@@ -1966,7 +1966,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	examine()
 		. = ..()
-		if (!our_cell)w
+		if (!our_cell)
 			. += "[src] is lacking a power source!"
 
 	attack_self(mob/user)
@@ -2016,7 +2016,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 /obj/item/makeshift_laser_barrel
 	name = "pipe assembly"
 	desc = "A long empty pipe."
-	w_class = W_CLASS_BULKY
+	w_class = W_CLASS_BULKY // so you cant have 5 almost finished guns in your backpack then finish them in a combat encounter
 
 	tooltip_rebuild = TRUE
 	icon = 'icons/obj/large/64x32.dmi'
