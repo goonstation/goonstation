@@ -777,7 +777,6 @@
 					save.cd = "/tiles/[posx],[posy]/objects"
 					while(save.dir.Find(id))
 						id = id + "I"
-					//save.dir.Add("[id]")
 					save.cd = "[id]"
 					save["dir"] << o.dir
 					save["type"] << o.type
