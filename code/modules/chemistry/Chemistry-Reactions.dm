@@ -264,10 +264,14 @@
 
 /// Deletes any reagents that are banned in smoke clouds.
 /proc/purge_smoke_blacklist(datum/reagents/FG)
-	FG.del_reagent("pyrosium")
-	FG.del_reagent("big_bang")
-	FG.del_reagent("big_bang_precursor")
-	FG.del_reagent("poor_concrete")
-	FG.del_reagent("okay_concrete")
-	FG.del_reagent("good_concrete")
-	FG.del_reagent("perfect_concrete")
+	for (var/reagent_id in FG.reagent_list)
+		var/datum/reagent/reagent = FG.reagent_list[reagent_id]
+		if (reagent.fluid_flags & FLUID_SMOKE_BANNED)
+			FG.del_reagent(reagent_id)
+
+/// Deletes any reagents that are banned in fluid puddles.
+/proc/purge_fluid_blacklist(datum/reagents/FG)
+	for (var/reagent_id in FG.reagent_list)
+		var/datum/reagent/reagent = FG.reagent_list[reagent_id]
+		if (reagent.fluid_flags & FLUID_BANNED)
+			FG.del_reagent(reagent_id)

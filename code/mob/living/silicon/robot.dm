@@ -1419,8 +1419,8 @@
 					update_bodypart("l_leg")
 				else return
 			src.module_active = null
-			src.update_appearance()
 			hud.set_active_tool(null)
+			src.update_appearance()
 			return
 
 		else if (istype(W,/obj/item/parts/robot_parts/) && src.wiresexposed)
@@ -2625,6 +2625,8 @@
 					eye_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
 					eye_light.plane = PLANE_LIGHTING
 					src.UpdateOverlays(eye_light, "eye_light")
+			else if (!src.part_head && !isdead(src))
+				src.death()
 
 		if (part == "chest" || update_all)
 			if (src.part_chest && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
@@ -2634,6 +2636,8 @@
 					src.i_chest.color = color_matrix
 				else
 					src.i_chest = null
+			else if (!src.part_chest && !isdead(src))
+				src.death()
 
 		if (part == "l_leg" || update_all)
 			if (src.part_leg_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)

@@ -155,7 +155,6 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	picture = "flocktrader.png"
 	name = "Flocktrader Sa.le"
 	desc = "Some sort of weird holographic image on some fancy totem thing. Seems like it wants to trade."
-	trader_area = "/area/flock_trader"
 	var/is_greeting = 0
 	var/grad_col_1 = "#3cb5a3"
 	var/grad_col_2 = "#124e43"
