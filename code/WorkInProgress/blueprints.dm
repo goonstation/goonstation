@@ -548,7 +548,6 @@
 	"/obj/machinery/firealarm", \
 	"/obj/machinery/power/apc", \
 	"/obj/machinery/alarm", \
-//	"/obj/machinery/power/terminal", \ // APC spawns its own connected terminal
 	"/obj/machinery/disposal", \
 	"/obj/machinery/gibber",
 	"/obj/machinery/floorflusher",
