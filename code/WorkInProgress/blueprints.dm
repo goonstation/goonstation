@@ -344,7 +344,6 @@
 		src.locked = FALSE
 		src.anchored = UNANCHORED
 		src.visible_message("[src] disengages its anchors.")
-		return
 
 	proc/activate(mob/user)
 		src.locked = TRUE
