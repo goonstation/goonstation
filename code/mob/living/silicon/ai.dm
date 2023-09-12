@@ -449,8 +449,7 @@ or don't if it uses a custom topopen overlay
 		if (src.dismantle_stage == 1)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.visible_message("<span class='alert'><b>[user.name]</b> opens [src.name]'s chassis cover.</span>")
-			if (src.locking)
-				src.locking = 0
+			src.locking = 0
 			src.dismantle_stage = 2
 		else if (src.dismantle_stage == 2)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -508,8 +507,7 @@ or don't if it uses a custom topopen overlay
 					src.dismantle_stage = 0
 				else
 					src.dismantle_stage = 1
-				if (src.locking)
-					src.locking = 0
+				src.locking = 0
 				user.visible_message("<span class='alert'><b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock.</span>")
 			else boutput(user, "<span class='alert'>Access denied.</span>")
 
