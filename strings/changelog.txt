@@ -1,7 +1,7 @@
 
 (t)tue sep 12 23
-(u)Sord
-(+)Singularity feeding changes: Paper 2 -> 0.5. Material(ore/bar) density*3, radioactive*4, neutron radioactive*6. Also feed a singularity a plutonium core to get a LOT of power.
+(u)Sord & Tarmunora
+(+)Singularity feeding changes: Base values (i.e.: bonuses from materials are unaffected) are generally higher, but have diminishing returns for any given type. Variety is the spice of life! Material(ore/bar) density*3, radioactive*4, neutron radioactive*6. Also feed a singularity a plutonium core to get a LOT of power.
 (u)Paaiii
 (p)15592
 (e)🗺🎨🔊|A-Mapping, C-Sprites, C-Sound
