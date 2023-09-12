@@ -751,8 +751,6 @@
 			var/posx = (curr.x - minx)
 			var/posy = (curr.y - miny)
 
-			//save.cd = "/tiles"
-			//save.dir.Add("[posx],[posy]")
 			save.cd = "/tiles/[posx],[posy]"
 			save["type"] << curr.type
 			save["dir"] << curr.dir
