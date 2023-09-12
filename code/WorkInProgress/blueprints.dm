@@ -271,7 +271,6 @@
 					"icon_state" = O.icon_state,
 				))
 				new O.objecttype(Pos) // need this part to also spawn the objects
-		return
 
 	proc/prepareBuild(mob/user)
 		if(src.invalidCount)
