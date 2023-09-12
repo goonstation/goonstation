@@ -1868,7 +1868,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	name = "makeshift laser rifle"
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "makeshift-energy"
-	item_state = "laser" //TODO better sprites
+	item_state = "laser" //TODO item states
 	w_class = W_CLASS_BULKY
 	c_flags = ONBACK
 	cell_type = null
@@ -1888,8 +1888,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	var/obj/item/cell/our_cell
 	///How much heat this weapon has after firing, the flashlight breaks if this gets too high
 	var/heat = 0
-	///
-	var/battery_image
 
 	proc/break_light()
 		elecflash(get_turf(src), 1, 3)
@@ -1943,7 +1941,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			SEND_SIGNAL(src, COMSIG_CELL_SWAP, null)
 			boutput(user,"<span class='notice'>You disconnect [our_cell] from [src].</span>")
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
-			user.put_in_hand_or_drop(our_cell)
 			return
 		else if (istype(W, /obj/item/cell) && !our_cell)
 			user.u_equip(W)
@@ -1953,7 +1950,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		else if (issnippingtool(W) && our_light)
 			boutput(user,"<span class='notice'>You remove [our_light] from the barrel.</span>")
 			playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
-			our_light.set_loc(get_turf(user))
+			user.put_in_hand_or_drop(our_light)
 			our_light = null
 			update_icon()
 			return
@@ -1969,10 +1966,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	examine()
 		. = ..()
-		if (heat > 100) // danger zone
-			. += "The rifle is smoking and emitting heat! This looks unsafe to fire!"
-		else if(heat > 80)
-			. += "The rifle is emitting a small amount of heat."
+		if (!our_cell)w
+			. += "[src] is lacking a power source!"
 
 	attack_self(mob/user)
 		var/I = tgui_input_number(user, "Input a firerate (In deciseconds)", "Timer Adjustment", shoot_delay, 10, 2)
@@ -1982,13 +1977,20 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		boutput(user, "<span class='notice'>You adjust [src] to fire every [I / 10] seconds.</span>")
 
 	update_icon()
-		if(our_cell)
-			var/image/overlay_image = SafeGetOverlayImage("gun_cell", 'icons/obj/large/64x32.dmi', "makeshift-battery")
+		if (our_cell)
+			var/image/overlay_image
+			if (istype(our_cell, /obj/item/cell/artifact))
+				var/obj/item/cell/artifact/C = our_cell
+				var/datum/artifact/powercell/AS = C.artifact
+				var/datum/artifact_origin/AO = AS.artitype
+				overlay_image = SafeGetOverlayImage("gun_cell", 'icons/obj/large/64x32.dmi', "makeshift-[AO.name]")
+			else
+				overlay_image = SafeGetOverlayImage("gun_cell", 'icons/obj/large/64x32.dmi', "makeshift-[our_cell.icon_state]")
 			src.UpdateOverlays(overlay_image, "gun_cell")
 		else
 			src.UpdateOverlays(null, "gun_cell")
 
-		if(our_light)
+		if (our_light)
 			var/image/overlay_image = SafeGetOverlayImage("gun_light", 'icons/obj/large/64x32.dmi', "makeshift-light")
 			src.UpdateOverlays(overlay_image, "gun_light")
 		else
@@ -2014,29 +2016,30 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 /obj/item/makeshift_laser_barrel
 	name = "pipe assembly"
 	desc = "A long empty pipe."
+	w_class = W_CLASS_BULKY
 
 	tooltip_rebuild = TRUE
-	icon = 'icons/obj/metal.dmi'
-	icon_state = "rods_5" // TODO get sprites
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "makeshift-construction1"
 
 	var/obj/item/light/tube/our_light
 	var/step = 0
 
 	attackby(obj/item/W, mob/user, params)
 		if (step == 0 && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_METAL && W.amount >= 4)
-			boutput(user,"<span class='notice'>You construct a stock for the barrel.</span>")
+			boutput(user,"<span class='notice'>You construct a stock and grip for the barrel.</span>")
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
 			step++
 			W.change_stack_amount(-4)
 			name = "pipe/stock assembly"
 			desc = "A gun of some kind? It seems unfinished."
-			icon_state = "rods_5"
+			icon_state = "makeshift-construction2"
+			update_icon()
 			return
 		else if (step == 1 && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL && W.amount >= 3) // 3 sheets so you have to deconstruct more than 1 window
 			boutput(user,"<span class='notice'>You create a lens using [W] and stuff it inside [src].</span>")
 			W.change_stack_amount(-3)
 			step++
-			icon_state = "rods_3"
 			return
 		else if (step == 2 && istype(W, /obj/item/light/tube))
 			var/obj/item/device/light/flashlight/F = W
@@ -2047,6 +2050,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			F.set_loc(src)
 			step++
 			name = "pipe/stock/light assembly"
+			icon_state = "makeshift-construction3"
+			update_icon()
 			return
 		else if (step == 3 && istype(W, /obj/item/device/timer))
 			boutput(user,"<span class='notice'>You attach the timer to [src].</span>")
@@ -2055,34 +2060,32 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			qdel(W)
 			step++
 			name = "pipe/stock/light/timer assembly"
+			icon_state = "makeshift-construction4"
+			update_icon()
 			return
 		else if (step == 4 && isweldingtool(W) && W:try_weld(user, 1) )
-			boutput(user,"<span class='notice'>You weld [src] together.</span>")
+			boutput(user,"<span class='notice'>You weld the end of the barrel into a point.</span>")
 			step++
 			name = "makeshift energy rifle"
+			icon_state = "makeshift-construction5"
+			update_icon()
 			return
 		else if (step == 5 && istype(W, /obj/item/cable_coil))
 			boutput(user,"<span class='notice'>You wire [src] together.</span>")
 			W.change_stack_amount(-1)
 			step++
-			desc = "A makeshift gun? Seems like it needs a power source."
-			return
-		else if (step == 6 && istype(W, /obj/item/cell))
-			boutput(user,"<span class='notice'>You connect [W] to the rifle. It is ready to fire!</span>")
-			user.u_equip(src)
-			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
 			var/obj/item/gun/energy/makeshift/M = new/obj/item/gun/energy/makeshift
 			M.our_light = our_light
 			our_light.set_loc(M)
-			M.attach_cell(W, user)
 			user.put_in_hand_or_drop(M)
+			M.update_icon()
 			qdel(src)
 			return
 		..()
 
 
 /obj/item/makeshift_laser_barrel/glass
-	step = 6
+	step = 5
 
 	New()
 		..()
