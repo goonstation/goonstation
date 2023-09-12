@@ -1,5 +1,7 @@
 
 (t)tue sep 12 23
+(u)aloe
+(+)Being fully heat resistant (usually from the fire resistance gene) now makes you immune to cremation.
 (u)FlameArrow57
 (p)15598
 (e)⚖💅🧛|C-Balance, C-QoL, A-Gamemodes
