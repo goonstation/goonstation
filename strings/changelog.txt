@@ -1,5 +1,21 @@
 
 (t)mon sep 11 23
+(u)Tyrant
+(p)15720
+(e)🗺🍝|A-Mapping, A-Catering
+(+)Oshan's Kitchen/bar now has a reagent extractor.
+(u)TealSeer
+(p)15768
+(e)🗺📦|A-Mapping, A-Game-Objects
+(+)Two artistic toolboxes now spawn on Donut 2 in the crew lounge and warehouse.
+(u)Garash
+(p)15783
+(e)🗺🔒🔄📄|A-Mapping, A-Secret, C-Rework, A-UI
+(+)New UI for the elevators, descend to the trench in style!
+(u)aloe
+(p)14916
+(e)🔎⚖🧫📦⚗|C-Code-Quality, C-Balance, C-Experimental, A-Game-Objects, A-Chemistry
+(*)Fluids are no longer clickable. Anything you used to click fluids with now works based on clicking the turf below the fluid. This also means that you can no longer see the most dominant reagent in a fluid by the name of the fluid.
 (u)Amylizzle
 (p)15791
 (e)💅📦|C-QoL, A-Game-Objects
