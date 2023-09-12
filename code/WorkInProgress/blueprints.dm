@@ -822,7 +822,6 @@
 			bp.req_glass += 0.5
 			save.cd = "/tiles/[A]/objects"
 			for (var/B in save.dir)
-				//if(B == "type" || B == "state") continue
 				save.cd = "/tiles/[A]/objects/[B]"
 				var/datum/objectinfo/O = new/datum/objectinfo()
 				O.objecttype = save["type"]
