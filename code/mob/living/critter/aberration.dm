@@ -113,8 +113,8 @@
 		Br?.TakeDamage(damage)
 
 	valid_target(var/mob/living/C)
-		if (istype(M, /mob/living/carbon/human))
-			var/mob/living/carbon/human/H = M
+		if (istype(C, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = C
 			if (istype(H.head, /obj/item/clothing/head/void_crown))
 				return FALSE
 		..()
