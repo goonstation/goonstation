@@ -757,7 +757,6 @@
 			save["state"] << curr.icon_state
 			if (curr.icon != initial(curr.icon))
 				save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
-			//save.dir.Add("objects")
 
 			for(var/obj/o in curr)
 				var/permitted = 0
