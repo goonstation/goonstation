@@ -52,25 +52,25 @@
 	north
 		icon_state = "camera"
 		sticky = FALSE
-		dir = NORTH
+		dir = SOUTH
+		pixel_y = 20
 
 	south
 		icon_state = "camera"
 		sticky = FALSE
-		dir = SOUTH
-		pixel_y = 20
+		dir = NORTH
 
 	east
 		icon_state = "camera"
 		sticky = FALSE
-		dir = EAST
-		pixel_x = -10
+		dir = WEST
+		pixel_x = 10
 
 	west
 		icon_state = "camera"
 		sticky = FALSE
-		dir = WEST
-		pixel_x = 10
+		dir = EAST
+		pixel_x = -10
 
 /obj/machinery/camera/auto/alt
 #ifdef IN_MAP_EDITOR
@@ -81,25 +81,26 @@
 	north
 		icon_state = "camera"
 		sticky = FALSE
-		dir = SOUTHWEST
+		dir = SOUTHEAST
+		pixel_y = 20
 
 	south
 		icon_state = "camera"
 		sticky = FALSE
-		dir = SOUTHEAST
-		pixel_y = 20
+		dir = SOUTHWEST
 
 	east
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTHWEST
+		pixel_x = 10
+
+	west
 		icon_state = "camera"
 		sticky = FALSE
 		dir = NORTHEAST
 		pixel_x = -10
 
-	west
-		icon_state = "camera"
-		sticky = FALSE
-		dir = NORTHWEST
-		pixel_x = 10
 
 /obj/machinery/camera/proc/autoposition(var/alt)
 	if (!src.sticky)
@@ -407,14 +408,14 @@
 		for(var/mob/O in mobs)
 			if (isAI(O))
 				boutput(O, "[user] holds a paper up to one of your cameras ...")
-				X.ui_interact(O)
+				O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
 				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 			else
 				var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
 				if (S)
 					if (S.current == src)
 						boutput(O, "[user] holds a paper up to one of the cameras ...")
-						X.ui_interact(O)
+						O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
 						logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 
 //Return a working camera that can see a given mob
