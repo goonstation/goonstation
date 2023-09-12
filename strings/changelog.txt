@@ -1,6 +1,10 @@
 
 (t)tue sep 12 23
 (u)Paaiii
+(p)15592
+(e)🗺🎨🔊|A-Mapping, C-Sprites, C-Sound
+(+)Resprited a bunch of old miscellaneous objects.
+(u)Paaiii
 (p)15595
 (e)⚖💅🤖|C-Balance, C-QoL, A-Silicons
 (+)Gives AIs a command to unlock their own core cover.
