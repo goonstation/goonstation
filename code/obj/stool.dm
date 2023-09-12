@@ -27,7 +27,7 @@
 	pressure_resistance = 3*ONE_ATMOSPHERE
 	layer = STORAGE_LAYER //dumb
 	default_material = "steel"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
@@ -909,7 +909,7 @@ TYPEINFO(/obj/stool/chair)
 /obj/stool/chair/material
 	name = "material chair"
 	desc = "A chair made from a material"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
 
 /obj/stool/chair/material/mauxite
@@ -1183,35 +1183,48 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 		unbuckle()
 
 /* ======================================================= */
-/* -------------------- Wooden Chairs -------------------- */
+/* -------------------- Dining Chairs -------------------- */
 /* ======================================================= */
 
-TYPEINFO(/obj/stool/chair/wooden)
+TYPEINFO(/obj/stool/chair/dining/wood)
 	mat_appearances_to_ignore = list("wood")
-/obj/stool/chair/wooden
-	name = "wooden chair"
-	icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
+/obj/stool/chair/dining/
+	name = "dining chair"
+	icon_state = "chair_wooden"
+	desc = "You shouldn't be seeing this!"
 	comfort_value = 3
 	foldable = 0
 	anchored = UNANCHORED
 	//deconstructable = 0
-	parts_type = /obj/item/furniture_parts/wood_chair
 
 	constructed //no "wood wood chair"
 		name = "chair"
+
+	wood
+		name = "wooden chair"
+		icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
+		parts_type = /obj/item/furniture_parts/dining_chair/wood
+
 	regal
 		name = "regal chair"
 		desc = "Much more comfortable than the average dining chair, and much more expensive."
 		icon_state = "regalchair"
 		comfort_value = 7
-		parts_type = /obj/item/furniture_parts/wood_chair/regal
+		parts_type = /obj/item/furniture_parts/dining_chair/regal
 
 	scrap
 		name = "scrap chair"
 		desc = "Hopefully you didn't pay actual money for this."
 		icon_state = "scrapchair"
 		comfort_value = 7
-		parts_type = /obj/item/furniture_parts/wood_chair/scrap
+		parts_type = /obj/item/furniture_parts/dining_chair/scrap
+
+	industrial
+		name = "industrial chair"
+		desc = "Repurposed scaffolding in the shape of a chair."
+		icon_state = "chair_industrial"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/dining_chair/industrial
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */

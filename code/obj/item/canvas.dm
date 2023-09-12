@@ -420,11 +420,9 @@
 		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
 			return null
 
-	attackby(obj/item/W, mob/user)
-		pop_open_a_browser_box(user)
-
-	attack_hand(mob/user)
-		pop_open_a_browser_box(user)
+	Click(location, control, params)
+		. = ..()
+		pop_open_a_browser_box(usr)
 
 	reagent_act()
 		return

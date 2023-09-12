@@ -489,18 +489,6 @@
 		health_update_queue |= src
 	return
 
-/mob/living/silicon/hivebot/bump(atom/movable/AM as mob|obj)
-	if (src.now_pushing)
-		return
-	if (!istype(AM, /atom/movable))
-		return
-	if (!src.now_pushing)
-		src.now_pushing = 1
-		if (!AM.anchored)
-			var/t = get_dir(src, AM)
-			step(AM, t)
-		src.now_pushing = null
-
 /mob/living/silicon/hivebot/attackby(obj/item/W, mob/user)
 	if (isweldingtool(W))
 		if (src.get_brute_damage() < 1)
@@ -939,9 +927,8 @@ Frequency:
 	name = "Eyebot"
 	icon_state = "eyebot"
 	health = 25
-
+	do_hurt_slowdown = FALSE
 	jetpack = 1 //ZeWaka: I concur with ghostdrone commenter, fuck whoever made this. See spacemove.
-	var/jeton = 0
 
 	New()
 		..()
@@ -965,6 +952,8 @@ Frequency:
 				available_ai_shells += src
 
 	movement_delay()
+		if (src.pulling && !isitem(src.pulling))
+			return ..()
 		return 1 + movement_delay_modifier
 
 	hotkey(name)

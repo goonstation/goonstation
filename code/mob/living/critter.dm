@@ -1598,3 +1598,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	electric_expose(var/power = 1)
 		return 0
+
+	is_heat_resistant()
+		return TRUE

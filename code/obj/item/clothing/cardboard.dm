@@ -6,7 +6,7 @@
 	icon_state = "c_box"
 	item_state = "c_box"
 	density = 1
-	see_face = 0
+	see_face = FALSE
 	over_hair = 1
 	wear_layer = MOB_LAYER_OVER_FUCKING_EVERYTHING_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH

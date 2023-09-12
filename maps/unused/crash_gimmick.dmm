@@ -207,20 +207,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"aph" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 4;
-	name = "old wooden chair"
-	},
-/turf/simulated/floor/caution/corner/se{
-	broken = 1;
-	desc = " It is made of steel.";
-	icon_old = "corner_east";
-	icon_state = "damaged5";
-	name = "steel floor"
-	},
-/area/russian/radiation)
 "apq" = (
 /obj/machinery/computer/stockexchange{
 	dir = 8
@@ -630,6 +616,20 @@
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
+	},
+/area/russian/radiation)
+"azT" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 4;
+	name = "old wooden chair"
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/west{
+	broken = 1;
+	desc = " It is made of temp.";
+	icon = 'icons/turf/floors.dmi';
+	icon_old = "fpurple2";
+	icon_state = "damaged1"
 	},
 /area/russian/radiation)
 "aAu" = (
@@ -1960,15 +1960,6 @@
 	icon_state = "damaged4"
 	},
 /area/russian/radiation)
-"aOt" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/purple/fancy{
-	desc = " It is made of temp.";
-	opaque_atom_count = -1
-	},
-/area/russian/radiation)
 "aOu" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/carpet/purple/fancy{
@@ -2008,29 +1999,6 @@
 	desc = " It is made of temp.";
 	icon_old = "grimy";
 	icon_state = "damaged2"
-	},
-/area/russian/radiation)
-"aPG" = (
-/obj/stool/chair/wooden,
-/obj/disposalpipe/segment/transport{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/white/checker{
-	desc = " It is made of steel.";
-	dir = 6;
-	name = "steel floor"
-	},
-/area/russian/radiation)
-"aPH" = (
-/obj/stool/chair/wooden,
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/white/checker{
-	desc = " It is made of steel.";
-	dir = 6;
-	name = "steel floor"
 	},
 /area/russian/radiation)
 "aPI" = (
@@ -2879,7 +2847,7 @@
 	floorintact = 1;
 	floorname = "plating";
 	gas_impermeable = 1;
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3";
 	layer = 1.9;
 	mod = "norn-R-"
@@ -6097,24 +6065,6 @@
 	name = "wood floor"
 	},
 /area/russian/radiation)
-"biM" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 4
-	},
-/obj/machinery/alarm{
-	pixel_y = 20
-	},
-/turf/simulated/floor/carpet/red/standard/edge/nw{
-	broken = 1;
-	desc = " It is made of temp.";
-	icon = 'icons/turf/floors.dmi';
-	icon_old = "red2";
-	icon_state = "damaged2"
-	},
-/area/russian/radiation)
 "biO" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light_switch/north,
@@ -6246,18 +6196,6 @@
 /obj/item/paper/horizon/eggs,
 /turf/simulated/floor/grass,
 /area/russian/radiation)
-"bje" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 4;
-	name = "old wooden chair"
-	},
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/space,
-/area/russian/radiation)
 "bjg" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/box/nerd_kit,
@@ -6295,19 +6233,6 @@
 /turf/simulated/floor/carpet/purple/fancy/edge/north{
 	desc = " It is made of temp."
 	},
-/area/russian/radiation)
-"bjj" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 8;
-	name = "old wooden chair"
-	},
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/disposalpipe/segment,
-/turf/space,
 /area/russian/radiation)
 "bjm" = (
 /obj/cable{
@@ -6488,7 +6413,7 @@
 	floorintact = 1;
 	floorname = "plating";
 	gas_impermeable = 1;
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3";
 	layer = 1.9;
 	mod = "norn-R-"
@@ -6500,20 +6425,6 @@
 	name = "steel floor"
 	},
 /area/station/mining/magnet)
-"bks" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 4;
-	name = "old wooden chair"
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/west{
-	broken = 1;
-	desc = " It is made of temp.";
-	icon = 'icons/turf/floors.dmi';
-	icon_old = "fpurple2";
-	icon_state = "damaged1"
-	},
-/area/russian/radiation)
 "bku" = (
 /obj/table/wood/round/auto,
 /obj/item/coin,
@@ -6553,22 +6464,6 @@
 	icon = 'icons/turf/floors.dmi';
 	icon_old = "purple1";
 	icon_state = "damaged1"
-	},
-/area/russian/radiation)
-"bkx" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 8;
-	name = "old wooden chair"
-	},
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26;
-	pixel_y = 1
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/carpet/purple/fancy/edge/east{
-	desc = " It is made of temp."
 	},
 /area/russian/radiation)
 "bkz" = (
@@ -6825,14 +6720,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grass,
 /area/russian/radiation)
-"bld" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 4;
-	name = "old wooden chair"
-	},
-/turf/space,
-/area/russian/radiation)
 "ble" = (
 /obj/table/wood/round/auto,
 /obj/item/paper/book/from_file/critter_compendium,
@@ -6866,15 +6753,6 @@
 	icon_old = "fpurple2";
 	icon_state = "damaged5"
 	},
-/area/russian/radiation)
-"blj" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 8;
-	name = "old wooden chair"
-	},
-/obj/disposalpipe/segment,
-/turf/space,
 /area/russian/radiation)
 "blk" = (
 /obj/machinery/disposal/small/east,
@@ -13460,18 +13338,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"bQU" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/west{
-	broken = 1;
-	desc = " It is made of temp.";
-	icon = 'icons/turf/floors.dmi';
-	icon_old = "fpurple2";
-	icon_state = "damaged1"
-	},
-/area/russian/radiation)
 "bQV" = (
 /obj/table/wood/round,
 /obj/shrub{
@@ -13487,24 +13353,6 @@
 	icon = 'icons/turf/floors.dmi';
 	icon_old = "purple1";
 	icon_state = "damaged1"
-	},
-/area/russian/radiation)
-"bQW" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/east{
-	broken = 1;
-	desc = " It is made of temp.";
-	icon = 'icons/turf/floors.dmi';
-	icon_old = "fpurple2";
-	icon_state = "damaged4"
 	},
 /area/russian/radiation)
 "bQX" = (
@@ -14590,6 +14438,18 @@
 	name = "wood floor"
 	},
 /area/russian/radiation)
+"bWA" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/west{
+	broken = 1;
+	desc = " It is made of temp.";
+	icon = 'icons/turf/floors.dmi';
+	icon_old = "fpurple2";
+	icon_state = "damaged1"
+	},
+/area/russian/radiation)
 "bWK" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random{
@@ -14880,9 +14740,7 @@
 	},
 /area/russian/radiation)
 "bYx" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 8
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -14958,9 +14816,7 @@
 	},
 /area/russian/radiation)
 "bYC" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 8
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -18420,15 +18276,6 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"cnv" = (
-/obj/stool/chair/wooden,
-/turf/simulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/russian/radiation)
 "cnx" = (
 /obj/noticeboard/persistent{
 	name = "Chapel persistent notice board";
@@ -19664,15 +19511,6 @@
 	desc = " It is made of temp."
 	},
 /area/russian/radiation)
-"csY" = (
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new/obj/item/captaingun
-	},
-/turf/simulated/floor/carpet/blue/fancy/innercorner/south{
-	desc = " It is made of temp."
-	},
-/area/russian/radiation)
 "csZ" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -19982,27 +19820,6 @@
 "cug" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 4
-	},
-/turf/simulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/russian/radiation)
-"cuh" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/stool/chair/wooden{
-	dir = 1
 	},
 /turf/simulated/floor/wood/two{
 	desc = " It is made of wood.";
@@ -21053,17 +20870,6 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"cyc" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/turf/simulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
-	},
-/area/russian/radiation)
 "cyd" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
@@ -21689,7 +21495,7 @@
 /obj/item/device/audio_log,
 /obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/purpleblack{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -32532,9 +32338,7 @@
 /area/russian/radiation)
 "dgf" = (
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
@@ -36446,6 +36250,16 @@
 	icon_state = "floor"
 	},
 /area/shuttle/arrival/station)
+"dQD" = (
+/obj/stool/chair/dining/wood,
+/turf/simulated/floor/neutral{
+	broken = 1;
+	desc = " It is made of steel.";
+	icon_old = "fullneutral";
+	icon_state = "damaged1";
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "dRY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -37089,23 +36903,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"exp" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/red/standard/edge/nw{
-	desc = " It is made of temp."
-	},
-/area/russian/radiation)
 "exs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -37123,24 +36920,6 @@
 	color = "#d1e6ff";
 	icon_state = "asteroid-8";
 	topnumber = 3
-	},
-/area/russian/radiation)
-"exL" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/red/standard/edge/ne{
-	broken = 1;
-	desc = " It is made of temp.";
-	icon = 'icons/turf/floors.dmi';
-	icon_old = "red2";
-	icon_state = "damaged1"
 	},
 /area/russian/radiation)
 "exQ" = (
@@ -37425,14 +37204,15 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"eMz" = (
-/obj/stool/chair/wooden,
-/turf/simulated/floor/neutral{
-	broken = 1;
-	desc = " It is made of steel.";
-	icon_old = "fullneutral";
-	icon_state = "damaged1";
-	name = "steel floor"
+"eMn" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy{
+	desc = " It is made of temp."
 	},
 /area/russian/radiation)
 "eMV" = (
@@ -38467,6 +38247,20 @@
 	icon_state = "damaged3"
 	},
 /area/russian/radiation)
+"fkb" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 4;
+	name = "old wooden chair"
+	},
+/turf/simulated/floor/caution/corner/se{
+	broken = 1;
+	desc = " It is made of steel.";
+	icon_old = "corner_east";
+	icon_state = "damaged5";
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "flb" = (
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -39144,17 +38938,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"fBO" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/decal/poster/wallsign/teaparty{
-	pixel_y = 32
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/west{
-	desc = " It is made of temp."
-	},
-/area/russian/radiation)
 "fBR" = (
 /obj/machinery/drainage,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
@@ -39216,26 +38999,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"fDd" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/neutral{
-	desc = " It is made of steel.";
-	name = "steel floor"
-	},
-/area/russian/radiation)
 "fDk" = (
 /obj/table/wood/round/auto,
 /obj/shrub{
@@ -39253,21 +39016,6 @@
 	desc = " It is made of steel.";
 	icon_old = "fullneutral";
 	icon_state = "damaged5";
-	name = "steel floor"
-	},
-/area/russian/radiation)
-"fDl" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/neutral{
-	broken = 1;
-	desc = " It is made of steel.";
-	icon_old = "fullneutral";
-	icon_state = "damaged4";
 	name = "steel floor"
 	},
 /area/russian/radiation)
@@ -40888,15 +40636,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"gos" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/turf/simulated/floor/neutral{
-	desc = " It is made of steel.";
-	name = "steel floor"
-	},
-/area/russian/radiation)
 "goI" = (
 /obj/decal/tile_edge/stripe{
 	dir = 4;
@@ -41280,6 +41019,18 @@
 /turf/simulated/floor/carpet/grime{
 	desc = " It is made of temp."
 	},
+/area/russian/radiation)
+"gwP" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 4;
+	name = "old wooden chair"
+	},
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/space,
 /area/russian/radiation)
 "gxe" = (
 /obj/machinery/firealarm{
@@ -41983,21 +41734,6 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
-"gLw" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
-	dir = 4
-	},
-/turf/simulated/floor/red/side{
-	desc = " It is made of steel.";
-	name = "steel floor"
-	},
-/area/russian/radiation)
 "gLx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42012,24 +41748,6 @@
 	dir = 1
 	},
 /turf/space,
-/area/russian/radiation)
-"gLQ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
-	dir = 4
-	},
-/turf/simulated/floor/red/side{
-	broken = 1;
-	desc = " It is made of steel.";
-	icon_old = "red";
-	icon_state = "damaged1";
-	name = "steel floor"
-	},
 /area/russian/radiation)
 "gMa" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -42411,6 +42129,22 @@
 	desc = " It is made of temp."
 	},
 /area/russian/radiation)
+"gSR" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 8;
+	name = "old wooden chair"
+	},
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
+	pixel_y = 1
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet/purple/fancy/edge/east{
+	desc = " It is made of temp."
+	},
+/area/russian/radiation)
 "gSZ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -42747,6 +42481,23 @@
 /turf/simulated/floor/sanitary/white{
 	desc = " It is made of steel.";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"gZL" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/standard/edge/nw{
+	desc = " It is made of temp."
 	},
 /area/russian/radiation)
 "gZO" = (
@@ -43878,6 +43629,26 @@
 	},
 /turf/space,
 /area/russian/radiation)
+"hLh" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/neutral{
+	desc = " It is made of steel.";
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "hLk" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 1
@@ -44409,6 +44180,24 @@
 	icon_old = "floorgrime";
 	icon_state = "damaged4";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"ibr" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/east{
+	broken = 1;
+	desc = " It is made of temp.";
+	icon = 'icons/turf/floors.dmi';
+	icon_old = "fpurple2";
+	icon_state = "damaged4"
 	},
 /area/russian/radiation)
 "ibL" = (
@@ -45506,6 +45295,18 @@
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-12"
+	},
+/area/russian/radiation)
+"iDc" = (
+/obj/stool/chair/dining/wood,
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/white/checker{
+	desc = " It is made of steel.";
+	dir = 6;
+	name = "steel floor"
 	},
 /area/russian/radiation)
 "iDz" = (
@@ -47682,19 +47483,6 @@
 /turf/simulated/floor/sanitary{
 	desc = " It is made of steel.";
 	name = "steel floor"
-	},
-/area/russian/radiation)
-"jxJ" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 4;
-	name = "old wooden chair"
-	},
-/turf/simulated/floor/wood/two{
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	name = "wood floor"
 	},
 /area/russian/radiation)
 "jxW" = (
@@ -53647,28 +53435,6 @@
 	},
 /turf/space,
 /area/space)
-"mvL" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 8;
-	name = "old wooden chair"
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/wood/two{
-	broken = 1;
-	desc = " It is made of wood.";
-	explosion_protection = 1;
-	explosion_resistance = 1;
-	icon_old = "wooden";
-	icon_state = "damaged3";
-	name = "wood floor"
-	},
-/area/russian/radiation)
 "mvV" = (
 /turf/simulated/floor/wood/two{
 	broken = 1;
@@ -54896,6 +54662,17 @@
 	},
 /obj/decal/cleanable/blood/splatter,
 /turf/space,
+/area/russian/radiation)
+"mUe" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/decal/poster/wallsign/teaparty{
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/west{
+	desc = " It is made of temp."
+	},
 /area/russian/radiation)
 "mUn" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -59764,6 +59541,14 @@
 	icon_state = "norn-13"
 	},
 /area/russian/radiation)
+"pkN" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 4;
+	name = "old wooden chair"
+	},
+/turf/space,
+/area/russian/radiation)
 "plj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -60813,6 +60598,17 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
+"pNa" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/turf/simulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/russian/radiation)
 "pOa" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -61753,6 +61549,28 @@
 	desc = " It is made of steel.";
 	icon_state = "panelscorched";
 	name = "steel plating"
+	},
+/area/russian/radiation)
+"qnR" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 8;
+	name = "old wooden chair"
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/wood/two{
+	broken = 1;
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	icon_old = "wooden";
+	icon_state = "damaged3";
+	name = "wood floor"
 	},
 /area/russian/radiation)
 "qoi" = (
@@ -64073,6 +63891,15 @@
 	name = "plating"
 	},
 /area/station/hallway/secondary/exit)
+"rpz" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 8;
+	name = "old wooden chair"
+	},
+/obj/disposalpipe/segment,
+/turf/space,
+/area/russian/radiation)
 "rpA" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
@@ -64169,6 +63996,15 @@
 /turf/simulated/floor{
 	desc = " It is made of steel.";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"rsT" = (
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = /obj/item/captaingun
+	},
+/turf/simulated/floor/carpet/blue/fancy/innercorner/south{
+	desc = " It is made of temp."
 	},
 /area/russian/radiation)
 "rtm" = (
@@ -65124,6 +64960,15 @@
 	name = "steel floor"
 	},
 /area/russian/radiation)
+"rMB" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/turf/simulated/floor/neutral{
+	desc = " It is made of steel.";
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "rNh" = (
 /obj/machinery/atmospherics/portables_connector{
 	dir = 1
@@ -65639,6 +65484,21 @@
 	icon_state = "norn-R-10"
 	},
 /area/station/ranch)
+"sbE" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
+	dir = 4
+	},
+/turf/simulated/floor/red/side{
+	desc = " It is made of steel.";
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "sca" = (
 /turf/simulated/shuttle/wall/cockpit/window{
 	dir = 1;
@@ -65965,6 +65825,15 @@
 	icon_old = "panelscorched";
 	icon_state = "platingdmg2";
 	name = "steel plating"
+	},
+/area/russian/radiation)
+"sje" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/purple/fancy{
+	desc = " It is made of temp.";
+	opaque_atom_count = -1
 	},
 /area/russian/radiation)
 "sju" = (
@@ -66532,6 +66401,24 @@
 	icon_old = "blueblack";
 	icon_state = "floorscorched1";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"sBO" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/standard/edge/ne{
+	broken = 1;
+	desc = " It is made of temp.";
+	icon = 'icons/turf/floors.dmi';
+	icon_old = "red2";
+	icon_state = "damaged1"
 	},
 /area/russian/radiation)
 "sBZ" = (
@@ -67974,6 +67861,24 @@
 	opaque_atom_count = 1
 	},
 /area/russian/radiation)
+"ttR" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_y = 20
+	},
+/turf/simulated/floor/carpet/red/standard/edge/nw{
+	broken = 1;
+	desc = " It is made of temp.";
+	icon = 'icons/turf/floors.dmi';
+	icon_old = "red2";
+	icon_state = "damaged2"
+	},
+/area/russian/radiation)
 "tul" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -68125,6 +68030,24 @@
 	icon_old = "platingdmg1";
 	icon_state = "platingdmg2";
 	name = "steel plating"
+	},
+/area/russian/radiation)
+"tyU" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
+	dir = 4
+	},
+/turf/simulated/floor/red/side{
+	broken = 1;
+	desc = " It is made of steel.";
+	icon_old = "red";
+	icon_state = "damaged1";
+	name = "steel floor"
 	},
 /area/russian/radiation)
 "tzb" = (
@@ -68758,6 +68681,27 @@
 	icon_old = "plating";
 	icon_state = "platingdmg2";
 	name = "steel plating"
+	},
+/area/russian/radiation)
+"tNp" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/turf/simulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
 	},
 /area/russian/radiation)
 "tNG" = (
@@ -70523,6 +70467,17 @@
 /obj/decal/cleanable/molten_item,
 /turf/space,
 /area/russian/radiation)
+"uQe" = (
+/obj/stool/chair/dining/wood,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker{
+	desc = " It is made of steel.";
+	dir = 6;
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "uRF" = (
 /turf/simulated/wall/auto/asteroid/lighted{
 	color = "#d1e6ff";
@@ -70990,17 +70945,6 @@
 /turf/simulated/floor/plating{
 	desc = " It is made of steel.";
 	name = "steel plating"
-	},
-/area/russian/radiation)
-"vhA" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/turf/simulated/floor/carpet/blue/fancy{
-	desc = " It is made of temp."
 	},
 /area/russian/radiation)
 "vhX" = (
@@ -73328,6 +73272,15 @@
 	name = "steel plating"
 	},
 /area/space)
+"wvf" = (
+/obj/stool/chair/dining/wood,
+/turf/simulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/russian/radiation)
 "wvq" = (
 /obj/machinery/camera{
 	c_tag = "Fore Cargo Router B";
@@ -73795,6 +73748,19 @@
 	icon_state = "norn-R-3"
 	},
 /area/russian/radiation)
+"wKu" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 4;
+	name = "old wooden chair"
+	},
+/turf/simulated/floor/wood/two{
+	desc = " It is made of wood.";
+	explosion_protection = 1;
+	explosion_resistance = 1;
+	name = "wood floor"
+	},
+/area/russian/radiation)
 "wKG" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark{
 	icon_state = "dshuttle-2"
@@ -74201,13 +74167,6 @@
 	desc = " It is made of steel.";
 	name = "steel plating"
 	},
-/area/russian/radiation)
-"wZj" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/disposalpipe/junction/left/south,
-/turf/space,
 /area/russian/radiation)
 "wZp" = (
 /obj/table/reinforced/auto,
@@ -74881,6 +74840,19 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
+"xqk" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 8;
+	name = "old wooden chair"
+	},
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/disposalpipe/segment,
+/turf/space,
+/area/russian/radiation)
 "xqy" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating{
@@ -75421,6 +75393,21 @@
 	desc = " It is made of steel.";
 	icon_old = "freezerfloor2";
 	icon_state = "damaged1";
+	name = "steel floor"
+	},
+/area/russian/radiation)
+"xGi" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/neutral{
+	broken = 1;
+	desc = " It is made of steel.";
+	icon_old = "fullneutral";
+	icon_state = "damaged4";
 	name = "steel floor"
 	},
 /area/russian/radiation)
@@ -76275,6 +76262,13 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark{
 	icon_state = "dshuttle-9"
 	},
+/area/russian/radiation)
+"yhU" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/disposalpipe/junction/left/south,
+/turf/space,
 /area/russian/radiation)
 "yhX" = (
 /turf/simulated/wall/auto/reinforced/supernorn{
@@ -84779,7 +84773,7 @@ weq
 wpZ
 wAY
 wMM
-wZj
+yhU
 xhK
 xnF
 xuG
@@ -88195,9 +88189,9 @@ bfu
 xHU
 bhK
 ktK
-bje
-bks
-bld
+gwP
+azT
+pkN
 bml
 xHj
 dGb
@@ -89403,9 +89397,9 @@ bfA
 ccw
 bhR
 biw
-bjj
-bkx
-blj
+xqk
+gSR
+rpz
 bms
 xHU
 dGb
@@ -92883,7 +92877,7 @@ ykH
 ykH
 ykH
 eLS
-fDd
+hLh
 ykH
 xHU
 hNx
@@ -93184,9 +93178,9 @@ dGb
 ykH
 ykH
 ykH
-eMz
+dQD
 fDk
-gos
+rMB
 xHU
 hNZ
 izS
@@ -93487,7 +93481,7 @@ ykH
 ykH
 ykH
 xgC
-fDl
+xGi
 goI
 xHU
 kmm
@@ -93630,7 +93624,7 @@ bfe
 bfN
 bhr
 pVS
-biM
+ttR
 bke
 bkJ
 blu
@@ -99114,7 +99108,7 @@ cZL
 dfI
 uUq
 xHU
-fBO
+mUe
 oqQ
 wdh
 dGb
@@ -99718,7 +99712,7 @@ cZN
 giY
 xTn
 wBs
-vhA
+eMn
 lPT
 ixG
 dGb
@@ -107376,7 +107370,7 @@ dGb
 dGb
 dGb
 ejY
-exp
+gZL
 xHU
 fat
 fQc
@@ -107980,7 +107974,7 @@ dGb
 dGb
 dGb
 eie
-exL
+sBO
 xHj
 fau
 fRL
@@ -107988,7 +107982,7 @@ gyu
 hlf
 hZj
 iNx
-jxJ
+wKu
 tzb
 kZY
 lGD
@@ -113831,7 +113825,7 @@ xHU
 aHo
 aKq
 aLT
-aOt
+sje
 aQD
 aRc
 aSl
@@ -115945,7 +115939,7 @@ aEd
 aHA
 aKv
 aLZ
-aPG
+iDc
 aQR
 xqy
 whF
@@ -116241,13 +116235,13 @@ dGb
 whF
 xHU
 aow
-aph
+fkb
 aqo
 aEe
 aJa
 aKw
 aMK
-aPH
+uQe
 aQT
 xqy
 whF
@@ -124300,7 +124294,7 @@ jxZ
 kmP
 lat
 lIJ
-mvL
+qnR
 tzb
 nQE
 xhs
@@ -130208,7 +130202,7 @@ bVO
 xHj
 chG
 cnp
-csY
+rsT
 iow
 cBQ
 xuz
@@ -132321,9 +132315,9 @@ bRL
 bVU
 cci
 chL
-cnv
+wvf
 ctd
-cyc
+pNa
 xHU
 cFA
 cJB
@@ -135644,7 +135638,7 @@ bXa
 ccA
 tzb
 cnG
-cuh
+tNp
 cyj
 piY
 sJp
@@ -137278,7 +137272,7 @@ dGb
 dGb
 fld
 vvd
-gLw
+sbE
 xHU
 ijL
 axm
@@ -137882,7 +137876,7 @@ dGb
 dGb
 fmd
 fYy
-gLQ
+tyU
 tBU
 xwv
 xHU
@@ -152852,7 +152846,7 @@ bCU
 jgc
 bGS
 bKM
-bQU
+bWA
 tBU
 xqy
 gMa
@@ -153456,7 +153450,7 @@ bDb
 bED
 bGO
 bKO
-bQW
+ibr
 xHj
 bZp
 cFT

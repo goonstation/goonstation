@@ -515,7 +515,7 @@
 					if(!equipped)
 						return
 
-					if(!istype(equipped,/obj/item/reactor_component))
+					if(!istype(equipped,/obj/item/reactor_component) && !istype(equipped,/obj/item/device/light/glowstick))
 						ui.user.visible_message("<span class='alert'>[ui.user] tries to shove \a [equipped] into the reactor. Silly [ui.user]!</span>", "<span class='alert'>You try to put \a [equipped] into the reactor. You feel very foolish.</span>")
 						return
 
@@ -528,9 +528,20 @@
 	proc/insert_comp_callback(var/x,var/y,var/mob/user,var/obj/item/reactor_component/equipped)
 		if(src.component_grid[x][y])
 			return FALSE
-		src.component_grid[x][y]=equipped
-		user.u_equip(equipped)
-		equipped.set_loc(src)
+		if(istype(equipped,/obj/item/device/light/glowstick))
+			var/obj/item/device/light/glowstick/stick = equipped
+			var/datum/material/glowstick_mat = getMaterial("glowstick")
+			glowstick_mat = glowstick_mat.getMutable()
+			glowstick_mat.setColor(rgb(stick.col_r*255, stick.col_g*255, stick.col_b*255))
+			var/obj/item/reactor_component/fuel_rod/glowsticks/result_rod = new /obj/item/reactor_component/fuel_rod/glowsticks(glowstick_mat)
+			src.component_grid[x][y]=result_rod
+			result_rod.set_loc(src)
+			user.u_equip(equipped)
+			qdel(equipped)
+		else
+			src.component_grid[x][y]=equipped
+			user.u_equip(equipped)
+			equipped.set_loc(src)
 		playsound(src, 'sound/machines/law_insert.ogg', 80)
 		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> component into nuclear reactor([src]): [equipped] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [equipped] into the reactor</span>", "<span class='alert'>You slide the [equipped] into the reactor.</span>")
@@ -710,6 +721,17 @@
 					src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
 				else
 					src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+		..()
+
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/glowstick
+	New()
+		var/datum/material/glowstick_mat = getMaterial("glowstick")
+		glowstick_mat = glowstick_mat.getMutable()
+
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				glowstick_mat.setColor(rgb(rand(0,255), rand(0,255), rand(0,255)))
+				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod/glowsticks(glowstick_mat)
 		..()
 
 #undef REACTOR_GRID_WIDTH

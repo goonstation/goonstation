@@ -2785,13 +2785,7 @@
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "kV" = (
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
+/obj/item/device/radio/intercom/radiostation,
 /obj/table/wood/auto,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -4507,7 +4501,7 @@
 /area/pod_wars/team1/bridge)
 "rr" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_old = null;
 	icon_state = "norn-R-3"
 	},
@@ -9113,7 +9107,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "JI" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural,
@@ -10657,7 +10651,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "Qk" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/cable{
@@ -11804,7 +11798,7 @@
 	},
 /area/pod_wars/team1/starboardhall)
 "UW" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "UX" = (

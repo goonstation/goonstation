@@ -1315,6 +1315,9 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 		return
 	src.climb(user)
 
+/obj/ladder/attack_ai(mob/user)
+	return src.attack_hand(user)
+
 /obj/ladder/attackby(obj/item/W, mob/user)
 	if (src.unclimbable) return
 	if (istype(W, /obj/item/grab))

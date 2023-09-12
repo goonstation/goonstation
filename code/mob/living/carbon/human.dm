@@ -49,7 +49,8 @@
 	var/image/l_leg_damage_standing = null
 	var/image/r_leg_damage_standing = null
 
-	var/image/image_eyes = null
+	var/image/image_eyes_L = null
+	var/image/image_eyes_R = null
 	var/image/image_cust_one = null
 	var/image/image_cust_two = null
 	var/image/image_cust_three = null
@@ -123,14 +124,11 @@
 	var/static/image/human_head_image = image('icons/mob/human_head.dmi')
 	var/static/image/human_detail_image = image('icons/mob/human.dmi', layer = MOB_OVERSUIT_LAYER2)
 	var/static/image/human_tail_image = image('icons/mob/human.dmi')
-	var/static/image/human_hair_image = image('icons/mob/human_hair.dmi')
 	var/static/image/human_untoned_image = image('icons/mob/human.dmi')
 	var/static/image/human_decomp_image = image('icons/mob/human_decomp.dmi')
 	var/static/image/human_untoned_decomp_image = image('icons/mob/human.dmi')
 	var/static/image/undies_image = image('icons/mob/human_underwear.dmi') //, layer = MOB_UNDERWEAR_LAYER)
 	var/static/image/bandage_image = image('icons/obj/surgery.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
-	var/static/image/blood_image = image('icons/obj/decals/blood/blood.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
-	var/static/image/handcuff_img = image('icons/mob/mob.dmi')
 	var/static/image/heart_image = image('icons/mob/human.dmi')
 	var/static/image/heart_emagged_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
 	var/static/image/spider_image = image('icons/mob/human.dmi', "layer" = EFFECTS_LAYER_UNDER_1-1)
@@ -176,7 +174,8 @@
 /mob/living/carbon/human/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	. = ..()
 
-	image_eyes = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
+	image_eyes_L = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
+	image_eyes_R = image('icons/mob/human_hair.dmi', layer = MOB_FACE_LAYER)
 	image_cust_one = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 	image_cust_two = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
 	image_cust_three = image('icons/mob/human_hair.dmi', layer = MOB_HAIR_LAYER2)
@@ -187,6 +186,7 @@
 	src.attach_hud(hud)
 	src.zone_sel = new(src)
 	src.attach_hud(zone_sel)
+	src.update_equipment_screen_loc()
 
 	if (src.stamina_bar)
 		hud.add_object(src.stamina_bar, initial(src.stamina_bar.layer), "EAST-1, NORTH")
@@ -534,6 +534,15 @@
 	if (organHolder)
 		organHolder.dispose()
 		organHolder = null
+
+	if (src.cloner_defects)
+		qdel(src.cloner_defects)
+		src.cloner_defects = null
+
+	if (src.inventory)
+		src.inventory.dispose()
+		src.inventory = null
+
 	..()
 
 	//blah, this might not be effective for ref clearing but ghost observers inside me NEED this list to be populated in base mob/disposing
@@ -625,7 +634,8 @@
 		return
 
 	//Zombies just rise again (after a delay)! Oh my!
-	if (src.mutantrace.onDeath(gibbed))
+	var/mutrace_result = src.mutantrace.onDeath(gibbed)
+	if(mutrace_result == MUTRACE_ONDEATH_REVIVED)
 		return
 
 	if (src.bioHolder && src.bioHolder.HasEffect("revenant"))
@@ -788,7 +798,10 @@
 					logTheThing(LOG_DIARY, null, "Rebooting because of no live players", "game")
 					Reboot_server()
 #endif
-	return ..(gibbed)
+	. = ..(gibbed)
+
+	if(mutrace_result == MUTRACE_ONDEATH_DEFER_DELETE)
+		qdel(src)
 
 //Unkillable respawn proc, also used by soulguard now
 // Also for removing antagonist status. New mob required to get rid of old-style, mob-specific antagonist verbs (Convair880).
@@ -1163,15 +1176,21 @@
 /mob/living/carbon/human/proc/face_visible()
 	. = TRUE
 	if (istype(src.wear_mask) && !src.wear_mask.see_face)
-		. = FALSE
+		return FALSE
 	else if (istype(src.head) && !src.head.see_face)
-		. = FALSE
+		return FALSE
 	else if (istype(src.wear_suit) && !src.wear_suit.see_face)
-		. = FALSE
+		return FALSE
 	else if (istype(src.back, /obj/item/clothing))
 		var/obj/item/clothing/hider = src.back
 		if (!hider.see_face)
-			. = FALSE
+			return FALSE
+	for (var/obj/item/hand in list(src.l_hand, src.r_hand))
+		if (istype(hand, /obj/item/paper/newspaper))
+			if (hand.two_handed)
+				return FALSE
+
+
 
 /mob/living/carbon/human/UpdateName()
 	var/id_name = src.wear_id?:registered
@@ -1198,6 +1217,10 @@
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
+
+
+/mob/living/carbon/human/admin_visible_name()
+	return src.real_name
 
 /mob/living/carbon/human/find_in_equipment(var/eqtype)
 	if (istype(w_uniform, eqtype))
@@ -1333,30 +1356,27 @@
 		else if (!src.wear_id)
 			alt_name = " (as Unknown)"
 
-	var/rendered
 	if (src.is_npc)
-		rendered = "<span class='name'>"
+		. = "<span class='name'>"
 	else
-		rendered = "<span class='name' data-ctx='\ref[src.mind]'>"
-	if (src.wear_mask && src.wear_mask.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
+		. = "<span class='name' data-ctx='\ref[src.mind]'>"
+	if (src.wear_mask?.vchange)//(istype(src.wear_mask, /obj/item/clothing/mask/gas/voice))
 		if (src.wear_id)
 			if (just_name_itself)
 				return src.wear_id:registered
-			rendered += "[src.wear_id:registered]</span>"
+			. += "[src.wear_id:registered]</span>"
 		else
 			if (just_name_itself)
 				return "Unknown"
-			rendered += "Unknown</span>"
+			. += "Unknown</span>"
 	else if (src.vdisfigured)
 		if (just_name_itself)
 			return "Unknown"
-		rendered += "Unknown</span>"
+		. += "Unknown</span>"
 	else
 		if (just_name_itself)
 			return src.real_name
-		rendered += "[src.real_name]</span>[alt_name]"
-
-	return rendered
+		. += "[src.real_name]</span>[alt_name]"
 
 /mob/living/carbon/human/say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
 	var/original_language = src.say_language

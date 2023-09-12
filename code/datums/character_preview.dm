@@ -142,6 +142,8 @@
 		preview_mob.dir = direction
 		preview_mob.bioHolder.mobAppearance.CopyOther(AH)
 		preview_mob.set_mutantrace(MR)
+		preview_mob.organHolder.left_eye?.update_color(AH, "L")
+		preview_mob.organHolder.right_eye?.update_color(AH, "R")
 		preview_mob.organHolder.head.donor = preview_mob
 		preview_mob.organHolder.head.donor_appearance.CopyOther(preview_mob.bioHolder.mobAppearance)
 		preview_mob.update_colorful_parts()
