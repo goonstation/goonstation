@@ -5,7 +5,7 @@
 	icon_state = "grille0-0"
 	density = 1
 	stops_space_move = 1
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	var/health = 30
 	var/health_max = 30
 	var/ruined = 0
@@ -86,7 +86,7 @@
 		var/connects_to = list(/obj/grille/catwalk, /obj/machinery/door) // We're working differently from grilles. We don't check a list and then another, we check all possible atoms to connect to.
 		event_handler_flags = 0
 		default_material = "steel"
-		uses_material_appearance = FALSE
+		uses_default_material_appearance = FALSE
 		mat_changename = FALSE
 
 		New()
