@@ -88,7 +88,6 @@
 		if(src.building && !src.Paused)
 			if (tgui_alert(user, "Pause the construction?", "ABCU", list("Yes", "No")) == "Yes")
 				src.pauseBuild()
-				return
 			return
 
 		var/list/OptionList = list(
