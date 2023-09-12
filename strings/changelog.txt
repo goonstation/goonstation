@@ -1,5 +1,9 @@
 
 (t)tue sep 12 23
+(u)FlameArrow57
+(p)15598
+(e)⚖💅🧛|C-Balance, C-QoL, A-Gamemodes
+(*)Roundstart blob respawn time increased to 15 minutes. Random event blobs will now have a 7 minute respawn time.
 (u)Lord_Earthfire
 (p)15687
 (e)🪲💅📦⚙|C-Bug, C-QoL, A-Game-Objects, A-Internal
