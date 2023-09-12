@@ -786,7 +786,6 @@
 					save["pixelx"] << o.pixel_x
 					save["pixely"] << o.pixel_y
 					save["icon_state"] << o.icon_state
-					//save["icon"] << "[o.icon]"
 
 		boutput(usr, "<span class='notice'>Saved blueprint as '[name]'. </span>")
 		return
