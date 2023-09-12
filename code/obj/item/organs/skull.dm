@@ -20,7 +20,7 @@
 	var/op_stage = 0
 	var/obj/item/device/key/skull/key = null //May randomly contain a key
 	rand_pos = 1
-	var/made_from = "bone"
+	default_material = "bone"
 	var/last_use = 0
 
 	New(loc, datum/organHolder/nholder)
@@ -206,7 +206,7 @@
 	desc = "What the hell was wrong with this person's FACE?! Were they even human?!"
 	icon_state = "skullA"
 	value = 4
-	made_from = "viscerite"
+	default_material = "viscerite"
 
 /obj/item/skull/peculiar // Wizards.
 	name = "peculiar skull"
@@ -225,14 +225,14 @@
 	desc = "Does this mean there's an alien race with crystal bones somewhere?"
 	icon_state = "skull_crystal"
 	value = 10
-	made_from = "molitz"
+	default_material = "molitz"
 
 /obj/item/skull/gold // Macho man.
 	name = "golden skull"
 	desc = "Is this thing solid gold, or just gold-plated? Yeesh."
 	icon_state = "skull_gold"
 	value = 7
-	made_from = "gold"
+	default_material = "gold"
 
 /obj/item/skull/noface // Cluwnes.
 	name = "faceless skull"

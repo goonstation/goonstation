@@ -69,7 +69,7 @@
 	var/datum/bone/bones = null
 	rand_pos = 1
 
-	var/made_from = "flesh" //Material this organ will produce.
+	default_material = "flesh" //Material this organ will produce.
 
 	///if the organ is currently acting as an organ in a body
 	var/in_body = FALSE

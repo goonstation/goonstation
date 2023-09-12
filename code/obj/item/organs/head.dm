@@ -16,7 +16,7 @@
 	item_state = ""
 	edible = 0
 	rand_pos = 0 // we wanna override it below
-	made_from = "bone"
+	default_material = "bone"
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	max_damage = INFINITY
 	throw_speed = 1
