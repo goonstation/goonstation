@@ -383,7 +383,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				if (prob(10))
 					W.set_loc(L.loc)
 
-			if (!L.is_heat_resistant())
+			if (!L.is_heat_resistant() || ischangeling(L))
 				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
 				L.remove()
 			else
