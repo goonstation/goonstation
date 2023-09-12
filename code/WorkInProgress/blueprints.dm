@@ -362,7 +362,6 @@
 			src.markers.Add(O)
 		boutput(user, "<span class='notice'>Building this will require [src.currentBp.req_metal] metal and [src.currentBp.req_glass] glass sheets.</span>")
 		src.visible_message("[src] locks into place and begins humming softly.")
-		return
 
 /datum/objectinfo
 	var/objecttype = null
