@@ -849,7 +849,6 @@
 				return
 			fdel("[savepath]")
 			boutput(usr, "<span class='alert'>Blueprint [name] deleted.</span>")
-			return
 		else
 			boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
 			return
