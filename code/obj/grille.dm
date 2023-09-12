@@ -89,6 +89,10 @@
 		uses_material_appearance = FALSE
 		mat_changename = FALSE
 
+		New()
+			. = ..()
+			APPLY_ATOM_PROPERTY(src, PROP_ATOM_DO_LIQUID_CLICKS, src) // fuck this object
+
 		update_icon(special_icon_state, override_parent = TRUE)
 			if (ruined)
 				return

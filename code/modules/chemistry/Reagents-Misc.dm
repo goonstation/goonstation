@@ -2587,6 +2587,34 @@ datum
 							M.visible_message("<span class='emote'><B>[M]</B> gives [some_idiot.name] the double deuce!</span>")
 				..()
 				return
+		capsizin
+			name = "capsizin"
+			id = "capsizin"
+			description = "This liquid doesn't seem to be self-righting..."
+			reagent_state = LIQUID
+			fluid_r = 23
+			fluid_g = 46
+			fluid_b = 111
+			transparency = 150
+			overdose = 30
+			threshold = THRESHOLD_INIT
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.Turn(180)
+					boutput(M, "You capsize!")
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.Turn(180)
+					boutput(M, "You manage to right yourself!")
+				..()
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				M.reagents.add_reagent("water", severity * mult)
 
 		transparium
 			name = "transparium"

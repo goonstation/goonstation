@@ -1,4 +1,30 @@
 
+(t)mon sep 11 23
+(u)aloe
+(p)14916
+(e)🔎⚖🧫📦⚗|C-Code-Quality, C-Balance, C-Experimental, A-Game-Objects, A-Chemistry
+(*)Fluids are no longer clickable. Anything you used to click fluids with now works based on clicking the turf below the fluid. This also means that you can no longer see the most dominant reagent in a fluid by the name of the fluid.
+(u)Amylizzle
+(p)15791
+(e)💅📦|C-QoL, A-Game-Objects
+(*)You can now put glowsticks directly into the reactor.
+(t)sun sep 10 23
+(u)Froggit Dogget
+(p)15732
+(e)|
+(+)Amanitin now does its damage when flushed out of the system.
+(u)Mantwerp
+(p)15793
+(e)🗺💅|A-Mapping, C-QoL
+(+)Added the acoustic guitar to the afterlife bar.
+(u)FlameArrow57
+(p)15542
+(e)⚖💅🧛🔨|C-Balance, C-QoL, A-Gamemodes, A-Player-Actions
+(*)Vampires, werewolves, and changelings can now bind abilities to Shift, Alt, and Ctrl.
+(u)Valtsu0
+(p)15747
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)New chemical: Capsizin. Makes you harmlessly capsize. Recipe: Reversium(1) + Capsaicin(4) = Capsizin(5)
 (t)sat sep 09 23
 (u)Mantwerp and Mcdangus
 (p)15704
