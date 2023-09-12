@@ -373,8 +373,9 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		//if (istype(A, /obj/item/graviton_grenade))
 			//src.warp = 100
 		if (istype(A.material))
-			gain += A.material.getProperty("density") * 2 * A.material_amt
-			gain += A.material.getProperty("radioactive") * 2 * A.material_amt
+			gain += A.material.getProperty("density") * 3 * A.material_amt
+			gain += A.material.getProperty("radioactive") * 4 * A.material_amt
+			gain += A.material.getProperty("n_radioactive") * 6 * A.material_amt
 		if (A.reagents)
 			gain += min(A.reagents.total_volume/4, 50)
 		if (istype(A, /obj/decal/cleanable)) //MBC : this check sucks, but its far better than cleanables doing hard-delete at the whims of the singularity. replace ASAP when i figure out cleanablessssss
@@ -389,8 +390,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					src.grow()
 					sleep(0.5 SECONDS)
 			qdel(A)
+		else if (istype(A, /obj/item/plutonium_core)) // as a treat
+			gain += 5000
+			qdel(A)
 		else if (istype(A, /obj/mechbeam)) //let's not make lazy feeders with trip lasers
 			gain += 0.25
+			qdel(A)
+		else if (istype(A, /obj/item/paper))
+			gain += 0.5
 			qdel(A)
 		else
 			var/obj/O = A
