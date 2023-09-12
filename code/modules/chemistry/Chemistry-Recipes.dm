@@ -678,6 +678,16 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
+	banana_milk
+		name = "Banana Milk"
+		id = "banana milk"
+		result = "banana_milk"
+		required_reagents = list("milk" = 1, "juice_banana" = 1)
+		result_amount = 2
+		mix_phrase = "The mixture turns a nice light yellow color."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
 	blue_milk
 		name = "Blue Milk"
 		id = "blue milk"
@@ -710,6 +720,16 @@
 		required_reagents = list("simplesyrup" = 1, "juice_apple" = 1, "juice_lime" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
 		result_amount = 5
 		mix_phrase = "You are reminded of family picnics and school functions as the syrup mixes with the juices."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	fizzy_banana
+		name = "Fizzy Banana"
+		id = "fizzy_banana"
+		result = "fizzy_banana"
+		required_reagents = list("simplesyrup" = 1, "juice_banana" = 1, "coconut_milk" = 1, "juice_lime" = 1, "tonic" = 1)
+		result_amount = 5
+		mix_phrase = "You think of tropical beaches and blue oceans as the syrup mixes with the juices."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
@@ -1887,6 +1907,44 @@
 		result_amount = 4
 		mix_phrase = "The drink honks at you! What the fuck?"
 		mix_sound = 'sound/misc/drinkfizz_honk.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_dirty_banana
+		name = "Dirty Banana"
+		id = "dirty_banana"
+		result = "dirty_banana"
+		required_reagents = list("rum" = 1, "juice_banana" = 1, "chocolate" = 1, "milk" = 1)
+		result_amount = 4
+		mix_phrase = "It's creamy, fruity and surprisingly clean!"
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_dirty_banana/banana
+		id = "dirty_banana_banana"
+		required_reagents = list("rum" = 1, "chocolate" = 1, "banana_milk" = 2)
+
+	cocktail_dirty_banana/choco
+		id = "dirty_banana_choco"
+		required_reagents = list("rum" = 1, "juice_banana" = 1, "chocolate_milk" = 2)
+
+	cocktail_sweet_surprise
+		name = "Sweet Surprise"
+		id = "sweet_surprise"
+		result = "sweet_surprise"
+		required_reagents = list("rum" = 1, "juice_banana" = 1, "coconut_milk" = 1)
+		result_amount = 3
+		mix_phrase = "The banana and coconut give off a tropical aroma when mixed."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_sweet_dreams
+		name = "Sweet Dreams"
+		id = "sweet_dreams"
+		result = "sweet_dreams"
+		required_reagents = list("sweet_surprise" = 1, "capulettium" = 1)
+		result_amount = 2
+		mix_phrase = "The sweet smell is almost enough to make you fall asleep."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
 	cola
