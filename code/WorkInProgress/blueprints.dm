@@ -251,9 +251,6 @@
 			if(Info.tiletype != null)
 				var/turf/newTile = Pos
 				newTile.ReplaceWith(Info.tiletype)
-				//var/LoadIcon = get_cached_file(Info.icon)
-				//if (!isnull(LoadIcon)) // now this works, but auto-walls override icon state when spawned :)
-					//newTile.icon = LoadIcon // disabled for now because of the walls thing.
 				newTile.icon_state = Info.state
 				newTile.set_dir(Info.direction)
 				newTile.inherit_area()
