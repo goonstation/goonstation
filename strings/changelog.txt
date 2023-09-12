@@ -1,5 +1,9 @@
 
 (t)mon sep 11 23
+(u)aloe
+(p)14916
+(e)🔎⚖🧫📦⚗|C-Code-Quality, C-Balance, C-Experimental, A-Game-Objects, A-Chemistry
+(*)Fluids are no longer clickable. Anything you used to click fluids with now works based on clicking the turf below the fluid. This also means that you can no longer see the most dominant reagent in a fluid by the name of the fluid.
 (u)Amylizzle
 (p)15791
 (e)💅📦|C-QoL, A-Game-Objects
