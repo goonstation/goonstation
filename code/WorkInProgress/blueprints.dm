@@ -851,7 +851,6 @@
 			boutput(usr, "<span class='alert'>Blueprint [name] deleted.</span>")
 		else
 			boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
-			return
 
 	attack_self(mob/user as mob)
 		if(!user.client)
