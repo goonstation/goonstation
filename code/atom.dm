@@ -21,8 +21,10 @@ TYPEINFO(/atom)
 
 	/// Material id of this object as a material id (lowercase string), set on New()
 	var/default_material = null
-	/// Does this object use appearance from the material?
-	var/uses_material_appearance = FALSE
+	/// Does this object use appearance from the default material?
+	var/uses_default_material_appearance = FALSE
+	/// Does this object use the default material's name?
+	var/uses_default_material_name = FALSE
 
 	/// The message displayed when the atom is alt+doubleclicked, should contain a description of the atom's functionality.
 	/// You can also override get_help_message() to return a message dynamically (based on atom state or the user etc.)
@@ -90,7 +92,7 @@ TYPEINFO(/atom)
 		// Lets stop having 5 implementations of this that all do it differently
 		if (!src.material && default_material)
 			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-			src.setMaterial(mat, src.uses_material_appearance, src.mat_changename)
+			src.setMaterial(mat)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
@@ -243,6 +245,15 @@ TYPEINFO(/atom)
 	proc/is_open_container()
 		return flags & OPENCONTAINER
 
+	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
+	proc/set_open_container(value)
+		if (value)
+			ADD_FLAG(src.flags, OPENCONTAINER)
+		else
+			REMOVE_FLAG(src.flags, OPENCONTAINER)
+		src.reagents?.handle_reactions()
+
+
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A
 		if (!src.reagents || !A.reagents)
@@ -287,7 +298,7 @@ TYPEINFO(/atom)
 /atom/proc/ex_act(var/severity=0,var/last_touched=0)
 	return
 
-/atom/proc/reagent_act(var/reagent_id,var/volume)
+/atom/proc/reagent_act(var/reagent_id,var/volume,var/datum/reagentsholder_reagents)
 	if (!istext(reagent_id) || !isnum(volume) || volume < 1)
 		return 1
 	return 0
@@ -372,6 +383,7 @@ TYPEINFO(/atom)
 
 /// Changes the icon state and returns TRUE if the icon state changed.
 /atom/proc/set_icon_state(var/new_state)
+	SHOULD_CALL_PARENT(TRUE)
 	. = new_state != src.icon_state
 	src.icon_state = new_state
 	if(. && src.material_applied_appearance && src.material)
@@ -692,12 +704,34 @@ TYPEINFO(/atom)
 		update_mdir_light_visibility(src.dir)
 
 /atom/proc/get_desc(dist, mob/user)
+	// If we click something on/under the floor, then analyze fluid/smoke as well
+	// a million things don't call the parent for this but the things I care about don't override it so kicking it down the road
+	if (CHECK_LIQUID_CLICK(src))
+		var/turf/T = get_turf(src)
+		var/obj/fluid/liquid = T.active_liquid
+		var/obj/fluid/airborne/gas = T.active_airborne_liquid
+
+		// Bit roundabout to use get_desc here instead of keeping it all in reagent code,
+		// but we can't actually identify which fluid obj is being examined from within'
+		// fluid group code, as my_atom is null. Thus we need to go through the obj for the
+		// distance check.
+
+		// also reagent examining code is hell and you need to explicitly put this proc call in every get_desc() proc
+		// to have it actually show up in examining
+		if (liquid)
+			. += liquid.get_desc(get_dist(T, user), user)
+		if (gas)
+			. += gas.get_desc(get_dist(T, user), user)
 
 /// Override this if you want the alt+doubleclick help message to be dynamic (for example based on the state of deconstruction).
 /// For consistency you should always also override help_message at least to a placeholder never-to-be-seen string, this is important
 /// for the context menu functionality. Use the [HELP_MESSAGE_OVERRIDE] macro to do that.
 /atom/proc/get_help_message(dist, mob/user)
 	. = src.help_message
+
+/// A proc to give this item a special name when viewed in an admin context (just the tilde-rightclick menu for now but probably other places later)
+/atom/proc/admin_visible_name()
+	return src.name
 
 /**
   * a proc to completely override the standard formatting for examine text

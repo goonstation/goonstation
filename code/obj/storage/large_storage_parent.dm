@@ -6,7 +6,7 @@
 // PLEASE JUST MAKE A MESS OF make_my_stuff() INSTEAD
 // CALL YOUR PARENTS
 
-#define RELAYMOVE_DELAY 50
+#define RELAYMOVE_DELAY 1 SECOND
 
 ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
@@ -190,13 +190,24 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return
 		src.last_relaymove_time = world.time
 
+		if (istype(get_turf(src), /turf/space))
+			if (!istype(get_turf(src), /turf/space/fluid))
+				return
+
 		if (src.legholes)
-			step(src,user.dir)
-			return
+			if (!src.anchored)
+				step(src,user.dir)
+				return
+			else
+				user.show_text("You try moving, but [src] seems to be stuck to the floor!", "red")
+				return
 
 		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
-				step(src, pick(alldirs))
+				if (!src.anchored)
+					step(src, pick(alldirs))
+				else
+					user.show_text("You try moving, but [src] seems to be stuck to the floor!", "red")
 			if (!src.jiggled)
 				src.jiggled = 1
 				user.show_text("You kick at [src], but it doesn't budge!", "red")

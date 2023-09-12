@@ -882,7 +882,7 @@ datum
 								LAGCHECK(LAG_LOW)
 								if (prob(40))
 									check.add_blood(H)
-							H.set_clothing_icon_dirty()
+							H.update_blood_all()
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
 						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)

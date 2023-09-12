@@ -7,6 +7,16 @@
 /// Has a flock relay been unleashed yet this round
 var/flock_signal_unleashed = FALSE
 
+var/datum/flock/default_flock = null
+///Gimmick flock with infinite compute that lone structures and units automatically connect to
+proc/get_default_flock()
+	if (!default_flock)
+		default_flock = new
+		default_flock.relay_allowed = FALSE
+		default_flock.quiet = TRUE
+		default_flock.achieve(FLOCK_ACHIEVEMENT_CHEAT_COMPUTE)
+	return default_flock
+
 /// manages and holds information for a flock
 /datum/flock
 	var/name
@@ -50,6 +60,10 @@ var/flock_signal_unleashed = FALSE
 	var/relay_finished = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
+	///Can this flock realize the relay?
+	var/relay_allowed = TRUE
+	///Do we broadcast system announcements?
+	var/quiet = FALSE
 
 	var/center_x = 0
 	var/center_y = 0
@@ -274,7 +288,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/update_computes(forceTextUpdate = FALSE)
 	var/totalCompute = src.total_compute()
 
-	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
+	var/datum/abilityHolder/flockmind/aH = src.flockmind?.abilityHolder
 	aH?.updateCompute(src.used_compute, totalCompute, forceTextUpdate)
 
 	for (var/mob/living/intangible/flock/trace/T as anything in src.traces)
@@ -692,7 +706,7 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
 	if (!T)
 		return
-	src.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_TURF_CLAIM, T)
+	src.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_TURF_CLAIM, T)
 
 	if (!src.relay_in_progress && !src.relay_finished && ((abs(T.x - src.center_x) + abs(T.y - src.center_y))/2 < 50)) //ignore extreme outliers
 		var/length = length(src.all_owned_tiles)
@@ -746,14 +760,14 @@ var/flock_signal_unleashed = FALSE
 
 // PROCESS
 
-/datum/flock/proc/process()
+/datum/flock/proc/relay_process()
 	if (src.total_compute() > 300)
 		for (var/mob/living/intangible/flock/flockmob in (src.traces + src.flockmind))
 			if (flockmob.GetComponent(/datum/component/tracker_hud/flock))
 				continue
 			flockmob.AddComponent(/datum/component/tracker_hud/flock, src.center_marker)
 	if (!src.relay_in_progress && !src.relay_finished)
-		if ((src.total_compute() >= FLOCK_RELAY_COMPUTE_COST) && !src.flockmind.tutorial)
+		if ((src.total_compute() >= FLOCK_RELAY_COMPUTE_COST) && !src.flockmind?.tutorial)
 			src.relay_in_progress = TRUE
 			src.center_marker.alpha = 0
 			for (var/turf/T in range(3, src.center_marker))
@@ -767,6 +781,10 @@ var/flock_signal_unleashed = FALSE
 			new /obj/flock_structure/relay(get_turf(src.center_marker), src)
 		else
 			src.center_marker.alpha = max(0, src.total_compute() - 300)
+
+/datum/flock/proc/process()
+	if (src.relay_allowed)
+		src.relay_process()
 
 	for(var/datum/unlockable_flock_structure/ufs as anything in src.unlockableStructures)
 		ufs.process()
@@ -793,7 +811,7 @@ var/flock_signal_unleashed = FALSE
 
 /datum/flock/proc/z_level_check(var/atom/A)
 	var/turf/T = get_turf(A)
-	if (src.dead || src.flockmind.tutorial || T.z == Z_LEVEL_STATION)
+	if (src.dead || src.flockmind?.tutorial || T.z == Z_LEVEL_STATION)
 		return TRUE
 	return FALSE
 

@@ -30,8 +30,16 @@ o+`        `-` ``..-:yooos-..----------..`
 
 //------------ OPTIONS TO GO FAST ------------//
 
-//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // Skip setup for atmos, Z5, don't show changelogs, skip pregame lobby
 //#define GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW 1  // Only include the tiny map Devtest, no other zlevels. Boots way faster
+
+//#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
+
+//#define SKIP_FEA_SETUP // Skip setting up atmospheric system
+//#define SKIP_Z5_SETUP // Skip generation of mining level
+//#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
+//#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
+//#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
+//#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
@@ -157,7 +165,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define XMAS 1
 //#define CANADADAY 1
 //#define FOOTBALL_MODE 1
-
+//#define ENABLE_ARTEMIS // Enables artemis for development
 
 //Don't comment this ty
 #ifdef STOP_DISTRACTING_ME
@@ -175,6 +183,15 @@ o+`        `-` ``..-:yooos-..----------..`
 #define I_AM_HACKERMAN
 #define CHECK_MORE_RUNTIMES
 #define QUICK_MOB_DELETION
+#endif
+
+#ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
+#define SKIP_FEA_SETUP
+#define SKIP_Z5_SETUP
+#define SKIP_PLANETS_SETUP
+#define SKIP_CAMERA_COVERAGE
+#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
+#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
 #endif
 
 //----- Testmerge & Revision Information -----//

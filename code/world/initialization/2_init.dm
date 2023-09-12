@@ -53,6 +53,9 @@
 	tele_man = new()
 	tele_man.setup()
 
+	Z_LOG_DEBUG("World/Init", "M4GP13 setup...")
+	magpie_man.setup()
+
 	Z_LOG_DEBUG("World/Init", "Mining setup...")
 	mining_controls.setup_mining_landmarks()
 
@@ -129,7 +132,7 @@
 	//QM Categories by ZeWaka
 	build_qm_categories()
 
-	#if SKIP_Z5_SETUP == 0
+	#ifndef SKIP_Z5_SETUP
 	UPDATE_TITLE_STATUS("Building mining level")
 	Z_LOG_DEBUG("World/Init", "Setting up mining level...")
 	makeMiningLevel()
@@ -161,7 +164,7 @@
 	initialize_mail_system()
 	#endif
 
-	#if ENABLE_ARTEMIS && SKIP_PLANETS_SETUP == 0
+	#if defined(ENABLE_ARTEMIS) && !defined(SKIP_PLANETS_SETUP)
 	UPDATE_TITLE_STATUS("Building planet level")
 	Z_LOG_DEBUG("World/Init", "Setting up planet level...")
 	makePlanetLevel()

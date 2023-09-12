@@ -54,6 +54,7 @@
 
 		var/mob/ownerMob = owner
 		ownerMob.show_message("<span class='notice'>We must hold still for a moment...</span>", 1)
+		ON_COOLDOWN(target, "changeling_remove_limb", 1 SECOND) //don't eat a limb right away
 
 	onEnd()
 		..()

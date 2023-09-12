@@ -19,7 +19,7 @@
 	event_handler_flags = USE_FLUID_ENTER
 	/// Does the raw material item get its name set?
 	mat_changename = FALSE
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	default_material = null
 
 	New()

@@ -118,6 +118,7 @@
 	layer = EFFECTS_LAYER_1
 	plane = PLANE_HUD
 	anchored = ANCHORED
+	mouse_opacity = 0
 
 proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE, atom/movable/pointer)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
@@ -166,6 +167,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 */
 
 /obj/decal/nav_danger
+	anchored = ANCHORED
 	name = "DANGER"
 	desc = "This navigational marker indicates a hazardous zone of space."
 	icon = 'icons/obj/decals/misc.dmi'
@@ -503,11 +505,14 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/bloodtrace
 	name = "blood trace"
 	desc = "Oh my!!"
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "lum"
+	icon = 'icons/obj/decals/blood/blood.dmi'
+	icon_state = "floor2"
+	color = "#3399FF"
+	alpha = 100
 	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null
+	anchored = ANCHORED
 
 /obj/decal/boxingrope
 	name = "Boxing Ropes"
@@ -606,6 +611,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
 	random_dir = 8
+	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 
 	New()
@@ -635,6 +641,7 @@ obj/decal/fakeobjects/teleport_pad
 	opacity = 0
 	anchored = ANCHORED
 	plane = PLANE_FLOOR
+	mouse_opacity = 0
 
 /obj/decal/icefloor/Crossed(atom/movable/AM)
 	..()
@@ -651,6 +658,12 @@ obj/decal/fakeobjects/teleport_pad
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
 				M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
+
+/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	. = ..()
+	if (exposed_temperature > T0C)
+		if(prob((exposed_temperature - T0C) * 0.1))
+			qdel(src)
 
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).
 /obj/decal/mule
@@ -707,6 +720,7 @@ obj/decal/fakeobjects/teleport_pad
 	real_name = "ball pit"
 	layer = 25
 	mouse_opacity = 0
+	anchored = ANCHORED_ALWAYS
 
 //Decals that glow.
 /obj/decal/glow
@@ -715,6 +729,7 @@ obj/decal/fakeobjects/teleport_pad
 	var/color_g = 0.35
 	var/color_b = 0.21
 	var/datum/light/light
+	anchored = ANCHORED_ALWAYS
 
 	New()
 		..()

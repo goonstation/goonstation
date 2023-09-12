@@ -127,6 +127,8 @@ var/global/list/mapNames = list(
 	var/merchant_left_station = /area/shuttle/merchant_shuttle/left_station
 	var/merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom
 	var/merchant_right_station = /area/shuttle/merchant_shuttle/right_station
+	var/list/shipping_destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
+	/// default shipping destinations
 
 	var/list/valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
@@ -425,6 +427,7 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
+	shipping_destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
@@ -578,6 +581,7 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+	shipping_destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the quartermaster's front office" = list(/area/station/quartermaster/office),
@@ -937,7 +941,7 @@ var/global/list/mapNames = list(
 		/datum/job/civilian/bartender = 2,
 		/datum/job/civilian/janitor = 3,
 		/datum/job/civilian/chaplain = 2,
-		/datum/job/special/lawyer = 1,
+		/datum/job/special/attorney = 1,
 		/datum/job/special/atmospheric_technician = 1
 	)
 
@@ -1027,7 +1031,7 @@ var/global/list/mapNames = list(
 	job_limits_from_landmarks = TRUE
 	job_limits_override = list(
 		/datum/job/special/atmospheric_technician = 1,
-		/datum/job/special/barber = 1,
+		/datum/job/special/hairdresser = 1,
 		/datum/job/special/research_assistant = 2,
 		/datum/job/special/medical_assistant = 2
 	)

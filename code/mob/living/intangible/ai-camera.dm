@@ -14,7 +14,7 @@
 /mob/living/intangible/aieye
 	name = "AI Eye"
 	icon = 'icons/mob/ai.dmi'
-	icon_state = "a-eye"
+	icon_state = "ai-eye"
 	density = 0
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
@@ -58,6 +58,11 @@
 		src.client.color = "#000000"
 		SPAWN(0) //let's try not hanging the entire server for 6 seconds every time an AI has wonky internet
 			src.client.images += aiImages
+			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+			src.update_name_tag()
+			src.job = "AI"
+			if (src.mind)
+				src.mind.assigned_role = "AI"
 			animate(src.client, 0.3 SECONDS, color = client_color)
 			var/sleep_counter = 0
 			for(var/image/I as anything in aiImagesLowPriority)

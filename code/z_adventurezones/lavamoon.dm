@@ -962,6 +962,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 				START_TRACKING_CAT(TR_CAT_CRITTERS)
 
 			process()
+				SHOULD_NOT_SLEEP(TRUE)
 				if (last_noise_time + last_noise_length < ticker.round_elapsed_ticks)
 					if (health <= 10)
 						playsound(src.loc, 'sound/machines/lavamoon_rotors_fast.ogg', 50, 0)
@@ -1313,6 +1314,9 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	if (user.stat || user.getStatusDuration("weakened") || BOUNDS_DIST(user, src) > 0)
 		return
 	src.climb(user)
+
+/obj/ladder/attack_ai(mob/user)
+	return src.attack_hand(user)
 
 /obj/ladder/attackby(obj/item/W, mob/user)
 	if (src.unclimbable) return
