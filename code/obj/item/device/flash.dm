@@ -316,7 +316,7 @@ TYPEINFO(/obj/item/device/flash)
 			if (!nostun)
 				M.apply_flash(1, 2, 0, 0, 0, 0, 0, burning, 100, stamina_damage = 210, disorient_time = 40)
 
-obj/item/device/flash/proc/on_counterrev(mob/living/M, mob/user)
+/obj/item/device/flash/proc/on_counterrev(mob/living/M, mob/user)
 	user.show_text("There seems to be something preventing [M] from revolting.", "red")
 
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
