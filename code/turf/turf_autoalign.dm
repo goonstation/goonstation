@@ -487,7 +487,7 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 /turf/simulated/wall/auto/supernorn/material
 	icon_state = "mapwall"
 	default_material = "steel"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
 
 /turf/simulated/wall/auto/supernorn/material/bamboo
@@ -832,7 +832,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn/wood)
 		/obj/plasticflaps
 	))
 /turf/unsimulated/wall/auto/supernorn/wood
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	default_material = "wood"
 	icon_state = "mapwall$$wood"
 
@@ -867,7 +867,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 /turf/unsimulated/wall/auto/coral
 	default_material = "coral"
 	mat_changename = TRUE
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
 //ABSTRACT_TYPE(/turf/unsimulated/wall/auto/lead) // zewaka: unsimwall/auto used in places - parent abstract tree

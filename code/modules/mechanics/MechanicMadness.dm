@@ -869,6 +869,7 @@
 	icon_state = "secdetector0"
 	can_rotate = 1
 	cabinet_banned = TRUE // abusable. B&
+	one_per_tile = TRUE //also abusable
 	var/range = 5
 	var/list/beamobjs = new/list(5)//just to avoid someone doing something dumb and making it impossible for us to clear out the beams
 	var/active = 0

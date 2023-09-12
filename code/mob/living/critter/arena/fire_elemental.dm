@@ -74,3 +74,6 @@
 			make_cleanable(/obj/decal/cleanable/ash,src.loc)
 			ghostize()
 			qdel(src)
+
+	is_heat_resistant()
+		return TRUE

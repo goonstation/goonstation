@@ -5831,13 +5831,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
-"bGA" = (
-/obj/disposaloutlet/west,
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "bGD" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -13826,6 +13819,14 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/nw)
+"efD" = (
+/obj/machinery/conveyor/WN{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "efO" = (
 /obj/decal/tile_edge/check{
 	dir = 5;
@@ -14788,20 +14789,6 @@
 "ewz" = (
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
-"ewD" = (
-/obj/machinery/floorflusher/industrial{
-	desc = "For flushing disposed waste. ";
-	name = "Processed Waste Flusher";
-	open = 1
-	},
-/obj/disposalpipe/trunk{
-	dir = 4
-	},
-/obj/machinery/light/small/sticky{
-	dir = 8
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "ewH" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
@@ -26582,19 +26569,6 @@
 	},
 /turf/simulated/floor/shuttle,
 /area/shuttle/asylum/medbay)
-"ieC" = (
-/obj/machinery/turret{
-	dir = 8;
-	name = "armory turret"
-	},
-/obj/decal/tile_edge/stripe/corner{
-	dir = 9
-	},
-/obj/decal/tile_edge/stripe/corner{
-	dir = 6
-	},
-/turf/simulated/floor/engine,
-/area/station/ai_monitored/armory)
 "ieH" = (
 /turf/simulated/floor/stairs/wide{
 	dir = 1
@@ -28639,6 +28613,15 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
+"iNG" = (
+/obj/machinery/conveyor/EW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/machinery/light/small,
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "iNU" = (
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/black/grime,
@@ -30760,17 +30743,6 @@
 /obj/machinery/light/emergency,
 /turf/simulated/floor/purpleblack,
 /area/station/science/lobby)
-"juN" = (
-/obj/machinery/conveyor/EW{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/machinery/light/small/sticky{
-	dir = 1
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "jvb" = (
 /turf/simulated/wall/auto/jen,
 /area/station/hangar/science)
@@ -34052,6 +34024,15 @@
 /obj/machinery/light/small/sticky/cool/very,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
+"kxT" = (
+/obj/machinery/crusher,
+/obj/machinery/conveyor/SE{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "kyi" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
@@ -34536,13 +34517,6 @@
 /obj/grille/catwalk/jen,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
-"kEQ" = (
-/obj/disposaloutlet/north,
-/obj/disposalpipe/trunk{
-	dir = 8
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "kES" = (
 /obj/grille/steel,
 /obj/decal/cleanable/dirt/jen,
@@ -37884,6 +37858,18 @@
 	},
 /turf/simulated/grass,
 /area/station/hallway/secondary/exit)
+"lFJ" = (
+/obj/machinery/conveyor/EN{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/machinery/light/small{
+	dir = 8;
+	status = 2
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "lFK" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -39535,6 +39521,17 @@
 "mcV" = (
 /turf/simulated/floor/wood/six,
 /area/station/library/reading2)
+"mdc" = (
+/obj/disposaloutlet/west,
+/obj/disposalpipe/trunk{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 4;
+	status = 2
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "mdn" = (
 /turf/space/asteroid,
 /area/station/turret_protected/armory_outside)
@@ -40485,6 +40482,21 @@
 	},
 /turf/space,
 /area/space)
+"muj" = (
+/obj/machinery/conveyor/WE{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "crusher1";
+	name = "crusher door"
+	},
+/obj/plasticflaps{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "mup" = (
 /obj/random_pod_spawner,
 /turf/simulated/floor/shuttlebay,
@@ -40835,6 +40847,20 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/inner/sw)
+"mzO" = (
+/obj/machinery/turret{
+	dir = 8;
+	name = "armory turret"
+	},
+/obj/decal/tile_edge/stripe/corner{
+	dir = 9
+	},
+/obj/decal/tile_edge/stripe/corner{
+	dir = 6
+	},
+/obj/mapping_helper/access/security,
+/turf/simulated/floor/engine,
+/area/station/ai_monitored/armory)
 "mzR" = (
 /obj/decal/cleanable/dirt/jen,
 /obj/mapping_helper/wingrille_spawn/auto,
@@ -61185,15 +61211,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/black,
 /area/station/engine/gas)
-"sPA" = (
-/obj/machinery/conveyor/EW{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/machinery/light/small/sticky,
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "sPD" = (
 /obj/decal/stripe_caution,
 /obj/decal/tile_edge/line/yellow{
@@ -63046,20 +63063,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/main)
-"tvm" = (
-/obj/plasticflaps,
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 8;
-	id = "crusher1";
-	name = "crusher door"
-	},
-/obj/machinery/conveyor/EW{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "tvv" = (
 /obj/machinery/conveyor/EW{
 	id = "ghostdrone"
@@ -66648,15 +66651,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 /area/station/engine/engineering/breakroom)
-"uAc" = (
-/obj/machinery/crusher,
-/obj/machinery/conveyor/SN{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/turf/simulated/floor/plating/jen,
-/area/station/maintenance/outer/sw)
 "uAh" = (
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
@@ -75211,6 +75205,17 @@
 "wYn" = (
 /turf/simulated/wall/auto/reinforced/jen/yellow,
 /area/station/maintenance/solar/east)
+"wYq" = (
+/obj/machinery/conveyor/EW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/plasticflaps{
+	dir = 4
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "wYs" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -78604,6 +78609,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/breakroom)
+"xVy" = (
+/obj/machinery/conveyor/SW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating/jen,
+/area/station/maintenance/outer/sw)
 "xVz" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -102417,7 +102430,7 @@ jJd
 xQa
 pfu
 pMG
-ieC
+mzO
 pMG
 ihr
 lAO
@@ -105198,9 +105211,9 @@ mHZ
 pFp
 jEM
 pFp
-ewD
+kxT
 faV
-uAc
+lFJ
 ieL
 rdj
 rdj
@@ -105498,11 +105511,11 @@ baZ
 uOO
 kXR
 pFp
-juN
+iNG
 ieL
-iGm
+muj
 ieL
-tvm
+ltH
 ieL
 cNV
 glP
@@ -105800,11 +105813,11 @@ pBV
 iSC
 eQS
 pFp
-ltH
+xVy
 nrz
-kEQ
+efD
 ieL
-sPA
+wYq
 ieL
 rdj
 rdj
@@ -106106,7 +106119,7 @@ gfk
 pFp
 pFp
 ieL
-ltH
+iNG
 ieL
 rdj
 rdj
@@ -106407,7 +106420,7 @@ uOO
 uOO
 cWf
 qMP
-ieL
+pFp
 ltH
 ieL
 rdj
@@ -107012,7 +107025,7 @@ tzh
 eTr
 gNr
 sUh
-sPA
+ltH
 ieL
 rdj
 rdj
@@ -107314,7 +107327,7 @@ sWP
 meV
 cCv
 ieL
-bGA
+mdc
 ieL
 rdj
 rdj

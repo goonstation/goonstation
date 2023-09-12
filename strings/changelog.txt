@@ -1,4 +1,60 @@
 
+(t)tue sep 12 23
+(u)Sord & Tarmunora
+(+)Singularity feeding changes: Base values (i.e.: bonuses from materials are unaffected) are generally higher, but have diminishing returns for any given type. Variety is the spice of life! Material(ore/bar) density*3, radioactive*4, neutron radioactive*6. Also feed a singularity a plutonium core to get a LOT of power.
+(u)Paaiii
+(p)15592
+(e)🗺🎨🔊|A-Mapping, C-Sprites, C-Sound
+(+)Resprited a bunch of old miscellaneous objects.
+(u)Paaiii
+(p)15595
+(e)⚖💅🤖|C-Balance, C-QoL, A-Silicons
+(+)Gives AIs a command to unlock their own core cover.
+(u)Bartimeus973
+(p)15564
+(e)🆕🎨🔨📦|C-Feature, C-Sprites, A-Player-Actions, A-Game-Objects
+(+)Some pies thrown by clowns have a chance to stick to people's faces.
+(u)aloe
+(+)Being fully heat resistant (usually from the fire resistance gene) now makes you immune to cremation.
+(u)FlameArrow57
+(p)15598
+(e)⚖💅🧛|C-Balance, C-QoL, A-Gamemodes
+(*)Roundstart blob respawn time increased to 15 minutes. Random event blobs will now have a 7 minute respawn time.
+(u)Lord_Earthfire
+(p)15687
+(e)🪲💅📦⚙|C-Bug, C-QoL, A-Game-Objects, A-Internal
+(+)Pipebomb- and beaker-assemblies should be more intutive to create now.
+(+)Standard pipebombs are now created by using a timer instead of a timer/igniter-assembly with a pipebomb frame.
+(u)Glamurio (Ryou)
+(p)15717
+(e)🆕⚗🍝|C-Feature, A-Chemistry, A-Catering
+(*)Added several new banana related drinks. See minor notes for details.
+(+)New banana juice recipes: Banana Milk (Banana, Milk), Fizzy Banana (Syrup, Banana, Coconut, Lime, Tonic), Dirty Banana (Rum, Banana, Chocolate, Milk), Sweet Surprise (Rum, Banana, Coconut), Sweet Dreams (Sweet Surprise, Capulettium)
+(u)Colossusqw
+(p)15709
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Smoke powder no longer fizzles into nothing when in a closed container, instead, reacting only when it is opened.
+(t)mon sep 11 23
+(u)Tyrant
+(p)15720
+(e)🗺🍝|A-Mapping, A-Catering
+(+)Oshan's Kitchen/bar now has a reagent extractor.
+(u)TealSeer
+(p)15768
+(e)🗺📦|A-Mapping, A-Game-Objects
+(+)Two artistic toolboxes now spawn on Donut 2 in the crew lounge and warehouse.
+(u)Garash
+(p)15783
+(e)🗺🔒🔄📄|A-Mapping, A-Secret, C-Rework, A-UI
+(+)New UI for the elevators, descend to the trench in style!
+(u)aloe
+(p)14916
+(e)🔎⚖🧫📦⚗|C-Code-Quality, C-Balance, C-Experimental, A-Game-Objects, A-Chemistry
+(*)Fluids are no longer clickable. Anything you used to click fluids with now works based on clicking the turf below the fluid. This also means that you can no longer see the most dominant reagent in a fluid by the name of the fluid.
+(u)Amylizzle
+(p)15791
+(e)💅📦|C-QoL, A-Game-Objects
+(*)You can now put glowsticks directly into the reactor.
 (t)sun sep 10 23
 (u)Froggit Dogget
 (p)15732
