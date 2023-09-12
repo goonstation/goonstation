@@ -18,11 +18,6 @@
 	made_from = "greymatter"
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
-	New(loc, datum/organHolder/nholder)
-		..()
-		if(made_from == "flesh")
-			src.AddComponent(/datum/component/consume/food_effects, list("brain_food_ithillid"))
-
 	disposing()
 		logTheThing(LOG_COMBAT, src, "[owner ? "(owner's ckey [owner.ckey]) " : ""]has been destroyed by [usr ? constructTarget(usr,"combat") : "???"] in [!isturf(src.loc) ? src.loc : ""][log_loc(src)]. Brain last touched by [src.fingerprintslast].")
 
@@ -34,6 +29,11 @@
 		if (holder)
 			holder.brain = null
 		..()
+
+	setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
+		. = ..()
+		if(mat1.mat_id == "greymatter")
+			src.AddComponent(/datum/component/consume/food_effects, list("brain_food_ithillid"))
 
 	Eat(mob/M, mob/user)
 		if(isghostcritter(M) || isghostcritter(user))
