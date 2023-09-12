@@ -3589,6 +3589,7 @@
 				return FALSE
 
 		on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+			holder.del_reagent("smokepowder") //no
 			if (holder)
 				holder.smoke_start(created_volume)
 
