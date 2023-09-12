@@ -171,6 +171,9 @@
 /obj/random_item_spawner/snacks/two,
 /turf/unsimulated/floor/black,
 /area/morrigan/holding)
+"ahx" = (
+/turf/space,
+/area/morrigan/station/maintenance)
 "ahA" = (
 /turf/simulated/wall/auto/asteroid,
 /area/morrigan/station/invest)
@@ -344,6 +347,12 @@
 /obj/item/paper/prelude_7,
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/derelict)
+"apS" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/morrigan/station/security/brig)
 "aqy" = (
 /obj/dartboard,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -5671,10 +5680,6 @@
 /area/morrigan/derelict)
 "fGR" = (
 /obj/disposalpipe/segment,
-/obj/lever/pipeswitch{
-	id = "pipe_one";
-	switch_type = /obj/disposalpipe/junction/left/west
-	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/security/brig)
 "fHm" = (
@@ -6369,6 +6374,11 @@
 "gne" = (
 /obj/disposalpipe/segment,
 /obj/item/wirecutters/grey,
+/obj/lever/pipeswitch{
+	id = "pipe_one";
+	switch_type = /obj/disposalpipe/junction/left/west;
+	pixel_y = 20
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/security/brig)
 "gnu" = (
@@ -6838,6 +6848,13 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/yellowblack,
 /area/morrigan/station/hallway)
+"gIB" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating,
+/area/morrigan/station/security/brig)
 "gIE" = (
 /obj/machinery/recharge_station,
 /obj/decal/stripe_caution,
@@ -8726,7 +8743,9 @@
 /obj/disposalpipe/segment{
 	dir = 4
 	},
-/obj/disposalpipe/junction/right/west,
+/obj/disposalpipe/junction/right/west{
+	id = "pipe_three"
+	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/brig)
 "iDf" = (
@@ -10246,6 +10265,12 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
+"kaK" = (
+/obj/disposalpipe/segment{
+	dir = 8
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/morrigan/station/security/brig)
 "kaR" = (
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/hallway)
@@ -14464,7 +14489,9 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "nYI" = (
-/obj/disposalpipe/junction/middle/south,
+/obj/disposalpipe/junction/middle/south{
+	id = "pipe_four"
+	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "nYV" = (
@@ -15077,6 +15104,11 @@
 "oFs" = (
 /obj/disposalpipe/segment,
 /obj/item/wrench,
+/obj/lever/pipeswitch{
+	id = "pipe_two";
+	switch_type = /obj/disposalpipe/junction/right/south;
+	pixel_x = 20
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/security/brig)
 "oFz" = (
@@ -15805,7 +15837,11 @@
 /area/morrigan/station/factory)
 "pvO" = (
 /obj/disposalpipe/junction/left/west,
-/obj/machinery/light/small,
+/obj/lever/pipeswitch{
+	id = "pipe_three";
+	switch_type = /obj/disposalpipe/junction/middle/south;
+	pixel_y = -20
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/security/brig)
 "pwb" = (
@@ -18761,6 +18797,12 @@
 /area/morrigan/station/security/brig)
 "sBD" = (
 /obj/disposalpipe/mechanics_switch/north,
+/obj/lever/pipeswitch{
+	id = "pipe_four";
+	switch_type = /obj/disposalpipe/junction/right/west;
+	pixel_x = 20
+	},
+/obj/machinery/light/small,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/security/brig)
 "sBG" = (
@@ -20853,7 +20895,9 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "uGf" = (
-/obj/disposalpipe/junction/right/south,
+/obj/disposalpipe/junction/left/north{
+	id = "pipe_two"
+	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "uGO" = (
@@ -31536,7 +31580,7 @@ vzC
 raW
 aEt
 uRB
-uRB
+ahx
 uRB
 pNq
 pNq
@@ -31951,10 +31995,10 @@ vwJ
 vwJ
 ceK
 ceK
+apS
 ceK
 ceK
-ceK
-ceK
+kaK
 ceK
 nJI
 nJI
@@ -32363,7 +32407,7 @@ oFs
 sBD
 ceK
 uoH
-uoH
+gIB
 uoH
 uoH
 laK
@@ -32570,7 +32614,7 @@ xiY
 ePk
 nXF
 xNk
-vBE
+rkk
 rkk
 laK
 qTx
