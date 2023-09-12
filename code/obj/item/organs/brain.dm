@@ -15,6 +15,7 @@
 	edible = 0
 	fail_damage = 120
 	max_damage = 120
+	made_from = "greymatter"
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
 	New(loc, datum/organHolder/nholder)
