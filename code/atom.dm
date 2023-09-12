@@ -702,12 +702,34 @@ TYPEINFO(/atom)
 		update_mdir_light_visibility(src.dir)
 
 /atom/proc/get_desc(dist, mob/user)
+	// If we click something on/under the floor, then analyze fluid/smoke as well
+	// a million things don't call the parent for this but the things I care about don't override it so kicking it down the road
+	if (CHECK_LIQUID_CLICK(src))
+		var/turf/T = get_turf(src)
+		var/obj/fluid/liquid = T.active_liquid
+		var/obj/fluid/airborne/gas = T.active_airborne_liquid
+
+		// Bit roundabout to use get_desc here instead of keeping it all in reagent code,
+		// but we can't actually identify which fluid obj is being examined from within'
+		// fluid group code, as my_atom is null. Thus we need to go through the obj for the
+		// distance check.
+
+		// also reagent examining code is hell and you need to explicitly put this proc call in every get_desc() proc
+		// to have it actually show up in examining
+		if (liquid)
+			. += liquid.get_desc(get_dist(T, user), user)
+		if (gas)
+			. += gas.get_desc(get_dist(T, user), user)
 
 /// Override this if you want the alt+doubleclick help message to be dynamic (for example based on the state of deconstruction).
 /// For consistency you should always also override help_message at least to a placeholder never-to-be-seen string, this is important
 /// for the context menu functionality. Use the [HELP_MESSAGE_OVERRIDE] macro to do that.
 /atom/proc/get_help_message(dist, mob/user)
 	. = src.help_message
+
+/// A proc to give this item a special name when viewed in an admin context (just the tilde-rightclick menu for now but probably other places later)
+/atom/proc/admin_visible_name()
+	return src.name
 
 /**
   * a proc to completely override the standard formatting for examine text
