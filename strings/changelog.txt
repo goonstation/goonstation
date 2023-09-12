@@ -1,4 +1,9 @@
 
+(t)tue sep 12 23
+(u)Colossusqw
+(p)15709
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Smoke powder no longer fizzles into nothing when in a closed container, instead, reacting only when it is opened.
 (t)mon sep 11 23
 (u)Tyrant
 (p)15720
