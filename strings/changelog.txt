@@ -1,5 +1,10 @@
 
 (t)tue sep 12 23
+(u)Lord_Earthfire
+(p)15687
+(e)🪲💅📦⚙|C-Bug, C-QoL, A-Game-Objects, A-Internal
+(+)Pipebomb- and beaker-assemblies should be more intutive to create now.
+(+)Standard pipebombs are now created by using a timer instead of a timer/igniter-assembly with a pipebomb frame.
 (u)Glamurio (Ryou)
 (p)15717
 (e)🆕⚗🍝|C-Feature, A-Chemistry, A-Catering
