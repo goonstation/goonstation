@@ -32,7 +32,6 @@
 			if (src.donor)
 				src.donor_name = src.donor.real_name
 				src.name = "[src.donor_name]'s [initial(src.name)]"
-			src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
 	disposing()
 		..()

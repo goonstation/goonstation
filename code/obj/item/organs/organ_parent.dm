@@ -139,7 +139,6 @@
 			src.blood_type = src.donor.bioHolder?.bloodType
 			src.blood_color = src.donor.bioHolder?.bloodColor
 			src.blood_reagent = src.donor.blood_id
-		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		src.max_damage += passed_genes?.get_effective_value("endurance")
