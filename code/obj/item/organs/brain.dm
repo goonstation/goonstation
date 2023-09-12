@@ -118,6 +118,7 @@
 	item_state = "late_brain"
 	desc = "A brain sized pyramid constructed out of silicon and LED lights. It employs complex quantum loopholes to create a consciousness within a decade or less."
 	created_decal = /obj/decal/cleanable/oil
+	made_from = "pharosium"
 	var/activated = 0
 
 	get_desc()
