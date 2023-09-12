@@ -1218,6 +1218,10 @@
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
 
+
+/mob/living/carbon/human/admin_visible_name()
+	return src.real_name
+
 /mob/living/carbon/human/find_in_equipment(var/eqtype)
 	if (istype(w_uniform, eqtype))
 		return w_uniform

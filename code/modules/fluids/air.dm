@@ -20,14 +20,12 @@
 // This is messy as fuck, but its the fastest solution i could think of CPU wise
 
 /obj/fluid/airborne
-	name = "cloud"
+	name = "vapor"
 	desc = "It's a free-flowing airborne state of matter!"
 	icon_state = "airborne"
 	do_iconstate_updates = 0
-	mouse_opacity = 1
 	opacity = 0
 	layer = FLUID_AIR_LAYER
-	flags = NOSPLASH
 
 	set_up(var/newloc, var/do_enters = 1)
 		if (is_setup) return
@@ -192,7 +190,6 @@
 					if (!F || !src.group || src.group.disposed) continue //set_up may decide to remove F
 
 					F.amt = src.group.amt_per_tile
-					F.name = src.name
 					F.color = src.finalcolor
 					F.finalcolor = src.finalcolor
 					F.alpha = src.finalalpha
@@ -285,8 +282,6 @@
 
 	update_icon(var/neighbor_was_removed = 0)  //BE WARNED THIS PROC HAS A REPLICA UP ABOVE IN FLUID GROUP UPDATE_LOOP. DO NOT CHANGE THIS ONE WITHOUT MAKING THE SAME CHANGES UP THERE OH GOD I HATE THIS
 		if (!src.group || !src.group.reagents) return
-
-		src.name = src.group.master_reagent_name ? src.group.master_reagent_name : src.group.reagents.get_master_reagent_name() //maybe obscure later?
 
 		var/datum/color/average = src.group.average_color ? src.group.average_color : src.group.reagents.get_average_color()
 		src.finalalpha = max(25, (average.a / 255) * src.group.max_alpha)
