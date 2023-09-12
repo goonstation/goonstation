@@ -1,5 +1,9 @@
 
 (t)tue sep 12 23
+(u)Bartimeus973
+(p)15564
+(e)🆕🎨🔨📦|C-Feature, C-Sprites, A-Player-Actions, A-Game-Objects
+(+)Some pies thrown by clowns have a chance to stick to people's faces.
 (u)aloe
 (+)Being fully heat resistant (usually from the fire resistance gene) now makes you immune to cremation.
 (u)FlameArrow57
