@@ -21,8 +21,10 @@ TYPEINFO(/atom)
 
 	/// Material id of this object as a material id (lowercase string), set on New()
 	var/default_material = null
-	/// Does this object use appearance from the material?
+	/// Does this object use appearance from the default material?
 	var/uses_default_material_appearance = FALSE
+	/// Does this object use the default material's name?
+	var/uses_default_material_name = FALSE
 
 	/// The message displayed when the atom is alt+doubleclicked, should contain a description of the atom's functionality.
 	/// You can also override get_help_message() to return a message dynamically (based on atom state or the user etc.)
@@ -90,7 +92,7 @@ TYPEINFO(/atom)
 		// Lets stop having 5 implementations of this that all do it differently
 		if (!src.material && default_material)
 			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-			src.setMaterial(mat, src.uses_default_material_appearance, src.mat_changename)
+			src.setMaterial(mat)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()

@@ -21,6 +21,8 @@
 	var/obj/item/device/key/skull/key = null //May randomly contain a key
 	rand_pos = 1
 	default_material = "bone"
+	uses_default_material_appearance = FALSE
+	uses_default_material_name = FALSE
 	var/last_use = 0
 
 	New(loc, datum/organHolder/nholder)
