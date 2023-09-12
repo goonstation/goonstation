@@ -503,16 +503,32 @@ datum
 			addiction_prob = 1 //It lasts a while, it's not as low as it seems
 			addiction_min = 100
 			max_addiction_severity = "LOW"
+			stun_resist = 3
 			depletion_rate = 0.1
 			taste = "bitter"
 			overdose = 60
 			threshold = THRESHOLD_INIT
+			var/stamina_regen = 1
+			var/expected_stamina_regen = 1
+			var/expected_stun_resist = 3
 			var/heart_failure_counter = 0
+
+			proc/caffeine_stamina_change(stun_resist, stamina_regen)
+				var/mob/M = holder.my_atom // All of the caffeine regen properties in a single place
+				if (M.reagents.get_reagent_amount(src.id) <= threshold)
+					return // Shouldn't add any stun resist to a chem that isn't there
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]")
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]")
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]", stun_resist)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]", stun_resist)
+				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", stamina_regen)
+				return
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", 3)
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", stamina_regen)
 				..()
 
 			cross_threshold_under()
@@ -541,12 +557,14 @@ datum
 
 				switch(caffeine_amt)
 					if(0 to 5)   //This is your trace amount of caffeine, doesn't do much
-						stun_resist = 3
+						expected_stamina_regen = 1
+						expected_stun_resist   = 3
 
 					if(5 to 20)  //A regular coffe mug's worth
 						if (M.get_eye_blurry() && prob(75))
 							M.change_eye_blurry(-1 * mult)
-						stun_resist = 6
+						expected_stamina_regen = 2
+						expected_stun_resist   = 7
 						M.dizziness = max(0,M.dizziness-3)
 						M.changeStatus("drowsy", -3 SECONDS) //Helps combat that morning fatigue
 						if (prob(25))
@@ -555,7 +573,8 @@ datum
 					if(20 to 40) //A significant amount of caffeine
 						if (M.get_eye_blurry())
 							M.change_eye_blurry(-1 * mult)
-						stun_resist = 10
+						expected_stamina_regen = 3
+						expected_stun_resist   = 12
 						M.changeStatus("drowsy", -5 SECONDS)
 						M.dizziness = max(0,M.dizziness-5)
 						if (prob(35))
@@ -571,7 +590,8 @@ datum
 					if(40 to 60) //A unhealthy amount of caffeine
 						if (M.get_eye_blurry())
 							M.change_eye_blurry(-2 * mult)
-						stun_resist = 15
+						expected_stamina_regen = 4
+						expected_stun_resist   = 20
 						M.changeStatus("drowsy", -10 SECONDS)
 						M.dizziness = max(0,M.dizziness-7)
 						M.make_jittery(10 * mult)
@@ -589,7 +609,8 @@ datum
 					if(60 to INFINITY)  //Too much coffee. Way bad for you.
 						if (M.get_eye_blurry())
 							M.change_eye_blurry(-1 * mult)
-						stun_resist = 20
+						expected_stamina_regen = 5
+						expected_stun_resist   = 25
 						M.changeStatus("drowsy", -15 SECONDS)
 						M.dizziness = max(0,M.dizziness-10)
 						M.make_jittery(15 * mult)
@@ -609,6 +630,11 @@ datum
 						else if(M.canmove && isturf(M.loc) && probmult(20))
 							step(M, pick(cardinal)) //Makes it hard for you to stay still
 						heart_failure_counter += 5 * mult // This can be really bad for you
+
+				if (stun_resist != expected_stun_resist || stamina_regen != expected_stamina_regen)
+					stun_resist = expected_stun_resist
+					stamina_regen = expected_stamina_regen
+					caffeine_stamina_change(stun_resist, stamina_regen)
 
 				..()
 				return
