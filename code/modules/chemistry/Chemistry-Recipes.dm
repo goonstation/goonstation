@@ -4177,8 +4177,10 @@
 			var/turf/location = 0
 			if (my_atom)
 				location = get_turf(my_atom)
-				fireflash(holder.my_atom, 1)
-				explosion(my_atom, get_turf(my_atom), -1, -1, 1, 2)
+				fireflash(holder.my_atom, 2)
+				//okay I'm turning off the explosion here because it keeps deleting the reagents and I don't want to consider synchronous explosion code
+				//feel free to turn back on if you think of a solution for it blowing up the reagent puddle
+				// explosion(my_atom, get_turf(my_atom), -1, -1, 1, 2)
 				if(istype(holder.my_atom, /obj))
 					var/obj/container = holder.my_atom
 					container.shatter_chemically(projectiles = TRUE)
@@ -4188,7 +4190,7 @@
 					location = pick(holder.covered_cache)
 					holder.covered_cache -= location
 					fireflash(location, 0)
-					explosion_new(my_atom, location, 2.25/amt)
+					// explosion_new(my_atom, location, 2.25/amt)
 			return
 
 	krokodil
