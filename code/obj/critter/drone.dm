@@ -266,7 +266,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				new /obj/item/device/prox_sensor(src.loc)
 			if(droploot)
 				new droploot(src.loc)
-			for (0 to board_drop_amount)
+			for (var/i in 1 to board_drop_amount)
 				new /obj/item/factionrep/ntboard(src.loc)
 			..()
 			return
