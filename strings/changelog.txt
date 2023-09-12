@@ -1,5 +1,10 @@
 
 (t)tue sep 12 23
+(u)Glamurio (Ryou)
+(p)15717
+(e)🆕⚗🍝|C-Feature, A-Chemistry, A-Catering
+(*)Added several new banana related drinks. See minor notes for details.
+(+)New banana juice recipes: Banana Milk (Banana, Milk), Fizzy Banana (Syrup, Banana, Coconut, Lime, Tonic), Dirty Banana (Rum, Banana, Chocolate, Milk), Sweet Surprise (Rum, Banana, Coconut), Sweet Dreams (Sweet Surprise, Capulettium)
 (u)Colossusqw
 (p)15709
 (e)⚖⚗|C-Balance, A-Chemistry
