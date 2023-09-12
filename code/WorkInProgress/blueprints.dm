@@ -579,7 +579,6 @@
 	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
-	//var/static/savefile/save = new/savefile("data/blueprints.dat")
 
 	pixelaction(atom/target, params, mob/user)
 		if(GET_DIST(src,target) > 10) return
