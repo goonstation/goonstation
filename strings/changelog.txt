@@ -1,5 +1,9 @@
 
 (t)mon sep 11 23
+(u)TealSeer
+(p)15768
+(e)🗺📦|A-Mapping, A-Game-Objects
+(+)Two artistic toolboxes now spawn on Donut 2 in the crew lounge and warehouse.
 (u)Garash
 (p)15783
 (e)🗺🔒🔄📄|A-Mapping, A-Secret, C-Rework, A-UI
