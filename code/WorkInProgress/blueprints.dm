@@ -809,8 +809,6 @@
 
 		save.cd = "/tiles" // cd to tiles
 		for (var/A in save.dir) // and now loop on every listing in tiles
-			//if(A == "sizex" || A == "sizey" || A == "roomname") continue
-			//save.cd = "/[usr.client.ckey]/[name]/[A]"
 			save.cd = "/tiles/[A]"
 			var/list/coords = splittext(A, ",")
 			var/datum/tileinfo/tf = new/datum/tileinfo()
