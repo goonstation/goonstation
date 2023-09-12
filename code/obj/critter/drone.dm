@@ -62,6 +62,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	var/score = 10
 	dead_state = "drone-dead"
 	var/obj/item/droploot = null
+	var/board_drop_amount = 1 //Boards given to NTcommander. Regular drones should have 1, bosses more and stuff that should drop boards 0
 	var/damaged = 0 // 1, 2, 3
 	var/dying = 0
 	var/beeptext = "beeps"
@@ -265,6 +266,8 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				new /obj/item/device/prox_sensor(src.loc)
 			if(droploot)
 				new droploot(src.loc)
+			for (0 to board_drop_amount)
+				new /obj/item/factionrep/ntboard(src.loc)
 			..()
 			return
 
@@ -682,7 +685,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			health = 100
 			maxhealth = 100
 			score = 10
-			droploot = /obj/item/factionrep/ntboard
+			droploot = /obj/item/mining_tool
 			projectile_type = /datum/projectile/laser/drill/saw_teeth
 			current_projectile = new/datum/projectile/laser/drill/saw_teeth
 			smashes_shit = 0
@@ -693,12 +696,6 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				..()
 				name = "FishDrone CR-[rand(1,999)]b"
 				return
-
-
-			CritterDeath() //Yeah thanks for only supporting a single item, loot variable.
-				if(dying) return
-				new/obj/item/mining_tool(src.loc)
-				..()
 
 	gunshark
 		name = "Syndicate GunShark"
@@ -713,7 +710,6 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		dead_state = "gunshark-dead"
 		alertsound1 = 'sound/machines/engine_alert1.ogg'
 		alertsound2 = 'sound/machines/engine_alert1.ogg'
-		droploot = /obj/item/factionrep/ntboard
 		projectile_type = /datum/projectile/bullet/lmg/weak
 		current_projectile = new/datum/projectile/bullet/lmg/weak
 		attack_cooldown = 20
@@ -796,6 +792,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		score = 10000
 		dead_state = "battledrone-dead"
 		droploot = /obj/item/plutonium_core
+		board_drop_amount = 10
 		alertsound1 = 'sound/machines/engine_alert2.ogg'
 		alertsound2 = 'sound/machines/engine_alert3.ogg'
 		projectile_type = /datum/projectile/bullet/autocannon/plasma_orb
@@ -807,6 +804,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			var/area/A = get_area(src)
 			if (A?.virtual)
 				droploot = null
+				board_drop_amount = 0
 			..()
 
 		process()
@@ -894,6 +892,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	score = 10000
 	dead_state = "ydrone-dead"
 	droploot = /obj/item/device/key/iridium
+	board_drop_amount = 16
 	alertsound1 = 'sound/machines/engine_alert2.ogg'
 	alertsound2 = 'sound/machines/engine_alert3.ogg'
 	projectile_type = /datum/projectile/laser/precursor/sphere
@@ -1278,6 +1277,7 @@ TYPEINFO(/obj/critter/gunbot/drone/miniature_syndie)
 	projectile_type = /datum/projectile/bullet/bullet_22
 	current_projectile = new/datum/projectile/bullet/bullet_22
 	attack_cooldown = 20
+	board_drop_amount = 0
 
 	var/voice_gender = "male"
 
