@@ -156,7 +156,7 @@
 					boutput(user, "<span class='alert'>There's no build in progress.</span>")
 					return
 				if (!src.Paused)
-					boutput(user, "<span class='alert'>It's already unpaused.</span>")
+					boutput(user, "<span class='alert'>[src] is already unpaused.</span>")
 					return
 				src.unpauseBuild()
 
