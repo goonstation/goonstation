@@ -142,7 +142,7 @@
 
 /datum/action/bar/private/icon/robojumper_to_silicon
 	duration = 1 SECONDS
-	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ACT
 	id = "robojumper_to_silicon"
 	icon = 'icons/mob/hud_robot.dmi'
 	icon_state = "robocable_charge"
