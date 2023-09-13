@@ -893,7 +893,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	score = 10000
 	dead_state = "ydrone-dead"
 	droploot = /obj/item/device/key/iridium
-	board_drop_amount = 16
+	board_drop_amount = 10
 	alertsound1 = 'sound/machines/engine_alert2.ogg'
 	alertsound2 = 'sound/machines/engine_alert3.ogg'
 	projectile_type = /datum/projectile/laser/precursor/sphere
