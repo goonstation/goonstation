@@ -9,6 +9,9 @@
 	var/positive = TRUE //boolean, if positive, then you will charge an APC with your cell, if negative, you will take charge from apc
 	var/charge_amount = 250
 
+	attack(mob/M, mob/user)
+		return
+
 	attack_self(var/mob/user as mob)
 		positive = !positive
 		icon_state = "robojumper-[positive? "plus": "minus"]"
@@ -200,6 +203,8 @@
 			else if (!silicon_user.emagged) // don't let us drain other cyborgs unless we're emagged
 				boutput(user, "<span class='alert'>A core law submodule limits you from draining the power of other cyborgs!</span>")
 				// also hint to the user that being emagged removes this restriction
+				..()
+				interrupt(INTERRUPT_ALWAYS)
 				return
 			else
 				donor_cell = silicon_target.cell
@@ -233,8 +238,8 @@
 					//user.visible_message("<span class='notice'>[user] transfers some of their power to [silicon_target]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
 				else
 					user.tri_message(target,
-						"<span class='alert'>[user] transfers some of the power from [target] to themselves!</span>",
-						"<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>",
+						"<span class='alert'>[user] siphons some of the power from [target] to themselves!</span>",
+						"<span class='notice'>You siphon [overspill] charge. You are now fully charged.</span>",
 						"<span class='alert'>[user] siphons [overspill] power from you!</span>"
 					)
 					//user.visible_message("<span class='notice'>[user] transfers some of the power from [silicon_target] to themselves!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
@@ -251,8 +256,8 @@
 					//user.visible_message("<span class='notice'>[user] transfers some of their power to [silicon_target]!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
 				else
 					user.tri_message(target,
-						"<span class='alert'>[user] transfers some of the power from [target] to themselves!</span>",
-						"<span class='notice'>You transfer [jumper.charge_amount] charge.</span>",
+						"<span class='alert'>[user] siphons some of the power from [target] to themselves!</span>",
+						"<span class='notice'>You siphon [jumper.charge_amount] charge.</span>",
 						"<span class='alert'>[user] siphons [jumper.charge_amount] power from you!</span>"
 					)
 					//user.visible_message("<span class='notice'>[user] transfers some of the power from [silicon_target] to yourself!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
