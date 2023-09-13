@@ -15,11 +15,15 @@
 		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
 
 	afterattack(var/atom/target, mob/user, flag)
-		if (!isobj(target))
+		/* if (!isobj(target))
 			..()
-			return
+			return */
 		if(istype(target,/obj/machinery/power/apc))
 			actions.start(new/datum/action/bar/private/icon/robojumper(user, target), user)
+		else if (istype(target, /mob/living/silicon/))
+			actions.start(new/datum/action/bar/private/icon/robojumper_to_silicon(user, target), user)
+		else
+			..()
 
 /datum/action/bar/private/icon/robojumper
 	duration = 1 SECONDS
@@ -119,6 +123,142 @@
 					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
 				restart = TRUE
 			apc.charging = apc.chargemode
+
+			if (prob(35))
+				playsound(owner.loc, 'sound/effects/electric_shock_short.ogg', 20, TRUE, -2, pitch = 0.7)
+			user.set_dir(get_dir(user, src.target))
+			src.target.add_fingerprint(user)
+			if(restart)
+				src.onRestart()
+			else
+				P.spawning = 0
+				..()
+		else
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+
+/datum/action/bar/private/icon/robojumper_to_silicon
+	duration = 1 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
+	id = "robojumper_to_silicon"
+	icon = 'icons/mob/hud_robot.dmi'
+	icon_state = "robocable_charge"
+
+	var/mob/user
+	var/mob/target
+	var/particles/P
+
+	New(mob/user, target)
+		var/obj/item/robojumper/jumper = user.equipped()
+		if(istype(jumper) && jumper.positive)
+			icon_state = "robocable_discharge"
+		. = ..()
+		src.user = user
+		src.target = target
+		P = src.user.GetParticles("robojumper")
+		if (!P) // only needs to be made on the mob once
+			src.user.UpdateParticles(new/particles/arcfiend/robojumper, "robojumper")
+			P = src.user.GetParticles("robojumper")
+
+	onUpdate()
+		..()
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+
+		P.spawning = initial(P.spawning)
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		src.loopStart()
+
+	onInterrupt(flag)
+		if(INTERRUPT_MOVE==flag && (BOUNDS_DIST(src.user, src.target) == 0))
+			state = ACTIONSTATE_RUNNING
+			interrupt_start = -1
+			return
+		P.spawning = 0
+		. = ..()
+
+	onEnd()
+		var/restart = FALSE
+		if (!(BOUNDS_DIST(src.user, src.target) == 0))
+			..()
+			interrupt(INTERRUPT_ALWAYS)
+
+		var/obj/item/robojumper/jumper = user.equipped()
+		var/mob/living/silicon/silicon_user = user
+		var/mob/living/silicon/silicon_target = target
+		if (istype(jumper) && istype(silicon_user) && istype(silicon_target) )
+			var/obj/item/cell/donor_cell = null
+			var/obj/item/cell/recipient_cell = null
+			if (jumper.positive)
+				donor_cell = silicon_user.cell
+				recipient_cell = silicon_target.cell
+			else if (!silicon_user.emagged) // don't let us drain other cyborgs unless we're emagged
+				boutput(user, "<span class='alert'>A core law submodule limits you from draining the power of other cyborgs!</span>")
+				// also hint to the user that being emagged removes this restriction
+				return
+			else
+				donor_cell = silicon_target.cell
+				recipient_cell = silicon_user.cell
+
+			if (isnull(donor_cell))
+				boutput(user, "<span class='alert'>You have no cell installed!</span>")
+				..()
+				interrupt(INTERRUPT_ALWAYS)
+				return
+			else if (isnull(recipient_cell))
+				boutput(user, "<span class='alert'>[jumper.positive? "[target] has" : "you have"] no cell installed!</span>")
+				..()
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
+			var/overspill = jumper.charge_amount - recipient_cell.charge
+			if (recipient_cell.charge >= recipient_cell.maxcharge)
+				boutput(user, "<span class='notice'>[jumper.positive ? "[target]" : "Your cell"] is already fully charged.</span>")
+			else if (donor_cell.charge <= jumper.charge_amount)
+				boutput(user, "<span class='alert'>[jumper.positive ? "You don't" : "[target] doesn't"] have enough power to transfer!</span>")
+			else if (overspill >= jumper.charge_amount)
+				donor_cell.use(overspill)
+				recipient_cell.charge += overspill
+				if (jumper.positive)
+					user.tri_message(target,
+						"[user] transfers some of their power to [target].",
+						"<span class='notice'>You transfer [overspill] charge. [target] is now fully charged.</span>",
+						"<span class='notice'>[user] transfers [overspill] power to you!</span>"
+					)
+					//user.visible_message("<span class='notice'>[user] transfers some of their power to [silicon_target]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
+				else
+					user.tri_message(target,
+						"<span class='alert'>[user] transfers some of the power from [target] to themselves!</span>",
+						"<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>",
+						"<span class='alert'>[user] siphons [overspill] power from you!</span>"
+					)
+					//user.visible_message("<span class='notice'>[user] transfers some of the power from [silicon_target] to themselves!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
+					logTheThing(LOG_STATION, user, "drains [overspill] power from [target] now [100*silicon_target.cell.charge/silicon_target.cell.maxcharge]% [log_loc(target)]")
+			else
+				donor_cell.use(jumper.charge_amount)
+				recipient_cell.charge += jumper.charge_amount
+				if (jumper.positive)
+					user.tri_message(target,
+						"[user] transfers some of their power to [target].",
+						"<span class='notice'>You transfer [jumper.charge_amount] charge.</span>",
+						"<span class='notice'>[user] transfers [jumper.charge_amount] power to you!</span>"
+					)
+					//user.visible_message("<span class='notice'>[user] transfers some of their power to [silicon_target]!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
+				else
+					user.tri_message(target,
+						"<span class='alert'>[user] transfers some of the power from [target] to themselves!</span>",
+						"<span class='notice'>You transfer [jumper.charge_amount] charge.</span>",
+						"<span class='alert'>[user] siphons [jumper.charge_amount] power from you!</span>"
+					)
+					//user.visible_message("<span class='notice'>[user] transfers some of the power from [silicon_target] to yourself!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
+					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from [target] now [100*silicon_target.cell.charge/silicon_target.cell.maxcharge]% [log_loc(silicon_target)]")
+				restart = TRUE
+			//silicon_target.charging = silicon_target.chargemode
 
 			if (prob(35))
 				playsound(owner.loc, 'sound/effects/electric_shock_short.ogg', 20, TRUE, -2, pitch = 0.7)
