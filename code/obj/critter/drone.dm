@@ -62,7 +62,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 	var/score = 10
 	dead_state = "drone-dead"
 	var/obj/item/droploot = null
-	var/board_drop_amount = 1 //Boards given to NTcommander. Regular drones should have 1, bosses more and stuff that should drop boards 0
+	var/board_drop_amount = 1 //Boards given to NTcommander. Regular drones should have 1, bosses more and stuff that shouldn't drop boards 0
 	var/damaged = 0 // 1, 2, 3
 	var/dying = 0
 	var/beeptext = "beeps"
