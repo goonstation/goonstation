@@ -5,6 +5,8 @@
  * @license ISC
  */
 
+export type TerminalOutputSectionProps = Pick<TerminalData, 'displayHTML'>
+
 export type PeripheralData = {
   card: string,
   icon: string,
@@ -20,6 +22,5 @@ export type TerminalData = {
   windowName: string,
   fontColor: string,
   bgColor: string,
-  peripherals: Array<PeripheralData>,
-  doScrollBottom: Boolean
+  peripherals: Array<PeripheralData>
 };

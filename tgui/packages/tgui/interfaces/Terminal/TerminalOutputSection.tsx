@@ -6,16 +6,16 @@
  */
 
 import { useBackend } from '../../backend';
-import { TerminalData } from './types';
+import { TerminalData, TerminalOutputSectionProps } from './types';
 import { Section, Box } from '../../components';
 
-export const TerminalOutputSection = (_props, context) => {
+export const TerminalOutputSection = (props: TerminalOutputSectionProps, context) => {
   const { data } = useBackend<TerminalData>(context);
   const {
-    displayHTML,
     fontColor,
     bgColor,
   } = data;
+  const { displayHTML } = props;
 
   return (
     <Section backgroundColor={bgColor} scrollable fill id="terminalOutput">

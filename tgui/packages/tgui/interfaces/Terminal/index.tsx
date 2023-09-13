@@ -18,22 +18,19 @@ export const Terminal = (_props, context) => {
   const { data } = useBackend<TerminalData>(context);
   const {
     windowName,
-    doScrollBottom,
+    displayHTML,
   } = data;
 
-  let handleScrollBottom = function () {
-    // There might be a better way than this setTimeout like fashion to run our js scroll code at the right time
-    // but I'm not familiar enough with Inferno hooks to find it
-    window.requestAnimationFrame(() => {
-      if (!doScrollBottom) {
-        return;
-      }
-      let terminalOutputScroll = document.querySelector('#terminalOutput .Section__content');
-      if (!terminalOutputScroll) {
-        return;
-      }
-      terminalOutputScroll.scrollTop = terminalOutputScroll.scrollHeight;
-    });
+  const handleTerminalOutputComponentDidUpdate = (lastProps, nextProps) => {
+    if (lastProps.displayHTML === nextProps.displayHTML) {
+      return;
+    }
+    const terminalOutputScroll = document.querySelector('#terminalOutput .Section__content');
+    if (!terminalOutputScroll) {
+      return;
+    }
+
+    terminalOutputScroll.scrollTop = terminalOutputScroll.scrollHeight;
   };
 
   return (
@@ -46,7 +43,9 @@ export const Terminal = (_props, context) => {
       <Window.Content>
         <Stack vertical fill>
           <Stack.Item grow>
-            <TerminalOutputSection />
+            <TerminalOutputSection
+              displayHTML={displayHTML}
+              onComponentDidUpdate={handleTerminalOutputComponentDidUpdate} />
           </Stack.Item>
           <Stack.Item>
             <InputAndButtonsSection />
@@ -56,7 +55,6 @@ export const Terminal = (_props, context) => {
           </Stack.Item>
         </Stack>
       </Window.Content>
-      {handleScrollBottom()}
     </Window>
   );
 };
