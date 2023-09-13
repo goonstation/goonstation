@@ -467,6 +467,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 			return
 
 	virtual
+		board_drop_amount = 0
 		applyDeathState()
 			overlays += image('icons/obj/ship.dmi', "dying-overlay")
 
