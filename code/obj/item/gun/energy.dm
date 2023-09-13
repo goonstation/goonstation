@@ -1868,7 +1868,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	name = "makeshift laser rifle"
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "makeshift-energy"
-	item_state = "laser" //TODO item states
+	item_state = "makeshift_laser"
 	w_class = W_CLASS_BULKY
 	c_flags = ONBACK
 	cell_type = null
