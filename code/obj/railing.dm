@@ -151,6 +151,8 @@
 		src.try_vault(user)
 
 	attack_ai(mob/user)
+		if(!can_reach(user, src) || isAI(user) || isAIeye(user))
+			return
 		return src.attack_hand(user)
 
 	Bumped(var/mob/AM as mob)
