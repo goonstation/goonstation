@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { useBackend, useLocalState } from '../../backend';
+import { useBackend } from '../../backend';
 import { TerminalData } from './types';
 import { Section, Flex, Input, Tooltip, Button } from '../../components';
 
@@ -15,60 +15,14 @@ export const InputAndButtonsSection = (_props, context) => {
     TermActive,
   } = data;
 
-  const [textInput, setTextInput] = useLocalState(context, 'textInput', "");
-  const [textInputHistory, setTextInputHistory] = useLocalState(context, 'textInputHistory', []);
-  const [textInputHistoryIndex, setTextInputHistoryIndex] = useLocalState(context, 'textInputHistoryIndex', 0);
-
-  const navigateHistory = function (direction, DOMInput) {
-    const newIndex = textInputHistoryIndex + direction;
-    let hasMoreHistory = false;
-    if (direction > 0 && newIndex < textInputHistory.length) {
-      hasMoreHistory = true;
-    } else if (direction < 0 && newIndex >= 0) {
-      hasMoreHistory = true;
-    }
-    if (hasMoreHistory) {
-      setTextInput(textInputHistory[newIndex]);
-      // setTextInput *should* have been good enough but sometimes, after editing the input, it fails to update,
-      // so let's update the dom input directly just to be sure
-      DOMInput.value = textInputHistory[newIndex];
-      setTextInputHistoryIndex(newIndex);
-    } else if (direction > 0) {
-      // The last down arrow should clear the text field
-      setTextInput("");
-      DOMInput.value = "";
-      setTextInputHistoryIndex(textInputHistory.length);
-    }
-  };
-
-  const appendHistory = function (newText) {
-    if (textInputHistory[textInputHistory.length - 1] === newText) {
-      return;
-    }
-    textInputHistory.push(newText);
-    setTextInputHistory(textInputHistory);
-    setTextInputHistoryIndex(textInputHistoryIndex + 1);
-  };
-
-  const handleInputInput = (_e, value) => {
-    setTextInput(value);
-    setTextInputHistoryIndex(textInputHistory.length);
-  };
-  const handleInputKeydown = (e) => {
-    if (e.key === 'Enter') {
-      act('text', { value: textInput });
-      appendHistory(textInput);
-      setTextInput("");
-    } else if (e.key === 'Up') {
-      navigateHistory(-1, e.target);
-    } else if (e.key === 'Down') {
-      navigateHistory(1, e.target);
-    }
+  const handleInputEnter = (_e, value) => {
+    act('text', { value: value });
   };
   const handleEnterClick = () => {
-    act('text', { value: textInput });
-    appendHistory(textInput);
-    setTextInput("");
+    // Still a tiny bit hacky but it's a manual click on the enter button which already caused me too much grief
+    const domInput = document.querySelector('#terminalInput .Input__input') as HTMLInputElement;
+    act('text', { value: domInput.value });
+    domInput.value = '';
   };
   const handleRestartClick = () => act('restart');
 
@@ -77,14 +31,13 @@ export const InputAndButtonsSection = (_props, context) => {
       <Flex align="center">
         <Flex.Item grow>
           <Input
-            as="span"
+            id="terminalInput"
             placeholder="Type Here"
             selfClear
-            value={textInput}
             fluid
-            onInput={handleInputInput}
-            onKeyDown={handleInputKeydown}
             mr="0.5rem"
+            onEnter={handleInputEnter}
+            history
           />
         </Flex.Item>
         <Flex.Item>
