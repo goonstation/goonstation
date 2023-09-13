@@ -324,14 +324,14 @@ TYPEINFO(/obj/machinery/fluid_canister)
 			" The pump is set to <em>[activetext]</em>." + \
 			" It's currently holding <em>[src.reagents.total_volume] units</em>."
 
-		for(var/datum/contextAction/fluid_canister/off/offButton in src.contexts)
-			switch (activetext)
-				if ("OFF")
-					offButton.icon_state = "off"
-				if ("IN")
-					offButton.icon_state = "off_green"
-				if ("OUT")
-					offButton.icon_state = "off_blue"
+		for(var/datum/contextAction/fluid_canister/button in src.contexts)
+			switch (button.type)
+				if (/datum/contextAction/fluid_canister/off)
+					button.icon_state = activetext == "OFF" ? "off" : "off_active"
+				if (/datum/contextAction/fluid_canister/slurp)
+					button.icon_state = activetext == "IN" ? "in_active" : "in"
+				if (/datum/contextAction/fluid_canister/piss)
+					button.icon_state = activetext == "OUT" ? "out_active" : "out"
 
 	attack_hand(var/mob/user)
 		user.showContextActions(src.contexts, src, src.contextLayout)
