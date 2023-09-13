@@ -227,6 +227,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 	projectile_type = /datum/projectile/laser/drill/cutter
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	droploot = null
+	board_drop_amount = 0
 	smashes_shit = 1
 
 	ChaseAttack(atom/M)
