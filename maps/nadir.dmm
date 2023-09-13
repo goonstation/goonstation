@@ -17448,6 +17448,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/dialogueobj/ntrepresentative,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/fitness)
 "hFM" = (

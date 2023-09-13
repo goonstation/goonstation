@@ -22475,10 +22475,8 @@
 /area/helldrone)
 "vDG" = (
 /obj/decal/cleanable/dirt,
-/obj/stool/chair/dining/wood{
-	dir = 8;
-	icon_state = "chair_wooden"
-	},
+/obj/stool/chair/dining/wood,
+/obj/dialogueobj/ntrepresentative,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/diner/motel/observatory)
 "vFH" = (
