@@ -1,4 +1,9 @@
 
+(t)wed sep 13 23
+(u)Retrino
+(p)15773
+(e)🎨|C-Sprites
+(+)Added 8 new faces to cyborg screenheads. Sly, Elated, Blush, Battery, Error, Loading, Pong, and Hypnotized
 (t)tue sep 12 23
 (u)Sord & Tarmunora
 (+)Singularity feeding changes: Base values (i.e.: bonuses from materials are unaffected) are generally higher, but have diminishing returns for any given type. Variety is the spice of life! Material(ore/bar) density*3, radioactive*4, neutron radioactive*6. Also feed a singularity a plutonium core to get a LOT of power.
