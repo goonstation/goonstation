@@ -25,11 +25,13 @@ export const Terminal = (_props, context) => {
     if (lastProps.displayHTML === nextProps.displayHTML) {
       return;
     }
+    scrollToBottom();
+  };
+  const scrollToBottom = () => {
     const terminalOutputScroll = document.querySelector('#terminalOutput .Section__content');
     if (!terminalOutputScroll) {
       return;
     }
-
     terminalOutputScroll.scrollTop = terminalOutputScroll.scrollHeight;
   };
 
@@ -45,6 +47,7 @@ export const Terminal = (_props, context) => {
           <Stack.Item grow>
             <TerminalOutputSection
               displayHTML={displayHTML}
+              onComponentDidMount={scrollToBottom}
               onComponentDidUpdate={handleTerminalOutputComponentDidUpdate} />
           </Stack.Item>
           <Stack.Item>
