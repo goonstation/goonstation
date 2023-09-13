@@ -1,5 +1,9 @@
 
 (t)wed sep 13 23
+(u)DisturbHerb, Tyrant
+(p)15787
+(e)🆕🗺⚗|C-Feature, A-Mapping, A-Chemistry
+(*)Added the new orbital shakers to Chemical Labs, which shake glassware around and apply physical force to them.
 (u)Tyrant
 (p)15554
 (e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
