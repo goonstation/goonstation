@@ -79,6 +79,8 @@
 		else
 			. = "fluid"
 
+	is_airborne()
+		return istype(src.my_group, /datum/fluid_group/airborne)
 
 //We use datum/controller/process/fluid_group to do evaporation
 
