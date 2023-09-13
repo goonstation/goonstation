@@ -53,7 +53,11 @@
 	nt_who
 		nodeImage = "ntportrait.png"
 		linkText = "Who are you?"
+		#ifdef MAP_OVERRIDE_OSHAN
 		nodeText = "I am Commander Wardson. I've been sent here to investigate the NSS Polaris incident. Do you by any chance have information regarding that?"
+		#else
+		nodeText = "I am Commander Wardson. I've been sent here to investigate a Syndicate asset. Do you by any chance have information regarding it?"
+		#endif
 		links = list()
 
 	nt_reputation
