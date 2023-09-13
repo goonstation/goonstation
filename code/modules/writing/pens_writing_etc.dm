@@ -1021,71 +1021,94 @@
 		overlay_images["paper"] = image('icons/obj/writing.dmi', "clipboard_paper")
 		overlay_images["pen"] = image('icons/obj/writing.dmi', "clipboard_pen")
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "Clipboard")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list()
+		.["pen"] = "[pen]"
+		.["integrated_pen"] = null
+
+		var/top_paper = src.get_top_paper()
+		.["top_paper"] = "[top_paper]"
+		.["top_paper_ref"] = "\ref[top_paper]"
+
+		.["paper"] = list()
+		.["paper_ref"] = list()
+		for(var/obj/item/paper/paper in src)
+			if(paper == top_paper)
+				continue
+			.["paper"] += "[paper]"
+			.["paper_ref"] += "\ref[paper]"
+
 	attack_self(mob/user as mob)
-		var/dat = "<B>Clipboard</B><BR>"
-		if (src.pen)
-			dat += "<A href='?src=\ref[src];pen=1'>Remove Pen</A><BR><HR>"
-		for(var/obj/item/paper/P in src)
-			dat += "<A href='?src=\ref[src];read=\ref[P]'>[P.name]</A> <A href='?src=\ref[src];title=\ref[P]'>Title</A> <A href='?src=\ref[src];remove=\ref[P]'>Remove</A><BR>"
+		ui_interact(user)
 
-		for(var/obj/item/photo/P in src) //Todo: make it actually show the photo.  Currently, using [bicon()] just makes an egg image pop up (??)
-			dat += "<A href='?src=\ref[src];remove=\ref[P]'>[P.name]</A><br>"
-
-		user.Browse(dat, "window=clipboard")
-		onclose(user, "clipboard")
-		return
-
-	Topic(href, href_list)
-		..()
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return
 		if ((usr.stat || usr.restrained()))
 			return
-
 		if (!(src in usr.contents))
 			return
 
-		src.add_dialog(usr)
-		if (href_list["pen"])
-			if (src.pen)
-				usr.put_in_hand_or_drop(src.pen)
-				src.pen = null
-				src.update()
+		switch(action)
+			// Take the pen out
+			if("remove_pen")
+				if (src.pen)
+					usr.put_in_hand_or_drop(src.pen)
+					src.pen = null
+					src.update()
+					. = TRUE
+			// Take paper out
+			if("remove_paper")
+				var/obj/item/paper/P = locate(params["ref"]) in src
+				if (P && P.loc == src && istype(P))
+					usr.put_in_hand_or_drop(P)
+					src.update()
+					. = TRUE
+			// Look at (or edit) the paper
+			if("edit_paper")
+				var/obj/item/paper/P = locate(params["ref"]) in src
+				if(istype(P))
+					P.ui_interact(usr)
+					. = TRUE
+			// Move paper to the top
+			if("move_top_paper")
+				var/obj/item/paper/P = locate(params["ref"]) in src
+				if(istype(P))
+					// contents.Insert(1, P) doesn't work so...
+					var/list/oldContents = src.contents.Copy()
+					src.contents = new/list()
+					src.contents += P
+					for (var/obj/oldContent in oldContents)
+						if (oldContent != P)
+							src.contents += oldContent
+					. = TRUE
+			// Rename the paper (it's a verb)
+			if("rename_paper")
+				if(!usr.literate)
+					boutput(usr, "<span class='alert'>You don't know how to write.</span>")
+					return
+				var/obj/item/pen/available_pen = null
+				if (istype(usr.r_hand, /obj/item/pen))
+					available_pen = usr.r_hand
+				else if (istype(usr.l_hand, /obj/item/pen))
+					available_pen = usr.l_hand
+				else if (istype(src.pen, /obj/item/pen))
+					available_pen = src.pen
+				else
+					boutput(usr, "<span class='alert'>You need a pen for that.</span>")
+					return
 
-		else if (href_list["remove"])
-			var/obj/item/P = locate(href_list["remove"])
-			if (P && P.loc == src)
-				usr.put_in_hand_or_drop(P)
-				src.update()
-
-		else if (href_list["read"])
-			var/obj/item/paper/P = locate(href_list["read"])
-			P.ui_interact(usr)
-
-		else//Stuff that involves writing from here on down
-			if(!usr.literate)
-				boutput(usr, "<span class='alert'>You don't know how to write.</span>")
-				return
-			var/obj/item/pen/available_pen = null
-			if (istype(usr.r_hand, /obj/item/pen))
-				available_pen = usr.r_hand
-			else if (istype(usr.l_hand, /obj/item/pen))
-				available_pen = usr.l_hand
-			else if (istype(src.pen, /obj/item/pen))
-				available_pen = src.pen
-			else
-				boutput(usr, "<span class='alert'>You need a pen for that.</span>")
-				return
-
-			if (href_list["write"])
-				var/obj/item/P = locate(href_list["write"])
-				if ((P && P.loc == src))
-					P.Attackby(available_pen, usr)
-
-			else if (href_list["title"])
 				if (istype(available_pen, /obj/item/pen/odd))
 					boutput(usr, "<span class='alert'>Try as you might, you fail to write anything sensible.</span>")
-					src.add_fingerprint(usr)
 					return
-				var/obj/item/P = locate(href_list["title"])
+				var/obj/item/P = locate(params["ref"]) in src
 				if (P && P.loc == src)
 					var/str = copytext(html_encode(input(usr,"What do you want to title this?","Title document","") as null|text), 1, 32)
 					if (str == null || length(str) == 0)
@@ -1096,10 +1119,7 @@
 					if(url_regex?.Find(str))
 						return
 					P.name = str
-
-		src.add_fingerprint(usr)
-		src.updateSelfDialog()
-		return
+					. = TRUE
 
 	attack_hand(mob/user)
 		if (!user.equipped() && (user.l_hand == src || user.r_hand == src))
@@ -1107,6 +1127,7 @@
 			if (P)
 				user.put_in_hand_or_drop(P)
 				src.update()
+				tgui_process.update_uis(src)
 			src.add_fingerprint(user)
 		else
 			return ..()
@@ -1128,6 +1149,7 @@
 			else
 				return
 		src.update()
+		tgui_process.update_uis(src)
 		user.update_inhands()
 		SPAWN(0)
 			attack_self(user)
@@ -1144,6 +1166,12 @@
 		else
 			src.ClearSpecificOverlays("pen")
 		src.item_state = "clipboard[(locate(/obj/item/paper) in src) ? "1" : "0"]"
+
+	proc/get_top_paper()
+		//Needed because src.contents might contain a pen
+		for (var/obj/item/paper/paper in src.contents)
+			return paper
+		return null
 
 /obj/item/clipboard/with_pen
 	New()
