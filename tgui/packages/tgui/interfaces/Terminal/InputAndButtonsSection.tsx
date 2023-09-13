@@ -74,7 +74,7 @@ export const InputAndButtonsSection = (_props, context) => {
 
   return (
     <Section fitted>
-      <Flex>
+      <Flex align="center">
         <Flex.Item grow>
           <Input
             as="span"
@@ -92,14 +92,16 @@ export const InputAndButtonsSection = (_props, context) => {
             <Button icon="share"
               color={TermActive ? "green" : "red"}
               onClick={handleEnterClick}
-              mr="0.5rem" />
+              mr="0.5rem"
+              my={0.25} />
           </Tooltip>
         </Flex.Item>
         <Flex.Item>
           <Tooltip content="Restart">
             <Button icon="repeat"
               color={TermActive ? "green" : "red"}
-              onClick={handleRestartClick} />
+              onClick={handleRestartClick}
+              my={0.25} />
           </Tooltip>
         </Flex.Item>
       </Flex>
