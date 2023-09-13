@@ -54195,7 +54195,7 @@
 	})
 "xFL" = (
 /obj/table/auto,
-/obj/item/clothing/under/gimmick/chaps,
+/obj/item/clothing/suit/chaps,
 /obj/item/instrument/trumpet,
 /obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor/plating,
