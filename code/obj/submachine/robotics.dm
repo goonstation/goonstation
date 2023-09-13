@@ -200,9 +200,8 @@
 			if (jumper.positive)
 				donor_cell = silicon_user.cell
 				recipient_cell = silicon_target.cell
-			else if (!silicon_user.emagged) // don't let us drain other cyborgs unless we're emagged
+			else if (!silicon_user.emagged)
 				boutput(user, "<span class='alert'>A core law submodule limits you from draining the power of other cyborgs!</span>")
-				// also hint to the user that being emagged removes this restriction
 				..()
 				interrupt(INTERRUPT_ALWAYS)
 				return
@@ -235,14 +234,12 @@
 						"<span class='notice'>You transfer [overspill] charge. [target] is now fully charged.</span>",
 						"<span class='notice'>[user] transfers [overspill] power to you!</span>"
 					)
-					//user.visible_message("<span class='notice'>[user] transfers some of their power to [silicon_target]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
 				else
 					user.tri_message(target,
 						"<span class='alert'>[user] siphons some of the power from [target] to themselves!</span>",
 						"<span class='notice'>You siphon [overspill] charge. You are now fully charged.</span>",
 						"<span class='alert'>[user] siphons [overspill] power from you!</span>"
 					)
-					//user.visible_message("<span class='notice'>[user] transfers some of the power from [silicon_target] to themselves!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
 					logTheThing(LOG_STATION, user, "drains [overspill] power from [target] now [100*silicon_target.cell.charge/silicon_target.cell.maxcharge]% [log_loc(target)]")
 			else
 				donor_cell.use(jumper.charge_amount)
@@ -253,17 +250,14 @@
 						"<span class='notice'>You transfer [jumper.charge_amount] charge.</span>",
 						"<span class='notice'>[user] transfers [jumper.charge_amount] power to you!</span>"
 					)
-					//user.visible_message("<span class='notice'>[user] transfers some of their power to [silicon_target]!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
 				else
 					user.tri_message(target,
 						"<span class='alert'>[user] siphons some of the power from [target] to themselves!</span>",
 						"<span class='notice'>You siphon [jumper.charge_amount] charge.</span>",
 						"<span class='alert'>[user] siphons [jumper.charge_amount] power from you!</span>"
 					)
-					//user.visible_message("<span class='notice'>[user] transfers some of the power from [silicon_target] to yourself!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
 					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from [target] now [100*silicon_target.cell.charge/silicon_target.cell.maxcharge]% [log_loc(silicon_target)]")
 				restart = TRUE
-			//silicon_target.charging = silicon_target.chargemode
 
 			if (prob(35))
 				playsound(owner.loc, 'sound/effects/electric_shock_short.ogg', 20, TRUE, -2, pitch = 0.7)
