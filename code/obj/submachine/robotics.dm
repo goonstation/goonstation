@@ -18,9 +18,6 @@
 		boutput(user, "<span class='alert'>The jumper cables will now transfer charge [positive ? "from you to the other device" : "from the other device to you"].</span>")
 
 	afterattack(var/atom/target, mob/user, flag)
-		/* if (!isobj(target))
-			..()
-			return */
 		if(istype(target,/obj/machinery/power/apc))
 			actions.start(new/datum/action/bar/private/icon/robojumper(user, target), user)
 		else if (istype(target, /mob/living/silicon/))
