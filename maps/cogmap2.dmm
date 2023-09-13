@@ -60074,6 +60074,7 @@
 /area/research_outpost)
 "fas" = (
 /obj/table/reinforced/chemistry/auto,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
