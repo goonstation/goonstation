@@ -678,6 +678,16 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
+	banana_milk
+		name = "Banana Milk"
+		id = "banana milk"
+		result = "banana_milk"
+		required_reagents = list("milk" = 1, "juice_banana" = 1)
+		result_amount = 2
+		mix_phrase = "The mixture turns a nice light yellow color."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
 	blue_milk
 		name = "Blue Milk"
 		id = "blue milk"
@@ -710,6 +720,16 @@
 		required_reagents = list("simplesyrup" = 1, "juice_apple" = 1, "juice_lime" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
 		result_amount = 5
 		mix_phrase = "You are reminded of family picnics and school functions as the syrup mixes with the juices."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	fizzy_banana
+		name = "Fizzy Banana"
+		id = "fizzy_banana"
+		result = "fizzy_banana"
+		required_reagents = list("simplesyrup" = 1, "juice_banana" = 1, "coconut_milk" = 1, "juice_lime" = 1, "tonic" = 1)
+		result_amount = 5
+		mix_phrase = "You think of tropical beaches and blue oceans as the syrup mixes with the juices."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
@@ -1887,6 +1907,44 @@
 		result_amount = 4
 		mix_phrase = "The drink honks at you! What the fuck?"
 		mix_sound = 'sound/misc/drinkfizz_honk.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_dirty_banana
+		name = "Dirty Banana"
+		id = "dirty_banana"
+		result = "dirty_banana"
+		required_reagents = list("rum" = 1, "juice_banana" = 1, "chocolate" = 1, "milk" = 1)
+		result_amount = 4
+		mix_phrase = "It's creamy, fruity and surprisingly clean!"
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_dirty_banana/banana
+		id = "dirty_banana_banana"
+		required_reagents = list("rum" = 1, "chocolate" = 1, "banana_milk" = 2)
+
+	cocktail_dirty_banana/choco
+		id = "dirty_banana_choco"
+		required_reagents = list("rum" = 1, "juice_banana" = 1, "chocolate_milk" = 2)
+
+	cocktail_sweet_surprise
+		name = "Sweet Surprise"
+		id = "sweet_surprise"
+		result = "sweet_surprise"
+		required_reagents = list("rum" = 1, "juice_banana" = 1, "coconut_milk" = 1)
+		result_amount = 3
+		mix_phrase = "The banana and coconut give off a tropical aroma when mixed."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_sweet_dreams
+		name = "Sweet Dreams"
+		id = "sweet_dreams"
+		result = "sweet_dreams"
+		required_reagents = list("sweet_surprise" = 1, "capulettium" = 1)
+		result_amount = 2
+		mix_phrase = "The sweet smell is almost enough to make you fall asleep."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
 	cola
@@ -3461,6 +3519,26 @@
 		max_temperature = 0
 
 
+	aerosol  //aerosol's reaction when crossing the heat threshold
+		name = "Aerosol"
+		id   = "aerosolheat"
+		required_reagents = list("propellant" = 1)
+		result_amount = 1
+		mix_phrase = "The mixture quickly turns into a pall of smoke!"
+		hidden = TRUE
+		min_temperature = T0C + 100
+
+		does_react(var/datum/reagents/holder) //making sure it doesn't smoke itself while inside a closed container
+			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+				return TRUE
+			else
+				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			if (holder)
+				SPAWN(1 DECI SECOND)
+					holder.smoke_start(created_volume,classic = 1)
+
 	smokepowder
 		name = "Smoke Powder"
 		id = "smokepowder"
@@ -3471,6 +3549,25 @@
 #ifdef CHEM_REACTION_PRIORITIES
 		priority = 9
 #endif
+
+	smokeheat  //smoke powder's reaction when crossing the heat threshold
+		name = "Smoke Heat"
+		id   = "smokeheat"
+		required_reagents = list("smokepowder" = 1)
+		result_amount = 1
+		mix_phrase = "The mixture quickly turns into a pall of smoke!"
+		hidden = TRUE
+		min_temperature = T0C + 25
+
+		does_react(var/datum/reagents/holder) //making sure it doesn't smoke itself while inside a closed container
+			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+				return TRUE
+			else
+				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			if (holder)
+				holder.smoke_start(created_volume)
 
 	smoke
 		name = "Smoke"
@@ -3485,14 +3582,15 @@
 #ifdef CHEM_REACTION_PRIORITIES
 		priority = 9
 #endif
-		on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+		does_react(var/datum/reagents/holder) //making sure it doesn't smoke itself while inside a closed container
+			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+				return TRUE
+			else
+				return FALSE
 
+		on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+			holder.del_reagent("smokepowder") //no
 			if (holder)
-				if(!holder?.my_atom?.is_open_container())
-					if(holder.my_atom)
-						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
-							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
-						return
 				holder.smoke_start(created_volume)
 
 	blackpowder // oh no
@@ -4079,8 +4177,10 @@
 			var/turf/location = 0
 			if (my_atom)
 				location = get_turf(my_atom)
-				fireflash(holder.my_atom, 1)
-				explosion(my_atom, get_turf(my_atom), -1, -1, 1, 2)
+				fireflash(holder.my_atom, 2)
+				//okay I'm turning off the explosion here because it keeps deleting the reagents and I don't want to consider synchronous explosion code
+				//feel free to turn back on if you think of a solution for it blowing up the reagent puddle
+				// explosion(my_atom, get_turf(my_atom), -1, -1, 1, 2)
 				if(istype(holder.my_atom, /obj))
 					var/obj/container = holder.my_atom
 					container.shatter_chemically(projectiles = TRUE)
@@ -4090,7 +4190,7 @@
 					location = pick(holder.covered_cache)
 					holder.covered_cache -= location
 					fireflash(location, 0)
-					explosion_new(my_atom, location, 2.25/amt)
+					// explosion_new(my_atom, location, 2.25/amt)
 			return
 
 	krokodil
@@ -4716,6 +4816,16 @@
 		//max_temperature = T0C - 100
 		result_amount = 1
 		mix_phrase = ".ylegnarts dnuora lriws ot snigeb erutxim ehT"
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		hidden = TRUE
+
+	capsizin
+		name = "capsizin"
+		id = "capsizin"
+		result = "capsizin"
+		required_reagents = list("reversium" = 1, "capsaicin" = 4)
+		result_amount = 5
+		mix_phrase = "The solution begins to capsize. What does that even mean?"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
 

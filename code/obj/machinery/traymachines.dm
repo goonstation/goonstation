@@ -364,9 +364,10 @@ ABSTRACT_TYPE(/obj/machine_tray)
 		for (var/mob/living/L in contents)
 			if (L in non_tray_contents)
 				continue
-			L.TakeDamage("chest", 0, 30)
-			if (!isdead(L) && prob(25))
-				L.emote("scream")
+			if (!L.is_heat_resistant())
+				L.TakeDamage("chest", 0, 30)
+				if (!isdead(L) && prob(25))
+					L.emote("scream")
 		sleep(1 SECOND)
 
 	if(isnull(src))
@@ -382,8 +383,11 @@ ABSTRACT_TYPE(/obj/machine_tray)
 				if (prob(10))
 					W.set_loc(L.loc)
 
-			logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
-			L.remove()
+			if (!L.is_heat_resistant() || ischangeling(L))
+				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
+				L.remove()
+			else
+				logTheThing(LOG_COMBAT, user, "fails to cremate [constructTarget(L,"combat")] in a crematorium at [log_loc(src)] due to their heat resistance.")
 			ashes += 1
 		else if (!ismob(I))
 			if (prob(max(0, 100 - (ashes * 10))))

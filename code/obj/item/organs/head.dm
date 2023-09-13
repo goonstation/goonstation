@@ -16,7 +16,7 @@
 	item_state = ""
 	edible = 0
 	rand_pos = 0 // we wanna override it below
-	made_from = "bone"
+	default_material = "bone"
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	max_damage = INFINITY
 	throw_speed = 1
@@ -633,7 +633,7 @@
 				if(HEAD_ROACH)
 					src.organ_name = "roach head"
 					src.desc = "Not the biggest bug you'll seen today, nor the last."
-					src.made_from = "chitin"
+					src.setMaterial(getMaterial("chitin"))
 
 				if(HEAD_FROG)
 					src.organ_name = "frog head"
