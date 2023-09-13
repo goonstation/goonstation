@@ -2168,7 +2168,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 
 /obj/item/clothing/suit/chaps
 	name = "chaps"
-	desc = "Now with 95% less chafing!"
+	desc = "Sturdy, protective leg coverings made with space leather."
 	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
