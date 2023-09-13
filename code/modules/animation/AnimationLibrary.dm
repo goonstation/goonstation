@@ -635,6 +635,15 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		icon_state = pick("flame-1", "flame-2", "flame-3", "flame-4")
 		..()
 
+/obj/particle/heat_swirl
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "heat-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("heat-1", "heat-2", "heat-3", "heat-4")
+		..()
+
 /proc/chemistry_particle(var/datum/reagents/holder, var/datum/chemical_reaction/reaction)
 	if(!istype(holder.my_atom, /obj) || !holder.my_atom.loc)
 		return
