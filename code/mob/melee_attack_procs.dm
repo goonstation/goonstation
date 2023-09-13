@@ -100,6 +100,9 @@
 		else if(istype(src.wear_mask,/obj/item/clothing/mask/clown_hat))
 			var/obj/item/clothing/mask/clown_hat/mask = src.wear_mask
 			mask.honk_nose(src)
+		else if(istype(src.wear_mask,/obj/item/clothing/mask/jester))
+			var/obj/item/clothing/mask/jester/mask = src.wear_mask
+			mask.jester_giggle(src)
 		else
 			var/item = src.get_random_equipped_thing_name()
 			if (item)

@@ -1163,6 +1163,7 @@ var/global/list/soundCache = list(
  	"sound/musical_instruments/bard/tapping1.ogg" = 'sound/musical_instruments/bard/tapping1.ogg',\
  	"sound/musical_instruments/bard/tapping2.ogg" = 'sound/musical_instruments/bard/tapping2.ogg',\
  	"sound/musical_instruments/Bell_Huge_1.ogg" = 'sound/musical_instruments/Bell_Huge_1.ogg',\
+ 	"sound/musical_instruments/Bell_Jingle.ogg" = 'sound/musical_instruments/Bell_Jingle.ogg',\
  	"sound/musical_instruments/Bikehorn_1.ogg" = 'sound/musical_instruments/Bikehorn_1.ogg',\
  	"sound/musical_instruments/Bikehorn_2.ogg" = 'sound/musical_instruments/Bikehorn_2.ogg',\
  	"sound/musical_instruments/Bikehorn_bonk1.ogg" = 'sound/musical_instruments/Bikehorn_bonk1.ogg',\

@@ -1256,6 +1256,24 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	icon_state = "jester"
 	item_state = "jester"
 	seal_hair = 1
+	var/pitch_sound_alt = FALSE
+	var/steps = 0
+
+	proc/jingle()
+		var/pitch_level = pitch_sound_alt ? 1.4 : 1.2
+		src.steps++
+		if(steps > 1)
+			playsound(src, 'sound/musical_instruments/Bell_Jingle.ogg', 50, pitch = pitch_level)
+			pitch_sound_alt = !pitch_sound_alt
+			src.steps = 0
+
+	equipped(mob/user)
+		..()
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(jingle))
+
+	unequipped(mob/user)
+		..()
+		UnregisterSignal(user, COMSIG_MOVABLE_MOVED)
 
 /obj/item/clothing/head/party
 	name = "party hat"
