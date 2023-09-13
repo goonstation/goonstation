@@ -1,5 +1,9 @@
 
 (t)wed sep 13 23
+(u)Tyrant
+(p)15554
+(e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
+(+)Twirling a bloody knife will flick the blood off and onto the floor. Doesn't work if the blood is dried.
 (u)Retrino
 (p)15773
 (e)🎨|C-Sprites
