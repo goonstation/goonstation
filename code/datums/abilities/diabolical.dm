@@ -303,7 +303,7 @@
 
 	cast(atom/T)
 		sonic_attack_environmental_effect(usr, 5, list("light"))
-		playsound(holder.owner.loc, 'sound/misc/jester_laugh.ogg', 125)
+		playsound(holder.owner.loc, 'sound/misc/laugh_evil.ogg', 125)
 
 //////////////////////////Dumb Floorclown stuff//////////////////////////
 /datum/targetable/gimmick/reveal

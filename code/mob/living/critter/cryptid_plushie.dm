@@ -117,7 +117,7 @@
 					reborn_cryptid.ckey = ckey_of_dead_player
 					SPAWN(0.5 SECONDS)
 						if(reborn_cryptid && !reborn_cryptid.disposed)
-							playsound(get_turf(reborn_cryptid), 'sound/misc/jester_laugh.ogg', 60, 1)
+							playsound(get_turf(reborn_cryptid), 'sound/misc/laugh_evil.ogg', 60, 1)
 			else
 				boutput(ghost_mob, "<h3><span class='alert'>The cycle has been stopped.</span></h3>")
 
