@@ -109,6 +109,7 @@ TYPEINFO(/obj/machinery/dialysis)
 		else
 			src.UpdateOverlays(image(src.icon, "pump-off"), "pump")
 			src.UpdateOverlays(image(src.icon, "screen-off"), "screen")
+			src.UpdateOverlays(image(src.icon, "tubing"), "tubing")
 			src.ClearSpecificOverlays("blood_out")
 			src.ClearSpecificOverlays("blood_in")
 
@@ -126,6 +127,7 @@ TYPEINFO(/obj/machinery/dialysis)
 		src.power_usage = 500
 		src.UpdateOverlays(image(src.icon, "pump-on"), "pump")
 		src.UpdateOverlays(image(src.icon, "screen-on"), "screen")
+		src.UpdateOverlays(image(src.icon, "cannulae"), "tubing")
 		src.UpdateIcon()
 		SubscribeToProcess()
 
