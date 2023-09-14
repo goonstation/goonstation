@@ -90,7 +90,9 @@ TYPEINFO(/obj/machinery/dialysis)
 		src.output_blood_colour = src.reagents.get_average_color().to_rgba()
 
 		// Infuse blood back in if possible. Don't wanna stuff too much blood back in.
-		if (!src.patient.reagents.is_full() && src.patient.blood_volume <= 500)
+		// The blood that's not actually in the bloodstream yet, know what I mean?
+		var/datum/reagent/non_blood_volume_blood = src.patient.reagents.reagent_list["blood"]
+		if (!src.patient.reagents.is_full() && (src.patient.blood_volume + non_blood_volume_blood.total_volume) <= 500)
 			src.reagents.trans_to(src.patient, src.draw_amount)
 			src.patient.reagents.reaction(src.patient, INGEST, src.draw_amount)
 
