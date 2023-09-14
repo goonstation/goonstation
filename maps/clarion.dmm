@@ -5716,13 +5716,6 @@
 "ayy" = (
 /turf/simulated/floor/caution/west,
 /area/station/maintenance/east)
-"ayB" = (
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown)
 "ayD" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -13965,12 +13958,6 @@
 	icon_state = "yellowblack"
 	},
 /area/station/hallway/primary/east)
-"bpj" = (
-/obj/table/reinforced/chemistry/auto/drugs,
-/turf/simulated/floor/purpleblack{
-	dir = 10
-	},
-/area/station/science/chemistry)
 "bpk" = (
 /obj/table/reinforced/chemistry/auto,
 /turf/simulated/floor/purpleblack,
@@ -16058,25 +16045,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/storage)
-"bCX" = (
-/obj/machinery/mass_driver{
-	id = "qm_dock_out"
-	},
-/obj/machinery/door/poddoor/blast/single{
-	doordir = "noblasts";
-	icon_state = "bdoornoblasts1";
-	id = "qm_dock_out";
-	layer = 4;
-	name = "Outbound Cargo Belt"
-	},
-/obj/strip_door,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/caution/misc,
-/area/station/quartermaster/office)
 "bDd" = (
 /obj/rack,
 /obj/item/clothing/suit/fire,
@@ -16217,6 +16185,16 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor,
 /area/station/engine/gas)
+"bFh" = (
+/obj/machinery/conveyor/WE{
+	id = "disposals";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth{
+	dir = 1
+	},
+/area/station/maintenance/disposal)
 "bFo" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/mining/staff_room)
@@ -18830,6 +18808,20 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/central)
+"cOt" = (
+/obj/machinery/conveyor/SN{
+	id = "cargo_in"
+	},
+/obj/machinery/door/poddoor/blast/single{
+	doordir = "noblasts";
+	icon_state = "bdoornoblasts1";
+	id = "cargo_in_inner";
+	layer = 4;
+	name = "Inbound Cargo Belt"
+	},
+/obj/strip_door,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "cOK" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18847,6 +18839,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"cPd" = (
+/obj/machinery/mass_driver{
+	id = "qm_dock_out"
+	},
+/obj/machinery/door/poddoor/blast/single{
+	doordir = "noblasts";
+	icon_state = "bdoornoblasts1";
+	id = "qm_dock_out";
+	layer = 4;
+	name = "Outbound Cargo Belt"
+	},
+/obj/strip_door,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/caution/misc,
+/area/station/quartermaster/office)
 "cPx" = (
 /turf/simulated/floor/specialroom/medbay,
 /area/station/medical/medbay)
@@ -19931,26 +19942,6 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost)
-"dNv" = (
-/obj/machinery/conveyor/SN{
-	id = "cargo_in"
-	},
-/obj/machinery/door/poddoor/blast/single{
-	doordir = "noblasts";
-	icon_state = "bdoornoblasts1";
-	id = "qm_dock";
-	layer = 4;
-	name = "Inbound Cargo Belt"
-	},
-/obj/strip_door,
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/machinery/launcher_loader/north,
-/turf/simulated/floor/caution/misc,
-/area/station/quartermaster/office)
 "dND" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -22029,6 +22020,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/inner)
+"fEL" = (
+/obj/disposalpipe/segment/mail,
+/obj/machinery/conveyor/SN{
+	id = "qm2hall";
+	name = "cargo belt - north";
+	operating = 1
+	},
+/obj/machinery/door/poddoor/blast/single{
+	doordir = "noblasts";
+	icon_state = "bdoornoblasts1";
+	id = "qm2hall_door";
+	layer = 4;
+	name = "QM Security Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/caution/misc{
+	dir = 1
+	},
+/area/station/quartermaster/office)
 "fFG" = (
 /obj/item/storage/wall/fire{
 	dir = 1;
@@ -22106,17 +22116,6 @@
 	icon_state = "blue1"
 	},
 /area/station/hallway/secondary/central)
-"fHo" = (
-/obj/disposalpipe/segment/mail{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/obj/strip_door,
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/security/beepsky)
 "fIg" = (
 /obj/machinery/vending/medical,
 /obj/machinery/firealarm/south,
@@ -26569,6 +26568,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"jbv" = (
+/obj/machinery/conveyor/NS{
+	id = "disposals";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/caution/westeast,
+/area/station/maintenance/disposal)
 "jbC" = (
 /obj/machinery/light/emergency{
 	dir = 1;
@@ -27036,14 +27043,6 @@
 /obj/mapping_helper/access/tox,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
-"jvO" = (
-/obj/machinery/conveyor/NS{
-	id = "disposals";
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/caution/westeast,
-/area/station/maintenance/disposal)
 "jwm" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -27995,20 +27994,6 @@
 	},
 /turf/simulated/floor/purple/corner,
 /area/station/science/lobby)
-"klZ" = (
-/obj/machinery/conveyor/SN{
-	id = "cargo_in"
-	},
-/obj/machinery/door/poddoor/blast/single{
-	doordir = "noblasts";
-	icon_state = "bdoornoblasts1";
-	id = "cargo_in_inner";
-	layer = 4;
-	name = "Inbound Cargo Belt"
-	},
-/obj/strip_door,
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "kow" = (
 /obj/machinery/door_control{
 	id = "engineshield";
@@ -28350,6 +28335,13 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/teleporter)
+"kzg" = (
+/obj/strip_door,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "kzz" = (
 /obj/item/storage/wall/random,
 /obj/cable{
@@ -28604,16 +28596,6 @@
 /obj/machinery/power/terminal,
 /turf/simulated/floor,
 /area/station/engine/substation/east)
-"kJp" = (
-/obj/machinery/conveyor/WE{
-	id = "disposals";
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/caution/northsouth{
-	dir = 1
-	},
-/area/station/maintenance/disposal)
 "kKs" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/blast{
@@ -33564,6 +33546,11 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/storage/tools)
+"oGj" = (
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown)
 "oGs" = (
 /obj/item/device/radio/intercom/engineering{
 	dir = 4
@@ -33888,6 +33875,17 @@
 	dir = 10
 	},
 /area/station/security/main)
+"oSY" = (
+/obj/disposalpipe/segment/mail{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/obj/strip_door,
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/security/beepsky)
 "oTr" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -33960,20 +33958,6 @@
 	},
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/storage/primary)
-"oWF" = (
-/obj/machinery/conveyor/NS{
-	id = "cargo_out"
-	},
-/obj/machinery/door/poddoor/blast/single{
-	doordir = "noblasts";
-	icon_state = "bdoornoblasts1";
-	id = "cargo_out_inner";
-	layer = 4;
-	name = "Outbound Cargo Belt"
-	},
-/obj/strip_door,
-/turf/simulated/floor,
-/area/station/quartermaster/office)
 "oWK" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -34110,13 +34094,6 @@
 	icon_state = "fpurple2"
 	},
 /area/station/crew_quarters/bar)
-"pdz" = (
-/obj/strip_door,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/science/bot_storage)
 "pgF" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 5
@@ -34200,25 +34177,6 @@
 /area/station/medical/medbay/lobby)
 "pme" = (
 /turf/simulated/floor/yellow/corner,
-/area/station/quartermaster/office)
-"pmg" = (
-/obj/disposalpipe/segment/mail,
-/obj/machinery/conveyor/SN{
-	id = "qm2hall";
-	name = "cargo belt - north";
-	operating = 1
-	},
-/obj/machinery/door/poddoor/blast/single{
-	doordir = "noblasts";
-	icon_state = "bdoornoblasts1";
-	id = "qm2hall_door";
-	layer = 4;
-	name = "QM Security Door"
-	},
-/obj/strip_door,
-/turf/simulated/floor/caution/misc{
-	dir = 1
-	},
 /area/station/quartermaster/office)
 "pmh" = (
 /obj/machinery/drainage,
@@ -34837,6 +34795,20 @@
 /obj/landmark/start/job/detective,
 /turf/simulated/floor/redblack,
 /area/station/security/detectives_office)
+"pMD" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost)
 "pNj" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
@@ -35827,28 +35799,6 @@
 /area/station/crew_quarters/quartersA{
 	name = "Crew Quarters M03"
 	})
-"qty" = (
-/obj/cable/orange{
-	icon_state = "4-8"
-	},
-/obj/machinery/conveyor/EW{
-	id = "mining2qm"
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/obj/machinery/door/poddoor/blast/single{
-	dir = 6;
-	doordir = "noblasts";
-	icon_state = "bdoornoblasts1";
-	id = "mining2qm_sec_door";
-	layer = 4;
-	name = "QM Security Door"
-	},
-/turf/simulated/floor/caution/misc{
-	dir = 4
-	},
-/area/station/quartermaster/office)
 "qum" = (
 /turf/simulated/floor/orangeblack,
 /area/station/engine/substation/east)
@@ -36966,6 +36916,13 @@
 /obj/table/reinforced/auto,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"rla" = (
+/obj/table/reinforced/chemistry/auto/drugs,
+/obj/machinery/chem_shaker/large/chemistry,
+/turf/simulated/floor/purpleblack{
+	dir = 10
+	},
+/area/station/science/chemistry)
 "rlv" = (
 /obj/disposalpipe/segment,
 /obj/cable{
@@ -37469,6 +37426,28 @@
 	},
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
+"rKt" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/machinery/conveyor/EW{
+	id = "mining2qm"
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/obj/machinery/door/poddoor/blast/single{
+	dir = 6;
+	doordir = "noblasts";
+	icon_state = "bdoornoblasts1";
+	id = "mining2qm_sec_door";
+	layer = 4;
+	name = "QM Security Door"
+	},
+/turf/simulated/floor/caution/misc{
+	dir = 4
+	},
+/area/station/quartermaster/office)
 "rKB" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -39101,6 +39080,20 @@
 	},
 /turf/simulated/floor/grass/random,
 /area/station/hydroponics/bay)
+"tdJ" = (
+/obj/machinery/conveyor/NS{
+	id = "cargo_out"
+	},
+/obj/machinery/door/poddoor/blast/single{
+	doordir = "noblasts";
+	icon_state = "bdoornoblasts1";
+	id = "cargo_out_inner";
+	layer = 4;
+	name = "Outbound Cargo Belt"
+	},
+/obj/strip_door,
+/turf/simulated/floor,
+/area/station/quartermaster/office)
 "tdV" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -39720,6 +39713,26 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/fitness)
+"tCe" = (
+/obj/machinery/conveyor/SN{
+	id = "cargo_in"
+	},
+/obj/machinery/door/poddoor/blast/single{
+	doordir = "noblasts";
+	icon_state = "bdoornoblasts1";
+	id = "qm_dock";
+	layer = 4;
+	name = "Inbound Cargo Belt"
+	},
+/obj/strip_door,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/machinery/launcher_loader/north,
+/turf/simulated/floor/caution/misc,
+/area/station/quartermaster/office)
 "tCh" = (
 /obj/shrub,
 /obj/decal/tile_edge/stripe/extra_big,
@@ -41184,27 +41197,6 @@
 /area/station/chapel/sanctuary{
 	name = "Community Center"
 	})
-"uIp" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost)
 "uIz" = (
 /obj/stool/bed,
 /obj/landmark/start/job/assistant,
@@ -68884,7 +68876,7 @@ okl
 okl
 awY
 axR
-ayB
+oGj
 azd
 pAG
 aAR
@@ -73546,7 +73538,7 @@ iGT
 bnC
 lkL
 bnC
-fHo
+oSY
 hQX
 brd
 bsj
@@ -81269,7 +81261,7 @@ bsu
 bXM
 bsu
 vMf
-qty
+rKt
 pOy
 aJg
 fqq
@@ -82801,7 +82793,7 @@ aUq
 fUL
 kbI
 rKB
-pmg
+fEL
 dZV
 buP
 iMh
@@ -83569,7 +83561,7 @@ bkq
 blB
 bmO
 bnK
-bpj
+rla
 bgR
 oUs
 aqu
@@ -83835,10 +83827,10 @@ oPt
 eQL
 tZa
 ooV
-oWF
+tdJ
 bAx
 bTY
-bCX
+cPd
 bDq
 aaa
 aaa
@@ -84349,10 +84341,10 @@ jEJ
 wyl
 dPT
 dPT
-klZ
+cOt
 nEg
 ddX
-dNv
+tCe
 lFq
 guu
 guu
@@ -85333,7 +85325,7 @@ hzq
 fCj
 seh
 lyy
-jvO
+jbv
 jcJ
 dHN
 aSm
@@ -85849,7 +85841,7 @@ avz
 azb
 azV
 awj
-kJp
+bFh
 awj
 aDN
 aEN
@@ -86636,7 +86628,7 @@ kut
 hhn
 nuA
 aTe
-pdz
+kzg
 aWa
 eLM
 aYw
@@ -103179,7 +103171,7 @@ fDM
 wCL
 wCL
 wCL
-uIp
+pMD
 bKK
 aab
 aab

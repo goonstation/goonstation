@@ -2832,27 +2832,6 @@
 	icon_state = "damaged5"
 	},
 /area/russian/radiation)
-"aXr" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/wall/false_wall/reinforced{
-	floorburnt = 0;
-	floorhealth = 100;
-	flooricon = 'icons/turf/floors.dmi';
-	flooricon_state = "plating";
-	floorintact = 1;
-	floorname = "plating";
-	gas_impermeable = 1;
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
-	icon_state = "norn-R-3";
-	layer = 1.9;
-	mod = "norn-R-"
-	},
-/area/russian/radiation)
 "aXs" = (
 /obj/lattice{
 	dir = 10;
@@ -6399,24 +6378,6 @@
 	icon_old = "wooden";
 	icon_state = "damaged4";
 	name = "wood floor"
-	},
-/area/russian/radiation)
-"bkn" = (
-/obj/disposalpipe/segment/mineral{
-	dir = 4
-	},
-/turf/simulated/wall/false_wall/reinforced{
-	floorburnt = 0;
-	floorhealth = 100;
-	flooricon = 'icons/turf/floors.dmi';
-	flooricon_state = "plating";
-	floorintact = 1;
-	floorname = "plating";
-	gas_impermeable = 1;
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
-	icon_state = "norn-R-3";
-	layer = 1.9;
-	mod = "norn-R-"
 	},
 /area/russian/radiation)
 "bko" = (
@@ -24826,19 +24787,6 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"cJA" = (
-/obj/strip_door,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/cargo{
-	dir = 4
-	},
-/turf/simulated/floor/black{
-	desc = " It is made of steel.";
-	name = "steel floor"
-	},
-/area/russian/radiation)
 "cJB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -32336,23 +32284,6 @@
 	icon_state = "damaged3"
 	},
 /area/russian/radiation)
-"dgf" = (
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/east{
-	broken = 1;
-	desc = " It is made of temp.";
-	icon = 'icons/turf/floors.dmi';
-	icon_old = "fgreen2";
-	icon_state = "damaged3"
-	},
-/area/russian/radiation)
 "dgx" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
@@ -36707,6 +36638,17 @@
 	icon_old = "floorgrime-b";
 	icon_state = "damaged3";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"eln" = (
+/obj/machinery/conveyor/WE{
+	name = "cargo belt - east";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating{
+	desc = " It is made of steel.";
+	name = "steel plating"
 	},
 /area/russian/radiation)
 "enu" = (
@@ -46306,6 +46248,19 @@
 	name = "wood floor"
 	},
 /area/russian/radiation)
+"iXP" = (
+/obj/strip_door,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/cargo{
+	dir = 4
+	},
+/turf/simulated/floor/black{
+	desc = " It is made of steel.";
+	name = "steel floor"
+	},
+/area/russian/radiation)
 "iXT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -51960,6 +51915,27 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
+"lFo" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/wall/false_wall/reinforced{
+	floorburnt = 0;
+	floorhealth = 100;
+	flooricon = 'icons/turf/floors.dmi';
+	flooricon_state = "plating";
+	floorintact = 1;
+	floorname = "plating";
+	gas_impermeable = 1;
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-R-3";
+	layer = 1.9;
+	mod = "norn-R-"
+	},
+/area/russian/radiation)
 "lFQ" = (
 /obj/landmark/start/job/head_of_security,
 /turf/unsimulated/floor{
@@ -53839,6 +53815,20 @@
 /turf/simulated/floor/black{
 	desc = " It is made of steel.";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"mBN" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating{
+	desc = " It is made of steel.";
+	name = "steel plating"
 	},
 /area/russian/radiation)
 "mBX" = (
@@ -59070,6 +59060,18 @@
 	icon_old = "floor";
 	icon_state = "damaged1";
 	name = "steel floor"
+	},
+/area/russian/radiation)
+"oUu" = (
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating/random{
+	desc = " It is made of steel.";
+	icon_state = "platingdmg2";
+	name = "steel plating"
 	},
 /area/russian/radiation)
 "oUS" = (
@@ -67292,20 +67294,6 @@
 	name = "steel plating"
 	},
 /area/russian/radiation)
-"tbV" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating{
-	desc = " It is made of steel.";
-	name = "steel plating"
-	},
-/area/russian/radiation)
 "tce" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -67971,17 +67959,6 @@
 	desc = " It is made of steel.";
 	icon_old = "plating";
 	icon_state = "platingdmg2";
-	name = "steel plating"
-	},
-/area/russian/radiation)
-"twE" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating{
-	desc = " It is made of steel.";
 	name = "steel plating"
 	},
 /area/russian/radiation)
@@ -69513,6 +69490,24 @@
 	name = "steel shuttle floor"
 	},
 /area/russian/radiation)
+"uiM" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 4
+	},
+/turf/simulated/wall/false_wall/reinforced{
+	floorburnt = 0;
+	floorhealth = 100;
+	flooricon = 'icons/turf/floors.dmi';
+	flooricon_state = "plating";
+	floorintact = 1;
+	floorname = "plating";
+	gas_impermeable = 1;
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-R-3";
+	layer = 1.9;
+	mod = "norn-R-"
+	},
+/area/russian/radiation)
 "uiP" = (
 /obj/stool/chair/comfy/shuttle{
 	dir = 8
@@ -70789,18 +70784,6 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor/grass,
-/area/russian/radiation)
-"vbW" = (
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating/random{
-	desc = " It is made of steel.";
-	icon_state = "platingdmg2";
-	name = "steel plating"
-	},
 /area/russian/radiation)
 "vcg" = (
 /obj/machinery/conveyor/EW{
@@ -73172,6 +73155,21 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn{
 	icon_state = "norn-R-12"
+	},
+/area/russian/radiation)
+"wuc" = (
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	name = "crematorium pipe"
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/east{
+	broken = 1;
+	desc = " It is made of temp.";
+	icon = 'icons/turf/floors.dmi';
+	icon_old = "fgreen2";
+	icon_state = "damaged3"
 	},
 /area/russian/radiation)
 "wuf" = (
@@ -86122,7 +86120,7 @@ cQn
 cUm
 cYH
 den
-dgf
+wuc
 dia
 xHj
 dlH
@@ -96333,7 +96331,7 @@ dFp
 dGb
 tBU
 xwv
-aXr
+lFo
 xwv
 vTV
 xwv
@@ -96345,7 +96343,7 @@ bgb
 bhB
 bil
 xHU
-bkn
+uiM
 xwv
 xHU
 xwv
@@ -102283,7 +102281,7 @@ dGb
 dGb
 xHj
 uLF
-vbW
+oUu
 xHU
 vFh
 wab
@@ -132020,7 +132018,7 @@ sJp
 qrE
 hkO
 ofB
-cJA
+iXP
 cNW
 wnr
 cVH
@@ -137299,9 +137297,9 @@ dyo
 dyo
 xoU
 xHs
-tbV
+mBN
 tls
-twE
+eln
 yfl
 ykS
 dGb

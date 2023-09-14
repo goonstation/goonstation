@@ -5991,6 +5991,18 @@
 /obj/item/piano_key,
 /turf/simulated/floor/carpet/red,
 /area/station/chapel/sanctuary)
+"cGj" = (
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/caution/north,
+/area/listeningpost)
 "cGn" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -16405,6 +16417,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/turret_protected/Zeta)
+"hif" = (
+/obj/machinery/conveyor/WE{
+	id = "disposals";
+	operating = 1;
+	move_lag = 16
+	},
+/obj/strip_door,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/disposal)
 "hig" = (
 /obj/decal/poster/wallsign/stencil/left/r{
 	pixel_x = -10
@@ -17264,13 +17288,6 @@
 	dir = 4
 	},
 /area/mining/magnet)
-"hDp" = (
-/obj/machinery/conveyor/EW{
-	id = "cargobuy"
-	},
-/obj/strip_door,
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
 "hDr" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -19514,6 +19531,21 @@
 /obj/item/wrestlingbell,
 /turf/simulated/floor/carpet/red/fancy/edge/south,
 /area/station/chapel/sanctuary)
+"iDk" = (
+/obj/decal/tile_edge/stripe{
+	dir = 6;
+	icon_state = "delivery2"
+	},
+/obj/machinery/door/firedoor/pyro{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe,
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/science/bot_storage)
 "iDl" = (
 /obj/table/glass/auto,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -22086,6 +22118,13 @@
 	dir = 4
 	},
 /area/station/engine/inner)
+"jEr" = (
+/obj/machinery/conveyor/WE{
+	id = "cargosell"
+	},
+/obj/strip_door,
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "jEF" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
@@ -22563,21 +22602,6 @@
 	dir = 4
 	},
 /area/station/hallway/primary/south)
-"jNJ" = (
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "delivery2"
-	},
-/obj/machinery/door/firedoor/pyro{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe,
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/science/bot_storage)
 "jNK" = (
 /obj/decal/boxingropeenter,
 /obj/disposalpipe/segment/mail,
@@ -22702,17 +22726,6 @@
 "jQu" = (
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/medical/breakroom)
-"jQJ" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/beakerbox,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/chemistry)
 "jQL" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -23480,6 +23493,13 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/carpet/purple/standard/edge/ne,
 /area/ghostdrone_factory)
+"kiM" = (
+/obj/machinery/conveyor/EW{
+	id = "cargobuy"
+	},
+/obj/strip_door,
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "kiR" = (
 /obj/shrub{
 	icon = 'icons/obj/stationobjs.dmi';
@@ -24156,6 +24176,17 @@
 /obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/baroffice)
+"kzO" = (
+/obj/machinery/conveyor/EW{
+	id = "cargodesk"
+	},
+/obj/strip_door,
+/obj/decal/tile_edge/stripe{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe,
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "kzT" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -28838,6 +28869,17 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/the_cage)
+"mDD" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/chem_shaker/large/chemistry,
+/obj/item/reagent_containers/glass/beaker/large,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "mDL" = (
 /turf/simulated/floor,
 /area/station/hallway/secondary/north)
@@ -31542,18 +31584,6 @@
 	},
 /turf/space,
 /area/space)
-"nOZ" = (
-/obj/machinery/conveyor/WE{
-	id = "disposals";
-	operating = 1;
-	move_lag = 16
-	},
-/obj/strip_door,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/maintenance/disposal)
 "nPc" = (
 /obj/machinery/computer/secure_data{
 	dir = 4
@@ -35673,17 +35703,6 @@
 /obj/item/item_box/postit,
 /turf/simulated/floor,
 /area/station/engine/elect)
-"pFW" = (
-/obj/machinery/conveyor/EW{
-	id = "cargodesk"
-	},
-/obj/strip_door,
-/obj/decal/tile_edge/stripe{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe,
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
 "pFY" = (
 /obj/machinery/light/emergency,
 /obj/machinery/light_switch/south,
@@ -35996,6 +36015,13 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/turret_protected/ai)
+"pPu" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/box/beakerbox,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "pPJ" = (
 /obj/machinery/shower,
 /obj/machinery/camera{
@@ -40970,12 +40996,6 @@
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"rYQ" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/chemistry)
 "rYV" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/light{
@@ -42646,13 +42666,6 @@
 /obj/item/plant/herb/cannabis,
 /turf/simulated/floor/green,
 /area/research_outpost/protest)
-"sLA" = (
-/obj/machinery/conveyor/WE{
-	id = "cargosell"
-	},
-/obj/strip_door,
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
 "sLE" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -44955,25 +44968,6 @@
 /area/station/maintenance/central{
 	name = "Maintenance Shack"
 	})
-"tIR" = (
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/obj/machinery/light,
-/turf/simulated/floor/caution/north,
-/area/listeningpost)
 "tIX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -62963,7 +62957,7 @@ xxT
 pLE
 nnW
 ite
-tIR
+cGj
 xxT
 jGe
 jGe
@@ -87763,8 +87757,8 @@ lil
 eah
 xzy
 sYp
-jQJ
-rYQ
+mDD
+pPu
 roI
 cAn
 sYc
@@ -88072,7 +88066,7 @@ vMw
 vMw
 vMw
 sTm
-jNJ
+iDk
 iVf
 xrc
 xrc
@@ -101090,7 +101084,7 @@ eeg
 bWJ
 rZI
 woD
-nOZ
+hif
 itH
 daf
 daf
@@ -103490,7 +103484,7 @@ vcs
 tnb
 mkv
 siO
-pFW
+kzO
 tnb
 qCn
 tnb
@@ -106511,9 +106505,9 @@ oau
 qOT
 huK
 vNE
-hDp
+kiM
 tnb
-sLA
+jEr
 tnb
 tnb
 nRi

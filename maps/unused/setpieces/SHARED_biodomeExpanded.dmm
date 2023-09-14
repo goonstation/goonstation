@@ -4258,17 +4258,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/crater/biodome/north)
-"eYF" = (
-/obj/strip_door,
-/obj/railing{
-	dir = 1
-	},
-/turf/unsimulated/floor/wood/four{
-	desc = "May be slippery.";
-	name = "bowling lane";
-	wet = 2
-	},
-/area/swampzone/interiors/bonktek)
 "eYJ" = (
 /obj/decal/fakeobjects/smallrocks,
 /turf/unsimulated/floor/cave,
@@ -7475,10 +7464,6 @@
 	},
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/space)
-"iTi" = (
-/obj/machinery/computer/biodome_elevator,
-/turf/unsimulated/floor/caution/corner/ne,
-/area/crypt/sigma)
 "iTk" = (
 /obj/stool/chair/comfy/shuttle/red{
 	dir = 4;
@@ -7666,6 +7651,12 @@
 	dir = 1
 	},
 /area/crater/biodome/south)
+"jbj" = (
+/obj/machinery/computer/elevator/biodome,
+/turf/unsimulated/floor/caution/corner/nw{
+	dir = 1
+	},
+/area/crater/biodome/crew)
 "jbO" = (
 /obj/spacevine,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -11019,6 +11010,15 @@
 /obj/decal/stalagmite,
 /turf/unsimulated/floor/cave,
 /area/swampzone/interiors/quarry)
+"nbV" = (
+/obj/strip_door,
+/obj/railing,
+/turf/unsimulated/floor/wood/four{
+	desc = "May be slippery.";
+	name = "bowling lane";
+	wet = 2
+	},
+/area/swampzone/interiors/bonktek)
 "nbZ" = (
 /obj/machinery/door/unpowered/wood,
 /turf/unsimulated/floor/setpieces/rootfloor{
@@ -14059,12 +14059,6 @@
 	dir = 1
 	},
 /area/crypt/sigma/morgue)
-"qPk" = (
-/obj/machinery/computer/biodome_elevator,
-/turf/unsimulated/floor/caution/corner/nw{
-	dir = 1
-	},
-/area/crater/biodome/crew)
 "qPJ" = (
 /obj/item/gun/kinetic/pistol,
 /obj/table/reinforced/industrial/auto,
@@ -14410,20 +14404,6 @@
 /obj/item/raw_material/molitz,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"rkg" = (
-/obj/strip_door,
-/obj/railing{
-	dir = 1
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/unsimulated/floor/wood/four{
-	desc = "May be slippery.";
-	name = "bowling lane";
-	wet = 2
-	},
-/area/swampzone/interiors/bonktek)
 "rkz" = (
 /obj/decal/cleanable/dirt,
 /obj/item/raw_material/char,
@@ -15496,6 +15476,24 @@
 "sGo" = (
 /turf/unsimulated/floor/cave,
 /area/swampzone/ground)
+"sGB" = (
+/obj/strip_door,
+/obj/railing{
+	dir = 1
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/unsimulated/floor/wood/four{
+	desc = "May be slippery.";
+	name = "bowling lane";
+	wet = 2
+	},
+/area/swampzone/interiors/bonktek)
+"sGI" = (
+/obj/machinery/computer/elevator/biodome,
+/turf/unsimulated/floor/caution/corner/ne,
+/area/crypt/sigma)
 "sGP" = (
 /obj/machinery/light,
 /obj/machinery/plantpot,
@@ -18655,15 +18653,6 @@
 	icon_state = "rootfloor_3"
 	},
 /area/crypt/mausoleum)
-"wmg" = (
-/obj/strip_door,
-/obj/railing,
-/turf/unsimulated/floor/wood/four{
-	desc = "May be slippery.";
-	name = "bowling lane";
-	wet = 2
-	},
-/area/swampzone/interiors/bonktek)
 "wmv" = (
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt{
@@ -19528,6 +19517,17 @@
 /obj/item/toolbox_arm,
 /turf/unsimulated/floor/yellowblack,
 /area/swampzone/interiors/bonktek/electek)
+"xkq" = (
+/obj/strip_door,
+/obj/railing{
+	dir = 1
+	},
+/turf/unsimulated/floor/wood/four{
+	desc = "May be slippery.";
+	name = "bowling lane";
+	wet = 2
+	},
+/area/swampzone/interiors/bonktek)
 "xkG" = (
 /obj/window/cubicle{
 	dir = 2
@@ -89483,7 +89483,7 @@ ahQ
 rlu
 oUE
 apu
-iTi
+sGI
 pbq
 pbq
 tmG
@@ -130922,10 +130922,10 @@ lbq
 aSw
 aSw
 lbq
-rkg
-wmg
-eYF
-wmg
+sGB
+nbV
+xkq
+nbV
 fIP
 vml
 izF
@@ -179782,7 +179782,7 @@ auI
 auI
 auI
 oQv
-qPk
+jbj
 qVN
 qVN
 bRz

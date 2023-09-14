@@ -832,6 +832,24 @@
 		return
 
 	afterattack(var/atom/target, mob/user, flag)
+		if (istype(target, /obj/item/clothing/))
+			if (apply_property(target)) // some property got changed, display a message and delete src
+				var/turf/T = get_turf(target)
+				playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
+				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!</span>")
+				if (src.loc)
+					if (ishuman(src.loc))
+						var/mob/living/carbon/human/wearer = src.loc
+						wearer.update_clothing()
+						wearer.update_equipped_modifiers() // required for things like movespeed changes
+				qdel(src)
+			else // nothing got changed, stats might be at cap already
+				boutput(user, "<span class='notice'>You can't seem to find a way to improve \the [target] with \the [src].</span>")
+
+		else
+			..()
+
+	proc/apply_property(var/atom/target)
 		var/did_something = 0
 
 		if (istype(target, /obj/item/clothing/))
@@ -863,29 +881,17 @@
 							target_clothing.setProperty(property.property_name, property.property_value)
 							did_something = 1
 
-			if (did_something) // some property got changed, display a message and delete src
-				var/turf/T = get_turf(target)
-				playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
-				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!</span>")
-				if (length(src.prefix_to_set))
-					target.name_prefix(prefix_to_set)
-					target.UpdateName()
-				if (length(src.suffix_to_set))
-					target.name_suffix(suffix_to_set)
-					target.UpdateName()
-				if (src.color_to_set)
-					target.color = src.color_to_set
-				if (src.loc)
-					if (ishuman(src.loc))
-						var/mob/living/carbon/human/wearer = src.loc
-						wearer.update_clothing()
-						wearer.update_equipped_modifiers() // required for things like movespeed changes
-				qdel(src)
-			else // nothing got changed, stats might be at cap already
-				boutput(user, "<span class='notice'>You can't seem to find a way to improve \the [target] with \the [src].</span>")
+				if(did_something)
+					if (length(src.prefix_to_set))
+						target.name_prefix(prefix_to_set)
+						target.UpdateName()
+					if (length(src.suffix_to_set))
+						target.name_suffix(suffix_to_set)
+						target.UpdateName()
+					if (src.color_to_set)
+						target.color = src.color_to_set
 
-		else
-			..()
+		return did_something
 
 /obj/item/property_setter/fire_jewel
 	name = "fire jewel"

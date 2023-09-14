@@ -1278,6 +1278,11 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai_upload)
+"aBX" = (
+/obj/stool/chair,
+/obj/npc/trader/robot/medical,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "aCv" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1371,6 +1376,18 @@
 /obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor/engine/caution/south,
 /area/station/medical/head)
+"aED" = (
+/obj/npc/trader/exclown,
+/obj/stool/chair/syndicate,
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "aEI" = (
 /obj/disposalpipe/segment/mail/vertical,
 /obj/landmark/gps_waypoint,
@@ -3320,22 +3337,6 @@
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
 	})
-"bwW" = (
-/obj/machinery/conveyor/EW{
-	id = "garbage";
-	move_lag = 6;
-	operating = 1
-	},
-/obj/machinery/door/poddoor/pyro{
-	autoclose = 1;
-	dir = 4;
-	id = "crusher";
-	layer = 4;
-	name = "Crusher Door"
-	},
-/obj/strip_door,
-/turf/simulated/floor/caution/northsouth,
-/area/station/maintenance/disposal)
 "bxc" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -7351,6 +7352,25 @@
 /area/station/maintenance/outer/nw{
 	name = "Northwest Breach Hull"
 	})
+"dtf" = (
+/obj/machinery/conveyor/WE{
+	id = "nadir_qmio"
+	},
+/obj/strip_door{
+	layer = 3.1
+	},
+/obj/machinery/door/poddoor/pyro{
+	autoclose = 1;
+	dir = 4;
+	id = "cargo_swapabout";
+	layer = 3.2;
+	name = "Cargo Transfer"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/quartermaster/cargooffice)
 "dtg" = (
 /obj/machinery/fluid_canister,
 /obj/machinery/camera{
@@ -8295,17 +8315,6 @@
 /obj/machinery/vending/medical,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
-"dNQ" = (
-/obj/stool/chair,
-/obj/npc/trader/robot{
-	icon_state = "medibot0";
-	name = "D.O.C.";
-	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader";
-	icon = 'icons/misc/evilreaverstation.dmi'
-	},
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "dOb" = (
 /obj/machinery/door_control{
 	id = "nadir_bhull_nw";
@@ -10992,6 +11001,13 @@
 	dir = 10
 	},
 /area/station/engine/core/nuclear)
+"eZY" = (
+/obj/strip_door,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/beepsky)
 "eZZ" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -17630,6 +17646,19 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/black,
 /area/station/security/hos)
+"hJn" = (
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/listeningpost)
 "hJD" = (
 /obj/table/reinforced/auto,
 /obj/machinery/networked/printer{
@@ -17764,6 +17793,25 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
+"hMA" = (
+/obj/strip_door{
+	layer = 3.1
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	doordir = "mid";
+	icon_state = "bdoormid1";
+	id = "cargogaming";
+	layer = 3.2;
+	name = "Transception Bay Door"
+	},
+/obj/machinery/conveyor/SN{
+	id = "nadir_qmio2"
+	},
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/engine/caution/northsouth,
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "hMP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17784,26 +17832,6 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
-"hNg" = (
-/obj/disposalpipe/segment/transport,
-/obj/strip_door{
-	layer = 3.1
-	},
-/obj/machinery/door/poddoor/blast/pyro{
-	doordir = "mid";
-	icon_state = "bdoormid1";
-	id = "cargogaming";
-	layer = 3.2;
-	name = "Transception Bay Door"
-	},
-/obj/machinery/conveyor/SN{
-	id = "nadir_qmio2"
-	},
-/obj/forcefield/energyshield/perma/doorlink,
-/turf/simulated/floor/engine/caution/northsouth,
-/area/station/quartermaster/cargobay{
-	name = "Cargo Primary Endpoint"
-	})
 "hNh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -21754,20 +21782,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
-"jvs" = (
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
-/obj/stool/chair/syndicate,
-/obj/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
-	})
 "jvJ" = (
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/bootleg,
@@ -22646,6 +22660,22 @@
 	},
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
+"jPI" = (
+/obj/machinery/conveyor/EW{
+	id = "garbage";
+	move_lag = 6;
+	operating = 1
+	},
+/obj/machinery/door/poddoor/pyro{
+	autoclose = 1;
+	dir = 4;
+	id = "crusher";
+	layer = 4;
+	name = "Crusher Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth,
+/area/station/maintenance/disposal)
 "jPL" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/small/harsh{
@@ -23977,6 +24007,19 @@
 	},
 /turf/space/fluid/acid/clear,
 /area/space)
+"kqi" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/computer/elevator/sea,
+/obj/machinery/light/small/warm/very{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/shuttle/sea_elevator_room)
 "kqm" = (
 /obj/stool/chair{
 	dir = 8
@@ -28442,26 +28485,6 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
-"mdr" = (
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/listeningpost)
 "mdz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30267,6 +30290,14 @@
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"mTH" = (
+/obj/strip_door,
+/obj/machinery/door/firedoor/pyro,
+/obj/disposalpipe/segment/ejection{
+	dir = 2
+	},
+/turf/simulated/floor/black,
+/area/station/science/bot_storage)
 "mTM" = (
 /obj/lattice{
 	dir = 9;
@@ -30506,11 +30537,6 @@
 /obj/storage/secure/closet/animal,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
-"mZj" = (
-/obj/table/reinforced/chemistry/auto/basicsup,
-/obj/machinery/light,
-/turf/simulated/floor/purpleblack,
-/area/station/science/chemistry)
 "mZs" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -31268,6 +31294,12 @@
 /area/station/science/construction{
 	name = "Extraction Nexus"
 	})
+"nrF" = (
+/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/machinery/light,
+/obj/machinery/chem_shaker/large/chemistry,
+/turf/simulated/floor/purpleblack,
+/area/station/science/chemistry)
 "nsh" = (
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/blackwhite{
@@ -40109,25 +40141,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
-"rxw" = (
-/obj/machinery/conveyor/WE{
-	id = "nadir_qmio"
-	},
-/obj/strip_door{
-	layer = 3.1
-	},
-/obj/machinery/door/poddoor/pyro{
-	autoclose = 1;
-	dir = 4;
-	id = "cargo_swapabout";
-	layer = 3.2;
-	name = "Cargo Transfer"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/quartermaster/cargooffice)
 "rxJ" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/hand_tele{
@@ -42279,13 +42292,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southwest)
-"suY" = (
-/obj/strip_door,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/security/beepsky)
 "svf" = (
 /obj/machinery/light/flock,
 /obj/table/flock/auto,
@@ -46021,6 +46027,26 @@
 	dir = 1
 	},
 /area/pasiphae/sys)
+"tZy" = (
+/obj/disposalpipe/segment/transport,
+/obj/strip_door{
+	layer = 3.1
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	doordir = "mid";
+	icon_state = "bdoormid1";
+	id = "cargogaming";
+	layer = 3.2;
+	name = "Transception Bay Door"
+	},
+/obj/machinery/conveyor/SN{
+	id = "nadir_qmio2"
+	},
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/engine/caution/northsouth,
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "tZC" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1
@@ -48253,19 +48279,6 @@
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/core/nuclear)
-"uZN" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/computer/sea_elevator,
-/obj/machinery/light/small/warm/very{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/black/side{
-	dir = 1
-	},
-/area/shuttle/sea_elevator_room)
 "vay" = (
 /obj/decal/tile_edge/floorguide/command{
 	dir = 4
@@ -53527,14 +53540,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/northwest)
-"xyW" = (
-/obj/strip_door,
-/obj/machinery/door/firedoor/pyro,
-/obj/disposalpipe/segment/ejection{
-	dir = 2
-	},
-/turf/simulated/floor/black,
-/area/station/science/bot_storage)
 "xzc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -53865,25 +53870,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"xHa" = (
-/obj/strip_door{
-	layer = 3.1
-	},
-/obj/machinery/door/poddoor/blast/pyro{
-	doordir = "mid";
-	icon_state = "bdoormid1";
-	id = "cargogaming";
-	layer = 3.2;
-	name = "Transception Bay Door"
-	},
-/obj/machinery/conveyor/SN{
-	id = "nadir_qmio2"
-	},
-/obj/forcefield/energyshield/perma/doorlink,
-/turf/simulated/floor/engine/caution/northsouth,
-/area/station/quartermaster/cargobay{
-	name = "Cargo Primary Endpoint"
-	})
 "xHl" = (
 /obj/item/storage/wall{
 	dir = 8;
@@ -81349,7 +81335,7 @@ bzS
 bzS
 lmL
 tjr
-dNQ
+aBX
 icZ
 hvz
 tjr
@@ -83022,7 +83008,7 @@ csW
 kYe
 eNp
 lSt
-mdr
+hJn
 fXu
 qWP
 cYP
@@ -94014,7 +94000,7 @@ kGf
 vef
 lXZ
 mhQ
-suY
+eZY
 ydL
 ebB
 ebB
@@ -97310,7 +97296,7 @@ xZW
 fpX
 uwF
 wSE
-xyW
+mTH
 lWM
 tKh
 lWM
@@ -101846,7 +101832,7 @@ huy
 hSH
 dqX
 oxJ
-rxw
+dtf
 oxJ
 kqZ
 wbj
@@ -104571,7 +104557,7 @@ liG
 pYn
 vsG
 pJt
-xHa
+hMA
 gwo
 dHS
 tAy
@@ -104827,7 +104813,7 @@ wRi
 jKl
 iLY
 aUx
-mZj
+nrF
 wRi
 wRi
 bJE
@@ -104873,7 +104859,7 @@ nes
 nes
 vsG
 ttr
-hNg
+tZy
 vjw
 pQa
 wKF
@@ -105175,7 +105161,7 @@ vIv
 oRI
 vsG
 mrq
-xHa
+hMA
 nym
 tMp
 pum
@@ -106691,7 +106677,7 @@ aUZ
 bcV
 fle
 uoh
-jvs
+aED
 pAx
 nPt
 rkv
@@ -108453,7 +108439,7 @@ jdT
 lsj
 kqm
 gdf
-uZN
+kqi
 gUh
 aMA
 ahN
@@ -113260,7 +113246,7 @@ eVf
 kti
 kti
 kti
-bwW
+jPI
 kti
 frk
 ojD

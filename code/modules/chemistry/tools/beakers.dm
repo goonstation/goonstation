@@ -181,6 +181,9 @@
 	icon_state = "largebottle-burn"
 	initial_reagents = "silver_sulfadiazine"
 
+/obj/item/reagent_containers/glass/beaker/large/cyborg
+	shatter_immune = TRUE
+
 /*  Now found in hydroponics.dm!
 
 /obj/item/reagent_containers/glass/beaker/large/happy_plant //I have to test too many fucking plant-related issues atm so I'm adding this just to make my life less annoying

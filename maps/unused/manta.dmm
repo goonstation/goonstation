@@ -1726,18 +1726,6 @@
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/grime,
 /area/abandonedmedicalship/robot_trader)
-"agf" = (
-/obj/stool/chair,
-/obj/npc/trader/robot{
-	icon_state = "medibot0";
-	name = "D.O.C.";
-	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader"
-	},
-/obj/map/light/white,
-/obj/machinery/light/small/floor/cool,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "agg" = (
 /obj/machinery/shuttle/engine/heater/seaheater_left,
 /turf/space/fluid/manta,
@@ -3216,24 +3204,6 @@
 /turf/simulated/floor/stairs/dark{
 	dir = 5
 	},
-/area/listeningpost/syndicateassaultvessel)
-"alp" = (
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
 "alq" = (
 /turf/simulated/floor/stairs/dark/wide{
@@ -10837,13 +10807,6 @@
 "aFw" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/kitchen/freezer)
-"aFx" = (
-/obj/strip_door,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/security/beepsky)
 "aFz" = (
 /obj/disposalpipe/segment/mail{
 	dir = 2;
@@ -10947,13 +10910,6 @@
 	dir = 4
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/bot_storage)
-"aFM" = (
-/obj/strip_door,
-/obj/disposalpipe/segment/mail{
-	dir = 4
-	},
-/turf/simulated/floor,
 /area/station/science/bot_storage)
 "aFN" = (
 /obj/disposalpipe/segment/mail{
@@ -19498,17 +19454,6 @@
 /obj/mapping_helper/access/kitchen,
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen/therustykrab)
-"bdV" = (
-/obj/strip_door,
-/obj/machinery/conveyor/SN{
-	id = "north"
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "qm_dock";
-	name = "Cargo Bay In"
-	},
-/turf/simulated/floor/plating/random,
-/area/station/quartermaster/cargobay)
 "bdX" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4
@@ -26707,21 +26652,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/cargobay)
-"bwW" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "qm";
-	locked = 1;
-	name = "Cargo Bay Shutters";
-	opacity = 0
-	},
-/obj/strip_door,
-/obj/machinery/conveyor/SN{
-	id = "qmdelivery"
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/cargobay)
 "bwY" = (
 /obj/decal/tile_edge/stripe/big,
 /obj/disposalpipe/segment{
@@ -27084,20 +27014,6 @@
 	desc = "For flushing disposed waste. ";
 	name = "Processed Waste Flusher";
 	open = 1
-	},
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/disposal)
-"bxW" = (
-/obj/machinery/conveyor/EW{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/strip_door,
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "crusher";
-	name = "crusher door"
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
@@ -27657,19 +27573,6 @@
 "bzB" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/supernorn,
-/area/station/maintenance/disposal)
-"bzC" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "crusher";
-	name = "crusher door"
-	},
-/obj/strip_door,
-/obj/machinery/conveyor/SN{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
 "bzD" = (
 /obj/machinery/door/airlock/pyro/security{
@@ -30289,16 +30192,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/disposal)
-"bHJ" = (
-/obj/machinery/conveyor/NS{
-	id = "disposals";
-	move_lag = 30;
-	operating = 1
-	},
-/obj/machinery/launcher_loader/south,
-/obj/strip_door,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/disposal)
 "bHK" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/security_horizontal{
 	name = "Submarine Bay (Security)"
@@ -30316,17 +30209,6 @@
 /obj/stool/chair,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/upperstarboard)
-"bHQ" = (
-/obj/strip_door,
-/obj/machinery/conveyor/NS{
-	id = "south"
-	},
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "cargobay_out";
-	name = "Cargo Bay Out"
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/quartermaster/cargobay)
 "bHR" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -35687,6 +35569,21 @@
 /obj/mapping_helper/access/security,
 /turf/simulated/floor/red,
 /area/station/security/interrogation)
+"iho" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "qm";
+	locked = 1;
+	name = "Cargo Bay Shutters";
+	opacity = 0
+	},
+/obj/strip_door,
+/obj/machinery/conveyor/SN{
+	id = "qmdelivery"
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/quartermaster/cargobay)
 "iiG" = (
 /obj/stool/chair/dining/wood,
 /obj/cable,
@@ -37887,6 +37784,15 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/communications/bedroom)
+"nLc" = (
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/simulated/floor/specialroom/clown,
+/area/station/crew_quarters/clown)
 "nLx" = (
 /obj/storage/closet/welding_supply,
 /obj/machinery/light/incandescent/netural{
@@ -37919,6 +37825,17 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"nOV" = (
+/obj/strip_door,
+/obj/machinery/conveyor/SN{
+	id = "north"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "qm_dock";
+	name = "Cargo Bay In"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/quartermaster/cargobay)
 "nOY" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -39156,6 +39073,13 @@
 	icon_state = "yellowblack"
 	},
 /area/station/engine/engineering/breakroom)
+"qDN" = (
+/obj/strip_door,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/security/beepsky)
 "qDR" = (
 /obj/item/device/radio/beacon,
 /obj/cable{
@@ -39353,17 +39277,6 @@
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
-"rfE" = (
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
-/obj/machinery/light/incandescent/warm{
-	dir = 1;
-	pixel_y = 20
-	},
-/turf/simulated/floor/specialroom/clown,
-/area/station/crew_quarters/clown)
 "rkb" = (
 /obj/table/wood/auto,
 /obj/item/bible,
@@ -39638,6 +39551,13 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/lobby)
+"rHN" = (
+/obj/strip_door,
+/obj/disposalpipe/segment/mail{
+	dir = 4
+	},
+/turf/simulated/floor,
+/area/station/science/bot_storage)
 "rLV" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -39830,6 +39750,17 @@
 	},
 /turf/space/fluid/manta,
 /area/diner/hangar)
+"seW" = (
+/obj/strip_door,
+/obj/machinery/conveyor/NS{
+	id = "south"
+	},
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "cargobay_out";
+	name = "Cargo Bay Out"
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/quartermaster/cargobay)
 "sfd" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 1;
@@ -40113,6 +40044,20 @@
 /obj/item/circuitboard/teleporter,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
+"sXU" = (
+/obj/machinery/conveyor/EW{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "crusher";
+	name = "crusher door"
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/disposal)
 "sXW" = (
 /obj/machinery/chem_heater/chemistry,
 /obj/decal/tile_edge/line/purple{
@@ -41728,6 +41673,19 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/communications/office)
+"wYm" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "crusher";
+	name = "crusher door"
+	},
+/obj/strip_door,
+/obj/machinery/conveyor/SN{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/disposal)
 "xaf" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/construction)
@@ -42157,6 +42115,17 @@
 	},
 /turf/simulated/floor/damaged2,
 /area/station/engine/inner)
+"xSr" = (
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost/syndicateassaultvessel)
 "xTC" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -42208,6 +42177,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/station/crew_quarters/bar)
+"xZl" = (
+/obj/stool/chair,
+/obj/npc/trader/robot/medical,
+/obj/map/light/white,
+/obj/machinery/light/small/floor/cool,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "xZq" = (
 /obj/machinery/drainage,
 /obj/cable{
@@ -42299,6 +42275,16 @@
 	},
 /turf/simulated/floor/red,
 /area/listeningpost/syndicateassaultvessel)
+"yhI" = (
+/obj/machinery/conveyor/NS{
+	id = "disposals";
+	move_lag = 30;
+	operating = 1
+	},
+/obj/machinery/launcher_loader/south,
+/obj/strip_door,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/disposal)
 "ykb" = (
 /obj/stool/chair/dining/wood{
 	dir = 8
@@ -56614,7 +56600,7 @@ aaa
 aaa
 afN
 afZ
-agf
+xZl
 agx
 bLc
 agO
@@ -70291,7 +70277,7 @@ bCY
 bEl
 aDe
 nOj
-bdV
+nOV
 bIU
 bdY
 ark
@@ -70895,7 +70881,7 @@ bCY
 bEm
 bEm
 bEm
-bHQ
+seW
 bIV
 bLe
 bCG
@@ -73001,7 +72987,7 @@ bqi
 ptd
 tdB
 bvq
-bwW
+iho
 bvq
 vCh
 bBE
@@ -83494,7 +83480,7 @@ aaa
 aaa
 aaa
 aji
-rfE
+nLc
 ajA
 ajM
 ajX
@@ -86065,7 +86051,7 @@ alD
 alD
 aub
 alh
-alp
+xSr
 alw
 anJ
 akS
@@ -95620,7 +95606,7 @@ aIt
 aBr
 aTj
 aTj
-aFx
+qDN
 aTj
 aVw
 aVw
@@ -101688,7 +101674,7 @@ boy
 bpL
 bkN
 brh
-aFM
+rHN
 aJq
 bwf
 bxL
@@ -105624,7 +105610,7 @@ bCD
 bDQ
 bDQ
 bDQ
-bHJ
+yhI
 bIA
 act
 aaa
@@ -106523,7 +106509,7 @@ bqZ
 bsq
 bpV
 aKN
-bxW
+sXU
 aKN
 bAZ
 aKN
@@ -106826,7 +106812,7 @@ bpV
 bIT
 aKN
 bxX
-bzC
+wYm
 vRH
 aKN
 bzX

@@ -8777,12 +8777,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
-"aSR" = (
-/obj/strip_door{
-	name = "Beepsky's room"
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/courtroom)
 "aSS" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -12685,27 +12679,6 @@
 	dir = 4
 	},
 /area/listeningpost)
-"bmy" = (
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost)
 "bmz" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grey/side{
@@ -14120,16 +14093,6 @@
 	name = "W light switch";
 	pixel_x = -24
 	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
-"bsI" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/generic,
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
-/obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "bsL" = (
@@ -17196,6 +17159,15 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/space)
+"egm" = (
+/obj/machinery/conveyor/WE{
+	id = "qmin"
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "ehp" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish{
@@ -18617,6 +18589,12 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
+"fHO" = (
+/obj/strip_door{
+	name = "Beepsky's room"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/courtroom)
 "fIj" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -19289,15 +19267,6 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/engine,
 /area/station/ai_monitored/armory)
-"gvi" = (
-/obj/machinery/conveyor/WE{
-	id = "qmin"
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
 "gvN" = (
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/kitchen/freezer)
@@ -22034,6 +22003,20 @@
 	},
 /turf/space,
 /area/station/solar/aisat)
+"jux" = (
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost)
 "juF" = (
 /turf/simulated/floor/airless/solar,
 /area/space)
@@ -22710,20 +22693,6 @@
 /obj/table/wood/auto,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/hor)
-"kdg" = (
-/obj/machinery/conveyor/EW{
-	id = "qmoutput"
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/obj/machinery/door/poddoor{
-	id = "cargosto2";
-	name = "Storage Shutter";
-	dir = 4
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "kdy" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -26105,6 +26074,20 @@
 /obj/decal/poster/wallsign/poster_y4nt,
 /turf/simulated/wall/auto/supernorn,
 /area/station/hydroponics/bay)
+"nSg" = (
+/obj/machinery/conveyor/EW{
+	id = "qmoutput"
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/obj/machinery/door/poddoor{
+	id = "cargosto2";
+	name = "Storage Shutter";
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "nSy" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -27098,6 +27081,15 @@
 	dir = 4
 	},
 /area/station/hallway/primary/central)
+"oOj" = (
+/obj/machinery/conveyor/WE{
+	id = "qmout"
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "oOE" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
@@ -27907,15 +27899,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/red,
 /area/station/security/main)
-"pss" = (
-/obj/machinery/conveyor/WE{
-	id = "qmout"
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
 "psK" = (
 /obj/storage/closet/welding_supply,
 /turf/simulated/floor,
@@ -29753,6 +29736,14 @@
 	tag = "icon-grass1"
 	},
 /area/station/crew_quarters/pool)
+"qUn" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/obj/landmark/gps_waypoint,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "qUo" = (
 /obj/storage/secure/crate/weapon/confiscated_items,
 /turf/simulated/floor/red/redblackchecker,
@@ -46291,7 +46282,7 @@ psc
 cXe
 cXe
 cXe
-bmy
+jux
 blH
 bla
 bla
@@ -76313,9 +76304,9 @@ ahN
 aJw
 aJw
 aCm
-pss
+oOj
 bAn
-gvi
+egm
 aCm
 ycc
 ycc
@@ -77835,7 +77826,7 @@ uRU
 hZI
 kZU
 fIv
-kdg
+nSg
 aJw
 axD
 aLx
@@ -78171,7 +78162,7 @@ aPu
 bpx
 aqj
 brJ
-bsI
+qUn
 apk
 sOO
 ccL
@@ -79729,7 +79720,7 @@ aQj
 xEQ
 upu
 upu
-aSR
+fHO
 upu
 upu
 aaa

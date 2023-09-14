@@ -264,10 +264,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"aI" = (
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/security/main)
 "aJ" = (
 /obj/machinery/flasher/solitary/new_walls/west{
 	name = "\improper Mounted Flash"
@@ -1189,20 +1185,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
-"cY" = (
-/obj/decal/cleanable/dirt,
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/plating/random,
-/area/station/crew_quarters/clown)
 "cZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/clown)
@@ -1400,17 +1382,6 @@
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "dx" = (
-/obj/machinery/conveyor/WE{
-	id = "qmin"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
-"dy" = (
-/obj/strip_door,
-/obj/machinery/door/poddoor{
-	id = "cargodock_in";
-	name = "Cargo Routing Door"
-	},
 /obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
@@ -1793,17 +1764,6 @@
 /turf/simulated/floor/neutral,
 /area/station/quartermaster/office)
 "ex" = (
-/obj/machinery/conveyor/WE{
-	id = "qmout"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
-"ey" = (
-/obj/strip_door,
-/obj/machinery/door/poddoor{
-	id = "cargodock_out";
-	name = "Cargo Routing Door"
-	},
 /obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
@@ -2245,14 +2205,6 @@
 /area/station/science/storage)
 "fx" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/janitor/supply)
-"fy" = (
-/obj/machinery/conveyor/SN{
-	id = "garbage";
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "fz" = (
 /obj/storage/secure/closet/command/chief_engineer,
@@ -6543,6 +6495,17 @@
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"wv" = (
+/obj/strip_door,
+/obj/machinery/door/poddoor{
+	id = "cargodock_out";
+	name = "Cargo Routing Door"
+	},
+/obj/machinery/conveyor/WE{
+	id = "qmout"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 "wZ" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -6562,6 +6525,18 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
+"AR" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/clown)
 "Ch" = (
 /obj/storage/secure/closet/security/forensics,
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
@@ -6587,6 +6562,21 @@
 /obj/machinery/clonepod,
 /turf/simulated/floor/white,
 /area/station/medical/research)
+"CB" = (
+/obj/strip_door,
+/obj/machinery/door/poddoor{
+	id = "cargodock_in";
+	name = "Cargo Routing Door"
+	},
+/obj/machinery/conveyor/WE{
+	id = "qmin"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
+"Eh" = (
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/security/main)
 "GM" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
@@ -6613,6 +6603,14 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
+"Xp" = (
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/janitor/supply)
 
 (1,1,1) = {"
 aa
@@ -52645,9 +52643,9 @@ ab
 nr
 aq
 ax
-aI
+Eh
 aO
-aI
+Eh
 ax
 bl
 bu
@@ -55979,9 +55977,9 @@ bR
 cK
 cK
 cU
-dy
+CB
 bL
-ey
+wv
 bL
 fx
 fS
@@ -56889,7 +56887,7 @@ dA
 eb
 eA
 fd
-fy
+Xp
 fV
 gq
 gT
@@ -57186,7 +57184,7 @@ fm
 fm
 fm
 ab
-cY
+AR
 dB
 ec
 eB

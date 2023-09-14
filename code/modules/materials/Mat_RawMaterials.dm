@@ -8,7 +8,7 @@
 	stack_type = /obj/item/material_piece
 	/// used for prefab bars
 	default_material = null
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE //TRUE for generic names such as Bar or Wad.
 
 	New()
@@ -203,7 +203,7 @@
 	amount = 5
 	default_material = "frozenfart"
 	mat_changename = FALSE
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 
 /obj/item/material_piece/steel
 	desc = "A processed bar of Steel, a common metal."
@@ -232,7 +232,7 @@
 	name = "plate"
 	desc = "A chunk of some sort of iridium alloy plating."
 	default_material = "iridiumalloy"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	amount = 5
 
 /obj/item/material_piece/spacelag
@@ -273,7 +273,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
 	icon_state = "log"
 	default_material = "wood"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
 	attackby(obj/item/W, mob/user)
@@ -292,7 +292,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	desc = "Keep away from Space Pandas."
 	icon_state = "bamboo"
 	default_material = "bamboo"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = TRUE
 
 	attackby(obj/item/W, mob/user)
@@ -312,7 +312,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	desc = "space silk produced by space dwelling space spiders. space."
 	icon_state = "spidersilk"
 	default_material = "spidersilk"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/leather
@@ -396,7 +396,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	desc = "some bits and pieces of bones."
 	icon_state = "scrap3"
 	default_material = "bone"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
 /obj/item/material_piece/gnesis
@@ -416,7 +416,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 	desc = "A piece of coral. Nice!"
 	icon_state = "coral"
 	default_material = "coral"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."
