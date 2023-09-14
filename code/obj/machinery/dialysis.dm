@@ -80,8 +80,8 @@ TYPEINFO(/obj/machinery/dialysis)
 
 		src.output_blood_colour = src.reagents.get_average_color().to_rgba()
 
-		// Infuse blood back in if possible.
-		if (!src.patient.reagents.is_full())
+		// Infuse blood back in if possible. Don't wanna stuff too much blood back in.
+		if (!src.patient.reagents.is_full() && src.patient.blood_volume >= 500)
 			src.reagents.trans_to(src.patient, src.draw_amount)
 			src.patient.reagents.reaction(src.patient, INGEST, src.draw_amount)
 
@@ -123,5 +123,8 @@ TYPEINFO(/obj/machinery/dialysis)
 	proc/stop_dialysis()
 		UnsubscribeProcess()
 		src.patient = null
+		if (!!src.reagents.total_volume)
+			src.reagents.clear_reagents()
+			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Purging internal reservoir.\"")
 		src.power_usage = 0
 		src.UpdateIcon()
