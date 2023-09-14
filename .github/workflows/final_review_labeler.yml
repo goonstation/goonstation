@@ -72,7 +72,7 @@ jobs:
             const result = JSON.parse(JSON.stringify(${{ steps.get_approvals.outputs.data }}))
             if (result.repository.pullRequest.reviews.totalCount >= 2) {
               github.rest.issues.addLabels({
-                issue_number: context.issue.number,
+                issue_number: ${{ steps.set-pr-number.outputs.result }},
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 labels: ['S-Ready-For-Final-Review']
