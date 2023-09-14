@@ -30,7 +30,7 @@ jobs:
             repo: ${{ github.event.repository.name }}
             prNumber: ${{ github.event.pull_request.number }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PR_WRITE_PAT }}
 
       - uses: actions/github-script@v6
         with:
@@ -44,4 +44,4 @@ jobs:
                 labels: ['S-Ready-For-Final-Review']
               })
             }
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          github-token: ${{ secrets.PR_WRITE_PAT }}
