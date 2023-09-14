@@ -123,9 +123,11 @@ TYPEINFO(/obj/machinery/dialysis)
 				blood_out.color = src.output_blood_colour
 			src.UpdateOverlays(blood_out, "blood_out")
 
-			var/image/blood_in = image(src.icon, "tubing-bad[src.patient.reagents.total_volume ? "" : "-empty"]")
+			var/image/blood_in = image(src.icon, "tubing-bad[(src.patient.blood_volume || src.patient.reagents.total_volume) ? "" : "-empty"]")
 			if (src.patient.reagents.total_volume)
 				blood_in.color = src.patient.reagents.get_average_color().to_rgba()
+			else
+				blood_in.color = src.patient.blood_color
 			src.UpdateOverlays(blood_in, "blood_in")
 		else
 			src.UpdateOverlays(image(src.icon, "pump-off"), "pump")
@@ -154,6 +156,7 @@ TYPEINFO(/obj/machinery/dialysis)
 	proc/stop_dialysis()
 		UnsubscribeProcess()
 		src.patient = null
+		src.output_blood_colour = null
 		if (!!src.reagents.total_volume)
 			src.reagents.clear_reagents()
 			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Purging internal reservoir.\"")
