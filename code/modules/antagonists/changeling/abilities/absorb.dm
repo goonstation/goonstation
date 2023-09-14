@@ -75,13 +75,14 @@
 	onInterrupt()
 		..()
 		boutput(owner, "<span class='alert'>Our feasting on [target] has been interrupted!</span>")
+		devour.doCooldown()
 
 /datum/targetable/changeling/devour
 	name = "Devour"
 	desc = "Almost instantly devour a human for DNA."
 	icon_state = "devour"
 	abomination_only = 1
-	cooldown = 0
+	cooldown = 5 SECONDS
 	targeted = 0
 	target_anything = 0
 	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY

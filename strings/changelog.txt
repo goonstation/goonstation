@@ -1,4 +1,9 @@
 
+(t)thu sep 14 23
+(u)UnfunnyPerson
+(p)15644
+(e)🎨🔨🤖|C-Sprites, A-Player-Actions, A-Silicons
+(+)Flipping with an exposed brain as a cyborg will give the "Loose Brain" status effect. Flip with the status effect to launch your brain.
 (t)wed sep 13 23
 (u)Azrun & Jan.antilles
 (e)🐑🧣🧶|C-Feature

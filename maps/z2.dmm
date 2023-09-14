@@ -29787,7 +29787,8 @@
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
 	id = "meatstation1";
-	name = "Safety Interlock"
+	name = "Safety Interlock";
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -57397,6 +57398,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"ecj" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/meat_derelict/main)
 "edm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -58260,7 +58267,9 @@
 	},
 /area/moon/museum)
 "fbU" = (
-/obj/critter/monster_door,
+/obj/critter/monster_door{
+	dir = 4
+	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "fcf" = (
@@ -66279,7 +66288,8 @@
 /turf/unsimulated/wall/generic{
 	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
-	name = "broken door"
+	name = "broken door";
+	dir = 4
 	},
 /area/meat_derelict/soviet)
 "nAf" = (
@@ -141509,7 +141519,7 @@ oeC
 hfT
 aqL
 aqL
-chN
+ecj
 chN
 chN
 bXx
