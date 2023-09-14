@@ -686,14 +686,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			boutput(user, "<span class='alert'>[src] is sealed.</span>")
 			return
 		user.lastattacked = target
-		if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
-			var/obj/fluid/F = target
+		// this shit sucks but there's no space for a cast since the following section is an if-else
+		var/turf/target_turf = CHECK_LIQUID_CLICK(target) ? get_turf(target) : null
+		if (target_turf?.active_liquid) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
+			var/obj/fluid/F = target_turf.active_liquid
 			if (!src.reagents.total_volume)
-				if (!F.group || !F.group.reagents.total_volume)
-					boutput(user, "<span class='alert'>[target] is empty. (this is a bug, whooops!)</span>")
-					F.removed()
-					return
-
 				if (reagents.total_volume >= reagents.maximum_volume)
 					boutput(user, "<span class='alert'>[src] is full.</span>")
 					return
@@ -702,17 +699,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				F.group.reagents.skip_next_update = 1
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
-				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
+				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [F].</span>")
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
-				var/turf/T = get_turf(F)
-
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
-				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
-				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
+				var/trans = src.reagents.trans_to(target_turf, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
+				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target_turf].</span>")
 
-		else if (is_reagent_dispenser(target)|| (target.is_open_container() == -1 && target.reagents) || (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne) && !src.reagents.total_volume)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target)|| (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -1719,8 +1714,9 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	                 "juice_strawberry", "juice_cherry", "juice_pineapple", "juice_apple",
 	                 "coconut_milk", "juice_pickle", "cocktail_citrus", "lemonade",
 	                 "halfandhalf", "swedium", "caledonium", "essenceofelvis", "pizza",
-									 "mint_tea", "tomcollins", "sangria", "peachschnapps", "mintjulep",
-									 "mojito", "cremedementhe", "grasshopper", "freeze", "limeade", "juice_peach")
+					 "mint_tea", "tomcollins", "sangria", "peachschnapps", "mintjulep",
+					 "mojito", "cremedementhe", "grasshopper", "freeze", "limeade", "juice_peach",
+					 "juice_banana")
 
 /obj/item/reagent_containers/food/drinks/duo
 	name = "red duo cup"

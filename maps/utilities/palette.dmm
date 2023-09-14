@@ -10341,7 +10341,7 @@
 /area/space)
 "PJ" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn.dmi';
+	icon = 'icons/turf/walls/supernorn.dmi';
 	icon_state = "12"
 	},
 /area/space)
@@ -12416,7 +12416,7 @@
 /area/space)
 "WY" = (
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn.dmi';
+	icon = 'icons/turf/walls/supernorn.dmi';
 	icon_state = "R12"
 	},
 /area/space)
