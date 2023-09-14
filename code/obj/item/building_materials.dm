@@ -63,7 +63,7 @@ MATERIAL
 	default_material = "steel"
 	///the material id string (lowercase) of the starting reinforcement
 	var/default_reinforcement = null
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 
 	New()
 		..()
@@ -526,7 +526,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	material_amt = 0.05
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 
 	New()
 		..()

@@ -16,7 +16,7 @@
 	item_state = ""
 	edible = 0
 	rand_pos = 0 // we wanna override it below
-	made_from = "bone"
+	default_material = "bone"
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	max_damage = INFINITY
 	throw_speed = 1
@@ -57,28 +57,27 @@
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/glasses/glasses = null
 
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 
 	New()
 		..()
-		SPAWN(0)
-			if (src.donor)
-				if(!src.bones)
-					src.bones = new /datum/bone(src)
-				src.bones.donor = src.donor
-				src.bones.parent_organ = src.organ_name
-				src.bones.name = "skull"
-				if (src.donor?.bioHolder?.mobAppearance)
-					src.donor_appearance = src.donor.bioHolder.mobAppearance
-					src.UpdateIcon(/*makeshitup*/ 0)
-				else //The heck?
-					src.UpdateIcon(/*makeshitup*/ 1)
-				if (src.donor.eye != null)
-					src.donor.set_eye(null)
-			else
+		if (src.donor)
+			if(!src.bones)
+				src.bones = new /datum/bone(src)
+			src.bones.donor = src.donor
+			src.bones.parent_organ = src.organ_name
+			src.bones.name = "skull"
+			if (src.donor?.bioHolder?.mobAppearance)
+				src.donor_appearance = src.donor.bioHolder.mobAppearance
+				src.UpdateIcon(/*makeshitup*/ 0)
+			else //The heck?
 				src.UpdateIcon(/*makeshitup*/ 1)
-			if (!src.chat_text)
-				src.chat_text = new(null, src)
+			if (src.donor.eye != null)
+				src.donor.set_eye(null)
+		else
+			src.UpdateIcon(/*makeshitup*/ 1)
+		if (!src.chat_text)
+			src.chat_text = new(null, src)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
@@ -184,7 +183,10 @@
 			else
 				src.skintone = AHead.s_tone
 			src.head_image.color = src.skintone
-			src.name = "[src.donor_name]'s [src.organ_name]"
+			if(src.donor_name)
+				src.name = "[src.donor_name]'s [src.organ_name]"
+			else
+				src.name = src.organ_name
 
 		// The rest of this shit gets sent to update_face
 		// get and install eyes, if any.
@@ -285,22 +287,18 @@
 		src.head_image.pixel_x = 0
 		src.head_image.pixel_y = 0
 		actual_head.appearance = src.head_image
+		actual_head.color = null
+		actual_head.overlays += src.head_image
 		src.head_image_eyes_L.pixel_x = 0
 		src.head_image_eyes_L.pixel_y = 0
 		if(src.left_eye)
 			src.head_image_eyes_L.color = left_eye.iris_color
-		else
-			src.head_image_eyes_L.color = "#FFFFFF"
-			src.head_image_eyes_L.alpha = 0
-		actual_head.overlays += src.head_image_eyes_L
+			actual_head.overlays += src.head_image_eyes_L
 		src.head_image_eyes_R.pixel_x = 0
 		src.head_image_eyes_R.pixel_y = 0
 		if(src.right_eye)
 			src.head_image_eyes_R.color = right_eye.iris_color
-		else
-			src.head_image_eyes_R.color = "#FFFFFF"
-			src.head_image_eyes_R.alpha = 0
-		actual_head.overlays += src.head_image_eyes_R
+			actual_head.overlays += src.head_image_eyes_R
 
 		if(src.head_image_nose)
 			actual_head.overlays += src.head_image_nose
@@ -634,7 +632,7 @@
 				if(HEAD_ROACH)
 					src.organ_name = "roach head"
 					src.desc = "Not the biggest bug you'll seen today, nor the last."
-					src.made_from = "chitin"
+					src.setMaterial(getMaterial("chitin"))
 
 				if(HEAD_FROG)
 					src.organ_name = "frog head"

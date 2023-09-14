@@ -1626,6 +1626,14 @@
 /mob/proc/is_active()
 	. = (0 >= usr.stat)
 
+/mob/proc/is_heat_resistant()
+	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
+		return TRUE
+	if(src.nodamage)
+		return TRUE
+	return FALSE
+
+
 /mob/proc/updatehealth()
 	if (src.nodamage == 0)
 		src.health = max_health - src.get_oxygen_deprivation() - src.get_toxin_damage() - src.get_burn_damage() - src.get_brute_damage()

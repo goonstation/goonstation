@@ -117,7 +117,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 /obj/machinery/computer/cloning/process()
 	..()
-	src.records_scan()
+	if (!(src.status & (NOPOWER | BROKEN)))
+		src.records_scan()
 
 /obj/machinery/computer/cloning/connection_scan()
 	if (src.portable)

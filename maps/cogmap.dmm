@@ -1256,9 +1256,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "afm" = (
@@ -37715,6 +37713,7 @@
 	pixel_y = 32
 	},
 /obj/table/reinforced/chemistry/auto/firstaid,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -39839,14 +39838,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;

@@ -678,6 +678,16 @@
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
+	banana_milk
+		name = "Banana Milk"
+		id = "banana milk"
+		result = "banana_milk"
+		required_reagents = list("milk" = 1, "juice_banana" = 1)
+		result_amount = 2
+		mix_phrase = "The mixture turns a nice light yellow color."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
 	blue_milk
 		name = "Blue Milk"
 		id = "blue milk"
@@ -710,6 +720,16 @@
 		required_reagents = list("simplesyrup" = 1, "juice_apple" = 1, "juice_lime" = 1, "ginger_ale" = 1, "juice_pineapple" = 1)
 		result_amount = 5
 		mix_phrase = "You are reminded of family picnics and school functions as the syrup mixes with the juices."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	fizzy_banana
+		name = "Fizzy Banana"
+		id = "fizzy_banana"
+		result = "fizzy_banana"
+		required_reagents = list("simplesyrup" = 1, "juice_banana" = 1, "coconut_milk" = 1, "juice_lime" = 1, "tonic" = 1)
+		result_amount = 5
+		mix_phrase = "You think of tropical beaches and blue oceans as the syrup mixes with the juices."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
@@ -1883,10 +1903,48 @@
 		name = "Honky Tonic"
 		id = "honky_tonic"
 		result = "honky_tonic"
-		required_reagents = list("tonic" = 1, "lube" = 1, "colors" = 1, "neurotoxin" = 1)
+		required_reagents = list("tonic" = 1, "lube" = 1, "neurotoxin" = 1, "juice_banana" = 1)
 		result_amount = 4
 		mix_phrase = "The drink honks at you! What the fuck?"
 		mix_sound = 'sound/misc/drinkfizz_honk.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_dirty_banana
+		name = "Dirty Banana"
+		id = "dirty_banana"
+		result = "dirty_banana"
+		required_reagents = list("rum" = 1, "juice_banana" = 1, "chocolate" = 1, "milk" = 1)
+		result_amount = 4
+		mix_phrase = "It's creamy, fruity and surprisingly clean!"
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_dirty_banana/banana
+		id = "dirty_banana_banana"
+		required_reagents = list("rum" = 1, "chocolate" = 1, "banana_milk" = 2)
+
+	cocktail_dirty_banana/choco
+		id = "dirty_banana_choco"
+		required_reagents = list("rum" = 1, "juice_banana" = 1, "chocolate_milk" = 2)
+
+	cocktail_sweet_surprise
+		name = "Sweet Surprise"
+		id = "sweet_surprise"
+		result = "sweet_surprise"
+		required_reagents = list("rum" = 1, "juice_banana" = 1, "coconut_milk" = 1)
+		result_amount = 3
+		mix_phrase = "The banana and coconut give off a tropical aroma when mixed."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		drinkrecipe = TRUE
+
+	cocktail_sweet_dreams
+		name = "Sweet Dreams"
+		id = "sweet_dreams"
+		result = "sweet_dreams"
+		required_reagents = list("sweet_surprise" = 1, "capulettium" = 1)
+		result_amount = 2
+		mix_phrase = "The sweet smell is almost enough to make you fall asleep."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
 		drinkrecipe = TRUE
 
 	cola
@@ -2087,14 +2145,14 @@
 		name = "Mexican Hot Chocolate"
 		id = "mexicanhotchocolate"
 		result = "mexicanhotchocolate"
-		required_reagents = list("chocolate" = 2, "capsaicin" = 1, "milk" = 1)
-		result_amount = 4
+		required_reagents = list("capsaicin" = 1, "chocolate_milk"= 2)
+		result_amount = 3
 		mix_phrase = "A spicy smell drifts up from the chocolate."
 
-	mexicanhotchocolate/mexicanhotchocolate2
-		id = "mexicanhotchocolate2"
-		required_reagents = list("capsaicin" = 1, "chocolate_milk"= 3)
-		result_amount = 4
+	mexicanhotchocolate/cinnamon
+		id = "mexicanhotchocolate_cinnamon"
+		required_reagents = list("cinnamon" = 1, "chocolate_milk"= 2)
+		result_amount = 3
 
 	pumpkinspicelatte
 		name = "Pumpkin Spice Latte"
@@ -2124,9 +2182,6 @@
 		reaction_icon_state = list("reaction_explode-1", "reaction_explode-2")
 		reaction_icon_color = "#ffffff"
 		on_reaction(var/datum/reagents/holder, var/created_volume)
-			if(istype(holder.my_atom, /obj))
-				var/obj/container = holder.my_atom
-				container.shatter_chemically(projectiles = TRUE)
 			if (holder.last_basic_explosion >= ticker.round_elapsed_ticks - 3)
 				return
 			holder.last_basic_explosion = ticker.round_elapsed_ticks
@@ -2135,6 +2190,9 @@
 				var/turf/location = get_turf(my_atom)
 				explosion(my_atom, location, -1,-1,0,1)
 				fireflash(location, 0)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -2142,7 +2200,6 @@
 					holder.covered_cache -= location
 					explosion_new(my_atom, location, 2.25/amt)
 					fireflash(location, 0)
-			return
 
 	explosion_barium // get in
 		name = "Barium Explosion"
@@ -2169,20 +2226,18 @@
 
 			var/turf/location = 0
 			if (my_atom)
-				if(istype(holder.my_atom, /obj))
-					var/obj/container = holder.my_atom
-					container.shatter_chemically(projectiles = TRUE)
 				location = get_turf(my_atom)
 				explosion(my_atom, location, -1,-1,0,1)
 				fireflash(location, 0)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 			else
-				var/amt = max(1, (holder.covered_cache.len * (total_volume_created / holder.covered_cache_volume)))
-				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
+				var/amt = length(holder.covered_cache) * (total_volume_created / holder.covered_cache_volume)
+				for (var/i = 0, i < amt && length(holder.covered_cache), i++)
 					location = pick(holder.covered_cache)
 					holder.covered_cache -= location
 					explosion_new(my_atom, location, 2.25/amt)
-					fireflash(location, 0)
-			return
 
 	explosion_magnesium // get in
 		name = "Magnesium Explosion"
@@ -2199,12 +2254,12 @@
 
 			var/turf/location = 0
 			if (my_atom)
-				if(istype(holder.my_atom, /obj))
-					var/obj/container = holder.my_atom
-					container.shatter_chemically(projectiles = TRUE)
 				location = get_turf(my_atom)
 				explosion(my_atom, location, -1,-1,0,1)
 				fireflash(location, 0)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -2398,20 +2453,19 @@
 		stateful = TRUE
 		reaction_icon_color = "#539147"
 		var/count = 0
-		var/amount_to_smoke = 1
 
 		does_react(var/datum/reagents/holder)
-			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+			if (holder.my_atom && holder.my_atom.is_open_container() || (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
 				return TRUE
 			else
 				return FALSE
 
 		on_reaction(var/datum/reagents/holder, var/created_volume) //assuming this is sodium cyanide so it also interacts with water and sulfuric acid
+			var/amount_to_smoke = 1
 			if(holder.has_reagent("acid"))
 				amount_to_smoke = 20
 				count += 6
-			else
-				amount_to_smoke = 1
+			amount_to_smoke = min(amount_to_smoke, holder.get_reagent_amount("cyanide"))
 			if(count < 6)
 				if(holder.has_reagent("water"))
 					count += 2
@@ -2419,10 +2473,10 @@
 					count++
 				reaction_icon_state = null
 			else
-				var/location = get_turf(holder.my_atom)
+				var/location = get_turf(holder.my_atom) || pick(holder.covered_cache)
 				reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
-				var/datum/reagents/smokeContents = new/datum/reagents/
-				smokeContents.add_reagent("cyanide", 1)
+				var/datum/reagents/smokeContents = new
+				smokeContents.add_reagent("cyanide", amount_to_smoke)
 				smoke_reaction(smokeContents, amount_to_smoke, location, do_sfx = FALSE)
 				holder.remove_reagent("cyanide", amount_to_smoke)
 				count = 0
@@ -3008,17 +3062,17 @@
 				SPAWN(6 DECI SECONDS) //you get a slight moment to react/be surprised
 					qdel(shine)
 					holder.del_reagent("photophosphide")
-					if(istype(holder.my_atom, /obj))
-						var/obj/container = holder.my_atom
-						container.shatter_chemically(projectiles = TRUE)
 					explosion(holder.my_atom, T, -1,-1,0,1)
 					playsound(get_turf(holder.my_atom), 'sound/effects/Explosion1.ogg', 50, 1)
 					fireflash(T, 0)
+					if(istype(holder.my_atom, /obj))
+						var/obj/container = holder.my_atom
+						container.shatter_chemically(projectiles = TRUE)
 
 	photophosphide_decay //decays in low amounts
 		name = "Photophosphide Decay"
 		id = "photophosphide_decay"
-		required_reagents = list("photophosphide" = 1)
+		required_reagents = list("photophosphide" = 0)
 		instant = FALSE
 		result_amount = 1
 		reaction_speed = 3
@@ -3029,6 +3083,9 @@
 				return TRUE
 			else
 				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			holder.remove_reagent("photophosphide", src.reaction_speed)
 
 	styptic_powder // COGWERKS CHEM REVISION PROJECT: no idea, probably a magic drug
 		name = "Styptic Powder"
@@ -3316,11 +3373,11 @@
 
 			var/turf/location = 0
 			if (my_atom)
+				location = get_turf(my_atom)
+				explosion(my_atom, location, 0, 1, 4, 5)
 				if(istype(holder.my_atom, /obj))
 					var/obj/container = holder.my_atom
 					container.shatter_chemically(projectiles = TRUE)
-				location = get_turf(my_atom)
-				explosion(my_atom, location, 0, 1, 4, 5)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -3343,11 +3400,11 @@
 
 			var/turf/location = 0
 			if (my_atom)
+				location = get_turf(my_atom)
+				explosion(my_atom, location, -1, 0, 2, 3)
 				if(istype(holder.my_atom, /obj))
 					var/obj/container = holder.my_atom
 					container.shatter_chemically(projectiles = TRUE)
-				location = get_turf(my_atom)
-				explosion(my_atom, location, -1, 0, 2, 3)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
@@ -3461,6 +3518,26 @@
 		max_temperature = 0
 
 
+	aerosol  //aerosol's reaction when crossing the heat threshold
+		name = "Aerosol"
+		id   = "aerosolheat"
+		required_reagents = list("propellant" = 1)
+		result_amount = 1
+		mix_phrase = "The mixture quickly turns into a pall of smoke!"
+		hidden = TRUE
+		min_temperature = T0C + 100
+
+		does_react(var/datum/reagents/holder) //making sure it doesn't smoke itself while inside a closed container
+			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+				return TRUE
+			else
+				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			if (holder)
+				SPAWN(1 DECI SECOND)
+					holder.smoke_start(created_volume,classic = 1)
+
 	smokepowder
 		name = "Smoke Powder"
 		id = "smokepowder"
@@ -3471,6 +3548,25 @@
 #ifdef CHEM_REACTION_PRIORITIES
 		priority = 9
 #endif
+
+	smokeheat  //smoke powder's reaction when crossing the heat threshold
+		name = "Smoke Heat"
+		id   = "smokeheat"
+		required_reagents = list("smokepowder" = 1)
+		result_amount = 1
+		mix_phrase = "The mixture quickly turns into a pall of smoke!"
+		hidden = TRUE
+		min_temperature = T0C + 25
+
+		does_react(var/datum/reagents/holder) //making sure it doesn't smoke itself while inside a closed container
+			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+				return TRUE
+			else
+				return FALSE
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			if (holder)
+				holder.smoke_start(created_volume)
 
 	smoke
 		name = "Smoke"
@@ -3485,14 +3581,15 @@
 #ifdef CHEM_REACTION_PRIORITIES
 		priority = 9
 #endif
-		on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+		does_react(var/datum/reagents/holder) //making sure it doesn't smoke itself while inside a closed container
+			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+				return TRUE
+			else
+				return FALSE
 
+		on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+			holder.del_reagent("smokepowder") //no
 			if (holder)
-				if(!holder?.my_atom?.is_open_container())
-					if(holder.my_atom)
-						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
-							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
-						return
 				holder.smoke_start(created_volume)
 
 	blackpowder // oh no
@@ -4078,19 +4175,21 @@
 
 			var/turf/location = 0
 			if (my_atom)
+				location = get_turf(my_atom)
+				fireflash(holder.my_atom, 2)
+				//okay I'm turning off the explosion here because it keeps deleting the reagents and I don't want to consider synchronous explosion code
+				//feel free to turn back on if you think of a solution for it blowing up the reagent puddle
+				// explosion(my_atom, get_turf(my_atom), -1, -1, 1, 2)
 				if(istype(holder.my_atom, /obj))
 					var/obj/container = holder.my_atom
 					container.shatter_chemically(projectiles = TRUE)
-				location = get_turf(my_atom)
-				fireflash(holder.my_atom, 1)
-				explosion(my_atom, get_turf(my_atom), -1, -1, 1, 2)
 			else
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 					location = pick(holder.covered_cache)
 					holder.covered_cache -= location
 					fireflash(location, 0)
-					explosion_new(my_atom, location, 2.25/amt)
+					// explosion_new(my_atom, location, 2.25/amt)
 			return
 
 	krokodil
@@ -4716,6 +4815,16 @@
 		//max_temperature = T0C - 100
 		result_amount = 1
 		mix_phrase = ".ylegnarts dnuora lriws ot snigeb erutxim ehT"
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		hidden = TRUE
+
+	capsizin
+		name = "capsizin"
+		id = "capsizin"
+		result = "capsizin"
+		required_reagents = list("reversium" = 1, "capsaicin" = 4)
+		result_amount = 5
+		mix_phrase = "The solution begins to capsize. What does that even mean?"
 		mix_sound = 'sound/misc/drinkfizz.ogg'
 		hidden = TRUE
 

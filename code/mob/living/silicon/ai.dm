@@ -4,8 +4,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	"Annoyed (Inverted)" = "ai_annoyed-lod", \
 	"Baffled" = "ai_baffled-dol",\
 	"Baffled (Inverted)" = "ai_baffled-lod",\
-	"Blank" = "ai_blank-lod",\
-	"Blank (Inverted)" = "ai_blank-dol",\
+	"Blank" = "ai_blank-dol",\
+	"Blank (Inverted)" = "ai_blank-lod",\
 	"Cheeky" = "ai_cheeky-dol",\
 	"Cheeky (Inverted)" = "ai_cheeky-lod",\
 	"Colourbars" = "ai_colourbars",\
@@ -118,7 +118,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/power_mode = 0
 	var/power_area = null
 	var/obj/machinery/power/apc/local_apc = null
-	var/obj/item/device/radio/radio1 = null // See /mob/living/say() in living.dm for AI-related radio code.
+	var/obj/item/device/radio/radio1 = null // See /mob/living/say() in living.dm for ai_related radio code.
 	var/obj/item/device/radio/radio2 = null
 	var/obj/item/device/radio/radio3 = null
 	var/obj/item/device/pda2/internal_pda = null
@@ -126,6 +126,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 	var/moustache_mode = 0
 	var/status_message = null
 	var/mob/living/silicon/deployed_shell = null
+	var/locking = 0
 
 	var/faceEmotion = "ai_happy-dol"
 	var/faceColor = "#66B2F2"
@@ -136,8 +137,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
 /* To add a new skin:
 - Create the skin itself but also the overlay you want to have for when in battery mode
 - The name of the core icon state will be used to fetch the battery mode overlay, so your batmode overlay
-- should be the name of your core icon state with "batmode-" before it
-- Ditto for when the AI is online as normal (should you choose to have an overlay for this). Prefix with "apcmode-"
+- should be the name of your core icon state with "lights_bat-" before it
+- Ditto for when the AI is online as normal (should you choose to have an overlay for this). Prefix with "lights_apc-"
 - Add the icon state name to skinsList below, and while it's technically optional, you should also associate a short description with it
 - There is currently no support for significantly differently shaped cores, you'll have to do that yourself, sorry
 */
@@ -448,6 +449,7 @@ or don't if it uses a custom topopen overlay
 		if (src.dismantle_stage == 1)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.visible_message("<span class='alert'><b>[user.name]</b> opens [src.name]'s chassis cover.</span>")
+			src.locking = 0
 			src.dismantle_stage = 2
 		else if (src.dismantle_stage == 2)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -505,6 +507,7 @@ or don't if it uses a custom topopen overlay
 					src.dismantle_stage = 0
 				else
 					src.dismantle_stage = 1
+				src.locking = 0
 				user.visible_message("<span class='alert'><b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock.</span>")
 			else boutput(user, "<span class='alert'>Access denied.</span>")
 
@@ -1242,7 +1245,7 @@ or don't if it uses a custom topopen overlay
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
-				if(faceEmotion != "ai-red" && faceEmotion != "ai-tetris")
+				if(faceEmotion != "ai_red" && faceEmotion != "ai_tetris")
 					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
 					SPAWN(0.5 SECONDS)
 						UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
@@ -1881,6 +1884,30 @@ or don't if it uses a custom topopen overlay
 		src.mind.transfer_to(target_shell)
 		return
 
+/mob/living/silicon/ai/verb/toggle_lock()
+	set category = "AI Commands"
+	set name = "Toggle Cover Lock"
+
+	if (src.dismantle_stage >= 2)
+		boutput(src, "<span class='alert'>You can't lock your cover when it's open!</span>")
+	else
+		if (src.locking)
+			boutput(src, "<span class='alert'>Your cover is currently locking, please be patient.</span>")
+		else if (src.dismantle_stage == 1)
+			src.locking = 1
+			boutput(src, "<span class='alert'>Locking cover...</span>")
+			SPAWN(12 SECONDS)
+				if (!src.locking)
+					boutput(src, "<span class='alert'>The lock was interrupted before it could finish!</span>")
+				else
+					src.dismantle_stage = 0
+					src.locking = 0
+					boutput(src, "<span class='alert'>You lock your cover lock.</span>")
+
+		else
+			src.dismantle_stage = 1
+			boutput(src, "<span class='alert'>You unlock your cover lock.</span>")
+
 /mob/living/silicon/ai/proc/eye_view()
 	if (isdead(src))
 		return
@@ -2262,27 +2289,27 @@ or don't if it uses a custom topopen overlay
 
 	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("paralysis"))
 		clearFaceOverlays(1)
-		UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai-stun-screen"), "temp_face")
+		UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_stun-screen"), "temp_face")
 
 	else
 		src.icon_state = coreSkin
 		UpdateOverlays(null, "temp_face") // we wanna get rid of the temporary BSOD/stun face overlays
 
-		var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai-white", src.layer)
+		var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai_white", src.layer)
 		I.color = faceColor
 		UpdateOverlays(I, "faceplate")
 
-		if (faceEmotion != "ai-tetris")
-			UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai-face_glow", src.layer+0.1), "face_glow")
+		if (faceEmotion != "ai_tetris")
+			UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai_face-glow", src.layer+0.1), "face_glow")
 		else
 			UpdateOverlays(null, "face_glow")
 
 		UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
 		if (src.power_mode == 1) // e.g get_image("batterymode-dwaine") which is the icon_state we want if coreSkin is "dwaine"
-			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "batmode-[coreSkin]"), "power-status")
+			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_bat-[coreSkin]"), "power-status")
 		else
-			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "apcmode-[coreSkin]"), "power-status")
+			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_apc-[coreSkin]"), "power-status")
 
 		if (src.moustache_mode == 1)
 			src.UpdateOverlays(SafeGetOverlayImage("moustache", 'icons/mob/ai.dmi', "moustache", src.layer+0.3), "moustache")
@@ -2292,17 +2319,17 @@ or don't if it uses a custom topopen overlay
 // ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
 	if (src.dismantle_stage > 1)
 		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-default"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_default"), "top")
 		else if(coreSkin == "gold" || coreSkin == "engineering" || coreSkin == "soviet")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-full"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_full"), "top")
 		else if(coreSkin == "dwaine" || coreSkin == "ailes" || coreSkin == "salvage" || coreSkin == "gardengear" || coreSkin == "telegun")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-split"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_split"), "top")
 		else if(coreSkin == "nt" || coreSkin == "industrial" || coreSkin == "lgun")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-uneven"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_uneven"), "top")
 		else if(coreSkin == "kingsway" || coreSkin == "clown" || coreSkin == "mime" || coreSkin == "tactical" || coreSkin == "mauxite")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-bulky"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_bulky"), "top")
 		else
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-[coreSkin]"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_[coreSkin]"), "top")
 
 	else
 		src.UpdateOverlays(null, "top")
@@ -2311,20 +2338,20 @@ or don't if it uses a custom topopen overlay
 		if (-INFINITY to 24)
 			src.UpdateOverlays(null, "burn")
 		if(25 to 49)
-			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "burn25"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-25"), "burn")
 		if(50 to 74)
-			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "burn50"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-50"), "burn")
 		if(75 to INFINITY)
-			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "burn75"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-75"), "burn")
 	switch(src.bruteloss)
 		if (-INFINITY to 24)
 			src.UpdateOverlays(null, "brute")
 		if(25 to 49)
-			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "brute25"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-25"), "brute")
 		if(50 to 74)
-			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "brute50"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-50"), "brute")
 		if(75 to INFINITY)
-			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "brute75"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-75"), "brute")
 
 /// Clears all overlays which constitute the displayed face/screen
 /mob/living/silicon/ai/proc/clearFaceOverlays(var/retain_cache=0)
@@ -2590,7 +2617,7 @@ proc/get_mobs_trackable_by_AI()
 	name = "\improper AI core frame"
 	desc = "A frame for an AI core."
 	icon = 'icons/mob/ai.dmi'
-	icon_state = "ai_frame0"
+	icon_state = "frame"
 	var/build_step = 0
 	var/obj/item/cell/cell = null
 	var/has_radios = 0
@@ -2612,14 +2639,14 @@ proc/get_mobs_trackable_by_AI()
 
 	New()
 		. = ..()
-		image_glass_overlay = image(icon, "ai_frame-glass", OBJ_LAYER+0.6)
-		image_wire_overlay = image(icon, "ai_frame-wires", OBJ_LAYER+0.5)
-		image_top_overlay = image(icon, "ai_frame-top", OBJ_LAYER+0.4)
+		image_glass_overlay = image(icon, "frame_glass", OBJ_LAYER+0.6)
+		image_wire_overlay = image(icon, "frame_wires", OBJ_LAYER+0.5)
+		image_top_overlay = image(icon, "frame_top", OBJ_LAYER+0.4)
 		// +0.3 is reserved for the core overlay; we can't define it here since we dunno what kind of core might be made!
-		image_cell_overlay = image(icon, "ai_frame-cell", OBJ_LAYER+0.25)
-		image_radio_overlay = image(icon, "ai_frame-radio", OBJ_LAYER+0.2)
-		image_interface_overlay = image(icon, "ai_frame-interface", OBJ_LAYER+0.15)
-		image_background_overlay = image(icon, "ai_frame-back", OBJ_LAYER+0.1)
+		image_cell_overlay = image(icon, "frame_cell", OBJ_LAYER+0.25)
+		image_radio_overlay = image(icon, "frame_radio", OBJ_LAYER+0.2)
+		image_interface_overlay = image(icon, "frame_interface", OBJ_LAYER+0.15)
+		image_background_overlay = image(icon, "frame_back", OBJ_LAYER+0.1)
 		// if someone map edited us in or something and set our build_step to 1 or 2, lets make sure we look the part!
 		if(!build_step || (build_step > 2))
 			build_step = 0 // if some bozo sets us to over 2 we need to default back to 0 so nothing breaks

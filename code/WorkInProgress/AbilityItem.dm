@@ -65,14 +65,6 @@
 			//S.icon = IC
 			spraybits += S
 
-			/* // What the heck? This ran 8 times. Also the spraybits loop does the same exact thing below. commenting this out to prevent fluid duplication
-			SPAWN(0)
-				S.reagents.reaction(theturf, TOUCH)
-				for(var/atom/A in theturf)
-					if (istype(A,/obj/fluid)) continue
-					S.reagents.reaction(A, TOUCH, 0, 0)
-			*/
-
 		if (the_mob) playsound(the_mob, 'sound/effects/spray.ogg', 75, 1, 0)
 		//E.reagents.clear_reagents()
 
