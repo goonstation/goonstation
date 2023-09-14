@@ -197,14 +197,11 @@
 			if (jumper.positive)
 				donor_cell = silicon_user.cell
 				recipient_cell = silicon_target.cell
-			else if (!silicon_user.emagged)
-				boutput(user, "<span class='alert'>A core law submodule limits you from draining the power of other cyborgs!</span>")
+			else
+				boutput(user, "<span class='alert'>You can't drain power from other cyborgs.</span>")
 				..()
 				interrupt(INTERRUPT_ALWAYS)
 				return
-			else
-				donor_cell = silicon_target.cell
-				recipient_cell = silicon_user.cell
 
 			if (isnull(donor_cell))
 				boutput(user, "<span class='alert'>You have no cell installed!</span>")
