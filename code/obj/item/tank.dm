@@ -13,6 +13,7 @@ Contains:
 	name = "tank"
 	desc = "A portable tank for holding pressurized gas. It can be worn on the back, or hooked up to a compatible receptacle."
 	icon = 'icons/obj/items/tank.dmi'
+	icon_state = "empty"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags = FPRINT | TABLEPASS | CONDUCT | TGUI_INTERACTIVE

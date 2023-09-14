@@ -2116,6 +2116,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/gastank
+	name = "Gas tank"
+	item_paths = list("MET-2")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/tank)
+	time = 3 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/patch
 	name = "Chemical Patch"
 	item_paths = list("FAB-1")
