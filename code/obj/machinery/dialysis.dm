@@ -20,7 +20,7 @@ TYPEINFO(/obj/machinery/dialysis)
 
 	New()
 		..()
-		src.create_reagents(500)
+		src.create_reagents(100)
 		if (islist(chem_whitelist) && length(chem_whitelist))
 			src.whitelist = chem_whitelist
 
@@ -99,6 +99,8 @@ TYPEINFO(/obj/machinery/dialysis)
 	update_icon(...)
 		..()
 		if (src.patient)
+			src.UpdateOverlays(image(src.icon, "cannulae"), "tubing")
+
 			var/image/blood_out = image(src.icon, "tubing-good")
 			blood_out.color = src.output_blood_colour
 			src.UpdateOverlays(blood_out, "blood_out")
@@ -127,7 +129,6 @@ TYPEINFO(/obj/machinery/dialysis)
 		src.power_usage = 500
 		src.UpdateOverlays(image(src.icon, "pump-on"), "pump")
 		src.UpdateOverlays(image(src.icon, "screen-on"), "screen")
-		src.UpdateOverlays(image(src.icon, "cannulae"), "tubing")
 		src.UpdateIcon()
 		SubscribeToProcess()
 
