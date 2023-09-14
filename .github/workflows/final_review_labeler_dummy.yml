@@ -1,4 +1,4 @@
-name: Final Review Labeler Dummy
+name: Final Review Labeler
 
 on:
   pull_request_review:
@@ -6,12 +6,12 @@ on:
 
 jobs:
   dummy-workflow:
-    name: dummy
+    name: Labeler
     runs-on: ubuntu-latest
     if: github.event.review.state == 'approved'
     steps:
       - name: Explanation
-        run: echo "This is a dummy workflow that triggers a workflow_run; it's necessary because otherwise the repo secrets will not be in scope for externally forked pull requests"
+        run: echo "This is a dummy workflow that triggers a workflow_run; it's necessary because otherwise the GITHUB_TOKEN won't be able to push a label for externally forked pull requests"
       - name: Save PR number
         env:
           PR_NUMBER: ${{ github.event.pull_request.number }}

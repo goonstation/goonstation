@@ -1,8 +1,8 @@
-name: Final Review Labeler
+name: Final Review Labeler Actual
 on:
   workflow_run:
     workflows:
-      - Final Review Labeler Dummy
+      - Final Review Labeler
     types:
       - "completed"
 
@@ -68,9 +68,10 @@ jobs:
 
       - uses: actions/github-script@v6
         with:
+          # Only on totalCount == 2 so maintainers can remove the label and it won't get re-applied
           script: |
             const result = JSON.parse(JSON.stringify(${{ steps.get_approvals.outputs.data }}))
-            if (result.repository.pullRequest.reviews.totalCount >= 2) {
+            if (result.repository.pullRequest.reviews.totalCount == 2) {
               github.rest.issues.addLabels({
                 issue_number: ${{ steps.set-pr-number.outputs.result }},
                 owner: context.repo.owner,
