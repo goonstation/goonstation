@@ -19,6 +19,8 @@ TYPEINFO(/obj/machinery/dialysis)
 	var/last_in = 0
 	var/last_out = 0
 	var/output_blood_colour
+	/// Reagent ID of the current patient's blood.
+	var/patient_blood_id
 
 	New()
 		..()
@@ -98,8 +100,9 @@ TYPEINFO(/obj/machinery/dialysis)
 		transfer_blood(src.patient, src, src.draw_amount)
 
 		// Re-implemented here due to all the got dang boutputs.
+		var/list/whitelist_buffer = src.whitelist + src.patient_blood_id
 		for (var/reagent_id in src.reagents.reagent_list)
-			if ((!src.hacked && !src.whitelist.Find(reagent_id)) || (src.hacked && src.whitelist.Find(reagent_id)))
+			if ((!src.hacked && !whitelist_buffer.Find(reagent_id)) || (src.hacked && whitelist_buffer.Find(reagent_id)))
 				src.reagents.del_reagent(reagent_id)
 
 		src.output_blood_colour = src.reagents.total_volume ? src.reagents.get_average_color().to_rgba() : null
@@ -148,6 +151,7 @@ TYPEINFO(/obj/machinery/dialysis)
 	proc/start_dialysis()
 		if (!src.patient) return
 		src.power_usage = 500
+		src.patient_blood_id = src.patient.blood_id
 		src.UpdateOverlays(image(src.icon, "pump-on"), "pump")
 		src.UpdateOverlays(image(src.icon, "screen-on"), "screen")
 		src.UpdateIcon()
@@ -156,6 +160,7 @@ TYPEINFO(/obj/machinery/dialysis)
 	proc/stop_dialysis()
 		UnsubscribeProcess()
 		src.patient = null
+		src.patient_blood_id = null
 		src.output_blood_colour = null
 		if (!!src.reagents.total_volume)
 			src.reagents.clear_reagents()
