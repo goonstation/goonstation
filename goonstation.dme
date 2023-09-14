@@ -1897,6 +1897,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\machinery\clonepod.dm"
 #include "code\obj\machinery\computer.dm"
 #include "code\obj\machinery\deep_fryer.dm"
+#include "code\obj\machinery\dialysis.dm"
 #include "code\obj\machinery\dispenser.dm"
 #include "code\obj\machinery\drone_beacon.dm"
 #include "code\obj\machinery\drone_factory.dm"

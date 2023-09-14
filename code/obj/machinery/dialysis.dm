@@ -1,0 +1,127 @@
+TYPEINFO(/obj/machinery/dialysis)
+	mats = list("MET-1" = 20, "CRY" = 5, "CON" = 5)
+
+/obj/machinery/dialysis
+	name = "dialysis machine"
+	desc = "A machine which continuously draws blood from a patient, removes excess chemicals from it, and re-infuses it into the patient."
+	icon = 'icons/obj/machines/dialysis.dmi'
+#ifdef IN_MAP_EDITOR
+	icon_state = "dialysis-map"
+#else
+	icon_state = "dialysis-base"
+#endif
+	var/mob/living/carbon/patient
+	var/list/whitelist
+	// In units per process tick.
+	var/draw_amount = 10
+	var/output_blood_colour
+
+	New()
+		..()
+		src.create_reagents(500)
+		if (islist(chem_whitelist) && length(chem_whitelist))
+			src.whitelist = chem_whitelist
+
+		src.UpdateOverlays(image(src.icon, "pump-off"), "pump")
+		src.UpdateOverlays(image(src.icon, "screen-off"), "screen")
+		src.UpdateOverlays(image(src.icon, "tubing"), "tubing")
+
+	attack_hand(mob/user)
+		src.anchored = !src.anchored
+		boutput(user, "You [src.anchored ? "apply" : "release"] \the [src.name]'s brake.")
+
+	get_desc(dist, mob/user)
+		..()
+		. += " Its internal blood reservoir is [get_fullness((src.reagents.total_volume / src.reagents.maximum_volume) * 100)]."
+
+	mouse_drop(atom/over_object as mob|obj)
+		var/mob/living/carbon/new_patient = over_object
+		var/mob/living/user = usr
+		if (isliving(user) && iscarbon(new_patient) && can_act(user) && in_interact_range(src, user) && in_interact_range(new_patient, user))
+			if (src.patient)
+				if (new_patient == src.patient)
+					new_patient.tri_message(user,\
+					"<span class='notice'><b>[user]</b> removes [src]'s cannulae from [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm.</span>",\
+					"<span class='notice'>You remove [src]'s cannulae from [new_patient == user ? "your" : "[new_patient]'s"] arm.</span>",\
+					"<span class='notice'>[new_patient == user ? "You remove" : "<b>[user]</b> removes"] [src]'s cannulae from your arm.</span>")
+					return src.stop_dialysis()
+				else return boutput(user, "<span class='alert'>[src] already has a patient attached!</span>")
+			new_patient.tri_message(user,\
+			"<span class='notice'><b>[user]</b> begins inserting [src]'s cannulae into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm.</span>",\
+			"<span class='notice'>[new_patient == user ? "You begin" : "<b>[user]</b> begins"] inserting [src]'s cannulae into your arm.</span>",\
+			"<span class='notice'>You begin inserting [src]'s cannulae into [new_patient == user ? "your" : "[new_patient]'s"] arm.</span>")
+			logTheThing(LOG_COMBAT, user, "tries to hook up a dialysis machine [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(cannulate), list(new_patient, user), src.icon, "dialysis-map", null, null)
+		..()
+
+	process(mult)
+		..()
+		if (!src.patient || !ishuman(src.patient) || !src.patient.blood_volume)
+			return src.stop_dialysis()
+
+		if (!in_interact_range(src, src.patient))
+			var/fluff = pick("pulled", "yanked", "ripped")
+			src.patient.visible_message("<span class='alert'><b>[src]'s needle gets [fluff] out of [src.patient]'s arm!</b></span>",\
+			"<span class='alert'><b>[src]'s needle gets [fluff] out of your arm!</b></span>")
+			src.stop_dialysis()
+			return
+
+		// If we're full of blood and can't take anymore on, destroy it all.
+		if (src.reagents.is_full())
+			src.reagents.clear_reagents()
+			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Blood buffer has reached maximum capacity. Purging internal reservoir.\"")
+
+		transfer_blood(src.patient, src, src.draw_amount)
+
+		// Re-implemented here due to all the got dang boutputs.
+		for (var/reagent_id in src.reagents.reagent_list)
+			if (!src.whitelist.Find(reagent_id))
+				src.reagents.del_reagent(reagent_id)
+
+		src.output_blood_colour = src.reagents.get_average_color().to_rgba()
+
+		// Infuse blood back in if possible.
+		if (!src.patient.reagents.is_full())
+			src.reagents.trans_to(src.patient, src.draw_amount)
+			src.patient.reagents.reaction(src.patient, INGEST, src.draw_amount)
+
+		src.UpdateIcon()
+
+	update_icon(...)
+		..()
+		if (src.patient)
+			var/image/blood_out = image(src.icon, "tubing-good")
+			blood_out.color = src.output_blood_colour
+			src.UpdateOverlays(blood_out, "blood_out")
+
+			var/image/blood_in = image(src.icon, "tubing-bad")
+			blood_in.color = src.patient.reagents.get_average_color().to_rgba()
+			src.UpdateOverlays(blood_in, "blood_in")
+		else
+			src.UpdateOverlays(image(src.icon, "pump-off"), "pump")
+			src.UpdateOverlays(image(src.icon, "screen-off"), "screen")
+			src.ClearSpecificOverlays("blood_out")
+			src.ClearSpecificOverlays("blood_in")
+
+	proc/cannulate(mob/living/carbon/new_patient, mob/user)
+		src.patient = new_patient
+		new_patient.tri_message(user,\
+			"<span class='notice'><b>[user]</b> inserts [src]'s cannulae into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm.</span>",\
+			"<span class='notice'>[new_patient == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s cannulae into your arm.</span>",\
+			"<span class='notice'>You insert [src]'s cannulae into [new_patient == user ? "your" : "[new_patient]'s"] arm.</span>")
+		logTheThing(LOG_COMBAT, user, "connects a dialysis machine [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
+		src.start_dialysis()
+
+	proc/start_dialysis()
+		if (!src.patient) return
+		src.power_usage = 500
+		src.UpdateOverlays(image(src.icon, "pump-on"), "pump")
+		src.UpdateOverlays(image(src.icon, "screen-on"), "screen")
+		src.UpdateIcon()
+		SubscribeToProcess()
+
+	proc/stop_dialysis()
+		UnsubscribeProcess()
+		src.patient = null
+		src.power_usage = 0
+		src.UpdateIcon()
