@@ -8297,13 +8297,7 @@
 /area/station/medical/medbay)
 "dNQ" = (
 /obj/stool/chair,
-/obj/npc/trader/robot{
-	icon_state = "medibot0";
-	name = "D.O.C.";
-	productset = 4;
-	trader_area = "/area/abandonedmedicalship/robot_trader";
-	icon = 'icons/misc/evilreaverstation.dmi'
-	},
+/obj/npc/trader/robot/medical,
 /turf/simulated/floor/white/grime,
 /area/abandonedmedicalship/robot_trader)
 "dOb" = (
@@ -9682,7 +9676,7 @@
 /area/station/medical/medbay/cloner)
 "exP" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
 /obj/item/device/radio/signaler,
@@ -16052,7 +16046,7 @@
 /area/station/science/hall)
 "hex" = (
 /obj/fluid_spawner{
-	amount = 2100
+	amount = 3000
 	},
 /turf/simulated/floor/pool/no_animate,
 /area/station/crew_quarters/pool)
@@ -21755,9 +21749,7 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
 "jvs" = (
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/stool/chair/syndicate,
 /obj/decal/cleanable/dirt,
 /obj/machinery/light/small{
@@ -27403,8 +27395,8 @@
 /area/station/hallway/primary/southwest)
 "lIL" = (
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -28443,14 +28435,7 @@
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
 "mdr" = (
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -30509,6 +30494,7 @@
 "mZj" = (
 /obj/table/reinforced/chemistry/auto/basicsup,
 /obj/machinery/light,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "mZs" = (
@@ -41822,13 +41808,7 @@
 /obj/table/wood/auto{
 	pixel_w = -1
 	},
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
+/obj/item/device/radio/intercom/radiostation,
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
 "snl" = (
@@ -48263,7 +48243,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/computer/sea_elevator,
+/obj/machinery/computer/elevator/sea,
 /obj/machinery/light/small/warm/very{
 	dir = 1;
 	pixel_y = 21
@@ -50388,7 +50368,7 @@
 	pixel_x = -4;
 	pixel_y = 7
 	},
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 3;
 	pixel_y = 1
 	},

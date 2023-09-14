@@ -2376,8 +2376,8 @@ TYPEINFO(/datum/mutantrace/pug)
 	genetics_removable = FALSE
 	mutant_folder = 'icons/mob/human.dmi' // vOv
 	mutant_organs = list(\
-		"left_eye"=/obj/item/organ/eye/cyber,\
-		"right_eye"=/obj/item/organ/eye/cyber,\
+		"left_eye"=/obj/item/organ/eye/cyber/configurable,\
+		"right_eye"=/obj/item/organ/eye/cyber/configurable,\
 		"heart"=/obj/item/organ/heart/cyber,\
 		"appendix"=/obj/item/organ/appendix/cyber,\
 		"intestines"=/obj/item/organ/intestines/cyber,\

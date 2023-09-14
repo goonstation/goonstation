@@ -168,6 +168,7 @@ TRAYS
 
 	New()
 		..()
+		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/double)
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)

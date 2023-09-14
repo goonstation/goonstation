@@ -121,6 +121,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	var/spaget_count = 0
 	var/katamari_mode = FALSE //! If true the sucked-in objects will get stuck to the singularity
 	var/num_absorbed = 0 //! Number of objects absorbed by the singularity
+	var/list/obj/succ_cache
 
 
 #ifdef SINGULARITY_TIME
@@ -134,6 +135,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.energy = E
 	maxradius = rad
+	succ_cache = list()
 	if(maxradius<2)
 		radius = maxradius
 	else
@@ -156,7 +158,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 	lense.blend_mode = BLEND_OVERLAY
 	lense.appearance_flags = RESET_ALPHA | RESET_COLOR
 	src.UpdateOverlays(lense, "grav_lensing")
-
 	..()
 
 /obj/machinery/the_singularity/disposing()
@@ -269,7 +270,6 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		qdel(src)
 
 /obj/machinery/the_singularity/Bumped(atom/A)
-	var/gain = 0
 	if(istype(A, /obj/dummy))
 		return
 
@@ -281,56 +281,60 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 
 	if(QDELETED(A)) // Don't bump that which no longer exists
 		return
+	src.consume_atom(A)
 
-	num_absorbed++
+/obj/machinery/the_singularity/proc/consume_atom(atom/A, no_visuals = FALSE)
+	var/gain = 0
 
-	if(src.spaget_count < 25 && !katamari_mode)
-		src.spaget_count++
-		var/spaget_time = 15 SECONDS
-		var/obj/dummy/spaget_overlay = new()
-		spaget_overlay.appearance = A.appearance
-		spaget_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
-		spaget_overlay.pixel_x = A.pixel_x + (A.x - src.x + 0.5)*32
-		spaget_overlay.pixel_y = A.pixel_y + (A.y - src.y + 0.5)*32
-		spaget_overlay.vis_flags = 0
-		spaget_overlay.plane = PLANE_DEFAULT
-		spaget_overlay.mouse_opacity = 0
-		spaget_overlay.transform = A.transform
-		if(prob(0.1)) // easteregg
-			spaget_overlay.icon = 'icons/obj/foodNdrink/food_meals.dmi'
-			spaget_overlay.icon_state = "spag-dish"
-			spaget_overlay.Scale(2, 2)
-		var/angle = get_angle(A, src)
-		var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
-		animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
-		var/obj/dummy/spaget_turner = new()
-		spaget_turner.vis_contents += spaget_overlay
-		spaget_turner.mouse_opacity = 0
-		spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
-		animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
-		src.vis_contents += spaget_turner
-		SPAWN(spaget_time + 1 SECOND)
-			src.spaget_count--
-			qdel(spaget_overlay)
-			qdel(spaget_turner)
-	else if(katamari_mode)
-		var/obj/dummy/kat_overlay = new()
-		kat_overlay.appearance = A.appearance
-		kat_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE | RESET_TRANSFORM
-		kat_overlay.pixel_x = 0
-		kat_overlay.pixel_y = 0
-		kat_overlay.vis_flags = 0
-		kat_overlay.plane = PLANE_NOSHADOW_ABOVE
-		kat_overlay.layer = src.layer + rand()
-		kat_overlay.mouse_opacity = 0
-		kat_overlay.alpha = 64
-		var/matrix/tr = new
-		tr.Turn(randfloat(0, 360))
-		tr.Translate(sqrt(num_absorbed) * 3 + 16 - 16, -16)
-		tr.Turn(randfloat(0, 360))
-		tr.Translate(-pixel_x, -pixel_y)
-		kat_overlay.transform = tr
-		src.underlays += kat_overlay
+	if(!no_visuals)
+		num_absorbed++
+		if(src.spaget_count < 25 && !katamari_mode)
+			src.spaget_count++
+			var/spaget_time = 15 SECONDS
+			var/obj/dummy/spaget_overlay = new()
+			spaget_overlay.appearance = A.appearance
+			spaget_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE
+			spaget_overlay.pixel_x = A.pixel_x + (A.x - src.x + 0.5)*32
+			spaget_overlay.pixel_y = A.pixel_y + (A.y - src.y + 0.5)*32
+			spaget_overlay.vis_flags = 0
+			spaget_overlay.plane = PLANE_DEFAULT
+			spaget_overlay.mouse_opacity = 0
+			spaget_overlay.transform = A.transform
+			if(prob(0.1)) // easteregg
+				spaget_overlay.icon = 'icons/obj/foodNdrink/food_meals.dmi'
+				spaget_overlay.icon_state = "spag-dish"
+				spaget_overlay.Scale(2, 2)
+			var/angle = get_angle(A, src)
+			var/matrix/flatten = matrix((A.x - src.x)*(cos(angle)), 0, -spaget_overlay.pixel_x, (A.y - src.y)*(sin(angle)), 0, -spaget_overlay.pixel_y)
+			animate(spaget_overlay, spaget_time, FALSE, QUAD_EASING, 0, alpha=0, transform=flatten)
+			var/obj/dummy/spaget_turner = new()
+			spaget_turner.vis_contents += spaget_overlay
+			spaget_turner.mouse_opacity = 0
+			spaget_turner.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_TOGETHER
+			animate_spin(spaget_turner, right_spinning ? "R" : "L", spaget_time / 8 + randfloat(-2, 2), looping=2, parallel=FALSE)
+			src.vis_contents += spaget_turner
+			SPAWN(spaget_time + 1 SECOND)
+				src.spaget_count--
+				qdel(spaget_overlay)
+				qdel(spaget_turner)
+		else if(katamari_mode)
+			var/obj/dummy/kat_overlay = new()
+			kat_overlay.appearance = A.appearance
+			kat_overlay.appearance_flags = RESET_COLOR | RESET_ALPHA | PIXEL_SCALE | RESET_TRANSFORM
+			kat_overlay.pixel_x = 0
+			kat_overlay.pixel_y = 0
+			kat_overlay.vis_flags = 0
+			kat_overlay.plane = PLANE_NOSHADOW_ABOVE
+			kat_overlay.layer = src.layer + rand()
+			kat_overlay.mouse_opacity = 0
+			kat_overlay.alpha = 64
+			var/matrix/tr = new
+			tr.Turn(randfloat(0, 360))
+			tr.Translate(sqrt(num_absorbed) * 3 + 16 - 16, -16)
+			tr.Turn(randfloat(0, 360))
+			tr.Translate(-pixel_x, -pixel_y)
+			kat_overlay.transform = tr
+			src.underlays += kat_overlay
 
 	if (isliving(A) && !isintangible(A))//if its a mob
 		var/mob/living/L = A
@@ -373,13 +377,14 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 		//if (istype(A, /obj/item/graviton_grenade))
 			//src.warp = 100
 		if (istype(A.material))
-			gain += A.material.getProperty("density") * 2 * A.material_amt
-			gain += A.material.getProperty("radioactive") * 2 * A.material_amt
+			gain += A.material.getProperty("density") * 3 * A.material_amt
+			gain += A.material.getProperty("radioactive") * 4 * A.material_amt
+			gain += A.material.getProperty("n_radioactive") * 6 * A.material_amt
+			if(isitem(A))
+				var/obj/item/I = A
+				gain *= I.amount
 		if (A.reagents)
 			gain += min(A.reagents.total_volume/4, 50)
-		if (istype(A, /obj/decal/cleanable)) //MBC : this check sucks, but its far better than cleanables doing hard-delete at the whims of the singularity. replace ASAP when i figure out cleanablessssss
-			qdel(A)
-			gain += 2
 		else if (istype(A, /obj/machinery/nuclearbomb))
 			gain += 5000 //ten clowns
 			playsound_global(clients, 'sound/machines/singulo_start.ogg', 50)
@@ -389,13 +394,15 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 					src.grow()
 					sleep(0.5 SECONDS)
 			qdel(A)
-		else if (istype(A, /obj/mechbeam)) //let's not make lazy feeders with trip lasers
-			gain += 0.25
+		else if (istype(A, /obj/item/plutonium_core)) // as a treat
+			gain += 5000
 			qdel(A)
 		else
 			var/obj/O = A
-			gain += 2
-			gain += length(O.contents) * 2
+			succ_cache[A.type] += 1
+			gain += 10/succ_cache[A.type]
+			for(var/atom/other_food in A)
+				src.consume_atom(other_food, no_visuals = TRUE)
 			O.set_loc(src.get_center())
 			O.ex_act(1)
 			if (O)

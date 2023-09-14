@@ -1,3 +1,5 @@
+(t)mon sep 11 23
+(*)You can't click fluids anymore. To accomodate this, using "check reagents" on a floor will check the reagents of a smoke/fluid (prioritizing smoke) on that tile. You can also use `+right-click in order to interact with smoke/fluid directly if needed. Fluid and smoke will have the most common reagent in the name when viewed through this menu.
 (t)mon aug 21 23
 (u)LeahTheTech
 (*)Added a new verb "Stabilize All Atmos" to reset all air on the entire station, in case that thing happens where there just isn't any air.

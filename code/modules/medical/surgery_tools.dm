@@ -308,27 +308,6 @@ CONTAINS:
 				surgery_limb.surgery(src)
 			return
 
-	attackby(obj/item/W, mob/user)
-		..()
-
-		if (istype(W,/obj/item/pipebomb/frame))
-			var/obj/item/pipebomb/frame/F = W
-			if (F.state < 2)
-				user.show_text("This might work better if [F] was hollowed out.")
-			else if (F.state == 2)
-				user.show_text("You combine [F] and [src]. This looks pretty unsafe!")
-				user.u_equip(F)
-				user.u_equip(src)
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-				var/obj/item/gun/kinetic/zipgun/Z = new/obj/item/gun/kinetic/zipgun
-				user.put_in_hand_or_drop(Z)
-				qdel(F)
-				qdel(src)
-
-			else
-				user.show_text("You can't seem to combine these two items this way.")
-		return
-
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red

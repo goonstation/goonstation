@@ -21,7 +21,7 @@ TYPEINFO_NEW(/obj/table)
 	material_amt = 0.2
 	var/parts_type = /obj/item/furniture_parts/table
 	default_material = null
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	var/auto = 0
 	var/status = null //1=weak|welded, 2=strong|unwelded
 	var/image/working_image = null
@@ -459,7 +459,7 @@ TYPEINFO(/obj/table/wood)
 	desc = "A table made from solid oak, which is quite rare in space."
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 	default_material = "wood"
 
@@ -544,7 +544,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 	name = "table"
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0$$mauxite"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
 	default_material = "mauxite"
 
@@ -785,11 +785,13 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	drawer_contents = list(/obj/item/storage/box/beakerbox,
 				/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
-				/obj/item/reagent_containers/glass/beaker/large,
-				/obj/item/clothing/glasses/spectro = 2,
+				/obj/item/clothing/glasses/spectro,
 				/obj/item/device/reagentscanner = 2,
 				/obj/item/reagent_containers/dropper/mechanical,
-				/obj/item/clothing/gloves/latex = 4)
+				/obj/item/storage/box/lglo_kit,
+				/obj/item/storage/box/beaker_lids,
+				/obj/item/reagent_containers/glass/condenser = 4)
+
 
 
 /obj/table/reinforced/chemistry/auto/clericalsup

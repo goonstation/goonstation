@@ -27,7 +27,7 @@
 	pressure_resistance = 3*ONE_ATMOSPHERE
 	layer = STORAGE_LAYER //dumb
 	default_material = "steel"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
@@ -909,7 +909,7 @@ TYPEINFO(/obj/stool/chair)
 /obj/stool/chair/material
 	name = "material chair"
 	desc = "A chair made from a material"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
 
 /obj/stool/chair/material/mauxite
