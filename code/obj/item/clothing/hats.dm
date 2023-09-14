@@ -1263,7 +1263,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 		var/pitch_level = pitch_sound_alt ? 1.4 : 1.2
 		src.steps++
 		if(steps > 1)
-			playsound(src, 'sound/musical_instruments/Bell_Jingle.ogg', 50, pitch = pitch_level)
+			playsound(src, 'sound/musical_instruments/Bell_Jingle.ogg', 100, pitch = pitch_level)
 			pitch_sound_alt = !pitch_sound_alt
 			src.steps = 0
 
