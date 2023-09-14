@@ -1,0 +1,42 @@
+name: Final Review Labeler
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  approve-labeler:
+    if: github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: octokit/graphql-action@v2.x
+        id: get_approvals
+        with:
+          query: |
+            query ($owner: String!, $repo: String!, $pullRequestID: Int!) {
+              repository(owner: $owner, name: $repo) {
+                pullRequest(number: $pullRequestID) {
+                  reviews(states: APPROVED) {
+                    totalCount
+                  }
+                }
+              }
+            }
+          variables: |
+            owner: ${{ github.event.repository.owner.name }}
+            repo: ${{ github.event.repository.name }}
+            pullRequestID: ${{ github.event.pull_request.id }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: actions/github-script@v6
+        with:
+          script: |
+            const result = JSON.parse(JSON.stringify(${{ steps.get_approvals.outputs.data }}))
+            if (result.repository.pullRequest.reviews.totalCount == 2) {
+              github.rest.issues.addLabels({
+                issue_number: context.issue.number,
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                labels: ['S-Ready-For-Final-Review']
+              })
+            }
