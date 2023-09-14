@@ -28,6 +28,11 @@ TYPEINFO(/obj/machinery/dialysis)
 		src.UpdateOverlays(image(src.icon, "screen-off"), "screen")
 		src.UpdateOverlays(image(src.icon, "tubing"), "tubing")
 
+	disposing()
+		if (src.patient)
+			src.stop_dialysis()
+		..()
+
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (src.hacked) return FALSE
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Dialysis protocols inversed.\"")
