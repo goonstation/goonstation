@@ -634,8 +634,8 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	item_state = "chicken"
 	see_face = 0
 
-/obj/item/clothing/mask/
-	name = "'s mask"
+/obj/item/clothing/mask/jester
+	name = "jester's mask"
 	desc = "The mask of a not-so-funny-clown."
 	icon_state = "jester"
 	item_state = "jester"
