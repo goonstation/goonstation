@@ -29,7 +29,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 	var/client/last_client = null
 	var/image/last_display = null
 	var/find_interesting = TRUE
-	var/list/setting_context_actions
+	var/list/datum/contextAction/actions = null
 	contextLayout = new /datum/contextLayout/experimentalcircle
 	var/show_underfloor_cables = TRUE
 	var/show_underfloor_disposal_pipes = TRUE
@@ -37,14 +37,18 @@ TYPEINFO(/obj/item/device/t_scanner)
 
 	New()
 		..()
-		setting_context_actions = list()
-		for(var/actionType in childrentypesof(/datum/contextAction/t_scanner)) //see context_actions.dm for those
+		actions = list()
+		for(var/actionType in childrentypesof(/datum/contextAction/t_scanner)) //see context_actions.dm
 			var/datum/contextAction/t_scanner/action = new actionType(src)
-			setting_context_actions += action
+			actions += action
 
+	/// Update the inventory, ability, and context buttons
 	proc/set_on(new_on, mob/user=null)
 		on = new_on
 		set_icon_state("t-ray[on]")
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/active))
+				action.icon_state ="[action.base_icon_state][on ? "on" : "off"]"
 		if(user)
 			boutput(user, "You switch [src] [on ? "on" : "off"].")
 		if(!on)
@@ -54,21 +58,30 @@ TYPEINFO(/obj/item/device/t_scanner)
 
 	proc/set_underfloor_cables(state, mob/user=null)
 		show_underfloor_cables = state
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/underfloor_cables))
+				action.icon_state = "[action.base_icon_state][show_underfloor_cables ? "on" : "off"]"
 		if(user)
 			boutput(user, "You switch [src] to [show_underfloor_cables ? "show" : "hide"] underfloor cables.")
 
 	proc/set_underfloor_disposal_pipes(state, mob/user=null)
 		show_underfloor_disposal_pipes = state
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/underfloor_disposal_pipes))
+				action.icon_state = "[action.base_icon_state][show_underfloor_disposal_pipes ? "on" : "off"]"
 		if(user)
 			boutput(user, "You switch [src] to [show_underfloor_disposal_pipes ? "show" : "hide"] underfloor disposal pipes.")
 
 	proc/set_blueprint_disposal_pipes(state, mob/user=null)
 		show_blueprint_disposal_pipes = state
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/blueprint_disposal_pipes))
+				action.icon_state = "[action.base_icon_state][show_blueprint_disposal_pipes ? "on" : "off"]"
 		if(user)
 			boutput(user, "You switch [src] to [show_blueprint_disposal_pipes ? "show" : "hide"] disposal pipe blueprints.")
 
 	attack_self(mob/user)
-		user.showContextActions(setting_context_actions, src, contextLayout)
+		user.showContextActions(actions, src, contextLayout)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))

@@ -1292,42 +1292,48 @@
 
 /datum/contextAction/t_scanner
 	icon = 'icons/ui/context16x16.dmi'
+	icon_state = "dismiss"
 	close_clicked = TRUE
 	close_moved = FALSE
-	desc = ""
+	var/base_icon_state = ""
 
 	checkRequirements(var/obj/item/device/t_scanner/t_scanner, mob/user)
 		return t_scanner in user
 
 	active
-		name = "Turn on/off"
-		icon_state = "bulb"
+		name = "Active"
+		desc = "Toggle T-ray scanner"
+		icon_state = "tray_scanner_off"
+		base_icon_state = "tray_scanner_"
 
 		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
 			t_scanner.set_on(!t_scanner.on)
 			var/obj/ability_button/tscanner_toggle/tscanner_button = locate(/obj/ability_button/tscanner_toggle) in t_scanner.ability_buttons
-			tscanner_button.icon_state = t_scanner.on ? "lighton" : "lightoff"
+			tscanner_button.icon_state = t_scanner.on ? "tray_on" : "tray_off"
 
 	underfloor_cables
-		name = "Underfloor Power Cables"
-		desc = "Toggle showing power cables located under the floor."
-		icon_state = "cut"
+		name = "Cables"
+		desc = "Current underfloor cables"
+		icon_state = "tray_cable_on"
+		base_icon_state = "tray_cable_"
 
 		execute(obj/item/device/t_scanner/t_scanner, mob/user)
 			t_scanner.set_underfloor_cables(!t_scanner.show_underfloor_cables, user)
 
 	underfloor_disposal_pipes
-		name = "Underfloor Disposal Pipes"
-		desc = "Toggle showing disposal pipes located under the floor."
-		icon_state = "weld"
+		name = "Disposal Pipes"
+		desc = "Current underfloor disposal pipes"
+		icon_state = "tray_pipes_on"
+		base_icon_state = "tray_pipes_"
 
 		execute(obj/item/device/t_scanner/t_scanner, mob/user)
 			t_scanner.set_underfloor_disposal_pipes(!t_scanner.show_underfloor_disposal_pipes, user)
 
 	blueprint_disposal_pipes
-		name = "Disposal Pipe Blueprints"
-		desc = "Toggle showing the original blueprints for disposal pipes."
-		icon_state = "cog"
+		name = "Pipe Blueprints"
+		desc = "Original pipe blueprints"
+		icon_state = "tray_blueprint_on"
+		base_icon_state = "tray_blueprint_"
 
 		execute(obj/item/device/t_scanner/t_scanner, mob/user)
 			t_scanner.set_blueprint_disposal_pipes(!t_scanner.show_blueprint_disposal_pipes, user)
