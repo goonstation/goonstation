@@ -3,6 +3,9 @@ on:
   pull_request_review:
     types: [submitted]
 
+permissions:
+  pull-requests: write
+
 jobs:
   approve-labeler:
     if: github.event.review.state == 'approved'
@@ -32,7 +35,7 @@ jobs:
         with:
           script: |
             const result = JSON.parse(JSON.stringify(${{ steps.get_approvals.outputs.data }}))
-            if (result.repository.pullRequest.reviews.totalCount == 2) {
+            if (result.repository.pullRequest.reviews.totalCount >= 2) {
               github.rest.issues.addLabels({
                 issue_number: context.issue.number,
                 owner: context.repo.owner,
