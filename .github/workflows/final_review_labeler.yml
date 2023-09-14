@@ -16,9 +16,9 @@ jobs:
         id: get_approvals
         with:
           query: |
-            query ($owner: String!, $repo: String!, $pullRequestID: Int!) {
+            query ($owner: String!, $repo: String!, $prNumber: Int!) {
               repository(owner: $owner, name: $repo) {
-                pullRequest(number: $pullRequestID) {
+                pullRequest(number: $prNumber) {
                   reviews(states: APPROVED) {
                     totalCount
                   }
@@ -28,7 +28,7 @@ jobs:
           variables: |
             owner: ${{ github.event.repository.owner.login }}
             repo: ${{ github.event.repository.name }}
-            pullRequestID: ${{ github.event.pull_request.number }}
+            prNumber: ${{ github.event.pull_request.number }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -44,3 +44,4 @@ jobs:
                 labels: ['S-Ready-For-Final-Review']
               })
             }
+          github-token: ${{ secrets.GITHUB_TOKEN }}
