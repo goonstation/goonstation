@@ -42,6 +42,7 @@ jobs:
         id: set-pr-number
         with:
           script: |
+            let fs = require('fs');
             let pr_number = Number(fs.readFileSync('./pr_number'));
             return pr_number
 
