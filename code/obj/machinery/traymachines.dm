@@ -379,16 +379,15 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			continue
 		if (isliving(I))
 			var/mob/living/L = I
-			for (var/obj/item/W in L)
-				if (prob(10))
-					W.set_loc(L.loc)
-
-			if (!L.is_heat_resistant() || ischangeling(L))
+			if (!L.is_heat_resistant())
 				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
-				L.remove()
+				for (var/obj/item/W in L)
+					if (prob(10))
+						W.set_loc(L.loc)
+				ashes += 1
 			else
 				logTheThing(LOG_COMBAT, user, "fails to cremate [constructTarget(L,"combat")] in a crematorium at [log_loc(src)] due to their heat resistance.")
-			ashes += 1
+				continue // don't qdel us thanks
 		else if (!ismob(I))
 			if (prob(max(0, 100 - (ashes * 10))))
 				ashes += 1

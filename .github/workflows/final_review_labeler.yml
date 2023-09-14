@@ -68,10 +68,10 @@ jobs:
 
       - uses: actions/github-script@v6
         with:
-          # Only on totalCount == 2 so maintainers can remove the label and it won't get re-applied
+          # Only on totalCount == 2 or 3 so maintainers can remove the label and it won't get re-applied (3 for fast approvals due to script delay)
           script: |
             const result = JSON.parse(JSON.stringify(${{ steps.get_approvals.outputs.data }}))
-            if (result.repository.pullRequest.reviews.totalCount == 2) {
+            if ((result.repository.pullRequest.reviews.totalCount == 2) || (result.repository.pullRequest.reviews.totalCount == 3)) {
               github.rest.issues.addLabels({
                 issue_number: ${{ steps.set-pr-number.outputs.result }},
                 owner: context.repo.owner,
