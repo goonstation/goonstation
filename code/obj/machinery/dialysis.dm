@@ -15,6 +15,7 @@ TYPEINFO(/obj/machinery/dialysis)
 	var/list/whitelist
 	// In units per process tick.
 	var/draw_amount = 10
+	var/hacked = FALSE
 	var/output_blood_colour
 
 	New()
@@ -26,6 +27,11 @@ TYPEINFO(/obj/machinery/dialysis)
 		src.UpdateOverlays(image(src.icon, "pump-off"), "pump")
 		src.UpdateOverlays(image(src.icon, "screen-off"), "screen")
 		src.UpdateOverlays(image(src.icon, "tubing"), "tubing")
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		if (src.hacked) return FALSE
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Dialysis protocols inversed.\"")
+		src.hacked = TRUE
 
 	attack_hand(mob/user)
 		src.anchored = !src.anchored
@@ -76,7 +82,7 @@ TYPEINFO(/obj/machinery/dialysis)
 
 		// Re-implemented here due to all the got dang boutputs.
 		for (var/reagent_id in src.reagents.reagent_list)
-			if (!src.whitelist.Find(reagent_id))
+			if ((!src.hacked && !src.whitelist.Find(reagent_id)) || (src.hacked && src.whitelist.Find(reagent_id)))
 				src.reagents.del_reagent(reagent_id)
 
 		src.output_blood_colour = src.reagents.get_average_color().to_rgba()
