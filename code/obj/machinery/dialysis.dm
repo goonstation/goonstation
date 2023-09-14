@@ -16,6 +16,8 @@ TYPEINFO(/obj/machinery/dialysis)
 	// In units per process tick.
 	var/draw_amount = 10
 	var/hacked = FALSE
+	var/last_in = 0
+	var/last_out = 0
 	var/output_blood_colour
 
 	New()
@@ -70,13 +72,21 @@ TYPEINFO(/obj/machinery/dialysis)
 
 	process(mult)
 		..()
-		if (!src.patient || !ishuman(src.patient) || !src.patient.blood_volume)
-			return src.stop_dialysis()
+		if (!src.patient || !ishuman(src.patient))
+			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Patient lost.\"")
+			src.stop_dialysis()
+			return
+
+		if (!src.patient.blood_volume)
+			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"No blood pressure detected.\"")
+			src.stop_dialysis()
+			return
 
 		if (!in_interact_range(src, src.patient))
 			var/fluff = pick("pulled", "yanked", "ripped")
 			src.patient.visible_message("<span class='alert'><b>[src]'s needle gets [fluff] out of [src.patient]'s arm!</b></span>",\
 			"<span class='alert'><b>[src]'s needle gets [fluff] out of your arm!</b></span>")
+			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"No blood pressure detected.\"")
 			src.stop_dialysis()
 			return
 
@@ -92,7 +102,7 @@ TYPEINFO(/obj/machinery/dialysis)
 			if ((!src.hacked && !src.whitelist.Find(reagent_id)) || (src.hacked && src.whitelist.Find(reagent_id)))
 				src.reagents.del_reagent(reagent_id)
 
-		src.output_blood_colour = src.reagents.get_average_color().to_rgba()
+		src.output_blood_colour = src.reagents.total_volume ? src.reagents.get_average_color().to_rgba() || null
 
 		// Infuse blood back in if possible. Don't wanna stuff too much blood back in.
 		// The blood that's not actually in the bloodstream yet, know what I mean?
@@ -108,12 +118,14 @@ TYPEINFO(/obj/machinery/dialysis)
 		if (src.patient)
 			src.UpdateOverlays(image(src.icon, "cannulae"), "tubing")
 
-			var/image/blood_out = image(src.icon, "tubing-good")
-			blood_out.color = src.output_blood_colour
+			var/image/blood_out = image(src.icon, "tubing-good[src.output_blood_colour ? "" : "-empty"]")
+			if (src.output_blood_colour)
+				blood_out.color = src.output_blood_colour
 			src.UpdateOverlays(blood_out, "blood_out")
 
-			var/image/blood_in = image(src.icon, "tubing-bad")
-			blood_in.color = src.patient.reagents.get_average_color().to_rgba()
+			var/image/blood_in = image(src.icon, "tubing-bad[src.patient.reagents.total_volume ? "" : "-empty"]")
+			if (src.patient.reagents.total_volume)
+				blood_in.color = src.patient.reagents.get_average_color().to_rgba()
 			src.UpdateOverlays(blood_in, "blood_in")
 		else
 			src.UpdateOverlays(image(src.icon, "pump-off"), "pump")
