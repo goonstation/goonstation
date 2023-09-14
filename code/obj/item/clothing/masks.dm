@@ -642,7 +642,7 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	see_face = 0
 
 	var/spam_flag = 0
-	var/spam_timer = 0
+	var/spam_timer = 100
 	var/list/sounds_instrument = list('sound/misc/jester_laugh_1.ogg', 'sound/misc/jester_laugh_2.ogg')
 	var/volume = 100
 	var/randomized_pitch = 1
