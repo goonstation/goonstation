@@ -625,7 +625,7 @@
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	var/trunk_type = /obj/disposalpipe/trunk/regular
-	dpdir = 0		//! bitmask of pipe directions
+	dpdir = 0	
 	regular
 		trunk_type = /obj/disposalpipe/trunk/regular
 	mail
