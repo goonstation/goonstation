@@ -829,7 +829,7 @@
 	isauto = TRUE
 	dir = SOUTH
 	icon_state = "pipe-j-spawner"
-	dpdir = 0	//! bitmask of pipe directions
+	dpdir = 0
 
 /obj/disposalpipe/junction/auto/New()
 	..()
