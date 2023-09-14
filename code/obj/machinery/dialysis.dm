@@ -102,7 +102,7 @@ TYPEINFO(/obj/machinery/dialysis)
 			if ((!src.hacked && !src.whitelist.Find(reagent_id)) || (src.hacked && src.whitelist.Find(reagent_id)))
 				src.reagents.del_reagent(reagent_id)
 
-		src.output_blood_colour = src.reagents.total_volume ? src.reagents.get_average_color().to_rgba() || null
+		src.output_blood_colour = src.reagents.total_volume ? src.reagents.get_average_color().to_rgba() : null
 
 		// Infuse blood back in if possible. Don't wanna stuff too much blood back in.
 		// The blood that's not actually in the bloodstream yet, know what I mean?
