@@ -1,5 +1,5 @@
 TYPEINFO(/obj/machinery/dialysis)
-	mats = list("MET-1" = 20, "CRY" = 5, "CON" = 5)
+	mats = list("MET-1" = 20, "CRY-1" = 5, "CON-2" = 5)
 
 /obj/machinery/dialysis
 	name = "dialysis machine"
@@ -10,6 +10,7 @@ TYPEINFO(/obj/machinery/dialysis)
 #else
 	icon_state = "dialysis-base"
 #endif
+	density = 1
 	var/mob/living/carbon/patient
 	var/list/whitelist
 	// In units per process tick.
@@ -81,7 +82,7 @@ TYPEINFO(/obj/machinery/dialysis)
 		src.output_blood_colour = src.reagents.get_average_color().to_rgba()
 
 		// Infuse blood back in if possible. Don't wanna stuff too much blood back in.
-		if (!src.patient.reagents.is_full() && src.patient.blood_volume >= 500)
+		if (!src.patient.reagents.is_full() && src.patient.blood_volume <= 500)
 			src.reagents.trans_to(src.patient, src.draw_amount)
 			src.patient.reagents.reaction(src.patient, INGEST, src.draw_amount)
 
