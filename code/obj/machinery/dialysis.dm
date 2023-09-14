@@ -84,8 +84,8 @@ TYPEINFO(/obj/machinery/dialysis)
 
 		if (!in_interact_range(src, src.patient))
 			var/fluff = pick("pulled", "yanked", "ripped")
-			src.patient.visible_message("<span class='alert'><b>[src]'s needle gets [fluff] out of [src.patient]'s arm!</b></span>",\
-			"<span class='alert'><b>[src]'s needle gets [fluff] out of your arm!</b></span>")
+			src.patient.visible_message("<span class='alert'><b>[src]'s cannulae gets [fluff] out of [src.patient]'s arm!</b></span>",\
+			"<span class='alert'><b>[src]'s cannulae gets [fluff] out of your arm!</b></span>")
 			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"No blood pressure detected.\"")
 			src.stop_dialysis()
 			return
@@ -106,8 +106,8 @@ TYPEINFO(/obj/machinery/dialysis)
 
 		// Infuse blood back in if possible. Don't wanna stuff too much blood back in.
 		// The blood that's not actually in the bloodstream yet, know what I mean?
-		var/datum/reagent/non_blood_volume_blood = src.patient.reagents.reagent_list["blood"]
-		if (!src.patient.reagents.is_full() && (src.patient.blood_volume + non_blood_volume_blood.volume) <= 500)
+		var/non_blood_volume_blood = src.patient.reagents.reagent_list["blood"]?.volume || 0
+		if (!src.patient.reagents.is_full() && (src.patient.blood_volume + non_blood_volume_blood) <= 500)
 			src.reagents.trans_to(src.patient, src.draw_amount)
 			src.patient.reagents.reaction(src.patient, INGEST, src.draw_amount)
 
