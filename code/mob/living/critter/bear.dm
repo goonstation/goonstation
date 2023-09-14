@@ -2,6 +2,7 @@
 	name = "space bear"
 	real_name = "space bear"
 	desc = "WOORGHHH"
+	icon = 'icons/mob/critter/humanoid/bear.dmi'
 	icon_state = "abear"
 	icon_state_dead = "abear-dead"
 	custom_gib_handler = /proc/gibs

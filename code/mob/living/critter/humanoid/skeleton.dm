@@ -29,6 +29,7 @@
 	name = "skeleton"
 	real_name = "skeleton"
 	desc = "Clak clak, motherfucker."
+	icon = 'icons/mob/critter/humanoid/skeleton.dmi'
 	icon_state = "skeleton"
 	icon_state_dead = "skeleton"
 	custom_gib_handler = /proc/bonegibs
