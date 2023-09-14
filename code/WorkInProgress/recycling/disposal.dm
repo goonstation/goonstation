@@ -840,7 +840,7 @@
 
 /obj/disposalpipe/junction/auto/initialize()
 	var/list/selftile = list()
-	for (var/obj/disposalpipe/segment/auto/dupe in range(0, src))
+	for (var/obj/disposalpipe/segment/auto/dupe in get_turf(src))
 		if (istype(dupe, src))
 			selftile += dupe
 	if (length(selftile) > 1)
