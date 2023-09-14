@@ -634,29 +634,20 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	item_state = "chicken"
 	see_face = 0
 
-/obj/item/clothing/mask/jester
-	name = "jester's mask"
+/obj/item/clothing/mask/
+	name = "'s mask"
 	desc = "The mask of a not-so-funny-clown."
 	icon_state = "jester"
 	item_state = "jester"
 	see_face = 0
 
-	var/spam_flag = 0
-	var/spam_timer = 100
-	var/list/sounds_instrument = list('sound/misc/jester_laugh_1.ogg', 'sound/misc/jester_laugh_2.ogg')
-	var/volume = 100
-	var/randomized_pitch = 1
-
-
 	proc/jester_giggle(mob/user as mob)
-		if (!spam_flag)
-			spam_flag = 1
-			var/laugh = pick("laughs!", "giggles!", "cackles!", "chuckles!")
+		if (!ON_COOLDOWN(src, "jester_laugh", 5 SECOND))
+			var/message_laugh = pick("laughs!", "giggles!", "cackles!", "chuckles!")
+			var/sounds_laugh = pick('sound/misc/jester_laugh_1.ogg', 'sound/misc/jester_laugh_2.ogg')
 			src.add_fingerprint(user)
-			user?.visible_message("<B>[user]</B> puts [his_or_her(user)] hand over the mouth of the [src.name] and [laugh]")
-			playsound(src, islist(src.sounds_instrument) ? pick(src.sounds_instrument) : src.sounds_instrument, src.volume, src.randomized_pitch)
-			SPAWN(src.spam_timer)
-				spam_flag = 0
+			user?.visible_message("<B>[user]</B> puts [his_or_her(user)] hand over the mouth of the [src.name] and [message_laugh]")
+			playsound(src, sounds_laugh, 100, 1)
 			return 1
 		return 0
 
