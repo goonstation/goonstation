@@ -36284,6 +36284,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purple/checker,
 /area/station/science/chemistry)
 "gNp" = (

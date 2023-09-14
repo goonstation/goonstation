@@ -379,7 +379,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			continue
 		if (isliving(I))
 			var/mob/living/L = I
-			if (!L.is_heat_resistant())
+			if (!L.is_heat_resistant() || ischangeling(L))
 				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
 				for (var/obj/item/W in L)
 					if (prob(10))

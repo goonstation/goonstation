@@ -1,5 +1,35 @@
 
+(t)wed sep 13 23
+(u)Azrun & Jan.antilles
+(e)🐑🧣🧶|C-Feature
+(+)Knitting expanded allow for basic dyeing and cozy scarves.
+(u)DisturbHerb, Tyrant
+(p)15787
+(e)🆕🗺⚗|C-Feature, A-Mapping, A-Chemistry
+(*)Added the new orbital shakers to Chemical Labs, which shake glassware around and apply physical force to them.
+(u)Tyrant
+(p)15554
+(e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
+(+)Twirling a bloody knife will flick the blood off and onto the floor. Doesn't work if the blood is dried.
+(u)Retrino
+(p)15773
+(e)🎨|C-Sprites
+(+)Added 8 new faces to cyborg screenheads. Sly, Elated, Blush, Battery, Error, Loading, Pong, and Hypnotized
 (t)tue sep 12 23
+(u)Sord & Tarmunora
+(+)Singularity feeding changes: Base values (i.e.: bonuses from materials are unaffected) are generally higher, but have diminishing returns for any given type. Variety is the spice of life! Material(ore/bar) density*3, radioactive*4, neutron radioactive*6. Also feed a singularity a plutonium core to get a LOT of power.
+(u)Paaiii
+(p)15592
+(e)🗺🎨🔊|A-Mapping, C-Sprites, C-Sound
+(+)Resprited a bunch of old miscellaneous objects.
+(u)Paaiii
+(p)15595
+(e)⚖💅🤖|C-Balance, C-QoL, A-Silicons
+(+)Gives AIs a command to unlock their own core cover.
+(u)Bartimeus973
+(p)15564
+(e)🆕🎨🔨📦|C-Feature, C-Sprites, A-Player-Actions, A-Game-Objects
+(+)Some pies thrown by clowns have a chance to stick to people's faces.
 (u)aloe
 (+)Being fully heat resistant (usually from the fire resistance gene) now makes you immune to cremation.
 (u)FlameArrow57

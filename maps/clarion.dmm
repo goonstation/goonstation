@@ -13965,6 +13965,7 @@
 /area/station/hallway/primary/east)
 "bpj" = (
 /obj/table/reinforced/chemistry/auto/drugs,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},

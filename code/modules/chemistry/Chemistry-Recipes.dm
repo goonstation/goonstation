@@ -2453,20 +2453,19 @@
 		stateful = TRUE
 		reaction_icon_color = "#539147"
 		var/count = 0
-		var/amount_to_smoke = 1
 
 		does_react(var/datum/reagents/holder)
-			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
+			if (holder.my_atom && holder.my_atom.is_open_container() || (istype(holder,/datum/reagents/fluid_group) && !holder.is_airborne()))
 				return TRUE
 			else
 				return FALSE
 
 		on_reaction(var/datum/reagents/holder, var/created_volume) //assuming this is sodium cyanide so it also interacts with water and sulfuric acid
+			var/amount_to_smoke = 1
 			if(holder.has_reagent("acid"))
 				amount_to_smoke = 20
 				count += 6
-			else
-				amount_to_smoke = 1
+			amount_to_smoke = min(amount_to_smoke, holder.get_reagent_amount("cyanide"))
 			if(count < 6)
 				if(holder.has_reagent("water"))
 					count += 2
@@ -2474,10 +2473,10 @@
 					count++
 				reaction_icon_state = null
 			else
-				var/location = get_turf(holder.my_atom)
+				var/location = get_turf(holder.my_atom) || pick(holder.covered_cache)
 				reaction_icon_state = list("reaction_smoke-1", "reaction_smoke-2")
-				var/datum/reagents/smokeContents = new/datum/reagents/
-				smokeContents.add_reagent("cyanide", 1)
+				var/datum/reagents/smokeContents = new
+				smokeContents.add_reagent("cyanide", amount_to_smoke)
 				smoke_reaction(smokeContents, amount_to_smoke, location, do_sfx = FALSE)
 				holder.remove_reagent("cyanide", amount_to_smoke)
 				count = 0
@@ -3589,6 +3588,7 @@
 				return FALSE
 
 		on_reaction(var/datum/reagents/holder, var/created_volume) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+			holder.del_reagent("smokepowder") //no
 			if (holder)
 				holder.smoke_start(created_volume)
 
@@ -4176,8 +4176,10 @@
 			var/turf/location = 0
 			if (my_atom)
 				location = get_turf(my_atom)
-				fireflash(holder.my_atom, 1)
-				explosion(my_atom, get_turf(my_atom), -1, -1, 1, 2)
+				fireflash(holder.my_atom, 2)
+				//okay I'm turning off the explosion here because it keeps deleting the reagents and I don't want to consider synchronous explosion code
+				//feel free to turn back on if you think of a solution for it blowing up the reagent puddle
+				// explosion(my_atom, get_turf(my_atom), -1, -1, 1, 2)
 				if(istype(holder.my_atom, /obj))
 					var/obj/container = holder.my_atom
 					container.shatter_chemically(projectiles = TRUE)
@@ -4187,7 +4189,7 @@
 					location = pick(holder.covered_cache)
 					holder.covered_cache -= location
 					fireflash(location, 0)
-					explosion_new(my_atom, location, 2.25/amt)
+					// explosion_new(my_atom, location, 2.25/amt)
 			return
 
 	krokodil

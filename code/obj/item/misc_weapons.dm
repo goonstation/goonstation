@@ -796,6 +796,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 /obj/item/knife/butcher/New()
 	..()
+	src.AddComponent(/datum/component/bloodflick)
 	BLOCK_SETUP(BLOCK_KNIFE)
 
 /obj/item/knife/butcher/throw_impact(atom/A, datum/thrown_thing/thr)
@@ -1122,6 +1123,10 @@ TYPEINFO(/obj/item/bat)
 	var/midair_fruit_slice = FALSE //! if this is TRUE, blocking with this weapon can slice thrown food items midair
 	var/midair_fruit_slice_stamina_cost = 7 //! The amount of stamina it costs to slice food midair
 	custom_suicide = 1
+
+/obj/item/swords/New()
+	src.AddComponent(/datum/component/bloodflick)
+	..()
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))
@@ -1708,6 +1713,7 @@ obj/item/whetstone
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
 		AddComponent(/datum/component/itemblock/saberblock, null, PROC_REF(get_reflect_color))

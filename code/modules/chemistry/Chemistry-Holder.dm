@@ -1207,6 +1207,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		else
 			smoke_reaction(src, round(min(5, round(volume/10))), location = my_atom ? get_turf(my_atom) : 0)
 
+	proc/is_airborne()
+		return FALSE
+
 ///////////////////////////////////////////////////////////////////////////////////
 
 
