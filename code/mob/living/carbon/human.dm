@@ -3250,6 +3250,11 @@
 		return 1
 	return 0
 
+/mob/living/carbon/human/is_heat_resistant()
+	. = ..()
+	if (ischangeling(src)) // comic book weakness
+		return FALSE
+
 /mob/living/carbon/human/empty_hands()
 	var/h = src.hand
 	src.hand = 0
