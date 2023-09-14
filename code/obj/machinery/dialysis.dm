@@ -39,6 +39,8 @@ TYPEINFO(/obj/machinery/dialysis)
 
 	get_desc(dist, mob/user)
 		..()
+		if (src.hacked)
+			. += " Something about it seems a little off."
 		. += " Its internal blood reservoir is [get_fullness((src.reagents.total_volume / src.reagents.maximum_volume) * 100)]."
 
 	mouse_drop(atom/over_object as mob|obj)
