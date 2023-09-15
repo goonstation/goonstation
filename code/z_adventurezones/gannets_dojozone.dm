@@ -497,6 +497,7 @@ Contents:
 	anchored = ANCHORED_ALWAYS
 	parts_type = null
 	hulk_immune = TRUE
+	HELP_MESSAGE_OVERRIDE("") // No, you can't wrench it
 
 	attackby(obj/item/W, mob/user, params)
 		if (istype(W))
