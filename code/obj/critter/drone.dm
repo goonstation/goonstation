@@ -1266,7 +1266,7 @@ TYPEINFO(/obj/critter/gunbot/drone/miniature_syndie)
 /obj/critter/gunbot/drone/miniature_syndie
 	name = "miniature Syndicate Operative"
 	desc = "They look determined."
-	icon = 'icons/misc/critter.dmi'
+	icon = 'icons/mob/critter/humanoid/mini_syndies.dmi'
 	icon_state = "minisyndie"
 	density = 1
 	health = 8
