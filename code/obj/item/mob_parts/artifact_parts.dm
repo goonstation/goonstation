@@ -546,5 +546,5 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 			boutput(M, "<span class='notice'>You feel some bad stuff fall out of your chest!</span>")
 			return
 
-		boutput(holder.owner, "<span class='alert'>[M] has nothing wrong with them that can be healed!</span>")
+		boutput(holder.owner, "<span class='alert'>[M] has nothing wrong with [him_or_her(M)] that can be healed!</span>")
 		return TRUE

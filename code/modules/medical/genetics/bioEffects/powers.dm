@@ -344,7 +344,7 @@
 			owner.changeStatus("paralysis", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
-			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			animate_storage_thump(container)
 
 		return
@@ -708,10 +708,10 @@
 			return 1
 
 		if (isdead(read))
-			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have their mind read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have [his_or_her(read)] mind read.</span>")
 			return
 		if (read.health < 0)
-			boutput(owner, "<span class='alert'>[read.name] is dying, and their thoughts are too scrambled to read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dying, and [his_or_her(read)] thoughts are too scrambled to read.</span>")
 			return
 
 		boutput(usr, "<span class='notice'>Mind Reading of [read.name]:</b></span>")
@@ -794,10 +794,10 @@
 			return 1
 
 		if (isdead(read))
-			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have their mind read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have [his_or_her(read)] mind read.</span>")
 			return
 		if (read.health < 0)
-			boutput(owner, "<span class='alert'>[read.name] is dying, and their thoughts are too scrambled to read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dying, and [his_or_her(read)] thoughts are too scrambled to read.</span>")
 			return
 
 		boutput(read, "<span class='alert'>Somehow, you sense <b>[owner]</b> trying and failing to read your mind!</span>")
@@ -1885,24 +1885,20 @@
 		return
 
 	OnLife(var/mult)
-		if(..()) return
-		if (isliving(owner))
-			var/mob/living/L = owner
-			var/turf/T = get_turf(L)
+		if(..())
+			return
+		if (!src.active)
+			return
+		if (!isliving(owner))
+			return
 
-			if (T && isturf(T))
-				var/area/A = get_area(T)
-				if (istype(T, /turf/space) || (A && (istype(A, /area/shuttle/) || istype(A, /area/shuttle_transit_space) || A.name == "Space" || A.name == "Ocean")))
-					src.cloak_decloak(2)
+		var/mob/living/L = owner
+		var/turf/T = get_turf(L)
 
-				else
-					if (T.RL_GetBrightness() < 0.2 && can_act(owner) && src.active)
-						src.cloak_decloak(1)
-					else
-						src.cloak_decloak(2)
-			else
-				src.cloak_decloak(2)
-		return
+		if (!isturf(T) || T.is_lit())
+			src.cloak_decloak(2)
+		else if (can_act(src.owner))
+			src.cloak_decloak(1)
 
 /datum/targetable/geneticsAbility/darkcloak
 	name = "Cloak of Darkness"
@@ -1918,6 +1914,7 @@
 		if (DC.active)
 			boutput(usr, "You stop using your cloak of darkness.")
 			DC.active = 0
+			DC.cloak_decloak(2)
 		else
 			boutput(usr, "You start using your cloak of darkness.")
 			DC.active = 1

@@ -1,14 +1,12 @@
 
-/// Controls mob UI, like stamina and abilityholders
+/// Controls mob UI, like abilityholders
 /datum/controller/process/mob_ui
 	setup()
 		name = "Mob UI"
 		schedule_interval = 1 SECOND
 
 	doWork()
-		for(var/mob/M in mobs)
-			M.handle_stamina_updates()
-
+		for(var/mob/M as anything in mobs)
 			if (!M.client) continue
 
 			if (M.abilityHolder)

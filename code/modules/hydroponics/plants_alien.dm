@@ -28,7 +28,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")) && prob(20))
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> vomits profusely!</span>")
-			playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+			playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 			if(!locate(/obj/decal/cleanable/vomit) in get_turf(POT)) make_cleanable( /obj/decal/cleanable/vomit,get_turf(POT))
 
 /datum/plant/artifact/peeker
@@ -236,7 +236,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plantgenes/DNA = POT.plantgenes
 
 		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(16))
-			playsound(POT,'sound/voice/animal/cat.ogg',30,1,-1)
+			playsound(POT,'sound/voice/animal/cat.ogg',30,TRUE,-1)
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> meows!</span>")
 
 		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
@@ -254,7 +254,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime") + 10)) return 0
 
-		playsound(POT,'sound/voice/animal/cat_hiss.ogg',30,1,-1)
+		playsound(POT,'sound/voice/animal/cat_hiss.ogg',30,TRUE,-1)
 		POT.visible_message("<span class='alert'><b>[POT.name]</b> hisses!</span>")
 
 // Weird Shit

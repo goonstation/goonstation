@@ -313,7 +313,7 @@
 		on_hit(atom/hit, angle, obj/projectile/O)
 			var/turf/T = get_turf(hit)
 			new/obj/decal/implo(T)
-			playsound(T, 'sound/effects/suck.ogg', 100, 1)
+			playsound(T, 'sound/effects/suck.ogg', 100, TRUE)
 			var/spamcheck = 0
 			for(var/atom/movable/AM in oview(2, T))
 				if(AM.anchored || AM == hit || AM.throwing) continue
@@ -526,7 +526,7 @@
 			var/msg = text("As [user] slaps the [src] onto the [target], the [target]")
 			var/currentench = I.enchant(incr)
 			var/turf/T = get_turf(target)
-			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
+			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
 			if(currentench-incr <= 2 || !rand(0, currentench))
 				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
 			else

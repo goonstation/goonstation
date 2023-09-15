@@ -1107,8 +1107,8 @@
 			if (isAIeye(activator))
 				var/mob/living/intangible/aieye/AE = activator
 				A = AE.mainframe
-			A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai-red")
-			A.faceEmotion = "ai-red"
+			A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai_red")
+			A.faceEmotion = "ai_red"
 			A.set_color("#EE0000")
 			//A.icon_state = "ai-malf"
 			return 1
@@ -1126,8 +1126,8 @@
 			if (isAIeye(activator))
 				var/mob/living/intangible/aieye/AE = activator
 				A = AE.mainframe
-			A.custom_emotions = ai_emotions | list("Tetris (reward)" = "ai-tetris")
-			A.faceEmotion = "ai-tetris"
+			A.custom_emotions = ai_emotions | list("Tetris (reward)" = "ai_tetris")
+			A.faceEmotion = "ai_tetris"
 			A.set_color("#111111")
 			A.update_appearance()
 			return 1
@@ -1343,7 +1343,7 @@
 		logTheThing(LOG_COMBAT, activator, "Activated the blood flood gib reward thing (Original Sin)")
 		if (result)
 			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
-			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1)
+			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, TRUE)
 		activator.gib()
 		return 1
 /datum/achievementReward/HotrodHelmet

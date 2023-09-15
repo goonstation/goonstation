@@ -150,11 +150,11 @@
 			return
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 
-		playsound(user, 'sound/effects/mag_warp.ogg', 50, 1)
+		playsound(user, 'sound/effects/mag_warp.ogg', 50, TRUE)
 		SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 			var/obj/target_r = new/obj/railgun_trg_dummy(target)
 
-			playsound(user, 'sound/weapons/railgun.ogg', 50, 1)
+			playsound(user, 'sound/weapons/railgun.ogg', 50, TRUE)
 			user.set_dir(get_dir(user, target))
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
@@ -1353,7 +1353,7 @@
 			user.smash_through(target, list("grille"))
 			var/obj/O = target
 			if (isitem(O) && !O.anchored)
-				playsound(user,'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, pitch = 1.7)
+				playsound(user,'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, pitch = 1.7)
 				var/turf/throw_to = get_edge_target_turf(user, get_dir(user,target))
 				O.throw_at(throw_to, 8, 2)
 

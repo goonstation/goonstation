@@ -173,9 +173,9 @@ TYPEINFO(/obj/item/saw/syndie)
 			return
 		..()
 		if (src.active)
-			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 90, 0)
+			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 90, FALSE)
 		else
-			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, 0)
+			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, FALSE)
 
 	attack(mob/target, mob/user)
 		if(!active)

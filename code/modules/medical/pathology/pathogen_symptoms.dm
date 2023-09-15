@@ -1731,7 +1731,7 @@ datum/pathogeneffects/malevolent/farts/plasma
 		..()
 		var/turf/T = get_turf(M)
 		var/datum/gas_mixture/gas = new /datum/gas_mixture
-		gas.zero()
+		ZERO_GASES(gas)
 		gas.toxins = origin.stage * (voluntary ? 0.6 : 3) // only a fifth for voluntary farts
 		gas.temperature = T20C
 		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
@@ -1760,7 +1760,7 @@ datum/pathogeneffects/malevolent/farts/co2
 		..()
 		var/turf/T = get_turf(M)
 		var/datum/gas_mixture/gas = new /datum/gas_mixture
-		gas.zero()
+		ZERO_GASES(gas)
 		gas.carbon_dioxide = origin.stage * (voluntary ? 1.4 : 7) // only a fifth for voluntary farts
 		gas.temperature = T20C
 		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
@@ -1793,7 +1793,7 @@ datum/pathogeneffects/malevolent/farts/o2
 		..()
 		var/turf/T = get_turf(M)
 		var/datum/gas_mixture/gas = new /datum/gas_mixture
-		gas.zero()
+		ZERO_GASES(gas)
 		gas.oxygen = origin.stage * (voluntary ? 20 : 2) // ten times as much for voluntary farts
 		gas.temperature = T20C
 		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000

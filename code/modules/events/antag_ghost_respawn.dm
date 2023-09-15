@@ -216,6 +216,8 @@
 						mind.add_antagonist(ROLE_BLOB, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_BLOB
 						M3 = mind.current
+						var/mob/living/intangible/blob_overmind/blob = M3
+						blob.random_event_spawn = TRUE
 					else
 						failed = 1
 

@@ -83,11 +83,11 @@ TYPEINFO(/obj/machinery/power/furnace)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/grab))
+			var/obj/item/grab/grab = W
 			if (!src.active)
-				boutput(user, "<span class='alert'>It'd probably be easier to dispose of them while the furnace is active...</span>")
+				boutput(user, "<span class='alert'>It'd probably be easier to dispose of [him_or_her(grab.affecting)] while the furnace is active...</span>")
 				return
 			else
-				var/obj/item/grab/grab = W
 				var/mob/target = grab.affecting
 				if (!isdead(grab.affecting))
 					boutput(user, "<span class='alert'>[grab.affecting.name] needs to be dead first!</span>")
@@ -141,7 +141,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 						src.fuel = src.maxfuel
 						boutput(user, "<span class='notice'>The furnace is now full!</span>")
 						break
-				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "<span class='notice'>You finish loading [crate] into [src]!</span>")
 				return
 
@@ -159,7 +159,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 				sleep(0.3 SECONDS)
 				if (user.loc != staystill)
 					break
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 
 		src.updateUsrDialog()
@@ -231,7 +231,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 		else if (istype(W, /obj/item/clothing/suit/)) fuel += 40
 		else if (istype(W, /obj/item/clothing/under/)) fuel += 30
 		else if (istype(W, /obj/item/plank)) fuel += 100
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuckburn)) fuel += 120
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuck/burn)) fuel += 120
 		else if (istype(W, /obj/item/reagent_containers/food/fish/lava_fish)) fuel += 150
 		else if (istype(W, /obj/item/reagent_containers/food/fish/igneous_fish)) fuel += 250
 		else if (istype(W, /obj/critter))

@@ -6,7 +6,7 @@ var/list/planetModifiers = list()
 var/list/planetModifiersUsed = list()//Assoc list, type:times used
 var/list/planet_seeds = list()
 
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 /proc/makePlanetLevel()
 	//var/list/turf/planetZ = list()
 	var/startTime = world.timeofday
@@ -330,16 +330,17 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	PLANET_LOCATIONS.add_planet(region, new /datum/planetData(name, ambient_light, generator))
 
+	var/failsafe = 800
 	//Make it interesting, slap some prefabs on that thing
-	for (var/n = 1, n <= prefabs_to_place, n++)
+	for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
 		var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet)
 		if (P)
 			var/maxX = (region.bottom_left.x + region.width - P.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (region.bottom_left.y + region.height - P.prefabSizeY - AST_MAPBORDER)
 			var/stop = 0
 			var/count= 0
-			var/maxTries = (P.required ? 200:50)
-			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+			var/maxTries = (P.required ? 200:80)
+			while (!stop && count < maxTries && failsafe-- > 0) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(region.bottom_left.x+AST_MAPBORDER, maxX), rand(region.bottom_left.y+AST_MAPBORDER,maxY), region.bottom_left.z)
 				if(!P.check_biome_requirements(target))
 					count++
@@ -357,6 +358,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 						LAGCHECK(LAG_LOW)
 
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+					n++
 					stop = 1
 				else
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type] failed due to blocked area. [target] @ [log_loc(target)]")
