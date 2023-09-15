@@ -2023,73 +2023,92 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	icon_state = "makeshift-construction1"
 
 	var/obj/item/light/tube/our_light
-	var/step = 0
 
-	attackby(obj/item/W, mob/user, params)
-		if (step == 0 && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_METAL && W.amount >= 4)
+	New()
+		..()
+		src.AddComponent(/datum/component/assembly, /obj/item/sheet, PROC_REF(construct_stock), FALSE)
+
+	proc/construct_stock(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/sheet/W = to_combine_atom
+		if (W.material.getMaterialFlags() & MATERIAL_METAL && W.amount >= 4)
 			boutput(user,"<span class='notice'>You construct a stock and grip for the barrel.</span>")
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
-			step++
 			W.change_stack_amount(-4)
 			name = "pipe/stock assembly"
 			desc = "A gun of some kind? It seems unfinished."
 			icon_state = "makeshift-construction2"
 			update_icon()
-			return
-		else if (step == 1 && istype(W, /obj/item/sheet) && W.material.getMaterialFlags() & MATERIAL_CRYSTAL && W.amount >= 3) // 3 sheets so you have to deconstruct more than 1 window
+			src.RemoveComponentsOfType(/datum/component/assembly)
+			src.AddComponent(/datum/component/assembly, /obj/item/sheet, PROC_REF(construct_lens), FALSE)
+			return TRUE
+
+	proc/construct_lens(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/sheet/W = to_combine_atom
+		if (W.material.getMaterialFlags() & MATERIAL_CRYSTAL && W.amount >= 3)
 			boutput(user,"<span class='notice'>You create a lens using [W] and stuff it inside [src].</span>")
 			W.change_stack_amount(-3)
-			step++
-			return
-		else if (step == 2 && istype(W, /obj/item/light/tube))
-			var/obj/item/device/light/flashlight/F = W
-			boutput(user,"<span class='notice'>You place [W] inside of the barrel.</span>")
-			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
-			user.u_equip(F)
-			our_light = F
-			F.set_loc(src)
-			step++
-			name = "pipe/stock/light assembly"
-			icon_state = "makeshift-construction3"
-			update_icon()
-			return
-		else if (step == 3 && istype(W, /obj/item/device/timer))
-			boutput(user,"<span class='notice'>You attach the timer to [src].</span>")
-			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
-			user.u_equip(W)
-			qdel(W)
-			step++
-			name = "pipe/stock/light/timer assembly"
-			icon_state = "makeshift-construction4"
-			update_icon()
-			return
-		else if (step == 4 && isweldingtool(W) && W:try_weld(user, 1) )
+			src.RemoveComponentsOfType(/datum/component/assembly)
+			src.AddComponent(/datum/component/assembly, /obj/item/light/tube, PROC_REF(add_lighttube), FALSE)
+			return TRUE
+
+	proc/add_lighttube(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/light/tube/T = to_combine_atom
+		boutput(user,"<span class='notice'>You place [T] inside of the barrel.</span>")
+		playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
+		user.u_equip(T)
+		our_light = T
+		T.set_loc(src)
+		name = "pipe/stock/light assembly"
+		icon_state = "makeshift-construction3"
+		update_icon()
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		src.AddComponent(/datum/component/assembly, /obj/item/device/timer, PROC_REF(add_timer), FALSE)
+		return TRUE
+
+	proc/add_timer(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/device/timer/T = to_combine_atom
+		boutput(user,"<span class='notice'>You attach the timer to [src].</span>")
+		playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
+		user.u_equip(T)
+		qdel(T)
+		name = "pipe/stock/light/timer assembly"
+		icon_state = "makeshift-construction4"
+		update_icon()
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		src.AddComponent(/datum/component/assembly, TOOL_WELDING, PROC_REF(weld_barrel), FALSE)
+		return TRUE
+
+	proc/weld_barrel(var/atom/to_combine_atom, var/mob/user)
+		if (to_combine_atom:try_weld(user, 1))
 			boutput(user,"<span class='notice'>You weld the end of the barrel into a point.</span>")
-			step++
 			name = "makeshift energy rifle"
 			icon_state = "makeshift-construction5"
 			update_icon()
-			return
-		else if (step == 5 && istype(W, /obj/item/cable_coil))
-			boutput(user,"<span class='notice'>You wire [src] together.</span>")
-			W.change_stack_amount(-1)
-			step++
-			var/obj/item/gun/energy/makeshift/M = new/obj/item/gun/energy/makeshift
-			M.our_light = our_light
-			our_light.set_loc(M)
-			user.put_in_hand_or_drop(M)
-			M.update_icon()
-			qdel(src)
-			return
-		..()
+			src.RemoveComponentsOfType(/datum/component/assembly)
+			src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(finish_gun), FALSE)
+			return TRUE
+
+	proc/finish_gun(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/cable_coil/C = to_combine_atom
+		boutput(user,"<span class='notice'>You wire [src] together.</span>")
+		C.change_stack_amount(-1)
+		var/obj/item/gun/energy/makeshift/M = new/obj/item/gun/energy/makeshift
+		M.our_light = our_light
+		our_light.set_loc(M)
+		user.put_in_hand_or_drop(M)
+		M.update_icon()
+		qdel(src)
+		return
 
 
-/obj/item/makeshift_laser_barrel/glass
-	step = 5
+
+/obj/item/makeshift_laser_barrel/testing
 
 	New()
 		..()
 		our_light = new /obj/item/light/tube
 		our_light.set_loc(src)
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(finish_gun), FALSE)
 
 #undef HEAT_REMOVED_PER_PROCESS
