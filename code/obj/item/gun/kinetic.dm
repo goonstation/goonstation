@@ -216,7 +216,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				else
 					user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
 					src.ejectcasings()
-					playsound(src, src.ammo.sound_load, 50, 1)
+					playsound(src, src.ammo.sound_load, rand(30, 60), TRUE)
 					return
 			else
 				user.show_text("[src] is empty!", "red")
