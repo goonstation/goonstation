@@ -40,19 +40,19 @@
 	anchored = UNANCHORED
 	processing_tier = PROCESSING_FULL
 
-	var/invalidCount = 0
+	var/invalid_count = 0
 	var/building = FALSE
-	var/BuildIndex = 1
-	var/BuildEnd = 0
+	var/build_index = 1
+	var/build_end = 0
 	var/list/markers = list()
-	var/list/apclist = list()
-	var/MetalOwed = 0
-	var/CrystalOwed = 0
-	var/TileCostProcessed = FALSE
+	var/list/apc_list = list()
+	var/metal_owed = 0
+	var/crystal_owed = 0
+	var/tile_cost_processed = FALSE
 
-	var/obj/item/blueprint/currentBp = null
+	var/obj/item/blueprint/current_bp = null
 	var/locked = FALSE
-	var/Paused = FALSE
+	var/paused = FALSE
 	var/off_x = 0
 	var/off_y = 0
 
@@ -68,14 +68,14 @@
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/blueprint))
-			if(src.currentBp)
+			if(src.current_bp)
 				boutput(user, "<span class='alert'>Theres already a blueprint in the machine.</span>")
 				return
 			else
 				boutput(user, "<span class='notice'>You insert the blueprint into the machine.</span>")
 				user.drop_item()
 				W.set_loc(src)
-				src.currentBp = W
+				src.current_bp = W
 				return
 		else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
 			boutput(user, "<span class='notice'>You insert the material into the machine.</span>")
@@ -85,12 +85,12 @@
 		return
 
 	attack_hand(mob/user)
-		if(src.building && !src.Paused)
+		if(src.building && !src.paused)
 			if (tgui_alert(user, "Pause the construction?", "ABCU", list("Yes", "No")) == "Yes")
-				src.pauseBuild()
+				src.pause_build()
 			return
 
-		var/list/OptionList = list(
+		var/list/option_list = list(
 			"Check Materials",
 			"Resume Construction",
 			src.locked ? "Unlock" : "Lock",
@@ -99,10 +99,10 @@
 			"Eject Blueprint",
 			"Cancel Build",
 		)
-		var/UserInput = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", OptionList)
-		if (!UserInput) return
+		var/user_input = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", option_list)
+		if (!user_input) return
 
-		switch(UserInput)
+		switch(user_input)
 			if("Unlock")
 				if (src.building)
 					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
@@ -115,7 +115,7 @@
 					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
 					return
 				if(src.locked) return
-				if(!src.currentBp)
+				if(!src.current_bp)
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can be locked.</span>")
 					return
 				src.activate(user)
@@ -127,115 +127,115 @@
 				if(!src.locked)
 					boutput(user, "<span class='alert'>The machine must be locked into place before activating it.</span>")
 					return
-				if(!src.currentBp)
+				if(!src.current_bp)
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can build anything.</span>")
 					return
-				src.prepareBuild(user)
+				src.prepare_build(user)
 
 			if("Eject Blueprint")
 				if(src.locked || src.building)
 					boutput(user, "<span class='alert'>Can not eject blueprint while machine is locked or building.</span>")
 					return
-				if (!src.currentBp)
+				if (!src.current_bp)
 					boutput(user, "<span class='alert'>No blueprint to eject.</span>")
 					return
-				src.currentBp.set_loc(src.loc)
-				src.currentBp = null
+				src.current_bp.set_loc(src.loc)
+				src.current_bp = null
 
 			if("Dump Materials")
 				for(var/obj/o in src)
-					if(o == src.currentBp) continue
+					if(o == src.current_bp) continue
 					o.set_loc(src.loc)
 
 			if("Check Materials")
-				src.auditInventory(user)
+				src.audit_inventory(user)
 
 			if ("Resume Construction")
 				if (!src.building)
 					boutput(user, "<span class='alert'>There's no build in progress.</span>")
 					return
-				if (!src.Paused)
+				if (!src.paused)
 					boutput(user, "<span class='alert'>[src] is already unpaused.</span>")
 					return
-				src.unpauseBuild()
+				src.unpause_build()
 
 			if ("Cancel Build")
 				if (!src.building)
 					boutput(user, "<span class='alert'>There's no build in progress.</span>")
 					return
-				src.endBuild()
+				src.end_build()
 		return
 
 	process()
 		..()
 		if (!src.building) return
-		if (src.BuildIndex > src.BuildEnd)
-			src.endBuild()
+		if (src.build_index > src.build_end)
+			src.end_build()
 			return
 
-		var/datum/tileinfo/Tile = src.currentBp.roominfo[src.BuildIndex]
-		if (isnull(Tile.tiletype))
-			src.BuildIndex++
+		var/datum/tileinfo/tile = src.current_bp.roominfo[src.build_index]
+		if (isnull(tile.tiletype))
+			src.build_index++
 			return
 
 		// try to consume materials for this tile
-		if (!src.TileCostProcessed)
-			var/ObjCount = length(Tile.objects)
-			src.MetalOwed += REBUILD_COST_TURF_METAL + REBUILD_COST_OBJECT_METAL * ObjCount
-			src.CrystalOwed += REBUILD_COST_TURF_CRYSTAL + REBUILD_COST_OBJECT_CRYSTAL * ObjCount
-			src.TileCostProcessed = TRUE
-		for (var/obj/Item in src)
-			if (src.MetalOwed <= 0 && src.CrystalOwed <= 0) break
-			if (Item == src.currentBp) continue
+		if (!src.tile_cost_processed)
+			var/obj_count = length(tile.objects)
+			src.metal_owed += REBUILD_COST_TURF_METAL + REBUILD_COST_OBJECT_METAL * obj_count
+			src.crystal_owed += REBUILD_COST_TURF_CRYSTAL + REBUILD_COST_OBJECT_CRYSTAL * obj_count
+			src.tile_cost_processed = TRUE
+		for (var/obj/item in src)
+			if (src.metal_owed <= 0 && src.crystal_owed <= 0) break
+			if (item == src.current_bp) continue
 
-			if (istype(Item, /obj/item/sheet))
-				var/obj/item/sheet/Sheets = Item
-				if (!Sheets.material) continue
-				if (src.MetalOwed && Sheets.material.getMaterialFlags() & MATERIAL_METAL)
-					var/SheetsConsumed = ceil(min(Sheets.amount, src.MetalOwed))
-					Sheets.change_stack_amount(-SheetsConsumed)
-					src.MetalOwed -= SheetsConsumed
+			if (istype(item, /obj/item/sheet))
+				var/obj/item/sheet/sheets = item
+				if (!sheets.material) continue
+				if (src.metal_owed && sheets.material.getMaterialFlags() & MATERIAL_METAL)
+					var/sheets_consumed = ceil(min(sheets.amount, src.metal_owed))
+					sheets.change_stack_amount(-sheets_consumed)
+					src.metal_owed -= sheets_consumed
 					continue
-				if (src.CrystalOwed && Sheets.material.getMaterialFlags() & MATERIAL_CRYSTAL)
-					var/SheetsConsumed = ceil(min(Sheets.amount, src.CrystalOwed))
-					Sheets.change_stack_amount(-SheetsConsumed)
-					src.CrystalOwed -= SheetsConsumed
-					continue
-
-			else if (istype(Item, /obj/item/material_piece))
-				var/obj/item/material_piece/Bars = Item
-				if (!Bars.material) continue
-				if (src.MetalOwed && Bars.material.getMaterialFlags() & MATERIAL_METAL)
-					var/BarsConsumed = ceil(min(Bars.amount, src.MetalOwed / BAR_SHEET_VALUE))
-					Bars.change_stack_amount(-BarsConsumed)
-					src.MetalOwed -= BarsConsumed * BAR_SHEET_VALUE
-					continue
-				if (src.CrystalOwed && Bars.material.getMaterialFlags() & MATERIAL_CRYSTAL)
-					var/BarsConsumed = ceil(min(Bars.amount, src.CrystalOwed / BAR_SHEET_VALUE))
-					Bars.change_stack_amount(-BarsConsumed)
-					src.CrystalOwed -= BarsConsumed * BAR_SHEET_VALUE
+				if (src.crystal_owed && sheets.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					var/sheets_consumed = ceil(min(sheets.amount, src.crystal_owed))
+					sheets.change_stack_amount(-sheets_consumed)
+					src.crystal_owed -= sheets_consumed
 					continue
 
-		if (src.MetalOwed > 0 || src.CrystalOwed > 0)
-			src.pauseBuild()
+			else if (istype(item, /obj/item/material_piece))
+				var/obj/item/material_piece/bars = item
+				if (!bars.material) continue
+				if (src.metal_owed && bars.material.getMaterialFlags() & MATERIAL_METAL)
+					var/bars_consumed = ceil(min(bars.amount, src.metal_owed / BAR_SHEET_VALUE))
+					bars.change_stack_amount(-bars_consumed)
+					src.metal_owed -= bars_consumed * BAR_SHEET_VALUE
+					continue
+				if (src.crystal_owed && bars.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					var/bars_consumed = ceil(min(bars.amount, src.crystal_owed / BAR_SHEET_VALUE))
+					bars.change_stack_amount(-bars_consumed)
+					src.crystal_owed -= bars_consumed * BAR_SHEET_VALUE
+					continue
+
+		if (src.metal_owed > 0 || src.crystal_owed > 0)
+			src.pause_build()
 			src.visible_message("<span class='alert'>[src] does not have enough materials to continue construction.</span>")
 			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 20)
 			return
 		// now build the tile if we paid for it
-		var/turf/Pos = locate(text2num(Tile.posx) + src.x,text2num(Tile.posy) + src.y, src.z)
+		var/turf/pos = locate(text2num(tile.posx) + src.x,text2num(tile.posy) + src.y, src.z)
 		for(var/obj/O in src.markers)
-			if(O.loc == Pos)
+			if(O.loc == pos)
 				qdel(O)
 				break
 
-		src.makeTile(Tile, Pos)
-		src.TileCostProcessed = FALSE
-		src.BuildIndex++
+		src.make_tile(tile, pos)
+		src.tile_cost_processed = FALSE
+		src.build_index++
 
-	proc/makeTile(var/datum/tileinfo/Info, var/turf/Pos)
+	proc/make_tile(var/datum/tileinfo/tile, var/turf/pos)
 		set waitfor = 0
 		SPAWN(0)
-			var/obj/overlay/V = new/obj/overlay(Pos)
+			var/obj/overlay/V = new/obj/overlay(pos)
 			V.icon = 'icons/obj/objects.dmi'
 			V.icon_state = "buildeffect"
 			V.name = "energy"
@@ -247,48 +247,48 @@
 
 			qdel(V)
 
-			if(Info.tiletype != null)
-				var/turf/newTile = Pos
-				newTile.ReplaceWith(Info.tiletype)
-				newTile.icon_state = Info.state
-				newTile.set_dir(Info.direction)
-				newTile.inherit_area()
+			if(tile.tiletype != null)
+				var/turf/new_tile = pos
+				new_tile.ReplaceWith(tile.tiletype)
+				new_tile.icon_state = tile.state
+				new_tile.set_dir(tile.direction)
+				new_tile.inherit_area()
 
-			for(var/datum/objectinfo/O in Info.objects)
+			for(var/datum/objectinfo/O in tile.objects)
 				if (O.objecttype == null) continue
 				if (ispath(O.objecttype, /obj/machinery/power/apc))
-					src.apclist[O] = Pos
+					src.apc_list[O] = pos
 					continue
-				new/dmm_suite/preloader(Pos, list( // this doesn't spawn the objects, only presets their properties
+				new/dmm_suite/preloader(pos, list( // this doesn't spawn the objects, only presets their properties
 					"layer" = O.layer,
 					"pixel_x" = O.px,
 					"pixel_y" = O.py,
 					"dir" = O.direction,
 					"icon_state" = O.icon_state,
 				))
-				new O.objecttype(Pos) // need this part to also spawn the objects
+				new O.objecttype(pos) // need this part to also spawn the objects
 
-	proc/prepareBuild(mob/user)
-		if(src.invalidCount)
+	proc/prepare_build(mob/user)
+		if(src.invalid_count)
 			boutput(usr, "<span class='alert'>The machine can not build on anything but empty space. Check for red markers.</span>")
 			return
 
-		src.BuildEnd = length(src.currentBp.roominfo)
-		if (src.BuildEnd <= 0)
+		src.build_end = length(src.current_bp.roominfo)
+		if (src.build_end <= 0)
 			return
 
 		src.building = TRUE
-		src.Paused = FALSE
-		src.BuildIndex = 1
+		src.paused = FALSE
+		src.build_index = 1
 		src.icon_state = "builder1"
 		SubscribeToProcess()
 		src.visible_message("<span class='notice'>[src] starts to buzz and vibrate. The operation light blinks on.</span>")
-		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.currentBp.name], authored by [src.currentBp.author]")
+		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.current_bp.name], authored by [src.current_bp.author]")
 
-	proc/endBuild()
-		for (var/datum/objectinfo/N in src.apclist)
-			new N.objecttype(src.apclist[N])
-		src.apclist = new/list
+	proc/end_build()
+		for (var/datum/objectinfo/N in src.apc_list)
+			new N.objecttype(src.apc_list[N])
+		src.apc_list = new/list
 
 		src.building = FALSE
 		UnsubscribeProcess()
@@ -298,41 +298,41 @@
 		makepowernets()
 		src.visible_message("<span class='notice'>[src] whirrs to a stop. The operation light flashes twice and turns off.</span>")
 
-	proc/auditInventory(mob/user)
-		var/MetalCount = 0
-		var/CrystalCount = 0
+	proc/audit_inventory(mob/user)
+		var/metal_count = 0
+		var/crystal_count = 0
 		for(var/obj/O in src)
-			if(O == src.currentBp) continue
+			if(O == src.current_bp) continue
 			if (istype(O, /obj/item/sheet))
-				var/obj/item/sheet/Sheets = O
-				if (!Sheets.material) continue
-				if (Sheets.material.getMaterialFlags() & MATERIAL_METAL)
-					MetalCount += Sheets.amount
-				if (Sheets.material.getMaterialFlags() & MATERIAL_CRYSTAL)
-					CrystalCount += Sheets.amount
+				var/obj/item/sheet/sheets = O
+				if (!sheets.material) continue
+				if (sheets.material.getMaterialFlags() & MATERIAL_METAL)
+					metal_count += sheets.amount
+				if (sheets.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					crystal_count += sheets.amount
 			else if (istype(O, /obj/item/material_piece))
-				var/obj/item/material_piece/Bars = O
-				if (!Bars.material) continue
-				if (Bars.material.getMaterialFlags() & MATERIAL_METAL)
-					MetalCount += Bars.amount * BAR_SHEET_VALUE
-				if (Bars.material.getMaterialFlags() & MATERIAL_CRYSTAL)
-					CrystalCount += Bars.amount * BAR_SHEET_VALUE
+				var/obj/item/material_piece/bars = O
+				if (!bars.material) continue
+				if (bars.material.getMaterialFlags() & MATERIAL_METAL)
+					metal_count += bars.amount * BAR_SHEET_VALUE
+				if (bars.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					crystal_count += bars.amount * BAR_SHEET_VALUE
 		if (user)
-			var/Message = "<span class='notice'>The machine is holding [MetalCount] metal, and [CrystalCount] crystal, measured in sheets.</span>"
-			if (src.currentBp)
-				Message += "<br><span class='notice'>Its current blueprint requires [src.currentBp.req_metal] metal,"
-				Message += " and [src.currentBp.req_glass] crystal, measured in sheets.</span>"
-			boutput(user, Message)
-		return list(MetalCount, CrystalCount)
+			var/message = "<span class='notice'>The machine is holding [metal_count] metal, and [crystal_count] crystal, measured in sheets.</span>"
+			if (src.current_bp)
+				message += "<br><span class='notice'>Its current blueprint requires [src.current_bp.req_metal] metal,"
+				message += " and [src.current_bp.req_glass] crystal, measured in sheets.</span>"
+			boutput(user, message)
+		return list(metal_count, crystal_count)
 
-	proc/unpauseBuild()
-		src.Paused = FALSE
+	proc/unpause_build()
+		src.paused = FALSE
 		src.icon_state = "builder1"
 		SubscribeToProcess()
 		src.visible_message("<span class='notice'>[src] starts to buzz and vibrate.</span>")
 
-	proc/pauseBuild()
-		src.Paused = TRUE
+	proc/pause_build()
+		src.paused = TRUE
 		src.icon_state = "builder"
 		UnsubscribeProcess()
 		src.visible_message("<span class='notice'>[src] releases a small puff of steam, then quiets down.</span>")
@@ -347,8 +347,8 @@
 	proc/activate(mob/user)
 		src.locked = TRUE
 		src.anchored = ANCHORED
-		src.invalidCount = 0
-		for(var/datum/tileinfo/T in src.currentBp.roominfo)
+		src.invalid_count = 0
+		for(var/datum/tileinfo/T in src.current_bp.roominfo)
 			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
 			var/obj/abcuMarker/O = null
 
@@ -356,10 +356,10 @@
 				O = new/obj/abcuMarker(pos)
 			else
 				O = new/obj/abcuMarker/red(pos)
-				src.invalidCount++
+				src.invalid_count++
 
 			src.markers.Add(O)
-		boutput(user, "<span class='notice'>Building this will require [src.currentBp.req_metal] metal and [src.currentBp.req_glass] glass sheets.</span>")
+		boutput(user, "<span class='notice'>Building this will require [src.current_bp.req_metal] metal and [src.current_bp.req_glass] glass sheets.</span>")
 		src.visible_message("[src] locks into place and begins humming softly.")
 
 /datum/objectinfo
