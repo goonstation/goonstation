@@ -1,5 +1,12 @@
 
 (t)fri sep 15 23
+(u)Colossusw
+(p)15317
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Overhauled Stinging Nettles slightly(minor changes for details).
+(+)Nettles now won't pass reagents to people wearing botany jumpsuits.
+(+)Nettles now have a 'smooth nettle' mutation that does not produce any histamine.
+(+)Nettles now are triggered by movement near them, on a cooldown inversely scaled to their endurance, as opposed to firing off randomly.
 (u)LeahTheTech
 (p)15503
 (e)⚖🌱|C-Balance, A-Hydroponics
