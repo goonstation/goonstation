@@ -50,9 +50,9 @@
 		/obj/item/reagent_containers/dropper/mechanical,
 		// TODO: some sort of chem dispenser?
 		/obj/item/reagent_containers/food/drinks/drinkingglass,
-		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/extinguisher/large/cyborg,
 		/obj/item/device/gps, // Let's them assist with telesci
 	)
@@ -168,8 +168,8 @@
 		/obj/item/scissors/surgical_scissors,
 		/obj/item/hemostat,
 		/obj/item/staple_gun,
-		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/dropper,
 	)
 

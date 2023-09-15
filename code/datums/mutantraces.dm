@@ -1233,7 +1233,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
 					else
 						H.changeStatus("spry", 1 MINUTE)
-						playsound(H, 'sound/effects/smear.ogg', 50, 1)
+						playsound(H, 'sound/effects/smear.ogg', 50, TRUE)
 						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
 						src.uses--
 						if (!src.uses)
@@ -2376,8 +2376,8 @@ TYPEINFO(/datum/mutantrace/pug)
 	genetics_removable = FALSE
 	mutant_folder = 'icons/mob/human.dmi' // vOv
 	mutant_organs = list(\
-		"left_eye"=/obj/item/organ/eye/cyber,\
-		"right_eye"=/obj/item/organ/eye/cyber,\
+		"left_eye"=/obj/item/organ/eye/cyber/configurable,\
+		"right_eye"=/obj/item/organ/eye/cyber/configurable,\
 		"heart"=/obj/item/organ/heart/cyber,\
 		"appendix"=/obj/item/organ/appendix/cyber,\
 		"intestines"=/obj/item/organ/intestines/cyber,\

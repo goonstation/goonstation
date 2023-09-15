@@ -1321,6 +1321,12 @@ ABSTRACT_TYPE(/datum/material/organic)
 			addTrigger(TRIGGERS_ON_PICKUP, new /datum/materialProc/onpickup_butt)
 			addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/onpickup_butt)
 
+	greymatter
+		mat_id = "greymatter"
+		name = "grey matter"
+		desc = "It makes your brain think good."
+		color = "#b99696"
+
 /datum/material/organic/char
 	mat_id = "char"
 	name = "char"
@@ -1855,3 +1861,22 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("n_radioactive", 5)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
+
+/// Material for bundles of glowsticks as fuel rods
+/datum/material/metal/glowstick
+	mat_id = "glowstick"
+	name = "glowsticks" //"it is made of glowsticks"
+	canMix = 0 //don't make alloys of this
+	desc = "It's just a bunch of glowsticks stuck together. How is this an ingot?"
+	color = "#00e618"
+	alpha = 200
+	quality = 60
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 3)
+		setProperty("radioactive", 1)
+		setProperty("electrical", 2)
+		setProperty("thermal", 3)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/glowstick_add())

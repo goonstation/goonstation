@@ -367,7 +367,7 @@ var/reverse_mode = 0
 						else
 							user.shock(src, rand(5000, 250000), "chest", 1, 1)
 						/*harmless_smoke_puff(get_turf(src))
-						playsound(user, 'sound/effects/ghost2.ogg', 60, 0)
+						playsound(user, 'sound/effects/ghost2.ogg', 60, FALSE)
 						user.flash(60)
 						var/mob/oldmob = user
 						var/mob/dead/observer/O = new/mob/dead/observer()
@@ -444,7 +444,7 @@ var/reverse_mode = 0
 									boutput(user, "<span class='alert'>The relic's power completely overwhelms you!!</span>")
 									using = 1
 									harmless_smoke_puff( get_turf(src) )
-									playsound(user, 'sound/effects/ghost2.ogg', 60, 0)
+									playsound(user, 'sound/effects/ghost2.ogg', 60, FALSE)
 									logTheThing(LOG_COMBAT, user, "was killed by [src] ([src.type]) at [log_loc(user)].")
 									user.flash(60)
 									var/mob/oldmob = user

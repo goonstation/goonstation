@@ -1278,6 +1278,13 @@ var/global/noir = 0
 				usr.client.cmd_admin_smitegib(M)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to smite a dude.")
+		if ("anvilgib")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_anvilgib(M)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to anvil gib a dude.")
 		if("transform")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -3000,7 +3007,7 @@ var/global/noir = 0
 										sawarm:set_item(new /obj/item/saw/elimbinator())
 
 
-									playsound(M, 'sound/machines/chainsaw_red.ogg', 60, 1)
+									playsound(M, 'sound/machines/chainsaw_red.ogg', 60, TRUE)
 									M.update_body()
 							message_admins("[key_name(usr)] has given everyone new arms.")
 							logTheThing(LOG_ADMIN, usr, "used the Saw Arms secret.")

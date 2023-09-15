@@ -657,7 +657,7 @@ datum
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -30 SECONDS)
-						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1, pitch = 0.8)
+						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE, pitch = 0.8)
 					if (istype(L,/mob/living/critter/fire_elemental) && !ON_COOLDOWN(L, "fire_elemental_fffoam", 5 SECONDS))
 						L.emote("scream")
 						for(var/mob/O in AIviewers(M, null))
@@ -668,7 +668,7 @@ datum
 						var/brutedmg = volume * 1.5 //elementals take 1.15x damage, 65 is 74.75. 2 maxcap pitchers goes to .50 brute under death.
 						brutedmg = min(brutedmg, 65) //Ideally acts like vampire with holy water, capping it so they don't instadie.
 						L.TakeDamage("chest", brutedmg, 0, 0, DAMAGE_BLUNT) //120u pitcher of fffoam instantly killed elementals, lol.
-						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1, pitch = 0.5)
+						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE, pitch = 0.5)
 				return
 
 			grenade_effects(var/obj/grenade, var/atom/A)
@@ -818,7 +818,7 @@ datum
 					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
-					playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+					playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 					var/obj/grille/catwalk/catwalk = null
 					if (istype(T, /turf/simulated/floor/airless/plating/catwalk)) //guh
 						catwalk = locate() in T
@@ -853,7 +853,7 @@ datum
 						wet.blend_mode = BLEND_ADD
 						wet.alpha = 60
 						T.UpdateOverlays(wet, "wet_overlay")
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 					T.wet = 3
 					SPAWN(80 SECONDS)
 						if (istype(T))
@@ -1291,6 +1291,7 @@ datum
 			fluid_g = 255
 			fluid_b = 204
 			transparency = 150
+			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				if (volume >= 5)
@@ -1364,7 +1365,7 @@ datum
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					if (!locate(/obj/decal/cleanable/oil) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						switch(volume)
 							if (0 to 0.5)
 								if (prob(volume * 10))
@@ -2076,6 +2077,7 @@ datum
 			value = 5
 			hunger_value = 0.8
 			threshold = THRESHOLD_INIT
+			fluid_flags = FLUID_BANNED
 
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
@@ -2290,6 +2292,7 @@ datum
 			fluid_g = 255
 			fluid_b = 255
 			transparency = 255
+			fluid_flags = FLUID_BANNED
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
@@ -2584,6 +2587,34 @@ datum
 							M.visible_message("<span class='emote'><B>[M]</B> gives [some_idiot.name] the double deuce!</span>")
 				..()
 				return
+		capsizin
+			name = "capsizin"
+			id = "capsizin"
+			description = "This liquid doesn't seem to be self-righting..."
+			reagent_state = LIQUID
+			fluid_r = 23
+			fluid_g = 46
+			fluid_b = 111
+			transparency = 150
+			overdose = 30
+			threshold = THRESHOLD_INIT
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.Turn(180)
+					boutput(M, "You capsize!")
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					M.Turn(180)
+					boutput(M, "You manage to right yourself!")
+				..()
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				M.reagents.add_reagent("water", severity * mult)
 
 		transparium
 			name = "transparium"
@@ -3107,6 +3138,7 @@ datum
 			fluid_r = 0
 			fluid_g = 0
 			fluid_b = 0
+			fluid_flags = FLUID_STACKING_BANNED
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				if (prob(80))
@@ -3195,7 +3227,7 @@ datum
 					return 1
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/blood) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						var/obj/decal/cleanable/blood/blood = make_cleanable(/obj/decal/cleanable/blood,T)
 						var/datum/bioHolder/bioHolder = src.data
 						if(bioHolder)
@@ -3324,7 +3356,7 @@ datum
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/vomit) in T)
 						// no mob to vomit, so this gets to stay - cirr
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/vomit,T)
 
 		gvomit
@@ -3346,7 +3378,7 @@ datum
 					volume = (volume/covered.len)
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/greenpuke) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
 		urine
@@ -3377,7 +3409,7 @@ datum
 					return 1
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/urine,T)
 
 		triplepiss
@@ -3399,7 +3431,7 @@ datum
 					return 1
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/urine,T)
 
 		poo
@@ -3413,6 +3445,7 @@ datum
 			transparency = 255
 			hygiene_value = -5
 			viscosity = 0.5
+			fluid_flags = FLUID_STACKING_BANNED
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				if (prob(66))
@@ -3428,6 +3461,7 @@ datum
 			fluid_g = 190
 			fluid_b = 230
 			transparency = 160
+			fluid_flags = FLUID_STACKING_BANNED
 
 		big_bang
 			name = "quark-gluon plasma"
@@ -3440,7 +3474,7 @@ datum
 			fluid_b = 250
 			transparency = 255
 			viscosity = 0.7
-
+			fluid_flags = FLUID_SMOKE_BANNED
 			pierces_outerwear = 1//shoo, biofool
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
@@ -3631,7 +3665,7 @@ datum
 							boutput(H, "You have a strange feeling for a moment.")
 						H.bioHolder.AddEffect("accent_yee", timeleft = 180)
 						H.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
-						playsound(H, 'sound/misc/yee.ogg', 50, 1)
+						playsound(H, 'sound/misc/yee.ogg', 50, TRUE)
 
 			on_remove()
 				var/atom/A = holder.my_atom
@@ -3664,7 +3698,7 @@ datum
 					M.bioHolder.AddEffect("accent_yee", timeleft = 180)
 				if (probmult(20))
 					M.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
-					playsound(M, 'sound/misc/yee.ogg', 50, 1)
+					playsound(M, 'sound/misc/yee.ogg', 50, TRUE)
 				if (probmult(8))
 					fake_attackEx(M, 'icons/effects/hallucinations.dmi', "bop-bop", "bop-bop")
 				if (probmult(8))
@@ -4172,6 +4206,7 @@ datum
 			fluid_b = 124
 			transparency = 255
 			overdose = 70
+			fluid_flags = FLUID_SMOKE_BANNED
 			var/concrete_strength = 0
 
 			reaction_turf(var/turf/T, var/volume)
