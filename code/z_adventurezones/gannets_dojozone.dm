@@ -499,10 +499,17 @@ Contents:
 	hulk_immune = TRUE
 
 	attackby(obj/item/W, mob/user, params)
-		if (istype(W) && src.place_on(W, user, params))
-			return
-		else
-			return ..()
+		if (istype(W))
+			src.place_on(W, user, params)
+
+/obj/table/anvil/gimmick
+	anchored = UNANCHORED
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> to slice it into sheets."})
+
+	attackby(obj/item/W, mob/user, params)
+		if (isweldingtool(W))
+			actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
+		..()
 
 /obj/dojo_bellows
 	name = "bellows"
