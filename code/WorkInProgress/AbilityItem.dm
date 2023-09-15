@@ -74,7 +74,7 @@
 			*/
 
 		if (the_mob)
-    	playsound(the_mob, 'sound/effects/spray.ogg', 75, TRUE, 0)
+			playsound(the_mob, 'sound/effects/spray.ogg', 75, TRUE, 0)
 		//E.reagents.clear_reagents()
 
 		sleep(0.5 SECONDS)
