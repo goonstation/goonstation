@@ -468,8 +468,8 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
 		"<span class='notice'>You scan [A] with [src]!</span>")
 
-		src.scan_results = scan_reagents(A, visible = 1)
-		tooltip_rebuild = 1
+		src.scan_results = scan_reagents(A, visible = TRUE)
+		tooltip_rebuild = TRUE
 
 		if (!isnull(A.reagents))
 			if (length(A.reagents.reagent_list) > 0)

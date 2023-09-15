@@ -10,6 +10,7 @@ var/global/datum/galaxy/GALAXY = new
 	var/mangled_rand
 	var/datum/xor_rand_generator/Rand
 
+#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 	New()
 		..()
 #if defined(DEBUG_ARTEMIS)
@@ -33,6 +34,7 @@ var/global/datum/galaxy/GALAXY = new
 
 		SPAWN(20 SECONDS)
 			populate_galaxy()
+#endif
 
 	/// Random Integer from (L,H) otherwise 0-1
 

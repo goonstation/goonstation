@@ -6,7 +6,7 @@
 	desc = "That thing should not be in there, nopenopenope."
 	icon = 'icons/obj/materials.dmi'
 	icon_state = "ore$$starstone" //wooo reused sprites
-	made_from = "gnesis"
+	default_material = "gnesis"
 	broken = TRUE
 	unusual = TRUE
 

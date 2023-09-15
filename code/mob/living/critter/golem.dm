@@ -2,6 +2,7 @@
 	name = "Golem"
 	real_name = "Golem"
 	desc = "An elemental being, crafted by local artisans using traditional techniques."
+	icon = 'icons/mob/critter/humanoid/golem.dmi'
 	icon_state = "golem"
 	hand_count = 2
 	blood_id = "smokepowder"
