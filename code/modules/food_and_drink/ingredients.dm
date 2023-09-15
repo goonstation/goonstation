@@ -19,7 +19,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 
 	heal(var/mob/living/M)
 		..()
-		if (prob(33))
+		if (!(istype(M, /mob/living/critter/plant/maneater)) && prob(33))
 			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
 			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 

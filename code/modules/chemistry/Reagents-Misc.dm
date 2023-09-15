@@ -3104,10 +3104,21 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1) // cogwerks note. making atrazine toxic
 				if (!M) M = holder.my_atom
-				M.take_toxin_damage(2 * mult)
+				if (istype(M, /mob/living/critter/plant))
+					M.take_toxin_damage(3 * mult)
+				else
+					M.take_toxin_damage(2 * mult)
 				flush(holder, 2 * mult, flushed_reagents)
 				..()
 				return
+
+			reaction_mob(var/mob/M, var/method=TOUCH, var/volume)
+				. = ..()
+				var/plant_touch_modifier = 0.3 //lets get some weedkiller on our plants
+				if(method == TOUCH && istype(M, /mob/living/critter/plant))
+					if(M.reagents)
+						M.reagents.add_reagent(src.id,volume*plant_touch_modifier,src.data)
+						. = 0
 
 			on_plant_life(var/obj/machinery/plantpot/P)
 				var/datum/plant/growing = P.current
@@ -3286,7 +3297,11 @@ datum
 */
 			on_plant_life(var/obj/machinery/plantpot/P)
 				var/datum/plant/growing = P.current
-				if (growing.growthmode == "carnivore") P.growth += 3
+				var/datum/plantgenes/DNA = P.plantgenes
+				if (growing.growthmode == "carnivore")
+					P.growth += 3
+					if (prob(80))
+						DNA.endurance++
 
 			on_transfer(var/datum/reagents/source, var/datum/reagents/target, var/trans_amt)
 				var/list/source_pathogens = source.aggregate_pathogens()
