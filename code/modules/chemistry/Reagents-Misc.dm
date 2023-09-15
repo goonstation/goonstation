@@ -657,7 +657,7 @@ datum
 					var/mob/living/L = M
 					if (istype(L) && L.getStatusDuration("burning"))
 						L.changeStatus("burning", -30 SECONDS)
-						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1, pitch = 0.8)
+						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE, pitch = 0.8)
 					if (istype(L,/mob/living/critter/fire_elemental) && !ON_COOLDOWN(L, "fire_elemental_fffoam", 5 SECONDS))
 						L.emote("scream")
 						for(var/mob/O in AIviewers(M, null))
@@ -668,7 +668,7 @@ datum
 						var/brutedmg = volume * 1.5 //elementals take 1.15x damage, 65 is 74.75. 2 maxcap pitchers goes to .50 brute under death.
 						brutedmg = min(brutedmg, 65) //Ideally acts like vampire with holy water, capping it so they don't instadie.
 						L.TakeDamage("chest", brutedmg, 0, 0, DAMAGE_BLUNT) //120u pitcher of fffoam instantly killed elementals, lol.
-						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1, pitch = 0.5)
+						playsound(L, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE, pitch = 0.5)
 				return
 
 			grenade_effects(var/obj/grenade, var/atom/A)
@@ -818,7 +818,7 @@ datum
 					wet.alpha = 60
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
-					playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+					playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 					var/obj/grille/catwalk/catwalk = null
 					if (istype(T, /turf/simulated/floor/airless/plating/catwalk)) //guh
 						catwalk = locate() in T
@@ -853,7 +853,7 @@ datum
 						wet.blend_mode = BLEND_ADD
 						wet.alpha = 60
 						T.UpdateOverlays(wet, "wet_overlay")
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 					T.wet = 3
 					SPAWN(80 SECONDS)
 						if (istype(T))
@@ -1365,7 +1365,7 @@ datum
 					T.UpdateOverlays(wet, "wet_overlay")
 					T.wet = 2
 					if (!locate(/obj/decal/cleanable/oil) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						switch(volume)
 							if (0 to 0.5)
 								if (prob(volume * 10))
@@ -3227,7 +3227,7 @@ datum
 					return 1
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/blood) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						var/obj/decal/cleanable/blood/blood = make_cleanable(/obj/decal/cleanable/blood,T)
 						var/datum/bioHolder/bioHolder = src.data
 						if(bioHolder)
@@ -3356,7 +3356,7 @@ datum
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/vomit) in T)
 						// no mob to vomit, so this gets to stay - cirr
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/vomit,T)
 
 		gvomit
@@ -3378,7 +3378,7 @@ datum
 					volume = (volume/covered.len)
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/greenpuke) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/greenpuke,T)
 
 		urine
@@ -3409,7 +3409,7 @@ datum
 					return 1
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/urine,T)
 
 		triplepiss
@@ -3431,7 +3431,7 @@ datum
 					return 1
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/urine) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable( /obj/decal/cleanable/urine,T)
 
 		poo
@@ -3665,7 +3665,7 @@ datum
 							boutput(H, "You have a strange feeling for a moment.")
 						H.bioHolder.AddEffect("accent_yee", timeleft = 180)
 						H.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
-						playsound(H, 'sound/misc/yee.ogg', 50, 1)
+						playsound(H, 'sound/misc/yee.ogg', 50, TRUE)
 
 			on_remove()
 				var/atom/A = holder.my_atom
@@ -3698,7 +3698,7 @@ datum
 					M.bioHolder.AddEffect("accent_yee", timeleft = 180)
 				if (probmult(20))
 					M.visible_message("<span class='emote'><b>[M]</b> yees.</span>")
-					playsound(M, 'sound/misc/yee.ogg', 50, 1)
+					playsound(M, 'sound/misc/yee.ogg', 50, TRUE)
 				if (probmult(8))
 					fake_attackEx(M, 'icons/effects/hallucinations.dmi', "bop-bop", "bop-bop")
 				if (probmult(8))

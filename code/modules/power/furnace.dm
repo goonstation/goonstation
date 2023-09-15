@@ -141,7 +141,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 						src.fuel = src.maxfuel
 						boutput(user, "<span class='notice'>The furnace is now full!</span>")
 						break
-				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "<span class='notice'>You finish loading [crate] into [src]!</span>")
 				return
 
@@ -159,7 +159,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 				sleep(0.3 SECONDS)
 				if (user.loc != staystill)
 					break
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 
 		src.updateUsrDialog()

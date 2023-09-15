@@ -1043,7 +1043,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 
 			cleaned = 1
 			W.reagents.clear_reagents()
-			playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
+			playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 			user.visible_message("<span class='notice'><b>[user]</b> washes [src]!</span>", "<span class='notice'>You clean the HECK out of [src]!</span>")
 			src.visible_message("<span class='notice'>[src] bumbles really happily!  Also, a little squeakily.</span>")
 			//todo: splash visual effect

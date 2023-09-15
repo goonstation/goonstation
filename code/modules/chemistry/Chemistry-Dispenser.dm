@@ -92,11 +92,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				user.lastattacked = src
 				attack_particle(user,src)
 				hit_twitch(src)
-				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
 				src.take_damage(damage)
 				user.visible_message("<span class='alert'><b>[user] bashes [src] with [B]!</b></span>")
 			else
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,TRUE)
 				user.visible_message("<span class='alert'><b>[user] uselessly taps [src] with [B]!</b></span>")
 			return
 

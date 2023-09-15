@@ -46,7 +46,7 @@
 			return
 		user.visible_message("<span class='alert'><b>[user.name]</b> attacks [target.name] with [O]!</span>")
 		var/turf/T = get_turf(user)
-		playsound(T, hitsound, 50, 1, -1)
+		playsound(T, hitsound, 50, TRUE, -1)
 		switch(damtype)
 			if ("brute")
 				random_brute_damage(target, dmg_amount,1)

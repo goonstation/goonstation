@@ -937,7 +937,7 @@
 			counter += timePassed
 			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
 				counter -= count
-				playsound(owner, sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 
@@ -959,7 +959,7 @@
 			counter += timePassed
 			if (counter >= count && owner)
 				counter -= count
-				playsound(owner, sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 		onAdd()

@@ -690,7 +690,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
 
-		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
 
 		for(var/obj/O in affected)
 			O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
@@ -772,7 +772,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if(ismob(AM))
 			if(AM:client)
 				ready = 0
-				playsound(src, 'sound/effects/exlow.ogg', 40, 0)
+				playsound(src, 'sound/effects/exlow.ogg', 40, FALSE)
 				var/turf/spawnloc = get_step(get_step(get_step(src, NORTH), NORTH), NORTH)
 				new/obj/boulder_trap_boulder(spawnloc)
 				playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)

@@ -90,7 +90,7 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 		src.item_state = "[src.base_state][src.on ? null : "-off"]"
 		set_icon_state("[src.base_state][src.on ? null : "-off"]")
 		toggler.update_clothing()
-		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
 		if (ishuman(toggler))
 			var/mob/living/carbon/human/H = toggler
 			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
@@ -174,7 +174,7 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 		if(H.mind)
 			if(H.mind.assigned_role == "Detective" && !src.already_worn)
 				src.already_worn = 1
-				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, 0)
+				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, FALSE)
 				user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
 	..()
 	return

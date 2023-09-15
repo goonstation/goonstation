@@ -280,7 +280,7 @@ TYPEINFO(/obj/machinery/processor)
 				//	continue
 
 			M.set_loc(src)
-			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")

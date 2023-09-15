@@ -520,7 +520,7 @@ TYPEINFO(/obj/laser_sink/mirror)
 
 /obj/laser_sink/mirror/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
 		src.anchored = !src.anchored
 	else
@@ -591,13 +591,13 @@ TYPEINFO(/obj/laser_sink/splitter)
 //todo: componentize anchoring behaviour
 /obj/laser_sink/splitter/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
 		src.anchored = !src.anchored
 	else if (ispryingtool(I))
 		if (ON_COOLDOWN(src, "rotate", 0.3 SECONDS))
 			return
-		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 50, TRUE)
 		src.dir = turn(src.dir, 90)
 	else
 		..()

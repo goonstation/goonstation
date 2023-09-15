@@ -205,7 +205,7 @@ proc/is_weak_rollable_contract(type)
 		..()
 
 	attack(target, mob/user)
-		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
+		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(!isdead(C))
@@ -846,7 +846,7 @@ obj/item/contract/greed
 					boutput(user, "<span class='notice'>What, not enough for you? Fine.</span>")
 					var/turf/T = get_turf(user)
 					if (T)
-						playsound(T, 'sound/items/coindrop.ogg', 30, 1)
+						playsound(T, 'sound/items/coindrop.ogg', 30, TRUE)
 						new /obj/item/coin(T)
 						for (var/i = 1; i<= 8; i= i*2)
 							if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))

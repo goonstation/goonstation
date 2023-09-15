@@ -73,7 +73,7 @@
 		switch (act)
 			if ("scream", "clak")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/items/Scissor.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/items/Scissor.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='alert'>[src] claks!</span>"
 		return null
 

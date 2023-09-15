@@ -64,7 +64,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/brullbar_roar.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/brullbar_roar.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] howls!</span></b>"
 		return null
 

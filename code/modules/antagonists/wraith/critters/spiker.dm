@@ -84,7 +84,7 @@
 
 				M.throw_at(destination, 10, 1)
 
-				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 				M.TakeDamageAccountArmor("All", rand(3,4), 0, 0, DAMAGE_CUT)
 				M.force_laydown_standup()
 				M.changeStatus("paralysis", 5 SECONDS)

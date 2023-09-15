@@ -805,7 +805,7 @@ proc/get_default_flock()
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
 	src.unreserveTurf(converterName)
 	src.claimTurf(flock_convert_turf(T))
-	playsound(T, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
+	playsound(T, 'sound/items/Deconstruct.ogg', 30, TRUE, extrarange = -10)
 
 // Z LEVEL CHECK
 

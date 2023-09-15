@@ -22,7 +22,7 @@
 				icon_state = "fogmachine0"
 
 				src.visible_message("<span class='alert'>The <B>[src]</B> splutters to a halt.</span>")
-				playsound(src, 'sound/machines/ding.ogg', 50, 1)
+				playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 			else
 				SPAWN(5 SECONDS)
 					var/datum/chemical_reaction/smoke/S = new
@@ -58,7 +58,7 @@
 						reagents.add_reagent(current_id, 10, null, null, 1)
 
 				C.reagents.clear_reagents()
-				playsound(src, 'sound/effects/bubbles.ogg', 50, 1)
+				playsound(src, 'sound/effects/bubbles.ogg', 50, TRUE)
 				return
 		else
 			boutput(user, "You put [C] into the funnel.")
@@ -73,7 +73,7 @@
 					reagents.add_reagent(current_id, 10, null, null, 1)
 
 			qdel(C)
-			playsound(src, 'sound/effects/pop.ogg', 50, 1)
+			playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
 			return
 
 
@@ -81,11 +81,11 @@
 		if(on == 0)
 			on = 1
 			boutput(user, "<span class='notice'>You flip the switch on the FogMachine-3000 to the On position.</span>")
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			return
 		if(on == 1)
 			on = 0
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			boutput(user, "<span class='notice'>You flip the switch on the FogMachine-3000 to the Off position.</span>")
 			return
 
