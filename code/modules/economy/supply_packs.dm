@@ -786,7 +786,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Civilian Department"
 	contains = list(/obj/critter/parrot/random = 5)
 	cost = 2000
-	containertype = /obj/storage/pryable/crate/animal
+	containertype = /obj/storage/crate/pryable/animal
 	containername = "Avian Import Kit"
 
 /datum/supply_packs/animal
@@ -795,7 +795,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Civilian Department"
 	contains = list (/obj/random_item_spawner/critter)
 	cost = 2000
-	containertype = /obj/storage/pryable/crate/animal
+	containertype = /obj/storage/crate/pryable/animal
 	containername = "Animal Import Kit"
 
 /datum/supply_packs/pet_carrier
