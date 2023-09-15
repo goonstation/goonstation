@@ -221,7 +221,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 				boutput(usr, "<span class='alert'>ERROR: Scanner unable to load report data.</span>")
 				return
 			if(!ON_COOLDOWN(src, "print", 2 SECOND))
-				playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
+				playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 				SPAWN(1 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper
 					P.set_loc(get_turf(src))
@@ -985,7 +985,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		if (!I || !(access_security in I.access))
 			boutput(user, "<span class='alert'>Insufficient access.</span>")
 			return
-		playsound(src, 'sound/machines/keyboard3.ogg', 30, 1)
+		playsound(src, 'sound/machines/keyboard3.ogg', 30, TRUE)
 		var/issuer = I.registered
 		var/issuer_job = I.assignment
 		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
@@ -1010,7 +1010,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		data_core.tickets += T
 
 		logTheThing(LOG_ADMIN, user, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
-		playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
+		playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
@@ -1118,7 +1118,7 @@ TYPEINFO(/obj/item/device/appraisal)
 		// replace with boutput
 		boutput(user, "<span class='notice'>[out_text]Estimated value: <strong>[sell_value] credit\s.</strong></span>")
 		if (sell_value > 0)
-			playsound(src, 'sound/machines/chime.ogg', 10, 1)
+			playsound(src, 'sound/machines/chime.ogg', 10, TRUE)
 
 		if (user.client && !user.client.preferences?.flying_chat_hidden)
 			var/image/chat_maptext/chat_text = null

@@ -41,7 +41,7 @@
 			return
 
 		if (!ON_COOLDOWN(src, "heart_wring", 2 SECONDS))
-			playsound(user, squeeze_sound, 30, 1)
+			playsound(user, squeeze_sound, 30, TRUE)
 			logTheThing(LOG_CHEMISTRY, user, "wrings out [src] containing [log_reagents(src)] at [log_loc(user)].")
 			src.reagents.trans_to(get_turf(src), HEART_WRING_AMOUNT)
 			boutput(user, "<span class='notice'>You wring out \the [src].</span>")

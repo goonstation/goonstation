@@ -145,7 +145,7 @@ TYPEINFO(/obj/item/old_grenade/sawfly)
 			if(issawflybuddy(target))
 				return
 			user.visible_message("<b class='alert'>[user] [pick(list("gouges", "carves", "cleaves", "lacerates", "shreds", "cuts", "tears", "saws", "mutilates", "hacks", "slashes",))] [target]!</b>")
-			playsound(user, 'sound/machines/chainsaw_green.ogg', 50, 1)
+			playsound(user, 'sound/machines/chainsaw_green.ogg', 50, TRUE)
 			if(prob(3))
 				user.communalbeep()
 			take_bleeding_damage(target, null, 10, DAMAGE_STAB)

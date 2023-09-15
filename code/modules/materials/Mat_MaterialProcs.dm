@@ -424,7 +424,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 			//sparkles
 			animate_flash_color_fill_inherit(owner,"#ff0000",4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakagentb.ogg', 50, 1, 8)
+			playsound(owner, 'sound/effects/leakagentb.ogg', 50, TRUE, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
 		else //no plasma present, or this is just normal molitz - you get just plain oxygen
@@ -433,7 +433,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			air.merge(payload) //add it to the target air
 			//blue sparkles
 			animate_flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
+			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 
 
 		molitz.setProperty("molitz_bubbles", iterations-1)
@@ -459,9 +459,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			if(iterations >= 1)
-				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
+				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 			if(iterations == 0)
-				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, 1, 5)
+				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, TRUE, 5)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
 			payload.temperature = T20C
@@ -548,7 +548,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/L = entering
 			if(L.slip(walking_matters = 1))
 				boutput(L, "You slip on the icy floor!")
-				playsound(owner, 'sound/misc/slip.ogg', 30, 1)
+				playsound(owner, 'sound/misc/slip.ogg', 30, TRUE)
 		return
 
 /datum/materialProc/ice_life

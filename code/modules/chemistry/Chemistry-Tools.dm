@@ -913,7 +913,7 @@ proc/ui_describe_reagents(atom/A)
 				user.lastattacked = src
 				attack_particle(user,src)
 				hit_twitch(src)
-				playsound(src, 'sound/impact_sounds/Generic_Slap_1.ogg', 50,1)
+				playsound(src, 'sound/impact_sounds/Generic_Slap_1.ogg', 50,TRUE)
 				user.visible_message("<span class='alert'><b>[user.name] smacks the [src.name] with the [W.name]!</b></span>")
 				if(angry)
 					become_unangry()

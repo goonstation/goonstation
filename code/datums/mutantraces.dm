@@ -1233,7 +1233,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
 					else
 						H.changeStatus("spry", 1 MINUTE)
-						playsound(H, 'sound/effects/smear.ogg', 50, 1)
+						playsound(H, 'sound/effects/smear.ogg', 50, TRUE)
 						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
 						src.uses--
 						if (!src.uses)

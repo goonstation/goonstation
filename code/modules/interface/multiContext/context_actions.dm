@@ -457,7 +457,7 @@
 	proc/success_feedback(atom/target, mob/user)
 		user.show_text(replacetext(success_text, "%target%", target), "blue")
 		if (success_sound)
-			playsound(target, success_sound, 50, 1)
+			playsound(target, success_sound, 50, TRUE)
 
 	proc/omnitool_swap(atom/target, mob/user, obj/item/tool/omnitool/omni)
 		if (!(omni_mode in omni.modes))

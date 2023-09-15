@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			new payload(T)
 			for (var/i in 1 to src.amount_to_spawn - 1)
 				var/turf/adjacent = get_step(T, cardinal[(i % length(cardinal)) + 1])
@@ -191,7 +191,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			for(var/i = 1; i <= src.count; i++)
 				var/atom/movable/thing = new payload(T)
 				var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
@@ -354,7 +354,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			var/obj/item/old_grenade/smoke/mustard/M = null
 			if (istype(src, /obj/item/old_grenade/smoke/mustard))
 				M = src
-			playsound(T, 'sound/effects/smoke.ogg', 50, 1, -3)
+			playsound(T, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 
 			SPAWN(0)
 				if (src)
@@ -419,7 +419,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
 			explosion(src, T, -1, -1, -0.25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = ANCHORED
@@ -431,7 +431,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			if (istype(src, /obj/item/old_grenade/stinger/frag))
 				F = src
 			if (F)
-				playsound(T, 'sound/effects/smoke.ogg', 20, 1, -2)
+				playsound(T, 'sound/effects/smoke.ogg', 20, TRUE, -2)
 				SPAWN(0)
 					if (F?.smoke) //Wire note: Fix for Cannot execute null.start()
 						for(var/i = 1 to 6)
@@ -484,7 +484,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		var/turf/T = ..()
 		if (T)
 			explosion_new(src, T, 5.0, 2)
-			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = ANCHORED
 			O.name = "Explosion"
@@ -519,7 +519,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 				qdel(src)
 				return
 
-			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 
 			for (var/mob/living/M in hearers(8, T))
 				if(check_target_immunity(M)) continue
@@ -585,7 +585,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/items/Welder2.ogg', 25, 1)
+			playsound(T, 'sound/items/Welder2.ogg', 25, TRUE)
 			T.hotspot_expose(700,125)
 
 			var/grenade = src // detaching the proc - in theory
@@ -670,7 +670,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
 
 			animate(E, alpha=0, time=2.5 SECONDS)
-			playsound(T, 'sound/weapons/flashbang.ogg', 30, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 30, TRUE)
 			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(10, 0, get_turf(src), color="#0ff", plane=PLANE_NOSHADOW_ABOVE)
 			steam.attach(src.loc)
@@ -678,7 +678,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 		else
 			animate(E, alpha=0, time=2 SECONDS)
-			playsound(T, 'sound/weapons/flashbang.ogg', 15, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 15, TRUE)
 
 		E.fingerprintslast = src.fingerprintslast
 		qdel(src)
@@ -717,7 +717,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					M.equip_if_possible(moustache, SLOT_WEAR_MASK)
 					M.set_clothing_icon_dirty()
 
-			playsound(T, 'sound/effects/Explosion2.ogg', 100, 1)
+			playsound(T, 'sound/effects/Explosion2.ogg', 100, TRUE)
 			var/obj/effects/explosion/E = new /obj/effects/explosion(T)
 			E.fingerprintslast = src.fingerprintslast
 
@@ -1561,7 +1561,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		user.show_text("You combine [to_combine_atom] and [src]. This looks pretty unsafe!")
 		user.u_equip(to_combine_atom)
 		user.u_equip(src)
-		playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		var/obj/item/gun/kinetic/zipgun/new_gun = new/obj/item/gun/kinetic/zipgun
 		user.put_in_hand_or_drop(new_gun)
 		qdel(to_combine_atom)
@@ -1593,7 +1593,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		if(other_frame.state == 2) // the other pipe needs to be welded
 			user.u_equip(src)
 			user.u_equip(to_combine_atom)
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 			var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
 			user.put_in_hand_or_drop(S)
 			qdel(to_combine_atom)
@@ -1847,7 +1847,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 
 		if (sound_effect)
 			SPAWN(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
-				playsound(src, sound_effect, 50, 1)
+				playsound(src, sound_effect, 50, TRUE)
 		SPAWN(5 SECONDS)
 			do_explode()
 
@@ -1941,7 +1941,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 							boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
 							M.set_loc(warp_to)
 			if (rcd)
-				playsound(src, 'sound/items/Deconstruct.ogg', 70, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 70, TRUE)
 				for (var/turf/T in view(rcd,src.loc))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()

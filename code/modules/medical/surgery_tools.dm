@@ -249,7 +249,7 @@ CONTAINS:
 
 		if (src.ammo < 1)
 			user.show_text("*click* *click*", "red")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 50, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 50, TRUE)
 			return ..()
 
 		if (user.a_intent != "help" && ishuman(M))
@@ -1161,14 +1161,14 @@ TYPEINFO(/obj/machinery/defib_mount)
 				else if (clumsy && !doctor && prob(1)) // extreme clumsiness can lead to extremely unintended examination results
 					var/obj/item/organ/head/head = H.drop_organ("head")
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head and hits it clean off [H == user ? "[his_or_her(H)] own" : "[H]'s"] shoulders!</span>")
-					playsound(H, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, 1)
+					playsound(H, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, TRUE)
 					if (head)
 						head.throw_at(get_dir(user, H), 3, 3)
 					return
 
 				else if (clumsy && prob(33)) // WHACK
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head!</span>")
-					playsound(H, 'sound/impact_sounds/Generic_Hit_1.ogg', 80, 1)
+					playsound(H, 'sound/impact_sounds/Generic_Hit_1.ogg', 80, TRUE)
 					my_damage = (max(my_damage, 2) * 3)
 
 				else if (!headSurgeryCheck(H))
@@ -1188,7 +1188,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				if (!H.limbs || !H.
 */
 		H.TakeDamage(def_zone, my_damage)
-		playsound(H, my_sound, 80, 1)
+		playsound(H, my_sound, 80, TRUE)
 		return
 
 	//else if (isrobot(M)) // clonk clonk

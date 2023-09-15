@@ -536,5 +536,5 @@
 
 	Move(var/turf/new_loc,direction)
 		if (src.mousetrap.buttbomb && src.armed)
-			playsound(src, 'sound/voice/farts/poo2.ogg', 30, 0, 0, 1.8)
+			playsound(src, 'sound/voice/farts/poo2.ogg', 30, FALSE, 0, 1.8)
 		..()
