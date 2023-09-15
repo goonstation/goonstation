@@ -2120,7 +2120,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Gas tank"
 	item_paths = list("MET-2")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/tank)
+	item_outputs = list(/obj/item/tank/empty)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
