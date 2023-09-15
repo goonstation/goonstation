@@ -182,6 +182,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		. = get_turf(src)
 
 	get_desc()
+		. = ..()
 		if (src.needs_prying && !src.open)
 			. += " Its shut tightly."
 		else if (src.pried_open)
