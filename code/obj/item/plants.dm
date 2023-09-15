@@ -9,7 +9,6 @@ ABSTRACT_TYPE(/obj/item/plant)
 	var/crop_prefix = ""
 	desc = "You shouldn't be able to see this item ingame!"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	var/brew_result = null // what will it make if it's brewable?
 	rand_pos = 1
 
 	New()
