@@ -937,7 +937,7 @@
 			counter += timePassed
 			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
 				counter -= count
-				playsound(owner, sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 
@@ -959,7 +959,7 @@
 			counter += timePassed
 			if (counter >= count && owner)
 				counter -= count
-				playsound(owner, sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 		onAdd()
@@ -2447,3 +2447,11 @@
 	icon_state = "fragrant"
 	maxDuration = 4 SECONDS
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/loose_brain
+	id = "loose_brain"
+	name = "Loose Brain"
+	desc = "You get the feeling that fliping with your brain exposed might not be a good idea..."
+	icon_state = "brain"
+	maxDuration = 2 MINUTES // I made this long so you can do gags where you fling your brain at someone
+	effect_quality = STATUS_QUALITY_NEGATIVE

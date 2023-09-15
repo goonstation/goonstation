@@ -117,7 +117,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 /obj/machinery/computer/cloning/process()
 	..()
-	src.records_scan()
+	if (!(src.status & (NOPOWER | BROKEN)))
+		src.records_scan()
 
 /obj/machinery/computer/cloning/connection_scan()
 	if (src.portable)
@@ -614,11 +615,11 @@ TYPEINFO(/obj/machinery/clone_scanner)
 	proc/set_lock(var/lock_status)
 		if(lock_status && !locked)
 			locked = 1
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			boutput(occupant, "<span class='alert'>\The [src] locks shut!</span>")
 		else if(!lock_status && locked)
 			locked = 0
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			boutput(occupant, "<span class='notice'>\The [src] unlocks!</span>")
 
 	// Meat grinder functionality.
@@ -662,7 +663,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		process_timer = timer_length
 		set_lock(1)
 		boutput(occupant, "<span style='color:red;font-weight:bold'>A whirling blade slowly begins descending upon you!</span>")
-		playsound(src, 'sound/machines/mixer.ogg', 50, 1)
+		playsound(src, 'sound/machines/mixer.ogg', 50, TRUE)
 		SubscribeToProcess()
 
 	proc/start_strip()
@@ -701,7 +702,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		src.occupant.TakeDamage(zone="All", brute=damage)
 		bleed(occupant, damage * 2, 0)
 		if(prob(50))
-			playsound(src, 'sound/machines/mixer.ogg', 50, 1)
+			playsound(src, 'sound/machines/mixer.ogg', 50, TRUE)
 		if(prob(30))
 			SPAWN(0.3 SECONDS)
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg', \

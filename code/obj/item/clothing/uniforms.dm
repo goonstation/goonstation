@@ -254,18 +254,12 @@
 
 // RANKS
 
+ABSTRACT_TYPE(/obj/item/clothing/under/rank)
 /obj/item/clothing/under/rank
-	name = "staff assistant's jumpsuit"
-	desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
-	icon = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
-	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
-	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_rank.dmi'
-	icon_state = "assistant"
-	item_state = "assistant"
-
-	april_fools
-		icon_state = "assistant-alt"
-		item_state = "assistant-alt"
+    name = "rank under parent"
+    icon = 'icons/obj/clothing/uniforms/item_js_rank.dmi'
+    wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_rank.dmi'
+    inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_rank.dmi'
 
 // Heads
 
@@ -540,6 +534,16 @@
 
 // Civilian
 
+/obj/item/clothing/under/rank/assistant
+	name = "staff assistant's jumpsuit"
+	desc = "It's a generic grey jumpsuit. That's about what assistants are worth, anyway."
+	icon_state = "assistant"
+	item_state = "assistant"
+
+/obj/item/clothing/under/rank/assistant/april_fools
+	icon_state = "assistant-alt"
+	item_state = "assistant-alt"
+
 /obj/item/clothing/under/rank/hydroponics
 	name = "botanist's jumpsuit"
 	desc = "Has a strong earthy smell to it. Hopefully it's merely dirty as opposed to soiled."
@@ -592,12 +596,16 @@
 
 // Not jobs, but not gimmicks
 
+ABSTRACT_TYPE(/obj/item/clothing/under/misc)
 /obj/item/clothing/under/misc
-	name = "prisoner's jumpsuit"
-	desc = "Busted."
+	name = "under misc parent"
 	icon = 'icons/obj/clothing/uniforms/item_js_misc.dmi'
 	wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_misc.dmi'
 	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_misc.dmi'
+
+/obj/item/clothing/under/misc/prisoner
+	name = "prisoner's jumpsuit"
+	desc = "Busted."
 	icon_state = "prisoner"
 	item_state = "prisoner"
 
@@ -883,12 +891,6 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	icon_state = "lucha3"
 	item_state = "lucha3"
 
-/obj/item/clothing/under/shorts/trashsinglet
-	name = "trash bag singlet"
-	desc = "It's time for the trashman to eat garbage and smash opponents!"
-	icon_state = "literaltrash"
-	item_state = "literaltrash"
-
 /obj/item/clothing/under/shorts/random_color
 	New()
 		..()
@@ -1086,15 +1088,26 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 
 // Suits
 
+ABSTRACT_TYPE(/obj/item/clothing/under/suit)
 /obj/item/clothing/under/suit
+
+/obj/item/clothing/under/suit/black
 	name = "black suit"
 	desc = "A black suit and red tie. Very formal."
 	icon_state = "suitB"
 	item_state = "suitB"
 
-	dress
-		icon_state = "suitB-dress"
-		item_state = "suitB-dress"
+/obj/item/clothing/under/suit/black/dress
+	name = "black dress"
+	desc = "A black dress. Very formal."
+	icon_state = "suitB-dress"
+	item_state = "suitB-dress"
+
+/obj/item/clothing/under/suit/mortician
+	name = "Mortician's Suit"
+	desc = "A drab black suit. Very formal. Fitting for someone who works with bodies."
+	icon_state = "suitB"
+	item_state = "suitB"
 
 /obj/item/clothing/under/suit/pinstripe
 	name = "pinstripe suit"
@@ -1108,9 +1121,9 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	icon_state = "suitR"
 	item_state = "suitR"
 
-	dress
-		icon_state = "suitR-dress"
-		item_state = "suitR-dress"
+/obj/item/clothing/under/suit/red/dress
+	icon_state = "suitR-dress"
+	item_state = "suitR-dress"
 
 /obj/item/clothing/under/suit/purple
 	name = "purple suit"
@@ -1118,9 +1131,9 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	icon_state = "suitP"
 	item_state = "suitP"
 
-	dress
-		icon_state = "suitP-dress"
-		item_state = "suitP-dress"
+/obj/item/clothing/under/suit/purple/dress
+	icon_state = "suitP-dress"
+	item_state = "suitP-dress"
 
 /obj/item/clothing/under/suit/captain
 	name = "\improper Captain's suit"
@@ -1128,17 +1141,17 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	icon_state = "suitG"
 	item_state = "suitG"
 
-	blue
-		icon_state = "suit-capB"
-		item_state = "suit-capB"
+/obj/item/clothing/under/suit/captain/blue
+	icon_state = "suit-capB"
+	item_state = "suit-capB"
 
-	dress
-		icon_state = "suitG-dress"
-		item_state = "suitG-dress"
+/obj/item/clothing/under/suit/captain/dress
+	icon_state = "suitG-dress"
+	item_state = "suitG-dress"
 
-	dress/blue
-		icon_state = "suit-capB-dress"
-		item_state = "suit-capB-dress"
+/obj/item/clothing/under/suit/captain/dress/blue
+	icon_state = "suit-capB-dress"
+	item_state = "suit-capB-dress"
 
 /obj/item/clothing/under/suit/hop
 	name = "\improper Head of Personnel's suit"
@@ -1146,12 +1159,12 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	icon_state = "suitT"
 	item_state = "suitT"
 
-	april_fools
-		icon_state = "suitR"
-		item_state = "suitR"
+/obj/item/clothing/under/suit/hop/april_fools
+	icon_state = "suitR"
+	item_state = "suitR"
 
-	dress
-		icon_state = "suitT-dress"
+/obj/item/clothing/under/suit/hop/dress
+	icon_state = "suitT-dress"
 
 /obj/item/clothing/under/suit/hos
 	name = "\improper Head of Security's suit"
@@ -1159,9 +1172,9 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	icon_state = "suitRb"
 	item_state = "suitRb"
 
-	dress
-		icon_state = "suitRb-dress"
-		item_state = "suitRb-dress"
+/obj/item/clothing/under/suit/hos/dress
+	icon_state = "suitRb-dress"
+	item_state = "suitRb-dress"
 
 // Scrubs
 

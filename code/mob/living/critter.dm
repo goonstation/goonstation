@@ -1271,8 +1271,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	is_heat_resistant()
 		if (!get_health_holder("burn"))
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 	ex_act(var/severity)
 		..() // Logs.
@@ -1603,3 +1603,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	electric_expose(var/power = 1)
 		return 0
+
+	is_heat_resistant()
+		return TRUE

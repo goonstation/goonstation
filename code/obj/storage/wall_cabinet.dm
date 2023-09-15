@@ -131,7 +131,7 @@ TYPEINFO(/obj/item/storage/wall)
 	icon_state = "miniorange"
 	pixel_y = 32
 	spawn_contents = list(/obj/item/clothing/under/color/orange = 2,
-	/obj/item/clothing/under/misc = 2,
+	/obj/item/clothing/under/misc/prisoner = 2,
 	/obj/item/clothing/shoes/orange = 3)
 
 /obj/item/storage/wall/blue

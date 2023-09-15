@@ -274,7 +274,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon = 'icons/obj/foodNdrink/food_produce.dmi'
 	icon_state = "rice-sprig"
 	food_color = "#FFFFAA"
-	brew_result = "ricewine"
+	brew_result = list("ricewine"=20)
 
 /obj/item/reagent_containers/food/snacks/ingredient/rice
 	name = "rice"
@@ -290,7 +290,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	custom_food = 1
 	initial_volume = 50
 	initial_reagents = list("sugar"=25)
-	brew_result = "rum"
+	brew_result = list("rum"=20)
 
 /obj/item/reagent_containers/food/snacks/ingredient/peanutbutter
 	name = "peanut butter"
@@ -356,7 +356,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	doants = 0
 	initial_volume = 50
 	initial_reagents = list("honey"=15)
-	brew_result = "mead"
+	brew_result = list("mead"=20)
 	mat_changename = "honey"
 	default_material = "honey"
 
@@ -509,7 +509,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			if (baton.is_active) //baton is on
 				if (user.a_intent != "harm")
 					if (user.traitHolder.hasTrait("training_security"))
-						playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, 1, -1) //bit quieter than a baton hit
+						playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, TRUE, -1) //bit quieter than a baton hit
 						user.visible_message("<span class='notice'>[user] [pick("expertly", "deftly", "casually", "smoothly")] baton-fries the dough, yielding a tasty donut.</span>", group = "batonfry")
 						var/obj/item/reagent_containers/food/snacks/donut/result = new /obj/item/reagent_containers/food/snacks/donut(src.loc)
 						user.u_equip(src)
@@ -519,7 +519,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 						boutput(user, "<span class='alert'>You just aren't experienced enough to baton-fry.</span>")
 				else
 					user.visible_message("<b class='alert'>[user] tries to baton fry the dough, but fries [his_or_her(user)] hand instead!</b>")
-					playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, 1, -1)
+					playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, TRUE, -1)
 					user.do_disorient(baton.stamina_damage, weakened = baton.stun_normal_weakened * 10, disorient = 80) //cut from batoncode to bypass all the logging stuff
 			else
 				boutput(user, "<span class='notice'>You [user.a_intent == "harm" ? "beat" : "prod"] the dough. The dough doesn't react.</span>")

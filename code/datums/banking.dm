@@ -837,11 +837,11 @@
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
 			user.lastattacked = src
 			attack_particle(user,src)
-			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,1)
+			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,TRUE)
 			src.take_damage(damage, user)
 			user.visible_message("<span class='alert'><b>[user] bashes the [src] with [I]!</b></span>")
 		else
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,TRUE)
 			user.visible_message("<span class='alert'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
 			return
 

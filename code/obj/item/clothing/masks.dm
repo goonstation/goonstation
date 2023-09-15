@@ -91,7 +91,7 @@
 
 		//Commence owie
 		take_bleeding_damage(target, null, rand(8, 16), DAMAGE_BLUNT)	//My
-		playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1) //head,
+		playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE) //head,
 		target.emote("scream") 									//FUCKING
 		target.TakeDamage("head", rand(12, 18), 0) 				//OW!
 		target.changeStatus("weakened", 4 SECONDS)
@@ -104,7 +104,7 @@
 	icon_state = "gas_mask"
 	c_flags =  COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
 	w_class = W_CLASS_NORMAL
-	see_face = 0
+	see_face = FALSE
 	item_state = "gas_mask"
 	color_r = 0.8 // green tint
 	color_g = 1
@@ -147,7 +147,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	desc = "Nobody will know who you are if you put this on. Nobody."
 	icon_state = "moustache"
 	item_state = "moustache"
-	see_face = 0
+	see_face = FALSE
 	w_class = W_CLASS_TINY
 	c_flags = null
 	is_syndicate = 1
@@ -162,14 +162,14 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	desc = "Almost as good as a REAL fake moustache."
 	icon_state = "moustache"
 	item_state = "moustache"
-	see_face = 1
+	see_face = TRUE
 
 /obj/item/clothing/mask/moustache/Italian
 	name = "fake Italian moustache"
 	desc = "For those who can't cut the lasagna."
 	icon_state = "moustache-i"
 	item_state = "moustache-i"
-	see_face = 1
+	see_face = TRUE
 
 
 /obj/item/clothing/mask/gas/emergency
@@ -185,7 +185,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		icon_state = "slasher_mask"
 		item_state = "slasher_mask"
 		item_function_flags = IMMUNE_TO_ACID
-		see_face = 1
+		see_face = TRUE
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 6)
@@ -206,7 +206,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		desc = "A close-fitting sealed gas mask, from the looks of it, it's well over a hundred years old."
 		icon_state = "slasher_mask"
 		item_state = "slasher_mask"
-		see_face = 1
+		see_face = TRUE
 		setupProperties()
 			..()
 			setProperty("movespeed", 0.2)
@@ -343,7 +343,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A mask depicting the grinning facial expression of a prototypical clown. There's a place to tuck the attached wig in if you don't want it interfering with your own hair."
 	icon_state = "clown"
 	item_state = "clown_hat"
-	see_face = 0
+	see_face = FALSE
 
 	var/spam_flag = 0
 	var/spam_timer = 100
@@ -567,7 +567,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A little mask, made of paper."
 	icon_state = "domino"
 	item_state = "domino"
-	see_face = 0
+	see_face = FALSE
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
@@ -584,7 +584,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "Haven't seen that fellow in a while."
 	icon_state = "melons"
 	item_state = "melons"
-	see_face = 0
+	see_face = FALSE
 
 TYPEINFO(/obj/item/clothing/mask/wrestling)
 	random_subtypes = list(/obj/item/clothing/mask/wrestling,
@@ -596,7 +596,7 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	desc = "A mask that will greatly enhance your wrestling prowess! Not, like, <i>physically</i>, but mentally. In your heart. In your soul. Something like that."
 	icon_state = "silvermask"
 	item_state = "silvermask"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/wrestling/black
 	icon_state = "blackmask"
@@ -615,7 +615,7 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	desc = "Looking at this thing gives you the heebie-jeebies. And a weird urge to go rob a bank, for some reason."
 	icon_state = "anime"
 	item_state = "anime"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/gas/plague
 	name = "plague doctor mask"
@@ -632,35 +632,35 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	desc = "Just your ordinary chicken mask that induces no violent feelings towards anyone or anything."
 	icon_state = "chicken"
 	item_state = "chicken"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/jester
 	name = "jester's mask"
 	desc = "The mask of a not-so-funny-clown."
 	icon_state = "jester"
 	item_state = "jester"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/hastur
 	name = "cultist mask"
 	desc = "The mask of a cultist who has seen the yellow sign and answered its call.."
 	icon_state = "hasturmask"
 	item_state = "hasturmask"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/kitsune
 	name = "kitsune mask"
 	desc = "The mask of a mythical fox creature from folklore."
 	icon_state = "kitsune"
 	item_state = "kitsune"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/blossommask
 	name = "cherryblossom mask"
 	desc = "A mask. Specifically for masquerades."
 	icon_state = "cherryblossom"
 	item_state = "cherryblossom"
-	see_face = 0
+	see_face = FALSE
 	c_flags = null
 
 /obj/item/clothing/mask/peacockmask
@@ -668,14 +668,14 @@ TYPEINFO(/obj/item/clothing/mask/wrestling)
 	desc = "A mask. Specifically for masquerades."
 	icon_state = "peacock"
 	item_state = "peacock"
-	see_face = 0
+	see_face = FALSE
 	c_flags = null
 
 ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana
 	name = "bandana"
 	desc = "The desperado's choice."
-	see_face = 0
+	see_face = FALSE
 	var/is_pulled_down = FALSE
 	var/obj/item/cloth/handkerchief/handkerchief = null
 

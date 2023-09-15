@@ -85,7 +85,7 @@
 	proc/cache_round_stats_blocking()
 		var/list/response = null
 		try
-			response = apiHandler.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
+			response = apiHandler?.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
 		catch
 			return 0
 		if (!response)
@@ -177,7 +177,7 @@
 		var/list/data = cloud_fetch_target_ckey(target)
 		if(!data)
 			return FALSE
-		data[key] = "[json_encode(value)]"
+		data[key] = "[value]"
 
 #ifdef LIVE_SERVER
 		// Via rust-g HTTP
@@ -389,8 +389,7 @@ proc/cloud_put_bulk(json)
 	request.prepare(RUSTG_HTTP_METHOD_POST, "[config.spacebee_api_url]/api/cloudsave", sanitized_json, headers)
 	request.begin_async()
 #else
-// temp disabled
-/* 		var/save_json
+	var/save_json
 	var/list/decoded_save
 	if (fexists("data/simulated_cloud.json"))
 		save_json = file2text("data/simulated_cloud.json")
@@ -402,10 +401,19 @@ proc/cloud_put_bulk(json)
 		if (!decoded_save[sani_ckey])
 			decoded_save[sani_ckey] = list(cdata = list())
 		for (var/data_key in sanitized[sani_ckey])
-			decoded_save[sani_ckey]["cdata"][data_key] = sanitized[sani_ckey][data_key]
+			var/value = sanitized[sani_ckey][data_key]["value"]
+			var/command = sanitized[sani_ckey][data_key]["command"]
+			switch(command)
+				if("add")
+					if (data_key in decoded_save[sani_ckey])
+						decoded_save[sani_ckey][data_key] = "[text2num(decoded_save[sani_ckey][data_key]) + value]"
+					else
+						decoded_save[sani_ckey][data_key] = "[value]"
+				if("replace")
+					decoded_save[sani_ckey][data_key] = "[value]"
 
 	//t2f appends, but need to to replace
 	fdel("data/simulated_cloud.json")
-	text2file(json_encode(decoded_save),"data/simulated_cloud.json") */
+	text2file(json_encode(decoded_save),"data/simulated_cloud.json")
 #endif
 	return TRUE
