@@ -1,5 +1,17 @@
 
 (t)fri sep 15 23
+(u)Lord_Earthfire
+(p)14516
+(e)🪲⚖🔄🔊📡🌱🐁|C-Bug, C-Balance, C-Rework, C-Sound, A-AI, A-Hydroponics, A-Critters
+(*)The syndicate supplies its botanists with a majorly changed and more responsive man-eating plant strain! Check the minor changes for details.
+(+)Man-eating plants don't insta-stun anymore. Instead, they got a stamina draining attack that stuns if you run out of stamina
+(+)Man-eating plants now need to aggressive-grab their victims to devour them. They show a visible action bar.
+(+)The items of it's devoured victims can be retreived by butchering/gibbing the plant. It can occasionally vomit them out as well.
+(+)The scaling of the maneater got changed. Its health scales with endurance, its stamina and stamina regeneration with potency.
+(+)Feeding meat/people to the maneater increases endurance now. Even if it is already out of its tray!
+(+)If any chem-producing plant was spliced into the man-eating plant, it will inject its victim with this chemicals. The amount scales with yield.
+(+)Atrazine now works as an effective skin-penetrating poison against maneaters
+(+)Maneater seeds now start with "dominant genome", "inhibited potential" and "temporary spliceability" gene strains
 (u)Colossusw
 (p)15317
 (e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
