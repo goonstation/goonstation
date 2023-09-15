@@ -24,7 +24,7 @@
 		var/turf/T = get_turf(src)
 		T.fluid_react_single("hot_dog", 3000)
 		new /obj/effect/supplyexplosion(T)
-		playsound(T, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+		playsound(T, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.limbs.sever("all")

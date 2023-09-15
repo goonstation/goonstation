@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			target.visible_message(
 				"<span class='alert'><b>[challenger]</b> slaps [target] in the face with the [src]!</span>"
 			)
-		playsound(target, 'sound/impact_sounds/Generic_Snap_1.ogg', 100, 1)
+		playsound(target, 'sound/impact_sounds/Generic_Snap_1.ogg', 100, TRUE)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))
@@ -637,7 +637,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			var/list/dummies = new/list()
 
-			playsound(user, 'sound/effects/elec_bigzap.ogg', 40, 1)
+			playsound(user, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 			SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 

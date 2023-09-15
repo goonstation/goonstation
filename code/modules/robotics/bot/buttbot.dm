@@ -311,7 +311,7 @@
 	var/oldtransform = src.transform
 	src.visible_message("<span class='alert'><b>[src]</b>'s exhaust port clogs!</span>")
 	violent_standup_twitch(src)
-	playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+	playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 	SPAWN(2 SECONDS)
 		var/jitters = 30
 		src.visible_message("<span class='alert'><b>[src]</b> creaks ominously!</span>")
@@ -379,10 +379,10 @@
 		return
 
 	if(istype(src, /obj/machinery/bot/buttbot/cyber))
-		playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 	else
 		if(narrator_mode)
-			playsound(src, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src, 'sound/vox/fart.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 		else
 			playsound(src, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 
@@ -409,7 +409,7 @@
 				fart_on_other = 1
 				src.fart_memory += A
 				new/obj/decal/implo(get_turf(src))
-				playsound(src, 'sound/effects/suck.ogg', 100, 1)
+				playsound(src, 'sound/effects/suck.ogg', 100, TRUE)
 				src.set_loc(K)
 				break
 			else if(istype(A,/obj/item/photo/voodoo))

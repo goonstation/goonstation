@@ -87,7 +87,7 @@
 	set category = "Batman"
 	set name = "Batsmoke \[Support]"
 
-	playsound(usr, 'sound/weapons/launcher.ogg', 70, 0, 0)
+	playsound(usr, 'sound/weapons/launcher.ogg', 70, FALSE, 0)
 	usr.visible_message("<span class='alert'>[usr] drops a smoke bomb!</span>", "<span class='alert'>You drop a smoke bomb!</span>")
 
 	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -109,7 +109,7 @@
 	for(i=0, i<100, i++)
 		step_to(A,T,0)
 		if (GET_DIST(A,T) < 1)
-			playsound(T, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 70, 0, 0)
+			playsound(T, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 70, FALSE, 0)
 			random_brute_damage(T, 7)
 			take_bleeding_damage(T, usr, 5, DAMAGE_STAB, 0)
 			bleed(T, 3, 1)
@@ -370,7 +370,7 @@ obj/item/batarang
 			H.changeStatus("weakened", 1 SECONDS)
 			H.force_laydown_standup()
 			take_bleeding_damage(H, null, 10)
-			playsound(src, hitsound, 60, 1)
+			playsound(src, hitsound, 60, TRUE)
 
 		else
 			return

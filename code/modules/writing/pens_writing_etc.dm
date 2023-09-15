@@ -80,7 +80,7 @@
 		..()
 		if (!src.spam_flag_sound && src.clicknoise)
 			src.spam_flag_sound = 1
-			playsound(user, 'sound/items/penclick.ogg', 50, 1)
+			playsound(user, 'sound/items/penclick.ogg', 50, TRUE)
 			if (!src.spam_flag_message)
 				src.spam_flag_message = 1
 				user.visible_message("<span style='color:#888888;font-size:80%'>[user] clicks [src].</span>")
@@ -977,7 +977,7 @@
 				A.name_suffixes = list()
 			A.name_suffix("([src.label])")
 			A.UpdateName()
-		playsound(src, 'sound/items/hand_label.ogg', 40, 1)
+		playsound(src, 'sound/items/hand_label.ogg', 40, TRUE)
 		if (user && !no_message)
 			logTheThing(LOG_STATION, user, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
@@ -1347,7 +1347,7 @@
 				if (length(pages) >= 10 && !icon_state == "booklet-thick")
 					src.icon_state = "booklet-thick"
 				src.visible_message("[user] staples [P] at the back of [src].")
-				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, TRUE)
 			else
 				boutput(user, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
 		else
