@@ -1470,6 +1470,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\transport\pods\locomotion.dm"
 #include "code\modules\transport\pods\MainWeapon.dm"
 #include "code\modules\transport\pods\pod_lights.dm"
+#include "code\modules\transport\pods\preassembled_frame_kit.dm"
 #include "code\modules\transport\pods\secondary_system.dm"
 #include "code\modules\transport\pods\secondary_weapon.dm"
 #include "code\modules\transport\pods\sensors.dm"
