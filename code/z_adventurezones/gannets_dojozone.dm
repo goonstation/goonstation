@@ -504,12 +504,21 @@ Contents:
 
 /obj/table/anvil/gimmick
 	anchored = UNANCHORED
-	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> to slice it into sheets."})
-
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> on <span class='harm'>harm</span> intent to slice it into sheets."})
 	attackby(obj/item/W, mob/user, params)
-		if (isweldingtool(W))
-			actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
+		if (isweldingtool(W) && user.a_intent == "harm")
+			SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, /obj/table/anvil/gimmick/deconstruct, null, W.icon, W.icon_state, "[user] finishes slicing \the [src] into sheets.",
+			INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED)
+			return
 		..()
+
+	deconstruct()
+		var/obj/item/sheet/sheet_stack = new /obj/item/sheet(src.loc)
+		sheet_stack.amount = 10
+		if (src.material)
+			sheet_stack.setMaterial(src.material)
+		sheet_stack.update_appearance()
+		qdel(src)
 
 /obj/dojo_bellows
 	name = "bellows"
