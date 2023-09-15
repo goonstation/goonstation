@@ -136,7 +136,7 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 
 	// remove once https://www.byond.com/forum/post/2888142 is fixed
 	#if DM_VERSION >= 515
-	#error "remove the below"
+	#warn "remove the below"
 	#endif
 	if(I)
 		for(var/ikey in overlay_refs)
