@@ -668,12 +668,10 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		var/list/brew_result = W.brew_result
 		var/list/brew_amount = 20 // how much brew could a brewstill brew if a brewstill still brewed brew?
 
-		if(istype(W, /obj/item/reagent_containers/food))
-			var/obj/item/reagent_containers/food/F = W
-			if(istype(W, /obj/item/reagent_containers/food/snacks/plant))
-				var/obj/item/reagent_containers/food/snacks/plant/P = W
-				var/datum/plantgenes/DNA = P.plantgenes
-				brew_amount = DNA?.get_effective_value("potency")
+		if(istype(W, /obj/item/reagent_containers/food/snacks/plant))
+			var/obj/item/reagent_containers/food/snacks/plant/P = W
+			var/datum/plantgenes/DNA = P.plantgenes
+			brew_amount = max(DNA?.get_effective_value("potency"), 5) //always produce SOMETHING
 
 		if (!brew_result)
 			return FALSE

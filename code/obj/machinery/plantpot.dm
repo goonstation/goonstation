@@ -1573,11 +1573,11 @@ proc/HYPadd_harvest_reagents(var/obj/item/I,var/datum/plant/growing,var/datum/pl
 	if(special_condition == "rotten")
 		putreagents += "yuck"
 
+	I.brew_result = DNA.mutation?.brew_result || I.brew_result
+
 	//if we don't got any chems to add to the plant, we can stop right here
 	if(!length(putreagents))
 		return
-
-	I.brew_result = MUT?.brew_result || I.brew_result
 
 	var/basecapacity = 8
 	if(istype(I,/obj/item/plant/)) basecapacity = 15
