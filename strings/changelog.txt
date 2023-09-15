@@ -1,5 +1,9 @@
 
 (t)fri sep 15 23
+(u)LeahTheTech
+(p)15503
+(e)⚖🌱|C-Balance, A-Hydroponics
+(*)Ricin and ghost chilli juice reagents are no longer present directly in their respective crops, instead requiring them to be brewed in a still.
 (u)Amylizzle
 (p)15796
 (e)⚖📦|C-Balance, A-Game-Objects
