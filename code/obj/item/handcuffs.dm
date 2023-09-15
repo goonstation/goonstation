@@ -98,9 +98,9 @@
 		var/handslost = !istype(H.limbs.l_arm,/obj) + !istype(H.limbs.r_arm,/obj)
 		switch(handslost)
 			if (1)
-				boutput(user, "<span class='alert'>[H.name] only has one arm, you still try to handcuff [his_or_her(H)]!</span>")
+				boutput(user, "<span class='alert'>[H.name] only has one arm, you still try to handcuff [him_or_her(H)]!</span>")
 			if (2)
-				boutput(user, "<span class='alert'>[H.name] has no arms, you can't handcuff them!</span>")
+				boutput(user, "<span class='alert'>[H.name] has no arms, you can't handcuff [him_or_her(H)]!</span>")
 				return
 
 		if (H.hasStatus("handcuffed"))

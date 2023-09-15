@@ -1217,7 +1217,7 @@ obj/decoration/ceilingfan
 				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
-				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				boutput(user, "<span class='alert'>With a single flick of [his_or_her(user)] wrist, [user] smoothly lights [src] with [W]. Damn [hes_or_shes(user)] cool.</span>")
 				src.lit = 1
 				UpdateIcon()
 
@@ -1580,7 +1580,7 @@ obj/decoration/gibberBroken
 				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
-				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				boutput(user, "<span class='alert'>With a single flick of [his_or_her(user)] wrist, [user] smoothly lights [src] with [W]. Damn [hes_or_shes(user)] cool.</span>")
 				src.lit = 1
 				UpdateIcon()
 

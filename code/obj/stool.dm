@@ -94,7 +94,7 @@
 			boutput(user, "You can't buckle anyone in before the game starts.")
 			return FALSE
 		if (to_buckle.buckled)
-			boutput(user, "They're already buckled into something!", "red")
+			boutput(user, "[capitalize(hes_or_shes(to_buckle))] already buckled into something!", "red")
 			return FALSE
 		if (BOUNDS_DIST(src, user) > 0 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
 			return FALSE

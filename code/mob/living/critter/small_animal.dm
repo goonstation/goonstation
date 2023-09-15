@@ -487,8 +487,8 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 				H.setStatus("resting", duration = INFINITE_STATUS)
 				H.force_laydown_standup()
 			else if (prob(4))
-				boutput(src, "<span class='notice'>You weave around [H] to [pick("show your affection!", "get them to feed you.", "annoy them for no reason in particular.")]</span>")
-				boutput(H, "<span class='notice'>[src] weaves around you, waving their tail around. A bunch of hair clings to your clothes and some gets in your nose.</span>")
+				boutput(src, "<span class='notice'>You weave around [H] to [pick("show your affection!", "get [him_or_her(H)] to feed you.", "annoy [him_or_her(H)] for no reason in particular.")]</span>")
+				boutput(H, "<span class='notice'>[src] weaves around you, waving [his_or_her(src)] tail around. A bunch of hair clings to your clothes and some gets in your nose.</span>")
 				H.emote("sneeze")
 
 	seek_target(range)
@@ -3851,7 +3851,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 	hand_attack(atom/target, params, location, control, origParams)
 		if(istype(target, /mob/living) && target != src)
-			boutput(src, "<span class='game' class='mhelp'>You poke [target] in a way that clearly indicates you want to help them.</span>")
+			boutput(src, "<span class='game' class='mhelp'>You poke [target] in a way that clearly indicates you want to help [him_or_her(target)].</span>")
 			boutput(target, "<span class='game' class='mhelp'>\The [src] seems willing to help you. Click on it with an empty hand if you want to accept the offer.</span>")
 			src.last_poked = target
 			if(src.icon_state_exclaim)

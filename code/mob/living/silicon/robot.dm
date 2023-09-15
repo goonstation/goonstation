@@ -984,7 +984,7 @@
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if(isshell(src) || src.part_head.ai_interface)
-			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, their laws can't be overwritten!</span>")
+			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, [his_or_her(src)] laws can't be overwritten!</span>")
 			return 0 //emags don't do anything to AI shells
 		if (!src.emaggable)
 			boutput(user, "<span class='alert'>You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!")
@@ -1119,7 +1119,7 @@
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 			var/obj/item/device/borg_linker/linker = W
 			if(!opened)
-				boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
+				boutput(user, "You need to open [src.name]'s cover before you can change [his_or_her(src)] law rack link.")
 				return
 			if(isshell(src) || src.part_head.ai_interface)
 				boutput(user,"You need to use this on the AI core directly!")

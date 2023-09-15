@@ -83,11 +83,11 @@ TYPEINFO(/obj/machinery/power/furnace)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/grab))
+			var/obj/item/grab/grab = W
 			if (!src.active)
-				boutput(user, "<span class='alert'>It'd probably be easier to dispose of them while the furnace is active...</span>")
+				boutput(user, "<span class='alert'>It'd probably be easier to dispose of [him_or_her(grab.affecting)] while the furnace is active...</span>")
 				return
 			else
-				var/obj/item/grab/grab = W
 				var/mob/target = grab.affecting
 				if (!isdead(grab.affecting))
 					boutput(user, "<span class='alert'>[grab.affecting.name] needs to be dead first!</span>")

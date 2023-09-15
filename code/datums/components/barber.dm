@@ -416,7 +416,7 @@ TYPEINFO_NEW(/datum/component/barber/shave)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
 			if("premature clone")
-				boutput(user, "<span class='hint'>You try to cut [M]'s hair very carefully, lest they fall over and explode.</span>")
+				boutput(user, "<span class='hint'>You try to cut [M]'s hair very carefully, lest [he_or_she(M)] fall over and explode.</span>")
 				return 1
 			if("mutilated")
 				M.emote("scream")

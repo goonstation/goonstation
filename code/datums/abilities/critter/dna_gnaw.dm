@@ -52,7 +52,7 @@
 					MT.real_name = "Unknown"
 					MT.bioHolder.AddEffect("husk")
 			else
-				boutput(holder.owner, "<span class='notice'>We cannot gain any DNA from [MT] in their current state.</span>")
+				boutput(holder.owner, "<span class='notice'>We cannot gain any DNA from [MT] in [his_or_her(MT)] current state.</span>")
 
 		holder.owner.TakeDamage("All", -5, -5)
 		M.TakeDamageAccountArmor("All", 5, 0, 0, DAMAGE_CRUSH)

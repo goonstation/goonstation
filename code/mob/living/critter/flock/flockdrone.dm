@@ -1155,7 +1155,7 @@
 	var/mob/living/critter/flock/F = target
 	if(istype(F))
 		if(F.get_health_percentage() >= 1.0)
-			boutput(user, "<span class='alert'>They don't need to be repaired, they're in perfect condition.</span>")
+			boutput(user, "<span class='alert'>[capitalize(he_or_she_dont_or_doesnt(F))] need to be repaired, [hes_or_shes(F)] in perfect condition.</span>")
 			return
 		if (isdead(F))
 			return
@@ -1185,7 +1185,7 @@
 		boutput(user, "<span class='alert'>The imprisonment matrix doesn't work on flockdrones.</span>")
 		return
 	else if(istype(target.loc, /obj/flock_structure/cage))
-		boutput(user, "<span class='alert'>They're already imprisoned, you can't double-imprison them!</span>")
+		boutput(user, "<span class='alert'>[hes_or_shes(target)] already imprisoned, you can't double-imprison [him_or_her(target)]!</span>")
 	else
 		actions.start(new/datum/action/bar/flock_entomb(target), user)
 		return TRUE

@@ -441,12 +441,13 @@ END GUIDE
 				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 				return
 			if (!M.literate)
-				boutput(user, "<span class='notice'>Unfortunately they don't know how to write. Their signature will mean nothing.</span>")
+				// 'they' has to exist
+				boutput(user, "<span class='notice'>Unfortunately [he_or_she_dont_or_doesnt(M)] know how to write. [capitalize(his_or_her(M))] signature will mean nothing.</span>")
 				return
 			if (ismobcritter(M))
 				var/mob/living/critter/C = M
 				if (C.is_npc)
-					boutput(user, "<span class='notice'>Despite your best efforts [M] refuses to sell you their soul!</span>")
+					boutput(user, "<span class='notice'>Despite your best efforts [M] refuses to sell you [his_or_her(M)] soul!</span>")
 					return
 			if (src.inuse != 1)
 				actions.start(new/datum/action/bar/icon/force_sign(user, M, src), user)

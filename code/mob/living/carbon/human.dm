@@ -2260,7 +2260,7 @@
 		return
 
 	if (!H.stat)
-		boutput(usr, "You can't eat [H] while they are conscious!")
+		boutput(usr, "You can't eat [H] while [hes_or_shes(H)] conscious!")
 		return
 
 	if (H.bioHolder.HasEffect("consumed"))
