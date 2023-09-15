@@ -1,5 +1,9 @@
 
 (t)fri sep 15 23
+(u)Amylizzle
+(p)15796
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Nuclear meltdowns now scale with the amount of radioactive fuel in the reactor.
 (u)glowbold
 (p)15740
 (e)🆕🎨💅📦💡|C-Feature, C-Sprites, C-QoL, A-Game-Objects, A-Station-Systems
