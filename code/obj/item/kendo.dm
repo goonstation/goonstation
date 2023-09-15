@@ -57,58 +57,75 @@
 	icon = 'icons/obj/items/weapons.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "shinai"
-	item_state = "shinai-light"
+	item_state = "shinai"
+	wear_state = "shinai"
 
 	w_class = W_CLASS_BULKY
-	two_handed = 1
+	two_handed = 0
 	throwforce = 4
 	throw_range = 4
 	stamina_crit_chance = 2
 
 	//these combat variables will change depending on the guard
-	force = 6
-	stamina_damage = 10
-	stamina_cost = 5
+	var/default_force = 5
+	var/default_stamina_damage = 10
+	var/default_stamina_cost = 5
+
+	custom_suicide = 1
+	hitsound = 'sound/impact_sounds/bat_wood.ogg'
 
 	hit_type = DAMAGE_BLUNT
+	tool_flags = 0
 	flags = FPRINT | TABLEPASS | USEDELAY
-	c_flags = EQUIPPED_WHILE_HELD
+	c_flags = EQUIPPED_WHILE_HELD | ONBELT
 	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
 
 	var/guard
 
 	New()
 		..()
+		src.stat_reset()
 		BLOCK_SETUP(BLOCK_SWORD)
 
+	attack_self(mob/user as mob)
+		if (src.two_handed == 1)
+			if(user.updateTwoHanded(src, FALSE)) // should never fail, but respect error codes
+				src.stat_reset()
+		else
+			if(user.updateTwoHanded(src, TRUE))
+				src.two_handed = 1
+		update_icon()
+		user.update_inhands()
+
 	proc/change_guard(var/mob/user,var/intent)
-		user.do_disorient(10,0,0,0,0,0,null)
+		user.do_disorient(10,0,0,0,0,0,null) // so that people can't cheese by swapping guards in one hand
+		if(!src.two_handed)
+			return
 		guard = intent
 		switch(guard)
 			if("help")
-				force = 5
-				stamina_damage = 10
-				stamina_cost = 5
-				item_state = "shinai-light"
+				src.force = 5
+				src.stamina_damage = 10
+				src.stamina_cost = 5
+				src.item_state = "shinai-light"
 				src.setItemSpecial(/datum/item_special/simple/kendo_light)
 			if("disarm")
-				force = 6
-				stamina_damage = 10
-				stamina_cost = 8
-				item_state = "shinai-sweep"
+				src.force = 6
+				src.stamina_damage = 10
+				src.stamina_cost = 8
+				src.item_state = "shinai-sweep"
 				src.setItemSpecial(/datum/item_special/swipe/kendo_sweep)
 			if("grab")
-				force = 6
-				stamina_damage = 15
-				stamina_cost = 10
-				item_state = "shinai-thrust"
+				src.force = 6
+				src.stamina_damage = 15
+				src.stamina_cost = 10
+				src.item_state = "shinai-thrust"
 				src.setItemSpecial(/datum/item_special/rangestab/kendo_thrust)
 			if("harm")
-				force = 8
-				stamina_damage = 30
-				stamina_cost = 35
-				item_state = "shinai-heavy"
-				item_state = "shinai-heavy"
+				src.force = 8
+				src.stamina_damage = 30
+				src.stamina_cost = 35
+				src.item_state = "shinai-heavy"
 				src.setItemSpecial(/datum/item_special/simple/kendo_heavy)
 		user.update_inhands()
 		src.buildTooltipContent()
@@ -130,14 +147,13 @@
 		return 0
 
 	proc/stat_reset()
-		if(force != 5)
-			force = 5
-		else
-			return
-		stamina_damage = 10
-		stamina_cost = 5
-		item_state = "shinai-light"
-		src.setItemSpecial(/datum/item_special/simple/kendo_light)
+		src.force = default_force
+		src.stamina_damage = default_stamina_damage
+		src.stamina_cost = default_stamina_cost
+		src.w_class = W_CLASS_BULKY
+		src.item_state = "shinai"
+		src.two_handed = 0
+		src.setItemSpecial()
 		src.buildTooltipContent()
 
 	intent_switch_trigger(mob/user as mob)
@@ -145,24 +161,30 @@
 			change_guard(user,user.a_intent)
 
 	attack(mob/living/carbon/human/defender, mob/living/carbon/human/attacker)
-		if(ishuman(defender))
-			if(defender.equipped() && istype(defender.equipped(),/obj/item/shinai))
-				var/obj/item/shinai/S = defender.equipped()
-				var/parry_block = S.parry_block_check(attacker,defender)
-				if((parry_block == 1) || (parry_block == 2))
-					attacker.do_disorient((attacker.equipped().stamina_damage),0,0,0,0,1,null)
-					return //stops damage if parried or blocked, if not, itll check for a disarm
+		if(!src.two_handed)
+			..()
+		if(!ishuman(defender))
+			..()
+		if(!defender.equipped())
+			..()
 
-			if((attacker.a_intent=="disarm") && prob(20) && defender.equipped())
-				var/obj/item/I = defender.equipped()
-				if (I.cant_drop)
-					return
-				defender.u_equip(I)
-				I.set_loc(defender.loc)
-				var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
-				I.throw_at(target_turf,3,1)
-				defender.show_text("<b>[attacker] knocks the [I] right out of your hands!</b>","red")
-				attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
+		if (istype(defender.equipped(), /obj/item/shinai))
+			var/obj/item/shinai/S = defender.equipped()
+			var/parry_block = S.parry_block_check(attacker, defender)
+			if((parry_block == 1) || (parry_block == 2))
+				attacker.do_disorient((attacker.equipped().stamina_damage),0,0,0,0,1,null)
+				return //stops damage if parried or blocked, if not, itll check for a disarm
+
+		if((attacker.a_intent=="disarm") && prob(20))
+			var/obj/item/I = defender.equipped()
+			if (I.cant_drop)
+				return
+			defender.u_equip(I)
+			I.set_loc(defender.loc)
+			var/target_turf = get_offset_target_turf(I.loc,rand(5)-rand(5),rand(5)-rand(5))
+			I.throw_at(target_turf,3,1)
+			defender.show_text("<b>[attacker] knocks the [I] right out of your hands!</b>","red")
+			attacker.show_text("<b>You knock the [I] right out of [defender]'s hands!</b>","green")
 		..()
 
 	attack_hand(mob/user)
@@ -173,6 +195,21 @@
 	dropped(mob/user as mob)
 		..()
 		stat_reset()
+
+	suicide(var/mob/user as mob)
+		user.visible_message("<span class='alert'><b>[user] bows and gently places the [src] on the ground.</b></span>")
+		user.drop_item()
+		var/say = pick("Take wa yowaku magaru ga ki wa tsuyoshi gouku tatsu.", "Kyoufu wa kokoro ga yurusu kagiri fukai monode shika nai.",
+		"Mizu ni nagasu.", "Anshin shite shineru.", "Shiranu ga hotoke.", "Makeru ga kachi.", "Ashita wa ashita no kaze ga fuku.")
+		user.say(say)
+		var/sakura = image(icon = 'icons/obj/dojo.dmi', icon_state = "sakura_overlay", layer = EFFECTS_LAYER_BASE)
+		user.UpdateOverlays(sakura, "sakura")
+		user.do_disorient(300,0,0,0,0,1)
+		user.changeStatus("stunned", 3 SECONDS)
+		SPAWN(3 SECONDS)
+			user.death(FALSE)
+			user.UpdateOverlays(null, "sakura")
+		return 1
 
 //==========
 //Shinai Bag
