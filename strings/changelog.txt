@@ -1,4 +1,9 @@
 
+(t)fri sep 15 23
+(u)glowbold
+(p)15740
+(e)🆕🎨💅📦💡|C-Feature, C-Sprites, C-QoL, A-Game-Objects, A-Station-Systems
+(*)Using a T-ray scanner in-hand allows you to toggle seeing underfloor power cables, underfloor disposal pipes, and the station pipe blueprints independently.
 (t)thu sep 14 23
 (u)UnfunnyPerson
 (p)15644
