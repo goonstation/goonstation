@@ -383,6 +383,12 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		random_brute_damage(user, 1)
 		H.changeStatus("weakened", 1 SECONDS)
 
+/obj/item/plant/herb/nettle/smooth
+	name = "smooth nettle leaves"
+	crop_suffix	= " leaves"
+	desc = "Nettle leaves that somehow don't seem to cause allergies."
+	icon_state = "nettle"
+
 /obj/item/plant/herb/catnip
 	name = "nepeta cataria"
 	crop_suffix	= ""

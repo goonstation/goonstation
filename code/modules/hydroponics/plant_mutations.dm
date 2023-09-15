@@ -491,6 +491,15 @@
 	assoc_reagents = list("methamphetamine")
 	chance = 10
 
+// Nettle Mutations
+
+/datum/plantmutation/stinging_nettle/smooth
+	name = "Dead Nettle"
+	name_prefix = "Smooth "
+	iconmod = "NettleSmooth"
+	crop = /obj/item/plant/herb/nettle/smooth
+	chance = 20
+
 // Venne Mutations
 
 /datum/plantmutation/venne/toxic
