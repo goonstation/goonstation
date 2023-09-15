@@ -100,11 +100,11 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> toots disgustingly!</span>"
 
 	specific_emote_type(var/act)

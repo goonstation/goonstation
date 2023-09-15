@@ -100,7 +100,7 @@
 			hat = 0
 			UpdateIcon()
 		if (!gibbed)
-			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, 0.2, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, TRUE, 0.2, 1)
 		death_effect()
 		..()
 
@@ -184,7 +184,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 			if("flip")
 				if(src.emote_check(voluntary, 50))
@@ -424,7 +424,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 
@@ -606,7 +606,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 

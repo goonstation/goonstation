@@ -221,7 +221,7 @@
 			return 1
 
 		my_mob.visible_message("<span class='alert'><b>[holder.owner] raises his hand into the air wide open!</b></span>")
-		playsound(sword, 'sound/effects/gust.ogg', 70, 1)
+		playsound(sword, 'sound/effects/gust.ogg', 70, TRUE)
 
 		if (ismob(sword.loc))
 			if(sword.loc == my_mob)
@@ -241,7 +241,7 @@
 		for(var/i=0, i<100, i++)
 			step_to(sword, my_mob)
 			if (BOUNDS_DIST(sword, my_mob) == 0)
-				playsound(my_mob, 'sound/effects/throw.ogg', 50, 1)
+				playsound(my_mob, 'sound/effects/throw.ogg', 50, TRUE)
 				sword.set_loc(get_turf(my_mob))
 				if (my_mob.put_in_hand(sword))
 					my_mob.visible_message("<span class='alert'><b>[my_mob] catches the [sword]!</b></span>")
@@ -596,7 +596,7 @@
 			M.take_oxygen_deprivation(-15)
 			M.losebreath = max(0, M.losebreath - 10)
 			M.visible_message("<span class='alert'>Some of [M]'s wounds slowly fade away!</span>", "<span class='alert'>Your wounds begin to fade away.</span>")
-			playsound(M, 'sound/items/mender.ogg', 50, 1)
+			playsound(M, 'sound/items/mender.ogg', 50, TRUE)
 		else
 			..()
 			boutput(M, "<span class='alert'>You don't have any lingering wounds to heal.</span>")
@@ -708,7 +708,7 @@
 		if(user.bioHolder && mutations_length)
 			var/turf/T = get_turf(user)
 			T.visible_message("<span class='notice'>\The [src] envelops [user] in [envelop_message] before [leaving_message]!</span>")
-			playsound(T, 'sound/effects/mag_warp.ogg', 70, 1)
+			playsound(T, 'sound/effects/mag_warp.ogg', 70, TRUE)
 			for (var/i = 1 to mutations_length)
 				var/datum/mutation_orb_mutdata/mut = mutations_to_add[i]
 
@@ -787,7 +787,7 @@
 			var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 			lightbeam.set_loc(T)
 			lightbeam.alpha = 0
-			playsound(T, 'sound/voice/heavenly.ogg', 50, 1, 0)
+			playsound(T, 'sound/voice/heavenly.ogg', 50, TRUE, 0)
 			animate(lightbeam, alpha=255, time=3.5 SECONDS)
 			SPAWN(30)
 				animate(lightbeam,alpha = 0, time=3.5 SECONDS)
@@ -835,7 +835,7 @@
 		if (istype(target, /obj/item/clothing/))
 			if (apply_property(target)) // some property got changed, display a message and delete src
 				var/turf/T = get_turf(target)
-				playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
+				playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
 				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!</span>")
 				if (src.loc)
 					if (ishuman(src.loc))

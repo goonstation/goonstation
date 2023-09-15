@@ -24,7 +24,7 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return 1
-		playsound(target, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, 1, -1)
+		playsound(target, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, TRUE, -1)
 		var/mob/M = target
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] gnaws into [M]!</b></span>", "<span class='alert'>We sink our teeth into [M]!</span>")

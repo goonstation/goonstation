@@ -1343,7 +1343,7 @@
 		logTheThing(LOG_COMBAT, activator, "Activated the blood flood gib reward thing (Original Sin)")
 		if (result)
 			boutput(activator, "<span class='alert'>You feel your soul cleansed of sin.</span>")
-			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, 1)
+			playsound(T, 'sound/voice/farts/diarrhea.ogg', 50, TRUE)
 		activator.gib()
 		return 1
 /datum/achievementReward/HotrodHelmet

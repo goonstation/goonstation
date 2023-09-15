@@ -12,9 +12,9 @@
 		user.lastattacked = src
 		src.visible_message("<B>[src]</B> screams!",1)
 		if (narrator_mode)
-			playsound(src, 'sound/vox/scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src, 'sound/vox/scream.ogg', 10, TRUE, -1, channel=VOLUME_CHANNEL_EMOTE)
 		else
-			playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, TRUE, -1, channel=VOLUME_CHANNEL_EMOTE)
 		..()
 		return
 
@@ -75,7 +75,7 @@
 		if(!ai.ready_for_tapes) return
 		if(src.loaded)
 			src.visible_message("[user] ejects the tape from the databank.",1)
-			playsound(src, 'sound/machines/driveclick.ogg', 80,1)
+			playsound(src, 'sound/machines/driveclick.ogg', 80,TRUE)
 			tape.set_loc(user.loc)
 			tape.layer = 3
 			icon_state = "oldai_mem-0"
@@ -102,7 +102,7 @@
 			ai.ready_for_tapes = 0
 			src.loaded = 1
 			var/tape_no = tape.tape_no
-			playsound(src, 'sound/machines/driveclick.ogg', 80,1)
+			playsound(src, 'sound/machines/driveclick.ogg', 80,TRUE)
 			src.visible_message("The databank begins loading the tape.",1)
 			src.icon_state = "oldai_mem-1"
 			sleep(1 SECOND)
@@ -172,7 +172,7 @@
 
 		if(prob(5))
 			speak(messages[1], 0) // spooky!!!
-			playsound(src, 'sound/machines/modem.ogg', 80,1)
+			playsound(src, 'sound/machines/modem.ogg', 80,TRUE)
 		return
 
 	power_change()
@@ -196,7 +196,7 @@
 		src.ready_for_tapes = 0
 		// for(var/mob/O in hearers(src, null))
 		// 	O << csound('sound/misc/satanellite_failedboot.ogg')
-		playsound(src, 'sound/misc/satanellite_failedboot.ogg', 80,1)
+		playsound(src, 'sound/misc/satanellite_failedboot.ogg', 80,TRUE)
 		src.change_face("blink")
 		sleep(2 SECONDS)
 		src.change_face("static")
@@ -251,7 +251,7 @@
 			src.change_face("static")
 			// for(var/mob/O in hearers(src, null))
 			// 	O << csound('sound/misc/satanellite_bootsignal.ogg')
-			playsound(src, 'sound/misc/satanellite_bootsignal.ogg', 80,1)
+			playsound(src, 'sound/misc/satanellite_bootsignal.ogg', 80,TRUE)
 			sleep(17 SECONDS)
 			if(!on) return
 			src.ready_for_tapes = 1
@@ -285,32 +285,32 @@
 	proc/load_tape(tapeno)
 		src.ready_for_tapes = 0
 		if(!on) return
-		playsound(src, 'sound/machines/modem.ogg', 80,1)
+		playsound(src, 'sound/machines/modem.ogg', 80,TRUE)
 		sleep(7 SECONDS)
 		switch(tapeno)
 			if(1)
 				src.change_face("static")
 				// for(var/mob/O in hearers(src, null))
 				// 	O << csound('sound/misc/satanellite_signal01.ogg')
-				playsound(src, 'sound/misc/satanellite_signal01.ogg', 80,1)
+				playsound(src, 'sound/misc/satanellite_signal01.ogg', 80,TRUE)
 				sleep(69 SECONDS)
 			if(2)
 				src.change_face("static")
 				// for(var/mob/O in hearers(src, null))
 				// 	O << csound('sound/misc/satanellite_signal02.ogg')
-				playsound(src, 'sound/misc/satanellite_signal02.ogg', 80,1)
+				playsound(src, 'sound/misc/satanellite_signal02.ogg', 80,TRUE)
 				sleep(69 SECONDS)
 			if(4)
 				src.change_face("static")
 				// for(var/mob/O in hearers(src, null))
 				// 	O << csound('sound/misc/satanellite_signal04.ogg')
-				playsound(src, 'sound/misc/satanellite_signal04.ogg', 80,1)
+				playsound(src, 'sound/misc/satanellite_signal04.ogg', 80,TRUE)
 				sleep(69 SECONDS)
 			if(420)
 				src.change_face("static")
 				// for(var/mob/O in hearers(src, null))
 				// 	O << csound('sound/misc/satanellite_signal420.ogg')
-				playsound(src, 'sound/misc/satanellite_signal420.ogg', 80,1)
+				playsound(src, 'sound/misc/satanellite_signal420.ogg', 80,TRUE)
 				sleep(69 SECONDS)
 		tapes_loaded++
 		src.change_face("dot")

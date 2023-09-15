@@ -1263,29 +1263,29 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 			if (WALL_CUTRERODS)
 				self_message = "You begin to cut the reinforced rods."
 				message = "[owner] begins to cut \the [the_wall]'s reinforced rods."
-				playsound(the_wall, 'sound/items/Wirecutter.ogg', 100, 1)
+				playsound(the_wall, 'sound/items/Wirecutter.ogg', 100, TRUE)
 			if (WALL_REMOVERERODS)
 				self_message = "You begin to remove the reinforced rods."
 				message = "[owner] begins to remove \the [the_wall]'s reinforced rods."
-				playsound(the_wall, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(the_wall, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			if (WALL_SLICECOVER)
 				self_message = "You begin to slice the metal cover."
 				message = "[owner] begins to slice \the [the_wall]'s metal cover."
 			if (WALL_PRYCOVER)
 				self_message = "You begin to pry the metal cover apart."
 				message = "[owner] begins to pry \the [the_wall]'s metal cover apart."
-				playsound(the_wall, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(the_wall, 'sound/items/Crowbar.ogg', 100, TRUE)
 			if (WALL_LOOSENSUPPORTRODS)
 				self_message = "You begin to loosen the support rods."
 				message = "[owner] begins to loosen \the [the_wall]'s support rods."
-				playsound(the_wall, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(the_wall, 'sound/items/Ratchet.ogg', 100, TRUE)
 			if (WALL_REMOVESUPPORTRODS)
 				self_message = "You begin to remove the support rods."
 				message = "[owner] begins to remove \the [the_wall]'s support rods."
 			if (WALL_PRYSHEATH)
 				self_message = "You begin to pry the outer sheath off."
 				message = "[owner] begins to pry \the [the_wall]'s outer sheath off."
-				playsound(the_wall, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(the_wall, 'sound/items/Crowbar.ogg', 100, TRUE)
 		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")
 
 	onEnd()

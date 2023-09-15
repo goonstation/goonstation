@@ -836,13 +836,13 @@ this is already used where it needs to be used, you can probably ignore it.
 		"<span class='combat'>You attack [M] with [src], set to <b>[dam_num2name(src.damage_type)]</b>!</span>")
 		switch(src.damage_type)
 			if (DAMAGE_STAB)
-				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 30, 1)
+				playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 30, TRUE)
 			if (DAMAGE_CUT)
-				playsound(M, 'sound/impact_sounds/Flesh_Cut_1.ogg', 30, 1)
+				playsound(M, 'sound/impact_sounds/Flesh_Cut_1.ogg', 30, TRUE)
 			if (DAMAGE_BLUNT)
-				playsound(M, 'sound/impact_sounds/Metal_Hit_1.ogg', 30, 1)
+				playsound(M, 'sound/impact_sounds/Metal_Hit_1.ogg', 30, TRUE)
 			if (DAMAGE_BURN)
-				playsound(M, 'sound/effects/mag_fireballlaunch.ogg', 30, 1)
+				playsound(M, 'sound/effects/mag_fireballlaunch.ogg', 30, TRUE)
 		take_bleeding_damage(M, user, 1, src.damage_type)
 
 /obj/item/test_dagger
@@ -868,12 +868,12 @@ this is already used where it needs to be used, you can probably ignore it.
 			if (ismob(usr))
 				A:lastattacker = usr
 				A:lastattackertime = world.time
-			playsound(A, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
+			playsound(A, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 			take_bleeding_damage(A, null, rand(2,3), DAMAGE_STAB)
 
 	attack(target, mob/user)
 		..()
-		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
+		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 		take_bleeding_damage(target, user, rand(2,3), DAMAGE_STAB)
 
 /* -------------------- Notes -------------------- */

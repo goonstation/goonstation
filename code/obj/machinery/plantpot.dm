@@ -2031,4 +2031,4 @@ TYPEINFO(/obj/machinery/hydro_mister)
 				user.visible_message("<b>[user]</b> switches [src.name] off.")
 				src.visible_message("\The [src] goes quiet.")
 
-		playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
+		playsound(src, 'sound/misc/lightswitch.ogg', 50, TRUE)
