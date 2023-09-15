@@ -144,7 +144,7 @@
 
 			SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
 
-			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
@@ -966,7 +966,7 @@
 		src.firesource = FIRESOURCE_OPEN_FLAME
 		src.icon_state = "match-lit"
 
-		playsound(user, 'sound/items/matchstick_light.ogg', 50, 1)
+		playsound(user, 'sound/items/matchstick_light.ogg', 50, TRUE)
 		light.enable()
 
 		processing_items |= src
@@ -979,11 +979,11 @@
 			src.icon_state = "match-broken"
 			src.name = "broken match"
 			if (user)
-				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1, 0, 2)
+				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, TRUE, 0, 2)
 		else
 			src.icon_state = "match-burnt"
 			src.name = "burnt-out match"
-			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
 
 		light.disable()
 
@@ -1171,7 +1171,7 @@
 		light.enable()
 		processing_items |= src
 		if (user != null)
-			playsound(user, 'sound/items/zippo_open.ogg', 30, 1)
+			playsound(user, 'sound/items/zippo_open.ogg', 30, TRUE)
 			user.update_inhands()
 
 	proc/deactivate(mob/user as mob)
@@ -1183,7 +1183,7 @@
 		light.disable()
 		processing_items.Remove(src)
 		if (user != null)
-			playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
+			playsound(user, 'sound/items/zippo_close.ogg', 30, TRUE)
 			user.update_inhands()
 
 	attack(mob/target, mob/user)
@@ -1191,26 +1191,6 @@
 			var/mob/living/carbon/human/fella = target
 
 			if (src.on)
-				if (user.zone_sel.selecting == "l_arm")
-					if (fella.limbs.l_arm_bleed > 1)
-						fella.TakeDamage("chest",0,10)
-						fella.limbs.l_arm_bleed = max(0,fella.limbs.l_arm_bleed-5)
-						if (fella.limbs.l_arm_bleed == 0)
-							user.visible_message("<span class='alert'>[user] completely cauterises [fella]'s left stump with [src]!</span>")
-						else
-							user.visible_message("<span class='alert'>[user] partially cauterises [fella]'s left stump with [src]!</span>")
-						return
-
-				if (user.zone_sel.selecting == "r_arm")
-					if (fella.limbs.r_arm_bleed > 1)
-						fella.TakeDamage("chest",0,10)
-						fella.limbs.r_arm_bleed = max(0,fella.limbs.r_arm_bleed-5)
-						if (fella.limbs.r_arm_bleed == 0)
-							user.visible_message("<span class='alert'>[user] completely cauterises [fella]'s right stump with [src]!</span>")
-						else
-							user.visible_message("<span class='alert'>[user] partially cauterises [fella]'s right stump with [src]!</span>")
-						return
-
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa
 					smoke.light(user, "<span class='alert'><b>[user]</b> lights [fella]'s [smoke] with [src].</span>")

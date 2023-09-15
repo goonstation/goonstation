@@ -18,6 +18,11 @@ var/list/special_places = list() //list of location names, which are coincidenta
 		AddComponent(/datum/component/mechanics_holder)
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send", PROC_REF(mechcompsend))
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"receive", PROC_REF(mechcompreceive))
+		START_TRACKING
+
+	disposing()
+		. = ..()
+		STOP_TRACKING
 
 	attack_ai(mob/user as mob)
 		return attack_hand(user)
@@ -58,7 +63,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 				return 0
 			src.busy = 1
 			flick("[src.icon_state]-act", src)
-			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
+			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in src.loc)
 				if(M.anchored)
 					continue
@@ -83,7 +88,7 @@ var/list/special_places = list() //list of location names, which are coincidenta
 				return 0
 			src.busy = 1
 			flick("[src.icon_state]-act", src)
-			playsound(src, 'sound/machines/lrteleport.ogg', 60, 1)
+			playsound(src, 'sound/machines/lrteleport.ogg', 60, TRUE)
 			for(var/atom/movable/M in target)
 				if(M.anchored)
 					continue

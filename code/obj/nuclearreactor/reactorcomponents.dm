@@ -43,9 +43,12 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/thermal_mass = 420*250//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 
-	New(material_name="steel")
+	New(material="steel")
 		..()
-		src.setMaterial(getMaterial(material_name))
+		if(istype(material, /datum/material))
+			src.setMaterial(material)
+		else
+			src.setMaterial(getMaterial(material))
 		melt_health = _max_health
 		var/img_check = ui_image_base64_cache[src.type]
 		if (img_check)
@@ -90,9 +93,6 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 				else
 					src.cap_icon.Blend(rgb(setcolor[1],setcolor[2],setcolor[3],setcolor[4]), ICON_MULTIPLY)
 
-
-
-
 	proc/melt()
 		if(melted)
 			return
@@ -130,8 +130,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 			if(RC.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
-			RC.material.triggerTemp(RC,RC.temperature)
-			src.material.triggerTemp(src,src.temperature)
+			RC.material_trigger_on_temp(RC.temperature)
+			src.material_trigger_on_temp(src.temperature)
 		//heat transfer with reactor vessel
 		var/obj/machinery/atmospherics/binary/nuclear_reactor/holder = src.loc
 		if(istype(holder))
@@ -143,8 +143,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 			if(holder.temperature < 0 || src.temperature < 0)
 				CRASH("TEMP WENT NEGATIVE")
 
-			holder.material.triggerTemp(holder,holder.temperature)
-			src.material.triggerTemp(src,src.temperature)
+			holder.material_trigger_on_temp(holder.temperature)
+			src.material_trigger_on_temp(src.temperature)
 		if((src.temperature > src.melting_point) && (src.melt_health > 0))
 			src.melt_health -= rand(10,50)
 		if(src.melt_health <= 0)
@@ -243,6 +243,17 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	extra_info()
 		. = ..()
 		. += "Radioactivity: [max(src.material.getProperty("n_radioactive")*10,src.material.getProperty("radioactive")*10)]%"
+
+/obj/item/reactor_component/fuel_rod/glowsticks
+	name = "makeshift fuel rod"
+	desc = "A fuel rod fo- hey this is just a squashed glowstick!"
+	melting_point = T0C+400 //plastic glowsticks melt easy
+
+	New(material)
+		if(isnull(material))
+			.=..("glowstick") //force material
+		else
+			.=..()
 ////////////////////////////////////////////////////////////////
 //Control rod
 /obj/item/reactor_component/control_rod
@@ -479,7 +490,8 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		15;"cardboard",\
 		15;"frozenfart",\
 		5;"negativematter",\
-		5;"plutonium"
+		5;"plutonium",\
+		100; "glowstick"
 
 /obj/item/reactor_component/fuel_rod/random_material
 	New()

@@ -84,7 +84,7 @@
 		if (..())
 			return 1
 		if (prob(15) && !ON_COOLDOWN(src, "playsound", 3 SECONDS))
-			playsound(src, 'sound/voice/babynoise.ogg', 30, 1)
+			playsound(src, 'sound/voice/babynoise.ogg', 30, TRUE)
 			src.visible_message("<span class='notice'><b>[src]</b> coos!</span>",\
 			"<span class='notice'>You coo!</span>")
 
@@ -92,11 +92,11 @@
 		switch (act)
 			if ("scream","hiss")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/cat_hiss.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> hisses!"
 			if ("smile","coo")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/babynoise.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/babynoise.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> coos!"
 		return null
 
@@ -132,11 +132,20 @@
 	proc/grow_up()
 		if (!src.babyspider || !ispath(src.adultpath))
 			return 0
+		var/has_implant = FALSE
+		//antag critter spiders have a maintenance implant. Transfer it when they grow up
+		for (var/obj/item/implant/access/infinite/assistant/I in src.contents)
+			has_implant = TRUE
 		src.unequip_all()
 		src.visible_message("<span class='alert'><b>[src] grows up!</b></span>",\
 		"<span class='notice'><b>You grow up!</b></span>")
 		SPAWN(0)
-			src.make_critter(src.adultpath)
+			var/mob/living/critter/spider/new_mob = src.make_critter(src.adultpath)
+			if (has_implant)
+				new /obj/item/implant/access/infinite/assistant(new_mob)
+			new_mob.ai_retaliate_patience = src.ai_retaliate_patience
+			if(!istype(new_mob.ai, src.ai_type))
+				new_mob.ai = new src.ai_type(new_mob)
 
 	valid_target(mob/living/C)
 		if (C.bioHolder.HasEffect("husk")) return FALSE
@@ -553,8 +562,8 @@
 
 /proc/funnygibs(atom/location, var/list/ejectables, var/bDNA, var/btype)
 	SPAWN(0)
-		playsound(location, 'sound/musical_instruments/Bikehorn_1.ogg', 100, 1)
-		playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+		playsound(location, 'sound/musical_instruments/Bikehorn_1.ogg', 100, TRUE)
+		playsound(location, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, TRUE)
 	var/obj/decal/cleanable/blood/splatter/extra/blood = null
 
 	var/list/bloods = list()

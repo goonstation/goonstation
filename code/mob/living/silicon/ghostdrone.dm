@@ -27,7 +27,6 @@
 	var/newDrone = 0
 
 	var/jetpack = 1 //fuck whoever made this
-	var/jeton = 0
 
 	var/sees_static = TRUE
 
@@ -37,6 +36,8 @@
 
 	New()
 		..()
+		remove_lifeprocess(/datum/lifeprocess/radiation)
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 		START_TRACKING
 		hud = new(src)
 		src.attach_hud(hud)
@@ -200,7 +201,7 @@
 	full_heal()
 		var/before = src.stat
 		..()
-		if (before == 2 && src.stat < 2) //if we were dead, and now arent
+		if (before == STAT_DEAD && !isdead(src)) //if we were dead, and now arent
 			src.updateSprite()
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
@@ -829,12 +830,12 @@
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
 					message = "<B>[src]</B> birdwells."
-					playsound(src, 'sound/vox/birdwell.ogg', 50, 1, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/vox/birdwell.ogg', 50, TRUE, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
 
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					if (narrator_mode)
-						playsound(src, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, 'sound/vox/scream.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					else
 						playsound(src, src.sound_scream, 80, 0, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<b>[src]</b> screams!"
@@ -921,7 +922,7 @@
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 					if (narrator_mode)
-						playsound(src, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, 'sound/vox/fart.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					else
 						playsound(src, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 #ifdef DATALOGGER
@@ -1101,7 +1102,7 @@
 		if (damage < 1)
 			return
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		if (!dmgtype) //brute only
 			src.TakeDamage("All", damage)
@@ -1165,11 +1166,10 @@
 			src.TakeDamage(null, round(src.max_health / 2, 1.0))
 
 	temperature_expose(null, temp, volume)
-		src.material?.triggerTemp(src, temp)
+		src.material_trigger_on_temp(temp)
 
 		for(var/atom/A in src.contents)
-			if(A.material)
-				A.material.triggerTemp(A, temp)
+			A.material_trigger_on_temp(temp)
 
 	new_static_image()
 		return

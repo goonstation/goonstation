@@ -425,6 +425,12 @@
 	src.bruteloss = max(bruteloss - brute, 0)
 	src.burnloss = max(burnloss - burn, 0)
 
+	if (brute > 0)
+		if (brute >= 10 || src.get_brute_damage() <= 5)
+			src.heal_slash_wound("all")
+		else if (prob(10))
+			src.heal_slash_wound("single")
+
 	if (burn > 0)
 		if (burn >= 10 || src.get_burn_damage() <= 5)
 			src.heal_laser_wound("all")
@@ -434,6 +440,16 @@
 	src.UpdateDamageIcon()
 	health_update_queue |= src
 	return 1
+
+/mob/living/carbon/human/proc/heal_slash_wound(type)
+	if (type == "single")
+		for (var/i in 0 to 2)
+			if (src.GetOverlayImage("slash_wound-[i]"))
+				src.UpdateOverlays(null, "slash_wound-[i]")
+				break
+	else if (type == "all")
+		for (var/i in 0 to 2)
+			src.UpdateOverlays(null, "slash_wound-[i]")
 
 /mob/living/carbon/human/proc/heal_laser_wound(type)
 	if (type == "single")

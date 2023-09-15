@@ -197,25 +197,25 @@
 		else if (K.ammo_cats == null) //someone forgot to set ammo cats. scream
 			check = 1
 		if (!check)
-			return 1
+			return AMMO_RELOAD_INCOMPATIBLE
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
 		if(K.sound_load_override)
 			playsound(K, K.sound_load_override, 50, 1)
 		else
-			playsound(K, sound_load, 50, 1)
+			playsound(K, sound_load, 50, TRUE)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
 		if (A.amount_left < 1)
-			return 2 // Magazine's empty.
+			return AMMO_RELOAD_SOURCE_EMPTY // Magazine's empty.
 		if (K.ammo.amount_left >= K.max_ammo_capacity)
 			if (K.ammo.ammo_type.type != A.ammo_type.type)
-				return 6 // Call swap().
-			return 3 // Gun's full.
+				return AMMO_RELOAD_TYPE_SWAP // Call swap().
+			return AMMO_RELOAD_ALREADY_FULL // Gun's full.
 		if (K.ammo.amount_left > 0 && K.ammo.ammo_type.type != A.ammo_type.type)
-			return 6 // Call swap().
+			return AMMO_RELOAD_TYPE_SWAP // Call swap().
 
 		else
 
@@ -249,7 +249,7 @@
 				if (A.delete_on_reload)
 					//DEBUG_MESSAGE("[K]: [A.type] (now empty) was deleted on partial reload.")
 					qdel(A) // No duplicating empty magazines, please (Convair880).
-				return 4 // Couldn't fully reload the gun.
+				return AMMO_RELOAD_PARTIAL // Couldn't fully reload the gun.
 			if ((A.amount_left >= 0) && (K.ammo.amount_left == K.max_ammo_capacity))
 				A.UpdateIcon()
 				K.UpdateIcon()
@@ -258,7 +258,7 @@
 					if (A.delete_on_reload)
 						//DEBUG_MESSAGE("[K]: [A.type] (now empty) was deleted on full reload.")
 						qdel(A) // No duplicating empty magazines, please (Convair880).
-				return 5 // Full reload or ammo left over.
+				return AMMO_RELOAD_FULLY // Full reload or ammo left over.
 
 	update_icon()
 
@@ -508,7 +508,7 @@
 	sname = "9×19mm Parabellum"
 	name = "9mm magazine"
 	desc = "A handgun magazine full of 9x19mm rounds, an intermediate pistol cartridge."
-	icon_state = "pistol_magazine"
+	icon_state = "branwen_magazine"
 	amount_left = 15
 	max_amount = 15
 	ammo_type = new/datum/projectile/bullet/bullet_9mm
@@ -1182,7 +1182,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "Airzooka Tactical Replacement Trashbag"
 	sname = "air"
 	desc = "A tactical trashbag for use in a Donk Co Airzooka."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
 	m_amt = 40000
 	g_amt = 0
@@ -1195,7 +1195,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "Airzooka Tactical Replacement Trashbag: Xtreme Edition"
 	sname = "air"
 	desc = "A tactical trashbag for use in a Donk Co Airzooka, now with plasma lining."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "biobag"
 	m_amt = 40000
 	g_amt = 0

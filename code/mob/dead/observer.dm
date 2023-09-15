@@ -19,7 +19,8 @@
 	var/in_point_mode = FALSE
 	var/datum/hud/ghost_observer/hud
 	var/auto_tgui_open = TRUE
-
+	/// Observer menu TGUI datum. Can be null.
+	var/datum/observe_menu/observe_menu = null
 	mob_flags = MOB_HEARS_ALL
 
 /mob/dead/observer/disposing()
@@ -306,7 +307,7 @@
 		var/mob/dead/our_ghost = null
 
 		// if we already have a ghost, just go get that instead
-		if (src.ghost && !src.ghost.disposed)
+		if (src.ghost && !src.ghost.disposed && src.ghost.last_ckey == src.ckey)
 			our_ghost = src.ghost
 		// no existing ghost, make a new one
 		else
@@ -651,75 +652,13 @@
 	set name = "Observe"
 	set category = null
 
-	var/list/names = list()
-	var/list/namecounts = list()
-	var/list/creatures = list()
-
-	for (var/client/C in clients)
-		LAGCHECK(LAG_LOW)
-		// not sure how this could happen, but be safe about it
-		if (!C?.mob)
-			continue
-		var/mob/M = C.mob
-		// remove some types you cannot observe
-		if (!isliving(M) && !iswraith(M) && !isAI(M))
-			continue
-		// admins aren't observable unless they're in player mode
-		if (C.holder && !C.player_mode)
-			continue
-		// remove any secret mobs that someone is controlling
-		if (M.unobservable)
-			continue
-		// add to list
-		var/name = M.name
-		if (name in names)
-			namecounts[name]++
-			name = "[name] ([namecounts[name]])"
-		else
-			names.Add(name)
-			namecounts[name] = 1
-		if (M.real_name && M.real_name != M.name)
-			name += " \[[M.real_name]\]"
-		if (isliving(M) && isdead(M) && !isAI(M))
-			name += " \[dead\]"
-		creatures[name] = M
-
-	var/eye_name = null
-	sortList(creatures, /proc/cmp_text_asc)
-	eye_name = tgui_input_list(src, "Please, select a target!", "Observe", creatures)
-
-	if (!eye_name)
-		return
-
-	insert_observer(creatures[eye_name])
+	if(isnull(src.observe_menu))
+		src.observe_menu = new()
+	src.observe_menu.ui_interact(src)
 
 
-/mob/dead/observer/verb/observe_object()
-	set name = "Observe Object"
-	set category = "Ghost"
 
-	var/list/all_observables = machine_registry[MACHINES_BOTS] + by_cat[TR_CAT_GHOST_OBSERVABLES]
-	var/list/observable_map = list() // List mapping label -> object (so we can include area in the label)
-
-	for (var/atom/A in all_observables)
-		// isghostrestrictedz also filters out objects in NULL
-		// bomb is only tracked in nuclear mode
-		if (isghostrestrictedz(A.z) && !istype(A, /obj/machinery/nuclearbomb) && !istype(A, /obj/item/football/the_big_one))
-			continue
-		// this doesn't distinguish objects with the same name on the same tile. that's fine
-		var/area/area = get_area(A)
-		var/turf/turf = get_turf(A)
-		observable_map["[A.name] at ([turf.x], [turf.y], [turf.z]) in [area.name]"] = A
-
-	sortList(observable_map, /proc/cmp_text_asc)
-	var/picked_label = tgui_input_list(src, "Please, select a target!", "Observe", observable_map)
-
-	if (!picked_label)
-		return
-
-	insert_observer(observable_map[picked_label])
-
-mob/dead/observer/proc/insert_observer(var/atom/target)
+/mob/dead/observer/proc/insert_observer(var/atom/target)
 	var/mob/dead/target_observer/newobs = new /mob/dead/target_observer
 	src.set_loc(newobs)
 	newobs.attach_hud(hud)
@@ -739,7 +678,7 @@ mob/dead/observer/proc/insert_observer(var/atom/target)
 	else if (src.client) //Wire: Fix for Cannot modify null.mob.
 		src.client.mob = newobs
 
-mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
+/mob/dead/observer/proc/insert_slasher_observer(var/atom/target) //aaaaaa i had to create a new proc aaaaaa
 	var/mob/dead/target_observer/slasher_ghost/newobs = new /mob/dead/target_observer/slasher_ghost
 	newobs.attach_hud(hud)
 	newobs.set_observe_target(target)

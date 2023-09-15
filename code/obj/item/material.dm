@@ -19,7 +19,7 @@
 	event_handler_flags = USE_FLUID_ENTER
 	/// Does the raw material item get its name set?
 	mat_changename = FALSE
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	default_material = null
 
 	New()
@@ -108,7 +108,7 @@
 				S.satchel.UpdateIcon()
 				if (length(S.satchel.contents) >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
-					playsound(H, 'sound/machines/chime.ogg', 20, 1)
+					playsound(H, 'sound/machines/chime.ogg', 20, TRUE)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
@@ -237,23 +237,6 @@
 	default_material = "molitz"
 	crystal = 1
 
-	get_desc()
-		if(!istype(src.material, /datum/material/crystal/molitz))
-			return
-		var/datum/material/crystal/molitz/molitz = src.material
-		if(molitz.iterations == 2 && molitz.unexploded == 0)
-			. += " Fracture lines dash to the small bubbles of gas, getting close to them but not quite reaching them. You fail to spot any large bubbles of gas that havent imploded on themselves."
-		else if(molitz.iterations == 1 && molitz.unexploded == 0)
-			. += " All of the large bubbles of gas and a chunk of the small bubbles of gas are imploded, with fracture lines getting close to the small bubbles that remain."
-		else if(molitz.iterations == 0 && molitz.unexploded == 0)
-			. += " You fail to notice any non collapsed bubbles of gas in the structure."
-		else if(molitz.iterations >= 3)
-			. += " Both large and small bubbles of gas are highly prevalent throughout the crystal."
-		else if(molitz.iterations >= 1)
-			. += " Nearly all of the large bubbles of gas have collapsed, however small bubbles of gas remain embeded in the structure."
-		else if(molitz.iterations == 0)
-			. += " You fail to spot any large bubbles of gas that havent imploded on themselves, the crystal is lodged full with small bubbles of gas."
-
 /obj/item/raw_material/molitz_beta
 	name = "molitz crystal"
 	desc = "An unusual crystal of Molitz."
@@ -265,23 +248,6 @@
 	setup_material()
 		. = ..()
 		src.pressure_resistance = INFINITY //has to be after material setup. REASONS
-
-	get_desc()
-		if(!istype(src.material, /datum/material/crystal/molitz))
-			return
-		var/datum/material/crystal/molitz/molitz = src.material
-		if(molitz.iterations == 2 && molitz.unexploded == 0)
-			. += " Fracture lines dash to the small bubbles of gas, getting close to them but not quite reaching them. You fail to spot any large bubbles of gas that havent imploded on themselves."
-		else if(molitz.iterations == 1 && molitz.unexploded == 0)
-			. += " All of the large bubbles of gas and a chunk of the small bubbles of gas are imploded, with fracture lines getting close to the small bubbles that remain."
-		else if(molitz.iterations == 0 && molitz.unexploded == 0)
-			. += " You fail to notice any non collapsed bubbles of gas in the structure."
-		else if(molitz.iterations >= 3)
-			. += " Both large and small bubbles of gas are highly prevalent throughout the crystal."
-		else if(molitz.iterations >= 1)
-			. += " Nearly all of the large bubbles of gas have collapsed, however small bubbles of gas remain embeded in the structure."
-		else if(molitz.iterations == 0)
-			. += " You fail to spot any large bubbles of gas that havent imploded on themselves, the crystal is lodged full with small bubbles of gas."
 
 /obj/item/raw_material/pharosium
 	name = "pharosium ore"
@@ -900,13 +866,13 @@
 			//But loading a container is more noticable and there should be less
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
-				playsound(src, sound_load, 40, 1)
+				playsound(src, sound_load, 40, TRUE)
 		else if (W?.cant_drop)
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
 		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
-			playsound(src, sound_load, 40, 1)
+			playsound(src, sound_load, 40, TRUE)
 		else
 			. = ..()
 
@@ -1008,7 +974,7 @@
 			if(!src.is_valid(M))
 				continue
 			M.set_loc(src)
-			playsound(src, sound_load, 40, 1)
+			playsound(src, sound_load, 40, TRUE)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")

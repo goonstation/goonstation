@@ -56,7 +56,6 @@
 		respawned.key = src.key
 		if (src.mind)
 			src.mind.transfer_to(respawned)
-		respawned.Login()
 		respawned.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 
 		qdel(src)
@@ -492,7 +491,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (length(types))
 		C = selfmob.make_critter(pick(types), spawnpoint, ghost_spawned=TRUE)
 	else
-		traitor = checkantag(selfmob)
+		traitor = selfmob.mind?.is_antagonist()
 		if (traitor)
 			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 		else

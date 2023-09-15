@@ -33,7 +33,7 @@
 				return 1
 		if (target == holder.owner || target == OT)
 			return 1
-		playsound(target, 'sound/effects/spray.ogg', 50, 1, -1,1.5)
+		playsound(target, 'sound/effects/spray.ogg', 50, TRUE, -1,1.5)
 		var/list/L = getline(OT, target)
 		for (var/turf/T in L)
 			if (T == OT)

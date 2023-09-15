@@ -33,6 +33,9 @@
 	proc/attackby_pre(source, atom/target, mob/user)
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
 			var/datum/fishing_spot/fishing_spot = null
+			if (isturf(target))
+				var/turf/T = target
+				target = T.active_liquid || target
 			var/fishing_spot_type = target.type
 			while (fishing_spot_type != null)
 				fishing_spot = global.fishing_spots[fishing_spot_type]
@@ -222,7 +225,7 @@ TYPEINFO(/obj/item/fish_portal)
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "unanchors" : "anchors"] the [src].")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			src.anchored = !(src.anchored)
 			return
 		else
@@ -261,24 +264,24 @@ TYPEINFO(/obj/item/fish_portal)
 				found_blacklisted_fish = TRUE
 				P.set_loc(get_turf(src))
 			else
-				switch( P.value )
-					if (FISH_RARITY_COMMON)
+				switch( P.rarity )
+					if (ITEM_RARITY_COMMON)
 						new/obj/item/currency/fishing(src.loc)
 						JOB_XP(user, "Angler", 1)
 						qdel( P )
-					if (FISH_RARITY_UNCOMMON)
+					if (ITEM_RARITY_UNCOMMON)
 						new/obj/item/currency/fishing/uncommon(src.loc)
 						JOB_XP(user, "Angler", 2)
 						qdel( P )
-					if (FISH_RARITY_RARE)
+					if (ITEM_RARITY_RARE)
 						new/obj/item/currency/fishing/rare(src.loc)
 						JOB_XP(user, "Angler", 3)
 						qdel( P )
-					if (FISH_RARITY_EPIC)
+					if (ITEM_RARITY_EPIC)
 						new/obj/item/currency/fishing/epic(src.loc)
 						JOB_XP(user, "Angler", 4)
 						qdel( P )
-					if (FISH_RARITY_LEGENDARY)
+					if (ITEM_RARITY_LEGENDARY)
 						new/obj/item/currency/fishing/legendary(src.loc)
 						JOB_XP(user, "Angler", 5)
 						qdel( P )
@@ -332,7 +335,7 @@ TYPEINFO(/obj/item/fish_portal)
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "unanchors" : "anchors"] the [src].")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			src.anchored = !(src.anchored)
 			return
 		else

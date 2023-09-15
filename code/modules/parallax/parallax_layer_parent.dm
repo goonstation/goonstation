@@ -2,6 +2,7 @@
 	plane = PLANE_PARALLAX
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
 	screen_loc = "CENTER,CENTER"
+	mouse_opacity = 0
 
 	/// The client that this parallax layer belongs to.
 	var/client/owner
@@ -62,6 +63,8 @@
 				src.parallax_icon_state = params["parallax_icon_state"]
 			if (params["static_colour"])
 				src.static_colour = params["static_colour"]
+			if (params["color"])
+				src.color = params["color"]
 			if (params["parallax_value"])
 				src.parallax_value = params["parallax_value"]
 			if (params["scroll_speed"])

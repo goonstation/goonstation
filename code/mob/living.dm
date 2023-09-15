@@ -125,9 +125,11 @@
 
 	var/const/singing_prefix = "%"
 
-	var/void_mindswappable = FALSE //are we compatible with the void mindswapper?
+	var/void_mindswappable = FALSE //! are we compatible with the void mindswapper?
+	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
+	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	src.create_mob_silhouette()
 	..()
 	init_preferences?.copy_to(src, usr, ignore_randomizer, skip_post_new_stuff=TRUE)
@@ -137,9 +139,17 @@
 		src.ensure_bp_list()
 
 	if (src.use_stamina)
-		src.stamina_bar = new(src)
 		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
 		//eventual hud merger pls
+		src.stamina_bar = new(src)
+
+		var/turf/T = get_turf(src)
+		var/area/AR = get_area(src)
+		if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
+			START_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
+		else
+			src.skipped_mobs_list |= SKIPPED_STAMINA_MOBS
+			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
 
 	if (src.isFlying)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
@@ -154,9 +164,13 @@
 	vision.flash(duration)
 
 /mob/living/disposing()
+	STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 	ai_target = null
 	ai_target_old.len = 0
 	move_laying = null
+
+	if(use_stamina)
+		STOP_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
 
 	if(stamina_bar)
 		for (var/datum/hud/thishud in huds)
@@ -1246,7 +1260,7 @@
 					else
 						// if we're a critter or on a different z level, and we don't have a client, they probably don't care
 						// we do want to show station monkey speech etc, but not transposed scientists and trench monkeys and whatever
-						if ((!ishuman(src) || (src.z != M.z)) && !src.client)
+						if ((!ishuman(src) || (get_z(src) != get_z(M))) && !src.client)
 							return
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
@@ -1481,6 +1495,9 @@
 		return
 	src.last_resist = world.time + 20
 
+	if(SEND_SIGNAL(src, COMSIG_MOB_RESIST))
+		return TRUE
+
 	if (isobj(src.loc))
 		var/obj/container = src.loc
 		if (container.mob_resist_inside(src))
@@ -1572,11 +1589,9 @@
 		gloves = null
 		//Todo: get critter gloves if they have a slot. also clean this up in general...
 
-	if (gloves?.material)
-		gloves.material.triggerOnAttack(gloves, M, src)
+	gloves?.material_on_attack_use(M, src)
 	for (var/atom/A in src)
-		if (A.material)
-			A.material.triggerOnAttacked(A, M, src, gloves)
+		A.material_trigger_on_mob_attacked(M, src, gloves, location)
 
 	M.viral_transmission(src,"Contact",1)
 
@@ -1733,16 +1748,17 @@
 	if (src.nodamage)
 		return .
 
-	var/health_deficiency = 0
-	if (src.max_health > 0)
-		health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
-	else
-		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
+	if (src.do_hurt_slowdown)
+		var/health_deficiency = 0
+		if (src.max_health > 0)
+			health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
+		else
+			health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
 
-	if (health_deficiency >= 30)
-		. += (health_deficiency / 35)
+		if (health_deficiency >= 30)
+			. += (health_deficiency / 35)
 
-	.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
+		.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
 
 	. = min(., maximum_slowdown)
 
@@ -1908,10 +1924,11 @@
 		P.die()
 		return 0
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 	for (var/atom/A in src)
-		if (A.material)
-			if(src.material) src.material.triggerOnBullet(A, src, P)
+		A.material_trigger_on_bullet(src, P)
+	for (var/atom/equipped_stuff in src.equipped())
+		equipped_stuff.material_trigger_on_bullet(src, P)
 
 	if (!P.proj_data)
 		return 0

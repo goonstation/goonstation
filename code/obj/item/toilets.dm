@@ -48,10 +48,10 @@ TYPEINFO(/obj/item/storage/toilet)
 		else
 			user.visible_message("<span class='notice'>[user] gives [G.affecting] a swirlie!</span>", "<span class='notice'>You give [G.affecting] a swirlie. It's like Middle School all over again!</span>")
 
-		playsound(src, 'sound/effects/toilet_flush.ogg', 50, 1)
+		playsound(src, 'sound/effects/toilet_flush.ogg', 50, TRUE)
 		if (G.affecting.hasStatus("burning"))
 			G.affecting.changeStatus("burning", -2 SECONDS)
-			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, TRUE)
 			return
 		return
 	return ..()
@@ -114,7 +114,7 @@ TYPEINFO(/obj/item/storage/toilet)
 			src.add_fingerprint(user)
 	if((src.clogged < 1) || (!src.storage.is_full()) || (user.loc != src.loc))
 		user.visible_message("<span class='notice'>[user] flushes [src].</span>", "<span class='notice'>You flush [src].</span>")
-		playsound(src, 'sound/effects/toilet_flush.ogg', 50, 1)
+		playsound(src, 'sound/effects/toilet_flush.ogg', 50, TRUE)
 
 
 #ifdef UNDERWATER_MAP

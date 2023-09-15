@@ -222,7 +222,7 @@
 			if(12)
 				horn_note = 'sound/musical_instruments/WeirdHorn_12.ogg'
 
-		playsound(src, horn_note, 50, 0)
+		playsound(src, horn_note, 50, FALSE)
 		for(var/atom/A in range(user, 5))
 			if(istype(A, /mob/living/critter/small_animal/dog/george))
 				var/mob/living/critter/small_animal/dog/george/G = A
@@ -577,7 +577,7 @@
 					playsound(src.loc, 'sound/effects/warp1.ogg', 65, 1)
 					src.visible_message("<span class='alert'><b>[src]</b> charges up!</span>")
 					sleep(0.5 SECONDS)
-					playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
+					playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 					var/list/lineObjs
 					lineObjs = DrawLine(src, linked_object, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -1149,7 +1149,7 @@
 		elec_zap()
 
 	proc/elec_zap()
-		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))

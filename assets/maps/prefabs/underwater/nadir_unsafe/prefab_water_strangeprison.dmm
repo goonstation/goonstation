@@ -161,8 +161,8 @@
 "aG" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/soup/gruel,
-/obj/item/reagent_containers/food/snacks/yuckburn,
-/obj/item/reagent_containers/food/snacks/yuckburn,
+/obj/item/reagent_containers/food/snacks/yuck/burn,
+/obj/item/reagent_containers/food/snacks/yuck/burn,
 /turf/simulated/floor/black,
 /area/prefab/sea_prison)
 "aH" = (

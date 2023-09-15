@@ -83,6 +83,11 @@
 	afterattack(var/atom/target, mob/user, flag)
 		if(isghostcritter(user)) return
 		if (!target.reagents) return
+		if(istype(target, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/t = target
+			if(t.current_lid)
+				boutput(user, "<span class='alert'>You cannot transfer liquids with the [target.name] while it has a lid on it!</span>")
+				return
 
 		switch(mode)
 			if (S_DRAW)

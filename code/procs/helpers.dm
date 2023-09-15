@@ -138,7 +138,7 @@ var/global/obj/fuckyou/flashDummy
 					target_r = L
 					continue
 
-	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, 1)
+	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, TRUE)
 
 	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
@@ -773,7 +773,7 @@ proc/get_angle(atom/a, atom/b)
 				text += html_encode(the_mob.name)
 			text += " "
 			if (the_client && !the_client.holder) //only show this stuff for non-admins because admins do a lot of shit while dead and it is unnecessary to show it
-				if (checkantag(the_mob))
+				if (the_mob.mind?.is_antagonist())
 					text += "\[<font color='red'>T</font>\] "
 				if (isdead(the_mob))
 					text += "\[DEAD\] "
@@ -1925,31 +1925,28 @@ proc/countJob(rank)
 
 	return 1
 
-/proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = 0, var/atom/source = 0)
-	var/is_immune = 0
+/proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = FALSE, var/atom/source = 0)
+	var/is_immune = FALSE
 
-	var/area/a = get_area( target )
-	if( a?.sanctuary )
-		return 1
+	var/area/a = get_area(target)
+	if(a?.sanctuary)
+		return TRUE
 
 	if (isliving(target))
 		var/mob/living/L = target
 
 		if (!isdead(L))
-			if (ignore_everything_but_nodamage == 1)
+			if (ignore_everything_but_nodamage)
 				if (L.nodamage)
-					is_immune = 1
+					is_immune = TRUE
 			else
 				if (L.nodamage || L.spellshield)
-					is_immune = 1
+					is_immune = TRUE
 
 		if (source && istype(source,/obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stance == "dodge") //matrix dodge flip
-				is_immune = 1
-
-	//if (is_immune == 1)
-	//	DEBUG_MESSAGE("[L] is immune to damage, aborting.")
+				is_immune = TRUE
 
 	return is_immune
 
@@ -2153,10 +2150,10 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		if (S == "glassware")
 			for (var/obj/item/reagent_containers/glass/G in view(CT, range))
 				if(G.can_recycle)
-					G.smash()
+					G.shatter_chemically()
 			for (var/obj/item/reagent_containers/food/drinks/drinkingglass/G2 in range(CT, range))
 				if(G2.can_recycle)
-					G2.smash()
+					G2.shatter_chemically()
 
 	return 1
 
@@ -2590,3 +2587,10 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	for (var/point in points)
 		. += point - prev
 		prev = point
+
+
+/// Returns the sum of densities of all atoms in the given turf including the turf itself
+proc/total_density(turf/T)
+	. = T.density
+	for (var/atom/A in T)
+		. += A.density

@@ -1,5 +1,5 @@
 
-var/global/list/material_cache = buildMaterialCache()
+var/global/list/material_cache
 
 /atom/var/datum/material/material = null
 /atom/var/material_amt = 1
@@ -85,6 +85,9 @@ var/global/list/material_cache = buildMaterialCache()
 	if(mat1?.countTriggers(TRIGGERS_ON_ENTERED))
 		mat1.RegisterSignal(src, COMSIG_ATOM_CROSSED, /datum/material/proc/triggerOnEntered)
 
+	if(mat1.getID() == default_material && !src.uses_default_material_name)
+		setname = FALSE
+
 	if (src.mat_changename && setname)
 		src.remove_prefixes(99)
 		src.remove_suffixes(99)
@@ -137,7 +140,9 @@ var/global/list/material_cache = buildMaterialCache()
 	src.alpha = initial(src.alpha) // these two are technically not ideal but better than nothing I guess
 	src.color = initial(src.color)
 	var/base_icon_state = materialless_icon_state()
-	if (isnull(mat1) || (mat1.getID() in src.get_typeinfo().mat_appearances_to_ignore))
+
+	if (isnull(mat1) || (mat1.getID() in src.get_typeinfo().mat_appearances_to_ignore) || \
+			mat1.getID() == default_material && !src.uses_default_material_appearance)
 		src.icon_state = base_icon_state
 		src.setTexture(null, key="material")
 		return
@@ -238,6 +243,72 @@ var/global/list/material_cache = buildMaterialCache()
 /// Merges two materials and returns result as new material.
 /proc/getFusedMaterial(var/datum/material/mat1,var/datum/material/mat2)
 	return new /datum/material/interpolated(mat1, mat2, 0.5)
+
+//custom matsci event procs
+//Use these if you want the stom in general to interact in a special way with the items procs e.g. spears on attack triggering the tip, but on pickup the shafts material
+//situation_modifier is for when you want something like specifying "chest" or "L_hand" for clothes
+
+/// Called when a mob holding this atom is attacked for mat effects
+/atom/proc/material_trigger_on_mob_attacked(var/mob/attacker, var/mob/attacked, var/atom/weapon, var/situation_modifier)
+	if (src.material)
+		src.material.triggerOnAttacked(src, attacker, attacked, weapon)
+	return
+
+/// Called when an atom is hit by a bullet for mat effects
+/atom/proc/material_trigger_on_bullet(var/atom/attacked, var/obj/projectile/projectile, var/situation_modifier)
+	if (src.material)
+		src.material.triggerOnBullet(src, attacked, projectile)
+	return
+
+/// Called when an atom is hit by a bullet for mat effects
+/atom/proc/material_trigger_on_chems(var/chem, var/amount)
+	if (src.material)
+		src.material.triggerChem(src, chem, amount)
+	return
+
+/// Called when an atom or someone wearing the material is attacked for mat effects
+/atom/proc/material_trigger_on_blob_attacked(var/blobPower, var/situation_modifier)
+	if (src.material)
+		src.material.triggerOnBlobHit(src, blobPower)
+	return
+
+/// Called when an atom is used for an attack a atom for mat effects
+/atom/proc/material_on_attack_use(var/mob/attacker, var/atom/attacked)
+	if (src.material)
+		src.material.triggerOnAttack(src, attacker, attacked)
+	return
+
+/// Called when an atom is caught in an explosion
+/atom/proc/material_trigger_on_explosion(var/severity)
+	if (src.material)
+		src.material.triggerExp(src, severity)
+	return
+
+/// Called when an atom is affected by a heat change
+/atom/proc/material_trigger_on_temp(var/temperature_applied)
+	if (src.material)
+		src.material.triggerTemp(src, temperature_applied)
+	return
+
+/// Called when the item is attacked with another atom for mat effects.
+/// If someone is smashed against the item or with hands, the mob itself is expected to be passed as attackatom
+/atom/proc/material_trigger_when_attacked(var/atom/attackatom, var/mob/attacker, var/meleeorthrow, var/situation_modifier)
+	if (src.material)
+		src.material.triggerOnHit(src, attackatom, attacker, meleeorthrow)
+	return
+
+///Called when an item is picked up for mat effects
+/obj/item/proc/material_on_pickup(mob/user)
+	if (src.material)
+		src.material.triggerPickup(user, src)
+	return
+
+///Called when an item is dropped for mat effects
+/obj/item/proc/material_on_drop(mob/user)
+	if (src.material)
+		src.material.triggerDrop(user, src)
+	return
+
 
 /// Merges two material names into one.
 /proc/getInterpolatedName(var/mat1, var/mat2, var/t)
@@ -351,6 +422,12 @@ var/global/list/material_cache = buildMaterialCache()
 	for(var/datum/material_recipe/R in materialRecipes)
 		if(R.validate(M)) return R
 	return null
+
+/proc/findRecipeName(var/obj/item/One,var/obj/item/Two)
+	var/tempmerge = getFusedMaterial(One.material, Two.material)
+	for(var/datum/material_recipe/R in materialRecipes)
+		if(R.validate(tempmerge)) return R
+	return getInterpolatedName(One.material.getName(), Two.material.getName(), 0.5)
 
 /**
 	* Searches the parent materials of the given material, up to a given generation, for an id.

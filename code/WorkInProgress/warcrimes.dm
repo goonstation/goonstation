@@ -174,11 +174,11 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 		START_TRACKING_CAT(TR_CAT_JOHNBILLS)
 		if(nude)
 			return
-		src.equip_new_if_possible(/obj/item/clothing/shoes/thong, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/color/orange, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/mask/cigarette/john, slot_wear_mask)
-		src.equip_new_if_possible(/obj/item/clothing/suit/labcoat, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/head/paper_hat/john, slot_head)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/thong, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/orange, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/mask/cigarette/john, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/clothing/suit/labcoat, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/head/paper_hat/john, SLOT_HEAD)
 
 		new /obj/item/implant/access/infinite/shittybill(src)
 
@@ -450,7 +450,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 					say(pick("Listen bud, I don't know who sold you these, but they ain't your pal.","Y'know these ain't legal in any NT facilities, right?","Maybe you ain't so dumb as ya look, brud."))
 					var/obj/item/clothing/mask/cigarette/cigarillo/juicer/J = W
 					src.u_equip(wear_mask)
-					src.equip_if_possible(J, slot_wear_mask)
+					src.equip_if_possible(J, SLOT_WEAR_MASK)
 					J.cant_other_remove = 0
 					sleep(3 SECONDS)
 					J.light(src, "<span class='alert'><b>[src]</b> casually lights [J] and takes a long draw.</span>")
@@ -481,7 +481,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 					say(pick("Well this ain't my usual brand, but...", "Oh actually, got any... uh nah you've probably never even seen one of those.","Wait a second, this ain't a real 'Rillo."))
 					var/obj/item/clothing/mask/cigarette/cig = W
 					src.u_equip(wear_mask)
-					src.equip_if_possible(cig, slot_wear_mask)
+					src.equip_if_possible(cig, SLOT_WEAR_MASK)
 					sleep(3 SECONDS)
 					cig.light(src, "<span class='alert'><b>[src]</b> cautiously lights [cig] and takes a short draw.</span>")
 					sleep(5 SECONDS)
@@ -657,7 +657,7 @@ Urs' Hauntdog critter
 		if(act == "scream" && src.emote_check(voluntary, 50))
 			var/turf/T = get_turf(src)
 			var/hogg = pick('sound/voice/hagg_vorbis.ogg','sound/voice/hogg_vorbis.ogg','sound/voice/hogg_vorbis_the.ogg','sound/voice/hogg_vorbis_screams.ogg','sound/voice/hogg_with_scream.ogg','sound/voice/hoooagh2.ogg','sound/voice/hoooagh.ogg',)
-			playsound(T, hogg, 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(T, hogg, 60, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 			return "<span class='emote'><b>[src]</b> screeeams!</span>"
 		return null
 
@@ -675,7 +675,7 @@ Urs' Hauntdog critter
 			src.visible_message("[src] screams![prob(5) ? " ...uh?" : null]",\
 			"You screams!")
 			var/hogg = pick('sound/voice/hagg_vorbis.ogg','sound/voice/hogg_vorbis.ogg','sound/voice/hogg_vorbis_the.ogg','sound/voice/hogg_vorbis_screams.ogg','sound/voice/hogg_with_scream.ogg','sound/voice/hoooagh2.ogg','sound/voice/hoooagh.ogg',)
-			playsound(T, hogg, 60, 1)
+			playsound(T, hogg, 60, TRUE)
 			user.add_karma(1.5)
 
 // ########################
@@ -711,8 +711,8 @@ Urs' Hauntdog critter
 	New()
 		..()
 		src.ai = new /datum/aiHolder/human/geneticist(src)
-		src.equip_new_if_possible(/obj/item/clothing/shoes/dress_shoes, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/rank/geneticist, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/labcoat/pathology, slot_wear_suit)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/dress_shoes, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/rank/geneticist, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/labcoat/pathology, SLOT_WEAR_SUIT)
 		if(prob(50))
-			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, SLOT_GLASSES)
