@@ -2117,3 +2117,24 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 	explosion_new(src, T, strength, 1)
 	if (delete)
 		qdel(src)
+
+///Pick someone 'falling onto' the explosive
+/obj/item/proc/get_hero()
+	if (!istype(src.loc, /turf)) // must be on the floor/tile directly
+		return null
+	var/turf/origin = src.loc
+	var/list/sacrifices = list()
+	for (var/mob/living/carbon/human/H in origin.contents)
+		// The deliberate act of using one's body to cover a live time-fused hand grenade
+		if(isalive(H) && H.lying && !isunconscious(H) && H.pulling == src)
+			sacrifices.Add(H)
+	if (!length(sacrifices))
+		return null
+	return pick(sacrifices)
+
+///Special case for heroic sacrifice
+/obj/item/proc/heroic_sacrifice(mob/living/carbon/human/H, strength)
+	logTheThing(LOG_COMBAT, src, "gibbed [constructTarget(H, "combat")] because they covered it with their body.")
+	src.visible_message("<span class='combat'><B>[H] dives onto [src], covering it with [his_or_her(H)] body!</B></span>")
+	// H.unlock_medal("Selfless Sacrifice?", 1) // "The ultimate sacrifice undoubtedly saved lives. Probably." // TODO: image
+	H.gib()
