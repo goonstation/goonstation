@@ -360,7 +360,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	icon = 'icons/obj/items/fishing_gear.dmi'
 	icon_state = "syndie_fishing_rod-inactive"
 	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
-	item_state = "fishing_rod-inactive"
+	item_state = "syndie_fishing_rod-inactive"
 	hit_type = DAMAGE_STAB
 	flags = FPRINT | TABLEPASS | USEDELAY
 	w_class = W_CLASS_NORMAL
@@ -457,6 +457,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			tooltip_rebuild = 1
 		if (!ON_COOLDOWN(user, "syndie_fishing_delay", src.usage_cooldown))
 			if (src.lure.owner && isliving(src.lure.owner))
+				logTheThing(LOG_COMBAT, user, "at [log_loc(src)] reels in a Syndicate Fishing Rod hooked in [src.lure.owner]")
 				if (!actions.hasAction(user,"fishing_for_fools"))
 					actions.start(new /datum/action/bar/syndie_fishing(user, src.lure.owner, src, src.lure), user)
 				if (!ON_COOLDOWN(user, "syndie_fishing_yank", src.yank_cooldown))
@@ -465,6 +466,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			else if (src.lure.loc == src)
 				if (target == loc)
 					return
+				logTheThing(LOG_COMBAT, user, "casts a Syndicate Fishing Rod out at [log_loc(src)]")
 				playsound(user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
 				src.is_fishing = TRUE
 				src.UpdateIcon()
@@ -489,11 +491,11 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		//state for fishing
 		if (src.is_fishing)
 			src.icon_state = "syndie_fishing_rod-active"
-			src.item_state = "fishing_rod-active"
+			src.item_state = "syndie_fishing_rod-active"
 		//state for not fishing
 		else
 			src.icon_state = "syndie_fishing_rod-inactive"
-			src.item_state = "fishing_rod-inactive"
+			src.item_state = "syndie_fishing_rod-inactive"
 
 	disposing()
 		. = ..()
@@ -520,10 +522,10 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			return FALSE
 
 /obj/item/implant/syndie_lure
-	name = "barbed lure"
-	icon = 'icons/obj/items/weapons.dmi'
-	icon_state = "bear_trap-open"
-	item_state = "bear_trap"
+	name = "minnow"
+	desc = "One of the most common bait fish, looks like this one got away! Until it caught you."
+	icon = 'icons/obj/foodNdrink/food_fish.dmi'
+	icon_state = "minnow"
 	object_flags = NO_GHOSTCRITTER
 	throwforce = 5
 	density = 0
