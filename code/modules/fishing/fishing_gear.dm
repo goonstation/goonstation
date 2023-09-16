@@ -449,6 +449,8 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 
 	afterattack(atom/target, mob/user)
 		..()
+		if (!isturf(user.loc))
+			return
 		if (!src.lure)
 			src.lure = new (src)
 			src.lure.rod = src
@@ -614,7 +616,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 
 //action (with bar) for reeling in a mob with the Glaucus
 /datum/action/bar/syndie_fishing
-	interrupt_flags = INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	interrupt_flags = INTERRUPT_STUNNED | INTERRUPT_ACTION
 	var/mob/user = null
 	var/mob/target = null
 	/// what fishing rod caught the mob
@@ -638,7 +640,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 
 	onStart()
 		..()
-		if (!src.user || !src.target || !src.rod || !src.lure || (src.target == src.user) || !(src.lure.owner == src.target) || !(src.user.equipped() == src.rod) || GET_DIST(src.user, src.target) > src.rod.line_length)
+		if (!src.user || !src.target || !src.rod || !src.lure || (src.target == src.user) || !(src.lure.owner == src.target) || !(src.user.equipped() == src.rod) || !isturf(src.user.loc) || GET_DIST(src.user, src.target) > src.rod.line_length)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -653,12 +655,12 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 
 	onUpdate()
 		..()
-		if (!src.user || !src.target || !src.rod || !src.lure || (src.target == src.user) || !(src.lure.owner == src.target) || !(src.user.equipped() == src.rod) || GET_DIST(src.user, src.target) > src.rod.line_length)
+		if (!src.user || !src.target || !src.rod || !src.lure || (src.target == src.user) || !(src.lure.owner == src.target) || !(src.user.equipped() == src.rod) || !isturf(src.user.loc) || GET_DIST(src.user, src.target) > src.rod.line_length)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onEnd()
-		if (!src.user || !src.target || !src.rod || !src.lure || (src.target == src.user) || !(src.lure.owner == src.target) || !(src.user.equipped() == src.rod) || GET_DIST(src.user, src.target) > src.rod.line_length)
+		if (!src.user || !src.target || !src.rod || !src.lure || (src.target == src.user) || !(src.lure.owner == src.target) || !(src.user.equipped() == src.rod) || !isturf(src.user.loc) || GET_DIST(src.user, src.target) > src.rod.line_length)
 			..()
 			interrupt(INTERRUPT_ALWAYS)
 			return
