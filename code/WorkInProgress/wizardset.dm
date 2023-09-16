@@ -307,10 +307,10 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	New()
 		..()
-		dummies += new /obj/border_dummy { dir = 1; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 2; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 4; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 8; }(src.loc)
+		dummies += new /obj/border_dummy { dir = NORTH; }(src.loc)
+		dummies += new /obj/border_dummy { dir = SOUTH; }(src.loc)
+		dummies += new /obj/border_dummy { dir = EAST; }(src.loc)
+		dummies += new /obj/border_dummy { dir = WEST; }(src.loc)
 		for (var/obj/item/O in get_turf(src))
 			O.pixel_y = 2
 			O.pixel_x = 0
