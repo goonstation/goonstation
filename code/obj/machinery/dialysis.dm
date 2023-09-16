@@ -25,9 +25,9 @@ TYPEINFO(/obj/machinery/dialysis)
 	New()
 		..()
 		src.create_reagents(100)
-		if (islist(chem_whitelist) && length(chem_whitelist))
-			src.whitelist = chem_whitelist
-
+		if (!length(chem_whitelist))
+			CRASH("[src] tried to fetch the global chem whitelist but it has a length of 0!")
+		src.whitelist = chem_whitelist
 		src.UpdateOverlays(image(src.icon, "pump-off"), "pump")
 		src.UpdateOverlays(image(src.icon, "screen-off"), "screen")
 		src.UpdateOverlays(image(src.icon, "tubing"), "tubing")
@@ -39,8 +39,11 @@ TYPEINFO(/obj/machinery/dialysis)
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		if (src.hacked) return FALSE
-		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Dialysis protocols inversed.\"")
 		src.hacked = TRUE
+		src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Dialysis protocols inversed.\"")
+		logTheThing(LOG_ADMIN, user, "emagged [src] at [log_loc(user)].")
+		logTheThing(LOG_DIARY, user, "emagged [src] at [log_loc(user)].", "admin")
+		message_admins("[key_name(usr)] emagged [src] at [log_loc(user)].")
 
 	attack_hand(mob/user)
 		src.anchored = !src.anchored
@@ -102,7 +105,7 @@ TYPEINFO(/obj/machinery/dialysis)
 		// Re-implemented here due to all the got dang boutputs.
 		var/list/whitelist_buffer = src.whitelist + src.patient_blood_id
 		for (var/reagent_id in src.reagents.reagent_list)
-			if ((!src.hacked && !whitelist_buffer.Find(reagent_id)) || (src.hacked && whitelist_buffer.Find(reagent_id)))
+			if ((!src.hacked && !(reagent_id in whitelist_buffer)) || (src.hacked && (reagent_id in whitelist_buffer)))
 				src.reagents.del_reagent(reagent_id)
 
 		src.output_blood_colour = src.reagents.total_volume ? src.reagents.get_average_color().to_rgba() : null
@@ -162,7 +165,7 @@ TYPEINFO(/obj/machinery/dialysis)
 		src.patient = null
 		src.patient_blood_id = null
 		src.output_blood_colour = null
-		if (!!src.reagents.total_volume)
+		if (src.reagents.total_volume)
 			src.reagents.clear_reagents()
 			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Purging internal reservoir.\"")
 		src.power_usage = 0
