@@ -358,7 +358,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	name = "\improper Glaucus fishing rod"
 	desc = "A high grade tactical fishing rod, completely impractical for reeling in bass."
 	icon = 'icons/obj/items/fishing_gear.dmi'
-	icon_state = "fishing_rod-inactive"
+	icon_state = "syndie_fishing_rod-inactive"
 	inhand_image_icon = 'icons/mob/inhand/hand_fishing.dmi'
 	item_state = "fishing_rod-inactive"
 	hit_type = DAMAGE_STAB
@@ -377,10 +377,13 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	var/syndie_fishing_speed = 0.7 SECONDS
 	// cooldown after throwing a hooked target around
 	var/yank_cooldown = 6 SECONDS
+	// how far you throw when yanking them
+	var/yank_range = 4
 	// how far the line can stretch
-	var/line_length = 8
+	var/line_length = 9
 	// true if the rod is currently ""fishing"", false if it isnt
 	var/is_fishing = FALSE
+	HELP_MESSAGE_OVERRIDE({"The Glaucus starts with 7 damage on a melee reel, but builds up 3 additional damage on each ranged reel. If this reaches <b>25 damage</b>, or 6 ranged reels before a melee reel, the target will be stunned when damaged."})
 
 	New()
 		..()
@@ -407,8 +410,11 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			src.lure.real_name = I.name
 			src.lure.desc = I.desc
 			src.lure.real_desc = I.desc
-			src.lure.icon = getFlatIcon(I)
+			src.lure.appearance = I
 			src.lure.set_dir(I.dir)
+			src.lure.overlay_refs = I.overlay_refs?.Copy()
+			src.lure.plane = initial(src.lure.plane)
+			src.lure.layer = initial(src.lure.layer)
 			src.lure.tooltip_rebuild = 1
 			tooltip_rebuild = 1
 		else
@@ -426,6 +432,9 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		else
 			if(!src.lure.owner)
 				if(BOUNDS_DIST(src.lure,src) == 0)
+					src.is_fishing = FALSE
+					src.UpdateIcon()
+					user.update_inhands()
 					src.lure.set_loc(src)
 				else
 					step_towards(src.lure, src)
@@ -449,7 +458,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 				if (!actions.hasAction(user,"fishing_for_fools"))
 					actions.start(new /datum/action/bar/syndie_fishing(user, src.lure.owner, src, src.lure), user)
 				if (!ON_COOLDOWN(user, "syndie_fishing_yank", src.yank_cooldown))
-					src.lure.owner.throw_at(target, 4, 1)
+					src.lure.owner.throw_at(target, yank_range, yank_range / 4)
 					user.visible_message("<span class='alert'><b>[user] thrashes [src.lure.owner] by yanking \the [src.name]!</b></span>")
 			else if (src.lure.loc == src)
 				if (target == loc)
@@ -477,31 +486,36 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	update_icon()
 		//state for fishing
 		if (src.is_fishing)
-			src.icon_state = "fishing_rod-active"
+			src.icon_state = "syndie_fishing_rod-active"
 			src.item_state = "fishing_rod-active"
 		//state for not fishing
 		else
-			src.icon_state = "fishing_rod-inactive"
+			src.icon_state = "syndie_fishing_rod-inactive"
 			src.item_state = "fishing_rod-inactive"
 
 	disposing()
 		. = ..()
 		qdel(src.lure)
 
-	proc/reel_in(mob/target, mob/user, damage_per_reel = 5)
+	// reels in, returns whether damage was dealt
+	proc/reel_in(mob/target, mob/user, damage_on_reel = 7)
 		target.setStatusMin("staggered", 4 SECONDS)
 		if(BOUNDS_DIST(target, user) == 0)
 			user.visible_message("<span class='alert'><b>[user] reels some meat out of [target] with \the [src.name]!</b></span>")
 			playsound(target.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
-			if (prob(min(100,damage_per_reel * 10)))
-				if (prob(20) && target.bioHolder && target.bioHolder.Uid && target.bioHolder.bloodType)
+			take_bleeding_damage(target, user, damage_on_reel, DAMAGE_CUT)
+			random_brute_damage(target, damage_on_reel)
+			if (damage_on_reel >= 25)
+				target.changeStatus("weakened", sqrt(damage_on_reel) / 3 SECONDS)
+				target.force_laydown_standup()
+				if (target.bioHolder && target.bioHolder.Uid && target.bioHolder.bloodType)
 					gibs(target.loc, blood_DNA=target.bioHolder.Uid, blood_type=target.bioHolder.bloodType, headbits=FALSE, source=target)
 				else
 					gibs(target.loc, headbits=FALSE, source=target)
-			take_bleeding_damage(target, user, damage_per_reel, DAMAGE_CUT)
-			random_brute_damage(target, damage_per_reel)
+			return TRUE
 		else
 			step_towards(target, user)
+			return FALSE
 
 /obj/item/implant/syndie_lure
 	name = "barbed lure"
@@ -602,14 +616,14 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 /datum/action/bar/syndie_fishing
 	interrupt_flags = INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	var/mob/user = null
-	/// the target of the action
 	var/mob/target = null
 	/// what fishing rod caught the mob
 	var/obj/item/syndie_fishing_rod/rod = null
 	/// what lure is snagged in the mob
 	var/obj/item/implant/syndie_lure/lure = null
-	/// stores current damage per point blank reel and increases by 0.5 each cycle
-	var/damage_per_reel = 0
+	/// stores current damage per point blank reel and increases by 3 each cycle that target isnt point blank
+	/// resets when damage is dealt
+	var/damage_on_reel = 7
 	/// how long a step of reeling takes, set onStart
 	duration = 0
 	/// id for fishing action
@@ -649,8 +663,10 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		src.damage_per_reel += 0.5
-		src.rod.reel_in(src.target, src.user, src.damage_per_reel)
+		if (src.rod.reel_in(src.target, src.user, src.damage_on_reel))
+			src.damage_on_reel = initial(src.damage_on_reel)
+		else
+			src.damage_on_reel += 3
 		src.onRestart()
 
 	onDelete()
