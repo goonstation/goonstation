@@ -249,4 +249,8 @@
 /datum/movement_modifier/spacebear
 	health_deficiency_adjustment = -30
 	additive_slowdown = -0.4
+//Morrigan MediHealbot
+/datum/movement_modifier/healbot
+	additive_slowdown = -0.25
+
 

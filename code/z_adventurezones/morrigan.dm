@@ -1023,10 +1023,6 @@ mob/living/carbon/human/morrigan_prisoner
 	name = "Morrigan Janitor's Office"
 	icon_state = "janitor"
 
-/area/morrigan/station/civilian/clown
-	name = "Morrigan Clown Hole"
-	icon_state = "green"
-
 // Command areas
 
 /area/morrigan/station/command
@@ -1789,7 +1785,7 @@ mob/living/carbon/human/morrigan_prisoner
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
-		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
+		abilityHolder.addAbility(/datum/targetable/critter/hookshot)
 
 	seek_target(range)
 		. = ..()
@@ -1815,9 +1811,9 @@ mob/living/carbon/human/morrigan_prisoner
 
 
 	critter_ability_attack(mob/target)
-		var/datum/targetable/critter/spiker/hook = src.abilityHolder.getAbility(/datum/targetable/critter/spiker/hook)
-		if (!hook.disabled && hook.cooldowncheck())
-			hook.handleCast(target)
+		var/datum/targetable/critter/hookshot = src.abilityHolder.getAbility(/datum/targetable/critter/hookshot)
+		if (!hookshot.disabled && hookshot.cooldowncheck())
+			hookshot.handleCast(target)
 			return TRUE
 
 	get_melee_protection(zone, damage_type)
@@ -1839,6 +1835,11 @@ mob/living/carbon/human/morrigan_prisoner
 	icon_state = "riotbot"
 	ai_type = /datum/aiHolder/ranged
 	eye_light_icon = "riotbot-eye"
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
 
 	seek_target(range)
 		. = ..()
@@ -1895,6 +1896,11 @@ mob/living/carbon/human/morrigan_prisoner
 	ai_type = /datum/aiHolder/aggressive
 	eye_light_icon = "engineerbot-eye"
 
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
+
 	seek_target(range)
 		. = ..()
 
@@ -1936,6 +1942,12 @@ mob/living/carbon/human/morrigan_prisoner
 	icon_state = "medibot"
 	ai_type = /datum/aiHolder/ranged
 	eye_light_icon = "medibot-eye"
+
+
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
+		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
 
 	seek_target(range)
 		. = ..()
@@ -2450,7 +2462,7 @@ TYPEINFO(/obj/item/gun/energy/hafpistol)
 TYPEINFO(/obj/item/gun/energy/peacebringer)
 	mats = null
 /obj/item/gun/energy/peacebringer
-	name = "Mod.98 Unbidden"
+	name = "The Aberrant"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/self_charging/peacebringer
 	icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
@@ -2836,7 +2848,6 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	cost = 50
 	damage = 15
 	shot_number = 1
-
 	sname = "lethal"
 	damage_type = D_ENERGY
 	hit_ground_chance = 30
@@ -2848,6 +2859,24 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 			shot_volume = 100
 		if(proj.reflectcount >= 2)
 			elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
+
+/datum/projectile/shieldpush
+	name = "AP Repulsion"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "crescent_white"
+	shot_sound = 'sound/weapons/pushrobo.ogg'
+	damage = 10
+
+	on_hit(atom/hit, angle, var/obj/projectile/O)
+		var/dir = get_dir(O.shooter, hit)
+		var/pow = O.power
+		if (isliving(hit))
+			O.die()
+			var/mob/living/mob = hit
+			mob.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = pow, remove_stamina_below_zero = 0)
+			var/throw_type = mob.can_lie ? THROW_GUNIMPACT : THROW_NORMAL
+			mob.throw_at(get_edge_target_turf(hit, dir),(pow-7)/2,1, throw_type = throw_type)
+			mob.emote("twitch_v")
 
 /datum/projectile/laser/smgminelethal
 	name = "Lethal Mode"
@@ -2910,6 +2939,61 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 			if (hit.reagents)
 				for (var/reagent_id as anything in venom_id)
 					hit.reagents.add_reagent(reagent_id, inject_amount)
+
+/datum/projectile/special/robohook
+	name = "hook"
+	dissipation_rate = 1
+	dissipation_delay = 7
+	icon_state = ""
+	damage = 1
+	hit_ground_chance = 0
+	shot_sound = 'sound/impact_sounds/robograb.ogg'
+	var/list/previous_line = list()
+
+	on_hit(atom/hit, angle, var/obj/projectile/P)
+		if (previous_line != null)
+			for (var/obj/O in previous_line)
+				qdel(O)
+		if (ismob(hit))
+			var/mob/M = hit
+			if(hit == P.special_data["owner"]) return 1
+			var/turf/destination = get_turf(P.special_data["owner"])
+			if (destination)
+
+				M.throw_at(destination, 10, 1)
+
+				playsound(M, 'sound/impact_sounds/stabreel.ogg', 50, 1)
+				M.TakeDamageAccountArmor("All", rand(3,4), 0, 0, DAMAGE_CUT)
+				M.force_laydown_standup()
+				M.changeStatus("paralysis", 5 SECONDS)
+				M.visible_message("<span class='alert'>[M] gets grabbed by a tentacle and dragged!</span>")
+
+		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_gungrab",1,1,"start_gungrab","end_gungrab",OBJ_LAYER,1)
+		SPAWN(1 DECI SECOND)
+			for (var/obj/O in previous_line)
+				qdel(O)
+		qdel(P)
+
+
+	on_launch(var/obj/projectile/P)
+		..()
+		if (!("owner" in P.special_data))
+			P.die()
+			return
+
+	on_end(var/obj/projectile/P)	//Clean up behind us
+		SPAWN(1 DECI SECOND)
+			for (var/obj/O in previous_line)
+				qdel(O)
+		..()
+
+	tick(var/obj/projectile/P)	//Trail the projectile
+		..()
+		if (previous_line != null)
+			for (var/obj/O in previous_line)
+				qdel(O)
+		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_tentacle",1,1,"start_tentacle","end_tentacle",OBJ_LAYER,1)
+
 
 //belts
 
@@ -3068,10 +3152,48 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 					active = 1
 					SPAWN(2 MINUTES) active = 0
 					playsound(AM, pick(list('sound/effects/sparks1.ogg','sound/effects/sparks2.ogg','sound/effects/sparks3.ogg','sound/effects/sparks4.ogg','sound/effects/sparks5.ogg','sound/effects/sparks6.ogg'), 75, 0))
+//Ability
+/datum/targetable/critter/hookshot
+	name = "GRABBER tech"
+	desc = "Keep your friends close, and enemies closer."
+	icon_state = "robohook"
+	cooldown = 15 SECONDS
+	targeted = TRUE
 
-/datum/targetable/critter/defensive
-	name = "strong guard"
-	desc = "Defend against damage for a time, at the cost of speed."
+	cast(atom/target)
+		if (..())
+			return 1
+
+		if (istype(holder.owner, /mob/living/critter/robotic/gunbot/morrigan/meleebot))
+			var/mob/living/critter/robotic/gunbot/morrigan/meleebot = holder.owner
+
+		var/mob/living/critter/robotic/gunbot/morrigan/meleebot/S = holder.owner
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(S, new/datum/projectile/special/robohook, get_turf(target))
+		while (!proj || proj.disposed)
+			proj = initialize_projectile_pixel_spread(S, new/datum/projectile/special/robohook, get_turf(target))
+
+		proj.special_data["owner"] = holder.owner
+		proj.targets = list(target)
+
+		proj.launch()
+
+
+/datum/targetable/critter/shieldproto
+	name = "AP Shield"
+	desc = "Knock assailants back then destroy incoming projectiles"
+	icon_state = "robopush"
+	cooldown = 20 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
+
+	var/datum/projectile/fireball/fire_elemental/fb_proj = new
+
+	cast(atom/target)
+		var/obj/projectile/P = initialize_projectile_pixel_spread( holder.owner, fb_proj, target )
+		logTheThing(LOG_COMBAT, usr, "used their [src.name] ability at [log_loc(usr)]")
+		if (P)
+			P.mob_shooter = holder.owner
+			P.launch()
 
 /datum/targetable/critter/nano_repair
 	name = "nano-bot repair"
@@ -3086,6 +3208,32 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		for (var/mob/living/critter/robotic/robo in range(5, holder.owner))
 			robo.HealDamage("all", 10, 10, 0)
 		return 0
+
+/datum/targetable/critter/robofast
+	name = "ER Speed Mode"
+	desc = "Overcharge your cell to speed yourself up."
+	icon_state = "robospeed"
+	cooldown = 45 SECONDS
+	targeted = FALSE
+
+	cast(atom/target)
+
+		if (!istype(holder.owner, /mob/living/critter/robotic/gunbot/morrigan/medibot))
+			boutput(holder.owner, "<span class='notice'>You cannot use this ability.</span>")
+			return TRUE
+		var/mob/living/critter/robotic/gunbot/morrigan/medibot = holder.owner
+
+		holder.owner.delStatus("stunned")
+		holder.owner.delStatus("weakened")
+		holder.owner.delStatus("paralysis")
+		holder.owner.delStatus("slowed")
+		holder.owner.delStatus("disorient")
+		holder.owner.change_misstep_chance(-INFINITY)
+		playsound(holder.owner, 'sound/machines/shielddown.ogg', 80, 1)
+		holder.owner.setStatusMin(("robospeed"), 5 SECONDS)
+		return FALSE
+
+
 
 /obj/lever/pipeswitch
 	///The ID to match with the particular pipe

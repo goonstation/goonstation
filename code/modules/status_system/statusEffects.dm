@@ -1533,6 +1533,16 @@
 		getTooltip()
 			. = "Your flesh is being converted into oxygen! But you are moving slightly faster."
 
+	robospeed
+	id = "robospeed"
+	name = "Hastened"
+	desc = "MAXIMUM OVERDRIVE (You're faster.)."
+	icon_state = "c_power"
+	unique = TRUE
+	movement_modifier = /datum/movement_modifier/healbot
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+
 
 
 /datum/statusEffect/bloodcurse
