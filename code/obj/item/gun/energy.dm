@@ -1905,6 +1905,15 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		SEND_SIGNAL(src, COMSIG_CELL_SWAP, our_cell)
 		update_icon()
 
+	proc/do_explode()
+		explosion(src, get_turf(src), -1, -1, 1, 2)
+		qdel(src)
+
+	emp_act()
+		if (our_cell)
+			src.visible_message("<span class='alert'>[src]'s cell violently explodes!</span>")
+			do_explode() // heh
+
 	New()
 		processing_items |= src
 		set_current_projectile(new/datum/projectile/laser/makeshift)
@@ -1913,7 +1922,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	Exited(Obj, newloc)
 		var/obj/item/cell/C = Obj
-		if (istype(C))
+		if (istype(C) && !QDELETED(C))
 			C.update_icon()
 			var/datum/component/power_cell/comp = C.GetComponent(/datum/component/power_cell)
 			comp.UnregisterFromParent()
@@ -1941,9 +1950,11 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	attackby(obj/item/W, mob/user, params)
 		if (iswrenchingtool(W) && our_cell)
+			var/obj/item/removed_cell = our_cell
 			SEND_SIGNAL(src, COMSIG_CELL_SWAP, null)
 			boutput(user,"<span class='notice'>You disconnect [our_cell] from [src].</span>")
 			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			user.put_in_hand_or_drop(removed_cell)
 			return
 		else if (istype(W, /obj/item/cell) && !our_cell)
 			user.u_equip(W)
@@ -2009,9 +2020,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			if (our_light.rigged) // bad idea
-				boutput(user,"<span class='alert'>[src] explodes!</span>")
-				explosion(src, get_turf(src), -1, -1, 1, 2)
-				qdel(src)
+				src.visible_message("<span class='alert'>[src]'s light tube violently explodes!</span>")
+				do_explode()
 				return
 			heat += rand(15,20)
 			update_icon()
