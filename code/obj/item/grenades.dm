@@ -1911,27 +1911,41 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 					strength_mult = 1.25
 				src.strength *= strength_mult
 
+			///Did someone dive onto the bomb? need for post-gib checks
+			var/meat_shield = FALSE
+			///Explosion center point
+			var/turf/origin = get_turf(src.loc)
+			///Mob who is diving on the bomb
+			var/mob/living/carbon/human/hero = src.get_hero()
+			if (istype(hero))
+				meat_shield = TRUE
+
+			// there goes my hero
+			if (meat_shield)
+				// watch him as he goes
+				src.strength = src.strength / 4 // halfish end output strength due to sqstrength
+
 			//do mod effects : pre-explosion
 			if (glowsticks)
-				var/turf/T = get_turf(src.loc)
-				make_cleanable( /obj/decal/cleanable/generic,T)
-				for (var/turf/splat in view(1,src.loc))
-					make_cleanable( /obj/decal/cleanable/greenglow,splat)
+				make_cleanable( /obj/decal/cleanable/generic,origin)
 				var/radium_amt = 6 * glowsticks
-				for (var/mob/M in view(3,src.loc))
-					if(iscarbon(M))
-						if (M.reagents)
-							M.reagents.add_reagent("radium", radium_amt, null, T0C + 300)
-					boutput(M, "<span class='alert'>You are splashed with hot green liquid!</span>")
+				if (meat_shield) // leave a radium puddle instead
+					hero.reagents.add_reagent("radium", 10 * radium_amt, null, T0C + 300)
+				else
+					for (var/turf/splat in view(1,src.loc))
+						make_cleanable( /obj/decal/cleanable/greenglow,splat)
+					for (var/mob/M in view(3,src.loc))
+						if(iscarbon(M))
+							if (M.reagents)
+								M.reagents.add_reagent("radium", radium_amt, null, T0C + 300)
+						boutput(M, "<span class='alert'>You are splashed with hot green liquid!</span>")
 			if (butt)
 				if (butt > 1)
 					playsound(src.loc, 'sound/voice/farts/superfart.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
-					for (var/mob/M in view(3+butt,src.loc))
-						ass_explosion(M, 0, 5)
 				else
 					playsound(src.loc, 'sound/voice/farts/poo2.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
-					for (var/mob/M in view(3,src.loc))
-						ass_explosion(M, 0, 5)
+				for (var/mob/M in view(meat_shield ? 1 : 3 + butt,src.loc))
+					ass_explosion(M, 0, 5)
 			if (confetti)
 				if (confetti > 1)
 					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(src.loc))
@@ -1943,7 +1957,6 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 				for (var/turf/splat in view(meat,src.loc))
 					make_cleanable( /obj/decal/cleanable/blood,splat)
 			if (ghost) //throw objects towards bomb center
-				var/turf/T = get_turf(src.loc)
 				if (ghost > 1)
 					for (var/mob/M in view(2+ghost,src.loc))
 						if(iscarbon(M))
@@ -1951,28 +1964,36 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 							var/yank_distance = 1
 							if (prob(50))
 								yank_distance = 2
-							M.throw_at(T, yank_distance, 2)
+							M.throw_at(origin, yank_distance, 2)
 				for (var/obj/O in view(1,src.loc))
-					O.throw_at(T, 2, 2)
+					O.throw_at(origin, 2, 2)
 			if (extra_shrapnel)
-				throw_shrapnel(get_turf(src.loc), 4, extra_shrapnel * 3)
+				throw_shrapnel(origin, 4, extra_shrapnel * (meat_shield ? 1 : 3))
 			if (cable && charge) //arc flash
 				var/target_count = 0
 				for (var/mob/living/L in view(5, src.loc))
 					target_count++
 				if (target_count)
 					for (var/mob/living/L in oview(5, src.loc))
-						arcFlash(src, L, max((charge*7) / target_count, 1))
+						// reducing range increases impact, reduce mob shock intensity instead
+						arcFlash(src, L, max((charge*7) / (target_count * (meat_shield ? 2 : 1)), 1))
 				else
 					for (var/turf/T in oview(3,src.loc))
 						if (prob(2))
 							arcFlashTurf(src, T, max((charge*6) * rand(),1))
 			if (bleed)
-				for (var/mob/M in view(3,src.loc))
+				for (var/mob/M in view(meat_shield ? 1 : 3,src.loc))
 					take_bleeding_damage(M, null, bleed * 3, DAMAGE_CUT)
 			if (src.reagents)
-				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12),src.loc) )
+				if (meat_shield)
+					src.reagents.trans_to_direct(hero, src.reagents.total_volume / 2)
+				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12), src.loc))
 					src.reagents.reaction(T,1,5)
+
+			// there goes my hero
+			if(meat_shield && istype(hero, /mob/living/carbon/human))
+				// he's ordinary
+				src.heroic_sacrifice(hero, src.strength)
 
 			src.blowthefuckup(src.strength, 0)
 
@@ -2010,26 +2031,25 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 						target.air.merge(payload)
 
 			if (throw_objs.len && length(throw_objs) > 0)
-				var/turf/T = get_turf(src.loc)
 				var/count = 20
 				var/obj/spawn_item
 				for (var/mob/living/L in oview(5, src.loc))
 					spawn_item = pick(throw_objs)
-					var/obj/O = new spawn_item(T)
+					var/obj/O = new spawn_item(origin)
 					if (istype(O,/obj/item/reagent_containers/patch))
 						var/obj/item/reagent_containers/patch/P = O
 						P.good_throw = 1
-					O.throw_at(L,5,3)
+					O.throw_at(L, meat_shield ? 2 : 5, 3) // thrown short of target
 					count--
 				if (count > 0)
 					for (var/turf/target in oview(4,src.loc))
 						if (prob(4))
 							spawn_item = pick(throw_objs)
-							var/obj/O = new spawn_item(T)
+							var/obj/O = new spawn_item(origin)
 							if (istype(O,/obj/item/reagent_containers/patch))
 								var/obj/item/reagent_containers/patch/P = O
 								P.good_throw = 1
-							O.throw_at(target,4,3)
+							O.throw_at(target,meat_shield ? 2 : 4,3)
 							count--
 						if (count <= 0)
 							break;
