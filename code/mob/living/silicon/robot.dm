@@ -2826,7 +2826,10 @@
 				var/image/clothed_image = U.wear_image
 				if (!clothed_image)
 					continue
-				clothed_image.icon_state = U.icon_state
+				if (U.wear_state)
+					clothed_image.icon_state = U.wear_state
+				else
+					clothed_image.icon_state = U.icon_state
 				//under_image.layer = MOB_CLOTHING_LAYER
 				clothed_image.alpha = U.alpha
 				clothed_image.color = U.color
