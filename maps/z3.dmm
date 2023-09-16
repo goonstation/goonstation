@@ -16064,6 +16064,15 @@
 	},
 /turf/space,
 /area/space)
+"dhZ" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "djW" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16457,6 +16466,9 @@
 "esg" = (
 /obj/machinery/light/small/iomoon{
 	dir = 1
+	},
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
 	},
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
@@ -19760,6 +19772,9 @@
 	dir = 8
 	},
 /obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "mWO" = (
@@ -20362,6 +20377,12 @@
 	},
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"oMW" = (
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "oNj" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -21188,6 +21209,9 @@
 	pixel_x = 22;
 	name = "button";
 	id = "balor_tele_in"
+	},
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
 	},
 /turf/unsimulated/floor/black,
 /area/helldrone)
@@ -23844,6 +23868,21 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
+"xnW" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "xoi" = (
 /obj/item/scissors,
 /turf/simulated/floor/grime,
@@ -34116,7 +34155,7 @@ bgu
 bgu
 krR
 bgu
-oua
+oMW
 oua
 bgu
 xic
@@ -37436,7 +37475,7 @@ rmW
 oua
 oua
 bgu
-onT
+dhZ
 krR
 bgu
 oua
@@ -40165,7 +40204,7 @@ tNm
 qKa
 bgu
 bgu
-tuq
+xnW
 oua
 bgu
 bgu

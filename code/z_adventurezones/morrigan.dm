@@ -259,6 +259,60 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	return list(access_morrigan_bridge, access_morrigan_medical, access_morrigan_CE, access_morrigan_captain, access_morrigan_RD, access_morrigan_engineering,
 	access_morrigan_factory, access_morrigan_HOS, access_morrigan_meetingroom, access_morrigan_customs, access_morrigan_exit, access_morrigan_science,
 	access_morrigan_mdir, access_morrigan_security, access_morrigan_janitor, access_morrigan_specialist)
+//decals
+/obj/decal/poster/wallsign/morrigan
+	name = "ADF Morrigan"
+	desc = "Poster of ADF Morrigan, looks very fancy!"
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "morrigan"
+
+/obj/decal/poster/wallsign/report
+	name = "Vigilance Poster"
+	desc = "Keen eyes keep the station safe! Report suspicious behavior to Security."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "report"
+
+/obj/decal/poster/wallsign/betray
+	name = "Not too late!"
+	desc = "You have a place here, with us, the Syndicate."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "n_for_s"
+
+/obj/decal/poster/wallsign/looselips
+	name = "Loose Lips"
+	desc = "Loose Lips Sink SpaceShips."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "looselips"
+
+/obj/decal/poster/wallsign/you4s
+	name = "Join Security"
+	desc = "Help keep your station secure today."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "you_4_s"
+
+/obj/decal/poster/wallsign/mod21
+	name = "Mod. 21 Deneb"
+	desc = "Our new staple ! With multiple functions!"
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "mod21"
+
+/obj/decal/poster/wallsign/syndicateposter
+	name = "Syndicate Poster"
+	desc = "A poster promoting the Syndicate."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "wall_poster_syndicate"
+
+/obj/decal/poster/wallsign/syndicatebanner
+	name = "Syndicate Banner"
+	desc = "A banner promoting the Syndicate"
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "syndicateposter"
+
+/obj/decal/poster/wallsign/nomask
+	name = "No Masks"
+	desc = "No Masks in this area."
+	icon = 'icons/obj/decals/posters.dmi'
+	icon_state = "nomask"
 
 //fake objects
 /obj/decal/fakeobjects/hafmech
@@ -266,6 +320,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon = 'icons/obj/adventurezones/morrigan/decoration.dmi'
 	bound_width = 128
 	bound_height = 128
+	density = TRUE
 /obj/decal/fakeobjects/hafmech
 	name = "Big Machine"
 	desc = "This does not come in smaller sizes..."
@@ -477,6 +532,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /obj/decal/fakeobjects/ships/dronebomb
 	name = "Prototype Drone"
 	icon_state = "dronebomb"
+
+/obj/decoration/ntcratesmall/syndicrate
+	name = "Metal Crate"
+	icon_state = "syndiecrate"
+
+/obj/decoration/ntcratesmall/opencrate
+	name = "Open Crate"
+	icon_state = "opencrate"
 //NPCS for Morrigan
 /mob/living/carbon/human/hobo
 	New()
@@ -2257,6 +2320,7 @@ mob/living/carbon/human/morrigan_prisoner
 /obj/machinery/door/poddoor/buff/morrigan_lockdown
 	name = "lockdown door"
 	desc = "door used for lockdowns."
+	autoclose = FALSE
 
 	New()
 		..()
@@ -2271,6 +2335,7 @@ mob/living/carbon/human/morrigan_prisoner
 /obj/machinery/door/poddoor/buff/morrigan_lockdown_broken
 	name = "lockdown door"
 	desc = "door used for lockdowns. This one seems to be malfunctioning."
+	autoclose = FALSE
 
 	New()
 		..()
@@ -2782,7 +2847,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 			shoot_reflected_bounce(proj, hit, 2, PROJ_NO_HEADON_BOUNCE)
 			shot_volume = 100
 		if(proj.reflectcount >= 2)
-			elecflash(get_turf(hit),radius=0, power=3, exclude_center = 0)
+			elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
 
 /datum/projectile/laser/smgminelethal
 	name = "Lethal Mode"
@@ -2857,7 +2922,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	slots = 7
 	check_wclass = 1
 	gun_type = /obj/item/gun/energy/peacebringer
-	can_hold = list(/obj/item/gun/energy/)
+	can_hold = list(/obj/item/gun/energy/peacebringer)
 	can_hold_exact = list(/obj/item/gun/energy/peacebringer)
 	spawn_contents = list(/obj/item/gun/energy/peacebringer)
 

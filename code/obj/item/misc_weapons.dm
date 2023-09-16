@@ -2049,7 +2049,7 @@ obj/item/whetstone
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "tactical_hammer"
 
-	force = 25
+	force = 17
 	throwforce = 20
 	stamina_cost = 25
 	stamina_damage = 35
@@ -2061,7 +2061,6 @@ obj/item/whetstone
 	w_class = W_CLASS_NORMAL
 	two_handed = FALSE
 	c_flags = ONBELT
-	tool_flags = TOOL_CHOPPING
 	flags = FPRINT | TABLEPASS | USEDELAY | NOSHIELD
 
 	proc/set_properties()
