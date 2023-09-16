@@ -1562,7 +1562,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	proc/makeshift_laser_crafting(var/atom/to_combine_atom, var/mob/user)
 		user.show_text("You wrench [src] into one long pipe!")
 		user.u_equip(src)
-		playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
 		var/obj/item/gun/kinetic/zipgun/new_gun = new/obj/item/makeshift_laser_barrel
 		user.put_in_hand_or_drop(new_gun)
 		qdel(src)

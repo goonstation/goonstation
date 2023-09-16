@@ -1953,7 +1953,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			var/obj/item/removed_cell = our_cell
 			SEND_SIGNAL(src, COMSIG_CELL_SWAP, null)
 			boutput(user,"<span class='notice'>You disconnect [our_cell] from [src].</span>")
-			playsound(src, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
 			user.put_in_hand_or_drop(removed_cell)
 			return
 		else if (istype(W, /obj/item/cell) && !our_cell)
@@ -1963,14 +1963,14 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			return
 		else if (issnippingtool(W) && our_light)
 			boutput(user,"<span class='notice'>You remove [our_light] from the barrel.</span>")
-			playsound(src, 'sound/items/Wirecutter.ogg', 50, 1)
+			playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
 			user.put_in_hand_or_drop(our_light)
 			our_light = null
 			update_icon()
 			return
 		else if (istype(W, /obj/item/light/tube) && !our_light)
 			boutput(user,"<span class='notice'>You place [W] inside of the barrel and redo the wiring.</span>")
-			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
+			playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
 			user.u_equip(W)
 			our_light = W
 			W.set_loc(src)
@@ -2051,7 +2051,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		var/obj/item/sheet/W = to_combine_atom
 		if (W.material.getMaterialFlags() & MATERIAL_METAL && W.amount >= 4)
 			boutput(user,"<span class='notice'>You construct a stock and grip for the barrel.</span>")
-			playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
+			playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
 			W.change_stack_amount(-4)
 			name = "pipe/stock assembly"
 			desc = "A gun of some kind? It seems unfinished."
@@ -2073,7 +2073,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	proc/add_lighttube(var/atom/to_combine_atom, var/mob/user)
 		var/obj/item/light/tube/T = to_combine_atom
 		boutput(user,"<span class='notice'>You place [T] inside of the barrel.</span>")
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
 		user.u_equip(T)
 		our_light = T
 		T.set_loc(src)
@@ -2087,7 +2087,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	proc/add_timer(var/atom/to_combine_atom, var/mob/user)
 		var/obj/item/device/timer/T = to_combine_atom
 		boutput(user,"<span class='notice'>You attach the timer to [src].</span>")
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
+		playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
 		user.u_equip(T)
 		qdel(T)
 		name = "pipe/stock/light/timer assembly"
