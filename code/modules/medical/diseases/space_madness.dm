@@ -109,6 +109,6 @@
 
 /datum/ailment/disease/space_madness/on_remove(var/mob/living/affected_mob, var/datum/ailment_data/D)
 	if (affected_mob?.client)
-		affected_mob.client.dir = 1 // Reset their view of the map. Yes, this was missing for many years (Convair880).
+		affected_mob.client.dir = NORTH // Reset their view of the map. Yes, this was missing for many years (Convair880).
 	..()
 	return
