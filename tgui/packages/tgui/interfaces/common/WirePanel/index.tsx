@@ -2,7 +2,8 @@
 import { useBackend } from "../../../backend";
 import { Blink, Box, Button, Divider, Flex, Section, Stack, Tooltip } from "../../../components";
 import { capitalize } from "../stringUtils";
-import { IndicatorProps, WirePanelActions, WirePanelControlLabels, WirePanelControls, WirePanelCoverStatus, WirePanelData, WireProps } from "./type";
+import type { WirePanelData, WireProps, IndicatorProps } from './type';
+import { WirePanelControls, WirePanelCoverStatus, WirePanelActions, WirePanelControlLabels } from './const';
 
 export const TextWires = (props, context) => {
   const { act, data } = useBackend<WirePanelData>(context);

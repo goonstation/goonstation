@@ -1,6 +1,8 @@
 import { Window } from '../layouts';
 import { Box, Collapsible, Dimmer, Icon, Section, Stack } from "../components";
-import { WirePanelControls, WirePanelCoverStatus, WirePanelData, WirePanelDynamic, WirePanelTheme, WirePanelThemes } from './common/WirePanel/type';
+import type { WirePanelData, WirePanelDynamic, WirePanelTheme } from './common/WirePanel/type';
+import { WirePanelControls, WirePanelCoverStatus, WirePanelThemes } from './common/WirePanel/const';
+
 import { TextWires, PhysicalWires, TextControls, PhysicalControls } from './common/WirePanel';
 import { useBackend } from '../backend';
 import { InfernoNode } from 'inferno';
@@ -149,3 +151,4 @@ export const RemoteAccessBlocker = (props:WirePanelComponentProps) => {
     );
   }
 };
+
