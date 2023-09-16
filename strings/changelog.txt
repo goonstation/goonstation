@@ -1,4 +1,9 @@
 
+(t)sat sep 16 23
+(u)Ryou (Glamurio)
+(p)15262
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)Adds chili cheese fries. Yummy!
 (t)fri sep 15 23
 (u)Lord_Earthfire
 (p)14516
