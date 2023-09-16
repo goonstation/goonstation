@@ -74,7 +74,7 @@
 			src.reagents.add_reagent(current_id, min(R.volume * 5, 50))
 
 		var/oldcolor = src.reagents.get_master_color()
-		var/icon/I = new /icon('icons/misc/critter.dmi',"golem")
+		var/icon/I = new /icon('icons/mob/critter/humanoid/golem.dmi',"golem")
 		I.Blend(oldcolor, ICON_ADD)
 		src.icon = I
 		src.faction = FACTION_WIZARD
