@@ -1867,8 +1867,10 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 /obj/item/gun/energy/makeshift
 	name = "makeshift laser rifle"
 	icon = 'icons/obj/large/64x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "makeshift-energy"
 	item_state = "makeshift_laser"
+	wear_state = "makeshift_laser"
 	w_class = W_CLASS_BULKY
 	c_flags = ONBACK
 	cell_type = null
@@ -1997,7 +1999,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		else
 			src.UpdateOverlays(null, "gun_light")
 
-		if (heat > 90) // danger zone
+		if (heat > 70) // danger of breaking
 			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", 'icons/obj/large/64x32.dmi', "makeshift-smoke")
 			src.UpdateOverlays(overlay_image, "gun_smoke")
 		else
