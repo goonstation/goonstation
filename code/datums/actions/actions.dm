@@ -727,6 +727,27 @@
 
 		logTheThing(LOG_COMBAT, owner, "attempts to handcuff [constructTarget(target,"combat")] with [cuffs] at [log_loc(owner)].")
 
+		if (!is_incapacitated(target)) // same check in both onStart and onEnd.
+			if (target.a_intent == INTENT_HELP)
+				if (owner.dir != target.dir)
+					owner.tri_message(target,
+						"<span class='alert'><B>[owner] attempts to handcuff [target],</B> \
+							but [he_or_she(owner)] can't reach [target]'s back.</span>",
+						"<span class='alert'>[target]'s back isn't turned! Cuff them from behind.</span>",
+						"<span class='alert'><B>[owner] can't cuff you from this angle!</B> Turn your back to cooperate.</span>"
+					)
+					interrupt(INTERRUPT_ALWAYS)
+					return
+			else
+				owner.tri_message(target,
+					"<span class='alert'><B>[owner] attempts to handcuff [target]. \
+						[he_or_she(target)] dodge[target.get_pronouns().pluralize ? "s" : ""] away!</B></span>",
+					"<span class='alert'>[target] slips from your grasp! Pin or incapacitate them first.</span>",
+					"<span class='alert'><B>You evade [owner]'s handcuff attempt!</B> Use help intent and turn your back to cooperate.</span>"
+				)
+				interrupt(INTERRUPT_ALWAYS)
+				return
+
 		duration *= cuffs.apply_multiplier
 
 		if(ishuman(owner))
@@ -742,6 +763,27 @@
 		var/mob/ownerMob = owner
 		if(!istype(ownerMob) || !target || !cuffs || target.hasStatus("handcuffed") || cuffs != ownerMob.equipped() || BOUNDS_DIST(owner, target) != 0)
 			return
+
+		if (!is_incapacitated(target))
+			if (target.a_intent == INTENT_HELP)
+				if (owner.dir != target.dir)
+					owner.tri_message(target,
+						"<span class='alert'><B>[owner] attempts to handcuff [target],</B> \
+							but [he_or_she(owner)] can't reach [target]'s back.</span>",
+						"<span class='alert'>[target]'s back isn't turned! Cuff them from behind.</span>",
+						"<span class='alert'><B>[owner] can't cuff you from this angle!</B> Turn your back to cooperate.</span>"
+					)
+					interrupt(INTERRUPT_ALWAYS)
+					return
+			else
+				owner.tri_message(target,
+					"<span class='alert'><B>[owner] attempts to handcuff [target]. \
+						[he_or_she(target)] dodge[target.get_pronouns().pluralize ? "s" : ""] away!</B></span>",
+					"<span class='alert'>[target] slips from your grasp! Pin or incapacitate them first.</span>",
+					"<span class='alert'><B>You evade [owner]'s handcuff attempt!</B> Use help intent and turn your back to cooperate.</span>"
+				)
+				interrupt(INTERRUPT_ALWAYS)
+				return
 
 		if (initial(cuffs.amount) > 1)
 			if (cuffs.amount < 1)
