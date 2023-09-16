@@ -979,6 +979,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 				return
 			if (isintangible(user))
 				boutput(user, "<span class='alert'>You have to be physically present for this!</span>")
+				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/cellRef = params["cellRef"]
 			if(cellRef)
