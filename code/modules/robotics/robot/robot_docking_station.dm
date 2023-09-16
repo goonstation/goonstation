@@ -977,7 +977,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (user == src.occupant)
 				boutput(user, "<span class='alert'>You can't modify your own power cell!</span>")
 				return
-			if (isintangible(user))
+			if (isAIeye(user))
 				boutput(user, "<span class='alert'>You have to be physically present for this!</span>")
 				return
 			var/mob/living/silicon/robot/R = src.occupant
@@ -1000,6 +1000,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 			. = TRUE
 		if("cell-remove")
 			if (!isrobot(src.occupant))
+				return
+			if (isAIeye(user))
+				boutput(user, "<span class='alert'>You have to be physically present for this!</span>")
 				return
 			if (user == src.occupant)
 				boutput(user, "<span class='alert'>You can't modify your own power cell!</span>")
