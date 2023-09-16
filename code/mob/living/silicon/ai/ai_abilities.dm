@@ -45,6 +45,8 @@
 						return expansion
 
 /datum/targetable/ai/module
+	icon_state = "ai_template"
+
 	castcheck(atom/target)
 		. = ..()
 		if(.)
@@ -111,7 +113,7 @@
 				D.icon_state = "chempuff"
 				D.layer = EFFECTS_LAYER_BASE
 
-				playsound(cam, 'sound/machines/mixer.ogg', 50, 1)
+				playsound(cam, 'sound/machines/mixer.ogg', 50, TRUE)
 
 				logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires [src.name], creating metal foam at [log_loc(T)].")
 
@@ -200,12 +202,12 @@
 				animate(cam.get_filter("charge_outline"), size=0.5, time=charge_time)
 				SPAWN(charge_time)
 					logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires a camera projectile [src.name], targeting [key_name(target)] [log_loc(target)].")
-					shoot_projectile_ST(cam, P, target)
+					shoot_projectile_ST_pixel_spread(cam, P, target)
 					if(P.cost > 1)
 						if (issilicon(cam))
 							var/mob/living/silicon/S = cam
 							if (S.cell)
-								S.cell.charge -= P.cost
+								S.cell.use(P.cost)
 						else
 							cam.use_power(P.cost / CELLRATE)
 					cam.remove_filter("charge_outline")
@@ -500,7 +502,7 @@
 
 		if(C)
 			logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] activates AI [src.name], targeting [log_loc(target)].")
-			playsound(C, 'sound/weapons/flash.ogg', 100, 1)
+			playsound(C, 'sound/weapons/flash.ogg', 100, TRUE)
 			C.visible_message("[C] emits a sudden flash.")
 			for (var/atom/A in oviewers((flash_range), get_turf(C)))
 				var/mob/living/M

@@ -9,24 +9,24 @@
 		real_name = "Cyalume Knight"
 		desc = "A knight of modern times."
 
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-		src.equip_new_if_possible(/obj/item/card/id/syndicate, slot_wear_id)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
 		var/obj/item/clothing/mask/gas/my_mask = new /obj/item/clothing/mask/gas/swat(src)
 		my_mask.vchange = new(src) // apply voice changer on the mask
-		src.equip_if_possible(my_mask, slot_wear_mask)
-		src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
+		src.equip_if_possible(my_mask, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/storage/belt/security, SLOT_BELT)
 
-		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, slot_r_store)
+		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
 
 		my_sword = new /obj/item/sword(src)
 		my_sword.bladecolor = "P"
-		src.equip_if_possible(my_sword, slot_l_store)
+		src.equip_if_possible(my_sword, SLOT_L_STORE)
 
 		src.add_ability_holder(/datum/abilityHolder/cyalume_knight)
 		abilityHolder.addAbility(/datum/targetable/cyalume_knight/recall_sword)
@@ -90,7 +90,7 @@
 	name = "Cyalume Knight Helmet"
 	desc = "An ominous armored article of clothing."
 	icon_state = "cknight_hood"
-	see_face = 0
+	see_face = FALSE
 
 /atom/movable/screen/ability/topBar/cyalume_knight
 	clicked(params)
@@ -221,7 +221,7 @@
 			return 1
 
 		my_mob.visible_message("<span class='alert'><b>[holder.owner] raises his hand into the air wide open!</b></span>")
-		playsound(sword, 'sound/effects/gust.ogg', 70, 1)
+		playsound(sword, 'sound/effects/gust.ogg', 70, TRUE)
 
 		if (ismob(sword.loc))
 			if(sword.loc == my_mob)
@@ -232,18 +232,16 @@
 				HH.visible_message("<span class='alert'>[sword] somehow escapes [HH]'s grasp!</span>", "<span class='alert'>The [sword] somehow escapes your grasp!</span>")
 				HH.u_equip(sword)
 				sword.set_loc(get_turf(HH))
-		if (istype(sword.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = sword.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(sword)
-			sword.set_loc(get_turf(sword))
-			sword.visible_message("<span class='alert'>[sword] somehow escapes the [S_temp] that it was inside of!</span>")
+		if (sword.stored)
+			var/atom/previous_storage = sword.stored.linked_item
+			sword.stored.transfer_stored_item(sword, get_turf(sword))
+			sword.visible_message("<span class='alert'>[sword] somehow escapes the [previous_storage] that it was inside of!</span>")
 
 		// assuming no super weird things happened, the sword should be on the ground at this point
 		for(var/i=0, i<100, i++)
 			step_to(sword, my_mob)
 			if (BOUNDS_DIST(sword, my_mob) == 0)
-				playsound(my_mob, 'sound/effects/throw.ogg', 50, 1)
+				playsound(my_mob, 'sound/effects/throw.ogg', 50, TRUE)
 				sword.set_loc(get_turf(my_mob))
 				if (my_mob.put_in_hand(sword))
 					my_mob.visible_message("<span class='alert'><b>[my_mob] catches the [sword]!</b></span>")
@@ -307,7 +305,7 @@
 		var/current_angle = start_angle
 		var/i
 		for(i = 0; i < num_projectiles; i++)
-			var/obj/projectile/P = initialize_projectile_ST(holder.owner, fired_projectile, target)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, fired_projectile, target)
 			if (P)
 				P.mob_shooter = holder.owner
 				P.rotateDirection(current_angle)
@@ -598,7 +596,7 @@
 			M.take_oxygen_deprivation(-15)
 			M.losebreath = max(0, M.losebreath - 10)
 			M.visible_message("<span class='alert'>Some of [M]'s wounds slowly fade away!</span>", "<span class='alert'>Your wounds begin to fade away.</span>")
-			playsound(M, 'sound/items/mender.ogg', 50, 1)
+			playsound(M, 'sound/items/mender.ogg', 50, TRUE)
 		else
 			..()
 			boutput(M, "<span class='alert'>You don't have any lingering wounds to heal.</span>")
@@ -710,7 +708,7 @@
 		if(user.bioHolder && mutations_length)
 			var/turf/T = get_turf(user)
 			T.visible_message("<span class='notice'>\The [src] envelops [user] in [envelop_message] before [leaving_message]!</span>")
-			playsound(T, 'sound/effects/mag_warp.ogg', 70, 1)
+			playsound(T, 'sound/effects/mag_warp.ogg', 70, TRUE)
 			for (var/i = 1 to mutations_length)
 				var/datum/mutation_orb_mutdata/mut = mutations_to_add[i]
 
@@ -789,7 +787,7 @@
 			var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 			lightbeam.set_loc(T)
 			lightbeam.alpha = 0
-			playsound(T, 'sound/voice/heavenly.ogg', 50, 1, 0)
+			playsound(T, 'sound/voice/heavenly.ogg', 50, TRUE, 0)
 			animate(lightbeam, alpha=255, time=3.5 SECONDS)
 			SPAWN(30)
 				animate(lightbeam,alpha = 0, time=3.5 SECONDS)
@@ -834,6 +832,24 @@
 		return
 
 	afterattack(var/atom/target, mob/user, flag)
+		if (istype(target, /obj/item/clothing/))
+			if (apply_property(target)) // some property got changed, display a message and delete src
+				var/turf/T = get_turf(target)
+				playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
+				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!</span>")
+				if (src.loc)
+					if (ishuman(src.loc))
+						var/mob/living/carbon/human/wearer = src.loc
+						wearer.update_clothing()
+						wearer.update_equipped_modifiers() // required for things like movespeed changes
+				qdel(src)
+			else // nothing got changed, stats might be at cap already
+				boutput(user, "<span class='notice'>You can't seem to find a way to improve \the [target] with \the [src].</span>")
+
+		else
+			..()
+
+	proc/apply_property(var/atom/target)
 		var/did_something = 0
 
 		if (istype(target, /obj/item/clothing/))
@@ -865,29 +881,17 @@
 							target_clothing.setProperty(property.property_name, property.property_value)
 							did_something = 1
 
-			if (did_something) // some property got changed, display a message and delete src
-				var/turf/T = get_turf(target)
-				playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
-				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!</span>")
-				if (length(src.prefix_to_set))
-					target.name_prefix(prefix_to_set)
-					target.UpdateName()
-				if (length(src.suffix_to_set))
-					target.name_suffix(suffix_to_set)
-					target.UpdateName()
-				if (src.color_to_set)
-					target.color = src.color_to_set
-				if (src.loc)
-					if (ishuman(src.loc))
-						var/mob/living/carbon/human/wearer = src.loc
-						wearer.update_clothing()
-						wearer.update_equipped_modifiers() // required for things like movespeed changes
-				qdel(src)
-			else // nothing got changed, stats might be at cap already
-				boutput(user, "<span class='notice'>You can't seem to find a way to improve \the [target] with \the [src].</span>")
+				if(did_something)
+					if (length(src.prefix_to_set))
+						target.name_prefix(prefix_to_set)
+						target.UpdateName()
+					if (length(src.suffix_to_set))
+						target.name_suffix(suffix_to_set)
+						target.UpdateName()
+					if (src.color_to_set)
+						target.color = src.color_to_set
 
-		else
-			..()
+		return did_something
 
 /obj/item/property_setter/fire_jewel
 	name = "fire jewel"

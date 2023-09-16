@@ -1300,7 +1300,12 @@ TYPEINFO(/obj/machinery/networked/nuclear_charge)
 						src.icon_state = "net_nuke0"
 						src.post_status(target,"command","term_message","data","command=status&status=success&session=[sessionid]")
 						//World announcement.
-						boutput(world, "<span class='alert'><B>Alert: Self-Destruct Sequence has been disengaged!</B></span>")
+						if (src.z == Z_LEVEL_STATION)
+							command_alert("The [station_or_ship()]'s detonation has been aborted. Please return to your regular duties.", "Self-Destruct Aborted", alert_origin = ALERT_STATION)
+							playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
+						else
+							command_alert("The nuclear charge at [get_area(src)] has been de-activated.", "Nuclear Charge De-activated", alert_origin = ALERT_STATION)
+							playsound_global(world, 'sound/misc/announcement_1.ogg', 25)
 						post_display_status(-1)
 						return
 
@@ -2247,19 +2252,24 @@ TYPEINFO(/obj/machinery/networked/printer)
 				scanned_thing = null
 			else
 				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
-					usr.drop_item()
-					I.set_loc(src)
-					src.scanned_thing = I
-					boutput(usr, "You insert [I].")
-				else if (istype(I, /obj/item/magtractor))
+				if (istype(I, /obj/item/magtractor))
 					var/obj/item/magtractor/mag = I
 					if (istype(mag.holding, /obj/item/paper) || istype(mag.holding, /obj/item/photo))
 						I = mag.holding
 						mag.dropItem(0)
-						I.set_loc(src)
-						src.scanned_thing = I
-						boutput(usr, "You insert [I].")
+					else
+						return
+				else if (istype(I, /obj/item/paper) || istype(I, /obj/item/photo))
+					usr.drop_item()
+				else
+					return
+				I.set_loc(src)
+				src.scanned_thing = I
+				boutput(usr, "You insert [I].")
+				SPAWN(0)
+					if(!scan_document())
+						use_power(200)
+
 			src.power_change()
 			src.updateUsrDialog()
 
@@ -3776,13 +3786,13 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				if (!src.active)
 					src.visible_message("<b>[src.name]</b> pings.")
 					src.active = 0
-					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+					playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 					src.UpdateIcon()
 				return
 
 			src.visible_message("<b>[src.name]</b> pings.")
 			src.active = 0
-			playsound(src, 'sound/machines/chime.ogg', 50, 1)
+			playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
 			src.UpdateIcon()
 
 		return
@@ -3802,7 +3812,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				return
 
 		if (I.w_class < W_CLASS_BULKY)
-			if (src.contents.len < src.setup_max_objects)
+			if (length(src.contents) < src.setup_max_objects)
 				if(I.cant_drop)
 					return
 				if (mag)
@@ -3983,7 +3993,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			src.sensed[2] = "0"
 
 		src.visible_message("<b>[src.name]</b> registers an impact and chimes.")
-		playsound(src, 'sound/machines/chime.ogg', 50, 1)
+		playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
 
 /obj/machinery/networked/test_apparatus/electrobox
 	name = "Electrical Testing Apparatus"
@@ -4389,7 +4399,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 
 					SPAWN(5 SECONDS)
 						src.visible_message("<b>[src.name]</b> finishes working and shuts down.")
-						playsound(src, 'sound/machines/chime.ogg', 50, 1)
+						playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
 						active = 0
 						src.UpdateIcon()
 				else
@@ -4480,9 +4490,8 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				src.temperature -= min(5, src.temperature-src.temptarget)
 
 			if (src.temperature != 310)
-				for (var/obj/M in src.loc.contents)
-					if (istype(M.artifact,/datum/artifact/))
-						M.ArtifactStimulus("heat", temperature)
+				for (var/atom/movable/AM in src.loc.contents)
+					AM.temperature_expose(null, src.temperature, CELL_VOLUME)
 
 			if (src.stopattarget && src.temperature == src.temptarget)
 				src.active = 0
@@ -4764,11 +4773,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 					APPLY_TO_GASES(_SET_SENSED_GAS)
 					#undef _SET_SENSED_GAS
 
-					var/tgmoles = 0
-					if(length(air_sample.trace_gases))
-						for(var/datum/gas/trace_gas as anything in air_sample.trace_gases)
-							tgmoles += trace_gas.moles
-					sensed.Add(round(100*tgmoles/total_moles, 0.1))
 				else
 					sensed = list("???")
 
@@ -4812,14 +4816,14 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 		..()
 
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", .proc/fire0)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", .proc/fire1)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", .proc/fire2)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", .proc/fire3)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", .proc/fire4)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", .proc/fire5)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", .proc/fire6)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", .proc/fire7)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 0", PROC_REF(fire0))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 1", PROC_REF(fire1))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 2", PROC_REF(fire2))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 3", PROC_REF(fire3))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 4", PROC_REF(fire4))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 5", PROC_REF(fire5))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 6", PROC_REF(fire6))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"input 7", PROC_REF(fire7))
 
 	return_html_interface()
 		. = {"<b>INPUT STATUS</b>

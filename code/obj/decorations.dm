@@ -78,7 +78,7 @@
 					return
 				src.falling = TRUE
 				src.animate_fall()
-				playsound(src, 'sound/effects/treefall.ogg', 70, 0)
+				playsound(src, 'sound/effects/treefall.ogg', 70, FALSE)
 				src.visible_message("<span class='alert'>\The [src] falls!</span>", "<span class='alert'>You hear a [src] fall, and thus prove that it has.</span>")
 				SPAWN(src.fall_time)
 					src.falling = FALSE
@@ -265,7 +265,7 @@
 			graze(user)
 			return 0
 
-		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, -1)
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, -1)
 
 		var/original_x = pixel_x
 		var/original_y = pixel_y
@@ -329,7 +329,7 @@
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
-		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, 0)
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, 0)
 		src.take_damage(W.force)
 		user.visible_message("<span class='alert'><b>[user] hacks at [src] with [W]!</b></span>")
 
@@ -575,7 +575,7 @@
 	anchored = ANCHORED
 	density = 0
 	opacity = 0
-	layer = FLY_LAYER+1.01 // just above windows
+	layer = EFFECTS_LAYER_UNDER_3 // below lights, above windoors
 	var/base_state = "blindsH"
 	var/open = 1
 	var/id = null
@@ -795,7 +795,7 @@
 	proc/toggle_group()
 		if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
 			switched_obj_toggle(SWOB_SIGNAGE,src.id,!(src.on))
-			playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
+			playsound(src, 'sound/misc/lightswitch.ogg', 50, TRUE)
 
 	attack_hand(mob/user)
 		src.toggle_group()
@@ -987,14 +987,14 @@
 	star_red
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-red"
-		name = "Shidd"
-		desc = "A dying red subgiant star shrouded in cast-off shells of gas."
+		name = "Fugere" // formerly known as fugg
+		desc = "A dying red subgiant star shrouded in cast-off shells of gas. Its name derives from the Latin verb, meaning to run away. It's sometimes called Fugg for short."
 
 	star_blue
 		icon = 'icons/misc/galactic_objects_large.dmi'
 		icon_state = "star-blue"
-		name = "Fugg"
-		desc = "A blazing young blue star."
+		name = "Šid" // formerly known as Shidd, and the two stars were named the other way around once
+		desc = "A blazing young blue star. Its name derives from the ancient persian name, Jamšid, where šid means brilliant or radiant. It's sometimes called Shidd for laughs."
 
 
 	domus_dei
@@ -1217,7 +1217,7 @@ obj/decoration/ceilingfan
 				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
-				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				boutput(user, "<span class='alert'>With a single flick of [his_or_her(user)] wrist, [user] smoothly lights [src] with [W]. Damn [hes_or_shes(user)] cool.</span>")
 				src.lit = 1
 				UpdateIcon()
 
@@ -1580,7 +1580,7 @@ obj/decoration/gibberBroken
 				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
-				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				boutput(user, "<span class='alert'>With a single flick of [his_or_her(user)] wrist, [user] smoothly lights [src] with [W]. Damn [hes_or_shes(user)] cool.</span>")
 				src.lit = 1
 				UpdateIcon()
 
@@ -1615,7 +1615,7 @@ obj/decoration/gibberBroken
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return

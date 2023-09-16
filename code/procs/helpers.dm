@@ -138,7 +138,7 @@ var/global/obj/fuckyou/flashDummy
 					target_r = L
 					continue
 
-	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, 1)
+	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, TRUE)
 
 	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
@@ -188,7 +188,11 @@ proc/castRay(var/atom/A, var/Angle, var/Distance) //Adapted from some forum stuf
 	* Returns the angle between two given atoms
 	*/
 proc/get_angle(atom/a, atom/b)
-    .= arctan(b.y - a.y, b.x - a.x)
+	var/turf/a_turf = get_turf(a)
+	var/turf/b_turf = get_turf(b)
+	if (isnull(a_turf) || isnull(b_turf))
+		return null
+	. = arctan(b_turf.y - a_turf.y, b_turf.x - a_turf.x)
 
 /turf/var/movable_area_next_type = null
 /turf/var/movable_area_prev_type = null
@@ -330,26 +334,16 @@ proc/get_angle(atom/a, atom/b)
 		index = findtext(t, "\t")
 	return t // fuk.
 
-/proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN, var/no_fucking_autoparse = 0)
+/proc/strip_html(var/t,var/limit=MAX_MESSAGE_LEN, var/no_fucking_autoparse = 0, strip_newlines=TRUE)
 	t = html_decode(copytext(t,1,limit))
 	if (no_fucking_autoparse == 1)
 		var/list/bad_characters = list("_", "'", "\"", "<", ">", ";", "[", "]", "{", "}", "|", "\\", "/")
 		for(var/c in bad_characters)
 			t = replacetext(t, c, "")
 
-	// html_encode(t) will convert < and > to &lt; and &gt;
-	// which will allow them to be used (safely) in messages
-	t = html_encode(t)
-
-	// var/index = findtext(t, "<")
-	// while(index)
-	// 	t = copytext(t, 1, index) + "&lt;" + copytext(t, index+1)
-	// 	index = findtext(t, "<")
-	// index = findtext(t, ">")
-	// while(index)
-	// 	t = copytext(t, 1, index) + "&gt;" + copytext(t, index+1)
-	// 	index = findtext(t, ">")
-	. = sanitize(t)
+	. = html_encode(t)
+	if (strip_newlines)
+		. = sanitize(.)
 
 /proc/strip_html_tags(var/t,var/limit=MAX_MESSAGE_LEN)
 	. = html_decode(copytext(t,1,limit))
@@ -695,7 +689,7 @@ proc/get_angle(atom/a, atom/b)
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
 //Mentor just changes the private message link
-/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null)
+/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null, ckey_and_alt_key = FALSE)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
@@ -757,7 +751,10 @@ proc/get_angle(atom/a, atom/b)
 			if (the_client.holder && the_client.stealth && !include_details)
 				text += "Administrator"
 			else if (the_client.holder && the_client.alt_key && !include_details)
-				text += "[the_client.fakekey]"
+				if(ckey_and_alt_key && FALSE)
+					text += "[the_key] (as [the_client.fakekey])"
+				else
+					text += "[the_client.fakekey]"
 			else
 				text += "[the_key]"
 		else
@@ -776,7 +773,7 @@ proc/get_angle(atom/a, atom/b)
 				text += html_encode(the_mob.name)
 			text += " "
 			if (the_client && !the_client.holder) //only show this stuff for non-admins because admins do a lot of shit while dead and it is unnecessary to show it
-				if (checktraitor(the_mob))
+				if (the_mob.mind?.is_antagonist())
 					text += "\[<font color='red'>T</font>\] "
 				if (isdead(the_mob))
 					text += "\[DEAD\] "
@@ -785,7 +782,9 @@ proc/get_angle(atom/a, atom/b)
 			if (admins)
 				linkSrc = "%admin_ref%"
 			else
-				linkSrc = "\ref[usr.client.holder]"
+				if (isnull(user))
+					user = usr
+				linkSrc = "\ref[user.client.holder]"
 			text += "<a href='byond://?src=[linkSrc]&action=adminplayeropts&targetckey=[the_mob.ckey]' class='popt'><i class='icon-info-sign'></i></a>"
 
 	return text
@@ -1168,7 +1167,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	var/list/name_temp = splittext(playerName, " ")
 	if (!name_temp.len)
 		playerName = "Unknown"
-	else if (name_temp.len == 1)
+	else if (length(name_temp) == 1)
 		playerName = name_temp[1]
 	else //Ex: John Smith becomes JSmith
 		playerName = copytext( ( copytext(name_temp[1],1, 2) + name_temp[name_temp.len] ), 1, 16)
@@ -1227,17 +1226,36 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 		. += M.loc
 		M = M.loc
 
+proc/outermost_movable(atom/movable/target)
+	RETURN_TYPE(/atom/movable)
+	if (!ismovable(target))
+		return null
+	var/atom/movable/M = target
+	while (ismovable(M.loc))
+		M = M.loc
+	. = M
+
 /proc/all_hearers(var/range,var/centre)
 	. = list()
 	for(var/atom/A as anything in (view(range,centre) | hearers(range, centre))) //Why was this view(). Oh no, the invisible man hears naught 'cause the sound can't find his ears.
 		if (ismob(A))
-			. += A
+			if(isskeleton(A))
+				var/mob/living/carbon/human/H = A
+				if (H.organHolder.head?.head_type == HEAD_SKELETON) // do they have their head
+					. += A
+			else
+				. += A
 		if (isobj(A) || ismob(A))
 			if (istype(A, /obj/item/organ/head))	//Skeletons can hear from their heads!
 				var/obj/item/organ/head/found_head = A
 				if (found_head.head_type == HEAD_SKELETON && found_head.linked_human != null)
 					var/mob/linked_mob = found_head.linked_human
 					. += linked_mob
+			else if (isobj(A)) // is it holding a head
+				for(var/obj/item/organ/head/head in A)
+					if (head.head_type == HEAD_SKELETON && head.linked_human != null)
+						var/mob/linked_mob = head.linked_human
+						. += linked_mob
 			for(var/mob/M in A.contents)
 				var/can_hear = 0 //this check prevents observers from hearing their target's messages twice
 
@@ -1331,60 +1349,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	var/stringtarget = copytext(stringtype, 1, parentend ? parentend : 0)
 	. = text2path(stringtarget)
 
-//Returns a list of minds that are some type of antagonist role
-//This may be a stop gap until a better solution can be figured out
-/proc/get_all_enemies()
-	if(ticker?.mode && current_state >= GAME_STATE_PLAYING)
-		var/datum/mind/enemies[] = new()
-		var/datum/mind/someEnemies[] = new()
-
-		//We gotta loop through the modes because someone thought it was a good idea to create new lists for all of them
-		if (istype(ticker.mode, /datum/game_mode/revolution))
-			someEnemies = ticker.mode:head_revolutionaries
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-			someEnemies = ticker.mode:revolutionaries
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-			someEnemies = ticker.mode:get_all_heads()
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-		else if (istype(ticker.mode, /datum/game_mode/nuclear))
-			someEnemies = ticker.mode:syndicates
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-		else if (istype(ticker.mode, /datum/game_mode/spy))
-			someEnemies = ticker.mode:spies
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-			someEnemies = ticker.mode:leaders
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-
-		//Lists we grab regardless of game type
-		//Traitors list is populated during traitor or mixed rounds, however it is created along with the game_mode datum unlike the rest of the lists
-		someEnemies = ticker.mode.traitors
-		for(var/datum/mind/M in someEnemies)
-			if (M.current)
-				enemies += M
-
-		//Sometimes admins assign traitors, this contains those dudes
-		someEnemies = ticker.mode.Agimmicks
-		for(var/datum/mind/M in someEnemies)
-			if (M.current)
-				enemies += M
-
-		return enemies
-
-	else
-		return 0
-
 /proc/GetRedPart(hex)
     hex = uppertext(hex)
     var/hi = text2ascii(hex, 2)
@@ -1477,7 +1441,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 		return 0
 	if (!isnum(mod))
 		return 0
-	if (category_boundaries.len <= 0)
+	if (length(category_boundaries) <= 0)
 		return 0
 
 	var/picker = rand(1,scalemax)
@@ -1601,6 +1565,16 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 
 	var/the_time = "[final_minutes][get_english_num(final_hour)] o'clock"
 	return the_time
+
+/// Returns time input as mm:ss
+proc/formatTimeText(var/timeValue as num)
+	var/seconds = round((timeValue / 10) % 60)
+	var/minutes = round(((timeValue / 10) - seconds) / 60)
+	if (minutes < 10)
+		minutes = "0[minutes]"
+	if (seconds < 10)
+		seconds = "0[seconds]"
+	return "[minutes]:[seconds]"
 
 /// Returns shift time as a string in hh:mm format. Call with TRUE to get time in hh:mm:ss format.
 /proc/formattedShiftTime(var/doSeconds)
@@ -1786,7 +1760,7 @@ proc/countJob(rank)
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
-		var/require_client = FALSE)
+		var/require_client = FALSE, var/do_popup = TRUE)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
@@ -1800,11 +1774,11 @@ proc/countJob(rank)
 		var/text_chat_toolate = "You have waited too long to respond to the offer."
 
 		if (text_messages.len)
-			if (text_messages.len >= 1) text_alert = text_messages[1]
-			if (text_messages.len >= 2) text_chat_alert = text_messages[2]
-			if (text_messages.len >= 3) text_chat_added = text_messages[3]
-			if (text_messages.len >= 4) text_chat_failed = text_messages[4]
-			if (text_messages.len >= 5) text_chat_toolate = text_messages[5]
+			if (length(text_messages) >= 1) text_alert = text_messages[1]
+			if (length(text_messages) >= 2) text_chat_alert = text_messages[2]
+			if (length(text_messages) >= 3) text_chat_added = text_messages[3]
+			if (length(text_messages) >= 4) text_chat_failed = text_messages[4]
+			if (length(text_messages) >= 5) text_chat_toolate = text_messages[5]
 
 		text_alert = strip_html(text_alert, MAX_MESSAGE_LEN, 1)
 		text_chat_alert = "<span class='notice'><h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3></span>"
@@ -1820,7 +1794,9 @@ proc/countJob(rank)
 					continue
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
-
+				if (!do_popup)
+					candidates |= M
+					continue
 				SPAWN(0) // Don't lock up the entire proc.
 					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
@@ -1843,7 +1819,8 @@ proc/countJob(rank)
 					else
 						return
 
-		sleep(confirmation_spawn)
+		if (do_popup)
+			sleep(confirmation_spawn)
 
 		// Filter list again.
 		if (candidates.len)
@@ -1948,114 +1925,30 @@ proc/countJob(rank)
 
 	return 1
 
-/proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = 0, var/atom/source = 0)
-	var/is_immune = 0
+/proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = FALSE, var/atom/source = 0)
+	var/is_immune = FALSE
 
-	var/area/a = get_area( target )
-	if( a?.sanctuary )
-		return 1
+	var/area/a = get_area(target)
+	if(a?.sanctuary)
+		return TRUE
 
 	if (isliving(target))
 		var/mob/living/L = target
 
 		if (!isdead(L))
-			if (ignore_everything_but_nodamage == 1)
+			if (ignore_everything_but_nodamage)
 				if (L.nodamage)
-					is_immune = 1
+					is_immune = TRUE
 			else
 				if (L.nodamage || L.spellshield)
-					is_immune = 1
+					is_immune = TRUE
 
 		if (source && istype(source,/obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stance == "dodge") //matrix dodge flip
-				is_immune = 1
-
-	//if (is_immune == 1)
-	//	DEBUG_MESSAGE("[L] is immune to damage, aborting.")
+				is_immune = TRUE
 
 	return is_immune
-
-// Their antag status is revoked on death/implant removal/expiration, but we still want them to show up in the game over stats (Convair880).
-/proc/remove_mindhack_status(var/mob/M, var/hack_type ="", var/removal_type ="")
-	if (!M || !M.mind || !hack_type || !removal_type)
-		return
-
-	// Find our master's mob reference (if any).
-	var/mob/mymaster = ckey_to_mob(M.mind.master)
-
-	switch (hack_type)
-		if ("mindhack")
-			switch (removal_type)
-				if ("expired")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
-				if ("surgery")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
-				if ("override")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
-				if ("death")
-					logTheThing(LOG_COMBAT, M, "(implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindhack status.")
-				else
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has vanished mysteriously.")
-
-			remove_antag(M, null, 1, 0)
-			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!(ROLE_MINDHACK in M.mind.former_antagonist_roles))
-					M.mind.former_antagonist_roles.Add(ROLE_MINDHACK)
-				ticker.mode.former_antagonists += M.mind
-
-		if ("vthrall")
-			switch (removal_type)
-				if ("death")
-					logTheThing(LOG_COMBAT, M, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing vampire thrall status.")
-				else
-					logTheThing(LOG_COMBAT, M, "(enthralled by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing vampire thrall status.")
-
-			remove_antag(M, null, 1, 0)
-			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!M.mind.former_antagonist_roles.Find(ROLE_VAMPTHRALL))
-					M.mind.former_antagonist_roles.Add(ROLE_VAMPTHRALL)
-				ticker.mode.former_antagonists += M.mind
-
-		// This is only used for spy minions and mindhacked antagonists at the moment.
-		if ("otherhack")
-			switch (removal_type)
-				if ("expired")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has worn off.")
-				if ("surgery")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was removed surgically.")
-				if ("override")
-					logTheThing(LOG_COMBAT, M, "'s mindhack implant (implanted by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) was overridden by a different implant.")
-				if ("death")
-					logTheThing(LOG_COMBAT, M, "(mindhacked by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has died, removing mindhack status.")
-				else
-					logTheThing(LOG_COMBAT, M, "(mindhacked by [mymaster ? "[constructTarget(mymaster,"combat")]" : "*NOKEYFOUND*"]) has been freed mysteriously, removing mindhack status.")
-
-			// Fix for mindhacked traitors etc losing their antagonist status.
-			if (M.mind && (M.mind.special_role == "spyminion"))
-				remove_antag(M, null, 1, 0)
-			else
-				M.mind.master = null
-			if (M.mind && ticker.mode && !(M.mind in ticker.mode.former_antagonists))
-				if (!(ROLE_MINDHACK in M.mind.former_antagonist_roles))
-					M.mind.former_antagonist_roles.Add(ROLE_MINDHACK)
-				ticker.mode.former_antagonists += M.mind
-
-		else
-			logTheThing(LOG_DEBUG, M, "<b>Convair880</b>: [M] isn't mindhacked or vampire thrall, can't remove mindhack status.")
-			return
-
-	if (removal_type == "death")
-		boutput(M, "<h2><span class='alert'>Since you have died, you are no longer mindhacked! Do not obey your former master's orders even if you've been brought back to life somehow.</span></h2>")
-		M.show_antag_popup("mindhackdeath")
-	else if (removal_type == "override")
-		boutput(M, "<h2><span class='alert'>Your mindhack implant has been overridden by a new one, cancelling out your former allegiances!</span></h2>")
-		M.show_antag_popup("mindhackoverride")
-	else
-		boutput(M, "<h2><span class='alert'>Your mind is your own again! You no longer feel the need to obey your former master's orders.</span></h2>")
-		M.show_antag_popup("mindhackexpired")
-
-	return
 
 /**
   * Looks up a player based on a string. Searches a shit load of things ~whoa~. Returns a list of mob refs.
@@ -2257,10 +2150,10 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		if (S == "glassware")
 			for (var/obj/item/reagent_containers/glass/G in view(CT, range))
 				if(G.can_recycle)
-					G.smash()
+					G.shatter_chemically()
 			for (var/obj/item/reagent_containers/food/drinks/drinkingglass/G2 in range(CT, range))
 				if(G2.can_recycle)
-					G2.smash()
+					G2.shatter_chemically()
 
 	return 1
 
@@ -2667,7 +2560,12 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		return "***NULL***"
 	if (!istype(thing))
 		return thing
-	return "\"[thing]\" ([thing.type])"
+
+	var/msg = "\"[thing]\" ([thing.type])"
+	if (ismob(thing))
+		var/mob/mobthing = thing
+		msg += " {Key: [mobthing.ckey || "***NULL***"]}" // IM RUNNING OUT OF BRACKET TYPES
+	return msg
 
 /// For runtime logs- returns the above plus ref
 /proc/identify_object(datum/thing)
@@ -2689,3 +2587,10 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	for (var/point in points)
 		. += point - prev
 		prev = point
+
+
+/// Returns the sum of densities of all atoms in the given turf including the turf itself
+proc/total_density(turf/T)
+	. = T.density
+	for (var/atom/A in T)
+		. += A.density

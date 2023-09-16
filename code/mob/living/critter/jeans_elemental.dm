@@ -1,7 +1,7 @@
 /mob/living/critter/jeans_elemental
 	name = "jeans jelemental"
 	desc = "A jysteroius jeing jomposed jostly of jeans."
-	icon = 'icons/misc/critter.dmi'
+	icon = 'icons/mob/critter/humanoid/elemental/jeans.dmi'
 	icon_state = "jeans_elemental"
 	density = TRUE
 	custom_gib_handler = /proc/gibs
@@ -10,7 +10,7 @@
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	meat_type = /obj/item/material_piece/cloth/jean
 	custom_vomit_type = /obj/item/material_piece/cloth/jean
 	name_the_meat = FALSE
@@ -18,7 +18,7 @@
 	health_brute_vuln = 0.5
 	health_burn = 50
 	health_burn_vuln = 2
-	ai_type = /datum/aiHolder/scorpion
+	ai_type = /datum/aiHolder/aggressive
 	is_npc = TRUE
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
@@ -90,15 +90,13 @@
 		A = pick(valid_objs)
 		A.setMaterial(getMaterial(transmute_mat))
 
+	valid_target(mob/living/C)
+		if (C.material?.getID() == transmute_mat) return FALSE //don't attack other jeans-like things
+		if (C.ckey == null && prob(80)) return FALSE //usually do not attack non-threats ie. NPC monkeys and AFK players
+		return ..()
+
 	seek_target(var/range)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isdead(C)) continue //don't attack the dead
-			if (isintangible(C)) continue //don't attack the AI eye
-			if (istype(C, src.type)) continue //don't attack other jeans
-			if (C.material?.mat_id == transmute_mat) continue //don't attack other jeans-like things
-			if (C.ckey == null && prob(80)) continue //usually do not attack non-threats ie. NPC monkeys and AFK players
-			. += C
+		. = ..()
 
 		if(length(.) && prob(30) && isalive(src))
 			make_the_noise()
@@ -116,7 +114,7 @@
 		if(prob(20))
 			var/list/walls = list()
 			for(var/turf/simulated/wall/wall in orange(1, src))
-				if(wall.material?.mat_id == transmute_mat)
+				if(wall.material?.getID() == transmute_mat)
 					walls += wall
 			if(length(walls))
 				src.set_loc(pick(walls))

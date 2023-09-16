@@ -1,0 +1,246 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decoration/regallamp{
+	icon_state = "lamp_regal_lit";
+	pixel_y = 8;
+	pixel_x = 8;
+	layer = 4
+	},
+/obj/shrub{
+	pixel_x = -15;
+	dir = 1
+	},
+/obj/candle_light{
+	layer = 1;
+	pixel_y = 3;
+	pixel_x = -10
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+"b" = (
+/obj/stool/chair/comfy{
+	pixel_y = 19;
+	dir = 1
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+"d" = (
+/obj/table/clothred/auto,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau{
+	pixel_y = 12;
+	pixel_x = -8;
+	layer = 4
+	},
+/turf/simulated/floor/grasslush/thin,
+/area/space)
+"k" = (
+/obj/decoration/regallamp{
+	icon_state = "lamp_regal_lit";
+	pixel_y = 10;
+	layer = 4;
+	pixel_x = -9
+	},
+/obj/shrub{
+	pixel_y = -1;
+	pixel_x = 11;
+	dir = 8
+	},
+/obj/candle_light{
+	layer = 1;
+	pixel_y = 2;
+	pixel_x = 16
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+"m" = (
+/obj/decoration/regallamp{
+	icon_state = "lamp_regal_lit";
+	pixel_y = 17;
+	pixel_x = -5;
+	layer = 2
+	},
+/obj/decal/alienflower{
+	layer = 2
+	},
+/obj/shrub{
+	pixel_y = -3;
+	pixel_x = -5;
+	layer = 2
+	},
+/obj/candle_light{
+	layer = 1
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+"n" = (
+/obj/stool/chair/material/mauxite{
+	layer = 2.89;
+	pixel_y = -5
+	},
+/obj/item/toy/plush/small/kitten{
+	name = "Silly kitty toy";
+	pixel_y = -5
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+"o" = (
+/obj/stool/chair/comfy/throne_gold{
+	pixel_x = 10;
+	pixel_y = 4;
+	dir = 4
+	},
+/obj/item/clothing/under/gimmick/princess{
+	pixel_x = 12;
+	pixel_y = 4;
+	name = "Pretty blue dress";
+	desc = "They've been expecting you!"
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+"s" = (
+/obj/stool/chair/dining/scrap{
+	layer = 2.89;
+	pixel_y = -10
+	},
+/obj/item/toy/plush/small/tuba{
+	name = "Tuba the doormouse";
+	pixel_y = -13;
+	layer = 2.89
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+"w" = (
+/obj/stool/chair/dining/wood{
+	dir = 1;
+	pixel_y = 13
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+"z" = (
+/obj/stool/chair/comfy/barber_chair{
+	pixel_y = 16;
+	dir = 1
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+"A" = (
+/obj/table/clothred/auto,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_y = 20;
+	pixel_x = -4;
+	layer = 4
+	},
+/obj/item/decoration/flower_vase/vase7{
+	pixel_y = 20;
+	pixel_x = 16;
+	layer = 2.9
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_x = 1;
+	pixel_y = 9;
+	layer = 4
+	},
+/turf/simulated/floor/grasslush/thin,
+/area/space)
+"Q" = (
+/obj/decoration/regallamp{
+	icon_state = "lamp_regal_lit";
+	pixel_y = 17;
+	layer = 2;
+	pixel_x = 3
+	},
+/obj/shrub{
+	pixel_y = 5;
+	layer = 2;
+	pixel_x = 4;
+	dir = 5
+	},
+/obj/candle_light{
+	layer = 1;
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+"U" = (
+/obj/stool/chair/office/red{
+	pixel_x = -8;
+	pixel_y = 7;
+	dir = 8
+	},
+/obj/item/clothing/head/that/purple{
+	name = "mad hat";
+	desc = "A mad purple tophat.";
+	pixel_y = 9;
+	pixel_x = -8
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+"W" = (
+/obj/table/clothred/auto,
+/obj/item/plate,
+/obj/item/reagent_containers/food/snacks/pieslice/strawberry{
+	pixel_x = 3
+	},
+/obj/item/reagent_containers/food/snacks/pieslice/blueberry{
+	pixel_y = -5
+	},
+/obj/item/reagent_containers/food/snacks/pieslice/chocolate{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_y = 20;
+	layer = 4
+	},
+/obj/item/reagent_containers/food/drinks/teapot{
+	pixel_y = 4;
+	pixel_x = -16;
+	layer = 2.9;
+	name = "tea pot";
+	desc = "A teapot, for brewing multiple servings of tea."
+	},
+/obj/machinery/light/small/floor/harsh,
+/turf/simulated/floor/grasslush/thin,
+/area/space)
+"X" = (
+/obj/stool/chair/dining/regal{
+	pixel_y = -6;
+	layer = 2.89
+	},
+/obj/item/toy/plush/small/bunny{
+	name = "hare plush toy";
+	desc = "Rabbits and bunnies are very different"
+	},
+/obj/item/pocketwatch{
+	pixel_x = 7;
+	pixel_y = -9;
+	name = "pocketwatch"
+	},
+/turf/simulated/floor/grasslush/thinner,
+/area/space)
+
+(1,1,1) = {"
+m
+o
+k
+"}
+(2,1,1) = {"
+n
+A
+b
+"}
+(3,1,1) = {"
+X
+W
+w
+"}
+(4,1,1) = {"
+s
+d
+z
+"}
+(5,1,1) = {"
+Q
+U
+a
+"}

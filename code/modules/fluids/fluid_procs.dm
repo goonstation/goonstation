@@ -59,24 +59,19 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 	if (!index)
 		if (airborne)
-			for(var/reagent_id in R.reagent_list)
-				if (reagent_id in ban_from_airborne_fluid) return
 			purge_smoke_blacklist(R)
 		else
-			for(var/reagent_id in R.reagent_list)
-				if (reagent_id in ban_from_fluid) return
+			purge_fluid_blacklist(R)
 	else // We only care about one chem
 		var/CI = 1
 		if (airborne)
-			for(var/reagent_id in R.reagent_list)
-				if ( CI++ == index )
-					if (reagent_id in ban_from_airborne_fluid) return
 			purge_smoke_blacklist(R)
 		else
 			for(var/reagent_id in R.reagent_list)
 				if ( CI++ == index )
-					if (reagent_id in ban_from_fluid) return
-
+					var/datum/reagent/reagent = R.reagent_list[reagent_id]
+					if (reagent.fluid_flags & FLUID_BANNED)
+						return
 
 	var/datum/fluid_group/FG
 	var/obj/fluid/F
@@ -131,11 +126,11 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		if (istype(T) && T.messy > 0)
 			var/found_cleanable = 0
 			for (var/obj/decal/cleanable/C in T)
-				if (istype(T) && !T.cleanable_fluid_react(C, 1)) // Some cleanables need special treatment
+				if (istype(T) && !T.cleanable_fluid_react(C, TRUE)) // Some cleanables need special treatment
 					found_cleanable = 1 //there exists a cleanable without a special case
 					break
 			if (found_cleanable)
-				T.cleanable_fluid_react(0,1)
+				T.cleanable_fluid_react(null,TRUE)
 
 	F.trigger_fluid_enter()
 
@@ -144,10 +139,11 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (react_volume <= 0) return
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 
-	if (airborne)
-		if (reagent_name in ban_from_airborne_fluid) return
-	else
-		if (reagent_name in ban_from_fluid) return
+	var/datum/reagent/cached = reagents_cache[reagent_name]
+	if (airborne && (cached.fluid_flags & FLUID_SMOKE_BANNED))
+		return
+	else if (cached.fluid_flags & FLUID_BANNED)
+		return
 
 	var/datum/fluid_group/FG
 	var/obj/fluid/F
@@ -200,11 +196,11 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		if (istype(T) && T.messy > 0)
 			var/found_cleanable = 0
 			for (var/obj/decal/cleanable/C in T)
-				if (istype(T) && !T.cleanable_fluid_react(C, 1))
+				if (istype(T) && !T.cleanable_fluid_react(C, TRUE))
 					found_cleanable = 1
 					break
 			if (found_cleanable)
-				T.cleanable_fluid_react(0,1)
+				T.cleanable_fluid_react(null,TRUE)
 
 	F.trigger_fluid_enter()
 
@@ -215,14 +211,14 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (src.messy <= 0) return //hey this is CLEAN so don't even bother looping through contents, thanks!!
 	var/found_cleanable = 0
 	for (var/obj/decal/cleanable/C in src)
-		if (!src.cleanable_fluid_react(C, 1)) // Some cleanables need special treatment
+		if (!src.cleanable_fluid_react(C, TRUE)) // Some cleanables need special treatment
 			found_cleanable = 1 //there exists a cleanable without a special case
 	if (found_cleanable)
-		src.cleanable_fluid_react(0,1)
+		src.cleanable_fluid_react(null,TRUE)
 
 //called whenever a cleanable is spawned. Returns 1 on success
 //grab_any_amount will be True when a fluid spreads onto a tile that may have cleanables on it
-/turf/simulated/proc/cleanable_fluid_react(var/obj/decal/cleanable/possible_cleanable = 0, var/grab_any_amount = 0)
+/turf/simulated/proc/cleanable_fluid_react(var/obj/decal/cleanable/possible_cleanable, var/grab_any_amount = FALSE)
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 	//if possible_cleanable has a value, handle exclusively this decal. don't search thru the turf.
 	if (possible_cleanable)
@@ -232,7 +228,7 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 			var/blood_dna = blood.blood_DNA
 			var/blood_type = blood.blood_type
 			var/is_tracks = istype(possible_cleanable,/obj/decal/cleanable/blood/dynamic/tracks)
-			if(is_tracks)
+			if(is_tracks && !grab_any_amount)
 				return 0
 			if (blood.reagents && blood.reagents.total_volume >= 13 || src.active_liquid || grab_any_amount)
 				if (blood.reagents)
@@ -262,19 +258,31 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 		if (!C.can_fluid_absorb) continue
 		cleanables += C
 
-	if (!src.active_liquid && (cleanables.len < 3 && !grab_any_amount))
+	if (!src.active_liquid && (length(cleanables) < 3 && !grab_any_amount))
 		return 0	//If the tile has an active liquid already, there is no requirement
 
+	// count actually valid cleanables
+	var/valid_cleanables = 0
 	for (var/obj/decal/cleanable/C in cleanables)
+		if (C.reagents || C.can_sample && C.sample_reagent)
+			valid_cleanables++
+
+	if (valid_cleanables < 3 && !grab_any_amount)
+		return 0
+
+	for (var/obj/decal/cleanable/C in cleanables)
+		var/datum/reagent/cached = reagents_cache[C.sample_reagent]
 		if (C?.reagents)
 			for(var/reagent_id in C.reagents.reagent_list)
-				if (reagent_id in ban_stacking_into_fluid) return
+				if (cached.fluid_flags & FLUID_STACKING_BANNED)
+					return
 			var/datum/reagents/R = new(C.reagents.maximum_volume) //Store reagents, delete cleanable, and then fluid react. prevents recursion
 			C.reagents.copy_to(R)
 			C.clean_forensic()
 			src.fluid_react(R, R.total_volume, processing_cleanables=TRUE)
 		else if (C?.can_sample && C.sample_reagent)
-			if ((!grab_any_amount && (C.sample_reagent in ban_stacking_into_fluid)) || (C.sample_reagent in ban_from_fluid)) return
+			if ((!grab_any_amount && (cached.fluid_flags & FLUID_STACKING_BANNED)) || (cached.fluid_flags & FLUID_BANNED))
+				return
 			var/sample = C.sample_reagent
 			var/amt = C.sample_amt
 			C.clean_forensic()

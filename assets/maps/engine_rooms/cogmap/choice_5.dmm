@@ -1,0 +1,331 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"dV" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"ed" = (
+/obj/cable/orange,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"fi" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"hc" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "outlet purge valve"
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"hS" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "outlet purge valve"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"ix" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"jr" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"ko" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"kI" = (
+/obj/machinery/light/small/floor,
+/obj/landmark/engine_room,
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"lh" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"ln" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot loop inlet valve"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"mc" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 6
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"nk" = (
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"nx" = (
+/obj/machinery/atmospherics/binary/passive_gate{
+	dir = 8;
+	on = 1;
+	pixel_y = 1;
+	target_pressure = 1e+031
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"ok" = (
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"pl" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 6
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"pO" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop inlet valve"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"qR" = (
+/turf/simulated/floor/grey/side,
+/area/station/engine/inner)
+"tf" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"tn" = (
+/obj/cable/orange{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"xq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"AI" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"AQ" = (
+/obj/machinery/atmospherics/pipe/manifold/overfloor{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"EA" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
+/area/station/engine/inner)
+"FL" = (
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"GB" = (
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"Ma" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 5
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"OJ" = (
+/obj/cable/orange{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"PX" = (
+/obj/machinery/atmospherics/binary/passive_gate{
+	dir = 4;
+	on = 1;
+	pixel_y = 1;
+	target_pressure = 1e+031
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"Tn" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 9
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+"Vp" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/inner)
+
+(1,1,1) = {"
+EA
+GB
+ln
+GB
+GB
+GB
+GB
+nx
+GB
+qR
+kI
+"}
+(2,1,1) = {"
+GB
+GB
+xq
+ko
+ko
+ko
+ko
+AQ
+ko
+Ma
+nk
+"}
+(3,1,1) = {"
+GB
+GB
+GB
+GB
+GB
+GB
+GB
+GB
+GB
+dV
+nk
+"}
+(4,1,1) = {"
+GB
+GB
+GB
+tf
+GB
+GB
+GB
+tf
+GB
+dV
+nk
+"}
+(5,1,1) = {"
+GB
+GB
+OJ
+ed
+GB
+GB
+GB
+GB
+GB
+xq
+hS
+"}
+(6,1,1) = {"
+ix
+ix
+tn
+GB
+GB
+GB
+GB
+GB
+GB
+AI
+lh
+"}
+(7,1,1) = {"
+GB
+GB
+GB
+GB
+GB
+GB
+GB
+ok
+ix
+mc
+hc
+"}
+(8,1,1) = {"
+GB
+GB
+GB
+tf
+GB
+GB
+GB
+tf
+GB
+Vp
+nk
+"}
+(9,1,1) = {"
+GB
+GB
+GB
+GB
+GB
+GB
+GB
+GB
+GB
+Vp
+nk
+"}
+(10,1,1) = {"
+GB
+GB
+pl
+jr
+jr
+jr
+jr
+fi
+jr
+Tn
+nk
+"}
+(11,1,1) = {"
+EA
+GB
+pO
+GB
+GB
+GB
+GB
+PX
+GB
+qR
+FL
+"}

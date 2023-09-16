@@ -57,7 +57,7 @@
 			src.death()
 		return
 
-	say(var/message) //Handle Virtual Spectres
+	say(var/message, var/ignore_stamina_winded = FALSE, var/unique_maptext_style, var/maptext_animation_colors)
 		if(!isghost)
 			return ..()
 

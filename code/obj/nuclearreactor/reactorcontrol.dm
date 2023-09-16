@@ -48,13 +48,13 @@
 		if (status & (NOPOWER|BROKEN))
 			return
 
-		if(turbine_handle.overspeed & src.icon_state != "engine1")
+		if(turbine_handle.overspeed && src.icon_state != "engine1")
 			src.icon_state = "engine1"
 			src.UpdateIcon()
-		else if(turbine_handle.stalling & src.icon_state != "engine2")
+		else if(turbine_handle.stalling && src.icon_state != "engine2")
 			src.icon_state = "engine2"
 			src.UpdateIcon()
-		else if(src.icon_state != "engine")
+		else if(!turbine_handle.overspeed && !turbine_handle.stalling && src.icon_state != "engine")
 			src.icon_state = "engine"
 			src.UpdateIcon()
 
@@ -105,7 +105,7 @@
 
 /obj/machinery/power/nuclear/reactor_control
 	name = "Reactor Control Computer"
-	desc = "A computer for configuring and monitoring the a nuclear reactor."
+	desc = "A computer for configuring and monitoring a nuclear reactor."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "reactor_stats"
 	density = TRUE
@@ -181,12 +181,8 @@
 		switch(action)
 			if("adjustCR")
 				logTheThing(LOG_STATION, src, "[src.reactor_handle] control rod insertion configured to [params["crvalue"]]% by [ui.user]")
-				for(var/x=1 to length(src.reactor_handle.component_grid))
-					for(var/y=1 to length(src.reactor_handle.component_grid[1]))
-						if(src.reactor_handle.component_grid[x][y])
-							if(istype(src.reactor_handle.component_grid[x][y],/obj/item/reactor_component/control_rod))
-								var/obj/item/reactor_component/control_rod/CR = src.reactor_handle.component_grid[x][y]
-								CR.configured_insertion_level = text2num(params["crvalue"])/100
+				src.reactor_handle.set_control_rods(text2num(params["crvalue"]))
+
 			if("slot")
 				var/x = params["x"]
 				var/y = params["y"]

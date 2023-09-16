@@ -1,4 +1,3 @@
-// If the rev icons start going wrong for some reason, ticker.mode:update_all_rev_icons() can be called to correct them.
 // If the game somtimes isn't registering a win properly, then ticker.mode.check_win() isn't being called somewhere.
 
 //uncomment to disable safety checks and win conditions to allow for local testing
@@ -57,7 +56,7 @@
 	var/rev_number = 0
 	var/ideal_rev_number = clamp(round(num_players / pop_divisor), min_revheads, max_revheads)
 
-	if(revs_possible.len >= ideal_rev_number)
+	if(length(revs_possible) >= ideal_rev_number)
 		rev_number = ideal_rev_number
 	else
 		rev_number = length(revs_possible)
@@ -91,7 +90,7 @@
 #endif
 
 	for(var/datum/mind/rev_mind in head_revolutionaries)
-		rev_mind.add_antagonist(ROLE_HEAD_REVOLUTIONARY)
+		rev_mind.add_antagonist(ROLE_HEAD_REVOLUTIONARY, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -150,42 +149,6 @@
 		M.gib()
 	endthisshit = 1
 
-/datum/game_mode/revolution/proc/update_all_rev_icons()
-	var/list/update_me = list()
-	update_me.Add(src.head_revolutionaries)
-	update_me.Add(src.revolutionaries)
-
-	for (var/datum/mind/M in update_me)
-		if (M.current)
-			M.current.antagonist_overlay_refresh(1, 0)
-
-	return
-
-/datum/game_mode/revolution/proc/update_rev_icons_added(datum/mind/rev_mind)
-	var/list/update_me = list()
-	update_me.Add(src.head_revolutionaries)
-	update_me.Add(src.revolutionaries) // Includes rev_mind.
-
-	for (var/datum/mind/M in update_me)
-		if (M.current)
-			M.current.antagonist_overlay_refresh(1, 0)
-
-	return
-
-/datum/game_mode/revolution/proc/update_rev_icons_removed(datum/mind/rev_mind)
-	if (rev_mind && istype(rev_mind) && rev_mind.current)
-		rev_mind.current.antagonist_overlay_refresh(1, 1)
-
-	var/list/update_me = list()
-	update_me.Add(src.head_revolutionaries)
-	update_me.Add(src.revolutionaries)
-
-	for (var/datum/mind/M in update_me)
-		if (M.current)
-			M.current.antagonist_overlay_refresh(1, 0)
-
-	return
-
 /datum/game_mode/proc/get_living_heads()
 	var/list/heads = list()
 
@@ -195,7 +158,7 @@
 			if(role in list("Captain", "Head of Security", "Head of Personnel", "Chief Engineer", "Research Director", "Medical Director","Communications Officer"))
 				heads += player.mind
 
-	if(heads.len < 1)
+	if(length(heads) < 1)
 		return null
 	else
 		return heads
@@ -316,10 +279,16 @@
 		boutput(world, "<span class='alert'><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>")
 
 #ifdef DATALOGGER
+	var/total = world.load_intra_round_value("rev_total")
+	world.save_intra_round_value("rev_total", total + 1)
 	switch(finished)
 		if(1)
+			var/wins = world.load_intra_round_value("rev_win")
+			world.save_intra_round_value("rev_win", wins + 1)
 			game_stats.Increment("traitorwin")
 		if(2)
+			var/losses = world.load_intra_round_value("rev_loss")
+			world.save_intra_round_value("rev_loss", losses + 1)
 			game_stats.Increment("traitorloss")
 #endif
 

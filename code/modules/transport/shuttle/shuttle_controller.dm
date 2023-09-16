@@ -34,7 +34,7 @@ datum/shuttle_controller
 			settimeleft(SHUTTLEARRIVETIME)
 			online = 1
 
-		INVOKE_ASYNC(ircbot, /datum/ircbot.proc/event, "shuttlecall", src.timeleft())
+		INVOKE_ASYNC(ircbot, TYPE_PROC_REF(/datum/ircbot, event), "shuttlecall", src.timeleft())
 
 		return TRUE
 
@@ -240,7 +240,6 @@ datum/shuttle_controller
 							else if(istype( A, /mob ))
 								var/mob/M = A
 								shake_camera(M, 32, 32)
-								M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
 								if (!isturf(M.loc) || !isliving(M) || isintangible(M))
 									continue
 								SPAWN(1 DECI SECOND)

@@ -24,6 +24,8 @@
 	var/smashes_shit = 1
 	var/list/alert_sounds = list('sound/machines/whistlealert.ogg', 'sound/machines/whistlebeep.ogg')
 
+	faction = FACTION_SYNDICATE
+
 	New()
 		..()
 		setup_loot_table()

@@ -23,7 +23,7 @@
 
 // areas
 
-/area/radiostation/
+/area/radiostation
 	name = "Radio Station"
 	icon_state = "purple"
 
@@ -346,7 +346,7 @@
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
-			O.setMaterial(copyMaterial(src.material))
+			O.setMaterial(src.material)
 		qdel(src)
 	else
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
@@ -783,13 +783,13 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /obj/item/storage/box/record/radio/host
 	desc = "A sleeve of exclusive radio station songs."
 
-/obj/item/storage/box/record/radio/host/New()
+/obj/item/storage/box/record/radio/host/make_my_stuff()
 	..()
 	var/list/possibilities = concrete_typesof(/obj/item/record/random, cache=FALSE)
 	possibilities = possibilities.Copy() // so we don't modify the cached version if someone else cached it I guess
-	for (var/i = 1, i < 8, i++)
+	while (!src.storage.is_full() && length(possibilities))
 		var/obj/item/record/R = pick(possibilities)
-		new R(src)
+		src.storage.add_contents(new R(src))
 		possibilities -= R
 
 // Tape deck
@@ -1107,3 +1107,12 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /datum/computer/file/record/radioship/testlog2/New()
 	..()
 	fields = strings("radioship/radioship_records.txt","log_2")
+
+
+
+/obj/item/device/radio/intercom/radiostation
+	name = "broadcast radio"
+	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."
+	device_color = "#E52780"
+	icon = 'icons/obj/radiostation.dmi'
+	icon_state = "mixtable-1"

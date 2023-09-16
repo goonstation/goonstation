@@ -2,6 +2,7 @@
 	name = "Robot"
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/hivebot.dmi'
+	voice_type = "cyborg"
 	icon_state = "vegas"
 	health = 60
 	max_health = 60
@@ -488,18 +489,6 @@
 		health_update_queue |= src
 	return
 
-/mob/living/silicon/hivebot/bump(atom/movable/AM as mob|obj)
-	if (src.now_pushing)
-		return
-	if (!istype(AM, /atom/movable))
-		return
-	if (!src.now_pushing)
-		src.now_pushing = 1
-		if (!AM.anchored)
-			var/t = get_dir(src, AM)
-			step(AM, t)
-		src.now_pushing = null
-
 /mob/living/silicon/hivebot/attackby(obj/item/W, mob/user)
 	if (isweldingtool(W))
 		if (src.get_brute_damage() < 1)
@@ -590,8 +579,9 @@
 	if(!istype(src.req_access, /list)) //something's very wrong
 		return 1
 
-	if (istype(I, /obj/item/device/pda2) && I:ID_card)
-		I = I:ID_card
+	var/obj/item/card/id/id_card = get_id_card(I)
+	if (istype(id_card))
+		I = id_card
 	var/list/L = src.req_access
 	if(!L.len) //no requirements
 		return 1
@@ -765,15 +755,15 @@ Frequency:
 				src.module_states[1] = null
 				src.module_states[2] = null
 				src.module_states[3] = null
-				src.cell.charge -=1
+				src.cell.use(1)
 			else
 				if (src.module_states[1])
-					src.cell.charge -=1
+					src.cell.use(1)
 				if (src.module_states[2])
-					src.cell.charge -=1
+					src.cell.use(1)
 				if (src.module_states[3])
-					src.cell.charge -=1
-				src.cell.charge -=1
+					src.cell.use(1)
+				src.cell.use(1)
 				setalive(src)
 		else
 			if (isalive(src))
@@ -796,7 +786,9 @@ Frequency:
 
 	if (src.mainframe)
 		src.real_name = "SHELL/[src.mainframe]"
+		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 		src.name = src.real_name
+		src.update_name_tag()
 
 	else if(src.real_name == "Cyborg")
 		src.real_name += " "
@@ -811,6 +803,7 @@ Frequency:
 
 	src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 	src.name = src.real_name
+	src.update_name_tag()
 
 	return
 
@@ -819,7 +812,7 @@ Frequency:
 		return TRUE
 	if (ishuman(other))
 		var/mob/living/carbon/human/H = other
-		if (!H.mutantrace || !H.mutantrace.exclusive_language)
+		if (!H.mutantrace.exclusive_language)
 			return TRUE
 		else
 			return ..()
@@ -934,9 +927,8 @@ Frequency:
 	name = "Eyebot"
 	icon_state = "eyebot"
 	health = 25
-
+	do_hurt_slowdown = FALSE
 	jetpack = 1 //ZeWaka: I concur with ghostdrone commenter, fuck whoever made this. See spacemove.
-	var/jeton = 0
 
 	New()
 		..()
@@ -960,6 +952,8 @@ Frequency:
 				available_ai_shells += src
 
 	movement_delay()
+		if (src.pulling && !isitem(src.pulling))
+			return ..()
 		return 1 + movement_delay_modifier
 
 	hotkey(name)
@@ -1086,7 +1080,7 @@ Frequency:
 			if (M.change_stack_amount(-1))
 				src.build_step++
 				boutput(user, "You add the plating to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.icon_state = "shell-plate"
 				return
 			else
@@ -1104,7 +1098,7 @@ Frequency:
 			if (coil.amount >= 3)
 				src.build_step++
 				boutput(user, "You add \the cable to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				coil.amount -= 3
 				src.icon_state = "shell-cable"
 				if (coil.amount < 1)
@@ -1123,7 +1117,7 @@ Frequency:
 			if (!src.cell)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.cell = W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -1140,7 +1134,7 @@ Frequency:
 			if (!src.has_radio)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.icon_state = "shell-radio"
 				src.has_radio = 1
 				qdel(W)
@@ -1157,7 +1151,7 @@ Frequency:
 			if (!src.has_interface)
 				src.build_step++
 				boutput(user, "You add the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.has_interface = 1
 				qdel(W)
 				return

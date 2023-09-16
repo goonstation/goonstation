@@ -9,6 +9,7 @@
 
 /datum/admins/proc/playeropt_link(mob/M, action)
 	return "?src=\ref[src];action=[action];targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts"
+
 /datum/admins/proc/playeropt(mob/M)
 	if (!ismob(M))
 		alert("Mob not found - can't auto-refresh the panel. (May have been banned / deleted)")
@@ -123,18 +124,17 @@
 
 			antagonist_roles += "<a href='?src=\ref[src];target=\ref[antagonist_role];action=viewvars'>[display_name]</a> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[antagonist_role]'>Remove</a><br>"
 
-		// Remove when mindhacks datumized
-		if (M.hasStatus(list("mindhack")))
-			antagonist_roles += "<span class='antag'>Mindhack</span><br>"
-			number_of_antagonists++
-
 		if (isnull(antagonist_roles))
 			antagonist_roles += "No antagonist roles present."
 		else
 			antagonist_roles += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
 
 		if (number_of_antagonists)
-			number_of_antagonist_roles = " <b><span class='antag'>[number_of_antagonists] antagonist role\s present.</span></b>"
+			if (number_of_antagonists == 1)
+				var/datum/antagonist/antagonist_role = M.mind.antagonists[1]
+				number_of_antagonist_roles = " <b><span class='antag'>Antagonist: [capitalize(antagonist_role.display_name)]</span></b>"
+			else
+				number_of_antagonist_roles = " <b><span class='antag'>[number_of_antagonists] antagonist role\s present.</span></b>"
 
 	//General info
 	//  Logs link:
@@ -152,6 +152,7 @@
 <div id="mobInfo">
 	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[html_key_string]</tt>)
 	[M.client ? "" : "<em>(no client)</em>"]
+	[M.ai ? "<a href='?src=\ref[src];target=\ref[M.ai];action=viewvars'>([M.ai.enabled ? "active" : "inactive"] AI)</a>" : ""]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
 	<div style="font-family: Monospace; font-size: 0.7em; float: right;">ping [M.client?.chatOutput?.last_ping || "N/A "]ms</div>
 	<br>Mob Type: <b>[M.type]</b>[number_of_antagonist_roles]
@@ -188,7 +189,7 @@
 					<div class='r'>
 						<a href='[playeropt_link(M, "checkhealth")]'>Check</a> &bull;
 						<a href='[playeropt_link(M, "revive")]'>Heal</a> &bull;
-						[(M.stat == 2 || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"] &bull;
+						[(isdead(M) || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"] &bull;
 						<a href='[playeropt_link(M, "kill")]'>Kill</a>
 					</div>
 					"} : ""]
@@ -241,7 +242,8 @@
 						<a href='[playeropt_link(M, "firegib")]'>Fire</a> &bull;
 						<a href='[playeropt_link(M, "elecgib")]'>Elec</a> &bull;
 						<a href='[playeropt_link(M, "icegib")]'>Ice</a> &bull;
-						<a href='[playeropt_link(M, "goldgib")]'>Gold</a>
+						<a href='[playeropt_link(M, "goldgib")]'>Gold</a> &bull;
+						<a href='[playeropt_link(M, "smite")]'>Smite</a>
 						<br>
 						<a href='[playeropt_link(M, "owlgib")]'>Owl</a> &bull;
 						<a href='[playeropt_link(M, "sharkgib")]'>Shark</a> &bull;
@@ -250,11 +252,13 @@
 						<a href='[playeropt_link(M, "tysongib")]'>Tyson</a> &bull;
 						<a href='[playeropt_link(M, "flockgib")]'>Flock</a> &bull;
 						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a> &bull;
-						<a href='[playeropt_link(M, "rapture")]'>Rapture</a>
+						<a href='[playeropt_link(M, "rapture")]'>Rapture</a> &bull;
+						<a href='[playeropt_link(M, "anvilgib")]'>Anvil</a>
 					</div>
 					<div class='l'>Misc</div>
 					<div class='r'>
-						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a>
+						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a> &bull;
+						<a href='[playeropt_link(M, "halt")]'>Halt!</a>
 					</div>
 				</div>
 			</div>

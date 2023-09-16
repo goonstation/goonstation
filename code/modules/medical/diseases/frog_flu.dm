@@ -4,7 +4,7 @@
 	spread = "Non-Contagious"
 	cure = "Robustissin, Robust Coffee, getting robusted"
 	associated_reagent = "sheltestgrog"
-	reagentcure = list("robustissin", "coffee")
+	reagentcure = list("cold_medicine", "coffee")
 	affected_species = list("Human")
 	stage_prob = 5
 
@@ -37,4 +37,4 @@
 			affected_mob.unequip_all()
 			logTheThing(LOG_COMBAT, affected_mob, "is transformed into a critter frog by the [name] reagent at [log_loc(affected_mob)].")
 			var/mob/living/critter/C = affected_mob.make_critter(/mob/living/critter/small_animal/frog, affected_mob)
-			C.butcherable = TRUE //So the brain is recoverable
+			C.butcherable = BUTCHER_ALLOWED //So the brain is recoverable

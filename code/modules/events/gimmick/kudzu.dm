@@ -83,7 +83,7 @@
 				if (isnull(ecoords))
 					return
 				var/list/coords = splittext(ecoords, ",")
-				if (coords.len < 3)
+				if (length(coords) < 3)
 					return
 				startturf = locate(text2num(coords[1]), text2num(coords[2]), text2num(coords[3]))
 
@@ -197,7 +197,7 @@
 			src.current_stage = 1
 			src.name = initial(src.name)
 			src.icon_state = "[src.base_state]-light[rand(1,3)]"
-			src.RL_SetOpacity(0)
+			src.set_opacity(0)
 			src.set_density(0)
 		if (10 to 19)
 			if (src.current_stage == 2)
@@ -205,7 +205,7 @@
 			src.current_stage = 2
 			src.name = "thick [initial(src.name)]"
 			src.icon_state = "[src.base_state]-med[rand(1,3)]"
-			src.RL_SetOpacity(1)
+			src.set_opacity(1)
 			src.set_density(0)
 		if (20 to INFINITY)
 			if (src.current_stage == 3)
@@ -213,7 +213,7 @@
 			src.current_stage = 3
 			src.name = "dense [initial(src.name)]"
 			src.icon_state = "[src.base_state]-hvy[rand(1,3)]"
-			src.RL_SetOpacity(1)
+			src.set_opacity(1)
 			src.set_density(1)
 
 /obj/spacevine/proc/Life()
@@ -472,6 +472,7 @@
 	opacity = 0
 	pixel_x = -16
 	layer = MOB_LAYER - 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))

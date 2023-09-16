@@ -159,7 +159,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 			break
 		for(var/obj/machinery/teleport/portal_ring/H in orange(2,src))
 			linked_rings += H
-		if (linked_rings.len > 0) found++
+		if (length(linked_rings) > 0) found++
 		return found
 
 /proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision, var/use_teleblocks = 1, var/sparks = 1)
@@ -207,6 +207,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 			return 1
 
 	M.set_loc(tmploc)
+	SEND_SIGNAL(M,COMSIG_MOVABLE_TELEPORTED)
+
 	if (sparks)
 		elecflash(M, power=3)
 	return 0

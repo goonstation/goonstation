@@ -2,17 +2,17 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon
 	mob_flags = USR_DIALOG_UPDATES_RANGE
 	gender = NEUTER
-	var/syndicate = 0 // Do we get Syndicate laws?
-	var/syndicate_possible = 0 //  Can we become a Syndie robot?
-	var/emagged = 0 // Are we emagged, removing all laws?
-	var/emaggable = 0 // Can we be emagged?
-	robot_talk_understand = 1
-	see_infrared = 1
+	var/syndicate = FALSE // Do we get Syndicate laws?
+	var/syndicate_possible = FALSE //  Can we become a Syndie robot?
+	var/emagged = FALSE // Are we emagged, removing all laws?
+	var/emaggable = FALSE // Can we be emagged?
+	robot_talk_understand = TRUE
+	see_infrared = TRUE
 	var/list/req_access = list()
 
-	var/killswitch = 0
+	var/killswitch = FALSE
 	var/killswitch_at = 0
-	var/weapon_lock = 0
+	var/weapon_lock = FALSE
 	var/weaponlock_time = 120
 	var/obj/item/card/id/botcard //An ID card that the robot "holds" invisibly
 
@@ -26,10 +26,10 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
 
-	can_bleed = 0
+	can_bleed = FALSE
 	blood_id = "oil"
-	use_stamina = 0
-	can_lie = 0
+	use_stamina = FALSE
+	can_lie = FALSE
 	canbegrabbed = FALSE // silicons can't be grabbed, they're too bulky or something
 	grabresistmessage = "but can't get a good grip!"
 
@@ -310,21 +310,14 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat > 1 && !istype(M, /mob/dead/target_observer))
+		if (isdead(M) && !istype(M, /mob/dead/target_observer))
 			var/thisR = rendered
 			if (M.client && M.client.holder && src.mind)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
 			M.show_message(thisR, 2)
 
-/mob/living/silicon/lastgasp()
-	// making this spawn a new proc since lastgasps seem to be related to the mob loop hangs. this way the loop can keep rolling in the event of a problem here. -drsingh
-	SPAWN(0)
-		if (!src || !src.client) return											// break if it's an npc or a disconnected player
-		var/enteredtext = winget(src, "mainwindow.input", "text")				// grab the text from the input bar
-		if ((copytext(enteredtext,1,6) == "say \"") && length(enteredtext) > 5)	// check if the player is trying to say something
-			winset(src, "mainwindow.input", "text=\"\"")						// clear the player's input bar to register death / unconsciousness
-			var/grunt = pick("BZZT","WONK","ZAP","FZZZT","GRRNT","BEEP","BOOP")	// pick a grunt to append
-			src.say(copytext(enteredtext,6,0) + "--" + grunt)					// say the thing they were typing and grunt
+/mob/living/silicon/lastgasp(allow_dead=FALSE)
+	..(allow_dead, grunt=pick("BZZT","WONK","ZAP","FZZZT","GRRNT","BEEP","BOOP"))
 
 /mob/living/silicon/proc/allowed(mob/M)
 	//check if it doesn't require any access at all
@@ -343,15 +336,14 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	if(!istype(src.req_access, /list)) //something's very wrong
 		return 1
 
-	if (istype(I, /obj/item/device/pda2) && I:ID_card)
-		I = I:ID_card
+	var/obj/item/card/id/id_card = get_id_card(I)
 	var/list/L = src.req_access
 	if(!L.len) //no requirements
 		return 1
-	if(!I || !istype(I, /obj/item/card/id) || !I:access) //not ID or no access
+	if(!istype(id_card, /obj/item/card/id) || !id_card:access) //not ID or no access
 		return 0
 	for(var/req in src.req_access)
-		if(!(req in I:access)) //doesn't have this access
+		if(!(req in id_card:access)) //doesn't have this access
 			return 0
 	return 1
 
@@ -565,7 +557,7 @@ var/global/list/module_editors = list()
 		return FALSE
 
 	if (src.syndicate || src.syndicate_possible)
-		if (src.mind.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = null))
+		if (src.mind.add_antagonist(ROLE_SYNDICATE_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_CONVERTED))
 			logTheThing(LOG_STATION, src, "[src] was made a Syndicate robot at [log_loc(src)]. [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 			logTheThing(LOG_STATION, src, "[src.name] is connected to the default Syndicate rack [constructName(src.law_rack_connection)] [cause ? " Source: [constructTarget(cause,"combat")]" : ""]")
 			return TRUE
@@ -633,7 +625,7 @@ var/global/list/module_editors = list()
 	if(!(rack in ticker.ai_law_rack_manager.registered_racks))
 		return
 	src.law_rack_connection = rack
-	logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)][user ? " by [user]" : ""]")
+	logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)][user ? " by [constructName(user)]" : ""]")
 	if (user)
 		var/area/A = get_area(src.law_rack_connection)
 		boutput(user, "You connect [src.name] to the stored law rack at [A.name].")

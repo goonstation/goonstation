@@ -204,7 +204,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 
 /mob/living/carbon/human/build_flat_icon(var/direction)
 	var/icon/return_icon
-	if (src.mutantrace)
+	if (src.mutantrace) //TODO: #14465
 		return_icon = icon(src.mutantrace.icon, src.mutantrace.icon_state, direction ? direction : null)
 	else
 		return_icon = icon('icons/mob/human.dmi', "body_[src.gender == MALE ? "m" : "f"]", direction ? direction : null)
@@ -216,8 +216,9 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 		undies.Blend(src.bioHolder.mobAppearance.u_color ? src.bioHolder.mobAppearance.u_color : "#FFFFFF", ICON_MULTIPLY)
 		return_icon.Blend(undies, ICON_OVERLAY)
 		undies = null
-
-	var/icon/comp = getFlatIcon(src, direction ? direction : null)
+	var/image/I = image(src)
+	I.dir = direction // force the direction to prevent it differing from the other icons
+	var/icon/comp = getFlatIcon(I, direction)
 	return_icon.Blend(comp, ICON_OVERLAY)
 	return return_icon
 
@@ -296,7 +297,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 				"<span class='alert'>You shove [src] in [user == M ? "your own" : "[M]'s"] face!</span>",\
 				"<span class='alert'>[M == user ? "You shove" : "<b>[user]</b> shoves"] [src] in your[M == user ? " own" : null] face!</span>")
 			if (M.client)
-				SETUP_GENERIC_ACTIONBAR(user, M, 2 SECONDS, .proc/show_popup_win, M.client, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED)
+				SETUP_GENERIC_ACTIONBAR(user, M, 2 SECONDS, PROC_REF(show_popup_win), M.client, src.icon, src.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_ATTACKED)
 			src.no_spam = ticker.round_elapsed_ticks
 		else
 			return // don't attack people with the poster thanks
@@ -501,7 +502,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 			boutput(user, "<span class='alert'>\The [src] buzzes grumpily!</span>")
 			return
 		src.papers --
-		playsound(src, 'sound/machines/printer_dotmatrix.ogg', 30, 1)
+		playsound(src, 'sound/machines/printer_dotmatrix.ogg', 30, TRUE)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
 		P.author = user.key
 		P.name = "Wanted: [src.plist["name"]]"

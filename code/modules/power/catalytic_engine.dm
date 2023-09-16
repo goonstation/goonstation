@@ -232,7 +232,7 @@
 			if(src.contained_rod)
 				if(src.toggling) return
 				boutput(user, "<span class='notice'>You [ejected_by_bot ? "eject" : "remove"] \the [contained_rod] from [src]'s retention clamp.</span>")
-				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 				src.contained_rod.UpdateIcon()
 				if(ejected_by_bot)
 					src.contained_rod.set_loc(src.loc)
@@ -253,7 +253,7 @@
 			if(!src.contained_rod)
 				if(src.toggling) return
 				boutput(user, "<span class='notice'>You insert \the [I] into [src]'s retention clamp.</span>")
-				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 				user.u_equip(I)
 				I.set_loc(src)
@@ -285,7 +285,7 @@
 			if(!src.contained_rod)
 				if(src.toggling) return
 				boutput(user, "<span class='notice'>You insert \the [O] into [src]'s retention clamp.</span>")
-				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 				O.set_loc(src)
 				src.contained_rod = O
@@ -324,7 +324,7 @@
 
 			src.ovr_door.icon_state = "nonvis"
 			flick("door-open",src.ovr_door)
-			playsound(src, 'sound/machines/sleeper_open.ogg', 40, 1)
+			playsound(src, 'sound/machines/sleeper_open.ogg', 40, TRUE)
 
 			if(src.contained_rod)
 				src.ovr_rod.icon_state = "rod-high"
@@ -349,7 +349,7 @@
 
 				src.ovr_door.icon_state = "door-shut"
 				flick("door-close",src.ovr_door)
-				playsound(src, 'sound/machines/sleeper_close.ogg', 40, 1)
+				playsound(src, 'sound/machines/sleeper_close.ogg', 40, TRUE)
 
 				SPAWN(0.6 SECONDS)
 
@@ -461,7 +461,7 @@
 		var/decay_ratio_adjustment = src.material.getProperty("chemical") * 0.00023
 		src.decay_ratio = min(src.decay_ratio + decay_ratio_adjustment,1)
 		src.anode_viability = max(0,src.material.getProperty("electrical") * 17)
-		if(src.material.material_flags & MATERIAL_ENERGY && src.anode_viability)
+		if(src.material.getMaterialFlags() & MATERIAL_ENERGY && src.anode_viability)
 			src.anode_viability = round(src.anode_viability * 1.3)
 		var/cathode_density_factor = 180 - (abs(5-src.material.getProperty("density")) * 45)
 		var/cathode_hardness_factor = 100 - (abs(5-src.material.getProperty("hard")) * 12)

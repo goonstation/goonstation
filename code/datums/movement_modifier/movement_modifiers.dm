@@ -168,11 +168,17 @@
 /datum/movement_modifier/amphibian
 	additive_slowdown = 1.2
 
+/datum/movement_modifier/maneater
+	additive_slowdown = 5
+
 /datum/movement_modifier/kudzu
 	additive_slowdown = 4
 
 /datum/movement_modifier/zombie
 	additive_slowdown = 3
+
+/datum/movement_modifier/golem
+	additive_slowdown = 2.5
 
 /datum/movement_modifier/revenant
 	maximum_slowdown = 2

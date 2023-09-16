@@ -198,111 +198,20 @@ This compiles the code to a dmb file. Then you can run Dream Daemon, select the 
 
 Be sure to always test not only if your changes work, but also if you didn't actually break something else that might be related- Dream Maker is a very old and occasionally fickle language, and sometimes it happens that things will just refuse to work.
 
+:::info
+It's also recommended that you set up some build settings before you press <kbd>F5</kbd>. Within the `_std` folder, there exists the file `__build.dm`, which can provide many helpful options for your testing, such as picking certain maps and disabling certain features to make the game boot faster. Be careful to save the uncommented lines you want in your vsc workspace but **NOT** actually commit these changes to the branch. More information about building a server is provided [here](#Using-__build.dm).
+:::
+:::info
+If you need to inspect exactly what the game is doing, the VS code debugger can be very useful- see [a guide to using it here](#How-to-use-the-VS-Code-Debugger).
+:::
+
 If you ever hit a brick wall, you can always ask the #imcoder channel in the [Discord](https://discord.gg/zd8t6pY). There's no such thing as a stupid question, and while, depending on activity, you might not always get an answer, it never hurts to ask.
 
 :::info
 Keep in mind that [asking good questions](https://www.oranges.net.nz/asking_questions.html) makes it much easier for us to help you!
-:::
+::: 
 
-### Step 4: Debugging Issues With Your Code :bug:
-If everything works fine, you don't need this section! skip to [Step 5](https://hackmd.io/ZSrATIZHQDikd2cKEjCf5g?view#Step-5-Up-On-Stage-).
-#### Oh God Why Did Everything Freeze Did The Game Crash
-![](https://i.imgur.com/m4pXd1p.png)
-
-***No, it didn't. (Probably.)
-See the next section.***
-
-#### Using the Debugger
-
-The **debugger** allows you to pause the game's execution so you can look inside and see what's going wrong. The debugger tab is found under the :beetle::arrow_forward: tab in the sidebar on the left, and if you haven't launched the game yet, it'll look something like this:
-![](https://i.imgur.com/fNfPQGr.png)
-
-
-First, find somewhere you want to inspect variables at, **inside a proc**. Breakpoints don't work outside of procs. Click just to the left of the line numbers to set a **breakpoint**. This is telling the debugger "stop running the code here so I can check things out."
-
-Checking the debugger tab again, you'll see your breakpoint is listed here, under *breakpoints*:
-![](https://i.imgur.com/vsvYAdg.png)
-
-:::info
-Notice the "runtime errors" checkbox- this is a 'special' setting which tells the game to always stop when a runtime error occurs. **You probably want to keep this on.** Otherwise, you might miss some errors while testing, which could cause bugs down the line.
-:::
-
-When the game runs a line of code which has a breakpoint, it **stops completely**, and the debugger panel will change to look like this:
-
-![](https://i.imgur.com/t3uFjFr.png)
-
-Let's go through these one at a time.
-
-- **VARIABLES**
-	- These are the variables which are in scope- essentially, everything that matters to this line of code. They're divided into a few different categories.
-		- *Locals*
-			- These are local variables to the proc, anything which is declared **in** the proc.
-		- *Arguments*
-			- ![](https://i.imgur.com/RUEMpQ1.png)
-			- These are arguments to the proc, along with two 'special' arguments.
-			- `usr`: A special variable which is set to whatever mob 'caused' the proc. It's generally unreliable. Further discussion [here](https://hackmd.io/KqcvmL-PQPSYCwfvwn9HYw#The-usr-keyword).
-			- `src`: The thing the proc is being called 'on'- whatever object owns the proc. `src` is null for global procs.
-		- *Globals*
-			- These are global variables, variables which are visible to everything everywhere. There's a million of them and you shouldn't need to worry about them (if you do, something is probably very wrong).
-
-- **WATCH**
-	- You don't ever NEED this window, but it can be useful at times. By putting in some expression (like `user.loc.name` or `cat.owner.date_of_birth`), the value of that expression will always be displayed in this window.
-	- ![](https://i.imgur.com/AnoTcc9.png)
-	- Note that as you move between different procs and scopes, an expression may become undefined or change its value to a completely different thing.
-
-- **BREAKPOINTS**
-	- A list of active and inactive breakpoints, along with the 'stop on runtime errors' setting. Breakpoints can be toggled by clicking the checkbox, which will set them to inactive (ie, they won't do anything) without fully removing them. This allows you to easily reenable them later.
-
-- **CALL STACK**
-	- This is an **extremely** useful window which shows you the 'stack' of procs which lead to the current one. The top dropdown box is the current proc, and essentially the only relevant one- the other dropdowns below are unrelated concurrent processes running.
-	- Here we can see the call stack for clicking a can of soda, leading all the way from the initial click (`client/Click`) to the `attack_hand` with a breakpoint in it.
-	- ![](https://i.imgur.com/T1bgACc.png)
-	- By clicking any of the listed procs, we can jump to exactly where in the proc the next proc was called. Inspecting that `/mob/living/carbon/human/click` call, we see the line where `mob/living/click` was called:
-	- ![](https://i.imgur.com/1itxF6d.png)
-
-:::info
-You might see the same proc appearing multiple times in a row in the call stack, like `/client/Click` here. This isn't a bug- DM allows you to define a single proc in multiple places, and 'continue' executing it somewhere else. 
-:::
-
-Now we've stopped the game's execution on a breakpoint, and looked around at what's going on in that moment. However, we might want to continue execution one line at a time so we can see how things change as more code runs. For this, we need the little window somewhere at the top of your screen:
-
-![](https://i.imgur.com/f8HtrTu.png)
-
-
-From left to right, the buttons are:
-- **Continue execution**; basically, resume running the code normally.
-- **Step over**; basically, run the next line of code without entering any procs on that line.
-- **Step in**; basically, enter the proc being called on this line. If there's multiple proc calls on the same line, you may have to step in multiple times to get where you want to go.
-- **Step out**; basically, continue the current proc to the end, then stop as soon as we exit the proc.
-- **Restart**; recompile and restart the game. Equivalent to closing the game and hitting F5 again.
-- **Stop**; stops the game. The same as closing the game window.
-
-That's about all you need to use the debugger; however, it takes some thought and experience to use the debugger **effectively**. Here's an example debugging case.
-
-#### Example Bug: Why Are All My Spacemen Exploding
-Say I make some changes to the code, and now whenever a human moves, they instantly gib into a bunch of blood and organs. This isn't ideal. I need to find where the code that gibs them is being called from during movement, so I can fix or remove it.
-
-I could just look for every instance of the `gib()` proc in code, as I'm *pretty* sure that's what's making them explode.
-
-![](https://i.imgur.com/9nBff7S.png)
-
-Alright, maybe not. I can use breakpoints and the call stack to find what's making my humans explode, but I don't know exactly where the person-exploding code is being called! I know that when I move, I explode, so I could just put a breakpoint in the `Move()` proc of humans. However, a lot of things happen when a person moves, so this might take a lot of stepping to find the right place.
-
-Instead, I can take something that I know will happen **after** the person explodes, and put a breakpoint there. Then, the call stack leading to that point will show me exactly where the calling proc is!
-
-I know that when a human gibs, they die, so I'll put a breakpoint in the `death()` proc of humans.
-Running the code, and moving, we hit that death breakpoint and see...
-
-![](https://i.imgur.com/0eosynI.png)
-
-Clicking on the `/mob/living/Move()` call right before the `/mob/living/carbon/human/gib` call...
-![](https://i.imgur.com/Vd7yNKC.png)
-
-There it is! Someone (probably me) put a `gib()` call in the `/mob/living/Move()` proc. Whoops. Deleting that fixes the problem!
-
-This is a silly, trivial bug, and actual bugs may be much more confusing and difficult to fix. As mentioned before, always feel free to ask the #imcoder channel in the [Discord](https://discord.gg/zd8t6pY).
-
-### Step 5: Up On Stage :movie_camera: 
+### Step 4: Up On Stage :movie_camera: 
 
 Hover over the word `Changes` and press the plus sign to stage all modified files. It should look like this:
 
@@ -321,7 +230,7 @@ Make sure you're checked out on the new branch you created earlier, and click th
 
 There you go! You have successfully made a commit to your branch. This is still 'unpublished', and only on your local computer, as indicated by the little cloud and arrow icon ![](https://i.imgur.com/3Ptpbgt.png) in the bottom left corner.
 
-### Step 6: Publishing to GitHub :cloud: 
+### Step 5: Publishing to GitHub :cloud: 
 
 Now, to get these changes onto GitHub, press ![](https://i.imgur.com/3Ptpbgt.png) or push normally for a prompt. This will push the commit you made to the origin on GitHub. You need an internet connection to do this, *obviously*.
 
@@ -506,6 +415,133 @@ The above features might stop being accurate if you are doing a lot of changes, 
 Press <kbd>Ctrl + T</kbd> and start typing the path / name of something you want to find, then hit enter to jump to its definition.
 
 Press <kbd>Ctrl + K</kbd> and start typing the name of a file you want to open, then hit enter to open it.
+
+### Using __build.dm
+
+`__build.dm` contains many helpful defines that are commented out and non functional. By removing the `//` and uncommenting the lines that you want, you can enable certain settings that are very helpful for debugging. You can enable multiple of them at once, although some of them might clash. there is usually a comment next to the define explaining what it does, so just reading through the file can tell you a lot. `__build.dm` isn't used in the actual goonstation servers, but changes to it still shouldn't be committed and should be kept unstaged in your workspace.
+
+Under "options to go fast", you have two options that let you speed up the loading of the game by disabling certain features. `IM_REALLY_IN_A_FUCKING_HURRY_HERE` is the go to. It skips the atmospherics system setup, skips loading in and generating the mining level, skips the pregame lobby (readying you up instantly and loading you into the game as soon as is possible) and doesn't show any of the normal pop up windows that you normally see when starting the game (rules, changelog, etc).
+`GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW` skips loading in the adventure zones in Z2, the debris field in Z3, and the generation of the Z5 mining level. Speeds up the loading slightly. Normally, if you just press <kbd>F5</kbd> by itself, it will load Cogmap 2, but activating this setting will load Atlas instead (which loads faster as it is less detailed). Using map overrides will still work.
+
+Under "convenience options for testing etc" you have different settings which can help you debug and bugtest certain features. You can give all players captain IDs by default, disable all /datum/targetable cooldowns, have each vendor start out with lots of credits so that you can vend things straight away, and test medals. There is also the `STOP_DISTRACTING_ME` define which enables all of the options down until `QUICK_MOB_DELETION`.
+
+`Z_LOG_ENABLE` logs additional data in world.log.
+
+If you are using the [tracy](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fcode#Even-Better-Profiler) profiling tool to collect data, you will need to define `TRACY_PROFILER_HOOK` so that it works correctly. There are additional profiling defines below it.
+
+The debugging toggles section contains the `DELETE_QUEUE_DEBUG`, `UPDATE_QUEUE_DEBUG`, `IMAGE_DEL_DEBUG`, `MACHINE_PROCESSING_DEBUG`, `QUEUE_STAT_DEBUG`, `ABSTRACT_VIOLATION` settings, hard ref delete queue logging, reference tracking and garbage collection logging. Most, if not all of these are very expensive to run and will probably cause some slowness. It also contains the `USE_PERSPECTIVE_EDITOR_WALLS` which swaps out the icons used in mapping tools such as strongdmm to use perspective walls, which can be useful to see where wall mounted items will appear on the sprite.
+
+The map overrides section allows you to pick what map to test on. They're sorted in order of special event maps, regular rotation maps, and finally discontinued/gimmick maps (some of which will not work properly without extra work).
+
+There are some unit test defines which are used by the github checks system to make sure that various prefabs and maps work correctly.
+
+Below that is a section with defines that you enable certain modes, such as RP mode and various holiday seasons.
+
+:::info
+There are some lines of code down the bottom of `__build.dm` which are required for some defines above it to work properly. As a rule of thumb, if you're not sure what a define does, don't touch it.
+:::
+
+Finally, at the bottom, there are testmerge and `BUILD_TIME` defines. Editing the `BUILD_TIME` settings can be useful if testing certain things that use real life time, such as Oshan/Nadir's day night cycling.
+
+### How to use the VS Code Debugger
+#### Oh God Why Did Everything Freeze Did The Game Crash
+![](https://i.imgur.com/m4pXd1p.png)
+
+***No, it didn't. (Probably.)
+See the next section.***
+
+#### Using the Debugger
+
+The **debugger** allows you to pause the game's execution so you can look inside and see what's going wrong. The debugger tab is found under the :beetle::arrow_forward: tab in the sidebar on the left, and if you haven't launched the game yet, it'll look something like this:
+![](https://i.imgur.com/fNfPQGr.png)
+
+
+First, find somewhere you want to inspect variables at, **inside a proc**. Breakpoints don't work outside of procs. Click just to the left of the line numbers to set a **breakpoint**. This is telling the debugger "stop running the code here so I can check things out."
+
+Checking the debugger tab again, you'll see your breakpoint is listed here, under *breakpoints*:
+![](https://i.imgur.com/vsvYAdg.png)
+
+:::info
+Notice the "runtime errors" checkbox- this is a 'special' setting which tells the game to always stop when a runtime error occurs. **You probably want to keep this on.** Otherwise, you might miss some errors while testing, which could cause bugs down the line.
+:::
+
+When the game runs a line of code which has a breakpoint, it **stops completely**, and the debugger panel will change to look like this:
+
+![](https://i.imgur.com/t3uFjFr.png)
+
+Let's go through these one at a time.
+
+- **VARIABLES**
+	- These are the variables which are in scope- essentially, everything that matters to this line of code. They're divided into a few different categories.
+		- *Locals*
+			- These are local variables to the proc, anything which is declared **in** the proc.
+		- *Arguments*
+			- ![](https://i.imgur.com/RUEMpQ1.png)
+			- These are arguments to the proc, along with two 'special' arguments.
+			- `usr`: A special variable which is set to whatever mob 'caused' the proc. It's generally unreliable. Further discussion [here](https://hackmd.io/KqcvmL-PQPSYCwfvwn9HYw#The-usr-keyword).
+			- `src`: The thing the proc is being called 'on'- whatever object owns the proc. `src` is null for global procs.
+		- *Globals*
+			- These are global variables, variables which are visible to everything everywhere. There's a million of them and you shouldn't need to worry about them (if you do, something is probably very wrong).
+
+- **WATCH**
+	- You don't ever NEED this window, but it can be useful at times. By putting in some expression (like `user.loc.name` or `cat.owner.date_of_birth`), the value of that expression will always be displayed in this window.
+	- ![](https://i.imgur.com/AnoTcc9.png)
+	- Note that as you move between different procs and scopes, an expression may become undefined or change its value to a completely different thing.
+
+- **BREAKPOINTS**
+	- A list of active and inactive breakpoints, along with the 'stop on runtime errors' setting. Breakpoints can be toggled by clicking the checkbox, which will set them to inactive (ie, they won't do anything) without fully removing them. This allows you to easily reenable them later.
+	- Note that **breakpoints remain on the same line even if you change the file they're set on**. For this reason, you shouldn't modify a file while you're in the middle of debugging, or the line which is currently running will be different than what's shown.
+
+- **CALL STACK**
+	- This is an **extremely** useful window which shows you the 'stack' of procs which lead to the current one. The top dropdown box is the current proc, and essentially the only relevant one- the other dropdowns below are unrelated concurrent processes running.
+	- Here we can see the call stack for clicking a can of soda, leading all the way from the initial click (`client/Click`) to the `attack_hand` with a breakpoint in it.
+	- ![](https://i.imgur.com/T1bgACc.png)
+	- By clicking any of the listed procs, we can jump to exactly where in that proc the next proc was called (which may be in another file, which will be opened). Inspecting that `/mob/living/carbon/human/click` call, we see the line where `mob/living/click` was called:
+	- ![](https://i.imgur.com/1itxF6d.png)
+	- Note that macros (anything defined by `#define MACRO_NAME(args) ...`, typically having all-caps names) don't appear in the call stack, as the macro doesn't actually exist while you're running the game, only functioning as text replacement during compilation.
+	- Also, built-in functions (`walk()`, `step()`, `get_dir()`, `viewers()`, etc) won't appear, because they aren't actually procs. You shouldn't need to worry about this.
+
+:::info
+You might see the same proc appearing multiple times in a row in the call stack, like `/client/Click` here. This isn't a bug- DM allows you to define a single proc in multiple places, and 'continue' executing it somewhere else. 
+:::
+
+Now we've stopped the game's execution on a breakpoint, and looked around at what's going on in that moment. However, we might want to continue execution one line at a time so we can see how things change as more code runs. For this, we need the little window somewhere at the top of your screen:
+
+![](https://i.imgur.com/f8HtrTu.png)
+
+
+From left to right, the buttons are:
+- **Continue execution**; basically, resume running the code normally.
+- **Step over**; basically, run the next line of code without entering any procs on that line.
+- **Step in**; basically, enter the proc being called on this line. If there's multiple proc calls on the same line, you may have to step in multiple times to get where you want to go.
+- **Step out**; basically, continue the current proc to the end, then stop as soon as we exit the proc.
+- **Restart**; recompile and restart the game. Equivalent to closing the game and hitting F5 again.
+- **Stop**; stops the game. The same as closing the game window.
+
+That's about all you need to use the debugger; however, it takes some thought and experience to use the debugger **effectively**. Here's an example debugging case.
+
+#### Example Bug: Why Are All My Spacemen Exploding
+Say I make some changes to the code, and now whenever a human moves, they instantly gib into a bunch of blood and organs. This isn't ideal. I need to find where the code that gibs them is being called from during movement, so I can fix or remove it.
+
+I could just look for every instance of the `gib()` proc in code, as I'm *pretty* sure that's what's making them explode.
+
+![](https://i.imgur.com/9nBff7S.png)
+
+Alright, maybe not. I can use breakpoints and the call stack to find what's making my humans explode, but I don't know exactly where the person-exploding code is being called! I know that when I move, I explode, so I could just put a breakpoint in the `Move()` proc of humans. However, a lot of things happen when a person moves, so this might take a lot of stepping to find the right place.
+
+Instead, I can take something that I know will happen **after** the person explodes, and put a breakpoint there. Then, the call stack leading to that point will show me exactly where the calling proc is!
+
+I know that when a human gibs, they die, so I'll put a breakpoint in the `death()` proc of humans.
+Running the code, and moving, we hit that death breakpoint and see...
+
+![](https://i.imgur.com/0eosynI.png)
+
+Clicking on the `/mob/living/Move()` call right before the `/mob/living/carbon/human/gib` call...
+![](https://i.imgur.com/Vd7yNKC.png)
+
+There it is! Someone (probably me) put a `gib()` call in the `/mob/living/Move()` proc. Whoops. Deleting that fixes the problem!
+
+This is a silly, trivial bug, and actual bugs may be much more confusing and difficult to fix. As mentioned before, always feel free to ask the #imcoder channel in the [Discord](https://discord.gg/zd8t6pY).
 
 ### Using Command Line git
 

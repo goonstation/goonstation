@@ -29,7 +29,7 @@
 		if (M.key) result += M.key
 		if (isdead(M)) result += "DEAD"
 		if (role) result += role
-		if (checktraitor(M)) result += "\[T\]"
+		if (M.mind?.is_antagonist()) result += "\[T\]"
 		system.reply(result.Join(" | "), user)
 
 /datum/spacebee_extension_command/addnote
@@ -288,7 +288,19 @@
 		for(var/client/C)
 			if (C.ckey == ckey)
 				var/mob/M = C.mob
-				if (M && ismob(M) && !isAI(M) && !isobserver(M))
+				var/area/A = get_area(M)
+				if (ismob(M) && istype(A, /area/prison/cell_block/wards))
+					var/ASLoc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
+					if (ASLoc)
+						M.set_loc(ASLoc)
+
+					M.show_text("<h2><font color=red><b>You have been unprisoned and sent back to the station.</b></font></h2>", "red")
+					logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
+					logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
+					system.reply("Unprisoned [ckey].", user)
+					return
+
+				else if (M && ismob(M) && !isAI(M) && !isobserver(M))
 					var/prison = pick_landmark(LANDMARK_PRISONWARP)
 					if (prison)
 						M.changeStatus("paralysis", 8 SECONDS)
@@ -396,7 +408,7 @@
 		else
 			var/list/message = list()
 			message += "You can put text arguments in quotes if you want spaces in them!"
-			message += "# means you need to add a server id.\n"
+			message += "\\# means you need to add a server id.\n"
 			for(var/command_name in system.commands)
 				var/datum/spacebee_extension_command/command = system.commands[command_name]
 				message += src.help_for_command(command)
@@ -482,7 +494,6 @@
 			target.mind.damned = 0
 			target.mind.transfer_to(newM)
 		target.mind = null
-		newM.Login()
 		newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 		qdel(target)
 

@@ -3,7 +3,7 @@
 /turf/space,
 /area/space)
 "b" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/obj/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "outer forcefield"
@@ -12,7 +12,7 @@
 	name = "Penalty Box"
 	})
 "c" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/obj/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "forcefield";

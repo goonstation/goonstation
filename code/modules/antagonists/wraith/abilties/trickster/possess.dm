@@ -55,7 +55,7 @@
 				WG = O.insert_slasher_observer(H)
 			wraith_mind = W.mind
 			W.mind.transfer_to(H)
-			RegisterSignal(H, COMSIG_MOB_DEATH, .proc/return_wraith)
+			RegisterSignal(H, COMSIG_MOB_DEATH, PROC_REF(return_wraith))
 			APPLY_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)	//Subject to change.
 			sleep(45 SECONDS)
 			if (!H?.loc)
@@ -72,7 +72,7 @@
 				REMOVE_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM, H)
 				if (human_mind)
 					human_mind.transfer_to(H)
-					playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
+					playsound(H, 'sound/effects/ghost2.ogg', 50, FALSE)
 					boutput(H, "<span class='notice'>You slowly regain control of your body. It's as if the presence within you dissipated into nothingness.</span>")
 				target_player?.dnr--
 				return
@@ -85,7 +85,7 @@
 				src.return_wraith(H)
 				if (human_mind)
 					human_mind.transfer_to(H)
-					playsound(H, 'sound/effects/ghost2.ogg', 50, 0)
+					playsound(H, 'sound/effects/ghost2.ogg', 50, FALSE)
 			qdel(WG)
 			H.take_brain_damage(30)
 			H.setStatus("weakened", 5 SECOND)

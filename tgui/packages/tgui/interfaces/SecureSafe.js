@@ -30,6 +30,7 @@ const SecureSafeScreen = (props, _context) => {
     disabled,
     emagged,
     padMsg,
+    theme,
   } = props;
 
   let content = padMsg ? padMsg : stylizeCode(attempt, codeLen);
@@ -137,13 +138,14 @@ export const SecureSafe = (_props, context) => {
     emagged,
     padMsg,
     safeName,
+    theme,
   } = data;
   return (
     <Window
       title={capitalize(safeName)}
       width={200}
       height={328}
-      theme="retro-dark"
+      theme={theme || "retro-dark"}
     >
       <Window.Content>
         <Section fill>

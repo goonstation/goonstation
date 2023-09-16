@@ -1,5 +1,5 @@
 
-/obj/item/reagent_containers/food/snacks/sandwich/
+/obj/item/reagent_containers/food/snacks/sandwich
 	icon = 'icons/obj/foodNdrink/food_bread.dmi'
 	bites_left = 4
 	heal_amt = 2
@@ -253,17 +253,17 @@
 		reagents.add_reagent("love", 15)
 
 /obj/item/reagent_containers/food/snacks/burger/heartburger/synth
-	name = "heartburger"
+	name = "synthetic heartburger"
 	desc = "A hearty meal, made with Love. This one seems to contain a green synthetic heart."
 	icon_state = "synthheartburger"
 
 /obj/item/reagent_containers/food/snacks/burger/heartburger/cyber
-	name = "heartburger"
+	name = "cyber heartburger"
 	desc = "A hearty meal, made with Love. This one seems to contain a shiny cyberheart."
 	icon_state = "roboheartburger"
 
 /obj/item/reagent_containers/food/snacks/burger/heartburger/flock
-	name = "heartburger"
+	name = "flock heartburger"
 	desc = "A hearty meal, made with Love. This one seems to cotain a teal pulsing octahedron."
 	icon_state = "flockheartburger"
 
@@ -276,17 +276,17 @@
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/burger/brainburger/synth
-	name = "brainburger"
+	name = "synthetic brainburger"
 	desc = "A strange looking burger. It looks almost sentient. It seems to contain a green synthetic brain."
 	icon_state = "synthbrainburger"
 
 /obj/item/reagent_containers/food/snacks/burger/brainburger/cyber
-	name = "brainburger"
+	name = "cyber brainburger"
 	desc = "A strange looking burger. It looks almost sentient. It seems to contain a Spontaneous Intelligence Creation Core."
 	icon_state = "robobrainburger"
 
 /obj/item/reagent_containers/food/snacks/burger/brainburger/flock
-	name = "brainburger"
+	name = "flock brainburger"
 	desc = "A strange looking burger. It looks almost sentient. It seems to contain an odd crystal."
 	icon_state = "flockbrainburger"
 
@@ -366,7 +366,7 @@
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
-	brew_result = "beepskybeer"
+	brew_result = list("beepskybeer"=20)
 	initial_reagents = list("cholesterol"=5,"nanites"=20)
 
 /obj/item/reagent_containers/food/snacks/burger/cheeseborger
@@ -376,7 +376,7 @@
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
-	brew_result = "beepskybeer"
+	brew_result = list("beepskybeer"=20)
 	initial_reagents = list("cholesterol"=5,"nanites"=20)
 
 /obj/item/reagent_containers/food/snacks/burger/synthburger
@@ -443,8 +443,8 @@
 					M.take_toxin_damage(2)
 				if(3)
 					boutput(M, "<span class='alert'>There was a cyst in that burger. Now your mouth is full of pus OH JESUS THATS DISGUSTING OH FUCK</span>")
-					M.visible_message("<span class='alert'>[M] suddenly and violently vomits!</span>")
-					M.vomit(20)
+					var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+					M.vomit(20, null, vomit_message)
 				if(4)
 					boutput(M, "<span class='alert'>You bite down on a chunk of bone, hurting your teeth.</span>")
 					random_brute_damage(M, 2)

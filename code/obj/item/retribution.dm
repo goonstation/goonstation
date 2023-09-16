@@ -149,7 +149,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 				else
 					random_burn_damage(scan_target, 30)
 					scan_target.changeStatus("weakened", 2 SECOND)
-				INVOKE_ASYNC(scan_target, /mob.proc/emote, "scream")
+				INVOKE_ASYNC(scan_target, TYPE_PROC_REF(/mob, emote), "scream")
 				playsound(scan_target.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 			else if (istype(scan_target, /obj/structure/girder))
 				create_scan_decal = TRUE
@@ -167,7 +167,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 			T = T.ReplaceWith(/turf/simulated/floor/plating/random)
 		if(create_scan_decal)
 			leavescan(T, 1)
-			playsound(T, 'sound/effects/smoke_tile_spread.ogg', 50, 1)
+			playsound(T, 'sound/effects/smoke_tile_spread.ogg', 50, TRUE)
 		return
 
 /obj/decal/syndicate_destruction_scan_center

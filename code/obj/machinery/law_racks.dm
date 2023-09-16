@@ -210,7 +210,7 @@
 		changeHealth(-power*0.15,"blob")
 
 	ex_act(severity)
-		src.material?.triggerExp(src, severity)
+		src.material_trigger_on_explosion(severity)
 		switch(severity)
 			if(1)
 				changeHealth(rand(-90,-70),"explosion severity [severity]")
@@ -232,8 +232,7 @@
 				src.visible_message("<span class='alert'>[src] is hit by the [P] but it deflects harmlessly.</span>")
 			return
 
-		if (src.material)
-			src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch (P.proj_data.damage_type)
 			if (D_KINETIC)
@@ -319,7 +318,7 @@
 			if(!inserted)
 				boutput(user,"<span class='alert'>There's no more space on the rack!</span>")
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/insert_module_callback, list(count,user,AIM), user.equipped().appearance, null, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(insert_module_callback), list(count,user,AIM), user.equipped().appearance, null, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 		else if (istype(I, /obj/item/clothing/mask/moustache/))
 			for_by_tcl(M, /mob/living/silicon/ai)
@@ -330,7 +329,7 @@
 		else if (istype(I, /obj/item/peripheral/videocard))
 			var/obj/item/peripheral/videocard/V = I
 			if (GET_COOLDOWN(src, "mine_cooldown") == 0)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/insert_videocard_callback, list(user,V), user.equipped().appearance, null, \
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(insert_videocard_callback), list(user,V), user.equipped().appearance, null, \
 						"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 			else
 				user.visible_message("<span class='alert'>The [src]'s graphics port isn't ready to accept [I] yet.</span>")
@@ -401,7 +400,7 @@
 					else
 						ui.user.visible_message("<span class='alert'>[ui.user] starts welding a module in place!</span>", "<span class='alert'>You start to weld the module in place!</span>")
 					var/positions = src.get_welding_positions(slotNum)
-					actions.start(new /datum/action/bar/private/welding(ui.user, src, 6 SECONDS, .proc/toggle_welded_callback, list(slotNum,ui.user), \
+					actions.start(new /datum/action/bar/private/welding(ui.user, src, 6 SECONDS, PROC_REF(toggle_welded_callback), list(slotNum,ui.user), \
 			  		"",	positions[1], positions[2]), ui.user)
 
 				return
@@ -421,7 +420,7 @@
 				else
 					ui.user.visible_message("<span class='alert'>[ui.user] starts screwing a module in place!</span>", "<span class='alert'>You start to screw the module in place!</span>")
 				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, .proc/toggle_screwed_callback, list(slotNum,ui.user), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+				SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(toggle_screwed_callback), list(slotNum,ui.user), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 				"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 				return
@@ -440,7 +439,7 @@
 						boutput(ui.user,"Your clunky robot hands can't grip the module!")
 						return
 					ui.user.visible_message("<span class='alert'>[ui.user] starts removing a module!</span>", "<span class='alert'>You start removing the module!</span>")
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, .proc/remove_module_callback, list(slotNum,ui.user), law_circuits[slotNum].icon, law_circuits[slotNum].icon_state, \
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(remove_module_callback), list(slotNum,ui.user), law_circuits[slotNum].icon, law_circuits[slotNum].icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 				else
 					var/equipped = ui.user.equipped()
@@ -452,7 +451,7 @@
 						return
 
 					ui.user.visible_message("<span class='alert'>[ui.user] starts inserting a module!</span>", "<span class='alert'>You start inserting the module!</span>")
-					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, .proc/insert_module_callback, list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
+					SETUP_GENERIC_ACTIONBAR(ui.user, src, 2 SECONDS, PROC_REF(insert_module_callback), list(slotNum,ui.user,equipped), ui.user.equipped().icon, ui.user.equipped().icon_state, \
 					"", INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 
@@ -592,7 +591,8 @@
 						current_abilities |= ability.type
 					var/list/abilities_to_remove = current_abilities - ai_abilities
 					for(ability_type in abilities_to_remove)
-						aiAH.removeAbility(ability_type)
+						if (ispath(ability_type, /datum/targetable/ai/module))
+							aiAH.removeAbility(ability_type)
 					var/list/abilities_to_add = ai_abilities - current_abilities
 					for(ability_type in abilities_to_add)
 						aiAH.addAbility(ability_type)
@@ -685,7 +685,7 @@
 			for (var/i in 1 to 10)
 				sleep(0.4 SECONDS)
 				if(src && prob(60))
-					var/obj/mined = new /obj/item/spacecash/buttcoin
+					var/obj/mined = new /obj/item/currency/spacecash/buttcoin
 					mined.set_loc(src.loc)
 					target = get_step(src, rand(1,8))
 					for (var/mob/living/mob in view(7,src))
@@ -743,6 +743,9 @@
 		if(istype(src.law_circuits[slot],/obj/item/aiModule/hologram_expansion))
 			var/obj/item/aiModule/hologram_expansion/holo = src.law_circuits[slot]
 			src.holo_expansions -= holo.expansion
+		else if(istype(src.law_circuits[slot],/obj/item/aiModule/ability_expansion))
+			var/obj/item/aiModule/ability_expansion/expansion = src.law_circuits[slot]
+			src.ai_abilities -= expansion.ai_abilities
 		src.law_circuits[slot]=null
 		src.welded[slot] = FALSE
 		src.screwed[slot] = FALSE

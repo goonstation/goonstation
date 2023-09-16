@@ -32,7 +32,8 @@
 					100;"nitrogen",
 					100;"plasma",
 					100;"carbon dioxide",
-					75;"sleeping agent")
+					75;"sleeping agent",
+					10;"fallout")
 			if("martian") // organic stuff
 				gas_type = pick(
 					200;"oxygen",
@@ -53,7 +54,8 @@
 					50;"carbon dioxide",
 					30;"farts",
 					30;"agent b",
-					30;"sleeping agent")
+					30;"sleeping agent",
+					10;"fallout")
 
 		// temperature
 		gas_temp = rand(0 KELVIN, 620 KELVIN)
@@ -110,11 +112,11 @@
 				if("farts")
 					gas.farts = src.gas_amount_current
 				if("agent b")
-					var/datum/gas/oxygen_agent_b/trace = gas.get_or_add_trace_gas_by_type(/datum/gas/oxygen_agent_b)
-					trace.moles = src.gas_amount_current
+					gas.oxygen_agent_b = src.gas_amount_current
 				if("sleeping agent")
-					var/datum/gas/sleeping_agent/trace = gas.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-					trace.moles = src.gas_amount_current
+					gas.nitrous_oxide = src.gas_amount_current
+				if("fallout")
+					gas.radgas = src.gas_amount_current
 			gas.temperature = src.gas_temp
 			if (L)
 				L.assume_air(gas)

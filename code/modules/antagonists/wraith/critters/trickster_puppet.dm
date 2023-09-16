@@ -19,12 +19,16 @@
 	var/traps_laid = 0
 	var/datum/abilityHolder/wraith/AH = null
 
-	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/M = null)
+	faction = FACTION_WRAITH
+
+	New(var/turf/T, var/mob/living/intangible/wraith/wraith_trickster/M = null, var/new_name = "Trickster puppet", var/new_real_name = "Trickster puppet")
 		..(T)
 		if(M != null)
 			src.master = M
 
 		last_life_update = TIME
+		src.name = new_name
+		src.real_name = new_real_name
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
 		AH = src.add_ability_holder(/datum/abilityHolder/wraith)
@@ -102,6 +106,7 @@
 			master_ability_holder.points = AH.points
 			master_ability_holder.possession_points = AH.possession_points
 			src.mind.transfer_to(master)
+			src.master.Move(master.loc) //call Move manually so we do restricted Z checks
 			src.master = null
 		qdel(src)
 		return 0

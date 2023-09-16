@@ -22,7 +22,6 @@
 		. = ..(); \
 		admin_procs += list(APPLY_PREFIX(TYPE/, PROCNAME)); \
 	}
-
 //temp_flags lol for atoms and im gonna be constantly adding and removing these
 //this doesn't entirely make sense, cause some other flags are temporary too! ok im runnign otu OF FUCKING SPACE
 /// used for removing us from mantapush list when we get deleted
@@ -82,9 +81,37 @@
 /// Uncross should call this after setting `.` to make sure Bump gets called if needed
 #define UNCROSS_BUMP_CHECK(AM) if(!. && do_bump) AM.Bump(src)
 
+/// Use this to override the help message instead of doing it directly
+#define HELP_MESSAGE_OVERRIDE(HM) \
+	help_message = HM; \
+	help_verb() { \
+		set popup_menu = TRUE; \
+		set hidden = FALSE; \
+		..(); \
+	}
+
+/// Wrapper around RegisterSignal for help messages. Use this when you want a component to add a custom help message to its parent.
+/// Makes it so the target is given the Help verb
+/// Note that we never remove the help verb and this is mostly because it's easier, unlikely to happen often and also not a big deal
+/// as the help verb just says that there's no help message if there's no help message.
+/// The reason why we skip mob is that mob.verbs is different from obj.verbs etc. Basically if you are trying to do this to a mob
+/// probably you will need to include HELP_MESSAGE_OVERRIDE on the mob to give it the static help verb. Sorry.
+#define RegisterHelpMessageHandler(target, help_message_handler) \
+	RegisterSignal(parent, COMSIG_ATOM_HELP_MESSAGE, help_message_handler); \
+	if(!ismob(target)) target.verbs |= /atom/proc/help_verb_dynamic
+
+/// Wrapper around UnregisterSignal for help messages, identical to UnregisterSignal but here for parity
+#define UnregisterHelpMessageHandler(target) \
+	UnregisterSignal(parent, COMSIG_ATOM_HELP_MESSAGE)
+
 /// For an unanchored movable atom
 #define UNANCHORED 0
 /// For an atom that can't be moved by player actions
 #define ANCHORED 1
 /// For an atom that's always immovable, even by stuff like black holes and gravity artifacts.
 #define ANCHORED_ALWAYS 2
+
+/// The atom is below the floor tiles.
+#define UNDERFLOOR 1
+/// The atom is above the floor tiles.
+#define OVERFLOOR 2

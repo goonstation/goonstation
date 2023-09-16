@@ -34,7 +34,7 @@ TYPEINFO(/obj/machinery/clonepod)
 	var/emagged = FALSE
 
 	var/clonehack = 0 //Is a traitor mindhacking the clones?
-	var/mob/implant_hacker = null // Who controls the clones?
+	var/datum/mind/implant_hacker = null // Who controls the clones?
 	var/is_speedy = 0 // Speed module installed?
 	var/is_efficient = 0 // Efficiency module installed?
 
@@ -108,7 +108,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		meat_level = 0 // no meat for those built from frames
 
 		for (var/obj/machinery/computer/cloning/C in orange(4, src))
-			if (C.linked_pods.len < C.max_pods)
+			if (length(C.linked_pods) < C.max_pods)
 				C.linked_pods += src
 				if(C.scanner?.pods)
 					C.scanner?.pods += src
@@ -237,9 +237,9 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		if (istype(oldholder))
 			oldholder.clone_generation++
+			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.mutant_race?.type)
 			src.occupant?.set_mutantrace(oldholder?.mobAppearance?.original_mutant_race?.type)
-			src.occupant.bioHolder.CopyOther(oldholder, copyActiveEffects = connected?.gen_analysis)
 			oldholder.mobAppearance?.mutant_race = oldholder.mobAppearance?.original_mutant_race
 			if(ishuman(src.occupant))
 				var/mob/living/carbon/human/H = src.occupant
@@ -255,9 +255,6 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		ghost.mind.transfer_to(src.occupant)
 		src.occupant.is_npc = FALSE
-
-		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
-			src.occupant.client.set_layout(src.occupant.client.tg_layout)
 
 		if (!defects)
 			stack_trace("Clone [identify_object(src.occupant)] generating with a null `defects` holder.")
@@ -341,12 +338,6 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.occupant.mind.key = src.occupant.key
 			src.occupant.mind.transfer_to(src.occupant)
 			ticker.minds += src.occupant.mind
-		// -- Mode/mind specific stuff goes here
-
-			if ((ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)) && isrevolutionary(src.occupant))
-				ticker.mode:update_all_rev_icons() //So the icon actually appears
-
-		// -- End mode specific stuff
 
 		src.occupant.is_npc = FALSE
 		logTheThing(LOG_STATION, usr, "starts cloning [constructTarget(src.occupant,"combat")] at [log_loc(src)].")
@@ -359,14 +350,14 @@ TYPEINFO(/obj/machinery/clonepod)
 			src.reagents.trans_to(src.occupant, 1000)
 
 			// Oh boy someone is cloning themselves up an army!
-		if(clonehack && implant_hacker != null)
+		if(clonehack && implant_hacker)
 			// No need to check near as much with a standard implant, as the cloned person is dead and is therefore enslavable upon cloning.
 			// How did this happen. Why is someone cloning you as a mindhack to yourself. WHO KNOWS?!
-			if(implant_hacker == src.occupant)
+			if(implant_hacker == src.occupant.mind)
 				boutput(src.occupant, "<span class='alert'>You feel utterly strengthened in your resolve! You are the most important person in the universe!</span>")
 			else
-				logTheThing(LOG_COMBAT, src.occupant, "was mindhack cloned. Mindhacker: [constructTarget(implant_hacker,"combat")]")
-				src.occupant.setStatus("mindhack", null, implant_hacker)
+				logTheThing(LOG_COMBAT, src.occupant, "was mindhack cloned. Mindhacker: [constructTarget(implant_hacker.current,"combat")]")
+				src.occupant.setStatus("mindhack", null, implant_hacker.current)
 
 		if (!src.occupant?.mind)
 			logTheThing(LOG_DEBUG, src, "Cloning pod failed to check mind status of occupant [src.occupant].")
@@ -374,7 +365,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			for (var/datum/antagonist/antag in src.occupant.mind.antagonists)
 				if (!antag.remove_on_clone)
 					continue
-				var/success = src.occupant.mind.remove_antagonist(antag.id)
+				var/success = src.occupant.mind.remove_antagonist(antag)
 				if (success)
 					logTheThing(LOG_COMBAT, src.occupant, "Cloning pod removed [antag.display_name] antag status.")
 				else
@@ -584,8 +575,9 @@ TYPEINFO(/obj/machinery/clonepod)
 
 	//Let's unlock this early I guess.
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
+		var/obj/item/card/id/id_card = get_id_card(W)
+		if (istype(id_card))
+			W = id_card
 		if (istype(W, /obj/item/card/id))
 			if (!src.check_access(W))
 				boutput(user, "<span class='alert'>Access Denied.</span>")
@@ -639,7 +631,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				return
 			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
 			clonehack = 1
-			implant_hacker = user
+			implant_hacker = user.mind
 			light.enable()
 			src.UpdateIcon()
 			user.drop_item()
@@ -1089,7 +1081,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			boutput(user, "<span class='alert'>The [src.name] is still running, hold your horses!</span>")
 			return
 		if (istype(G, /obj/item/reagent_containers/food/snacks/ingredient/meat) || (istype(G, /obj/item/reagent_containers/food) && (findtext(G.name, "meat")||findtext(G.name,"bacon"))) || (istype(G, /obj/item/parts/human_parts)) || istype(G, /obj/item/clothing/head/butt) || istype(G, /obj/item/organ) || istype(G,/obj/item/raw_material/martian))
-			if (src.meats.len >= src.max_meat)
+			if (length(src.meats) >= src.max_meat)
 				boutput(user, "<span class='alert'>There is already enough meat in there! You should not exceed the maximum safe meat level!</span>")
 				return
 

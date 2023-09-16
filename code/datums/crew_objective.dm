@@ -456,41 +456,6 @@ ABSTRACT_TYPE(/datum/objective/crew/bartender)
 #define PIZZA_OBJ_COUNT 3
 ABSTRACT_TYPE(/datum/objective/crew/chef)
 /datum/objective/crew/chef
-	var/static/list/blacklist = list(
-		/obj/item/reagent_containers/food/snacks/burger/humanburger,
-		/obj/item/reagent_containers/food/snacks/donut/custom/robust,
-		/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
-		/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,
-		/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,
-		/obj/item/reagent_containers/food/snacks/meatball,
-		/obj/item/reagent_containers/food/snacks/mushroom,
-		/obj/item/reagent_containers/food/snacks/pickle/trash,
-		/obj/item/reagent_containers/food/snacks/pizza/xmas,
-		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
-		/obj/item/reagent_containers/food/snacks/soup/custom,
-		/obj/item/reagent_containers/food/snacks/condiment/syndisauce,
-		/obj/item/reagent_containers/food/snacks/donkpocket_w,
-		/obj/item/reagent_containers/food/snacks/surstromming,
-		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
-		/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner,
-		/obj/item/reagent_containers/food/snacks/pancake/classic,
-		/obj/item/reagent_containers/food/snacks/wonton_spawner,
-		/obj/item/reagent_containers/food/snacks/agar_block,
-		/obj/item/reagent_containers/food/snacks/sushi_roll/custom,
-#ifndef UNDERWATER_MAP
-		/obj/item/reagent_containers/food/snacks/healgoo,
-		/obj/item/reagent_containers/food/snacks/greengoo,
-#endif
-		/obj/item/reagent_containers/food/snacks/snowball,
-		/obj/item/reagent_containers/food/snacks/burger/vr,
-		/obj/item/reagent_containers/food/snacks/slimjim,
-		/obj/item/reagent_containers/food/snacks/bite,
-		/obj/item/reagent_containers/food/snacks/pickle_holder,
-		/obj/item/reagent_containers/food/snacks/snack_cake,
-		/obj/item/reagent_containers/food/snacks/ice_cream/random,
-		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom
-	)
-	var/static/list/ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - blacklist - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter)
 /datum/objective/crew/chef/cake
 	var/choices[CAKE_OBJ_COUNT]
 	var/completed = FALSE
@@ -498,14 +463,22 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 	set_up()
 		..()
 		var/list/names[CAKE_OBJ_COUNT]
-		for(var/i in 1 to CAKE_OBJ_COUNT)
-			choices[i] = pick(ingredients)
+		var/i = 0
+		var/current_rolls = 0
+		var/max_rolls = 30
+		while (i < CAKE_OBJ_COUNT)
+			i++
+			choices[i] = pick(allowed_favorite_ingredients)
 			var/choiceType = choices[i]
 			var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
-			if(!instance.custom_food)
+			if(instance.custom_food)
+				names[i] = instance.name
+			else
 				i--
-				continue
-			names[i] = instance.name
+			current_rolls++
+			if (current_rolls > max_rolls)
+				stack_trace("Failed to generate a foodlist objective for chef. Aborting.")
+				return
 		explanation_text = "Create a custom, three-tier cake with layers of "
 		for (var/ingredient in names)
 			if (ingredient != names[CAKE_OBJ_COUNT])
@@ -525,7 +498,7 @@ ABSTRACT_TYPE(/datum/objective/crew/chef)
 		..()
 		var/list/names[PIZZA_OBJ_COUNT]
 		for(var/i = 1, i <= PIZZA_OBJ_COUNT, i++)
-			choices[i] = pick(ingredients)
+			choices[i] = pick(allowed_favorite_ingredients)
 			var/choiceType = choices[i]
 			var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
 			if(!instance.custom_food || !instance.name)
@@ -586,7 +559,7 @@ ABSTRACT_TYPE(/datum/objective/crew/engineer)
 	check_completion()
 		if(isnull(check_result))
 			check_result = FALSE
-			if(mechanic_controls.scanned_items.len > 9)
+			if(length(mechanic_controls.scanned_items) > 9)
 				check_result = TRUE
 		return check_result
 /datum/objective/crew/engineer/teleporter
@@ -649,7 +622,7 @@ ABSTRACT_TYPE(/datum/objective/crew/miner)
 					var/datum/ore_cloud_data/OCD = ores[ore]
 					if(OCD.for_sale && OCD.amount)
 						materials |= ore
-			check_result = materials.len >= 10
+			check_result = length(materials) >= 10
 		return check_result
 
 ABSTRACT_TYPE(/datum/objective/crew/researchdirector)
@@ -772,7 +745,7 @@ ABSTRACT_TYPE(/datum/objective/crew/medicaldirector)
 		if(isnull(check_result))
 			check_result = FALSE
 			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
-				if(C.records.len > 4)
+				if(length(C.records) > 4)
 					check_result = TRUE
 		return check_result
 /datum/objective/crew/medicaldirector/cyborgs
@@ -863,7 +836,7 @@ ABSTRACT_TYPE(/datum/objective/crew/geneticist)
 		if(isnull(check_result))
 			check_result = FALSE
 			for(var/obj/machinery/computer/cloning/C as anything in machine_registry[MACHINES_CLONINGCONSOLES])
-				if(C.records.len > 4)
+				if(length(C.records) > 4)
 					check_result = TRUE
 		return check_result
 
@@ -987,8 +960,10 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && ishuman(owner.current))
 			var/mob/living/carbon/human/H = owner.current
-			if(in_centcom(H) && H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(in_centcom(H) && H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
 
 /datum/objective/crew/staffassistant/clown
 	explanation_text = "Escape on the shuttle alive wearing at least one piece of clown clothing."
@@ -1066,8 +1041,10 @@ ABSTRACT_TYPE(/datum/objective/crew/technicalassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //checking basic stuff - they escaped alive and have an ID
 			var/mob/living/carbon/human/H = owner.current
-			if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
 /datum/objective/crew/technicalassistant/spacesuit
 	explanation_text = "Get your grubby hands on a spacesuit."
 	medal_name = "Vacuum Sealed"
@@ -1090,8 +1067,11 @@ ABSTRACT_TYPE(/datum/objective/crew/medicalassistant)
 	check_completion()
 		if(owner.current && !isdead(owner.current) && in_centcom(owner.current)) //checking basic stuff - they escaped alive and have an ID
 			var/mob/living/carbon/human/H = owner.current
-			if(H.wear_id && H.wear_id:registered == H.real_name && !(H.wear_id:assignment in list("Technical Assistant","Staff Assistant","Medical Assistant"))) return 1
-			else return 0
+			if(H.wear_id)
+				var/obj/item/card/id/id_card = get_id_card(H.wear_id)
+				if (istype(id_card) && id_card.registered == H.real_name && !(id_card.assignment in list("Technical Assistant","Staff Assistant","Medical Assistant")))
+					return TRUE
+
 /datum/objective/crew/medicalassistant/healself
 	explanation_text = "Make sure you are completely unhurt when the escape shuttle leaves."
 	medal_name = "Smooth Operator"

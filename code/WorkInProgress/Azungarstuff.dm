@@ -954,7 +954,7 @@
 		src.add_dialog(user)
 		busy = 1
 		showswirl(user.loc)
-		playsound(src, 'sound/effects/teleport.ogg', 60, 1)
+		playsound(src, 'sound/effects/teleport.ogg', 60, TRUE)
 		SPAWN(1 SECOND)
 		teleport(user)
 		busy = 0
@@ -1087,7 +1087,7 @@ TYPEINFO(/obj/item/rpcargotele)
 
 	onStart()
 		..()
-		playsound(thecrate, 'sound/machines/click.ogg', 60, 1)
+		playsound(thecrate, 'sound/machines/click.ogg', 60, TRUE)
 		owner.visible_message("<span class='notice'>[owner] starts to calibrate the cargo teleporter in a suspicious manner.</span>")
 	onEnd()
 		..()
@@ -1096,4 +1096,4 @@ TYPEINFO(/obj/item/rpcargotele)
 		qdel(thecrate)
 		message_admins("One of the NT supply crates has been succesfully teleported!")
 		boutput(owner, "<span class='notice'>You have successfully teleported one of the supply crates to the Syndicate.</span>")
-		playsound(thecrate, 'sound/machines/click.ogg', 60, 1)
+		playsound(thecrate, 'sound/machines/click.ogg', 60, TRUE)

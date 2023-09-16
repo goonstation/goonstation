@@ -10,6 +10,7 @@
 	icon_state = "floor"
 	thermal_conductivity = 0.04
 	heat_capacity = 225000
+	default_material = "steel"
 
 	turf_flags = IS_TYPE_SIMULATED | MOB_SLIP | MOB_STEP
 
@@ -17,7 +18,6 @@
 	var/burnt = 0
 	var/has_material = TRUE
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
-	var/plate_mat = null
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
 	var/tmp/roundstart_icon_state
@@ -27,10 +27,8 @@
 
 	New()
 		..()
-		if (has_material)
-			if (isnull(plate_mat))
-				plate_mat = getMaterial("steel")
-			setMaterial(plate_mat, copy = FALSE)
+		if (has_material && isnull(default_material))
+			setMaterial(getMaterial("steel"))
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -204,7 +202,7 @@
 			make_cleanable( C ,src)
 		else if ((locate(/obj) in src) && prob(3))
 			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal,\
-			/obj/item/spacecash, /obj/item/tile/steel, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
+			/obj/item/currency/spacecash, /obj/item/tile/steel, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
 			new C (src)
 		else if (prob(1) && prob(2)) // really rare. not "three space things spawn on destiny during first test with just prob(1)" rare.
 			var/obj/C = pick(/obj/item/space_thing, /obj/item/sticker/gold_star, /obj/item/sticker/banana, /obj/item/sticker/heart,\
@@ -644,6 +642,8 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/circuit)
+	mat_appearances_to_ignore = list("pharosium")
 /turf/simulated/floor/circuit
 	name = "transduction matrix"
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry."
@@ -651,13 +651,9 @@
 	RL_LumR = 0
 	RL_LumG = 0   //Corresponds to color of the icon_state.
 	RL_LumB = 0.3
-	mat_appearances_to_ignore = list("pharosium")
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
-
-	New()
-		plate_mat = getMaterial("pharosium")
-		. = ..()
+	default_material = "pharosium"
 
 /turf/simulated/floor/circuit/green
 	icon_state = "circuit-green"
@@ -697,18 +693,16 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/carpet)
+	mat_appearances_to_ignore = list("cotton")
 /turf/simulated/floor/carpet
 	name = "carpet"
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "red1"
 	step_material = "step_carpet"
 	step_priority = STEP_PRIORITY_MED
-	mat_appearances_to_ignore = list("cotton")
 	mat_changename = 0
-
-	New()
-		plate_mat = getMaterial("cotton")
-		. = ..()
+	default_material = "cotton"
 
 /turf/simulated/floor/carpet/grime
 	name = "cheap carpet"
@@ -856,11 +850,12 @@ DEFINE_FLOORS(marble/border_wb,
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/glassblock)
+	mat_appearances_to_ignore = list("steel","synthrubber","glass")
 /turf/simulated/floor/glassblock
 	name = "glass block tiling"
 	icon = 'icons/turf/floors.dmi'
 	icon_state = "glass_small"
-	mat_appearances_to_ignore = list("steel","synthrubber","glass")
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
 	mat_changename = FALSE
@@ -895,6 +890,7 @@ DEFINE_FLOORS(marble/border_wb,
 
 /turf/simulated/floor/glassblock/transparent
 	icon_state = "glasstr_cyan"
+	default_material = "glass"
 
 	New()
 		var/image/I
@@ -917,7 +913,6 @@ DEFINE_FLOORS(marble/border_wb,
 		#endif
 		I.plane = PLANE_SPACE
 		src.underlays += I
-		plate_mat = getMaterial("glass")
 		..()
 
 /turf/simulated/floor/glassblock/transparent/cyan
@@ -1103,15 +1098,13 @@ DEFINE_FLOORS(minitiles/black,
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/wood)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/wood
 	icon_state = "wooden-2"
-	mat_appearances_to_ignore = list("wood")
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
-
-	New()
-		plate_mat = getMaterial("wood")
-		. = ..()
+	default_material = "wood"
 
 /turf/simulated/floor/wood/two
 	icon_state = "wooden"
@@ -1228,26 +1221,39 @@ DEFINE_FLOORS(minitiles/black,
 	icon_state = "quiltystair2"
 
 
+TYPEINFO(/turf/simulated/floor/stairs/wood)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood
+	default_material = "wood"
 	icon_state = "wood_stairs"
 
 /turf/simulated/floor/stairs/wood/wide
+	default_material = "wood"
 	icon_state = "wood_stairs2"
 
 
+TYPEINFO(/turf/simulated/floor/stairs/wood2)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood2
+	default_material = "wood"
 	icon_state = "wood2_stairs"
 
 /turf/simulated/floor/stairs/wood2/wide
+	default_material = "wood"
 	icon_state = "wood2_stairs2"
 
 /turf/simulated/floor/stairs/wood2/middle
+	default_material = "wood"
 	icon_state = "wood2_stairs2_middle"
 
+TYPEINFO(/turf/simulated/floor/stairs/wood3)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood3
+	default_material = "wood"
 	icon_state = "wood3_stairs"
 
 /turf/simulated/floor/stairs/wood3/wide
+	default_material = "wood"
 	icon_state = "wood3_stairs2"
 
 
@@ -1301,13 +1307,14 @@ DEFINE_FLOORS(minitiles/black,
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/snow)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated/floor/snow
 	name = "snow"
 	has_material = FALSE
 	icon_state = "snow1"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
-	mat_appearances_to_ignore = list("steel")
 
 	New()
 		..()
@@ -1418,26 +1425,27 @@ DEFINE_FLOORS(techfloor/green,
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/grass)
+	mat_appearances_to_ignore = list("steel","synthrubber")
 /turf/simulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
-	mat_appearances_to_ignore = list("steel","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
+	default_material = "synthrubber"
 
+	#ifdef XMAS
 	New()
-		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			if(prob(10))
 				new /obj/item/reagent_containers/food/snacks/snowball/unmelting(src)
 			src.ReplaceWith(/turf/simulated/floor/snow/snowball, keep_old_material=FALSE, handle_air = FALSE)
 			return
-		#endif
-		plate_mat = getMaterial("synthrubber")
 		..()
+	#endif
 
 /turf/proc/grassify()
 	.=0
@@ -1474,19 +1482,21 @@ DEFINE_FLOORS(techfloor/green,
 /turf/simulated/floor/grass/random/alt
 	icon_state = "grass_eh"
 
+TYPEINFO(/turf/simulated/floor/grasstodirt)
+	mat_appearances_to_ignore = list("steel","synthrubber")
 /turf/simulated/floor/grasstodirt
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "grasstodirt"
-	mat_appearances_to_ignore = list("steel","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
 
+TYPEINFO(/turf/simulated/floor/dirt)
+	mat_appearances_to_ignore = list("steel","synthrubber")
 /turf/simulated/floor/dirt
 	name = "dirt"
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "dirt"
-	mat_appearances_to_ignore = list("steel","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -1494,6 +1504,8 @@ DEFINE_FLOORS(techfloor/green,
 
 //// some other floors ////
 
+TYPEINFO(/turf/simulated/floor/marslike)
+	mat_appearances_to_ignore = list("steel")
 /turf/simulated/floor/marslike
 	name = "imitation martian dirt"
 	desc = "Wow, you almost believed it was real martian dirt for a moment!"
@@ -1501,7 +1513,6 @@ DEFINE_FLOORS(techfloor/green,
 	icon_state = "placeholder"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
-	mat_appearances_to_ignore = list("steel")
 
 /turf/simulated/floor/marslike/t1
 	icon_state = "t1"
@@ -1512,29 +1523,33 @@ DEFINE_FLOORS(techfloor/green,
 /turf/simulated/floor/marslike/t4
 	icon_state = "t4"
 
+TYPEINFO(/turf/simulated/floor/stone)
+	mat_appearances_to_ignore = list("steel","rock")
 /turf/simulated/floor/stone
 	name = "stone"
 	icon = 'icons/turf/dojo.dmi'
 	icon_state = "stone"
-	mat_appearances_to_ignore = list("steel","rock")
 	mat_changename = 0
 	mat_changedesc = 0
-
-	New()
-		plate_mat = getMaterial("rock")
-		..()
+	default_material = "rock"
 
 /////////////////////////////////////////
 
 
 /* Outdoors tilesets - Walp */
-
+TYPEINFO(/turf/simulated/floor/grasslush)
+	mat_appearances_to_ignore = list("steel","synthrubber")
+TYPEINFO(/turf/simulated/floor/grasslush/airless)
+	mat_appearances_to_ignore = list("steel","synthrubber")
+TYPEINFO(/turf/unsimulated/floor/grasslush)
+	mat_appearances_to_ignore = list("steel","synthrubber")
+TYPEINFO(/turf/unsimulated/floor/grasslush/airless)
+	mat_appearances_to_ignore = list("steel","synthrubber")
 DEFINE_FLOORS(grasslush,
 	name = "lush grass";\
 	desc = "This grass somehow thrives in space.";\
 	icon = 'icons/turf/outdoors.dmi';\
 	icon_state = "grass_lush";\
-	mat_appearances_to_ignore = list("steel","synthrubber");\
 	mat_changename = 0;\
 	mat_changedesc = 0;\
 	step_material = "step_outdoors";\
@@ -1619,14 +1634,12 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	icon_state = "bridge"
 	default_melt_cap = 80
 	allows_vehicles = 1
-
-	New()
-		plate_mat = getMaterial("blob")
-		..()
+	default_material = "blob"
+	mat_changename = FALSE
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
-		setMaterial(copyMaterial(O.my_material))
-		color = material.color
+		setMaterial(O.my_material)
+		color = material.getColor()
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (isweldingtool(W))
@@ -1662,7 +1675,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
 		if (T.amount >= 1)
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 			T.build(src)
 		return
 
@@ -1788,10 +1801,11 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	setIntact(FALSE)
 	broken = 0
 	burnt = 0
-	if(plate_mat)
-		src.setMaterial(plate_mat, copy = FALSE)
+	if(default_material)
+		var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
+		src.setMaterial(mat)
 	else
-		src.setMaterial(getMaterial("steel"), copy = FALSE)
+		src.setMaterial(getMaterial("steel"))
 	levelupdate()
 
 /turf/simulated/floor/proc/dismantle_wall()//can get called due to people spamming weldingtools on walls
@@ -1860,7 +1874,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (!user || !istype(W, /obj/item/light_parts/floor))
 		return
 	if(!instantly)
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		boutput(user, "You begin to attach the light fixture to [src]...")
 		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/floor/proc/finish_attaching,\
 			list(W, user), W.icon, W.icon_state, null, null)
@@ -1906,7 +1920,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		user.unlock_medal("Misclick", 1)
 
 	to_plating()
-	playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
+	playsound(src, 'sound/items/Crowbar.ogg', 80, TRUE)
 
 /turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 
@@ -1929,7 +1943,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (src.reinforced && ((isweldingtool(C) && C:try_weld(user,0,-1,1,1)) || iswrenchingtool(C)))
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		if(iswrenchingtool(C))
-			playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 80, TRUE)
 		if(do_after(user, 3 SECONDS))
 			if(!src.reinforced)
 				return
@@ -1939,8 +1953,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				R1.setMaterial(material)
 				R2.setMaterial(material)
 			else
-				R1.setMaterial(getMaterial("steel"), copy = FALSE)
-				R2.setMaterial(getMaterial("steel"), copy = FALSE)
+				R1.setMaterial(getMaterial("steel"))
+				R2.setMaterial(getMaterial("steel"))
 			ReplaceWithFloor()
 			src.to_plating()
 			return
@@ -1968,15 +1982,26 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 		// Don't replace with an [else]! If a prying tool is found above [intact] might become 0 and this runs too, which is how floor swapping works now! - BatElite
 		if (!intact)
-			if(T.change_stack_amount(-1))
+			if(T.amount >= 1)
 				restore_tile()
-				src.plate_mat = src.material
+				src.default_material = src.material
+
+				// if we have a special icon state and it doesn't have a material variant
+				// and at the same time the base floor icon state does have a material variant
+				// we use the material variant from the base floor
+				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material.getID()]"
+				var/potential_new_base_icon_state = "floor$$[C.material.getID()]"
+				if(!src.is_valid_icon_state(potential_new_icon_state) && is_valid_icon_state(potential_new_base_icon_state, 'icons/turf/floors.dmi'))
+					src.icon_state = "floor"
+					src.icon = 'icons/turf/floors.dmi'
+
 				if(C.material)
 					src.setMaterial(C.material)
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 
 				if(!istype(src.material, /datum/material/metal/steel))
-					logTheThing(LOG_STATION, user, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "constructs a floor (<b>Material:</b>: [src.material && src.material.getName() ? "[src.material.getName()]" : "*UNKNOWN*"]) at [log_loc(src)].")
+				T.change_stack_amount(-1)
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
 			//	return
@@ -1985,7 +2010,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if(istype(C, /obj/item/sheet))
 		var/obj/item/sheet/S = C
 		if (!S.amount_check(2,user)) return
-		if (S?.material?.material_flags & MATERIAL_METAL)
+		if (S?.material?.getMaterialFlags() & MATERIAL_METAL)
 			var/msg = "a girder"
 
 			if(!girder_egg)
@@ -2071,7 +2096,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 					actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
 			else
 				actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
-		else if (S?.material?.material_flags & MATERIAL_CRYSTAL)
+		else if (S?.material?.getMaterialFlags() & MATERIAL_CRYSTAL)
 			if(S.reinforcement)
 				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.rwindows : /obj/window/reinforced, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
 			else
@@ -2099,7 +2124,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			K.Attackby(C, user, params)
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
-		src?.material?.triggerOnHit(src, C, user, 1)
+		src.material_trigger_when_attacked(C, user, 1)
 	else
 		return attack_hand(user)
 
@@ -2108,7 +2133,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (I.material)
 		src.setMaterial(I.material)
 	I.change_stack_amount(-2)
-	playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
+	playsound(src, 'sound/items/Deconstruct.ogg', 80, TRUE)
 
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
@@ -2218,7 +2243,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 
 		attackby(obj/item/W, mob/user)
 			if (istype(W, /obj/item/device/key/generic/coldsteel))
-				playsound(src, 'sound/effects/mag_warp.ogg', 50, 1)
+				playsound(src, 'sound/effects/mag_warp.ogg', 50, TRUE)
 				src.visible_message("<span class='notice'><b>[src] slides away!</b></span>")
 				src.ReplaceWithSpace() // make sure the area override says otherwise - maybe this sucks
 
@@ -2484,18 +2509,16 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 			src.icon_state = "swamp[rand(1, 4)]"
 
 
+TYPEINFO(/turf/simulated/floor/auto/water/ice)
+	mat_appearances_to_ignore = list("ice")
 /turf/simulated/floor/auto/water/ice
 	name = "ice"
 	desc = "Frozen water."
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
 	icon_state_edge = "ice_edge"
-	mat_appearances_to_ignore = list("ice")
-
-	New()
-		plate_mat = getMaterial("ice")
-		..()
-		name = initial(name)
+	default_material = "ice"
+	mat_changename = FALSE
 
 /turf/simulated/floor/auto/water/ice/rough
 	name = "ice"
@@ -2595,3 +2618,15 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	New()
 		..()
 		src.set_dir(pick(NORTH,SOUTH))
+
+// Material flooring
+
+DEFINE_FLOORS(mauxite,
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "floor$$mauxite";\
+	default_material = "mauxite")
+
+DEFINE_FLOORS(bamboo,
+	icon = 'icons/turf/floors.dmi';\
+	icon_state = "floor$$bamboo";\
+	default_material = "bamboo")

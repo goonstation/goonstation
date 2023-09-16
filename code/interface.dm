@@ -4,8 +4,7 @@
 			set category = "Commands"
 			set name = "Changelog"
 			set desc = "Show or hide the changelog"
-
-			if (winget(src, "changes", "is-visible") == "true")
+			if (winexists(src, "changes") && winget(src, "changes", "is-visible") == "true")
 				src.Browse(null, "window=changes")
 			else
 				var/changelogHtml = grabResource("html/changelog.html")

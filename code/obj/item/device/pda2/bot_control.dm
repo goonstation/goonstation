@@ -49,7 +49,7 @@
 			null, \
 			FALSE \
 		)
-		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(receive_signal))
 
 	on_deactivated(obj/item/device/pda2/pda)
 		qdel(get_radio_connection_by_id(pda, "bot_beacon"))
@@ -259,35 +259,28 @@
 	return_text()
 		if(..())
 			return
+		// Pre scan destinations
+		beacons = null
+		src.post_status("bot_beacon", "findbeacon", "delivery", "address_tag", "delivery")
 
 		. = list(src.return_text_header())
 		. += "<h4>M.U.L.E. bot Interlink V0.8</h4>"
-
 		if(!src.active)
 			// list of bots
 			if(!src.botlist || (src.botlist && src.botlist.len==0))
 				. += "No bots found.<BR>"
-
 			else
 				for(var/obj/machinery/bot/mulebot/B in src.botlist)
 					. += "<A href='byond://?src=\ref[src];op=control;bot=\ref[B]'>[B] at [get_area(B)]</A><BR>"
-
-
-
 			. += "<BR><A href='byond://?src=\ref[src];op=scanbots'>Scan for active bots</A><BR>"
-
 		else	// bot selected, control it
 
-
 			. += "<B>[src.active]</B><BR> Status: (<A href='byond://?src=\ref[src];op=control;bot=\ref[src.active]'><i>refresh</i></A>)<BR>"
-
 			if(!src.botstatus)
 				. += "Waiting for response...<BR>"
 			else
-
 				. += "Location: [src.botstatus["loca"] ]<BR>"
 				. += "Mode: "
-
 				switch(src.botstatus["mode"])
 					if(0)
 						. += "Ready"

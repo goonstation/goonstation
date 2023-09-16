@@ -165,11 +165,11 @@
 			if (copytext(newPath, -1) != "/" && fexists(newPath)) //"server" already has this file? apparently that causes ~problems~
 				fdel(newPath)
 			if (text2file(parsedFile, newPath)) //make a new file with the parsed text because byond fucking sucks at sending text as anything besides html
-				src << browse(file(newPath), "file=[r];display=0")
+				src << browse_rsc(file(newPath), r)
 			else
 				world.log << "RESOURCE ERROR: Failed to convert text in '[r]' to a temporary file"
 		else //file is binary just throw it at the client as is
-			src << browse(fileRef, "file=[r];display=0")
+			src << browse_rsc(fileRef, r)
 		if(i++ % 100 == 0)
 			sleep(1)
 

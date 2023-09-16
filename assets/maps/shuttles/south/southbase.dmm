@@ -147,7 +147,7 @@
 /obj/machinery/door/airlock/pyro/glass/command{
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -267,7 +267,7 @@
 	},
 /area/shuttle/escape/centcom)
 "mr" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "nb" = (
@@ -353,7 +353,7 @@
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "qO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -497,7 +497,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "xT" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -709,7 +709,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Gm" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -914,7 +914,7 @@
 	name = "Secure Transport";
 	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor4"
 	},

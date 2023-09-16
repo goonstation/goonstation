@@ -118,11 +118,11 @@
 	if(terminal && !(src.status & BROKEN))
 		src.excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
 		if(charging && src.excess >= src.chargelevel)		// if there's power available, try to charge
-			var/load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
-			charge += load * mult		// increase the charge
-			add_load(load)		// add the load to the terminal side network
-			load_last_tick = load
-			if (!src.is_charging) src.is_charging = TRUE
+			var/load = min(capacity-charge, chargelevel)	// charge at set rate, limited to spare capacity
+			if(terminal.add_load(load))						// attempt to add the load to the terminal side network
+				charge += load * mult						// increase the charge if we did
+				load_last_tick = load
+				if (!src.is_charging) src.is_charging = TRUE
 		else
 			load_last_tick = 0
 			if (src.is_charging) src.is_charging = FALSE
@@ -148,7 +148,7 @@
 
 			charge -= adj_output
 
-			if(blocking_objects.len > 0)
+			if(length(blocking_objects) > 0)
 				melt_blocking_objects()
 			power_sold(adj_output)
 
@@ -283,16 +283,11 @@
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
 			qdel(O)
 
-/obj/machinery/power/pt_laser/add_load(var/amount)
-	if(terminal?.powernet)
-		terminal.powernet.newload += amount
-
-
 /obj/machinery/power/pt_laser/proc/can_fire()
 	return abs(src.output) <= src.charge
 
 /obj/machinery/power/pt_laser/proc/update_laser_power()
-	src.laser?.traverse(.proc/update_laser_segment)
+	src.laser?.traverse(PROC_REF(update_laser_segment))
 
 /obj/machinery/power/pt_laser/proc/update_laser_segment(obj/linked_laser/ptl/laser)
 	var/alpha = clamp(((log(10, max(1,laser.source.laser_power() * laser.power)) - 5) * (255 / 5)), 50, 255) //50 at ~1e7 255 at 1e11 power, the point at which the laser's most deadly effect happens
@@ -424,7 +419,7 @@
 		return
 
 	if(prob(min(power/1e5,50)))
-		INVOKE_ASYNC(L, /mob/living.proc/emote, "scream") //might be spammy if they stand in it for ages, idk
+		INVOKE_ASYNC(L, TYPE_PROC_REF(/mob/living, emote), "scream") //might be spammy if they stand in it for ages, idk
 
 	if(L.dir == turn(src.dir,180) && ishuman(L)) //they're looking into the beam!
 		var/safety = 1
@@ -525,7 +520,7 @@ TYPEINFO(/obj/laser_sink/mirror)
 
 /obj/laser_sink/mirror/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
 		src.anchored = !src.anchored
 	else
@@ -596,13 +591,13 @@ TYPEINFO(/obj/laser_sink/splitter)
 //todo: componentize anchoring behaviour
 /obj/laser_sink/splitter/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
 		src.anchored = !src.anchored
 	else if (ispryingtool(I))
 		if (ON_COOLDOWN(src, "rotate", 0.3 SECONDS))
 			return
-		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 50, TRUE)
 		src.dir = turn(src.dir, 90)
 	else
 		..()
@@ -681,8 +676,8 @@ TYPEINFO(/obj/laser_sink/splitter)
 	src.length = length
 	src.dir = dir
 	src.current_turf = get_turf(src)
-	RegisterSignal(current_turf, COMSIG_TURF_REPLACED, .proc/current_turf_replaced)
-	RegisterSignal(current_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, .proc/current_turf_density_change)
+	RegisterSignal(current_turf, COMSIG_TURF_REPLACED, PROC_REF(current_turf_replaced))
+	RegisterSignal(current_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, PROC_REF(current_turf_density_change))
 
 ///Attempt to propagate the laser by extending, interacting with sinks etc.
 ///Separated from New to allow setting up properties on a laser object without passing them as New args
@@ -732,9 +727,9 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser/proc/become_endpoint()
 	src.is_endpoint = TRUE
 	var/turf/next_turf = get_next_turf()
-	RegisterSignal(next_turf, COMSIG_TURF_REPLACED, .proc/next_turf_replaced)
-	RegisterSignal(next_turf, COMSIG_ATOM_UNCROSSED, .proc/next_turf_updated)
-	RegisterSignal(next_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, .proc/next_turf_updated)
+	RegisterSignal(next_turf, COMSIG_TURF_REPLACED, PROC_REF(next_turf_replaced))
+	RegisterSignal(next_turf, COMSIG_ATOM_UNCROSSED, PROC_REF(next_turf_updated))
+	RegisterSignal(next_turf, COMSIG_TURF_CONTENTS_SET_DENSITY, PROC_REF(next_turf_updated))
 
 ///Called when we extend a new laser object and are therefore no longer an endpoint
 /obj/linked_laser/proc/release_endpoint()
@@ -841,7 +836,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser/ptl/try_propagate()
 	. = ..()
 	var/turf/T = get_next_turf()
-	if (!T) //edge of z_level
+	if (!T || istype(T, /turf/unsimulated/wall/trench)) //edge of z_level or oshan trench
 		var/obj/laser_sink/ptl_seller/seller = get_singleton(/obj/laser_sink/ptl_seller)
 		if (seller.incident(src))
 			src.sink = seller

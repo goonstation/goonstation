@@ -118,6 +118,7 @@
 	layer = EFFECTS_LAYER_1
 	plane = PLANE_HUD
 	anchored = ANCHORED
+	mouse_opacity = 0
 
 proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time=2 SECONDS, invisibility=INVIS_NONE, atom/movable/pointer)
 	// note that `target` can also be a turf, but byond sux and I can't declare the var as atom because areas don't have vis_contents
@@ -166,6 +167,7 @@ proc/make_point(atom/movable/target, pixel_x=0, pixel_y=0, color="#ffffff", time
 */
 
 /obj/decal/nav_danger
+	anchored = ANCHORED
 	name = "DANGER"
 	desc = "This navigational marker indicates a hazardous zone of space."
 	icon = 'icons/obj/decals/misc.dmi'
@@ -224,7 +226,7 @@ obj/decal/fakeobjects
 	anchored = ANCHORED
 	density = 0
 	desc = "Barber poles historically were signage used to convey that the barber would perform services such as blood letting and other medical procedures, with the red representing blood, and the white representing the bandaging. In America, long after the time when blood-letting was offered, a third colour was added to bring it in line with the colours of their national flag. This one is in space."
-	layer = OBJ_LAYER
+	layer = EFFECTS_LAYER_UNDER_2
 	plane = PLANE_DEFAULT
 
 /obj/decal/fakeobjects/oven
@@ -279,6 +281,19 @@ obj/decal/fakeobjects/cargopad
 	icon_state = "robot"
 	anchored = UNANCHORED
 	density = 1
+
+/obj/decal/fakeobjects/robot/security
+	name = "robot"
+	real_name = "robot"
+	desc = "A Security Robot, something seems a bit off."
+	icon = 'icons/misc/critter.dmi'
+	icon_state = "mars_sec_bot"
+
+	hugo
+		name = "HUGO"
+
+	henk
+		name = "HENK"
 
 /obj/decal/fakeobjects/apc_broken
 	name = "broken APC"
@@ -363,7 +378,7 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/fakeobjects/pipe
 	name = "rusted pipe"
 	desc = "Good riddance."
-	icon = 'icons/obj/atmospherics/pipes/regular_pipe.dmi'
+	icon = 'icons/obj/atmospherics/pipes/pipe.dmi'
 	icon_state = "intact"
 	anchored = ANCHORED
 	layer = DECAL_LAYER
@@ -410,6 +425,47 @@ obj/decal/fakeobjects/teleport_pad
 	anchored = ANCHORED
 	density = 1
 
+// Laundry machines
+
+/obj/decal/fakeobjects/Laundry
+	name = "laundry machine"
+	desc = "The door has been pried off..."
+	icon = 'icons/obj/janitor.dmi'
+	icon_state = "laundry"
+	anchored = ANCHORED
+	density = 1
+	var/image/cycle = null
+	var/image/light = null
+
+	New()
+		..()
+		src.UpdateOverlays(src.cycle, "door")
+
+	drying
+		desc = "Will those clothes ever be dry?"
+		New()
+			icon_state = "laundry-d1"
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
+			ENSURE_IMAGE(src.light, src.icon, "laundry-dlight")
+			src.UpdateOverlays(src.light, "light")
+			..()
+
+	washing
+		desc = "Around and around..."
+		New()
+			icon_state = "laundry-w1"
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry0")
+			ENSURE_IMAGE(src.light, src.icon, "laundry-wlight")
+			src.UpdateOverlays(src.light, "light")
+			..()
+
+	open
+		desc = "Who left these clothes?"
+		New()
+			icon_state = "laundry-p"
+			ENSURE_IMAGE(src.cycle, src.icon, "laundry1")
+			..()
+
 //sealab prefab fakeobjs
 
 /obj/decal/fakeobjects/pcb
@@ -449,11 +505,14 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/bloodtrace
 	name = "blood trace"
 	desc = "Oh my!!"
-	icon = 'icons/effects/blood.dmi'
-	icon_state = "lum"
+	icon = 'icons/obj/decals/blood/blood.dmi'
+	icon_state = "floor2"
+	color = "#3399FF"
+	alpha = 100
 	invisibility = INVIS_ALWAYS
 	blood_DNA = null
 	blood_type = null
+	anchored = ANCHORED
 
 /obj/decal/boxingrope
 	name = "Boxing Ropes"
@@ -552,6 +611,7 @@ obj/decal/fakeobjects/teleport_pad
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
 	random_dir = 8
+	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 
 	New()
@@ -581,6 +641,7 @@ obj/decal/fakeobjects/teleport_pad
 	opacity = 0
 	anchored = ANCHORED
 	plane = PLANE_FLOOR
+	mouse_opacity = 0
 
 /obj/decal/icefloor/Crossed(atom/movable/AM)
 	..()
@@ -597,6 +658,12 @@ obj/decal/fakeobjects/teleport_pad
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
 				M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
+
+/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	. = ..()
+	if (exposed_temperature > T0C)
+		if(prob((exposed_temperature - T0C) * 0.1))
+			qdel(src)
 
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).
 /obj/decal/mule
@@ -653,6 +720,7 @@ obj/decal/fakeobjects/teleport_pad
 	real_name = "ball pit"
 	layer = 25
 	mouse_opacity = 0
+	anchored = ANCHORED_ALWAYS
 
 //Decals that glow.
 /obj/decal/glow
@@ -661,6 +729,7 @@ obj/decal/fakeobjects/teleport_pad
 	var/color_g = 0.35
 	var/color_b = 0.21
 	var/datum/light/light
+	anchored = ANCHORED_ALWAYS
 
 	New()
 		..()
@@ -768,3 +837,61 @@ obj/decal/fakeobjects/teleport_pad
 /obj/decal/tile_edge/floorguide/arrow_s
 	name = "Directional Navigation Guide"
 	icon_state = "endpiece_s"
+
+/obj/decal/slipup
+	name = ""
+	desc = ""
+	anchored = ANCHORED
+	mouse_opacity = 0
+	icon = null
+	icon_state = null
+	alpha = 0
+	opacity = 0
+	pixel_x = 0
+	pixel_y = 8
+	plane = PLANE_NOSHADOW_ABOVE
+
+	New(var/location = null, var/state = null, var/mob/target = null)
+		if(location)
+			src.set_loc(location)
+		else
+			src.set_loc(usr.loc)
+
+		animate_slipup(src, state, target)
+		..()
+
+	proc/animate_slipup(var/obj/slipup_decal, var/state = null, var/mob/target = null)
+		var/new_state = "slipup"
+		if(state)
+			new_state = state
+
+		if (target)
+			var/image/image = image('icons/effects/effects.dmi', src, new_state)
+			target << image
+
+		var/matrix/original = matrix()
+		original.Scale(0.05)
+		src.transform = original
+
+		animate(src,transform = matrix(1, MATRIX_SCALE), time = 1 SECONDS, alpha = 255, pixel_y = 16, pixel_x = rand(-32, 32), easing = ELASTIC_EASING)
+		animate(time = 1 SECOND, alpha = 0, pixel_y = 8, easing = CIRCULAR_EASING)
+		SPAWN(2 SECONDS)
+			qdel(src)
+
+/obj/decal/slipup/clumsy
+	pixel_x = -32
+	pixel_y = 16
+
+	animate_slipup(var/obj/decal/slipup_decal, var/state = null, var/mob/target = null)
+		var/new_state = "slipup_clown1"
+		if(state)
+			new_state = state
+
+		if (target)
+			var/image/image = image('icons/effects/96x32.dmi', src, new_state)
+			target << image
+
+		animate(src, time = 0.5 SECOND, alpha = 255)
+		animate(pixel_y = 64, pixel_x = rand(-64, 0), alpha = 0, time = 1.5 SECONDS, easing = SINE_EASING)
+		SPAWN(2 SECONDS)
+			qdel(src)

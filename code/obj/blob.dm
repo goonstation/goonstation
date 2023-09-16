@@ -169,8 +169,8 @@
 			overmind.blobs -= src
 		if (O)
 			overmind = O
-			setMaterial(copyMaterial(O.my_material))
-			color = material.color
+			setMaterial(O.my_material)
+			color = material.getColor()
 			original_color = color
 			O.blobs |= src
 			onAttach(O)
@@ -188,17 +188,21 @@
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobattack(T,overmind.color))
 		if (T?.density)
 			T.blob_act(overmind.attack_power * 20)
-			T.material?.triggerOnBlobHit(T, overmind.attack_power * 20)
+			T.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 
 		else
 			for (var/mob/M in T.contents)
 				M.blob_act(overmind.attack_power * 20)
 				if(isliving(M))
 					var/mob/living/L = M
+					for (var/obj/equipped_stuff in L.equipped())
+						equipped_stuff.material_trigger_on_blob_attacked(overmind.attack_power * 20)
+					for (var/obj/contained_stuff in L.contents)
+						contained_stuff.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 					L.was_harmed(src)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
-				O.material?.triggerOnBlobHit(O, overmind.attack_power * 20)
+				O.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 
 
 	proc/attack_random()
@@ -251,7 +255,7 @@
 		return
 
 	bullet_act(var/obj/projectile/P)
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 		var/damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 		var/damage_mult = 1
 		var/damtype = "brute"
@@ -283,8 +287,7 @@
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		var/temp_difference = abs(temperature - src.ideal_temp)
 		var/tolerance = temp_tolerance
-		if (material)
-			material.triggerTemp(src, temperature)
+		src.material_trigger_on_temp(temperature)
 
 		if (src.has_upgrade(/datum/blob_upgrade/fire_resist))
 			tolerance *= 3
@@ -348,8 +351,7 @@
 				if (prob(chunk_chance))
 					create_chunk(get_turf(user))
 
-		if (material)
-			material.triggerOnAttacked(src, user, src, W)
+		src.material_trigger_when_attacked(W, user, 1)
 
 		src.take_damage(damage,damage_mult,damtype,user)
 
@@ -361,7 +363,7 @@
 	proc/create_chunk(var/turf/T)
 		var/obj/item/material_piece/wad/blob/BC = new
 		BC.set_loc(T)
-		BC.setMaterial(copyMaterial(material))
+		BC.setMaterial(src.material)
 		BC.name = "chunk of blob"
 
 	proc/take_damage(var/amount,var/damage_mult = 1,var/damtype = "brute",var/mob/user)
@@ -433,8 +435,7 @@
 			qdel(src)
 		else
 			src.UpdateIcon()
-			if (healthbar) //ZeWaka: Fix for null.onUpdate
-				healthbar.onUpdate()
+			healthbar?.onUpdate()
 		return
 
 	proc/updatePoisonOverlay()
@@ -508,7 +509,7 @@
 		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind) || overmind.admin_override))
 			return
 
-		var/blob_type = /obj/blob/
+		var/blob_type = /obj/blob
 		if (ispath(src.spread_type))
 			blob_type = src.spread_type
 
@@ -583,6 +584,7 @@
 	fire_coefficient = 0.5
 	poison_coefficient = 0.5
 	poison_depletion = 3
+	anchored = ANCHORED_ALWAYS
 	var/nextAttackMsg = 0
 
 	New()
@@ -737,7 +739,7 @@
 		if (!Target)
 			return 1
 
-		var/obj/projectile/L = initialize_projectile_ST(src, current_projectile, Target)
+		var/obj/projectile/L = initialize_projectile_pixel_spread(src, current_projectile, Target)
 
 		if (!L)
 			return
@@ -1065,7 +1067,7 @@
 	if (!src)
 		return null
 
-	if (src.contents.len < 1)
+	if (length(src.contents) < 1)
 		return null
 
 	for (var/obj/O in src.contents)

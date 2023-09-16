@@ -89,7 +89,7 @@
 				logTheThing(LOG_COMBAT, src, "has been defeated.")
 				message_admins("The Syndicate Weapon: Orion Retribution Device has been defeated.")
 
-			playsound(src, 'sound/effects/ship_engage.ogg', 100, 1)
+			playsound(src, 'sound/effects/ship_engage.ogg', 100, TRUE)
 
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			var/death_loc = get_center()
@@ -132,7 +132,7 @@
 		check_health()
 
 		if(prob(5))
-			playsound(src, 'sound/machines/giantdrone_boop1.ogg', 55, 1)
+			playsound(src, 'sound/machines/giantdrone_boop1.ogg', 55, TRUE)
 
 		if(task == "following path" && mode)
 			follow_path()
@@ -845,7 +845,7 @@
 					random_brute_damage(M, 80 / dam_type)
 			M.changeStatus("weakened", 4 SECOND)
 			M.changeStatus("stunned", 1 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
 		var/turf/simulated/T = locate(point_x,point_y,src.z)
 		if(dam_type == 2 && istype(T, /turf/simulated/wall))
 			leavescan(T, 1)

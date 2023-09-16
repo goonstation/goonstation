@@ -215,7 +215,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "fragments"
 	sname = "fragments"
 	cost = 1
-	pellets_to_fire = 4
+	pellets_to_fire = 6
 	casing = /obj/item/casing/shotgun/pipe
 	spread_projectile_type = /datum/projectile/bullet/improvplasglass
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
@@ -229,7 +229,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "glass"
 	sname = "glass"
 	cost = 1
-	pellets_to_fire = 6
+	pellets_to_fire = 7
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 36
@@ -242,7 +242,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	name = "fragments"
 	sname = "fragments"
 	cost = 1
-	pellets_to_fire = 3
+	pellets_to_fire = 5
 	casing = /obj/item/casing/shotgun/pipe
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
 	speed_max = 40
@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				sfloors -= Q
 
 	on_hit(var/atom/A)
-		playsound(A, 'sound/weapons/energy/LightningCannonImpact.ogg', 50, 1)
+		playsound(A, 'sound/weapons/energy/LightningCannonImpact.ogg', 50, TRUE)
 		var/list/sfloors = list()
 		for (var/turf/T in view(shock_range, A))
 			if (!T.density)
@@ -382,7 +382,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		fireflash_sm(get_turf(P), burn_range, temperature)
 
 	on_hit(var/atom/A)
-		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
 		fireflash_sm(get_turf(A), blast_size, temperature)
 
 /datum/projectile/special/howitzer
@@ -425,7 +425,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_hit(var/atom/A)
 		var/turf/T = get_turf(A)
-		playsound(A, 'sound/effects/ExplosionFirey.ogg', 60, 1)
+		playsound(A, 'sound/effects/ExplosionFirey.ogg', 60, TRUE)
 		if(!src.impacted)
 			playsound_global(world, 'sound/weapons/energy/howitzer_impact.ogg', 60)
 			src.impacted = 1
@@ -464,7 +464,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		//prevent playing all 50 sounds at once on rapid bounce
 		if(world.time >= last_sound_time + 1 DECI SECOND)
 			last_sound_time = world.time
-			playsound(A, hit_sound, 60, 1)
+			playsound(A, hit_sound, 60, TRUE)
 
 		if (explosive_hits)
 			SPAWN(0)
@@ -750,7 +750,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				else
 					playsound(T, src.hit_sound, 60, 1)
 		else
-			playsound(A, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
+			playsound(A, 'sound/effects/mag_magmisimpact.ogg', 25, TRUE, -1)
 
 /datum/projectile/special/homing/magicmissile/weak
 	name = "magic minimissile"
@@ -958,7 +958,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	on_hit(atom/hit, direction, projectile)
 		if(src.hit_sound)
 			playsound(hit, src.hit_sound, 50, 1)
-		if(ismob(hit) && typetospawn)
+		if(ismob(hit) && typetospawn && !hasspawned)
 			hasspawned = TRUE
 			. = new typetospawn(get_turf(hit))
 		return

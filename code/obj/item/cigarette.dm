@@ -85,7 +85,7 @@
 				src.reagents.trans_to(target, 5)
 			qdel (src)
 			return
-		else if (istype(target, /obj/item/match) && src.on)
+		else if (istype(target, /obj/item/match) && src.on == MATCH_LIT)
 			target:light(user, "<span class='alert'><b>[user]</b> lights [target] with [src].</span>")
 		else if (src.on == 0 && isitem(target) && target:burning)
 			src.light(user, "<span class='alert'><b>[user]</b> lights [src] with [target]. Goddamn.</span>")
@@ -144,7 +144,7 @@
 
 			SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
 
-			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
@@ -388,7 +388,7 @@
 	desc = "A cigarette which seems to have been laced with something."
 
 	New()
-		if (all_functional_reagent_ids.len > 0)
+		if (length(all_functional_reagent_ids) > 0)
 			var/list/chem_choices = all_functional_reagent_ids
 			src.flavor = pick(chem_choices)
 		else
@@ -908,8 +908,7 @@
 	burn_output = 600
 	burn_possible = 1
 
-	/// 0 = unlit, 1 = lit, -1 is burnt out/broken or otherwise unable to be lit
-	var/on = 0
+	var/on = MATCH_UNLIT
 
 	var/light_mob = 0
 	var/life_timer = 0
@@ -926,13 +925,14 @@
 		light.attach(src)
 		src.life_timer = rand(15,25)
 
+
 	pickup(mob/user)
 		..()
 		light.attach(user)
 
 	dropped(mob/user)
 		..()
-		if (isturf(src.loc) && src.on > 0)
+		if (isturf(src.loc) && src.on == MATCH_LIT)
 			user.visible_message("<span class='alert'><b>[user]</b> calmly drops and treads on the lit [src.name], putting it out instantly.</span>")
 			src.put_out(user)
 			return
@@ -941,7 +941,7 @@
 				light.attach(src)
 
 	process()
-		if (src.on > 0)
+		if (src.on == MATCH_LIT)
 			if (src.life_timer >= 0)
 				life_timer--
 			var/location = src.loc
@@ -962,54 +962,54 @@
 			//sleep(1 SECOND)
 
 	proc/light(var/mob/user as mob)
-		src.on = 1
+		src.on = MATCH_LIT
 		src.firesource = FIRESOURCE_OPEN_FLAME
 		src.icon_state = "match-lit"
 
-		playsound(user, 'sound/items/matchstick_light.ogg', 50, 1)
+		playsound(user, 'sound/items/matchstick_light.ogg', 50, TRUE)
 		light.enable()
 
 		processing_items |= src
 
 	proc/put_out(var/mob/user as mob, var/break_it = 0)
-		src.on = -1
+		src.on = MATCH_INERT
 		src.firesource = FALSE
 		src.life_timer = 0
 		if (break_it)
 			src.icon_state = "match-broken"
 			src.name = "broken match"
 			if (user)
-				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1, 0, 2)
+				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, TRUE, 0, 2)
 		else
 			src.icon_state = "match-burnt"
 			src.name = "burnt-out match"
-			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
 
 		light.disable()
 
 		processing_items.Remove(src)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
-		if (src.on == 0)
+		if (src.on == MATCH_UNLIT)
 			if (temperature > T0C+200)
 				src.visible_message("<span class='alert'>The [src] ignites!</span>")
 				src.light()
 
 	ex_act(severity)
-		if (src.on == 0)
+		if (src.on == MATCH_UNLIT)
 			src.visible_message("<span class='alert'>The [src] ignites!</span>")
 			src.light()
 
 	afterattack(atom/target, mob/user as mob)
-		if (src.on > 0)
+		if (src.on > MATCH_UNLIT)
 			if (!ismob(target) && target.reagents)
 				user.show_text("You heat [target].", "blue")
 				target.reagents.temperature_reagents(4000,10)
 				return
-		else if (src.on == -1)
+		else if (src.on == MATCH_INERT)
 			user.show_text("You [pick("fumble", "fuss", "mess", "faff")] around with [src] and try to get it to light, but it's no use.", "red")
 			return
-		else if (src.on == 0)
+		else if (src.on == MATCH_UNLIT)
 			if (istype(target, /obj/item/match) && target:on > 0)
 				user.visible_message("<b>[user]</b> lights [src] with the flame from [target].",\
 				"You light [src] with the flame from [target].")
@@ -1099,7 +1099,7 @@
 
 	attack_self(mob/user)
 		if (user.find_in_hand(src))
-			if (src.on > 0)
+			if (src.on == MATCH_LIT)
 				user.visible_message("<b>[user]</b> [pick("licks [his_or_her(user)] finger and snuffs out [src].", "waves [src] around until it goes out.")]")
 				src.put_out(user)
 		else
@@ -1171,7 +1171,7 @@
 		light.enable()
 		processing_items |= src
 		if (user != null)
-			playsound(user, 'sound/items/zippo_open.ogg', 30, 1)
+			playsound(user, 'sound/items/zippo_open.ogg', 30, TRUE)
 			user.update_inhands()
 
 	proc/deactivate(mob/user as mob)
@@ -1183,7 +1183,7 @@
 		light.disable()
 		processing_items.Remove(src)
 		if (user != null)
-			playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
+			playsound(user, 'sound/items/zippo_close.ogg', 30, TRUE)
 			user.update_inhands()
 
 	attack(mob/target, mob/user)
@@ -1191,26 +1191,6 @@
 			var/mob/living/carbon/human/fella = target
 
 			if (src.on)
-				if (user.zone_sel.selecting == "l_arm")
-					if (fella.limbs.l_arm_bleed > 1)
-						fella.TakeDamage("chest",0,10)
-						fella.limbs.l_arm_bleed = max(0,fella.limbs.l_arm_bleed-5)
-						if (fella.limbs.l_arm_bleed == 0)
-							user.visible_message("<span class='alert'>[user] completely cauterises [fella]'s left stump with [src]!</span>")
-						else
-							user.visible_message("<span class='alert'>[user] partially cauterises [fella]'s left stump with [src]!</span>")
-						return
-
-				if (user.zone_sel.selecting == "r_arm")
-					if (fella.limbs.r_arm_bleed > 1)
-						fella.TakeDamage("chest",0,10)
-						fella.limbs.r_arm_bleed = max(0,fella.limbs.r_arm_bleed-5)
-						if (fella.limbs.r_arm_bleed == 0)
-							user.visible_message("<span class='alert'>[user] completely cauterises [fella]'s right stump with [src]!</span>")
-						else
-							user.visible_message("<span class='alert'>[user] partially cauterises [fella]'s right stump with [src]!</span>")
-						return
-
 				if (fella.wear_mask && istype(fella.wear_mask, /obj/item/clothing/mask/cigarette))
 					var/obj/item/clothing/mask/cigarette/smoke = fella.wear_mask // aaaaaaa
 					smoke.light(user, "<span class='alert'><b>[user]</b> lights [fella]'s [smoke] with [src].</span>")
@@ -1352,7 +1332,7 @@
 
 	New()
 		. = ..()
-		RegisterSignals(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), .proc/update_hotbox_flag)
+		RegisterSignals(src, list(COMSIG_MOVABLE_SET_LOC, COMSIG_MOVABLE_MOVED), PROC_REF(update_hotbox_flag))
 
 	proc/update_hotbox_flag(thing, previous_loc, direction)
 		if (!firesource) return

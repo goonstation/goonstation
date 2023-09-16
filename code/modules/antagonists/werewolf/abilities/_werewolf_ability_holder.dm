@@ -43,7 +43,7 @@
 
 			playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
 			SPAWN(0.5 SECONDS)
-				if (M?.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
+				if (istype(M?.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
 			M.visible_message("<span class='alert'><B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B></span>")
@@ -186,6 +186,7 @@
 			if (healing > 0)
 				M.HealDamage("All", healing, healing)
 				M.add_stamina(healing)
+				M.sims?.affectMotive("Ravenous Hunger", healing * 5)
 
 		if ("spread")
 			var/mob/living/carbon/human/HH = target
@@ -205,7 +206,7 @@
 				HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
 				M.werewolf_audio_effects(HH, "feast")
 				HH.setStatus("weakened",rand(3 SECONDS, 6 SECONDS))
-				if (prob(70) && HH.stat != 2)
+				if (prob(70) && !isdead(HH))
 					HH.emote("scream")
 		if ("pounce")
 			if(isobserver(target) || isintangible(target))
@@ -214,7 +215,7 @@
 			M.visible_message("<span class='alert'><B>[M] barrels through the air, slashing [target]!</B></span>")
 			damage += rand(2,8)
 			playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-			if (prob(33) && target.stat != 2)
+			if (prob(33) && !isdead(target))
 				target.emote("scream")
 		if ("thrash")
 			if (prob(75))
@@ -226,7 +227,7 @@
 
 			if (prob(60)) playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
 			if (prob(75)) target.setStatus("weakened", 3 SECONDS)
-			if (prob(33) && target.stat != 2)
+			if (prob(33) && !isdead(target))
 				target.emote("scream")
 
 		else
@@ -285,30 +286,6 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/atom/movable/screen/ability/topBar/werewolf
-	clicked(params)
-		var/datum/targetable/werewolf/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			usr.targeting_ability = owner
-			usr.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
 /datum/abilityHolder/werewolf
 	usesPoints = 0
 	regenRate = 0
@@ -319,9 +296,28 @@
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.
 
 	New()
-		..()
+		. = ..()
 		awaken_time = rand(5, 10)*100
+		#ifdef RP_MODE
+		awaken_time *= 2
+		#endif
 		src.tainted_saliva_reservoir = new/datum/reagents(500)
+
+	transferOwnership(mob/newbody)
+		. = ..()
+		if (ishuman(newbody))
+			var/mob/living/carbon/human/H = newbody
+			if (H.sims)
+				// Did you know that the motive system has no way to remove a motive? Now you do! This has been fun facts with aloe
+				qdel(H.sims)
+				H.sims = new /datum/simsHolder/rp/wolf(H)
+
+	onRemove(mob/from_who)
+		. = ..()
+		var/mob/living/carbon/human/H = from_who
+		if (istype(H.sims, /datum/simsHolder/rp/wolf))
+			qdel(H.sims)
+			H.sims = new /datum/simsHolder/rp(H)
 
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()
@@ -352,37 +348,6 @@
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
 	var/werewolf_only = 0
-
-	New()
-		..()
-		var/atom/movable/screen/ability/topBar/werewolf/B = new /atom/movable/screen/ability/topBar/werewolf(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-		return
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/werewolf()
-			object.icon = src.icon
-			object.owner = src
-		if (src.last_cast > world.time)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
-		return
 
 	proc/incapacitation_check(var/stunned_only_is_okay = 0)
 		if (!holder)
@@ -434,6 +399,10 @@
 		if (src.not_when_handcuffed == 1 && M.restrained())
 			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
+
+		if (!isturf(src.holder.owner.loc))
+			boutput(src.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
+			return FALSE
 
 		return 1
 

@@ -2,6 +2,7 @@
 	name = "space bear"
 	real_name = "space bear"
 	desc = "WOORGHHH"
+	icon = 'icons/mob/critter/humanoid/bear.dmi'
 	icon_state = "abear"
 	icon_state_dead = "abear-dead"
 	custom_gib_handler = /proc/gibs
@@ -20,11 +21,12 @@
 	ai_retaliates = TRUE
 	ai_retaliate_patience = 0
 	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
-	ai_type = /datum/aiHolder/bear
+	ai_type = /datum/aiHolder/aggressive/scavenger
 	is_npc = TRUE
 	left_arm = /obj/item/parts/human_parts/arm/left/bear
 	right_arm = /obj/item/parts/human_parts/arm/right/bear
 	add_abilities = list(/datum/targetable/critter/tackle)
+	no_stamina_stuns = TRUE
 	var/droparms = TRUE
 
 	on_pet(mob/user)
@@ -55,7 +57,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/MEraaargh.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/MEraaargh.ogg', 70, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] roars!</span></b>"
 		return null
 
@@ -122,17 +124,13 @@
 
 	update_dead_icon()
 		var/datum/handHolder/HH = hands[1]
-		. = "abear"
+		. = "abear-dead"
 		if (!HH.limb)
 			. += "-l"
 		HH = hands[2]
 		if (!HH.limb)
 			. += "-r"
 		icon_state = .
-
-	death()
-		can_lie = FALSE
-		..()
 
 /mob/living/critter/bear/care
 	name = "space carebear"

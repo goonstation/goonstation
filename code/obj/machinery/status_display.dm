@@ -418,6 +418,7 @@ TYPEINFO(/obj/machinery/ai_status_display)
 			return
 		update()
 		..()
+
 	proc/update()
 		//Update backing colour
 		if (face_color != owner.faceColor)
@@ -429,18 +430,21 @@ TYPEINFO(/obj/machinery/ai_status_display)
 			screen_glow.set_color(colors[1] / 255, colors[2] / 255, colors[3] / 255)
 
 		//Update expression
-		if (src.emotion != owner.faceEmotion)
-			UpdateOverlays(owner.faceEmotion != "ai-tetris" ? glow_image : null, "glow_img")
-			face_image.icon_state = owner.faceEmotion
+		var/faceEmotion = owner.faceEmotion
+		if (isdead(owner))
+			faceEmotion = "ai_bsod"
+		if (src.emotion != faceEmotion)
+			UpdateOverlays(faceEmotion != "ai_tetris" ? glow_image : null, "glow_img")
+			face_image.icon_state = faceEmotion
 			UpdateOverlays(face_image, "emotion_img")
-			emotion = owner.faceEmotion
+			emotion = faceEmotion
 
 		//Re-enable all the stuff if we are powering on again
 		if (!screen_glow.enabled)
 			screen_glow.enable()
 			UpdateOverlays(face_image, "emotion_img")
 			UpdateOverlays(back_image, "back_img")
-			UpdateOverlays(owner.faceEmotion != "ai-tetris" ? glow_image : null, "glow_img")
+			UpdateOverlays(owner.faceEmotion != "ai_tetris" ? glow_image : null, "glow_img")
 
 		message = owner.status_message
 		name = initial(name) + " ([owner.name])"

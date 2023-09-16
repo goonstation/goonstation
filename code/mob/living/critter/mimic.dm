@@ -1,12 +1,13 @@
 /mob/living/critter/mimic
 	name = "Mimic"
+	real_name = "mimic"
 	desc = null
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mimicface"
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/mimic
 	can_lie = FALSE
-	butcherable = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
 	health_brute = 20
 	health_burn = 20
 	health_brute_vuln = 0.75
@@ -20,7 +21,6 @@
 	ai_attacks_per_ability = 0
 
 	dir_locked = TRUE //most items don't have dirstates, so don't let us change one
-	var/mutable_appearance/disguise
 	var/icon/face_image
 	var/icon/face_displace_image
 	var/is_hiding = FALSE
@@ -70,8 +70,8 @@
 		src.stop_hiding()
 
 	proc/disguise_as(var/obj/target)
-		src.disguise = new /mutable_appearance(target)
-		src.appearance = src.disguise
+		src.appearance = target
+		src.dir = target.dir
 		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
 		src.start_hiding()
 
@@ -105,20 +105,16 @@
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/sting/mimic/sting = src.abilityHolder.getAbility(/datum/targetable/critter/sting/mimic)
 		var/datum/targetable/critter/tackle/pounce = src.abilityHolder.getAbility(/datum/targetable/critter/tackle)
-		if(!sting.disabled && sting.cooldowncheck())
+		if(sting && !sting.disabled && sting.cooldowncheck())
 			sting.handleCast(target)
 			return TRUE
-		if(!pounce.disabled && pounce.cooldowncheck())
+		if(pounce && !pounce.disabled && pounce.cooldowncheck())
 			pounce.handleCast(target)
 			return TRUE
 
-	seek_target(var/range = 5)
-		. = list()
-		for (var/mob/living/C in hearers(range, src))
-			if (isintangible(C)) continue
-			if (is_incapacitated(C)) continue
-			if (istype(C, src.type)) continue
-			. += C
+	valid_target(mob/living/C)
+		if (is_incapacitated(C)) return FALSE
+		return ..()
 
 	Life(datum/controller/process/mobs/parent)
 		. = ..()
@@ -176,3 +172,6 @@
 		HH.can_range_attack = FALSE
 		var/datum/limb/small_critter/L = HH.limb
 		L.max_wclass = W_CLASS_SMALL
+
+/mob/living/critter/mimic/virtual
+		add_abilities = list(/datum/targetable/critter/mimic, /datum/targetable/critter/tackle)

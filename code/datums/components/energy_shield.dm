@@ -47,7 +47,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	var/obj/decal/ceshield/overlay
 
 	signals = list(COMSIG_MOB_SHIELD_ACTIVATE)
-	proctype = .proc/activate
+	proctype = PROC_REF(activate)
 
 /datum/component/wearertargeting/energy_shield/Initialize(_valid_slots, _shield_strength = 1, _shield_efficiency = 1, _bleedthrough = TRUE, _power_drain = 0)
 	. = ..()
@@ -58,7 +58,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 	src.bleedthrough = _bleedthrough
 	src.power_drain = _power_drain
 	overlay = new
-	RegisterSignal(parent, COMSIG_SHIELD_TOGGLE, .proc/toggle)
+	RegisterSignal(parent, COMSIG_SHIELD_TOGGLE, PROC_REF(toggle))
 	if((SLOT_L_HAND in valid_slots) || (SLOT_R_HAND in valid_slots))
 		parent:c_flags |= EQUIPPED_WHILE_HELD
 
@@ -111,7 +111,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 /datum/component/wearertargeting/energy_shield/proc/turn_on()
 	processing_items |= src
 	src.active = TRUE
-	playsound(current_user, 'sound/items/miningtool_on.ogg', 25, 0, -5, 1.5)
+	playsound(current_user, 'sound/items/miningtool_on.ogg', 25, FALSE, -5, 1.5)
 	boutput(current_user, "<span class='notice'>You power up your energy shield.</span>")
 	current_user.vis_contents += overlay
 
@@ -124,7 +124,7 @@ TYPEINFO(/datum/component/wearertargeting/energy_shield)
 		current_user.visible_message("<span class='alert'>[current_user]'s energy shield violently pops!</span>")
 		elecflash(current_user, 1, 1, 0)
 	else
-		playsound(current_user, 'sound/items/miningtool_off.ogg', 25, 0, -5, 1.5)
+		playsound(current_user, 'sound/items/miningtool_off.ogg', 25, FALSE, -5, 1.5)
 		boutput(current_user, "<span class='notice'>Your energy shield powers down.</span>")
 
 /datum/component/wearertargeting/energy_shield/proc/toggle()

@@ -142,14 +142,14 @@ TYPEINFO(/obj/machinery/computer/arcade)
 		var/prizeselect = rand(1,8)
 		switch(prizeselect)
 			if(1)
-				var/obj/item/spacecash/P = new /obj/item/spacecash
+				var/obj/item/currency/spacecash/P = new /obj/item/currency/spacecash
 				P.setup(src.loc)
 				prize = P
 				prize.name = "space ticket"
 				prize.desc = "It's almost like actual currency!"
 			if(2)
 				if (isrestrictedz(z))
-					var/obj/item/spacecash/P = new /obj/item/spacecash
+					var/obj/item/currency/spacecash/P = new /obj/item/currency/spacecash
 					P.setup(src.loc)
 					prize = P
 					prize.name = "space ticket"

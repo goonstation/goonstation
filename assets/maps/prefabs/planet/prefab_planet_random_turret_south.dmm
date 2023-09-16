@@ -1,0 +1,75 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"z" = (
+/obj/decal/poster/wallsign/warning1,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/noGenerate)
+"A" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/noGenerate)
+"S" = (
+/obj/deployable_turret/outpost/active/south,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"W" = (
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+A
+A
+A
+z
+a
+"}
+(3,1,1) = {"
+a
+A
+W
+W
+W
+a
+"}
+(4,1,1) = {"
+a
+A
+W
+S
+W
+a
+"}
+(5,1,1) = {"
+a
+A
+W
+W
+W
+a
+"}
+(6,1,1) = {"
+a
+A
+A
+A
+z
+a
+"}
+(7,1,1) = {"
+a
+a
+a
+a
+a
+a
+"}

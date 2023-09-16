@@ -221,17 +221,26 @@
 	req_access = list(access_security)
 
 /obj/machinery/weapon_stand/taser_rack/recharger
-	name = "taser recharger rack"
-	desc = "A taser rack that can charge up to 3 taser guns. Handy!"
+	name = "security weapon recharger rack"
+	desc = "A taser rack that can charge up to 3 security weapons. Handy!"
 	icon_state = "taser_charge_rack"
 	amount = 3
 	max_amount = 3
 	stand_type = "taser_charge_rack"
+	contained_weapon_name = "security weapon"
 	recharges_contents = 1
+
+	valid_item(obj/item/I)
+		return(istype(I, /obj/item/gun/energy/taser_gun) ||\
+		istype(I, /obj/item/gun/energy/tasershotgun) ||\
+		istype(I, /obj/item/gun/energy/tasersmg) ||\
+		istype(I, /obj/item/gun/energy/wavegun)
+		)
 
 	empty
 		icon_state = "taser_rack0"
 		amount = 0
+
 
 /obj/machinery/weapon_stand/egun_rack
 	name = "energy gun rack"
@@ -277,5 +286,5 @@
 	req_access = list(access_security)
 	has_wire_panel = TRUE
 
-/obj/machinery/weapon_stand/rifle_rack/recharger
-	recharges_contents = 1
+	recharger
+		recharges_contents = 1

@@ -1,0 +1,77 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/writing{
+	words = "SLUG ZONE!!!";
+	pixel_x = -31
+	},
+/obj/decal/cleanable/writing{
+	words = "SLUG ZONE!!!";
+	pixel_y = -29
+	},
+/turf/simulated/floor/grass,
+/area/space)
+"e" = (
+/obj/shrub{
+	dir = 4
+	},
+/obj/machinery/light/small/floor/greenish,
+/turf/simulated/floor/grass,
+/area/space)
+"i" = (
+/mob/living/critter/small_animal/slug{
+	dir = 8
+	},
+/obj/item/clothing/head/party/random{
+	pixel_x = -1;
+	pixel_y = 2
+	},
+/obj/decal/cleanable/writing{
+	words = "SLUG ZONE!!!";
+	pixel_y = 9;
+	pixel_x = 33
+	},
+/turf/simulated/floor/grass,
+/area/space)
+"u" = (
+/mob/living/critter/small_animal/slug,
+/obj/item/clothing/head/party/random,
+/obj/decal/cleanable/writing{
+	words = "SLUG ZONE!!!";
+	pixel_y = -22
+	},
+/turf/simulated/floor/grass,
+/area/space)
+"A" = (
+/turf/simulated/floor/grass,
+/area/space)
+"T" = (
+/mob/living/critter/small_animal/slug/snail,
+/obj/item/clothing/head/party/random{
+	pixel_x = 14;
+	pixel_y = 7
+	},
+/turf/simulated/floor/grass,
+/area/space)
+"X" = (
+/obj/decal/cleanable/writing{
+	words = "SLUG ZONE!!!";
+	pixel_y = 28
+	},
+/turf/simulated/floor/grass,
+/area/space)
+
+(1,1,1) = {"
+X
+T
+a
+"}
+(2,1,1) = {"
+A
+e
+A
+"}
+(3,1,1) = {"
+i
+A
+u
+"}

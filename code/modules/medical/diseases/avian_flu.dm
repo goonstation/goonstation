@@ -3,7 +3,7 @@
 	max_stages = 4
 	spread = "Non-Contagious"
 	cure = "Chicken Soup"
-	associated_reagent = "feather fluid"
+	associated_reagent = "feather_fluid"
 	reagentcure = list("chickensoup")
 	affected_species = list("Human")
 //

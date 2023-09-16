@@ -175,7 +175,7 @@
 					else if (team_num == TEAM_SYNDICATE)
 						team = mode.team_SY
 				last_check = world.time
-				INVOKE_ASYNC(src, /obj/machinery/clonepod/pod_wars.proc/growclone_a_ghost)
+				INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/clonepod/pod_wars, growclone_a_ghost))
 		return..()
 
 	New()
@@ -183,16 +183,6 @@
 		animate_rainbow_glow(src) // rgb shit cause it looks cool
 		SubscribeToProcess()
 		last_check = world.time
-
-	start_clone()
-		. = ..()
-		if (.)
-			if (team_num == TEAM_NANOTRASEN)
-				new /obj/item/implant/pod_wars/nanotrasen(src.occupant)
-			else if (team_num == TEAM_SYNDICATE)
-				new /obj/item/implant/pod_wars/syndicate(src.occupant)
-
-		return
 
 	ex_act(severity)
 		return
@@ -275,6 +265,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	angle_arc_size = 180
 	quick_deploy_fuel = 2
 	associated_deployer = /obj/item/turret_deployer/pod_wars
+	can_toggle_activation = FALSE
 	var/destroyed = 0
 	var/reconstruction_time = 5 MINUTES
 
@@ -632,7 +623,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 
 			boutput(user, "<span class='notice'>This computer seems to be frozen on a space-weather tracking screen. It looks like a large ion storm will be passing this system in about <b class='alert'>[(cur_time)] minutes mission time</b>.<br>You can't input any commands to run the control protocols for this satelite...</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1, flags = SOUND_IGNORE_SPACE)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE, flags = SOUND_IGNORE_SPACE)
 			return 0
 		if (owner_team != get_pod_wars_team_num(user))
 			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
@@ -641,7 +632,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			SETUP_GENERIC_ACTIONBAR(user, src, duration, /obj/control_point_computer/proc/capture, list(user),\
 			 null, null, "[user] successfully enters [his_or_her(user)] command code into \the [src]!", null)
 		else
-			boutput(user, "You can't think of anything else to do on this console...")
+			boutput(user, "<span class='alert'>You can't think of anything else to do on this console...</span>")
 
 	proc/is_commander(var/mob/user)
 		if (istype(ticker.mode, /datum/game_mode/pod_wars))
@@ -833,7 +824,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.getID() ? "[newThing.material.getID()]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing
@@ -880,7 +871,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		src.tier = tier
 
 		showswirl(src, 0)
-		playsound(loc, 'sound/effects/mag_warp.ogg', 100, 1, flags = SOUND_IGNORE_SPACE)
+		playsound(loc, 'sound/effects/mag_warp.ogg', 100, TRUE, flags = SOUND_IGNORE_SPACE)
 		//handle name, color, and access for types...
 		var/team_name_str
 		switch(team_num)

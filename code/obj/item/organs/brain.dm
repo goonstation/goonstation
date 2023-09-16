@@ -8,18 +8,15 @@
 	desc = "A human brain, gross."
 	organ_holder_name = "brain"
 	organ_holder_location = "head"
+	icon = 'icons/obj/items/organs/brain.dmi'
 	icon_state = "brain2"
 	item_state = "brain"
 	var/datum/mind/owner = null
 	edible = 0
 	fail_damage = 120
 	max_damage = 120
+	default_material = "greymatter"
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
-
-	New(loc, datum/organHolder/nholder)
-		..()
-		if(made_from == "flesh")
-			src.AddComponent(/datum/component/consume/food_effects, list("brain_food_ithillid"))
 
 	disposing()
 		logTheThing(LOG_COMBAT, src, "[owner ? "(owner's ckey [owner.ckey]) " : ""]has been destroyed by [usr ? constructTarget(usr,"combat") : "???"] in [!isturf(src.loc) ? src.loc : ""][log_loc(src)]. Brain last touched by [src.fingerprintslast].")
@@ -32,6 +29,11 @@
 		if (holder)
 			holder.brain = null
 		..()
+
+	setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
+		. = ..()
+		if(mat1.getID() == "greymatter")
+			src.AddComponent(/datum/component/consume/food_effects, list("brain_food_ithillid"))
 
 	Eat(mob/M, mob/user)
 		if(isghostcritter(M) || isghostcritter(user))
@@ -116,6 +118,7 @@
 	item_state = "late_brain"
 	desc = "A brain sized pyramid constructed out of silicon and LED lights. It employs complex quantum loopholes to create a consciousness within a decade or less."
 	created_decal = /obj/decal/cleanable/oil
+	default_material = "pharosium"
 	var/activated = 0
 
 	get_desc()
@@ -137,7 +140,7 @@
 	icon_state = "ai_brain"
 	item_state = "ai_brain"
 	created_decal = /obj/decal/cleanable/oil
-	made_from = "pharosium"
+	default_material = "pharosium"
 
 /obj/item/organ/brain/martian
 	name = "squishy lump"
@@ -145,7 +148,7 @@
 	icon_state = "martian_brain"
 	item_state = "martian_brain"
 	created_decal = /obj/decal/cleanable/martian_viscera/fluid
-	made_from = "viscerite"
+	default_material = "viscerite"
 
 /obj/item/organ/brain/flockdrone
 	name = "odd crystal"
@@ -153,7 +156,7 @@
 	icon_state = "flockdrone_brain"
 	item_state = "flockdrone_brain"
 	created_decal = /obj/decal/cleanable/flockdrone_debris/fluid
-	made_from = "gnesis"
+	default_material = "gnesis"
 
 	on_life()
 		var/mob/living/M = holder.donor

@@ -149,6 +149,12 @@
 	bullet_act()
 		return
 
+	proc/get_encounter_size(size, P)
+		. = size
+		if(!P || prob(P))
+			var/max_r = round(min(width,height)/2)-1
+			. = rand(size, max_r)
+
 	proc/erase_area()
 		var/turf/origin = get_turf(src)
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
@@ -195,7 +201,7 @@
 		for (var/turf/T in block(origin, locate(origin.x + width - 1, origin.y + height - 1, origin.z)))
 
 			for (var/mob/living/L in T)
-				if(ismobcritter(L) && isdead(L)) // we don't care about dead critters
+				if(ismobcritter(L)) // we don't care about critters
 					continue
 				if(!isintangible(L)) //neither blob overmind or AI eye should block this
 					unacceptable = TRUE
@@ -546,7 +552,7 @@
 	proc/build_icon()
 		src.ClearAllOverlays()
 
-		if (damage_overlays.len == 4)
+		if (length(damage_overlays) == 4)
 			switch(src.health)
 				if (70 to 94)
 					src.UpdateOverlays(damage_overlays[1], "magnet_damage")
@@ -845,13 +851,19 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		/obj/machinery/door/poddoor/blast/asteroid
 	))
 /turf/simulated/wall/auto/asteroid
-	icon = 'icons/turf/walls_asteroid.dmi'
+	icon = 'icons/turf/walls/asteroid.dmi'
+#ifdef PERSPECTIVE_EDITOR_WALL
+	icon_state = "asteroid-perspective-map"
+#else
+	icon_state = "asteroid-map"
+#endif
 	mod = "asteroid-"
 	light_mod = "wall-"
 	plane = PLANE_WALL-1
 	layer = ASTEROID_LAYER
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	default_material = "rock"
+	color = "#D1E6FF"
 
 #ifdef UNDERWATER_MAP
 	name = "cavern wall"
@@ -897,7 +909,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				if (length(color_vals))
 					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
-					algea.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+					algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
 					UpdateOverlays(algea, "glow_algae")
 					add_medium_light("glow_algae", color_vals)
 
@@ -916,12 +928,14 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	ice
 		name = "comet chunk"
 		desc = "That's some cold stuff right there."
+		color = "#9cc4f5"
 		stone_color = "#9cc4f5"
 		default_ore = /obj/item/raw_material/ice
 
 	geode
 		name = "compacted stone"
 		desc = "This rock looks really hard to dig out."
+		color = "#4c535c"
 		stone_color = "#4c535c"
 		default_ore = null
 		hardness = 10
@@ -934,6 +948,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		default_material = "jean"
 		default_ore = /obj/item/material_piece/cloth/jean
 		replace_type = /turf/simulated/floor/plating/airless/asteroid/jean
+		color = "#88c2ff"
 		stone_color = "#88c2ff"
 
 
@@ -1015,6 +1030,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	algae
 		name = "sea foam"
 		desc = "Rapid depressuziation has flash-frozen sea water and algae into hardened foam."
+		color = "#6090a0"
 		stone_color = "#6090a0"
 		fullbright = 0
 		luminosity = 1
@@ -1026,7 +1042,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 			var/color_vals = list(rand(100,200), rand(100,200), rand(100,200), 30)  // random colors, muted
 			algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
-			algea.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+			algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
 			UpdateOverlays(algea, "glow_algae")
 			add_medium_light("glow_algae", color_vals)
 
@@ -1051,6 +1067,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		worldgenCandidates += src
 		if(current_state <= GAME_STATE_PREGAME)
 			src.color = src.stone_color
+		else
+			SPAWN(1)
+				space_overlays()
 
 	generate_worldgen()
 		. = ..()
@@ -1182,32 +1201,52 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.ClearAllOverlays() // i know theres probably a better way to handle this
 		if(light)
 			src.UpdateOverlays(light, "ambient")
+		if(src.fullbright)
+			src.UpdateOverlays(new/image/fullbright, "fullbright")
 		src.top_overlays()
 		src.ore_overlays()
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
-		var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[src.topnumber]")
-		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
+		var/image/top_overlay = image('icons/turf/walls/asteroid.dmi',"top[src.topnumber]")
+		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask2[src.icon_state]"))
 		top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
 		UpdateOverlays(top_overlay, "ast_top_rock")
 
 	proc/ore_overlays()
 		if(src.ore) // make sure ores dont turn invisible
-			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[src.ore?.name][src.orenumber]")
-			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+			var/image/ore_overlay = image('icons/turf/walls/asteroid.dmi',"[src.ore?.name][src.orenumber]")
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
 			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 			src.UpdateOverlays(ore_overlay, "ast_ore")
 
 	proc/space_overlays()
-		for (var/turf/space/A in orange(src,1))
-			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[get_dir(A,src)]")
+		for (var/turf/A in orange(src,1))
+			var/dir_from = get_dir(A, src)
+			var/dir_to = get_dir(src, A)
+			var/skip_this = !istype(A, /turf/space)
+			if (!skip_this && !is_cardinal(dir_to))
+				for (var/cardinal_dir in cardinal)
+					if (dir_to & cardinal_dir)
+						var/turf/T = get_step(src, cardinal_dir)
+						if (!istype(T, /turf/space))
+							skip_this = TRUE
+							break
+			if (skip_this)
+				A.ClearSpecificOverlays("ast_edge_[dir_from]")
+				continue
+			var/image/edge_overlay = image('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
 			edge_overlay.plane = PLANE_WALL-1
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
-			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
+			A.UpdateOverlays(edge_overlay, "ast_edge_[dir_from]")
 			src.space_overlays += edge_overlay
+
+	Del()
+		for(var/turf/T in orange(src, 1))
+			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
+		..()
 
 	proc/dig_asteroid(var/mob/living/user, var/obj/item/mining_tool/tool)
 		if (!user || !tool || !istype(src)) return
@@ -1267,7 +1306,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.hardness /= 2
 		else
 			src.hardness = 0
-		src.UpdateOverlays(image('icons/turf/walls_asteroid.dmi', "weakened"), "asteroid_weakened")
+		src.UpdateOverlays(image('icons/turf/walls/asteroid.dmi', "weakened"), "asteroid_weakened")
 
 	proc/damage_asteroid(var/power,var/allow_zero = 0)
 		// use this for stuff that arent mining tools but still attack asteroids
@@ -1292,6 +1331,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		return
 
 	proc/destroy_asteroid(var/dropOre=1)
+		var/image/weather = GetOverlayImage("weather")
+		var/image/ambient = GetOverlayImage("ambient")
+
 		var/datum/ore/O = src.ore
 		var/datum/ore/event/E = src.event
 		if (src.invincible)
@@ -1308,15 +1350,22 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
 				var/obj/item/raw_material/MAT = new ore_to_create
+
+				// rocks don't deserve quality; moreover this speeds up big explosions since rocks don't need to copyMaterial() anymore
+				if(ore_to_create ==  /obj/item/raw_material/rock)
+					continue
+
 				MAT.set_loc(src)
 
 				if(MAT.material)
-					if(MAT.material.quality != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
-						var/newQual = max(MAT.material.quality, src.quality)
-						MAT.material.quality = newQual
+					//If we don't use quality anymore, remove this
+					MAT.material = MAT.material.getMutable()
+					if(MAT.material.getQuality() != 0) //If it's 0 then that's probably the default, so let's use the asteroids quality only if it's higher. That way materials that have a quality by default will not occur at any quality less than the set one. And materials that do not have a quality by default, use the asteroids quality instead.
+						var/newQual = max(MAT.material.getQuality(), src.quality)
+						MAT.material.setQuality(newQual)
 						MAT.quality = newQual
 					else
-						MAT.material.quality = src.quality
+						MAT.material.setQuality(src.quality)
 						MAT.quality = src.quality
 
 				MAT.name = getOreQualityName(MAT.quality) + " [MAT.name]"
@@ -1324,7 +1373,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			icon_old = icon_state
 
 		var/new_color = src.stone_color
-		src.RL_SetOpacity(0)
+		src.set_opacity(0)
 		src.ReplaceWith(src.replace_type, FALSE)
 		src.stone_color = new_color
 		src.set_opacity(0)
@@ -1343,6 +1392,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if (RL_Started) RL_UPDATE_LIGHT(src) //Then applies the proper lighting.
 #endif
 
+		if(weather)
+			src.UpdateOverlays(weather, "weather")
+		if(ambient)
+			src.UpdateOverlays(ambient, "ambient")
 		return src
 
 	proc/set_event(var/datum/ore/event/E)
@@ -1363,16 +1416,18 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/turf/simulated/wall/auto/asteroid/AST
 			while (distributions > 0)
 				distributions--
-				if (usable_turfs.len < 1)
+				if (length(usable_turfs) < 1)
 					break
 				AST = pick(usable_turfs)
 				AST.event = E
 				E.onGenerate(AST)
 				usable_turfs -= AST
 
+TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
+	mat_appearances_to_ignore = list("rock")
 /turf/simulated/floor/plating/airless/asteroid
 	name = "asteroid"
-	icon = 'icons/turf/walls_asteroid.dmi'
+	icon = 'icons/turf/walls/asteroid.dmi'
 	icon_state = "astfloor1"
 	plane = PLANE_FLOOR //Try to get the edge overlays to work with shadowing. I dare ya.
 	oxygen = 0.001
@@ -1385,7 +1440,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
 	var/list/space_overlays = null
-	mat_appearances_to_ignore = list("rock")
 	turf_flags = MOB_SLIP | MOB_STEP | IS_TYPE_SIMULATED | FLUID_MOVE
 
 #ifdef UNDERWATER_MAP
@@ -1419,6 +1473,9 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		coloration_overlay.blend_mode = 4
 		UpdateIcon()
 		worldgenCandidates += src
+		if(current_state > GAME_STATE_PREGAME)
+			SPAWN(1)
+				space_overlays()
 
 	generate_worldgen()
 		. = ..()
@@ -1442,6 +1499,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			tile.build(src)
 
 	update_icon()
+		var/image/ambient_light = src.GetOverlayImage("ambient")
+		var/image/weather = src.GetOverlayImage("weather")
 
 		src.ClearAllOverlays()
 		src.color = src.stone_color
@@ -1450,21 +1509,95 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.UpdateOverlays(new /image/fullbright, "fullbright")
 		#endif
 
+		if(length(overlays) != length(overlay_refs)) //hack until #5872 is resolved
+			overlay_refs.len = 0
+		src.UpdateOverlays(ambient_light, "ambient")
+		src.UpdateOverlays(weather, "weather")
+
 	proc/space_overlays() //For overlays ON THE SPACE TILE
-		for (var/turf/space/A in orange(src,1))
-			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[get_dir(A,src)]")
+		for (var/turf/A in orange(src,1))
+			var/dir_from = get_dir(A, src)
+			var/dir_to = get_dir(src, A)
+			var/skip_this = !istype(A, /turf/space)
+			if (!skip_this && !is_cardinal(dir_to))
+				for (var/cardinal_dir in cardinal)
+					if (dir_to & cardinal_dir)
+						var/turf/T = get_step(src, cardinal_dir)
+						if (!istype(T, /turf/space))
+							skip_this = TRUE
+							break
+			if (skip_this)
+				A.ClearSpecificOverlays("ast_edge_[dir_from]")
+				continue
+			var/image/edge_overlay = image('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.plane = PLANE_FLOOR
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
-			A.UpdateOverlays(edge_overlay, "ast_edge_[get_dir(A,src)]")
+			A.UpdateOverlays(edge_overlay, "ast_edge_[dir_from]")
 			src.space_overlays += edge_overlay
+
+	Del()
+		for(var/turf/T in orange(src, 1))
+			T.ClearSpecificOverlays("ast_edge_[get_dir(T, src)]")
+		..()
 
 
 /turf/simulated/floor/plating/airless/asteroid/jean
 	name = "jasteroid"
 	desc = "A free-floating jineral jeposit from space."
 	stone_color = "#88c2ff"
+
+/turf/simulated/floor/plating/airless/asteroid/comet
+	name = "regolith"
+	desc = "It's dusty and cold."
+	stone_color = "#7d93ad"
+	color = "#7d93ad"
+
+	ice
+		name = "comet ice"
+		stone_color = "#a8cdfa"
+		color = "#a8cdfa"
+
+	ice_dense
+		name = "dense ice"
+		desc = "A compressed layer of comet ice."
+		stone_color = "#2070CC"
+		color = "#2070CC"
+
+	ice_char
+		name = "dark regolith"
+		desc = "An inky-black assortment of carbon-rich dust and ice."
+		stone_color = "#111111"
+		color = "#111111"
+
+	glassy
+		name = "blasted regolith"
+		desc = "This stuff has been blasted and fused by stellar radiation and impacts."
+		stone_color = "#111111"
+		color = "#111111"
+
+	copper
+		name = "metallic rock"
+		desc = "Rich in soft metals."
+		stone_color = "#553333"
+		color = "#553333"
+
+	iron
+		name = "ferrous rock"
+		desc = "Dense metallic rock."
+		stone_color = "#333333"
+		color = "#333333"
+
+	plasma
+		name = "plasma ice"
+		desc = "Concentrated plasma trapped in dense ice."
+
+	radioactive
+		name = "radioactive metal"
+		desc = "There's a hazardous amount of radioactive material in this metallic layer."
+		stone_color = "#114444"
+		color = "#114444"
 
 
 // Tool Defines
@@ -1494,7 +1627,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		if(cell_type)
 			var/cell = new cell_type
 			AddComponent(/datum/component/cell_holder, cell)
-			RegisterSignal(src, COMSIG_CELL_SWAP, .proc/power_down)
+			RegisterSignal(src, COMSIG_CELL_SWAP, PROC_REF(power_down))
 		BLOCK_SETUP(BLOCK_ROD)
 
 	// Seems like a basic bit of user feedback to me (Convair880).
@@ -1909,7 +2042,7 @@ TYPEINFO(/obj/item/cargotele)
 
 		var/cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, swappable = FALSE)
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, .proc/maybe_reset_target) //make sure cargo pads can GC
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, PROC_REF(maybe_reset_target)) //make sure cargo pads can GC
 
 	proc/maybe_reset_target(datum/dummy, var/obj/submachine/cargopad/pad)
 		if (target == pad)
@@ -1980,25 +2113,28 @@ TYPEINFO(/obj/item/cargotele)
 
 		boutput(user, "<span class='notice'>Teleporting [cargo] to [src.target]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, .proc/finish_teleport, list(cargo, user), null, null, null, null)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
 		return TRUE
 
 
 	proc/finish_teleport(var/obj/cargo, var/mob/user)
 		if (ismob(cargo.loc) && cargo.loc == user)
 			user.u_equip(cargo)
-		if (istype(cargo.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = cargo.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(cargo)
+		if (istype(cargo, /obj/item))
+			var/obj/item/I = cargo
+			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
 		// And logs for good measure (Convair880).
 		var/obj/storage/S = cargo
 		ENSURE_TYPE(S)
-
+		var/mob_teled = FALSE
 		for (var/mob/M in cargo.contents)
 			if (M)
 				logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] with [constructTarget(M,"station")] inside to [log_loc(src.target)].")
+				mob_teled = TRUE
+
+		if(!mob_teled)
+			logTheThing(LOG_STATION, user, "uses a cargo transporter to send [cargo.name][S && S.locked ? " (locked)" : ""][S && S.welded ? " (welded)" : ""] to [log_loc(src.target)].")
 
 		cargo.set_loc(get_turf(src.target))
 		target.receive_cargo(cargo)
@@ -2017,19 +2153,10 @@ TYPEINFO(/obj/item/cargotele)
 
 /obj/item/cargotele/traitor
 	cost = 15
-	var/static/list/possible_targets = list()
 	///The account to credit for sales
 	var/datum/db_record/account = null
 	///The total amount earned from selling/stealing
 	var/total_earned = 0
-
-	New()
-		..()
-		if (!length(possible_targets))
-			for(var/turf/T in world) //hate to do this but it's only once vOv
-				LAGCHECK(LAG_LOW)
-				if(istype(T,/turf/space) && T.z != 1 && T.z != 6 && !isrestrictedz(T.z)) //do not foot ball, do not collect 200
-					possible_targets += T
 
 	attack_self() // Fixed --melon
 		return
@@ -2046,10 +2173,7 @@ TYPEINFO(/obj/item/cargotele)
 			store.weld(TRUE, user)
 
 	finish_teleport(var/obj/cargo, var/mob/user)
-		if (!length(src.possible_targets))
-			src.target = locate(rand(1,world.maxx), rand(1,world.maxy), 1)
-		else
-			src.target = pick(src.possible_targets)
+		src.target = random_space_turf() || random_nonrestrictedz_turf()
 		boutput(user, "<span class='notice'>Teleporting [cargo]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
 		var/value = shippingmarket.appraise_value(cargo.contents, sell = FALSE)
@@ -2084,6 +2208,9 @@ TYPEINFO(/obj/item/cargotele)
 		if (istype(item, /obj/item/device/pda2))
 			var/obj/item/device/pda2/pda = item
 			owner_name = pda.registered
+		else if (istype(item, /obj/item/clothing/lanyard))
+			var/obj/item/clothing/lanyard/lanyard = item
+			owner_name = lanyard.registered
 		else if (istype(item, /obj/item/card/id))
 			var/obj/item/card/id/card = item
 			owner_name = card.registered
@@ -2134,7 +2261,7 @@ TYPEINFO(/obj/item/cargotele)
 			if (E.scan_decal)
 				mining_scandecal(L, AST, E.scan_decal)
 	var/found_string = ""
-	if (ores_found.len > 0)
+	if (length(ores_found) > 0)
 		var/list_counter = 1
 		for (var/X in ores_found)
 			found_string += X
@@ -2249,20 +2376,20 @@ TYPEINFO(/obj/item/cargotele)
 				src.anchored = UNANCHORED
 				icon_state = "gravgen-off"
 				return
-			PCEL.charge -= 5
+			PCEL.use(5)
 			if (src.target)
 				for(var/obj/item/raw_material/O in orange(1,src))
 					if (istype(O,/obj/item/raw_material/rock)) continue
-					PCEL.charge -= 2
+					PCEL.use(2)
 					O.set_loc(src.target)
 				for(var/obj/item/scrap/S in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					S.set_loc(src.target)
 				for(var/obj/decal/cleanable/machine_debris/D in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					D.set_loc(src.target)
 				for(var/obj/decal/cleanable/robot_debris/R in orange(1,src))
-					PCEL.charge -= 2
+					PCEL.use(2)
 					R.set_loc(src.target)
 			for(var/obj/item/raw_material/O in range(6,src))
 				if (moved >= 10)
@@ -2319,8 +2446,8 @@ TYPEINFO(/obj/item/cargotele)
 
 	New()
 		..()
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_ENABLED, .proc/add_pad)
-		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, .proc/remove_pad)
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_ENABLED, PROC_REF(add_pad))
+		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_CARGO_PAD_DISABLED, PROC_REF(remove_pad))
 
 	/// Add a pad to the global pads list. Do nothing if the pad is already in the pads list.
 	proc/add_pad(datum/holder, obj/submachine/cargopad/pad)
@@ -2456,6 +2583,8 @@ TYPEINFO(/obj/item/ore_scoop)
 	item_state = "buildpipe"
 	w_class = W_CLASS_SMALL
 	var/obj/item/satchel/mining/satchel = null
+	///Does this scoop pick up rock, ice etc.
+	var/collect_junk = FALSE
 
 	prepared
 		New()
@@ -2475,11 +2604,14 @@ TYPEINFO(/obj/item/ore_scoop)
 			if (!issilicon(user))
 				var/obj/item/satchel/mining/S = W
 				user.drop_item()
-				if (satchel)
-					user.put_in_hand_or_drop(satchel)
+				var/obj/item/satchel/mining/old_satchel = src.satchel
+				if (old_satchel)
+					old_satchel.set_loc(get_turf(user))
 				S.set_loc(src)
-				satchel = S
-				icon_state = "scoop-bag"
+				src.satchel = S
+				if (old_satchel)
+					user.put_in_hand_or_drop(old_satchel)
+				src.icon_state = "scoop-bag"
 				user.visible_message("[user] inserts [S] into [src].", "You insert [S] into [src].")
 			else
 				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
@@ -2488,23 +2620,28 @@ TYPEINFO(/obj/item/ore_scoop)
 			return
 
 	attack_self(var/mob/user as mob)
-		if(!issilicon(user))
-			if (satchel)
-				user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
-				user.put_in_hand_or_drop(satchel)
-				satchel = null
-				icon_state = "scoop"
-			else
-				boutput(user, "<span class='alert'>There's no satchel in [src] to unload.</span>")
-		else
+		if(issilicon(user))
 			boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
+			return
+		if (!satchel)
+			src.collect_junk = !src.collect_junk
+			if (src.collect_junk)
+				boutput(user, "<span class='info'>Now collecting junk.</span>")
+			else
+				boutput(user, "<span class='info'>No longer collecting junk.</span>")
+		else
+			user.visible_message("[user] unloads [satchel] from [src].", "You unload [satchel] from [src].")
+			user.put_in_hand_or_drop(satchel)
+			satchel = null
+			icon_state = "scoop"
+
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob, flag)
 		if(isturf(target))
 			if (!satchel)
 				boutput(user, "<span class='alert'>There's no satchel in [src] to dump out.</span>")
 				return
-			if (satchel.contents.len < 1)
+			if (length(satchel.contents) < 1)
 				boutput(user, "<span class='alert'>The satchel in [src] is empty.</span>")
 				return
 			user.visible_message("[user] dumps out [src]'s satchel contents.", "You dump out [src]'s satchel contents.")
@@ -2513,9 +2650,32 @@ TYPEINFO(/obj/item/ore_scoop)
 			satchel.UpdateIcon()
 			return
 		if (istype(target, /obj/item/satchel/mining))
-			user.swap_hand() //Needed so you don't drop the scoop instead of the satchel
-			src.attackby(target, user)
-			user.swap_hand()
+			if (!issilicon(user))
+				var/obj/item/satchel/mining/new_satchel = target
+				var/atom/old_location = null //this stores the old location so we know where the clicked item came from
+				var/was_stored = FALSE //For stuff with storage datums, we can move the item to that storage
+				if (new_satchel.stored)
+					old_location = new_satchel.stored.linked_item
+					was_stored = TRUE
+				else
+					old_location = new_satchel.loc
+				if (ismob(old_location) && !was_stored)
+					var/mob/old_user = old_location
+					old_user.drop_item(new_satchel) // not only user since you could click on a satchel carried by someone else... ugh
+				var/obj/item/satchel/mining/old_satchel = src.satchel
+				if (old_satchel)
+					old_satchel.set_loc(get_turf(user))
+				new_satchel.set_loc(src)
+				src.satchel = new_satchel
+				if (old_satchel && old_location)
+					if (was_stored) //if the old satchel was in a storage item, the new item should fit as well
+						old_location.storage.add_contents(old_satchel, user, FALSE)
+					else
+						user.put_in_hand_or_drop(old_satchel)
+				src.icon_state = "scoop-bag"
+				user.visible_message("[user] inserts [new_satchel] into [src].", "You insert [new_satchel] into [src].")
+			else
+				boutput(user, "<span class='alert'>The satchel is firmly secured to the scoop.</span>")
 
 ////// Shit that goes in the asteroid belt, might split it into an exploring.dm later i guess
 
@@ -2531,7 +2691,7 @@ TYPEINFO(/obj/item/ore_scoop)
 	ex_act(severity)
 		if (severity == 1.0)
 			if (prob(8))
-				src.RL_SetOpacity(0)
+				src.set_opacity(0)
 				src.set_density(0)
 				src.icon_state = "ancient-b"
 				return

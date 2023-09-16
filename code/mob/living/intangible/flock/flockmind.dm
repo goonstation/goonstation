@@ -102,7 +102,7 @@
 /mob/living/intangible/flock/flockmind/proc/spawnEgg()
 	if(src.flock)
 		new /obj/flock_structure/rift(get_turf(src), src.flock)
-		playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1)
+		playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, TRUE)
 	else
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
 		return
@@ -212,7 +212,8 @@
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
 	log_respawn_event(picked.mind, "Flocktrace", src.real_name)
 
-	picked.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, source = antagonist_source, master = src.mind)
+	if (!picked.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, source = antagonist_source, master = src.flock.flockmind_mind))
+		logTheThing(LOG_DEBUG, "Failed to add flocktrace antagonist role to [key_name(picked)] during partition. THIS IS VERY BAD GO YELL AT A FLOCK CODER.")
 
 // old code for flocktrace respawns
 /datum/ghost_notification/respawn/flockdrone
@@ -221,14 +222,14 @@
 	icon_state = "flocktrace"
 
 /mob/living/intangible/flock/flockmind/proc/receive_ghosts(var/list/ghosts)
-	if(!ghosts || ghosts.len <= 0)
+	if(!ghosts || length(ghosts) <= 0)
 		boutput(src, "<span class='alert'>Unable to partition, please try again later.</span>")
 		return
 	var/list/valid_ghosts = list()
 	for(var/mob/dead/observer/O in ghosts)
 		if(O?.client)
 			valid_ghosts |= O
-	if(valid_ghosts.len <= 0)
+	if(length(valid_ghosts) <= 0)
 		SPAWN(1 SECOND)
 			boutput(src, "<span class='alert'>Unable to partition, please try again later.</span>")
 		return

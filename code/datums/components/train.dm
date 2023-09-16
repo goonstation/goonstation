@@ -13,15 +13,15 @@ TYPEINFO(/datum/component/train)
 	src.cart = cart
 
 /datum/component/train/RegisterWithParent()
-	RegisterSignal(src.parent, COMSIG_MOVABLE_MOVED, .proc/on_parent_move)
-	RegisterSignal(src.cart, COMSIG_MOVABLE_BLOCK_MOVE, .proc/on_cart_move)
+	RegisterSignal(src.parent, COMSIG_MOVABLE_MOVED, PROC_REF(on_parent_move))
+	RegisterSignal(src.cart, COMSIG_MOVABLE_BLOCK_MOVE, PROC_REF(on_cart_move))
 
 /datum/component/train/UnregisterFromParent()
 	UnregisterSignal(src.parent, COMSIG_MOVABLE_MOVED)
 	UnregisterSignal(src.cart, COMSIG_MOVABLE_BLOCK_MOVE)
 
 /datum/component/train/proc/on_parent_move(atom/movable/thing, previous_loc, direction)
-	if (thing.loc != previous_loc)
+	if (thing.loc != previous_loc && !QDELETED(cart))
 		cart.Move(previous_loc)
 
 /datum/component/train/proc/on_cart_move(atom/movable/thing, new_loc, direction)

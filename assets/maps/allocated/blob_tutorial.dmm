@@ -14,7 +14,7 @@
 /turf/simulated/floor,
 /area/tutorial/blob)
 "V" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/obj/singularity.dmi';
 	icon_state = "TheSingMain";
 	name = "v-space"

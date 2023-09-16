@@ -59,21 +59,28 @@
 			. *= max(W.health/initial(W.health),0.1)
 
 		else if (istype(A, /turf/simulated/floor))
+			var/turf/simulated/floor/floor_turf
 #ifdef UNDERWATER_MAP
 			. = 45 SECONDS
 #else
 			. = 30 SECONDS
 #endif
+			if(floor_turf.broken)
+				. -= 5 SECONDS
+			if(!floor_turf.intact)
+				. -= 5 SECONDS
 		else if (istype(A, /obj/machinery/door/airlock)||istype(A, /obj/machinery/door/unpowered/wood))
 			var/obj/machinery/door/airlock/AL = A
 			if (AL.hardened == 1)
 				boutput(user, "<span class='alert'>\The [AL] is reinforced against deconstruction!</span>")
 				return
-			. = 35 SECONDS
+			. = 30 SECONDS
 		else if (istype(A, /obj/structure/girder))
 			. = 10 SECONDS
 		else if (istype(A, /obj/grille))
 			. = 6 SECONDS
+			var/obj/grille/the_grille = A
+			. *= max(the_grille.health/the_grille.health_max,0.1)
 		else if (istype(A, /obj/window))
 			. = 10 SECONDS
 		else if (istype(A, /obj/lattice))
@@ -89,11 +96,6 @@
 
 			if (istext(decon_complexity))
 				boutput(user, "<span class='alert'>[decon_complexity]</span>")
-				// if(istype(A,/obj/machinery/lawrack))
-				// 	var/obj/machinery/lawrack/LR = A
-				// 	. = (LR._health/2) SECONDS
-				// 	decon_complexity = 0
-				// else
 				return
 
 			if(locate(/mob/living) in O)
@@ -258,9 +260,9 @@
 			W.health -= 5
 			if (istype(W, /turf/simulated/wall/r_wall) || istype(W, /turf/simulated/wall/auto/reinforced))
 				W.health -= 5
-		// else if(istype(target, /obj/machinery/lawrack))
-		// 	var/obj/machinery/lawrack/LR = target
-		// 	LR.changeHealth(-1.5, owner)
+		else if(istype(target, /obj/grille))
+			var/obj/grille/the_grille = target
+			the_grille.health -= 5
 
 		var/obj/item/salvager/S = src.call_proc_on
 		if(istype(S))
@@ -292,14 +294,13 @@
 	slots = 8
 
 	attack_hand(mob/user)
-		if(istype(src.loc, /obj/item/storage/backpack))
+		if (src.stored)
+			src.stored.hide_hud(user)
+			// in case its somehow attacked without opening where its stored
 			if (user.s_active)
 				user.detach_hud(user.s_active)
 				user.s_active = null
-			user.s_active = src.hud
-			hud.update(user)
-			user.attach_hud(src.hud)
-			return
+			src.storage.show_hud(user)
 		else
 			. = ..()
 
@@ -310,7 +311,7 @@
 	spawn_contents = list()
 	slots = 10
 	can_hold = list(/obj/item/electronics/frame, /obj/item/salvager)
-	in_list_or_max = 1
+	check_wclass = 1
 	color = "#ff9933"
 	satchel_compatible = FALSE
 
@@ -335,7 +336,7 @@
 	icon_state = "whitesub_body"
 	health = 150
 	maxhealth = 150
-	acid_damage_multiplier = 0
+	acid_damage_multiplier = 0.5
 	init_comms_type = /obj/item/shipcomponent/communications/salvager
 	color = list(-0.269231,0.75,3.73077,0.269231,-0.249999,-2.73077,1,0.5,0)
 
@@ -456,12 +457,20 @@
 		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
 			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
 
+
+var/datum/magpie_manager/magpie_man = new
+/datum/magpie_manager
+	var/obj/npc/trader/salvager/magpie
+
+	proc/setup()
+		src.magpie = locate("M4GP13")
+
+
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"
 	icon = 'icons/obj/trader.dmi'
 	icon_state = "crate_dispenser"
 	picture = "generic.png"
-	trader_area = "/area/syndicate/salvager"
 	angrynope = "Unable to process request."
 	whotext = "I am the salvage reclamation and supply commissary.  In short I will provide goods in exchange for reclaimed materials and equipment."
 	barter = TRUE
@@ -470,8 +479,7 @@
 	New()
 		..()
 
-		src.chat_text = new
-		src.vis_contents += src.chat_text
+		src.chat_text = new(null, src)
 
 		for(var/sell_type in concrete_typesof(/datum/commodity/magpie/sell))
 			src.goods_sell += new sell_type(src)
@@ -533,12 +541,17 @@
 						I.bump_up(chatbot_text.measured_height)
 
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", just_maptext = just_float, assoc_maptext = chatbot_text)
-		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, 1)
+		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, TRUE)
 
 
 // Stubs for the public
 /obj/item/clothing/suit/space/salvager
 /obj/item/clothing/head/helmet/space/engineer/salvager
+/obj/item/clothing/glasses/salvager
+#ifndef SECRETS_ENABLED
+	icon_state = "construction"
+	item_state = "construction"
+#endif
 /obj/salvager_cryotron
 /obj/item/salvager_hand_tele
 /obj/item/device/pda2/salvager

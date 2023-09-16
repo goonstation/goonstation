@@ -312,7 +312,7 @@
 				mob_type = "Monkey"
 			else if (ishuman(src))
 				var/mob/living/carbon/human/H = src
-				if (H.mutantrace && !H.mutantrace.human_compatible)
+				if (!H.mutantrace.human_compatible)
 					mob_type = capitalize(H.mutantrace.name)
 				else
 					mob_type = "Human"
@@ -370,6 +370,8 @@
 
 	if (!bypass_resistance && !src.disease_resistance_check(null,A.name))
 		return null
+
+	logTheThing(LOG_COMBAT, src, " gained the [ailment_name] ([ailment_path]) disease.")
 
 	if (istype(A, /datum/ailment/disease/))
 		var/datum/ailment/disease/D = A

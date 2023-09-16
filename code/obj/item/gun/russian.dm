@@ -35,7 +35,7 @@
 	proc/fire_gun(mob/user as mob)
 		if(src.shotsLeft > 1)
 			src.shotsLeft--
-			playsound(user, 'sound/weapons/Gunclick.ogg', 80, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 80, TRUE)
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)
 					O.show_message("<span class='alert'>[user] points the gun at [his_or_her(user)] head. Click!</span>", 1, "<span class='alert'>Click!</span>", 2)
@@ -60,7 +60,7 @@
 				user.TakeDamage("head", 300, 0)
 			take_bleeding_damage(user, null, 500, DAMAGE_STAB)
 			src.shotsLeft = 0
-			playsound(user, 'sound/weapons/Gunshot.ogg', 100, 1)
+			playsound(user, 'sound/weapons/Gunshot.ogg', 100, TRUE)
 			user.visible_message("<span class='alert'><B>BOOM!</B> [user]'s head explodes.</span>",\
 				"<span class='alert'><B>BOOM!</B></span>",\
 				"<span class='alert'>You hear someone's head explode.</span>")
@@ -87,6 +87,7 @@
 	desc = "A slightly shabby looking combat revolver developed by somebody. Uses .357 caliber rounds."
 	force = MELEE_DMG_REVOLVER
 	shotsMax = 1 //griff
+	contraband = 4
 	var/fakeshots = 0
 	New()
 		fakeshots = rand(2, 7)

@@ -60,7 +60,7 @@
 
 	New()
 		if (prob(10))
-			src.initial_reagents["grognardium"] = 5
+			src.initial_reagents["rum"] = 5
 		..()
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater
@@ -333,6 +333,7 @@
 		var/drop_this_shit = 0 //i promise this is useful
 		if (src.is_sealed)
 			is_sealed = 0
+			src.set_open_container(TRUE)
 			can_chug = 1
 			splash_all_contents = TRUE
 			incompatible_with_chem_dispensers = FALSE
@@ -390,7 +391,7 @@
 		src.icon_state = "crushed-[iconsplit[2]]"
 
 /obj/item/reagent_containers/food/drinks/cola/random
-	name = "space cola"
+	name = "off-brand space cola"
 	desc = "You don't recognise this cola brand at all."
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1
@@ -525,7 +526,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 			reagents.add_reagent("cryostylane", 5)
 		reagents.add_reagent("water", 25)
 		reagents.add_reagent("VHFCS", 5)
-		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "cat_drugs", "coffee"), 5)
+		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "catdrugs", "coffee"), 5)
 		for(var/i=0; i<3; i++)
 			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","urine","nicotine","weedkiller","venom","jenkem","ectoplasm"), 5)
 

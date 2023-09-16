@@ -47,7 +47,7 @@
 /turf/unsimulated/floor/specialroom/gym,
 /area/shuttle/escape/centcom)
 "aQ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -233,7 +233,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor{
 	dir = 4
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /obj/window/crystal/north,
 /turf/simulated/floor/airless/black/grime,
 /area/shuttle/escape/centcom)
@@ -710,7 +710,7 @@
 	},
 /area/centcom/outside)
 "wT" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/wood/three,
 /area/shuttle/escape/centcom)
 "xw" = (
@@ -745,7 +745,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "zj" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -825,7 +825,7 @@
 /turf/unsimulated/floor/arrival,
 /area/centcom)
 "BP" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/shiny,
 /area/shuttle/escape/centcom)
 "CC" = (
@@ -833,7 +833,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "CK" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "Da" = (
@@ -1031,7 +1031,7 @@
 	dir = 4;
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "JK" = (
@@ -1089,7 +1089,7 @@
 /obj/machinery/door/airlock/pyro/security{
 	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/white,
 /area/shuttle/escape/centcom)
 "LN" = (
@@ -1395,7 +1395,7 @@
 	},
 /area/centcom)
 "XO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";

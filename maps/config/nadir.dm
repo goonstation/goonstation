@@ -1,6 +1,8 @@
-#include "..\nadir.dmm"
-#include "..\z2.dmm"
-#include "..\z3_water.dmm"
+INCLUDE_MAP("../nadir.dmm")
+#ifndef GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW
+INCLUDE_MAP("../z2.dmm")
+INCLUDE_MAP("../z3_water.dmm")
 #include "z4.dm"
-#include "..\z5_trench.dmm"
+INCLUDE_MAP("../z5_trench.dmm")
+#endif
 #define MAP_MODE "standard"

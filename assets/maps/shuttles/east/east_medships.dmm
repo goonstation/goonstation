@@ -40,7 +40,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "aQ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "aZ" = (
@@ -142,7 +142,7 @@
 	hardened = 1
 	},
 /obj/machinery/light/small/floor,
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "eQ" = (
@@ -554,7 +554,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "zj" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -966,7 +966,7 @@
 	},
 /area/centcom)
 "XO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";

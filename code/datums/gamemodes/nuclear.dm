@@ -19,7 +19,8 @@
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
 	var/const/agents_possible = 10 //If we ever need more syndicate agents. cogwerks - raised from 5
-
+	var/podbay_authed = FALSE // Whether or not we authed our podbay yet
+	var/obj/machinery/computer/battlecruiser_podbay/auth_computer = null // The auth computer in the cairngorm so we can auth it
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -51,7 +52,7 @@
 
 	possible_syndicates = get_possible_enemies(ROLE_NUKEOP, num_synds)
 
-	if (!islist(possible_syndicates) || possible_syndicates.len < 1)
+	if (!islist(possible_syndicates) || length(possible_syndicates) < 1)
 		boutput(world, "<span class='alert'><b>ERROR: couldn't assign any players as Syndicate operatives, aborting nuke round pre-setup.</b></span>")
 		return 0
 
@@ -170,6 +171,7 @@
 	syndicates |= chosen_syndicates
 	for (var/datum/mind/syndicate in syndicates)
 		syndicate.assigned_role = "MODE" //So they aren't chosen for other jobs.
+		syndicate.special_role = ROLE_NUKEOP
 		possible_syndicates.Remove(syndicate)
 
 	agent_radiofreq = random_radio_frequency()
@@ -194,6 +196,7 @@
 
 /datum/game_mode/nuclear/post_setup()
 	var/datum/mind/leader_mind = src.pick_leader()
+	leader_mind.special_role = ROLE_NUKEOP_COMMANDER
 
 	//Building the plant location strings
 	var/to_store_in_mind
@@ -225,14 +228,11 @@
 		synd_mind.store_memory(to_store_in_mind, 0, 0)
 		boutput(synd_mind.current, to_output)
 
-		if(synd_mind == leader_mind)
-			synd_mind.add_antagonist(ROLE_NUKEOP_COMMANDER)
-			var/mob/living/carbon/human/H = synd_mind.current
-			H.equip_if_possible(new /obj/item/device/audio_log/nuke_briefing(H, concatenated_location_names), H.slot_r_hand)
-		else
-			synd_mind.add_antagonist(ROLE_NUKEOP)
+		equip_antag(synd_mind)
 
-		synd_mind.current.antagonist_overlay_refresh(1, 0)
+		if(synd_mind == leader_mind)
+			var/mob/living/carbon/human/H = synd_mind.current
+			H.equip_if_possible(new /obj/item/device/audio_log/nuke_briefing(H, concatenated_location_names), SLOT_R_HAND)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
 	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
@@ -245,6 +245,9 @@
 	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
 		for(var/i = 1 to 5)
 			new /obj/item/breaching_charge/thermite(T)
+
+	for_by_tcl(computer,/obj/machinery/computer/battlecruiser_podbay)
+		auth_computer = computer
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -422,6 +425,9 @@
 
 /datum/game_mode/nuclear/process()
 	set background = 1
+	if (!podbay_authed && ticker.round_elapsed_ticks >= 15 MINUTES)
+		auth_computer.authorize()
+		podbay_authed = TRUE
 	..()
 	return
 

@@ -55,7 +55,7 @@
 	if (!src.contents.len || !src.on) // somehow there's nothing in the machine or it's turned off somehow, whoops!
 		processing_items.Remove(src)
 		src.visible_message("[src] lets out a grumpy buzz!")
-		playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+		playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 		src.on = 0
 		src.UpdateIcon()
 		return
@@ -74,8 +74,8 @@
 			src.cycle = DRY
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a beep and hums as it switches to its drying cycle.")
-			playsound(src, 'sound/machines/chime.ogg', 30, 1)
-			playsound(src, 'sound/machines/engine_highpower.ogg', 30, 1)
+			playsound(src, 'sound/machines/chime.ogg', 30, TRUE)
+			playsound(src, 'sound/machines/engine_highpower.ogg', 20, TRUE)
 			src.UpdateIcon()
 		else // drying is done!
 			processing_items.Remove(src)
@@ -86,18 +86,18 @@
 					clothing.delStatus("freshly_laundered") // ...and this is the price we pay for being cheeky
 					clothing.changeStatus("freshly_laundered", rand(2,4) MINUTES)
 					clothing.UpdateName()
-				else if (istype(item, /obj/item/spacecash))
-					var/obj/item/spacecash/cash = item
+				else if (istype(item, /obj/item/currency/spacecash))
+					var/obj/item/currency/spacecash/cash = item
 					var/list/amounts = random_split(cash.amount, min(rand(3,6), cash.amount - 1))
 					for (var/amount in amounts)
 						if (amount >= cash.amount)
 							break
-						var/obj/item/spacecash/newcash = cash.split_stack(amount)
+						var/obj/item/currency/spacecash/newcash = cash.split_stack(amount)
 						newcash.set_loc(src)
 			src.cycle = POST
 			src.cycle_current = 0
 			src.visible_message("[src] lets out a happy beep!")
-			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 			if(src.occupant) // If someone is inside we eject immediatly so as to not keep people hostage
 				if (ishuman(src.occupant))
 					H.w_uniform?.changeStatus("freshly_laundered", rand(2,4) MINUTES)
@@ -123,10 +123,10 @@
 			H.TakeDamage("All", 2, 0, 0, DAMAGE_BLUNT) //Getting washed like that has gotta hurt
 			H.take_oxygen_deprivation(rand(0,3)) //Hard to keep breathing while in the machine
 			src.shake()
-			playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			if (src.cycle_current == 2 && src.cycle == WASH)
 				src.visible_message("[src] groans horribly, some water drips out!")
-				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 100, 1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 80, TRUE)
 			else if (src.cycle_current == 4 && src.cycle == WASH)
 				src.visible_message("[src] is making a horrible ratchet! [H]'s face can be seen pressed against the glass.")
 				if(isliving(H))
@@ -146,15 +146,15 @@
 				H.delStatus("marker_painted")
 			else
 				src.visible_message("[src] clicks locked and sloshes a bit as it starts its washing cycle.")
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
-			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 100, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
+			playsound(src, 'sound/machines/washing_start.ogg', 80, TRUE)
 			src.UpdateIcon()
 
 		else if (src.cycle == WASH && prob(40)) // play a washery sound
-			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 100, 1)
+			playsound(src, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 80, TRUE)
 			src.shake()
 		else if (src.cycle == DRY && prob(20)) // play a dryery sound
-			playsound(src, 'sound/machines/engine_highpower.ogg', 30, 1)
+			playsound(src, 'sound/machines/engine_highpower.ogg', 20, TRUE)
 			src.shake()
 
 /obj/submachine/laundry_machine/proc/shake(var/amt = 5)
@@ -177,14 +177,14 @@
 		else if ((!istype(W, /obj/item/clothing) || !istype(W, /obj/item/grab)) && W.w_class > W_CLASS_HUGE)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is too big to fit!")
 			return
-		else if (src.contents.len >= src.load_max)
+		else if (length(src.contents) >= src.load_max)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [src] is too full!")
 			return
 		else if (W.cant_drop || W.cant_self_remove)
 			src.visible_message("[user] tries [his_or_her(user)] best to put [W] into [src], but [W] is stuck to [him_or_her(user)]!")
 			return
 		else
-			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/spacecash))
+			if (istype(W, /obj/item/clothing) || istype(W, /obj/item/currency/spacecash))
 				user.u_equip(W)
 				W.set_loc(src)
 				src.visible_message("[user] puts [W] into [src].")

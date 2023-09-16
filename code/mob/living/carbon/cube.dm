@@ -92,7 +92,6 @@
 							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
-								message = "<span class='alert'>[M] vomits!</span>"
 								M.vomit()
 							break
 						if(!fart_on_other)
@@ -261,7 +260,6 @@
 							message = "<span class='alert'><B>[src]</B> jumps and farts all over [M]! That's disgusting!</span>"
 							fart_on_other = 1
 							if(prob(20))
-								message = "<span class='alert'>[M] vomits!</span>"
 								M.vomit()
 							break
 						if(!fart_on_other)

@@ -239,7 +239,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.send(turfcheck)
 							sleep(0.5 SECONDS)
 
@@ -263,13 +263,13 @@ TYPEINFO(/obj/machinery/networked/telepad)
 									src.message_host("command=nack&cause=bad[turfcheck & 1 ? "x" : null][turfcheck & 2 ? "y" : null][turfcheck & 4 ? "z" : null]")
 								else
 									src.message_host("command=nack&cause=badxyz")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.badreceive()
 							else if(!is_teleportation_allowed(turfcheck))
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.receive(turfcheck)
 							sleep(0.5 SECONDS)
 
@@ -473,6 +473,9 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		if (!target)
 			return 1
 
+		leaveresidual(target)
+		sleep(0.5 SECONDS)
+
 		var/list/stuff = list()
 		for(var/atom/movable/O as obj|mob in src.loc)
 			if(O.anchored) continue
@@ -484,12 +487,13 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				logTheThing(LOG_STATION, usr, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 			else
 				logTheThing(LOG_STATION, usr, "sent [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
-			which.set_loc(target)
+			// teleblock checks should already be done
+			do_teleport(which,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+
 
 		showswirl_out(src.loc)
 		leaveresidual(src.loc)
 		showswirl(target)
-		leaveresidual(target)
 		use_power(1500)
 		if(prob(2) && prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
@@ -506,6 +510,9 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			//boutput(usr, "Unknown interference prevents teleportation from that location!")
 			return 1
 
+		leaveresidual(receiveturf)
+		sleep(0.5 SECONDS)
+
 		var/list/stuff = list()
 		for(var/atom/movable/O as obj|mob in receiveturf)
 			if(O.anchored) continue
@@ -516,11 +523,10 @@ TYPEINFO(/obj/machinery/networked/telepad)
 				logTheThing(LOG_STATION, usr, "received [constructTarget(which,"station")] from [log_loc(which)] to [log_loc(src)] with a telepad")
 			else
 				logTheThing(LOG_STATION, usr, "received [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
-			which.set_loc(src.loc)
+			do_teleport(which,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
 		showswirl_out(receiveturf)
-		leaveresidual(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
@@ -545,17 +551,17 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if(O.anchored) continue
 			receive.Add(O)
 		for(var/atom/movable/O in send)
-			O.set_loc(target)
+			do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 			if(ismob(O))
 				logTheThing(LOG_STATION, usr, "sent [constructTarget(O,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 
 		for(var/atom/movable/O in receive)
 			if(ismob(O))
 				logTheThing(LOG_STATION, usr, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
-			O.set_loc(src.loc)
+			do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 		showswirl(src.loc)
 		showswirl(target)
-		use_power(500000)
+		use_power(400000)
 		if(prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
@@ -600,7 +606,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 		else //MAJOR EFFECTS
 			effect = pick("mutatearea","areascatter","majorsummon")
 		logTheThing(LOG_STATION, usr, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
-		INVOKE_ASYNC(src, /obj/machinery/networked/telepad.proc/processbadeffect, effect)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/networked/telepad, processbadeffect), effect)
 
 	proc/processbadeffect(var/effect)
 		switch(effect)
@@ -631,7 +637,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("ignite")
@@ -665,7 +671,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					M.throw_at(target, 10, 2)
 				return
 			if("rads")
-				playsound(src, 'sound/weapons/ACgun2.ogg', 50, 1)
+				playsound(src, 'sound/weapons/ACgun2.ogg', 50, TRUE)
 				for (var/i in 1 to rand(3,5))
 					var/datum/projectile/neutron/projectile = new(15)
 					shoot_projectile_DIR(src, projectile, pick(alldirs))
@@ -687,7 +693,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("brute")
@@ -729,23 +735,23 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("minorsummon")
 				var/summon = pick("pig","mouse","roach","rockworm")
 				switch(summon)
 					if("pig")
-						new /obj/critter/pig(src.loc)
+						new /mob/living/critter/small_animal/pig(src.loc)
 					if("mouse")
 						for(var/i = 1 to rand(3,8))
-							new/mob/living/critter/small_animal/mouse(src.loc)
+							new /mob/living/critter/small_animal/mouse(src.loc)
 					if("roach")
 						for(var/i = 1 to rand(3,8))
-							new/mob/living/critter/small_animal/cockroach(src.loc)
+							new /mob/living/critter/small_animal/cockroach(src.loc)
 					if("rockworm")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/rockworm(src.loc)
+							new /mob/living/critter/rockworm(src.loc)
 				return
 			if("tinyfire")
 				fireflash(src.loc, 3)
@@ -753,7 +759,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/mob/living/critter/skeleton,/mob/living/critter/mimic)
+				var/summon = pick(/mob/living/critter/plant/maneater, /obj/critter/killertomato, /mob/living/critter/small_animal/wasp, /mob/living/critter/golem/, /mob/living/critter/skeleton, /mob/living/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")
@@ -765,7 +771,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					turfs += T
 				var/turf = pick(turfs)
 				for(var/atom/movable/O as obj|mob in turf)
-					O.set_loc(src.loc)
+					do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				return
 			if("areascatter")
 				var/list/turfs = new
@@ -779,15 +785,15 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					for(var/atom/movable/O as obj|mob in oview(src,5))
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("majorsummon")
 				var/summon = pick(
-					/obj/critter/zombie,
+					/mob/living/critter/zombie,
 					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
-					/obj/critter/martian/soldier,
+					/mob/living/critter/martian/soldier,
 					/mob/living/critter/lion,
 					/obj/critter/yeti,
 					/obj/critter/gunbot/drone,
@@ -1075,7 +1081,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			return
 
 		if (href_list["addbookmark"])
-			if(bookmarks.len >= max_bookmarks)
+			if(length(bookmarks) >= max_bookmarks)
 				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 				return
 			var/datum/teleporter_bookmark/bm = new

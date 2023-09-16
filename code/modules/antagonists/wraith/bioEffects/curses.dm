@@ -149,8 +149,8 @@
 
 	OnLife(mult)
 		if (probmult(5))
-			owner.visible_message("<span class='alert'>[owner] suddenly vomits on the floor!</span>")
-			owner.vomit(rand(3,5))
+			var/vomit_message = "<span class='alert'>[owner] suddenly vomits on the floor!</span>"
+			owner.vomit(rand(3,5), null, vomit_message)
 		if (probmult(3))
 			owner.emote(pick("cough", "sneeze"))
 

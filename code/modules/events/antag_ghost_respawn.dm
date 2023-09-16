@@ -36,7 +36,7 @@
 			message_admins("Setup of previous Antagonist Spawn hasn't finished yet, aborting.")
 			return
 
-		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Headspider", "Salvager", "Arcfiend", "Flockmind")
+		var/type = input(usr, "Select antagonist type.", "Antagonists", "Blob") as null|anything in list("Blob", "Blob (AI)", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestle Doodle", "Vampire", "Changeling", "Headspider", "Salvager", "Arcfiend", "Flockmind")
 		if (!type)
 			return
 		else
@@ -66,9 +66,9 @@
 				message_admins("Antagonist Spawn (non-admin) is disabled in this game mode, aborting.")
 				return
 			#ifdef MAP_OVERRIDE_NADIR
-			src.antagonist_type = pick(list("Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			src.antagonist_type = pick(list("Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestle Doodle", "Vampire", "Changeling", "Flockmind"))
 			#else
-			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestler_Doodle", "Vampire", "Changeling", "Flockmind"))
+			src.antagonist_type = pick(list("Blob", "Hunter", "Werewolf", "Wizard", "Wraith", "Wrestler", "Wrestle Doodle", "Vampire", "Changeling", "Flockmind"))
 			#endif
 			for(var/mob/living/intangible/wraith/W in ticker.mode.traitors)
 				if(W.deaths < 2)
@@ -216,6 +216,8 @@
 						mind.add_antagonist(ROLE_BLOB, do_relocate = FALSE, source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 						role = ROLE_BLOB
 						M3 = mind.current
+						var/mob/living/intangible/blob_overmind/blob = M3
+						blob.random_event_spawn = TRUE
 					else
 						failed = 1
 
@@ -290,7 +292,7 @@
 					else
 						failed = 1
 
-				if ("Wrestler_Doodle")
+				if ("Wrestle Doodle")
 					var/mob/living/critter/C = M3.critterize(/mob/living/critter/small_animal/bird/timberdoodle/strong)
 					if (istype(C))
 						M3 = C
@@ -354,7 +356,6 @@
 			lucky_dude.random_event_special_role = 1
 			if (!(lucky_dude in ticker.mode.Agimmicks))
 				ticker.mode.Agimmicks.Add(lucky_dude)
-			M3.antagonist_overlay_refresh(1, 0)
 
 			if (!isnull(objective_path))
 				if (ispath(objective_path, /datum/objective_set))
@@ -379,11 +380,11 @@
 						else
 							M3.set_loc(ASLoc)
 					if (2)
-						if (!job_start_locations["wizard"])
+						if (!landmarks[LANDMARK_WIZARD])
 							boutput(M3, "<B><span class='alert'>A starting location for you could not be found, please report this bug!</span></B>")
 							M3.set_loc(ASLoc)
 						else
-							M3.set_loc(pick(job_start_locations["wizard"]))
+							M3.set_loc(pick_landmark(LANDMARK_WIZARD))
 					if (3)
 						M3.set_loc(ASLoc)
 			//nah

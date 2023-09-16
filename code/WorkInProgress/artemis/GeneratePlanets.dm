@@ -1,12 +1,187 @@
+/// The following is based on GenerateMining.dm
+
+var/planetZLevel = null
+var/list/planetGenerators = list()//Assoc list
+var/list/planetModifiers = list()
+var/list/planetModifiersUsed = list()//Assoc list, type:times used
+var/list/planet_seeds = list()
+
+#ifdef ENABLE_ARTEMIS
+/proc/makePlanetLevel()
+	//var/list/turf/planetZ = list()
+	var/startTime = world.timeofday
+	if(!planetZLevel)
+		boutput(world, "<span class='alert'>Skipping Planet Generation!</span>")
+		return
+	else
+		boutput(world, "<span class='alert'>Generating Planet Level ...</span>")
+
+	// SEED zee Planets!!!!
+	for(var/area/map_gen/planet/A in by_type[/area/map_gen])
+		if(!planet_seeds[A.name])
+			planet_seeds[A.name] = list("height"=GALAXY.Rand.xor_rand(1,50000), "humidity"=GALAXY.Rand.xor_rand(1,50000), "heat"=GALAXY.Rand.xor_rand(1,50000))
+
+		var/seed = planet_seeds[A.name]
+		A.generate_perlin_noise_terrain(list(seed["height"], seed["humidity"], seed["heat"]))
+
+		if(A.allow_prefab)
+			var/list/area_turfs = get_area_turfs(A)
+			var/num_to_place = PLANET_NUMPREFABS + GALAXY.Rand.xor_rand(0, PLANET_NUMPREFABSEXTRA)
+			for (var/n = 1, n <= num_to_place, n++)
+				game_start_countdown?.update_status("Setting up planet level...\n(Prefab [n]/[num_to_place])")
+				var/datum/mapPrefab/planet/M = pick_map_prefab(/datum/mapPrefab/planet)
+				if (M)
+					var/maxX = (world.maxx - M.prefabSizeX - PLANET_MAPBORDER)
+					var/maxY = (world.maxy - M.prefabSizeY - PLANET_MAPBORDER)
+					var/stop = 0
+					var/count= 0
+					var/maxTries = (M.required ? 200 : 33)
+					while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+						var/turf/target = locate(GALAXY.Rand.xor_rand(1+PLANET_MAPBORDER, maxX), GALAXY.Rand.xor_rand(1+PLANET_MAPBORDER,maxY), planetZLevel)
+						target = GALAXY.Rand.xor_pick(area_turfs)
+						//var/area/A = get_area(target)
+						if(!M.check_biome_requirements(target))
+							count = INFINITY
+							break
+						var/datum/loadedProperties/ret = M.applyTo(target)
+						if (!ret)
+							logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to blocked area. [target] @ [showCoords(target.x, target.y, target.z)]")
+						else
+							logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type][M.required?" (REQUIRED)":""] succeeded. [target] @ [showCoords(target.x, target.y, target.z)]")
+							stop = 1
+							if(istype(A,/area/map_gen/planet))
+								var/area/map_gen/planet/P = A
+								P.prefabs |= ret
+
+							var/space_turfs = block(locate(ret.sourceX, ret.sourceY, ret.sourceZ), locate(ret.maxX, ret.maxY, ret.maxZ))
+							for(var/turf/T in space_turfs)
+								if(!istype(T, /turf/space))
+									space_turfs -= T
+							A.map_generator.generate_terrain(space_turfs)
+						count++
+					if (count == maxTries)
+						logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [M.type] failed due to maximum tries [maxTries][M.required?" WARNING: REQUIRED FAILED":""].")
+				else break
+
+	for(var/area/map_gen/planet/A in by_type[/area/map_gen])
+		if(!A.allow_prefab)
+			var/area/map_gen/planet/parent_area = get_area_by_type(A.parent_type)
+			parent_area.biome_turfs += A.biome_turfs
+			parent_area.overlays += A.overlays
+			for(var/turf/T in A)
+				new parent_area.type(T)
+		else
+			for(var/datum/loadedProperties/prefab in A.prefabs)
+				var/list/turf/prefab_turfs = block(locate(prefab.sourceX, prefab.sourceY, prefab.sourceZ),locate(prefab.maxX, prefab.maxY, prefab.maxZ))
+				var/list/turf/regen_turfs = list()
+				for(var/turf/variableTurf/T in prefab_turfs)
+					regen_turfs += T
+					if(istype(T.loc, /area/space)) //space...
+						new A.type(T)
+				if(length(regen_turfs))
+					A.map_generator.generate_terrain(regen_turfs, reuse_seed=TRUE)
+
+	// // remove temporary areas
+	var/area/A
+	var/turf/AT
+	var/turf/west_turf
+	for (AT in get_area_turfs(/area/noGenerate))
+		if(AT.z != planetZLevel) continue
+		if(!istype(AT, /turf/space)) continue
+		west_turf = get_step(AT, WEST)
+		while(west_turf.x > 0)
+			if(istype(west_turf.loc, /area/map_gen/planet))
+				break
+
+			west_turf = get_step(west_turf, WEST)
+		A = get_area(west_turf)
+		new A.type(AT)
+
+	for (AT in get_area_turfs(/area/allowGenerate))
+		if(AT.z != planetZLevel) continue
+		if(!istype(AT, /turf/space) && !istype(AT, /turf/map_gen)) continue
+		west_turf = get_step(AT, WEST)
+		while(west_turf.x > 0)
+			if(istype(west_turf.loc, /area/map_gen/planet))
+				break
+
+			west_turf = get_step(west_turf, WEST)
+		A = get_area(west_turf)
+		new A.type(AT)
+
+	boutput(world, "<span class='alert'>Generated Planet Level in [((world.timeofday - startTime)/10)] seconds!")
+
+/obj/landmark/artemis_planets
+	name = "zlevel"
+	icon_state = "x3"
+	add_to_landmarks = FALSE
+
+	init(delay_qdel=TRUE)
+		if(!planetZLevel)
+			planetZLevel = src.z
+		..()
+
+#define DEFINE_PLANET(_PATH, _NAME) \
+	/area/map_gen/planet/_PATH{name=_NAME};\
+	/area/map_gen/planet/_PATH/no_prefab{allow_prefab = FALSE};
+
+/area/map_gen/planet
+	New()
+		..()
+		if(isnull(planetGenerators[name]))
+			var/map_generator_path = pick(/datum/map_generator/jungle_generator,/datum/map_generator/desert_generator,/datum/map_generator/snow_generator)
+			planetGenerators[name] = new map_generator_path()
+
+	generate_perlin_noise_terrain(list/seed_list)
+		if(generated)
+			return
+		map_generator = planetGenerators[name]
+		if(seed_list)
+			map_generator.set_seed(seed_list)
+		map_generator.generate_terrain(get_area_turfs(src), reuse_seed=TRUE)
+		generated = TRUE
+
+	proc/colorize_planet(color)
+		src.ambient_light = color
+		if(src.ambient_light)
+			var/image/I = new /image/ambient
+			I.color = src.ambient_light
+			overlays += I
+
+	store_biome(turf/T, datum/biome/B)
+		if(!biome_turfs[B])
+			biome_turfs[B] = list()
+		biome_turfs[B] |= T
+
+	proc/clear_biomes()
+		biome_turfs = list()
+
+DEFINE_PLANET(alpha, "Alpha")
+DEFINE_PLANET(beta, "Beta")
+DEFINE_PLANET(charlie, "Charlie")
+DEFINE_PLANET(delta, "Delta")
+DEFINE_PLANET(echo, "Echo")
+DEFINE_PLANET(foxtrot, "Foxtrot")
+DEFINE_PLANET(gamma, "Gamma")
+DEFINE_PLANET(hotel, "Hotel")
+DEFINE_PLANET(indigo, "Indigo")
+
+#endif
+
 /area/map_gen/planet
 	name = "planet generation area"
 	var/list/turf/biome_turfs = list()
 	var/list/datum/loadedProperties/prefabs = list()
 	var/allow_prefab = TRUE
 	var/generated = FALSE
+	var/area/map_gen/planet/no_prefab/no_prefab_ref
+	var/area/map_gen/planet/no_foreground/occlude_ref
 
 	no_prefab
 		allow_prefab = FALSE
+
+	no_foreground
+		occlude_foreground_parallax_layers = TRUE
 
 /datum/planetData
 	var/name
@@ -69,7 +244,61 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	//Generate and cleanup region
 	var/datum/allocated_region/region = global.region_allocator.allocate(width, height)
-	region.clean_up(main_area=/area/map_gen/planet)
+	var/area/map_gen/planet/planet_area = new/area/map_gen/planet
+	planet_area.no_prefab_ref = new/area/map_gen/planet/no_prefab
+	planet_area.occlude_ref = new/area/map_gen/planet/no_foreground
+
+	planet_area.name = name
+	planet_area.no_prefab_ref.name = name
+	planet_area.occlude_ref.name = name
+	region.clean_up(main_area=planet_area)
+
+	//Parallax it?
+	if(istype(generator, /datum/map_generator/snow_generator) && prob(15) )
+		var/angle = rand(110,250)
+		var/scroll_speed = rand(50, 100)
+		var/color_alpha = rand(30,60)/100
+		var/color_matrix = list(
+								1, 0, 0, color_alpha,
+								0, 1, 0, color_alpha,
+								0, 0, 1, color_alpha,
+								0, 0, 0, 1,
+								0, 0, 0, -1)
+		planet_area.area_parallax_layers = list(
+		/atom/movable/screen/parallax_layer/foreground/snow=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
+		/atom/movable/screen/parallax_layer/foreground/snow/sparse=list(color=color_matrix, scroll_speed=scroll_speed+25, scroll_angle=angle),
+		)
+	else if(istype(generator, /datum/map_generator/desert_generator) && prob(15) )
+		var/angle = rand(110,250)
+		var/scroll_speed = rand(75, 175)
+		var/color_alpha = rand(40,80)/100
+		var/color_matrix = list(
+								1, 0, 0, color_alpha,
+								0, 1, 0, color_alpha,
+								0, 0, 1, color_alpha,
+								0, 0, 0, 1,
+								0, 0, 0, -1)
+		planet_area.area_parallax_layers = list(
+			/atom/movable/screen/parallax_layer/foreground/dust=list(color=color_matrix, scroll_speed=scroll_speed, scroll_angle=angle),
+			/atom/movable/screen/parallax_layer/foreground/dust/sparse=list(color=color_matrix, scroll_speed=scroll_speed*1.5, scroll_angle=angle)
+		)
+	else if(istype(generator, /datum/map_generator/forest_generator) && prob(95))
+		var/angle = rand(90,270)
+		planet_area.area_parallax_layers = list(
+			/atom/movable/screen/parallax_layer/foreground/clouds=list(scroll_angle=angle)
+			)
+		if(prob(20))
+			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/clouds/dense] = list(scroll_angle=angle+rand(5,5))
+		if(prob(20))
+			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/clouds/sparse] = list(scroll_angle=angle+rand(5,5))
+		if(prob(20))
+			planet_area.area_parallax_layers[/atom/movable/screen/parallax_layer/foreground/snow] = list(scroll_speed=rand(1,5), scroll_angle=240)
+
+	// Occlude overlays on edges
+	if(planet_area.area_parallax_layers)
+		planet_area.no_prefab_ref.area_parallax_layers = planet_area.area_parallax_layers
+		for(var/turf/cordon/CT in planet_area)
+			new/obj/foreground_parallax_occlusion(CT)
 
 	//Populate with Biome!
 	var/turfs = block(locate(region.bottom_left.x+1, region.bottom_left.y+1, region.bottom_left.z), locate(region.bottom_left.x+region.width-2, region.bottom_left.y+region.height-2, region.bottom_left.z) )
@@ -101,16 +330,17 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	PLANET_LOCATIONS.add_planet(region, new /datum/planetData(name, ambient_light, generator))
 
+	var/failsafe = 800
 	//Make it interesting, slap some prefabs on that thing
-	for (var/n = 1, n <= prefabs_to_place, n++)
+	for (var/n = 1, n <= prefabs_to_place && failsafe-- > 0)
 		var/datum/mapPrefab/planet/P = pick_map_prefab(/datum/mapPrefab/planet)
 		if (P)
 			var/maxX = (region.bottom_left.x + region.width - P.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (region.bottom_left.y + region.height - P.prefabSizeY - AST_MAPBORDER)
 			var/stop = 0
 			var/count= 0
-			var/maxTries = (P.required ? 200:50)
-			while (!stop && count < maxTries) //Kinda brute forcing it. Dumb but whatever.
+			var/maxTries = (P.required ? 200:80)
+			while (!stop && count < maxTries && failsafe-- > 0) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(region.bottom_left.x+AST_MAPBORDER, maxX), rand(region.bottom_left.y+AST_MAPBORDER,maxY), region.bottom_left.z)
 				if(!P.check_biome_requirements(target))
 					count++
@@ -128,6 +358,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 						LAGCHECK(LAG_LOW)
 
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type][P.required?" (REQUIRED)":""] succeeded. [target] @ [log_loc(target)]")
+					n++
 					stop = 1
 				else
 					logTheThing(LOG_DEBUG, null, "Prefab placement #[n] [P.type] failed due to blocked area. [target] @ [log_loc(target)]")
@@ -165,7 +396,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				break
 
 			T = pick(turfs)
-			if(T.density)
+			if(!checkTurfPassable(T))
 				maxTries--
 				continue
 
@@ -180,6 +411,8 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 	return turfs
 /datum/map_generator/asteroids
+	clear_turf_type = /turf/space
+
 	generate_terrain(var/list/turfs, var/reuse_seed, var/flags)
 		if(!length(seeds))
 			seeds = list(null)
@@ -190,6 +423,8 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 				T.generate_worldgen()
 
 /datum/map_generator/sea_caves
+	clear_turf_type = /turf/space/fluid/trench
+
 	generate_terrain(var/list/turfs, var/reuse_seed, var/flags)
 		if(!length(seeds))
 			seeds = list(null)
@@ -214,8 +449,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 
 			for(var/turf/space/space_turf in turfs)
 				space_turf.ReplaceWith(/turf/space/fluid/trench)
-				space_turf.name = ocean_name
-				space_turf.color = ocean_color
+				space_turf.name = "ocean floor"
 				space_turf.RL_Init()
 
 				if (prob(1))
@@ -241,7 +475,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 
 					if (prob(1) && prob(16))
-						new /mob/living/critter/small_animal/hallucigenia/ai_controlled(space_turf)
+						new /mob/living/critter/small_animal/hallucigenia(space_turf)
 					else if (prob(1) && prob(15))
 						new /obj/overlay/tile_effect/cracks/spawner/pikaia(space_turf)
 

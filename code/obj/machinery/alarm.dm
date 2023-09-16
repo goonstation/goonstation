@@ -96,16 +96,6 @@
 			safe = 0
 		else safe = 1
 
-	var/tgmoles = 0
-	if(length(environment.trace_gases))
-		for(var/datum/gas/trace_gas as anything in environment.trace_gases)
-			tgmoles += trace_gas.moles
-
-	if(tgmoles > 1)
-		if(tgmoles > 2)
-			safe = 0
-		else safe = 1
-
 	src.icon_state = "alarm[!safe]"
 
 	if(safe == 2)
@@ -140,7 +130,7 @@
 		src.add_fingerprint(user)
 		src.visible_message("<span class='alert'>[user] has [(status & BROKEN) ? "de" : "re"]activated [src]!</span>")
 		return
-	if (istype(W, /obj/item/card/id) || (istype(W, /obj/item/device/pda2) && W:ID_card))
+	if (istype(get_id_card(W), /obj/item/card/id))
 		if (status & (BROKEN|NOPOWER))
 			boutput(user, "<span class='alert'>The local air monitor has no power!</span>")
 			return
@@ -245,13 +235,6 @@
 
 		// Newly added gases should be added here manually since there's no nice way of using APPLY_TO_GASES here
 
-		var/tgmoles = 0
-		if(length(environment.trace_gases))
-			for(var/datum/gas/trace_gas as anything in environment.trace_gases)
-				tgmoles += trace_gas.moles
-
-		if(tgmoles > 1)
-			output += "<FONT color = 'red'>WARNING: unidentified gases present in environment!</FONT><BR>"
 
 		if(e_gas)
 			output += "<FONT color = 'red'>WARNING: Local override engaged, air supply is limited!</FONT><BR>"

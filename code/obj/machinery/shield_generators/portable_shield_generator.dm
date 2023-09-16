@@ -112,11 +112,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		return
 
 	use_power(var/amount, var/chan=EQUIP)
-		if(PCEL && !connected && active)
-			PCEL.use(src.power_usage)
+		var/line_shielded = FALSE
 		if(connected && active)
 			var/datum/powernet/net = src.connected_wire.get_powernet()
-			net?.newload += src.power_usage
+			if(net.newload + amount <= net.avail)
+				net.newload += amount
+				line_shielded = TRUE
+		if(!line_shielded && PCEL && active)
+			PCEL.use(src.power_usage)
+
 
 	proc/process_wired()
 		//check for linepower
@@ -211,7 +215,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 			if(src.active)
 				src.turn_off()
 			else
-				src.turn_on()
+				src.turn_on(user)
 
 	proc/turn_on(mob/user)
 		if (src.active)
@@ -224,7 +228,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		else	//turn on power if connected to a power grid with power in it
 			if(line_powered() && connected)
 				src.shield_on()
-				src.visible_message("<b>[user.name]</b> powers up the [src.name].")
+				if (user)
+					src.visible_message("<b>[user.name]</b> powers up the [src.name].")
 			else
 				boutput(user, "The [src.name]'s battery light flickers briefly.")
 		build_icon()

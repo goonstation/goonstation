@@ -173,6 +173,9 @@ TYPEINFO(/obj/machinery/drainage/big)
 		amount = 5000
 		delay = 10
 
+	wine
+		amount = 330
+		reagent_id = "wine"
 
 	polluted_filth
 		delay = 35
@@ -242,8 +245,6 @@ TYPEINFO(/obj/machinery/fluid_canister)
 
 	var/contained = 0
 
-	var/static/image/overlay_image = image('icons/obj/fluid.dmi')
-
 	New()
 		..()
 		src.reagents = new /datum/reagents(bladder)
@@ -301,14 +302,15 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		var/amt = round((src.reagents.total_volume / bladder) * 12,1)
 		icon_state = "[base_icon][amt]"
 
+		var/overlay_istate = "w_off"
 		if (slurping)
-			overlay_image.icon_state = "w_2"
+			overlay_istate = "w_2"
 		else if (pissing)
-			overlay_image.icon_state = "w_1"
+			overlay_istate = "w_1"
 		else
-			overlay_image.icon_state = "w_off"
+			overlay_istate = "w_off"
 
-		UpdateOverlays(overlay_image, "working")
+		UpdateOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
 
 	Topic(href, href_list)
 		if (usr.stat || usr.restrained())
@@ -372,7 +374,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 /obj/machinery/fluid_canister/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		if (length(porter.contents) >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
 			src.contained = 1

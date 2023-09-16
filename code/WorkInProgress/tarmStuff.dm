@@ -55,7 +55,7 @@
 		active_state = "lasercannon-anim"
 		icon_state = "lasercannon-anim"
 
-		shoot(target, start, mob/user, POX, POY, is_dual_wield)
+		shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 			if(src.canshoot(user))
 				flick("lasercannon-fire", src)
 			. = ..()
@@ -252,7 +252,7 @@
 		ammo = new default_magazine
 		. = ..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		spread_angle = max(0, shoot_delay*2+last_shot_time-TIME)*0.4
 		shotcount = 0
 		. = ..(target, start, user, POX+rand(-spread_angle, spread_angle)*16, POY+rand(-spread_angle, spread_angle)*16)
@@ -313,7 +313,7 @@
 		on_hit(atom/hit, angle, obj/projectile/O)
 			var/turf/T = get_turf(hit)
 			new/obj/decal/implo(T)
-			playsound(T, 'sound/effects/suck.ogg', 100, 1)
+			playsound(T, 'sound/effects/suck.ogg', 100, TRUE)
 			var/spamcheck = 0
 			for(var/atom/movable/AM in oview(2, T))
 				if(AM.anchored || AM == hit || AM.throwing) continue
@@ -332,7 +332,7 @@
 /obj/item/gun/kinetic/pistol/autoaim
 	name = "\improper Catoblepas pistol"
 	desc = "A semi-smart pistol with moderate aim-correction. The manufacterer markings read \"Anderson Para-Munitions\"."
-	shoot(target, start, mob/user, POX, POY) //checks clicked turf first, so you can choose a target if need be
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null) //checks clicked turf first, so you can choose a target if need be
 		for(var/mob/M in range(2, target))
 			if(M == user || istype(M.get_id(), /obj/item/card/id/syndicate)) continue
 			..(get_turf(M), start, user, POX, POY)
@@ -491,6 +491,21 @@
 					H.visible_message("<span class='alert'>[H]'s head get's blown right off! Holy shit!</span>", "<span class='alert'>Your head gets blown clean off! Holy shit!</span>")
 				H.death()
 
+/obj/item/ammo/bullets/pipeshot/chems/saltshot
+	sname = "salt load"
+	desc = "This appears to be a bunch of salt shoved into a few cut open pipe frames."
+	ammo_type = new/datum/projectile/special/spreader/buckshot_burst/salt
+
+	get_desc(dist, mob/user)
+		if (dist <= 1)
+			. = "The shells smell like [prob(1) ? "deadchat. What?" : "the ocean."]"
+
+/datum/pipeshotrecipe/chem/salt
+	thingsneeded = 4
+	result = /obj/item/ammo/bullets/pipeshot/chems/saltshot
+	craftname = "salt"
+	reagents_req = list("salt"=5)
+
 //magical crap
 /obj/item/enchantment_scroll
 	name = "Scroll of Enchantment"
@@ -511,7 +526,7 @@
 			var/msg = text("As [user] slaps the [src] onto the [target], the [target]")
 			var/currentench = I.enchant(incr)
 			var/turf/T = get_turf(target)
-			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
+			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
 			if(currentench-incr <= 2 || !rand(0, currentench))
 				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
 			else
@@ -619,21 +634,15 @@
 		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "cow", magical = 1))
 
 //lily's office
-/obj/item/storage/desk_drawer/lily/
-	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
-	/obj/item/reagent_containers/food/snacks/cake,\
-	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
-	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,\
-	/obj/item/reagent_containers/food/snacks/cake,\
-)
-
 /obj/table/wood/auto/desk/lily
-	New()
-		..()
-		var/obj/item/storage/desk_drawer/lily/L = new(src)
-		src.desk_drawer = L
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/reagent_containers/food/snacks/cake,
+						/obj/item/reagent_containers/food/snacks/cake,
+						/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,
+						/obj/item/reagent_containers/food/snacks/cake/cream,
+						/obj/item/reagent_containers/food/snacks/cake/cream,
+						/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+						/obj/item/reagent_containers/food/snacks/cake)
 
 /obj/machinery/door/unpowered/wood/lily
 
@@ -679,7 +688,7 @@ TYPEINFO(/obj/item/device/geiger)
 	New()
 		. = ..()
 		AddComponent(/datum/component/holdertargeting/geiger)
-		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, .proc/change_icon_state)
+		RegisterSignal(src, COMSIG_MOB_GEIGER_TICK, PROC_REF(change_icon_state))
 
 	proc/change_icon_state(source, stage)
 		switch(stage)

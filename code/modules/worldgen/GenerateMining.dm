@@ -15,6 +15,8 @@ var/list/miningModifiers = list()
 		place()
 
 	proc/place()
+		if(src.z == planetZLevel)
+			return // noop
 		if (map_currently_underwater)
 			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
@@ -46,8 +48,10 @@ var/list/miningModifiers = list()
 		name = "variable clear"
 		icon_state = "clear"
 		place()
-			if(PLANET_LOCATIONS.repair_planet(src))
-				//
+			PLANET_LOCATIONS.repair_planet(src)// Clear turf will be replaced by planet mapgen
+			var/datum/map_generator/gen = PLANET_LOCATIONS.get_generator(src)
+			if(gen && gen.clear_turf_type) // If planet mapgen doesn't replace it use the generators clear type
+				src.ReplaceWith(gen.clear_turf_type, FALSE, TRUE, FALSE, TRUE)
 			else if (map_currently_underwater)
 				src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 			else
@@ -323,9 +327,8 @@ var/list/miningModifiers = list()
 	#endif
 	for (var/n in 1 to num_to_place)
 		game_start_countdown?.update_status("Setting up mining level...\n(Prefab [n]/[num_to_place])")
-		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining,
-			wanted_tags = map_currently_underwater ? list("underwater") : null,
-			unwanted_tags = map_currently_underwater ? null : list("underwater"))
+		var/list/wanted_tags = get_prefab_tags()
+		var/datum/mapPrefab/mining/M = pick_map_prefab(/datum/mapPrefab/mining, wanted_tags)
 		if (M)
 			var/maxX = (world.maxx - M.prefabSizeX - AST_MAPBORDER)
 			var/maxY = (world.maxy - M.prefabSizeY - AST_MAPBORDER)

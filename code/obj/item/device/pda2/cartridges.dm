@@ -239,6 +239,18 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
 			src.read_only = 1
 
+	bartender
+		name = "\improper Drinkmaster 1000"
+		desc = "Your friend for making the perfect drink!"
+		icon_state = "cart-hydro"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
+			src.read_only = 1
+
 	genetics
 		name = "\improper Deoxyribonucleic Amigo cartridge"
 		desc = "There was, at one point, a time when this cartridge often got use."
@@ -362,6 +374,9 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 		name = "\improper Detomatix cartridge"
 		desc = "Designed with the latest advancements in blast processing."
 		icon_state = "cart-deto"
+		HELP_MESSAGE_OVERRIDE({"Put the cartridge into a pda, then from the main menu navigate to <b>"File Browser"</b>
+								Use the <b>"MISSILE"</b> app to scan for pda targets, then hit the <b>"DETONATE"</b> button to blow up the target PDA.
+								Use the <b>"SELF-DESTRUCT"</b> program to almost instantaneously explode your own PDA."})
 
 		New()
 			..()

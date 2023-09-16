@@ -59,17 +59,17 @@
 			hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
 			boutput(charger, "<span class='alert'>You slam into [hit]! Ouch!</span>")
 			charger.changeStatus("stunned", 3 SECONDS)
-			playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
+			playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, -1)
 		else if (isobj(hit))
 			var/obj/H = hit
 			if (H.anchored)
 				hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
 				boutput(charger, "<span class='alert'>You slam into [hit]! Ouch!</span>")
 				charger.changeStatus("stunned", 3 SECONDS)
-				playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
+				playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, -1)
 			else
 				hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
-				playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
+				playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, -1)
 				boutput(charger, "<span class='alert'>You slam into [hit]!</span>")
 				var/kbdir = angle_to_dir(angle)
 				step(H, kbdir, 2)
@@ -78,7 +78,7 @@
 						step(H, kbdir, 2)
 		else if (ismob(hit))
 			var/mob/M = hit
-			playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, -1)
+			playsound(hit, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, -1)
 			hit.visible_message("<span class='alert'>[charger] slams into [hit]!</span>", "You hear something slam!")
 			boutput(charger, "<span class='alert'>You slam into [hit]!</span>")
 			boutput(M, "<span class='alert'><b>[charger] slams into you!</b></span>")
@@ -117,7 +117,7 @@
 			return TRUE
 		var/mob/M = holder.owner
 		var/turf/S = get_turf(M)
-		var/obj/projectile/O = initialize_projectile_ST(S, proj, T)
+		var/obj/projectile/O = initialize_projectile_pixel_spread(S, proj, T)
 		if (!O)
 			return TRUE
 		if (!O.was_setup)

@@ -92,7 +92,7 @@ var/list/rollList = list()
 						continue
 					apc.overload_lighting()
 
-				playsound(T, 'sound/effects/ghost.ogg', 75, 0)
+				playsound(T, 'sound/effects/ghost.ogg', 75, FALSE)
 				new /obj/critter/bloodling(T)
 #endif
 
@@ -145,7 +145,7 @@ var/list/rollList = list()
 			return 0
 		if (!src.can_have_pals || !Pal.can_have_pals)
 			return 0
-		if (istype(Pal.loc, /obj/item/storage))
+		if (Pal.stored)
 			return 0
 
 		src.dicePals += Pal
@@ -153,7 +153,7 @@ var/list/rollList = list()
 		if (Pal.dicePals.len)
 
 			for (var/obj/item/dice/D in Pal.dicePals)
-				if (istype(D.loc, /obj/item/storage))
+				if (D.stored)
 					Pal.dicePals -= D
 					continue
 				if (ismob(D.loc))
@@ -167,7 +167,7 @@ var/list/rollList = list()
 			Pal.loc:u_equip(Pal)
 		Pal.set_loc(src)
 
-		if(src.dicePals.len == 1) //magic trick time
+		if(length(src.dicePals) == 1) //magic trick time
 			src.colorcache = src.color //removes src color, then overlays a decoy image to make the icon look unchanged
 			src.color = null
 			src.decoyimageicon = new /icon(src.icon,src.icon_state)
@@ -461,7 +461,7 @@ var/list/rollList = list()
 						continue
 					apc.overload_lighting()
 
-				playsound(T, 'sound/effects/ghost.ogg', 75, 0)
+				playsound(T, 'sound/effects/ghost.ogg', 75, FALSE)
 				new /obj/critter/bloodling(T)
 #endif
 
@@ -612,7 +612,7 @@ var/list/rollList = list()
 				src.addeddice++
 				if(diceposition == 5)
 					break
-			if(D.dicePals.len == src.addeddice)
+			if(length(D.dicePals) == src.addeddice)
 				D.dicePals = list()
 				if(D.colorcache)
 					D.color = D.colorcache
@@ -729,9 +729,10 @@ var/list/rollList = list()
 		else
 			..()
 
-	attackby(obj/item/dice/W, mob/living/user)
-		if(src.icon_state != "dicebox")
-			addDice(W,"diceboxt",user)
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/dice))
+			if(src.icon_state != "dicebox")
+				addDice(I,"diceboxt",user)
 
 /obj/item/diceholder/dicecup
 	name = "dice cup"
@@ -750,15 +751,17 @@ var/list/rollList = list()
 			hiddenroll()
 			src.diceinchatstring = src.dicelist[1].diceInChat(1,src.localRollList)
 
+
 	attack_self(mob/user as mob)
 		if(src.icon_state == "dicecup")
-			if(diceposition != 0)
+			if(dicelist.len)
 				user.visible_message("<span class='notice'>[user] shakes the dice cup!</span>","<span class='notice'>You shake the dice cup!</span>")
 				hiddenroll()
 
 	attack_hand(mob/user)
 		if((src in user.contents) && (src.icon_state == "dicecup"))
-			removeDie(user)
+			if(dicelist.len)
+				removeDie(user)
 		else if(src.icon_state == "dicecupf")
 			if(user.a_intent == "help")
 				if(user.name == diceowner)
@@ -774,9 +777,10 @@ var/list/rollList = list()
 		else
 			..()
 
-	attackby(obj/item/dice/W, mob/living/user)
-		if(src.icon_state == "dicecup")
-			addDice(W,"dicecup",user)
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/dice))
+			if(src.icon_state == "dicecup")
+				addDice(I,"dicecup",user)
 
 /obj/item/storage/dicepouch
 	name = "dice pouch"
@@ -790,7 +794,7 @@ var/list/rollList = list()
 
 	proc/colorpick()
 		src.setcolor = pick("#D65555","#D88A41","#D8D856","#5FBF91","#6AC2D8","#9F6AD8", "null","#D882B3")
-		for(var/obj/item/dice/i in src)
+		for(var/obj/item/dice/i in src.storage.get_contents())
 			i.color = src.setcolor
 
 	make_my_stuff()

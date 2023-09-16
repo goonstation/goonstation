@@ -191,8 +191,8 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		//dress player sprite
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
-			holderim = image(H.flat_icon)
-		holderim.filters += filter(type="alpha", icon=image('icons/obj/zoldorf.dmi', "take_off_shoes_mask"))
+			holderim = image(H.build_flat_icon(SOUTH))
+		holderim.filters += filter(type="alpha", icon=icon('icons/obj/zoldorf.dmi', "take_off_shoes_mask"))
 		holderim.overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', icon_state="wizard")
 		holderim.overlays += image('icons/mob/clothing/head.dmi', icon_state="wizard")
 		holderim.pixel_y = -3
@@ -234,11 +234,14 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		if(user in src.openwindows) //making sure the zoldorf cant keep the zoldorf menu open and buy things from within the booth
 			src.openwindows.Remove(user)
 
+		var/datum/mind/mind = user.mind
+		if (mind)
+			mind.wipe_antagonists()
+			user = mind.current
 		var/mob/zoldorf/Z = user.make_zoldorf(src) //the rest is building the mob, cleaning up overlays and variables, and passing control to the new zoldorf!
 		Z.set_loc(src)
 		Z.homebooth = src
 		Z.autofree = 1
-		remove_antag(Z,null,0,0)
 		src.souldorfs.Add(Z)
 		src.occupied = 1
 		the_zoldorf.Add(Z)
@@ -292,12 +295,12 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 				sleep(2.5 SECONDS)
 				o2.color = "#00BA88"
 				o2.icon = 'icons/obj/zoldorf.dmi'
-				icon_state = "colorfade"
+				o2.icon_state = "colorfade"
 				sleep(2.5 SECONDS)
 
 			if(src)
 				if(z.loc == src)
-					z.stat = 0
+					setalive(z)
 					boutput(z, "<span class='notice'><b>The whispers and wails of those parted fade into nothingness...</b></span>")
 				src.lightfade()
 				src.remove_simple_light("zoldorf")
@@ -387,7 +390,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 			return 1
 
 	attackby(obj/item/weapon, mob/user)
-		if(istype(weapon, /obj/item/spacecash)) //adding money to the vending machine
+		if(istype(weapon, /obj/item/currency/spacecash)) //adding money to the vending machine
 			src.credits += weapon.amount
 			if(winget(user,"Zoldorf","is-visible") == "true")
 				user << output(list2params(list("add",null,null,weapon.amount)),"Zoldorf.browser:updatecredits")
@@ -475,7 +478,7 @@ var/global/list/datum/zoldorfitem/zoldorf_items = list()
 		else
 			if((text2num_safe(href_list["credits"]) <= src.credits) && (text2num_safe(href_list["credits"])>=1) && (usr in range(1,src)) && (!(usr in src))) //return command
 				usr << output("return","Zoldorf.browser:serverconfirm")
-				var/obj/item/moneyreturn = new /obj/item/spacecash(get_turf(src),src.credits)
+				var/obj/item/moneyreturn = new /obj/item/currency/spacecash(get_turf(src),src.credits)
 				src.credits = 0
 				usr.put_in_hand_or_drop(moneyreturn)
 				updateui(usr)

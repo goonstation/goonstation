@@ -325,7 +325,7 @@ proc/get_average_color(icon/I, xPixelInterval = 4, yPixelInterval = 4)
 	return rgb(rSum/total,gSum/total,bSum/total)
 
 /client/proc/set_saturation(s=1)
-	src.saturation_matrix = hsv_transform_color_matrix(1, s, 1)
+	src.saturation_matrix = hsv_transform_color_matrix(0, s, 1)
 	src.color = mult_color_matrix(src.color_matrix, src.saturation_matrix)
 
 /client/proc/set_color(matrix=COLOR_MATRIX_IDENTITY, respect_view_tint_settings = FALSE)

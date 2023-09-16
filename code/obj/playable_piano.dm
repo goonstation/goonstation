@@ -40,10 +40,10 @@ TYPEINFO(/obj/player_piano)
 		if (!items_claimed)
 			src.desc += " The free user essentials box is untouched!" //jank
 		AddComponent(/datum/component/mechanics_holder)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "play", .proc/mechcompPlay)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", .proc/mechcompNotes)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set timing", .proc/mechcompTiming)
-		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset", .proc/reset_piano)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "play", PROC_REF(mechcompPlay))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set notes", PROC_REF(mechcompNotes))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "set timing", PROC_REF(mechcompTiming))
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "reset", PROC_REF(reset_piano))
 
 	// requires it's own proc because else the mechcomp input will be taken as first argument of ready_piano()
 	proc/mechcompPlay(var/datum/mechanicsMessage/input)
@@ -90,7 +90,7 @@ TYPEINFO(/obj/player_piano)
 				user.visible_message("[user] starts loosening the piano's castors...", "You start loosening the piano's castors...")
 				if (!do_after(user, 3 SECONDS) || anchored != 1)
 					return
-				playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
+				playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
 				src.anchored = UNANCHORED
 				SEND_SIGNAL(src, COMSIG_MECHCOMP_RM_ALL_CONNECTIONS)
 				user.visible_message("[user] loosens the piano's castors!", "You loosen the piano's castors!")
@@ -99,7 +99,7 @@ TYPEINFO(/obj/player_piano)
 				user.visible_message("[user] starts tightening the piano's castors...", "You start tightening the piano's castors...")
 				if (!do_after(user, 3 SECONDS) || anchored != 0)
 					return
-				playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
+				playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
 				src.anchored = ANCHORED
 				user.visible_message("[user] tightens the piano's castors!", "You tighten the piano's castors!")
 				return
@@ -112,7 +112,7 @@ TYPEINFO(/obj/player_piano)
 				user.visible_message("[user] starts prying off the piano's maintenance panel...", "You begin to pry off the maintenance panel...")
 				if (!do_after(user, 3 SECONDS) || panel_exposed != 0)
 					return
-				playsound(user, 'sound/items/Crowbar.ogg', 65, 1)
+				playsound(user, 'sound/items/Crowbar.ogg', 65, TRUE)
 				user.visible_message("[user] prys off the piano's maintenance panel.","You pry off the maintenance panel.")
 				var/obj/item/plank/P = new(get_turf(user))
 				P.name = "Piano Maintenance Panel"
@@ -127,7 +127,7 @@ TYPEINFO(/obj/player_piano)
 				user.visible_message("[user] starts replacing the piano's maintenance panel...", "You start replacing the piano's maintenance panel...")
 				if (!do_after(user, 3 SECONDS) || panel_exposed != 1)
 					return
-				playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
+				playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
 				user.visible_message("[user] replaces the maintenance panel!", "You replace the maintenance panel!")
 				panel_exposed = 0
 				UpdateIcon(0)
@@ -141,7 +141,7 @@ TYPEINFO(/obj/player_piano)
 			if (!do_after(user, 7 SECONDS) || is_looping == 2)
 				return
 			is_looping = 2
-			playsound(user, 'sound/items/Wirecutter.ogg', 65, 1)
+			playsound(user, 'sound/items/Wirecutter.ogg', 65, TRUE)
 			user.visible_message("<span class='alert'>[user] snips the looping control wire!</span>", "You snip the looping control wire!")
 
 		else if (ispulsingtool(W)) //resetting piano the hard way
@@ -291,7 +291,7 @@ TYPEINFO(/obj/player_piano)
 		play_notes(1)
 
 	proc/play_notes(var/is_master) //how notes are handled, using while and spawn to set a very strict interval, solo piano process loop was too variable to work for music
-		if (linked_pianos.len > 0 && is_master)
+		if (length(linked_pianos) > 0 && is_master)
 			for (var/obj/player_piano/p in linked_pianos)
 				SPAWN(0)
 					p.ready_piano(1)

@@ -25,13 +25,13 @@ TYPEINFO(/obj/machinery/processor)
 
 			for(var/atom/A in contents)
 				if(A == X) continue
-				if(isSameMaterial(A.material, X.material))
+				if(A.material.isSameMaterial(X.material))
 					matches.Add(A)
 
 			var/output_location = get_output_location()
 			var/obj/item/material_piece/exists_nearby = null
 			for(var/obj/item/material_piece/G in output_location)
-				if(isSameMaterial(G.material, X.material))
+				if(G.material.isSameMaterial(X.material))
 					exists_nearby = G
 					break
 
@@ -57,15 +57,15 @@ TYPEINFO(/obj/machinery/processor)
 			if (out_amount > 0)
 				if(exists_nearby)
 					exists_nearby.change_stack_amount(out_amount)
-					mat_id = exists_nearby.material.mat_id
+					mat_id = exists_nearby.material.getID()
 					mat = exists_nearby.material
 				else
 					var/newType = getProcessedMaterialForm(X.material)
 					var/obj/item/material_piece/P = new newType
 					P.set_loc(get_output_location())
-					P.setMaterial(copyMaterial(X.material))
+					P.setMaterial(X.material)
 					P.change_stack_amount(out_amount - P.amount)
-					mat_id = P.material.mat_id
+					mat_id = P.material.getID()
 					mat = P.material
 
 				if (istype(output_location, /obj/machinery/manufacturer))
@@ -77,21 +77,21 @@ TYPEINFO(/obj/machinery/processor)
 					var/obj/item/material_piece/second_exists_nearby = null
 					var/second_mat_id
 					for(var/obj/item/material_piece/G in output_location)
-						if(isSameMaterial(G.material, second_mat))
+						if(G.material.isSameMaterial(second_mat))
 							second_exists_nearby = G
 							break
 
 					if(second_exists_nearby)
 						second_exists_nearby.change_stack_amount(out_amount)
-						second_mat_id = second_exists_nearby.material.mat_id
+						second_mat_id = second_exists_nearby.material.getID()
 						second_mat = second_exists_nearby.material
 					else
 						var/newType = getProcessedMaterialForm(second_mat)
 						var/obj/item/material_piece/PC = new newType
 						PC.set_loc(get_output_location())
-						PC.setMaterial(copyMaterial(second_mat))
+						PC.setMaterial(second_mat)
 						PC.change_stack_amount(out_amount - PC.amount)
-						second_mat_id = PC.material.mat_id
+						second_mat_id = PC.material.getID()
 						second_mat = PC.material
 
 					if (istype(output_location, /obj/machinery/manufacturer))
@@ -142,6 +142,7 @@ TYPEINFO(/obj/machinery/processor)
 				if(I.material)
 					I.set_loc(src)
 			S.UpdateIcon()
+			S.tooltip_rebuild = 1
 			return
 
 		else if (W.cant_drop) //For borg held items
@@ -275,11 +276,11 @@ TYPEINFO(/obj/machinery/processor)
 			if(!istype(M, /obj/item/cable_coil))
 				if (!istype(M.material))
 					continue
-				//if (!M.material.material_flags & MATERIAL_CRYSTAL || !M.material.material_flags & MATERIAL_METAL)
+				//if (!M.material.getMaterialFlags() & MATERIAL_CRYSTAL || !M.material.getMaterialFlags() & MATERIAL_METAL)
 				//	continue
 
 			M.set_loc(src)
-			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
@@ -360,6 +361,9 @@ TYPEINFO(/obj/machinery/processor)
 		html += "<div style=\"margin: auto;text-align:center\"><a href='?src=\ref[src];activate=1'><i class=\"icon-check-sign icon-large\"></i></a></div><br><br>"
 
 		for(var/obj/item/I in src)
+			if(isnull(I.material))
+				stack_trace("Null material item [I] [I.type] in nano-crucible")
+				continue
 			if(!I.amount) continue
 			if(first_part == I) continue
 			if(second_part == I) continue
@@ -418,7 +422,7 @@ TYPEINFO(/obj/machinery/processor)
 					RE?.apply_to_obj(piece)
 					first_part = null
 					second_part = null
-					boutput(usr, "<span class='notice'>You make [amt] [piece].</span>")
+					boutput(usr, "<span class='notice'>You make [piece].</span>")
 
 		else if(href_list["eject"])
 			var/obj/item/L = locate(href_list["eject"]) in src
@@ -440,7 +444,7 @@ TYPEINFO(/obj/machinery/processor)
 
 	proc/updateResultName()
 		if(first_part && second_part)
-			resultName = getInterpolatedName(first_part.material.name, second_part.material.name, 0.5)
+			resultName = findRecipeName(first_part, second_part)
 		else
 			resultName = "???"
 
@@ -448,7 +452,7 @@ TYPEINFO(/obj/machinery/processor)
 		for(var/obj/item/A in src)
 			if(A == W|| !A.amount) continue
 			if(A.material)
-				if(isSameMaterial(A.material, W.material))
+				if(A.material.isSameMaterial(W.material))
 					var/obj/item/I = A
 					I.change_stack_amount(W.amount)
 					if(W == user.equipped())
@@ -469,7 +473,7 @@ TYPEINFO(/obj/machinery/processor)
 			return
 
 		if(W.material != null)
-			if(!W.material.canMix)
+			if(!W.material.getCanMix())
 				boutput(user, "<span class='alert'>This material can not be used in \the [src].</span>")
 				return
 
@@ -491,7 +495,7 @@ TYPEINFO(/obj/machinery/processor)
 		user.set_loc(src)
 
 		var/datum/material/M = new /datum/material/organic/flesh {desc="A disgusting wad of flesh."; color="#881111";} ()
-		M.name = "[user.real_name] flesh"
+		M.setName("[user.real_name] flesh")
 
 		var/obj/item/material_piece/wad/dummyItem = new /obj/item/material_piece/wad
 		dummyItem.set_loc(src)
@@ -518,12 +522,12 @@ TYPEINFO(/obj/machinery/processor)
 			if(!W.material)
 				boutput(user, "<span class='alert'>No significant material found in \the [target].</span>")
 			else
-				boutput(user, "<span class='notice'><u>[capitalize(W.material.name)]</u></span>")
-				boutput(user, "<span class='notice'>[W.material.desc]</span>")
+				boutput(user, "<span class='notice'><u>[capitalize(W.material.getName())]</u></span>")
+				boutput(user, "<span class='notice'>[W.material.getDesc()]</span>")
 
-				if(W.material.properties.len)
+				if(length(W.material.getMaterialProperties()))
 					boutput(user, "<span class='notice'><u>The material is:</u></span>")
-					for(var/datum/material_property/X in W.material.properties)
+					for(var/datum/material_property/X in W.material.getMaterialProperties())
 						var/value = W.material.getProperty(X.id)
 						boutput(user, "<span class='notice'>• [X.getAdjective(W.material)] ([value])</span>")
 				else

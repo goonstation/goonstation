@@ -1471,7 +1471,7 @@
 	var/list/clothing_choices = list()
 	var/current_choice = new/datum/chameleon_backpack_pattern
 	spawn_contents = list()
-	in_list_or_max = TRUE
+	check_wclass = TRUE
 	can_hold = list(/obj/item/storage/belt/chameleon)
 
 	New()
@@ -1480,24 +1480,31 @@
 		remote.connected_backpack = src
 
 		var/obj/item/clothing/under/chameleon/jumpsuit = new /obj/item/clothing/under/chameleon(src)
+		src.storage.add_contents(jumpsuit)
 		remote.connected_jumpsuit = jumpsuit
 
 		var/obj/item/clothing/head/chameleon/hat = new /obj/item/clothing/head/chameleon(src)
+		src.storage.add_contents(hat)
 		remote.connected_hat = hat
 
 		var/obj/item/clothing/suit/chameleon/suit = new /obj/item/clothing/suit/chameleon(src)
+		src.storage.add_contents(suit)
 		remote.connected_suit = suit
 
 		var/obj/item/clothing/glasses/chameleon/glasses = new /obj/item/clothing/glasses/chameleon(src)
+		src.storage.add_contents(glasses)
 		remote.connected_glasses = glasses
 
 		var/obj/item/clothing/shoes/chameleon/shoes = new /obj/item/clothing/shoes/chameleon(src)
+		src.storage.add_contents(shoes)
 		remote.connected_shoes = shoes
 
 		var/obj/item/storage/belt/chameleon/belt = new /obj/item/storage/belt/chameleon(src)
+		src.storage.add_contents(belt)
 		remote.connected_belt = belt
 
 		var/obj/item/clothing/gloves/chameleon/gloves = new /obj/item/clothing/gloves/chameleon(src)
+		src.storage.add_contents(gloves)
 		remote.connected_gloves = gloves
 
 		for(var/U in (typesof(/datum/chameleon_backpack_pattern)))
@@ -1675,6 +1682,10 @@
 	icon_state = "remote"
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
+	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to change the appearance of all chameleon clothing.
+							Right click on a piece of chameleon clothing and use <b>"Change appearance"</b> to change the appearance of that specific piece.
+							Use a piece of clothing on the corresponding chameleon clothing piece to add that appearance to the list of possible appearances.
+							Use the remote in hand and select the <b>"New Outfit Set"</b> option to create a new set of clothing."})
 
 	var/obj/item/storage/backpack/chameleon/connected_backpack = null
 	var/obj/item/clothing/under/chameleon/connected_jumpsuit = null

@@ -99,6 +99,11 @@
 			src.UpdateIcon()
 			return 1
 
+	set_loc(newloc, storage_check)
+		. = ..()
+		if (src.active && newloc != null)
+			qdel(src)
+
 	attackby(obj/item/W, mob/user)
 		return
 
@@ -190,9 +195,8 @@
 			if (L.bleeding <= 3)
 				repair_bleeding_damage(M, 25, 1)
 
-		else 
+		else
 			repair_bleeding_damage(M, 25, 1)
-		active = 1
 
 		if (reagents?.total_volume)
 			if (!borg)
@@ -211,7 +215,7 @@
 				R.trans_to(M, reagents.total_volume/2)
 				src.in_use = 0
 
-			playsound(src, 'sound/items/sticker.ogg', 50, 1)
+			playsound(src, 'sound/items/sticker.ogg', 50, TRUE)
 
 		else
 			if (!borg)
@@ -219,6 +223,7 @@
 				qdel(src)
 			else
 				src.in_use = 0
+		active = 1
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		.= 0
@@ -438,11 +443,9 @@
 				if (ismob(target.loc))
 					var/mob/U = target.loc
 					U.u_equip(target)
-				else if (istype(target.loc, /obj/item/storage))
-					var/obj/item/storage/U = target.loc
-					U.contents -= target
-					if (U.hud)
-						U.hud.update()
+				else if (istype(target, /obj/item))
+					var/obj/item/I = target
+					I.stored?.transfer_stored_item(I, src, user = user)
 				target.set_loc(src)
 				patches += target
 				update_overlay()
@@ -740,7 +743,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 		if (src?.reagents.total_volume > 0)
 			src.reagents.trans_to(mender, src.reagents.total_volume)
 			src.UpdateIcon()
-			playsound(src, 'sound/items/mender_refill_juice.ogg', 50, 1)
+			playsound(src, 'sound/items/mender_refill_juice.ogg', 50, TRUE)
 			if (src.reagents.total_volume == 0)
 				boutput(user, "<span class='notice'>You refill [mender] to [mender.reagents.total_volume]u and empty [src]!</span>")
 			else

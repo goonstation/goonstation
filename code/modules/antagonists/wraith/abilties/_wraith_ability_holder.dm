@@ -7,6 +7,10 @@
 	var/possession_points = 0
 	/// number of souls required to evolve into a specialized wraith subclass
 	var/absorbs_to_evolve = 3
+#ifdef BONUS_POINTS
+	corpsecount = 9999
+	possession_points = 9999
+#endif
 	onAbilityStat()
 		..()
 		.= list()

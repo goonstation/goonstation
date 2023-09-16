@@ -36,7 +36,7 @@
 	health_burn = 25
 	health_burn_vuln = 0.5
 	metabolizes = 0 // for now?
-	butcherable = 2
+	butcherable = BUTCHER_YOU_MONSTER
 	flags = TABLEPASS
 	fits_under_table = 1
 	hand_count = 3
@@ -378,11 +378,8 @@
 			if (nectarTransferAmt <= 0)
 				return
 
-			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents)))
-				var/list/additional_reagents = planter.current.assoc_reagents
-				if (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents))
-					additional_reagents = additional_reagents | planter.plantgenes.mutation.assoc_reagents
-
+			var/list/additional_reagents = HYPget_assoc_reagents(planter.current, planter.plantgenes)
+			if (length(additional_reagents))
 				planter.reagents.remove_reagent("nectar", nectarTransferAmt*0.75)
 				user.reagents.add_reagent("honey", nectarTransferAmt*0.75)
 				for (var/X in additional_reagents)
@@ -547,6 +544,8 @@
 			SPAWN(2 SECONDS)
 				var/obj/icecube/honeycube = new /obj/icecube(src)
 				MT.set_loc(honeycube)
+				honeycube.melttemp = T20C
+				honeycube.cooltemp = T20C
 				honeycube.name = "block of honey"
 				honeycube.desc = "It's a block of honey. I guess there's someone trapped inside? Is it Han Solo?"
 				honeycube.steam_on_death = 0
@@ -852,9 +851,9 @@
 				src.visible_message("<b>[src]</b> regurgitates a...key? Huh!")
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				if (src.name == "sun bee")
-					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow."; icon_state = "key_solar";} (src.loc)
 				else
-					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow.";} (src.loc)
+					new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow."; icon_state = "key_lunar";} (src.loc)
 
 /mob/living/critter/small_animal/bee/overbee
 	name = "THE OVERBEE"

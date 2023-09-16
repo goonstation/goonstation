@@ -210,9 +210,6 @@
 	html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[D]'>List Procs</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];DMDump=\ref[D]'>DM Dump</a>"
 
-	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
-		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
-
 	html += "<br>"
 	html += {"<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>"}
 
@@ -410,11 +407,11 @@
 
 	else if (islist(value))
 		var/list/L = value
-		html += "\[[name]\]</th><td>List ([(!isnull(L) && L.len > 0) ? "[L.len] items" : "<em>empty</em>"])"
+		html += "\[[name]\]</th><td>List ([(!isnull(L) && length(L) > 0) ? "[L.len] items" : "<em>empty</em>"])"
 
 		if (L?.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || name == "verbs"))
 			// not sure if this is completely right...
-			//if (0) // (L.vars.len > 0)
+			//if (0) // (length(L.vars) > 0)
 			//	html += "<ol>"
 			//	for (var/entry in L)
 			//		html += debug_variable(entry, L[entry], level + 1)
@@ -432,7 +429,7 @@
 					html += debug_variable(L[index], L[L[index]], value, level + 1, max_list_len)
 				else
 					html += debug_variable("[index]", L[index], value, level + 1, max_list_len)
-			if(L.len > max_list_len)
+			if(length(L) > max_list_len)
 				html += "<tr><th>\[...\]</th><td><em class='value'>...</em></td>"
 
 			html += "</tbody></table>"
@@ -640,14 +637,6 @@
 				O.AddComponent(/datum/component/explode_on_touch, explosion_size, gib, delete_object, limbs_to_remove, turf_safe_explosion)
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
-		return
-	if (href_list["ViewReferences"])
-		USR_ADMIN_ONLY
-		if(holder && src.holder.level >= LEVEL_CODER)
-			var/datum/D = locate(href_list["ViewReferences"])
-			usr.client.view_references(D, href_list["window_name"])
-		else
-			audit(AUDIT_ACCESS_DENIED, "tried to view references.")
 		return
 	if (href_list["AddPathogen"])
 		USR_ADMIN_ONLY

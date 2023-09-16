@@ -254,6 +254,12 @@
 							qdel(C)
 						else
 							live++
+					for (var/mob/living/critter/C in gauntlet)
+						if (isdead(C))
+							showswirl(get_turf(C))
+							qdel(C)
+						else
+							live++
 					if (!live)
 						finishWave()
 					for (var/mob/living/M in gauntlet)
@@ -295,6 +301,8 @@
 			for (var/obj/artifact/A in gauntlet)
 				qdel(A)
 			for (var/obj/critter/C in gauntlet)
+				qdel(C)
+			for (var/mob/living/critter/C in gauntlet)
 				qdel(C)
 			for (var/obj/machinery/bot/B in gauntlet)
 				qdel(B)
@@ -471,6 +479,8 @@
 				qdel(P)
 		for (var/obj/item/electronics/E in gauntlet)
 			qdel(E)
+		for(var/obj/item/material_piece/M in gauntlet)
+			qdel(M)
 
 		current_level++
 		current_waves.len = 0
@@ -1041,43 +1051,43 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Mimic"
 		point_cost = 1
 		count = 6
-		types = list(/mob/living/critter/mimic)
+		types = list(/mob/living/critter/mimic/virtual)
 
 	meaty
 		name = "Meat Thing"
 		point_cost = 1
 		count = 2
-		types = list(/obj/critter/blobman/meaty_martha)
+		types = list(/mob/living/critter/blobman/meat)
 
 	martian
 		name = "Martian"
 		point_cost = 1
 		count = 6
-		types = list(/obj/critter/martian)
+		types = list(/mob/living/critter/martian)
 
 	soldier
 		name = "Martian Soldier"
 		point_cost = 3
 		count = 4
-		types = list(/obj/critter/martian/soldier)
+		types = list(/mob/living/critter/martian/soldier)
 
 	warrior
 		name = "Martian Warrior"
 		point_cost = 3
 		count = 2
-		types = list(/obj/critter/martian/warrior)
+		types = list(/mob/living/critter/martian/warrior)
 
 	mutant
 		name = "Martian Mutant"
 		point_cost = 5
 		count = 0.05
-		types = list(/obj/critter/martian/psychic)
+		types = list(/mob/living/critter/martian/mutant)
 
 	martian_assorted
 		name = "Martian Assortment"
 		point_cost = 6
 		count = 12
-		types = list(/obj/critter/martian/soldier, /obj/critter/martian/soldier, /obj/critter/martian/soldier, /obj/critter/martian/warrior)
+		types = list(/mob/living/critter/martian/soldier, /mob/living/critter/martian/soldier, /mob/living/critter/martian/soldier, /mob/living/critter/martian/warrior)
 
 	bear
 		name = "Bear"
@@ -1131,7 +1141,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Zombie"
 		point_cost = 4
 		count = 2
-		types = list(/obj/critter/zombie)
+		types = list(/mob/living/critter/zombie)
 
 	micromen
 		name = "Micro Man"
@@ -1197,7 +1207,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Security Zapbot"
 		point_cost = 2
 		count = 2
-		types = list(/obj/critter/ancient_repairbot/grumpy)
+		types = list(/mob/living/critter/robotic/repairbot)
 
 	fermid
 		name = "Fermid"
@@ -1215,13 +1225,13 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Man Eater"
 		point_cost = 5
 		count = 2
-		types = list(/obj/critter/maneater)
+		types = list(/mob/living/critter/plant/maneater)
 
 	fallback
 		name = "Floating Eyes"
 		point_cost = 0.01
 		count = 10
-		types = list(/obj/critter/floateye)
+		types = list(/mob/living/critter/small_animal/floateye)
 
 /proc/queryGauntletMatches(data)
 	if (islist(data) && data["data_hub_callback"])

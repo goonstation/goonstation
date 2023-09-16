@@ -62,39 +62,6 @@
 
 ////////////////////////////////////////////////// Ability holder /////////////////////////////////////////////
 
-/atom/movable/screen/ability/topBar/vampire
-	clicked(params)
-		var/datum/targetable/vampire/spell = owner
-		var/datum/abilityHolder/holder = owner.holder
-
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-
-		if(params["shift"] && params["ctrl"])
-			if(owner.waiting_for_hotkey)
-				holder.cancel_action_binding()
-				return
-			else
-				owner.waiting_for_hotkey = 1
-				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
-				return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			owner.holder.owner.targeting_ability = owner
-			owner.holder.owner.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
 /datum/abilityHolder/vampire
 	usesPoints = 1
 	regenRate = 0
@@ -104,6 +71,10 @@
 	points = 0 // Replaces the old vamp_blood_remaining var.
 	var/vamp_blood_tracking = 1
 	var/mob/vamp_isbiting = null
+#ifdef BONUS_POINTS
+	vamp_blood = 99999
+	points = 99999
+#endif
 
 	// Note: please use mob.get_vampire_blood() & mob.change_vampire_blood() instead of changing the numbers directly.
 
@@ -136,6 +107,14 @@
 		.["Blood:"] = round(src.points)
 		.["Total:"] = round(src.vamp_blood)
 		return
+
+	onAttach(mob/to_whom)
+		..()
+		RegisterSignal(to_whom, COMSIG_MOB_FLIP, PROC_REF(launch_bat_orbiters))
+
+	onRemove(mob/from_who)
+		..()
+		UnregisterSignal(from_who, COMSIG_MOB_FLIP)
 
 	onLife(var/mult = 1)
 		..()
@@ -338,8 +317,6 @@
 					return
 
 			M.mind.add_subordinate_antagonist(ROLE_VAMPTHRALL, master = src)
-			if (istype(src.owner, /mob))
-				src.owner.antagonist_overlay_refresh(TRUE, FALSE)
 
 			boutput(owner, "<span class='notice'>[M] has been revived as your thrall.</span>")
 			logTheThing(LOG_COMBAT, owner, "enthralled [constructTarget(M,"combat")] at [log_loc(owner)].")
@@ -371,40 +348,10 @@
 	var/not_when_in_an_object = TRUE
 	var/unlock_message = null
 
-	New()
-		var/atom/movable/screen/ability/topBar/vampire/B = new /atom/movable/screen/ability/topBar/vampire(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-		return
-
 	onAttach(var/datum/abilityHolder/H)
 		..() // Start_on_cooldown check.
 		if (src.unlock_message && src.holder && src.holder.owner)
 			boutput(src.holder.owner, "<span class='notice'><h3>[src.unlock_message]</h3></span>")
-		return
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/vampire()
-			object.icon = src.icon
-			object.owner = src
-		if (src.last_cast > world.time)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
 		return
 
 	proc/incapacitation_check(var/stunned_only_is_okay = 0)

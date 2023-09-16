@@ -117,7 +117,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 /obj/machinery/computer/cloning/process()
 	..()
-	src.records_scan()
+	if (!(src.status & (NOPOWER | BROKEN)))
+		src.records_scan()
 
 /obj/machinery/computer/cloning/connection_scan()
 	if (src.portable)
@@ -132,7 +133,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		if (!isnull(src.scanner))
 			src.scanner.connected = src
 			P.connected = src
-		if (src.linked_pods.len >= src.max_pods)
+		if (length(src.linked_pods) >= src.max_pods)
 			break
 
 /obj/machinery/computer/cloning/special_deconstruct(var/obj/computerframe/frame as obj)
@@ -153,8 +154,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
-	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
-		var/obj/item/spacecash/cash = W
+	if (wagesystem.clones_for_cash && istype(W, /obj/item/currency/spacecash))
+		var/obj/item/currency/spacecash/cash = W
 		src.held_credit += cash.amount
 		cash.amount = 0
 		user.show_text("<span class='notice'>You add [cash] to the credit in [src].</span>")
@@ -237,7 +238,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		show_message("Error: Unable to locate valid genetic data.", "danger")
 		return
 	if(!allow_dead_scanning && subject.decomp_stage)
-		show_message("Error: Failed to read genetic data from subject.<br>Necrosis of tissue has been detected.")
+		show_message("Error: Failed to read genetic data from subject. Necrosis of tissue has been detected.")
 		return
 	if (!subject.bioHolder || subject.bioHolder.HasEffect("husk"))
 		show_message("Error: Extreme genetic degredation present.", "danger")
@@ -249,7 +250,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		show_message("Error: Incompatible cellular structure.", "danger")
 		return
 	if (subject.mob_flags & IS_BONEY)
-		show_message("Error: No tissue mass present.<br>Total ossification of subject detected.", "danger")
+		show_message("Error: No tissue mass present. Total ossification of subject detected.", "danger")
 		return
 	if (!cloning_with_records && isalive(subject))
 		show_message("Error: Unable to scan alive patient.")
@@ -614,11 +615,11 @@ TYPEINFO(/obj/machinery/clone_scanner)
 	proc/set_lock(var/lock_status)
 		if(lock_status && !locked)
 			locked = 1
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			boutput(occupant, "<span class='alert'>\The [src] locks shut!</span>")
 		else if(!lock_status && locked)
 			locked = 0
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			boutput(occupant, "<span class='notice'>\The [src] unlocks!</span>")
 
 	// Meat grinder functionality.
@@ -662,7 +663,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		process_timer = timer_length
 		set_lock(1)
 		boutput(occupant, "<span style='color:red;font-weight:bold'>A whirling blade slowly begins descending upon you!</span>")
-		playsound(src, 'sound/machines/mixer.ogg', 50, 1)
+		playsound(src, 'sound/machines/mixer.ogg', 50, TRUE)
 		SubscribeToProcess()
 
 	proc/start_strip()
@@ -701,7 +702,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		src.occupant.TakeDamage(zone="All", brute=damage)
 		bleed(occupant, damage * 2, 0)
 		if(prob(50))
-			playsound(src, 'sound/machines/mixer.ogg', 50, 1)
+			playsound(src, 'sound/machines/mixer.ogg', 50, TRUE)
 		if(prob(30))
 			SPAWN(0.3 SECONDS)
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg', \

@@ -32,7 +32,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 
 /obj/item/device/radio/intercom/New()
 	. = ..()
-	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGED, .proc/update_pixel_offset_dir)
+	RegisterSignal(src, COMSIG_ATOM_DIR_CHANGED, PROC_REF(update_pixel_offset_dir))
 	if(src.icon_state == "intercom") // if something overrides the icon we don't want this
 		var/image/screen_image = image(src.icon, "intercom-screen")
 		screen_image.color = src.device_color
@@ -59,7 +59,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 		attack_self(user)
 
 /obj/item/device/radio/attackby(obj/item/W, mob/user)
-	if (istype(W, /obj/item/fish))
+	if (istype(W, /obj/item/reagent_containers/food/fish))
 		if(src.dir == SOUTH)
 			user.visible_message("<b><span class='hint'>[user] shoves the fish over the intercom, and then mounts the whole thing on a board \
 				which they conveniently had.</span></b>", "<b><span class='hint'>You shove the fish over the intercom, and then mount the whole thing on a board \

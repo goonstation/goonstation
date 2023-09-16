@@ -1,0 +1,42 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"p" = (
+/mob/living/carbon/human/npc/syndicate_weak,
+/obj/item/reagent_containers/food/drinks/bottle/beer,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"v" = (
+/obj/random_item_spawner/junk/maybe_few,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"K" = (
+/obj/reagent_dispensers/beerkeg,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"X" = (
+/obj/decal/cleanable/vomit,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+
+(1,1,1) = {"
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+v
+a
+"}
+(3,1,1) = {"
+K
+p
+a
+"}
+(4,1,1) = {"
+a
+X
+a
+"}

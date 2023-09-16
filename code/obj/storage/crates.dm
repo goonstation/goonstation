@@ -254,10 +254,6 @@
 				new /obj/item/pen/crayon/rainbow(src)
 			return 1
 
-/obj/storage/crate/materials
-	name = "building materials crate"
-	spawn_contents = list(/obj/item/sheet/steel/fullstack,
-	/obj/item/sheet/glass/fullstack)
 /obj/storage/crate/radio
 	name = "radio headsets crate"
 	spawn_contents = list(
@@ -447,6 +443,8 @@
 	desc = "A big metal box that probably has goodies inside."
 	spawn_contents = list(/obj/random_item_spawner/loot_crate/surplus)
 
+TYPEINFO(/obj/storage/crate/chest)
+	mat_appearances_to_ignore = list("wood")
 /obj/storage/crate/chest
 	name = "treasure chest"
 	desc = "Glittering gold, trinkets and baubles. Paid for in blood."
@@ -454,10 +452,8 @@
 	icon_state = "chest"
 	icon_opened = "chest-open"
 	icon_closed = "chest"
-
-	New()
-		..()
-		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+	mat_changename = FALSE
+	default_material = "wood"
 
 /obj/storage/crate/chest/coins
 	var/coins_count_min = 5
@@ -475,7 +471,7 @@
 		..()
 		var/bux_count = rand(3, 10)
 		for(var/i in 1 to bux_count)
-			var/obj/item/spacebux/bux = new(src, pick(10, 20, 50, 100, 200, 500))
+			var/obj/item/currency/spacebux/bux = new(src, pick(10, 20, 50, 100, 200, 500))
 			bux.pixel_x = rand(-9, 9)
 			bux.pixel_y = rand(0, 6)
 

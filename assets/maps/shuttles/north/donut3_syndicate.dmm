@@ -6,7 +6,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	hardened = 1
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/map/light/dimred,
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
@@ -226,7 +226,7 @@
 /turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom)
 "gI" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -348,7 +348,7 @@
 	},
 /area/shuttle/escape/centcom)
 "lb" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
 "lq" = (
@@ -365,7 +365,7 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "mg" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom)
 "mq" = (
@@ -858,7 +858,7 @@
 /turf/unsimulated/floor/circuit/red,
 /area/shuttle/escape/centcom)
 "Ms" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -915,7 +915,7 @@
 /turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom)
 "QE" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /obj/map/light/dimred,
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
@@ -961,7 +961,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom)
 "SX" = (
@@ -1071,7 +1071,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	hardened = 1
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom)
 "WU" = (
@@ -1158,7 +1158,7 @@
 	},
 /area/shuttle/escape/centcom)
 "Yq" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "YE" = (
@@ -1197,7 +1197,7 @@
 /turf/unsimulated/floor/plating,
 /area/shuttle/escape/centcom)
 "ZQ" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";

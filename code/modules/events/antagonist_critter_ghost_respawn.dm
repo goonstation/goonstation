@@ -98,7 +98,7 @@
 		) = 100,
 		list(new /datum/eventSpawnedCritter(
 			name = "gunbots",
-			critter_types = list(/mob/living/critter/robotic/gunbot),
+			critter_types = list(/mob/living/critter/robotic/gunbot/strong),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
 					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
@@ -245,7 +245,7 @@
 					new /obj/item/implant/access/infinite/assistant(M.current)
 					if (src.custom_spawn_turf)
 						M.current.set_loc(src.custom_spawn_turf)
-					antagify(M.current, null, 1)
+					M.add_generic_antagonist(ROLE_ANTAGONIST_CRITTER, "[M.current.real_name]", source = ANTAGONIST_SOURCE_RANDOM_EVENT)
 				candidates -= M
 
 			command_alert("Our sensors have detected a hostile nonhuman lifeform in the vicinity of the station.", "Hostile Critter", alert_origin = ALERT_GENERAL)

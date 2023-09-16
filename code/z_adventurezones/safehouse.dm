@@ -73,7 +73,7 @@
 			vertical
 				dir = EAST
 
-/obj/machinery/door_control/podbay/suspiciousdebris/
+/obj/machinery/door_control/podbay/suspiciousdebris
 	name = "suspicious debris"
 	id = "podbay_safehouse"
 	icon = 'icons/obj/adventurezones/safehouse.dmi'
@@ -92,6 +92,7 @@
 
 	initializeBioholder() //We need bioholder data intialised so we can use it elsewhere.
 		bioHolder.ownerName = name
+		bioHolder.ownerType = src.type
 		bioHolder.mobAppearance.customization_first = new /datum/customization_style/moustache/vandyke
 		bioHolder.mobAppearance.customization_first_color = "#241200"
 		bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
@@ -330,16 +331,16 @@ obj/item/reagent_containers/iv_drip/dead_exec
 	desc = "One of those briefcases spies leave at park benches."
 	spawn_contents = list(/obj/item/paper/safehouse/cloner_note)
 
-	New()
+	make_my_stuff()
 		..()
-		var/obj/item/spacecash/random/tourist/S1 = new /obj/item/spacecash/random/tourist
-		S1.setup(src)
-		var/obj/item/spacecash/random/tourist/S2 = new /obj/item/spacecash/random/tourist
-		S2.setup(src)
-		var/obj/item/spacecash/random/tourist/S3 = new /obj/item/spacecash/random/tourist
-		S3.setup(src)
-		var/obj/item/spacecash/random/tourist/S4 = new /obj/item/spacecash/random/tourist
-		S4.setup(src)
+		var/obj/item/currency/spacecash/tourist/S1 = new /obj/item/currency/spacecash/tourist
+		S1.setup(src, try_add_to_storage = TRUE)
+		var/obj/item/currency/spacecash/tourist/S2 = new /obj/item/currency/spacecash/tourist
+		S2.setup(src, try_add_to_storage = TRUE)
+		var/obj/item/currency/spacecash/tourist/S3 = new /obj/item/currency/spacecash/tourist
+		S3.setup(src, try_add_to_storage = TRUE)
+		var/obj/item/currency/spacecash/tourist/S4 = new /obj/item/currency/spacecash/tourist
+		S4.setup(src, try_add_to_storage = TRUE)
 
 /obj/decal/poster/wallsign/dead_exec_portrait
 	name = "executive portrait"
@@ -581,7 +582,7 @@ obj/item/reagent_containers/iv_drip/dead_exec
 		<br> Head Researcher, VitaNova</span>
 		"}
 
-/datum/computer/file/record/saferoom/
+/datum/computer/file/record/saferoom
 	New()
 		..()
 		src.name = "[copytext("\ref[src]", 4, 12)]GENERIC"

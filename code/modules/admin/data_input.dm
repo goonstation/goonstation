@@ -127,7 +127,14 @@
 				boutput(src, "<span class='alert'>Cancelled.</span>")
 				return
 			input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
-			input = new input
+			if(isnull(input))
+				boutput(src, "<span class='alert'>Cancelled.</span>")
+				return
+			var/list/arglist = src.get_proccall_arglist()
+			if(length(arglist))
+				input = new input(arglist(arglist))
+			else
+				input = new input
 
 		if (DATA_INPUT_NUM_ADJUST)
 			input = input("Enter amount to adjust by:", custom_title) as null|num
@@ -174,7 +181,7 @@
 					MV.Add(text2num(temp))
 					i++
 
-			if (MV.len >= 6)
+			if (length(MV) >= 6)
 				input = matrix(MV[1], MV[2], MV[3], MV[4], MV[5], MV[6])
 
 			else
@@ -309,12 +316,12 @@
 	var/datum/promise/promise = null
 	target_anything = TRUE
 	targeted = TRUE
-	max_range = 3000
+	check_range = FALSE
 	target_ghosts = TRUE
 	lock_holder = FALSE
 
-	castcheck(var/mob/M)
-		if (M.client && M.client.holder)
+	castcheck()
+		if (usr.client && usr.client.holder)
 			return TRUE
 
 	handleCast(var/atom/selected)

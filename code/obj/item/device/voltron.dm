@@ -20,7 +20,7 @@
 			target.set_loc(src)
 			img = image('icons/effects/effects.dmi',src ,"energyorb")
 			target << img
-		RegisterSignal(the_user, COMSIG_MOB_DROPPED, .proc/handle_dropped_item)
+		RegisterSignal(the_user, COMSIG_MOB_DROPPED, PROC_REF(handle_dropped_item))
 		APPLY_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 
 		//SPAWN(0) check() but why
@@ -232,7 +232,7 @@
 		if(D)
 			dummy.invisibility = INVIS_ALWAYS
 
-		playsound(src, 'sound/effects/shielddown2.ogg', 40, 1)
+		playsound(src, 'sound/effects/shielddown2.ogg', 40, TRUE)
 		var/obj/overlay/O = new/obj/overlay(get_turf(target))
 		O.name = "Energy"
 		O.anchored = ANCHORED
@@ -266,7 +266,7 @@
 
 			activating = 1
 
-			playsound(src, 'sound/effects/singsuck.ogg', 40, 1)
+			playsound(src, 'sound/effects/singsuck.ogg', 40, TRUE)
 			var/obj/overlay/O = new/obj/overlay(get_turf(user))
 			O.name = "Energy"
 			O.anchored = ANCHORED

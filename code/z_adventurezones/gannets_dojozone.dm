@@ -139,7 +139,7 @@ Contents:
 //	slot_belt = /obj/item/swords_sheaths/katana
 	slot_jump = list(/obj/item/clothing/under/gimmick/hakama/random)
 	slot_head = list(/obj/item/clothing/head/bandana/random_color)
-	slot_foot = list(/obj/item/clothing/shoes/sandal/wizard)
+	slot_foot = list(/obj/item/clothing/shoes/sandal/magic/wizard)
 	slot_rhan = null
 	slot_lhan = list(/obj/item/dojohammer)
 	slot_belt = list(/obj/item/swords_sheaths/katana/reverse)
@@ -478,7 +478,7 @@ Contents:
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
 				if(prob(1*mult))
-					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
+					if((R.material?.getMaterialFlags() & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
 						if (R.amount > 1)
 							R.change_stack_amount(-1)
 						else
@@ -687,7 +687,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/sengoku)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto/sengoku)
 /turf/unsimulated/wall/auto/sengoku
-	icon = 'icons/turf/walls_sengoku.dmi'
+	icon = 'icons/turf/walls/sengoku.dmi'
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/paper)
@@ -695,17 +695,17 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto/paper)
 /turf/unsimulated/wall/auto/paper
-	icon = 'icons/turf/walls_paper.dmi'
+	icon = 'icons/turf/walls/paper.dmi'
 
 
 /turf/unsimulated/wall/sengoku_tall
-	icon = 'icons/turf/walls_sengoku.dmi'
+	icon = 'icons/turf/walls/sengoku.dmi'
 	icon_state= "tall"
 	opacity = 0
 
 /turf/simulated/wall/false_wall/sengoku
 	desc = "There seems to be markings on one of the edges, huh."
-	icon = 'icons/turf/walls_paper.dmi'
+	icon = 'icons/turf/walls/paper.dmi'
 	icon_state = "2"
 	can_be_auto = 0
 

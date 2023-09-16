@@ -47,15 +47,16 @@ Turfs and decal for the space rift
 /obj/machinery/bot/guardbot/future
 	name = "Wally-392"
 	desc = "A PR-7 Robuddy!  Whoa, these don't even exist yet!  Why does this one look so old then?"
-	icon = 'icons/obj/bots/newbots.dmi'
+	icon = 'icons/obj/bots/robuddy/pr-7.dmi'
 	health = 50
 	setup_unique_name = 1
-	hat_x_offset = -6
 	setup_no_costumes = 1
 	no_camera = 1
 	flashlight_red = 0.1
 	flashlight_green = 0.1
 	flashlight_blue = 0.4
+
+	hat_x_offset = 1
 
 	setup_charge_maximum = 800
 	setup_default_startup_task = /datum/computer/file/guardbot_task/future
@@ -73,7 +74,7 @@ Turfs and decal for the space rift
 		src.task = null
 		src.wakeup_timer = 0
 		src.last_dock_id = null
-		icon_needs_update = 1
+		src.UpdateIcon()
 		if(!warm_boot)
 			src.scratchpad.len = 0
 			src.speak("Guardbuddy V2.9 Online.")
@@ -268,8 +269,8 @@ Turfs and decal for the space rift
 		..()
 
 		bioHolder.AddEffect("psy_resist") // Heh
-		src.equip_new_if_possible(/obj/item/clothing/shoes/red, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/color/white, slot_w_uniform)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/red, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/white, SLOT_W_UNIFORM)
 
 	initializeBioholder()
 		bioHolder.mobAppearance.customization_second = new /datum/customization_style/beard/tramp
@@ -387,6 +388,7 @@ Turfs and decal for the space rift
 	name = "time-space breach"
 	desc = "Uhh.  UHHHH.  uh."
 	fullbright = 0
+	plane = PLANE_FLOOR
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "timehole"
 

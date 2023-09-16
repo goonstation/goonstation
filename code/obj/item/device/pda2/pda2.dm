@@ -32,6 +32,7 @@
 	var/frequency = FREQ_PDA
 	var/beacon_freq = FREQ_NAVBEACON //Beacon frequency for locating beacons (I love beacons)
 	var/net_id = null //Hello dude intercepting our radio transmissions, here is a number that is not just \ref
+	var/scannable = TRUE // Whether this PDA is picked up when scanning for PDAs on the messenger
 
 	var/tmp/list/pdasay_autocomplete = list()
 
@@ -239,8 +240,8 @@
 				var/mob/M = AM
 				LAZYLISTADDUNIQUE(M.attached_objs, src)
 				src.glide_size = M.glide_size
-				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, .proc/on_mob_throw_end)
-				if (M.slip(ignore_actual_delay = 1, throw_type=THROW_PEEL_SLIP, params=list("slip_obj"=src)))
+				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, PROC_REF(on_mob_throw_end))
+				if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type = THROW_PEEL_SLIP, params = list("slip_obj" = src)))
 					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
 					if (M.bioHolder.HasEffect("clumsy"))
 						M.changeStatus("weakened", 5 SECONDS)
@@ -294,6 +295,7 @@
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	bartender
+		setup_default_cartridge = /obj/item/disk/data/cartridge/bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	botanist
@@ -416,6 +418,10 @@
 		if(src.alert_ringtones[T])
 			qdel(src.alert_ringtones[T])
 			src.alert_ringtones[T] = null
+
+	if (src.pen)
+		qdel(src.pen)
+		src.pen = null
 
 	if (src.hd)
 		src.hd.dispose()
@@ -659,7 +665,7 @@
 			C.set_loc(user.loc)
 			qdel(C)
 
-	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette))
+	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette) || istype(C, /obj/item/device/light/flashlight/penlight))
 		if (!src.pen)
 			src.insert_pen(C, user)
 		else
@@ -735,7 +741,7 @@
 
 
 /obj/item/device/pda2/verb/eject()
-	set name = "Eject ID"
+	set name = "Eject PDA ID"
 	set desc = "Eject the currently loaded ID card from this PDA."
 	set category = "Local"
 	set src in usr
@@ -992,7 +998,7 @@
 
 	proc/bust_speaker()
 		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
-		playsound(src, 'sound/impact_sounds/Machinery_Break_1.ogg', 20, 1)
+		playsound(src, 'sound/impact_sounds/Machinery_Break_1.ogg', 20, TRUE)
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 
@@ -1103,12 +1109,11 @@
 			return
 
 		if(src in bible_contents)
-			for_by_tcl(B, /obj/item/storage/bible)
+			for_by_tcl(B, /obj/item/bible)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					T.hotspot_expose(700,125)
 					explosion(src, T, -1, -1, 2, 3)
-			bible_contents.Remove(src)
 			qdel(src)
 			return
 
@@ -1171,7 +1176,7 @@ ThinkOS 7 comes with several useful applications built in, these include:<br>
 <li>Messenger: Send messages between all enabled PDAs.  Can also send the current file in the clipboard.</li>
 <li>File Browser: Manage and execute programs in the internal drive or loaded cartridge.</li>
 <li>Atmos Scanner: Using patented AirScan technology.</li>
-<li>Modules: Light up your life with a flashlight, or see right through the floor with a T-Scanner! The choice is yours!</li>
+<li>Modules: Light up your life with a flashlight, or see right through the floor with a T-ray Scanner! The choice is yours!</li>
 </ul></i>
 <b>To send a file with the messenger:</b><br>
 Enter the file browser and copy the file you want to send.  Now enter the messenger and select *send file*.<br>

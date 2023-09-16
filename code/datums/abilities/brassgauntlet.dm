@@ -157,8 +157,8 @@
 						owlmask.cant_self_remove = 1
 
 
-						M.equip_if_possible(owlsuit, M.slot_w_uniform)
-						M.equip_if_possible(owlmask, M.slot_wear_mask)
+						M.equip_if_possible(owlsuit, SLOT_W_UNIFORM)
+						M.equip_if_possible(owlmask, SLOT_WEAR_MASK)
 						M.set_clothing_icon_dirty()
 					continue
 
@@ -246,24 +246,24 @@ proc/badstone(var/mob/user, var/obj/item/W, var/obj/item/clothing/B)
 	W.set_loc(null) //<-- this sets the location to null
 	sleep(5 SECONDS)
 
-	playsound(user, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 	boutput(user,"<span class='alert'><B>The [B] cracks slightly around the stone.</B></span>")
 	sleep(20 SECONDS)
 	boutput(user,"<span class='alert'><B>The [B] feels really tight on your arm all of a sudden.</B></span>")
 	sleep(10 SECONDS)
-	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 	boutput(user,"<span class='alert'><B>Like really tight!</B></span>")
 	sleep(10 SECONDS)
-	playsound(user, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, TRUE)
 	user.emote("scream")
 	sleep(5 SECONDS)
-	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 	sleep(10 SECONDS)
-	playsound(user, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, TRUE)
 	user.visible_message("<span class='alert'><B>The [B] begins to glow!</B></span>")
 	sleep(2 SECONDS)
 	boutput(user, "<span class='alert'><B>The [B] tightens hard around your hand and begins to move on its own!</B></span>")
-	playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, TRUE)
 	sleep(5 SECONDS)
 
 	//Everything turns to gold

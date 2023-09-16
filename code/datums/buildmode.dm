@@ -256,7 +256,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		if (!usr.client.holder.buildmode_view)
 			usr.client.cmd_admin_aview()
 		usr.see_in_dark = initial(usr.see_in_dark)
-		usr.see_invisible = INVIS_GHOST
+		usr.see_invisible = INVIS_SPOOKY
 	else
 		src.buildmode.activate()
 		if (!usr.client.holder.buildmode_view)

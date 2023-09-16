@@ -64,10 +64,11 @@
 				boutput(user, "<b>[O]</b> [recharge_phrase]")
 			on_cooldown = 0
 
+		logTheThing(LOG_COMBAT, user, "was teleported by Telewand artifact [O] from [log_loc(user)] to [log_loc(T)].")
 		user.set_loc(T)
 
 		var/turf/start_loc = get_turf(user)
-		playsound(start_loc, wand_sound, 50, 1, -1)
+		playsound(start_loc, wand_sound, 50, TRUE, -1)
 		particleMaster.SpawnSystem(new /datum/particleSystem/tele_wand(T,particle_sprite,particle_color))
 		O.ArtifactFaultUsed(user)
 		return
