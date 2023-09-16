@@ -12,10 +12,12 @@
 	var/base_item_state
 	/// worn belt icon states
 	var/static/belt_icons = list("eldritch" = "martian-belt",
-								"precursor" = "martian-belt",
-								"wizard" = "martian-belt")
+								 "martian" = "martian-belt",
+								 "precursor" = "martian-belt",
+								 "wizard" = "martian-belt")
 	/// worn back icon states
 	var/back_icons = list("eldritch" = "martian-backpack",
+						  "martian" = "martian-backpack",
 						  "precursor" = "martian-backpack",
 						  "wizard" = "martian-backpack")
 
@@ -40,6 +42,7 @@
 
 		// transform icon state
 		src.base_icon_state = src.icon_state
+		src.base_item_state = src.item_state
 		src.icon = 'icons/obj/artifacts/artifactStorages.dmi'
 		if (slot == SLOT_BELT)
 			src.wear_image_icon = 'icons/mob/clothing/belt.dmi'
@@ -80,11 +83,25 @@
 		src.UpdateOverlays(src.wizard_gem_image, "gem")
 		src.wizard_gem_image = null
 
+	// used for martian bag of holding changing size
+	proc/martian_change_shape()
+		var/list/prev_contents = list()
+		for (var/atom/A as anything in src.storage?.get_contents())
+			prev_contents += A
+			src.storage.transfer_stored_item(A, get_turf(src))
+
+		src.create_storage(/datum/storage/artifact_bag_of_holding/martian, max_wclass = pick(W_CLASS_TINY, W_CLASS_SMALL, W_CLASS_NORMAL, W_CLASS_BULKY),
+			slots = rand(3, 13), opens_if_worn = TRUE)
+
+		for (var/atom/A as anything in prev_contents)
+			if (src.storage.check_can_hold(A) == STORAGE_CAN_HOLD)
+				src.storage.add_contents(A, null, FALSE)
+
 /datum/artifact/bag_of_holding
 	associated_object = /obj/item/artifact/bag_of_holding
 	type_name = "Bag of Holding"
 	rarity_weight = 200
-	validtypes = list("eldritch", "precursor", "wizard")
+	validtypes = list("eldritch", "martian", "precursor", "wizard")
 	validtriggers = list(/datum/artifact_trigger/force, /datum/artifact_trigger/electric, /datum/artifact_trigger/heat,
 		/datum/artifact_trigger/radiation, /datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch,
 		/datum/artifact_trigger/cold)
@@ -124,6 +141,11 @@
 				boh.create_storage(/datum/storage/no_hud/eldritch_bag_of_holding, max_wclass = wclass, slots = slots, opens_if_worn = \
 					boh.c_flags & ONBELT || boh.c_flags & ONBACK, params = list("use_inventory_counter" = TRUE, "item_pick_type" = \
 					pick(STORAGE_NO_HUD_QUEUE, STORAGE_NO_HUD_STACK, STORAGE_NO_HUD_RANDOM)))
+
+			// immediately start the storage effect, can always be worn
+			if ("martian")
+				boh.c_flags |= (ONBELT | ONBACK)
+				boh.martian_change_shape()
 
 			// "large sized" storage that can hold small items
 			if ("wizard")

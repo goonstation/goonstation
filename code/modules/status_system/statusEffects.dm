@@ -2447,3 +2447,35 @@
 	icon_state = "fragrant"
 	maxDuration = 4 SECONDS
 	effect_quality = STATUS_QUALITY_POSITIVE
+
+// martian bag of holding artifact effect
+/datum/statusEffect/martian_boh
+	id = "martian_boh_morph"
+	name = "Morphing"
+	duration = INFINITE_STATUS
+	effect_quality = STATUS_QUALITY_NEUTRAL
+	var/passed = 0 SECONDS
+	var/period
+	var/message_given = FALSE
+
+	New()
+		src.period = rand(60, 180) SECONDS
+		..()
+
+	onUpdate(timePassed)
+		src.passed += timePassed / 10 SECONDS
+
+		if (src.passed < src.period * 0.75)
+			return
+
+		if (!src.message_given)
+			src.owner.loc.visible_message("<span class='alert'>[src.owner] begins to change shape!</span>")
+			src.message_given = TRUE
+		else if (src.passed >= src.period)
+			var/obj/item/artifact/bag_of_holding/boh = src.owner
+			src.owner.loc.visible_message("<span class='alert'>[src.owner] completely changes!</span>")
+			playsound(src.owner.loc, pick("sound/machines/ArtifactMar[pick(1, 2)].ogg"), 75, TRUE)
+			boh.martian_change_shape()
+			src.passed = 0
+			src.period = rand(60, 180) SECONDS
+			src.message_given = FALSE

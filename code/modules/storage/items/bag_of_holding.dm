@@ -34,6 +34,19 @@
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 	boh.ArtifactFaultUsed(user, boh)
 
+// --- martian ---
+
+// storage that changes what it can hold over time
+/datum/storage/artifact_bag_of_holding/martian
+
+/datum/storage/artifact_bag_of_holding/martian/New()
+	..()
+	src.linked_item.setStatus("martian_boh_morph")
+
+/datum/storage/artifact_bag_of_holding/martian/disposing()
+	src.linked_item.delStatus("martian_boh_morph")
+	..()
+
 // --- wizard ---
 
 // storage that shows a random, smaller selection of the total contents each time you look inside or its contents change
