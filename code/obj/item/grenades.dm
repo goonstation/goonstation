@@ -918,6 +918,15 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			logGrenade(user)
 			armed = TRUE
 
+	///Enforce a dress code upon victims
+	proc/dress_up(mob/target)
+		return 0
+
+/obj/item/gimmickbomb/heroic_sacrifice(mob/M)
+	var/area/t = get_area(M)
+	if(t?.sanctuary) return
+	src.dress_up(M)
+
 /obj/item/gimmickbomb/owlgib
 	name = "Owl Bomb"
 	desc = "Owls. Owls everywhere"
@@ -938,28 +947,36 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	icon_state = "owlbomb"
 	sound_beep = 'sound/voice/animal/hoot.ogg'
 
+	dress_up(mob/living/carbon/human/H)
+		if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask)))
+			for(var/obj/item/clothing/O in H)
+				H.u_equip(O)
+				if (O)
+					O.set_loc(H.loc)
+					O.dropped(H)
+					O.layer = initial(O.layer)
+
+				var/obj/item/clothing/under/gimmick/owl/owlsuit = new /obj/item/clothing/under/gimmick/owl(H)
+				owlsuit.cant_self_remove = 1
+				var/obj/item/clothing/mask/owl_mask/owlmask = new /obj/item/clothing/mask/owl_mask(H)
+				owlmask.cant_self_remove = 1
+
+				H.equip_if_possible(owlsuit, SLOT_W_UNIFORM)
+				H.equip_if_possible(owlmask, SLOT_WEAR_MASK)
+				H.set_clothing_icon_dirty()
+
 	detonate()
+		var/mob/living/carbon/human/hero = src.get_hero()
+		if(istype(hero, /mob/living/carbon/human))
+			src.heroic_sacrifice(hero)
+			..()
+			return
+
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN(0)
-				if (!(M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/owl_mask)))
-					for(var/obj/item/clothing/O in M)
-						M.u_equip(O)
-						if (O)
-							O.set_loc(M.loc)
-							O.dropped(M)
-							O.layer = initial(O.layer)
-
-					var/obj/item/clothing/under/gimmick/owl/owlsuit = new /obj/item/clothing/under/gimmick/owl(M)
-					owlsuit.cant_self_remove = 1
-					var/obj/item/clothing/mask/owl_mask/owlmask = new /obj/item/clothing/mask/owl_mask(M)
-					owlmask.cant_self_remove = 1
-
-
-					M.equip_if_possible(owlsuit, SLOT_W_UNIFORM)
-					M.equip_if_possible(owlmask, SLOT_WEAR_MASK)
-					M.set_clothing_icon_dirty()
+				src.dress_up(M)
 		..()
 
 /obj/item/gimmickbomb/hotdog
@@ -967,24 +984,33 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	desc = "A hotdog bomb? What the heck does that even mean?!"
 	icon_state = "hotdog"
 
+	dress_up(mob/living/carbon/human/H)
+		if (!(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
+			for(var/obj/item/clothing/O in H)
+				H.u_equip(O)
+				if (O)
+					O.set_loc(H.loc)
+					O.dropped(H)
+					O.layer = initial(O.layer)
+
+			var/obj/item/clothing/suit/gimmick/hotdog/suit = new /obj/item/clothing/suit/gimmick/hotdog(H)
+			suit.cant_self_remove = 1
+
+			H.equip_if_possible(suit, SLOT_WEAR_SUIT)
+			H.set_clothing_icon_dirty()
+		..()
+
 	detonate()
+		var/mob/living/carbon/human/hero = src.get_hero()
+		if(istype(hero, /mob/living/carbon/human))
+			src.heroic_sacrifice(hero)
+			..()
+			return
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN(0)
-				if (!(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
-					for(var/obj/item/clothing/O in M)
-						M.u_equip(O)
-						if (O)
-							O.set_loc(M.loc)
-							O.dropped(M)
-							O.layer = initial(O.layer)
-
-					var/obj/item/clothing/suit/gimmick/hotdog/H = new /obj/item/clothing/suit/gimmick/hotdog(M)
-					H.cant_self_remove = 1
-
-					M.equip_if_possible(H, SLOT_WEAR_SUIT)
-					M.set_clothing_icon_dirty()
+				src.dress_up(M)
 		..()
 
 /obj/item/gimmickbomb/butt
