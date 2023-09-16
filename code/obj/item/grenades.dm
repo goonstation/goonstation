@@ -488,7 +488,14 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			explosion_new(src, T, 5.0, 2)
+			var/brisance = 2
+			var/power = 5.0
+			var/mob/living/carbon/human/hero = src.get_hero()
+			if(istype(hero, /mob/living/carbon/human))
+				brisance = 1
+				power = 2.5
+				src.heroic_sacrifice(hero, power)
+			explosion_new(src, T, power, brisance)
 			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = ANCHORED
