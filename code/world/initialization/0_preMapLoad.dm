@@ -50,6 +50,10 @@
 			roundLog << "<br>"
 			logLength += 4
 
+		if (!global.parent_type_table)
+			Z_LOG_DEBUG("Preload", "Generating parent type table...")
+			generate_parent_type_table()
+
 		Z_LOG_DEBUG("Preload", "Applying config...")
 		// apply some settings from config..
 		abandon_allowed = config.respawn
