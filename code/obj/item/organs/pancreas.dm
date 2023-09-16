@@ -51,7 +51,7 @@ TYPEINFO(/obj/item/organ/pancreas/cyber)
 	desc = "A fancy robotic pancreas to replace one that someone's lost!"
 	icon_state = "cyber-pancreas"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0

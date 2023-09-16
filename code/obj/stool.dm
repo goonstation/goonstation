@@ -27,7 +27,7 @@
 	pressure_resistance = 3*ONE_ATMOSPHERE
 	layer = STORAGE_LAYER //dumb
 	default_material = "steel"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
@@ -94,7 +94,7 @@
 			boutput(user, "You can't buckle anyone in before the game starts.")
 			return FALSE
 		if (to_buckle.buckled)
-			boutput(user, "They're already buckled into something!", "red")
+			boutput(user, "[capitalize(hes_or_shes(to_buckle))] already buckled into something!", "red")
 			return FALSE
 		if (BOUNDS_DIST(src, user) > 0 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
 			return FALSE
@@ -127,7 +127,7 @@
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -416,7 +416,7 @@ TYPEINFO(/obj/stool/wooden)
 		to_buckle.set_loc(src.loc)
 
 		to_buckle.set_clothing_icon_dirty()
-		playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+		playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		return TRUE
 
@@ -427,7 +427,7 @@ TYPEINFO(/obj/stool/wooden)
 			buckled_guy.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 
 	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newsheet as obj, var/mob/user as mob)
 		if (!newsheet || newsheet.cape || (src.sheet == newsheet && newsheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
@@ -617,7 +617,7 @@ TYPEINFO(/obj/stool/chair)
 			return
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "unscrews [src] from" : "secures [src] to"] the floor.")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -777,7 +777,7 @@ TYPEINFO(/obj/stool/chair)
 		if (has_butt)
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
-			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 		return TRUE
 
 
@@ -807,7 +807,7 @@ TYPEINFO(/obj/stool/chair)
 
 		src.buckled_guy = null
 
-		playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+		playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 
 	ex_act(severity)
 		for (var/mob/M in src.loc)
@@ -909,7 +909,7 @@ TYPEINFO(/obj/stool/chair)
 /obj/stool/chair/material
 	name = "material chair"
 	desc = "A chair made from a material"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
 
 /obj/stool/chair/material/mauxite
@@ -1432,7 +1432,7 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 	toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
 		return
 

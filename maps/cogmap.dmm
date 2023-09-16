@@ -37713,6 +37713,7 @@
 	pixel_y = 32
 	},
 /obj/table/reinforced/chemistry/auto/firstaid,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},

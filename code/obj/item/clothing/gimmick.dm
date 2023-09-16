@@ -1186,7 +1186,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
 					if (H.gloves)
-						boutput(user, "<span class='alert'>You can't put [src] on [H]'s finger while they're wearing [H.gloves], you oaf!</span>")
+						boutput(user, "<span class='alert'>You can't put [src] on [H]'s finger while [hes_or_shes(H)] wearing [H.gloves], you oaf!</span>")
 						return
 					if (user == H) // giving yourself a wedding ring???? are you too lazy to just equip it like a normal person????????
 						user.visible_message("<b>[user]</b> slips [src] onto [his_or_her(user)] own finger. Legally, [he_or_she(user)] is now married to [him_or_her(user)]self. Congrats.",\

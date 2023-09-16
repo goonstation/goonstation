@@ -133,11 +133,11 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/screams/martian_screech.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/martian_screech.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> emits a psychic screech!"
 			if ("growl")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/screams/martian_growl.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/screams/martian_growl.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> gives a guttural psionic growl!"
 		return null
 

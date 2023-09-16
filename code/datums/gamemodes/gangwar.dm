@@ -446,6 +446,14 @@ proc/broadcast_to_all_gangs(var/message)
 				if ("Randomise")
 					temporary_name = generate_random_name()
 
+		// add the gang to their displayed name for antag and round end stuff. works hopefully??
+		var/datum/antagonist/leader_antag = src.leader.get_antagonist(ROLE_GANG_LEADER)
+		leader_antag.display_name = "[src.gang_name] [leader_antag.display_name]"
+
+		for (var/datum/mind/ganger in src.members)
+			var/datum/antagonist/antag = ganger.get_antagonist(ROLE_GANG_MEMBER)
+			antag.display_name = "[src.gang_name] [antag.display_name]"
+
 	proc/select_gang_uniform()
 		// Jumpsuit Selection.
 		var/temporary_jumpsuit = tgui_input_list(src.leader.current, "Select your gang's uniform slot item:", "Gang Uniform Selection", src.uniform_list)
@@ -720,7 +728,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		target_area.being_captured = 1
 		S.in_use = 1
-		playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)	//maybe just repeat the appropriate amount of times
+		playsound(target_turf, 'sound/machines/hiss.ogg', 50, TRUE)	//maybe just repeat the appropriate amount of times
 
 	onUpdate()
 		..()
@@ -729,7 +737,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 		if(prob(15))
-			playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)
+			playsound(target_turf, 'sound/machines/hiss.ogg', 50, TRUE)
 
 	onInterrupt(var/flag)
 		boutput(owner, "<span class='alert'>You were interrupted!</span>")

@@ -49118,7 +49118,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3"
 	},
 /area/station/engine/elect)
@@ -59686,7 +59686,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3"
 	},
 /area/station/crew_quarters/fitness)

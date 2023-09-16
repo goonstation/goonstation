@@ -236,7 +236,7 @@
 		// Person entering is too far away
 		if (BOUNDS_DIST(src, L) > 0)
 			boutput(L, "<b>You need to be closer to [src] to enter cryogenic storage!</b>")
-			boutput(user, "<b>[L] needs to be closer to [src] for you to put them in cryogenic storage!</b>")
+			boutput(user, "<b>[L] needs to be closer to [src] for you to put [him_or_her(L)] in cryogenic storage!</b>")
 			return FALSE
 		// Person putting other person in is too far away
 		if (user && BOUNDS_DIST(src, user) > 0)
@@ -332,7 +332,7 @@
 		if (target.client || !target.ckey)
 			boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
 			return FALSE
-		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
+		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? [he_or_she(target)] will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
 			if (!src.mob_can_enter_storage(target, user))
 				return FALSE
 			else

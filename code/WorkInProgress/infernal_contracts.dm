@@ -205,7 +205,7 @@ proc/is_weak_rollable_contract(type)
 		..()
 
 	attack(target, mob/user)
-		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
+		playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(!isdead(C))
@@ -441,12 +441,13 @@ END GUIDE
 				boutput(user, "<span class='notice'>You can't sell your soul to yourself!</span>")
 				return
 			if (!M.literate)
-				boutput(user, "<span class='notice'>Unfortunately they don't know how to write. Their signature will mean nothing.</span>")
+				// 'they' has to exist
+				boutput(user, "<span class='notice'>Unfortunately [he_or_she_dont_or_doesnt(M)] know how to write. [capitalize(his_or_her(M))] signature will mean nothing.</span>")
 				return
 			if (ismobcritter(M))
 				var/mob/living/critter/C = M
 				if (C.is_npc)
-					boutput(user, "<span class='notice'>Despite your best efforts [M] refuses to sell you their soul!</span>")
+					boutput(user, "<span class='notice'>Despite your best efforts [M] refuses to sell you [his_or_her(M)] soul!</span>")
 					return
 			if (src.inuse != 1)
 				actions.start(new/datum/action/bar/icon/force_sign(user, M, src), user)
@@ -846,7 +847,7 @@ obj/item/contract/greed
 					boutput(user, "<span class='notice'>What, not enough for you? Fine.</span>")
 					var/turf/T = get_turf(user)
 					if (T)
-						playsound(T, 'sound/items/coindrop.ogg', 30, 1)
+						playsound(T, 'sound/items/coindrop.ogg', 30, TRUE)
 						new /obj/item/coin(T)
 						for (var/i = 1; i<= 8; i= i*2)
 							if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))
