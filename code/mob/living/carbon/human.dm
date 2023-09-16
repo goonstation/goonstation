@@ -1970,7 +1970,7 @@
 				I.equipped(src, SLOT_WEAR_ID)
 				equipped = 1
 				clothing_dirty |= C_ID
-			else if (hasvar(src.wear_id,storage)) // Lanyards
+			else if (istype(src.wear_id,/obj/item/clothing/lanyard)) // Lanyards
 				if (src.wear_id.storage.check_can_hold(I))
 					src.wear_id.storage.add_contents(I)
 		if (SLOT_EARS)
