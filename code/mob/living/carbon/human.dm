@@ -1194,7 +1194,7 @@
 
 /mob/living/carbon/human/UpdateName()
 	var/id_name = src.wear_id?:registered
-	if (src.wear_id.storage)
+	if (hasvar(src.wear_id.storage))
 		id_name = (locate(/obj/item/card/id) in src.wear_id)?:registered
 	if (!face_visible())
 		if (id_name)
