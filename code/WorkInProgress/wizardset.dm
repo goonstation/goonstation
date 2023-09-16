@@ -710,7 +710,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 			pixel_x = 0
 			pixel_y = 0
 			if (!(dir in cardinal))
-				src.set_dir(2)
+				src.set_dir(SOUTH)
 			switch (dir)
 				if (1)
 					pixel_y = -32
@@ -843,8 +843,8 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 
 	proc/update_dir(var/D)
 		src.set_dir(D)
-		if (!(dir & 2))
-			src.set_dir(2)
+		if (!(dir & SOUTH))
+			src.set_dir(SOUTH)
 		pixel_y = 28
 		effect_overlay.set_dir(dir)
 
