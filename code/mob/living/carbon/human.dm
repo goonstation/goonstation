@@ -1970,6 +1970,9 @@
 				I.equipped(src, SLOT_WEAR_ID)
 				equipped = 1
 				clothing_dirty |= C_ID
+			else if (src.wear_id.storage) // Lanyards
+				if (src.wear_id.storage.check_can_hold(I))
+					src.wear_id.storage.add_contents(I)
 		if (SLOT_EARS)
 			if (!src.ears && src.organHolder && src.organHolder.head)
 				src.ears = I

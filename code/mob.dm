@@ -2838,6 +2838,10 @@
 								R["name"] = newname
 								if (R["full_name"])
 									R["full_name"] = newname
+						for (var/obj/item/clothing/lanyard/L in src.contents) // bonus points if someone figures out how to nicely recurse through all storage
+							for (var/obj/item/card/id/ID in L)
+								ID.registered = newname
+								ID.update_name()
 						for (var/obj/item/card/id/ID in src.contents)
 							ID.registered = newname
 							ID.update_name()
