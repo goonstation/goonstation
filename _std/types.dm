@@ -149,19 +149,19 @@ var/global/list/parent_type_table
 proc/parent_type_of(type)
 	if (!global.parent_type_table)
 		global.parent_type_table = global.generate_parent_type_table()
-    return global.parent_type_table[type]
+	return global.parent_type_table[type]
 
 proc/generate_parent_type_table()
-    var/list/table = new
-    var/list/stack = list(/datum)
-    while(stack.len)
-        var/parent = stack[stack.len]
-        stack.len--
-        var/children = typesof(parent) - parent
-        for(var/child in children)
-            table[child] = parent
-        stack += children
-    return table
+	var/list/table = new
+	var/list/stack = list(/datum)
+	while(stack.len)
+		var/parent = stack[stack.len]
+		stack.len--
+		var/children = typesof(parent) - parent
+		for(var/child in children)
+			table[child] = parent
+		stack += children
+	return table
 
 // by_type and by_cat stuff
 
