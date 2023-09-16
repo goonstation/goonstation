@@ -146,18 +146,12 @@ proc/maximal_subtype(var/list/L)
 // credit to Kaiochao on the BYOND forums for the idea
 var/global/list/parent_type_table
 
-/// Get the parent type of a given type.
-/// Generates the table (VERY EXPENSIVE) if it hasn't been generated yet.
 proc/parent_type_of(type)
-	global.parent_type_table ||= global.generate_parent_type_table()
+	if (!global.parent_type_table)
+		global.parent_type_table = global.generate_parent_type_table()
 	return global.parent_type_table[type]
 
-/// Generates the parent type table. This is INCREDIBLY EXPENSIVE, so we do it lazily, but also in preMapLoad- if something needs it as the world
-/// is being set up, it'll be there, but we ensure it will never be loaded during a round.
 proc/generate_parent_type_table()
-#if DM_VERSION >= 515
-#warn You're on 515, so you should really remove the really expensive parent_type_of workaround and replace it with the actually supported method of static var access.
-#endif
 	var/list/table = new
 	var/list/stack = list(/datum)
 	while(stack.len)
