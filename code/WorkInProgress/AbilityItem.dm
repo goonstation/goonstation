@@ -65,7 +65,16 @@
 			//S.icon = IC
 			spraybits += S
 
-		if (the_mob) playsound(the_mob, 'sound/effects/spray.ogg', 75, 1, 0)
+			/* // What the heck? This ran 8 times. Also the spraybits loop does the same exact thing below. commenting this out to prevent fluid duplication
+			SPAWN(0)
+				S.reagents.reaction(theturf, TOUCH)
+				for(var/atom/A in theturf)
+					if (istype(A,/obj/fluid)) continue
+					S.reagents.reaction(A, TOUCH, 0, 0)
+			*/
+
+		if (the_mob)
+			playsound(the_mob, 'sound/effects/spray.ogg', 75, TRUE, 0)
 		//E.reagents.clear_reagents()
 
 		sleep(0.5 SECONDS)
@@ -196,7 +205,7 @@
 			qdel(src)
 			return
 
-		playsound(the_mob, 'sound/effects/bamf.ogg', 100, 1)
+		playsound(the_mob, 'sound/effects/bamf.ogg', 100, TRUE)
 
 		if(prob(explosion_chance) || R.emagged)
 			boutput(the_mob, "<span class='alert'>The rocket shoes blow up!</span>")
@@ -268,7 +277,7 @@
 			boutput(the_mob, "<span class='alert'>You must be wearing the shoes to use them.</span>")
 			return
 
-		playsound(the_mob, 'sound/effects/bamf.ogg', 100, 1)
+		playsound(the_mob, 'sound/effects/bamf.ogg', 100, TRUE)
 
 		SPAWN(0)
 			for(var/i=0, i<R.soniclength, i++)
@@ -389,14 +398,13 @@
 ////////////////////////////////////////////////////////////
 
 /obj/ability_button/tscanner_toggle
-	name = "Toggle T-Scanner"
-	icon_state = "lightoff" //TODO: make bespoke sprites for this I guess
+	name = "Toggle T-ray Scanner"
+	icon_state = "tray_off"
 
 	execute_ability()
 		var/obj/item/device/t_scanner/J = the_item
-		J.AttackSelf(the_mob)
-		if(J.on) icon_state = "lighton"
-		else  icon_state = "lightoff"
+		J.set_on(!J.on, the_mob) // only turns on/off
+		src.icon_state = J.on ? "tray_on" : "tray_off"
 		..()
 
 ////////////////////////////////////////////////////////////

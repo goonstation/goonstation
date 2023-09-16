@@ -375,12 +375,12 @@
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)
 					O.show_message("<span class='alert'>[user] points the gun at [his_or_her(user)] head. Wonk!</span>", 1, "<span class='alert'>Wonk!</span>", 2)
-					playsound(user, 'sound/vox/wonk.ogg', 70, 1)
+					playsound(user, 'sound/vox/wonk.ogg', 70, TRUE)
 
 			return 0
 		else if(src.shotsLeft == 1)
 			src.shotsLeft = 0
-			playsound(user, 'sound/voice/animal/hoot.ogg', 70, 1)
+			playsound(user, 'sound/voice/animal/hoot.ogg', 70, TRUE)
 			for(var/mob/O in AIviewers(user, null))
 				if (O.client)	O.show_message("<span class='alert'><B>HOOT!</B> [user] explodes revealing an owl within.</span>", 1, "<span class='alert'>You hear an owl.</span>", 2)
 				SPAWN(1 DECI SECOND)
@@ -444,10 +444,10 @@
 					boutput(O, "<span class='alert'><b>[affected_mob] [pick("horks", "vomits", "spews")] up an Owl!</b>")
 
 		if(2)
-			playsound(affected_mob, 'sound/effects/HeartBeatLong.ogg', 70, 1)
+			playsound(affected_mob, 'sound/effects/HeartBeatLong.ogg', 70, TRUE)
 			if (probmult(50))
 				for(var/mob/O in viewers(affected_mob, null))
-					playsound(O, 'sound/voice/animal/hoot.ogg', 70, 1)
+					playsound(O, 'sound/voice/animal/hoot.ogg', 70, TRUE)
 					O.show_message(text("<span class='alert'><B>[]</B> hoots uncontrollably!</span>", affected_mob), 1)
 				affected_mob.changeStatus("stunned", 10 SECONDS)
 				affected_mob.changeStatus("weakened", 10 SECONDS)
@@ -479,7 +479,7 @@
 				affected_mob.changeStatus("weakened", 10 SECONDS)
 				affected_mob.make_jittery(250)
 				for(var/mob/O in viewers(affected_mob, null))
-					playsound(O, 'sound/voice/animal/hoot.ogg', 70, 1)
+					playsound(O, 'sound/voice/animal/hoot.ogg', 70, TRUE)
 					O.show_message(text("<span class='alert'><B>[]</B> hoots uncontrollably!</span>", affected_mob), 1)
 			if(probmult(25))
 				boutput(affected_mob, "<B>[pick("Who-WHO", "HOoooT", "neST!")]</B>")

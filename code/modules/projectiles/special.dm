@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				sfloors -= Q
 
 	on_hit(var/atom/A)
-		playsound(A, 'sound/weapons/energy/LightningCannonImpact.ogg', 50, 1)
+		playsound(A, 'sound/weapons/energy/LightningCannonImpact.ogg', 50, TRUE)
 		var/list/sfloors = list()
 		for (var/turf/T in view(shock_range, A))
 			if (!T.density)
@@ -382,7 +382,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		fireflash_sm(get_turf(P), burn_range, temperature)
 
 	on_hit(var/atom/A)
-		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
 		fireflash_sm(get_turf(A), blast_size, temperature)
 
 /datum/projectile/special/howitzer
@@ -425,7 +425,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_hit(var/atom/A)
 		var/turf/T = get_turf(A)
-		playsound(A, 'sound/effects/ExplosionFirey.ogg', 60, 1)
+		playsound(A, 'sound/effects/ExplosionFirey.ogg', 60, TRUE)
 		if(!src.impacted)
 			playsound_global(world, 'sound/weapons/energy/howitzer_impact.ogg', 60)
 			src.impacted = 1
@@ -464,7 +464,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		//prevent playing all 50 sounds at once on rapid bounce
 		if(world.time >= last_sound_time + 1 DECI SECOND)
 			last_sound_time = world.time
-			playsound(A, hit_sound, 60, 1)
+			playsound(A, hit_sound, 60, TRUE)
 
 		if (explosive_hits)
 			SPAWN(0)
@@ -750,7 +750,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				else
 					playsound(T, src.hit_sound, 60, 1)
 		else
-			playsound(A, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
+			playsound(A, 'sound/effects/mag_magmisimpact.ogg', 25, TRUE, -1)
 
 /datum/projectile/special/homing/magicmissile/weak
 	name = "magic minimissile"

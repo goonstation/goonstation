@@ -2260,7 +2260,7 @@
 		return
 
 	if (!H.stat)
-		boutput(usr, "You can't eat [H] while they are conscious!")
+		boutput(usr, "You can't eat [H] while [hes_or_shes(H)] conscious!")
 		return
 
 	if (H.bioHolder.HasEffect("consumed"))
@@ -3249,6 +3249,11 @@
 	else if (istype(src.gloves, /obj/item/clothing/gloves/ring/titanium))
 		return 1
 	return 0
+
+/mob/living/carbon/human/is_heat_resistant()
+	. = ..()
+	if (ischangeling(src)) // comic book weakness
+		return FALSE
 
 /mob/living/carbon/human/empty_hands()
 	var/h = src.hand

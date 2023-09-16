@@ -212,7 +212,7 @@
 				boutput(user, "This fitting isn't user-serviceable.")
 				return
 			boutput(user, "<span class='notice'>Removing fitting...</span>")
-			playsound(user, 'sound/machines/click.ogg', 50, 1)
+			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), null, null, null, null)
 
 
@@ -222,7 +222,7 @@
 
 		if (istype(A, /turf/simulated/floor))
 			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
-			playsound(user, 'sound/machines/click.ogg', 50, 1)
+			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), null, null, null, null)
 
 
@@ -235,7 +235,7 @@
 			if (locate(/obj/window) in B)
 				return
 			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
-			playsound(user, 'sound/machines/click.ogg', 50, 1)
+			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), null, null, null, null)
 
 
@@ -258,7 +258,7 @@
 						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
 					src.metal_ammo += loadAmount
 					S.change_stack_amount(-loadAmount)
-					playsound(src, 'sound/machines/click.ogg', 25, 1)
+					playsound(src, 'sound/machines/click.ogg', 25, TRUE)
 					src.inventory_counter.update_number(src.metal_ammo)
 					boutput(user, "You load the metal sheet into the lamp manufacturer.")
 			else
@@ -672,7 +672,7 @@ ported and crapped up by: haine
 			if (tank.label_name == switch_tank)
 				src.active_tank = tank
 				user.show_text("[src] is now dispensing [switch_tank].")
-				playsound(loc, 'sound/effects/pop.ogg', 50, 0) // Play a sound effect.
+				playsound(loc, 'sound/effects/pop.ogg', 50, FALSE) // Play a sound effect.
 				return
 
 	afterattack(obj/target, mob/user)
@@ -691,7 +691,7 @@ ported and crapped up by: haine
 
 			var/trans = src.active_tank.reagents.trans_to(target, amt_to_transfer)
 			user.show_text("You transfer [trans] unit\s of the solution to [target]. [active_tank.reagents.total_volume] unit\s remain.", "blue")
-			playsound(loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 0) // Play a sound effect.
+			playsound(loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, FALSE) // Play a sound effect.
 			processing_items |= src
 		else
 			return ..() // call your parents!!

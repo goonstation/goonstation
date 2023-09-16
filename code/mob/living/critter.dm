@@ -1271,8 +1271,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	is_heat_resistant()
 		if (!get_health_holder("burn"))
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 	ex_act(var/severity)
 		..() // Logs.
@@ -1376,6 +1376,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		else
 			if (src.critter_basic_attack(target))
 				src.ai_attack_count += 1
+
+	/// Used for generic critter mobAI - override if your critter needs additional behaviour for eating
+	proc/critter_eat(var/obj/item/target)
+		target.Eat(src, src, TRUE)
+
 
 	/// How the critter should attack normally
 	proc/critter_basic_attack(var/mob/target)

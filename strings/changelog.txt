@@ -1,5 +1,45 @@
 
+(t)fri sep 15 23
+(u)Lord_Earthfire
+(p)14516
+(e)🪲⚖🔄🔊📡🌱🐁|C-Bug, C-Balance, C-Rework, C-Sound, A-AI, A-Hydroponics, A-Critters
+(*)The syndicate supplies its botanists with a majorly changed and more responsive man-eating plant strain! Check the minor changes for details.
+(+)Man-eating plants don't insta-stun anymore. Instead, they got a stamina draining attack that stuns if you run out of stamina
+(+)Man-eating plants now need to aggressive-grab their victims to devour them. They show a visible action bar.
+(+)The items of it's devoured victims can be retreived by butchering/gibbing the plant. It can occasionally vomit them out as well.
+(+)The scaling of the maneater got changed. Its health scales with endurance, its stamina and stamina regeneration with potency.
+(+)Feeding meat/people to the maneater increases endurance now. Even if it is already out of its tray!
+(+)If any chem-producing plant was spliced into the man-eating plant, it will inject its victim with this chemicals. The amount scales with yield.
+(+)Atrazine now works as an effective skin-penetrating poison against maneaters
+(+)Maneater seeds now start with "dominant genome", "inhibited potential" and "temporary spliceability" gene strains
+(u)Colossusw
+(p)15317
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Overhauled Stinging Nettles slightly(minor changes for details).
+(+)Nettles now won't pass reagents to people wearing botany jumpsuits.
+(+)Nettles now have a 'smooth nettle' mutation that does not produce any histamine.
+(+)Nettles now are triggered by movement near them, on a cooldown inversely scaled to their endurance, as opposed to firing off randomly.
+(u)LeahTheTech
+(p)15503
+(e)⚖🌱|C-Balance, A-Hydroponics
+(*)Ricin and ghost chilli juice reagents are no longer present directly in their respective crops, instead requiring them to be brewed in a still.
+(u)Amylizzle
+(p)15796
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Nuclear meltdowns now scale with the amount of radioactive fuel in the reactor.
+(u)glowbold
+(p)15740
+(e)🆕🎨💅📦💡|C-Feature, C-Sprites, C-QoL, A-Game-Objects, A-Station-Systems
+(*)Using a T-ray scanner in-hand allows you to toggle seeing underfloor power cables, underfloor disposal pipes, and the station pipe blueprints independently.
+(t)thu sep 14 23
+(u)UnfunnyPerson
+(p)15644
+(e)🎨🔨🤖|C-Sprites, A-Player-Actions, A-Silicons
+(+)Flipping with an exposed brain as a cyborg will give the "Loose Brain" status effect. Flip with the status effect to launch your brain.
 (t)wed sep 13 23
+(u)Azrun & Jan.antilles
+(e)🐑🧣🧶|C-Feature
+(+)Knitting expanded allow for basic dyeing and cozy scarves.
 (u)DisturbHerb, Tyrant
 (p)15787
 (e)🆕🗺⚗|C-Feature, A-Mapping, A-Chemistry

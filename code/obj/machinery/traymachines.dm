@@ -139,11 +139,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_t
 
 	// stop the tray from extending into solid things
 	if (T.density && !istype(get_area(src), /area/solarium)) // Solarium gets an exception because this is a hilarious way to get Helios
-		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 		return
 	for(var/obj/O in T) // we still want to extend into mobs, no iterating over them
 		if (O.density && O.anchored) // it's ok to pull in unanchored stuff I guess!
-			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 			return
 
 	my_tray.set_dir(src.dir)
@@ -379,16 +379,15 @@ ABSTRACT_TYPE(/obj/machine_tray)
 			continue
 		if (isliving(I))
 			var/mob/living/L = I
-			for (var/obj/item/W in L)
-				if (prob(10))
-					W.set_loc(L.loc)
-
-			if (!L.is_heat_resistant() || ischangeling(L))
+			if (!L.is_heat_resistant())
 				logTheThing(LOG_COMBAT, user, "cremates [constructTarget(L,"combat")] in a crematorium at [log_loc(src)].")
-				L.remove()
+				for (var/obj/item/W in L)
+					if (prob(10))
+						W.set_loc(L.loc)
+				ashes += 1
 			else
 				logTheThing(LOG_COMBAT, user, "fails to cremate [constructTarget(L,"combat")] in a crematorium at [log_loc(src)] due to their heat resistance.")
-			ashes += 1
+				continue // don't qdel us thanks
 		else if (!ismob(I))
 			if (prob(max(0, 100 - (ashes * 10))))
 				ashes += 1
@@ -546,7 +545,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 								H.emote("scream")
 							if (i % (2 SECONDS))
 								boutput(H, "<span class='alert'>[pick("Your skin is melting!", "This false sun burns just like a real one!", "The light! <b>IT BURNS</b>!")]</span>")
-								playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+								playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
 							if (isdead(H))
 								make_cleanable(/obj/decal/cleanable/ash, src)
 								H.unequip_all()

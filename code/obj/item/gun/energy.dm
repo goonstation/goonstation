@@ -125,7 +125,7 @@ TYPEINFO(/obj/item/gun/energy)
 				return 1
 			boutput(user, "<span class='alert'>*click* *click*</span>")
 			if (!src.silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return 0
 
 

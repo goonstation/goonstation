@@ -85,7 +85,7 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/killme.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/killme.ogg', 70, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> begs for mercy!"
 
 /mob/living/critter/mechmonstrosity/medical
@@ -281,7 +281,7 @@
 			logTheThing(LOG_COMBAT, ownerMob, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
-			playsound(ownerMob, 'sound/items/hypo.ogg', 80, 0)
+			playsound(ownerMob, 'sound/items/hypo.ogg', 80, FALSE)
 
 			var/mob/living/critter/robotic/crawler/crawler = new /mob/living/critter/robotic/crawler(get_turf(target))
 			crawler.name = "[target]'s crawling head"

@@ -350,7 +350,7 @@
 				I.name = "dna activator - [E.name]"
 				I.gene_to_activate = E.id
 				on_ui_interacted(ui.user)
-				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		if("injector")
 			. = TRUE
 			if (!genResearch.isResearched(/datum/geneticsResearchEntry/injector))
@@ -375,7 +375,7 @@
 			copy_datum_vars(E, NEW)
 			I.BE = NEW
 			on_ui_interacted(ui.user)
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		if("researchmut")
 			. = TRUE
 			var/datum/bioEffect/E = locate(params["ref"])
@@ -694,7 +694,7 @@
 				var/waste = (E.reclaim_mats + genResearch.researchMaterial) - reclamation_cap
 				if (waste >= E.reclaim_mats)
 					scanner_alert(ui.user, "Nothing would be gained from reclamation due to material capacity limit. Reclamation aborted.", error = TRUE)
-					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1, -10)
+					playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE, -10)
 					return
 				genResearch.researchMaterial = min(genResearch.researchMaterial + E.reclaim_mats, reclamation_cap)
 				if (waste > 0)
@@ -706,7 +706,7 @@
 				E.holder = null
 				saved_mutations -= E
 				qdel(E)
-			playsound(src, 'sound/machines/pc_process.ogg', 50, 1)
+			playsound(src, 'sound/machines/pc_process.ogg', 50, TRUE)
 			src.equipment_cooldown(GENETICS_RECLAIMER, 600)
 		if("save")
 			. = TRUE
