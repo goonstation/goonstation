@@ -171,7 +171,9 @@
 
 /obj/machinery/weapon_stand/proc/update()
 	src.icon_state = "[src.stand_type][src.amount]"
-	return
+
+/obj/machinery/weapon_stand/proc/valid_item(obj/item/I)
+	return istype(I, contained_weapon)
 
 /obj/machinery/weapon_stand/process() // Override the normal process proc with this:
 	if(recharges_contents)
