@@ -1193,9 +1193,7 @@
 
 
 /mob/living/carbon/human/UpdateName()
-	var/id_name = src.wear_id?:registered
-	if (hasvar(src.wear_id,storage))
-		id_name = (locate(/obj/item/card/id) in src.wear_id)?:registered
+	var/id_name = get_id_card(src.wear_id)?:registered
 	if (!face_visible())
 		if (id_name)
 			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
@@ -1972,7 +1970,7 @@
 				I.equipped(src, SLOT_WEAR_ID)
 				equipped = 1
 				clothing_dirty |= C_ID
-			else if (src.wear_id.storage) // Lanyards
+			else if (hasvar(src.wear_id,storage)) // Lanyards
 				if (src.wear_id.storage.check_can_hold(I))
 					src.wear_id.storage.add_contents(I)
 		if (SLOT_EARS)
