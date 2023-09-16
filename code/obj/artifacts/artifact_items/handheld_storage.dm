@@ -8,6 +8,8 @@
 	w_class = W_CLASS_NORMAL
 	/// original icon state, without artifact activation fx
 	var/base_icon_state
+	/// original item_state
+	var/base_item_state
 	/// worn belt icon states
 	var/static/belt_icons = list("eldritch" = "martian-belt",
 								"precursor" = "martian-belt",
@@ -69,9 +71,9 @@
 
 		// reset icons and wear layer
 		src.icon = initial(src.icon)
-		src.wear_image_icon = initial(src.wear_image_icon)
 		src.icon_state = src.base_icon_state
-		src.item_state = initial(src.item_state)
+		src.item_state = src.base_item_state
+		src.wear_image_icon = initial(src.wear_image_icon)
 		src.wear_layer = initial(src.wear_layer)
 
 		// reapply overlay if needed
