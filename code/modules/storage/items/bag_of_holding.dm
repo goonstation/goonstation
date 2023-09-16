@@ -1,32 +1,42 @@
-// storage datums for bag of holding artifact. see code there for intent of these
+// storage datums for bag of holding artifact. see code there for how these are used
 
+// --- eldritch ---
+
+// eldritch storage that has no hud. doesn't inherit from other artifact storages' parent type since they don't have the no hud functionality
 /datum/storage/no_hud/eldritch_bag_of_holding
 
+// effect from putting a bag of holding into another
 /datum/storage/no_hud/eldritch_bag_of_holding/add_contents_extra(obj/item/I, mob/user, visible)
 	..()
 	if (istype(I, /obj/item/artifact/bag_of_holding))
 		var/obj/item/artifact/bag_of_holding/boh = I
 		var/datum/artifact/artifact = boh.artifact
 		if (artifact.activated)
-			combine_bags_of_holding(user, boh, src.linked_item)
+			combine_bags_of_holding(src.linked_item, boh, user)
 			return
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 	boh.ArtifactFaultUsed(user, boh)
 
+// --- parent artifact storage type ---
+
+// parent artifact bag of holding type
 /datum/storage/artifact_bag_of_holding
 
+// effect from putting a bag of holding into another
 /datum/storage/artifact_bag_of_holding/add_contents_extra(obj/item/I, mob/user, visible)
 	..()
 	if (istype(I, /obj/item/artifact/bag_of_holding))
 		var/obj/item/artifact/bag_of_holding/boh = I
 		var/datum/artifact/artifact = boh.artifact
 		if (artifact.activated)
-			combine_bags_of_holding(user, boh, src.linked_item)
-			return FALSE
+			combine_bags_of_holding(src.linked_item, boh, user)
+			return
 	var/obj/item/artifact/bag_of_holding/boh = src.linked_item
 	boh.ArtifactFaultUsed(user, boh)
-	return TRUE
 
+// --- wizard ---
+
+// storage that shows a random, smaller selection of the total contents each time you look inside or its contents change
 /datum/storage/artifact_bag_of_holding/wizard
 	var/visible_slots = 3
 
@@ -45,32 +55,44 @@
 	if (user)
 		src.show_hud(user)
 
-/datum/storage/artifact_bag_of_holding/wizard/show_hud(mob/user, refresh_hud = TRUE)
+// does the randomization of visible contents
+/datum/storage/artifact_bag_of_holding/wizard/show_hud(mob/user)
 	shuffle_list(src.stored_items)
 	..()
+	// item order is randomized, then hud refreshes, only adding new objects. this is needed to remove old objects
 	for (var/obj/item/I in (src.hud.objects - src.get_hud_contents()))
 		src.hud.remove_object(I)
 
+// extra check for the storage
 /datum/storage/artifact_bag_of_holding/wizard/hud_can_add(obj/item/I)
 	return (length(src.get_contents()) < src.visible_slots) && ..()
 
 /datum/storage/artifact_bag_of_holding/wizard/get_visible_slots()
 	return src.visible_slots
 
+// make sure only up to visible slots # of contents are shown
 /datum/storage/artifact_bag_of_holding/wizard/get_hud_contents(hud_clear_check = TRUE)
 	var/list/current_contents = src.get_contents()
 	return !length(current_contents) ? current_contents : current_contents.Copy(1, min(length(current_contents), src.visible_slots) + 1)
 
+// --- precursor ---
+
+// storage that stops items from burning, repairs items to full health, and can apply a random effect to items put inside
 /datum/storage/artifact_bag_of_holding/precursor
 
 /datum/storage/artifact_bag_of_holding/precursor/add_contents_extra(obj/item/I, mob/user, visible)
 	if (!..())
 		return
+
 	var/play_sound = FALSE
+
+	// extinguish burning items
 	if (I.burning || (I in by_cat[TR_CAT_BURNING_ITEMS]))
 		I.combust_ended()
 		boutput(user, "<span class='notice'>[I] is enveloped in a glow and extinguished!</span>")
 		play_sound = TRUE
+
+	// repair items to full health
 	var/initial_health = get_initial_item_health(I)
 	if (I.health < initial_health)
 		boutput(user, "<span class='notice'>[src.linked_item] hums for a moment, and [I] reforms to its original state!</span>")
@@ -80,6 +102,7 @@
 	if (play_sound)
 		playsound(src.linked_item.loc, 'sound/machines/ArtifactPre1.ogg', 50, TRUE)
 
+	// random effect has a chance to apply to an item once, and only every so often
 	var/first_time_entrance = !GET_ATOM_PROPERTY(I, PROP_ATOM_PRECURSOR_BOH_ENTERED)
 	APPLY_ATOM_PROPERTY(I, PROP_ATOM_PRECURSOR_BOH_ENTERED, src.linked_item)
 	if (GET_COOLDOWN(src.linked_item, "precusor_boh_transformation_chance"))
@@ -90,6 +113,7 @@
 	if (!first_time_entrance)
 		return
 
+	// apply effect
 	var/item_name = I.name
 	switch(rand(1, 4))
 		if (1)
@@ -103,18 +127,22 @@
 			I.name = new_name
 			I.real_name = new_name
 	boutput(user, "<span class='notice'>[src.linked_item] warps strangely and returns to normal. \The [item_name] isn't the same anymore!</span>")
+
+	// make sure sound is always played if storage did something
 	if (!play_sound)
 		playsound(src.linked_item.loc, 'sound/machines/ArtifactPre1.ogg', 50, TRUE)
 
-// when a bag of holding artifact is put into into another
-// user can be null, boh_1 is put into boh_2
-proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifact/boh_2)
+// --- other ---
+
+// when a bag of holding artifact is put into into another, after its been done
+// boh "added" is put into boh "boh"
+proc/combine_bags_of_holding(obj/item/artifact/boh, obj/item/artifact/added, mob/user = null)
 	var/effect
-	var/turf/T = get_turf(boh_2)
+	var/turf/T = get_turf(boh)
 	switch(rand(1, 4))
 		// explosion
 		if (1)
-			explosion_new(boh_1, T, 3) // causes a one tile hull breach
+			explosion_new(added, T, 3) // causes a one tile hull breach
 			T.visible_message("<span class='alert'><B>The artifacts explode! HOLY SHIT!!!")
 			playsound(T, "explosion", 25, TRUE)
 			user?.gib()
@@ -133,7 +161,7 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 			effect = "black hole"
 		// teleport items everywhere
 		if (3)
-			var/list/items = boh_1.storage.get_contents() + boh_2.storage.get_contents() - boh_1
+			var/list/items = boh.storage.get_contents() + added.storage.get_contents() - added
 			// teleport to random storages
 			if (prob(50))
 				if (length(items))
@@ -158,10 +186,10 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 			// teleport to random turfs
 			else
 				var/list/turfs = block(locate(1, 1, T.z || Z_LEVEL_STATION), locate(world.maxx, world.maxy, T.z || Z_LEVEL_STATION))
-				for (var/obj/item/I as anything in boh_1.storage.get_contents())
-					boh_1.storage.transfer_stored_item(I, pick(turfs))
-				for (var/obj/item/I as anything in (boh_2.storage.get_contents() - boh_1))
-					boh_2.storage.transfer_stored_item(I, pick(turfs))
+				for (var/obj/item/I as anything in added.storage.get_contents())
+					added.storage.transfer_stored_item(I, pick(turfs))
+				for (var/obj/item/I as anything in (boh.storage.get_contents() - added))
+					boh.storage.transfer_stored_item(I, pick(turfs))
 
 				effect = "content teleportation to random turfs"
 
@@ -186,13 +214,14 @@ proc/combine_bags_of_holding(mob/user, obj/item/artifact/boh_1, obj/item/artifac
 
 			effect = "user stranded in pocket dimension"
 
-	logTheThing(LOG_STATION, boh_2, "artifact bags of holding combined at [log_loc(T)][user ? " by [user] " : null]with effect [effect].")
+	logTheThing(LOG_STATION, boh, "artifact bags of holding combined at [log_loc(T)][user ? " by [user] " : null]with effect [effect].")
 
-	for (var/obj/item/I as anything in (boh_1.storage.get_contents() + boh_2.storage.get_contents() - boh_1))
+	for (var/obj/item/I as anything in (added.storage.get_contents() + boh.storage.get_contents() - added))
 		qdel(I)
-	qdel(boh_1)
-	qdel(boh_2)
+	qdel(added)
+	qdel(boh)
 
+// small singulo imitator that isn't deadly
 /obj/dummy/artifact_boh_singulo_dummy
 	name = "gravitational singularity"
 	desc = "That's... a singularity..."
