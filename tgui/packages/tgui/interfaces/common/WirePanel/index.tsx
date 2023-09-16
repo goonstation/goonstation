@@ -36,8 +36,8 @@ export const PhysicalWires = (props, context) => {
           <PhysicalWire
             key={i}
             index={i}
-            name={wirePanelStatic.wires[i].name}
-            value={wirePanelStatic.wires[i].value}
+            name={wire.name}
+            value={wire.value}
             cut={wirePanelDynamic.wires[i].cut}
             act={act}
           />
@@ -51,23 +51,20 @@ export const TextControls = (props, context) => {
   const { data } = useBackend<WirePanelData>(context);
   const { wirePanelDynamic, wirePanelStatic } = data;
   return (
-    <>
-      <Divider />
-      <Box className="WirePanel-control-container">
-        {wirePanelStatic.indicators.map((indicator, i) => {
-          return (
-            <TextControl
-              key={i}
-              name={wirePanelStatic.indicators[i].name}
-              value={wirePanelStatic.indicators[i].value}
-              control={wirePanelStatic.indicators[i].control}
-              status={(wirePanelDynamic.active_wire_controls & indicator.control)}
-              pattern={wirePanelDynamic.indicators[i].pattern}
-            />
-          );
-        })}
-      </Box>
-    </>
+    <Box className="WirePanel-control-container">
+      {wirePanelStatic.indicators.map((indicator, i) => {
+        return (
+          <TextControl
+            key={i}
+            name={indicator.name}
+            value={indicator.value}
+            control={indicator.control}
+            status={(wirePanelDynamic.active_wire_controls & indicator.control)}
+            pattern={wirePanelDynamic.indicators[i].pattern}
+          />
+        );
+      })}
+    </Box>
   );
 };
 
@@ -76,18 +73,16 @@ export const PhysicalControls = (props, context) => {
   const { wirePanelDynamic, wirePanelStatic } = data;
   return (
     <Box className="WirePanel-indicator-container">
-      <Stack>
-        {wirePanelStatic.indicators.map((indicator, i) => {
-          return (
-            <PhysicalControl
-              key={i}
-              pattern={wirePanelDynamic.indicators[i].pattern}
-              colorValue={wirePanelStatic.indicators[i].value}
-              colorName={wirePanelStatic.indicators[i].name}
-            />
-          );
-        })}
-      </Stack>
+      {wirePanelStatic.indicators.map((indicator, i) => {
+        return (
+          <PhysicalControl
+            key={i}
+            pattern={wirePanelDynamic.indicators[i].pattern}
+            colorValue={indicator.value}
+            colorName={indicator.name}
+          />
+        );
+      })}
     </Box>
   );
 };
@@ -103,8 +98,8 @@ export const WirePanelShowControls = (props, context) => {
             <PhysicalWire
               key={i}
               index={i}
-              name={wirePanelStatic.wires[i].name}
-              value={wirePanelStatic.wires[i].value}
+              name={wire.name}
+              value={wire.value}
               cut={wirePanelDynamic.wires[i].cut}
               act={act}
             />
@@ -117,9 +112,9 @@ export const WirePanelShowControls = (props, context) => {
           return (
             <TextControl
               key={i}
-              name={wirePanelStatic.indicators[i].name}
-              value={wirePanelStatic.indicators[i].value}
-              control={wirePanelStatic.indicators[i].control}
+              name={indicator.name}
+              value={indicator.value}
+              control={indicator.control}
               status={(wirePanelDynamic.active_wire_controls & indicator.control)}
               pattern={wirePanelDynamic.indicators[i].pattern}
             />
@@ -141,8 +136,8 @@ export const WirePanelShowIndicators = (props, context) => {
             <PhysicalWire
               key={i}
               index={i}
-              name={wirePanelStatic.wires[i].name}
-              value={wirePanelStatic.wires[i].value}
+              name={wire.name}
+              value={wire.value}
               cut={wirePanelDynamic.wires[i].cut}
               act={act}
             />
@@ -157,8 +152,8 @@ export const WirePanelShowIndicators = (props, context) => {
               <PhysicalControl
                 key={i}
                 pattern={wirePanelDynamic.indicators[i].pattern}
-                colorValue={wirePanelStatic.indicators[i].value}
-                colorName={wirePanelStatic.indicators[i].name}
+                colorValue={indicator.value}
+                colorName={indicator.name}
               />
             );
           })}
@@ -180,8 +175,8 @@ export const WirePanelAirlocks = (props, context) => {
               <TextWire
                 key={i}
                 index={i}
-                name={wirePanelStatic.wires[i].name}
-                value={wirePanelStatic.wires[i].value}
+                name={wire.name}
+                value={wire.value}
                 cut={wirePanelDynamic.wires[i].cut}
                 act={act}
               />
@@ -194,9 +189,9 @@ export const WirePanelAirlocks = (props, context) => {
             return (
               <TextControl
                 key={i}
-                name={wirePanelStatic.indicators[i].name}
-                value={wirePanelStatic.indicators[i].value}
-                control={wirePanelStatic.indicators[i].control}
+                name={indicator.name}
+                value={indicator.value}
+                control={indicator.control}
                 status={(wirePanelDynamic.active_wire_controls & indicator.control)}
                 pattern={wirePanelDynamic.indicators[i].pattern}
               />

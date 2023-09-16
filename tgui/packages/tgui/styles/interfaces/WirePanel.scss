@@ -111,6 +111,8 @@ $color-label: colors.fg(colors.$label) !default;
   height: 5em;
   border: 2px outset rgb(200,200,200);
   direction: rtl;
+  width: 100%;
+  display: inline-flex;
 }
 
 .WirePanel-indicator-frame {
