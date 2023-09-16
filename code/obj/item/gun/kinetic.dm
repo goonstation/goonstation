@@ -162,7 +162,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				user.show_text("You can't unload this gun.", "red")
 				return
 			src.eject_magazine(user)
-
 		return ..()
 
 	attack(mob/M, mob/user)
@@ -217,6 +216,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				else
 					user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
 					src.ejectcasings()
+					playsound(src, src.ammo.sound_load, rand(30, 60), TRUE)
 					return
 			else
 				user.show_text("[src] is empty!", "red")
