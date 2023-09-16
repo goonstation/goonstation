@@ -1924,6 +1924,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	process()
 		if (heat > 0)
 			heat = max(0, heat - HEAT_REMOVED_PER_PROCESS)
+			update_icon()
 		return
 
 	canshoot(mob/user)
@@ -1995,6 +1996,12 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			src.UpdateOverlays(overlay_image, "gun_light")
 		else
 			src.UpdateOverlays(null, "gun_light")
+
+		if (heat > 90) // danger zone
+			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", 'icons/obj/large/64x32.dmi', "makeshift-smoke")
+			src.UpdateOverlays(overlay_image, "gun_smoke")
+		else
+			src.UpdateOverlays(null, "gun_smoke")
 		..()
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
