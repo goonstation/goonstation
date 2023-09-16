@@ -312,7 +312,7 @@
 	return
 
 /mob/living/carbon/human/TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss, var/bypass_reversal = FALSE)
-	if (src.nodamage) return
+	if (src.nodamage || QDELETED(src)) return
 
 	hit_twitch(src)
 
@@ -328,7 +328,7 @@
 	if(src.traitHolder?.hasTrait("athletic"))
 		brute *=1.33
 
-	if (src.mutantrace)
+	if(src.mutantrace) //HOW
 		var/typemult
 		if(islist(src.mutantrace.typevulns))
 			typemult = src.mutantrace.typevulns[DAMAGE_TYPE_TO_STRING(damage_type)]
@@ -425,6 +425,12 @@
 	src.bruteloss = max(bruteloss - brute, 0)
 	src.burnloss = max(burnloss - burn, 0)
 
+	if (brute > 0)
+		if (brute >= 10 || src.get_brute_damage() <= 5)
+			src.heal_slash_wound("all")
+		else if (prob(10))
+			src.heal_slash_wound("single")
+
 	if (burn > 0)
 		if (burn >= 10 || src.get_burn_damage() <= 5)
 			src.heal_laser_wound("all")
@@ -434,6 +440,16 @@
 	src.UpdateDamageIcon()
 	health_update_queue |= src
 	return 1
+
+/mob/living/carbon/human/proc/heal_slash_wound(type)
+	if (type == "single")
+		for (var/i in 0 to 2)
+			if (src.GetOverlayImage("slash_wound-[i]"))
+				src.UpdateOverlays(null, "slash_wound-[i]")
+				break
+	else if (type == "all")
+		for (var/i in 0 to 2)
+			src.UpdateOverlays(null, "slash_wound-[i]")
 
 /mob/living/carbon/human/proc/heal_laser_wound(type)
 	if (type == "single")

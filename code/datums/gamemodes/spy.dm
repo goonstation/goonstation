@@ -85,7 +85,7 @@
 
 	var/the_slot = null
 	if (leader.back?.storage && !leader.back.storage.is_full())
-		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), leader.slot_in_backpack)
+		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), SLOT_IN_BACKPACK)
 		the_slot = "backpack"
 	else
 		var/obj/K2 = new /obj/item/storage/box/spykit(get_turf(leader))
@@ -111,14 +111,12 @@
 	src.spies.Add(spymind)
 	src.spies[spymind] = leadermind
 	spymind.special_role = "spyminion"
-	spymind.master = leader.ckey
 
 	return 1
 
 /datum/game_mode/spy/proc/remove_spy(mob/living/spy)
 	src.spies.Remove(spy)
 	spy.mind.special_role = null
-	spy.mind.master = null
 	return 1
 
 /datum/game_mode/spy/declare_completion()

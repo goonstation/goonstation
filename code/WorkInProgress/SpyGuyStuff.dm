@@ -18,7 +18,7 @@ Fibre wire
 /obj/item/soulskull
 	name = "ominous skull"
 	desc = "This skull gives you the heebie-jeebies."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skull_ominous"
 	var/being_mean = 0
 
@@ -158,9 +158,9 @@ proc/Create_Tommyname()
 			O.dropped(src)
 			O.layer = initial(O.layer)
 
-	src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_shoes)
-	src.equip_new_if_possible(/obj/item/clothing/under/suit {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_w_uniform)
-	src.equip_new_if_possible(/obj/item/football, slot_in_backpack)
+	src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_SHOES)
+	src.equip_new_if_possible(/obj/item/clothing/under/suit/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_W_UNIFORM)
+	src.equip_new_if_possible(/obj/item/football, SLOT_IN_BACKPACK)
 
 	src.sound_scream = 'sound/voice/tommy_you-are-tearing-me-apart-lisauh.ogg'
 	src.sound_fingersnap = 'sound/voice/tommy_did-not-hit-hehr.ogg'
@@ -223,7 +223,7 @@ proc/Create_Tommyname()
 		projectiles = list(new/datum/projectile/tommy)
 		..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		for(var/mob/O in AIviewers(user, null))
 			O.show_message("<span class='alert'><B>[user] fires the [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a loud crackling noise.</span>", 2)
 		sleep(0.1 SECONDS)
@@ -395,7 +395,7 @@ proc/Create_Tommyname()
 				var/obj/item/clothing/head/wig/W = H.create_wig()
 				H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 				H.drop_from_slot(H.head)
-				H.force_equip(W, H.slot_head)
+				H.force_equip(W, SLOT_HEAD)
 				H.update_colorful_parts()
 
 /obj/item/gun/energy/dtrumpet
@@ -413,7 +413,7 @@ proc/Create_Tommyname()
 /obj/machinery/power/debug_generator
 	name = "mysterious petrol generator"
 	desc = "Holds untold powers. Literally. Untold power. Get it? Power. Watts? Ok, fine. This thing spits out unlimited watt-volts!! There. I said it!"
-	icon_state = "ggenoff"
+	icon_state = "ggen0"
 	density = 1
 	var/generating = 0
 	New()
@@ -425,11 +425,11 @@ proc/Create_Tommyname()
 		if(generating > 0)
 			SubscribeToProcess()
 			powernet = get_direct_powernet()
-			icon_state = "ggenoff"
+			icon_state = "ggen0"
 		else
 			UnsubscribeProcess()
 			powernet = null
-			icon_state = "ggen"
+			icon_state = "ggen1"
 
 	process()
 		..()
@@ -659,7 +659,7 @@ proc/Create_Tommyname()
 				move_and_delete_object(A)
 		sleep(DEFAULT_ANIMATION_TIME)
 
-	while(created_atoms.len > 0)
+	while(length(created_atoms) > 0)
 		var/atom/A = created_atoms[created_atoms.len]
 		created_atoms.len--
 		if(istype(A, /turf))
@@ -861,6 +861,10 @@ proc/Create_Tommyname()
 
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
+
+	HELP_MESSAGE_OVERRIDE({"Use the garrot wire in hand to hold it with two hands, then place yourself behind your target.
+							Click them with the wire to attempt to grab them.
+							While a target is being strangled, use the wire in hand to inflict more damage and bleed in addition to the suffocation."})
 
 	New()
 		..()

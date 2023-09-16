@@ -201,6 +201,26 @@
 
 		M.buttgib()
 
+/client/proc/cmd_admin_anvilgib(mob/M as mob in world, height = 7 as num|null, anvil_type = /obj/table/anvil as text|null)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Anvil Gib"
+	set popup_menu = 0
+
+	if (!src.holder)
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	if (tgui_alert(src.mob, "Are you sure you want to gib [M]?", "Confirmation", list("Yes", "No")) == "Yes")
+		if(usr.key != M.key && M.client)
+			logTheThing(LOG_ADMIN, usr, "has anvilgibbed [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has anvilgibbed [constructTarget(M,"diary")]", "admin")
+			message_admins("[key_name(usr)] has anvilgibbed [key_name(M)]")
+
+		if(istext(anvil_type))
+			anvil_type = get_one_match(anvil_type)
+
+		M.anvilgib(height=height, anvil_type=anvil_type)
+
 /client/proc/cmd_admin_flockgib(mob/M as mob in world)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Flockbit gib"
@@ -273,6 +293,23 @@
 			message_admins("[key_name(usr)] has undamned [key_name(M)]")
 
 		M.un_damn()
+
+/client/proc/cmd_admin_smitegib(mob/M as mob)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Smite"
+	set popup_menu = 0
+
+	if (!src.holder)
+		boutput(src, "Only administrators may use this command.")
+		return
+
+	if (tgui_alert(src.mob, "Are you sure you want to smite [M]?", "Confirmation", list("Yes", "No")) == "Yes")
+		if(usr.key != M.key && M.client)
+			logTheThing(LOG_ADMIN, usr, "has smited [constructTarget(M,"admin")]")
+			logTheThing(LOG_DIARY, usr, "has smited [constructTarget(M,"diary")]", "admin")
+			message_admins("[key_name(usr)] has smited [key_name(M)]")
+
+		M.smite_gib()
 
 /client/proc/cmd_admin_gib_self()
 	set name = "Gibself"
@@ -360,7 +397,7 @@
 	Q.caller = usr
 	Q.tysonspeed = speed
 
-/obj/bantyson/
+/obj/bantyson
 	name = "Mike Tyson"
 	desc = "Oh shit!!!"
 	icon = 'icons/misc/Tyson4real.dmi'
@@ -442,7 +479,7 @@
 		playsound(src.loc, pick('sound/misc/Boxingbell.ogg'), 50, 0)
 		qdel(src)
 
-/obj/gibtyson/
+/obj/gibtyson
 	name = "Mike Tyson"
 	desc = "Oh shit!"
 	icon = 'icons/misc/Tyson4real.dmi'

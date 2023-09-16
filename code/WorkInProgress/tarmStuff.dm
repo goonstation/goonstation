@@ -55,7 +55,7 @@
 		active_state = "lasercannon-anim"
 		icon_state = "lasercannon-anim"
 
-		shoot(target, start, mob/user, POX, POY, is_dual_wield)
+		shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 			if(src.canshoot(user))
 				flick("lasercannon-fire", src)
 			. = ..()
@@ -252,7 +252,7 @@
 		ammo = new default_magazine
 		. = ..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		spread_angle = max(0, shoot_delay*2+last_shot_time-TIME)*0.4
 		shotcount = 0
 		. = ..(target, start, user, POX+rand(-spread_angle, spread_angle)*16, POY+rand(-spread_angle, spread_angle)*16)
@@ -332,7 +332,7 @@
 /obj/item/gun/kinetic/pistol/autoaim
 	name = "\improper Catoblepas pistol"
 	desc = "A semi-smart pistol with moderate aim-correction. The manufacterer markings read \"Anderson Para-Munitions\"."
-	shoot(target, start, mob/user, POX, POY) //checks clicked turf first, so you can choose a target if need be
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null) //checks clicked turf first, so you can choose a target if need be
 		for(var/mob/M in range(2, target))
 			if(M == user || istype(M.get_id(), /obj/item/card/id/syndicate)) continue
 			..(get_turf(M), start, user, POX, POY)
@@ -634,21 +634,15 @@
 		mutations_to_add = list(new /datum/mutation_orb_mutdata(id = "cow", magical = 1))
 
 //lily's office
-/obj/item/storage/desk_drawer/lily/
-	spawn_contents = list(	/obj/item/reagent_containers/food/snacks/cake,\
-	/obj/item/reagent_containers/food/snacks/cake,\
-	/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,\
-	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/cream,\
-	/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,\
-	/obj/item/reagent_containers/food/snacks/cake,\
-)
-
 /obj/table/wood/auto/desk/lily
-	New()
-		..()
-		var/obj/item/storage/desk_drawer/lily/L = new(src)
-		src.desk_drawer = L
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/reagent_containers/food/snacks/cake,
+						/obj/item/reagent_containers/food/snacks/cake,
+						/obj/item/reagent_containers/food/snacks/yellow_cake_uranium_cake,
+						/obj/item/reagent_containers/food/snacks/cake/cream,
+						/obj/item/reagent_containers/food/snacks/cake/cream,
+						/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+						/obj/item/reagent_containers/food/snacks/cake)
 
 /obj/machinery/door/unpowered/wood/lily
 

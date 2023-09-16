@@ -43,7 +43,7 @@
 
 			playsound(M.loc, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, -1)
 			SPAWN(0.5 SECONDS)
-				if (M?.mutantrace && istype(M.mutantrace, /datum/mutantrace/werewolf))
+				if (istype(M?.mutantrace, /datum/mutantrace/werewolf))
 					M.emote("howl")
 
 			M.visible_message("<span class='alert'><B>[M] [pick("metamorphizes", "transforms", "changes")] into a werewolf! Holy shit!</B></span>")
@@ -186,6 +186,7 @@
 			if (healing > 0)
 				M.HealDamage("All", healing, healing)
 				M.add_stamina(healing)
+				M.sims?.affectMotive("Ravenous Hunger", healing * 5)
 
 		if ("spread")
 			var/mob/living/carbon/human/HH = target
@@ -205,7 +206,7 @@
 				HH.add_fingerprint(M) // Just put 'em on the mob itself, like pulling does. Simplifies forensic analysis a bit.
 				M.werewolf_audio_effects(HH, "feast")
 				HH.setStatus("weakened",rand(3 SECONDS, 6 SECONDS))
-				if (prob(70) && HH.stat != 2)
+				if (prob(70) && !isdead(HH))
 					HH.emote("scream")
 		if ("pounce")
 			if(isobserver(target) || isintangible(target))
@@ -214,7 +215,7 @@
 			M.visible_message("<span class='alert'><B>[M] barrels through the air, slashing [target]!</B></span>")
 			damage += rand(2,8)
 			playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
-			if (prob(33) && target.stat != 2)
+			if (prob(33) && !isdead(target))
 				target.emote("scream")
 		if ("thrash")
 			if (prob(75))
@@ -226,7 +227,7 @@
 
 			if (prob(60)) playsound(M.loc, pick('sound/voice/animal/werewolf_attack1.ogg', 'sound/voice/animal/werewolf_attack2.ogg', 'sound/voice/animal/werewolf_attack3.ogg'), 50, 1)
 			if (prob(75)) target.setStatus("weakened", 3 SECONDS)
-			if (prob(33) && target.stat != 2)
+			if (prob(33) && !isdead(target))
 				target.emote("scream")
 
 		else
@@ -319,9 +320,28 @@
 	var/awaken_time //don't really need this here, but admins might want to know when the werewolf's awaken time is.
 
 	New()
-		..()
+		. = ..()
 		awaken_time = rand(5, 10)*100
+		#ifdef RP_MODE
+		awaken_time *= 2
+		#endif
 		src.tainted_saliva_reservoir = new/datum/reagents(500)
+
+	transferOwnership(mob/newbody)
+		. = ..()
+		if (ishuman(newbody))
+			var/mob/living/carbon/human/H = newbody
+			if (H.sims)
+				// Did you know that the motive system has no way to remove a motive? Now you do! This has been fun facts with aloe
+				qdel(H.sims)
+				H.sims = new /datum/simsHolder/rp/wolf(H)
+
+	onRemove(mob/from_who)
+		. = ..()
+		var/mob/living/carbon/human/H = from_who
+		if (istype(H.sims, /datum/simsHolder/rp/wolf))
+			qdel(H.sims)
+			H.sims = new /datum/simsHolder/rp(H)
 
 	onAbilityStat() // In the 'Werewolf' tab.
 		..()

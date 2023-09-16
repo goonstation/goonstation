@@ -82,6 +82,10 @@
 	qdel(src.hud)
 	src.hud = null
 
+	if (istype(src.linked_item, /obj/item))
+		var/obj/item/I = src.linked_item
+		I.tooltip_rebuild = TRUE
+
 	src.linked_item = null
 	src.stored_items = null
 
@@ -330,7 +334,7 @@
 
 /// when adding an item in
 /datum/storage/proc/add_contents(obj/item/I, mob/user = null, visible = TRUE)
-	if (user?.equipped() == I)
+	if (I in user?.equipped_list())
 		user.u_equip(I)
 	src.stored_items += I
 	I.set_loc(src.linked_item, FALSE)
@@ -367,6 +371,8 @@
 /// when transfering something in the storage out
 /datum/storage/proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
 	if (!(I in src.get_contents()))
+		return
+	if(I.anchored) //Niche exception where items are anchored in storage. "Mech Components mainly"
 		return
 	src.stored_items -= I
 	src.hud.remove_item(I, user)
@@ -420,6 +426,10 @@
 	if (user.s_active == src.hud)
 		user.s_active = null
 		user.detach_hud(src.hud)
+
+/// if user sees the storage hud
+/datum/storage/proc/hud_shown(mob/user)
+	return user in src.hud.mobs
 
 /// emping storage emps everything inside
 /datum/storage/proc/storage_emp_act()

@@ -48,9 +48,7 @@
 	},
 /area/space)
 "aQ" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
+/obj/npc/trader/random,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -204,11 +202,11 @@
 /turf/simulated/drawbridge/floor,
 /area/space)
 "fA" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "fG" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 1;
 	icon_state = "alt_heater-R"
@@ -222,7 +220,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
 "fM" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/unsimulated/floor/plating,
 /area/space)
 "gd" = (
@@ -265,14 +263,12 @@
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
 "gF" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/diner_centcom)
 "gP" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -542,9 +538,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "kL" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -578,7 +572,7 @@
 /turf/space,
 /area/space)
 "lp" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 1;
 	icon_state = "alt_heater-L"
@@ -601,7 +595,7 @@
 /turf/simulated/floor/airless/engine,
 /area/regina)
 "lB" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -802,7 +796,7 @@
 	},
 /area/shuttle/merchant_shuttle/diner_centcom)
 "pi" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/black,
 /area/regina)
 "pp" = (
@@ -885,7 +879,7 @@
 /turf/simulated/floor/airless/plating,
 /area/regina)
 "qj" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "qn" = (
@@ -989,7 +983,7 @@
 /turf/simulated/floor/airless/engine,
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "sI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1000,7 +994,7 @@
 	},
 /area/regina)
 "sT" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "sZ" = (
@@ -1010,7 +1004,7 @@
 /turf/space,
 /area/space)
 "ta" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap2)
 "te" = (
@@ -1204,9 +1198,7 @@
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "wR" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1457,7 +1449,7 @@
 	},
 /area/space)
 "AI" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1546,11 +1538,11 @@
 /turf/simulated/drawbridge/wall,
 /area/regina)
 "Df" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/unsimulated/floor/plating,
 /area/regina)
 "Dg" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/regina)
 "Dl" = (
@@ -1587,7 +1579,7 @@
 	},
 /area/shuttle/merchant_shuttle/right_centcom/destiny)
 "DT" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1624,9 +1616,7 @@
 /area/space)
 "Fc" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1734,11 +1724,11 @@
 /turf/space,
 /area/space)
 "GT" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /turf/simulated/floor/plating,
 /area/space)
 "GV" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
 "Hi" = (
@@ -1848,9 +1838,7 @@
 /area/regina)
 "Ki" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1908,7 +1896,7 @@
 /turf/simulated/floor/airless/engine,
 /area/space)
 "La" = (
-/obj/wingrille_spawn,
+/obj/mapping_helper/wingrille_spawn,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1969,7 +1957,7 @@
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "LP" = (
-/obj/wingrille_spawn/bulletproof,
+/obj/mapping_helper/wingrille_spawn/bulletproof,
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 1;
 	icon_state = "alt_heater-M"
@@ -2098,7 +2086,7 @@
 /turf/simulated/floor/yellowblack,
 /area/regina)
 "Ov" = (
-/obj/wingrille_spawn/reinforced/full,
+/obj/mapping_helper/wingrille_spawn/reinforced/full,
 /turf/simulated/floor/black,
 /area/space)
 "OA" = (
@@ -2169,9 +2157,7 @@
 /turf/space,
 /area/regina)
 "Qf" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -2309,7 +2295,7 @@
 /turf/simulated/floor/airless/engine,
 /area/regina)
 "SX" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
 "Tm" = (
@@ -2430,9 +2416,7 @@
 /area/regina)
 "Vv" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2703,14 +2687,12 @@
 /turf/simulated/floor/airless/engine,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
 "ZV" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/engine,
 /area/shuttle/merchant_shuttle/diner_centcom)
 "ZW" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},

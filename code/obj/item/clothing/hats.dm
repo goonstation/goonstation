@@ -376,7 +376,7 @@ proc/filter_trait_hats(var/type)
 					var/boop = "hand"
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.equip_if_possible(W, H.slot_wear_mask))
+						if (H.equip_if_possible(W, SLOT_WEAR_MASK))
 							boop = "mouth"
 						else
 							H.put_in_hand_or_drop(W) //Put it in their hand
@@ -450,7 +450,7 @@ proc/filter_trait_hats(var/type)
 		if (!n_name)
 			return
 		n_name = copytext(html_encode(n_name), 1, 32)
-		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && usr.stat == 0))
+		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && isalive(usr)))
 			src.phrase = n_name
 			logTheThing(LOG_SAY, usr, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)
@@ -770,7 +770,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "Good god, this thing STINKS. Is that mold on the inner lining? Ugh."
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
-	see_face = 0
+	see_face = FALSE
 	seal_hair = 1
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
@@ -784,7 +784,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "It's a paper hat!"
 	icon_state = "paper"
 	item_state = "lgloves"
-	see_face = 1
+	see_face = TRUE
 	body_parts_covered = HEAD
 
 /obj/item/paper_hat/attackby(obj/item/W, mob/user)
@@ -796,19 +796,25 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				src.color = P.font_color
 				src.desc = "A colorful paper hat"
 
+/obj/item/clothing/head/tinfoil_hat
+	name = "tinfoil hat"
+	desc = "Protects the wearer from mindcontrol and, apparently, weak martian psychic blasts which do not involve the liquification of brains."
+	icon_state = "tinfoil"
+	item_state = "tinfoil"
+
 /obj/item/clothing/head/towel_hat
 	name = "towel hat"
 	desc = "A white towel folded all into a fancy hat. NOT a turban!" // @;)
 	icon_state = "towelhat"
 	item_state = "lgloves"
-	see_face = 1
+	see_face = TRUE
 	body_parts_covered = HEAD
 
 /obj/item/clothing/head/crown
 	name = "crown"
 	desc = "Yeah, big deal, you got a fancy crown, what does that do for you against the <b>HORRORS OF SPACE</b>, tough guy?"
 	icon_state = "crown"
-	see_face = 1
+	see_face = TRUE
 	body_parts_covered = HEAD
 	setupProperties()
 		..()
@@ -1955,3 +1961,102 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	item_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
 
+// fishing hats
+
+/obj/item/clothing/head/fish_fear_me
+	name = "fish fear me hat"
+	desc = "An extremely witty piece of headwear for the discerning angler."
+	item_state = "fishfearme"
+	icon_state = "fishfearme"
+	var/favourite_word = "fish"
+	var/emag_multiplier = 0
+
+	proc/who()
+		if(prob(50 * emag_multiplier))
+			if (prob(20))
+				return pick("clowns", "captains", "staff assistants", "frogs", "bees", "traitors", "NanoTrasen", "Syndicate", "scientists", "anglers", "security officers")
+			var/tries = 50
+			var/atom_value = -INFINITY
+			do
+				var/atom/A = pick(world.contents)
+				var/A_value
+				if (istype(A, /turf/space))
+					A_value = -1
+				else if(istype(A, /area) || istype(A, /turf))
+					A_value = 0
+				else if(istype(A, /atom/movable/overlay) || istype(A, /atom/movable/screen) || istype(A, /obj/effect) || istype(A, /obj/effects) || istype(A, /obj/overlay))
+					continue
+				else
+					if (isobj(A) && !isitem(A))
+						A_value = 1
+					else
+						A_value = 3
+					var/turf/T = get_turf(A)
+					if (isnull(T))
+						A_value -= 2
+					else if (T.z == Z_LEVEL_STATION)
+						A_value += 1
+				var/atom_name = trim(stripTextMacros(A.name))
+				if (length(atom_name) <= 2)
+					continue
+				if (findtext(atom_name, " "))
+					A_value -= 0.5
+				if (A_value > atom_value)
+					. = atom_name
+					atom_value = A_value
+			while (atom_value < 4 && tries-- > 0)
+			return pluralize(.)
+		. = pick("fish", "me", "god", "women", "men", "enbies", "people")
+
+	proc/do_what()
+		if(prob(5 * emag_multiplier))
+			return pick("robust", "eat", "desire")
+		. = pick("fear", "want", "love")
+
+	New()
+		..()
+		src.color = hsv_transform_color_matrix(randfloat(0, 360), 1, 1)
+		generate_name()
+
+	proc/generate_name()
+		var/list/who = list(who(), who(), who(), who())
+		if (prob(66))
+			var/have_fish = FALSE
+			for (var/who_word in who)
+				if (who_word == favourite_word)
+					have_fish = TRUE
+			if (!have_fish)
+				who[rand(1,4)] = favourite_word
+		who[1] = capitalize(who[1])
+		name = "\improper '[who[1]] [do_what()] [who[2]], [who[3]] [do_what()] [who[4]]' hat"
+		real_name = name
+
+	emag_act(mob/user, obj/item/card/emag/E)
+		. = ..()
+		emag_multiplier = 1
+		generate_name()
+		boutput(user, "<span class='notice'>The hat's text changes to read: [name].</span>")
+
+	demag(mob/user)
+		. = ..()
+		emag_multiplier = 0
+		generate_name()
+		boutput(user, "<span class='notice'>The hat's text changes to read: [name].</span>")
+
+/obj/item/clothing/head/fish_fear_me/emagged
+	emag_multiplier = 1
+
+/obj/item/clothing/head/fish_fear_me/emagged/very
+	emag_multiplier = 3
+
+/obj/item/clothing/head/fish_fear_me/admin
+	name = "admin fear me hat"
+	desc = "An extremely witty piece of headwear for the discerning admin."
+	favourite_word = "admins"
+
+	who()
+		. = pick("admins", "coders", "mentors", "players", "bugs", "feedback", "bans", "ahelps")
+
+	New()
+		. = ..()
+		src.color = mult_color_matrix(normalize_color_to_matrix(src.color), normalize_color_to_matrix(list(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)))

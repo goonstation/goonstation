@@ -54,6 +54,8 @@
 	var/weak_tk = FALSE
 	///can the wraith hear ghosts? Toggleable with an ability
 	var/hearghosts = TRUE
+	/// what is our minion summoning marker, if we have any?
+	var/obj/spookMarker/spawn_marker = null
 
 	var/datum/movement_controller/movement_controller
 
@@ -639,6 +641,7 @@
 	var/copied_desc = null
 	var/copied_name = null
 	var/copied_real_name = null
+	var/copied_pronouns = null
 	var/traps_laid = 0
 
 	New(var/mob/M)
@@ -664,15 +667,6 @@
 //////////////
 // Related procs and verbs
 //////////////
-
-// i am dumb - marq
-/mob/proc/wraithize()
-	if (src.mind || src.client)
-		message_admins("[key_name(usr)] made [key_name(src)] a wraith.")
-		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a wraith.")
-		src.mind.add_antagonist(ROLE_WRAITH)
-		return
-	return null
 
 /proc/visibleBodies(var/mob/M)
 	var/list/ret = new

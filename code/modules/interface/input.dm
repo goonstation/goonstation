@@ -136,7 +136,7 @@ var/list/dirty_keystates = list()
 		//(this fixes the behavior of guns not firing if you clicked a hidden tile. now you can actually shoot in the dark or in a small tunnel!)
 		if (!object && src.mob)
 			var/list/l2 = splittext(params2list(params)["screen-loc"],",")
-			if (l2.len >= 2)
+			if (length(l2) >= 2)
 				var/list/lx = splittext(l2[1],":")
 				var/list/ly = splittext(l2[2],":")
 
@@ -154,6 +154,10 @@ var/list/dirty_keystates = list()
 			var/result = src.mob.double_click(target, location, control, paramslist)
 			if(result)
 				src.skip_next_left_click = TRUE
+			else
+				..()
+		else
+			..()
 
 	Click(atom/object, location, control, params)
 		var/list/parameters = params2list(params)
@@ -296,11 +300,6 @@ var/list/dirty_keystates = list()
 		return 0
 
 /mob
-
-	proc/keys_changed(keys, changed)
-		set waitfor = 0
-		//SHOULD_NOT_SLEEP(TRUE) // prevent shitty code from locking up the main input loop - commenting out for now because out of scope
-		// stub
 
 	proc/recheck_keys()
 		keys_changed(src.client?.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state

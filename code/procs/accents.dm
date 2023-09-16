@@ -1,3 +1,15 @@
+proc/random_accent()
+	RETURN_TYPE(/datum/bioEffect/speech)
+	var/static/list/datum/bioEffect/speech/accents = null
+	if(isnull(accents))
+		for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
+			var/datum/bioEffect/speech/effect = new bio_type()
+			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
+				continue
+			LAZYLISTADD(accents, effect)
+	. = pick(accents)
+
+
 /datum/parse_result
 	var/string = ""
 	var/chars_used = 0
@@ -854,9 +866,6 @@
 		i += P.chars_used
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
-
-	if(prob(2))
-		modded += " :DDDDD"
 	return modded
 
 /proc/tommify(var/string)
@@ -887,9 +896,9 @@
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
 
-	if(prob(15))
-		modded += " Bork Bork Bork!"
 	if(prob(5))
+		modded += " Bork Bork Bork!"
+	if(prob(1))
 		modded += " Bork."
 
 	return modded
@@ -1477,10 +1486,6 @@ var/list/zalgo_mid = list(
 // this list got too big to maintain as a list literal, so now it lives in strings/language/scots.txt
 
 /proc/scotify(var/string) // plays scottish music on demand, harr harr i crack me up (shoot me)
-	// at hufflaw's request
-	if(prob(1) && prob(1))
-		string += " You just made an enemy for life!"
-
 	var/list/tokens = splittext(string, " ")
 	var/list/modded_tokens = list()
 
@@ -1513,8 +1518,6 @@ var/list/zalgo_mid = list(
 		modded_tokens += modified_token
 
 	var/modded = jointext(modded_tokens, " ")
-	if(prob(2))
-		modded += pick(" Och!"," Och aye the noo!"," Help ma Boab!"," Hoots!"," Micthy me!"," Get tae fuck!")
 
 	return modded
 
@@ -1570,19 +1573,6 @@ var/list/zalgo_mid = list(
 		i += P.chars_used
 		T.curr_char_pos = T.curr_char_pos + P.chars_used
 		T.update()
-
-	if(prob(5))
-		modded += " Tabarnak!"
-	if(prob(3))
-		modded += " Calisse de merde."
-	if(prob(3))
-		modded += " You dum-h'ass!"
-	if(prob(2))
-		modded += " Saint-simonac de viarge!"
-	if(prob(2))
-		modded += " Mon hosti d'con."
-	if(prob(1))
-		modded += " Hon Hon Hon. :3"
 	return modded
 
 /proc/tabarnak_parse(var/datum/text_roamer/R)
@@ -2376,7 +2366,7 @@ var/list/zalgo_mid = list(
 		modded_tokens += modified_token
 	var/modded = jointext(modded_tokens, " ")
 	if(prob(33))
-		modded += pick("Arrr!"," Arr!", "Yarrrrr!")
+		modded += pick(" Arrr!"," Arr!", " Yarrrrr!")
 	return modded
 
 
@@ -2445,6 +2435,21 @@ proc/accent_mocking(string)
 		letters += letter
 	return jointext(letters, "")
 
+proc/accent_piglatin(string)
+	var/list/tokens = splittext(string, regex(@"\b", "i"))
+	var/list/modded_tokens = list()
+	var/regex/consclust = regex(@"(^[bcdfghjklmnpqrstvwxys]+)?(\l+)", "i")
+	for (var/token in tokens)
+		if(length(token) > 1)
+			token = consclust.Replace(token, GLOBAL_PROC_REF(piglatin_replace))
+		modded_tokens += token
+	return jointext(modded_tokens, "")
+
+proc/piglatin_replace(match, one, two)
+	if(!one && findtext(two, regex(@"[aeiou]", "i"), length(two)))
+		return "[two]yay"
+	else
+		return "[two][one]ay"
 
 proc/accent_hacker(string, leet_chance=100)
 	var/static/list/leetspeak_suffix_translation = list(

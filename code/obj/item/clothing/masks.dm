@@ -104,7 +104,7 @@
 	icon_state = "gas_mask"
 	c_flags =  COVERSMOUTH | COVERSEYES | MASKINTERNALS | BLOCKSMOKE
 	w_class = W_CLASS_NORMAL
-	see_face = 0
+	see_face = FALSE
 	item_state = "gas_mask"
 	color_r = 0.8 // green tint
 	color_g = 1
@@ -147,7 +147,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	desc = "Nobody will know who you are if you put this on. Nobody."
 	icon_state = "moustache"
 	item_state = "moustache"
-	see_face = 0
+	see_face = FALSE
 	w_class = W_CLASS_TINY
 	c_flags = null
 	is_syndicate = 1
@@ -162,14 +162,14 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 	desc = "Almost as good as a REAL fake moustache."
 	icon_state = "moustache"
 	item_state = "moustache"
-	see_face = 1
+	see_face = TRUE
 
 /obj/item/clothing/mask/moustache/Italian
 	name = "fake Italian moustache"
 	desc = "For those who can't cut the lasagna."
 	icon_state = "moustache-i"
 	item_state = "moustache-i"
-	see_face = 1
+	see_face = TRUE
 
 
 /obj/item/clothing/mask/gas/emergency
@@ -185,7 +185,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		icon_state = "slasher_mask"
 		item_state = "slasher_mask"
 		item_function_flags = IMMUNE_TO_ACID
-		see_face = 1
+		see_face = TRUE
 		setupProperties()
 			..()
 			setProperty("meleeprot_head", 6)
@@ -206,7 +206,7 @@ TYPEINFO(/obj/item/clothing/mask/moustache)
 		desc = "A close-fitting sealed gas mask, from the looks of it, it's well over a hundred years old."
 		icon_state = "slasher_mask"
 		item_state = "slasher_mask"
-		see_face = 1
+		see_face = TRUE
 		setupProperties()
 			..()
 			setProperty("movespeed", 0.2)
@@ -270,6 +270,7 @@ TYPEINFO(/obj/item/voice_changer)
 	desc = "This voice-modulation device will dynamically disguise your voice to that of whoever is listed on your identification card, via incredibly complex algorithms. Discretely fits inside most masks, and can be removed with wirecutters."
 	icon_state = "voicechanger"
 	is_syndicate = 1
+	HELP_MESSAGE_OVERRIDE({"Use the voice changer on a face-concealing mask to fit it inside. You will speak as and appear in chat as the name of your worn ID, or as "unknown" if you aren't wearing your ID. Use wirecutters on the mask to remove the voice changer."})
 
 TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	mats = 12	// 2x voice changer cost. It's complicated ok
@@ -342,7 +343,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A mask depicting the grinning facial expression of a prototypical clown. There's a place to tuck the attached wig in if you don't want it interfering with your own hair."
 	icon_state = "clown"
 	item_state = "clown_hat"
-	see_face = 0
+	see_face = FALSE
 
 	var/spam_flag = 0
 	var/spam_timer = 100
@@ -391,6 +392,8 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	color_b = 1
 	w_class = W_CLASS_SMALL
 	var/mob/living/carbon/human/victim
+	HELP_MESSAGE_OVERRIDE({"Wearing this mask as a clown traitor will allow it to be used as a gasmask.\n
+							You can force the mask directly onto someone's face by aiming at the head while they are lying down and click on them with the mask on any intent other than <span class='help'>help</span>."})
 
 	equipped(var/mob/user, var/slot)
 		. = ..()
@@ -439,7 +442,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 		if ( reach <= 1 && user.mind && user.mind.assigned_role == "Clown" && istraitor(user) && istype(user,/mob/living/carbon/human) && istype(target,/mob/living/carbon/human) )
 			var/mob/living/carbon/human/U = user
 			var/mob/living/carbon/human/T = target
-			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src,T.slot_wear_mask) )
+			if ( U.a_intent != INTENT_HELP && U.zone_sel.selecting == "head" && T.can_equip(src, SLOT_WEAR_MASK) )
 				U.visible_message("<span class='alert'>[src] latches onto [T]'s face!</span>","<span class='alert'>You slap [src] onto [T]'s face!'</span>")
 				logTheThing(LOG_COMBAT, user, "forces [T] to wear [src] (cursed clown mask) at [log_loc(T)].")
 				U.u_equip(src)
@@ -447,7 +450,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 				// If we don't empty out that slot first, it could blip the mask out of existence
 				T.drop_from_slot(T.wear_mask)
 
-				T.equip_if_possible(src,T.slot_wear_mask)
+				T.equip_if_possible(src, SLOT_WEAR_MASK)
 
 
 /obj/item/clothing/mask/medical
@@ -564,7 +567,7 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A little mask, made of paper."
 	icon_state = "domino"
 	item_state = "domino"
-	see_face = 0
+	see_face = FALSE
 	burn_point = 220
 	burn_output = 900
 	burn_possible = 1
@@ -581,33 +584,38 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "Haven't seen that fellow in a while."
 	icon_state = "melons"
 	item_state = "melons"
-	see_face = 0
+	see_face = FALSE
 
+TYPEINFO(/obj/item/clothing/mask/wrestling)
+	random_subtypes = list(/obj/item/clothing/mask/wrestling,
+		/obj/item/clothing/mask/wrestling/black,
+		/obj/item/clothing/mask/wrestling/green,
+		/obj/item/clothing/mask/wrestling/blue)
 /obj/item/clothing/mask/wrestling
 	name = "wrestling mask"
 	desc = "A mask that will greatly enhance your wrestling prowess! Not, like, <i>physically</i>, but mentally. In your heart. In your soul. Something like that."
 	icon_state = "silvermask"
 	item_state = "silvermask"
-	see_face = 0
+	see_face = FALSE
 
-	black
-		icon_state = "blackmask"
-		item_state = "blackmask"
+/obj/item/clothing/mask/wrestling/black
+	icon_state = "blackmask"
+	item_state = "blackmask"
 
-	green
-		icon_state = "greenmask"
-		item_state = "greenmask"
+/obj/item/clothing/mask/wrestling/green
+	icon_state = "greenmask"
+	item_state = "greenmask"
 
-	blue
-		icon_state = "bluemask"
-		item_state = "bluemask"
+/obj/item/clothing/mask/wrestling/blue
+	icon_state = "bluemask"
+	item_state = "bluemask"
 
 /obj/item/clothing/mask/anime
 	name = "moeblob mask"
 	desc = "Looking at this thing gives you the heebie-jeebies. And a weird urge to go rob a bank, for some reason."
 	icon_state = "anime"
 	item_state = "anime"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/gas/plague
 	name = "plague doctor mask"
@@ -624,35 +632,35 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "Just your ordinary chicken mask that induces no violent feelings towards anyone or anything."
 	icon_state = "chicken"
 	item_state = "chicken"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/jester
 	name = "jester's mask"
 	desc = "The mask of a not-so-funny-clown."
 	icon_state = "jester"
 	item_state = "jester"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/hastur
 	name = "cultist mask"
 	desc = "The mask of a cultist who has seen the yellow sign and answered its call.."
 	icon_state = "hasturmask"
 	item_state = "hasturmask"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/kitsune
 	name = "kitsune mask"
 	desc = "The mask of a mythical fox creature from folklore."
 	icon_state = "kitsune"
 	item_state = "kitsune"
-	see_face = 0
+	see_face = FALSE
 
 /obj/item/clothing/mask/blossommask
 	name = "cherryblossom mask"
 	desc = "A mask. Specifically for masquerades."
 	icon_state = "cherryblossom"
 	item_state = "cherryblossom"
-	see_face = 0
+	see_face = FALSE
 	c_flags = null
 
 /obj/item/clothing/mask/peacockmask
@@ -660,14 +668,14 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 	desc = "A mask. Specifically for masquerades."
 	icon_state = "peacock"
 	item_state = "peacock"
-	see_face = 0
+	see_face = FALSE
 	c_flags = null
 
 ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 /obj/item/clothing/mask/bandana
 	name = "bandana"
 	desc = "The desperado's choice."
-	see_face = 0
+	see_face = FALSE
 	var/is_pulled_down = FALSE
 	var/obj/item/cloth/handkerchief/handkerchief = null
 

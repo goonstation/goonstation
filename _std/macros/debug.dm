@@ -220,3 +220,9 @@ proc/dm_dump(var/x)
 	var/msg = "HEY, LISTEN!!! Merge Conflict Marker detected at [log_loc(src)]! Please manually address all potential merge conflicts!!!"
 	boutput(world, "<span class='bold notice'>[msg],</span>")
 	message_admins(msg)
+
+/// For unit test support
+/// *Only* run the test provided within the parentheses
+/// This is useful for debugging when you want to reduce noise, but should never be pushed
+/// Intended to be used in the manner of `TEST_FOCUS(/datum/unit_test/math)`
+#define TEST_FOCUS(test_path) ##test_path { focus = TRUE; }

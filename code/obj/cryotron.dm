@@ -177,11 +177,31 @@
 
 	proc/enter_prompt(var/mob/living/user as mob)
 		if (mob_can_enter_storage(user)) // check before the prompt for dead/incapped/restrained/etc users
-			if (tgui_alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed.", "Confirmation", list("Yes", "No")) == "Yes")
-				if (tgui_alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", list("Yes", "No")) == "Yes")
-					if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
-						add_person_to_storage(user)
-					return 1
+			var/what_does_the_player_want = tgui_alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed. You can also \"Observe\", where you free up your role slot in the round and become an observer.", "Confirmation", list("Yes", "No", "Observe"))
+			switch (what_does_the_player_want)
+				if ("Yes")
+					if (tgui_alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", list("Yes", "No")) == "Yes")
+						if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
+							add_person_to_storage(user)
+							user.show_text("<b style=\"font-size: 200%\">Remember, if you want to abandon the round to observe and free up space for someone else, simply use the \"ghost\" command in the Commands tab. (top-right corner)</b>", "blue")
+						return 1
+
+				if ("Observe")
+					var/confirmation_message = "Are you absolutely sure you want to abandon the round? "
+#ifdef RP_MODE
+					confirmation_message += "You can respawn back to the round later."
+#else
+					confirmation_message += "You will be an observer until the next round."
+#endif
+					if (tgui_alert(user, confirmation_message, "Confirmation", list("Yes", "No")) == "Yes")
+						if (mob_can_enter_storage(user))
+							add_person_to_storage(user)
+							respawn_controller.subscribeNewRespawnee(user.ckey)
+							user.mind?.get_player()?.dnr = TRUE
+							user.ghostize()
+							qdel(user)
+							return 1
+
 		return 0
 
 	proc/mob_can_enter_storage(var/mob/living/L as mob, var/mob/user as mob)

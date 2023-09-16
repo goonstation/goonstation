@@ -333,6 +333,7 @@
 		var/drop_this_shit = 0 //i promise this is useful
 		if (src.is_sealed)
 			is_sealed = 0
+			src.set_open_container(TRUE)
 			can_chug = 1
 			splash_all_contents = TRUE
 			incompatible_with_chem_dispensers = FALSE
@@ -390,7 +391,7 @@
 		src.icon_state = "crushed-[iconsplit[2]]"
 
 /obj/item/reagent_containers/food/drinks/cola/random
-	name = "space cola"
+	name = "off-brand space cola"
 	desc = "You don't recognise this cola brand at all."
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1

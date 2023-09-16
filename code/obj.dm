@@ -9,7 +9,7 @@
 
 	var/deconstruct_flags = DECON_NONE
 
-	var/artifact = null
+	var/datum/artifact/artifact = null
 	var/cannot_be_stored = FALSE
 	var/move_triggered = 0
 	var/object_flags = 0
@@ -85,7 +85,7 @@
 		. = ..()
 
 	ex_act(severity)
-		src.material?.triggerExp(src, severity)
+		src.material_trigger_on_explosion(severity)
 		switch(severity)
 			if(1)
 				changeHealth(-100)
@@ -104,11 +104,11 @@
 			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
 			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
-			quality = src.material.quality
-			if(initial(src.opacity) && src.material.alpha <= MATERIAL_ALPHA_OPACITY)
-				RL_SetOpacity(0)
-			else if(initial(src.opacity) && !src.opacity && src.material.alpha > MATERIAL_ALPHA_OPACITY)
-				RL_SetOpacity(1)
+			quality = src.material.getQuality()
+			if(initial(src.opacity) && src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY)
+				set_opacity(0)
+			else if(initial(src.opacity) && !src.opacity && src.material.getAlpha() > MATERIAL_ALPHA_OPACITY)
+				set_opacity(1)
 
 	disposing()
 		for(var/mob/M in src.contents)
@@ -209,6 +209,12 @@
 
 	proc/initialize()
 
+	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
+		return FALSE
+
+	proc/get_chemical_effect_position() //!how many pixels up or down chemistry reaction animations should shift, to fit the item it's reacting in
+		return 7 //default is up a bit since most objects are centered
+
 	attackby(obj/item/I, mob/user)
 // grabsmash
 		if (istype(I, /obj/item/grab/))
@@ -241,7 +247,7 @@
 		F["[path].color"] >> color
 		F["[path].density"] >> density
 		F["[path].opacity"] >> opacity
-		RL_SetOpacity(opacity)
+		set_opacity(opacity)
 		F["[path].anchored"] >> anchored
 		F["[path].pixel_x"] >> pixel_x
 		F["[path].pixel_y"] >> pixel_y
@@ -279,7 +285,7 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "There's no bedsheets left in [src]!")
+			boutput(user, "<span class='alert'>There's no bedsheets left in [src]!</span>")
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] bedsheet[s_es(src.amount)] in [src]."
@@ -307,142 +313,10 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "There's no towels left in [src]!")
+			boutput(user, "<span class='alert'>There's no towels left in [src]!</span>")
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
-
-
-/obj/lattice
-	desc = "Intersecting metal rods, used as a structural skeleton for space stations and to facilitate movement in a vacuum."
-	name = "lattice"
-	icon = 'icons/obj/structures.dmi'
-	icon_state = "lattice"
-	density = 0
-	stops_space_move = 1
-	anchored = ANCHORED
-	layer = LATTICE_LAYER
-	plane = PLANE_FLOOR
-	//	flags = CONDUCT
-	text = "<font color=#333>+"
-
-	blob_act(var/power)
-		if(prob(75))
-			qdel(src)
-			return
-
-	ex_act(severity)
-		src.material?.triggerExp(src, severity)
-		switch(severity)
-			if(1)
-				qdel(src)
-				return
-			if(2)
-				qdel(src)
-				return
-			if(3)
-				return
-			else
-
-	proc/replace_with_catwalk(var/obj/item/rods/rods)
-		var/turf/simulated/floor/airless/plating/catwalk/auto/T = get_turf(src.loc)
-		T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk/auto, keep_old_material = 0, handle_dir = 1)
-		T.MakeCatwalk(rods)
-		qdel(src)
-
-	attackby(obj/item/C, mob/user)
-		if (istype(C, /obj/item/rods))
-			var/actionbar_duration = 2 SECOND
-
-			if (ishuman(user))
-				if (user.traitHolder.hasTrait("training_engineer"))
-					src.replace_with_catwalk(C)
-					return // Engineers can bypass the actionbar and instantly put down catwalks.
-
-				if (user.traitHolder.hasTrait("carpenter"))
-					actionbar_duration /= 2
-
-			user.show_text("You start putting the rods together and making a catwalk...", "blue")
-			SETUP_GENERIC_ACTIONBAR(user, src, actionbar_duration, /obj/lattice/proc/replace_with_catwalk, list(C), C.icon, C.icon_state, null, null)
-
-		if (istype(C, /obj/item/tile))
-			var/obj/item/tile/T = C
-			if (T.amount >= 1)
-				T.build(get_turf(src))
-				playsound(src.loc, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
-				T.add_fingerprint(user)
-				qdel(src)
-			return
-		if (isweldingtool(C) && C:try_weld(user,0))
-			boutput(user, "<span class='notice'>Slicing lattice joints ...</span>")
-			new /obj/item/rods/steel(src.loc)
-			qdel(src)
-		return
-
-/obj/lattice/barricade
-	name = "barricade"
-	desc = "A lattice that has been turned into a makeshift barricade."
-	icon_state = "girder"
-	density = 1
-	var/strength = 2
-
-	proc/barricade_damage(var/hitstrength)
-		strength -= hitstrength
-		playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
-		if (strength < 1)
-			src.visible_message("The barricade breaks!")
-			if (prob(50)) new /obj/item/rods/steel(src.loc)
-			qdel(src)
-			return
-
-	attackby(obj/item/W, mob/user)
-		if (isweldingtool(W))
-			if(W:try_weld(user,1))
-				boutput(user, "<span class='notice'>You disassemble the barricade.</span>")
-				var/obj/item/rods/R = new /obj/item/rods/steel(src.loc)
-				R.amount = src.strength
-				qdel(src)
-				return
-		else if (istype(W,/obj/item/rods))
-			var/obj/item/rods/R = W
-			var/difference = 5 - src.strength
-			if (difference <= 0)
-				boutput(user, "<span class='alert'>This barricade is already fully reinforced.</span>")
-				return
-			if (R.amount >= difference)
-				R.change_stack_amount(-difference)
-				src.strength = 5
-				boutput(user, "<span class='notice'>You reinforce the barricade.</span>")
-				boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>") // seperate line for consistency's sake i guess
-				return
-			else if (R.amount <= difference)
-				src.strength += R.amount
-				boutput(user, "<span class='notice'>You use up the last of your rods to reinforce the barricade.</span>")
-				if (src.strength >= 5) boutput(user, "<span class='notice'>The barricade is now fully reinforced!</span>")
-				user.u_equip(W)
-				qdel(W)
-				return
-		else
-			if (W.force > 8)
-				user.lastattacked = src
-				src.barricade_damage(W.force / 8)
-				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 50, 1)
-			..()
-
-	ex_act(severity)
-		switch(severity)
-			if(1)
-				qdel(src)
-				return
-			if(2) src.barricade_damage(3)
-			if(3) src.barricade_damage(1)
-		return
-
-	blob_act(var/power)
-		src.barricade_damage(2 * power / 20)
-
-	meteorhit()
-		src.barricade_damage(1)
 
 /obj/overlay
 	name = "overlay"
@@ -488,7 +362,8 @@
 /obj/proc/alter_health()
 	return 1
 
-/obj/proc/hide(h)
+/// Whether or not to hide something based on the value of hide, usually whether or not the turf is intact.
+/obj/proc/hide(hide)
 	return
 
 /obj/proc/replace_with_explosive()
@@ -525,6 +400,8 @@
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16
+		if(W.layer < src.layer)
+			W.layer = src.layer + 0.1
 		. = TRUE
 
 /obj/proc/receive_silicon_hotkey(var/mob/user)

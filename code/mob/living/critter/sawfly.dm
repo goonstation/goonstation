@@ -22,7 +22,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	speechverb_ask = "hums"
 	health = 50 //this value's pretty arbitrary, since it's overridden when they get their healtholders
 	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg')
-	var/friends = list()
 	var/retaliate = FALSE
 	misstep_chance = 40 //makes them behave more like drones, and harder to kite into a straightaway then shoot
 
@@ -33,8 +32,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	can_disarm = FALSE
 	use_stamina = FALSE
 	use_stunned_icon = FALSE
-	butcherable = FALSE
-	can_bleed = FALSE
 	canbegrabbed = FALSE
 	can_lie = FALSE
 	can_burn = FALSE

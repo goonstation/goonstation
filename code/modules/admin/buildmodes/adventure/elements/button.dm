@@ -123,6 +123,7 @@
 		update_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
+		. = ..()
 		if (varname == "dir")
 			update_dir(newvalue)
 

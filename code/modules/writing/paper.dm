@@ -78,7 +78,7 @@
 
 /obj/item/paper/examine(mob/user)
 	. = ..()
-	ui_interact(user)
+	src.ui_interact(user)
 
 /obj/item/paper/custom_suicide = 1
 /obj/item/paper/suicide(var/mob/user as mob)
@@ -123,19 +123,9 @@
 		qdel(src)
 
 /obj/item/paper/attack_ai(var/mob/AI as mob)
-	var/mob/living/silicon/ai/user
-	if (isAIeye(AI))
-		var/mob/living/intangible/aieye/E = AI
-		user = E.mainframe
-	else
-		user = AI
-	if (!isAI(user) || (user.current && GET_DIST(src, user.current) < 2)) //Wire: fix for undefined variable /mob/living/silicon/robot/var/current
-		var/font_junk = ""
-		for (var/i in src.fonts)
-			font_junk += "<link href='http://fonts.googleapis.com/css?family=[i]' rel='stylesheet' type='text/css'>"
-		usr.Browse("<HTML><HEAD><TITLE>[src.name]</TITLE>[font_junk]</HEAD><BODY><TT>[src.info]</TT></BODY></HTML>", "window=[src.name]")
-		onclose(usr, "[src.name]")
-	return
+	//Papers can be alt+click inspected from anywhere, let's give attack_ai the same freedom
+	//	instead of doing dubious /mob/living/silicon/ai.current checks
+	ui_interact(AI)
 
 /obj/item/paper/proc/stamp(x, y, r, stamp_png, icon_state)
 	if(length(stamps) < PAPER_MAX_STAMPS)
@@ -275,7 +265,7 @@
 			var/obj/item/portable_typewriter/typewriter = src.loc
 			if(istype(typewriter.pen, /obj/item/pen))
 				O = typewriter.pen
-	if(istype(O, /obj/item/pen))
+	if(istype(O, /obj/item/pen) && in_interact_range(src, user))
 		var/obj/item/pen/PEN = O
 		. += list(
 			"penFont" = PEN.font,
@@ -284,7 +274,7 @@
 			"isCrayon" = FALSE,
 			"stampClass" = "FAKE",
 		)
-	else if(istype(O, /obj/item/stamp))
+	else if(istype(O, /obj/item/stamp) && in_interact_range(src, user))
 		var/obj/item/stamp/stamp = O
 		stamp.current_state = stamp_assets[STAMP_IDS[stamp.current_mode]]
 		. += list(
@@ -350,7 +340,6 @@
 	var/pixel_width = (14 + (12 * (length-1)))
 	src.field_counter++
 	return {"\[<input type="text" style="font:'12x Georgia';color:'null';min-width:[pixel_width]px;max-width:[pixel_width]px;" id="paperfield_[field_counter]" maxlength=[length] size=[length] />\]"}
-
 
 /obj/item/paper/thermal
 	name = "thermal paper"
@@ -643,6 +632,8 @@
 
 /obj/item/paper_bin/get_desc()
 	var/n = src.amount
+	if (n == INFINITY)
+		return "There's an infinite amount of paper in \the [src], the wonders of future technology."
 	for(var/obj/item/paper/P in src)
 		n++
 	return "There's [(n > 0) ? n : "no" ] paper[s_es(n)] in \the [src]."
@@ -929,3 +920,109 @@
 				item_info = 0
 			placeholder_info += "<br><br><b>[commander_item.name]</b>: [item_info]"
 		info = placeholder_info
+
+/// A blank newspaper, which will randomly generate a headline usually.
+/obj/item/paper/newspaper
+	name = "Newspaper"
+	desc = "This is a newspaper. It appears to lack a headline. And text."
+	icon = 'icons/obj/writing.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
+	icon_state = "newspaper"
+	item_state = "newspaper"
+	sealed = TRUE
+	two_handed = TRUE
+	info = ""
+	var/headline = ""
+	var/publisher = ""
+
+/// a rolled up newspaper
+/obj/item/paper/newspaper/rolled
+	icon_state = "newspaper_rolled"
+	item_state = "paper"
+	two_handed = FALSE
+
+/obj/item/paper/newspaper/New()
+	. = ..()
+	// it picks a random set of info at new, then the printing press overrides it
+	src.publisher = pick_smart_string("newspaper.txt", "publisher")
+	src.name = "[src.publisher]"
+	src.generate_headline()
+	src.generate_article()
+	src.update_desc()
+
+/obj/item/paper/newspaper/ui_interact(mob/user, datum/tgui/ui)
+	if (!src.two_handed)
+		return // only read the contents if the newspaper is unfurled
+	..()
+
+/obj/item/paper/newspaper/attack_self(mob/user)
+	src.force_drop(user)
+	src.rollup(user)
+	user.put_in_hand_or_drop(src)
+	user.UpdateName()
+	// todo: figure out how to make the thing ruffle so it doesn't look like the opening is as instant as it is.
+
+/obj/item/paper/newspaper/proc/rollup(mob/user)
+	if (src.two_handed) // rolling it up
+		src.two_handed = FALSE
+		src.icon_state = "newspaper_rolled"
+		src.item_state = "paper"
+	else // unrolling it
+		src.two_handed = TRUE
+		src.icon_state = "newspaper"
+		src.item_state = "newspaper"
+		src.ui_interact(user)
+
+/obj/item/paper/newspaper/proc/update_desc()
+	src.desc = "It's a newspaper from [src.publisher]. Its headline reads: '[src.headline]'"
+
+/obj/item/paper/newspaper/proc/generate_headline()
+	src.headline = pick_smart_string("newspaper.txt", "headline")
+	// todo: generate headlines randomly. Personally i'd rather keep handwritten ones only as they're better.
+
+/// generates a random newspaper article.
+/obj/item/paper/newspaper/proc/generate_article()
+	src.info += "<b>[src.headline]</b><br>"
+	if (prob(20)) // use a prewritten article instead of a randomly generated one
+		src.info += pick_smart_string("newspaper.txt", "article")
+		return
+	// The grammar is horrendous and I cannot figure out how to grammar enough to fix it.
+	// this could also be done much better using a far better system like better smart strings or something
+	// you're welcome to the challenge but this has absorbed too many hours of my life already, it's good enough.
+	var/temporary = ""
+	for (var/count in 1 to rand(4, 8))
+		var/name1 = pick_smart_string("newspaper.txt", "name")
+		var/name2 = pick_smart_string("newspaper.txt", "name")
+		if (prob(80)) //80% chance of a random name as opposed to an "important" one.
+			name1 = capitalize(pick_string_autokey(pick("names/first_female.txt", "names/first_male.txt")))
+			name1 += " [capitalize(pick_string_autokey("names/last.txt"))]"
+		if (prob(80))
+			name2 = capitalize(pick_string_autokey(pick("names/first_female.txt", "names/first_male.txt")))
+			name2 += " [capitalize(pick_string_autokey("names/last.txt"))]"
+		var/location1 = pick_smart_string("newspaper.txt", "location")
+		if (prob(30))
+			location1 = pick_smart_string("newspaper.txt", "betterlocation")
+		var/noun1 = pick_smart_string("newspaper.txt", "noun")
+		var/title1 = pick_smart_string("newspaper.txt", "title")
+		var/event1 = pick_smart_string("newspaper.txt", "event")
+		var/emotion1 = pick_smart_string("newspaper.txt", "emotion")
+		switch(rand(1, 9))
+			if (1)
+				temporary += "<br><br>The [title1], [name1], was found in [location1]."
+			if (2)
+				temporary += "<br><br>A [noun1] was found on site in [location1]."
+			if (3)
+				temporary += "<br><br>Employees of NT were shocked when [name1] was discovered to have [event1]."
+			if (4)
+				temporary += "<br><br>The [noun1] has drawn strong criticism from [name1] and sparked protests in [location1], despite [title1] [name2] approving it."
+			if (5)
+				temporary += "<br><br>[capitalize(title1)] [name1] condemns [name2] for [event1]."
+			if (6)
+				temporary += "<br><br>[name1] declined to comment."
+			if (7)
+				temporary += "<br><br>Residents of [location1] expressed [emotion1] at the news."
+			if (8)
+				temporary += "<br><br>[capitalize(title1)] [name1] tells [src.publisher] that they personally blame [name2]."
+			if (9)
+				temporary += "<br><br>When [name1] [event1], there was some mild [emotion1] visible from [name2]."
+	src.info += temporary

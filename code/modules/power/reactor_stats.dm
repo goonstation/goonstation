@@ -111,6 +111,8 @@
 		if(G.toxins) .["Plasma|mols"] = G.toxins
 		if(G.carbon_dioxide) .["Carbon Dioxide|mols"] = G.carbon_dioxide
 		if(G.nitrogen) .["Nitrogen|mols"] = G.nitrogen
+		if(G.nitrous_oxide) .["Nitrous Oxide|mols"] = G.nitrous_oxide
+		if(G.oxygen_agent_b) .["Oxygen Agent B|mols"] = G.oxygen_agent_b
 
 		.["Pressure|Pa"] = MIXTURE_PRESSURE(G) KILO PASCALS
 		.["Temperature|K"] = G.temperature
@@ -119,20 +121,13 @@
 		.["Thermal Energy|J"] = THERMAL_ENERGY(G)
 		.["Total Moles|moles"] = TOTAL_MOLES(G)
 
-		if(length(G.trace_gases))
-			for(var/datum/gas/T as anything in G.trace_gases)
-				if(istype(T, /datum/gas/sleeping_agent))
-					.["Nitrous Oxide|mols"] = T.moles
-				else if(istype(T, /datum/gas/oxygen_agent_b))
-					.["Oxygen Agent B|mols"] = T.moles
-				// else
-				// 	.["Other Gasses|mols"] = T.moles
-
 	else
 		if(G?.ARCHIVED(oxygen)) .["Oxygen|mols"] = G.ARCHIVED(oxygen)
 		if(G?.ARCHIVED(toxins)) .["Plasma|mols"] = G.ARCHIVED(toxins)
 		if(G?.ARCHIVED(carbon_dioxide)) .["Carbon Dioxide|mols"] = G.ARCHIVED(carbon_dioxide)
 		if(G?.ARCHIVED(nitrogen)) .["Nitrogen|mols"] = G.ARCHIVED(nitrogen)
+		if(G?.ARCHIVED(nitrous_oxide)) .["Nitrous Oxide|mols"] = G.ARCHIVED(nitrous_oxide)
+		if(G?.ARCHIVED(oxygen_agent_b)) .["Oxygen Agent B|mols"] = G.ARCHIVED(oxygen_agent_b)
 
 		if (G) //sorry, this was still somehow causing runtimes????
 			.["Pressure|Pa"] = MIXTURE_PRESSURE(G) KILO PASCALS
@@ -141,15 +136,6 @@
 			.["Heat Capacity|J/K"] = HEAT_CAPACITY_ARCHIVED(G)
 			.["Thermal Energy|J"] = THERMAL_ENERGY(G)
 			.["Total Moles|moles"] = TOTAL_MOLES(G)
-
-		if(G && length(G.trace_gases))
-			for(var/datum/gas/T as anything in G.trace_gases)
-				if(istype(T, /datum/gas/sleeping_agent))
-					.["Nitrous Oxide|mols"] = T.ARCHIVED(moles)
-				else if(istype(T, /datum/gas/oxygen_agent_b))
-					.["Oxygen Agent B|mols"] = T.ARCHIVED(moles)
-				// else
-				// 	.["Other Gasses|mols"] = T.ARCHIVED(moles)
 
 
 /obj/machinery/power/reactor_stats/proc/sample_teg()

@@ -27,13 +27,13 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 
 		src.changeStatus("stimulants", 15 MINUTES)
 
-		src.equip_new_if_possible(/obj/item/clothing/shoes/macho, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/armor/vest/macho, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/macho, slot_glasses)
-		src.equip_new_if_possible(/obj/item/clothing/head/helmet/macho, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/belt/macho_belt, slot_belt)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/macho, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/gimmick/macho, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/vest/macho, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/macho, SLOT_GLASSES)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/macho, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/storage/belt/macho_belt, SLOT_BELT)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
 
 		if(!src.pseudo)
 			for (var/datum/targetable/macho/A as() in concrete_typesof(/datum/targetable/macho))
@@ -420,6 +420,14 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 	desc = "Official pants of the Space Wrestling Federation."
 	icon_state = "machopants"
 	item_state = "machopants"
+
+	random_color
+		icon_state = "machopants_base"
+		item_state = "machopants_base"
+
+		New()
+			..()
+			src.color = random_saturated_hex_color(1)
 
 /obj/item/clothing/suit/armor/vest/macho
 	name = "tiger stripe vest"

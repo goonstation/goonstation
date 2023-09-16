@@ -2,6 +2,7 @@
 #define ROLE_SPY_THIEF "spy_thief"
 #define ROLE_NUKEOP "nukeop"
 #define ROLE_NUKEOP_COMMANDER "nukeop_commander"
+#define ROLE_SYNDICATE_AGENT "syndicate_agent"
 #define ROLE_VAMPIRE "vampire"
 #define ROLE_GANG_LEADER "gang_leader"
 #define ROLE_WIZARD "wizard"
@@ -19,6 +20,7 @@
 #define ROLE_FLOCKMIND "flockmind"
 #define ROLE_FLOCKTRACE "flocktrace"
 #define ROLE_SALVAGER "salvager"
+#define ROLE_ANTAGONIST_CRITTER "antagonist_critter"
 #define ROLE_MISC "misc"
 
 // special antagonist roles

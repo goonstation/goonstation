@@ -75,7 +75,7 @@
 	// hide called by levelupdate if turf intact status changes
 	// change visibility status and force update of icon
 	hide(var/intact)
-		invisibility = (intact && level==1) ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
+		invisibility = (intact && level == UNDERFLOOR) ? INVIS_ALWAYS : INVIS_NONE	// hide if floor is intact
 		update()
 
 	// returns the type path of disposalpipe corresponding to this item dtype
@@ -153,12 +153,12 @@
 		if (iswrenchingtool(I))
 			if(anchored)
 				anchored = UNANCHORED
-				level = 2
+				level = OVERFLOOR
 				set_density(1)
 				boutput(user, "You detach the pipe from the underfloor.")
 			else
 				anchored = ANCHORED
-				level = 1
+				level = UNDERFLOOR
 				set_density(0)
 				boutput(user, "You attach the pipe to the underfloor.")
 			playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -192,7 +192,7 @@
 					P.color = src.color
 					P.name = src.name
 					if (src.material)
-						P.setMaterial(src.material, copy=FALSE)
+						P.setMaterial(src.material)
 					P.UpdateIcon()
 					boutput(user, "You weld [P] in place.")
 					logTheThing(LOG_STATION, user, "welded the disposal pipe in place at [log_loc(P)]")

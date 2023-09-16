@@ -117,7 +117,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 /obj/machinery/computer/cloning/process()
 	..()
-	src.records_scan()
+	if (!(src.status & (NOPOWER | BROKEN)))
+		src.records_scan()
 
 /obj/machinery/computer/cloning/connection_scan()
 	if (src.portable)
@@ -132,7 +133,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		if (!isnull(src.scanner))
 			src.scanner.connected = src
 			P.connected = src
-		if (src.linked_pods.len >= src.max_pods)
+		if (length(src.linked_pods) >= src.max_pods)
 			break
 
 /obj/machinery/computer/cloning/special_deconstruct(var/obj/computerframe/frame as obj)
@@ -153,8 +154,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 
 /obj/machinery/computer/cloning/attackby(obj/item/W, mob/user)
-	if (wagesystem.clones_for_cash && istype(W, /obj/item/spacecash))
-		var/obj/item/spacecash/cash = W
+	if (wagesystem.clones_for_cash && istype(W, /obj/item/currency/spacecash))
+		var/obj/item/currency/spacecash/cash = W
 		src.held_credit += cash.amount
 		cash.amount = 0
 		user.show_text("<span class='notice'>You add [cash] to the credit in [src].</span>")

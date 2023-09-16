@@ -28,7 +28,7 @@
 	New()
 		..()
 		if (has_material && isnull(default_material))
-			setMaterial(getMaterial("steel"), copy = FALSE)
+			setMaterial(getMaterial("steel"))
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -202,7 +202,7 @@
 			make_cleanable( C ,src)
 		else if ((locate(/obj) in src) && prob(3))
 			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal,\
-			/obj/item/spacecash, /obj/item/tile/steel, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
+			/obj/item/currency/spacecash, /obj/item/tile/steel, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
 			new C (src)
 		else if (prob(1) && prob(2)) // really rare. not "three space things spawn on destiny during first test with just prob(1)" rare.
 			var/obj/C = pick(/obj/item/space_thing, /obj/item/sticker/gold_star, /obj/item/sticker/banana, /obj/item/sticker/heart,\
@@ -1221,26 +1221,39 @@ TYPEINFO(/turf/simulated/floor/wood)
 	icon_state = "quiltystair2"
 
 
+TYPEINFO(/turf/simulated/floor/stairs/wood)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood
+	default_material = "wood"
 	icon_state = "wood_stairs"
 
 /turf/simulated/floor/stairs/wood/wide
+	default_material = "wood"
 	icon_state = "wood_stairs2"
 
 
+TYPEINFO(/turf/simulated/floor/stairs/wood2)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood2
+	default_material = "wood"
 	icon_state = "wood2_stairs"
 
 /turf/simulated/floor/stairs/wood2/wide
+	default_material = "wood"
 	icon_state = "wood2_stairs2"
 
 /turf/simulated/floor/stairs/wood2/middle
+	default_material = "wood"
 	icon_state = "wood2_stairs2_middle"
 
+TYPEINFO(/turf/simulated/floor/stairs/wood3)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood3
+	default_material = "wood"
 	icon_state = "wood3_stairs"
 
 /turf/simulated/floor/stairs/wood3/wide
+	default_material = "wood"
 	icon_state = "wood3_stairs2"
 
 
@@ -1622,10 +1635,11 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	default_melt_cap = 80
 	allows_vehicles = 1
 	default_material = "blob"
+	mat_changename = FALSE
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
-		setMaterial(copyMaterial(O.my_material))
-		color = material.color
+		setMaterial(O.my_material)
+		color = material.getColor()
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (isweldingtool(W))
@@ -1789,9 +1803,9 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	burnt = 0
 	if(default_material)
 		var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
-		src.setMaterial(mat, copy = FALSE)
+		src.setMaterial(mat)
 	else
-		src.setMaterial(getMaterial("steel"), copy = FALSE)
+		src.setMaterial(getMaterial("steel"))
 	levelupdate()
 
 /turf/simulated/floor/proc/dismantle_wall()//can get called due to people spamming weldingtools on walls
@@ -1939,8 +1953,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				R1.setMaterial(material)
 				R2.setMaterial(material)
 			else
-				R1.setMaterial(getMaterial("steel"), copy = FALSE)
-				R2.setMaterial(getMaterial("steel"), copy = FALSE)
+				R1.setMaterial(getMaterial("steel"))
+				R2.setMaterial(getMaterial("steel"))
 			ReplaceWithFloor()
 			src.to_plating()
 			return
@@ -1970,13 +1984,13 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if (!intact)
 			if(T.amount >= 1)
 				restore_tile()
-				src.default_material = getMaterial(src.material)
+				src.default_material = src.material
 
 				// if we have a special icon state and it doesn't have a material variant
 				// and at the same time the base floor icon state does have a material variant
 				// we use the material variant from the base floor
-				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material.mat_id]"
-				var/potential_new_base_icon_state = "floor$$[C.material.mat_id]"
+				var/potential_new_icon_state = "[materialless_icon_state()]$$[C.material.getID()]"
+				var/potential_new_base_icon_state = "floor$$[C.material.getID()]"
 				if(!src.is_valid_icon_state(potential_new_icon_state) && is_valid_icon_state(potential_new_base_icon_state, 'icons/turf/floors.dmi'))
 					src.icon_state = "floor"
 					src.icon = 'icons/turf/floors.dmi'
@@ -1986,7 +2000,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
 
 				if(!istype(src.material, /datum/material/metal/steel))
-					logTheThing(LOG_STATION, user, "constructs a floor (<b>Material:</b>: [src.material && src.material.name ? "[src.material.name]" : "*UNKNOWN*"]) at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "constructs a floor (<b>Material:</b>: [src.material && src.material.getName() ? "[src.material.getName()]" : "*UNKNOWN*"]) at [log_loc(src)].")
 				T.change_stack_amount(-1)
 			//if(T && (--T.amount < 1))
 			//	qdel(T)
@@ -1996,7 +2010,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if(istype(C, /obj/item/sheet))
 		var/obj/item/sheet/S = C
 		if (!S.amount_check(2,user)) return
-		if (S?.material?.material_flags & MATERIAL_METAL)
+		if (S?.material?.getMaterialFlags() & MATERIAL_METAL)
 			var/msg = "a girder"
 
 			if(!girder_egg)
@@ -2082,7 +2096,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 					actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
 			else
 				actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
-		else if (S?.material?.material_flags & MATERIAL_CRYSTAL)
+		else if (S?.material?.getMaterialFlags() & MATERIAL_CRYSTAL)
 			if(S.reinforcement)
 				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.rwindows : /obj/window/reinforced, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
 			else
@@ -2110,7 +2124,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 			K.Attackby(C, user, params)
 
 	else if (!user.pulling || user.pulling.anchored || (user.pulling.loc != user.loc && BOUNDS_DIST(user, user.pulling) > 0)) // this seemed like the neatest way to make attack_hand still trigger when needed
-		src?.material?.triggerOnHit(src, C, user, 1)
+		src.material_trigger_when_attacked(C, user, 1)
 	else
 		return attack_hand(user)
 

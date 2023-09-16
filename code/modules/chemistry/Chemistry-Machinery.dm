@@ -14,20 +14,20 @@ TYPEINFO(/obj/machinery/chem_heater)
 
 /obj/machinery/chem_heater
 	name = "Reagent Heater/Cooler"
-	desc = "A device used for the slow but precise heating and cooling of chemicals. It looks like a cross between an oven and a urinal."
+	desc = "A device used for the slow but precise heating and cooling of chemicals."
 	density = 1
 	anchored = ANCHORED
-	icon = 'icons/obj/chemical.dmi'
+	icon = 'icons/obj/heater.dmi'
 	icon_state = "heater"
 	flags = NOSPLASH | TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	power_usage = 50
+	processing_tier = PROCESSING_HALF
 	var/obj/beaker = null
 	var/active = 0
 	var/target_temp = T0C
 	var/output_target = null
 	var/mob/roboworking = null
-	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
 	// The chemistry APC was largely meaningless, so I made dispensers/heaters require a power supply (Convair880).
 
 	New()
@@ -178,7 +178,6 @@ TYPEINFO(/obj/machinery/chem_heater)
 				if (!container?.reagents.total_volume)
 					return
 				src.active = 1
-				active()
 				src.UpdateIcon()
 			if("stop")
 				set_inactive()
@@ -196,25 +195,22 @@ TYPEINFO(/obj/machinery/chem_heater)
 		return ..(AM)
 	*/
 
-	process()
-		..()
-
-	proc/active()
+	process(mult)
 		if (!active) return
 		if (status & (NOPOWER|BROKEN) || !beaker || !beaker.reagents.total_volume)
 			set_inactive()
 			return
 
 		var/datum/reagents/R = beaker:reagents
-		R.temperature_reagents(target_temp, 400)
+		R.temperature_reagents(target_temp, exposed_volume = (400 + R.total_volume * 5) * mult, change_cap = 100) //it uses juice in if the beaker is filled more. Or something.
 
-		src.power_usage = 1000
+		src.power_usage = 2000 + R.total_volume * 25
 
-		if(abs(R.total_temperature - target_temp) <= 3) active = 0
+		if(abs(R.total_temperature - target_temp) <= 3)
+			active = 0
 
 		tgui_process.update_uis(src)
-
-		SPAWN(1 SECOND) active()
+		..()
 
 	proc/robot_disposal_check()
 		// Without this, the heater might occasionally show that a beaker is still inserted
@@ -246,19 +242,19 @@ TYPEINFO(/obj/machinery/chem_heater)
 		tgui_process.update_uis(src)
 
 	update_icon()
-		src.overlays -= src.icon_beaker
 		if (src.beaker)
-			src.overlays += src.icon_beaker
+			src.UpdateOverlays(SafeGetOverlayImage("beaker", 'icons/obj/heater.dmi', "heater-beaker"), "beaker")
 			if (src.active && src.beaker:reagents && src.beaker:reagents:total_volume)
 				if (target_temp > src.beaker:reagents:total_temperature)
 					src.icon_state = "heater-heat"
 				else if (target_temp < src.beaker:reagents:total_temperature)
 					src.icon_state = "heater-cool"
 				else
-					src.icon_state = "heater"
+					src.icon_state = "heater-closed"
 			else
-				src.icon_state = "heater"
+				src.icon_state = "heater-closed"
 		else
+			src.UpdateOverlays(null, "beaker", retain_cache=TRUE)
 			src.icon_state = "heater"
 
 	mouse_drop(over_object, src_location, over_location)
@@ -288,6 +284,9 @@ TYPEINFO(/obj/machinery/chem_heater)
 			src.UpdateIcon()
 			tgui_process.update_uis(src)
 
+	chemistry
+		icon = 'icons/obj/heater_chem.dmi'
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -309,8 +308,10 @@ TYPEINFO(/obj/machinery/chem_master)
 	flags = NOSPLASH
 	power_usage = 50
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-	var/obj/item/beaker = null
+	var/obj/beaker = null
 	var/list/beaker_cache = null
+	///If TRUE, the beaker cache will be rebuilt on ui_data
+	var/rebuild_cache = FALSE
 	var/mob/roboworking = null
 	var/emagged = FALSE
 	var/list/whitelist = list()
@@ -377,10 +378,14 @@ TYPEINFO(/obj/machinery/chem_master)
 		if(!src.beaker)
 			return FALSE
 
+		if(istype(src.beaker, /obj/reagent_dispensers/chemicalbarrel))
+			remove_barrel(src.beaker)
+			return
+
 		if(!src.roboworking)
 			var/obj/item/I = src.beaker
 			TRANSFER_OR_DROP(src, I) // causes Exited proc to be called
-			user.put_in_hand_or_eject(I)
+			user?.put_in_hand_or_eject(I)
 		else // robos dont want exited proc
 			src.beaker = null
 			src.roboworking = null
@@ -517,7 +522,7 @@ TYPEINFO(/obj/machinery/chem_master)
 		.["patch_icons"] = patch_icons
 
 	proc/rebuild_beaker_cache()
-		if(!src.beaker)
+		if(QDELETED(src.beaker))
 			src.beaker_cache = null
 			return
 
@@ -545,6 +550,9 @@ TYPEINFO(/obj/machinery/chem_master)
 					volume = current_reagent.volume
 				)))
 
+	proc/invalidate_cache()
+		src.rebuild_cache = TRUE
+
 	proc/manufacture_name(var/param_name)
 		var/name = param_name
 		name = trim(copytext(sanitize(html_encode(name)), 1, CHEMMASTER_ITEMNAME_MAXSIZE))
@@ -554,13 +562,77 @@ TYPEINFO(/obj/machinery/chem_master)
 				name = src.beaker.reagents.get_master_reagent_name()
 		return name
 
+	proc/try_attach_barrel(var/obj/reagent_dispensers/chemicalbarrel/barrel, var/mob/user)
+		if (src.status & (NOPOWER|BROKEN))
+			user.show_text("[src] seems to be out of order.", "red")
+			return
+
+		if (src.beaker == barrel)
+			user.show_text("The [barrel.name] is already connected to the [src.name]!", "red")
+			return
+
+		if(BOUNDS_DIST(src, user) > 0)
+			user.show_text("The [src.name] is too far away to mess with!", "red")
+			return
+
+		if (GET_DIST(barrel, src) > 1)
+			usr.show_text("The [src.name] is too far away from the [barrel.name] to hook up!", "red")
+			return
+
+		if(src.beaker)
+			src.eject_beaker(user)
+
+		src.beaker = barrel
+		barrel.linked_machine = src
+		boutput(user, "You hook the [src.beaker] up to the [src.name].")
+		RegisterSignal(barrel, COMSIG_MOVABLE_MOVED, PROC_REF(remove_barrel))
+		RegisterSignal(barrel, COMSIG_ATOM_REAGENT_CHANGE, PROC_REF(invalidate_cache))
+
+		var/tube_x = 5 //where the tube connects to the chemmaster (changes with dir)
+		var/tube_y = -5
+		if(dir == EAST)
+			tube_x = 7
+			tube_y = 6
+		if(dir == WEST)
+			tube_x = -8
+			tube_y = 0
+		var/datum/lineResult/result = drawLine(src, barrel, "chemmaster", "chemmaster_end", src.pixel_x + tube_x, src.pixel_y + tube_y, barrel.pixel_x + 6, barrel.pixel_y + 8)
+		result.lineImage.pixel_x = -src.pixel_x
+		result.lineImage.pixel_y = -src.pixel_y
+		if(src.layer > barrel.layer) //this should ensure it renders above both the barrel and chemmaster
+			result.lineImage.layer = src.layer + 0.1
+		else
+			result.lineImage.layer = barrel.layer + 0.1
+		src.UpdateOverlays(result.lineImage, "tube")
+
+		rebuild_beaker_cache()
+		global.tgui_process.update_uis(src)
+		src.UpdateIcon()
+
+	proc/remove_barrel(var/obj/reagent_dispensers/chemicalbarrel/barrel)
+		barrel.linked_machine = null
+		UnregisterSignal(src.beaker, COMSIG_MOVABLE_MOVED)
+		UnregisterSignal(src.beaker, COMSIG_ATOM_REAGENT_CHANGE)
+		src.beaker = null
+		rebuild_beaker_cache()
+		src.UpdateIcon()
+		global.tgui_process.update_uis(src)
+		src.UpdateOverlays(null, "tube")
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (istype(over_object, /obj/reagent_dispensers/chemicalbarrel))
+			try_attach_barrel(over_object, usr)
+		..()
+
 	ui_data(mob/user)
 		. = list()
 
-		if(src.beaker)
+		if(!QDELETED(src.beaker))
 			.["default_name"] = src.beaker.reagents.get_master_reagent_name()
 		else
 			.["default_name"] = null
+		if (src.rebuild_cache)
+			src.rebuild_beaker_cache()
 		.["container"] = beaker_cache
 
 	ui_act(action, list/params, datum/tgui/ui)
@@ -829,7 +901,10 @@ TYPEINFO(/obj/machinery/chem_master)
 
 	update_icon()
 		if(src.beaker)
-			icon_state = "mixer1"
+			if(istype(src.beaker, /obj/reagent_dispensers/chemicalbarrel))
+				icon_state = "mixer_barrel"
+			else
+				icon_state = "mixer1"
 		else
 			icon_state = "mixer0"
 

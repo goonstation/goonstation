@@ -68,6 +68,7 @@
 //skipped_mobs_list flags
 #define SKIPPED_MOBS_LIST (1 << 0)
 #define SKIPPED_AI_MOBS_LIST (1 << 1)
+#define SKIPPED_STAMINA_MOBS (1 << 2)
 
 // decomp_stage defines
 #define DECOMP_STAGE_NO_ROT 0
@@ -75,3 +76,17 @@
 #define DECOMP_STAGE_DECAYED 2
 #define DECOMP_STAGE_HIGHLY_DECAYED 3
 #define DECOMP_STAGE_SKELETONIZED 4
+
+// Stat defines
+#define STAT_ALIVE 0
+#define STAT_UNCONSCIOUS 1
+#define STAT_DEAD 2
+
+// Butchering defines
+#define BUTCHER_NOT_ALLOWED 0
+#define BUTCHER_ALLOWED 1
+/// Extra "WHAT A MONSTER" message on butchering
+#define BUTCHER_YOU_MONSTER 2
+
+//idk where else to put this
+#define DEFAULT_MIRANDA "You have the right to remain silent. Anything you say can and will be used against you in a NanoTrasen court of Space Law. You have the right to a rent-an-attorney. If you cannot afford one, a monkey in a suit and funny hat will be appointed to you."

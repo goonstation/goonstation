@@ -180,3 +180,7 @@ ABSTRACT_TYPE(/obj/item/device/key)
 	name = "tubular key"
 	desc = "One of those cylinder keys that you see on vending machines and stuff."
 	icon_state = "key_round"
+
+/obj/item/device/key/filing_cabinet/locked_table_random_room
+	desc = "A key for locking desk drawers. Cool."
+	id = "locked_table_random_room"

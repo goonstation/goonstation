@@ -535,10 +535,7 @@
 				state = I.item_state ? I.item_state + "-L" : (I.icon_state ? I.icon_state + "-L" : "L")
 			handimage.icon_state = state
 
-			if (H.mutantrace)
-				handimage.pixel_y = H.mutantrace.hand_offset + 6
-			else
-				handimage.pixel_y = 6
+			handimage.pixel_y = H.mutantrace.hand_offset + 6
 
 			if (H)
 				//H.update_clothing()
@@ -668,11 +665,7 @@
 			if(!(state in icon_states(I.inhand_image_icon)))
 				state = I.item_state ? I.item_state + "-R" : (I.icon_state ? I.icon_state + "-R" : "R")
 
-			handimage.icon_state = state
-			if (H.mutantrace)
-				handimage.pixel_y = H.mutantrace.hand_offset + 6
-			else
-				handimage.pixel_y = 6
+			handimage.pixel_y = H.mutantrace.hand_offset + 6
 
 			if (H)
 				H.update_clothing()

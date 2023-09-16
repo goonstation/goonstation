@@ -56,12 +56,12 @@
 			for (var/x = 1, x <= world.maxx, x++)
 				for (var/y = 1, y <= world.maxy, y++)
 					var/turf/T = locate(x,y,5)
-					if (T.name == "asteroid" || T.name == "cavern wall" || T.type == /turf/simulated/floor/plating/airless/asteroid)
+					if (istype(T, /turf/simulated/wall/auto/asteroid) || istype(T, /turf/simulated/floor/plating/airless/asteroid))
 						turf_color = "solid"
-					else if (T.name == "trench floor" || T.name == "\proper space")
+					else if (istype(T, /turf/space))
 						turf_color = "empty"
 					else
-						if (T.loc && (T.loc.type == /area/shuttle/sea_elevator || T.loc.type == /area/shuttle/sea_elevator/lower || T.loc.type == /area/prefab/sea_mining || T.loc.type == /area/mining/miningoutpost || T.loc.type == /area/mining/manufacturing || T.loc.type == /area/mining/hangar || T.loc.type == /area/mining/refinery || T.loc.type == /area/mining/dock || T.loc.type == /area/mining/power || T.loc.type == /area/mining/quarters || T.loc.type == /area/mining/magnet_control || T.loc.type == /area/mining/mainasteroid || T.loc.type == /area/mining/comms || T.loc.type == /area/station/solar/small_backup3)) // i hate this
+						if (T.loc && istype(T.loc, /area/shuttle/sea_elevator) || istype(T.loc, /area/mining) || istype(T.loc, /area/prefab/sea_mining) || istype(T.loc, /area/station/solar/small_backup3))
 							turf_color = "station"
 						else
 							turf_color = "other"
@@ -164,7 +164,7 @@
 		if (!C)
 			return
 		if (!src.map_html || !src.map)
-			boutput(C, "oh no, map doesnt exist!")
+			boutput(C, "<b class='alert'>oh no, map doesnt exist!</b>")
 			return
 		C << browse_rsc(src.map, "trenchmap.png")
 		C << browse(src.map_html, "window=trench_map;size=650x700;title=Trench Map")
@@ -937,7 +937,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 		if(istype(I, /obj/item/cell))
 			if(open)
 				if(cell)
-					boutput(user, "There is already a power cell inside.")
+					boutput(user, "<span class='alert'>There is already a power cell inside.</span>")
 					return
 				else
 					// insert cell
@@ -950,7 +950,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 
 						user.visible_message("<span class='notice'>[user] inserts a power cell into [src].</span>", "<span class='notice'>You insert the power cell into [src].</span>")
 			else
-				boutput(user, "The hatch must be open to insert a power cell.")
+				boutput(user, "<span class='alert'>The hatch must be open to insert a power cell.</span>")
 				return
 		else if (ispryingtool(I))
 			open = !open

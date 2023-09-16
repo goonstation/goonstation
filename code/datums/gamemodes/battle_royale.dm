@@ -370,8 +370,8 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/EOD)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/hoscape)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/heavy)
-	armor_supplies.Add(/obj/item/clothing/suit/armor/centcomm)
-	armor_supplies.Add(/obj/item/clothing/suit/armor/centcommcoat)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/captain/centcomm)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/capcoat/centcomm)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/captain)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/batman)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/football)
@@ -444,7 +444,7 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	if (!ishuman(battler))
 		return
 
-	battler.equip_if_possible(new /obj/item/device/radio/headset(battler), battler.slot_ears)
+	battler.equip_if_possible(new /obj/item/device/radio/headset(battler), SLOT_EARS)
 
 	// Battle royale crewmembers are rainbow flavored
 	var/obj/item/clothing/under/jumpsuit = null
@@ -532,22 +532,22 @@ proc/equip_battler(mob/living/carbon/human/battler)
 	hat.setProperty("meleeprot_head", 3)
 	hat.setProperty("coldprot", 5)
 	hat.setProperty("heatprot", 5)
-	battler.equip_if_possible(jumpsuit, battler.slot_w_uniform)
-	battler.equip_if_possible(hat, battler.slot_head)
-	battler.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(battler), battler.slot_shoes)
+	battler.equip_if_possible(jumpsuit, SLOT_W_UNIFORM)
+	battler.equip_if_possible(hat, SLOT_HEAD)
+	battler.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(battler), SLOT_SHOES)
 	var/obj/item/clothing/head/vest = new /obj/item/clothing/suit/armor/vest/light
 	vest.delProperty("heatprot")
 	vest.delProperty("coldprot")
-	battler.equip_if_possible(vest, battler.slot_wear_suit)
-	battler.equip_if_possible(new /obj/item/storage/backpack/empty(battler), battler.slot_back)
-	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), battler.slot_l_store)
-	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), battler.slot_r_store)
+	battler.equip_if_possible(vest, SLOT_WEAR_SUIT)
+	battler.equip_if_possible(new /obj/item/storage/backpack/empty(battler), SLOT_BACK)
+	battler.equip_if_possible(new /obj/item/reagent_containers/food/snacks/donut/custom/robusted(battler), SLOT_L_STORE)
+	battler.equip_if_possible(new /obj/item/reagent_containers/mender/both/mini(battler), SLOT_R_STORE)
 
 	var/obj/item/card/id/captains_spare/I = new /obj/item/card/id/captains_spare // for whatever reason, this is neccessary
 	I.registered = "[battler.name]"
 	I.assignment = "Battler"
 	I.access |= access_maxsec
-	battler.equip_if_possible(I, battler.slot_wear_id)
+	battler.equip_if_possible(I, SLOT_WEAR_ID)
 	//battler.Equip_Bank_Purchase(battler.mind.purchased_bank_item)
 	battler.set_clothing_icon_dirty()
 

@@ -255,8 +255,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if ("martian")
 				// medicine, some poisons, some gross stuff
 				potential_reagents = list("charcoal","styptic_powder","salbutamol","anti_rad","silver_sulfadiazine","synaptizine",
-				"omnizine","synthflesh","saline","salicylic_acid","menthol","calomel","penteticacid","antihistamine","atropine",
-				"perfluorodecalin","ipecac","mutadone","insulin","epinephrine","cyanide","ketamine","toxin","neurotoxin","mutagen",
+				"omnizine","synthflesh","saline","salicylic_acid","menthol","calomel","penteticacid","antihistamine","atropine","solipsizine",
+				"perfluorodecalin","ipecac","mutadone","insulin","epinephrine","cyanide","ketamine","toxin","neurotoxin","neurodepressant","mutagen",
 				"fake_initropidril","toxic_slurry","jenkem","space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter")
 			if ("eldritch")
 				// all the worst stuff. all of it
@@ -264,17 +264,19 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				"phlogiston","thermite","infernite","foof","fuel","blackpowder","acid","amanitin","coniine","cyanide","curare",
 				"formaldehyde","lipolicide","initropidril","cholesterol","itching","pacid","pancuronium","polonium",
 				"sodium_thiopental","ketamine","sulfonal","toxin","venom","neurotoxin","mutagen","wolfsbane",
-				"toxic_slurry","histamine","saxitoxin")
+				"toxic_slurry","histamine","saxitoxin","viper_venom","ricin")
 			else
 				// absolutely everything
 				potential_reagents = all_functional_reagent_ids
 
-		if (potential_reagents.len > 0)
+		if (length(potential_reagents) > 0)
 			var/looper = rand(2,5)
 			while (looper > 0)
 				var/reagent = pick(potential_reagents)
-				if(payload_type == 3 && ban_from_fluid.Find(reagent)) // do not pick stuff that is banned from fluid dump
-					continue
+				if(payload_type == 3) // do not pick stuff that is banned from fluid dump
+					var/datum/reagent/cached = reagents_cache[reagent]
+					if (cached.fluid_flags & FLUID_BANNED)
+						continue
 				looper--
 				payload_reagents += reagent
 			log_addendum = "Payload: [payload_type_name], [kText.list2text(payload_reagents, ", ")]"
@@ -291,7 +293,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			reaction_reagents += X
 
 		var/amountper = 0
-		if (reaction_reagents.len > 0)
+		if (length(reaction_reagents) > 0)
 			amountper = round(O.reagents.maximum_volume / reaction_reagents.len)
 		else
 			amountper = 20
@@ -337,7 +339,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return
 		var/datum/artifact/bomb/transmute/A = src.artifact
 		O.setMaterial(A.mat)
-		boutput(user, "\The [O] turn\s into [A.mat.name]!")
+		boutput(user, "\The [O] turn\s into [A.mat.getName()]!")
 
 /datum/artifact/bomb/transmute
 	associated_object = /obj/machinery/artifact/bomb/transmute
@@ -449,13 +451,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		mat = getMaterial(material)
 
-		warning_initial = "appears to be turning into [mat.name]."
-		warning_final = "begins transmuting nearby matter into [mat.name]!"
-		log_addendum = "Material: [mat.name]"
+		warning_initial = "appears to be turning into [mat.getName()]."
+		warning_final = "begins transmuting nearby matter into [mat.getName()]!"
+		log_addendum = "Material: [mat.getName()]"
 
-		var/matR = GetRedPart(mat.color)
-		var/matG = GetGreenPart(mat.color)
-		var/matB = GetBluePart(mat.color)
+		var/matR = GetRedPart(mat.getColor())
+		var/matG = GetGreenPart(mat.getColor())
+		var/matB = GetBluePart(mat.getColor())
 		lightColor = list(matR, matG, matB, 255)
 
 		range = rand(3,7)
@@ -469,7 +471,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (..())
 			return
 		var/base_offset = rand(1000)
-		O.add_filter("rays", 1, rays_filter(size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.color))
+		O.add_filter("rays", 1, rays_filter(size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.getColor()))
 		animate(O.get_filter("rays"), size=16*range, time=0.5 SECONDS, offset=base_offset+50)
 		animate(size=32*range, time=0.5 SECONDS, offset=base_offset+50, alpha=0)
 		playsound(O.loc, 'sound/weapons/conc_grenade.ogg', 90, 1)

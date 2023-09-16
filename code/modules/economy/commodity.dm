@@ -1,5 +1,5 @@
 // Commodities
-/datum/commodity/
+/datum/commodity
 	var/comname = "commodity" // Name of the item on the market
 	var/comtype = null // Type Path of the item on the market
 	var/price = 0 // Current selling price for this commodity
@@ -59,6 +59,15 @@
 /datum/commodity/meat
 	comname = "Meat"
 	comtype = /obj/item/reagent_containers/food/snacks/ingredient/meat
+	onmarket = 1
+	price = 50
+	baseprice = 50
+	upperfluc = 25
+	lowerfluc = -25
+
+/datum/commodity/fish
+	comname = "Fish"
+	comtype = /obj/item/reagent_containers/food/fish
 	onmarket = 1
 	price = 50
 	baseprice = 50
@@ -363,7 +372,7 @@
 
 /datum/commodity/boogiebot
 	comname = "Boogiebot"
-	comtype = /obj/critter/boogiebot
+	comtype = /mob/living/critter/small_animal/boogiebot
 	desc = "The latest in boogie technology!"
 	onmarket = 0
 	price = 5000
@@ -1228,6 +1237,15 @@
 	upperfluc = 50
 	lowerfluc = -50
 
+/datum/commodity/junk/ai_kit_mime
+	comname = "Mime AI Parts"
+	comtype = /obj/item/ai_plating_kit/mime
+	desc = "The parts required to plate an AI to thematically match with being trapped in a box."
+	price = 800
+	baseprice = 800
+	upperfluc = 50
+	lowerfluc = -50
+
 /////////////////////////////////
 ///////food trader //////////////
 /////////////////////////////////
@@ -1607,7 +1625,7 @@
 
 /datum/commodity/bodyparts/cybereye
 	comname = "Cybereye"
-	comtype = /obj/item/organ/eye/cyber
+	comtype = /obj/item/organ/eye/cyber/configurable
 	price = 1500
 	baseprice = 1500
 	upperfluc = 750
@@ -2220,7 +2238,7 @@
 	upperfluc = 100
 	lowerfluc = -20
 
-/datum/commodity/sticker/
+/datum/commodity/sticker
 	onmarket = 0
 
 /datum/commodity/sticker/googly_eyes
@@ -2262,6 +2280,16 @@
 	baseprice = 200
 	upperfluc = 20
 	lowerfluc = -20
+
+/datum/commodity/clownsabre
+	comname = "C-Sabre"
+	comtype = /obj/item/swords_sheaths/clown
+	desc = "A high quality sabre."
+	onmarket = 0
+	price = 500
+	baseprice = 500
+	upperfluc = 250
+	lowerfluc = -250
 
 /*
 /datum/commodity/screamshoes
@@ -2364,7 +2392,7 @@
 	lowerfluc = -200
 
 // FLOCKTRADER COMMODITIES AND PRICES
-/datum/commodity/flock/
+/datum/commodity/flock
 	desc = "Goods that the Flocktrader sells or wants."
 	onmarket = 0
 
@@ -2527,6 +2555,14 @@
 	price = 30000
 	upperfluc = 12500
 	lowerfluc = -12500
+
+/datum/commodity/flock/tech/ai_kit_flock
+	comname = "Flock Plating Kit"
+	comtype = /obj/item/ai_plating_kit/flock
+	desc = "A decorative plating kit for a computational core. We cannot guarantee an absense of side effects."
+	price = 2500
+	upperfluc = 500
+	lowerfluc = -500
 
 /////////////////////////////////
 ///////skeleton trader //////////

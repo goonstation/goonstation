@@ -17,6 +17,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	var/on = 1
 	var/area/area = null
 	var/otherarea = null
+	var/id = null
 	//	luminosity = 1
 	var/datum/light/light
 
@@ -28,9 +29,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 		light = new /datum/light/point
 	SPAWN(0.5 SECONDS)
 		src.area = get_area(src)
-
 		if(otherarea)
 			src.area = locate(text2path("/area/[otherarea]"))
+
+		src.id = src.area.name
+		ADD_SWITCHED_OBJ(SWOB_LIGHTS)
 
 		if(!name || name == "N light switch" || name == "E light switch" || name == "S light switch" || name == "W light switch")
 			name = "light switch"
@@ -49,15 +52,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 		light.attach(src)
 		light.enable()
 
+/obj/machinery/light_switch/disposing()
+	REMOVE_SWITCHED_OBJ(SWOB_LIGHTS)
+	. = ..()
+
 /obj/machinery/light_switch/proc/trigger(var/datum/mechanicsMessage/inp)
 	if(!ON_COOLDOWN(src, "mechcomp_toggle", 1 SECOND))
-		toggle(null)
+		toggle_group(null)
 
 /obj/machinery/light_switch/proc/autoposition()
 	var/turf/T = null
 	for (var/dir in cardinal)
 		T = get_step(src,dir)
-		if (T.density || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+		if (T.density || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
 			src.set_dir(dir)
 			if (dir == EAST)
 				src.pixel_x = 24
@@ -74,6 +81,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	if (!newly_built) // dont want the area to end up something wacky
 		src.area = get_area(src)
 		src.on = src.area.lightswitch
+		src.id = src.area.name
+		ADD_SWITCHED_OBJ(SWOB_LIGHTS)
 		area.machines += src // i dont know why it doesn't end up in there
 		src.UpdateIcon()
 	src.autoposition()
@@ -81,7 +90,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 /obj/machinery/light_switch/was_deconstructed_to_frame(mob/user)
 	. = ..()
 	area.machines -= src
-
+	REMOVE_SWITCHED_OBJ(SWOB_LIGHTS)
 
 /obj/machinery/light_switch/update_icon()
 	if(status & NOPOWER)
@@ -106,7 +115,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	if(user && !user.stat)
 		return "A light switch. It is [on? "on" : "off"]."
 
-/obj/machinery/light_switch/proc/toggle(mob/user=null)
+/obj/machinery/light_switch/attack_hand(mob/user)
+	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
+		toggle_group(user)
+
+/obj/machinery/light_switch/proc/toggle_group(mob/user=null) //flip *this* switch, update target area, then prompt the group to refresh accordingly
 	on = !on
 	area.lightswitch = on
 	area.power_change()
@@ -114,26 +127,24 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	if(user)
 		interact_particle(user,src)
 
-	for(var/obj/machinery/light_switch/L in area.machines)
-		L.on = on
-		L.UpdateIcon()
-
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
+	playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
 
 	if(user)
 		src.add_fingerprint(user)
 		logTheThing(LOG_STATION, user, "turns [on ? "on" : "off"] a lightswitch at [log_loc(user)]")
 
-	playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"[on ? "lightOn":"lightOff"]")
+
+	switched_obj_toggle(SWOB_LIGHTS,src.id,src.on) //the bit that handles visual and switch state updates for the group, via the toggle proc below
 
 	if(on && !ON_COOLDOWN(src, "turtlesplode", 10 SECONDS))
 		for_by_tcl(S, /obj/critter/turtle)
 			if(get_area(S) == src.area && S.rigged)
 				S.explode()
 
-/obj/machinery/light_switch/attack_hand(mob/user)
-	if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
-		toggle(user)
+/obj/machinery/light_switch/proc/toggle(var/on_signal)
+	src.on = on_signal
+	src.UpdateIcon()
 
 /obj/machinery/light_switch/power_change()
 

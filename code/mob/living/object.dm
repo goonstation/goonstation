@@ -66,7 +66,7 @@
 		src.pixel_x = possessed_thing.pixel_x
 		src.pixel_y = possessed_thing.pixel_y
 		src.set_density(possessed_thing.density)
-		src.RL_SetOpacity(possessed_thing.opacity)
+		src.set_opacity(possessed_thing.opacity)
 		src.create_submerged_images()
 		src.flags = possessed_thing.flags
 		src.event_handler_flags = src.flags
@@ -254,6 +254,7 @@
 				src.possessed_thing.set_loc(get_turf(src))
 			if (src.possessed_item)
 				possessed_item.cant_drop = initial(possessed_item.cant_drop)
+			qdel(src.dummy)
 
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))

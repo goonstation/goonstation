@@ -763,7 +763,7 @@
 				return
 
 			if(signal.data["command"] == "report_pda")
-				if(!message_on || !signal.data["sender"] || signal.data["sender"] == master.net_id)
+				if(!message_on || !signal.data["sender"] || signal.data["sender"] == master.net_id || !src.master.scannable)
 					return
 
 				var/datum/signal/newsignal = get_free_signal()
@@ -771,14 +771,6 @@
 				newsignal.data["address_1"] = signal.data["sender"]
 				newsignal.data["owner"] = src.master.owner
 				src.post_signal(newsignal)
-
-				if(!ON_COOLDOWN(src.master, "report_pda_refresh", 1 SECOND))
-					src.master.updateSelfDialog()
-				else if(!src.report_refresh_queued)
-					src.report_refresh_queued = TRUE
-					SPAWN(1 SECOND)
-						src.report_refresh_queued = FALSE
-						src.master.updateSelfDialog()
 
 			if(signal.encryption) return
 
@@ -893,8 +885,6 @@
 
 					if(length(src.hosted_files) >= 1)
 						src.CheckForPasskey(signal.data["message"], signal.data["sender"])
-
-					src.master.updateSelfDialog()
 
 				if("file_send_req")
 					if(!message_on)

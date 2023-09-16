@@ -103,6 +103,8 @@
 	/// the temperature the cube will start taking damage at
 	var/melttemp = T0C
 
+	var/does_cooling = TRUE
+
 	New(loc, mob/iced as mob)
 		..()
 		if(iced && !isAI(iced) && !isblob(iced) && !iswraith(iced))
@@ -121,9 +123,10 @@
 
 		src.health *= (rand(10,20)/10)
 
-		for(var/mob/M in src)
-			if (!ishuman(M)) // bodytemp loop handles it for humans
-				src.RegisterSignal(M, COMSIG_LIVING_LIFE_TICK, PROC_REF(PassiveCool))
+		if (src.does_cooling)
+			for(var/mob/M in src)
+				if (!ishuman(M)) // bodytemp loop handles it for humans
+					src.RegisterSignal(M, COMSIG_LIVING_LIFE_TICK, PROC_REF(PassiveCool))
 
 	disposing()
 		processing_items.Remove(src)
@@ -141,9 +144,7 @@
 				steam.set_up(10, 0, get_turf(src))
 				steam.attach(src)
 				steam.start(clear_holder=1)
-
 		..()
-
 
 	relaymove(mob/user as mob)
 		if (user.stat)
@@ -206,3 +207,18 @@
 		SPAWN(0)
 			takeDamage(20 / severity)
 		..()
+
+/obj/icecube/spider
+	name = "bundle of web"
+	desc = "A big wad of web. Someone seems to be stuck inside it."
+	icon = 'icons/effects/effects.dmi'
+	icon_state = "web2"
+	steam_on_death = FALSE
+	does_cooling = FALSE
+
+	clown
+		name = "bundle of cotton candy"
+		desc = "What the fuck spins webs out of - y'know what, scratch that. You don't want to find out."
+		icon = 'icons/effects/effects.dmi'
+		icon_state = "candyweb2"
+

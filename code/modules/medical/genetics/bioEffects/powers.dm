@@ -11,7 +11,6 @@
 	blockGaps = 2
 	stability_loss = 10
 	var/using = 0
-	var/safety = 0
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
 	var/datum/targetable/geneticsAbility/ability = null
 
@@ -51,6 +50,7 @@
 
 	//varedit support for cooldowns
 	onVarChanged(variable, oldval, newval)
+		. = ..()
 		if (variable == "cooldown" && istype(src.ability))
 			src.ability.cooldown = newval
 			src.ability.holder?.updateButtons()
@@ -125,7 +125,7 @@
 	blockGaps = 2
 	stability_loss = 5
 	ability_path = /datum/targetable/geneticsAbility/mattereater
-	var/target_path = /obj/item/
+	var/target_path = /obj/item
 
 /datum/targetable/geneticsAbility/mattereater
 	name = "Matter Eater"
@@ -1130,7 +1130,7 @@
 
 		owner.visible_message("<span class='alert'><b>[owner.name]</b> shoots eye beams!</span>")
 		var/datum/projectile/laser/eyebeams/PJ = new projectile_path
-		shoot_projectile_ST(owner, PJ, T)
+		shoot_projectile_ST_pixel_spread(owner, PJ, T)
 
 	cast_misfire(atom/target)
 		if (..())
@@ -1246,9 +1246,9 @@
 
 		var/obj/the_object = target
 
-		var/base_path = /obj/item/
+		var/base_path = /obj/item
 		if (linked_power.power > 1)
-			base_path = /obj/
+			base_path = /obj
 
 		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 
@@ -1283,7 +1283,7 @@
 				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
 				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
-				the_object.setMaterial(getMaterial("gold"), copy = FALSE)
+				the_object.setMaterial(getMaterial("gold"))
 		linked_power.using = 0
 
 	cast_misfire()
@@ -1292,9 +1292,9 @@
 		if(linked_power.using)
 			return 1
 
-		var/base_path = /obj/item/
+		var/base_path = /obj/item
 		if (linked_power.power > 1)
-			base_path = /obj/
+			base_path = /obj
 
 		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 		if (!items.len)
@@ -1319,7 +1319,7 @@
 			owner.visible_message("[owner] touches [the_object].")
 		else
 			owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to flesh!</span>")
-			the_object.setMaterial(getMaterial("flesh"), copy = FALSE)
+			the_object.setMaterial(getMaterial("flesh"))
 		linked_power.using = 0
 		return
 
@@ -1885,24 +1885,20 @@
 		return
 
 	OnLife(var/mult)
-		if(..()) return
-		if (isliving(owner))
-			var/mob/living/L = owner
-			var/turf/T = get_turf(L)
+		if(..())
+			return
+		if (!src.active)
+			return
+		if (!isliving(owner))
+			return
 
-			if (T && isturf(T))
-				var/area/A = get_area(T)
-				if (istype(T, /turf/space) || (A && (istype(A, /area/shuttle/) || istype(A, /area/shuttle_transit_space) || A.name == "Space" || A.name == "Ocean")))
-					src.cloak_decloak(2)
+		var/mob/living/L = owner
+		var/turf/T = get_turf(L)
 
-				else
-					if (T.RL_GetBrightness() < 0.2 && can_act(owner) && src.active)
-						src.cloak_decloak(1)
-					else
-						src.cloak_decloak(2)
-			else
-				src.cloak_decloak(2)
-		return
+		if (!isturf(T) || T.is_lit())
+			src.cloak_decloak(2)
+		else if (can_act(src.owner))
+			src.cloak_decloak(1)
 
 /datum/targetable/geneticsAbility/darkcloak
 	name = "Cloak of Darkness"
@@ -1918,6 +1914,7 @@
 		if (DC.active)
 			boutput(usr, "You stop using your cloak of darkness.")
 			DC.active = 0
+			DC.cloak_decloak(2)
 		else
 			boutput(usr, "You start using your cloak of darkness.")
 			DC.active = 1

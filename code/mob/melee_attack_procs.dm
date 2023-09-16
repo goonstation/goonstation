@@ -23,8 +23,11 @@
 	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
-		else
+		else if (ishuman(M))
 			src.administer_CPR(M)
+		else
+			src.visible_message("<span class='notice'>[src] shakes [M], trying to wake them up!</span>")
+			hit_twitch(M)
 	else if (M.is_bleeding())
 		src.staunch_bleeding(M)
 	else if (src.health > 0)
@@ -203,17 +206,19 @@
 
 	if (block_it_up)
 		var/obj/item/grab/block/G = new /obj/item/grab/block(src, src, src)
-		src.put_in_hand(G, src.hand)
+		if(src.put_in_hand(G, src.hand))
+			playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
+			src.visible_message("<span class='alert'>[src] starts blocking!</span>")
+			SEND_SIGNAL(src, COMSIG_UNARMED_BLOCK_BEGIN, G)
+			src.setStatus("blocking", duration = INFINITE_STATUS)
+			block_begin(src)
+		else
+			qdel(G)
 
-		playsound(src.loc, 'sound/impact_sounds/Generic_Shove_1.ogg', 50, 1, -1)
-		src.visible_message("<span class='alert'>[src] starts blocking!</span>")
-		SEND_SIGNAL(src, COMSIG_UNARMED_BLOCK_BEGIN, G)
-		src.setStatus("blocking", duration = INFINITE_STATUS)
-		block_begin(src)
 		src.next_click = world.time + (COMBAT_CLICK_DELAY)
 
 /mob/living/proc/grab_block() //this is sorta an ugly but fuck it!!!!
-	if (src.grabbed_by && src.grabbed_by.len > 0)
+	if (src.grabbed_by && length(src.grabbed_by) > 0)
 		return 0
 
 	.= 1
@@ -604,11 +609,12 @@
 		else
 			msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
-		return
+		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a target_damage_multiplier of 0.")
+
 	if (!self_damage_multiplier)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 		msgs.visible_message_self("<span class='alert'><B>[src] hits [target] with a ridiculously feeble attack!</B></span>")
-		return
+		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a self_damage_multiplier of 0.")
 
 	msgs.played_sound = "punch"
 	var/do_punch = FALSE
@@ -1026,7 +1032,7 @@
 				var/mob/living/carbon/human/H = target
 				if (H.can_be_converted_to_the_revolution())
 					if (isrevolutionary(owner))
-						if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY))
+						if (H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED))
 							H.changeStatus("newcause", 5 SECONDS)
 							H.HealDamage("All", max(30 - H.health,0), 0)
 							H.HealDamage("All", 0, max(30 - H.health,0))

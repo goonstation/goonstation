@@ -1,5 +1,6 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
+ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 /obj/machinery/bot
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
@@ -88,8 +89,7 @@
 		src.processing_tier = src.PT_idle
 		src.SubscribeToProcess()
 		if(!src.chat_text)
-			src.chat_text = new
-		src.vis_contents += src.chat_text
+			src.chat_text = new(null, src)
 		SPAWN(0.5 SECONDS)
 			src.botcard = new /obj/item/card/id(src)
 			src.botcard.access = get_access(src.access_lookup)
@@ -164,6 +164,10 @@
 
 	proc/explode()
 		return
+
+	proc/admin_command_speak()
+		set name = "Speak"
+		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
 
 	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
 		if (!src.on || !message || src.muted)

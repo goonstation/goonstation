@@ -36,7 +36,7 @@
 	},
 /area/shuttle/escape/centcom)
 "ik" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/wood/two,
 /area/shuttle/escape/centcom)
 "kb" = (

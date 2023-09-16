@@ -51,6 +51,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	var/letgo_hp = 50
 	var/mob/living/carbon/human/occupant = null
 	var/process_time = 20 SECONDS
+	var/static/process_speedup = 0 // static since the genetek upgrade is universal
 	var/damage_per_tick = 1
 
 	var/image/screenoverlay = null
@@ -239,7 +240,8 @@ TYPEINFO(/obj/machinery/genetics_booth)
 				UpdateOverlays(screenoverlay, "screen", 0, 1)
 				animate_shake(src,5,3,2, return_x = -3)
 				playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1, pitch = 1.4)
-				if (entry_time + process_time < TIME)
+				var/adjusted_time = process_time - (process_time * process_speedup)
+				if (entry_time + adjusted_time < TIME)
 					eject_occupant()
 			else
 				UpdateOverlays(abilityoverlay, "abil", 0, 1)

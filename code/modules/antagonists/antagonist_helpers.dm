@@ -1,25 +1,42 @@
+/// An associative list of all antagonist IDs, associated with a list of all antagonist datums of that ID.
+var/list/list/antagonists = list()
+
 /**
- * Gets a list of all antagonists of ID role_id.
- * Returns a list if any datums are present, or null if none are.
+ * Gets a list of all antagonist datums of ID role_id, or of all IDs if no ID is specified.
+ * Returns a list of all antagonist datums. If no antagonist datums could be found, returns an empty list.
  */
-/proc/get_all_antagonists(role_id, include_pseudo = FALSE)
+/proc/get_all_antagonists(antagonist_role_id)
 	. = list()
-	for (var/datum/mind/mind in ticker.minds)
-		for (var/datum/antagonist/antag in mind.antagonists)
-			if (antag.id == role_id && (!antag.pseudo || include_pseudo))
-				. += antag
-				break
+
+	if (antagonist_role_id)
+		return antagonists["[antagonist_role_id]"]
+
+	for (var/antagonist_type in antagonists)
+		. += antagonists[antagonist_type]
 
 /// Returns a list of all gang datums.
 proc/get_all_gangs()
 	. = list()
 
-	for (var/datum/antagonist/gang_leader/antag_datum in get_all_antagonists(ROLE_GANG_LEADER))
-		. += antag_datum.gang
+	for (var/datum/antagonist/gang_leader/antagonist_role as anything in get_all_antagonists(ROLE_GANG_LEADER))
+		if (antagonist_role?.gang)
+			. += antagonist_role.gang
 
-	return .
+/** Returns the mind of this mind's master.
+ * If a specific antagonist role ID is provided, then the master of the antagonist datum of that ID belonging to this mind will be returned.
+ * If no antagonist role ID is provided, then the master of the newest antagonist datum will be returned.
+ */
+/datum/mind/proc/get_master(antagonist_role_id)
+	if (antagonist_role_id)
+		var/datum/antagonist/subordinate/antagonist_role = src.get_antagonist(antagonist_role_id)
+		if (antagonist_role?.master)
+			. = antagonist_role.master
+		return
 
-/// Returns the gang datum of this mob, provided they has one. Otherwise returns false.
+	for (var/datum/antagonist/subordinate/antagonist_role in src.antagonists)
+		. = antagonist_role.master // Return the master of the newest antagonist datum in `antagonists`.
+
+/// Returns the gang datum of this mob, provided they have one. Otherwise returns false.
 /mob/proc/get_gang()
 	var/datum/gang/gang
 	var/datum/antagonist/gang_leader/gang_leader_antagonist_role = src.mind?.get_antagonist(ROLE_GANG_LEADER)
@@ -55,7 +72,6 @@ proc/get_all_gangs()
 		"Security Officer",
 		"Security Assistant",
 		"Vice Officer",
-		"Part-time Vice Officer",
 		"Detective",
 		"AI",
 		"Cyborg")

@@ -1,6 +1,5 @@
 
 #define IS_NPC_HATED_ITEM(x) ( \
-		istype(x, /obj/item/clothing/suit/straight_jacket) || \
 		istype(x, /obj/item/handcuffs) || \
 		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
@@ -10,14 +9,15 @@
 	name = "monkey"
 	real_name = "monkey"
 #ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
 	icon_state = "monkey"
 #endif
+	default_mutantrace = /datum/mutantrace/monkey
 
 	New()
 		..()
 		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
-				src.bioHolder.AddEffect("monkey")
 				if (src.name == "monkey" || !src.name)
 					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
@@ -30,60 +30,78 @@
 /mob/living/carbon/human/npc/monkey/mr_muggles
 	name = "Mr. Muggles"
 	real_name = "Mr. Muggles"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mr_muggles"
+#endif
 	gender = "male"
 	ai_offhand_pickup_chance = 1 // very civilized
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/color/blue, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/under/color/blue, SLOT_W_UNIFORM)
 
 /mob/living/carbon/human/npc/monkey/mrs_muggles
 	name = "Mrs. Muggles"
 	real_name = "Mrs. Muggles"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mrs_muggles"
+#endif
 	gender = "female"
 	ai_offhand_pickup_chance = 1 // also very civilized
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/color/magenta, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/under/color/magenta, SLOT_W_UNIFORM)
 
 /mob/living/carbon/human/npc/monkey/mr_rathen
 	name = "Mr. Rathen"
 	real_name = "Mr. Rathen"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mr_rathen"
+#endif
 	gender = "male"
 	ai_offhand_pickup_chance = 2 // learned that there's dangerous stuff in engineering!
 	ai_poke_thing_chance = 0.3 // don't mess up the engine too much
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/rank/engineer, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/under/rank/engineer, SLOT_W_UNIFORM)
 
 /mob/living/carbon/human/npc/monkey/albert
 	name = "Albert"
 	real_name = "Albert"
+#ifdef IN_MAP_EDITOR
+	icon_state = "albert"
+#endif
 	gender = "male"
 	ai_offhand_pickup_chance = 10 // more curious than most monkeys
 	ai_poke_thing_chance = 3
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/suit/space, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/suit/space, SLOT_WEAR_SUIT)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, SLOT_HEAD)
 
 /mob/living/carbon/human/npc/monkey/von_braun
 	name = "Von Braun"
 	real_name = "Von Braun"
 	gender = "male"
+#ifdef IN_MAP_EDITOR
+	icon_state = "oppenheimer" // Close enough
+#endif
 	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatching stuff
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, SLOT_WEAR_SUIT)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, SLOT_HEAD)
 
 /mob/living/carbon/human/npc/monkey/oppenheimer
 	name = "Oppenheimer"
 	real_name = "Oppenheimer"
+#ifdef IN_MAP_EDITOR
+	icon_state = "oppenheimer"
+#endif
 	gender = "male"
 	ai_offhand_pickup_chance = 40 // went through training as a spy thief, skilled at snatch- wait, I'm getting a feeling of deja vu
 	ai_poke_thing_chance = 2
@@ -96,9 +114,9 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/suit/space/syndicate, SLOT_WEAR_SUIT)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/space, SLOT_HEAD)
 
 			var/obj/item/card/id/ID = new/obj/item/card/id(src)
 			ID.name = "Oppenheimer's ID Card"
@@ -108,7 +126,7 @@
 			ID.icon_state = "id_syndie"
 			ID.desc = "Oppenheimer's identification card."
 
-			src.equip_if_possible(ID, slot_wear_id)
+			src.equip_if_possible(ID, SLOT_WEAR_ID)
 
 
 	ai_is_valid_target(mob/M)
@@ -139,46 +157,59 @@
 /mob/living/carbon/human/npc/monkey/horse
 	name = "????"
 	real_name = "????"
+#ifdef IN_MAP_EDITOR
+	icon_state = "horse"
+#endif
 	gender = "male"
 	New()
 		..()
 		ai_offhand_pickup_chance = rand(100) // an absolute wildcard
 		ai_poke_thing_chance = rand(50)
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/mask/horse_mask/cursed/monkey, slot_wear_mask)
+			src.equip_new_if_possible(/obj/item/clothing/mask/horse_mask/cursed/monkey, SLOT_WEAR_MASK)
 
 /mob/living/carbon/human/npc/monkey/tanhony
 	name = "Tanhony"
 	real_name = "Tanhony"
+#ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
+	icon_state = "tanhony"
+#endif
 	gender = "female"
 	ai_offhand_pickup_chance = 5 // your base monkey
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/head/paper_hat, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/head/paper_hat, SLOT_HEAD)
 
 /mob/living/carbon/human/npc/monkey/krimpus
 	name = "Krimpus"
 	real_name = "Krimpus"
+#ifdef IN_MAP_EDITOR
+	icon_state = "krimpus"
+#endif
 	gender = "female"
 	ai_offhand_pickup_chance = 2.5 // some of the botany fruit is very dangerous, Krimpus learned not to eat
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/rank/hydroponics, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/apron/botanist, slot_wear_suit)
+			src.equip_new_if_possible(/obj/item/clothing/under/rank/hydroponics, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/suit/apron/botanist, SLOT_WEAR_SUIT)
 
 /mob/living/carbon/human/npc/monkey/stirstir
 	name = "Monsieur Stirstir"
 	real_name = "Monsieur Stirstir"
+#ifdef IN_MAP_EDITOR
+	icon_state = "stirstir"
+#endif
 	gender = "male"
 	ai_offhand_pickup_chance = 4 // a filthy thief but he's trying to play nice for now
 	ai_poke_thing_chance = 5 // maybe finds tools... breaks out of prison...
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/head/beret/prisoner, SLOT_HEAD)
 			if(prob(80)) // couldnt figure out how to hide it in the debris field, so i just chucked it in a monkey
 				var/obj/item/disk/data/cartridge/ringtone_numbers/idk = new
 				idk.set_loc(src)
@@ -189,6 +220,7 @@
 	name = "monkey"
 	real_name = "monkey"
 #ifdef IN_MAP_EDITOR
+	icon = 'icons/mob/map_mob.dmi'
 	icon_state = "monkey"
 #endif
 	ai_aggressive = 0
@@ -197,13 +229,13 @@
 	var/list/shitlist = list()
 	var/ai_aggression_timeout = 600
 	var/ai_poke_thing_chance = 1
+	default_mutantrace = /datum/mutantrace/monkey
 
 	New()
 		..()
 		START_TRACKING
 		if (!src.disposed)
 			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-			src.bioHolder.AddEffect("monkey")
 			if (src.name == "monkey" || !src.name)
 				src.name = pick_string_autokey("names/monkey.txt")
 			src.real_name = src.name
@@ -605,8 +637,8 @@
 		..()
 		SPAWN(1 SECOND)
 			var/head = pick(/obj/item/clothing/head/bandana/red, /obj/item/clothing/head/bandana/random_color)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, slot_shoes)
-			src.equip_new_if_possible(head, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/tourist, SLOT_SHOES)
+			src.equip_new_if_possible(head, SLOT_HEAD)
 			var/weap = pick(/obj/item/saw/active, /obj/item/extinguisher, /obj/item/ratstick, /obj/item/razor_blade, /obj/item/bat, /obj/item/kitchen/utensil/knife/cleaver, /obj/item/nunchucks, /obj/item/tinyhammer, /obj/item/storage/toolbox/mechanical/empty, /obj/item/kitchen/rollingpin)
 			src.put_in_hand_or_drop(new weap)
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "angry_monkey", 5)
@@ -628,14 +660,17 @@
 // sea monkeys
 /mob/living/carbon/human/npc/monkey/sea
 	name = "sea monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "sea"
+#endif
 	max_health = 150
 	ai_useitems = FALSE // or they eat all the floor pills and die before anyone visits
+	default_mutantrace = /datum/mutantrace/monkey/seamonkey
 
 	New()
 		..()
 		SPAWN(0.5 SECONDS)
 			if (!src.disposed)
-				src.bioHolder.AddEffect("seamonkey")
 				if (src.name == "sea monkey" || !src.name)
 					src.name = pick_string_autokey("names/monkey.txt")
 				src.real_name = src.name
@@ -644,6 +679,9 @@
 /mob/living/carbon/human/npc/monkey/sea/gang
 	//name = "sea monkey"
 	//real_name = "sea monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "sea_gang"
+#endif
 	gender = "male"
 	ai_aggressive = 1
 	ai_calm_down = 0
@@ -651,12 +689,15 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/under, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/mobster/alt, SLOT_W_UNIFORM)
 
 /mob/living/carbon/human/npc/monkey/sea/gang_gun
 	//name = "sea monkey"
 	//real_name = "sea monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "sea_gang"
+#endif
 	gender = "female"
 	ai_aggressive = 1
 	ai_calm_down = 0
@@ -664,13 +705,16 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-			src.equip_new_if_possible(/obj/item/gun/kinetic/detectiverevolver, slot_l_hand)
-			src.equip_new_if_possible(/obj/item/clothing/under, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
+			src.equip_new_if_possible(/obj/item/gun/kinetic/detectiverevolver, SLOT_L_HAND)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/mobster/alt, SLOT_W_UNIFORM)
 
 /mob/living/carbon/human/npc/monkey/sea/rich
 	//name = "sea monkey"
 	//real_name = "sea monkey"
+#ifdef IN_MAP_EDITOR
+	icon_state = "sea_rich"
+#endif
 	gender = "female"
 	ai_aggressive = 1
 	ai_calm_down = 0
@@ -678,27 +722,33 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/head/crown, slot_head)
+			src.equip_new_if_possible(/obj/item/clothing/head/crown, SLOT_HEAD)
 
 /mob/living/carbon/human/npc/monkey/sea/lab
 	name = "Kimmy"
 	real_name = "Kimmy"
 	gender = "female"
+#ifdef IN_MAP_EDITOR
+	icon_state = "sea_sci"
+#endif
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/under/rank/scientist, slot_w_uniform)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/regular, SLOT_GLASSES)
+			src.equip_new_if_possible(/obj/item/clothing/under/rank/scientist, SLOT_W_UNIFORM)
 
 // non-AI monkeys
 /mob/living/carbon/human/monkey/mr_wigglesby
 	name = "Mr. Wigglesby"
 	real_name = "Mr. Wigglesby"
+#ifdef IN_MAP_EDITOR
+	icon_state = "mr_wigglesby"
+#endif
 	gender = "male"
 	New()
 		..()
 		SPAWN(1 SECOND)
-			src.equip_new_if_possible(/obj/item/clothing/under/suit, src.slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/black, src.slot_shoes)
+			src.equip_new_if_possible(/obj/item/clothing/under/suit/black, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
 
 #undef IS_NPC_HATED_ITEM

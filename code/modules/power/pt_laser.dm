@@ -118,11 +118,11 @@
 	if(terminal && !(src.status & BROKEN))
 		src.excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
 		if(charging && src.excess >= src.chargelevel)		// if there's power available, try to charge
-			var/load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
-			charge += load * mult		// increase the charge
-			add_load(load)		// add the load to the terminal side network
-			load_last_tick = load
-			if (!src.is_charging) src.is_charging = TRUE
+			var/load = min(capacity-charge, chargelevel)	// charge at set rate, limited to spare capacity
+			if(terminal.add_load(load))						// attempt to add the load to the terminal side network
+				charge += load * mult						// increase the charge if we did
+				load_last_tick = load
+				if (!src.is_charging) src.is_charging = TRUE
 		else
 			load_last_tick = 0
 			if (src.is_charging) src.is_charging = FALSE
@@ -148,7 +148,7 @@
 
 			charge -= adj_output
 
-			if(blocking_objects.len > 0)
+			if(length(blocking_objects) > 0)
 				melt_blocking_objects()
 			power_sold(adj_output)
 
@@ -282,11 +282,6 @@
 		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
 			qdel(O)
-
-/obj/machinery/power/pt_laser/add_load(var/amount)
-	if(terminal?.powernet)
-		terminal.powernet.newload += amount
-
 
 /obj/machinery/power/pt_laser/proc/can_fire()
 	return abs(src.output) <= src.charge
@@ -841,7 +836,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser/ptl/try_propagate()
 	. = ..()
 	var/turf/T = get_next_turf()
-	if (!T) //edge of z_level
+	if (!T || istype(T, /turf/unsimulated/wall/trench)) //edge of z_level or oshan trench
 		var/obj/laser_sink/ptl_seller/seller = get_singleton(/obj/laser_sink/ptl_seller)
 		if (seller.incident(src))
 			src.sink = seller

@@ -67,7 +67,7 @@ datum
 
 				if(check < 8)
 					M.reagents.add_reagent(pick("methamphetamine", "crank", "neurotoxin"), rand(1,5))
-					M.visible_message("<span class='alert'><b>[M.name]</b> scratches at something under their skin!</span>")
+					M.visible_message("<span class='alert'><b>[M.name]</b> scratches at something under their [issilicon(M) ? "chassis" : "skin"]!</span>")
 					random_brute_damage(M, 5 * mult)
 				else if (check < 16)
 					switch(rand(1,2))

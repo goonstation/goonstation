@@ -70,7 +70,12 @@
 					var/datum/component/glue_ready/maybe_glue_ready_comp = M.GetComponent(/datum/component/glue_ready)
 					if(maybe_glue_ready_comp)
 						qdel(maybe_glue_ready_comp)
-					M.throw_at(get_edge_cheap(source, get_dir(source, M)),  20 + round(created_volume * 2), 1 + round(created_volume / 10))
+					var/atom/target
+					if (get_turf(source) == get_turf(M))
+						target = get_edge_target_turf(source, pick(alldirs))
+					else
+						target = get_edge_cheap(source, get_dir(source, M))
+					M.throw_at(target, 2 + round(created_volume / 5), 1 + round(created_volume / 10))
 					LAGCHECK(LAG_MED)
 
 	if (holder)
@@ -135,7 +140,7 @@
 				//boutput(world,"[react_amount]")
 
 		var/divisor = howmany
-		if (covered.len > 4)
+		if (length(covered) > 4)
 			divisor *= 1.2
 		source.fluid_react(holder, react_amount/divisor, airborne = 1)
 
@@ -259,10 +264,14 @@
 
 /// Deletes any reagents that are banned in smoke clouds.
 /proc/purge_smoke_blacklist(datum/reagents/FG)
-	FG.del_reagent("pyrosium")
-	FG.del_reagent("big_bang")
-	FG.del_reagent("big_bang_precursor")
-	FG.del_reagent("poor_concrete")
-	FG.del_reagent("okay_concrete")
-	FG.del_reagent("good_concrete")
-	FG.del_reagent("perfect_concrete")
+	for (var/reagent_id in FG.reagent_list)
+		var/datum/reagent/reagent = FG.reagent_list[reagent_id]
+		if (reagent.fluid_flags & FLUID_SMOKE_BANNED)
+			FG.del_reagent(reagent_id)
+
+/// Deletes any reagents that are banned in fluid puddles.
+/proc/purge_fluid_blacklist(datum/reagents/FG)
+	for (var/reagent_id in FG.reagent_list)
+		var/datum/reagent/reagent = FG.reagent_list[reagent_id]
+		if (reagent.fluid_flags & FLUID_BANNED)
+			FG.del_reagent(reagent_id)

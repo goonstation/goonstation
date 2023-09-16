@@ -18,6 +18,7 @@
 #define WEAPON_VENDOR_CATEGORY_AMMO "ammo"
 #define WEAPON_VENDOR_CATEGORY_UTILITY "utility"
 #define WEAPON_VENDOR_CATEGORY_ASSISTANT "assistant"
+#define WEAPON_VENDOR_CATEGORY_FISHING "fishing"
 
 /obj/submachine/weapon_vendor
 	name = "Weapons Vendor"
@@ -95,7 +96,7 @@
 
 	proc/accepted_token(var/token, var/mob/user)
 		src.ui_interact(user)
-		playsound(src.loc, sound_token, 80, 1)
+		playsound(src.loc, sound_token, 80, 0)
 		boutput(user, "<span class='notice'>You insert the requisition token into [src].</span>")
 		if(log_purchase)
 			logTheThing(LOG_STATION, user, "inserted [token] into [src] at [log_loc(get_turf(src))]")
@@ -235,6 +236,46 @@
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
 		..()
 
+/obj/submachine/weapon_vendor/fishing
+	name = "Fishing Supplies Vendor"
+	desc = "An automated quartermaster service for obtaining and upgrading your fishing gear."
+	icon_state = "fishing"
+	credits = list(WEAPON_VENDOR_CATEGORY_FISHING = 0)
+	token_accepted = /obj/item/currency/fishing
+	sound_token = 'sound/effects/insert_ticket.ogg'
+	log_purchase = FALSE
+	layer = 4
+
+	ex_act()
+		return
+
+	New()
+		materiel_stock += new/datum/materiel/fishing_gear/rod
+		materiel_stock += new/datum/materiel/fishing_gear/upgraded_rod
+		materiel_stock += new/datum/materiel/fishing_gear/master_rod
+		materiel_stock += new/datum/materiel/fishing_gear/uniform
+		materiel_stock += new/datum/materiel/fishing_gear/hat
+		materiel_stock += new/datum/materiel/fishing_gear/fish_box
+		materiel_stock += new/datum/materiel/fishing_gear/fish_mount
+		..()
+
+	accepted_token(var/obj/item/currency/fishing/token)
+		if (istype(token, /obj/item/currency/fishing))
+			src.credits[WEAPON_VENDOR_CATEGORY_FISHING]+=token.amount
+		..()
+
+/obj/submachine/weapon_vendor/fishing/portable
+	anchored = 0
+
+	attackby(obj/item/W, mob/user)
+		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
+			user.visible_message("<b>[user]</b> [src.anchored ? "unanchors" : "anchors"] the [src].")
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			src.anchored = !(src.anchored)
+			return
+		else
+			return ..()
+
 // Materiel avaliable for purchase:
 
 /datum/materiel
@@ -259,6 +300,9 @@
 
 /datum/materiel/ammo
 	category = WEAPON_VENDOR_CATEGORY_AMMO
+
+/datum/materiel/fishing_gear
+	category = WEAPON_VENDOR_CATEGORY_FISHING
 
 //SECURITY
 
@@ -525,6 +569,48 @@
 	path = /obj/item/storage/backpack/satchel/flintlock_pistol_satchel
 	description = "A set of two flintlock pistols and 15 rounds of ammunition."
 
+//FISHING
+/datum/materiel/fishing_gear/rod
+	name = "Basic fishing rod"
+	path = /obj/item/fishing_rod/basic
+	description = "A basic fishing rod."
+	cost = 0
+
+/datum/materiel/fishing_gear/upgraded_rod
+	name = "Upgraded fishing rod"
+	path = /obj/item/fishing_rod/upgraded
+	description = "An upgraded fishing rod, able to fish in a variety of more difficult locations."
+	cost = 25
+
+/datum/materiel/fishing_gear/master_rod
+	name = "Master fishing rod"
+	path = /obj/item/fishing_rod/master
+	description = "The ultimate fishing rod, capable of fishing in the most extreme circumstances."
+	cost = 50
+
+/datum/materiel/fishing_gear/fish_box
+	name = "Portable aquarium"
+	path = /obj/item/storage/fish_box
+	description = "A temporary solution for bulk-fish transportation. Holds 6 fish in relative comfort."
+	cost = 10
+
+/datum/materiel/fishing_gear/uniform
+	name = "Angler's overalls"
+	path = /obj/item/clothing/under/rank/angler
+	description = "Smells fishy; It's wearer must have a keen appreciation for the piscine."
+	cost = 5
+
+/datum/materiel/fishing_gear/hat
+	name = "Fish fear me cap"
+	path = /obj/item/clothing/head/fish_fear_me
+	description = "The ultimate angling headwear. Comes with a new, personalised message every time."
+	cost = 15
+
+/datum/materiel/fishing_gear/fish_mount
+	name = "Fish Wall Mount"
+	path = /obj/item/wall_trophy/fish_trophy
+	description = "A Wall Mount to attach fish to and show it off."
+	cost = 10
 
 // Requisition tokens
 /obj/item/requisition_token
@@ -564,3 +650,4 @@
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
 #undef WEAPON_VENDOR_CATEGORY_UTILITY
 #undef WEAPON_VENDOR_CATEGORY_ASSISTANT
+#undef WEAPON_VENDOR_CATEGORY_FISHING

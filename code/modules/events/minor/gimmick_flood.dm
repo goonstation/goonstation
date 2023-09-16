@@ -20,9 +20,9 @@
 			else
 				L = concrete_typesof(/datum/reagent)
 
-			if(L.len == 1)
+			if(length(L) == 1)
 				reagent_type = L[1]
-			else if(L.len > 1)
+			else if(length(L) > 1)
 				reagent_type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 			else
 				usr.show_text("No reagents matching that name", "red")

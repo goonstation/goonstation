@@ -1,5 +1,5 @@
 /mob/dead
-	stat = 2
+	stat = STAT_DEAD
 	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
 	pass_unstable = FALSE
 	///Our corpse, if one exists
@@ -75,7 +75,7 @@
 	logTheThing(LOG_DIARY, src, "(GHOST): [message]", "say")
 
 	if (src.client && src.client.ismuted())
-		boutput(src, "You are currently muted and may not speak.")
+		boutput(src, "<b class='alert'>You are currently muted and may not speak.</b>")
 		return
 
 	if(src?.client?.preferences.auto_capitalization)

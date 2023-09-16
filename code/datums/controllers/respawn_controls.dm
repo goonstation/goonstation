@@ -195,7 +195,6 @@ var/datum/respawn_controls/respawn_controller
 		M.adminspawned = 1
 		M.is_respawned_player = 1
 		M.key = the_client.key
-		M.Login()
 		M.client.player.dnr = FALSE //reset DNR in case we cryoed to get here
 		M.client.player.claimed_rewards = list() // reset claimed medal rewards
 		M.mind.purchased_bank_item = null
@@ -211,6 +210,7 @@ var/datum/respawn_controls/respawn_controller
 	respawn_controller.doRespawn(src.ckey)
 
 /atom/movable/screen/respawn_timer
+	name = "Respawn Timer"
 	screen_loc = "CENTER, NORTH"
 	maptext_width = 32 * 5
 	maptext_x = -32 * 2

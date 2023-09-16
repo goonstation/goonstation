@@ -111,38 +111,6 @@
 	desc = "A large briefcase for experimental toxins research."
 	spawn_contents = list(/obj/item/raw_material/molitz_beta = 2, /obj/item/paper/hellburn)
 
-/obj/item/storage/desk_drawer
-	name = "desk drawer"
-	desc = "This fits into a desk and you can store stuff in it! Wow, amazing!!"
-	icon = 'icons/obj/items/storage.dmi'
-	icon_state = "desk_drawer"
-	flags = FPRINT | TABLEPASS
-	w_class = W_CLASS_BULKY
-	max_wclass = W_CLASS_SMALL
-	slots = 13 // these can't move (in theory) and they can only hold w_class 2 things so we may as well let them hold a bunch
-	mechanics_type_override = /obj/item/storage/desk_drawer
-	var/locked = 0
-	var/id = null
-
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/device/key/filing_cabinet))
-			var/obj/item/device/key/K = W
-			if (src.id && K.id == src.id)
-				src.locked = !src.locked
-				user.visible_message("[user] [!src.locked ? "un" : null]locks [src].")
-				playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
-			else
-				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s lock.</span>")
-			return
-		..()
-
-	mouse_drop(atom/over_object, src_location, over_location)
-		if (src.locked)
-			if (usr)
-				boutput(usr, "<span class='alert'>[src] is locked!</span>")
-			return
-		..()
-
 /obj/item/storage/rockit
 	name = "\improper Rock-It Launcher"
 	desc = "Huh..."

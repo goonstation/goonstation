@@ -689,7 +689,7 @@ proc/get_angle(atom/a, atom/b)
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
 //Mentor just changes the private message link
-/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null)
+/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null, ckey_and_alt_key = FALSE)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
@@ -751,7 +751,10 @@ proc/get_angle(atom/a, atom/b)
 			if (the_client.holder && the_client.stealth && !include_details)
 				text += "Administrator"
 			else if (the_client.holder && the_client.alt_key && !include_details)
-				text += "[the_client.fakekey]"
+				if(ckey_and_alt_key && FALSE)
+					text += "[the_key] (as [the_client.fakekey])"
+				else
+					text += "[the_client.fakekey]"
 			else
 				text += "[the_key]"
 		else
@@ -770,7 +773,7 @@ proc/get_angle(atom/a, atom/b)
 				text += html_encode(the_mob.name)
 			text += " "
 			if (the_client && !the_client.holder) //only show this stuff for non-admins because admins do a lot of shit while dead and it is unnecessary to show it
-				if (checktraitor(the_mob))
+				if (the_mob.mind?.is_antagonist())
 					text += "\[<font color='red'>T</font>\] "
 				if (isdead(the_mob))
 					text += "\[DEAD\] "
@@ -779,7 +782,9 @@ proc/get_angle(atom/a, atom/b)
 			if (admins)
 				linkSrc = "%admin_ref%"
 			else
-				linkSrc = "\ref[usr.client.holder]"
+				if (isnull(user))
+					user = usr
+				linkSrc = "\ref[user.client.holder]"
 			text += "<a href='byond://?src=[linkSrc]&action=adminplayeropts&targetckey=[the_mob.ckey]' class='popt'><i class='icon-info-sign'></i></a>"
 
 	return text
@@ -1162,7 +1167,7 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	var/list/name_temp = splittext(playerName, " ")
 	if (!name_temp.len)
 		playerName = "Unknown"
-	else if (name_temp.len == 1)
+	else if (length(name_temp) == 1)
 		playerName = name_temp[1]
 	else //Ex: John Smith becomes JSmith
 		playerName = copytext( ( copytext(name_temp[1],1, 2) + name_temp[name_temp.len] ), 1, 16)
@@ -1220,6 +1225,15 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	while (ismob(M.loc) || isobj(M.loc))
 		. += M.loc
 		M = M.loc
+
+proc/outermost_movable(atom/movable/target)
+	RETURN_TYPE(/atom/movable)
+	if (!ismovable(target))
+		return null
+	var/atom/movable/M = target
+	while (ismovable(M.loc))
+		M = M.loc
+	. = M
 
 /proc/all_hearers(var/range,var/centre)
 	. = list()
@@ -1335,60 +1349,6 @@ proc/get_adjacent_floor(atom/W, mob/user, px, py)
 	var/stringtarget = copytext(stringtype, 1, parentend ? parentend : 0)
 	. = text2path(stringtarget)
 
-//Returns a list of minds that are some type of antagonist role
-//This may be a stop gap until a better solution can be figured out
-/proc/get_all_enemies()
-	if(ticker?.mode && current_state >= GAME_STATE_PLAYING)
-		var/datum/mind/enemies[] = new()
-		var/datum/mind/someEnemies[] = new()
-
-		//We gotta loop through the modes because someone thought it was a good idea to create new lists for all of them
-		if (istype(ticker.mode, /datum/game_mode/revolution))
-			someEnemies = ticker.mode:head_revolutionaries
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-			someEnemies = ticker.mode:revolutionaries
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-			someEnemies = ticker.mode:get_all_heads()
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-		else if (istype(ticker.mode, /datum/game_mode/nuclear))
-			someEnemies = ticker.mode:syndicates
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-		else if (istype(ticker.mode, /datum/game_mode/spy))
-			someEnemies = ticker.mode:spies
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-			someEnemies = ticker.mode:leaders
-			for(var/datum/mind/M in someEnemies)
-				if (M.current)
-					enemies += M
-
-		//Lists we grab regardless of game type
-		//Traitors list is populated during traitor or mixed rounds, however it is created along with the game_mode datum unlike the rest of the lists
-		someEnemies = ticker.mode.traitors
-		for(var/datum/mind/M in someEnemies)
-			if (M.current)
-				enemies += M
-
-		//Sometimes admins assign traitors, this contains those dudes
-		someEnemies = ticker.mode.Agimmicks
-		for(var/datum/mind/M in someEnemies)
-			if (M.current)
-				enemies += M
-
-		return enemies
-
-	else
-		return 0
-
 /proc/GetRedPart(hex)
     hex = uppertext(hex)
     var/hi = text2ascii(hex, 2)
@@ -1481,7 +1441,7 @@ proc/RarityClassRoll(var/scalemax = 100, var/mod = 0, var/list/category_boundari
 		return 0
 	if (!isnum(mod))
 		return 0
-	if (category_boundaries.len <= 0)
+	if (length(category_boundaries) <= 0)
 		return 0
 
 	var/picker = rand(1,scalemax)
@@ -1800,7 +1760,7 @@ proc/countJob(rank)
 /// Returns a list of eligible dead players to be respawned as an antagonist or whatever (Convair880).
 /// Text messages: 1: alert | 2: alert (chatbox) | 3: alert acknowledged (chatbox) | 4: no longer eligible (chatbox) | 5: waited too long (chatbox)
 /proc/dead_player_list(var/return_minds = 0, var/confirmation_spawn = 0, var/list/text_messages = list(), var/allow_dead_antags = 0,
-		var/require_client = FALSE)
+		var/require_client = FALSE, var/do_popup = TRUE)
 	var/list/candidates = list()
 	// Confirmation delay specified, so prompt eligible dead mobs and wait for response.
 	if (confirmation_spawn > 0)
@@ -1814,11 +1774,11 @@ proc/countJob(rank)
 		var/text_chat_toolate = "You have waited too long to respond to the offer."
 
 		if (text_messages.len)
-			if (text_messages.len >= 1) text_alert = text_messages[1]
-			if (text_messages.len >= 2) text_chat_alert = text_messages[2]
-			if (text_messages.len >= 3) text_chat_added = text_messages[3]
-			if (text_messages.len >= 4) text_chat_failed = text_messages[4]
-			if (text_messages.len >= 5) text_chat_toolate = text_messages[5]
+			if (length(text_messages) >= 1) text_alert = text_messages[1]
+			if (length(text_messages) >= 2) text_chat_alert = text_messages[2]
+			if (length(text_messages) >= 3) text_chat_added = text_messages[3]
+			if (length(text_messages) >= 4) text_chat_failed = text_messages[4]
+			if (length(text_messages) >= 5) text_chat_toolate = text_messages[5]
 
 		text_alert = strip_html(text_alert, MAX_MESSAGE_LEN, 1)
 		text_chat_alert = "<span class='notice'><h3>[strip_html(text_chat_alert, MAX_MESSAGE_LEN)]</h3></span>"
@@ -1834,7 +1794,9 @@ proc/countJob(rank)
 					continue
 				if (C.holder && !C.holder.ghost_respawns && !C.player_mode || !M.show_respawn_prompts)
 					continue
-
+				if (!do_popup)
+					candidates |= M
+					continue
 				SPAWN(0) // Don't lock up the entire proc.
 					M.current.playsound_local(M.current, 'sound/misc/lawnotify.ogg', 50, flags=SOUND_IGNORE_SPACE)
 					boutput(M.current, text_chat_alert)
@@ -1857,7 +1819,8 @@ proc/countJob(rank)
 					else
 						return
 
-		sleep(confirmation_spawn)
+		if (do_popup)
+			sleep(confirmation_spawn)
 
 		// Filter list again.
 		if (candidates.len)
@@ -1962,31 +1925,28 @@ proc/countJob(rank)
 
 	return 1
 
-/proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = 0, var/atom/source = 0)
-	var/is_immune = 0
+/proc/check_target_immunity(var/atom/target, var/ignore_everything_but_nodamage = FALSE, var/atom/source = 0)
+	var/is_immune = FALSE
 
-	var/area/a = get_area( target )
-	if( a?.sanctuary )
-		return 1
+	var/area/a = get_area(target)
+	if(a?.sanctuary)
+		return TRUE
 
 	if (isliving(target))
 		var/mob/living/L = target
 
 		if (!isdead(L))
-			if (ignore_everything_but_nodamage == 1)
+			if (ignore_everything_but_nodamage)
 				if (L.nodamage)
-					is_immune = 1
+					is_immune = TRUE
 			else
 				if (L.nodamage || L.spellshield)
-					is_immune = 1
+					is_immune = TRUE
 
 		if (source && istype(source,/obj/projectile) && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			if(H.stance == "dodge") //matrix dodge flip
-				is_immune = 1
-
-	//if (is_immune == 1)
-	//	DEBUG_MESSAGE("[L] is immune to damage, aborting.")
+				is_immune = TRUE
 
 	return is_immune
 
@@ -2190,10 +2150,10 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		if (S == "glassware")
 			for (var/obj/item/reagent_containers/glass/G in view(CT, range))
 				if(G.can_recycle)
-					G.smash()
+					G.shatter_chemically()
 			for (var/obj/item/reagent_containers/food/drinks/drinkingglass/G2 in range(CT, range))
 				if(G2.can_recycle)
-					G2.smash()
+					G2.shatter_chemically()
 
 	return 1
 
@@ -2600,7 +2560,12 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		return "***NULL***"
 	if (!istype(thing))
 		return thing
-	return "\"[thing]\" ([thing.type])"
+
+	var/msg = "\"[thing]\" ([thing.type])"
+	if (ismob(thing))
+		var/mob/mobthing = thing
+		msg += " {Key: [mobthing.ckey || "***NULL***"]}" // IM RUNNING OUT OF BRACKET TYPES
+	return msg
 
 /// For runtime logs- returns the above plus ref
 /proc/identify_object(datum/thing)
@@ -2622,3 +2587,10 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	for (var/point in points)
 		. += point - prev
 		prev = point
+
+
+/// Returns the sum of densities of all atoms in the given turf including the turf itself
+proc/total_density(turf/T)
+	. = T.density
+	for (var/atom/A in T)
+		. += A.density

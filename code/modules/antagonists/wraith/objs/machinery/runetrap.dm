@@ -52,6 +52,7 @@
 		if(!armed) return
 		if(!isliving(AM)) return
 		if(istype(AM, /mob/living/critter/wraith/trickster_puppet)) return
+		if(isintangible(AM)) return
 		return TRUE
 
 
@@ -201,12 +202,11 @@
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! You can hear a slippery sound!</span>")
 		M.remove_pulling()
 		M.changeStatus("weakened", 3 SECONDS)
-		boutput(M, "<span class='notice'>You suddenly slip!</span>")
+		boutput(M, "<span class='notice'>An ethereal force slips you!</span>")
 		playsound(M, 'sound/misc/slip.ogg', 50, 1, -3)
 		var/atom/target = get_edge_target_turf(M, M.dir)
 		M.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
-		elecflash(src, 1, 1)
 
 /proc/checkRun(var/mob/M)	//If we are above walking speed, this triggers
 	if(!M) return

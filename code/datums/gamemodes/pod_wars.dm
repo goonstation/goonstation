@@ -1,5 +1,6 @@
 #define TEAM_NANOTRASEN 1
 #define TEAM_SYNDICATE 2
+#define TEAM_NEUTRAL 3
 
 #define FORTUNA "FORTUNA"
 #define RELIANT "RELIANT"
@@ -258,7 +259,6 @@ var/list/pw_rewards_tier3 = null
 //////////////////
 ///////////////pod_wars asteroids
 /turf/simulated/wall/auto/asteroid/pod_wars
-	fullbright = 1
 	name = "asteroid"
 	desc = "It's asteroid material."
 	hardness = 1
@@ -631,8 +631,7 @@ datum/game_mode/pod_wars/proc/get_voice_line_alts_for_team_sound(var/datum/pod_w
 		if (m == pw_team.commander)
 			continue 		//count em for active players, but don't display em here, they already got their name up there!
 		string += "<b>[m.current]</b> ([m.ckey])</b><br>"
-	boutput(world, "[active_players] active players/[length(pw_team.members)] total players")
-	boutput(world, "")	//L.something
+	boutput(world, "<h3 class='admin'>[active_players] active players/[length(pw_team.members)] total players.</h3>")
 
 
 
@@ -963,7 +962,7 @@ proc/setup_pw_crate_lists()
 	SPAWN(3.5 SECONDS)
 		qdel(O)
 
-/obj/decoration/memorial/
+/obj/decoration/memorial
 	name = "Generic Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"

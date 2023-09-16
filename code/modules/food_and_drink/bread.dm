@@ -260,7 +260,7 @@
 		heal_amt = 5
 		real_name = "elvis toast"
 		initial_volume = 30
-		initial_reagents = list("bread"=5,"essenseofelvis"=25)
+		initial_reagents = list("bread"=5,"essenceofelvis"=25)
 		food_effects = list("food_warm", "food_energized")
 		meal_time_flags = MEAL_TIME_BREAKFAST | MEAL_TIME_SNACK
 
@@ -308,7 +308,7 @@
 		heal_amt = 6
 		real_name = "elvis cheese toast"
 		initial_volume = 35
-		initial_reagents = list("bread"=5,"cheese"=5,"essenseofelvis"=25)
+		initial_reagents = list("bread"=5,"cheese"=5,"essenceofelvis"=25)
 
 	New()
 		..()
@@ -337,7 +337,7 @@
 		heal_amt = 4
 		real_name ="bacon elvis toast"
 		initial_volume = 35
-		initial_reagents = list("bread"=5,"porktonium"=5,"essenseofelvis"=25)
+		initial_reagents = list("bread"=5,"porktonium"=5,"essenceofelvis"=25)
 
 	New()
 		..()

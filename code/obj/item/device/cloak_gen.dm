@@ -2,6 +2,8 @@
 //Cloak field generator
 //Remote for said generator
 
+// TODO cloak gen remote needs a TGUI menu real fucking bad. so many verbs
+
 TYPEINFO(/obj/item/cloak_gen)
 	mats = 12
 
@@ -12,27 +14,28 @@ TYPEINFO(/obj/item/cloak_gen)
 	icon_state = "cloakgen_off"
 	var/range = 3
 	var/maxrange = 5
-	var/active = 0
-	var/icon_to_use = "noise2"
+	var/active = FALSE
+	var/image/noise_image
 	var/list/fields = new/list()
-	is_syndicate = 1
+	is_syndicate = TRUE
 	contraband = 2
+	HELP_MESSAGE_OVERRIDE({"Place the cloaking field generator on the floor, then use the associated remote to turn it on or off. While on, the cloaking field generator is immovable."})
 
 	New()
 		..()
 		var/obj/item/remote/cloak_gen/remote = new /obj/item/remote/cloak_gen(src.loc)
-		SPAWN(0)
-			remote.my_gen = src
+		remote.my_gen = src
+
+		src.update_noise_image("noise2")
 
 	disposing()
-		//DEBUG_MESSAGE("Disposing() was called for [src] at [log_loc(src)].")
 		if (src.active)
 			src.turn_off()
 		..()
 		return
 
-	attack_self()
-		boutput(usr, "<span class='alert'>I need to place it on the ground to use it.</span>")
+	attack_self(mob/user)
+		boutput(user, "<span class='alert'>I need to place it on the ground to use it.</span>")
 
 	// Shouldn't be required, but there have been surplus crate-related bugs in the past (Convair880).
 	attackby(obj/item/W, mob/user)
@@ -52,48 +55,68 @@ TYPEINFO(/obj/item/cloak_gen)
 		return
 
 	pickup(var/mob/living/M)
-		if(active) turn_off()
+		. = ..()
+		if(active)
+			turn_off(M)
 
-	proc/get_cloaked_icon(turf/T)
-		var/icon/turf = icon(T.icon, T.icon_state, T.dir)
-		var/icon/noise = icon('icons/misc/old_or_unused.dmi', icon_to_use, dir=pick(cardinal))
-		turf.Blend(noise,ICON_MULTIPLY)
-		return turf
+	proc/setup_tile_cloak(obj/overlay/O)
+		// First, get the appearance of the turf and use it as the base for the overlay
+		// we can't use vis_contents for the turf, as putting turfs in vis_contents also displays every atom on the turf
+		var/turf/T = get_turf(O)
+		O.appearance = T.appearance
+		O.dir = T.dir
 
-	proc/turn_on()
+		// List of types we want to copy to the overlay, other than the turf
+		var/static/mimicked_types = list(/obj/window, /obj/machinery/door, /obj/grille)
+		for (var/atom/movable/AM as anything in T)
+			for (var/checktype in mimicked_types)
+				if (ispath(AM.type, checktype))
+					// These flags are never unset currently. Messy but likely irrelevant. sorry!
+					AM.vis_flags |= VIS_INHERIT_ID | VIS_INHERIT_LAYER | VIS_INHERIT_PLANE
+					O.vis_contents += AM
+
+		O.add_filter("cloak noise", 1, alpha_mask_filter(render_source="*noise_[ref(src)]"))
+
+	proc/turn_on(mob/user)
 		if (active) return
 
 		if (!isturf(loc))
-			if (usr && ismob(usr))
-				boutput(usr, "<span class='alert'>The field generator must be on the floor to be activated.</span>")
+			if (user && ismob(user))
+				boutput(user, "<span class='alert'>The field generator must be on the floor to be activated.</span>")
 			return
 
-		active = 1
+		active = TRUE
 		anchored = ANCHORED
 
-		if (usr && ismob(usr))
-			boutput(usr, "<span class='notice'>You activate the cloak field generator.</span>")
+		if (user && ismob(user))
+			boutput(user, "<span class='notice'>You activate the cloak field generator.</span>")
 
-		for(var/turf/T in range(range,src))
-			if(!isturf(T)) continue
-			var/obj/overlay/O = new/obj/overlay(T)
-			fields += O
-			O.icon = get_cloaked_icon(T)
+		for(var/turf/T in range(range, src))
+			var/obj/overlay/O = new /obj/overlay(T)
+			src.setup_tile_cloak(O)
+			O.mouse_opacity = FALSE
 			O.layer = EFFECTS_LAYER_4
-			O.anchored = ANCHORED
-			O.set_density(0)
-			O.name = T.name
-			O.mouse_opacity = FALSE // let people click through the field
+			O.plane = PLANE_NOSHADOW_ABOVE
+			fields += O
 
-	proc/turn_off()
-		if (!active) return
+	proc/turn_off(mob/user)
+		if (!src.active)
+			return
 
-		active = 0
-		anchored = UNANCHORED
-		if (usr && ismob(usr))
-			boutput(usr, "<span class='notice'>You deactivate the cloak field generator.</span>")
-		for(var/A in fields)
-			qdel(A)
+		src.active = FALSE
+		src.anchored = UNANCHORED
+		boutput(user, "<span class='notice'>You deactivate the cloak field generator.</span>")
+		for(var/obj/overlay/O in fields)
+			qdel(O)
+
+	proc/update_noise_image(var/set_icon_state)
+		src.overlays -= noise_image
+		qdel(src.noise_image)
+		src.noise_image = image(icon='icons/misc/old_or_unused.dmi', icon_state=set_icon_state)
+		noise_image.render_target = "*noise_[ref(src)]"
+		// hacky- we need the image on the map somewhere so it'll actually render as a render_source
+		// it won't actually render as an overlay since we prefix render_target with `*`
+		src.overlays += noise_image
 
 /obj/item/remote/cloak_gen
 	name = "cloaking field generator remote"
@@ -106,43 +129,45 @@ TYPEINFO(/obj/item/cloak_gen)
 	var/obj/item/cloak_gen/my_gen = null
 	var/anti_spam = 0 // Creating and deleting overlays en masse can cause noticeable lag (Convair880).
 	contraband = 2
+	HELP_MESSAGE_OVERRIDE({"Use the remote in hand to turn the generator on or off.
+							Right click the remote to access a list of parameters that will affect the generator.
+							Hit the remote on a generator to link it to that generator."})
 
-	attack_self()
-		if (isliving(usr))
+	attack_self(mob/user)
+		. = ..()
+		if (isliving(user))
 			if (my_gen)
 				if (my_gen.active)
 					src.anti_spam = world.time
-					my_gen.turn_off()
+					my_gen.turn_off(user)
 				else
 					if (src.anti_spam && world.time < src.anti_spam + 100)
-						usr.show_text("The cloaking field generator is recharging!", "red")
+						user.show_text("The cloaking field generator is recharging!", "red")
 						return
 					src.anti_spam = world.time
-					my_gen.turn_on()
+					my_gen.turn_on(user)
 			else
-				boutput(usr, "<span class='alert'>No signal detected. Swipe remote on a cloaking generator to establish a connection.</span>")
-		return
+				boutput(user, "<span class='alert'>No signal detected. Swipe remote on a cloaking generator to establish a connection.</span>")
 
 	verb/set_pattern()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen) return
 		var/input = input(usr,"Select cloaking pattern:","Set pattern","Noise") in list("Noise","Linear","Chaos","Cubic","Interference","Rotating")
+		var/icon_to_use
 		switch(input)
 			if("Linear")
-				my_gen.icon_to_use = "noise1"
+				icon_to_use = "noise1"
 			if("Noise")
-				my_gen.icon_to_use = "noise2"
+				icon_to_use = "noise2"
 			if("Chaos")
-				my_gen.icon_to_use = "noise3"
+				icon_to_use = "noise3"
 			if("Cubic")
-				my_gen.icon_to_use = "noise4"
+				icon_to_use = "noise4"
 			if("Interference")
-				my_gen.icon_to_use = "noise5"
+				icon_to_use = "noise5"
 			if("Rotating")
-				my_gen.icon_to_use = "noise6"
-		if(my_gen.active)
-			my_gen.turn_off()
-			my_gen.turn_on()
+				icon_to_use = "noise6"
+		my_gen.update_noise_image(icon_to_use)
 		boutput(usr, "<span class='notice'>You set the pattern to '[input]'.</span>")
 
 	verb/set_range()
@@ -154,8 +179,8 @@ TYPEINFO(/obj/item/cloak_gen)
 			return
 		my_gen.range = input
 		if(my_gen.active)
-			my_gen.turn_off()
-			my_gen.turn_on()
+			my_gen.turn_off(usr)
+			my_gen.turn_on(usr)
 		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
 
 	verb/increase_range()
@@ -166,8 +191,8 @@ TYPEINFO(/obj/item/cloak_gen)
 			return
 		my_gen.range++
 		if(my_gen.active)
-			my_gen.turn_off()
-			my_gen.turn_on()
+			my_gen.turn_off(usr)
+			my_gen.turn_on(usr)
 		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
 
 	verb/decrease_range()
@@ -178,18 +203,18 @@ TYPEINFO(/obj/item/cloak_gen)
 			return
 		my_gen.range--
 		if(my_gen.active)
-			my_gen.turn_off()
-			my_gen.turn_on()
+			my_gen.turn_off(usr)
+			my_gen.turn_on(usr)
 		boutput(usr, "<span class='notice'>You set the range to [my_gen.range].</span>")
 
 	verb/turn_on()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen || my_gen.active) return
-		my_gen.turn_on()
+		my_gen.turn_on(usr)
 		boutput(usr, "<span class='notice'>You turn the cloaking field generator on.</span>")
 
 	verb/turn_off()
 		set src in view(1)
 		if (!isliving(usr) || !my_gen || !my_gen.active) return
-		my_gen.turn_off()
+		my_gen.turn_off(usr)
 		boutput(usr, "<span class='notice'>You turn the cloaking field generator off.</span>")

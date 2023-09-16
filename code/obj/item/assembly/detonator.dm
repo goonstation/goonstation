@@ -212,7 +212,7 @@
 				src.attachments += W
 				user.show_message("<span class='notice'>You stick the note onto the detonator assembly.</span>")
 			else if (W.is_detonator_attachment())
-				if (src.attachments.len < 3)
+				if (length(src.attachments) < 3)
 					W.set_loc(src)
 					W.master = src
 					user.u_equip(W)
@@ -303,6 +303,8 @@
 	if (src.part_fs.timing)
 		return
 	if (!src.attachedTo || !src.master) // if the detonator assembly isn't wired to anything, then no need to prime it
+		return
+	if (src.attachedTo.destroyed)
 		return
 	src.safety = 0
 	src.part_fs.timing = 1

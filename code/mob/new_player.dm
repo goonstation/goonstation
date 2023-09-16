@@ -1,6 +1,6 @@
 
 var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
-mob/new_player
+/mob/new_player
 	anchored = ANCHORED
 
 	var/ready = 0
@@ -12,11 +12,11 @@ mob/new_player
 	var/antag_fallthrough = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
-	var/twitch_bill_spawn = 0
+	var/twitch_bill_spawn = FALSE
 #endif
 
-	density = 0
-	stat = 2
+	density = FALSE
+	stat = STAT_DEAD
 	canmove = 0
 
 	anchored = ANCHORED	//  don't get pushed around
@@ -27,7 +27,7 @@ mob/new_player
 		. = ..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-		ready = 1
+		ready = TRUE
 	#endif
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).
@@ -209,6 +209,7 @@ mob/new_player
 							logTheThing(LOG_STATION, src, "[key_name(S)] late-joins as an emagged cyborg.")
 							S.mind?.add_antagonist(ROLE_EMAGGED_ROBOT, respect_mutual_exclusives = FALSE, source = ANTAGONIST_SOURCE_LATE_JOIN)
 						SPAWN(1 DECI SECOND)
+							S.bioHolder?.mobAppearance?.pronouns = S.client.preferences.AH.pronouns
 							S.choose_name()
 							qdel(src)
 					else
@@ -319,7 +320,8 @@ mob/new_player
 				boutput(character.mind.current,"<h3 class='notice'>You've arrived in a nondescript container! Good luck!</h3>")
 				//So the location setting is handled in EquipRank in jobprocs.dm. I assume cause that is run all the time as opposed to this.
 			else if (character.traitHolder && character.traitHolder.hasTrait("pilot"))
-				boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
+				if (istype(character.loc, /obj/machinery/vehicle))
+					boutput(character.mind.current,"<h3 class='notice'>You've become lost on your way to the station! Good luck!</h3>")
 			else if (character.traitHolder && character.traitHolder.hasTrait("sleepy"))
 				SPAWN(10 SECONDS) //ugly hardcoding- matches the duration you're asleep for
 					boutput(character?.mind?.current,"<h3 class='notice'>Hey, you! You're finally awake!</h3>")
@@ -374,6 +376,13 @@ mob/new_player
 
 			// Apply any roundstart mutators to late join if applicable
 			roundstart_events(character)
+
+			//picky eater trait handling
+			if (ishuman(character) && character.traitHolder?.hasTrait("picky_eater"))
+				var/datum/trait/picky_eater/eater_trait = character.traitHolder.getTrait("picky_eater")
+				if (length(eater_trait.fav_foods) > 0)
+					boutput(character, eater_trait.explanation_text)
+					character.mind.store_memory(eater_trait.explanation_text)
 
 			SPAWN(0)
 				qdel(src)
@@ -639,7 +648,9 @@ a.latejoin-card:hover {
 			// the middle of the map is GeNeRaLlY part of the actual station. moreso than 1,1,1 at least
 			var/midx = round(world.maxx / 2)
 			var/midy = round(world.maxy / 2)
-			boutput(world, "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)")
+			var/msg = "No latejoin landmarks placed, dumping [src] to ([midx], [midy], 1)"
+			message_admins(msg)
+			stack_trace(msg)
 			src.set_loc(locate(midx,midy,1))
 		else
 			src.set_loc(pick_landmark(LANDMARK_LATEJOIN))
@@ -666,6 +677,8 @@ a.latejoin-card:hover {
 
 		mind.transfer_to(new_character)
 
+		// Latejoin antag stuff
+
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/assday))
 			var/bad_type = ROLE_TRAITOR
 			makebad(new_character, bad_type)
@@ -673,15 +686,15 @@ a.latejoin-card:hover {
 			logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
 		else
 			if (ishuman(new_character) && allow_late_antagonist && current_state == GAME_STATE_PLAYING && ticker.round_elapsed_ticks >= 6000 && emergency_shuttle.timeleft() >= 300 && !src.is_respawned_player) // no new evils for the first 10 minutes or last 5 before shuttle
-				if (late_traitors && ticker.mode && ticker.mode.latejoin_antag_compatible == 1 && !(jobban_isbanned(new_character, "Syndicate")))
+				if (late_traitors && ticker.mode.latejoin_antag_compatible && !(jobban_isbanned(new_character, "Syndicate")))
 					var/livingtraitor = 0
 
 					for(var/datum/mind/brain in ticker.minds)
-						if(brain.current && checktraitor(brain.current)) // if a traitor
-							if (issilicon(brain.current) || brain.current.stat & 2 || brain.current.client == null) // if a silicon mob, dead or logged out, skip
+						if(brain.current && brain.is_antagonist())
+							if (issilicon(brain.current) || isdead(brain.current) || brain.current.client == null) // if a silicon mob, dead or logged out, skip
 								continue
 
-							livingtraitor = 1
+							livingtraitor = TRUE
 							logTheThing(LOG_DEBUG, null, "<b>Late join</b>: checking [new_character.ckey], found livingtraitor [brain.key].")
 							break
 
@@ -695,11 +708,15 @@ a.latejoin-card:hover {
 					else
 						bad_type = ROLE_TRAITOR
 
-					if ((!livingtraitor && prob(40)) || (livingtraitor && ticker.mode.latejoin_only_if_all_antags_dead == 0 && prob(4)))
-						makebad(new_character, bad_type)
-						new_character.mind.late_special_role = 1
-						logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
-						antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
+					// Check if they have this antag type enabled. If not, too bad!
+					// get_preference_for_role can't handle antag types under 'misc' like wrestler or wolf, so we need to special case those
+					var/antag_enabled = new_character.client?.preferences.vars[get_preference_for_role(bad_type) || get_preference_for_role(ROLE_MISC)]
+					if (antag_enabled)
+						if ((!livingtraitor && prob(40)) || (livingtraitor && !ticker.mode.latejoin_only_if_all_antags_dead && prob(4)))
+							makebad(new_character, bad_type)
+							new_character.mind.late_special_role = TRUE
+							logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
+							antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
 
 
 

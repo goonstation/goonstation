@@ -4,6 +4,8 @@
 	icon_state = "meter_anim"
 	var/obj/machinery/atmospherics/pipe/target = null
 	anchored = ANCHORED
+	directwired = FALSE // this shouldn't be power machinery at all but I don't want to edit all maps so it's staying for now
+	// without directwired = FALSE it hotwires engines because it connects powernets together etc
 
 /obj/machinery/power/stats_meter/New()
 	..()
