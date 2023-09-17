@@ -43,11 +43,9 @@ TYPEINFO(/obj/kitchenspike)
 		return TRUE
 	else
 		boutput(user, "<span class='alert'>The spike already has a monkey on it, finish collecting their meat first!</span>")
-		return
 
 /obj/kitchenspike/attack_hand(mob/user)
-	if(..())
-		return
+	. = ..()
 	if(src.occupied)
 		if(src.meat > 1)
 			src.meat--

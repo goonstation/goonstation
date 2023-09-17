@@ -171,27 +171,6 @@
 			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
 			logTheThing(LOG_BOMBING, user, "rigs [src] with [S] at [log_loc(user)].")
 
-		else if (istype(C, /obj/item/pipebomb/frame))
-			var/obj/item/pipebomb/frame/PF = C
-			if(!(src in user.equipped_list()))
-				boutput(user, "<span class='alert'>You need to be holding [src] to do this.</span>")
-				return
-
-			if (PF.state > 2)
-				user.show_text("[PF] needs to be empty to be used.", "red")
-				return
-
-			// Pies won't do, they require a mob as the target. Obviously, the mousetrap roller is much more
-			// likely to bump into an inanimate object.
-			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.buttbomb)
-				user.show_text("[src] must have a grenade or pipe bomb attached first.", "red")
-				return
-
-			user.u_equip(src)
-			user.u_equip(PF)
-			new /obj/item/mousetrap_roller(get_turf(src), src, PF)
-			return
-
 		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
 			if(!(src in user.equipped_list()))
 				boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
@@ -557,5 +536,5 @@
 
 	Move(var/turf/new_loc,direction)
 		if (src.mousetrap.buttbomb && src.armed)
-			playsound(src, 'sound/voice/farts/poo2.ogg', 30, 0, 0, 1.8)
+			playsound(src, 'sound/voice/farts/poo2.ogg', 30, FALSE, 0, 1.8)
 		..()

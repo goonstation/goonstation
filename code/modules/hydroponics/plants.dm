@@ -40,6 +40,7 @@ ABSTRACT_TYPE(/datum/plant)
 
 	var/special_proc = 0 // Does this plant do something special when it's in the pot?
 	var/attacked_proc = 0 // Does this plant react if you try to attack it?
+	var/proximity_proc = 0 // Does this plant react to things moving around it?
 	var/harvested_proc = 0 // Take a guess
 
 	/// Don't rename the crop after the plant.
@@ -182,9 +183,9 @@ ABSTRACT_TYPE(/datum/plant)
 					damage_amt = rand(15,30)
 			if ("blood","bloodc")
 				if (src.growthmode == "carnivore")
-					DNA.growtime += rand(5,10)
-					DNA.harvtime += rand(5,10)
-					DNA.endurance += rand(10,30)
+					DNA.growtime += rand(4,6)
+					DNA.harvtime += rand(4,6)
+					DNA.endurance += rand(4,8)
 			if ("radium","uranium")
 				damage_amt = rand(5,15)
 				HYPmutateDNA(DNA,1)
@@ -235,6 +236,9 @@ ABSTRACT_TYPE(/datum/plant)
 		if (damage_amt)
 			if (prob(damage_prob))
 				S.seeddamage += damage_amt
+
+	proc/ProximityProc(var/obj/machinery/plantpot/POT,var/mob/user) // Simple proximity proc for stuff like nettles
+		return
 
 /datum/plantgenes
 	var/growtime = 0 // These vars are pretty much bonuses/penalties applied on top of the

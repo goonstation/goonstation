@@ -1755,7 +1755,6 @@ datum/preferences
 			var/mob/living/carbon/human/H = character
 			H.pin = pin
 			H.gender = src.gender
-			//H.desc = src.flavor_text
 
 		if (!skip_post_new_stuff)
 			apply_post_new_stuff(character)
@@ -1773,10 +1772,6 @@ datum/preferences
 				H.voice_type = H.mutantrace.voice_override
 
 	proc/apply_post_new_stuff(mob/living/character)
-		if(ishuman(character))
-			var/mob/living/carbon/human/H = character
-			if (H?.organHolder?.head?.donor_appearance) // aaaa
-				H.organHolder.head.donor_appearance.CopyOther(AH)
 		if (traitPreferences.isValid() && character.traitHolder)
 			for (var/T in traitPreferences.traits_selected)
 				character.traitHolder.addTrait(T)

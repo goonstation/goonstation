@@ -687,7 +687,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/sengoku)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto/sengoku)
 /turf/unsimulated/wall/auto/sengoku
-	icon = 'icons/turf/walls_sengoku.dmi'
+	icon = 'icons/turf/walls/sengoku.dmi'
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/paper)
@@ -695,17 +695,17 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto/paper)
 /turf/unsimulated/wall/auto/paper
-	icon = 'icons/turf/walls_paper.dmi'
+	icon = 'icons/turf/walls/paper.dmi'
 
 
 /turf/unsimulated/wall/sengoku_tall
-	icon = 'icons/turf/walls_sengoku.dmi'
+	icon = 'icons/turf/walls/sengoku.dmi'
 	icon_state= "tall"
 	opacity = 0
 
 /turf/simulated/wall/false_wall/sengoku
 	desc = "There seems to be markings on one of the edges, huh."
-	icon = 'icons/turf/walls_paper.dmi'
+	icon = 'icons/turf/walls/paper.dmi'
 	icon_state = "2"
 	can_be_auto = 0
 

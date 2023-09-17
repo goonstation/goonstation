@@ -99,7 +99,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				return 1
 		boutput(user, "<span class='alert'>*click* *click*</span>")
 		if (!src.silenced)
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 		return 0
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -162,7 +162,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				user.show_text("You can't unload this gun.", "red")
 				return
 			src.eject_magazine(user)
-
 		return ..()
 
 	attack(mob/M, mob/user)
@@ -217,6 +216,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				else
 					user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
 					src.ejectcasings()
+					playsound(src, src.ammo.sound_load, rand(30, 60), TRUE)
 					return
 			else
 				user.show_text("[src] is empty!", "red")
@@ -1081,7 +1081,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(!src.canshoot(user))
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return
 		..()
 		pulled = FALSE
@@ -1090,7 +1090,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	shoot_point_blank(atom/target, var/mob/user, second_shot)
 		if(!src.canshoot(user))
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return
 		..()
 		pulled = FALSE
@@ -1337,7 +1337,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		user.visible_message("<span class='alert'><b>[user] places [src]'s barrel in [hisher] mouth and pulls the trigger with [hisher] foot!</b></span>")
 		var/obj/head = user.organHolder.drop_organ("head")
 		qdel(head)
-		playsound(src, 'sound/weapons/shotgunshot.ogg', 100, 1)
+		playsound(src, 'sound/weapons/shotgunshot.ogg', 100, TRUE)
 		var/obj/decal/cleanable/blood/gibs/gib = make_cleanable( /obj/decal/cleanable/blood/gibs,get_turf(user))
 		gib.streak_cleanable(turn(user.dir,180))
 		health_update_queue |= user
@@ -1513,7 +1513,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					src.icon_state = "slamgun-open-loaded"
 				else
 					src.icon_state = "slamgun-open"
-				update_icon()
+				UpdateIcon()
 				two_handed = 0
 
 			user.update_inhands()
@@ -1522,7 +1522,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				w_class = W_CLASS_BULKY
 				force = MELEE_DMG_RIFLE
 				src.icon_state = "slamgun-ready"
-				update_icon()
+				UpdateIcon()
 				two_handed = 1
 				user.update_inhands()
 
@@ -1536,7 +1536,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		. = src.casings_to_eject
 		..()
 		if(. != src.casings_to_eject)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
 		if(src.icon_state == "slamgun-ready")
@@ -2348,7 +2348,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.keys_changed(0,0xFFFF)
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
-		playsound(src, 'sound/weapons/scope.ogg', 50, 1)
+		playsound(src, 'sound/weapons/scope.ogg', 50, TRUE)
 		break
 
 

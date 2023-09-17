@@ -29,6 +29,7 @@
 	name = "skeleton"
 	real_name = "skeleton"
 	desc = "Clak clak, motherfucker."
+	icon = 'icons/mob/critter/humanoid/skeleton.dmi'
 	icon_state = "skeleton"
 	icon_state_dead = "skeleton"
 	custom_gib_handler = /proc/bonegibs
@@ -72,7 +73,7 @@
 		switch (act)
 			if ("scream", "clak")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/items/Scissor.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/items/Scissor.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='alert'>[src] claks!</span>"
 		return null
 

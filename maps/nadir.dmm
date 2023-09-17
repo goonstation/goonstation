@@ -30494,6 +30494,7 @@
 "mZj" = (
 /obj/table/reinforced/chemistry/auto/basicsup,
 /obj/machinery/light,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "mZs" = (
@@ -48242,7 +48243,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/machinery/computer/sea_elevator,
+/obj/machinery/computer/elevator/sea,
 /obj/machinery/light/small/warm/very{
 	dir = 1;
 	pixel_y = 21
