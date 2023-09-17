@@ -541,7 +541,7 @@ var/datum/magpie_manager/magpie_man = new
 						I.bump_up(chatbot_text.measured_height)
 
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", just_maptext = just_float, assoc_maptext = chatbot_text)
-		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, 1)
+		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, TRUE)
 
 
 // Stubs for the public

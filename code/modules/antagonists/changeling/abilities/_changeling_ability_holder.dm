@@ -1,40 +1,3 @@
-/atom/movable/screen/ability/topBar/changeling
-	clicked(params)
-		var/datum/targetable/changeling/spell = owner
-		var/datum/abilityHolder/holder = owner.holder
-
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-
-		if(params["shift"] && params["ctrl"])
-			if(owner.waiting_for_hotkey)
-				holder.cancel_action_binding()
-				return
-			else
-				owner.waiting_for_hotkey = 1
-				src.UpdateIcon()
-				boutput(usr, "<span class='notice'>Please press a number to bind this ability to...</span>")
-				return
-
-		if (!isturf(owner.holder.owner.loc) && !spell.can_use_in_container)
-			boutput(owner.holder.owner, "<span class='alert'>Using that in here will do just about no good for you.</span>")
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			owner.holder.owner.targeting_ability = owner
-			owner.holder.owner.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
 /datum/abilityHolder/changeling
 	usesPoints = 1
 	regenRate = 0
@@ -60,7 +23,7 @@
 	proc/addDna(var/mob/living/carbon/human/M, var/headspider_override = 0)
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
 		if (O)
-			boutput(owner, "<span class='notice'>[M] was a changeling! We have absorbed their entire genetic structure!</span>")
+			boutput(owner, "<span class='notice'>[M] was a changeling! We have absorbed [his_or_her(M)] entire genetic structure!</span>")
 			logTheThing(LOG_COMBAT, owner, "absorbs [constructTarget(M,"combat")] as a changeling [log_loc(owner)].")
 
 			if (headspider_override != 1) // Headspiders shouldn't be free.
@@ -186,34 +149,6 @@
 	var/can_use_in_container = 0
 	preferred_holder_type = /datum/abilityHolder/changeling
 
-	New()
-		var/atom/movable/screen/ability/topBar/changeling/B = new /atom/movable/screen/ability/topBar/changeling(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/changeling()
-			object.icon = src.icon
-			object.owner = src
-		if (src.last_cast > world.time)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
-
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
 		var/datum/abilityHolder/changeling/H = holder
@@ -225,6 +160,9 @@
 		if (incapacitationCheck())
 			boutput(holder.owner, "<span class='alert'>We cannot use our abilities while incapacitated.</span>")
 			return 0
+		if (!isturf(src.holder.owner.loc) && !src.can_use_in_container)
+			boutput(src.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
+			return FALSE
 		if (!human_only && !abomination_only)
 			return 1
 		var/mob/living/carbon/human/H = holder.owner

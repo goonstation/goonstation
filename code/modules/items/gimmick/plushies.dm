@@ -112,7 +112,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 		interrupt(INTERRUPT_ALWAYS)
 		return
 	if(prob(10) && !M.traitHolder?.hasTrait("claw"))
-		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, 1)
+		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, TRUE)
 		M.visible_message("<span class='alert'>[M] flubs up and the claw drops [his_or_her(M)] prize!</spawn>")
 		interrupt(INTERRUPT_ALWAYS)
 		return
@@ -127,7 +127,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	if(BOUNDS_DIST(M, CM) > 0 || M == null || CM == null)
 		interrupt(INTERRUPT_ALWAYS)
 		return
-	playsound(CM, 'sound/machines/capsulebuy.ogg', 80, 1)
+	playsound(CM, 'sound/machines/capsulebuy.ogg', 80, TRUE)
 	CM.busy = 1
 	CM.icon_state = "claw_playing"
 
@@ -139,10 +139,10 @@ TYPEINFO(/obj/submachine/claw_machine)
 	CM.busy = 0
 	CM.icon_state = "claw"
 	if(!CM.has_plushies && !length(CM.contents))
-		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, 1)
+		playsound(CM, 'sound/machines/claw_machine_fail.ogg', 80, TRUE)
 		M.visible_message("<span class='alert'>[CM] seems to be out of prizes, oh no!</spawn>")
 		return
-	playsound(CM, 'sound/machines/claw_machine_success.ogg', 80, 1)
+	playsound(CM, 'sound/machines/claw_machine_success.ogg', 80, TRUE)
 	M.visible_message("<span class='notice'>[M] successfully secures their precious goodie, and it drops into the prize chute with a satisfying <i>plop</i>.</span>")
 	var/list/prize_pool = null
 	if(CM.has_plushies)
@@ -287,7 +287,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	if (!menuchoice)
 		return
 	if (menuchoice == "Awoo" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, 'sound/voice/babynoise.ogg', 50, 1)
+		playsound(user, 'sound/voice/babynoise.ogg', 50, TRUE)
 		src.audible_message("<span class='emote'>[src] awoos!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)
@@ -317,7 +317,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 	if (!menuchoice)
 		return
 	if (menuchoice == "Honk" && !ON_COOLDOWN(src, "playsound", 2 SECONDS))
-		playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
+		playsound(user, 'sound/items/rubberduck.ogg', 50, TRUE)
 		src.audible_message("<span class='emote'>[src] honks!</span>")
 	else if (menuchoice == "Say")
 		src.say_something(user)

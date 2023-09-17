@@ -21,7 +21,7 @@
 			if(ON_COOLDOWN(source, "ldm_reaction_ratelimit", 0.2 SECONDS))
 				continue
 			new/obj/decal/implo(source)
-			playsound(source, 'sound/effects/suck.ogg', 100, 1)
+			playsound(source, 'sound/effects/suck.ogg', 100, TRUE)
 
 			if (in_container)
 				var/damage = clamp(created_volume * rand(8, 15) / 10, 1, 80)	// 0.8 to 1.5 damage per unit made
@@ -63,7 +63,7 @@
 			if(ON_COOLDOWN(source, "sorium_reaction_ratelimit", 0.2 SECONDS))
 				continue
 			new/obj/decal/shockwave(source)
-			playsound(source, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(source, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			SPAWN(0)
 				for(var/atom/movable/M in view(clamp(2+round(created_volume/15), 0, 4), source))
 					if(M.anchored || M == source || M.throwing) continue
@@ -120,9 +120,9 @@
 
 		if (do_sfx)
 			if (narrator_mode || vox_smoke)
-				playsound(location, 'sound/vox/smoke.ogg', 50, 1, -3)
+				playsound(location, 'sound/vox/smoke.ogg', 50, TRUE, -3)
 			else
-				playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+				playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 
 		//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(source, holder, 20, smoke_size))
 
@@ -168,9 +168,9 @@
 		return 0
 
 	if (narrator_mode || vox_smoke)
-		playsound(location, 'sound/vox/smoke.ogg', 50, 1, -3)
+		playsound(location, 'sound/vox/smoke.ogg', 50, TRUE, -3)
 	else
-		playsound(location, 'sound/effects/smoke.ogg', 50, 1, -3)
+		playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 
 	var/list/covered = holder.covered_turf()
 	if (!covered || !length(covered))
@@ -237,9 +237,9 @@
 	amount = clamp(amount/5, 0, 5)
 	if (!no_fluff)
 		if (hootmode)
-			playsound(center, 'sound/voice/animal/hoot.ogg', 100, 1)
+			playsound(center, 'sound/voice/animal/hoot.ogg', 100, TRUE)
 		else
-			playsound(center, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(center, 'sound/weapons/flashbang.ogg', 25, TRUE)
 
 	for (var/mob/living/M in all_hearers(world.view, center))
 		if (isintangible(M) )

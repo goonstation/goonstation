@@ -202,6 +202,9 @@ proc/ui_describe_reagents(atom/A)
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
 		user.lastattacked = target
+
+		// this shit sucks but this is an if-else so there's no space to fit a cast in there
+		var/turf/target_turf = CHECK_LIQUID_CLICK(target) ? get_turf(target) : null
 		if (ismob(target) && !target.is_open_container() && src.is_open_container()) // pour reagents down their neck (if possible)
 			if (!src.reagents.total_volume)
 				boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
@@ -247,47 +250,26 @@ proc/ui_describe_reagents(atom/A)
 					src.reagents.reaction(target, TOUCH, min(src.amount_per_transfer_from_this, src.reagents.total_volume))
 					src.reagents.remove_any(src.amount_per_transfer_from_this)
 
-		else if (istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne) && src.is_open_container()) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
-			var/obj/fluid/F = target
+		else if (target_turf?.active_liquid && src.is_open_container()) // fluid handling : If src is empty, fill from fluid. otherwise add to the fluid.
+			var/obj/fluid/F = target_turf.active_liquid
 			if (!src.reagents.total_volume)
-				if (!F.group || !F.group.reagents.total_volume)
-					boutput(user, "<span class='alert'>[target] is empty. (this is a bug, whooops!)</span>")
-					F.removed()
-					return
-
 				if (reagents.total_volume >= reagents.maximum_volume)
 					boutput(user, "<span class='alert'>[src] is full.</span>")
 					return
-				//var/transferamt = min(src.reagents.maximum_volume - src.reagents.total_volume, F.amt)
 
-				F.group.reagents.skip_next_update = 1
+				F.group.reagents.skip_next_update = TRUE
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, reagents.maximum_volume - reagents.total_volume)
-				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [target].</span>")
+				boutput(user, "<span class='notice'>You fill [src] with [amt] units of [F].</span>")
 				F.group.drain(F, amt / F.group.amt_per_tile, src) // drain uses weird units
 			else //trans_to to the FLOOR of the liquid, not the liquid itself. will call trans_to() for turf which has a little bit that handles turf application -> fluids
-				var/turf/T = get_turf(F)
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src] [log_reagents(src)] to [F] at [log_loc(user)].") // Added reagents (Convair880).
-				var/trans = src.reagents.trans_to(T, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
-				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [T].</span>")
+				var/trans = src.reagents.trans_to(target_turf, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
+				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target_turf].</span>")
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents) || ((istype(target, /obj/fluid) && !istype(target, /obj/fluid/airborne)) && !src.reagents.total_volume) && src.is_open_container()) //A dispenser. Transfer FROM it TO us.
-			if (istype(target, /obj/reagent_dispensers/chemicalbarrel))
-				var/obj/reagent_dispensers/chemicalbarrel/target_barrel = target
-				if(target_barrel.funnel_active)
-					if (!src.reagents.total_volume)
-						boutput(user, "<span class='alert'>Your [src.name] is empty!</span>")
-						return
-					if (target.reagents.total_volume >= target.reagents.maximum_volume)
-						boutput(user, "<span class='alert'>[target.name] is already full!</span>")
-						return
-					src.reagents.trans_to(target, src.amount_per_transfer_from_this)
-					user.visible_message("<span class='alert'>[user.name] pours some reagent from the [src.name] into the [target.name].</span>")
-					playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
-					return
-
+		else if ((is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) && src.is_open_container()) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -914,7 +896,7 @@ proc/ui_describe_reagents(atom/A)
 	attackby(var/obj/item/W, mob/user)
 		if(istype(W, /obj/item/organ))
 			var/obj/item/organ/organ = W
-			if(organ.made_from != "flesh")
+			if(organ.material.getMaterialFlags() & MATERIAL_ORGANIC)
 				boutput(user, "<span class='alert'>The [src] rejects the non-organic organ!</span>")
 			else if (reagents.total_volume >= reagents.maximum_volume)
 				boutput(user, "<span class='alert'>The [src] is too full!</span>")
@@ -931,7 +913,7 @@ proc/ui_describe_reagents(atom/A)
 				user.lastattacked = src
 				attack_particle(user,src)
 				hit_twitch(src)
-				playsound(src, 'sound/impact_sounds/Generic_Slap_1.ogg', 50,1)
+				playsound(src, 'sound/impact_sounds/Generic_Slap_1.ogg', 50,TRUE)
 				user.visible_message("<span class='alert'><b>[user.name] smacks the [src.name] with the [W.name]!</b></span>")
 				if(angry)
 					become_unangry()

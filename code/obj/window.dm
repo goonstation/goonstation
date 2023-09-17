@@ -33,7 +33,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	var/image/damage_image = null
 	default_material = "glass"
 	mat_changename = TRUE
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = ANCHORED
