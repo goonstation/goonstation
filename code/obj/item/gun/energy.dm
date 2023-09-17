@@ -1919,7 +1919,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		qdel(src)
 
 	proc/finish_repairs(var/obj/item/cable_coil/C, /var/mob/user)
-		C.change_stack_amount(-60)
+		C.change_stack_amount(-10)
 		heat_repair = 0
 		playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
 		src.icon_state = "makeshift-energy"
@@ -1989,7 +1989,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 						SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/gun/energy/makeshift/proc/finish_repairs,\
 						list(W,user), W.icon, W.icon_state, "<span class='notice'>[user] replaces the burnt wiring within [src].</span>", null)
 					else
-						boutput(user,"<span class='notice'>You need at least 60 wire to repair the wiring.</span>")
+						boutput(user,"<span class='notice'>You need at least 10 wire to repair the wiring.</span>")
 					return
 			else if (iswrenchingtool(W) && our_cell)
 				var/obj/item/removed_cell = our_cell
@@ -2179,11 +2179,11 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			list(C,user), C.icon, C.icon_state, "<span class='notice'>[user] attaches wire to the inside of [src].</span>", null)
 			return TRUE
 		else
-			boutput(user,"<span class='notice'>You need at least 90 wire to fully wire up the barrel.</span>")
+			boutput(user,"<span class='notice'>You need at least 10 wire to fully wire up the barrel.</span>")
 			return FALSE
 
 	proc/finish_add_wire(var/obj/item/cable_coil/C, var/mob/user)
-		C.change_stack_amount(-90)
+		C.change_stack_amount(-10)
 		icon_state = "makeshift-construction3"
 		state = 3
 		src.RemoveComponentsOfType(/datum/component/assembly)
