@@ -626,4 +626,4 @@ toxic - poisons
 	cost = 1500
 	shot_sound = 'sound/weapons/laserlight.ogg'
 	icon_state = "laser_tiny"
-	damage = 12
+	damage = 18

@@ -1888,13 +1888,22 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	var/obj/item/light/tube/our_light
 	///What battery this gun uses
 	var/obj/item/cell/our_cell
-	///How much heat this weapon has after firing, the flashlight breaks if this gets too high
+	///How much heat this weapon has after firing, the weapon breaks if this gets too high
 	var/heat = 0
+	///What step of repair are we on if we have broken? 0 = functional
+	var/heat_repair = 0
 
 	proc/break_light()
+		if (our_cell)
+			our_cell.use(our_cell.charge)
+			SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
 		elecflash(get_turf(src), 1, 3)
 		our_light.light_status = LIGHT_BURNED
 		our_light.update()
+		heat_repair = 1
+		src.icon_state = "makeshift-burnt-1"
+		heat += 150 // spicy!
+		update_icon()
 
 	proc/attach_cell(var/obj/item/cell/C, mob/user)
 		if (user)
@@ -1908,6 +1917,13 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	proc/do_explode()
 		explosion(src, get_turf(src), -1, -1, 1, 2)
 		qdel(src)
+
+	proc/finish_repairs(var/obj/item/cable_coil/C, /var/mob/user)
+		C.change_stack_amount(-60)
+		heat_repair = 0
+		playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
+		src.icon_state = "makeshift-energy"
+		update_icon()
 
 	emp_act()
 		if (our_cell)
@@ -1934,11 +1950,21 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	process()
 		if (heat > 0)
+			if (heat > 175)
+				var/mob/living/victim = src.loc
+				if (istype(victim))
+					victim.changeStatus("burning", 7 SECONDS)
+					if (!ON_COOLDOWN(victim, "makeshift_burn", 5 SECONDS))
+						boutput(victim, "<span class='alert'>You are set on fire due to the extreme temperature of [src]!</span>")
+						victim.emote("scream")
 			heat = max(0, heat - HEAT_REMOVED_PER_PROCESS)
 			update_icon()
 		return
 
 	canshoot(mob/user)
+		if (heat_repair != 0)
+			boutput(user,"<span class='alert'>[src] will need repairs before being able to function!</span>")
+			return FALSE
 		if (!our_light)
 			boutput(user,"<span class='alert'>[src] needs a light source to function!</span>")
 			return FALSE
@@ -1949,7 +1975,22 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			return ..()
 
 	attackby(obj/item/W, mob/user, params)
-		if (iswrenchingtool(W) && our_cell)
+		if(heat_repair) // gun machine broke, we need to repair it
+			if (issnippingtool(W) && heat_repair == 1)
+				boutput(user,"<span class='notice'>You remove the burnt wiring from [src].</span>")
+				playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
+				heat_repair++
+				src.icon_state = "makeshift-burnt-2"
+				update_icon()
+				return
+			else if (istype(W, /obj/item/cable_coil) && W.amount >= 60 && heat_repair == 2)
+				if (W.amount >= 60)
+					SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/gun/energy/makeshift/proc/finish_repairs,\
+					list(W,user), W.icon, W.icon_state, "<span class='notice'>[user] replaces the burnt wiring within [src].</span>", null)
+				else
+					boutput(user,"<span class='notice'>You need at least 60 wire to repair the wiring.</span>")
+				return
+		else if (iswrenchingtool(W) && our_cell)
 			var/obj/item/removed_cell = our_cell
 			SEND_SIGNAL(src, COMSIG_CELL_SWAP, null)
 			boutput(user,"<span class='notice'>You disconnect [our_cell] from [src].</span>")
@@ -1978,10 +2019,17 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			return
 		..()
 
-	examine()
+	get_desc()
 		. = ..()
-		if (!our_cell)
-			. += "[src] is lacking a power source!"
+		if (!heat_repair)
+			if (!our_cell)
+				. += " [src] is lacking a power source!"
+			if (!our_light)
+				. += " [src] is lacking a light source!"
+			else if(our_light != LIGHT_OK)
+				. += " [src]'s light source is nonfunctional!"
+		else
+			. += " [src] is completely broken! It will need to be repaired before being fired."
 
 	attack_self(mob/user)
 		var/I = tgui_input_number(user, "Input a firerate (In deciseconds)", "Timer Adjustment", shoot_delay, 10, 2)
@@ -2010,7 +2058,10 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		else
 			src.UpdateOverlays(null, "gun_light")
 
-		if (heat > 70) // danger of breaking
+		if (heat > 175)
+			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", 'icons/obj/large/64x32.dmi', "makeshift-burn")
+			src.UpdateOverlays(overlay_image, "gun_smoke")
+		else if (heat > 70)
 			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", 'icons/obj/large/64x32.dmi', "makeshift-smoke")
 			src.UpdateOverlays(overlay_image, "gun_smoke")
 		else
@@ -2031,6 +2082,16 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				return
 			our_cell.use(current_projectile.cost)
 		return ..(target, start, user)
+
+/obj/item/gun/energy/makeshift/spawnable // for testing purposes
+
+	New()
+		..()
+		var/obj/item/cell/supercell/charged/C = new /obj/item/cell/supercell/charged
+		attach_cell(C)
+		var/obj/item/light/tube/T = new /obj/item/light/tube
+		our_light = T
+		T.set_loc(src)
 
 /obj/item/makeshift_laser_barrel
 	name = "pipe assembly"
@@ -2067,8 +2128,25 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			boutput(user,"<span class='notice'>You create a lens using [W] and stuff it inside [src].</span>")
 			W.change_stack_amount(-3)
 			src.RemoveComponentsOfType(/datum/component/assembly)
-			src.AddComponent(/datum/component/assembly, /obj/item/light/tube, PROC_REF(add_lighttube), FALSE)
+			src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(add_inside_wiring), FALSE)
 			return TRUE
+
+	proc/add_inside_wiring(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/cable_coil/C = to_combine_atom
+		if (C.amount >= 90) // you need a LOT of wire
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/makeshift_laser_barrel/proc/finish_add_wire,\
+			list(C,user), C.icon, C.icon_state, "<span class='notice'>[user] attaches wire to the inside of [src].</span>", null)
+			return TRUE
+		else
+			boutput(user,"<span class='notice'>You need at least 90 wire to fully wire up the barrel.</span>")
+			return FALSE
+
+	proc/finish_add_wire(var/obj/item/cable_coil/C, var/mob/user)
+		C.change_stack_amount(-90)
+		icon_state = "makeshift-construction3"
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		src.AddComponent(/datum/component/assembly, /obj/item/light/tube, PROC_REF(add_lighttube), FALSE)
+		return TRUE
 
 	proc/add_lighttube(var/atom/to_combine_atom, var/mob/user)
 		var/obj/item/light/tube/T = to_combine_atom
@@ -2078,7 +2156,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		our_light = T
 		T.set_loc(src)
 		name = "pipe/stock/light assembly"
-		icon_state = "makeshift-construction3"
+		icon_state = "makeshift-construction4"
 		update_icon()
 		src.RemoveComponentsOfType(/datum/component/assembly)
 		src.AddComponent(/datum/component/assembly, /obj/item/device/timer, PROC_REF(add_timer), FALSE)
@@ -2091,7 +2169,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		user.u_equip(T)
 		qdel(T)
 		name = "pipe/stock/light/timer assembly"
-		icon_state = "makeshift-construction4"
+		icon_state = "makeshift-construction5"
 		update_icon()
 		src.RemoveComponentsOfType(/datum/component/assembly)
 		src.AddComponent(/datum/component/assembly, TOOL_WELDING, PROC_REF(weld_barrel), FALSE)
@@ -2101,7 +2179,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		if (to_combine_atom:try_weld(user, 1))
 			boutput(user,"<span class='notice'>You weld the end of the barrel into a point.</span>")
 			name = "makeshift energy rifle"
-			icon_state = "makeshift-construction5"
+			icon_state = "makeshift-construction6"
 			update_icon()
 			src.RemoveComponentsOfType(/datum/component/assembly)
 			src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(finish_gun), FALSE)
@@ -2109,7 +2187,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	proc/finish_gun(var/atom/to_combine_atom, var/mob/user)
 		var/obj/item/cable_coil/C = to_combine_atom
-		boutput(user,"<span class='notice'>You wire [src] together.</span>")
+		boutput(user,"<span class='notice'>You wire the timer, light tube, and barrel together.</span>")
 		C.change_stack_amount(-1)
 		var/obj/item/gun/energy/makeshift/M = new/obj/item/gun/energy/makeshift
 		M.our_light = our_light
