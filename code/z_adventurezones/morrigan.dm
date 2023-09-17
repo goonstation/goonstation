@@ -1476,7 +1476,117 @@ mob/living/carbon/human/morrigan_prisoner
 	And above all DO NOT stand on the pad when it's active, unless you feel like reciting code phrases to Lero security for the next 6 hours.<br><br>
 	- Technical Operative Banks
 	"}
+// Audio Tapes
+/obj/item/audio_tape/morrigan_interrogation
+	New()
+		..()
 
+		messages = list(
+	"Come on, you know we aren't buying that.. even you can realize there's no way you weren't the source of the problem.",
+	"You know I can't help you like this, think with me here... you just happened to be there when security arrived ?",
+	"You're not going to make this any better on yourself. We know what happened, we have cameras, we are just giving you a chance to explain yourself.",
+	"I know what you people do... there's just no point. Lock me up already.",
+	"Of course there's a point. There's always a point. Maybe it was an accident. You aren't a bad person are you?",
+	"...are you...Soren?",
+	"That's not my na-",
+	"Shh.. this is all off the record. But you can't expect me to not notice things off.",
+	"This missing here, that disappears there... I'm not blind to this. We know what you're doing.",
+	"You'd have been executed already, if it weren't for me. Call it a favor.",
+	"*static*",
+	"Looks like our time is done, think carefully about our conversation today, Matheos. "
+	)
+
+		speakers = list(
+		"Filtered voice",
+		"Filtered voice",
+		"Filtered voice",
+		"Male voice",
+		"Filtered voice",
+		"Filtered voice",
+		"Male Voice",
+		"Filtered Voice",
+		"Filtered Voice",
+		"Filtered Voice",
+		"???",
+		"Filtered Voice")
+
+/obj/item/audio_tape/morrigan_interrogation2
+	New()
+		..()
+
+		messages = list(
+
+	"We're past that now. You know, I commend your skill even. If things were different.. you'd make for an excellent operative.",
+	"I am just an engineer, nothing more.",
+	"You are hunh ? We usually keep most records redacted for security reasons, but I've managed to get a hand on yours.",
+	"...*sighs*",
+	"Do you know why I've spent so much time with you Soren?",
+	"Stop. Calling. Me. That.",
+	"We have all the information we need already.",
+	"You don't know what you're talking about-",
+	"You're not the only one here. Ever since we've become a temporary prison service for that fucked up station, we've had dozens like you through here.",
+	"While it's not our primary job, we have sensitive material here, of course we'd KNOW Soren. You and your 3 other little lambs won't dent our operation.",
+	"Your little friend 'A' is already in custody. So quit the fucking act. We know what NanoTrasen is capable of.",
+	"*undiscernable noises*",
+	"*Deep Breath* Because I was part of them.",
+	"...holy fuck Alderman?!"
+	)
+
+		speakers = list(
+		"Filtered voice",
+		"Matheos's voice",
+		"Filtered voice",
+		"Matheos's voice",
+		"Filtered voice",
+		"Matheos' voice",
+		"Filtered Voice",
+		"Matheos's Voice",
+		"Filtered Voice",
+		"Filtered Voice",
+		"Filtered Voice",
+		"???",
+		"Male Voice",
+		"Soren's Voice")
+
+/obj/item/audio_tape/morrigan_interrogation3
+	New()
+		..()
+
+		messages = list(
+
+	"But how ? We ... we all thought..",
+	"That doesn't matter. What you need to understand is that NanoTrasen betrayed us. They don't care about you Soren. You don't matter.",
+	"Because the syndicate is somehow better Alderman ? Hunh ? You think terrorizing employees just going about their day is the right thing to do?",
+	"What is the right thing to do then?",
+	"Definitely not this! You're better than this.",
+	"We do what we must in this grand game. I've found my place here. There was no attempt EVER to try to rescue us Soren. Not one.",
+	"I tried coming back, it was just.. so hard there was just so much snow.. I thought..",
+	"That wasn't your job. And neither is it mine to sit here and chat with you.",
+	"...what are you getting at ?",
+	"It's not too late Soren. Those pest friends of yours didn't have this luxury. I'm going above and beyond for an old friend.",
+	"I... Alderman you know this just.",
+	"*undiscernable noises*",
+	"I don't want to see you die pointlessly. It's hell on both sides, they knew the risks... at least we could endure hell together again.",
+	"Alderman...",
+	"It's Alexander now. I can't do more for you. I'm calling them to take you back to your cell, you already know too much. Make the right choice."
+	)
+
+		speakers = list(
+		"Soren's Voice",
+		"Alderman's Voice",
+		"Soren's Voice",
+		"Alderman's Voice",
+		"Soren's Voice",
+		"Alderman's Voice",
+		"Soren's Voice",
+		"Alderman's Voice",
+		"Soren's Voice",
+		"Alderman's Voice",
+		"???",
+		"Filtered Voice",
+		"Soren's Voice",
+		"Filtered Voice"
+		)
 // Lockers with restricted access
 
 /obj/storage/secure/closet/morrigan
