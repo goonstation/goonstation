@@ -518,7 +518,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				owner.stomach_process -= src
 				qdel(src)
 
+/obj/item/reagent_containers/food/snacks/takeout
+	name = "Chinese takeout carton"
+	desc = "Purports to contain \"General Zeng's Chicken.\"  How old is this?"
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "takeout"
+	heal_amt = 1
+	initial_volume = 60
 
+	New()
+		..()
+		reagents.add_reagent("chickensoup", 10)
+		reagents.add_reagent("salt", 10)
+		reagents.add_reagent("grease", 5)
+		reagents.add_reagent("msg", 2)
+		reagents.add_reagent("VHFCS", 8)
+		reagents.add_reagent("egg",5)
 
 /* ================================================ */
 /* -------------------- Drinks -------------------- */
