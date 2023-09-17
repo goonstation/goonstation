@@ -13,7 +13,10 @@
 
 	New()
 		. = ..()
+		src.create_reagents(400)
 		src.fluid_image = image(src.icon, "fluid", -1)
+		src.create_storage(/datum/storage/unholdable, max_wclass = W_CLASS_NORMAL, params = list("rustle"=TRUE))
+		START_TRACKING
 
 	update_icon()
 		if (reagents.total_volume)
@@ -27,11 +30,6 @@
 		..()
 		src.UpdateIcon()
 
-/obj/mopbucket/New()
-	..()
-	create_reagents(400)
-	START_TRACKING
-
 /obj/mopbucket/disposing()
 	. = ..()
 	STOP_TRACKING
@@ -42,7 +40,6 @@
 	if (!reagents)
 		return
 	. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
-	return
 
 /obj/mopbucket/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/mop))

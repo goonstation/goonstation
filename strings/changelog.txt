@@ -1,4 +1,7 @@
 
+(t)sun sep 17 23
+(u)aloe
+(*)Mop buckets now have 7 slots of storage inside them, for normal-sized items or smaller. This means that to pour things into the bucket, you need to click drag the reagent container to the bucket.
 (t)sat sep 16 23
 (u)Ryou (Glamurio)
 (p)15262
