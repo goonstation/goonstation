@@ -1032,7 +1032,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/datum/plantmutation/MUT = DNA.mutation
 		if(!growing)
-			logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Plant pot at \[[x],[y],[z]] used by ([user]) attempted a harvest without having a current plant.")
+			logTheThing(LOG_DEBUG, user, "<b>Hydro Controls</b>: Plant pot at \[[x],[y],[z]] used by ([user]) attempted a harvest without having a current plant.")
 			return
 
 		if(growing.harvested_proc)
