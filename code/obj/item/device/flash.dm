@@ -174,11 +174,21 @@ TYPEINFO(/obj/item/device/flash)
 		eye_damage = src.eye_damage_mod + rand(0, (1 * flash_power))
 
 	// We're flashing somebody directly, hence the 100% chance to disrupt cloaking device at the end.
-	var/blind_success = M.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
+	var/blind_success
+	var/flash_reflected = FALSE
+	var/previous_user = user
+	var/mob/living/carbon/human/H = M
+	if (istype(H) && istype(H.glasses, /obj/item/clothing/glasses/sunglasses/reflective))
+		flash_reflected = TRUE
+		M = user
+	blind_success = M.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
 	if (src.emagged)
 		user.apply_flash(animation_duration, weakened, 0, 0, eye_blurry, eye_damage, 0, burning, 100, stamina_damage = 70 * flash_power, disorient_time = 30)
 
-	convert(M,user)
+	if (!flash_reflected)
+		convert(M, user)
+	else
+		convert(M, previous_user)
 
 	// Log entry.
 	var/blind_msg_target = "!"
@@ -186,7 +196,11 @@ TYPEINFO(/obj/item/device/flash)
 	if (!blind_success)
 		blind_msg_target = " but your eyes are protected!"
 		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
-	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>[user] blinds you with \the [src][blind_msg_target]</span>")
+	if (M != user)
+		M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>[user] blinds you with \the [src][blind_msg_target]</span>")
+	else
+		M.visible_message("<span class='alert'>[user] blinds themselves with \the [src][blind_msg_others]</span>", "<span class='alert'>A bright light blinds you[blind_msg_target]</span>")
+
 	logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 	if (src.emagged)
 		logTheThing(LOG_COMBAT, user, "blinds themself with [src] at [log_loc(user)].")

@@ -182,6 +182,19 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	mats = 4
 
+/obj/item/clothing/glasses/sunglasses/reflective
+	allow_blind_sight = TRUE
+	var/static/list/possible_appearances = list(/obj/item/clothing/glasses/meson, /obj/item/clothing/glasses/thermal, /obj/item/clothing/glasses/visor,
+		/obj/item/clothing/glasses/healthgoggles, /obj/item/clothing/glasses/spectro)
+
+	New()
+		var/obj/item/clothing/glasses/picked_type = pick(src.possible_appearances)
+		src.name = initial(picked_type.name)
+		src.desc = initial(picked_type.desc)
+		src.icon = initial(picked_type.icon)
+		src.icon_state = initial(picked_type.icon_state)
+		..()
+
 /obj/item/clothing/glasses/sunglasses/tanning
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. This pair has a label that says: \"For tanning use only.\""
 	color_b = 0.95
