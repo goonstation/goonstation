@@ -1892,6 +1892,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	var/heat = 0
 	///What step of repair are we on if we have broken? 0 = functional
 	var/heat_repair = 0
+	///What projectile we switch to when update_damage() is called
+	var/lens_proj = /datum/projectile/laser/makeshift
 
 	proc/break_light()
 		if (our_cell)
@@ -1924,6 +1926,10 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
 		src.icon_state = "makeshift-energy"
 		update_icon()
+
+	proc/update_proj()
+		set_current_projectile(new lens_proj)
+		projectiles = list(current_projectile)
 
 	emp_act()
 		if (our_cell)
@@ -1984,8 +1990,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 					src.icon_state = "makeshift-burnt-2"
 					update_icon()
 					return
-				else if (istype(W, /obj/item/cable_coil) && W.amount >= 60 && heat_repair == 2)
-					if (W.amount >= 60)
+				else if (istype(W, /obj/item/cable_coil) && heat_repair == 2)
+					if (W.amount >= 10)
 						SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/gun/energy/makeshift/proc/finish_repairs,\
 						list(W,user), W.icon, W.icon_state, "<span class='notice'>[user] replaces the burnt wiring within [src].</span>", null)
 					else
@@ -2049,7 +2055,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			if(1)
 				. = "You can use <b>wirecutters</b> to remove the burnt wiring."
 			if(2)
-				. = "You can add 60 wire to replace the wiring."
+				. = "You can add 10 wire to replace the wiring."
 
 	attack_self(mob/user)
 		var/I = tgui_input_number(user, "Input a firerate (In deciseconds)", "Timer Adjustment", shoot_delay, 10, 2)
@@ -2113,6 +2119,14 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		our_light = T
 		T.set_loc(src)
 
+/obj/item/makeshift_lens
+	name = "salvaged lens"
+	desc = "A lens salvaged from a device of some kind. Maybe this could be used to craft something?"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "salv_lens"
+	/// When put in a makeshift laser rifle, what proj to do switch to?
+	var/lens_proj = /datum/projectile/laser/makeshift
+
 /obj/item/makeshift_laser_barrel
 	name = "pipe assembly"
 	desc = "A long empty pipe."
@@ -2123,6 +2137,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	icon_state = "makeshift-construction1"
 	/// Used to display the correct help message.
 	var/state = 0
+	///what proj does the resulting laser rifle use?
+	var/lens_proj = /datum/projectile/laser/makeshift
 
 	var/obj/item/light/tube/our_light
 
@@ -2135,9 +2151,9 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			if (0)
 				return "You can use 4 metal sheets to construct a stock/grip for [src]."
 			if (1)
-				return "You can insert 3 glass sheets to create a makeshift lens for [src]."
+				return "You can insert a salvaged lens into [src]. Salvaged lenses can be obtained by using <b>wirecutters</b> on a flashlight, camera, or flash."
 			if (2)
-				return "You can add 90 lengths of cable coil to wire the inside of the barrel."
+				return "You can add 10 lengths of cable coil to wire the inside of the barrel."
 			if (3)
 				return "You can add a light tube to [src]."
 			if (4)
@@ -2159,22 +2175,23 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			icon_state = "makeshift-construction2"
 			update_icon()
 			src.RemoveComponentsOfType(/datum/component/assembly)
-			src.AddComponent(/datum/component/assembly, /obj/item/sheet, PROC_REF(construct_lens), FALSE)
+			src.AddComponent(/datum/component/assembly, /obj/item/makeshift_lens, PROC_REF(add_lens), FALSE)
 			return TRUE
 
-	proc/construct_lens(var/atom/to_combine_atom, var/mob/user)
-		var/obj/item/sheet/W = to_combine_atom
-		if (W.material.getMaterialFlags() & MATERIAL_CRYSTAL && W.amount >= 3)
-			boutput(user,"<span class='notice'>You create a lens using [W] and stuff it inside [src].</span>")
-			state = 2
-			W.change_stack_amount(-3)
-			src.RemoveComponentsOfType(/datum/component/assembly)
-			src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(add_inside_wiring), FALSE)
-			return TRUE
+	proc/add_lens(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/makeshift_lens/L = to_combine_atom
+		boutput(user,"<span class='notice'>You stuff [L] inside [src].</span>")
+		state = 2
+		lens_proj = L.lens_proj
+		user.u_equip(L)
+		qdel(L)
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(add_inside_wiring), FALSE)
+		return TRUE
 
 	proc/add_inside_wiring(var/atom/to_combine_atom, var/mob/user)
 		var/obj/item/cable_coil/C = to_combine_atom
-		if (C.amount >= 90) // you need a LOT of wire
+		if (C.amount >= 10) // you need a LOT of wire
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/makeshift_laser_barrel/proc/finish_add_wire,\
 			list(C,user), C.icon, C.icon_state, "<span class='notice'>[user] attaches wire to the inside of [src].</span>", null)
 			return TRUE
@@ -2239,6 +2256,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		our_light.set_loc(M)
 		user.put_in_hand_or_drop(M)
 		M.update_icon()
+		M.lens_proj = lens_proj
+		M.update_proj()
 		qdel(src)
 		return
 

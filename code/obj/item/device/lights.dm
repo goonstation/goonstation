@@ -64,6 +64,15 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 	light_type = null
 	brightness = 4.6
 
+	proc/remove_lens(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/makeshift_lens/L = new /obj/item/makeshift_lens
+		user.u_equip(src)
+		boutput(user,"<span class='notice'>You cut out a lens from [src], but destroy [src] in the process.</span>")
+		playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
+		qdel(src)
+		user.put_in_hand_or_drop(L)
+		return TRUE
+
 	var/datum/component/loctargeting/medium_directional_light/light_dir
 	New(loc, R = initial(col_r), G = initial(col_g), B = initial(col_b))
 		..()
@@ -72,6 +81,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 		col_b = B
 		light_dir = src.AddComponent(/datum/component/loctargeting/medium_directional_light, col_r * 255, col_g * 255, col_b  * 255, 210)
 		light_dir.update(0)
+		src.AddComponent(/datum/component/assembly, TOOL_SNIPPING, PROC_REF(remove_lens), FALSE)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.emagged)

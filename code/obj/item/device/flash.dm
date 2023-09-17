@@ -34,6 +34,20 @@ TYPEINFO(/obj/item/device/flash)
 	var/max_flash_power = 0
 	var/min_flash_power = 0
 
+	proc/remove_lens(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/makeshift_lens/L = new /obj/item/makeshift_lens
+		L.lens_proj = /datum/projectile/laser/makeshift/powerful
+		user.u_equip(src)
+		boutput(user,"<span class='notice'>You cut out a lens from [src], but destroy [src] in the process.</span>")
+		playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
+		qdel(src)
+		user.put_in_hand_or_drop(L)
+		return TRUE
+
+	New()
+		..()
+		src.AddComponent(/datum/component/assembly, TOOL_SNIPPING, PROC_REF(remove_lens), FALSE)
+
 	cyborg
 		process_burnout(mob/user)
 			return
