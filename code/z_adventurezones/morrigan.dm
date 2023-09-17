@@ -2420,11 +2420,12 @@ mob/living/carbon/human/morrigan_prisoner
 	deconstruct_flags = DECON_NONE
 	icon = 'icons/obj/monitors.dmi'
 	icon_state = "self_destruct1"
-	desc = "A big red button labeled to activate station's self destruct when pressed. It has an ID card reader. It is locked behind a bulletproof glass case. "
+	desc = "A big red button labeled to activate station's self destruct when pressed. It has an ID card reader. It is locked behind a bulletproof glass case."
 	var/timing = FALSE
 	var/time = 80
 	var/locked = TRUE
 	var/last_announcement_made = FALSE
+	var/list/linked_doors = null
 
 	proc/activate_nuke()
 		if (src.timing)
@@ -2452,8 +2453,11 @@ mob/living/carbon/human/morrigan_prisoner
 				light.on = TRUE
 				light.update() //you have to update it for it to work
 				LAGCHECK(LAG_LOW)
-		for (var/obj/machinery/door/poddoor/buff/morrigan_lockdown/door in by_type[/obj/machinery/door/poddoor/buff/morrigan_lockdown])
-			door.close()
+		for (var/obj/machinery/door/door as anything in by_type[/obj/machinery/door/poddoor/buff/morrigan_lockdown])
+			if (door.density)
+				door.open()
+			else
+				door.close()
 
 	//pressing the button
 	attack_hand(var/mob/user)
@@ -2506,26 +2510,28 @@ mob/living/carbon/human/morrigan_prisoner
 /obj/machinery/door/poddoor/buff/morrigan_lockdown
 	name = "lockdown door"
 	desc = "Door used for lockdowns."
+	layer = OBJ_LAYER + 1
 	autoclose = FALSE
 
 	New()
 		..()
 		START_TRACKING
-		open()
 
 	disposing()
 		STOP_TRACKING
 		..()
 
-//door that doesn't close during lockdown
-/obj/machinery/door/poddoor/buff/morrigan_lockdown_broken
-	name = "lockdown door"
-	desc = "Door used for lockdowns. This one seems to be malfunctioning."
-	autoclose = FALSE
-
+/obj/machinery/door/poddoor/buff/morrigan_lockdown/open
 	New()
 		..()
-		open()
+		src.open()
+
+/obj/fakeobjects/morrigan/broken_lockdown
+	name = "lockdown door"
+	desc = "Door used for lockdowns. This one seems to be malfunctioning."
+	icon = 'icons/obj/doors/SL_doors.dmi'
+	icon_state = "pdoor0"
+	layer = OBJ_LAYER + 1
 
 //gas mask please i beg
 
@@ -3338,10 +3344,6 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		if (..())
 			return TRUE
 
-		if (!istype(holder.owner, /mob/living/critter/robotic/gunbot/morrigan/meleebot))
-			boutput(holder.owner, "<span class='notice'>You cannot use this ability.</span>")
-			return
-
 		var/obj/projectile/proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/robohook, get_turf(target))
 		while (!proj || proj.disposed)
 			proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/robohook, get_turf(target))
@@ -3351,7 +3353,6 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 
 		proj.launch()
 
-
 /datum/targetable/critter/shieldproto
 	name = "AP Shield"
 	desc = "Knock assailants back then destroy incoming projectiles"
@@ -3360,10 +3361,10 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	targeted = TRUE
 	target_anything = TRUE
 
-	var/datum/projectile/shieldpush/projectile = new /datum/projectile/shieldpush
+	var/datum/projectile/shieldpush/projectile = new
 
 	cast(atom/target)
-		var/obj/projectile/P = initialize_projectile_pixel_spread( holder.owner, projectile, target )
+		var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, projectile, target )
 		logTheThing(LOG_COMBAT, usr, "used their [src.name] ability at [log_loc(usr)]")
 		if (P)
 			P.mob_shooter = holder.owner
@@ -3375,14 +3376,13 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	icon_state = "roboheal"
 	cooldown = 20 SECONDS
 	targeted = FALSE
-	var/K = /mob/living/critter/robotic/gunbot/morrigan/engineerbot
 
 	cast(atom/target)
 		if (..())
 			return TRUE
 		for (var/mob/living/critter/robotic/robot in range(5, holder.owner))
 			robot.HealDamage("all", 10, 10, 0)
-			playsound(K, 'sound/items/welder.ogg', 80, 0)
+		playsound(holder.owner, 'sound/items/welder.ogg', 80, 0)
 		return FALSE
 
 /datum/targetable/critter/robofast
@@ -3393,11 +3393,8 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	targeted = FALSE
 
 	cast(atom/target)
-
-		if (!istype(holder.owner, /mob/living/critter/robotic/gunbot/morrigan/medibot))
-			boutput(holder.owner, "<span class='notice'>You cannot use this ability.</span>")
-			return
-
+		if (..())
+			return TRUE
 		holder.owner.delStatus("stunned")
 		holder.owner.delStatus("weakened")
 		holder.owner.delStatus("paralysis")
@@ -3405,7 +3402,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		holder.owner.delStatus("disorient")
 		holder.owner.change_misstep_chance(-INFINITY)
 		playsound(holder.owner, 'sound/machines/shielddown.ogg', 80, 1)
-		holder.owner.setStatusMin(("robospeed"), 10 SECONDS)
+		holder.owner.setStatusMin("robospeed", 10 SECONDS)
 		return FALSE
 
 
@@ -3434,3 +3431,43 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 				newpipe.id = src.id
 				OTHER_START_TRACKING_CAT(newpipe, TR_CAT_SWITCHED_PIPES)
 				src.switch_type = pipe_type //so we switch back next time
+
+/turf/simulated/wall/morrigan_cracked
+	name = "wall"
+	desc = "This wall seems damaged..."
+	icon = 'icons/obj/adventurezones/Morrigan/turf.dmi'
+	icon_state = "bustedwall"
+
+	health = 30
+
+	proc/take_damage(var/damage) // Let other walls support this later
+		src.health -= damage
+		if (src.health <= 0)
+			new /obj/fakeobjects/morrigan/broken_wall(get_turf(src))
+			src.ReplaceWith(/turf/unsimulated/floor/plating)
+
+	attackby(obj/item/W, mob/user, params)
+		user.lastattacked = src
+		attack_particle(user, src)
+		src.visible_message("<span class='alert'>[user ? user : "Someone"] hits [src] with [W].</span>", "<span class='alert'>You hit [src] with [W].</span>")
+		src.take_damage(W.force / 2)
+
+	dismantle_wall(devastated=0, keep_material = 1)
+		return
+
+	meteorhit()
+		return
+
+	ex_act(severity)
+		return
+
+	blob_act(var/power)
+		return
+
+/obj/fakeobjects/morrigan/broken_wall
+	name = "collapsed wall"
+	icon = 'icons/obj/adventurezones/Morrigan/turf.dmi'
+	icon_state = "bustedwallc"
+	anchored = ANCHORED_ALWAYS
+	density = 0
+	opacity = 0

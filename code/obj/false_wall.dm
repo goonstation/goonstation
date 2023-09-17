@@ -306,7 +306,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 
 /turf/simulated/wall/false_wall/darkshuttle
 	name = "Dark Shuttle Wall"
-	icon = 'icons/turf/walls_shuttle-debris.dmi'
+	icon = 'icons/turf/walls/shuttle/dark.dmi'
 	icon_state = "dshuttle-12"
 	can_be_auto = 0
 
