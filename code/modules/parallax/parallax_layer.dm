@@ -2,6 +2,7 @@
 	plane = PLANE_PARALLAX
 	appearance_flags = KEEP_TOGETHER | TILE_BOUND
 	screen_loc = "CENTER,CENTER"
+	mouse_opacity = 0
 
 	/// The client that this parallax layer belongs to.
 	var/client/owner

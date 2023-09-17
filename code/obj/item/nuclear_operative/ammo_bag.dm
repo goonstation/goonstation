@@ -149,9 +149,9 @@
 			var/obj/item/ammo/bullets/magazine = K.default_magazine
 			var/reload_sound = initial(magazine.sound_load)
 			if(isnull(reload_sound))
-				playsound(K, 'sound/weapons/gunload_light.ogg', 50, 1)
+				playsound(K, 'sound/weapons/gunload_light.ogg', 50, TRUE)
 			else
-				playsound(K, reload_sound, 50, 1)
+				playsound(K, reload_sound, 50, TRUE)
 
 	ex_act(severity)
 		return

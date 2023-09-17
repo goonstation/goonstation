@@ -155,7 +155,7 @@ TYPEINFO(/obj/machinery/phone)
 
 		src.icon_state = "[answered_icon]"
 		UpdateIcon()
-		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, 0)
+		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, FALSE)
 
 		if(!src.ringing) // we are making an outgoing call
 			if(src.connected)

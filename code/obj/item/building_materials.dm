@@ -63,7 +63,7 @@ MATERIAL
 	default_material = "steel"
 	///the material id string (lowercase) of the starting reinforcement
 	var/default_reinforcement = null
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 
 	New()
 		..()
@@ -526,7 +526,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	material_amt = 0.05
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 
 	New()
 		..()
@@ -956,7 +956,7 @@ MATERIAL
 				if (istype(T, /turf/simulated/floor))
 					// If it's still a floor, attempt to place or replace the floor tile
 					var/turf/simulated/floor/F = T
-					F.attackby(src, user)
+					F.Attackby(src, user)
 					tooltip_rebuild = 1
 				else
 					boutput(user, "You cannot build on or repair this turf!")
@@ -1083,6 +1083,12 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			sheet_cost = 2
 			icon = 'icons/obj/furniture/table_industrial.dmi'
 			icon_state = "table_parts"
+		industrialchair
+			recipe_id = "industrialchair"
+			craftedType = /obj/item/furniture_parts/dining_chair/industrial
+			name = "Industrial Chair Parts"
+			icon = 'icons/obj/furniture/chairs.dmi'
+			icon_state = "ichair_parts"
 
 	metal
 		fl_tiles
@@ -1291,7 +1297,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon_state = "wstool"
 		chair
 			recipe_id = "wood_chair"
-			craftedType = /obj/stool/chair/wooden/constructed
+			craftedType = /obj/stool/chair/dining/constructed
 			name = "Chair"
 			icon = 'icons/obj/furniture/chairs.dmi'
 			icon_state = "chair_wooden"

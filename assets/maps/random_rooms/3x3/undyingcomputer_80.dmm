@@ -8,12 +8,12 @@
 	layer = 4;
 	shrunk = -1;
 	desc = "A collection of network management tools, found wedged in an engineer's chest cavity. You swear you can hear it breathing.";
-	uses_material_appearance = 1
+	uses_default_material_appearance = 1
 	},
 /obj/cable/yellow{
 	icon_state = "1-2";
 	default_material = "bone";
-	uses_material_appearance = 1;
+	uses_default_material_appearance = 1;
 	insulator_default = "flesh"
 	},
 /obj/dialogueobj/engineerscorpse{
@@ -41,7 +41,7 @@
 /obj/decal/cleanable/molten_item,
 /obj/cable/yellow{
 	icon_state = "0-2";
-	uses_material_appearance = 1;
+	uses_default_material_appearance = 1;
 	insulator_default = "flesh"
 	},
 /obj/item/cable_coil/yellow/cut{
