@@ -1975,49 +1975,53 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			return ..()
 
 	attackby(obj/item/W, mob/user, params)
-		if(heat_repair) // gun machine broke, we need to repair it
-			if (issnippingtool(W) && heat_repair == 1)
-				boutput(user,"<span class='notice'>You remove the burnt wiring from [src].</span>")
+		if (heat < 70)
+			if(heat_repair) // gun machine broke, we need to repair it
+				if (issnippingtool(W) && heat_repair == 1)
+					boutput(user,"<span class='notice'>You remove the burnt wiring from [src].</span>")
+					playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
+					heat_repair++
+					src.icon_state = "makeshift-burnt-2"
+					update_icon()
+					return
+				else if (istype(W, /obj/item/cable_coil) && W.amount >= 60 && heat_repair == 2)
+					if (W.amount >= 60)
+						SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/gun/energy/makeshift/proc/finish_repairs,\
+						list(W,user), W.icon, W.icon_state, "<span class='notice'>[user] replaces the burnt wiring within [src].</span>", null)
+					else
+						boutput(user,"<span class='notice'>You need at least 60 wire to repair the wiring.</span>")
+					return
+			else if (iswrenchingtool(W) && our_cell)
+				var/obj/item/removed_cell = our_cell
+				SEND_SIGNAL(src, COMSIG_CELL_SWAP, null)
+				boutput(user,"<span class='notice'>You disconnect [our_cell] from [src].</span>")
+				playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
+				user.put_in_hand_or_drop(removed_cell)
+				return
+			else if (istype(W, /obj/item/cell) && !our_cell)
+				user.u_equip(W)
+				boutput(user,"<span class='notice'>You attach [W] to [src].</span>")
+				attach_cell(W, user)
+				return
+			else if (issnippingtool(W) && our_light)
+				boutput(user,"<span class='notice'>You remove [our_light] from the barrel.</span>")
 				playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
-				heat_repair++
-				src.icon_state = "makeshift-burnt-2"
+				user.put_in_hand_or_drop(our_light)
+				our_light = null
 				update_icon()
 				return
-			else if (istype(W, /obj/item/cable_coil) && W.amount >= 60 && heat_repair == 2)
-				if (W.amount >= 60)
-					SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/gun/energy/makeshift/proc/finish_repairs,\
-					list(W,user), W.icon, W.icon_state, "<span class='notice'>[user] replaces the burnt wiring within [src].</span>", null)
-				else
-					boutput(user,"<span class='notice'>You need at least 60 wire to repair the wiring.</span>")
+			else if (istype(W, /obj/item/light/tube) && !our_light)
+				boutput(user,"<span class='notice'>You place [W] inside of the barrel and redo the wiring.</span>")
+				playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
+				user.u_equip(W)
+				our_light = W
+				W.set_loc(src)
+				update_icon()
 				return
-		else if (iswrenchingtool(W) && our_cell)
-			var/obj/item/removed_cell = our_cell
-			SEND_SIGNAL(src, COMSIG_CELL_SWAP, null)
-			boutput(user,"<span class='notice'>You disconnect [our_cell] from [src].</span>")
-			playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
-			user.put_in_hand_or_drop(removed_cell)
+			..()
+		else
+			boutput(user,"<span class='notice'>Attempting to work on [src] while its on fire might be a bad idea...</span>")
 			return
-		else if (istype(W, /obj/item/cell) && !our_cell)
-			user.u_equip(W)
-			boutput(user,"<span class='notice'>You attach [W] to [src].</span>")
-			attach_cell(W, user)
-			return
-		else if (issnippingtool(W) && our_light)
-			boutput(user,"<span class='notice'>You remove [our_light] from the barrel.</span>")
-			playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
-			user.put_in_hand_or_drop(our_light)
-			our_light = null
-			update_icon()
-			return
-		else if (istype(W, /obj/item/light/tube) && !our_light)
-			boutput(user,"<span class='notice'>You place [W] inside of the barrel and redo the wiring.</span>")
-			playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
-			user.u_equip(W)
-			our_light = W
-			W.set_loc(src)
-			update_icon()
-			return
-		..()
 
 	get_desc()
 		. = ..()
