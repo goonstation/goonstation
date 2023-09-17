@@ -1604,8 +1604,8 @@
 /obj/decal/cleanable/cobweb,
 /obj/item/clothing/head/wig,
 /obj/item/clothing/head/wig,
-/obj/item/clothing/suit,
-/obj/item/clothing/suit,
+/obj/item/clothing/suit/jacket/leather,
+/obj/item/clothing/suit/jacket/leather,
 /obj/storage/crate,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
