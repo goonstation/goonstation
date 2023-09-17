@@ -35,7 +35,7 @@
 					src.reagent_id = "water"
 				src.reagents.add_reagent(src.reagent_id, 10)
 			src.color = src.reagents?.get_master_color()
-			src.name = "[capitalize(src.reagents.get_master_reagent_name())] Golem"
+			src.name = "[capitalize(src.reagents?.get_master_reagent_name())] Golem"
 		var/image/eyes = SafeGetOverlayImage("golem_eyes", 'icons/mob/critter/humanoid/golem.dmi', "golem-eyes", MOB_OVERLAY_BASE)
 		eyes.plane = PLANE_SELFILLUM
 		eyes.appearance_flags |= RESET_COLOR
@@ -62,7 +62,7 @@
 		HH.limb_name = "right golem arm"
 
 	valid_target(mob/living/C)
-		if(ishuman(C))
+		if (ishuman(C))
 			var/mob/living/carbon/human/H = C
 			if (H.traitHolder.hasTrait("training_chaplain"))
 				return FALSE
