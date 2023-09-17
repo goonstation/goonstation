@@ -1975,7 +1975,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			return ..()
 
 	attackby(obj/item/W, mob/user, params)
-		if (heat < 70)
+		if (heat < 175)
 			if(heat_repair) // gun machine broke, we need to repair it
 				if (issnippingtool(W) && heat_repair == 1)
 					boutput(user,"<span class='notice'>You remove the burnt wiring from [src].</span>")
