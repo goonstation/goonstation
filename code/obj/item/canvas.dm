@@ -346,6 +346,9 @@
 		src.art.Crop(1, 1, bound_width, bound_height)
 		src.icon = src.art
 
+	proc/save_to_local_file()
+		usr << ftp(src.art, "canvas_[src.name]_[time2text(world.realtime,"YYYY-MM-DD")].png")
+
 	proc/save_to_id(id)
 		world.save_intra_round_value("persistent_canvas_[id]", src.art)
 		world.save_intra_round_value("persistent_canvas_artists_[id]", src.pixel_artists)
