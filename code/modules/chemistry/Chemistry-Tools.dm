@@ -896,7 +896,7 @@ proc/ui_describe_reagents(atom/A)
 	attackby(var/obj/item/W, mob/user)
 		if(istype(W, /obj/item/organ))
 			var/obj/item/organ/organ = W
-			if(organ.material.getMaterialFlags() & MATERIAL_ORGANIC)
+			if(!(organ.material.getMaterialFlags() & MATERIAL_ORGANIC))
 				boutput(user, "<span class='alert'>The [src] rejects the non-organic organ!</span>")
 			else if (reagents.total_volume >= reagents.maximum_volume)
 				boutput(user, "<span class='alert'>The [src] is too full!</span>")
