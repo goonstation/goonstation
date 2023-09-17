@@ -497,19 +497,6 @@ var/sound/iomoon_alarm_sound = null
 			"and safety procedures in place for the magma chamber area.")
 
 //Items
-/obj/item/yoyo
-	name = "Atomic Yo-Yo"
-	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "yoyo"
-	item_state = "yoyo"
-	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
-
-	New()
-		..()
-		BLOCK_SETUP(BLOCK_ROPE)
-
-
 /obj/item/paper/xg_tapes
 	name = "XIANG|GIESEL Onboarding Course"
 	desc = "A cover sheet meant to accompany a set of corporate training materials."
