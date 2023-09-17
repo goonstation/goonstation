@@ -1268,7 +1268,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 /obj/ladder/embed/proc/toggle_hidden()
 	set name = "Toggle Hidden"
 	src.hidden = !src.hidden
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/ladder/New()
 	..()

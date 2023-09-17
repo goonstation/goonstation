@@ -2088,7 +2088,7 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
 		current.dir = directions[1]
 		current.dpdir = src.dpdir
-		update_icon(current)
+		UpdateIcon(current)
 		qdel(src)
 	else if (length(directions) == 2)
 	// turns into a normal pipe segment
@@ -2105,12 +2105,12 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 				if (SOUTHWEST)
 					src.dir = SOUTH
 			src.icon_state = "pipe-c"
-			update_icon(src)
+			UpdateIcon(src)
 		else
 		// straight pipe
 			src.dir = directions[1]
 			src.icon_state = "pipe-s"
-			update_icon(src)
+			UpdateIcon(src)
 	else
 	// DO NOT MAKE JUNCTIONS, FOOLS.
 		CRASH("Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")

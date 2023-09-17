@@ -1513,7 +1513,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					src.icon_state = "slamgun-open-loaded"
 				else
 					src.icon_state = "slamgun-open"
-				update_icon()
+				UpdateIcon()
 				two_handed = 0
 
 			user.update_inhands()
@@ -1522,7 +1522,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				w_class = W_CLASS_BULKY
 				force = MELEE_DMG_RIFLE
 				src.icon_state = "slamgun-ready"
-				update_icon()
+				UpdateIcon()
 				two_handed = 1
 				user.update_inhands()
 
@@ -1536,7 +1536,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		. = src.casings_to_eject
 		..()
 		if(. != src.casings_to_eject)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
 		if(src.icon_state == "slamgun-ready")
