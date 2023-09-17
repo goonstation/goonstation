@@ -1128,7 +1128,7 @@ mob/living/carbon/human/morrigan_prisoner
 	I have to get out of here before the wardens come back.
 	"}
 
-/obj/item/paper/complaint#1
+/obj/item/paper/complaint1
 	name = "Old piece of paper"
 	icon_state = "paper_burned"
 	info ={"
@@ -3136,11 +3136,11 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 
 				M.throw_at(destination, 10, 1)
 
-				playsound(M, 'sound/impact_sounds/stabreel.ogg', 50, 1)
+				playsound(M, 'sound/impact_sounds/stabreel.ogg', 50, 0)
 				M.TakeDamageAccountArmor("All", rand(3,4), 0, 0, DAMAGE_CUT)
 				M.force_laydown_standup()
 				M.changeStatus("paralysis", 5 SECONDS)
-				M.visible_message("<span class='alert'>[M] gets grabbed by a tentacle and dragged!</span>")
+				M.visible_message("<span class='alert'>[M] gets grabbed by a hook and dragged!</span>")
 
 		previous_line = DrawLine(P.special_data["owner"], P, /obj/line_obj/tentacle ,'icons/obj/projectiles.dmi',"mid_gungrab",1,1,"start_gungrab","end_gungrab",OBJ_LAYER,1)
 		SPAWN(1 DECI SECOND)
@@ -3356,7 +3356,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	name = "AP Shield"
 	desc = "Knock assailants back then destroy incoming projectiles"
 	icon_state = "robopush"
-	cooldown = 20 SECONDS
+	cooldown = 10 SECONDS
 	targeted = TRUE
 	target_anything = TRUE
 
@@ -3372,15 +3372,17 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 /datum/targetable/critter/nano_repair
 	name = "nano-bot repair"
 	desc = "Send out nano-bots to repair robotics in a 5 tile radius."
-	icon_state = "critter_bite"
+	icon_state = "roboheal"
 	cooldown = 20 SECONDS
 	targeted = FALSE
+	var/K = /mob/living/critter/robotic/gunbot/morrigan/engineerbot
 
 	cast(atom/target)
 		if (..())
 			return TRUE
 		for (var/mob/living/critter/robotic/robot in range(5, holder.owner))
 			robot.HealDamage("all", 10, 10, 0)
+			playsound(K, 'sound/items/welder.ogg', 80, 0)
 		return FALSE
 
 /datum/targetable/critter/robofast
@@ -3403,7 +3405,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 		holder.owner.delStatus("disorient")
 		holder.owner.change_misstep_chance(-INFINITY)
 		playsound(holder.owner, 'sound/machines/shielddown.ogg', 80, 1)
-		holder.owner.setStatusMin(("robospeed"), 5 SECONDS)
+		holder.owner.setStatusMin(("robospeed"), 10 SECONDS)
 		return FALSE
 
 

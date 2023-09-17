@@ -1537,7 +1537,7 @@
 	id = "robospeed"
 	name = "Hastened"
 	desc = "MAXIMUM OVERDRIVE (You're faster.)."
-	icon_state = "c_power"
+	icon_state = "janktank"
 	unique = TRUE
 	movement_modifier = /datum/movement_modifier/healbot
 	effect_quality = STATUS_QUALITY_POSITIVE
