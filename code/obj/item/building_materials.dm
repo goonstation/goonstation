@@ -956,7 +956,7 @@ MATERIAL
 				if (istype(T, /turf/simulated/floor))
 					// If it's still a floor, attempt to place or replace the floor tile
 					var/turf/simulated/floor/F = T
-					F.attackby(src, user)
+					F.Attackby(src, user)
 					tooltip_rebuild = 1
 				else
 					boutput(user, "You cannot build on or repair this turf!")
