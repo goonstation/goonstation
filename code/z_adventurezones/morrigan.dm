@@ -1787,70 +1787,32 @@ mob/living/carbon/human/morrigan_prisoner
 //start of the dialogue
 /datum/dialogueNode/hobo_start
 	linkText = "..." //Because we use the first node as a "go back" link as well.
-	links = list(/datum/dialogueNode/hobo_reward,/datum/dialogueNode/hobo_give_pill)
+	links = list(/datum/dialogueNode/hobo_who,/datum/dialogueNode/hobo_question)
 
 	getNodeText(var/client/C)
-		var/rep = C.reputations.get_reputation_level("hobo")
-		if(rep < 2)
-			return "I haven't seen my wife in 30 years, only the drugs bring her back."
-		if(rep < 6)
-			return "Fuck off already. You're bloody alright though."
-		else
-			return "I need me drugs..."
+		return pick("I haven't seen my wife in 30 years, only the drugs bring her back.", "Fuck off already. You're bloody alright though.", "I need me drugs...")
 
-//checking if npc has anything for you
-/datum/dialogueNode/hobo_reward
-	linkText = "What cha got for me?"
-	links = list(/datum/dialogueNode/hobo_reward_welder)
-
-	getNodeText(var/client/C)
-		var/rep = C.reputations.get_reputation_level("hobo")
-		if (rep < 5)
-			return "Fuck no mate."
-		if (master.getFlag(C, "weldingtool") == "taken")
-			return "You already took shit from me, pal."
-		else
-			return "Here's your fucking tool, pal. Sure will be useful."
-
-//if npc has rewards it will offer a welder
-/datum/dialogueNode/hobo_reward_welder
-	linkText = "I'll take that off you."
+/datum/dialogueNode/hobo_who
+	linkText = "Who are you?"
 	links = list()
+
+	getNodeText(var/client/C)
+		return "im the very hobo nice to meet you mate (please replace text)"
+
+/datum/dialogueNode/hobo_question
+	linkText = "How do i leave?"
+	links = list(/datum/dialogueNode/hobo_thank)
 	nodeText = "Bloody scammed yeah."
 
-	canShow(var/client/C)
-		var/rep = C.reputations.get_reputation_level("hobo")
-		if(master.getFlag(C, "weldingtool") == "taken" || rep < 5 )
-			return FALSE
-		else
-			return TRUE
+	getNodeText(var/client/C)
+		return "yes you leave by um uhh umm uhhh mhmhmm (please replace)"
 
-	onActivate(var/client/C)
-		master.setFlag(C, "weldingtool", "taken")
-		C.mob.put_in_hand_or_drop(new/obj/item/weldingtool, C.mob.hand)
-		return
-
-//giving pills to the npc
-/datum/dialogueNode/hobo_give_pill
-	linkText = "I actually have something interesting.."
+/datum/dialogueNode/hobo_thank
+	linkText = "Thank you."
 	links = list()
 
 	getNodeText(var/client/C)
-		return "Hands off the pills!"
-
-	canShow(var/client/C)
-		if (istype(C.mob.equipped(), /obj/item/reagent_containers/pill/cyberpunk))
-			return TRUE
-		else
-			return FALSE
-
-	onActivate(var/client/C)
-		var/obj/item/I = C.mob.equipped()
-		if (istype(I, /obj/item/reagent_containers/pill/cyberpunk))
-			C.mob.u_equip(I)
-			qdel(I)
-			C.reputations.set_reputation(id = "hobo", amt = 1000)
-			return
+		return "yeah no problem mate yeah (replace)"
 
 // Critter area
 /mob/living/critter/robotic/gunbot/morrigan
