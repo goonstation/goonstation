@@ -1502,7 +1502,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			if (1) // Default state
 				return "You can use a <b>welding tool</b> to hollow out the frame."
 			if (2) // Hollowed out
-				return "You can add fuel to begin making a pipebomb, a staple gun to create a zip gun, a pipe frame to create a slam gun, or use <b>wirecutters</b> to create hollow pipe hulls."
+				return "You can add fuel to begin making a pipebomb, a staple gun to create a zip gun, a pipe frame to create a slam gun, a <b>wrench</b> to create a laser rifle assembly, or use <b>wirecutters</b> to create hollow pipe hulls."
 			if (3) // Hollowed out with chem inside
 				return "You can add a cable coil to continue making a pipebomb."
 			if (4) // Hollowed out with chem and wiring

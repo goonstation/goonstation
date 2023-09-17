@@ -2033,7 +2033,23 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			else if(our_light != LIGHT_OK)
 				. += " [src]'s light source is nonfunctional!"
 		else
-			. += " [src] is completely broken! It will need to be repaired before being fired."
+			. += " [src] is completely broken!"
+
+	get_help_message(dist, mob/user)
+		switch(src.heat_repair)
+			if(0)
+				if(!our_cell)
+					. += "You can use a large energy cell on [src] to attach it to the gun."
+				else
+					. += "You can use a <b>wrench</b> to remove [src]'s energy cell."
+				if(!our_light)
+					. += "You can use a light tube on [src] to insert it into the gun."
+				else
+					. += "You can use <b>wirecutters</b> to remove [src]'s light tube."
+			if(1)
+				. = "You can use <b>wirecutters</b> to remove the burnt wiring."
+			if(2)
+				. = "You can add 60 wire to replace the wiring."
 
 	attack_self(mob/user)
 		var/I = tgui_input_number(user, "Input a firerate (In deciseconds)", "Timer Adjustment", shoot_delay, 10, 2)
@@ -2105,6 +2121,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	tooltip_rebuild = TRUE
 	icon = 'icons/obj/large/64x32.dmi'
 	icon_state = "makeshift-construction1"
+	/// Used to display the correct help message.
+	var/state = 0
 
 	var/obj/item/light/tube/our_light
 
@@ -2112,9 +2130,27 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		..()
 		src.AddComponent(/datum/component/assembly, /obj/item/sheet, PROC_REF(construct_stock), FALSE)
 
+	get_help_message(dist, mob/user)
+		switch(src.state)
+			if (0)
+				return "You can use 4 metal sheets to construct a stock/grip for [src]."
+			if (1)
+				return "You can insert 3 glass sheets to create a makeshift lens for [src]."
+			if (2)
+				return "You can add 90 lengths of cable coil to wire the inside of the barrel."
+			if (3)
+				return "You can add a light tube to [src]."
+			if (4)
+				return "You can attach a timer to [src]."
+			if (5)
+				return "You can use a <b>welding tool</b> on [src] to weld the end of the barrel into a point."
+			if (6)
+				return "You can use a cable coil on [src] to wire the timer and barrel together."
+
 	proc/construct_stock(var/atom/to_combine_atom, var/mob/user)
 		var/obj/item/sheet/W = to_combine_atom
 		if (W.material.getMaterialFlags() & MATERIAL_METAL && W.amount >= 4)
+			state = 1
 			boutput(user,"<span class='notice'>You construct a stock and grip for the barrel.</span>")
 			playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
 			W.change_stack_amount(-4)
@@ -2130,6 +2166,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		var/obj/item/sheet/W = to_combine_atom
 		if (W.material.getMaterialFlags() & MATERIAL_CRYSTAL && W.amount >= 3)
 			boutput(user,"<span class='notice'>You create a lens using [W] and stuff it inside [src].</span>")
+			state = 2
 			W.change_stack_amount(-3)
 			src.RemoveComponentsOfType(/datum/component/assembly)
 			src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(add_inside_wiring), FALSE)
@@ -2148,6 +2185,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	proc/finish_add_wire(var/obj/item/cable_coil/C, var/mob/user)
 		C.change_stack_amount(-90)
 		icon_state = "makeshift-construction3"
+		state = 3
 		src.RemoveComponentsOfType(/datum/component/assembly)
 		src.AddComponent(/datum/component/assembly, /obj/item/light/tube, PROC_REF(add_lighttube), FALSE)
 		return TRUE
@@ -2158,6 +2196,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
 		user.u_equip(T)
 		our_light = T
+		state = 4
 		T.set_loc(src)
 		name = "pipe/stock/light assembly"
 		icon_state = "makeshift-construction4"
@@ -2170,6 +2209,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		var/obj/item/device/timer/T = to_combine_atom
 		boutput(user,"<span class='notice'>You attach the timer to [src].</span>")
 		playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
+		state = 5
 		user.u_equip(T)
 		qdel(T)
 		name = "pipe/stock/light/timer assembly"
@@ -2182,6 +2222,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	proc/weld_barrel(var/atom/to_combine_atom, var/mob/user)
 		if (to_combine_atom:try_weld(user, 1))
 			boutput(user,"<span class='notice'>You weld the end of the barrel into a point.</span>")
+			state = 6
 			name = "makeshift energy rifle"
 			icon_state = "makeshift-construction6"
 			update_icon()
@@ -2200,8 +2241,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		M.update_icon()
 		qdel(src)
 		return
-
-
 
 /obj/item/makeshift_laser_barrel/testing
 
