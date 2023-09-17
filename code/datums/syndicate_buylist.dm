@@ -1010,7 +1010,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Captain", "VIP", "Regional Director", "Inspector")
 
 /datum/syndicate_buylist/traitor/sunglasses
-	name = "Reflective glasses"
+	name = "Reflective Glasses"
 	desc = "A randomly selected pair of glasses, with built-in sun and flash protection, covered by their 100%, one-way reflective shine!"
 	item = /obj/item/clothing/glasses/sunglasses/reflective
 	cost = 1
