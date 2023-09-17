@@ -2013,7 +2013,7 @@ mob/living/carbon/human/morrigan_prisoner
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
-		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
+		abilityHolder.addAbility(/datum/targetable/critter/shieldproto)
 
 	seek_target(range)
 		. = ..()
@@ -2073,7 +2073,7 @@ mob/living/carbon/human/morrigan_prisoner
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
-		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
+		abilityHolder.addAbility(/datum/targetable/critter/nano_repair)
 
 	seek_target(range)
 		. = ..()
@@ -2121,7 +2121,7 @@ mob/living/carbon/human/morrigan_prisoner
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION_WEAK, src)
-		abilityHolder.addAbility(/datum/targetable/critter/spiker/hook)
+		abilityHolder.addAbility(/datum/targetable/critter/robofast)
 
 	seek_target(range)
 		. = ..()
@@ -2505,7 +2505,7 @@ mob/living/carbon/human/morrigan_prisoner
 
 /obj/machinery/door/poddoor/buff/morrigan_lockdown
 	name = "lockdown door"
-	desc = "door used for lockdowns."
+	desc = "Door used for lockdowns."
 	autoclose = FALSE
 
 	New()
@@ -2520,7 +2520,7 @@ mob/living/carbon/human/morrigan_prisoner
 //door that doesn't close during lockdown
 /obj/machinery/door/poddoor/buff/morrigan_lockdown_broken
 	name = "lockdown door"
-	desc = "door used for lockdowns. This one seems to be malfunctioning."
+	desc = "Door used for lockdowns. This one seems to be malfunctioning."
 	autoclose = FALSE
 
 	New()
@@ -3330,21 +3330,21 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 /datum/targetable/critter/hookshot
 	name = "GRABBER tech"
 	desc = "Keep your friends close, and enemies closer."
-	icon_state = "robohook"
+	icon_state = "robograb"
 	cooldown = 15 SECONDS
 	targeted = TRUE
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 
-		if (istype(holder.owner, /mob/living/critter/robotic/gunbot/morrigan/meleebot))
-			var/mob/living/critter/robotic/gunbot/morrigan/meleebot = holder.owner
+		if (!istype(holder.owner, /mob/living/critter/robotic/gunbot/morrigan/meleebot))
+			boutput(holder.owner, "<span class='notice'>You cannot use this ability.</span>")
+			return
 
-		var/mob/living/critter/robotic/gunbot/morrigan/meleebot/S = holder.owner
-		var/obj/projectile/proj = initialize_projectile_pixel_spread(S, new/datum/projectile/special/robohook, get_turf(target))
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/robohook, get_turf(target))
 		while (!proj || proj.disposed)
-			proj = initialize_projectile_pixel_spread(S, new/datum/projectile/special/robohook, get_turf(target))
+			proj = initialize_projectile_pixel_spread(holder.owner, new/datum/projectile/special/robohook, get_turf(target))
 
 		proj.special_data["owner"] = holder.owner
 		proj.targets = list(target)
@@ -3360,10 +3360,10 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	targeted = TRUE
 	target_anything = TRUE
 
-	var/datum/projectile/fireball/fire_elemental/fb_proj = new
+	var/datum/projectile/shieldpush/projectile = new /datum/projectile/shieldpush
 
 	cast(atom/target)
-		var/obj/projectile/P = initialize_projectile_pixel_spread( holder.owner, fb_proj, target )
+		var/obj/projectile/P = initialize_projectile_pixel_spread( holder.owner, projectile, target )
 		logTheThing(LOG_COMBAT, usr, "used their [src.name] ability at [log_loc(usr)]")
 		if (P)
 			P.mob_shooter = holder.owner
@@ -3378,10 +3378,10 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 
 	cast(atom/target)
 		if (..())
-			return 1
-		for (var/mob/living/critter/robotic/robo in range(5, holder.owner))
-			robo.HealDamage("all", 10, 10, 0)
-		return 0
+			return TRUE
+		for (var/mob/living/critter/robotic/robot in range(5, holder.owner))
+			robot.HealDamage("all", 10, 10, 0)
+		return FALSE
 
 /datum/targetable/critter/robofast
 	name = "ER Speed Mode"
@@ -3394,8 +3394,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 
 		if (!istype(holder.owner, /mob/living/critter/robotic/gunbot/morrigan/medibot))
 			boutput(holder.owner, "<span class='notice'>You cannot use this ability.</span>")
-			return TRUE
-		var/mob/living/critter/robotic/gunbot/morrigan/medibot = holder.owner
+			return
 
 		holder.owner.delStatus("stunned")
 		holder.owner.delStatus("weakened")
