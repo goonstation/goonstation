@@ -2097,7 +2097,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			heat += rand(15,20)
 			update_icon()
 			if (heat > 120 || (heat > 100 && prob(25)))
-				boutput(user,"<span class='alert'>[src]'s light source breaks due to the excess heat within!</span>")
+				boutput(user,"<span class='alert'>[src] bursts into flame!</span>")
 				break_light()
 				return
 			our_cell.use(current_projectile.cost)
