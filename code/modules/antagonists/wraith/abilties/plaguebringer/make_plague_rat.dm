@@ -43,12 +43,13 @@
 			boutput(holder.owner, "<span class='alert'>This [station_or_ship()] is already a rat den, you cannot summon another rat!</span>")
 			return TRUE
 
-	proc/make_plague_rat(var/mob/W, var/turf/T, var/tries = 0)
-		if (!istype(W, /mob/living/intangible/wraith/wraith_decay))
+	proc/make_plague_rat(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)
+		if (!istype(W))
 			boutput(W, "something went terribly wrong, call 1-800-CODER")
 			return
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
+		W.spawn_marker = marker
 		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a plague rat? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a plague rat. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
@@ -79,3 +80,4 @@
 			message_admins("[lucky_dude.key] respawned as a plague rat for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
 		qdel(marker)
+		W.spawn_marker = null

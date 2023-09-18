@@ -93,7 +93,7 @@
 				return 0
 
 		if (2)
-			var/obj/machinery/computer/pod/comp_check = item_to_check
+			var/obj/machinery/computer/comp_check = item_to_check
 			if (!comp_check || !istype(comp_check))
 				src.show_text("The computer appears to have been destroyed.", "red")
 				return 0
@@ -174,7 +174,7 @@
 		smoke.set_up(5, 0, src.loc)
 		smoke.attach(src)
 
-		playsound(destination, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
+		playsound(destination, 'sound/effects/mag_teleport.ogg', 25, TRUE, -1)
 		src.set_loc(destination)
 		smoke.start()
 

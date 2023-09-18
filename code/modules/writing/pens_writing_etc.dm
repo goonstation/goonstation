@@ -80,7 +80,7 @@
 		..()
 		if (!src.spam_flag_sound && src.clicknoise)
 			src.spam_flag_sound = 1
-			playsound(user, 'sound/items/penclick.ogg', 50, 1)
+			playsound(user, 'sound/items/penclick.ogg', 50, TRUE)
 			if (!src.spam_flag_message)
 				src.spam_flag_message = 1
 				user.visible_message("<span style='color:#888888;font-size:80%'>[user] clicks [src].</span>")
@@ -101,7 +101,7 @@
 			drawing.setMaterial(src.material)
 			src.material_uses--
 			if(src.material_uses <= 0)
-				boutput(user, "<span class='notice'>[src.material.name] rubs off of [src].</span>")
+				boutput(user, "<span class='notice'>[src.material.getName()] rubs off of [src].</span>")
 				src.removeMaterial()
 			return TRUE
 		return FALSE
@@ -121,7 +121,7 @@
 		var/obj/decal/cleanable/writing/G = make_cleanable(/obj/decal/cleanable/writing, T)
 		G.artist = user.key
 
-		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -194,7 +194,7 @@
 				src.removeMaterial() // no
 				src.visible_message("<span class='alert'>Dipping [src] causes the material to slough off.</span>")
 
-	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
 		. = ..()
 		src.reagents?.clear_reagents() // no
 
@@ -698,7 +698,7 @@
 		G.artist = user.key
 
 		if(user.client) //I don't give a damn about monkeys writing stuff with crayon!!
-			logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+			logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
 
 		var/size = 32
 
@@ -851,7 +851,7 @@
 		var/obj/decal/cleanable/writing/infrared/G = make_cleanable(/obj/decal/cleanable/writing/infrared,T)
 		G.artist = user.key
 
-		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.name])" : null] [log_loc(T)]: [t]")
+		logTheThing(LOG_STATION, user, "writes on [T] with [src][src.material ? " (material: [src.material.getName()])" : null] [log_loc(T)]: [t]")
 		t = copytext(html_encode(t), 1, MAX_MESSAGE_LEN)
 		if (src.font_color)
 			G.color = src.font_color
@@ -977,7 +977,7 @@
 				A.name_suffixes = list()
 			A.name_suffix("([src.label])")
 			A.UpdateName()
-		playsound(src, 'sound/items/hand_label.ogg', 40, 1)
+		playsound(src, 'sound/items/hand_label.ogg', 40, TRUE)
 		if (user && !no_message)
 			logTheThing(LOG_STATION, user, "labels [constructTarget(A,"combat")] with \"[src.label]\"")
 		else if(!no_message)
@@ -1347,7 +1347,7 @@
 				if (length(pages) >= 10 && !icon_state == "booklet-thick")
 					src.icon_state = "booklet-thick"
 				src.visible_message("[user] staples [P] at the back of [src].")
-				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+				playsound(user,'sound/impact_sounds/Generic_Snap_1.ogg', 50, TRUE)
 			else
 				boutput(user, "<span class='alert'>You need a loaded stapler in hand to add this paper to the booklet.</span>")
 		else

@@ -241,7 +241,7 @@
 
 	levelupdate()
 		for(var/obj/O in src)
-			if(O.level == 1)
+			if(O.level == UNDERFLOOR)
 				O.hide(0)
 
 	tilenotify(turf/notifier)
@@ -568,85 +568,6 @@
 #ifdef IN_MAP_EDITOR
 		icon_state = "concrete"
 #endif
-
-/obj/machinery/computer/sea_elevator
-	name = "Elevator Control"
-	icon_state = "shuttle"
-	machine_registry_idx = MACHINES_ELEVATORCOMPS
-	var/active = 0
-	var/location = 1 // 0 for bottom, 1 for top
-
-/obj/machinery/computer/sea_elevator/attack_hand(mob/user)
-	if(..())
-		return
-	var/dat = "<a href='byond://?src=\ref[src];close=1'>Close</a><BR><BR>"
-
-	if(location)
-		dat += "Elevator Location: Upper level"
-	else
-		dat += "Elevator Location: Lower Level"
-	dat += "<BR>"
-	if(active)
-		dat += "Moving"
-	else
-		dat += "<a href='byond://?src=\ref[src];send=1'>Move Elevator</a><BR><BR>"
-
-	user.Browse(dat, "window=sea_elevator")
-	onclose(user, "sea_elevator")
-	return
-
-/obj/machinery/computer/sea_elevator/Topic(href, href_list)
-	if(..())
-		return
-	if (((src in usr.contents) || (in_interact_range(src, usr) && istype(src.loc, /turf))) || (issilicon(usr)))
-		src.add_dialog(usr)
-
-		if (href_list["send"])
-			if(!active)
-				for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-					active = 1
-					C.visible_message("<span class='alert'>The elevator begins to move!</span>")
-					playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
-				SPAWN(5 SECONDS)
-					call_shuttle()
-
-		if (href_list["close"])
-			src.remove_dialog(usr)
-			usr.Browse(null, "window=sea_elevator")
-
-	src.add_fingerprint(usr)
-	src.updateUsrDialog()
-	return
-
-
-/obj/machinery/computer/sea_elevator/proc/call_shuttle()
-
-	if(location == 0) // at bottom
-		var/area/start_location = locate(/area/shuttle/sea_elevator/lower)
-		var/area/end_location = locate(/area/shuttle/sea_elevator/upper)
-		start_location.move_contents_to(end_location, /turf/simulated/floor/plating, ignore_fluid = 1)
-		location = 1
-	else // at top
-		var/area/start_location = locate(/area/shuttle/sea_elevator/upper)
-		var/area/end_location = locate(/area/shuttle/sea_elevator/lower)
-		for(var/mob/M in end_location) // oh dear, stay behind the yellow line kids
-			SPAWN(1 DECI SECOND)
-				random_brute_damage(M, 30)
-				M.changeStatus("weakened", 5 SECONDS)
-				M.emote("scream")
-				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 90, 1)
-		start_location.move_contents_to(end_location, /turf/simulated/floor/specialroom/sea_elevator_shaft, ignore_fluid = 1)
-		location = 0
-
-	for(var/obj/machinery/computer/sea_elevator/C in machine_registry[MACHINES_ELEVATORCOMPS])
-		active = 0
-		C.visible_message("<span class='alert'>The elevator has moved.</span>")
-		C.location = src.location
-
-	return
-
-
-
 
 proc/fluid_turf_setup(first_time=FALSE)
 	if(QDELETED(ocean_fluid_obj))

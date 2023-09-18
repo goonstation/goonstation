@@ -6,7 +6,7 @@
 	targeted = FALSE
 	cooldown = 30 SECONDS
 	var/max_traps = 7
-	var/list/trap_types = list("Madness", "Burning", "Teleporting", "Illusions", "EMP", "Blinding", "Sleepyness")
+	var/list/trap_types = list("Madness", "Burning", "Teleporting", "Illusions", "EMP", "Blinding", "Sleepyness", "Slipperiness")
 
 	cast()
 		. = ..()

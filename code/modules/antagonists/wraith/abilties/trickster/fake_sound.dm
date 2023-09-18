@@ -50,4 +50,4 @@
 				if("Gibs")
 					sound_choice = "sound/impact_sounds/Flesh_Break_2.ogg"
 
-			playsound(target, sound_choice, 70, 0)
+			playsound(target, sound_choice, 70, FALSE)

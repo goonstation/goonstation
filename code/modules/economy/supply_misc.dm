@@ -96,13 +96,13 @@ ABSTRACT_TYPE(/area/supply)
 	if (isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if (isghostdrone(M)) // except for drones
-			return 1
+			return TRUE
 		else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider))
-			return 1
-		else if (!M.can_lie && isdead(M))
-			return 1
+			return TRUE
+		else if (isdead(M))
+			return TRUE
 		else if(!M.lying) // or you're lying down
-			return 0
+			return FALSE
 	return ..()
 
 /obj/plasticflaps/ex_act(severity)

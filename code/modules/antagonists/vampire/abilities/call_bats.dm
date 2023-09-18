@@ -38,8 +38,8 @@
 
 			var/turf/shoot_at = get_step(user, pick(alldirs))
 
-			for (var/i = 0, i < num_bats, i += 0.1) //pay no mind :)
-				var/obj/projectile/proj = initialize_projectile_ST(user, new /datum/projectile/special/homing/orbiter/spiritbat, shoot_at)
+			for (var/i = 0, i < create, i += 0.1) //pay no mind :)
+				var/obj/projectile/proj = initialize_projectile_pixel_spread(M, P, shoot_at)
 				if (proj && !proj.disposed)
 					proj.targets = list(user)
 

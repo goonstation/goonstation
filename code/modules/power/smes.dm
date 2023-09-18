@@ -156,8 +156,8 @@
 			// Adjusting mult to other power sources would likely cause more harm than good as it would cause unusual surges
 			// of power that would only be noticed though hotwire or be unrationalizable to player.  This will extrapolate power
 			// benefits to charged value so that minimal loss occurs.
-			charge += load * mult	// increase the charge
-			add_load(load)		// add the load to the terminal side network
+			if(terminal.add_load(load))			// add the load to the terminal side network
+				charge += load * mult	// increase the charge if successful
 
 		else					// if not enough capcity
 			charging = 0		// stop charging
@@ -202,15 +202,6 @@
 
 	if (clev != chargedisplay())
 		UpdateIcon()
-
-
-///obj/machinery/power/smes/add_avail(var/amount)
-//	if (terminal?.powernet)
-//		terminal.powernet.newavail += amount
-
-/obj/machinery/power/smes/add_load(var/amount)
-	if (terminal?.powernet)
-		terminal.powernet.newload += amount
 
 /obj/machinery/power/smes/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
@@ -309,8 +300,8 @@
 			// Adjusting mult to other power sources would likely cause more harm than good as it would cause unusual surges
 			// of power that would only be noticed though hotwire or be unrationalizable to player.  This will extrapolate power
 			// benefits to charged value so that minimal loss occurs.
-			charge += load * mult	// increase the charge
-			add_load(load)		// add the load to the terminal side network
+			if(terminal.add_load(load))			// attempt to add the load to the terminal side network
+				charge += load * mult	// increase the charge if successful
 
 			// Simulate bad PID
 			var/adjust = 0

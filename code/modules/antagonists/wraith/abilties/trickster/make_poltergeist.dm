@@ -1,4 +1,4 @@
-#define RP_MAX_POLTERGEISTS 3
+#define RP_MAX_POLTERGEISTS 2
 /datum/targetable/wraithAbility/make_poltergeist
 	name = "Make Poltergeist"
 	desc = "Attempt to breach the veil between worlds to allow a lesser spirit to enter this realm."
@@ -31,6 +31,7 @@
 
 	proc/make_poltergeist(var/mob/living/intangible/wraith/W, var/turf/T, var/tries = 0)
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
+		W.spawn_marker = marker
 		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a poltergeist? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a poltergeist. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
@@ -65,4 +66,5 @@
 			boutput(P, "<span class='notice'><b>Don't venture too far from your portal or your master!</b></span>")
 			P.set_loc(T)
 			P.marker = marker
+		W.spawn_marker = null
 #undef RP_MAX_POLTERGEISTS

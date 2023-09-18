@@ -284,13 +284,7 @@
 		return
 
 	if (issnippingtool(W) && !src.reinforced)
-		if (src.camera_status)
-			src.break_camera(user)
-		else
-			src.repair_camera(user)
-		// now disconnect anyone using the camera
-		src.disconnect_viewers()
-		return
+		SETUP_GENERIC_ACTIONBAR(src, src, 0.5 SECOND, /obj/machinery/camera/proc/snipcamera, null, W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
 	if (!src.camera_status)
 		return
@@ -304,14 +298,14 @@
 		for(var/mob/O in mobs)
 			if (isAI(O))
 				boutput(O, "[user] holds a paper up to one of your cameras ...")
-				O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+				X.ui_interact(O)
 				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 			else
 				var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
 				if (S)
 					if (S.current == src)
 						boutput(O, "[user] holds a paper up to one of the cameras ...")
-						O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+						X.ui_interact(O)
 						logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 
 //Return a working camera that can see a given mob
@@ -387,7 +381,14 @@
 			for (var/mob/living/silicon/aiPlayer in mobs) // manually cancel, to not disturb internal state
 				aiPlayer.cancelAlarm("Motion", src.loc.loc)
 
-
+/obj/machinery/camera/proc/snipcamera(user)
+	if (src.camera_status)
+		src.break_camera(user)
+	else
+		src.repair_camera(user)
+	// now disconnect anyone using the camera
+	src.disconnect_viewers()
+	return
 
 
 /*------------------------------------

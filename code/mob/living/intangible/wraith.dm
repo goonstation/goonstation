@@ -54,6 +54,8 @@
 	var/weak_tk = FALSE
 	///can the wraith hear ghosts? Toggleable with an ability
 	var/hearghosts = TRUE
+	/// what is our minion summoning marker, if we have any?
+	var/obj/spookMarker/spawn_marker = null
 
 	var/datum/movement_controller/movement_controller
 
@@ -641,6 +643,7 @@
 	var/copied_desc = null
 	var/copied_name = null
 	var/copied_real_name = null
+	var/copied_pronouns = null
 	var/traps_laid = 0
 
 	New(var/mob/M)

@@ -59,24 +59,19 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 	if (!index)
 		if (airborne)
-			for(var/reagent_id in R.reagent_list)
-				if (reagent_id in ban_from_airborne_fluid) return
 			purge_smoke_blacklist(R)
 		else
-			for(var/reagent_id in R.reagent_list)
-				if (reagent_id in ban_from_fluid) return
+			purge_fluid_blacklist(R)
 	else // We only care about one chem
 		var/CI = 1
 		if (airborne)
-			for(var/reagent_id in R.reagent_list)
-				if ( CI++ == index )
-					if (reagent_id in ban_from_airborne_fluid) return
 			purge_smoke_blacklist(R)
 		else
 			for(var/reagent_id in R.reagent_list)
 				if ( CI++ == index )
-					if (reagent_id in ban_from_fluid) return
-
+					var/datum/reagent/reagent = R.reagent_list[reagent_id]
+					if (reagent.fluid_flags & FLUID_BANNED)
+						return
 
 	var/datum/fluid_group/FG
 	var/obj/fluid/F
@@ -144,10 +139,11 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (react_volume <= 0) return
 	if (!IS_VALID_FLUIDREACT_TURF(src)) return
 
-	if (airborne)
-		if (reagent_name in ban_from_airborne_fluid) return
-	else
-		if (reagent_name in ban_from_fluid) return
+	var/datum/reagent/cached = reagents_cache[reagent_name]
+	if (airborne && (cached.fluid_flags & FLUID_SMOKE_BANNED))
+		return
+	else if (cached.fluid_flags & FLUID_BANNED)
+		return
 
 	var/datum/fluid_group/FG
 	var/obj/fluid/F
@@ -265,16 +261,28 @@ turf/simulated/floor/plating/airless/ocean_canpass()
 	if (!src.active_liquid && (length(cleanables) < 3 && !grab_any_amount))
 		return 0	//If the tile has an active liquid already, there is no requirement
 
+	// count actually valid cleanables
+	var/valid_cleanables = 0
 	for (var/obj/decal/cleanable/C in cleanables)
+		if (C.reagents || C.can_sample && C.sample_reagent)
+			valid_cleanables++
+
+	if (valid_cleanables < 3 && !grab_any_amount)
+		return 0
+
+	for (var/obj/decal/cleanable/C in cleanables)
+		var/datum/reagent/cached = reagents_cache[C.sample_reagent]
 		if (C?.reagents)
 			for(var/reagent_id in C.reagents.reagent_list)
-				if (reagent_id in ban_stacking_into_fluid) return
+				if (cached.fluid_flags & FLUID_STACKING_BANNED)
+					return
 			var/datum/reagents/R = new(C.reagents.maximum_volume) //Store reagents, delete cleanable, and then fluid react. prevents recursion
 			C.reagents.copy_to(R)
 			C.clean_forensic()
 			src.fluid_react(R, R.total_volume, processing_cleanables=TRUE)
 		else if (C?.can_sample && C.sample_reagent)
-			if ((!grab_any_amount && (C.sample_reagent in ban_stacking_into_fluid)) || (C.sample_reagent in ban_from_fluid)) return
+			if ((!grab_any_amount && (cached.fluid_flags & FLUID_STACKING_BANNED)) || (cached.fluid_flags & FLUID_BANNED))
+				return
 			var/sample = C.sample_reagent
 			var/amt = C.sample_amt
 			C.clean_forensic()

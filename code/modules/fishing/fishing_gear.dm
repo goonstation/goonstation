@@ -33,6 +33,9 @@
 	proc/attackby_pre(source, atom/target, mob/user)
 		if (target && user && (src.last_fished < TIME + src.fishing_delay))
 			var/datum/fishing_spot/fishing_spot = null
+			if (isturf(target))
+				var/turf/T = target
+				target = T.active_liquid || target
 			var/fishing_spot_type = target.type
 			while (fishing_spot_type != null)
 				fishing_spot = global.fishing_spots[fishing_spot_type]
@@ -222,7 +225,7 @@ TYPEINFO(/obj/item/fish_portal)
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "unanchors" : "anchors"] the [src].")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			src.anchored = !(src.anchored)
 			return
 		else
@@ -239,7 +242,7 @@ TYPEINFO(/obj/item/fish_portal)
 	density = 1
 	layer = MOB_LAYER + 0.1
 	var/working = FALSE
-	var/allowed = list(/obj/item/fish)
+	var/allowed = list(/obj/item/reagent_containers/food/fish)
 
 	attack_hand(var/mob/user)
 		if (!length(src.contents))
@@ -255,30 +258,30 @@ TYPEINFO(/obj/item/fish_portal)
 		sleep(rand(3 SECONDS, 7 SECONDS))
 		var/found_blacklisted_fish = FALSE
 		// Dispense processed stuff
-		for(var/obj/item/fish/P in src)
+		for(var/obj/item/reagent_containers/food/fish/P in src)
 			//No botany fish. Be a real angler and use that damn fishing rod
 			if (P.fishing_upload_blacklisted)
 				found_blacklisted_fish = TRUE
 				P.set_loc(get_turf(src))
 			else
-				switch( P.value )
-					if (FISH_RARITY_COMMON)
+				switch( P.rarity )
+					if (ITEM_RARITY_COMMON)
 						new/obj/item/currency/fishing(src.loc)
 						JOB_XP(user, "Angler", 1)
 						qdel( P )
-					if (FISH_RARITY_UNCOMMON)
+					if (ITEM_RARITY_UNCOMMON)
 						new/obj/item/currency/fishing/uncommon(src.loc)
 						JOB_XP(user, "Angler", 2)
 						qdel( P )
-					if (FISH_RARITY_RARE)
+					if (ITEM_RARITY_RARE)
 						new/obj/item/currency/fishing/rare(src.loc)
 						JOB_XP(user, "Angler", 3)
 						qdel( P )
-					if (FISH_RARITY_EPIC)
+					if (ITEM_RARITY_EPIC)
 						new/obj/item/currency/fishing/epic(src.loc)
 						JOB_XP(user, "Angler", 4)
 						qdel( P )
-					if (FISH_RARITY_LEGENDARY)
+					if (ITEM_RARITY_LEGENDARY)
 						new/obj/item/currency/fishing/legendary(src.loc)
 						JOB_XP(user, "Angler", 5)
 						qdel( P )
@@ -305,7 +308,7 @@ TYPEINFO(/obj/item/fish_portal)
 			else
 				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
 				var/amtload = 0
-				for (var/obj/item/fish/F in S.contents)
+				for (var/obj/item/reagent_containers/food/fish/F in S.contents)
 					F.set_loc(src)
 					amtload++
 				S.UpdateIcon()
@@ -332,7 +335,7 @@ TYPEINFO(/obj/item/fish_portal)
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "unanchors" : "anchors"] the [src].")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			src.anchored = !(src.anchored)
 			return
 		else
@@ -346,4 +349,4 @@ TYPEINFO(/obj/item/fish_portal)
 	icon_state = "aquarium"
 	item_state = "aquarium"
 	slots = 6
-	can_hold = 	list(/obj/item/fish)
+	can_hold = 	list(/obj/item/reagent_containers/food/fish)

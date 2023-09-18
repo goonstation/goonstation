@@ -14,7 +14,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "v" = (
-/obj/critter/gunbot/heavy{
+/mob/living/critter/robotic/gunbot{
 	name = "garden defender 04"
 	},
 /turf/variableTurf/clear,
@@ -24,7 +24,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "C" = (
-/obj/critter/gunbot/heavy{
+/mob/living/critter/robotic/gunbot{
 	name = "garden defender 02"
 	},
 /turf/variableTurf/clear,
@@ -36,7 +36,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "N" = (
-/obj/critter/gunbot/heavy{
+/mob/living/critter/robotic/gunbot{
 	name = "garden defender 01"
 	},
 /turf/variableTurf/clear,

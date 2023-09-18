@@ -27,8 +27,7 @@
 
 		var/mob/living/M = src.owner
 
-		// Not INTERRUPT_STUNNED because we can cast while stunned, just not unconcious
-		if (!ishuman(M) || M.stat)
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("paralysis") || !transform)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -37,7 +36,8 @@
 	onUpdate()
 		..()
 		var/mob/living/M = owner
-		if (M.stat)
+
+		if (M == null || !ishuman(M) || !isalive(M) || M.getStatusDuration("paralysis") || !transform)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

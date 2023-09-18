@@ -140,6 +140,13 @@
 /obj/item/electronics/frame/proc/kickout(source, mob/stowaway)
 	if(istype(stowaway))
 		stowaway.set_loc(get_turf(source))
+	else
+		for(var/atom/movable/AM in stowaway)
+			kickout(source, AM)
+
+/obj/item/electronics/frame/Entered(atom/movable/AM, atom/OldLoc)
+	. = ..()
+	kickout(src, AM)
 
 /obj/item/electronics/frame/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/electronics/))
@@ -937,8 +944,8 @@
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
-		var/obj/item/electronics/frame/F = new
 		var/turf/target_loc = get_turf(target)
+		var/obj/item/electronics/frame/F = new(target_loc)
 		F.name = "[target.name] frame"
 		if(O.deconstruct_flags & DECON_DESTRUCT)
 			F.store_type = O.type
@@ -950,16 +957,15 @@
 				M.u_equip(O)
 			O.set_loc(F)
 		// move frame to the location after object is gone, so crushers do not crusher themselves
-		F.set_loc(target_loc)
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"
 		F.w_class = W_CLASS_BULKY
 
 		elecflash(src,power=2)
-
-		O.was_deconstructed_to_frame(user)
-		F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
+		if(!QDELETED(O))
+			O.was_deconstructed_to_frame(user)
+			F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 
 	MouseDrop_T(atom/target, mob/user)
 		if (!isobj(target))

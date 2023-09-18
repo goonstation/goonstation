@@ -109,6 +109,9 @@ ABSTRACT_TYPE(/datum/targetable/wraithAbility/curse)
 	castcheck(atom/target)
 		. = ..()
 		var/mob/living/L = target
+		if(L?.bioHolder.HasEffect("death_curse"))
+			boutput(holder.owner, "That curse is already applied to this being...")
+			return TRUE
 		if (!(L?.bioHolder.HasEffect("rot_curse") && L?.bioHolder.HasEffect("weak_curse") && \
 				L?.bioHolder.HasEffect("blind_curse") && L?.bioHolder.HasEffect("blood_curse")))
 			boutput(holder.owner, "<span class='alert'>That being's soul is not weakened enough. We need to curse it some more.</span>")

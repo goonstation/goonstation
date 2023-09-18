@@ -14,7 +14,7 @@
       return 1
 
     if (ismartian(target))
-      boutput(holder.owner, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
+      boutput(holder.owner, "<span class='alert'>[capitalize(he_or_she(target))] can hear you just fine without the use of your abilities.</span>")
     else if (isliving(target))
       var/mob/living/T = target
       if(!T)

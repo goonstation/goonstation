@@ -21,7 +21,7 @@
 	proc/addDna(var/mob/living/carbon/human/M, var/headspider_override = FALSE)
 		var/datum/abilityHolder/changeling/O = M.get_ability_holder(/datum/abilityHolder/changeling)
 		if (O)
-			boutput(owner, "<span class='notice'>[M] was a changeling! We have absorbed their entire genetic structure!</span>")
+			boutput(owner, "<span class='notice'>[M] was a changeling! We have absorbed [his_or_her(M)] entire genetic structure!</span>")
 			logTheThing(LOG_COMBAT, owner, "absorbs [constructTarget(M,"combat")] as a changeling [log_loc(owner)].")
 
 			if (!headspider_override) // Headspiders shouldn't be free.

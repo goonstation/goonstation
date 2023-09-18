@@ -68,10 +68,10 @@
 	var/debuff_duration = 1200 //deciseconds. 1200 = 2 minutes
 
 	//give blobs who get rekt soon after starting another chance
-	var/current_try = 1
-	var/extra_tries_max = 2
-	var/extra_try_period = 3000 //3000 = 5 minutes
-	var/extra_try_timestamp = 0
+	var/spawn_time = 0
+	var/respawned = FALSE
+
+	var/random_event_spawn = FALSE
 
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
 
@@ -98,13 +98,13 @@
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
-		my_material = copyMaterial(getMaterial("blob"))
-		my_material.color = "#ffffff"
-		initial_material = copyMaterial(getMaterial("blob"))
+		src.my_material = getMaterial("blob")
+		src.my_material = src.my_material.getMutable()
+		src.my_material.setColor("#ffffff")
+		initial_material = getMaterial("blob")
 
 		//set start grace-period timestamp
-		var/extraGrace = rand(600, 1800) //add between 1 min and 3 mins extra
-		src.extra_try_timestamp = world.timeofday + extra_try_period + extraGrace
+		src.spawn_time = TIME
 
 		src.nucleus_overlay = image('icons/mob/blob.dmi', null, "reflective_overlay")
 		src.nucleus_overlay.alpha = 0
@@ -211,11 +211,11 @@
 		. = ..()
 
 		//if within grace period, respawn
-		if (src.current_try < src.extra_tries_max && world.timeofday <= src.extra_try_timestamp)
-			src.extra_try_timestamp = 0
-			src.current_try++
+		var/respawn_time = !src.random_event_spawn ? 15 MINUTES : 7 MINUTES
+		if (!src.respawned && (TIME - src.spawn_time <= respawn_time))
+			src.respawned = TRUE
 			src.reset()
-			out(src, "<span class='notice'><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready for round [src.current_try]!</b></span>")
+			boutput(src, "<span class='notice'><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready to try again!</b></span>")
 
 		//no grace, go die scrub
 		else
@@ -353,9 +353,10 @@
 		src.upgrade_id = 1
 		src.lipids = new()
 		src.nuclei = new()
-		src.my_material = copyMaterial(getMaterial("blob"))
-		src.my_material.color = "#ffffff"
-		src.initial_material = copyMaterial(getMaterial("blob"))
+		src.my_material = getMaterial("blob")
+		src.my_material = src.my_material.getMutable()
+		src.my_material.setColor("#ffffff")
+		src.initial_material = getMaterial("blob")
 		src.organ_color = initial(src.organ_color)
 		src.debuff_timestamp = 0
 

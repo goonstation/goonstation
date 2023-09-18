@@ -15,8 +15,8 @@
 
 		var/mob/living/user = holder.owner
 
-		if (level == 1)
-			user.special_sprint &= ~SPRINT_BAT_CLOAKED
+		if (level == UNDERFLOOR)
+			M.special_sprint &= ~SPRINT_BAT_CLOAKED
 
 			if (user.special_sprint & SPRINT_BAT)
 				user.special_sprint &= ~SPRINT_BAT

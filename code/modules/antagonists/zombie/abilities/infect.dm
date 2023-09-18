@@ -74,7 +74,7 @@
 				target.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 				target.ghost.mind.transfer_to(target)
 		logTheThing(LOG_COMBAT, ownerMob, "zombifies [constructTarget(target,"combat")].")
-		playsound(ownerMob, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 0)
+		playsound(ownerMob, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, FALSE)
 		ownerMob.visible_message("<span class='alert'><B>[ownerMob ] successfully infected [target]!</B></span>", 1)
 		ownerMob.health = ownerMob.max_health
 		target.TakeDamageAccountArmor("head", 30, 0, 0, DAMAGE_CRUSH)

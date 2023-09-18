@@ -45,7 +45,7 @@
 			return FALSE
 
 	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
-		boutput(M, "<span class='alert'>You need to remove their headgear first.</span>")
+		boutput(M, "<span class='alert'>You need to remove [his_or_her(target)] headgear first.</span>")
 		return FALSE
 
 	if (check_target_immunity(target) == 1)
@@ -200,7 +200,7 @@
 			return FALSE
 
 	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
-		boutput(M, "<span class='alert'>You need to remove their headgear first.</span>")
+		boutput(M, "<span class='alert'>You need to remove [his_or_her(target)] headgear first.</span>")
 		return FALSE
 
 	if (check_target_immunity(target) == 1)
@@ -310,10 +310,6 @@
 	castcheck(atom/target)
 		. = ..()
 		var/mob/living/M = src.holder.owner
-
-		if (GET_DIST(M, target) > src.max_range)
-			boutput(M, "<span class='alert'>[target] is too far away.</span>")
-			return TRUE
 
 		if (actions.hasAction(M, "vamp_blood_suck_ranged"))
 			boutput(M, "<span class='alert'>You are already performing a Blood action and cannot start a Bite.</span>")

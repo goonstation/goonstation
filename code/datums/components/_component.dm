@@ -272,7 +272,7 @@ var/datum/signal_holder/global_signal_holder
 				CRASH("Unregistering a complex signal [json_encode(sig)] without its component existing.")
 			comp.unregister(src, sig[2])
 			continue
-		if(!signal_procs[target][sig])
+		if(!signal_procs[target]?[sig])
 			if(!istext(sig))
 				stack_trace("We're unregistering with something that isn't a valid signal \[[sig]\], you fucked up")
 			continue
@@ -432,6 +432,18 @@ var/datum/signal_holder/global_signal_holder
 	if(!components)
 		return list()
 	return islist(components) ? components : list(components)
+
+/**
+  * Calls RemoveComponent on all components of a given type that are attached to this datum
+  *
+  * Arguments:
+  * * c_type The component type path
+  */
+
+/datum/proc/RemoveComponentsOfType(c_type)
+	var/list/datum/component/component_to_remove_list = src.GetComponents(c_type)
+	for (var/datum/component/component_to_remove as anything in component_to_remove_list)
+		component_to_remove.RemoveComponent()
 
 /**
   * Creates an instance of `new_type` in the datum and attaches to it as parent

@@ -140,7 +140,7 @@ TYPEINFO(/obj/item/organ/kidney/cyber)
 	desc = "A fancy robotic kidney to replace one that someone's lost!"
 	icon_state = "cyber-kidney-L"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0

@@ -197,25 +197,25 @@
 		else if (K.ammo_cats == null) //someone forgot to set ammo cats. scream
 			check = 1
 		if (!check)
-			return 1
+			return AMMO_RELOAD_INCOMPATIBLE
 
 		K.add_fingerprint(usr)
 		A.add_fingerprint(usr)
 		if(K.sound_load_override)
 			playsound(K, K.sound_load_override, 50, 1)
 		else
-			playsound(K, sound_load, 50, 1)
+			playsound(K, sound_load, 50, TRUE)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
 		if (A.amount_left < 1)
-			return 2 // Magazine's empty.
+			return AMMO_RELOAD_SOURCE_EMPTY // Magazine's empty.
 		if (K.ammo.amount_left >= K.max_ammo_capacity)
 			if (K.ammo.ammo_type.type != A.ammo_type.type)
-				return 6 // Call swap().
-			return 3 // Gun's full.
+				return AMMO_RELOAD_TYPE_SWAP // Call swap().
+			return AMMO_RELOAD_ALREADY_FULL // Gun's full.
 		if (K.ammo.amount_left > 0 && K.ammo.ammo_type.type != A.ammo_type.type)
-			return 6 // Call swap().
+			return AMMO_RELOAD_TYPE_SWAP // Call swap().
 
 		else
 
@@ -249,7 +249,7 @@
 				if (A.delete_on_reload)
 					//DEBUG_MESSAGE("[K]: [A.type] (now empty) was deleted on partial reload.")
 					qdel(A) // No duplicating empty magazines, please (Convair880).
-				return 4 // Couldn't fully reload the gun.
+				return AMMO_RELOAD_PARTIAL // Couldn't fully reload the gun.
 			if ((A.amount_left >= 0) && (K.ammo.amount_left == K.max_ammo_capacity))
 				A.UpdateIcon()
 				K.UpdateIcon()
@@ -258,7 +258,7 @@
 					if (A.delete_on_reload)
 						//DEBUG_MESSAGE("[K]: [A.type] (now empty) was deleted on full reload.")
 						qdel(A) // No duplicating empty magazines, please (Convair880).
-				return 5 // Full reload or ammo left over.
+				return AMMO_RELOAD_FULLY // Full reload or ammo left over.
 
 	update_icon()
 
@@ -305,26 +305,26 @@
 	icon_empty = "custom-0"
 
 	onMaterialChanged()
-		ammo_type.material = copyMaterial(src.material)
+		ammo_type.material = src.material
 
 		if(src.material)
 			ammo_type.power = round(material.getProperty("density") * 2 + material.getProperty("hard"))
 			ammo_type.generate_inverse_stats()
 			ammo_type.dissipation_delay = round(material.getProperty("density") / 2)
 
-			if((src.material.material_flags & MATERIAL_CRYSTAL))
+			if((src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_PIERCING
-			if((src.material.material_flags & MATERIAL_METAL))
+			if((src.material.getMaterialFlags() & MATERIAL_METAL))
 				ammo_type.damage_type = D_KINETIC
-			if((src.material.material_flags & MATERIAL_ORGANIC))
+			if((src.material.getMaterialFlags() & MATERIAL_ORGANIC))
 				ammo_type.damage_type = D_TOXIC
-			if((src.material.material_flags & MATERIAL_ENERGY))
+			if((src.material.getMaterialFlags() & MATERIAL_ENERGY))
 				ammo_type.damage_type = D_ENERGY
-			if((src.material.material_flags & MATERIAL_METAL) && (src.material.material_flags & MATERIAL_CRYSTAL))
+			if((src.material.getMaterialFlags() & MATERIAL_METAL) && (src.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 				ammo_type.damage_type = D_SLASHING
-			if((src.material.material_flags & MATERIAL_ENERGY) && (src.material.material_flags & MATERIAL_ORGANIC))
+			if((src.material.getMaterialFlags() & MATERIAL_ENERGY) && (src.material.getMaterialFlags() & MATERIAL_ORGANIC))
 				ammo_type.damage_type = D_BURNING
-			if((src.material.material_flags & MATERIAL_ENERGY) && (src.material.material_flags & MATERIAL_METAL))
+			if((src.material.getMaterialFlags() & MATERIAL_ENERGY) && (src.material.getMaterialFlags() & MATERIAL_METAL))
 				ammo_type.damage_type = D_RADIOACTIVE
 
 		return ..()
@@ -443,7 +443,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
 		..()
@@ -508,7 +508,7 @@
 	sname = "9×19mm Parabellum"
 	name = "9mm magazine"
 	desc = "A handgun magazine full of 9x19mm rounds, an intermediate pistol cartridge."
-	icon_state = "pistol_magazine"
+	icon_state = "branwen_magazine"
 	amount_left = 15
 	max_amount = 15
 	ammo_type = new/datum/projectile/bullet/bullet_9mm
@@ -752,7 +752,6 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_SHOTGUN_HIGH
 	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_heavy.ogg'
-	w_class = W_CLASS_NORMAL
 
 /obj/item/ammo/bullets/pipeshot/plasglass // plasmaglass handmade shells
 	sname = "plasmaglass load"
@@ -1183,7 +1182,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "Airzooka Tactical Replacement Trashbag"
 	sname = "air"
 	desc = "A tactical trashbag for use in a Donk Co Airzooka."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
 	m_amt = 40000
 	g_amt = 0
@@ -1196,7 +1195,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "Airzooka Tactical Replacement Trashbag: Xtreme Edition"
 	sname = "air"
 	desc = "A tactical trashbag for use in a Donk Co Airzooka, now with plasma lining."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "biobag"
 	m_amt = 40000
 	g_amt = 0
@@ -1412,7 +1411,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	proc/set_custom_mats(datum/material/coreMat, datum/material/genMat = null)
 		src.setMaterial(coreMat)
 		if(genMat)
-			src.name = "[genMat.name]-doped [src.name]"
+			src.name = "[genMat.getName()]-doped [src.name]"
 
 			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
 			max_charge = round((conductivity ** 2) * 4, 25)

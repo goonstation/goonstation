@@ -99,7 +99,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				return 1
 		boutput(user, "<span class='alert'>*click* *click*</span>")
 		if (!src.silenced)
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 		return 0
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -115,33 +115,33 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				if(0)
 					user.show_text("You can't reload this gun.", "red")
 					return
-				if(1)
+				if(AMMO_RELOAD_INCOMPATIBLE)
 					user.show_text("This ammo won't fit!", "red")
 					return
-				if(2)
+				if(AMMO_RELOAD_SOURCE_EMPTY)
 					user.show_text("There's no ammo left in [b.name].", "red")
 					return
-				if(3)
+				if(AMMO_RELOAD_ALREADY_FULL)
 					user.show_text("[src] is full!", "red")
 					return
-				if(4)
+				if(AMMO_RELOAD_PARTIAL)
 					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.ammo.amount_left] rounds remaining.</span>")
 					src.tooltip_rebuild = 1
 					src.logme_temp(user, src, b) // Might be useful (Convair880).
 					return
-				if(5)
+				if(AMMO_RELOAD_FULLY)
 					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You fully reload [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
 					src.tooltip_rebuild = 1
 					src.logme_temp(user, src, b)
 					return
-				if(6)
+				if(AMMO_RELOAD_TYPE_SWAP)
 					switch (src.ammo.swap(b,src))
-						if(0)
+						if(AMMO_SWAP_INCOMPATIBLE)
 							user.show_text("This ammo won't fit!", "red")
 							return
-						if(1)
+						if(AMMO_SWAP_SOURCE_EMPTY)
 							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap out the magazine. Or whatever this specific gun uses.</span>")
-						if(2)
+						if(AMMO_SWAP_ALREADY_FULL)
 							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
 					src.logme_temp(user, src, b)
 					return
@@ -162,7 +162,6 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				user.show_text("You can't unload this gun.", "red")
 				return
 			src.eject_magazine(user)
-
 		return ..()
 
 	attack(mob/M, mob/user)
@@ -182,7 +181,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.casings_to_eject += src.current_projectile.shot_number
 		. = ..()
 
-	shoot(var/target, var/start, var/mob/user, var/POX, var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (src.canshoot(user) && !isghostdrone(user))
 			if (src.auto_eject)
 				var/turf/T = get_turf(src)
@@ -217,6 +216,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				else
 					user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
 					src.ejectcasings()
+					playsound(src, src.ammo.sound_load, rand(30, 60), TRUE)
 					return
 			else
 				user.show_text("[src] is empty!", "red")
@@ -291,7 +291,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		else
 			return FALSE
 
-	shoot(var/target, var/start, var/mob/user, var/POX, var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		. = ..()
 		hammer_cocked = FALSE
 		src.UpdateIcon()
@@ -480,7 +480,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/vbullet)
 		..()
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		var/turf/T = get_turf(src)
 
 		if (!istype(T.loc, /area/sim))
@@ -509,7 +509,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(failured)
 			if(canshoot(user))
 				var/turf/T = get_turf(src)
@@ -898,6 +898,8 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	gildable = 0
 	fire_animation = FALSE
 	default_magazine = /obj/item/ammo/bullets/veritate
+	ammobag_magazines = list(/obj/item/ammo/bullets/veritate)
+	ammobag_restock_cost = 2
 
 	New()
 		ammo = new default_magazine
@@ -1076,10 +1078,10 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		else
 			return ..()
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(!src.canshoot(user))
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return
 		..()
 		pulled = FALSE
@@ -1088,7 +1090,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	shoot_point_blank(atom/target, var/mob/user, second_shot)
 		if(!src.canshoot(user))
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return
 		..()
 		pulled = FALSE
@@ -1114,7 +1116,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		else // guess someone spawned one???
 			return TRUE
 
-	shoot(target, start, mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (src.canshoot(user))
 			. = ..() // this checks canshoot twice; could be refactored
 		else
@@ -1199,7 +1201,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //0.41
 /obj/item/gun/kinetic/derringer
 	name = "derringer"
-	desc = "A small and easy-to-hide gun that comes with 2 shots. (Can be hidden in worn clothes and retrieved by using the wink emote)"
+	desc = "A small and easy-to-hide gun that comes with 2 shots."
 	icon_state = "derringer"
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_41)
@@ -1208,6 +1210,15 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/derringer
 	fire_animation = TRUE
+
+	get_help_message(dist, mob/user)
+		var/keybind = "Default CTRL + W"
+		var/datum/keymap/current_keymap = user.client.keymap
+		for (var/key in current_keymap.keys)
+			if (current_keymap.keys[key] == "wink")
+				keybind = current_keymap.unparse_keybind(key)
+				break
+		return "Hit the gun on a piece of clothing to hide it inside. Retrieve it by using the <b>*wink</b> ([keybind]) emote."
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
@@ -1279,7 +1290,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/flintlock)
 		..()
 
-	shoot(var/atom/target, var/atom/start, var/mob/user, var/POX, var/POY, var/is_dual_wield)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		sleep(0.3)
 		if (src.canshoot(user) && !isghostdrone(user))
 			var/obj/effects/flintlock_smoke/E = new /obj/effects/flintlock_smoke(get_turf(src))
@@ -1326,7 +1337,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		user.visible_message("<span class='alert'><b>[user] places [src]'s barrel in [hisher] mouth and pulls the trigger with [hisher] foot!</b></span>")
 		var/obj/head = user.organHolder.drop_organ("head")
 		qdel(head)
-		playsound(src, 'sound/weapons/shotgunshot.ogg', 100, 1)
+		playsound(src, 'sound/weapons/shotgunshot.ogg', 100, TRUE)
 		var/obj/decal/cleanable/blood/gibs/gib = make_cleanable( /obj/decal/cleanable/blood/gibs,get_turf(user))
 		gib.streak_cleanable(turn(user.dir,180))
 		health_update_queue |= user
@@ -1376,7 +1387,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	canshoot(mob/user)
 		return(..() && src.racked_slide)
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(ammo.amount_left > 0 && !racked_slide)
 			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
 		..()
@@ -1502,7 +1513,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 					src.icon_state = "slamgun-open-loaded"
 				else
 					src.icon_state = "slamgun-open"
-				update_icon()
+				UpdateIcon()
 				two_handed = 0
 
 			user.update_inhands()
@@ -1511,7 +1522,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 				w_class = W_CLASS_BULKY
 				force = MELEE_DMG_RIFLE
 				src.icon_state = "slamgun-ready"
-				update_icon()
+				UpdateIcon()
 				two_handed = 1
 				user.update_inhands()
 
@@ -1525,7 +1536,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		. = src.casings_to_eject
 		..()
 		if(. != src.casings_to_eject)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
 		if(src.icon_state == "slamgun-ready")
@@ -2337,7 +2348,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		src.keys_changed(0,0xFFFF)
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
-		playsound(src, 'sound/weapons/scope.ogg', 50, 1)
+		playsound(src, 'sound/weapons/scope.ogg', 50, TRUE)
 		break
 
 
@@ -2415,7 +2426,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			return TRUE
 		..()
 
-	shoot(target, start, mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (src.broke_open)
 			boutput(user, "<span class='alert'>You need to close [src] before you can fire!</span>")
 		if (!src.broke_open && src.ammo.amount_left > 0)

@@ -94,7 +94,7 @@
 		activatesecurity()
 		src.anger()
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	if(P.proj_data)
 		switch(P.proj_data.damage_type)

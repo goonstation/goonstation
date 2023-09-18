@@ -218,7 +218,7 @@
 		. = ..()
 		var/turf/T = get_turf(target)
 		for(var/obj/O in T.cameras)
-			shoot_projectile_ST(O, current_projectile, T)
+			shoot_projectile_ST_pixel_spread(O, current_projectile, T)
 
 /// Genericized throw ability, used by wrestlers and werewolves
 /// TODO ABILITYHOLDER CASTCHECK

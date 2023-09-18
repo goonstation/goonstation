@@ -431,7 +431,7 @@
 				S = new pick.unique_seed(holder.owner.loc)
 			else
 				S = new /obj/item/seed(holder.owner.loc,0)
-			S.generic_seed_setup(pick)
+			S.generic_seed_setup(pick, FALSE)
 			holder.owner.put_in_hand_or_drop(S)
 
 		return 0

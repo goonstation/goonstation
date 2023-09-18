@@ -5,7 +5,7 @@
 	icon_state = "grille0-0"
 	density = 1
 	stops_space_move = 1
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	var/health = 30
 	var/health_max = 30
 	var/ruined = 0
@@ -86,8 +86,12 @@
 		var/connects_to = list(/obj/grille/catwalk, /obj/machinery/door) // We're working differently from grilles. We don't check a list and then another, we check all possible atoms to connect to.
 		event_handler_flags = 0
 		default_material = "steel"
-		uses_material_appearance = FALSE
+		uses_default_material_appearance = FALSE
 		mat_changename = FALSE
+
+		New()
+			. = ..()
+			APPLY_ATOM_PROPERTY(src, PROP_ATOM_DO_LIQUID_CLICKS, src) // fuck this object
 
 		update_icon(special_icon_state, override_parent = TRUE)
 			if (ruined)
@@ -363,7 +367,7 @@
 
 		else if(can_build_window && istype(W, /obj/item/sheet/))
 			var/obj/item/sheet/S = W
-			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL && S.amount_check(2))
+			if (S.material && S.material.getMaterialFlags() & MATERIAL_CRYSTAL && S.amount_check(2))
 				var/obj/window/WI
 				var/win_thin = 0
 				var/win_dir = 2
@@ -394,7 +398,7 @@
 					if(win_thin)
 						WI.set_dir(win_dir)
 						WI.ini_dir = win_dir
-					logTheThing(LOG_STATION, user, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.mat_id ? "[WI.material.mat_id]" : "*UNKNOWN*"]) at ([log_loc(user)] in [user.loc.loc])")
+					logTheThing(LOG_STATION, user, "builds a [WI.name] (<b>Material:</b> [WI.material && WI.material.getID() ? "[WI.material.getID()]" : "*UNKNOWN*"]) at ([log_loc(user)] in [user.loc.loc])")
 				else
 					user.show_text("<b>Error:</b> Couldn't spawn window. Try again and please inform a coder if the problem persists.", "red")
 					return

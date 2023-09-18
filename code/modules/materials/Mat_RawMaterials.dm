@@ -8,7 +8,7 @@
 	stack_type = /obj/item/material_piece
 	/// used for prefab bars
 	default_material = null
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE //TRUE for generic names such as Bar or Wad.
 
 	New()
@@ -20,14 +20,14 @@
 
 	_update_stack_appearance()
 		if(material)
-			name = "[amount] [mat_changename ? material.name : ""] [initial(src.name)][amount > 1 ? "s":""]"
+			name = "[amount] [mat_changename ? material.getName() : ""] [initial(src.name)][amount > 1 ? "s":""]"
 		return
 
 	split_stack(var/toRemove)
 		if(toRemove >= amount || toRemove < 1) return 0
 		var/obj/item/material_piece/P = new src.type
 		P.set_loc(src.loc)
-		P.setMaterial(copyMaterial(src.material))
+		P.setMaterial(src.material)
 		src.change_stack_amount(-toRemove)
 		P.change_stack_amount(toRemove - P.amount)
 		return P
@@ -139,6 +139,18 @@
 			default_material = "blob"
 			mat_changename = FALSE
 
+			random
+				var/static/list/random_blob_materials = null
+				New()
+					. = ..()
+					if (!src.random_blob_materials)
+						src.random_blob_materials = list()
+						var/datum/material/base_mat = getMaterial("blob")
+						for (var/i in 1 to 10)
+							var/datum/material/new_mat = base_mat.getMutable()
+							new_mat.setColor(rgb(rand(1,255), rand(1,255), rand(1,255), 255))
+							src.random_blob_materials += new_mat
+					src.setMaterial(pick(src.random_blob_materials))
 	sphere
 		// energy
 		icon_state = "sphere"
@@ -180,7 +192,7 @@
 			else if(istype(A, /turf/simulated/wall/))
 				var/obj/decal/poster/banner/B = new(A)
 				if (src.material) B.setMaterial(src.material)
-				logTheThing(LOG_STATION, user, "Hangs up a banner (<b>Material:</b> [B.material && B.material.mat_id ? "[B.material.mat_id]" : "*UNKNOWN*"]) in [A] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "Hangs up a banner (<b>Material:</b> [B.material && B.material.getID() ? "[B.material.getID()]" : "*UNKNOWN*"]) in [A] at [log_loc(user)].")
 				src.change_stack_amount(-1)
 				user.visible_message("<span class='notice'>[user] hangs up a [B.name] in [A]!.</span>", "<span class='notice'>You hang up a [B.name] in [A]!</span>")
 
@@ -191,7 +203,7 @@
 	amount = 5
 	default_material = "frozenfart"
 	mat_changename = FALSE
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 
 /obj/item/material_piece/steel
 	desc = "A processed bar of Steel, a common metal."
@@ -220,7 +232,7 @@
 	name = "plate"
 	desc = "A chunk of some sort of iridium alloy plating."
 	default_material = "iridiumalloy"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	amount = 5
 
 /obj/item/material_piece/spacelag
@@ -252,7 +264,7 @@
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
 	icon_state = "log"
 	default_material = "wood"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
 	attackby(obj/item/W, mob/user)
@@ -271,7 +283,7 @@
 	desc = "Keep away from Space Pandas."
 	icon_state = "bamboo"
 	default_material = "bamboo"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = TRUE
 
 	attackby(obj/item/W, mob/user)
@@ -291,7 +303,7 @@
 	desc = "space silk produced by space dwelling space spiders. space."
 	icon_state = "spidersilk"
 	default_material = "spidersilk"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/leather
@@ -365,12 +377,17 @@
 	icon_state = "bar"
 	default_material = "soulsteel"
 
+/obj/item/material_piece/metal/censorium
+	desc = "A bar of censorium. Nice try."
+	icon_state = "bar"
+	default_material = "censorium"
+
 /obj/item/material_piece/bone
 	name = "bits of bone"
 	desc = "some bits and pieces of bones."
 	icon_state = "scrap3"
 	default_material = "bone"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
 /obj/item/material_piece/gnesis
@@ -390,7 +407,7 @@
 	desc = "A piece of coral. Nice!"
 	icon_state = "coral"
 	default_material = "coral"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."

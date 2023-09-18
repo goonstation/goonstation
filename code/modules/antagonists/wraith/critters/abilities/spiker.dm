@@ -19,9 +19,9 @@
 				return TRUE
 
 		var/mob/living/critter/wraith/spiker/S = holder.owner
-		var/obj/projectile/proj = initialize_projectile_ST(S, new/datum/projectile/special/tentacle, get_turf(target))
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(S, new/datum/projectile/special/tentacle, get_turf(target))
 		while (!proj || proj.disposed)
-			proj = initialize_projectile_ST(S, new/datum/projectile/special/tentacle, get_turf(target))
+			proj = initialize_projectile_pixel_spread(S, new/datum/projectile/special/tentacle, get_turf(target))
 
 		proj.special_data["owner"] = holder.owner
 		proj.targets = list(target)

@@ -61,7 +61,7 @@
 		possessed_thing.set_loc(src)
 
 		//Appearance Stuff
-		src.update_icon()
+		src.UpdateIcon()
 		src.desc = possessed_thing.desc
 		src.pixel_x = possessed_thing.pixel_x
 		src.pixel_y = possessed_thing.pixel_y

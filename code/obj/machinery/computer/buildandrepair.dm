@@ -265,7 +265,7 @@ TYPEINFO(/obj/item/circuitboard)
 				C.UpdateIcon()
 			if (istype(P, /obj/item/sheet))
 				var/obj/item/sheet/S = P
-				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+				if (S.material && S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 					if (S.amount >= 2)
 						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						actions.start(action_bar, user)

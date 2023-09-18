@@ -1274,9 +1274,9 @@ Returns:
 					A.Attackby(src, user)
 
 		if(bloody && hitmob)
-			playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 100, 0)
+			playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 100, FALSE)
 		else
-			playsound(target, 'sound/impact_sounds/Blade_Small.ogg', 100, 0)
+			playsound(target, 'sound/impact_sounds/Blade_Small.ogg', 100, FALSE)
 
 		flags |= SUPPRESSATTACK
 		force = initial(force)
@@ -1335,8 +1335,8 @@ Returns:
 		shaft = M
 		SetPrefix()
 		if(shaft)
-			src.color = shaft.color
-			src.alpha = shaft.alpha
+			src.color = shaft.getColor()
+			src.alpha = shaft.getAlpha()
 		return
 
 	proc/setHeadMaterial(var/datum/material/M)
@@ -1344,8 +1344,8 @@ Returns:
 		SetPrefix()
 		setMaterial(M, setname = 0)
 		if(shaft)
-			src.color = shaft.color
-			src.alpha = shaft.alpha
+			src.color = shaft.getColor()
+			src.alpha = shaft.getAlpha()
 		if(src.material && src.material.hasProperty("hard"))
 			src.force = round(src.material.getProperty("hard") * 2)
 			src.throwforce = round(src.material.getProperty("hard") * 3)
@@ -1355,9 +1355,9 @@ Returns:
 		src.remove_prefixes(prefix)
 		prefix = ""
 		if(head)
-			prefix += "[head.name]-tipped[shaft?" ":""]"
+			prefix += "[head.getName()]-tipped[shaft?" ":""]"
 		if (shaft)
-			prefix += "[shaft.name]"
+			prefix += "[shaft.getName()]"
 		src.name_prefix(prefix)
 		src.UpdateName()
 
@@ -1365,15 +1365,15 @@ Returns:
 		overlays.Cut()
 		if(shaft)
 			var/image/imgShaft = image('icons/obj/items/weapons.dmi',icon_state = "spear")
-			imgShaft.color = shaft.color
-			imgShaft.alpha = shaft.alpha
+			imgShaft.color = shaft.getColor()
+			imgShaft.alpha = shaft.getAlpha()
 			imgShaft.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgShaft
 			shaftImg = imgShaft
 		if(head)
 			var/image/imgHead = image('icons/obj/items/weapons.dmi',icon_state = "spearhead")
-			imgHead.color = head.color
-			imgHead.alpha = head.alpha
+			imgHead.color = head.getColor()
+			imgHead.alpha = head.getAlpha()
 			imgHead.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgHead
 			headImg = imgHead
@@ -1661,7 +1661,7 @@ Returns:
 	var/atom/movable/AT = A.loc
 
 	if(explode)
-		playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, 1)
+		playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, TRUE)
 	for(var/y = 1, y <= I.Height(), y++)
 		for(var/x = 1, x <= I.Width(), x++)
 			var/color = I.GetPixel(x, y)
@@ -2333,7 +2333,7 @@ Returns:
 		var/turf/fire_target_tile = get_step(get_step(get_step(get_step(src, src.dir), src.dir), direction), direction)
 
 		SPAWN(1 DECI SECOND)
-			playsound(src, 'sound/weapons/rocket.ogg', 50, 1)
+			playsound(src, 'sound/weapons/rocket.ogg', 50, TRUE)
 
 			var/obj/item/rpg_rocket/R = new
 
@@ -2937,9 +2937,9 @@ var/list/lag_list = new/list()
 
 	proc/spook(var/mob/living/L)
 		if (narrator_mode)
-			playsound(L, 'sound/vox/ghost.ogg', 5, 0)
+			playsound(L, 'sound/vox/ghost.ogg', 5, FALSE)
 		else
-			playsound(L, 'sound/effects/ghost.ogg', 5, 0)
+			playsound(L, 'sound/effects/ghost.ogg', 5, FALSE)
 		sleep(0.3 SECONDS)
 		active = 1
 		walk_towards(src,L,3)
