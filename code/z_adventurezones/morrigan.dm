@@ -632,7 +632,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		. = ..()
 		randomize_look(src, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
 
-mob/living/carbon/human/morrigan_prisoner
+/mob/living/carbon/human/morrigan_prisoner
 	New()
 		..()
 		src.equip_new_if_possible((/obj/item/clothing/under/misc/prisoner), SLOT_W_UNIFORM)
@@ -643,7 +643,51 @@ mob/living/carbon/human/morrigan_prisoner
 	initializeBioholder()
 		. = ..()
 		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
+/mob/living/carbon/human/morrigan_rnd
+	New()
+		..()
+		src.equip_new_if_possible((/obj/item/clothing/under/rank/morrigan/robofab), SLOT_W_UNIFORM)
+		src.equip_new_if_possible((/obj/item/storage/backpack/engineering), SLOT_BACK)
+		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
 
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
+
+/mob/living/carbon/human/morrigan_quality
+	New()
+		..()
+		src.equip_new_if_possible((/obj/item/clothing/under/rank/morrigan/quality), SLOT_W_UNIFORM)
+		src.equip_new_if_possible((/obj/item/storage/backpack/green), SLOT_BACK)
+		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
+
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
+
+/mob/living/carbon/human/morrigan_executive
+	New()
+		..()
+		src.equip_new_if_possible((/obj/item/clothing/under/rank/morrigan/executive), SLOT_W_UNIFORM)
+		src.equip_new_if_possible((/obj/item/clothing/suit/morrigan/executive), SLOT_WEAR_SUIT)
+		src.equip_new_if_possible((/obj/item/clothing/mask/swat/haf), SLOT_WEAR_MASK)
+		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
+		src.equip_new_if_possible((/obj/item/card/id/morrigan/all_access), SLOT_WEAR_ID)
+
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
+
+/mob/living/carbon/human/morrigan_doctor
+	New()
+		..()
+		src.equip_new_if_possible((/obj/item/clothing/under/rank/medical/april_fools), SLOT_W_UNIFORM)
+		src.equip_new_if_possible((/obj/item/storage/backpack/blue), SLOT_BACK)
+		src.equip_new_if_possible((/obj/item/clothing/shoes/swat), SLOT_SHOES)
+
+	initializeBioholder()
+		. = ..()
+		randomize_look(src, TRUE, FALSE, TRUE, TRUE, TRUE, FALSE, src)
 
 /mob/living/critter/human/hobo
 	name = "Hobo"
@@ -653,6 +697,36 @@ mob/living/carbon/human/morrigan_prisoner
 	faction = FACTION_GENERIC
 	ai_type = /datum/aiHolder/aggressive
 	human_to_copy = /mob/living/carbon/human/hobo
+
+/mob/living/critter/human/morrigan_quality
+	name = "Quality Assurance Worker"
+	desc = "You don't recognize them"
+	health_brute = 20
+	health_burn = 20
+	faction = FACTION_SYNDICATE
+	ai_type = /datum/aiHolder/aggressive
+	human_to_copy = /mob/living/carbon/human/morrigan_quality
+
+	seek_target(range)
+		. = ..()
+
+		if (length(.) && prob(10))
+			src.say(pick("Who...who are you?!", "Get away from here!", "SECURITY, HELP!", "You aren't meant to be here!", "It's because of people like you!", "You caused this!"))
+
+/mob/living/critter/human/morrigan_rnd
+	name = "R&D Worker"
+	desc = "You don't recognize them"
+	health_brute = 20
+	health_burn = 20
+	faction = FACTION_SYNDICATE
+	ai_type = /datum/aiHolder/aggressive
+	human_to_copy = /mob/living/carbon/human/morrigan_rnd
+
+	seek_target(range)
+		. = ..()
+
+		if (length(.) && prob(10))
+			src.say(pick("Who...who are you?!", "Get away from here!", "SECURITY, HELP!", "You aren't meant to be here!", "It's because of people like you!", "You caused this!"))
 
 /mob/living/critter/human/hobo/dagger
 	hand_count = 2
@@ -862,6 +936,18 @@ mob/living/carbon/human/morrigan_prisoner
 
 /obj/mapping_helper/mob_spawn/corpse/human/morrigansec
 	spawn_type = /mob/living/carbon/human/morrigansec
+
+/obj/mapping_helper/mob_spawn/corpse/human/morrigan_executive
+	spawn_type = /mob/living/carbon/human/morrigan_executive
+
+/obj/mapping_helper/mob_spawn/corpse/human/morrigan_rnd
+	spawn_type = /mob/living/carbon/human/morrigan_rnd
+
+/obj/mapping_helper/mob_spawn/corpse/human/morrigan_quality
+	spawn_type = /mob/living/carbon/human/morrigan_quality
+
+/obj/mapping_helper/mob_spawn/corpse/human/morrigan_doctor
+	spawn_type = /mob/living/carbon/human/morrigan_doctor
 // Areas
 
 /area/morrigan
@@ -1888,7 +1974,7 @@ mob/living/carbon/human/morrigan_prisoner
 
 //start of the dialogue
 /datum/dialogueNode/hobo_start
-	linkText = "..." //Because we use the first node as a "go back" link as well.
+	linkText = "..."
 	links = list(/datum/dialogueNode/hobo_who,/datum/dialogueNode/hobo_question)
 
 	getNodeText(var/client/C)
@@ -1907,14 +1993,21 @@ mob/living/carbon/human/morrigan_prisoner
 	nodeText = "Bloody scammed yeah."
 
 	getNodeText(var/client/C)
-		return "If you can get past the addicts and the creepy shit out there, I hear there's some old id hidden in some bum middle of the station."
+		return "If you can get past the addicts and the creepy shit out there, I hear there's some old id hidden in some bum middle of here. Us sane few barricaded ourselves in, if you go out there you're on your own."
+/datum/dialogueNode/hobo_question
+	linkText = "Where am I ?"
+	links = list(/datum/dialogueNode/hobo_thank)
+	nodeText = "Bloody scammed yeah."
+
+	getNodeText(var/client/C)
+		return "Where do you think ? Fuckin' paradise. You're on Lero you bumbling ape. Otherwise known as the slammer. Don't know what you've done, don't care either just keep away from me and my mates' shit."
 
 /datum/dialogueNode/hobo_thank
 	linkText = "Thank you."
 	links = list()
 
 	getNodeText(var/client/C)
-		return "Just bugger off already mate yeah ?"
+		return pick("Whatever.", "Just bugger off already will you?", "Fuck off already.", "Cool, mate.")
 
 // Critter area
 /mob/living/critter/robotic/gunbot/morrigan
@@ -2086,7 +2179,7 @@ mob/living/carbon/human/morrigan_prisoner
 		var/datum/handHolder/HH = hands[1]
 		HH.limb = new /datum/limb/transposed/morrigan
 		HH.icon = 'icons/mob/critter_ui.dmi'
-		HH.icon_state = "hand_martian"
+		HH.icon_state = "welderhand"
 		HH.name = "Soldering Iron"
 		HH.limb_name = "soldering iron"
 
@@ -2557,7 +2650,15 @@ mob/living/carbon/human/morrigan_prisoner
 			src.icon_state = "eyemask_y"
 		else
 			src.icon_state = "eyemask"
+/obj/item/clothing/mask/swat/haf
+	name = "Strange Mask"
+	desc = "Not your usual colors..."
+	icon_state = "swathaf"
+	item_state = "swathaf"
 
+	color_r = 0.5
+	color_g = 0.8
+	color_b = 0.8
 
 //WEAPONS-------------------------------------------------------------------------------
 

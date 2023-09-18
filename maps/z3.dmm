@@ -18578,10 +18578,7 @@
 /turf/space,
 /area/diner/jucer_trader)
 "kfu" = (
-/obj/decal/fakeobjects/tallsmes{
-	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit, except communist.";
-	icon = 'icons/misc/hospital.dmi'
-	},
+/obj/decal/fakeobjects/tallsmes,
 /turf/unsimulated/floor/engine/glow,
 /area/helldrone/core)
 "kgG" = (
@@ -20587,10 +20584,7 @@
 	icon_state = "hvent";
 	name = "defunct vent"
 	},
-/obj/decal/fakeobjects/tallsmes{
-	desc = "An ultra-high-capacity superconducting magnetic energy storage (SMES) unit, except communist.";
-	icon = 'icons/misc/hospital.dmi'
-	},
+/obj/decal/fakeobjects/tallsmes,
 /turf/unsimulated/floor/engine/glow,
 /area/helldrone/core)
 "phG" = (
