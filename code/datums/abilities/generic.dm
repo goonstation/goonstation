@@ -26,22 +26,19 @@
 	regenRate = 0
 
 /datum/abilityHolder/hidden
-	usesPoints = 0
-	regenRate = 0
-	topBarRendered = 0
-	rendered = 0
+	usesPoints = FALSE
+	topBarRendered = FALSE
+	rendered = FALSE
 	hidden = TRUE
 
 /datum/targetable/chairflip
 	name = "Chair Flip"
 	desc = "Click to launch yourself off of a chair."
-	//icon_state = "fireball"
 	targeted = TRUE
 	target_anything = TRUE
-	cooldown = 1
+	check_range = FALSE
+	cooldown = 0.1 SECONDS
 	preferred_holder_type = /datum/abilityHolder/hidden
-	icon = null
-	icon_state = null
 	var/extrarange = 0 //affects next flip only
 	var/dist = 0
 
@@ -62,7 +59,7 @@
 		src.cast(T)
 
 	cast(atom/target) //the effect is in throw_impact at the bottom of mob.dm
-		..()
+		. = ..()
 
 		var/mob/M = holder.owner
 		logTheThing(LOG_COMBAT, M, "chairflips from [log_loc(M)], vector: ([target.x - M.x], [target.y - M.y]), dir: <i>[dir2text(get_dir(M, target))]</i>")
@@ -82,7 +79,7 @@
 		if (istype(M.buckled,/obj/stool/chair))
 			var/obj/stool/chair/C = M.buckled
 			M.buckled.unbuckle()
-			C.buckledIn = 0
+			C.buckledIn = FALSE
 			C.buckled_guy = null
 		M.pixel_y = 0
 		M.buckled = null
@@ -102,10 +99,6 @@
 		if (!iswrestler(M) && M.traitHolder && !M.traitHolder.hasTrait("glasscannon"))
 			M.remove_stamina(STAMINA_FLIP_COST)
 			M.stamina_stun()
-
-		//if (!M.reagents.has_reagent("fliptonium"))
-			//animate_spin(src, prob(50) ? "L" : "R", 1, 0)
-
 
 /mob/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..()
