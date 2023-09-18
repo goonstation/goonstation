@@ -1257,18 +1257,14 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "toggle-parallax"
 
-#ifndef UNDERWATER_MAP
 	if ((winget(src, "menu.toggle_parallax", "is-checked") == "true") && parallax_enabled)
-		src.screen -= src.parallax_controller?.parallax_layers
+		qdel(src.parallax_controller)
 		src.parallax_controller = new(null, src)
 		src.mob?.register_parallax_signals()
 
 	else if (src.parallax_controller)
-		src.screen -= src.parallax_controller.parallax_layers
 		qdel(src.parallax_controller)
-		src.parallax_controller = null
 		src.mob?.unregister_parallax_signals()
-#endif
 
 /client/verb/apply_view_tint()
 	set hidden = 1
