@@ -23,10 +23,11 @@
 /turf/space,
 /area/space)
 "aag" = (
-/turf/simulated/shuttle/wall{
-	dir = 8;
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 8
 	},
+/turf/space,
 /area/space)
 "aah" = (
 /obj/decal/fakeobjects/airmonitor_broken,
@@ -44,6 +45,10 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "aal" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
 /turf/simulated/floor/airless,
 /area/space)
 "aam" = (
@@ -150,6 +155,10 @@
 /turf/space,
 /area/space)
 "aaz" = (
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans";
+	dir = 1
+	},
 /turf/simulated/floor/airless/damaged4,
 /area/space)
 "aaA" = (
@@ -178,9 +187,10 @@
 /turf/simulated/floor/airless/damaged3,
 /area/space)
 "aaD" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aaF" = (
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
@@ -29687,21 +29697,21 @@
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cna" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cnb" = (
 /obj/table/wood/auto,
 /obj/item/crowbar,
 /obj/item/crowbar,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cnc" = (
@@ -29715,14 +29725,14 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cne" = (
 /obj/submachine/syndicate_teleporter,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cnf" = (
@@ -29791,8 +29801,8 @@
 /area/listeningpost)
 "cnk" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cnl" = (
