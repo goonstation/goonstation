@@ -95,12 +95,16 @@
 	icon_state = "red6"
 
 	north
+		icon_state = "red4"
 		dir = NORTH
 	south
+		icon_state = "red4"
 		dir = SOUTH
 	east
+		icon_state = "red4"
 		dir = EAST
 	west
+		icon_state = "red4"
 		dir = WEST
 	ne
 		dir = NORTHEAST
