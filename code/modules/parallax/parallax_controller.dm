@@ -128,7 +128,6 @@
 	. = ..()
 	src.toggle_parallax()
 
-
 /mob/Login()
 	. = ..()
 	src.register_parallax_signals()
@@ -138,23 +137,28 @@
 	. = ..()
 
 /mob/proc/register_parallax_signals()
-	if (src.client?.parallax_controller)
-		RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(update_parallax))
-		RegisterSignal(src, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(update_area_parallax))
-		RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_parallax_z))
-		RegisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
+	if (!src.client?.parallax_controller)
+		return
 
-		var/datum/component/complexsignal/outermost_movable/C = src.GetComponent(/datum/component/complexsignal/outermost_movable)
-		src.client.parallax_controller.outermost_movable = C.get_outermost_movable()
-		src.update_area_parallax(null, get_area(src.client.parallax_controller.previous_turf), get_area(src))
-		src.update_parallax_z(null, src.client.parallax_controller.previous_turf?.z, src.z)
+	RegisterSignal(src, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(update_parallax))
+	RegisterSignal(src, XSIG_MOVABLE_AREA_CHANGED, PROC_REF(update_area_parallax))
+	RegisterSignal(src, XSIG_MOVABLE_Z_CHANGED, PROC_REF(update_parallax_z))
+	RegisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(update_outermost_movable))
+
+	var/datum/component/complexsignal/outermost_movable/C = src.GetComponent(/datum/component/complexsignal/outermost_movable)
+	var/atom/movable/outermost_movable = C.get_outermost_movable()
+	src.client.parallax_controller.outermost_movable = outermost_movable
+	src.update_area_parallax(null, get_area(src.client.parallax_controller.previous_turf), get_area(outermost_movable))
+	src.update_parallax_z(null, src.client.parallax_controller.previous_turf?.z, outermost_movable.z)
 
 /mob/proc/unregister_parallax_signals()
-	if (src.GetComponent(/datum/component/complexsignal/outermost_movable))
-		UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
-		UnregisterSignal(src, XSIG_MOVABLE_AREA_CHANGED)
-		UnregisterSignal(src, XSIG_MOVABLE_Z_CHANGED)
-		UnregisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED)
+	if (!src.GetComponent(/datum/component/complexsignal/outermost_movable))
+		return
+
+	UnregisterSignal(src, XSIG_MOVABLE_TURF_CHANGED)
+	UnregisterSignal(src, XSIG_MOVABLE_AREA_CHANGED)
+	UnregisterSignal(src, XSIG_MOVABLE_Z_CHANGED)
+	UnregisterSignal(src, XSIG_OUTERMOST_MOVABLE_CHANGED)
 
 /mob/proc/update_parallax(datum/component/component, turf/old_turf, turf/new_turf)
 	src.client?.parallax_controller?.update_parallax_layers(old_turf, new_turf)
