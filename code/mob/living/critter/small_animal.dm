@@ -3899,6 +3899,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	desc = "Leave your body and return to ghost form"
 	icon_state = "mentordisappear"
 	can_cast_from_container = TRUE
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 	var/const/disappearance_time = 0.5 SECONDS
 
 	cast(mob/target)
@@ -3913,24 +3914,18 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		SPAWN(disappearance_time)
 			M.ghostize()
 			qdel(M)
-
-	incapacitationCheck()
-		return FALSE
-
 /datum/targetable/critter/mentortoggle
 	name = "Toggle Pick Up Requests"
 	desc = "Enable or disable player pick up requests."
 	icon_state = "mentortoggle"
 	can_cast_from_container = TRUE
+	incapacitation_restriction = ABILITY_CAN_USE_ALWAYS
 
 	cast(mob/target)
 		var/mob/living/critter/small_animal/mouse/weak/mentor/M = holder.owner
 		M.allow_pickup_requests = !M.allow_pickup_requests
 		boutput(M, "<span class='notice'>You have toggled pick up requests [M.allow_pickup_requests ? "on" : "off"]</span>")
 		logTheThing(LOG_ADMIN, src, "Toggled mentor mouse pick up requests [M.allow_pickup_requests ? "on" : "off"]")
-
-	incapacitationCheck()
-		return FALSE
 
 /mob/living/critter/small_animal/mouse/weak/mentor/admin
 	name = "admin mouse"

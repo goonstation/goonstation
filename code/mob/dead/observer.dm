@@ -148,6 +148,7 @@
 
 #ifdef HALLOWEEN
 /mob/dead/observer/Crossed(atom/movable/mover)
+	. = ..()
 	if (istype(src.abilityHolder, /datum/abilityHolder/ghost_observer))
 		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 		if (GH.spooking)

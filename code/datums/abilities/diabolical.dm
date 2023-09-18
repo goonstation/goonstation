@@ -178,7 +178,7 @@
 
 	cast(atom/T)
 		. = ..()
-		sonic_attack_environmental_effect(user, 5, list("light"))
+		sonic_attack_environmental_effect(src.holder.owner, 5, list("light"))
 		playsound(src.holder.owner.loc, 'sound/misc/jester_laugh.ogg', 125)
 
 //////////////////////////Dumb Floorclown stuff//////////////////////////
@@ -256,7 +256,8 @@
 	var/grabtime = 6.5 SECONDS
 
 	cast(mob/target)
-		user.plane = PLANE_UNDERFLOOR
+		. = ..()
+		src.holder.owner.plane = PLANE_UNDERFLOOR
 		target.cluwnegib(grabtime)
 
 //// Crayon-related stuff ////

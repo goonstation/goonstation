@@ -178,12 +178,19 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	preferred_holder_type = /datum/abilityHolder/ghost_observer
 	icon = 'icons/mob/ghost_observer_abilities.dmi'
 	icon_state = "teleport"
+	/// Convenience var, ghost-typed version of holder.owner
+	var/mob/dead/observer/ghost_owner
 
 	castcheck(atom/target)
 		. = ..()
-		if (!src.holder.ghost_owner)
+		if (!src.ghost_owner)
 			boutput(holder.owner, "<span class='alert'>You can't do that, you're not a ghost!</span>")
 			return FALSE
+
+	onAttach(datum/abilityHolder/H)
+		. = ..()
+		if (istype(H.owner, /mob/dead/observer))
+			src.ghost_owner = H.owner
 
 ///////////////////////////////////////
 
@@ -194,7 +201,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		. = ..()
-		src.holder.ghost_owner.dead_tele()
+		src.ghost_owner.dead_tele()
 
 /datum/targetable/ghost_observer/observe
 	name = "Observe"
@@ -203,7 +210,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		. = ..()
-		src.holder.ghost_owner.observe()
+		src.ghost_owner.observe()
 
 /datum/targetable/ghost_observer/reenter_corpse
 	name = "Re-enter Corpse"
@@ -212,7 +219,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		. = ..()
-		src.holder.ghost_owner.reenter_corpse()
+		src.ghost_owner.reenter_corpse()
 
 /datum/targetable/ghost_observer/toggle_lighting
 	name = "Toggle Lighting"
@@ -221,7 +228,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		. = ..()
-		src.holder.ghost_owner.toggle_lighting()
+		src.ghost_owner.toggle_lighting()
 
 /datum/targetable/ghost_observer/toggle_ghosts
 	name = "Toggle Seeing Ghosts"
@@ -230,7 +237,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 	cast(atom/target)
 		. = ..()
-		src.holder.ghost_owner.toggle_ghosts()
+		src.ghost_owner.toggle_ghosts()
 
 /datum/targetable/ghost_observer/toggle_HUD
 	name = "Hide HUD"
@@ -240,7 +247,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	cast(atom/target)
 		. = ..()
 		var/datum/abilityHolder/ghost_observer/AH = src.holder
-		var/mob/dead/observer/ghost = src.holder.ghost_owner
+		var/mob/dead/observer/ghost = src.ghost_owner
 		if (AH.display_buttons)
 			name = "Show HUD"
 			desc = "Show all HUD buttons."
