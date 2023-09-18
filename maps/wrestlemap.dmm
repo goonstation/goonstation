@@ -6495,12 +6495,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
-"cUd" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1
-	},
-/turf/space,
-/area/space)
 "cUu" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/supernorn,
@@ -47326,7 +47320,7 @@
 	},
 /area/station/solar/west)
 "uPn" = (
-/turf/simulated/floor/airbridge,
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "uPq" = (
 /obj/cable{
@@ -103094,11 +103088,11 @@ vnX
 vnX
 vnX
 vnX
-dII
+vnX
 fHc
 fHc
 fHc
-dII
+vnX
 vnX
 vnX
 yaT
@@ -105810,7 +105804,7 @@ vnX
 vnX
 vnX
 vnX
-cUd
+aXX
 tTB
 amn
 ngU
@@ -107926,7 +107920,7 @@ vnX
 vnX
 vnX
 vnX
-cUd
+aXX
 eUs
 eUs
 eUs
