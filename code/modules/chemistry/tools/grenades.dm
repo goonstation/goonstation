@@ -30,7 +30,10 @@
 	var/detonating = 0
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
-
+	HELP_MESSAGE_OVERRIDE({"Hit the grenade casing with a fuse to begin.
+							Hit the grenade casing with a small beaker to load it inside, up to two.
+							Hit a loaded grenade casing with a <b>screwdriver</b> to finish it. Use it in hand to begin the countdown.
+							Hit a finished grenade with an igniter assembly to add it to the grenade casing."})
 
 	New()
 		..()
@@ -174,7 +177,7 @@
 		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
 		src.armed = TRUE
 		src.icon_state = icon_state_armed
-		playsound(src, 'sound/weapons/armbomb.ogg', 75, 1, -3)
+		playsound(src, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
 		SPAWN(3 SECONDS)
 			if (src && !src.disposed)
 				if(user?.equipped() == src)

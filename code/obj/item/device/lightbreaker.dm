@@ -18,6 +18,7 @@ TYPEINFO(/obj/item/lightbreaker)
 	stamina_crit_chance = 15
 	var/ammo = 4
 	var/ammo_max = 4
+	HELP_MESSAGE_OVERRIDE({"Use the lightbreaker in hand to shatter most windows and lights around you, and deafen/stagger people around you without ear protection. To recharge the lightbreaker, hit it with a <b>screwdriver</b>."})
 
 	examine()
 		. = ..()
@@ -99,7 +100,7 @@ TYPEINFO(/obj/item/lightbreaker)
 		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(the_breaker, 'sound/misc/winding.ogg', 50, 1,3)
+		playsound(the_breaker, 'sound/misc/winding.ogg', 50, TRUE,3)
 
 	onStart()
 		..()

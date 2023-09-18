@@ -457,7 +457,7 @@
 	proc/success_feedback(atom/target, mob/user)
 		user.show_text(replacetext(success_text, "%target%", target), "blue")
 		if (success_sound)
-			playsound(target, success_sound, 50, 1)
+			playsound(target, success_sound, 50, TRUE)
 
 	proc/omnitool_swap(atom/target, mob/user, obj/item/tool/omnitool/omni)
 		if (!(omni_mode in omni.modes))
@@ -1289,3 +1289,51 @@
 		return robospray in user
 	execute(var/obj/item/robospray/robospray, var/mob/user)
 		robospray.change_reagent(src.reagent_id, user)
+
+/datum/contextAction/t_scanner
+	icon = 'icons/ui/context16x16.dmi'
+	icon_state = "dismiss"
+	close_clicked = TRUE
+	close_moved = FALSE
+	var/base_icon_state = ""
+
+	checkRequirements(var/obj/item/device/t_scanner/t_scanner, mob/user)
+		return t_scanner in user
+
+	active
+		name = "Active"
+		desc = "Toggle T-ray scanner"
+		icon_state = "tray_scanner_off"
+		base_icon_state = "tray_scanner_"
+
+		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_on(!t_scanner.on)
+			var/obj/ability_button/tscanner_toggle/tscanner_button = locate(/obj/ability_button/tscanner_toggle) in t_scanner.ability_buttons
+			tscanner_button.icon_state = t_scanner.on ? "tray_on" : "tray_off"
+
+	underfloor_cables
+		name = "Cables"
+		desc = "Current underfloor cables"
+		icon_state = "tray_cable_on"
+		base_icon_state = "tray_cable_"
+
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_underfloor_cables(!t_scanner.show_underfloor_cables, user)
+
+	underfloor_disposal_pipes
+		name = "Disposal Pipes"
+		desc = "Current underfloor disposal pipes"
+		icon_state = "tray_pipes_on"
+		base_icon_state = "tray_pipes_"
+
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_underfloor_disposal_pipes(!t_scanner.show_underfloor_disposal_pipes, user)
+
+	blueprint_disposal_pipes
+		name = "Pipe Blueprints"
+		desc = "Original pipe blueprints"
+		icon_state = "tray_blueprint_on"
+		base_icon_state = "tray_blueprint_"
+
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_blueprint_disposal_pipes(!t_scanner.show_blueprint_disposal_pipes, user)

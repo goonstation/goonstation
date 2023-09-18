@@ -42,6 +42,8 @@
 /obj/item/clothing/suit/hoodie
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
+	icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
 	icon_state = "hoodie"
 	item_state = "hoodie"
 	body_parts_covered = TORSO|ARMS
@@ -1622,7 +1624,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "cultist"
 	item_state = "cultist"
-	see_face = 0
+	see_face = FALSE
 	magical = 1
 	over_hair = TRUE
 	wear_layer = MOB_FULL_SUIT_LAYER
@@ -1663,7 +1665,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
 	icon_state = "flockcultist"
 	item_state = "flockcultistt"
-	see_face = 0
+	see_face = FALSE
 	wear_layer = MOB_FULL_SUIT_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = TORSO|LEGS|ARMS
@@ -1811,17 +1813,22 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 		..()
 		setProperty("coldprot", 5)
 
-/obj/item/clothing/suit/labcoat/hitman
-    name = "black jacket"
-    desc = "A stylish black suitjacket."
-    icon_state = "hitmanc"
-    item_state = "hitmanc"
-    coat_style = "hitmanc"
+/obj/item/clothing/suit/hitman
+	name = "black jacket"
+	desc = "A stylish black suitjacket."
+	icon_state = "hitmanc_o"
+	item_state = "hitmanc"
+	coat_style = "hitmanc"
 
-/obj/item/clothing/suit/labcoat/hitman/satansuit
+	New()
+		..()
+		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
+
+/obj/item/clothing/suit/hitman/satansuit
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-	icon_state = "inspectorc"
+	icon_state = "inspectorc_o"
 	item_state = "inspectorc"
+	coat_style = "inspectorc"
 
 /obj/item/clothing/suit/witchfinder
 	name = "witchfinder general's coat"

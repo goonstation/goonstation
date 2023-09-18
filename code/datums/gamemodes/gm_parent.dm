@@ -191,22 +191,36 @@ ABSTRACT_TYPE(/datum/game_mode)
   * Arguments:
   * * type - requested antagonist type.
   * * number - requested number of antagonists. If it can't find that many it will try to look again, but ignoring antagonist preferences.
+	* * allow_carbon - if this proc is ran mid-round this allows for /mob/living/carbon to be included in the list of candidates. (normally only new_player)
+	* * filter_proc - a proc that takes a mob and returns TRUE if it should be included in the list of candidates.
   */
-/datum/game_mode/proc/get_possible_enemies(type,number)
+/datum/game_mode/proc/get_possible_enemies(type, number, allow_carbon=FALSE, filter_proc=null)
 	var/list/candidates = list()
 	/// Used to fill in the quota if we can't find enough players with the antag preference on.
 	var/list/unpicked_candidate_minds = list()
 
 	for(var/client/C)
-		var/mob/new_player/player = C.mob
-		if (!istype(player)) continue
-		if (jobban_isbanned(player, "Syndicate")) continue //antag banned
+		if (istype(C.mob, /mob/new_player))
+			var/mob/new_player/new_player = C.mob
+			if (!new_player.ready)
+				continue
+		else if(istype(C.mob, /mob/living/carbon))
+			if(!allow_carbon)
+				continue
+			if(!find_job_in_controller_by_string(C.mob.job)?.allow_traitors)
+				continue
+		else
+			continue
+		if(filter_proc && !call(filter_proc)(C.mob))
+			continue
+		var/datum/mind/mind = C.mob.mind
+		if (jobban_isbanned(C.mob, "Syndicate")) continue //antag banned
 
-		if ((player.ready) && !(player.mind in traitors) && !(player.mind in token_players) && !(player.mind in candidates))
-			if (player.client.preferences.vars[get_preference_for_role(type)])
-				candidates += player.mind
+		if (!(mind in traitors) && !(mind in token_players) && !(mind in candidates))
+			if (C.preferences.vars[get_preference_for_role(type)])
+				candidates += mind
 			else // eligible but has the preference off, keeping in mind in case we don't find enough candidates with it on to fill the gap
-				unpicked_candidate_minds.Add(player.mind)
+				unpicked_candidate_minds.Add(mind)
 
 	logTheThing(LOG_DEBUG, null, "Picking [number] possible antagonists of type [type], \
 									found [length(candidates)] players out of [length(candidates) + length(unpicked_candidate_minds)] who had that antag enabled.")

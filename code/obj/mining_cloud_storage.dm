@@ -125,7 +125,7 @@
 		src.updateUsrDialog()
 
 	proc/quickload(var/mob/living/user,var/obj/item/O)
-		if (!user || !O)
+		if (!user || QDELETED(O))
 			return
 		if(istype(O,/obj/item/raw_material/))
 			var/obj/item/raw_material/R = O
@@ -151,7 +151,7 @@
 			if (O in user.contents)
 				continue
 			src.load_item(M)
-			playsound(src, sound_load, 40, 1)
+			playsound(src, sound_load, 40, TRUE)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")

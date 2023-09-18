@@ -608,6 +608,37 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		if (M.sprint_particle.loc == T)
 			M.sprint_particle.loc = null
 
+/obj/particle/chemical_reaction
+	icon = 'icons/effects/chemistry_effects.dmi'
+	plane = PLANE_OVERLAY_EFFECTS
+
+/obj/particle/chemical_shine
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "shine"
+	plane = PLANE_OVERLAY_EFFECTS
+
+/proc/chemistry_particle(var/datum/reagents/holder, var/datum/chemical_reaction/reaction)
+	if(!istype(holder.my_atom, /obj) || !holder.my_atom.loc)
+		return
+	var/obj/holder_object = holder.my_atom
+
+	var/obj/particle/chemical_reaction/chemical_reaction = new /obj/particle/chemical_reaction
+	var/y_offset = 0
+
+	if(!reaction.reaction_icon_color)
+		chemical_reaction.color = holder.get_average_rgb()
+	else
+		chemical_reaction.color = reaction.reaction_icon_color
+
+	y_offset = holder_object.get_chemical_effect_position()
+	chemical_reaction.set_loc(holder_object.loc)
+	chemical_reaction.icon_state = pick(reaction.reaction_icon_state)
+	chemical_reaction.pixel_x = holder_object.pixel_x
+	chemical_reaction.pixel_y = holder_object.pixel_y + y_offset
+
+	SPAWN(2 SECONDS)
+		qdel(chemical_reaction)
+
 /proc/attack_twitch(var/atom/A, move_multiplier=1, angle_multiplier=1)
 	if (!istype(A) || islivingobject(A))
 		return		//^ possessed objects use an animate loop that is important for readability. let's not interrupt that with this dumb animation
@@ -1232,7 +1263,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1249,7 +1280,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1266,7 +1297,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1452,7 +1483,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/mob/M = A
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 	if (play_sound)
-		playsound(center, 'sound/effects/darkspawn.ogg', 50,0)
+		playsound(center, 'sound/effects/darkspawn.ogg', 50,FALSE)
 	SPAWN(5 SECONDS)
 		var/turf/TA = locate(A.x - size, A.y - size, A.z)
 		var/turf/TB = locate(A.x + size, A.y + size, A.z)
@@ -1522,7 +1553,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
-	playsound(A, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+	playsound(A, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 	var/orig_x = A.pixel_x
 	var/orig_y = A.pixel_y
 	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0.01 SECONDS)
@@ -1723,6 +1754,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 			M.update_canmove()
 
 /obj/decal/laserbeam
+	anchored = ANCHORED
 	icon = 'icons/obj/singularity.dmi'
 	icon_state = "Contain_F"
 
@@ -1739,7 +1771,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	beam.Scale(scale_x, 1)
 	beam.plane = PLANE_ABOVE_LIGHTING
 	beam.layer = NOLIGHT_EFFECTS_LAYER_BASE
-	playsound(T, 'sound/weapons/hadar_impact.ogg', 30, 1)
+	playsound(T, 'sound/weapons/hadar_impact.ogg', 30, TRUE)
 	animate(beam, time = beam_time / 2, pixel_y = abs(scale_y * 32 / 2 + 16), transform = M, flags = ANIMATION_PARALLEL)
 	animate(time = beam_time / 2, transform = matrix(0,0,0,0,scale_y,0))
 	SPAWN(beam_time / 2)
@@ -1751,4 +1783,45 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	SPAWN(beam_time)
 		qdel(beam)
 
+proc/animate_orbit(atom/orbiter, center_x = 0, center_y = 0, radius = 32, time=8 SECONDS, loops=-1, clockwise=FALSE)
+	orbiter.pixel_x = center_x + radius
+	orbiter.pixel_y = center_y
 
+	animate(orbiter,
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_x = center_x,
+		flags = ANIMATION_PARALLEL,
+		loop = loops)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_x = center_x - radius)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_x = center_x)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_x = center_x + radius)
+
+	var/cw_factor = clockwise ? -1 : 1
+	animate(orbiter,
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_y = center_y + radius * cw_factor,
+		flags = ANIMATION_PARALLEL,,
+		loop = loops)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_y = center_y)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_OUT,
+		pixel_y = center_y - radius * cw_factor)
+	animate(
+		time = time/4,
+		easing = SINE_EASING | EASE_IN,
+		pixel_y = center_y)

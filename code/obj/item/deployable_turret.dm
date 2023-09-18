@@ -382,24 +382,24 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		var/distance = GET_DIST(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
-			return 0
+			return FALSE
 		if (!C)
-			return 0
+			return FALSE
 		if(!isliving(C) || isintangible(C))
-			return 0
+			return FALSE
 		if (C.health < 0)
-			return 0
-		if (C.stat == 2)
-			return 0
+			return FALSE
+		if (isdead(C))
+			return FALSE
 		for(var/atom/movable/some_loc in obj_loc_chain(C))
 			if(istype(some_loc, /obj/item)) // prevent shooting at pickled people and such
-				return 0
+				return FALSE
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
 			if (H.hasStatus(list("resting", "weakened", "stunned", "paralysis"))) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
-				return 0
+				return FALSE
 		if (is_friend(C))
-			return 0
+			return FALSE
 
 		var/angle = get_angle(get_turf(src),get_turf(C))
 
@@ -409,9 +409,9 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		crossed_turfs = castRay(src,anglemod,distance)
 		for (var/turf/T in crossed_turfs)
 			if (T.opacity == 1)
-				return 0
+				return FALSE
 			if (T.density == 1)
-				return 0
+				return FALSE
 
 		angle = angle < 0 ? angle+360 : angle // make angles positive
 		angle = angle - src.external_angle
@@ -424,8 +424,8 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			angle = abs(angle)
 
 		if (angle <= (angle_arc_size/2)) //are we in the seeking arc?
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 
 	proc/is_friend(var/mob/living/C) //tried to keep this generic in case you want to make a turret that only shoots monkeys or something
@@ -497,16 +497,8 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	is_friend(var/mob/living/C)
 		var/obj/item/card/id/I = C.get_id()
 		if(!istype(I))
-			return 0
-		switch(I.icon_state)
-			if("id_sec")
-				return 1
-			if("id_com")
-				return 1
-			if("gold")
-				return 1
-			else
-				return 0
+			return FALSE
+		. = (access_security in I.access) || (access_heads in I.access)
 
 /obj/deployable_turret/riot/active
 	anchored = ANCHORED
@@ -562,7 +554,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 	castcheck(var/mob/M)
 		if (M.client && M.client.holder)
-			return 1
+			return TRUE
 
 	handleCast(var/atom/target)
 
@@ -593,7 +585,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			SPAWN(0)
 				src.my_turret.set_angle(get_angle(my_turret,target))
 
-			return 0
+			return FALSE
 
 /////////////////////////////
 //       User Manuals      //

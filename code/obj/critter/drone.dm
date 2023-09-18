@@ -290,7 +290,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		if(prob(7))
 			src.visible_message("<b>[src] [beeptext].</b>")
 			if (beepsound)
-				playsound(src, beepsound, 55, 1)
+				playsound(src, beepsound, 55, TRUE)
 
 		if(task == "following path")
 			follow_path()
@@ -580,7 +580,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		Shoot(var/atom/target, var/start, var/user, var/bullet = 0)
 			if(target == start)
 				return
-			playsound(src, 'sound/effects/mag_warp.ogg', 50, 1)
+			playsound(src, 'sound/effects/mag_warp.ogg', 50, TRUE)
 			SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 				var/obj/target_r
 
@@ -589,7 +589,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 				else
 					target_r = new/obj/railgun_trg_dummy(target)
 
-				playsound(src, 'sound/weapons/railgun.ogg', 50, 1)
+				playsound(src, 'sound/weapons/railgun.ogg', 50, TRUE)
 				src.set_dir(get_dir(src, target))
 
 				var/list/affected = DrawLine(src, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
@@ -812,7 +812,7 @@ TYPEINFO(/obj/critter/gunbot/drone/helldrone)
 		process()
 			..()
 			if(prob(3))
-				playsound(src, 'sound/machines/signal.ogg', 60, 0)
+				playsound(src, 'sound/machines/signal.ogg', 60, FALSE)
 			return
 
 		Shoot(var/target, var/start, var/user, var/bullet = 0)
@@ -903,7 +903,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	process()
 		..()
 		if(prob(3))
-			playsound(src, 'sound/machines/signal.ogg', 60, 0)
+			playsound(src, 'sound/machines/signal.ogg', 60, FALSE)
 
 		return
 
@@ -1016,7 +1016,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 			P2.launch()
 
 	proc/elec_zap()
-		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
@@ -1143,7 +1143,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 
 
 	/*proc/elec_zap()
-		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
@@ -1195,7 +1195,7 @@ TYPEINFO(/obj/critter/gunbot/drone/iridium)
 	process()
 		..()
 		if(prob(3))
-			playsound(src,'sound/effects/heartbeat.ogg', 60, 0) //for the spooky effect
+			playsound(src,'sound/effects/heartbeat.ogg', 60, FALSE) //for the spooky effect
 		return
 
 	New()
@@ -1251,7 +1251,7 @@ TYPEINFO(/obj/critter/gunbot/drone/miniature_syndie)
 /obj/critter/gunbot/drone/miniature_syndie
 	name = "miniature Syndicate Operative"
 	desc = "They look determined."
-	icon = 'icons/misc/critter.dmi'
+	icon = 'icons/mob/critter/humanoid/mini_syndies.dmi'
 	icon_state = "minisyndie"
 	density = 1
 	health = 8
@@ -1297,7 +1297,7 @@ TYPEINFO(/obj/critter/gunbot/drone/miniature_syndie)
 
 	CritterDeath()
 		if(dying) return
-		playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 		icon_state = dead_state
 		SPAWN(0.5 SECONDS)// for the dramatic effect
 			explosion(src, get_turf(src), -1, -1, 2, 3)

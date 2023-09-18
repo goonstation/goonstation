@@ -384,16 +384,10 @@ SYNDICATE DRONE FACTORY AREAS
 		if(src.deadly && !(isnull(old_loc) || O.anchored == ANCHORED_ALWAYS))
 			return_if_overlay_or_effect(O)
 
-			if (check_target_immunity(O, TRUE))
+			if (istype(O, /obj/projectile))
 				return
 
 			if (isintangible(O))
-				return
-
-			if (HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING) && !src.no_fly_zone)
-				if (isliving(O))
-					var/mob/living/M = O
-					M.setStatusMin("burning", 5 SECONDS)
 				return
 
 			if (istype(O, /obj/critter))
@@ -401,7 +395,19 @@ SYNDICATE DRONE FACTORY AREAS
 				if (C.flying)
 					return
 
-			if (istype(O, /obj/projectile))
+			if (isliving(O))
+				var/mob/living/M = O
+				if (M.mind?.damned)
+					melt_away(M)
+					return
+
+			if (check_target_immunity(O, TRUE))
+				return
+
+			if (HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING) && !src.no_fly_zone)
+				if (isliving(O))
+					var/mob/living/M = O
+					M.setStatusMin("burning", 5 SECONDS)
 				return
 
 			if (O.throwing && !isliving(O))
@@ -569,7 +575,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "strange wall"
 	desc = "This wall seems strangely out-of-place."
 	icon_state = "cave-0"
-	icon = 'icons/turf/walls_cave.dmi'
+	icon = 'icons/turf/walls/cave.dmi'
 
 	var/active = 0
 
@@ -684,7 +690,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
 
-		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
 
 		for(var/obj/O in affected)
 			O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
@@ -766,7 +772,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if(ismob(AM))
 			if(AM:client)
 				ready = 0
-				playsound(src, 'sound/effects/exlow.ogg', 40, 0)
+				playsound(src, 'sound/effects/exlow.ogg', 40, FALSE)
 				var/turf/spawnloc = get_step(get_step(get_step(src, NORTH), NORTH), NORTH)
 				new/obj/boulder_trap_boulder(spawnloc)
 				playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
@@ -1202,7 +1208,7 @@ SYNDICATE DRONE FACTORY AREAS
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
 				sleep(1 SECOND)
-				playsound_global(world, 'sound/effects/mag_pandroar.ogg', 60) // heh
+				playsound_global(world, 'sound/effects/mag_pandroar.ogg', 40) // heh
 				shake_camera(usr, 15, 16, 0.5)
 				new/obj/item/alchemy/stone(middle)
 				sleep(0.2 SECONDS)

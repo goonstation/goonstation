@@ -27,7 +27,6 @@
 	var/newDrone = 0
 
 	var/jetpack = 1 //fuck whoever made this
-	var/jeton = 0
 
 	var/sees_static = TRUE
 
@@ -202,7 +201,7 @@
 	full_heal()
 		var/before = src.stat
 		..()
-		if (before == 2 && src.stat < 2) //if we were dead, and now arent
+		if (before == STAT_DEAD && !isdead(src)) //if we were dead, and now arent
 			src.updateSprite()
 
 	TakeDamage(zone, brute, burn, tox, damage_type, disallow_limb_loss)
@@ -365,10 +364,8 @@
 			src.examine_verb(target) // in theory, usr should be us, this is shit though
 			return
 
-		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
+		if (src.client?.check_key(KEY_POINT))
 			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-			if (src.in_point_mode)
-				src.toggle_point_mode()
 			return
 
 		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
@@ -831,12 +828,12 @@
 			if ("birdwell", "burp")
 				if (src.emote_check(voluntary, 50))
 					message = "<B>[src]</B> birdwells."
-					playsound(src, 'sound/vox/birdwell.ogg', 50, 1, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/vox/birdwell.ogg', 50, TRUE, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
 
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
 					if (narrator_mode)
-						playsound(src, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, 'sound/vox/scream.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					else
 						playsound(src, src.sound_scream, 80, 0, 0, 1.5, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<b>[src]</b> screams!"
@@ -923,7 +920,7 @@
 							if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 							if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
 					if (narrator_mode)
-						playsound(src, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, 'sound/vox/fart.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					else
 						playsound(src, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 #ifdef DATALOGGER

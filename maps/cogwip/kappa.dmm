@@ -885,8 +885,7 @@
 /obj/machinery/door/airlock/pyro,
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /obj/disposalpipe/segment,
 /obj/machinery/door/firedoor/pyro,
@@ -7067,9 +7066,7 @@
 /area/space)
 "tW" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},

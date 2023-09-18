@@ -1220,7 +1220,7 @@
 /turf/simulated/floor/airless/neutral,
 /area/prefab/discount_dans_asteroid)
 "Tk" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /turf/simulated/floor/carpet/blue/standard/edge/nw,

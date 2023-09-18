@@ -66,7 +66,7 @@
 	var/impact_sfx = hit_atom.hitby(src, thr)
 	impact_sfx = src.overwrite_impact_sfx(impact_sfx,hit_atom, thr)
 	if(src && impact_sfx)
-		playsound(src, impact_sfx, 40, 1)
+		playsound(src, impact_sfx, 40, TRUE)
 
 /atom/movable/bump(atom/O)
 	if(src.throwing)

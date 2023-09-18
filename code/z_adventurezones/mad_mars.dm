@@ -425,7 +425,7 @@
 			if ((istype(P, /obj/item/mars_roverpart/motherboard))&&(!motherboard))
 				boutput(user, "<span class='notice'>You wire the motherboard to the rover.</span>")
 				motherboard = 1
-			playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
+			playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
 			qdel(P)
 			if((wheel)&&(oxy)&&(battery)&&(glass)&&(motherboard))
 				var/obj/vehicle/marsrover/R = new /obj/vehicle/marsrover(loc)
@@ -597,10 +597,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 	sound_group = "mars"
 	sound_loop = 'sound/ambience/loop/Mars_Interior.ogg'
 	sound_loop_vol = 60
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/foreground/dust,
-		/atom/movable/screen/parallax_layer/foreground/dust/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/mars
 	occlude_foreground_parallax_layers = TRUE
 
 /area/marsoutpost/New()
@@ -735,7 +732,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 		if (!start) //Wire: fix for Cannot read null.y (start was null somehow)
 			return
 
-		shoot_projectile_ST(src, my_bullet, target)
+		shoot_projectile_ST_pixel_spread(src, my_bullet, target)
 
 /obj/machinery/computer/mars_vault
 	name = "Vault Console"
