@@ -3,7 +3,11 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 
 /datum/spooktober_ghost_handler
 	var/const/MAX_POINTS = 100000
+#ifdef BONUS_POINTS
+	var/points = INFINITY
+#else
 	var/points = 0
+#endif
 	var/cur_meter_location = 0
 	var/last_meter_location = 0			//the amount of points at the last update. Used for deciding when to redraw the sprite to have less progress
 	var/earned_points = list()				//assoc list of ckeys to their gained points.
@@ -364,6 +368,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	icon_state = "decorate"
 	targeted = TRUE
 	target_anything = TRUE
+	check_range = FALSE
 	cooldown = 2 MINUTES
 	start_on_cooldown = TRUE
 	special_screen_loc = "SOUTH,CENTER"
@@ -403,6 +408,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 	icon_state = "bloodwriting"
 	targeted = TRUE
 	target_anything = TRUE
+	check_range = FALSE
 	cooldown = 3 MINUTES
 	start_on_cooldown = TRUE
 	special_screen_loc = "SOUTH,CENTER+1"
