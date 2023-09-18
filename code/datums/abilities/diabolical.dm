@@ -150,7 +150,7 @@
 	desc = "Summon a devilish contract and pen."
 
 	cast(mob/target)
-		. = ,.()
+		. = ..()
 		spawncontract(src.holder.owner, 0, 1)
 
 ////////////////////////Kill Jesta///////////////////////////////
