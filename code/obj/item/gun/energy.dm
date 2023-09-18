@@ -1860,6 +1860,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		..()
 
 #define HEAT_REMOVED_PER_PROCESS 25
+#define FIRE_THRESHOLD 175
 // Makeshift Laser Rifle
 TYPEINFO(/obj/item/gun/energy/makeshift)
 	mats = 0
@@ -1916,6 +1917,13 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		SEND_SIGNAL(src, COMSIG_CELL_SWAP, our_cell)
 		update_icon()
 
+	proc/attach_light(var/obj/item/light/tube/T, mob/user)
+		if (user)
+			user.u_equip(T)
+		our_light = T
+		our_light.set_loc(src)
+		update_icon()
+
 	proc/do_explode()
 		explosion(src, get_turf(src), -1, -1, 1, 2)
 		qdel(src)
@@ -1956,7 +1964,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	process()
 		if (heat > 0)
-			if (heat > 175)
+			if (heat > FIRE_THRESHOLD)
 				var/mob/living/victim = src.loc
 				if (istype(victim))
 					victim.changeStatus("burning", 7 SECONDS)
@@ -1981,7 +1989,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			return ..()
 
 	attackby(obj/item/W, mob/user, params)
-		if (heat < 175)
+		if (heat < FIRE_THRESHOLD)
 			if(heat_repair) // gun machine broke, we need to repair it
 				if (issnippingtool(W) && heat_repair == 1)
 					boutput(user,"<span class='notice'>You remove the burnt wiring from [src].</span>")
@@ -2018,10 +2026,8 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				return
 			else if (istype(W, /obj/item/light/tube) && !our_light)
 				boutput(user,"<span class='notice'>You place [W] inside of the barrel and redo the wiring.</span>")
-				playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
-				user.u_equip(W)
-				our_light = W
-				W.set_loc(src)
+				playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
+				attach_light(W, user)
 				update_icon()
 				return
 			..()
@@ -2084,7 +2090,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		else
 			src.UpdateOverlays(null, "gun_light")
 
-		if (heat > 175)
+		if (heat > FIRE_THRESHOLD)
 			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", 'icons/obj/large/64x32.dmi', "makeshift-burn")
 			src.UpdateOverlays(overlay_image, "gun_smoke")
 		else if (heat > 70)
@@ -2116,8 +2122,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		var/obj/item/cell/supercell/charged/C = new /obj/item/cell/supercell/charged
 		attach_cell(C)
 		var/obj/item/light/tube/T = new /obj/item/light/tube
-		our_light = T
-		T.set_loc(src)
+		attach_light(T)
 
 /obj/item/makeshift_lens
 	name = "salvaged lens"
@@ -2252,12 +2257,11 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		boutput(user,"<span class='notice'>You wire the timer, light tube, and barrel together.</span>")
 		C.change_stack_amount(-1)
 		var/obj/item/gun/energy/makeshift/M = new/obj/item/gun/energy/makeshift
-		M.our_light = our_light
-		our_light.set_loc(M)
 		user.put_in_hand_or_drop(M)
 		M.update_icon()
 		M.lens_proj = lens_proj
 		M.update_proj()
+		M.attach_light(our_light, user)
 		qdel(src)
 		return
 
@@ -2271,3 +2275,4 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(finish_gun), FALSE)
 
 #undef HEAT_REMOVED_PER_PROCESS
+#undef FIRE_THRESHOLD
