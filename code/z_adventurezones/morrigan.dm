@@ -1003,11 +1003,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 // Station areas
 
 /area/morrigan/station
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/cairngorm
 
 // Security areas
 
@@ -1192,11 +1188,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /area/morrigan/station/space
 	name = "Morrigan Space"
 	icon_state = "red"
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/cairngorm
 
 // Podbays
 

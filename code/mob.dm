@@ -2207,7 +2207,7 @@
 	src.emote("scream")
 	src.gib()
 
-/mob/proc/anvilgib(height = 7, use_shadow=TRUE, anvil_type=/obj/table/anvil)
+/mob/proc/anvilgib(height = 7, use_shadow=TRUE, anvil_type=/obj/table/anvil/gimmick)
 	logTheThing(LOG_COMBAT, src, "is anvil-gibbed at [log_loc(src)].")
 	src.transforming = TRUE
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "anvilgib")

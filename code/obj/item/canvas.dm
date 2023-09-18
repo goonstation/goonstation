@@ -339,10 +339,10 @@
 		src.pixel_artists = world.load_intra_round_value("persistent_canvas_artists_[id]") || list()
 
 	proc/load_from_file()
-		var/icon/file = input(usr, "Please select the image to load.", "Load Image", null) as null|icon
+		var/file = input(usr, "Please select the image to load.", "Load Image", null) as null|icon
 		if(isnull(file))
 			return
-		src.art = file
+		src.art = icon(file)
 		src.art.Crop(1, 1, bound_width, bound_height)
 		src.icon = src.art
 
