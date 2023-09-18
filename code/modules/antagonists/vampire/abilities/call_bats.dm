@@ -18,11 +18,6 @@
 	unlock_message = "You have gained Call Frost Bats, a protection spell."
 	var/num_bats = 4
 
-	flip_callback()
-		. = ..()
-		var/datum/abilityHolder/vampire/AH = src.holder
-		AH.launch_bat_orbiters()
-
 	cast(mob/target)
 		. = ..()
 
@@ -38,7 +33,7 @@
 
 			var/turf/shoot_at = get_step(user, pick(alldirs))
 
-			for (var/i = 0, i < create, i += 0.1) //pay no mind :)
+			for (var/i = 0, i < num_bats, i += 0.1) //pay no mind :)
 				var/obj/projectile/proj = initialize_projectile_pixel_spread(M, P, shoot_at)
 				if (proj && !proj.disposed)
 					proj.targets = list(user)
