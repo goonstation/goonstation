@@ -948,6 +948,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/mapping_helper/mob_spawn/corpse/human/morrigan_doctor
 	spawn_type = /mob/living/carbon/human/morrigan_doctor
+
+/obj/mapping_helper/mob_spawn/corpse/human/morrigan_prisoner
+	spawn_type = /mob/living/carbon/human/morrigan_prisoner
 // Areas
 
 /area/morrigan
@@ -1975,7 +1978,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 //start of the dialogue
 /datum/dialogueNode/hobo_start
 	linkText = "..."
-	links = list(/datum/dialogueNode/hobo_who,/datum/dialogueNode/hobo_question)
+	links = list(/datum/dialogueNode/hobo_who,/datum/dialogueNode/hobo_question,/datum/dialogueNode/hobo_where)
 
 	getNodeText(var/client/C)
 		return pick("I haven't seen my wife in 30 years, only the drugs bring her back.", "Fuck off already.", "I need me drugs...")
@@ -1994,7 +1997,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	getNodeText(var/client/C)
 		return "If you can get past the addicts and the creepy shit out there, I hear there's some old id hidden in some bum middle of here. Us sane few barricaded ourselves in, if you go out there you're on your own."
-/datum/dialogueNode/hobo_question
+/datum/dialogueNode/hobo_where
 	linkText = "Where am I ?"
 	links = list(/datum/dialogueNode/hobo_thank)
 	nodeText = "Bloody scammed yeah."

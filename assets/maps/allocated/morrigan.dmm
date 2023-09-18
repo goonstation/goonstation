@@ -5130,10 +5130,6 @@
 /obj/decal/poster/wallsign/morrigan,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/security/brig)
-"eYx" = (
-/obj/landmark/artifact,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/maintenance)
 "eYJ" = (
 /obj/decal/poster/wallsign/poster_y4nt{
 	pixel_y = 32
@@ -17777,7 +17773,7 @@
 /obj/item/clothing/glasses/vr{
 	network = "arcadevr"
 	},
-/obj/mapping_helper/mob_spawn/corpse/human/random,
+/obj/mapping_helper/mob_spawn/corpse/human/morrigan_prisoner,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/brig)
 "qXk" = (
@@ -29920,7 +29916,7 @@ xtg
 wEq
 bur
 oDH
-eYx
+xtg
 eEF
 xtg
 vkE
