@@ -22,53 +22,53 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
-		)
+	)
 
 /datum/parallax_render_source_group/area/assault_pod
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/space_1/south,
 		/atom/movable/screen/parallax_render_source/space_2/south,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse/south,
-		)
+	)
 
 /datum/parallax_render_source_group/area/wizard_den
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
-		)
+	)
 
 /datum/parallax_render_source_group/area/magpie
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
-		)
+	)
 
 /datum/parallax_render_source_group/area/void
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/void,
 		/atom/movable/screen/parallax_render_source/void/clouds_1,
 		/atom/movable/screen/parallax_render_source/void/clouds_2,
-		)
+	)
 
 /datum/parallax_render_source_group/area/ice_moon
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/foreground/snow,
 		/atom/movable/screen/parallax_render_source/foreground/snow/sparse,
-		)
+	)
 
 /datum/parallax_render_source_group/area/io_moon
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/foreground/embers,
 		/atom/movable/screen/parallax_render_source/foreground/embers/sparse,
-		)
+	)
 
 /datum/parallax_render_source_group/area/mars
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/foreground/dust,
 		/atom/movable/screen/parallax_render_source/foreground/dust/sparse,
-		)
+	)
 
 /datum/parallax_render_source_group/area/owlery
 	parallax_render_source_types = list(
@@ -77,15 +77,20 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 		/atom/movable/screen/parallax_render_source/typhon/donut3,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
 		/atom/movable/screen/parallax_render_source/asteroids_near,
-		)
+	)
 
 /datum/parallax_render_source_group/area/grillnasium
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
-		)
+	)
 
+/datum/parallax_render_source_group/area/ntps
+	parallax_render_source_types = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+	)
 
 // Planet Parallax Layers
 /datum/parallax_render_source_group/planet/snow
@@ -120,7 +125,7 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/foreground/dust,
 		/atom/movable/screen/parallax_render_source/foreground/dust/sparse,
-		)
+	)
 
 /datum/parallax_render_source_group/planet/desert/setup_render_sources()
 	var/angle = rand(110, 250)
@@ -132,7 +137,7 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 		0, 0, 1, colour_alpha,
 		0, 0, 0, 1,
 		0, 0, 0, -1,
-		)
+	)
 
 	var/atom/movable/screen/parallax_render_source/dust_layer = src.parallax_render_source_types_and_sources[/atom/movable/screen/parallax_render_source/foreground/dust]
 	dust_layer.color = colour_matrix
@@ -147,7 +152,7 @@ Z_LEVEL_PARALLAX_RENDER_SOURCE_GROUP(5)
 /datum/parallax_render_source_group/planet/forest
 	parallax_render_source_types = list(
 		/atom/movable/screen/parallax_render_source/foreground/clouds,
-		)
+	)
 
 /datum/parallax_render_source_group/planet/forest/setup_render_sources()
 	var/angle = rand(90, 270)
