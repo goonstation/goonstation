@@ -138,7 +138,7 @@ var/global/obj/fuckyou/flashDummy
 					target_r = L
 					continue
 
-	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, 1)
+	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, TRUE)
 
 	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 

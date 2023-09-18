@@ -35,7 +35,7 @@
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			M.set_loc(container)
-			container.update_icon()
+			container.UpdateIcon()
 		M.death(FALSE)
 
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian
@@ -81,6 +81,8 @@
 	var/delete_id = FALSE
 	/// If TRUE we break the headset and make it unscannable after spawning
 	var/break_headset = FALSE
+	/// Sent in if we are spawned by a human critter that drops a spawner
+	var/datum/bioHolder/appearance_override = null
 
 	setup()
 		if (isnull(src.spawn_type))
@@ -159,7 +161,10 @@
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			H.set_loc(container)
-			container.update_icon()
+			container.UpdateIcon()
+
+		if (src.appearance_override)
+			H.bioHolder.CopyOther(src.appearance_override, TRUE, FALSE, FALSE, FALSE)
 
 	do_damage(var/mob/living/carbon/human/H) // Override if you want specific damage numbers / types
 		H.TakeDamage("all", brute = rand(100, 150), burn = rand(100, 150), tox = rand(40, 80), disallow_limb_loss = TRUE)

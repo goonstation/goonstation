@@ -890,7 +890,7 @@
 			var/turf/simulated/wall/T = A
 			T.dismantle_wall(1)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 			boutput(ship.pilot, "<span class='alert'><B>You crash through the wall!</B></span>")
 			in_bump = 0
 		if(istype(A, /turf/simulated/floor))
@@ -904,7 +904,7 @@
 					shake_camera(M, 6, 8)
 			if(prob(30))
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 				boutput(ship.pilot, "<span class='alert'><B>You plow through the floor!</B></span>")
 	if(ismob(A))
 		var/mob/M = A
@@ -917,7 +917,7 @@
 		var/turf/target = get_edge_target_turf(ship, ship.dir)
 		M.throw_at(target, 4, 2)
 		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 		in_bump = 0
 	if(isobj(A))
 		var/obj/O = A
@@ -927,7 +927,7 @@
 			boutput(O, "<span class='alert'><B>[ship] crashes into you!</B></span>")
 			var/turf/target = get_edge_target_turf(ship, ship.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 			O.throw_at(target, 20, 3, allow_anchored = TRUE, bonus_throwforce = 15)
 			if (istype(O, /obj/machinery/vehicle))
 				A.meteorhit(src)

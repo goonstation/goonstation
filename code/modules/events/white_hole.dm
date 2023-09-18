@@ -433,7 +433,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/paper = 3,
 			/obj/critter/killertomato = 0.5,
 			/mob/living/critter/small_animal/cat/synth = 1,
-			/mob/living/critter/maneater = 0.3,
+			/mob/living/critter/plant/maneater = 0.3,
 		),
 		"maint" = list(
 			/obj/decal/cleanable/rust = 10,
@@ -800,7 +800,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				if (M.client)
 					boutput(M, "<span class='alert'>The air grows light and thin. Something feels terribly wrong.</span>")
 					shake_camera(M, 5, 16)
-			playsound(src,'sound/effects/creaking_metal1.ogg',100,0,5,-0.5)
+			playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,-0.5)
 
 		processing_items |= src
 
@@ -848,7 +848,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			for_by_tcl(IX, /obj/machinery/interdictor)
 				if (IX.expend_interdict(500, src))
 					if(prob(20))
-						playsound(IX,'sound/machines/alarm_a.ogg',20,0,5,-1.5)
+						playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
 						IX.visible_message("<span class='alert'><b>[IX] emits an anti-gravitational anomaly warning!</b></span>")
 					if(state != "active")
 						grow_duration += 4 SECOND
@@ -865,7 +865,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			if(state == "static")
 				state = "growing"
 				src.visible_message("<span class='alert'><b>[src] begins to uncollapse out of itself!</b></span>")
-				playsound(src,'sound/machines/engine_alert3.ogg',100,0,5,-0.5)
+				playsound(src,'sound/machines/engine_alert3.ogg',100,FALSE,5,-0.5)
 				if (random_events.announce_events && triggered_by_event)
 					command_alert("A severe anti-gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It will uncollapse into a white hole. Consider quarantining it off.", "Gravitational Anomaly", alert_origin = ALERT_ANOMALY)
 			return
@@ -873,7 +873,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 		if(state == "growing")
 			state = "active"
 			src.visible_message("<span class='alert'><b>[src] uncollapses into a white hole!</b></span>")
-			playsound(src, 'sound/machines/singulo_start.ogg', 90, 0, 5, -1)
+			playsound(src, 'sound/machines/singulo_start.ogg', 90, FALSE, 5, -1)
 			animate(src, transform = matrix(1.2, MATRIX_SCALE), time = 0.3 SECONDS, loop = 0, easing = BOUNCE_EASING)
 			animate(transform = matrix(1, MATRIX_SCALE), time = 0.3 SECONDS, loop = 0, easing = BOUNCE_EASING)
 
@@ -882,7 +882,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			SPAWN(0)
 				animate(src, transform = matrix() / 100, time = 3 SECONDS, loop = 0)
 			state = "dying"
-			playsound(src, 'sound/machines/singulo_start.ogg', 90, 0, 5, -2)
+			playsound(src, 'sound/machines/singulo_start.ogg', 90, FALSE, 5, -2)
 
 		// push or throw things away from the white hole
 		for (var/atom/movable/X in range(7,src))

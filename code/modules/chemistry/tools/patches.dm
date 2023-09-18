@@ -215,7 +215,7 @@
 				R.trans_to(M, reagents.total_volume/2)
 				src.in_use = 0
 
-			playsound(src, 'sound/items/sticker.ogg', 50, 1)
+			playsound(src, 'sound/items/sticker.ogg', 50, TRUE)
 
 		else
 			if (!borg)
@@ -743,7 +743,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 		if (src?.reagents.total_volume > 0)
 			src.reagents.trans_to(mender, src.reagents.total_volume)
 			src.UpdateIcon()
-			playsound(src, 'sound/items/mender_refill_juice.ogg', 50, 1)
+			playsound(src, 'sound/items/mender_refill_juice.ogg', 50, TRUE)
 			if (src.reagents.total_volume == 0)
 				boutput(user, "<span class='notice'>You refill [mender] to [mender.reagents.total_volume]u and empty [src]!</span>")
 			else

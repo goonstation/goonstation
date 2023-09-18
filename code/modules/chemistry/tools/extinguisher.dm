@@ -168,7 +168,7 @@
 				qdel(src)
 				return
 
-		playsound(src, 'sound/effects/spray.ogg', 30, 1, -3)
+		playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -3)
 
 		var/direction = get_dir(src,target)
 

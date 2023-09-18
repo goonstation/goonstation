@@ -409,7 +409,7 @@ var/global/the_automaton = null
 		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 		swirl.set_loc(target_turf)
 		swirl.pixel_y = 10
-		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 		SPAWN(1.5 SECONDS)
 			swirl.pixel_y = 0
 			qdel(swirl)

@@ -326,7 +326,7 @@
 			else						// otherwise limit to 10 tiles
 				target = get_ranged_target_turf(T, direction, 10)
 
-			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 			for(var/atom/movable/AM in H)
 				AM.set_loc(T)
 				AM.pipe_eject(direction)
@@ -336,7 +336,7 @@
 
 		else	// no specified direction, so throw in random direction
 
-			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -1343,10 +1343,10 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 		if (allowDump)
 			flick("unblockoutlet-open", src)
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
-			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 
 
 			for(var/atom/movable/AM in H)
@@ -1414,10 +1414,10 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 		if (things_to_dump.len)
 			flick("unblockoutlet-open", src)
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
-			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 
 			for (var/atom/movable/AM in things_to_dump)
 				AM.set_loc(src.loc)
@@ -1862,10 +1862,10 @@ TYPEINFO(/obj/disposaloutlet)
 					M.mail_tag = H.mail_tag
 
 		flick("outlet-open", src)
-		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 		sleep(2 SECONDS)	//wait until correct animation frame
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 
 		var/turf/expel_loc = get_turf(src)
 		while(locate(src.type) in get_step(expel_loc, src.dir))
@@ -2088,7 +2088,7 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
 		current.dir = directions[1]
 		current.dpdir = src.dpdir
-		update_icon(current)
+		UpdateIcon(current)
 		qdel(src)
 	else if (length(directions) == 2)
 	// turns into a normal pipe segment
@@ -2105,12 +2105,12 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 				if (SOUTHWEST)
 					src.dir = SOUTH
 			src.icon_state = "pipe-c"
-			update_icon(src)
+			UpdateIcon(src)
 		else
 		// straight pipe
 			src.dir = directions[1]
 			src.icon_state = "pipe-s"
-			update_icon(src)
+			UpdateIcon(src)
 	else
 	// DO NOT MAKE JUNCTIONS, FOOLS.
 		CRASH("Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")

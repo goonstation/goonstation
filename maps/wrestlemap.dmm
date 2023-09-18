@@ -22704,13 +22704,13 @@
 /area/station/medical/breakroom)
 "jQJ" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/beakerbox,
-/obj/item/reagent_containers/glass/beaker/large,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/machinery/chem_shaker/large/chemistry,
+/obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/arcade,
 /area/station/science/chemistry)
 "jQL" = (
@@ -40972,6 +40972,7 @@
 /area/station/security/detectives_office)
 "rYQ" = (
 /obj/table/reinforced/chemistry/auto,
+/obj/item/storage/box/beakerbox,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /obj/item/reagent_containers/food/drinks/fueltank,
 /turf/simulated/floor/specialroom/arcade,
