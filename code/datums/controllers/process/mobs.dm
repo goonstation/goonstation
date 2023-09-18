@@ -55,11 +55,7 @@
 					scheck()
 			else if(istype(X, /mob/dead))
 				var/mob/dead/G = X
-				#ifdef HALLOWEEN
-				if (TRUE)
-				#else
 				if (isadminghost(G) || IS_TWITCH_CONTROLLED(G))
-				#endif
 					G:Life(src)
 					scheck()
 
