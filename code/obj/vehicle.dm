@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.eject_rider(crashed=FALSE, selfdismount=TRUE, ejectall=FALSE)
 
 	Click(location,control,params)
-		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
 			var/mob/dead/observer/O = usr
 			if(src.rider)
 				O.insert_observer(src.rider)
