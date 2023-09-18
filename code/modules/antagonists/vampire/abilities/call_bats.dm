@@ -17,6 +17,7 @@
 	can_cast_while_cuffed = TRUE
 	unlock_message = "You have gained Call Frost Bats, a protection spell."
 	var/num_bats = 4
+	var/datum/projectile/special/homing/orbiter/spiritbat/P = new
 
 	cast(mob/target)
 		. = ..()
@@ -34,7 +35,7 @@
 			var/turf/shoot_at = get_step(user, pick(alldirs))
 
 			for (var/i = 0, i < num_bats, i += 0.1) //pay no mind :)
-				var/obj/projectile/proj = initialize_projectile_pixel_spread(M, P, shoot_at)
+				var/obj/projectile/proj = initialize_projectile_pixel_spread(user, P, shoot_at)
 				if (proj && !proj.disposed)
 					proj.targets = list(user)
 

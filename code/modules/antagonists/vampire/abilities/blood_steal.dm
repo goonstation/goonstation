@@ -79,10 +79,10 @@
 
 	loopStart()
 		..()
-		var/obj/projectile/proj = initialize_projectile_pixel_spread(HH, new/datum/projectile/special/homing/vamp_blood, M)
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(AH, new/datum/projectile/special/homing/vamp_blood, user)
 		var/tries = 10
 		while (tries > 0 && (!proj || proj.disposed))
-			proj = initialize_projectile_pixel_spread(HH, new/datum/projectile/special/homing/vamp_blood, M)
+			proj = initialize_projectile_pixel_spread(AH, new/datum/projectile/special/homing/vamp_blood, user)
 			tries--
 		if(isnull(proj) || proj.disposed)
 			boutput(user, "<span class='alert'>Blood steal interrupted.</span>")

@@ -99,10 +99,10 @@
 
 		AH.the_coffin = coffin
 
-		var/obj/projectile/proj = initialize_projectile_pixel_spread(M, new/datum/projectile/special/homing/travel, spawnturf)
+		var/obj/projectile/proj = initialize_projectile_pixel_spread(user, new/datum/projectile/special/homing/travel, AH.coffin_turf)
 		var/tries = 5
 		while (tries > 0 && (!proj || proj.disposed))
-			proj = initialize_projectile_pixel_spread(M, new/datum/projectile/special/homing/travel, spawnturf)
+			proj = initialize_projectile_pixel_spread(user, new/datum/projectile/special/homing/travel, AH.coffin_turf)
 
 		proj.special_data["owner"] = user
 		proj.targets = list(coffin)

@@ -3898,7 +3898,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	name = "Vanish"
 	desc = "Leave your body and return to ghost form"
 	icon_state = "mentordisappear"
-	needs_turf = FALSE //always castable
+	can_cast_from_container = TRUE
 	var/const/disappearance_time = 0.5 SECONDS
 
 	cast(mob/target)
@@ -3920,9 +3920,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /datum/targetable/critter/mentortoggle
 	name = "Toggle Pick Up Requests"
 	desc = "Enable or disable player pick up requests."
-	icon_state = "mentordisappear"
 	icon_state = "mentortoggle"
-	needs_turf = FALSE //always castable
+	can_cast_from_container = TRUE
 
 	cast(mob/target)
 		var/mob/living/critter/small_animal/mouse/weak/mentor/M = holder.owner
