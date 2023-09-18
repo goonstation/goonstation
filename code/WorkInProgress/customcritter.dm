@@ -326,7 +326,7 @@
 
 	proc/play_optional_sound(var/sound/sound)
 		if (sound)
-			playsound(src, sound, 50, 1)
+			playsound(src, sound, 50, TRUE)
 
 	proc/addUntiedEvent(var/datum/critterEvent/E)
 		events += E

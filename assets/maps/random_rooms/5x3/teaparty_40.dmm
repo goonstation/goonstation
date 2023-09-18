@@ -98,7 +98,7 @@
 /turf/simulated/floor/grasslush/thinner,
 /area/space)
 "s" = (
-/obj/stool/chair/wooden/scrap{
+/obj/stool/chair/dining/scrap{
 	layer = 2.89;
 	pixel_y = -10
 	},
@@ -110,7 +110,7 @@
 /turf/simulated/floor/grasslush/thinner,
 /area/space)
 "w" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1;
 	pixel_y = 13
 	},
@@ -203,7 +203,7 @@
 /turf/simulated/floor/grasslush/thin,
 /area/space)
 "X" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	pixel_y = -6;
 	layer = 2.89
 	},

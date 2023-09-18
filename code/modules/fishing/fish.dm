@@ -503,6 +503,10 @@ Alien/mutant/other fish:
 		global.processing_items -= src
 		. = ..()
 
+	make_reagents()
+		..() //it still contains fish oil
+		src.reagents.add_reagent("liquid_code",10)
+
 	process()
 		if (prob(30))
 			src.hologram_effect(TRUE)

@@ -457,12 +457,20 @@
 		if((POD_ACCESS_SALVAGER in src.access_type) && length(landmarks[LANDMARK_SALVAGER_BEACON]))
 			. = pick(landmarks[LANDMARK_SALVAGER_BEACON])
 
+
+var/datum/magpie_manager/magpie_man = new
+/datum/magpie_manager
+	var/obj/npc/trader/salvager/magpie
+
+	proc/setup()
+		src.magpie = locate("M4GP13")
+
+
 /obj/npc/trader/salvager
 	name = "M4GP13 Salvage and Barter System"
 	icon = 'icons/obj/trader.dmi'
 	icon_state = "crate_dispenser"
 	picture = "generic.png"
-	trader_area = "/area/syndicate/salvager"
 	angrynope = "Unable to process request."
 	whotext = "I am the salvage reclamation and supply commissary.  In short I will provide goods in exchange for reclaimed materials and equipment."
 	barter = TRUE
@@ -533,12 +541,17 @@
 						I.bump_up(chatbot_text.measured_height)
 
 		src.audible_message("<span class='game say'><span class='name'>[src]</span> [pick(src.speakverbs)], \"[message]\"", just_maptext = just_float, assoc_maptext = chatbot_text)
-		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, 1)
+		playsound(src, 'sound/misc/talk/bottalk_1.ogg', 40, TRUE)
 
 
 // Stubs for the public
 /obj/item/clothing/suit/space/salvager
 /obj/item/clothing/head/helmet/space/engineer/salvager
+/obj/item/clothing/glasses/salvager
+#ifndef SECRETS_ENABLED
+	icon_state = "construction"
+	item_state = "construction"
+#endif
 /obj/salvager_cryotron
 /obj/item/salvager_hand_tele
 /obj/item/device/pda2/salvager

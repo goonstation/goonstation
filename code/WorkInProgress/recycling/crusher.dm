@@ -73,7 +73,7 @@ TYPEINFO(/obj/machinery/crusher)
 	onStart()
 		. = ..()
 		if (!ON_COOLDOWN(owner, "crusher_sound", 1 SECOND))
-			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
+			playsound(owner, 'sound/items/mining_drill.ogg', 40, TRUE,0,0.8)
 		target.temp_flags |= BEING_CRUSHERED
 		if(!src.classic)
 			target.set_loc(owner.loc)
@@ -87,7 +87,7 @@ TYPEINFO(/obj/machinery/crusher)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
-			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
+			playsound(owner, 'sound/items/mining_drill.ogg', 40, TRUE,0,0.8)
 		if(!src.classic)
 			target.set_loc(owner.loc)
 
@@ -160,7 +160,7 @@ TYPEINFO(/obj/machinery/crusher)
 			return
 
 		if (!ON_COOLDOWN(owner, "crusher_sound", 1 SECOND))
-			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
+			playsound(owner, 'sound/items/mining_drill.ogg', 40, TRUE,0,0.8)
 
 		var/obj/item/scrap/S = new(get_turf(owner))
 		S.blood = bblood

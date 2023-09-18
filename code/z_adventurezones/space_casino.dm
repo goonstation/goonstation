@@ -118,7 +118,7 @@ TYPEINFO(/obj/submachine/slot_machine/item)
 		sleep(1.5 SECONDS)
 
 		new/obj/decal/implo(src.loc)
-		playsound(src, 'sound/effects/suck.ogg', 60, 1)
+		playsound(src, 'sound/effects/suck.ogg', 60, TRUE)
 		if (src.scan)
 			src.scan.set_loc(src.loc)
 		qdel(src)

@@ -301,11 +301,6 @@ var/list/dirty_keystates = list()
 
 /mob
 
-	proc/keys_changed(keys, changed)
-		set waitfor = 0
-		//SHOULD_NOT_SLEEP(TRUE) // prevent shitty code from locking up the main input loop - commenting out for now because out of scope
-		// stub
-
 	proc/recheck_keys()
 		keys_changed(src.client?.key_state, 0xFFFF) //ZeWaka: Fix for null.key_state
 
