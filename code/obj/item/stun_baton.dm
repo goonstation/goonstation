@@ -543,7 +543,7 @@ TYPEINFO(/obj/item/baton/ntso)
 			"<span class='notice'>You begin to prime the [src].</span>",\
 			"<span class='alert'>You hear an electrical whine.</span>")
 			playsound(user, 'sound/items/defib_charge.ogg', 90, 0)
-			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_on]", null, INTERRUPT_NONE)
+			SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 0.2 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_on]", null, INTERRUPT_NONE)
 
 	proc/charge(var/mob/user) // Defib code but its exactly what we want here
 		src.setStatus("defib_charged", 5 SECONDS)
