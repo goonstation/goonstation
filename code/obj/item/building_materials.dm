@@ -384,6 +384,10 @@ MATERIAL
 					currentRecipe = /datum/sheet_crafting_recipe/metal/construct
 
 				if("smallwindow")
+					for (var/obj/window/window in get_turf(src))
+						//the same direction thindow or a full window
+						if (window.dir == usr.dir || !(window.dir in cardinal))
+							return
 					if (src.reinforcement)
 						a_type = map_settings ? map_settings.rwindows_thin : /obj/window/reinforced
 					else
@@ -394,7 +398,10 @@ MATERIAL
 					a_callback = /proc/window_reinforce_callback
 
 				if("bigwindow")
-					if (!amount_check(2,usr)) return
+					if (locate(/obj/window) in get_turf(usr))
+						return
+					if (!amount_check(2,usr))
+						return
 					if (src.reinforcement)
 						a_type = map_settings ? map_settings.rwindows : /obj/window/reinforced
 					else
