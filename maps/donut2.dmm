@@ -3566,10 +3566,6 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/machinery/conveyor_switch{
-	id = "cargo-art-in";
-	name = "artifact intake conveyor switch"
-	},
 /obj/landmark/start/job/quartermaster,
 /turf/simulated/floor/caution/south,
 /area/station/quartermaster/office)
@@ -3661,12 +3657,6 @@
 "aqs" = (
 /obj/submachine/cargopad{
 	name = "Cargo Bay Pad"
-	},
-/obj/machinery/door_control{
-	id = "cargoartdoor";
-	name = "Artifact Intake Door Control";
-	pixel_x = 6;
-	pixel_y = -24
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -3969,7 +3959,6 @@
 	pixel_y = 4
 	},
 /obj/submachine/weapon_vendor/security,
-/obj/machinery/light/incandescent,
 /obj/cable{
 	icon_state = "2-4"
 	},
@@ -9348,7 +9337,7 @@
 /obj/disposalpipe/trunk{
 	dir = 8
 	},
-/obj/machinery/disposal{
+/obj/machinery/disposal/botany{
 	name = "monkey feeder"
 	},
 /turf/simulated/floor/green/side{
@@ -25748,7 +25737,8 @@
 /area/station/turret_protected/AIsat)
 "fgb" = (
 /obj/machinery/conveyor/NW{
-	id = "cargo-art-in"
+	id = "cargo-art-in";
+	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -29152,9 +29142,12 @@
 /area/station/crew_quarters/arcade/dungeon)
 "hKJ" = (
 /obj/machinery/conveyor/EW{
-	id = "cargo-art-in"
+	id = "cargo-art-in";
+	operating = 1
 	},
-/obj/plasticflaps,
+/obj/plasticflaps{
+	dir = 4
+	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "hKZ" = (
@@ -30044,14 +30037,11 @@
 /area/station/hallway/primary/south)
 "iwD" = (
 /obj/forcefield/energyshield/perma,
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "cargoartdoor";
-	name = "Cargo Routing Door"
-	},
 /obj/machinery/conveyor/NS{
 	id = "cargo-art-in";
 	operating = 1
 	},
+/obj/plasticflaps,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "iwQ" = (
@@ -34094,6 +34084,10 @@
 /area/station/hallway/primary/south)
 "lmO" = (
 /obj/decal/cleanable/generic,
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "lnc" = (
@@ -34629,6 +34623,7 @@
 /obj/item/device/radio/intercom/security{
 	dir = 8
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/redblack{
 	dir = 4
 	},
@@ -34790,7 +34785,8 @@
 /area/station/maintenance/inner/central)
 "lLv" = (
 /obj/machinery/conveyor/EW{
-	id = "cargo-art-in"
+	id = "cargo-art-in";
+	operating = 1
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
@@ -35308,6 +35304,9 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/science)
+"mgr" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/gen_storage)
 "mgz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -129376,11 +129375,11 @@ dAM
 vBz
 ahR
 aMy
-pNr
-pNr
-pNr
-pNr
-pNr
+mgr
+mgr
+mgr
+mgr
+mgr
 aaa
 aaa
 aaa
