@@ -1,6 +1,8 @@
 //Yikes let's put all these stone powers in one place
 //This is Readster's very messy attempt at ability code (<-- Eff You)
 
+// aloe update I refuse to even refactor this. good fucking luck
+
 //Space Stone
 /obj/ability_button/stone_teleport
 	name = "Telecrystal Stone"

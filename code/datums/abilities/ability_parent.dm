@@ -808,7 +808,7 @@
 		owner.holder.abilities.Swap(index_source,index_target)
 		owner.holder.updateButtons()
 
-///TODO: add a var for that thing where some abilities find a valid target on a turf if a turf isn't provided (for wraiths mostly)
+///TODO: add a var for that thing where some abilities find a valid target on a turf if a turf isn't provided (for wraiths mostly) (also lings)
 /// Allows me to put checks in castcheck() where they belong and avoid duplication
 /datum/targetable
 
@@ -926,7 +926,7 @@
 	/// If you need additional restrictions on the ability use that the vars don't cover, override castcheck() with those.
 	/// return FALSE to deduct points on successful cast, TRUE to not deduct points.
 	/// Once again- ONCE THIS PROC IS CALLED, WE HAVE COMMITTED TO CASTING THE ABILITY
-	proc/cast(atom/target)
+	proc/cast(atom/target, params)
 		//SHOULD_CALL_PARENT(TRUE)
 		if(interrupt_action_bars)
 			actions.interrupt(holder.owner, INTERRUPT_ACT)
