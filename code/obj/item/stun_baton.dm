@@ -212,8 +212,7 @@ TYPEINFO(/obj/item/baton)
 		else
 			dude_to_stun = victim
 
-
-		dude_to_stun.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
+		src.the_stun(dude_to_stun)
 
 		if (isliving(dude_to_stun))
 			var/mob/living/L = dude_to_stun
@@ -229,6 +228,9 @@ TYPEINFO(/obj/item/baton)
 			dude_to_stun.lastattackertime = world.time
 
 		return TRUE
+
+	proc/the_stun(var/mob/target)
+		target.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
 
 	attack_self(mob/user as mob)
 		src.add_fingerprint(user)
@@ -519,3 +521,44 @@ TYPEINFO(/obj/item/baton/ntso)
 		src.is_active = FALSE
 		usr.show_text("The [src.name] is now open and unpowered.", "blue")
 		src.process_charges(-INFINITY)
+
+/obj/item/baton/windup
+	is_active = FALSE
+	pickup_sfx = 'sound/items/pickup_defib.ogg'
+
+	var/recharge_time = 5 SECONDS
+
+	attack_self(mob/user as mob)
+		src.add_fingerprint(user)
+
+		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, cost_normal) & CELL_SUFFICIENT_CHARGE) && !(src.is_active))
+			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
+			return
+
+		if (ON_COOLDOWN(src, "defib_cooldown", src.recharge_time)) // Shameless code steal
+			user.show_text("[src] is [src.hasStatus("defib_charged") ? "already primed" : "still recharging"]!", "red")
+			return
+		if (!src.hasStatus("defib_charged"))
+			user.visible_message("<span class='alert'>[user] begins to prime the [src].</span>",\
+			"<span class='notice'>You begin to prime the [src].</span>",\
+			"<span class='alert'>You hear an electrical whine.</span>")
+			playsound(user, 'sound/items/defib_charge.ogg', 90, 0)
+			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_on]", null, INTERRUPT_NONE)
+
+	proc/charge(var/mob/user) // Defib code but its exactly what we want here
+		src.setStatus("defib_charged", 5 SECONDS)
+		src.is_active = TRUE
+		src.UpdateIcon()
+		user.update_inhands()
+		SPAWN(5 SECONDS)
+			if (!QDELETED(src) && src.is_active)
+				src.is_active = FALSE
+				src.UpdateIcon()
+				user?.update_inhands()
+
+	the_stun(var/mob/target)
+		target.do_disorient(src.disorient_stamina_damage, weakened = src.stun_normal_weakened * 10, disorient = 60)
+		src.delStatus("defib_charged")
+		src.is_active = FALSE
+		src.UpdateIcon()
+		target.update_inhands()

@@ -2900,173 +2900,30 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 				playsound(src, 'sound/ambience/morrigan/steamrelease.ogg', 70, 1)
 				ON_COOLDOWN(src, "rack delay", 1 SECONDS)
 
-//stun baton
-/obj/item/syndicate_baton
+// stun baton
+/obj/item/baton/windup/morrigan
 	name = "Mod.33 Izar"
 	desc = "Rather flimsy compared to those back home...."
-	flags = FPRINT | TABLEPASS
 	icon = 'icons/obj/adventurezones/morrigan/weapons/weapon.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	icon_state = "synd_baton-off"
-	item_state = "baton"
-	pickup_sfx = 'sound/items/pickup_defib.ogg'
-	uses_multiple_icon_states = 1
-	c_flags = ONBELT
-	force = 0
+	icon_state = "baton"
+	item_state = "synd_baton-off"
+	icon_on = "batonex"
+	icon_off = "baton"
+	item_on = "synd_baton-A"
+	item_off = "synd_baton-D"
+	force = 15
 	throwforce = 7
-	health = 7
-	w_class = W_CLASS_NORMAL
 	contraband = 4
-	stamina_damage = 0
-	stamina_cost = 0
-	stamina_crit_chance = 5
-	item_function_flags = USE_INTENT_SWITCH_TRIGGER
-	var/icon_base = "baton"
-	var/charge_time = 100
-	var/icon_on = "batonex"
-	var/icon_off = "baton"
-	var/item_on = "synd_baton-A"
-	var/item_off = "synd_baton-D"
-	var/flipped = FALSE
-	var/is_active = TRUE
+	can_swap_cell = FALSE
 
-	New()
-		..()
-	disposing()
-		processing_items -= src
-		..()
-	update_icon()
-
-		if (!src || !istype(src))
-			return
-
-		if
-			src.set_icon_state("[src.icon_off][src.flipped ? "-f" : ""]")
-			src.item_state = "[src.item_off][src.flipped ? "-f" : ""]"
-			return
-
-		switch (type)
-			if ("failed_stun")
-				user.visible_message("<span class='alert'><B>[victim] has been prodded with the [src.name] by [user]! Luckily it was off.</B></span>")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE, -1)
-				logTheThing(LOG_COMBAT, user, "unsuccessfully tries to stun [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
-
-			if ("failed_harm")
-				user.visible_message("<span class='alert'><B>[victim] has been prodded with the [src.name] by [user]! Luckily it was wasn't extended.</B></span>")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE, -1)
-				logTheThing(LOG_COMBAT, user, "unsuccessfully tries to harm [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
-
-			if ("stun")
-				user.visible_message("<span class='alert'><B>[victim] has been stunned with the [src.name] by [user]!</B></span>")
-				logTheThing(LOG_COMBAT, user, "stuns [constructTarget(victim,"combat")] with the [src.name] at [log_loc(victim)].")
-				playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 50, TRUE, -1)
-
-			else
-				logTheThing(LOG_DEBUG, user, "<b>Convair880</b>: stun baton ([src.type]) do_stun() was called with an invalid argument ([type]), aborting. Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
-				return
-		var/mob/dude_to_stun
-		if (stun_who == 1 && user && ismob(user))
-			dude_to_stun = user
-		else
-			dude_to_stun = victim
-
-
-		dude_to_stun.changeStatus("weakened", 4 SECONDS)
-		if (isliving(dude_to_stun))
-			var/mob/living/L = dude_to_stun
-			L.Virus_ShockCure(33)
-			L.shock_cyberheart(33)
-
-		src.process_charges(-1, user)
-
-		if (user && ismob(user))
-			user.lastattacked = dude_to_stun
-			dude_to_stun.lastattacker = user
-			dude_to_stun.lastattackertime = world.time
-
-	attack_self(mob/user as mob)
-		if(ON_COOLDOWN(src, "defib_cooldown", src.charge_time))
-			user.show_text("[src] is [src.hasStatus("defib_charged") ? "already primed" : "still recharging"]!", "red")
-			return
-		if(!src.hasStatus("defib_charged"))
-			user.visible_message("<span class='alert'>[user] primes the [src].</span>", "<span class='notice'>You prime the [src].</span>", "<span class='alert'>You hear an electrical whine.</span>")
-			playsound(user.loc, 'sound/items/defib_charge.ogg', 90, 0)
-			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_on]", null, INTERRUPT_NONE)
-
-	attack(mob/M, mob/user)
-		src.add_fingerprint(user)
-
-		if(check_target_immunity( M ))
-			user.show_message("<span class='alert'>[M] seems to be warded from attacks!</span>")
-			return
-
-		if (src.can_stun() == 1 && user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
-			src.do_stun(user, M, "failed_stun", 1)
-			JOB_XP(user, "Clown", 1)
-			return
-
-		switch (user.a_intent)
-			if ("harm")
-				if (!src.is_active || (src.is_active && src.can_stun() == 0))
-					playsound(src, "swing_hit", 50, 1, -1)
-					..()
-				else
-					src.do_stun(user, M, "failed_harm", 1)
-
-			else
-				if (!src.is_active || (src.is_active && src.can_stun() == 0))
-					src.do_stun(user, M, "failed_stun", 1)
-				else
-					if (user.mind && M.mind && (user.mind.get_master(ROLE_VAMPTHRALL) == M.mind))
-						boutput(user, "<span class='alert'>You cannot harm your master!</span>")
-						return
-					if (M.do_dodge(user, src) || M.parry_or_dodge(user, src))
-						return
-					src.do_stun(user, M, "stun", 2)
-
-		return
-
-	intent_switch_trigger(var/mob/user)
-		src.do_flip_stuff(user, user.a_intent)
-
-	attack_hand(var/mob/user)
-		if (src.flipped && user.a_intent != INTENT_HARM)
-			user.show_text("You flip \the [src].")
-			src.flipped = FALSE
-			src.UpdateIcon()
-			user.update_inhands()
-		else if (user.a_intent == INTENT_HARM)
-			src.do_flip_stuff(user, INTENT_HARM)
-		..()
-
-	proc/do_flip_stuff(var/mob/user, var/intent)
-		if (intent == INTENT_HARM)
-			if (src.flipped) //swapping hands triggers the intent switch too, so we dont wanna spam that
-				return
-			src.flipped = TRUE
-			animate(src, transform = turn(matrix(), 120), time = 0.07 SECONDS) //turn partially
-			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS) //turn the rest of the way
-			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS) //finish up at the right spot
-			src.transform = null //clear it before updating icon
-			src.setItemSpecial(/datum/item_special/simple)
-			src.UpdateIcon()
-			user.update_inhands()
-			user.show_text("<B>You flip \the [src] and grab it by the head!" "red")
-		else
-			if (!src.flipped)
-				return
-			src.flipped = FALSE
-			animate(src, transform = turn(matrix(), 120), time = 0.07 SECONDS)
-			animate(transform = turn(matrix(), 240), time = 0.07 SECONDS)
-			animate(transform = turn(matrix(), 180), time = 0.04 SECONDS)
-			src.transform = null
-			src.setItemSpecial(src.item_special_path)
-			src.UpdateIcon()
-			user.update_inhands()
-			user.show_text("<B>You flip \the [src] and grab it by the base!", "red")
-
-
-	//projectiles
+	the_stun(var/mob/target)
+		target.changeStatus("weakened", 5 SECONDS)
+		src.delStatus("defib_charged")
+		src.is_active = FALSE
+		src.UpdateIcon()
+		target.update_inhands()
+//projectiles
 /datum/projectile/bullet/optio/hitscanrail
 	name = "hardlight beam"
 	sname = "electro magnetic shot"
