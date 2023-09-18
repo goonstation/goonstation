@@ -26,7 +26,7 @@
 	var/regenRate = 0 //starting regen
 	var/bonus = 0
 	var/lastBonus = 0
-	var/tabName = "Spells"
+	var/tabName = "Abilities"
 
 	var/mob/owner = null
 	var/datum/abilityHolder/relay = null
