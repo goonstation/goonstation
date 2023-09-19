@@ -625,7 +625,7 @@
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	var/trunk_type = /obj/disposalpipe/trunk/regular
-	dpdir = 0		//! bitmask of pipe directions
+	dpdir = 0	
 	regular
 		trunk_type = /obj/disposalpipe/trunk/regular
 	mail
@@ -829,7 +829,7 @@
 	isauto = TRUE
 	dir = SOUTH
 	icon_state = "pipe-j-spawner"
-	dpdir = 0	//! bitmask of pipe directions
+	dpdir = 0
 
 /obj/disposalpipe/junction/auto/New()
 	..()
@@ -840,7 +840,7 @@
 
 /obj/disposalpipe/junction/auto/initialize()
 	var/list/selftile = list()
-	for (var/obj/disposalpipe/segment/auto/dupe in range(0, src))
+	for (var/obj/disposalpipe/segment/auto/dupe in get_turf(src))
 		if (istype(dupe, src))
 			selftile += dupe
 	if (length(selftile) > 1)
