@@ -136,7 +136,7 @@
 
 		blob
 			name = "chunk of blob"
-			default_material = "blob"
+			default_material = /datum/material/organic/blob
 			mat_changename = FALSE
 
 			random
@@ -201,25 +201,24 @@
 	name = "frozen fart"
 	desc = "Remarkable! The cold temperatures in the freezer have frozen the fart in mid-air."
 	amount = 5
-	default_material = "frozenfart"
+	default_material = /datum/material/organic/frozenfart
 	mat_changename = FALSE
 	uses_default_material_appearance = FALSE
 
 /obj/item/material_piece/steel
 	desc = "A processed bar of Steel, a common metal."
-	default_material = "steel"
+	default_material = /datum/material/metal/steel
 	icon_state = "bar"
-	default_material = "steel"
 
 /obj/item/material_piece/hamburgris
 	name = "clump"
 	desc = "A big clump of petrified mince, with a horriffic smell."
-	default_material = "hamburgris"
+	default_material = /datum/material/organic/hamburgris
 	icon_state = "wad"
 
 /obj/item/material_piece/glass
 	desc = "A cut block of glass, a common crystalline substance."
-	default_material = "glass"
+	default_material = /datum/material/crystal/glass
 	icon_state = "block"
 
 /obj/item/material_piece/copper

@@ -358,7 +358,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	initial_reagents = list("honey"=15)
 	brew_result = list("mead"=20)
 	mat_changename = "honey"
-	default_material = "honey"
+	default_material = /datum/material/organic/honey
 
 /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly
 	name = "royal jelly"

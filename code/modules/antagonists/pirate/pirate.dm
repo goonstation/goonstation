@@ -101,7 +101,7 @@ TYPEINFO(/obj/gold_bee)
 	object_flags = NO_GHOSTCRITTER
 	density = 1
 	anchored = UNANCHORED
-	default_material = "gold"
+	default_material = /datum/material/metal/gold
 	mat_changename = FALSE
 	var/list/gibs = list()
 
