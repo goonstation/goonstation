@@ -15136,7 +15136,7 @@
 	},
 /area/morrigan/station/civilian/cafe)
 "opW" = (
-/obj/machinery/disposal/small/south,
+/obj/item/collecting_chute,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/eng)
 "oqw" = (
@@ -22142,7 +22142,7 @@
 /turf/unsimulated/floor/caution,
 /area/morrigan/station/exit)
 "vuW" = (
-/obj/machinery/door/poddoor/buff,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/eng)
 "vve" = (
