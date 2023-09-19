@@ -224,13 +224,13 @@
 				recipient_cell.charge += overspill
 				if (jumper.positive)
 					user.tri_message(target,
-						"[user] transfers some of their power to [target].",
+						"[user] transfers some of [his_or_her(user)] power to [target].",
 						"<span class='notice'>You transfer [overspill] charge. [target] is now fully charged.</span>",
 						"<span class='notice'>[user] transfers [overspill] power to you!</span>"
 					)
 				else
 					user.tri_message(target,
-						"<span class='alert'>[user] siphons some of the power from [target] to themselves!</span>",
+						"<span class='alert'>[user] siphons some of the power from [target] to [himself_or_herself(user)]!</span>",
 						"<span class='notice'>You siphon [overspill] charge. You are now fully charged.</span>",
 						"<span class='alert'>[user] siphons [overspill] power from you!</span>"
 					)
@@ -240,13 +240,13 @@
 				recipient_cell.charge += jumper.charge_amount
 				if (jumper.positive)
 					user.tri_message(target,
-						"[user] transfers some of their power to [target].",
+						"[user] transfers some of [his_or_her(user)] power to [target].",
 						"<span class='notice'>You transfer [jumper.charge_amount] charge.</span>",
 						"<span class='notice'>[user] transfers [jumper.charge_amount] power to you!</span>"
 					)
 				else
 					user.tri_message(target,
-						"<span class='alert'>[user] siphons some of the power from [target] to themselves!</span>",
+						"<span class='alert'>[user] siphons some of the power from [target] to [himself_or_herself(user)]!</span>",
 						"<span class='notice'>You siphon [jumper.charge_amount] charge.</span>",
 						"<span class='alert'>[user] siphons [jumper.charge_amount] power from you!</span>"
 					)
