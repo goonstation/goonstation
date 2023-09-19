@@ -615,7 +615,7 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	desc = "Radioactive waste produced as a by product of reprocessing fuel. It may still contain some fuel to be extracted."
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "waste"
-	default_material = "slag"
+	default_material = /datum/material/metal/slag
 
 	New()
 		. = ..()

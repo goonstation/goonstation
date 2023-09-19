@@ -392,11 +392,29 @@
 		var/list/picklist
 		switch(picker)
 			if(1 to 10)
-				picklist = list("diamond","ruby","topaz","emerald","sapphire","amethyst")
+				picklist = list(
+					/datum/material/crystal/gemstone/diamond,
+					/datum/material/crystal/gemstone/ruby,
+					/datum/material/crystal/gemstone/topaz,
+					/datum/material/crystal/gemstone/emerald,
+					/datum/material/crystal/gemstone/sapphire,
+					/datum/material/crystal/gemstone/amethyst)
 			if(11 to 40)
-				picklist = list("jasper","garnet","peridot","malachite","lapislazuli","alexandrite")
+				picklist = list(
+					/datum/material/crystal/gemstone/jasper,
+					/datum/material/crystal/gemstone/garnet,
+					/datum/material/crystal/gemstone/peridot,
+					/datum/material/crystal/gemstone/malachite,
+					/datum/material/crystal/gemstone/lapis,
+					/datum/material/crystal/gemstone/alexandrite)
 			else
-				picklist = list("onyx","rosequartz","citrine","jade","aquamarine","iolite")
+				picklist = list(
+					/datum/material/crystal/gemstone/onyx,
+					/datum/material/crystal/gemstone/rose_quartz,
+					/datum/material/crystal/gemstone/citrine,
+					/datum/material/crystal/gemstone/jade,
+					/datum/material/crystal/gemstone/aquamarine,
+					/datum/material/crystal/gemstone/iolite)
 
 		var/datum/material/M = getMaterial(pick(picklist))
 		src.setMaterial(M)

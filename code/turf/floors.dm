@@ -10,7 +10,7 @@
 	icon_state = "floor"
 	thermal_conductivity = 0.04
 	heat_capacity = 225000
-	default_material = "steel"
+	default_material = /datum/material/metal/steel
 
 	turf_flags = IS_TYPE_SIMULATED | MOB_SLIP | MOB_STEP
 
@@ -28,7 +28,7 @@
 	New()
 		..()
 		if (has_material && isnull(default_material))
-			setMaterial(getMaterial("steel"))
+			setMaterial(getMaterial(/datum/material/metal/steel))
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -653,7 +653,7 @@ TYPEINFO(/turf/simulated/floor/circuit)
 	RL_LumB = 0.3
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 
 /turf/simulated/floor/circuit/green
 	icon_state = "circuit-green"
@@ -890,7 +890,7 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 
 /turf/simulated/floor/glassblock/transparent
 	icon_state = "glasstr_cyan"
-	default_material = "glass"
+	default_material = /datum/material/crystal/glass
 
 	New()
 		var/image/I
@@ -1104,7 +1104,7 @@ TYPEINFO(/turf/simulated/floor/wood)
 	icon_state = "wooden-2"
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 
 /turf/simulated/floor/wood/two
 	icon_state = "wooden"
@@ -1224,36 +1224,36 @@ TYPEINFO(/turf/simulated/floor/wood)
 TYPEINFO(/turf/simulated/floor/stairs/wood)
 	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	icon_state = "wood_stairs"
 
 /turf/simulated/floor/stairs/wood/wide
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	icon_state = "wood_stairs2"
 
 
 TYPEINFO(/turf/simulated/floor/stairs/wood2)
 	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood2
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	icon_state = "wood2_stairs"
 
 /turf/simulated/floor/stairs/wood2/wide
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	icon_state = "wood2_stairs2"
 
 /turf/simulated/floor/stairs/wood2/middle
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	icon_state = "wood2_stairs2_middle"
 
 TYPEINFO(/turf/simulated/floor/stairs/wood3)
 	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/stairs/wood3
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	icon_state = "wood3_stairs"
 
 /turf/simulated/floor/stairs/wood3/wide
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	icon_state = "wood3_stairs2"
 
 
@@ -1435,7 +1435,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	mat_changedesc = 0
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
-	default_material = "synthrubber"
+	default_material = /datum/material/rubber/synthrubber
 
 	#ifdef XMAS
 	New()
@@ -1729,7 +1729,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 						if (src.material)
 							I.setMaterial(src.material)
 						else
-							var/datum/material/M = getMaterial("steel")
+							var/datum/material/M = getMaterial(/datum/material/metal/steel)
 							I.setMaterial(M)
 					src.ReplaceWithLattice()
 				if(2)
@@ -1741,7 +1741,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 						if (src.material)
 							I.setMaterial(src.material)
 						else
-							var/datum/material/M = getMaterial("steel")
+							var/datum/material/M = getMaterial(/datum/material/metal/steel)
 							I.setMaterial(M)
 					if(prob(80))
 						src.break_tile_to_plating()
@@ -1805,7 +1805,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
 		src.setMaterial(mat)
 	else
-		src.setMaterial(getMaterial("steel"))
+		src.setMaterial(getMaterial(/datum/material/metal/steel))
 	levelupdate()
 
 /turf/simulated/floor/proc/dismantle_wall()//can get called due to people spamming weldingtools on walls
@@ -1914,7 +1914,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		if(src.material)
 			A.setMaterial(src.material)
 		else
-			var/datum/material/M = getMaterial("steel")
+			var/datum/material/M = getMaterial(/datum/material/metal/steel)
 			A.setMaterial(M)
 		.= A //return tile for crowbar special attack ok
 		user.unlock_medal("Misclick", 1)
@@ -1953,8 +1953,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				R1.setMaterial(material)
 				R2.setMaterial(material)
 			else
-				R1.setMaterial(getMaterial("steel"))
-				R2.setMaterial(getMaterial("steel"))
+				R1.setMaterial(getMaterial(/datum/material/metal/steel))
+				R2.setMaterial(getMaterial(/datum/material/metal/steel))
 			ReplaceWithFloor()
 			src.to_plating()
 			return

@@ -43,7 +43,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/thermal_mass = 420*250//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 
-	New(material="steel")
+	New(material=/datum/material/metal/steel)
 		..()
 		if(istype(material, /datum/material))
 			src.setMaterial(material)

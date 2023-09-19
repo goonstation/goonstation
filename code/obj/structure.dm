@@ -72,7 +72,7 @@ obj/structure/ex_act(severity)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/defaultMaterial = getMaterial("steel")
+					var/datum/material/defaultMaterial = getMaterial(/datum/material/metal/steel)
 					A.setMaterial(defaultMaterial)
 				qdel(src)
 			else
@@ -81,7 +81,7 @@ obj/structure/ex_act(severity)
 					if (src.material)
 						A.setMaterial(src.material)
 					else
-						var/datum/material/defaultMaterial = getMaterial("steel")
+						var/datum/material/defaultMaterial = getMaterial(/datum/material/metal/steel)
 						A.setMaterial(defaultMaterial)
 				else
 					qdel(src)
@@ -209,7 +209,7 @@ obj/structure/ex_act(severity)
 				if (the_girder.material)
 					A.setMaterial(the_girder.material)
 				else
-					var/datum/material/defaultMaterial = getMaterial("steel")
+					var/datum/material/defaultMaterial = getMaterial(/datum/material/metal/steel)
 					A.setMaterial(defaultMaterial)
 				qdel(the_girder)
 			if (GIRDER_UNSECURESUPPORT)
@@ -231,7 +231,7 @@ obj/structure/ex_act(severity)
 				if (the_tool.material)
 					A.setMaterial(the_girder.material)
 				else
-					var/datum/material/defaultMaterial = getMaterial("steel")
+					var/datum/material/defaultMaterial = getMaterial(/datum/material/metal/steel)
 					A.setMaterial(defaultMaterial)
 				qdel(the_girder)
 			if (GIRDER_SECURE)
@@ -248,7 +248,7 @@ obj/structure/ex_act(severity)
 				var/turf/Tsrc = get_turf(the_girder)
 				var/turf/simulated/wall/WALL
 				var/obj/item/sheet/S = the_tool
-				var/datum/material/defaultMaterial = getMaterial("steel")
+				var/datum/material/defaultMaterial = getMaterial(/datum/material/metal/steel)
 
 				if (S.reinforcement)
 					WALL = Tsrc.ReplaceWithRWall()
@@ -301,7 +301,7 @@ obj/structure/ex_act(severity)
 
 		T.ReplaceWith(target_type, FALSE, FALSE, FALSE)
 		var/atom/A = src.loc
-		var/datum/material/defaultMaterial = getMaterial("steel")
+		var/datum/material/defaultMaterial = getMaterial(/datum/material/metal/steel)
 		var/turf/simulated/wall/false_wall/FW = A
 
 		FW.setMaterial(S.material ? S.material : defaultMaterial)
@@ -321,7 +321,7 @@ obj/structure/ex_act(severity)
 		if(src.material)
 			S.setMaterial(src.material)
 		else
-			var/datum/material/defaultMaterial = getMaterial("steel")
+			var/datum/material/defaultMaterial = getMaterial(/datum/material/metal/steel)
 			S.setMaterial(defaultMaterial)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 		qdel(src)

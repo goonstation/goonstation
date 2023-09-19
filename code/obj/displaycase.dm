@@ -260,7 +260,7 @@
 				L.AddComponent(/datum/component/cell_holder, our_cell)
 				// The man with the golden gun.
 				if (src.quality_counter >= src.q_threshold2)
-					L.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
+					L.setMaterial(getMaterial(/datum/material/metal/gold), appearance = 0, setname = 0)
 					if (L.material)
 						L.material.triggerOnAdd(L)
 						L.name = "show-piece antique laser gun"

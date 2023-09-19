@@ -806,9 +806,9 @@ TYPEINFO(/obj/item/room_planner)
 		var/datum/material/glass = origin.glass
 		var/turf/L = get_turf(src)
 		if (!metal)
-			metal = getMaterial("steel")
+			metal = getMaterial(/datum/material/metal/steel)
 		if (!glass)
-			glass = getMaterial("glass")
+			glass = getMaterial(/datum/material/crystal/glass)
 
 		origin.use_materials(2, borders)
 

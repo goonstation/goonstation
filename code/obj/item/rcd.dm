@@ -133,7 +133,7 @@ TYPEINFO(/obj/item/rcd)
 	var/list/datum/contextAction/contexts = list()
 
 	get_desc()
-		. += "<br>It holds [matter]/[max_matter] [istype(src, /obj/item/rcd/material) ? material_type.name : "matter"]  units. It is currently set to "
+		. += "<br>It holds [matter]/[max_matter] [istype(src, /obj/item/rcd/material) ? material_type : "matter"]  units. It is currently set to "
 		switch (src.mode)
 			if (RCD_MODE_FLOORSWALLS)
 				. += "Floors/Walls"
@@ -310,9 +310,9 @@ TYPEINFO(/obj/item/rcd)
 						if (!restricted_materials || !safe_deconstruct)
 							T.setMaterial(getMaterial(material_type))
 						else if(!("steel" in restricted_materials))
-							T.setMaterial(getMaterial("steel"))
+							T.setMaterial(getMaterial(/datum/material/metal/steel))
 						else
-							T.setMaterial(getMaterial("negativematter"))
+							T.setMaterial(getMaterial(/datum/material/metal/negativematter))
 						log_construction(user, "deconstructs a wall ([A])")
 						return
 
@@ -638,7 +638,7 @@ TYPEINFO(/obj/item/rcd)
 
 //unused except for in the research module
 /obj/item/rcd/cyborg
-	material_type = "electrum"
+	material_type = /datum/material/metal/electrum
 
 TYPEINFO(/obj/item/rcd/construction)
 	mats = list("MET-3"=100, "CRY-2" = 50, "CON-2"=50, "POW-3"=50, "starstone"=10)
@@ -918,8 +918,8 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 
 	shits_sparks = 0
 
-	material_type = "cardboard"
-	restricted_materials = list("cardboard")
+	material_type = /datum/material/organic/cardboard
+	restricted_materials = list(/datum/material/organic/cardboard)
 	safe_deconstruct = TRUE
 
 	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_AIRLOCK, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)

@@ -414,7 +414,7 @@
 		icon_state = "packingcrate[n]"
 		icon_opened = "packingcrate[n]_open"
 		icon_closed = "packingcrate[n]"
-		src.setMaterial(getMaterial("cardboard"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial(/datum/material/organic/cardboard), appearance = 0, setname = 0)
 		..()
 
 /obj/storage/crate/wooden
@@ -434,7 +434,7 @@
 		icon_state = "woodencrate[n]"
 		icon_opened = "woodencrate[n]_open"
 		icon_closed = "woodencrate[n]"
-		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial(/datum/material/organic/wood), appearance = 0, setname = 0)
 		..()
 
 

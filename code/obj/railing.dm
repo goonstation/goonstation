@@ -54,7 +54,7 @@
 			if(src.material)
 				R.setMaterial(src.material)
 			else
-				var/datum/material/M = getMaterial("steel")
+				var/datum/material/M = getMaterial(/datum/material/metal/steel)
 				R.setMaterial(M)
 		qdel(src)
 
@@ -133,7 +133,7 @@
 				if(src.material)
 					R.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
+					var/datum/material/M = getMaterial(/datum/material/metal/steel)
 					R.setMaterial(M)
 			else
 				user.show_text("There's no reinforcment on [src] to cut off!", "blue")

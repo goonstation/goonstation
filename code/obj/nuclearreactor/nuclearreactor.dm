@@ -69,7 +69,7 @@
 		terminal.set_dir(turn(src.dir,-90))
 		terminal.master = src
 
-		src.setMaterial(getMaterial("steel"), appearance = FALSE)
+		src.setMaterial(getMaterial(/datum/material/metal/steel), appearance = FALSE)
 		for(var/x=1 to REACTOR_GRID_WIDTH)
 			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				src.flux_grid[x][y] = list()
@@ -549,7 +549,7 @@
 			return FALSE
 		if(istype(equipped,/obj/item/device/light/glowstick))
 			var/obj/item/device/light/glowstick/stick = equipped
-			var/datum/material/glowstick_mat = getMaterial("glowstick")
+			var/datum/material/glowstick_mat = getMaterial(/datum/material/metal/glowstick)
 			glowstick_mat = glowstick_mat.getMutable()
 			glowstick_mat.setColor(rgb(stick.col_r*255, stick.col_g*255, stick.col_b*255))
 			var/obj/item/reactor_component/fuel_rod/glowsticks/result_rod = new /obj/item/reactor_component/fuel_rod/glowsticks(glowstick_mat)
@@ -752,7 +752,7 @@
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/glowstick
 	New()
-		var/datum/material/glowstick_mat = getMaterial("glowstick")
+		var/datum/material/glowstick_mat = getMaterial(/datum/material/metal/glowstick)
 		glowstick_mat = glowstick_mat.getMutable()
 
 		for(var/x=1 to REACTOR_GRID_WIDTH)

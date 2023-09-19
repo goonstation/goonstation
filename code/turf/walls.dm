@@ -181,7 +181,7 @@ TYPEINFO(/turf/simulated/wall)
 	qdel(parts)
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
-	var/datum/material/defaultMaterial = getMaterial("steel")
+	var/datum/material/defaultMaterial = getMaterial(/datum/material/metal/steel)
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
 		if (!devastated)
 			var/atom/A = new /obj/structure/girder/reinforced(src)
@@ -237,7 +237,7 @@ TYPEINFO(/turf/simulated/wall)
 	if (src.material && keep_material)
 		D.setMaterial(src.material)
 	else
-		D.setMaterial(getMaterial("steel"))
+		D.setMaterial(getMaterial(/datum/material/metal/steel))
 
 
 /turf/simulated/wall/burn_down()
@@ -431,7 +431,7 @@ TYPEINFO(/turf/simulated/wall)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial(/datum/material/metal/steel))
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 6
@@ -439,7 +439,7 @@ TYPEINFO(/turf/simulated/wall)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial(/datum/material/metal/steel))
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 
 	else if (iswrenchingtool(W))
@@ -463,7 +463,7 @@ TYPEINFO(/turf/simulated/wall)
 			if (src.material)
 				A.setMaterial(src.material)
 			else
-				A.setMaterial(getMaterial("steel"))
+				A.setMaterial(getMaterial(/datum/material/metal/steel))
 
 	else if (isscrewingtool(W))
 		if (src.d_state == 1)
@@ -528,7 +528,7 @@ TYPEINFO(/turf/simulated/wall)
 			if(S.material)
 				src.setMaterial(S.material)
 			else
-				src.setMaterial(getMaterial("steel"))
+				src.setMaterial(getMaterial(/datum/material/metal/steel))
 			boutput(user, "<span class='notice'>You repaired the wall.</span>")
 
 //grabsmash

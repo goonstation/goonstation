@@ -179,7 +179,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 				if (S.material)
 					src.setMaterial(S.material)
 				else
-					var/datum/material/M = getMaterial("steel")
+					var/datum/material/M = getMaterial(/datum/material/metal/steel)
 					src.setMaterial(M)
 				boutput(user, "<span class='notice'>You repaired the wall.</span>")
 				return
@@ -1303,7 +1303,7 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial(/datum/material/metal/steel))
 				self_message = "You remove the reinforcing rods."
 				message = "[owner] removes \the [the_wall]'s reinforcing rods."
 				the_wall.d_state = 2
@@ -1327,7 +1327,7 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 				if (the_wall.material)
 					A.setMaterial(the_wall.material)
 				else
-					A.setMaterial(getMaterial("steel"))
+					A.setMaterial(getMaterial(/datum/material/metal/steel))
 			if (WALL_PRYSHEATH)
 				self_message = "You remove the outer sheath."
 				message = "[owner] removes \the [the_wall]'s outer sheath."

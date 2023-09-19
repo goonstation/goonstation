@@ -515,7 +515,7 @@
 		if(src.material)
 			R.setMaterial(src.material)
 		else
-			var/datum/material/M = getMaterial("steel")
+			var/datum/material/M = getMaterial(/datum/material/metal/steel)
 			R.setMaterial(M)
 
 	proc/get_connection()

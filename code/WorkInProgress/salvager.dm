@@ -150,7 +150,7 @@
 				if (F.material)
 					B.setMaterial(F.material)
 				else
-					var/datum/material/M = getMaterial("steel")
+					var/datum/material/M = getMaterial(/datum/material/metal/steel)
 					B.setMaterial(M)
 			F.ReplaceWithSpace()
 			log_construction(user, "removes flooring ([A])")
@@ -163,7 +163,7 @@
 					if (A.material)
 						B.setMaterial(A.material)
 					else
-						var/datum/material/M = getMaterial("steel")
+						var/datum/material/M = getMaterial(/datum/material/metal/steel)
 						B.setMaterial(M)
 
 			log_construction(user, "deconstructs an airlock ([A])")
@@ -175,7 +175,7 @@
 			if (A.material)
 				B.setMaterial(A.material)
 			else
-				var/datum/material/M = getMaterial("steel")
+				var/datum/material/M = getMaterial(/datum/material/metal/steel)
 				B.setMaterial(M)
 
 			log_construction(user, "deconstructs a girder ([A])")
@@ -187,7 +187,7 @@
 				if (A.material)
 					B.setMaterial(A.material)
 				else
-					var/datum/material/M = getMaterial("glass")
+					var/datum/material/M = getMaterial(/datum/material/crystal/glass)
 					B.setMaterial(M)
 			log_construction(user, "deconstructs a ([A])")
 			qdel(A)
@@ -200,7 +200,7 @@
 				if (A.material)
 					B.setMaterial(A.material)
 				else
-					var/datum/material/M = getMaterial("steel")
+					var/datum/material/M = getMaterial(/datum/material/metal/steel)
 					B.setMaterial(M)
 
 			log_construction(user, "deconstructs a grille ([A])")
@@ -212,7 +212,7 @@
 			if (A.material)
 				B.setMaterial(A.material)
 			else
-				var/datum/material/M = getMaterial("steel")
+				var/datum/material/M = getMaterial(/datum/material/metal/steel)
 				B.setMaterial(M)
 			log_construction(user, "deconstructs a lattice ([A])")
 			qdel(A)
@@ -232,7 +232,7 @@
 					if (A.material)
 						B.setMaterial(A.material)
 					else
-						var/datum/material/M = getMaterial("steel")
+						var/datum/material/M = getMaterial(/datum/material/metal/steel)
 						B.setMaterial(M)
 				log_construction(user, "deconstructs a ([A])")
 				qdel(A)

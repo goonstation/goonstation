@@ -1310,8 +1310,8 @@ Returns:
 	hit_type = DAMAGE_STAB
 
 	New()
-		setHeadMaterial(getMaterial("telecrystal"))
-		setShaftMaterial(getMaterial("bohrum"))
+		setHeadMaterial(getMaterial(/datum/material/crystal/telecrystal))
+		setShaftMaterial(getMaterial(/datum/material/metal/bohrum))
 		buildOverlays()
 
 		..()
@@ -3185,9 +3185,9 @@ var/list/lag_list = new/list()
 /datum/engibox_mode/transmute
 	name = "Change material"
 	desc = "Changes the material of the targeted object."
-	var/mat_id = "gold"
+	var/mat_type = /datum/material/metal/gold
 	used(atom/user, atom/target)
-		target.setMaterial(getMaterial(mat_id))
+		target.setMaterial(getMaterial(mat_type))
 		return
 
 /datum/engibox_mode/density

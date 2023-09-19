@@ -309,7 +309,7 @@ TYPEINFO(/obj/item/circuitboard)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
+					var/datum/material/M = getMaterial(/datum/material/metal/steel)
 					A.setMaterial(M)
 				qdel(src)
 		if(STATE_ANCHORED)

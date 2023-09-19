@@ -624,11 +624,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if (src.mode != "ready")
 					boutput(usr, "<span class='alert'>You cannot eject materials while the unit is working.</span>")
 				else
-					var/mat_id = href_list["eject"]
+					var/mat_type = href_list["eject"]
 					var/ejectamt = 0
 					var/turf/ejectturf = get_turf(usr)
 					for(var/obj/item/O in src.contents)
-						if (O.material && O.material.getID() == mat_id)
+						if (O.material && O.material.getID() == mat_type)
 							if (!ejectamt)
 								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
 								if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
@@ -642,7 +642,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 								playsound(src.loc, src.sound_grump, 50, 1)
 								boutput(usr, "<span class='alert'>There's not that much material in [name]. It has ejected what it could.</span>")
 								ejectamt = O.amount
-							src.update_resource_amount(mat_id, -ejectamt * 10) // ejectamt will always be <= actual amount
+							src.update_resource_amount(mat_type, -ejectamt * 10) // ejectamt will always be <= actual amount
 							if (ejectamt == O.amount)
 								O.set_loc(get_output_location(O))
 							else
@@ -1681,20 +1681,20 @@ TYPEINFO(/obj/machinery/manufacturer)
 			return TRUE
 		return FALSE
 
-	proc/get_materials_needed(datum/manufacture/M) // returns associative list of item_paths with the mat_ids they're gonna use; does not guarantee all item_paths are satisfied
+	proc/get_materials_needed(datum/manufacture/M) // returns associative list of item_paths with the mat_types they're gonna use; does not guarantee all item_paths are satisfied
 		var/list/mats_used = list()
 		var/list/mats_available = src.resource_amounts.Copy()
 
 		for (var/i in 1 to M.item_paths.len)
 			var/pattern = M.item_paths[i]
 			var/amount = M.item_amounts[i]
-			for (var/mat_id in mats_available)
-				if (mats_available[mat_id] < amount)
+			for (var/mat_type in mats_available)
+				if (mats_available[mat_type] < amount)
 					continue
-				var/datum/material/mat = src.get_our_material(mat_id)
+				var/datum/material/mat = src.get_our_material(mat_type)
 				if (match_material_pattern(pattern, mat)) // TODO: refactor proc cuz this is bad
-					mats_used[pattern] = mat_id
-					mats_available[mat_id] -= amount
+					mats_used[pattern] = mat_type
+					mats_available[mat_type] -= amount
 					break
 
 		return mats_used
@@ -1707,13 +1707,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/remove_materials(datum/manufacture/M)
 		for (var/i = 1 to M.item_paths.len)
 			var/pattern = M.item_paths[i]
-			var/mat_id = src.materials_in_use[pattern]
-			if (mat_id)
+			var/mat_type = src.materials_in_use[pattern]
+			if (mat_type)
 				var/amount = M.item_amounts[i]
-				src.update_resource_amount(mat_id, -amount)
+				src.update_resource_amount(mat_type, -amount)
 				for (var/obj/item/I in src.contents)
-					if (I.material && istype(I, src.base_material_class) && I.material.getID() == mat_id)
-						var/target_amount = round(src.resource_amounts[mat_id] / 10)
+					if (I.material && istype(I, src.base_material_class) && I.material.getID() == mat_type)
+						var/target_amount = round(src.resource_amounts[mat_type] / 10)
 						if (!target_amount)
 							src.contents -= I
 							qdel(I)
@@ -1970,12 +1970,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 	</thead>
 	<tbody>
 		"}
-		for(var/mat_id in src.resource_amounts)
-			var/datum/material/mat = src.get_our_material(mat_id)
+		for(var/mat_type in src.resource_amounts)
+			var/datum/material/mat = src.get_our_material(mat_type)
 			dat += {"
 		<tr>
-			<td><a href='?src=\ref[src];eject=[url_encode(mat_id)]' class='buttonlink'>&#9167;</a>  [mat]</td>
-			<td class='r'>[src.resource_amounts[mat_id]/10]</td>
+			<td><a href='?src=\ref[src];eject=[url_encode(mat_type)]' class='buttonlink'>&#9167;</a>  [mat]</td>
+			<td class='r'>[src.resource_amounts[mat_type]/10]</td>
 		</tr>
 			"}
 		if (length(dat) == 1)
@@ -2183,17 +2183,17 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 		src.build_icon()
 
-	proc/update_resource_amount(mat_id, amt, datum/material/mat_added=null)
-		src.resource_amounts[mat_id] = max(src.resource_amounts[mat_id] + amt, 0)
-		if (src.resource_amounts[mat_id] == 0)
-			stored_materials_by_id -= mat_id
-		else if (mat_added && !(mat_id in stored_materials_by_id))
-			stored_materials_by_id[mat_id] = mat_added
+	proc/update_resource_amount(mat_type, amt, datum/material/mat_added=null)
+		src.resource_amounts[mat_type] = max(src.resource_amounts[mat_type] + amt, 0)
+		if (src.resource_amounts[mat_type] == 0)
+			stored_materials_by_id -= mat_type
+		else if (mat_added && !(mat_type in stored_materials_by_id))
+			stored_materials_by_id[mat_type] = mat_added
 
-	proc/get_our_material(mat_id)
-		if (mat_id in src.stored_materials_by_id)
-			return src.stored_materials_by_id[mat_id]
-		return getMaterial(mat_id)
+	proc/get_our_material(mat_type)
+		if (mat_type in src.stored_materials_by_id)
+			return src.stored_materials_by_id[mat_type]
+		return getMaterial(mat_type)
 
 	proc/claim_free_resources()
 		if (src.deconstruct_flags & DECON_BUILT)

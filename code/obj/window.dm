@@ -522,7 +522,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			if(src.material)
 				A.setMaterial(src.material)
 			else
-				var/datum/material/M = getMaterial("glass")
+				var/datum/material/M = getMaterial(/datum/material/crystal/glass)
 				A.setMaterial(M)
 		if(reinforcement && limiter.canISpawn(/obj/item/rods))
 			A = new /obj/item/rods(src.loc)
@@ -631,7 +631,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		if(the_window.material)
 			A.setMaterial(the_window.material)
 		else
-			var/datum/material/M = getMaterial("glass")
+			var/datum/material/M = getMaterial(/datum/material/crystal/glass)
 			A.setMaterial(M)
 		if(!(the_window.dir in cardinal)) // full window takes two sheets to make
 			A.amount += 1
@@ -649,7 +649,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 /obj/window/reinforced
 	icon_state = "rwindow"
-	default_reinforcement = "steel"
+	default_reinforcement = /datum/material/metal/steel
 	health = 50
 	health_max = 50
 	the_tuff_stuff
@@ -889,7 +889,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /obj/window/auto/reinforced
 	icon_state = "mapwin_r"
 	mod = "R-"
-	default_reinforcement = "steel"
+	default_reinforcement = /datum/material/metal/steel
 	health = 50
 	health_max = 50
 	the_tuff_stuff
@@ -969,7 +969,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /obj/window/auto/crystal/reinforced
 	icon_state = "mapwin_r"
 	mod = "R-"
-	default_reinforcement = "steel"
+	default_reinforcement = /datum/material/metal/steel
 	health = 100
 	health_max = 100
 	deconstruct_time = 5 SECONDS
@@ -987,7 +987,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	desc = "A hardened external window reinforced with advanced materials."
 	icon_state = "mapwin_r"
 	default_material = "uqillglass"
-	default_reinforcement = "bohrum"
+	default_reinforcement = /datum/material/metal/bohrum
 
 	the_tuff_stuff
 		explosion_resistance = 5

@@ -1638,7 +1638,7 @@ obj/decoration/gibberBroken
 			if (src.material)
 				S.setMaterial(src.material)
 			else
-				var/datum/material/M = getMaterial("steel")
+				var/datum/material/M = getMaterial(/datum/material/metal/steel)
 				S.setMaterial(M)
 		qdel(src)
 		return

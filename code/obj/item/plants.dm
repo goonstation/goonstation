@@ -222,7 +222,7 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 
 	make_reagents()
 		..()
-		src.setMaterial(getMaterial("steel"))
+		src.setMaterial(getMaterial(/datum/material/metal/steel))
 
 /obj/item/plant/oat
 	name = "oat"

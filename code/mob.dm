@@ -2165,10 +2165,10 @@
 			the_butt = new /obj/item/clothing/head/butt/cyberbutt
 		else if (istype(src, /mob/living/intangible/wraith) || istype(src, /mob/dead))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE)
+			the_butt.setMaterial(getMaterial(/datum/material/organic/ectoplasm), appearance = TRUE, setname = TRUE)
 		else if (istype(src, /mob/living/intangible/blob_overmind))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE)
+			the_butt.setMaterial(getMaterial(/datum/material/organic/blob), appearance = TRUE, setname = TRUE)
 		else
 			the_butt = new /obj/item/clothing/head/butt/synth
 

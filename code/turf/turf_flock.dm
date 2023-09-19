@@ -314,10 +314,10 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	for (var/i = 1 to rand(3, 6))
 		if (prob(70))
 			B = new /obj/item/raw_material/scrap_metal(T)
-			B.setMaterial(getMaterial("gnesis"))
+			B.setMaterial(getMaterial(/datum/material/crystal/gnesis))
 		else
 			B = new /obj/item/raw_material/shard(T)
-			B.setMaterial(getMaterial("gnesisglass"))
+			B.setMaterial(getMaterial(/datum/material/crystal/gnesis/transparent))
 
 	src.ReplaceWith("/turf/simulated/floor/feather", FALSE)
 
@@ -339,7 +339,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 		src.desc = initial(src.desc)
 		src.broken = FALSE
 		src.UpdateIcon()
-		src.setMaterial(getMaterial("gnesis"))
+		src.setMaterial(getMaterial(/datum/material/crystal/gnesis))
 	var/health_given = min(min(resources_available, FLOCK_REPAIR_COST) * src.repair_per_resource, src.max_health - src.health)
 	src.health += health_given
 	return ceil(health_given / src.repair_per_resource)

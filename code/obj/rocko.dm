@@ -33,9 +33,9 @@ obj/item/rocko
 		if (prob(10))
 			var/new_material = pick(childrentypesof(/datum/material/metal))
 			var/datum/material/dummy = new new_material
-			src.setMaterial(getMaterial(dummy.getID()), setname = FALSE)
+			src.setMaterial(getMaterial(dummy.type), setname = FALSE)
 		else
-			src.setMaterial(getMaterial("rock"), appearance = FALSE, setname = FALSE)
+			src.setMaterial(getMaterial(/datum/material/metal/rock), appearance = FALSE, setname = FALSE)
 
 		UpdateIcon()
 

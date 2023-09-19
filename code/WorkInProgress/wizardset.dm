@@ -585,7 +585,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 	var/light_b = 1
 	var/lum = 5
 	var/image/over_image
-	var/assoc_material = "wiz_quartz"
+	var/assoc_material = /datum/material/crystal/wizard/quartz
 	icon = 'icons/turf/adventure.dmi'
 
 	proc/create_bar(var/obj/machinery/portable_reclaimer/creator)
