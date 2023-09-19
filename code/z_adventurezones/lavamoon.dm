@@ -1470,7 +1470,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	icon_state = "energywall"
 	opacity = 0
 	var/obj/iomoon_puzzle/ancient_robot_door/energy/next = null
-	dir = 4
+	dir = EAST
 	var/length = 1
 	var/datum/light/light
 

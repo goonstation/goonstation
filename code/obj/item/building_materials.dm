@@ -10,7 +10,7 @@ MATERIAL
 /proc/window_reinforce_callback(var/datum/action/bar/icon/build/B, var/obj/window/reinforced/W)
 	sheet_crafting_callback(B)
 
-	W.ini_dir = 2
+	W.ini_dir = SOUTH
 	if (!istype(W) || !usr) //Wire: Fix for Cannot read null.loc (|| !usr)
 		return
 	if (B.sheet.reinforcement)
@@ -1384,7 +1384,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 	if(isnull(.))
 		var/dir = SOUTH
 		if (recipeID == "bigwindow")
-			dir = 5 //full tile
+			dir = NORTHEAST //full tile
 
 		var/icon/result_icon = icon(icon, icon_state, dir)
 
