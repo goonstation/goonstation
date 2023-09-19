@@ -70,10 +70,10 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 			else if(istype(T.loc, /area/allowGenerate))
 				prev_area.contents += T
 				//new prev_area.type(T)
-			else if(length(prev_area.area_parallax_layers))
+			else if(prev_area.area_parallax_render_source_group)
 				var/area/our_area = T.loc
-				if(!length(our_area.area_parallax_layers))
-					our_area.area_parallax_layers = prev_area.area_parallax_layers
+				if(!our_area.area_parallax_render_source_group)
+					our_area.area_parallax_render_source_group = prev_area.area_parallax_render_source_group
 					our_area.occlude_foreground_parallax_layers = TRUE
 				if (our_area.occlude_foreground_parallax_layers)
 					T.update_parallax_occlusion_overlay()
