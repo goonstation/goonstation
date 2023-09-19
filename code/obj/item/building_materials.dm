@@ -462,7 +462,7 @@ MATERIAL
 
 	reinforced
 		icon_state = "sheet-m-r_5"
-		default_reinforcement = "steel"
+		default_reinforcement = /datum/material/metal/steel
 
 /obj/item/sheet/glass
 	icon_state = "sheet-g_5" //overriden in-game but shows up in map editors
@@ -472,7 +472,7 @@ MATERIAL
 
 	reinforced
 		icon_state = "sheet-g-r_5"
-		default_reinforcement = "steel"
+		default_reinforcement = /datum/material/metal/steel
 
 	crystal
 		default_material = "plasmaglass"
@@ -480,7 +480,7 @@ MATERIAL
 
 		reinforced
 			icon_state = "sheet-g-r_5"
-			default_reinforcement = "steel"
+			default_reinforcement = /datum/material/metal/steel
 
 /obj/item/sheet/wood
 	item_state = "sheet-metal"

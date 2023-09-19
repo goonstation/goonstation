@@ -1700,7 +1700,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 
     New()
         . = ..()
-        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+        setMaterial(getMaterial(/datum/material/fabric/jean), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansskr
     name = "Red Skull Shirt and Jeans"
@@ -1711,7 +1711,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 
     New()
         . = ..()
-        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+        setMaterial(getMaterial(/datum/material/fabric/jean), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansskb
     name = "Black Skull Shirt and Jeans"
@@ -1722,7 +1722,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 
     New()
         . = ..()
-        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+        setMaterial(getMaterial(/datum/material/fabric/jean), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansyel
     name = "Yellow Shirt and Jeans"
@@ -1733,7 +1733,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 
     New()
         . = ..()
-        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+        setMaterial(getMaterial(/datum/material/fabric/jean), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansacid
     name = "Skull Shirt and Acid Wash Jeans"
@@ -1744,7 +1744,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 
     New()
         . = ..()
-        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+        setMaterial(getMaterial(/datum/material/fabric/jean), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansgrey
     name = "Grey Shirt and Jeans"
@@ -1755,7 +1755,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 
     New()
         . = ..()
-        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+        setMaterial(getMaterial(/datum/material/fabric/jean), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeanspurp
     name = "Purple Shirt and White Jeans"
@@ -1766,7 +1766,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 
     New()
         . = ..()
-        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+        setMaterial(getMaterial(/datum/material/fabric/jean), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeansblue
     name = "Blue Shirt and Jeans"
@@ -1777,7 +1777,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 
     New()
         . = ..()
-        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+        setMaterial(getMaterial(/datum/material/fabric/jean), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/casualjeanskhaki
     name = "Khaki Shirt and Jeans"
@@ -1788,7 +1788,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 
     New()
         . = ..()
-        setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+        setMaterial(getMaterial(/datum/material/fabric/jean), FALSE, FALSE, TRUE)
 
 /obj/item/clothing/under/misc/racingsuitbee
     name = "Bee Racing Jumpsuit"

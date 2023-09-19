@@ -1,8 +1,8 @@
 /// material recipie definition
 /datum/material_recipe
 	var/name = ""
-	/// ID of the result material. used as fallback or when you do not want to use a result item.
-	var/result_id = null
+	/// typepath of the result material. used as fallback or when you do not want to use a result item.
+	var/result_type = null
 	/// Path of the resulting material item.
 	var/result_item = null
 
@@ -30,7 +30,7 @@
 
 /datum/material_recipe/hauntium
 	name = "hauntium"
-	result_id = "hauntium"
+	result_type = /datum/material/fabric/hauntium
 	result_item = /obj/item/material_piece/cloth/hauntium
 
 	validate(var/datum/material/M)
@@ -49,7 +49,7 @@
 
 /datum/material_recipe/soulsteel
 	name = "soul steel"
-	result_id = "soulsteel"
+	result_type = /datum/material/metal/soulsteel
 
 	validate(var/datum/material/M)
 		var/hasSoul = 0
@@ -67,7 +67,7 @@
 
 /datum/material_recipe/steel
 	name = "steel"
-	result_id = "steel"
+	result_type = /datum/material/metal/steel
 
 	validate(var/datum/material/M)
 		var/one = 0
@@ -82,7 +82,7 @@
 
 /datum/material_recipe/censorium
 	name = "censorium"
-	result_id = "censorium"
+	result_type = /datum/material/metal/censorium
 	result_item = /obj/item/material_piece/metal/censorium
 
 	validate(var/datum/material/M)
@@ -101,7 +101,7 @@
 
 /datum/material_recipe/copper // this doesn't REALLY make sense how steel recipe does but I don't care. Need a way to make copper for coroisum
 	name = "copper"
-	result_id = "copper"
+	result_type = /datum/material/metal/copper
 
 	validate(var/datum/material/M)
 		var/one = 0
@@ -116,7 +116,7 @@
 
 /datum/material_recipe/electrum
 	name = "electrum"
-	result_id = "electrum"
+	result_type = /datum/material/metal/electrum
 
 	validate(var/datum/material/M)
 		var/one = 0
@@ -131,7 +131,7 @@
 
 /datum/material_recipe/plasmasteel
 	name = "plasmasteel"
-	result_id = "plasmasteel"
+	result_type = /datum/material/metal/plasmasteel
 
 	validate(var/datum/material/M)
 		var/one = 0
@@ -148,7 +148,7 @@
 
 /datum/material_recipe/plasmaglass
 	name = "plasmaglass"
-	result_id = "plasmaglass"
+	result_type = /datum/material/crystal/plasmaglass
 
 	validate(var/datum/material/M)
 		var/one = 0
@@ -165,7 +165,7 @@
 
 /datum/material_recipe/dyneema
 	name = "dyneema"
-	result_id = "dyneema"
+	result_type = /datum/material/fabric/dyneema
 	result_item = /obj/item/material_piece/cloth/dyneema
 
 	validate(var/datum/material/M)
@@ -184,7 +184,7 @@
 
 /datum/material_recipe/synthleather
 	name = "synthleather"
-	result_id = "synthleather"
+	result_type = /datum/material/fabric/synthleather
 
 	validate(var/datum/material/M)
 		var/one = 0
@@ -199,7 +199,7 @@
 
 /datum/material_recipe/synthblubber
 	name = "synthblubber"
-	result_id = "synthblubber"
+	result_type = /datum/material/rubber/synthblubber
 
 	validate(var/datum/material/M)
 		var/one = 0

@@ -1303,7 +1303,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 				if (generator.semiconductor.material)
 					S.setMaterial(generator.semiconductor.material)
 				else
-					S.setMaterial(getMaterial("steel"))
+					S.setMaterial(getMaterial(/datum/material/metal/steel))
 				qdel(generator.semiconductor)
 				generator.semiconductor = null
 
@@ -1382,7 +1382,7 @@ Present 	Unscrewed  Connected 	Unconnected		Missing
 						if (the_tool.material)
 							src.generator.semiconductor.setMaterial(the_tool.material)
 						else
-							src.generator.semiconductor.setMaterial(getMaterial("steel"))
+							src.generator.semiconductor.setMaterial(getMaterial(/datum/material/metal/steel))
 						the_tool.change_stack_amount(-10)
 
 						generator.semiconductor_state = TEG_SEMI_STATE_BOOTLEG_SEMI

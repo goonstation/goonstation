@@ -82,7 +82,24 @@
 					affected.Add(get_steps(centerOfRow, turn(usr.dir,90), steps))  //And add them to our list
 
 			for(var/turf/T in affected)
-				var/list/material = list("gold","silver","spacelag","iridiumalloy","soulsteel","erebite","ruby","onyx","diamond","topaz","emerald","telecrystal","miracle","ice","flesh","pizza")
+				var/list/material = list(
+					/datum/material/metal/gold,
+					/datum/material/metal/silver,
+					/datum/material/metal/spacelag,
+					/datum/material/metal/iridiumalloy,
+					/datum/material/metal/soulsteel,
+					/datum/material/crystal/erebite,
+					/datum/material/crystal/gemstone/ruby,
+					/datum/material/crystal/gemstone/onyx,
+					/datum/material/crystal/gemstone/diamond,
+					/datum/material/crystal/gemstone/topaz,
+					/datum/material/crystal/gemstone/emerald,
+					/datum/material/crystal/telecrystal,
+					/datum/material/crystal/miracle,
+					/datum/material/crystal/ice,
+					/datum/material/organic/flesh,
+					/datum/material/organic/pizza
+					)
 				T.setMaterial(getMaterial(pick(material)))
 				var/dir_temp = pick("L", "R")
 				animate_spin(T, dir_temp, 3)

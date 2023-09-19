@@ -441,7 +441,7 @@
 		name = "catalytic anode rod"
 		desc = "Rod of material extruded in a suitable form for catalytic electrical generation. It's stamped on one end with an indicative symbol."
 		New()
-			var/datum/material/M = getMaterial("copper")
+			var/datum/material/M = getMaterial(/datum/material/metal/copper)
 			src.setMaterial(M)
 			src.setupMaterial()
 			..()
@@ -450,7 +450,7 @@
 		name = "catalytic cathode rod"
 		desc = "Rod of material extruded in a suitable form for catalytic electrical generation. It's stamped on one end with an indicative symbol."
 		New()
-			var/datum/material/M = getMaterial("steel")
+			var/datum/material/M = getMaterial(/datum/material/metal/steel)
 			src.setMaterial(M)
 			src.setupMaterial()
 			..()

@@ -218,7 +218,7 @@
 	desc = "A hollow teal crystal, like some sort of weird alien syringe. It has a barbed tip. Nasty!"
 	New()
 		. = ..()
-		src.material = getMaterial("gnesis")
+		src.material = getMaterial(/datum/material/crystal/gnesis)
 
 	on_life(mult)
 		. = ..()

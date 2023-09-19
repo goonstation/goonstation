@@ -514,7 +514,7 @@
 
 		New()
 			..()
-			src.setMaterial(getMaterial("gold"))
+			src.setMaterial(getMaterial(/datum/material/metal/gold))
 
 	random
 		var/picked_color

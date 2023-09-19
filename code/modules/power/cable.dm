@@ -70,8 +70,8 @@
 	color = "#DD0000"
 	text = ""
 
-	var/insulator_default = "synthrubber"
-	var/condcutor_default = "copper"
+	var/insulator_default = /datum/material/rubber/synthrubber
+	var/condcutor_default = /datum/material/metal/copper
 
 	var/datum/material/insulator = null
 	var/datum/material/conductor = null
@@ -88,8 +88,8 @@
 	iconmod = "-thick"
 	color = "#075C90"
 
-	condcutor_default = "pharosium"
-	insulator_default = "synthblubber"
+	condcutor_default = /datum/material/metal/pharosium
+	insulator_default = /datum/material/rubber/synthblubber
 
 	//same as normal cables but you have to click them multiple cuts heheheh
 	var/static/cuts_required = 3

@@ -619,7 +619,7 @@
 		if (T.material)
 			A.setMaterial(T.material)
 		else
-			var/datum/material/M = getMaterial("steel")
+			var/datum/material/M = getMaterial(/datum/material/metal/steel)
 			A.setMaterial(M)
 
 		T.ReplaceWithSpace()

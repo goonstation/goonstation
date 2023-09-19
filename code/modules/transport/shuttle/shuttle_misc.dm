@@ -194,8 +194,8 @@ ABSTRACT_TYPE(/obj/machinery/shuttle/weapon)
 	throw_speed = 0.3
 
 	New()
-		src.setMaterial(getMaterial("plasmastone"), appearance = 1, setname = 0)
-		src.setMaterial(getMaterial("erebite"), appearance = 0, setname = 0)
-		src.setMaterial(getMaterial("plasmaglass"), appearance = 1, setname = 0)
-		src.setMaterial(getMaterial("dyneema"), appearance = 1, setname = 0)
+		src.setMaterial(getMaterial(/datum/material/crystal/plasmastone), appearance = 1, setname = 0)
+		src.setMaterial(getMaterial(/datum/material/crystal/erebite), appearance = 0, setname = 0)
+		src.setMaterial(getMaterial(/datum/material/crystal/plasmaglass), appearance = 1, setname = 0)
+		src.setMaterial(getMaterial(/datum/material/fabric/dyneema), appearance = 1, setname = 0)
 		..()

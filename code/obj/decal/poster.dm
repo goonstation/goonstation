@@ -1137,7 +1137,7 @@
 			user.visible_message("<span class='alert'>[user] cuts off the [src.name] with [W].</span>", "<span class='alert'>You cut off the [src.name] with [W].</span>")
 			var/obj/item/material_piece/cloth/C = new(user.loc)
 			if (src.material) C.setMaterial(src.material)
-			else C.setMaterial(getMaterial("cotton")) // In case the material is null
+			else C.setMaterial(getMaterial(/datum/material/fabric/cotton)) // In case the material is null
 			qdel(src)
 
 	mouse_drop(atom/over_object, src_location, over_location)

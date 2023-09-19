@@ -49,13 +49,13 @@ var/global/atom_emergency_stop = 0
 			boutput(usr, "<span class='alert'>Error detected in material cache, attempting rebuild. Please try again.</span>")
 			buildMaterialCache()
 			return
-		var/mat = input(usr,"Select Material:","Material",null) in material_cache
+		var/datum/material/mat = input(usr,"Select Material:","Material",null) in material_cache
 		if(!mat)
 			return
 
-		logTheThing(LOG_ADMIN, usr, "transmuted all of [transmute_path] into [mat] (details: [amount_to_transmute] things/batch, [sleep_time] sleep time)")
-		logTheThing(LOG_DIARY, usr, "transmuted all of [transmute_path] into [mat] (details: [amount_to_transmute] things/batch, [sleep_time] sleep time)", "admin")
-		message_admins("[key_name(usr)] began transmuting all of [transmute_path] into [mat]")
+		logTheThing(LOG_ADMIN, usr, "transmuted all of [transmute_path] into [mat.name] (details: [amount_to_transmute] things/batch, [sleep_time] sleep time)")
+		logTheThing(LOG_DIARY, usr, "transmuted all of [transmute_path] into [mat.name] (details: [amount_to_transmute] things/batch, [sleep_time] sleep time)", "admin")
+		message_admins("[key_name(usr)] began transmuting all of [transmute_path] into [mat.name]")
 
 		var/transmute = 0
 		var/transmute_total = 0
@@ -77,9 +77,9 @@ var/global/atom_emergency_stop = 0
 					transmute = 0
 					sleep(sleep_time)
 
-		logTheThing(LOG_ADMIN, usr, "transmuted [transmute_total] of [transmute_path] into [mat].")
-		logTheThing(LOG_DIARY, usr, "transmuted [transmute_total] of [transmute_path] into [mat].", "admin")
-		message_admins("[key_name(usr)] transmuted [transmute_total] of [transmute_path] into [mat].")
+		logTheThing(LOG_ADMIN, usr, "transmuted [transmute_total] of [transmute_path] into [mat.name].")
+		logTheThing(LOG_DIARY, usr, "transmuted [transmute_total] of [transmute_path] into [mat.name].", "admin")
+		message_admins("[key_name(usr)] transmuted [transmute_total] of [transmute_path] into [mat.name].")
 		return
 
 /* -------------------- Emag -------------------- */

@@ -1230,7 +1230,7 @@
 	blockGaps = 4
 	stability_loss = 5
 	ability_path = /datum/targetable/geneticsAbility/midas
-	var/transmute_material = "gold"
+	var/transmute_material = /datum/material/metal/gold
 
 /datum/targetable/geneticsAbility/midas
 	name = "Midas Touch"

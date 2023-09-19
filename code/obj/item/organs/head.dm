@@ -632,7 +632,7 @@
 				if(HEAD_ROACH)
 					src.organ_name = "roach head"
 					src.desc = "Not the biggest bug you'll seen today, nor the last."
-					src.setMaterial(getMaterial("chitin"))
+					src.setMaterial(getMaterial(/datum/material/organic/chitin))
 
 				if(HEAD_FROG)
 					src.organ_name = "frog head"

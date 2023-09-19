@@ -612,7 +612,29 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		SPAWN(1 SECOND)
 			if(location?.material?.getID() == "miracle")
 				location.visible_message("<span class='notice'>[location] bends and twists, changing colors rapidly.</span>")
-				var/chosen = pick(prob(100); "mauxite",prob(100); "pharosium",prob(100); "cobryl",prob(100); "bohrum",prob(80); "cerenkite",prob(50); "syreline",prob(20); "slag",prob(3); "spacelag",prob(5); "soulsteel",prob(100); "molitz",prob(50); "claretine",prob(5); "erebite",prob(10); "quartz",prob(5); "uqill",prob(10); "telecrystal",prob(1); "starstone",prob(5); "blob",prob(8); "koshmarite",prob(20); "chitin",prob(4); "pizza",prob(15); "beewool",prob(6); "ectoplasm")
+				var/chosen = pick(
+					prob(100); /datum/material/metal/mauxite,
+					prob(100); /datum/material/metal/pharosium,
+					prob(100); /datum/material/metal/cobryl,
+					prob(100); /datum/material/metal/bohrum,
+					prob(80); /datum/material/metal/cerenkite,
+					prob(50); /datum/material/metal/syreline,
+					prob(20); /datum/material/metal/slag,
+					prob(3); /datum/material/metal/spacelag,
+					prob(5); /datum/material/metal/soulsteel,
+					prob(100); /datum/material/crystal/molitz,
+					prob(50); /datum/material/crystal/claretine,
+					prob(5); /datum/material/crystal/erebite,
+					prob(10); /datum/material/crystal/,
+					prob(5); /datum/material/crystal/uqill,
+					prob(10); /datum/material/crystal/telecrystal,
+					prob(1); /datum/material/crystal/starstone,
+					prob(5); /datum/material/organic/blob,
+					prob(8); /datum/material/organic/koshmarite,
+					prob(20); /datum/material/organic/chitin,
+					prob(4); /datum/material/organic/pizza,
+					prob(15); /datum/material/fabric/beewool,
+					prob(6); /datum/material/organic/ectoplasm)
 				location.setMaterial(getMaterial(chosen), appearance = 1, setname = 1)
 		return
 

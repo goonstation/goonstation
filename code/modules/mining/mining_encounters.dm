@@ -142,12 +142,12 @@
 		for (var/turf/simulated/wall/auto/asteroid/AST in generated_turfs)
 			AST.quality = quality
 			AST.space_overlays()
-			AST.setMaterial(getMaterial("jean"))
+			AST.setMaterial(getMaterial(/datum/material/fabric/jean))
 
 		var/list/turf/floors = list()
 		for (var/turf/simulated/floor/plating/airless/asteroid/AST in generated_turfs)
 			AST.UpdateIcon()
-			AST.setMaterial(getMaterial("jean"))
+			AST.setMaterial(getMaterial(/datum/material/fabric/jean))
 			floors += AST
 
 		for(var/i in 0 to rand(0, 2))
@@ -927,11 +927,11 @@
 
 	switch(RarityClassRoll(100,0,list(90,50)))
 		if(1)
-			scrap_material = getMaterial(pick("steel","mauxite"))
+			scrap_material = getMaterial(pick(/datum/material/metal/steel,/datum/material/metal/mauxite))
 		if(2)
-			scrap_material = getMaterial(pick("cobryl","bohrum"))
+			scrap_material = getMaterial(pick(/datum/material/metal/cobryl,/datum/material/metal/bohrum))
 		if(3)
-			scrap_material = getMaterial(pick("gold","syreline"))
+			scrap_material = getMaterial(pick(/datum/material/metal/gold,/datum/material/metal/syreline))
 
 	var/list/turfs_near_center = list()
 	for(var/turf/T in range(size - 1,center))

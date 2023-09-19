@@ -12,7 +12,7 @@
 
 	New()
 		..()
-		var/datum/material/M = getMaterial("gnesis")
+		var/datum/material/M = getMaterial(/datum/material/crystal/gnesis)
 		src.setMaterial(M, appearance = TRUE, setname = FALSE)
 
 	on_life(var/mult = 1)

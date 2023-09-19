@@ -79,7 +79,7 @@
 				src.bones = new /datum/bone(src)
 			src.bones.donor = new_holder
 			src.bones.parent_organ = "[src.name]"
-			src.setMaterial(getMaterial("bone"), appearance = 0, setname = 0)
+			src.setMaterial(getMaterial(/datum/material/organic/bone), appearance = 0, setname = 0)
 
 			src.add_fingerprint(holder)
 			//https://forum.ss13.co/showthread.php?tid=1774

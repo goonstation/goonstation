@@ -983,16 +983,16 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 	detonate()
 		for(var/turf/G in range(5, src))
-			G.setMaterial(getMaterial("gold"))
+			G.setMaterial(getMaterial(/datum/material/metal/gold))
 		for(var/obj/item/I in range(5, src))
-			I.setMaterial(getMaterial("gold"))
+			I.setMaterial(getMaterial(/datum/material/metal/gold))
 		for(var/obj/machinery/T in range(5, src))
-			T.setMaterial(getMaterial("gold"))
+			T.setMaterial(getMaterial(/datum/material/metal/gold))
 		for(var/mob/living/carbon/human/M in range(3, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN(0)
-				M.become_statue(getMaterial("gold"))
+				M.become_statue(getMaterial(/datum/material/metal/gold))
 		..()
 
 
@@ -1770,7 +1770,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 	var/sound_effect = 0
 	var/rcd = 0
 	var/plasma = 0
-	var/rcd_mat = "steel"
+	var/rcd_mat = /datum/material/metal/steel
 	//if it contains reagents, those will be splashed on the floor
 
 	var/list/throw_objs = new /list()

@@ -3698,11 +3698,45 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 		if (prob(1)) // rarely give a different material
 			if (prob(1)) // VERY rarely give a super-fancy material
-				var/list/rare_material_varieties = list("gold", "spacelag", "diamond", "ruby", "garnet", "topaz", "citrine", "peridot", "emerald", "jade", "aquamarine",
-				"sapphire", "iolite", "amethyst", "alexandrite", "uqill", "uqillglass", "telecrystal", "miracle", "starstone", "flesh", "blob", "bone", "beeswax", "carbonfibre")
+				var/list/rare_material_varieties = list(
+					/datum/material/metal/gold,
+					/datum/material/metal/spacelag,
+					/datum/material/crystal/gemstone/diamond,
+					/datum/material/crystal/gemstone/ruby,
+					/datum/material/crystal/gemstone/garnet,
+					/datum/material/crystal/gemstone/topaz,
+					/datum/material/crystal/gemstone/citrine,
+					/datum/material/crystal/gemstone/peridot,
+					/datum/material/crystal/gemstone/emerald,
+					/datum/material/crystal/gemstone/jade,
+					/datum/material/crystal/gemstone/aquamarine,
+					/datum/material/crystal/gemstone/sapphire,
+					/datum/material/crystal/gemstone/iolite,
+					/datum/material/crystal/gemstone/amethyst,
+					/datum/material/crystal/gemstone/alexandrite,
+					/datum/material/crystal/uqill,
+					/datum/material/crystal/uqill/transparent,
+					/datum/material/crystal/telecrystal,
+					/datum/material/crystal/miracle,
+					/datum/material/crystal/starstone,
+					/datum/material/organic/flesh,
+					/datum/material/organic/blob,
+					/datum/material/organic/bone,
+					/datum/material/organic/beeswax,
+					/datum/material/fabric/carbonfibre)
 				src.setMaterial(getMaterial(pick(rare_material_varieties)))
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
-				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
+				var/list/material_varieties = list(
+					/datum/material/metal/steel,
+					/datum/material/crystal/glass,
+					/datum/material/metal/silver,
+					/datum/material/crystal,
+					/datum/material/crystal/rose_quartz,
+					/datum/material/crystal/plasmaglass,
+					/datum/material/crystal/gemstone/onyx,
+					/datum/material/crystal/gemstone/jasper,
+					/datum/material/crystal/gemstone/malachite,
+					/datum/material/crystal/gemstone/lapis)
 				src.setMaterial(getMaterial(pick(material_varieties)))
 
 	death(var/gibbed)

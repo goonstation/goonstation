@@ -110,7 +110,7 @@ TYPEINFO(/obj/item/rcd)
 
 	var/shits_sparks = 1
 
-	var/material_name = "steel"
+	var/material_type = /datum/material/metal/steel
 	// list of materials that the RCD can deconstruct, if empty no restriction.
 	var/safe_deconstruct = FALSE // whether deconstructing a wall will make the material
 	// of the floor be different than the material of the wall
@@ -133,7 +133,7 @@ TYPEINFO(/obj/item/rcd)
 	var/list/datum/contextAction/contexts = list()
 
 	get_desc()
-		. += "<br>It holds [matter]/[max_matter] [istype(src, /obj/item/rcd/material) ? material_name : "matter"]  units. It is currently set to "
+		. += "<br>It holds [matter]/[max_matter] [istype(src, /obj/item/rcd/material) ? material_type.name : "matter"]  units. It is currently set to "
 		switch (src.mode)
 			if (RCD_MODE_FLOORSWALLS)
 				. += "Floors/Walls"
@@ -245,7 +245,7 @@ TYPEINFO(/obj/item/rcd)
 					if (do_thing(user, A, "building a floor", matter_create_floor, time_create_floor))
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
 						T.inherit_area()
-						T.setMaterial(getMaterial(material_name))
+						T.setMaterial(getMaterial(material_type))
 						return
 
 
@@ -253,7 +253,7 @@ TYPEINFO(/obj/item/rcd)
 					if (do_thing(user, A, "building a wall", matter_create_wall, time_create_wall))
 						var/turf/simulated/wall/T = A:ReplaceWithWall()
 						T.inherit_area()
-						T.setMaterial(getMaterial(material_name))
+						T.setMaterial(getMaterial(material_type))
 						log_construction(user, "builds a wall ([T])")
 						return
 
@@ -263,7 +263,7 @@ TYPEINFO(/obj/item/rcd)
 					if (do_thing(user, A, "reinforcing the wall", matter_reinforce_wall, time_reinforce_wall))
 						var/turf/simulated/wall/T = A:ReplaceWithRWall()
 						T.inherit_area()
-						T.setMaterial(getMaterial(material_name))
+						T.setMaterial(getMaterial(material_type))
 						log_construction(user, "reinforces a wall ([T])")
 						return
 
@@ -277,7 +277,7 @@ TYPEINFO(/obj/item/rcd)
 						else
 							T = wallTurf:ReplaceWithWall()
 
-						T.setMaterial(getMaterial(material_name))
+						T.setMaterial(getMaterial(material_type))
 
 						log_construction(user, "builds a wall ([T]) on girder ([A])")
 						qdel(A)
@@ -298,7 +298,7 @@ TYPEINFO(/obj/item/rcd)
 				if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
 					if (do_thing(user, A, "removing the reinforcement from \the [A]", matter_unreinforce_wall, time_unreinforce_wall))
 						var/turf/simulated/wall/T = A:ReplaceWithWall()
-						T.setMaterial(getMaterial(material_name))
+						T.setMaterial(getMaterial(material_type))
 						log_construction(user, "deconstructs a reinforced wall into a normal wall ([T])")
 						return
 
@@ -308,7 +308,7 @@ TYPEINFO(/obj/item/rcd)
 					if (do_thing(user, A, "deconstructing \the [A]", matter_remove_wall, time_remove_wall))
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
 						if (!restricted_materials || !safe_deconstruct)
-							T.setMaterial(getMaterial(material_name))
+							T.setMaterial(getMaterial(material_type))
 						else if(!("steel" in restricted_materials))
 							T.setMaterial(getMaterial("steel"))
 						else
@@ -385,7 +385,7 @@ TYPEINFO(/obj/item/rcd)
 					var/turf/simulated/wall/W = A
 					if (do_thing(user, W, "attaching a light bulb fixture to \the [W]", matter_create_light_fixture, time_create_light_fixture))
 						var/obj/item/light_parts/bulb/LB = new /obj/item/light_parts/bulb(get_turf(W))
-						LB.setMaterial(getMaterial(material_name))
+						LB.setMaterial(getMaterial(material_type))
 						W.attach_light_fixture_parts(user, LB, TRUE)
 						log_construction(user, "built a light fixture to a wall ([W])")
 
@@ -396,7 +396,7 @@ TYPEINFO(/obj/item/rcd)
 					var/turf/simulated/floor/F = A
 					if (do_thing(user, F, "building a floor lamp on \the [F]", matter_create_light_fixture, time_create_light_fixture))
 						var/obj/item/light_parts/floor/FL = new /obj/item/light_parts/floor(get_turf(F))
-						FL.setMaterial(getMaterial(material_name))
+						FL.setMaterial(getMaterial(material_type))
 						F.attach_light_fixture_parts(user, FL, TRUE)
 						log_construction(user, "built a floor lamp on a floor ([F])")
 
@@ -416,7 +416,7 @@ TYPEINFO(/obj/item/rcd)
 					var/turf/simulated/wall/W = A
 					if (do_thing(user, W, "attaching a light bulb fixture to \the [W]", matter_create_light_fixture, time_create_light_fixture))
 						var/obj/item/light_parts/LB = new /obj/item/light_parts(get_turf(W))
-						LB.setMaterial(getMaterial(material_name))
+						LB.setMaterial(getMaterial(material_type))
 						W.attach_light_fixture_parts(user, LB, TRUE)
 						log_construction(user, "built a light fixture to a wall ([W])")
 
@@ -638,7 +638,7 @@ TYPEINFO(/obj/item/rcd)
 
 //unused except for in the research module
 /obj/item/rcd/cyborg
-	material_name = "electrum"
+	material_type = "electrum"
 
 TYPEINFO(/obj/item/rcd/construction)
 	mats = list("MET-3"=100, "CRY-2" = 50, "CON-2"=50, "POW-3"=50, "starstone"=10)
@@ -844,7 +844,7 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 					// Is /auto always the one to use here? hm. //yes, yes it should be
 					var/obj/window/auto/T = new (get_turf(A))
 					log_construction(user, "builds a window")
-					T.setMaterial(getMaterial(material_name))
+					T.setMaterial(getMaterial(material_type))
 					return
 		else
 			..()
@@ -863,7 +863,7 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 		if (do_thing(user, A, "building a door", matter_create_door, 5 SECONDS))
 			var/obj/machinery/door/unpowered/wood/T = new (A)
 			T.set_dir(door_dir)
-			T.setMaterial(getMaterial(material_name))
+			T.setMaterial(getMaterial(material_type))
 			log_construction(user, null, "builds a door ([T]")
 
 
@@ -918,7 +918,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 
 	shits_sparks = 0
 
-	material_name = "cardboard"
+	material_type = "cardboard"
 	restricted_materials = list("cardboard")
 	safe_deconstruct = TRUE
 
@@ -932,20 +932,20 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 			boutput(user, "Recycling [W] just doesn't work.")
 		else if (istype(W, /obj/item/paper/book))
 			matter += 5
-			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_type]-units.")
 			qdel(W)
 		else if (istype(W, /obj/item/paper))
 			matter += 0.5
-			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_type]-units.")
 			qdel(W)
 		else if (istype(W, /obj/item/paper_booklet))
 			var/obj/item/paper_booklet/booklet = W
 			matter += booklet.pages.len/2
-			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_type]-units.")
 			qdel(W)
 		else if (W?.material?.getID() == "wood")
 			matter += 20
-			boutput(user, "\The [src] pulps [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			boutput(user, "\The [src] pulps [W], and now holds [src.matter]/[src.max_matter] [material_type]-units.")
 			qdel(W)
 
 ////////

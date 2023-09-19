@@ -948,10 +948,10 @@
 			if(95 to 97)
 				return "champion"
 			if(98 to 99)
-				src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
+				src.setMaterial(getMaterial(/datum/material/metal/gold), appearance = 0, setname = 0)
 				return "best"
 			if(100 to INFINITY)
-				src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
+				src.setMaterial(getMaterial(/datum/material/metal/gold), appearance = 0, setname = 0)
 				return "mystical"
 			else
 				return "odd"

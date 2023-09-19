@@ -35,19 +35,19 @@ var/global/meteor_shower_active = 0
 			if ( map_setting == "NADIR" ) // Nadir can have a counterpart to this event with acid hailstones, but it will need to function differently
 				. = FALSE
 
-	event_effect(source, amount, direction, delay, warning_time, speed, datum/material/transmute_material_instead="random")
+	event_effect(source, amount, direction, delay, warning_time, speed, /datum/material/transmute_material_instead=null)
 		..()
 		//var/timer = ticker.round_elapsed_ticks / 600
 
-		if(transmute_material_instead == "random")
+		if(isnull(transmute_material_instead))
 			#ifdef APRIL_FOOLS
-			transmute_material_instead = "jean"
+			transmute_material_instead = /datum/material/fabric/jean
 			#else
 			if(prob(97))
 				transmute_material_instead = null
 			else
 				if(prob(50))
-					transmute_material_instead = "jean"
+					transmute_material_instead = /datum/material/fabric/jean
 				else
 					transmute_material_instead = pick(material_cache)
 			#endif
@@ -230,8 +230,8 @@ var/global/meteor_shower_active = 0
 
 		var/transmute_material_instead = null
 		if(tgui_alert(usr, "Do you want the meteor to transmute into a material instead of exploding?", "Meteor Shower", list("Yes", "No")) == "Yes")
-			var/matid = tgui_input_list(usr, "Select material to transmute to:", "Set Material", material_cache)
-			transmute_material_instead = getMaterial(matid)
+			var/mattype = tgui_input_list(usr, "Select material to transmute to:", "Set Material", material_cache)
+			transmute_material_instead = getMaterial(mattype)
 
 		src.event_effect(source, amtinput, dirinput, delinput, timinput, spdinput, transmute_material_instead)
 		return

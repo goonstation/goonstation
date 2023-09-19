@@ -12,17 +12,14 @@ var/global/list/material_cache
 /// Returns one of the base materials by id or by typepath.
 /proc/getMaterial(mat)
 	#ifdef CHECK_MORE_RUNTIMES
-	if (!ispath(mat) && !istext(mat))
-		CRASH("getMaterial() called with a non-typepath and non text argument [mat].")
-	if (!(mat in material_cache) && !(mat in material_cache))
+	if (!ispath(mat))
+		CRASH("getMaterial() called without typepath [mat].")
+	if (!(mat in material_cache))
 		CRASH("getMaterial() called with an invalid material [mat].")
 	#endif
-	if(!ispath(mat) && !istext(mat))
+	if(!ispath(mat))
 		return null
-	if (istext(mat))
-		return material_cache?[mat]
-	if (ispath(mat))
-		return material_cache?[mat]
+	return material_cache?[mat]
 
 /proc/mergeProperties(var/list/leftProps, var/list/rightProps, var/rightBias=0.5)
 	var/leftBias = 1 - rightBias

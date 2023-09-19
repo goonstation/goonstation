@@ -705,7 +705,7 @@
 	New()
 		..()
 		src.UpdateIcon()
-		src.setMaterial(getMaterial("cotton"), appearance = FALSE, setname = FALSE)
+		src.setMaterial(getMaterial(/datum/material/fabric/cotton), appearance = FALSE, setname = FALSE)
 
 	attack_hand(mob/user)
 		if (src.bed)
@@ -1059,7 +1059,7 @@
 
 		New()
 			..()
-			src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
+			src.setMaterial(getMaterial(/datum/material/fabric/cotton), appearance = 0, setname = 0)
 
 // LONG SHIRTS
 // No they're not sweaters
@@ -1946,7 +1946,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 
 	New()
 		. = ..()
-		setMaterial(getMaterial("jean"), FALSE, FALSE, TRUE)
+		setMaterial(getMaterial(/datum/material/fabric/jean), FALSE, FALSE, TRUE)
 
 //crate loot
 

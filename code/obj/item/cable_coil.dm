@@ -41,8 +41,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	var/currently_laying = FALSE
 
 	// will use getMaterial() to apply these at spawn
-	var/spawn_insulator_name = "synthrubber"
-	var/spawn_conductor_name = "copper"
+	var/spawn_insulator_name = /datum/material/rubber/synthrubber
+	var/spawn_conductor_name = /datum/material/metal/copper
 
 	New(loc, length = STARTCOIL)
 		src.amount = length
@@ -149,8 +149,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	namemod = "reinforced "
 	iconmod = "-thick"
 
-	spawn_insulator_name = "synthblubber"
-	spawn_conductor_name = "pharosium"
+	spawn_insulator_name = /datum/material/rubber/synthblubber
+	spawn_conductor_name = /datum/material/metal/pharosium
 
 	cable_obj_type = /obj/cable/reinforced
 

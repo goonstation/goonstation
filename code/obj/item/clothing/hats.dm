@@ -500,7 +500,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 
 	New()
 		..()
-		src.setMaterial(getMaterial("gold"))
+		src.setMaterial(getMaterial(/datum/material/metal/gold))
 
 /obj/item/clothing/head/longtophat
 	name = "long tophat"

@@ -1462,7 +1462,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 							sleep(4 SECONDS)
 							if (H && src)
 								playsound(get_turf(H), 'sound/impact_sounds/Crystal_Hit_1.ogg', 50, 1)
-								H.become_statue(getMaterial("ice"), "Someone completely frozen in ice. How this happened, you have no clue!")
+								H.become_statue(getMaterial(/datum/material/crystal/ice), "Someone completely frozen in ice. How this happened, you have no clue!")
 		..()
 
 /* ============================================================= */

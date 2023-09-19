@@ -856,15 +856,15 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 			if(0)
 				; // regular hat
 			if(1)
-				hat.setMaterial(getMaterial("gold"))
+				hat.setMaterial(getMaterial(/datum/material/metal/gold))
 			if(2)
-				hat.setMaterial(getMaterial("miracle"))
+				hat.setMaterial(getMaterial(/datum/material/crystal/miracle))
 			if(3)
-				hat.setMaterial(getMaterial("telecrystal"))
+				hat.setMaterial(getMaterial(/datum/material/crystal/telecrystal))
 			if(4)
-				hat.setMaterial(getMaterial("negativematter"))
+				hat.setMaterial(getMaterial(/datum/material/metal/negativematter))
 			if(5 to INFINITY)
-				hat.setMaterial(getMaterial("starstone"))
+				hat.setMaterial(getMaterial(/datum/material/crystal/starstone))
 				var/matrix/trans = new
 				trans.Scale((ubertier - 4) / 3) // mmm, large hat
 				hat.transform = trans

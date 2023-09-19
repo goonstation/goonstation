@@ -221,11 +221,11 @@ TYPEINFO(/obj/flock_structure)
 			if(0 to 50)
 				B = new /obj/item/raw_material/scrap_metal
 				B.set_loc(location)
-				B.setMaterial(getMaterial("gnesis"))
+				B.setMaterial(getMaterial(/datum/material/crystal/gnesis))
 			if(51 to 100)
 				B = new /obj/item/raw_material/shard
 				B.set_loc(location)
-				B.setMaterial(getMaterial("gnesisglass"))
+				B.setMaterial(getMaterial(/datum/material/crystal/gnesis/transparent))
 		if(prob(30))
 			B.throw_at(get_edge_cheap(location, pick(alldirs)), rand(10), 3)
 	qdel(src)

@@ -97,10 +97,10 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	tick(var/obj/projectile/P)
 		var/turf/T = get_turf(P)
 		if (T)
-			T.setMaterial(getMaterial("gold"))
+			T.setMaterial(getMaterial(/datum/material/metal/gold))
 
 	on_hit(var/atom/A)
-		A.setMaterial(getMaterial("gold"))
+		A.setMaterial(getMaterial(/datum/material/metal/gold))
 
 /datum/projectile/special/piercing
 	name = "focused beam"

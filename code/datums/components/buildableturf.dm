@@ -48,7 +48,7 @@ TYPEINFO(/datum/component/buildable_turf)
 					SPAWN(0.5)	// delay to not allow afterattack to trigger
 						var/turf/simulated/floor/T = location.ReplaceWithFloor()
 						T.inherit_area()
-						T.setMaterial(getMaterial(RCD.material_name))
+						T.setMaterial(getMaterial(RCD.material_type))
 						clear_edge_overlays(location)
 						T.vis_contents -= station_repair.ambient_obj
 					return TRUE

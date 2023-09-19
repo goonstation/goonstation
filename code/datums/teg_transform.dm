@@ -34,14 +34,14 @@
 				transform_to_type(T.type)
 				return
 
-	proc/transform_to_type(type, mat_id)
+	proc/transform_to_type(type, mat_type)
 		if(ispath(type, /datum/teg_transformation))
 			SPAWN(0)
 				if(generator.active_form)
 					generator.active_form.on_revert()
 				generator.active_form = new type
-				if(mat_id)
-					generator.active_form.mat_id = mat_id
+				if(mat_type)
+					generator.active_form.mat_type = mat_type
 				generator.active_form.on_transform(generator)
 
 	/// Transform when a matsci semiconductor is inserted and the material differs the material
@@ -78,7 +78,7 @@ ABSTRACT_TYPE(/datum/teg_transformation)
 datum/teg_transformation
 	var/name = null
 	/// material id to apply
-	var/mat_id
+	var/mat_type
 	/// associated list of reagent ids and amounts to cause transformation
 	var/list/required_reagents
 	/// ref to TEG
@@ -98,8 +98,8 @@ datum/teg_transformation
 	proc/on_transform(obj/machinery/power/generatorTemp/teg)
 		var/datum/material/M
 		src.teg = teg
-		if(initial(src.mat_id))
-			M = getMaterial(src.mat_id)
+		if(initial(src.mat_type))
+			M = getMaterial(src.mat_type)
 		else
 			M = src.teg.semiconductor.material.copyMaterial()
 
@@ -121,14 +121,14 @@ datum/teg_transformation
 
 	/// Default TEG Transformation we know and ""love""
 	default
-		mat_id = "steel"
+		mat_type = /datum/material/metal/steel
 
 	/**
 	  * Material Science Transformation
 	  * Triggered by /obj/item/teg_semiconductor having a material applied likely by [/obj/machinery/arc_electroplater]
 	  */
 	matsci
-		mat_id = null
+		mat_type = null
 
 		on_transform()
 			var/electrical_conductivity
