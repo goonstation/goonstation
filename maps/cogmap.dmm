@@ -1249,6 +1249,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
+"afl" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/generic,
+/obj/stool/chair/syndicate,
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/npc/trader/exclown,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "afm" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -3686,6 +3696,38 @@
 	dir = 1
 	},
 /turf/simulated/floor/shuttlebay,
+/area/station/hangar/sec)
+"any" = (
+/obj/rack,
+/obj/item/clothing/suit/space/emerg,
+/obj/item/clothing/head/emerg,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/air,
+/obj/item/crowbar,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/rack,
+/obj/item/tank/air{
+	pixel_x = -6;
+	pixel_y = 4
+	},
+/obj/item/clothing/suit/space/emerg{
+	pixel_x = 6
+	},
+/obj/item/crowbar{
+	pixel_x = 3;
+	pixel_y = -1
+	},
+/obj/item/clothing/mask/breath{
+	pixel_x = 5;
+	pixel_y = 1
+	},
+/obj/item/clothing/head/emerg{
+	pixel_x = 5;
+	pixel_y = 10
+	},
+/turf/simulated/floor,
 /area/station/hangar/sec)
 "anH" = (
 /obj/machinery/computer/arcade{
@@ -32372,20 +32414,6 @@
 /obj/lattice,
 /turf/space,
 /area/space)
-"cci" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/npc/trader/robot/syndicate,
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost)
 "cck" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
 	can_rupture = 0;
@@ -37667,18 +37695,6 @@
 	dir = 1
 	},
 /area/station/science/chemistry)
-"csV" = (
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/obj/decal/poster/wallsign/poster_ptoe{
-	pixel_y = 32
-	},
-/obj/table/reinforced/chemistry/auto/firstaid,
-/turf/simulated/floor/purplewhite{
-	dir = 1
-	},
-/area/station/science/chemistry)
 "csW" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -39794,6 +39810,20 @@
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
+/area/listeningpost)
+"cAN" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/red,
 /area/listeningpost)
 "cAO" = (
 /turf/simulated/floor/carpet{
@@ -42075,16 +42105,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
-"dWq" = (
-/obj/machinery/vending/jobclothing/chaplain,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 1;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/turf/simulated/floor/black,
-/area/station/chapel/office)
 "dWz" = (
 /obj/machinery/conveyor/WE{
 	id = "garbage";
@@ -48406,6 +48426,19 @@
 /obj/mapping_helper/access/captain,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/captain)
+"jCY" = (
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/obj/decal/poster/wallsign/poster_ptoe{
+	pixel_y = 32
+	},
+/obj/table/reinforced/chemistry/auto/firstaid,
+/obj/machinery/chem_shaker/large/chemistry,
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/station/science/chemistry)
 "jDm" = (
 /obj/table/reinforced/auto,
 /obj/machinery/recharger{
@@ -50523,6 +50556,16 @@
 	},
 /turf/simulated/floor/yellow/side,
 /area/station/storage/primary)
+"lFS" = (
+/obj/machinery/vending/jobclothing/chaplain,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 1;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/black,
+/area/station/chapel/office)
 "lGf" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable/yellow{
@@ -55046,16 +55089,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/security/main)
-"pxQ" = (
-/obj/decal/cleanable/dirt,
-/obj/decal/cleanable/generic,
-/obj/stool/chair/syndicate,
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/npc/trader/exclown,
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/clown)
 "pxW" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -59637,38 +59670,6 @@
 	},
 /turf/simulated/floor,
 /area/station/maintenance/east)
-"tsu" = (
-/obj/rack,
-/obj/item/clothing/suit/space/emerg,
-/obj/item/clothing/head/emerg,
-/obj/item/clothing/mask/breath,
-/obj/item/tank/air,
-/obj/item/crowbar,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/rack,
-/obj/item/tank/air{
-	pixel_x = -6;
-	pixel_y = 4
-	},
-/obj/item/clothing/suit/space/emerg{
-	pixel_x = 6
-	},
-/obj/item/crowbar{
-	pixel_x = 3;
-	pixel_y = -1
-	},
-/obj/item/clothing/mask/breath{
-	pixel_x = 5;
-	pixel_y = 1
-	},
-/obj/item/clothing/head/emerg{
-	pixel_x = 5;
-	pixel_y = 10
-	},
-/turf/simulated/floor,
-/area/station/hangar/sec)
 "tsL" = (
 /obj/machinery/conveyor/NS{
 	name = "cargo belt - south";
@@ -93821,7 +93822,7 @@ nxc
 nxc
 nxc
 amr
-tsu
+any
 aoK
 wJN
 arA
@@ -98751,7 +98752,7 @@ adC
 adC
 aag
 cne
-csV
+jCY
 cpu
 cqx
 crx
@@ -107704,7 +107705,7 @@ sFS
 abY
 anW
 aeF
-pxQ
+afl
 age
 eTP
 ahJ
@@ -119520,7 +119521,7 @@ aTI
 aUT
 aTJ
 aTJ
-dWq
+lFS
 aSD
 baA
 bbA
@@ -145636,7 +145637,7 @@ cAc
 czY
 czY
 czY
-cci
+cAN
 sAI
 cBQ
 cBQ

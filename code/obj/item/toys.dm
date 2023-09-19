@@ -54,7 +54,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		playsound(loc, 'sound/items/gavel.ogg', 75, 1)
+		playsound(loc, 'sound/items/gavel.ogg', 75, TRUE)
 		user.visible_message("<span class='alert'><b> Sweet Jesus! [user] is bashing their head in with [name]!</b></span>")
 		user.TakeDamage("head", 150, 0)
 		SPAWN(50 SECONDS)
@@ -82,7 +82,7 @@
 		if(cooldown > world.time)
 			return
 		else
-			playsound(loc, 'sound/items/gavel.ogg', 75, 1)
+			playsound(loc, 'sound/items/gavel.ogg', 75, TRUE)
 			user.say("Order, order in the court!")
 			cooldown = world.time + 40
 			return
@@ -156,7 +156,7 @@
 			prfirst = pick("high", "cool", "beloved", "crappy", "interesting", "worthless", "random", "horribly coded", "butt", "low", "extremely", "soul", "outdated")
 			prmiddle = pick("octane", "spooky", "quality", "secret", "crap", "chatty", "butt", "energetic", "diarrhea inducing", "confusing", "magical", "relative pathed", "stealing", "ridiculous")
 			prlast = pick("functions", "bugfixes", "features", "items", "weapons", "the entire goddamn chat", "antagonist", "job", "sprites", "butts", "artifacts", "cars")
-			playsound(loc, 'sound/machines/ding.ogg', 75, 1)
+			playsound(loc, 'sound/machines/ding.ogg', 75, TRUE)
 			user.visible_message("<span class='alert'><B>[user] uploads the Gooncode to their PDA.</B></span>")
 			I.audible_message("<i>New pull request opened on [stationfirst][stationlast]station: <span class='emote'>\"Ports [prfirst] [prmiddle] [prlast] from Goonstation.\"</i></span>")
 			cooldown = world.time + 40
@@ -281,12 +281,12 @@ TYPEINFO(/obj/item/toy/handheld)
 			if (H.sims)
 				H.sims.affectMotive("fun", 1)
 		if (narrator_mode)
-			playsound(user, 'sound/vox/duct.ogg', 50, 1)
+			playsound(user, 'sound/vox/duct.ogg', 50, TRUE)
 		else
-			playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
+			playsound(user, 'sound/items/rubberduck.ogg', 50, TRUE)
 		if(prob(1))
 			user.drop_item()
-			playsound(user, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, 1) // this is gonna spook some people!!
+			playsound(user, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, TRUE) // this is gonna spook some people!!
 			var/wacka = 0
 			while (wacka++ < 50)
 				sleep(0.2 SECONDS)

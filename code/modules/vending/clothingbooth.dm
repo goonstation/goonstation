@@ -79,7 +79,7 @@ var/list/clothingbooth_paths = list()
 				src.money += weapon.amount
 				weapon.amount = 0
 				user.visible_message("<span class='notice'>[user.name] inserts credits into [src]")
-				playsound(user, 'sound/machines/capsulebuy.ogg', 80, 1)
+				playsound(user, 'sound/machines/capsulebuy.ogg', 80, TRUE)
 				user.u_equip(weapon)
 				weapon.dropped(user)
 				qdel(weapon)

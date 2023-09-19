@@ -1150,7 +1150,7 @@ TYPEINFO(/turf/simulated)
 		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
 
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
-		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 		R.change_stack_amount(-1)
 		var/obj/lattice/lattice = new(src)
 		lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
@@ -1164,7 +1164,7 @@ TYPEINFO(/turf/simulated)
 		if (T.amount >= 1)
 			for(var/obj/lattice/L in src)
 				qdel(L)
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 			T.build(src)
 
 #if defined(MAP_OVERRIDE_POD_WARS)

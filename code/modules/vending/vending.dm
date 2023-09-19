@@ -415,7 +415,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
-		playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,1)
+		playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
 		..()
 		if (W.force >= 5 && prob(4 + (W.force - 5)))
 			src.fall(user)

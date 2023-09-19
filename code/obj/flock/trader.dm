@@ -381,7 +381,8 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	if(!W || !user || W.cant_drop)
 		return
 	if(istype(W, /obj/item/grab))
-		boutput(user, "<span class='alert'>You can't fit them into this, sadly.</span>")
+		var/obj/item/grab/G = W
+		boutput(user, "<span class='alert'>You can't fit [him_or_her(G.affecting)] into this, sadly.</span>")
 		return
 	src.visible_message("<span class='alert'>[user.name] puts [W] in [src].</span>")
 	var/gained_resources = (W.health * 2) + 5

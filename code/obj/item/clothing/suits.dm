@@ -42,6 +42,8 @@
 /obj/item/clothing/suit/hoodie
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
+	icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
 	icon_state = "hoodie"
 	item_state = "hoodie"
 	body_parts_covered = TORSO|ARMS

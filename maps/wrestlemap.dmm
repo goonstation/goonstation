@@ -2548,18 +2548,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
-"bfD" = (
-/obj/npc/trader/robot/syndicate,
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/obj/machinery/light,
-/turf/simulated/floor/caution/north,
-/area/listeningpost)
 "bfT" = (
 /obj/item/device/radio/intercom/cargo{
 	pixel_y = 28
@@ -19199,6 +19187,14 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
+"ixw" = (
+/obj/machinery/vending/jobclothing/chaplain,
+/obj/machinery/light/incandescent/warm{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
 "ixF" = (
 /obj/stool/bench/wooden/auto,
 /turf/simulated/floor/wood/two,
@@ -19984,6 +19980,17 @@
 "iLN" = (
 /turf/simulated/floor/stairs/wide/middle,
 /area/station/medical/medbay)
+"iLO" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/machinery/chem_shaker/large/chemistry,
+/obj/item/reagent_containers/glass/beaker/large,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "iLT" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -22714,17 +22721,6 @@
 "jQu" = (
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/medical/breakroom)
-"jQJ" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/storage/box/beakerbox,
-/obj/item/reagent_containers/glass/beaker/large,
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/chemistry)
 "jQL" = (
 /obj/disposalpipe/segment/food{
 	dir = 4
@@ -40648,12 +40644,6 @@
 /area/station/maintenance/northwest{
 	name = "Corpse Tunnel"
 	})
-"rPG" = (
-/obj/fluid_spawner{
-	amount = 3000
-	},
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "rPH" = (
 /obj/table/auto,
 /obj/item/clothing/gloves/boxing,
@@ -40910,6 +40900,13 @@
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
 	})
+"rWm" = (
+/obj/table/auto,
+/obj/item/clothing/suit/chaps,
+/obj/item/instrument/trumpet,
+/obj/item/clothing/glasses/sunglasses,
+/turf/simulated/floor/plating,
+/area/station/maintenance/west)
 "rWD" = (
 /obj/machinery/power/data_terminal,
 /obj/machinery/communications_dish,
@@ -40980,12 +40977,6 @@
 /obj/disposalpipe/trunk,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
-"rYQ" = (
-/obj/table/reinforced/chemistry/auto,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/obj/item/reagent_containers/food/drinks/fueltank,
-/turf/simulated/floor/specialroom/arcade,
-/area/station/science/chemistry)
 "rYV" = (
 /obj/machinery/atmospherics/pipe/simple,
 /obj/machinery/light{
@@ -41496,6 +41487,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/central)
+"sig" = (
+/obj/fluid_spawner{
+	amount = 3000
+	},
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "sio" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -44959,6 +44956,18 @@
 /area/station/maintenance/central{
 	name = "Maintenance Shack"
 	})
+"tIR" = (
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/obj/machinery/light,
+/turf/simulated/floor/caution/north,
+/area/listeningpost)
 "tIX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -47848,6 +47857,13 @@
 /area/station/hallway/secondary/central{
 	name = "Ringside Hallway"
 	})
+"vbq" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/storage/box/beakerbox,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/obj/item/reagent_containers/food/drinks/fueltank,
+/turf/simulated/floor/specialroom/arcade,
+/area/station/science/chemistry)
 "vbD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -54018,14 +54034,6 @@
 	},
 /turf/simulated/floor/plating/airless/random,
 /area/station/solar/east)
-"xCn" = (
-/obj/machinery/vending/jobclothing/chaplain,
-/obj/machinery/light/incandescent/warm{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/wood/two,
-/area/station/chapel/office)
 "xCG" = (
 /obj/machinery/shower{
 	dir = 8
@@ -54193,13 +54201,6 @@
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
-"xFL" = (
-/obj/table/auto,
-/obj/item/clothing/under/gimmick/chaps,
-/obj/item/instrument/trumpet,
-/obj/item/clothing/glasses/sunglasses,
-/turf/simulated/floor/plating,
-/area/station/maintenance/west)
 "xFR" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -62956,7 +62957,7 @@ xxT
 pLE
 nnW
 ite
-bfD
+tIR
 xxT
 jGe
 jGe
@@ -87756,8 +87757,8 @@ lil
 eah
 xzy
 sYp
-jQJ
-rYQ
+iLO
+vbq
 roI
 cAn
 sYc
@@ -88651,7 +88652,7 @@ bkb
 bMD
 fdD
 bkb
-xFL
+rWm
 uSj
 pgy
 gas
@@ -93450,7 +93451,7 @@ mbw
 bpr
 lZG
 ezA
-xCn
+ixw
 ptp
 bLw
 arC
@@ -112774,7 +112775,7 @@ mRP
 pCu
 aNV
 ohJ
-rPG
+sig
 aZY
 uav
 uRW

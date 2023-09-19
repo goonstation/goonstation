@@ -60,7 +60,7 @@ var/datum/station_zlevel_repair/station_repair = new
 		copy_gas_to_airless()
 		clear_around_beacons()
 		if (remove_parallax)
-			remove_all_parallax_layers(Z_LEVEL_STATION)
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
 
 	proc/land_vehicle_fixup(replace_with_cars, add_sub)
 		if(replace_with_cars)
@@ -343,15 +343,16 @@ ABSTRACT_TYPE(/datum/terrainify)
 	station_repair.clean_up_station_level()
 
 	var/list/void_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/void,
-		/atom/movable/screen/parallax_layer/void/clouds_1,
-		/atom/movable/screen/parallax_layer/void/clouds_2,
+		/atom/movable/screen/parallax_render_source/void,
+		/atom/movable/screen/parallax_render_source/void/clouds_1,
+		/atom/movable/screen/parallax_render_source/void/clouds_2,
 		)
 
-	add_global_parallax_layer(void_parallax_layers, z_level = Z_LEVEL_STATION)
+
+	ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, void_parallax_layers, 0 SECONDS)
 	if (all_z_levels)
-		add_global_parallax_layer(void_parallax_layers, z_level = Z_LEVEL_DEBRIS)
-		add_global_parallax_layer(void_parallax_layers, z_level = Z_LEVEL_MINING)
+		ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_DEBRIS, void_parallax_layers, 0 SECONDS)
+		ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_MINING, void_parallax_layers, 0 SECONDS)
 
 /datum/terrainify/ice_moon
 	name = "Ice Moon Station"
@@ -408,7 +409,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 					station_repair.ambient_light.color = rgb(ambient_value,ambient_value+((rand()*1)),ambient_value+((rand()*1))) //randomly shift green&blue to reduce vertical banding
 					S.UpdateOverlays(station_repair.ambient_light, "ambient")
 			// Path to market does not need to be cleared because it was converted to ice.  Abyss will screw up everything!
-			remove_all_parallax_layers(Z_LEVEL_STATION)
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
 			handle_mining(params, space)
 
 			logTheThing(LOG_ADMIN, ui.user, "turned space into an another outpost on Theta.")

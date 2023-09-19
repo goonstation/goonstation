@@ -16,7 +16,7 @@
 	attack_self(mob/user as mob)
 		if (loom_cart)
 			boutput(user, "<span class='notice'>You remove the [loom_cart.thread ? null : "spent "]cartridge from the nanoloom.</span>")
-			playsound(src, 'sound/machines/click.ogg', 40, 1)
+			playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 			loom_cart.UpdateIcon()
 			user.put_in_hand_or_drop(loom_cart)
 			src.loom_cart = null
@@ -26,7 +26,7 @@
 		if (istype(W, /obj/item/nanoloom_cartridge))
 			if(!loom_cart)
 				boutput(user, "<span class='notice'>You load the cartridge into the nanoloom.</span>")
-				playsound(src, 'sound/machines/click.ogg', 40, 1)
+				playsound(src, 'sound/machines/click.ogg', 40, TRUE)
 				W.set_loc(src)
 				user.u_equip(W)
 				src.loom_cart = W
@@ -121,7 +121,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(loom, 'sound/items/putback_defib.ogg', 30, 1)
+		playsound(loom, 'sound/items/putback_defib.ogg', 30, TRUE)
 		if(gear_dam.apply_mend())
 			loom.loom_cart.thread--
 			loom.UpdateIcon()

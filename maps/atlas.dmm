@@ -4667,19 +4667,6 @@
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/combustion_chamber)
-"aqh" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	light_type = /obj/item/light/tube/light_purpleish;
-	pixel_y = 21
-	},
-/obj/table/reinforced/chemistry/auto/chemstorage,
-/obj/item/paper/labdrawertips,
-/turf/simulated/floor/purplewhite{
-	dir = 9
-	},
-/area/station/science/chemistry)
 "aqj" = (
 /obj/machinery/turret,
 /obj/decal/stripe_delivery,
@@ -12026,6 +12013,25 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
+"aNP" = (
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/listeningpost)
 "aNQ" = (
 /turf/simulated/floor/redblack{
 	dir = 5
@@ -16175,17 +16181,6 @@
 /obj/item/clothing/gloves/ring/gold,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/heads)
-"cuA" = (
-/obj/machinery/firealarm/north,
-/obj/machinery/glass_recycler/chemistry{
-	pixel_y = 14
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/table/reinforced/chemistry/auto/allinone,
-/turf/simulated/floor/purplewhite{
-	dir = 5
-	},
-/area/station/science/chemistry)
 "cvv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
@@ -16609,15 +16604,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
-"fdW" = (
-/obj/machinery/light_switch/auto,
-/obj/machinery/crema_switch{
-	pixel_x = 5;
-	pixel_y = 28
-	},
-/obj/machinery/vending/jobclothing/chaplain,
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office)
 "ffY" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4;
@@ -16773,6 +16759,19 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
+"fSt" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	light_type = /obj/item/light/tube/light_purpleish;
+	pixel_y = 21
+	},
+/obj/table/reinforced/chemistry/auto/chemstorage,
+/obj/machinery/chem_shaker/large/chemistry,
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/station/science/chemistry)
 "fUd" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -18725,25 +18724,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
-"qVo" = (
-/obj/stool/chair/office/red{
-	dir = 8
-	},
-/obj/npc/trader/robot/syndicate,
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
-/area/listeningpost)
 "qWS" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/submachine/cargopad/engineering,
@@ -18990,6 +18970,15 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/refinery)
+"sSW" = (
+/obj/machinery/light_switch/auto,
+/obj/machinery/crema_switch{
+	pixel_x = 5;
+	pixel_y = 28
+	},
+/obj/machinery/vending/jobclothing/chaplain,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "sTu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19660,6 +19649,18 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
+"wij" = (
+/obj/machinery/firealarm/north,
+/obj/machinery/glass_recycler/chemistry{
+	pixel_y = 14
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/table/reinforced/chemistry/auto/allinone,
+/obj/item/paper/labdrawertips,
+/turf/simulated/floor/purplewhite{
+	dir = 5
+	},
+/area/station/science/chemistry)
 "wlm" = (
 /obj/displaycase{
 	displayed = /obj/item/captaingun
@@ -19712,18 +19713,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"wzj" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/phone/wall{
-	pixel_x = 23;
-	pixel_y = 2
-	},
-/obj/item/ghostboard,
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office)
 "wJs" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable{
@@ -19757,6 +19746,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"wSV" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/phone/wall{
+	pixel_x = 23;
+	pixel_y = 2
+	},
+/obj/item/ghostboard,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "xce" = (
 /obj/storage/closet,
 /obj/item/tank/oxygen,
@@ -61827,7 +61828,7 @@ azM
 any
 axg
 aCA
-aqh
+fSt
 ain
 aEC
 aCz
@@ -63035,7 +63036,7 @@ aDK
 aXk
 aDw
 aCA
-cuA
+wij
 aQd
 aEF
 aFl
@@ -75390,7 +75391,7 @@ mes
 aek
 aew
 aew
-fdW
+sSW
 agm
 abn
 aiO
@@ -75993,7 +75994,7 @@ aaa
 ach
 rxv
 aew
-wzj
+wSV
 mGr
 ajf
 ahX
@@ -93053,7 +93054,7 @@ aaa
 aaa
 ohq
 aNG
-qVo
+aNP
 aOi
 aOu
 aNG

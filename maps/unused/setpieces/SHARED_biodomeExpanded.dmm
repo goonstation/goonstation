@@ -556,7 +556,7 @@
 "aGx" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 2;
-	
+
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
@@ -6940,7 +6940,7 @@
 "ikB" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 2;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -7476,7 +7476,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/space)
 "iTi" = (
-/obj/machinery/computer/biodome_elevator,
+/obj/machinery/computer/elevator/biodome,
 /turf/unsimulated/floor/caution/corner/ne,
 /area/crypt/sigma)
 "iTk" = (
@@ -14060,7 +14060,7 @@
 	},
 /area/crypt/sigma/morgue)
 "qPk" = (
-/obj/machinery/computer/biodome_elevator,
+/obj/machinery/computer/elevator/biodome,
 /turf/unsimulated/floor/caution/corner/nw{
 	dir = 1
 	},

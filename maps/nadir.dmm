@@ -4375,6 +4375,12 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/medbay/surgery)
+"bVJ" = (
+/obj/table/reinforced/chemistry/auto/basicsup,
+/obj/machinery/light,
+/obj/machinery/chem_shaker/large/chemistry,
+/turf/simulated/floor/purpleblack,
+/area/station/science/chemistry)
 "bVY" = (
 /obj/machinery/hydro_growlamp,
 /turf/simulated/floor/black/grime,
@@ -5767,14 +5773,6 @@
 	dir = 8
 	},
 /area/station/turret_protected/ai)
-"cHa" = (
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/obj/machinery/vending/jobclothing/chaplain,
-/turf/simulated/floor/black,
-/area/station/chapel/office)
 "cHd" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/storage/eva)
@@ -8303,6 +8301,11 @@
 /obj/machinery/vending/medical,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
+"dNQ" = (
+/obj/stool/chair,
+/obj/npc/trader/robot/medical,
+/turf/simulated/floor/white/grime,
+/area/abandonedmedicalship/robot_trader)
 "dOb" = (
 /obj/machinery/door_control{
 	id = "nadir_bhull_nw";
@@ -11326,12 +11329,6 @@
 /obj/machinery/r_door_control/podbay/security,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hangar/sec)
-"fkq" = (
-/obj/fluid_spawner{
-	amount = 3000
-	},
-/turf/simulated/floor/pool/no_animate,
-/area/station/crew_quarters/pool)
 "fkS" = (
 /obj/machinery/door/airlock/pyro/medical/alt,
 /obj/mapping_helper/access/medical,
@@ -15934,18 +15931,6 @@
 	dir = 8
 	},
 /area/shuttle/arrival/station)
-"hca" = (
-/obj/npc/trader/exclown,
-/obj/stool/chair/syndicate,
-/obj/decal/cleanable/dirt,
-/obj/machinery/light/small{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
-	})
 "hcb" = (
 /obj/table/reinforced/auto,
 /obj/machinery/coffeemaker/botany,
@@ -16057,6 +16042,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/science/hall)
+"hex" = (
+/obj/fluid_spawner{
+	amount = 3000
+	},
+/turf/simulated/floor/pool/no_animate,
+/area/station/crew_quarters/pool)
 "heB" = (
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/blue,
@@ -21292,11 +21283,6 @@
 /obj/landmark/start/job/security_assistant,
 /turf/simulated/floor/red,
 /area/station/security/brig)
-"jki" = (
-/obj/stool/chair,
-/obj/npc/trader/robot/medical,
-/turf/simulated/floor/white/grime,
-/area/abandonedmedicalship/robot_trader)
 "jkD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21760,6 +21746,18 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/green,
 /area/station/hydroponics/bay)
+"jvs" = (
+/obj/npc/trader/exclown,
+/obj/stool/chair/syndicate,
+/obj/decal/cleanable/dirt,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "jvJ" = (
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot/bootleg,
@@ -22198,6 +22196,14 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"jEi" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/machinery/vending/jobclothing/chaplain,
+/turf/simulated/floor/black,
+/area/station/chapel/office)
 "jEk" = (
 /obj/submachine/chef_sink/chem_sink{
 	pixel_y = 15
@@ -28434,6 +28440,19 @@
 	},
 /turf/simulated/floor/minitiles/black,
 /area/station/bridge)
+"mdr" = (
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/redblack{
+	dir = 4
+	},
+/area/listeningpost)
 "mdz" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30478,11 +30497,6 @@
 /obj/storage/secure/closet/animal,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
-"mZj" = (
-/obj/table/reinforced/chemistry/auto/basicsup,
-/obj/machinery/light,
-/turf/simulated/floor/purpleblack,
-/area/station/science/chemistry)
 "mZs" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor,
@@ -43778,19 +43792,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southeast)
-"tdP" = (
-/obj/npc/trader/robot/syndicate,
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/redblack{
-	dir = 4
-	},
-/area/listeningpost)
 "teq" = (
 /obj/decal/cleanable/machine_debris{
 	icon_state = "gib7"
@@ -44645,6 +44646,19 @@
 "tvO" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/pasiphae/maint)
+"tvR" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/computer/elevator/sea,
+/obj/machinery/light/small/warm/very{
+	dir = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/black/side{
+	dir = 1
+	},
+/area/shuttle/sea_elevator_room)
 "tvS" = (
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
@@ -48238,19 +48252,6 @@
 	},
 /turf/simulated/floor/engine/caution/east,
 /area/station/engine/core/nuclear)
-"uZN" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/machinery/computer/sea_elevator,
-/obj/machinery/light/small/warm/very{
-	dir = 1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/black/side{
-	dir = 1
-	},
-/area/shuttle/sea_elevator_room)
 "vay" = (
 /obj/decal/tile_edge/floorguide/command{
 	dir = 4
@@ -81334,7 +81335,7 @@ bzS
 bzS
 lmL
 tjr
-jki
+dNQ
 icZ
 hvz
 tjr
@@ -83007,7 +83008,7 @@ csW
 kYe
 eNp
 lSt
-tdP
+mdr
 fXu
 qWP
 cYP
@@ -93615,7 +93616,7 @@ jBH
 aiQ
 xKk
 xKk
-fkq
+hex
 xKk
 gUR
 fxR
@@ -104812,7 +104813,7 @@ wRi
 jKl
 iLY
 aUx
-mZj
+bVJ
 wRi
 wRi
 bJE
@@ -106676,7 +106677,7 @@ aUZ
 bcV
 fle
 uoh
-hca
+jvs
 pAx
 nPt
 rkv
@@ -108438,7 +108439,7 @@ jdT
 lsj
 kqm
 gdf
-uZN
+tvR
 gUh
 aMA
 ahN
@@ -108720,7 +108721,7 @@ aDn
 mIG
 nYt
 dcH
-cHa
+jEi
 wOn
 rKb
 wOn

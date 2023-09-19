@@ -497,12 +497,29 @@ Contents:
 	anchored = ANCHORED_ALWAYS
 	parts_type = null
 	hulk_immune = TRUE
+	HELP_MESSAGE_OVERRIDE("") // No, you can't wrench it
 
 	attackby(obj/item/W, mob/user, params)
-		if (istype(W) && src.place_on(W, user, params))
+		if (istype(W))
+			src.place_on(W, user, params)
+
+/obj/table/anvil/gimmick
+	anchored = UNANCHORED
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> on <span class='harm'>harm</span> intent to slice it into sheets."})
+	attackby(obj/item/W, mob/user, params)
+		if (isweldingtool(W) && user.a_intent == "harm")
+			SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, PROC_REF(deconstruct), null, W.icon, W.icon_state, "[user] finishes slicing \the [src] into sheets.",
+			INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED)
 			return
-		else
-			return ..()
+		..()
+
+	deconstruct()
+		var/obj/item/sheet/sheet_stack = new /obj/item/sheet(src.loc)
+		sheet_stack.amount = 10
+		if (src.material)
+			sheet_stack.setMaterial(src.material)
+		sheet_stack.update_appearance()
+		qdel(src)
 
 /obj/dojo_bellows
 	name = "bellows"

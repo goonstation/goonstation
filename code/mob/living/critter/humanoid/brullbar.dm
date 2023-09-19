@@ -3,6 +3,7 @@
 	real_name = "brullbar"
 	desc = "Oh god."
 	density = 1
+	icon = 'icons/mob/critter/humanoid/brullbar.dmi'
 	icon_state = "brullbar"
 	icon_state_dead = "brullbar-dead"
 	custom_gib_handler = /proc/gibs
@@ -63,7 +64,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/brullbar_roar.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/brullbar_roar.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] howls!</span></b>"
 		return null
 
