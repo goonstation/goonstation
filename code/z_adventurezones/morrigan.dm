@@ -2702,7 +2702,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "swathaf"
 	item_state = "swathaf"
 
-	color_r = 0.5
+	color_r = 0.8
 	color_g = 0.8
 	color_b = 0.8
 
@@ -2950,6 +2950,47 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 				boutput(user, "<span class='notice'>You release some heat from the shotgun!</span>")
 				playsound(src, 'sound/ambience/morrigan/steamrelease.ogg', 70, 1)
 				ON_COOLDOWN(src, "rack delay", 1 SECONDS)
+//rifle unused but there for completion reasons i'm sick please help - rex
+TYPEINFO(/obj/item/gun/energy/laserifle)
+	mats = null
+/obj/item/gun/energy/laserifle
+	name = "Mod. 201 Mimosa"
+	uses_multiple_icon_states = 1
+	cell_type = /obj/item/ammo/power_cell/self_charging/medium
+	icon = 'icons/obj/adventurezones/morrigan/weapons/gunlarge.dmi'
+	icon_state = "laserifle"
+	desc = "The lastest product from Morrigan, a self charging rifle made for peace..or..war keeping with not stolen technology."
+	item_state = "laserifle"
+	force = 10
+	can_swap_cell = FALSE
+	rechargeable = FALSE
+	uses_charge_overlay = TRUE
+	muzzle_flash = "muzzle_flash_laser"
+	charge_icon_state = "laserifle"
+	spread_angle = 3
+
+	New()
+		set_current_projectile(new/datum/projectile/laser/laseriflelethal)
+		projectiles = list(current_projectile,new/datum/projectile/laser/laseriflelesslethal)
+		..()
+
+	update_icon()
+		if (current_projectile.type == /datum/projectile/laser/laseriflelethal)
+			icon = 'icons/obj/adventurezones/morrigan/weapons/gunlarge.dmi'
+			charge_icon_state = "laserifle"
+			muzzle_flash = "muzzle_flash_laser"
+			item_state = "laserifle"
+		else if (current_projectile.type == new/datum/projectile/laser/laseriflelesslethal)
+			icon = 'icons/obj/adventurezones/morrigan/weapons/gunlarge.dmi'
+			charge_icon_state = "laserifleless"
+			muzzle_flash = "muzzle_flash_waveg"
+			item_state = "laserifleless"
+		..()
+	attack_self(var/mob/M)
+		..()
+		UpdateIcon()
+		M.update_inhands()
+
 
 // stun baton
 /obj/item/baton/windup/morrigan
@@ -3206,6 +3247,37 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 			shot_volume = 100
 		if(proj.reflectcount >= 2)
 			elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
+
+/datum/projectile/laser/laseriflelethal
+	name = "Lethal Mode"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "redbolt"
+	shot_sound = 'sound/weapons/laserifle.ogg'
+	cost = 30
+	damage = 19
+	shot_number = 2
+	sname = "lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
+
+/datum/projectile/laser/laseriflelesslethal
+	name = "Less-Lethal Mode"
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "laserifleless"
+	shot_sound = 'sound/weapons/laser_a.ogg'
+	cost = 35
+	pierces = -1
+	damage = 7
+	shot_number = 2
+	sname = "less-lethal"
+	damage_type = D_ENERGY
+	hit_ground_chance = 30
+
+	on_hit(atom/hit, angle, obj/projectile/O)
+		. = ..()
+		if(isliving(hit))
+			var/mob/living/L = hit
+			L.do_disorient(stamina_damage = 35, weakened = 0 SECOND, stunned = 0 SECOND, disorient = 5 SECONDS, remove_stamina_below_zero = 0)
 
 /datum/projectile/shieldpush
 	name = "AP Repulsion"

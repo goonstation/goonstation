@@ -646,6 +646,10 @@
 		desc = "A finely stamped gold coin compatible with the Pirate Weapons Vendor."
 		icon_state = "doubloon"
 
+	morrigan
+		desc = "A Syndicate provided token for the Morrigan Weapons Vendor"
+		icon_state = "morrigan"
+
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
 #undef WEAPON_VENDOR_CATEGORY_UTILITY

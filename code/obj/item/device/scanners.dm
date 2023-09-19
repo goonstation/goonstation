@@ -1018,7 +1018,12 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 
 		return T.target_byond_key
 
-
+/obj/item/device/ticket_writer/syndicate
+	name = "Security TicketWriter 2001"
+	desc = "A device used to issue tickets from the security department."
+	icon_state = "ticketwriter"
+	item_state = "electronic"
+	var/ticket_text = "[ticket_target] has been officially [pick("cautioned","warned","told off","yelled at","berated","sneered at")] by The Syndicate for [ticket_reason] on [time2text(world.realtime, "DD/MM/53")].<br>Issued by: [issuer] - [issuer_job]<br>"
 
 
 TYPEINFO(/obj/item/device/appraisal)
