@@ -233,13 +233,7 @@
 /area/swampzone/interiors/bonktek)
 "apg" = (
 /obj/table/wood/auto,
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
+/obj/item/device/radio/intercom/radiostation,
 /turf/simulated/floor/carpet/grime,
 /area/swampzone/ground)
 "apu" = (
@@ -562,7 +556,7 @@
 "aGx" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 2;
-	
+
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
@@ -6946,7 +6940,7 @@
 "ikB" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 2;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -7482,7 +7476,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/space)
 "iTi" = (
-/obj/machinery/computer/biodome_elevator,
+/obj/machinery/computer/elevator/biodome,
 /turf/unsimulated/floor/caution/corner/ne,
 /area/crypt/sigma)
 "iTk" = (
@@ -7931,13 +7925,7 @@
 /turf/unsimulated/wall/auto/lead/gray,
 /area/crypt/sigma/lab)
 "juj" = (
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
+/obj/item/device/radio/intercom/radiostation,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/west,
 /area/swampzone/interiors/bonktek/funktek)
 "jvk" = (
@@ -14072,7 +14060,7 @@
 	},
 /area/crypt/sigma/morgue)
 "qPk" = (
-/obj/machinery/computer/biodome_elevator,
+/obj/machinery/computer/elevator/biodome,
 /turf/unsimulated/floor/caution/corner/nw{
 	dir = 1
 	},

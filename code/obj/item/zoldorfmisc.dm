@@ -17,7 +17,7 @@
 	attackby(obj/item/weapon, mob/user)
 		if(istype(weapon, /obj/item/pen) && src.icon_state=="scrollopen")
 			user.visible_message("<span class='alert'><b>[user.name] stabs themself with the [weapon] and starts signing the contract in blood!</b></span>","<span class='alert'><b>You stab yourself with the [weapon] and start signing the contract in blood!</b></span>")
-			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
+			playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 			take_bleeding_damage(user, null, 10, DAMAGE_STAB)
 			src.icon_state = "signing"
 			if (do_after(user, 4.6 SECONDS))
@@ -52,7 +52,7 @@
 					user.visible_message("<span class='success'><b>[user.name]'s skin seems to glow faintly.</b></span>","<span class='success'><b>You feel an otherworldly presence coursing through you!</b></span>")
 					. += "<span class='success'><b>Tip:</b> This will allow the zoldorf player to observe you like a ghost, if you wish to remain unseen, splashing yourself with holy water will clear the brand.</span>"
 					if(the_zoldorf.len)
-						boutput(the_zoldorf[1],"<span class='notice'><b>[user.name] has been branded!</b> You may now observe them via Astral Projection.</span>")
+						boutput(the_zoldorf[1],"<span class='notice'><b>[user.name] has been branded!</b> You may now observe [him_or_her(user)] via Astral Projection.</span>")
 					src.branded = 0
 
 			else if (istype(src.referencedorf,/obj/machinery/playerzoldorf) && (istype(usr,/mob/zoldorf)))

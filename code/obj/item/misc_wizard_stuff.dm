@@ -184,7 +184,7 @@
 		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
 			if (M?.traitHolder?.hasTrait("training_chaplain"))
 				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
-				playsound(M, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
+				playsound(M, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 				JOB_XP(M, "Chaplain", 2)
 				return
 
@@ -249,7 +249,7 @@
 		thunder_charges -= 1
 		var/turf/T = get_turf(target)
 		var/obj/lightning_target/lightning = new/obj/lightning_target(T)
-		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, 1)
+		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, TRUE)
 		lightning.caster = user
 		UpdateIcon()
 		flick("[icon_state]_fire", src)

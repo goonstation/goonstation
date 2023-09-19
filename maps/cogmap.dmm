@@ -1256,9 +1256,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "afm" = (
@@ -3710,9 +3708,6 @@
 	dir = 8
 	},
 /obj/rack,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
 /obj/item/tank/air{
 	pixel_x = -6;
 	pixel_y = 4
@@ -12856,7 +12851,7 @@
 /area/station/security/hos)
 "aNS" = (
 /obj/rack,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = -8;
 	pixel_y = 8
 	},
@@ -15671,7 +15666,7 @@
 /area/station/crew_quarters/courtroom)
 "aVz" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = -8;
 	pixel_y = 13
 	},
@@ -28120,7 +28115,7 @@
 /area/station/maintenance/central)
 "bOu" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_y = 15
 	},
 /obj/item/device/gps{
@@ -37718,6 +37713,7 @@
 	pixel_y = 32
 	},
 /obj/table/reinforced/chemistry/auto/firstaid,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -39842,14 +39838,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -44856,8 +44845,7 @@
 /area/space)
 "gfX" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 1
+	dir = 1
 	},
 /turf/simulated/floor/redwhite{
 	dir = 6
@@ -53585,8 +53573,8 @@
 /area/listeningpost)
 "ojC" = (
 /mob/living/critter/small_animal/bird/owl{
-	health_brute = 200;
-	health_burn = 200;
+	health_brute = 50;
+	health_burn = 50;
 	name = "Hooty McOwlface"
 	},
 /turf/simulated/floor/grass/leafy,
@@ -56366,7 +56354,6 @@
 /area/station/solar/north)
 "qBh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable/yellow{
 	icon_state = "0-2"
 	},
@@ -57116,7 +57103,6 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "rea" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
 /obj/cable{
@@ -60847,8 +60833,7 @@
 	pixel_x = -10
 	},
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 1
+	dir = 1
 	},
 /turf/simulated/floor/redwhite{
 	dir = 10

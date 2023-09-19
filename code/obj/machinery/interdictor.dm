@@ -525,7 +525,7 @@ TYPEINFO(/obj/item/interdictor_board)
 			src.state = 3
 			src.icon_state = "interframe-3"
 			boutput(user, "<span class='notice'>You remove \the [intcap] from the interdictor's cell compartment.</span>")
-			playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 			user.put_in_hand_or_drop(src.intcap)
 			src.intcap = null
@@ -555,7 +555,7 @@ TYPEINFO(/obj/item/interdictor_board)
 					src.state = 4
 					src.icon_state = "interframe-4"
 					boutput(user, "<span class='notice'>You install \the [I] into the interdictor's cell compartment.</span>")
-					playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+					playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 					user.u_equip(I)
 					I.set_loc(src)
@@ -635,31 +635,31 @@ TYPEINFO(/obj/item/interdictor_board)
 	onStart()
 		..()
 		if (itdr.state == 0)
-			playsound(itdr, 'sound/items/Ratchet.ogg', 40, 1)
+			playsound(itdr, 'sound/items/Ratchet.ogg', 40, TRUE)
 		if (itdr.state == 1)
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 		if (itdr.state == 2)
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 		if (itdr.state == 4)
-			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, 1)
+			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, TRUE)
 		if (itdr.state == 5)
-			playsound(itdr, 'sound/items/Screwdriver.ogg', 30, 1)
+			playsound(itdr, 'sound/items/Screwdriver.ogg', 30, TRUE)
 		if (itdr.state == 6)
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 	onEnd()
 		..()
 		if (itdr.state == 0) //unassembled > no components
 			itdr.state = 1
 			itdr.icon_state = "interframe-1"
 			boutput(owner, "<span class='notice'>You assemble and secure the frame components.</span>")
-			playsound(itdr, 'sound/items/Ratchet.ogg', 40, 1)
+			playsound(itdr, 'sound/items/Ratchet.ogg', 40, TRUE)
 			itdr.desc = "A frame for a spatial interdictor. It's missing its mainboard."
 			return
 		if (itdr.state == 1) //no components > mainboard
 			itdr.state = 2
 			itdr.icon_state = "interframe-2"
 			boutput(owner, "<span class='notice'>You install the interdictor mainboard.</span>")
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
@@ -672,7 +672,7 @@ TYPEINFO(/obj/item/interdictor_board)
 			itdr.state = 3
 			itdr.icon_state = "interframe-3"
 			boutput(owner, "<span class='notice'>You install the phase-control rod.</span>")
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 
 			var/mob/source = owner
 			source.u_equip(the_tool)
@@ -685,7 +685,7 @@ TYPEINFO(/obj/item/interdictor_board)
 			itdr.state = 5
 			itdr.icon_state = "interframe-5"
 			boutput(owner, "<span class='notice'>You finish wiring together the interdictor's systems.</span>")
-			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, 1)
+			playsound(itdr, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 			the_tool.amount -= 4
 			if (the_tool.amount < 1)
@@ -701,12 +701,12 @@ TYPEINFO(/obj/item/interdictor_board)
 			itdr.state = 6
 			itdr.icon_state = "interframe-5"
 			boutput(owner, "<span class='notice'>You finish securing the wire terminals. The internal systems are now fully installed.</span>")
-			playsound(itdr, 'sound/items/Screwdriver.ogg', 30, 1)
+			playsound(itdr, 'sound/items/Screwdriver.ogg', 30, TRUE)
 			itdr.desc = "A nearly-complete frame for a spatial interdictor. It's missing a casing."
 			return
 		if (itdr.state == 6)
 			boutput(owner, "<span class='notice'>You install a metal casing onto the interdictor, completing its construction.</span>")
-			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(itdr, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 
 			//setting up for custom interdictor casing
 			var/obj/item/sheet/S = the_tool

@@ -295,6 +295,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_buttgib,
 		/client/proc/cmd_admin_tysongib,
 		/client/proc/cmd_admin_smitegib,
+		/client/proc/cmd_admin_anvilgib,
 		/client/proc/removeOther,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
@@ -1276,7 +1277,7 @@ var/list/fun_images = list()
 				S.icon = 'icons/effects/ULIcons.dmi'
 				S.icon_state = "etc"
 				S.color = transparentColor
-				S.UpdateOverlays(null, "starlight", 1)
+				S.underlays -= S.starlight
 
 	var/confirm5 = tgui_alert(src.mob, "Make everything full bright?", "Fullbright?", list("Yes", "No"))
 	if (confirm5 == "Yes")
@@ -2164,20 +2165,21 @@ var/list/fun_images = list()
 		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
-		var/list/atom/atoms = list()
+		var/list/atom/atom_names = list()
 		for(var/atom/thing as anything in list(clicked_turf) + clicked_turf.contents)
 			if(thing.name)
-				atoms += thing
+				atom_names[thing.admin_visible_name()] = thing
 			else if(!istype(thing, /obj/effect) && !istype(thing, /obj/overlay/tile_effect))
 				if(initial(thing.name))
-					atoms["nameless [initial(thing.name)]"] = thing
+					atom_names["nameless [initial(thing.name)]"] = thing
 				else
-					atoms["nameless [thing.type]"] = thing
-		if (atoms.len)
-			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atoms)
-			if (isnull(A)) return
+					atom_names["nameless [thing.type]"] = thing
+		if (length(atom_names))
+			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atom_names)
+			if (isnull(A))
+				return
 		if(istext(A))
-			A = atoms[A]
+			A = atom_names[A]
 
 	var/title = "What do?"
 	var/list/verbs = list()

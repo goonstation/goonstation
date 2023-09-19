@@ -143,7 +143,7 @@
 			boutput(M, "<span class='notice'>You donate 200 blood points to [target].</span>")
 			boutput(target, "<span class='notice'>[M] has donated you 200 blood points. Your health is temporarily increased.</span>")
 		else
-			boutput(M, "<span class='notice'>You were not able to enthrall [target] - their ghost has departed.</span>")
+			boutput(M, "<span class='notice'>You were not able to enthrall [target] - [his_or_her(target)] ghost has departed.</span>")
 
 	onInterrupt()
 		..()
