@@ -1561,7 +1561,7 @@
 	set popup_menu = 0
 
 	ADMIN_ONLY
-	var/matid = tgui_input_list(src, "Select material to transmute to:", "Set Material", material_cache_matid)
+	var/matid = tgui_input_list(src, "Select material to transmute to:", "Set Material", material_cache)
 	var/material_selected = getMaterial(matid)
 	if(!material_selected)
 		alert(src, "Invalid material selected: [matid]", "Invalid Material", "Ok")

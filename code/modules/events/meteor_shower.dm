@@ -49,7 +49,7 @@ var/global/meteor_shower_active = 0
 				if(prob(50))
 					transmute_material_instead = "jean"
 				else
-					transmute_material_instead = pick(material_cache_matid)
+					transmute_material_instead = pick(material_cache)
 			#endif
 		if(istext(transmute_material_instead))
 			transmute_material_instead = getMaterial(transmute_material_instead)
@@ -230,7 +230,7 @@ var/global/meteor_shower_active = 0
 
 		var/transmute_material_instead = null
 		if(tgui_alert(usr, "Do you want the meteor to transmute into a material instead of exploding?", "Meteor Shower", list("Yes", "No")) == "Yes")
-			var/matid = tgui_input_list(usr, "Select material to transmute to:", "Set Material", material_cache_matid)
+			var/matid = tgui_input_list(usr, "Select material to transmute to:", "Set Material", material_cache)
 			transmute_material_instead = getMaterial(matid)
 
 		src.event_effect(source, amtinput, dirinput, delinput, timinput, spdinput, transmute_material_instead)

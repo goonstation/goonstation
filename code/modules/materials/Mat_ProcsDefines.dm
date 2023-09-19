@@ -1,8 +1,6 @@
 // THESE TWO ARE THE SAME LIST
-/// the material cache, indexed by material id
-var/global/list/material_cache_matid
 /// the material cache, indexed by typepath
-var/global/list/material_cache_type
+var/global/list/material_cache
 
 /atom/var/datum/material/material = null
 /atom/var/material_amt = 1
@@ -11,22 +9,20 @@ var/global/list/material_cache_type
 	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet) || istype(A, /obj/item/cable_coil) || istype(A, /obj/item/raw_material/shard)) return 1
 	return 0
 
-
-
 /// Returns one of the base materials by id or by typepath.
 /proc/getMaterial(mat)
 	#ifdef CHECK_MORE_RUNTIMES
 	if (!ispath(mat) && !istext(mat))
 		CRASH("getMaterial() called with a non-typepath and non text argument [mat].")
-	if (!(mat in material_cache_matid) && !(mat in material_cache_type))
+	if (!(mat in material_cache) && !(mat in material_cache))
 		CRASH("getMaterial() called with an invalid material [mat].")
 	#endif
 	if(!ispath(mat) && !istext(mat))
 		return null
 	if (istext(mat))
-		return material_cache_matid?[mat]
+		return material_cache?[mat]
 	if (ispath(mat))
-		return material_cache_type?[mat]
+		return material_cache?[mat]
 
 /proc/mergeProperties(var/list/leftProps, var/list/rightProps, var/rightBias=0.5)
 	var/leftBias = 1 - rightBias

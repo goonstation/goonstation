@@ -201,11 +201,11 @@
 			prefix = "MYTHIC"
 
 	if(doMaterial)
-		var/list/material = pick(material_cache_type - list(
+		var/list/material = pick(material_cache - list(
 			/datum/material/metal/cerenkite,
 			/datum/material/crystal/plasmastone,
 			/datum/material/organic/koshmarite))
-		I.setMaterial(material_cache_type[material], appearance = 1, setname = 1)
+		I.setMaterial(material_cache[material], appearance = 1, setname = 1)
 
 	I.name_prefix(prefix)
 

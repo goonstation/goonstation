@@ -217,14 +217,12 @@
 	return
 
 /proc/buildMaterialCache()
-	material_cache_matid = list()
-	material_cache_type = list()
+	material_cache = list()
 	var/materialList = concrete_typesof(/datum/material)
 	for(var/datum/material/mat as anything in materialList)
 		if(initial(mat.cached))
 			var/datum/material/M = new mat()
-			material_cache_matid[M.getID()] = M.getImmutable()
-			material_cache_type[M.type] = material_cache_matid[M.getID()]
+			material_cache[M.type] = material_cache[M.getID()]
 
 #ifdef TRACY_PROFILER_HOOK
 /proc/prof_init()
