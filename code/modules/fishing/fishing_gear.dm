@@ -555,36 +555,51 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
 
 	attackby(obj/item/W, mob/user)
-		if (try_embed(user))
+		if (src.try_embed(user))
 			return
 		..()
 
 	attack_hand(mob/user)
-		if (try_embed(user))
+		if (src.try_embed(user))
 			return
 		..()
 
 	pickup(mob/user)
-		if (try_embed(user))
+		if (src.try_embed(user))
 			return
 		..()
 
 	pull(mob/user)
-		if (try_embed(user))
+		if (src.try_embed(user))
 			return
+		..()
+
+	Crossed(atom/movable/AM as mob|obj)
+		if (ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.lying)
+				src.try_embed(H, FALSE)
+		..()
+
+	Uncrossed(atom/movable/AM as mob|obj)
+		if (ishuman(AM))
+			var/mob/living/carbon/human/H = AM
+			if(H.lying)
+				src.try_embed(H, FALSE)
 		..()
 
 	throw_impact(mob/hit_atom, datum/thrown_thing/thr)
 		if (isliving(hit_atom) && hit_atom.equipped() == src.rod)
 			return
-		else if ((isliving(hit_atom) && !hit_atom.nodamage && GET_DIST(src, src.rod) < src.rod.line_length))
-			src.embed(hit_atom)
+		else
+			src.try_embed(hit_atom, FALSE)
 		return ..()
 
-	proc/try_embed(mob/M)
+	proc/try_embed(mob/M, do_weaken = TRUE)
 		if (istype(M) && isliving(M) && !M.nodamage)
-			M.changeStatus("weakened", 5 SECONDS)
-			M.TakeDamage(M.hand == LEFT_HAND ? "l_arm": "r_arm", 15, 0, 0, DAMAGE_STAB)
+			if (do_weaken)
+				M.changeStatus("weakened", 5 SECONDS)
+				M.TakeDamage(M.hand == LEFT_HAND ? "l_arm": "r_arm", 15, 0, 0, DAMAGE_STAB)
 			M.force_laydown_standup()
 			src.embed(M)
 			return TRUE
