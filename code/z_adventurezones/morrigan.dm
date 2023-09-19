@@ -2621,6 +2621,52 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "pdoor0"
 	layer = OBJ_LAYER + 1
 
+//funny chute
+
+/obj/item/collecting_chute
+
+	name = "collecting chute"
+	desc = "put stuff in it"
+	icon = 'icons/obj/disposal.dmi'
+	icon_state = "disposal"
+	anchored = ANCHORED
+	density = TRUE
+	var/required_objects = list(/obj/item/fishing_rod) //temporary
+	var/functioning = TRUE
+
+	New()
+		. = ..()
+
+	proc/put_item(var/obj/item/W, var/mob/user)
+		W.set_loc(src)
+		user.u_equip(W)
+		for (W in src)
+			for (var/obj in required_objects)
+				if (istype(W, obj))
+					return
+				else
+					SPAWN(2 SECONDS)
+					W.set_loc(src.loc)
+					src.visible_message("<span class='alert'><b>The chute spits [W] out! Looks like it doesn't accept it..</b></span>")
+					return
+
+	proc/check_contents()
+		var/items_collected = 0
+		for (var/i in src.contents)
+			for (i in required_objects)
+				items_collected += 1
+		if (length(required_objects) == items_collected)
+			src.visible_message("<span class='alert'><b>\The [src] makes a beep!</b></span>")
+			src.functioning = FALSE // there should be a door opening code but thats later
+			return TRUE
+		else
+			return FALSE
+
+	attackby(obj/item/W, mob/user)
+		put_item(W, user)
+		check_contents()
+		return
+
 //gas mask please i beg
 
 /obj/item/clothing/mask/gas/eyemask
