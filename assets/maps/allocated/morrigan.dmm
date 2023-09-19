@@ -1164,6 +1164,12 @@
 /obj/decal/poster/wallsign/hazard_exheat,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict)
+"bdu" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/paper/manufacturer_blueprint,
+/obj/item/stamped_bullion,
+/turf/unsimulated/floor/twotone/black,
+/area/morrigan/station/invest)
 "bdG" = (
 /obj/shrub{
 	desc = "Looks suspiciously just like an Earth ficus.";
@@ -4069,7 +4075,6 @@
 /area/morrigan/derelict)
 "efx" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/stamped_bullion,
 /turf/unsimulated/floor/twotone/black,
 /area/morrigan/station/invest)
 "efH" = (
@@ -4968,7 +4973,7 @@
 /area/morrigan/station/factory)
 "ePt" = (
 /obj/decal/poster/wallsign/warning3,
-/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/robotics)
 "eQj" = (
@@ -5048,8 +5053,11 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/engineering/eng)
 "eUh" = (
-/obj/storage/secure/crate/eng,
-/obj/item/electronics/resistor,
+/obj/table/podium_wood/syndicate,
+/obj/item/gun/energy/railgun_experimental{
+	pixel_y = 13;
+	pixel_x = -3
+	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/eng)
 "eUt" = (
@@ -5293,6 +5301,7 @@
 /area/morrigan/derelict)
 "fdJ" = (
 /obj/item/shipcomponent/engine/helios,
+/obj/table/reinforced/industrial/auto,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "fdW" = (
@@ -5476,6 +5485,10 @@
 /obj/item/storage/firstaid/toxin,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"fpe" = (
+/obj/table/reinforced/industrial/auto,
+/turf/unsimulated/floor/plating/scorched,
+/area/morrigan/station/factory)
 "fpx" = (
 /obj/machinery/vending/medical_public,
 /turf/unsimulated/floor/twotone/red,
@@ -7106,15 +7119,8 @@
 	},
 /area/morrigan/station/civilian/crewquarters)
 "gOd" = (
-/obj/decal/fakeobjects/firelock_broken,
 /obj/item/raw_material/shard/plasmacrystal,
-/obj/overlay{
-	density = 1;
-	desc = "You have no idea what this does.";
-	icon = 'icons/obj/recycling.dmi';
-	icon_state = "grinder-o1";
-	name = "assembly machine"
-	},
+/obj/machinery/door/poddoor/blast,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "gOg" = (
@@ -7605,6 +7611,10 @@
 	dir = 9
 	},
 /area/morrigan/station/hallway)
+"hif" = (
+/obj/window/auto/reinforced/indestructible/glass,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/engineering/eng)
 "hij" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -8947,11 +8957,6 @@
 "iFl" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/civilian/kitchen)
-"iFE" = (
-/obj/storage/secure/crate/eng,
-/obj/item/electronics/fuse,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/engineering/eng)
 "iFH" = (
 /obj/storage/secure/closet/morrigan/brig,
 /obj/item/swords_sheaths/clown,
@@ -9637,7 +9642,22 @@
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/medical/reception)
 "jko" = (
-/obj/machinery/portable_atmospherics/scrubber,
+/obj/table/auto,
+/obj/item/screwdriver/orange,
+/obj/item/gun_parts/bottom_rail/sight{
+	pixel_y = 9;
+	pixel_x = -7
+	},
+/obj/item/cell/cerenkite{
+	pixel_y = 16;
+	pixel_x = -8
+	},
+/obj/item/cable_coil/cut{
+	color = "#DD0000";
+	desc = "A mangled scrap of power cable.";
+	icon_state = "coil1";
+	name = "torn up cable"
+	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/eng)
 "jkz" = (
@@ -10040,6 +10060,7 @@
 /obj/machinery/light/emergencyflashing{
 	dir = 1
 	},
+/obj/table/reinforced/industrial/auto,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/factory)
 "jEi" = (
@@ -11673,6 +11694,7 @@
 /obj/machinery/light/emergencyflashing{
 	dir = 1
 	},
+/obj/table/reinforced/industrial/auto,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "lmk" = (
@@ -13053,10 +13075,6 @@
 "mBk" = (
 /turf/unsimulated/floor/caution/north,
 /area/morrigan/station/exit)
-"mBl" = (
-/mob/living/critter/robotic/gunbot/morrigan/meleebot,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/invest)
 "mBY" = (
 /mob/living/carbon/human/syndicatemorrigan/rowdy,
 /turf/unsimulated/floor/black,
@@ -13141,11 +13159,6 @@
 /obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/maintenance)
-"mFX" = (
-/obj/storage/secure/crate/eng,
-/obj/item/electronics/frame,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/engineering/eng)
 "mGi" = (
 /obj/decal/cleanable/blood{
 	icon_state = "tracksL"
@@ -13731,6 +13744,7 @@
 	dir = 4
 	},
 /obj/decal/fakeobjects/factory/claw,
+/obj/table/reinforced/industrial/auto,
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/factory)
 "ngg" = (
@@ -15068,6 +15082,7 @@
 /obj/machinery/light/emergencyflashing{
 	dir = 1
 	},
+/obj/table/reinforced/industrial/auto,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "omN" = (
@@ -15422,6 +15437,10 @@
 "oFz" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/security/armory)
+"oFS" = (
+/obj/table/reinforced/industrial/auto,
+/turf/unsimulated/floor/engine/glow,
+/area/morrigan/station/factory)
 "oFT" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/orange,
@@ -17091,6 +17110,9 @@
 /obj/decal/cleanable/vomit,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
+"qsM" = (
+/turf/simulated/wall/morrigan_cracked,
+/area/morrigan/station/security/brig)
 "qtg" = (
 /obj/decal/fakeobjects/lightbulb_broken{
 	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
@@ -19631,10 +19653,6 @@
 	},
 /turf/unsimulated/floor/minitiles/black,
 /area/morrigan/station/security/main)
-"tab" = (
-/obj/table/podium_wood/syndicate,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/invest)
 "taj" = (
 /turf/unsimulated/floor/black,
 /area/morrigan/station/command/bridge)
@@ -19911,6 +19929,7 @@
 /area/morrigan/derelict/hobo)
 "toZ" = (
 /obj/item/shipcomponent/mainweapon/disruptor,
+/obj/table/reinforced/industrial/auto,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "tpr" = (
@@ -20466,14 +20485,6 @@
 /mob/living/critter/human/hobo/club,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"tRs" = (
-/obj/table/podium_wood/syndicate,
-/obj/item/gun/energy/railgun_experimental{
-	pixel_y = 13;
-	pixel_x = -3
-	},
-/turf/unsimulated/floor/black,
-/area/morrigan/station/invest)
 "tSm" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 9
@@ -20779,8 +20790,7 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/medical/main)
 "ugQ" = (
-/obj/storage/secure/crate/eng,
-/obj/item/electronics/keypad,
+/obj/table/podium_wood/syndicate,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/eng)
 "ugR" = (
@@ -20954,6 +20964,7 @@
 /area/morrigan/station/invest)
 "uqS" = (
 /obj/decal/fakeobjects/factory/claw,
+/obj/table/reinforced/industrial/auto,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "uqU" = (
@@ -21484,7 +21495,7 @@
 /area/morrigan/station/engineering/specialist)
 "uLI" = (
 /obj/decal/poster/wallsign/hazard_caution,
-/obj/mapping_helper/wingrille_spawn/auto,
+/obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/medical/robotics)
 "uMl" = (
@@ -22126,6 +22137,10 @@
 "vuL" = (
 /turf/unsimulated/floor/caution,
 /area/morrigan/station/exit)
+"vuW" = (
+/obj/machinery/door/poddoor/buff,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/engineering/eng)
 "vve" = (
 /obj/table/syndicate/auto,
 /obj/machinery/coffeemaker/security,
@@ -24659,14 +24674,6 @@
 	},
 /turf/simulated/floor/airless/twotone/blue,
 /area/morrigan/station/medical/main)
-"xSQ" = (
-/obj/machinery/light/incandescent/netural,
-/obj/item/card/id/morrigan/janitor,
-/obj/item/mop/orange,
-/obj/rack,
-/obj/item/clothing/gloves/yellow,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/engineering/eng)
 "xSV" = (
 /obj/grille/steel/broken,
 /obj/decal/fakeobjects/safehouse/mechcomp_cabinet,
@@ -28302,7 +28309,7 @@ nAA
 dhg
 rlr
 odW
-pKD
+hfp
 vDE
 vDE
 vDE
@@ -28510,8 +28517,8 @@ odW
 uqK
 lIa
 vDE
-vDE
-vDE
+hfp
+hfp
 hfp
 hfp
 suX
@@ -28610,10 +28617,10 @@ axu
 plC
 adT
 odW
-hZG
-mBl
+bdu
 vDE
-tRs
+vDE
+hfp
 odW
 rxv
 uOC
@@ -28716,7 +28723,7 @@ odW
 maU
 dni
 vDE
-tab
+hfp
 odW
 lHW
 hfp
@@ -31062,7 +31069,7 @@ uRB
 gac
 ykr
 apl
-nNN
+fpe
 oTY
 eDk
 jXH
@@ -31783,7 +31790,7 @@ uRB
 gac
 omv
 eJL
-ykr
+oFS
 ykr
 dAQ
 uVG
@@ -31964,8 +31971,8 @@ tJx
 qyf
 oir
 oir
-jVJ
-ugQ
+hif
+oir
 eUh
 wWp
 uru
@@ -32067,8 +32074,8 @@ wWp
 lJc
 oir
 oir
+vuW
 oir
-iFE
 ugQ
 wWp
 naK
@@ -32169,9 +32176,9 @@ iiT
 wWp
 ivg
 gNA
-xSQ
 oir
-mFX
+hif
+rPF
 jko
 wWp
 naK
@@ -33079,7 +33086,7 @@ vwJ
 vwJ
 ceK
 ceK
-ceK
+qsM
 ceK
 ceK
 vZE
