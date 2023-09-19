@@ -601,13 +601,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.TakeDamage(M.hand == LEFT_HAND ? "l_arm": "r_arm", 15, 0, 0, DAMAGE_STAB)
 			M.force_laydown_standup()
-			src.embed(M)
-			return TRUE
-		else
-			return FALSE
 
-	proc/embed(mob/M)
-		if (istype(M))
 			src.owner = M
 			src.set_loc(M)
 			M.visible_message("<span class='alert'><b>[M] gets snagged by a fishing lure!</b></span>")
@@ -615,7 +609,9 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			M.emote("scream")
 			take_bleeding_damage(M, null, 10, DAMAGE_STAB)
 			M.UpdateDamageIcon()
-		return
+			return TRUE
+		else
+			return FALSE
 
 	Eat(mob/M, mob/user, by_matter_eater)
 		. = ..()
