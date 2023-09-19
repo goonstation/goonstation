@@ -511,7 +511,7 @@
 				C.amount -= 70
 
 			else if (C.amount >= 50) // wooden chairs
-				FP = /obj/item/furniture_parts/wood_chair
+				FP = /obj/item/furniture_parts/dining_chair/wood
 				FP_name = "Bredsjö"
 				C.amount -= 50
 
@@ -964,7 +964,7 @@
 					if (E)
 						src.visible_message("<span class='combat'><B>[src] [pick("tears","yanks","rips")] [M]'s eye out! <i>Holy shit!!</i></B></span>")
 						E = H.drop_organ(chosen_eye)
-						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 						E.set_loc(src.loc)
 			if (isliving(M))
 				var/mob/living/H = M
@@ -1119,7 +1119,7 @@
 				src.lying = 0
 				src.wanderer = initial(src.wanderer)
 			src.visible_message("<span class='combat'><b>[user]</b> swings at [src], but misses!</span>")
-			playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 0)
+			playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, FALSE)
 			return
 		else
 			return ..()

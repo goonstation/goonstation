@@ -322,7 +322,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /datum/gang
 	/// The maximum number of gang members per gang.
-	var/static/current_max_gang_members = 5
+	var/static/current_max_gang_members = 4
 	/// Gang tag icon states that are being used by other gangs.
 	var/static/list/used_tags
 	/// Gang names that are being used by other gangs.
@@ -425,11 +425,14 @@ proc/broadcast_to_all_gangs(var/message)
 		while(src.gang_name == "Gang Name")
 			var/choice = "Accept"
 			if(src.leader?.current)
-				choice = tgui_alert(src.leader?.current, "Name: [temporary_name].", "Approve Your Gang's Name", list("Accept", "Reselect", "Randomise"))
+				// if the leader is disconnected, this tgui_alert call will return null, breaking everything. Default to "Accept" and give them the random name
+				choice = tgui_alert(src.leader?.current, "Name: [temporary_name].", "Approve Your Gang's Name", list("Accept", "Reselect", "Randomise")) || "Accept"
 			switch(choice)
 				if ("Accept")
 					if (temporary_name in src.used_names)
 						boutput(src.leader.current, "<span class='alert'>Another gang has this name.</span>")
+						// to prevent the incredibly slim chance that a disconncted gang leader rolls the same name as an existing gang
+						temporary_name = generate_random_name()
 						continue
 
 					src.gang_name = temporary_name
@@ -445,6 +448,15 @@ proc/broadcast_to_all_gangs(var/message)
 
 				if ("Randomise")
 					temporary_name = generate_random_name()
+
+
+		// add the gang to their displayed name for antag and round end stuff. works hopefully??
+		var/datum/antagonist/leader_antag = src.leader.get_antagonist(ROLE_GANG_LEADER)
+		leader_antag.display_name = "[src.gang_name] [leader_antag.display_name]"
+
+		for (var/datum/mind/ganger in src.members)
+			var/datum/antagonist/antag = ganger.get_antagonist(ROLE_GANG_MEMBER)
+			antag.display_name = "[src.gang_name] [antag.display_name]"
 
 	proc/select_gang_uniform()
 		// Jumpsuit Selection.
@@ -527,7 +539,6 @@ proc/broadcast_to_all_gangs(var/message)
 		"owl suit" = /obj/item/clothing/under/gimmick/owl,
 		"pinstripe suit" = /obj/item/clothing/under/suit/pinstripe,
 		"purple suit" = /obj/item/clothing/under/suit/purple,
-		"assless chaps" = /obj/item/clothing/under/gimmick/chaps,
 		"mailman's jumpsuit" = /obj/item/clothing/under/misc/mail,
 		"comfy sweater" = /obj/item/clothing/under/gimmick/sweater,
 		"party princess uniform" = /obj/item/clothing/under/gimmick/princess,
@@ -553,7 +564,6 @@ proc/broadcast_to_all_gangs(var/message)
 		"red lawyer's suit" = /obj/item/clothing/under/misc/lawyer/red,
 		"lawyer suit" = /obj/item/clothing/under/misc/lawyer,
 		"blue tracksuit" = /obj/item/clothing/under/gimmick/chav,
-		"aged hipster clothes" = /obj/item/clothing/under/gimmick/dawson,
 		"diver jumpsuit" = /obj/item/clothing/under/gimmick/sealab,
 		"spiderman suit" = /obj/item/clothing/under/gimmick/spiderman,
 		"Vault 13 jumpsuit" = /obj/item/clothing/under/gimmick/vault13,
@@ -722,7 +732,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		target_area.being_captured = 1
 		S.in_use = 1
-		playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)	//maybe just repeat the appropriate amount of times
+		playsound(target_turf, 'sound/machines/hiss.ogg', 50, TRUE)	//maybe just repeat the appropriate amount of times
 
 	onUpdate()
 		..()
@@ -731,7 +741,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 		if(prob(15))
-			playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)
+			playsound(target_turf, 'sound/machines/hiss.ogg', 50, TRUE)
 
 	onInterrupt(var/flag)
 		boutput(owner, "<span class='alert'>You were interrupted!</span>")

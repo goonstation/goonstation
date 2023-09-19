@@ -645,5 +645,5 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed$$mauxite"
 	default_material = "mauxite"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE

@@ -274,7 +274,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 				for (var/mob/M in src.grillitem)
 					M.ghostize()
 			qdel(src.grillitem)
-			src.grillitem = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
+			src.grillitem = new /obj/item/reagent_containers/food/snacks/yuck/burn (src)
 			if (!src.grillitem.reagents)
 				src.grillitem.create_reagents(50)
 

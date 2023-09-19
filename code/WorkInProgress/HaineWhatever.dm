@@ -1288,7 +1288,7 @@ TYPEINFO(/obj/submachine/blackjack)
 		if (istype(AM, /obj/item))
 			user.u_equip(AM)
 		AM.set_loc(get_turf(M))
-		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [M] and removes their [AM.name] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [constructName(M)] and removes their [AM.name] at [log_loc(user)].")
 		return
 
 	custom_suicide = 1
@@ -1360,7 +1360,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 				if (bling)
 					bling.throwforce = 1
 			bling.throw_at(target, 8, 2)
-			playsound(T, 'sound/effects/bamf.ogg', 40, 1)
+			playsound(T, 'sound/effects/bamf.ogg', 40, TRUE)
 			user.visible_message("<span class='success'><b>[user]</b> blasts some bling at [target]!</span>")
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
@@ -1527,7 +1527,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 		else if (!ON_COOLDOWN(src, "recent_fire", 30 SECOND))
 			src.bangfired = TRUE
 			user?.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
-			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, 1)
+			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, TRUE)
 			icon_state = "bangflag[icon_state]"
 			return
 		else

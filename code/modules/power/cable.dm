@@ -368,6 +368,9 @@
 	if(d1 != 0 && !request_rebuild)
 		var/turf/T1 = get_step(src, d1)
 		for (var/obj/machinery/power/M in T1.contents)
+			if (M.netnum > length(powernets) || M.netnum < 0)
+				stack_trace("Machine [identify_object(M)] has a netnum of [M.netnum], when the valid powernets are \[1-[length(powernets)]\]")
+				continue
 			if(!M.directwired)
 				continue
 			if(M.netnum == 0 || length(powernets[M.netnum].cables) == 0)

@@ -70,10 +70,10 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 			else if(istype(T.loc, /area/allowGenerate))
 				prev_area.contents += T
 				//new prev_area.type(T)
-			else if(length(prev_area.area_parallax_layers))
+			else if(prev_area.area_parallax_render_source_group)
 				var/area/our_area = T.loc
-				if(!length(our_area.area_parallax_layers))
-					our_area.area_parallax_layers = prev_area.area_parallax_layers
+				if(!our_area.area_parallax_render_source_group)
+					our_area.area_parallax_render_source_group = prev_area.area_parallax_render_source_group
 					our_area.occlude_foreground_parallax_layers = TRUE
 				if (our_area.occlude_foreground_parallax_layers)
 					T.update_parallax_occlusion_overlay()
@@ -212,28 +212,28 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	illegal_still
 		maxNum = 1
-		probability = 10
+		probability = 15
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_illegal_still.dmm"
 		prefabSizeX = 23
 		prefabSizeY = 18
 
 	random_ship1
 		maxNum = 1
-		probability = 10
+		probability = 20
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_ship1.dmm"
 		prefabSizeX = 6
 		prefabSizeY = 6
 
 	random_crap1
 		maxNum = 1
-		probability = 10
+		probability = 20
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_crap1.dmm"
 		prefabSizeX = 6
 		prefabSizeY = 3
 
 	random_crap2
 		maxNum = 1
-		probability = 10
+		probability = 20
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_random_crap2.dmm"
 		prefabSizeX = 11
 		prefabSizeY = 7
@@ -289,21 +289,28 @@ ABSTRACT_TYPE(/datum/mapPrefab/planet)
 
 	supply_outpost_defended
 		maxNum = 1
-		probability = 10
+		probability = 15
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_supply_outpost_defended.dmm"
 		prefabSizeX = 16
 		prefabSizeY = 15
 
 	old_shack
 		maxNum = 1
-		probability = 10
+		probability = 15
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_old_shack.dmm"
 		prefabSizeX = 10
 		prefabSizeY = 11
 
 	shipwreck_survivor1
 		maxNum = 1
-		probability = 10
+		probability = 15
 		prefabPath = "assets/maps/prefabs/planet/prefab_planet_shipwreck_survivor1.dmm"
 		prefabSizeX = 19
 		prefabSizeY = 18
+
+	hidden_research_facility
+		maxNum = 1
+		probability = 10
+		prefabPath = "assets/maps/prefabs/planet/prefab_planet_hidden_research_facility.dmm"
+		prefabSizeX = 23
+		prefabSizeY = 32

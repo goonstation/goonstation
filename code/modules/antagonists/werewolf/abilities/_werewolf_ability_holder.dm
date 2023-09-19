@@ -286,30 +286,6 @@
 
 //////////////////////////////////////////// Ability holder /////////////////////////////////////////
 
-/atom/movable/screen/ability/topBar/werewolf
-	clicked(params)
-		var/datum/targetable/werewolf/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(owner.holder.owner.loc))
-			boutput(owner.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr.targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			usr.targeting_ability = owner
-			usr.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-		return
-
 /datum/abilityHolder/werewolf
 	usesPoints = 0
 	regenRate = 0
@@ -336,9 +312,9 @@
 				qdel(H.sims)
 				H.sims = new /datum/simsHolder/rp/wolf(H)
 
-	onRemove()
+	onRemove(mob/from_who)
 		. = ..()
-		var/mob/living/carbon/human/H = src.owner
+		var/mob/living/carbon/human/H = from_who
 		if (istype(H.sims, /datum/simsHolder/rp/wolf))
 			qdel(H.sims)
 			H.sims = new /datum/simsHolder/rp(H)
@@ -372,37 +348,6 @@
 	var/when_stunned = 0 // 0: Never | 1: Ignore mob.stunned and mob.weakened | 2: Ignore all incapacitation vars
 	var/not_when_handcuffed = 0
 	var/werewolf_only = 0
-
-	New()
-		..()
-		var/atom/movable/screen/ability/topBar/werewolf/B = new /atom/movable/screen/ability/topBar/werewolf(null)
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		B.name = src.name
-		B.desc = src.desc
-		src.object = B
-		return
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/werewolf()
-			object.icon = src.icon
-			object.owner = src
-		if (src.last_cast > world.time)
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt] ([round((src.last_cast-world.time)/10)])"
-			object.icon_state = src.icon_state + "_cd"
-		else
-			var/pttxt = ""
-			if (pointCost)
-				pttxt = " \[[pointCost]\]"
-			object.name = "[src.name][pttxt]"
-			object.icon_state = src.icon_state
-		return
 
 	proc/incapacitation_check(var/stunned_only_is_okay = 0)
 		if (!holder)
@@ -454,6 +399,10 @@
 		if (src.not_when_handcuffed == 1 && M.restrained())
 			boutput(M, "<span class='alert'>You can't use this ability when restrained!</span>")
 			return 0
+
+		if (!isturf(src.holder.owner.loc))
+			boutput(src.holder.owner, "<span class='alert'>You can't use this ability here.</span>")
+			return FALSE
 
 		return 1
 

@@ -6,7 +6,7 @@
 // PLEASE JUST MAKE A MESS OF make_my_stuff() INSTEAD
 // CALL YOUR PARENTS
 
-#define RELAYMOVE_DELAY 50
+#define RELAYMOVE_DELAY 1 SECOND
 
 ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
@@ -190,20 +190,31 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return
 		src.last_relaymove_time = world.time
 
+		if (istype(get_turf(src), /turf/space))
+			if (!istype(get_turf(src), /turf/space/fluid))
+				return
+
 		if (src.legholes)
-			step(src,user.dir)
-			return
+			if (!src.anchored)
+				step(src,user.dir)
+				return
+			else
+				user.show_text("You try moving, but [src] seems to be stuck to the floor!", "red")
+				return
 
 		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
-				step(src, pick(alldirs))
+				if (!src.anchored)
+					step(src, pick(alldirs))
+				else
+					user.show_text("You try moving, but [src] seems to be stuck to the floor!", "red")
 			if (!src.jiggled)
 				src.jiggled = 1
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
 					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>")
-				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 				var/shakes = 5
 				while (shakes > 0)
 					shakes--
@@ -888,12 +899,12 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	onStart()
 		..()
-		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins taking apart [the_storage].</span>")
 
 	onEnd()
 		..()
-		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)

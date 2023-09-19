@@ -102,7 +102,7 @@
 	charge = 15000
 
 /obj/item/cell/erebite/charged
-	charge = 20000
+	charge = 60000
 
 /obj/item/cell/cerenkite/charged
 	charge = 15000

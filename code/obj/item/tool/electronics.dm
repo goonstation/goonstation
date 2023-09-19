@@ -250,13 +250,13 @@
 				var/dirr = input("Select A Direction!", "UDLR", null, null) in list("Up","Down","Left","Right")
 				switch(dirr)
 					if("Up")
-						src.set_dir(1)
+						src.set_dir(NORTH)
 					if("Down")
-						src.set_dir(2)
+						src.set_dir(SOUTH)
 					if("Left")
-						src.set_dir(8)
+						src.set_dir(WEST)
 					if("Right")
-						src.set_dir(4)
+						src.set_dir(EAST)
 			boutput(user, "Ready to deploy!")
 			if (tgui_alert(user, "Ready to deploy?", "Confirmation", list("Yes", "No")) == "Yes")
 				boutput(user, "<span class='alert'>Place box and solder to deploy!</span>")
@@ -944,8 +944,8 @@
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
-		var/obj/item/electronics/frame/F = new
 		var/turf/target_loc = get_turf(target)
+		var/obj/item/electronics/frame/F = new(target_loc)
 		F.name = "[target.name] frame"
 		if(O.deconstruct_flags & DECON_DESTRUCT)
 			F.store_type = O.type
@@ -957,7 +957,6 @@
 				M.u_equip(O)
 			O.set_loc(F)
 		// move frame to the location after object is gone, so crushers do not crusher themselves
-		F.set_loc(target_loc)
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"
