@@ -641,3 +641,40 @@
 /mob/living/carbon/human/UpdateDamage()
 	..()
 	src.hud?.update_health_indicator()
+
+///The deliberate act of using one's body to cover a live time-fused hand grenade. Returns "remaining" explosion power
+/mob/living/carbon/human/proc/cover_explosion_with_body(power, brisance=1)
+
+	if(src.nodamage) return
+
+	var/effective_power = power * clamp(1 - src.get_explosion_resistance(), 0, 1)
+
+	if (effective_power < 0)
+		return
+	if (effective_power > 7 || (effective_power > 6 && src.health < 0))
+		src.gib(1)
+		return
+
+	var/list/chest_organs = list("heart", "left_lung", "right_lung", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix")
+	chest_organs.Remove(src.organHolder.get_missing_organs())
+	shuffle_list(chest_organs)
+
+	var/b_loss = clamp(power*15, 0, 120)
+	var/f_loss = clamp((power-2.5)*10, 0, 120)
+
+	// tiered effects
+	if (effective_power > 0)
+		src.TakeDamage("chest", b_loss/2, f_loss/2, 0, DAMAGE_BLUNT, TRUE) // damage parity
+	if (effective_power > 1) // body is the medium
+		src.organHolder.damage_organs(effective_power * 2, 0, 0, chest_organs, brisance)
+		if (src.chest_item && src.chest_item?.material)
+			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
+			var/obj/item/I = chest_item
+			I.material_trigger_on_temp(T0C + effective_power * 100)
+			I.material_trigger_on_explosion(severity)
+	if (effective_power > 3) // body is the message
+		for(var/i in 1 to min(effective_power - 2, length(chest_organs)))
+			src.organHolder.drop_and_throw_organ(chest_organs[i], dist=round(effective_power/2), speed=brisance, showtext=FALSE)
+
+	src.UpdateDamageIcon()
+	return
