@@ -1,3 +1,9 @@
+
+(t)tue sep 19 23
+(u)Smilg
+(p)15820
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Assless chaps replaced with regular chaps.
 (t)mon sep 18 23
 (u)LeahTheTech
 (*)Clone records can now have notes attached.
