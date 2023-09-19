@@ -1705,7 +1705,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			src.in_glass = new P(src)
 		if (prob(5))
 			src.salted = TRUE
-		src.update_icon()
+		src.UpdateIcon()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane
 	// well, relatively sane, the dangerous drinks are still here but at least people won't be drinking initropidril again
@@ -1860,12 +1860,9 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		src.UpdateIcon()
 
 		if (src.reagents.total_volume == 0)
-			update_icon()
 			icon_state = "pinkmug_empty"
 		else
-			update_icon()
 			icon_state = "pinkmug_full"
-		return
 
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"

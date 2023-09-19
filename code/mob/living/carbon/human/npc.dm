@@ -781,7 +781,7 @@
 		var/obj/item/gun/kinetic/GN = src.r_hand
 		for(var/obj/item/ammo/bullets/BB in src.contents)
 			src.l_hand = BB
-			GN:attackby(BB,src)
+			GN:Attackby(BB,src)
 			src.u_equip(BB)
 			src.l_hand = null
 			if (BB)
