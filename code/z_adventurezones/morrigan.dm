@@ -2631,7 +2631,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "disposal"
 	anchored = ANCHORED
 	density = TRUE
-	var/required_objects = list(/obj/item/fishing_rod) //temporary
+	var/required_objects = list(/obj/item/fishing_rod, /obj/item/gun/energy/railgun_experimental) //temporary
 	var/functioning = TRUE
 
 	New()
@@ -2645,27 +2645,32 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 				if (istype(W, obj))
 					return
 				else
-					SPAWN(2 SECONDS)
+					sleep(2 SECONDS)
 					W.set_loc(src.loc)
 					src.visible_message("<span class='alert'><b>The chute spits [W] out! Looks like it doesn't accept it..</b></span>")
 					return
 
 	proc/check_contents()
 		var/items_collected = 0
-		for (var/i in src.contents)
-			for (i in required_objects)
-				items_collected += 1
+		for (var/item in src)
+			for (var/required_item in required_objects)
+				if (istype(item, required_item))
+					items_collected += 1
 		if (length(required_objects) == items_collected)
 			src.visible_message("<span class='alert'><b>\The [src] makes a beep!</b></span>")
 			src.functioning = FALSE // there should be a door opening code but thats later
-			return TRUE
+			return
 		else
-			return FALSE
+			return
 
 	attackby(obj/item/W, mob/user)
-		put_item(W, user)
-		check_contents()
-		return
+		if(src.functioning)
+			put_item(W, user)
+			check_contents()
+			return
+		else
+			boutput(user, "<span class='alert'><b>\The [src] doesn't seem to work!</b></span>")
+			return
 
 //gas mask please i beg
 
