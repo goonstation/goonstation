@@ -15135,6 +15135,10 @@
 	dir = 4
 	},
 /area/morrigan/station/civilian/cafe)
+"opW" = (
+/obj/machinery/disposal/small/south,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/engineering/eng)
 "oqw" = (
 /obj/item/wrench,
 /obj/item/electronics/soldering,
@@ -31970,7 +31974,7 @@ xAi
 tJx
 qyf
 oir
-oir
+opW
 hif
 oir
 eUh
