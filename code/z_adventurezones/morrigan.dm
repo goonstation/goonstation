@@ -2658,7 +2658,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 					items_collected += 1
 		if (length(required_objects) == items_collected)
 			src.visible_message("<span class='alert'><b>\The [src] makes a beep!</b></span>")
-			src.functioning = FALSE // there should be a door opening code but thats later
+			playsound(src, 'sound/effects/zzzt.ogg', 50, TRUE)
+			src.functioning = FALSE
 			return
 		else
 			return
