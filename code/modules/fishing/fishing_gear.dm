@@ -490,6 +490,8 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			src.lure.rod = src
 			tooltip_rebuild = 1
 			RegisterSignal(src.lure, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(max_range_check))
+		if (src.lure.owner && src.lure.loc != src.lure.owner)
+			src.lure.owner = null
 
 	proc/max_range_check()
 		if (GET_DIST(src, src.lure) > src.line_length)
@@ -575,7 +577,7 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 	throw_impact(mob/hit_atom, datum/thrown_thing/thr)
 		if (isliving(hit_atom) && hit_atom.equipped() == src.rod)
 			return
-		else if ((isliving(hit_atom) && !hit_atom.nodamage && GET_DIST(src, src.rod) <= src.rod.line_length))
+		else if ((isliving(hit_atom) && !hit_atom.nodamage && GET_DIST(src, src.rod) < src.rod.line_length))
 			src.embed(hit_atom)
 		return ..()
 
@@ -681,6 +683,6 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 
 	canRunCheck(in_start)
 		..()
-		if (!src.user || !src.target || !src.rod || !src.lure || (src.target == src.user) || !(src.lure.owner == src.target) || !(src.user.equipped() == src.rod) || !isturf(src.user.loc))
+		if (!src.user || !src.target || !src.rod || !src.lure || (src.target == src.user) || !(src.lure.loc == src.target) || !(src.user.equipped() == src.rod) || !isturf(src.user.loc))
 			interrupt(INTERRUPT_ALWAYS)
 			return
