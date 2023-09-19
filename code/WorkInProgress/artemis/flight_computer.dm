@@ -208,7 +208,7 @@
 			return
 
 		// TODO Sensor Ping Sound?!?!?
-		//playsound(master, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, 1)
+		//playsound(master, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, TRUE)
 
 	onUpdate()
 		..()

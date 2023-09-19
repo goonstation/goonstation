@@ -90,7 +90,7 @@
 		//shoot off tail
 		if (L.organHolder?.tail)
 			var/mob/living/critter/small_animal/livingtail/C = new /mob/living/critter/small_animal/livingtail(get_turf(src.holder.owner))
-			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 			make_cleanable(/obj/decal/cleanable/blood/splatter, L.loc)
 			C.tail_memory = L.organHolder.tail
 			C.primary_color = L.organHolder.tail.organ_color_2

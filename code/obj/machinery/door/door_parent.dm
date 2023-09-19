@@ -107,7 +107,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			// If we just return 0, they will be able to bump-open the door and get past regardless
 			// because mob paralysis doesn't take effect until the next tick.
 			if (prob(20) && !ON_COOLDOWN(H, "brainstumble_cooldown", 1 SECOND))
-				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, TRUE)
 				src.visible_message("<span class='alert'><b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!</span>")
 				if (!istype(H.head, /obj/item/clothing/head/helmet))
 					H.TakeDamageAccountArmor("head", 9, 0, 0, DAMAGE_BLUNT)
@@ -567,7 +567,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 				var/mob_layer = L.layer	//Make it look like we're inside the door
 				L.layer = src.layer - 0.01
 				if(!ON_COOLDOWN(L, "doorcrush", 0.5 SECONDS))
-					playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
+					playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, TRUE)
 					L.emote("scream")
 
 					L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
@@ -588,7 +588,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if(did_crush)
 			interrupt_autoclose = 1
 			src.visible_message("<span class='alert'>\The [src] whirrs [pick_string("descriptors.txt", "borg_shake")]!</span>")
-			playsound(src, 'sound/machines/hydraulic.ogg', 30,1)
+			playsound(src, 'sound/machines/hydraulic.ogg', 30,TRUE)
 			sleep(crush_delay) //If we crushed someone, wait a bit until resuming operations to prevent chaincrushing
 			src.operating = 0
 			src.open()
@@ -708,11 +708,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/unpowered/martian/open()
 	if(src.locked) return
-	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 	. = ..()
 
 /obj/machinery/door/unpowered/martian/close()
-	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 	. = ..()
 
 // APRIL FOOLS
@@ -791,7 +791,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 		return
 	if (user.is_hulk())
 		src.visible_message("<span class='alert'><B>[user] smashes through the door!</B></span>")
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 		src.operating = -1
 		src.set_unlocked()
 		open()
@@ -803,17 +803,17 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 			close()
 	else if (src.density)
 		play_animation("deny")
-		playsound(src, 'sound/machines/door_locked.ogg', 50, 1, -2)
+		playsound(src, 'sound/machines/door_locked.ogg', 50, TRUE, -2)
 		boutput(user, "<span class='alert'>The door is locked!</span>")
 	return
 
 /obj/machinery/door/unpowered/wood/open()
 	if(src.locked) return
-	playsound(src, 'sound/machines/door_open.ogg', 50, 1)
+	playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/close()
-	playsound(src, 'sound/machines/door_close.ogg', 50, 1)
+	playsound(src, 'sound/machines/door_close.ogg', 50, TRUE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/verb/simple_lock()
@@ -867,7 +867,7 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 			return
 		if (prob(5) || (!the_door.simple_lock && prob(5)))
 			owner.visible_message("<span class='alert'>[owner] messes up while picking [src.the_door]'s lock!</span>")
-			playsound(the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
+			playsound(the_door, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

@@ -344,7 +344,7 @@
 			owner.changeStatus("paralysis", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
-			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			animate_storage_thump(container)
 
 		return
@@ -708,10 +708,10 @@
 			return 1
 
 		if (isdead(read))
-			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have their mind read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have [his_or_her(read)] mind read.</span>")
 			return
 		if (read.health < 0)
-			boutput(owner, "<span class='alert'>[read.name] is dying, and their thoughts are too scrambled to read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dying, and [his_or_her(read)] thoughts are too scrambled to read.</span>")
 			return
 
 		boutput(usr, "<span class='notice'>Mind Reading of [read.name]:</b></span>")
@@ -794,10 +794,10 @@
 			return 1
 
 		if (isdead(read))
-			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have their mind read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have [his_or_her(read)] mind read.</span>")
 			return
 		if (read.health < 0)
-			boutput(owner, "<span class='alert'>[read.name] is dying, and their thoughts are too scrambled to read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dying, and [his_or_her(read)] thoughts are too scrambled to read.</span>")
 			return
 
 		boutput(read, "<span class='alert'>Somehow, you sense <b>[owner]</b> trying and failing to read your mind!</span>")

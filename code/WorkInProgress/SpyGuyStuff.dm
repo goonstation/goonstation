@@ -372,7 +372,7 @@ proc/Create_Tommyname()
 					var/starty = 1
 					var/mob/badmantarget = M
 					boutput(badmantarget, "<span style=\"color:black\"> <B> You hear a voice in your head, 'You're not supposed to be here'. </B>")
-					playsound(badmantarget, 'sound/misc/american_patriot.ogg', 50, 1, -1)
+					playsound(badmantarget, 'sound/misc/american_patriot.ogg', 50, TRUE, -1)
 					sleep(10 SECONDS)
 					startx = badmantarget.x - rand(-11, 11)
 					starty = badmantarget.y - rand(-11, 11)
@@ -771,7 +771,7 @@ proc/Create_Tommyname()
 			O.set_loc(T)
 			animate_slide(O, 0, 0, animtime, LINEAR_EASING)
 
-	playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
+	playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, TRUE)
 	sleep(animtime)
 	if(turf_type)
 		DEBUG_MESSAGE("Creating [turf_type] at [log_loc(T)]")

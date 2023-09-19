@@ -957,7 +957,7 @@
 	src.add_fingerprint(user)
 	if (ispryingtool(C) && src.density && (src.status & NOPOWER) && !( src.operating ))
 		if(!ON_COOLDOWN(src, "prying_sound", 1.5 SECONDS))
-			playsound(src, 'sound/machines/airlock_pry.ogg', 35, 1)
+			playsound(src, 'sound/machines/airlock_pry.ogg', 35, TRUE)
 		src.operating = TRUE
 		flick("[icon_base]c0", src)
 		src.icon_state = "[icon_base]0"

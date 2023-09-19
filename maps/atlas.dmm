@@ -4685,7 +4685,7 @@
 	pixel_y = 21
 	},
 /obj/table/reinforced/chemistry/auto/chemstorage,
-/obj/item/paper/labdrawertips,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -16222,6 +16222,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/table/reinforced/chemistry/auto/allinone,
+/obj/item/paper/labdrawertips,
 /turf/simulated/floor/purplewhite{
 	dir = 5
 	},

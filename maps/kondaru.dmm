@@ -33303,6 +33303,7 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/power/apc/autoname_north,
+/obj/machinery/chem_shaker/large/chemistry,
 /obj/item/paper/labdrawertips,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
@@ -37077,8 +37078,7 @@
 /turf/simulated/floor/black,
 /area/station/turret_protected/Zeta)
 "gRM" = (
-/obj/machinery/computer/barcode/qm{
-	},
+/obj/machinery/computer/barcode/qm,
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-8"
@@ -41148,8 +41148,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "jYt" = (
-/obj/machinery/computer/barcode{
-	},
+/obj/machinery/computer/barcode,
 /obj/cable{
 	icon_state = "0-2"
 	},
@@ -50416,18 +50415,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"riM" = (
-/obj/machinery/computer/barcode/qm{
-	dir = 8
-	},
-/obj/machinery/alarm{
-	dir = 8;
-	pixel_x = 20
-	},
-/turf/simulated/floor/orangeblack/side{
-	dir = 4
-	},
-/area/station/quartermaster/office)
 "riU" = (
 /obj/shrub,
 /turf/simulated/floor/grass,
@@ -107105,7 +107092,7 @@ lTF
 bNf
 bOL
 bQb
-riM
+bZR
 bSW
 bJr
 cnU

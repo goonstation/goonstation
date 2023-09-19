@@ -453,6 +453,12 @@
 		if(mainframe)
 			mainframe.deploy_to()
 
+	verb/toggle_lock()
+		set category = "AI Commands"
+		set name = "Toggle Cover Lock"
+		if(mainframe)
+			mainframe.toggle_lock()
+
 	verb/open_nearest_door()
 		set category = "AI Commands"
 		set name = "Open Nearest Door to..."

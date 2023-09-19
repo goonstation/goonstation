@@ -113,7 +113,7 @@
 				D.icon_state = "chempuff"
 				D.layer = EFFECTS_LAYER_BASE
 
-				playsound(cam, 'sound/machines/mixer.ogg', 50, 1)
+				playsound(cam, 'sound/machines/mixer.ogg', 50, TRUE)
 
 				logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires [src.name], creating metal foam at [log_loc(T)].")
 
@@ -502,7 +502,7 @@
 
 		if(C)
 			logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] activates AI [src.name], targeting [log_loc(target)].")
-			playsound(C, 'sound/weapons/flash.ogg', 100, 1)
+			playsound(C, 'sound/weapons/flash.ogg', 100, TRUE)
 			C.visible_message("[C] emits a sudden flash.")
 			for (var/atom/A in oviewers((flash_range), get_turf(C)))
 				var/mob/living/M

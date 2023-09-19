@@ -97,7 +97,7 @@
 	S.in_rush = 0
 
 	if(check_target_immunity(target))
-		boutput(src, "<span class='alert'>[target] braces themselves to stop your tackle effortlessly!</span>")
+		boutput(src, "<span class='alert'>[target] braces [himself_or_herself(target)] to stop your tackle effortlessly!</span>")
 		return
 
 	if (src.hasStatus("handcuffed"))

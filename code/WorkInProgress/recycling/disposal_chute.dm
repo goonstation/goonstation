@@ -300,7 +300,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 						SubscribeToProcess()
 						src.is_processing = 1
 				update()
-				playsound(src, 'sound/misc/handle_click.ogg', 50, 1)
+				playsound(src, 'sound/misc/handle_click.ogg', 50, TRUE)
 				. = TRUE
 			if("togglePump")
 				if (src.mode)
@@ -445,7 +445,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		ZERO_GASES(src.air_contents)
 
 		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
 		sleep(0.5 SECONDS) // wait for animation to finish
 
 
@@ -472,7 +472,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 	proc/expel(var/obj/disposalholder/H)
 
 		var/turf/target
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -657,7 +657,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			SubscribeToProcess()
 			is_processing = 1
 
-		playsound(src, 'sound/misc/handle_click.ogg', 50, 1)
+		playsound(src, 'sound/misc/handle_click.ogg', 50, TRUE)
 
 		update()
 		return
@@ -750,7 +750,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			H.mail_tag = src.destination_tag
 		H.start(src)
 		flick("chemlink_flush", src.flush_dummy)
-		playsound(src, 'sound/misc/handle_click.ogg', 50, 1)
+		playsound(src, 'sound/misc/handle_click.ogg', 50, TRUE)
 
 	ui_interact(mob/user, datum/tgui/ui)
 		ui = tgui_process.try_update_ui(user, src, ui)

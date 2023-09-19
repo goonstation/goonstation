@@ -201,7 +201,7 @@
 
 		M.buttgib()
 
-/client/proc/cmd_admin_anvilgib(mob/M as mob in world, height = 7 as num|null, anvil_type = /obj/table/anvil as text|null)
+/client/proc/cmd_admin_anvilgib(mob/M as mob in world, height = 7 as num|null, anvil_type = /obj/table/anvil/gimmick as text|null)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "Anvil Gib"
 	set popup_menu = 0
