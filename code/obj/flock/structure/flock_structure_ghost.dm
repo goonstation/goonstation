@@ -111,5 +111,5 @@
 		var/obj/item/flockcache/cache = new(get_turf(src))
 		cache.resources = currentmats
 	flock_speak(src, "Tealprint derealizing", flock)
-	playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 30, 1, extrarange = -10)
+	playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 30, TRUE, extrarange = -10)
 	qdel(src)

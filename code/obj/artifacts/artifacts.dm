@@ -79,7 +79,7 @@
 		src.Artifact_blob_act(power)
 
 	bullet_act(var/obj/projectile/P)
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch (P.proj_data.damage_type)
 			if(D_KINETIC,D_PIERCING,D_SLASHING)
@@ -277,7 +277,7 @@
 		var/turf/T = get_turf(src)
 		if (cinematic)
 			T.visible_message("<span class='alert'><b>An artifact suddenly warps into existence!</b></span>")
-			playsound(T, 'sound/effects/teleport.ogg', 50,1)
+			playsound(T, 'sound/effects/teleport.ogg', 50,TRUE)
 			var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 			swirl.set_loc(T)
 			SPAWN(1.5 SECONDS)

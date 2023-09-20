@@ -127,7 +127,7 @@
 
 			M.changeStatus("weakened", 3 SECONDS)
 
-		if(!src.to_transfer.len || src.to_transfer.len == 1)
+		if(!src.to_transfer.len || length(src.to_transfer) == 1)
 			src.visible_message("The [src] buzzes.")
 			src.last_switch = 0
 			if(src.teleport_next_switch)
@@ -409,7 +409,7 @@
 			if("ONION SLUG CANDY") // Anagram: ANNOYING CLOUDS
 				particleMaster.SpawnSystem(new /datum/particleSystem/spooky_mist(get_turf(user)))
 				user.show_text("A cold and spooky wind begins to blow!","#8218A8")
-				playsound(user, 'sound/ambience/nature/Wind_Cold2.ogg', 50, 1, 5)
+				playsound(user, 'sound/ambience/nature/Wind_Cold2.ogg', 50, TRUE, 5)
 			if("HOT SIGMA") // Anagram: IM A GHOST
 				user.blend_mode = 2
 				user.alpha = 150

@@ -52,11 +52,6 @@
 	dir = 1
 	},
 /area/mining/hangar)
-"aE" = (
-/obj/item/cigbutt,
-/obj/landmark/artifact,
-/turf/simulated/floor/plating/scorched,
-/area/evilreaver/security)
 "aM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
@@ -116,6 +111,11 @@
 	dir = 1
 	},
 /area/mining/dock)
+"bf" = (
+/obj/lattice,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/martian,
+/area/evilreaver/bridge)
 "bi" = (
 /obj/lattice{
 	dir = 10;
@@ -141,6 +141,17 @@
 	icon_state = "lattice-dir"
 	},
 /turf/space,
+/area/noGenerate)
+"bA" = (
+/obj/item/cigbutt,
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/security)
+"cc" = (
+/obj/decal/cleanable/cobweb2,
+/obj/item/scrap,
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/plating/damaged3,
 /area/noGenerate)
 "ce" = (
 /obj/lattice{
@@ -195,6 +206,13 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/mining/manufacturing)
+"cN" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/obj/item/raw_material/shard/glass,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/atmospherics)
 "cT" = (
 /obj/effects/background_objects/star_blue{
 	pixel_x = -64;
@@ -202,13 +220,18 @@
 	},
 /turf/space,
 /area/noGenerate)
+"du" = (
+/obj/lattice,
+/mob/living/critter/martian/soldier,
+/turf/simulated/floor/martian,
+/area/evilreaver/chapel)
 "dF" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/quarters)
 "dK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space,
@@ -244,6 +267,12 @@
 	},
 /turf/space,
 /area/noGenerate)
+"eS" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/atmospherics)
 "eT" = (
 /turf/simulated/floor/grime,
 /area/mining/dock)
@@ -251,11 +280,26 @@
 /obj/effects/background_objects/regina,
 /turf/space,
 /area/noGenerate)
+"fz" = (
+/obj/crevice{
+	pixel_y = 30
+	},
+/obj/landmark/spawner/artifact,
+/obj/lattice,
+/turf/simulated/floor/martian,
+/area/noGenerate)
 "fA" = (
 /obj/decal/fakeobjects/lighttube_broken,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/red/side,
 /area/evilreaver/security)
+"fI" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibup1"
+	},
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/damaged2,
+/area/evilreaver/atmospherics)
 "fK" = (
 /obj/lattice{
 	dir = 9;
@@ -263,6 +307,10 @@
 	},
 /turf/space,
 /area/noGenerate)
+"gb" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/bar,
+/area/evilreaver/bar)
 "gl" = (
 /obj/machinery/neosmelter,
 /turf/simulated/floor/shuttlebay{
@@ -281,6 +329,10 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/caution/east,
 /area/mining/miningoutpost)
+"gz" = (
+/mob/living/critter/martian/soldier,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
 "gB" = (
 /obj/lattice{
 	dir = 1;
@@ -288,10 +340,17 @@
 	},
 /turf/space,
 /area/noGenerate)
+"gM" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/mob/living/critter/martian/warrior,
+/turf/simulated/floor/martian,
+/area/evilreaver/storage/tools)
 "gO" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -375,22 +434,17 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/security)
-"iW" = (
-/obj/overlay{
-	desc = "The corpse of a long dead space thing.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "marscorpse";
-	name = "dead martian"
-	},
-/obj/item/cigbutt,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/bar)
-"je" = (
-/obj/decal/cleanable/cobweb2,
-/obj/item/scrap,
-/obj/landmark/artifact,
-/turf/simulated/floor/plating/damaged3,
-/area/noGenerate)
+"jn" = (
+/obj/lattice,
+/obj/decal/fakeobjects/pipe,
+/mob/living/critter/martian/mutant,
+/turf/simulated/floor/martian,
+/area/evilreaver/bridge)
+"jS" = (
+/obj/lattice,
+/mob/living/critter/martian/warrior,
+/turf/simulated/floor/martian,
+/area/evilreaver/bridge)
 "jZ" = (
 /obj/machinery/door/poddoor{
 	density = 0;
@@ -414,6 +468,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
+"kp" = (
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/storage/tools)
 "kz" = (
 /obj/decal/cleanable/molten_item,
 /obj/item/tile/steel,
@@ -427,10 +485,20 @@
 	dir = 8
 	},
 /area/evilreaver/security)
-"kW" = (
-/obj/critter/martian/soldier,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/security)
+"kE" = (
+/obj/item/reagent_containers/food/fish/red_herring,
+/obj/item/reagent_containers/food/snacks/burger,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating,
+/area/spyshack)
+"kK" = (
+/mob/living/critter/martian/soldier,
+/turf/simulated/floor/martian,
+/area/evilreaver/bridge)
+"kL" = (
+/mob/living/critter/martian/soldier,
+/turf/simulated/floor/martian,
+/area/evilreaver/chapel)
 "lp" = (
 /obj/machinery/conveyor/NS{
 	id = "MINSouth"
@@ -440,7 +508,7 @@
 "lx" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -459,6 +527,15 @@
 	name = "organic floor"
 	},
 /area/noGenerate)
+"mi" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
+"ms" = (
+/obj/lattice,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/martian,
+/area/evilreaver/storage/tools)
 "mO" = (
 /obj/decal/cleanable/machine_debris,
 /turf/simulated/floor/martian,
@@ -477,7 +554,7 @@
 "nl" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -486,6 +563,11 @@
 	name = "organic floor"
 	},
 /area/noGenerate)
+"nm" = (
+/obj/item/cigbutt,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/bar)
 "nn" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/mining/miningoutpost)
@@ -525,12 +607,6 @@
 "nA" = (
 /turf/simulated/floor,
 /area/mining/quarters)
-"nD" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 6
-	},
-/area/noGenerate)
 "nG" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
@@ -688,7 +764,7 @@
 "oz" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -700,16 +776,10 @@
 "oD" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
-/area/noGenerate)
-"oG" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 4
-	},
 /area/noGenerate)
 "oH" = (
 /obj/table/reinforced/auto,
@@ -719,11 +789,6 @@
 	dir = 8
 	},
 /area/mining/hangar)
-"oI" = (
-/obj/decal/cleanable/dirt,
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/security)
 "oL" = (
 /obj/decal/fakeobjects/skeleton,
 /obj/decal/cleanable/blood,
@@ -865,7 +930,7 @@
 "pH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -946,7 +1011,7 @@
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "pQ" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/refinery)
 "pR" = (
@@ -1049,7 +1114,7 @@
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -1107,6 +1172,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/comms)
+"qJ" = (
+/obj/lattice,
+/obj/decal/cleanable/machine_debris,
+/mob/living/critter/martian/warrior,
+/turf/simulated/floor/martian,
+/area/evilreaver/security)
 "qK" = (
 /obj/machinery/firealarm{
 	pixel_y = 24;
@@ -1129,7 +1200,7 @@
 "qT" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -1167,7 +1238,7 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /obj/disposalpipe/segment/transport{
 	dir = 4
@@ -1250,10 +1321,13 @@
 	icon_state = "carpetS"
 	},
 /area/tech_outpost)
-"rG" = (
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/martian,
-/area/evilreaver/storage/tools)
+"rE" = (
+/obj/decal/fakeobjects/lighttube_broken{
+	dir = 4
+	},
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/bridge)
 "rH" = (
 /obj/disposalpipe/segment/transport,
 /obj/cable{
@@ -1272,7 +1346,7 @@
 "rN" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -1337,7 +1411,7 @@
 	icon_state = "1-2"
 	},
 /obj/disposalpipe/segment/transport,
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "sf" = (
@@ -1348,7 +1422,7 @@
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "sg" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/quarters)
 "sj" = (
@@ -1370,11 +1444,6 @@
 	dir = 8
 	},
 /area/mining/hangar)
-"sq" = (
-/obj/decal/cleanable/machine_debris,
-/obj/critter/martian/warrior/dead,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/atmospherics)
 "su" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe{
@@ -1397,13 +1466,13 @@
 	name = "Power Room";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/mining/power)
 "sB" = (
 /obj/disposalpipe/segment/transport,
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "sC" = (
@@ -1433,7 +1502,7 @@
 "sH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -1479,10 +1548,6 @@
 	name = "reinforced plating"
 	},
 /area/mining/refinery)
-"sT" = (
-/obj/critter/martian/soldier,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/storage/tools)
 "sU" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/plating/airless,
@@ -1530,10 +1595,6 @@
 	},
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
-"tk" = (
-/obj/critter/martian/warrior,
-/turf/simulated/floor/martian,
-/area/evilreaver/storage/tools)
 "tp" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/supernorn,
@@ -1541,7 +1602,7 @@
 "tq" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -1549,38 +1610,19 @@
 "ts" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
-/area/evilreaver/atmospherics)
-"tt" = (
-/obj/lattice,
-/obj/decal/fakeobjects/pipe,
-/obj/item/raw_material/shard/glass,
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/plating/damaged2,
 /area/evilreaver/atmospherics)
 "tv" = (
 /turf/simulated/floor/orangeblack/side{
 	dir = 9
 	},
 /area/mining/hangar)
-"tx" = (
-/obj/decal/fakeobjects/lighttube_broken{
-	dir = 4
-	},
-/obj/landmark/artifact,
-/turf/simulated/floor/plating/scorched,
-/area/evilreaver/bridge)
 "tz" = (
 /turf/simulated/floor,
 /area/mining/miningoutpost)
-"tA" = (
-/obj/lattice,
-/obj/critter/martian/warrior/dead,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/atmospherics)
 "tD" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -1661,7 +1703,7 @@
 /obj/machinery/door/airlock/pyro{
 	name = "Maint Crew Quarters"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "uc" = (
@@ -1685,11 +1727,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/power)
-"uk" = (
-/obj/lattice,
-/obj/critter/martian/warrior/dead,
-/turf/simulated/floor/martian,
-/area/evilreaver/storage/tools)
 "um" = (
 /obj/item/clothing/suit/space/old,
 /obj/item/clothing/head/helmet/space/old,
@@ -1719,6 +1756,10 @@
 "ux" = (
 /turf/simulated/floor/scorched2,
 /area/mining/manufacturing)
+"uy" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/martian,
+/area/evilreaver/bridge)
 "uz" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -1730,10 +1771,6 @@
 /obj/effects/background_objects/regis,
 /turf/space,
 /area/noGenerate)
-"uD" = (
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/plating/scorched,
-/area/evilreaver/atmospherics)
 "uE" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibmid3"
@@ -1769,7 +1806,7 @@
 	},
 /area/mining/mainasteroid)
 "uR" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -1786,12 +1823,6 @@
 	dir = 4
 	},
 /area/tech_outpost)
-"uX" = (
-/obj/lattice,
-/obj/decal/fakeobjects/pipe,
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/plating/damaged2,
-/area/evilreaver/atmospherics)
 "uY" = (
 /obj/storage/crate,
 /obj/random_item_spawner/junk/maybe_few,
@@ -1804,10 +1835,6 @@
 /obj/disposalpipe/segment/transport,
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
-"vb" = (
-/obj/critter/martian/psychic/dead,
-/turf/simulated/floor/plating/damaged1,
-/area/evilreaver/atmospherics)
 "vd" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -1876,7 +1903,7 @@
 	name = "Power Room";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "vC" = (
@@ -1931,7 +1958,7 @@
 	},
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -2003,13 +2030,6 @@
 	dir = 1
 	},
 /area/mining/hangar)
-"wn" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/obj/critter/martian/warrior/dead,
-/turf/simulated/floor/martian,
-/area/evilreaver/storage/tools)
 "wo" = (
 /obj/machinery/door/airlock/pyro,
 /obj/decal/stripe_delivery,
@@ -2081,13 +2101,6 @@
 	dir = 8
 	},
 /area/mining/manufacturing)
-"wG" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/obj/critter/martian/warrior,
-/turf/simulated/floor/martian,
-/area/evilreaver/storage/tools)
 "wJ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -2116,7 +2129,7 @@
 "wR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
@@ -2170,13 +2183,6 @@
 "xr" = (
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
-"xt" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibup1"
-	},
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/plating/damaged2,
-/area/evilreaver/atmospherics)
 "xv" = (
 /turf/simulated/wall/auto/supernorn,
 /area/mining/quarters)
@@ -2280,7 +2286,7 @@
 "xM" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -2297,6 +2303,16 @@
 	},
 /turf/space,
 /area/noGenerate)
+"xP" = (
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibtorso"
+	},
+/obj/decal/cleanable/blood/gibs{
+	icon_state = "gibleg"
+	},
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
 "xQ" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -2366,10 +2382,6 @@
 /obj/stool/bed,
 /turf/simulated/floor,
 /area/mining/quarters)
-"yk" = (
-/obj/landmark/artifact,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/storage/tools)
 "yl" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/electrical,
@@ -2408,16 +2420,6 @@
 	dir = 6
 	},
 /area/mining/mainasteroid)
-"ys" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibtorso"
-	},
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gibleg"
-	},
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/atmospherics)
 "yw" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
@@ -2428,10 +2430,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
-"yy" = (
-/obj/critter/martian/warrior/dead,
-/turf/simulated/floor/plating/damaged1,
-/area/evilreaver/atmospherics)
 "yA" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
@@ -2443,10 +2441,6 @@
 "yB" = (
 /turf/simulated/floor/caution/north,
 /area/mining/manufacturing)
-"yC" = (
-/obj/critter/martian/warrior/dead,
-/turf/simulated/floor/plating/scorched,
-/area/evilreaver/atmospherics)
 "yH" = (
 /obj/decal/floatingtiles{
 	dir = 4
@@ -2515,7 +2509,7 @@
 	name = "Power Room";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
 "zm" = (
@@ -2526,7 +2520,7 @@
 /turf/simulated/floor/black,
 /area/mining/quarters)
 "zn" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable{
 	icon_state = "1-2"
 	},
@@ -2538,6 +2532,10 @@
 	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/noGenerate)
+"zp" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/atmospherics)
 "zq" = (
 /obj/rail{
 	dir = 9;
@@ -2597,19 +2595,13 @@
 /obj/machinery/light_switch/north,
 /turf/simulated/floor/grime,
 /area/mining/manufacturing)
-"zO" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 10
-	},
-/area/noGenerate)
 "zP" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4;
 	name = "Mining Outpost";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "zQ" = (
@@ -2619,10 +2611,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
-"zR" = (
-/obj/critter/martian/soldier,
-/turf/simulated/floor/martian,
-/area/evilreaver/chapel)
 "zS" = (
 /obj/storage/closet/coffin,
 /turf/simulated/floor/martian,
@@ -2694,10 +2682,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/tech_outpost)
-"An" = (
-/obj/critter/martian/warrior,
-/turf/simulated/floor/martian,
-/area/evilreaver/security)
 "Ao" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/noGenerate)
@@ -2726,17 +2710,12 @@
 /obj/storage/closet/coffin,
 /turf/simulated/floor/carpet/grime,
 /area/evilreaver/chapel)
-"Ax" = (
-/obj/decal/fakeobjects/pipe,
-/obj/critter/martian/psychic,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/chapel)
 "Az" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	name = "Shuttle Dock";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/hangar)
 "AA" = (
@@ -2788,19 +2767,10 @@
 "AM" = (
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/chapel)
-"AO" = (
-/obj/lattice,
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/martian,
-/area/evilreaver/chapel)
-"AP" = (
-/obj/critter/martian/psychic/dead,
-/turf/simulated/floor/martian,
-/area/evilreaver/chapel)
 "AQ" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/lattice,
@@ -2957,7 +2927,7 @@
 "BK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space,
@@ -3002,11 +2972,6 @@
 "BU" = (
 /turf/simulated/floor/caution/east,
 /area/mining/quarters)
-"BV" = (
-/obj/lattice,
-/obj/critter/martian/soldier,
-/turf/simulated/floor/martian,
-/area/evilreaver/chapel)
 "Cd" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -3095,10 +3060,6 @@
 	dir = 10
 	},
 /area/tech_outpost)
-"CB" = (
-/obj/critter/martian/soldier,
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "CC" = (
 /obj/storage/secure/closet/engineering/mechanic,
 /turf/simulated/floor{
@@ -3134,6 +3095,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
+"Db" = (
+/mob/living/critter/martian/warrior,
+/turf/simulated/floor/martian,
+/area/evilreaver/security)
 "Dd" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -3270,7 +3235,7 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 8
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/mining/dock)
@@ -3292,12 +3257,8 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
-"Em" = (
-/turf/space,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/mining/hangar)
 "En" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
 "Eq" = (
@@ -3339,6 +3300,13 @@
 "Ey" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/bridge)
+"EG" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/martian,
+/area/evilreaver/storage/tools)
 "EJ" = (
 /obj/lattice{
 	dir = 6;
@@ -3364,7 +3332,7 @@
 "EM" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -3382,7 +3350,7 @@
 "EO" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -3492,10 +3460,6 @@
 /obj/storage/crate,
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
-"Fw" = (
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/plating/damaged3,
-/area/evilreaver/security)
 "Fx" = (
 /obj/storage/secure/closet/engineering/mining,
 /turf/simulated/floor/grime,
@@ -3535,7 +3499,7 @@
 "FK" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/lattice,
@@ -3593,7 +3557,7 @@
 "FX" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/lattice,
@@ -3603,16 +3567,15 @@
 	name = "organic floor"
 	},
 /area/evilreaver/bridge)
-"FY" = (
-/obj/lattice,
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "Ga" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"Gb" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/martian,
+/area/evilreaver/security)
 "Gh" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3642,11 +3605,6 @@
 	dir = 8
 	},
 /area/mining/miningoutpost)
-"Gm" = (
-/obj/lattice,
-/obj/critter/martian/warrior,
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "Gq" = (
 /obj/machinery/computer/transit_shuttle/mining{
 	dir = 4
@@ -3732,10 +3690,6 @@
 	icon_state = "carpetN"
 	},
 /area/tech_outpost)
-"GO" = (
-/obj/critter/martian/soldier,
-/turf/simulated/floor/carpet/grime,
-/area/evilreaver/chapel)
 "GP" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -3835,12 +3789,6 @@
 	dir = 4
 	},
 /area/noGenerate)
-"HC" = (
-/obj/lattice,
-/obj/decal/cleanable/machine_debris,
-/obj/critter/martian/warrior,
-/turf/simulated/floor/martian,
-/area/evilreaver/security)
 "HE" = (
 /obj/decal/fakeobjects/apc_broken,
 /turf/simulated/wall/auto/reinforced/old,
@@ -3858,10 +3806,10 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
-"HL" = (
-/obj/critter/martian/warrior,
+"HI" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
 /turf/simulated/floor/martian,
-/area/evilreaver/bridge)
+/area/evilreaver/storage/tools)
 "HM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3927,6 +3875,10 @@
 	},
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
+"HZ" = (
+/mob/living/critter/martian/soldier,
+/turf/simulated/floor/carpet/grime,
+/area/evilreaver/chapel)
 "Ia" = (
 /obj/rail{
 	dir = 8;
@@ -3943,11 +3895,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
-"Ig" = (
-/obj/lattice,
-/obj/critter/martian/warrior/dead,
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "Ij" = (
 /obj/machinery/conveyor/NS{
 	id = "MINSouth"
@@ -4007,7 +3954,7 @@
 "Iy" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -4035,7 +3982,7 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
 "IF" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/spyshack)
 "IG" = (
@@ -4141,12 +4088,6 @@
 	},
 /turf/simulated/bar,
 /area/evilreaver/bar)
-"Jp" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 8
-	},
-/area/noGenerate)
 "Js" = (
 /turf/simulated/floor{
 	dir = 4;
@@ -4160,7 +4101,7 @@
 /turf/simulated/floor/martian,
 /area/evilreaver/security)
 "Jv" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/hangar)
 "Jz" = (
@@ -4201,6 +4142,10 @@
 /obj/grille/catwalk,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/mining/mainasteroid)
+"JK" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/martian,
+/area/evilreaver/chapel)
 "JM" = (
 /obj/rail{
 	dir = 1;
@@ -4209,13 +4154,9 @@
 /turf/simulated/floor/plating/airless,
 /area/mining/mainasteroid)
 "JR" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/magnet_control)
-"JV" = (
-/obj/critter/martian/psychic,
-/turf/simulated/floor/martian,
-/area/evilreaver/security)
 "JX" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4246,7 +4187,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/hangar)
 "Kg" = (
@@ -4288,7 +4229,7 @@
 "Kt" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -4298,7 +4239,7 @@
 /area/mining/magnet_control)
 "Kz" = (
 /obj/cable,
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/hangar)
 "KA" = (
@@ -4425,7 +4366,7 @@
 /obj/machinery/door/airlock/pyro{
 	dir = 4
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/mining/miningoutpost)
@@ -4647,7 +4588,7 @@
 /turf/simulated/floor/grime,
 /area/mining/miningoutpost)
 "Mw" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
 "Mx" = (
@@ -4702,14 +4643,6 @@
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/tech_outpost)
-"MM" = (
-/obj/crevice{
-	pixel_y = 30
-	},
-/obj/landmark/artifact,
-/obj/lattice,
-/turf/simulated/floor/martian,
-/area/noGenerate)
 "MO" = (
 /obj/table/auto,
 /obj/item/magnetizer{
@@ -4744,12 +4677,6 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/spyshack)
-"Nc" = (
-/obj/item/fish/red_herring,
-/obj/item/reagent_containers/food/snacks/burger,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating,
-/area/spyshack)
 "Nd" = (
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag22";
@@ -4769,6 +4696,14 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/caution/east,
 /area/mining/quarters)
+"Np" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/scorched,
+/area/evilreaver/bridge)
+"Nq" = (
+/mob/living/critter/martian/soldier,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
 "Nt" = (
 /obj/machinery/manufacturer/hangar,
 /obj/machinery/light/incandescent,
@@ -4810,7 +4745,7 @@
 "NG" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space,
@@ -4873,6 +4808,10 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/caution/east,
 /area/mining/hangar)
+"Oc" = (
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/damaged1,
+/area/evilreaver/atmospherics)
 "Od" = (
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -5011,10 +4950,6 @@
 	},
 /turf/simulated/wall/auto/reinforced/old,
 /area/evilreaver/genetics)
-"OZ" = (
-/obj/critter/martian/psychic/dead,
-/turf/simulated/floor/plating/scorched,
-/area/evilreaver/bridge)
 "Pb" = (
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/blood/splatter,
@@ -5084,6 +5019,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/mining/manufacturing)
+"PM" = (
+/obj/lattice,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/martian,
+/area/evilreaver/security)
 "PP" = (
 /obj/stool/chair{
 	dir = 8
@@ -5116,7 +5056,7 @@
 "Qc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -5153,6 +5093,10 @@
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor,
 /area/mining/quarters)
+"Qv" = (
+/mob/living/critter/martian/warrior,
+/turf/simulated/floor/martian,
+/area/evilreaver/storage/tools)
 "Qz" = (
 /obj/item/tile/steel,
 /turf/simulated/floor/plating/damaged3,
@@ -5165,6 +5109,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/old,
 /area/tech_outpost)
+"QC" = (
+/obj/storage/closet/coffin,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
+/obj/item/seed/cannabis,
+/obj/item/seed/cannabis,
+/turf/simulated/floor/martian,
+/area/noGenerate)
 "QE" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -5184,6 +5137,10 @@
 /obj/machinery/communications_dish,
 /turf/simulated/floor/plating,
 /area/noGenerate)
+"QL" = (
+/mob/living/critter/martian/mutant,
+/turf/simulated/floor/martian,
+/area/evilreaver/security)
 "QN" = (
 /obj/table/auto,
 /obj/item/magnet_parts/construction,
@@ -5192,10 +5149,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
-"QO" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid,
-/area/noGenerate)
 "QR" = (
 /obj/lattice,
 /obj/item/raw_material/shard,
@@ -5218,12 +5171,6 @@
 	},
 /turf/space/asteroid,
 /area/noGenerate)
-"QW" = (
-/obj/lattice,
-/obj/decal/fakeobjects/pipe,
-/obj/critter/martian/psychic,
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "QX" = (
 /obj/machinery/light/emergency{
 	dir = 4;
@@ -5232,6 +5179,10 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
+"QY" = (
+/mob/living/critter/martian/warrior,
+/turf/simulated/floor/martian,
+/area/evilreaver/bridge)
 "Ra" = (
 /turf/simulated/wall/auto/supernorn,
 /area/mining/refinery)
@@ -5267,14 +5218,14 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/mining/comms)
 "Rk" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/space,
@@ -5282,7 +5233,7 @@
 "Rl" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -5364,7 +5315,7 @@
 	name = "Shuttle Dock";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/hangar)
 "RK" = (
@@ -5412,10 +5363,6 @@
 "Se" = (
 /turf/simulated/floor,
 /area/tech_outpost)
-"Sh" = (
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/martian,
-/area/evilreaver/security)
 "Si" = (
 /obj/machinery/manufacturer/general,
 /obj/decal/stripe_delivery,
@@ -5471,18 +5418,9 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
-"SJ" = (
-/obj/storage/closet/coffin,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
-/obj/item/fish/salmon,
-/obj/item/seed/cannabis,
-/obj/item/seed/cannabis,
-/turf/simulated/floor/martian,
-/area/noGenerate)
 "SK" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -5607,7 +5545,7 @@
 	name = "Mining Outpost";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/manufacturing)
 "TH" = (
@@ -5781,7 +5719,7 @@
 "Uz" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/plating/airless/shuttlebay{
@@ -5798,6 +5736,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/tech_outpost)
+"UC" = (
+/obj/decal/fakeobjects/pipe,
+/mob/living/critter/martian/mutant,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/chapel)
 "UF" = (
 /obj/machinery/recharge_station,
 /obj/machinery/light/incandescent,
@@ -5914,12 +5857,6 @@
 /obj/item/reagent_containers/dropper,
 /turf/simulated/floor/white,
 /area/evilreaver/genetics)
-"Vu" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 9
-	},
-/area/noGenerate)
 "Vy" = (
 /obj/disposalpipe/segment/transport,
 /turf/simulated/wall/auto/supernorn,
@@ -6027,10 +5964,6 @@
 /obj/cable,
 /turf/simulated/floor/airless/solar,
 /area/station/solar/small_backup3)
-"Wu" = (
-/turf/space,
-/turf/space,
-/area/noGenerate)
 "Wv" = (
 /obj/storage/closet/welding_supply,
 /obj/machinery/light/incandescent,
@@ -6038,12 +5971,6 @@
 	dir = 4
 	},
 /area/mining/hangar)
-"Ww" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 5
-	},
-/area/noGenerate)
 "Wx" = (
 /obj/rail{
 	dir = 8;
@@ -6091,7 +6018,7 @@
 	name = "Mining Outpost";
 	req_access_txt = "51"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/mining/refinery)
 "WJ" = (
@@ -6109,10 +6036,6 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/noGenerate)
-"WT" = (
-/obj/critter/martian/soldier/dead,
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "WW" = (
 /obj/lattice,
 /obj/decal/fakeobjects/pipe,
@@ -6144,7 +6067,7 @@
 "Xa" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /obj/decal/fakeobjects/pipe{
@@ -6169,6 +6092,11 @@
 /obj/machinery/power/apc/autoname_west,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
+"Xh" = (
+/obj/lattice,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
 "Xi" = (
 /obj/railing/orange/reinforced{
 	dir = 4
@@ -6229,7 +6157,7 @@
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/storage/tools)
 "XD" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/mining/dock)
 "XJ" = (
@@ -6264,10 +6192,6 @@
 	dir = 8
 	},
 /area/mining/hangar)
-"XV" = (
-/obj/critter/martian/psychic/dead,
-/turf/simulated/floor/martian,
-/area/evilreaver/bridge)
 "XW" = (
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
@@ -6311,7 +6235,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/firedoor_spawn,
+/obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grime,
 /area/mining/magnet_control)
 "Yf" = (
@@ -6368,15 +6292,11 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/evilreaver/bar)
-"Yz" = (
-/obj/overlay{
-	desc = "The corpse of a long dead space thing.";
-	icon = 'icons/misc/hstation.dmi';
-	icon_state = "marscorpse";
-	name = "dead martian"
-	},
-/turf/simulated/bar,
-/area/evilreaver/bar)
+"YA" = (
+/obj/decal/cleanable/machine_debris,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/atmospherics)
 "YB" = (
 /turf/simulated/bar,
 /area/evilreaver/bar)
@@ -6438,6 +6358,11 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /turf/simulated/floor/grime,
 /area/mining/refinery)
+"YV" = (
+/obj/lattice,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/martian,
+/area/evilreaver/chapel)
 "YW" = (
 /turf/simulated/wall/auto/martian,
 /area/evilreaver/storage/tools)
@@ -6452,6 +6377,11 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/bar,
 /area/evilreaver/bar)
+"Zc" = (
+/obj/decal/cleanable/dirt,
+/obj/mapping_helper/mob_spawn/corpse/critter/random/martian,
+/turf/simulated/floor/plating/damaged3,
+/area/evilreaver/security)
 "Zd" = (
 /obj/machinery/light/incandescent,
 /obj/decal/cleanable/dirt,
@@ -6466,7 +6396,7 @@
 "Zf" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal"
 	},
 /turf/simulated/floor/martian,
@@ -6512,11 +6442,6 @@
 	},
 /turf/simulated/wall/auto/supernorn,
 /area/mining/refinery)
-"Zu" = (
-/obj/lattice,
-/obj/critter/martian/warrior/dead,
-/turf/simulated/floor/martian,
-/area/evilreaver/security)
 "Zv" = (
 /obj/machinery/light/incandescent,
 /turf/simulated/floor,
@@ -6559,12 +6484,6 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/bridge)
-"ZM" = (
-/turf/space,
-/turf/simulated/wall/auto/asteroid{
-	dir = 1
-	},
-/area/noGenerate)
 "ZR" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair{
@@ -15480,7 +15399,7 @@ YW
 vw
 vw
 zB
-Ax
+UC
 By
 vw
 Gv
@@ -15787,7 +15706,7 @@ BA
 EM
 Gv
 Jg
-Yz
+gb
 KP
 bn
 kz
@@ -16079,20 +15998,20 @@ aw
 YW
 Xa
 ru
-sT
+gz
 tW
 vw
 vM
 zE
-AO
-BV
+YV
+du
 CW
 Gv
 Jm
 YB
 yh
 KP
-Yz
+gb
 LM
 Wm
 Wm
@@ -16392,7 +16311,7 @@ EO
 Gv
 Jo
 Zb
-iW
+nm
 yh
 YB
 Fr
@@ -16682,13 +16601,13 @@ aw
 aw
 YW
 qs
-rG
+HI
 Yr
 tY
 vM
 vM
-zR
-AP
+kL
+JK
 Ci
 vw
 Gv
@@ -16985,7 +16904,7 @@ aw
 XJ
 Xr
 Yr
-tk
+Qv
 tY
 vM
 vM
@@ -17301,7 +17220,7 @@ Ej
 Zw
 Zf
 Zo
-oI
+Zc
 aT
 AU
 Ej
@@ -17590,14 +17509,14 @@ XJ
 XJ
 Yh
 rx
-uk
+ms
 wf
-yk
+kp
 vM
 vw
 Dh
 By
-GO
+HZ
 vw
 Ej
 mO
@@ -17893,7 +17812,7 @@ XJ
 YW
 tq
 rx
-wn
+EG
 Yf
 vM
 vM
@@ -18195,7 +18114,7 @@ XJ
 YW
 YW
 um
-wG
+gM
 Yh
 tY
 AU
@@ -18204,10 +18123,10 @@ Fm
 GV
 Ej
 Ej
-JV
+QL
 Zo
 Zo
-kW
+Nq
 FN
 AU
 Ej
@@ -18486,7 +18405,7 @@ ab
 aw
 aw
 aw
-MM
+fz
 OA
 nW
 UM
@@ -18788,10 +18707,10 @@ ab
 Rk
 aw
 XJ
-je
+cc
 OD
 Qe
-SJ
+QC
 UM
 UM
 qg
@@ -18809,10 +18728,10 @@ Hf
 Jt
 Zo
 Zo
-kW
+Nq
 Fn
 Fn
-aE
+bA
 AU
 Ej
 aw
@@ -19106,11 +19025,11 @@ Yr
 YW
 AU
 Ej
-Fw
+mi
 Hf
-JV
+QL
 Zo
-Sh
+Gb
 Hf
 QE
 AU
@@ -19411,9 +19330,9 @@ Ej
 FG
 Hf
 Hf
-Zu
+PM
 Fn
-An
+Db
 Kt
 AU
 Ej
@@ -19706,12 +19625,12 @@ YW
 YW
 YW
 wR
-tk
+Qv
 YW
 AU
 Ej
 FK
-HC
+qJ
 Kt
 Zw
 Ej
@@ -20308,7 +20227,7 @@ qj
 SX
 rS
 ts
-uD
+zp
 xc
 yo
 rQ
@@ -20609,16 +20528,16 @@ Vk
 VU
 SX
 rW
-tt
+cN
 uE
 xp
-ys
+xP
 Ab
 Ac
 Ey
-FY
-HL
-WT
+bf
+QY
+uy
 ZG
 GM
 GU
@@ -20911,10 +20830,10 @@ Vk
 VX
 Tj
 sk
-tA
+Xh
 uL
-xt
-yy
+fI
+Oc
 Ab
 Ac
 Ey
@@ -20923,7 +20842,7 @@ Ga
 WW
 ZH
 cg
-QW
+jn
 qi
 Eu
 Ey
@@ -21212,18 +21131,18 @@ pi
 Vk
 Wo
 qC
-sq
+YA
 tJ
-uX
+eS
 xx
 yA
 Ab
 Ac
 Ey
-Gm
+jS
 HX
 Ey
-CB
+kK
 ZG
 GU
 hN
@@ -21516,19 +21435,19 @@ WJ
 Tj
 su
 tP
-vb
+Oc
 xy
-yC
+zp
 Ac
 Ac
 Ey
 Gr
-Ig
+bf
 XN
 GU
 hv
-OZ
-tx
+Np
+rE
 Eu
 Ey
 aw
@@ -21826,8 +21745,8 @@ Ac
 Eu
 Eu
 Is
-XV
-HL
+uy
+QY
 Eu
 Bo
 Eu
@@ -39707,7 +39626,7 @@ ab
 ab
 ab
 ab
-Wu
+ab
 ab
 ab
 ab
@@ -40009,7 +39928,12 @@ ab
 ab
 ab
 ab
-Wu
+ab
+ab
+ab
+aW
+ab
+ab
 ab
 ab
 aW
@@ -40017,11 +39941,6 @@ ab
 ab
 ab
 ab
-aW
-Wu
-Wu
-Wu
-Wu
 ab
 aa
 aa
@@ -40311,7 +40230,7 @@ ab
 ab
 ab
 aW
-Wu
+ab
 ab
 ab
 aX
@@ -40320,10 +40239,10 @@ bt
 bt
 bt
 bi
-Wu
 ab
 ab
-Wu
+ab
+ab
 ab
 ab
 aa
@@ -40625,7 +40544,7 @@ RN
 RN
 Kc
 ab
-Wu
+ab
 ab
 ab
 ab
@@ -40927,7 +40846,7 @@ CA
 RN
 Kc
 Kc
-Wu
+ab
 ab
 ab
 ab
@@ -41833,7 +41752,7 @@ KJ
 RN
 Kc
 Kc
-QO
+Kc
 ab
 ab
 ab
@@ -42135,7 +42054,7 @@ Wq
 RN
 Kc
 Kc
-QO
+Kc
 ab
 ab
 ab
@@ -42437,8 +42356,8 @@ Xs
 RN
 Kc
 Kc
-zO
-zO
+FM
+FM
 ab
 ab
 ab
@@ -42740,7 +42659,7 @@ RN
 Kc
 Kc
 Kc
-QO
+Kc
 ab
 ab
 ab
@@ -43042,7 +42961,7 @@ RN
 Kc
 Kc
 Kc
-QO
+Kc
 ab
 ab
 ab
@@ -43344,7 +43263,7 @@ RN
 Kc
 Kc
 Kc
-QO
+Kc
 HU
 ab
 ab
@@ -43646,7 +43565,7 @@ RN
 Kc
 Kc
 Kc
-QO
+Kc
 HU
 ab
 ab
@@ -43948,7 +43867,7 @@ SU
 XW
 SU
 SU
-QO
+Kc
 HU
 ab
 ab
@@ -44248,9 +44167,9 @@ Xu
 NX
 za
 YK
-Nc
+kE
 SU
-nD
+HU
 HU
 ab
 ab
@@ -44530,7 +44449,7 @@ ab
 ab
 ab
 ab
-Ww
+ZS
 Kc
 Kc
 Kc
@@ -44832,7 +44751,7 @@ ab
 ab
 ep
 ab
-ZM
+RK
 Kc
 Kc
 Kc
@@ -45134,7 +45053,7 @@ ab
 ab
 ab
 ab
-ZM
+RK
 Kc
 Kc
 Kc
@@ -45436,8 +45355,8 @@ ab
 ab
 ab
 ab
-Ww
-Ww
+ZS
+ZS
 Kc
 Kc
 Pz
@@ -45739,8 +45658,8 @@ bt
 bt
 bt
 ZS
-Ww
-Ww
+ZS
+ZS
 Kc
 tF
 Pz
@@ -46344,7 +46263,7 @@ bu
 bu
 bu
 bu
-ZM
+RK
 Kc
 Kc
 GW
@@ -46621,15 +46540,15 @@ XR
 HW
 UX
 HW
-Jp
-zO
+Bt
+FM
 ab
 ab
 ab
 ab
-Vu
-Jp
-Jp
+DW
+Bt
+Bt
 FM
 ab
 ab
@@ -46646,7 +46565,7 @@ ab
 ab
 ab
 ab
-Wu
+ab
 ab
 Kc
 Kc
@@ -46924,12 +46843,12 @@ HW
 wO
 HW
 Kc
-zO
-Jp
-Jp
-Jp
-Jp
-Vu
+FM
+Bt
+Bt
+Bt
+Bt
+DW
 Kc
 Kc
 FM
@@ -46948,12 +46867,12 @@ ab
 ep
 ab
 ab
-Wu
+ab
 ab
 ab
 Kc
 Qm
-nD
+HU
 RN
 pb
 Mt
@@ -48410,7 +48329,7 @@ ab
 ab
 ab
 ab
-ZM
+RK
 Kc
 ab
 ab
@@ -48712,12 +48631,12 @@ ab
 HW
 HW
 HW
-ZM
+RK
 Kc
 Kc
 Kc
 FM
-Wu
+ab
 ab
 ab
 ab
@@ -49019,7 +48938,7 @@ Vn
 Vn
 Lq
 Kc
-Wu
+ab
 ab
 ab
 ab
@@ -49047,7 +48966,7 @@ sP
 Jv
 Jv
 Jv
-Em
+sP
 sP
 sP
 Jv
@@ -49316,13 +49235,13 @@ ab
 HW
 HW
 HW
-ZM
+RK
 Kc
 Kc
 JX
 Kc
-zO
-Wu
+FM
+ab
 ab
 ab
 ab
@@ -49618,13 +49537,13 @@ ab
 ab
 ab
 ab
-ZM
+RK
 Kc
 Kc
 JX
 Kc
 Kc
-Wu
+ab
 ab
 ab
 ab
@@ -49919,18 +49838,18 @@ ab
 ab
 ab
 ab
-Vu
-Vu
+DW
+DW
 Kc
 Kc
 JX
 Kc
 Kc
-zO
-Jp
-Jp
-Jp
-Jp
+FM
+Bt
+Bt
+Bt
+Bt
 EU
 Ya
 Od
@@ -50221,7 +50140,7 @@ ab
 ab
 ep
 ab
-Vu
+DW
 Kc
 Kc
 Kc
@@ -55657,7 +55576,7 @@ Ws
 ab
 ab
 ab
-Ww
+ZS
 HW
 HW
 Tn
@@ -57821,8 +57740,8 @@ ab
 ce
 ab
 ab
-Ww
-oG
+ZS
+HA
 Pz
 Qm
 Pz
@@ -58691,7 +58610,7 @@ Kc
 Hx
 Kr
 Hx
-Ww
+ZS
 Kc
 Kc
 Fv
@@ -58993,13 +58912,13 @@ HA
 GJ
 NQ
 aY
-Ww
-oG
-oG
-Ww
+ZS
+HA
+HA
+ZS
 Kc
 Kc
-nD
+HU
 HW
 HW
 HW
@@ -59031,7 +58950,7 @@ bu
 bu
 bu
 bu
-Ww
+ZS
 HA
 ZS
 Kc
@@ -59298,10 +59217,10 @@ aY
 fK
 ab
 ab
-Ww
-oG
-oG
-nD
+ZS
+HA
+HA
+HU
 aY
 NQ
 aY

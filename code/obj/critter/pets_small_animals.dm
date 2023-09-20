@@ -12,7 +12,7 @@
 	atksilicon = 0
 	firevuln = 1
 	brutevuln = 1
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	pet_text = list("gently baps", "pets", "cuddles")
 	feed_text = "chatters happily!"
 
@@ -54,8 +54,6 @@
 	name = "Morty"
 	generic = 0
 
-ABSTRACT_TYPE(/obj/critter/dream_creature)
-
 #define PARROT_MAX_WORDS 64		// may as well try and be careful I guess
 #define PARROT_MAX_PHRASES 32	// doesn't hurt, does it?
 
@@ -78,7 +76,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	angertext = "squawks angrily at"
 	death_text = "%src% lets out a final weak squawk and keels over."
 	chase_text = "flails into"
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	flying = 1
 	health_gain_from_food = 2
 	feed_text = "chirps happily!"
@@ -146,13 +144,13 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 		if (!islist(src.learned_phrases))
 			src.learned_phrases = list()
 
-		if (!learn_phrase && src.learn_words_max > 0 && src.learned_words.len >= src.learn_words_max)
+		if (!learn_phrase && src.learn_words_max > 0 && length(src.learned_words) >= src.learn_words_max)
 			if (prob(5))
 				var/dump_word = pick(src.learned_words)
 				src.learned_words -= dump_word
 			else
 				return
-		if (learn_phrase && src.learn_phrase_max > 0 && src.learned_phrases.len >= src.learn_phrase_max)
+		if (learn_phrase && src.learn_phrase_max > 0 && length(src.learned_phrases) >= src.learn_phrase_max)
 			if (prob(5))
 				var/dump_phrase = pick(src.learned_phrases)
 				src.learned_phrases -= dump_phrase
@@ -513,7 +511,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 				C.amount -= 70
 
 			else if (C.amount >= 50) // wooden chairs
-				FP = /obj/item/furniture_parts/wood_chair
+				FP = /obj/item/furniture_parts/dining_chair/wood
 				FP_name = "Bredsjö"
 				C.amount -= 50
 
@@ -875,7 +873,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	brutevuln = 1
 	angertext = "caws angrily at"
 	death_text = "%src% lets out a final weak caw and keels over."
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	flying = 1
 	chases_food = 1
 	health_gain_from_food = 2
@@ -929,7 +927,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	angertext = "caws angrily at"
 	death_text = "%src% lets out a final weak caw and keels over."
 	chase_text = "flails into"
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	flying = 1
 	chases_food = 1
 	health_gain_from_food = 2
@@ -966,7 +964,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 					if (E)
 						src.visible_message("<span class='combat'><B>[src] [pick("tears","yanks","rips")] [M]'s eye out! <i>Holy shit!!</i></B></span>")
 						E = H.drop_organ(chosen_eye)
-						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 						E.set_loc(src.loc)
 			if (isliving(M))
 				var/mob/living/H = M
@@ -1013,8 +1011,6 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 		src.last_feather_time = world.time
 		return F
 
-
-
 /obj/critter/meatslinky // ferrets for wire
 	name = "space ferret"
 	desc = "A ferret that came from space. Or maybe went to space. Who knows how it got here?"
@@ -1030,7 +1026,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	atksilicon = 0
 	firevuln = 1
 	brutevuln = 1
-	butcherable = 2
+	butcherable = BUTCHER_YOU_MONSTER
 	angertext = "wigs out at"
 	atk_text = "flails itself into"
 	atk_brute_amt = 3
@@ -1123,7 +1119,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 				src.lying = 0
 				src.wanderer = initial(src.wanderer)
 			src.visible_message("<span class='combat'><b>[user]</b> swings at [src], but misses!</span>")
-			playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, 0)
+			playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 50, FALSE)
 			return
 		else
 			return ..()
@@ -1168,7 +1164,7 @@ ABSTRACT_TYPE(/obj/critter/dream_creature)
 	atksilicon = 0
 	firevuln = 1
 	brutevuln = 1
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	health_gain_from_food = 2
 	feed_text = "happily begins washing its food!"
 	pet_text = list("pets", "cuddles", "pats", "snuggles")

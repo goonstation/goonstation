@@ -110,6 +110,10 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	add_fingerprint(user)
 	return ui_interact(user)
 
+/obj/item/storage/secure/attack_ai(mob/user)
+	src.add_dialog(user)
+	return ui_interact(user)
+
 /obj/item/storage/secure/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if (!ui)
@@ -373,6 +377,8 @@ TYPEINFO(/obj/item/storage/secure/ssafe)
 				/obj/item/gun/energy/egun_jr,\
 				/obj/item/gun/energy/laser_gun,\
 				/obj/item/device/key/random,\
+				/obj/item/storage/firstaid/old,\
+				/obj/item/storage/firstaid/crit,\
 				/obj/item/paper/IOU)
 
 				for (var/i=rand(1,src.storage.slots), i>0, i--)

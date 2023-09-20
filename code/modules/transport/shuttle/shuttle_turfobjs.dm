@@ -59,25 +59,41 @@
 	damage_slashing()
 	damage_blunt()
 
+/turf/simulated/floor/shuttle/yellow
+	icon_state = "floor2"
+
+/turf/simulated/floor/shuttle/white
+	icon_state = "floor3"
+
+/turf/simulated/floor/shuttle/red
+	icon_state = "floor4"
+
+/turf/simulated/floor/shuttle/purple
+	icon_state = "floor5"
+
+/turf/simulated/floor/shuttle/green
+	icon_state = "floor6"
+
 /turf/unsimulated/floor/shuttle
 	name = "shuttle floor"
 	icon_state = "floor"
 	icon = 'icons/turf/shuttle.dmi'
 	turf_flags = MOB_STEP
 
-	hitby()
-		. = ..()
-	reagent_act()
-	bullet_act()
-	ex_act()
-	blob_act()
-	meteorhit()
-	damage_heat()
-	damage_corrosive()
-	damage_piercing()
-	damage_slashing()
-	damage_blunt()
+/turf/unsimulated/floor/shuttle/yellow
+	icon_state = "floor2"
 
+/turf/unsimulated/floor/shuttle/white
+	icon_state = "floor3"
+
+/turf/unsimulated/floor/shuttle/red
+	icon_state = "floor4"
+
+/turf/unsimulated/floor/shuttle/purple
+	icon_state = "floor5"
+
+/turf/unsimulated/floor/shuttle/green
+	icon_state = "floor6"
 
 TYPEINFO(/turf/simulated/wall/auto/shuttle)
 	connect_overlay = 1
@@ -88,17 +104,17 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	connects_to_exceptions = list()
 	connects_to = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn, /turf/simulated/wall/auto/supernorn/wood,
-		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/wingrille_spawn,
+		/turf/simulated/wall/false_wall, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn,
 		/turf/simulated/wall/auto/shuttle, /obj/indestructible/shuttle_corner
 	))
 	connects_with_overlay = typecacheof(list(
 		/turf/simulated/wall/auto/supernorn/wood, /turf/simulated/wall/false_wall/reinforced,
-		/obj/machinery/door, /obj/window, /obj/wingrille_spawn
+		/obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn
 	))
 /turf/simulated/wall/auto/shuttle
 	name = "shuttle wall"
 	desc = "A shuttle wall. Pretty reinforced."
-	icon = 'icons/turf/walls_shuttle.dmi'
+	icon = 'icons/turf/walls/shuttle/blue.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
 	icon_state = "perspective-mapwall"
 #else
@@ -126,7 +142,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 
 // ---------------------------------------------- OBJECTS -------------------------------------
 
-/obj/indestructible/
+/obj/indestructible
 	anchored = ANCHORED_ALWAYS
 
 	attackby()
@@ -183,10 +199,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/shuttle)
 	plane = PLANE_WALL
 	name = "shuttle wall"
 	desc = "A shuttle wall. Pretty reinforced. This appears to be a corner."
-	icon = 'icons/turf/walls_shuttle.dmi'
+	icon = 'icons/turf/walls/shuttle/corner.dmi'
 	icon_state = "corner"
 	density = 1
 	opacity = 0
+	gas_impermeable = TRUE
 	layer = EFFECTS_LAYER_BASE - 1
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 

@@ -166,7 +166,7 @@ TYPEINFO(/obj/item/rcd)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			var/obj/item/rcd_ammo/R = W
-			if (!restricted_materials || (R?.material?.mat_id in restricted_materials))
+			if (!restricted_materials || (R?.material?.getID() in restricted_materials))
 				if (!R.matter)
 					return
 				if (matter == max_matter)
@@ -182,7 +182,7 @@ TYPEINFO(/obj/item/rcd)
 					qdel(R)
 				R.tooltip_rebuild = 1
 				src.UpdateIcon()
-				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "\The [src] now holds [src.matter]/[src.max_matter] matter-units.")
 				return
 			else
@@ -195,7 +195,7 @@ TYPEINFO(/obj/item/rcd)
 		if (!(mode in src.modes))
 			CRASH("RCD [src] tried to switch to a mode not in its modes.")
 
-		playsound(src, 'sound/effects/pop.ogg', 50, 0)
+		playsound(src, 'sound/effects/pop.ogg', 50, FALSE)
 
 		src.mode = mode
 
@@ -286,12 +286,13 @@ TYPEINFO(/obj/item/rcd)
 
 			if (RCD_MODE_AIRLOCK)
 				// create_door handles all the other stuff.
-				create_door(A, user)
+				SPAWN(0) //let's not lock the entire attack call and let people attack with zero delay
+					create_door(A, user)
 				return
 
 			if (RCD_MODE_DECONSTRUCT)
 
-				if(restricted_materials && !(A.material?.mat_id in restricted_materials))
+				if(restricted_materials && !(A.material?.getID() in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
 					return
 				if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
@@ -482,13 +483,13 @@ TYPEINFO(/obj/item/rcd)
 			for(var/mob/N in viewers(user, 3))
 				if(N.client && N != user && N != H)
 					N.show_message(text("<span class='alert'><B>[] shoves \the [src] down []'s throat!</B></span>", user, H), 1)
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			if(do_after(user, 2 SECONDS))
 				elecflash(src)
 				var/mob/living/carbon/wall/W = new(H.loc)
 				W.real_name = H.real_name
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-				playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+				playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 				H.mind?.transfer_to(W)
 				H.gib()
 				matter -= 3
@@ -533,12 +534,12 @@ TYPEINFO(/obj/item/rcd)
 			return 0
 		src.working_on += target
 
-		playsound(src, 'sound/machines/click.ogg', 50, 1)
+		playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 		boutput(user, "You start [what]... ([issilicon(user) ? "[ammo * src.silicon_cost_multiplier] charge" : "[ammo] matter units"][delay ? ", [delay / 10] seconds" : ""])")
 
 		if ((!delay || do_after(user, delay)) && ammo_check(user, ammo))
 			ammo_consume(user, ammo)
-			playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 			shitSparks()
 			src.working_on -= target
 			return 1
@@ -675,15 +676,15 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 				var /obj/machinery/door/poddoor/blast/B = A
 				if (findtext(B.id, "rcd_built") != 0)
 					boutput(user, "Deconstructing \the [B] ([matter_remove_door])...")
-					playsound(src, 'sound/machines/click.ogg', 50, 1)
+					playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, 5 SECONDS))
 						if (ammo_check(user, matter_remove_door))
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
 							logTheThing(LOG_STATION, user, "removes a pod door ([B]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 				else
 					boutput(user, "<span class='alert'>You cannot deconstruct that!</span>")
 					return
@@ -691,15 +692,15 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 				var/obj/machinery/r_door_control/R = A
 				if (findtext(R.id, "rcd_built") != 0)
 					boutput(user, "Deconstructing \the [R] ([matter_remove_door])...")
-					playsound(src, 'sound/machines/click.ogg', 50, 1)
+					playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 					if(do_after(user, 5 SECONDS))
 						if (ammo_check(user, matter_remove_door))
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 							src.shitSparks()
 							ammo_consume(user, matter_remove_door)
 							logTheThing(LOG_STATION, user, "removes a Door Control ([A]) using \the [src] in [user.loc.loc] ([log_loc(user)])")
 							qdel(A)
-							playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+							playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 				else
 					boutput(user, "<span class='alert'>You cannot deconstruct that!</span>")
 					return
@@ -714,10 +715,10 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 					boutput(user, "<span class='alert'>You cannot modify that!</span>")
 			else if (istype(A, /turf/simulated/wall) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Door Control ([matter_create_door])")
-				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, 5 SECONDS))
 					if (ammo_check(user, matter_create_door))
-						playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+						playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 						src.shitSparks()
 						var/idn = hangar_id_number
 						hangar_id_number++
@@ -734,10 +735,10 @@ TYPEINFO(/obj/item/rcd/construction/chiefEngineer)
 		else if (mode == RCD_MODE_PODDOOR)
 			if (istype(A, /turf/simulated/floor) && ammo_check(user, matter_create_door, 500))
 				boutput(user, "Creating Pod Bay Door ([matter_create_door])")
-				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				if(do_after(user, 5 SECONDS))
 					if (ammo_check(user, matter_create_door))
-						playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
+						playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
 						src.shitSparks()
 						var/stepdir = get_dir(src, A)
 						var/poddir = turn(stepdir, 90)
@@ -923,7 +924,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 			matter += booklet.pages.len/2
 			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
 			qdel(W)
-		else if (W?.material?.mat_id == "wood")
+		else if (W?.material?.getID() == "wood")
 			matter += 20
 			boutput(user, "\The [src] pulps [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
 			qdel(W)

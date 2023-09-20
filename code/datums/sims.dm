@@ -23,30 +23,31 @@
 
 	New(var/is_control = 0)
 		..()
-		if (src.holder)
-			var/icon/hud_style = hud_style_selection[get_hud_style(src.holder.owner)]
-			if (isicon(hud_style))
-				src.icon = hud_style
-				hud.tooltipTheme = hud_style
-		hud.name = name
-		hud.icon = icon
-		hud.icon_state = icon_state
-		hud.layer = HUD_LAYER
+		SPAWN(0)
+			if (src.holder)
+				var/icon/hud_style = hud_style_selection[get_hud_style(src.holder.owner)]
+				if (isicon(hud_style))
+					src.icon = hud_style
+					hud.tooltipTheme = hud_style
+			hud.name = name
+			hud.icon = icon
+			hud.icon_state = icon_state
+			hud.layer = HUD_LAYER
 
-		if (prob(20))
-			var/v = rand(50, 100)
-			value = v
-			last_life_value = v
+			if (prob(20))
+				var/v = rand(50, 100)
+				value = v
+				last_life_value = v
 
-		updateHud()
-		if (!is_control)
-			var/datum/simsMotive/M = simsController.motives[type]
-			if (M && istype(M))
-				depletion_rate = M.depletion_rate
-				gain_rate = M.gain_rate
-				drain_rate = M.drain_rate
+			updateHud()
+			if (!is_control)
+				var/datum/simsMotive/M = simsController.motives[type]
+				if (M && istype(M))
+					depletion_rate = M.depletion_rate
+					gain_rate = M.gain_rate
+					drain_rate = M.drain_rate
 
-		simsController.register_motive(src)
+			simsController.register_motive(src)
 
 	disposing()
 		if (hud)
@@ -206,7 +207,7 @@
 		wolfy // for werewolves - depletes slower, but only regens hunger by feeding on humans
 			name = "Ravenous Hunger" // With the name changed, all the stuff that restores hunger won't restore this
 			icon_state = "ravenous"
-			desc = "Ravenous hunger can only be sated by feeding on the living..."
+			desc = "Ravenous hunger can only be satiated by feeding on the living..."
 			depletion_rate = 0.039
 
 
@@ -257,9 +258,8 @@
 					protection--
 					return 0
 				// Devera-class interdictor: prevent passive hygiene decrease within the field
-				for_by_tcl(IX, /obj/machinery/interdictor)
-					if (IX.expend_interdict(1,src,TRUE,ITDR_DEVERA))
-						return 0
+				if (holder.owner.hasStatus("devera_field"))
+					return 0
 				return 1
 
 		onIncrease()

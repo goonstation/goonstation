@@ -57,6 +57,7 @@ datum
 			transparency = 20
 			blob_damage = 1
 			value = 3 // 1c + 1c + 1c
+			var/melts_items = FALSE //!does this melt items? sulfuric acid doesn't since it smokes on reaction and that's Brutal
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M) M = holder.my_atom
@@ -113,7 +114,7 @@ datum
 					return 1
 				if (istype(O,/obj/item/clothing/head/chemhood || /obj/item/clothing/suit/chemsuit))
 					return 1
-				if (isitem(O) && prob(40))
+				if (isitem(O) && prob(40) && volume >= 10 && melts_items)
 					var/obj/item/toMelt = O
 					if (!(toMelt.item_function_flags & IMMUNE_TO_ACID))
 						if(!O.hasStatus("acid"))
@@ -139,6 +140,7 @@ datum
 			fluid_g = 200
 			fluid_b = 255
 			blob_damage = 1.2
+			melts_items = TRUE
 
 		harmful/acid/nitric_acid
 			name = "nitric acid"
@@ -148,6 +150,7 @@ datum
 			fluid_g = 200
 			fluid_b = 255
 			blob_damage = 0.7
+			melts_items = TRUE
 
 		harmful/acetic_acid
 			name = "acetic acid"
@@ -207,11 +210,13 @@ datum
 					M = holder.my_atom
 				damage_counter += rand(2, 4) * mult * min(1, volume)
 				..()
-
-			on_mob_life_complete(mob/living/M)
-				if(M)
-					M.take_toxin_damage(damage_counter)
-					logTheThing(LOG_COMBAT, M, "took [damage_counter] TOX damage from amanitin.")
+			on_remove()
+				..()
+				var/mob/living/carbon/human/M = holder.my_atom
+				if (!istype(M)) return
+				M.take_toxin_damage(damage_counter)
+				logTheThing(LOG_COMBAT, M, "took [damage_counter] TOX damage from amanitin.")
+				damage_counter = 0
 
 
 		harmful/chemilin
@@ -389,7 +394,7 @@ datum
 							M.setStatus("slowed", 5 SECONDS)
 						if (probmult(8) && !M.reagents?.get_reagent_amount("promethazine"))
 							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
-							playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+							playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
 						else if (probmult(5))
 							boutput(M, "<span class='alert'>You feel a sudden pain in your chest.</span>")
@@ -917,7 +922,7 @@ datum
 
 			reaction_obj(var/obj/O, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 16)
+				if (length(covered) > 16)
 					volume = (volume/covered.len)
 
 				if (istype(O,/obj/fluid))
@@ -1117,16 +1122,19 @@ datum
 				if (!M) M = holder.my_atom
 				if (!counter) counter = 1
 				switch(counter += (1 * mult))
-					if (1 to 5)
+					if (3 to 9)
 						if (probmult(10))
 							M.emote(pick("drool", "tremble"))
-					if (6 to 10)
-						if (prob(8))
-							boutput(M, "<span class='alert'><b>You feel [pick("weak", "horribly weak", "numb", "like you can barely move", "tingly")].</b></span>")
-							M.setStatusMin("stunned", 2 SECONDS * mult)
+					if (9 to 18)
+						if (prob(4))
+							boutput(M, "<span class='alert'><b>You feel [pick("weak", "like you can barely move", "tingly")].</b></span>")
+							M.setStatusMin("slowed", 2 SECONDS * mult)
+						else if (prob(4))
+							boutput(M, "<span class='alert'><b>You feel [pick("horribly weak", "numb")].</b></span>")
+							M.setStatusMin("stunned", 1 SECOND * mult)
 						else if (probmult(8))
 							M.emote(pick("drool", "tremble"))
-					if (11 to INFINITY)
+					if (18 to INFINITY)
 						M.setStatusMin("weakened", 20 SECONDS * mult)
 						if (prob(10))
 							M.emote(pick("drool", "tremble", "gasp"))
@@ -1394,7 +1402,7 @@ datum
 					M.visible_message(pick("<span class='alert'><B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!</span>",\
 											"<span class='alert'><B>[M]</B> bleeds [pick("profusely", "from every wound")]!</span>",\
 											"<span class='alert'><B>[M]</B>'s [pick("chest", "face", "whole body")] bleeds!</span>"))
-					playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1) //some bloody effects
+					playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE) //some bloody effects
 					make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
 				else if (probmult(20))
 					make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc) //some extra bloody effects

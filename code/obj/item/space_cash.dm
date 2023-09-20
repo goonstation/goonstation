@@ -415,6 +415,7 @@ TYPEINFO(/obj/item/stamped_bullion)
 	name = "1 research ticket"
 	real_name = "research ticket"
 	icon_state = "fish_common"
+	layer = 4.5
 	desc = "A Nanotrasen aquatic research ticket compatible with the Fishing Equipment Vendor."
 	stack_type = /obj/item/currency/fishing // so all fishing tokens stack
 	default_min_amount = 1

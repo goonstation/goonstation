@@ -241,7 +241,7 @@ TYPEINFO(/obj/machinery/space_heater)
 
 						//boutput(world, "now at [removed.temperature]")
 
-					env.merge(removed)
+					L.assume_air(removed)
 					UpdateIcon()
 					//boutput(world, "turf now at [env.temperature]")
 

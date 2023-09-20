@@ -83,7 +83,7 @@
 				if (isnull(ecoords))
 					return
 				var/list/coords = splittext(ecoords, ",")
-				if (coords.len < 3)
+				if (length(coords) < 3)
 					return
 				startturf = locate(text2num(coords[1]), text2num(coords[2]), text2num(coords[3]))
 
@@ -472,6 +472,7 @@
 	opacity = 0
 	pixel_x = -16
 	layer = MOB_LAYER - 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))

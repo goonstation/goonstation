@@ -156,7 +156,7 @@
 
 		switch (no_of_skulls)
 			if (0)
-				boutput(M, "<span class='alert'><b>Their skull was missing. No trophy for you.</b></span>")
+				boutput(M, "<span class='alert'><b>[capitalize(his_or_her(target))] skull was missing. No trophy for you.</b></span>")
 			if (1)
 				if (tvalue <= 0)
 					boutput(M, "<span class='alert'><b>This trophy is completely worthless!</b></span>")

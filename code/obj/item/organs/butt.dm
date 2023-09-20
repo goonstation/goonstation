@@ -146,7 +146,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 
 			//Commence owie
 			take_bleeding_damage(target, null, rand(4, 8), DAMAGE_BLUNT)	//My
-			playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1) //head,
+			playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE) //head,
 			target.emote("scream") 									//FUCKING
 			target.TakeDamage("head", rand(8, 16), 0) 				//OW!
 
@@ -202,6 +202,10 @@ TYPEINFO(/obj/item/clothing/head/butt/cyberbutt)
 			user.u_equip(W)
 		else
 			return ..()
+
+	emp_act()
+		. = ..()
+		donor?.emote("fart", FALSE)
 
 // moving this from plants_crop.dm because SERIOUSLY WHY -- cirr
 /obj/item/clothing/head/butt/synth

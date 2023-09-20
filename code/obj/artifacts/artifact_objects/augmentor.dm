@@ -246,7 +246,7 @@
 			available_parts -= organs_4
 		if(!H.limbs)
 			available_parts -= limbs
-		if(available_parts.len <= 0)
+		if(length(available_parts) <= 0)
 			return // something went horribly wrong, abort
 
 		var/list/missing_parts = list()
@@ -264,11 +264,11 @@
 				missing_parts += part_loc
 			else if(is_augmented_part(bodypart, part_loc))
 				candidates_to_remove += part_loc
-		if(missing_parts.len > 0)
+		if(length(missing_parts) > 0)
 			// we have body parts of the target missing, pick one of them
 			return pick(missing_parts)
 		available_parts -= candidates_to_remove
-		if(available_parts.len > 0)
+		if(length(available_parts) > 0)
 			return pick(available_parts)
 		// else, return null (no unupgraded parts left)
 
@@ -302,7 +302,7 @@
 	right_arm = list(/obj/item/parts/robot_parts/arm/right/light, /obj/item/parts/robot_parts/arm/right/standard)
 	left_leg = list(/obj/item/parts/robot_parts/leg/left/standard, /obj/item/parts/robot_parts/leg/left/light, /obj/item/parts/robot_parts/leg/left/treads)
 	right_leg = list(/obj/item/parts/robot_parts/leg/right/standard, /obj/item/parts/robot_parts/leg/right/light, /obj/item/parts/robot_parts/leg/right/treads)
-	eye = list(/obj/item/organ/eye/cyber,/obj/item/organ/eye/cyber/sunglass,/obj/item/organ/eye/cyber/sechud,/obj/item/organ/eye/cyber/thermal,/obj/item/organ/eye/cyber/meson,/obj/item/organ/eye/cyber/spectro,/obj/item/organ/eye/cyber/prodoc,/obj/item/organ/eye/cyber/ecto,/obj/item/organ/eye/cyber/camera,/obj/item/organ/eye/cyber/nightvision,/obj/item/organ/eye/cyber/laser)
+	eye = list(/obj/item/organ/eye/cyber/configurable,/obj/item/organ/eye/cyber/sunglass,/obj/item/organ/eye/cyber/sechud,/obj/item/organ/eye/cyber/thermal,/obj/item/organ/eye/cyber/meson,/obj/item/organ/eye/cyber/spectro,/obj/item/organ/eye/cyber/prodoc,/obj/item/organ/eye/cyber/ecto,/obj/item/organ/eye/cyber/camera,/obj/item/organ/eye/cyber/nightvision,/obj/item/organ/eye/cyber/laser)
 	heart = list(/obj/item/organ/heart/cyber)
 	butt = list(/obj/item/clothing/head/butt/cyberbutt)
 	stomach = list(/obj/item/organ/stomach/cyber)

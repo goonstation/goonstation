@@ -204,6 +204,17 @@
 			return 1 //welding, has fuel
 		return 0 //not welding
 
+	get_help_message(dist, mob/user)
+		if (istype(src, /obj/item/tool/omnitool/syndicate))
+			var/keybind = "Default: CTRL + X"
+			var/datum/keymap/current_keymap = user.client.keymap
+			for (var/key in current_keymap.keys)
+				if (current_keymap.keys[key] == "flex")
+					keybind = current_keymap.unparse_keybind(key)
+					break
+			return "Hit the omnitool on a piece of clothing to hide it. Retrieve the tool by using the <b>*flex</b> ([keybind]) emote."
+		else
+			return null
 
 
 /obj/item/tool/omnitool/syndicate

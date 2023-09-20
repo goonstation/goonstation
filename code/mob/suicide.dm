@@ -20,7 +20,7 @@
 /mob/verb/suicide()
 
 	if ((!isliving(src) || isdead(src)) && !isAIeye(src) && !istype(src, /mob/zoldorf))
-		boutput(src, "You're already dead!")
+		boutput(src, "<span class='alert'>You're already dead!</span>")
 		return
 
 	if(src.suiciding)
@@ -29,6 +29,10 @@
 				src.death()
 			else
 				boutput(src, "<span class='alert'>Too late! You've decided to live on.</span>")
+		return
+
+	if (src.health < 0)
+		succumb()
 		return
 
 	if(src.mind && src.mind.damned)
@@ -40,17 +44,17 @@
 		return
 
 	if (!ticker)
-		boutput(src, "You can't commit suicide before the game starts!")
+		boutput(src, "<span class='alert'>You can't commit suicide before the game starts!</span>")
 		return
 
 	if (!suicide_allowed)
-		boutput(src, "You find yourself unable to go through with killing yourself!")
+		boutput(src, "<span class='alert'>You find yourself unable to go through with killing yourself!</span>")
 		return
 
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
 		if(HAS_ATOM_PROPERTY(H, PROP_MOB_NO_SELF_HARM))
-			boutput(H, "Your cannot bring yourself to commit suicide!")
+			boutput(H, "<span class='alert'>You cannot bring yourself to commit suicide!</span>")
 			return
 
 	if (src.do_suicide()) //                           <------ put mob unique behaviour here in an override!!!!

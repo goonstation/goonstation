@@ -260,7 +260,7 @@ var/global
 	diary = null
 	diary_name = null
 	hublog = null
-	game_version = "Goonstation 13 (r" + VCS_REVISION + ")"
+	game_version = "Goonstation 13 (r" + ORIGIN_REVISION + ")"
 
 	master_mode = "traitor"
 	next_round_mode = "traitor"
@@ -385,7 +385,6 @@ var/global
 	list/datum/powernet/powernets = null
 
 	join_motd = null
-	rules = null
 	forceblob = 0
 
 	halloween_mode = 0
@@ -409,11 +408,11 @@ var/global
 	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.
 	//airlockIndexToWireColor does the opposite thing - it takes the index for what the wire does, for example AIRLOCK_WIRE_IDSCAN is 1, AIRLOCK_WIRE_POWER1 is 2, etc. It returns the wire color number.
 	//airlockWireColorToFlag takes the wire color number and returns the flag for it (1, 2, 4, 8, 16, etc)
-	list/airlockWireColorToFlag = RandomAirlockWires()
+	list/airlockWireColorToFlag
 	list/airlockIndexToFlag
 	list/airlockIndexToWireColor
 	list/airlockWireColorToIndex
-	list/APCWireColorToFlag = RandomAPCWires()
+	list/APCWireColorToFlag
 	list/APCIndexToFlag
 	list/APCIndexToWireColor
 	list/APCWireColorToIndex
@@ -487,6 +486,42 @@ var/global
 	/// Icon states that exist for a given icon ref. Format is valid_icon_states[icon] = list(). Populated by is_valid_icon_state(), used for caching.
 	list/valid_icon_states = list()
 
+	list/allowed_favorite_ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter) - list(
+		/obj/item/reagent_containers/food/snacks/burger/humanburger,
+		/obj/item/reagent_containers/food/snacks/donut/custom/robust,
+		/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
+		/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,
+		/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,
+		/obj/item/reagent_containers/food/snacks/meatball,
+		/obj/item/reagent_containers/food/snacks/mushroom,
+		/obj/item/reagent_containers/food/snacks/pickle/trash,
+		/obj/item/reagent_containers/food/snacks/pizza/xmas,
+		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+		/obj/item/reagent_containers/food/snacks/soup/custom,
+		/obj/item/reagent_containers/food/snacks/condiment/syndisauce,
+		/obj/item/reagent_containers/food/snacks/donkpocket_w,
+		/obj/item/reagent_containers/food/snacks/surstromming,
+		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
+		/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner,
+		/obj/item/reagent_containers/food/snacks/pancake/classic,
+		/obj/item/reagent_containers/food/snacks/wonton_spawner,
+		/obj/item/reagent_containers/food/snacks/agar_block,
+		/obj/item/reagent_containers/food/snacks/sushi_roll/custom,
+#ifndef UNDERWATER_MAP
+		/obj/item/reagent_containers/food/snacks/healgoo,
+		/obj/item/reagent_containers/food/snacks/greengoo,
+#endif
+		/obj/item/reagent_containers/food/snacks/snowball,
+		/obj/item/reagent_containers/food/snacks/burger/vr,
+		/obj/item/reagent_containers/food/snacks/slimjim,
+		/obj/item/reagent_containers/food/snacks/bite,
+		/obj/item/reagent_containers/food/snacks/pickle_holder,
+		/obj/item/reagent_containers/food/snacks/pickle_holder/paper,
+		/obj/item/reagent_containers/food/snacks/snack_cake,
+		/obj/item/reagent_containers/food/snacks/snack_cake/golden,
+		/obj/item/reagent_containers/food/snacks/ice_cream/random,
+		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
+
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
 		addGlobalImage(I, "[key]-renderSourceImage")
@@ -530,36 +565,6 @@ var/global
 		globalImages.Remove(key)
 	return
 
-/proc/addAIImage(var/image/I, var/key, var/low_priority=FALSE)
-	if(I && length(key))
-		if(low_priority)
-			aiImagesLowPriority[key] = I
-		else
-			aiImages[key] = I
-		for_by_tcl(M, /mob/living/silicon/ai)
-			if (M.client)
-				M << I
-		return I
-	return null
-
-/proc/getAIImage(var/key)
-	if(length(key) && aiImages[key]) return aiImages[key]
-	else if(length(key) && aiImagesLowPriority[key]) return aiImagesLowPriority[key]
-	else return null
-
-/proc/removeAIImage(var/key)
-	if(length(key) && aiImages[key])
-		for(var/client/C in clients)
-			C.images -= aiImages[key]
-		aiImages[key] = null
-		aiImages.Remove(key)
-	if(length(key) && aiImagesLowPriority[key])
-		for(var/client/C in clients)
-			C.images -= aiImagesLowPriority[key]
-		aiImagesLowPriority[key] = null
-		aiImagesLowPriority.Remove(key)
-	return
-
 /// Generates item icons for manufacturers and other things, used in UI dialogs. Sends to client if needed.
 // Note that a client that clears its cache won't get new icons. Deal with it. BYOND's browse_rsc is shite.
 /proc/getItemIcon(var/atom/path, var/state, var/dir, var/key = null, var/client/C)
@@ -593,3 +598,7 @@ var/global
 	browse_item_initial_done = 1
 	for (var/client/C in clients)
 		sendItemIcons(C)
+
+#ifdef TWITCH_BOT_ALLOWED
+var/global/mob/twitch_mob = 0
+#endif

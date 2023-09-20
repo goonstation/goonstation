@@ -326,7 +326,7 @@
 
 	proc/play_optional_sound(var/sound/sound)
 		if (sound)
-			playsound(src, sound, 50, 1)
+			playsound(src, sound, 50, TRUE)
 
 	proc/addUntiedEvent(var/datum/critterEvent/E)
 		events += E
@@ -1172,7 +1172,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	proc/fire_at(var/turf/T, var/mob/RT)
 		var/turf/S = get_turf(C)
-		shoot_projectile_ST(S, current_projectile, T)
+		shoot_projectile_ST_pixel_spread(S, current_projectile, T)
 		C.tokenized_message(fire_text, RT)
 		return 1
 

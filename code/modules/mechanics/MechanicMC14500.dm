@@ -107,7 +107,7 @@ var/list/hex_digit_values = list("0" = 0, "1" = 1, "2" = 2, "3" = 3, "4" = 4, "5
 				sleep(0.1 SECONDS)
 
 	attack_hand(mob/user)
-		if (src.level != 1)
+		if (src.level == OVERFLOOR)
 			return ..(user)
 		if (!istype(src.loc, /turf/)) return
 
@@ -324,7 +324,7 @@ function update_mem_lights(mem)
 
 	proc
 		fire1(var/datum/mechanicsMessage/anInput)
-			if(level == 2)
+			if(level == OVERFLOOR)
 				return
 
 			if (anInput?.isTrue())
@@ -336,7 +336,7 @@ function update_mem_lights(mem)
 			lastSignal = anInput
 
 		fire2(var/datum/mechanicsMessage/anInput)
-			if(level == 2)
+			if(level == OVERFLOOR)
 				return
 
 			if (anInput?.isTrue())
@@ -348,7 +348,7 @@ function update_mem_lights(mem)
 			lastSignal = anInput
 
 		fire3(var/datum/mechanicsMessage/anInput)
-			if(level == 2)
+			if(level == OVERFLOOR)
 				return
 
 			if (anInput?.isTrue())
@@ -360,7 +360,7 @@ function update_mem_lights(mem)
 			lastSignal = anInput
 
 		fire4(var/datum/mechanicsMessage/anInput)
-			if(level == 2)
+			if(level == OVERFLOOR)
 				return
 
 			if (anInput?.isTrue())
@@ -372,7 +372,7 @@ function update_mem_lights(mem)
 			lastSignal = anInput
 
 		fire5(var/datum/mechanicsMessage/anInput)
-			if(level == 2)
+			if(level == OVERFLOOR)
 				return
 
 			if (anInput?.isTrue())
@@ -384,7 +384,7 @@ function update_mem_lights(mem)
 			lastSignal = anInput
 
 		fire6(var/datum/mechanicsMessage/anInput)
-			if(level == 2)
+			if(level == OVERFLOOR)
 				return
 
 			if (anInput?.isTrue())
@@ -396,7 +396,7 @@ function update_mem_lights(mem)
 			lastSignal = anInput
 
 		fire7(var/datum/mechanicsMessage/anInput)
-			if(level == 2)
+			if(level == OVERFLOOR)
 				return
 
 			if (anInput?.isTrue())

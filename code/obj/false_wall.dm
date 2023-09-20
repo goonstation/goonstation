@@ -121,8 +121,8 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 				var/atom/A = new /obj/item/sheet(src)
 				var/atom/B = new /obj/structure/girder/displaced(src)
 				var/datum/material/defaultMaterial = getMaterial("steel")
-				A.setMaterial(src.material ? src.material : defaultMaterial, copy = src.material ? TRUE :FALSE)
-				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial, copy = src.material ? TRUE :FALSE)
+				A.setMaterial(src.material ? src.material : defaultMaterial)
+				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
 
 				var/floorname1	= src.floorname
 				var/floorintact1	= src.floorintact
@@ -159,7 +159,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		if (src.operating)
 			return 0
 		src.operating = 1
-		src.name = src.material ? "false [src.material.name] wall" : "false wall"
+		src.name = src.material ? "false [src.material.getName()] wall" : "false wall"
 		animate(src, time = delay, pixel_x = 25, easing = BACK_EASING)
 		SPAWN(delay)
 			//we want to return 1 without waiting for the animation to finish - the textual cue seems sloppy if it waits
@@ -181,7 +181,7 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 		if (src.operating)
 			return 0
 		src.operating = 1
-		src.name = src.material ? "[src.material.name] wall" : "steel wall"
+		src.name = src.material ? "[src.material.getName()] wall" : "steel wall"
 		animate(src, time = delay, pixel_x = 0, easing = BACK_EASING)
 		src.set_density(1)
 		src.flags |= ALWAYS_SOLID_FLUID
@@ -209,13 +209,13 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 			var/static/list/s_connects_to = typecacheof(list(/turf/simulated/wall/auto/supernorn, /turf/simulated/wall/auto/reinforced/supernorn,
 			/turf/simulated/wall/auto/jen, /turf/simulated/wall/auto/reinforced/jen,
 			/turf/simulated/wall/false_wall, /turf/simulated/wall/auto/shuttle, /obj/machinery/door,
-			/obj/window, /obj/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
+			/obj/window, /obj/mapping_helper/wingrille_spawn, /turf/simulated/wall/auto/reinforced/supernorn/yellow,
 			/turf/simulated/wall/auto/reinforced/supernorn/blackred, /turf/simulated/wall/auto/reinforced/supernorn/orange,
 			/turf/simulated/wall/auto/old, /turf/simulated/wall/auto/reinforced/old,
 			/turf/unsimulated/wall/auto/supernorn,/turf/unsimulated/wall/auto/reinforced/supernorn))
 
 			var/static/list/s_connects_with_overlay = typecacheof(list(/turf/simulated/wall/auto/shuttle,
-			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/wingrille_spawn))
+			/turf/simulated/wall/auto/shuttle, /obj/machinery/door, /obj/window, /obj/mapping_helper/wingrille_spawn))
 
 			if (istype(src, /turf/simulated/wall/false_wall/reinforced))
 				wall_path = ispath(map_settings.rwalls) ? map_settings.rwalls : /turf/simulated/wall/auto/reinforced
@@ -303,12 +303,6 @@ ADMIN_INTERACT_PROCS(/turf/simulated/wall/false_wall, proc/open, proc/close)
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "leadwall"
 	can_be_auto = 0
-
-
-/turf/simulated/wall/false_wall/tempus
-	desc = "The pattern on the wall seems to have a seam on it"
-	icon = 'icons/turf/walls_tempus-green.dmi'
-	icon_state = "0"
 
 /obj/shifting_wall
 	name = "r wall"

@@ -264,7 +264,7 @@
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 
 				if(istype(I, /obj/item/currency/spacecash/buttcoin))
-					boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
+					boutput(user, "<span class='success'>Your transaction will complete anywhere within 10 to 10e27 minutes from now.</span>")
 				else
 					src.accessed_record["current_money"] += I.amount
 
@@ -837,11 +837,11 @@
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
 			user.lastattacked = src
 			attack_particle(user,src)
-			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,1)
+			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,TRUE)
 			src.take_damage(damage, user)
 			user.visible_message("<span class='alert'><b>[user] bashes the [src] with [I]!</b></span>")
 		else
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,TRUE)
 			user.visible_message("<span class='alert'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
 			return
 

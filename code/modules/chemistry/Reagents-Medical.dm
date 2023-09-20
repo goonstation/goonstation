@@ -412,6 +412,7 @@ datum
 							repair_bleeding_damage(H, 80, 2)
 						if (ishuman(M))
 							var/mob/living/carbon/human/healed = M
+							healed.heal_slash_wound("all")
 							healed.heal_laser_wound("all")
 
 					var/silent = 0
@@ -431,12 +432,12 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if(volume >= 5)
 					if(!locate(/obj/decal/cleanable/blood/gibs) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable(/obj/decal/cleanable/blood/gibs,T)
 			/*reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/item/parts/robot_parts/robot_frame))
@@ -864,11 +865,11 @@ datum
 				if (severity == 1) //lesser
 					if (effect <= 2)
 						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
-						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
-						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 				else if (severity == 2) // greater
 					if (effect <= 2)
@@ -881,14 +882,14 @@ datum
 								LAGCHECK(LAG_LOW)
 								if (prob(40))
 									check.add_blood(H)
-							H.set_clothing_icon_dirty()
+							H.update_blood_all()
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
-						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 8)
 						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
-						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 
 		medical/proconvertin // old name for factor VII, which is a protein that causes blood to clot. this stuff is seemingly just used for people with hemophilia but this is ss13 so let's give it to everybody who's bleeding a little, it's fine.
@@ -969,7 +970,7 @@ datum
 						L.emote("cough")
 					else if (severity > 1 && prob(50))
 						L.visible_message("<span class='alert'>[L] coughs up a little blood!</span>")
-						playsound(L, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+						playsound(L, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 						bleed(L, rand(2,8) * mult, 3 * mult)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M

@@ -57,7 +57,7 @@
 
 	attackby(obj/item/W, mob/user)
 		..()
-		if (src.contents && src.contents.len > 0 && istype(W, /obj/item/device/analyzer/healthanalyzer))
+		if (src.contents && length(src.contents) > 0 && istype(W, /obj/item/device/analyzer/healthanalyzer))
 			var/output = ""
 			var/list/L = list()
 			for (var/obj/O in src.contents)
@@ -85,7 +85,7 @@ TYPEINFO(/obj/item/organ/stomach/cyber)
 	desc = "A fancy robotic stomach to replace one that someone's lost!"
 	icon_state = "cyber-stomach"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0

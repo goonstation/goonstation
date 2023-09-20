@@ -108,7 +108,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		meat_level = 0 // no meat for those built from frames
 
 		for (var/obj/machinery/computer/cloning/C in orange(4, src))
-			if (C.linked_pods.len < C.max_pods)
+			if (length(C.linked_pods) < C.max_pods)
 				C.linked_pods += src
 				if(C.scanner?.pods)
 					C.scanner?.pods += src
@@ -255,9 +255,6 @@ TYPEINFO(/obj/machinery/clonepod)
 
 		ghost.mind.transfer_to(src.occupant)
 		src.occupant.is_npc = FALSE
-
-		if(src.occupant.client) // gross hack for resetting tg layout bleh bluh
-			src.occupant.client.set_layout(src.occupant.client.tg_layout)
 
 		if (!defects)
 			stack_trace("Clone [identify_object(src.occupant)] generating with a null `defects` holder.")
@@ -605,7 +602,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				boutput(user,"<span class='alert'>The cloning pod emits an angry boop!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, user, "installed ([W]) to ([src]) at [log_loc(user)].")
 			speed_bonus *= 3
 			meat_used_per_tick *= 4
 			is_speedy = 1
@@ -621,7 +618,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
 			user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
-			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, user, "installed ([W]) to ([src]) at [log_loc(user)].")
 			meat_used_per_tick *= 0.5
 			is_efficient = 1
 			user.drop_item()
@@ -632,7 +629,7 @@ TYPEINFO(/obj/machinery/clonepod)
 			if (operating && attempting)
 				boutput(user,"<span class='alert'>The cloning pod emits a[pick("n angry", " grumpy", "n annoyed", " cheeky")] [pick("boop","bop", "beep", "blorp", "burp")]!</span>")
 				return
-			logTheThing(LOG_STATION, src, "[user] installed ([W]) to ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, user, "installed ([W]) to ([src]) at [log_loc(user)].")
 			clonehack = 1
 			implant_hacker = user.mind
 			light.enable()
@@ -646,7 +643,7 @@ TYPEINFO(/obj/machinery/clonepod)
 				boutput(user, "<space class='alert'>You must wait for the current cloning cycle to finish before you can remove the mindhack module.</span>")
 				return
 			boutput(user, "<span class='notice'>You begin detatching the mindhack cloning module...</span>")
-			logTheThing(LOG_STATION, src, "[user] removed the mindhack cloning module from ([src]) at [log_loc(user)].")
+			logTheThing(LOG_STATION, user, "removed the mindhack cloning module from ([src]) at [log_loc(user)].")
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			if (do_after(user, 50) && clonehack)
 				new /obj/item/cloneModule/mindhack_module( src.loc )
@@ -1084,7 +1081,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			boutput(user, "<span class='alert'>The [src.name] is still running, hold your horses!</span>")
 			return
 		if (istype(G, /obj/item/reagent_containers/food/snacks/ingredient/meat) || (istype(G, /obj/item/reagent_containers/food) && (findtext(G.name, "meat")||findtext(G.name,"bacon"))) || (istype(G, /obj/item/parts/human_parts)) || istype(G, /obj/item/clothing/head/butt) || istype(G, /obj/item/organ) || istype(G,/obj/item/raw_material/martian))
-			if (src.meats.len >= src.max_meat)
+			if (length(src.meats) >= src.max_meat)
 				boutput(user, "<span class='alert'>There is already enough meat in there! You should not exceed the maximum safe meat level!</span>")
 				return
 

@@ -55,7 +55,7 @@
 	var/memory = ""
 	var/atom/movable/pulling = null
 	var/mob/pulled_by = null
-	var/stat = 0
+	var/stat = STAT_ALIVE
 	var/next_click = 0
 	var/transforming = null
 	var/hand = 0
@@ -291,8 +291,7 @@
 	if (src.buckled?.anchored && istype(src.buckled))
 		return
 
-	if (src.dir_locked)
-		b = src.dir
+	var/orig_dir = src.dir
 
 	//for item specials
 	if (src.restrain_time > TIME)
@@ -312,6 +311,9 @@
 	if (src.s_active && !(s_active.master?.linked_item in src))
 		src.detach_hud(src.s_active)
 		src.s_active = null
+
+	if(src.dir_locked && src.dir != orig_dir)
+		src.dir = orig_dir
 
 /mob/proc/update_grab_loc()
 	//robust grab : keep em close
@@ -408,9 +410,11 @@
 		src.buckled.buckled_guy = null
 
 	mobs.Remove(src)
-	if (ai)
+
+	if (src.ai)
 		qdel(ai)
 		ai = null
+
 	mind = null
 	ckey = null
 	client = null
@@ -447,6 +451,7 @@
 /mob/Login()
 	if (!src.client)
 		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
+	src.client.set_layout(src.client.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -456,6 +461,9 @@
 	if(src.skipped_mobs_list & SKIPPED_AI_MOBS_LIST)
 		skipped_mobs_list &= ~SKIPPED_AI_MOBS_LIST
 		global.ai_mobs |= src
+	if(src.skipped_mobs_list & SKIPPED_STAMINA_MOBS)
+		OTHER_START_TRACKING_CAT(src, TR_CAT_STAMINA_MOBS)
+		src.skipped_mobs_list &= ~SKIPPED_STAMINA_MOBS
 
 	if(!src.last_ckey)
 		SPAWN(0)
@@ -557,7 +565,7 @@
 				src.now_pushing = 0
 				var/atom/source = A
 				src.visible_message("<span class='alert'><B>[src]</B>'s bounces off [A]!</span>")
-				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
+				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/throw_dir = turn(get_dir(A, src),rand(-1,1)*45)
 				src.throw_at(get_edge_cheap(source, throw_dir),  20, 3)
 				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src)] is flubber bounced [dir2text(throw_dir)] due to impact with turf [log_object(A)] [log_reagents(A)] at [log_loc(src)].")
@@ -585,18 +593,16 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-1)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 100 units of charge (50,000 joules) to interdict a repulsion, permitting safe discharge of the fields
-					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(100,src))
-							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
-							var/atom/source = get_turf(tmob)
-							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
-							return
+					if (tmob.hasStatus("spatial_protection"))
+						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+						var/atom/source = get_turf(tmob)
+						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
+						return
 					// like repels - bump them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
 					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!</span>")
-					playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 100, 1)
+					playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 100, TRUE)
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
@@ -607,7 +613,7 @@
 
 				var/atom/source = get_turf(tmob)
 				src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
-				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
+				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/target_dir = get_dir(src, tmob)
 				var/src_dir = get_dir(tmob, src)
 				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
@@ -632,14 +638,12 @@
 					tmob_effect.deactivate(10)
 					tmob_effect.update_charge(-tmob_effect.charge)
 					//spatial interdictor: mitigate biomagnetic discharges
-					//consumes 150 units of charge (75,000 joules) to interdict an attraction, permitting safe discharge of the fields
 
-					for_by_tcl(IX, /obj/machinery/interdictor)
-						if (IX.expend_interdict(150,src))
-							src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
-							var/atom/source = get_turf(tmob)
-							playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
-							return
+					if (tmob.hasStatus("spatial_protection"))
+						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
+						var/atom/source = get_turf(tmob)
+						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
+						return
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
 					tmob.now_pushing = 1
@@ -658,7 +662,7 @@
 						var/turf/Q = pick(sfloors)
 						arcFlashTurf(src, Q, 3000)
 						sfloors -= Q
-					playsound(source, 'sound/effects/suck.ogg', 100, 1)
+					playsound(source, 'sound/effects/suck.ogg', 100, TRUE)
 					for(var/atom/movable/M in view(5, source))
 						if(M.anchored || M == source) continue
 						if(throw_charge > 0)
@@ -672,7 +676,7 @@
 						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
 							tmob.now_pushing = 0
 
-		if (!issilicon(AM))
+		if (!issilicon(AM) && !issilicon(src))
 			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled &&!src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
@@ -932,7 +936,7 @@
 		boutput(src, "<span class='alert'>Sorry, this server does not have medals enabled.</span>")
 		return
 
-	boutput(src, "Retrieving your medal information...")
+	boutput(src, "<span class='hint'>Retrieving your medal information...</span>")
 
 	SPAWN(0)
 		var/list/output = list()
@@ -1193,8 +1197,10 @@
 	icon_rebuild_flag &= ~BODY
 
 /mob/proc/UpdateDamage()
+	SHOULD_CALL_PARENT(TRUE)
+	var/prev_health = src.health
 	updatehealth()
-	return
+	SEND_SIGNAL(src, COMSIG_MOB_UPDATE_DAMAGE, prev_health)
 
 /mob/proc/set_damage_icon_dirty()
 	icon_rebuild_flag |= DAMAGE
@@ -1266,7 +1272,7 @@
 	if (istype(W))
 		actions.interrupt(src, INTERRUPT_ACT)
 		var/obj/item/magtractor/origW
-		if (W.useInnerItem && W.contents.len > 0)
+		if (W.useInnerItem && length(W.contents) > 0)
 			if (istype(W, /obj/item/magtractor))
 				origW = W
 			var/obj/item/held = W.holding
@@ -1500,8 +1506,7 @@
 
 /mob/verb/cmd_rules()
 	set name = "Rules"
-	// src.Browse(rules, "window=rules;size=480x320")
-	src << browse(rules, "window=rules;size=480x320")
+	src << link("http://wiki.ss13.co/Rules")
 
 /mob/verb/succumb()
 	set hidden = 1
@@ -1550,7 +1555,7 @@
 	var/stun = 0
 	stun = round((P.power*(1.0-P.proj_data.ks_ratio)), 1.0)
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	switch(P.proj_data.damage_type)
 		if (D_KINETIC)
@@ -1590,7 +1595,7 @@
 
 	stun *= 0.2 //mbc magic number stun multiplier wow
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	switch(P.proj_data.damage_type)
 		if (D_ENERGY)
@@ -1620,6 +1625,14 @@
 
 /mob/proc/is_active()
 	. = (0 >= usr.stat)
+
+/mob/proc/is_heat_resistant()
+	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
+		return TRUE
+	if(src.nodamage)
+		return TRUE
+	return FALSE
+
 
 /mob/proc/updatehealth()
 	if (src.nodamage == 0)
@@ -1667,7 +1680,7 @@
 		src.active_color_matrix = null
 	else
 		var/first_entry = src.color_matrices[1]
-		if (src.color_matrices.len == 1) // Just one matrix?
+		if (length(src.color_matrices) == 1) // Just one matrix?
 			src.active_color_matrix = src.color_matrices[first_entry]
 		else
 			var/list/color_matrix_2_apply = src.color_matrices[first_entry]
@@ -1848,16 +1861,16 @@
 	qdel(src)
 
 
-/mob/proc/firegib(var/drop_clothes = TRUE)
-	if (isobserver(src)) return
+/mob/proc/firegib(var/drop_equipment = TRUE)
+	if (isobserver(src))
+		return
 #ifdef DATALOGGER
 	game_stats.Increment("violence")
 #endif
 	logTheThing(LOG_COMBAT, src, "is fire-gibbed at [log_loc(src)].")
 	src.death(TRUE)
 	var/atom/movable/overlay/gibs/animation = null
-	src.transforming = 1
-	src.canmove = 0
+	src.transforming = TRUE
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
 
@@ -1865,23 +1878,23 @@
 		animation = new(src.loc)
 		animation.master = src
 		flick("firegibbed", animation)
-		if (drop_clothes)
+		if (drop_equipment)
 			for (var/obj/item/W in src)
 				if (istype(W, /obj/item/clothing))
 					var/obj/item/clothing/C = W
-					C.stains += "singed"
-					C.UpdateName()
+					C.add_stain("singed")
 			unequip_all()
 
-	if ((src.mind || src.client) && !istype(src, /mob/living/carbon/human/npc))
-		var/mob/dead/observer/newmob = ghostize()
-		newmob.corpse = null
-
-	if (!iscarbon(src))
-		robogibs(src.loc)
+	if (drop_equipment)
+		if (isrobot(src) || isrobocritter(src))
+			robogibs(src.loc)
+		else
+			gibs(src.loc)
 
 	if (animation)
 		animation.delaydispose()
+
+	src.ghostize()
 	qdel(src)
 
 /mob/proc/partygib(give_medal)
@@ -2081,7 +2094,7 @@
 			src.gib()
 			return
 		src.show_text("<span style=\"font-weight:bold; font-style:italic; color:red; font-family:'Comic Sans MS', sans-serif; font-size:200%;\">It's coming!!!</span>")
-		playsound(the_turf, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 70, 1)
+		playsound(the_turf, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 70, TRUE)
 
 		floorcluwne.loc=the_turf //I actually do want to bypass Entered() and Exit() stuff now tyvm
 		animate_slide(the_turf, 0, -24, duration)
@@ -2152,10 +2165,10 @@
 			the_butt = new /obj/item/clothing/head/butt/cyberbutt
 		else if (istype(src, /mob/living/intangible/wraith) || istype(src, /mob/dead))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE, copy = FALSE)
+			the_butt.setMaterial(getMaterial("ectoplasm"), appearance = TRUE, setname = TRUE)
 		else if (istype(src, /mob/living/intangible/blob_overmind))
 			the_butt = new /obj/item/clothing/head/butt
-			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE, copy = FALSE)
+			the_butt.setMaterial(getMaterial("blob"), appearance = TRUE, setname = TRUE)
 		else
 			the_butt = new /obj/item/clothing/head/butt/synth
 
@@ -2189,10 +2202,49 @@
 /mob/proc/smite_gib()
 	var/turf/T = get_turf(src)
 	showlightning_bolt(T)
-	playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
+	playsound(T, 'sound/effects/lightning_strike.ogg', 50, TRUE)
 	src.unequip_all()
 	src.emote("scream")
 	src.gib()
+
+/mob/proc/anvilgib(height = 7, use_shadow=TRUE, anvil_type=/obj/table/anvil/gimmick)
+	logTheThing(LOG_COMBAT, src, "is anvil-gibbed at [log_loc(src)].")
+	src.transforming = TRUE
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "anvilgib")
+	src.anchored = ANCHORED_ALWAYS
+
+	var/obj/anvil = new anvil_type(get_turf(src))
+	anvil.anchored = ANCHORED_ALWAYS
+	anvil.pixel_y = 32 * height
+	anvil.alpha = 0
+	anvil.layer += 4
+	anvil.plane = PLANE_NOSHADOW_ABOVE
+	animate(anvil, alpha = 255, time = 0.9 SECONDS, flags = ANIMATION_PARALLEL)
+	animate(anvil, pixel_y = 0, easing = EASE_IN | QUAD_EASING, time = 1.84 SECONDS, flags = ANIMATION_PARALLEL)
+
+	var/obj/effects/shadow
+	if(use_shadow)
+		shadow = new /obj/effects{
+			icon='icons/effects/96x96.dmi';
+			icon_state="circle";
+			mouse_opacity = 0;
+			color = "#000000";
+			alpha = 0;
+			transform = matrix(0.8, 0, 0, 0, 0.5, 0);
+			pixel_x = -32;
+			pixel_y = -32 - 7;
+			anchored = ANCHORED_ALWAYS;
+			plane = PLANE_NOSHADOW_BELOW
+		}(get_turf(src))
+		animate(shadow, alpha = 150, transform = matrix(0.25, 0, 0, 0, 0.17, 0), easing = EASE_IN | QUAD_EASING, time = 1.75 SECONDS, flags = ANIMATION_PARALLEL)
+
+	playsound(get_turf(src), 'sound/effects/cartoon_fall.ogg', 50, FALSE)
+	SPAWN(1.8 SECONDS)
+		src.gib()
+		anvil.anchored = anvil_type == anvil_type ? FALSE : initial(anvil.anchored)
+		anvil.plane = initial(anvil.plane)
+		if(shadow)
+			qdel(shadow)
 
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
@@ -2441,7 +2493,7 @@
 	if (src.hasStatus("handcuffed"))
 		src.handcuffs.destroy_handcuffs(src)
 	src.bodytemperature = src.base_body_temp
-	if (src.stat > 1)
+	if (isdead(src))
 		setalive(src)
 
 /mob/proc/infected(var/datum/pathogen/P)
@@ -2915,7 +2967,7 @@
 
 	var/mob/living/carbon/human/newbody = new()
 	newbody.set_loc(reappear_turf)
-	newbody.equip_new_if_possible(/obj/item/clothing/under/misc, newbody.slot_w_uniform)
+	newbody.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
 
 	newbody.real_name = src.real_name
 
@@ -2980,7 +3032,7 @@
 		if(!the_turf)
 			src.gib() // ghostize will handle the rest.
 			return
-		playsound(the_turf, 'sound/effects/damnation.ogg', 50, 1)
+		playsound(the_turf, 'sound/effects/damnation.ogg', 50, TRUE)
 
 		satan.loc=the_turf //I actually do want to bypass Entered() and Exit() stuff now tyvm
 		animate_slide(the_turf, 0, -24, duration)
@@ -3115,7 +3167,7 @@
 	if(target)
 		var/success = src.help_examine(target)
 		if(!success)
-			boutput(src, "Sadly \the [target] has no help message attached.")
+			boutput(src, "<span class='alert'>Sadly \the [target] has no help message attached.</span>")
 	else
 		boutput(src, {"<span class='helpmsg'>
 			You can use this command by right clicking an object and selecting Help (not all objects support this).<br>
@@ -3135,7 +3187,7 @@
 
 	var/success = usr.help_examine(src)
 	if(!success)
-		boutput(usr, "Sadly \the [src] has no help message attached.")
+		boutput(usr, "<span class='alert'>Sadly \the [src] has no help message attached.</span>")
 
 /// Same as help_verb but this one except visible, added dynamically when requested by signals
 /atom/proc/help_verb_dynamic()
@@ -3148,7 +3200,7 @@
 
 	var/success = usr.help_examine(src)
 	if(!success)
-		boutput(usr, "Sadly \the [src] has no help message attached.")
+		boutput(usr, "<span class='alert'>Sadly \the [src] has no help message attached.</span>")
 
 /mob/living/verb/interact_verb(atom/A as mob|obj|turf in oview(1, usr))
 	set name = "Pick Up / Left Click"

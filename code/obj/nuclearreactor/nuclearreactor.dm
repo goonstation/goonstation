@@ -94,15 +94,17 @@
 			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
 
-	update_icon()
+	proc/MarkGridForUpdate()
+		src._comp_grid_overlay_update = TRUE
 
+	update_icon()
 		//status lights
 		//gas input/output
-		if(TOTAL_MOLES(air1) > 100)
+		if(air1 && TOTAL_MOLES(air1) > 100)
 			src.UpdateOverlays(image(icon, "lights_cool"), "gas_input_lights")
 		else
 			src.UpdateOverlays(null, "gas_input_lights")
-		if(TOTAL_MOLES(air2) > 100)
+		if(air2 && TOTAL_MOLES(air2) > 100)
 			src.UpdateOverlays(image(icon, "lights_heat"), "gas_output_lights")
 		else
 			src.UpdateOverlays(null, "gas_output_lights")
@@ -256,7 +258,7 @@
 
 		processCaseRadiation(tmpRads)
 
-		src.material.triggerTemp(src,src.temperature)
+		src.material_trigger_on_temp(src.temperature)
 
 		total_thermal_e += src.thermal_mass * src.temperature
 		total_gas_volume += src.reactor_vessel_gas_volume
@@ -332,11 +334,11 @@
 			//var/coe2 = (THERMAL_ENERGY(current_gas) + src.temperature*src.thermal_mass)
 			//if(abs(coe2 - coe_check) > 64)
 			//	CRASH("COE VIOLATION REACTOR")
-			if(src.current_gas.temperature < 0 || src.temperature < 0)
-				CRASH("TEMP WENT NEGATIVE")
+			if(src.current_gas.temperature <= 0 || src.temperature <= 0)
+				CRASH("TEMP WENT NONPOSITIVE (hottest=[hottest], coldest=[coldest], max_delta_e=[max_delta_e], deltaT=[deltaT], deltaTr=[deltaTr])")
 
 			. = src.current_gas
-		if(inGas)
+		if(inGas && (THERMAL_ENERGY(inGas) > 0))
 			src.current_gas = inGas.remove((src.reactor_vessel_gas_volume*MIXTURE_PRESSURE(inGas))/(R_IDEAL_GAS_EQUATION*inGas.temperature))
 			if(src.current_gas && TOTAL_MOLES(src.current_gas) < 1)
 				if(istype(., /datum/gas_mixture))
@@ -372,16 +374,39 @@
 		world << alarm //ew
 		command_alert("A nuclear reactor aboard the station has catastrophically overloaded. Radioactive debris, nuclear fallout, and coolant fires are likely. Immediate evacuation of the surrounding area is strongly advised.", "NUCLEAR MELTDOWN")
 
-		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad)")
+
 		//explode, throw radioactive components everywhere, dump rad gas, throw radioactive debris everywhere
 		src.melted = TRUE
+		var/meltdown_badness = 0
 		if(!src.current_gas)
 			src.current_gas = new/datum/gas_mixture()
-		src.current_gas.radgas += 6000
-		src.current_gas.temperature = src.temperature
+
+		//determine how bad this meltdown should be
+		//basically this is a points system, more points = worser
+		//at 49 fresh melted cerenkite rods, this is 1080 (feasible, but difficult). at 49 fresh melted plutonium rods this is 3038 (basically upper limit - it would be insane to reach this without admemes)
+		//at 3 fresh melted cerenkite rods this is 60 (most common meltdown due to pipeburn)
+		//total sum of radioactive junk
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				if(src.component_grid[x][y])
+					var/obj/item/reactor_component/comp = src.component_grid[x][y]
+					//more radioactive material = higher score. Doubled if the component is already melted.
+					meltdown_badness += (comp.material.getProperty("radioactive")*2 + comp.material.getProperty("n_radioactive")*5 + comp.material.getProperty("spent_fuel")*10) * (1 + comp.melted)
+					if(istype(comp, /obj/item/reactor_component/gas_channel))
+						var/obj/item/reactor_component/gas_channel/gascomp = comp
+						src.current_gas.merge(gascomp.air_contents) //grab all the gas in the channels and put it back in the reactor so it can be vented into engineering
+
+		src.current_gas.radgas += meltdown_badness*15
+		src.current_gas.temperature = max(src.temperature, src.current_gas.temperature)
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
-		explosion_new(src,current_loc,2500,1,0,360,TRUE)
+
+		for(var/i = 1 to rand(5,20))
+			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
+
+		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad) meltdown badness: [meltdown_badness]")
+
+		explosion_new(src, current_loc, max(100, meltdown_badness*5), TRUE, 0, 360, TRUE)
 		SPAWN(15 SECONDS)
 			alarm.repeat = FALSE //haha this is horrendous, this cannot be the way to do this
 			alarm.status = SOUND_UPDATE
@@ -509,7 +534,7 @@
 					if(!equipped)
 						return
 
-					if(!istype(equipped,/obj/item/reactor_component))
+					if(!istype(equipped,/obj/item/reactor_component) && !istype(equipped,/obj/item/device/light/glowstick))
 						ui.user.visible_message("<span class='alert'>[ui.user] tries to shove \a [equipped] into the reactor. Silly [ui.user]!</span>", "<span class='alert'>You try to put \a [equipped] into the reactor. You feel very foolish.</span>")
 						return
 
@@ -522,9 +547,20 @@
 	proc/insert_comp_callback(var/x,var/y,var/mob/user,var/obj/item/reactor_component/equipped)
 		if(src.component_grid[x][y])
 			return FALSE
-		src.component_grid[x][y]=equipped
-		user.u_equip(equipped)
-		equipped.set_loc(src)
+		if(istype(equipped,/obj/item/device/light/glowstick))
+			var/obj/item/device/light/glowstick/stick = equipped
+			var/datum/material/glowstick_mat = getMaterial("glowstick")
+			glowstick_mat = glowstick_mat.getMutable()
+			glowstick_mat.setColor(rgb(stick.col_r*255, stick.col_g*255, stick.col_b*255))
+			var/obj/item/reactor_component/fuel_rod/glowsticks/result_rod = new /obj/item/reactor_component/fuel_rod/glowsticks(glowstick_mat)
+			src.component_grid[x][y]=result_rod
+			result_rod.set_loc(src)
+			user.u_equip(equipped)
+			qdel(equipped)
+		else
+			src.component_grid[x][y]=equipped
+			user.u_equip(equipped)
+			equipped.set_loc(src)
 		playsound(src, 'sound/machines/law_insert.ogg', 80)
 		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> component into nuclear reactor([src]): [equipped] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [equipped] into the reactor</span>", "<span class='alert'>You slide the [equipped] into the reactor.</span>")
@@ -605,15 +641,15 @@
 			var/list/chosen_slot = pick(free_slots)
 			user.set_loc(src)
 			SPAWN(1 SECOND)
-				playsound(user, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+				playsound(user, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, TRUE)
 				user.emote("scream")
 			SPAWN(2.5 SECONDS)
-				playsound(user, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+				playsound(user, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, TRUE)
 				user.emote("scream")
 			SPAWN(4 SECONDS)
-				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
+				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, TRUE)
 				var/obj/item/reactor_component/fuel_rod/meat_rod = new /obj/item/reactor_component/fuel_rod("flesh")
-				meat_rod.material.name = user.name
+				meat_rod.material.setName(user.name)
 				if(user.bioHolder && user.bioHolder.HasEffect("radioactive"))
 					meat_rod.material.setProperty("radioactive", 3)
 				meat_rod.setMaterial(meat_rod.material)
@@ -632,8 +668,8 @@
 			return FALSE
 
 	/// Transmuting nuclear engine into jeans sometimes causes a client crash
-	setMaterial(datum/material/mat1, appearance, setname, copy, use_descriptors)
-		if(mat1.mat_id == "jean")
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
+		if(mat1.getID() == "jean")
 			return
 		. = ..()
 
@@ -694,14 +730,35 @@
 						src.component_grid[x][y] = new /obj/item/reactor_component/gas_channel/random_material
 					if(4)
 						src.component_grid[x][y] = new /obj/item/reactor_component/heat_exchanger/random_material
-
 		..()
 
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/meltdown
 	New()
 		for(var/x=2 to REACTOR_GRID_WIDTH-1)
 			for(var/y=2 to REACTOR_GRID_HEIGHT-1)
+				if(x==4 && y==4)
+					src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
+				else
+					src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("cerenkite")
+		..()
+
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/insane
+	New()
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
 				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
+				src.component_grid[x][y].melt()
+		..()
+
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/glowstick
+	New()
+		var/datum/material/glowstick_mat = getMaterial("glowstick")
+		glowstick_mat = glowstick_mat.getMutable()
+
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				glowstick_mat.setColor(rgb(rand(0,255), rand(0,255), rand(0,255)))
+				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod/glowsticks(glowstick_mat)
 		..()
 
 #undef REACTOR_GRID_WIDTH

@@ -1,4 +1,4 @@
-ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 /obj/item/reagent_containers/food/snacks/pie
 	name = "pie"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
@@ -9,16 +9,46 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 	var/slicetype = /obj/item/reagent_containers/food/snacks/pieslice
 	var/splat = 0 // for thrown pies
 	food_effects = list("food_refreshed","food_cold")
+	///In the case of a thrown splattered pie, minimum amount of time we remain visually stuck on someone's face.
+	var/min_stuck_time = 5 SECONDS
+	///In the case of a thrown splattered pie, maximum amount of time we remain visually stuck on someone's face.
+	var/max_stuck_time = 10 SECONDS
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
-			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
-			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-			M.change_eye_blurry(rand(5,10))
-			M.take_eye_damage(rand(0, 2), 1)
-			if (prob(40))
-				JOB_XP(M, "Clown", 2)
+			var/mob/thrower = thr.thrown_by
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
+			if (thrower.mind?.assigned_role == "Clown" && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
+				var/mob/living/carbon/human/H = M
+				var/image/face_pie = image('icons/obj/foodNdrink/food_dessert.dmi', "face_pie")
+				src.visible_message("<span class='notice'>[src] splats right in [H]'s face and remains stuck there!</span>")
+				face_pie.layer = MOB_OVERLAY_BASE
+				face_pie.appearance_flags = RESET_COLOR | PIXEL_SCALE
+				var/overlay_key = "face_pie"
+				if(H.mutantrace.head_offset)
+					face_pie.pixel_y = H.mutantrace.head_offset
+				M.UpdateOverlays(face_pie, overlay_key)
+				src.set_loc(M)
+				M.bioHolder?.AddEffect("bad_eyesight")
+				JOB_XP(thrower, "Clown", 1)
+				SPAWN(rand(src.min_stuck_time, src.max_stuck_time))
+					if (QDELETED(M))
+						return
+					M.bioHolder?.RemoveEffect("bad_eyesight")
+					M.UpdateOverlays(null, overlay_key)
+					if (QDELETED(src))
+						return
+					src.visible_message("<span class='notice'>[src] falls off of [M]'s face.</span>")
+					src.set_loc(M.loc)
+					qdel(face_pie)
+				return
+			else
+				src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
+				M.change_eye_blurry(rand(5,10))
+				M.take_eye_damage(rand(0, 2), 1)
+				if (prob(40))
+					JOB_XP(M, "Clown", 2)
 		else
 			..()
 
@@ -43,6 +73,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 			qdel (src)
 		else ..()
 
+ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 /obj/item/reagent_containers/food/snacks/pieslice
 	name = "slice of pie"
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
@@ -53,42 +84,52 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 	heal_amt = 4
 	initial_volume = 5
 	apple
+		name = "slice of apple pie"
 		icon_state = "applepie-slice"
 		initial_reagents = list("juice_apple"=3)
 		desc = "A slice of apple pie. Is there anything more Space-American?"
 	lime
+		name = "slice of lime pie"
 		icon_state = "limepie-slice"
 		initial_reagents = list("juice_lime"=3)
 		desc = "A slice of key lime pie. Tart, sweet, and with a dollop of cream on top."
 	lemon
+		name = "slice of lemon pie"
 		icon_state = "lemonpie-slice"
 		initial_reagents = list("juice_lemon"=3)
 		desc = "A slice of lemon meringue pie. A fine use of fruit curd."
 	strawberry
+		name = "slice of strawberry pie"
 		icon_state = "strawberrypie-slice"
 		initial_reagents = list("juice_strawberry"=3)
 		desc = "A slice of strawberry pie. It smells like summertime memories."
 	pumpkin
+		name = "slice of pumpkin pie"
 		icon_state = "pumpie-slice"
 		initial_reagents = list("juice_pumpkin"=3)
 		desc = "A slice of pumpkin pie. An autumn favourite."
 	chocolate
+		name = "slice of chocolate pie"
 		icon_state = "chocolatepie-slice"
 		initial_reagents = list("sugar"=3, "hugs"=2)
 		desc = "Like a slice of chocolate cake, but a slice of pie, and also very different."
 	raspberry
+		name = "slice of raspberry pie"
 		icon_state = "raspberrypie-slice"
 		initial_reagents = list("juice_raspberry"=3)
 		desc = "A slice of raspberry pie. Those are fresh raspberries, too. Oh man."
 	blackberry
+		name = "slice of blackberry pie"
 		icon_state = "blackberrypie-slice"
 		initial_reagents = list("juice_blackberry"=3)
 		desc = "A slice of balckberry pie. The stains will be oh so worth it."
 	blueberry
+		name = "slice of blueberry pie"
 		icon_state = "blueberrypie-slice"
 		initial_reagents = list("juice_blueberry"=3)
 		desc = "A slice of blueberry pie. Blueberries cook up purple, who knew?"
 	cherry
+		name = "slice of cherry pie"
 		icon_state = "cherrypie-slice"
 		initial_reagents = list("juice_cherry"=3)
 		desc = "A slice of cherry pie. It looks so good, it brings a tear to you eye."
@@ -180,13 +221,18 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/snacks/pie)
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (contents)
-			var/atom/movable/randomContent
-			if (contents.len >= 1)
-				randomContent = pick(contents)
+			var/atom/movable/random_content
+			if (length(contents) >= 1)
+				random_content = pick(contents)
 			else
-				randomContent = src
+				random_content = src
 
-			hit_atom.Attackby(randomContent, thr?.user)
+ 			hit_atom.Attackby(random_content, thr?.user)
+			//for afterattack, we want to filter out mobs since pies hit also the turf the person is standing on. Also, we need to call it on an actual item
+			if (hit_atom && random_content && istype(random_content, /obj/item) && ismob(hit_atom))
+				var/obj/item/randomed_item = random_content
+				randomed_item.AfterAttack(hit_atom, thr?.user)
+
 
 			if (ismob(hit_atom))
 				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)

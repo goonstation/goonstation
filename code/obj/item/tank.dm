@@ -355,7 +355,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 		src.icon_state = "[base_icon_state][src.on]"
 		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
 		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
-		update_icon()
+		UpdateIcon()
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.update_clothing() // Immediately update the worn icon
@@ -428,7 +428,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.volume = 18
+		src.air_contents.volume = 30
 		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 ////////////////////////////////////////////////////////////
@@ -488,6 +488,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
+	item_state = "em_oxtank"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	health = 5
@@ -501,7 +502,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.volume = 8
+		src.air_contents.volume = 15
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 

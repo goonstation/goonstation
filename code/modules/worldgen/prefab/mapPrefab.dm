@@ -29,6 +29,10 @@ ABSTRACT_TYPE(/datum/mapPrefab)
 		..()
 		if(isnull(name) && !isnull(prefabPath))
 			src.generate_default_name()
+		src.init()
+
+	proc/init()
+		return
 
 	proc/post_init()
 		if(isnull(name) && !isnull(prefabPath))
@@ -127,24 +131,43 @@ proc/get_map_prefabs(prefab_type)
 proc/pick_map_prefab(prefab_type, list/wanted_tags=null, list/unwanted_tags=null)
 	RETURN_TYPE(/datum/mapPrefab)
 	var/prefab_list = get_map_prefabs(prefab_type)
-	if(!length(prefab_list))
+	if (!length(prefab_list))
 		return null
 
 	var/list/required = list()
 	var/list/choices = list()
-	for(var/name in prefab_list)
+	for (var/name in prefab_list)
 		var/datum/mapPrefab/prefab = prefab_list[name]
-		if(
-				length(prefab.tags & unwanted_tags) || \
-				length(prefab.tags & wanted_tags) != length(wanted_tags) || \
-				prefab.maxNum > 0 && prefab.nPlaced >= prefab.maxNum
-			)
+		if (istype(prefab, /datum/mapPrefab/mining))
+			if (!(prefab.tags & wanted_tags)) // Uses bitflags inclusively IE if it has any wanted tag its viable
+				continue
+		else if (length(prefab.tags & wanted_tags) != length(wanted_tags)) // Compares length exclusive IE needs exactly that tag
+			continue
+		if (prefab.maxNum > 0 && prefab.nPlaced >= prefab.maxNum)
 			continue
 		choices[prefab] = prefab.probability
-		if(prefab.required)
+		if (prefab.required)
 			required[prefab] = prefab.probability
 
-	if(length(required))
+	if (length(required))
 		return weighted_pick(required)
 
 	return weighted_pick(choices)
+
+proc/get_prefab_tags()
+	var/wanted_tags = null
+	wanted_tags	= PREFAB_ANYWHERE
+	if (map_currently_underwater)
+		wanted_tags |= PREFAB_NADIR_SAFE
+#if defined(MAP_OVERRIDE_OSHAN)
+		wanted_tags |= PREFAB_OSHAN | PREFAB_NADIR_UNSAFE
+#endif
+#if defined(MAP_OVERRIDE_NADIR)
+		wanted_tags |= PREFAB_NADIR
+#endif
+#if defined(MAP_OVERRIDE_MANTA)
+		wanted_tags |= PREFAB_MANTA | PREFAB_NADIR_UNSAFE
+#endif
+	else
+		wanted_tags |= PREFAB_SPACE
+	return wanted_tags

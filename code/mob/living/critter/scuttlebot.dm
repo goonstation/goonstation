@@ -59,7 +59,7 @@
 
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, pitch=1.4, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, pitch=1.4, channel=VOLUME_CHANNEL_EMOTE)
 					return pick("[src] unleashes the tiniest robotic toot.", "[src] sends out a ridiculously pitched fart.")
 
 			if ("burp")
