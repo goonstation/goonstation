@@ -3662,7 +3662,7 @@
 	lungrot
 		name = "lungrot"
 		id = "lungrot"
-		result = "lungrot"
+		result = "lungrot_bloom"
 		// this reaction is a reference to salbutamol inhalers being a risk factor in getting oral thrush.
 		// Of course in RL, this is harmless for most people (so please take your meds), but we're in spaaaaaaaaceeeee!
 		required_reagents = list("salbutamol" = 0.1, "miasma" = 1)
@@ -3670,7 +3670,7 @@
 		instant = 0
 		reaction_speed = 0.5
 		//since we are talking about contraction of miasma on weakened lung tissue, make some common antibiotics prevent this
-		inhibitors = list("spaceacillin", "cold_medicine")
+		inhibitors = list("cold_medicine")
 		// no mixing sound or message. With lungrot decaying into miasma that would create a mass of message spam. And it should be kinda stealthy
 		mix_phrase = null
 		mix_sound = null

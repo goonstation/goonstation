@@ -90,6 +90,20 @@ datum
 			transparency = 235
 			disease = /datum/ailment/disease/cold
 
+
+		disease/lungrot
+			name = "lungrot bloom"
+			id = "lungrot_bloom"
+			description = "highly toxic fungal colonies created in the enviroment of a weakened lung."
+			reagent_state = SOLID
+			minimum_to_infect = 2.5
+			fluid_r = 43
+			fluid_b = 54
+			fluid_g = 25
+			transparency = 166
+			disease = /datum/ailment/disease/lungrot
+
+
 		disease/stringy_gibbis // Fake GBS
 			name = "stringy gibbis"
 			id = "stringy gibbis"

@@ -1532,56 +1532,6 @@ datum
 				return
 
 
-		harmful/lungrot
-			name = "lungrot"
-			id = "lungrot"
-			description = "highly toxic fungal colonies created in the enviroment of a weakened lung."
-			reagent_state = GAS
-			fluid_r = 43
-			fluid_b = 54
-			fluid_g = 25
-			transparency = 166
-
-			on_mob_life(var/mob/living/target, var/mult = 1)
-				if (!target) target = holder.my_atom
-				// it's 2.5 miasma per lungrot, so while you create lungrot, the amount of miasma still builds up
-				// so for as long as sabutamol is in your bloodstream, lungrot is created and miasma lingers in you.
-				target.reagents.add_reagent("miasma", 2.5 * mult * depletion_rate)
-
-				// if it's only low amount of lungrot, it has no effect at all, except decaying into miasma.
-				if (holder.get_reagent_amount(src.id) > 5)
-					//over 5u, it's beginning with a bit of tox damage and messages over a bad feeling in your lungs
-					target.take_toxin_damage(0.5 * mult)
-					// if above 10u of lungrot, the fun begins and you begin coughing out the reagents in you with a 15 second cooldown
-					// chance for lungrot breath is ((amount of lungrot) div 3 + 5 )% every lifeloop tick, capped at 25% at 72u
-					if (isliving(target) && (holder.get_reagent_amount(src.id) >= 10) && prob(clamp(holder.get_reagent_amount(src.id) / 3 + 3, 8, 25)) && (!ON_COOLDOWN(target, "lungrot_breath", 15 SECONDS)))
-						var/mob/living/living_target = target
-						var/turf/target_turf = get_turf(living_target)
-						//We want to smoke the stuff one tile in front of the person, if the space is not occupied by a wall or such
-						var/turf/potential_turf = get_step(target_turf, living_target.dir)
-						if (!potential_turf.density)
-							target_turf = potential_turf
-
-						//add some losebreath for a bit more damage and so you don't directly inhale the chemicals you just coughed out
-						living_target.visible_message("<span class='alert>[living_target] coughs out a [pick("nasty","noxious","concerning","rotten")] cloud of miasma!</span>", "<span class='alert'>You cough out a [pick("nasty","noxious","concerning","rotten")] cloud of miasma!</span>")
-						living_target.losebreath += (1 * mult)
-						living_target.emote("cough")
-
-						// the smoke breathed out is 75% of lungrot as miasma and 35% of this amount out of the chempool in you on top of that, capped at 20u of new miasma.
-						var/amount_of_miasma_to_smoke = clamp(holder.get_reagent_amount(src.id) * 0.75, 5, 20)
-						var/datum/reagents/reagents_to_smoke = new /datum/reagents(amount_of_miasma_to_smoke * 1.35)
-						// we take the turf we are on, because setting my_atom of the temporary chem holder would call on_remove on the miasma and remove the miasma buff effect
-						reagents_to_smoke.add_reagent("miasma", amount_of_miasma_to_smoke)
-						holder.trans_to_direct(reagents_to_smoke, amount_of_miasma_to_smoke * 0.35)
-
-						// now we smoke the stuff and remove the temporary reagent holder
-						target_turf.fluid_react(reagents_to_smoke, reagents_to_smoke.total_volume,  airborne = 1)
-						qdel(reagents_to_smoke)
-
-					else if (prob(10) && (!ON_COOLDOWN(target, "lungrot_message", 25 SECONDS)))
-						boutput(target, "<span class='alert'>You feel [pick("a burning sensation in your lungs", "like it's harder to breath", "a fur-like texture on your tongue")].</span>")
-				..()
-
 		harmful/mutagen // COGWERKS CHEM REVISION PROJECT. magic chemical, fine as is
 			name = "unstable mutagen"
 			id = "mutagen"
