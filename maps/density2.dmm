@@ -1689,7 +1689,10 @@
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/crew_quarters/garden)
 "ps" = (
-/obj/shrub/berry/strawberry,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/shrub/random,
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/crew_quarters/garden)
 "px" = (
@@ -2374,8 +2377,8 @@
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden)
 "xo" = (
-/obj/shrub/berry/strawberry,
 /obj/machinery/light/small/floor/cool,
+/obj/shrub/random,
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/crew_quarters/garden)
 "xp" = (
@@ -3499,7 +3502,6 @@
 	},
 /area/station/bridge)
 "Jp" = (
-/obj/shrub/berry/strawberry,
 /obj/cable{
 	icon_state = "1-4"
 	},
@@ -4338,16 +4340,7 @@
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/crew_quarters/garden)
 "RO" = (
-/obj/shrub/berry/strawberry,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_y = 21
-	},
+/obj/shrub/random,
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/crew_quarters/garden)
 "RR" = (
@@ -48498,8 +48491,8 @@ iz
 nY
 pk
 pn
-ps
 pq
+RO
 pq
 pq
 xg
@@ -49704,7 +49697,7 @@ iz
 mH
 mE
 iz
-RO
+UH
 qG
 pq
 pq
@@ -50006,7 +49999,7 @@ iz
 iz
 iz
 iz
-pI
+ps
 qG
 pq
 sc
@@ -53026,7 +53019,7 @@ hR
 hR
 hR
 hR
-pI
+ps
 qG
 pq
 sc
