@@ -159,7 +159,7 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				if (!holder)
 					return
-				if (volume >= 5 && holder.total_temperature >= T0C + 400 && (istype(O, /obj/steel_beams) || (O.material && istype(O.material, /datum/material/metal/steel)))
+				if (volume >= 5 && holder.total_temperature >= T0C + 400 && (istype(O, /obj/steel_beams) || (O.material && istype(O.material, /datum/material/metal/steel))))
 					O.visible_message("<span class='alert'>[O] melts!</span>")
 					qdel(O)
 
