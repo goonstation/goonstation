@@ -1,4 +1,9 @@
 
+(t)wed sep 20 23
+(u)TealSeer
+(p)15841
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Empty gas tanks can now be made at the general manufacturer for 0.1 sturdy metal.
 (t)tue sep 19 23
 (u)Smilg
 (p)15819
