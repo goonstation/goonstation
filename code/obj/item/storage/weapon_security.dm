@@ -30,6 +30,17 @@
 	desc = "Contains a robust donut and a robusted donut, for security use"
 	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/robust = 1, /obj/item/reagent_containers/food/snacks/donut/custom/robusted = 1)
 
+/obj/item/storage/lunchbox/sturdydonuts
+	name = "sturdy donuts lunchbox"
+	icon_state = "lunchbox"
+	desc = "Contains a sturdy donut and the sturdiest donut, for syndicate security use"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donut/custom/sturdy = 1, /obj/item/reagent_containers/food/snacks/donut/custom/sturdiest = 1)
+
+/obj/item/storage/lunchbox/secdonk
+	name = "donkpocket lunchbox"
+	icon_state = "lunchbox"
+	desc = "Contains the imfamous donk pocket... two infact!"
+	spawn_contents = list(/obj/item/reagent_containers/food/snacks/donkpocket = 2)
 // For sec officers and the HoS. Really love spawning with a full backpack (Convair880).
 /obj/item/storage/box/security_starter_kit
 	name = "security starter kit"
@@ -148,6 +159,14 @@
 	/obj/item/old_grenade/stinger/frag,\
 	/obj/item/chem_grenade/flashbang,\
 	/obj/item/old_grenade/graviton)
+
+/obj/item/storage/box/somewhatactical_kit // rex - stolen shamelessly
+	name = "tactical grenade box"
+	desc = "A box with 2 flashbangs and 1 stinger grenade."
+	icon_state = "flashbang"
+	spawn_contents = list(
+	/obj/item/old_grenade/stinger/frag,\
+	/obj/item/chem_grenade/flashbang = 2,)
 
 /obj/item/storage/box/f_grenade_kit
 	name = "cleaner grenade box"

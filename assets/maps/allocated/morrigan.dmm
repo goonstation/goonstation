@@ -8895,7 +8895,6 @@
 /obj/item/clothing/mask/gas/swat,
 /obj/item/device/flash,
 /obj/item/device/light/glowstick/red,
-/obj/item/storage/backpack/syndie,
 /obj/machinery/light/incandescent/netural,
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
@@ -8904,6 +8903,7 @@
 /obj/item/clothing/under/rank/morrigan/sec,
 /obj/item/clothing/head/morrigan/sberet,
 /obj/item/clothing/shoes/swat,
+/obj/item/storage/backpack/security,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "iBu" = (
@@ -15679,7 +15679,6 @@
 /obj/item/clothing/mask/gas/swat,
 /obj/item/device/flash,
 /obj/item/device/light/glowstick/red,
-/obj/item/storage/backpack/syndie,
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
@@ -15687,6 +15686,7 @@
 /obj/item/clothing/under/rank/morrigan/sec,
 /obj/item/clothing/head/morrigan/sberet,
 /obj/item/clothing/shoes/swat,
+/obj/item/storage/backpack/security,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "oTW" = (
@@ -19877,7 +19877,6 @@
 /obj/item/clothing/mask/gas/swat,
 /obj/item/device/flash,
 /obj/item/device/light/glowstick/red,
-/obj/item/storage/backpack/syndie,
 /obj/decal/tile_edge/stripe/big{
 	dir = 4
 	},
@@ -19886,6 +19885,7 @@
 /obj/item/clothing/under/rank/morrigan/sec,
 /obj/item/clothing/head/morrigan/sberet,
 /obj/item/clothing/shoes/swat,
+/obj/item/storage/backpack/security,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "tlx" = (
