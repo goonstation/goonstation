@@ -10866,7 +10866,6 @@
 "kmw" = (
 /obj/window/auto/reinforced/indestructible,
 /obj/grille/steel,
-/obj/decal/poster/wallsign/morrigan,
 /obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
 	dir = 4
 	},
@@ -15604,7 +15603,6 @@
 /obj/window/auto/reinforced/indestructible,
 /obj/grille/steel,
 /obj/grille/steel,
-/obj/decal/poster/wallsign/morrigan,
 /obj/fakeobjects/morrigan/broken_lockdown,
 /turf/simulated/floor/engine,
 /area/morrigan/station/hallway)
@@ -22094,8 +22092,8 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/civilian/crewquarters)
 "uYy" = (
-/obj/submachine/weapon_vendor,
 /obj/item_dispenser/handcuffs,
+/obj/submachine/weapon_vendor/morriganvendor,
 /turf/unsimulated/floor/minitiles/black,
 /area/morrigan/station/security/main)
 "uYJ" = (
