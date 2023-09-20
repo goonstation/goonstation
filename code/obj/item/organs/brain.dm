@@ -15,7 +15,7 @@
 	edible = 0
 	fail_damage = 120
 	max_damage = 120
-	default_material = "greymatter"
+	default_material = /datum/material/organic/flesh/greymatter
 	tooltip_flags = REBUILD_ALWAYS //fuck it, nobody examines brains that often
 
 	disposing()
@@ -118,7 +118,7 @@
 	item_state = "late_brain"
 	desc = "A brain sized pyramid constructed out of silicon and LED lights. It employs complex quantum loopholes to create a consciousness within a decade or less."
 	created_decal = /obj/decal/cleanable/oil
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	var/activated = 0
 
 	get_desc()
@@ -140,7 +140,7 @@
 	icon_state = "ai_brain"
 	item_state = "ai_brain"
 	created_decal = /obj/decal/cleanable/oil
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 
 /obj/item/organ/brain/martian
 	name = "squishy lump"
@@ -148,7 +148,7 @@
 	icon_state = "martian_brain"
 	item_state = "martian_brain"
 	created_decal = /obj/decal/cleanable/martian_viscera/fluid
-	default_material = "viscerite"
+	default_material = /datum/material/organic/viscerite
 
 /obj/item/organ/brain/flockdrone
 	name = "odd crystal"
@@ -156,7 +156,7 @@
 	icon_state = "flockdrone_brain"
 	item_state = "flockdrone_brain"
 	created_decal = /obj/decal/cleanable/flockdrone_debris/fluid
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 
 	on_life()
 		var/mob/living/M = holder.donor

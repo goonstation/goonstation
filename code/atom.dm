@@ -19,7 +19,7 @@ TYPEINFO(/atom)
 	var/shrunk = 0
 	var/list/cooldowns
 
-	/// Material id of this object as a material id (lowercase string), set on New()
+	/// Material typepath of this object, set on New()
 	var/default_material = null
 	/// Does this object use appearance from the default material?
 	var/uses_default_material_appearance = FALSE
@@ -90,8 +90,12 @@ TYPEINFO(/atom)
 	New(turf/newLoc)
 		. = ..()
 		// Lets stop having 5 implementations of this that all do it differently
-		if (!src.material && default_material)
-			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
+		if (!src.material && src.default_material)
+			#ifdef CHECK_MORE_RUNTIMES
+			if (!ispath(src.default_material))
+				CRASH("Default material [src.default_material] in [src] isn't a typepath!")
+			#endif
+			var/datum/material/mat = ispath(src.default_material) ? getMaterial(src.default_material) : src.default_material
 			src.setMaterial(mat)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)

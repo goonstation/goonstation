@@ -217,7 +217,7 @@
 	throwforce = 10
 	scoopable = 0
 	material_name = "Rock"
-	default_material = "rock"
+	default_material = /datum/material/metal/rock
 
 	setup_material()
 		..()
@@ -227,14 +227,14 @@
 	name = "mauxite ore"
 	desc = "A chunk of Mauxite, a sturdy common metal."
 	material_name = "Mauxite"
-	default_material = "mauxite"
+	default_material = /datum/material/metal/mauxite
 	metal = 2
 
 /obj/item/raw_material/molitz
 	name = "molitz crystal"
 	desc = "A crystal of Molitz, a common crystalline substance."
 	material_name = "Molitz"
-	default_material = "molitz"
+	default_material = /datum/material/crystal/molitz
 	crystal = 1
 
 /obj/item/raw_material/molitz_beta
@@ -242,7 +242,7 @@
 	desc = "An unusual crystal of Molitz."
 	icon_state = "ore$$molitz_b"
 	material_name = "Molitz Beta"
-	default_material = "molitz_b"
+	default_material = /datum/material/crystal/molitz/beta
 	crystal = 1
 
 	setup_material()
@@ -253,7 +253,7 @@
 	name = "pharosium ore"
 	desc = "A chunk of Pharosium, a conductive metal."
 	material_name = "Pharosium"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	metal = 1
 	conductor = 1
 
@@ -261,14 +261,14 @@
 	name = "cobryl ore"
 	desc = "A chunk of Cobryl, a somewhat valuable metal."
 	material_name = "Cobryl"
-	default_material = "cobryl"
+	default_material = /datum/material/metal/cobryl
 	metal = 1
 
 /obj/item/raw_material/char
 	name = "char ore"
 	desc = "A heap of Char, a fossil energy source similar to coal."
 	material_name = "Char"
-	default_material = "char"
+	default_material = /datum/material/organic/char
 	//cogwerks - burn vars
 	burn_point = 450
 	burn_output = 1600
@@ -279,14 +279,14 @@
 	name = "claretine ore"
 	desc = "A heap of Claretine, a highly conductive salt."
 	material_name = "Claretine"
-	default_material = "claretine"
+	default_material = /datum/material/crystal/claretine
 	conductor = 2
 
 /obj/item/raw_material/bohrum
 	name = "bohrum ore"
 	desc = "A chunk of Bohrum, a heavy and highly durable metal."
 	material_name = "Bohrum"
-	default_material = "bohrum"
+	default_material = /datum/material/metal/bohrum
 	metal = 3
 	dense = 1
 
@@ -294,7 +294,7 @@
 	name = "syreline ore"
 	desc = "A chunk of Syreline, an extremely valuable and coveted metal."
 	material_name = "Syreline"
-	default_material = "syreline"
+	default_material = /datum/material/metal/syreline
 	metal = 1
 
 /obj/item/raw_material/erebite
@@ -302,7 +302,7 @@
 	desc = "A chunk of Erebite, an extremely volatile high-energy mineral."
 	var/exploded = 0
 	material_name = "Erebite"
-	default_material = "erebite"
+	default_material = /datum/material/crystal/erebite
 	powersource = 2
 
 	ex_act(severity)
@@ -356,7 +356,7 @@
 	name = "cerenkite ore"
 	desc = "A chunk of Cerenkite, a highly radioactive mineral."
 	material_name = "Cerenkite"
-	default_material = "cerenkite"
+	default_material = /datum/material/metal/cerenkite
 	metal = 1
 	powersource = 1
 
@@ -364,7 +364,7 @@
 	name = "plasmastone"
 	desc = "A piece of plasma in its solid state."
 	material_name = "Plasmastone"
-	default_material = "plasmastone"
+	default_material = /datum/material/crystal/plasmastone
 	//cogwerks - burn vars
 	burn_point = 1000
 	burn_output = 10000
@@ -424,20 +424,20 @@
 	name = "uqill nugget"
 	desc = "A nugget of Uqill, a rare and very dense stone."
 	material_name = "Uqill"
-	default_material = "uqill"
+	default_material = /datum/material/crystal/uqill
 	dense = 2
 
 /obj/item/raw_material/fibrilith
 	name = "fibrilith chunk"
 	desc = "A compressed chunk of Fibrilith, an odd mineral known for its high tensile strength."
 	material_name = "Fibrilith"
-	default_material = "fibrilith"
+	default_material = /datum/material/fabric/fibrilith
 
 /obj/item/raw_material/telecrystal
 	name = "telecrystal"
 	desc = "A large unprocessed telecrystal, a gemstone with space-warping properties."
 	material_name = "Telecrystal"
-	default_material = "telecrystal"
+	default_material = /datum/material/crystal/telecrystal
 	crystal = 1
 	powersource = 2
 
@@ -468,20 +468,20 @@
 	name = "miracle matter"
 	desc = "Miracle Matter is a bizarre substance known to metamorphosise into other minerals when processed."
 	material_name = "Miracle"
-	default_material = "miracle"
+	default_material = /datum/material/crystal/miracle
 
 /obj/item/raw_material/starstone
 	name = "starstone"
 	desc = "An extremely rare jewel. Highly prized by collectors and lithovores."
 	material_name = "Starstone"
-	default_material = "starstone"
+	default_material = /datum/material/crystal/starstone
 	crystal = 1
 
 /obj/item/raw_material/eldritch
 	name = "koshmarite ore"
 	desc = "An unusual dense pulsating stone. You feel uneasy just looking at it."
 	material_name = "Koshmarite"
-	default_material = "koshmarite"
+	default_material = /datum/material/organic/koshmarite
 	crystal = 1
 	dense = 2
 
@@ -489,7 +489,7 @@
 	name = "viscerite lump"
 	desc = "A disgusting flesh-like material. Ugh. What the hell is this?"
 	material_name = "Viscerite"
-	default_material = "viscerite"
+	default_material = /datum/material/organic/viscerite
 	dense = 2
 
 	setup_material()
@@ -501,7 +501,7 @@
 	name = "gold nugget"
 	desc = "A chunk of pure gold. Damn son."
 	material_name = "Gold"
-	default_material = "gold"
+	default_material = /datum/material/metal/gold
 	dense = 2
 
 // Misc building material
@@ -519,13 +519,13 @@
 	desc = "It's a big puffy white thing. Most likely not a cloud though."
 	icon_state = "cotton"
 	material_name = "Cotton"
-	default_material = "cotton"
+	default_material = /datum/material/fabric/cotton
 
 /obj/item/raw_material/ice
 	name = "ice chunk"
 	desc = "A chunk of ice. It's pretty cold."
 	material_name = "Ice"
-	default_material = "ice"
+	default_material = /datum/material/crystal/ice
 	crystal = 1
 	scoopable = 0
 
@@ -538,7 +538,7 @@
 	burn_possible = 0
 	mat_changename = TRUE
 	material_name = "Steel"
-	default_material = "steel"
+	default_material = /datum/material/metal/steel
 
 	New()
 		..()
@@ -569,7 +569,7 @@
 	event_handler_flags = USE_FLUID_ENTER
 	material_amt = 0.1
 	material_name = "Glass"
-	default_material = "glass"
+	default_material = /datum/material/crystal/glass
 	mat_changename = TRUE
 	var/sound_stepped = 'sound/impact_sounds/Glass_Shards_Hit_1.ogg'
 
@@ -601,11 +601,11 @@
 
 	glass
 		material_name = "Glass"
-		default_material = "glass"
+		default_material = /datum/material/crystal/glass
 
 	plasmacrystal
 		material_name = "Plasmaglass"
-		default_material = "plasmaglass"
+		default_material = /datum/material/crystal/plasmaglass
 
 /obj/item/raw_material/shard/proc/walked_over(mob/living/carbon/human/H as mob)
 	if(ON_COOLDOWN(H, "shard_Crossed", 7 SECONDS) || H.getStatusDuration("stunned") || H.getStatusDuration("weakened")) // nerf for dragging a person and a shard to damage them absurdly fast - drsingh
@@ -636,7 +636,7 @@
 	name = "chitin chunk"
 	desc = "A chunk of chitin."
 	material_name = "Chitin"
-	default_material = "chitin"
+	default_material = /datum/material/organic/chitin
 	metal = 3
 	dense = 1
 
@@ -644,88 +644,88 @@
 
 /obj/item/material_piece/mauxite
 	desc = "A processed bar of Mauxite, a sturdy common metal."
-	default_material = "mauxite"
+	default_material = /datum/material/metal/mauxite
 	icon_state = "bar"
 
 /obj/item/material_piece/molitz
 	desc = "A cut block of Molitz, a common crystalline substance."
-	default_material = "molitz"
+	default_material = /datum/material/crystal/molitz
 	icon_state = "bar"
 
 /obj/item/material_piece/pharosium
 	desc = "A processed bar of Pharosium, a conductive metal."
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	icon_state = "bar"
 
 /obj/item/material_piece/cobryl
 	desc = "A processed bar of Cobryl, a somewhat valuable metal."
-	default_material = "cobryl"
+	default_material = /datum/material/metal/cobryl
 	icon_state = "bar"
 
 /obj/item/material_piece/claretine
 	desc = "A compressed Claretine, a highly conductive salt."
-	default_material = "claretine"
+	default_material = /datum/material/crystal/claretine
 	icon_state = "bar"
 
 /obj/item/material_piece/bohrum
 	desc = "A processed bar of Bohrum, a heavy and highly durable metal."
-	default_material = "bohrum"
+	default_material = /datum/material/metal/bohrum
 	icon_state = "bar"
 
 /obj/item/material_piece/syreline
 	desc = "A processed bar of Syreline, an extremely valuable and coveted metal."
-	default_material = "syreline"
+	default_material = /datum/material/metal/syreline
 	icon_state = "bar"
 
 /obj/item/material_piece/plasmastone
 	desc = "A cut block of Plasmastone."
-	default_material = "plasmastone"
+	default_material = /datum/material/crystal/plasmastone
 	icon_state = "bar"
 
 /obj/item/material_piece/uqill
 	desc = "A cut block of Uqill. It is quite heavy."
-	default_material = "uqill"
+	default_material = /datum/material/crystal/uqill
 	icon_state = "bar"
 
 /obj/item/material_piece/koshmarite
 	desc = "A cut block of an unusual dense stone. It seems similar to obsidian."
-	default_material = "koshmarite"
+	default_material = /datum/material/organic/koshmarite
 	icon_state = "bar"
 
 /obj/item/material_piece/viscerite
 	desc = "A cut block of a disgusting flesh-like material. Grody."
-	default_material = "viscerite"
+	default_material = /datum/material/organic/viscerite
 	icon_state = "bar"
 
 /obj/item/material_piece/char
 	desc = "A cut block of Char."
-	default_material = "char"
+	default_material = /datum/material/organic/char
 	icon_state = "wad"
 	color = "#221122"
 
 /obj/item/material_piece/telecrystal
 	desc = "A cut block of Telecrystal."
-	default_material = "telecrystal"
+	default_material = /datum/material/crystal/telecrystal
 	icon_state = "bar"
 
 /obj/item/material_piece/fibrilith
 	desc = "A cut block of Fibrilith."
-	default_material = "fibrilith"
+	default_material = /datum/material/fabric/fibrilith
 	icon_state = "bar"
 
 /obj/item/material_piece/cerenkite
 	desc = "A cut block of Cerenkite."
-	default_material = "cerenkite"
+	default_material = /datum/material/metal/cerenkite
 	icon_state = "bar"
 
 /obj/item/material_piece/erebite
 	desc = "A cut block of Erebite."
-	default_material = "erebite"
+	default_material = /datum/material/crystal/erebite
 	icon_state = "bar"
 
 /obj/item/material_piece/ice
 	desc = "Uh. What's the point in this? Is someone planning to make an igloo?"
-	default_material = "ice"
+	default_material = /datum/material/crystal/ice
 
 // Material-related Machinery
 

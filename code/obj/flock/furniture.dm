@@ -26,7 +26,7 @@ TYPEINFO(/obj/table/flock)
 	parts_type = /obj/item/furniture_parts/table/flock
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 
 /obj/table/flock/New()
 	..()
@@ -66,7 +66,7 @@ TYPEINFO(/obj/item/furniture_parts/table/flock)
 	furniture_type = /obj/table/flock/auto
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 
 /obj/item/furniture_parts/table/flock/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -94,7 +94,7 @@ TYPEINFO(/obj/stool/chair/comfy/flock)
 	scoot_sounds = list( 'sound/misc/chair/glass/scoot1.ogg', 'sound/misc/chair/glass/scoot2.ogg', 'sound/misc/chair/glass/scoot3.ogg', 'sound/misc/chair/glass/scoot4.ogg', 'sound/misc/chair/glass/scoot5.ogg' )
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 
 /obj/stool/chair/comfy/flock/New()
 	..()
@@ -122,7 +122,7 @@ TYPEINFO(/obj/item/furniture_parts/flock_chair)
 	furniture_name = "thrumming alcove"
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 
 /obj/item/furniture_parts/flock_chair/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -150,7 +150,7 @@ TYPEINFO(/obj/storage/closet/flock)
 	close_sound = 'sound/misc/flockmind/flockdrone_locker_close.ogg'
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 	var/health_attack = 100
 	var/health_max = 100
 	var/repair_per_resource = 2.5
@@ -264,7 +264,7 @@ TYPEINFO(/obj/machinery/light/flock)
 	removable_bulb = FALSE
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 
 /obj/machinery/light/flock/New()
 	..()
@@ -309,7 +309,7 @@ TYPEINFO(/obj/lattice/flock)
 	icon_state = "fibrenet"
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 
 /obj/lattice/flock/New()
 	..()
@@ -358,7 +358,7 @@ TYPEINFO(/obj/grille/flock)
 	can_be_snipped = FALSE
 	can_be_unscrewed = FALSE
 	can_build_window = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 
 	update_icon(special_icon_state, override_parent = TRUE) //fix for perspective grilles fucking these up
 		if (ruined)

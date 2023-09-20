@@ -142,7 +142,7 @@ TYPEINFO(/obj/item/furniture_parts/table/wood)
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	furniture_type = /obj/table/wood/auto
 	furniture_name = "wooden table"
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	mat_changename = TRUE
 
 /obj/item/furniture_parts/table/wood/round
@@ -219,7 +219,7 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	furniture_name = "glass table"
 	density_check = FALSE //FOR NOW
 	var/has_glass = 1
-	default_material = "glass"
+	default_material = /datum/material/crystal/glass
 
 
 	UpdateName()
@@ -372,7 +372,7 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	stamina_cost = 15
 	furniture_type = /obj/stool/wooden
 	furniture_name = "wooden stool"
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 
 /obj/item/furniture_parts/stool/pet_bed
 	name = "pet bed parts"

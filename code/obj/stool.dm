@@ -26,7 +26,7 @@
 	throwforce = 10
 	pressure_resistance = 3*ONE_ATMOSPHERE
 	layer = STORAGE_LAYER //dumb
-	default_material = "steel"
+	default_material = /datum/material/metal/steel
 	uses_default_material_appearance = FALSE
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
@@ -201,7 +201,7 @@ TYPEINFO(/obj/stool/wooden)
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
 
@@ -917,7 +917,7 @@ TYPEINFO(/obj/stool/chair)
 	icon_state = "chair$$mauxite"
 	desc = "A sturdy chair. It doesn't look very comfortable..."
 	comfort_value = -2
-	default_material = "mauxite"
+	default_material = /datum/material/metal/mauxite
 
 /* ======================================================= */
 /* -------------------- Folded Chairs -------------------- */

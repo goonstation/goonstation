@@ -862,7 +862,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 	plane = PLANE_WALL-1
 	layer = ASTEROID_LAYER
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	default_material = "rock"
+	default_material = /datum/material/metal/rock
 	color = "#D1E6FF"
 
 #ifdef UNDERWATER_MAP
@@ -945,7 +945,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		desc = "A free-floating jineral jeposit from space."
 		default_ore = null
 		hardness = 1
-		default_material = "jean"
+		default_material = /datum/material/fabric/jean
 		default_ore = /obj/item/material_piece/cloth/jean
 		replace_type = /turf/simulated/floor/plating/airless/asteroid/jean
 		color = "#88c2ff"

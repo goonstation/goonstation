@@ -20,7 +20,7 @@ TYPEINFO(/obj/flock_structure)
 	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 	/// when did we get created?
 	var/time_started = 0
 	var/build_time = 6 // in seconds

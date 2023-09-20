@@ -223,35 +223,35 @@
 
 /obj/item/material_piece/copper
 	desc = "A processed bar of copper, a conductive metal."
-	default_material = "copper"
+	default_material = /datum/material/metal/copper
 	icon_state = "bar"
 
 /obj/item/material_piece/iridiumalloy
 	icon_state = "iridium"
 	name = "plate"
 	desc = "A chunk of some sort of iridium alloy plating."
-	default_material = "iridiumalloy"
+	default_material = /datum/material/metal/iridiumalloy
 	uses_default_material_appearance = FALSE
 	amount = 5
 
 /obj/item/material_piece/spacelag
 	icon_state = "bar"
 	desc = "Yep. There it is. You've done it. I hope you're happy now."
-	default_material = "spacelag"
+	default_material = /datum/material/metal/spacelag
 	amount = 1
 
 /obj/item/material_piece/slag
 	icon_state = "wad"
 	name = "slag"
 	desc = "By-product of smelting"
-	default_material = "slag"
+	default_material = /datum/material/metal/slag
 	mat_changename = FALSE
 
 /obj/item/material_piece/rubber/latex
 	name = "sheet"
 	desc = "A sheet of latex."
 	icon_state = "latex"
-	default_material = "latex"
+	default_material = /datum/material/rubber/latex
 
 	setup_material()
 		src.create_reagents(10)
@@ -262,7 +262,7 @@
 	name = "wooden log"
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
 	icon_state = "log"
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
@@ -281,7 +281,7 @@
 	name = "stalk"
 	desc = "Keep away from Space Pandas."
 	icon_state = "bamboo"
-	default_material = "bamboo"
+	default_material = /datum/material/organic/bamboo
 	uses_default_material_appearance = FALSE
 	mat_changename = TRUE
 
@@ -301,7 +301,7 @@
 	name = "space spider silk"
 	desc = "space silk produced by space dwelling space spiders. space."
 	icon_state = "spidersilk"
-	default_material = "spidersilk"
+	default_material = /datum/material/fabric/spidersilk
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
@@ -309,83 +309,82 @@
 	name = "leather"
 	desc = "leather made from the skin of some sort of space critter."
 	icon_state = "fabric"
-	default_material = "leather"
+	default_material = /datum/material/fabric/leather
 	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/synthleather
 	name = "synthleather"
 	desc = "A type of artificial leather."
 	icon_state = "fabric"
-	default_material = "synthleather"
+	default_material = /datum/material/fabric/synthleather
 	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/cottonfabric
 	name = "fabric"
 	desc = "A type of natural fabric."
 	icon_state = "fabric"
-	default_material = "cotton"
+	default_material = /datum/material/fabric/cotton
 
 /obj/item/material_piece/cloth/jean
 	name = "jean textile"
 	desc = "A type of a sturdy textile."
 	icon_state = "fabric"
-	default_material = "jean"
+	default_material = /datum/material/fabric/jean
 	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/brullbarhide
 	name = "brullbar hide"
 	desc = "The hide of a brullbar."
 	icon_state = "fabric"
-	default_material = "brullbarhide"
+	default_material = /datum/material/fabric/brullbarhide
 	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/kingbrullbarhide
 	name = "king brullbar hide"
 	desc = "The hide of a king brullbar."
 	icon_state = "fabric"
-	default_material = "kingbrullbarhide"
+	default_material = /datum/material/fabric/brullbarhide/king
 	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/carbon
 	name = "fabric"
 	desc = "carbon based hi-tech material."
 	icon_state = "fabric"
-	default_material = "carbonfibre"
+	default_material = /datum/material/fabric/carbonfibre
 
 /obj/item/material_piece/cloth/dyneema
 	name = "fabric"
 	desc = "carbon nanofibres and space spider silk!"
 	icon_state = "fabric"
-	default_material = "dyneema"
+	default_material = /datum/material/fabric/dyneema
 
 /obj/item/material_piece/cloth/hauntium
 	name = "fabric"
 	desc = "This cloth seems almost alive."
 	icon_state = "fabric"
-	default_material = "hauntium"
-
+	default_material = /datum/material/fabric/hauntium
 /obj/item/material_piece/cloth/beewool
 	name = "bee wool"
 	desc = "Some bee wool."
 	icon_state = "fabric"
-	default_material = "beewool"
+	default_material = /datum/material/fabric/beewool
 	mat_changename = FALSE
 
 /obj/item/material_piece/soulsteel
 	desc = "A bar of soulsteel. Metal made from souls."
 	icon_state = "bar"
-	default_material = "soulsteel"
+	default_material = /datum/material/metal/soulsteel
 
 /obj/item/material_piece/metal/censorium
 	desc = "A bar of censorium. Nice try."
 	icon_state = "bar"
-	default_material = "censorium"
+	default_material = /datum/material/metal/censorium
 
 /obj/item/material_piece/bone
 	name = "bits of bone"
 	desc = "some bits and pieces of bones."
 	icon_state = "scrap3"
-	default_material = "bone"
+	default_material = /datum/material/organic/bone
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 
@@ -393,33 +392,33 @@
 	name = "wafer"
 	desc = "A warm, pulsing block of weird alien computer crystal stuff."
 	icon_state = "bar"
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 
 /obj/item/material_piece/gnesisglass
 	name = "wafer"
 	desc = "A shimmering, transclucent block of weird alien computer crystal stuff."
 	icon_state = "bar"
-	default_material = "gnesisglass"
+	default_material = /datum/material/crystal/gnesis/transparent
 
 /obj/item/material_piece/coral
 	name = "chunk"
 	desc = "A piece of coral. Nice!"
 	icon_state = "coral"
-	default_material = "coral"
+	default_material = /datum/material/organic/coral
 	uses_default_material_appearance = FALSE
 
 /obj/item/material_piece/neutronium
 	desc = "Neutrons condensed into a solid form."
 	icon_state = "bar"
-	default_material = "neutronium"
+	default_material = /datum/material/metal/neutronium
 
 /obj/item/material_piece/plutonium
 	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
 	icon_state = "bar"
-	default_material = "plutonium"
+	default_material = /datum/material/metal/plutonium
 
 /obj/item/material_piece/foolsfoolsgold
 	name = "fool's pyrite bar"
 	desc = "It's gold that isn't. Except it is. MINDFUCK"
 	icon_state = "bar"
-	default_material = "gold"
+	default_material = /datum/material/metal/gold

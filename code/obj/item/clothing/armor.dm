@@ -32,7 +32,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	bloodoverlayimage = SUITBLOOD_ARMOR
 	hides_from_examine = 0
 	mat_changename = FALSE
-	default_material = "carbonfibre"
+	default_material = /datum/material/fabric/carbonfibre
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/assembly/anal_ignite))
@@ -453,7 +453,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
 	item_state = "nt2armor"
 	body_parts_covered = TORSO
 	hides_from_examine = 0
-	default_material = "carbonfibre"
+	default_material = /datum/material/fabric/carbonfibre
 
 	setupProperties()
 		..()

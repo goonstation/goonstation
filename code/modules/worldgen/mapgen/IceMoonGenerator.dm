@@ -118,7 +118,7 @@
 	desc = "You're inside a glacier. Wow."
 	fullbright = 0
 	replace_type = /turf/simulated/floor/plating/airless/asteroid/icemoon
-	default_material = "ice"
+	default_material = /datum/material/crystal/ice
 	color = "#8df"
 	stone_color = "#8df"
 	carbon_dioxide = 100

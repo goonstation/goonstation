@@ -216,7 +216,7 @@ TYPEINFO(/obj/item/organ/lung/cyber)
 	name = "cyberlungs"
 	desc = "Fancy robotic lungs!"
 	icon_state = "cyber-lungs_L"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0

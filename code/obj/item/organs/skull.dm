@@ -20,7 +20,7 @@
 	var/op_stage = 0
 	var/obj/item/device/key/skull/key = null //May randomly contain a key
 	rand_pos = 1
-	default_material = "bone"
+	default_material = /datum/material/organic/bone
 	uses_default_material_appearance = FALSE
 	uses_default_material_name = FALSE
 	var/last_use = 0
@@ -207,7 +207,7 @@
 	desc = "What the hell was wrong with this person's FACE?! Were they even human?!"
 	icon_state = "skullA"
 	value = 4
-	default_material = "viscerite"
+	default_material = /datum/material/organic/viscerite
 
 /obj/item/skull/peculiar // Wizards.
 	name = "peculiar skull"
@@ -226,14 +226,14 @@
 	desc = "Does this mean there's an alien race with crystal bones somewhere?"
 	icon_state = "skull_crystal"
 	value = 10
-	default_material = "molitz"
+	default_material = /datum/material/crystal/molitz
 
 /obj/item/skull/gold // Macho man.
 	name = "golden skull"
 	desc = "Is this thing solid gold, or just gold-plated? Yeesh."
 	icon_state = "skull_gold"
 	value = 7
-	default_material = "gold"
+	default_material = /datum/material/metal/gold
 
 /obj/item/skull/noface // Cluwnes.
 	name = "faceless skull"

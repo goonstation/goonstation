@@ -107,7 +107,7 @@
 	w_class = W_CLASS_TINY
 
 	cerenkite
-		default_material = "cerenkite"
+		default_material = /datum/material/metal/cerenkite
 
 	erebite
-		default_material = "erebite"
+		default_material = /datum/material/crystal/erebite

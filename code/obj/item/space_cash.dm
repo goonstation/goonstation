@@ -339,7 +339,7 @@ TYPEINFO(/obj/item/stamped_bullion)
 	force = 4
 	throwforce = 6
 	mat_changename = FALSE
-	default_material = "gold"
+	default_material = /datum/material/metal/gold
 
 /obj/item/currency/fakecash // im the king of bad ideas
 	name = "1 discount credit"

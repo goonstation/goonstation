@@ -60,7 +60,7 @@ MATERIAL
 	var/datum/material/reinforcement = null
 	rand_pos = 1
 	inventory_counter_enabled = 1
-	default_material = "steel"
+	default_material = /datum/material/metal/steel
 	///the material id string (lowercase) of the starting reinforcement
 	var/default_reinforcement = null
 	uses_default_material_appearance = TRUE
@@ -457,7 +457,7 @@ MATERIAL
 
 /obj/item/sheet/steel
 	item_state = "sheet-metal"
-	default_material = "steel"
+	default_material = /datum/material/metal/steel
 	color = "#8C8C8C"
 
 	reinforced
@@ -467,7 +467,7 @@ MATERIAL
 /obj/item/sheet/glass
 	icon_state = "sheet-g_5" //overriden in-game but shows up in map editors
 	item_state = "sheet-glass"
-	default_material = "glass"
+	default_material = /datum/material/crystal/glass
 	color = "#A3DCFF"
 
 	reinforced
@@ -475,7 +475,7 @@ MATERIAL
 		default_reinforcement = /datum/material/metal/steel
 
 	crystal
-		default_material = "plasmaglass"
+		default_material = /datum/material/crystal/plasmaglass
 		color = "#A114FF"
 
 		reinforced
@@ -485,23 +485,23 @@ MATERIAL
 /obj/item/sheet/wood
 	item_state = "sheet-metal"
 	icon_state = "sheet-m_5$wood"
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	amount = 10
 
 /obj/item/sheet/bamboo
 	item_state = "sheet-metal"
 	icon_state = "sheet-m_5$$bamboo"
-	default_material = "bamboo"
+	default_material = /datum/material/organic/bamboo
 	amount = 10
 
 /obj/item/sheet/mauxite
 	item_state = "sheet-metal"
 	icon_state = "sheet-m_5$$mauxite"
-	default_material = "mauxite"
+	default_material = /datum/material/metal/mauxite
 	amount = 10
 
 /obj/item/sheet/electrum
-	default_material = "electrum"
+	default_material = /datum/material/metal/electrum
 	color = "#44ACAC"
 
 	change_stack_amount(var/use_amount)
@@ -863,11 +863,11 @@ MATERIAL
 
 
 /obj/item/rods/steel
-	default_material = "steel"
+	default_material = /datum/material/metal/steel
 
 /obj/item/rods/mauxite
 	icon_state = "rods_5$$mauxite"
-	default_material = "mauxite"
+	default_material = /datum/material/metal/mauxite
 	amount = 10
 
 // TILES
@@ -1029,13 +1029,13 @@ MATERIAL
 #endif
 
 /obj/item/tile/steel
-	default_material = "steel"
+	default_material = /datum/material/metal/steel
 	color = "#8C8C8C"
 
 /obj/item/tile/cardboard // for drones
 	desc = "They keep the floor in a good and walkable condition. At least, they would if they were actually made of steel."
 	force = 0
-	default_material = "cardboard"
+	default_material = /datum/material/organic/cardboard
 	color = "#d3b173"
 
 // kinda needed for some stuff I'm making - haine

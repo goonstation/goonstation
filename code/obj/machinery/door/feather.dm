@@ -9,7 +9,7 @@ TYPEINFO(/obj/machinery/door/feather)
 	var/flock_id = "Solid seal aperture"
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 	autoclose = TRUE
 	var/broken = FALSE
 	health = 250

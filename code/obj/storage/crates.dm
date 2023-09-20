@@ -453,7 +453,7 @@ TYPEINFO(/obj/storage/crate/chest)
 	icon_opened = "chest-open"
 	icon_closed = "chest"
 	mat_changename = FALSE
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 
 /obj/storage/crate/chest/coins
 	var/coins_count_min = 5

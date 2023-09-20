@@ -1249,7 +1249,7 @@ TYPEINFO(/obj/item/clothing/under/towel)
 	burn_possible = 1
 	rand_pos = 0
 	mat_changename = FALSE
-	default_material = "cotton"
+	default_material = /datum/material/fabric/cotton
 
 	setupProperties()
 		..()

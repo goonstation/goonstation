@@ -29,7 +29,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 	var/donor_DNA = null
 	var/datum/organHolder/holder = null
 	var/sound/sound_fart = null // this is the life I live, making it so you can change the fart sound of your butt (that you can wear on your head) so that you can make artifact butts with weird farts
-	default_material = "butt"
+	default_material = /datum/material/organic/flesh/butt
 	mat_changename = "butt"
 
 	disposing()
@@ -184,7 +184,7 @@ TYPEINFO(/obj/item/clothing/head/butt/cyberbutt)
 	icon_state = "butt-cyber"
 	allow_staple = 0
 	toned = 0
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
 // no this is not done and I dunno when it will be done
 // I am a bad person who accepts bribes of freaky macho butt drawings and then doesn't prioritize the request the bribe was for

@@ -21,7 +21,7 @@
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	mat_changeappearance = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 
 /obj/item/reagent_containers/gnesis/New()
 	..()

@@ -145,7 +145,7 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 	edible = 0
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	transplant_XP = 7
 	squeeze_sound = 'sound/voice/screams/Robot_Scream_2.ogg'
 
@@ -162,7 +162,7 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 	item_state = "flockdrone_heart"
 	body_image = "heart_flock"
 	created_decal = /obj/decal/cleanable/flockdrone_debris/fluid
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 	var/resources = 0 // reagents for humans go in heart, resources for flockdrone go in heart, now, not the brain
 	var/flockjuice_limit = 20 // pump flockjuice into the human host forever, but only a small bit
 	var/min_blood_amount = 450

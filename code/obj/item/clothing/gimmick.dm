@@ -162,7 +162,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/waldo)
 	item_state = "waldo"
 	material_piece = /obj/item/material_piece/cloth/jean
 	mat_changename = FALSE
-	default_material = "jean"
+	default_material = /datum/material/fabric/jean
 
 TYPEINFO(/obj/item/clothing/under/gimmick/odlaw)
 	mat_appearances_to_ignore = list("jean")
@@ -173,7 +173,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/odlaw)
 	item_state = "odlaw"
 	material_piece = /obj/item/material_piece/cloth/jean
 	mat_changename = FALSE
-	default_material = "jean"
+	default_material = /datum/material/fabric/jean
 
 TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	mat_appearances_to_ignore = list("jean")
@@ -184,7 +184,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	item_state = "waldont1"
 	material_piece = /obj/item/material_piece/cloth/jean
 	mat_changename = FALSE
-	default_material = "jean"
+	default_material = /datum/material/fabric/jean
 
 	New()
 		..()
@@ -819,7 +819,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	cant_other_remove = 1
 	material_piece = /obj/item/material_piece/cloth/jean
 	mat_changename = FALSE
-	default_material = "jean"
+	default_material = /datum/material/fabric/jean
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -1288,7 +1288,7 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 	item_state = "gring"
 	material_prints = "shallow scratches"
 	mat_changename = 0 // okay let's just be "gold ring" and not "flimsy soft good gold ring" tia
-	default_material = "gold"
+	default_material = /datum/material/metal/gold
 
 /obj/item/clothing/gloves/ring/titanium // fancy loot crate ring that gives you hulk, basically. real overpowered?  :T
 	name = "titanium ring"
@@ -1509,7 +1509,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "white"
 	material_piece = /obj/item/material_piece/cloth/jean
 	mat_changename = FALSE
-	default_material = "jean"
+	default_material = /datum/material/fabric/jean
 
 /obj/item/clothing/suit/jacketsjacket
 	name = "baseball jacket"

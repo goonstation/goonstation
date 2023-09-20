@@ -146,7 +146,7 @@ TYPEINFO(/obj/item/organ/eye/cyber)
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	show_on_examine = TRUE
 	change_iris = FALSE
 
@@ -180,7 +180,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/sunglass)
 	organ_name = "polarized cybereye"
 	desc = "A fancy electronic eye. It has a polarized filter on the lens for built-in protection from the sun and other harsh lightsources. Your night vision is fucked, though."
 	icon_state = "eye-sunglass"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	color_r = 0.95 // darken a little
 	color_g = 0.95
 	color_b = 0.975 // kinda blue
@@ -204,7 +204,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/sechud)
 	organ_name = "\improper Security HUD cybereye"
 	desc = "A fancy electronic eye. It has a Security HUD system installed."
 	icon_state = "eye-sec"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	color_r = 0.975 // darken a little, kinda red
 	color_g = 0.95
 	color_b = 0.95
@@ -235,7 +235,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/thermal)
 	organ_name = "thermal imager cybereye"
 	desc = "A fancy electronic eye. It lets you see through cloaks and enhances your night vision. Use caution around bright lights."
 	icon_state = "eye-thermal"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	color_r = 1
 	color_g = 0.9 // red tint
 	color_b = 0.9
@@ -257,7 +257,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/meson)
 	organ_name = "mesonic imager cybereye"
 	desc = "A fancy electronic eye. It lets you see the structure of the station through walls. Trippy!"
 	icon_state = "eye-meson"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.9
@@ -302,7 +302,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/spectro)
 	organ_name = "spectroscopic imager cybereye"
 	desc = "A fancy electronic eye. It has an integrated minature Raman spectroscope for easy qualitative and quantitative analysis of chemical samples."
 	icon_state = "eye-spectro"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	color_r = 1 // pink tint?
 	color_g = 0.9
 	color_b = 0.95
@@ -324,7 +324,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/prodoc)
 	organ_name = "\improper ProDoc Healthview cybereye"
 	desc = "A fancy electronic eye. It's fitted with an advanced miniature sensor array that allows you to quickly determine the physical condition of others."
 	icon_state = "eye-prodoc"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.925
@@ -360,7 +360,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/ecto)
 	organ_name = "ectosensor cybereye"
 	desc = "A fancy electronic eye. It lets you see spooky stuff."
 	icon_state = "eye-ecto"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.925
@@ -385,7 +385,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/camera)
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Eye Cam"
 	var/camera_network = "Zeta"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	iris_color = "#0d0558"
 
 	New()
@@ -407,7 +407,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/nightvision)
 	organ_name = "night vision cybereye"
 	desc = "A fancy electronic eye. It has built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights."
 	icon_state = "eye-night"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	color_r = 0.7
 	color_g = 1
 	color_b = 0.7
@@ -429,7 +429,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/laser)
 	organ_name = "laser cybereye"
 	desc = "A fancy electronic eye. It can fire a small laser."
 	icon_state = "eye-laser"
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 	color_r = 1
 	color_g = 0.85
 	color_b = 0.85
@@ -491,7 +491,7 @@ obj/item/organ/eye/skeleton
 	name = "boney eye"
 	desc = "Yes it also has eye sockets. How this works is unknown."
 	icon_state = "eye-bone"
-	default_material = "bone" //duh
+	default_material = /datum/material/organic/bone //duh
 	blood_reagent = "calcium"
 	change_iris = 0
 

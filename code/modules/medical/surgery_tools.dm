@@ -1202,7 +1202,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 1
-	default_material = "synthrubber"
+	default_material = /datum/material/rubber/synthrubber
 
 /* ================================================== */
 /* -------------------- Penlight -------------------- */

@@ -41,7 +41,7 @@ TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "shuttle-bay"
 	allows_vehicles = 1
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 
 /turf/simulated/floor/shuttlebay/flock/middle
 	icon = 'icons/misc/featherzone.dmi'
