@@ -51,10 +51,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 			P.write_on_turf(src, user, params)
 			return
 
-		else if (istype(W, /obj/item/light_parts))
-			src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
-			return
-
 		else
 			if(src.material)
 				src.material.triggerOnHit(src, W, user, 1)

@@ -86,55 +86,6 @@ TYPEINFO(/turf/simulated/wall)
 	if(!ticker && istype(src.loc, /area/station/maintenance) && prob(7))
 		make_cleanable(/obj/decal/cleanable/fungus, src)
 
-// Made this a proc to avoid duplicate code (Convair880).
-/turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
-	if (!user || !istype(W, /obj/item/light_parts/) || istype(W, /obj/item/light_parts/floor))	//hack, no floor lights on walls
-		return
-
-	// the wall is the target turf, the source is the turf where the user is standing
-	var/turf/target = src
-	var/turf/source = get_turf(user)
-
-	// need to find the direction to orient the new light
-	var/dir = 0
-
-	// find the direction from the mob to the target wall
-	for (var/d in cardinal)
-		if (get_step(source,d) == target)
-			dir = d
-			break
-
-	// if no direction was found, fail. need to be standing cardinal to the wall to put the fixture up
-	if (!dir)
-		return //..(parts, user)
-
-	if(!instantly && W && !W.disposed)
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-		boutput(user, "You begin to attach the light fixture to [src]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/wall/proc/finish_attaching,\
-			list(W, user, dir), W.icon, W.icon_state, null, null)
-		return
-
-	finish_attaching(W, user, dir)
-	return
-
-/turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
-	boutput(user, "You attach the light fixture to [src].")
-	var/obj/item/light_parts/parts = W
-	var/obj/machinery/light/newlight = new parts.fixture_type(get_turf(user))
-	newlight.set_dir(light_dir)
-	newlight.icon_state = parts.installed_icon_state
-	newlight.base_state = parts.installed_base_state
-	newlight.fitting = parts.fitting
-	newlight.status = 1 // LIGHT_EMPTY
-	if (istype(src,/turf/simulated/wall/auto))
-		newlight.nostick = 0
-		newlight.autoposition(light_dir)
-	newlight.add_fingerprint(user)
-	src.add_fingerprint(user)
-	user.u_equip(parts)
-	qdel(parts)
-
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
 	var/datum/material/defaultMaterial = getMaterial("steel")
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
@@ -252,10 +203,6 @@ TYPEINFO(/turf/simulated/wall)
 		P.write_on_turf(src, user, params)
 		return
 
-	else if (istype(W, /obj/item/light_parts))
-		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
-		return
-
 	else if (isweldingtool(W))
 		var/turf/T = user.loc
 		if (!( istype(T, /turf) ))
@@ -328,10 +275,6 @@ TYPEINFO(/turf/simulated/wall)
 	if (istype(W, /obj/item/pen))
 		var/obj/item/pen/P = W
 		P.write_on_turf(src, user, params)
-		return
-
-	else if (istype(W, /obj/item/light_parts))
-		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
 	else if (isweldingtool(W))

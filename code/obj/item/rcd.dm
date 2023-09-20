@@ -38,7 +38,7 @@ TYPEINFO(/obj/item/rcd)
 	anchored = UNANCHORED
 	var/matter = 0
 	var/max_matter = 50
-	flags = FPRINT | TABLEPASS| CONDUCT
+	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	force = 10
 	throwforce = 10
@@ -368,60 +368,41 @@ TYPEINFO(/obj/item/rcd)
 						new map_settings.windows(get_turf(A))
 						log_construction(user, "builds a window")
 						return
+
 			if (RCD_MODE_LIGHTBULBS)
-				if (istype(A, /turf/simulated/wall))
-					if((locate(/obj/machinery/light) in A) || (locate(/obj/machinery/light) in get_turf(user)))
-						boutput(user, "There's already a lamp there!") // stacking lights simply can't be good for the environment
-						return
-					var/dir
-					for (var/d in cardinal)
-						if (get_step(user,d) == A)
-							dir = d
-							break
-					if(!dir) // lights only apply themselves if standing at a cardinal direction from the wall
-						boutput(user, "You can't seem to reach that part of \the [A]. Try standing right up against it.")
-						return
-					var/turf/simulated/wall/W = A
-					if (do_thing(user, W, "attaching a light bulb fixture to \the [W]", matter_create_light_fixture, time_create_light_fixture))
-						var/obj/item/light_parts/bulb/LB = new /obj/item/light_parts/bulb(get_turf(W))
-						LB.setMaterial(getMaterial(material_name))
-						W.attach_light_fixture_parts(user, LB, TRUE)
-						log_construction(user, "built a light fixture to a wall ([W])")
+				if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
+					var/obj/item/light_parts/bulb/LB = new /obj/item/light_parts/bulb(src)
+					if (LB.can_attach(A, user))
+						if (do_thing(user, A, "attaching a light bulb fixture to \the [A]", matter_create_light_fixture, time_create_light_fixture))
+							LB.setMaterial(getMaterial(material_name))
+							LB.attach_fixture(LB, A, user, TRUE)
+							log_construction(user, "built a light fixture to a wall ([A])")
+					else
+						qdel(LB)
 
 				if (istype(A, /turf/simulated/floor))
-					if((locate(/obj/machinery/light) in A)) // Just check the floor, not the user
-						boutput(user, "There's already a light there!") // stacking lights simply can't be good for the environment
-						return
-					var/turf/simulated/floor/F = A
-					if (do_thing(user, F, "building a floor lamp on \the [F]", matter_create_light_fixture, time_create_light_fixture))
-						var/obj/item/light_parts/floor/FL = new /obj/item/light_parts/floor(get_turf(F))
-						FL.setMaterial(getMaterial(material_name))
-						F.attach_light_fixture_parts(user, FL, TRUE)
-						log_construction(user, "built a floor lamp on a floor ([F])")
+					var/obj/item/light_parts/floor/LF = new /obj/item/light_parts/floor(src)
+					if (LF.can_attach(A, user))
+						if (do_thing(user, A, "building a floor lamp on \the [A]", matter_create_light_fixture, time_create_light_fixture))
+							LF.setMaterial(getMaterial(material_name))
+							LF.attach_fixture(LF, A, user, TRUE)
+							log_construction(user, "built a floor lamp on a floor ([A])")
+					else
+						qdel(LF)
 
 			if (RCD_MODE_LIGHTTUBES)
-				if((locate(/obj/machinery/light) in A) || (locate(/obj/machinery/light) in get_turf(user)))
-					boutput(user, "There's already a lamp there!")
-					return
-				if (istype(A, /turf/simulated/wall))
-					var/dir
-					for (var/d in cardinal)
-						if (get_step(user,d) == A)
-							dir = d
-							break
-					if(!dir)
-						boutput(user, "You can't seem to reach that part of \the [A]. Try standing right up against it.")
-						return
-					var/turf/simulated/wall/W = A
-					if (do_thing(user, W, "attaching a light bulb fixture to \the [W]", matter_create_light_fixture, time_create_light_fixture))
-						var/obj/item/light_parts/LB = new /obj/item/light_parts(get_turf(W))
-						LB.setMaterial(getMaterial(material_name))
-						W.attach_light_fixture_parts(user, LB, TRUE)
-						log_construction(user, "built a light fixture to a wall ([W])")
+				if (istype(A, /turf/simulated/wall) || istype(A, /obj/window))
+					var/obj/item/light_parts/LP = new /obj/item/light_parts(src)
+					if (LP.can_attach(A, user))
+						if (do_thing(user, A, "attaching a light bulb fixture to \the [A]", matter_create_light_fixture, time_create_light_fixture))
+							LP.setMaterial(getMaterial(material_name))
+							LP.attach_fixture(LP, A, user, TRUE)
+							log_construction(user, "built a light fixture to a wall ([A])")
+					else
+						qdel(LP)
 
  // Express limb surgery with an RCD
 	attack(mob/living/carbon/human/M, mob/living/carbon/user)
-
 		if (issilicon(user))
 			return ..()
 		else if (length(working_on) > 0) //Lets not get too crazy
