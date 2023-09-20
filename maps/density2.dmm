@@ -4286,6 +4286,7 @@
 /obj/machinery/door/airlock/pyro/glass/sci,
 /obj/mapping_helper/access/heads,
 /obj/mapping_helper/access/research_foyer,
+/obj/mapping_helper/access/mining,
 /turf/simulated/floor/purple/checker,
 /area/station/science)
 "Ei" = (
