@@ -2072,6 +2072,11 @@ TYPEINFO(/area/station/hallway)
 	sound_environment = 10
 	station_map_colour = MAPC_HALLWAY
 
+/area/station/hallway/arrivals
+	name = "Arrival Hallway"
+	do_not_irradiate = 1
+	icon_state = "pink"
+
 ABSTRACT_TYPE(/area/station/hallway/primary)
 /area/station/hallway/primary
   name = "Primary Hallway"
