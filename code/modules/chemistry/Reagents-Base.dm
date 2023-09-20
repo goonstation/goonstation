@@ -514,7 +514,7 @@ datum
 					if (istype(I, /obj/item/ammo/bullets/bullet_22HP) || istype(I, /obj/item/ammo/bullets/bullet_22) || istype(I, /obj/item/ammo/bullets/a38) || istype(I, /obj/item/ammo/bullets/custom) || istype(I,/datum/projectile/bullet/revolver_38))
 						var/obj/item/ammo/bullets/bullet_holder = I
 						var/datum/projectile/ammo_type = bullet_holder.ammo_type
-						if (ammo_type && !(ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver))
+						if (ammo_type && !(ammo_type.material && istype(ammo_type.material, /datum/material/metal/silver)))
 							ammo_type.material = getMaterial(/datum/material/metal/silver)
 							holder.remove_reagent(src.id, 20)
 							.= 0
