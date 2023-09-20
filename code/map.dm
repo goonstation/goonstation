@@ -41,6 +41,7 @@ var/global/list/mapNames = list(
 	"Mushroom" =			list("id" = "MUSHROOM",		"settings" = "mushroom",		"playerPickable" = FALSE),
 	"Trunkmap" =			list("id" = "TRUNKMAP",		"settings" = "trunkmap",		"playerPickable" = FALSE),
 	//"Density" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
+	"Density2" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 20),
 	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
 	//"Icarus" =			list("id" = "ICARUS",		"settings" = "icarus",			"playerPickable" = FALSE),
@@ -1039,15 +1040,8 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
-		"the thermo-electric generator room" = list(/area/station/engine/core),
-		"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
-		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery),
-		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
-		"the net cafe" = list(/area/station/crew_quarters/info),
-		"the artifact lab" = list(/area/station/science/artifact),
-		"the genetics lab" = list(/area/station/medical/research))
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria))
 
 /datum/map_settings/ozymandias
 	name = "OZYMANDIAS"
