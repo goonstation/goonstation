@@ -1369,6 +1369,10 @@
 	dir = 4
 	},
 /area/station/chapel/office)
+"iJ" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "iM" = (
 /obj/machinery/light,
 /obj/cable{
@@ -2462,6 +2466,10 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"qn" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "qy" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/plating,
@@ -4255,8 +4263,8 @@
 /area/station/engine/engineering)
 "Ed" = (
 /obj/lattice{
-	icon_state = "lattice-dir-b";
-	dir = 1
+	dir = 1;
+	icon_state = "lattice-dir-b"
 	},
 /turf/space,
 /area/space)
@@ -4374,6 +4382,9 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"EU" = (
+/turf/space,
+/area/shuttle/mining/station)
 "EV" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -5615,6 +5626,12 @@
 /obj/machinery/coffeemaker/command,
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
+"NG" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "NJ" = (
 /obj/machinery/light{
 	dir = 1;
@@ -83843,8 +83860,8 @@ fS
 fS
 PZ
 ZN
-fS
-fS
+ZN
+ZN
 fS
 fS
 fS
@@ -84146,7 +84163,7 @@ fS
 PZ
 PZ
 fS
-fS
+NG
 fS
 fS
 fS
@@ -84448,7 +84465,7 @@ fS
 fS
 Ta
 fS
-Rf
+qn
 fS
 fS
 Rf
@@ -84750,8 +84767,8 @@ fS
 fS
 fS
 fS
-Rf
-Rf
+qn
+qn
 Rf
 Rf
 Rf
@@ -85052,8 +85069,8 @@ Rf
 Rf
 fS
 fS
-Rf
-Rf
+qn
+qn
 Rf
 Rf
 Rf
@@ -85352,14 +85369,14 @@ Rf
 Rf
 Rf
 Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
+qn
+qn
+qn
+qn
+qn
+qn
+qn
+qn
 Rf
 Rf
 Rf
@@ -85654,16 +85671,16 @@ Rf
 Rf
 Rf
 Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-fS
+qn
+EU
+EU
+EU
+EU
+EU
+EU
+qn
+qn
+iJ
 Rf
 Rf
 Rf
@@ -85956,16 +85973,16 @@ Rf
 Rf
 Rf
 Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-fS
+qn
+EU
+EU
+EU
+EU
+EU
+EU
+EU
+qn
+iJ
 fS
 Rf
 Rf
@@ -86258,16 +86275,16 @@ Rf
 Rf
 Rf
 Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-fS
+qn
+EU
+EU
+EU
+EU
+EU
+EU
+EU
+EU
+iJ
 fS
 Rf
 Rf
@@ -86560,16 +86577,16 @@ Rf
 Rf
 Rf
 Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
+qn
+EU
+EU
+EU
+EU
+EU
+EU
+EU
+EU
+qn
 fS
 fS
 Rf
@@ -86862,16 +86879,16 @@ Rf
 Rf
 Rf
 Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
+qn
+EU
+EU
+EU
+EU
+EU
+EU
+EU
+EU
+qn
 Rf
 Rf
 Rf
@@ -87164,16 +87181,16 @@ Rf
 Rf
 Rf
 Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
+qn
+EU
+EU
+EU
+EU
+EU
+EU
+EU
+qn
+qn
 Rf
 Rf
 Rf
@@ -87466,15 +87483,15 @@ Rf
 Rf
 Rf
 Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
+qn
+EU
+EU
+EU
+EU
+EU
+EU
+qn
+qn
 Rf
 Rf
 Rf
@@ -87768,14 +87785,14 @@ Rf
 Rf
 Rf
 Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
-Rf
+qn
+qn
+qn
+qn
+qn
+qn
+qn
+qn
 Rf
 Rf
 Rf
