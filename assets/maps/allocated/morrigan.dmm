@@ -7314,6 +7314,9 @@
 /obj/mapping_helper/access/morrigan/exit,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
+	dir = 4
+	},
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
@@ -12487,6 +12490,9 @@
 /obj/mapping_helper/access/morrigan/exit,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
+	dir = 4
+	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/exit)
 "lOv" = (
@@ -15832,6 +15838,7 @@
 /obj/mapping_helper/access/morrigan/exit,
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/exit)
 "oPQ" = (
