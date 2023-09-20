@@ -1369,10 +1369,6 @@
 	dir = 4
 	},
 /area/station/chapel/office)
-"iJ" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "iM" = (
 /obj/machinery/light,
 /obj/cable{
@@ -1606,6 +1602,10 @@
 /obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"ko" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "ks" = (
 /obj/machinery/conveyor/SN{
 	id = "chapel"
@@ -2466,10 +2466,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/engine/engineering)
-"qn" = (
-/obj/grille/catwalk,
-/turf/simulated/floor/airless/plating/catwalk,
-/area/space)
 "qy" = (
 /obj/machinery/manufacturer/robotics,
 /turf/simulated/floor/plating,
@@ -2602,6 +2598,12 @@
 "rn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/clown)
+"ro" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/turf/simulated/floor/plating/airless/asteroid,
+/area/space)
 "rs" = (
 /obj/machinery/light{
 	dir = 8;
@@ -2620,6 +2622,13 @@
 /obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"rD" = (
+/obj/decal/tile_edge/line/black{
+	dir = 1;
+	icon_state = "tile1"
+	},
+/turf/simulated/floor/darkblue,
+/area/station/bridge)
 "rH" = (
 /obj/submachine/weapon_vendor/security,
 /turf/simulated/floor/red,
@@ -2867,6 +2876,10 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
+"tY" = (
+/obj/decal/poster/wallsign/warning_sus,
+/turf/unsimulated/wall/auto/lead/blue,
+/area/station/bridge)
 "ud" = (
 /obj/machinery/conveyor/WE{
 	id = "qmin"
@@ -3762,6 +3775,7 @@
 	time = 0
 	},
 /obj/disposalpipe/segment/brig,
+/obj/mapping_helper/access/heads,
 /turf/simulated/floor/carpet/red/fancy/innercorner/north,
 /area/station/bridge)
 "Al" = (
@@ -4382,9 +4396,6 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"EU" = (
-/turf/space,
-/area/shuttle/mining/station)
 "EV" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -5499,6 +5510,10 @@
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon9,
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden)
+"MB" = (
+/obj/grille/catwalk,
+/turf/simulated/floor/airless/plating/catwalk,
+/area/space)
 "MI" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
@@ -5626,12 +5641,6 @@
 /obj/machinery/coffeemaker/command,
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
-"NG" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/turf/simulated/floor/plating/airless/asteroid,
-/area/space)
 "NJ" = (
 /obj/machinery/light{
 	dir = 1;
@@ -6746,6 +6755,9 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/arrival/station)
+"WD" = (
+/turf/space,
+/area/shuttle/mining/station)
 "WJ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/shuttle/engine/heater{
@@ -45864,8 +45876,8 @@ Rf
 Rf
 Rf
 Rf
-aG
-yg
+tY
+rD
 zY
 CE
 ES
@@ -84163,7 +84175,7 @@ fS
 PZ
 PZ
 fS
-NG
+ro
 fS
 fS
 fS
@@ -84465,7 +84477,7 @@ fS
 fS
 Ta
 fS
-qn
+MB
 fS
 fS
 Rf
@@ -84767,8 +84779,8 @@ fS
 fS
 fS
 fS
-qn
-qn
+MB
+MB
 Rf
 Rf
 Rf
@@ -85069,8 +85081,8 @@ Rf
 Rf
 fS
 fS
-qn
-qn
+MB
+MB
 Rf
 Rf
 Rf
@@ -85369,14 +85381,14 @@ Rf
 Rf
 Rf
 Rf
-qn
-qn
-qn
-qn
-qn
-qn
-qn
-qn
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
 Rf
 Rf
 Rf
@@ -85671,16 +85683,16 @@ Rf
 Rf
 Rf
 Rf
-qn
-EU
-EU
-EU
-EU
-EU
-EU
-qn
-qn
-iJ
+MB
+WD
+WD
+WD
+WD
+WD
+WD
+MB
+MB
+ko
 Rf
 Rf
 Rf
@@ -85973,16 +85985,16 @@ Rf
 Rf
 Rf
 Rf
-qn
-EU
-EU
-EU
-EU
-EU
-EU
-EU
-qn
-iJ
+MB
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+MB
+ko
 fS
 Rf
 Rf
@@ -86275,16 +86287,16 @@ Rf
 Rf
 Rf
 Rf
-qn
-EU
-EU
-EU
-EU
-EU
-EU
-EU
-EU
-iJ
+MB
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+ko
 fS
 Rf
 Rf
@@ -86577,16 +86589,16 @@ Rf
 Rf
 Rf
 Rf
-qn
-EU
-EU
-EU
-EU
-EU
-EU
-EU
-EU
-qn
+MB
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+MB
 fS
 fS
 Rf
@@ -86879,16 +86891,16 @@ Rf
 Rf
 Rf
 Rf
-qn
-EU
-EU
-EU
-EU
-EU
-EU
-EU
-EU
-qn
+MB
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+MB
 Rf
 Rf
 Rf
@@ -87181,16 +87193,16 @@ Rf
 Rf
 Rf
 Rf
-qn
-EU
-EU
-EU
-EU
-EU
-EU
-EU
-qn
-qn
+MB
+WD
+WD
+WD
+WD
+WD
+WD
+WD
+MB
+MB
 Rf
 Rf
 Rf
@@ -87483,15 +87495,15 @@ Rf
 Rf
 Rf
 Rf
-qn
-EU
-EU
-EU
-EU
-EU
-EU
-qn
-qn
+MB
+WD
+WD
+WD
+WD
+WD
+WD
+MB
+MB
 Rf
 Rf
 Rf
@@ -87785,14 +87797,14 @@ Rf
 Rf
 Rf
 Rf
-qn
-qn
-qn
-qn
-qn
-qn
-qn
-qn
+MB
+MB
+MB
+MB
+MB
+MB
+MB
+MB
 Rf
 Rf
 Rf
