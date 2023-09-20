@@ -1,5 +1,9 @@
 
 (t)wed sep 20 23
+(u)UnfunnyPerson
+(p)15547
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Added a randomized wig crate. Cargo can order this crate for 2000 credits.
 (u)TealSeer
 (p)15841
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
