@@ -1860,7 +1860,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		..()
 
 #define HEAT_REMOVED_PER_PROCESS 25
-#define FIRE_THRESHOLD 175
+#define FIRE_THRESHOLD 150
 // Makeshift Laser Rifle
 TYPEINFO(/obj/item/gun/energy/makeshift)
 	mats = 0
@@ -1905,7 +1905,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		our_light.update()
 		heat_repair = 1
 		src.icon_state = "makeshift-burnt-1"
-		heat += 150 // spicy!
+		heat += FIRE_THRESHOLD // spicy!
 		update_icon()
 
 	proc/attach_cell(var/obj/item/cell/C, mob/user)
