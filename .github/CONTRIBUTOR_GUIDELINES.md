@@ -99,7 +99,7 @@ As you might be able to tell, there are a lot of pull requests pending at any gi
 ### Labels
 There are many labels that people can use to attach to their PR or to issue reports. These are handy for organisation, as sometimes a developer will go through all the PRs that have a certain label (`Size-XXS`, or `A-Chemistry` for instance) and use that to pick what to review. It's therefore good practise to put labels on your pull requests, and there's a couple ways to add labels:
 
-- Keywordlabeler bot assigns labels to pull requests based on certain key words in the pull reuqest's description. For instance, putting \[BUG\] or \[FIX\] in the top line of a PR's ddescription will add the `C-bug` label to it. The full list of what key word matches what label can be found in the .github/keylabeler.yml file. These are handy for adding labels which start with the prefix `A-`.
+- The KeywordLabeler bot assigns labels to pull requests based on certain key words in the pull request's description. For instance, putting \[BUG\] or \[FIX\] in the top line of a PR's ddescription will add the `C-bug` label to it. The full list of what key word matches what label can be found in the `.github/keylabeler.yml` file. These are handy for adding labels which start with the prefix `A-`.
 - Contributors with [triage permissions](#Triage-Team) can simply add and remove labels from their own PRs, as well as issue reports and other people's PRs.
 
 Some labels are automatically assigned as well, and do certain things:
