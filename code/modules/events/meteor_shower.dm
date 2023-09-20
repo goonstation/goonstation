@@ -53,7 +53,7 @@ var/global/meteor_shower_active = 0
 			#endif
 		if(istext(transmute_material_instead))
 			transmute_material_instead = getMaterial(transmute_material_instead)
-		if(transmute_material_instead?.getID() == "jean")
+		if(transmute_material_instead?.type == /datum/material/fabric/jean)
 			shower_name = "jeteor jower"
 
 		if (isnum(direction) && direction == -1)
