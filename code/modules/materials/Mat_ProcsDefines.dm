@@ -13,7 +13,7 @@ var/global/list/material_cache
 /proc/getMaterial(mat)
 	#ifdef CHECK_MORE_RUNTIMES
 	if (!ispath(mat))
-		CRASH("getMaterial() called without typepath [mat].")
+		CRASH("getMaterial() called without typepath: [mat].")
 	if (!(mat in material_cache))
 		CRASH("getMaterial() called with an invalid material [mat].")
 	#endif
