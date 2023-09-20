@@ -193,7 +193,7 @@
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
 
 datum/teg_transformation/vampire
-	mat_id = "bone"
+	mat_id = /datum/material/organic/bone
 	var/datum/abilityHolder/vampire/abilityHolder
 	var/list/datum/targetable/vampire/abilities = list()
 	var/health = 150

@@ -1564,7 +1564,7 @@
 	var/mattype = tgui_input_list(src, "Select material to transmute to:", "Set Material", material_cache)
 	var/datum/material/material_selected = getMaterial(mattype)
 	if(!material_selected)
-		alert(src, "Invalid material selected: [mattype.name]", "Invalid Material", "Ok")
+		alert(src, "Invalid material selected: [mattype]", "Invalid Material", "Ok")
 		return
 	A.setMaterial(material_selected)
 	boutput(src, "Set material of [A] to [material_selected]")
