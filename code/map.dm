@@ -1064,6 +1064,11 @@ var/global/list/mapNames = list(
 
 	escape_dir = EAST
 
+	job_limits_override = list(
+		/datum/job/civilian/cyborg = 0,
+	)
+
+
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
