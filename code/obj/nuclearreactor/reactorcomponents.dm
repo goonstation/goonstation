@@ -421,77 +421,77 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					return .
 
 #define SANE_COMPONENT_MATERIALS \
-		100;/datum/material/metal/gold,\
-		100;/datum/material/metal/syreline,\
-		100;/datum/material/metal/silver,\
-		100;/datum/material/metal/cobryl,\
-		50;/datum/material/crystal/miracle,\
-		20;/datum/material/metal/soulsteel,\
-		20;/datum/material/fabric/hauntium,\
-		20;/datum/material/organic/ectoplasm,\
-		10;/datum/material/fabric/ectofibre,\
-		10;"wiz_quartz",\
-		10;"wiz_topaz",\
-		10;"wiz_ruby",\
-		10;"wiz_amethyst",\
-		10;"wiz_emerald",\
-		10;"wiz_sapphire",\
-		10;"gnesis",\
-		10;"gnesisglass",\
-		10;"starstone",\
-		100;"koshmarite",\
-		100;"plasmastone",\
-		50;"telecrystal",\
-		30;"erebite",\
-		100;"flesh",\
-		100;"viscerite",\
-		100;"leather",\
-		100;"cotton",\
-		100;"coral",\
-		50;"spidersilk",\
-		50;"beewool",\
-		50;"beeswax",\
-		50;"chitin",\
-		50;"bamboo",\
-		50;"wood",\
-		50;"bone",\
-		20;"blob",\
-		60;"pizza",\
-		20;"butt",\
-		100;"electrum",\
-		100;"steel",\
-		100;"mauxite",\
-		100;"copper",\
-		100;"pharosium",\
-		100;"glass",\
-		100;"char",\
-		100;"molitz",\
-		50;"molitz_b",\
-		50;"bohrum",\
-		70;"cerenkite",\
-		50;"plasmasteel",\
-		50;"claretine",\
-		50;"plasmaglass",\
-		50;"uqill",\
-		50;"latex",\
-		50;"synthrubber",\
-		50;"synthblubber",\
-		50;"synthleather",\
-		50;"fibrilith",\
-		30;"carbonfibre",\
-		30;"diamond",\
-		30;"dyneema",\
-		20;"iridiumalloy",\
-		5;"neutronium",\
-		100;"rock",\
-		100;"slag",\
-		100;"ice",\
-		5;"spacelag",\
-		15;"cardboard",\
-		15;"frozenfart",\
-		5;"negativematter",\
-		5;"plutonium",\
-		100; "glowstick"
+		100;	/datum/material/metal/gold,\
+		100;	/datum/material/metal/syreline,\
+		100;	/datum/material/metal/silver,\
+		100;	/datum/material/metal/cobryl,\
+		50;		/datum/material/crystal/miracle,\
+		20;		/datum/material/metal/soulsteel,\
+		20;		/datum/material/fabric/hauntium,\
+		20;		/datum/material/organic/ectoplasm,\
+		10;		/datum/material/fabric/ectofibre,\
+		10;		/datum/material/crystal/wizard/quartz,\
+		10;		/datum/material/crystal/wizard/topaz,\
+		10;		/datum/material/crystal/wizard/ruby,\
+		10;		/datum/material/crystal/wizard/amethyst,\
+		10;		/datum/material/crystal/wizard/emerald,\
+		10;		/datum/material/crystal/wizard/sapphire,\
+		10;		/datum/material/crystal/gnesis,\
+		10;		/datum/material/crystal/gnesis/transparent,\
+		10;		/datum/material/crystal/starstone,\
+		100;	/datum/material/organic/koshmarite,\
+		100;	/datum/material/crystal/plasmastone,\
+		50;		/datum/material/crystal/telecrystal,\
+		30;		/datum/material/crystal/erebite,\
+		100;	/datum/material/organic/flesh,\
+		100;	/datum/material/organic/viscerite,\
+		100;	/datum/material/fabric/leather,\
+		100;	/datum/material/fabric/cotton,\
+		100;	/datum/material/organic/coral,\
+		50;		/datum/material/fabric/spidersilk,\
+		50;		/datum/material/fabric/beewool,\
+		50;		/datum/material/organic/beeswax,\
+		50;		/datum/material/organic/chitin,\
+		50;		/datum/material/organic/bamboo,\
+		50;		/datum/material/organic/wood,\
+		50;		/datum/material/organic/bone,\
+		20;		/datum/material/organic/blob,\
+		60;		/datum/material/organic/pizza,\
+		20;		/datum/material/organic/flesh/butt,\
+		100;	/datum/material/metal/electrum,\
+		100;	/datum/material/metal/steel,\
+		100;	/datum/material/metal/mauxite,\
+		100;	/datum/material/metal/copper,\
+		100;	/datum/material/metal/pharosium,\
+		100;	/datum/material/crystal/glass,\
+		100;	/datum/material/organic/char,\
+		100;	/datum/material/crystal/molitz,\
+		50;		/datum/material/crystal/moltiz/beta,\
+		50;		/datum/material/metal/bohrum,\
+		70;		/datum/material/metal/cerenkite,\
+		50;		/datum/material/metal/plasmasteel,\
+		50;		/datum/material/crystal/claretine,\
+		50;		/datum/material/crystal/plasmaglass,\
+		50;		/datum/material/crystal/uqill,\
+		50;		/datum/material/rubber/latex,\
+		50;		/datum/material/rubber/synthrubber,\
+		50;		/datum/material/rubber/synthblubber,\
+		50;		/datum/material/rubber/synthleather,\
+		50;		/datum/material/fabric/fibrilith,\
+		30;		/datum/material/fabric/carbonfibre,\
+		30;		/datum/material/crystal/gemstone/diamond,\
+		30;		/datum/material/fabric/dyneema,\
+		20;		/datum/material/metal/iridiumalloy,\
+		5;		/datum/material/metal/neutronium,\
+		100;	/datum/material/metal/rock,\
+		100;	/datum/material/metal/slag,\
+		100;	/datum/material/metal/ice,\
+		5;		/datum/material/metal/spacelag,\
+		15;		/datum/material/organic/cardboard,\
+		15;		/datum/material/organic/frozenfart,\
+		5;		/datum/material/metal/negativematter,\
+		5;		/datum/material/metal/plutonium,\
+		100;	/datum/material/metal/glowstick
 
 /obj/item/reactor_component/fuel_rod/random_material
 	New()

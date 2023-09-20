@@ -672,7 +672,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 /obj/window/crystal/reinforced
 	icon_state = "rwindow"
-	default_reinforcement = "steel"
+	default_reinforcement = /datum/material/metal/steel
 	health = 100
 	health_max = 100
 	explosion_resistance = 4
