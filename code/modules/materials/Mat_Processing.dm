@@ -399,13 +399,13 @@ TYPEINFO(/obj/machinery/processor)
 					var/apply_material = 1
 
 					if(RE)
-						if(!RE.result_id && !RE.result_item)
+						if(!RE.result_type && !RE.result_item)
 							RE.apply_to(merged)
 						else if(RE.result_item)
 							newtype = RE.result_item
 							apply_material = 0
-						else if(RE.result_id)
-							merged = getMaterial(RE.result_id)
+						else if(RE.result_type)
+							merged = getMaterial(RE.result_type)
 
 					var/obj/item/piece = new newtype(src)
 
