@@ -2353,7 +2353,7 @@
 /area/station/bridge)
 "wN" = (
 /obj/landmark/map{
-	name = "DENSITY"
+	name = "DENSITY2"
 	},
 /turf/space,
 /area/space)
@@ -2949,21 +2949,6 @@
 	},
 /turf/simulated/floor/auto/dirt,
 /area/station/crew_quarters/garden)
-"Dz" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/engineering,
-/obj/decal/stripe_delivery,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/engine/engineering)
 "DC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -2987,12 +2972,12 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 8
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
 /obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "DO" = (
@@ -3022,12 +3007,12 @@
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4
 	},
-/obj/cable{
-	icon_state = "1-2"
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
 /obj/decal/stripe_delivery,
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "Ei" = (
@@ -49099,7 +49084,7 @@ pq
 xo
 pq
 sc
-Dz
+DM
 sc
 xo
 pq
@@ -53931,7 +53916,7 @@ pq
 pq
 xo
 sc
-Dz
+DM
 sc
 pq
 xo
