@@ -1,26 +1,26 @@
 TYPEINFO(/datum/component/hallucination/trippy_colors)
 	initialization_args = list(
-		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts. -1 for permanent", 30),
+		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
 	)
 
 TYPEINFO(/datum/component/hallucination/random_sound)
 	initialization_args = list(
-		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts. -1 for permanent", 30),
-		ARG_INFO("sound_list", DATA_INPUT_LIST_BUILD, "List of sounds that the mob can hallucinate appearing. "),
+		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
+		ARG_INFO("sound_list", DATA_INPUT_LIST_BUILD, "List of sounds that the mob can hallucinate appearing."),
 		ARG_INFO("sound_prob", DATA_INPUT_NUM, "probability of a sound being played per mob life tick", 10),
 	)
 
 TYPEINFO(/datum/component/hallucination/random_image)
 	initialization_args = list(
-		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts. -1 for permanent", 30),
+		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
 		ARG_INFO("image_list", DATA_INPUT_LIST_BUILD, "List of images that the mob can hallucinate appearing"),
 		ARG_INFO("image_prob", DATA_INPUT_NUM, "probability of an image being displayed per mob life tick", 10),
-		ARG_INFO("image_time", DATA_INPUT_NUM, "seconds the displayed image hangs around", 20 SECONDS),
+		ARG_INFO("image_time", DATA_INPUT_NUM, "seconds the displayed image hangs around", 20),
 	)
 
 TYPEINFO(/datum/component/hallucination/fake_attack)
 	initialization_args = list(
-		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts. -1 for permanent", 30),
+		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
 		ARG_INFO("image_list", DATA_INPUT_LIST_BUILD, "List of images that the mob can hallucinate attacking, leave null for default"),
 		ARG_INFO("name_list", DATA_INPUT_LIST_BUILD, "List of names that the mob can hallucinate attacking, leave null for default"),
 		ARG_INFO("attacker_prob", DATA_INPUT_NUM, "probability of an attacker being spawned per mob life tick", 10),
@@ -28,13 +28,13 @@ TYPEINFO(/datum/component/hallucination/fake_attack)
 
 TYPEINFO(/datum/component/hallucination/random_image_override)
 	initialization_args = list(
-		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts. -1 for permanent", 30),
+		ARG_INFO("timeout", DATA_INPUT_NUM, "how long this hallucination lasts in seconds. -1 for permanent", 30),
 		ARG_INFO("image_list", DATA_INPUT_LIST_BUILD, "List of images that the mob can hallucinate attached to things"),
 		ARG_INFO("target_list", DATA_INPUT_LIST_BUILD, "List of target types that the mob can hallucinate images attached to in range"),
 		ARG_INFO("range", DATA_INPUT_NUM, "distance from mob to search for target types", 5),
 		ARG_INFO("image_prob", DATA_INPUT_NUM, "probability of an image being displayed per mob life tick", 10),
-		ARG_INFO("image_time", DATA_INPUT_NUM, "seconds the displayed image hangs around", 20 SECONDS),
-		ARG_INFO("override", DATA_INPUT_BOOL, "if the hallucination replaces the target's icon or adds it as overlay", TRUE),
+		ARG_INFO("image_time", DATA_INPUT_NUM, "seconds the displayed image hangs around", 20),
+		ARG_INFO("override", DATA_INPUT_BOOL, "Does this hallucination replace the target's icon?", TRUE),
 	)
 
 
@@ -46,9 +46,9 @@ TYPEINFO(/datum/component/hallucination/random_image_override)
 ///Generic hallucination effects - subclass for fancy effects
 ABSTRACT_TYPE(/datum/component/hallucination)
 /datum/component/hallucination
-	dupe_mode = COMPONENT_DUPE_ALLOWED //you can have lots of hallucinations
+	dupe_mode = COMPONENT_DUPE_ALLOWED//you can have lots of hallucinations
 	///expiry time, -1 means never
-	var/ttl = -1
+	var/ttl = 0
 	///Instead of typecasting every tick, let's just hold a nice ref
 	var/mob/parent_mob
 
@@ -74,15 +74,24 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 /// Trippy colors - apply an RGB swap to client's vision
 /datum/component/hallucination/trippy_colors
+	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS //you can only have one of these, but refresh the timeout
 	var/current_color_pattern = 0
+	var/pattern1 = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
+	var/pattern2 = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
+
+	Initialize(timeout=30)
+		if(src.timeout == -1)
+			return //if timeout is already infinite and this is a dupe, just do nothing
+		else
+			.=..()
 
 	do_mob_tick(mob, mult)
 		if(parent_mob.client && (current_color_pattern == 0 || probmult(20))) //trippy colours
 			if(src.current_color_pattern == 1)
-				animate_fade_drug_inbetween_1(parent_mob.client, 40)
+				parent_mob.client.animate_color(pattern2, time=40, easing=SINE_EASING)
 				src.current_color_pattern = 2
 			else
-				animate_fade_drug_inbetween_2(parent_mob.client, 40)
+				parent_mob.client.animate_color(pattern1, time=40, easing=SINE_EASING)
 				src.current_color_pattern = 1
 		..()
 
@@ -154,7 +163,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			halluc.appearance = copyfrom.appearance
 			halluc.loc = halluc_loc
 			parent_mob.client?.images += halluc
-			SPAWN(src.image_time)
+			SPAWN(src.image_time SECONDS)
 				qdel(halluc)
 		. = ..()
 
@@ -240,7 +249,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		src.override = override
 
 
-	do_mob_tick(mult)
+	do_mob_tick(mob,mult)
 		if(probmult(image_prob))
 			//pick a non dense turf in view
 			var/list/atom/potentials = list()
@@ -254,7 +263,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			halluc.loc = halluc_loc
 			halluc.override = src.override
 			parent_mob.client?.images += halluc
-			SPAWN(src.image_time)
+			SPAWN(src.image_time SECONDS)
 				qdel(halluc)
 		. = ..()
 
