@@ -3730,7 +3730,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 					/datum/material/metal/steel,
 					/datum/material/crystal/glass,
 					/datum/material/metal/silver,
-					/datum/material/crystal,
+					/datum/material/crystal/gemstone,
 					/datum/material/crystal/gemstone/rose_quartz,
 					/datum/material/crystal/plasmaglass,
 					/datum/material/crystal/gemstone/onyx,
