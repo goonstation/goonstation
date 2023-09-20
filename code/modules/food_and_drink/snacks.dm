@@ -2132,13 +2132,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/reagent_containers/food))
-			var/icon/I = new/icon('icons/obj/foodNdrink/food_dessert.dmi', "folded-crepe")
-			//I.Blend(custom_crepe_food.get_food_color(), ICON_ADD)
-			src.icon = I
-			src.heal_amt = 5
-			src.name = "[W.name] folded in a crepe"
-			W.reagents.trans_to(src, 50)
-			qdel (W)
+			if(src.icon_state != "folded-crepe")
+				var/icon/I = new/icon('icons/obj/foodNdrink/food_dessert.dmi', "folded-crepe")
+				src.icon = I
+				src.heal_amt = 5
+				src.name = "[W.name] folded in a crepe"
+				W.reagents.trans_to(src, 50)
+				qdel (W)
 
 /obj/item/reagent_containers/food/snacks/omelette/bee
 	name = "deep-space hell omelette"
