@@ -2963,6 +2963,7 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 	desc = "The lastest product from Morrigan, a self charging rifle made for peace..or..war keeping with not stolen technology."
 	item_state = "laserifle"
 	force = 10
+	two_handed = TRUE
 	can_swap_cell = FALSE
 	rechargeable = FALSE
 	uses_charge_overlay = TRUE

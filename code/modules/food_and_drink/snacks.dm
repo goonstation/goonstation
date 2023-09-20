@@ -1485,6 +1485,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			initial_volume = 40
 			initial_reagents = list("salbutamol"=12,"epinephrine"=12,"saline"=16)
 
+		sturdy
+			name = "sturdy donut"
+			desc = "This doesn't seem stolen at all, Contains chemicals to help with unsteadiness and stamina."
+			icon_state = "donut7"
+			item_state = "donut2"
+			bites_left = 4
+			initial_volume = 36
+			initial_reagents = list("sugar"=12,"ammoniumbicarbonate"=12,"ephedrine"=12)
+		sturdiest
+			name = "sturdest donut"
+			desc = "This doesn't seem stolen at all, Contains chemicals to help with pain and critical situations."
+			icon_state = "donut6"
+			item_state = "donut2"
+			bites_left = 4
+			initial_volume = 36
+			initial_reagents = list("sugar"=12,"salicylic_acid"=12,"ephedrine"=12)
 		random
 			New()
 				if(rand(1,3) == 1)

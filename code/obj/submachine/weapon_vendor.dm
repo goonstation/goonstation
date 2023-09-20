@@ -234,8 +234,36 @@
 
 	accepted_token()
 		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
+		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=2
+		..()
+/obj/submachine/weapon_vendor/morriganvendor
+	name = "Security Vendor"
+	icon = 'icons/obj/vending.dmi'
+	icon_state = "weapon-morrigan"
+	desc = "An automated quartermaster service for supplying your security crew with weapons and gear."
+	token_accepted = /obj/item/requisition_token/morrigan
+	log_purchase = TRUE
+	layer = 4
+
+	ex_act()
+		return
+
+	New()
+		materiel_stock += new/datum/materiel/loadout/morriganlight
+		materiel_stock += new/datum/materiel/loadout/morrigancontrol
+		materiel_stock += new/datum/materiel/loadout/morriganmelee
+		materiel_stock += new/datum/materiel/loadout/morriganheavy
+		materiel_stock += new/datum/materiel/loadout/morriganexplorer
+		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
+		materiel_stock += new/datum/materiel/utility/morrigandonuts
+		materiel_stock += new/datum/materiel/utility/secdonk
+		materiel_stock += new/datum/materiel/utility/sortatactical
 		..()
 
+	accepted_token()
+		src.credits[WEAPON_VENDOR_CATEGORY_LOADOUT]++
+		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=2
+		..()
 /obj/submachine/weapon_vendor/fishing
 	name = "Fishing Supplies Vendor"
 	desc = "An automated quartermaster service for obtaining and upgrading your fishing gear."
@@ -405,6 +433,39 @@
 	name = "Assistant"
 	path = /obj/item/storage/belt/security/assistant
 	description = "One belt containing a security barrier, a forensic scanner, and a security ticket writer."
+//morrigan
+/datum/materiel/loadout/morriganmelee
+	name = "Melee Specialist Officer"
+	path = /obj/item/storage/belt/security/morriganmelee
+	description = "One belt containing a baton, a ticketer, and a tactical hammer. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
+/datum/materiel/loadout/morriganlight
+	name = "Light Patrol Officer"
+	path = /obj/item/storage/belt/security/morriganlight
+	description = "One belt containing a baton, a light sidearm, and a ticketer. Perfect of station patrols."
+/datum/materiel/loadout/morrigancontrol
+	name = "Shock Officer"
+	path = /obj/item/storage/belt/security/morrigancontrol
+	description = "One belt containing a baton, a laser shotgun, and a ticketer. For more tense situations."
+/datum/materiel/loadout/morriganheavy
+	name = "Crowd Disperser Officer"
+	path = /obj/item/storage/belt/security/morriganheavy
+	description = "One belt containing a baton, a laser assault rifle, and a ticketer. For dealing with large crowds."
+/datum/materiel/loadout/morriganexplorer
+	name = "EVA Officer"
+	path = /obj/item/storage/belt/security/morriganexplorer
+	description = "One belt containing a baton, a mining SMG, and a ticketer. For dealing with space threats."
+/datum/materiel/utility/morrigandonuts
+	name = "Sturd(iest) Donuts"
+	path = /obj/item/storage/lunchbox/sturdydonuts
+	description = "One Sturdy Donut and one Sturdiest Donut, which are loaded with helpful chemicals! This isn't a knock off and is totally original!"
+/datum/materiel/utility/secdonk
+	name = "Donk(s) Pockets"
+	path = /obj/item/storage/lunchbox/secdonk
+	description = "How could you have not seen this coming?"
+/datum/materiel/utility/sortatactical
+	name = "Misc Grenade Box"
+	path = /obj/item/storage/box/somewhatactical_kit
+	description = "Contains 2 flash grenades and a stinger grenade."
 
 //SYNDIE
 
@@ -648,7 +709,7 @@
 
 	morrigan
 		desc = "A Syndicate provided token for the Morrigan Weapons Vendor"
-		icon_state = "morrigan"
+		icon_state = "req-token-morrigan"
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
