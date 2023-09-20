@@ -52339,8 +52339,9 @@
 	},
 /area/station/janitor/office)
 "mpY" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "mqh" = (
 /obj/disposalpipe/segment/cargo{
 	dir = 4
