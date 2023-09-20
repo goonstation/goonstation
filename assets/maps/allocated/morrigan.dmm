@@ -1504,6 +1504,25 @@
 /obj/item/raw_material/shard/glass,
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/passage)
+"bpt" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 8;
+	hardened = 1
+	},
+/obj/machinery/secscanner{
+	dir = 4;
+	pixel_x = 19
+	},
+/obj/mapping_helper/access/morrigan/exit,
+/obj/mapping_helper/airlock/hardener,
+/obj/mapping_helper/airlock/anti_emag,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
+	dir = 4
+	},
+/turf/unsimulated/floor/redblack{
+	dir = 4
+	},
+/area/morrigan/station/exit)
 "bpz" = (
 /obj/decal/floatingtiles{
 	dir = 8;
@@ -7302,22 +7321,6 @@
 	},
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/engineering/exports)
-"gUo" = (
-/obj/machinery/door/airlock/pyro/glass/security/alt{
-	dir = 8;
-	hardened = 1
-	},
-/obj/machinery/secscanner{
-	dir = 4;
-	pixel_x = 19
-	},
-/obj/mapping_helper/access/morrigan/exit,
-/obj/mapping_helper/airlock/hardener,
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/redblack{
-	dir = 4
-	},
-/area/morrigan/station/exit)
 "gUp" = (
 /obj/item/c_tube,
 /obj/machinery/light/small{
@@ -10863,14 +10866,6 @@
 /mob/living/critter/small_animal/mouse/mad,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"kmw" = (
-/obj/window/auto/reinforced/indestructible,
-/obj/grille/steel,
-/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/morrigan/station/hallway)
 "kno" = (
 /obj/disposalpipe/segment,
 /obj/stool/chair{
@@ -11670,6 +11665,16 @@
 /obj/item/pen/fancy,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/main)
+"lcO" = (
+/obj/machinery/door/airlock/pyro/external{
+	hardened = 1
+	},
+/obj/mapping_helper/access/morrigan/exit,
+/obj/mapping_helper/airlock/hardener,
+/obj/mapping_helper/airlock/anti_emag,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown,
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/exit)
 "ldj" = (
 /obj/decal/cleanable/rust/jen,
 /obj/storage/closet/emergency,
@@ -12478,16 +12483,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/construction)
-"lOp" = (
-/obj/machinery/door/airlock/pyro/glass/security/alt{
-	dir = 8;
-	hardened = 1
-	},
-/obj/mapping_helper/access/morrigan/exit,
-/obj/mapping_helper/airlock/hardener,
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/exit)
 "lOv" = (
 /mob/living/critter/robotic/gunbot/morrigan/medibot,
 /turf/unsimulated/floor/wood/seven,
@@ -15599,13 +15594,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"oCU" = (
-/obj/window/auto/reinforced/indestructible,
-/obj/grille/steel,
-/obj/grille/steel,
-/obj/fakeobjects/morrigan/broken_lockdown,
-/turf/simulated/floor/engine,
-/area/morrigan/station/hallway)
 "oCV" = (
 /obj/item/casing/shotgun{
 	pixel_y = -10;
@@ -15823,15 +15811,6 @@
 /obj/map/light,
 /turf/unsimulated/floor/black,
 /area/morrigan/routing/transport)
-"oPg" = (
-/obj/machinery/door/airlock/pyro/external{
-	hardened = 1
-	},
-/obj/mapping_helper/access/morrigan/exit,
-/obj/mapping_helper/airlock/hardener,
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/exit)
 "oPQ" = (
 /obj/decal/cleanable/rust/jen,
 /obj/decal/cleanable/rust/jen,
@@ -19964,6 +19943,19 @@
 "tfo" = (
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"tfD" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 8;
+	hardened = 1
+	},
+/obj/mapping_helper/access/morrigan/exit,
+/obj/mapping_helper/airlock/hardener,
+/obj/mapping_helper/airlock/anti_emag,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown{
+	dir = 4
+	},
+/turf/unsimulated/floor/industrial,
+/area/morrigan/station/exit)
 "tgc" = (
 /obj/stool/chair/pew/fancy/center{
 	dir = 1
@@ -22091,11 +22083,6 @@
 /obj/drink_rack/mug,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/civilian/crewquarters)
-"uYy" = (
-/obj/item_dispenser/handcuffs,
-/obj/submachine/weapon_vendor/morriganvendor,
-/turf/unsimulated/floor/minitiles/black,
-/area/morrigan/station/security/main)
 "uYJ" = (
 /obj/decal/poster/wallsign/report{
 	pixel_y = 30
@@ -22163,6 +22150,14 @@
 /obj/mapping_helper/access/morrigan/bridge,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOP)
+"vdg" = (
+/obj/window/auto/reinforced/indestructible,
+/obj/grille/steel,
+/obj/machinery/door/poddoor/buff/morrigan_lockdown/open{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/morrigan/station/hallway)
 "vdp" = (
 /obj/structure/girder/displaced,
 /turf/unsimulated/floor/engine/glow,
@@ -23100,6 +23095,11 @@
 /obj/decal/cleanable/dirt/jen,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
+"wgx" = (
+/obj/item_dispenser/handcuffs,
+/obj/submachine/weapon_vendor/morriganvendor,
+/turf/unsimulated/floor/minitiles/black,
+/area/morrigan/station/security/main)
 "wgQ" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet/random,
@@ -25286,6 +25286,13 @@
 "ykr" = (
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
+"ykK" = (
+/obj/window/auto/reinforced/indestructible,
+/obj/grille/steel,
+/obj/grille/steel,
+/obj/fakeobjects/morrigan/broken_lockdown,
+/turf/simulated/floor/engine,
+/area/morrigan/station/hallway)
 "ykU" = (
 /turf/unsimulated/floor/engine/caution,
 /area/morrigan/station/maintenance)
@@ -26358,7 +26365,7 @@ lWV
 lWV
 lWV
 fRN
-oPg
+lcO
 hpw
 kPv
 hpw
@@ -26669,7 +26676,7 @@ aaL
 aaL
 aaL
 nui
-lOp
+tfD
 nui
 jsD
 oSx
@@ -27081,7 +27088,7 @@ obU
 obU
 aaL
 nui
-gUo
+bpt
 nui
 jsD
 mkg
@@ -28648,7 +28655,7 @@ wqQ
 fHm
 wHi
 fUZ
-kmw
+vdg
 rVW
 nkU
 yht
@@ -29064,7 +29071,7 @@ xjU
 mMJ
 hvQ
 bvF
-oCU
+ykK
 bvF
 bvF
 bvF
@@ -33698,7 +33705,7 @@ pRA
 pRA
 iPz
 aOR
-uYy
+wgx
 azI
 hiO
 nHg
