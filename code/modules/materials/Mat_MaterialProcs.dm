@@ -610,7 +610,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			return
 
 		SPAWN(1 SECOND)
-			if(istype(location?.material?, /datum/material/crystal/miracle))
+			if(istype(location?.material, /datum/material/crystal/miracle))
 				location.visible_message("<span class='notice'>[location] bends and twists, changing colors rapidly.</span>")
 				var/chosen = pick(
 					prob(100); /datum/material/metal/mauxite,
