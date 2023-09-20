@@ -484,7 +484,7 @@ proc/filter_trait_hats(var/type)
 		setProperty("heatprot", 5)
 
 TYPEINFO(/obj/item/clothing/head/that/gold)
-	mat_appearances_to_ignore = list("gold") // we already look fine ty
+	mat_appearances_to_ignore = list(/datum/material/metal/gold) // we already look fine ty
 /obj/item/clothing/head/that/gold
 	name = "golden hat"
 	desc = "A golden tophat."

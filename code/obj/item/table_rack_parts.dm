@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_name = "desk"
 
 TYPEINFO(/obj/item/furniture_parts/table/wood)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /obj/item/furniture_parts/table/wood
 	name = "table parts"
 	desc = "A collection of parts that can be used to make a wooden table."
@@ -210,7 +210,7 @@ TYPEINFO(/obj/item/furniture_parts/table/wood)
 
 /* ---------- Glass Table Parts ---------- */
 TYPEINFO(/obj/item/furniture_parts/table/glass)
-	mat_appearances_to_ignore = list("glass")
+	mat_appearances_to_ignore = list(/datum/material/crystal/glass)
 /obj/item/furniture_parts/table/glass
 	name = "glass table parts"
 	desc = "A collection of parts that can be used to make a glass table."
@@ -362,7 +362,7 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	furniture_name = "stool"
 
 TYPEINFO(/obj/item/furniture_parts/woodenstool)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /obj/item/furniture_parts/woodenstool
 	name = "wooden stool parts"
 	desc = "A collection of parts that can be used to make a wooden stool."

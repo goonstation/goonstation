@@ -330,7 +330,7 @@
 
 //not a good spot for this but idc
 TYPEINFO(/obj/item/stamped_bullion)
-	mat_appearances_to_ignore = list("gold")
+	mat_appearances_to_ignore = list(/datum/material/metal/gold)
 /obj/item/stamped_bullion //*not* a material piece - therefore doesn't stack, needs to be refined, etc. etc. etc.
 	name = "stamped bullion"
 	desc = "Oh wow! This stuff's got to be worth a lot of money!"

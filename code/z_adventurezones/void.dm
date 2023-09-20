@@ -40,7 +40,7 @@ CONTENTS:
 			H.client?.playAmbience(src, AMBIENCE_FX_2, 50)
 
 TYPEINFO(/turf/unsimulated/wall/void)
-	mat_appearances_to_ignore = list("steel")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel)
 /turf/unsimulated/wall/void
 	name = "dense void"
 	icon = 'icons/turf/floors.dmi'
@@ -58,7 +58,7 @@ TYPEINFO(/turf/unsimulated/wall/void)
 	fullbright = 0
 
 TYPEINFO(/turf/unsimulated/floor/void)
-	mat_appearances_to_ignore = list("steel")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel)
 /turf/unsimulated/floor/void
 	name = "void"
 	icon = 'icons/turf/floors.dmi'
@@ -70,7 +70,7 @@ TYPEINFO(/turf/unsimulated/floor/void)
 	fullbright = 0
 
 TYPEINFO(/turf/simulated/wall/void)
-	mat_appearances_to_ignore = list("steel")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel)
 /turf/simulated/wall/void
 	name = "dense void"
 	icon = 'icons/turf/floors.dmi'
@@ -97,7 +97,7 @@ TYPEINFO(/turf/simulated/wall/void)
 
 
 TYPEINFO(/turf/simulated/floor/void)
-	mat_appearances_to_ignore = list("steel")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel)
 /turf/simulated/floor/void
 	name = "void"
 	icon = 'icons/turf/floors.dmi'

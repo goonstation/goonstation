@@ -444,7 +444,7 @@
 	spawn_contents = list(/obj/random_item_spawner/loot_crate/surplus)
 
 TYPEINFO(/obj/storage/crate/chest)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /obj/storage/crate/chest
 	name = "treasure chest"
 	desc = "Glittering gold, trinkets and baubles. Paid for in blood."

@@ -1,6 +1,6 @@
 // flockdrone door
 TYPEINFO(/obj/machinery/door/feather)
-	mat_appearances_to_ignore = list("steel","gnesis")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/crystal/gnesis)
 /obj/machinery/door/feather
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "door1"

@@ -643,7 +643,7 @@
 /////////////////////////////////////////
 
 TYPEINFO(/turf/simulated/floor/circuit)
-	mat_appearances_to_ignore = list("pharosium")
+	mat_appearances_to_ignore = list(/datum/material/metal/pharosium)
 /turf/simulated/floor/circuit
 	name = "transduction matrix"
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry."
@@ -694,7 +694,7 @@ TYPEINFO(/turf/simulated/floor/circuit)
 /////////////////////////////////////////
 
 TYPEINFO(/turf/simulated/floor/carpet)
-	mat_appearances_to_ignore = list("cotton")
+	mat_appearances_to_ignore = list(/datum/material/fabric/cotton)
 /turf/simulated/floor/carpet
 	name = "carpet"
 	icon = 'icons/turf/carpet.dmi'
@@ -851,7 +851,7 @@ DEFINE_FLOORS(marble/border_wb,
 /////////////////////////////////////////
 
 TYPEINFO(/turf/simulated/floor/glassblock)
-	mat_appearances_to_ignore = list("steel","synthrubber","glass")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/rubber/synthrubber, /datum/material/crystal/glass)
 /turf/simulated/floor/glassblock
 	name = "glass block tiling"
 	icon = 'icons/turf/floors.dmi'
@@ -1099,7 +1099,7 @@ DEFINE_FLOORS(minitiles/black,
 /////////////////////////////////////////
 
 TYPEINFO(/turf/simulated/floor/wood)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /turf/simulated/floor/wood
 	icon_state = "wooden-2"
 	step_material = "step_wood"
@@ -1222,7 +1222,7 @@ TYPEINFO(/turf/simulated/floor/wood)
 
 
 TYPEINFO(/turf/simulated/floor/stairs/wood)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /turf/simulated/floor/stairs/wood
 	default_material = /datum/material/organic/wood
 	icon_state = "wood_stairs"
@@ -1233,7 +1233,7 @@ TYPEINFO(/turf/simulated/floor/stairs/wood)
 
 
 TYPEINFO(/turf/simulated/floor/stairs/wood2)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /turf/simulated/floor/stairs/wood2
 	default_material = /datum/material/organic/wood
 	icon_state = "wood2_stairs"
@@ -1247,7 +1247,7 @@ TYPEINFO(/turf/simulated/floor/stairs/wood2)
 	icon_state = "wood2_stairs2_middle"
 
 TYPEINFO(/turf/simulated/floor/stairs/wood3)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /turf/simulated/floor/stairs/wood3
 	default_material = /datum/material/organic/wood
 	icon_state = "wood3_stairs"
@@ -1308,7 +1308,7 @@ TYPEINFO(/turf/simulated/floor/stairs/wood3)
 /////////////////////////////////////////
 
 TYPEINFO(/turf/simulated/floor/snow)
-	mat_appearances_to_ignore = list("steel")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel)
 /turf/simulated/floor/snow
 	name = "snow"
 	has_material = FALSE
@@ -1426,7 +1426,7 @@ DEFINE_FLOORS(techfloor/green,
 /////////////////////////////////////////
 
 TYPEINFO(/turf/simulated/floor/grass)
-	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/rubber/synthrubber)
 /turf/simulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
@@ -1483,7 +1483,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 	icon_state = "grass_eh"
 
 TYPEINFO(/turf/simulated/floor/grasstodirt)
-	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/rubber/synthrubber)
 /turf/simulated/floor/grasstodirt
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
@@ -1492,7 +1492,7 @@ TYPEINFO(/turf/simulated/floor/grasstodirt)
 	mat_changedesc = 0
 
 TYPEINFO(/turf/simulated/floor/dirt)
-	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/rubber/synthrubber)
 /turf/simulated/floor/dirt
 	name = "dirt"
 	icon = 'icons/misc/worlds.dmi'
@@ -1505,7 +1505,7 @@ TYPEINFO(/turf/simulated/floor/dirt)
 //// some other floors ////
 
 TYPEINFO(/turf/simulated/floor/marslike)
-	mat_appearances_to_ignore = list("steel")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel)
 /turf/simulated/floor/marslike
 	name = "imitation martian dirt"
 	desc = "Wow, you almost believed it was real martian dirt for a moment!"
@@ -1524,7 +1524,7 @@ TYPEINFO(/turf/simulated/floor/marslike)
 	icon_state = "t4"
 
 TYPEINFO(/turf/simulated/floor/stone)
-	mat_appearances_to_ignore = list("steel","rock")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/metal/rock)
 /turf/simulated/floor/stone
 	name = "stone"
 	icon = 'icons/turf/dojo.dmi'
@@ -1538,13 +1538,13 @@ TYPEINFO(/turf/simulated/floor/stone)
 
 /* Outdoors tilesets - Walp */
 TYPEINFO(/turf/simulated/floor/grasslush)
-	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/rubber/synthrubber)
 TYPEINFO(/turf/simulated/floor/grasslush/airless)
-	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/rubber/synthrubber)
 TYPEINFO(/turf/unsimulated/floor/grasslush)
-	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/rubber/synthrubber)
 TYPEINFO(/turf/unsimulated/floor/grasslush/airless)
-	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/rubber/synthrubber)
 DEFINE_FLOORS(grasslush,
 	name = "lush grass";\
 	desc = "This grass somehow thrives in space.";\
@@ -2510,7 +2510,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 
 
 TYPEINFO(/turf/simulated/floor/auto/water/ice)
-	mat_appearances_to_ignore = list("ice")
+	mat_appearances_to_ignore = list(/datum/material/crystal/ice)
 /turf/simulated/floor/auto/water/ice
 	name = "ice"
 	desc = "Frozen water."

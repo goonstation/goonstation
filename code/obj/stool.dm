@@ -197,7 +197,7 @@
 	parts_type = /obj/item/furniture_parts/stool/neon
 
 TYPEINFO(/obj/stool/wooden)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
@@ -548,7 +548,7 @@ TYPEINFO(/obj/stool/wooden)
 /* -------------------- Chairs -------------------- */
 /* ================================================ */
 TYPEINFO(/obj/stool/chair)
-	mat_appearances_to_ignore = list("steel")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel)
 
 /obj/stool/chair
 	name = "chair"
@@ -924,7 +924,7 @@ TYPEINFO(/obj/stool/chair)
 /* ======================================================= */
 
 TYPEINFO(/obj/item/chair/folded)
-	mat_appearances_to_ignore = list("steel")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel)
 /obj/item/chair/folded
 	name = "chair"
 	desc = "A folded chair. Good for smashing noggin-shaped things."
@@ -1105,7 +1105,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 	mats = 15
 
 TYPEINFO(/obj/stool/chair/comfy/wheelchair)
-	mat_appearances_to_ignore = list("steel")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel)
 /obj/stool/chair/comfy/wheelchair
 	name = "wheelchair"
 	desc = "It's a chair that has wheels attached to it. Do I really have to explain this to you? Can you not figure this out on your own? Wheelchair. Wheel, chair. Chair that has wheels."
@@ -1187,7 +1187,7 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 /* ======================================================= */
 
 TYPEINFO(/obj/stool/chair/dining/wood)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /obj/stool/chair/dining/
 	name = "dining chair"
 	icon_state = "chair_wooden"

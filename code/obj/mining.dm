@@ -1424,7 +1424,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				usable_turfs -= AST
 
 TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
-	mat_appearances_to_ignore = list("rock")
+	mat_appearances_to_ignore = list(/datum/material/metal/rock)
 /turf/simulated/floor/plating/airless/asteroid
 	name = "asteroid"
 	icon = 'icons/turf/walls/asteroid.dmi'

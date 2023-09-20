@@ -935,7 +935,7 @@ var/global/in_replace_with = 0
 //moved step and slip functions into Carbon and Human files!
 
 TYPEINFO(/turf/simulated)
-	mat_appearances_to_ignore = list("steel")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel)
 /turf/simulated
 	name = "station"
 	allows_vehicles = 0

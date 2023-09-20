@@ -1305,7 +1305,7 @@ TYPEINFO(/obj/submachine/blackjack)
 		return 1
 
 TYPEINFO(/obj/item/gun/bling_blaster)
-	mat_appearances_to_ignore = list("gold") // we already look fine ty
+	mat_appearances_to_ignore = list(/datum/material/metal/gold) // we already look fine ty
 /obj/item/gun/bling_blaster
 	name = "fancy bling blaster"
 	desc = "A big old gun with a slot on the side of it to insert cash. It seems to be made of gold, but isn't gold pretty soft? Is this safe?"

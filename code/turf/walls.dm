@@ -1,5 +1,5 @@
 TYPEINFO(/turf/simulated/wall)
-	mat_appearances_to_ignore = list("steel")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel)
 
 /turf/simulated/wall
 	name = "wall"

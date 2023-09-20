@@ -487,7 +487,7 @@
 /////////////////////////////////////////
 
 TYPEINFO(/turf/unsimulated/floor/circuit)
-	mat_appearances_to_ignore = list("pharosium")
+	mat_appearances_to_ignore = list(/datum/material/metal/pharosium)
 /turf/unsimulated/floor/circuit
 	name = "transduction matrix"
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry."
@@ -727,7 +727,7 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 /////////////////////////////////////////
 
 TYPEINFO(/turf/unsimulated/floor/wood)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /turf/unsimulated/floor/wood
 	icon_state = "wooden-2"
 	default_material = /datum/material/organic/wood
@@ -953,7 +953,7 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 /////////////////////////////////////////
 
 TYPEINFO(/turf/unsimulated/floor/grass)
-	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_appearances_to_ignore = list(/datum/material/steel, /datum/material/rubber/synthrubber)
 /turf/unsimulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
@@ -1128,7 +1128,7 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 
 
 TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
-	mat_appearances_to_ignore = list("ice")
+	mat_appearances_to_ignore = list(/datum/material/crystal/ice)
 /turf/unsimulated/floor/auto/water/ice
 	name = "ice"
 	desc = "Frozen water."

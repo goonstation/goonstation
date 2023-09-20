@@ -165,7 +165,7 @@
 	/obj/item/storage/briefcase = 2)
 
 TYPEINFO(/obj/storage/closet/coffin)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /obj/storage/closet/coffin
 	name = "coffin"
 	desc = "A burial receptacle for the dearly departed."

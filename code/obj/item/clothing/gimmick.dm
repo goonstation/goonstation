@@ -154,7 +154,7 @@
 	see_face = FALSE
 
 TYPEINFO(/obj/item/clothing/under/gimmick/waldo)
-	mat_appearances_to_ignore = list("jean")
+	mat_appearances_to_ignore = list(/datum/material/fabric/jean)
 /obj/item/clothing/under/gimmick/waldo
 	name = "striped shirt and jeans"
 	desc = "A very distinctive outfit."
@@ -165,7 +165,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/waldo)
 	default_material = /datum/material/fabric/jean
 
 TYPEINFO(/obj/item/clothing/under/gimmick/odlaw)
-	mat_appearances_to_ignore = list("jean")
+	mat_appearances_to_ignore = list(/datum/material/fabric/jean)
 /obj/item/clothing/under/gimmick/odlaw
 	name = "yellow-striped shirt and jeans"
 	desc = "A rather sinister outfit."
@@ -176,7 +176,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/odlaw)
 	default_material = /datum/material/fabric/jean
 
 TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
-	mat_appearances_to_ignore = list("jean")
+	mat_appearances_to_ignore = list(/datum/material/fabric/jean)
 /obj/item/clothing/under/gimmick/fake_waldo
 	name = "striped shirt and jeans"
 	desc = "A very odd outfit."
@@ -809,7 +809,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/fake_waldo)
 	icon_state = "nm_back"
 
 TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
-	mat_appearances_to_ignore = list("jean")
+	mat_appearances_to_ignore = list(/datum/material/fabric/jean)
 /obj/item/clothing/under/gimmick/dawson
 	name = "Aged hipster clothes"
 	desc = "A worn-out brown coat with acid-washed jeans and a yellow-stained shirt. The previous owner must've been a real klutz."
@@ -1281,7 +1281,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 						sleep(rand(2,5))
 
 TYPEINFO(/obj/item/clothing/gloves/ring/gold)
-	mat_appearances_to_ignore = list("gold") // we already look fine ty
+	mat_appearances_to_ignore = list(/datum/material/metal/gold) // we already look fine ty
 /obj/item/clothing/gloves/ring/gold
 	name = "gold ring"
 	icon_state = "gring"
@@ -1501,7 +1501,7 @@ TYPEINFO(/obj/item/clothing/gloves/ring/gold)
 
 
 TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
-	mat_appearances_to_ignore = list("jean")
+	mat_appearances_to_ignore = list(/datum/material/fabric/jean)
 /obj/item/clothing/under/gimmick/shirtnjeans
 	name = "shirt and jeans"
 	desc = "A white shirt and a pair of torn jeans."

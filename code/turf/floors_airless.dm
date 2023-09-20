@@ -510,7 +510,7 @@
 /////////////////////////////////////////
 
 TYPEINFO(/turf/simulated/floor/airless/circuit)
-	mat_appearances_to_ignore = list("pharosium")
+	mat_appearances_to_ignore = list(/datum/material/metal/pharosium)
 /turf/simulated/floor/airless/circuit
 	name = "transduction matrix"
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry."
@@ -559,7 +559,7 @@ TYPEINFO(/turf/simulated/floor/airless/circuit)
 /////////////////////////////////////////
 
 TYPEINFO(/turf/simulated/floor/airless/carpet)
-	mat_appearances_to_ignore = list("cotton")
+	mat_appearances_to_ignore = list(/datum/material/fabric/cotton)
 /turf/simulated/floor/airless/carpet
 	name = "carpet"
 	icon = 'icons/turf/carpet.dmi'
@@ -761,7 +761,7 @@ TYPEINFO(/turf/simulated/floor/airless/carpet)
 /////////////////////////////////////////
 
 TYPEINFO(/turf/simulated/floor/airless/wood)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /turf/simulated/floor/airless/wood
 	icon_state = "wooden-2"
 	step_material = "step_wood"
@@ -920,7 +920,7 @@ TYPEINFO(/turf/simulated/floor/airless/wood)
 /////////////////////////////////////////
 
 TYPEINFO(/turf/simulated/floor/airless/grass)
-	mat_appearances_to_ignore = list("steel","synthrubber")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/rubber/synthrubber)
 /turf/simulated/floor/airless/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'

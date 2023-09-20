@@ -1,5 +1,5 @@
 TYPEINFO(/mob/living/critter/flock)
-	mat_appearances_to_ignore = list("gnesis")
+	mat_appearances_to_ignore = list(/datum/material/crystal/gnesis)
 /mob/living/critter/flock
 	var/resources = 0
 	name = "concept of a bird machine"

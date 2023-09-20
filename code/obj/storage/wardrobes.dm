@@ -1,6 +1,6 @@
 
 TYPEINFO(/obj/storage/closet/dresser)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /obj/storage/closet/dresser
 	name = "dresser"
 	desc = "It's got room for all your fanciest or shabbiest outfits!"

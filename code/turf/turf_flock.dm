@@ -2,7 +2,7 @@
 // FLOOR
 // -----
 TYPEINFO(/turf/simulated/floor/feather)
-	mat_appearances_to_ignore = list("steel","gnesis")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/crystal/gnesis)
 /turf/simulated/floor/feather
 	name = "weird floor"
 	desc = "I don't like the looks of that whatever-it-is."
@@ -180,7 +180,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/feather)
 	connects_to = typecacheof(list(/turf/simulated/wall/auto/feather, /obj/machinery/door, /obj/window))
 	connects_with_overlay = typecacheof(list(/obj/machinery/door, /obj/window))
 TYPEINFO(/turf/simulated/wall/auto/feather)
-	mat_appearances_to_ignore = list("steel", "gnesis")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/crystal/gnesis)
 /turf/simulated/wall/auto/feather
 	name = "weird glowing wall"
 	desc = "You can feel it thrumming and pulsing."

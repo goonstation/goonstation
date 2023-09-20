@@ -3,7 +3,7 @@
 /*========================*/
 
 TYPEINFO(/obj/item/clothing/head/butt)
-	mat_appearances_to_ignore = list("butt")
+	mat_appearances_to_ignore = list(/datum/material/organic/flesh/butt)
 /obj/item/clothing/head/butt
 	name = "butt"
 	desc = "It's a butt. It goes on your head."
@@ -177,7 +177,7 @@ TYPEINFO(/obj/item/clothing/head/butt)
 		return
 
 TYPEINFO(/obj/item/clothing/head/butt/cyberbutt)
-	mat_appearances_to_ignore = list("pharosium")
+	mat_appearances_to_ignore = list(/datum/material/metal/pharosium)
 /obj/item/clothing/head/butt/cyberbutt // what the fuck am I doing with my life
 	name = "robutt"
 	desc = "This is a butt, made of metal. A futuristic butt. Okay."

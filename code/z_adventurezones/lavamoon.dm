@@ -1172,7 +1172,7 @@ var/global/iomoon_blowout_state = 0 //0: Hasn't occurred, 1: Moon is irradiated 
 		src.overlays += I
 
 TYPEINFO(/obj/ladder)
-	mat_appearances_to_ignore = list("negativematter")
+	mat_appearances_to_ignore = list(/datum/material/metal/negativematter)
 ADMIN_INTERACT_PROCS(/obj/ladder, proc/toggle_extradimensional, proc/change_extradimensional_overlay)
 ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 

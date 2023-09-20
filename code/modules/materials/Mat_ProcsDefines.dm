@@ -142,8 +142,8 @@ var/global/list/material_cache
 	src.color = initial(src.color)
 	var/base_icon_state = materialless_icon_state()
 
-	if (isnull(mat1) || (mat1.getID() in src.get_typeinfo().mat_appearances_to_ignore) || \
-			mat1.getID() == default_material && !src.uses_default_material_appearance)
+	if (isnull(mat1) || (mat1.type in src.get_typeinfo().mat_appearances_to_ignore) || \
+			mat1.type == default_material && !src.uses_default_material_appearance)
 		src.icon_state = base_icon_state
 		src.setTexture(null, key="material")
 		return
@@ -168,7 +168,7 @@ var/global/list/material_cache
 	if(isnull(mat))
 		mat = src.material
 	var/base_icon_state = img.materialless_icon_state()
-	if (isnull(mat) || (mat.getID() in src.get_typeinfo().mat_appearances_to_ignore))
+	if (isnull(mat) || (mat.type in src.get_typeinfo().mat_appearances_to_ignore))
 		img.icon_state = base_icon_state
 		return
 	var/potential_new_icon_state = "[base_icon_state]$$[mat.getID()]"

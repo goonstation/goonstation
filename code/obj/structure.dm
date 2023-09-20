@@ -330,7 +330,7 @@ obj/structure/ex_act(severity)
 		return ..()
 
 TYPEINFO(/obj/structure/woodwall)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /obj/structure/woodwall
 	name = "barricade"
 	desc = "This was thrown up in a hurry."

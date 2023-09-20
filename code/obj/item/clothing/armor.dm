@@ -21,7 +21,7 @@
 		return
 
 TYPEINFO(/obj/item/clothing/suit/armor/vest)
-	mat_appearances_to_ignore = list("carbonfibre")
+	mat_appearances_to_ignore = list(/datum/material/fabric/carbonfibre)
 /obj/item/clothing/suit/armor/vest
 	name = "armor vest"
 	desc = "An armored vest that protects against some damage. Contains carbon fibres."
@@ -445,7 +445,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 		src.AddComponent(/datum/component/toggle_coat, coat_style = "[src.coat_style]", buttoned = FALSE)
 
 TYPEINFO(/obj/item/clothing/suit/armor/NT_alt)
-	mat_appearances_to_ignore = list("carbonfibre")
+	mat_appearances_to_ignore = list(/datum/material/fabric/carbonfibre)
 /obj/item/clothing/suit/armor/NT_alt
 	name = "old armored vest"
 	desc = "A grungy surplus armored vest. Smelly and not very clean."

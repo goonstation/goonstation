@@ -1229,7 +1229,7 @@ ABSTRACT_TYPE(/obj/item/clothing/under/suit)
 // Towels
 
 TYPEINFO(/obj/item/clothing/under/towel)
-	mat_appearances_to_ignore = list("cotton")
+	mat_appearances_to_ignore = list(/datum/material/fabric/cotton)
 /obj/item/clothing/under/towel
 	name = "towel"
 	desc = "Made of nice, soft terrycloth. Very important when adventuring."

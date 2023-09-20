@@ -1,5 +1,5 @@
 TYPEINFO(/obj/bookshelf)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /obj/bookshelf
 	name = "bookshelf"
 	desc = "A storage unit designed to fit a lot of books. Been a while since you've seen one of these!"
@@ -184,7 +184,7 @@ TYPEINFO(/obj/bookshelf)
 			file_curr_books(curr_contents)
 
 TYPEINFO(/obj/item/furniture_parts/bookshelf)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /obj/item/furniture_parts/bookshelf
 	name = "bookshelf parts"
 	desc = "A collection of parts that can be used to construct a bookshelf."

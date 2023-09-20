@@ -346,7 +346,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	initial_reagents = list("pepper"=10)
 
 TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
-	mat_appearances_to_ignore = list("honey")
+	mat_appearances_to_ignore = list(/datum/material/organic/honey)
 /obj/item/reagent_containers/food/snacks/ingredient/honey
 	name = "honey"
 	desc = "A sweet nectar derivative produced by bees."

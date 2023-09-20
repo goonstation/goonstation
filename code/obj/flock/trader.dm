@@ -35,7 +35,7 @@
 	icon_state = "shuttle-floor"
 
 TYPEINFO(/turf/simulated/floor/shuttlebay/flock)
-	mat_appearances_to_ignore = list("steel","gnesis")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/crystal/gnesis)
 /turf/simulated/floor/shuttlebay/flock
 	name = "shuttle bay plating"
 	icon = 'icons/misc/featherzone.dmi'

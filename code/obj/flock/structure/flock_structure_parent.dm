@@ -2,7 +2,7 @@
 ABSTRACT_TYPE(/obj/flock_structure)
 TYPEINFO(/obj/flock_structure)
 	var/cancellable = TRUE
-	mat_appearances_to_ignore = list("gnesis")
+	mat_appearances_to_ignore = list(/datum/material/crystal/gnesis)
 /obj/flock_structure
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "egg"

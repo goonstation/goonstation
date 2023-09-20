@@ -43,7 +43,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 	var/thermal_mass = 420*250//specific heat capacity of steel (420 J/KgK) * mass of component (Kg)
 
 
-	New(material=/datum/material/metal/steel)
+	New(material = /datum/material/metal/steel)
 		..()
 		if(istype(material, /datum/material))
 			src.setMaterial(material)
@@ -62,7 +62,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		. = ..()
 		src.cap_icon = icon(src.icon, src.icon_state_cap)
 		if(appearance) //some mildly cursed code to set material appearance on the end caps
-			if (mat1.getID() in src.get_typeinfo().mat_appearances_to_ignore)
+			if (mat1.type in src.get_typeinfo().mat_appearances_to_ignore)
 				return
 			if (src.mat_changeappearance && mat1.shouldApplyColor())
 				var/list/setcolor = mat1.getColor()
@@ -421,15 +421,15 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 					return .
 
 #define SANE_COMPONENT_MATERIALS \
-		100;"gold",\
-		100;"syreline",\
-		100;"silver",\
-		100;"cobryl",\
-		50;"miracle",\
-		20;"soulsteel",\
-		20;"hauntium",\
-		20;"ectoplasm",\
-		10;"ectofibre",\
+		100;/datum/material/metal/gold,\
+		100;/datum/material/metal/syreline,\
+		100;/datum/material/metal/silver,\
+		100;/datum/material/metal/cobryl,\
+		50;/datum/material/crystal/miracle,\
+		20;/datum/material/metal/soulsteel,\
+		20;/datum/material/fabric/hauntium,\
+		20;/datum/material/organic/ectoplasm,\
+		10;/datum/material/fabric/ectofibre,\
 		10;"wiz_quartz",\
 		10;"wiz_topaz",\
 		10;"wiz_ruby",\

@@ -18,7 +18,7 @@ TYPEINFO_NEW(/obj/table/flock)
 	smooth_list = typecacheof(/obj/table/flock/auto)
 
 TYPEINFO(/obj/table/flock)
-	mat_appearances_to_ignore = list("gnesis")
+	mat_appearances_to_ignore = list(/datum/material/crystal/gnesis)
 /obj/table/flock
 	name = "humming surface"
 	desc = "A table? An alien supercomputer? Well, it's flat, you can put stuff on it."
@@ -58,7 +58,7 @@ TYPEINFO(/obj/table/flock)
 	auto = TRUE
 
 TYPEINFO(/obj/item/furniture_parts/table/flock)
-	mat_appearances_to_ignore = list("gnesis")
+	mat_appearances_to_ignore = list(/datum/material/crystal/gnesis)
 /obj/item/furniture_parts/table/flock
 	name = "collapsed disk"
 	desc = "An extendable... <i>thing</i> that can be stretched out to make, uh, probably a table of some kind? Where's the goddamn instructions?!"
@@ -81,7 +81,7 @@ TYPEINFO(/obj/item/furniture_parts/table/flock)
 ///////////////////////////
 
 TYPEINFO(/obj/stool/chair/comfy/flock)
-	mat_appearances_to_ignore = list("gnesis")
+	mat_appearances_to_ignore = list(/datum/material/crystal/gnesis)
 /obj/stool/chair/comfy/flock
 	name = "thrumming alcove"
 	desc = "It's like an egg chair, but gaudy. Okay, more gaudy."
@@ -109,7 +109,7 @@ TYPEINFO(/obj/stool/chair/comfy/flock)
 		<br><span class='bold'>###=-</span></span>"}
 
 TYPEINFO(/obj/item/furniture_parts/flock_chair)
-	mat_appearances_to_ignore = list("gnesis")
+	mat_appearances_to_ignore = list(/datum/material/crystal/gnesis)
 /obj/item/furniture_parts/flock_chair
 	name = "pulsing orb"
 	desc = "It feels dense and like it wants to pop open. If you fumble around, maybe you can find some sort of catch or button."
@@ -138,7 +138,7 @@ TYPEINFO(/obj/item/furniture_parts/flock_chair)
 ///////////////////////////
 
 TYPEINFO(/obj/storage/closet/flock)
-	mat_appearances_to_ignore = list("steel","gnesis")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/crystal/gnesis)
 /obj/storage/closet/flock
 	name = "flashy capsule"
 	desc = "It looks kinda like a closet. There's no handle, though. Also, it looks like a giant bar of soap."
@@ -251,7 +251,7 @@ TYPEINFO(/obj/storage/closet/flock)
 ///////////////////////////
 
 TYPEINFO(/obj/machinery/light/flock)
-	mat_appearances_to_ignore = list("gnesis")
+	mat_appearances_to_ignore = list(/datum/material/crystal/gnesis)
 /obj/machinery/light/flock
 	name = "shining cabochon"
 	desc = "It pulses and flares to a strange rhythm."
@@ -300,7 +300,7 @@ TYPEINFO(/obj/machinery/light/flock)
 // FIBRENET
 /////////////
 TYPEINFO(/obj/lattice/flock)
-	mat_appearances_to_ignore = list("steel","gnesis")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/crystal/gnesis)
 /obj/lattice/flock
 	desc = "Some sort of floating mesh in space, like a bendy lattice. Those wacky flock things."
 	name = "fibrenet"
@@ -341,7 +341,7 @@ TYPEINFO(/obj/lattice/flock)
 // BARRICADE
 /////////////
 TYPEINFO(/obj/grille/flock)
-	mat_appearances_to_ignore = list("steel","gnesis")
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/crystal/gnesis)
 /obj/grille/flock
 	desc = "A glowing mesh of metallic fibres."
 	name = "barricade"

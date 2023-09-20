@@ -453,7 +453,7 @@ TYPEINFO_NEW(/obj/table/wood)
 	. = ..()
 	smooth_list = typecacheof(/obj/table/wood/auto)
 TYPEINFO(/obj/table/wood)
-	mat_appearances_to_ignore = list("wood")
+	mat_appearances_to_ignore = list(/datum/material/organic/wood)
 /obj/table/wood
 	name = "wooden table"
 	desc = "A table made from solid oak, which is quite rare in space."
@@ -878,7 +878,7 @@ TYPEINFO_NEW(/obj/table/glass)
 	. = ..()
 	smooth_list = typecacheof(/obj/table/glass) // has to be the base type here or else regular glass tables won't connect to reinforced ones
 TYPEINFO(/obj/table/glass)
-	mat_appearances_to_ignore = list("glass")
+	mat_appearances_to_ignore = list(/datum/material/crystal/glass)
 /obj/table/glass
 	name = "glass table"
 	desc = "A table made of glass. It looks like it might shatter if you set something down on it too hard."

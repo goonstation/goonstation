@@ -1019,7 +1019,7 @@ TYPEINFO(/obj/disposalpipe/loafer)
 #define MAXIMUM_LOAF_STATE_VALUE 10
 
 TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
-	mat_appearances_to_ignore = list("negativematter")
+	mat_appearances_to_ignore = list(/datum/material/metal/negativematter)
 /obj/item/reagent_containers/food/snacks/einstein_loaf
 	name = "einstein-rosen loaf"
 	desc = "A hypothetical feature of loaf-spacetime. Maybe this could be used as a material?"
