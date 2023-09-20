@@ -147,7 +147,7 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 		if(rollcount >= count) return // Standard skip-if-complete
 		if(!istype(eval_item)) return // If it's not an item, it's not a stackable
 		if(mat_type) // If we're checking for materials, do that here with a tag comparison
-			if(!eval_item.material || eval_item.material.type != src.mat_type)
+			if(!eval_item.material || !istype(eval_item.material.type, src.mat_type))
 				return
 		if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt)))
 			rollcount += eval_item.amount

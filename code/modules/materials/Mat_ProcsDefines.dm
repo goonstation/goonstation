@@ -1,4 +1,3 @@
-// THESE TWO ARE THE SAME LIST
 /// the material cache, indexed by typepath
 var/global/list/material_cache
 
@@ -9,13 +8,13 @@ var/global/list/material_cache
 	if(istype(A, /obj/item/tile) || istype(A, /obj/item/rods) || istype(A, /obj/item/sheet) || istype(A, /obj/item/cable_coil) || istype(A, /obj/item/raw_material/shard)) return 1
 	return 0
 
-/// Returns one of the base materials by id or by typepath.
+/// Returns one of the base materials when given a typepath.
 /proc/getMaterial(mat)
 	#ifdef CHECK_MORE_RUNTIMES
 	if (!ispath(mat))
-		CRASH("getMaterial() called without typepath: [mat].")
+		CRASH("getMaterial() called without a non-typepath argument: [mat].")
 	if (!(mat in material_cache))
-		CRASH("getMaterial() called with an invalid material [mat].")
+		CRASH("getMaterial() called with an invalid material typepath: [mat].")
 	#endif
 	if(!ispath(mat))
 		return null
@@ -73,6 +72,9 @@ var/global/list/material_cache
 /// Sets the material of an object. PLEASE USE THIS TO SET MATERIALS UNLESS YOU KNOW WHAT YOU'RE DOING.
 /atom/proc/setMaterial(datum/material/mat1 = null, appearance = TRUE, setname = TRUE, mutable = FALSE, use_descriptors = FALSE)
 	if (isnull(mat1))
+		#ifdef CHECK_MORE_RUNTIMES
+		CRASH("setMaterial called with no material given.")
+		#endif
 		return
 	if(istext(mat1))
 		CRASH("setMaterial() called with a string instead of a material datum.")
@@ -143,7 +145,7 @@ var/global/list/material_cache
 	var/base_icon_state = materialless_icon_state()
 
 	if (isnull(mat1) || (mat1.type in src.get_typeinfo().mat_appearances_to_ignore) || \
-			mat1.type == default_material && !src.uses_default_material_appearance)
+			istype(mat1.type, default_material) && !src.uses_default_material_appearance)
 		src.icon_state = base_icon_state
 		src.setTexture(null, key="material")
 		return

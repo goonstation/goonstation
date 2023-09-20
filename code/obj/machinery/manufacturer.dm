@@ -628,7 +628,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					var/ejectamt = 0
 					var/turf/ejectturf = get_turf(usr)
 					for(var/obj/item/O in src.contents)
-						if (O.material && O.material.getID() == mat_type)
+						if (O.material && istype(O.material, mat_type))
 							if (!ejectamt)
 								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
 								if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
@@ -1712,7 +1712,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				var/amount = M.item_amounts[i]
 				src.update_resource_amount(mat_type, -amount)
 				for (var/obj/item/I in src.contents)
-					if (I.material && istype(I, src.base_material_class) && I.material.getID() == mat_type)
+					if (I.material && istype(I, src.base_material_class) && istype(I.material, mat_type))
 						var/target_amount = round(src.resource_amounts[mat_type] / 10)
 						if (!target_amount)
 							src.contents -= I

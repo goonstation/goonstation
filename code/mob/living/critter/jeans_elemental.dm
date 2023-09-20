@@ -91,7 +91,7 @@
 		A.setMaterial(getMaterial(transmute_mat))
 
 	valid_target(mob/living/C)
-		if (C.material == transmute_mat) return FALSE //don't attack other jeans-like things
+		if (istype(C.material, transmute_mat)) return FALSE //don't attack other jeans-like things
 		if (C.ckey == null && prob(80)) return FALSE //usually do not attack non-threats ie. NPC monkeys and AFK players
 		return ..()
 
