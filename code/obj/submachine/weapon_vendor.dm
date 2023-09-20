@@ -709,7 +709,7 @@
 
 	morrigan
 		desc = "A Syndicate provided token for the Morrigan Weapons Vendor"
-		icon_state = "morrigan"
+		icon_state = "req-token-morrigan"
 
 #undef WEAPON_VENDOR_CATEGORY_SIDEARM
 #undef WEAPON_VENDOR_CATEGORY_LOADOUT
