@@ -3670,7 +3670,7 @@
 		instant = 0
 		reaction_speed = 0.5
 		//since we are talking about contraction of miasma on weakened lung tissue, make some common antibiotics prevent this
-		inhibitors = list("spaceacillin", "robustissin")
+		inhibitors = list("spaceacillin", "cold_medicine")
 		// no mixing sound or message. With lungrot decaying into miasma that would create a mass of message spam. And it should be kinda stealthy
 		mix_phrase = null
 		mix_sound = null
