@@ -448,9 +448,17 @@
 	dir = 0;
 	name = "autoname - SS13"
 	},
+/obj/machinery/power/smes/magical,
+/obj/cable{
+	icon_state = "0-4";
+	pixel_y = 0
+	},
 /turf/simulated/floor/purple,
 /area/station/science)
 "dY" = (
+/obj/cable{
+	icon_state = "2-8"
+	},
 /turf/simulated/floor/purple,
 /area/station/science)
 "eb" = (
@@ -2191,6 +2199,16 @@
 /obj/shrub/captainshrub,
 /turf/simulated/floor/wood,
 /area/station/bridge)
+"uD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/purple,
+/area/station/science)
 "uJ" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/decal/cleanable/dirt,
@@ -90625,8 +90643,8 @@ bc
 ci
 dq
 dY
-eS
-fv
+eT
+uD
 fK
 fU
 gj
