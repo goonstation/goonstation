@@ -2026,3 +2026,12 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 /obj/item/clothing/under/gimmick/trashsinglet/biohazard
 	icon_state = "biobag"
 	item_state = "biobag"
+
+/obj/item/clothing/suit/chaps
+	name = "chaps"
+	desc = "Sturdy, protective leg coverings made with space leather."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "chaps"
+	item_state = "chaps"

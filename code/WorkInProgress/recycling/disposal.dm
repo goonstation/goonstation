@@ -1948,12 +1948,12 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			segment.fix_sprite()
 		else if(istype(pipe, /obj/disposalpipe/junction))
 			var/obj/disposalpipe/segment/horiz = new(pipe.loc)
-			horiz.dpdir = 1 | 2
-			horiz.set_dir(1)
+			horiz.dpdir = NORTH | SOUTH
+			horiz.set_dir(NORTH)
 			horiz.fix_sprite()
 			var/obj/disposalpipe/segment/vert = new(pipe.loc)
-			vert.dpdir = 4 | 8
-			vert.set_dir(4)
+			vert.dpdir = EAST | WEST
+			vert.set_dir(EAST)
 			vert.fix_sprite()
 			qdel(pipe)
 		if(istype(pipe, /obj/disposalpipe/segment))

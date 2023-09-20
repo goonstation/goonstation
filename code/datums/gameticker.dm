@@ -781,6 +781,8 @@ var/global/current_state = GAME_STATE_INVALID
 
 	logTheThing(LOG_DEBUG, null, "Spawned XP")
 
+	logTheThing(LOG_DEBUG, null, "Power Generation: [json_encode(station_power_generation)]")
+
 	SPAWN(0)
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")
 		var/datum/crewCredits/creds = new
