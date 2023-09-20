@@ -366,6 +366,15 @@
 /obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/station/science)
+"dn" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/crew_quarters/garden)
 "do" = (
 /obj/submachine/chem_extractor{
 	dir = 8
@@ -1000,6 +1009,13 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/chapel/office)
+"iM" = (
+/obj/machinery/light,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/crew_quarters/garden)
 "iP" = (
 /obj/machinery/conveyor/SN{
 	id = "chapel"
@@ -1566,6 +1582,14 @@
 	},
 /turf/simulated/floor/black,
 /area/station/security/main)
+"of" = (
+/obj/machinery/light/small/floor/cool,
+/obj/shrub/random,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/crew_quarters/garden)
 "oj" = (
 /obj/machinery/door/airlock/pyro/security{
 	req_access = null
@@ -2002,6 +2026,10 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/clown)
 "sI" = (
@@ -2129,7 +2157,7 @@
 /obj/item/instrument/large/piano{
 	name = "old piano"
 	},
-/turf/unsimulated/floor/wood,
+/turf/simulated/floor/wood,
 /area/station/bridge)
 "uo" = (
 /obj/machinery/light{
@@ -2138,7 +2166,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/unsimulated/floor/wood,
+/turf/simulated/floor/wood,
 /area/station/bridge)
 "up" = (
 /obj/machinery/camera{
@@ -2148,7 +2176,7 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/unsimulated/floor/wood,
+/turf/simulated/floor/wood,
 /area/station/bridge)
 "uq" = (
 /obj/cable{
@@ -2161,23 +2189,17 @@
 	dir = 4
 	},
 /obj/shrub/captainshrub,
-/turf/unsimulated/floor/wood,
+/turf/simulated/floor/wood,
 /area/station/bridge)
 "uJ" = (
 /obj/machinery/chem_dispenser/soda,
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/carpet{
-	dir = 9;
-	icon_state = "red2"
-	},
+/turf/simulated/floor/carpet/red/standard/edge/nw,
 /area/station/bridge)
 "uL" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/chem_dispenser/alcohol/ultra,
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "red2"
-	},
+/turf/simulated/floor/carpet/red/standard/edge/north,
 /area/station/bridge)
 "uV" = (
 /obj/table/reinforced/bar/auto,
@@ -2191,10 +2213,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/turf/unsimulated/floor/carpet{
-	dir = 5;
-	icon_state = "red2"
-	},
+/turf/simulated/floor/carpet/red/standard/edge/ne,
 /area/station/bridge)
 "vb" = (
 /turf/simulated/wall/auto/supernorn,
@@ -2308,16 +2327,16 @@
 	name = "stool"
 	},
 /obj/decal/tile_edge/stripe,
-/turf/unsimulated/floor/wood,
+/turf/simulated/floor/wood,
 /area/station/bridge)
 "ww" = (
 /obj/decal/tile_edge/stripe,
-/turf/unsimulated/floor/wood,
+/turf/simulated/floor/wood,
 /area/station/bridge)
 "wA" = (
 /obj/mic_stand,
 /obj/decal/tile_edge/stripe,
-/turf/unsimulated/floor/wood,
+/turf/simulated/floor/wood,
 /area/station/bridge)
 "wM" = (
 /obj/table/wood/round/auto,
@@ -2330,7 +2349,7 @@
 /obj/decal/tile_edge/stripe{
 	dir = 4
 	},
-/turf/unsimulated/floor/wood,
+/turf/simulated/floor/wood,
 /area/station/bridge)
 "wN" = (
 /obj/landmark/map{
@@ -2339,10 +2358,7 @@
 /turf/space,
 /area/space)
 "wO" = (
-/turf/unsimulated/floor/carpet{
-	dir = 8;
-	icon_state = "red2"
-	},
+/turf/simulated/floor/carpet/red/standard/edge/west,
 /area/station/bridge)
 "wU" = (
 /turf/unsimulated/floor/carpet,
@@ -2354,10 +2370,7 @@
 /obj/drink_rack/cup{
 	pixel_y = 32
 	},
-/turf/unsimulated/floor/carpet{
-	dir = 5;
-	icon_state = "red2"
-	},
+/turf/simulated/floor/carpet/red/standard/edge/ne,
 /area/station/bridge)
 "xf" = (
 /obj/machinery/door/airlock/pyro/command{
@@ -2517,11 +2530,17 @@
 /obj/railing{
 	color = "#222288"
 	},
-/turf/unsimulated/floor/wood/two,
+/turf/simulated/floor/wood/two,
 /area/station/bridge)
 "yE" = (
-/turf/simulated/floor/airless/stairs/wood2,
-/area/station/bridge)
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/clown)
 "yF" = (
 /obj/decal/stage_edge,
 /obj/machinery/computer/bank_data,
@@ -2529,7 +2548,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/unsimulated/floor/wood/two,
+/turf/simulated/floor/wood/two,
 /area/station/bridge)
 "yH" = (
 /obj/decal/stage_edge,
@@ -2538,7 +2557,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/turf/unsimulated/floor/wood/two,
+/turf/simulated/floor/wood/two,
 /area/station/bridge)
 "yI" = (
 /obj/table/reinforced/bar/auto,
@@ -2569,32 +2588,23 @@
 	pixel_x = 7;
 	pixel_y = 2
 	},
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "red2"
-	},
+/turf/simulated/floor/carpet/red/standard/edge/sw,
 /area/station/bridge)
 "yM" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
 	pixel_y = 10
 	},
-/turf/unsimulated/floor/carpet{
-	icon_state = "red2"
-	},
+/turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/bridge)
 "yN" = (
 /obj/table/reinforced/bar/auto,
-/turf/unsimulated/floor/carpet{
-	icon_state = "red2"
-	},
+/turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/bridge)
 "yP" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/espresso_machine,
-/turf/unsimulated/floor/carpet{
-	icon_state = "red2"
-	},
+/turf/simulated/floor/carpet/red/standard/edge/se,
 /area/station/bridge)
 "yQ" = (
 /obj/shrub/random,
@@ -3372,10 +3382,7 @@
 /obj/stool/chair/comfy{
 	dir = 4
 	},
-/turf/unsimulated/floor/carpet{
-	dir = 9;
-	icon_state = "fgreen2"
-	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/nw,
 /area/station/bridge)
 "HL" = (
 /obj/table/wood/round,
@@ -3388,10 +3395,7 @@
 /obj/item/matchbook{
 	pixel_y = 8
 	},
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "fgreen2"
-	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/north,
 /area/station/bridge)
 "HN" = (
 /obj/table/wood/round/auto,
@@ -3406,19 +3410,13 @@
 	pixel_x = 4;
 	pixel_y = 1
 	},
-/turf/unsimulated/floor/carpet{
-	dir = 1;
-	icon_state = "fgreen2"
-	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/north,
 /area/station/bridge)
 "HU" = (
 /obj/stool/chair/comfy{
 	dir = 8
 	},
-/turf/unsimulated/floor/carpet{
-	dir = 5;
-	icon_state = "fgreen2"
-	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/ne,
 /area/station/bridge)
 "Ic" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon4,
@@ -3474,32 +3472,22 @@
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
 "IX" = (
-/turf/unsimulated/floor/carpet{
-	dir = 10;
-	icon_state = "fgreen2"
-	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/sw,
 /area/station/bridge)
 "Jc" = (
 /obj/stool/chair/couch{
 	dir = 9
 	},
-/turf/unsimulated/floor/carpet{
-	icon_state = "fgreen2"
-	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/south,
 /area/station/bridge)
 "Jd" = (
 /obj/stool/chair/couch{
 	dir = 5
 	},
-/turf/unsimulated/floor/carpet{
-	icon_state = "fgreen2"
-	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/south,
 /area/station/bridge)
 "Jf" = (
-/turf/unsimulated/floor/carpet{
-	dir = 6;
-	icon_state = "fgreen2"
-	},
+/turf/unsimulated/floor/carpet/green/fancy/edge/se,
 /area/station/bridge)
 "Jp" = (
 /obj/cable{
@@ -3538,6 +3526,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"Jw" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "JB" = (
 /obj/cable/orange,
 /obj/cable/orange{
@@ -4093,6 +4087,9 @@
 	icon_state = "tube1";
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -45778,7 +45775,7 @@ Rf
 sJ
 uo
 ww
-yE
+Bn
 AZ
 CU
 Fw
@@ -48504,8 +48501,8 @@ qG
 Ic
 Er
 Gc
-pJ
-pq
+dn
+JH
 Mr
 tM
 Nh
@@ -48807,7 +48804,7 @@ Io
 qG
 qG
 Lc
-Pf
+iM
 Ml
 Ml
 Ml
@@ -49109,9 +49106,9 @@ pq
 pq
 pq
 qG
-pq
-xo
-pq
+Er
+of
+JH
 Ml
 Og
 Pg
@@ -49413,7 +49410,7 @@ pq
 Ld
 qG
 Mv
-pq
+pI
 Ml
 Ml
 Ml
@@ -49715,7 +49712,7 @@ sR
 pq
 pq
 qG
-pq
+pI
 Ml
 Oh
 Pm
@@ -50017,7 +50014,7 @@ sc
 sc
 LN
 qG
-pq
+pI
 Ml
 Ml
 Ml
@@ -50319,7 +50316,7 @@ tn
 se
 pq
 qG
-px
+pH
 ok
 Fv
 Oj
@@ -50621,7 +50618,7 @@ tn
 sf
 pq
 qG
-pq
+pI
 oo
 Oj
 Oj
@@ -50923,7 +50920,7 @@ tn
 sj
 pq
 qG
-px
+pH
 ov
 Oj
 Oj
@@ -51225,9 +51222,9 @@ tn
 sj
 pq
 qG
-pq
-ox
-Oj
+Er
+oH
+Jw
 Oj
 Oj
 Oj
@@ -56344,7 +56341,7 @@ oT
 qg
 qS
 rm
-rm
+yE
 tU
 vO
 xY
