@@ -247,6 +247,9 @@
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
 	},
+/obj/cable{
+	icon_state = "4-8"
+	},
 /turf/simulated/floor/purple,
 /area/station/science)
 "bs" = (
@@ -582,13 +585,14 @@
 /turf/space,
 /area/shuttle/research/outpost)
 "dL" = (
-/obj/machinery/vending/electronics,
 /obj/machinery/light{
 	dir = 8;
 	icon_state = "tube1";
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/rkit,
+/obj/item/electronics/scanner,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "dP" = (
@@ -2934,12 +2938,16 @@
 /area/station/bridge)
 "uD" = (
 /obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable,
+/obj/cable{
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/purple,
 /area/station/science)
 "uE" = (
@@ -2966,7 +2974,7 @@
 /area/station/hallway/secondary/entry)
 "uL" = (
 /obj/decal/cleanable/dirt,
-/obj/machinery/chem_dispenser/alcohol/ultra,
+/obj/machinery/chem_dispenser/alcohol/bar,
 /turf/simulated/floor/carpet/red/standard/edge/north,
 /area/station/bridge)
 "uN" = (
@@ -3070,15 +3078,8 @@
 /turf/simulated/floor/airless/plating/catwalk,
 /area/mining/magnet)
 "vJ" = (
-/obj/decal/cleanable/dirt,
-/obj/storage/crate/clown,
-/obj/item/peripheral/videocard,
-/obj/item/storage/pill_bottle/cyberpunk,
-/obj/item/reagent_containers/food/snacks/pie/cream,
-/obj/decal/cleanable/molten_item,
-/obj/item/storage/goodybag,
-/obj/item/pen/crayon/rainbow,
-/turf/simulated/floor/plating/random,
+/obj/machinery/computer/barcode/qm,
+/turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "vL" = (
 /obj/machinery/processor,
@@ -3651,6 +3652,13 @@
 /area/station/quartermaster/office)
 "zN" = (
 /obj/decal/cleanable/dirt,
+/obj/storage/crate/clown,
+/obj/item/peripheral/videocard,
+/obj/item/storage/pill_bottle/cyberpunk,
+/obj/item/reagent_containers/food/snacks/pie/cream,
+/obj/decal/cleanable/molten_item,
+/obj/item/storage/goodybag,
+/obj/item/pen/crayon/rainbow,
 /obj/cable{
 	icon_state = "1-8"
 	},
@@ -3885,6 +3893,12 @@
 	},
 /obj/cable,
 /obj/machinery/power/apc/autoname_south,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/engine{
 	allows_vehicles = 0
 	},
@@ -4239,6 +4253,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
+"EB" = (
+/obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon20_to_1_end,
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/artifact)
 "EC" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/landmark/start/job/medical_doctor,
@@ -4947,13 +4965,17 @@
 /area/station/hallway/secondary/entry)
 "Jy" = (
 /obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
 	icon_state = "0-2"
 	},
 /obj/cable,
 /obj/landmark/gps_waypoint,
+/obj/cable{
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
 /turf/simulated/floor/purple,
 /area/station/science)
 "JB" = (
@@ -5405,7 +5427,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/cafeteria)
 "ML" = (
-/obj/landmark/start/job/medical_doctor,
+/obj/machinery/manufacturer/medical,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "MM" = (
@@ -5557,11 +5579,6 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "NO" = (
-/obj/machinery/door_control{
-	id = "kitchen_shutter";
-	name = "Kitchen Shutter Control";
-	pixel_x = -26
-	},
 /obj/machinery/chem_dispenser/chemical,
 /obj/item/reagent_containers/glass/beaker/large,
 /turf/simulated/floor/specialroom/bar,
@@ -5701,6 +5718,12 @@
 	icon_state = "tube1";
 	layer = 9.1;
 	pixel_y = 21
+	},
+/obj/machinery/door_control{
+	id = "kitchen_shutter";
+	name = "Kitchen Shutter Control";
+	pixel_x = 1;
+	pixel_y = 24
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
@@ -6068,6 +6091,7 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "Sn" = (
+/obj/landmark/start/job/medical_doctor,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "Sr" = (
@@ -78852,7 +78876,7 @@ RZ
 RZ
 RZ
 RZ
-RZ
+EB
 Rf
 Rf
 Rf
@@ -79751,7 +79775,7 @@ fK
 gj
 gS
 dv
-hv
+ht
 RZ
 WA
 tT
