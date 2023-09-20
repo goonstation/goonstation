@@ -49,13 +49,14 @@
 		..()
 		owner = M
 		hud = new()
-		onAttach()
+		if(owner)
+			onAttach(owner)
 
 	disposing()
 		for (var/atom/movable/screen/S in hud.objects)
 			if (hasvar(S, "master") && S:master == src)
 				S:master = null
-		onRemove()
+		onRemove(owner)
 		hud.clear_master()
 		hud.mobs -= src
 
@@ -79,15 +80,15 @@
 			src.updateText(0, src.x_occupied, src.y_occupied)
 
 	/// Called just before we're removed from a mob
-	proc/onRemove()
+	proc/onRemove(mob/from_who)
 		SHOULD_CALL_PARENT(TRUE)
-		owner?.detach_hud(hud)
+		from_who?.detach_hud(hud)
 
-	proc/onAttach()
+	proc/onAttach(mob/to_whom)
 		SHOULD_CALL_PARENT(TRUE)
-		owner.attach_hud(hud)
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
+		to_whom.attach_hud(hud)
+		if (ishuman(to_whom))
+			var/mob/living/carbon/human/H = to_whom
 			H.hud?.update_ability_hotbar()
 
 	proc/updateCounters()
@@ -212,7 +213,7 @@
 		bonus = 0
 
 	proc/transferOwnership(var/newbody)
-		onRemove()
+		onRemove(owner)
 		owner = newbody
 		onAttach(newbody)
 
@@ -966,7 +967,7 @@
 				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
 			if (!castcheck(target))
 				src.holder.locked = FALSE
-				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			var/datum/abilityHolder/localholder = src.holder
 			. = cast(target, params)
 			if(!QDELETED(localholder))

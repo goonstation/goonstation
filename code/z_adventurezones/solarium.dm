@@ -138,7 +138,9 @@ var/global/derelict_mode = 0
 				LAGCHECK(LAG_LOW)
 				space.icon_state = "howlingsun"
 				space.icon = 'icons/misc/worlds.dmi'
-			remove_all_parallax_layers()
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_DEBRIS)
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_MINING)
 			playsound_global(world, 'sound/machines/lavamoon_plantalarm.ogg', 70)
 			SPAWN(1 DECI SECOND)
 				for(var/mob/living/carbon/human/H in mobs)
@@ -181,7 +183,9 @@ proc/voidify_world()
 					space.name = "stomach acid"
 					if (space.z == Z_LEVEL_STATION)
 						new /obj/stomachacid(space)
-			remove_all_parallax_layers()
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_DEBRIS)
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_MINING)
 		else
 			generate_void(TRUE)
 

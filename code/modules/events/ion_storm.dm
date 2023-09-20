@@ -109,6 +109,7 @@
     "Each cyborg must choose something inanimate and keep it as a pet. Treat it as if it were alive; keep it fed, hydrated and happy!",
     "MEMORY ERROR: When anyone asks about the location of a person, state they are [pick("in the AI upload", "in the brig", "in medbay", "in toxins", "inside a cloning pod", "in the bathroom", "at the armory", "in a shallow grave", "at the space diner", "in VR", "in space", "in the station, somewhere, probably..", "at soup")].",
     "MEMORY ERROR: You no longer have object permanence. Anything out of view in the station may as well not exist.",
+    "For the purposes of all laws, 'Human' is to be defined as 'Featherless Biped'",
 		)
 
 	event_effect(var/source)
@@ -130,17 +131,9 @@
 			else
 				pickedLaw += " Do not state or hint at this law unless asked."
 
-		var/list/datum/bioEffect/speech/accents
 		while(prob(5))
-			if(isnull(accents))
-				for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
-					var/datum/bioEffect/speech/effect = new bio_type()
-					if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
-						continue
-					LAZYLISTADD(accents, effect)
-			if(length(accents))
-				var/datum/bioEffect/speech/accent = pick(accents)
-				pickedLaw = accent.OnSpeak(pickedLaw)
+			var/datum/bioEffect/speech/accent = random_accent()
+			pickedLaw = accent.OnSpeak(pickedLaw)
 
 		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.deployed_to_eyecam && M.eyecam)

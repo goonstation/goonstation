@@ -1271,8 +1271,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	is_heat_resistant()
 		if (!get_health_holder("burn"))
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 	ex_act(var/severity)
 		..() // Logs.
@@ -1376,6 +1376,11 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		else
 			if (src.critter_basic_attack(target))
 				src.ai_attack_count += 1
+
+	/// Used for generic critter mobAI - override if your critter needs additional behaviour for eating
+	proc/critter_eat(var/obj/item/target)
+		target.Eat(src, src, TRUE)
+
 
 	/// How the critter should attack normally
 	proc/critter_basic_attack(var/mob/target)
@@ -1546,7 +1551,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 /mob/living/critter/Logout()
 	..()
 	//no key should mean that they transferred somewhere else and aren't just temporarily logged out
-	if (src.ai && !src.ai.enabled && src.is_npc && !src.key)
+	if (src.ai && !src.ai.enabled && src.is_npc && !src.key && !QDELETED(src))
 		ai.enable()
 
 /mob/living/critter/Login()
@@ -1598,3 +1603,6 @@ ABSTRACT_TYPE(/mob/living/critter/robotic)
 
 	electric_expose(var/power = 1)
 		return 0
+
+	is_heat_resistant()
+		return TRUE

@@ -1107,3 +1107,12 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /datum/computer/file/record/radioship/testlog2/New()
 	..()
 	fields = strings("radioship/radioship_records.txt","log_2")
+
+
+
+/obj/item/device/radio/intercom/radiostation
+	name = "broadcast radio"
+	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."
+	device_color = "#E52780"
+	icon = 'icons/obj/radiostation.dmi'
+	icon_state = "mixtable-1"

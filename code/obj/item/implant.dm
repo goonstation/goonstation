@@ -923,6 +923,17 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 				..()
 				src.AddComponent(/datum/component/radioactive, 50, FALSE, FALSE, 0)
 
+	glass_shard
+		name = "shrapnel"
+		icon = 'icons/obj/scrap.dmi'
+		desc = "A shattered piece of glass shrapnel. Ow."
+		icon_state = "glass_shrapnel"
+		leaves_wound = FALSE
+
+		New()
+			..()
+			implant_overlay = null
+
 	body_visible
 		bleed_time = 0
 		leaves_wound = FALSE
@@ -1640,6 +1651,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	name = "microbomb implanter"
 	icon_state = "implanter1-g"
 	sneaky = TRUE
+	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, an explosion relative to the amount of microbombs in them will occur. Suiciding will cause no explosion."})
 
 	New()
 		var/obj/item/implant/revenge/microbomb/newbomb = new/obj/item/implant/revenge/microbomb( src )
@@ -1651,6 +1663,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	name = "flyzapper implanter"
 	icon_state = "implanter1-g"
 	sneaky = TRUE
+	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, a ball of lightning relative to the amount of flyzapper implants in them will occur. Suiciding will cause no lightning."})
 
 	New()
 		src.imp = new /obj/item/implant/revenge/zappy(src)
@@ -1833,247 +1846,6 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 		return
 	else
 		return ..()
-
-/* =============================================================== */
-/* ------------------------- Implant Pad ------------------------- */
-/* =============================================================== */
-
-TYPEINFO(/obj/item/implantpad)
-	mats = 5
-
-/obj/item/implantpad
-	name = "implantpad"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "implantpad-0"
-	var/obj/item/implantcase/case = null
-	var/broadcasting = null
-	var/listening = 1
-	item_state = "electronic"
-	throw_speed = 1
-	throw_range = 5
-	w_class = W_CLASS_SMALL
-	desc = "A small device for analyzing implants."
-
-/obj/item/implantpad/proc/update()
-
-	if (src.case)
-		src.icon_state = "implantpad-1"
-	else
-		src.icon_state = "implantpad-0"
-	return
-
-/obj/item/implantpad/attack_hand(mob/user)
-
-	if ((src.case && (user.l_hand == src || user.r_hand == src)))
-		user.put_in_hand_or_drop(src.case)
-		src.case = null
-		src.add_fingerprint(user)
-		update()
-	else
-		if (src in user.contents)
-			SPAWN(0)
-				src.attack_self(user)
-				return
-		else
-			return ..()
-	return
-
-/obj/item/implantpad/attackby(obj/item/implantcase/C, mob/user)
-
-	if (istype(C, /obj/item/implantcase))
-		if (!( src.case ))
-			user.drop_item()
-			C.set_loc(src)
-			src.case = C
-	else
-		return
-	src.update()
-	return
-
-/obj/item/implantpad/attack_self(mob/user as mob)
-
-	src.add_dialog(user)
-	var/dat = "<B>Implant Mini-Computer:</B><HR>"
-	if (src.case)
-		if (src.case.imp)
-			if (istype(src.case.imp, /obj/item/implant/tracking ))
-				var/obj/item/implant/tracking/T = src.case.imp
-				dat += {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Tracking Beacon<BR>
-<b>Zone:</b> Spinal Column> 2-5 vertebrae<BR>
-<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<BR>
-<b>Life:</b> 10 minutes after death of host<BR>
-<b>Important Notes:</b> None<BR>
-<HR>
-<b>Implant Details:</b> <BR>
-<b>Function:</b> Continuously transmits low power signal on frequency- Useful for tracking.<BR>
-<b>Special Features:</b><BR>
-<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
-a malfunction occurs thereby securing safety of subject. The implant will melt and
-disintegrate into bio-safe elements.<BR>
-<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
-circuitry. As a result neurotoxins can cause massive damage.<HR>
-Implant Specifics:
-Frequency (144.1-148.9):
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(T.frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-
-ID (1-100):
-<A href='byond://?src=\ref[src];id=-10'>-</A>
-<A href='byond://?src=\ref[src];id=-1'>-</A> [T.id]
-<A href='byond://?src=\ref[src];id=1'>+</A>
-<A href='byond://?src=\ref[src];id=10'>+</A><BR>"}
-			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/freedom))
-				dat += {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Freedom Beacon<BR>
-<b>Zone:</b> Right Hand> Near wrist<BR>
-<b>Power Source:</b> Lithium Ion Battery<BR>
-<b>Life:</b> optimum 5 uses<BR>
-<b>Important Notes: <font color='red'>Illegal</font></b><BR>
-<HR>
-<b>Implant Details:</b> <BR>
-<b>Function:</b> Transmits a specialized cluster of signals to override handcuff locking
-mechanisms<BR>
-<b>Special Features:</b><BR>
-<i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system
-<BR>
-<b>Integrity:</b> The battery is extremely weak and commonly after injection its
-life can drive down to only 1 use.<HR>
-No Implant Specifics"}
-			else if (istype(src.case.imp, /obj/item/implant/sec))
-				dat += {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> T.U.R.D.S. Weapon Auth Implant<BR>
-<b>Zone:</b> Spinal Column> 2-5 vertebrae<BR>
-<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<BR>
-<b>Life:</b> 10 minutes after death of host<BR>
-<b>Important Notes:</b> Allows access to weapons equip with M.W.L. (Martian Weapon Lock) devices<BR>
-<HR>
-<b>Implant Details:</b> <BR>
-<b>Function:</b> Continuously transmits low power signal which communicates with M.W.L. systems.<BR>
-Range: 35-40 meters<BR>
-<b>Special Features:</b><BR>
-<i>Neuro-Safe</i>- Specialized shell absorbs excess voltages self-destructing the chip if
-a malfunction occurs thereby securing safety of subject. The implant will melt and
-disintegrate into bio-safe elements.<BR>
-<b>Integrity:</b> Gradient creates slight risk of being overcharged and frying the
-circuitry. As a result neurotoxins can cause massive damage.<BR>
-<i>Self-Destruct</i>- This implant will self terminate upon request from an authorized Command Implant <HR>
-<b>Level: 1 Auth</b>"}
-			else if (istype(src.case.imp, /obj/item/implant/counterrev))
-				dat += {"
-<b>Implant Specifications:</b><BR>
-<b>Name:</b> Counter-Revolutionary Implant<BR>
-<b>Zone:</b> Spinal Column> 5-7 vertebrae<BR>
-<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<BR>
-<b>Important Notes:</b> Will make the crewmember loyal to the command staff and prevent thoughts of rebelling.<BR>"}
-			else if (istype(src.case.imp, /obj/item/implant/revenge/microbomb))
-				dat += {"
-<b>Implant Specifications:</b><br>
-<b>Name:</b> Microbomb Implant<br>
-<b>Zone:</b> Base of Skull<br>
-<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
-<b>Important Notes: <font color='red'>Illegal</font></b><BR><HR>"}
-			else if (istype(src.case.imp, /obj/item/implant/robotalk))
-				dat += {"
-<b>Implant Specifications:</b><br>
-<b>Name:</b> Machine Language Translator<br>
-<b>Zone:</b> Cerebral Cortex<br>
-<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
-<b>Important Notes:</b> Enables the host to transmit, receive and understand digital transmissions used by most mechanoids.<BR>"}
-			else if (istype(src.case.imp, /obj/item/implant/bloodmonitor))
-				dat += {"
-<b>Implant Specifications:</b><br>
-<b>Name:</b> Blood Monitor<br>
-<b>Zone:</b> Jugular Vein<br>
-<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
-<b>Important Notes:</b> Warns the host of any detected infections or foreign substances in the bloodstream.<BR>"}
-			else if (istype(src.case.imp, /obj/item/implant/mindhack))
-				dat += {"
-<b>Implant Specifications:</b><br>
-<b>Name:</b> Mind Hack<br>
-<b>Zone:</b> Brain Stem<br>
-<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
-<b>Important Notes:</b> Injects an electrical signal directly into the brain that compels obedience in human subjects for a short time. Most minds fight off the effects after approx. 25 minutes.<BR>"}
-			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
-				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
-				dat += {"
-<b>Implant Specifications:</b><br>
-<b>Name:</b> Remote Signaler<br>
-<b>Zone:</b> Left hand near wrist<br>
-<b>Power Source:</b> Nervous System Ion Withdrawal Gradient<br>
-<HR>
-<b>Implant Details:</b> <BR>
-<b>Function:</b> Transmits a radio signal on a configurable frequency.
-<b>Special Features:</b><BR>
-<i>Neuro-Scan</i>- Analyzes certain shadow signals in the nervous system<BR>
-<HR>
-Implant Specifics:<BR>
-Frequency (144.1-148.9):
-<A href='byond://?src=\ref[src];freq=-10'>-</A>
-<A href='byond://?src=\ref[src];freq=-2'>-</A> [format_frequency(implant.signaler.frequency)]
-<A href='byond://?src=\ref[src];freq=2'>+</A>
-<A href='byond://?src=\ref[src];freq=10'>+</A><BR>
-
-ID (1-100):
-<A href='byond://?src=\ref[src];id=-10'>-</A>
-<A href='byond://?src=\ref[src];id=-1'>-</A> [implant.signaler.code]
-<A href='byond://?src=\ref[src];id=1'>+</A>
-<A href='byond://?src=\ref[src];id=10'>+</A><BR>"}
-			else
-				dat += "Implant ID not in database"
-		else
-			dat += "The implant casing is empty."
-	else
-		dat += "Please insert an implant casing!"
-	user.Browse(dat, "window=implantpad")
-	onclose(user, "implantpad")
-	return
-
-/obj/item/implantpad/Topic(href, href_list)
-	..()
-	if (usr.stat)
-		return
-	if ((usr.contents.Find(src) || (in_interact_range(src, usr) && istype(src.loc, /turf))))
-		src.add_dialog(usr)
-		if (!istype(src.case, /obj/item/implantcase))
-			return
-		if (href_list["freq"])
-			var/frequency_change = text2num_safe(href_list["freq"])
-			if (istype(src.case.imp, /obj/item/implant/tracking))
-				var/obj/item/implant/tracking/implant = src.case.imp
-				implant.frequency += frequency_change
-				implant.frequency = sanitize_frequency(implant.frequency)
-			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
-				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
-				implant.signaler.frequency += frequency_change
-				implant.signaler.frequency = sanitize_frequency(implant.signaler.frequency)
-		if (href_list["id"])
-			var/id_change = text2num_safe(href_list["id"])
-			if (istype(src.case.imp, /obj/item/implant/tracking))
-				var/obj/item/implant/tracking/implant = src.case.imp
-				implant.id += id_change
-				implant.id = clamp(implant.id, 1, 100)
-			else if (istype(src.case.imp, /obj/item/implant/emote_triggered/signaler))
-				var/obj/item/implant/emote_triggered/signaler/implant = src.case.imp
-				implant.signaler.code += id_change
-				implant.signaler.code = clamp(implant.signaler.code, 1, 100)
-		if (ismob(src.loc))
-			attack_self(src.loc)
-		else
-			for(var/mob/M in viewers(1, src))
-				if (M.client)
-					src.attack_self(M)
-				//Foreach goto(290)
-		src.add_fingerprint(usr)
-	else
-		usr.Browse(null, "window=implantpad")
-		return
-	return
 
 /* =============================================================== */
 /* ------------------------- Implant Gun ------------------------- */

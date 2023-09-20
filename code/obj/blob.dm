@@ -739,7 +739,7 @@
 		if (!Target)
 			return 1
 
-		var/obj/projectile/L = initialize_projectile_ST(src, current_projectile, Target)
+		var/obj/projectile/L = initialize_projectile_pixel_spread(src, current_projectile, Target)
 
 		if (!L)
 			return

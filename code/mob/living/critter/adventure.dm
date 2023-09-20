@@ -12,6 +12,7 @@
 	name = "transposed scientist"
 	real_name = "transposed scientist"
 	desc = "A fellow who seems to have been shunted between dimensions. Not a good state to be in."
+	icon = 'icons/mob/critter/humanoid/crunched.dmi'
 	icon_state = "crunched"
 	icon_state_dead = "crunched"
 	hand_count = 2
@@ -112,6 +113,7 @@
 	name = "darkness"
 	real_name = "darkness"
 	desc = "Oh god."
+	icon = 'icons/mob/critter/humanoid/shade.dmi'
 	icon_state = "shade"
 	icon_state_dead = "shade" //doesn't have a dead icon, just fades away
 	death_text = null //has special spooky voice lines
@@ -432,6 +434,7 @@
 	name = "town guard"
 	real_name = "town guard"
 	desc = "An angry man dressed in medieval armor."
+	icon = 'icons/mob/critter/humanoid/town_guard.dmi'
 	icon_state = "townguard"
 	icon_state_dead = "townguard-dead"
 	hand_count = 2

@@ -51,8 +51,6 @@
 "ah" = (
 /obj/lattice,
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/space,
@@ -92,11 +90,9 @@
 	},
 /obj/lattice,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4";
 	pixel_y = 0
 	},
@@ -333,17 +329,6 @@
 	},
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
-"aV" = (
-/obj/lattice{
-	icon_state = "lattice-dir"
-	},
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/space,
-/area/space)
 "aW" = (
 /turf/simulated/shuttle/wall{
 	dir = 5;
@@ -459,8 +444,6 @@
 "bt" = (
 /obj/lattice,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/space,
@@ -1921,10 +1904,10 @@
 /area/space)
 "fz" = (
 /obj/table/wood/auto,
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/shoes/sandal,
-/obj/item/clothing/shoes/sandal,
+/obj/item/clothing/shoes/sandal/magic/wizard,
+/obj/item/clothing/shoes/sandal/magic/wizard,
+/obj/item/clothing/shoes/sandal/magic/wizard,
+/obj/item/clothing/shoes/sandal/magic/wizard,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor5"
 	},
@@ -2054,9 +2037,7 @@
 	},
 /area/space)
 "fT" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
+/obj/npc/trader/random,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -2099,9 +2080,7 @@
 /area/space)
 "ga" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2347,7 +2326,6 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/warp_beacon{
@@ -2881,7 +2859,6 @@
 	icon_state = "catwalk_cross"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/space,
@@ -2892,8 +2869,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/space,
@@ -2905,8 +2880,6 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/space,
@@ -2927,8 +2900,6 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/space,
@@ -2940,7 +2911,6 @@
 	icon_state = "catwalk_cross"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/space,
@@ -3087,8 +3057,6 @@
 "iK" = (
 /obj/lattice,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
@@ -3150,13 +3118,9 @@
 "iT" = (
 /obj/lattice,
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/light/runway_light/delay3,
@@ -3265,8 +3229,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/space,
@@ -3413,13 +3375,7 @@
 /area/space)
 "jz" = (
 /obj/table/wood/auto,
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
+/obj/item/device/radio/intercom/radiostation,
 /turf/simulated/floor/carpet/grime,
 /area/space)
 "jA" = (
@@ -4071,8 +4027,6 @@
 	icon_state = "lattice-dir-b"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/space,
@@ -4080,8 +4034,6 @@
 "lj" = (
 /obj/lattice,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/space,
@@ -4582,11 +4534,7 @@
 /turf/space,
 /area/space)
 "mz" = (
-/obj/npc/trader/robot{
-	name = "Thrifty B.O.B.";
-	picture = "loungebuddy.png";
-	trader_area = "/area/evilreaver/storage/engineering"
-	},
+/obj/npc/trader/robot/robuddy/salvage,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
 /area/space)
@@ -7164,11 +7112,7 @@
 	name = "weird meat"
 	},
 /obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget,
@@ -7714,7 +7658,6 @@
 	},
 /obj/map/light/dimred,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4";
 	pixel_y = 0
 	},
@@ -7767,8 +7710,6 @@
 /area/space)
 "ut" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/redblack{
@@ -7782,7 +7723,6 @@
 	},
 /obj/map/light/dimred,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -7853,7 +7793,6 @@
 	icon_state = "datasec"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4";
 	pixel_y = 0
 	},
@@ -7897,8 +7836,6 @@
 /area/space)
 "uF" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
@@ -7914,7 +7851,6 @@
 	name = "Security Records"
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -7952,7 +7888,6 @@
 	},
 /obj/map/light/dimred,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4";
 	pixel_y = 0
 	},
@@ -7981,7 +7916,6 @@
 	},
 /obj/map/light/dimred,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/data_terminal,
@@ -8054,7 +7988,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4";
 	pixel_y = 0
 	},
@@ -8068,13 +8001,9 @@
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/redblack{
@@ -8084,29 +8013,21 @@
 /area/space)
 "va" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/redblack,
 /area/space)
 "vb" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/space)
 "vc" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/machinery/light/small/floor,
@@ -8114,8 +8035,6 @@
 /area/space)
 "vd" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/darkblue,
@@ -8126,13 +8045,9 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
@@ -8150,7 +8065,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/unsimulated/floor/circuit/red,
@@ -8195,8 +8109,6 @@
 	dir = 8
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor/red,
@@ -8217,8 +8129,6 @@
 	dir = 4
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/red,
@@ -8325,7 +8235,6 @@
 "vB" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/unsimulated/floor/darkblue,
@@ -8404,16 +8313,12 @@
 /area/space)
 "vO" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/black,
 /area/space)
 "vP" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black{
@@ -8425,8 +8330,6 @@
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor/black{
@@ -8435,8 +8338,6 @@
 /area/space)
 "vR" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black{
@@ -8448,8 +8349,6 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/black,
@@ -8728,21 +8627,15 @@
 /area/space)
 "wF" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/black,
 /area/space)
 "wG" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black{
@@ -8751,13 +8644,9 @@
 /area/space)
 "wH" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/black{
@@ -8766,8 +8655,6 @@
 /area/space)
 "wI" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black{
@@ -8779,8 +8666,6 @@
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/black,
@@ -8859,14 +8744,6 @@
 	},
 /turf/unsimulated/floor/red,
 /area/space)
-"wU" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 2;
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/red,
-/area/space)
 "wV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -8922,8 +8799,6 @@
 /area/space)
 "xe" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/machinery/door/airlock/pyro/glass{
@@ -9404,16 +9279,12 @@
 /area/space)
 "ya" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/red,
 /area/space)
 "yc" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor/red,
@@ -9639,7 +9510,6 @@
 "yH" = (
 /obj/machinery/power/smes/magical,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /obj/cable{
@@ -9653,7 +9523,6 @@
 	icon_state = "term"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4";
 	pixel_y = 0
 	},
@@ -9661,8 +9530,6 @@
 /area/space)
 "yJ" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/floor/plating/random,
@@ -9682,8 +9549,6 @@
 /area/space)
 "yM" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/machinery/light{
@@ -9695,8 +9560,6 @@
 /area/space)
 "yN" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/stairs/dark/wide{
@@ -9706,8 +9569,6 @@
 /area/space)
 "yO" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black,
@@ -9777,8 +9638,6 @@
 /area/space)
 "yX" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/plating/random,
@@ -9789,8 +9648,6 @@
 	name = "power substation"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black,
@@ -9801,8 +9658,6 @@
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/black/grime,
@@ -10879,8 +10734,6 @@
 	icon_state = "2-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/red,
@@ -13501,11 +13354,11 @@ wa
 wj
 wx
 wF
-wU
+ym
 xe
-wU
-wU
-wU
+ym
+ym
+ym
 xZ
 yl
 ai
@@ -13629,9 +13482,9 @@ aa
 aa
 ae
 ah
-aV
-aV
-aV
+lo
+lo
+lo
 bt
 th
 tm
@@ -13933,9 +13786,9 @@ aa
 aa
 ae
 lj
-aV
-aV
-aV
+lo
+lo
+lo
 bt
 th
 to
@@ -14109,11 +13962,11 @@ we
 wn
 wB
 wJ
-wU
+ym
 xe
-wU
-wU
-wU
+ym
+ym
+ym
 yc
 yn
 ai

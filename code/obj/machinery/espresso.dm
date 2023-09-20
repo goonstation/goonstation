@@ -140,7 +140,7 @@ TYPEINFO(/obj/machinery/espresso_machine)
 		if (isAI(user) || !can_reach(user, O) || BOUNDS_DIST(user, src) > 1 || !can_act(user) )
 			return
 
-		src.attackby(O, user)
+		src.Attackby(O, user)
 
 	attack_hand(mob/user)
 		if (can_reach(user,src) && !(status & (NOPOWER|BROKEN)))

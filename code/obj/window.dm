@@ -8,7 +8,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	desc = "A window."
 	density = 1
 	stops_space_move = 1
-	dir = 5 //full tile
+	dir = NORTHEAST //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
@@ -33,7 +33,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	var/image/damage_image = null
 	default_material = "glass"
 	mat_changename = TRUE
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = ANCHORED
@@ -42,8 +42,10 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	the_tuff_stuff
 		explosion_resistance = 3
 
-	New()
-		..()
+	New(loc, dir_override=null)
+		..(loc)
+		if(!isnull(dir_override))
+			src.dir = dir_override
 		src.ini_dir = src.dir
 		update_nearby_tiles(need_rebuild=1,selfnotify=1) // self notify to stop fluid jankness
 		if (default_reinforcement)
@@ -462,6 +464,11 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 
 		else if (iswrenchingtool(W) && src.state == 0 && !src.anchored)
 			actions.start(new /datum/action/bar/icon/deconstruct_window(src, W), user)
+		else if (src.health < src.health_max && istype(W, /obj/item/sheet) && W.material.isSameMaterial(src.material))
+			var/time = 4 SECONDS
+			if (user.traitHolder.hasTrait("carpenter") || user.traitHolder.hasTrait("training_engineer"))
+				time = 2 SECONDS
+			SETUP_GENERIC_ACTIONBAR(user, src, time, /obj/window/proc/fix_window, list(W), null, null, "<span class='notice'> [user] repairs \the [src] with \the [W] </span>", null)
 		else
 			attack_particle(user,src)
 			playsound(src.loc, src.hitsound , 75, 1)
@@ -565,6 +572,12 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			T.selftilenotify() //for fluids
 
 		return 1
+
+	proc/fix_window(var/obj/item/sheet/S)
+		health = health_max
+		UpdateIcon(src)
+		if (S)
+			S.change_stack_amount(-1)
 
 
 /datum/action/bar/icon/deconstruct_window
@@ -755,7 +768,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /obj/window/auto
 	icon = 'icons/obj/window_pyro.dmi'
 	icon_state = "mapwin"
-	dir = 5
+	dir = NORTHEAST
 	health_multiplier = 2
 	alpha = 160
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
@@ -888,8 +901,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	New()
 		..()
 		SPAWN(1 DECI SECOND)
-			ini_dir = 5//gurgle
-			set_dir(5)//grumble
+			ini_dir = NORTHEAST//gurgle
+			set_dir(NORTHEAST)//grumble
 
 	smash(var/actuallysmash)
 		if(actuallysmash)
@@ -1017,7 +1030,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		opacity = 0
 		icon_state = "safetyrail"
 		layer = EFFECTS_LAYER_BASE
-		dir = 1
+		dir = NORTH
 		default_material = "steel"
 
 // flock windows

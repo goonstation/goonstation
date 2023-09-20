@@ -459,9 +459,11 @@
 	src.mind.violated_hippocratic_oath = 1
 	return 1
 
+/// 'this man' vs 'this person'
 /proc/man_or_woman(var/mob/subject)
 	return subject.get_pronouns().preferredGender
 
+/// 'their cookie' vs 'her cookie'
 /proc/his_or_her(var/mob/subject)
 	return subject.get_pronouns().possessive
 
@@ -471,15 +473,35 @@
 /proc/he_or_she(var/mob/subject)
 	return subject.get_pronouns().subjective
 
+/// "they're outside" vs "he's outside"
 /proc/hes_or_shes(var/mob/subject)
 	var/datum/pronouns/pronouns = subject.get_pronouns()
 	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
+/// 'they are' vs 'he is'
 /proc/is_or_are(var/mob/subject)
-	return (subject.get_pronouns().pluralize ? "are" : "is")
+	return subject.get_pronouns().pluralize ? "are" : "is"
+
+/// 'they have' vs 'he has'
+/proc/has_or_have(var/mob/subject)
+	return subject.get_pronouns().pluralize ? "have" : "has"
 
 /proc/himself_or_herself(var/mob/subject)
 	return subject.get_pronouns().reflexive
+
+/// "he doesn't" vs "they don't"
+///
+/// should arguably just be 'does_or_doesnt' but i figure this is by far the dominant use of that so I'm rolling them together
+/proc/he_or_she_dont_or_doesnt(mob/subject)
+	return "[he_or_she(subject)] do[blank_or_es(subject)]n't"
+
+/// 'they run' vs 'he runs'
+/proc/blank_or_s(mob/subject)
+	return subject.get_pronouns().pluralize ? "" : "s"
+
+/// 'they smash' vs 'he smashes'
+/proc/blank_or_es(mob/subject)
+	return subject.get_pronouns().pluralize ? "" : "es"
 
 /mob/proc/get_explosion_resistance()
 	return min(GET_ATOM_PROPERTY(src, PROP_MOB_EXPLOPROT), 100) / 100
@@ -493,19 +515,19 @@
 
 	if (src.wear_mask)
 		src.wear_mask.add_blood(whose)
+		src.update_bloody_mask()
 	if (src.head)
 		src.head.add_blood(whose)
+		src.update_bloody_head()
 	if (src.glasses && prob(33))
 		src.glasses.add_blood(whose)
 	if (prob(15))
 		if (src.wear_suit)
 			src.wear_suit.add_blood(whose)
+			src.update_bloody_suit()
 		else if (src.w_uniform)
 			src.w_uniform.add_blood(whose)
-
-	src.update_clothing()
-	src.update_body()
-	return
+			src.update_bloody_uniform()
 
 /mob/proc/spread_blood_hands(mob/whose)
 	return
@@ -516,8 +538,10 @@
 
 	if (src.gloves)
 		src.gloves.add_blood(whose)
+		src.update_bloody_gloves()
 	else
 		src.add_blood(whose)
+		src.update_bloody_hands()
 	if (src.equipped())
 		var/obj/item/I = src.equipped()
 		if (istype(I))
@@ -525,12 +549,10 @@
 	if (prob(15))
 		if (src.wear_suit)
 			src.wear_suit.add_blood(whose)
+			src.update_bloody_suit()
 		else if (src.w_uniform)
 			src.w_uniform.add_blood(whose)
-
-	src.update_clothing()
-	src.update_body()
-	return
+			src.update_bloody_uniform()
 
 /mob/proc/is_bleeding()
 	return 0
@@ -672,52 +694,52 @@
 				old.u_equip(CI5)
 
 			old.u_equip(CI)
-			newbody.equip_if_possible(CI, slot_w_uniform) // Has to be at the top of the list, naturally.
-			if (CI2) newbody.equip_if_possible(CI2, slot_belt)
-			if (CI3) newbody.equip_if_possible(CI3, slot_wear_id)
-			if (CI4) newbody.equip_if_possible(CI4, slot_l_store)
-			if (CI5) newbody.equip_if_possible(CI5, slot_r_store)
+			newbody.equip_if_possible(CI, SLOT_W_UNIFORM) // Has to be at the top of the list, naturally.
+			if (CI2) newbody.equip_if_possible(CI2, SLOT_BELT)
+			if (CI3) newbody.equip_if_possible(CI3, SLOT_WEAR_ID)
+			if (CI4) newbody.equip_if_possible(CI4, SLOT_L_STORE)
+			if (CI5) newbody.equip_if_possible(CI5, SLOT_R_STORE)
 
 		if (old.wear_suit)
 			var/obj/item/CI6 = old.wear_suit
 			old.u_equip(CI6)
-			newbody.equip_if_possible(CI6, slot_wear_suit)
+			newbody.equip_if_possible(CI6, SLOT_WEAR_SUIT)
 		if (old.head)
 			var/obj/item/CI7 = old.head
 			old.u_equip(CI7)
-			newbody.equip_if_possible(CI7, slot_head)
+			newbody.equip_if_possible(CI7, SLOT_HEAD)
 		if (old.wear_mask)
 			var/obj/item/CI8 = old.wear_mask
 			old.u_equip(CI8)
-			newbody.equip_if_possible(CI8, slot_wear_mask)
+			newbody.equip_if_possible(CI8, SLOT_WEAR_MASK)
 		if (old.ears)
 			var/obj/item/CI9 = old.ears
 			old.u_equip(CI9)
-			newbody.equip_if_possible(CI9, slot_ears)
+			newbody.equip_if_possible(CI9, SLOT_EARS)
 		if (old.glasses)
 			var/obj/item/CI10 = old.glasses
 			old.u_equip(CI10)
-			newbody.equip_if_possible(CI10, slot_glasses)
+			newbody.equip_if_possible(CI10, SLOT_GLASSES)
 		if (old.gloves)
 			var/obj/item/CI11 = old.gloves
 			old.u_equip(CI11)
-			newbody.equip_if_possible(CI11, slot_gloves)
+			newbody.equip_if_possible(CI11, SLOT_GLOVES)
 		if (old.shoes)
 			var/obj/item/CI12 = old.shoes
 			old.u_equip(CI12)
-			newbody.equip_if_possible(CI12, slot_shoes)
+			newbody.equip_if_possible(CI12, SLOT_SHOES)
 		if (old.back)
 			var/obj/item/CI13 = old.back
 			old.u_equip(CI13)
-			newbody.equip_if_possible(CI13, slot_back)
+			newbody.equip_if_possible(CI13, SLOT_BACK)
 		if (old.l_hand)
 			var/obj/item/CI14 = old.l_hand
 			old.u_equip(CI14)
-			newbody.equip_if_possible(CI14, slot_l_hand)
+			newbody.equip_if_possible(CI14, SLOT_L_HAND)
 		if (old.r_hand)
 			var/obj/item/CI15 = old.r_hand
 			old.u_equip(CI15)
-			newbody.equip_if_possible(CI15, slot_r_hand)
+			newbody.equip_if_possible(CI15, SLOT_R_HAND)
 
 	SPAWN(2 SECONDS) // Necessary.
 		if (newbody)

@@ -19,7 +19,8 @@
 	var/obj/machinery/nuclearbomb/the_bomb = null
 	var/bomb_check_timestamp = 0 // See check_finished().
 	var/const/agents_possible = 10 //If we ever need more syndicate agents. cogwerks - raised from 5
-
+	var/podbay_authed = FALSE // Whether or not we authed our podbay yet
+	var/obj/machinery/computer/battlecruiser_podbay/auth_computer = null // The auth computer in the cairngorm so we can auth it
 
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -231,7 +232,7 @@
 
 		if(synd_mind == leader_mind)
 			var/mob/living/carbon/human/H = synd_mind.current
-			H.equip_if_possible(new /obj/item/device/audio_log/nuke_briefing(H, concatenated_location_names), H.slot_r_hand)
+			H.equip_if_possible(new /obj/item/device/audio_log/nuke_briefing(H, concatenated_location_names), SLOT_R_HAND)
 
 	the_bomb = new /obj/machinery/nuclearbomb(pick_landmark(LANDMARK_NUCLEAR_BOMB))
 	OTHER_START_TRACKING_CAT(the_bomb, TR_CAT_GHOST_OBSERVABLES) // STOP_TRACKING done in bomb/disposing()
@@ -244,6 +245,9 @@
 	for(var/turf/T in landmarks[LANDMARK_SYNDICATE_BREACHING_CHARGES])
 		for(var/i = 1 to 5)
 			new /obj/item/breaching_charge/thermite(T)
+
+	for_by_tcl(computer,/obj/machinery/computer/battlecruiser_podbay)
+		auth_computer = computer
 
 	SPAWN(rand(waittime_l, waittime_h))
 		send_intercept()
@@ -421,6 +425,9 @@
 
 /datum/game_mode/nuclear/process()
 	set background = 1
+	if (!podbay_authed && ticker.round_elapsed_ticks >= 15 MINUTES)
+		auth_computer.authorize()
+		podbay_authed = TRUE
 	..()
 	return
 

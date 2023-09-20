@@ -33,6 +33,7 @@ TYPEINFO(/obj/item/saw)
 	w_class = W_CLASS_BULKY
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
+	leaves_slash_wound = TRUE
 	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
@@ -172,9 +173,9 @@ TYPEINFO(/obj/item/saw/syndie)
 			return
 		..()
 		if (src.active)
-			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 90, 0)
+			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 90, FALSE)
 		else
-			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, 0)
+			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, FALSE)
 
 	attack(mob/target, mob/user)
 		if(!active)

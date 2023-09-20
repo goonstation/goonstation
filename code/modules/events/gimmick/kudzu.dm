@@ -472,6 +472,7 @@
 	opacity = 0
 	pixel_x = -16
 	layer = MOB_LAYER - 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))
