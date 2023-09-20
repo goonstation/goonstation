@@ -113,11 +113,11 @@ Some labels are automatically assigned as well, and do certain things:
 - The `S-Needs-Reproducing` label is one put onto an issue report when the person trying to fix that particular bug can't recreate it, or wants to double check that this bug is actually in game and not a oneoff. Issues with this label for more than two weeks get automatically closed. The opposite of this label is `E-Verified`.
 
 The prefixes on the labels are used to group labels together by category, for easier scrolling. They are:
-- `A-`, generally for category of the change, such as `A-Clothing` or `A-Mapping`.
-- `C-`, slightly more broad categories, like `C-Bug`, `C-QoL`, `C-Revert`, `C-Sprites`.
-- `E-`, information about the bug/PR itself, such as `E-FUCK`, `E-Complex`, `E-Certified-Organic`.
-- `P-`, labelling of the severity of a bug (like `P-Minor`).
-- `S-`, more important information about the bug/PR, like `S-Merge-Conflict`, and `S-Stale`.
+- `A-`, generally for the **a**rea of the game, such as `A-Clothing` or `A-Chemistry`.
+- `C-`, for the **c**ategory of the change itself, like `C-Bug`, `C-QoL`, `C-Revert`, `C-Sprites`.
+- `E-`, **e**xtra information about the bug/PR itself, such as `E-FUCK`, `E-Complex`, `E-Certified-Organic`.
+- `P-`, labelling of the **p**riority of a bug (like `P-Minor`).
+- `S-`, to convey **s**tatus information, like `S-Merge-Conflict`, and `S-Stale`.
 - `size/`, to indicate the number of lines changed.
 
 ### Reviewing Issues
