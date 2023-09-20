@@ -166,7 +166,7 @@ TYPEINFO(/obj/item/rcd)
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/rcd_ammo))
 			var/obj/item/rcd_ammo/R = W
-			if (!restricted_materials || (R?.material?.getID() in restricted_materials))
+			if (!restricted_materials || (R?.material?.type in restricted_materials))
 				if (!R.matter)
 					return
 				if (matter == max_matter)
@@ -292,7 +292,7 @@ TYPEINFO(/obj/item/rcd)
 
 			if (RCD_MODE_DECONSTRUCT)
 
-				if(restricted_materials && !(A.material?.getID() in restricted_materials))
+				if(restricted_materials && !(A.material?.type in restricted_materials))
 					boutput(user, "Target object is not made of a material this RCD can deconstruct.")
 					return
 				if (istype(A, /turf/simulated/wall/r_wall) || istype(A, /turf/simulated/wall/auto/reinforced))
@@ -309,7 +309,7 @@ TYPEINFO(/obj/item/rcd)
 						var/turf/simulated/floor/T = A:ReplaceWithFloor()
 						if (!restricted_materials || !safe_deconstruct)
 							T.setMaterial(getMaterial(material_type))
-						else if(!("steel" in restricted_materials))
+						else if(!(/datum/material/metal/steel in restricted_materials))
 							T.setMaterial(getMaterial(/datum/material/metal/steel))
 						else
 							T.setMaterial(getMaterial(/datum/material/metal/negativematter))
