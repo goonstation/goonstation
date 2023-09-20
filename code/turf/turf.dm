@@ -376,9 +376,9 @@ proc/generate_space_color()
 		starlight.color = starlight_color_override ? starlight_color_override : src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
-		src.underlays += starlight
+		src.underlays = list(starlight)
 	else
-		src.underlays -= starlight
+		src.underlays = null
 	#endif
 
 // override for space turfs, since they should never hide anything

@@ -2,7 +2,7 @@
 /*----------Heart----------*/
 /*=========================*/
 
-#define HEART_REAGENT_CAP 100
+#define HEART_REAGENT_CAP 330
 #define HEART_WRING_AMOUNT src.reagents.maximum_volume * 0.25
 /obj/item/organ/heart
 	name = "heart"
