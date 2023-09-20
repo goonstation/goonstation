@@ -3259,7 +3259,37 @@ var/list/lag_list = new/list()
 				if(!active_mode.saved_var || isnull(active_mode.saved_var)) active_mode = null
 
 			if(istype(active_mode,/datum/engibox_mode/transmute)) //You only have yourself to blame for this. This shitty code is the fault of whoever changed this!!!
-				active_mode:mat_id = input(usr,"Select material","material","gold") in list("gold", "steel", "mauxite", "pharosium","cobryl","bohrum","cerenkite","syreline","glass","molitz","claretine","erebite","plasmastone","plasmaglass","quartz","uqill","telecrystal","miraclium","starstone","flesh","char","koshmarite","viscerite","beeswax","latex","synthrubber","synthblubber","brullbarhide","cotton","fibrilith")
+				active_mode:mat_type = input(usr,"Select material","material",/datum/material/metal/gold) in list(
+					/datum/material/metal/gold,
+					/datum/material/metal/steel,
+					/datum/material/metal/mauxite,
+					/datum/material/metal/pharosium,
+					/datum/material/metal/cobryl,
+					/datum/material/metal/bohrum,
+					/datum/material/metal/cerenkite,
+					/datum/material/metal/syreline,
+					/datum/material/crystal/glass,
+					/datum/material/crystal/molitz,
+					/datum/material/crystal/claretine,
+					/datum/material/crystal/erebite,
+					/datum/material/crystal/plasmastone,
+					/datum/material/crystal/plasmaglass,
+					/datum/material/crystal/gemstone,
+					/datum/material/crystal/uqill,
+					/datum/material/crystal/telecrystal,
+					/datum/material/crystal/miracle,
+					/datum/material/crystal/starstone,
+					/datum/material/organic/flesh,
+					/datum/material/organic/char,
+					/datum/material/organic/koshmarite,
+					/datum/material/organic/viscerite,
+					/datum/material/organic/beeswax,
+					/datum/material/rubber/latex,
+					/datum/material/rubber/synthrubber,
+					/datum/material/rubber/synthblubber,
+					/datum/material/fabric/brullbarhide,
+					/datum/material/fabric/cotton,
+					/datum/material/fabric/fibrilith)
 
 			if(istype(active_mode,/datum/engibox_mode/replicate))
 				active_mode:obj_path = null

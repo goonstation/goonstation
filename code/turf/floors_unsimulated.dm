@@ -953,7 +953,7 @@ TYPEINFO(/turf/unsimulated/floor/wood)
 /////////////////////////////////////////
 
 TYPEINFO(/turf/unsimulated/floor/grass)
-	mat_appearances_to_ignore = list(/datum/material/steel, /datum/material/rubber/synthrubber)
+	mat_appearances_to_ignore = list(/datum/material/metal/steel, /datum/material/rubber/synthrubber)
 /turf/unsimulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
