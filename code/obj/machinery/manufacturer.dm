@@ -2278,6 +2278,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/glass,
 		/datum/manufacture/glassR,
 		/datum/manufacture/atmos_can,
+		/datum/manufacture/gastank,
 		/datum/manufacture/player_module,
 		/datum/manufacture/cable,
 		/datum/manufacture/powercell,

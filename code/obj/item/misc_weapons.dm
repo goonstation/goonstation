@@ -171,7 +171,7 @@ TYPEINFO(/obj/item/sword)
 		var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
 		if (!S)
 			S = H.find_type_in_hand(/obj/item/sword, "left")
-		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
+		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus(list("stunned", "weakened", "paralysis"))))
 			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))

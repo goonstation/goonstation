@@ -843,7 +843,6 @@ TYPEINFO(/atom)
 	src.material_trigger_when_attacked(W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
-	return
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")

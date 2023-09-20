@@ -443,7 +443,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
 		..()

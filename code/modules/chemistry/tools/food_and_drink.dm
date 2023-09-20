@@ -518,7 +518,22 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				owner.stomach_process -= src
 				qdel(src)
 
+/obj/item/reagent_containers/food/snacks/takeout
+	name = "Chinese takeout carton"
+	desc = "Purports to contain \"General Zeng's Chicken.\"  How old is this?"
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "takeout"
+	heal_amt = 1
+	initial_volume = 60
 
+	New()
+		..()
+		reagents.add_reagent("chickensoup", 10)
+		reagents.add_reagent("salt", 10)
+		reagents.add_reagent("grease", 5)
+		reagents.add_reagent("msg", 2)
+		reagents.add_reagent("VHFCS", 8)
+		reagents.add_reagent("egg",5)
 
 /* ================================================ */
 /* -------------------- Drinks -------------------- */
@@ -1690,7 +1705,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			src.in_glass = new P(src)
 		if (prob(5))
 			src.salted = TRUE
-		src.update_icon()
+		src.UpdateIcon()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane
 	// well, relatively sane, the dangerous drinks are still here but at least people won't be drinking initropidril again
@@ -1845,12 +1860,9 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		src.UpdateIcon()
 
 		if (src.reagents.total_volume == 0)
-			update_icon()
 			icon_state = "pinkmug_empty"
 		else
-			update_icon()
 			icon_state = "pinkmug_full"
-		return
 
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"
