@@ -3659,6 +3659,27 @@
 			var/turf/location = pick(holder.covered_turf())
 			location.fluid_react_single("miasma", created_volume, airborne = 1)
 
+	lungrot
+		name = "lungrot"
+		id = "lungrot"
+		result = "lungrot"
+		// this reaction is a reference to salbutamol inhalers being a risk factor in getting oral thrush.
+		// Of course in RL, this is harmless for most people (so please take your meds), but we're in spaaaaaaaaceeeee!
+		required_reagents = list("salbutamol" = 0.1, "miasma" = 1)
+		result_amount = 1
+		instant = 0
+		reaction_speed = 0.5
+		//since we are talking about contraction of miasma on weakened lung tissue, make some common antibiotics prevent this
+		inhibitors = list("spaceacillin", "robustissin")
+		// no mixing sound or message. With lungrot decaying into miasma that would create a mass of message spam. And it should be kinda stealthy
+		mix_phrase = null
+		mix_sound = null
+
+		does_react(var/datum/reagents/holder)
+			//This reaction does only happen in carbon-based beings
+			return holder.my_atom && iscarbon(holder.my_atom)
+
+
 	jenkem // moved this down so improperly mixed nutrients yield jenkem instead
 		name = "Jenkem"
 		id = "jenkem"
