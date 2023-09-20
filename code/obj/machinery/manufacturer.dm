@@ -63,7 +63,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	var/obj/item/disk/data/floppy/manudrive = null
 	var/list/resource_amounts = list()
 	var/list/materials_in_use = list()
-	var/list/stored_materials_by_id = list()
+	var/list/stored_materials_by_type = list()
 
 	// Production options
 	var/search = null
@@ -2186,13 +2186,13 @@ TYPEINFO(/obj/machinery/manufacturer)
 	proc/update_resource_amount(mat_type, amt, datum/material/mat_added=null)
 		src.resource_amounts[mat_type] = max(src.resource_amounts[mat_type] + amt, 0)
 		if (src.resource_amounts[mat_type] == 0)
-			stored_materials_by_id -= mat_type
-		else if (mat_added && !(mat_type in stored_materials_by_id))
-			stored_materials_by_id[mat_type] = mat_added
+			stored_materials_by_type -= mat_type
+		else if (mat_added && !(mat_type in stored_materials_by_type))
+			stored_materials_by_type[mat_type] = mat_added
 
 	proc/get_our_material(mat_type)
-		if (mat_type in src.stored_materials_by_id)
-			return src.stored_materials_by_id[mat_type]
+		if (mat_type in src.stored_materials_by_type)
+			return src.stored_materials_by_type[mat_type]
 		return getMaterial(mat_type)
 
 	proc/claim_free_resources()

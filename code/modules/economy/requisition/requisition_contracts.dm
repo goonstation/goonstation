@@ -131,8 +131,8 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 	var/typepath_alt
 	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path if not initially specified.
 	var/commodity
-	///Material ID string. If defined, will require the stack's material's mat_id to match the specified mat_id.
-	var/mat_id
+	///A material typepath. If defined, will require the stack's material's typepath to match the specified typepath.
+	var/mat_type
 
 	New()
 		if(src.commodity) // Fetch configuration data from commodity if specified
@@ -146,8 +146,8 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 		. = ..()
 		if(rollcount >= count) return // Standard skip-if-complete
 		if(!istype(eval_item)) return // If it's not an item, it's not a stackable
-		if(mat_id) // If we're checking for materials, do that here with a tag comparison
-			if(!eval_item.material || eval_item.material.getID() != src.mat_id)
+		if(mat_type) // If we're checking for materials, do that here with a tag comparison
+			if(!eval_item.material || eval_item.material.type != src.mat_type)
 				return
 		if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt)))
 			rollcount += eval_item.amount

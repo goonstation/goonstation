@@ -41,7 +41,7 @@ TYPEINFO(/obj/machinery/processor)
 			for(var/obj/item/M in matches)
 				totalAmount += M.amount
 
-			var/mat_id
+			var/mat_type
 			var/datum/material/mat
 
 			//Check for exploitable inputs and divide the result accordingly
@@ -57,7 +57,7 @@ TYPEINFO(/obj/machinery/processor)
 			if (out_amount > 0)
 				if(exists_nearby)
 					exists_nearby.change_stack_amount(out_amount)
-					mat_id = exists_nearby.material.getID()
+					mat_type = exists_nearby.material.type
 					mat = exists_nearby.material
 				else
 					var/newType = getProcessedMaterialForm(X.material)
@@ -65,17 +65,17 @@ TYPEINFO(/obj/machinery/processor)
 					P.set_loc(get_output_location())
 					P.setMaterial(X.material)
 					P.change_stack_amount(out_amount - P.amount)
-					mat_id = P.material.getID()
+					mat_type = P.material.type
 					mat = P.material
 
 				if (istype(output_location, /obj/machinery/manufacturer))
 					var/obj/machinery/manufacturer/M = output_location
-					M.update_resource_amount(mat_id, out_amount * 10, mat)
+					M.update_resource_amount(mat_type, out_amount * 10, mat)
 
 				//If the input was a cable coil, output the conductor too
 				if (second_mat)
 					var/obj/item/material_piece/second_exists_nearby = null
-					var/second_mat_id
+					var/second_mat_type
 					for(var/obj/item/material_piece/G in output_location)
 						if(G.material.isSameMaterial(second_mat))
 							second_exists_nearby = G
@@ -83,7 +83,7 @@ TYPEINFO(/obj/machinery/processor)
 
 					if(second_exists_nearby)
 						second_exists_nearby.change_stack_amount(out_amount)
-						second_mat_id = second_exists_nearby.material.getID()
+						second_mat_type = second_exists_nearby.material.type
 						second_mat = second_exists_nearby.material
 					else
 						var/newType = getProcessedMaterialForm(second_mat)
@@ -91,12 +91,12 @@ TYPEINFO(/obj/machinery/processor)
 						PC.set_loc(get_output_location())
 						PC.setMaterial(second_mat)
 						PC.change_stack_amount(out_amount - PC.amount)
-						second_mat_id = PC.material.getID()
+						second_mat_type = PC.material.type
 						second_mat = PC.material
 
 					if (istype(output_location, /obj/machinery/manufacturer))
 						var/obj/machinery/manufacturer/M = output_location
-						M.update_resource_amount(second_mat_id, out_amount * 10, second_mat)
+						M.update_resource_amount(second_mat_type, out_amount * 10, second_mat)
 
 			//Delete items in processor and output leftovers
 			var/leftovers = (totalAmount/div_factor-out_amount)*div_factor

@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 /datum/rc_entry/stack/steelsheet
 	name = "NT-spec steel sheet"
 	typepath = /obj/item/sheet
-	mat_id = "steel"
+	mat_type = /datum/material/metal/steel
 	feemod = 30
 
 ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
