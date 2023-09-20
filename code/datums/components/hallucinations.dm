@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/pattern2 = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
 
 	Initialize(timeout=30)
-		if(src.timeout == -1)
+		if(src.ttl == -1)
 			return //if timeout is already infinite and this is a dupe, just do nothing
 		else
 			.=..()
