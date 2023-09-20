@@ -3,7 +3,7 @@
 /obj/item/cable_coil/_color/name = ""+#_color+" cable coil";\
 /obj/item/cable_coil/_color/base_name = ""+#_color+" cable coil";\
 /obj/item/cable_coil/_color/stack_type = /obj/item/cable_coil/_color;\
-/obj/item/cable_coil/_color/spawn_insulator_name = ""+#_color+" synthrubber";\
+/obj/item/cable_coil/_color/spawn_insulator_type = /datum/material/rubber/synthrubber/_color;\
 /obj/item/cable_coil/_color/cable_obj_type = /obj/cable/_color;\
 /obj/item/cable_coil/_color/cut;\
 /obj/item/cable_coil/_color/cut/icon_state = "coil2";\

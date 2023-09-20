@@ -41,8 +41,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	var/currently_laying = FALSE
 
 	// will use getMaterial() to apply these at spawn
-	var/spawn_insulator_name = /datum/material/rubber/synthrubber
-	var/spawn_conductor_name = /datum/material/metal/copper
+	var/spawn_insulator_type = /datum/material/rubber/synthrubber
+	var/spawn_conductor_type = /datum/material/metal/copper
 
 	New(loc, length = STARTCOIL)
 		src.amount = length
@@ -50,8 +50,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		pixel_y = rand(-2,2)
 		UpdateIcon()
 		..(loc)
-		if (spawn_conductor_name)
-			applyCableMaterials(src, getMaterial(spawn_insulator_name), getMaterial(spawn_conductor_name))
+		if (spawn_conductor_type)
+			applyCableMaterials(src, getMaterial(spawn_insulator_type), getMaterial(spawn_conductor_type))
 		BLOCK_SETUP(BLOCK_ROPE)
 
 	before_stack(atom/movable/O as obj, mob/user as mob)
@@ -149,8 +149,8 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 	namemod = "reinforced "
 	iconmod = "-thick"
 
-	spawn_insulator_name = /datum/material/rubber/synthblubber
-	spawn_conductor_name = /datum/material/metal/pharosium
+	spawn_insulator_type = /datum/material/rubber/synthblubber
+	spawn_conductor_type = /datum/material/metal/pharosium
 
 	cable_obj_type = /obj/cable/reinforced
 
