@@ -194,17 +194,17 @@ datum/shuttle_controller
 						announcement_done = 1
 
 					else if (announcement_done < 2 && timeleft < 30)
-						var/area/sound_location = locate(/area/shuttle_sound_spawn)
+						var/turf/sound_location = pick_landmark(LANDMARK_SHUTTLE_SOUND)
 						playsound(sound_location, 'sound/effects/ship_charge.ogg', 100)
 						announcement_done = 2
 
 					else if (announcement_done < 3 && timeleft < 4)
-						var/area/sound_location = locate(/area/shuttle_sound_spawn)
+						var/turf/sound_location = pick_landmark(LANDMARK_SHUTTLE_SOUND)
 						playsound(sound_location, 'sound/effects/ship_engage.ogg', 100)
 						announcement_done = 3
 
 					else if (announcement_done < 4 && timeleft < 1)
-						var/area/sound_location = locate(/area/shuttle_sound_spawn)
+						var/turf/sound_location = pick_landmark(LANDMARK_SHUTTLE_SOUND)
 						playsound(sound_location, 'sound/effects/explosion_new4.ogg', 75)
 						playsound(sound_location, 'sound/effects/flameswoosh.ogg', 75)
 						announcement_done = 4

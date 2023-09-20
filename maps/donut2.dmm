@@ -3198,9 +3198,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/office)
-"aoJ" = (
-/turf/space,
-/area/shuttle_sound_spawn)
 "aoK" = (
 /obj/storage/closet/wardrobe/mixed,
 /obj/random_item_spawner/dressup/one_or_zero,
@@ -36530,6 +36527,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/bridge)
+"mYd" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "mYz" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9;
@@ -56753,7 +56754,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+mYd
 aaa
 aaa
 aaa
@@ -75036,7 +75037,7 @@ ani
 ani
 ani
 ani
-aoJ
+mYd
 aaa
 aaa
 dRI

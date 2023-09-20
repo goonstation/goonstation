@@ -46688,8 +46688,9 @@
 	},
 /area/station/hallway/secondary/exit)
 "cEK" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "cEL" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4
