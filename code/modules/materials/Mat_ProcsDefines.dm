@@ -74,8 +74,9 @@ var/global/list/material_cache
 	if (isnull(mat1))
 		#ifdef CHECK_MORE_RUNTIMES
 		CRASH("setMaterial called with no material given.")
-		#endif
+		#else
 		return
+		#endif
 	if(istext(mat1))
 		CRASH("setMaterial() called with a string instead of a material datum.")
 	if(!mat1 ||!istype(mat1, /datum/material))
