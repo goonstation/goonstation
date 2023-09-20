@@ -239,7 +239,7 @@
 /obj/cable{
 	icon_state = "6-9"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "br" = (
 /obj/mapping_helper/access/research,
@@ -380,7 +380,7 @@
 /obj/cable{
 	icon_state = "8-9"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cD" = (
 /turf/simulated/floor/plating,
@@ -428,7 +428,7 @@
 /obj/cable{
 	icon_state = "1-5"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "cV" = (
 /obj/landmark/magnet_shield,
@@ -749,7 +749,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "fa" = (
 /obj/machinery/lawrack{
@@ -881,7 +881,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "fK" = (
 /obj/machinery/door/poddoor{
@@ -941,7 +941,7 @@
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
 "fS" = (
-/turf/simulated/wall/auto/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid,
 /area/space)
 "fU" = (
 /obj/machinery/chem_master{
@@ -1109,7 +1109,7 @@
 /area/station/turret_protected/ai_upload)
 "gN" = (
 /obj/machinery/manufacturer/qm,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/station/quartermaster/magnet)
 "gS" = (
 /obj/cable{
@@ -1931,6 +1931,10 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
+"mA" = (
+/mob/living/critter/rockworm/gary,
+/turf/simulated/floor/plating,
+/area/station/mining/staff_room)
 "mB" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/chapel/office)
@@ -2035,7 +2039,7 @@
 /obj/cable{
 	icon_state = "4-10"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "nu" = (
 /obj/cable{
@@ -2403,6 +2407,12 @@
 /obj/machinery/light,
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"pM" = (
+/obj/machinery/power/data_terminal,
+/obj/cable/orange,
+/obj/machinery/power/collector_control,
+/turf/simulated/floor/engine,
+/area/station/engine/engineering)
 "pP" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/office)
@@ -2580,6 +2590,10 @@
 /obj/storage/secure/closet/brig,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"rB" = (
+/mob/living/critter/small_animal/dog/george,
+/turf/simulated/floor/auto/dirt,
+/area/station/crew_quarters/garden)
 "rC" = (
 /obj/storage/secure/closet/security/equipment,
 /turf/simulated/floor/red,
@@ -2620,7 +2634,7 @@
 /obj/cable{
 	icon_state = "1-10"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "sc" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -2847,7 +2861,7 @@
 /obj/machinery/arc_electroplater{
 	dir = 4
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/station/quartermaster/magnet)
 "ui" = (
 /obj/stool/bench/auto,
@@ -2933,7 +2947,7 @@
 	icon_state = "2-10"
 	},
 /obj/item/raw_material/char,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "uF" = (
 /turf/unsimulated/wall/setpieces/leadwindow,
@@ -3260,7 +3274,7 @@
 /obj/cable{
 	icon_state = "1-6"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "xo" = (
 /obj/machinery/light/small/floor/cool,
@@ -3678,7 +3692,7 @@
 /area/station/crew_quarters/showers)
 "Ac" = (
 /obj/grille/catwalk,
-/turf/simulated/wall/auto/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid,
 /area/station/mining/staff_room)
 "Ah" = (
 /obj/machinery/light{
@@ -4047,7 +4061,7 @@
 /obj/cable{
 	icon_state = "5-10"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Dn" = (
 /obj/table/wood/round,
@@ -4296,7 +4310,7 @@
 /obj/cable{
 	icon_state = "2-9"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "EV" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -4548,7 +4562,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "GH" = (
 /obj/machinery/crusher,
@@ -4656,7 +4670,7 @@
 	icon_state = "1-2"
 	},
 /obj/item/raw_material/char,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Hs" = (
 /obj/rack,
@@ -4811,7 +4825,7 @@
 	pixel_y = 0
 	},
 /obj/machinery/power/furnace,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Iz" = (
 /obj/machinery/power/collector_control,
@@ -4834,7 +4848,7 @@
 	icon_state = "2-8"
 	},
 /obj/item/raw_material/char,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "IL" = (
 /obj/cable{
@@ -4856,7 +4870,7 @@
 /obj/cable{
 	icon_state = "2-5"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "IX" = (
 /turf/unsimulated/floor/carpet/green/fancy/edge/sw,
@@ -5075,7 +5089,7 @@
 	icon_state = "2-5"
 	},
 /obj/item/raw_material/char,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Ku" = (
 /obj/cable{
@@ -5125,6 +5139,9 @@
 /obj/cable{
 	icon_state = "0-4";
 	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "0-2"
 	},
 /turf/simulated/floor/plating,
 /area/station/security/main)
@@ -5275,7 +5292,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "LS" = (
-/turf/simulated/wall/auto/asteroid/lighted,
+/turf/simulated/wall/auto/asteroid,
 /area/station/mining/staff_room)
 "LV" = (
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
@@ -5309,7 +5326,7 @@
 /obj/cable{
 	icon_state = "6-8"
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Mg" = (
 /obj/mapping_helper/access/heads,
@@ -5342,7 +5359,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/station/quartermaster/magnet)
 "Ml" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -5806,7 +5823,7 @@
 /area/station/science/artifact)
 "PZ" = (
 /obj/item/raw_material/char,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Qa" = (
 /obj/decal/cleanable/blood/tracks,
@@ -6059,7 +6076,7 @@
 /area/station/bridge)
 "Ss" = (
 /obj/machinery/portable_reclaimer,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/station/quartermaster/magnet)
 "St" = (
 /obj/cable{
@@ -6107,6 +6124,10 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
+"SW" = (
+/mob/living/critter/small_animal/mouse/remy,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/cafeteria)
 "SX" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -6124,8 +6145,8 @@
 "SY" = (
 /obj/table/wood/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 4;
-	autoclose = 0
+	autoclose = 0;
+	dir = 4
 	},
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/wood{
@@ -6134,7 +6155,7 @@
 /area/station/hallway/secondary/entry)
 "Ta" = (
 /obj/landmark/spawner/artifact,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Tb" = (
 /obj/cable{
@@ -6201,7 +6222,7 @@
 /area/station/mining/staff_room)
 "TQ" = (
 /obj/machinery/ore_cloud_storage_container,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/station/quartermaster/magnet)
 "TT" = (
 /obj/storage/secure/closet/fridge/kitchen,
@@ -6345,6 +6366,9 @@
 	icon_state = "12"
 	},
 /area/shuttle/arrival/station)
+"UR" = (
+/turf/simulated/floor/plating/airless/asteroid,
+/area/station/quartermaster/magnet)
 "UV" = (
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/auto/dirt,
@@ -6887,7 +6911,7 @@
 	icon_state = "1-5"
 	},
 /obj/item/raw_material/char,
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 "Yr" = (
 /obj/machinery/dispenser,
@@ -7165,7 +7189,7 @@
 	},
 /area/shuttle/arrival/station)
 "ZN" = (
-/turf/simulated/floor/plating/airless/asteroid/lighted,
+/turf/simulated/floor/plating/airless/asteroid,
 /area/space)
 
 (1,1,1) = {"
@@ -53518,7 +53542,7 @@ pq
 sc
 ta
 sj
-xD
+pM
 Yr
 zo
 DP
@@ -53529,7 +53553,7 @@ JB
 xc
 Bx
 pq
-qG
+rB
 qG
 oG
 Ol
@@ -56554,7 +56578,7 @@ Nq
 NO
 OM
 PD
-Ox
+SW
 Ox
 TX
 in
@@ -79140,7 +79164,7 @@ Rf
 zw
 hr
 TQ
-hr
+UR
 sw
 QL
 He
@@ -79437,13 +79461,13 @@ fS
 fS
 fS
 Mk
-hr
+UR
 Rf
 zw
 mx
 uh
-hr
-hr
+UR
+UR
 YD
 YD
 Rf
@@ -79739,8 +79763,8 @@ fS
 fS
 fS
 Ss
-hr
-hr
+UR
+UR
 zw
 zw
 zw
@@ -82457,7 +82481,7 @@ Ix
 LS
 cD
 cD
-cD
+mA
 cD
 LS
 fS
