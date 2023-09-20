@@ -35,7 +35,7 @@ var/global/meteor_shower_active = 0
 			if ( map_setting == "NADIR" ) // Nadir can have a counterpart to this event with acid hailstones, but it will need to function differently
 				. = FALSE
 
-	event_effect(source, amount, direction, delay, warning_time, speed, /datum/material/transmute_material_instead=null)
+	event_effect(source, amount, direction, delay, warning_time, speed, transmute_material_instead = null)
 		..()
 		//var/timer = ticker.round_elapsed_ticks / 600
 
