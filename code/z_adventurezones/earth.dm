@@ -644,7 +644,7 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/gnesis
 	initial_reagents = "flockdrone_fluid"
-	default_material = "gnesisglass"
+	default_material = /datum/material/crystal/gnesis/transparent
 
 /mob/living/critter/small_animal/crab/responsive
 

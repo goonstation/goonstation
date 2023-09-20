@@ -479,7 +479,7 @@
 
 
 /obj/storage/closet/extradimensional
-	default_material = "negativematter"
+	default_material = /datum/material/metal/negativematter
 
 
 

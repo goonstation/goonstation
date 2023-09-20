@@ -1235,10 +1235,10 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	. = ..(severity, last_touched)
 
 /obj/ladder/embed/extradimensional
-	default_material = "negativematter"
+	default_material = /datum/material/metal/negativematter
 
 /obj/ladder/extradimensional
-	default_material = "negativematter"
+	default_material = /datum/material/metal/negativematter
 
 // admin interact procs
 /obj/ladder/proc/toggle_extradimensional()

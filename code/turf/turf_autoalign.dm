@@ -480,23 +480,23 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 #else
 	icon_state = "mapwall$$wood"
 #endif
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 
 TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 	connect_overlay = 0
 /turf/simulated/wall/auto/supernorn/material
 	icon_state = "mapwall"
-	default_material = "steel"
+	default_material = /datum/material/metal/steel
 	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
 
 /turf/simulated/wall/auto/supernorn/material/bamboo
 	icon_state = "mapwall$$bamboo"
-	default_material = "bamboo"
+	default_material = /datum/material/organic/bamboo
 
 /turf/simulated/wall/auto/supernorn/material/mauxite
 	icon_state = "mapwall$$mauxite"
-	default_material = "mauxite"
+	default_material = /datum/material/metal/mauxite
 
 
 TYPEINFO(/turf/simulated/wall/auto/reinforced/supernorn/blackred)
@@ -536,7 +536,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced/paper)
 	connects_with_overlay = typecacheof(list(/obj/table/reinforced/bar/auto))
 /turf/simulated/wall/auto/reinforced/paper
 	icon = 'icons/turf/walls/paper.dmi'
-	default_material = "bamboo"
+	default_material = /datum/material/organic/bamboo
 
 	update_neighbors()
 		..()
@@ -676,7 +676,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/hedge)
 	mod = "hedge-"
 	light_mod = "wall-"
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 
 /* ===================================================== */
 /* -------------------- UNSIMULATED -------------------- */
@@ -833,7 +833,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn/wood)
 	))
 /turf/unsimulated/wall/auto/supernorn/wood
 	uses_default_material_appearance = TRUE
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 	icon_state = "mapwall$$wood"
 
 TYPEINFO(/turf/unsimulated/wall/auto/gannets)
@@ -865,7 +865,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 
 
 /turf/unsimulated/wall/auto/coral
-	default_material = "coral"
+	default_material = /datum/material/organic/coral
 	mat_changename = TRUE
 	uses_default_material_appearance = TRUE
 

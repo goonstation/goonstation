@@ -12,7 +12,7 @@ TYPEINFO(/turf/simulated/floor/feather)
 	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 	broken = FALSE
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
@@ -194,7 +194,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	flags = USEDELAY | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	mat_changename = FALSE
 	mat_changedesc = FALSE
-	default_material = "gnesis"
+	default_material = /datum/material/crystal/gnesis
 	var/broken = FALSE
 	var/on = FALSE
 

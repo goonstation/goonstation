@@ -31,7 +31,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	var/deconstruct_time = 1 SECOND
 	var/image/connect_image = null
 	var/image/damage_image = null
-	default_material = "glass"
+	default_material = /datum/material/crystal/glass
 	mat_changename = TRUE
 	uses_default_material_appearance = TRUE
 	pressure_resistance = 4*ONE_ATMOSPHERE
@@ -659,7 +659,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	icon_state = "rpyro"
 
 /obj/window/crystal
-	default_material = "plasmaglass"
+	default_material = /datum/material/crystal/plasmaglass
 	hitsound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
 	health = 80
@@ -686,7 +686,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	name = "bulletproof window"
 	desc = "A specially made, heavily reinforced window. Trying to break or shoot through this would be a waste of time."
 	icon_state = "rwindow"
-	default_material = "uqillglass"
+	default_material = /datum/material/crystal/uqill/transparent
 	health_multiplier = 100
 	deconstruct_time = 10 SECONDS
 
@@ -959,7 +959,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		loc = initialPos//LULLE
 
 /obj/window/auto/crystal
-	default_material = "plasmaglass"
+	default_material = /datum/material/crystal/plasmaglass
 	hitsound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
 	health = 80
@@ -978,7 +978,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	name = "bulletproof window"
 	desc = "A specially made, heavily reinforced window. Trying to break or shoot through this would be a waste of time."
 	icon_state = "mapwin_r"
-	default_material = "uqillglass"
+	default_material = /datum/material/crystal/uqill/transparent
 	health_multiplier = 100
 	deconstruct_time = 10 SECONDS
 
@@ -986,7 +986,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	name = "hardened window"
 	desc = "A hardened external window reinforced with advanced materials."
 	icon_state = "mapwin_r"
-	default_material = "uqillglass"
+	default_material = /datum/material/crystal/uqill/transparent
 	default_reinforcement = /datum/material/metal/bohrum
 
 	the_tuff_stuff
@@ -1031,12 +1031,12 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		icon_state = "safetyrail"
 		layer = EFFECTS_LAYER_BASE
 		dir = NORTH
-		default_material = "steel"
+		default_material = /datum/material/metal/steel
 
 // flock windows
 
 /obj/window/auto/feather
-	default_material = "gnesisglass"
+	default_material = /datum/material/crystal/gnesis/transparent
 	var/flock_id = "Fibrewoven window"
 	var/repair_per_resource = 1
 
@@ -1078,7 +1078,7 @@ TYPEINFO(/obj/window/feather)
 	var/flock_id = "Fibrewoven window"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "window"
-	default_material = "gnesisglass"
+	default_material = /datum/material/crystal/gnesis/transparent
 	hitsound = 'sound/impact_sounds/Crystal_Hit_1.ogg'
 	shattersound = 'sound/impact_sounds/Crystal_Shatter_1.ogg'
 	mat_changename = FALSE

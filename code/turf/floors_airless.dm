@@ -518,7 +518,7 @@ TYPEINFO(/turf/simulated/floor/airless/circuit)
 	RL_LumR = 0
 	RL_LumG = 0   //Corresponds to color of the icon_state.
 	RL_LumB = 0.3
-	default_material = "pharosium"
+	default_material = /datum/material/metal/pharosium
 
 /turf/simulated/floor/airless/circuit/green
 	icon_state = "circuit-green"
@@ -565,7 +565,7 @@ TYPEINFO(/turf/simulated/floor/airless/carpet)
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "red1"
 	mat_changename = 0
-	default_material = "cotton"
+	default_material = /datum/material/fabric/cotton
 
 	break_tile()
 		..()
@@ -766,7 +766,7 @@ TYPEINFO(/turf/simulated/floor/airless/wood)
 	icon_state = "wooden-2"
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 
 /turf/simulated/floor/airless/wood/two
 	icon_state = "wooden"
@@ -927,7 +927,7 @@ TYPEINFO(/turf/simulated/floor/airless/grass)
 	icon_state = "grass"
 	mat_changename = 0
 	mat_changedesc = 0
-	default_material = "synthrubber"
+	default_material = /datum/material/rubber/synthrubber
 
 /turf/simulated/floor/airless/grass/leafy
 	icon_state = "grass_leafy"

@@ -1030,7 +1030,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 	throwforce = 0
 	initial_volume = 400
 	mat_changename = FALSE
-	default_material = "negativematter"
+	default_material = /datum/material/metal/negativematter
 
 
 	New()

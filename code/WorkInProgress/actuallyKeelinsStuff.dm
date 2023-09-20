@@ -1556,7 +1556,7 @@ Returns:
 	icon ='icons/obj/objects.dmi'
 	icon_state = "statuefloorpills"
 	density = 1
-	default_material = "slag"
+	default_material = /datum/material/metal/slag
 
 	New()
 		..()

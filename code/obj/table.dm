@@ -461,7 +461,7 @@ TYPEINFO(/obj/table/wood)
 	parts_type = /obj/item/furniture_parts/table/wood
 	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
-	default_material = "wood"
+	default_material = /datum/material/organic/wood
 
 	auto
 		auto = 1
@@ -546,7 +546,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 	icon_state = "0$$mauxite"
 	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
-	default_material = "mauxite"
+	default_material = /datum/material/metal/mauxite
 
 	auto
 		auto = TRUE
@@ -616,7 +616,7 @@ TYPEINFO_NEW(/obj/table/nanotrasen)
 	desc = "An industrial grade table with an azure glass panel on the top. The glass looks extremely sturdy."
 	icon = 'icons/obj/furniture/table_nanotrasen.dmi'
 	parts_type = /obj/item/furniture_parts/table/nanotrasen
-	default_material = "glass"
+	default_material = /datum/material/crystal/glass
 
 	auto
 		auto = TRUE
@@ -883,7 +883,7 @@ TYPEINFO(/obj/table/glass)
 	name = "glass table"
 	desc = "A table made of glass. It looks like it might shatter if you set something down on it too hard."
 	icon = 'icons/obj/furniture/table_glass.dmi'
-	default_material = "glass"
+	default_material = /datum/material/crystal/glass
 	parts_type = /obj/item/furniture_parts/table/glass
 	var/glass_broken = GLASS_INTACT
 	var/reinforced = 0

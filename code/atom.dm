@@ -91,11 +91,14 @@ TYPEINFO(/atom)
 		. = ..()
 		// Lets stop having 5 implementations of this that all do it differently
 		if (!src.material && src.default_material)
-			#ifdef CHECK_MORE_RUNTIMES
-			if (!ispath(src.default_material))
+			var/datum/material/mat
+			if (ispath(src.default_material))
+				mat = getMaterial(src.default_material)
+			else
+				mat = src.default_material
+				#ifdef CHECK_MORE_RUNTIMES
 				CRASH("Default material [src.default_material] in [src] isn't a typepath!")
-			#endif
-			var/datum/material/mat = ispath(src.default_material) ? getMaterial(src.default_material) : src.default_material
+				#endif
 			src.setMaterial(mat)
 
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)

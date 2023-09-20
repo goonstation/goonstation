@@ -17,7 +17,7 @@ TYPEINFO(/turf/simulated/wall)
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
 	HELP_MESSAGE_OVERRIDE("You can use a <b>welding tool</b> to begin to disassemble it.")
-	default_material = "steel"
+	default_material = /datum/material/metal/steel
 
 	var/health = 100
 	var/list/forensic_impacts = null

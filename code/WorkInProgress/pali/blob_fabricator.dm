@@ -68,7 +68,7 @@
 	supplemental_desc = "This one is for producing blobs. What?"
 	icon_state = "fab-hangar"
 	icon_base = "hangar"
-	default_material = "blob"
+	default_material = /datum/material/organic/blob
 	mat_changename = FALSE
 	available = list(
 		/datum/manufacture/mechanics/blob/base,

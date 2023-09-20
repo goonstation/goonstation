@@ -702,7 +702,7 @@ TYPEINFO(/turf/simulated/floor/carpet)
 	step_material = "step_carpet"
 	step_priority = STEP_PRIORITY_MED
 	mat_changename = 0
-	default_material = "cotton"
+	default_material = /datum/material/fabric/cotton
 
 /turf/simulated/floor/carpet/grime
 	name = "cheap carpet"
@@ -1531,7 +1531,7 @@ TYPEINFO(/turf/simulated/floor/stone)
 	icon_state = "stone"
 	mat_changename = 0
 	mat_changedesc = 0
-	default_material = "rock"
+	default_material = /datum/material/metal/rock
 
 /////////////////////////////////////////
 
@@ -1634,7 +1634,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	icon_state = "bridge"
 	default_melt_cap = 80
 	allows_vehicles = 1
-	default_material = "blob"
+	default_material = /datum/material/organic/blob
 	mat_changename = FALSE
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
@@ -1801,8 +1801,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	setIntact(FALSE)
 	broken = 0
 	burnt = 0
-	if(default_material)
-		var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
+	if(src.default_material)
+		var/datum/material/mat = ispath(src.default_material) ? getMaterial(src.default_material) : src.default_material
 		src.setMaterial(mat)
 	else
 		src.setMaterial(getMaterial(/datum/material/metal/steel))
@@ -2517,7 +2517,7 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
 	icon_state_edge = "ice_edge"
-	default_material = "ice"
+	default_material = /datum/material/crystal/ice
 	mat_changename = FALSE
 
 /turf/simulated/floor/auto/water/ice/rough
@@ -2624,9 +2624,9 @@ TYPEINFO(/turf/simulated/floor/auto/water/ice)
 DEFINE_FLOORS(mauxite,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "floor$$mauxite";\
-	default_material = "mauxite")
+	default_material = /datum/material/metal/mauxite)
 
 DEFINE_FLOORS(bamboo,
 	icon = 'icons/turf/floors.dmi';\
 	icon_state = "floor$$bamboo";\
-	default_material = "bamboo")
+	default_material = /datum/material/organic/bamboo)
