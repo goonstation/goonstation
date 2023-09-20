@@ -104,7 +104,7 @@ There are many labels that people can use to attach to their PR or to issue repo
 
 Some labels are automatically assigned as well, and do certain things:
 
-- Size labels are automatically assigned by github-actions bot, based on the amount of lines changed.
+- Size labels are automatically assigned based on the amount of lines changed.
 - Labels like `C-Sprites`, `C-Sound`, and `C-Documentation` are automatically added based on changes to `.dmi` files, `.ogg` files, and `.md` files respectively.
 - The `S-Merge-Conflict` label gets applied when your branch is no longer able to be merged with the master branch. Note that this doesn't update instantly, so the better way to check is to see the line of text at the bottom of the PR that reads "This branch has conflicts that must be resolved", listing the conflicting files. You must resolve merge conflicts, otherwise it can't be merged.
 - The `S-Stale` label gets added when there has been no activity on a branch for 2 weeks. To get rid of it, simply update the branch with a new commit. The dev-only label `E-Certified-Organic` prevents a PR from going stale.
