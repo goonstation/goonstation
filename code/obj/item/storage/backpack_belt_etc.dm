@@ -866,24 +866,28 @@
 //morrigan admin stuff, normal player should never see this
 	morriganlight
 		spawn_contents = list(/obj/item/gun/energy/hafpistol, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
+
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/hafpistol
 
 	morrigancontrol
 		spawn_contents = list(/obj/item/gun/energy/lasershotgun, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
+
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/lasershotgun
 
 	morriganexplorer
 		spawn_contents = list(/obj/item/gun/energy/smgmine, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
+
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/smgmine
 
 	morriganheavy
 		spawn_contents = list(/obj/item/gun/energy/laserifle, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
+
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/laserifle

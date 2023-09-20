@@ -41,7 +41,7 @@
 	var/turf/orig_turf
 
 	///Default dir, set to in do_step()
-	var/facing_dir = 1
+	var/facing_dir = NORTH
 	/// Whether this projectile was shot point-blank style (clicking an adjacent mob). Adjusts the log entry accordingly
 	var/was_pointblank = FALSE
 

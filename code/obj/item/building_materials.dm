@@ -10,7 +10,7 @@ MATERIAL
 /proc/window_reinforce_callback(var/datum/action/bar/icon/build/B, var/obj/window/reinforced/W)
 	sheet_crafting_callback(B)
 
-	W.ini_dir = 2
+	W.ini_dir = SOUTH
 	if (!istype(W) || !usr) //Wire: Fix for Cannot read null.loc (|| !usr)
 		return
 	if (B.sheet.reinforcement)
@@ -384,6 +384,10 @@ MATERIAL
 					currentRecipe = /datum/sheet_crafting_recipe/metal/construct
 
 				if("smallwindow")
+					for (var/obj/window/window in get_turf(src))
+						//the same direction thindow or a full window
+						if (window.dir == usr.dir || !(window.dir in cardinal))
+							return
 					if (src.reinforcement)
 						a_type = map_settings ? map_settings.rwindows_thin : /obj/window/reinforced
 					else
@@ -394,7 +398,10 @@ MATERIAL
 					a_callback = /proc/window_reinforce_callback
 
 				if("bigwindow")
-					if (!amount_check(2,usr)) return
+					if (locate(/obj/window) in get_turf(usr))
+						return
+					if (!amount_check(2,usr))
+						return
 					if (src.reinforcement)
 						a_type = map_settings ? map_settings.rwindows : /obj/window/reinforced
 					else
@@ -1377,7 +1384,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 	if(isnull(.))
 		var/dir = SOUTH
 		if (recipeID == "bigwindow")
-			dir = 5 //full tile
+			dir = NORTHEAST //full tile
 
 		var/icon/result_icon = icon(icon, icon_state, dir)
 

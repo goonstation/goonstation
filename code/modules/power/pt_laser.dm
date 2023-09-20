@@ -8,7 +8,7 @@
 	icon_state = "ptl"
 	density = 1
 	anchored = ANCHORED_ALWAYS
-	dir = 4
+	dir = EAST
 	bound_height = 96
 	bound_width = 96
 	var/output = 0		//power output of the beam

@@ -1,4 +1,16 @@
 
+(t)tue sep 19 23
+(u)Smilg
+(p)15819
+(e)🆕🤖|C-Feature, A-Silicons
+(+)Cyborg cell cables can now be used on other cyborgs.
+(u)Smilg
+(p)15820
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Assless chaps replaced with regular chaps.
+(t)mon sep 18 23
+(u)LeahTheTech
+(*)Clone records can now have notes attached.
 (t)sun sep 17 23
 (u)aloe
 (*)Mop buckets now have 7 slots of storage inside them, for normal-sized items or smaller. This means that to pour things into the bucket, you need to click drag the reagent container to the bucket.

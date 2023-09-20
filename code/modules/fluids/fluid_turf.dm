@@ -148,7 +148,7 @@
 			light.enable()
 
 //space/fluid/ReplaceWith() this is for future ctrl Fs
-	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = 1, force = 0)
+	ReplaceWith(var/what, var/keep_old_material = 1, var/handle_air = 1, var/handle_dir = NORTH, force = 0)
 		.= ..(what, keep_old_material, handle_air)
 
 		if (handle_air)
