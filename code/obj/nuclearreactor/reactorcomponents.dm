@@ -466,7 +466,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		100;	/datum/material/crystal/glass,\
 		100;	/datum/material/organic/char,\
 		100;	/datum/material/crystal/molitz,\
-		50;		/datum/material/crystal/moltiz/beta,\
+		50;		/datum/material/crystal/molitz/beta,\
 		50;		/datum/material/metal/bohrum,\
 		70;		/datum/material/metal/cerenkite,\
 		50;		/datum/material/metal/plasmasteel,\
@@ -476,7 +476,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		50;		/datum/material/rubber/latex,\
 		50;		/datum/material/rubber/synthrubber,\
 		50;		/datum/material/rubber/synthblubber,\
-		50;		/datum/material/rubber/synthleather,\
+		50;		/datum/material/fabric/synthleather,\
 		50;		/datum/material/fabric/fibrilith,\
 		30;		/datum/material/fabric/carbonfibre,\
 		30;		/datum/material/crystal/gemstone/diamond,\
@@ -485,7 +485,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 		5;		/datum/material/metal/neutronium,\
 		100;	/datum/material/metal/rock,\
 		100;	/datum/material/metal/slag,\
-		100;	/datum/material/metal/ice,\
+		100;	/datum/material/crystal/ice,\
 		5;		/datum/material/metal/spacelag,\
 		15;		/datum/material/organic/cardboard,\
 		15;		/datum/material/organic/frozenfart,\
