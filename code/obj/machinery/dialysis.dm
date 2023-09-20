@@ -28,9 +28,7 @@ TYPEINFO(/obj/machinery/dialysis)
 		if (!length(chem_whitelist))
 			CRASH("[src] tried to fetch the global chem whitelist but it has a length of 0!")
 		src.whitelist = chem_whitelist
-		src.UpdateOverlays(image(src.icon, "pump-off"), "pump")
-		src.UpdateOverlays(image(src.icon, "screen-off"), "screen")
-		src.UpdateOverlays(image(src.icon, "tubing"), "tubing")
+		src.UpdateIcon()
 
 	disposing()
 		if (src.patient)
@@ -122,6 +120,8 @@ TYPEINFO(/obj/machinery/dialysis)
 	update_icon(...)
 		..()
 		if (src.patient)
+			src.UpdateOverlays(image(src.icon, "pump-on"), "pump")
+			src.UpdateOverlays(image(src.icon, "screen-on"), "screen")
 			src.UpdateOverlays(image(src.icon, "cannulae"), "tubing")
 
 			var/image/blood_out = image(src.icon, "tubing-good[src.output_blood_colour ? "" : "-empty"]")
@@ -143,20 +143,20 @@ TYPEINFO(/obj/machinery/dialysis)
 			src.ClearSpecificOverlays("blood_in")
 
 	proc/cannulate(mob/living/carbon/new_patient, mob/user)
-		src.patient = new_patient
 		new_patient.tri_message(user,\
 			"<span class='notice'><b>[user]</b> inserts [src]'s cannulae into [new_patient == user ? "[his_or_her(new_patient)]" : "[new_patient]'s"] arm.</span>",\
 			"<span class='notice'>[new_patient == user ? "You insert" : "<b>[user]</b> inserts"] [src]'s cannulae into your arm.</span>",\
 			"<span class='notice'>You insert [src]'s cannulae into [new_patient == user ? "your" : "[new_patient]'s"] arm.</span>")
 		logTheThing(LOG_COMBAT, user, "connects a dialysis machine [log_reagents(src)] to [constructTarget(new_patient,"combat")] at [log_loc(user)].")
-		src.start_dialysis()
+		src.start_dialysis(new_patient, user)
 
-	proc/start_dialysis()
-		if (!src.patient) return
+	proc/start_dialysis(mob/living/carbon/new_patient, mob/user)
+		if (!new_patient) return
+		if (src.patient)
+			return boutput(user, "<span class='alert'>[src] already has a patient attached!</span>")
+		src.patient = new_patient
 		src.power_usage = 500
 		src.patient_blood_id = src.patient.blood_id
-		src.UpdateOverlays(image(src.icon, "pump-on"), "pump")
-		src.UpdateOverlays(image(src.icon, "screen-on"), "screen")
 		src.UpdateIcon()
 		SubscribeToProcess()
 
