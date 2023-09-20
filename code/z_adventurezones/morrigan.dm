@@ -2967,7 +2967,6 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 	can_swap_cell = FALSE
 	rechargeable = FALSE
 	uses_charge_overlay = TRUE
-	muzzle_flash = "muzzle_flash_laser"
 	charge_icon_state = "laserifle"
 	spread_angle = 3
 
@@ -2986,7 +2985,7 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 			icon = 'icons/obj/adventurezones/morrigan/weapons/gunlarge.dmi'
 			charge_icon_state = "laserifleless"
 			muzzle_flash = "muzzle_flash_waveg"
-			item_state = "laserifleless"
+			item_state = "laserless"
 		..()
 	attack_self(var/mob/M)
 		..()
@@ -3255,7 +3254,7 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "redbolt"
 	shot_sound = 'sound/weapons/laserifle.ogg'
-	cost = 30
+	cost = 45
 	damage = 19
 	shot_number = 2
 	sname = "lethal"
@@ -3270,7 +3269,7 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 	cost = 35
 	pierces = -1
 	damage = 7
-	shot_number = 2
+	shot_number = 1
 	sname = "less-lethal"
 	damage_type = D_ENERGY
 	hit_ground_chance = 30

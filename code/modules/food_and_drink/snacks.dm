@@ -1492,7 +1492,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 			item_state = "donut2"
 			bites_left = 4
 			initial_volume = 36
-			initial_reagents = list("sugar"=12,"ammoniumbicarbonate"=12,"ephedrine"=12)
+			initial_reagents = list("sugar"=12,"smelling_salt"=12,"ephedrine"=12)
 		sturdiest
 			name = "sturdest donut"
 			desc = "This doesn't seem stolen at all, Contains chemicals to help with pain and critical situations."
