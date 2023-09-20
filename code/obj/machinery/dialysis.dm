@@ -77,7 +77,7 @@ TYPEINFO(/obj/machinery/dialysis)
 
 	process(mult)
 		..()
-		if (!src.patient || !ishuman(src.patient))
+		if (!src.patient || !ishuman(src.patient) || QDELETED(src.patient))
 			src.audible_message("<span class='game say'><span class='name'>[src]</span> beeps, \"Patient lost.\"")
 			src.stop_dialysis()
 			return
