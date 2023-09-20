@@ -14,7 +14,7 @@
 /obj/cable/_color;\
 /obj/cable/_color/name = ""+#_color+" power cable";\
 /obj/cable/_color/color = _hexcolor;\
-/obj/cable/_color/insulator_default = ""+#_color+" synthrubber";\
+/obj/cable/_color/insulator_default = /datum/material/rubber/synthrubber/_color;\
 /datum/material/rubber/synthrubber/_color;\
 /datum/material/rubber/synthrubber/_color/mat_id = ""+#_color+" synthrubber";\
 /datum/material/rubber/synthrubber/_color/name = ""+#_color+" synthrubber";\
