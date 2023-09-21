@@ -88,7 +88,7 @@ var/global/datum/apiHandler/apiHandler
 			src.apiError("API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]", forceErrorException)
 			return
 
-		var/req_route = "[config.goonhub_api_endpoint]/[route.path]/?[route.formatParams()]"
+		var/req_route = "[config.goonhub_api_endpoint]/[route.path][route.routeParams ? "/[route.formatRouteParams()]" : ""]/?[route.formatQueryParams()]"
 
 		var/headers = list(
 			"Accept" = "application/json",
