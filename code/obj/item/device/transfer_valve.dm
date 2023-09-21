@@ -518,7 +518,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 
 	examine()
 		. = ..()
-		if (pressure)
+		if (src.pressure)
 			. += "<br><span class='notice'>This crystal has already measured something. Another explosion will overwrite the previous results.</span>"
 
 	ex_act(var/ex, var/inf, var/factor)
