@@ -515,7 +515,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	bites_left = 1
 	var/did_react = 0
 	var/digest_count = 0
-	var/dissolve_threshold = 10
+	var/dissolve_threshold = 20
 
 	proc/process_stomach(mob/living/owner, var/process_rate = 5)
 		src.digest_count += process_rate
