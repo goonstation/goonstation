@@ -134,7 +134,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 30
 	initial_reagents = list("juice_apple"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/apple
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/apple
 
 /obj/item/reagent_containers/food/snacks/pie/lime
 	name = "key lime pie"
@@ -145,7 +145,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 30
 	initial_reagents = list("juice_lime"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/lime
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/lime
 
 
 /obj/item/reagent_containers/food/snacks/pie/lemon
@@ -157,7 +157,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_lemon"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/lemon
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/lemon
 
 /obj/item/reagent_containers/food/snacks/pie/strawberry
 	name = "strawberry pie"
@@ -168,7 +168,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_strawberry"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/strawberry
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/strawberry
 
 /obj/item/reagent_containers/food/snacks/pie/pumpkin
 	name = "pumpkin pie"
@@ -179,7 +179,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_pumpkin"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/pumpkin
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/pumpkin
 
 /obj/item/reagent_containers/food/snacks/pie/cream
 	name = "cream pie"
@@ -280,7 +280,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_reagents = list("sugar"=20,"hugs"=10)
 	food_effects = list("food_sweaty","food_refreshed", "food_explosion_resist")
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/chocolate
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/chocolate
 
 /obj/item/reagent_containers/food/snacks/pie/pot
 	name = "space-chicken pot pie"
@@ -320,7 +320,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_raspberry"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/raspberry
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/raspberry
 
 /obj/item/reagent_containers/food/snacks/pie/blackberry
 	name = "blackberry pie"
@@ -331,7 +331,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_blackberry"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/blackberry
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/blackberry
 
 /obj/item/reagent_containers/food/snacks/pie/blueberry
 	name = "blueberry pie"
@@ -342,7 +342,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_blueberry"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/blueberry
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/blueberry
 
 /obj/item/reagent_containers/food/snacks/pie/cherry
 	name = "cherry pie"
@@ -353,4 +353,4 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_cherry"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/cherry
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/cherry
