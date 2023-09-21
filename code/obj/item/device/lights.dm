@@ -804,6 +804,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 		processing_items |= src
 		if (istype(user))
 			user.update_inhands()
+		src.UpdateParticles(new/particles/roadflare_smoke,"roadflare_smoke")
 
 	proc/put_out(var/mob/user as mob)
 		src.on = FLARE_BURNT
@@ -817,6 +818,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 		if (istype(user))
 			user.update_inhands()
 		processing_items.Remove(src)
+		src.ClearSpecificParticles("roadflare_smoke")
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == FLARE_UNLIT)
@@ -868,3 +870,20 @@ TYPEINFO(/obj/item/device/light/floodlight)
 #undef FLARE_UNLIT
 #undef FLARE_LIT
 #undef FLARE_BURNT
+
+/particles/roadflare_smoke
+	icon = 'icons/effects/effects.dmi'
+	icon_state = list("smoke")
+	color = "#dddddd"
+	width = 150
+	height = 200
+	count = 15
+	spawning = 0.5
+	lifespan = generator("num", 20, 35, UNIFORM_RAND)
+	fade = generator("num", 50, 100, UNIFORM_RAND)
+	position = generator("box", list(4,5,0), list(6,10,0), UNIFORM_RAND)
+	velocity = generator("box", list(-1,0.5,0), list(1,2,0), NORMAL_RAND)
+	rotation = generator("num", 0, 180, NORMAL_RAND)
+	gravity = list(0.07, 0.02, 0)
+	grow = list(0.01, 0)
+	fadein = 10
