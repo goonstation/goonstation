@@ -542,7 +542,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			boutput( user, "<b>There's no crystal in this here device!</b>")
 		else
 			if(crystal.pressure)
-				boutput( user, "The reader reads <b>[crystal.pressure/25]</b> kilojoules." )
+				boutput( user, "The reader reads <b>[crystal.pressure]</b> kiloblast." )
 			else
 				boutput( user, "The reader reads a firm 0. It guilts you into trying to read an unexploded pressure crystal, and seems to have \
 					succeeded. You feel ashamed for being so compelled by a device that has nothing more than a slot and a number display.")
