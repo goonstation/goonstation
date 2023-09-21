@@ -15553,16 +15553,16 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/garden/owlery)
 "aSV" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
@@ -42884,11 +42884,11 @@
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "ctK" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/mask/balaclava,
 /obj/item/storage/pill_bottle/cyberpunk,
@@ -54978,11 +54978,11 @@
 	},
 /area/station/medical/cdc)
 "dbS" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate,
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
@@ -66297,9 +66297,9 @@
 /area/research_outpost)
 "myv" = (
 /obj/decal/woodclutter,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /mob/living/critter/small_animal/cockroach{
 	health = 30;
 	name = "Maude"

@@ -11767,11 +11767,11 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
 "ftR" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate,
 /turf/simulated/floor/orangeblack/side{
 	dir = 10

@@ -23136,11 +23136,11 @@
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
 "bDx" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate/bloody,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
@@ -23299,10 +23299,10 @@
 /obj/item/material_piece/coral,
 /obj/item/material_piece/coral,
 /obj/item/material_piece/coral,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/space/fluid,
 /area/space)
 "bEa" = (
@@ -23457,7 +23457,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bEs" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/space/fluid,
 /area/space)
 "bEt" = (

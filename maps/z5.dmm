@@ -5258,8 +5258,8 @@
 /obj/item/reagent_containers/glass/compostbag,
 /obj/item/reagent_containers/glass/compostbag,
 /obj/decal/cleanable/cobweb2,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/item/clothing/mask/balaclava,
 /turf/simulated/floor/plating,
 /area/spyshack)

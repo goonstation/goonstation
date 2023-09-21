@@ -2589,8 +2589,8 @@ Returns:
 
 	for(var/turf/T in random_floor_turfs)
 		if(prob(3))
-			new/obj/item/plank(T)
-			new/obj/item/plank(T)
+			new/obj/item/sheet/wood(T)
+			new/obj/item/sheet/wood(T)
 		else if(prob(1) && prob(40))
 			new/obj/item/gun/kinetic/spes(T)
 			new/obj/item/ammo/bullets/a12(T)

@@ -2130,9 +2130,9 @@
 "aSa" = (
 /obj/decal/woodclutter,
 /obj/storage/crate,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/item/storage/box/mousetraps,
 /obj/item/reagent_containers/food/snacks/ingredient/cheese,
 /obj/machinery/light/emergency,
