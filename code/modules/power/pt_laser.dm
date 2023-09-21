@@ -650,11 +650,10 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	luminosity = 1
 	mouse_opacity = 0
-	event_handler_flags = IMMUNE_TRENCH_WARP
 	///How many laser segments are behind us
 	var/length = 0
 	///Maximum number of segments in the beam, this exists to prevent nerds from blowing up the server
