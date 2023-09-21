@@ -1129,11 +1129,51 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/costume)
 	slot = SLOT_HEAD
 	cost = PAY_TRADESMAN/2
 
-/datum/clothingbooth_item/costume/dinosuar
-	name = "Dinosaur Pajamas"
-	path = /obj/item/clothing/suit/gimmick/dinosaur
+//Pajamas
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/pajamas)
+/datum/clothingbooth_item/pajamas
+	name = "pajamas"
 	slot = SLOT_WEAR_SUIT
-	cost = PAY_TRADESMAN/2
+	category = "Pajamas"
+	cost=PAY_TRADESMAN/2
+
+/datum/clothingbooth_item/pajamas/dinosuar
+	name = "Green Dinosaur Pajamas"
+	path = /obj/item/clothing/suit/gimmick/dinosaur/green
+
+	red
+		name = "Red Dinosaur Pajamas"
+		path = /obj/item/clothing/suit/gimmick/dinosaur/red
+
+	blue
+		name = "Blue Dinosaur Pajamas"
+		path = /obj/item/clothing/suit/gimmick/dinosaur/blue
+
+	yellow
+		name = "Yellow Dinosaur Pajamas"
+		path = /obj/item/clothing/suit/gimmick/dinosaur/yellow
+
+	orange
+		name = "Orange Dinosaur Pajamas"
+		path = /obj/item/clothing/suit/gimmick/dinosaur/orange
+
+	purple
+		name = "Purple Dinosaur Pajamas"
+		path = /obj/item/clothing/suit/gimmick/dinosaur/purple
+
+	pink
+		name = "Pink Dinosaur Pakamas"
+		path = /obj/item/clothing/suit/gimmick/dinosaur/pink
+
+	white
+		name = "White Dinosaur Pajamas"
+		path = /obj/item/clothing/suit/gimmick/dinosaur/white
+
+	black
+		name = "Black Dinosaur Pajamas"
+		path = /obj/item/clothing/suit/gimmick/dinosaur/black
+
 
 //Western
 

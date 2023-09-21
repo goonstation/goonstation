@@ -1799,21 +1799,65 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	item_state = "guybrush"
 
 //fake lizard stuff
-
 /obj/item/clothing/suit/gimmick/dinosaur
-	name = "dinosaur pajamas"
-	desc = "It has a little hood you can flip up and down. Rawr!"
-	icon_state = "dinosaur"
-	item_state = "dinosaur"
-	hides_from_examine = C_UNIFORM
+    name = "dinosaur pajamas"
+    desc = "It has a little hood you can flip up and down. Rawr!"
+    icon_state = "dinosaur"
+    item_state = "dinosaur"
+    hides_from_examine = C_UNIFORM
+    var/hcolor = null
 
-	New()
-		..()
-		src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur")
+    New()
+        ..()
+        src.AddComponent(/datum/component/toggle_hood, hood_style="dinosaur[src.hcolor ? "-[hcolor]" : null]")
+        src.icon_state = "dinosaur[src.hcolor ? "-[hcolor]" : null]"
+        src.item_state = "dinosaur[src.hcolor ? "-[hcolor]" : null]"
+        src.name = "[src.hcolor] dinosaur pajamas"
+        if(src.hcolor == "yellow")
+            if(prob(25))
+                src.name = "bananasaur pajamas"
+                src.desc = "It has a little banana-scented hood you can flip up an down. In fact, the whole thing smells like bananas."
 
-	setupProperties()
-		..()
-		setProperty("coldprot", 25)
+    setupProperties()
+        ..()
+        setProperty("coldprot", 25)
+
+    red
+        icon_state = "dinosaur-red"
+        item_state = "dinosaur-red"
+        hcolor = "red"
+    blue
+        icon_state = "dinosaur-blue"
+        item_state = "dinosaur-blue"
+        hcolor = "blue"
+    green
+        icon_state = "dinosaur-green"
+        item_state = "dinosaur-green"
+        hcolor = "green"
+    yellow
+        icon_state = "dinosaur-yellow"
+        item_state = "dinosaur-yellow"
+        hcolor = "yellow"
+    orange
+        icon_state = "dinosaur-orange"
+        item_state = "dinosaur-orange"
+        hcolor = "orange"
+    white
+        icon_state = "dinosaur-white"
+        item_state = "dinosaur-white"
+        hcolor = "white"
+    black
+        icon_state = "dinosaur-black"
+        item_state = "dinosaur-black"
+        hcolor = "black"
+    purple
+        icon_state = "dinosaur-purple"
+        item_state = "dinosaur-purple"
+        hcolor = "purple"
+    pink
+        icon_state = "dinosaur-pink"
+        item_state = "dinosaur-pink"
+        hcolor = "pink"
 
 /obj/item/clothing/head/biglizard
 	name = "giant novelty lizard head"
