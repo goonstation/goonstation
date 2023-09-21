@@ -1,4 +1,9 @@
 
+(t)thu sep 21 23
+(u)Flaborized
+(p)15738
+(e)🎨|C-Sprites
+(*)Added bunsen burners to chemistry. Allows you to heat beakers/condensers/others while still being able to access them, this includes letting you hook up condensers on top of them. Find one in the auxiliary cabinet with the condensers or print them at the sci fabricator.
 (t)wed sep 20 23
 (u)Sord
 (+)Singularity field generators max power 250 -> 100 so they will depower faster when not being charged.

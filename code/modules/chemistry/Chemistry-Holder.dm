@@ -113,7 +113,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	///This is what you use to change the temp of a reagent holder.
 	///Do not manually change the reagent unless you know what youre doing.
-	proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0)
+	proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0, cannot_be_cooled = FALSE)
 		if (!src.can_be_heated)
 			return
 		last_temp = total_temperature
@@ -140,6 +140,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/change = new_temperature - total_temperature
 
 		if(change < 0)
+			if(cannot_be_cooled)
+				return
 			change = -clamp(abs(change),change_min,change_cap)
 		else
 			change = clamp(abs(change),change_min,change_cap)
