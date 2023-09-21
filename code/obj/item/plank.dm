@@ -168,8 +168,8 @@
 		owner.visible_message("<span class='notice'>[owner] constructs a wooden door!</span>")
 		plank.construct_door(otherplank, owner)
 
-/datum/action/bar/icon/wood_repair_wall
-	id = "wood_repair_wall"
+/datum/action/bar/icon/plank_repair_wall
+	id = "plank_repair_wall"
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
 	#ifdef HALLOWEEN
 	duration = 20
@@ -179,12 +179,12 @@
 	icon = 'icons/ui/actions.dmi'
 	icon_state = "working"
 
-	var/obj/item/sheet/wood/wood
+	var/obj/item/plank/plank
 	var/obj/structure/woodwall/wall
 
-	New(var/obj/item/sheet/wood/wood, var/obj/structure/woodwall/wall, var/duration_i)
+	New(var/obj/item/plank/plank, var/obj/structure/woodwall/wall, var/duration_i)
 		..()
-		src.wood = wood
+		src.plank = plank
 		src.wall = wall
 		if (!wall)
 			interrupt(INTERRUPT_ALWAYS)
@@ -198,11 +198,11 @@
 
 	onUpdate()
 		..()
-		if (wood == null || owner == null || BOUNDS_DIST(owner, wall) > 0)
+		if (plank == null || owner == null || BOUNDS_DIST(owner, wall) > 0)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		var/mob/source = owner
-		if (istype(source) && wood != source.equipped())
+		if (istype(source) && plank != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 		if (prob(20))
 			playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
@@ -214,11 +214,12 @@
 
 	onEnd()
 		..()
-		owner.visible_message("<span class='notice'>[owner] uses a [wood] to completely repair the [wall]!</span>")
+		owner.visible_message("<span class='notice'>[owner] uses a [plank] to completely repair the [wall]!</span>")
 		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
 		//do repair shit.
 		wall.health = wall.health_max
 		wall.checkhealth()
 		if (ismob(owner))
 			var/mob/M = owner
-			wood.change_stack_amount(1)
+			M.u_equip(W)
+		qdel(W)
