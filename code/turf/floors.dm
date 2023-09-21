@@ -1430,7 +1430,11 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/simulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
+	#ifdef AUTUMN
+	icon_state = "grass_autumn"
+	#else
 	icon_state = "grass"
+	#endif
 	mat_changename = 0
 	mat_changedesc = 0
 	step_material = "step_outdoors"
@@ -1472,7 +1476,11 @@ TYPEINFO(/turf/simulated/floor/grass)
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/grass/leafy
+#ifdef AUTUMN
+	icon_state = "leafy_autumn"
+#else
 	icon_state = "grass_leafy"
+#endif
 
 /turf/simulated/floor/grass/random
 	New()
@@ -1487,7 +1495,11 @@ TYPEINFO(/turf/simulated/floor/grasstodirt)
 /turf/simulated/floor/grasstodirt
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
+	#ifdef AUTUMN
+	icon_state = "autumntodirt"
+	#else
 	icon_state = "grasstodirt"
+	#endif
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -2443,9 +2455,14 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	name = "grass"
 	desc = "some leafy grass."
 	icon = 'icons/turf/outdoors.dmi'
+#ifdef AUTUMN
+	icon_state = "leafy_autumn"
+	icon_state_edge = "leafy_autumnedge"
+#else
 	icon_state = "grass_leafy"
-	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS - 1
 	icon_state_edge = "grass_leafyedge"
+#endif
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS - 1
 
 /turf/simulated/floor/auto/dirt
 	name = "dirt"

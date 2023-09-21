@@ -60,6 +60,12 @@
 	var/fallen = FALSE
 	var/fall_time = 2 SECONDS
 
+#ifdef AUTUMN
+	New()
+		icon_state = pick("tree_red", "tree_yellow", "tree_orange")
+		..()
+#endif
+
 	attackby(obj/item/I, mob/user)
 		if ((issawingtool(I) || ischoppingtool(I)) && (!isrestrictedz(src.z) || isgenplanet(src)))
 			if (I.hitsound)
@@ -213,7 +219,11 @@
 	name = "shrub"
 	desc = "A bush. Despite your best efforts, you can't tell if it's real or not."
 	icon = 'icons/misc/worlds.dmi'
+#ifdef AUTUMN
+	icon_state = "shrub_autumn"
+#else
 	icon_state = "shrub"
+#endif
 	anchored = ANCHORED
 	density = 0
 	layer = EFFECTS_LAYER_UNDER_1
