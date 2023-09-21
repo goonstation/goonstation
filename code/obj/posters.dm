@@ -502,7 +502,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 			boutput(user, "<span class='alert'>\The [src] buzzes grumpily!</span>")
 			return
 		src.papers --
-		playsound(src, 'sound/machines/printer_dotmatrix.ogg', 30, 1)
+		playsound(src, 'sound/machines/printer_dotmatrix.ogg', 30, TRUE)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
 		P.author = user.key
 		P.name = "Wanted: [src.plist["name"]]"

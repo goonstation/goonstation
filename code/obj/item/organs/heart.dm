@@ -2,7 +2,7 @@
 /*----------Heart----------*/
 /*=========================*/
 
-#define HEART_REAGENT_CAP 100
+#define HEART_REAGENT_CAP 330
 #define HEART_WRING_AMOUNT src.reagents.maximum_volume * 0.25
 /obj/item/organ/heart
 	name = "heart"
@@ -41,7 +41,7 @@
 			return
 
 		if (!ON_COOLDOWN(src, "heart_wring", 2 SECONDS))
-			playsound(user, squeeze_sound, 30, 1)
+			playsound(user, squeeze_sound, 30, TRUE)
 			logTheThing(LOG_CHEMISTRY, user, "wrings out [src] containing [log_reagents(src)] at [log_loc(user)].")
 			src.reagents.trans_to(get_turf(src), HEART_WRING_AMOUNT)
 			boutput(user, "<span class='notice'>You wring out \the [src].</span>")
@@ -145,7 +145,7 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 	edible = 0
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
-	made_from = "pharosium"
+	default_material = "pharosium"
 	transplant_XP = 7
 	squeeze_sound = 'sound/voice/screams/Robot_Scream_2.ogg'
 
@@ -162,7 +162,7 @@ TYPEINFO(/obj/item/organ/heart/cyber)
 	item_state = "flockdrone_heart"
 	body_image = "heart_flock"
 	created_decal = /obj/decal/cleanable/flockdrone_debris/fluid
-	made_from = "gnesis"
+	default_material = "gnesis"
 	var/resources = 0 // reagents for humans go in heart, resources for flockdrone go in heart, now, not the brain
 	var/flockjuice_limit = 20 // pump flockjuice into the human host forever, but only a small bit
 	var/min_blood_amount = 450

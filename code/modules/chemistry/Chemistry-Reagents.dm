@@ -385,7 +385,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 5)
 					if(!locate(/turf/unsimulated/floor/void) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						new /turf/unsimulated/floor/void(T)
 
 		//	When finished, exposure to or consumption of this drug should basically duplicate the

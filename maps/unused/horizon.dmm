@@ -21155,9 +21155,7 @@
 	pixel_x = 10
 	},
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
@@ -44059,14 +44057,7 @@
 /area/listeningpost/power)
 "cwF" = (
 /obj/decal/cleanable/dirt,
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -49127,7 +49118,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3"
 	},
 /area/station/engine/elect)
@@ -53395,7 +53386,7 @@
 /obj/item/device/audio_log,
 /obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/purpleblack,
 /area/station/science/artifact{
 	name = "Artifact Lounge"
@@ -59695,7 +59686,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3"
 	},
 /area/station/crew_quarters/fitness)

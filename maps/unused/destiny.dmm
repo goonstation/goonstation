@@ -12678,7 +12678,7 @@
 	icon_state = "line3"
 	},
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/hand_labeler,
 /turf/simulated/floor/orangeblack/side/white{
 	dir = 1
@@ -14718,14 +14718,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -17361,9 +17354,7 @@
 /area/station/science/teleporter)
 "cGi" = (
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/juggleplaque{
 	pixel_y = 32
 	},
@@ -43973,7 +43964,7 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/black,
 /area/station/security/main)
 "pNd" = (

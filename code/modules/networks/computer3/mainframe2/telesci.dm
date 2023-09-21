@@ -671,7 +671,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					M.throw_at(target, 10, 2)
 				return
 			if("rads")
-				playsound(src, 'sound/weapons/ACgun2.ogg', 50, 1)
+				playsound(src, 'sound/weapons/ACgun2.ogg', 50, TRUE)
 				for (var/i in 1 to rand(3,5))
 					var/datum/projectile/neutron/projectile = new(15)
 					shoot_projectile_DIR(src, projectile, pick(alldirs))
@@ -759,7 +759,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater, /obj/critter/killertomato, /mob/living/critter/small_animal/wasp, /mob/living/critter/golem/, /mob/living/critter/skeleton, /mob/living/critter/mimic)
+				var/summon = pick(/mob/living/critter/plant/maneater, /obj/critter/killertomato, /mob/living/critter/small_animal/wasp, /mob/living/critter/golem, /mob/living/critter/skeleton, /mob/living/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")

@@ -1187,6 +1187,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/packing
 	containername = "Haberdasher's Crate"
 
+/datum/supply_packs/random_wigs
+	name = "Spare wigs crate"
+	desc = "7x assorted wigs."
+	category = "Civilian Department"
+	contains = list(/obj/item/clothing/head/wig/spawnable/random = 7)
+	cost = 2000
+	containertype = /obj/storage/crate/packing
+	containername = "Wig Crate"
+
 /datum/supply_packs/headbands
 	name = "Bargain Bows and Bands Box"
 	desc = "Headbands for all occasions."
@@ -1915,7 +1924,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/banjo)
 	containertype = /obj/storage/crate/wooden
 
-//Western
+/datum/supply_packs/news
+	name = "Old Newspaper Set"
+	desc = "A bunch of old newspapers that we wanted to get rid of. Please take them off our hands."
+	cost = 200
+	containername = "Newspaper Crate"
+	contains = list(/obj/item/paper/newspaper/rolled)
+	amount = 8
+	containertype = /obj/storage/crate/packing
+
 /datum/supply_packs/electricguitar
 	name = "Electric Guitar Kit"
 	desc = "1x Electric Guitar"
@@ -1925,7 +1942,17 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/electricguitar)
 	containertype = /obj/storage/crate/wooden
 
+/datum/supply_packs/guitar
+	name = "Acoustic Guitar Kit"
+	desc = "1x Acoustic Guitar"
+	category = "Civilian Department"
+	cost = 2000
+	containername = "Acoustic Guitar Kit"
+	contains = list(/obj/item/instrument/guitar)
+	containertype = /obj/storage/crate/wooden
 
+
+//Western
 /datum/supply_packs/west_coats
 	name = "Dusty Old Coats"
 	desc = "4x coats in various colors."

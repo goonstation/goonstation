@@ -114,6 +114,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	icon_state = "empty"
 	casecolor = "empty"
 
+/obj/machinery/portable_atmospherics/canister/poo
+	name = "Canister \[POO\]"
+	icon_state = "orange"
+	casecolor = "orange"
+
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
@@ -772,6 +777,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	if (!src.isempty)
 		src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 		src.air_contents.nitrogen = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	src.UpdateIcon()
+	return 1
+
+/obj/machinery/portable_atmospherics/canister/poo/New()
+	..()
+	if (!src.isempty)
+		src.air_contents.oxygen = (src.maximum_pressure*filled * (2/3))*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+		src.air_contents.toxins = (src.maximum_pressure*filled * (1/3))*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.UpdateIcon()
 	return 1
 
