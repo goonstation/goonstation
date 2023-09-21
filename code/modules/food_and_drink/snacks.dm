@@ -33,7 +33,6 @@
 		if(iscarbon(eater))
 			var/mob/living/carbon/C = eater
 			for(var/atom/movable/MO as mob|obj in src)
-				MO.set_loc(C)
 				C.stomach_contents += MO
 
 	disposing()
