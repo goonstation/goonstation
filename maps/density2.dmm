@@ -1145,6 +1145,10 @@
 /obj/item/reagent_containers/food/drinks/bottle/soda,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
+"gt" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "gu" = (
 /obj/table/reinforced/auto,
 /obj/item/hand_labeler,
@@ -1338,21 +1342,6 @@
 "hH" = (
 /turf/space,
 /area/shuttle/research/station)
-"hM" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 6;
-	name = "autoname - SS13";
-	pixel_y = 20;
-	tag = ""
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/shrub/random,
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "hN" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -1618,6 +1607,12 @@
 /obj/machinery/computer/chem_requester{
 	dir = 4
 	},
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "jx" = (
@@ -1625,6 +1620,17 @@
 /area/station/hallway/secondary/exit)
 "jz" = (
 /obj/shrub/random,
+/obj/machinery/power/apc/autoname_north,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 6;
+	name = "autoname - SS13";
+	pixel_y = 20;
+	tag = ""
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
 "jB" = (
@@ -1820,18 +1826,18 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
-"kM" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "kO" = (
 /obj/cable{
 	icon_state = "2-8"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/exit)
+"kP" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
@@ -1861,12 +1867,6 @@
 	},
 /turf/simulated/floor/specialroom/chapel,
 /area/station/chapel/office)
-"lc" = (
-/obj/machinery/light{
-	dir = 4
-	},
-/turf/simulated/floor/engine,
-/area/station/hallway/secondary/exit)
 "li" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 1
@@ -6107,15 +6107,6 @@
 	},
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
-"Oa" = (
-/obj/forcefield/energyshield/perma/doorlink{
-	desc = "A door-linked force field that prevents gasses from passing through it.";
-	name = "Door-linked Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/machinery/door/airlock/pyro/external,
-/turf/simulated/floor/engine,
-/area/station/hallway/secondary/exit)
 "Oc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -50846,16 +50837,16 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
 Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 Rf
 Rf
 Rf
@@ -51146,20 +51137,20 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
 Rf
-hC
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 Rf
 Rf
 Rf
@@ -51448,20 +51439,20 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 Rf
 Rf
 Rf
@@ -51750,20 +51741,20 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hH
 hH
 hH
@@ -52052,20 +52043,20 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hH
 hH
 hH
@@ -52354,20 +52345,20 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hH
 hH
 hH
@@ -52656,20 +52647,20 @@ Rf
 Rf
 Rf
 Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hB
+Rf
+Rf
+Rf
 hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
 Rf
 Rf
 Rf
@@ -52958,24 +52949,24 @@ Rf
 Rf
 Rf
 Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hB
 hB
 hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+hC
 hB
 hB
 hB
 Rf
 Rf
 Rf
-XQ
+Wl
 jq
 rP
 FU
@@ -53260,6 +53251,13 @@ Rf
 Rf
 Rf
 Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hB
 hB
 hB
@@ -53267,18 +53265,11 @@ hB
 hB
 hB
 hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-Wl
-Kb
-Kb
-Wl
-kJ
+Rf
+Rf
+Rf
+XQ
+jx
 rP
 jx
 jx
@@ -53562,6 +53553,13 @@ Rf
 Rf
 Rf
 Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hB
 hB
 hB
@@ -53569,17 +53567,10 @@ hB
 hB
 hB
 hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-Oa
-hZ
-lc
-bV
+Rf
+Rf
+Rf
+XQ
 jx
 rP
 ui
@@ -53864,13 +53855,13 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hB
 hB
 hB
@@ -53879,11 +53870,11 @@ hB
 hB
 hB
 Wl
-hZ
+Wl
 Wl
 Wl
 jz
-rP
+kP
 jx
 jx
 jx
@@ -54166,6 +54157,13 @@ Rf
 Rf
 Rf
 Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hB
 hB
 hB
@@ -54173,19 +54171,12 @@ hB
 hB
 hB
 hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-Wl
+gt
+Gm
 hZ
-Wl
-Wl
-hM
-kM
+gt
+jx
+rP
 ui
 ui
 nd
@@ -54468,13 +54459,13 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hB
 hB
 hB
@@ -54484,7 +54475,7 @@ hB
 hB
 hN
 hZ
-Gm
+hZ
 bV
 jx
 kO
@@ -54770,13 +54761,13 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hB
 hB
 hB
@@ -55072,20 +55063,20 @@ Rf
 Rf
 Rf
 Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hB
 hB
 hB
 hB
 hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
 Rf
 Rf
 Rf
@@ -55375,13 +55366,13 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 hB
 hB
 hB
@@ -55679,15 +55670,15 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
 Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+hB
+hB
+hB
 Rf
 Rf
 Rf
@@ -55981,14 +55972,14 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 Rf
 Rf
 Rf
@@ -56283,14 +56274,14 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 Rf
 Rf
 Rf
@@ -56586,12 +56577,12 @@ Rf
 Rf
 Rf
 Rf
-hB
-hB
-hB
-hB
-hB
-hB
+Rf
+Rf
+Rf
+Rf
+Rf
+Rf
 Rf
 Rf
 Rf
