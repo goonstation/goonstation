@@ -403,8 +403,8 @@ TYPEINFO(/obj/structure/woodwall)
 			return
 
 	attackby(var/obj/item/W, mob/user)
-		if (istype(W, /obj/item/plank))
-			actions.start(new /datum/action/bar/icon/plank_repair_wall(W, src, 30), user)
+		if (istype(W,/obj/item/sheet/wood))
+			actions.start(new /datum/action/bar/icon/wood_repair_wall(W, src, 30), user)
 			return
 		..()
 		user.lastattacked = src
