@@ -654,6 +654,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 	density = 0
 	luminosity = 1
 	mouse_opacity = 0
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	///How many laser segments are behind us
 	var/length = 0
 	///Maximum number of segments in the beam, this exists to prevent nerds from blowing up the server

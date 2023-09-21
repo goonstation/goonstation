@@ -135,6 +135,7 @@
 	density = 1
 	opacity = 0
 	anchored = ANCHORED
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	var/has_processing_loop = 0
 
 	New(var/turf/loc)

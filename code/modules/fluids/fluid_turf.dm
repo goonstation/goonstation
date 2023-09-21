@@ -342,7 +342,7 @@
 
 	Entered(var/atom/movable/AM)
 		. = ..()
-		if (istype(AM,/mob/dead) || istype(AM,/mob/living/intangible) || istype(AM, /obj/lattice) || istype(AM, /obj/cable/reinforced) || istype(AM,/obj/torpedo_targeter) || istype(AM,/obj/overlay) || istype (AM, /obj/arrival_missile) || istype(AM, /obj/sea_ladder_deployed) || istype(AM, /obj/forcefield) || istype(AM, /obj/linked_laser))
+		if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
 			return
 		if (locate(/obj/lattice) in src)
 			return
