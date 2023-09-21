@@ -26,7 +26,7 @@
 	pixel_y = 31;
 	desc = "This sculpture seems a little funny...";
 	color = "#f546d2";
-	default_material = "pizza";
+	default_material = /datum/material/organic/pizza;
 	anchored = 1;
 	name = "clown fish model";
 	material_applied_appearance = 1;
@@ -89,7 +89,7 @@
 	pixel_y = 7;
 	rand_pos = 0;
 	desc = "That's not even an art piece, that's just a goldfish cracker.";
-	default_material = "gold";
+	default_material = /datum/material/metal/gold;
 	uses_default_material_appearance = 1
 	},
 /obj/map/light/cyan,
@@ -103,7 +103,7 @@
 	desc = "A very realistic sculpture of a largemouth bass.";
 	material_applied_appearance = 1;
 	uses_default_material_appearance = 1;
-	default_material = "steel";
+	default_material = /datum/material/metal/steel;
 	rand_pos = 1
 	},
 /obj/railing/velvet{

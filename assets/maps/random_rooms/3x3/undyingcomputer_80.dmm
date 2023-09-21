@@ -12,7 +12,7 @@
 	},
 /obj/cable/yellow{
 	icon_state = "1-2";
-	default_material = "bone";
+	default_material = /datum/material/organic/bone;
 	uses_default_material_appearance = 1;
 	insulator_default = "flesh"
 	},
@@ -117,7 +117,7 @@
 "G" = (
 /obj/decal/cleanable/dirt/dirt3,
 /obj/item/disk/data/memcard{
-	default_material = "flesh";
+	default_material = /datum/material/organic/flesh;
 	name = "melted circuit board";
 	desc = "It's melted straight into the drive and won't budge.";
 	pixel_x = -18;
