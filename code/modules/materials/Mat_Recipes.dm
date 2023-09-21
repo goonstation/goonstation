@@ -38,11 +38,11 @@
 		var/hasKosh = FALSE
 
 		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "soulsteel") hasSteel = TRUE
-			if(CM.getID() == "koshmarite") hasKosh = TRUE
+			if(istype(CM, /datum/material/metal/soulsteel)) hasSteel = TRUE
+			if(istype(CM, /datum/material/organic/koshmarite)) hasKosh = TRUE
 
-		if(M.getID() == "soulsteel") hasSteel = TRUE
-		if(M.getID() == "koshmarite") hasKosh = TRUE
+		if(istype(M, /datum/material/metal/soulsteel)) hasSteel = TRUE
+		if(istype(M, /datum/material/organic/koshmarite)) hasKosh = TRUE
 
 		if(hasSteel && hasKosh) return TRUE
 		else return FALSE
@@ -56,11 +56,11 @@
 		var/hasSteel = FALSE
 
 		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "ectoplasm") hasSoul = TRUE
-			if(CM.getID() == "steel") hasSteel = TRUE
+			if(istype(CM, /datum/material/organic/ectoplasm)) hasSoul = TRUE
+			if(istype(CM, /datum/material/metal/steel)) hasSteel = TRUE
 
-		if(M.getID() == "ectoplasm") hasSoul = TRUE
-		if(M.getID() == "steel") hasSteel = TRUE
+		if(istype(M, /datum/material/organic/ectoplasm)) hasSoul = TRUE
+		if(istype(M, /datum/material/metal/steel)) hasSteel = TRUE
 
 		if(hasSoul && hasSteel) return TRUE
 		else return FALSE
@@ -74,8 +74,8 @@
 		var/two = FALSE
 
 		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "mauxite") one = TRUE
-			if(CM.getID() == "char") two = TRUE
+			if(istype(CM, /datum/material/metal/mauxite)) one = TRUE
+			if(istype(CM, /datum/material/organic/char)) two = TRUE
 
 		if(one && two) return TRUE
 		else return FALSE
@@ -90,11 +90,11 @@
 		var/hasRock = FALSE
 
 		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "char") hasChar = TRUE
-			if(CM.getID() == "rock") hasRock = TRUE
+			if(istype(CM, /datum/material/organic/char)) hasChar = TRUE
+			if(istype(CM, /datum/material/metal/rock)) hasRock = TRUE
 
-		if(M.getID() == "char") hasChar = TRUE
-		if(M.getID() == "rock") hasRock = TRUE
+		if(istype(M, /datum/material/organic/char)) hasChar = TRUE
+		if(istype(M, /datum/material/metal/rock)) hasRock = TRUE
 
 		if(hasChar && hasRock) return TRUE
 		else return FALSE
@@ -108,8 +108,8 @@
 		var/two = FALSE
 
 		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "pharosium") one = TRUE
-			if(CM.getID() == "char") two = TRUE
+			if(istype(CM, /datum/material/metal/pharosium)) one = TRUE
+			if(istype(CM, /datum/material/organic/char)) two = TRUE
 
 		if(one && two) return TRUE
 		else return FALSE
@@ -123,8 +123,8 @@
 		var/two = FALSE
 
 		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "gold") one = TRUE
-			if(CM.getID() == "cobryl") two = TRUE
+			if(istype(CM, /datum/material/metal/gold)) one = TRUE
+			if(istype(CM, /datum/material/metal/cobryl)) two = TRUE
 
 		if(one && two) return TRUE
 		else return FALSE
@@ -138,8 +138,8 @@
 		var/two = FALSE
 
 		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "plasmastone") one = TRUE
-			if(CM.getID() == "steel") two = TRUE
+			if(istype(CM, /datum/material/crystal/plasmastone)) one = TRUE
+			if(istype(CM, /datum/material/metal/steel)) two = TRUE
 
 		if(one && two) return TRUE
 		else return FALSE
@@ -155,8 +155,8 @@
 		var/two = FALSE
 
 		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "plasmastone") one = TRUE
-			if(CM.getID() == "glass") two = TRUE
+			if(istype(CM, /datum/material/crystal/plasmastone)) one = TRUE
+			if(istype(CM, /datum/material/crystal/glass)) two = TRUE
 
 		if(one && two) return TRUE
 		else return FALSE
@@ -173,11 +173,11 @@
 		var/hasSilk = FALSE
 
 		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "carbonfibre") hasCarbon = TRUE
-			if(CM.getID() == "spidersilk") hasSilk = TRUE
+			if(istype(CM, /datum/material/fabric/carbonfibre)) hasCarbon = TRUE
+			if(istype(CM, /datum/material/fabric/spidersilk)) hasSilk = TRUE
 
-		if(M.getID() == "carbonfibre") hasCarbon = TRUE
-		if(M.getID() == "spidersilk") hasSilk = TRUE
+		if(istype(M, /datum/material/fabric/carbonfibre)) hasCarbon = TRUE
+		if(istype(M, /datum/material/fabric/spidersilk)) hasSilk = TRUE
 
 		if(hasCarbon && hasSilk) return TRUE
 		else return FALSE
@@ -191,8 +191,8 @@
 		var/two = FALSE
 
 		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "latex") one = TRUE
-			if(CM.getID() == "cotton") two = TRUE
+			if(istype(CM, /datum/material/rubber/latex)) one = TRUE
+			if(istype(CM, /datum/material/fabric/cotton)) two = TRUE
 
 		if(one && two) return TRUE
 		else return FALSE
@@ -208,7 +208,7 @@
 		var/regex/R = regex("rubber")
 
 		for(var/datum/material/CM in M.getParentMaterials())
-			if(CM.getID() == "coral") one = TRUE
+			if(istype(CM, /datum/material/organic/coral)) one = TRUE
 			if(R.Find(CM.getID())) two = TRUE
 
 		if(one && two) return TRUE

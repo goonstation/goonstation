@@ -369,10 +369,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		. = ..()
 		if(isnull(src.material))
 			return
-		var/found_negative = (src.material.getID() == "negativematter")
+		var/found_negative = (istype(src.material, /datum/material/metal/negativematter))
 		if(!found_negative)
 			for(var/datum/material/parent_mat in src.material.getParentMaterials())
-				if(parent_mat.getID() == "negativematter")
+				if(istype(parent_mat, /datum/material/metal/negativematter))
 					found_negative = TRUE
 					break
 		if(found_negative)

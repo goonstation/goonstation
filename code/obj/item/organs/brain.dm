@@ -32,7 +32,7 @@
 
 	setMaterial(datum/material/mat1, appearance, setname, mutable, use_descriptors)
 		. = ..()
-		if(mat1.getID() == "greymatter")
+		if(istype(mat1, /datum/material/organic/flesh/greymatter))
 			src.AddComponent(/datum/component/consume/food_effects, list("brain_food_ithillid"))
 
 	Eat(mob/M, mob/user)

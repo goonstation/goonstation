@@ -119,7 +119,7 @@ var/global/list/material_cache
 			O2.desc = "[!isnull(O2.real_desc) ? "[O2.real_desc]" : "[initial(O2.desc)]"] It is made of [mat1.getName()].[length(traitDesc) ? " " + traitDesc : ""]"
 		else
 			src.desc = "[initial(src.desc)] It is made of [mat1.getName()].[length(traitDesc) ? " " + traitDesc : ""]"
-		if (mat1.getID() == "gold") //marks material gold as not a good choice to sell for people who dont already know
+		if (istype(mat1, /datum/material/metal/gold)) //marks material gold as not a good choice to sell for people who dont already know
 			src.desc += " It's probably not very valuable to a reputable buyer."
 	if(appearance)
 		src.setMaterialAppearance(mat1)

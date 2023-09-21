@@ -943,7 +943,7 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 			matter += booklet.pages.len/2
 			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_type]-units.")
 			qdel(W)
-		else if (W?.material?.getID() == "wood")
+		else if (istype(W?.material, /datum/material/organic/wood))
 			matter += 20
 			boutput(user, "\The [src] pulps [W], and now holds [src.matter]/[src.max_matter] [material_type]-units.")
 			qdel(W)

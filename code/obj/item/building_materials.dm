@@ -294,7 +294,7 @@ MATERIAL
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 			if (src.reinforcement)
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(/datum/sheet_crafting_recipe/remetal/glass))
-		if (src?.material?.getID() == "cardboard")
+		if (istype(src?.material, /datum/material/organic/cardboard))
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 		if (src?.material?.getMaterialFlags() & MATERIAL_WOOD)

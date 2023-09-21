@@ -19,7 +19,7 @@
 
 /obj/item/handcuffs/setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
 	..()
-	if (mat1.getID() == "silver")
+	if (istype(mat1, /datum/material/metal/silver))
 		name = "silver handcuffs"
 		icon_state = "handcuff-silver"
 		desc = "These handcuffs are perfect for containing evil creatures, but they're fragile otherwise as a result."
@@ -141,7 +141,7 @@
 	user.drop_item(src)
 	user.update_clothing()
 	if (src.strength == 1) // weak cuffs break
-		if (src.material && src.material.getID() == "silver")
+		if (istype(src.material && src.material, /datum/material/metal/silver))
 			src.visible_message("<span class='alert'>[src] disintegrate.</span>")
 		else if ((istype(src, /obj/item/handcuffs/guardbot)))
 			src.visible_message("<span class='alert'>[src] biodegrade instantly. [prob (10) ? "DO NOT QUESTION THIS" : null]</span>")

@@ -868,7 +868,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		if (!src.damage_image)
 			src.damage_image = image('icons/obj/window_damage.dmi')
 			src.damage_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
-			if(src.material?.getID() == "plasmaglass") //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
+			if(istype(src.material, /datum/material/crystal/plasmaglass)) //plasmaglass gets hand-picked alpha since it's so common and looks odd with default
 				src.damage_image.alpha = 85
 			else
 				src.damage_image.alpha = 180
