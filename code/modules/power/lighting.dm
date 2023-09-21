@@ -61,21 +61,25 @@ TYPEINFO(/obj/item/light_parts)
 
 /obj/item/light_parts/proc/can_attach(atom/target, mob/user)
 	var/dir = NORTH
+	var/turf/checkturf = get_turf(target)
 	if (src.install_type == INSTALL_FLOOR)
 		if (!istype(target, /turf/simulated/floor))
 			return FALSE
 	else if (src.install_type == INSTALL_WALL)
 		if (!istype(target, /obj/window) && !istype(target, /turf/simulated/wall))
 			return FALSE
-		dir = get_dir(get_turf(target), user)
+		dir = get_dir(checkturf, user)
+		checkturf = get_step(checkturf, dir)
 		if (!is_cardinal(dir))
 			boutput(user, "You can't seem to reach that part of \the [target]. Try standing right up against it.")
 			return FALSE
-	if (locate(/obj/machinery/light) in get_turf(target))
-		boutput(user, "There's already a lamp there!")
-		return FALSE
+	dir = turn(dir, 180)
+	for (var/obj/machinery/light/L in checkturf)
+			if (L.dir == dir && L.install_type == src.install_type)
+			boutput(user, "There's already a lamp there!")
+			return FALSE
 	return TRUE
-s
+
 /obj/item/light_parts/proc/attach_fixture(atom/self, atom/target, mob/user, instantly)
 	if (!user)
 		return FALSE
@@ -116,9 +120,6 @@ s
 	src.add_fingerprint(user)
 	user.u_equip(src)
 	qdel(src)
-
-#undef INSTALL_WALL
-#undef INSTALL_FLOOR
 
 //MBC : moving lights to consume power inside as an area-wide process() instead of each individual light processing its own shit
 /obj/machinery/light_area_manager
@@ -177,6 +178,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	power_channel = LIGHT
 	var/removable_bulb = 1
 	var/datum/light/point/light
+	var/install_type = INSTALL_WALL
 
 	New()
 		..()
@@ -256,6 +258,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	base_state = "flamp"
 	icon_state = "flamp1"
 	wallmounted = 0
+	install_type = INSTALL_FLOOR
 
 //regular light bulbs
 /obj/machinery/light/small
@@ -374,6 +377,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	desc = "A small lighting fixture, embedded in the floor."
 	plane = PLANE_FLOOR
 	allowed_type = /obj/item/light/bulb
+	install_type = INSTALL_FLOOR
 
 	New()
 		..()
@@ -461,6 +465,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	allowed_type = /obj/item/light/bulb/emergency
 	on = 1
 	removable_bulb = 0
+	install_type = INSTALL_WALL
 
 /obj/machinery/light/runway_light
 	name = "runway light"
@@ -475,7 +480,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	on = 1
 	wallmounted = 0
 	removable_bulb = 0
-
+	install_type = INSTALL_FLOOR
 	delay2
 		icon_state = "runway20"
 		base_state = "runway2"
@@ -504,6 +509,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	removable_bulb = 0
 	var/static/warning_color = "#da9b49"
 	var/connected_dock = null
+	install_type = INSTALL_FLOOR
 
 	New()
 		..()
@@ -582,6 +588,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	light_type = /obj/item/light/big_bulb
 	allowed_type = /obj/item/light/big_bulb
 	power_usage = 0
+	install_type = INSTALL_FLOOR
 
 	attackby(obj/item/W, mob/user)
 
@@ -629,6 +636,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 	layer = ABOVE_OBJ_LAYER
 	plane = PLANE_DEFAULT
 	var/switchon = FALSE		// independent switching for lamps - not controlled by area lightswitch
+	install_type = INSTALL_FLOOR
 
 // if attack with hand, only "grab" attacks are an attempt to remove bulb
 // otherwise, switch the lamp on/off
@@ -1588,3 +1596,7 @@ TYPEINFO(/obj/item/light)
 		return C
 	else
 		return ..()
+
+
+#undef INSTALL_WALL
+#undef INSTALL_FLOOR
