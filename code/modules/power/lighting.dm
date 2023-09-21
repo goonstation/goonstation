@@ -75,7 +75,7 @@ TYPEINFO(/obj/item/light_parts)
 			return FALSE
 	dir = turn(dir, 180)
 	for (var/obj/machinery/light/L in checkturf)
-			if (L.dir == dir && L.install_type == src.install_type)
+		if (L.dir == dir && L.install_type == src.install_type)
 			boutput(user, "There's already a lamp there!")
 			return FALSE
 	return TRUE
