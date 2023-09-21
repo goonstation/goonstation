@@ -742,12 +742,12 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 /obj/item/roadflare
 	name = "emergency flare"
-	desc = "Space grade emergency flare that can burn in an 02 free environment. "
+	desc = "Space grade emergency flare that can burn in an 02 free environment. Estimated burn time 3-6 minutes."
 	icon = 'icons/obj/lighting.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "roadflare"
 	uses_multiple_icon_states = 1
-	w_class = W_CLASS_TINY
+	w_class = W_CLASS_POCKET_SIZED
 	throwforce = 1
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 0
@@ -759,8 +759,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 	var/on = FLARE_UNLIT
 
-	var/light_mob = 0
-	var/life_timer = 0
+	var/life_time = 0
 	rand_pos = 1
 
 	var/col_r = 0.95
@@ -771,27 +770,25 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 	New()
 		..()
-		src.life_timer = rand(120,360)
+		src.life_time = (world.time + rand(1800,3600))
 		light_c = src.AddComponent(/datum/component/loctargeting/medium_light, col_r*255, col_g*255, col_b*255, 510 * brightness)
 		light_c.update(0)
 
 
 	process()
 		if (src.on == FLARE_LIT)
-			if (src.life_timer >= 0)
-				life_timer--
-			var/location = src.loc
-			if (ismob(location))
-				var/mob/M = location
-				if (src.life_timer <= 0)
+			if (world.time > life_time)
+				var/location = src.loc
+				if (ismob(location))
+					var/mob/M = location
 					src.put_out(M)
+					return
+				else
+					src.put_out()
 					return
 			var/turf/T = get_turf(src.loc)
 			if (T)
 				T.hotspot_expose(900,5)
-			if (src.life_timer <= 0)
-				src.put_out()
-				return
 
 	proc/light(var/mob/user as mob)
 		src.on = FLARE_LIT
@@ -809,7 +806,6 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	proc/put_out(var/mob/user as mob)
 		src.on = FLARE_BURNT
 		src.firesource = FALSE
-		src.life_timer = 0
 		src.icon_state = "roadflare-burnt"
 		src.item_state = "roadflare"
 		src.name = "burnt-out emergency flare"
@@ -874,16 +870,17 @@ TYPEINFO(/obj/item/device/light/floodlight)
 /particles/roadflare_smoke
 	icon = 'icons/effects/effects.dmi'
 	icon_state = list("smoke")
-	color = "#dddddd"
+	color = "#ffffff"
 	width = 150
 	height = 200
 	count = 15
-	spawning = 0.5
+	spawning = 0.25
 	lifespan = generator("num", 20, 35, UNIFORM_RAND)
 	fade = generator("num", 50, 100, UNIFORM_RAND)
 	position = generator("box", list(4,5,0), list(6,10,0), UNIFORM_RAND)
 	velocity = generator("box", list(-1,0.5,0), list(1,2,0), NORMAL_RAND)
 	rotation = generator("num", 0, 180, NORMAL_RAND)
+	scale = list(0.5, 0.5)
 	gravity = list(0.07, 0.02, 0)
 	grow = list(0.01, 0)
 	fadein = 10
