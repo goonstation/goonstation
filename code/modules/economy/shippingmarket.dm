@@ -368,7 +368,7 @@
 						break
 					else if (istype(O, /obj/item/pressure_crystal))
 						var/obj/item/pressure_crystal/pc = O
-						duckets += pc.pressure ** 1.6 * 10 // please change this if you can balance it better
+						duckets += pc.pressure ** 1.1 * 400 // please change this if you can balance it better
 						if (sell)
 							qdel(O)
 						break

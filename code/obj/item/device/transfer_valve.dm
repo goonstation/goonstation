@@ -509,29 +509,25 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 /obj/item/pressure_crystal
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "pressure_3"
-	var/pressure = 0 // used to calculate credit value, in shippingmarket.dm
+	var/pressure = 0 // used to calculate credit value, in shippingmarket.dm proc/appraise_value
 	var/last_explode_time = 0
 	desc = "A pressure crystal. We're not really sure how it works, but it does. Place this near where the epicenter of a bomb would be, \
-		then detonate the bomb. Afterwards, place the crystal in a tester to determine the strength."
+		then detonate the bomb. Afterwards, place the crystal in a tester to determine the strength.<br>\
+		Spent pressure crystals can be sold to researchers on the shipping market, for a credit sum depending on the measured power."
 	name = "pressure crystal"
 
 	examine()
 		. = ..()
 		if (pressure)
-			. += "<span class='notice'>This crystal has already measured something. Another explosion will overwrite the previous results.</span>"
+			. += "<br><span class='notice'>This crystal has already measured something. Another explosion will overwrite the previous results.</span>"
 
 	ex_act(var/ex, var/inf, var/factor)
+		var/exp_power = (factor / 2) ** 2 || (4-clamp(ex, 1, 3))*2 // we made it extremely accurate
 		if (src.last_explode_time < world.time)
-			src.pressure = factor || (4-clamp(ex, 1, 3))*2 // we made it extremely accurate
+			src.pressure = exp_power
 		else // sum the power of multiple explosions at roughly the same instant, but diminishingly
 			// preferring stronger explosions, too
-			var/exp_power = factor || (4-clamp(ex, 1, 3))*2
-			//src.pressure = exp_power > src.pressure ? exp_power + sqrt(src.pressure) : src.pressure + sqrt(exp_power)
 			src.pressure = max(src.pressure, exp_power) + sqrt(min(src.pressure, exp_power))
-
-			//src.pressure += sqrt(factor || (4-clamp(ex, 1, 3))*2)
-
-		//pressure += (rand()-0.5) * (pressure/1000)//its not extremely accurate.
 		src.icon_state = "pressure_[clamp(ex, 1, 3)]"
 		src.last_explode_time = world.time
 
@@ -570,10 +566,6 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			overlays = list()
 			wear_image.overlays = list()
 			boutput( user, "You pry out the crystal." )
-			/* if(prob(src.crystal.total_pressure / 45))
-				boutput( user, "<b class='alert'>It shatters!</b>" )
-				qdel(src.crystal)
-				return */
 			src.crystal.set_loc(user.loc)
 			src.crystal = null
 			return
