@@ -300,6 +300,12 @@ Contains:
 
 ////////////////////////////////////////////////////////////
 
+/obj/item/tank/empty
+	name = "gas tank"
+	icon_state = "empty"
+
+////////////////////////////////////////////////////////////
+
 /obj/item/tank/anesthetic
 	name = "gas tank (sleeping agent)"
 	icon_state = "anesthetic"

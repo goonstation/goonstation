@@ -72,10 +72,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/ffart_pickup
 	execute(var/mob/M, var/obj/item/I)
-		SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
-			if(I in M.get_all_items_on_mob())
-				M.remove_item(I)
-				I.set_loc(get_turf(I))
+		if(!I.cant_drop)
+			SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
+				if(I in M.get_all_items_on_mob())
+					M.remove_item(I)
+					I.set_loc(get_turf(I))
 		return
 
 /datum/materialProc/brullbar_temp_onlife
