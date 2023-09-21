@@ -163,6 +163,7 @@ TYPEINFO(/obj/item/organ/stomach/cyber)
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
+	capacity = 12
 
 	on_transplant(mob/M)
 		. = ..()
