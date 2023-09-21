@@ -63,7 +63,6 @@
 		if (istype(C, /obj/item/plank))
 			actions.start(new /datum/action/bar/icon/plank_build_door(C, src, 30), user)
 
-
 //bad copy paste, bad code. - kyle me made, bad
 /obj/item/plank/anti_zombie
 	construct(mob/user as mob, turf/T as turf)
