@@ -16,10 +16,13 @@
 		..()
 		for (var/atom/movable/AM in src.stomach_contents)
 			AM.set_loc(src.donor)
+		if (src.is_full())
+			src.donor.setStatus("full")
 
 	on_removal()
 		for (var/atom/movable/AM in src.stomach_contents)
 			AM.set_loc(src) // take them with us
+		src.donor.delStatus("full")
 		..()
 
 	attackby(obj/item/W, mob/user)
@@ -39,19 +42,21 @@
 	proc/consume(atom/movable/AM)
 		AM.set_loc(src.donor)
 		src.stomach_contents |= AM
+		if (src.is_full())
+			src.donor.setStatus("full")
 
 	proc/vomit()
 		if (!length(src.stomach_contents))
 			return null
 		var/atom/movable/AM = pick(src.stomach_contents)
-		AM.set_loc(src.donor.loc)
-		src.stomach_contents -= AM
+		src.eject(AM)
 		return AM
 
 	proc/eject(atom/movable/AM)
 		AM.set_loc(src.donor.loc)
 		src.stomach_contents -= AM
-
+		if (!src.is_full())
+			src.donor.delStatus("full")
 
 	proc/is_full()
 		return src.calculate_fullness() > src.capacity

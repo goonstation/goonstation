@@ -488,3 +488,10 @@
 			if(!(istype(H) && istype(H.mutantrace, /datum/mutantrace/ithillid)))
 				visible = FALSE
 				duration = 0
+
+/datum/statusEffect/full
+	id = "full"
+	name = "Full"
+	desc = "Your stomach is completely full!"
+	icon_state = "stomach"
+	unique = TRUE
