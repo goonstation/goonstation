@@ -62,7 +62,7 @@
 	detailed_power_data.log_machine(src, amount)
 #endif
 
-	if(!istype(src, /obj/machinery/power/smes) && istype(get_area(src),/area/station))
+	if(powernet && src.z == Z_LEVEL_STATION && !istype(src, /obj/machinery/power/smes) && !istype(get_area(src), /area/listeningpost))
 		station_power_generation["[round(world.time / ( 1 MINUTE ))]"] += amount
 
 
