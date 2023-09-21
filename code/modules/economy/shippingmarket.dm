@@ -366,6 +366,12 @@
 						if (sell)
 							qdel(O)
 						break
+					else if (istype(O, /obj/item/pressure_crystal))
+						var/obj/item/pressure_crystal/pc = O
+						duckets += pc.pressure ** 1.6 * 10 // please change this if you can balance it better
+						if (sell)
+							qdel(O)
+						break
 					else if (O.artifact && sell)
 						src.sell_artifact(O, O.artifact)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear

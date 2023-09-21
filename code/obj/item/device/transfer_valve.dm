@@ -509,17 +509,34 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 /obj/item/pressure_crystal
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "pressure_3"
-	var/pressure = 0
-	var/total_pressure = 0
-	desc = "A pressure crystal. We're not really sure how it works, but it does. Place this near where the epicenter of a bomb would be, then detonate the bomb. Afterwards, place the crystal in a tester to determine the strength."
-	name = "Pressure Crystal"
+	var/pressure = 0 // used to calculate credit value, in shippingmarket.dm
+	var/last_explode_time = 0
+	desc = "A pressure crystal. We're not really sure how it works, but it does. Place this near where the epicenter of a bomb would be, \
+		then detonate the bomb. Afterwards, place the crystal in a tester to determine the strength."
+	name = "pressure crystal"
+
+	examine()
+		. = ..()
+		if (pressure)
+			. += "<span class='notice'>This crystal has already measured something. Another explosion will overwrite the previous results.</span>"
+
 	ex_act(var/ex, var/inf, var/factor)
-		pressure = factor || (4-clamp(ex, 1, 3))*2
-		total_pressure += pressure
-		pressure += (rand()-0.5) * (pressure/1000)//its not extremely accurate.
-		icon_state = "pressure_[clamp(ex, 1, 3)]"
+		if (src.last_explode_time < world.time)
+			src.pressure = factor || (4-clamp(ex, 1, 3))*2 // we made it extremely accurate
+		else // sum the power of multiple explosions at roughly the same instant, but diminishingly
+			// preferring stronger explosions, too
+			var/exp_power = factor || (4-clamp(ex, 1, 3))*2
+			//src.pressure = exp_power > src.pressure ? exp_power + sqrt(src.pressure) : src.pressure + sqrt(exp_power)
+			src.pressure = max(src.pressure, exp_power) + sqrt(min(src.pressure, exp_power))
+
+			//src.pressure += sqrt(factor || (4-clamp(ex, 1, 3))*2)
+
+		//pressure += (rand()-0.5) * (pressure/1000)//its not extremely accurate.
+		src.icon_state = "pressure_[clamp(ex, 1, 3)]"
+		src.last_explode_time = world.time
+
 /obj/item/device/pressure_sensor
-	name = "Pressure Sensor"
+	name = "pressure sensor"
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "pressure_tester"
 	desc = "Put in a pressure crystal to determine the strength of the explosion."
@@ -531,7 +548,8 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			if(crystal.pressure)
 				boutput( user, "The reader reads <b>[crystal.pressure/25]</b> kilojoules." )
 			else
-				boutput( user, "The reader reads a firm 0. It guilts you into trying to read an unexploded pressure crystal, and seems to have succeeded. You feel ashamed for being so compelled by a device that has nothing more than a slot and a number display.")
+				boutput( user, "The reader reads a firm 0. It guilts you into trying to read an unexploded pressure crystal, and seems to have \
+					succeeded. You feel ashamed for being so compelled by a device that has nothing more than a slot and a number display.")
 	ex_act()
 		qdel(src)
 	attackby(obj/item/thing, mob/user)
@@ -552,10 +570,10 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			overlays = list()
 			wear_image.overlays = list()
 			boutput( user, "You pry out the crystal." )
-			if(prob(src.crystal.total_pressure / 45))
+			/* if(prob(src.crystal.total_pressure / 45))
 				boutput( user, "<b class='alert'>It shatters!</b>" )
 				qdel(src.crystal)
-				return
+				return */
 			src.crystal.set_loc(user.loc)
 			src.crystal = null
 			return
