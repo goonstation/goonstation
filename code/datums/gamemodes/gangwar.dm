@@ -610,7 +610,10 @@ proc/broadcast_to_all_gangs(var/message)
 		"psychedelic hat" = /obj/item/clothing/head/psyche,
 		"Snake's bandana" = /obj/item/clothing/head/snake,
 		"powdered wig" = /obj/item/clothing/head/powdered_wig,
-		"black ten-gallon hat" = /obj/item/clothing/head/westhat/black)
+		"black ten-gallon hat" = /obj/item/clothing/head/westhat/black,
+		"red mushroom cap" = /obj/item/clothing/head/mushroomcap/red,
+		"stag beetle helm" = /obj/item/clothing/head/stagbeetle,
+		"rhino beetle helm" = /obj/item/clothing/head/rhinobeetle)
 
 /obj/item/spray_paint
 	name = "Spraypaint Can"
