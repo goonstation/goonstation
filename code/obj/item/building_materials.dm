@@ -1065,6 +1065,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/metal)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/glass)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/cardboard)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood/zwood)
 /datum/sheet_crafting_recipe
 	var/recipe_id //The ID of the recipe, used for TGUI act()s
 	var/name

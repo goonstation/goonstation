@@ -3516,7 +3516,7 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	category = "Ammo"
 /datum/manufacture/plank	//
 	name = "Barricade Planks"
-	item_paths = list("MET-1")
+	item_paths = list("MET-2")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/sheet/wood/zwood)
 	time = 1 SECOND
