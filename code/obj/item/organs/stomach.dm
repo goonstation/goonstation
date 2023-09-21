@@ -9,6 +9,8 @@
 	fail_damage = 100
 	///How much food can we fit, based on `fill_amt` var on food items
 	var/capacity = 7
+	///How much food and other stuff we have (also based on `fill_amt`)
+	var/food_amount = 0
 	///Stomach contents are actually stored in the mob so that things like matsci effects work
 	VAR_PRIVATE/atom/movable/stomach_contents = list()
 
@@ -35,15 +37,31 @@
 	proc/cut_open()
 		for (var/atom/movable/AM in src.stomach_contents)
 			AM.set_loc(get_turf(src))
-			src.stomach_contents -= AM
+		src.stomach_contents = null
 		src.splat(get_turf(src))
 		qdel(src)
+
+	///How much does this thing fill a stomach
+	proc/food_value(atom/movable/AM)
+		if (istype(AM, /obj/item/reagent_containers/food))
+			var/obj/item/reagent_containers/food/food = AM
+			return food.fill_amt
+		else
+			return 1 //other stuff can clog your stomach
 
 	proc/consume(atom/movable/AM)
 		AM.set_loc(src.donor)
 		src.stomach_contents |= AM
+		src.food_amount += src.food_value(AM)
 		if (src.is_full())
 			src.donor.setStatus("full")
+
+	proc/eject(atom/movable/AM)
+		AM.set_loc(src.donor.loc)
+		src.stomach_contents -= AM
+		src.food_amount -= src.food_value(AM)
+		if (!src.is_full())
+			src.donor.delStatus("full")
 
 	proc/vomit()
 		if (!length(src.stomach_contents))
@@ -52,14 +70,8 @@
 		src.eject(AM)
 		return AM
 
-	proc/eject(atom/movable/AM)
-		AM.set_loc(src.donor.loc)
-		src.stomach_contents -= AM
-		if (!src.is_full())
-			src.donor.delStatus("full")
-
 	proc/is_full()
-		return src.calculate_fullness() > src.capacity
+		return src.food_amount > src.capacity
 
 	//get_fullness was taken
 	proc/calculate_fullness()
