@@ -2254,11 +2254,3 @@
 		else
 			src.say(message)
 		src.stat = old_stat // back to being dead 😌
-
-
-// /mob/living/proc/consume(atom/movable/thing)
-// 	var/obj/item/organ/stomach/stomach = src.organHolder?.stomach
-// 	if (!stomach || ) //we don't care if the new thing actually fits, only that the stomach isn't full
-// 		return FALSE
-// 	thing.set_loc(stomach)
-// 	return TRUE

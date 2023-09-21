@@ -13,6 +13,8 @@
 	var/food_amount = 0
 	///Stomach contents are actually stored in the mob so that things like matsci effects work
 	VAR_PRIVATE/atom/movable/stomach_contents = list()
+	///Amount of reagents we digest from each bite per life tick, also how fast the bites dissolve
+	var/digestion_per_tick = 3
 
 	on_transplant()
 		..()
@@ -50,6 +52,8 @@
 			return 1 //other stuff can clog your stomach
 
 	proc/consume(atom/movable/AM)
+		if (AM in src.stomach_contents)
+			return
 		AM.set_loc(src.donor)
 		src.stomach_contents |= AM
 		src.food_amount += src.food_value(AM)
@@ -57,6 +61,8 @@
 			src.donor.setStatus("full")
 
 	proc/eject(atom/movable/AM)
+		if (!(AM in src.stomach_contents))
+			return
 		AM.set_loc(src.donor.loc)
 		src.stomach_contents -= AM
 		src.food_amount -= src.food_value(AM)
@@ -132,15 +138,13 @@
 		src.digest_food(mult)
 		src.digest_mobs(mult)
 
-#define DIGESTION_PER_LIFE_TICK 3 //Total amount of reagents we can digest each Life tick
 	proc/digest_food(mult = 1)
 		var/count_to_process = min(length(src.stomach_contents), 10)
 		var/count_left = count_to_process
 		for(var/obj/item/reagent_containers/food/snacks/bite/B in src.stomach_contents)
-			B.process_stomach(src.donor, (DIGESTION_PER_LIFE_TICK / count_to_process) * mult) //Takes an even amt of reagents from all stomach contents
+			B.process_stomach(src.donor, (src.digestion_per_tick / count_to_process) * mult) //Takes an even amt of reagents from all stomach contents
 			if(count_left-- <= 0)
 				break
-#undef DIGESTION_PER_LIFE_TICK
 
 	///LOOK I'M ONLY REORGANISING THIS CODE OKAY, I AM NOT RESPONSIBLE FOR THIS DO NOT @ ME
 	proc/digest_mobs(mult = 1)

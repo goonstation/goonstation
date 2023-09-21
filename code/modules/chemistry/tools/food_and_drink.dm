@@ -457,7 +457,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			else
 				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
 				B.fill_amt = src.fill_amt/initial(src.bites_left) //so all the bites add up to the full item fillness
-				B.reagents.maximum_volume = reagents.total_volume/(src.bites_left+1 || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
+				B.reagents.maximum_volume = reagents.total_volume/((src.bites_left+1) || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
 				src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
 				var/mob/living/L = eater
 				L.organHolder.stomach.consume(B)
