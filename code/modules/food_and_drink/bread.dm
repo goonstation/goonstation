@@ -6,6 +6,7 @@
 	icon_state = "breadloaf"
 	bites_left = 1
 	heal_amt = 1
+	fill_amt = 6
 	food_color = "#FFFFCC"
 	real_name = "bread"
 	flags = FPRINT | TABLEPASS

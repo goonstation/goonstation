@@ -8,7 +8,7 @@
 	icon_state = "stomach"
 	fail_damage = 100
 	///How much food can we fit, based on `fill_amt` var on food items
-	var/capacity = 10
+	var/capacity = 7
 	///Stomach contents are actually stored in the mob so that things like matsci effects work
 	VAR_PRIVATE/atom/movable/stomach_contents = list()
 

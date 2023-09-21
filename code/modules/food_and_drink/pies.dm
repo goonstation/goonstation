@@ -5,8 +5,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 	desc = "A null pie. You shouldn't be able to see this!"
 	item_state = "pie"
 	required_utensil = REQUIRED_UTENSIL_SPOON
+	fill_amt = 10
 	sliceable = FALSE
-	var/slicetype = /obj/item/reagent_containers/food/snacks/pieslice
+	slice_amount = 8
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice
 	var/splat = 0 // for thrown pies
 	food_effects = list("food_refreshed","food_cold")
 	///In the case of a thrown splattered pie, minimum amount of time we remain visually stuck on someone's face.
@@ -51,27 +53,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 					JOB_XP(M, "Clown", 2)
 		else
 			..()
-
-	attackby(obj/item/W, mob/user)
-		if (iscuttingtool(W) || issawingtool(W))
-			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
-				user.change_eye_blurry(5)
-				user.changeStatus("weakened", 3 SECONDS)
-				JOB_XP(user, "Clown", 2)
-				return
-
-			if(sliceable == FALSE)
-				return
-
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 8
-			while (makeslices > 0)
-				new slicetype (T)
-				makeslices -= 1
-			qdel (src)
-		else ..()
 
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 /obj/item/reagent_containers/food/snacks/pieslice
