@@ -346,7 +346,7 @@
 			return
 		if (locate(/obj/lattice) in src)
 			return
-		if (AM.anchored == 2)
+		if (AM.anchored == ANCHORED_ALWAYS)
 			return
 		if (ismob(AM))
 			var/mob/M = AM
@@ -541,19 +541,19 @@
 	ex_act(severity)
 		return
 
-	Entered(atom/movable/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
+	Entered(atom/movable/AM as mob|obj)
+		if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
 			return ..()
 		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
 		if (isturf(T))
-			visible_message("<span class='alert'>[A] falls down [src]!</span>")
-			if (ismob(A))
-				var/mob/M = A
+			visible_message("<span class='alert'>[AM] falls down [src]!</span>")
+			if (ismob(AM))
+				var/mob/M = AM
 				random_brute_damage(M, 25)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.emote("scream")
 				playsound(M.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-			A.set_loc(T)
+			AM.set_loc(T)
 			return
 		else ..()
 
