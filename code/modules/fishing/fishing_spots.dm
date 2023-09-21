@@ -48,8 +48,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
 	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovagun", "sucker")]!")
 	user.put_in_hand_or_drop(fish)
-	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, 1)
-	playsound(user, 'sound/effects/fish_catch.ogg', 75, 1)
+	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/fish_catch.ogg', 75, TRUE)
 	fishing_rod.last_fished = TIME //set the last fished time
 	return 1
 
@@ -790,3 +790,13 @@ datum/fishing_spot/golden_toilet
 	/obj/item/disk/data/cartridge/clown = 15,\
 	/obj/item/disk/data/cartridge/ringtone_beepy = 5)
 
+//AI-core
+/datum/fishing_spot/ai_core
+	fishing_atom_type = /mob/living/silicon/ai
+	rod_tier_required = 3
+	fish_available = list(/obj/item/reagent_containers/food/fish/code_worm = 40,\
+	/obj/item/reagent_containers/food/fish/goldfish = 10, \
+	/obj/item/cable_coil/reinforced = 20,\
+	/obj/item/cell/shell_cell = 10, \
+	/obj/item/disk/data/cartridge/clown = 15,\
+	/obj/item/disk/data/cartridge/ringtone_beepy = 5)

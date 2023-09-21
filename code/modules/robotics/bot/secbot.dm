@@ -589,7 +589,7 @@
 				stuncount--
 				if (check_target_immunity(M))
 					src.visible_message("<span class='alert'><B>[src] tries to stun [M] with the [src.our_baton] but the attack bounces off uselessly!</B></span>")
-					playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
+					playsound(src, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, TRUE, -1)
 				else
 					src.our_baton.do_stun(src, M, src.stun_type, 2)
 				if (!stuncount && maxstuns-- <= 0)
@@ -767,7 +767,7 @@
 				if(prob(50 + (src.emagged * 15)))
 					for(var/mob/M in hearers(C, null))
 						M.show_text("<font size=[max(0, 5 - GET_DIST(get_turf(src), M))]>THUD, thud!</font>")
-					playsound(C, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+					playsound(C, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 					animate_storage_thump(C)
 				src.container_cool_off_counter++
 				if(src.container_cool_off_counter >= src.container_cool_off_max) // Give him some time to cool off
@@ -889,7 +889,7 @@
 				src.speak("PREPARE FOR JUSTICE.")
 			if('sound/voice/bfreeze.ogg')
 				src.speak("FREEZE. SCUMBAG.")
-		playsound(src, saything, 50, 0)
+		playsound(src, saything, 50, FALSE)
 
 	proc/weeoo()
 		if(weeooing)
@@ -897,7 +897,7 @@
 		SPAWN(0)
 			weeooing = 1
 			var/weeoo = 10
-			playsound(src, 'sound/machines/siren_police.ogg', 50, 1)
+			playsound(src, 'sound/machines/siren_police.ogg', 50, TRUE)
 			while (weeoo)
 				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
 				sleep(0.3 SECONDS)
@@ -1247,7 +1247,7 @@
 				for(var/j in 1 to rand(2,5))
 					qbert += "[pick("!","?")]"
 				src.speak("[qbert]")
-		playsound(src, say_thing, 50, 0, 0, 1)
+		playsound(src, say_thing, 50, FALSE, 0, 1)
 		ON_COOLDOWN(src, "[SECBOT_LASTTARGET_COOLDOWN]-[src.target?.name]", src.last_target_cooldown)
 
 //secbot handcuff bar thing
@@ -1278,11 +1278,11 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(master, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+		playsound(master, 'sound/weapons/handcuffs.ogg', 30, TRUE, -2)
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [master.target]!</B></span>")
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON)
 			duration = round(duration * 0.75)
-			playsound(master, 'sound/misc/winding.ogg', 30, 1, -2)
+			playsound(master, 'sound/misc/winding.ogg', 30, TRUE, -2)
 
 	onInterrupt()
 		..()
@@ -1380,10 +1380,10 @@
 		master.baton_charging = 1
 		master.visible_message("<span class='alert'><B>[master] is energizing its prod, preparing to zap [master.target]!</B></span>")
 		if(master.is_beepsky == IS_BEEPSKY_AND_HAS_HIS_SPECIAL_BATON || master.is_beepsky == IS_BEEPSKY_BUT_HAS_SOME_GENERIC_BATON || master.emagged >= 2)
-			playsound(master, 'sound/machines/ArtifactBee2.ogg', 30, 1, -2)
+			playsound(master, 'sound/machines/ArtifactBee2.ogg', 30, TRUE, -2)
 			duration = round(duration * 0.6)
 		else
-			playsound(master, 'sound/effects/electric_shock_short.ogg', 30, 1, -2)
+			playsound(master, 'sound/effects/electric_shock_short.ogg', 30, TRUE, -2)
 
 	onEnd()
 		..()

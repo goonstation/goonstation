@@ -176,6 +176,27 @@
 		catwalk.setMaterial(rods?.material)
 		catwalk.set_loc(src)
 
+	///A very loose approximation of "is there some light shining on this thing", taking into account all lighting systems and byond internal crap
+	///Performance warning since simple light checks are NOT CHEAP
+	proc/is_lit(RL_threshold = 0.3)
+		if (src.fullbright || src.RL_GetBrightness() > RL_threshold)
+			return TRUE
+
+		var/area/area = get_area(src)
+		if (area.force_fullbright)
+			return TRUE
+
+		for (var/dir in cardinal) //check for neighbouring starlit turfs
+			var/turf/T = get_step(src, dir)
+			if (istype(T, /turf/space))
+				var/turf/space/space_turf = T
+				if (length(space_turf.underlays))
+					return TRUE
+
+		if (src.SL_lit())
+			return TRUE
+		return FALSE
+
 /obj/overlay/tile_effect
 	name = ""
 	anchored = ANCHORED
@@ -342,6 +363,8 @@ proc/generate_space_color()
 	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
 		src.color = space_color
 
+	// underlays are chacked in CI for duplicate turfs on a dmm tile
+	#ifndef CI_RUNTIME_CHECKING
 	if(fullbright)
 		if(!starlight)
 			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x = -32, pixel_y = -32)
@@ -353,9 +376,10 @@ proc/generate_space_color()
 		starlight.color = starlight_color_override ? starlight_color_override : src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
-		UpdateOverlays(starlight, "starlight")
+		src.underlays = list(starlight)
 	else
-		UpdateOverlays(null, "starlight")
+		src.underlays = null
+	#endif
 
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
@@ -1126,7 +1150,7 @@ TYPEINFO(/turf/simulated)
 		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
 
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
-		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 		R.change_stack_amount(-1)
 		var/obj/lattice/lattice = new(src)
 		lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
@@ -1140,7 +1164,7 @@ TYPEINFO(/turf/simulated)
 		if (T.amount >= 1)
 			for(var/obj/lattice/L in src)
 				qdel(L)
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 			T.build(src)
 
 #if defined(MAP_OVERRIDE_POD_WARS)

@@ -19,7 +19,7 @@
 	name = "space helmet"
 	icon_state = "space"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	see_face = 0
+	see_face = FALSE
 	item_state = "s_helmet"
 	desc = "Helps protect against vacuum."
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
@@ -48,7 +48,7 @@
 	icon_state = "espace0"
 	uses_multiple_icon_states = 1
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
-	see_face = 0
+	see_face = FALSE
 	item_state = "s_helmet"
 	var/on = 0
 
@@ -271,7 +271,7 @@
 	desc = "A lightweight space helmet."
 	icon_state = "spacelight-e" // if I add more light suits/helmets change this to nuetral suit/helmet
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
-	see_face = 0
+	see_face = FALSE
 	item_state = "s_helmet"
 	hides_from_examine = C_EARS|C_MASK // Light space suit helms have transparent fronts
 	seal_hair = 1
@@ -340,7 +340,7 @@
 		icon_state = "syndie_commander"
 		desc = "A terrifyingly tall, black & red cap, typically worn by a Syndicate Nuclear Operative Commander. Maybe they're trying to prove something to the Head of Security?"
 		seal_hair = 0
-		see_face = 1
+		see_face = TRUE
 		team_num = TEAM_SYNDICATE
 
 		setupProperties()
@@ -390,7 +390,7 @@
 			icon_state = "syndie_specialist"
 			item_state = "syndie_specialist"
 			c_flags = SPACEWEAR | COVERSEYES
-			see_face = 0
+			see_face = FALSE
 			protective_temperature = 1300
 			abilities = list(/obj/ability_button/nukie_meson_toggle)
 			var/on = 0
@@ -400,7 +400,7 @@
 
 			proc/toggle(var/mob/toggler)
 				src.on = !src.on
-				playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
+				playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
 				if (ishuman(toggler))
 					var/mob/living/carbon/human/H = toggler
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
@@ -932,7 +932,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/siren)
 	item_state = "nthelm"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH | BLOCKCHOKE
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
-	see_face = 0
+	see_face = FALSE
 	setupProperties()
 		..()
 		setProperty("meleeprot_head", 8)
@@ -988,7 +988,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		src.item_state = "[initial(src.item_state)][src.visor_enabled ? "-on" : null]"
 		set_icon_state("[initial(src.icon_state)][src.visor_enabled ? "-on" : null]")
 		user.update_clothing()
-		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
 
 		// Check that the user is human & the helmet is worn
 		if (!ishuman(user))

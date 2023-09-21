@@ -967,7 +967,7 @@
 				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
 			if (!castcheck(target))
 				src.holder.locked = FALSE
-				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			var/datum/abilityHolder/localholder = src.holder
 			. = cast(target, params)
 			if(!QDELETED(localholder))

@@ -5383,6 +5383,11 @@
 /obj/machinery/door/poddoor/blast/single{
 	id = "chapel_driver"
 	},
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/chapel/funeral_parlor)
 "awZ" = (
@@ -5718,9 +5723,7 @@
 /area/station/maintenance/east)
 "ayB" = (
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown)
 "ayD" = (
@@ -13967,6 +13970,7 @@
 /area/station/hallway/primary/east)
 "bpj" = (
 /obj/table/reinforced/chemistry/auto/drugs,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purpleblack{
 	dir = 10
 	},
@@ -16054,13 +16058,6 @@
 /obj/lattice,
 /turf/space,
 /area/space)
-"bCK" = (
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "bCQ" = (
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
@@ -18059,6 +18056,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "ceB" = (
@@ -18213,6 +18215,11 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "clS" = (
@@ -19912,6 +19919,11 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "dMT" = (
@@ -20321,6 +20333,22 @@
 	dir = 8
 	},
 /area/station/science/lobby)
+"edV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/access,
+/obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/main)
 "eeV" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -23661,6 +23689,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
 	},
@@ -24043,6 +24076,11 @@
 "hnI" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "hoj" = (
@@ -26184,17 +26222,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
-"iNH" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/mapping_helper/access,
-/obj/mapping_helper/firedoor_spawn,
-/turf/simulated/floor/plating,
-/area/station/hangar/main)
 "iNX" = (
 /obj/cable,
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
@@ -27018,7 +27045,7 @@
 /obj/disposalpipe/segment/mail{
 	dir = 4
 	},
-/obj/fishing_pool,
+/obj/fishing_pool/portable,
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -29769,17 +29796,6 @@
 /obj/machinery/ghostdrone_factory,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
-"lEA" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/security,
-/turf/simulated/floor/plating,
-/area/station/hangar/sec)
 "lFq" = (
 /obj/lattice{
 	dir = 10;
@@ -31768,6 +31784,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/misc{
 	dir = 8
 	},
@@ -32633,6 +32654,22 @@
 /obj/machinery/light,
 /turf/simulated/floor/redwhite,
 /area/station/medical/medbay/surgery)
+"nSt" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/security,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/hangar/sec)
 "nSN" = (
 /obj/machinery/light,
 /obj/rack,
@@ -33346,6 +33383,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/east)
 "owP" = (
@@ -33502,6 +33544,11 @@
 	},
 /obj/mapping_helper/access,
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/west)
 "oCX" = (
@@ -36335,6 +36382,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/misc{
 	dir = 4
 	},
@@ -37118,6 +37170,11 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/maint,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "rrn" = (
@@ -37311,7 +37368,7 @@
 	},
 /obj/disposalpipe/segment,
 /obj/table/reinforced/auto,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/hand_labeler,
 /obj/item/storage/firstaid/regular,
 /obj/machinery/camera{
@@ -38072,6 +38129,19 @@
 /obj/machinery/light,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
+"siv" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 4
+	},
+/obj/mapping_helper/firedoor_spawn,
+/obj/mapping_helper/access/maint,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/maintenance/east)
 "siQ" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -38309,6 +38379,11 @@
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/engine,
 /area/station/engine/core/nuclear)
 "srC" = (
@@ -38704,6 +38779,13 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"sNj" = (
+/obj/cable/orange{
+	icon_state = "4-8"
+	},
+/obj/machinery/light,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "sOc" = (
 /obj/item/device/radio/beacon,
 /obj/landmark/gps_waypoint,
@@ -39253,14 +39335,6 @@
 	dir = 6
 	},
 /area/mining/magnet)
-"tjf" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 4
-	},
-/obj/mapping_helper/firedoor_spawn,
-/obj/mapping_helper/access/maint,
-/turf/simulated/floor/plating,
-/area/station/maintenance/east)
 "tjK" = (
 /obj/disposalpipe/segment/mail{
 	dir = 4
@@ -41188,14 +41262,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -42247,6 +42314,11 @@
 	dir = 4
 	},
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/caution/misc{
 	dir = 4
 	},
@@ -42889,6 +42961,11 @@
 "wmc" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/mapping_helper/firedoor_spawn,
+/obj/forcefield/energyshield/perma/doorlink{
+	desc = "A door-linked force field that prevents gasses from passing through it.";
+	name = "Door-linked Atmospheric Forcefield";
+	powerlevel = 1
+	},
 /turf/simulated/floor/plating,
 /area/station/crewquarters/cryotron)
 "wmt" = (
@@ -71181,7 +71258,7 @@ amy
 amy
 xAM
 aiW
-lEA
+nSt
 aiW
 aiW
 apV
@@ -71695,7 +71772,7 @@ all
 all
 gBx
 aiW
-lEA
+nSt
 aiW
 nRg
 ajR
@@ -78698,8 +78775,8 @@ gck
 bzk
 fho
 bBB
-bCK
-rpX
+buG
+sNj
 bFo
 roW
 jkc
@@ -83003,7 +83080,7 @@ alH
 alH
 alH
 ale
-iNH
+edV
 ale
 uXU
 aqB
@@ -83517,7 +83594,7 @@ amx
 anc
 ale
 ale
-iNH
+edV
 ale
 apT
 arA
@@ -87393,7 +87470,7 @@ sqY
 plf
 aBJ
 avz
-tjf
+siv
 aET
 aFY
 iHN
@@ -87907,7 +87984,7 @@ aaa
 aaa
 ozL
 avz
-tjf
+siv
 aET
 aET
 aET

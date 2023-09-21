@@ -340,6 +340,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	desc = "This closet was produced using the finest in applied optical illusion technology. When closed, it will dynamically assume the appearance of the floor tile underneath."
 
+	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
+		. = ..()
+		if(in_surplus_crate)
+			var/obj/storage/closet/syndi/closet = item
+			closet.open()
+
 /datum/syndicate_buylist/traitor/snidely
 	name = "Fake Moustache"
 	item = /obj/item/clothing/mask/moustache

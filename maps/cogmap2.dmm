@@ -1526,9 +1526,7 @@
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/generic,
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
 	name = "Clown's Quarters"
@@ -1606,8 +1604,8 @@
 /obj/decal/cleanable/cobweb,
 /obj/item/clothing/head/wig,
 /obj/item/clothing/head/wig,
-/obj/item/clothing/suit,
-/obj/item/clothing/suit,
+/obj/item/clothing/suit/jacket/leather,
+/obj/item/clothing/suit/jacket/leather,
 /obj/storage/crate,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
@@ -26479,7 +26477,7 @@
 "bzq" = (
 /obj/table/reinforced/auto,
 /obj/item/paper/book/from_file/space_law,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 8;
 	pixel_y = 3
 	},
@@ -29768,7 +29766,7 @@
 	pixel_x = -24;
 	pixel_y = 8
 	},
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -42291,8 +42289,8 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/construction)
 "crR" = (
-/obj/item/storage/box/trackimp_kit2,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
+/obj/item/storage/box/trackimp_kit,
 /obj/item/device/gps,
 /obj/item/device/gps,
 /obj/item/device/gps,
@@ -48509,9 +48507,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "cJZ" = (
-/obj/machinery/computer/barcode/qm{
-	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-	},
+/obj/machinery/computer/barcode/qm,
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -50559,9 +50555,7 @@
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "cPP" = (
-/obj/machinery/computer/barcode/qm{
-	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-	},
+/obj/machinery/computer/barcode/qm,
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
@@ -53059,9 +53053,7 @@
 	},
 /area/station/hangar/qm)
 "cWP" = (
-/obj/machinery/computer/barcode/qm{
-	destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
-	},
+/obj/machinery/computer/barcode/qm,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -58679,14 +58671,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -60089,6 +60074,7 @@
 /area/research_outpost)
 "fas" = (
 /obj/table/reinforced/chemistry/auto,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},
@@ -71884,7 +71870,6 @@
 	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/engineering_mechanic,
-/obj/mapping_helper/access/engineering_mechanic,
 /turf/simulated/floor/plating,
 /area/station/engine/elect)
 "thb" = (
@@ -74755,7 +74740,6 @@
 /turf/simulated/floor/grey/blackgrime,
 /area/station/hangar/catering)
 "xij" = (
-/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/classic{
 	name = "Bathroom"
 	},

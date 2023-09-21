@@ -2847,7 +2847,7 @@
 	floorintact = 1;
 	floorname = "plating";
 	gas_impermeable = 1;
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3";
 	layer = 1.9;
 	mod = "norn-R-"
@@ -6413,7 +6413,7 @@
 	floorintact = 1;
 	floorname = "plating";
 	gas_impermeable = 1;
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3";
 	layer = 1.9;
 	mod = "norn-R-"
@@ -21495,7 +21495,7 @@
 /obj/item/device/audio_log,
 /obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/purpleblack{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -32338,9 +32338,7 @@
 /area/russian/radiation)
 "dgf" = (
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"

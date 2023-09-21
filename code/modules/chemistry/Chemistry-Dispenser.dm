@@ -24,6 +24,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/item/beaker = null
 	var/list/dispensable_reagents = null
+	///Should always be a type of /obj/item/reagent_containers
 	var/glass_path = /obj/item/reagent_containers/glass
 	var/glass_name = "beaker"
 	var/dispenser_name = "Chemical"
@@ -91,11 +92,11 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				user.lastattacked = src
 				attack_particle(user,src)
 				hit_twitch(src)
-				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_2.ogg', 50,TRUE)
 				src.take_damage(damage)
 				user.visible_message("<span class='alert'><b>[user] bashes [src] with [B]!</b></span>")
 			else
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,TRUE)
 				user.visible_message("<span class='alert'><b>[user] uselessly taps [src] with [B]!</b></span>")
 			return
 
@@ -106,6 +107,9 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			user.show_text("[src] seems to be out of order.", "red")
 			return
 
+		if (B.current_lid)
+			boutput(user, "<span class='alert'>You cannot put the [B.name] in the [src.name] while it has a lid on it.</span>")
+			return
 		/*
 		if (isrobot(user))
 			var/the_reagent = input("Which chemical do you want to put in the [glass_name]?", "[dispenser_name] Dispenser", null, null) as null|anything in src.dispensable_reagents
@@ -128,6 +132,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		*/
 		var/ejected_beaker = null
 		if (src.beaker?.loc == src)
+			beaker.reagents?.handle_reactions()
 			ejected_beaker = src.beaker
 			user.put_in_hand_or_drop(ejected_beaker)
 
@@ -143,6 +148,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 				boutput(user, "You swap the [B] with the [glass_name] already loaded into the machine.")
 			else
 				boutput(user, "You add the [glass_name] to the machine!")
+		B.reagents?.handle_reactions()
 		src.UpdateIcon()
 		src.ui_interact(user)
 
@@ -312,18 +318,22 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					if(beaker.loc == src)
 						if((BOUNDS_DIST(usr, src) == 0))
 							usr.put_in_hand_or_drop(beaker)
+							beaker.reagents?.handle_reactions()
 						else
 							beaker.set_loc(src.loc)
 					beaker = null
 					src.UpdateIcon()
 					. = TRUE
 				else
-					var/obj/item/I = usr.equipped()
-					if (istype(I, glass_path))
-						if(!I.cant_drop) // borgs and item arms
+					var/obj/item/reagent_containers/beaker = usr.equipped()
+					if (istype(beaker, glass_path))
+						if (beaker.current_lid)
+							boutput(ui.user, "<span class='alert'>You cannot put the [beaker.name] in the [src.name] while it has a lid on it.</span>")
+							return
+						if(!beaker.cant_drop) // borgs and item arms
 							usr.drop_item()
-							I.set_loc(src)
-						src.beaker = I
+							beaker.set_loc(src)
+						src.beaker = beaker
 						src.UpdateIcon()
 						. = TRUE
 			if ("remove")
@@ -440,6 +450,14 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
+//Combines alcohol and soda dispenser
+/obj/machinery/chem_dispenser/alcohol/bar
+	name = "bar dispenser"
+	desc = "You see a small, fading warning label on the side of the machine:<br>WARNING: Contents pending approval for human consumption. User assumes all risks.</br>"
+	dispensable_reagents = list("beer", "bitters", "bourbon", "champagne", "juice_cherry", "cider", \
+								"coconut_milk", "cola", "juice_cran", "gin", "ginger_ale", "grenadine", "juice_lemon", \
+								"juice_lime", "juice_orange", "juice_pineapple",  "rum", "sugar", \
+								"tea", "tequila", "juice_tomato", "tonic", "vanilla", "vermouth", "vodka", "water", "wine")
 
 // Dispenses any drink you want. Designed for the afterlife bar
 /obj/machinery/chem_dispenser/alcohol/ultra
@@ -455,13 +473,6 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 							"mimosa","french75","sangria","tomcollins","peachschnapps","moscowmule","tequila","tequilasunrise",\
 							"paloma","mintjulep","mojito","cremedementhe","grasshopper","freeze","curacao","bluelagoon",\
 							"bluehawaiian","negroni","necroni") // ow my hands
-	icon_state = "alc_dispenser"
-	icon_base = "alc_dispenser"
-	glass_path = /obj/item/reagent_containers/food/drinks
-	glass_name = "bottle"
-	dispenser_name = "Alcohol"
-
-	dispense_sound = 'sound/misc/pourdrink2.ogg'
 
 /obj/machinery/chem_dispenser/alcohol/hydro
 	name = "ULTRA DISPENSER"

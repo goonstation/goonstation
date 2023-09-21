@@ -321,7 +321,7 @@
 		if (src.alive && src.health <= 0) src.CritterDeath()
 
 		if (hitsound)
-			playsound(src, hitsound, 50, 1)
+			playsound(src, hitsound, 50, TRUE)
 		if (W?.hitsound)
 			playsound(src,W.hitsound,50,1)
 
@@ -378,7 +378,7 @@
 			attack_twitch(user)
 			hit_twitch(src)
 			if (hitsound)
-				playsound(src, hitsound, 50, 1)
+				playsound(src, hitsound, 50, TRUE)
 			if (src.alive && src.health <= 0) src.CritterDeath()
 			if (src.alive)
 				on_damaged(user)
@@ -1050,7 +1050,7 @@
 
 			if (shouldThrow && T)
 				src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-				playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+				playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
 			else
 				var/hatch_wiggle_counter = rand(3,8)
 				while (hatch_wiggle_counter-- > 0)

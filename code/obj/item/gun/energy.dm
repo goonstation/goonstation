@@ -125,7 +125,7 @@ TYPEINFO(/obj/item/gun/energy)
 				return 1
 			boutput(user, "<span class='alert'>*click* *click*</span>")
 			if (!src.silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return 0
 
 
@@ -546,7 +546,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 /obj/item/gun/energy/wavegun
 	name = "\improper Sancai wave gun"
 	icon = 'icons/obj/items/gun.dmi'
-	desc = "The versatile XIANG|GIESEL model '三才' with three monlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
+	desc = "The versatile XIANG|GIESEL model '三才' with three nonlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun"
 	item_state = "wave"
 	cell_type = /obj/item/ammo/power_cell/med_power

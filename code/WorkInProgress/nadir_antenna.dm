@@ -301,7 +301,7 @@ TYPEINFO(/obj/machinery/communications_dish/transception)
 /obj/machinery/communications_dish/transception/attack_hand(mob/user)
 	if(src.intcap && intcap_door_open)
 		boutput(user, "<span class='notice'>You remove \the [intcap] from the cabinet's cell compartment.</span>")
-		playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+		playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 		user.put_in_hand_or_drop(src.intcap)
 		src.intcap = null

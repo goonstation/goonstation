@@ -387,7 +387,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(master, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, 1)
+		playsound(master, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, TRUE)
 		master.anchored = ANCHORED
 		master.icon_state = "[master.icon_state_base]-c"
 		master.visible_message("<span class='alert'>[master] begins to clean the [T.name].</span>")

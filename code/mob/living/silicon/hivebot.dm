@@ -1080,7 +1080,7 @@ Frequency:
 			if (M.change_stack_amount(-1))
 				src.build_step++
 				boutput(user, "You add the plating to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.icon_state = "shell-plate"
 				return
 			else
@@ -1098,7 +1098,7 @@ Frequency:
 			if (coil.amount >= 3)
 				src.build_step++
 				boutput(user, "You add \the cable to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				coil.amount -= 3
 				src.icon_state = "shell-cable"
 				if (coil.amount < 1)
@@ -1117,7 +1117,7 @@ Frequency:
 			if (!src.cell)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.cell = W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -1134,7 +1134,7 @@ Frequency:
 			if (!src.has_radio)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.icon_state = "shell-radio"
 				src.has_radio = 1
 				qdel(W)
@@ -1151,7 +1151,7 @@ Frequency:
 			if (!src.has_interface)
 				src.build_step++
 				boutput(user, "You add the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.has_interface = 1
 				qdel(W)
 				return

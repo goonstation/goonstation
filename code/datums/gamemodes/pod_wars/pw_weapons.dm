@@ -177,7 +177,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
 			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new(T)
 			PJ.pellets_to_fire = src.pellets_to_fire
 			if(src.custom_projectile_type)
@@ -219,7 +219,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/conc_grenade.ogg', 90, 1)
+			playsound(T, 'sound/weapons/conc_grenade.ogg', 90, TRUE)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = ANCHORED
 			O.name = "Explosion"
