@@ -511,6 +511,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	icon_state = "pressure_3"
 	var/pressure = 0 // used to calculate credit value, in shippingmarket.dm proc/appraise_value
 	var/last_explode_time = 0
+	var/static/explosion_id = 0
 	desc = "A pressure crystal. We're not really sure how it works, but it does. Place this near where the epicenter of a bomb would be, \
 		then detonate the bomb. Afterwards, place the crystal in a tester to determine the strength.<br>\
 		Spent pressure crystals can be sold to researchers on the shipping market, for a credit sum depending on the measured power."
@@ -523,13 +524,20 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 
 	ex_act(var/ex, var/inf, var/factor)
 		var/exp_power = (factor / 2) ** 2 || (4-clamp(ex, 1, 3))*2 // we made it extremely accurate
+
+		if (src.explosion_id == exp_power * world.time)
+			return // we don't want peeps stacking 50 crystals on 1 explosion
+			// this only stops stacking, or making rings of crystals - you can still make a line of valuable crystals from the epicenter
+
 		if (src.last_explode_time < world.time)
 			src.pressure = exp_power
 		else // sum the power of multiple explosions at roughly the same instant, but diminishingly
 			// preferring stronger explosions, too
 			src.pressure = max(src.pressure, exp_power) + sqrt(min(src.pressure, exp_power))
+
 		src.icon_state = "pressure_[clamp(ex, 1, 3)]"
 		src.last_explode_time = world.time
+		src.explosion_id = exp_power * world.time
 
 /obj/item/device/pressure_sensor
 	name = "pressure sensor"
