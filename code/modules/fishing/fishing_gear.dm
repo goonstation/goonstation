@@ -93,7 +93,7 @@
 			return
 
 		if (user.bioHolder.HasEffect("clumsy") && prob(25))
-			user.visible_message("<span class='alert'><b>[user]</b> fumbles with [src.rod] in [his_or_her(user)] haste and hits [himself_or_herself(user)] in the forehead with it!</span>", "<span class='alert'>You fumble with [src.rod] in your haste and hit yourself in the forehead with it!</span>")
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles with [src.rod] in [his_or_her(user)] haste and hits [himself_or_herself(user)] in the forehead with it!</span>")
 			user.changeStatus("weakened", 2 SECONDS)
 			playsound(user, 'sound/impact_sounds/tube_bonk.ogg', 50, 1)
 			interrupt(INTERRUPT_ALWAYS)
