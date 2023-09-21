@@ -120,9 +120,13 @@
 	disposing()
 		for (var/mob/M in src.mobs)
 			M.detach_hud(src)
-		for (var/atom/movable/screen/hud/S in src.objects)
-			if (S.master == src)
-				S.master = null
+		for (var/atom/movable/Obj in src.objects)
+			Obj.plane = initial(Obj.plane)
+			if(istype(Obj, /atom/movable/screen/hud))
+				var/atom/movable/screen/hud/H = Obj
+				if (H.master == src)
+					H.master = null
+		src.objects = null
 		for (var/client/C in src.clients)
 			remove_client(C)
 
@@ -142,8 +146,8 @@
 
 	proc/add_client(client/C)
 		check_objects()
-		C.screen += src.objects
-		src.clients += C
+		C.screen |= src.objects
+		src.clients |= C
 
 	proc/remove_client(client/C)
 		src.clients -= C
@@ -151,6 +155,8 @@
 			C.screen -= A
 
 	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltipTheme = null, desc = null, customType = null, mouse_opacity = 1)
+		if(QDELETED(src))
+			CRASH("Tried to create a screen (id '[id]', name '[name]') on a deleted datum/hud")
 		var/atom/movable/screen/hud/S
 		if (customType)
 			if (!ispath(customType, /atom/movable/screen/hud))

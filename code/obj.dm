@@ -209,6 +209,12 @@
 
 	proc/initialize()
 
+	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
+		return FALSE
+
+	proc/get_chemical_effect_position() //!how many pixels up or down chemistry reaction animations should shift, to fit the item it's reacting in
+		return 7 //default is up a bit since most objects are centered
+
 	attackby(obj/item/I, mob/user)
 // grabsmash
 		if (istype(I, /obj/item/grab/))
@@ -394,6 +400,8 @@
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16
+		if(W.layer < src.layer)
+			W.layer = src.layer + 0.1
 		. = TRUE
 
 /obj/proc/receive_silicon_hotkey(var/mob/user)

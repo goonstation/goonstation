@@ -72,10 +72,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/ffart_pickup
 	execute(var/mob/M, var/obj/item/I)
-		SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
-			if(I in M.get_all_items_on_mob())
-				M.remove_item(I)
-				I.set_loc(get_turf(I))
+		if(!I.cant_drop)
+			SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
+				if(I in M.get_all_items_on_mob())
+					M.remove_item(I)
+					I.set_loc(get_turf(I))
 		return
 
 /datum/materialProc/brullbar_temp_onlife
@@ -424,7 +425,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 			//sparkles
 			animate_flash_color_fill_inherit(owner,"#ff0000",4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakagentb.ogg', 50, 1, 8)
+			playsound(owner, 'sound/effects/leakagentb.ogg', 50, TRUE, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
 		else //no plasma present, or this is just normal molitz - you get just plain oxygen
@@ -433,7 +434,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			air.merge(payload) //add it to the target air
 			//blue sparkles
 			animate_flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
+			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 
 
 		molitz.setProperty("molitz_bubbles", iterations-1)
@@ -459,9 +460,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			if(iterations >= 1)
-				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
+				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 			if(iterations == 0)
-				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, 1, 5)
+				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, TRUE, 5)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
 			payload.temperature = T20C
@@ -548,7 +549,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/L = entering
 			if(L.slip(walking_matters = 1))
 				boutput(L, "You slip on the icy floor!")
-				playsound(owner, 'sound/misc/slip.ogg', 30, 1)
+				playsound(owner, 'sound/misc/slip.ogg', 30, TRUE)
 		return
 
 /datum/materialProc/ice_life
@@ -733,3 +734,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
 				floor_owner.ReplaceWithSpace()
 				return
+
+/datum/materialProc/glowstick_add
+	desc = "It has a chemical glow."
+	max_generations = 1
+	var/datum/component/loctargeting/sm_light/light_c
+
+	execute(var/atom/owner)
+		var/list/color = rgb2num(owner.material.getColor())
+		light_c = owner.AddComponent(/datum/component/loctargeting/sm_light, color[1], color[2], color[3], 255 * 0.33)
+		light_c.update(1)

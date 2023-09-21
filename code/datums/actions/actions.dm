@@ -1742,11 +1742,11 @@
 	onStart()
 		..()
 		if(iswrenchingtool(tool))
-			playsound(target, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(target, 'sound/items/Ratchet.ogg', 50, TRUE)
 		else if(isweldingtool(tool))
 			tool:try_weld(owner,0,-1)
 		else if(isscrewingtool(tool))
-			playsound(target, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(target, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins [unanchor ? "un" : ""]anchoring [target].</span>")
 
 	onEnd()

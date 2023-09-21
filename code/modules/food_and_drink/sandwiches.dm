@@ -366,7 +366,7 @@
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
-	brew_result = "beepskybeer"
+	brew_result = list("beepskybeer"=20)
 	initial_reagents = list("cholesterol"=5,"nanites"=20)
 
 /obj/item/reagent_containers/food/snacks/burger/cheeseborger
@@ -376,7 +376,7 @@
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
-	brew_result = "beepskybeer"
+	brew_result = list("beepskybeer"=20)
 	initial_reagents = list("cholesterol"=5,"nanites"=20)
 
 /obj/item/reagent_containers/food/snacks/burger/synthburger
@@ -555,6 +555,18 @@
 	heal_amt = 1
 	initial_volume = 5
 	initial_reagents = list("cholesterol"=1)
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
+
+/obj/item/reagent_containers/food/snacks/chilifries
+	name = "chili cheese fries"
+	desc = "Lightly salted potato fingers, topped with chili and cheese."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "chilifries"
+	bites_left = 6
+	heal_amt = 2
+	initial_volume = 5
+	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"= 10)
+	food_effects = list("food_hp_up")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
 
 /obj/item/reagent_containers/food/snacks/macguffin

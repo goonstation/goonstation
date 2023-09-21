@@ -451,6 +451,7 @@
 /mob/Login()
 	if (!src.client)
 		stack_trace("mob/Login called without a client for mob [identify_object(src)]. What?")
+	src.client.set_layout(src.client.tg_layout)
 	if(src.skipped_mobs_list)
 		var/area/AR = get_area(src)
 		AR?.mobs_not_in_global_mobs_list?.Remove(src)
@@ -460,6 +461,9 @@
 	if(src.skipped_mobs_list & SKIPPED_AI_MOBS_LIST)
 		skipped_mobs_list &= ~SKIPPED_AI_MOBS_LIST
 		global.ai_mobs |= src
+	if(src.skipped_mobs_list & SKIPPED_STAMINA_MOBS)
+		OTHER_START_TRACKING_CAT(src, TR_CAT_STAMINA_MOBS)
+		src.skipped_mobs_list &= ~SKIPPED_STAMINA_MOBS
 
 	if(!src.last_ckey)
 		SPAWN(0)
@@ -561,7 +565,7 @@
 				src.now_pushing = 0
 				var/atom/source = A
 				src.visible_message("<span class='alert'><B>[src]</B>'s bounces off [A]!</span>")
-				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
+				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/throw_dir = turn(get_dir(A, src),rand(-1,1)*45)
 				src.throw_at(get_edge_cheap(source, throw_dir),  20, 3)
 				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src)] is flubber bounced [dir2text(throw_dir)] due to impact with turf [log_object(A)] [log_reagents(A)] at [log_loc(src)].")
@@ -592,13 +596,13 @@
 					if (tmob.hasStatus("spatial_protection"))
 						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 						var/atom/source = get_turf(tmob)
-						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
 						return
 					// like repels - bump them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
 					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!</span>")
-					playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 100, 1)
+					playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 100, TRUE)
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
@@ -609,7 +613,7 @@
 
 				var/atom/source = get_turf(tmob)
 				src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
-				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
+				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/target_dir = get_dir(src, tmob)
 				var/src_dir = get_dir(tmob, src)
 				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
@@ -638,7 +642,7 @@
 					if (tmob.hasStatus("spatial_protection"))
 						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 						var/atom/source = get_turf(tmob)
-						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
 						return
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
@@ -658,7 +662,7 @@
 						var/turf/Q = pick(sfloors)
 						arcFlashTurf(src, Q, 3000)
 						sfloors -= Q
-					playsound(source, 'sound/effects/suck.ogg', 100, 1)
+					playsound(source, 'sound/effects/suck.ogg', 100, TRUE)
 					for(var/atom/movable/M in view(5, source))
 						if(M.anchored || M == source) continue
 						if(throw_charge > 0)
@@ -672,7 +676,7 @@
 						if (tmob) //Wire: Fix for: Cannot modify null.now_pushing
 							tmob.now_pushing = 0
 
-		if (!issilicon(AM))
+		if (!issilicon(AM) && !issilicon(src))
 			if (tmob.a_intent == "help" && src.a_intent == "help" && tmob.canmove && src.canmove && !tmob.buckled && !src.buckled &&!src.throwing && !tmob.throwing) // mutual brohugs all around!
 				var/turf/oldloc = src.loc
 				var/turf/newloc = tmob.loc
@@ -1622,6 +1626,14 @@
 /mob/proc/is_active()
 	. = (0 >= usr.stat)
 
+/mob/proc/is_heat_resistant()
+	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
+		return TRUE
+	if(src.nodamage)
+		return TRUE
+	return FALSE
+
+
 /mob/proc/updatehealth()
 	if (src.nodamage == 0)
 		src.health = max_health - src.get_oxygen_deprivation() - src.get_toxin_damage() - src.get_burn_damage() - src.get_brute_damage()
@@ -2082,7 +2094,7 @@
 			src.gib()
 			return
 		src.show_text("<span style=\"font-weight:bold; font-style:italic; color:red; font-family:'Comic Sans MS', sans-serif; font-size:200%;\">It's coming!!!</span>")
-		playsound(the_turf, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 70, 1)
+		playsound(the_turf, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 70, TRUE)
 
 		floorcluwne.loc=the_turf //I actually do want to bypass Entered() and Exit() stuff now tyvm
 		animate_slide(the_turf, 0, -24, duration)
@@ -2190,10 +2202,49 @@
 /mob/proc/smite_gib()
 	var/turf/T = get_turf(src)
 	showlightning_bolt(T)
-	playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
+	playsound(T, 'sound/effects/lightning_strike.ogg', 50, TRUE)
 	src.unequip_all()
 	src.emote("scream")
 	src.gib()
+
+/mob/proc/anvilgib(height = 7, use_shadow=TRUE, anvil_type=/obj/table/anvil/gimmick)
+	logTheThing(LOG_COMBAT, src, "is anvil-gibbed at [log_loc(src)].")
+	src.transforming = TRUE
+	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "anvilgib")
+	src.anchored = ANCHORED_ALWAYS
+
+	var/obj/anvil = new anvil_type(get_turf(src))
+	anvil.anchored = ANCHORED_ALWAYS
+	anvil.pixel_y = 32 * height
+	anvil.alpha = 0
+	anvil.layer += 4
+	anvil.plane = PLANE_NOSHADOW_ABOVE
+	animate(anvil, alpha = 255, time = 0.9 SECONDS, flags = ANIMATION_PARALLEL)
+	animate(anvil, pixel_y = 0, easing = EASE_IN | QUAD_EASING, time = 1.84 SECONDS, flags = ANIMATION_PARALLEL)
+
+	var/obj/effects/shadow
+	if(use_shadow)
+		shadow = new /obj/effects{
+			icon='icons/effects/96x96.dmi';
+			icon_state="circle";
+			mouse_opacity = 0;
+			color = "#000000";
+			alpha = 0;
+			transform = matrix(0.8, 0, 0, 0, 0.5, 0);
+			pixel_x = -32;
+			pixel_y = -32 - 7;
+			anchored = ANCHORED_ALWAYS;
+			plane = PLANE_NOSHADOW_BELOW
+		}(get_turf(src))
+		animate(shadow, alpha = 150, transform = matrix(0.25, 0, 0, 0, 0.17, 0), easing = EASE_IN | QUAD_EASING, time = 1.75 SECONDS, flags = ANIMATION_PARALLEL)
+
+	playsound(get_turf(src), 'sound/effects/cartoon_fall.ogg', 50, FALSE)
+	SPAWN(1.8 SECONDS)
+		src.gib()
+		anvil.anchored = anvil_type == anvil_type ? FALSE : initial(anvil.anchored)
+		anvil.plane = initial(anvil.plane)
+		if(shadow)
+			qdel(shadow)
 
 // Man, there's a lot of possible inventory spaces to store crap. This should get everything under normal circumstances.
 // Well, it's hard to account for every possible matryoshka scenario (Convair880).
@@ -2916,7 +2967,7 @@
 
 	var/mob/living/carbon/human/newbody = new()
 	newbody.set_loc(reappear_turf)
-	newbody.equip_new_if_possible(/obj/item/clothing/under/misc, SLOT_W_UNIFORM)
+	newbody.equip_new_if_possible(/obj/item/clothing/under/misc/prisoner, SLOT_W_UNIFORM)
 
 	newbody.real_name = src.real_name
 
@@ -2981,7 +3032,7 @@
 		if(!the_turf)
 			src.gib() // ghostize will handle the rest.
 			return
-		playsound(the_turf, 'sound/effects/damnation.ogg', 50, 1)
+		playsound(the_turf, 'sound/effects/damnation.ogg', 50, TRUE)
 
 		satan.loc=the_turf //I actually do want to bypass Entered() and Exit() stuff now tyvm
 		animate_slide(the_turf, 0, -24, duration)

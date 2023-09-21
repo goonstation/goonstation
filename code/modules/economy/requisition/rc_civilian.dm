@@ -406,8 +406,8 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	feemod = 20
 
 /datum/rc_entry/item/chaps
-	name = "assless chaps"
-	typepath = /obj/item/clothing/under/gimmick/chaps
+	name = "chaps"
+	typepath = /obj/item/clothing/suit/chaps
 	feemod = 5000
 
 /datum/rc_entry/food/grapes

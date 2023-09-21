@@ -378,11 +378,8 @@
 			if (nectarTransferAmt <= 0)
 				return
 
-			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents)))
-				var/list/additional_reagents = planter.current.assoc_reagents
-				if (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents))
-					additional_reagents = additional_reagents | planter.plantgenes.mutation.assoc_reagents
-
+			var/list/additional_reagents = HYPget_assoc_reagents(planter.current, planter.plantgenes)
+			if (length(additional_reagents))
 				planter.reagents.remove_reagent("nectar", nectarTransferAmt*0.75)
 				user.reagents.add_reagent("honey", nectarTransferAmt*0.75)
 				for (var/X in additional_reagents)

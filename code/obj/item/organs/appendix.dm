@@ -34,7 +34,7 @@ TYPEINFO(/obj/item/organ/appendix/cyber)
 	// item_state = "cyber-"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
-	made_from = "pharosium"
+	default_material = "pharosium"
 	edible = 0
 
 	//A bad version of the robutsec... For now.

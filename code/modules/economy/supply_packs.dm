@@ -1156,7 +1156,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	name = "Scrap Furnishings Crate"
 	desc = "A flat-packed set of...trash and scrap parts. I guess you could make furniture out of it?"
 	contains = list(/obj/item/furniture_parts/table/scrap = 4,
-					/obj/item/furniture_parts/wood_chair/scrap = 4)
+					/obj/item/furniture_parts/dining_chair/scrap = 4)
 	cost = 20000
 	containertype = /obj/storage/crate/wooden
 	containername = "Scrap Furnishings Crate"
@@ -1164,7 +1164,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 /datum/supply_packs/furniture_regal
 	name = "Regal Furnishings Crate"
 	desc = "A set of very fancy flat-packed, regal furniture."
-	contains = list(/obj/item/furniture_parts/wood_chair/regal = 4,
+	contains = list(/obj/item/furniture_parts/dining_chair/regal = 4,
 					/obj/item/furniture_parts/table/regal = 4,
 					/obj/item/furniture_parts/decor/regallamp = 2)
 	cost = 80000
@@ -1186,6 +1186,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = 5000
 	containertype = /obj/storage/crate/packing
 	containername = "Haberdasher's Crate"
+
+/datum/supply_packs/random_wigs
+	name = "Spare wigs crate"
+	desc = "7x assorted wigs."
+	category = "Civilian Department"
+	contains = list(/obj/item/clothing/head/wig/spawnable/random = 7)
+	cost = 2000
+	containertype = /obj/storage/crate/packing
+	containername = "Wig Crate"
 
 /datum/supply_packs/headbands
 	name = "Bargain Bows and Bands Box"
@@ -1915,7 +1924,15 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/banjo)
 	containertype = /obj/storage/crate/wooden
 
-//Western
+/datum/supply_packs/news
+	name = "Old Newspaper Set"
+	desc = "A bunch of old newspapers that we wanted to get rid of. Please take them off our hands."
+	cost = 200
+	containername = "Newspaper Crate"
+	contains = list(/obj/item/paper/newspaper/rolled)
+	amount = 8
+	containertype = /obj/storage/crate/packing
+
 /datum/supply_packs/electricguitar
 	name = "Electric Guitar Kit"
 	desc = "1x Electric Guitar"
@@ -1925,7 +1942,17 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	contains = list(/obj/item/instrument/electricguitar)
 	containertype = /obj/storage/crate/wooden
 
+/datum/supply_packs/guitar
+	name = "Acoustic Guitar Kit"
+	desc = "1x Acoustic Guitar"
+	category = "Civilian Department"
+	cost = 2000
+	containername = "Acoustic Guitar Kit"
+	contains = list(/obj/item/instrument/guitar)
+	containertype = /obj/storage/crate/wooden
 
+
+//Western
 /datum/supply_packs/west_coats
 	name = "Dusty Old Coats"
 	desc = "4x coats in various colors."

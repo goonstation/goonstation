@@ -766,8 +766,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (isAI(M))
 				var/mob/living/silicon/ai/A = M
-				A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai-red")
-				A.faceEmotion = "ai-red"
+				A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai_red")
+				A.faceEmotion = "ai_red"
 				A.set_color("#EE0000")
 				return 1
 			return 0

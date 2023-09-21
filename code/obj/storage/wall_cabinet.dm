@@ -131,7 +131,7 @@ TYPEINFO(/obj/item/storage/wall)
 	icon_state = "miniorange"
 	pixel_y = 32
 	spawn_contents = list(/obj/item/clothing/under/color/orange = 2,
-	/obj/item/clothing/under/misc = 2,
+	/obj/item/clothing/under/misc/prisoner = 2,
 	/obj/item/clothing/shoes/orange = 3)
 
 /obj/item/storage/wall/blue
@@ -257,7 +257,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/gimmick/dolan = 1,
 	/obj/item/clothing/under/gimmick/butler = 1,
 	/obj/item/clothing/under/misc/mobster = 1,
-	/obj/item/clothing/under/gimmick/chaps= 1,
+	/obj/item/clothing/suit/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
 /obj/item/storage/wall/clothingrack/clothes_shooting_range //for the shooting range prefab; Consumerism.
@@ -266,7 +266,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/suit/wintercoat = 1,
 	/obj/item/clothing/suit/hitman = 1,
 	/obj/item/clothing/suit/johnny_coat = 1,
-	/obj/item/clothing/under/gimmick/chaps= 1,
+	/obj/item/clothing/suit/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
 obj/item/storage/wall/clothingrack/hatrack

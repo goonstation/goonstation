@@ -242,7 +242,7 @@ TYPEINFO(/obj/item/disk)
 	if (spam_flag == 0)
 		spam_flag = 1
 
-		playsound(user, 'sound/effects/mag_pandroar.ogg', 100, 0)
+		playsound(user, 'sound/effects/mag_pandroar.ogg', 100, FALSE)
 		for (var/mob/M in view(user))
 			if (M != user)
 				M.change_misstep_chance(50)
@@ -266,7 +266,7 @@ TYPEINFO(/obj/item/disk)
 	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
-		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
+		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE, -1)
 		playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 		user.visible_message("<span class='alert'><B>[user] bonks [M] on the head with [src]!</B></span>",\
 							"<span class='alert'><B>You bonk [M] on the head with [src]!</B></span>",\
@@ -658,3 +658,15 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)
+
+/obj/item/yoyo
+	name = "Atomic Yo-Yo"
+	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "yoyo"
+	item_state = "yoyo"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROPE)

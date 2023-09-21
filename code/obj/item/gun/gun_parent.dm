@@ -66,6 +66,21 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 			forensic_IDs.Add(src.forensic_ID)
 		return ..()
 
+	// equip handling for weapons that fit on your back
+	try_specific_equip(mob/user)
+		. = ..()
+		if (!(src.c_flags & ONBACK))
+			return
+		if (!user.back?.storage)
+			return
+		if (!user.s_active)
+			return
+		if (user.s_active.master != user.back.storage)
+			return
+		if (user.back.storage.check_can_hold(src) == STORAGE_CAN_HOLD)
+			user.back.Attackby(src, user)
+			return TRUE
+
 /datum/gunTarget
 	var/params = null
 	var/target = null
@@ -336,7 +351,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 	if (!canshoot(user))
 		if (!silenced)
 			target.visible_message("<span class='alert'><B>[user] tries to shoot [user == target ? "[him_or_her(user)]self" : target] with [src] point-blank, but it was empty!</B></span>")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 		else
 			user.show_text("*click* *click*", "red")
 		return FALSE
@@ -419,7 +434,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 		if (ismob(user))
 			user.show_text("*click* *click*", "red") // No more attack messages for empty guns (Convair880).
 			if (!silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 		return FALSE
 	if (!process_ammo(user))
 		return FALSE
@@ -499,7 +514,7 @@ var/list/forensic_IDs = new/list() //Global list of all guns, based on bioholder
 /obj/item/gun/proc/process_ammo(var/mob/user)
 	boutput(user, "<span class='alert'>*click* *click*</span>")
 	if (!src.silenced)
-		playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+		playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 	return 0
 
 // Could be useful in certain situations (Convair880).

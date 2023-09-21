@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			new payload(T)
 			for (var/i in 1 to src.amount_to_spawn - 1)
 				var/turf/adjacent = get_step(T, cardinal[(i % length(cardinal)) + 1])
@@ -191,7 +191,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			for(var/i = 1; i <= src.count; i++)
 				var/atom/movable/thing = new payload(T)
 				var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
@@ -354,7 +354,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			var/obj/item/old_grenade/smoke/mustard/M = null
 			if (istype(src, /obj/item/old_grenade/smoke/mustard))
 				M = src
-			playsound(T, 'sound/effects/smoke.ogg', 50, 1, -3)
+			playsound(T, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 
 			SPAWN(0)
 				if (src)
@@ -419,7 +419,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
 			explosion(src, T, -1, -1, -0.25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = ANCHORED
@@ -431,7 +431,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			if (istype(src, /obj/item/old_grenade/stinger/frag))
 				F = src
 			if (F)
-				playsound(T, 'sound/effects/smoke.ogg', 20, 1, -2)
+				playsound(T, 'sound/effects/smoke.ogg', 20, TRUE, -2)
 				SPAWN(0)
 					if (F?.smoke) //Wire note: Fix for Cannot execute null.start()
 						for(var/i = 1 to 6)
@@ -484,7 +484,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		var/turf/T = ..()
 		if (T)
 			explosion_new(src, T, 5.0, 2)
-			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = ANCHORED
 			O.name = "Explosion"
@@ -519,7 +519,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 				qdel(src)
 				return
 
-			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 
 			for (var/mob/living/M in hearers(8, T))
 				if(check_target_immunity(M)) continue
@@ -585,7 +585,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/items/Welder2.ogg', 25, 1)
+			playsound(T, 'sound/items/Welder2.ogg', 25, TRUE)
 			T.hotspot_expose(700,125)
 
 			var/grenade = src // detaching the proc - in theory
@@ -670,7 +670,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
 
 			animate(E, alpha=0, time=2.5 SECONDS)
-			playsound(T, 'sound/weapons/flashbang.ogg', 30, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 30, TRUE)
 			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(10, 0, get_turf(src), color="#0ff", plane=PLANE_NOSHADOW_ABOVE)
 			steam.attach(src.loc)
@@ -678,7 +678,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 		else
 			animate(E, alpha=0, time=2 SECONDS)
-			playsound(T, 'sound/weapons/flashbang.ogg', 15, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 15, TRUE)
 
 		E.fingerprintslast = src.fingerprintslast
 		qdel(src)
@@ -717,7 +717,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					M.equip_if_possible(moustache, SLOT_WEAR_MASK)
 					M.set_clothing_icon_dirty()
 
-			playsound(T, 'sound/effects/Explosion2.ogg', 100, 1)
+			playsound(T, 'sound/effects/Explosion2.ogg', 100, TRUE)
 			var/obj/effects/explosion/E = new /obj/effects/explosion(T)
 			E.fingerprintslast = src.fingerprintslast
 
@@ -1491,11 +1491,11 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	var/state = 1
 	var/strength = 5
 	var/list/item_mods = new/list() //stuff something into one or both of the pipes to change the finished product
-	var/list/allowed_items = list("/obj/item/device/light/glowstick","/obj/item/clothing/head/butt", "/obj/item/paper", "/obj/item/reagent_containers/food/snacks/ingredient/meat",\
-	 							"/obj/item/reagent_containers/food/snacks/ectoplasm", "/obj/item/scrap", "/obj/item/raw_material/scrap_metal", "/obj/item/cell","/obj/item/cable_coil",\
-	 							"/obj/item/item_box/medical_patches", "/obj/item/item_box/gold_star", "/obj/item/item_box/assorted/stickers", "/obj/item/material_piece/cloth",\
-	 							"/obj/item/raw_material/shard", "/obj/item/raw_material/telecrystal", "/obj/item/instrument", "/obj/item/reagent_containers/food/snacks/ingredient/butter",\
-	 							"/obj/item/rcd_ammo")
+	var/list/allowed_items = list(/obj/item/device/light/glowstick, /obj/item/clothing/head/butt, /obj/item/paper, /obj/item/reagent_containers/food/snacks/ingredient/meat,\
+	 							/obj/item/reagent_containers/food/snacks/ectoplasm, /obj/item/scrap, /obj/item/raw_material/scrap_metal, /obj/item/cell,/obj/item/cable_coil,\
+	 							/obj/item/item_box/medical_patches, /obj/item/item_box/gold_star, /obj/item/item_box/assorted/stickers, /obj/item/material_piece/cloth,\
+	 							/obj/item/raw_material/shard, /obj/item/raw_material/telecrystal, /obj/item/instrument, /obj/item/reagent_containers/food/snacks/ingredient/butter,\
+	 							/obj/item/rcd_ammo)
 
 	get_help_message(dist, mob/user)
 		switch(src.state)
@@ -1519,190 +1519,232 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			state = 2
 		return
 
-	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/pipebomb/frame))
-			var/obj/item/pipebomb/frame/other_frame = W
-			if((src.state + other_frame.state == 3)) // one of pipes is welded, other one is not
-				user.u_equip(src)
-				user.u_equip(W)
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-				var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
-				user.put_in_hand_or_drop(S)
-				qdel(W)
-				qdel(src)
+	New()
+		. = ..()
+		// unwelded frame + welder -> hollow frame
+		src.AddComponent(/datum/component/assembly, TOOL_WELDING, PROC_REF(pipeframe_welding), FALSE)
+		// unwelded frame + hollow frame -> slamgun
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(slamgun_crafting), TRUE)
+		// unwelded frame + mousetrap -> mousetrap roller
+		src.AddComponent(/datum/component/assembly, /obj/item/mousetrap, PROC_REF(mousetrap_roller_crafting), TRUE)
 
-		if(isweldingtool(W) && src.state == 1)
-			if(!W:try_weld(user, 1))
-				return
-			boutput(user, "<span class='notice'>You hollow out the pipe.</span>")
-			src.state = 2
-			icon_state = "Pipe_Hollow"
-			desc = "Two small pipes joined together. The pipes are empty."
+	// Pipebomb/shot assembly procs
 
-			if (material)
-				name = "hollow [src.material.getName()] pipe frame"
-			else
-				name = "hollow pipe frame"
-			src.flags |= NOSPLASH
+	/// Pipeframe welding proc
+	proc/pipeframe_welding(var/atom/to_combine_atom, var/mob/user)
+		if(!to_combine_atom:try_weld(user, 1))
+			return FALSE
+		boutput(user, "<span class='notice'>You hollow out the pipe.</span>")
+		src.state = 2
+		src.icon_state = "Pipe_Hollow"
+		src.desc = "Two small pipes joined together. The pipes are empty."
+		if (src.material)
+			src.name = "hollow [src.material.getName()] pipe frame"
+		else
+			src.name = "hollow pipe frame"
+		src.flags |= NOSPLASH
+		//Since we changed the state, remove all assembly components and add the next state ones
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		// hollow frame + cutters  -> unfilled pipeshot
+		src.AddComponent(/datum/component/assembly, TOOL_SNIPPING, PROC_REF(pipeshot_crafting), FALSE)
+		// hollow frame + *stuff*  -> hollow frame + pipebomb special effects
+		src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
+		// hollow frame + staple gun  -> zipgun
+		src.AddComponent(/datum/component/assembly, /obj/item/staple_gun, PROC_REF(zipgun_crafting), TRUE)
+		// hollow frame + fuel  -> unwired pipebombs
+		src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipebomb_filling), FALSE)
+		// Since the assembly was done, return TRUE
+		return TRUE
 
-		if(issnippingtool(W) && src.state == 2) //pipeshot crafting
-			name = "hollow pipe hulls"
-			boutput(user, "<span class='notice'>You cut the pipe into four neat hulls.</span>")
-			src.state = 5
-			icon_state = "Pipeshot"
-			desc = "Four open pipe shells. They're currently empty."
+	/// Zipgun crafting proc
+	proc/zipgun_crafting(var/atom/to_combine_atom, var/mob/user)
+		user.show_text("You combine [to_combine_atom] and [src]. This looks pretty unsafe!")
+		user.u_equip(to_combine_atom)
+		user.u_equip(src)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+		var/obj/item/gun/kinetic/zipgun/new_gun = new/obj/item/gun/kinetic/zipgun
+		user.put_in_hand_or_drop(new_gun)
+		qdel(to_combine_atom)
+		qdel(src)
 
-		if (allowed_items.len && length(item_mods) < 3 && src.state == 2)
-			var/ok = 0
-			for (var/A in allowed_items)
-				if (istype(W, text2path(A) )) ok = 1
-			if (ok)
-				boutput(user, "<span class='notice'>You stuff [W] into the [length(item_mods) == 0 ? "first" : "second"] pipe.</span>")
-				item_mods += W
-				user.u_equip(W)
-				W.set_loc(src)
+	///mousetrap roller crafting proc
+	proc/mousetrap_roller_crafting(var/atom/to_combine_atom, var/mob/user)
+		//This could theoretically be moved to mousetrap and enabled if a bomb is attached.
+		//But you either check if a bomb is attached or if the pipeframe is state 2, so it won't change much
 
-		if(istype(W, /obj/item/reagent_containers/) && src.state == 2)
-			var/ok = 0
-			for (var/A in allowed_items)
-				if (istype(W, text2path(A) )) ok = 1
-			if (!ok)
-				//There is less room for explosive material when you use item mods
-				var/max_allowed = 20 - item_mods.len * 5
-				src.state = 3
-				var/avg_volatility = 0
-				src.reagents = new /datum/reagents(max_allowed)
-				src.reagents.my_atom = src
-				W.reagents.trans_to(src, max_allowed)
-				boutput(user, "<span class='notice'>You fill the pipe with [src.reagents.total_volume] units of the reagents.</span>")
-				for (var/id in src.reagents.reagent_list)
-					var/datum/reagent/R = src.reagents.reagent_list[id]
-					avg_volatility += R.volatility * R.volume / src.reagents.maximum_volume
+		var/obj/item/mousetrap/checked_trap = to_combine_atom
 
-				qdel(src.reagents)
-				src.reagents = null
-				if (avg_volatility < 1) // B A D.
-					src.strength = 0
-				else
-					src.strength *= avg_volatility
-					src.strength -= item_mods.len * 0.5 //weakened by having mods
+		// Pies won't do, they require a mob as the target. Obviously, the mousetrap roller is much more
+		// likely to bump into an inanimate object.
+		if (!checked_trap.grenade && !checked_trap.grenade_old && !checked_trap.pipebomb && !checked_trap.buttbomb)
+			user.show_text("[checked_trap] must have a grenade or pipe bomb attached first.", "red")
+			return FALSE
 
-				icon_state = "Pipe_Filled"
-				src.state = 3
-				desc = "Two small pipes joined together. The pipes are filled."
+		user.u_equip(checked_trap)
+		user.u_equip(src)
+		new /obj/item/mousetrap_roller(get_turf(checked_trap), checked_trap, src)
+		// we don't remove the components here since the frame can be retreived by disassembling the roller
+		// Since the assembly was done, return TRUE
+		return TRUE
 
-				if (material)
-					name = "filled [src.material.getName()] pipe frame"
-				else
-					name = "filled pipe frame"
+	/// Slamgun crafting proc
+	proc/slamgun_crafting(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/pipebomb/frame/other_frame = to_combine_atom
+		if(other_frame.state == 2) // the other pipe needs to be welded
+			user.u_equip(src)
+			user.u_equip(to_combine_atom)
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+			var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
+			user.put_in_hand_or_drop(S)
+			qdel(to_combine_atom)
+			qdel(src)
+			// Since the assembly was done, return TRUE
+			return TRUE
 
-		if(istype(W, /obj/item/reagent_containers/) && src.state == 5) //pipeshot crafting cont'd
+	///pipeshot crafting proc
+	proc/pipeshot_crafting(var/atom/to_combine_atom, var/mob/user)
+		src.name = "hollow pipe hulls"
+		boutput(user, "<span class='notice'>You cut the pipe into four neat hulls.</span>")
+		src.state = 5
+		src.icon_state = "Pipeshot"
+		src.desc = "Four open pipe shells. They're currently empty."
+		//Since we changed the state, remove all assembly components and add the next state ones
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		// unfilled pipeshot + fuel  -> filled pipeshot
+		src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipeshot_filling), FALSE)
+		// Since the assembly was done, return TRUE
+		return TRUE
 
-			if (!W.reagents.maximum_volume)
-				boutput(user, "<span class='alert'>[W] is empty!</span>")
-				return
+	/// Pipebomb special effect filling proc
+	proc/pipebomb_stuffing(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/stuffable_item = to_combine_atom
+		if (length(item_mods) < 3)
+			boutput(user, "<span class='notice'>You stuff [stuffable_item] into the [length(item_mods) == 0 ? "first" : "second"] pipe.</span>")
+			item_mods += stuffable_item
+			user.u_equip(stuffable_item)
+			stuffable_item.set_loc(src)
+			//once we begun stuffing items in the frame, only pipebombs are the way to go
+			if (length(item_mods) == 1)
+				src.RemoveComponentsOfType(/datum/component/assembly)
+				// hollow frame + *stuff*  -> hollow frame + pipebomb special effects
+				src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
+				// hollow frame + fuel  -> unwired pipebombs
+				src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipebomb_filling), FALSE)
+			// Since the assembly was done, return TRUE
+			return TRUE
+		else
+			boutput(user, "<span class='notice'>There are already too many items in the frame.</span>")
 
-			var/amount = 20
+	/// Pipebomb fuel filling proc
+	proc/pipebomb_filling(var/atom/to_combine_atom, var/mob/user)
+		//There is less room for explosive material when you use item mods
+		var/obj/item/reagent_containers/filling_glass = to_combine_atom
+		var/max_allowed = 20 - src.item_mods.len * 5
+		if(filling_glass.reagents.total_volume < max_allowed)
+			boutput(user, "<span class='notice'>There is not enough chemicals in [filling_glass] to fill the frame.</span>")
+		else
+			src.state = 3
 			var/avg_volatility = 0
+			src.reagents = new /datum/reagents(max_allowed)
+			src.reagents.my_atom = src
+			filling_glass.reagents.trans_to(src, max_allowed)
+			boutput(user, "<span class='notice'>You fill the pipe with [src.reagents.total_volume] units of the reagents.</span>")
+			for (var/id in src.reagents.reagent_list)
+				var/datum/reagent/R = src.reagents.reagent_list[id]
+				avg_volatility += R.volatility * R.volume / src.reagents.maximum_volume
 
-			for (var/id in W.reagents.reagent_list)
-				var/datum/reagent/R = W.reagents.reagent_list[id]
+			qdel(src.reagents)
+			src.reagents = null
+			if (avg_volatility < 1) // B A D.
+				src.strength = 0
+			else
+				src.strength *= avg_volatility
+				src.strength -= item_mods.len * 0.5 //weakened by having mods
+
+			src.icon_state = "Pipe_Filled"
+			src.state = 3
+			src.desc = "Two small pipes joined together. The pipes are filled."
+
+			if (src.material)
+				src.name = "filled [src.material.getName()] pipe frame"
+			else
+				src.name = "filled pipe frame"
+			//Since we changed the state, remove all assembly components and add the next state ones
+			src.RemoveComponentsOfType(/datum/component/assembly)
+			// cables + unwired pipebomb -> wired pipebomb
+			src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(pipebomb_cabling), TRUE)
+
+		// We return true here even if the volatility was not high enough, so we don't spill chemicals on the frame for no reason
+		// Since the assembly was done, return TRUE
+		return TRUE
+
+	/// Pipeshot fuel filling proc
+	proc/pipeshot_filling(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/reagent_containers/filling_glass = to_combine_atom
+		var/amount = 20
+		var/avg_volatility = 0
+		if(filling_glass.reagents.total_volume < amount)
+			boutput(user, "<span class='notice'>There is not enough chemicals in [filling_glass] to fill [src].</span>")
+			//since we don't want to spill on the frame, still return true
+		else
+			for (var/id in to_combine_atom.reagents.reagent_list)
+				var/datum/reagent/R = to_combine_atom.reagents.reagent_list[id]
 				avg_volatility += R.volatility
-			avg_volatility /= length(W.reagents.reagent_list)
+			avg_volatility /= length(to_combine_atom.reagents.reagent_list)
 
 			if (avg_volatility < 1) // invalid ingredients/concentration
-				boutput(user, "<span class='notice'>You realize that the contents of [W] aren't actually all too explosive and decide not to pour it into the [src].</span>")
+				boutput(user, "<span class='notice'>You realize that the contents of [filling_glass] aren't actually all too explosive and decide not to pour it into the [src].</span>")
 			else
 				//consume the reagents
 				src.reagents = new /datum/reagents(amount)
 				src.reagents.my_atom = src
-				W.reagents.trans_to(src, amount)
+				filling_glass.reagents.trans_to(src, amount)
 				qdel(src.reagents)
 				//make the hulls
 				boutput(user, "<span class='notice'>You add some propellant to the hulls.</span>")
 				new /obj/item/assembly/pipehulls(get_turf(src))
 				qdel(src)
+		// Since the assembly was done, return TRUE
+		// We return true here even if the volatility was not high enough, so we don't spill chemicals on the frame for no reason
+		return TRUE
 
-		if(istype(W, /obj/item/cable_coil) && src.state == 3)
-			boutput(user, "<span class='notice'>You link the cable, fuel and pipes.</span>")
-			src.state = 4
-			icon_state = "Pipe_Wired"
 
-			if (material)
-				name = "[src.material.getName()] pipe bomb frame"
-			else
-				name = "pipe bomb frame"
+	/// Pipebomb cabling proc
+	proc/pipebomb_cabling(var/atom/to_combine_atom, var/mob/user)
+		boutput(user, "<span class='notice'>You link the cable, fuel and pipes.</span>")
+		src.state = 4
+		src.icon_state = "Pipe_Wired"
 
-			desc = "Two small pipes joined together, filled with explosives and connected with a cable. It needs some kind of ignition switch."
-			src.flags &= ~NOSPLASH
-
-		if(istype(W, /obj/item/assembly/time_ignite) && src.state == 4)
-			boutput(user, "<span class='notice'>You connect the cable to the timer/igniter assembly.</span>")
-			var/turf/T = get_turf(src)
-			var/obj/item/pipebomb/bomb/A = new /obj/item/pipebomb/bomb(T)
-			A.strength = src.strength
-			if (material)
-				A.setMaterial(src.material)
-				src.material = null
-
-			//add properties from item mods to the finished pipe bomb
-			for (var/M in item_mods)
-				for (var/I in allowed_items)
-					if (istype(M, text2path(I) ))
-						A.name = "modified pipe bomb"
-						if (istype(M, /obj/item/device/light/glowstick))
-							A.glowsticks += 1
-						if (istype(M, /obj/item/clothing/head/butt))
-							A.butt += 1
-						if (istype(M, /obj/item/paper))
-							A.confetti += 1
-						if (istype(M, /obj/item/reagent_containers/food/snacks/ingredient/meat))
-							A.meat += 1
-						if (istype(M, /obj/item/reagent_containers/food/snacks/ectoplasm))
-							A.ghost += 1
-						if (istype(M, /obj/item/scrap) || istype(M,/obj/item/raw_material/scrap_metal))
-							A.extra_shrapnel += 1
-						if (istype(M,/obj/item/cable_coil))
-							A.cable += 1
-						if (istype(M, /obj/item/cell))
-							var/obj/item/cell/C = M
-							A.charge += C.charge
-							if (C.rigged || istype(M, /obj/item/cell/erebite))
-								A.strength += 3
-						if (istype(M, /obj/item/material_piece/cloth))
-							A.strength = src.strength / 5
-						if (istype(M, /obj/item/raw_material/shard))
-							var/obj/item/raw_material/shard/S = M // fix for duplication glitch because someone may have forgot to assign M to S, whoops!
-							A.bleed += 1
-							if (S && (S.material.hasProperty("hard") || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
-								A.bleed += 1
-						if (istype(M, /obj/item/raw_material/telecrystal))
-							A.tele += 1
-						if (istype(M, /obj/item/instrument))
-							var/obj/item/instrument/R = M
-							A.sound_effect = islist(R.sounds_instrument) ? pick(R.sounds_instrument) : R.sounds_instrument
-						if (istype(M, /obj/item/reagent_containers/food/snacks/ingredient/butter))
-							if (!A.reagents)
-								var/datum/reagents/R = new/datum/reagents(20)
-								A.reagents = R
-							A.reagents.add_reagent("water", 5)
-						if (istype(M, /obj/item/rcd_ammo))
-							A.rcd += 1
-							if (istype(M, /obj/item/rcd_ammo/big))
-								A.rcd += 1
-						if (istype(M, /obj/item/item_box/medical_patches) || istype(M,/obj/item/item_box/gold_star))
-							var/obj/item/item_box/B = M
-							A.throw_objs += B.contained_item
-						if (istype(M, /obj/item/item_box/assorted/stickers))
-							var/obj/item/item_box/assorted/B = M
-							A.throw_objs += B.contained_items
-						if (istype(M, /obj/item/material_piece/plasmastone) || istype(M, /obj/item/raw_material/plasmastone))
-							A.plasma += 1
-			user.u_equip(W)
-			qdel(W)
-			qdel(src)
+		if (src.material)
+			src.name = "[src.material.getName()] pipe bomb frame"
 		else
-			. = ..()
+			src.name = "pipe bomb frame"
+
+		src.desc = "Two small pipes joined together, filled with explosives and connected with a cable. It needs some kind of ignition switch."
+		src.flags &= ~NOSPLASH
+		//Since we changed the state, remove all assembly components and add the next state ones
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		// timer + wired pipebomb -> standard pipebomb
+		src.AddComponent(/datum/component/assembly, /obj/item/device/timer, PROC_REF(standard_pipebomb_crafting), TRUE)
+		// Since the assembly was done, return TRUE
+		return TRUE
+
+	/// Standard pipebomb without assemblies
+	proc/standard_pipebomb_crafting(var/atom/to_combine_atom, var/mob/user)
+		boutput(user, "<span class='notice'>You connect the cable to the timer.</span>")
+		var/turf/target_turf = get_turf(src)
+		var/obj/item/pipebomb/bomb/complete_bomb = new /obj/item/pipebomb/bomb(target_turf)
+		complete_bomb.strength = src.strength
+		if (src.material)
+			complete_bomb.setMaterial(src.material)
+		//add properties from item mods to the finished pipe bomb
+		complete_bomb.set_up_special_ingredients(src.item_mods)
+		user.u_equip(to_combine_atom)
+		qdel(to_combine_atom)
+		qdel(src)
+		// Since the assembly was done, return TRUE
+		return TRUE
+
 
 ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 /obj/item/pipebomb/bomb
@@ -1738,6 +1780,62 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 			return
 		src.arm(user)
 
+	/// This proc handles the addition of special effects to the pipebomb. Pass a list with the items to items_to_account for this
+	proc/set_up_special_ingredients(var/list/items_to_account)
+		if(length(items_to_account) > 0)
+			src.name = "modified pipe bomb"
+		else
+			return
+		for (var/checked_item in items_to_account)
+			if (istype(checked_item, /obj/item/device/light/glowstick))
+				src.glowsticks += 1
+			if (istype(checked_item, /obj/item/clothing/head/butt))
+				src.butt += 1
+			if (istype(checked_item, /obj/item/paper))
+				src.confetti += 1
+			if (istype(checked_item, /obj/item/reagent_containers/food/snacks/ingredient/meat))
+				src.meat += 1
+			if (istype(checked_item, /obj/item/reagent_containers/food/snacks/ectoplasm))
+				src.ghost += 1
+			if (istype(checked_item, /obj/item/scrap) || istype(checked_item,/obj/item/raw_material/scrap_metal))
+				src.extra_shrapnel += 1
+			if (istype(checked_item,/obj/item/cable_coil))
+				src.cable += 1
+			if (istype(checked_item, /obj/item/cell))
+				var/obj/item/cell/C = checked_item
+				src.charge += C.charge
+				if (C.rigged || istype(checked_item, /obj/item/cell/erebite))
+					src.strength += 3
+			if (istype(checked_item, /obj/item/material_piece/cloth))
+				src.strength = src.strength / 5
+			if (istype(checked_item, /obj/item/raw_material/shard))
+				var/obj/item/raw_material/shard/S = checked_item // fix for duplication glitch because someone may have forgot to assign M to S, whoops!
+				src.bleed += 1
+				if (S && (S.material.hasProperty("hard") || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
+					src.bleed += 1
+			if (istype(checked_item, /obj/item/raw_material/telecrystal))
+				src.tele += 1
+			if (istype(checked_item, /obj/item/instrument))
+				var/obj/item/instrument/R = checked_item
+				src.sound_effect = islist(R.sounds_instrument) ? pick(R.sounds_instrument) : R.sounds_instrument
+			if (istype(checked_item, /obj/item/reagent_containers/food/snacks/ingredient/butter))
+				if (!src.reagents)
+					var/datum/reagents/R = new/datum/reagents(20)
+					src.reagents = R
+				src.reagents.add_reagent("water", 5)
+			if (istype(checked_item, /obj/item/rcd_ammo))
+				src.rcd += 1
+				if (istype(checked_item, /obj/item/rcd_ammo/big))
+					src.rcd += 1
+			if (istype(checked_item, /obj/item/item_box/medical_patches) || istype(checked_item,/obj/item/item_box/gold_star))
+				var/obj/item/item_box/B = checked_item
+				src.throw_objs += B.contained_item
+			if (istype(checked_item, /obj/item/item_box/assorted/stickers))
+				var/obj/item/item_box/assorted/B = checked_item
+				src.throw_objs += B.contained_items
+			if (istype(checked_item, /obj/item/material_piece/plasmastone) || istype(checked_item, /obj/item/raw_material/plasmastone))
+				src.plasma += 1
+
 	proc/arm(mob/user)
 		boutput(user, "<span class='alert'>You activate the pipe bomb! 5 seconds!</span>")
 		armed = TRUE
@@ -1749,7 +1847,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 
 		if (sound_effect)
 			SPAWN(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
-				playsound(src, sound_effect, 50, 1)
+				playsound(src, sound_effect, 50, TRUE)
 		SPAWN(5 SECONDS)
 			do_explode()
 
@@ -1843,7 +1941,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 							boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
 							M.set_loc(warp_to)
 			if (rcd)
-				playsound(src, 'sound/items/Deconstruct.ogg', 70, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 70, TRUE)
 				for (var/turf/T in view(rcd,src.loc))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()
