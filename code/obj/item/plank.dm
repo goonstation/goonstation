@@ -221,5 +221,5 @@
 		wall.checkhealth()
 		if (ismob(owner))
 			var/mob/M = owner
-			M.u_equip(W)
-		qdel(W)
+			M.u_equip(plank)
+		qdel(plank)

@@ -298,8 +298,12 @@ MATERIAL
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 		if (src?.material?.getMaterialFlags() & MATERIAL_WOOD)
-			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
-				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+			if (istype(src,/obj/item/sheet/wood/zwood))
+				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/zwood))
+					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+			else
+				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
+					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 
 		.["itemList"] = availableRecipes
 
