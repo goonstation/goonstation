@@ -1,5 +1,5 @@
 TYPEINFO(/obj/ladder)
-	mat_appearances_to_ignore = list("negativematter")
+	mat_appearances_to_ignore = list(/datum/material/metal/negativematter)
 ADMIN_INTERACT_PROCS(/obj/ladder, proc/toggle_extradimensional, proc/change_extradimensional_overlay)
 ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 
@@ -62,10 +62,10 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	. = ..(severity, last_touched)
 
 /obj/ladder/embed/extradimensional
-	default_material = "negativematter"
+	default_material = /datum/material/metal/negativematter
 
 /obj/ladder/extradimensional
-	default_material = "negativematter"
+	default_material = /datum/material/metal/negativematter
 
 // admin interact procs
 /obj/ladder/proc/toggle_extradimensional()
@@ -92,7 +92,7 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 /obj/ladder/embed/proc/toggle_hidden()
 	set name = "Toggle Hidden"
 	src.hidden = !src.hidden
-	src.update_icon()
+	src.UpdateIcon()
 
 /obj/ladder/New()
 	..()
@@ -109,10 +109,10 @@ ADMIN_INTERACT_PROCS(/obj/ladder/embed, proc/toggle_hidden)
 	. = ..()
 	if(isnull(src.material))
 		return
-	var/found_negative = (src.material.getID() == "negativematter")
+	var/found_negative = (istype(src.material, /datum/material/metal/negativematter))
 	if(!found_negative)
 		for(var/datum/material/parent_mat in src.material.getParentMaterials())
-			if(parent_mat.getID() == "negativematter")
+			if(istype(parent_mat, /datum/material/metal/negativematter))
 				found_negative = TRUE
 				break
 	if(found_negative)
