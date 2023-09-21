@@ -41,7 +41,6 @@
 /obj/cable/orange,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "pdoor0";
 	id = "radshield";
 	name = "Radiation Safety Shutters";
@@ -356,6 +355,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
+"cf" = (
+/obj/machinery/gibber/output_north,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "cg" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -413,6 +416,10 @@
 "cM" = (
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/AIsat)
+"cN" = (
+/obj/machinery/vending/monkey/genetics,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "cO" = (
 /obj/machinery/door/airlock/pyro/engineering/alt,
 /obj/mapping_helper/access/mining,
@@ -535,7 +542,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "pdoor0";
 	id = "radshield";
 	name = "Radiation Safety Shutters";
@@ -863,7 +869,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "pdoor0";
 	id = "radshield";
 	name = "Radiation Safety Shutters";
@@ -1879,6 +1884,7 @@
 /obj/railing/red{
 	dir = 8
 	},
+/obj/vehicle/segway,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/security/main)
 "lV" = (
@@ -1988,6 +1994,23 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/main)
+"mJ" = (
+/obj/machinery/door/airlock/pyro/security{
+	name = "Head of Security's Equipment";
+	aiControlDisabled = 1
+	},
+/obj/mapping_helper/access/hos,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/marble/black,
+/area/station/bridge)
 "mL" = (
 /obj/machinery/light{
 	dir = 1;
@@ -2167,7 +2190,6 @@
 /obj/cable/orange,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "pdoor0";
 	id = "radshield";
 	name = "Radiation Safety Shutters";
@@ -3231,7 +3253,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "pdoor0";
 	id = "radshield";
 	name = "Radiation Safety Shutters";
@@ -3392,6 +3413,10 @@
 	layer = 2
 	},
 /area/station/solar/aisat)
+"xP" = (
+/obj/storage/secure/closet/security/armory,
+/turf/simulated/floor/marble/black,
+/area/station/bridge)
 "xS" = (
 /obj/machinery/conveyor/WE{
 	id = "qmout"
@@ -4826,7 +4851,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/machinery/door/poddoor/pyro/shutters{
 	density = 0;
-	dir = 4;
 	icon_state = "pdoor0";
 	id = "radshield";
 	name = "Radiation Safety Shutters";
@@ -5855,6 +5879,10 @@
 /obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"OK" = (
+/obj/machinery/vending/monkey/kitchen,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "OM" = (
 /obj/table/wood/auto,
 /obj/machinery/microwave,
@@ -5976,6 +6004,27 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
+"Qc" = (
+/obj/storage/secure/crate/weapon/armory{
+	name = "armory in a box"
+	},
+/obj/item/clothing/glasses/nightvision{
+	pixel_x = 4;
+	pixel_y = -6
+	},
+/obj/item/clothing/glasses/thermal,
+/obj/item/gun/energy/pulse_rifle,
+/obj/item/gun/kinetic/riotgun,
+/obj/item/clothing/suit/armor/heavy,
+/obj/item/clothing/suit/armor/EOD,
+/obj/item/clothing/head/helmet/EOD,
+/obj/item/clothing/head/helmet/riot,
+/obj/item/storage/box/flashbang_kit,
+/obj/item/storage/box/revimp_kit,
+/obj/item/chem_grenade/pepper,
+/obj/item/chem_grenade/pepper,
+/turf/simulated/floor/marble/black,
+/area/station/bridge)
 "Qg" = (
 /obj/stool/bench/red,
 /obj/landmark/start/job/geneticist,
@@ -5997,6 +6046,17 @@
 /obj/landmark/start/job/security_officer,
 /turf/simulated/floor/red,
 /area/station/security/main)
+"QA" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/obj/cable{
+	icon_state = "0-4";
+	pixel_y = 0
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/bridge)
 "QD" = (
 /turf/unsimulated/wall/setpieces/leadwindow{
 	dir = 4
@@ -6127,22 +6187,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/bridge)
-"RD" = (
-/obj/machinery/door/airlock/pyro/security{
-	name = "Head of Security's Equipment"
-	},
-/obj/mapping_helper/access/hos,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/cable{
-	icon_state = "1-8"
-	},
-/turf/simulated/floor/marble/black,
-/area/station/bridge)
 "RF" = (
 /obj/disposalpipe/trunk{
 	dir = 8
@@ -6212,7 +6256,7 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
 "Sr" = (
-/obj/storage/secure/closet/command/hos,
+/obj/machinery/vending/security_ammo,
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
 "Ss" = (
@@ -6220,18 +6264,16 @@
 /turf/simulated/floor/plating/airless/asteroid,
 /area/station/quartermaster/magnet)
 "St" = (
+/obj/machinery/light,
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/machinery/light,
+/obj/storage/secure/closet/command/hos,
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
 "Sy" = (
 /obj/machinery/communications_dish,
 /obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-8"
-	},
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
 "SF" = (
@@ -6622,6 +6664,10 @@
 	icon_state = "3"
 	},
 /area/shuttle/arrival/station)
+"VK" = (
+/obj/kitchenspike,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southeast)
 "VP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48612,7 +48658,7 @@ ND
 aG
 aG
 aG
-aG
+Rf
 Rf
 Rf
 Rf
@@ -48911,11 +48957,11 @@ LF
 sJ
 MU
 MU
-MU
 OY
 Qp
 aG
-Rf
+aG
+aG
 Rf
 Rf
 Rf
@@ -49215,8 +49261,8 @@ MX
 MU
 MU
 MU
-MU
-aG
+RC
+xP
 aG
 aG
 Rf
@@ -49517,8 +49563,8 @@ MY
 NF
 NY
 MU
+QA
 MU
-RC
 Sr
 aG
 Rf
@@ -49819,8 +49865,8 @@ Na
 NK
 NZ
 MY
+mJ
 MY
-RD
 St
 aG
 Rf
@@ -50120,9 +50166,9 @@ sJ
 Nf
 MU
 Oc
-MU
 QF
 kD
+Qc
 Sy
 aG
 Rf
@@ -58578,7 +58624,7 @@ Kq
 Kq
 Kq
 Rx
-Kc
+cf
 Kc
 Rf
 Rf
@@ -58877,11 +58923,11 @@ Md
 MM
 NB
 NT
+cN
+VK
+OK
 Kc
 Kc
-Kc
-Kc
-Rf
 Rf
 Rf
 Rf
@@ -59180,9 +59226,9 @@ Kc
 Kc
 Kc
 Kc
-Rf
-Rf
-Rf
+Kc
+Kc
+Kc
 Rf
 Rf
 Rf
