@@ -1161,6 +1161,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\routes\players\notes\AddPlayerNotes.dm"
 #include "code\modules\goonhub\api\routes\players\notes\DeletePlayerNotes.dm"
 #include "code\modules\goonhub\api\routes\players\notes\GetPlayerNotes.dm"
+#include "code\modules\goonhub\api\routes\players\notes\UpdatePlayerNotes.dm"
 #include "code\modules\gps\gps.dm"
 #include "code\modules\holiday\halloween.dm"
 #include "code\modules\holiday\spacemas.dm"
