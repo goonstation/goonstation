@@ -481,6 +481,9 @@ MATERIAL
 	default_material = "wood"
 	amount = 10
 
+	zwood
+		amount = 5
+
 /obj/item/sheet/bamboo
 	item_state = "sheet-metal"
 	icon_state = "sheet-m_5$$bamboo"
@@ -1358,6 +1361,14 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon = 'icons/obj/doors/SL_doors.dmi'
 			icon_state = "wood1"
 
+	zwood
+		zbarricade
+			recipe_id = "zbarricade"
+			craftedType = /obj/structure/woodwall/anti_zombie
+			name = "Zombie Barricade"
+			sheet_cost = 5
+			icon = 'icons/obj/structures.dmi'
+			icon_state = "woodwall"
 
 /proc/sheet_crafting_recipe_get_ui_data(var/recipePath)
 	var/datum/sheet_crafting_recipe/typedRecipePath = recipePath
