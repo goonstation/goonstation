@@ -7,6 +7,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 /obj/item/reagent_containers/food
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	var/heal_amt = 0 							//! Amount this food heals for when eaten
+	var/fill_amt = 1							//! Amount of space this takes up in a stomach
 	var/required_utensil = null 				//! Which utensil we need to use to eat this
 	var/food_color = null 						//! Color for various food items
 	var/custom_food = TRUE 						//! Can it be used to make custom food like for pizzas
@@ -93,6 +94,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 
 	//This proc handles all the actions being done to the produce. use this proc to work with your slices after they were created (looking at all these slice code at plant produce...)
 	proc/process_sliced_products(var/obj/item/reagent_containers/food/slice, var/amount_to_transfer)
+		slice.fill_amt = src.fill_amt / src.slice_amount
 		slice.transform = src.transform // for botany crops
 		slice.reagents.clear_reagents() // dont need initial_reagents when you're inheriting reagents of another obj (no cheese duping >:[ )
 		slice.reagents.maximum_volume = amount_to_transfer
@@ -244,6 +246,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
 					M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
 					"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
+					return 0
+				if (tummy.calculate_fullness() > tummy.capacity)
+					M.show_message("<span class='alert'>You're just too full to take another bite!</span>")
 					return 0
 				if (!H.organHolder.head)
 					M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but they have no head!</span>",\
@@ -439,19 +444,17 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	proc/on_bite(mob/eater, mob/feeder, ethereal_eater)
 
 		if (isliving(eater))
-			if (src.reagents && src.reagents.total_volume) //only create food chunks for reagents
-				if(ethereal_eater)//ghost critters can get a little ingest reaction and a tiny amount of reagent, but won't actually take reagents
-					src.reagents.reaction(eater, INGEST, 3)
-					if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
-						src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
-				else
-					var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
-					B.set_loc(eater)
-					B.reagents.maximum_volume = reagents.total_volume/(src.bites_left+1 || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
-					src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
-					var/mob/living/L = eater
-					L.stomach_process += B
-
+			if(ethereal_eater)//ghost critters can get a little ingest reaction and a tiny amount of reagent, but won't actually take reagents
+				src.reagents.reaction(eater, INGEST, 3)
+				if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
+					src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
+			else
+				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
+				B.fill_amt = src.fill_amt/initial(src.bites_left) //so all the bites add up to the full item fillness
+				B.reagents.maximum_volume = reagents.total_volume/(src.bites_left+1 || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
+				src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
+				var/mob/living/L = eater
+				L.organHolder.stomach.consume(B)
 
 			if (length(src.food_effects) && isliving(eater) && eater.bioHolder)
 				var/mob/living/L = eater
@@ -505,18 +508,21 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	rand_pos = 1
 	bites_left = 1
 	var/did_react = 0
+	var/digest_count = 0
+	var/dissolve_threshold = 3
 
 	proc/process_stomach(mob/living/owner, var/process_rate = 5)
-		if (owner && src.reagents)
+		src.digest_count++
+		if (owner && src.reagents?.total_volume > 0)
 			if (!src.did_react)
 				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
 				src.did_react = 1
 
 			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)
 
-			if (src.reagents.total_volume <= 0)
-				owner.stomach_process -= src
-				qdel(src)
+		if ((!src.reagents || src.reagents.total_volume <= 0) && src.digest_count > src.dissolve_threshold)
+			owner.organHolder.stomach.eject(src)
+			qdel(src)
 
 
 

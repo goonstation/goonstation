@@ -33,8 +33,7 @@
 		if(iscarbon(eater))
 			var/mob/living/carbon/C = eater
 			for(var/atom/movable/MO as mob|obj in src)
-				MO.set_loc(C)
-				C.stomach_contents += MO
+				C.organHolder.stomach.consume(MO) //if they don't have a stomach then this deserves to runtime and blow up
 
 	disposing()
 		for (var/mob/M in src)
@@ -115,6 +114,7 @@
 				boutput(user, "<i>You feel as though something of value has been lost...</i>")
 			src.make_slices()
 
+	//todo: make this use the actual generic slicing behaviour
 	proc/make_slices()
 		var/makeslices = src.bites_left
 		. = list()
@@ -141,6 +141,7 @@
 			src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
 			P.pixel_x = rand(-6, 6)
 			P.pixel_y = rand(-6, 6)
+			P.fill_amt = src.fill_amt / initial(src.bites_left)
 			. += P
 			makeslices--
 		qdel(src)
