@@ -509,6 +509,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 /obj/item/pressure_crystal
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "pressure_3"
+	w_class = W_CLASS_SMALL
 	var/pressure = 0 // used to calculate credit value, in shippingmarket.dm proc/appraise_value
 	var/last_explode_time = 0
 	var/static/explosion_id = 0
