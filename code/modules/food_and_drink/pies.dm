@@ -5,7 +5,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 	desc = "A null pie. You shouldn't be able to see this!"
 	item_state = "pie"
 	required_utensil = REQUIRED_UTENSIL_SPOON
-	fill_amt = 10
+	fill_amt = 6
 	sliceable = FALSE
 	slice_amount = 8
 	slice_product = /obj/item/reagent_containers/food/snacks/pieslice
