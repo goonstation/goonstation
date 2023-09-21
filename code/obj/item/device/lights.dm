@@ -770,7 +770,6 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 	New()
 		..()
-		src.life_time = (world.time + rand(1800,3600))
 		light_c = src.AddComponent(/datum/component/loctargeting/medium_light, col_r*255, col_g*255, col_b*255, 510 * brightness)
 		light_c.update(0)
 
@@ -792,12 +791,14 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 	proc/light(var/mob/user as mob)
 		src.on = FLARE_LIT
+		w_class = W_CLASS_BULKY
 		src.firesource = FIRESOURCE_OPEN_FLAME
 		src.icon_state = "roadflare-lit"
 
-		playsound(user, 'sound/items/matchstick_light.ogg', 80, 0.5)
+		playsound(user, 'sound/items/matchstick_light.ogg', 80, FALSE)
 		light_c.enable()
 
+		src.life_time = (world.time + rand(1800,3600))
 		processing_items |= src
 		if (istype(user))
 			user.update_inhands()
@@ -805,11 +806,13 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 	proc/put_out(var/mob/user as mob)
 		src.on = FLARE_BURNT
+		w_class = W_CLASS_POCKET_SIZED
 		src.firesource = FALSE
 		src.icon_state = "roadflare-burnt"
 		src.item_state = "roadflare"
 		src.name = "burnt-out emergency flare"
 
+		playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, FALSE)
 		light_c.disable()
 		if (istype(user))
 			user.update_inhands()
@@ -819,12 +822,12 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == FLARE_UNLIT)
 			if (temperature > T0C+200)
-				src.visible_message("<span class='alert'>The [src] ignites!</span>")
+				src.visible_message("<span class='alert'>[src] ignites!</span>")
 				src.light()
 
 	ex_act(severity)
 		if (src.on == FLARE_UNLIT)
-			src.visible_message("<span class='alert'>The [src] ignites!</span>")
+			src.visible_message("<span class='alert'>[src] ignites!</span>")
 			src.light()
 
 	afterattack(atom/target, mob/user as mob)
