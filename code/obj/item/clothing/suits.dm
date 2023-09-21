@@ -2,15 +2,12 @@
 //setup.dm
 //#define SUITBLOOD_ARMOR 1
 //#define SUITBLOOD_COAT 2
-
+ABSTRACT_TYPE(/obj/item/clothing/suit)
 /obj/item/clothing/suit
-	name = "leather jacket"
-	desc = "Made from real Space Bovine, but don't call it cowhide under penalty of Article 5.P3RG."
+	name = "suit parent"
 	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
-	icon_state = "ljacket"
-	item_state = "ljacket"
 	wear_layer = MOB_ARMOR_LAYER
 	var/fire_resist = T0C+100
 	/// If TRUE the suit will hide whoever is wearing it's hair
@@ -42,6 +39,8 @@
 /obj/item/clothing/suit/hoodie
 	name = "hoodie"
 	desc = "Nice and comfy on those cold space evenings."
+	icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
 	icon_state = "hoodie"
 	item_state = "hoodie"
 	body_parts_covered = TORSO|ARMS
@@ -121,6 +120,9 @@
 			hcolor = "blue"
 		..()
 
+/* ======== Jackets ======== */
+
+ABSTRACT_TYPE(/obj/item/clothing/suit/jacket)
 /obj/item/clothing/suit/jacket
 	name = "jacket"
 	desc = "Should you be seeing this? The answer is no!"
@@ -133,95 +135,102 @@
 		..()
 		setProperty("coldprot", 20)
 
-	dan
-		name = "logo jacket"
-		desc = "A dark teal jacket made of heavy synthetic fabric. It has the Discount Dan's logo printed on the back."
-		icon_state = "dan_teal"
-		item_state = "dan_teal"
+/obj/item/clothing/suit/jacket/leather
+	name = "leather jacket"
+	desc = "Made from real Space Bovine, but don't call it cowhide under penalty of Article 5.P3RG."
+	icon_state = "ljacket"
+	item_state = "ljacket"
 
-		setupProperties()
-			..()
-			setProperty("coldprot", 25)
+/obj/item/clothing/suit/jacket/dan
+	name = "logo jacket"
+	desc = "A dark teal jacket made of heavy synthetic fabric. It has the Discount Dan's logo printed on the back."
+	icon_state = "dan_teal"
+	item_state = "dan_teal"
 
-	plastic
-		name = "plastic jacket"
-		desc = "A flimsy and translucent plastic jacket that comes in a variety of colors. Someone who wears this must either have negative fashion or impeccable taste."
-		icon_state = "jacket_plastic"
-		item_state = "jacket_plastic"
+	setupProperties()
+		..()
+		setProperty("coldprot", 25)
 
-		setupProperties()
-			..()
-			setProperty("coldprot", 10)
+/obj/item/clothing/suit/jacket/plastic
+	name = "plastic jacket"
+	desc = "A flimsy and translucent plastic jacket that comes in a variety of colors. Someone who wears this must either have negative fashion or impeccable taste."
+	icon_state = "jacket_plastic"
+	item_state = "jacket_plastic"
 
-		random_color
-			New()
-				..()
-				src.color = random_saturated_hex_color(1)
+	setupProperties()
+		..()
+		setProperty("coldprot", 10)
 
+/obj/item/clothing/suit/jacket/plastic/random_color
+	New()
+		..()
+		src.color = random_saturated_hex_color(1)
 
-	yellow
-		name = "yellow jacket"
-		desc = "A yellow jacket with a floral design embroidered on the back."
-		icon_state = "jacket_yellow"
-		item_state = "jacket_yellow"
+/obj/item/clothing/suit/jacket/yellow
+	name = "yellow jacket"
+	desc = "A yellow jacket with a floral design embroidered on the back."
+	icon_state = "jacket_yellow"
+	item_state = "jacket_yellow"
 
-	sparkly
-		name = "sparkly jacket"
-		desc = "No glitter. No LEDs. Just magic!"
-		icon_state = "jacket_sparkly"
-		item_state = "jacket_sparkly"
+/obj/item/clothing/suit/jacket/sparkly
+	name = "sparkly jacket"
+	desc = "No glitter. No LEDs. Just magic!"
+	icon_state = "jacket_sparkly"
+	item_state = "jacket_sparkly"
 
-	design
-		name = "jacket"
-		desc = "A colorful jacket with a neat design on the back."
-		var/random_design
+ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
+/obj/item/clothing/suit/jacket/design
+	name = "jacket"
+	desc = "A colorful jacket with a neat design on the back."
+	var/random_design
 
-		New()
-			..()
-			random_design = rand(1,10)
-			src.wear_image.overlays += image(src.wear_image_icon,"design_[random_design]")
+	New()
+		..()
+		random_design = rand(1,10)
+		src.wear_image.overlays += image(src.wear_image_icon,"design_[random_design]")
 
-		update_wear_image(mob/living/carbon/human/H, override)
-			src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "suit-" : ""]design_[random_design]"))
-		tan
-			name = "tan jacket"
-			icon_state = "jacket_tan"
-			item_state = "jacket_tan"
+	update_wear_image(mob/living/carbon/human/H, override)
+		src.wear_image.overlays = list(image(src.wear_image.icon,"[override ? "suit-" : ""]design_[random_design]"))
 
-		maroon
-			name = "maroon jacket"
-			icon_state = "jacket_maroon"
-			item_state = "jacket_maroon"
+/obj/item/clothing/suit/jacket/design/tan
+	name = "tan jacket"
+	icon_state = "jacket_tan"
+	item_state = "jacket_tan"
 
-		magenta
-			name = "magenta jacket"
-			icon_state = "jacket_magenta"
-			item_state = "jacket_magenta"
+/obj/item/clothing/suit/jacket/design/maroon
+	name = "maroon jacket"
+	icon_state = "jacket_maroon"
+	item_state = "jacket_maroon"
 
-		mint
-			name = "mint jacket"
-			icon_state = "jacket_mint"
-			item_state = "jacket_mint"
+/obj/item/clothing/suit/jacket/design/magenta
+	name = "magenta jacket"
+	icon_state = "jacket_magenta"
+	item_state = "jacket_magenta"
 
-		cerulean
-			name = "cerulean jacket"
-			icon_state = "jacket_cerulean"
-			item_state = "jacket_cerulean"
+/obj/item/clothing/suit/jacket/design/mint
+	name = "mint jacket"
+	icon_state = "jacket_mint"
+	item_state = "jacket_mint"
 
-		navy
-			name = "navy jacket"
-			icon_state = "jacket_navy"
-			item_state = "jacket_navy"
+/obj/item/clothing/suit/jacket/design/cerulean
+	name = "cerulean jacket"
+	icon_state = "jacket_cerulean"
+	item_state = "jacket_cerulean"
 
-		indigo
-			name = "indigo jacket"
-			icon_state = "jacket_indigo"
-			item_state = "jacket_indigo"
+/obj/item/clothing/suit/jacket/design/navy
+	name = "navy jacket"
+	icon_state = "jacket_navy"
+	item_state = "jacket_navy"
 
-		grey
-			name = "grey jacket"
-			icon_state = "jacket_grey"
-			item_state = "jacket_grey"
+/obj/item/clothing/suit/jacket/design/indigo
+	name = "indigo jacket"
+	icon_state = "jacket_indigo"
+	item_state = "jacket_indigo"
+
+/obj/item/clothing/suit/jacket/design/grey
+	name = "grey jacket"
+	icon_state = "jacket_grey"
+	item_state = "jacket_grey"
 
 /obj/item/clothing/suit/bio_suit
 	name = "bio suit"

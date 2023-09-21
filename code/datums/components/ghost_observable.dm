@@ -10,6 +10,6 @@ TYPEINFO(/datum/component/ghost_observable)
 		return COMPONENT_INCOMPATIBLE
 	OTHER_START_TRACKING_CAT(parent, TR_CAT_GHOST_OBSERVABLES)
 
-/datum/component/bullet_holes/UnregisterFromParent()
+/datum/component/ghost_observable/UnregisterFromParent()
 	OTHER_STOP_TRACKING_CAT(parent, TR_CAT_GHOST_OBSERVABLES)
 	. = ..()

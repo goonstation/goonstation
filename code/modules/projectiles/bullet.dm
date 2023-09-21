@@ -1684,7 +1684,7 @@ datum/projectile/bullet/autocannon
 		for(var/atom/a in hit)
 			a.icon_state = pick(icon_states(a.icon))
 
-		playsound(hit, 'sound/machines/glitch3.ogg', 50, 1)
+		playsound(hit, 'sound/machines/glitch3.ogg', 50, TRUE)
 
 /datum/projectile/bullet/glitch/gun
 	damage = 1
@@ -1739,7 +1739,7 @@ datum/projectile/bullet/autocannon
 			if(istype(H.wear_mask, /obj/item/clothing/mask/clown_hat))
 				clown_tally += 1
 			if(clown_tally > 0)
-				playsound(H, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
+				playsound(H, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE)
 
 			if (H.job == "Clown" || clown_tally >= 2)
 				H.drop_from_slot(H.shoes)

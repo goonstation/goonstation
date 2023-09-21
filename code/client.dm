@@ -402,7 +402,7 @@
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 				//preferences.randomizeLook()
 				preferences.ShowChoices(src.mob)
-				src.mob.Browse(grabResource("html/tgControls.html"),"window=tgcontrolsinfo;size=600x400;title=TG Controls Help")
+				tgui_alert(src, content_window = "tgControls", do_wait = FALSE)
 				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
@@ -1257,18 +1257,14 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "toggle-parallax"
 
-#ifndef UNDERWATER_MAP
 	if ((winget(src, "menu.toggle_parallax", "is-checked") == "true") && parallax_enabled)
-		src.screen -= src.parallax_controller?.parallax_layers
+		qdel(src.parallax_controller)
 		src.parallax_controller = new(null, src)
 		src.mob?.register_parallax_signals()
 
 	else if (src.parallax_controller)
-		src.screen -= src.parallax_controller.parallax_layers
 		qdel(src.parallax_controller)
-		src.parallax_controller = null
 		src.mob?.unregister_parallax_signals()
-#endif
 
 /client/verb/apply_view_tint()
 	set hidden = 1

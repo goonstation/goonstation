@@ -1356,7 +1356,7 @@
 		/obj/item/clothing/under/gimmick/jetson,
 		/obj/item/clothing/under/gimmick/princess,
 		/obj/item/clothing/under/gimmick/sweater,
-		/obj/item/clothing/under/gimmick/chaps,
+		/obj/item/clothing/suit/chaps,
 		/obj/item/clothing/under/gimmick/vault13,
 		/obj/item/clothing/under/gimmick/murph,
 		/obj/item/clothing/under/gimmick/sealab,

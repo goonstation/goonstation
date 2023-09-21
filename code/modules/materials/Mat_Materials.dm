@@ -1321,6 +1321,12 @@ ABSTRACT_TYPE(/datum/material/organic)
 			addTrigger(TRIGGERS_ON_PICKUP, new /datum/materialProc/onpickup_butt)
 			addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/onpickup_butt)
 
+	greymatter
+		mat_id = "greymatter"
+		name = "grey matter"
+		desc = "It makes your brain think good."
+		color = "#b99696"
+
 /datum/material/organic/char
 	mat_id = "char"
 	name = "char"

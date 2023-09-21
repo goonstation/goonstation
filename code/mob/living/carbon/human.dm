@@ -1218,6 +1218,10 @@
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
 
+
+/mob/living/carbon/human/admin_visible_name()
+	return src.real_name
+
 /mob/living/carbon/human/find_in_equipment(var/eqtype)
 	if (istype(w_uniform, eqtype))
 		return w_uniform
@@ -2256,7 +2260,7 @@
 		return
 
 	if (!H.stat)
-		boutput(usr, "You can't eat [H] while they are conscious!")
+		boutput(usr, "You can't eat [H] while [hes_or_shes(H)] conscious!")
 		return
 
 	if (H.bioHolder.HasEffect("consumed"))
@@ -3246,6 +3250,11 @@
 		return 1
 	return 0
 
+/mob/living/carbon/human/is_heat_resistant()
+	. = ..()
+	if (ischangeling(src)) // comic book weakness
+		return FALSE
+
 /mob/living/carbon/human/empty_hands()
 	var/h = src.hand
 	src.hand = 0
@@ -3375,6 +3384,8 @@
 		if (H.organHolder?.tail)
 			var/obj/item/organ/tail/T = H.organHolder.tail
 			T.colorize_tail(H.bioHolder.mobAppearance)
+		H.organHolder?.left_eye?.update_color(H.bioHolder?.mobAppearance, "L")
+		H.organHolder?.right_eye?.update_color(H.bioHolder?.mobAppearance, "R")
 		H?.bioHolder?.mobAppearance.UpdateMob()
 
 /mob/living/carbon/human/get_pronouns()

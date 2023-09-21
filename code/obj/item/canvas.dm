@@ -92,7 +92,7 @@
 			// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 			artists[ckey(user.ckey)]++
 
-			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, TRUE)
 			user.visible_message("[user] paints over \the [src] with \the [W].", "You paint over \the [src] with \the [W].")
 			logTheThing(LOG_STATION, user, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
 
@@ -338,6 +338,17 @@
 		src.icon = src.art
 		src.pixel_artists = world.load_intra_round_value("persistent_canvas_artists_[id]") || list()
 
+	proc/load_from_file()
+		var/file = input(usr, "Please select the image to load.", "Load Image", null) as null|icon
+		if(isnull(file))
+			return
+		src.art = icon(file)
+		src.art.Crop(1, 1, bound_width, bound_height)
+		src.icon = src.art
+
+	proc/save_to_local_file()
+		usr << ftp(src.art, "canvas_[src.name]_[time2text(world.realtime,"YYYY-MM-DD")].png")
+
 	proc/save_to_id(id)
 		world.save_intra_round_value("persistent_canvas_[id]", src.art)
 		world.save_intra_round_value("persistent_canvas_artists_[id]", src.pixel_artists)
@@ -421,13 +432,15 @@
 			return null
 
 	attackby(obj/item/W, mob/user)
-		pop_open_a_browser_box(user)
+		; // don't call parent to prevent paint can nonsense
 
-	attack_hand(mob/user)
-		pop_open_a_browser_box(user)
+	Click(location, control, params)
+		. = ..()
+		pop_open_a_browser_box(usr)
 
 	reagent_act()
 		return
+
 	ex_act(severity)
 		return
 

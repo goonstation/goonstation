@@ -257,7 +257,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			src.anchored = !(src.anchored)
 			return
 		else
@@ -691,7 +691,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
-			playsound(src, 'sound/musical_instruments/Bikehorn_2.ogg', 70, 0, 0, 0.5)
+			playsound(src, 'sound/musical_instruments/Bikehorn_2.ogg', 70, FALSE, 0, 0.5)
 			var/turf/T = get_turf(src)
 			if (!T)
 				return
@@ -713,8 +713,8 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			logTheThing(LOG_COMBAT, S, "was skeletonized by a dootdoot trumpet played by [constructTarget(M,"combat")] at [log_loc(src)].")
 			S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
 			playsound(S, S.gender == "female" ? 'sound/voice/screams/female_scream.ogg' : 'sound/voice/screams/male_scream.ogg', 50, 0, 0, S.get_age_pitch())
-			playsound(S, 'sound/effects/bubbles.ogg', 50, 0)
-			playsound(S, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 0)
+			playsound(S, 'sound/effects/bubbles.ogg', 50, FALSE)
+			playsound(S, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, FALSE)
 			var/bdna = null // For forensics (Convair880).
 			var/btype = null
 			if (S.bioHolder.Uid && S.bioHolder.bloodType)

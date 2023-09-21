@@ -100,7 +100,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 			return
 
 		src.on = !src.on
-		playsound(src, 'sound/items/penclick.ogg', 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, TRUE)
 		if (src.on)
 			set_icon_state(src.icon_on)
 			if (src.emagged) // Burn them all!
@@ -476,7 +476,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 		icon_off = "lava_lamp-[lamp_color]0"
 
 	attack_self(mob/user as mob)
-		playsound(src, 'sound/items/penclick.ogg', 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, TRUE)
 		src.on = !src.on
 		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)
@@ -589,7 +589,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 		boutput(user, "<span class='notice'>You need a wrench to activate [src].</span>")
 
 	proc/toggle()
-		playsound(src, 'sound/misc/lightswitch.ogg', 50, 1, pitch=0.5)
+		playsound(src, 'sound/misc/lightswitch.ogg', 50, TRUE, pitch=0.5)
 		src.switch_on = !src.switch_on
 		if (src.switch_on)
 			processing_items |= src

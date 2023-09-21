@@ -1604,8 +1604,8 @@
 /obj/decal/cleanable/cobweb,
 /obj/item/clothing/head/wig,
 /obj/item/clothing/head/wig,
-/obj/item/clothing/suit,
-/obj/item/clothing/suit,
+/obj/item/clothing/suit/jacket/leather,
+/obj/item/clothing/suit/jacket/leather,
 /obj/storage/crate,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/barber_shop)
@@ -60074,6 +60074,7 @@
 /area/research_outpost)
 "fas" = (
 /obj/table/reinforced/chemistry/auto,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 6
 	},

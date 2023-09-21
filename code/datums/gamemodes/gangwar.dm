@@ -425,11 +425,14 @@ proc/broadcast_to_all_gangs(var/message)
 		while(src.gang_name == "Gang Name")
 			var/choice = "Accept"
 			if(src.leader?.current)
-				choice = tgui_alert(src.leader?.current, "Name: [temporary_name].", "Approve Your Gang's Name", list("Accept", "Reselect", "Randomise"))
+				// if the leader is disconnected, this tgui_alert call will return null, breaking everything. Default to "Accept" and give them the random name
+				choice = tgui_alert(src.leader?.current, "Name: [temporary_name].", "Approve Your Gang's Name", list("Accept", "Reselect", "Randomise")) || "Accept"
 			switch(choice)
 				if ("Accept")
 					if (temporary_name in src.used_names)
 						boutput(src.leader.current, "<span class='alert'>Another gang has this name.</span>")
+						// to prevent the incredibly slim chance that a disconncted gang leader rolls the same name as an existing gang
+						temporary_name = generate_random_name()
 						continue
 
 					src.gang_name = temporary_name
@@ -445,6 +448,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 				if ("Randomise")
 					temporary_name = generate_random_name()
+
 
 		// add the gang to their displayed name for antag and round end stuff. works hopefully??
 		var/datum/antagonist/leader_antag = src.leader.get_antagonist(ROLE_GANG_LEADER)
@@ -728,7 +732,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		target_area.being_captured = 1
 		S.in_use = 1
-		playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)	//maybe just repeat the appropriate amount of times
+		playsound(target_turf, 'sound/machines/hiss.ogg', 50, TRUE)	//maybe just repeat the appropriate amount of times
 
 	onUpdate()
 		..()
@@ -737,7 +741,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 		if(prob(15))
-			playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)
+			playsound(target_turf, 'sound/machines/hiss.ogg', 50, TRUE)
 
 	onInterrupt(var/flag)
 		boutput(owner, "<span class='alert'>You were interrupted!</span>")

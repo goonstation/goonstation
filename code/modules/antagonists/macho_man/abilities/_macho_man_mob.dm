@@ -349,6 +349,7 @@ var/list/snd_macho_idle = list('sound/voice/macho/macho_alert16.ogg', 'sound/voi
 /obj/critter/microman
 	name = "Micro Man"
 	desc = "All the macho madness you'd ever need, shrunk down to pocket size."
+	icon = 'icons/mob/critter/humanoid/microman.dmi'
 	icon_state = "microman"
 	health = 25
 	aggressive = 1

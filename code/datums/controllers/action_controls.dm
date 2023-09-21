@@ -479,4 +479,3 @@ var/datum/action_controller/actions
 			INVOKE_ASYNC(src.target, src.proc_path, arglist(src.proc_args))
 		else
 			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
-

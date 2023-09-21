@@ -9,7 +9,6 @@ ABSTRACT_TYPE(/obj/item/plant)
 	var/crop_prefix = ""
 	desc = "You shouldn't be able to see this item ingame!"
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
-	var/brew_result = null // what will it make if it's brewable?
 	rand_pos = 1
 
 	New()
@@ -383,6 +382,12 @@ ABSTRACT_TYPE(/obj/item/plant/herb)
 		boutput(user, "<span class='alert'>Your hands itch from touching [src]!</span>")
 		random_brute_damage(user, 1)
 		H.changeStatus("weakened", 1 SECONDS)
+
+/obj/item/plant/herb/nettle/smooth
+	name = "smooth nettle leaves"
+	crop_suffix	= " leaves"
+	desc = "Nettle leaves that somehow don't seem to cause allergies."
+	icon_state = "nettle"
 
 /obj/item/plant/herb/catnip
 	name = "nepeta cataria"

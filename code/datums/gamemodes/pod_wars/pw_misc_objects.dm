@@ -623,7 +623,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 
 			boutput(user, "<span class='notice'>This computer seems to be frozen on a space-weather tracking screen. It looks like a large ion storm will be passing this system in about <b class='alert'>[(cur_time)] minutes mission time</b>.<br>You can't input any commands to run the control protocols for this satelite...</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1, flags = SOUND_IGNORE_SPACE)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE, flags = SOUND_IGNORE_SPACE)
 			return 0
 		if (owner_team != get_pod_wars_team_num(user))
 			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
@@ -871,7 +871,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		src.tier = tier
 
 		showswirl(src, 0)
-		playsound(loc, 'sound/effects/mag_warp.ogg', 100, 1, flags = SOUND_IGNORE_SPACE)
+		playsound(loc, 'sound/effects/mag_warp.ogg', 100, TRUE, flags = SOUND_IGNORE_SPACE)
 		//handle name, color, and access for types...
 		var/team_name_str
 		switch(team_num)

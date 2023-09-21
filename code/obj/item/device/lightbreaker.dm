@@ -100,7 +100,7 @@ TYPEINFO(/obj/item/lightbreaker)
 		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(the_breaker, 'sound/misc/winding.ogg', 50, 1,3)
+		playsound(the_breaker, 'sound/misc/winding.ogg', 50, TRUE,3)
 
 	onStart()
 		..()

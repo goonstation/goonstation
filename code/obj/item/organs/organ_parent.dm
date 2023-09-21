@@ -24,6 +24,8 @@
 	stamina_cost = 5
 	edible = 1	// currently overridden by material settings
 	material_amt = 0.3
+	uses_default_material_appearance = FALSE
+	uses_default_material_name = FALSE
 	var/mob/living/carbon/human/donor = null // if I can't use "owner" I can at least use this
 	/// Whoever had this organ first, the original owner
 	var/mob/living/carbon/human/donor_original = null // So people'll know if a lizard's wearing someone else's tail
@@ -69,7 +71,7 @@
 	var/datum/bone/bones = null
 	rand_pos = 1
 
-	var/made_from = "flesh" //Material this organ will produce.
+	default_material = "flesh" //Material this organ will produce.
 
 	///if the organ is currently acting as an organ in a body
 	var/in_body = FALSE
@@ -106,7 +108,7 @@
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, TRUE)
 			src.splat(get_turf(src))
 			if(W.hit_type == DAMAGE_BURN)
 				src.take_damage(0, W.force, 0, W.hit_type)
@@ -139,7 +141,6 @@
 			src.blood_type = src.donor.bioHolder?.bloodType
 			src.blood_color = src.donor.bioHolder?.bloodColor
 			src.blood_reagent = src.donor.blood_id
-		src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
 	HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 		src.max_damage += passed_genes?.get_effective_value("endurance")
@@ -168,7 +169,7 @@
 	proc/splat(turf/T)
 		if(!istype(T) || src.decal_done || !ispath(src.created_decal))
 			return FALSE
-		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
 		var/obj/decal/cleanable/cleanable = make_cleanable(src.created_decal, T)
 		cleanable.blood_DNA = src.blood_DNA
 		cleanable.blood_type = src.blood_type
