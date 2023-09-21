@@ -5,6 +5,7 @@
  */
 
 export { AnimatedNumber } from './AnimatedNumber';
+export { Autofocus } from './Autofocus';
 export { Blink } from './Blink';
 export { BlockQuote } from './BlockQuote';
 export { Box } from './Box';
@@ -23,6 +24,7 @@ export { Grid } from './Grid';
 export { Icon } from './Icon';
 export { Image } from './Image';
 export { Input } from './Input';
+export { Interactive } from './Interactive';
 export { Knob } from './Knob';
 export { LabeledControls } from './LabeledControls';
 export { LabeledList } from './LabeledList';
@@ -32,6 +34,7 @@ export { NumberInput } from './NumberInput';
 export { Placeholder } from './goonstation/Placeholder';
 export { ProgressBar } from './ProgressBar';
 export { Popper } from './Popper';
+export { Pointer } from './Pointer';
 export { RoundGauge } from './RoundGauge';
 export { Section } from './Section';
 export { SectionEx } from './goonstation/SectionEx';

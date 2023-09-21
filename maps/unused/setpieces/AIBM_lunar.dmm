@@ -210,29 +210,21 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2";
-	d2 = 2
+	
 	},
-/turf/unsimulated/floor/bot/caution{
-	dir = 2
-	},
-/area/moon/underground/hemera)
-"aO" = (
-/obj/machinery/power/data_terminal,
-/obj/cable{
-	icon_state = "0-2";
-	d2 = 2
-	},
-/turf/unsimulated/floor/delivery/caution{
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack{
 	dir = 2
 	},
 /area/moon/underground/hemera)
 "aP" = (
 /obj/cable{
 	icon_state = "0-2";
-	d2 = 2
+	
 	},
 /obj/machinery/power/data_terminal,
-/turf/unsimulated/floor/bot/caution{
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack{
 	dir = 2
 	},
 /area/moon/underground/hemera)
@@ -253,7 +245,7 @@
 "aS" = (
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/secdetector{
@@ -264,10 +256,9 @@
 "aT" = (
 /obj/cable{
 	icon_state = "0-2";
-	d2 = 2
+	
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable,
@@ -287,8 +278,6 @@
 /area/moon/underground/hemera)
 "aW" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor/orangeblack/side{
@@ -297,17 +286,16 @@
 /area/moon/underground/hemera)
 "aX" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-2";
-	d2 = 2
+	
 	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 1
@@ -331,8 +319,7 @@
 	},
 /obj/cable{
 	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor/orangeblack/side{
 	dir = 5
@@ -341,7 +328,6 @@
 "ba" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/guardbot_dock{
@@ -349,7 +335,8 @@
 	frequency = 1089;
 	name = "dusty docking station"
 	},
-/turf/unsimulated/floor/bot/caution{
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor/orangeblack{
 	dir = 2
 	},
 /area/moon/underground/hemera)
@@ -397,7 +384,8 @@
 "bg" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
-/turf/unsimulated/floor/bot{
+/obj/decal/stripe_caution,
+/turf/unsimulated/floor{
 	dir = 2
 	},
 /area/moon/underground/hemera)
@@ -424,8 +412,7 @@
 "bj" = (
 /obj/cable{
 	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -513,11 +500,11 @@
 "bv" = (
 /obj/cable{
 	icon_state = "0-2";
-	d2 = 2
+	
 	},
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/cable,
 /turf/unsimulated/floor{
@@ -528,7 +515,6 @@
 "bw" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/networked/secdetector,
@@ -580,8 +566,7 @@
 "bD" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/floors.dmi';
@@ -591,8 +576,7 @@
 "bE" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -605,8 +589,7 @@
 "bF" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor/yellow/side{
 	dir = 4
@@ -615,8 +598,7 @@
 "bG" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor/yellow{
 	dir = 2
@@ -625,8 +607,7 @@
 "bH" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor/yellow/side{
 	dir = 8
@@ -635,8 +616,7 @@
 "bI" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /obj/cable{
 	tag = "icon-1-4";
@@ -650,8 +630,7 @@
 "bJ" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor/grime,
 /area/moon/underground/hemera)
@@ -828,7 +807,8 @@
 /obj/landmark{
 	name = "moonfall_hemera"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/hemera/lower)
 "cn" = (
 /obj/grille/catwalk{
@@ -838,7 +818,8 @@
 /obj/landmark{
 	name = "moonfall_hemera"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/hemera/lower)
 "co" = (
 /obj/decal/fakeobjects/pipe{
@@ -870,7 +851,8 @@
 /obj/landmark{
 	name = "moonfall_hemera"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/hemera/lower)
 "cr" = (
 /obj/grille/catwalk{
@@ -880,7 +862,8 @@
 /obj/landmark{
 	name = "moonfall_hemera"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/hemera/lower)
 "cs" = (
 /turf/unsimulated/wall/setpieces/leadwall/white/lunar{
@@ -1343,7 +1326,8 @@
 	},
 /area/moon/underground)
 "ds" = (
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/moon/underground)
 "dt" = (
 /turf/unsimulated/floor/caution/misc{
@@ -1751,7 +1735,7 @@
 	},
 /area/moon/underground)
 "ez" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -1777,7 +1761,7 @@
 	},
 /area/moon/underground)
 "eC" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -1789,7 +1773,7 @@
 /turf/unsimulated/floor,
 /area/moon/underground)
 "eD" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	dir = 2;
 	icon_state = "rwindow"
@@ -1831,7 +1815,8 @@
 /obj/landmark{
 	name = "moonfall_museum"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/museum/lower)
 "eJ" = (
 /obj/grille/catwalk{
@@ -1841,7 +1826,8 @@
 /obj/landmark{
 	name = "moonfall_museum"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/museum/lower)
 "eK" = (
 /turf/unsimulated/wall/setpieces/lunar,
@@ -1879,7 +1865,8 @@
 /obj/landmark{
 	name = "moonfall_museum"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/museum/lower)
 "eR" = (
 /obj/grille/catwalk{
@@ -1889,7 +1876,8 @@
 /obj/landmark{
 	name = "moonfall_museum"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/shuttle/lunar_elevator/museum/lower)
 "eS" = (
 /turf/unsimulated/wall/setpieces/lunar{
@@ -2720,8 +2708,7 @@
 "hf" = (
 /obj/cable{
 	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
+	
 	},
 /obj/decal/fakeobjects/lightbulb_broken{
 	desc = "This light is probably broken.  It looks pretty new and ok, though, so it's probably just not wired up.";
@@ -2879,8 +2866,7 @@
 "hw" = (
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -3018,13 +3004,11 @@
 "hJ" = (
 /obj/cable{
 	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
+	
 	},
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3081,8 +3065,7 @@
 "hR" = (
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3252,8 +3235,7 @@
 	},
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3271,8 +3253,7 @@
 	},
 /obj/cable{
 	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
+	
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -3285,20 +3266,16 @@
 "ik" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
 "il" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /turf/unsimulated/floor,
@@ -3488,8 +3465,7 @@
 	},
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3510,8 +3486,7 @@
 	},
 /obj/cable{
 	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
+	
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 8;
@@ -3619,13 +3594,12 @@
 /area/moon/museum)
 "iL" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2";
-	d2 = 2
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -3634,7 +3608,7 @@
 /obj/cable,
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -3647,7 +3621,6 @@
 "iN" = (
 /obj/grille/steel,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/unsimulated/floor,
@@ -3679,15 +3652,12 @@
 "iQ" = (
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "iR" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor,
@@ -3695,8 +3665,7 @@
 "iS" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 1;
@@ -3714,24 +3683,21 @@
 	},
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "iU" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "iV" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /obj/machinery/door/airlock/maintenance{
 	req_access_txt = ""
@@ -3741,8 +3707,7 @@
 "iW" = (
 /obj/cable{
 	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
@@ -3807,8 +3772,6 @@
 /area/moon/museum)
 "jf" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /obj/cable{
@@ -3892,8 +3855,7 @@
 	},
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
@@ -3997,8 +3959,7 @@
 	},
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -4092,8 +4053,7 @@
 	},
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /obj/machinery/light/small/iomoon{
 	dir = 1;
@@ -4209,7 +4169,7 @@
 /obj/grille/steel,
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum)
@@ -4227,8 +4187,7 @@
 	},
 /obj/cable{
 	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
+	
 	},
 /obj/cable{
 	icon_state = "1-2"
@@ -4248,8 +4207,7 @@
 /obj/critter/moonspy,
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
@@ -4269,20 +4227,16 @@
 	},
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor,
 /area/moon/museum/west)
 "jW" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor,
@@ -4319,8 +4273,6 @@
 	pixel_y = 0
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/unsimulated/floor,
@@ -4569,8 +4521,7 @@
 "ky" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/unsimulated/floor/stairs{
 	dir = 1
@@ -5819,7 +5770,8 @@
 /area/moon/museum)
 "ne" = (
 /obj/machinery/door/airlock,
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/moon/museum)
 "nf" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -5836,7 +5788,8 @@
 	name = "Security Checkpoint";
 	req_access_txt = "255"
 	},
-/turf/unsimulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor,
 /area/moon/museum)
 "nh" = (
 /obj/stool/chair/office/red{
@@ -6105,7 +6058,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "nN" = (
-/obj/machinery/chem_dispenser,
+/obj/machinery/chem_dispenser/chemical,
 /turf/simulated/floor{
 	icon_state = "carpetN"
 	},
@@ -6151,7 +6104,7 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/communications_dish,
 /turf/simulated/floor/plating/airless,
@@ -6159,8 +6112,7 @@
 "nV" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/simulated/wall,
 /area/station/crew_quarters/kitchen)
@@ -6168,10 +6120,9 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-2";
-	d2 = 2
+	
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/computer3/generic/communications,
@@ -6227,7 +6178,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/networked/radio,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "of" = (
 /obj/machinery/power/data_terminal,
@@ -6236,7 +6188,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/networked/printer,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "og" = (
 /obj/machinery/power/data_terminal,
@@ -6245,7 +6198,8 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/networked/storage/scanner,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "oh" = (
 /obj/cable{
@@ -6254,7 +6208,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/pitching_machine,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "oi" = (
 /obj/cable{
@@ -6265,7 +6220,8 @@
 /obj/machinery/networked/printer{
 	print_id = "Joe"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "oj" = (
 /obj/cable{
@@ -6274,7 +6230,8 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/test_apparatus/electrobox,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "ok" = (
 /obj/item/luggable_computer,
@@ -6286,8 +6243,7 @@
 "om" = (
 /obj/cable{
 	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
+	
 	},
 /obj/item/card/id/captains_spare,
 /obj/cable{
@@ -6301,8 +6257,7 @@
 "on" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
@@ -6313,8 +6268,7 @@
 	},
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
@@ -6325,13 +6279,11 @@
 	},
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/simulated/floor{
 	icon_state = "carpetE"
@@ -6344,8 +6296,7 @@
 	},
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /obj/machinery/door/airlock/command{
 	name = "Control Room";
@@ -6356,8 +6307,7 @@
 "or" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
@@ -6368,8 +6318,7 @@
 	},
 /obj/cable{
 	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
@@ -6467,8 +6416,7 @@
 	},
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
@@ -6494,8 +6442,7 @@
 	},
 /obj/cable{
 	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
@@ -6542,9 +6489,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "oP" = (
-/obj/landmark{
-	name = "JoinLate"
-	},
+/obj/landmark/start/latejoin,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "oQ" = (
@@ -6560,7 +6505,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "oS" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -6571,7 +6516,7 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
@@ -6592,8 +6537,7 @@
 "oW" = (
 /obj/cable{
 	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
@@ -6603,13 +6547,9 @@
 	icon_state = "1-2"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
@@ -6632,7 +6572,8 @@
 	dir = 8;
 	setup_os_string = "ZETA_MAINFRAME"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pa" = (
 /obj/machinery/light{
@@ -6669,9 +6610,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "pf" = (
-/obj/landmark{
-	name = "Observer-Start"
-	},
+/obj/landmark/observer,
 /obj/item/broken_rcd,
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
@@ -6690,7 +6629,7 @@
 	},
 /area/station/crew_quarters/kitchen)
 "pi" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -6706,27 +6645,25 @@
 /obj/cable,
 /obj/cable{
 	icon_state = "0-2";
-	d2 = 2
+	
 	},
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pl" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/networked/test_apparatus/gas_sensor{
 	setup_tag = "BOTTOM"
 	},
-/obj/landmark{
-	name = "bubsbeejob"
-	},
-/turf/simulated/floor/bot,
+/obj/landmark/bubs_job,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pm" = (
 /obj/machinery/power/data_terminal,
@@ -6749,7 +6686,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pp" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -6773,7 +6710,8 @@
 /obj/machinery/networked/mainframe/zeta{
 	tag = "ZETA_MAINFRAME"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/fitness)
 "ps" = (
 /obj/machinery/light{
@@ -6804,7 +6742,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/kitchen)
 "pw" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -6818,7 +6756,7 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/item/device/net_sniffer,
 /turf/simulated/floor/plating,
@@ -6826,8 +6764,7 @@
 "py" = (
 /obj/cable{
 	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
+	
 	},
 /obj/cable{
 	tag = "icon-1-2";
@@ -6922,8 +6859,7 @@
 	},
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
@@ -6944,8 +6880,6 @@
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
@@ -6957,8 +6891,7 @@
 	},
 /obj/cable{
 	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/fitness)
@@ -7008,7 +6941,7 @@
 "pX" = (
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/networked/storage/tape_drive{
@@ -7017,7 +6950,8 @@
 	read_only = 1;
 	setup_drive_type = /obj/item/disk/data/tape/boot2
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "pY" = (
 /obj/cable{
@@ -7042,8 +6976,7 @@
 "qa" = (
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/simulated/floor/circuit,
 /area/station/crew_quarters/kitchen)
@@ -7060,8 +6993,7 @@
 "qc" = (
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/simulated/floor/circuit,
 /area/station/crew_quarters/fitness)
@@ -7118,7 +7050,8 @@
 	read_only = 0;
 	setup_drive_type = /obj/item/disk/data/tape/master
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "ql" = (
 /obj/machinery/power/data_terminal,
@@ -7129,20 +7062,21 @@
 	setup_drive_type = /obj/item/disk/data/tape/test;
 	setup_spawn_with_tape = 1
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qm" = (
 /obj/machinery/power/data_terminal,
 /obj/cable,
 /obj/machinery/guardbot_dock,
 /obj/machinery/bot/guardbot,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qn" = (
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/simulated/wall,
 /area/station/crew_quarters/kitchen)
@@ -7188,65 +7122,66 @@
 /obj/machinery/power/data_terminal,
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/cable,
 /obj/machinery/networked/printer{
 	print_id = "Stan"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qw" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/networked/test_apparatus/heater,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qx" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/networked/test_apparatus/xraymachine,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qy" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/networked/test_apparatus/impact_pad,
 /obj/cable{
 	icon_state = "0-2";
-	d2 = 2
+	
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qz" = (
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/networked/test_apparatus/xraymachine,
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qA" = (
 /obj/machinery/light{
@@ -7311,12 +7246,9 @@
 "qM" = (
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor,
@@ -7324,8 +7256,7 @@
 "qN" = (
 /obj/cable{
 	icon_state = "2-8";
-	d1 = 2;
-	d2 = 8
+	
 	},
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
@@ -7341,7 +7272,7 @@
 "qQ" = (
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
@@ -7349,19 +7280,17 @@
 "qR" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "qS" = (
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
@@ -7370,7 +7299,6 @@
 /obj/machinery/power/data_terminal,
 /obj/machinery/computer3/terminal/zeta,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/light{
@@ -7406,7 +7334,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "qZ" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -7418,7 +7346,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "ra" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 1
@@ -7429,7 +7357,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rb" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -7486,7 +7414,7 @@
 /turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "ri" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 8
@@ -7609,7 +7537,8 @@
 /obj/machinery/networked/storage/bomb_tester{
 	bank_id = "Mixer"
 	},
-/turf/simulated/floor/bot,
+/obj/decal/stripe_caution,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "rz" = (
 /obj/table/auto,
@@ -7644,7 +7573,8 @@
 	pixel_y = 5;
 	network = "bombtest"
 	},
-/turf/simulated/floor/delivery,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor,
 /area/station/crew_quarters/kitchen)
 "rA" = (
 /obj/machinery/plantpot,
@@ -7653,14 +7583,13 @@
 "rB" = (
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/power/solar,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rC" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/computer/solar_control,
@@ -7675,7 +7604,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rE" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	dir = 2
 	},
@@ -7686,7 +7615,7 @@
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/kitchen)
 "rF" = (
-/obj/grille,
+/obj/grille/steel,
 /obj/window/reinforced{
 	icon_state = "rwindow";
 	dir = 4
@@ -8577,7 +8506,7 @@ ab
 ab
 ab
 aq
-aO
+aN
 aX
 bg
 ax

@@ -15,14 +15,16 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	hand_count = 1
 	can_disarm = 1
 	can_help = 1
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 
 	is_npc = 1
 
-	var/health_brute = 10
-	var/health_brute_vuln = 1
-	var/health_burn = 10
-	var/health_burn_vuln = 2
+	health_brute = 10
+	health_brute_vuln = 1
+	health_burn = 10
+	health_burn_vuln = 2
+
+	faction = FACTION_AQUATIC
 
 	var/out_of_water_debuff = 1 // debuff amount for being out of water
 	var/in_water_buff = 1 // buff amount for being in water
@@ -91,6 +93,10 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if(P.mob_shooter)
 		src.harmed_by(P.mob_shooter)
 
+/mob/living/critter/aquatic/EnteredFluid(obj/fluid/F, atom/oldloc)
+	. = ..()
+	src.aquabreath_process?.update_water_status()
+
 /datum/lifeprocess/aquatic_breathing
 	var/water_need = 0 // 0, 1, or 2; 1 and 2 just differ in intensity
 	var/in_water_to_out_of_water = 0 // did they enter an area with sufficient water from an area with insufficient water?
@@ -98,11 +104,12 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	var/out_of_water_to_in_water = 0 // did they enter an area with insufficient water from an area with sufficient water?
 	var/in_water_buff = 1 // buff amount for being in water
 
-	New(new_owner,arguments)
+	New(mob/new_owner,arguments)
 		..()
 		if(length(arguments) >= 2)
 			in_water_buff = arguments[1]
 			out_of_water_debuff = arguments[2]
+		new_owner.event_handler_flags |= USE_FLUID_ENTER
 
 	process()
 		src.update_water_status()
@@ -176,7 +183,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	speechverb_say = "blubs"
 	speechverb_exclaim = "glubs"
 	death_text = "%src% flops belly up!"
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/small
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/small
 	// todo: skinresult of scales, custom_brain_type of fish egg item (caviar?)
 
 	throws_can_hit_me = 0
@@ -243,7 +250,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 		walk(src,0)
 		swimming_away = 0
 		if (src.ai)
-			src.ai.enabled = 0
+			src.ai.disable()
 
 /mob/living/critter/aquatic/fish/specific_emotes(var/act, var/param = null, var/voluntary = 0)
 	switch (act)
@@ -389,7 +396,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	speechverb_say = "demands"
 	speechverb_exclaim = "bellows"
 	death_text = "%src% collapses in on itself!"
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet
 	// todo: meat_type of something cool, skinresult of especially hard crustacean plates?
 
 	ai = null
@@ -527,7 +534,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 /mob/living/critter/aquatic/fish/jellyfish/New()
 	..()
 	src.color = random_saturated_hex_color()
-	var/list/color_list = rgb2num(src.color)
+	var/list/color_list = rgb2num(src.color || "#ffffff")
 	src.add_medium_light("jellyglow", color_list + list(100))
 	SPAWN(0)
 		if(src.client)
@@ -552,11 +559,72 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	HH.limb_name = "tendrils"
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
+//Shark
+////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/mob/living/critter/aquatic/shark
+	name = "space shark"
+	real_name = "space shark"
+	desc = "This is the third most terrifying thing you've ever laid eyes on."
+	icon = 'icons/misc/banshark.dmi'
+	icon_state = "banshark1"
+	icon_state_dead = "banshark1-dead"
+	hand_count = 1
+	health_brute = 40
+	health_brute_vuln = 1
+	health_burn = 40
+	health_burn_vuln = 3
+	butcherable = BUTCHER_ALLOWED
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 0
+	ai_retaliate_persistence = RETALIATE_UNTIL_DEAD
+	ai_type = /datum/aiHolder/aggressive/scavenger
+	is_npc = TRUE
+	no_stamina_stuns = TRUE
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/mouth/shark
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "mouth"
+		HH.name = "mouth"
+		HH.limb_name = "jaws"
+		HH.can_hold_items = FALSE
+
+	setup_healths()
+		add_hh_flesh(src.health_brute, src.health_brute_vuln)
+		add_hh_flesh_burn(src.health_burn, src.health_burn_vuln)
+
+	seek_target(var/range = 9)
+		. = ..()
+
+		if (length(.) && prob(10))
+			playsound(src.loc, 'sound/misc/jaws.ogg', 50, 0)
+
+	critter_scavenge(var/mob/target)
+		src.visible_message("<span class='combat'><B>[src]</B> gibs [target] in one bite!</span>")
+		logTheThing(LOG_COMBAT, target, "was gibbed by [src] at [log_loc(src)].") // Some logging for instakill critters would be nice (Convair880).
+		playsound(src.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
+		target.gib()
+		target.ghostize()
+
+	death(var/gibbed)
+		if (!gibbed)
+			src.reagents.add_reagent("shark_dna", 50, null)
+		..()
+
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/shark
+	name = "shark egg"
+	critter_type = /mob/living/critter/aquatic/shark
+	warm_count = 50
+
+////////////////////////////////////////////////////////////////////////////////////////////////////
 // aquatic mobcritter limbs
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 
 /datum/limb/mouth/fish
-	sound_attack = "sound/impact_sounds/Glub_2.ogg"
+	sound_attack = 'sound/impact_sounds/Glub_2.ogg'
 	dam_low = 0
 	dam_high = 1
 	miss_prob = 100 // you ever meet those fish that eat the dead skin off of the backs of your feet?
@@ -565,6 +633,12 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	jellyfish
 		dam_low = 3
 		dam_high = 8
+
+/datum/limb/mouth/shark
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_1.ogg'
+	dam_low = 25
+	dam_high = 35
+	miss_prob = 100
 
 /datum/limb/king_crab // modified claw limb
 
@@ -608,7 +682,7 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 	if(check_target_immunity( target ))
 		return 0
 	if (prob(15))
-		logTheThing("combat", user, target, "accidentally slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "accidentally slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
 		user.visible_message("<span class='alert'><b>[user] accidentally slashes [target] while trying to [user.a_intent] them!</b></span>", "<span class='alert'><b>You accidentally slash [target] while trying to [user.a_intent] them!</b></span>")
 		harm(target, user, 1)
 		return 1
@@ -631,13 +705,12 @@ ABSTRACT_TYPE(/mob/living/critter/aquatic)
 
 /datum/limb/king_crab/harm(mob/target, var/mob/living/user, var/no_logs = 0)
 	if (no_logs != 1)
-		logTheThing("combat", user, target, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
-	var/obj/item/affecting = target.get_affecting(user)
-	var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 10, 20, 0, 2)
-	user.attack_effects(target, affecting)
+		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with pincers at [log_loc(user)].")
+	var/datum/attackResults/msgs = user.calculate_melee_attack(target, 10, 20, 0, 2, can_punch = 0, can_kick = 0)
+	user.attack_effects(target, user.zone_sel?.selecting)
 	var/action = pick("slashes", "tears into", "gouges", "rips into", "lacerates", "mutilates")
 	msgs.base_attack_message = "<b><span class='alert'>[user] [action] [target] with their [src.holder]!</span></b>"
-	msgs.played_sound = "sound/impact_sounds/Glub_1.ogg"
+	msgs.played_sound = 'sound/impact_sounds/Glub_1.ogg'
 	msgs.damage_type = DAMAGE_CUT
 	msgs.flush(SUPPRESS_LOGS)
 

@@ -16,7 +16,8 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 2
 	throw_range = 5
-	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT|ONBELT
+	flags = TABLEPASS|EXTRADELAY|FPRINT|CONDUCT
+	c_flags = ONBELT
 	stamina_damage = 5
 	stamina_cost = 5
 	stamina_crit_chance = 10
@@ -135,9 +136,8 @@
 			boutput(user, "You join the lining coils together.")
 			C.tooltip_rebuild = 1
 			C.UpdateIcon()
-			if(istype(src.loc, /obj/item/storage))
-				var/obj/item/storage/storage = src.loc
-				storage.hud.remove_object(src)
+			if(src.stored)
+				src.stored.transfer_stored_item(src, get_turf(src), user = user)
 			else if(istype(src.loc, /mob))
 				var/mob/M = src.loc
 				M.u_equip(src)

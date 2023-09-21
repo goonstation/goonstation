@@ -3,11 +3,11 @@
 	name = "Arc Flash"
 	desc = "Unleash a ranged bolt of electricity towards a creature. Nearby targets will also be shocked by chain lightning, although with reduced effectiveness."
 	icon_state = "arcflash"
-	cooldown = 15 SECONDS
+	cooldown = 12 SECONDS
 	pointCost = 50
 	target_anything = TRUE
 	targeted = TRUE
-	
+
 	/// The amount of power used when shocking a mob.
 	var/wattage = 600 KILO WATT
 	/// Max range (in tiles) between mobs to chain between.
@@ -20,7 +20,7 @@
 		if (!ismob(target) || target == src.holder.owner || !IN_RANGE(src.holder.owner, target, (WIDE_TILE_WIDTH / 2)))
 			return TRUE
 		arcFlash(src.holder.owner, target, src.wattage)
-		logTheThing("combat", src.holder.owner, target, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
+		logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 
 		var/list/exempt_targets = list(src.holder.owner, target)
 		var/mob/chain_source = target
@@ -37,5 +37,5 @@
 			else
 				break
 			arcFlash(chain_source, chain_target, (src.wattage / (i + 1)))
-			logTheThing("combat", src.holder.owner, target, "[key_name(src.holder.owner)] hit [key_name(target)] with chain lightning [log_loc(src.holder.owner)].")
+			logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] hit [key_name(target)] with chain lightning [log_loc(src.holder.owner)].")
 			chain_source = chain_target

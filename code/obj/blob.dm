@@ -11,7 +11,7 @@
 	alpha = 180
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 	var/health = 30         // current health of the blob
 	var/health_max = 30     // health cap
@@ -59,7 +59,7 @@
 
 		SPAWN(0.1 SECONDS)
 			for (var/mob/living/carbon/human/H in src.loc)
-				if (H.decomp_stage == 4 || check_target_immunity(H))//too decomposed or too cool to be eaten
+				if (H.decomp_stage == DECOMP_STAGE_SKELETONIZED || check_target_immunity(H))//too decomposed or too cool to be eaten
 					continue
 				H.was_harmed(src)
 				src.visible_message("<span class='alert'><b>The blob starts trying to absorb [H.name]!</b></span>")
@@ -169,8 +169,8 @@
 			overmind.blobs -= src
 		if (O)
 			overmind = O
-			setMaterial(copyMaterial(O.my_material))
-			color = material.color
+			setMaterial(O.my_material)
+			color = material.getColor()
 			original_color = color
 			O.blobs |= src
 			onAttach(O)
@@ -188,17 +188,21 @@
 		particleMaster.SpawnSystem(new /datum/particleSystem/blobattack(T,overmind.color))
 		if (T?.density)
 			T.blob_act(overmind.attack_power * 20)
-			T.material?.triggerOnBlobHit(T, overmind.attack_power * 20)
+			T.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 
 		else
 			for (var/mob/M in T.contents)
 				M.blob_act(overmind.attack_power * 20)
 				if(isliving(M))
 					var/mob/living/L = M
+					for (var/obj/equipped_stuff in L.equipped())
+						equipped_stuff.material_trigger_on_blob_attacked(overmind.attack_power * 20)
+					for (var/obj/contained_stuff in L.contents)
+						contained_stuff.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 					L.was_harmed(src)
 			for (var/obj/O in T.contents)
 				O.blob_act(overmind.attack_power * 20)
-				O.material?.triggerOnBlobHit(O, overmind.attack_power * 20)
+				O.material_trigger_on_blob_attacked(overmind.attack_power * 20)
 
 
 	proc/attack_random()
@@ -251,7 +255,7 @@
 		return
 
 	bullet_act(var/obj/projectile/P)
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 		var/damage = round((P.power*P.proj_data.ks_ratio), 1.0)
 		var/damage_mult = 1
 		var/damtype = "brute"
@@ -274,6 +278,8 @@
 			if(D_SLASHING)
 				damage_mult = 1.5
 				damtype = "brute"
+			if(D_SPECIAL)
+				return
 
 		src.take_damage(damage,damage_mult,damtype)
 		return
@@ -281,8 +287,7 @@
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		var/temp_difference = abs(temperature - src.ideal_temp)
 		var/tolerance = temp_tolerance
-		if (material)
-			material.triggerTemp(src, temperature)
+		src.material_trigger_on_temp(temperature)
 
 		if (src.has_upgrade(/datum/blob_upgrade/fire_resist))
 			tolerance *= 3
@@ -315,7 +320,7 @@
 	attackby(var/obj/item/W, var/mob/user)
 		user.lastattacked = src
 		if(ismobcritter(user) && user:ghost_spawned || isghostdrone(user))
-			src.visible_message("<span class='combat'><b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!</span>")
+			src.visible_message("<span class='combat'><b>[user.name]</b> feebly attacks [src] with [W], but is too weak to harm it!</span>", group="blobweaklyattacked")
 			return
 		if( istype(W,/obj/item/clothing/head) && overmind )
 			user.drop_item()
@@ -324,7 +329,7 @@
 			user.visible_message( "<span class='notice'>The blob disperses the hat!</span>" )
 			overmind.show_message( "<span class='notice'>[user] places the [W] on you!</span>" )
 			return
-		src.visible_message("<span class='combat'><b>[user.name]</b> attacks [src] with [W]!</span>")
+		src.visible_message("<span class='combat'><b>[user.name]</b> attacks [src] with [W]!</span>", group="blobattacked")
 		playsound(src.loc, "sound/voice/blob/blobdamaged[rand(1, 3)].ogg", 75, 1)
 		if (W.hitsound)
 			playsound(src.loc, W.hitsound, 50, 1)
@@ -346,8 +351,7 @@
 				if (prob(chunk_chance))
 					create_chunk(get_turf(user))
 
-		if (material)
-			material.triggerOnAttacked(src, user, src, W)
+		src.material_trigger_when_attacked(W, user, 1)
 
 		src.take_damage(damage,damage_mult,damtype,user)
 
@@ -359,7 +363,7 @@
 	proc/create_chunk(var/turf/T)
 		var/obj/item/material_piece/wad/blob/BC = new
 		BC.set_loc(T)
-		BC.setMaterial(copyMaterial(material))
+		BC.setMaterial(src.material)
 		BC.name = "chunk of blob"
 
 	proc/take_damage(var/amount,var/damage_mult = 1,var/damtype = "brute",var/mob/user)
@@ -431,8 +435,7 @@
 			qdel(src)
 		else
 			src.UpdateIcon()
-			if (healthbar) //ZeWaka: Fix for null.onUpdate
-				healthbar.onUpdate()
+			healthbar?.onUpdate()
 		return
 
 	proc/updatePoisonOverlay()
@@ -503,10 +506,10 @@
 		src.alpha = max(src.alpha, 32)
 
 	proc/spread(var/turf/T)
-		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind)))
+		if (!istype(T) || !T.can_blob_spread_here(null, null, isadmin(overmind) || overmind.admin_override))
 			return
 
-		var/blob_type = /obj/blob/
+		var/blob_type = /obj/blob
 		if (ispath(src.spread_type))
 			blob_type = src.spread_type
 
@@ -581,13 +584,18 @@
 	fire_coefficient = 0.5
 	poison_coefficient = 0.5
 	poison_depletion = 3
+	anchored = ANCHORED_ALWAYS
 	var/nextAttackMsg = 0
 
 	New()
+		APPLY_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src, 3)
+
 		. = ..()
 		START_TRACKING
 
 	disposing()
+		REMOVE_ATOM_PROPERTY(src, PROP_ATOM_TELEPORT_JAMMER, src)
+
 		. = ..()
 		STOP_TRACKING
 
@@ -635,9 +643,9 @@
 		else
 			out(overmind, "<span class='blobalert'>Your nucleus in [get_area(src)] has been destroyed!</span>")
 			if (prob(50))
-				playsound(src.loc, "sound/voice/blob/blobdeploy.ogg", 100, 1)
+				playsound(src.loc, 'sound/voice/blob/blobdeploy.ogg', 100, 1)
 			else
-				playsound(src.loc, "sound/voice/blob/blobdeath.ogg", 100, 1)
+				playsound(src.loc, 'sound/voice/blob/blobdeath.ogg', 100, 1)
 
 		//destroy blob tiles near the destroyed nucleus
 		for (var/obj/blob/B in orange(1, src))
@@ -731,7 +739,7 @@
 		if (!Target)
 			return 1
 
-		var/obj/projectile/L = initialize_projectile_ST(src, current_projectile, Target)
+		var/obj/projectile/L = initialize_projectile_pixel_spread(src, current_projectile, Target)
 
 		if (!L)
 			return
@@ -759,11 +767,11 @@
 	color_green = 0
 	color_blue = 0
 	color_icon = "#ffffff"
-	power = 20
+	damage = 10
+	stun = 10
 	cost = 0
 	dissipation_rate = 25
 	dissipation_delay = 8
-	ks_ratio = 0.5
 	sname = "slime"
 	shot_sound = 'sound/voice/blob/blobshoot.ogg'
 	shot_number = 0
@@ -771,6 +779,7 @@
 	hit_ground_chance = 50
 	window_pass = 0
 	override_color = 1
+	disruption = 33
 
 	on_hit(atom/hit, angle, var/obj/projectile/O)
 		..()
@@ -786,7 +795,7 @@
 			if (ishuman(asshole))
 				var/mob/living/carbon/human/literal_asshole = asshole
 				literal_asshole.remove_stamina(45)
-				playsound(hit.loc, "sound/voice/blob/blobhit.ogg", 100, 1)
+				playsound(hit.loc, 'sound/voice/blob/blobhit.ogg', 100, 1)
 
 			if (prob(8))
 				asshole.drop_item()
@@ -1002,6 +1011,11 @@
 	gas_impermeable = TRUE
 	flags = ALWAYS_SOLID_FLUID
 
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		T.selftilenotify()
+
 	take_damage(var/amount,var/damage_mult = 1,var/damtype,var/mob/user)
 		if (damage_mult == 0)
 			return
@@ -1025,6 +1039,12 @@
 	gas_impermeable = TRUE
 	health = 40
 	health_max = 40
+	flags = ALWAYS_SOLID_FLUID
+
+	New()
+		..()
+		var/turf/T = get_turf(src)
+		T.selftilenotify()
 
 	take_damage(amount, mult, damtype, mob/user)
 		if (damtype == "burn")
@@ -1047,7 +1067,7 @@
 	if (!src)
 		return null
 
-	if (src.contents.len < 1)
+	if (length(src.contents) < 1)
 		return null
 
 	for (var/obj/O in src.contents)

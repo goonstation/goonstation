@@ -6,8 +6,9 @@
 // like the R&D stuff in paranoia
 
 /datum/game_mode/spy
-	name = "conspiracy"
+	name = "Spy"
 	config_tag = "spy"
+	regular = FALSE
 
 	var/list/leaders = list()
 	var/list/spies = list()
@@ -76,35 +77,15 @@
 		send_intercept()
 
 /datum/game_mode/spy/send_intercept()
-	var/intercepttext = "Cent. Com. Update Requested staus information:<BR>"
-	intercepttext += " Cent. Com has recently been contacted by the following syndicate affiliated organisations in your area, please investigate any information you may have:"
-
-	var/list/possible_modes = list("revolution", "wizard", "nuke", "traitor", "changeling")
-	var/number = pick(2, 3)
-	var/i = 0
-	for(i = 0, i < number, i++)
-		possible_modes.Remove(pick(possible_modes))
-	possible_modes.Insert(rand(possible_modes.len), "[ticker.mode]")
-
-	var/datum/intercept_text/i_text = new /datum/intercept_text
-	for(var/A in possible_modes)
-		intercepttext += i_text.build(A, pick(leaders))
-
-	for_by_tcl(C, /obj/machinery/communications_dish)
-		C.add_centcom_report("Cent. Com. Status Summary", intercepttext)
-
-	command_alert("Summary downloaded and printed out at all communications consoles.", "Enemy communication intercept. Security Level Elevated.")
-
+	..(src.leaders)
 
 /datum/game_mode/spy/proc/equip_leader(mob/living/carbon/human/leader)
 	if (!istype(leader))
 		return
 
-	//equip_traitor(leader) <- Quad mindhacks and the starter gear are more than sufficient. Spies really don't need a traitor uplink on top of that.
-
 	var/the_slot = null
-	if (istype(leader.back, /obj/item/storage/) && leader.back.contents.len < 7)
-		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), leader.slot_in_backpack)
+	if (leader.back?.storage && !leader.back.storage.is_full())
+		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), SLOT_IN_BACKPACK)
 		the_slot = "backpack"
 	else
 		var/obj/K2 = new /obj/item/storage/box/spykit(get_turf(leader))
@@ -130,14 +111,12 @@
 	src.spies.Add(spymind)
 	src.spies[spymind] = leadermind
 	spymind.special_role = "spyminion"
-	spymind.master = leader.ckey
 
 	return 1
 
 /datum/game_mode/spy/proc/remove_spy(mob/living/spy)
 	src.spies.Remove(spy)
 	spy.mind.special_role = null
-	spy.mind.master = null
 	return 1
 
 /datum/game_mode/spy/declare_completion()
@@ -253,14 +232,6 @@
 
 			var/obj/item/implant/spy_implant/new_imp = new
 			M.visible_message("<span class='alert'>[M] has been implanted by [user].</span>", "<span class='alert'>You have been implanted by [user].</span>")
-
-			if(ishuman(M))
-				var/mob/living/carbon/human/H = M
-				H.implant.Add(new_imp)
-
-			new_imp.set_loc(M)
-			new_imp.implanted = 1
-			new_imp.owner = M
 			user.show_message("<span class='alert'>You implanted the implant into [M]. <b>[src.charges-1]</b> implants remaining!</span>")
 			new_imp.implanted(M, user, override)
 
@@ -284,11 +255,12 @@
 
 		if (M == Implanter)
 			boutput(M, "<span class='alert'>This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!</span>")
-			alert(M, "This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!", "YOUR BEST IDEA YET!!")
+			SPAWN(0)
+				alert(M, "This was a great idea! You always have the best ideas!  You feel more self-control than you ever have before!", "YOUR BEST IDEA YET!!")
 			return
 
 		if (override == -1)
-			logTheThing("combat", M, Implanter, "'s loyalties are unchanged! (Injector: [constructTarget(Implanter,"combat")])")
+			logTheThing(LOG_COMBAT, M, "'s loyalties are unchanged! (Injector: [constructTarget(Implanter,"combat")])")
 			boutput(M, "<h1><font color=red>Your loyalties are unaffected! You have resisted this new implant!</font></h1>")
 			return
 
@@ -306,7 +278,8 @@
 		boutput(M, "<span class='alert'>A brilliant pain flashes through your brain!</span>")
 		if (override)
 			boutput(M, "<h1><font color=red>Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!</font></h1>")
-			alert(M, "Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!", "YOU HAVE A NEW MASTER!")
+			SPAWN(0)
+				alert(M, "Your loyalties have shifted! You now know that it is [leader_name] that is truly deserving of your obedience!", "YOU HAVE A NEW MASTER!")
 			if (istype(leader_mind) && leader_mind.current && M.client)
 				for (var/image/I in M.client.images)
 					if (I.loc == oldLeader.current)
@@ -314,7 +287,8 @@
 						break
 		else
 			boutput(M, "<h1><font color=red>You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!</font></h1>")
-			alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!", "YOU HAVE BEEN MINDHACKED!")
+			SPAWN(0)
+				alert(M, "You feel an unwavering loyalty to [leader_name]! You feel you must obey [his_or_her(leader_name)] every order! Do not tell anyone about this unless [leader_name] tells you to!", "YOU HAVE BEEN MINDHACKED!")
 
 		if (M.mind)
 			if (!src.linked_objective)
@@ -323,7 +297,7 @@
 			src.linked_objective.explanation_text = "Obey [leader_name]'s every order."
 
 		if (leader_mind?.current && M.client)
-			var/I = image(antag_spyleader, loc = leader_mind.current)
+			var/I = image('icons/mob/antag_overlays.dmi', icon_state = "spy", loc = leader_mind.current)
 			M.client.images += I
 
 		spymode.add_spy(M, Implanter)

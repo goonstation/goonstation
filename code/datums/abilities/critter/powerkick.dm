@@ -34,7 +34,7 @@
 			var/kicktype = pick("kick", "roundhouse", "thrust")
 			ow.visible_message("<span class='alert'><B>[ow.name] [kickverb] [target] with a powerful [kicktype]!</B></span>")
 
-			playsound(ow.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+			playsound(ow.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 
 			ow.changeStatus("stunned", 1 SECOND)
 			ow.changeStatus("weakened", 1 SECOND)
@@ -60,7 +60,7 @@
 				if (1)
 					return
 
-			logTheThing("combat", ow, target, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(ow)].")
+			logTheThing(LOG_COMBAT, ow, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(ow)].")
 
 		else if (ismob(target))
 			var/mob/M = target
@@ -87,5 +87,5 @@
 				M.throw_at(T, 5, 2)
 				M.changeStatus("stunned", 1 SECOND)
 
-			logTheThing("combat", M, target, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "uses Power Kick on [constructTarget(target,"combat")] at [log_loc(M)].")
 		return 0

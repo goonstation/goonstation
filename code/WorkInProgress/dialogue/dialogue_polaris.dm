@@ -7,7 +7,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndcorpse2"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -51,7 +51,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndcorpse3"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -86,7 +86,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndcorpse7"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -130,7 +130,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndcorpse8"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -170,7 +170,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/machines/airlock_deny_temp.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/machines/airlock_deny_temp.ogg', 50, 1,1)
 			return
 
 	syndicatecorpse8_takeitem
@@ -193,7 +193,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndcorpse11"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -238,7 +238,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndcorpse5"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -282,7 +282,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "syndcorpse10"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -322,7 +322,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/machines/airlock_deny_temp.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/machines/airlock_deny_temp.ogg', 50, 1,1)
 			return
 
 
@@ -333,7 +333,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "seccorpse1"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -377,7 +377,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "seccorpse2"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -421,7 +421,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "seccorpse6"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -466,7 +466,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "seccorpse3"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -511,7 +511,7 @@
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "seccorpse7"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -557,7 +557,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "old_alt"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -587,7 +587,7 @@
 		var/list/inputs = list() //Required in case multiple people are using this at the same time.
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			if(master.getFlag(C, "access") != "granted")
 				var/X = input(C,"Please enter the password.","Sgt. Wilkins Private Computer","Password") as text
 				if (X == "Icarus")
@@ -610,7 +610,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log2
@@ -623,7 +623,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log3
@@ -636,7 +636,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log4
@@ -649,7 +649,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	sergeantscomputer_log5
@@ -661,7 +661,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 		getNodeText(var/client/C)
@@ -673,7 +673,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "plant"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	pixel_y = 12
 	var/datum/dialogueMaster/dialogue = null
 
@@ -726,7 +726,7 @@
 /obj/dialogueobj/bustedmantapc
 	name = "broken computer"
 	desc = "Yeaaah, it has certainly seen some better days."
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "bustedmantapc"
@@ -766,12 +766,12 @@
 		var/taken = 0
 
 		canShow(var/client/C)
-			if(taken == 0 && istype(C.mob.equipped(), /obj/item/crowbar)) return 1
+			if(taken == 0 && ispryingtool(C.mob.equipped())) return 1
 			else return 0
 
 		onActivate(var/client/C)
 			taken = 1
-			playsound(C.mob.loc, "sound/items/Crowbar.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/items/Crowbar.ogg', 50, 1,1)
 			C.mob.put_in_hand_or_drop(new/obj/item/blackbox, C.mob.hand)
 			return
 
@@ -781,7 +781,7 @@
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "computer_generic"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -811,7 +811,7 @@
 		var/list/inputs = list() //Required in case multiple people are using this at the same time.
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			if(master.getFlag(C, "access") != "granted")
 				var/X = input(C,"Please enter the password.","Engineering Computer","Password") as text
 				if (X == "Congaline")
@@ -834,7 +834,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	engineeringcomputer_log2
@@ -847,7 +847,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	engineeringcomputer_log3
@@ -860,7 +860,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 	engineeringcomputer_log4
@@ -873,7 +873,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/effects/manta_interface.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/manta_interface.ogg', 50, 1,1)
 			return
 
 //ENGINEER
@@ -882,7 +882,7 @@
 	icon = 'icons/misc/hstation.dmi'
 	icon_state = "body3"
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -925,7 +925,7 @@
 			else return 0
 
 		onActivate(var/client/C)
-			playsound(C.mob.loc, "sound/machines/airlock_deny_temp.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/machines/airlock_deny_temp.ogg', 50, 1,1)
 			return
 
 	engineerscorpse_takeitem
@@ -950,7 +950,7 @@
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "futurecrate"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/datum/dialogueMaster/dialogue = null
 
 	New()
@@ -994,7 +994,7 @@
 
 		onActivate(var/client/C)
 			flick("futurecrateopen",master.master)
-			playsound(C.mob.loc, "sound/effects/polaris_crateopening.ogg", 50, 1,1)
+			playsound(C.mob.loc, 'sound/effects/polaris_crateopening.ogg', 50, 1,1)
 			master.master.icon_state = "futurecrateopened"
 			return
 

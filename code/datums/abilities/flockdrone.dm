@@ -4,7 +4,7 @@
 	New()
 		. = ..()
 		if (!istype(owner, /mob/living/critter/flock/drone))
-			stack_trace("Flockdrone abilityHolder initialized on non-flockdrone [src] (\ref[src])")
+			stack_trace("Flockdrone abilityHolder initialized on non-flockdrone [identify_object(owner)]")
 
 	onAbilityStat()
 		..()

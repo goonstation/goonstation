@@ -9,14 +9,22 @@
 	blockGaps = 1
 	msgGain = "Your skin begins to glow softly."
 	msgLose = "Your glow fades away."
+	var/list/color
 
 	OnAdd()
 		..()
-		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
+		src.color = hsv2rgblist(randfloat(0, 360), randfloat(0, 100), 100)
+		src.color += list(50 + 75 * power)
+		owner.add_sm_light("glowy", src.color)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		src.color[4] = 75 + 50 * power
+		owner.add_sm_light("glowy", src.color)
 
 	OnRemove()
 		..()
-		owner.add_sm_light("glowy", list(rand(25,255), rand(25,255), rand(25,255), 150))
+		owner.remove_sm_light("glowy")
 
 /datum/bioEffect/horns
 	name = "Cranial Keratin Formation"
@@ -253,16 +261,10 @@
 
 	OnAdd()
 		. = ..()
-		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size, render_source = src.distort.render_target))
-		owner.vis_contents += src.distort
-		src.filter = owner.get_filter("dwarfism")
-		animate(src.filter, size=0, time=0)
-		animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
+		src.applyFilter()
 
 	OnRemove()
-		owner.remove_filter("dwarfism")
-		owner.vis_contents -= src.distort
-		src.filter = null
+		src.removeFilter()
 		. = ..()
 
 	disposing()
@@ -270,11 +272,30 @@
 		src.distort = null
 		. = ..()
 
+	// We need to fully remove and remake the filter in these cases because the filter reverts to its original size when the animation is interrupted
+	// by another animation, like scan lines. Can't just animate to the correct size.
 	onVarChanged(variable, oldval, newval)
 		. = ..()
 		if(variable == "size" && src.filter)
-			animate(src.filter, size=0, time=0)
-			animate(size=src.size, time=0.7 SECONDS, easing=SINE_EASING)
+			src.removeFilter()
+			src.applyFilter()
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		src.removeFilter()
+		src.applyFilter()
+
+	proc/applyFilter()
+		owner.add_filter("dwarfism", 1, displacement_map_filter(size=src.size * power, render_source = src.distort.render_target))
+		owner.vis_contents += src.distort
+		src.filter = owner.get_filter("dwarfism")
+		animate(src.filter, size=0, time=0)
+		animate(size=src.size * power, time=0.7 SECONDS, easing=SINE_EASING)
+
+	proc/removeFilter()
+		owner.remove_filter("dwarfism")
+		owner.vis_contents -= src.distort
+		src.filter = null
 
 /datum/bioEffect/drunk
 	name = "Ethanol Production"
@@ -295,8 +316,9 @@
 		var/mob/living/L = owner
 		if (isdead(L))
 			return
-		if (L.reagents && L.reagents.get_reagent_amount(reagent_to_add) < reagent_threshold)
-			L.reagents.add_reagent(reagent_to_add,add_per_tick * mult)
+		var/reagent_id = islist(reagent_to_add) ? pick(reagent_to_add) : reagent_to_add
+		if (L.reagents && L.reagents.get_reagent_amount(reagent_id) < reagent_threshold)
+			L.reagents.add_reagent(reagent_id,add_per_tick * mult)
 
 /datum/bioEffect/drunk/bee
 	name = "Bee Production"
@@ -344,7 +366,7 @@
 	msgGain = "You begin to sense an odd chemical taste in your mouth."
 	msgLose = "The chemical taste in your mouth fades."
 	occur_in_genepools = 1 //this is going to be very goddamn rare and very fucking difficult to unlock.
-	mob_exclusive = /mob/living/carbon/human/
+	mob_exclusive = /mob/living/carbon/human
 	probability = 1
 	blockCount = 5
 	can_research = 0
@@ -364,7 +386,7 @@
 
 	New()
 		..()
-		if (all_functional_reagent_ids.len > 1)
+		if (length(all_functional_reagent_ids) > 1)
 			reagent_to_add = pick(all_functional_reagent_ids)
 		else
 			reagent_to_add = "water"
@@ -379,7 +401,7 @@
 	stability_loss = 25
 
 	OnLife(var/mult)
-		if (prob(src.change_prob) && all_functional_reagent_ids.len > 1)
+		if (prob(src.change_prob) && length(all_functional_reagent_ids) > 1)
 			reagent_to_add = pick(all_functional_reagent_ids)
 		..()
 
@@ -487,6 +509,14 @@
 			overlay_image.color = color_hex
 		..()
 
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "color_hex")
+			overlay_image.color = color_hex
+			if(isliving(owner))
+				var/mob/living/L = owner
+				L.UpdateOverlays(overlay_image, id)
+
 /datum/bioEffect/fire_aura/evil //this is just for /proc/soulcheck
 	occur_in_genepools = 0
 	probability = 0
@@ -502,3 +532,59 @@
 	New()
 		..()
 		color_hex = "#680000"
+
+/datum/bioEffect/reversedSounds
+	name = "Antitemporal Inner Ear"
+	desc = "Makes your inner ear travel back in time, causing you to hear sounds in reverse."
+	id = "reversed_sounds"
+	probability = 25
+	msgGain = "You start hearing things backwards."
+	msgLose = "You no longer hear things backwards."
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, -1)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()
+
+/datum/bioEffect/slowSounds
+	name = "Leisurely Inner Ear"
+	desc = "Makes your inner ear chill out a little, meaning you hear things deeper and in slow motion."
+	id = "slow_sounds"
+	probability = 25
+	msgGain = "You hear everything slowed down and deeper."
+	msgLose = "You no longer hear everything slowed down and deeper."
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 0.5 / power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 0.5 / power)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()
+
+/datum/bioEffect/fastSounds
+	name = "Hurried Inner Ear"
+	desc = "Your inner ear is full of performance enhancing drugs, it processes sounds really quickly and with higher pitch!"
+	id = "fast_sounds"
+	probability = 25
+	msgGain = "You hear everything sped up and higher pitched."
+	msgLose = "You no longer hear everything sped up and higher pitched."
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 2 * power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 2 * power)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()

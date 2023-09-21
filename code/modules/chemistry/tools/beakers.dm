@@ -13,6 +13,7 @@
 	initial_volume = 50
 	var/image/fluid_image
 	var/icon_style = "beaker"
+	accepts_lid = TRUE
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	object_flags = NO_GHOSTCRITTER
 
@@ -85,6 +86,19 @@
 			return
 
 		..(A, user)
+
+	get_chemical_effect_position()
+		switch(icon_style)
+			if("beaker")
+				return 9
+			if("beakerlarge")
+				return 9
+			if("eflask")
+				return 15
+			if("roundflask")
+				return 16
+			if("flask")
+				return 18
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
@@ -167,6 +181,9 @@
 	icon_state = "largebottle-burn"
 	initial_reagents = "silver_sulfadiazine"
 
+/obj/item/reagent_containers/glass/beaker/large/cyborg
+	shatter_immune = TRUE
+
 /*  Now found in hydroponics.dm!
 
 /obj/item/reagent_containers/glass/beaker/large/happy_plant //I have to test too many fucking plant-related issues atm so I'm adding this just to make my life less annoying
@@ -184,6 +201,7 @@
 	name = "reagent extractor tank"
 	desc = "A large tank used in the reagent extractors. You probably shouldn't be able to see this!"
 	initial_volume = 500
+	shatter_immune = TRUE
 
 /* ================================================= */
 /* -------------------- Flasks -------------------- */
@@ -224,9 +242,8 @@
 			src.icon_state = src.icon_style
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
-		var/turf/T = get_turf(A)
 		..()
-		src.smash(T)
+		src.shatter_chemically()
 
 /obj/item/reagent_containers/glass/flask/round
 	name = "round flask"
@@ -235,3 +252,28 @@
 
 /obj/item/reagent_containers/glass/flask/black_powder //prefab shit
 	initial_reagents = "blackpowder"
+
+/obj/item/reagent_containers/glass/flask/heartbottle //goes in Jan's admin office
+	name = "The Secret Ingredient"
+	desc = "You feel strangely warm and relaxed just looking at it."
+	icon = 'icons/misc/janstuff.dmi'
+	icon_state = "heartbottle"
+	icon_style = "heartbottle"
+	initial_volume = 50
+	initial_reagents = "love"
+
+	update_icon() //updates icon based on fluids inside
+		src.underlays = null
+		if (src.reagents && src.reagents.total_volume)
+			var/fluid_state = round(clamp((src.reagents.total_volume / src.reagents.maximum_volume * 5 + 1), 1, 5))
+			var/datum/color/average = reagents.get_average_color()
+			var/average_rgb = average.to_rgba()
+			src.icon_state = "[src.icon_style][fluid_state]"
+			if (!src.fluid_image)
+				src.fluid_image = image('icons/misc/janstuff.dmi', "fluid-[icon_style][fluid_state]", -1)
+			else
+				src.fluid_image.icon_state = "fluid-[src.icon_style][fluid_state]"
+			src.fluid_image.color = average_rgb
+			src.underlays += fluid_image
+		else
+			src.icon_state = src.icon_style

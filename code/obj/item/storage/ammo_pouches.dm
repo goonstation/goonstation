@@ -11,7 +11,7 @@
 	w_class = W_CLASS_TINY
 	max_wclass = W_CLASS_TINY
 	slots = 5
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	can_hold = list(/obj/item/ammo)
 
 	assault_rifle
@@ -56,6 +56,11 @@
 		icon_state = "ammopouch-double"
 		spawn_contents = list(/obj/item/ammo/bullets/nine_mm_NATO = 5)
 
+	veritate
+		name = "PDW magazine pouch"
+		icon_state = "ammopouch-double"
+		spawn_contents = list(/obj/item/ammo/bullets/veritate = 5)
+
 
 	powercell_medium
 		name = "power cell pouch"
@@ -97,6 +102,12 @@
 		icon_state = "ammopouch-double"
 		spawn_contents = list(/obj/item/ammo/bullets/lmg = 5)
 
+	shuriken
+		name = "shuriken pouch"
+		desc = "A pouch for carrying shurikens. Guaranteed to not shred."
+		slots = 4
+		spawn_contents = list(/obj/item/implant/projectile/shuriken = 4)
+
 /obj/item/storage/grenade_pouch
 	name = "grenade pouch"
 	icon_state = "ammopouch"
@@ -105,7 +116,7 @@
 	w_class = W_CLASS_TINY
 	slots = 6
 	can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade)
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 
 	frag
 		name = "frag grenade pouch"
@@ -116,8 +127,11 @@
 		spawn_contents = list(/obj/item/old_grenade/stinger = 6)
 
 	incendiary
-		name = "incendiary grenade pouch"
-		spawn_contents = list(/obj/item/chem_grenade/incendiary = 6)
+		name = "incendiary supplies pouch"
+		can_hold = list(/obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/firebot_deployer)
+		spawn_contents = list(/obj/item/chem_grenade/incendiary = 3,
+		/obj/item/chem_grenade/very_incendiary = 2,
+		/obj/item/firebot_deployer = 1)
 
 	high_explosive
 		name = "high explosive grenade pouch"
@@ -141,6 +155,18 @@
 		name = "napalm smoke grenade pouch"
 		spawn_contents = list(/obj/item/chem_grenade/napalm = 6)
 
+	oxygen
+		name = "oxygen grenade pouch"
+		spawn_contents = list(/obj/item/old_grenade/oxygen = 6)
+
+	metal_foam
+		name = "metal foam grenade pouch"
+		spawn_contents = list(/obj/item/chem_grenade/metalfoam = 6)
+	repair
+		name = "repair grenade pouch"
+		spawn_contents = list(/obj/item/old_grenade/oxygen = 3,
+		/obj/item/chem_grenade/metalfoam = 3)
+
 // dumb idiot gannets shouldn't have called these "ammo_pouches" if he was gonna make pouches for non-ammo things. wow.
 
 /obj/item/storage/medical_pouch
@@ -149,7 +175,7 @@
 	health = 6
 	w_class = W_CLASS_TINY
 	slots = 4
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/reagent_containers/mender/brute/high_capacity,
 	/obj/item/reagent_containers/mender/burn/high_capacity)
 
@@ -160,7 +186,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 6
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/handcuffs = 3,\
 	/obj/item/device/flash,\
 	/obj/item/reagent_containers/food/snacks/donut,\
@@ -182,7 +208,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 5
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/handcuffs/ = 1,
 	/obj/item/handcuffs/guardbot = 2,
 	/obj/item/device/flash,
@@ -199,7 +225,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 5
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/old_grenade/emp = 5)
 
 /obj/item/storage/tactical_grenade_pouch
@@ -209,7 +235,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 7
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/chem_grenade/incendiary = 2,\
 	/obj/item/chem_grenade/shock,\
 	/obj/item/old_grenade/smoke = 1,\
@@ -224,7 +250,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 6
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/old_grenade/sonic = 5,\
 	/obj/item/clothing/ears/earmuffs/earplugs)
 
@@ -235,7 +261,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 6
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/old_grenade/energy_concussion = 5)
 
 /obj/item/storage/banana_grenade_pouch
@@ -245,7 +271,7 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 7 //bonus two slots for the banana grenade kit
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/old_grenade/spawner/banana = 5)
 
 /obj/item/storage/beartrap_pouch
@@ -254,8 +280,24 @@
 	icon_state = "ammopouch-large"
 	w_class = W_CLASS_SMALL
 	slots = 4
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	spawn_contents = list(/obj/item/beartrap = 4)
+
+/obj/item/storage/landmine_pouch
+	name = "landmine pouch"
+	desc = "A large pouch for keeping your highly unethical landmines in."
+	icon_state = "ammopouch-large"
+	w_class = W_CLASS_SMALL
+	slots = 3
+	opens_if_worn = TRUE
+	var/static/list/possible_contents = list(/obj/item/mine/radiation, /obj/item/mine/incendiary, /obj/item/mine/stun, /obj/item/mine/blast)
+
+	make_my_stuff()
+		..()
+		var/obj/item/mine/random_mine
+		for (var/i = 1 to src.slots)
+			random_mine = pick(src.possible_contents)
+			src.storage.add_contents(new random_mine(src))
 
 /obj/item/storage/pouch/highcap
 	name = "tactical pouch"
@@ -263,7 +305,7 @@
 	icon_state = "ammopouch-quad"
 	w_class = W_CLASS_SMALL
 	slots = 6
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	can_hold = list(/obj/item/ammo, /obj/item/old_grenade, /obj/item/chem_grenade, /obj/item/reagent_containers, /obj/item/deployer/barricade, /obj/item/tool, /obj/item/breaching_charge, /obj/item/pinpointer, /obj/item/mine, /obj/item/remote, /obj/item/device/)
 
 /obj/item/storage/sawfly_pouch
@@ -273,9 +315,9 @@
 	health = 6
 	w_class = W_CLASS_SMALL
 	slots = 4
-	does_not_open_in_pocket = 0
+	opens_if_worn = TRUE
 	spawn_contents = list(
-		/obj/item/old_grenade/sawfly = 3,
+		/obj/item/old_grenade/sawfly/firsttime = 3,
 		/obj/item/remote/sawflyremote
 	)
 

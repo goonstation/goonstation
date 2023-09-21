@@ -4,15 +4,13 @@
 	icon_state = "sinebeam3"
 	brightness = 1
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 0
+	stun = 0
 //How much ammo this costs
 	cost = 50
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
-//Kill/Stun ratio
-	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "shrink beam"
 //file location for the sound you want it to play

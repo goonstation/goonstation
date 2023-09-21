@@ -57,7 +57,7 @@
 		src.Artifact_emp_act()
 		..()
 
-	shoot(var/target,var/start,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/energygun/A = src.artifact
@@ -118,6 +118,7 @@
 			// artifact tweak buff, people said guns were useless compared to their cells
 			// the next 3 lines override the randomize(). Doing this instead of editing randomize to avoid changing prismatic spray.
 			bullet.power = rand(15,35) // randomise puts it between 2 and 50, let's make it less variable
+			bullet.generate_inverse_stats()
 			bullet.dissipation_rate = rand(1,bullet.power)
 			bullet.cost = rand(35,100) // randomise puts it at 50-150
 			bullets += bullet

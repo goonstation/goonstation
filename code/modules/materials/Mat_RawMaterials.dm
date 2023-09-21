@@ -7,45 +7,27 @@
 	max_stack = INFINITY
 	stack_type = /obj/item/material_piece
 	/// used for prefab bars
-	var/default_material = null
-	var/static/list/valid_icon_states = null
+	default_material = null
+	uses_default_material_appearance = TRUE
+	mat_changename = TRUE //TRUE for generic names such as Bar or Wad.
 
 	New()
 		..()
-		if (istext(default_material))
-			var/datum/material/M = getMaterial(default_material)
-			src.setMaterial(M)
 		setup_material()
 
 	proc/setup_material()
 		.=0
 
-	proc/is_valid_icon_state(var/state)
-		if(isnull(src.valid_icon_states))
-			src.valid_icon_states = list()
-			for(var/icon_state in icon_states('icons/obj/materials.dmi'))
-				src.valid_icon_states[icon_state] = 1
-		return state in src.valid_icon_states
-
-	onMaterialChanged()
-		..()
-		var/potential_new_icon_state = "[src.material.mat_id]-[initial(src.icon_state)]"
-		if(src.is_valid_icon_state(potential_new_icon_state))
-			src.icon_state = potential_new_icon_state
-			src.UpdateOverlays(null, "material")
-			src.color = null
-			src.alpha = 255
-
-	update_stack_appearance()
+	_update_stack_appearance()
 		if(material)
-			name = "[amount] [material.name] [initial(src.name)][amount > 1 ? "s":""]"
+			name = "[amount] [mat_changename ? material.getName() : ""] [initial(src.name)][amount > 1 ? "s":""]"
 		return
 
 	split_stack(var/toRemove)
 		if(toRemove >= amount || toRemove < 1) return 0
 		var/obj/item/material_piece/P = new src.type
 		P.set_loc(src.loc)
-		P.setMaterial(copyMaterial(src.material))
+		P.setMaterial(src.material)
 		src.change_stack_amount(-toRemove)
 		P.change_stack_amount(toRemove - P.amount)
 		return P
@@ -69,7 +51,7 @@
 				user.put_in_hand(src)
 			boutput(user, "<span class='notice'>You add the material to the stack. It now has [src.amount] pieces.</span>")
 
-	mouse_drop(over_object, src_location, over_location) //src dragged onto over_object
+	mouse_drop(atom/over_object, src_location, over_location) //src dragged onto over_object
 		if (isobserver(usr))
 			boutput(usr, "<span class='alert'>Quit that! You're dead!</span>")
 			return
@@ -85,7 +67,7 @@
 				boutput(usr, "<span class='alert'>You're too far away from it to do that.</span>")
 				return
 
-		if (istype(over_object,/obj/item/material_piece)) //piece to piece, doesnt matter if in hand or not.
+		if (istype(over_object,/obj/item/material_piece) && isturf(over_object.loc)) //piece to piece only if on ground
 			var/obj/item/targetObject = over_object
 			if(targetObject.stack_item(src))
 				usr.visible_message("<span class='notice'>[usr.name] stacks \the [src]!</span>")
@@ -154,11 +136,21 @@
 
 		blob
 			name = "chunk of blob"
+			default_material = "blob"
+			mat_changename = FALSE
 
-			setup_material()
-				src.setMaterial(getMaterial("blob"), setname = 0)
-				..()
-
+			random
+				var/static/list/random_blob_materials = null
+				New()
+					. = ..()
+					if (!src.random_blob_materials)
+						src.random_blob_materials = list()
+						var/datum/material/base_mat = getMaterial("blob")
+						for (var/i in 1 to 10)
+							var/datum/material/new_mat = base_mat.getMutable()
+							new_mat.setColor(rgb(rand(1,255), rand(1,255), rand(1,255), 255))
+							src.random_blob_materials += new_mat
+					src.setMaterial(pick(src.random_blob_materials))
 	sphere
 		// energy
 		icon_state = "sphere"
@@ -182,10 +174,10 @@
 				var/zone = user.zone_sel.selecting
 				var/surgery_status = H.get_surgery_status(zone)
 				if (surgery_status && H.organHolder)
-					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, zone, surgery_status, rand(1,4), "bandag"), user)
+					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 15, zone, surgery_status, rand(1,4), Vrb = "bandag"), user)
 					src.in_use = 1
 				else if (H.bleeding)
-					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 20, zone, 0, rand(2,4), "bandag"), user)
+					actions.start(new /datum/action/bar/icon/medical_suture_bandage(H, src, 20, zone, 0, rand(2,4), Vrb = "bandag"), user)
 					src.in_use = 1
 				else
 					user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to bandage!", "red")
@@ -200,7 +192,7 @@
 			else if(istype(A, /turf/simulated/wall/))
 				var/obj/decal/poster/banner/B = new(A)
 				if (src.material) B.setMaterial(src.material)
-				logTheThing("station", user, null, "Hangs up a banner (<b>Material:</b> [B.material && B.material.mat_id ? "[B.material.mat_id]" : "*UNKNOWN*"]) in [A] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "Hangs up a banner (<b>Material:</b> [B.material && B.material.getID() ? "[B.material.getID()]" : "*UNKNOWN*"]) in [A] at [log_loc(user)].")
 				src.change_stack_amount(-1)
 				user.visible_message("<span class='notice'>[user] hangs up a [B.name] in [A]!.</span>", "<span class='notice'>You hang up a [B.name] in [A]!</span>")
 
@@ -209,80 +201,60 @@
 	name = "frozen fart"
 	desc = "Remarkable! The cold temperatures in the freezer have frozen the fart in mid-air."
 	amount = 5
-	setup_material()
-		src.setMaterial(getMaterial("frozenfart"), appearance = 0, setname = 0)
-		..()
+	default_material = "frozenfart"
+	mat_changename = FALSE
+	uses_default_material_appearance = FALSE
 
 /obj/item/material_piece/steel
 	desc = "A processed bar of Steel, a common metal."
 	default_material = "steel"
 	icon_state = "bar"
-
-	setup_material()
-		src.setMaterial(getMaterial("steel"), appearance = 1, setname = 1)
-		..()
+	default_material = "steel"
 
 /obj/item/material_piece/hamburgris
 	name = "clump"
 	desc = "A big clump of petrified mince, with a horriffic smell."
 	default_material = "hamburgris"
-	icon_state = "slag"
-
-	setup_material()
-		src.setMaterial(getMaterial("hamburgris"), appearance = 0, setname = 0)
-		..()
+	icon_state = "wad"
 
 /obj/item/material_piece/glass
 	desc = "A cut block of glass, a common crystalline substance."
 	default_material = "glass"
 	icon_state = "block"
 
-	setup_material()
-		src.setMaterial(getMaterial("glass"), appearance = 1, setname = 1)
-		..()
-
 /obj/item/material_piece/copper
 	desc = "A processed bar of copper, a conductive metal."
 	default_material = "copper"
 	icon_state = "bar"
 
-	setup_material()
-		src.setMaterial(getMaterial("copper"), appearance = 1, setname = 1)
-		..()
-
 /obj/item/material_piece/iridiumalloy
 	icon_state = "iridium"
-	name = "iridium alloy plate"
+	name = "plate"
 	desc = "A chunk of some sort of iridium alloy plating."
+	default_material = "iridiumalloy"
+	uses_default_material_appearance = FALSE
 	amount = 5
-	setup_material()
-		src.setMaterial(getMaterial("iridiumalloy"), appearance = 0, setname = 0)
-		..()
 
 /obj/item/material_piece/spacelag
-	icon_state = "spacelag-bar"
-	name = "spacelag bar"
+	icon_state = "bar"
 	desc = "Yep. There it is. You've done it. I hope you're happy now."
+	default_material = "spacelag"
 	amount = 1
-	setup_material()
-		src.setMaterial(getMaterial("spacelag"), appearance = 0, setname = 0)
-		..()
 
 /obj/item/material_piece/slag
-	icon_state = "slag"
+	icon_state = "wad"
 	name = "slag"
 	desc = "By-product of smelting"
-	setup_material()
-		src.setMaterial(getMaterial("slag"), appearance = 0, setname = 0)
-		..()
+	default_material = "slag"
+	mat_changename = FALSE
 
 /obj/item/material_piece/rubber/latex
-	name = "latex sheet"
+	name = "sheet"
 	desc = "A sheet of latex."
 	icon_state = "latex"
+	default_material = "latex"
 
 	setup_material()
-		src.setMaterial(getMaterial("latex"), appearance = 0, setname = 0)
 		src.create_reagents(10)
 		reagents.add_reagent("rubber", 10)
 		return ..()
@@ -291,14 +263,14 @@
 	name = "wooden log"
 	desc = "Years of genetic engineering mean timber always comes in mostly perfectly shaped cylindrical logs."
 	icon_state = "log"
-	setup_material()
-		src.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
-		..()
+	default_material = "wood"
+	uses_default_material_appearance = FALSE
+	mat_changename = FALSE
+
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
 			user.visible_message("[user] cuts a plank from the [src].", "You cut a plank from the [src].")
-			var/obj/item/plankobj = new /obj/item/plank(user.loc)
-			plankobj.setMaterial(getMaterial("wood"), appearance = 0, setname = 0)
+			new /obj/item/sheet/wood(user.loc)
 			if (src.amount > 1)
 				change_stack_amount(-1)
 			else
@@ -307,16 +279,18 @@
 			..()
 
 /obj/item/material_piece/organic/bamboo
-	name = "bamboo stalk"
+	name = "stalk"
 	desc = "Keep away from Space Pandas."
 	icon_state = "bamboo"
-	setup_material()
-		src.setMaterial(getMaterial("bamboo"), appearance = 0, setname = 0)
-		..()
+	default_material = "bamboo"
+	uses_default_material_appearance = FALSE
+	mat_changename = TRUE
+
 	attackby(obj/item/W, mob/user)
 		if ((istool(W, TOOL_CUTTING | TOOL_SAWING)))
-			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src].")
+			user.visible_message("[user] carefully extracts a shoot from [src].", "You carefully cut a shoot from [src], leaving behind some usable building material.")
 			new /obj/item/reagent_containers/food/snacks/plant/bamboo/(user.loc)
+			new /obj/item/sheet/bamboo(user.loc)
 			if (src.amount > 1)
 				change_stack_amount(-1)
 			else
@@ -328,127 +302,125 @@
 	name = "space spider silk"
 	desc = "space silk produced by space dwelling space spiders. space."
 	icon_state = "spidersilk"
-	setup_material()
-		src.setMaterial(getMaterial("spidersilk"), appearance = 0, setname = 0)
-		..()
+	default_material = "spidersilk"
+	uses_default_material_appearance = FALSE
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/leather
 	name = "leather"
 	desc = "leather made from the skin of some sort of space critter."
-	icon_state = "leather-fabric"
-	setup_material()
-		src.setMaterial(getMaterial("leather"), appearance = 0, setname = 0)
-		..()
+	icon_state = "fabric"
+	default_material = "leather"
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/synthleather
 	name = "synthleather"
 	desc = "A type of artificial leather."
-	icon_state = "synthleather-fabric"
-	setup_material()
-		src.setMaterial(getMaterial("synthleather"), appearance = 0, setname = 0)
-		..()
+	icon_state = "fabric"
+	default_material = "synthleather"
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/cottonfabric
-	name = "cotton fabric"
+	name = "fabric"
 	desc = "A type of natural fabric."
 	icon_state = "fabric"
-	setup_material()
-		src.setMaterial(getMaterial("cotton"), appearance = 0, setname = 0)
-		..()
+	default_material = "cotton"
+
+/obj/item/material_piece/cloth/jean
+	name = "jean textile"
+	desc = "A type of a sturdy textile."
+	icon_state = "fabric"
+	default_material = "jean"
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/brullbarhide
 	name = "brullbar hide"
 	desc = "The hide of a brullbar."
-	icon_state = "brullbarhide-fabric"
-	setup_material()
-		src.setMaterial(getMaterial("brullbarhide"), appearance = 0, setname = 0)
-		..()
+	icon_state = "fabric"
+	default_material = "brullbarhide"
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/kingbrullbarhide
 	name = "king brullbar hide"
 	desc = "The hide of a king brullbar."
-	icon_state = "brullbarhide-fabric"
-	setup_material()
-		src.setMaterial(getMaterial("kingbrullbarhide"), appearance = 0, setname = 0)
-		..()
+	icon_state = "fabric"
+	default_material = "kingbrullbarhide"
+	mat_changename = FALSE
 
 /obj/item/material_piece/cloth/carbon
-	name = "carbon nano fibre fabric"
+	name = "fabric"
 	desc = "carbon based hi-tech material."
-	icon_state = "carbonfibre-fabric"
-	setup_material()
-		src.setMaterial(getMaterial("carbonfibre"), appearance = 0, setname = 0)
-		..()
+	icon_state = "fabric"
+	default_material = "carbonfibre"
 
 /obj/item/material_piece/cloth/dyneema
-	name = "dyneema fabric"
+	name = "fabric"
 	desc = "carbon nanofibres and space spider silk!"
-	icon_state = "dyneema-fabric"
-	setup_material()
-		src.setMaterial(getMaterial("dyneema"), appearance = 0, setname = 0)
-		..()
+	icon_state = "fabric"
+	default_material = "dyneema"
 
 /obj/item/material_piece/cloth/hauntium
-	name = "hauntium fabric"
+	name = "fabric"
 	desc = "This cloth seems almost alive."
-	icon_state = "dyneema-fabric"
-
-	setup_material()
-		src.setMaterial(getMaterial("hauntium"), appearance = 1, setname = 0)
-		..()
+	icon_state = "fabric"
+	default_material = "hauntium"
 
 /obj/item/material_piece/cloth/beewool
 	name = "bee wool"
 	desc = "Some bee wool."
-	icon_state = "beewool-fabric"
-	setup_material()
-		src.setMaterial(getMaterial("beewool"), appearance = 0, setname = 0)
-		..()
+	icon_state = "fabric"
+	default_material = "beewool"
+	mat_changename = FALSE
 
 /obj/item/material_piece/soulsteel
-	name = "soulsteel bar"
 	desc = "A bar of soulsteel. Metal made from souls."
-	icon_state = "soulsteel-bar"
-	setup_material()
-		src.setMaterial(getMaterial("soulsteel"), appearance = 0, setname = 0)
-		..()
+	icon_state = "bar"
+	default_material = "soulsteel"
+
+/obj/item/material_piece/metal/censorium
+	desc = "A bar of censorium. Nice try."
+	icon_state = "bar"
+	default_material = "censorium"
 
 /obj/item/material_piece/bone
 	name = "bits of bone"
 	desc = "some bits and pieces of bones."
 	icon_state = "scrap3"
-	setup_material()
-		src.setMaterial(getMaterial("bone"), appearance = 0, setname = 0)
-		..()
+	default_material = "bone"
+	uses_default_material_appearance = FALSE
+	mat_changename = FALSE
 
 /obj/item/material_piece/gnesis
-	name = "gnesis wafer"
+	name = "wafer"
 	desc = "A warm, pulsing block of weird alien computer crystal stuff."
-	icon_state = "gnesis-bar"
-	setup_material()
-		src.setMaterial(getMaterial("gnesis"), appearance = 0, setname = 0)
-		..()
+	icon_state = "bar"
+	default_material = "gnesis"
 
 /obj/item/material_piece/gnesisglass
-	name = "gnesisglass wafer"
+	name = "wafer"
 	desc = "A shimmering, transclucent block of weird alien computer crystal stuff."
-	icon_state = "gnesisglass-bar"
-	setup_material()
-		src.setMaterial(getMaterial("gnesisglass"), appearance = 0, setname = 0)
-		..()
+	icon_state = "bar"
+	default_material = "gnesisglass"
 
 /obj/item/material_piece/coral
-	name = "coral"
+	name = "chunk"
 	desc = "A piece of coral. Nice!"
 	icon_state = "coral"
-	setup_material()
-		src.setMaterial(getMaterial("coral"), appearance = 0, setname = 0)
-		..()
+	default_material = "coral"
+	uses_default_material_appearance = FALSE
 
 /obj/item/material_piece/neutronium
-	name = "neutronium"
 	desc = "Neutrons condensed into a solid form."
 	icon_state = "bar"
-	setup_material()
-		src.setMaterial(getMaterial("neutronium"), appearance = 0, setname = 0)
-		..()
+	default_material = "neutronium"
+
+/obj/item/material_piece/plutonium
+	desc = "Reprocessed nuclear fuel, refined into fissile isotopes."
+	icon_state = "bar"
+	default_material = "plutonium"
+
+/obj/item/material_piece/foolsfoolsgold
+	name = "fool's pyrite bar"
+	desc = "It's gold that isn't. Except it is. MINDFUCK"
+	icon_state = "bar"
+	default_material = "gold"

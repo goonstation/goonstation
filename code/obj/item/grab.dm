@@ -9,7 +9,7 @@
 	icon_state = "reinforce"
 	name = "grab"
 	w_class = W_CLASS_HUGE
-	anchored = 1
+	anchored = ANCHORED
 	var/prob_mod = 1
 	var/assailant_stam_drain = 30
 	var/affecting_stam_drain = 20
@@ -17,6 +17,7 @@
 	var/item_grab_overlay_state = "grab_small"
 	var/can_pin = 1
 	var/dropped = 0
+	var/irresistible = 0
 
 	New(atom/loc, mob/assailant = null, mob/affecting = null)
 		..()
@@ -33,13 +34,13 @@
 
 			var/image/ima = SafeGetOverlayImage("grab", src.icon, item_grab_overlay_state)
 			ima.layer = src.loc.layer + 1
-			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM
+			ima.appearance_flags = RESET_COLOR | KEEP_APART | RESET_TRANSFORM | PIXEL_SCALE
 
 			I.UpdateOverlays(ima, "grab", 0, 1)
 		src.assailant = assailant
 		src.affecting = affecting
 		src.affecting.grabbed_by += src
-		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, .proc/check_hostage)
+		RegisterSignal(src.assailant, COMSIG_ATOM_HITBY_PROJ, PROC_REF(check_hostage))
 		if (assailant != affecting)
 			SEND_SIGNAL(affecting, COMSIG_MOB_GRABBED, src)
 
@@ -70,7 +71,7 @@
 					affecting.layer = initial(affecting.layer)
 				affecting.pixel_x = initial(affecting.pixel_x)
 				affecting.pixel_y = initial(affecting.pixel_y)
-				affecting.set_density(1)
+				affecting.set_density(initial(affecting.density))
 
 
 			if (state == GRAB_PIN)
@@ -80,11 +81,11 @@
 				affecting.force_laydown_standup()
 
 			if (state == GRAB_CHOKE)
-				logTheThing("combat", src.assailant, src.affecting, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles at [log_loc(src.affecting)]")
 			else if (state == GRAB_PIN)
-				logTheThing("combat", src.assailant, src.affecting, "drops their pin on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "drops their pin on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
 			else if(!istype(src, /obj/item/grab/block))
-				logTheThing("combat", src.assailant, src.affecting, "drops their grab on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
+				logTheThing(LOG_COMBAT, src.assailant, "drops their grab on [constructTarget(src.affecting,"combat")] at [log_loc(src.affecting)]")
 			if (affecting.grabbed_by)
 				affecting.grabbed_by -= src
 
@@ -99,10 +100,11 @@
 		if (src.disposed)
 			src.set_loc(null)
 
-	set_loc() //never ever ever ever!!!
-		..()
-		if (src.loc && !istype(src.loc, /mob))
-			set_loc(null)
+	set_loc(new_loc) //never ever ever ever!!!
+		if (!istype(new_loc, /mob))
+			..(null)
+		else
+			..()
 
 	dropped()
 		..()
@@ -135,6 +137,15 @@
 
 		UpdateIcon()
 
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if (state >= GRAB_AGGRESSIVE && !istype(target,/turf))
+			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container())
+				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src.affecting] [log_reagents(src.affecting)] to [target] at [log_loc(user)].")
+				var/trans = src.affecting.reagents.trans_to(target, 10)
+				if (trans)
+					boutput(user, "<span class='notice'>You dump [trans] units of the solution from [src.affecting] to [target].</span>")
+
 	attack(atom/target, mob/user)
 		if (check())
 			return
@@ -147,7 +158,7 @@
 
 
 	proc/process_kill(var/mob/living/carbon/human/H, mult = 1)
-		if(H)
+		if(H && !ischangeling(H))
 			choke_count += 1 * mult
 			H.remove_stamina((STAMINA_REGEN+8.5) * mult)
 			H.stamina_stun(mult)
@@ -165,7 +176,7 @@
 		if (!isturf(src.assailant.loc) || !(BOUNDS_DIST(src.assailant, src.affecting) == 0))
 			return
 
-		actions.interrupt(src.affecting, INTERRUPT_ALWAYS)
+		actions.interrupt(src.affecting, INTERRUPT_MOVE)
 
 		var/pxo = 0
 		var/pyo = 0
@@ -209,7 +220,7 @@
 					src.affecting.buckled = null
 
 				else
-					logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
+					logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 					for(var/mob/O in AIviewers(src.assailant, null))
 						O.show_message("<span class='alert'>[src.assailant] has grabbed [src.affecting] aggressively (now hands)!</span>", 1)
 					icon_state = "reinforce"
@@ -225,7 +236,7 @@
 				src.assailant.lastattacked = src.affecting
 				src.affecting.lastattacker = src.assailant
 				src.affecting.lastattackertime = world.time
-				logTheThing("combat", src.assailant, src.affecting, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
+				logTheThing(LOG_COMBAT, src.assailant, "'s grip upped to aggressive on [constructTarget(src.affecting,"combat")]")
 				user.next_click = world.time + user.combat_click_delay
 				src.assailant.visible_message("<span class='alert'>[src.assailant] has reinforced [his_or_her(assailant)] grip on [src.affecting] (now aggressive)!</span>")
 			if (GRAB_AGGRESSIVE)
@@ -241,7 +252,7 @@
 				user.next_click = world.time + user.combat_click_delay
 			if (GRAB_CHOKE)
 				src.state = GRAB_AGGRESSIVE
-				logTheThing("combat", src.assailant, src.affecting, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles")
+				logTheThing(LOG_COMBAT, src.assailant, "releases their choke on [constructTarget(src.affecting,"combat")] after [choke_count] cycles")
 				for (var/mob/O in AIviewers(src.assailant, null))
 					O.show_message("<span class='alert'>[src.assailant] has loosened [his_or_her(assailant)] grip on [src.affecting]'s neck!</span>", 1)
 				user.next_click = world.time + user.combat_click_delay
@@ -252,9 +263,12 @@
 			return
 
 		icon_state = "disarm/kill"
-		logTheThing("combat", src.assailant, src.affecting, "chokes [constructTarget(src.affecting,"combat")]")
+		logTheThing(LOG_COMBAT, src.assailant, "chokes [constructTarget(src.affecting,"combat")]")
 		choke_count = 0
-
+		if (istype(src.loc, /obj/item/cloth))
+			var/obj/item/cloth/cloth = src.loc
+			if (cloth.reagents && cloth.reagents.total_volume > 0 && iscarbon(src.affecting))
+				logTheThing(LOG_COMBAT, src.assailant, "begins to force [constructTarget(src.affecting)] to breathe from [cloth] [log_reagents(cloth.reagents)]")
 		if (!msg_overridden)
 			if (isitem(src.loc))
 				var/obj/item/I = src.loc
@@ -276,7 +290,8 @@
 		//src.affecting.stunned = max(src.affecting.stunned, 3)
 		if (ishuman(src.affecting))
 			var/mob/living/carbon/human/H = src.affecting
-			H.set_stamina(min(0, H.stamina))
+			if (!ischangeling(H))
+				H.set_stamina(min(0, H.stamina))
 
 		if (isliving(src.affecting))
 			src.affecting:was_harmed(src.assailant)
@@ -286,7 +301,7 @@
 			return
 
 		icon_state = "pin"
-		logTheThing("combat", src.assailant, src.affecting, "pins [constructTarget(src.affecting,"combat")]")
+		logTheThing(LOG_COMBAT, src.assailant, "pins [constructTarget(src.affecting,"combat")]")
 
 		for (var/mob/O in AIviewers(src.assailant, null))
 			O.show_message("<span class='alert'>[src.assailant] has pinned [src.affecting] to [get_turf(T)]!</span>", 1)
@@ -354,7 +369,9 @@
 		src.affecting.set_dir(pick(alldirs))
 		resist_count += 1
 
-		if (is_incapacitated(src.affecting))
+		if (irresistible)
+			prob_mod = 0
+		else if (is_incapacitated(src.affecting))
 			prob_mod = 0.7
 		else
 			prob_mod = 1
@@ -511,24 +528,29 @@
 	onUpdate()
 		..()
 
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0 || GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		if (!G || !istype(G) || G.affecting != target)
+		if (!G || !istype(G) || G.affecting != target || G.state == GRAB_PIN)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
 	onStart()
 		..()
-		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0)
+		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || BOUNDS_DIST(owner, T) > 0 || GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			interrupt(INTERRUPT_ALWAYS)
 			return
+
+		if (!G || !istype(G) || G.affecting != target || G.state == GRAB_PIN)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
 
 	onEnd()
 		..()
 		var/mob/ownerMob = owner
-		if(owner && ownerMob && target && G && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0)
+		if(owner && ownerMob && target && G && G.state != GRAB_PIN && BOUNDS_DIST(owner, target) == 0 && BOUNDS_DIST(owner, T) == 0 && !GET_ATOM_PROPERTY(target, PROP_MOB_CANT_BE_PINNED))
 			G.upgrade_to_pin(T)
 		else
 			interrupt(INTERRUPT_ALWAYS)
@@ -554,10 +576,12 @@
 		return 0
 
 	user.visible_message("<span class='alert'><B>[M] has been smashed against [src] by [user]!</B></span>")
-	logTheThing("combat", user, M, "smashes [constructTarget(M,"combat")] against [src]")
+	logTheThing(LOG_COMBAT, user, "smashes [constructTarget(M,"combat")] against [src]")
 
 	src.Bumped(M)
 	random_brute_damage(G.affecting, rand(2,3))
+	src.material_trigger_when_attacked(G.affecting, user, 1)
+	G.affecting.material_on_attack_use(user, src)
 	G.affecting.TakeDamage("chest", rand(4,5))
 	playsound(G.affecting.loc, "punch", 25, 1, -1)
 
@@ -565,6 +589,32 @@
 	G.dispose()
 	return 1
 
+/turf/grab_smash(obj/item/grab/G, mob/user)
+	var/mob/affecting = G.affecting //the parent disposes G
+	if(..())
+		var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
+		affecting.do_disorient(40, disorient = duration, stack_stuns = FALSE)
+
+/obj/window/grab_smash(obj/item/grab/G, mob/user)
+	if (!ismob(G.affecting) || BOUNDS_DIST(G.affecting, src) != 0)
+		return
+	G.affecting.TakeDamage("head", 5, 0)
+	src.damage_blunt(10)
+	if (QDELETED(src))
+		src.visible_message("<span class='alert'><B>[user] smashes [G.affecting]'s head straight through [src]!</B></span>")
+		logTheThing(LOG_COMBAT, user, "smashes [constructTarget(user,"combat")]'s head through [src]")
+		take_bleeding_damage(G.affecting, user, 15, DAMAGE_CUT, TRUE)
+		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
+	else
+		src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
+		logTheThing(LOG_COMBAT, user, "slams [constructTarget(user,"combat")]'s head into [src]")
+		playsound(src.loc, src.hitsound , 100, 1)
+
+	var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
+	G.affecting.do_disorient(20, disorient = duration, stack_stuns = FALSE)
+
+	G.dispose()
+	return 1
 
 /turf/simulated/floor/grab_smash(obj/item/grab/G as obj, mob/user as mob)
 	var/mob/M = G.affecting
@@ -585,24 +635,6 @@
 	attack_particle(user,src)
 
 /turf/unsimulated/floor/grab_smash(obj/item/grab/G as obj, mob/user as mob)
-	var/mob/M = G.affecting
-
-	if  (!(ismob(G.affecting)))
-		return 0
-
-	if (BOUNDS_DIST(src, M) > 0)
-		return 0
-
-	if (!G.can_pin)
-		return 0
-
-	if (isliving(G.affecting))
-		G.affecting:was_harmed(G.assailant)
-
-	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
-	attack_particle(user,src)
-
-/obj/fluid/grab_smash(obj/item/grab/G as obj, mob/user as mob)
 	var/mob/M = G.affecting
 
 	if  (!(ismob(G.affecting)))
@@ -729,7 +761,7 @@
 
 
 /obj/item/gun/try_grab(var/mob/living/target, var/mob/living/user)
-	src.hide_attack = 1
+	src.hide_attack = ATTACK_FULLY_HIDDEN
 
 	if (..())
 		for (var/mob/O in AIviewers(user, null))
@@ -767,9 +799,10 @@
 		..()
 
 	proc/shoot()
-		shot = 1
-
-		if (affecting && assailant && isitem(src.loc))
+		if(src.shot)
+			return
+		src.shot = TRUE
+		if (src.affecting && src.assailant && isitem(src.loc))
 			var/obj/item/gun/G = src.loc
 			G.shoot_point_blank(src.affecting,src.assailant,1) //don't shoot an offhand gun
 
@@ -783,7 +816,7 @@
 	name = "block"
 	desc = "By holding this in your active hand, you are blocking!"
 	can_pin = 0
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
 
 
 	New()
@@ -809,8 +842,9 @@
 
 
 		if (assailant)
-			assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
-			assailant.delStatus("blocking")
+			if(assailant.hasStatus("blocking"))
+				assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
+				assailant.delStatus("blocking")
 			assailant.last_resist = world.time + COMBAT_BLOCK_DELAY
 		..()
 
@@ -860,13 +894,13 @@
 /obj/item/grab/block/proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
 	switch(hit_type)
 		if (DAMAGE_BLUNT)
-			playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, TRUE, -1)
 		if (DAMAGE_CUT)
-			playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, TRUE, -1)
 		if (DAMAGE_STAB)
-			playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, TRUE, -1)
 		if (DAMAGE_BURN)
-			playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, TRUE, -1)
 
 /obj/item/grab/block/handle_throw(mob/living/user, atom/target)
 	if (isturf(user.loc) && target)
@@ -881,67 +915,71 @@
 			var/turf/target_turf = get_step(user, target_dir)
 			if (!target_turf)
 				target_turf = T
-
-			var/mob/living/dive_attack_hit = null
-
-			for (var/mob/living/L in target_turf)
-				if (user == L || isintangible(L)) continue
-				dive_attack_hit = L
-				break
-
-			if (dive_attack_hit)
-				var/damage = rand(1,6)
-				if (ishuman(user))
-					var/mob/living/carbon/human/H = user
-					if (H.shoes)
-						damage += H.shoes.kick_bonus
-					else if (H.limbs.r_leg)
-						damage += H.limbs.r_leg.limb_hit_bonus
-					else if (H.limbs.l_leg)
-						damage += H.limbs.l_leg.limb_hit_bonus
-
-				dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
-				playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
-				for (var/mob/O in AIviewers(user))
-					O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
-				logTheThing("combat", user, dive_attack_hit, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
-
 			step_to(user, target_turf)
+			var/mob/living/dive_attack_hit = null
+			if(get_turf(user) == target_turf)
 
-			if(!dive_attack_hit && get_turf(user) == target_turf)
+				for (var/mob/living/L in target_turf)
+					if (user == L || isintangible(L)) continue
+					dive_attack_hit = L
+					break
+
+				if (dive_attack_hit)
+					var/damage = rand(1,6)
+					if (ishuman(user))
+						var/mob/living/carbon/human/H = user
+						if (H.shoes)
+							damage += H.shoes.kick_bonus
+						else if (H.limbs.r_leg)
+							damage += H.limbs.r_leg.limb_hit_bonus
+						else if (H.limbs.l_leg)
+							damage += H.limbs.l_leg.limb_hit_bonus
+					if(issilicon(dive_attack_hit))
+						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+						for (var/mob/O in AIviewers(user))
+							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!")
+					else
+						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
+						for (var/mob/O in AIviewers(user))
+							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
+					logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
+
+
+				else
+					// Slidekick to throw items on the turf
+					var/item_num_to_throw = 0
+					if (ishuman(user))
+						var/mob/living/carbon/human/H = user
+						item_num_to_throw += !!H.limbs.r_leg
+						item_num_to_throw += !!H.limbs.l_leg
+					else if (ismobcritter(user))
+						//TODO: When mobcritters keep track of how many legs they have, replace the below.
+						item_num_to_throw += 2
+
+					if (item_num_to_throw)
+						for (var/obj/item/itm in target_turf) // We want to kick items only
+							if (itm.w_class >= W_CLASS_HUGE)
+								continue
+
+							var/cardinal_throw_dir = target_dir
+							if (!is_cardinal(cardinal_throw_dir))
+								if(prob(50))
+									cardinal_throw_dir &= NORTH | SOUTH
+								else
+									cardinal_throw_dir &= EAST | WEST
+
+							var/atom/throw_target = get_edge_target_turf(itm, cardinal_throw_dir)
+							if (throw_target)
+								item_num_to_throw--
+								playsound(itm, "swing_hit", 50, 1)
+								itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8) // Range: 1-4, Speed: 1-2
+
+							if (!item_num_to_throw)
+								break
+			if(!dive_attack_hit)
 				for (var/mob/O in AIviewers(user))
 					O.show_message("<span class='alert'><B>[user] slides to the ground!</B></span>", 1, group = "resist")
-
-				// Slidekick to throw items on the turf
-				var/item_num_to_throw = 0
-				if (ishuman(user))
-					var/mob/living/carbon/human/H = user
-					item_num_to_throw += !!H.limbs.r_leg
-					item_num_to_throw += !!H.limbs.l_leg
-				else if (ismobcritter(user))
-					//TODO: When mobcritters keep track of how many legs they have, replace the below.
-					item_num_to_throw += 2
-
-				if (item_num_to_throw)
-					for (var/obj/item/itm in target_turf) // We want to kick items only
-						if (itm.w_class >= W_CLASS_HUGE)
-							continue
-
-						var/cardinal_throw_dir = target_dir
-						if (!is_cardinal(cardinal_throw_dir))
-							if(prob(50))
-								cardinal_throw_dir &= NORTH | SOUTH
-							else
-								cardinal_throw_dir &= EAST | WEST
-
-						var/atom/throw_target = get_edge_target_turf(itm, cardinal_throw_dir)
-						if (throw_target)
-							item_num_to_throw--
-							playsound(itm, "swing_hit", 50, 1)
-							itm.throw_at(throw_target, W_CLASS_HUGE - itm.w_class, (1 / itm.w_class) + 0.8) // Range: 1-4, Speed: 1-2
-
-						if (!item_num_to_throw)
-							break
 
 
 	user.u_equip(src)

@@ -13,13 +13,15 @@ TYPEINFO(/datum/component/analyzable)
 	)
 
 /datum/component/analyzable/Initialize(type_override)
-	if (!isobj(parent))
-		return COMPONENT_INCOMPATIBLE
-	var/obj/O = parent
-	if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
+	. = ..()
+	if (ismovable(parent))
+		var/atom/movable/O = parent
+		if (O.mechanics_interaction == MECHANICS_INTERACTION_BLACKLISTED)
+			return COMPONENT_INCOMPATIBLE
+	else
 		return COMPONENT_INCOMPATIBLE
 	src.result_type = type_override
-	RegisterSignal(parent, list(COMSIG_ATOM_ANALYZE), .proc/attempt_analysis)
+	RegisterSignal(parent, COMSIG_ATOM_ANALYZE, PROC_REF(attempt_analysis))
 
 /datum/component/analyzable/proc/attempt_analysis(obj/parent_atom, obj/item/I, mob/user)
 	PRIVATE_PROC(TRUE)
@@ -28,7 +30,8 @@ TYPEINFO(/datum/component/analyzable)
 		return
 	// if this item doesn't have mats defined or was constructed or
 	// attempting to scan a syndicate item and this is a normal scanner
-	if (isnull(parent_atom.mats) || parent_atom.mats == 0 || (parent_atom.is_syndicate && !I.is_syndicate))
+	var/typeinfo/obj/typeinfo = parent_atom.get_typeinfo()
+	if (isnull(typeinfo.mats) || typeinfo.mats == 0 || (parent_atom.is_syndicate && !I.is_syndicate))
 		return MECHANICS_ANALYSIS_INCOMPATIBLE
 	var/obj/item/electronics/scanner/S = I
 	if (istype(S))

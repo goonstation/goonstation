@@ -15,26 +15,33 @@
 		/obj/item/robot_foodsynthesizer,
 		/obj/item/reagent_containers/food/drinks/bottle/beer/borg,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher,
+		/obj/item/pen/omni, // Fancy
 		/obj/item/pen/crayon/random/robot,
+		/obj/item/pen/crayon/rainbow,
+		/obj/item/sponge, // To clean up drawings
 		/obj/item/coin_bot,
 		/obj/item/dice/robot,
 		/obj/item/device/light/zippo/borg,
-		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/device/prisoner_scanner,
 		/obj/item/item_box/assorted/stickers/robot,
 		// TODO: security grenade fabricator?!
 		// /obj/item/handcuffs/tape_roll/crappy,
 		/obj/item/c_tube, // TODO: make slightly buffed version?
+		/obj/item/gun/kinetic/foamdartgun/borg,
 		/obj/item/device/detective_scanner,
 		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
 		/obj/item/device/camera_viewer,
 		/obj/item/hand_labeler,
 		/obj/item/device/ticket_writer,
+		/obj/item/sec_tape/vended,
 	)
 
 // scientist.
-/datum/robot/module_tool_creator/recursive/module/chemistry
+/datum/robot/module_tool_creator/recursive/module/science
 	definitions = list(
+		/obj/item/hand_labeler,
+		/obj/item/pen,
+		/obj/item/item_box/assorted/stickers/robot/science,
 		/obj/item/robot_chemaster,
 		// TODO: utility grenade fabricator?
 		/obj/item/reagent_containers/syringe,
@@ -43,10 +50,11 @@
 		/obj/item/reagent_containers/dropper/mechanical,
 		// TODO: some sort of chem dispenser?
 		/obj/item/reagent_containers/food/drinks/drinkingglass,
-		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/extinguisher/large/cyborg,
+		/obj/item/device/gps, // Let's them assist with telesci
 	)
 
 // botanist. chef. janitor.
@@ -56,6 +64,7 @@
 		/obj/item/pen, // TODO: make more versatile version
 		/obj/item/seedplanter,
 		/obj/item/plantanalyzer,
+		/obj/item/gardentrowel,
 		/obj/item/device/igniter,
 		/obj/item/saw/cyborg,
 		/obj/item/satchel/hydro, // TODO: make more versatile version
@@ -74,6 +83,7 @@
 		/obj/item/ladle,
 		/obj/item/kitchen/rollingpin/light,
 		/obj/item/reagent_containers/food/drinks/drinkingglass/icing,
+		/obj/item/fishing_rod/basic,
 	)
 
 /datum/robot/module_tool_creator/recursive/module/common
@@ -126,6 +136,7 @@
 		/obj/item/rcd,
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
+		/obj/item/pinpointer/category/apcs/station,
 		#ifdef MAP_OVERRIDE_OSHAN
 			/obj/item/mining_tool/power_shovel/borg,
 		#endif
@@ -134,6 +145,9 @@
 		/datum/robot/module_tool_creator/item_type/amount/steel_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/glass_sheet,
 		/datum/robot/module_tool_creator/item_type/amount/cable_coil,
+		#ifdef MAP_OVERRIDE_OSHAN
+			/datum/robot/module_tool_creator/item_type/amount/cable_coil/reinforced,
+		#endif
 	)
 
 // medical doctor.
@@ -154,8 +168,8 @@
 		/obj/item/scissors/surgical_scissors,
 		/obj/item/hemostat,
 		/obj/item/staple_gun,
-		/obj/item/reagent_containers/glass/beaker/large,
-		/obj/item/reagent_containers/glass/beaker/large,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
+		/obj/item/reagent_containers/glass/beaker/large/cyborg,
 		/obj/item/reagent_containers/dropper,
 	)
 

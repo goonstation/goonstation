@@ -9,6 +9,7 @@
 
 /datum/admins/proc/playeropt_link(mob/M, action)
 	return "?src=\ref[src];action=[action];targetckey=[M.ckey];targetmob=\ref[M];origin=adminplayeropts"
+
 /datum/admins/proc/playeropt(mob/M)
 	if (!ismob(M))
 		alert("Mob not found - can't auto-refresh the panel. (May have been banned / deleted)")
@@ -19,13 +20,29 @@
 		if (AI.deployed_to_eyecam)
 			M = AI.eyecam
 
+	var/mentor = M.client?.player?.mentor
+	var/hos = (M.ckey in NT)
+
 	// The topBar style here is so that it can continue to happily chill at the top of even chui windows
 	var/header_thing_chui_toggle = (usr.client && !usr.client.use_chui) ? "<style type='text/css'>#topBar { top: 0; left: 0; right: 0; background-color: white; } </style>" : "<style type='text/css'>#topBar { top: 46px; left: 4px; right: 10px; background: inherit; }</style>"
+
+	var/key_string = "no ckey"
+	var/html_key_string = "<i>no ckey</i>"
+	if (M.key)
+		key_string = M.key
+		html_key_string = key_string
+	else if(M.last_ckey)
+		if (find_player(M.last_ckey)?.client)
+			key_string = "last: [M.last_ckey] / in other mob"
+			html_key_string = "last: [M.last_ckey] <i>/ in <a href='?src=\ref[src];action=refreshoptions;targetckey=[M.last_ckey];'>other mob</a></i>"
+		else
+			key_string = "last: [M.last_ckey] / offline"
+			html_key_string = "last: [M.last_ckey] <i>/ offline</i>"
 
 	var/list/dat = list()
 	dat += {"
 	[header_thing_chui_toggle]
-	<title>[M.name] ([M.key ? M.key : "NO CKEY"]) Options</title>
+	<title>[M.name] ([key_string]) Options</title>
 	<style>
 		a {
 			text-decoration: none;
@@ -62,6 +79,18 @@
 			color: #f55;
 		}
 
+		.pseudo {
+			color: #b57edc;
+		}
+
+		.mentor {
+			color: #a24cff;
+		}
+
+		.hos {
+			color: #2237AD;
+		}
+
 		#topBar {
 			position: fixed;
 			padding: 0.2em 0.5em;
@@ -71,29 +100,41 @@
 		#topOpts {
 			float: right;
 		}
+
+		#mobInfo {
+			margin-top: 2em;
+			margin-bottom: 0.25em;
+		}
 	</style>
 	"}
 
-	//Antag roles (yes i said antag jeez shut up about it already)
-	var/antag
+	var/antagonist_roles
+	var/number_of_antagonist_roles = ""
+
 	if (M.mind)
-		var/antag_len = length(M.mind.antagonists)
-		if (antag_len)
-			antag = "<b>[antag_len] antagonist role\s present.</b><br>"
-			for (var/datum/antagonist/this_antag as anything in M.mind.antagonists)
-				antag += "<span class='antag'>[this_antag.display_name]</span> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[this_antag]'>Remove</a><br>"
-			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a><br>"
-			antag += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a><br>"
-		else if (M.mind.special_role != null)
-			antag = {"
-			<a href='[playeropt_link(M, "traitor")]' class='antag'>[M.mind.special_role]</a> &mdash;
-			<a href='[playeropt_link(M, "remove_traitor")]' class='antag'>Remove</a>
-			"}
-		else if (!isobserver(M))
-			antag = "<a href='[playeropt_link(M, "traitor")]'>Make Antagonist</a>"
-			antag += "<br><a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role (New system, WIP)</a><br>"
+		var/number_of_antagonists = 0
+		for (var/datum/antagonist/antagonist_role as anything in M.mind.antagonists)
+			var/display_name = "<span class='antag'>[capitalize(antagonist_role.display_name)]</span>"
+			if (antagonist_role.vr)
+				display_name += " <span class='pseudo'>(VR)</span>"
+			else if (antagonist_role.pseudo)
+				display_name += " <span class='pseudo'>(pseudo)</span>"
+			else
+				number_of_antagonists++
+
+			antagonist_roles += "<a href='?src=\ref[src];target=\ref[antagonist_role];action=viewvars'>[display_name]</a> &mdash; <a href='?src=\ref[src];action=remove_antagonist;targetmob=\ref[M];target_antagonist=\ref[antagonist_role]'>Remove</a><br>"
+
+		if (isnull(antagonist_roles))
+			antagonist_roles += "No antagonist roles present."
 		else
-			antag = "Observer"
+			antagonist_roles += "<a href='?src=\ref[src];targetmob=\ref[M];action=wipe_antagonists'>Remove All Antagonist Roles</a>"
+
+		if (number_of_antagonists)
+			if (number_of_antagonists == 1)
+				var/datum/antagonist/antagonist_role = M.mind.antagonists[1]
+				number_of_antagonist_roles = " <b><span class='antag'>Antagonist: [capitalize(antagonist_role.display_name)]</span></b>"
+			else
+				number_of_antagonist_roles = " <b><span class='antag'>[number_of_antagonists] antagonist role\s present.</span></b>"
 
 	//General info
 	//  Logs link:
@@ -105,15 +146,16 @@
 		<a href='?src=\ref[src];action=view_logs;type=all_logs_string;presearch=[M.key ? M.key : M.name];origin=adminplayeropts'>Logs</a> &bull;
 		<a href='?src=\ref[src];action=refreshoptions;targetckey=[M.ckey];targetmob=\ref[M];'>&#8635;</a>
 	</div>
-	<b>[M.name]</b> (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
+	<b>[M.name]</b> (<tt>[html_key_string]</tt>)[mentor ? " <b class='mentor'>(Mentor)</b>" : ""][hos ? " <b class='hos'>(HoS)</b>" : ""]
 </div>
 
-<div style="margin-top: 2em;">
-	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[M.key ? M.key : "<em>no key</em>"]</tt>)
+<div id="mobInfo">
+	Mob: <b>[M.name]</b> [M.mind && M.mind.assigned_role ? "{[M.mind.assigned_role]}": ""] (<tt>[html_key_string]</tt>)
 	[M.client ? "" : "<em>(no client)</em>"]
+	[M.ai ? "<a href='?src=\ref[src];target=\ref[M.ai];action=viewvars'>([M.ai.enabled ? "active" : "inactive"] AI)</a>" : ""]
 	[isdead(M) ? "<span class='antag'>(dead)</span>" : ""]
 	<div style="font-family: Monospace; font-size: 0.7em; float: right;">ping [M.client?.chatOutput?.last_ping || "N/A "]ms</div>
-	<br>Mob Type: <b>[M.type]</b> ([antag])
+	<br>Mob Type: <b>[M.type]</b>[number_of_antagonist_roles]
 </div>
 	"}
 
@@ -147,7 +189,7 @@
 					<div class='r'>
 						<a href='[playeropt_link(M, "checkhealth")]'>Check</a> &bull;
 						<a href='[playeropt_link(M, "revive")]'>Heal</a> &bull;
-						[(M.stat == 2 || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"] &bull;
+						[(isdead(M) || M.max_health == 0) ? "Dead" : "[round(100 * M.health / M.max_health)]%"] &bull;
 						<a href='[playeropt_link(M, "kill")]'>Kill</a>
 					</div>
 					"} : ""]
@@ -176,6 +218,11 @@
 						<a href='[playeropt_link(M, "addtrait")]'>Add</a> &bull;
 						<a href='[playeropt_link(M, "removetrait")]'>Remove</a>
 				 	</div>
+					<div class='l'>Objectives</div>
+					<div class='r'>
+						<a href='[playeropt_link(M, "manageobjectives")]'>Manage</a> &bull;
+						<a href='[playeropt_link(M, "addobjective")]'>Add</a>
+				 	</div>
 					<div class='l'>StatusEffects<a href='?src=\ref[src];action=secretsfun;type=statuseffect_help'>*</a></div>
 					<div class='r'>
 						<a href='[playeropt_link(M, "setstatuseffect")]'>Set</a> &bull;
@@ -195,7 +242,8 @@
 						<a href='[playeropt_link(M, "firegib")]'>Fire</a> &bull;
 						<a href='[playeropt_link(M, "elecgib")]'>Elec</a> &bull;
 						<a href='[playeropt_link(M, "icegib")]'>Ice</a> &bull;
-						<a href='[playeropt_link(M, "goldgib")]'>Gold</a>
+						<a href='[playeropt_link(M, "goldgib")]'>Gold</a> &bull;
+						<a href='[playeropt_link(M, "smite")]'>Smite</a>
 						<br>
 						<a href='[playeropt_link(M, "owlgib")]'>Owl</a> &bull;
 						<a href='[playeropt_link(M, "sharkgib")]'>Shark</a> &bull;
@@ -203,11 +251,14 @@
 						<a href='[playeropt_link(M, "cluwnegib")]'>Cluwne</a> &bull;
 						<a href='[playeropt_link(M, "tysongib")]'>Tyson</a> &bull;
 						<a href='[playeropt_link(M, "flockgib")]'>Flock</a> &bull;
-						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a>
+						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a> &bull;
+						<a href='[playeropt_link(M, "rapture")]'>Rapture</a> &bull;
+						<a href='[playeropt_link(M, "anvilgib")]'>Anvil</a>
 					</div>
 					<div class='l'>Misc</div>
 					<div class='r'>
-						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a>
+						<a href='[playeropt_link(M, "forcespeech")]'>Force Say</a> &bull;
+						<a href='[playeropt_link(M, "halt")]'>Halt!</a>
 					</div>
 				</div>
 			</div>
@@ -286,7 +337,8 @@
 						<a href='[playeropt_link(M, "sharkban")]'>Ban w/shark</a> &bull;
 						<a href='[playeropt_link(M, "jobbanpanel")]'>Job Bans</a> &bull;
 						<a href='[playeropt_link(M, "banooc")]'>OOC [oocban_isbanned(M) ? "Unban" : "Ban"]</a> &bull;
-						<a href='[playeropt_link(M, "viewcompids")]'>CompIDs</a>
+						<a href='[playeropt_link(M, "viewcompids")]'>CompIDs</a> &bull;
+						<a href='[playeropt_link(M, "centcombans")]'>CentCom</a>
 					</div>
 					<div class='l'>
 						Persistent
@@ -295,34 +347,32 @@
 						<a href='[playeropt_link(M, "giveantagtoken")]'>Antag Tokens</a> &bull;
 						<a href='[playeropt_link(M, "setspacebux")]'>Spacebux</a> &bull;
 						<a href='[playeropt_link(M, "viewantaghistory")]'>Antag History</a> &bull;
-						<a href='[playeropt_link(M, "chatbans")]'>Chat Bans</a>
+						<a href='[playeropt_link(M, "chatbans")]'>Chat Bans</a> &bull;
+						<a href='[playeropt_link(M, "flavortext")]'>Flavor text</a>
 					</div>
 				"}
 
 		dat += "</div></div>"
 
-	//Very special roles
 	if(!istype(M, /mob/new_player))
-		dat += {"
-			<div class='optionGroup' style='border-color: #B57EDC;'>
-				<h2 style='background-color: #B57EDC;'>Antagonist Options</h2>
-				<div>
-					<div class='l'>Antag Status</div>
-					<div class='r'>
-						[antag]
-					</div>
-					<div class='l'>Make Into</div>
-					<div class='r'>
-						[iswraith(M) ? "<em>Is Wraith</em>" : "<a href='[playeropt_link(M, "makewraith")]'>Wraith</a>"] &bull;
-						[isblob(M) ? "<em>Is Blob</em>" : "<a href='[playeropt_link(M, "makeblob")]'>Blob</a>"] &bull;
-						[istype(M, /mob/living/carbon/human/machoman) ? "<em>Is Macho Man</em>" : "<a href='[playeropt_link(M, "makemacho")]'>Macho Man</a>"] &bull;
-						[isflockmob(M) ? "<em>Is Flock</em>" : "<a href='[playeropt_link(M, "makeflock")]'>Flock</a>"] &bull;
-						[isfloorgoblin(M) ? "<em>Is Floor Goblin</em>" : "<a href='[playeropt_link(M, "makefloorgoblin")]'>Floor Goblin</a>"] &bull;
-						[istype(M, /mob/living/carbon/human/slasher) ? "<em>Is Slasher</em>" : "<a href='[playeropt_link(M, "makeslasher")]'>Slasher</a>"]
+		if (M.mind)
+			dat += {"
+				<div class='optionGroup' style='border-color: #B57EDC;'>
+					<h2 style='background-color: #B57EDC;'>Antagonist Options</h2>
+					<div>
+						<div class='l'>Options</div>
+						<div class='r'>
+							<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a> &bull;
+							<a href='?src=\ref[src];targetmob=\ref[M];action=add_subordinate_antagonist'>Add Subordinate Antagonist Role</a><br>
+						</div>
+
+						<div class='l'>Antag Roles</div>
+						<div class='r'>
+							[antagonist_roles]
+						</div>
 					</div>
 				</div>
-			</div>
-			"}
+				"}
 
 		dat += {"
 			<div class='optionGroup' style='border-color: #779ECB;'>
@@ -336,8 +386,7 @@
 						<a href='[playeropt_link(M, "makecritter")]'>Critter</a> &bull;
 						<a href='[playeropt_link(M, "makecube")]'>Meatcube</a> &bull;
 						<!-- <a href='[playeropt_link(M, "transform")]'>Transform</a> &bull; -->
-						<a href='[playeropt_link(M, "clownify")]'>Cluwne</a>
-						<br>
+						<a href='[playeropt_link(M, "clownify")]'>Cluwne</a> &bull;
 						<a href='[playeropt_link(M, "makeai")]'>AI</a> &bull;
 						<a href='[playeropt_link(M, "makecyborg")]'>Cyborg</a> &bull;
 						<a href='[playeropt_link(M, "makeghostdrone")]'>Ghostdrone</a>
@@ -346,6 +395,8 @@
 						<a href='[playeropt_link(M, "modifylimbs")]'>Modify Limbs/Organs</a> &bull;
 						<a href='[playeropt_link(M, "respawntarget")]'>Respawn</a> &bull;
 						<a href='[playeropt_link(M, "respawnas")]'>Respawn As</a>
+						<br>
+						<a href='[playeropt_link(M, "changeoutfit")]'>Change Outfit</a>
 				"} : {"
 						Only human mobs can be transformed.
 						<br><a href='[playeropt_link(M, "humanize")]'>Humanize</a> &bull;

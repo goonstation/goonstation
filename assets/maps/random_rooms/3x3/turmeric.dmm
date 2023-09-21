@@ -1,0 +1,53 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/leaves,
+/turf/simulated/floor/grasstodirt,
+/area/dmm_suite/clear_area)
+"g" = (
+/obj/decal/cleanable/leaves,
+/turf/simulated/floor/grasstodirt{
+	icon_state = "dirt"
+	},
+/area/dmm_suite/clear_area)
+"k" = (
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/item/reagent_containers/food/snacks/plant/turmeric,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/grasstodirt{
+	icon_state = "dirt"
+	},
+/area/dmm_suite/clear_area)
+"A" = (
+/turf/simulated/floor/grasstodirt{
+	icon_state = "dirt"
+	},
+/area/dmm_suite/clear_area)
+"B" = (
+/obj/decal/cleanable/leaves,
+/turf/simulated/floor/grasstodirt{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"D" = (
+/turf/simulated/floor/grasstodirt,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+k
+g
+D
+"}
+(2,1,1) = {"
+B
+u
+D
+"}
+(3,1,1) = {"
+k
+A
+a
+"}

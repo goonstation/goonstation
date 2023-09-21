@@ -1,0 +1,190 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/simulated/wall,
+/area/testroom)
+"m" = (
+/obj/landmark/map{
+	name = "BLANK"
+	},
+/turf/simulated/wall,
+/area/testroom)
+"s" = (
+/obj/landmark/unit_test_bottom_left,
+/turf/simulated/floor,
+/area/testroom)
+"w" = (
+/obj/landmark/unit_test_top_right,
+/turf/simulated/floor,
+/area/testroom)
+"U" = (
+/turf/simulated/floor,
+/area/testroom)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+m
+"}
+(2,1,1) = {"
+a
+U
+U
+U
+U
+U
+U
+U
+U
+U
+s
+a
+"}
+(3,1,1) = {"
+a
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+a
+"}
+(4,1,1) = {"
+a
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+a
+"}
+(5,1,1) = {"
+a
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+a
+"}
+(6,1,1) = {"
+a
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+a
+"}
+(7,1,1) = {"
+a
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+a
+"}
+(8,1,1) = {"
+a
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+a
+"}
+(9,1,1) = {"
+a
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+a
+"}
+(10,1,1) = {"
+a
+U
+U
+U
+U
+U
+U
+U
+U
+U
+U
+a
+"}
+(11,1,1) = {"
+a
+w
+U
+U
+U
+U
+U
+U
+U
+U
+U
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

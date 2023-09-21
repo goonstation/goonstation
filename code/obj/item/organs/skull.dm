@@ -7,7 +7,7 @@
 	name = "skull"
 	desc = "It's a SKULL!"
 	var/preddesc = "A trophy from a less interesting kill." // See assign_gimmick_skull().
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skull"
 	inhand_image_icon = 'icons/mob/inhand/hand_skulls.dmi'
 	health = 4
@@ -20,7 +20,9 @@
 	var/op_stage = 0
 	var/obj/item/device/key/skull/key = null //May randomly contain a key
 	rand_pos = 1
-	var/made_from = "bone"
+	default_material = "bone"
+	uses_default_material_appearance = FALSE
+	uses_default_material_name = FALSE
 	var/last_use = 0
 
 	New(loc, datum/organHolder/nholder)
@@ -32,7 +34,6 @@
 			if (src.donor)
 				src.donor_name = src.donor.real_name
 				src.name = "[src.donor_name]'s [initial(src.name)]"
-			src.setMaterial(getMaterial(made_from), appearance = 0, setname = 0)
 
 	disposing()
 		..()
@@ -107,7 +108,7 @@
 		if (istool(W, TOOL_SAWING))
 			user.visible_message("<span class='notice'>[user] hollows out [src].</span>")
 			var/obj/item/clothing/mask/skull/smask = new /obj/item/clothing/mask/skull
-			playsound(user.loc, "sound/machines/mixer.ogg", 50, 1)
+			playsound(user.loc, 'sound/machines/mixer.ogg', 50, 1)
 
 			if (src.key)
 				var/obj/item/device/key/skull/SK = src.key
@@ -122,6 +123,13 @@
 			qdel(src)
 			return
 
+		if (istype(W, /obj/item/device/light/candle))
+			user.visible_message("<b>[user]</b> carefully sets up a candle on top of [src].",\
+			"You ritualistically plant a candle on [src]. Welp.")
+			var/obj/item/device/light/spirit_candle/C = new /obj/item/device/light/spirit_candle(src.loc)
+			user.put_in_hand_or_drop(C)
+			qdel(W)
+			qdel(src)
 		else
 			return ..()
 
@@ -199,7 +207,7 @@
 	desc = "What the hell was wrong with this person's FACE?! Were they even human?!"
 	icon_state = "skullA"
 	value = 4
-	made_from = "viscerite"
+	default_material = "viscerite"
 
 /obj/item/skull/peculiar // Wizards.
 	name = "peculiar skull"
@@ -207,19 +215,25 @@
 	icon_state = "skull_strange"
 	value = 3
 
+/obj/item/skull/menacing // Vampires.
+	name = "menacing skull"
+	desc = "Gives off a threatening aura and also makes a great halloween decoration."
+	icon_state = "skull_menacing"
+	value = 3
+
 /obj/item/skull/crystal // Omnitraitors.
 	name = "crystal skull"
 	desc = "Does this mean there's an alien race with crystal bones somewhere?"
 	icon_state = "skull_crystal"
 	value = 10
-	made_from = "molitz"
+	default_material = "molitz"
 
 /obj/item/skull/gold // Macho man.
 	name = "golden skull"
 	desc = "Is this thing solid gold, or just gold-plated? Yeesh."
 	icon_state = "skull_gold"
 	value = 7
-	made_from = "gold"
+	default_material = "gold"
 
 /obj/item/skull/noface // Cluwnes.
 	name = "faceless skull"

@@ -152,7 +152,7 @@
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
 	icon_state = "statue_robot"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/robot/servotron/old
@@ -160,7 +160,7 @@
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
 	icon_state = "statue_oldrobot"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/decal/fakeobjects/robot/servotron/older
@@ -168,7 +168,7 @@
 	desc = "A statue of Kingsway Systems' Servotron"
 	icon = 'icons/misc/mars_outpost.dmi'
 	icon_state = "statue_olderrobot"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 
@@ -176,7 +176,7 @@
 	name = "pedestal"
 	icon = 'icons/misc/mars_outpost.dmi'
 	icon_state = "statue_pedestal"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 
@@ -184,7 +184,7 @@
 	name = "robot arm"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "marsfactory_arm"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	pixel_x = -22
 	pixel_y = 5
@@ -262,7 +262,7 @@
 	desc = "A billboard for some backwater planetary outpost. How old is this?"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "mars_sign1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	pixel_x = -32
 
@@ -270,7 +270,7 @@
 	name = "dirt"
 	desc = "That isn't any old pile of dirt, it's martian dirt!"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "mars_dirt"
 
@@ -298,7 +298,7 @@
 	icon_state = "mars"
 	item_state = "mars"
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
-	see_face = 0
+	see_face = TRUE
 
 
 /obj/critter/marsrobot
@@ -325,7 +325,7 @@
 
 	seek_target()
 		if(active)
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			for (var/mob/living/C in hearers(src.seekrange,src))
 				if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 				if (iscarbon(C) && !src.atkcarbon) continue
@@ -397,7 +397,7 @@
 	icon_state = "rover_puzzle_base"
 	desc = "It looks like this rover was never finished."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/wheel = 0
 	var/oxy = 0
 	var/battery = 0
@@ -425,7 +425,7 @@
 			if ((istype(P, /obj/item/mars_roverpart/motherboard))&&(!motherboard))
 				boutput(user, "<span class='notice'>You wire the motherboard to the rover.</span>")
 				motherboard = 1
-			playsound(user, 'sound/items/Deconstruct.ogg', 65, 1)
+			playsound(user, 'sound/items/Deconstruct.ogg', 65, TRUE)
 			qdel(P)
 			if((wheel)&&(oxy)&&(battery)&&(glass)&&(motherboard))
 				var/obj/vehicle/marsrover/R = new /obj/vehicle/marsrover(loc)
@@ -470,6 +470,9 @@
 				pickedup = 1
 
 
+TYPEINFO(/obj/vehicle/marsrover)
+	mats = 8
+
 /obj/vehicle/marsrover
 	name = "Rover"
 	desc = "A rover designed to let researchers explore hazardous planets safely and efficiently. It looks pretty old."
@@ -477,7 +480,6 @@
 	rider_visible = 0
 	layer = MOB_LAYER + 1
 	sealed_cabin = 1
-	mats = 8
 
 /obj/vehicle/marsrover/proc/update()
 	if(rider)
@@ -485,7 +487,7 @@
 	else
 		icon_state = "marsrover"
 
-/obj/vehicle/marsrover/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/marsrover/eject_rider(var/crashed, var/selfdismount, ejectall=TRUE)
 	var/mob/rider = src.rider
 	..()
 	rider.pixel_y = 0
@@ -595,6 +597,8 @@
 	sound_group = "mars"
 	sound_loop = 'sound/ambience/loop/Mars_Interior.ogg'
 	sound_loop_vol = 60
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/mars
+	occlude_foreground_parallax_layers = TRUE
 
 /area/marsoutpost/New()
 	. = ..()
@@ -618,10 +622,7 @@
 /area/marsoutpost/duststorm
 	name = "Barren Planet"
 	icon_state = "yellow"
-
-	New()
-		..()
-		overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "dustverlay", layer = EFFECTS_LAYER_BASE)
+	occlude_foreground_parallax_layers = FALSE
 
 	Entered(atom/movable/O)
 		..()
@@ -639,6 +640,7 @@
 
 
 /area/marsoutpost/vault
+	name = "Abandoned Vault"
 	icon_state = "red"
 
 /obj/critter/gunbot/heavy
@@ -687,7 +689,7 @@
 
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		if(overheat == 10)
 			speak("WARNING : OVERHEATING")
 			sleep(5 SECONDS)
@@ -730,7 +732,7 @@
 		if (!start) //Wire: fix for Cannot read null.y (start was null somehow)
 			return
 
-		shoot_projectile_ST(src, my_bullet, target)
+		shoot_projectile_ST_pixel_spread(src, my_bullet, target)
 
 /obj/machinery/computer/mars_vault
 	name = "Vault Console"

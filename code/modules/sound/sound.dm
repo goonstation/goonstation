@@ -12,7 +12,7 @@
 	else{\
 		vol *= A\
 	}\
-} while(false)
+} while(FALSE)
 
 #define LISTENER_ATTEN(A) do {\
 	if (A <= SPACE_ATTEN_MIN){\
@@ -27,7 +27,7 @@
 	else{\
 		ourvolume *= A\
 	}\
-} while(false)
+} while(FALSE)
 
 #define MAX_SPACED_RANGE 6 //diff range for when youre in a vaccuum
 #define CLIENT_IGNORES_SOUND(C) (C?.ignore_sound_flags && ((ignore_flag && C.ignore_sound_flags & ignore_flag) || C.ignore_sound_flags & SOUND_ALL))
@@ -61,7 +61,7 @@ var/global/ECHO_CLOSE = list(0,0,0,0,0,0,0,0.25,1.5,1.0,0,1.0,0,0,0,0,1.0,7)
 var/global/list/falloff_cache = list()
 
 //default volumes
-var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
+var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 //volumous hair with l'orial paris
 /client/var/list/volumes
@@ -125,14 +125,13 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 		src.chatOutput.adjustVolumeRaw( getMasterVolume() * volume )
 
 /proc/playsound(atom/source, soundin, vol, vary, extrarange, pitch, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
-	// don't play if over the per-tick sound limit
-
 	var/turf/source_turf = get_turf(source)
 
 	// don't play if the sound is happening nowhere
 	if (isnull(source_turf))
 		return
 
+	// don't play if over the per-tick sound limit
 	var/play_id = "[(source_turf.x / SOUND_LIMITER_GRID_SIZE)] [round(source_turf.y / SOUND_LIMITER_GRID_SIZE)] [source_turf.z] [SOUNDIN_ID]"
 	if (!limiter || !limiter.canISpawn(/sound) || !limiter.canISpawn(play_id, 1))
 		return
@@ -159,6 +158,16 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	var/ourvolume
 	var/scaled_dist
 	var/storedVolume
+
+	// ugly but I can't really put this anywhere else
+	if (ishuman(source) && channel == VOLUME_CHANNEL_EMOTE)
+		var/mob/living/carbon/human/H = source
+		// yes, these are all the conditions that make your force whisper. needs an atom prop, christ
+		// if we meet any of them, halve volume of emotes
+		if (H.oxyloss > 10 || H.losebreath >= 4 || H.hasStatus("muted") \
+		    || (H.reagents?.has_reagent("capulettium_plus") && H.hasStatus("resting")) \
+			|| H.stamina < STAMINA_WINDED_SPEAK_MIN)
+			vol /= 2
 
 	// at this multiple of the max range the sound will be below TOO_QUIET level, derived from falloff equation lower in the code
 	var/rangemult = 0.18/(-(TOO_QUIET + 0.0542  * vol)/(TOO_QUIET - vol))**(10/17)
@@ -227,6 +236,9 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 			S.volume = ourvolume
 
+			var/orig_freq = S.frequency
+			S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
+
 			if (spaced_env && !(flags & SOUND_IGNORE_SPACE))
 				S.environment = SPACED_ENV
 				S.echo = SPACED_ECHO
@@ -243,6 +255,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 			S.y = 0
 
 			C << S
+
+			S.frequency = orig_freq
 
 
 /mob/proc/playsound_local(atom/source, soundin, vol, vary, extrarange, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
@@ -307,6 +321,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 		if (istype(source_turf))
 			var/dx = source_turf.x - src.x
 			S.pan = clamp(dx/8.0 * 100, -100, 100)
+
+		S.frequency *= (HAS_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(src, PROP_MOB_HEARD_PITCH) : 1)
 
 		src << S
 
@@ -391,7 +407,12 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 		S.volume = ourvolume
 
+		var/orig_freq = S.frequency
+		S.frequency *= (HAS_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) ? GET_ATOM_PROPERTY(C.mob, PROP_MOB_HEARD_PITCH) : 1)
+
 		C << S
+
+		S.frequency = orig_freq
 
 /mob/living/silicon/ai/playsound_local(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1, ignore_flag = 0, channel = VOLUME_CHANNEL_GAME, flags = 0)
 	..()
@@ -464,7 +485,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 
 	//yeah that sound outright doesn't exist
 	if (!S)
-		logTheThing("debug", null, null, "<b>Sounds:</b> Unable to find sound: [soundin]")
+		logTheThing(LOG_DEBUG, null, "<b>Sounds:</b> Unable to find sound: [soundin]")
 		return
 
 	S.falloff = 9999//(world.view + extrarange) / 3.5
@@ -532,7 +553,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 	sound_playing[ S.channel ][1] = S.volume
 	sound_playing[ S.channel ][2] = VOLUME_CHANNEL_AMBIENT
 	S.volume *= getVolume( VOLUME_CHANNEL_AMBIENT ) / 100
-	S.status = SOUND_UPDATE | SOUND_STREAM // playing one at a time, update
+	S.status = SOUND_STREAM // playing one at a time
 	if (pass_volume != 0)
 		S.volume *= attenuate_for_location(A)
 		EARLY_RETURN_IF_QUIET(S.volume)
@@ -632,6 +653,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.1, 0.5, 0.5, 1, 1)
 		"pug" = sound('sound/misc/talk/pug.ogg'),	"pug!" = sound('sound/misc/talk/pug_exclaim.ogg'),"pug?" = sound('sound/misc/talk/pug_ask.ogg'), \
 		"pugg" = sound('sound/misc/talk/pugg.ogg'),	"pugg!" = sound('sound/misc/talk/pugg_exclaim.ogg'),"pugg?" = sound('sound/misc/talk/pugg_ask.ogg'), \
 		"roach" = sound('sound/misc/talk/roach.ogg'),	"roach!" = sound('sound/misc/talk/roach_exclaim.ogg'),"roach?" = sound('sound/misc/talk/roach_ask.ogg'), \
+		"cyborg" = sound('sound/misc/talk/cyborg.ogg'),	"cyborg!" = sound('sound/misc/talk/cyborg_exclaim.ogg'),"cyborg?" = sound('sound/misc/talk/cyborg_ask.ogg'), \
  		"radio" = sound('sound/misc/talk/radio.ogg')\
  		)
 

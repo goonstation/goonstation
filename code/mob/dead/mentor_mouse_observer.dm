@@ -1,6 +1,7 @@
 /mob/dead/target_observer/mentor_mouse_observer
 	name = "mentor mouse"
 	real_name = "mentor mouse"
+	is_respawnable = FALSE
 	var/image/ping
 	var/ping_id
 	var/mob/the_guy
@@ -23,6 +24,7 @@
 		src.ping.blend_mode = BLEND_ADD
 		src.ping.layer = HUD_LAYER_3
 		src.ping.plane = PLANE_HUD
+		src.ping.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA
 
 	process_move(keys)
 		if(keys && src.move_dir && !src.leave_popup_open)
@@ -84,9 +86,9 @@
 			return
 
 		if(src.is_admin)
-			logTheThing("diary", src, null, "(ADMINMOUSE): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(ADMINMOUSE): [message]", "say")
 		else
-			logTheThing("diary", src, null, "(MENTORMOUSE): [message]", "say")
+			logTheThing(LOG_DIARY, src, "(MENTORMOUSE): [message]", "say")
 
 		if (src.client && src.client.ismuted())
 			boutput(src, "You are currently muted and may not speak.")
@@ -118,6 +120,7 @@
 		boutput(src.the_guy, rendered)
 
 	emote(act, voluntary=0)
+		..()
 		src.my_mouse.emote(act, voluntary)
 
 	stop_observing()

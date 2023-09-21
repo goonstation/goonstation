@@ -3,7 +3,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "centrifuge0"
 	desc = "A large machine that can be used to separate a pathogen sample from a blood sample."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	var/obj/item/bloodslide/source = null
@@ -34,7 +34,7 @@
 					else
 						var/datum/reagent/blood/B = src.source.reagents.reagent_list["blood"]
 						if (B.volume && length(B.pathogens))
-							if (B.pathogens.len > 1)
+							if (length(B.pathogens) > 1)
 								output_text += "The centrifuge is calibrated to isolate a sample of [src.isolated ? src.isolated.name : "all pathogens"].<br><br>"
 								output_text += "The blood in the [src.source] contains multiple pathogens. Calibrate to isolate a sample of:<br>"
 								output_text += "<a href='?src=\ref[src];all=1'>All</a><BR>"
@@ -144,7 +144,7 @@
 					user.client.screen -= O
 				user.u_equip(O)
 				boutput(user, "You insert the blood slide into the machine.")
-				if (src.source.blood && src.source.blood.pathogens.len == 1)
+				if (src.source.blood && length(src.source.blood.pathogens) == 1)
 					var/uid = src.source.blood.pathogens[1]
 					src.isolated = src.source.blood.pathogens[uid]
 				else
@@ -205,7 +205,7 @@
 
 	var/zoom = 0
 
-	anchored = 1
+	anchored = ANCHORED
 
 	proc/message_parts(var/message)
 		var/cloc = findtext(message, ":")
@@ -402,7 +402,9 @@
 	var/datum/pathobank/db = new
 	var/predictive_data = ""
 	var/datum/spyGUI/gui = null
-	var/manipulating = false //are we currently irradiating the pathogen?
+	/// Are we currently irradiating the pathogen?
+	var/manipulating = FALSE
+
 	New()
 		..()
 		gui = new("html/pathoComp.html", "pathology", "size=715x685", src)
@@ -561,7 +563,7 @@
 					if (bit != "|")
 						src.manip.analysis_list += bit
 				src.manip.analysis_list -= src.manip.analysis_list[1]
-				src.manip.analysis_list = sortList(src.manip.analysis_list)
+				sortList(src.manip.analysis_list, /proc/cmp_text_asc)
 				qdel(src.manip.loaded)
 				src.manip.loaded = null
 				visible_message("<span class='notice'>The manipulator ejects the empty vial.</span>")
@@ -577,7 +579,7 @@
 			var/id = text2num_safe(href_list["analysisappend"])
 			if(id != null && id >= 0)
 				id++ //JS sent a zero-based ID
-				if (id > 0 && src.manip.analysis_list.len >= id) //We want the index to be in bounds now.
+				if (id > 0 && length(src.manip.analysis_list) >= id) //We want the index to be in bounds now.
 					var/element = src.manip.analysis_list[id]
 					src.manip.analysis_list.Cut(id, id+1)
 					if (!src.manip.analysis)
@@ -954,7 +956,7 @@
 						src.manip.loaded.reference.cdc_announce(usr)
 
 					var/datum/pathogendna/source = src.manip.slots[src.manip.splicesource]
-					logTheThing("pathology", usr, null, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
+					logTheThing(LOG_PATHOLOGY, usr, "splices pathogen [source.reference.name] into [oldname] creating [src.manip.loaded.reference.name].")
 				else
 					// how about some more feedback for what went wrong? :)
 					var/reason = ""
@@ -1036,7 +1038,7 @@
 	icon_state = "manipulator"
 	desc = "A large, softly humming machine."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	var/machine_state = 0
 
@@ -1085,14 +1087,14 @@
 		if (!O.reagents.has_reagent("pathogen"))
 			user.show_message("<span class='alert'>The vial does not contain a viable pathogen sample, and is rejected by the machine.</span>")
 			return
-		if (O.reagents.reagent_list.len > 1)
+		if (length(O.reagents.reagent_list) > 1)
 			user.show_message("<span class='alert'>The machine rejects the sample, as it contains foreign chemical samples.</span>")
 			return
 		var/datum/reagent/blood/pathogen/P = O.reagents.reagent_list["pathogen"]
-		if (P.pathogens.len > 1)
+		if (length(P.pathogens) > 1)
 			user.show_message("<span class='alert'>The vial contains multiple pathogen samples, and is rejected by the machine.</span>")
 			return
-		if (P.pathogens.len == 0)
+		if (length(P.pathogens) == 0)
 			user.show_message("<span class='alert'>The vial does not contain a viable pathogen sample, and is rejected by the machine.</span>")
 			return
 		if (P.volume < 2)
@@ -1103,8 +1105,8 @@
 		//boutput(user, "Valid. Contains pathogen ([P.volume] units with pathogen [PT.name]. Slot is [exposed]. DNA: [PT.dnasample]")
 		if (!PT.dnasample)
 			PT.dnasample = new(PT) // damage control
-			stack_trace("Pathogen [PT.name] (\ref[PT]) had no DNA.")
-			logTheThing("pathology", user, null, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
+			stack_trace("Pathogen [identify_object(PT)] had no DNA.")
+			logTheThing(LOG_PATHOLOGY, user, "Pathogen [PT.name] (\ref[PT]) had no DNA. (this is a bug)")
 		if(firstFreeSlot == -2)
 			loaded = PT.dnasample.clone()
 		else
@@ -1197,7 +1199,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "synth1"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	var/list/obj/item/reagent_containers/glass/vial/vials[5]
 	var/obj/item/reagent_containers/glass/beaker/antiagent = null
@@ -1370,7 +1372,7 @@
 				var/obj/item/reagent_containers/glass/vial/V = vials[sel_vial]
 				if (V.reagents.has_reagent("pathogen"))
 					var/datum/reagent/blood/pathogen/R = V.reagents.reagent_list["pathogen"]
-					if (R.pathogens.len > 1)
+					if (length(R.pathogens) > 1)
 						output_text += "#[sel_vial] [V.name] (<font color='red'>ERROR:</font> contains multiple pathogen samples)<br><br>"
 					else if (!R.pathogens.len)
 						output_text += "#[sel_vial] [V.name] (empty)<br><br>"
@@ -1411,7 +1413,7 @@
 					var/obj/item/reagent_containers/glass/vial/V = vials[i]
 					if ("pathogen" in V.reagents.reagent_list)
 						var/datum/reagent/blood/pathogen/R = V.reagents.reagent_list["pathogen"]
-						if (R.pathogens.len > 1)
+						if (length(R.pathogens) > 1)
 							output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (multiple samples)<br>"
 						else if (!R.pathogens.len)
 							output_text += "#[i] <a href='?src=\ref[src];vial=[i]'>[V.name]</a> <a href='?src=\ref[src];eject=[i]'>\[eject\]</a> (empty)<br>"
@@ -1649,7 +1651,7 @@
 	icon = 'icons/obj/pathology.dmi'
 	icon_state = "autoclave"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/obj/item/reagent_containers/glass/sanitizing = null
 	var/machine_state = 0
 	var/santime = 3 // 15
@@ -1736,7 +1738,7 @@
 	icon_state = "incubator"
 	var/static/image/icon_beaker = image('icons/obj/chemical.dmi', "heater-beaker")
 	desc = "A machine that can automatically provide a petri dish with nutrients. It can also directly fill vials with a sample of the pathogen inside."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/obj/item/reagent_containers/glass/petridish/target = null
 	var/medium = null
@@ -1748,7 +1750,7 @@
 	update_icon()
 		if (src.target)
 			icon_state = "incubator_on"
-		else 
+		else
 			icon_state = "incubator"
 
 	attack_hand(mob/user)

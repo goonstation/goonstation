@@ -47,13 +47,18 @@
 	afterattack(obj/target, mob/user, flag)
 		if (!src.reagents || !target.reagents)
 			return
+		if(istype(target, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/t = target
+			if(t.current_lid)
+				boutput(user, "<span class='alert'>You cannot transfer liquids with the [target.name] while it has a lid on it!</span>")
+				return
 
 		if ((src.customizable_settings_available && src.transfer_mode == TO_SELF) || (!src.customizable_settings_available && !src.reagents.total_volume))
 			var/t = min(src.transfer_amount, target.reagents.total_volume) // Can't draw more than THEY have.
 			t = min(src.transfer_amount, src.reagents.maximum_volume - src.reagents.total_volume)
 			if (t <= 0) return
 
-			if (target.is_open_container() != 1 && !istype(target, /obj/reagent_dispensers))
+			if (target.is_open_container() != 1 && !is_reagent_dispenser(target))
 				boutput(user, "<span class='alert'>You cannot directly remove reagents from [target].</span>")
 				return
 			if (!target.reagents.total_volume)
@@ -109,7 +114,7 @@
 		if (!src || !istype(src) || !user|| !target)
 			return
 
-		logTheThing("combat", user, target, "[delayed == 0 ? "drips" : "tries to drip"] chemicals [log_reagents(src)] from a dropper onto [constructTarget(target,"combat")] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "[delayed == 0 ? "drips" : "tries to drip"] chemicals [log_reagents(src)] from a dropper onto [constructTarget(target,"combat")] at [log_loc(user)].")
 		return
 
 /* ============================================================ */
@@ -163,8 +168,7 @@
 		. = list(
 			"curTransferAmt" = src.transfer_amount,
 			"transferMode" = transfer_mode,
-			"curReagentVol" = src.reagents.total_volume,
-			"reagentColor" = src.reagents.get_average_color().to_rgb(),
+			"reagents" = ui_describe_reagents(src),
 		)
 
 	ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)

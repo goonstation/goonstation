@@ -117,7 +117,7 @@
 			howmanysell--
 			var/the_commodity = pick(goods_sell_temp)
 			var/datum/commodity/COM = new the_commodity(src)
-			if(COM.type == /datum/commodity) logTheThing("debug", src, null, "<B>SpyGuy/Traders:</B> [src] got a /datum/commodity when trying to set up stock with [the_commodity]")
+			if(COM.type == /datum/commodity) logTheThing(LOG_DEBUG, src, "<B>SpyGuy/Traders:</B> [src] got a /datum/commodity when trying to set up stock with [the_commodity]")
 			src.goods_sell += COM
 			goods_sell_temp -= the_commodity
 
@@ -214,7 +214,7 @@
 			src.shopping_cart -= COM
 		src.shopping_cart.Cut()
 
-/datum/commodity/trader/
+/datum/commodity/trader
 	var/listed_name = "a thing!!!"   // What it shows up as outside the shopping cart
 	var/list/possible_names = list() // List of names the trader will call this commodity
 	var/list/possible_alt_types = list() // List of things this trade can be other than the base path
@@ -232,5 +232,5 @@
 		src.price = rand(src.price_boundary[1],src.price_boundary[2])
 		src.baseprice = price
 
-/datum/commodity/trader/incart/
+/datum/commodity/trader/incart
 	var/datum/commodity/reference = null

@@ -4,6 +4,9 @@
 #define FIREBOT_MOVE_SPEED 8
 #define FIREBOT_SEARCH_COOLDOWN "look4fire"
 #define FIREBOT_SPRAY_COOLDOWN "spraycooldown"
+#define EXTINGUISH_HOTSPOTS 1
+#define EXTINGUISH_ITEMS 2
+#define EXTINGUISH_MOBS 4
 
 /obj/machinery/bot/firebot
 	name = "Firebot"
@@ -14,7 +17,7 @@
 	flags =  FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE | DOORPASS
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	req_access = list(access_engineering_atmos)
 	on = 1
 	health = 20
@@ -29,6 +32,9 @@
 	/// If we pointed at someone, don't keep pointing at them, its rude
 	var/last_pointed = null
 	var/setup_party = 0
+	var/extinguish_flags = EXTINGUISH_HOTSPOTS | EXTINGUISH_ITEMS | EXTINGUISH_MOBS
+	var/water_amt = 2
+	var/foam_amt = 8
 	//To-Do: Patrol the station for fires maybe??
 
 /obj/machinery/bot/firebot/party
@@ -117,7 +123,7 @@
 		src.emagged = 1
 		src.on = 1
 		src.icon_state = "firebot[src.on]"
-		logTheThing("station", user, null, "emagged a [src] at [log_loc(src)].")
+		logTheThing(LOG_STATION, user, "emagged a [src] at [log_loc(src)].")
 		return 1
 	return 0
 
@@ -148,9 +154,7 @@
 		//Swedenfact:
 		//"Fart" means "speed", so if a policeman pulls you over with the words "fartkontroll" you should not pull your pants down
 		return
-	if (istype(W, /obj/item/device/pda2) && W:ID_card)
-		W = W:ID_card
-	if (istype(W, /obj/item/card/id))
+	if (istype(get_id_card(W), /obj/item/card/id))
 		if (src.allowed(user))
 			src.locked = !src.locked
 			boutput(user, "Controls are now [src.locked ? "locked." : "unlocked."]")
@@ -226,37 +230,40 @@
 /obj/machinery/bot/firebot/proc/look_for_fire()
 	if(ON_COOLDOWN(src, FIREBOT_SEARCH_COOLDOWN, src.found_cooldown))
 		return
-	for_by_tcl(H, /obj/hotspot) // First search for burning tiles
-		if ((H == src.oldtarget))
-			continue
-		if(IN_RANGE(src, H, 7))
-			if(prob(10))
-				if(src.setup_party)
-					src.speak(pick("IT IS PARTY TIME.","I AM A FAN OF PARTIES", "PARTIES ARE THE FUTURE"))
-				else
-					src.speak(pick("I AM GOING TO MURDER THIS FIRE.","KILL ALL FIRES.","I DIDN'T START THIS, BUT I'M GOING TO END IT.","[world.time >= 30 MINUTES ? "TONIGHT" : "TODAY"] A FIRE DIES."))
-			return H
+	if(src.extinguish_flags & EXTINGUISH_HOTSPOTS)
+		for_by_tcl(H, /obj/hotspot) // First search for burning tiles
+			if ((H == src.oldtarget))
+				continue
+			if(IN_RANGE(src, H, 7))
+				if(prob(10))
+					if(src.setup_party)
+						src.speak(pick("IT IS PARTY TIME.","I AM A FAN OF PARTIES", "PARTIES ARE THE FUTURE"))
+					else
+						src.speak(pick("I AM GOING TO MURDER THIS FIRE.","KILL ALL FIRES.","I DIDN'T START THIS, BUT I'M GOING TO END IT.","[world.time >= 30 MINUTES ? "TONIGHT" : "TODAY"] A FIRE DIES."))
+				return H
 
-	for (var/obj/O in by_cat[TR_CAT_BURNING_ITEMS]) // Is anything else on fire?
-		if (O == src.oldtarget)
-			continue
-		if(IN_RANGE(src, O, 7))
-			if(prob(10))
-				if(src.setup_party)
-					src.speak(pick("PARTY SUPPLIES DETECTED. RIGHT ON.","PARTY FAVORS ARE THE BEST FLAVOR.", "[O] PARTY FOUL PROBABILITY: [rand(1, 150)]%. RECTIPARTYING."))
-				else
-					src.speak(pick("[O] BURN POINT TEMPERATURE EXCEEDED.","[O] DOT BURNING GREATER THAN ZERO EQUALS TRUE.","HOT [pick("ANGRY", "BURNING")] [O] IN MY AREA DETECTED.","[world.time >= 30 MINUTES ? "TONIGHT" : "TODAY"] A FIRE DIES."))
-			return O
+	if(src.extinguish_flags & EXTINGUISH_ITEMS)
+		for (var/obj/O in by_cat[TR_CAT_BURNING_ITEMS]) // Is anything else on fire?
+			if (O == src.oldtarget)
+				continue
+			if(IN_RANGE(src, O, 7))
+				if(prob(10))
+					if(src.setup_party)
+						src.speak(pick("PARTY SUPPLIES DETECTED. RIGHT ON.","PARTY FAVORS ARE THE BEST FLAVOR.", "[O] PARTY FOUL PROBABILITY: [rand(1, 150)]%. RECTIPARTYING."))
+					else
+						src.speak(pick("[O] BURN POINT TEMPERATURE EXCEEDED.","[O] DOT BURNING GREATER THAN ZERO EQUALS TRUE.","HOT [pick("ANGRY", "BURNING")] [O] IN MY AREA DETECTED.","[world.time >= 30 MINUTES ? "TONIGHT" : "TODAY"] A FIRE DIES."))
+				return O
 
-	for (var/mob/M in by_cat[TR_CAT_BURNING_MOBS]) // fine I guess we can go extinguish someone
-		if (M == src.oldtarget || isdead(M))
-			continue
-		if(IN_RANGE(src, M, 7) && (M.getStatusDuration("burning") || (src.emagged && prob(25))))
-			if (src.setup_party)
-				src.speak(pick("YOU NEED TO GET DOWN -- ON THE DANCE FLOOR", "PARTY HARDER", "HAPPY BIRTHDAY.", "YOU ARE NOT PARTYING SUFFICIENTLY.", "NOW CORRECTING PARTY DEFICIENCY."))
-			else
-				src.speak(pick("YOU ARE ON FIRE!", "STOP DROP AND ROLL","THE FIRE IS ATTEMPTING TO FEED FROM YOU! I WILL STOP IT","I WON'T LET YOU BURN AWAY!",5;"Taste the meat, not the heat."))
-			return M
+	if(src.extinguish_flags & EXTINGUISH_MOBS)
+		for (var/mob/M in by_cat[TR_CAT_BURNING_MOBS]) // fine I guess we can go extinguish someone
+			if (M == src.oldtarget || isdead(M) || !src.valid_target(M))
+				continue
+			if(IN_RANGE(src, M, 7) && (M.getStatusDuration("burning") || (src.emagged && prob(25))))
+				if (src.setup_party)
+					src.speak(pick("YOU NEED TO GET DOWN -- ON THE DANCE FLOOR", "PARTY HARDER", "HAPPY BIRTHDAY.", "YOU ARE NOT PARTYING SUFFICIENTLY.", "NOW CORRECTING PARTY DEFICIENCY."))
+				else
+					src.speak(pick("YOU ARE ON FIRE!", "STOP DROP AND ROLL","THE FIRE IS ATTEMPTING TO FEED FROM YOU! I WILL STOP IT","I WON'T LET YOU BURN AWAY!",5;"Taste the meat, not the heat."))
+				return M
 
 
 /obj/machinery/bot/firebot/DoWhileMoving()
@@ -300,10 +307,10 @@
 
 	flick("firebot-c", src)
 	if (src.setup_party)
-		playsound(src.loc, "sound/musical_instruments/Bikehorn_1.ogg", 75, 1, -3)
+		playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 75, 1, -3)
 
 	else
-		playsound(src.loc, "sound/effects/spray.ogg", 30, 1, -3)
+		playsound(src.loc, 'sound/effects/spray.ogg', 30, 1, -3)
 
 	for(var/a in 0 to 5)
 		var/obj/effects/water/W = new /obj/effects/water
@@ -311,8 +318,8 @@
 		W.set_loc( get_turf(src) )
 		var/turf/my_target = pick(the_targets)
 		var/datum/reagents/R = new/datum/reagents(15)
-		R.add_reagent("water", 2)
-		R.add_reagent("ff-foam", 8)
+		R.add_reagent("water", src.water_amt)
+		R.add_reagent("ff-foam", src.foam_amt)
 		if (src.setup_party)	// heh
 			R.add_reagent("sparkles", 5)
 		W.spray_at(my_target, R, 1)
@@ -363,7 +370,7 @@
 	src.exploding = 1
 	src.on = 0
 	src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-	playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+	playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 	var/turf/Tsec = get_turf(src)
 
 	new /obj/item/device/prox_sensor(Tsec)
@@ -374,7 +381,7 @@
 		new /obj/item/parts/robot_parts/arm/left/standard(Tsec)
 
 	var/obj/item/storage/toolbox/emergency/emptybox = new /obj/item/storage/toolbox/emergency(Tsec)
-	for(var/obj/item/I in emptybox.contents) //Empty the toolbox so we don't have infinite crowbars or whatever
+	for(var/obj/item/I in emptybox.storage.get_contents()) //Empty the toolbox so we don't have infinite crowbars or whatever
 		qdel(I)
 
 	elecflash(src, radius=1, power=3, exclude_center = 0)
@@ -387,11 +394,25 @@
 	src.oldtarget = null
 	src.oldloc = null
 	src.path = null
-	src.cooldowns -= FIREBOT_SEARCH_COOLDOWN
-	src.cooldowns -= FIREBOT_SPRAY_COOLDOWN
+	if(src.cooldowns)
+		src.cooldowns -= FIREBOT_SEARCH_COOLDOWN
+		src.cooldowns -= FIREBOT_SPRAY_COOLDOWN
 	src.icon_state = "firebot[src.on]"
 	src.updateUsrDialog()
 	return
+
+/obj/machinery/bot/firebot/proc/valid_target(mob/M)
+	return TRUE
+
+/obj/machinery/bot/firebot/firebrand
+	name = "Firebrand Firebot"
+	desc = "A little friendly-fire-fighting robot! He looks so darn evil."
+	extinguish_flags = EXTINGUISH_MOBS
+	water_amt = 0
+	foam_amt = 10
+
+/obj/machinery/bot/firebot/firebrand/valid_target(mob/M)
+	return istype(M.get_id(), /obj/item/card/id/syndicate)
 
 /*
  *	Firebot construction
@@ -402,7 +423,7 @@
 		..()
 		return
 
-	if(src.contents.len >= 1)
+	if(length(src.contents) >= 1)
 		boutput(user, "<span class='alert'>You need to empty [src] out first!</span>")
 		return
 

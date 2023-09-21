@@ -60,6 +60,12 @@ $(document).ready(function() {
 					);
 				}
 
+				if (run.usr) {
+					row.append(
+						$('<span>', {'class': 'usr', html: run.usr})
+					);
+				}
+
 				var uid = run.file + run.line + run.name;
 				if (typeof occurrences[uid] !== 'undefined') {
 					occurrences[uid]++;
@@ -125,6 +131,8 @@ $(document).ready(function() {
 		var file = $this.find('.file').text();
 		var line = $this.find('.line').text();
 		var name = $this.find('.name').text();
+		var usr = $this.find('.usr').text();
+
 		var uid = file + line + name;
 
 		var details = '<h2><i class="icon-pencil"></i> Summary</h2>';
@@ -134,6 +142,7 @@ $(document).ready(function() {
 		details += '<tr><td><strong>File</strong></td><td>' + file + '</td></tr>';
 		details += '<tr><td><strong>Line</strong></td><td>' + line + '</td></tr>';
 		details += '<tr><td><strong>Error</strong></td><td>' + name + '</td></tr>';
+		details += '<tr><td><strong>Usr</strong></td><td>' + usr + '</td></tr>';
 		details += '</tbody></table>';
 
 		details += '<h2><i class="icon-code"></i> Description</h2>';

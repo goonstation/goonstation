@@ -11,6 +11,7 @@
 	.log li {overflow: visible; padding: 5px 5px 5px 20px; border-top: 1px solid #ccc; line-height: 1.4}
 	.log li.title {background: #efefef; font-size: 1.7em; color: #115FD5; padding: 10px 10px; border-top: 0;}
 	.log li.date {background: #f1f1f1; font-size: 1.1em; font-weight: bold; padding: 8px 5px; border-bottom: 2px solid #bbb;}
+	.log li.testmerge {background: rgb(216, 230, 240) !important;}
 	.log li.admin {font-size: 1.2em; padding: 5px 5px 5px 10px;}
 	.log li.admin span {color: #2A76E7;}
 	.log li.collapse-button { background: rgb(243, 243, 243); padding-left: 5px; cursor: pointer;}
@@ -39,6 +40,10 @@
 		background: rgb(225, 225, 225);
 	}
 
+	li.collapse-button.active.testmerge, li.collapse-button:hover {
+		background: rgb(202, 215, 224) !important;
+	}
+
 	.log.ass li.collapse-button.active, .log.ass li.collapse-button:hover {
 		background: #ffd4b0;
 	}
@@ -58,7 +63,9 @@
 	}
 
 	.emoji {
-		margin-left: 20px;
+		font-family: 'Twemoji', 'Segoe UI Emoji' !important;
+		font-size: 1.15em;
+		margin-left: 10px;
 		position: relative;
 		display: inline-block;
 	}
@@ -67,6 +74,7 @@
 		visibility: hidden;
 		background-color: #333;
 		color: #fff;
+		font-size: 1.1em;
 		width: 200px;
 		text-align: center;
 		padding: 5px 0;
@@ -101,4 +109,5 @@ window.onload = function(e) {
 	}
 }
 </script>
+<!-- CSS INJECT GOES HERE -->
 <!-- HTML GOES HERE -->

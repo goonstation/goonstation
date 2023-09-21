@@ -13,7 +13,8 @@
 	name = ""
 	desc = ""
 	mouse_opacity = 0
-	anchored = 1
+	pass_unstable = FALSE
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE
@@ -815,7 +816,6 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 				par.pixel_x += 5
 			if (src.blow_direction == WEST)
 				par.pixel_x -= 5
-			par.color = "#DBDBDB"
 
 			first.Turn(rand(-90, 90))
 			first.Scale(0.1, 0.1)
@@ -1375,7 +1375,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			if(isliving(A))
 				var/mob/living/L = A
 				if(!issmokeimmune(L))
-					logTheThing("combat", A, null, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
+					logTheThing(LOG_COMBAT, A, "is hit by chemical smoke [log_reagents(copied)] at [log_loc(A)].")
 					if(L.reagents)
 						copied.copy_to(L.reagents, 1 / max((GET_DIST(A, location)+1)/2, 1)**2) //applies an adjusted inverse-square falloff to amount inhaled - 100% at center and adjacent tiles, then 44%, 25%, 16%, 11%, etc.
 
@@ -1449,7 +1449,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			Sleep(1)
 
 /datum/particleSystem/blow_cig_smoke
-	New(var/atom/location = null, var/blow_dir = null)
+	New(var/atom/location = null, var/blow_dir = null, var/color = "#DBDBDB")
 		var/dir_append = "_n"
 		switch(blow_dir)
 			if (EAST)
@@ -1459,7 +1459,7 @@ var/matrix/MS0101 = matrix(0.1, 0, 0, 0, 0.1, 0)
 			if(SOUTH)
 				dir_append = "_s"
 
-		..(location, "blow_cig_smoke[dir_append]", 25, "#DBDBDB")
+		..(location, "blow_cig_smoke[dir_append]", 25, color)
 		SpawnParticle()	//want this particle system to display asap - needs to show up at the same time as its flavor text, not after
 
 

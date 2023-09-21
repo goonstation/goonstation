@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/camera_viewer)
+	mats = 6
+
 /obj/item/device/camera_viewer
 	name = "camera monitor"
 	desc = "A portable video monitor connected to a security camera network."
@@ -6,7 +9,6 @@
 	w_class = W_CLASS_SMALL
 	var/network = "SS13"
 	var/obj/machinery/camera/current = null
-	mats = 6
 
 	attack_self(mob/user as mob)
 		src.add_dialog(user)
@@ -26,7 +28,7 @@
 				D[text("[][]", C.c_tag, (C.camera_status ? null : " (Deactivated)"))] = C
 			LAGCHECK(LAG_LOW)
 
-		var/t = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(D))
+		var/t = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(D, /proc/cmp_text_asc))
 
 		if(!t)
 			user.set_eye(null)

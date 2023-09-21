@@ -47,8 +47,8 @@ obj/chessbutton
 			boutput(user, "<span class='alert'>You are about to erase the board. Press again to confirm.</span>")
 			confirm = 1
 		else
-			logTheThing("admin", user, null, "has reset the chessboard. Hope nobody was playing chess.")
-			logTheThing("diary", user, null, "has reset the chessboard. Hope nobody was playing chess.", "admin")
+			logTheThing(LOG_ADMIN, user, "has reset the chessboard. Hope nobody was playing chess.")
+			logTheThing(LOG_DIARY, user, "has reset the chessboard. Hope nobody was playing chess.", "admin")
 
 			for(var/turf/unsimulated/floor/chess/T in chessboard)
 				T.enpassant = null // almost forgot this, gotte get that sweet GC
@@ -99,7 +99,7 @@ obj/item/chesspiece
 	desc = "a generic chess piece parent that you really shouldnt be seeing"
 	icon = 'icons/misc/chess.dmi'
 	icon_state = "pawn_black"
-	anchored = 1
+	anchored = ANCHORED
 
 	var/chess_color = 0
 	var/isking = 0

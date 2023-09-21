@@ -1,0 +1,31 @@
+@use '.././components/Button.scss';
+
+.clothingbooth__ {
+  &dropdown {
+    margin-bottom: 0 !important;
+    margin-right: 0 !important;
+  }
+
+  &boothitem {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  &boothitem > div {
+    pointer-events: none;
+  }
+
+  &boothitem:hover,
+  &boothitem-selected {
+    background-color: Button.$color-selected;
+  }
+
+  &boothitem:active {
+    background-color: lighten(Button.$color-selected, 30%);
+  }
+
+  &preview {
+    width: 64px;
+    height: 128px;
+  }
+}

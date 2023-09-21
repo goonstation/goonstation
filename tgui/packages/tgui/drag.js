@@ -190,15 +190,23 @@ export const dragStartHandler = event => {
 
 const dragEndHandler = event => {
   logger.log('drag end');
+  dragging = false;
   dragMoveHandler(event);
   document.removeEventListener('mousemove', dragMoveHandler);
   document.removeEventListener('mouseup', dragEndHandler);
-  dragging = false;
   storeWindowGeometry();
 };
 
 const dragMoveHandler = event => {
   if (!dragging) {
+    return;
+  }
+  if (event.buttons === 0) {
+    logger.log('emergency drag end');
+    document.removeEventListener('mousemove', dragMoveHandler);
+    document.removeEventListener('mouseup', dragEndHandler);
+    dragging = false;
+    storeWindowGeometry();
     return;
   }
   event.preventDefault();

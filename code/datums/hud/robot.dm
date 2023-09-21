@@ -7,7 +7,7 @@
 	MouseExited(location, control, params)
 		src.maptext = null
 
-/datum/hud/robot
+/datum/hud/silicon/robot
 	var/atom/movable/screen/hud
 		mod1
 		mod2
@@ -334,7 +334,6 @@
 					master.set_a_intent(INTENT_HARM)
 				else
 					master.set_a_intent(INTENT_HELP)
-				update_intent()
 			if ("pulling")
 				if (master.pulling)
 					unpull_particle(master,pulling)
@@ -360,34 +359,34 @@
 			if ("upgrades")
 				set_show_upgrades(!src.show_upgrades)
 			if ("upgrade1") // this is horrifying
-				if (last_upgrades.len >= 1)
+				if (length(last_upgrades) >= 1)
 					master.activate_upgrade(src.last_upgrades[1])
 			if ("upgrade2")
-				if (last_upgrades.len >= 2)
+				if (length(last_upgrades) >= 2)
 					master.activate_upgrade(src.last_upgrades[2])
 			if ("upgrade3")
-				if (last_upgrades.len >= 3)
+				if (length(last_upgrades) >= 3)
 					master.activate_upgrade(src.last_upgrades[3])
 			if ("upgrade4")
-				if (last_upgrades.len >= 4)
+				if (length(last_upgrades) >= 4)
 					master.activate_upgrade(src.last_upgrades[4])
 			if ("upgrade5")
-				if (last_upgrades.len >= 5)
+				if (length(last_upgrades) >= 5)
 					master.activate_upgrade(src.last_upgrades[5])
 			if ("upgrade6")
-				if (last_upgrades.len >= 6)
+				if (length(last_upgrades) >= 6)
 					master.activate_upgrade(src.last_upgrades[6])
 			if ("upgrade7")
-				if (last_upgrades.len >= 7)
+				if (length(last_upgrades) >= 7)
 					master.activate_upgrade(src.last_upgrades[7])
 			if ("upgrade8")
-				if (last_upgrades.len >= 8)
+				if (length(last_upgrades) >= 8)
 					master.activate_upgrade(src.last_upgrades[8])
 			if ("upgrade9")
-				if (last_upgrades.len >= 9)
+				if (length(last_upgrades) >= 9)
 					master.activate_upgrade(src.last_upgrades[9])
 			if ("upgrade10")
-				if (last_upgrades.len >= 10)
+				if (length(last_upgrades) >= 10)
 					master.activate_upgrade(src.last_upgrades[10])
 			if ("health")
 				mini_health = (mini_health + 1) % 3
@@ -433,6 +432,61 @@
 						pos_x -= spacing
 						animate_buff_in(U)
 		return
+
+	update_health()
+		..()
+		if (!isdead(master))
+			//var/pct = round(100*master.cell.charge/master.cell.maxcharge, 1)
+			//charge.maptext = "<span class='vga ol vt c'>[pct]%</span>"
+			//charge.maptext_y = 11
+			if (mini_health == 2)
+				health.maptext = " "
+			else if (1 || last_health != master.health)
+
+				var/list/hp = list(
+					"[!mini_health ? "H/C " : "HEAD "][maptext_health_percent(master.part_head)]",
+					"[!mini_health ? " " : "\nCHST "][maptext_health_percent(master.part_chest)]",
+					"[!mini_health ? "\nARM " : "\nLARM "][maptext_health_percent(master.part_arm_l)]",
+					"[!mini_health ? " " : "\nRARM "][maptext_health_percent(master.part_arm_r)]",
+					"[!mini_health ? "\nLEG " : "\nLLEG "][maptext_health_percent(master.part_leg_l)]",
+					"[!mini_health ? " " : "\nRLEG "][maptext_health_percent(master.part_leg_r)]"
+					)
+
+				health.maptext = "<span class='ol r vt ps2p'>[jointext(hp, "")]</span>"
+				last_health = master.health
+
+
+			/*
+				var/obj/item/parts/robot_parts/head/part_head = null
+				var/obj/item/parts/robot_parts/chest/part_chest = null
+				var/obj/item/parts/robot_parts/arm/part_arm_r = null
+				var/obj/item/parts/robot_parts/arm/part_arm_l = null
+				var/obj/item/parts/robot_parts/leg/part_leg_r = null
+				var/obj/item/parts/robot_parts/leg/part_leg_l = null
+			*/
+
+			switch(master.health)
+				if(100 to INFINITY)
+					health.icon_state = "health0"
+				if(80 to 100)
+					health.icon_state = "health1"
+				if(60 to 80)
+					health.icon_state = "health2"
+				if(40 to 60)
+					health.icon_state = "health3"
+				if(20 to 40)
+					health.icon_state = "health4"
+				if(0 to 20)
+					health.icon_state = "health5"
+				else
+					health.icon_state = "health6"
+		else
+			health.icon_state = "health7"
+
+		// I put this here because there's nowhere else for it right now.
+		// @TODO robot hud needs a general update() call imo.
+		if (src.eyecam)
+			eyecam.invisibility = (master.mainframe ? INVIS_NONE : INVIS_ALWAYS)
 
 	proc
 		set_active_tool(active) // naming these tools to distinuish it from the module of a borg
@@ -513,61 +567,6 @@
 			return "<span style='color: [rgb(255 * clamp((100 - pct) / 50, 0, 1), 255 * clamp(pct / 50, 1, 0), 0)];'>[!mini_health ? "[add_lspace(round(pct), 3)]%" : "[add_lspace(round(part.max_health - dmg), 3)]</span>/<span style='color: #ffffff;'>[add_lspace(round(part.max_health), 3)]"]</span>"
 
 
-		update_health()
-			if (!isdead(master))
-				//var/pct = round(100*master.cell.charge/master.cell.maxcharge, 1)
-				//charge.maptext = "<span class='vga ol vt c'>[pct]%</span>"
-				//charge.maptext_y = 11
-				if (mini_health == 2)
-					health.maptext = " "
-				else if (1 || last_health != master.health)
-
-					var/list/hp = list(
-						"[!mini_health ? "H/C " : "HEAD "][maptext_health_percent(master.part_head)]",
-						"[!mini_health ? " " : "\nCHST "][maptext_health_percent(master.part_chest)]",
-						"[!mini_health ? "\nARM " : "\nLARM "][maptext_health_percent(master.part_arm_l)]",
-						"[!mini_health ? " " : "\nRARM "][maptext_health_percent(master.part_arm_r)]",
-						"[!mini_health ? "\nLEG " : "\nLLEG "][maptext_health_percent(master.part_leg_l)]",
-						"[!mini_health ? " " : "\nRLEG "][maptext_health_percent(master.part_leg_r)]"
-						)
-
-					health.maptext = "<span class='ol r vt ps2p'>[jointext(hp, "")]</span>"
-					last_health = master.health
-
-
-				/*
-					var/obj/item/parts/robot_parts/head/part_head = null
-					var/obj/item/parts/robot_parts/chest/part_chest = null
-					var/obj/item/parts/robot_parts/arm/part_arm_r = null
-					var/obj/item/parts/robot_parts/arm/part_arm_l = null
-					var/obj/item/parts/robot_parts/leg/part_leg_r = null
-					var/obj/item/parts/robot_parts/leg/part_leg_l = null
-				*/
-
-				switch(master.health)
-					if(100 to INFINITY)
-						health.icon_state = "health0"
-					if(80 to 100)
-						health.icon_state = "health1"
-					if(60 to 80)
-						health.icon_state = "health2"
-					if(40 to 60)
-						health.icon_state = "health3"
-					if(20 to 40)
-						health.icon_state = "health4"
-					if(0 to 20)
-						health.icon_state = "health5"
-					else
-						health.icon_state = "health6"
-			else
-				health.icon_state = "health7"
-
-			// I put this here because there's nowhere else for it right now.
-			// @TODO robot hud needs a general update() call imo.
-			if (src.eyecam)
-				eyecam.invisibility = (master.mainframe ? INVIS_NONE : INVIS_ALWAYS)
-
-
 		update_pulling()
 			pulling.icon_state = "pull[master.pulling ? 1 : 0]"
 
@@ -636,7 +635,7 @@
 
 /mob/living/silicon/robot
 	updateStatusUi()
-		if(src.hud && istype(src.hud, /datum/hud/robot))
-			var/datum/hud/robot/H = src.hud
+		if(src.hud && istype(src.hud, /datum/hud/silicon/robot))
+			var/datum/hud/silicon/robot/H = src.hud
 			H.update_status_effects()
 		return

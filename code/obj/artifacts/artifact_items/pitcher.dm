@@ -64,6 +64,8 @@
 			reagents.add_reagent("werewolf_serum", 2)
 		if (prob(3))
 			reagents.add_reagent("liquid spacetime", 25)
+		if (prob(3))
+			reagents.add_reagent("rat_spit", 5)
 		if (prob(1))
 			reagents.add_reagent("rat_venom", 5)
 		if (prob(3))
@@ -114,8 +116,10 @@
 			reagents.add_reagent("bee", 10)
 		if(prob(15))
 			reagents.add_reagent("port", 30)
+		#ifdef SECRETS_ENABLED
 		if(prob(7))
 			reagents.add_reagent("bombini", 15)
+		#endif
 		if(prob(3))
 			reagents.add_reagent("medusa", 10)
 

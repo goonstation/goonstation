@@ -70,6 +70,11 @@
 	filter_data = null
 	filters = null
 
+/atom/proc/copy_filters_to(atom/other)
+	if(!filter_data)
+		return
+	for(var/filter in filter_data)
+		other.add_filter(filter, filter_data[filter]["priority"], filter_data[filter])
 
 
 //Helpers to generate lists for filter helpers

@@ -1,0 +1,52 @@
+<body>
+<h2>Stationfinder, First Edition</h2>
+<hr>
+<p>The rules outlined here are intended for quick pick up games and as tools for guided improvisation. They are not built to be mechanically sound or rigorous. I hope you have fun with them.</p>
+<p>The attributes are:</p>
+<p>Strength<br>Dexterity<br>Constitution<br>Intelligence<br>Wisdom<br>Charisma</p>
+<p>Allocate the following array of modifiers: (-1, 0, 0, 1, 1, 2)</p>
+<p>Your Maximum HP is: 10 + (Your Constitution Modifier)*2</p>
+<p>Choose 3 + (Your Intelligence Modifier) Lores or Genetic Power.</p>
+<p>Lores:</p>
+<p>Lores represent your character’s experience and knowledge, and are open to both player and Game Master interpretation. Think of some interesting lores based on your character’s history and work with the Game Master to ensure that they are neither too broad nor too specific.</p>
+<p>Common Example Lores:</p>
+<p>Survival<br>History<br>Computers<br>Traps and Mechanisms<br>Blacksmithing<br>Fishing</p>
+<p>Genetic Power:<br>While all people have latent potential in their genes for the manifestion of psychic or physical augmentations, activating and manipulating them requires study and practice in order to affect the world around you.. At character creation, you may learn any genetic power with a genetic power tier less than or equal to than your Intelligence Modifier. All others must be researched and unlocked during the course of play.</p>
+<p>Using a genetic Power requires a check.</p>
+<p>Third tier genetic powers and higher are the work of higher beings and eldritch beasts. Players do not normally have access to such powers without receiving them as a boon or the use of artifacts.</p>
+<p>Doing Things:</p>
+<p>Each time you want to do something which has a chance of failure, the Game Master should ask for a check.</p>
+<p>Checks are made with 2d6, + the appropriate attribute modifier, + 1 if you have an appropriate lore</p>
+<p>12 = Critical Success<br>10-12 = Resounding Success<br>7-9 = Partial Success<br>1-6 = Failure</p>
+<p>On a Critical Success, the Game Master should provide you with 3 fortunes to choose from, based on the situation.</p>
+<p>On a Partial Success or Failure, the Game master should provide you with 3 misfortunes to choose from, based on the situation.</p>
+<p>In either case, the Game Master should avoid providing fortunes or misfortunes on the basis of mechanics, instead focusing on narrative elements (such as leaving yourself or an ally open to an enemy attack, getting lost, or attracting the attention of a patrolling enemy in the case of misfortunes, or stumbling across a hidden treasure or injuring an enemy’s shoulder in the case of fortunes)</p>
+<p>Dealing Damage:</p>
+<p>When a check or power would result in damage, roll 1d6 to see how much it is. If a check or power would deal “deadly damage”, roll 2d6 and take the higher result.</p>
+<p>If the damage is the result of multiple identical sources (e.g., 3 arrow traps or 3 goblins), roll the damage once and add 1 damage for each source beyond the first. (e.g., 1d6+2)</p>
+<p>Dying and Being Dead:</p>
+<p>If a player character falls to 0 hit points, they begin dying. Roll a simple check with no attribute or lore modifiers. On a success, the player survives, unconscious. On a partial success, the player survives with a permanent injury. On a failure, they die.</p>
+<p>Leveling Up:<br>Every time a player character survives to the end of a session, they level up. They choose from the following:<br>1: Gain 5 Maximum HP<br>2: Gain one new lore relevant to the session they just finished.<br>3: Learn one new power relevant to the session they just finished.</p>
+<p>Afflictions:<br>Afflictions and injuries cause cumulative -1 to relevant checks. For example, a strained shoulder might have a -1 to checks made using it. Injuries are generally healed the next time the creature rests.</p>
+<p>Combat:<br>Combat turns are loose and fluid. The Players and Game Master work together to weave an interesting narrative in combat the same as in the rest of the game. Players take turns during combat to ensure that everyone has an opportunity to contribute, but turn order is not rigid. If the players cannot decide on a turn order, consider rolling competing dexterity checks, or else have the Game Master decide.</p>
+<p>Enemies in combat do not receive turns. They serve a narrative purpose at the discretion of the Game Master, and receiving damage from one should generally by the result of a misfortune.</p>
+<p>Resting:<br>Resting takes eight hours in a safe environment. When you rest, you regain 1d6+(Con Modifier) hit points and heal all temporary afflictions.</p>
+<p>Example Powers:</p>
+<p>0: Basic Tricks. Reproduce any mundane seeming magic trick or sleight of hand. Clean, Soil, or Flavor any one object.</p>
+<p>0: Light. Produce and manipulate a heatless torchlight that moves at your discretion within sight.</p>
+<p>0: Sound. Produce and manipulate a sound that moves at your discretion within sight.</p>
+<p>0: Sense Power. Sense the presence or abscence of active powers and/or artifacts in an area, object, or creature.</p>
+<p>0: Purify/Putrefy. Food or water cupped in your hands becomes sacred or defiled, your choice. If it is sacred, it becomes safe to eat. If it is defiled, it becomes spoiled and rancid.</p>
+<p>1: Psychic Attack. Deal damage to a target within sight.</p>
+<p>1: Lesser Inspiration. One creature within sight is inspired. The next time they would fail a check, they partially succeed instead. That creature cannot benefit from any lesser inspirations again until the next time it rests.</p>
+<p>1: Lesser Disruption. One creature within sight is unnerved or distracted. The next time they would succeed a check, they partially succeed instead. That creature cannot be afflicted by any lesser disruptions again until the next time it rests.</p>
+<p>1: Telepathy. Create and maintain a single telepathic bond, with a single willing person you touch, allowing the two of you to communicate using only your thoughts. Creating a new telepathic bond ends the first one.</p>
+<p>1: Ward Area. Create a ward around a camp-sized area that rings an audible or mental alert to all creatures inside the ward if it is crossed. This alert is enough to wake any creature from sleeping. The ward ends when it is crossed.</p>
+<p>1: Speak with Dead. One corpse you touch may speak with you as if alive, until you stop touching it. This does not mean it is friendly to you, nor does it mean it necessarily tells the truth.</p>
+<p>2: Camoflauge. A creature you touch blends in with their surroundings, unable to be seen until the next time it takes a hostile action.</p>
+<p>2: Dispel Power. Your power suppresses the genetic powers of others. Any genetic power with a tier of 2 or less is dispelled; any genetic power of a tier higher than 2 is supressed or reduced so long as you focus on it,</p>
+<p>2: Explosion. You create an explosion at a point you can see, dealing deadly damage to all creatures nearby.</p>
+<p>2: Sleep. You put a creature within sight to sleep. They wake up as they normally would. Creatures that do not sleep are unaffected.</p>
+<p>2: Heavy Weapon. One weapon you touch is filled with dark matter. All attacks made with it deal deadly damage. This power ends if you use it again.</p>
+<p>3: Resurrection. One corpse you touch comes back to life. Ressurecting a corpse requires significant effort, and both you and the ressurected person suffer a permanent affliction.</p>
+<p>3: Polymorph. One creature you touch changes shape to that of another creature you have seen before. This transformation lasts for as long as they are within sight, and you choose their new attribute array allocation appropriately for the creature you choose.</p>

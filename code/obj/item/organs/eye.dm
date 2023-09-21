@@ -7,12 +7,15 @@
 	organ_name = "eye"
 	desc = "Here's lookin' at you! Er, maybe not so much, anymore."
 	organ_holder_location = "head"
+	icon = 'icons/obj/items/organs/eye.dmi'
 	icon_state = "eye"
 	var/change_iris = 1
+	var/iris_color = "#0D84A8"
+	var/iris_state_override = null
 	var/color_r = 1 // same as glasses/helmets/masks/etc, used for vision color modifications, see human/handle_regular_hud_updates()
 	var/color_g = 1
 	var/color_b = 1
-	var/show_on_examine = 0 // do we get mentioned when our donor is examined?
+	var/show_on_examine = FALSE // do we get mentioned when our donor is examined?
 
 	New()
 		..()
@@ -27,22 +30,35 @@
 				holder.right_eye = null
 		..()
 
-	update_icon()
-		if (!src.change_iris)
-			return
-		var/image/iris_image = image(src.icon, src, "[icon_state]-iris")
-		iris_image.color = "#0D84A8"
-		if (src.donor && src.donor.bioHolder && src.donor.bioHolder.mobAppearance) // good lord
-			var/datum/appearanceHolder/AH = src.donor.bioHolder.mobAppearance // I ain't gunna type that a billion times thanks
-			if ((src.body_side == L_ORGAN && AH.customization_second.id == "hetrcoL") || (src.body_side == R_ORGAN && AH.customization_second.id == "hetcroR")) // dfhsgfhdgdapeiffert
-				iris_image.color = AH.customization_second_color
-			else if ((src.body_side == L_ORGAN && AH.customization_third.id == "hetcroL") || (src.body_side == R_ORGAN && AH.customization_third == "hetcroR")) // gbhjdghgfdbldf
-				iris_image.color = AH.customization_third_color
-			else
-				iris_image.color = AH.e_color
-		src.UpdateOverlays(iris_image, "iris")
+	on_transplant(mob/M)
+		. = ..()
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			H.update_face()
 
-	attach_organ(var/mob/living/carbon/M as mob, var/mob/user as mob)
+	on_removal()
+		if(ishuman(donor))
+			var/mob/living/carbon/human/H = donor
+			SPAWN(0) //need to delay until after the eye is actually removed from the organholder
+				H.update_face()
+		. = ..()
+
+	proc/update_color(datum/appearanceHolder/AH, side)
+		if(src.change_iris)
+			if (AH.customization_first.id == "hetcro[side]")
+				src.iris_color = AH.customization_first_color
+			else if (AH.customization_second.id == "hetcro[side]")
+				src.iris_color = AH.customization_second_color
+			else if (AH.customization_third.id == "hetcro[side]")
+				src.iris_color = AH.customization_third_color
+			else
+				src.iris_color = AH.e_color
+			var/image/iris_image = image(src.icon, src, "[iris_state_override || icon_state]-iris")
+			iris_image.color = iris_color
+			src.UpdateOverlays(iris_image, "iris")
+
+
+	attach_organ(var/mob/living/carbon/M, var/mob/user)
 		/* Overrides parent function to handle special case for attaching eyes.
 		Note that eyes don't appear to track op_stage on the head container, like chest organs do. */
 		var/mob/living/carbon/human/H = M
@@ -105,6 +121,11 @@
 	icon_state = "eye-synth"
 	item_state = "plant"
 	synthetic = 1
+	iris_state_override = "eye"
+	iris_color = "#2dca2d"
+
+TYPEINFO(/obj/item/organ/eye/cyber)
+	mats = 6
 
 /obj/item/organ/eye/cyber
 	name = "cybereye"
@@ -115,9 +136,9 @@
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
-	made_from = "pharosium"
-	show_on_examine = 1
+	default_material = "pharosium"
+	show_on_examine = TRUE
+	change_iris = FALSE
 
 	emp_act()
 		..()
@@ -126,17 +147,34 @@
 			if (src.holder && src.holder.donor)
 				src.holder.donor.show_text("<b>Your [src.organ_name] [pick("crackles and sparks", "makes a weird crunchy noise", "buzzes strangely")]!</b>", "red")
 
+/obj/item/organ/eye/cyber/configurable
+	iris_state_override = "eye"
+	change_iris = TRUE
+
+	attackby(obj/item/W, mob/user)
+		if(ispulsingtool(W)) //TODO kyle's robotics configuration console/machine/thing
+			var/new_color = tgui_color_picker(usr, "Choose a color", "Cybereye", "#0D84A8")
+			if (!isnull(new_color))
+				iris_color = new_color
+			var/image/iris_image = image(src.icon, src, "eye-iris")
+			iris_image.color = iris_color
+			src.UpdateOverlays(iris_image, "iris")
+		else
+			. = ..()
+
+TYPEINFO(/obj/item/organ/eye/cyber/sunglass)
+	mats = 7
+
 /obj/item/organ/eye/cyber/sunglass
 	name = "polarized cybereye"
 	organ_name = "polarized cybereye"
 	desc = "A fancy electronic eye. It has a polarized filter on the lens for built-in protection from the sun and other harsh lightsources. Your night vision is fucked, though."
 	icon_state = "eye-sunglass"
-	mats = 7
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.95 // darken a little
 	color_g = 0.95
 	color_b = 0.975 // kinda blue
-	change_iris = 0
+	iris_color = "#202020"
 
 	on_transplant(mob/M)
 		. = ..()
@@ -148,24 +186,26 @@
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_DISORIENT_RESIST_EYE_MAX, src)
 		. = ..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/sechud)
+	mats = 7
+
 /obj/item/organ/eye/cyber/sechud
 	name = "\improper Security HUD cybereye"
 	organ_name = "\improper Security HUD cybereye"
 	desc = "A fancy electronic eye. It has a Security HUD system installed."
 	icon_state = "eye-sec"
-	mats = 7
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.975 // darken a little, kinda red
 	color_g = 0.95
 	color_b = 0.95
-	change_iris = 0
+	iris_color = "#3a0404"
 
 	process()
 		if (src.broken)
 			processing_items.Remove(src)
 			get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
 
-	on_transplant(var/mob/M as mob)
+	on_transplant(var/mob/M)
 		..()
 		if (src.broken)
 			return
@@ -177,17 +217,19 @@
 		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).remove_mob(donor)
 		..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/thermal)
+	mats = 7
+
 /obj/item/organ/eye/cyber/thermal
 	name = "thermal imager cybereye"
 	organ_name = "thermal imager cybereye"
 	desc = "A fancy electronic eye. It lets you see through cloaks and enhances your night vision. Use caution around bright lights."
 	icon_state = "eye-thermal"
-	mats = 7
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 1
 	color_g = 0.9 // red tint
 	color_b = 0.9
-	change_iris = 0
+	iris_color = "#a01f1f"
 
 	on_transplant(mob/M)
 		. = ..()
@@ -197,22 +239,24 @@
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_THERMALVISION, src)
 		. = ..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/meson)
+	mats = 7
+
 /obj/item/organ/eye/cyber/meson
 	name = "mesonic imager cybereye"
 	organ_name = "mesonic imager cybereye"
 	desc = "A fancy electronic eye. It lets you see the structure of the station through walls. Trippy!"
 	icon_state = "eye-meson"
-	mats = 7
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.9
-	change_iris = 0
 	organ_abilities = list(/datum/targetable/organAbility/meson)
 	var/on = 1
 	var/mob/living/carbon/human/assigned = null
+	iris_color = "#45bb00"
 
-	on_transplant(var/mob/M as mob)
+	on_transplant(var/mob/M)
 		..()
 		if (src.broken)
 			return
@@ -232,7 +276,7 @@
 
 	proc/toggle()
 		src.on = !src.on
-		playsound(assigned, "sound/items/mesonactivate.ogg", 30, 1)
+		playsound(assigned, 'sound/items/mesonactivate.ogg', 30, TRUE)
 		if (src.on)
 			assigned.vision.set_scan(1)
 			APPLY_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
@@ -240,17 +284,19 @@
 			assigned.vision.set_scan(0)
 			REMOVE_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
 
+TYPEINFO(/obj/item/organ/eye/cyber/spectro)
+	mats = 7
+
 /obj/item/organ/eye/cyber/spectro
 	name = "spectroscopic imager cybereye"
 	organ_name = "spectroscopic imager cybereye"
 	desc = "A fancy electronic eye. It has an integrated minature Raman spectroscope for easy qualitative and quantitative analysis of chemical samples."
 	icon_state = "eye-spectro"
-	mats = 7
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 1 // pink tint?
 	color_g = 0.9
 	color_b = 0.95
-	change_iris = 0
+	iris_color = "#d12ab5"
 
 	on_transplant(mob/M)
 		. = ..()
@@ -260,17 +306,19 @@
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_SPECTRO, src)
 		. = ..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/prodoc)
+	mats = 7
+
 /obj/item/organ/eye/cyber/prodoc
 	name = "\improper ProDoc Healthview cybereye"
 	organ_name = "\improper ProDoc Healthview cybereye"
 	desc = "A fancy electronic eye. It's fitted with an advanced miniature sensor array that allows you to quickly determine the physical condition of others."
 	icon_state = "eye-prodoc"
-	mats = 7
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.925
-	change_iris = 0
+	iris_color = "#1dd144"
 
 	// stolen from original prodocs
 	process()
@@ -278,31 +326,35 @@
 			processing_items.Remove(src)
 			get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
 
-	on_transplant(var/mob/M as mob)
+	on_transplant(var/mob/M)
 		..()
 		if (src.broken)
 			return
 		processing_items |= src
+		APPLY_ATOM_PROPERTY(M,PROP_MOB_EXAMINE_HEALTH,src)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).add_mob(M)
 		return
 
-	on_removal()
+	on_removal(var/mob/M)
 		processing_items.Remove(src)
+		REMOVE_ATOM_PROPERTY(M,PROP_MOB_EXAMINE_HEALTH,src)
 		get_image_group(CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS).remove_mob(donor)
 		..()
 		return
+
+TYPEINFO(/obj/item/organ/eye/cyber/ecto)
+	mats = 7
 
 /obj/item/organ/eye/cyber/ecto
 	name = "ectosensor cybereye"
 	organ_name = "ectosensor cybereye"
 	desc = "A fancy electronic eye. It lets you see spooky stuff."
 	icon_state = "eye-ecto"
-	mats = 7
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.925
-	change_iris = 0
+	iris_color = "#65e681"
 
 	on_transplant(mob/M)
 		. = ..()
@@ -312,17 +364,19 @@
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_GHOSTVISION, src)
 		. = ..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/camera)
+	mats = 7
+
 /obj/item/organ/eye/cyber/camera
 	name = "camera cybereye"
 	organ_name = "camera cybereye"
 	desc = "A fancy electronic eye. It has a camera in it connected to the station's security camera network."
 	icon_state = "eye-camera"
-	mats = 7
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Eye Cam"
 	var/camera_network = "Zeta"
-	made_from = "pharosium"
-	change_iris = 0
+	default_material = "pharosium"
+	iris_color = "#0d0558"
 
 	New()
 		..()
@@ -330,22 +384,24 @@
 		src.camera.c_tag = src.camera_tag
 		src.camera.network = src.camera_network
 
-	on_transplant(var/mob/M as mob)
+	on_transplant(var/mob/M)
 		..()
 		src.camera.c_tag = "[M]'s Eye"
 		return ..()
+
+TYPEINFO(/obj/item/organ/eye/cyber/nightvision)
+	mats = 7
 
 /obj/item/organ/eye/cyber/nightvision
 	name = "night vision cybereye"
 	organ_name = "night vision cybereye"
 	desc = "A fancy electronic eye. It has built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights."
 	icon_state = "eye-night"
-	mats = 7
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.7
 	color_g = 1
 	color_b = 0.7
-	change_iris = 0
+	iris_color = "#027e17"
 
 	on_transplant(mob/M)
 		. = ..()
@@ -355,18 +411,20 @@
 		REMOVE_ATOM_PROPERTY(donor, PROP_MOB_NIGHTVISION, src)
 		. = ..()
 
+TYPEINFO(/obj/item/organ/eye/cyber/laser)
+	mats = 7
+
 /obj/item/organ/eye/cyber/laser
 	name = "laser cybereye"
 	organ_name = "laser cybereye"
 	desc = "A fancy electronic eye. It can fire a small laser."
 	icon_state = "eye-laser"
-	mats = 7
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 1
 	color_g = 0.85
 	color_b = 0.85
-	change_iris = 0
 	organ_abilities = list(/datum/targetable/organAbility/eyebeam)
+	iris_color = "#ff0000"
 	var/eye_proj_override = null
 
 	add_ability(var/datum/abilityHolder/aholder, var/abil)
@@ -423,7 +481,7 @@ obj/item/organ/eye/skeleton
 	name = "boney eye"
 	desc = "Yes it also has eye sockets. How this works is unknown."
 	icon_state = "eye-bone"
-	made_from = "bone" //duh
+	default_material = "bone" //duh
 	blood_reagent = "calcium"
 	change_iris = 0
 

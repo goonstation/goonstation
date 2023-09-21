@@ -48,8 +48,9 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
   // Basic checks to detect whether this page runs in BYOND
   var isByond = (tridentVersion !== null || window.cef_to_byond)
     && location.hostname === '127.0.0.1'
-    && location.pathname.indexOf('/tmp') === 0
     && location.search !== '?external';
+		//As of BYOND 515 the path doesn't seem to include tmp dir anymore if you're trying to open tgui in external browser and looking why it doesn't work
+    //&& location.pathname.indexOf('/tmp') === 0
 
   // Version constants
   Byond.IS_BYOND = isByond;
@@ -202,6 +203,8 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
     var len = styleSheets.length;
     for (var i = 0; i < len; i++) {
       var styleSheet = styleSheets[i];
+			if(styleSheet.href === undefined)
+        continue;
       if (styleSheet.href.indexOf(url) !== -1) {
         return styleSheet.rules.length > 0;
       }
@@ -253,6 +256,7 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
     if (type === 'js') {
       var node = document.createElement('script');
       node.type = 'text/javascript';
+      node.crossOrigin = 'anonymous';
       // IE8: Prefer non-https protocols
       node.src = Byond.IS_LTE_IE9
         ? url.replace('https://', 'http://')
@@ -277,6 +281,9 @@ if (window.__windowId__ === '[' + 'tgui:windowId' + ']') {
       var node = document.createElement('link');
       node.type = 'text/css';
       node.rel = 'stylesheet';
+      // set crossorigin attribute to anonymous to avoid CORS errors on browsers that support it (OD's CEF)
+      if ('crossOrigin' in node)
+      	node.crossOrigin = 'anonymous';
       // IE8: Prefer non-https protocols
       node.href = Byond.IS_LTE_IE9
         ? url.replace('https://', 'http://')
@@ -387,11 +394,13 @@ window.__updateQueue__ = [];
 window.update = function (message) {
   window.__updateQueue__.push(message);
 };
-Byond.topic({
-  tgui: 1,
-  window_id: window.__windowId__,
-  type: 'ready',
-});
+window.onload = function () {
+	Byond.topic({
+		tgui: 1,
+		window_id: window.__windowId__,
+		type: 'ready',
+	});
+};
 
 // Necessary polyfill to make Webpack code splitting work on IE8
 if (!Function.prototype.bind) (function () {

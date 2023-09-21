@@ -1,5 +1,7 @@
-/// Internal flag that will always interrupt any action.
+/// Internal flag that will always interrupt any action, and disables action resumability
 #define INTERRUPT_ALWAYS -1
+/// dont
+#define INTERRUPT_NONE 0
 /// Interrupted when object moves
 #define INTERRUPT_MOVE 1
 /// Interrupted when object does anything

@@ -22,6 +22,8 @@ var/global/datum/ui_state/tgui_not_incapacitated_state/tgui_not_incapacitated_tu
 	turf_check = no_turfs
 
 /datum/ui_state/tgui_not_incapacitated_state/can_use_topic(src_object, mob/user)
+	if(istype(user, /mob/dead/target_observer))
+		return UI_UPDATE
 	if(user.stat)
 		return UI_CLOSE
 	if(!can_act(user) || (turf_check && !isturf(user.loc)))

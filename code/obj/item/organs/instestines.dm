@@ -50,16 +50,18 @@
 		..()
 		src.icon_state = pick("plant_intestines", "plant_intestines_bloom")
 
+TYPEINFO(/obj/item/organ/intestines/cyber)
+	mats = 6
+
 /obj/item/organ/intestines/cyber
 	name = "cyberintestines"
 	desc = "A fancy robotic intestines to replace one that someone's lost!"
 	icon_state = "cyber-intestines"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 
 	emag_act(mob/user, obj/item/card/emag/E)
 		. = ..()

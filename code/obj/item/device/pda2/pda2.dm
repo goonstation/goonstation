@@ -8,7 +8,8 @@
 	item_state = "pda"
 	w_class = W_CLASS_SMALL
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	wear_layer = MOB_BELT_LAYER
 	var/obj/item/card/id/ID_card = null // slap an ID card into that thang
 	var/obj/item/pen = null // slap a pen into that thang
@@ -31,6 +32,7 @@
 	var/frequency = FREQ_PDA
 	var/beacon_freq = FREQ_NAVBEACON //Beacon frequency for locating beacons (I love beacons)
 	var/net_id = null //Hello dude intercepting our radio transmissions, here is a number that is not just \ref
+	var/scannable = TRUE // Whether this PDA is picked up when scanning for PDAs on the messenger
 
 	var/tmp/list/pdasay_autocomplete = list()
 
@@ -55,7 +57,7 @@
 		// Departments
 		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_MINING, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 		// Other
-		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MECHANIC,
+		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
 		// Alerts
 		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING,
 	)
@@ -116,7 +118,7 @@
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
 	ntso
 		icon_state = "pda-nt"
@@ -125,7 +127,7 @@
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
 		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
 	ai
 		icon_state = "pda-h"
@@ -138,7 +140,7 @@
 			// Departments
 			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_MINING, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 			// Other
-			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_MECHANIC,
+			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
 			// start in party line by default
 			MGD_PARTY,
 		)
@@ -172,35 +174,40 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 	medical
+		name = "Medical PDA"
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
 		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
 
 		robotics
+			name = "Robotics PDA"
 			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
 			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
 			default_muted_mailgroups = list(MGA_SALES)
 
 	genetics
+		name = "Genetics PDA"
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
 		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 
 	security
+		name = "Security PDA"
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
 		setup_default_module = /obj/item/device/pda_module/alert
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
 	forensic
+		name = "Forensic PDA"
 		icon_state = "pda-s"
 		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
 		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CRISIS, MGA_TRACKING)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
 
 	toxins
 		icon_state = "pda-tox"
@@ -233,8 +240,8 @@
 				var/mob/M = AM
 				LAZYLISTADDUNIQUE(M.attached_objs, src)
 				src.glide_size = M.glide_size
-				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, .proc/on_mob_throw_end)
-				if (M.slip(ignore_actual_delay = 1, throw_type=THROW_PEEL_SLIP, params=list("slip_obj"=src)))
+				RegisterSignal(M, COMSIG_MOVABLE_THROW_END, PROC_REF(on_mob_throw_end))
+				if (M.slip(walking_matters = 1, ignore_actual_delay = 1, throw_type = THROW_PEEL_SLIP, params = list("slip_obj" = src)))
 					boutput(M, "<span class='notice'>You slipped on the PDA!</span>")
 					if (M.bioHolder.HasEffect("clumsy"))
 						M.changeStatus("weakened", 5 SECONDS)
@@ -253,18 +260,23 @@
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT)
 
 	atmos
+		name = "Atmos PDA"
 		icon_state = "pda-a"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/atmos
 
 	engine
+		name = "Engineer PDA"
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
+		setup_default_module = /obj/item/device/pda_module/tray //mechanics used to have these
 		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS)
+		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
 
 	technical_assistant
+		name = "Technical Assistant PDA"
 		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
 		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
+		setup_default_module = /obj/item/device/pda_module/tray
 		alertgroups = list(MGA_MAIL,MGA_RADIO)
 
 	mining
@@ -275,21 +287,16 @@
 	chiefengineer
 		icon_state = "pda-ce"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
-		mailgroups = list(MGO_ENGINEER,MGO_MECHANIC,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
+		setup_default_module = /obj/item/device/pda_module/tray
+		mailgroups = list(MGO_ENGINEER,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
 
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 
 	bartender
+		setup_default_cartridge = /obj/item/disk/data/cartridge/bartender
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
-
-	mechanic
-		icon_state = "pda-a"
-		setup_default_module = /obj/item/device/pda_module/tray
-		setup_default_cartridge = /obj/item/disk/data/cartridge/mechanic
-		mailgroups = list(MGO_MECHANIC,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_RKIT)
 
 	botanist
 		icon_state = "pda-hydro"
@@ -323,6 +330,7 @@
 
 /obj/item/device/pda2/New()
 	..()
+	START_TRACKING
 	// This should probably be okay before the spawn, this way the HUD ability actually immediately shows up
 	if(src.setup_default_module)
 		src.module = new src.setup_default_module(src)
@@ -389,6 +397,7 @@
 			src.set_scan_program(scan)
 
 /obj/item/device/pda2/disposing()
+	STOP_TRACKING
 	if (src.cartridge)
 		src.cartridge.dispose()
 		src.cartridge = null
@@ -409,6 +418,10 @@
 		if(src.alert_ringtones[T])
 			qdel(src.alert_ringtones[T])
 			src.alert_ringtones[T] = null
+
+	if (src.pen)
+		qdel(src.pen)
+		src.pen = null
 
 	if (src.hd)
 		src.hd.dispose()
@@ -565,11 +578,6 @@
 		return
 
 /obj/item/device/pda2/attackby(obj/item/C, mob/user)
-	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
-		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		if (U.try_deliver(C, user))
-			return
-
 	if (istype(C, /obj/item/disk/data/cartridge))
 		user.drop_item()
 		C.set_loc(src)
@@ -598,7 +606,7 @@
 		return
 
 	else if (isscrewingtool(C))
-		playsound(user.loc, "sound/items/Screwdriver.ogg", 50, 1)
+		playsound(user.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 		src.closed = !src.closed
 		boutput(user, "You [src.closed ? "secure" : "unscrew"] the cover.")
 
@@ -629,6 +637,9 @@
 			src.updateSelfDialog()
 		else
 			if (src.ID_card)
+				if (IS_WORN_BY_SOMEONE_OTHER_THAN(src, user))
+					boutput(user, "<span class='alert'>There's already an ID card in [src].</span>")
+					return
 				boutput(user, "<span class='notice'>You swap [ID] and [src.ID_card].</span>")
 				src.eject_id_card(user)
 				src.insert_id_card(ID, user)
@@ -654,7 +665,7 @@
 			C.set_loc(user.loc)
 			qdel(C)
 
-	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette))
+	else if (istype(C, /obj/item/pen) || istype(C, /obj/item/clothing/mask/cigarette) || istype(C, /obj/item/device/light/flashlight/penlight))
 		if (!src.pen)
 			src.insert_pen(C, user)
 		else
@@ -675,13 +686,6 @@
 		..()
 
 /obj/item/device/pda2/afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
-	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
-		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		var/atom/b_item = U.bounty_is_claimable(A)
-		if (b_item)
-			actions.start(new/datum/action/bar/private/spy_steal(b_item,U), user)
-			return
-
 	var/scan_dat = null
 	if (src.scan_program && istype(src.scan_program))
 		scan_dat = src.scan_program.scan_atom(A)
@@ -697,9 +701,9 @@
 /obj/item/device/pda2/MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
 	if (istype(uplink,/obj/item/uplink/integrated/pda/spy))
 		var/obj/item/uplink/integrated/pda/spy/U = uplink
-		var/atom/b_item = U.bounty_is_claimable(O)
-		if (b_item)
-			actions.start(new/datum/action/bar/private/spy_steal(b_item,U), user)
+		var/datum/bounty_claim/claim = U.bounty_is_claimable(O, user)
+		if (claim)
+			actions.start(new/datum/action/bar/private/spy_steal(claim.delivery, U), user)
 			return
 	..()
 
@@ -737,7 +741,7 @@
 
 
 /obj/item/device/pda2/verb/eject()
-	set name = "Eject ID"
+	set name = "Eject PDA ID"
 	set desc = "Eject the currently loaded ID card from this PDA."
 	set category = "Local"
 	set src in usr
@@ -994,7 +998,7 @@
 
 	proc/bust_speaker()
 		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
-		playsound(src, "sound/impact_sounds/Machinery_Break_1.ogg", 20, 1)
+		playsound(src, 'sound/impact_sounds/Machinery_Break_1.ogg', 20, TRUE)
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 
@@ -1105,12 +1109,11 @@
 			return
 
 		if(src in bible_contents)
-			for_by_tcl(B, /obj/item/storage/bible)
+			for_by_tcl(B, /obj/item/bible)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					T.hotspot_expose(700,125)
 					explosion(src, T, -1, -1, 2, 3)
-			bible_contents.Remove(src)
 			qdel(src)
 			return
 
@@ -1173,7 +1176,7 @@ ThinkOS 7 comes with several useful applications built in, these include:<br>
 <li>Messenger: Send messages between all enabled PDAs.  Can also send the current file in the clipboard.</li>
 <li>File Browser: Manage and execute programs in the internal drive or loaded cartridge.</li>
 <li>Atmos Scanner: Using patented AirScan technology.</li>
-<li>Modules: Light up your life with a flashlight, or see right through the floor with a T-Scanner! The choice is yours!</li>
+<li>Modules: Light up your life with a flashlight, or see right through the floor with a T-ray Scanner! The choice is yours!</li>
 </ul></i>
 <b>To send a file with the messenger:</b><br>
 Enter the file browser and copy the file you want to send.  Now enter the messenger and select *send file*.<br>

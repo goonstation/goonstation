@@ -3,6 +3,7 @@
 	extension = "MNUDR"
 	size = 20
 	var/list/drivestored = list()
+	var/num_working = 0
 	var/fablimit = -1 //This fablimit gets replaced so just ignore this one and dont worry about it.
 
 	disposing()
@@ -12,10 +13,12 @@
 /datum/computer/file/manudrive/restricted // This is for manudrives that actually have a fabrication limit. Only difference is there file cant be copied.
 	name = "Restricted Manufacturer Recipes"
 	dont_copy = 1
+TYPEINFO(/obj/item/disk/data/floppy/manudrive)
+	mats = 0 // These things arent intended to be reproducible (god I butchered that) due to things like fablimits.
+
 /obj/item/disk/data/floppy/manudrive // This one should be the parent of manudrives that dont have a fabrication limit.
 	name = "Standard ManuDrive: Empty"
 	desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer."
-	mats = 0 // These things arent intended to be reproducible (god I butchered that) due to things like fablimits.
 	random_color = 0
 	icon_state = "datadiskwhi"
 	/// Put the recipe string here and itll make em into instances.
@@ -47,3 +50,32 @@
 		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture AI law racks."
 		icon_state = "datadiskcom"
 		temp_recipe_string = list(/datum/manufacture/mechanics/lawrack)
+
+		singleuse
+			fablimit = 1
+
+	interdictor_parts //Compacts the parts into a single manudrive
+		name = "Engineering Manudrive: Spatial Interdictor Assembly Blueprints"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture spatial interdictor hardware."
+		icon_state = "datadisk2"
+		temp_recipe_string = list(/datum/manufacture/interdictor_kit,
+		/datum/manufacture/interdictor_board_standard,
+		/datum/manufacture/interdictor_board_nimbus,
+		/datum/manufacture/interdictor_board_zephyr,
+		/datum/manufacture/interdictor_board_devera,
+		/datum/manufacture/interdictor_rod_lambda,
+		/datum/manufacture/interdictor_rod_sigma,
+		/datum/manufacture/interdictor_rod_epsilon,
+		/datum/manufacture/interdictor_rod_phi)
+
+	cleaner_grenade //Let's janitors create more grenades after running out.
+		name = "Civilian ManuDrive: Cleaning Grenade Blueprint"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture cleaning grenades."
+		icon_state = "datadisk1"
+		temp_recipe_string = list(/datum/manufacture/cleaner_grenade)
+
+	lasers
+		name = "Engineering Manudrive: Laser Component Blueprints"
+		desc = "A drive for data storage that can be inserted and removed from manufacturers to temporarily add recipes to a manufacturer. This drive carries a blueprint that permits the user to manufacture laser mirrors and beam splitters."
+		icon_state = "datadiskeng"
+		temp_recipe_string = list(/datum/manufacture/mechanics/laser_mirror, /datum/manufacture/mechanics/laser_splitter)

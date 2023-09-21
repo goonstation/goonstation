@@ -54,7 +54,7 @@
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		playsound(loc, 'sound/items/gavel.ogg', 75, 1)
+		playsound(loc, 'sound/items/gavel.ogg', 75, TRUE)
 		user.visible_message("<span class='alert'><b> Sweet Jesus! [user] is bashing their head in with [name]!</b></span>")
 		user.TakeDamage("head", 150, 0)
 		SPAWN(50 SECONDS)
@@ -82,7 +82,7 @@
 		if(cooldown > world.time)
 			return
 		else
-			playsound(loc, 'sound/items/gavel.ogg', 75, 1)
+			playsound(loc, 'sound/items/gavel.ogg', 75, TRUE)
 			user.say("Order, order in the court!")
 			cooldown = world.time + 40
 			return
@@ -110,12 +110,22 @@
 	src.desc = "This is Clown College diploma, a Bachelor of Farts Degree for the study of [pick("slipology", "jugglemancy", "pie science", "bicycle horn accoustics", "comic sans calligraphy", "gelotology", "flatology", "nuclear physics", "goonstation coder")]. It appears to be written in crayon."
 
 /obj/item/toy/diploma/attack(mob/M, mob/user)
-	if (isliving(user))
-		var/mob/living/L = user
-		if (L.mind && L.mind.assigned_role == "Clown")
-			L.visible_message("<span class='alert'><B>[L] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
+	if (ishuman(user))
+		var/mob/living/carbon/human/H = user
+		if (H.mind && H.mind.assigned_role == "Clown")
+			if (M == user)
+				user.visible_message("[H] shows off [src]!", 1)
+				return
+			if(ON_COOLDOWN(M, "clown_diploma", 30 SECONDS))
+				user.visible_message("[H] waves the diploma at [M]!")
+				return
+			H.visible_message("<span class='alert'><B>[H] bonks [M] [pick("kindly", "graciously", "helpfully", "sympathetically")].</B></span>")
 			playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
-			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [L], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
+			M.say("[pick("Wow", "Gosh dangit", "Aw heck", "Oh gosh", "Damnit")], [H], [pick("why are you so", "it's totally unfair that you're so", "how come you're so", "tell me your secrets to being so")] [pick("cool", "smart", "worldly", "funny", "wise", "drop dead hilarious", "incredibly likeable", "beloved by everyone", "straight up amazing", "devilishly handsome")]!")
+		else
+			..()
+	else
+		..()
 
 /obj/item/toy/gooncode
 	name = "gooncode hard disk drive"
@@ -146,7 +156,7 @@
 			prfirst = pick("high", "cool", "beloved", "crappy", "interesting", "worthless", "random", "horribly coded", "butt", "low", "extremely", "soul", "outdated")
 			prmiddle = pick("octane", "spooky", "quality", "secret", "crap", "chatty", "butt", "energetic", "diarrhea inducing", "confusing", "magical", "relative pathed", "stealing", "ridiculous")
 			prlast = pick("functions", "bugfixes", "features", "items", "weapons", "the entire goddamn chat", "antagonist", "job", "sprites", "butts", "artifacts", "cars")
-			playsound(loc, 'sound/machines/ding.ogg', 75, 1)
+			playsound(loc, 'sound/machines/ding.ogg', 75, TRUE)
 			user.visible_message("<span class='alert'><B>[user] uploads the Gooncode to their PDA.</B></span>")
 			I.audible_message("<i>New pull request opened on [stationfirst][stationlast]station: <span class='emote'>\"Ports [prfirst] [prmiddle] [prlast] from Goonstation.\"</i></span>")
 			cooldown = world.time + 40
@@ -184,12 +194,14 @@
 /obj/machinery/computer/arcade/handheld
 	desc = "You shouldn't see this, I exist for typechecks"
 
+TYPEINFO(/obj/item/toy/handheld)
+	mats = 2
+
 /obj/item/toy/handheld
 	name = "arcade toy"
 	desc = "These high tech gadgets compress the full arcade experience into a large, clunky handheld!"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "arcade-generic"
-	mats = 2
 	var/arcademode = FALSE
 	//The arcade machine will typecheck if we're this type
 	var/obj/machinery/computer/arcade/handheld/arcadeholder = null
@@ -269,12 +281,12 @@
 			if (H.sims)
 				H.sims.affectMotive("fun", 1)
 		if (narrator_mode)
-			playsound(user, 'sound/vox/duct.ogg', 50, 1)
+			playsound(user, 'sound/vox/duct.ogg', 50, TRUE)
 		else
-			playsound(user, 'sound/items/rubberduck.ogg', 50, 1)
+			playsound(user, 'sound/items/rubberduck.ogg', 50, TRUE)
 		if(prob(1))
 			user.drop_item()
-			playsound(user, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, 1) // this is gonna spook some people!!
+			playsound(user, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, TRUE) // this is gonna spook some people!!
 			var/wacka = 0
 			while (wacka++ < 50)
 				sleep(0.2 SECONDS)
@@ -286,6 +298,7 @@
 		src.add_fingerprint(user)
 	return
 
+ADMIN_INTERACT_PROCS(/obj/item/ghostboard, proc/admin_command_speak)
 /obj/item/ghostboard
 	name = "\improper Ouija board"
 	desc = "A wooden board that allows for communication with spirits and such things. Or that's what the company that makes them claims, at least."
@@ -303,12 +316,12 @@
 
 	New()
 		. = ..()
-		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 		BLOCK_SETUP(BLOCK_BOOK)
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	proc/generate_words()
 		var/list/words = list()
@@ -337,14 +350,8 @@
 			if(!selected)
 				return
 
-			animate_float(src, 1, 5, 1)
-			if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
-				var/area/AR = get_area(src)
-				for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
-					if(M.client)
-						boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
-			for (var/mob/O in observersviewers(7, src))
-				O.show_message("<B><span class='notice'>The board spells out a message ... \"[selected]\"</span></B>", 1)
+			src.speak(selected)
+
 			#ifdef HALLOWEEN
 			if (istype(usr.abilityHolder, /datum/abilityHolder/ghost_observer))
 				var/datum/abilityHolder/ghost_observer/GH = usr.abilityHolder
@@ -352,6 +359,20 @@
 			#endif
 		else
 			return ..(location,control,params)
+
+	proc/speak(message)
+		animate_float(src, 1, 5, 1)
+		if(prob(20) && !ON_COOLDOWN(src, "bother chaplains", 1 MINUTE))
+			var/area/AR = get_area(src)
+			for(var/mob/M in by_cat[TR_CAT_CHAPLAINS])
+				if(M.client)
+					boutput(M, "<span class='notice'>You sense a disturbance emanating from \a [src] in \the [AR.name].</span>")
+		for (var/mob/O in observersviewers(7, src))
+			O.show_message("<B><span class='notice'>The board spells out a message ... \"[message]\"</span></B>", 1)
+
+	proc/admin_command_speak()
+		set name = "Speak"
+		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
 
 /obj/item/ghostboard/emouija
 	name = "Emouija board"

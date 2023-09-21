@@ -188,9 +188,9 @@
 		..()
 		src.fields = list("#!",
 						  "if $argc 1 lt | gptio peek elecbox voltage",
-							"if $argc 1 lt | gptio peek elecbox wattage",
+							"if $argc 1 lt | gptio peek elecbox amperage",
 						  "if $argc 1 ge | gptio poke elecbox voltage $arg0",
-							"if $argc 2 ge | gptio poke elecbox wattage $arg1")
+							"if $argc 2 ge | gptio poke elecbox amperage $arg1")
 
 /datum/computer/file/record/artlab_pitcher
 	name = "pitcher"

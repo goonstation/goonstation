@@ -4,6 +4,7 @@
 	desc = "Bean shaped, but not actually beans. You can still eat them, though!"
 	organ_holder_location = "chest"
 	organ_holder_required_op_stage = 7
+	icon = 'icons/obj/items/organs/kidney.dmi'
 	icon_state = "kidneys"
 	failure_disease = /datum/ailment/disease/kidney_failure
 	var/chem_metabolism_modifier = 1
@@ -15,10 +16,10 @@
 		if (!..())
 			return 0
 		if (body_side == L_ORGAN)
-			if (src.holder.left_kidney && src.holder.left_kidney.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.left_kidney && src.holder.left_kidney.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		else
-			if (src.holder.right_kidney && src.holder.right_kidney.get_damage() > FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+			if (src.holder.right_kidney && src.holder.right_kidney.get_damage() > fail_damage && prob(src.get_damage() * 0.2))
 				donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
@@ -131,16 +132,18 @@
 		..()
 		src.icon_state = pick("plant_appendix", "plant_appendix_bloom")
 
+TYPEINFO(/obj/item/organ/kidney/cyber)
+	mats = 6
+
 /obj/item/organ/kidney/cyber
 	name = "cyberkidney"
 	desc = "A fancy robotic kidney to replace one that someone's lost!"
 	icon_state = "cyber-kidney-L"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 	min_chem_metabolism_modifier = 75
 	max_chem_metabolism_modifier = 150
 

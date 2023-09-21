@@ -1,6 +1,7 @@
 /datum/random_event/major/player_spawn/pests
 	name = "Pests (playable)"
 	customization_available = 1
+	targetable = TRUE
 	var/num_pests = 0 //custom critter limit
 	var/pest_type = null //custom critter path
 
@@ -11,7 +12,6 @@
 	list(/mob/living/critter/small_animal/fly/weak, /mob/living/critter/small_animal/mosquito/weak,),\
 	list(/mob/living/critter/small_animal/cat/weak,),\
 	list(/mob/living/critter/small_animal/dog/pug/weak,/mob/living/critter/small_animal/dog/corgi/weak,/mob/living/critter/small_animal/dog/shiba/weak),\
-	list(/mob/living/critter/changeling/eyespider,/mob/living/critter/changeling/buttcrab),\
 	list(/mob/living/critter/small_animal/frog/weak),\
 	list(/mob/living/critter/small_animal/cockroach/robo/weak),\
 	list(/mob/living/critter/robotic/bot/cleanbot, /mob/living/critter/robotic/bot/firebot),)
@@ -31,7 +31,7 @@
 
 		src.num_pests = input(usr, "How many pests to spawn?", src.name, 0) as num|null
 		if (!src.num_pests || src.num_pests < 1)
-			cleanup_event()
+			cleanup()
 			return
 		else
 			src.num_pests = round(src.num_pests)
@@ -40,7 +40,32 @@
 		if (alert(usr, "You have chosen to spawn [src.num_pests] [src.pest_type ? src.pest_type : "random pests"]. Is this correct?", src.name, "Yes", "No") == "Yes")
 			event_effect(source)
 		else
-			cleanup_event()
+			cleanup()
+
+	proc/get_spawn_loc()
+		if (src.custom_spawn_turf)
+			return src.custom_spawn_turf
+
+		var/list/EV = list()
+
+		if (length(landmarks[LANDMARK_PESTSTART]))
+			EV += landmarks[LANDMARK_PESTSTART]
+		if (length(landmarks[LANDMARK_MONKEY]))
+			EV += landmarks[LANDMARK_MONKEY]
+		if (length(landmarks[LANDMARK_BLOBSTART]))
+			EV += landmarks[LANDMARK_BLOBSTART]
+		if (length(landmarks[LANDMARK_KUDZUSTART]))
+			EV += landmarks[LANDMARK_KUDZUSTART]
+		EV += job_start_locations["Clown"]
+
+		if(!EV.len)
+			EV += landmarks[LANDMARK_LATEJOIN]
+			if (!EV.len)
+				message_admins("Pests event couldn't find any valid landmarks!")
+				logTheThing(LOG_DEBUG, null, "Failed to find any valid landmarks for a Pests event!")
+				src.cleanup()
+				return
+		return pick(EV)
 
 	event_effect(var/source)
 		..()
@@ -57,27 +82,8 @@
 
 
 		if (candidates.len)
-			var/list/EV = list()
+			var/atom/pestlandmark = src.get_spawn_loc()
 
-			if (length(landmarks[LANDMARK_PESTSTART]))
-				EV += landmarks[LANDMARK_PESTSTART]
-			if (length(landmarks[LANDMARK_MONKEY]))
-				EV += landmarks[LANDMARK_MONKEY]
-			if (length(landmarks[LANDMARK_BLOBSTART]))
-				EV += landmarks[LANDMARK_BLOBSTART]
-			if (length(landmarks[LANDMARK_KUDZUSTART]))
-				EV += landmarks[LANDMARK_KUDZUSTART]
-			EV += job_start_locations["Clown"]
-
-			if(!EV.len)
-				EV += landmarks[LANDMARK_LATEJOIN]
-				if (!EV.len)
-					message_admins("Pests event couldn't find any valid landmarks!")
-					logTheThing( "debug", null, null, "Failed to find any valid landmarks for a Pests event!" )
-					cleanup_event()
-					return
-
-			var/atom/pestlandmark = pick(EV)
 			var/list/select = list()
 			if (src.pest_type) //customized
 				select += src.pest_type
@@ -93,8 +99,9 @@
 				if (!candidates || !length(candidates))
 					break
 
-				var/datum/mind/M = pick(candidates)
+				var/datum/mind/M = candidates[1]
 				if (M.current)
+					log_respawn_event(M, "ghost critter", source)
 					M.current.make_ghost_critter(pestlandmark,select)
 					var/obj/item/implant/access/infinite/assistant/O = new /obj/item/implant/access/infinite/assistant(M.current)
 					O.owner = M.current
@@ -105,9 +112,10 @@
 
 			if (src.num_pests >= 5)
 				command_alert("A large number of pests have been detected onboard.", "Pest invasion", alert_origin = ALERT_STATION)
-		cleanup_event()
+		src.cleanup()
 
-	proc/cleanup_event()
+	cleanup()
 		src.num_pests = 0
 		src.pest_type = null
+		src.custom_spawn_turf = null
 

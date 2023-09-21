@@ -42,7 +42,7 @@
 			return 1
 
 		if (RC && istype(RC))
-			if (src.the_poison.len > 1)
+			if (length(src.the_poison) > 1)
 				if (!RC.reagents)
 					RC.reagents = new /datum/reagents(src.amount_per_poison * src.the_poison.len)
 					RC.reagents.my_atom = RC
@@ -68,7 +68,7 @@
 
 		if (attempt_success == 1)
 			boutput(M, "<span class='notice'>You successfully poisoned [target].</span>")
-			logTheThing("combat", M, null, "poisons [target] [log_reagents(target)] at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "poisons [target] [log_reagents(target)] at [log_loc(M)].")
 			return 0
 		else
 			boutput(M, "<span class='alert'>You failed to poison [target].</span>")

@@ -1,6 +1,7 @@
 
 /* -------------------- Standard Toolboxes -------------------- */
 
+ABSTRACT_TYPE(/obj/item/storage/toolbox)
 /obj/item/storage/toolbox
 	name = "toolbox"
 	icon = 'icons/obj/items/storage.dmi'
@@ -8,26 +9,24 @@
 	icon_state = "red"
 	item_state = "toolbox-red"
 	flags = FPRINT | TABLEPASS | CONDUCT | NOSPLASH
-	force = 6
+	force = 8
 	throwforce = 10
 	throw_speed = 1
 	throw_range = 7
 	w_class = W_CLASS_BULKY
 	max_wclass = W_CLASS_NORMAL
+	prevent_holding = list(/obj/item/storage/box)
 
 	//cogwerks - burn vars
 	burn_point = 4500
 	burn_output = 4800
 	burn_type = 1
-	stamina_damage = 47
+	stamina_damage = 50
 	stamina_cost = 20
 	stamina_crit_chance = 10
 
 	New()
 		..()
-		if (src.type == /obj/item/storage/toolbox)
-			message_admins("BAD: [src] ([src.type]) spawned at [log_loc(src)]")
-			qdel(src)
 		BLOCK_SETUP(BLOCK_ROD)
 
 	custom_suicide = 1
@@ -41,15 +40,29 @@
 				user.suiciding = 0
 		return 1
 
-	attackby(obj/item/W, mob/user, obj/item/storage/T)
-		if (istype(W, /obj/item/storage/toolbox) || istype(W, /obj/item/storage/box) || istype(W, /obj/item/storage/belt))
-			var/obj/item/storage/S = W
-			for (var/obj/item/I in S.get_contents())
-				if (..(I, user, S) == 0)
-					break
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/tile) && !length(src.storage.get_contents()) && !isrobot(user)) // we are making a floorbot!
+			var/obj/item/toolbox_tiles/B = new /obj/item/toolbox_tiles
+
+			user.put_in_hand_or_drop(B)
+			W.change_stack_amount(-1)
+
+			if(istype(src, /obj/item/storage/toolbox/emergency))
+				B.color_overlay = "floorbot_overlay_red"
+			else if(istype(src, /obj/item/storage/toolbox/electrical))
+				B.color_overlay = "floorbot_overlay_yellow"
+			else if(istype(src, /obj/item/storage/toolbox/artistic))
+				B.color_overlay = "floorbot_overlay_green"
+
+			if(B.color_overlay)
+				B.UpdateOverlays(image(B.icon, icon_state = B.color_overlay), "coloroverlay")
+
+			user.drop_item(src)
+			src.set_loc(B)
+			boutput(user, "You add the tiles into the empty toolbox. They stick oddly out the top.")
 			return
-		else
-			return ..()
+
+		return ..()
 
 /obj/item/storage/toolbox/emergency
 	name = "emergency toolbox"
@@ -77,17 +90,25 @@
 		spawn_contents = list(/obj/item/device/analyzer/atmospheric/upgraded,\
 		/obj/item/electronics/soldering,\
 		/obj/item/device/t_scanner,\
+		/obj/item/electronics/scanner,\
 		/obj/item/cable_coil,\
 		/obj/item/reagent_containers/food/snacks/sandwich/pb,\
-		/obj/item/reagent_containers/food/snacks/plant/banana,\
 		/obj/item/reagent_containers/food/drinks/milk)
 
 	yellow_tools
 		spawn_contents = list(/obj/item/screwdriver/yellow,\
 		/obj/item/wrench/yellow,\
-		/obj/item/weldingtool,\
+		/obj/item/weldingtool/yellow,\
 		/obj/item/crowbar/yellow,\
 		/obj/item/wirecutters/yellow,\
+		/obj/item/device/analyzer/atmospheric)
+
+	orange_tools //used for QM bought tools
+		spawn_contents = list(/obj/item/screwdriver/orange,\
+		/obj/item/wrench/orange,\
+		/obj/item/weldingtool/orange,\
+		/obj/item/crowbar/orange,\
+		/obj/item/wirecutters/orange,\
 		/obj/item/device/analyzer/atmospheric)
 
 	empty
@@ -104,6 +125,7 @@
 	/obj/item/crowbar)
 
 	make_my_stuff()
+		..()
 		var/picked = pick(/obj/item/cable_coil,\
 		/obj/item/cable_coil/yellow,\
 		/obj/item/cable_coil/orange,\
@@ -114,10 +136,10 @@
 		/obj/item/cable_coil/hotpink,\
 		/obj/item/cable_coil/brown,\
 		/obj/item/cable_coil/white)
-		spawn_contents.Add(picked)
+		src.storage.add_contents(new picked(src))
 		if (!istype(src, /obj/item/storage/toolbox/electrical/mechanic_spawn))
-			spawn_contents.Add(picked,picked)
-		. = ..()
+			for (var/i = 1 to 2)
+				src.storage.add_contents(new picked(src))
 
 
 	// The extra items (scanner and soldering iron) take up precious space in the backpack.
@@ -128,6 +150,12 @@
 		/obj/item/reagent_containers/food/snacks/sandwich/cheese,\
 		/obj/item/reagent_containers/food/snacks/chips,\
 		/obj/item/reagent_containers/food/drinks/coffee)
+
+	orange_tools //used for QM bought tools
+		spawn_contents = list(/obj/item/screwdriver/orange,\
+		/obj/item/wirecutters/orange,\
+		/obj/item/device/t_scanner,\
+		/obj/item/crowbar/orange)
 
 /obj/item/storage/toolbox/artistic
 	name = "artistic toolbox"
@@ -177,15 +205,15 @@
 		if(!ishuman(user) || !user:find_ailment_by_type(/datum/ailment/disability/memetic_madness))
 			boutput(user, "<span class='alert'>You can't seem to find the latch to open this. Maybe you need to examine it more thoroughly?</span>")
 			return
-		if (src.contents.len >= 7)
+		if (src.storage.is_full())
 			return
-		if (((istype(W, /obj/item/storage) && W.w_class > W_CLASS_SMALL) || src.loc == W))
+		if (((W.storage && W.w_class > W_CLASS_SMALL) || src.loc == W))
 			return
 		if(istype(W, /obj/item/grab))	// It will devour people! It's an evil thing!
 			var/obj/item/grab/G = W
 			if(!G.affecting) return
 			if(!G.affecting.stat && !G.affecting.restrained() && !G.affecting.getStatusDuration("weakened"))
-				boutput(user, "<span class='alert'>They're moving too much to feed to His Grace!</span>")
+				boutput(user, "<span class='alert'>[capitalize(hes_or_shes(G.affecting))] moving too much to feed to His Grace!</span>")
 				return
 			user.visible_message("<span class='alert'><b>[user] is trying to feed [G.affecting] to [src]!</b></span>")
 			if(!do_mob(user, G.affecting, 30)) return
@@ -207,17 +235,17 @@
 
 		src.hunger = 0
 		src.hunger_message_level = 0
-		playsound(src.loc, pick("sound/voice/burp_alien.ogg"), 50, 0)
+		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		//Neatly sort everything they have into handy little boxes.
-		var/obj/item/storage/box/per_person = new
-		per_person.set_loc(src)
-		var/obj/item/storage/box/Gcontents = new
-		Gcontents.set_loc(per_person)
+		var/obj/item/storage/box/per_person = new /obj/item/storage/box(src)
+		src.storage.add_contents(per_person)
+		var/obj/item/storage/box/Gcontents = new /obj/item/storage/box(src)
+		per_person.storage.add_contents(Gcontents)
 		per_person.name = "Box-'[M.real_name]'"
 		for(var/obj/item/looted in M)
-			if(Gcontents.contents.len >= 7)
-				Gcontents = new
-				Gcontents.set_loc(per_person)
+			if(Gcontents.storage.is_full())
+				Gcontents = new /obj/item/storage/box(src)
+				per_person.storage.add_contents(Gcontents)
 			if(istype(looted, /obj/item/implant)) continue
 			M.u_equip(looted)
 			if (looted == src)
@@ -226,7 +254,7 @@
 				continue
 
 			if (looted)
-				looted.set_loc(Gcontents)
+				Gcontents.storage.add_contents(looted)
 				looted.layer = initial(looted.layer)
 				looted.dropped(M)
 
@@ -256,7 +284,7 @@
 		servantlinks = null
 
 		src.visible_message("<span class='alert'><b>[src]</b> screams!</span>")
-		playsound(src.loc,"sound/effects/screech.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/screech.ogg', 50, 1)
 
 		..()
 		return
@@ -304,7 +332,7 @@
 		else
 			asize++
 		acount++
-	src.playsound_local(src.loc,"sound/effects/screech.ogg", 50, 1)
+	src.playsound_local(src.loc,'sound/effects/screech.ogg', 50, 1)
 	shake_camera(src, 20, 16)
 	boutput(src, "<font color=red>[screamstring]</font>")
 	boutput(src, "<i><b><font face = Tempus Sans ITC>His Grace accepts thee, spread His will! All who look close to the Enlightened may share His gifts.</font></b></i>")

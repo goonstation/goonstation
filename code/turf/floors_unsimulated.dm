@@ -134,7 +134,6 @@
 	New()
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
-		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/damaged2
@@ -142,7 +141,6 @@
 	New()
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
-		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/damaged3
@@ -150,7 +148,6 @@
 	New()
 		..()
 		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
-		damage_overlay.alpha = 200
 		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/plating/random
@@ -175,15 +172,15 @@
 			make_cleanable(/obj/decal/cleanable/dirt/dirt4,src)
 		if (prob(2))
 			make_cleanable(/obj/decal/cleanable/dirt/dirt5,src)
-		if ((locate(/obj/window) in src) || (locate(/obj/wingrille_spawn) in src))
+		if ((locate(/obj/window) in src) || (locate(/obj/mapping_helper/wingrille_spawn) in src))
 			return
 		if (prob(2))
 			var/obj/C = pick(/obj/decal/cleanable/paper, /obj/decal/cleanable/fungus, /obj/decal/cleanable/dirt, /obj/decal/cleanable/ash,\
 			/obj/decal/cleanable/molten_item, /obj/decal/cleanable/machine_debris, /obj/decal/cleanable/oil, /obj/decal/cleanable/rust)
 			make_cleanable( C ,src)
 		else if ((locate(/obj) in src) && prob(3))
-			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal/steel,\
-			/obj/item/spacecash, /obj/item/tile/steel, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
+			var/obj/C = pick(/obj/item/cable_coil/cut/small, /obj/item/brick, /obj/item/cigbutt, /obj/item/scrap, /obj/item/raw_material/scrap_metal,\
+			/obj/item/currency/spacecash, /obj/item/tile/steel, /obj/item/weldingtool, /obj/item/screwdriver, /obj/item/wrench, /obj/item/wirecutters, /obj/item/crowbar)
 			new C (src)
 		else if (prob(1) && prob(2)) // really rare. not "three space things spawn on destiny during first test with just prob(1)" rare.
 			var/obj/C = pick(/obj/item/space_thing, /obj/item/sticker/gold_star, /obj/item/sticker/banana, /obj/item/sticker/heart,\
@@ -361,6 +358,9 @@
 /turf/unsimulated/floor/darkpurple/side
 	icon_state = "dpurple"
 
+/turf/unsimulated/floor/darkpurple/corner
+	icon_state = "dpurplecorner"
+
 /////////////////////////////////////////
 
 /turf/unsimulated/floor/bluegreen
@@ -486,6 +486,8 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/unsimulated/floor/circuit)
+	mat_appearances_to_ignore = list("pharosium")
 /turf/unsimulated/floor/circuit
 	name = "transduction matrix"
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry."
@@ -493,11 +495,7 @@
 	RL_LumR = 0
 	RL_LumG = 0   //Corresponds to color of the icon_state.
 	RL_LumB = 0.3
-	mat_appearances_to_ignore = list("pharosium")
-
-	New()
-		..()
-		setMaterial(getMaterial("pharosium"))
+	default_material = "pharosium"
 
 /turf/unsimulated/floor/circuit/green
 	icon_state = "circuit-green"
@@ -642,33 +640,6 @@
 
 /////////////////////////////////////////
 
-/turf/unsimulated/floor/delivery
-	icon_state = "delivery"
-
-/turf/unsimulated/floor/delivery/white
-	icon_state = "delivery_white"
-
-/turf/unsimulated/floor/delivery/caution
-	icon_state = "deliverycaution"
-
-
-/turf/unsimulated/floor/bot
-	icon_state = "bot"
-
-/turf/unsimulated/floor/bot/white
-	icon_state = "bot_white"
-
-/turf/unsimulated/floor/bot/blue
-	icon_state = "bot_blue"
-
-/turf/unsimulated/floor/bot/caution
-	icon_state = "botcaution"
-
-/turf/unsimulated/floor/bot/darkpurple
-	icon_state = "bot_dpurple"
-
-/////////////////////////////////////////
-
 /turf/unsimulated/floor/engine
 	name = "reinforced floor"
 	icon_state = "engine"
@@ -755,13 +726,11 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/unsimulated/floor/wood)
+	mat_appearances_to_ignore = list("wood")
 /turf/unsimulated/floor/wood
 	icon_state = "wooden-2"
-	mat_appearances_to_ignore = list("wood")
-
-	New()
-		..()
-		setMaterial(getMaterial("wood"))
+	default_material = "wood"
 
 /turf/unsimulated/floor/wood/two
 	icon_state = "wooden"
@@ -894,16 +863,32 @@
 	step_priority = STEP_PRIORITY_MED
 
 /turf/unsimulated/floor/airless/plating/scorched
-	icon_state = "panelscorched"
+	New()
+		..()
+		var/image/burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
+		burn_overlay.alpha = 200
+		UpdateOverlays(burn_overlay,"burn")
 
 /turf/unsimulated/floor/airless/plating/damaged1
-	icon_state = "platingdmg1"
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg1")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/airless/plating/damaged2
-	icon_state = "platingdmg2"
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg2")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 /turf/unsimulated/floor/airless/plating/damaged3
-	icon_state = "platingdmg3"
+	New()
+		..()
+		var/image/damage_overlay = image('icons/turf/floors.dmi',"platingdmg3")
+		damage_overlay.alpha = 200
+		UpdateOverlays(damage_overlay,"damage")
 
 //////////////
 
@@ -967,17 +952,15 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/unsimulated/floor/grass)
+	mat_appearances_to_ignore = list("steel","synthrubber")
 /turf/unsimulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
-	mat_appearances_to_ignore = list("steel","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
-
-	New()
-		..()
-		setMaterial(getMaterial("synthrubber"))
+	default_material = "synthrubber"
 
 /turf/unsimulated/floor/grass/leafy
 	icon_state = "grass_leafy"
@@ -1000,6 +983,33 @@
 
 /////////////////////////////////////////
 
+/turf/unsimulated/floor/glassblock
+	name = "glass block tiling"
+	icon = 'icons/turf/floors.dmi'
+	icon_state = "glass_small"
+	step_material = "step_wood"
+	step_priority = STEP_PRIORITY_MED
+
+/turf/unsimulated/floor/glassblock/large
+	icon_state = "glass_large"
+
+/turf/unsimulated/floor/glassblock/transparent_cyan
+	icon_state = "glasstr_cyan"
+
+/turf/unsimulated/floor/glassblock/transparent_indigo
+	icon_state = "glasstr_indigo"
+
+/turf/unsimulated/floor/glassblock/transparent_red
+	icon_state = "glasstr_red"
+
+/turf/unsimulated/floor/glassblock/transparent_grey
+	icon_state = "glasstr_grey"
+
+/turf/unsimulated/floor/glassblock/transparent_purple
+	icon_state = "glasstr_purple"
+
+/////////////////////////////////////////
+
 /turf/unsimulated/floor/shuttlebay
 	name = "shuttle bay plating"
 	icon_state = "engine"
@@ -1019,7 +1029,8 @@
 		. = ..()
 		src.layer += src.edge_priority_level / 1000
 		SPAWN(0.5 SECONDS) //give neighbors a chance to spawn in
-			edge_overlays()
+			if(istype(src))
+				edge_overlays()
 
 	proc/edge_overlays()
 		for (var/turf/T in orange(src,1))
@@ -1116,18 +1127,16 @@
 			src.icon_state = "swamp[rand(1, 4)]"
 
 
+TYPEINFO(/turf/unsimulated/floor/auto/water/ice)
+	mat_appearances_to_ignore = list("ice")
 /turf/unsimulated/floor/auto/water/ice
 	name = "ice"
 	desc = "Frozen water."
 	icon = 'icons/turf/water.dmi'
 	icon_state = "ice"
 	icon_state_edge = "ice_edge"
-	mat_appearances_to_ignore = list("ice")
-
-	New()
-		..()
-		setMaterial(getMaterial("ice"))
-		name = initial(name)
+	default_material = "ice"
+	mat_changename = FALSE
 
 /turf/unsimulated/floor/auto/water/ice/rough
 	name = "ice"

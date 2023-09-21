@@ -69,9 +69,9 @@ client/proc/replace_space()
 		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -79,7 +79,7 @@ client/proc/replace_space()
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	logTheThing("admin", src, null, "began to convert all space tiles into an ocean of [reagent.id].")
+	logTheThing(LOG_ADMIN, src, "began to convert all space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all space tiles into an ocean of [reagent.id]. Oh no.")
 
 	SPAWN(0)
@@ -112,9 +112,9 @@ client/proc/replace_space_exclusive()
 		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -122,7 +122,7 @@ client/proc/replace_space_exclusive()
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	logTheThing("admin", src, null, "began to convert all station space tiles into an ocean of [reagent.id].")
+	logTheThing(LOG_ADMIN, src, "began to convert all station space tiles into an ocean of [reagent.id].")
 	message_admins("[key_name(src)] began to convert all station space tiles into an ocean of [reagent.id].")
 
 	SPAWN(0)
@@ -163,10 +163,22 @@ client/proc/replace_space_exclusive()
 #ifdef UNDERWATER_MAP
 			T.name = ocean_name
 #endif
-
 			T.color = ocean_color
 			LAGCHECK(LAG_REALTIME)
 
+// catwalks sim water otherwise
+#ifndef UNDERWATER_MAP
+		for(var/turf/simulated/floor/airless/plating/catwalk/C in world)
+			if (C.z != 1 || istype(C, /turf/space/fluid/warp_z5)) continue
+			var/turf/orig = locate(C.x, C.y, C.z)
+			var/turf/space/fluid/T = orig.ReplaceWith(/turf/space/fluid, FALSE, TRUE, FALSE, TRUE)
+			T.color = ocean_color
+			LAGCHECK(LAG_REALTIME)
+#endif
+
+		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_DEBRIS)
+		REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_MINING)
 		message_admins("Finished space replace!")
 		map_currently_underwater = 1
 
@@ -188,7 +200,7 @@ client/proc/dereplace_space()
 
 	var/answer = alert("Replace Z1 only?",,"Yes","No")
 
-	logTheThing("admin", src, null, "began to convert all ocean tiles into space.")
+	logTheThing(LOG_ADMIN, src, "began to convert all ocean tiles into space.")
 	message_admins("[key_name(src)] began to convert all ocean tiles into space.")
 
 	SPAWN(0)
@@ -200,11 +212,15 @@ client/proc/dereplace_space()
 					var/turf/orig = locate(F.x, F.y, F.z)
 					orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
 		else
 			for(var/turf/space/fluid/F in world)
 				var/turf/orig = locate(F.x, F.y, F.z)
 				orig.ReplaceWith(/turf/space, FALSE, TRUE, FALSE, TRUE)
 				LAGCHECK(LAG_REALTIME)
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_STATION)
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_DEBRIS)
+			RESTORE_PARALLAX_RENDER_SOURCE_GROUP_TO_DEFAULT(Z_LEVEL_MINING)
 
 		message_admins("Finished space dereplace!")
 		map_currently_underwater = 0

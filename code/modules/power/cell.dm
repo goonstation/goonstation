@@ -38,8 +38,8 @@
 	name = "erebite power cell"
 	desc = "A small battery/generator unit powered by the unstable mineral Erebite. Do not expose to high temperatures or fire."
 	icon_state = "erebcell"
-	maxcharge = 15000
-	genrate = 10
+	maxcharge = 60000
+	genrate = 30
 	specialicon = 1
 
 /obj/item/cell/cerenkite
@@ -54,6 +54,13 @@
 	name = "AI shell power cell"
 	desc = "A rechargable electrochemical power cell. It's made for AI shells."
 	maxcharge = 4000
+
+/obj/item/cell/hypercell
+	name = "hyper capacity power cell"
+	desc = "A hyper capacity power cell utilizing the latest in high density energy storage. Warning: Do no- *the rest is scratched out*"
+	icon_state = "hypercell"
+	maxcharge = 25000
+	specialicon = 1
 
 /obj/item/cell/custom
 	name = "Large power cell"
@@ -83,7 +90,7 @@
 	proc/set_custom_mats(datum/material/coreMat, datum/material/genMat = null)
 		src.setMaterial(coreMat)
 		if(genMat)
-			src.name = "[genMat.name]-doped [src.name]"
+			src.name = "[genMat.getName()]-doped [src.name]"
 			var/conductivity = (2 * coreMat.getProperty("electrical") + genMat.getProperty("electrical")) / 3 //if self-charging, use a weighted average of the conductivities
 			maxcharge = round((conductivity ** 2) * 300, 500)
 			genrate = (coreMat.getProperty("radioactive") + coreMat.getProperty("n_radioactive") * 2 + genMat.getProperty("radioactive") * 2 + genMat.getProperty("n_radioactive") * 4) / 3 //weight this too
@@ -95,13 +102,16 @@
 	charge = 15000
 
 /obj/item/cell/erebite/charged
-	charge = 15000
+	charge = 60000
 
 /obj/item/cell/cerenkite/charged
 	charge = 15000
 
 /obj/item/cell/shell_cell/charged
 	charge = 4000
+
+/obj/item/cell/hypercell/charged
+	charge = 25000
 
 /obj/item/cell/New()
 	..()
@@ -150,16 +160,17 @@
 	if(rigged && amount > 0)
 		if (rigger)
 			message_admins("[key_name(rigger)]'s rigged cell exploded at [log_loc(src)].")
-			logTheThing("combat", rigger, null, "'s rigged cell exploded at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, rigger, "'s rigged cell exploded at [log_loc(src)].")
 		explode()
 
 // recharge the cell
 /obj/item/cell/proc/give(var/amount)
+	. = min(maxcharge-charge, amount)
 	charge = min(maxcharge, charge+amount)
 	if(rigged && amount > 0)
 		if (rigger)
 			message_admins("[key_name(rigger)]'s rigged cell exploded at [log_loc(src)].")
-			logTheThing("combat", rigger, null, "'s rigged cell exploded at [log_loc(src)].")
+			logTheThing(LOG_COMBAT, rigger, "'s rigged cell exploded at [log_loc(src)].")
 		explode()
 
 /obj/item/cell/process()
@@ -189,11 +200,11 @@
 		if (S.reagents.has_reagent("plasma", 1))
 			if (istype(src,/obj/item/cell/erebite))
 				message_admins("[key_name(user)] injected [src] with plasma, causing an explosion at [log_loc(user)].")
-				logTheThing("combat", user, null, "injected [src] with plasma, causing an explosion at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "injected [src] with plasma, causing an explosion at [log_loc(user)].")
 				boutput(user, "<span class='alert'>The plasma reacts with the erebite and explodes violently!</span>")
 				src.explode()
 			else
-				logTheThing("combat", user, null, "rigged [src] to explode at [log_loc(user)].")
+				logTheThing(LOG_COMBAT, user, "rigged [src] to explode at [log_loc(user)].")
 				rigged = 1
 				rigger = user
 		S.reagents.clear_reagents()
@@ -215,12 +226,11 @@
 
 /obj/item/cell/proc/explode()
 	if(src in bible_contents)
-		for_by_tcl(B, /obj/item/storage/bible)
+		for_by_tcl(B, /obj/item/bible)
 			var/turf/T = get_turf(B.loc)
 			if(T)
 				T.hotspot_expose(700,125)
 				explosion(src, T, -1, -1, 2, 3)
-		bible_contents.Remove(src)
 		qdel(src)
 		return
 	var/turf/T = get_turf(src.loc)
@@ -232,7 +242,7 @@
 
 
 /obj/item/cell/proc/zap(mob/user as mob, var/ignores_gloves = 0)
-	if (user.shock(src, src.charge, user.hand == 1 ? "l_arm" : "r_arm", 1, ignores_gloves))
+	if (user.shock(src, src.charge, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, ignores_gloves))
 		boutput(user, "<span class='alert'>[src] shocks you!</span>")
 
 		for(var/mob/M in AIviewers(src))
@@ -310,7 +320,7 @@
 /obj/item/ammo/power_cell/self_charging/potato/New(var/loc, var/potency, var/endurance)
 	var/rngfactor = 2 + rand()
 	src.max_charge += round(potency/rngfactor)
-	src.recharge_rate = 0.5 * round(endurance/rand(25,30))
+	src.recharge_rate = 0.25 * round(endurance/rand(25,30))
 	src.charge = src.max_charge
 	..()
 

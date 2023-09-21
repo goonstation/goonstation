@@ -1,7 +1,7 @@
 /obj/npc/station_trader //separate obj because he has a lot of different behaviours eg. no buying, no set area, no defence systems to activate
 	name="Shady Robot"
-	icon = 'icons/misc/evilreaverstation.dmi' //temporary
-	icon_state = "pr1_b"
+	icon = 'icons/obj/bots/robuddy/pr-1.dmi'
+	icon_state = "body"
 	picture = "robot.png"
 	var/hiketolerance = 20 //How much they will tolerate price hike
 	var/list/droplist = null //What the merchant will drop upon their death
@@ -96,6 +96,9 @@
 
 	New()
 		..()
+		src.UpdateOverlays(image(src.icon, "face-happy"), "emotion")
+		src.UpdateOverlays(image(src.icon, "lights-on"), "lights")
+
 		teleport()
 		process()
 
@@ -461,17 +464,16 @@
 		else if (href_list["card"])
 			if (src.scan) src.scan = null
 			else
-				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-					if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+				var/obj/item/card/id/id_card = get_id_card(usr.equipped())
+				if (istype(id_card))
 					boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 					var/datum/db_record/account = null
-					account = FindBankAccountByName(I:registered)
+					account = FindBankAccountByName(id_card.registered)
 					if(account)
 						var/enterpin = usr.enter_pin("Card Reader")
-						if (enterpin == I:pin)
+						if (enterpin == id_card.pin)
 							boutput(usr, "<span class='notice'>Card authorized.</span>")
-							src.scan = I
+							src.scan = id_card
 						else
 							boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
 							src.scan = null

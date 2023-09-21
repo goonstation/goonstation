@@ -249,7 +249,7 @@ datum/pathogeneffects/benevolent/resurrection
 			M.changeStatus("paralysis", 15 SECONDS) 			// paralyze the person for a while, because coming back to life is hard work
 			M.change_misstep_chance(40)					// even after getting up they still have some grogginess for a while
 			M.stuttering = 15
-			if (M.ghost && M.ghost.mind && !(M.mind && M.mind.dnr)) // if they have dnr set don't bother shoving them back in their body
+			if (M.ghost && M.ghost.mind && !(M.mind && M.mind.get_player()?.dnr)) // if they have dnr set don't bother shoving them back in their body
 				M.ghost.show_text("<span class='alert'><B>You feel yourself being dragged out of the afterlife!</B></span>")
 				M.ghost.mind.transfer_to(M)
 				qdel(M.ghost)

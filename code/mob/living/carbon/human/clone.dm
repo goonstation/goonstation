@@ -3,6 +3,7 @@
 
 	New()
 		. = ..()
+		is_npc = TRUE
 
 		// Randomize gender and blood type
 		// For whatever reason this appeared to be randomizing other appearance details,

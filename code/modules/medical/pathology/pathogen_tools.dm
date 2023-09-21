@@ -156,7 +156,7 @@
 				// Multiple types of reagents will immediately make the dish dirty.
 				if (R == "pathogen")
 					var/datum/reagent/blood/pathogen/P = src.reagents.reagent_list["pathogen"]
-					if (P.pathogens.len > 1)
+					if (length(P.pathogens) > 1)
 						// Too many pathogens. This culture is dead.
 						set_dirty("The presence of multiple pathogens makes them unable to grow.")
 				else if (R in pathogen_controller.media)
@@ -184,7 +184,7 @@
 					// Foreign chemical, murdering the culture.
 					set_dirty("The pathogen culture is unable to cultivate in the environment due to foreign chemicals.")
 		else
-			if (src.reagents.reagent_list.len == 1 && src.reagents.reagent_list[1] == "pathogen")
+			if (length(src.reagents.reagent_list) == 1 && src.reagents.reagent_list[1] == "pathogen")
 				return
 			for (var/R in src.reagents.reagent_list)
 				var/datum/reagent/RE = src.reagents.reagent_list[R]
@@ -435,16 +435,16 @@
 	proc/inject(var/mob/living/carbon/human/target, var/mob/user)
 		if (is_cure)
 			if (!is_vaccine)
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with the cure for [src.pathogen.name].")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with the cure for [src.pathogen.name].")
 				target.remission(src.pathogen)
 			else
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with a vaccine for [src.pathogen.name].")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with a vaccine for [src.pathogen.name].")
 				target.immunity(src.pathogen)
 		else
 			if (target.infected(src.pathogen))
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector and infects them.")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector and infects them.")
 			else
-				logTheThing("pathology", user, target, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector but they were unaffected.")
+				logTheThing(LOG_PATHOLOGY, user, "injects [constructTarget(target,"pathology")] with pathogen [src.pathogen.name] from a bad cure injector but they were unaffected.")
 		src.pathogen = null
 		used = 1
 

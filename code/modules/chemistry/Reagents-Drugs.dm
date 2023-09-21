@@ -67,7 +67,7 @@ datum
 
 				if(check < 8)
 					M.reagents.add_reagent(pick("methamphetamine", "crank", "neurotoxin"), rand(1,5))
-					M.visible_message("<span class='alert'><b>[M.name]</b> scratches at something under their skin!</span>")
+					M.visible_message("<span class='alert'><b>[M.name]</b> scratches at something under their [issilicon(M) ? "chassis" : "skin"]!</span>")
 					random_brute_damage(M, 5 * mult)
 				else if (check < 16)
 					switch(rand(1,2))
@@ -80,7 +80,7 @@ datum
 							else if(prob(50))
 								fake_attackEx(M, 'icons/misc/critter.dmi', "mimicface", "smiling thing")
 								boutput(M, "<span class='alert'><b>The smiling thing</b> laughs!</span>")
-								M.playsound_local(M.loc, pick("sound/voice/cluwnelaugh1.ogg", "sound/voice/cluwnelaugh2.ogg", "sound/voice/cluwnelaugh3.ogg"), 35, 1)
+								M.playsound_local(M.loc, pick('sound/voice/cluwnelaugh1.ogg', 'sound/voice/cluwnelaugh2.ogg', 'sound/voice/cluwnelaugh3.ogg'), 35, 1)
 							else
 								M.playsound_local(M.loc, pick('sound/machines/ArtifactEld1.ogg', 'sound/machines/ArtifactEld2.ogg'), 50, 1)
 								boutput(M, "<span class='alert'><b>You hear something strange behind you...</b></span>")
@@ -122,7 +122,7 @@ datum
 					M.emote("faint")
 					//var/mob/living/carbon/human/H = M
 					//if (istype(H))
-					M.changeStatus("radiation", 3 SECONDS, 2)
+					M.take_radiation_dose(0.001 SIEVERTS * volume, internal=TRUE)
 					M.take_toxin_damage(5)
 					M.take_brain_damage(10)
 				else
@@ -289,53 +289,101 @@ datum
 			transparency = 20
 			value = 6 // 4 2
 			thirst_value = -0.03
+			var/counter = 1
 			var/current_color_pattern = 1
+			var/static/list/halluc_sounds = list(
+				"punch",
+				'sound/vox/poo-vox.ogg',
+				new /datum/hallucinated_sound("clownstep", min_count = 1, max_count = 6, delay = 0.4 SECONDS),
+				'sound/weapons/armbomb.ogg',
+				new /datum/hallucinated_sound('sound/weapons/Gunshot.ogg', min_count = 1, max_count = 3, delay = 0.4 SECONDS),
+				new /datum/hallucinated_sound('sound/impact_sounds/Energy_Hit_3.ogg', min_count = 2, max_count = 4, delay = COMBAT_CLICK_DELAY),
+				'sound/voice/creepyshriek.ogg',
+				new /datum/hallucinated_sound('sound/impact_sounds/Metal_Hit_1.ogg', min_count = 1, max_count = 3, delay = COMBAT_CLICK_DELAY),
+				new /datum/hallucinated_sound('sound/machines/airlock_bolt.ogg', min_count = 1, max_count = 3, delay = 0.3 SECONDS),
+				'sound/machines/airlock_swoosh_temp.ogg',
+				'sound/machines/airlock_deny.ogg',
+				'sound/machines/airlock_pry.ogg',
+				new /datum/hallucinated_sound('sound/weapons/flash.ogg', min_count = 1, max_count = 3, delay = COMBAT_CLICK_DELAY),
+				'sound/musical_instruments/Bikehorn_1.ogg',
+				'sound/misc/talk/radio.ogg',
+				'sound/misc/talk/radio2.ogg',
+				'sound/misc/talk/radio_ai.ogg',
+				'sound/weapons/laser_f.ogg',
+				'sound/items/security_alert.ogg', //hehehehe
+				new /datum/hallucinated_sound('sound/machines/click.ogg', min_count = 1, max_count = 4, delay = 0.4 SECONDS), //silenced pistol sound
+				new /datum/hallucinated_sound('sound/effects/glare.ogg', pitch = 0.8), //vamp glare is pitched down for... reasons
+				'sound/effects/poff.ogg',
+				new /datum/hallucinated_sound('sound/effects/electric_shock_short.ogg', min_count = 3, max_count = 10, delay = 1 SECOND, pitch = 0.8), //arcfiend drain
+				'sound/items/hypo.ogg',
+				'sound/items/sticker.ogg',
+			)
+			var/static/list/speech_sounds = list(
+				'sound/misc/talk/speak_1.ogg',
+				'sound/misc/talk/speak_3.ogg',
+				'sound/misc/talk/cow.ogg',
+				'sound/misc/talk/roach.ogg',
+				'sound/misc/talk/lizard.ogg',
+				'sound/misc/talk/skelly.ogg',
+			)
+			var/static/list/voice_names = list(
+				"The voice in your head",
+				"Someone right behind you",
+				"???",
+				"A whisper in the vents",
+				"The universe itself",
+			)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				// TODO. Write awesome hallucination algorithm!
-//				if(M.canmove) step(M, pick(cardinal))
-//				if(prob(7)) M.emote(pick("twitch","drool","moan","giggle"))
-				if(prob(20))
+				src.counter += 1 * mult //around half realtime
+				if(M.client && counter >= 6 && prob(20)) //trippy colours
 					if(src.current_color_pattern == 1)
 						animate_fade_drug_inbetween_1(M.client, 40)
 						src.current_color_pattern = 2
 					else
 						animate_fade_drug_inbetween_2(M.client, 40)
 						src.current_color_pattern = 1
-				if(probmult(6))
-					switch(rand(1,2))
-						if(1)
-							if(prob(50))
-								fake_attack(M)
-							else
-								var/monkeys = rand(1,3)
-								for(var/i = 0, i < monkeys, i++)
-									fake_attackEx(M, 'icons/mob/monkey.dmi', "monkey_hallucination", "monkey ([rand(1, 1000)])")
-						if(2)
-							var/halluc_state = null
-							var/halluc_name = null
-							switch(rand(1,5))
-								if(1)
-									halluc_state = "pig"
-									halluc_name = pick("pig", "DAT FUKKEN PIG")
-								if(2)
-									halluc_state = "spider"
-									halluc_name = pick("giant black widow", "aw look a spider", "OH FUCK A SPIDER")
-								if(3)
-									halluc_state = "dragon"
-									halluc_name = pick("dragon", "Lord Cinderbottom", "SOME FUKKEN LIZARD THAT BREATHES FIRE")
-								if(4)
-									halluc_state = "slime"
-									halluc_name = pick("red slime", "some gooey thing", "ANGRY CRIMSON POO")
-								if(5)
-									halluc_state = "shambler"
-									halluc_name = pick("shambler", "strange creature", "OH GOD WHAT THE FUCK IS THAT THING?")
-							fake_attackEx(M, 'icons/effects/hallucinations.dmi', halluc_state, halluc_name)
-				if(probmult(9))
-					M.playsound_local(M.loc, pick("explosion", "punch", 'sound/vox/poo-vox.ogg', "clownstep", 'sound/weapons/armbomb.ogg', 'sound/weapons/Gunshot.ogg'), 50, 1)
-				if(probmult(8))
-					boutput(M, "<b>You hear a voice in your head... <i>[phrase_log.random_phrase("say")]</i></b>")
+				if(probmult(12) && !ON_COOLDOWN(M, "hallucination_spawn", 30 SECONDS)) //spawn a fake critter
+					if (prob(20))
+						if(prob(60))
+							fake_attack(M)
+						else
+							var/monkeys = rand(1,3)
+							for(var/i = 0, i < monkeys, i++)
+								fake_attackEx(M, 'icons/mob/monkey.dmi', "monkey_hallucination", pick_string_autokey("names/monkey.txt"))
+					else
+						var/fake_type = pick(childrentypesof(/obj/fake_attacker))
+						new fake_type(M.loc, M)
+				//THE VOICES GET LOUDER
+				if(probmult(min(16 + src.counter/2, 30))) //play some fake audio
+					var/atom/origin = M.loc
+					var/turf/mob_turf = get_turf(M)
+					if (mob_turf)
+						origin = locate(mob_turf.x + rand(-10,10), mob_turf.y + rand(-10,10), mob_turf.z)
+					//wacky loosely typed code ahead
+					var/datum/hallucinated_sound/chosen = pick(src.halluc_sounds)
+					if (istype(chosen)) //it's a datum
+						chosen.play(M, origin)
+					else //it's just a path directly
+						M.playsound_local(origin, chosen, 100, 1)
+				if(probmult(8)) //display a random chat message
+					M.playsound_local(M.loc, pick(src.speech_sounds, 100, 1))
+					boutput(M, "<b>[pick(src.voice_names)]</b> says, \"[phrase_log.random_phrase("say")]\"")
+				if(probmult(10)) //turn someone into a critter
+					var/list/candidates = list()
+					for(var/mob/living/carbon/human/human in viewers(M))
+						candidates += human
+					if (length(candidates))
+						var/mob/living/carbon/human/chosen = pick(candidates)
+						var/obj/fake_attacker/fake_type = pick(childrentypesof(/obj/fake_attacker))
+						var/image/override_img = image(initial(fake_type.fake_icon), chosen, initial(fake_type.fake_icon_state), chosen.layer)
+						override_img.override = TRUE
+						var/client/client = M.client //hold a reference to the client directly
+						client?.images.Add(override_img)
+						SPAWN (20 SECONDS)
+							client?.images.Remove(override_img)
+							qdel(override_img)
 				..()
 				return
 
@@ -346,10 +394,11 @@ datum
 				return
 
 			on_mob_life_complete(var/mob/living/M)
-				if(src.current_color_pattern == 1)
-					animate_fade_from_drug_1(M.client, 40)
-				else
-					animate_fade_from_drug_2(M.client, 40)
+				if(M.client)
+					if(src.current_color_pattern == 1)
+						animate_fade_from_drug_1(M.client, 40)
+					else
+						animate_fade_from_drug_2(M.client, 40)
 
 			on_remove()
 				. = ..()
@@ -442,6 +491,87 @@ datum
 				if(probmult(7)) M.emote(pick("twitch","drool","moan","giggle"))
 				..()
 				return
+
+		drug/solipsizine
+			name = "solipsizine"
+			id = "solipsizine"
+			description = "A highly potent hallucinogenic substance that causes intense delirium and acute inability to percieve others."
+			reagent_state = LIQUID
+			depletion_rate = 0.2
+			addiction_prob = 8
+			fluid_r = 200
+			fluid_g = 120
+			fluid_b = 120
+			transparency = 50
+			var/counter = 1
+			var/list/invisible_people
+			var/list/mob/not_yet_invisible
+			var/datum/client_image_group/invisible_group
+			var/tick_counter = 0 // we actually count ticks, no mult here
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(isnull(invisible_people))
+					invisible_people = list()
+				if(!M) M = holder.my_atom
+				src.counter += 1 * mult //around half realtime
+				src.tick_counter += 1
+
+				if(probmult(3))
+					boutput(M, pick("<span class='notice'>You feel eerily alone..</span>",\
+									"<span class='notice'>You feel like everything's gone silent.</span>",\
+									"<span class='notice'>Everything seems so quiet all of a sudden.</span>",\
+									"<span class='notice'>You can hear your heart beating.</span>",\
+									"<span class='notice'>Something is wrong.</span>"))
+				else if(probmult(3))
+					M.emote(pick("shiver","shudder","drool"))
+
+				if(counter > 15) //turn everyone into nothing
+					if(M.ear_damage < 15 && M.ear_deaf < 5)
+						M.take_ear_damage(3 * mult, 1) //makes it so you can't hear people after a bit
+
+					var/list/candidates = null
+					// every 15 ticks we check for newly created mobs just in case
+					if(isnull(not_yet_invisible) || tick_counter % 15 == 0)
+						not_yet_invisible = by_type[/mob/living/carbon/human] - invisible_people
+					var/list/mob/current_viewers = viewers(M)
+					candidates = not_yet_invisible - current_viewers
+					not_yet_invisible &= current_viewers
+
+					if(length(candidates) > 0)  //makes the other people disappear
+						if (isnull(invisible_group))
+							invisible_group = new /datum/client_image_group
+							invisible_group.add_mob(M)
+						for(var/mob/living/carbon/human/chosen in candidates)
+							var/image/invisible_img = image(null, chosen, null, chosen.layer)
+							invisible_img.name = "\u200b"
+							invisible_img.override = TRUE
+							invisible_group.add_image(invisible_img)
+							invisible_people += chosen
+
+				if(counter > 25)                   //some side effects (not using a switch statement so the stages stack)
+					if(M.get_brain_damage() <= 40)
+						M.take_brain_damage(1 * mult) //some amount of brain damage
+					if(probmult(9) && !ON_COOLDOWN(M, "heartbeat_hallucination", 60 SECONDS)) //play some hearbeat sounds
+						M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 20, 1)
+				..()
+
+			on_remove()
+				. = ..()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+
+					if(!isnull(invisible_group) && (M.get_brain_damage() > 10))          //hits you and knocks you down for a little
+						M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>",\
+											"You feel as if your body is tearing itself apart!")
+						M.setStatusMin("weakened", 10 SECONDS)
+						M.make_jittery(500)
+
+				qdel(invisible_group)
+				qdel(invisible_people)
+				qdel(not_yet_invisible)
+				invisible_group = null
+				invisible_people = null
+				not_yet_invisible = null
 
 		drug/THC
 			name = "tetrahydrocannabinol"
@@ -833,10 +963,10 @@ datum
 				M.druggy = max(M.druggy, 15)
 				if(probmult(11))
 					M.visible_message("<span class='notice'><b>[M.name]</b> hisses!</span>")
-					playsound(M.loc, "sound/voice/animal/cat_hiss.ogg", 50, 1)
+					playsound(M.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
 				if(probmult(9))
 					M.visible_message("<span class='notice'><b>[M.name]</b> meows! What the fuck?</span>")
-					playsound(M.loc, "sound/voice/animal/cat.ogg", 50, 1)
+					playsound(M.loc, 'sound/voice/animal/cat.ogg', 50, 1)
 				if(probmult(7))
 					switch(rand(1,2))
 						if(1)
@@ -896,14 +1026,14 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 
-				if(holder.has_reagent("methamphetamine")) return ..() //Since is created by a meth overdose, dont react while meth is in their system.
+				if(holder.has_reagent("methamphetamine") || holder.has_reagent("synd_methamphetamine")) return ..() //Since is created by a meth overdose, dont react while meth is in their system.
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "triplemeth", 98)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "triplemeth", 98)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "triplemeth", 1000)
 
 				if(hascall(holder.my_atom,"addOverlayComposition"))
 					holder.my_atom:addOverlayComposition(/datum/overlayComposition/triplemeth)
-				flush(M, 5 * mult, flushed_reagents)
+				flush(holder, 5 * mult, flushed_reagents)
 				if(probmult(50)) M.emote(pick("twitch","blink_r","shiver"))
 				M.make_jittery(5)
 				M.make_dizzy(5 * mult)
@@ -919,7 +1049,7 @@ datum
 				var/mob/living/M = overdoser
 				if(!istype(M))
 					return
-				if(holder.has_reagent("methamphetamine"))
+				if(holder.has_reagent("methamphetamine") || holder.has_reagent("synd_methamphetamine"))
 					return //Since is created by a meth overdose, dont react while meth is in their system.
 				if (severity == 1)
 					if (effect <= 2)
@@ -1002,7 +1132,7 @@ datum
 				if(prob(50))
 					M.take_brain_damage(1 * mult)
 				if(purge_brain)
-					flush(M, 5 * mult, flushed_reagents)
+					flush(holder, 5 * mult, flushed_reagents)
 				..()
 				return
 
@@ -1045,6 +1175,20 @@ datum
 				fluid_r = 115 // This shit's pure and blue
 				fluid_g = 197
 				fluid_b = 250
+
+		drug/question_mark
+			name = "???"
+			id = "question_mark"
+			depletion_rate = 2
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if (prob(40))
+					if(!M)
+						M = holder.my_atom
+					M.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_primaries"), 3 * mult)
+					M.reagents.add_reagent(pick_string("chemistry_tools.txt", "CYBERPUNK_drug_adulterants"), 2 * mult)
+					M.reagents.remove_reagent(src, 1 * mult)
+				..()
 
 		drug/hellshroom_extract
 			name = "Hellshroom extract"
@@ -1105,7 +1249,7 @@ datum/reagent/drug/hellshroom_extract/proc/breathefire(var/mob/M)
 	var/list/affected_turfs = getline(M, T)
 
 	M.visible_message("<span class='alert'><b>[M] burps a stream of fire!</b></span>")
-	playsound(M.loc, "sound/effects/mag_fireballlaunch.ogg", 30, 0)
+	playsound(M.loc, 'sound/effects/mag_fireballlaunch.ogg', 30, 0)
 
 	var/turf/currentturf
 	var/turf/previousturf

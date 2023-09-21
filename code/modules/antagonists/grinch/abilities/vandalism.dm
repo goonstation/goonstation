@@ -53,7 +53,7 @@
 		if (objects_fucked_up > 0)
 			M.emote("laugh")
 			M.visible_message("<span class='alert'>[M] laughs smugly!</span>")
-			logTheThing("combat", M, null, "uses the vandalize ability at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "uses the vandalize ability at [log_loc(M)].")
 			return 0
 		else
 			boutput(M, "<span class='alert'>You couldn't find anything to vandalize. You should try again near some walls or Spacemas decorations.</span>")

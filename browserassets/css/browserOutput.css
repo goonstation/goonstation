@@ -11,7 +11,7 @@ html, body {
 }
 body {
 	background: #fff;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Twemoji", "Segoe UI Emoji";
     font-size: 12px;
     line-height: 1.4;
 	overflow-x: hidden;
@@ -32,7 +32,6 @@ img.icon {
 a {color: #0000ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}
-.emoji {font-family: "Segoe UI Emoji" !important;}
 img.emoji {
 	height: 1em;
 	width: 1em;
@@ -308,6 +307,8 @@ img.emoji {
 /* ADD HERE FOR BOLD */
 .bold, .name, .prefix, .ooc, .looc, .adminooc, .adminlooc, .admin, .gfartooc, .gfartlooc, .gfartadmin, .mentorooc, .mentorlooc, .medal {font-weight: bold;}
 
+.odd-highlight { background-color: #efefef; }
+
 /* ADD HERE FOR ITALIC */
 .italic, .ghostdronesay.broadcast {font-style: italic;}
 
@@ -324,9 +325,12 @@ img.emoji {
 .system {color: #ff0000;}
 .ooc {color: #002eb8;}
 .looc {color: #4c6ccd;}
+.newbeeooc {color: #29AB87;}
+.newbeelooc {color: #8BC16E;}
 .adminooc {color: #b82e00;}
 .adminlooc {color: #cd6c4c;}
 .admin {color: #386aff;}
+.admin .prefix {display: block; float:left; font-size: 0.5em; text-align: center;}
 .adminMsgWrap {color: #AE46BA;}
 .gfartooc {color: #0099cc;}
 .gfartlooc {color: #4cb7db;}
@@ -337,6 +341,7 @@ img.emoji {
 .combat {color: #ff0000;}
 .say {}
 .sing {color: #B87AB8;}
+.robotsing {color: #7EBAB5;}
 .blobsay {color: white; background-color: #226622;}
 .bugsay {color: #EA5D17;}
 .deadsay {color: #5c00e6;}
@@ -344,13 +349,16 @@ img.emoji {
 .thrallsay {color: white; background-color: #580283;}
 .thrallsay .vamp.name {color: #ff0000;}
 .kudzusay {color: white; background-color: #566B44;}
+.crabsay {color: white; background-color: #6A1D1D;}
+.crabsay a {color: #6464ff;}
 .astralsay {color: #2AABA4;}
 .martiansay {color: #E89235;} /* #BD33D9 is the telepathy colour, possibly more suitable? */
 .martianimperial {color: #C7376C; font-size: 14px;}
 .flocksay {color: #488276;}
 .flocksay a {color: #488276;}
 .flocksay a:visited {color: #488276;}
-.flockmindsay {color: #66ad9e; font-size: 120%;}
+.flocksay.sentient {color:white; background-color:#66ad9e;}
+.flocksay.sentient.flockmind {font-size: 120%;}
 .flocknpc {color: #869995; font-size: 80%;}
 .flocksay.ping {font-style: italic;}
 .ghostdronesay {color: #d81aef;}
@@ -364,6 +372,7 @@ h1.alert, h2.alert {color: #000000;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
 .lawupdate {color: #6464ff}
 .monospace {font-family: monospace;}
+.helpmsg {color: #417c81; border: 1px solid #417c81; padding: 2px; margin: 2px 0; display: inline-block;}
 
 .rstandard {color: #008000;}
 .rintercom {color: #006080;}
@@ -375,6 +384,7 @@ h1.alert, h2.alert {color: #000000;}
 .rresearch {color: #461B7E;}
 .rcivilian {color: #A10082;}
 .rsyndicate {color: #962121;}
+.rintercomai {color: #39397d}
 .rother {color: #800080;}
 
 .connectionClosed, .fatalError {background: red; color: white; padding: 5px;}
@@ -400,9 +410,27 @@ h1.alert, h2.alert {color: #000000;}
 	margin-left: 0px !important;
 	margin-right: 0px !important;
 }
+/*intent styling for help messages (and whenever you need to refer to intents in chat)*/
+.help {
+	font-weight: bold;
+	color: #349E00;
+}
+.harm {
+	font-weight: bold;
+	color: #B51214;
+}
+.disarm {
+	font-weight: bold;
+	color: #EAC300;
+}
+.grab {
+	font-weight: bold;
+	color: #FF6A00;
+}
 
 /* bog-standard dark theme with easy, unsaturated colors */
 body.theme-dark { background-color: #23272a; color: #dfdfcf; }
+body.theme-dark .odd-highlight { background-color: #191c20; }
 body.theme-dark .regular { color: #dfdfcf; }
 body.theme-dark .mhelp {color: #e75ae0;}
 body.theme-dark .ahelp {color:  #ffa135;}
@@ -416,6 +444,8 @@ body.theme-dark .emote { color: #888888; }
 body.theme-dark .subtle { color: #7A7471; }
 body.theme-dark .ooc {color: #688eff;}
 body.theme-dark .looc {color: #92a9ee;}
+body.theme-dark .newbeeooc {color: #29AB87;}
+body.theme-dark .newbeelooc {color: #8BC16E;}
 body.theme-dark .adminooc {color: #be6e53;}
 body.theme-dark .adminlooc {color: #ce8c76;}
 body.theme-dark .mentorooc {color: #a653ff;}
@@ -481,19 +511,23 @@ body.theme-dark .gfartlooc {color: #92cbdf;}
 body.theme-dark .gfartadmin {color: #c2953c;}
 body.theme-dark .combat {color: #e20000;}
 body.theme-dark .sing {color: #D8BFD8;}
+body.theme-dark .robotsing {color: #E0FFFF;}
 body.theme-dark .blobsay {color: #111; background-color: #4ec44e;}
 body.theme-dark .bugsay {color: #EA5D17;}
 body.theme-dark .deadsay {color: #b27eff;}
 body.theme-dark .hivesay {color: #e2a059;}
 body.theme-dark .thrallsay {color: white; background-color: #6f00a7;}
 body.theme-dark .kudzusay {color: #111; background-color: #7B8F68;}
+body.theme-dark .crabsay {color: #111; background-color: #AC3232;}
+body.theme-dark .crabsay a {color: #0000ff;}
 body.theme-dark .astralsay {color: #60d4cf;}
 body.theme-dark .martiansay {color: #E89235;} /* #BD33D9 is the telepathy colour, possibly more suitable? */
 body.theme-dark .martianimperial {color: #e26794;}
 body.theme-dark .flocksay {color: #6fbbac;}
 body.theme-dark .flocksay a {color: #6dc0af;}
 body.theme-dark .flocksay a:visited {color: #6ec2b1;}
-body.theme-dark .flockmindsay {color: #82dbc8;}
+body.theme-dark .flocksay.sentient {color: #111; background-color:#82dbc8;}
+body.theme-dark .flocksay.sentient.flockmind {font-size: 120%;}
 body.theme-dark .flocknpc {color: #afc9c3;}
 body.theme-dark .ghostdronesay {color: #ca4ed8;}
 body.theme-dark .roboticsay {color: #111; background-color: #c4c3c3;}
@@ -502,19 +536,34 @@ body.theme-dark h2.alert {color: #cfcfcf;}
 body.theme-dark .adminHearing .name[data-ctx] {border-bottom: 1px dotted rgb(219, 219, 219);}
 body.theme-dark .blobalert {color: #9c74fc; }
 body.theme-dark .lawupdate {color: #6464FF; }
+body.theme-dark .helpmsg {color: #98bdc2; border: 1px solid #98bdc2;}
 
 body.theme-dark .connectionClosed {background: rgb(192, 0, 0); color: white;}
 body.theme-dark .fatalError {background: rgb(192, 0, 0); color: white;}
 body.theme-dark .connectionClosed.restored {background: green;}
 
 body.theme-dark .rstandard {color: #3fcc3f;}
-body.theme-dark .rintercom {color: #4dc1c9;}
-body.theme-dark .rcommand {color: #7ca6d6;}
+body.theme-dark .rintercom {color: #81f7ff;}
+body.theme-dark .rcommand {color: #7397c0;}
 body.theme-dark .rsecurity {color: #e43535;}
 body.theme-dark .rdetective {color: #af4242;}
 body.theme-dark .rengineering {color: #dda448;}
-body.theme-dark .rmedical {color: #51DBCB;}
+body.theme-dark .rmedical {color: #00bbff;}
 body.theme-dark .rresearch {color: #bf83e2;}
 body.theme-dark .rcivilian {color: #ce45b2;}
 body.theme-dark .rsyndicate {color: #cf5757;}
+body.theme-dark .rintercomai {color: #7F7FE2}
 body.theme-dark .rother {color: #E896E5;}
+
+body.theme-dark .help {
+	color: #42CC00;
+}
+body.theme-dark .harm {
+	color: #D01416;
+}
+body.theme-dark .disarm {
+	color: #FFFF00;
+}
+body.theme-dark .grab {
+	color: #FF6A00;
+}

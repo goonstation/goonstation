@@ -29,10 +29,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	heal(var/mob/M)
 		if(src.razor_blade && ishuman(M))
 			var/mob/living/carbon/human/H = M
-			var/obj/item/affecting = H.organs["head"]
 			boutput(H, "<span class='alert'>You bite down into a razor blade!</span>")
+			H.TakeDamage("head", 10, 0, 0, DAMAGE_STAB)
 			H.changeStatus("weakened", 3 SECONDS)
-			affecting.take_damage(10, 0)
 			H.UpdateDamageIcon()
 			src.razor_blade = 0
 			new /obj/item/razor_blade( get_turf(src) )
@@ -62,6 +61,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	real_name = "candy cane"
 	icon = 'icons/misc/xmas.dmi'
 	icon_state = "candycane"
+	item_state = "candycane_h"
 	sugar_content = 20
 	food_effects = list("food_energized")
 
@@ -210,6 +210,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 				tastesbad = 0
 
 	heal(var/mob/M)
+		..()
 		if (tastesbad)
 			boutput(M, "<span class='alert'>[phrase]! That tasted like [flavor]...</span>")
 		else
@@ -232,7 +233,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 					src.heal_amt = 0
 				else
 					var/flavor = null
-					if (all_functional_reagent_ids.len > 0)
+					if (length(all_functional_reagent_ids) > 0)
 						flavor = pick(all_functional_reagent_ids)
 					else
 						flavor = "sugar"
@@ -290,46 +291,69 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 //#endif
 
-/obj/item/reagent_containers/food/snacks/lollipop
+/obj/item/reagent_containers/food/snacks/candy/lollipop
 	name = "lollipop"
 	desc = "How many licks does it take to get to the center? No one knows, they just bite the things."
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "lpop-0"
-	var/icon_random = 0 // does it just choose from the existing random colors?
+	sugar_content = 5
+	var/icon_random = FALSE //! does it just choose from the existing random colors?
 	var/image/image_candy
 	heal_amt = 1
 	bites_left = 5
 	real_name = "lollipop"
 
-	New()
-		..()
-		if (src.icon_random)
-			src.icon_state = "lpop-[rand(1,6)]"
-		else
-			SPAWN(0)
-				src.UpdateIcon()
+/obj/item/reagent_containers/food/snacks/candy/lollipop/New()
+	..()
+	if (src.icon_random)
+		src.icon_state = "lpop-[rand(1,6)]"
+	else
+		SPAWN(0)
+			src.UpdateIcon()
 
-	update_icon()
-		if (src.icon_random)
-			return
-		if (src.reagents)
-			ENSURE_IMAGE(src.image_candy, src.icon, "lpop-w")
-			var/datum/color/average = reagents.get_average_color()
-			src.image_candy.color = average.to_rgba()
-			src.UpdateOverlays(src.image_candy, "candy")
+/obj/item/reagent_containers/food/snacks/candy/lollipop/update_icon()
+	if (src.icon_random)
+		return
+	if (src.reagents)
+		ENSURE_IMAGE(src.image_candy, src.icon, "lpop-w")
+		src.reagents.remove_reagent("sugar", 5) // sugar will always override sadly. So we ignore it.
+		var/datum/color/average = src.reagents.get_average_color()
+		src.image_candy.color = average.to_rgba()
+		src.UpdateOverlays(src.image_candy, "candy")
+		src.reagents.add_reagent("sugar", 5) // then we put the sugar back in.
 
-/obj/item/reagent_containers/food/snacks/lollipop/random_medical
-	icon_state = "lpop-"
+/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
+	icon_random = TRUE
 	var/list/flavors = list("omnizine", "saline", "salicylic_acid", "epinephrine", "mannitol", "synaptizine", "anti_rad", "oculine", "salbutamol", "charcoal")
 
-	New()
+/obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical/New()
+	..()
+	SPAWN(0)
+		if (islist(src.flavors) && length(src.flavors))
+			for (var/i=5, i>0, i--)
+				src.reagents.add_reagent(pick(src.flavors), 1)
+
+/obj/item/reagent_containers/food/snacks/candy/sugar_cube
+	name = "sugar cube"
+	desc = "Cubed sugar."
+	icon_state = "sugar-cube"
+	sugar_content = 10
+	bites_left = 1
+	food_color = "#FFFFFF"
+	w_class = W_CLASS_TINY
+
+	afterattack(obj/target, mob/user, flag)
 		..()
-		SPAWN(0)
-			if (src.icon_state == "lpop-")
-				src.icon_state = "lpop-[rand(1,6)]"
-			if (islist(src.flavors) && length(src.flavors))
-				for (var/i=5, i>0, i--)
-					src.reagents.add_reagent(pick(src.flavors), 1)
+		if (target.is_open_container() && target.reagents)
+			if (target.reagents.total_volume >= target.reagents.maximum_volume)
+				boutput(user, "<span class='alert'>[target] is full.</span>")
+				return
+
+			boutput(user, "<span class='notice'>You put [src] into [target].</span>")
+
+			src.reagents.trans_to(target, src.reagents.total_volume)
+			user.u_equip(src)
+			qdel(src)
 
 /obj/item/reagent_containers/food/snacks/swedish_fish
 	name = "swedish fisk"
@@ -434,7 +458,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	New()
 		..()
 		src.icon_state = "gummyworm-[rand(1,3)]"
-		src.reagents.add_reagent(pick("juice_cherry", "juice_orange", "lemonade", "juice_strawberry", "juice_blueberry", "juice_apple", "juice_blueraspberry", "juice_watermelon", "juice_peach", "cocktail_citrus"), 5)
+		src.reagents.add_reagent(pick("juice_cherry", "juice_orange", "lemonade", "juice_strawberry", "juice_blueberry", "juice_apple", "juice_banana", "juice_blueraspberry", "juice_watermelon", "juice_peach", "cocktail_citrus"), 5)
 		src.heal_amt = 1
 
 /obj/item/reagent_containers/food/snacks/candy/candyheart

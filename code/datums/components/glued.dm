@@ -16,10 +16,11 @@ TYPEINFO(/datum/component/glued)
 	var/set_loc_rippoff_in_progress = FALSE
 
 /datum/component/glued/Initialize(atom/target, glue_duration=null, glue_removal_time=null)
+	. = ..()
 	if(!istype(src.parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	src.glued_to = target
-	RegisterSignal(glued_to, COMSIG_PARENT_PRE_DISPOSING, .proc/delete_self)
+	RegisterSignal(glued_to, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(delete_self))
 	src.dries_up_timestamp = glue_duration ? TIME + glue_duration : null
 	src.glue_removal_time = glue_removal_time
 	var/atom/movable/parent = src.parent
@@ -48,12 +49,14 @@ TYPEINFO(/datum/component/glued)
 	else
 		parent.plane = PLANE_UNDERFLOOR
 	parent.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
-	RegisterSignal(parent, COMSIG_ATTACKHAND, .proc/on_attackhand)
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/pass_on_attackby)
-	RegisterSignal(parent, COMSIG_MOVABLE_BLOCK_MOVE, .proc/move_blocked_check)
-	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, .proc/on_set_loc)
-	RegisterSignal(parent, list(COMSIG_ATOM_EXPLODE, COMSIG_ATOM_EXPLODE_INSIDE), .proc/on_explode)
-	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, .proc/on_hitby_proj)
+	RegisterSignal(parent, COMSIG_ATTACKHAND, PROC_REF(on_attackhand))
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(pass_on_attackby))
+	RegisterSignal(parent, COMSIG_MOVABLE_BLOCK_MOVE, PROC_REF(move_blocked_check))
+	RegisterSignal(parent, COMSIG_MOVABLE_SET_LOC, PROC_REF(on_set_loc))
+	RegisterSignals(parent, list(COMSIG_ATOM_EXPLODE, COMSIG_ATOM_EXPLODE_INSIDE), PROC_REF(on_explode))
+	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, PROC_REF(on_hitby_proj))
+	if(isliving(parent))
+		RegisterSignal(parent, COMSIG_MOB_RESIST, PROC_REF(on_resist))
 
 /datum/component/glued/proc/delayed_dry_up(glue_duration)
 	set waitfor = FALSE
@@ -82,12 +85,19 @@ TYPEINFO(/datum/component/glued)
 /datum/component/glued/proc/start_ungluing(atom/movable/parent, mob/user)
 	if(isnull(src.glue_removal_time))
 		boutput(user, "<span class='alert'>You try to unglue [parent] from [src.glued_to] but the glue is too strong.</span>")
-		return
+		return FALSE
 	var/turf/T = get_turf(parent)
-	T.visible_message("<span class='notice'>[user] starts ungluing [parent] from [src.glued_to].</span>")
+	if(parent == user)
+		T.visible_message("<span class='notice'>[user] starts ungluing [himself_or_herself(user)] from [src.glued_to].</span>")
+	else
+		T.visible_message("<span class='notice'>[user] starts ungluing [parent] from [src.glued_to].</span>")
 	actions.start(
-		new /datum/action/bar/icon/callback(user, parent, src.glue_removal_time, .proc/delete_self, null, parent.icon, parent.icon_state,\
+		new /datum/action/bar/icon/callback(user, parent, src.glue_removal_time, PROC_REF(delete_self), null, parent.icon, parent.icon_state,\
 		"<span class='notice'>[user] manages to unglue [parent] from [src.glued_to].</span>", 0, src), user)
+	return TRUE
+
+/datum/component/glued/proc/on_resist(mob/living/parent)
+	return src.start_ungluing(parent, parent)
 
 /datum/component/glued/proc/pass_on_attackby(atom/movable/parent, obj/item/item, mob/user, list/params, is_special)
 	src.glued_to.Attackby(item, user, params, is_special)
@@ -118,7 +128,7 @@ TYPEINFO(/datum/component/glued)
 /datum/component/glued/UnregisterFromParent()
 	var/atom/movable/parent = src.parent
 	UnregisterSignal(parent, list(COMSIG_ATTACKHAND, COMSIG_ATTACKBY, COMSIG_MOVABLE_BLOCK_MOVE, COMSIG_MOVABLE_SET_LOC, COMSIG_ATOM_EXPLODE,
-		COMSIG_ATOM_EXPLODE_INSIDE, COMSIG_ATOM_HITBY_PROJ))
+		COMSIG_ATOM_EXPLODE_INSIDE, COMSIG_ATOM_HITBY_PROJ, COMSIG_MOB_RESIST))
 	UnregisterSignal(glued_to, COMSIG_PARENT_PRE_DISPOSING)
 	parent.remove_filter("glued_outline")
 	parent.animate_movement = src.original_animate_movement

@@ -11,6 +11,9 @@
 var/global/list/portable_machinery = list() // stop looping through world for things you SHITMONGERS
 
 // Adapted from the PDA program in portable_machinery_control.dm (Convair880).
+TYPEINFO(/obj/item/remote/porter)
+	mats = 4
+
 /obj/item/remote/porter
 	name = "Remote"
 	icon = 'icons/obj/items/device.dmi'
@@ -18,9 +21,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	icon_state = "locator"
 	item_state = "electronic"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	w_class = W_CLASS_SMALL
-	mats = 4
 	var/list/machinerylist = list()
 	var/machinery_name = "" // For user prompt stuff.
 	var/anti_spam = 0 // In relation to world time.
@@ -101,12 +103,12 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		src.machinerylist = list()
 		src.get_machinery()
-		if (!src.machinerylist || (src.machinerylist && src.machinerylist.len == 0))
+		if (!src.machinerylist || (src.machinerylist && length(src.machinerylist) == 0))
 			user.show_text("Couldn't find any linkable machinery.", "red")
 			return
 
 		var/t1
-		if (src.machinerylist.len == 1)
+		if (length(src.machinerylist) == 1)
 			t1 = src.machinerylist[1]
 		else
 			t1 = input("Please select a [src.machinery_name] to control", "Target Selection", null, null) as null|anything in src.machinerylist
@@ -155,12 +157,12 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 					P.set_loc(our_loc) // We're at home, so let's summon the thing to our location.
 					flick("[P.icon_state]-tele", P)
 					user.show_text("[src.machinery_name] summoned successfully.", "blue")
-					logTheThing("station", usr, null, "teleports [P] to [log_loc(our_loc)].")
+					logTheThing(LOG_STATION, user, "teleports [P] to [log_loc(our_loc)].")
 				else
 					P.set_loc(home_loc) // Send back to home location.
 					flick("[P.icon_state]-tele", P)
 					user.show_text("[src.machinery_name] sent to home turf.", "blue")
-					logTheThing("station", usr, null, "teleports [P] to its home turf [log_loc(home_loc)].")
+					logTheThing(LOG_STATION, user, "teleports [P] to its home turf [log_loc(home_loc)].")
 
 				if (hasvar(P, "occupant"))
 					if (istype(P, /obj/machinery/port_a_brig/))
@@ -221,6 +223,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 		return
 
 // I suppose this device would be sorta useless with tele-block checks?
+TYPEINFO(/obj/item/remote/porter/port_a_sci)
+	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
+
 /obj/item/remote/porter/port_a_sci
 	name = "Port-A-Sci Remote"
 	icon = 'icons/obj/porters.dmi'
@@ -228,7 +233,6 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	item_state = "electronic"
 	desc = "A remote that summons a Port-A-Sci."
 	machinery_name = "Port-a-Sci"
-	mats = list("MET-1" = 5, "CON-1" = 5, "telecrystal" = 10)
 
 	get_machinery()
 		if (!src)
@@ -290,17 +294,19 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 ///////////////////////////////////// Port-a-Brig /////////////////////////////////////
 
+TYPEINFO(/obj/machinery/port_a_brig)
+	mats = 30
+
 /obj/machinery/port_a_brig
 	name = "Port-A-Brig"
 	icon = 'icons/obj/cloning.dmi'
 	icon_state = "port_a_brig_0"
 	desc = "A portable holding cell with teleporting capabilites."
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.8
 	req_access = list(access_security)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
-	mats = 30
 	var/mob/occupant = null
 	var/locked = 0
 	var/homeloc = null
@@ -377,7 +383,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
-			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
+			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 	allow_drop()
@@ -401,14 +407,13 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 				UnsubscribeProcess()
 
 	attackby(obj/item/W, mob/user as mob)
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
+		var/obj/item/card/id/id_card = get_id_card(W)
+		if (istype(id_card, /obj/item/card/id))
 			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [ src.locked ? "lock" : "unlock"] the [src].")
 				if (src.occupant)
-					logTheThing("station", user, src.occupant, "[src.locked ? "locks" : "unlocks"] [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
+					logTheThing(LOG_STATION, user, "[src.locked ? "locks" : "unlocks"] [src.name] with [constructTarget(src.occupant,"station")] inside at [log_loc(src)].")
 			else
 				boutput(user, "<span class='alert'>This [src] doesn't seem to accept your authority.</span>")
 
@@ -429,16 +434,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			actions.start(new /datum/action/bar/portabrig_shove_in(src, user, G.affecting, G), user)
 
 		else if (ispryingtool(W))
-			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying door open.</span>")
-			playsound(src.loc, "sound/items/Crowbar.ogg", 100, 1)
-			sleep(15 SECONDS)
-			if ((user.loc == T && user.equipped() == W))
-				src.locked = 0
-				boutput(user, "<span class='notice'>You pried the door open.</span>")
-			else if((isrobot(user) && (user.loc == T)))
-				src.locked = 0
-				boutput(user, "<span class='notice'>You pried the door open.</span>")
+			SETUP_GENERIC_ACTIONBAR(user, src, 15 SECONDS, /obj/machinery/port_a_brig/proc/pry_open, list(user), W.icon, W.icon_state,
+				"<span class='alert'>[user] pries open [src].</span>", INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED)
 
 	proc/build_icon()
 		if(src.occupant)
@@ -458,7 +456,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	verb/move_eject()
 		set src in oview(1)
 		set category = "Local"
-		if (!isalive(usr) || usr.hasStatus(list("stunned", "paralysis", "weakened", "handcuffed")))
+		if (!isalive(usr) || isintangible(usr) || usr.hasStatus(list("stunned", "paralysis", "weakened", "handcuffed")))
 			return
 		src.go_out()
 		add_fingerprint(usr)
@@ -496,18 +494,23 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 	onEnd()
 		..()
-		if (!src.owner || !src.victim || QDELETED(G))
+		if (!src.owner || !src.victim || QDELETED(G) || brig?.occupant)
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		if (!(BOUNDS_DIST(src.owner, src.brig) == 0) || !(BOUNDS_DIST(src.victim, src.brig) == 0))
 			interrupt(INTERRUPT_ALWAYS)
+			return
 		src.brig.visible_message("<span class='alert'>[owner] shoves [victim] into [src.brig]!</span>")
-		victim.set_loc(src.brig)
 		src.brig.occupant = victim
+		victim.set_loc(src.brig)
 		for(var/obj/O in src.brig)
 			O.set_loc(src.brig.loc)
 		src.brig.build_icon()
 		qdel(G)
 
+/obj/machinery/port_a_brig/proc/pry_open()
+	playsound(src.loc, 'sound/items/Crowbar.ogg', 100, TRUE)
+	src.locked = FALSE
 
 /obj/item/paper/Port_A_Brig
 	name = "paper - 'A-97 Port-A-Brig Manual"
@@ -520,6 +523,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 ////////////////////////////////////////// Port-a-Medbay /////////////////////////////////////
 /* replaced with an actual sleeper, see sleeper.dm
+TYPEINFO(/obj/machinery/port_a_medbay)
+	mats = 30
+
 /obj/machinery/port_a_medbay
 	name = "Port-A-Medbay"
 	icon = 'icons/obj/porters.dmi'
@@ -527,9 +533,8 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	var/image/image_lid = null
 	desc = "An emergency transportation device for critically injured patients."
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.2
-	mats = 30
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/occupant = null
 	var/homeloc = null
@@ -591,7 +596,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
-			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
+			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 	allow_drop()
@@ -673,7 +678,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	icon_closed = "portasci"
 	icon_opened = "portasci-open"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 6
 	//mats = 30 // Nope! We don't need multiple personal teleporters without any z-level restrictions (Convair880).
 	var/homeloc = null
@@ -692,9 +697,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 		src.homeloc = src.loc
 
-		possible_new_friend = typesof(/obj/critter/bear) + typesof(/obj/critter/spider/ice) + typesof(/obj/critter/cat) + typesof(/obj/critter/parrot)\
-						+ list(/obj/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /obj/critter/wraithskeleton, /obj/critter/magiczombie, /obj/critter/brullbar)\
-						- list(/obj/critter/spider/ice/queen)
+		possible_new_friend = typesof(/mob/living/critter/bear) + typesof(/mob/living/critter/spider/ice) + typesof(/mob/living/critter/small_animal/cat) + typesof(/obj/critter/parrot)\
+						+ list(/mob/living/critter/aberration, /obj/critter/domestic_bee, /obj/critter/domestic_bee/chef, /obj/critter/bat/buff, /obj/critter/bat, /obj/critter/bloodling, /mob/living/critter/skeleton/wraith, /mob/living/critter/skeleton, /mob/living/critter/brullbar)\
+						- list(/mob/living/critter/spider/ice/queen)
 
 	disposing()
 		if (islist(portable_machinery))
@@ -733,7 +738,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief.
-			logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
+			logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 	allow_drop()
@@ -758,14 +763,14 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 				var/list/mob/body_list = list()
 				for(var/mob/living/carbon/M in src.contents) //Don't think you're gonna get lucky, ghosts!
 					if(!isdead(M)) body_list += M
-				if(body_list.len > 1)
+				if(length(body_list) > 1)
 
 					for(var/I = 1, I <= body_list.len , I++)
 						var/next_in_line = ((I % body_list.len) + 1)
 
 						var/mob/M = body_list[I] //What the actual fuck is this motherfucking nonsense shit fuck I hate you byond what the hell.
 						if(M.mind)
-							logTheThing("combat", src, body_list[next_in_line], "swapped [key_name(M)] and [constructTarget(body_list[next_in_line],"combat")]'s bodies!")
+							logTheThing(LOG_COMBAT, src, "swapped [key_name(M)] and [constructTarget(body_list[next_in_line],"combat")]'s bodies!")
 							M.mind.swap_with(body_list[next_in_line])
 							I++ //Step once more to prevent us from hitting the swapped mob
 
@@ -777,22 +782,22 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 					if(81 to INFINITY) //Travel sickness!
 						for(var/mob/living/carbon/M in src.contents)
 							SPAWN(rand(10,40))
-								M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>", "<span class='alert'>Oh god, that was terrible!</span>", "<span class='alert'>You hear a splat!</span>")
+								var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+								M.vomit(0, null, vomit_message)
 								M.change_misstep_chance(40)
 								M.changeStatus("drowsy", 10 SECONDS)
-								M.vomit()
 
 					if(51 to 70) //A nice tan
 						for(var/mob/living/carbon/M in src.contents)
-							M.changeStatus("radiation", 20 SECONDS, 1)
+							M.take_radiation_dose(0.5 SIEVERTS)
 							M.show_text("\The [src] buzzes oddly.", "red")
 					if(31 to 50) //A very nice tan
 						for(var/mob/living/carbon/M in src.contents)
-							M.changeStatus("radiation", 30 SECONDS, 2)
+							M.take_radiation_dose(1.25 SIEVERTS)
 							M.show_text("You feel a warm tingling sensation.", "red")
 					if(21 to 30) //The nicest tan
 						for(var/mob/living/carbon/human/M in src.contents)
-							M.changeStatus("radiation", 40 SECONDS, 3)
+							M.take_radiation_dose(2 SIEVERTS)
 							M.show_text("<B>You feel a wave of searing heat wash over you!</B>", "red")
 							//if(M.bioHolder && M.bioHolder.mobAppearance) //lol
 								// s_tone now an RGB rather than a numeric value so disabling this for the moment
@@ -813,7 +818,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 							M.throw_at(T,100, 2)
 
 					if(3 to 10) //Hitchhiker friend!
-						var/obj/critter/C = pick(possible_new_friend)
+						var/C = pick(possible_new_friend)
 						new C(src)
 
 						for(var/mob/M in src.contents)
@@ -827,6 +832,9 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 
 //////////////////////////////////////// Port-a-NanoMed ///////////////////////////////////////////
 
+TYPEINFO(/obj/machinery/vending/port_a_nanomed)
+	mats = null
+
 /obj/machinery/vending/port_a_nanomed
 	name = "Port-A-NanoMed"
 	desc = "A compact and portable version of the NanoMed Plus."
@@ -834,14 +842,13 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 	icon_state = "vend"
 	icon_deny = "vend-deny"
 	layer = FLOOR_EQUIP_LAYER1
-	req_access_txt = "5"
+	req_access = list(access_medical_lockers)
 	acceptcard = 0
-	anchored = 0
+	anchored = UNANCHORED
 	p_class = 1.2
 	can_fall = 0
-	mats = null
 	ai_control_enabled = 1
-	window_size = "400x675"
+	power_usage = 0
 	var/homeloc = null
 
 	New()
@@ -917,7 +924,7 @@ var/global/list/portable_machinery = list() // stop looping through world for th
 			src.homeloc = over_object
 			usr.visible_message("<span class='notice'><b>[usr.name]</b> changes the [src.name]'s home turf.</span>", "<span class='notice'>New home turf selected: [get_area(src.homeloc)].</span>")
 			// The crusher, hell fires etc. This feature enables quite a bit of mischief...well, if it wouldn't be the NanoMed.
-			//logTheThing("station", usr, null, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
+			//logTheThing(LOG_STATION, usr, "sets [src.name]'s home turf to [log_loc(src.homeloc)].")
 		return
 
 	allow_drop()

@@ -3,9 +3,9 @@
 
 //don't attack mobs in santuary zones. attacking non-mobs there is fine
 //we can only attack people in pods etc if we're also in the pod etc
-#define ATTACK_CHECK(target) ((!(get_area(target)):sanctuary || !ismob(target)) && (isturf(target:loc) || target:loc == src.loc))
+#define ATTACK_CHECK(target) ((!ismob(target) || !((get_area(target))?:sanctuary)) && (isturf(target:loc) || target:loc == src.loc))
 
-/obj/critter/
+/obj/critter
 	name = "critter"
 	desc = "you shouldnt be able to see this"
 	icon = 'icons/misc/critter.dmi'
@@ -13,7 +13,7 @@
 	var/dead_state = null
 	layer = 5
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/is_template = 0
@@ -81,7 +81,7 @@
 	var/sleeping_icon_state = null
 	var/mob/living/wrangler = null
 
-	var/butcherable = 0
+	var/butcherable = BUTCHER_NOT_ALLOWED
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 1
 
@@ -123,16 +123,12 @@
 			report_state = 1
 			if (src in gauntlet_controller.gauntlet)
 				gauntlet_controller.increaseCritters(src)
-			if (src in colosseum_controller.colosseum)
-				colosseum_controller.increaseCritters(src)
 
 	proc/report_death()
 		if (report_state == 1)
 			report_state = 0
 			if (src in gauntlet_controller.gauntlet)
 				gauntlet_controller.decreaseCritters(src)
-			if (src in colosseum_controller.colosseum)
-				colosseum_controller.decreaseCritters(src)
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()
@@ -194,7 +190,7 @@
 		if(registered_area)
 			task = "hibernating"
 			registered_area.registered_critters |= src
-			anchored = 1
+			anchored = ANCHORED
 			//DEBUG_MESSAGE("[src] started hibernating at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"].")
 			//critters -= src //Stop processing this critter
 
@@ -225,7 +221,7 @@
 		..()
 		if (!src.alive)
 			if (src.skinresult && max_skins)
-				if (istype(W, /obj/item/circular_saw) || istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/scalpel) || istype(W, /obj/item/raw_material/shard) || istype(W, /obj/item/sword) || istype(W, /obj/item/saw) || issnippingtool(W))
+				if (issawingtool(W) || iscuttingtool(W) || issnippingtool(W))
 
 					for(var/i, i<rand(1, max_skins), i++)
 						new src.skinresult (src.loc)
@@ -235,7 +231,7 @@
 					user.visible_message("<span class='alert'>[user] skins [src].</span>","You skin [src].")
 
 			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife/butcher)))
-				user.visible_message("<span class='alert'>[user] butchers [src].[src.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]","You butcher [src].</span>")
+				user.visible_message("<span class='alert'>[user] butchers [src].[src.butcherable == BUTCHER_YOU_MONSTER ? " <b>WHAT A MONSTER!</b>" : null]","You butcher [src].</span>")
 
 				var/i = rand(2,4)
 				var/transfer = src.reagents.total_volume / i
@@ -325,7 +321,7 @@
 		if (src.alive && src.health <= 0) src.CritterDeath()
 
 		if (hitsound)
-			playsound(src, hitsound, 50, 1)
+			playsound(src, hitsound, 50, TRUE)
 		if (W?.hitsound)
 			playsound(src,W.hitsound,50,1)
 
@@ -382,7 +378,7 @@
 			attack_twitch(user)
 			hit_twitch(src)
 			if (hitsound)
-				playsound(src, hitsound, 50, 1)
+				playsound(src, hitsound, 50, TRUE)
 			if (src.alive && src.health <= 0) src.CritterDeath()
 			if (src.alive)
 				on_damaged(user)
@@ -432,7 +428,7 @@
 			sleeping = 0
 			on_wake()
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC,D_PIERCING,D_SLASHING)
@@ -494,21 +490,22 @@
 		return
 
 	proc/follow_path()
+		set waitfor = 0
 		if (!mobile)
 			task = "thinking"
 			return
 
 		if (src.loc == followed_path_retry_target)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter arrived at target location.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter arrived at target location.")
 			task = "thinking"
 			followed_path = null
 			followed_path_retries = 0
 			followed_path_retry_target = null
 		else if (!followed_path)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter following empty path.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter following empty path.")
 			task = "thinking"
 		else if (!followed_path.len)
-			logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter path ran out.")
+			logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter path ran out.")
 			task = "thinking"
 		else
 			var/turf/nextturf = followed_path[1]
@@ -524,10 +521,10 @@
 				if (!followed_path_retry_target)
 					task = "thinking"
 				else if (followed_path_retries > 10)
-					logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Critter out of retries.")
+					logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Critter out of retries.")
 					task = "thinking"
 				else
-					logTheThing("debug", null, null, "<B>Marquesas/Critter Astar:</b> Hit a wall, retrying.")
+					logTheThing(LOG_DEBUG, null, "<B>Marquesas/Critter Astar:</b> Hit a wall, retrying.")
 					followed_path = findPath(src.loc, followed_path_retry_target)
 					return
 			else
@@ -548,15 +545,6 @@
 				if (isliving(M))
 					waking = 1
 					break
-
-		//for(var/mob/living/M in range(10, src))
-		//	if(M.client)
-		//		waking = 1
-		//		break
-
-		if (!waking)
-			if (get_area(src) == colosseum_controller.colosseum)
-				waking = 1
 
 		if(waking)
 			hibernate_check = 20
@@ -595,6 +583,7 @@
 			sleep_check = 10
 
 	proc/process()
+		SHOULD_NOT_SLEEP(TRUE)
 		if (is_template || task == "hibernating")
 			return 0
 		if (!src.alive)
@@ -617,6 +606,7 @@
 		return ai_think()
 
 	proc/ai_think()
+		set waitfor = 0
 		switch(task)
 			if ("thinking")
 				src.attack = 0
@@ -657,7 +647,7 @@
 							if(ATTACK_CHECK(current_target))
 								ChaseAttack(current_target)
 							src.task = "attacking"
-							src.anchored = 1
+							src.anchored = ANCHORED
 							src.target_lastloc = current_target.loc
 					else
 						if (mobile)
@@ -698,7 +688,7 @@
 					src.task = "chasing"// food"
 				else
 					src.visible_message("<b>[src]</b> [src.eat_text] [src.food_target].")
-					playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+					playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 					if (food_target)
 						if (food_target.bites_left) src.food_target.bites_left-- //ZeWaka: Fix for null. bites_left
 						if (food_target.reagents && food_target.reagents.total_volume > 0 && src.reagents.total_volume < 30)
@@ -728,20 +718,20 @@
 					src.task = "chasing"// corpse"
 				var/mob/living/carbon/human/C = src.corpse_target
 				src.visible_message("<b>[src]</b> gnaws some meat off [src.corpse_target]'s body!")
-				playsound(src.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(src.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				sleep(rand(20,30))
 				if (prob(20))
 					C.decomp_stage += 1
 					C.update_body()
 					C.update_face()
 					switch (C.decomp_stage)
-						if (4)
+						if (DECOMP_STAGE_SKELETONIZED)
 							src.visible_message("<span class='combat'><b>[src]</b> tears the last piece of meat off [src.corpse_target]!</span>")
 							src.task = "thinking"
 							src.corpse_target = null
-						if (3)
+						if (DECOMP_STAGE_HIGHLY_DECAYED)
 							src.visible_message("<span class='alert'><b>[src]</b> has eaten most of the flesh from [src.corpse_target]'s bones!")
-						if (2)
+						if (DECOMP_STAGE_DECAYED)
 							src.visible_message("<span class='alert'><b>[src]</b> has eaten enough of [src.corpse_target] that their bones are showing!")
 
 			if ("attacking")
@@ -824,7 +814,7 @@
 				return
 			var/list/visible = new()
 			for (var/mob/living/carbon/human/H in view (src.seekrange,src))
-				if (isdead(H) && H.decomp_stage <= 3 && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
+				if (isdead(H) && H.decomp_stage <= DECOMP_STAGE_HIGHLY_DECAYED && !H.bioHolder?.HasEffect("husk")) //is dead, isn't a skeleton, isn't a grody husk
 					visible.Add(H)
 				else continue
 			if (src.corpse_target && (src.corpse_target in visible))
@@ -894,7 +884,7 @@
 		else
 			src.icon_state = dead_state
 		src.alive = 0
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.set_density(0)
 		walk_to(src,0) //halt walking
 		report_death()
@@ -970,20 +960,11 @@
 		if(target == start)
 			return
 
-	//	playsound(user, "mp5gunshot.ogg", 100, 1)
-	/*	if(bullet == 0)
-			A = new /obj/bullet/mpbullet( user:loc )
-		else if(bullet == 1)
-			playsound(user, "sound/weapons/shotgunshot.ogg", 100, 1)
-			A = new /obj/bullet/slug( user:loc )
-		else if(bullet == 2)
-			playsound(user, "fivegunshot.ogg", 100, 1)
-			A = new /obj/bullet/medbullet( user:loc )*/
 		if (!isturf(target))
 			return
 		// FUCK YOU WHOEVER IS USING THIS
 		// FUCK YOU
-		shoot_projectile_ST(src,  new/datum/projectile/bullet/revolver_38(), target)
+		shoot_projectile_ST_pixel_spread(src,  new/datum/projectile/bullet/revolver_38(), target)
 		return
 
 
@@ -1016,7 +997,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/pen))
 			var/t = input(user, "Enter new name", src.name, src.critter_name) as null|text
-			logTheThing("debug", user, null, "names a critter egg \"[t]\"")
+			logTheThing(LOG_DEBUG, user, "names a critter egg \"[t]\"")
 			if (!t)
 				return
 			phrase_log.log_phrase("name-critter", t, no_duplicates=TRUE)
@@ -1056,11 +1037,12 @@
 		if (hatched || anchored)
 			return
 		if (src.warm_count <= 0 || shouldThrow)
+			hatched = TRUE
 			if (shouldThrow && T)
 				make_cleanable( /obj/decal/cleanable/eggsplat,T)
 				src.set_loc(T)
 			else
-				src.anchored = 1
+				src.anchored = ANCHORED
 				src.layer = initial(src.layer)
 				if (user)
 					user.u_equip(src)
@@ -1068,7 +1050,7 @@
 
 			if (shouldThrow && T)
 				src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-				playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 100, 1)
+				playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
 			else
 				var/hatch_wiggle_counter = rand(3,8)
 				while (hatch_wiggle_counter-- > 0)
@@ -1082,7 +1064,7 @@
 				if (istext(critter_type))
 					critter_type = text2path(critter_type)
 				else
-					logTheThing("debug", null, null, "EGG: [src] has invalid critter path!")
+					logTheThing(LOG_DEBUG, null, "EGG: [src] has invalid critter path!")
 					src.visible_message("Looks like there wasn't anything inside of [src]!")
 					qdel(src)
 					return
@@ -1099,7 +1081,7 @@
 			if (istype(src.parent, /mob/living/critter/spider/clownqueen))
 				var/mob/living/critter/spider/clownqueen/queen = src.parent
 				if (islist(queen.babies))
-					queen.babies += newCritter
+					queen.babies += get_weakref(newCritter)
 
 			sleep(0.1 SECONDS)
 			qdel(src)
@@ -1121,7 +1103,7 @@
 		C.set_density(initial(C.density))
 		C.on_revive()
 		C.visible_message("<span class='alert'>[C] seems to rise from the dead!</span>")
-		logTheThing("admin", src, null, "revived [C] (critter).")
+		logTheThing(LOG_ADMIN, src, "revived [C] (critter).")
 		message_admins("[key_name(src)] revived [C] (critter)!")
 	else
 		boutput(src, "[C] isn't dead, you goof!")
@@ -1137,7 +1119,7 @@
 	if (C.alive)
 		C.health = 0
 		C.CritterDeath()
-		logTheThing("admin", src, null, "killed [C] (critter).")
+		logTheThing(LOG_ADMIN, src, "killed [C] (critter).")
 		message_admins("[key_name(src)] killed [C] (critter)!")
 	else
 		boutput(src, "[C] isn't alive, you goof!")

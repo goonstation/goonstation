@@ -14,7 +14,7 @@
       return 1
 
     if (ismartian(target))
-      boutput(holder.owner, "<span class='alert'>They can hear you just fine without the use of your abilities.</span>")
+      boutput(holder.owner, "<span class='alert'>[capitalize(he_or_she(target))] can hear you just fine without the use of your abilities.</span>")
     else if (isliving(target))
       var/mob/living/T = target
       if(!T)
@@ -24,7 +24,7 @@
         return 1
       else
         var/message = html_encode(input("What would you like to communicate to [target]?", "Telepathy", "") as text)
-        logTheThing("say", holder.owner, target, "MARTIAN TELEPATHY TO [constructTarget(target,"say")]: [message]")
+        logTheThing(LOG_SAY, holder.owner, "MARTIAN TELEPATHY TO [constructTarget(target,"say")]: [message]")
         message = trim(copytext(sanitize(message), 1, 255))
         var/class = "martiansay"
         if(istype(holder.owner, /mob/living/critter/martian/overseer))

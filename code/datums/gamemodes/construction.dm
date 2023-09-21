@@ -1,6 +1,7 @@
 /datum/game_mode/construction
-	name = "Construction"
+	name = "Construction (For testing only. Don't select this!)"
 	config_tag = "construction"
+	regular = FALSE
 	crew_shortage_enabled = 0
 	var/list/enabled_jobs = list()
 	var/list/milestones = list()
@@ -226,7 +227,7 @@
 			minor_ores += mining_controls.get_ore_from_path(pick(common_ores))
 			minor_ores += mining_controls.get_ore_from_path(pick(rare_ores))
 	var/datum/generation_marker/initial = new
-	logTheThing("debug", null, null, "<B>Marquesas/Construction:</B> Generating asteroid at [showCoords(ax, ay, 1)].")
+	logTheThing(LOG_DEBUG, null, "<B>Marquesas/Construction:</B> Generating asteroid at [showCoords(ax, ay, 1)].")
 	initial.x = ax
 	initial.y = ay
 	initial.z = 1
@@ -254,8 +255,8 @@
 			AST.amount = rand(ORE.amount_per_tile_min,ORE.amount_per_tile_max)
 			AST.ClearAllOverlays() // i know theres probably a better way to handle this
 			AST.UpdateIcon()
-			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[ORE.name][AST.orenumber]")
-			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[AST.icon_state]"))
+			var/image/ore_overlay = image('icons/turf/walls/asteroid.dmi',"[ORE.name][AST.orenumber]")
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[AST.icon_state]"))
 			ore_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 			AST.UpdateOverlays(ore_overlay, "ast_ore")
 

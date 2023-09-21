@@ -17,11 +17,14 @@
 	var/goods_illegal = list() // Illegal goods
 	var/list/goods_buy = new/list() //what products the merchant buys
 	var/list/shopping_cart = new/list() //What has been bought
+	var/list/mob/barter_customers = list() // Customer credit
 	var/obj/item/sell = null //Item to sell
 	var/portrait_setup = null
 	var/obj/item/sellitem = null
 	var/item_name = "--------"
 	var/obj/item/card/id/scan = null
+	var/barter = FALSE
+	var/currency = "Credits"
 	//Trader dialogue
 	var/sell_dialogue = null
 	var/buy_dialogue = null
@@ -31,8 +34,9 @@
 	var/list/failed_purchase_dialogue = null
 	var/pickupdialogue = null
 	var/pickupdialoguefailure = null
-	var/list/trader_area = "/area/trade_outpost/martian"
+	var/list/trader_area = null
 	var/doing_a_thing = 0
+	var/log_trades = TRUE
 
 	var/datum/dialogueMaster/dialogue = null //dialogue will open on click if available. otherwise open trade directly.
 	var/lastWindowName = ""
@@ -62,6 +66,7 @@
 
 	New()
 		dialogue = new/datum/dialogueMaster/traderGeneric(src)
+		src.trader_area = get_area(src)
 		..()
 
 	anger()
@@ -82,7 +87,7 @@
 		src.add_dialog(user)
 		lastWindowName = windowName
 
-		var/dat = updatemenu()
+		var/dat = updatemenu(user)
 		if(!temp)
 			dat += {"[src.greeting]<HR>
 			<A href='?src=\ref[src];purchase=1'>Purchase Items</A><BR>
@@ -96,16 +101,16 @@
 		return
 
 	attackby(obj/item/I, mob/user)
-		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if (istype(id_card))
 			boutput(user, "<span class='notice'>You swipe the ID card in the card reader.</span>")
 			var/datum/db_record/account = null
-			account = FindBankAccountByName(I:registered)
+			account = FindBankAccountByName(id_card.registered)
 			if(account)
 				var/enterpin = user.enter_pin("Card Reader")
-				if (enterpin == I:pin)
+				if (enterpin == id_card.pin)
 					boutput(user, "<span class='notice'>Card authorized.</span>")
-					src.scan = I
+					src.scan = id_card
 				else
 					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
 					src.scan = null
@@ -141,14 +146,14 @@
 		var/list/goods_for_purchase = goods_sell.Copy()
 		// Illegal goods for syndicate traitors
 		if (illegal)
-			if(usr.mind && (usr.mind.special_role == ROLE_TRAITOR || usr.mind.special_role == ROLE_SPY_THIEF || usr.mind.special_role == ROLE_NUKEOP ||	usr.mind.special_role == ROLE_SLEEPER_AGENT || usr.mind.special_role == ROLE_HARDMODE_TRAITOR ||	usr.mind.special_role == ROLE_OMNITRAITOR))
+			if(usr.mind && (istraitor(usr) || isspythief(usr) || isnukeop(usr) || usr.mind.special_role == ROLE_SLEEPER_AGENT || usr.mind.special_role == ROLE_OMNITRAITOR))
 				goods_for_purchase += goods_illegal
 		if (href_list["purchase"])
 			src.temp =buy_dialogue + "<HR><BR>"
 			for(var/datum/commodity/N in goods_for_purchase)
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
 				src.temp += {"<A href='?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
-				<B>Cost:</B> [N.price] Credits<BR>
+				<B>Cost:</B> [N.price] [currency]<BR>
 				<B>Description:</B> [N.desc]<BR>
 				<A href='?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>"
@@ -156,17 +161,19 @@
 		///////Handle the buying of a specific item //
 		//////////////////////////////////////////////
 		else if (href_list["doorder"])
-			if(!scan)
-				src.temp = {"You have to scan a card in first.<BR>
-							<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
-				src.updateUsrDialog()
-				return
-			if (src.scan.registered in FrozenAccounts)
-				boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
-				return
 			var/datum/db_record/account = null
-			account = FindBankAccountByName(src.scan.registered)
-			if (account)
+			if(!barter)
+				if(!scan)
+					src.temp = {"You have to scan a card in first.<BR>
+								<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
+					src.updateUsrDialog()
+					return
+				if (src.scan.registered in FrozenAccounts)
+					boutput(usr, "<span class='alert'>Your account cannot currently be liquidated due to active borrows.</span>")
+					return
+
+				account = FindBankAccountByName(src.scan.registered)
+			if (barter || account)
 				var/quantity = 1
 				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
 				if(!isnum_safe(quantity))
@@ -181,11 +188,17 @@
 				var/datum/commodity/P = locate(href_list["doorder"]) in goods_for_purchase
 
 				if(P)
+					var/current_funds = src.barter ? barter_customers[usr] : account["current_money"]
 					if(shopping_cart.len + quantity > 50)
 						src.temp = {"Error. Maximum purchase limit of 50 items exceeded.<BR>
 						<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
-					else if(account["current_money"] >= P.price * quantity)
-						account["current_money"] -= P.price * quantity
+					else if(current_funds >= P.price * quantity)
+						if(barter)
+							barter_customers[usr] -= P.price * quantity
+						else
+							account["current_money"] -= P.price * quantity
+						if(log_trades)
+							logTheThing(LOG_STATION, usr, "bought ([quantity]) [P.comtype] from [src] at [log_loc(get_turf(src))]")
 						while(quantity-- > 0)
 							shopping_cart += new P.comtype()
 						src.temp = {"[pick(successful_purchase_dialogue)]<BR>
@@ -231,7 +244,7 @@
 				if(N.hidden)
 					continue
 				else
-					temp+={"<B>[N.comname] for [N.price] Credits:</B> [N.indemand ? N.desc_buy_demand : N.desc_buy]<BR>
+					temp+={"<B>[N.comname] for [N.price] [currency]:</B> [N.indemand ? N.desc_buy_demand : N.desc_buy]<BR>
 							<A href='?src=\ref[src];haggles=[N]'><B><U>Haggle</U></B></A><BR><BR>"}
 			if(src.sellitem)
 				src.item_name = src.sellitem.name
@@ -285,7 +298,7 @@
 				if(N.hidden)
 					continue
 				else
-					temp+="<B>[N.comname] for [N.price] Credits:</B> [N.indemand ? N.desc_buy_demand : N.desc_buy]<BR><BR>"
+					temp+="<B>[N.comname] for [N.price] [currency]:</B> [N.indemand ? N.desc_buy_demand : N.desc_buy]<BR><BR>"
 			if(src.sellitem)
 				src.item_name = src.sellitem.name
 			else
@@ -299,22 +312,24 @@
 		/////////Actually Sell the item //////////
 		//////////////////////////////////////////
 		else if (href_list["selltheitem"])
+			var/datum/db_record/account = null
 			if(!src.sellitem)
 				src.updateUsrDialog()
 				return
 			if (doing_a_thing)
 				src.updateUsrDialog()
 				return
-			if(!src.scan)
-				src.temp = {"You have to scan a card in first.<BR>
-							<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
-				src.updateUsrDialog()
-				return
+			if(!barter)
+				if(!src.scan)
+					src.temp = {"You have to scan a card in first.<BR>
+								<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
+					src.updateUsrDialog()
+					return
+				account = FindBankAccountByName(src.scan.registered)
+
 			var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, src.sellitem)
 			if(tradetype)
-				var/datum/db_record/account = null
-				account = FindBankAccountByName(src.scan.registered)
-				if (!account)
+				if (!barter && !account)
 					src.temp = {" [src] looks slightly agitated when he realizes there is no bank account associated with the ID card.<BR>
 								<BR><A href='?src=\ref[src];sell=1'>OK</A>"}
 					src.add_fingerprint(usr)
@@ -324,8 +339,15 @@
 					doing_a_thing = 1
 					src.temp = pick(src.successful_sale_dialogue) + "<BR>"
 					src.temp += "<BR><A href='?src=\ref[src];sell=1'>OK</A>"
-					account["current_money"] += tradetype.price * src.sellitem.amount
+
+					var/value = sold_item(tradetype, sellitem, src.sellitem.amount, usr)
+					if(log_trades)
+						logTheThing(LOG_STATION, usr, "sold ([src.sellitem.amount])[sellitem.type] to [src] for [value] at [log_loc(get_turf(src))]")
 					qdel (src.sellitem)
+					if(account)
+						account["current_money"] += value
+					else
+						barter_customers[usr]  += value
 					src.sellitem = null
 					src.add_fingerprint(usr)
 					src.updateUsrDialog()
@@ -338,25 +360,8 @@
 		////////Handle Bank account Set-Up ///////
 		//////////////////////////////////
 		else if (href_list["card"])
-			if (src.scan) src.scan = null
-			else
-				var/obj/item/I = usr.equipped()
-				if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-					if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
-					boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
-					var/datum/db_record/account = null
-					account = FindBankAccountByName(I:registered)
-					if(account)
-						var/enterpin = usr.enter_pin("Card Reader")
-						if (enterpin == I:pin)
-							boutput(usr, "<span class='notice'>Card authorized.</span>")
-							src.scan = I
-						else
-							boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
-							src.scan = null
-					else
-						boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
-						src.scan = null
+			card_scan()
+
 		////////////////////////////////////////////////////
 		//////View what still needs to be picked up/////////
 		///////////////////////////////////////////////////
@@ -381,26 +386,51 @@
 		src.add_fingerprint(usr)
 		src.updateUsrDialog()
 		return
+
+	proc/card_scan()
+		if (src.scan) src.scan = null
+		else
+			var/obj/item/card/id/id_card = get_id_card(usr.equipped())
+			if (istype(id_card))
+				boutput(usr, "<span class='notice'>You swipe the ID card in the card reader.</span>")
+				var/datum/db_record/account = null
+				account = FindBankAccountByName(id_card.registered)
+				if(account)
+					var/enterpin = usr.enter_pin("Card Reader")
+					if (enterpin == id_card.pin)
+						boutput(usr, "<span class='notice'>Card authorized.</span>")
+						src.scan = id_card
+					else
+						boutput(usr, "<span class='alert'>Pin number incorrect.</span>")
+						src.scan = null
+				else
+					boutput(usr, "<span class='alert'>No bank account associated with this ID found.</span>")
+					src.scan = null
+
 	/////////////////////////////////////////////
 	/////Update the menu with the default items
 	////////////////////////////////////////////
-	proc/updatemenu()
-
+	proc/updatemenu(mob/user)
 		var/dat
 		dat = portrait_setup
-		dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
-		if(scan)
-			var/datum/db_record/account = null
-			account = FindBankAccountByName(src.scan.registered)
-			if (account)
-				dat+="<B>Current Funds</B>: [account["current_money"]] Credits<HR>"
-			else
-				dat+="<HR>"
+
+		if(barter)
+			if(!barter_customers[user])
+				barter_customers[user] = 0
+			dat+="<B>Barter value</B>: [barter_customers[user]] [currency]<HR>"
 		else
-			dat+="<HR>"
+			dat +="<B>Scanned Card:</B> <A href='?src=\ref[src];card=1'>([src.scan])</A><BR>"
+			if(scan)
+				var/datum/db_record/account = null
+				account = FindBankAccountByName(src.scan.registered)
+				if (account)
+					dat+="<B>Current Funds</B>: [account["current_money"]] [currency]<HR>"
+				else
+					dat+="<HR>"
 		if(temp)
 			dat+=temp
 		return dat
+
 	///////////////////////////////////////
 	///////Spawn the crates full of goods///
 	////////////////////////////////////////
@@ -462,11 +492,11 @@
 			if(askingprice < H.price)
 				if (src.bullshit >= 5)
 					H.price = askingprice
-					src.temp = "<B>Cost:</B> [H.price] Credits<BR>"
+					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
 					src.temp += src.errormsgs[3]
 					return
 				else
-					src.temp = "<B>Cost:</B> [H.price] Credits<BR>"
+					src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
 					src.temp += src.errormsgs[4]
 					return
 		// check if the price increase % of the haggle is more than this trader will tolerate
@@ -475,7 +505,7 @@
 		var/negatol = 0 - src.hiketolerance
 		if (buying == 1) // we're buying, so price must be checked for negative
 			if (hikeperc <= negatol || askingprice < H.baseprice / 5)
-				src.temp = "<B>Cost:</B> [H.price] Credits<BR>"
+				src.temp = "<B>Cost:</B> [H.price] [currency]<BR>"
 				src.temp += src.errormsgs[5]
 				H.haggleattempts++
 				return
@@ -495,7 +525,7 @@
 			else
 				H.price = round(middleground - rand(0,negotiate))
 
-		src.temp = "<B>New Cost:</B> [H.price] Credits<BR><HR>"
+		src.temp = "<B>New Cost:</B> [H.price] [currency]<BR><HR>"
 		H.haggleattempts++
 		// warn the player if the trader isn't going to take any more haggling
 		if (patience == H.haggleattempts)
@@ -503,27 +533,33 @@
 		else
 			src.temp += pick(src.hagglemsgs)
 
+	///////////////////////////////////////////////
+	////// special handling for selling an item ///
+	///////////////////////////////////////////////
+	proc/sold_item(datum/commodity/C, obj/S, count, mob/user as mob)
+		. = C.price * count
 
 	///////////////////////////////////
 	////// batch selling - cogwerks ///
 	///////////////////////////////////
 
 	MouseDrop_T(atom/movable/O as obj, mob/user as mob)
+		var/datum/db_record/account = null
 		if(BOUNDS_DIST(O, user) > 0) return
 		if(!isliving(user)) return
-		if(!src.scan)
-			boutput(user, "<span class='alert'>You have to scan your ID first!</span>")
-			return
+		if(!barter)
+			if(!src.scan)
+				boutput(user, "<span class='alert'>You have to scan your ID first!</span>")
+				return
+			account = FindBankAccountByName(src.scan.registered)
+			if(!account)
+				boutput(user, "<span class='alert'>[src]There is no account registered with this card!</span>")
+				return
 		if(angry)
 			boutput(user, "<span class='alert'>[src] is angry and won't trade with anyone right now.</span>")
 			return
 		if(!alive)
 			boutput(user, "<span class='alert'>[src] is dead!</span>")
-			return
-		var/datum/db_record/account = null
-		account = FindBankAccountByName(src.scan.registered)
-		if(!account)
-			boutput(user, "<span class='alert'>[src]There is no account registered with this card!</span>")
 			return
 		/*if (isitem(O))
 			user.visible_message("<span class='notice'>[src] rummages through [user]'s goods.</span>")
@@ -537,23 +573,41 @@
 						sleep(0.2 SECONDS)
 						if (user.loc != staystill) break*/
 		if (istype(O, /obj/storage/crate/))
-			if (O:locked)
-				user.show_text("[src] stares at the locked [O], unamused. Maybe you should make sure the thing's open, first.", "red")
+			var/obj/storage/crate/C = O
+			if (C.locked)
+				user.show_text("[src] stares at the locked [C], unamused. Maybe you should make sure the thing's open, first.", "red")
 				return
 			SPAWN(1 DECI SECOND)
 				user.visible_message("<span class='notice'>[src] rummages through [user]'s [O].</span>")
 				playsound(src.loc, "rustle", 60, 1)
 				var/cratevalue = null
-				for (var/obj/sellitem in O.contents)
+				var/list/sold_string = list()
+				for (var/obj/item/sellitem in O.contents)
 					var/datum/commodity/tradetype = most_applicable_trade(src.goods_buy, sellitem)
 					if(tradetype)
-						cratevalue += tradetype.price
+						cratevalue += sold_item(tradetype, sellitem, sellitem.amount, user)
 						qdel(sellitem)
+						sold_string[sellitem.type] += sellitem.amount
+				if(log_trades && length(sold_string))
+					logTheThing(LOG_STATION, user, "sold ([json_encode(sold_string)]) to [src] for [cratevalue] at [log_loc(get_turf(src))]")
 				if(cratevalue)
-					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] credits have been transferred to your account.</span>")
-					account["current_money"] += cratevalue
+					boutput(user, "<span class='notice'>[src] takes what they want from [O]. [cratevalue] [currency] have been transferred to your account.</span>")
+					if(account)
+						account["current_money"] += cratevalue
+					else
+						barter_customers[user] += cratevalue
 				else
 					boutput(user, "<span class='notice'>[src] finds nothing of interest in [O].</span>")
+
+// trader except money never comes out. You sell to accrue credit that can then be spent so it is a closed system.
+/obj/npc/trader/barter
+	name="Trader"
+	barter=TRUE
+	attackby(obj/item/I as obj, mob/user as mob)
+		return
+
+	card_scan()
+		return
 
 /////////////////////////////////////////////////////
 ///////////////THE TRADERS ///////////////////////////
@@ -563,7 +617,6 @@
 /obj/npc/trader/random
 	icon_state = "welder"
 	picture = "generic.png"
-	trader_area = "/area/shuttle/merchant_shuttle/left"
 	angrynope = "Not right now..."
 	whotext = ""
 
@@ -642,14 +695,14 @@
 		var/list/selltypes = typesof(pick(commercetypes))
 		var/list/buytypes = typesof(pick(commercetypes))
 
-		while(selltypes.len > 0 && src.goods_sell.len < items_for_sale)
+		while(length(selltypes) > 0 && length(src.goods_sell) < items_for_sale)
 			var/pickedselltype = pick(selltypes)
 			var/datum/commodity/sellitem = new pickedselltype(src)
 			selltypes -= pickedselltype
 			if(sellitem.comtype != null)
 				src.goods_sell += sellitem
 
-		while(buytypes.len > 0 && src.goods_buy.len < items_wanted)
+		while(length(buytypes) > 0 && length(src.goods_buy) < items_wanted)
 			var/pickedbuytype = pick(buytypes)
 			var/datum/commodity/buyitem = new pickedbuytype(src)
 			buytypes -= pickedbuytype
@@ -662,11 +715,11 @@
 		for(var/turf/T in get_area_turfs( get_area(src) ))
 			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
 				var/N = pick(1,2)
-				var/obj/critter/martian/P = null
+				var/mob/living/critter/martian/P = null
 				if (N == 1)
-					P = new /obj/critter/martian/soldier
+					P = new /mob/living/critter/martian/soldier
 				else
-					P = new /obj/critter/martian/warrior
+					P = new /mob/living/critter/martian/warrior
 				P.set_loc(D.loc)
 				showswirl(P.loc)
 
@@ -675,7 +728,6 @@
 /obj/npc/trader/martian
 	icon_state = "martianP"
 	picture = "martian.png"
-	trader_area = "/area/martian_trader"
 	angrynope = "Not now, human."
 	whotext = "I am a simple martian, looking to trade."
 
@@ -733,205 +785,19 @@
 			boutput(M, "<B>[src.name]</B> yells, \"mortigi c^iujn!\"")
 		for(var/turf/T in get_area_turfs( get_area(src) ))
 			for(var/obj/decal/fakeobjects/teleport_pad/D in T)
-				var/obj/critter/martian/soldier/P = new /obj/critter/martian/soldier
+				var/mob/living/critter/martian/soldier/P = new /mob/living/critter/martian/soldier
 				P.set_loc(D.loc)
 				showswirl(P.loc)
 
-////////Robot
+////////Robot parent
+ABSTRACT_TYPE(/obj/npc/trader/robot)
 /obj/npc/trader/robot
-	icon = 'icons/misc/evilreaverstation.dmi' // changed from the ancient robot sprite to pr1
-	icon_state = "pr1_b"
-	picture = "robot.png"
-	trader_area = "/area/turret_protected/robot_trade_outpost"
-	var/productset = 0 // 0 is robots and salvage, 1 is podparts and drugs, 2 is produce. 3 is syndicate junk, 4 is medical stuff
 	angrynope = "Unable to process request."
 	whotext = "I am a trading unit. I have been authorized to engage in trade with you."
+	picture = "robot.png"
 
 	New()
 		..()
-		switch(productset)
-			if(1) // drugs and pod stuff
-				src.goods_sell += new /datum/commodity/podparts/engine(src)
-				src.goods_sell += new /datum/commodity/podparts/laser(src)
-				src.goods_sell += new /datum/commodity/podparts/asslaser(src)
-				src.goods_sell += new /datum/commodity/podparts/blackarmor(src)
-				src.goods_sell += new /datum/commodity/podparts/skin_stripe_r(src)
-				src.goods_sell += new /datum/commodity/podparts/skin_stripe_b(src)
-				src.goods_sell += new /datum/commodity/podparts/skin_flames(src)
-				src.goods_sell += new /datum/commodity/contraband/ntso_uniform(src)
-				src.goods_sell += new /datum/commodity/contraband/ntso_beret(src)
-				src.goods_sell += new /datum/commodity/contraband/ntso_vest(src)
-				src.goods_sell += new /datum/commodity/drugs/methamphetamine(src)
-				src.goods_sell += new /datum/commodity/drugs/crank(src)
-				//src.goods_sell += new /datum/commodity/drugs/bathsalts(src)
-				src.goods_sell += new /datum/commodity/drugs/catdrugs(src)
-				src.goods_sell += new /datum/commodity/drugs/morphine(src)
-				src.goods_sell += new /datum/commodity/drugs/krokodil(src)
-				src.goods_sell += new /datum/commodity/drugs/lsd(src)
-				src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
-				src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
-				src.goods_sell += new /datum/commodity/pills/uranium(src)
-
-				src.goods_buy += new /datum/commodity/drugs/shrooms(src)
-				src.goods_buy += new /datum/commodity/drugs/cannabis(src)
-				src.goods_buy += new /datum/commodity/drugs/cannabis_mega(src)
-				src.goods_buy += new /datum/commodity/drugs/cannabis_white(src)
-				src.goods_buy += new /datum/commodity/drugs/cannabis_omega(src)
-
-			if(2) // diner attendant
-				src.goods_sell += new /datum/commodity/diner/mysteryburger(src)
-				src.goods_sell += new /datum/commodity/diner/monster(src)
-				src.goods_sell += new /datum/commodity/diner/sloppyjoe(src)
-				src.goods_sell += new /datum/commodity/diner/mashedpotatoes(src)
-				src.goods_sell += new /datum/commodity/diner/waffles(src)
-				src.goods_sell += new /datum/commodity/diner/pancake(src)
-				src.goods_sell += new /datum/commodity/diner/meatloaf(src)
-				src.goods_sell += new /datum/commodity/diner/slurrypie(src)
-				src.goods_sell += new /datum/commodity/diner/daily_special(src)
-
-				src.goods_buy += new /datum/commodity/produce/special/gmelon(src)
-				src.goods_buy += new /datum/commodity/produce/special/greengrape(src)
-				src.goods_buy += new /datum/commodity/produce/special/ghostchili(src)
-				src.goods_buy += new /datum/commodity/produce/special/chilly(src)
-				src.goods_buy += new /datum/commodity/produce/special/lashberry(src)
-				src.goods_buy += new /datum/commodity/produce/special/purplegoop(src)
-				src.goods_buy += new /datum/commodity/produce/special/glowfruit(src)
-
-			if(3) // syndicate bot
-				src.illegal = 1
-				var/carlsell = rand(1,10)
-				src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
-				src.goods_illegal += new /datum/commodity/contraband/command_helmet(src)
-				src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
-				if (carlsell <= 3)
-					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
-				if (carlsell >= 2 && carlsell <= 6)
-					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
-				if (carlsell >= 5 && carlsell <= 8)
-					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
-				if (carlsell >= 9)
-					src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
-					src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
-					src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
-				src.goods_illegal += new /datum/commodity/contraband/birdbomb(src)
-				src.goods_illegal += new /datum/commodity/contraband/syndicate_headset(src)
-				src.goods_sell += new /datum/commodity/contraband/swatmask(src)
-				src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
-				src.goods_sell += new /datum/commodity/contraband/flare(src)
-				src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
-				src.goods_sell += new /datum/commodity/podparts/cloak(src)
-				src.goods_sell += new /datum/commodity/podparts/redarmor(src)
-				src.goods_sell += new /datum/commodity/podparts/ballistic(src)
-				src.goods_sell += new /datum/commodity/podparts/artillery(src)
-				src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
-				src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
-#ifdef MAP_OVERRIDE_MANTA
-				src.goods_sell += new /datum/commodity/HEtorpedo(src)
-#endif
-
-				src.goods_buy += new /datum/commodity/contraband/egun(src)
-				src.goods_buy += new /datum/commodity/contraband/secheadset(src)
-				src.goods_buy += new /datum/commodity/contraband/hosberet(src)
-				src.goods_buy += new /datum/commodity/contraband/spareid(src)
-				src.goods_buy += new /datum/commodity/contraband/captainid(src)
-				src.goods_buy += new /datum/commodity/goldbar(src)
-
-			if(4) // medical
-				src.goods_sell += new /datum/commodity/medical/injectorbelt(src)
-				src.goods_sell += new /datum/commodity/medical/strange_reagent(src)
-				src.goods_sell += new /datum/commodity/medical/firstaidR(src)
-				src.goods_sell += new /datum/commodity/medical/firstaidBr(src)
-				src.goods_sell += new /datum/commodity/medical/firstaidB(src)
-				src.goods_sell += new /datum/commodity/medical/firstaidT(src)
-				src.goods_sell += new /datum/commodity/medical/firstaidO(src)
-				src.goods_sell += new /datum/commodity/medical/firstaidN(src)
-				src.goods_sell += new /datum/commodity/medical/firstaidC(src)
-				src.goods_sell += new /datum/commodity/medical/injectorPent(src)
-				src.goods_sell += new /datum/commodity/medical/injectorPerf(src)
-				#ifdef CREATE_PATHOGENS //PATHOLOGY REMOVAL
-				src.goods_sell += new /datum/commodity/synthmodule/bacteria(src)
-				src.goods_sell += new /datum/commodity/synthmodule/virii(src)
-				src.goods_sell += new /datum/commodity/synthmodule/fungi(src)
-				src.goods_sell += new /datum/commodity/synthmodule/parasite(src)
-				src.goods_sell += new /datum/commodity/synthmodule/gmcell(src)
-				src.goods_sell += new /datum/commodity/synthmodule/vaccine(src)
-				src.goods_sell += new /datum/commodity/pathogensample(src)
-				#endif
-
-				src.goods_sell += new /datum/commodity/bodyparts/cyberheart(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cyberbutt(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cybereye(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cybereye_sunglass(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cybereye_sechud(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cybereye_thermal(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cybereye_meson(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cybereye_spectro(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cybereye_prodoc(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cybereye_camera(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cybereye_laser(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cybereye_ecto(src)
-				src.goods_sell += new /datum/commodity/bodyparts/l_cyberlung(src)
-				src.goods_sell += new /datum/commodity/bodyparts/r_cyberlung(src)
-				src.goods_sell += new /datum/commodity/bodyparts/l_cyberkidney(src)
-				src.goods_sell += new /datum/commodity/bodyparts/r_cyberkidney(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cyberliver(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cyberspleen(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cyberstomach(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cyberintestines(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cyberpancreas(src)
-				src.goods_sell += new /datum/commodity/bodyparts/cyberappendix(src)
-
-				src.goods_buy += new /datum/commodity/bodyparts/armL(src)
-				src.goods_buy += new /datum/commodity/bodyparts/armR(src)
-				src.goods_buy += new /datum/commodity/bodyparts/legL(src)
-				src.goods_buy += new /datum/commodity/bodyparts/legR(src)
-				src.goods_buy += new /datum/commodity/bodyparts/brain(src)
-				src.goods_buy += new /datum/commodity/bodyparts/synthbrain(src)
-				src.goods_buy += new /datum/commodity/bodyparts/aibrain(src)
-				src.goods_buy += new /datum/commodity/bodyparts/butt(src)
-				src.goods_buy += new /datum/commodity/bodyparts/synthbutt(src)
-				src.goods_buy += new /datum/commodity/bodyparts/heart(src)
-				src.goods_buy += new /datum/commodity/bodyparts/synthheart(src)
-				src.goods_buy += new /datum/commodity/bodyparts/l_eye(src)
-				src.goods_buy += new /datum/commodity/bodyparts/r_eye(src)
-				src.goods_buy += new /datum/commodity/bodyparts/syntheye(src)
-				src.goods_buy += new /datum/commodity/bodyparts/l_lung(src)
-				src.goods_buy += new /datum/commodity/bodyparts/r_lung(src)
-				src.goods_buy += new /datum/commodity/bodyparts/l_kidney(src)
-				src.goods_buy += new /datum/commodity/bodyparts/r_kidney(src)
-				src.goods_buy += new /datum/commodity/bodyparts/liver(src)
-				src.goods_buy += new /datum/commodity/bodyparts/spleen(src)
-				src.goods_buy += new /datum/commodity/bodyparts/stomach(src)
-				src.goods_buy += new /datum/commodity/bodyparts/intestines(src)
-				src.goods_buy += new /datum/commodity/bodyparts/pancreas(src)
-				src.goods_buy += new /datum/commodity/bodyparts/appendix(src)
-
-			else // salvage goods
-				src.goods_sell += new /datum/commodity/fuel(src)
-				src.goods_sell += new /datum/commodity/junk/horsemask(src)
-				src.goods_sell += new /datum/commodity/junk/batmask(src)
-				src.goods_sell += new /datum/commodity/junk/johnny(src)
-				src.goods_sell += new /datum/commodity/junk/buddy(src)
-				src.goods_sell += new /datum/commodity/junk/cowboy_boots(src)
-				src.goods_sell += new /datum/commodity/junk/cowboy_hat(src)
-				src.goods_sell += new /datum/commodity/medical/injectormask(src)
-				src.goods_sell += new /datum/commodity/contraband/briefcase(src)
-				src.goods_sell += new /datum/commodity/boogiebot(src)
-				src.goods_sell += new /datum/commodity/junk/voltron(src)
-				src.goods_sell += new /datum/commodity/junk/cloner_upgrade(src)
-				src.goods_sell += new /datum/commodity/junk/grinder_upgrade(src)
-				src.goods_sell += new /datum/commodity/junk/speedyclone(src)
-				src.goods_sell += new /datum/commodity/junk/efficientclone(src)
-				src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
-
-				src.goods_buy += new /datum/commodity/salvage/scrap(src)
-				src.goods_buy += new /datum/commodity/salvage/machinedebris(src)
-				src.goods_buy += new /datum/commodity/salvage/robotdebris(src)
-				src.goods_buy += new /datum/commodity/relics/gnome(src)
-				src.goods_buy += new /datum/commodity/goldbar(src)
-
-		//src.name = pick( "Unit DX-495E", "Unit DX-495H", "Unit DX-575E", "Unit DX-485F", "Unit DX-385D", "Sketchy D", "Skeevy D")
-
 		greeting= {"[src.name]'s eyes light up, and he states, \"Salutations organic, welcome to my shop. Please browse my wares.\""}
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
@@ -965,6 +831,216 @@
 			for (var/obj/machinery/bot/guardbot/G in T)
 				G.turn_on()
 
+/obj/npc/trader/robot/medical
+	name = "D.O.C."
+	icon = 'icons/misc/evilreaverstation.dmi'
+	icon_state = "medibot0"
+
+	New()
+		..()
+		src.goods_sell += new /datum/commodity/medical/injectorbelt(src)
+		src.goods_sell += new /datum/commodity/medical/strange_reagent(src)
+		src.goods_sell += new /datum/commodity/medical/firstaidR(src)
+		src.goods_sell += new /datum/commodity/medical/firstaidBr(src)
+		src.goods_sell += new /datum/commodity/medical/firstaidB(src)
+		src.goods_sell += new /datum/commodity/medical/firstaidT(src)
+		src.goods_sell += new /datum/commodity/medical/firstaidO(src)
+		src.goods_sell += new /datum/commodity/medical/firstaidN(src)
+		src.goods_sell += new /datum/commodity/medical/firstaidC(src)
+		src.goods_sell += new /datum/commodity/medical/injectorPent(src)
+		src.goods_sell += new /datum/commodity/medical/injectorPerf(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cyberheart(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cyberbutt(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cybereye(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cybereye_sunglass(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cybereye_sechud(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cybereye_thermal(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cybereye_meson(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cybereye_spectro(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cybereye_prodoc(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cybereye_camera(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cybereye_laser(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cybereye_ecto(src)
+		src.goods_sell += new /datum/commodity/bodyparts/l_cyberlung(src)
+		src.goods_sell += new /datum/commodity/bodyparts/r_cyberlung(src)
+		src.goods_sell += new /datum/commodity/bodyparts/l_cyberkidney(src)
+		src.goods_sell += new /datum/commodity/bodyparts/r_cyberkidney(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cyberliver(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cyberspleen(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cyberstomach(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cyberintestines(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cyberpancreas(src)
+		src.goods_sell += new /datum/commodity/bodyparts/cyberappendix(src)
+
+		src.goods_buy += new /datum/commodity/bodyparts/armL(src)
+		src.goods_buy += new /datum/commodity/bodyparts/armR(src)
+		src.goods_buy += new /datum/commodity/bodyparts/legL(src)
+		src.goods_buy += new /datum/commodity/bodyparts/legR(src)
+		src.goods_buy += new /datum/commodity/bodyparts/brain(src)
+		src.goods_buy += new /datum/commodity/bodyparts/synthbrain(src)
+		src.goods_buy += new /datum/commodity/bodyparts/aibrain(src)
+		src.goods_buy += new /datum/commodity/bodyparts/butt(src)
+		src.goods_buy += new /datum/commodity/bodyparts/synthbutt(src)
+		src.goods_buy += new /datum/commodity/bodyparts/heart(src)
+		src.goods_buy += new /datum/commodity/bodyparts/synthheart(src)
+		src.goods_buy += new /datum/commodity/bodyparts/l_eye(src)
+		src.goods_buy += new /datum/commodity/bodyparts/r_eye(src)
+		src.goods_buy += new /datum/commodity/bodyparts/syntheye(src)
+		src.goods_buy += new /datum/commodity/bodyparts/l_lung(src)
+		src.goods_buy += new /datum/commodity/bodyparts/r_lung(src)
+		src.goods_buy += new /datum/commodity/bodyparts/l_kidney(src)
+		src.goods_buy += new /datum/commodity/bodyparts/r_kidney(src)
+		src.goods_buy += new /datum/commodity/bodyparts/liver(src)
+		src.goods_buy += new /datum/commodity/bodyparts/spleen(src)
+		src.goods_buy += new /datum/commodity/bodyparts/stomach(src)
+		src.goods_buy += new /datum/commodity/bodyparts/intestines(src)
+		src.goods_buy += new /datum/commodity/bodyparts/pancreas(src)
+		src.goods_buy += new /datum/commodity/bodyparts/appendix(src)
+
+/obj/npc/trader/robot/syndicate
+	name = "C.A.R.L."
+	icon = 'icons/mob/robots.dmi'
+	icon_state = "syndibot"
+	illegal = TRUE
+
+	New()
+		..()
+		var/carlsell = rand(1,10)
+		src.goods_illegal += new /datum/commodity/contraband/command_suit(src)
+		src.goods_illegal += new /datum/commodity/contraband/command_helmet(src)
+		src.goods_illegal += new /datum/commodity/contraband/disguiser(src)
+		src.goods_illegal += new /datum/commodity/contraband/birdbomb(src)
+		src.goods_illegal += new /datum/commodity/contraband/syndicate_headset(src)
+		if (carlsell <= 3)
+			src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
+		if (carlsell >= 2 && carlsell <= 6)
+			src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
+		if (carlsell >= 5 && carlsell <= 8)
+			src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
+		if (carlsell >= 9)
+			src.goods_illegal += new /datum/commodity/contraband/radiojammer(src)
+			src.goods_illegal += new /datum/commodity/contraband/stealthstorage(src)
+			src.goods_illegal += new /datum/commodity/contraband/voicechanger(src)
+
+		src.goods_sell += new /datum/commodity/contraband/swatmask(src)
+		src.goods_sell += new /datum/commodity/contraband/spy_sticker_kit(src)
+		src.goods_sell += new /datum/commodity/contraband/flare(src)
+		src.goods_sell += new /datum/commodity/contraband/eguncell_highcap(src)
+		src.goods_sell += new /datum/commodity/podparts/cloak(src)
+		src.goods_sell += new /datum/commodity/podparts/redarmor(src)
+		src.goods_sell += new /datum/commodity/podparts/ballistic(src)
+		src.goods_sell += new /datum/commodity/podparts/artillery(src)
+		src.goods_sell += new /datum/commodity/contraband/artillery_ammo(src)
+		src.goods_sell += new /datum/commodity/contraband/ai_kit_syndie(src)
+#ifdef UNDERWATER_MAP
+		src.goods_sell += new /datum/commodity/HEtorpedo(src)
+#endif
+
+		src.goods_buy += new /datum/commodity/contraband/egun(src)
+		src.goods_buy += new /datum/commodity/contraband/secheadset(src)
+		src.goods_buy += new /datum/commodity/contraband/hosberet(src)
+		src.goods_buy += new /datum/commodity/contraband/spareid(src)
+		src.goods_buy += new /datum/commodity/contraband/captainid(src)
+		src.goods_buy += new /datum/commodity/goldbar(src)
+
+ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
+/obj/npc/trader/robot/robuddy
+	icon = 'icons/obj/bots/robuddy/pr-1.dmi'
+	icon_state = "body"
+
+	New()
+		..()
+		src.UpdateOverlays(SafeGetOverlayImage("face", 'icons/obj/bots/robuddy/pr-1.dmi' ,"face-happy"), "face")
+		src.UpdateOverlays(SafeGetOverlayImage("lights", 'icons/obj/bots/robuddy/pr-1.dmi' ,"lights-on"), "lights")
+
+/obj/npc/trader/robot/robuddy/salvage
+	name = "Thrifty B.O.B.";
+	picture = "loungebuddy.png";
+
+	New()
+		..()
+		src.goods_sell += new /datum/commodity/fuel(src)
+		src.goods_sell += new /datum/commodity/junk/horsemask(src)
+		src.goods_sell += new /datum/commodity/junk/batmask(src)
+		src.goods_sell += new /datum/commodity/junk/johnny(src)
+		src.goods_sell += new /datum/commodity/junk/buddy(src)
+		src.goods_sell += new /datum/commodity/junk/cowboy_boots(src)
+		src.goods_sell += new /datum/commodity/junk/cowboy_hat(src)
+		src.goods_sell += new /datum/commodity/medical/injectormask(src)
+		src.goods_sell += new /datum/commodity/contraband/briefcase(src)
+		src.goods_sell += new /datum/commodity/boogiebot(src)
+		src.goods_sell += new /datum/commodity/junk/voltron(src)
+		src.goods_sell += new /datum/commodity/junk/cloner_upgrade(src)
+		src.goods_sell += new /datum/commodity/junk/grinder_upgrade(src)
+		src.goods_sell += new /datum/commodity/junk/speedyclone(src)
+		src.goods_sell += new /datum/commodity/junk/efficientclone(src)
+		src.goods_sell += new /datum/commodity/podparts/goldarmor(src)
+
+		src.goods_buy += new /datum/commodity/salvage/scrap(src)
+		src.goods_buy += new /datum/commodity/salvage/machinedebris(src)
+		src.goods_buy += new /datum/commodity/salvage/robotdebris(src)
+		src.goods_buy += new /datum/commodity/relics/gnome(src)
+		src.goods_buy += new /datum/commodity/goldbar(src)
+
+/obj/npc/trader/robot/robuddy/drugs
+	name = "Sketchy D-5"
+	desc = "The robot equivelant of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon."
+	picture = "loungebuddy.png"
+	greeting = "I got what you need."
+
+	New()
+		..()
+		src.goods_sell += new /datum/commodity/podparts/engine(src)
+		src.goods_sell += new /datum/commodity/podparts/laser(src)
+		src.goods_sell += new /datum/commodity/podparts/asslaser(src)
+		src.goods_sell += new /datum/commodity/podparts/blackarmor(src)
+		src.goods_sell += new /datum/commodity/podparts/skin_stripe_r(src)
+		src.goods_sell += new /datum/commodity/podparts/skin_stripe_b(src)
+		src.goods_sell += new /datum/commodity/podparts/skin_flames(src)
+		src.goods_sell += new /datum/commodity/contraband/ntso_uniform(src)
+		src.goods_sell += new /datum/commodity/contraband/ntso_beret(src)
+		src.goods_sell += new /datum/commodity/contraband/ntso_vest(src)
+		src.goods_sell += new /datum/commodity/contraband/swatmask(src)
+		src.goods_sell += new /datum/commodity/drugs/methamphetamine(src)
+		src.goods_sell += new /datum/commodity/drugs/crank(src)
+		src.goods_sell += new /datum/commodity/drugs/catdrugs(src)
+		src.goods_sell += new /datum/commodity/drugs/morphine(src)
+		src.goods_sell += new /datum/commodity/drugs/krokodil(src)
+		src.goods_sell += new /datum/commodity/drugs/lsd(src)
+		src.goods_sell += new /datum/commodity/drug/lsd_bee(src)
+		src.goods_sell += new /datum/commodity/relics/bootlegfirework(src)
+		src.goods_sell += new /datum/commodity/pills/uranium(src)
+
+		src.goods_buy += new /datum/commodity/drugs/shrooms(src)
+		src.goods_buy += new /datum/commodity/drugs/cannabis(src)
+		src.goods_buy += new /datum/commodity/drugs/cannabis_mega(src)
+		src.goods_buy += new /datum/commodity/drugs/cannabis_white(src)
+		src.goods_buy += new /datum/commodity/drugs/cannabis_omega(src)
+
+/obj/npc/trader/robot/robuddy/diner
+	name = "B.I.F.F."
+	desc = "The robot proprieter of the Diner. Deals in food that's to dine for!"
+	picture = "loungebuddy.png"
+
+	New()
+		..()
+		src.goods_sell += new /datum/commodity/diner/mysteryburger(src)
+		src.goods_sell += new /datum/commodity/diner/monster(src)
+		src.goods_sell += new /datum/commodity/diner/sloppyjoe(src)
+		src.goods_sell += new /datum/commodity/diner/mashedpotatoes(src)
+		src.goods_sell += new /datum/commodity/diner/waffles(src)
+		src.goods_sell += new /datum/commodity/diner/pancake(src)
+		src.goods_sell += new /datum/commodity/diner/meatloaf(src)
+		src.goods_sell += new /datum/commodity/diner/slurrypie(src)
+		src.goods_sell += new /datum/commodity/diner/daily_special(src)
+
+		src.goods_buy += new /datum/commodity/produce/special/gmelon(src)
+		src.goods_buy += new /datum/commodity/produce/special/greengrape(src)
+		src.goods_buy += new /datum/commodity/produce/special/ghostchili(src)
+		src.goods_buy += new /datum/commodity/produce/special/chilly(src)
+		src.goods_buy += new /datum/commodity/produce/special/lashberry(src)
+		src.goods_buy += new /datum/commodity/produce/special/purplegoop(src)
+		src.goods_buy += new /datum/commodity/produce/special/glowfruit(src)
 
 /// BZZZZZZZZZZZ
 
@@ -973,7 +1049,6 @@
 	icon_state = "bee"
 	picture = "bee.png"
 	name = "Bombini" // like the tribe of bumblebees
-	trader_area = "/area/bee_trader"
 
 	New()
 		..()
@@ -1056,7 +1131,6 @@
 	icon_state = "exclown"
 	picture = "exclown.png"
 	name = "Geoff Honkington"
-	trader_area = "/area/hallway/secondary/entry"
 	angrynope = "HO--nngh. Leave me alone."
 	whotext = "Just an honest trader tryin' to make a living. Mind the banana peel, ya hear?"
 	var/honk = 0
@@ -1094,10 +1168,14 @@
 		src.goods_sell += new /datum/commodity/sticker/googly_eyes_angry(src)
 		src.goods_sell += new /datum/commodity/toygun(src)
 		src.goods_sell += new /datum/commodity/toygunammo(src)
+		src.goods_sell += new /datum/commodity/clownsabre(src)
 		src.goods_sell += new /datum/commodity/junk/circus_board(src)
 		src.goods_sell += new /datum/commodity/junk/pie_launcher(src)
 		src.goods_sell += new /datum/commodity/junk/laughbox(src)
 		src.goods_sell += new /datum/commodity/junk/ai_kit_clown(src)
+		src.goods_sell += new /datum/commodity/junk/ai_kit_mime(src)
+		src.goods_sell += new /datum/commodity/foam_dart_grenade(src)
+
 
 
 		/////////////////////////////////////////////////////////
@@ -1150,7 +1228,6 @@
 	icon_state = "skeleton"
 	picture = "skeleton.png"
 	name = "Clack Hat"
-	trader_area = "/area/skeleton_trader"
 	angrynope = "Not now."
 	whotext = "I am a trader."
 
@@ -1206,7 +1283,6 @@
 	icon_state = "chad"
 	picture = "chad.png"
 	name = "Chad"
-	trader_area = "/area/diner/hallway"
 	angrynope = "Piss off, bro!"
 	whotext = "What does it look like, man?"
 
@@ -1261,7 +1337,6 @@
 	icon_state = "hand"
 	picture = "hand.png"
 	name = "A hand sticking out from a toilet"
-	trader_area = "/area/diner/bathroom"
 
 	New()
 		..()
@@ -1327,7 +1402,6 @@
 	icon_state = "twins"
 	picture = "twins.png"
 	name = "Carol and Lynn"
-	trader_area = "/area/prefab/mobius"
 
 	bound_width = 64
 	bound_height = 32
@@ -1390,7 +1464,6 @@
 	icon_state = "flexx"
 	picture = "flexx.png"
 	name = "Flexx"
-	trader_area = "/area/flexx_trader"
 	angrynope = "Not cool, champ!"
 	whotext = "Yo, buddy, name's Flexx. Whaddup?"
 

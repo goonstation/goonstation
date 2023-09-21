@@ -34,7 +34,7 @@
 			return
 		if (ishuman(user))
 			var/mob/living/carbon/human/humanuser = user
-			if(!isalive(user) && user.ghost && user.ghost.mind && user.ghost.mind.dnr)
+			if(!isalive(user) && user.ghost && user.ghost.mind && user.ghost.mind.get_player()?.dnr)
 				O.visible_message("<span class='alert'><b>[O]</b> refuses to process [user.name]!</span>")
 				return
 			O.visible_message("<span class='alert'><b>[O]</b> suddenly pulls [user.name] inside[escapable ? "!" : " and slams shut!"]</span>")
@@ -88,7 +88,7 @@
 				bdna = user.bioHolder.Uid
 				btype = user.bioHolder.bloodType
 			var/turf/T = get_turf(user)
-			gibs(T, null, null, bdna, btype)
+			gibs(T, null, bdna, btype)
 
 			ArtifactLogs(user, null, O, "touched", "robotizing user", 0) // Added (Convair880).
 

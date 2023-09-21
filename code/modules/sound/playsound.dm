@@ -1,4 +1,18 @@
-var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
+/// Approximate check of whether music is playing or not (radio / ad tapes / admin music all count as music here)
+/// If music is playing this should return TRUE. But if music stopped playing only recently-ish it can sometimes return TRUE still.
+/// In some rare cases it can happen that this has a false negative too so like don't rely on this for anything super important, ok?
+proc/is_music_playing()
+	. = GET_COOLDOWN(global, "music")
+	if(!. && length(clients))
+		// alright now we do this wicked heuristic where we ask *some* client whether they have music playing, I'm sure that will work
+		var/client/C = usr?.client || pick(clients)
+		var/list/sounds = C.SoundQuery()
+		for(var/sound/S in sounds)
+			if(S.channel == SOUNDCHANNEL_RADIO || S.channel >= SOUNDCHANNEL_ADMIN_LOW && S.channel <= SOUNDCHANNEL_ADMIN_HIGH)
+				// extend the cooldown by the length of this sound so we don't need to check SoundQuery next time
+				EXTEND_COOLDOWN(global, "music", S.len - S.offset)
+				. = TRUE
+				break
 
 /client/proc/play_sound_real(S as sound, var/vol as num, var/freq as num)
 	if (!config.allow_admin_sounds)
@@ -21,8 +35,8 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	if (!vol)
 		return
 
-	logTheThing("admin", src, null, "played sound [S]")
-	logTheThing("diary", src, null, "played sound [S]", "admin")
+	logTheThing(LOG_ADMIN, src, "played sound [S]")
+	logTheThing(LOG_DIARY, src, "played sound [S]", "admin")
 	message_admins("[key_name(src)] played sound [S]")
 	SPAWN(0)
 		for (var/client/C in clients)
@@ -46,7 +60,7 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	music_sound.wait = 0
 	music_sound.repeat = 0
 	music_sound.priority = 254
-	music_sound.channel = admin_sound_channel //having this set to 999 removed layering music functionality -ZeWaka
+	music_sound.channel = admin_sound_channel
 	if(!freq)
 		music_sound.frequency = 1
 	else
@@ -78,9 +92,11 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [music_sound.volume]")
 		dj_panel.move_admin_sound_channel()
-	logTheThing("admin", src, null, "started loading music [S]")
-	logTheThing("diary", src, null, "started loading music [S]", "admin")
+	logTheThing(LOG_ADMIN, src, "started loading music [S]")
+	logTheThing(LOG_DIARY, src, "started loading music [S]", "admin")
 	message_admins("[key_name(src)] started loading music [S]")
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
 /client/proc/play_music_radio(soundPath, var/name)
@@ -108,9 +124,12 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 			boutput(C, "Now playing radio tunes. <a href='byond://winset?command=Stop-the-Radio!'>Stop music</a>")
 			//DEBUG_MESSAGE("Playing sound for [C] on channel [music_sound.channel] with volume [client_vol]")
 
-	logTheThing("admin", src, null, "started loading music [soundPath], by the name of: [name]")
-	logTheThing("diary", src, null, "started loading music [soundPath], by the name of: [name]", "admin")
+	logTheThing(LOG_ADMIN, src, "started loading music [soundPath], by the name of: [name]")
+	logTheThing(LOG_DIARY, src, "started loading music [soundPath], by the name of: [name]", "admin")
 	message_admins("[key_name(src)] started loading music [soundPath], by the name of: [name]")
+
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", max(2 MINUTES, music_sound.len))
 	return 1
 
 /proc/play_music_remote(data)
@@ -149,12 +168,12 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 
 	if (adminC)
-		logTheThing("admin", adminC, null, "loaded remote music: [data["file"]] ([data["filesize"]])")
-		logTheThing("diary", adminC, null, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
+		logTheThing(LOG_ADMIN, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])")
+		logTheThing(LOG_DIARY, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
 		message_admins("[key_name(adminC)] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
 	else
-		logTheThing("admin", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])")
-		logTheThing("diary", data["key"], null, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
+		logTheThing(LOG_ADMIN, data["key"], "loaded remote music: [data["file"]] ([data["filesize"]])")
+		logTheThing(LOG_DIARY, data["key"], "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
 		message_admins("[data["key"]] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
 	return 1
 
@@ -188,11 +207,9 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 	var/mute_channel = 1014
 	var/sound/stopsound = sound(null,wait = 0,channel=mute_channel)
 	for (var/i = 1 to 10)
-		//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
 		stopsound.channel = mute_channel
 		src << 	stopsound
 		mute_channel ++
-	//DEBUG_MESSAGE("Muting sound channel [stopsound.channel] for [src]")
 
 /client/verb/stop_the_radio()
 	set category = "Commands"
@@ -250,13 +267,16 @@ var/global/admin_sound_channel = 1014 //Ranges from 1014 to 1024
 
 	if (response.errored || !response.body)
 		boutput(src, "<span class='bold' class='notice'>Something went wrong with the youtube thing! Yell at Wire.</span>")
-		logTheThing("debug", null, null, "<b>Youtube Error</b>: No response from server with video: <b>[video]</b>")
-		logTheThing("diary", null, null, "Youtube Error: No response from server with video: [video]", "debug")
+		logTheThing(LOG_DEBUG, null, "<b>Youtube Error</b>: No response from server with video: <b>[video]</b>")
+		logTheThing(LOG_DIARY, null, "Youtube Error: No response from server with video: [video]", "debug")
 		return
 
 	var/data = json_decode(response.body)
 	if (data["error"])
 		boutput(src, "<span class='bold' class='notice'>Error returned from youtube server thing: [data["error"]].</span>")
 		return
+
+	// prevent radio station from interrupting us
+	EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO: use data from the request as duration instead
 
 	boutput(src, "<span class='bold' class='notice'>Youtube audio loading started. This may take some time to play and a second message will be displayed when it finishes.</span>")

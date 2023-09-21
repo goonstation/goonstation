@@ -18,12 +18,6 @@
 	icon_state = "evidence"
 	desc = "A box for collecting forensics evidence."
 
-/* Phased out with the forensic scanner overhaul. Was useless anyway (Convair880).
-/obj/item/storage/box/fcard_kit
-	name = "fingerprint card box"
-	icon_state = "id"
-	spawn_contents = list(/obj/item/f_card = 7)
-*/
 /obj/item/storage/box/morphineinjectors
 	name = "morphine autoinjector box"
 	icon_state = "box"
@@ -66,13 +60,13 @@
 	/obj/item/ammo/bullets/a38 = 2,\
 	/obj/item/ammo/bullets/a38/stun = 2)
 
-/obj/item/storage/box/ak47 // cogwerks, terrorism update
-	name = "rifle box"
+/obj/item/storage/box/akm // cogwerks, terrorism update
+	name = "AKM box"
 	icon_state = "hard_case"
-	desc = "A box containing a syndicate rifle and some ammo."
+	desc = "A box containing a surplus AKM and 3 magazines."
 	// this might be a terrible idea giving them so much ammo, but whatevs
-	spawn_contents = list(/obj/item/gun/kinetic/ak47,\
-	/obj/item/ammo/bullets/ak47 = 2)
+	spawn_contents = list(/obj/item/gun/kinetic/akm,\
+	/obj/item/ammo/bullets/akm = 2)
 
 /obj/item/storage/box/pistol
 	name = "suppressed pistol box"
@@ -128,6 +122,9 @@
 	desc = "<FONT color=red><B>WARNING: Do not use without reading these preautions!</B></FONT><br><B>These devices are extremely dangerous and can cause blindness or deafness if used incorrectly.</B><br>The chemicals contained in these devices have been tuned for maximal effectiveness and due to<br>extreme safety precuaiotn shave been incased in a tamper-proof pack. DO NOT ATTEMPT TO OPEN<br>FLASH WARNING: Do not use continually. Excercise extreme care when detonating in closed spaces.<br>&emsp;Make attemtps not to detonate withing range of 2 meters of the intended target. It is imperative<br>&emsp;that the targets visit a medical professional after usage. Damage to eyes increases extremely per<br>&emsp;use and according to range. Glasses with flash resistant filters DO NOT always work on high powered<br>&emsp;flash devices such as this. <B>EXERCISE CAUTION REGARDLESS OF CIRCUMSTANCES</B><br>SOUND WARNING: Do not use continually. Visit a medical professional if hearing is lost.<br>&emsp;There is a slight chance per use of complete deafness. Exercise caution and restraint.<br>STUN WARNING: If the intended or unintended target is too close to detonation the resulting sound<br>&emsp;and flash have been known to cause extreme sensory overload resulting in temporary<br>&emsp;incapacitation.<br><B>DO NOT USE CONTINUALLY</B><br>Operating Directions:<br>&emsp;1. Pull detonnation pin. <B>ONCE THE PIN IS PULLED THE GRENADE CAN NOT BE DISARMED!</B><br>&emsp;2. Throw grenade. <B>NEVER HOLD A LIVE FLASHBANG</B><br>&emsp;3. The grenade will detonste 10 seconds hafter being primed. <B>EXCERCISE CAUTION</B><br>&emsp;-<B>Never prime another grenade until after the first is detonated</B><br>Note: Usage of this pyrotechnic device without authorization is an extreme offense and can<br>result in severe punishment upwards of <B>10 years in prison per use</B>.<br><br>Default 3 second wait till from prime to detonation. This can be switched with a screwdriver<br>to 10 seconds.<br><br>Copyright of Nanotrasen Industries- Military Armnaments Division<br>This device was created by Nanotrasen Labs a member of the Expert Advisor Corporation"
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/flashbang = 7)
+
+/obj/item/storage/box/flashbang_kit/vendor //Smaller amount for the sec vendor
+	spawn_contents = list(/obj/item/chem_grenade/flashbang = 4)
 
 /obj/item/storage/box/emp_kit
 	name = "\improper EMP grenade box"
@@ -234,7 +231,7 @@
 	name = "bowling bag"
 	icon_state = "bowling_bag"
 	item_state = "bowling"
-	in_list_or_max = TRUE
+	check_wclass = TRUE
 	can_hold = list(/obj/item/clothing/under/gimmick/bowling,\
 		/obj/item/bowling_ball)
 	spawn_contents = list(/obj/item/clothing/under/gimmick/bowling,\
@@ -248,7 +245,7 @@
 	name = "space-american football kit"
 	desc = "This kit contains everything you need to become a great football player. Wearing all of the equipment inside will grant you the ability to rush down and tackle anyone who stands in your way!"
 	icon_state = "box"
-	in_list_or_max = TRUE
+	check_wclass = TRUE
 	can_hold = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
 		/obj/item/clothing/under/football,/obj/item/clothing/shoes/cleats, /obj/item/football)
 	spawn_contents = list(/obj/item/clothing/suit/armor/football,/obj/item/clothing/head/helmet/football,\
@@ -273,6 +270,8 @@
 	New()
 		..()
 		src.cloaked = 0
+		src.create_storage(/datum/storage, prevent_holding = list(/obj/item/storage/box), max_wclass = src.max_wclass, slots = src.slots, sneaky = src.sneaky,
+			opens_if_worn = TRUE)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -343,12 +342,12 @@
 		[name] tested this fucking gun and it blew [gender ? "her" : "his"] goddamn brains out. I dunno why we're even sending this shit to you.<BR>
 		<B>Don't use it. Fuck.</B><BR>
 		<BR>
-		<I>/[prob(50)? pick_string_autokey("names/first_male.txt"):pick_string_autokey("names/first_female.txt")]</I>
+		<I>/[prob(50) ? pick_string_autokey("names/first_male.txt") : pick_string_autokey("names/first_female.txt")]</I>
 		"}
 
 /obj/item/storage/box/costume/safari
 	name = "safari costume"
-	in_list_or_max = TRUE
+	check_wclass = TRUE
 	can_hold = list(/obj/item/boomerang,
 	/obj/item/clothing/under,
 	/obj/item/ammo/bullets/tranq_darts)

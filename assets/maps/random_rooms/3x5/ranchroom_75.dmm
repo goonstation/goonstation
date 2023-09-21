@@ -1,0 +1,113 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/submachine/chicken_incubator,
+/obj/item/reagent_containers/food/snacks/ingredient/egg,
+/turf/simulated/floor/damaged1,
+/area/dmm_suite/clear_area)
+"f" = (
+/obj/railing/reinforced,
+/turf/simulated/floor/green/corner{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"g" = (
+/turf/simulated/floor/damaged1,
+/area/dmm_suite/clear_area)
+"h" = (
+/obj/chicken_nesting_box,
+/turf/simulated/floor/damaged1,
+/area/dmm_suite/clear_area)
+"o" = (
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"q" = (
+/turf/simulated/floor/green,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/machinery/light{
+	dir = 4;
+	pixel_x = 11
+	},
+/turf/simulated/floor/green/corner{
+	dir = 1
+	},
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/railing/reinforced,
+/turf/simulated/floor/green/corner,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/shrub{
+	dir = 8
+	},
+/obj/item/seed/grass,
+/turf/simulated/floor/dirt,
+/area/dmm_suite/clear_area)
+"E" = (
+/obj/machinery/light/incandescent{
+	dir = 8;
+	nostick = 1;
+	pixel_x = -11
+	},
+/turf/simulated/floor/green/corner{
+	dir = 4
+	},
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/railing/reinforced,
+/turf/simulated/floor/green/side,
+/area/dmm_suite/clear_area)
+"N" = (
+/obj/table/reinforced/auto,
+/obj/item/chicken_carrier,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/damaged1,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/item/reagent_containers/food/snacks/ranch_feed_bag,
+/turf/simulated/floor/damaged1,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/submachine/ranch_feed_grinder,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/obj/machinery/light/incandescent/netural{
+	dir = 1;
+	nostick = 1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/damaged1,
+/area/dmm_suite/clear_area)
+"Z" = (
+/obj/stool/chair/green{
+	dir = 1
+	},
+/turf/simulated/floor/damaged1,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+R
+Q
+v
+E
+a
+"}
+(2,1,1) = {"
+g
+q
+M
+o
+x
+"}
+(3,1,1) = {"
+N
+Z
+f
+s
+h
+"}

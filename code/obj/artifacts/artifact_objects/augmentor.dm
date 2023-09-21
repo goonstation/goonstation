@@ -4,7 +4,7 @@
 
 /datum/artifact/augmentor
 	associated_object = /obj/artifact/augmentor
-	type_name = "Surgery machine"
+	type_name = "Surgery machine (cyborg/synth)"
 	type_size = ARTIFACT_SIZE_LARGE
 	rarity_weight = 350
 	validtypes = list("ancient","precursor")
@@ -20,8 +20,12 @@
 	var/recharge_time = 600
 	var/recharging = 0
 	var/working = 0
+	// per person
+	var/limited_use = FALSE
+	var/max_uses = INFINITY
+	var/list/uses = list()
 	// this monster of a list is used for quick reference to a path
-	var/global/list/work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/airbridge_dpl.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
+	var/list/work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/effects/airbridge_dpl.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
 	var/global/list/augmentation_instances = list()
 
 	// convenience dictionary because fuck writing a dozen more switch cases for this
@@ -106,7 +110,7 @@
 			if(!H) return
 
 			var/part_loc = augment.get_part_target(H, augment_location)
-			if(!part_loc)
+			if(!part_loc || (limited_use && uses[H.bioHolder.uid_hash] == max_uses))
 				// you're already perfect, limbwise
 				boutput(H, "<b>[O]</b> twitches slightly, then returns to a ready position.")
 				return
@@ -150,6 +154,8 @@
 			random_brute_damage(user, 30)
 			bleed(H, 5, 5)
 			O.ArtifactFaultUsed(H)
+			if (limited_use)
+				uses[H.bioHolder.uid_hash]++
 			T.visible_message("<b>[O]</b> withdraws its instruments and slams shut.")
 			working = 0
 			recharging = 1
@@ -233,14 +239,14 @@
 				if("organs_4")
 					parts += organs_4
 		available_parts &= parts
-		if(!H.organs)
+		if(!H.organHolder)
 			available_parts -= organs_1
 			available_parts -= organs_2
 			available_parts -= organs_3
 			available_parts -= organs_4
 		if(!H.limbs)
 			available_parts -= limbs
-		if(available_parts.len <= 0)
+		if(length(available_parts) <= 0)
 			return // something went horribly wrong, abort
 
 		var/list/missing_parts = list()
@@ -258,11 +264,11 @@
 				missing_parts += part_loc
 			else if(is_augmented_part(bodypart, part_loc))
 				candidates_to_remove += part_loc
-		if(missing_parts.len > 0)
+		if(length(missing_parts) > 0)
 			// we have body parts of the target missing, pick one of them
 			return pick(missing_parts)
 		available_parts -= candidates_to_remove
-		if(available_parts.len > 0)
+		if(length(available_parts) > 0)
 			return pick(available_parts)
 		// else, return null (no unupgraded parts left)
 
@@ -296,7 +302,7 @@
 	right_arm = list(/obj/item/parts/robot_parts/arm/right/light, /obj/item/parts/robot_parts/arm/right/standard)
 	left_leg = list(/obj/item/parts/robot_parts/leg/left/standard, /obj/item/parts/robot_parts/leg/left/light, /obj/item/parts/robot_parts/leg/left/treads)
 	right_leg = list(/obj/item/parts/robot_parts/leg/right/standard, /obj/item/parts/robot_parts/leg/right/light, /obj/item/parts/robot_parts/leg/right/treads)
-	eye = list(/obj/item/organ/eye/cyber,/obj/item/organ/eye/cyber/sunglass,/obj/item/organ/eye/cyber/sechud,/obj/item/organ/eye/cyber/thermal,/obj/item/organ/eye/cyber/meson,/obj/item/organ/eye/cyber/spectro,/obj/item/organ/eye/cyber/prodoc,/obj/item/organ/eye/cyber/ecto,/obj/item/organ/eye/cyber/camera,/obj/item/organ/eye/cyber/nightvision,/obj/item/organ/eye/cyber/laser)
+	eye = list(/obj/item/organ/eye/cyber/configurable,/obj/item/organ/eye/cyber/sunglass,/obj/item/organ/eye/cyber/sechud,/obj/item/organ/eye/cyber/thermal,/obj/item/organ/eye/cyber/meson,/obj/item/organ/eye/cyber/spectro,/obj/item/organ/eye/cyber/prodoc,/obj/item/organ/eye/cyber/ecto,/obj/item/organ/eye/cyber/camera,/obj/item/organ/eye/cyber/nightvision,/obj/item/organ/eye/cyber/laser)
 	heart = list(/obj/item/organ/heart/cyber)
 	butt = list(/obj/item/clothing/head/butt/cyberbutt)
 	stomach = list(/obj/item/organ/stomach/cyber)
@@ -335,3 +341,71 @@
 	left_kidney = list(/obj/item/organ/kidney/synth/left)
 	right_kidney = list(/obj/item/organ/kidney/synth/right)
 	appendix = list(/obj/item/organ/appendix/synth)
+
+/obj/artifact/augmentor/limb_augmentor
+	name = "artifact limb augmentor"
+	associated_datum = /datum/artifact/augmentor/limb_augmentor
+
+/datum/artifact/augmentor/limb_augmentor
+	associated_object = /obj/artifact/augmentor/limb_augmentor
+	type_name = "Surgery machine (artifact limbs)"
+	rarity_weight = 200
+	validtypes = list("eldritch", "martian", "precursor")
+	limited_use = TRUE
+	max_uses = 2
+	work_sounds = list('sound/impact_sounds/Flesh_Stab_1.ogg','sound/impact_sounds/Slimy_Splat_1.ogg','sound/impact_sounds/Flesh_Tear_2.ogg','sound/impact_sounds/Slimy_Hit_3.ogg')
+
+	post_setup()
+		. = ..()
+		recharge_time = pick(30, 60) SECONDS
+
+		switch(artitype.name)
+			if ("eldritch")
+				augment = get_augmentation("artifact/artifact_eldritch")
+			if ("martian")
+				augment = get_augmentation("artifact/artifact_martian")
+			if ("precursor")
+				augment = get_augmentation("artifact/artifact_precursor")
+
+		augment_location += "limbs"
+
+/datum/artifact_augmentation/artifact
+	get_part_target(mob/living/carbon/human/H)
+		var/list/valid_limbs = list()
+		for (var/limb in limbs)
+			if (!istype(H.limbs.get_limb(limb), part_list[limb][1]))
+				valid_limbs += limb
+
+		if (!length(valid_limbs))
+			return
+
+		if (("l_arm" in valid_limbs) && !("r_arm" in valid_limbs))
+			return "l_arm"
+		if (!("l_arm" in valid_limbs) && ("r_arm" in valid_limbs))
+			return "r_arm"
+		if (("l_leg" in valid_limbs) && !("r_leg" in valid_limbs))
+			return "l_leg"
+		if (!("l_leg" in valid_limbs) && ("r_leg" in valid_limbs))
+			return "r_leg"
+		return pick(valid_limbs)
+
+	get_part_type(part_loc)
+		return part_list[part_loc][1]
+
+/datum/artifact_augmentation/artifact/artifact_eldritch
+	left_arm = list(/obj/item/parts/artifact_parts/arm/eldritch/left)
+	right_arm = list(/obj/item/parts/artifact_parts/arm/eldritch/right)
+	left_leg = list(/obj/item/parts/artifact_parts/leg/eldritch/left)
+	right_leg = list(/obj/item/parts/artifact_parts/leg/eldritch/right)
+
+/datum/artifact_augmentation/artifact/artifact_martian
+	left_arm = list(/obj/item/parts/artifact_parts/arm/martian/left)
+	right_arm = list(/obj/item/parts/artifact_parts/arm/martian/right)
+	left_leg = list(/obj/item/parts/artifact_parts/leg/martian/left)
+	right_leg = list(/obj/item/parts/artifact_parts/leg/martian/right)
+
+/datum/artifact_augmentation/artifact/artifact_precursor
+	left_arm = list(/obj/item/parts/artifact_parts/arm/precursor/left)
+	right_arm = list(/obj/item/parts/artifact_parts/arm/precursor/right)
+	left_leg = list(/obj/item/parts/artifact_parts/leg/precursor/left)
+	right_leg = list(/obj/item/parts/artifact_parts/leg/precursor/right)

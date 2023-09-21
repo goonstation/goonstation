@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, ColorBox, Divider, Knob, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
+import { Box, Button, Knob, LabeledList, NoticeBox, ProgressBar, Section } from '../components';
 import { formatMoney, formatPower, formatSiUnit } from '../format';
 import { Window } from '../layouts';
 
@@ -69,7 +69,7 @@ const Status = (props, context) => {
           average: [0.5, 0.8],
           bad: [-Infinity, 0.5],
         }}
-        value={gridLoad / totalGridPower} />
+        value={totalGridPower ? (gridLoad / totalGridPower) : 0} />
     </Section>
   );
 };

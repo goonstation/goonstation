@@ -312,8 +312,8 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 				I:force_dud = !I:force_dud
 				display_ui(usr)
 				message_admins("[key_name(usr)] made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].")
-				logTheThing("admin", usr, null, "made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].")
-				logTheThing("diary", usr, null, "made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].", "admin")
+				logTheThing(LOG_ADMIN, usr, "made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].")
+				logTheThing(LOG_DIARY, usr, "made \the [I] [I:force_dud ? "into a dud" : "able to explode again"] at [log_loc(I)].", "admin")
 
 		else  if(href_list["filter"])
 			filter_active_only = !filter_active_only
@@ -335,8 +335,8 @@ var/global/datum/bomb_monitor/bomb_monitor = new
 				return
 
 			message_admins("[key_name(usr)] made \the [I] at [log_loc(I)] detonate!")
-			logTheThing("admin", usr, null, "made \the [I] at [log_loc(I)] detonate!")
-			logTheThing("diary", usr, null, "made \the [I] at [log_loc(I)]  detonate!", "admin")
+			logTheThing(LOG_ADMIN, usr, "made \the [I] at [log_loc(I)] detonate!")
+			logTheThing(LOG_DIARY, usr, "made \the [I] at [log_loc(I)]  detonate!", "admin")
 
 			if (istype(I, /obj/item/assembly/detonator))
 				var/obj/item/assembly/detonator/D = I

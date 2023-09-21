@@ -34,7 +34,7 @@
 	name = "Mainframe"
 	desc = "A mainframe computer. It's pretty big!"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon_state = "dwaine"
 	device_tag = "PNET_MAINFRAME"
 	timeout = 30
@@ -251,7 +251,6 @@
 		..()
 		if(status & (NOPOWER|BROKEN|MAINT) || !processing)
 			return
-		use_power(500)
 		if(prob(3))
 			SPAWN(1 DECI SECOND)
 				playsound(src.loc, pick(ambience_computer), 50, 1)
@@ -363,7 +362,7 @@
 					src.os.term_input(data, target, file)
 					if(!isnull(usr))
 						var/atom/source = signal.source
-						logTheThing("computers", usr, null, "message '[html_encode(data)]' sent to [src] [log_loc(src)] from [source] [log_loc(source)]")
+						logTheThing(LOG_STATION, usr, "message '[html_encode(data)]' sent to [src] [log_loc(src)] from [source] [log_loc(source)]")
 
 				return
 
@@ -508,7 +507,7 @@
 						var/datum/computer/file/mainframe_program/P = src.processing[x]
 						if (istype(P))
 							P.progid = x+1
-						if (src.processing.len == x)
+						if (length(src.processing) == x)
 							src.processing.len++
 						src.processing[x+1] = P
 

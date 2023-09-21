@@ -2,6 +2,11 @@
 #define SOUNDCHANNEL_LOOPING 123
 #define SOUNDCHANNEL_FX_1 124
 #define SOUNDCHANNEL_FX_2 125
+#define SOUNDCHANNEL_RADIO 1013
+#define SOUNDCHANNEL_ADMIN_LOW 1014 // lower end of the range of admin channels
+#define SOUNDCHANNEL_ADMIN_HIGH 1024 // upper end
+
+var/global/admin_sound_channel = SOUNDCHANNEL_ADMIN_LOW // current admin channel
 
 //sound mute
 #define SOUND_NONE 0

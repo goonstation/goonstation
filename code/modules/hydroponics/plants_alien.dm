@@ -26,9 +26,9 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.harvtime + DNA.harvtime) && prob(20))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime")) && prob(20))
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> vomits profusely!</span>")
-			playsound(POT, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(POT, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 			if(!locate(/obj/decal/cleanable/vomit) in get_turf(POT)) make_cleanable( /obj/decal/cleanable/vomit,get_turf(POT))
 
 /datum/plant/artifact/peeker
@@ -80,7 +80,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		else if(focus_level <= 6)
 			boutput(M, "<span style=\"color:red;font-size:3em\">Run.</span>")
 		else
-			logTheThing("combat", M, null, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
+			logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 			if (M.organHolder)
 				var/obj/brain = M.organHolder.drop_organ("brain")
 				brain?.throw_at(get_edge_cheap(get_turf(M), pick(cardinal)), 16, 3)
@@ -113,17 +113,17 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		if(src.focused)
 			pr += 10
 
-		if (POT.growth > (P.growtime + DNA.growtime) && prob(pr))
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(pr))
 			if(focused)
 				if(stare_extreme(focused, POT))
 					return
 
-			var/extreme_start = prob(max(0, DNA.potency / 30))
+			var/extreme_start = prob(max(0, DNA?.get_effective_value("potency") / 30))
 			var/list/stuffnearby = list()
 			for (var/mob/living/X in view(7,POT)) stuffnearby.Add(X)
 			if(!extreme_start)
 				for (var/obj/item/X in view(7,POT)) stuffnearby.Add(X)
-			if (stuffnearby.len > 1)
+			if (length(stuffnearby) >= 1)
 				var/thing = pick(stuffnearby)
 				POT.visible_message("<span class='alert'><b>[POT.name]</b> stares at [thing].</span>")
 				if(extreme_start)
@@ -180,7 +180,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 			return
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth < (P.harvtime + DNA.harvtime))
+		if (POT.growth < (P.harvtime + DNA?.get_effective_value("harvtime")))
 			return
 
 		for (var/obj/machinery/plantpot/otherPot in oview(1, POT))
@@ -219,7 +219,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 /datum/plant/artifact/cat
 	name = "Synthetic Cat"
 	override_icon_state = "Cat"
-	crop = /obj/critter/cat/synth
+	crop = /mob/living/critter/small_animal/cat/synth
 	unique_seed = /obj/item/seed/alien/cat
 	starthealth = 90 // 9 lives
 	growtime = 100
@@ -235,12 +235,12 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth > (P.growtime + DNA.growtime) && prob(16))
-			playsound(POT,'sound/voice/animal/cat.ogg',30,1,-1)
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && prob(16))
+			playsound(POT,'sound/voice/animal/cat.ogg',30,TRUE,-1)
 			POT.visible_message("<span class='alert'><b>[POT.name]</b> meows!</span>")
 
-		if (POT.growth > (P.harvtime + DNA.harvtime + 10))
-			var/obj/critter/cat/synth/C = new(get_turf(POT))
+		if (POT.growth > (P.harvtime + DNA?.get_effective_value("harvtime") + 10))
+			var/mob/living/critter/small_animal/cat/synth/C = new(get_turf(POT))
 			C.health = POT.health
 			POT.visible_message("<span class='notice'>The synthcat climbs out of the tray!</span>")
 			POT.HYPdestroyplant()
@@ -252,40 +252,57 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth < (P.growtime + DNA.growtime)) return 0
+		if (POT.growth < (P.growtime + DNA?.get_effective_value("growtime") + 10)) return 0
 
-		playsound(POT,'sound/voice/animal/cat_hiss.ogg',30,1,-1)
+		playsound(POT,'sound/voice/animal/cat_hiss.ogg',30,TRUE,-1)
 		POT.visible_message("<span class='alert'><b>[POT.name]</b> hisses!</span>")
 
 // Weird Shit
 
 /datum/plant/maneater
-	name = "Man-Eating"
+	name = "Man-Eating Plant"
 	plant_icon = 'icons/obj/hydroponics/plants_alien.dmi'
 	sprite = "Maneater"
 	growthmode = "carnivore"
 	unique_seed = /obj/item/seed/maneater
+	genome = 12
 	starthealth = 40
-	growtime = 30
-	harvtime = 200
+	growtime = 40
+	harvtime = 250
 	harvestable = 0
 	endurance = 10
 	special_proc = 1
 	attacked_proc = 1
 	vending = 0
+	innate_commuts = list(/datum/plant_gene_strain/overpowering_genome, /datum/plant_gene_strain/temporary_splice_stabilizer, /datum/plant_gene_strain/reagent_blacklist)
 
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
 		if (.) return
-		var/datum/plant/P = POT.current
+		var/datum/plant/current_plant = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
-		if (POT.growth > (P.growtime + DNA.growtime) && prob(4))
+		if (POT.growth > (current_plant.growtime - DNA?.get_effective_value("growtime")) && prob(4))
 			var/MEspeech = pick("Feed me!", "I'm hungryyyy...", "Give me blood!", "I'm starving!", "What's for dinner?")
 			for(var/mob/M in hearers(POT, null)) M.show_message("<B>Man-Eating Plant</B> gurgles, \"[MEspeech]\"")
-		if (POT.growth > (P.harvtime + DNA.harvtime))
-			var/obj/critter/maneater/ME = new(get_turf(POT))
-			ME.health = POT.health * 3
-			ME.friends = ME.friends | POT.contributors
+		if (POT.growth > (current_plant.harvtime - DNA?.get_effective_value("harvtime")))
+			var/mob/living/critter/plant/maneater/new_maneater = new(get_turf(POT))
+			//Quality with the maneater is simulated a bit differently. It's calulated out of the endurance and potency-stat only
+			var/simulated_quality = (rand(-5, 5) + DNA?.get_effective_value("potency") / 6 + DNA?.get_effective_value("endurance") / 9)
+			var/simulated_quality_status = null
+			if (HYPCheckCommut(DNA,/datum/plant_gene_strain/unstable) && prob(33))
+				simulated_quality_status = "malformed"
+				simulated_quality = rand(10,-10)
+			else
+				switch(simulated_quality)
+					if(20 to INFINITY)
+						if(prob(min(100, simulated_quality - 15)))
+							simulated_quality_status = "jumbo"
+							simulated_quality *= 2
+					if(-9999 to -11)
+						simulated_quality_status = "rotten"
+						simulated_quality += -20
+			new_maneater.name = HYPgenerate_produce_name(new_maneater, POT, current_plant, simulated_quality, simulated_quality_status, FALSE)
+			new_maneater.HYPsetup_DNA(DNA, POT, current_plant, simulated_quality_status)
 			POT.visible_message("<span class='notice'>The man-eating plant climbs out of the tray!</span>")
 			POT.HYPdestroyplant()
 			return
@@ -296,7 +313,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		var/datum/plant/P = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
 
-		if (POT.growth < (P.growtime + DNA.growtime)) return 0
+		if (POT.growth < (P.growtime - DNA?.get_effective_value("growtime"))) return 0
 
 		var/MEspeech = pick("Hands off, asshole!","The hell d'you think you're doin'?!","You dick!","Bite me, motherfucker!")
 		for(var/mob/O in hearers(POT, null))
@@ -304,6 +321,34 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 		boutput(user, "<span class='alert'>The plant angrily bites you!</span>")
 		random_brute_damage(user, 9,1)
 		return 1
+
+	proc/feed_maneater(var/obj/machinery/plantpot/POT, var/mob/user, var/mob/living/carbon/victim)
+		var/datum/plantgenes/DNA = POT.plantgenes
+		if(POT && victim && victim.loc == user.loc && victim)
+			user.visible_message("<span class='alert'>[POT.name] grabs [victim] and devours them ravenously!</span>")
+			logTheThing(LOG_COMBAT, user, "feeds [constructTarget(victim,"combat")] to a man-eater at [log_loc(POT)].")
+			message_admins("[key_name(user)] feeds [key_name(victim, 1)] ([isdead(victim) ? "dead" : "alive"]) to a man-eater at [log_loc(POT)].")
+			if(victim.hasStatus("handcuffed"))
+				victim.handcuffs.drop_handcuffs(victim) //handcuffs have special handling for zipties and such, remove them properly first
+			victim.unequip_all()
+			if(victim.mind)
+				victim.ghostize()
+				qdel(victim)
+			else
+				qdel(victim)
+			playsound(POT.loc, 'sound/items/eatfood.ogg', 30, 1, -2)
+			POT.reagents.add_reagent("blood", 120)
+			DNA.endurance += rand(30, 40) //since tray chemistry makes no differnce if you put a dip of blood or feed a human, we give some endurance and health as a reward (Lord_Earthfire)
+			POT.health += rand(20, 30)
+			SPAWN(2.5 SECONDS)
+				if(POT)
+					playsound(POT.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
+			return
+		else
+			user.show_text("You were interrupted!", "red")
+			return
+
+
 
 /datum/plant/crystal
 	name = "Crystal"

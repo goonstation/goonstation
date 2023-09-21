@@ -68,7 +68,7 @@ SYNDICATE DRONE FACTORY AREAS
 		sound_environment = 3
 
 /area/crater/cave
-	name = "Caves"
+	name = "Moist Caves"
 	icon_state = "purple"
 	force_fullbright = 0
 	sound_environment = 8
@@ -76,7 +76,7 @@ SYNDICATE DRONE FACTORY AREAS
 	sims_score = 30
 
 /area/crater/cave/lower
-	name = "Lower Caves"
+	name = "Lower Moist Caves"
 	icon_state = "purple"
 	force_fullbright = 0
 	skip_sims = 1
@@ -333,31 +333,31 @@ SYNDICATE DRONE FACTORY AREAS
 
 /area/crypt/sigma/mainhall
 	icon_state = "chapel"
-	name = "Research Facility Sigma"
+	name = "Facility Sigma Main Hall"
 
 /area/crypt/sigma/rd
 	icon_state = "bridge"
-	name = "Director's Quarters"
+	name = "Facility Sigma Director's Quarters"
 
 /area/crypt/sigma/lab
 	icon_state = "toxlab"
-	name = "Laboratory"
+	name = "Facility Sigma Laboratory"
 
 /area/crypt/sigma/crew
 	icon_state = "crewquarters"
-	name = "Crew Quarters"
+	name = "Facility Sigma Personnel's Quarters"
 
 /area/crypt/sigma/kitchen
 	icon_state = "kitchen"
-	name = "Kitchen"
+	name = "Facility Sigma Kitchen"
 
 /area/crypt/sigma/storage
 	icon_state = "storage"
-	name = "Storage Rooms"
+	name = "Facility Sigma Storage Rooms"
 
 /area/crypt/sigma/morgue
 	icon_state = "purple"
-	name = "Morgue"
+	name = "Facility Sigma Morgue"
 
 /area/catacombs
 	name = "Catacombs"
@@ -374,16 +374,15 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "Lava"
 	desc = "The floor is lava. Oh no."
 	icon_state = "lava"
-	var/deadly = 1
-	fullbright = 0
-	pathable = 0
-	can_replace_with_stuff = 1
+	pathable = FALSE
+	can_replace_with_stuff = TRUE
+	var/deadly = TRUE
+	var/no_fly_zone = FALSE
 
 	Entered(atom/movable/O, atom/old_loc)
 		..()
-		if(src.deadly && !(isnull(old_loc) || O.anchored == 2))
-			if (istype(O, /obj/critter) && O:flying)
-				return
+		if(src.deadly && !(isnull(old_loc) || O.anchored == ANCHORED_ALWAYS))
+			return_if_overlay_or_effect(O)
 
 			if (istype(O, /obj/projectile))
 				return
@@ -391,7 +390,25 @@ SYNDICATE DRONE FACTORY AREAS
 			if (isintangible(O))
 				return
 
-			return_if_overlay_or_effect(O)
+			if (istype(O, /obj/critter))
+				var/obj/critter/C = O
+				if (C.flying)
+					return
+
+			if (isliving(O))
+				var/mob/living/M = O
+				if (M.mind?.damned)
+					melt_away(M)
+					return
+
+			if (check_target_immunity(O, TRUE))
+				return
+
+			if (HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING) && !src.no_fly_zone)
+				if (isliving(O))
+					var/mob/living/M = O
+					M.setStatusMin("burning", 5 SECONDS)
+				return
 
 			if (O.throwing && !isliving(O))
 				SPAWN(0.8 SECONDS)
@@ -401,30 +418,34 @@ SYNDICATE DRONE FACTORY AREAS
 
 			melt_away(O)
 
-
 	proc/melt_away(atom/movable/O)
+		#ifdef CHECK_MORE_RUNTIMES
+		if(current_state <= GAME_STATE_WORLD_NEW)
+			CRASH("[identify_object(O)] melted in lava at [src.x],[src.y],[src.z] ([src.loc] [src.loc.type]) during world initialization")
+		#endif
 		if (ismob(O))
 			if (isliving(O))
 				var/mob/living/M = O
 				var/mob/living/carbon/human/H = M
 				if (istype(H))
-					H.unkillable = 0
-				if(!M.stat) M.emote("scream")
+					H.unkillable = FALSE
+				if(!M.stat)
+					M.emote("scream")
 				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
-				logTheThing("combat", M, null, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
-				M.firegib() // thanks ISN!
+				logTheThing(LOG_COMBAT, M, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
+				M.firegib(drop_equipment = FALSE) // thanks ISN!
 		else
 			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
 			qdel(O)
 
-	ex_act(severity)
-		return
+/turf/unsimulated/floor/lava/nofly
+	no_fly_zone = TRUE
 
 /obj/decal/lightshaft
 	name = "light"
 	desc = "There's light coming through a hole in the ceiling."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	mouse_opacity = 0
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
@@ -437,7 +458,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "stalactite" // c, not g! c as in ceiling, g as in ground. dang!
 	desc = "It's a stalactite."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE
 	icon = 'icons/misc/exploration.dmi'
@@ -447,7 +468,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "stalagmite"
 	desc = "It's a stalagmite."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = EFFECTS_LAYER_BASE
 	icon = 'icons/misc/exploration.dmi'
@@ -457,7 +478,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "snow"
 	desc = "A bit of snow."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -467,7 +488,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "runes"
 	desc = "A set of dimly glowing runes is carved into the rock here."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -477,7 +498,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "cliff"
 	desc = "The edge of a cliff."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -491,7 +512,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "statue"
 	desc = "A statue of some humanoid being."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -513,7 +534,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "pieces of wood"
 	desc = "Theres bits and pieces of wood all over the place."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -523,7 +544,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "mushroom"
 	desc = "Some sort of mushroom."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/misc/exploration.dmi'
@@ -554,7 +575,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "strange wall"
 	desc = "This wall seems strangely out-of-place."
 	icon_state = "cave-0"
-	icon = 'icons/turf/walls_cave.dmi'
+	icon = 'icons/turf/walls/cave.dmi'
 
 	var/active = 0
 
@@ -568,13 +589,13 @@ SYNDICATE DRONE FACTORY AREAS
 		active = 1
 
 		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
-		if(src.loc.opacity) src.loc.opacity = 0
+		if(src.loc.opacity) src.loc.set_opacity(0)
 
 		src.set_loc(tile)
 
 		SPAWN(0.5 SECONDS)
 			tile.invisibility = INVIS_ALWAYS_ISH
-			tile.opacity = 1
+			tile.set_opacity(1)
 			active = 0
 
 	find_suitable_tiles()
@@ -609,13 +630,13 @@ SYNDICATE DRONE FACTORY AREAS
 
 		var/turf/picked = pick(possible)
 		if(src.loc.invisibility) src.loc.invisibility = INVIS_NONE
-		if(src.loc.opacity) src.loc.opacity = 0
+		if(src.loc.opacity) src.loc.set_opacity(0)
 
 		src.set_loc(picked)
 
 		SPAWN(0.5 SECONDS)
 			picked.invisibility = INVIS_ALWAYS_ISH
-			picked.opacity = 1
+			picked.set_opacity(1)
 			active = 0
 
 		//SPAWN(rand(100,200)) update() // raised delay
@@ -623,14 +644,14 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/line_obj/whip
 	name = "Whip"
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
 /obj/whip_trg_dummy
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
@@ -669,10 +690,10 @@ SYNDICATE DRONE FACTORY AREAS
 
 		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
 
-		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
 
 		for(var/obj/O in affected)
-			O.anchored = 1 //Proc wont spawn the right object type so lets do that here.
+			O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
 			O.name = "Whip"
 
 			var/turf/T = O.loc
@@ -701,7 +722,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "boulder"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 
 	New(var/atom/sloc)
@@ -740,7 +761,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/ready = 1
 	var/resets = 0
@@ -751,7 +772,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if(ismob(AM))
 			if(AM:client)
 				ready = 0
-				playsound(src, 'sound/effects/exlow.ogg', 40, 0)
+				playsound(src, 'sound/effects/exlow.ogg', 40, FALSE)
 				var/turf/spawnloc = get_step(get_step(get_step(src, NORTH), NORTH), NORTH)
 				new/obj/boulder_trap_boulder(spawnloc)
 				playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
@@ -821,7 +842,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/active = 0
 
@@ -932,7 +953,7 @@ SYNDICATE DRONE FACTORY AREAS
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "shovel"
 	w_class = W_CLASS_NORMAL
-	flags = ONBELT
+	c_flags = ONBELT
 	force = 15
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 
@@ -944,7 +965,7 @@ SYNDICATE DRONE FACTORY AREAS
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/active = 0
 
@@ -964,10 +985,10 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/graveyard/loose_rock
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "rockwall"
-	dir = 4
+	dir = EAST
 	density = 1
 	opacity = 1
-	anchored = 1
+	anchored = ANCHORED
 	desc = "These rocks are riddled with small cracks and fissures. A cold draft lingers around them."
 	name = "Rock Wall"
 	var/id = "alchemy"
@@ -983,13 +1004,13 @@ SYNDICATE DRONE FACTORY AREAS
 
 	proc/crumble()
 		src.visible_message("<span class='alert'><b>[src] crumbles!</b></span>")
-		playsound(src.loc, "sound/effects/stoneshift.ogg", 50, 1)
+		playsound(src.loc, 'sound/effects/stoneshift.ogg', 50, 1)
 		var/obj/effects/bad_smoke/smoke = new /obj/effects/bad_smoke
 		smoke.name = "dust cloud"
 		smoke.set_loc(src.loc)
 		icon_state = "rubble"
 		set_density(0)
-		opacity = 0
+		set_opacity(0)
 		SPAWN(18 SECONDS)
 			if ( smoke )
 				smoke.name = initial(smoke.name)
@@ -1125,7 +1146,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/alchemy/empty
 	name = "Empty Circle"
 	desc = "An Empty Circle, waiting to be filled"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity= 0
 	icon = 'icons/obj/items/alchemy.dmi'
@@ -1153,7 +1174,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/alchemy/circle
 	name = "Alchemy Circle"
 	desc = "A bizzare looking mass of lines and circles is drawn onto the floor here."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity= 0
 	layer = FLOOR_EQUIP_LAYER1
@@ -1180,14 +1201,14 @@ SYNDICATE DRONE FACTORY AREAS
 			if(blood == 1)
 				activated = 1
 				boutput(usr, "<span class='success'>The Circle begins to vibrate and glow.</span>")
-				playsound(src.loc, "sound/voice/chanting.ogg", 50, 1)
+				playsound(src.loc, 'sound/voice/chanting.ogg', 50, 1)
 				sleep(1 SECOND)
 				shake_camera(usr, 15, 16, 0.2)
 				sleep(1 SECOND)
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
 				sleep(1 SECOND)
-				playsound_global(world, "sound/effects/mag_pandroar.ogg", 60) // heh
+				playsound_global(world, 'sound/effects/mag_pandroar.ogg', 40) // heh
 				shake_camera(usr, 15, 16, 0.5)
 				new/obj/item/alchemy/stone(middle)
 				sleep(0.2 SECONDS)
@@ -1267,24 +1288,24 @@ SYNDICATE DRONE FACTORY AREAS
 
 		if (satellite_crash_event_status != -1)
 			boutput(user, "<span class='alert'>The [src.name] emits a sad beep.</span>")
-			playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
 			return
 
 		var/area/crypt/graveyard/ourArea = get_area(user)
 		if (!istype(ourArea))
 			boutput(user, "<span class='alert'>The [src.name] emits a rude beep! It appears to have no signal.</span>")
-			playsound(src.loc, "sound/machines/whistlebeep.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/whistlebeep.ogg', 50, 1)
 			return
 
 		for (var/turf/T in range(user, 1))
 			if (T.density)
 				boutput(user, "<span class='alert'>The [src.name] gives off a grumpy beep! Looks like the signals are reflecting off of walls or something.  Maybe move?</span>")
-				playsound(src.loc, "sound/machines/whistlealert.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/whistlealert.ogg', 50, 1)
 				return
 
 		satellite_crash_event_status = 0
 		user.visible_message("<span class='alert'>[user] pokes some buttons on [src]!</span>", "You activate [src].  Apparently.")
-		playsound(user.loc, "sound/machines/signal.ogg", 60, 1)
+		playsound(user.loc, 'sound/machines/signal.ogg', 60, 1)
 		new /obj/effects/sat_crash(get_turf(src))
 
 		return
@@ -1292,7 +1313,7 @@ SYNDICATE DRONE FACTORY AREAS
 var/satellite_crash_event_status = -1
 /obj/effects/sat_crash
 	name = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "impact_marker"
@@ -1317,7 +1338,7 @@ var/satellite_crash_event_status = -1
 		satellite.pixel_x = -16
 		satellite.icon = 'icons/effects/64x64.dmi'
 		satellite.icon_state = "syndsat"
-		satellite.anchored = 1
+		satellite.anchored = ANCHORED
 		satellite.bound_width = 64
 		satellite.bound_height = 64
 		satellite.name = "Syndicate TeleRelay Satellite"
@@ -1327,7 +1348,7 @@ var/satellite_crash_event_status = -1
 		light.set_brightness(0.7)
 		light.attach(satellite)
 		light.enable()
-		playsound(src.loc, "sound/machines/satcrash.ogg", 50, 0)
+		playsound(src.loc, 'sound/machines/satcrash.ogg', 50, 0)
 
 		sleep(5 SECONDS)
 		if (!satellite)
@@ -1347,7 +1368,7 @@ var/satellite_crash_event_status = -1
 		var/datum/effects/system/explosion/explode = new /datum/effects/system/explosion
 		explode.set_up( src.loc )
 		explode.start()
-		playsound(src.loc, "sound/effects/kaboom.ogg", 90, 1)
+		playsound(src.loc, 'sound/effects/kaboom.ogg', 90, 1)
 		SPAWN(1 DECI SECOND)
 			fireflash(src.loc, 4)
 		for (var/mob/living/L in range(src.loc, 2))
@@ -1396,24 +1417,22 @@ var/satellite_crash_event_status = -1
 	sound_group = "drone_factory"
 
 /area/drone/zone
+	name = "Drone Assembly Outpost Entrance"
 
 /area/drone/crew_quarters
-	name = "Crew Quarters"
+	name = "Drone Engineer's Quarters"
 	icon_state = "showers"
 	sound_environment = 4
 
 /area/drone/engineering
-	name = "Engineering"
+	name = "Drone Engineering"
 	icon_state = "yellow"
 	sound_environment = 5
 
 /area/drone/office
-	name = "Design Office"
+	name = "Drone Design Office"
 	icon_state = "purple"
 
 /area/drone/assembly
-	name = "Assembly Floor"
+	name = "Drone Assembly Floor"
 	icon_state = "storage"
-
-
-

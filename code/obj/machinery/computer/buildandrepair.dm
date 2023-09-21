@@ -1,10 +1,17 @@
+#define STATE_UNANCHORED 0
+#define STATE_ANCHORED 1
+#define STATE_HAS_BOARD 2
+#define STATE_HAS_CABLES 3
+#define STATE_HAS_GLASS 4
+
 /obj/computerframe
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	name = "Console-frame"
 	icon = 'icons/obj/computer_frame.dmi'
 	icon_state = "0"
-	var/state = 0
+	///State of construction of the frame, see defines above
+	var/state = STATE_UNANCHORED
 	var/obj/item/circuitboard/circuit = null
 	var/obj/item/cable_coil/my_cable = null
 	material_amt = 0.5
@@ -14,9 +21,12 @@
 //	weight = 1.0E8
 
 ABSTRACT_TYPE(/obj/item/circuitboard)
+TYPEINFO(/obj/item/circuitboard)
+	mats = 6
+
 /obj/item/circuitboard
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	health = 6
 	w_class = W_CLASS_SMALL
 	name = "Circuit board"
@@ -28,7 +38,14 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 	var/computertype = null
 	var/powernet = null
 	var/list/records = null
-	mats = 6
+
+	New()
+		. = ..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 /obj/item/circuitboard/security
 	name = "Circuit board (Security Cameras)"
@@ -142,6 +159,9 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/item/circuitboard/qmsupply
 	name = "Circuit board (Quartermaster's Console)"
 	computertype = "/obj/machinery/computer/supplycomp"
+/obj/item/circuitboard/transception
+	name = "Circuit board (Transception Interlink)"
+	computertype = "/obj/machinery/computer/transception"
 /obj/item/circuitboard/mining_magnet
 	name = "Circuit board (Mining Magnet Computer)"
 	computertype = "/obj/machinery/computer/magnet"
@@ -155,57 +175,88 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 /obj/computerframe/meteorhit(obj/O as obj)
 	qdel(src)
 
+/obj/computerframe/get_help_message(dist, mob/user)
+	switch (src.state)
+		if (STATE_UNANCHORED)
+			return "You can use a <b>wrench</b> to anchor it."
+		if (STATE_ANCHORED)
+			if (!src.circuit)
+				return {"
+					You can insert a circuit board to start assembling a console,
+					or use a <b>wrench</b> to unanchor it
+				"}
+			else
+				return {"
+					You can use a <b>screwdriver</b> to screw the circuit board in place,
+					or a <b>crowbar</b> to remove it.
+				"}
+		if (STATE_HAS_BOARD)
+			return {"
+				You can add cables to continue assembly,
+				or use a <b>screwdriver</b> to unscrew the circuit board.
+			"}
+		if (STATE_HAS_CABLES)
+			return {"
+				You can add glass to continue assembly,
+				or use a pair of <b>wirecutters</b> to remove the cables.
+			"}
+		if (STATE_HAS_GLASS)
+			return {"
+				You can use a <b>screwdriver</b> to finish assembly,
+				or a <b>crowbar</b> to remove the screen.
+			"}
+
 /obj/computerframe/attackby(obj/item/P, mob/user)
 	var/datum/action/bar/icon/callback/action_bar = new /datum/action/bar/icon/callback(user, src, 2 SECONDS, /obj/computerframe/proc/state_actions,\
 	list(P,user), P.icon, P.icon_state, null)
 	switch(state)
-		if (0)
+		if (STATE_UNANCHORED)
 			if (iswrenchingtool(P))
 				actions.start(action_bar, user)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-			if (isweldingtool(P) && P:try_weld(user,0,-1,0,1))
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+			if (isweldingtool(P) && P:try_weld(user,0,-1,1,1))
 				actions.start(action_bar, user)
-		if (1)
+		if (STATE_ANCHORED)
 			if (iswrenchingtool(P))
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 				actions.start(action_bar, user)
 			if (istype(P, /obj/item/circuitboard) && !circuit)
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You place the circuit board inside the frame.</span>")
 				src.icon_state = "1"
 				src.circuit = P
 				user.drop_item()
 				P.set_loc(src)
 			if (isscrewingtool(P) && circuit)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You screw the circuit board into place.</span>")
-				src.state = 2
+				src.state = STATE_HAS_BOARD
 				src.icon_state = "2"
 			if (ispryingtool(P) && circuit)
-				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the circuit board.</span>")
-				src.state = 1
+				src.state = STATE_ANCHORED
 				src.icon_state = "0"
 				circuit.set_loc(src.loc)
 				src.circuit = null
-		if (2)
+		if (STATE_HAS_BOARD)
 			if (isscrewingtool(P) && circuit)
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You unfasten the circuit board.</span>")
-				src.state = 1
+				src.state = STATE_ANCHORED
 				src.icon_state = "1"
 			if (istype(P, /obj/item/cable_coil))
 				if (P.amount >= 5)
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 					actions.start(action_bar, user)
 				else
 					boutput(user, "<span class='alert'>You need at least five pieces of cable to wire the computer.</span>")
 
-		if (3)
+		if (STATE_HAS_CABLES)
 			if (issnippingtool(P))
-				playsound(src.loc, "sound/items/Wirecutter.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the cables.</span>")
-				src.state = 2
+				src.state = STATE_HAS_BOARD
 				src.icon_state = "2"
 				//my_cable.set_loc(src.loc) // Haine: fix for Cannot execute null.set loc()
 				//my_cable = null
@@ -214,24 +265,24 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 				C.UpdateIcon()
 			if (istype(P, /obj/item/sheet))
 				var/obj/item/sheet/S = P
-				if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+				if (S.material && S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 					if (S.amount >= 2)
-						playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
+						playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 						actions.start(action_bar, user)
 					else
 						boutput(user, "<span class='alert'>You need at least two sheets of glass to install the screen.</span>")
 				else
 					boutput(user, "<span class='alert'>This is the wrong kind of material. You'll need a type of glass or crystal.</span>")
-		if (4)
+		if (STATE_HAS_GLASS)
 			if (ispryingtool(P))
-				playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You remove the glass panel.</span>")
-				src.state = 3
+				src.state = STATE_HAS_CABLES
 				src.icon_state = "3"
 				var/obj/item/sheet/glass/A = new /obj/item/sheet/glass( src.loc )
 				A.amount = 2
 			if (isscrewingtool(P))
-				playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 				boutput(user, "<span class='notice'>You connect the monitor.</span>")
 				var/obj/machinery/computer/B = new src.circuit.computertype ( src.loc )
 				B.set_dir(src.dir)
@@ -241,16 +292,16 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 					B.records = circuit.records
 				if (circuit.frequency)
 					B.frequency = circuit.frequency
-				logTheThing("station", user, null, "assembles [B] [log_loc(B)]")
+				logTheThing(LOG_STATION, user, "assembles [B] [log_loc(B)]")
 				qdel(src)
 
 /obj/computerframe/proc/state_actions(obj/item/P, mob/user)
 	switch(state)
-		if(0)
+		if(STATE_UNANCHORED)
 			if(user.equipped(P) && iswrenchingtool(P))
 				boutput(user, "<span class='notice'>You wrench the frame into place.</span>")
-				src.anchored = 1
-				src.state = 1
+				src.anchored = ANCHORED
+				src.state = STATE_ANCHORED
 			if(user.equipped(P) && isweldingtool(P))
 				boutput(user, "<span class='notice'>You deconstruct the frame.</span>")
 				var/obj/item/sheet/A = new /obj/item/sheet( src.loc )
@@ -261,20 +312,26 @@ ABSTRACT_TYPE(/obj/item/circuitboard)
 					var/datum/material/M = getMaterial("steel")
 					A.setMaterial(M)
 				qdel(src)
-		if(1)
+		if(STATE_ANCHORED)
 			if(user.equipped(P) && iswrenchingtool(P))
 				boutput(user, "<span class='notice'>You unfasten the frame.</span>")
-				src.anchored = 0
-				src.state = 0
-		if(2)
+				src.anchored = UNANCHORED
+				src.state = STATE_UNANCHORED
+		if(STATE_HAS_BOARD)
 			if(user.equipped(P) && istype(P, /obj/item/cable_coil))
 				boutput(user, "<span class='notice'>You add cables to the frame.</span>")
 				P.change_stack_amount(-5)
-				src.state = 3
+				src.state = STATE_HAS_CABLES
 				src.icon_state = "3"
-		if(3)
+		if(STATE_HAS_CABLES)
 			if(user.equipped(P) && istype(P, /obj/item/sheet))
 				boutput(user, "<span class='notice'>You put in the glass panel.</span>")
 				P.change_stack_amount(-2)
-				src.state = 4
+				src.state = STATE_HAS_GLASS
 				src.icon_state = "4"
+
+#undef STATE_UNANCHORED
+#undef STATE_ANCHORED
+#undef STATE_HAS_BOARD
+#undef STATE_HAS_CABLES
+#undef STATE_HAS_GLASS

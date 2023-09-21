@@ -19,6 +19,6 @@
 			affected_mob.update_face()
 
 /datum/ailment/disease/tissue_necrosis/on_remove(var/mob/living/affected_mob,var/datum/ailment_data/D)
-	affected_mob:decomp_stage = 0
+	affected_mob:decomp_stage = DECOMP_STAGE_NO_ROT
 	..()
 

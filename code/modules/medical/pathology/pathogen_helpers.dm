@@ -16,7 +16,7 @@
 	return string
 
 /obj/statue
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	layer = MOB_LAYER
 	var/mob/mob_inside
@@ -24,9 +24,7 @@
 	Exited(atom/movable/AM, atom/newloc)
 		. = ..()
 		if(AM == src.mob_inside)
-			boutput(src.mob_inside, "<span class='alert'>Some kind of force rips your statue-bound body apart.</span>")
-			src.mob_inside.remove()
-			src.mob_inside = null
+			src.remove_occupant()
 
 	ex_act(severity)
 		if(severity == 1)
@@ -37,6 +35,17 @@
 				M.emote("faint")
 			src.visible_message("<span class='alert'><b>[src] shatters into a million tiny pieces!</b></span>")
 			dothepixelthing(src)
+
+	disposing()
+		src.remove_occupant()
+		. = ..()
+
+	/// Remove (read: kill and delete) the mob inside this statue
+	proc/remove_occupant()
+		if (src.mob_inside)
+			boutput(src.mob_inside, "<span class='alert'>Some kind of force rips your statue-bound body apart.</span>")
+			src.mob_inside.remove()
+			src.mob_inside = null
 
 /mob/proc/become_statue(var/datum/material/M, var/newDesc = null, survive=FALSE)
 	var/obj/statue/statueperson = new /obj/statue(get_turf(src))
@@ -87,5 +96,5 @@
 	P.spread = 25
 	P.suppression_threshold = max(1, P.suppression_threshold)
 	P.add_symptom(pathogen_controller.path_to_symptom[stype])
-	logTheThing("pathology", null, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
+	logTheThing(LOG_PATHOLOGY, null, "Pathogen [P.name] created by quick-pathogen-proc with symptom [stype].")
 	return P

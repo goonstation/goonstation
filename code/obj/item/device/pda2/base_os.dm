@@ -192,7 +192,7 @@
 									continue
 								pdaOwnerNames += P_name
 								pdaOwnerNames[P_name] = P_id
-							pdaOwnerNames = sortList(pdaOwnerNames)
+							sortList(pdaOwnerNames, /proc/cmp_text_asc)
 							for (var/P_name in pdaOwnerNames)
 								var/P_id = pdaOwnerNames[P_name]
 
@@ -429,7 +429,7 @@
 							default = src.master.uplink.lock_code
 							prompt += " Your uplink code has been pre-entered for your convenience."
 
-						var/t = input(usr, prompt, src.name, default) as text
+						var/t = tgui_input_text(usr, prompt, src.name, default)
 						if (!t)
 							return
 
@@ -445,7 +445,7 @@
 						else
 							t = copytext(sanitize(strip_html(t)), 1, 20)
 							src.message_tone = t
-							logTheThing("pdamsg", usr, null, "sets ring message of <b>[src.master]</b> to: [src.message_tone]")
+							logTheThing(LOG_PDAMSG, usr, "sets ring message of <b>[src.master]</b> to: [src.message_tone]")
 
 					if("note")
 						var/inputtext = html_decode(replacetext(src.note, "<br>", "\n"))
@@ -551,7 +551,7 @@
 						if(href_list["message_send"])
 							t = href_list["message_send"]
 						else
-							t = input(usr, "Please enter message", target_name, null) as null|text
+							t = tgui_input_text(usr, "Please enter message", target_name)
 						if (!t || !isalive(usr))
 							return
 
@@ -746,7 +746,7 @@
 				null, \
 				FALSE \
 			)
-			RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+			RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(receive_signal))
 
 		on_unset_host(obj/item/device/pda2/pda)
 			qdel(get_radio_connection_by_id(pda, "pda"))
@@ -763,7 +763,7 @@
 				return
 
 			if(signal.data["command"] == "report_pda")
-				if(!message_on || !signal.data["sender"] || signal.data["sender"] == master.net_id)
+				if(!message_on || !signal.data["sender"] || signal.data["sender"] == master.net_id || !src.master.scannable)
 					return
 
 				var/datum/signal/newsignal = get_free_signal()
@@ -771,14 +771,6 @@
 				newsignal.data["address_1"] = signal.data["sender"]
 				newsignal.data["owner"] = src.master.owner
 				src.post_signal(newsignal)
-
-				if(!ON_COOLDOWN(src.master, "report_pda_refresh", 1 SECOND))
-					src.master.updateSelfDialog()
-				else if(!src.report_refresh_queued)
-					src.report_refresh_queued = TRUE
-					SPAWN(1 SECOND)
-						src.report_refresh_queued = FALSE
-						src.master.updateSelfDialog()
 
 			if(signal.encryption) return
 
@@ -893,8 +885,6 @@
 
 					if(length(src.hosted_files) >= 1)
 						src.CheckForPasskey(signal.data["message"], signal.data["sender"])
-
-					src.master.updateSelfDialog()
 
 				if("file_send_req")
 					if(!message_on)
@@ -1063,7 +1053,7 @@
 			src.message_note += "<i><b>&rarr; To [target_name]:</b></i><br>[message]<br>"
 			src.message_last = world.time
 
-			logTheThing("pdamsg", null, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
+			logTheThing(LOG_PDAMSG, null, "<i><b>[src.master.owner]'s PDA used by [key_name(src.master.loc)] &rarr; [target_name]:</b></i> [message]")
 			return 0
 
 		proc/SendFile(var/target_id, var/group, var/just_send_it, var/datum/computer/file/file)

@@ -114,7 +114,7 @@ mob/verb/checkrewards()
 	desc = "A bucket! And it's red! Wow."
 	required_levels = list("Janitor"=5)
 	claimable = 1
-	var/path_to_spawn = /obj/item/reagent_containers/glass/bucket/red/
+	var/path_to_spawn = /obj/item/reagent_containers/glass/bucket/red
 
 	activate(var/client/C)
 		var/obj/item/reagent_containers/glass/bucket/bucket = locate(/obj/item/reagent_containers/glass/bucket) in C.mob.contents
@@ -244,6 +244,19 @@ mob/verb/checkrewards()
 	required_levels = list("Botanist"=10)
 	path_to_spawn = /obj/item/reagent_containers/glass/wateringcan/rainbow
 
+/datum/jobXpReward/botanist/jumpsuit
+	name = "Senior Botanist Jumpsuit"
+	desc = "An old jumpsuit with an earthy smell to it."
+	required_levels = list("Botanist"=15)
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		boutput(C, "<span class='hint'>The jumpsuit pops into existance!</span>")
+		var/obj/item/I = new /obj/item/clothing/under/misc/hydroponics(get_turf(C.mob))
+		C.mob.put_in_hand(I)
+
 /datum/jobXpReward/botanist/wateringcan/old
 	name = "Antique Watering Can"
 	desc = "A Watering can that looks like it's made of rainbows... sorta. Seems the same as normal otherwise..."
@@ -307,8 +320,7 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 
-		var/actual_reward_path = prob(1) ? /obj/item/gun/energy/lawbringer/old : src.reward_path
-		var/obj/item/gun/energy/lawbringer/LG = new actual_reward_path()
+		var/obj/item/gun/energy/lawbringer/LG = new reward_path()
 		var/obj/item/paper/lawbringer_pamphlet/LGP = new/obj/item/paper/lawbringer_pamphlet()
 		if (!istype(LG))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're an HoS! You don't need no stinkin' guns anyway!")
@@ -334,7 +346,7 @@ mob/verb/checkrewards()
 	claimPerRound = 1
 	icon_state = "?"
 	var/sacrifice_path = /obj/item/gun/energy/egun
-	var/reward_path = /obj/item/katana_sheath/captain
+	var/reward_path = /obj/item/swords_sheaths/captain
 	var/sacrifice_name = "E-Gun"
 
 	activate(var/client/C)
@@ -366,7 +378,7 @@ mob/verb/checkrewards()
 			found = 1
 			qdel(K)
 			boutput(C.mob, "Your energy gun morphs into a sword! What the fuck!")
-			var/obj/item/katana_sheath/captain/T = new/obj/item/katana_sheath/captain()
+			var/obj/item/swords_sheaths/captain/T = new/obj/item/swords_sheaths/captain()
 			T.set_loc(get_turf(C.mob))
 			C.mob.put_in_hand(T)
 			return
@@ -386,7 +398,7 @@ mob/verb/checkrewards()
 	claimPerRound = 1
 	icon_state = "?"
 	var/sacrifice_path = /obj/item/gun/kinetic/detectiverevolver
-	var/reward_path = /obj/item/gun/kinetic/colt_saa/detective
+	var/reward_path = /obj/item/gun/kinetic/single_action/colt_saa/detective
 	var/sacrifice_name = ".38 revolver"
 
 	activate(var/client/C)
@@ -409,7 +421,7 @@ mob/verb/checkrewards()
 			src.claimedNumbers[usr.key] --
 			return
 
-		var/obj/item/gun/kinetic/colt_saa/colt = new reward_path()
+		var/obj/item/gun/kinetic/single_action/colt_saa/colt = new reward_path()
 		if (!istype(colt))
 			boutput(C.mob, "Something terribly went wrong. The reward path got screwed up somehow. call 1-800-CODER. But you're a detective! You don't need no stinkin' guns anyway!")
 			src.claimedNumbers[usr.key] --
@@ -607,6 +619,27 @@ mob/verb/checkrewards()
 		boutput(C.mob, "You look down and notice that a whole sushi chef outfit has materialized in your hands! What on earth?")
 		return
 
+/datum/jobXpReward/chefhattall
+    name = "Tall Chef Hat"
+    desc = "Your iconic toque blanche but tall!"
+    required_levels = list("Chef"=2)
+    claimable = 1
+    var/path_to_spawn = /obj/item/clothing/head/chefhattall
+
+    activate(var/client/C)
+        var/obj/item/clothing/head/chefhat/chefhat = locate(/obj/item/clothing/head/chefhat) in C.mob.contents
+
+        if (istype(chefhat))
+            C.mob.remove_item(chefhat)
+            qdel(chefhat)
+        else
+            boutput(C.mob, "You need to be holding a chef's hat in order to claim this reward")
+            return
+        var/obj/item/I = new path_to_spawn()
+        I.set_loc(get_turf(C.mob))
+        C.mob.put_in_hand_or_drop(I)
+        boutput(C.mob, "Your chef's hat suddenly elongates before your very eyes!")
+
 /////////////Mime////////////////
 
 /datum/jobXpReward/mime/mimefancy
@@ -638,3 +671,80 @@ mob/verb/checkrewards()
 		I.set_loc(get_turf(C.mob))
 		C.mob.put_in_hand(I)
 		return
+
+//////////////AI/////////////////
+
+ABSTRACT_TYPE(/datum/jobXpReward/ai)
+/datum/jobXpReward/ai
+	var/aiskin = "default"
+	required_levels = list("AI")
+	icon_state = "?"
+	claimable = 1
+	claimPerRound = 1
+
+	activate(var/client/C)
+		if (isAI(C.mob))
+			var/mob/living/silicon/ai/A = C.mob
+			if (isAIeye(C.mob))
+				var/mob/living/intangible/aieye/AE = C.mob
+				A = AE.mainframe
+			A.coreSkin = aiskin
+			A.update_appearance()
+			return 1
+		else
+			boutput(C, "<span class='alert'>You need to be an AI to use this, you goof!</span>")
+
+/datum/jobXpReward/ai/aiframedefault
+	name = "AI Core Frame - Standard"
+	desc = "Resets your AI core to standard."
+	aiskin = "default"
+
+/datum/jobXpReward/ai/aiframent
+	name = "AI Core Frame - NanoTrasen"
+	desc = "Fancies up your core to show some company spirit!"
+	aiskin = "nt"
+
+/datum/jobXpReward/ai/aiframentold
+	name = "AI Core Frame - NanoTrasen (Dated)"
+	desc = "Fancies up your core to show some company spirit! Now with added dust and eggshell white."
+	aiskin = "ntold"
+
+/datum/jobXpReward/ai/aiframegardengear
+	name = "AI Core Frame - Hydroponics"
+	desc = "Paints your core with the colours of the hydroponics department!"
+	aiskin = "gardengear"
+
+/datum/jobXpReward/ai/aiframescience
+	name = "AI Core Frame - Research"
+	desc = "Paints your core with the colours of the research department!"
+	aiskin = "science"
+
+/datum/jobXpReward/ai/aiframemedical
+	name = "AI Core Frame - Medical"
+	desc = "Paints your core with the colours of the medical department!"
+	aiskin = "medical"
+
+/datum/jobXpReward/ai/aiframeengineering
+	name = "AI Core Frame - Engineering"
+	desc = "Paints your core with the colours of the engineering department!"
+	aiskin = "engineering"
+
+/datum/jobXpReward/ai/aiframesecurity
+	name = "AI Core Frame - Security"
+	desc = "Fancies up your AI core to look all tactical."
+	aiskin = "tactical"
+
+/datum/jobXpReward/ai/aiframelgun
+	name = "AI Core Frame - Plastic (Pink)"
+	desc = "Replaces your AI core with a fancy, child-friendly version."
+	aiskin = "lgun"
+
+/datum/jobXpReward/ai/aiframetelegun
+	name = "AI Core Frame - Plastic (Blue)"
+	desc = "Replaces your AI core with a fancy, child-friendly version."
+	aiskin = "telegun"
+
+/datum/jobXpReward/ai/aiframerustic
+	name = "AI Core Frame - Rustic"
+	desc = "Replaces your AI core with a much, much older model."
+	aiskin = "rustic"

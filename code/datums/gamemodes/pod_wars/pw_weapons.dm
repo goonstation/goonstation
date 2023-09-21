@@ -1,4 +1,7 @@
 ///////////////////////////////////////PW Blasters
+TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
+	mats = 0
+
 /obj/item/gun/energy/blaster_pod_wars
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
@@ -7,7 +10,6 @@
 	item_state = "pw_pistol_nt"
 	w_class = W_CLASS_NORMAL
 	force = 8
-	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
 
 	var/image/indicator_display = null
@@ -15,31 +17,31 @@
 	var/initial_proj = /datum/projectile/laser/blaster
 	var/team_num = 0	//1 is NT, 2 is Syndicate
 
-	shoot(var/target,var/start,var/mob/user)
-		if (canshoot())
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, start, user)
 				else
 					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
-					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
+					playsound(get_turf(user), 'sound/machines/buzz-sigh.ogg', 20, 1)
 
 					return
 			else
 				return ..(target, start, user)
 
-	shoot_point_blank(atom/target, mob/user)
-		if (canshoot())
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, user)
 				else
 					boutput(user, "<span class='alert'>You don't have to right DNA to fire this weapon!</span><br>")
-					playsound(get_turf(user), "sound/machines/buzz-sigh.ogg", 20, 1)
+					playsound(get_turf(user), 'sound/machines/buzz-sigh.ogg', 20, 1)
 
 					return
 			else
-				return ..(target, user)
+				return ..(target, user, second_shot)
 
 	disposing()
 		indicator_display = null
@@ -51,7 +53,7 @@
 		projectiles = list(current_projectile)
 		src.indicator_display = image('icons/obj/items/gun.dmi', "")
 		if(istype(loc, /mob/living))
-			RegisterSignal(loc, COMSIG_MOB_DEATH, .proc/stop_charging)
+			RegisterSignal(loc, COMSIG_MOB_DEATH, PROC_REF(stop_charging))
 		..()
 
 
@@ -109,7 +111,7 @@
 	icon_state = "recharger_cell"
 	charge = 200
 	max_charge = 200
-	recharge_rate = 10
+	recharge_rate = 5
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_standard
 	name = "Power Cell - Standard Radioisotope"
@@ -118,7 +120,7 @@
 	icon_state = "recharger_cell"
 	charge = 300
 	max_charge = 300
-	recharge_rate = 15
+	recharge_rate = 8
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_high
 	name = "Power Cell - Robust Radioisotope "
@@ -127,7 +129,7 @@
 	icon_state = "recharger_cell"
 	charge = 350
 	max_charge = 350
-	recharge_rate = 30
+	recharge_rate = 15
 
 //////////survival_machete//////////////
 /obj/item/survival_machete
@@ -148,7 +150,7 @@
 	stamina_damage = 25
 	stamina_cost = 10
 	stamina_crit_chance = 40
-	pickup_sfx = "sound/items/blade_pull.ogg"
+	pickup_sfx = 'sound/items/blade_pull.ogg'
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 
 	New()
@@ -167,15 +169,15 @@
 	alt_det_time = 60
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "energy_stinger1"
 	var/datum/projectile/custom_projectile_type = /datum/projectile/laser/blaster/blast
 	var/pellets_to_fire = 10
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/grenade.ogg", 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
 			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new(T)
 			PJ.pellets_to_fire = src.pellets_to_fire
 			if(src.custom_projectile_type)
@@ -186,10 +188,10 @@
 			if (istype(L))
 
 				// var/datum/projectile/P = new PJ.spread_projectile_type		//dummy projectile to get power level
-				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.power)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
+				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.damage)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
 				L.emote("twitch_v")
 			else
-				shoot_projectile_ST(get_turf(src), PJ, get_step(src, NORTH))
+				shoot_projectile_ST_pixel_spread(get_turf(src), PJ, get_step(src, NORTH))
 			SPAWN(0.1 SECONDS)
 				qdel(src)
 		else
@@ -211,15 +213,15 @@
 	alt_det_time = 60
 	item_state = "fragnade"
 	is_syndicate = 0
-	sound_armed = "sound/weapons/armbomb.ogg"
+	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "concussion1"
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, "sound/weapons/conc_grenade.ogg", 90, 1)
+			playsound(T, 'sound/weapons/conc_grenade.ogg', 90, TRUE)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.name = "Explosion"
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'

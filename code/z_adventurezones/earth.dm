@@ -26,70 +26,31 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	sound_group = "centcom"
 	filler_turf = "/turf/unsimulated/nicegrass/random"
 	is_centcom = 1
+	var/static/list/entered_ckeys = list()
+
+	Entered(atom/movable/A, atom/oldloc)
+		. = ..()
+		if (current_state < GAME_STATE_FINISHED)
+			if(istype(A, /mob/living))
+				var/mob/living/M = A
+				if(!M.client)
+					return
+				if(M.client.holder)
+					return
+				if(M.client.ckey in entered_ckeys)
+					return
+				entered_ckeys += M.client.ckey
+				logTheThing(LOG_DEBUG, M, "entered Centcom before round end [log_loc(M)].")
 
 /area/centcom/outside
 	name = "Earth"
 	icon_state = "nothing_earth"
 	//force_fullbright = 1
+	ambient_light = CENTCOM_LIGHT
 
-// HIGHLY SCIENTIFIC NUMBERS PULLED OUT OF MY ASS
-// Loosely based on color temperatures during daylight hours
-// and random bullshit for night hours
-// would love to have this at runtime but
-// i do not think that is possible in a way that isnt shit. maybe. idk
-#if BUILD_TIME_HOUR == 0
-	ambient_light = rgb(255 * 0.01, 255 * 0.01, 255 * 0.01)	// night time
-#elif BUILD_TIME_HOUR == 1
-	ambient_light = rgb(255 * 0.005, 255 * 0.005, 255 * 0.01)	// night time
-#elif BUILD_TIME_HOUR == 2
-	ambient_light = rgb(255 * 0.00, 255 * 0.00, 255 * 0.005)	// night time
-#elif BUILD_TIME_HOUR == 3
-	ambient_light = rgb(255 * 0.00, 255 * 0.00, 255 * 0.00)	// night time
-#elif BUILD_TIME_HOUR == 4
-	ambient_light = rgb(255 * 0.02, 255 * 0.02, 255 * 0.02)	// night time
-#elif BUILD_TIME_HOUR == 5
-	ambient_light = rgb(255 * 0.05, 255 * 0.05, 255 * 0.05)	// night time
-#elif BUILD_TIME_HOUR == 6
-	ambient_light = rgb(181 * 0.25, 205 * 0.25, 255 * 0.25)	// 17000
-#elif BUILD_TIME_HOUR == 7
-	ambient_light = rgb(202 * 0.60, 218 * 0.60, 255 * 0.60)	// 10000
-#elif BUILD_TIME_HOUR == 8
-	ambient_light = rgb(221 * 0.95, 230 * 0.95, 255 * 0.95)	// 8000 (sunrise)
-#elif BUILD_TIME_HOUR == 9
-	ambient_light = rgb(210 * 1.00, 223 * 1.00, 255 * 1.00)	// 11000
-#elif BUILD_TIME_HOUR == 10
-	ambient_light = rgb(196 * 1.00, 214 * 1.00, 255 * 1.00)	// 10000
-#elif BUILD_TIME_HOUR == 11
-	ambient_light = rgb(221 * 1.00, 230 * 1.00, 255 * 1.00)	// 8000
-#elif BUILD_TIME_HOUR == 12
-	ambient_light = rgb(230 * 1.00, 235 * 1.00, 255 * 1.00)	// 7500-ish
-#elif BUILD_TIME_HOUR == 13
-	ambient_light = rgb(243 * 1.00, 242 * 1.00, 255 * 1.00)	// 7000
-#elif BUILD_TIME_HOUR == 14
-	ambient_light = rgb(255 * 1.00, 250 * 1.00, 244 * 1.00)	// 6250-ish
-#elif BUILD_TIME_HOUR == 15
-	ambient_light = rgb(255 * 1.00, 243 * 1.00, 231 * 1.00)	// 5800-ish
-#elif BUILD_TIME_HOUR == 16
-	ambient_light = rgb(255 * 1.00, 232 * 1.00, 213 * 1.00)	// 5200-ish
-#elif BUILD_TIME_HOUR == 17
-	ambient_light = rgb(255 * 0.95, 206 * 0.95, 166 * 0.95)	// 4000
-#elif BUILD_TIME_HOUR == 18
-	ambient_light = rgb(255 * 0.90, 146 * 0.90,  39 * 0.90)	// 2200 (sunset), "golden hour"
-#elif BUILD_TIME_HOUR == 19
-	ambient_light = rgb(196 * 0.50, 214 * 0.50, 255 * 0.50)	// 10000
-#elif BUILD_TIME_HOUR == 20
-	ambient_light = rgb(191 * 0.21, 211 * 0.20, 255 * 0.30)	// 12000 (moon / stars), "blue hour"
-#elif BUILD_TIME_HOUR == 21
-	ambient_light = rgb(218 * 0.10, 228 * 0.10, 255 * 0.13)	// 8250
-#elif BUILD_TIME_HOUR == 22
-	ambient_light = rgb(221 * 0.04, 230 * 0.04, 255 * 0.05)	// 8000
-#elif BUILD_TIME_HOUR == 23
-	ambient_light = rgb(243 * 0.01, 242 * 0.01, 255 * 0.02)	// 7000
-#else
-	ambient_light = rgb(255 * 1.00, 255 * 1.00, 255 * 1.00)	// uhhhhhh
-#endif
-
-
+/area/centcom/gallery
+	name = "NT Art Gallery"
+	icon_state = "green"
 
 /area/centcom/offices
 	name = "NT Offices"
@@ -106,6 +67,9 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	aibm
 		ckey = "angriestibm"
 		name = "Office of AngriestIBM"
+	angel
+		ckey = "hauntmachine"
+		name = "Office of Angel"
 	aphtonites
 		ckey = ""
 		name = "Office of Aphtonites"
@@ -190,12 +154,18 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	ines
 		ckey = "hokie"
 		name = "Office of Ines"
+	janantilles
+		ckey = "janantilles"
+		name = "Office of Fleur DeLaCreme"
 	katzen
 		ckey = "flappybat"
 		name = "Office of Katzen"
 	kyle
 		ckey = "kyle2143"
 		name = "Office of Kyle"
+	leah
+		ckey = "leahthetech"
+		name = "Office of Leah"
 	lyra
 		ckey = "lison"
 		name = "Office of Lyra"
@@ -277,12 +247,6 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	varshie
 		ckey = "varshie"
 		name = "Office of Varshie"
-	virvatuli
-		ckey = "virvatuli"
-		name = "Office of Virvatuli"
-		sound_loop = 'sound/ambience/music/officebeats.ogg'
-		sound_loop_vol = 80
-		sound_group = "virva_office"
 	walpvrgis
 		ckey = "walpvrgis"
 		name = "Office of Walpvrgis"
@@ -423,11 +387,12 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 //adhara office
 
 //adhara herself....?
-/obj/critter/cat/cathara
+/mob/living/critter/small_animal/cat/cathara
 	name = "Cathara"
 	desc = "...is this really her?? Do they let cats be admins??"
 	icon_state = "cat1"
-	randomize_cat = 0
+	randomize_name = FALSE
+	randomize_look = FALSE
 
 	New()
 		..()
@@ -552,8 +517,8 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	equipped(var/mob/user)
 		..()
 		boutput(user, "<span class='alert'>You can feel a proud and angry presence probing your mind...</span>")
-		src.cant_self_remove = true
-		src.cant_other_remove = true
+		src.cant_self_remove = TRUE
+		src.cant_other_remove = TRUE
 		SPAWN(1 SECOND)
 			if (user.bioHolder && user.bioHolder.HasEffect("accent_scots"))
 				boutput(user, "<span class='notice'>YE AR' ALREADY BLESSED!!!</span>")
@@ -567,8 +532,8 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 			else
 				boutput(user, "<span class='alert'>YE AR' NO' WORTHY OF ADA O'HARA'S BLESSIN'! FECK AFF!!!!</span>")
 				src.rejected_mobs.Add(user)
-			src.cant_self_remove = true
-			src.cant_other_remove = false
+			src.cant_self_remove = TRUE
+			src.cant_other_remove = FALSE
 
 
 /area/centcom/offices/enakai
@@ -606,7 +571,7 @@ proc/get_centcom_mob_cloner_spawn_loc()
 
 /obj/centcom_clone_wrapper
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	mouse_opacity = 0
 	var/bumping = FALSE
 
@@ -616,7 +581,7 @@ proc/get_centcom_mob_cloner_spawn_loc()
 
 	set_loc(newloc)
 		. = ..()
-		if(isnull(newloc))
+		if(isnull(newloc) && !QDELETED(src))
 			src.vis_contents = null
 			qdel(src)
 
@@ -640,10 +605,10 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 	if(!istype(AR, /area/centcom/reconstitutioncenter))
 		clone.set_loc(get_centcom_mob_cloner_spawn_loc())
 	if(!indirect)
-		L.density = TRUE
+		L.set_density(TRUE)
 		L.set_a_intent(INTENT_HARM)
 		L.dir_locked = TRUE
-	playsound(clone, "sound/machines/ding.ogg", 50, 1)
+	playsound(clone, 'sound/machines/ding.ogg', 50, TRUE)
 	clone.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")
 	var/static/list/obj/machinery/conveyor/conveyors = null
 	var/static/conveyor_running_count = 0
@@ -663,3 +628,29 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 			for(var/obj/machinery/conveyor/conveyor as anything in conveyors)
 				conveyor.operating = 0
 				conveyor.setdir()
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/shot/normal
+	name = "very normal drink"
+	desc = "Will not blow your leg off."
+	gulp_size = 25
+	initial_volume = 25
+
+	New()
+		. = ..()
+		src.create_reagents(src.initial_volume)
+		src.reagents.add_reagent("ice", 5, temp_new = T0C - 1)
+		src.reagents.add_reagent("potassium", 5, temp_new = T0C - 1)
+		src.reagents.add_reagent("LSD", 15, temp_new = T0C - 1)
+
+/obj/item/reagent_containers/food/drinks/drinkingglass/pitcher/gnesis
+	initial_reagents = "flockdrone_fluid"
+	default_material = "gnesisglass"
+
+/mob/living/critter/small_animal/crab/responsive
+
+
+/obj/item/reagent_containers/food/drinks/cola/efrem
+	#ifdef SECRETS_ENABLED
+	initial_reagents = list("cola"=10, "VHFCS"=10, "crime"=10)
+	#endif
+	name = "Bebop Cola"

@@ -4,7 +4,7 @@
 	icon_state = "doortimer0"
 	desc = "A remote control switch for a door."
 	req_access = list(access_security)
-	anchored = TRUE
+	anchored = ANCHORED
 	var/id = null
 	var/time = 30
 	var/timing = FALSE
@@ -194,14 +194,14 @@
 	return
 
 /obj/machinery/door_timer/power_change()
-	UpdateIcon()
+	src.UpdateIcon()
 
 
 // Why range 30? COG2 places linked fixtures much further away from the timer than originally envisioned.
 /obj/machinery/door_timer/proc/alarm()
 	if (!src)
 		return
-	if (status & (NOPOWER|BROKEN))
+	if (src.status & (NOPOWER|BROKEN))
 		return
 
 	for_by_tcl(M, /obj/machinery/door/window/brigdoor)
@@ -285,7 +285,7 @@
 			var/previous_time = src.time
 			src.time = clamp(0, round(params["time"]), src.max_time)
 			if (params["finish"])
-				logTheThing("station", usr, null, "set timer to [src.time]sec (previously: [previous_time]sec) on a door timer: [src] [log_loc(src)].")
+				logTheThing(LOG_STATION, usr, "set timer to [src.time]sec (previously: [previous_time]sec) on a door timer: [src] [log_loc(src)].")
 
 			return TRUE
 
@@ -306,7 +306,7 @@
 						break
 
 			src.timing = !src.timing
-			logTheThing("station", usr, null, "[src.timing ? "starts" : "stops"] a door timer: [src] [log_loc(src)].")
+			logTheThing(LOG_STATION, usr, "[src.timing ? "starts" : "stops"] a door timer: [src] [log_loc(src)].")
 
 			src.add_fingerprint(usr)
 			src.UpdateIcon()
@@ -321,7 +321,7 @@
 					if (GET_COOLDOWN(F, "flash"))
 						return
 					F.flash()
-					logTheThing("station", usr, null, "sets off flashers from a door timer: [src] [log_loc(src)].")
+					logTheThing(LOG_STATION, usr, "sets off flashers from a door timer: [src] [log_loc(src)].")
 					return TRUE
 
 		if ("toggle-flusher")
@@ -334,10 +334,10 @@
 						return
 					if (FF.open != 1)
 						FF.openup()
-						logTheThing("station", usr, null, "opens a floor flusher from a door timer: [src] [log_loc(src)].")
+						logTheThing(LOG_STATION, usr, "opens a floor flusher from a door timer: [src] [log_loc(src)].")
 					else
 						FF.closeup()
-						logTheThing("station", usr, null, "closes a floor flusher from a door timer: [src] [log_loc(src)].")
+						logTheThing(LOG_STATION, usr, "closes a floor flusher from a door timer: [src] [log_loc(src)].")
 					return TRUE
 
 /obj/machinery/door_timer/attack_ai(mob/user)
@@ -347,10 +347,10 @@
 	return src.ui_interact(user)
 
 /obj/machinery/door_timer/update_icon()
-	if (status & (NOPOWER))
+	if (src.status & (NOPOWER))
 		icon_state = "doortimer-p"
 		return
-	else if (status & (BROKEN))
+	else if (src.status & (BROKEN))
 		icon_state = "doortimer-b"
 		return
 	else

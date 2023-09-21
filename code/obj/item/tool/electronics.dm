@@ -5,7 +5,7 @@
 
 //Electronics parts
 
-/obj/item/electronics/
+/obj/item/electronics
 	name = "electronic thing"
 	icon = 'icons/obj/electronics.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -137,6 +137,17 @@
 		store_type = null
 		..()
 
+/obj/item/electronics/frame/proc/kickout(source, mob/stowaway)
+	if(istype(stowaway))
+		stowaway.set_loc(get_turf(source))
+	else
+		for(var/atom/movable/AM in stowaway)
+			kickout(source, AM)
+
+/obj/item/electronics/frame/Entered(atom/movable/AM, atom/OldLoc)
+	. = ..()
+	kickout(src, AM)
+
 /obj/item/electronics/frame/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/electronics/))
 		var/obj/item/electronics/E = W
@@ -158,7 +169,7 @@
 				boutput(user, "<span class='notice'>You unsecure the [src].</span>")
 			else if(secured == 2)
 				boutput(user, "<span class='alert'>You deploy the [src]!</span>")
-				logTheThing("station", user, null, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
+				logTheThing(LOG_STATION, user, "deploys a [src.name] in [user.loc.loc] ([log_loc(src)])")
 				if (!istype(user.loc,/turf) && (store_type in typesof(/obj/critter)))
 					qdel(user.loc)
 
@@ -239,13 +250,13 @@
 				var/dirr = input("Select A Direction!", "UDLR", null, null) in list("Up","Down","Left","Right")
 				switch(dirr)
 					if("Up")
-						src.set_dir(1)
+						src.set_dir(NORTH)
 					if("Down")
-						src.set_dir(2)
+						src.set_dir(SOUTH)
 					if("Left")
-						src.set_dir(8)
+						src.set_dir(WEST)
 					if("Right")
-						src.set_dir(4)
+						src.set_dir(EAST)
 			boutput(user, "Ready to deploy!")
 			if (tgui_alert(user, "Ready to deploy?", "Confirmation", list("Yes", "No")) == "Yes")
 				boutput(user, "<span class='alert'>Place box and solder to deploy!</span>")
@@ -279,20 +290,37 @@
 		src.remove_dialog(usr)
 	return
 
+/obj/item/electronics/frame/Exited(Obj, newloc)
+	. = ..()
+	var/atom/movable/AM = Obj
+	if(AM == deconstructed_thing && !QDELETED(AM))
+		src.visible_message("<span class='notice'>[src] vanishes in a puff of logic!</span>", "<span class='notice'>You hear a mild poof.</span>", "frame_poof")
+		qdel(src)
+
 /obj/item/electronics/frame/proc/deploy(mob/user)
 	var/turf/T = get_turf(src)
 	var/obj/O = null
+	src.stored?.transfer_stored_item(src, T, user = user)
 	if (deconstructed_thing)
 		O = deconstructed_thing
+		UnregisterSignal(O, COMSIG_ATOM_ENTERED)
+		deconstructed_thing = null
 		O.set_loc(T)
 		O.set_dir(src.dir)
 		O.was_built_from_frame(user, 0)
-		deconstructed_thing = null
+
+		// if we have a material, give it to the object if the object doesn't have one
+		if (src.material && !O.material)
+			O.setMaterial(src.material)
 	else
 		O = new store_type(T)
 		O.set_dir(src.dir)
 		if(istype(O))
 			O.was_built_from_frame(user, 1)
+
+		if (src.material && !O.material)
+			O.setMaterial(src.material)
+
 	if(istype(O))
 		O.deconstruct_flags |= DECON_BUILT
 	qdel(src)
@@ -443,11 +471,11 @@
 
 	syndicate
 		is_syndicate = TRUE
-	
+
 	New()
 		. = ..()
-		RegisterSignal(src, list(COMSIG_ITEM_ATTACKBY_PRE), .proc/pre_attackby)
-	
+		RegisterSignal(src, COMSIG_ITEM_ATTACKBY_PRE, PROC_REF(pre_attackby))
+
 	get_desc()
 		// We display this on a separate line and with a different color to show emphasis
 		. = ..()
@@ -480,7 +508,7 @@
 			do_scan_effects(A, user)
 			boutput(user, scan_output)
 		return TRUE
-	
+
 	proc/do_scan_effects(atom/target, mob/user)
 		// more often than not, this will display for objects, but we include a message to scanned mobs just for consistency's sake
 		user.tri_message(target,
@@ -496,7 +524,7 @@
 	desc = "A device that takes data scans from a device analyser, then interprets and encodes them into blueprints for fabricators to read."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "rkit"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	mechanics_interaction = MECHANICS_INTERACTION_BLACKLISTED
 	//var/datum/electronics/electronics_items/link = null
@@ -569,7 +597,7 @@
 			newsignal.data["command"] = "DROP"
 		newsignal.data["address_tag"] = "TRANSRKIT"
 		newsignal.data["sender"] = src.net_id
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 /obj/machinery/rkit/proc/upload_blueprint(var/datum/electronics/scanned_item/O, var/target, var/internal)
 	SPAWN(0.5 SECONDS) //This proc sends responses so there must be a delay
@@ -587,7 +615,7 @@
 		newsignal.data["address_1"] = target
 		newsignal.data["sender"] = src.net_id
 		newsignal.data_file = scanFile
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "ruck")
 
 /obj/machinery/rkit/proc/pda_message(var/target, var/message)
 	SPAWN(0.5 SECONDS) //response proc
@@ -597,7 +625,7 @@
 		newsignal.data["sender_name"] = "RKIT-MAILBOT"
 		newsignal.data["message"] = message
 		if (target) newsignal.data["address_1"] = target
-		newsignal.data["group"] = list(MGO_MECHANIC, MGA_RKIT)
+		newsignal.data["group"] = list(MGO_ENGINEER, MGA_RKIT)
 		newsignal.data["sender"] = src.net_id
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
@@ -786,12 +814,11 @@
 					match_check = 1
 					break
 			if (!match_check)
-				var/obj/tempobj = new X (src)
-				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(tempobj.name,tempobj.type,tempobj.mats)
+				var/typeinfo/obj/typeinfo = get_type_typeinfo(X)
+				var/obj/typedummy = X
+				var/datum/electronics/scanned_item/O = ruck_controls.scan_in(initial(typedummy.name), X, typeinfo.mats)
 				if(O)
 					upload_blueprint(O, "TRANSRKIT", 1)
-					SPAWN(4 SECONDS)
-						qdel(tempobj)
 				S.scanned -= X
 				add_count++
 		if (add_count==  1)
@@ -905,36 +932,40 @@
 	hitsound = 'sound/machines/chainsaw.ogg'
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_SAWING
-	flags = ONBELT | FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_NORMAL
 
 	proc/finish_decon(atom/target,mob/user) // deconstructing work
 		if (!isobj(target))
 			return
 		var/obj/O = target
-		logTheThing("station", user, null, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
+		logTheThing(LOG_STATION, user, "deconstructs [target] in [user.loc.loc] ([log_loc(user)])")
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
-		var/obj/item/electronics/frame/F = new
 		var/turf/target_loc = get_turf(target)
+		var/obj/item/electronics/frame/F = new(target_loc)
 		F.name = "[target.name] frame"
 		if(O.deconstruct_flags & DECON_DESTRUCT)
 			F.store_type = O.type
 			qdel(O)
 		else
 			F.deconstructed_thing = target
+			if(ismob(O.loc))
+				var/mob/M = O.loc
+				M.u_equip(O)
 			O.set_loc(F)
 		// move frame to the location after object is gone, so crushers do not crusher themselves
-		F.set_loc(target_loc)
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"
 		F.w_class = W_CLASS_BULKY
 
 		elecflash(src,power=2)
-
-		O.was_deconstructed_to_frame(user)
+		if(!QDELETED(O))
+			O.was_deconstructed_to_frame(user)
+			F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 
 	MouseDrop_T(atom/target, mob/user)
 		if (!isobj(target))
@@ -950,17 +981,20 @@
 		var/decon_complexity = O.build_deconstruction_buttons()
 		if (!decon_complexity)
 			boutput(user, "<span class='alert'>[target] cannot be deconstructed.</span>")
-			if (O.deconstruct_flags & DECON_ACCESS)
+			if (O.deconstruct_flags & DECON_NULL_ACCESS)
 				boutput(user, "<span class='alert'>[target] is under an access lock and must have its access requirements removed first.</span>")
+			return
+		if (istext(decon_complexity))
+			boutput(user, "<span class='alert'>[decon_complexity]</span>")
 			return
 		if (issilicon(user) && (O.deconstruct_flags & DECON_NOBORG))
 			boutput(user, "<span class='alert'>Cyborgs cannot deconstruct this [target].</span>")
 			return
-		if ((!O.allowed(user) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
+		if ((!(O.allowed(user) || O.deconstruct_flags & DECON_NO_ACCESS) || O.is_syndicate) && !(O.deconstruct_flags & DECON_BUILT))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] without sufficient access to operate it.</span>")
 			return
 
-		if(locate(/mob/living) in O)
+		if(length(get_all_mobs_in(O)))
 			boutput(user, "<span class='alert'>You cannot deconstruct [target] while someone is inside it!</span>")
 			return
 
@@ -968,7 +1002,7 @@
 			boutput(user, "<span class='alert'>You cannot bring yourself to deconstruct [target] in this area.</span>")
 			return
 
-		if (O.decon_contexts && O.decon_contexts.len <= 0) //ready!!!
+		if (O.decon_contexts && length(O.decon_contexts) <= 0) //ready!!!
 			boutput(user, "Deconstructing [O], please remain still...")
 			playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
 			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,src,(decon_complexity * 2.5 SECONDS)), user)
@@ -1022,7 +1056,7 @@
 	if (src.decon_contexts)
 		for(var/datum/contextAction/C in src.decon_contexts)
 			C.dispose()
-	..()
+	. = ..()
 
 /obj/proc/was_deconstructed_to_frame(mob/user)
 	.= 0
@@ -1033,7 +1067,7 @@
 /obj/proc/build_deconstruction_buttons()
 	.= 0
 
-	if (deconstruct_flags & DECON_ACCESS)
+	if (deconstruct_flags & DECON_NULL_ACCESS)
 		if (src.has_access_requirements())
 			return
 

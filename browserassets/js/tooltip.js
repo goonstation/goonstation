@@ -10,8 +10,8 @@ var escaper = encodeURIComponent || escape;
 var decoder = decodeURIComponent || unescape;
 
 function getParameterByName(name, params) {
-	name = name.replace(/[\[\]]/g, "\\$&");
-	var regex = new RegExp(name + "(=([^&;#]*)|&|#|$)");
+	name = name.replace(/[\[\]]/g, '\\$&');
+	var regex = new RegExp(name + '(=([^&;#]*)|&|#|$)');
 	var results = regex.exec(params);
 	if (!results) {
 		return null;
@@ -19,7 +19,7 @@ function getParameterByName(name, params) {
 	if (!results[2]) {
 		return '';
 	}
-	return decoder(results[2].replace(/\+/g, " "));
+	return decoder(results[2].replace(/\+/g, ' '));
 }
 
 function htmlEntities(str) {
@@ -221,9 +221,9 @@ var tooltip = {
 		if (tooltip.options.hasOwnProperty('special')) {
 			if (tooltip.options.special === 'pod') {
 				top--; //Pods do some weird funky shit with view and well just trust me that this is needed
-			} 
+			}
 		}
-		
+
 		var yloc = top;
 
 		//Handle manually set offsets (whether to adjust the tooltip along an axis by a pixel amount)
@@ -351,7 +351,7 @@ var tooltip = {
 		}
 
 		//Images affect sizing, so we have to wait until they all load first
-		tooltip.$content.waitForImages(function() {
+		tooltip.showDelayInt = tooltip.$content.waitForImages(function() {
 			tooltip.showDelayInt = setTimeout(function() {
 				tooltip.position();
 			}, tooltip.showDelay);

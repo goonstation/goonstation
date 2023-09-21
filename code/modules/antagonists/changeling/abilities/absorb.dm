@@ -31,6 +31,21 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if (!ON_COOLDOWN(target, "changeling_remove_limb", 1.5 SECONDS))
+			var/list/valid_limbs = list("l_leg", "r_arm", "r_leg", "l_arm")
+			var/mob/living/carbon/human/H = target
+			H.TakeDamage("All", 15, 0, 0)
+			take_bleeding_damage(H, null, 8, DAMAGE_STAB, TRUE)
+			for (var/L in valid_limbs)
+				var/obj/item/parts/possible_limb = H.limbs?[L]
+				if (possible_limb)
+					ownerMob.visible_message("<span class='combat bold'>[ownerMob] viciously devours [H]'s [possible_limb]!</span>")
+					possible_limb.remove(FALSE)
+					qdel(possible_limb)
+					playsound(H, 'sound/voice/burp_alien.ogg', 35)
+					H.emote("scream", FALSE)
+					break
+
 	onStart()
 		..()
 		if(BOUNDS_DIST(owner, target) > 0 || target == null || owner == null || !devour)
@@ -39,6 +54,7 @@
 
 		var/mob/ownerMob = owner
 		ownerMob.show_message("<span class='notice'>We must hold still for a moment...</span>", 1)
+		ON_COOLDOWN(target, "changeling_remove_limb", 1 SECOND) //don't eat a limb right away
 
 	onEnd()
 		..()
@@ -51,7 +67,7 @@
 			boutput(ownerMob, "<span class='notice'>We devour [target]!</span>")
 			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] hungrily devours [target]!</B></span>"))
 			playsound(ownerMob.loc, 'sound/voice/burp_alien.ogg', 50, 1)
-			logTheThing("combat", ownerMob, target, "devours [constructTarget(target,"combat")] as a changeling in horror form [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, ownerMob, "devours [constructTarget(target,"combat")] as a changeling in horror form [log_loc(owner)].")
 
 			target.ghostize()
 			qdel(target)
@@ -59,16 +75,17 @@
 	onInterrupt()
 		..()
 		boutput(owner, "<span class='alert'>Our feasting on [target] has been interrupted!</span>")
+		devour.doCooldown()
 
 /datum/targetable/changeling/devour
 	name = "Devour"
 	desc = "Almost instantly devour a human for DNA."
 	icon_state = "devour"
 	abomination_only = 1
-	cooldown = 0
+	cooldown = 5 SECONDS
 	targeted = 0
 	target_anything = 0
-	restricted_area_check = 2
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
 		if (..())
@@ -89,6 +106,10 @@
 		if (T.bioHolder.HasEffect("husk"))
 			boutput(usr, "<span class='alert'>This creature has already been drained...</span>")
 			return 1
+		if (isnpc(T))
+			boutput(C, "<span class='alert'>The DNA of this target seems inferior somehow, you have no desire to feed on it.</span>")
+			return 1
+
 
 		actions.start(new/datum/action/bar/icon/abominationDevour(T, src), C)
 		return 0
@@ -127,7 +148,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		var/done = TIME - started
+		var/done = src.time_spent()
 		var/complete = clamp((done / duration), 0, 1)
 		if (complete >= 0.2 && last_complete < 0.2)
 			boutput(ownerMob, "<span class='notice'>We extend a proboscis.</span>")
@@ -162,7 +183,7 @@
 				C.addDna(target)
 			boutput(ownerMob, "<span class='notice'>We have absorbed [target]!</span>")
 			ownerMob.visible_message(text("<span class='alert'><B>[ownerMob] sucks the fluids out of [target]!</B></span>"))
-			logTheThing("combat", ownerMob, target, "absorbs [constructTarget(target,"combat")] as a changeling [log_loc(owner)].")
+			logTheThing(LOG_COMBAT, ownerMob, "absorbs [constructTarget(target,"combat")] as a changeling [log_loc(owner)].")
 
 			target.dna_to_absorb = 0
 			target.death(FALSE)
@@ -183,7 +204,7 @@
 	cooldown = 0
 	targeted = 0
 	target_anything = 0
-	restricted_area_check = 2
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(atom/target)
 		if (..())

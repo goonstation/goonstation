@@ -56,12 +56,11 @@
 		respawned.key = src.key
 		if (src.mind)
 			src.mind.transfer_to(respawned)
-		respawned.Login()
 		respawned.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 
 		qdel(src)
 
-		logTheThing("debug", respawned, null, "Humanize() failed. Player was respawned instead.")
+		logTheThing(LOG_DEBUG, respawned, "Humanize() failed. Player was respawned instead.")
 		message_admins("Humanize() failed. [key_name(respawned)] was respawned instead.")
 		respawned.show_text("Humanize: an error occurred and you have been respawned instead. Please report this to a coder.", "red")
 
@@ -89,9 +88,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[t])
-		src.organs[t] = null
 
 	return ..()
 
@@ -105,7 +101,7 @@
 	O.canmove = 0
 	O.name = src.name
 	O.real_name = src.real_name
-	O.anchored = 1
+	O.anchored = ANCHORED
 	O.aiRestorePowerRoutine = 0
 	O.lastKnownIP = src.client.address
 
@@ -115,14 +111,14 @@
 	if (!mobile && !do_not_move && job_start_locations["AI"])
 		O.set_loc(pick(job_start_locations["AI"]))
 
-	boutput(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
-	boutput(O, "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
-	boutput(O, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-	boutput(O, "To use something, simply double-click it.")
-	boutput(O, "Currently right-click functions will not work for the AI (except examine), and will either be replaced with dialogs or won't be usable by the AI.")
+	boutput(O, "<b class='hint'>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</b>")
+	boutput(O, "<b class='hint'>To look at other parts of the station, double-click yourself to get a camera menu.</b>")
+	boutput(O, "<b class='hint'>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</b>")
+	boutput(O, "<span class='hint'>To use something, simply click it.")
+	boutput(O, "<span class='hint'>Use the prefix <b>:s</b> to speak to fellow silicons through binary.</span>")
 
 	O.show_laws()
-	boutput(O, "<b>These laws may be changed by other players.</b>")
+	boutput(O, "<b class='hint'>These laws may be changed by other players.</b>")
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
@@ -166,7 +162,7 @@
 /mob/proc/critterize(var/CT)
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a critter ([CT]).")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a critter ([CT]).")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a critter ([CT]).")
 
 		return make_critter(CT, get_turf(src))
 	return 0
@@ -175,6 +171,9 @@
 	var/mob/living/critter/newmob = new critter_type()
 	if(ghost_spawned)
 		newmob.ghost_spawned = ghost_spawned
+		if(!istype(newmob, /mob/living/critter/small_animal/mouse/weak/mentor))
+			newmob.name_prefix("ethereal")
+			newmob.UpdateName()
 	if (!T || !isturf(T))
 		T = get_turf(src)
 	newmob.set_loc(T)
@@ -211,7 +210,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
 	var/mob/living/silicon/robot/cyborg = new /mob/living/silicon/robot/(src.loc, null, 1, syndie = syndicate)
 
@@ -220,18 +218,26 @@
 	cyborg.name = "Cyborg"
 	cyborg.real_name = "Cyborg"
 	cyborg.UpdateName()
-	if (src.client)
-		cyborg.lastKnownIP = src.client.address
-		src.client.mob = cyborg
-	else
-		//if they're logged out or whatever
-		cyborg.key = src.key
 	if (src.ghost)
 		if (src.ghost.mind)
 			src.ghost.mind.transfer_to(cyborg)
+		else
+			if (src.client)
+				cyborg.lastKnownIP = src.client.address
+				src.client.mob = cyborg
+			else
+				//if they're logged out or whatever
+				cyborg.key = src.key
 	else
 		if(src.mind)
 			src.mind.transfer_to(cyborg)
+		else
+			if (src.client)
+				cyborg.lastKnownIP = src.client.address
+				src.client.mob = cyborg
+			else
+				//if they're logged out or whatever
+				cyborg.key = src.key
 	cyborg.set_loc(get_turf(src.loc))
 	if (syndicate)
 		cyborg.make_syndicate("Robotize_MK2 (probably cyborg converter)")
@@ -241,10 +247,6 @@
 		boutput(cyborg, "<B>You have been transformed into a Cyborg. Cyborgs can interact with most electronic objects in their view.</B>")
 		boutput(cyborg, "<B>You must follow all laws that the AI has.</B>")
 	boutput(cyborg, "<B>Use \"say :s (message)\" to speak to fellow cyborgs and the AI through binary.</B>")
-
-	if(cyborg.mind && (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution)))
-		if ((cyborg.mind in ticker.mode:revolutionaries) || (cyborg.mind in ticker.mode:head_revolutionaries))
-			ticker.mode:update_all_rev_icons() //So the icon actually appears
 
 	if(gory)
 		var/mob/living/silicon/robot/R = cyborg
@@ -265,8 +267,6 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs)
-		qdel(src.organs[text("[t]")])
 
 	if(!mainframe)
 		var/mob/living/silicon/hivebot/O = new /mob/living/silicon/hivebot( src.loc )
@@ -279,10 +279,10 @@
 			src.client.mob = O
 		src.mind?.transfer_to(O)
 		O.set_loc(src.loc)
-		boutput(O, "<B>You are a Robot.</B>")
-		boutput(O, "<B>You're more or less a Cyborg but have no organic parts.</B>")
-		boutput(O, "To use something, simply double-click it.")
-		boutput(O, "Use say \":s to speak in binary.")
+		boutput(O, "<b class='hint'>You are a Robot.</b>")
+		boutput(O, "<b class='hint'>You're more or less a Cyborg but have no organic parts.</b>")
+		boutput(O, "<b class='hint'>To use something, simply double-click it.</b>")
+		boutput(O, "<b class='hint'>Use say \":s to speak in binary.</b>")
 
 		dispose()
 		return O
@@ -300,127 +300,13 @@
 		src.mind?.transfer_to(O)
 		O.Namepick()
 		O.set_loc(src.loc)
-		boutput(O, "<B>You are a Mainframe Unit.</B>")
-		boutput(O, "<B>You cant do much on your own but can take remote command of nearby empty Robots.</B>")
-		boutput(O, "Press Deploy to search for nearby bots to command.")
-		boutput(O, "Use say \":s to speak in binary.")
+		boutput(O, "<b class='hint'>You are a Mainframe Unit.</b>")
+		boutput(O, "<b class='hint'>You cant do much on your own but can take remote command of nearby empty Robots.</b>")
+		boutput(O, "<b class='hint'>Press Deploy to search for nearby bots to command.</b>")
+		boutput(O, "<b class='hint'>Use say \":s to speak in binary.</b>")
 
 		dispose()
 		return O
-
-/mob/proc/blobize()
-	if (src.mind || src.client)
-		message_admins("[key_name(usr)] made [key_name(src)] a blob.")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a blob.")
-
-		return make_blob()
-	return 0
-
-/mob/proc/slasherize()
-	if(src.mind || src.client)
-		var/mob/living/carbon/human/slasher/W = new/mob/living/carbon/human/slasher(src)
-		var/turf/T = get_turf(src)
-		if(!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-			if (ASLoc)
-				W.set_loc(ASLoc)
-			else
-				W.set_loc(locate(1, 1, 1))
-		else
-			W.set_loc(T)
-		src.show_antag_popup("slasher")
-		if(src.mind)
-			src.mind.transfer_to(W)
-			src.mind.special_role = "slasher"
-		else
-			var/key = src.client.key
-			if (src.client)
-				src.client.mob = W
-			W.mind = new /datum/mind()
-			ticker.minds += W.mind
-			W.mind.ckey = ckey
-			W.mind.key = key
-			W.mind.current = W
-		ticker.mode.Agimmicks += W.mind
-		qdel(src)
-
-/mob/proc/machoize(var/shitty = 0)
-	if (src.mind || src.client)
-		if (shitty)
-			message_admins("[key_name(src)] has been made a faustian macho man.")
-			logTheThing("admin", null, src, "[constructTarget(src,"admin")] has been made a faustian macho man.")
-		else
-			message_admins("[key_name(usr)] made [key_name(src)] a macho man.")
-			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a macho man.")
-		var/mob/living/carbon/human/machoman/W = new/mob/living/carbon/human/machoman(src, shitty)
-
-		var/turf/T = get_turf(src)
-		if (!(T && isturf(T)) || (isrestrictedz(T.z) && !(src.client && src.client.holder)))
-			var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-			if (ASLoc)
-				W.set_loc(ASLoc)
-			else
-				W.set_loc(locate(1, 1, 1))
-		else
-			W.set_loc(T)
-
-		if (src.mind)
-			if (shitty)
-				boutput(src, "<span class='notice'>You are being bombarded by energetic macho waves!</span>")
-				src.mind.transfer_to(W)
-				W.mind.special_role = "faustian macho man"
-				ticker.mode.Agimmicks.Add(W)
-				W.real_name = "[pick("Faustian", "Fony", "Fake", "False","Fraudulent", "Fragile")] [W.real_name]"
-				W.name = W.real_name
-
-			else
-				src.mind.transfer_to(W)
-				src.mind.special_role = "macho man"
-		else
-			var/key = src.client.key
-			if (src.client)
-				src.client.mob = W
-			W.mind = new /datum/mind()
-			ticker.minds += W.mind
-			W.mind.ckey = ckey
-			W.mind.key = key
-			W.mind.current = W
-		qdel(src)
-
-		SPAWN(2.5 SECONDS) // Don't remove.
-			if (W) W.assign_gimmick_skull()
-
-		if(shitty)
-			if (W)
-				W.traitHolder.addTrait("deathwish") //evil
-				W.traitHolder.addTrait("glasscannon") //what good will those stimulants do you now?
-			if (W)
-				var/list/dangerousVerbs = list(\
-					/mob/living/carbon/human/machoman/verb/macho_offense,\
-					/mob/living/carbon/human/machoman/verb/macho_defense,\
-					/mob/living/carbon/human/machoman/verb/macho_normal,\
-					/mob/living/carbon/human/machoman/verb/macho_grasp,\
-					/mob/living/carbon/human/machoman/verb/macho_headcrunch,\
-					/mob/living/carbon/human/machoman/verb/macho_chestcrunch,\
-					/mob/living/carbon/human/machoman/verb/macho_leap,\
-					/mob/living/carbon/human/machoman/verb/macho_rend,\
-					/mob/living/carbon/human/machoman/verb/macho_touch,\
-					/mob/living/carbon/human/machoman/verb/macho_piledriver,\
-					/mob/living/carbon/human/machoman/verb/macho_superthrow,\
-					/mob/living/carbon/human/machoman/verb/macho_soulsteal,\
-					/mob/living/carbon/human/machoman/verb/macho_stare,\
-					/mob/living/carbon/human/machoman/verb/macho_heartpunch,\
-					/mob/living/carbon/human/machoman/verb/macho_summon_arena,\
-					/mob/living/carbon/human/machoman/verb/macho_slimjim_snap) //they can keep macho heal
-				W.verbs -= dangerousVerbs //this is just diabolical
-				W.reagents.add_reagent("anti_fart", 800) //as is this
-				boutput(W, "<span class='notice'>You weren't able to absorb all the macho waves you were bombarded with! You have been left an incomplete macho man, with a frail body, and only one macho power. However, you inflict double damage with most melee weapons. Use your newfound form wisely to prove your worth as a macho champion of justice. Do not kill innocent crewmembers.</span>")
-
-		else
-			boutput(W, "<span class='notice'>You are now a macho man!</span>")
-
-		return W
-	return 0
 
 /mob/proc/cubeize(var/life = 10, var/CT)
 	if (!CT)
@@ -428,7 +314,7 @@
 
 	if (src.mind || src.client)
 		message_admins("[key_name(usr)] made [key_name(src)] a cube ([CT]) with a lifetime of [life].")
-		logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a cube ([CT]) with a lifetime of [life].")
+		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a cube ([CT]) with a lifetime of [life].")
 
 		return make_cube(CT, life)
 	return 0
@@ -477,9 +363,8 @@
 	src.canmove = 0
 	src.icon = null
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, "transform", INVIS_ALWAYS)
-	for(var/t in src.organs) qdel(src.organs[text("[t]")])
 
-	var/mob/living/critter/mechmonstrosity/suffering/O = new /mob/living/critter/mechmonstrosity/suffering/(src.loc,null,1)
+	var/mob/living/critter/mechmonstrosity/suffering/O = new /mob/living/critter/mechmonstrosity/suffering/(src.loc,null,null,1)
 
 
 	O.gender = src.gender
@@ -555,22 +440,18 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 
 	// get the mind
 	var/datum/mind/mind = src.mind
+	// get the player datum
+	var/datum/player/P = find_player(src.key)
 	if(isnull(src.mind))
-		// ok i don't know how this happened but make them a new mind
-		if (src.client)
-			src.mind = new /datum/mind(src)
-			ticker.minds += src.mind
-			mind = src.mind
-		else
-			// why is this happening aaaaa
-			return
+		// uh oh
+		CRASH("Checking if [identify_object(src)] can respawn as a ghost critter, but they don't have a mind!")
 
 	// determine if they're allowed to respawn
 	var/min_time_passed = initial_time_passed
 	if(mind.assigned_role == "Animal" || mind.assigned_role == "Ghostdrone")
 		// no you get to wait for longer
 		min_time_passed = second_time_around
-	var/time_elapsed = (world.timeofday + ((world.timeofday < mind.last_death_time) ? 864000 : 0)) - mind.last_death_time // Offset the time of day in case of midnight rollover
+	var/time_elapsed = (world.timeofday + ((world.timeofday < P.last_death_time) ? 864000 : 0)) - P.last_death_time // Offset the time of day in case of midnight rollover
 	var/time_left = min_time_passed - time_elapsed
 	if(time_left > 0)
 		var/time_left_message = ""
@@ -610,7 +491,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (length(types))
 		C = selfmob.make_critter(pick(types), spawnpoint, ghost_spawned=TRUE)
 	else
-		traitor = checktraitor(selfmob)
+		traitor = selfmob.mind?.is_antagonist()
 		if (traitor)
 			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 		else
@@ -627,6 +508,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.say_language = "animal"
 	C.literate = 0
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	if (traitor)
 		C.show_antag_popup("ghostcritter_antag")
@@ -669,9 +551,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	C.say_language = "animal"
 	C.literate = 0
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	C.show_antag_popup("ghostcritter_mentor")
-	logTheThing("admin", C, null, "respawned as a mentor mouse at [log_loc(C)].")
+	logTheThing(LOG_ADMIN, C, "respawned as a mentor mouse at [log_loc(C)].")
 
 	//hacky fix : qdel brain to prevent reviving
 	if (C.organHolder)
@@ -707,9 +590,9 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	src = null
 	var/mob/living/critter/C = selfmob.make_critter(/mob/living/critter/small_animal/mouse/weak/mentor/admin, spawnpoint, ghost_spawned=TRUE)
 	C.mind.assigned_role = "Animal"
-	// C.say_language = "animal"
 	C.literate = 1
 	C.original_name = selfmob.real_name
+	C.is_npc = FALSE
 
 	//hacky fix : qdel brain to prevent reviving
 	if (C.organHolder)
@@ -728,12 +611,12 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(!isdead(src) || !src.mind || !ticker || !ticker.mode)
 		return
 	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/football))
-		boutput(src, "Sorry, respawn options aren't availbale during football mode.")
+		boutput(src, "Sorry, respawn options aren't available during football mode.")
 		return
 	var/turf/target_turf = pick(get_area_turfs(/area/afterlife/bar/barspawn))
 
 	if (!src.client) return //ZeWaka: fix for null.preferences
-	var/mob/living/carbon/human/newbody = new(null, null, src.client.preferences, TRUE)
+	var/mob/living/carbon/human/newbody = new(target_turf, null, src.client.preferences, TRUE)
 	newbody.real_name = src.real_name
 	newbody.ghost = src //preserve your original ghost
 	if(!src.mind.assigned_role || iswraith(src) || isblob(src) || src.mind.assigned_role == "Cyborg" || src.mind.assigned_role == "AI")
@@ -758,7 +641,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if(to_del)
 		newbody.remove_item(to_del)
 		qdel(to_del)
-	to_del = locate(/obj/item/storage/bible) in newbody
+	to_del = locate(/obj/item/bible) in newbody
 	if(to_del)
 		newbody.remove_item(to_del)
 		qdel(to_del)
@@ -773,10 +656,10 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	// 	newbody.abilityHolder.transferOwnership(newbody)
 	// src.abilityHolder = null
 
+	// There are some traits removed in the afterlife bar, these have afterlife_blacklist set to TRUE.
 
 	newbody.UpdateOverlays(image('icons/misc/32x64.dmi',"halo"), "halo")
 	newbody.set_clothing_icon_dirty()
-	newbody.set_loc(target_turf)
 
 	if (src.mind) //Mind transfer also handles key transfer.
 		src.mind.transfer_to(newbody)
@@ -818,97 +701,3 @@ var/respawn_arena_enabled = 0
 	newbody.set_clothing_icon_dirty()
 	newbody.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
 	return
-
-///////////////////
-// FLOCKMIND
-///////////////////
-// flockdrones are critters, just critterize someone
-
-/mob/proc/flockerize(var/datum/flock/flock) // this will not host your web apps for you
-	if (src.mind || src.client)
-		if(flock == null)
-			// no flocks given, make flockmind
-			message_admins("[key_name(usr)] made [key_name(src)] a flockmind ([src.real_name]).")
-			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flockmind ([src.real_name]).")
-			return make_flockmind()
-		else
-			// make flocktrace of existing flock
-			message_admins("[key_name(usr)] made [key_name(src)] a flocktrace of flock [flock.name].")
-			logTheThing("admin", usr, src, "made [constructTarget(src,"admin")] a flocktrace ([flock.name]).")
-			return make_flocktrace(get_turf(src), flock)
-	return null
-
-/mob/proc/make_flockmind()
-	if (!src.mind && !src.client)
-		return null
-
-	var/mob/living/intangible/flock/flockmind/O = new/mob/living/intangible/flock/flockmind(src)
-
-	var/turf/T = get_turf(src)
-	if (!(T && isturf(T)) || (isghostrestrictedz(T.z) && !(src.client && src.client.holder)))
-		var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
-		if (OS)
-			O.set_loc(OS)
-		else
-			O.z = 1
-	else
-		O.set_loc(pick_landmark(LANDMARK_LATEJOIN))
-
-	if (src.mind)
-		src.mind.transfer_to(O)
-	else
-		var/key = src.client.key
-		if (src.client)
-			src.client.mob = O
-		O.mind = new /datum/mind()
-		O.mind.ckey = ckey
-		O.mind.key = key
-		O.mind.current = O
-		ticker.minds += O.mind
-	O.flock.flockmind_mind = O.mind
-	O.mind.special_role = ROLE_FLOCKMIND
-	qdel(src)
-	boutput(O, "<B>You are a flockmind, the collective machine consciousness of a flock of drones! Your existence is tied to your flock! Ensure that it survives and thrives!</B>")
-	boutput(O, "<B>Silicon units are able to detect your transmissions and messages (with some signal corruption), so exercise caution in what you say.</B>")
-	boutput(O, "<B>On the flipside, you can hear silicon transmissions and all radio signals, but with heavy corruption.</B>")
-	O.show_antag_popup("flockmind")
-	return O
-
-// flocktraces are made by flockminds
-/mob/proc/make_flocktrace(var/atom/spawnloc, var/datum/flock/flock)
-	if (src.mind || src.client)
-		if(!spawnloc)
-			spawnloc = get_turf(src)
-		if(!flock)
-			flock = new/datum/flock()
-
-		var/mob/living/intangible/flock/trace/O = new/mob/living/intangible/flock/trace(spawnloc, flock)
-		if (src.mind)
-			src.mind.transfer_to(O)
-			flock.trace_minds[O.name] = O.mind
-		else
-			var/key = src.client.key
-			if (src.client)
-				src.client.mob = O
-			O.mind = new /datum/mind()
-			O.mind.ckey = ckey
-			O.mind.key = key
-			O.mind.current = O
-			ticker.minds += O.mind
-
-		if (!O.mind.special_role) // Preserve existing antag role (if any).
-			O.mind.special_role = ROLE_FLOCKTRACE
-		if (!(O.mind in ticker.mode.Agimmicks))
-			ticker.mode.Agimmicks += O.mind
-		qdel(src)
-
-		boutput(O, "<span class='bold'>You are a Flocktrace, a partition of the Flock's collective computation!</span>")
-		boutput(O, "<span class='bold'>Your loyalty is to the Flock of [flock.flockmind.real_name]. Spread drones, convert the station, and aid in the construction of the Relay.</span>")
-		boutput(O, "<span class='bold'>In this form, you cannot be harmed, but you can't do anything to the world at large.</span>")
-		boutput(O, "<span class='italic'>Tip: Click-drag yourself onto unoccupied drones to take direct control of them.</span>")
-		boutput(O, "<span class='notice'>You are part of the <span class='bold'>[flock.name]</span> flock.</span>")
-		O.show_antag_popup("flocktrace")
-		flock_speak(null, "Trace partition [O.real_name] has been instantiated.", flock)
-
-		return O
-	return null

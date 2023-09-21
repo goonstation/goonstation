@@ -45,8 +45,10 @@
 
 #define AMMO_PISTOL_22 "pistol_22"
 #define AMMO_PISTOL_9MM "pistol_9mm"
+#define AMMO_PISTOL_9MM_SOVIET "pistol_9mm_soviet"
+#define AMMO_PISTOL_9MM_ALL AMMO_PISTOL_9MM, AMMO_PISTOL_9MM_SOVIET
 #define AMMO_PISTOL_41 "pistol_41"
-#define AMMO_PISTOL_ALL AMMO_PISTOL_22, AMMO_PISTOL_9MM, AMMO_PISTOL_41
+#define AMMO_PISTOL_ALL AMMO_PISTOL_22, AMMO_PISTOL_9MM_ALL, AMMO_PISTOL_41
 
 #define AMMO_TRANQ_9MM "tranq_9mm"
 #define AMMO_TRANQ_308 "tranq_308"
@@ -57,9 +59,10 @@
 #define AMMO_AUTO_308 "auto_308"
 
 #define AMMO_AUTO_556 "auto_5.56mm"
+#define AMMO_AUTO_762 "auto_7.62mm" //7.62x39, not fullsize like 308
 #define AMMO_SMG_9MM "auto_9mm"
 
-#define AMMO_9MM_ALL AMMO_AUTO_9MM, AMMO_PISTOL_9MM, AMMO_TRANQ_9MM
+#define AMMO_9MM_ALL AMMO_SMG_9MM, AMMO_PISTOL_9MM_ALL, AMMO_TRANQ_9MM
 
 #define AMMO_CANNON_40MM "grenade_40mm"
 #define AMMO_GRENADE_40MM "grenade_custom"
@@ -67,7 +70,8 @@
 
 #define AMMO_ROCKET_SING "rocket_sing"
 #define AMMO_ROCKET_RPG "rocket_rpg"
-#define AMMO_ROCKET_ALL AMMO_ROCKET_SING, AMMO_ROCKET_RPG
+#define AMMO_ROCKET_MRL "rocket_mrl"
+#define AMMO_ROCKET_ALL AMMO_ROCKET_SING, AMMO_ROCKET_RPG, AMMO_ROCKET_MRL
 
 #define AMMO_FOAMDART "foamdart"
 #define AMMO_AIRZOOKA "airzooka"
@@ -78,6 +82,7 @@
 #define AMMO_GYROJET "gyrojet"
 #define AMMO_FLECHETTE "flechette"
 #define AMMO_BLOWDART "blowdart"
+#define AMMO_STAPLE "staple"
 
 #define AMMO_DART_ALL AMMO_FOAMDART,AMMO_BLOWDART
 
@@ -85,4 +90,7 @@
 #define AMMO_DERRINGER_LITERAL "spawner_derringer"
 #define AMMO_HOWITZER "howitzer"
 #define AMMO_FLINTLOCK "flintlock"
+#define AMMO_FLINTLOCK_RIFLE "flintlock_rifle"
+#define AMMO_FLINTLOCK_MORTAR "flintlock_hand_mortar"
 #define AMMO_COILGUN "coilgun"
+#define AMMO_KUVALDA "kuvalda"

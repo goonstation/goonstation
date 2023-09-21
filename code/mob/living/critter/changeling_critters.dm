@@ -13,7 +13,7 @@
 	blood_id = "bloodc"
 	table_hide = 0
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	var/datum/abilityHolder/changeling/hivemind_owner = 0
 	var/icon_prefix = ""
 	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type
@@ -31,10 +31,11 @@
 		if (bodypart)
 			bodypart.name = "mutagenic [initial(bodypart.name)]"
 		src.original_bodypart = bodypart
+		src.original_bodypart?.set_loc(src)
 
 	say(message, involuntary = 0)
 		if (hivemind_owner)
-			message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
+			message = trim(copytext(strip_html(message), 1, MAX_MESSAGE_LEN))
 
 			if (!message)
 				return
@@ -42,7 +43,7 @@
 			if (dd_hasprefix(message, "*"))
 				return src.emote(copytext(message, 2),1)
 
-			logTheThing("diary", src, null, "(HIVEMIND): [message]", "hivesay")
+			logTheThing(LOG_DIARY, src, "(HIVEMIND): [message]", "hivesay")
 
 			if (src.client && src.client.ismuted())
 				boutput(src, "You are currently muted and may not speak.")
@@ -99,12 +100,12 @@
 			hat = 0
 			UpdateIcon()
 		if (!gibbed)
-			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, 0.2, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, TRUE, 0.2, 1)
 		death_effect()
 		..()
 
 	butcher(mob/user)
-		src.original_bodypart.set_loc(src.loc)
+		src.original_bodypart?.set_loc(src.loc)
 		src.original_bodypart = null
 		return ..(user, FALSE)
 
@@ -146,17 +147,21 @@
 	hand_count = 1
 	var/absorbed_dna = 0
 
-	New()
+	New(loc, obj/item/bodypart)
 		..()
-		abilityHolder = new /datum/abilityHolder/critter/handspider(src)
+		src.add_ability_holder(/datum/abilityHolder/critter/handspider)
 		//todo : move to add_abilities list because its cleaner that way
 		abilityHolder.addAbility(/datum/targetable/critter/dna_gnaw)
 		abilityHolder.addAbility(/datum/targetable/critter/boilgib)
 		abilityHolder.updateButtons()
 		src.flags ^= TABLEPASS
 
-		RegisterSignal(src, COMSIG_MOB_PICKUP, .proc/stop_sprint)
-		RegisterSignal(src, COMSIG_MOB_DROPPED, .proc/enable_sprint)
+		if (bodypart && istype(bodypart, /obj/item/parts/robot_parts))
+			src.icon_prefix = "robo"
+			src.UpdateIcon()
+
+		RegisterSignal(src, COMSIG_MOB_PICKUP, PROC_REF(stop_sprint))
+		RegisterSignal(src, COMSIG_MOB_DROPPED, PROC_REF(enable_sprint))
 
 	disposing()
 		UnregisterSignal(src, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
@@ -179,7 +184,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 			if("flip")
 				if(src.emote_check(voluntary, 50))
@@ -344,7 +349,7 @@
 
 	New()
 		..()
-		abilityHolder = new /datum/abilityHolder/critter/eyespider(src)
+		src.add_ability_holder(/datum/abilityHolder/critter/eyespider)
 		// TODO: ACTUAL ABILITIES
 		abilityHolder.addAbility(/datum/targetable/critter/mark)
 		abilityHolder.addAbility(/datum/targetable/critter/boilgib)
@@ -353,9 +358,7 @@
 		src.flags ^= TABLEPASS | DOORPASS
 
 		// EYE CAN SEE FOREVERRRR
-		src.sight |= SEE_MOBS | SEE_TURFS | SEE_OBJS
-		src.see_in_dark = SEE_DARK_FULL
-		src.see_invisible = INVIS_CLOAK
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION, src)
 
 	// a slight breeze will kill these guys, such is life as a squishy li'l eye
 	setup_healths()
@@ -421,7 +424,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 
@@ -562,7 +565,8 @@
 	setup_healths()
 		add_hh_flesh(16, 1)
 		add_hh_flesh_burn(5, 1.25)
-		add_health_holder(/datum/healthHolder/toxin)
+
+
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
@@ -602,7 +606,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 
@@ -639,22 +643,21 @@
 		return istype(C) && !isdead(C) && src.loc != C
 
 /mob/living/critter/changeling/headspider/proc/infect_target(mob/M)
-	if(ishuman(M) && isalive(M))
+	if(ishuman(M) && !isdead(M))
 		var/mob/living/carbon/human/H = M
 		random_brute_damage(H, 10)
 		src.visible_message("<font color='#FF0000'><B>\The [src]</B> crawls down [H.name]'s throat!</font>")
+		playsound(src, 'sound/misc/headspiderability.ogg', 60)
 		src.set_loc(H)
 		H.setStatusMin("paralysis", 10 SECONDS)
 
 		var/datum/ailment_data/parasite/HS = new /datum/ailment_data/parasite
 		HS.master = get_disease_from_path(/datum/ailment/parasite/headspider)
 		HS.affected_mob = H
-		HS.source = src.mind
-		var/datum/ailment/parasite/headspider/HSD = HS.master
-		HSD.changeling = changeling
+		HS.source = src
 		H.ailments += HS
 
-		logTheThing("combat", src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, src.mind, "'s headspider enters [constructTarget(H,"combat")] at [log_loc(src)].")
 
 /mob/living/critter/changeling/headspider/hand_attack(atom/target)
 	if (filter_target(target))
@@ -684,5 +687,10 @@
 			spider.hivemind_owner = 0
 		for (var/mob/dead/target_observer/hivemind_observer/obs in changeling.hivemind)
 			boutput(obs, "<span class='alert'>Your telepathic link to your master has been destroyed!</span>")
-			obs.boot()
+			obs.mind?.remove_antagonist(ROLE_CHANGELING_HIVEMIND_MEMBER)
 		changeling.hivemind.Cut()
+
+
+/mob/living/critter/changeling/headspider/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE

@@ -10,22 +10,29 @@
 			return controller.hotkey(src, name)
 	return ..()
 
-/mob/keys_changed(keys, changed)
+/mob/proc/keys_changed(keys, changed)
+	set waitfor = 0
 	if (changed & KEY_EXAMINE && src.client)
 		if (keys & KEY_EXAMINE)
 			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
-				for (var/mob/M as anything in mobs)
-					M.name_tag?.show_images(src.client, TRUE, FALSE)
-			if (src.mob_hovered_over)
-				var/mob/M = src.mob_hovered_over
-				M.name_tag?.show_images(src.client, FALSE, TRUE)
+				var/atom/movable/name_tag/hover_tag
+				for (var/atom/A as anything in src.get_tracked_examine_atoms())
+					hover_tag = A.get_examine_tag(src)
+					hover_tag?.show_images(src.client, TRUE, FALSE)
+			if (src.atom_hovered_over)
+				var/atom/A = src.atom_hovered_over
+				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
+				hover_tag?.show_images(src.client, FALSE, TRUE)
 		else
 			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
-				for (var/mob/M as anything in mobs)
-					M.name_tag?.show_images(src.client, FALSE, FALSE)
-			else if (src.mob_hovered_over)
-				var/mob/M = src.mob_hovered_over
-				M.name_tag?.show_images(src.client, FALSE, FALSE)
+				var/atom/movable/name_tag/hover_tag
+				for (var/mob/A as anything in src.get_tracked_examine_atoms())
+					hover_tag = A.get_examine_tag(src)
+					hover_tag?.show_images(src.client, FALSE, FALSE)
+			else if (src.atom_hovered_over)
+				var/atom/A = src.atom_hovered_over
+				var/atom/movable/name_tag/hover_tag = A.get_examine_tag(src)
+				hover_tag?.show_images(src.client, FALSE, FALSE)
 
 	if (src.use_movement_controller)
 		var/datum/movement_controller/controller = src.use_movement_controller.get_movement_controller()
@@ -175,9 +182,8 @@
 								src.inertia_dir = 0
 					else if (isrobot(src) || isghostdrone(src) || isshell(src))
 						if (src:jetpack)
-							if (!src:jeton)
-								spacemove = 0
-								src.inertia_dir = 0
+							spacemove = 0
+							src.inertia_dir = 0
 
 					if (!spacemove) // yes, this is dumb
 						// also fuck it.
@@ -232,14 +238,15 @@
 						if (mob_flags & AT_GUNPOINT) //we do this check here because if we DID take a step, we aren't tight-grabbed and the gunpoint shot will be triggered by Mob/Move(). messy i know, fix later
 							for(var/obj/item/grab/gunpoint/G in grabbed_by)
 								G.shoot()
-
+						var/list/stepped = list()
 						for (var/obj/item/grab/G as anything in src.grabbed_by)
-							if (G.assailant == pushing || G.affecting == pushing) continue
+							if ((G.assailant in stepped) || G.assailant == pushing || G.affecting == pushing) continue
 							if (G.state < GRAB_AGGRESSIVE) continue
 							if (!G.assailant || !isturf(G.assailant.loc) || G.assailant.anchored)
 								return
 							src.set_density(0) //assailant shouldn't be able to bump us here. Density is set to 0 by the grab stuff but *SAFETY!*
 							step(G.assailant, move_dir)
+							stepped |= G.assailant
 							if(G.assailant)
 								delay += G.assailant.p_class
 
@@ -290,3 +297,12 @@
 
 			next_move = world.time + delay
 			return delay
+		else
+			if (src.restrained() || !isalive(src))
+				return
+			for (var/obj/item/grab/G as anything in src.grabbed_by)
+				if (G.state == GRAB_PIN)
+					if (src.last_resist > world.time)
+						return
+					src.last_resist = world.time + 20
+					G.do_resist()

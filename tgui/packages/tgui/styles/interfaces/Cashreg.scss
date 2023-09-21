@@ -1,0 +1,38 @@
+/**
+ * @file
+ * @copyright 2022
+ * @author DisturbHerb (https://github.com/DisturbHerb/)
+ * @license MIT
+ */
+
+ @use '.././colors.scss';
+
+ .cashreg__ {
+  &ownerbutton,
+  &pay,
+  &tip {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    & > * {
+      padding: 0.5em 0.1em;
+    }
+  }
+
+  &centerpart {
+    font-size: 1.5rem;
+  }
+
+  &amount:hover {
+    background-color: lighten(colors.$blue, colors.$fg-lightness)
+  }
+
+  &table {
+    width: 80%;
+
+    &_cellright {
+      text-align: right;
+    }
+  }
+}

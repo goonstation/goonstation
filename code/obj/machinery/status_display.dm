@@ -9,15 +9,23 @@
 // // Alert status
 // // And arbitrary messages set by comms computer
 
+/obj/status_display_proxy
+	plane = PLANE_NOSHADOW_ABOVE
+	mouse_opacity = FALSE
+
 #define MAX_LEN 5
+TYPEINFO(/obj/machinery/status_display)
+	mats = 14
+
 /obj/machinery/status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "frame"
 	name = "status display"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
-	mats = 14
+	plane = PLANE_NOSHADOW_ABOVE
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
+	power_usage = 200
 	var/glow_in_dark_screen = TRUE
 	var/image/screen_image
 
@@ -28,6 +36,7 @@
 					// 4 = Supply shuttle timer  -- NO LONGER SUPPORTED
 					// 5 = Research station destruct timer
 					// 6 = Mining Ore Score Tracking -- NO LONGER SUPPORTED
+					// 7 = Nuclear Operative Timer
 
 	var/picture_state	// icon_state of alert picture
 	var/message1 = ""	// message line 1
@@ -39,11 +48,18 @@
 	var/lastdisplayline1 = ""		// the cached last displays
 	var/lastdisplayline2 = ""
 
-	var/frequency = 1435		// radio frequency
+	var/net_id = null
+	var/frequency = FREQ_STATUS_DISPLAY		// radio frequency
 
 	var/display_type = 0		// bitmask of messages types to display: 0=normal  1=supply shuttle  2=reseach stn destruct
 
 	var/repeat_update = FALSE	// true if we are going to update again this ptick
+
+	/// Reference to the nuclear bomb in Nuclear Operatives mode
+	var/obj/machinery/nuclearbomb/the_bomb = null
+
+	/// Proxy object for putting map text on top of overlays
+	var/obj/status_display_proxy/proxy = null
 
 	var/image/crt_image = null
 
@@ -51,16 +67,28 @@
 	// register for radio system
 	New()
 		..()
-		src.layer -= 0.2
+		src.proxy = new
+		src.layer -= 0.3
+		proxy.layer = src.layer + 0.1
+		src.vis_contents += proxy
 		crt_image = SafeGetOverlayImage("crt", src.icon, "crt")
-		crt_image.layer = src.layer + 0.1
+		crt_image.layer = src.layer + 0.2
 		crt_image.plane = PLANE_DEFAULT
-		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART
+		crt_image.appearance_flags = NO_CLIENT_COLOR | RESET_ALPHA | KEEP_APART | PIXEL_SCALE
 		crt_image.alpha = 255
 		crt_image.mouse_opacity = 0
 		UpdateOverlays(crt_image, "crt")
 
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+		src.AddComponent( \
+			/datum/component/packet_connected/radio, \
+			null, \
+			src.frequency, \
+			src.net_id, \
+			"receive_signal", \
+			FALSE, \
+			"STATDISPLAY", \
+			FALSE \
+		)
 
 		if(glow_in_dark_screen)
 			src.screen_image = image('icons/obj/status_display.dmi', src.icon_state, -1)
@@ -70,6 +98,14 @@
 			screen_image.color = list(0.66,0.66,0.66, 0.66,0.66,0.66, 0.66,0.66,0.66)
 			src.UpdateOverlays(screen_image, "screen_image")
 
+		if(!src.net_id)
+			src.net_id = generate_net_id(src)
+
+	disposing()
+		qdel(src.proxy)
+		src.proxy = null
+		. = ..()
+
 
 	// timed process
 	process()
@@ -77,7 +113,7 @@
 			ClearAllOverlays()
 			return
 
-		use_power(200)
+		..()
 
 		update()
 
@@ -155,6 +191,32 @@
 
 				update_display_lines(line1,line2)
 
+			if(7) // Nuclear Operative Bomb Armed!
+				if(isnull(src.the_bomb))
+					if(ticker.mode.type == /datum/game_mode/nuclear)
+						var/datum/game_mode/nuclear/game_mode = ticker.mode
+						src.the_bomb = game_mode.the_bomb
+					if(isnull(src.the_bomb))
+						for_by_tcl(nuke, /obj/machinery/nuclearbomb)
+							src.the_bomb = nuke
+							break
+				if (!src.the_bomb?.armed)
+					set_picture("nuclear")
+					return
+				set_picture_with_text("nuclear", src.the_bomb.get_countdown_timer())
+				if(src.repeat_update)
+					var/delay = src.base_tick_spacing * PROCESSING_TIER_MULTI(src)
+					SPAWN(0.5 SECONDS)
+						src.repeat_update = FALSE
+						var/iterations = round(delay/5)
+						for(var/i in 1 to iterations)
+							if(mode != 7 || src.repeat_update) // kill early if message or mode changed
+								break
+							update()
+							if(i != iterations)
+								sleep(0.5 SECONDS) // set to update again in 5 ticks
+						src.repeat_update = TRUE
+
 		if(glow_in_dark_screen) // should re-add the glow if power is restored
 			screen_image.plane = PLANE_LIGHTING
 			screen_image.blend_mode = BLEND_ADD
@@ -178,7 +240,7 @@
 			message2 = null
 			index2 = 0
 		repeat_update = TRUE
-		desc = "[message1] [message2]"
+		desc = "[message1]<br>[message2]" // multiline messages
 		lastdisplayline1 = null
 		lastdisplayline2 = null
 
@@ -186,15 +248,29 @@
 
 	proc/set_maptext(var/line1, var/line2)
 		if(!line2)
-			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 5px;  color: #09f">[line1]</span>"}
+			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]</span>"}
 		else
-			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 5px;  color: #09f">[line1]<BR/>[line2]</span>"}
+			src.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 6px;  color: #09f">[line1]<BR/>[line2]</span>"}
+
+	proc/set_picture_with_text(var/state, var/newText)
+		var/image/previous = GetOverlayImage("picture")
+		if (previous?.icon_state != state)
+			src.maptext = ""
+			var/image/newImage = SafeGetOverlayImage("picture", src.icon, src.picture_state)
+			newImage.layer = src.layer + 0.1
+			newImage.blend_mode = BLEND_INSET_OVERLAY
+			UpdateOverlays(newImage, "picture")
+			UpdateOverlays(null, "overlay_image")
+			UpdateOverlays(crt_image, "crt")
+			src.picture_state = state
+		proxy.maptext = {"<span class='vm c' style="font-family: StatusDisp; font-size: 6px;  color: #fff">[newText]</span>"}
 
 	proc/set_picture(var/state)
 		var/image/previous = GetOverlayImage("picture")
 		if(previous?.icon_state == state)
 			return
 		src.maptext = ""
+		src.proxy.maptext = ""
 		picture_state = state
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=picture_state), "picture")
 		UpdateOverlays(null, "overlay_image")
@@ -206,6 +282,7 @@
 		if(previous_state?.icon_state == state && previous_overlay?.icon_state == overlay)
 			return
 		src.maptext = ""
+		src.proxy.maptext = ""
 		picture_state = state+overlay
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=state), "picture")
 		UpdateOverlays(image('icons/obj/status_display.dmi', icon_state=overlay), "overlay_image")
@@ -218,6 +295,7 @@
 		lastdisplayline1 = line1
 		lastdisplayline2 = line2
 
+		src.proxy.maptext = ""
 		set_maptext(line1, line2)
 
 		if(GetOverlayImage("picture") || GetOverlayImage("overlay_image") || !GetOverlayImage("crt"))
@@ -234,6 +312,11 @@
 		return ""
 
 	receive_signal(datum/signal/signal)
+		if (!signal || (!signal.data["address_tag"] && !signal.data["address_1"]))
+			return
+
+		if (signal.data["address_tag"] != "STATDISPLAY" && signal.data["address_1"] != src.net_id)
+			return
 
 		switch(signal.data["command"])
 			if("blank")
@@ -245,7 +328,7 @@
 
 			if("message")
 				mode = 2
-				set_message(signal.data["msg1"], signal.data["msg2"])
+				set_message(strip_html(signal.data["msg1"]), strip_html(signal.data["msg2"]))
 
 			if("alert")
 				mode = 3
@@ -260,6 +343,9 @@
 					else
 						set_picture("destruct")
 
+			if("nuclear")
+				mode = 7
+				repeat_update = TRUE
 
 
 /obj/machinery/status_display/supply_shuttle
@@ -274,15 +360,17 @@
 	name = "mining display"
 	mode = 6
 
+TYPEINFO(/obj/machinery/ai_status_display)
+	mats = list("MET-1"=2, "CON-1"=6, "CRY-1"=6)
+
 /obj/machinery/ai_status_display
 	icon = 'icons/obj/status_display.dmi'
 	icon_state = "ai_frame"
 	name = "\improper AI display"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
-	mats = list("MET-1"=2, "CON-1"=6, "CRY-1"=6)
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_MULTITOOL
-
+	power_usage = 200
 	machine_registry_idx = MACHINES_STATUSDISPLAYS
 	var/is_on = FALSE //Distinct from being powered
 
@@ -329,7 +417,7 @@
 			screen_glow.disable()
 			return
 		update()
-		use_power(200)
+		..()
 
 	proc/update()
 		//Update backing colour
@@ -342,18 +430,21 @@
 			screen_glow.set_color(colors[1] / 255, colors[2] / 255, colors[3] / 255)
 
 		//Update expression
-		if (src.emotion != owner.faceEmotion)
-			UpdateOverlays(owner.faceEmotion != "ai-tetris" ? glow_image : null, "glow_img")
-			face_image.icon_state = owner.faceEmotion
+		var/faceEmotion = owner.faceEmotion
+		if (isdead(owner))
+			faceEmotion = "ai_bsod"
+		if (src.emotion != faceEmotion)
+			UpdateOverlays(faceEmotion != "ai_tetris" ? glow_image : null, "glow_img")
+			face_image.icon_state = faceEmotion
 			UpdateOverlays(face_image, "emotion_img")
-			emotion = owner.faceEmotion
+			emotion = faceEmotion
 
 		//Re-enable all the stuff if we are powering on again
 		if (!screen_glow.enabled)
 			screen_glow.enable()
 			UpdateOverlays(face_image, "emotion_img")
 			UpdateOverlays(back_image, "back_img")
-			UpdateOverlays(owner.faceEmotion != "ai-tetris" ? glow_image : null, "glow_img")
+			UpdateOverlays(owner.faceEmotion != "ai_tetris" ? glow_image : null, "glow_img")
 
 		message = owner.status_message
 		name = initial(name) + " ([owner.name])"

@@ -5,7 +5,6 @@
  * @license MIT
  */
 
-import { toTitleCase } from 'common/string';
 import { useBackend } from '../../backend';
 import { Box, Button, Collapsible, LabeledList, Section, Stack, Table } from '../../components';
 import { Window } from '../../layouts';

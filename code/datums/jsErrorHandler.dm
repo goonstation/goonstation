@@ -83,8 +83,8 @@ var/global/datum/debugFileOutput/debugFileOutput = new()
 		out(src, "<span style='color: blue;'>[e]</span>")
 		return
 
-	logTheThing("admin", src, null, "deleted the '[fileName]' JS logfile")
-	logTheThing("diary", src, null, "deleted the '[fileName]' JS logfile", "admin")
+	logTheThing(LOG_ADMIN, src, "deleted the '[fileName]' JS logfile")
+	logTheThing(LOG_DIARY, src, "deleted the '[fileName]' JS logfile", "admin")
 	message_admins("[key_name(src)] deleted the '[fileName]' JS logfile")
 
 /client/proc/deleteAllJsLogFiles()
@@ -100,6 +100,6 @@ var/global/datum/debugFileOutput/debugFileOutput = new()
 	var/list/summary = debugFileOutput.clearAll()
 	var/friendlySummary = summary.Join(", ")
 
-	logTheThing("admin", src, null, "deleted every JS logfile! ([friendlySummary])")
-	logTheThing("diary", src, null, "deleted every JS logfile! ([friendlySummary])", "admin")
+	logTheThing(LOG_ADMIN, src, "deleted every JS logfile! ([friendlySummary])")
+	logTheThing(LOG_DIARY, src, "deleted every JS logfile! ([friendlySummary])", "admin")
 	message_admins("[key_name(src)] deleted every JS logfile! ([friendlySummary])")

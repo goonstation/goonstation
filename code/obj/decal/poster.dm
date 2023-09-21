@@ -4,7 +4,7 @@
 	name = "poster"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "poster"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 0
 	deconstruct_flags = DECON_WIRECUTTERS
@@ -496,11 +496,13 @@
 		poster_hair
 			name = "Fabulous Hair!"
 			desc = "There's a bunch of ladies with really fancy hair pictured on this."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_hair"
 
 		poster_cool
 			name = "cool poster"
 			desc = "There's a couple people pictured on this poster, looking pretty cool."
+			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_cool3"
 			random_icon_states = list("wall_poster_cool", "wall_poster_cool2", "wall_poster_cool3")
 
@@ -576,18 +578,20 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "wall_poster_cool3"
 			pixel_var = 1
-			random_icon_states = list("wall_poster_cool",
-																"wall_poster_cool2",
-																"wall_poster_cool3",
-																"wall_poster_hair",
-																"wall_poster_human",
-																"wall_poster_borg",
-																"wall_poster_sol",
-																"wall_poster_clown",
-																"wall_poster_beach",
-																"wall_poster_discount",
-																"wall_poster_octocluwne",
-																"wall_poser_eyetest")
+			random_icon_states = list(
+				"wall_poster_cool",
+				"wall_poster_cool2",
+				"wall_poster_cool3",
+				"wall_poster_hair",
+				"wall_poster_human",
+				"wall_poster_borg",
+				"wall_poster_sol",
+				"wall_poster_clown",
+				"wall_poster_beach",
+				"wall_poster_discount",
+				"wall_poster_octocluwne",
+				"wall_poster_eyetest"
+			)
 
 		poster_mining
 			name = "mining poster"
@@ -619,6 +623,11 @@
 			name = "warning sign"
 			desc = "A sign warning you of something."
 			icon_state = "wall_warning4"
+
+		warning_sus
+			name = "warning sign"
+			desc = "A sign warning you of something suspicious."
+			icon_state = "wall_sus"
 
 		statistics1
 			name = "statistics poster"
@@ -659,10 +668,6 @@
 				..()
 
 				var/which = pick(
-					// old contest winners
-					10;"tea1",
-					10;"tea2",
-					10;"tea3",
 					// the fuck II poster
 					30;"fuckII",
 					// new contest winners
@@ -681,17 +686,6 @@
 					5 ;"contest-other7"
 					)
 				switch(which)
-					if("tea1")
-						src.name = "Tea Hell and Back"
-						src.desc = "<i>Starring Camryn Stern, Edgar Palmer, Ryan Yeets, Jebediah Hawkins, and Frederick Cooper.</i>"
-					if("tea2")
-						src.icon_state = "teaparty2"
-						src.name = "It Came from the Void"
-						src.desc = "<i>Starring William Carr, Bruce Isaman, and Julio Hayhurst.</i>"
-					if("tea3")
-						src.icon_state = "teaparty3"
-						src.name = "Afterlife Activity"
-						src.desc = "<i>Starring Marmalade Addison, Lily White, cockroach, and Darcey Paynter.</i>"
 					if("fuckII")
 						src.name = "\proper fuck II"
 						src.desc = "A poster for \"<em>fuck II: Plumb Fuckled.\"</em>"
@@ -716,7 +710,7 @@
 						src.icon_state = "pack_smart"
 					if("contest-other2")
 						src.name = "Mindhacker Device Poster"
-						src.icon_state = "mindhacker"
+						src.icon_state = "mindhacked"
 					if("contest-other3")
 						src.name = "Edit Wiki"
 						src.icon_state = "edit_wiki"
@@ -859,6 +853,17 @@
 			icon = 'icons/obj/decals/posters.dmi'
 			icon_state = "bucket" // sprite by BatElite!
 
+		keep_it_or_melt
+			name = "KEEP IT or MELT"
+			desc = "A poster depicting an emergency suit with large text that reads \"KEEP IT or MELT\". A tiny row of text at the bottom reads \"All personnel receive suits rated for three minutes of exposure.\""
+			icon = 'icons/obj/decals/posters.dmi'
+			icon_state = "keep_it_or_melt"
+
+		eiffelposter //for Jan's office
+			desc = "A poster of the Eiffel Tower in Paris, France."
+			name = "Eiffel Poster"
+			icon = 'icons/misc/janstuff.dmi'
+			icon_state = "poster_eiffel"
 
 ///////////////////////////////////////
 // AZUNGAR'S HEAD OF DEPARTMENT ITEMS// + FIREBARRAGE HELPED TOO BUT HE SMELLS
@@ -875,6 +880,7 @@
 			var/icon_glass = "rddiploma1"
 			var/icon_award = "rddiploma"
 			var/icon_empty = "frame"
+			var/glass_type = /obj/item/sheet/glass
 			icon_state = "rddiploma"
 			pixel_y = -6
 
@@ -907,13 +913,13 @@
 						src.usage_state = 1
 						src.icon_state = icon_glass
 						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
-						var/obj/item/sheet/glass/G = new /obj/item/sheet/glass()
+						var/obj/item/sheet/glass/G = new glass_type()
 						G.amount = 1
 						src.add_fingerprint(user)
 						user.put_in_hand_or_drop(G)
 
 					if (1)
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						var/obj/item/award_item = locate(award_type) in src
 						if(award_item)
 							award_item.desc = src.desc
@@ -929,7 +935,7 @@
 
 				if (src.usage_state == 2)
 					if (istype(W, award_type))
-						playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+						playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 						user.u_equip(W)
 						W.set_loc(src)
 						user.visible_message("[user] places the [award_name] back in the frame.", "You place the [award_name] back in the frame.")
@@ -939,7 +945,8 @@
 				if (src.usage_state == 1)
 					if (istype(W, /obj/item/sheet/glass))
 						if (W.amount >= 1)
-							playsound(src.loc, "sound/machines/click.ogg", 50, 1)
+							src.glass_type = W.type
+							playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 							user.u_equip(W)
 							qdel(W)
 							user.visible_message("[user] places glass back in the frame.", "You place the glass back in the frame.")
@@ -953,7 +960,7 @@
 		framed_award/hos_medal
 			name = "framed medal"
 			desc = "A dusty old war medal."
-			award_type = /obj/item/clothing/suit/hosmedal/
+			award_type = /obj/item/clothing/suit/hosmedal
 			award_name = "medal"
 			owner_job = "Head of Security"
 			icon_glass = "medal1"
@@ -990,7 +997,7 @@
 		framed_award/firstbill
 			name = "framed space currency"
 			desc = "A single bill of space currency."
-			award_type = /obj/item/firstbill/
+			award_type = /obj/item/firstbill
 			award_name = "first bill"
 			owner_job = "Head of Personnel"
 			icon_glass = "hopcredit1"
@@ -1010,7 +1017,7 @@
 		framed_award/rddiploma
 			name = "research directors diploma"
 			desc = "A fancy space diploma."
-			award_type = /obj/item/rddiploma/
+			award_type = /obj/item/rddiploma
 
 			get_desc(dist)
 				if(award_text)
@@ -1032,7 +1039,7 @@
 		framed_award/mdlicense
 			name = "medical directors medical license"
 			desc = "There's just no way this is real."
-			award_type = /obj/item/mdlicense/
+			award_type = /obj/item/mdlicense
 			award_name = "medical license"
 			owner_job = "Medical Director"
 			icon_glass = "mdlicense1"
@@ -1084,6 +1091,7 @@
 	icon_state = "banner_base"
 	popup_win = 0
 	var/colored = FALSE
+	var/static/image/banner_holder = image('icons/obj/decals/banners.dmi', "banner_holder")
 	var/chosen_overlay
 	var/static/list/choosable_overlays = list("Horizontal Stripes","Vertical Stripes","Diagonal Stripes","Cross","Diagonal Cross","Full","Full Gradient",
 	"Left Line","Middle Line","Right Line","Northwest Line","Northeast Line","Southwest Line","Southeast Line","Big Ball","Medium Ball","Small Ball",
@@ -1091,7 +1099,7 @@
 
 	proc/clear_banner()
 		if (src.material)
-			src.color = src.material.color
+			src.color = src.material.getColor()
 		else
 			src.color = "#ffffff" // In case the material is null
 		src.overlays = null
@@ -1100,8 +1108,7 @@
 
 	New()
 		. = ..()
-		var/static/image/banner_holder = image(src.icon, "banner_holder")
-		banner_holder.appearance_flags = RESET_COLOR
+		banner_holder.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.underlays.Add(banner_holder)
 
 	attackby(obj/item/W, mob/user)
@@ -1110,10 +1117,10 @@
 				chosen_overlay = tgui_input_list(user, "What do you want to draw?", "Drawings Options", choosable_overlays)
 				if (!chosen_overlay) return
 				var/mutable_appearance/new_overlay = mutable_appearance(src.icon, chosen_overlay)
-				new_overlay.appearance_flags = RESET_COLOR
+				new_overlay.appearance_flags = RESET_COLOR | PIXEL_SCALE
 				new_overlay.color = W.color
 				src.overlays.Add(new_overlay)
-				logTheThing("station", user, null, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
+				logTheThing(LOG_STATION, user, "Drew a [chosen_overlay] in the [src] with [W] at [log_loc(user)].")
 				desc = "A banner, colored and decorated"
 				if(istype(W,/obj/item/pen/crayon/rainbow))
 					var/obj/item/pen/crayon/rainbow/R = W

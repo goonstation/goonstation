@@ -35,7 +35,7 @@
 	density = 0
 	alpha = 100
 	var/sound/pulse_sound = 'sound/weapons/ACgun2.ogg'
-	var/rad_strength = 25
+	var/rad_strength = (25/40) SIEVERTS
 	var/pulse_range = 5
 	var/mutate_prob = 25
 	var/bad_mut_prob = 75
@@ -47,7 +47,7 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
 		sleep(lifespan)
-		playsound(src,pulse_sound,50,1)
+		playsound(src,pulse_sound,50,TRUE)
 		irradiate_turf(get_turf(src))
 		for (var/turf/T in circular_range(src,pulse_range))
 			irradiate_turf(T)
@@ -64,14 +64,14 @@
 		if (!isturf(T))
 			return
 		//spatial interdictor: nullify radiation pulses
-		//consumes 100 units of charge per tile protected
-		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,T,IX.interdict_range) && IX.expend_interdict(100,1))
+		//consumes 100 units of charge (50,000 joules) per tile protected
+		for_by_tcl(IX, /obj/machinery/interdictor)
+			if (IX.expend_interdict(100,T,1))
 				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
 				return
 		animate_flash_color_fill_inherit(T,"#00FF00",1,5)
 		for (var/mob/living/carbon/M in T.contents)
-			M.changeStatus("radiation", (rad_strength) SECONDS, 3)
+			M.take_radiation_dose(rad_strength)
 			if (prob(mutate_prob) && M.bioHolder)
 				if (prob(bad_mut_prob))
 					M.bioHolder.RandomEffect("bad")
@@ -87,7 +87,7 @@
 	density = 0
 	alpha = 100
 	var/sound/pulse_sound = 'sound/weapons/ACgun1.ogg'
-	var/rad_strength = 10
+	var/rad_strength = (50/40) SIEVERTS
 	var/pulse_range = 3
 	var/mutate_prob = 10
 	var/bad_mut_prob = 90
@@ -99,7 +99,7 @@
 		if(!particleMaster.CheckSystemExists(/datum/particleSystem/rads_warning, src))
 			particleMaster.SpawnSystem(new /datum/particleSystem/rads_warning(src))
 		sleep(lifespan)
-		playsound(src,pulse_sound,50,1)
+		playsound(src,pulse_sound,50,TRUE)
 		irradiate_turf(get_turf(src))
 		for (var/turf/T in circular_range(src,pulse_range))
 			irradiate_turf(T)
@@ -116,14 +116,14 @@
 		if (!isturf(T))
 			return
 		//spatial interdictor: nullify radiation pulses
-		//consumes 150 units of charge per tile protected
-		for (var/obj/machinery/interdictor/IX in by_type[/obj/machinery/interdictor])
-			if (IN_RANGE(IX,T,IX.interdict_range) && IX.expend_interdict(150,1))
+		//consumes 150 units of charge (75,000 joules) per tile protected
+		for_by_tcl(IX, /obj/machinery/interdictor)
+			if (IX.expend_interdict(150,T,1))
 				animate_flash_color_fill_inherit(T,"#FFDD00",1,5)
 				return
 		animate_flash_color_fill_inherit(T,"#0084ff",1,5)
-		for (var/atom/A in T.contents)
-			A.changeStatus("n_radiation", (rad_strength) SECONDS, 3)
+		for (var/mob/A in T.contents)
+			A.take_radiation_dose(rad_strength)
 			if(iscarbon(A))
 				var/mob/living/carbon/M = A
 				if (prob(mutate_prob) && M.bioHolder)

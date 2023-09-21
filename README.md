@@ -1,12 +1,13 @@
 ### [![Goonstation](.github/assets/goonstation.png)](#) Welcome to the main repository for the Goonstation branch of [Space Station 13](https://spacestation13.com/).
 
-[![contains technical debt](https://forthebadge.com/images/badges/contains-technical-debt.svg)](#)[![made with crayons](https://forthebadge.com/images/badges/made-with-crayons.svg)](#)[![made in byond](https://user-images.githubusercontent.com/5211576/29499758-4efff304-85e6-11e7-8267-62919c3688a9.gif)](#)
+[![contains technical debt](https://shields.io/badge/contains-technical%20debt-blue?style=for-the-badge)](#)[![made with crayons](https://shields.io/badge/made%20with%20crayons-green?style=for-the-badge)](#)[![made in byond](https://github.com/goonstation/goonstation/assets/4741640/041eb7c6-4bfa-443a-a615-5e1e0bfa3c11)](#)
 
 # SETUP
 
 [<img src=".github/assets/setup.png" alt="Setup" width="150" align="left">](https://hackmd.io/@goonstation/docs/%2F%40goonstation%2Fdev)
 
-Want to get the code up and running? This guide is the place to go. <br>***Be sure to follow it exactly!*** If you need help, visit the #imcoder channel on our Discord.
+Want to get the code up and running to test changes? This guide is the place to go. 
+<br>***Be sure to follow it exactly!*** If you need help, visit the #imcoder channel on our Discord.
 
 ## COMMUNITY
 
@@ -50,7 +51,7 @@ You’ll need to create a file named `__secret.dme` in the +secret subdirectory.
 
 
 ## LICENSE
-[![license-badge](https://forthebadge.com/images/badges/cc-nc-sa.svg)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
+[![license-badge](https://shields.io/badge/license-CC--BY--NC--SA-lightgrey?style=for-the-badge)](https://creativecommons.org/licenses/by-nc-sa/3.0/)
 
 All Goonstation contributions are licensed under [Creative Commons BY-NC-SA](https://creativecommons.org/licenses/by-nc-sa/3.0/). See LICENSE for more details.
 

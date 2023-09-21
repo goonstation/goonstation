@@ -26,7 +26,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				src.interface = config.irclog_url
 				src.loaded = 1
 
-				if (src.queue && src.queue.len > 0)
+				if (src.queue && length(src.queue) > 0)
 					if (src.debugging)
 						src.logDebug("Load success, flushing queue: [json_encode(src.queue)]")
 					for (var/x = 1, x <= src.queue.len, x++) //Flush queue
@@ -37,8 +37,8 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 			else
 				loadTries++
 				if (loadTries >= 5)
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
-					logTheThing("diary", null, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts")
+					logTheThing(LOG_DIARY, null, "<b>IRCBOT:</b> Reached 5 failed config load attempts", "debug")
 				return 0
 
 
@@ -77,10 +77,10 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				SPAWN(1 SECOND)
 					if (!src.loaded)
 						src.load()
-				return "queued"
+				return null
 			else
 				if (config.env == "dev" || !config.ircbot_api) // If we have no API key, why even bother
-					return 0
+					return null
 
 				args = (args == null ? list() : args)
 				args["server_name"] = (config.server_name ? replacetext(config.server_name, "#", "") : null)
@@ -101,8 +101,8 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 					response = request.into_response()
 
 				if (response.errored || !response.body)
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(args)] <br> <b>error:</b> [response.error]")
-					return
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> No return data from export. <b>errored:</b> [response.errored] <b>status_code:</b> [response.status_code] <b>iface:</b> [iface]. <b>args:</b> [text_args(args)] <br> <b>error:</b> [response.error]")
+					return null
 
 				var/content = response.body
 
@@ -112,16 +112,16 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				//Handle the response
 				var/list/contentJson = json_decode(content)
 				if (!contentJson["status"])
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [json_encode(contentJson)]")
-					return 0
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> Object missing status parameter in export response: [json_encode(contentJson)]")
+					return contentJson
 				if (contentJson["status"] == "error")
 					var/log = ""
 					if (contentJson["errormsg"])
 						log = "Error returned from export: [contentJson["errormsg"]][(contentJson["error"] ? ". Error code: [contentJson["error"]]": "")]"
 					else
 						log = "An unknown error was returned from export: [json_encode(contentJson)]"
-					logTheThing("debug", null, null, "<b>IRCBOT:</b> [log]")
-				return 1
+					logTheThing(LOG_DEBUG, null, "<b>IRCBOT:</b> [log]")
+				return contentJson
 
 
 		//Format the response to an irc request juuuuust right
@@ -162,7 +162,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 
 		logDebug(log)
 			if (!log) return 0
-			logTheThing("debug", null, null, "<b>IRCBOT DEBUGGING:</b> [log]")
+			logTheThing(LOG_DEBUG, null, "<b>IRCBOT DEBUGGING:</b> [log]")
 			return 1
 
 
@@ -200,9 +200,12 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 	ircmsg["code"] = discordCode
 	var/res = ircbot.export("link", ircmsg)
 
-	if (res)
+	if (res && res["status"] == "ok")
 		tgui_alert(src, "Please return to Discord and look for any Medical Assistant PMs.", "Discord")
 		return 1
+	else if (res && res["response"])
+		tgui_alert(src, res["response"], "Error")
+		return 0
 	else
 		tgui_alert(src, "An unknown internal error occurred. Please report this.", "Error")
 		return 0

@@ -1,46 +1,66 @@
 //See bottom of file for valid materials in /simple recipes.
 
-/datum/matfab_recipe/simple/insbody
-	name = "Instrument body"
-	desc = "The body of an instrument."
-	category = "Miscellaneous"
-	materials = list("!any"=4)
-	result = /obj/item/musicpart/body
+/datum/matfab_recipe/simple/nuclear
+	name = "Nuclear Component - base"
+	desc = "You shouldn't see this"
+	category = "Nuclear"
+	result = /obj/item/reactor_component
 
-/datum/matfab_recipe/simple/insneck
-	name = "Instrument neck"
-	desc = "The neck of an instrument."
-	category = "Miscellaneous"
-	materials = list("!any"=3)
-	result = /obj/item/musicpart/neck
+	postProcess(obj/item/reactor_component/I)
+		. = ..()
+		//default properties for all materials - everything is a sponge unless otherwise specified
+		if(!I.material.hasProperty("density"))
+			I.material.setProperty("density", 1)
+		if(!I.material.hasProperty("hard"))
+			I.material.setProperty("hard", 1)
+		if(I.material.getID()=="ice") //ice is cold
+			I.temperature = T0C-10
 
-/datum/matfab_recipe/simple/insmouth
-	name = "Instrument mouthpiece"
-	desc = "The mouthpiece of an instrument."
-	category = "Miscellaneous"
+/datum/matfab_recipe/simple/nuclear/fuel_rod
+	name = "Nuclear Fuel Rod"
+	desc = "A fuel rod for a nuclear reactor"
+	category = "Nuclear"
 	materials = list("!any"=2)
-	result = /obj/item/musicpart/mouth
+	result = /obj/item/reactor_component/fuel_rod
 
-/datum/matfab_recipe/simple/insbell
-	name = "Instrument bell"
-	desc = "The bell of an instrument. Not an actual bell."
-	category = "Miscellaneous"
-	materials = list("!metalcrystal"=4)
-	result = /obj/item/musicpart/bell
+/datum/matfab_recipe/makeshift_fuel_rod
+	name = "Makeshift Nuclear Fuel Rod"
+	desc = "A fuel rod for a nuclear reactor, made out of glowsticks"
+	category = "Nuclear"
 
-/datum/matfab_recipe/simple/insbag
-	name = "Instrument bag"
-	desc = "The bag of an instrument."
-	category = "Miscellaneous"
-	materials = list("!clothorganic"=4)
-	result = /obj/item/musicpart/bag
+	New()
+		..()
+		required_parts.Add(new/datum/matfab_part/glowstick {part_name = "Glowstick"; required_amount = 1} ())
 
-/datum/matfab_recipe/simple/insrod
-	name = "Instrument rod"
-	desc = "A plain old hollowed out rod."
-	category = "Miscellaneous"
-	materials = list("!metalcrystal"=3)
-	result = /obj/item/musicpart/h_rod
+	build(amount, obj/machinery/nanofab/owner)
+		for(var/i=0, i<amount, i++)
+			var/obj/item/device/light/glowstick/stick = getObjectByPartName("Glowstick")
+			var/datum/material/glowstick_mat = getMaterial("glowstick")
+			glowstick_mat = glowstick_mat.getMutable()
+			glowstick_mat.setColor(rgb(stick.col_r*255, stick.col_g*255, stick.col_b*255))
+			var/obj/item/reactor_component/fuel_rod/glowsticks/result_rod = new /obj/item/reactor_component/fuel_rod/glowsticks(glowstick_mat)
+			result_rod.set_loc(getOutputLocation(owner))
+
+/datum/matfab_recipe/simple/nuclear/control_rod
+	name = "Control Rod"
+	desc = "A control rod for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=2)
+	result = /obj/item/reactor_component/control_rod
+
+/datum/matfab_recipe/simple/nuclear/heat_exchanger
+	name = "Heat Exchanger"
+	desc = "A heat exchanger component for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=2)
+	result = /obj/item/reactor_component/heat_exchanger
+
+/datum/matfab_recipe/simple/nuclear/gas_channel
+	name = "Coolant Channel"
+	desc = "A coolant channel component for a nuclear reactor"
+	category = "Nuclear"
+	materials = list("!any"=2)
+	result = /obj/item/reactor_component/gas_channel
 
 /datum/matfab_recipe/spacesuit
 	name = "Space Suit Set"
@@ -70,7 +90,7 @@
 
 /datum/matfab_recipe/mining_mod_conc
 	name = "Tool mod (Concussive)"
-	desc = "A mod for mining tools. Increases AOE."
+	desc = "A mod for mining tools. Increases area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -86,7 +106,7 @@
 
 /datum/matfab_recipe/mining_head_pick
 	name = "Tool head (Pick)"
-	desc = "A Pick head. Picks have high power but no AOE."
+	desc = "A Pick head. Picks have high power but no area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -106,7 +126,7 @@
 
 /datum/matfab_recipe/mining_head_blaster
 	name = "Tool head (Blaster)"
-	desc = "A Blaster head. Blasters have lower power but very high AOE."
+	desc = "A Blaster head. Blasters have lower power but very high area of effect."
 	category = "Mining Tools"
 
 	New()
@@ -125,7 +145,7 @@
 
 /datum/matfab_recipe/mining_head_hammer
 	name = "Tool head (Hammer)"
-	desc = "A Hammer head. Hammers have a wide AOE and normal power."
+	desc = "A Hammer head. Hammers have a wide area of effect and normal power."
 	category = "Mining Tools"
 
 	New()
@@ -144,7 +164,7 @@
 
 /datum/matfab_recipe/mining_head_drill
 	name = "Tool head (Drill)"
-	desc = "A Drill head. Hammers have a long AOE and normal power."
+	desc = "A Drill head. Drills have a long area of effect and normal power."
 	category = "Mining Tools"
 
 	New()
@@ -194,17 +214,17 @@
 				if(istype(opt, /obj/item/mining_mod/conc))
 					newObj.blasting = 1
 
-				newObj.setMaterial(mat1 = head.material, appearance = 1, setname = 1, copy = 1, use_descriptors = 0)
+				newObj.setMaterial(mat1 = head.material, appearance = 1, setname = 1, use_descriptors = 0)
 
 				if(newObj.blasting)
 					newObj.remove_prefixes(99)
 					newObj.name_prefix("Blasting")
-					newObj.name_prefix(head.material.name ? head.material.name : "")
+					newObj.name_prefix(head.material.getName() ? head.material.getName() : "")
 					newObj.UpdateName()
 				else if(newObj.powered)
 					newObj.remove_prefixes(99)
 					newObj.name_prefix("Powered")
-					newObj.name_prefix(head.material.name ? head.material.name : "")
+					newObj.name_prefix(head.material.getName() ? head.material.getName() : "")
 					newObj.UpdateName()
 
 				newObj.desc = "[initial(newObj.desc)] It has \a [head.name]."
@@ -237,7 +257,7 @@
 
 /datum/matfab_recipe/spear
 	name = "Spear"
-	desc = "A simple spear with long reach. (This is very experimental and likely buggy)"
+	desc = "A simple spear with long reach."
 	category = "Weapons"
 
 	New()
@@ -322,7 +342,7 @@
 
 /datum/matfab_recipe/lens
 	name = "Lens"
-	desc = "A Lens used as a component in various objects."
+	desc = "A lens used as a component in various objects."
 	category = "Components"
 
 	New()
@@ -341,7 +361,7 @@
 
 /datum/matfab_recipe/tripod
 	name = "Tripod"
-	desc = "A tripod."
+	desc = "A tripod for attaching a light to."
 	category = "Components"
 
 	New()
@@ -373,9 +393,9 @@
 			var/obj/item/source = getObjectByPartName("Glasses")
 			if(source?.material)
 				newObj.setMaterial(source.material)
-				newObj.color_r = GetRedPart(source.material.color) / 255
-				newObj.color_g = GetGreenPart(source.material.color) / 255
-				newObj.color_b = GetBluePart(source.material.color) / 255
+				newObj.color_r = GetRedPart(source.material.getColor()) / 255
+				newObj.color_g = GetGreenPart(source.material.getColor()) / 255
+				newObj.color_b = GetBluePart(source.material.getColor()) / 255
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
@@ -456,10 +476,10 @@
 			var/obj/item/toe = getObjectByPartName("Optional Toe Tip")
 			if(toe && toe.material)
 				newObj.setMaterial(toe.material)
-				newObj.desc = "[toe.material.name]-toed [upper.material.name] shoes. The soles are made of [sole.material.name]."
+				newObj.desc = "[toe.material.getName()]-toed [upper.material.getName()] shoes. The soles are made of [sole.material.getName()]."
 			else if(upper && upper.material)
 				newObj.setMaterial(upper.material)
-				newObj.desc = newObj.desc + " The soles are made of [sole.material.name]."
+				newObj.desc = newObj.desc + " The soles are made of [sole.material.getName()]."
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
@@ -480,15 +500,15 @@
 			var/obj/item/casingObj = getObjectByPartName("Casing")
 			var/obj/item/device/light/flashlight/newObj
 			if(lensObj?.material)
-				var/R = GetRedPart(lensObj.material.color) / 255
-				var/G = GetGreenPart(lensObj.material.color) / 255
-				var/B = GetBluePart(lensObj.material.color) / 255
+				var/R = GetRedPart(lensObj.material.getColor()) / 255
+				var/G = GetGreenPart(lensObj.material.getColor()) / 255
+				var/B = GetBluePart(lensObj.material.getColor()) / 255
 				newObj = new(null, R, G, B)
 			else
 				newObj = new
 			if(casingObj?.material)
 				newObj.setMaterial(casingObj.material)
-				newObj.desc = newObj.desc + " It has a [lensObj.material.name] lens."
+				newObj.desc = newObj.desc + " It has a [lensObj.material.getName()] lens."
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
@@ -510,10 +530,10 @@
 			var/obj/item/casingObj = getObjectByPartName("Casing")
 			if(casingObj?.material && lensObj?.material)
 				newObj.setMaterial(lensObj.material)
-				newObj.desc = newObj.desc + " Its made from [lensObj.material.name]."
-				newObj.color_r = GetRedPart(lensObj.material.color) / 255
-				newObj.color_g = GetGreenPart(lensObj.material.color) / 255
-				newObj.color_b = GetBluePart(lensObj.material.color) / 255
+				newObj.desc = newObj.desc + " Its made from [lensObj.material.getName()]."
+				newObj.color_r = GetRedPart(lensObj.material.getColor()) / 255
+				newObj.color_g = GetGreenPart(lensObj.material.getColor()) / 255
+				newObj.color_b = GetBluePart(lensObj.material.getColor()) / 255
 
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -536,10 +556,10 @@
 			var/obj/item/casingObj = getObjectByPartName("Casing")
 			if(casingObj?.material && lensObj?.material)
 				newObj.setMaterial(lensObj.material)
-				newObj.desc = newObj.desc + " Its made from [lensObj.material.name]."
-				newObj.color_r = GetRedPart(lensObj.material.color) / 255
-				newObj.color_g = GetGreenPart(lensObj.material.color) / 255
-				newObj.color_b = GetBluePart(lensObj.material.color) / 255
+				newObj.desc = newObj.desc + " Its made from [lensObj.material.getName()]."
+				newObj.color_r = GetRedPart(lensObj.material.getColor()) / 255
+				newObj.color_g = GetGreenPart(lensObj.material.getColor()) / 255
+				newObj.color_b = GetBluePart(lensObj.material.getColor()) / 255
 
 
 			newObj.set_loc(getOutputLocation(owner))
@@ -547,7 +567,7 @@
 
 /datum/matfab_recipe/tripodbulb
 	name = "Tripod bulb"
-	desc = "a replacement tripod light bulb. Lens color affects light color."
+	desc = "A replacement tripod light bulb. Lens color affects light color."
 	category = "Lights"
 
 	New()
@@ -562,14 +582,14 @@
 			var/obj/item/casingObj = getObjectByPartName("Casing")
 			if(casingObj?.material && lensObj?.material)
 				newObj.setMaterial(lensObj.material)
-				newObj.desc = newObj.desc + " Its made from [lensObj.material.name]."
-				newObj.light.set_color(GetRedPart(lensObj.material.color) / 255, GetGreenPart(lensObj.material.color) / 255, GetBluePart(lensObj.material.color) / 255)
+				newObj.desc = newObj.desc + " Its made from [lensObj.material.getName()]."
+				newObj.light.set_color(GetRedPart(lensObj.material.getColor()) / 255, GetGreenPart(lensObj.material.getColor()) / 255, GetBluePart(lensObj.material.getColor()) / 255)
 
 			newObj.set_loc(getOutputLocation(owner))
 		return
 
 /datum/matfab_recipe/sheet
-	name = "Material Sheet"
+	name = "Material sheet"
 	desc = "Sheets for construction purposes."
 	category = "Tools"
 
@@ -593,6 +613,22 @@
 				newObj.setMaterial(source.material)
 			newObj.change_stack_amount((amount*10) - newObj.amount)
 			newObj.set_loc(getOutputLocation(owner))
+
+/datum/matfab_recipe/thermocouple
+	name = "Themocouple"
+	desc = "For use in a Thermo Electric Generator."
+	category = "Tools"
+
+	New()
+		required_parts.Add(new/datum/matfab_part/metalorcrystal {part_name = "Sheet"; required_amount = 1} ())
+		..()
+
+	build(amount, var/obj/machinery/nanofab/owner)
+		var/obj/item/source = getObjectByPartName("Sheet")
+		var/obj/item/teg_semiconductor/newObj = new()
+		if(source?.material)
+			newObj.setMaterial(source.material)
+		newObj.set_loc(getOutputLocation(owner))
 
 /datum/matfab_recipe/cell_small
 	name = "Small energy cell"
@@ -655,21 +691,23 @@
 			var/master_chem = chemical.reagents.get_master_reagent()
 			var/master_chem_name = chemical.reagents.get_master_reagent_name()
 
+			var/datum/material/mat = refined.material.getMutable()
+
 			var/datum/materialProc/generic_reagent_onlife/O = new/datum/materialProc/generic_reagent_onlife(master_chem,1)
-			refined.material.triggersOnLife.Cut()
-			refined.material.addTrigger(refined.material.triggersOnLife, O)
+			mat.removeAllTriggers(TRIGGERS_ON_LIFE)
+			mat.addTrigger(TRIGGERS_ON_LIFE, O)
 
 			var/datum/materialProc/generic_reagent_onattack_depleting/A = new/datum/materialProc/generic_reagent_onattack_depleting(master_chem,1,10,25)
-			refined.material.triggersOnAttack.Cut()
-			refined.material.addTrigger(refined.material.triggersOnAttack, A)
+			mat.removeAllTriggers(TRIGGERS_ON_ATTACK)
+			mat.addTrigger(TRIGGERS_ON_ATTACK, A)
 
 			var/obj/item/material_piece/wad/W = new /obj/item/material_piece/wad
 
 			if(refined?.material)
-				refined.material.canMix = 0
-				refined.material.name = "[master_chem_name]-infused [refined.material.name]"
-				refined.material.mat_id = "[master_chem_name][refined.material.mat_id]"
-				W.setMaterial(refined.material)
+				mat.setCanMix(0)
+				mat.setName("[master_chem_name]-infused [mat.getName()]")
+				mat.setID("[master_chem_name][mat.getID()]")
+				W.setMaterial(mat)
 				W.change_stack_amount(9)
 
 			W.set_loc(getOutputLocation(owner))
@@ -829,7 +867,7 @@
 						P.part_name = "[isFinish?"(Main) ":""]Any Material"
 						P.required_amount = numReq
 					else
-						logTheThing("debug", null, null, "Invalid material parameter in [type] : [A]")
+						logTheThing(LOG_DEBUG, null, "Invalid material parameter in [type] : [A]")
 				if(P)
 					if(isFinish)
 						finishMaterial = P

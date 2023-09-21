@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/flash)
+	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
+
 /obj/item/device/flash
 	name = "flash"
 	desc = "A device that emits a complicated strobe when used, causing disorientation. Useful for stunning people or starting a dance party."
@@ -8,15 +11,15 @@
 	w_class = W_CLASS_TINY
 	throw_speed = 4
 	throw_range = 10
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	click_delay = COMBAT_CLICK_DELAY
+	flags = FPRINT | TABLEPASS | CONDUCT | ATTACK_SELF_DELAY
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	item_state = "electronic"
-	mats = list("MET-1" = 3, "CON-1" = 5, "CRY-1" = 5)
 
 	var/status = 1 // Bulb still functional?
 	var/secure = 1 // Access panel still secured?
 	var/use = 0 // Times the flash has been used.
-	var/l_time = 0 // Anti-spam cooldown (in relation to world time).
 	var/emagged = 0 // Booby Trapped?
 
 	var/eye_damage_mod = 0
@@ -84,6 +87,11 @@
 				else
 					. += "\nThe bulb is in terrible condition"
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			qdel(src) //cannot un-turboflash
+
 //I split attack and flash_mob into seperate procs so the rev_flash code is cleaner
 /obj/item/device/flash/attack(mob/living/M, mob/user)
 	if(isghostcritter(user)) return
@@ -112,7 +120,7 @@
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
 			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
-			logTheThing("combat", user, M, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "tries to blind [constructTarget(M,"combat")] with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
 			SPAWN(0.1 SECONDS)
@@ -142,9 +150,8 @@
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
-	playsound(src, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	flick(src.animation_type, src)
-	src.l_time = world.time
 	if (!src.turboflash)
 		src.use++
 
@@ -180,9 +187,9 @@
 		blind_msg_target = " but your eyes are protected!"
 		blind_msg_others = " but [his_or_her(M)] eyes are protected!"
 	M.visible_message("<span class='alert'>[user] blinds [M] with \the [src][blind_msg_others]</span>", "<span class='alert'>[user] blinds you with \the [src][blind_msg_target]</span>")
-	logTheThing("combat", user, M, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
+	logTheThing(LOG_COMBAT, user, "blinds [constructTarget(M,"combat")] with [src] at [log_loc(user)].")
 	if (src.emagged)
-		logTheThing("combat", user, user, "blinds themself with [src] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "blinds themself with [src] at [log_loc(user)].")
 
 	// Handle bulb wear.
 	if (src.turboflash)
@@ -206,9 +213,6 @@
 	if(isghostcritter(user)) return
 	src.add_fingerprint(user)
 
-	if (src.l_time && world.time < src.l_time + 10)
-		return
-
 	if (user?.bioHolder?.HasEffect("clumsy") && prob(50))
 		user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], but slips and drops it!</span>")
 		user.drop_item()
@@ -228,7 +232,7 @@
 			return
 		if (src.cell && istype(src.cell,/obj/item/cell/erebite))
 			user.visible_message("<span class='alert'>[user]'s flash/cell assembly violently explodes!</span>")
-			logTheThing("combat", user, null, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "tries to area-flash with [src] (erebite power cell) at [log_loc(user)].")
 			var/turf/T = get_turf(src.loc)
 			explosion(src, T, 0, 1, 2, 2)
 			SPAWN(0.1 SECONDS)
@@ -236,9 +240,8 @@
 			return
 
 	// Play animations.
-	playsound(src, "sound/weapons/flash.ogg", 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	flick(src.animation_type, src)
-	src.l_time = world.time
 
 	if (isrobot(user))
 		SPAWN(0)
@@ -285,39 +288,36 @@
 
 /obj/item/device/flash/proc/convert(mob/living/M as mob, mob/user as mob)
 	.= 0
-	if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-		var/datum/game_mode/revolution/R = ticker.mode
-		if (ishuman(M))
-			//playsound(src, "sound/weapons/rev_flash_startup.ogg", 40, 1 , 0, 0.6) //moved to rev flash only
+	if (ishuman(M))
+		var/mob/living/carbon/human/H = M
+		var/safety = 0
+		if (H.eyes_protected_from_light())
+			safety = 1
 
-			var/mob/living/carbon/human/H = M
-			var/safety = 0
-			if (H.eyes_protected_from_light())
-				safety = 1
-
-			if (safety == 0 && user.mind && (user.mind in R.head_revolutionaries) && !isghostcritter(user))
-				var/nostun = 0
-				var/list/U = R.get_unconvertables()
-				if (!H.client || !H.mind)
-					user.show_text("[H] is braindead and cannot be converted.", "red")
-				else if (locate(/obj/item/implant/counterrev) in H.implant)
-					user.show_text("There seems to be something preventing [H] from revolting.", "red")
-					.= 0.5
-					nostun = 1
-				else if (H.mind in U)
-					user.show_text("[H] seems unwilling to revolt.", "red")
-					nostun = 1
-				else if (H.mind in R.head_revolutionaries)
-					user.show_text("[H] is already a member of the revolution.", "red")
+		if (safety == 0 && user.mind && user.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY) && !isghostcritter(user))
+			var/nostun = 0
+			if (!H.client || !H.mind)
+				user.show_text("[H] is braindead and cannot be converted.", "red")
+			else if (locate(/obj/item/implant/counterrev) in H.implant)
+				src.on_counterrev(M, user)
+				.= 0.5
+				nostun = 1
+			else if (!H.can_be_converted_to_the_revolution())
+				user.show_text("[H] seems unwilling to revolt.", "red")
+				nostun = 1
+			else if (H.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
+				user.show_text("[H] is already a member of the revolution.", "red")
+			else
+				.= 1
+				if (!(H.mind?.get_antagonist(ROLE_REVOLUTIONARY)))
+					H.mind?.add_antagonist(ROLE_REVOLUTIONARY, source = ANTAGONIST_SOURCE_CONVERTED)
 				else
-					.= 1
-					if (!(H.mind in R.revolutionaries))
-						R.add_revolutionary(H.mind)
-					else
-						user.show_text("[H] is already a member of the revolution.", "red")
-				if (!nostun)
-					M.apply_flash(1, 2, 0, 0, 0, 0, 0, burning, 100, stamina_damage = 210, disorient_time = 40)
+					user.show_text("[H] is already a member of the revolution.", "red")
+			if (!nostun)
+				M.apply_flash(1, 2, 0, 0, 0, 0, 0, burning, 100, stamina_damage = 210, disorient_time = 40)
 
+/obj/item/device/flash/proc/on_counterrev(mob/living/M, mob/user)
+	user.show_text("There seems to be something preventing [M] from revolting.", "red")
 
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
 	tooltip_rebuild = 1
@@ -374,11 +374,13 @@
 	return
 
 // The Turboflash - A flash combined with a charged energy cell to make a bigger, meaner flash (That dies after one use).
+TYPEINFO(/obj/item/device/flash/turbo)
+	mats = 0
+
 /obj/item/device/flash/turbo
 	name = "flash/cell assembly"
 	desc = "A common stun weapon with a power cell hastily wired into it. Looks dangerous."
 	icon_state = "turboflash"
-	mats = 0
 	animation_type = "turboflash2"
 	turboflash = 1
 	max_flash_power = 5000
@@ -415,6 +417,8 @@
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/device/flash/turbo = 5)
 
+TYPEINFO(/obj/item/device/flash/revolution)
+	mats = 0
 /obj/item/device/flash/revolution
 	name = "revolutionary flash"
 	desc = "A device that emits an extremely bright light when used. Something about this device forces people to revolt, when flashed by a revolution leader."
@@ -430,23 +434,8 @@
 	attackby(obj/item/W, mob/user)
 		return
 
-	attack(mob/living/M, mob/user)
-		flash_mob(M, user, 0)
-		flash_mob(M, user, 1)
-
-
-	flash_mob(mob/living/M as mob, mob/user as mob, var/convert = 1)
-		if (!convert)
-			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-				var/datum/game_mode/revolution/R = ticker.mode
-				if (M.mind && (M.mind in R.head_revolutionaries))
-					user.show_text("[src] refuses to flash!", "red") //lol
-					return
-		else if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			playsound(src, "sound/weapons/rev_flash_startup.ogg", 30, 1 , 0, 0.6)
-			var/convert_result = convert(M,user)
-			if (convert_result == 0.5)
-				user.show_text("Hold still to override . . . ", "red")
-				actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)
-			if (convert_result)
-				..()
+	on_counterrev(mob/living/M, mob/user)
+		. = ..()
+		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, TRUE, 0, 0.6)
+		user.show_text("Hold still to override . . . ", "red")
+		actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)

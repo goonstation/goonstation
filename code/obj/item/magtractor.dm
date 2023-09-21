@@ -1,4 +1,7 @@
 
+TYPEINFO(/obj/item/magtractor)
+	mats = 12
+
 /obj/item/magtractor
 	name = "magtractor"
 	desc = "A device used to pick up and hold objects via the mysterious power of magnets."
@@ -7,7 +10,7 @@
 	icon_state = "magtractor"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	flags = FPRINT | TABLEPASS| CONDUCT | EXTRADELAY
 	force = 10
 	throwforce = 10
@@ -15,7 +18,6 @@
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
 	m_amt = 50000
-	mats = 12
 	stamina_damage = 15
 	stamina_cost = 15
 	stamina_crit_chance = 5
@@ -70,7 +72,7 @@
 
 		if (istype(W, /obj/item/magtractor))
 			var/turf/T = get_ranged_target_turf(user, turn(user.dir, 180), 7)
-			playsound(user.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 50, 1)
+			playsound(user.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
 			user.visible_message("<span class='combat bold'>\The [src]'s magnets violently repel as they counter a similar magnetic field!</span>")
 			user.throw_at(T, 7, 10)
 			user.changeStatus("stunned", 2 SECONDS)
@@ -186,14 +188,12 @@
 		src.working = 1
 		user.set_pulling(null)
 
-		var/atom/oldloc = W.loc
+		if (W.stored) //For removing items from containers with the tractor
+			W.stored.transfer_stored_item(W, src, user = user)
+			W.layer = 3 //why is this necessary aaaaa!.
+
 		W.set_loc(src)
 		W.pickup(user)
-
-		if (istype(oldloc, /obj/item/storage)) //For removing items from containers with the tractor
-			var/obj/item/storage/S = oldloc
-			S.hud.remove_item(W) // ugh
-			W.layer = 3 //why is this necessary aaaaa!.
 
 		src.holding = W
 		src.processHeld = 1
@@ -213,7 +213,7 @@
 		src.UpdateOverlays(I, "magField")
 		src.updateHeldOverlay(W)
 
-		playsound(src.loc, "sound/machines/ping.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/ping.ogg', 50, 1)
 
 		for (var/obj/ability_button/magtractor_drop/abil in src)
 			abil.icon_state = "mag_drop1"

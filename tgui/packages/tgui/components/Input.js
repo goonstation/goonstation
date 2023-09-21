@@ -7,7 +7,7 @@
 import { classes } from 'common/react';
 import { Component, createRef } from 'inferno';
 import { Box } from './Box';
-import { KEY_ESCAPE, KEY_ENTER } from 'common/keycodes';
+import { KEY_ESCAPE, KEY_ENTER, KEY_UP, KEY_DOWN } from 'common/keycodes';
 
 export const toInputValue = value => (
   typeof value !== 'number' && typeof value !== 'string'
@@ -21,6 +21,8 @@ export class Input extends Component {
     this.inputRef = createRef();
     this.state = {
       editing: false,
+      history: [],
+      historyIndex: 0,
     };
     this.handleInput = e => {
       const { editing } = this.state;
@@ -48,8 +50,34 @@ export class Input extends Component {
         }
       }
     };
+
+    this.navigateHistory = (direction, e) => {
+      const newIndex = this.state.historyIndex + direction;
+      let hasMoreHistory = false;
+      if (direction > 0 && newIndex < this.state.history.length) {
+        hasMoreHistory = true;
+      } else if (direction < 0 && newIndex >= 0) {
+        hasMoreHistory = true;
+      }
+      if (hasMoreHistory) {
+        e.target.value = this.state.history[newIndex];
+        this.state.historyIndex = newIndex;
+      } else if (direction > 0) {
+        // The last down arrow should clear the text field
+        e.target.value = "";
+        this.state.historyIndex = this.state.history.length;
+      }
+    };
+
+    this.appendHistory = function (newText) {
+      if (this.state.history[this.state.history.length - 1] !== newText) {
+        this.state.history.push(newText);
+      }
+      this.state.historyIndex = this.state.history.length;
+    };
+
     this.handleKeyDown = e => {
-      const { onInput, onChange, onEnter } = this.props;
+      const { onInput, onChange, onEnter, history } = this.props;
       if (e.keyCode === KEY_ENTER) {
         this.setEditing(false);
         if (onChange) {
@@ -61,6 +89,9 @@ export class Input extends Component {
         if (onEnter) {
           onEnter(e, e.target.value);
         }
+        if (history) {
+          this.appendHistory(e.target.value);
+        }
         if (this.props.selfClear) {
           e.target.value = '';
         } else {
@@ -69,10 +100,23 @@ export class Input extends Component {
         return;
       }
       if (e.keyCode === KEY_ESCAPE) {
+        if (this.props.onEscape) {
+          this.props.onEscape(e);
+          return;
+        }
+
         this.setEditing(false);
         e.target.value = toInputValue(this.props.value);
         e.target.blur();
         return;
+      }
+
+      if (history) {
+        if (e.keyCode === KEY_UP) {
+          this.navigateHistory(-1, e);
+        } else if (e.keyCode === KEY_DOWN) {
+          this.navigateHistory(1, e);
+        }
       }
     };
   }
@@ -83,8 +127,15 @@ export class Input extends Component {
     if (input) {
       input.value = toInputValue(nextValue);
     }
-    if (this.props.autoFocus) {
-      setTimeout(() => input.focus(), 1);
+
+    if (this.props.autoFocus || this.props.autoSelect) {
+      setTimeout(() => {
+        input.focus();
+
+        if (this.props.autoSelect) {
+          input.select();
+        }
+      }, 1);
     }
   }
 

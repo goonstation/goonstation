@@ -170,7 +170,7 @@
 			if ("suffocation")
 				M.take_oxygen_deprivation(damage)
 			if ("radiation")
-				M.changeStatus("radiation", damage SECONDS, 3)
+				M.take_radiation_dose(damage)
 
 	CritterAttack(mob/N)
 		if (!melee)
@@ -322,11 +322,11 @@
 					A.attach(src)
 					abil[i] = A
 				else
-					logTheThing("debug", null, null, "<b>Marquesas/CritterCreator:</b> Cannot deserialize type [T].")
+					logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator:</b> Cannot deserialize type [T].")
 
 	proc/play_optional_sound(var/sound/sound)
 		if (sound)
-			playsound(src, sound, 50, 1)
+			playsound(src, sound, 50, TRUE)
 
 	proc/addUntiedEvent(var/datum/critterEvent/E)
 		events += E
@@ -536,9 +536,9 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	doOnDeath()
 		if (gibtype)
-			gibs(C.loc, list())
+			gibs(C.loc)
 		else
-			robogibs(C.loc, list())
+			robogibs(C.loc)
 		qdel(C)
 
 /datum/critterDeath/explode
@@ -935,7 +935,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			event.deserialize(F, "[path].event", sandbox)
 			event.attached = src
 		else
-			logTheThing("debug", "usr", null, "<b>Marquesas/CritterCreator: </b> Failed to deserialize event for ability.")
+			logTheThing(LOG_DEBUG, "usr", "<b>Marquesas/CritterCreator: </b> Failed to deserialize event for ability.")
 
 	proc/attach(var/obj/critter/custom/CR)
 		C = CR
@@ -1045,7 +1045,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			M.TakeDamageAccountArmor("chest", bonus_damage, 0)
 			return 1
 		else
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
 			return 0
 
 	change_configuration(var/datum/critterCreator/configurer, var/which)
@@ -1104,7 +1104,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	use_ability()
 		if (!C)
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Error using ability \ref[src] ([type]). C: \ref[C] [C].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Error using ability \ref[src] ([type]). C: \ref[C] [C].")
 			return 0
 		if (C.target && ismob(C.target))
 			var/mob/M = C.target
@@ -1115,7 +1115,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 			M.reagents.add_reagent(reagent_id, inject_amount)
 			return 1
 		else
-			logTheThing("debug", null, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
+			logTheThing(LOG_DEBUG, null, "<b>Marquesas/CritterCreator: </b> Cannot reagent inject target, target is [C.target].")
 			return 0
 
 	change_configuration(var/datum/critterCreator/configurer, var/which)
@@ -1172,7 +1172,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	proc/fire_at(var/turf/T, var/mob/RT)
 		var/turf/S = get_turf(C)
-		shoot_projectile_ST(S, current_projectile, T)
+		shoot_projectile_ST_pixel_spread(S, current_projectile, T)
 		C.tokenized_message(fire_text, RT)
 		return 1
 
@@ -1728,8 +1728,8 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	proc/getEnum(var/name, var/default, var/list/possible)
 		return input(usr, "New value for [name]", name, default) in possible
 
-	proc/getTypeExclusive(var/name, var/default, var/parent_type)
-		return input(usr, "New value for [name]", name, default) in childrentypesof(parent_type)
+	proc/getTypeExclusive(var/name, var/default, var/type_of_parent)
+		return input(usr, "New value for [name]", name, default) in childrentypesof(type_of_parent)
 
 	proc/stripPath(var/typename)
 		var/typetext = "[typename]"

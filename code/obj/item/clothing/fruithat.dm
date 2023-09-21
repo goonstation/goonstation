@@ -16,7 +16,7 @@
 				"<span class='notice'>You take a bite of [src]!</span>")
 				src.bites--
 				M.nutrition += 20
-				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				if (!src.bites)
 					user.u_equip(src)
 					qdel(src)
@@ -38,7 +38,7 @@
 					"<span class='alert'><b>[user]</b> feeds you [src]!</span>")
 				src.bites--
 				M.nutrition += 20
-				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
 				if (!src.amount)
 					user.u_equip(src)
 					qdel(src)
@@ -55,7 +55,7 @@
 	multipart = 1
 
 	checkifdone()
-		if (src.contents.len >= 8)
+		if (length(src.contents) >= 8)
 			src.product = 1
 			src.desc += "<BR><span class='notice'>It looks like this assembly can be secured with a screwdriver.</span>"
 

@@ -1,3 +1,125 @@
+(t)mon sep 11 23
+(*)You can't click fluids anymore. To accomodate this, using "check reagents" on a floor will check the reagents of a smoke/fluid (prioritizing smoke) on that tile. You can also use `+right-click in order to interact with smoke/fluid directly if needed. Fluid and smoke will have the most common reagent in the name when viewed through this menu.
+(t)mon aug 21 23
+(u)LeahTheTech
+(*)Added a new verb "Stabilize All Atmos" to reset all air on the entire station, in case that thing happens where there just isn't any air.
+(t)mon aug 7 23
+(u)LeahTheTech
+(*)Added better logging to detect hotwires, large power networks being connected to high power ones will now log to station log.
+(t)tue jul 11 23
+(u)Azrun
+(*)Bulk law changes now support paths (Now you can add hologram and ability modules)
+(t)tue jun 27 23
+(u)tarmunora
+(*)Admin PMs will display admin keys as ckey (as altkey) if alt key is set
+(t)fri jun 16 23
+(u)Sord
+(+)ASAY now shows your current alt key if you have one set
+(u)LeahTheTech
+(*)It is now once again possible to assign a custom objective when adding an antagonist to someone.
+(t)mon jun 05 23
+(u)LeahTheTech
+(*)Removed the old broken admin respawn-panel verb in favour of the new custom-ghost-spawn verb.
+(t)fri jun 02 23
+(u)LeahTheTech
+(*)Added a flock conversion build mode.
+(t)sat may 27 23
+(u)LeahTheTech
+(*)Added a new admin verb: Distribute Tokens. Gives an antag token to every <i>roundstart</i> antag.
+(t)tue may 23 23
+(u)pali
+(*)There's now a <b>Halt!</b> button in player options. It stops the player's movement for 5 seconds.<br>Intended for when someone prays and you want to fulfull their prayer but they just keep running away like a silly goose.
+(t)wed may 10 23
+(u)LeahTheTech
+(*)Added revolution W/L tracking and an admin verb to check nukie/flock/revs W/L stats: Check-gamemode-stats
+(t)thu apr 20 23
+(u)LeahTheTech
+(+)Added new buildmode mode: meteor.
+(t)wed apr 19 23
+(u)LeahTheTech
+(+)Added flavour text, medical, security and syndicate notes to player options panel.
+(t)sat apr 15 23
+(u)LeahTheTech
+(+)New admin bioeffect: "robed", lets humans and critters cast wizard spells without needing a staff. Useful for making an army of magic crabs.
+(+)New admin interact proc for critters "Modify critter health" that lets you set new values for critter health holders without going insane.
+(t)sat apr 8 23
+(u)Mr. Moriarty
+(*)The way antagonist roles are displayed in Player Options has changed. Each current role and the controls to add/remove roles is now centralized under Antagonist Options.
+(t)fri mar 24 23
+(u)LeahTheTech
+(+)New admin spawnable job: Nanotrasen Emergency Response Technician, basically a tooled up centcom repair tech.
+(t)sun mar 23 23
+(u)Zamujasa
+(*)Changing the current round's game mode will now ask you if you want to do it for that round only.
+(*)No more "HOW long has it been stuck on nuclear?!"!
+(t)sun mar 19 23
+(u)LeahTheTech
+(*)New verb Set-Conspiracy-Objective, allows you to set a custom objective for all conspirators. Best used before any conspirators have spawned (ie lobby).
+(u)Flappybat
+(*)Change Outfit has been added to the Player Options panel under Transformation, letting you dress someone quickly in a job's outfit. This attempts to keep their current ID card where possible.
+(t)fri mar 17 23
+(u)Zamujasa
+(*)Admin-healing should now be more consistent, and work on most mob critters.
+(t)mon feb 27 23
+(u)Zamujasa
+(*)Toggle-Power-Debug, will show maptext over (most) things that draw power.
+(t)sun feb 26 23
+(u)LeahTheTech
+(*)New verb "Custom Ghost Spawn", which allows you to set up a custom spawn event to respawn ghost players as a particular type of mob, job or spawn them directly into an existing mob. Has a bunch of other configurable settings such as antag role, spawn location and custom objective text.
+(t)thu feb 23 23
+(u)Zamujasa
+(*)New proc, /mob/proc/badminize. Gives you a bunch of really dumb and extremely OP genes and abilities.
+(*)Slightly rearranged an admin area for more Crime Potential.
+(t)mon feb 17 23
+(u)Sovexe
+(*)You can now view ban data from other servers ingame. There is a new "CentCom" link in the player options panel. Clicking it will launch the CentCom Viewer panel that lists out all known server and job bans associated with the target player.
+(t)mon feb 13 23
+(u)pali
+(*)New experimental ghost interaction mode. Use the toggle-ghost-interaction verb to toggle it on or off.<br>When it's toggled on you can interact with most machines and objects as a ghost by clicking on them.<br>You can also clickdrag things to move them around. When you clickdrag an unanchored thing onto its own tile you change its pixel position, if it's a neighbouring tile you move it there (even if it is a wall etc.), if it is a tile further away you throw the thing.<br>If you clickdrag an item onto some other object it'll act more or less as if you clicked on it with the item in hand.
+(u)Zamujasa
+(*)People who are not dead but can still hear deadchat (ghost VR, afterlife, wraith, etc) can now hear admin dsay as well.
+(t)sun feb 5 23
+(u)ZeWaka
+(*)When you edit <code>color</code> in View Variables, there is a new 'Color Matrix Editor' option to preview color matrix changes on your selection before applying.
+(t)sat feb 4 23
+(u)LeahTheTech
+(+)The player options panel now shows if someone is mentor or HoS whitelisted at the top.
+(t)tue jan 31 23
+(u)LeahTheTech and pali
+(*)Admin interact now has the ability to call certain procs on objects. These options are marked with a * and can be easily added to types using the ADMIN_INTERACT_PROCS macro. Examples include open and close procs on doors, toggle proc on airbridges, and arm proc on nuclear bombs.
+(t)sat jan 21 23
+(u)Zamujasa
+(*)Player Notes looks a little different. Feel free to tweak/adjust. (Dimmed entries are automatic notes, red ones are bans. Mostly. I tried.)
+(*)After three thousand years, Delay-Round-End will now prompt for confirmation if someone else has already delayed it instead of just removing it. The future is now.
+(t)mon jan 09 23
+(u)Zamujasa
+(*)Force-Desussification has two new options. They might... shock you!
+(t)sat jan 07 23
+(u)Sovexe
+(*)A new shared admin psuedo adventure zone is now available. Use Go-to-Admin-Hangout or inquire about the secret enterance to go there and explore! I hope to see this zone grow overtime and welcome others to contribute to it.
+(t)sun dec 11 22
+(u)pali
+(*)I moved some things from coder rank to admin rank:<br>announcements and admin PMs no longer strip HTML when sent by admins<br>clicking on the window icon in the very top left corner now lets you access some misc stuff but namely the profiler when you want to know what's causing the lag<br>the detergent event is no longer locker to coders<br>The verbs financial-info, adjust-budget, randomize-appearance, mass-flock-convert and flock-cheats are now on the admin rank
+(t)fri dec 9 22
+(u)aloe
+(*)You can now make people nukeops during nuclear rounds through the normal make-antag menu. It'll handle the overlays and the gear and the renaming and whatever, and even deletes all their old gear. There will probably be some bugs but it's mostly functional.
+(t)tue nov 29 22
+(u)pali
+(*)Players can now make their own Spacemas tree ornaments. If you see a low-qualtiy or rule-breaking ornament you should examine it (that shows you the author's ckey in the description) and then click "Annihilate ornament" in the window to permanently get rid of it.
+(t)fri nov 25 22
+(u)pali
+(*)New Toggle-Whitelist verb which lets you toggle whitelist on or off. And Whitelist-Add-Temp which lets you whitelist a ckey for this round only.<div style='font-size:0.7em;'>If the current server has whitelist turned on by default (i.e. the Dev or Event server) the Toggle-Whitelist command lets you select the number of rounds for which the server will remain open to the public.<br>If the current whitelist status differs from the config status this is displayed in server name as either [CLOSED] or [OPEN] and also with more details in admin status tab.</div>
+(t)sat oct 22 22
+(u)pali
+(*)Radio station music-playing now goes on cooldown when admin music gets played.
+(u)Gerhazo
+(*)Added save/load functionality to the particool UI. Supports saving the particle set properties as well as the set icons.
+(t)wed sep 07 22
+(u)Sord
+(+)Added new "Summon vortexes" random event for admin spawning. This spawns the disaster portals which summons critters. Has an option to use void critters or non-void critters.
+(t)tue aug 30 22
+(u)Sovexe
+(*)The Topic log is now hidden by default. This behavior can be toggled in your admin preferences.
 (t)tue jul 19 22
 (u)Ilysen
 (*)Started integrating the new antagonist system with the player panel. Development is still ongoing, but at bare minimum admins should be able to add and remove traitor status from people now.

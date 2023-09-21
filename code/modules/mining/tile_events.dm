@@ -7,6 +7,7 @@
 	var/scan_decal = null
 	var/prevent_excavation = 0
 	var/restrict_to_turf_type = null
+	var/weight = 100
 
 	set_up(var/datum/ore/event/parent_event)
 		..()
@@ -24,7 +25,7 @@
 	set_up(var/datum/ore/parent)
 		if (..() || !parent)
 			return 1
-		if (parent.gems.len < 1)
+		if (length(parent.gems) < 1)
 			return 1
 		gem_type = pick(parent.gems)
 
@@ -60,12 +61,13 @@
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
-		new /obj/critter/rockworm(AST)
+		new /mob/living/critter/rockworm(AST)
 
 /datum/ore/event/loot_crate
 	analysis_string = "Caution! Large object embedded in rock!"
 	excavation_string = "An abandoned crate was unearthed!"
 	scan_decal = "scan-object"
+	weight = 10
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
@@ -118,7 +120,7 @@
 
 	New()
 		..()
-		warning_overlay = image('icons/turf/walls_asteroid.dmi', "unstable")
+		warning_overlay = image('icons/turf/walls/asteroid.dmi', "unstable")
 
 	onHit(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
@@ -128,7 +130,7 @@
 		SPAWN(timer)
 			if (istype(AST)) //Wire note: Fix for Undefined variable /turf/simulated/floor/plating/airless/asteroid/var/invincible
 				AST.invincible = 0
-				explosion(AST, AST, 1, 2, 3, 4, 1)
+				explosion(AST, AST, 1, 2, 3, 4)
 
 /datum/ore/event/radioactive
 	analysis_string = "Caution! Radioactive mineral deposits detected!"
@@ -141,10 +143,10 @@
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 5 SECONDS, 2)
+			L.take_radiation_dose(0.05 SIEVERTS)
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (..())
 			return
 		for (var/mob/living/L in range(1,AST))
-			L.changeStatus("radiation", 10 SECONDS, 2)
+			L.take_radiation_dose(0.1 SIEVERTS)

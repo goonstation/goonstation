@@ -42,7 +42,7 @@
 	effect_activate(var/obj/O,var/mob/living/user)
 		if (..())
 			return
-		O.anchored = 1
+		O.anchored = ANCHORED
 		var/turf/Aloc = get_turf(O)
 		for (var/turf/T in range(field_radius,Aloc))
 			if(GET_DIST(O,T) == field_radius)
@@ -55,7 +55,7 @@
 	effect_deactivate(obj/O)
 		if(..())
 			return
-		O.anchored = 0
+		O.anchored = UNANCHORED
 		for (var/obj/forcefield/F in src.forcefields)
 			src.forcefields -= F
 			qdel(F)

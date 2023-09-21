@@ -478,7 +478,7 @@ Returns:
 	var/turf/TLast = pick(L)
 	L.Remove(TLast)
 
-	while(L.len >= 1)
+	while(length(L) >= 1)
 		var/turf/TA = pick(L)
 		L.Remove(TA)
 		TLast.vis_contents += TLast
@@ -491,7 +491,7 @@ Returns:
 		if(T.z == 1)
 			L.Add(T)
 
-	while(L.len >= 1)
+	while(length(L) >= 1)
 		var/turf/TA = pick(L)
 		L.Remove(TA)
 		var/turf/TB = pick(L)
@@ -509,7 +509,7 @@ Returns:
 	desc = ""
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/targetX = 2
 	var/targetY = 2
 	var/targetZ = 2
@@ -542,7 +542,7 @@ Returns:
 		return
 
 	onVarChanged(variable, oldval, newval)
-		. = 0
+		. = ..()
 		switch(variable)
 			if ("targetZ")
 				updateVis()
@@ -597,11 +597,11 @@ Returns:
 	desc = ""
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/targetZ = 2
 
 	onVarChanged(variable, oldval, newval)
-		. = 0
+		. = ..()
 		switch(variable)
 			if ("targetZ")
 				updateVis()
@@ -663,7 +663,7 @@ Returns:
 			if(A?.z == 1) //Basically, if the area has a turf on z1 ... Doesn't work as described in byond documentation. So we have to do it the slow way ...
 				areas.Add(A)
 
-	while(areas.len >= 2)
+	while(length(areas) >= 2)
 		var/area/one = pick(areas)
 		areas.Remove(one)
 		var/area/two = pick(areas)
@@ -739,7 +739,7 @@ Returns:
 			for(var/T in ignoreTypes)
 				if(istype(O, T)) continue oneOuter
 
-			if(twoTurfsExpend.len > 0)
+			if(length(twoTurfsExpend) > 0)
 				var/turf/T = pick(twoTurfsExpend)
 				twoTurfsExpend.Remove(T)
 				O.set_loc(T)
@@ -762,7 +762,7 @@ Returns:
 			for(var/T in ignoreTypes)
 				if(istype(O, T)) continue twoOuter
 
-			if(oneTurfsExpend.len > 0)
+			if(length(oneTurfsExpend) > 0)
 				var/turf/T = pick(oneTurfsExpend)
 				oneTurfsExpend.Remove(T)
 				O.set_loc(T)
@@ -776,7 +776,7 @@ Returns:
 	desc = "You can see a skeleton down there. It seems to be holding some sort of key."
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "valterak"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -785,7 +785,7 @@ Returns:
 	desc = "Upon closer inspection these seem to be the burnt remnants of a whip. How they are still there or even recognizable is beyond you."
 	icon = 'icons/misc/exploration.dmi'
 	icon_state = "vwhip"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -874,7 +874,7 @@ Returns:
 	canmove = 0
 	invisibility = INVIS_ALWAYS
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	proc/shake(var/steps = 20, var/length = 1, var/delay = 0, var/strength = 32, var/anim_easing = LINEAR_EASING)
 		SPAWN(0)
@@ -907,7 +907,7 @@ Returns:
 			if(freeze_source)
 				source.nodamage = 1
 				source.canmove = 0
-				source.anchored = 1
+				source.anchored = ANCHORED
 		return
 
 	proc/stop()
@@ -918,7 +918,7 @@ Returns:
 		if(freeze_source)
 			source.nodamage = 0
 			source.canmove = 1
-			source.anchored = 0
+			source.anchored = UNANCHORED
 
 		del(src)
 		return
@@ -942,7 +942,7 @@ Returns:
 /obj/wormhole
 	name = "nascent wormhole"
 	desc = "a small baby wormhole"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "whole-nascent"
@@ -979,7 +979,7 @@ Returns:
 	desc = ""
 	icon = 'icons/effects/meleeeffects.dmi'
 	icon_state = "sabre"
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_1
 
 	New()
@@ -1024,7 +1024,7 @@ Returns:
 	desc = ""
 	icon = null
 	icon_state = "sabre"
-	anchored = 1
+	anchored = ANCHORED
 	New(var/obj/item/experimental/melee/spear/S,var/atom/location)
 		src.set_loc(location)
 		var/image/I = image(S)
@@ -1274,9 +1274,9 @@ Returns:
 					A.Attackby(src, user)
 
 		if(bloody && hitmob)
-			playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 100, 0)
+			playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 100, FALSE)
 		else
-			playsound(target, 'sound/impact_sounds/Blade_Small.ogg', 100, 0)
+			playsound(target, 'sound/impact_sounds/Blade_Small.ogg', 100, FALSE)
 
 		flags |= SUPPRESSATTACK
 		force = initial(force)
@@ -1335,8 +1335,8 @@ Returns:
 		shaft = M
 		SetPrefix()
 		if(shaft)
-			src.color = shaft.color
-			src.alpha = shaft.alpha
+			src.color = shaft.getColor()
+			src.alpha = shaft.getAlpha()
 		return
 
 	proc/setHeadMaterial(var/datum/material/M)
@@ -1344,8 +1344,8 @@ Returns:
 		SetPrefix()
 		setMaterial(M, setname = 0)
 		if(shaft)
-			src.color = shaft.color
-			src.alpha = shaft.alpha
+			src.color = shaft.getColor()
+			src.alpha = shaft.getAlpha()
 		if(src.material && src.material.hasProperty("hard"))
 			src.force = round(src.material.getProperty("hard") * 2)
 			src.throwforce = round(src.material.getProperty("hard") * 3)
@@ -1355,9 +1355,9 @@ Returns:
 		src.remove_prefixes(prefix)
 		prefix = ""
 		if(head)
-			prefix += "[head.name]-tipped[shaft?" ":""]"
+			prefix += "[head.getName()]-tipped[shaft?" ":""]"
 		if (shaft)
-			prefix += "[shaft.name]"
+			prefix += "[shaft.getName()]"
 		src.name_prefix(prefix)
 		src.UpdateName()
 
@@ -1365,15 +1365,15 @@ Returns:
 		overlays.Cut()
 		if(shaft)
 			var/image/imgShaft = image('icons/obj/items/weapons.dmi',icon_state = "spear")
-			imgShaft.color = shaft.color
-			imgShaft.alpha = shaft.alpha
+			imgShaft.color = shaft.getColor()
+			imgShaft.alpha = shaft.getAlpha()
 			imgShaft.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgShaft
 			shaftImg = imgShaft
 		if(head)
 			var/image/imgHead = image('icons/obj/items/weapons.dmi',icon_state = "spearhead")
-			imgHead.color = head.color
-			imgHead.alpha = head.alpha
+			imgHead.color = head.getColor()
+			imgHead.alpha = head.getAlpha()
 			imgHead.appearance_flags = RESET_ALPHA | RESET_COLOR
 			overlays += imgHead
 			headImg = imgHead
@@ -1556,15 +1556,15 @@ Returns:
 	icon ='icons/obj/objects.dmi'
 	icon_state = "statuefloorpills"
 	density = 1
+	default_material = "slag"
 
 	New()
 		..()
-		setMaterial(getMaterial("slag"))
+		AddComponent(/datum/component/radioactive,20,FALSE,FALSE)
 		name = "Statue of Dr.Floorpills"
 
 	attack_hand(mob/user)
-		boutput(user, "[src] feels oddly warm ...")
-		user.changeStatus("radiation", 5 SECONDS)
+		boutput(user, "[src] feels oddly warm...")
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -1609,38 +1609,47 @@ Returns:
 					argcopy[r] = X
 			call(procpath)(arglist(argcopy))
 
-/datum/admins/proc/pixelexplosion()
+/datum/admins/proc/pixelexplosion(mode="explode" in list("explode", "pixelate"))
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set name = "Pixel explosion mode"
 	set desc = "Enter pixel explosion mode."
 	alert("Clicking on things will now explode them into pixels!")
-	pixelmagic()
+	pixelmagic(mode == "explode")
 
 /datum/targetable/pixelpicker
 	target_anything = 1
 	targeted = 1
 	max_range = 3000
+	var/explode = TRUE
 
 	castcheck(var/mob/M)
 		if (M.client && M.client.holder)
 			return 1
 
 	handleCast(var/atom/selected)
-		dothepixelthing(selected)
+		if(src.explode)
+			dothepixelthing(selected)
+		else
+			dothepixelthing(selected, /obj/item/apixel, FALSE)
 		var/mob/M = usr
 		var/datum/targetable/pixelpicker/R = new()
+		R.explode = src.explode
 		M.targeting_ability = R
 		M.update_cursor()
 		return 1
 
-/proc/pixelmagic()
+/proc/pixelmagic(explode=TRUE)
 	var/mob/M = usr
 	var/datum/targetable/pixelpicker/R = new()
+	R.explode = explode
 	M.targeting_ability = R
 	M.update_cursor()
 
-/proc/dothepixelthing(var/atom/A)
+/proc/dothepixelthing(var/atom/A, pixel_type=/obj/apixel, explode=TRUE)
 	if (isturf(A)) //deleting turfs is bad!
+		return
+
+	if(istype(A, /obj/item/apixel) || istype(A, /obj/apixel))
 		return
 
 	if (ismob(A)) //deleting mobs crashes them - lets transfer their client to a ghost first
@@ -1651,37 +1660,65 @@ Returns:
 	var/icon/I = getFlatIcon(A)
 	var/atom/movable/AT = A.loc
 
-	playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, 1)
+	if(explode)
+		playsound(AT, 'sound/effects/ExplosionFirey.ogg', 75, TRUE)
 	for(var/y = 1, y <= I.Height(), y++)
 		for(var/x = 1, x <= I.Width(), x++)
 			var/color = I.GetPixel(x, y)
 			if(color != null)
-				var/actX = A.pixel_x + x - 1
-				var/actY = A.pixel_y + y - 1
-				var/obj/apixel/P = new /obj/apixel
-				P.set_loc(A.loc)
+				var/actX = A.pixel_x + x - 1 - 16
+				var/actY = A.pixel_y + y - 1 - 16
+				var/obj/P = new pixel_type(A.loc, A)
 				P.pixel_x = actX
 				P.pixel_y = actY
 				P.color = color
 				P.layer = 15
-				animate_explode_pixel(P)
+				if(explode)
+					animate_explode_pixel(P)
 				pixels += P
 
 	qdel(A)
-	SPAWN(7 SECONDS)
-		for(var/datum/D in pixels)
-			qdel(D)
-
-	return
+	if(explode)
+		SPAWN(7 SECONDS)
+			for(var/datum/D in pixels)
+				qdel(D)
 
 /obj/apixel
 	name = ""
 	desc = "this is a single pixel. wow."
 	icon = 'icons/effects/1x1.dmi'
 	icon_state = "pixel"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
+	pixel_z = 16
+	pixel_w = 16
+
+/obj/item/apixel
+	name = ""
+	desc = "This is a single pixel. Wow."
+	icon = 'icons/effects/1x1.dmi'
+	icon_state = "pixel"
+	pixel_z = 16
+	pixel_w = 16
+	var/got_renamed = FALSE
+
+	New(loc, atom/original)
+		..(loc)
+		src.name = original.name
+		src.desc = "This is a single pixel of [original.name]. Wow."
+
+	pickup(mob/user)
+		. = ..()
+		icon = 'icons/effects/white.dmi'
+		if(!got_renamed)
+			got_renamed = TRUE
+			name = "pixel of [name]"
+
+	dropped(mob/user)
+		. = ..()
+		src.icon = initial(icon)
+
 
 /datum/admins/proc/turn_off_pixelexplosion()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1850,7 +1887,7 @@ Returns:
 /obj/largetest
 	name = "test"
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	icon = 'icons/misc/512x512.dmi'
@@ -1859,7 +1896,7 @@ Returns:
 /obj/peninscription
 	name = "mysterious inscription"
 	desc = "It's some form of inscription. It reads 'nij ud-bi-ta la-ba-jal-la: ki-sikil tur ur dam-ma-na-ka ce nu-ub-dur-re'. There is a small pictogram below it."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/obj/decals/misc.dmi'
@@ -1878,7 +1915,7 @@ Returns:
 	name = "nothing"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank"
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	opacity = 0
 	plane = PLANE_ABOVE_LIGHTING
@@ -1887,7 +1924,7 @@ Returns:
 	name = "nothing"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "blank-plug"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	plane = PLANE_ABOVE_LIGHTING
@@ -1896,7 +1933,7 @@ Returns:
 	name = "fire"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfireplug"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -1904,7 +1941,7 @@ Returns:
 	name = "fire"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "hfire"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -1912,7 +1949,7 @@ Returns:
 	name = "nothing"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "tileswish"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -1921,7 +1958,7 @@ Returns:
 	desc = "a swirling blue vortex"
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "swirlthing"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -1979,7 +2016,7 @@ Returns:
 	name = "ProcTrigger"
 	desc = "If you see this and you're not an admin then that's sorta bad."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
 	icon = 'icons/effects/ULIcons.dmi'
@@ -2070,7 +2107,7 @@ Returns:
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "rup"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
 	var/spawn_rate = 100 	   //Time before a new object spaws after the previous is gone.
@@ -2133,7 +2170,7 @@ Returns:
 	icon = 'icons/effects/lines.dmi'
 	icon_state = "lght"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	pixel_y = -16
@@ -2148,7 +2185,7 @@ Returns:
 	name = "spooky candle"
 	desc = "It's a big candle. It's also floating."
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	var/datum/light/light
 
@@ -2174,7 +2211,7 @@ Returns:
 	name = "candle"
 	desc = "It's a big candle"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 
 	var/datum/light/point/light
@@ -2194,14 +2231,14 @@ Returns:
 	name = "electricity"
 	plane = PLANE_ABOVE_LIGHTING
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
 /obj/elec_trg_dummy
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	invisibility = INVIS_ALWAYS_ISH
@@ -2257,7 +2294,7 @@ Returns:
 	desc = "Pew Pew"
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "shuttlecannonthing"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/ready = 1
 
@@ -2296,7 +2333,7 @@ Returns:
 		var/turf/fire_target_tile = get_step(get_step(get_step(get_step(src, src.dir), src.dir), direction), direction)
 
 		SPAWN(1 DECI SECOND)
-			playsound(src, "sound/weapons/rocket.ogg", 50, 1)
+			playsound(src, 'sound/weapons/rocket.ogg', 50, TRUE)
 
 			var/obj/item/rpg_rocket/R = new
 
@@ -2317,7 +2354,7 @@ Returns:
 	desc = "Don't move this thing or you're gonna have a bad time."
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "stool"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/areasize = ""
 	var/moving = 0
@@ -2388,7 +2425,7 @@ Returns:
 			if(!isturf(T)) continue
 			newareaturfs += T
 
-		if(newareaturfs.len < oldareaturfs.len) //Out of bounds. Fucking byond.
+		if(length(newareaturfs) < oldareaturfs.len) //Out of bounds. Fucking byond.
 			moving = 0
 			return
 
@@ -2487,7 +2524,7 @@ Returns:
 	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
@@ -2512,7 +2549,7 @@ Returns:
 	desc = "A rip in time and space."
 	opacity = 0
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/adventurezones/void.dmi'
 	icon_state = "fissure"
 
@@ -2538,12 +2575,12 @@ Returns:
 			eligible.Add(H)
 
 	var/mob/living/carbon/human/picked1
-	if(eligible.len > 0)
+	if(length(eligible) > 0)
 		picked1 = pick(eligible)
 		eligible -= picked1
 
 	var/mob/living/carbon/human/picked2
-	if(eligible.len > 0)
+	if(length(eligible) > 0)
 		picked2 = pick(eligible)
 
 	picked1?.zombify()
@@ -2606,34 +2643,34 @@ Returns:
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		icon_state = "boomerang"
-		var/mob/user = thr.user
-		if(hit_atom == user)
-			if(prob(prob_clonk))
-				user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
-				playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-				user.changeStatus("stunned", 5 SECONDS)
-				user.changeStatus("weakened", 3 SECONDS)
-				user.changeStatus("paralysis", 2 SECONDS)
-				user.force_laydown_standup()
+		if(ishuman(thr.user))
+			var/mob/living/carbon/human/user = thr.user
+			if(hit_atom == user)
+				if(prob(prob_clonk))
+					user.visible_message("<span class='alert'><B>[user] fumbles the catch and is clonked on the head!</B></span>")
+					playsound(user.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+					user.changeStatus("stunned", 5 SECONDS)
+					user.changeStatus("weakened", 3 SECONDS)
+					user.changeStatus("paralysis", 2 SECONDS)
+					user.force_laydown_standup()
+				else
+					src.Attackhand(user)
+				return
 			else
-				src.Attackhand(user)
-			return
-		else
-			if(ishuman(hit_atom))
-				var/mob/living/carbon/human/H = hit_atom
-				var/safari = (istype(H.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(H.head, /obj/item/clothing/head/safari))
-				if(safari)
-					H.changeStatus("stunned", 4 SECONDS)
-					H.changeStatus("weakened", 2 SECONDS)
-					H.force_laydown_standup()
-					//H.paralysis++
-					playsound(H.loc, "swing_hit", 50, 1)
+				if(ishuman(hit_atom))
+					var/mob/living/carbon/human/H = hit_atom
+					if(istype(user?.w_uniform, /obj/item/clothing/under/gimmick/safari) && istype(user?.head, /obj/item/clothing/head/safari))
+						H.changeStatus("stunned", 4 SECONDS)
+						H.changeStatus("weakened", 2 SECONDS)
+						H.force_laydown_standup()
+						//H.paralysis++
+						playsound(H.loc, "swing_hit", 50, 1)
 
-				prob_clonk = min(prob_clonk + 5, 40)
-				SPAWN(2 SECONDS)
-					prob_clonk = max(prob_clonk - 5, 0)
+					prob_clonk = min(prob_clonk + 5, 40)
+					SPAWN(2 SECONDS)
+						prob_clonk = max(prob_clonk - 5, 0)
 
-		return ..(hit_atom)
+			return ..(hit_atom)
 
 /proc/mod_color(var/atom/A)
 	SET_ADMIN_CAT(ADMIN_CAT_UNUSED)
@@ -2685,8 +2722,8 @@ Returns:
 			P.setTarget(target)
 			var/targetThing = isturf(target) ? "" : "[target] in "
 			targetThing += "[get_area(target)]"
-			logTheThing("admin", usr, null, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
-			logTheThing("diary", usr, null, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
+			logTheThing(LOG_ADMIN, usr, "created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
+			logTheThing(LOG_DIARY, usr, "created a portal at [selected.x], [selected.y], [selected.z] ([get_area(selected)]) pointing to [target.x], [target.y], [target.z] ([targetThing])", "admin")
 			message_admins("[key_name(usr)] created a portal at [log_loc(selected)] ([get_area(selected)]) pointing to [log_loc(target)] ([targetThing])")
 		else if (alert == "No")
 			var/mob/M = usr
@@ -2745,7 +2782,7 @@ Returns:
 /obj/perm_portal
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "portal"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/atom/target = null
@@ -2766,7 +2803,10 @@ Returns:
 	Bumped(atom/movable/AM)
 		if(target && istype(target))
 			if(ismob(AM))
-				logTheThing("combat", AM, null, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
+				logTheThing(LOG_STATION, AM, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)]")
+			if (istype(AM, /obj/critter/gunbot/drone)) //stop teleporting the damn y-drone!
+				var/obj/critter/gunbot/drone/drone = AM
+				logTheThing(LOG_STATION, drone, "entered [src] at [log_loc(src)] and teleported to [log_loc(target)] while chasing [key_name(drone.target)]")
 			AM.set_loc(target)
 		else
 			src.visible_message("<span style='color: red; font-weight: bold'>The portal collapses in on itself!</span>")
@@ -2809,7 +2849,7 @@ Returns:
 				M.nutrition += src.heal_amt * 10
 				M.poo += 1
 				src.heal(M)
-				playsound(M.loc,"sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc,'sound/items/eatfood.ogg', rand(10,50), 1)
 				boutput(user, "<span class='alert'>You eat the raisin and shed a single tear as you realise that you now have no raisin.</span>")
 				qdel(src)
 				return 1
@@ -2823,7 +2863,7 @@ Returns:
 				M.nutrition += src.heal_amt * 10
 				M.poo += 1
 				src.heal(M)
-				playsound(M.loc, "sound/items/eatfood.ogg", rand(10,50), 1)
+				playsound(M.loc, 'sound/items/eatfood.ogg', rand(10,50), 1)
 				boutput(user, "<span class='alert'>[M] eats the raisin.</span>")
 				qdel(src)
 				return 1
@@ -2840,11 +2880,11 @@ var/list/lag_list = new/list()
 
 /proc/add_and_average(var/value)
 	lag_list.Insert(1,value)
-	if(lag_list.len > lag_average_size) lag_list.Cut(lag_average_size+1,0)
+	if(length(lag_list) > lag_average_size) lag_list.Cut(lag_average_size+1,0)
 	var/tempnum = 0
 	for(var/a in lag_list)
 		tempnum += a
-	if(lag_list.len >= lag_average_size) average_tenth = (tempnum / lag_list.len)
+	if(length(lag_list) >= lag_average_size) average_tenth = (tempnum / lag_list.len)
 
 	switch( ((average_tenth * world.cpu) / 100) )
 		if(0 to 0.1)
@@ -2868,10 +2908,10 @@ var/list/lag_list = new/list()
 	boutput(usr, "<span class='success'>[average_tenth] at [lag_list.len] samples.</span>")
 
 
-/obj/spook
+/obj/item/spook
 	var/active = 0
 	invisibility = INVIS_ALWAYS_ISH
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	icon = 'icons/misc/hstation.dmi'
 	icon_state = "null"
@@ -2881,27 +2921,26 @@ var/list/lag_list = new/list()
 
 	New()
 		startloc = get_turf(src)
-		loop()
-		return ..()
+		processing_items.Add(src)
+		. = ..()
 
-	proc/loop()
+	disposing()
+		processing_items.Remove(src)
+		. = ..()
 
-		if(active)
-			SPAWN(3 SECONDS) loop()
-			return
-
-
-		for(var/mob/living/L in hearers(world.view, src))
-			if(prob(20)) spook(L)
-			break
-
-		SPAWN(2 SECONDS) loop()
+	process()
+		if(!active)
+			for(var/mob/living/L in hearers(world.view, src))
+				if(prob(20))
+					SPAWN(0)
+						spook(L)
+				break
 
 	proc/spook(var/mob/living/L)
 		if (narrator_mode)
-			playsound(L, 'sound/vox/ghost.ogg', 5, 0)
+			playsound(L, 'sound/vox/ghost.ogg', 5, FALSE)
 		else
-			playsound(L, 'sound/effects/ghost.ogg', 5, 0)
+			playsound(L, 'sound/effects/ghost.ogg', 5, FALSE)
 		sleep(0.3 SECONDS)
 		active = 1
 		walk_towards(src,L,3)
@@ -2911,8 +2950,8 @@ var/list/lag_list = new/list()
 		src.invisibility = INVIS_ALWAYS_ISH
 		src.set_loc(startloc)
 		walk(src,0)
-		SPAWN(10 SECONDS) active = 0
-
+		SPAWN(10 SECONDS)
+			active = 0
 
 /datum/engibox_mode
 	var/name = ""
@@ -3064,8 +3103,8 @@ var/list/lag_list = new/list()
 	desc = "Places a Conveyor belt - facing the direction you are facing."
 	used(atom/user, atom/target)
 		var/obj/machinery/conveyor/L = new/obj/machinery/conveyor(get_turf(target))
-		L.set_dir(user:dir)
-		L.basedir = L.dir
+		L.dir_in = user.dir
+		L.dir_out = turn(user.dir, 180)
 		return
 
 /datum/engibox_mode/poddoor
@@ -3163,7 +3202,7 @@ var/list/lag_list = new/list()
 	name = "Toggle opacity"
 	desc = "Toggles the opacity of an object."
 	used(atom/user, atom/target)
-		target.opacity = !target.opacity
+		target.set_opacity(!target.opacity)
 		boutput(usr, "<span class='notice'>Target opacity now: [target.opacity]</span>")
 		return
 
@@ -3242,7 +3281,7 @@ var/list/lag_list = new/list()
 /obj/signpost
 	icon = 'icons/misc/old_or_unused.dmi'
 	icon_state = "signpost"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	attackby(obj/item/W, mob/user)

@@ -1,12 +1,13 @@
 /**
 * Not related to the other shield generator at all.
 */
+ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off)
 /obj/machinery/shieldgenerator
 	name = "Shield generator parent"
 	desc = "fix me please"
 	density = 1
 	opacity = 0
-	anchored = 0
+	anchored = UNANCHORED
 	layer = FLOOR_EQUIP_LAYER1
 	deconstruct_flags = DECON_DESTRUCT
 	var/obj/item/cell/PCEL = null
@@ -21,10 +22,10 @@
 	var/image/display_active = null
 	var/image/display_battery = null
 	var/image/display_panel = null
-	var/sound/sound_on = "sound/effects/shielddown.ogg"
-	var/sound/sound_off = "sound/effects/shielddown2.ogg"
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
-	var/sound/sound_battwarning = "sound/machines/pod_alarm.ogg"
+	var/sound/sound_on = 'sound/effects/shielddown.ogg'
+	var/sound/sound_off = 'sound/effects/shielddown2.ogg'
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
+	var/sound/sound_battwarning = 'sound/machines/pod_alarm.ogg'
 	var/list/deployed_shields = list()
 	var/direction = ""	//for building the icon, always north or directional
 	var/connected = 0	//determine if gen is wrenched over a wire.
@@ -58,6 +59,7 @@
 
 	process()
 		if(src.active)
+			src.power_usage = get_draw()
 			if(PCEL && !connected)
 				process_battery()
 			else
@@ -73,24 +75,16 @@
 				qdel(src)
 				return
 			if(2)
-				if(PCEL && !connected && active)
-					src.PCEL.use(120 * src.range * (src.power_level * src.power_level))
-				else if(connected && active)
-					use_power(src.power_usage * 4)
+				use_power(src.power_usage * 4)
 				if(prob(50))
 					shield_off(1)
 				return
 			if(3)
-				if(PCEL && !connected && active)
-					src.PCEL.use(60 * src.range * (src.power_level * src.power_level))
-					return
-				else if(connected && active)
-					use_power(src.power_usage * 2)
-				return
+				use_power(src.power_usage * 2)
 
 	blob_act(var/power)
 		if(PCEL && !connected && active)
-			src.PCEL.use(60 * src.range * (src.power_level * src.power_level))
+			use_power(src.power_usage * 2)
 		else if(connected && active)
 			use_power(src.power_usage * power/10)
 		if(prob(25 * power/20))
@@ -116,6 +110,17 @@
 			if (net.avail - net.newload > power_usage)
 				. = TRUE
 		return
+
+	use_power(var/amount, var/chan=EQUIP)
+		var/line_shielded = FALSE
+		if(connected && active)
+			var/datum/powernet/net = src.connected_wire.get_powernet()
+			if(net.newload + amount <= net.avail)
+				net.newload += amount
+				line_shielded = TRUE
+		if(!line_shielded && PCEL && active)
+			PCEL.use(src.power_usage)
+
 
 	proc/process_wired()
 		//check for linepower
@@ -143,7 +148,7 @@
 			return
 
 	proc/process_battery()
-		PCEL.use(get_draw())
+		PCEL.use(src.power_usage)
 		var/charge_percentage = 0
 		var/current_battery_level = 0
 		if(PCEL?.charge > 0 && PCEL.maxcharge > 0)
@@ -208,19 +213,29 @@
 				src.shield_off()
 		else
 			if(src.active)
-				src.shield_off()
+				src.turn_off()
 			else
-				if(PCEL)
-					if(PCEL.charge > 0)
-						src.shield_on()
-					else
-						boutput(user, "The [src.name]'s battery light flickers briefly.")
-				else	//turn on power if connected to a power grid with power in it
-					if(line_powered() && connected)
-						src.shield_on()
-						src.visible_message("<b>[user.name]</b> powers up the [src.name].")
-					else
-						boutput(user, "The [src.name]'s battery light flickers briefly.")
+				src.turn_on(user)
+
+	proc/turn_on(mob/user)
+		if (src.active)
+			return
+		if(PCEL && !connected)
+			if(PCEL.charge > 0)
+				src.shield_on()
+			else
+				boutput(user, "The [src.name]'s battery light flickers briefly.")
+		else	//turn on power if connected to a power grid with power in it
+			if(line_powered() && connected)
+				src.shield_on()
+				if (user)
+					src.visible_message("<b>[user.name]</b> powers up the [src.name].")
+			else
+				boutput(user, "The [src.name]'s battery light flickers briefly.")
+		build_icon()
+
+	proc/turn_off()
+		src.shield_off()
 		build_icon()
 
 	attackby(obj/item/W, mob/user)
@@ -254,7 +269,7 @@
 				src.anchored = !src.anchored
 				src.backup = 0
 				src.visible_message("<b>[user.name]</b> [src.connected ? "connects" : "disconnects"] [src.name] [src.connected ? "to" : "from"] the wire.")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 			else
 				boutput(user, "There is no cable to connect to.")
 
@@ -313,7 +328,7 @@
 		S.deployer = src
 		src.deployed_shields += S
 
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 		playsound(src.loc, src.sound_on, 50, 1)
 		build_icon()
@@ -326,7 +341,7 @@
 			qdel(S)
 
 		if(!connected)
-			src.anchored = 0
+			src.anchored = UNANCHORED
 		src.active = 0
 
 		//currently only the e-shield interacts with atmos
@@ -337,6 +352,11 @@
 		playsound(src.loc, src.sound_off, 50, 1)
 		build_icon()
 
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.PCEL)
+			src.PCEL = null
+
 /*
 /Force field objects for various generators
 **/
@@ -346,7 +366,7 @@
 	desc = "A force field deployed to stop meteors and other high velocity masses."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shield"
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/meteorshield/deployer = null
 
 	attackby(obj/item/W, mob/user)
@@ -358,7 +378,7 @@
 			if(MS.PCEL && !MS.connected && MS.active)
 				MS.PCEL.use(force_value * MS.range * (MS.power_level * MS.power_level))
 			else if(MS.connected)
-				MS.use_power(MS.power_usage + force_value )
+				MS.use_power(MS.power_usage + force_value)
 
 			playsound(src, src.sound_shieldhit, 20, 1)
 			return
@@ -379,7 +399,7 @@
 				force_value = damage / 1.7
 
 			if(MS.PCEL && !MS.connected && MS.active)
-				MS.PCEL.use(force_value * MS.range * (MS.power_level * MS.power_level))
+				MS.use_power(force_value * MS.range * (MS.power_level * MS.power_level))
 			else if(MS.connected)
 				MS.use_power(MS.power_usage + force_value )
 
@@ -389,7 +409,7 @@
 		if(istype(deployer, /obj/machinery/shieldgenerator/meteorshield))
 			var/obj/machinery/shieldgenerator/meteorshield/MS = deployer
 			if(MS.PCEL && !MS.connected && MS.active)
-				MS.PCEL.use(60 * MS.range)
+				MS.use_power(60 * MS.range)
 			else if(MS.connected && MS.active)
 				MS.use_power(MS.power_usage)
 			playsound(src.loc, src.sound_shieldhit, 50, 1)
@@ -406,17 +426,11 @@
 					qdel(src)
 					return
 				if(2)
-					if(MS.PCEL && !MS.connected && MS.active)
-						MS.PCEL.use(120 * MS.range)
-					else if(MS.connected && MS.active)
-						MS.use_power(MS.power_usage * 4)
+					MS.use_power(MS.power_usage * 4)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
 				if(3)
-					if(MS.PCEL && !MS.connected && MS.active)
-						MS.PCEL.use(60 * MS.range)
-					else if(MS.connected && MS.active)
-						MS.use_power(MS.power_usage * 2)
+					MS.use_power(MS.power_usage * 2)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
 
@@ -424,10 +438,7 @@
 		if(istype(deployer, /obj/machinery/shieldgenerator/meteorshield))
 			var/obj/machinery/shieldgenerator/meteorshield/MS = deployer
 
-			if(MS.PCEL && !MS.connected && MS.active)
-				MS.PCEL.use(60 * MS.range * (MS.power_level * MS.power_level))
-			else if(MS.connected && MS.active)
-				MS.use_power(MS.power_usage * 2)
+			MS.use_power(MS.power_usage * 2)
 			if(prob(25 * power/20))
 				MS.shield_off(1)
 			playsound(src.loc, src.sound_shieldhit, 50, 1)
@@ -443,7 +454,7 @@
 	var/isactive = TRUE
 	density = 0
 
-	var/sound/sound_shieldhit = "sound/impact_sounds/Energy_Hit_1.ogg"
+	var/sound/sound_shieldhit = 'sound/impact_sounds/Energy_Hit_1.ogg'
 	var/obj/machinery/shieldgenerator/deployer = null
 	var/obj/machinery/door/linked_door = null
 	var/update_tiles
@@ -464,6 +475,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF33FF" //change colour for different power levels
 			src.powerlevel = 4
+			src.mouse_opacity = 0
 			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 		else if(deployer != null && deployer.power_level == 1)
 			src.name = "Atmospheric Forcefield"
@@ -471,6 +483,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#3333FF" //change colour for different power levels
 			src.powerlevel = 1
+			src.mouse_opacity = 0
 			flags = 0
 			gas_impermeable = TRUE
 		else if(deployer != null && deployer.power_level == 2)
@@ -479,6 +492,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#33FF33"
 			src.powerlevel = 2
+			src.mouse_opacity = 0
 			flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 			gas_impermeable = TRUE
 		else if(deployer != null)
@@ -487,6 +501,7 @@
 			src.icon_state = "shieldw"
 			src.color = "#FF3333"
 			src.powerlevel = 3
+			src.mouse_opacity = 1
 			flags = ALWAYS_SOLID_FLUID | USEDELAY | FLUID_DENSE
 			density = 1
 
@@ -507,15 +522,20 @@
 			//these power levels are kind of arbitrary
 			if(src.powerlevel >= 2) src.flags |= FLUID_DENSE
 			if(src.powerlevel < 3) src.gas_impermeable = TRUE
+			if(src.powerlevel == 3)
+				src.mouse_opacity = 1
+				src.set_density(TRUE)
 		else
 			src.icon_state = ""
 			src.isactive = FALSE
 			src.invisibility = INVIS_ALWAYS_ISH //ehh whatever this "works"
 			src.flags &= ~FLUID_DENSE
 			src.gas_impermeable = FALSE
+			src.mouse_opacity = 0
+			src.set_density(FALSE)
 
 	proc/update_nearby_tiles(need_rebuild)
-		var/turf/simulated/source = loc
+		var/turf/source = src.loc
 		if(istype(source))
 			return source.update_nearby_tiles(need_rebuild)
 
@@ -565,7 +585,7 @@
 			//unless the power level is 3, which blocks solid objects, meteors should pass through untoucheda
 			if(ES.power_level == 3)
 				if(ES.PCEL && !ES.connected && ES.active)	//Technically these shields can be used as emergency meteor shields, but they are very bad a blocking them
-					ES.PCEL.use(120 * ES.range * (ES.power_level * ES.power_level))
+					ES.use_power(ES.power_usage * 4)
 				else if(ES.connected && ES.active)
 					ES.use_power(ES.power_usage * 2)
 			playsound(src.loc, src.sound_shieldhit, 50, 1)
@@ -583,14 +603,14 @@
 					return
 				if(2)
 					if(ES.PCEL && !ES.connected && ES.active)
-						ES.PCEL.use(60 * ES.range * (ES.power_level * ES.power_level))
+						ES.use_power(ES.power_usage * 2)
 					else if(ES.connected && ES.active)
 						ES.use_power(ES.power_usage * 4)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)
 					return
 				if(3)
 					if(ES.PCEL && !ES.connected && ES.active)
-						ES.PCEL.use(30 * ES.range * (ES.power_level * ES.power_level))
+						ES.use_power(ES.power_usage)
 					else if(ES.connected && ES.active)
 						ES.use_power(ES.power_usage * 2)
 					playsound(src.loc, src.sound_shieldhit, 50, 1)

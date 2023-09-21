@@ -3,7 +3,7 @@
 	desc = "A punching bag. Can you get to speed level 4???"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "punchingbag"
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_SIMPLE
 	layer = MOB_LAYER_BASE+1 // TODO LAYER
 
@@ -51,7 +51,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "fitnesslifter"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
@@ -77,9 +77,9 @@
 				sleep(0.3 SECONDS)
 				user.pixel_y = -4
 				sleep(0.3 SECONDS)
-				playsound(user, 'sound/effects/spring.ogg', 60, 1)
+				playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 
-			playsound(user, 'sound/machines/click.ogg', 60, 1)
+			playsound(user, 'sound/machines/click.ogg', 60, TRUE)
 			in_use = 0
 			user.transforming = 0
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
@@ -99,7 +99,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "fitnessweight"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH
 	var/in_use = 0
 
@@ -116,11 +116,11 @@
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
-			var/obj/decal/W = new /obj/decal/
+			var/obj/decal/W = new /obj/decal
 			W.icon = 'icons/obj/stationobjs.dmi'
 			W.icon_state = "fitnessweight-w"
 			W.set_loc(loc)
-			W.anchored = 1
+			W.anchored = ANCHORED
 			W.layer = MOB_LAYER_BASE+1
 			var/bragmessage = pick("pushing it to the limit","going into overdrive","burning with determination","rising up to the challenge", "getting strong now","getting ripped")
 			user.visible_message(text("<span class='alert'><B>[user] is [bragmessage]!</B></span>"))
@@ -134,12 +134,12 @@
 					sleep(0.3 SECONDS)
 					user.pixel_y = (user.pixel_y == 3) ? 5 : 3
 
-				playsound(user, 'sound/effects/spring.ogg', 60, 1)
+				playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 
 			sleep(0.3 SECONDS)
 			user.pixel_y = 2
 			sleep(0.3 SECONDS)
-			playsound(user, 'sound/machines/click.ogg', 60, 1)
+			playsound(user, 'sound/machines/click.ogg', 60, TRUE)
 			in_use = 0
 			user.transforming = 0
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")

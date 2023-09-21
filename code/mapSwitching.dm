@@ -52,7 +52,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				src.playerPickable[map] += mapNames[map]
 
 		if (!src.active)
-			logTheThing("debug", null, null, "<b>Map Switcher:</b> Failed to find an entry in mapNames. map_setting: [map_setting]")
+			logTheThing(LOG_DEBUG, null, "<b>Map Switcher:</b> Failed to find an entry in mapNames. map_setting: [map_setting]")
 			return
 
 
@@ -169,13 +169,13 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		src.previousVotes["vote[src.voteIndex]"] = reportData
 		src.previousVotes["vote_tally[src.voteIndex]"] = votes
 
-		logTheThing("debug", null, null, "<b>Map Vote Debug:</b> Vote data: [json_encode(votes)]. Report data: [json_encode(reportData)]")
+		logTheThing(LOG_DEBUG, null, "<b>Map Vote Debug:</b> Vote data: [json_encode(votes)]. Report data: [json_encode(reportData)]")
 
 		//reset votes holders
 		src.passiveVotes = new()
 		map_vote_holder.clear_votes()
 		//no one voted :(
-		if (votes.len == 0)
+		if (length(votes) == 0)
 			return
 
 		//determine winner
@@ -192,14 +192,14 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 			//a tie is detected! make a note of which maps are tied
 			else if (mapVotes == highestVotes)
-				if (tiedMaps.len == 0)
+				if (length(tiedMaps) == 0)
 					//retroactively note that the previously highest voted map is now tied
 					tiedMaps += src.voteChosenMap
 				tiedMaps += map
 
 		//handle ties
 		if (tiedMaps.len)
-			logTheThing("debug", null, null, "Map tie detected. Choices: [json_encode(tiedMaps)]")
+			logTheThing(LOG_DEBUG, null, "Map tie detected. Choices: [json_encode(tiedMaps)]")
 			src.voteChosenMap = pick(tiedMaps)
 
 		//trigger map switch using voteChosenMap
@@ -210,8 +210,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 			try
 				src.setNextMap("Player Vote", mapName = src.voteChosenMap)
 			catch (var/exception/e)
-				logTheThing("admin", null, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]")
-				logTheThing("diary", null, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]", "debug")
+				logTheThing(LOG_ADMIN, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]")
+				logTheThing(LOG_DIARY, null, "Failed to set map <b>[src.voteChosenMap]</b> from map vote: [e]", "debug")
 				return
 
 		//announce winner
@@ -223,8 +223,8 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		out(world, msg)
 
 		//log this
-		logTheThing("admin", null, null, "The players voted for <b>[src.voteChosenMap]</b> as the next map.")
-		logTheThing("diary", null, null, "The players voted for [src.voteChosenMap] as the next map.", "admin")
+		logTheThing(LOG_ADMIN, null, "The players voted for <b>[src.voteChosenMap]</b> as the next map.")
+		logTheThing(LOG_DIARY, null, "The players voted for [src.voteChosenMap] as the next map.", "admin")
 		message_admins("The players voted for <b>[src.voteChosenMap]</b> as the next map. <a href='?src=\ref[src];type=view_mapvote_report;vote=[src.voteIndex]'>(View Voters)</a>")
 
 	//rudely cancel the vote without counting votes/doing anything
@@ -236,12 +236,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 	// Standardized way to ask a user for a map
 	proc/clientSelectMap(client/C,var/pickable)
-		var/info = "Select a map"
-		info += "\nCurrently on: [src.current]"
-		if(pickable)
-			return input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in src.playerPickable
-		else
-			return(input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in mapNames)
+		return tgui_input_list(C, "Select a map. Currently on: [src.current]", "Switch Map", pickable ? src.playerPickable : mapNames, src.next || src.current)
 
 	//show a html report of who voted for what in any given map vote
 	proc/composeVoteReport(vote)
@@ -256,7 +251,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		var/list/reportData = src.previousVotes["vote[vote]"]
 		for (var/mapName in reportData)
 			var/list/voters = reportData[mapName]
-			html += "<b>[mapName]</b> - [voters.len] total vote[voters.len == 1 ? "" : "s"]<br>"
+			html += "<b>[mapName]</b> - [voters.len] total vote[length(voters) == 1 ? "" : "s"]<br>"
 
 			var/count = 1
 			for (var/ckey in voters)
@@ -480,11 +475,13 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				//chosenMap = "Density"
 			if(istype(I, /obj/item/reagent_containers/food/snacks/donut))
 				chosenMap = "Donut 2"
+			//if(istype(I, /obj/item/grab))
+				//chosenMap = "Wrestlemap"
 
 		if (mapSwitcher.playersVoting)
 			if(chosenMap)
 				map_vote_holder.special_vote(C,chosenMap)
-				boutput(C.mob, "Map vote successful???")
+				boutput(C.mob, "<span class='success'>Map vote successful???</span>")
 			else
 				map_vote_holder.show_window(C)
 

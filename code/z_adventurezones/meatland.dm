@@ -86,12 +86,12 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "It keeps pulsing.  Ew.  Probably shouldn't put your hand in the..mouth?"
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "meatlumps"
-	dir = 4
+	dir = EAST
 
 /obj/stomachacid
 	name = "acid"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "acid_depth"
 	layer = EFFECTS_LAYER_UNDER_1
@@ -119,7 +119,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "The masons inscribed the all-seeing eye of providence on the dollar bill as part of a great conspiracy.  Ha ha, nah, I'm lying. The symbol was added years before the masons started using it by an artist who probably just thought it looked cool.  Anyway, this sure is a gross blobby thing, ain't it?"
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "light"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/health = 10
 	var/alive = 1
@@ -154,10 +154,10 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "A hydraulic door capable of withstanding multiple atmospheres of pressure. Oh, except this one. This one is all broken and covered in blood."
 	wanderer = 0
 	opacity = 1
-	anchored = 1
+	anchored = ANCHORED
 	seekrange = 1
 	attack_range = 1
-	butcherable = 0
+	butcherable = BUTCHER_NOT_ALLOWED
 	density = 1
 	aggressive = 1
 	atkcarbon = 1
@@ -189,7 +189,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (src.alive && ispryingtool(O))
 				user.visible_message("<span class='alert'><b>[user] jabs [src] with [O]!</b></span>", "<span class='alert'>You jab [src] with [O] and begin to pull!  Hold on!</span>")
 				if (do_after(user, 2 SECONDS))
-					playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+					playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 					gibs(src.loc)
 					if (src.loc)
 						new /obj/item/tile/steel (src.loc)
@@ -215,7 +215,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if(ismob(M))
 			src.attacking = 1
 			src.visible_message("<span class='alert'><B>[src]</B> chomps down on [M]!</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 			random_brute_damage(M, rand(10,35), 1)
 			SPAWN(1 SECOND)
 				src.attacking = 0
@@ -229,14 +229,14 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				src.task = "thinking"
 
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			if (target)
 				if (GET_DIST(src, src.target) <= src.attack_range)
 					var/mob/living/carbon/M = src.target
 					if (M)
 						CritterAttack(M)
 						src.task = "attacking"
-						src.anchored = 1
+						src.anchored = ANCHORED
 						src.target_lastloc = M.loc
 				else
 					if ((GET_DIST(src, src.target)) >= src.attack_range)
@@ -247,11 +247,11 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				src.task = "thinking"
 		else if (task == "attacking")
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			return ..()
 		else
 			src.icon_state = initial(src.icon_state)
-			src.opacity = initial(src.opacity)
+			src.set_opacity(initial(src.opacity))
 			return ..()
 
 	proc/update_meat_head_dialog(var/new_text)
@@ -268,7 +268,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	density = 1
 	defensive = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	aggressive = 0
 	health = 4000
 	icon = 'icons/effects/64x64.dmi'
@@ -305,7 +305,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				src.task = "thinking"
 
 			src.icon_state = "[initial(src.icon_state)]-attack"
-			src.opacity = 0
+			src.set_opacity(0)
 			if (target)
 				if(prob(30))
 					playsound(src.loc, pick(meathead_noises), 40, 1)
@@ -314,7 +314,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 					if (M)
 						CritterAttack(M)
 						src.task = "attacking"
-						src.anchored = 1
+						src.anchored = ANCHORED
 						src.target_lastloc = M.loc
 				else
 					if ((GET_DIST(src, src.target)) >= src.attack_range)
@@ -338,7 +338,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 		src.attacking = 1
 		src.visible_message("<span class='alert'>[src] slaps [M] with a meaty tendril!</span>")
-		playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 		M.changeStatus("weakened", 10 SECONDS)
 		random_brute_damage(M, 10, 1)
 		M.throw_at(get_edge_target_turf(M, get_dir(src, get_step_away(M, src))), 200, 4)
@@ -364,7 +364,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if (!exploded_sentence || !length(exploded_sentence))
 			return 1
 
-		if (exploded_sentence.len > 1)
+		if (length(exploded_sentence) > 1)
 			if (prob(50))
 				exploded_sentence.Cut( rand(1, round(exploded_sentence.len / 2)))
 				exploded_sentence.len = max(5, exploded_sentence.len - rand(1,4))
@@ -432,99 +432,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		return
 
 #undef MEATHEAD_MAX_CUSTOM_UTTERANCES
-
-/obj/critter/blobman/meaty_martha
-	generic = 0
-	death_text = "%src% collapses into viscera..."
-
-	New()
-		..()
-		src.name = "[pick("grody", "clotty", "greasy", "meaty", "fleshy", "vile", "chunky", "putrid")] [pick("nugget", "bloblet", "pustule", "corpuscle", "viscera")]"
-		src.icon_state = pick("meaty_mouth", "polyp", "goop")
-
-	ChaseAttack(mob/M)
-		. = target_missing_limb(M)
-		if ((. == "r_arm" || . == "l_arm") && ishuman(M))
-			var/mob/living/carbon/human/H = M
-			src.visible_message("<span class='alert'><b>[src] latches onto [M]'s stump!!</b></span>")
-			boutput(M, "<span class='alert'>OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
-			M.emote("scream")
-			M.changeStatus("stunned", 2 SECONDS)
-			random_brute_damage(M, 3)
-			switch (.)
-				if ("r_arm")
-					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/right {remove_stage = 2;} (M)
-					H.limbs.vars["r_arm"] = part
-					part.holder = M
-
-				if ("l_arm")
-					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/left {remove_stage = 2;} (M)
-					H.limbs.vars["l_arm"] = part
-					part.holder = M
-
-			H.update_body()
-			H.update_clothing()
-			H.unlock_medal("My Bologna Has A First Name",1)
-			qdel(src)
-
-		else
-			src.visible_message("<span class='alert'><B>[src]</B> smacks against [M]!</span>")
-			src.set_loc(M.loc)
-			playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
-			if(iscarbon(M))
-				if (prob(25))
-					M.changeStatus("weakened", 1 SECONDS)
-				random_brute_damage(M, rand(2,5), 1)
-
-	CritterDeath()
-		if (!src.alive) return
-		..()
-		if (src.loc)
-			gibs(src.loc)
-		qdel(src)
-
-	proc/update_meat_head_dialog(var/new_text)
-		if (!new_text || !length(ckey(new_text)))
-			return
-		var/obj/critter/monster_door/meat_head/main_meat_head = by_type[/obj/critter/monster_door/meat_head][1]
-		main_meat_head.update_meat_head_dialog(new_text)
-
-	proc/target_missing_limb(mob/living/carbon/human/testhuman)
-		if (!istype(testhuman) || !testhuman.limbs)
-			return null
-
-		if (!testhuman.limbs.l_arm)
-			return "l_arm"
-		else if (!testhuman.limbs.r_arm)
-			return "r_arm"
-		else if (!testhuman.limbs.r_leg)
-			return "r_leg"
-		else if (!testhuman.limbs.l_leg)
-			return "l_leg"
-
-		return null
-
-/obj/critter/zombie/meatmonaut
-	name = "Lost Cosmonaut"
-	desc = "Soviet presence near NT stations is rarely overt. For good reasons, as this fellow probably learned too late.  Seriously, where is his face? Grody."
-	icon = 'icons/misc/meatland.dmi'
-	icon_state = "sovmeat"
-	health = 26
-	brutevuln = 0.6
-	atcritter = 0
-	eats_brains = 0
-	generic = 0
-
-	ChaseAttack(mob/M)
-		if(!attacking)
-			src.CritterAttack(M)
-		return
-
-	CritterAttack(mob/M)
-		if (prob(20))
-			playsound(src.loc, "sound/misc/meatmonaut1.ogg", 50, 0)
-		return ..()
 
 /obj/item/disk/data/fixed_disk/meatland
 
@@ -874,7 +781,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 	explode()
 		. = isturf(src.loc) ? src.loc : get_turf(src)
-		playsound(., "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(., 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 		gibs(.)
 		qdel(src)
 
@@ -1083,16 +990,16 @@ meaty thoughts from cogwerks to his spacepal aibm:
 					locked = 0
 					src.icon_state = "cheget_unlocked"
 					src.visible_message("<span class='alert'>[src]'s lock mechanism clicks unlocked.</span>")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 					if (prob(50))
 						src.visible_message("<span class='alert'>[src] emits a happy bleep.</span>")
-						playsound(src.loc, "sound/machines/cheget_goodbloop.ogg", 30, 1)
+						playsound(src.loc, 'sound/machines/cheget_goodbloop.ogg', 30, 1)
 
 				else
 					locked = 1
 					src.icon_state = "cheget_closed"
 					src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
-					playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+					playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 			else if (href_list["enter"] == "")
 				if (locked)
 					return
@@ -1100,7 +1007,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 				src.icon_state = "cheget_closed"
 
 				src.visible_message("<span class='alert'>[src]'s lock mechanism clunks locked.</span>")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 65, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 65, 1)
 
 			else
 				usr << output("HET!&0", "cheget.browser:updateReadout")
@@ -1111,7 +1018,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 							any_of_them_right++
 
 					src.visible_message("<span class='alert'>[src] emits a[(any_of_them_right > 1) ? "couple" : null] grumpy boop[(any_of_them_right > 1) ? "s" : null].</span>")
-					playsound(src.loc, "sound/machines/cheget_grumpbloop.ogg", 30, 1)
+					playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
 
 /obj/machinery/computer3/luggable/cheget
 	name = "\improper Cheget"
@@ -1156,7 +1063,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (signal?.data["authcode"] && !(signal.data["authcode"] in src.knownKeys))
 				knownKeys += signal.data["authcode"]
 
-				if (knownKeys.len >= 2 && !inPasswordRequestMode)
+				if (length(knownKeys) >= 2 && !inPasswordRequestMode)
 					inPasswordRequestMode = 1
 					src.print_text("&#x041F;&#x410;&#x0420;&#x41E;&#x41B;&#x42C;?")
 
@@ -1165,7 +1072,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (signal?.data["authcode"] && (signal.data["authcode"] in src.knownKeys))
 				knownKeys -= signal.data["authcode"]
 
-				if (knownKeys.len < 2)
+				if (length(knownKeys) < 2)
 					inPasswordRequestMode = 0
 
 /obj/item/peripheral/cheget
@@ -1193,7 +1100,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if(href_list["key"] && istype(usr.equipped(), /obj/item/device/key))
 			boutput(usr, "<span class='alert'>It doesn't fit.  Must be the wrong key.</span>")
 			host.visible_message("<span class='alert'>[src.loc] emits a grumpy boop.</span>")
-			playsound(src.loc, "sound/machines/cheget_grumpbloop.ogg", 30, 1)
+			playsound(src.loc, 'sound/machines/cheget_grumpbloop.ogg', 30, 1)
 
 		return
 
@@ -1246,7 +1153,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		else if (href_list["eject_key"])
 			if(src.inserted_key)
 				boutput(usr, "<span class='notice'>You turn the key and pull it out of the lock. The green light turns off.</span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 30, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 30, 1)
 				src.inserted_key.set_loc(get_turf(src.loc))
 				src.inserted_key = null
 				SPAWN(1 SECOND)
@@ -1276,7 +1183,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "\"WHO PUT BELLA IN THE WYCH ELM?\"<br>There is a small keyhole on the front."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "tombstone"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/opened = 0
 
@@ -1289,7 +1196,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (findtext(O.name, "onyx"))
 				opened = 1
 				user.visible_message("<span class='alert'><b>[user] inserts [O] into [src]!</b></span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Click_1.ogg", 60, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Click_1.ogg', 60, 1)
 				qdel(O)
 
 				src.visible_message("<span class='alert'>Something pops out of [src]!</span>")
@@ -1321,7 +1228,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "It's a big ol' ball of nerves.  Normally, these aren't the size of patio furniture, but.  um.  <i>future.</i>"
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "ganglion0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/timer = 0 //Seconds to toggle back off after activation.  Zero to just act as a toggle.
 	var/active = 0
@@ -1368,7 +1275,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if (active)
 			return 1
 
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 		src.icon_state = "ganglion[++active]"
 		light.enable()
 
@@ -1408,7 +1315,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if (!active || latching)
 			return 1
 
-		playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
 		src.icon_state = "ganglion[--active]"
 		light.disable()
 
@@ -1437,7 +1344,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "fangdoor1"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 
 	open()
@@ -1451,7 +1358,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		flick("fangdoorc0",src)
 		src.icon_state = "fangdoor0"
 		set_density(0)
-		opacity = 0
+		set_opacity(0)
 		src.name = "unsealed door"
 		SPAWN(1.3 SECONDS)
 			changing_state = 0
@@ -1467,7 +1374,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		active = (opened != default_state)
 
 		set_density(1)
-		opacity = 1
+		set_opacity(1)
 		flick("fangdoorc1",src)
 		for (var/mob/living/L in src.loc)
 			if (prob(10))
@@ -1480,8 +1387,8 @@ meaty thoughts from cogwerks to his spacepal aibm:
 					random_brute_damage(L, 25, 1)
 			else
 				L.visible_message("<span class='alert'><b>[L] is gored by [src]!</b></span>", "<span class='alert'><b>OH SHIT</b></span>")
-				playsound(src.loc, "sound/impact_sounds/Flesh_Break_1.ogg", 50, 1)
-				logTheThing("combat", L, null, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
+				playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+				logTheThing(LOG_COMBAT, L, "was gibbed by [src] ([src.type]) at [log_loc(L)].")
 				L.gib()
 
 		src.icon_state = "fangdoor1"
@@ -1533,21 +1440,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 //Meat limbs: probably not a desirable prize
 /obj/item/parts/human_parts/arm/meat_mutant
-
-	getMobIcon(var/lying)
-		if (lying)
-			if (src.lyingImage)
-				return src.lyingImage
-
-			src.lyingImage = image('icons/mob/human.dmi', "[slot]_mutated_l")
-			return lyingImage
-
-		else
-			if (src.standImage)
-				return src.standImage
-
-			src.standImage = image('icons/mob/human.dmi', "[slot]_mutated")
-			return standImage
+	partIconModifier = "mutated"
 
 	left
 		name = "weird left arm"
@@ -1586,7 +1479,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		src.w_class = initial(src.w_class)
 		return ..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!istype(target, /turf) || !istype(start, /turf))
 			return
 		if (target == user.loc || target == loc)
@@ -1608,7 +1501,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 			theGib.throw_at(target, 8, 2)
 			random_brute_damage(user, rand(5,15))
-			playsound(T, "sound/impact_sounds/Flesh_Break_1.ogg", 40, 1)
+			playsound(T, 'sound/impact_sounds/Flesh_Break_1.ogg', 40, TRUE)
 
 			user.visible_message("<span class='alert'><b>[user]</b> blasts a lump of flesh at [target]!</span>")
 			if (prob(15))
@@ -1619,6 +1512,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "It looks pretty well ruined."
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "meat_reactor"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 0

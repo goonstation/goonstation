@@ -58,7 +58,7 @@
 		var/pickwhich = rand(1,3)
 		switch(pickwhich)
 			if(1)
-				the_commodity = /datum/commodity/trader/josh/hosuniform
+				the_commodity = /datum/commodity/trader/josh/hosboots
 			if(2)
 				the_commodity = /datum/commodity/trader/josh/injectorbelt
 			if(3)
@@ -99,12 +99,12 @@
 
 /* Unique Items that Josh buys */
 
-/datum/commodity/trader/josh/hosuniform
-	comname = "HoS' Uniform"
-	comtype = /obj/item/clothing/under/rank/head_of_security
-	price_boundary = list(700,7000)
-	possible_names = list("I'm going to a fancy party tonight. Got a slick nasty security uniform for me?",
-	"Got a spare uniform from the HoS? They're fancy as heck.")
+/datum/commodity/trader/josh/hosboots
+	comname = "HoS' Boots"
+	comtype = /obj/item/clothing/shoes/swat/heavy
+	price_boundary = list(10000,20000)
+	possible_names = list("I'm going to a fancy party tonight. Got a pair of slick nasty security kicks for me?",
+	"Got a pair of those sick stompy boots the HoS wears? They're cool as heck.")
 
 /datum/commodity/trader/josh/injectorbelt
 	comname = "Injector Belt"

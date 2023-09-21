@@ -46,7 +46,7 @@ proc/check_compid_list(var/client/C)
 			/* This will never happen what the fuck is wrong with me?
 			if (CI.last_ckey != C.ckey) //Computer-sharing? Sneaky jerk? Who knows.
 				message_admins("[C.key] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
-				logTheThing("admin", C, null, "[C.key] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
+				logTheThing(LOG_ADMIN, C, "[C.key] (ID:[C.computer_id]) shares a computerID with [CI.last_ckey]")
 				CI.last_ckey = C.ckey
 			*/
 			CI.last_seen = world.realtime
@@ -61,7 +61,7 @@ proc/check_compid_list(var/client/C)
 		CI.times_seen = 1
 
 		//Has this computerid changed recently and does it have a habit of changing?
-		if(C.compid_info_list.len >= 2) //Do they have more than 2 CID's on file? Weird
+		if(length(C.compid_info_list) >= 2) //Do they have more than 2 CID's on file? Weird
 			var/today = time2text(world.realtime, "YYYYMMDD")
 			var/current_hour = time2text(world.realtime, "hh")
 			var/current_minute = time2text(world.realtime, "mm")
@@ -90,13 +90,13 @@ proc/check_compid_list(var/client/C)
 						SPAWN(1 SECOND)
 							del(C) //RIP
 					message_admins("[key_name(C)][msg]")
-					logTheThing("admin", C, null, msg)
-					logTheThing("diary", C, null, msg, "admin")
+					logTheThing(LOG_ADMIN, C, msg)
+					logTheThing(LOG_DIARY, C, msg, "admin")
 
 				else
 					message_admins("[key_name(C)][msg]")
-					logTheThing("admin", C, null, "[key_name(C)][msg]")
-					logTheThing("diary", C, null, "[key_name(C)][msg]", "admin")
+					logTheThing(LOG_ADMIN, C, "[key_name(C)][msg]")
+					logTheThing(LOG_DIARY, C, "[key_name(C)][msg]", "admin")
 
 				ircmsg["msg"] = "(IP: [C.address]) [msg]"
 				ircbot.export_async("admin", ircmsg)
@@ -106,9 +106,9 @@ proc/check_compid_list(var/client/C)
 
 		C.compid_info_list += CI
 	/* Pointless alert
-	if(C.compid_info_list.len > 10) //Holy evasion, Batman!
+	if(length(C.compid_info_list) > 10) //Holy evasion, Batman!
 		message_admins("[key_name(C)] (ID:[C.computer_id]) has been seen having [C.compid_info_list.len] IDs!")
-		logTheThing("admin", C, null, "(ID:[C.computer_id]) has been seen having [C.compid_info_list.len] IDs!")
+		logTheThing(LOG_ADMIN, C, "(ID:[C.computer_id]) has been seen having [C.compid_info_list.len] IDs!")
 	*/
 
 	save_compids(C.ckey, C.compid_info_list)
@@ -130,8 +130,8 @@ proc/do_computerid_test(var/client/C)
 	ircmsg["msg"] = " [msg]"
 	ircbot.export_async("admin", ircmsg)
 	message_admins("[key_name(C)][msg]")
-	logTheThing("admin", C, null, msg)
-	logTheThing("diary", C, null, msg, "admin")
+	logTheThing(LOG_ADMIN, C, msg)
+	logTheThing(LOG_DIARY, C, msg, "admin")
 	if(is_fucker)
 		//message_admins("[key_name(C)] was automatically banned for using the CID DLL.")
 		var/banData[] = new()

@@ -12,6 +12,7 @@ var/datum/score_tracker/score_tracker
 	var/score_enemy_failure_rate = 0
 	var/final_score_sec = 0
 	// ENGINEERING DEPARTMENT
+	var/power_generated = 0
 	var/score_power_outages = 0
 	var/score_structural_damage = 0
 	var/final_score_eng = 0
@@ -70,7 +71,6 @@ var/datum/score_tracker/score_tracker
 #ifdef CREW_OBJECTIVES
 				if (istype(objective, /datum/objective/crew)) continue
 #endif
-				if (istype(objective, /datum/objective/miscreant)) continue
 				if (!objective.check_completion())
 					traitor_objectives_failed++
 
@@ -131,6 +131,9 @@ var/datum/score_tracker/score_tracker
 		score_power_outages = clamp(score_power_outages,0,100)
 		score_structural_damage = clamp(score_structural_damage,0,100)
 
+		for(var/time in station_power_generation)
+			power_generated += station_power_generation[time]
+
 		final_score_eng = (score_power_outages + score_structural_damage) * 0.5
 
 		// RESEARCH DEPARTMENT SECTION
@@ -152,7 +155,7 @@ var/datum/score_tracker/score_tracker
 			// something glitched out and broke so give them a free pass on it
 			score_expenses = 100
 		else
-			var/profit_target = 300000
+			var/profit_target = wagesystem.total_stipend
 			var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 			if (totalfunds == 0)
 				score_expenses = 0
@@ -284,15 +287,18 @@ var/datum/score_tracker/score_tracker
 
 	proc/get_cash_in_thing(var/atom/A)
 		. = 0
-		for (var/I in A)
-			if (istype(I, /obj/item/storage))
+		if (istype(A, /obj/item/currency/spacecash))
+			var/obj/item/currency/spacecash/SC = A
+			. += SC.amount
+		else if (istype(A, /obj/item/card/id))
+			var/obj/item/card/id/ID = A
+			. += ID.money
+		else if (A.storage)
+			for (var/obj/item/I as anything in A.storage.get_contents())
 				. += get_cash_in_thing(I)
-			if (istype(I, /obj/item/spacecash))
-				var/obj/item/spacecash/SC = I
-				. += SC.amount
-			if (istype(I, /obj/item/card/id))
-				var/obj/item/card/id/ID = I
-				. += ID.amount
+		else
+			for (var/I in A)
+				. += get_cash_in_thing(I)
 
 	proc/heisenhat_stats()
 		. = list()
@@ -341,7 +347,7 @@ var/datum/score_tracker/score_tracker
 	proc/escapee_facts()
 		. = list()
 		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
-		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : $[richest_total]<BR>"
+		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : [richest_total][CREDIT_SIGN]<BR>"
 		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name] : [most_damaged_escapee.get_damage()]%<BR>"		//it'll be kinda different from when it's calculated, but whatever.
 		if (length(command_pets_escaped))
 			var/list/who_escaped = list()
@@ -396,6 +402,7 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text += "<BR>"
 
 		score_tracker.score_text += "<B><U>ENGINEERING DEPARTMENT</U></B><BR>"
+		score_tracker.score_text += "<B>Power Generated:</B> [engineering_notation(score_tracker.power_generated)]W<BR>"
 		score_tracker.score_text += "<B>Station Structural Integrity:</B> [round(score_tracker.score_structural_damage)]%<BR>"
 		score_tracker.score_text += "<B>Station Areas Powered:</B> [round(score_tracker.score_power_outages)]%<BR>"
 		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_eng)]%<BR>"
@@ -408,7 +415,7 @@ var/datum/score_tracker/score_tracker
 
 		score_tracker.score_text += "<B><U>CIVILIAN DEPARTMENT</U></B><BR>"
 		score_tracker.score_text += "<B>Overall Station Cleanliness:</B> [round(score_tracker.score_cleanliness)]%<BR>"
-		score_tracker.score_text += "<B>Profit Made from Initial Budget:</B> [round(score_tracker.score_expenses)]%<BR>"
+		score_tracker.score_text += "<B>Station Profitabilty:</B> [round(score_tracker.score_expenses)]%<BR>"
 		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_civ)]%<BR>"
 		score_tracker.score_text += "<BR>"
 	 /* until this is actually done or being worked on im just going to comment it out
@@ -426,7 +433,7 @@ var/datum/score_tracker/score_tracker
 	if(!length(data_core.tickets) && !length(data_core.fines) && !length(score_tracker.inspector_report)) return
 
 	if (!score_tracker.tickets_text)
-		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
 
 		score_tracker.tickets_text = score_tracker.inspector_report
 
@@ -460,7 +467,7 @@ var/datum/score_tracker/score_tracker
 						score_tracker.tickets_text += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>[F.approver ? "[F.issuer != F.approver ? "Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [F.approver] - [F.approver_job]" : "Issued by: [F.approver] - [F.approver_job]"]" : "Not Approved"]<br>Paid: [F.paid_amount] credits<br><br>"
 		else
 			score_tracker.tickets_text += "No fines were issued!<br><br>"
-		logTheThing("debug", null, null, "Zamujasa/SHOWTICKETS: [world.timeofday] done")
+		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] done")
 
 	src.Browse(score_tracker.tickets_text, "window=tickets;size=500x650")
 	return

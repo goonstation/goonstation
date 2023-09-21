@@ -60,7 +60,7 @@
 
 	New()
 		if (prob(10))
-			src.initial_reagents["grognardium"] = 5
+			src.initial_reagents["rum"] = 5
 		..()
 
 /obj/item/reagent_containers/food/drinks/bottle/soda/bottledwater
@@ -311,9 +311,13 @@
 	rc_flags = RC_FULLNESS
 	initial_volume = 50
 	can_chug = 0
+	splash_all_contents = FALSE
+	incompatible_with_chem_dispensers = TRUE
+	amount_per_transfer_from_this = 0
 	initial_reagents = list("cola"=20,"VHFCS"=10)
-	var/is_sealed = 1 //can you drink out of it?
+	is_sealed = TRUE
 	var/standard_override //is this a random cola or a standard cola (for crushed icons)
+	var/shaken = FALSE //sets to TRUE on *twirl emote
 
 	New()
 		..()
@@ -328,10 +332,20 @@
 	attack_self(mob/user as mob)
 		var/drop_this_shit = 0 //i promise this is useful
 		if (src.is_sealed)
-			user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			is_sealed = 0
+			src.set_open_container(TRUE)
 			can_chug = 1
-			playsound(src.loc, "sound/items/can_open.ogg", 50, 1)
+			splash_all_contents = TRUE
+			incompatible_with_chem_dispensers = FALSE
+			amount_per_transfer_from_this = 5
+			playsound(src.loc, 'sound/items/can_open.ogg', 50, 1)
+			if (src.shaken)
+				src.reagents.reaction(user)
+				src.reagents.clear_reagents()
+				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+				user.visible_message("<span class='notice'>[user] pops the tab on \the [src] and is sprayed with the contents!</span>", "<span class='notice'>You pop \the [src] open and are immediatly sprayed with it's contents. [pick("FUCK", "DAMMIT", "SHIT")]!</span>")
+			else
+				user.visible_message("[user] pops the tab on \the [src]!", "You pop \the [src] open!")
 			return
 		if (!src.reagents || !src.reagents.total_volume)
 			var/zone = user.zone_sel.selecting
@@ -349,6 +363,10 @@
 			if (!drop_this_shit) //see?
 				user.put_in_hand_or_drop(C)
 			qdel(src)
+
+	is_open_container()
+		return !is_sealed
+
 
 	proc/setup_soda() // made to be overridden, so that the Spess-Pepsi/Space-Coke debacle can continue
 		if (prob(50)) // without having to change the Space-Cola path
@@ -373,7 +391,7 @@
 		src.icon_state = "crushed-[iconsplit[2]]"
 
 /obj/item/reagent_containers/food/drinks/cola/random
-	name = "space cola"
+	name = "off-brand space cola"
 	desc = "You don't recognise this cola brand at all."
 	icon = 'icons/obj/foodNdrink/can.dmi'
 	heal_amt = 1
@@ -508,7 +526,7 @@ obj/item/reagent_containers/food/drinks/covfefe
 			reagents.add_reagent("cryostylane", 5)
 		reagents.add_reagent("water", 25)
 		reagents.add_reagent("VHFCS", 5)
-		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "cat_drugs", "coffee"), 5)
+		reagents.add_reagent(pick("methamphetamine", "crank", "space_drugs", "catdrugs", "coffee"), 5)
 		for(var/i=0; i<3; i++)
 			reagents.add_reagent(pick("beff","ketchup","eggnog","yuck","chocolate","vanilla","cleaner","capsaicin","toxic_slurry","luminol","urine","nicotine","weedkiller","venom","jenkem","ectoplasm"), 5)
 

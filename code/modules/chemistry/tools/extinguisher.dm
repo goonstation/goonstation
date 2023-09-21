@@ -11,6 +11,7 @@
 	var/initial_volume = 100
 	///Does it get destroyed from exploding
 	var/reinforced = FALSE
+	var/shattered = FALSE
 	hitsound = 'sound/impact_sounds/Metal_Hit_1.ogg'
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT | OPENCONTAINER
 	tooltip_flags = REBUILD_DIST
@@ -74,9 +75,9 @@
 	return "Contains [src.reagents.total_volume] units."
 
 /obj/item/extinguisher/attack(mob/M, mob/user)
-	src.hide_attack = 0
-	if(user.a_intent == "help" && !safety) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
-		src.hide_attack = 1
+	src.hide_attack = ATTACK_VISIBLE
+	if(user.a_intent == "help" && !safety &&!shattered) //don't smack people with a deadly weapon while you're trying to extinguish them, thanks
+		src.hide_attack = ATTACK_FULLY_HIDDEN
 		return
 	..()
 
@@ -84,28 +85,48 @@
 	..()
 	//src.afterattack(target, user)
 
+/obj/item/extinguisher/shatter_chemically(var/projectiles = FALSE) //needs sound probably definitely for sure
+	for(var/mob/M in AIviewers(src))
+		boutput(M, "<span class='alert'>The <B>[src.name]</B> breaks open!</span>")
+	if(projectiles)
+		var/datum/projectile/special/spreader/uniform_burst/circle/circle = new /datum/projectile/special/spreader/uniform_burst/circle/(get_turf(src))
+		circle.shot_sound = null //no grenade sound ty
+		circle.spread_projectile_type = /datum/projectile/bullet/shrapnel/shrapnel_implant
+		circle.pellet_shot_volume = 0
+		circle.pellets_to_fire = 10
+		shoot_projectile_ST_pixel_spread(get_turf(src), circle, get_step(src, NORTH))
+	src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
+	icon_state = "fire_extinguisher_shattered"
+	src.desc = "It's shattered beyond all use."
+	shattered = TRUE
+	return TRUE
+
 /obj/item/extinguisher/afterattack(atom/target, mob/user , flag)
 	//TODO; Add support for reagents in water.
 	if (!src.reagents)
 		boutput(user, "<span class='alert'>Man, the handle broke off, you won't spray anything with this.</span>")
 		return
 
-	if ( istype(target, /obj/reagent_dispensers) && BOUNDS_DIST(src, target) == 0)
+	if (src.shattered)
+		boutput(user, "<span class='alert'>The extinguisher is too damaged!</span>")
+		return
+
+	if ( is_reagent_dispenser(target) && BOUNDS_DIST(src, target) == 0)
 		var/obj/o = target
 		o.reagents.trans_to(src, (src.reagents.maximum_volume - src.reagents.total_volume))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 		boutput(user, "<span class='notice'>Extinguisher refilled...</span>")
-		playsound(src.loc, "sound/effects/zzzt.ogg", 50, 1, -6)
+		playsound(src.loc, 'sound/effects/zzzt.ogg', 50, 1, -6)
 		user.lastattacked = target
 		return
 
-	if (!safety && !istype(target, /obj/item/storage) && !istype(target, /obj/item/storage/secure))
+	if (!safety && !target.storage)
 		if (src.reagents.total_volume < 1)
 			boutput(user, "<span class='alert'>The extinguisher is empty.</span>")
 			return
 
 		if (src.reagents.has_reagent("infernite") && src.reagents.has_reagent("blackpowder")) // BAHAHAHAHA
-			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, 1, -3)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, 1, -3)
 			fireflash(src.loc, 0)
 			explosion(src, src.loc, -1,0,1,1)
 			src.reagents.remove_any(src.initial_volume)
@@ -116,17 +137,14 @@
 			new/obj/item/scrap(get_turf(user))
 			if (ishuman(user))
 				var/mob/living/carbon/human/M = user
-				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-				implanted.owner = M
-				M.implant += implanted
+				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 				implanted.implanted(M, null, 4)
 				boutput(M, "<span class='alert'>You are struck by shrapnel!</span>")
-				M.emote("scream")
 			qdel(src)
 			return
 
 		else if (src.reagents.has_reagent("infernite") || src.reagents.has_reagent("foof"))
-			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 60, 1, -3)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 60, 1, -3)
 			fireflash(src.loc, 0)
 			src.reagents.remove_any(src.initial_volume)
 			if (src.reinforced)
@@ -150,7 +168,7 @@
 				qdel(src)
 				return
 
-		playsound(src, "sound/effects/spray.ogg", 30, 1, -3)
+		playsound(src, 'sound/effects/spray.ogg', 30, TRUE, -3)
 
 		var/direction = get_dir(src,target)
 
@@ -165,7 +183,7 @@
 		src.reagents.trans_to_direct(R, min(src.reagents.total_volume, (distance * reagents_per_dist)))
 		src.inventory_counter.update_percent(src.reagents.total_volume, src.reagents.maximum_volume)
 
-		logTheThing("combat", user, T, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
+		logTheThing(LOG_CHEMISTRY, user, "sprays [src] at [constructTarget(T,"combat")], [log_reagents(src)] at [log_loc(user)] ([get_area(user)])")
 
 		user.lastattacked = target
 
@@ -197,13 +215,15 @@
 	return
 
 /obj/item/extinguisher/attack_self(mob/user as mob)
+	if(shattered)
+		return
 	if (safety)
 		src.item_state = "fireextinguisher1"
 		set_icon_state("fire_extinguisher1")
 		user.update_inhands()
 		src.desc = "The safety is off."
 		boutput(user, "The safety is off.")
-		ADD_FLAG(src.flags, OPENCONTAINER)
+		src.set_open_container(TRUE)
 		safety = FALSE
 	else
 		src.item_state = "fireextinguisher0"
@@ -211,7 +231,7 @@
 		user.update_inhands()
 		src.desc = "The safety is on."
 		boutput(user, "The safety is on.")
-		REMOVE_FLAG(src.flags, OPENCONTAINER)
+		src.set_open_container(FALSE)
 		safety = TRUE
 
 /obj/item/extinguisher/move_trigger(var/mob/M, kindof)
@@ -230,3 +250,6 @@
 		..()
 		src.banned_reagents += src.melting_reagents
 		src.melting_reagents = list()
+
+	shatter_chemically(var/projectiles = FALSE)
+		return

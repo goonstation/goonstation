@@ -12,7 +12,7 @@
 	var/failing = 0
 
 	attackby(obj/item/W, mob/living/user)
-		if (istype(W, /obj/item/crowbar))
+		if (ispryingtool(W))
 			boutput(user, "There's no maintenance panel to open.")
 			return
 		if (isweldingtool(W))
@@ -60,7 +60,7 @@
 	desc = "A sophisticated machine that fabricates large objects from a nearby reserve of supplies."
 	icon = 'icons/obj/machines/podfab.dmi'
 	icon_state = "fab-still"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = 2.9
 	var/active = 0
@@ -73,9 +73,8 @@
 	var/override_dir = null
 	var/turf/outputLoc = null
 	var/sound_happy = 'sound/machines/chime.ogg'
-	var/sound_volume = 50
-	var/static/list/fabsounds = list('sound/machines/engine_grump1.ogg','sound/machines/engine_grump2.ogg','sound/machines/engine_grump3.ogg',
-	'sound/machines/computerboot_pc.ogg','sound/machines/glitch3.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/impact_sounds/Metal_Hit_Heavy_1.ogg','sound/machines/romhack1.ogg','sound/machines/romhack3.ogg')
+	var/sound_volume = 20
+	var/static/list/fabsounds = list('sound/machines/computerboot_pc.ogg','sound/machines/glitch3.ogg','sound/impact_sounds/Metal_Clang_1.ogg','sound/machines/mixer.ogg','sound/machines/pc_process.ogg','sound/machines/rock_drill.ogg','sound/machines/scan.ogg') //holy fuck these were awful sounds, these ones are slightly less awful but i hate the way this works
 
 	attack_hand(var/mob/user)
 		if (active)
@@ -197,6 +196,6 @@
 	name = "semi-constructed object"
 	desc = "A thing in the process of being assembled by a fabricator."
 	alpha = 5
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0

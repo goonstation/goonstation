@@ -13,7 +13,7 @@ jobs:
       run: |
         wget "https://raw.githubusercontent.com/${{ github.repository }}/master/.github/update_changelog.py"
     - name: Set up Python
-      uses: actions/setup-python@v1
+      uses: actions/setup-python@v4
       with:
         python-version: 3.8
     - name: Install dependencies

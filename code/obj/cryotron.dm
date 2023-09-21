@@ -5,11 +5,12 @@
 /obj/cryotron
 	name = "industrial cryogenic sleep unit"
 	desc = "The terminus of a large underfloor cryogenic storage complex."
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
 	event_handler_flags = IMMUNE_SINGULARITY
+	pass_unstable = FALSE
 	bound_width = 96
 	bound_x = -32
 	bound_height = 64
@@ -145,7 +146,7 @@
 				for (var/obj/machinery/computer/announcement/A as anything in machine_registry[MACHINES_ANNOUNCEMENTS])
 					if (!A.status && A.announces_arrivals)
 						A.announce_departure(L)
-				logTheThing("station", L, null, "entered cryogenic storage at [log_loc(src)].")
+				logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 				return 1
 
 		stored_mobs += L
@@ -171,16 +172,36 @@
 		var/datum/db_record/crew_record = data_core.general.find_record("id", L.datacore_id)
 		if (!isnull(crew_record))
 			crew_record["p_stat"] = "In Cryogenic Storage"
-		logTheThing("station", L, null, "entered cryogenic storage at [log_loc(src)].")
+		logTheThing(LOG_STATION, L, "entered cryogenic storage at [log_loc(src)].")
 		return 1
 
 	proc/enter_prompt(var/mob/living/user as mob)
 		if (mob_can_enter_storage(user)) // check before the prompt for dead/incapped/restrained/etc users
-			if (tgui_alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed.", "Confirmation", list("Yes", "No")) == "Yes")
-				if (tgui_alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", list("Yes", "No")) == "Yes")
-					if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
-						add_person_to_storage(user)
-					return 1
+			var/what_does_the_player_want = tgui_alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed. You can also \"Observe\", where you free up your role slot in the round and become an observer.", "Confirmation", list("Yes", "No", "Observe"))
+			switch (what_does_the_player_want)
+				if ("Yes")
+					if (tgui_alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", list("Yes", "No")) == "Yes")
+						if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
+							add_person_to_storage(user)
+							user.show_text("<b style=\"font-size: 200%\">Remember, if you want to abandon the round to observe and free up space for someone else, simply use the \"ghost\" command in the Commands tab. (top-right corner)</b>", "blue")
+						return 1
+
+				if ("Observe")
+					var/confirmation_message = "Are you absolutely sure you want to abandon the round? "
+#ifdef RP_MODE
+					confirmation_message += "You can respawn back to the round later."
+#else
+					confirmation_message += "You will be an observer until the next round."
+#endif
+					if (tgui_alert(user, confirmation_message, "Confirmation", list("Yes", "No")) == "Yes")
+						if (mob_can_enter_storage(user))
+							add_person_to_storage(user)
+							respawn_controller.subscribeNewRespawnee(user.ckey)
+							user.mind?.get_player()?.dnr = TRUE
+							user.ghostize()
+							qdel(user)
+							return 1
+
 		return 0
 
 	proc/mob_can_enter_storage(var/mob/living/L as mob, var/mob/user as mob)
@@ -215,7 +236,7 @@
 		// Person entering is too far away
 		if (BOUNDS_DIST(src, L) > 0)
 			boutput(L, "<b>You need to be closer to [src] to enter cryogenic storage!</b>")
-			boutput(user, "<b>[L] needs to be closer to [src] for you to put them in cryogenic storage!</b>")
+			boutput(user, "<b>[L] needs to be closer to [src] for you to put [him_or_her(L)] in cryogenic storage!</b>")
 			return FALSE
 		// Person putting other person in is too far away
 		if (user && BOUNDS_DIST(src, user) > 0)
@@ -311,7 +332,7 @@
 		if (target.client || !target.ckey)
 			boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
 			return FALSE
-		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
+		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? [he_or_she(target)] will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
 			if (!src.mob_can_enter_storage(target, user))
 				return FALSE
 			else

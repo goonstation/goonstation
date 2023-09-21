@@ -33,9 +33,9 @@
 	New()
 		. = ..()
 		src.net_id = generate_net_id(src)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send packet", .proc/spacket)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Self-Only Messages",.proc/toggleSelfOnly)
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Mainframe Registration",.proc/toggleMainframeReg)
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"send packet", PROC_REF(spacket))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Self-Only Messages",PROC_REF(toggleSelfOnly))
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_CONFIG,"Toggle Mainframe Registration",PROC_REF(toggleMainframeReg))
 
 	disposing()
 		if(src.link)
@@ -45,7 +45,7 @@
 
 	proc/toggleSelfOnly(obj/item/W as obj, mob/user as mob)
 		self_only = !self_only
-		boutput(user, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages recieved."]")
+		boutput(user, "[self_only ? "Now only processing messages adressed at us.":"Now processing all messages received."]")
 		tooltip_rebuild = 1
 
 	proc/toggleMainframeReg(obj/item/W as obj, mob/user as mob)

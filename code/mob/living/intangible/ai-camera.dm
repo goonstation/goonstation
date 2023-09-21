@@ -9,20 +9,19 @@
 //Camera Helmets /obj/item/clothing/head/helmet/camera X
 //Bots /obj/machinery/bot  X
 //Observables /obj/observable  X
-//Colosseum putts /obj/machinery/colosseum_putt  X
 //Cyborgs /mob/living/silicon/robot  X
 
 /mob/living/intangible/aieye
 	name = "AI Eye"
 	icon = 'icons/mob/ai.dmi'
-	icon_state = "a-eye"
+	icon_state = "ai-eye"
 	density = 0
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
-	stat = 0
+	stat = STAT_ALIVE
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
-	can_lie = 0 //can't lie down, you're a floating ghostly eyeball
+	can_lie = FALSE //can't lie down, you're a floating ghostly eyeball
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
@@ -50,34 +49,35 @@
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_NO_MOVEMENT_PUFFS, src)
 		if (render_special)
 			render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+		AddComponent(/datum/component/minimap_marker, MAP_AI, "ai_eye")
+
 	Login()
 		.=..()
 		src.client.show_popup_menus = 1
-		//if (src.client)
-		//	src.client.show_popup_menus = 0
-		for(var/key in aiImages)
-			var/image/I = aiImages[key]
-			src.client << I
-		SPAWN(0)
+		var/client_color = src.client.color
+		src.client.color = "#000000"
+		SPAWN(0) //let's try not hanging the entire server for 6 seconds every time an AI has wonky internet
+			src.client.images += aiImages
+			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+			src.update_name_tag()
+			src.job = "AI"
+			if (src.mind)
+				src.mind.assigned_role = "AI"
+			animate(src.client, 0.3 SECONDS, color = client_color)
 			var/sleep_counter = 0
-			for(var/key in aiImagesLowPriority)
-				var/image/I = aiImagesLowPriority[key]
+			for(var/image/I as anything in aiImagesLowPriority)
 				src.client << I
 				if(sleep_counter++ % (300 * 10) == 0)
 					LAGCHECK(LAG_LOW)
 
 	Logout()
-		//if (src.client)
-		//	src.client.show_popup_menus = 1
 		var/client/cl = src.last_client
-		if(cl)
-			for(var/key in aiImages)
-				var/image/I = aiImages[key]
-				cl.images -= I
+		if (!cl)
+			return ..()
 		SPAWN(0)
+			cl?.images -= aiImages
 			var/sleep_counter = 0
-			for(var/key in aiImagesLowPriority)
-				var/image/I = aiImagesLowPriority[key]
+			for(var/image/I as anything in aiImagesLowPriority)
 				cl?.images -= I
 				if(sleep_counter++ % (300 * 10) == 0)
 					LAGCHECK(LAG_LOW)
@@ -108,9 +108,9 @@
 	Move(var/turf/NewLoc, direct) //Ewww!
 		last_loc = src.loc
 
-		src.closeContextActions()
+		src.contextActionsOnMove()
 		// contextbuttons can also exist on our mainframe and the eye shares the same hud, fun stuff.
-		src.mainframe?.closeContextActions()
+		src.mainframe?.contextActionsOnMove()
 
 		if (src.mainframe)
 			src.mainframe.tracker.cease_track()
@@ -145,7 +145,7 @@
 			while(!istype(temp.loc, /turf))
 				temp = temp.loc
 			UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
-			RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, .proc/check_eye_z)
+			RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, PROC_REF(check_eye_z))
 			outer_eye_atom = temp
 		else
 			UnregisterSignal(src.outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
@@ -178,7 +178,7 @@
 			//var/turf/T = target
 			//boutput(world, "[T] [isturf(target)] [findtext(control, "map_viewport")] [control]")
 			if( isturf(target) && findtext(control, "map_viewport") )
-				set_loc(src, target)
+				src.set_loc(target)
 
 			if (GET_DIST(src, target) > 0)
 				src.set_dir(get_dir(src, target))
@@ -242,7 +242,7 @@
 	say_understands(var/other)
 		if (ishuman(other))
 			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace || !H.mutantrace.exclusive_language)
+			if (!H.mutantrace.exclusive_language)
 				return 1
 		if (isrobot(other))
 			return 1
@@ -256,7 +256,7 @@
 		if (src.mainframe)
 			src.mainframe.say(message)
 		else
-			visible_message("[CLEAN(src)] says, <b>[CLEAN(message)]</b>")
+			visible_message("[html_encode("[src]")] says, <b>[html_encode("[message]")]</b>")
 
 	say_radio()
 		src.mainframe.say_radio()
@@ -265,6 +265,7 @@
 		src.mainframe.say_main_radio(msg)
 
 	emote(var/act, var/voluntary = 0)
+		..()
 		if (mainframe)
 			mainframe.emote(act, voluntary)
 
@@ -452,6 +453,12 @@
 		if(mainframe)
 			mainframe.deploy_to()
 
+	verb/toggle_lock()
+		set category = "AI Commands"
+		set name = "Toggle Cover Lock"
+		if(mainframe)
+			mainframe.toggle_lock()
+
 	verb/open_nearest_door()
 		set category = "AI Commands"
 		set name = "Open Nearest Door to..."
@@ -497,16 +504,8 @@
 
 //---TURF---//
 /turf/var/image/aiImage
-/turf/var/list/cameras = null
-
-/turf/proc/adjustCameraImage()
-	if(!istype(src.aiImage)) return
-
-	if( src.cameras.len >= 1 )
-		src.aiImage.loc = null
-	else if( src.cameras == null )
-		src.aiImage.loc = src
-	return
+/turf/var/list/obj/machinery/camera/cameras
+/turf/var/list/datum/component/camera_coverage_emitter/camera_coverage_emitters
 
 //slow
 /*
@@ -517,105 +516,13 @@
 			usr.client.show_popup_menus = (length(cameras))
 */
 
-//---TURF---//
-
-//---CAMERA---//
-/obj/machinery/camera/var/list/turf/coveredTiles = null
-
-/obj/machinery/camera/proc/updateCoverage()
-	LAZYLISTADDUNIQUE(camerasToRebuild, src)
-	if (current_state > GAME_STATE_WORLD_NEW && !global.explosions.exploding)
-		world.updateCameraVisibility()
-
 //---MISC---//
-
-var/list/obj/machinery/camera/camerasToRebuild
-world/proc/updateCameraVisibility(generateAiImages=FALSE)
-	set waitfor = FALSE
-#if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
-	// I don't wanna wait for this camera setup shit just GO
-	return
-#endif
-
-	if(generateAiImages)
-		var/mutable_appearance/ma = new(image('icons/misc/static.dmi', icon_state = "static"))
-		ma.plane = PLANE_HUD
-		ma.layer = 100
-		ma.color = "#777777"
-		ma.dir = pick(alldirs)
-		ma.appearance_flags = TILE_BOUND | KEEP_APART | RESET_TRANSFORM | RESET_ALPHA | RESET_COLOR
-		ma.name = " "
-
-		// takes about one second compared to the ~12++ that the actual calculations take
-		game_start_countdown?.update_status("Updating cameras...\n(Calculating...)")
-//pod wars has no AI so this is just a waste of time...
-#if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP) && !defined(MAP_OVERRIDE_EVENT)
-		var/list/turf/cam_candidates = block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION))
-
-		var/lastpct = 0
-		var/thispct = 0
-		var/donecount = 0
-
-		for(var/turf/t as anything in cam_candidates) //ugh
-			t.aiImage = new
-			t.aiImage.appearance = ma
-			t.aiImage.dir = pick(alldirs)
-			t.aiImage.loc = t
-
-			addAIImage(t.aiImage, "aiImage_\ref[t.aiImage]", low_priority=istype(t, /turf/space))
-
-			donecount++
-			thispct = round(donecount / cam_candidates.len * 100)
-			if (thispct != lastpct)
-				lastpct = thispct
-				game_start_countdown?.update_status("Updating cameras...\n[thispct]%")
-
-			LAGCHECK(100)
-
-		for_by_tcl(cam, /obj/machinery/camera)
-			LAZYLISTADDUNIQUE(camerasToRebuild, cam)
-		game_start_countdown?.update_status("Updating camera vis...\n")
-
-	var/list/turf/staticUpdateTurfs = list()
-
-	for(var/obj/machinery/camera/cam as anything in camerasToRebuild)
-		var/list/prev_tiles = cam.coveredTiles
-		var/list/new_tiles = list()
-		if(cam.camera_status && !isnull(get_turf(cam)))
-			for(var/turf/T in view(CAM_RANGE, get_turf(cam)))
-				new_tiles += T
-		if (prev_tiles)
-			for(var/turf/T as anything in (prev_tiles - new_tiles))
-				staticUpdateTurfs |= T
-				if(isnull(T.cameras)) continue
-				T.cameras -= cam
-				if(!length(T.cameras))
-					T.cameras = null
-		if (new_tiles)
-			for(var/turf/T as anything in (new_tiles - prev_tiles))
-				LAZYLISTADDUNIQUE(T.cameras, cam)
-				staticUpdateTurfs |= T
-
-		cam.coveredTiles = new_tiles
-
-	for(var/turf/T as anything in staticUpdateTurfs)
-		T.aiImage?.loc = length(T.cameras) ? null : T
-
-	camerasToRebuild = null
-#endif
-
-// to be called by admins if everything breaks. TODO move to an admin verb
-/proc/force_full_camera_rebuild()
-	for_by_tcl(cam, /obj/machinery/camera)
-		LAZYLISTADDUNIQUE(camerasToRebuild, cam)
-	world.updateCameraVisibility()
-
 /mob/living/intangible/aieye/proc/check_eye_z(source)
 	var/atom/movable/temp = source
 	while(!istype(temp.loc, /turf))
 		temp = temp.loc
 	if(temp != source)
-		RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, .proc/check_eye_z)
+		RegisterSignal(temp, COMSIG_MOVABLE_SET_LOC, PROC_REF(check_eye_z))
 		UnregisterSignal(outer_eye_atom, COMSIG_MOVABLE_SET_LOC)
 		outer_eye_atom = temp
 

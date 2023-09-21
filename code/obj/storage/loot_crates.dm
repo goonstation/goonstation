@@ -14,7 +14,12 @@
 		/obj/item/clothing/suit/billow_cape = 10,\
 		/obj/item/clothing/under/misc/tiedye = 20,\
 		/obj/item/clothing/under/misc/neapolitan = 20,\
-		/obj/item/clothing/under/misc/mint_chip = 20,
+		/obj/item/clothing/under/misc/mint_chip = 20,\
+		/obj/item/clothing/under/misc/mimefancy = 10,\
+		/obj/item/clothing/under/misc/mimedress = 10,\
+		/obj/item/clothing/suit/torncloak/random = 20,\
+		/obj/item/clothing/suit/scarfcape/random = 20,\
+		/obj/item/clothing/suit/fakebeewings = 10,
 	// station
 	)
 	var/list/department = list(
@@ -46,15 +51,20 @@
 		/obj/item/ammo/power_cell/self_charging/pod_wars_standard = 20,\
 		/obj/item/clothing/gloves/ring/titanium = 20,\
 		/obj/item/gun/energy/phaser_gun = 20,\
+		/obj/item/gun/energy/phaser_small = 20,\
+		/obj/item/gun/energy/phaser_huge = 10,\
 		/obj/item/clothing/ears/earmuffs/yeti = 20,\
+		/obj/item/clothing/lanyard = 20,\
+		/obj/item/kitchen/utensil/knife/tracker = 10,
 	// fun
 		/obj/item/gun/bling_blaster = 20,\
 		/obj/item/clothing/under/gimmick/frog = 20,\
 		/obj/vehicle/skateboard = 20,\
 		/obj/item/device/flyswatter = 20,\
-		/obj/critter/bear = 20,\
+		/mob/living/critter/bear = 20,\
 		/obj/item/clothing/shoes/jetpack = 20,\
-		/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider = 20,
+		/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/nicespider = 20, \
+		/obj/item/gun/kinetic/foamdartshotgun = 20,
 	)
 
 var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_manager
@@ -66,7 +76,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 	icon_opened = "crateopen"
 	icon_closed = "crate"
 	locked = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	var/image/light = null
 
 	New()
@@ -375,7 +385,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		holder.visible_message("<span class='alert'><b>Spikes shoot out of [holder]!</b></span>")
 		if (opener)
 			random_brute_damage(opener,damage,1)
-			playsound(opener.loc, "sound/impact_sounds/Flesh_Stab_1.ogg", 60, 1)
+			playsound(opener.loc, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 		return
 
 /datum/loot_crate_trap/zap
@@ -393,10 +403,10 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 
 	trigger_trap(var/mob/living/opener)
 		holder.visible_message("<span class='alert'>A loud grinding sound comes from inside [holder] as it unlocks!</span>")
-		playsound(holder.loc, "sound/machines/engine_grump1.ogg", 60, 1)
+		playsound(holder.loc, 'sound/machines/engine_grump1.ogg', 60, 1)
 
 		for (var/obj/I in holder.contents)
-			if (istype(I,/obj/critter/cat/))
+			if (istype(I,/mob/living/critter/small_animal/cat))
 				continue // absolutely fucking not >=I
 			new /obj/item/scrap(holder)
 			qdel(I)
@@ -451,10 +461,10 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		attached = C
 		attached.vis_contents += src
 		attached.locked = TRUE
-		attached.anchored = TRUE
-		attached.update_icon()
+		attached.anchored = ANCHORED
+		attached.UpdateIcon()
 		icon_state = "antitamper-on"
-		playsound(src, 'sound/impact_sounds/Wood_Snap.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Wood_Snap.ogg', 40, TRUE)
 
 	proc/detach_from()
 		if (!attached)
@@ -466,10 +476,10 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		SPAWN(1 SECOND)
 			C.vis_contents -= src
 			C.locked = FALSE
-			C.anchored = FALSE
-			C.update_icon()
+			C.anchored = UNANCHORED
+			C.UpdateIcon()
 			qdel(src)
-		playsound(src, 'sound/impact_sounds/plate_break.ogg', 30, 1)
+		playsound(src, 'sound/impact_sounds/plate_break.ogg', 30, TRUE)
 
 /obj/item/clothing/gloves/psylink_bracelet
 	name = "jewelled bracelet"

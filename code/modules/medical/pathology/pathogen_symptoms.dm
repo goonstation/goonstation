@@ -93,7 +93,7 @@ datum/pathogeneffects
 				if (target.infected(origin))
 					if (infect_message)
 						target.show_message(infect_message)
-					logTheThing("pathology", origin.infected, target, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
+					logTheThing(LOG_PATHOLOGY, origin.infected, "infects [constructTarget(target,"pathology")] with [origin.name] due to symptom [name] through direct contact ([contact_type]).")
 					return 1
 
 	proc/onadd(var/datum/pathogen/origin)
@@ -590,7 +590,7 @@ obj/hallucinated_item
 	icon_state = null
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	var/mob/owner = null
@@ -623,27 +623,27 @@ datum/pathogeneffects/malevolent/serious_paranoia
 		var/what = pick("I am the traitor.", "I will kill you.", "You will die, [M].")
 		if (prob(50))
 			boutput(M, "<B>[O]</B> points at [M].")
-			make_point(get_turf(M))
+			make_point(M)
 		boutput(M, "<B>[O]</B> [action], \"[what]\"")
 
 	proc/backpack(var/mob/M, var/mob/living/O)
 		var/item = pick(traitor_items)
 		boutput(M, "<span class='notice'>[O] has added the [item] to the backpack!</span>")
-		logTheThing("pathology", M, O, "saw a fake message about an [constructTarget(O,"pathology")] adding [item] to their backpacks due to Serious Paranoia symptom.")
+		logTheThing(LOG_PATHOLOGY, M, "saw a fake message about an [constructTarget(O,"pathology")] adding [item] to their backpacks due to Serious Paranoia symptom.")
 
 	proc/acidspit(var/mob/M, var/mob/living/O, var/mob/living/O2)
 		if (O2)
 			boutput(M, "<span class='alert'><B>[O] spits acid at [O2]!</B></span>")
 		else
 			boutput(M, "<span class='alert'><B>[O] spits acid at you!</B></span>")
-		logTheThing("pathology", M, O, "saw a fake message about an [constructTarget(O,"pathology")] spitting acid due to Serious Paranoia symptom.")
+		logTheThing(LOG_PATHOLOGY, M, "saw a fake message about an [constructTarget(O,"pathology")] spitting acid due to Serious Paranoia symptom.")
 
 	proc/vampirebite(var/mob/M, var/mob/living/O, var/mob/living/O2)
 		if (O2)
 			boutput(M, "<span class='alert'><B>[O] bites [O2]!</B></span>")
 		else
 			boutput(M, "<span class='alert'><B>[O] bites you!</B></span>")
-		logTheThing("pathology", M, O, "saw a fake message about an [constructTarget(O,"pathology")] biting someone due to Serious Paranoia symptom.")
+		logTheThing(LOG_PATHOLOGY, M, "saw a fake message about an [constructTarget(O,"pathology")] biting someone due to Serious Paranoia symptom.")
 
 	proc/floor_in_view(var/mob/M)
 		var/list/ret = list()
@@ -703,7 +703,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3, 4, 5, 6))
 					switch (event)
@@ -739,7 +739,7 @@ datum/pathogeneffects/malevolent/serious_paranoia
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3, 4, 5, 6))
 					switch (event)
@@ -819,7 +819,7 @@ datum/pathogeneffects/malevolent/serious_paranoia/mild
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3))
 					switch (event)
@@ -836,7 +836,7 @@ datum/pathogeneffects/malevolent/serious_paranoia/mild
 					var/list/mob/living/OL = list()
 					for (var/mob/living/O in oview(7, M))
 						OL += O
-					if (OL.len == 0)
+					if (length(OL) == 0)
 						return
 					var/event = pick(list(1, 2, 3))
 					switch (event)
@@ -932,7 +932,7 @@ datum/pathogeneffects/malevolent/gibbing
 						H.dump_contents_chance = 100
 					M.show_message("<span class='alert'>Your organs burst out of your body!</span>")
 					src.infect_cloud(M, origin, origin.spread) // boof
-					logTheThing("pathology", M, null, "gibbed due to Gibbing symptom in [origin].")
+					logTheThing(LOG_PATHOLOGY, M, "gibbed due to Gibbing symptom in [origin].")
 					M.gib()
 				else if (prob(30))
 					M.show_message("<span class='alert'>Your body feels too tight to hold your organs inside.</span>")
@@ -1220,7 +1220,7 @@ datum/pathogeneffects/malevolent/capacitor
 							M.visible_message("<span class='alert'>A burst of lightning jumps at [M] from [A].</span>", "<span class='alert'>A burst of lightning jumps at you from [A]. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 							M.TakeDamage("chest", 0, 5)
 							var/amt  = A.cell.charge / 6
-							A.cell.charge -= amt
+							A.cell.use(amt)
 							origin.symptom_data["capacitor"] += amt * 50
 							if (amt > 5000 && load > 5000)
 								M.show_message("<span class='notice'>You feel energized.</span>")
@@ -1263,7 +1263,7 @@ datum/pathogeneffects/malevolent/capacitor
 							M.visible_message("<span class='alert'>A burst of lightning jumps at [M] from [A].</span>", "<span class='alert'>A burst of lightning jumps at you from [A]. It burns!</span>", "<span class='alert'>You hear something spark.</span>")
 							M.TakeDamage("chest", 0, 5)
 							var/amt = A.cell.charge / 5 // apcs have a weirdly low capacity.
-							A.cell.charge -= amt
+							A.cell.use(amt)
 							origin.symptom_data["capacitor"] += amt * 50
 							if (amt > 5000 && load > 5000)
 								M.show_message("<span class='notice'>You feel energized.</span>")
@@ -1484,7 +1484,7 @@ datum/pathogeneffects/malevolent/ultimatefever
 						qdel(IC)
 				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("fire_resist","thermal_resist"))
 					M.show_message("<span class='alert'>You completely burn up!</span>")
-					logTheThing("pathology", M, null, " is firegibbed due to symptom [src].")
+					logTheThing(LOG_PATHOLOGY, M, " is firegibbed due to symptom [src].")
 					M.firegib()
 
 	may_react_to()
@@ -1657,7 +1657,7 @@ datum/pathogeneffects/malevolent/seriouschills/ultimate
 						M.emote("shiver")
 				if (prob(1) && !M.bioHolder.HasOneOfTheseEffects("cold_resist","thermal_resist"))
 					M.show_message("<span class='alert'>You freeze completely!</span>")
-					logTheThing("pathology", usr, null, "was ice statuified by symptom [src].")
+					logTheThing(LOG_PATHOLOGY, usr, "was ice statuified by symptom [src].")
 					M.become_statue_ice()
 		if (M.bodytemperature < 0)
 			M.bodytemperature = 0
@@ -1731,7 +1731,7 @@ datum/pathogeneffects/malevolent/farts/plasma
 		..()
 		var/turf/T = get_turf(M)
 		var/datum/gas_mixture/gas = new /datum/gas_mixture
-		gas.zero()
+		ZERO_GASES(gas)
 		gas.toxins = origin.stage * (voluntary ? 0.6 : 3) // only a fifth for voluntary farts
 		gas.temperature = T20C
 		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
@@ -1760,7 +1760,7 @@ datum/pathogeneffects/malevolent/farts/co2
 		..()
 		var/turf/T = get_turf(M)
 		var/datum/gas_mixture/gas = new /datum/gas_mixture
-		gas.zero()
+		ZERO_GASES(gas)
 		gas.carbon_dioxide = origin.stage * (voluntary ? 1.4 : 7) // only a fifth for voluntary farts
 		gas.temperature = T20C
 		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
@@ -1793,7 +1793,7 @@ datum/pathogeneffects/malevolent/farts/o2
 		..()
 		var/turf/T = get_turf(M)
 		var/datum/gas_mixture/gas = new /datum/gas_mixture
-		gas.zero()
+		ZERO_GASES(gas)
 		gas.oxygen = origin.stage * (voluntary ? 20 : 2) // ten times as much for voluntary farts
 		gas.temperature = T20C
 		gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
@@ -1944,7 +1944,7 @@ datum/pathogeneffects/malevolent/mutation
 	var/list/chrom_types = list(/datum/dna_chromosome, /datum/dna_chromosome/anti_mutadone, /datum/dna_chromosome/stealth, /datum/dna_chromosome/power_enhancer, /datum/dna_chromosome/cooldown_reducer, /datum/dna_chromosome/safety)
 
 	proc/mutate(var/mob/M, var/datum/pathogen/origin)
-		if (M.bioHolder)
+		if (M.bioHolder && ishuman(M))
 			if(prob(chrom_prob))
 				var/type_to_make = pick(chrom_types)
 				var/datum/dna_chromosome/C = new type_to_make()
@@ -2013,24 +2013,24 @@ datum/pathogeneffects/malevolent/radiation
 		switch (origin.stage)
 			if (1 to 3)
 				if (prob(5 * origin.stage + 3))
-					M.changeStatus("radiation", origin.stage)
+					M.take_radiation_dose(origin.stage)
 					boutput(M,"<span class='alert'>You feel sick.</span>")
 			if (4)
 				if (prob(13))
-					M.changeStatus("radiation", 3 SECONDS)
+					M.take_radiation_dose(3 SECONDS)
 					boutput(M,"<span class='alert'>You feel very sick!</span>")
 				else if (prob(26))
-					M.changeStatus("radiation", 2 SECONDS)
+					M.take_radiation_dose(2 SECONDS)
 					boutput(M,"<span class='alert'>You feel sick.</span>")
 			if (5)
 				if (prob(15))
-					M.changeStatus("radiation", rand(2,4) SECONDS)
+					M.take_radiation_dose(rand(2,4) SECONDS)
 					boutput(M,"<span class='alert'>You feel extremely sick!!</span>")
 				else if (prob(20))
-					M.changeStatus("radiation", 3 SECONDS)
+					M.take_radiation_dose(3 SECONDS)
 					boutput(M,"<span class='alert'>You feel very sick!</span>")
 				else if (prob(40))
-					M.changeStatus("radiation", 2 SECONDS)
+					M.take_radiation_dose(2 SECONDS)
 					boutput(M,"<span class='alert'>You feel sick.</span>")
 
 
@@ -2084,19 +2084,19 @@ datum/pathogeneffects/malevolent/snaps/jazz
 				var/obj/item/I = H.w_uniform
 				H.u_equip(I)
 				I.set_loc(H.loc)
-			H.equip_if_possible(T, H.slot_w_uniform)
+			H.equip_if_possible(T, SLOT_W_UNIFORM)
 		if (!(H.head && istype(H.head, /obj/item/clothing/head/flatcap)))
 			var/obj/item/clothing/head/flatcap/F = new /obj/item/clothing/head/flatcap(H)
 			if (H.head)
 				var/obj/item/I = H.head
 				H.u_equip(I)
 				I.set_loc(H.loc)
-			H.equip_if_possible(F, H.slot_head)
+			H.equip_if_possible(F, SLOT_HEAD)
 
 		if (!H.find_type_in_hand(/obj/item/instrument/saxophone))
 			var/obj/item/instrument/saxophone/D = new /obj/item/instrument/saxophone(H)
 			if(!(H.put_in_hand(D) == 1))
-				var/drophand = (H.hand == 0 ? H.slot_r_hand : H.slot_l_hand) //basically works like a derringer
+				var/drophand = (H.hand == RIGHT_HAND ? SLOT_R_HAND : SLOT_L_HAND) //basically works like a derringer
 				H.drop_item()
 				D.set_loc(H)
 				H.equip_if_possible(D, drophand)

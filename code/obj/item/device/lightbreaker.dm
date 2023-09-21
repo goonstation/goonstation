@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/lightbreaker)
+	mats = 15
+
 /obj/item/lightbreaker
 	name = "compact tape"
 	desc = "A casette player loaded with a casette of a vampire's screech."
@@ -11,11 +14,11 @@
 	throw_range = 10
 	w_class = W_CLASS_SMALL
 	is_syndicate = 1
-	mats = 15
 	stamina_cost = 10
 	stamina_crit_chance = 15
 	var/ammo = 4
 	var/ammo_max = 4
+	HELP_MESSAGE_OVERRIDE({"Use the lightbreaker in hand to shatter most windows and lights around you, and deafen/stagger people around you without ear protection. To recharge the lightbreaker, hit it with a <b>screwdriver</b>."})
 
 	examine()
 		. = ..()
@@ -30,12 +33,12 @@
 			src.activate(user)
 			ammo--
 		else
-			playsound(src.loc, "sound/machines/click.ogg", 100, 1)
+			playsound(src.loc, 'sound/machines/click.ogg', 100, 1)
 			boutput(user, "<span class='alert'>The tape is worn out!</span>")
 		return
 
 	proc/activate(mob/user as mob)
-		playsound(src.loc, "sound/effects/light_breaker.ogg", 75, 1, 5)
+		playsound(src.loc, 'sound/effects/light_breaker.ogg', 75, 1, 5)
 		for (var/obj/machinery/light/L in view(7, user))
 			if (L.status == 2 || L.status == 1)
 				continue
@@ -62,7 +65,7 @@
 
 	proc/rewind()
 		ammo = ammo_max
-		playsound(src.loc, "sound/machines/click.ogg", 100, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 100, 1)
 
 /datum/action/bar/icon/rewind_tape
 	id = "rewind_tape"
@@ -97,7 +100,7 @@
 		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(the_breaker, "sound/misc/winding.ogg", 50, 1,3)
+		playsound(the_breaker, 'sound/misc/winding.ogg', 50, TRUE,3)
 
 	onStart()
 		..()

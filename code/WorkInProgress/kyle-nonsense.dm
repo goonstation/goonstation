@@ -11,4 +11,4 @@
 	var/file_name = "data/scores_backup_[world.realtime].txt"
 	text2file(backup_text, file_name)
 	usr << file_name
-	logTheThing( "debug", usr, null, "Backed up scores: [backup_text]" )
+	logTheThing(LOG_DEBUG, usr, "Backed up scores: [backup_text]")

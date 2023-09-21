@@ -27,7 +27,7 @@
 
 	var/list/organ_list = list("all", "head", "skull", "brain", "left_eye", "right_eye", "chest", "heart", "left_lung", "right_lung", "butt", "left_kidney", "right_kidney", "liver", "stomach", "intestines", "spleen", "pancreas", "appendix", "tail")
 
-	var/list/organ_type_list = list(
+	var/static/list/organ_type_list = list(
 		"head"="/obj/item/organ/head",
 		"skull"="/obj/item/skull",
 		"brain"="/obj/item/organ/brain",
@@ -161,6 +161,8 @@
 
 	//What should happen on every tick when an organ is missing. Should be called above in /datum/organHolder/proc/handle_organs().
 	proc/handle_missing(var/organ_name as text, var/mult = 1)
+		if (ischangeling(src.donor))
+			return
 		switch (organ_name)
 			if ("liver")
 				donor.take_toxin_damage(2*mult, 1)
@@ -175,7 +177,7 @@
 				if (!get_working_kidney_amt())
 					donor.take_toxin_damage(2, 1)
 			if ("tail")
-				if(ischangeling(donor) || src.donor?.reagents?.get_reagent_amount("ethanol") > 50) // drunkenness prevents tail-clumsiness
+				if(src.donor?.reagents?.get_reagent_amount("ethanol") > 50) // drunkenness prevents tail-clumsiness
 					return
 				if (donor.mob_flags & SHOULD_HAVE_A_TAIL) // Only become clumsy if you should have a tail and are not a shapeshifting alien
 					donor.bioHolder?.AddEffect("clumsy", 0, 0, 0, 1)
@@ -216,9 +218,9 @@
 			return 0
 
 		if(donor.traitHolder?.hasTrait("weakorgans"))
-			brute *=2
-			burn *=2
-			tox *=2
+			brute *= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
+			burn *= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
+			tox *= TRAIT_FRAIL_ORGAN_DAMAGE_MULT
 
 		if (islist(src.organ_list))
 			var/obj/item/organ/O = src.organ_list[organ]
@@ -240,17 +242,17 @@
 	//organs should not perform their functions if they have 100 damage
 	proc/get_working_kidney_amt()
 		var/count = 0
-		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.FAIL_DAMAGE))
+		if (left_kidney && (!left_kidney.broken && left_kidney.get_damage() <= left_kidney.fail_damage))
 			count++
-		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.FAIL_DAMAGE))
+		if (right_kidney && (!right_kidney.broken && right_kidney.get_damage() <= right_kidney.fail_damage))
 			count++
 		return count
 
 	proc/get_working_lung_amt()
 		var/count = 0
-		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.FAIL_DAMAGE))
+		if (left_lung && (!left_lung.broken && left_lung.get_damage() <= left_lung.fail_damage))
 			count++
-		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.FAIL_DAMAGE))
+		if (right_lung && (!right_lung.broken && right_lung.get_damage() <= right_lung.fail_damage))
 			count++
 		return count
 
@@ -409,7 +411,7 @@
 			else if(organ == tail)
 				organ = "tail"
 			else
-				return 0 // what the fuck are you trying to remove
+				return null // what the fuck are you trying to remove
 
 		switch (lowertext(organ))
 
@@ -434,7 +436,7 @@
 
 			if ("head")
 				if (!src.head)
-					return 0
+					return null
 				var/obj/item/organ/head/myHead = src.head
 				if (src.brain && !isskeleton(src.donor)) // skeletons move their brain elsewhere so they can detach their head without dying
 					myHead.brain = src.drop_organ("brain", myHead)
@@ -484,7 +486,7 @@
 
 			if ("skull")
 				if (!src.skull)
-					return 0
+					return null
 				var/obj/item/skull/mySkull = src.skull
 				mySkull.set_loc(location)
 				mySkull.holder = null
@@ -495,15 +497,15 @@
 
 			if ("brain")
 				if (!src.brain)
-					return 0
+					return null
 				var/obj/item/organ/brain/myBrain = src.brain
 				if (!myBrain.owner) //Oh no, they have no mind!
 					if (src.donor.ghost)
 						if (src.donor.ghost.mind)
-							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.key]] from ghost.")
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to retrieve mind for key \[[src.donor.key]] from ghost.")
 							myBrain.setOwner(src.donor.ghost.mind)
 						else if (src.donor.ghost.key)
-							logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
+							logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]] from ghost.")
 							var/datum/mind/newmind = new
 							newmind.ckey = src.donor.ghost.ckey
 							newmind.key = src.donor.ghost.key
@@ -511,7 +513,7 @@
 							src.donor.ghost.mind = newmind
 							myBrain.setOwner(newmind)
 					else if (src.donor.key)
-						logTheThing("debug", null, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
+						logTheThing(LOG_DEBUG, null, "<b>Mind</b> drop_organ forced to create new mind for key \[[src.donor.key]]")
 						var/datum/mind/newmind = new
 						newmind.ckey = src.donor.ckey
 						newmind.key = src.donor.key
@@ -529,7 +531,7 @@
 
 			if ("left_eye")
 				if (!src.left_eye)
-					return 0
+					return null
 				var/obj/item/organ/eye/myLeftEye = src.left_eye
 				myLeftEye.set_loc(location)
 				myLeftEye.on_removal()
@@ -541,7 +543,7 @@
 
 			if ("right_eye")
 				if (!src.right_eye)
-					return 0
+					return null
 				var/obj/item/organ/eye/myRightEye = src.right_eye
 				myRightEye.set_loc(location)
 				myRightEye.on_removal()
@@ -553,7 +555,7 @@
 
 			if ("chest")
 				if (!src.chest)
-					return 0
+					return null
 				var/obj/item/organ/chest/myChest = src.chest
 				myChest.set_loc(location)
 				myChest.on_removal()
@@ -564,7 +566,7 @@
 
 			if ("heart")
 				if (!src.heart)
-					return 0
+					return null
 				var/obj/item/organ/heart/myHeart = src.heart
 				//Commented this out for some reason I forget. I'm sure I'll remember what it is one day. -kyle
 				// if (src.heart.robotic)
@@ -580,7 +582,7 @@
 
 			if ("left_lung")
 				if (!src.left_lung)
-					return 0
+					return null
 				var/obj/item/organ/lung/left/myLeftLung = src.left_lung
 				myLeftLung.set_loc(location)
 				myLeftLung.on_removal()
@@ -593,7 +595,7 @@
 
 			if ("right_lung")
 				if (!src.right_lung)
-					return 0
+					return null
 				var/obj/item/organ/lung/right/myRightLung = src.right_lung
 				myRightLung.set_loc(location)
 				myRightLung.on_removal()
@@ -606,7 +608,7 @@
 
 			if ("butt")
 				if (!src.butt)
-					return 0
+					return null
 				var/obj/item/clothing/head/butt/myButt = src.butt
 				myButt.set_loc(location)
 				myButt.holder = null
@@ -618,7 +620,7 @@
 
 			if ("left_kidney")
 				if (!src.left_kidney)
-					return 0
+					return null
 				var/obj/item/organ/kidney/left/myleft_kidney = src.left_kidney
 				myleft_kidney.set_loc(location)
 				myleft_kidney.on_removal()
@@ -630,7 +632,7 @@
 
 			if ("right_kidney")
 				if (!src.right_kidney)
-					return 0
+					return null
 				var/obj/item/organ/kidney/right/myright_kidney = src.right_kidney
 				myright_kidney.set_loc(location)
 				myright_kidney.on_removal()
@@ -642,7 +644,7 @@
 
 			if ("liver")
 				if (!src.liver)
-					return 0
+					return null
 				var/obj/item/organ/liver/myliver = src.liver
 				myliver.set_loc(location)
 				myliver.on_removal()
@@ -654,7 +656,7 @@
 
 			if ("stomach")
 				if (!src.stomach)
-					return 0
+					return null
 				var/obj/item/organ/stomach/mystomach = src.stomach
 				mystomach.set_loc(location)
 				mystomach.on_removal()
@@ -666,7 +668,7 @@
 
 			if ("intestines")
 				if (!src.intestines)
-					return 0
+					return null
 				var/obj/item/organ/intestines/myintestines = src.intestines
 				myintestines.set_loc(location)
 				myintestines.on_removal()
@@ -678,7 +680,7 @@
 
 			if ("spleen")
 				if (!src.spleen)
-					return 0
+					return null
 				var/obj/item/organ/spleen/myspleen = src.spleen
 				myspleen.set_loc(location)
 				myspleen.on_removal()
@@ -690,7 +692,7 @@
 
 			if ("pancreas")
 				if (!src.pancreas)
-					return 0
+					return null
 				var/obj/item/organ/pancreas/mypancreas = src.pancreas
 				mypancreas.set_loc(location)
 				mypancreas.on_removal()
@@ -702,7 +704,7 @@
 
 			if ("appendix")
 				if (!src.appendix)
-					return 0
+					return null
 				var/obj/item/organ/appendix/myappendix = src.appendix
 				myappendix.set_loc(location)
 				myappendix.on_removal()
@@ -714,7 +716,7 @@
 
 			if ("tail")
 				if (!src.tail)
-					return 0
+					return null
 				var/obj/item/organ/tail/mytail = src.tail
 				mytail.set_loc(location)
 				mytail.on_removal()
@@ -826,10 +828,15 @@
 						H.wear_mask = newHead.wear_mask
 						newHead.wear_mask.set_loc(H)
 						newHead.wear_mask = null
-					if (isskeleton(H) && newHead.head_type == HEAD_SKELETON)
+
+					if (isskeleton(H))
 						var/datum/mutantrace/skeleton/S = H.mutantrace
-						S.set_head(newHead)
-					H.set_eye(null)
+						if (newHead.head_type == HEAD_SKELETON) // only set head / reset eye if we can link to it
+							S.set_head(newHead)
+							H.set_eye(null)
+					else
+						H.set_eye(null)
+
 				src.donor.update_body()
 				src.donor.UpdateDamageIcon()
 				src.donor.update_clothing()
@@ -865,10 +872,30 @@
 				boutput(src.donor, "<span class='alert'><b>You feel yourself forcibly ejected from your corporeal form!</b></span>")
 				src.donor.ghostize()
 				if (newBrain.owner)
-					newBrain.owner.transfer_to(src.donor)
+					var/mob/G
+					G = find_ghost_by_key(newBrain?.owner?.key)
+					if (G)
+						if (!isdead(G)) // so if they're in VR, the afterlife bar, or a ghostcritter
+							G.show_text("<span class='notice'>You feel yourself being pulled out of your current plane of existence!</span>")
+							G.ghostize()?.mind?.transfer_to(src.donor)
+						else
+							G.show_text("<span class='alert'>You feel yourself being dragged out of the afterlife!</span>")
+							G.mind?.transfer_to(src.donor)
 				newBrain.op_stage = op_stage
 				src.brain = newBrain
 				src.head.brain = newBrain
+
+				// if the head has an skeleton, and we're not taking it, eject the skeleton out of the head
+				if (src.head.head_type == HEAD_SKELETON)
+					var/mob/living/carbon/human/H = src.head.linked_human
+					if (H && (!isskeleton(src.donor) && H != src.donor))
+						var/datum/mutantrace/skeleton/S = H?.mutantrace
+						S.head_tracker = null
+						H.set_eye(null)
+						src.head.UnregisterSignal(src.head.linked_human, COMSIG_CREATE_TYPING)
+						src.head.UnregisterSignal(src.head.linked_human, COMSIG_REMOVE_TYPING)
+						src.head.UnregisterSignal(src.head.linked_human, COMSIG_SPEECH_BUBBLE)
+
 				newBrain.set_loc(src.donor)
 				newBrain.holder = src
 				organ_list["brain"] = newBrain
@@ -1129,7 +1156,7 @@
 			if (istype(I, /obj/item/organ))
 				var/obj/item/organ/O = I
 				O.on_transplant(src.donor)
-			if (is_full_robotic())
+			if (is_full_robotic() && !istype(src.donor:mutantrace, /datum/mutantrace/cyberman))
 				donor.unlock_medal("Spaceship of Theseus", 1)
 			return 1
 
@@ -1159,7 +1186,10 @@
 	//change stamina modifies based on amount of working lungs. lungs w/ health > 0
 	//lungs_changed works like this: if lungs_changed is != the num of working lungs, then apply the stamina modifier
 	proc/handle_lungs_stamina(var/mult = 1)
+		if(QDELETED(donor)) return
 		var/working_lungs = src.get_working_lung_amt()
+		if (ischangeling(src.donor)) //we cheat
+			working_lungs = 2
 		switch (working_lungs)
 			if (0)
 				if (working_lungs != lungs_changed)
@@ -1350,7 +1380,7 @@
 	cooldown = 0
 	last_cast = 0
 	preferred_holder_type = /datum/abilityHolder/organ
-	var/disabled = 0
+	disabled = 0
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
 	var/obj/item/organ/linked_organ = null
@@ -1410,11 +1440,11 @@
 			return 1
 		actions.interrupt(holder.owner, INTERRUPT_ACT)
 		if (ismob(target))
-			logTheThing("combat", holder.owner, target, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [constructTarget(target,"combat")].")
 		else if (target)
-			logTheThing("combat", holder.owner, null, "used ability [src.name] ([src.linked_organ]) on [target].")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]) on [target].")
 		else
-			logTheThing("combat", holder.owner, null, "used ability [src.name] ([src.linked_organ]).")
+			logTheThing(LOG_COMBAT, holder.owner, "used ability [src.name] ([src.linked_organ]).")
 		return 0
 
 /datum/targetable/organAbility/eyebeam
@@ -1455,16 +1485,16 @@
 		var/mult = src.eye_proj == /datum/projectile/laser/eyebeams ? 1 : 0
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> shoots [mult ? "eye beams" : "an eye beam"]!</span>")
 		var/datum/projectile/PJ = new eye_proj
-		shoot_projectile_ST(holder.owner, PJ, T)
+		shoot_projectile_ST_pixel_spread(holder.owner, PJ, T)
 
 /datum/projectile/laser/eyebeams/left
 	icon_state = "eyebeamL"
-	power = 10
+	damage = 10
 	cost = 10
 
 /datum/projectile/laser/eyebeams/right
 	icon_state = "eyebeamR"
-	power = 10
+	damage = 10
 	cost = 10
 
 /datum/targetable/organAbility/meson

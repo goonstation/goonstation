@@ -1,0 +1,2 @@
+/obj/grille/catwalk/cross : /obj/grille/catwalk
+/obj/grille/catwalk/jen/@SUBTYPES : /obj/grille/catwalk/jen

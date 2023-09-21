@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/timer)
+	mats = 2
+
 /obj/item/device/timer
 	name = "timer"
 	icon_state = "timer0"
@@ -11,7 +14,6 @@
 	flags = FPRINT | TABLEPASS| CONDUCT
 	w_class = W_CLASS_SMALL
 	m_amt = 100
-	mats = 2
 	desc = "A device that emits a signal when the time reaches 0."
 
 /obj/item/device/timer/proc/time()
@@ -48,7 +50,7 @@
 
 		if (src.time > 0)
 			src.time -= passed_time
-			if(time<5)
+			if(time < 5 SECONDS)
 				src.c_state(2)
 			else
 				// they might increase the time while it is timing
@@ -123,19 +125,19 @@
 				processing_items |= src
 
 			if (istype(master, /obj/item/device/transfer_valve))
-				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
+				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a transfer valve at [log_loc(src.master)].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 			else if (istype(src.master, /obj/item/assembly/time_ignite)) //Timer-detonated beaker assemblies
 				var/obj/item/assembly/rad_ignite/RI = src.master
-				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a timer-igniter assembly at [log_loc(src.master)]. Contents: [log_reagents(RI.part3)]")
+				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a timer-igniter assembly at [log_loc(src.master)]. Contents: [log_reagents(RI.part3)]")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 			else if(istype(src.master, /obj/item/assembly/time_bomb))	//Timer-detonated single-tank bombs
-				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
+				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
 				message_admins("[key_name(usr)] [timing ? "initiated" : "defused"] a timer on a single-tank bomb at [log_loc(src.master)].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 			else if (istype(src.master, /obj/item/mine)) // Land mine.
-				logTheThing("bombing", usr, null, "[timing ? "initiated" : "defused"] a timer on a [src.master.name] at [log_loc(src.master)].")
+				logTheThing(LOG_BOMBING, usr, "[timing ? "initiated" : "defused"] a timer on a [src.master.name] at [log_loc(src.master)].")
 				SEND_SIGNAL(src.master, "[timing ? COMSIG_ITEM_BOMB_SIGNAL_START : COMSIG_ITEM_BOMB_SIGNAL_CANCEL]")
 			. = TRUE
 

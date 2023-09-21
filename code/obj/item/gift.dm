@@ -40,7 +40,7 @@
 				if(user_choice == "Cancel")
 					return
 				if(!(user_choice == "Wrap"))
-					var/a_used = 2 ** (src.w_class - 1)
+					var/a_used = round(2 ** (src.w_class - 1))
 					if (src.amount < a_used)
 						boutput(user, "<span class='notice'>You need more paper!</span>")
 						return
@@ -60,7 +60,7 @@
 			if(istype(W, /obj/item/phone_handset/))
 				boutput(user, "<span class='notice'>You can't wrap that, it has a cord attached!</span>")
 				return
-			var/a_used = 2 ** (src.w_class - 1)
+			var/a_used = round(2 ** (src.w_class - 1))
 			if (src.amount < a_used)
 				boutput(user, "<span class='notice'>You need more paper!</span>")
 				return
@@ -68,12 +68,7 @@
 				src.amount -= a_used
 				tooltip_rebuild = 1
 				user.drop_item()
-				var/obj/item/gift/G = new /obj/item/gift(src.loc)
-				G.size = W.w_class
-				G.w_class = G.size + 1
-				G.icon_state = "gift[clamp(G.size, 1, 3)]-[src.style]"
-				G.gift = W
-				W.set_loc(G)
+				var/obj/item/gift/G = W.gift_wrap(src.style)
 				G.add_fingerprint(user)
 				W.add_fingerprint(user)
 				src.add_fingerprint(user)
@@ -110,13 +105,13 @@
 		else
 			boutput(user, "<span class='notice'>You need more paper.</span>")
 	else
-		boutput(user, "They're moving around too much.")
+		boutput(user, "<span class='alert'>[hes_or_shes(target)] moving around too much.</span>")
 
 /obj/item/gift
 	desc = "For me!?"
 	name = "gift"
 	icon = 'icons/obj/items/items.dmi'
-	icon_state = "gift2-p"
+	icon_state = "gift2-g"
 	item_state = "gift"
 	var/size = 3
 	var/obj/item/gift = null
@@ -124,6 +119,12 @@
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
+	var/random_icons = TRUE
+
+	New()
+		. = ..()
+		if (src.random_icons)
+			src.icon_state = "[(prob(1) && prob(1)) ? "strange" : "gift[rand(1,3)]"]-[pick("r", "rs", "g", "gs")]"
 
 /obj/item/gift/attack_self(mob/user as mob)
 	if(!src.gift)
@@ -275,7 +276,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/pen/crayon/rainbow,
 	/obj/item/storage/box/crayon,
 	/obj/item/device/light/zippo/gold,
-	/obj/item/spacecash/random/really_small,
+	/obj/item/currency/spacecash/really_small,
 	/obj/item/rubberduck,
 	/obj/item/rubber_hammer,
 	/obj/item/bang_gun,
@@ -323,6 +324,7 @@ var/global/list/generic_gift_paths = list(/obj/item/basketball,
 	/obj/item/storage/box/bacon_kit,
 	/obj/item/storage/box/balloonbox,
 	/obj/item/storage/box/nerd_kit,
+	/obj/item/storage/box/nerd_kit/stationfinder,
 	/obj/item/storage/fanny/funny,
 	/obj/item/storage/firstaid/regular,
 	/obj/item/storage/pill_bottle/cyberpunk,
@@ -338,7 +340,7 @@ var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,
 	/obj/item/old_grenade/moustache,
 	/obj/item/clothing/head/oddjob,
 	/obj/item/clothing/mask/anime,
-	/obj/item/clothing/under/gimmick,
+	/obj/item/clothing/under/gimmick/sailor,
 	/obj/item/clothing/suit/armor/sneaking_suit,
 	/obj/item/kitchen/everyflavor_box,
 	/obj/item/medical/bruise_pack/cyborg,
@@ -358,7 +360,7 @@ var/global/list/questionable_generic_gift_paths = list(/obj/item/relic,
 	/obj/item/gun/kinetic/beepsky,
 	/obj/item/gun/kinetic/gungun,
 #endif
-	/obj/item/spacecash/random/small)
+	/obj/item/currency/spacecash/small)
 
 var/global/list/xmas_gift_paths = list(/obj/item/clothing/suit/sweater,
 	/obj/item/clothing/suit/sweater/red,

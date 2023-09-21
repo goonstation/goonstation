@@ -11,7 +11,7 @@
 	var/item_off = "sparkler-off"
 	w_class = W_CLASS_TINY
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	opacity = 0
 	col_r = 0.7
 	col_g = 0.3
@@ -89,7 +89,7 @@
 		if (!src) return
 		if (burnt) return
 		if (!src.on)
-			logTheThing("combat", user, null, "lights the [src] at [log_loc(src)].")
+			logTheThing(LOG_STATION, user, "lights the [src] at [log_loc(src)].")
 			src.on = 1
 			src.hit_type = DAMAGE_BURN
 			src.force = 3
@@ -126,13 +126,13 @@
 	var/open = 0
 
 	attack_hand(mob/user)
-		if (src.loc == user && (!does_not_open_in_pocket || src == user.l_hand || src == user.r_hand))
+		if (src.loc == user && (opens_if_worn || src == user.l_hand || src == user.r_hand))
 			if(src.open)
 				..()
 			else
 				src.open = 1
 				src.icon_state = "sparkler_box-open"
-				playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 20, 1, -2)
 				boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 		else
 			..()
@@ -143,7 +143,7 @@
 		else
 			src.open = 1
 			src.icon_state = "sparkler_box-open"
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 20, 1, -2)
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 20, 1, -2)
 			boutput(user, "<span class='notice'>You snap open the child-protective safety tape on [src].</span>")
 
 	mouse_drop(atom/over_object, src_location, over_location)

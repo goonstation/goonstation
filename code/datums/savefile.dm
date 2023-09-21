@@ -62,6 +62,7 @@
 		F["[profileNum]_flavor_text"] << src.flavor_text
 		F["[profileNum]_medical_note"] << src.medical_note
 		F["[profileNum]_security_note"] << src.security_note
+		F["[profileNum]_synd_int_note"] << src.synd_int_note
 
 		// Randomize appearances
 		F["[profileNum]_name_is_always_random"] << src.be_random_name
@@ -102,6 +103,7 @@
 		F["[profileNum]_be_blob"] << src.be_blob
 		F["[profileNum]_be_conspirator"] << src.be_conspirator
 		F["[profileNum]_be_flock"] << src.be_flock
+		F["[profileNum]_be_salvager"] << src.be_salvager
 		F["[profileNum]_be_misc"] << src.be_misc
 
 		// UI settings. Ehhhhh.
@@ -110,8 +112,6 @@
 
 		if(src.traitPreferences.isValid())
 			F["[profileNum]_traits"] << src.traitPreferences.traits_selected
-
-
 
 		// Global options
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
@@ -132,6 +132,9 @@
 		F["flying_chat_hidden"] << src.flying_chat_hidden
 		F["auto_capitalization"] << src.auto_capitalization
 		F["local_deachat"] << src.local_deadchat
+
+		F["tgui_fancy"] << src.tgui_fancy
+		F["tgui_lock"] << src.tgui_lock
 
 		if (returnSavefile)
 			return F
@@ -226,6 +229,7 @@
 		F["[profileNum]_flavor_text"] >> src.flavor_text
 		F["[profileNum]_medical_note"] >> src.medical_note
 		F["[profileNum]_security_note"] >> src.security_note
+		F["[profileNum]_synd_int_note"] >> src.synd_int_note
 
 		// Randomization options
 		F["[profileNum]_name_is_always_random"] >> src.be_random_name
@@ -291,6 +295,7 @@
 		F["[profileNum]_be_blob"] >> src.be_blob
 		F["[profileNum]_be_conspirator"] >> src.be_conspirator
 		F["[profileNum]_be_flock"] >> src.be_flock
+		F["[profileNum]_be_salvager"] >> src.be_salvager
 		F["[profileNum]_be_misc"] >> src.be_misc
 
 		// UI settings...
@@ -319,6 +324,11 @@
 		F["flying_chat_hidden"] >> src.flying_chat_hidden
 		F["auto_capitalization"] >> src.auto_capitalization
 		F["local_deachat"] >> src.local_deadchat
+
+		F["tgui_fancy"] >> src.tgui_fancy
+		if(isnull(src.tgui_fancy))
+			src.tgui_fancy = 1
+		F["tgui_lock"] >> src.tgui_lock
 
 
 		if (isnull(src.name_first) || !length(src.name_first) || isnull(src.name_last) || !length(src.name_last))
@@ -355,9 +365,9 @@
 
 		if (!src.traitPreferences.isValid())
 			src.traitPreferences.traits_selected.Cut()
-			src.traitPreferences.calcTotal()
 			tgui_alert(user, "Your traits couldn't be loaded. Please reselect your traits.", "Reselect traits")
 
+		src.traitPreferences.updateTotal()
 
 		if(!src.radio_music_volume) // We can take this out some time, when we're decently sure that most people will have this var set to something
 			F["[profileNum]_sounds"] >> src.radio_music_volume
@@ -431,7 +441,7 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [user.ckey]")
+			logTheThing(LOG_DEBUG, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [user.ckey]")
 			return
 
 		var/list/ret = json_decode(response.body)
@@ -451,7 +461,7 @@
 			if (IsGuestKey( user.key ))
 				return 0
 			if (save_to)
-				CRASH("Tried to save a cloud save with a client and a key to save to specified- need one or the")
+				CRASH("Tried to save a cloud save with a client and a key to save to specified- need one or the other")
 
 		var/savefile/save = src.savefile_save(ckey(save_to) || user.ckey, 1, 1)
 		var/exported = save.ExportText()
@@ -464,7 +474,7 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [save_to || user.ckey]")
+			logTheThing(LOG_DEBUG, null, "<b>cloudsave_load:</b> Failed to contact goonhub. u: [save_to || user.ckey]")
 			return
 
 		var/list/ret = json_decode(response.body)
@@ -483,7 +493,7 @@
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			logTheThing("debug", null, null, "<b>cloudsave_delete:</b> Failed to contact goonhub. u: [user.ckey]")
+			logTheThing(LOG_DEBUG, null, "<b>cloudsave_delete:</b> Failed to contact goonhub. u: [user.ckey]")
 			return
 
 		user.player.cloudsaves.Remove( name )

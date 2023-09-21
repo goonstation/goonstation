@@ -230,7 +230,7 @@
 
 	name = "railway vehicle"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/road_rage_force = 40
 
 	New()
@@ -334,12 +334,12 @@
 			for (var/mob/living/M in dest_t)
 				M.TakeDamageAccountArmor("chest", src.road_rage_force, 0)
 				M.visible_message("<span class='alert'><b>[M] was hit by [src]!</b></span>", "<span class='alert'><b>You were hit by [src]!</b></span>")
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				M.throw_at(get_edge_target_turf(M, knock_dir), 10, 2)
 			for (var/obj/O in dest_t)
 				if (O == src || istype(O, /obj/railway) || !O.density)
 					continue
-				playsound(src.loc, "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 40, 1)
+				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
 				if (O.anchored && magically_destructive)
 					visible_message("<span class='alert'><b>[src] crashes into [O].</b></span>")
 					qdel(O)
@@ -379,7 +379,7 @@
 		var/dump_angle = 90
 
 		on_trigger()
-			if (contents.len > 0)
+			if (length(contents) > 0)
 				var/dump_dir = turn(dir, dump_angle)
 				var/turf/T = get_step(loc, dump_dir)
 				for (var/atom/movable/AM in src)

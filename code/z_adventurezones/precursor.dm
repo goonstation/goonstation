@@ -19,16 +19,18 @@
 	skip_sims = 1
 	sims_score = 30
 	sound_group = "ice_moon"
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/ice_moon
+	occlude_foreground_parallax_layers = TRUE
 
 /area/upper_arctic/pod1
-	name = "Outpost Theta Pod One"
+	name = "Outpost Theta Pod One Upper Level"
 	icon_state = "green"
 	sound_environment = 3
 	skip_sims = 1
 	sims_score = 30
 
 /area/lower_arctic/pod1
-	name = "Outpost Theta Pod One"
+	name = "Outpost Theta Pod One Lower Level"
 	icon_state = "green"
 	sound_environment = 3
 	skip_sims = 1
@@ -59,7 +61,7 @@
 	sims_score = 30
 
 /area/upper_arctic/mining
-	name = "Glacier Access"
+	name = "Glacier Access Upper Level"
 	icon_state = "dk_yellow"
 	sound_environment = 2
 	sound_environment = 2
@@ -67,7 +69,7 @@
 	sims_score = 30
 
 /area/lower_arctic/mining
-	name = "Glacier Access"
+	name = "Glacier Access Lower Level"
 	icon_state = "dk_yellow"
 	sound_environment = 2
 	sound_environment = 2
@@ -78,9 +80,7 @@
 	sound_environment = 15
 	skip_sims = 1
 	sims_score = 30
-	New()
-		..()
-		overlays += image(icon = 'icons/turf/areas.dmi', icon_state = "snowverlay", layer = EFFECTS_LAYER_BASE)
+	occlude_foreground_parallax_layers = FALSE
 
 /area/upper_arctic/exterior/surface
 	name = "Ice Moon Surface"
@@ -159,6 +159,7 @@
 /obj/item/hell_sax
 	name = "curious instrument"
 	desc = "It appears to be a musical instrument of some sort."
+	interesting = "Scans detect: COBRYL | IRIDIUM *** UNUSUAL RESONANT PROPERTIES"
 	icon = 'icons/obj/artifacts/artifactsitem.dmi'
 	icon_state = "precursor-1" // temp
 	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
@@ -218,10 +219,10 @@
 			if(12)
 				horn_note = 'sound/musical_instruments/WeirdHorn_12.ogg'
 
-		playsound(src, horn_note, 50, 0)
+		playsound(src, horn_note, 50, FALSE)
 		for(var/atom/A in range(user, 5))
-			if(istype(A, /obj/critter/dog/george))
-				var/obj/critter/dog/george/G = A
+			if(istype(A, /mob/living/critter/small_animal/dog/george))
+				var/mob/living/critter/small_animal/dog/george/G = A
 				if(prob(60))
 					G.howl()
 			if(ishuman(A))
@@ -262,7 +263,7 @@
 
 	attackby(obj/item/W, mob/user)
 	/*	if (istype(W,/obj/item/skull)) // placeholder
-			playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 50, 1)
+			playsound(src.loc, 'sound/machines/ArtifactPre1.ogg', 50, 1)
 			src.visible_message("<span class='notice'><b>Something activates inside [src]!</b></span>")
 
 			if (id)
@@ -288,6 +289,7 @@
 	desc = "Neat."
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "orb"
+	interesting = "Scans detect: COBRYL | IRIDIUM | BOSE-EINSTEIN CONDENSATE | RHYDBERG MATTER"
 	var/id = "ENTRY" // default
 
 /obj/precursor_puzzle/orb_stand
@@ -295,8 +297,9 @@
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "orb_holder"
 	desc = "It seems to be missing something."
+	interesting = "Scans detect: COBRYL | IRIDIUM | BOSE-EINSTEIN CONDENSATE | RHYDBERG MATTER"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/id = 1
 	var/target_id = 1
 	var/assembled = 0
@@ -336,7 +339,7 @@
 
 		SPAWN(1 DECI SECOND)
 			src.ready = 0 // disable momentarily to prevent spamming
-			user.visible_message("<span class='alert'><b>[user] is warped away by [src]! Holy shit!</b></span>")
+			user.visible_message("<span class='alert'><b>[user] is blasted away somewhere by [src]! Holy shit!</b></span>")
 			var/otherside = get_turf(other)
 			user.set_loc(otherside)
 			explosion(src,src.loc,-1,-1,1,2)
@@ -357,14 +360,14 @@
 			var/obj/item/chilly_orb/O = W
 			if(O.id == src.id)
 				boutput(user, "<span class='notice'><b>[O] attaches neatly to [src]. Oh dear.</span>")
-				playsound(src.loc, "sound/items/Deconstruct.ogg", 60, 1)
+				playsound(src.loc, 'sound/items/Deconstruct.ogg', 60, 1)
 				user.drop_item(O)
 				O.set_loc(src)
 				src.icon_state = "orb_activated"
 				src.assembled = 1
 				sleep(0.5 SECONDS)
 				src.visible_message("<span class='notice'><b>[src] makes a strange noise!</b></span>")
-				playsound(src.loc, "sound/machines/ArtifactPre1.ogg", 60, 1)
+				playsound(src.loc, 'sound/machines/ArtifactPre1.ogg', 60, 1)
 				src.ready = 1
 				return
 			else
@@ -375,8 +378,8 @@
 			sleep(0.1 SECONDS)
 			user.visible_message("<span class='alert'><b>[W] violently pops! Way to go, jerk!</span>")
 			user.drop_item(W)
-			playsound(src.loc, "sound/impact_sounds/Metal_Hit_Heavy_1.ogg", 75, 1)
-			playsound(src.loc, "sound/machines/hiss.ogg", 75, 1)
+			playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 75, 1)
+			playsound(src.loc, 'sound/machines/hiss.ogg', 75, 1)
 			explosion(src, src.loc, -1,-1,1,1)
 			user:emote("scream")
 			qdel(W)
@@ -388,11 +391,11 @@
 
 /obj/precursor_puzzle/glowing_door
 	name = "glowing edifice"
-	desc = "You can faintly make out a pattern of fissures and seams along the surface."
+	desc = "You can faintly make out a pattern of fissures and glowing seams along the surface."
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "bluedoor_1"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 	var/active = 0
 	var/opened = 0
@@ -455,12 +458,12 @@
 			opened = 1
 			changing_state = 1
 			active = (opened != default_state)
-			playsound(src.loc, "sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
+			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 			src.visible_message("<b>[src] slides open.</b>")
 			flick("bluedoor_opening",src)
 			src.icon_state = "bluedoor_0"
 			set_density(0)
-			opacity = 0
+			set_opacity(0)
 			SPAWN(1.3 SECONDS)
 				changing_state = 0
 			return
@@ -475,8 +478,8 @@
 			active = (opened != default_state)
 
 			set_density(1)
-			opacity = 1
-			playsound(src.loc,"sound/impact_sounds/Stone_Scrape_1.ogg", 50, 1)
+			set_opacity(1)
+			playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 50, 1)
 			src.visible_message("<b>[src] slides shut.</b>")
 			flick("bluedoor_closing",src)
 			src.icon_state = "bluedoor_1"
@@ -515,7 +518,7 @@
 	icon = 'icons/obj/artifacts/artifacts.dmi'
 	icon_state = "precursor-2"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 	var/active = 0
 	var/list/pitches = list()
@@ -568,10 +571,10 @@
 						return
 					light.enable()
 					src.animate_effect()
-					playsound(src.loc, "sound/effects/warp1.ogg", 65, 1)
+					playsound(src.loc, 'sound/effects/warp1.ogg', 65, 1)
 					src.visible_message("<span class='alert'><b>[src]</b> charges up!</span>")
 					sleep(0.5 SECONDS)
-					playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+					playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 					var/list/lineObjs
 					lineObjs = DrawLine(src, linked_object, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
@@ -584,7 +587,7 @@
 						random_burn_damage(poorSoul, 15) // let's not be too mean
 						boutput(poorSoul, "<span class='alert'><B>You feel a powerful shock course through your body!</B></span>")
 						poorSoul.unlock_medal("HIGH VOLTAGE", 1)
-						poorSoul:Virus_ShockCure(poorSoul, 100)
+						poorSoul:Virus_ShockCure(100)
 						poorSoul:shock_cyberheart(100)
 						poorSoul:weakened += rand(1,2)*/
 						if (isdead(poorSoul) && prob(15))
@@ -619,12 +622,13 @@
 /obj/precursor_puzzle/rotator
 	name = "peculiar machine"
 	desc = "It looks like it can be moved somehow."
+	interesting = "Scans detect: COBRYL | IRIDIUM | BOSE-EINSTEIN CONDENSATE | RYDBERG MATTER"
 	icon = 'icons/obj/artifacts/artifacts.dmi'
 	icon_state = "precursor-6"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
-	dir = 4 // facing right or left
+	dir = EAST // facing right or left
 	var/active = 0
 	var/id = 1
 	var/obj/precursor_puzzle/controller/linked_controller = null
@@ -663,13 +667,13 @@
 		src.active = 1
 
 		src.visible_message("<span class='notice'><b>[user] turns [src].</b></span>")
-		playsound(src.loc, "sound/effects/stoneshift.ogg", 60, 1)
+		playsound(src.loc, 'sound/effects/stoneshift.ogg', 60, 1)
 		src.icon = 'icons/obj/artifacts/puzzles.dmi'
 		src.icon_state = "column_spin"
 		sleep(1 SECOND)
 		src.icon = 'icons/obj/artifacts/artifacts.dmi'
 		src.icon_state = "precursor-6"
-		playsound(src.loc, "sound/machines/click.ogg", 60, 1)
+		playsound(src.loc, 'sound/machines/click.ogg', 60, 1)
 
 		switch(src.setting) // roll to next color
 			if("red")
@@ -714,7 +718,7 @@
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "controller_on"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 1
 	var/active = 0
 	var/id = 1
@@ -799,15 +803,15 @@
 			if(src.linked_shields.len)
 				if(setting_red == target_red)
 					src.visible_message("<span class='notice'><b>[src]</b> beeps oddly.</span>")
-					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
+					playsound(src.loc, 'sound/machines/twobeep.ogg', 50,1)
 					sleep(0.2 SECONDS)
 				if(setting_green == target_green)
 					src.visible_message("<span class='notice'><b>[src]</b> beeps strangely.</span>")
-					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
+					playsound(src.loc, 'sound/machines/twobeep.ogg', 50,1)
 					sleep(0.2 SECONDS)
 				if(setting_blue == target_blue)
 					src.visible_message("<span class='notice'><b>[src] beeps curiously.</span>")
-					playsound(src.loc,"sound/machines/twobeep.ogg",50,1)
+					playsound(src.loc, 'sound/machines/twobeep.ogg', 50,1)
 					sleep(0.2 SECONDS)
 
 				Z_LOG_INFO("Adventure/Precursor", "Puzzle value: [setting_red] [setting_green] [setting_blue] ([target_red] [target_green] [target_blue])")
@@ -827,12 +831,12 @@
 
 
 /obj/precursor_puzzle/shield
-	name = "energy barrier"
+	name = "rydberg-matter barrier"
 	desc = "It's pretty solid, somehow."
 	icon = 'icons/effects/effects.dmi'
 	icon_state = "shield1"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	var/active = 0
 	var/id = 1
@@ -861,7 +865,7 @@
 				src.set_density(1)
 				src.invisibility = INVIS_NONE
 				changing_state = 1
-				playsound(src.loc, "sound/effects/shielddown.ogg", 60, 1)
+				playsound(src.loc, 'sound/effects/shielddown.ogg', 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers up!</b></span>")
 				light.enable()
 
@@ -876,7 +880,7 @@
 				src.active = 0
 				src.set_density(0)
 				src.invisibility = INVIS_ALWAYS_ISH
-				playsound(src.loc, "sound/effects/shielddown2.ogg", 60, 1)
+				playsound(src.loc, 'sound/effects/shielddown2.ogg', 60, 1)
 				src.visible_message("<span class='notice'><b>[src] powers down!</b></span>")
 				changing_state = 1
 				light.disable()
@@ -886,12 +890,13 @@
 			return
 
 /obj/precursor_puzzle/sphere
-	name = "energy sphere"
+	name = "rydberg-matter sphere"
 	desc = "That doesn't look very safe at all."
+	interesting = "Scans detect: BOSE-EINSTEIN CONDENSATE | RYDBERG MATTER *** ELECTROMAGNETIC HAZARD"
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
 	event_handler_flags = USE_PROXIMITY
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/id = 1
@@ -932,7 +937,7 @@
 				boutput(user, "<span class='notice'>You feel electricity course through you harmlessly!</span>")
 				return
 
-			user.TakeDamage(user.hand == 1 ? "l_arm" : "r_arm", 0, shock_damage)
+			user.TakeDamage(user.hand == LEFT_HAND ? "l_arm" : "r_arm", 0, shock_damage)
 			boutput(user, "<span class='alert'><B>You feel a powerful shock course through your body sending you flying!</B></span>")
 			user.unlock_medal("HIGH VOLTAGE", 1)
 			user.Virus_ShockCure(100)
@@ -980,7 +985,7 @@
 
 /obj/portrait_sneaky
 	name = "crooked portrait"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/decals/wallsigns.dmi'
 	icon_state = "portrait"
 	desc = "A portrait of a man wearing a ridiculous merchant hat. That must be Discount Dan."
@@ -992,7 +997,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (ispryingtool(W))
-			playsound(src.loc, "sound/items/Crowbar.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			boutput(user, "<span class='notice'><b>You pry [src] off the wall, destroying it! You jerk!</b></span>")
 			new /obj/decal/woodclutter(src.loc)
 			new /obj/item/storage/secure/ssafe/martian(src.loc)
@@ -1004,177 +1009,9 @@
 			..()
 			return
 
-/obj/critter/shade
-	name = "darkness"
-	desc = "Oh god."
-	icon_state = "shade"
-	dead_state = "shade" //doesn't have a dead icon, just fades away
-	death_text = null //has special spooky voice lines
-	health = 10
-	brutevuln = 0.5
-	firevuln = 0
-	aggressive = 1
-	generic = 0
-
-
-	attack_hand(var/mob/user)
-		if (user.a_intent == "help")
-			return
-
-		..()
-
-	ChaseAttack(mob/M)
-		return
-
-	CritterAttack(mob/M)
-		if (!ismob(M))
-			return
-
-		src.attacking = 1
-
-		if (M.lying)
-			src.speak( pick("me-�m ina men-an-uras-a?", "e-z� ina gu-sum... e-z� ina g�-ri-ta!", "e-z� n�-gig, e-z� n�-d�m-d�m-ma, e-z� �u...bar ina libir lugar!", "namlugallu-zu-ne-ne inim-dirig, namgallu-zu-ne-ne inim-b�r-ra, izi te-en ina an!", "ri azag, ri azag, ri azag, ri �rim, ri e-z�!", "e-z�, �rim diir-da...nu-me-a.") )
-			// where is the crown of heaven and earth // you are from the writing... you are from the other side // you abominations, created creatures, you let loose the ancient king
-			// mankind's hubris, mankind's breach of treaty extinguished the heavens // banish the taboo, banish the taboo, banish you // you, enemy, without a god
-			src.visible_message("<span class='alert'><B>[src]</B> takes hold of [M]!</span>")
-			boutput(M, "<span class='alert'><b>It burns!</b></span>")
-			M.TakeDamage("chest", 0, rand(5,15))
-		else
-			src.speak( pick("an-z�, bar ina k�, ina k�! ina k�-bar-ra!", "hul-�l. l��r-l�-ene ina im-dugud-ene. n-ene. e-z�.", "ki-lul-la, ki-in-dar, �-a-nir-ra: urudu e-re-s�-ki-in ina �mun, en-nu-�a-ak ina l��r-l�-ene", "l�-k�r-ra! l�-n�-zuh! l�-ru-g�!", "nu-me-en-na-ta, na!") )
-			// where heaven ends, the gate, the gate! the outer door! // the evil ones, the butchers on the lumps of stone. humans. you. // in the place of murder, in the crevice, in the house of mourning: the copper servant formed of thought guards against the butchers //
-			// stranger! thief! recalcitrant one! // you don't exist, human!
-			src.visible_message("<span class='alert'><B>[src]</B> reaches for [M]!</span>")
-			boutput(M, "<span class='alert'><b>It burns!</b></span>")
-			M.TakeDamage("chest", 0, rand(5,15))
-
-		SPAWN(6 SECONDS)
-			src.attacking = 0
-
-	ai_think()
-		if(task == "thinking" || task == "wandering")
-			if (prob(5))
-				src.speak( pick("namlugallu ha-lam ina lugal-�a�-l�-s�...","� da-r�-s� �e�...","�-e-me-en �ri-z�-er igi-bad!","inim...k� ina ki-dul, ina e-�r, ina ki-bad-r�, h�-�m-me-�m...", "�ri-k�r...d�b, �ri...ar, e-z�...", "galam, gamar ganzer, g�bil p�ri! ul, ul! s�kud...") )
-				// mankind destroyed the merciful king // sleep forever, brethren // i am one who lost my footing and opened my eyes // to seek or find the right words, the armor, the secret point, the distant places, that is our wish // to ascend, overwhelming darkness, burning bright! shine! shine! shine brightly!
-		else
-			if (prob(5))
-				src.speak( pick("ina urudu e-re-s�-ki-in kala libir arza ina S�KUD ZAL.", "i.menden ina nam-ab-ba issa, nam-nu-tar  nam-diir, i.menden l�n�-�a...","bar...gub ina b�d-�ul-hi...","�idim ak ina libir i�gal, diir ak ina agrun, ul-��r-ra, z�-m�!", "�ru p�d g�g, ina gidim niin!") )
-				// the copper servant mends the rights of the FLASH OF DAWN // we are the elder shades, ill-fated divinities, we are the temple servants...// step outside the outer wall
-				// architect of the ancient throne, god of the inner sanctuary, jubilation, praise! // watchfire reveals night, the darkened monstrosity
-				//
-				//
-		return ..()
-
-	CritterDeath()
-		..()
-		speak( pick("��r...�a ina ��r-kug z�h-bi!", "�d, �d, �u...bar...", "n�-nam-nu-kal...", "lugal-me taru, lugal-me galam!", "me-li-e-a...") )
-		// sing the sacred song to the bitter end // go out, exit, release // nothing is precious // our king will return, our king will ascend // woe is me
-		SPAWN(1.5 SECONDS)
-			qdel(src)
-
-	seek_target()
-		src.anchored = 0
-		if (src.target)
-			src.task = "chasing"
-			return
-
-		for (var/mob/living/carbon/C in view(src.seekrange,src))
-			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
-			if (C.stat || C.health < 0) continue
-
-			src.target = C
-			src.oldtarget_name = C.name
-			src.task = "chasing"
-			src.speak( pick("siskur, siskur ina na sukkal...","�ra ina g�g, �� ina ur zal...","l�-�rim! l�-�rim!","� �-zi-ga...bal, na, e-z� ha-lam ina � si-ga...") )
-			// sacrifice, sacrifice the human envoy! // praise the night, kill the servant of light // enemy! enemy! // cursed with violence, human, you ruin the quiet house
-			break
-
-	proc/speak(var/message)
-		if (!message)
-			return
-
-		var/fontSize = 1
-		var/fontIncreasing = 1
-		var/fontSizeMax = 3
-		var/fontSizeMin = -3
-		var/messageLen = length(message)
-		var/list/processedMessage = list()
-
-		for (var/i = 1, i <= messageLen, i++)
-			processedMessage += "<font size=[fontSize]>[copytext(message, i, i+1)]</font>"
-			if (fontIncreasing)
-				fontSize = min(fontSize+1, fontSizeMax)
-				if (fontSize >= fontSizeMax)
-					fontIncreasing = 0
-			else
-				fontSize = max(fontSize-1, fontSizeMin)
-				if (fontSize <= fontSizeMin)
-					fontIncreasing = 1
-
-		src.visible_message("<b>the [src.name]</b> whispers, \"[processedMessage.Join("")]\"")
-		playsound(src.loc, pick('sound/voice/creepywhisper_1.ogg', 'sound/voice/creepywhisper_2.ogg', 'sound/voice/creepywhisper_3.ogg'), 50, 1)
-		return
-
-/obj/critter/shade/scientist
-	name = "faded scientist"
-	desc = "Something is terribly wrong with them."
-	icon = 'icons/mob/human.dmi'
-	icon_state = "body_m"
-	dead_state = "body_m" //doesn't have a dead icon
-	alpha = 192
-	color = "#676767"
-	health = 100
-	var/animating = 0
-	var/jumpsuit = "scientist-alt"
-	var/oversuit = null
-	var/overarmor = null
-
-	New()
-		..()
-		if(jumpsuit)
-			overlays += image('icons/mob/clothing/jumpsuits/worn_js_rank.dmi', "[jumpsuit]")
-		if(oversuit)
-			overlays += image('icons/mob/clothing/overcoats/worn_suit.dmi', "[oversuit]")
-		if(overarmor)
-			overlays += image('icons/mob/clothing/overcoats/worn_suit_armor.dmi', "[jumpsuit]")
-
-	process()
-		..()
-		if (!animating && prob(5))
-			animating = 1
-			animate(src, alpha = 64, time = 10, easing = SINE_EASING)
-			animate(alpha = 192, time = 10, easing = SINE_EASING)
-			SPAWN(2.5 SECONDS)
-				animating = 0
-
-	CritterDeath()
-		if (!alive)
-			return
-		..()
-		particleMaster.SpawnSystem(new /datum/particleSystem/localSmoke("#000000", 5, get_turf(src)))
-		qdel(src)
-
-	lost
-		desc = "Huh? What is this guy doing here?"
-		CritterDeath()
-			if (!alive)
-				return
-			new /obj/item/paper/otp(get_turf(src))
-			..()
-
-	am_research
-		jumpsuit = "robotics-alt"
-		oversuit = "labcoat-o"
-
-	guard
-		name = "faded guard"
-		desc = "Their armor still seems surprisingly functional."
-		health = 250
-		jumpsuit = "darkred"
-		overarmor = "heavy"
-
 /obj/effects/ydrone_summon //WIP
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	var/range = 5
 	var/end_float_effect = 0
 	var/horseneigh = 0 //what am I doing with my life
@@ -1273,18 +1110,18 @@
 
 
 /datum/projectile/laser/precursor/sphere // for precursor traps
-	name = "energy sphere"
+	name = "rydberg-matter sphere"
 	icon = 'icons/obj/artifacts/puzzles.dmi'
 	icon_state = "sphere"
-	power = 75
+	damage = 60
+	stun = 15
 	cost = 75
-	sname = "energy bolt"
+	sname = "rydberg-matter sphere"
 	dissipation_delay = 15
 	shot_sound = 'sound/machines/ArtifactPre1.ogg'
 	color_red = 0.1
 	color_green = 0.3
 	color_blue = 1
-	ks_ratio = 0.8
 
 	on_hit(atom/hit)
 		if (istype(hit, /turf))
@@ -1309,7 +1146,7 @@
 		elec_zap()
 
 	proc/elec_zap()
-		playsound(src, "sound/effects/elec_bigzap.ogg", 40, 1)
+		playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 		var/list/lineObjs
 		for (var/mob/living/poorSoul in range(src, 5))
@@ -1328,7 +1165,7 @@
 		for (var/obj/machinery/vehicle/poorPod in range(src, 4))
 			lineObjs += DrawLine(src, poorPod, /obj/line_obj/elec, 'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",FLY_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
-			playsound(poorPod.loc, "sound/effects/elec_bigzap.ogg", 40, 0)
+			playsound(poorPod.loc, 'sound/effects/elec_bigzap.ogg', 40, 0)
 			poorPod.bullet_act(src)
 
 
@@ -1346,7 +1183,7 @@
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/active = 0
 
@@ -1366,7 +1203,7 @@
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "ydn"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/active = 0
 
@@ -1389,7 +1226,7 @@
 	desc = "It seems to be part of the satellite. The interface is locked. You see a small circular port below the keypad."
 	icon = 'icons/obj/airtunnel.dmi'
 	icon_state = "airbr0"
-	anchored = 1
+	anchored = ANCHORED
 	pixel_y = 32
 	var/activated = FALSE
 

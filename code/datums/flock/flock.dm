@@ -7,6 +7,16 @@
 /// Has a flock relay been unleashed yet this round
 var/flock_signal_unleashed = FALSE
 
+var/datum/flock/default_flock = null
+///Gimmick flock with infinite compute that lone structures and units automatically connect to
+proc/get_default_flock()
+	if (!default_flock)
+		default_flock = new
+		default_flock.relay_allowed = FALSE
+		default_flock.quiet = TRUE
+		default_flock.achieve(FLOCK_ACHIEVEMENT_CHEAT_COMPUTE)
+	return default_flock
+
 /// manages and holds information for a flock
 /datum/flock
 	var/name
@@ -17,43 +27,81 @@ var/flock_signal_unleashed = FALSE
 	var/list/priority_tiles = list()
 	var/list/deconstruct_targets = list()
 	var/list/traces = list()
+	/// Are we the memory of a dead flockmind?
+	var/dead = FALSE
+	/// number of zero compute flocktraces the flock has
+	var/free_traces = 0
+	var/queued_trace_deaths = 0
+	/// max number of flocktraces the flock can support
+	var/max_trace_count = 0
 	/// Store a list of all minds who have been flocktraces of this flock at some point, indexed by name
 	var/list/trace_minds = list()
 	/// Store the mind of the current flockmind
 	var/datum/mind/flockmind_mind = null
 	/// Stores associative lists of type => list(units) - do not edit directly, use removeDrone() and registerUnit()
 	var/list/units = list()
+	/// The current cost of laying a flockdrone egg, automatically updated when drones are added and removed
+	var/current_egg_cost = FLOCK_LAY_EGG_COST
 	/// associative list of used names (for traces, drones, and bits) to true values
 	var/list/active_names = list()
 	var/list/enemies = list()
+	var/list/atom/movable/ignores = list()
 	///Associative list of objects to an associative list of their annotation names to images
 	var/list/annotations = list()
 	///Static cache of annotation images
 	var/static/list/annotation_imgs = null
 	var/list/obj/flock_structure/structures = list()
 	var/list/datum/unlockable_flock_structure/unlockableStructures = list()
+	var/bullets_hit = 0
 	///list of strings that lets flock record achievements for structure unlocks
 	var/list/achievements = list()
 	var/mob/living/intangible/flock/flockmind/flockmind
-	var/relay_in_progress_or_finished = FALSE
-	var/snoop_clarity = 80 // how easily we can see silicon messages, how easily silicons can see this flock's messages
-	var/snooping = FALSE //are both sides of communication currently accessible?
+	var/relay_in_progress = FALSE
+	var/relay_finished = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
+	///Can this flock realize the relay?
+	var/relay_allowed = TRUE
+	///Do we broadcast system announcements?
+	var/quiet = FALSE
+
+	var/center_x = 0
+	var/center_y = 0
+
+	var/obj/dummy/center_marker = null
+
+	var/datum/flockstats/stats
 
 /datum/flock/New()
 	..()
+	src.center_marker = new(locate(0,0,1))
+	src.center_marker.anchored = ANCHORED
+	src.center_marker.mouse_opacity = 0
+	src.center_marker.icon = 'icons/misc/featherzone-160x160.dmi'
+	src.center_marker.icon_state = "structure-relay"
+	src.center_marker.color = COLOR_MATRIX_FLOCKMIND
+	src.center_marker.alpha = 0
+	src.center_marker.pixel_x = -64
+	src.center_marker.pixel_y = -64
+
 	src.name = src.pick_name("flock")
 	flocks[src.name] = src
+	src.stats = new(src)
 	processing_items |= src
-	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
-		src.unlockableStructures += new DT(src)
+	src.load_structures()
 	if (!annotation_imgs)
 		annotation_imgs = build_annotation_imgs()
 	src.units[/mob/living/critter/flock/drone] = list() //this one needs initialising
 
+
+/datum/flock/proc/load_structures()
+	src.unlockableStructures = list()
+	for(var/DT in childrentypesof(/datum/unlockable_flock_structure))
+		src.unlockableStructures += new DT(src)
+
 /datum/flock/ui_status(mob/user)
-	return istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user)
+	if(istype(user, /mob/living/intangible/flock/flockmind) || tgui_admin_state.can_use_topic(src, user))
+		return UI_INTERACTIVE
 
 /datum/flock/ui_data(mob/user)
 	return describe_state(src.ui_tab)
@@ -78,11 +126,10 @@ var/flock_signal_unleashed = FALSE
 				F.release_control()
 			var/atom/movable/origin = locate(params["origin"])
 			if(!QDELETED(origin))
-				var/turf/T = get_turf(origin)
-				if(T.z != Z_LEVEL_STATION)
+				if(!src.z_level_check(origin))
 					boutput(user, "<span class='alert'>They seem to be beyond your capacity to reach.</span>")
 				else
-					user.set_loc(T)
+					user.set_loc(get_turf(origin))
 		if("rally")
 			var/mob/living/critter/flock/C = locate(params["origin"])
 			if(C?.flock == src) // not sure when it'd apply but in case
@@ -98,6 +145,25 @@ var/flock_signal_unleashed = FALSE
 				if(istype(host))
 					boutput(host, "<span class='flocksay'><b>\[SYSTEM: The flockmind has removed you from your previous corporeal shell.\]</b></span>")
 					host.release_control()
+		if("promote_trace")
+			var/message = "Are you sure?"
+
+			var/mob/living/intangible/flock/trace/trace_to_promote = locate(params["origin"])
+			if(!istype(trace_to_promote.loc, /mob/living/critter/flock/drone))
+				if (!trace_to_promote.client || trace_to_promote.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
+					message += " This Flocktrace is unresponsive."
+			else
+				var/mob/living/critter/flock/drone/host = trace_to_promote.loc
+				if (!host.client || host.controller.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
+					message += " This Flocktrace is unresponsive."
+
+			if (tgui_alert(user, message, "Promote Flocktrace", list("Yes", "Cancel")) == "Yes")
+				var/choice = tgui_alert(user, "Leave the Flock?", "Promote Flocktrace", list("No", "Yes", "Cancel"))
+				if (choice && choice != "Cancel")
+					if (!trace_to_promote)
+						return
+					trace_to_promote.promoteToFlockmind(choice == "No" ? FALSE : TRUE)
+
 		if("delete_trace")
 			var/mob/living/intangible/flock/trace/T = locate(params["origin"])
 			if(T)
@@ -124,6 +190,7 @@ var/flock_signal_unleashed = FALSE
 	state["drones"] = list()
 	state["structures"] = list()
 	state["enemies"] = list()
+	state["stats"] = list()
 	state["category_lengths"] = list(
 		"traces" = length(src.traces),
 		"drones" = length(src.units[/mob/living/critter/flock/drone]),
@@ -162,6 +229,21 @@ var/flock_signal_unleashed = FALSE
 				else
 					// enemy no longer exists, let's do something about that
 					src.enemies -= name
+
+		if ("stats")
+			var/list/stats = list(
+				"Drones realized: " = src.stats.drones_made,
+				"Bits formed: " = src.stats.bits_made,
+				"Total deaths: " = src.stats.deaths,
+				"Resources gained: " = src.stats.resources_gained,
+				"Partitions created: " = src.stats.partitions_made,
+				"Tiles converted: " = src.stats.tiles_converted,
+				"Structures created: " = src.stats.structures_made,
+				"Highest compute: " = src.stats.peak_compute
+				)
+
+			for (var/stat in stats)
+				state["stats"] += list(list("name" = stat, "value" = stats[stat]))
 
 	// DESCRIBE VITALS
 	var/list/vitals = list()
@@ -203,15 +285,17 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/can_afford_compute(var/cost)
 	return (cost <= src.total_compute() - src.used_compute)
 
-/datum/flock/proc/update_computes()
+/datum/flock/proc/update_computes(forceTextUpdate = FALSE)
 	var/totalCompute = src.total_compute()
 
-	var/datum/abilityHolder/flockmind/aH = src.flockmind.abilityHolder
-	aH?.updateCompute(src.used_compute, totalCompute)
+	var/datum/abilityHolder/flockmind/aH = src.flockmind?.abilityHolder
+	aH?.updateCompute(src.used_compute, totalCompute, forceTextUpdate)
 
 	for (var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		aH = T.abilityHolder
-		aH?.updateCompute(src.used_compute, totalCompute)
+		aH?.updateCompute(src.used_compute, totalCompute, forceTextUpdate)
+
+	src.max_trace_count = round(min(src.total_compute(), FLOCK_RELAY_COMPUTE_COST) / FLOCKTRACE_COMPUTE_COST) + src.free_traces
 
 /datum/flock/proc/registerFlockmind(var/mob/living/intangible/flock/flockmind/F)
 	if(!F)
@@ -227,13 +311,7 @@ var/flock_signal_unleashed = FALSE
 	if(!T)
 		return
 	src.traces |= T
-	var/comp_provided = T.compute_provided()
-	if (comp_provided)
-		if (comp_provided < 0)
-			src.used_compute += abs(comp_provided)
-		else
-			src.total_compute += comp_provided
-		src.update_computes()
+	src.update_computes(TRUE)
 
 /datum/flock/proc/removeTrace(var/mob/living/intangible/flock/trace/T)
 	if(!T)
@@ -241,13 +319,7 @@ var/flock_signal_unleashed = FALSE
 	src.traces -= T
 	src.active_names -= T.real_name
 	hideAnnotations(T)
-	var/comp_provided = T.compute_provided()
-	if (comp_provided)
-		if (comp_provided < 0)
-			src.used_compute -= abs(comp_provided)
-		else
-			src.total_compute -= comp_provided
-		src.update_computes()
+	src.update_computes(TRUE)
 
 /datum/flock/proc/ping(var/atom/target, var/mob/living/intangible/flock/pinger)
 	//awful typecheck because turfs and movables have vis_contents defined seperately because god hates us
@@ -269,7 +341,7 @@ var/flock_signal_unleashed = FALSE
 			SPAWN(3 SECONDS)
 				F.client?.images -= arrow
 				qdel(arrow)
-		var/class = "flocksay ping [istype(F, /mob/living/intangible/flock/flockmind) ? "flockmindsay" : ""]"
+		var/class = "flocksay ping [istype(F, /mob/living/intangible/flock/flockmind) ? "flockmind" : ""]"
 		var/prefix = "<span class='bold'>\[[src.name]\] </span><span class='name'>[pinger.name]</span>"
 		boutput(F, "<span class='[class]'><a href='?src=\ref[F];origin=\ref[target];ping=[TRUE]'>[prefix]: Interrupt request, target: [target] in [get_area(target)].</a></span>")
 	playsound_global(src.traces + src.flockmind, 'sound/misc/flockmind/ping.ogg', 50, 0.5)
@@ -283,26 +355,26 @@ var/flock_signal_unleashed = FALSE
 	var/image/deconstruct = image('icons/misc/featherzone.dmi', icon_state = "deconstruct")
 	deconstruct.blend_mode = BLEND_ADD
 	deconstruct.plane = PLANE_ABOVE_LIGHTING
-	deconstruct.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	deconstruct.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	deconstruct.pixel_y = 16
 	.[FLOCK_ANNOTATION_DECONSTRUCT] = deconstruct
 
 	var/image/hazard = image('icons/misc/featherzone.dmi', icon_state = "hazard")
 	hazard.blend_mode = BLEND_ADD
 	hazard.plane = PLANE_ABOVE_LIGHTING
-	hazard.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	hazard.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	hazard.pixel_y = 16
 	.[FLOCK_ANNOTATION_HAZARD] = hazard
 
 	var/image/priority = image('icons/misc/featherzone.dmi', icon_state = "frontier")
-	priority.appearance_flags = RESET_ALPHA | RESET_COLOR
+	priority.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 	priority.alpha = 180
 	priority.plane = PLANE_ABOVE_LIGHTING
 	priority.mouse_opacity = FALSE
 	.[FLOCK_ANNOTATION_PRIORITY] = priority
 
 	var/image/reserved = image('icons/misc/featherzone.dmi', icon_state = "frontier")
-	reserved.appearance_flags = RESET_ALPHA | RESET_COLOR
+	reserved.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 	reserved.alpha = 80
 	reserved.plane = PLANE_ABOVE_LIGHTING
 	reserved.mouse_opacity = FALSE
@@ -311,14 +383,14 @@ var/flock_signal_unleashed = FALSE
 	var/image/flock_face = image('icons/misc/featherzone.dmi', icon_state = "flockmind_face")
 	flock_face.blend_mode = BLEND_ADD
 	flock_face.plane = PLANE_ABOVE_LIGHTING
-	flock_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	flock_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	flock_face.pixel_y = 16
 	.[FLOCK_ANNOTATION_FLOCKMIND_CONTROL] = flock_face
 
 	var/image/trace_face = image('icons/misc/featherzone.dmi', icon_state = "flocktrace_face")
 	trace_face.blend_mode = BLEND_ADD
 	trace_face.plane = PLANE_ABOVE_LIGHTING
-	trace_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	trace_face.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	trace_face.pixel_y = 16
 	.[FLOCK_ANNOTATION_FLOCKTRACE_CONTROL] = trace_face
 
@@ -327,8 +399,15 @@ var/flock_signal_unleashed = FALSE
 	health.pixel_x = 10
 	health.pixel_y = 16
 	health.plane = PLANE_ABOVE_LIGHTING
-	health.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
+	health.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
 	.[FLOCK_ANNOTATION_HEALTH] = health
+
+	var/image/ignore = image('icons/misc/featherzone.dmi', icon_state = "ignore")
+	ignore.blend_mode = BLEND_ADD
+	ignore.plane = PLANE_ABOVE_LIGHTING
+	ignore.appearance_flags = RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | PIXEL_SCALE
+	ignore.pixel_y = 16
+	.[FLOCK_ANNOTATION_IGNORE] = ignore
 
 ///proc to get the indexed list of annotations on a particular mob
 /datum/flock/proc/getAnnotations(atom/target)
@@ -365,6 +444,8 @@ var/flock_signal_unleashed = FALSE
 		get_image_group(src).remove_image(image)
 		active -= annotation
 		qdel(image)
+	if (!length(active))
+		src.annotations -= target
 
 /datum/flock/proc/showAnnotations(var/mob/M)
 	get_image_group(src).add_mob(M)
@@ -397,8 +478,11 @@ var/flock_signal_unleashed = FALSE
 				name_found = TRUE
 				src.active_names[name] = TRUE
 		tries++
+		if(phrase_log.is_uncool(jointext(splittext(name,"."),"")))
+			name_found = FALSE
+
 	if (!name_found && tries == max_tries)
-		logTheThing("debug", null, null, "Too many tries were reached in trying to name a flock or one of its units.")
+		logTheThing(LOG_DEBUG, null, "Too many tries were reached in trying to name a flock or one of its units.")
 		return "error"
 	return name
 
@@ -409,6 +493,8 @@ var/flock_signal_unleashed = FALSE
 		if(!src.units[D.type])
 			src.units[D.type] = list()
 		src.units[D.type] |= D
+		if (istype(D, /mob/living/critter/flock/drone))
+			src.updateEggCost()
 		if (check_name_uniqueness && src.active_names[D.real_name])
 			D.real_name = istype(D, /mob/living/critter/flock/drone) ? src.pick_name("flockdrone") : src.pick_name("flockbit")
 		D.AddComponent(/datum/component/flock_interest, src)
@@ -424,6 +510,8 @@ var/flock_signal_unleashed = FALSE
 	if(isflockmob(D))
 		src.units[D.type] -= D
 		src.active_names -= D.real_name
+		if (istype(D, /mob/living/critter/flock/drone))
+			src.updateEggCost()
 		D.GetComponent(/datum/component/flock_interest)?.RemoveComponent(/datum/component/flock_interest)
 		if(D.real_name && busy_tiles[D.real_name])
 			src.unreserveTurf(D.real_name)
@@ -441,11 +529,11 @@ var/flock_signal_unleashed = FALSE
 /datum/flock/proc/getActiveTraces()
 	var/list/active_traces = list()
 	for (var/mob/living/intangible/flock/trace/T as anything in src.traces)
-		if (T.client)
+		if (T.client && T.afk_counter < FLOCK_AFK_COUNTER_THRESHOLD)
 			active_traces += T
 		else if (istype(T.loc, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/flockdrone = T.loc
-			if (flockdrone.client)
+			if (flockdrone.client && T.afk_counter < FLOCK_AFK_COUNTER_THRESHOLD)
 				active_traces += T
 	return active_traces
 
@@ -489,6 +577,13 @@ var/flock_signal_unleashed = FALSE
 		return 0
 	return length(src.units[/mob/living/critter/flock/drone/])
 
+/datum/flock/proc/updateEggCost()
+	var/egg_count = 0
+	for (var/obj/flock_structure/egg/egg in src.structures)
+		if (!QDELETED(egg))
+			egg_count++
+	src.current_egg_cost = round(FLOCK_LAY_EGG_COST + (src.getComplexDroneCount() + egg_count) ** 1.4, 10)
+
 /datum/flock/proc/toggleDeconstructionFlag(var/atom/target)
 	toggleAnnotation(target, FLOCK_ANNOTATION_DECONSTRUCT)
 	src.deconstruct_targets ^= target
@@ -497,6 +592,8 @@ var/flock_signal_unleashed = FALSE
 
 /datum/flock/proc/updateEnemy(atom/M)
 	if(!M)
+		return
+	if (src.isIgnored(M))
 		return
 	if (isvehicle(M))
 		for (var/mob/occupant in M) // making assumption flock knows who everyone in the pod is
@@ -528,21 +625,61 @@ var/flock_signal_unleashed = FALSE
 	var/enemy_name = M
 	return (enemy_name in src.enemies)
 
-// DEATH
+/datum/flock/proc/addIgnore(atom/A)
+	if (isvehicle(A))
+		for (var/mob/occupant in A)
+			src.addIgnore(occupant)
+	if (ismob(A))
+		var/mob/M = A
+		if (M.find_radio())
+			boutput(A, "<span class='flocksay italic'>A thousand whispers you never noticed suddenly fall silent and the feeling of being watched fades.</span>")
+	src.ignores |= A
+	src.addAnnotation(A, FLOCK_ANNOTATION_IGNORE)
 
-/datum/flock/proc/perish()
+/datum/flock/proc/removeIgnore(atom/A)
+	if (isvehicle(A))
+		for (var/mob/occupant in A)
+			src.removeIgnore(occupant)
+	if (ismob(A))
+		var/mob/M = A
+		if (M.find_radio())
+			boutput(A, "<span class='flocksay italic'>You hear harsh echoes of the Signal in your mind. The gaze of something you can't see is once again painfully fixed on you.</span>")
+	src.ignores -= A
+	src.removeAnnotation(A, FLOCK_ANNOTATION_IGNORE)
+
+/datum/flock/proc/isIgnored(atom/A)
+	return A in src.ignores
+
+// DEATH
+///if real is FALSE then perish will not deallocate needed lists (used for pity respawn)
+/datum/flock/proc/perish(real = TRUE)
 	for(var/pathkey in src.units)
 		for(var/mob/living/critter/flock/F as anything in src.units[pathkey])
 			F.dormantize()
+	for(var/obj/flock_structure/S as anything in src.structures)
+		S.gib()
+	for(var/turf/T in src.priority_tiles)
+		src.togglePriorityTurf(T)
+	for (var/name in src.busy_tiles)
+		src.unreserveTurf(src.busy_tiles[name])
+	src.bullets_hit = 0
+	src.achievements = list()
+	src.unlockableStructures = list()
+	src.total_compute = 0
+	src.used_compute = 0
+	for (var/turf/simulated/floor/feather/feathertile in src.all_owned_tiles)
+		feathertile.flock = null
+	all_owned_tiles = list()
+	if (!real)
+		src.load_structures()
+		return
+	src.dead = TRUE
 	for(var/mob/living/intangible/flock/trace/T as anything in src.traces)
 		T.death()
 	if (src.flockmind)
 		hideAnnotations(src.flockmind)
-	for(var/obj/flock_structure/S as anything in src.structures)
-		S.gib()
 	qdel(get_image_group(src))
 	annotations = null
-	all_owned_tiles = null
 	busy_tiles = null
 	priority_tiles = null
 	units = null
@@ -567,8 +704,23 @@ var/flock_signal_unleashed = FALSE
 	removeAnnotation(T, FLOCK_ANNOTATION_RESERVED)
 
 /datum/flock/proc/claimTurf(var/turf/simulated/T)
+	if (!T)
+		return
+	src.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_TURF_CLAIM, T)
+
+	if (!src.relay_in_progress && !src.relay_finished && ((abs(T.x - src.center_x) + abs(T.y - src.center_y))/2 < 50)) //ignore extreme outliers
+		var/length = length(src.all_owned_tiles)
+		src.center_x += (T.x - src.center_x)/(length + 1)
+		src.center_y += (T.y - src.center_y)/(length + 1)
+		src.center_marker.set_loc(locate(src.center_x, src.center_y, 1))
 	src.all_owned_tiles |= T
 	src.priority_tiles -= T
+
+	if (isfeathertile(T))
+		src.stats.tiles_converted++
+	if (istype(T, /turf/simulated/floor/feather))
+		var/turf/simulated/floor/feather/featherturf = T
+		featherturf.flock = src
 	T.AddComponent(/datum/component/flock_interest, src)
 	for(var/obj/O in T.contents)
 		if(HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOCK_THING))
@@ -608,16 +760,31 @@ var/flock_signal_unleashed = FALSE
 
 // PROCESS
 
+/datum/flock/proc/relay_process()
+	if (src.total_compute() > 300)
+		for (var/mob/living/intangible/flock/flockmob in (src.traces + src.flockmind))
+			if (flockmob.GetComponent(/datum/component/tracker_hud/flock))
+				continue
+			flockmob.AddComponent(/datum/component/tracker_hud/flock, src.center_marker)
+	if (!src.relay_in_progress && !src.relay_finished)
+		if ((src.total_compute() >= FLOCK_RELAY_COMPUTE_COST) && !src.flockmind?.tutorial)
+			src.relay_in_progress = TRUE
+			src.center_marker.alpha = 0
+			for (var/turf/T in range(3, src.center_marker))
+				for (var/atom/A in T)
+					if ((ismob(A) || isflockstructure(A)) && !isintangible(A)) //stupid, but flock structures define gib too
+						var/mob/M = A
+						M.gib()
+					else if (A.density)
+						qdel(A)
+				T.ReplaceWith(/turf/simulated/floor/feather)
+			new /obj/flock_structure/relay(get_turf(src.center_marker), src)
+		else
+			src.center_marker.alpha = max(0, src.total_compute() - 300)
+
 /datum/flock/proc/process()
-	var/list/floors_no_longer_existing = list()
-
-	for(var/turf/simulated/floor/feather/T in src.all_owned_tiles)
-		if(!T || T.loc == null || T.broken)
-			floors_no_longer_existing |= T
-			continue
-
-	if(length(floors_no_longer_existing))
-		src.all_owned_tiles -= floors_no_longer_existing
+	if (src.relay_allowed)
+		src.relay_process()
 
 	for(var/datum/unlockable_flock_structure/ufs as anything in src.unlockableStructures)
 		ufs.process()
@@ -631,11 +798,24 @@ var/flock_signal_unleashed = FALSE
 		M = src.enemies[enemy]["mob"]
 		if (QDELETED(M))
 			src.removeEnemy(M)
+	for(var/atom/ignore as anything in src.ignores)
+		if (QDELETED(ignore))
+			src.removeIgnore(ignore)
 
 /datum/flock/proc/convert_turf(var/turf/T, var/converterName)
 	src.unreserveTurf(converterName)
 	src.claimTurf(flock_convert_turf(T))
-	playsound(T, "sound/items/Deconstruct.ogg", 40, 1)
+	playsound(T, 'sound/items/Deconstruct.ogg', 30, TRUE, extrarange = -10)
+
+// Z LEVEL CHECK
+
+/datum/flock/proc/z_level_check(var/atom/A)
+	var/turf/T = get_turf(A)
+	if (src.dead || src.flockmind?.tutorial || T.z == Z_LEVEL_STATION)
+		return TRUE
+	return FALSE
+
+// ACHIEVEMENTS
 
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/achieve(var/str)
@@ -647,6 +827,23 @@ var/flock_signal_unleashed = FALSE
 ///Unlock an achievement (string) if it isn't already unlocked
 /datum/flock/proc/hasAchieved(var/str)
 	return (str in src.achievements)
+
+/datum/flock/proc/check_for_bullets_hit_achievement(obj/projectile/P)
+	if (!istype(P.proj_data, /datum/projectile/bullet))
+		return
+	if (src.bullets_hit > FLOCK_BULLETS_HIT_THRESHOLD)
+		return
+
+	var/attacker = P.shooter
+	if(!(ismob(attacker) || iscritter(attacker) || isvehicle(attacker)))
+		attacker = P.mob_shooter // shooter is updated on reflection, so we fall back to mob_shooter if it turns out to be a wall or something
+	if (istype(attacker, /mob/living/critter/flock))
+		var/mob/living/critter/flock/flockcritter = attacker
+		if (flockcritter.flock == src)
+			return
+	src.bullets_hit++
+	if (src.bullets_hit == FLOCK_BULLETS_HIT_THRESHOLD)
+		src.achieve(FLOCK_ACHIEVEMENT_BULLETS_HIT)
 ////////////////////
 // GLOBAL PROCS!!
 ////////////////////
@@ -670,33 +867,66 @@ var/flock_signal_unleashed = FALSE
 	/obj/machinery/computer3 = /obj/flock_structure/compute,
 	/obj/machinery/computer = /obj/flock_structure/compute,
 	/obj/machinery/networked/teleconsole = /obj/flock_structure/compute,
+	/obj/submachine/chem_extractor = /obj/flock_structure/compute,
+	/obj/submachine/seed_manipulator = /obj/flock_structure/compute,
 	/obj/machinery/networked/mainframe = /obj/flock_structure/compute/mainframe,
+	/obj/machinery/vending = /obj/flock_structure/fabricator,
+	/obj/machinery/manufacturer = /obj/flock_structure/fabricator,
+	/obj/submachine/seed_vendor = /obj/flock_structure/fabricator,
+	/obj/machinery/dispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/disposal_pipedispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/chem_dispenser = /obj/flock_structure/fabricator,
+	/obj/machinery/chemicompiler_stationary = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/foamtank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/watertank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/fueltank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/heliumtank = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/compostbin = /obj/flock_structure/fabricator,
+	/obj/reagent_dispensers/beerkeg = /obj/flock_structure/fabricator,
 	/obj/spacevine = null
 	)
 
-/proc/flock_convert_turf(var/turf/T)
+/proc/flockTurfAllowed(var/turf/T)
+	var/area/area = get_area(T)
+	return !(istype(area, /area/listeningpost) || istype(area, /area/ghostdrone_factory))
+
+/proc/flock_convert_turf(var/turf/T, tutorial=FALSE, force=FALSE, fancy=FALSE)
 	if(!T)
 		return
+	if (!force && !flockTurfAllowed(T))
+		return
 
-	if(istype(T, /turf/simulated/floor) || istype(T, /turf/simulated/pool))
-		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
+	var/static/list/fancy_flock_matrix = list(-0.2,-0.2,-0.2,-0.2,-0.2,-0.2,-0.25,-0.2,-0.15,0.368627,0.764706,0.666667)
+
+	if(istype(T, /turf/simulated/wall) || force && (T.density || locate(/obj/indestructible/shuttle_corner) in T))
+		if(tutorial)
+			T.ReplaceWith(/turf/simulated/wall/auto/feather/tutorial, FALSE, force=force)
+		else
+			T.ReplaceWith(/turf/simulated/wall/auto/feather, FALSE, force=force)
 		animate_flock_convert_complete(T)
+		if(force)
+			for(var/obj/indestructible/shuttle_corner/C in T)
+				qdel(C)
 
-	if(istype(T, /turf/simulated/wall))
-		T.ReplaceWith("/turf/simulated/wall/auto/feather", FALSE)
+	if(istype(T, /turf/simulated/floor) || force && istype(T, /turf/unsimulated/floor))
+		T.ReplaceWith(/turf/simulated/floor/feather, FALSE, force=force)
 		animate_flock_convert_complete(T)
 
 	// regular and flock lattices
 	var/obj/lattice/lat = locate(/obj/lattice) in T
 	if(lat)
-		qdel(lat)
-		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
-		animate_flock_convert_complete(T)
+		if(istype(lat, /obj/lattice/flock) || !fancy)
+			qdel(lat)
+			T.ReplaceWith(/turf/simulated/floor/feather, FALSE, force=force)
+			animate_flock_convert_complete(T)
+		else
+			qdel(lat)
+			new /obj/lattice/flock(T)
 
 	var/obj/grille/catwalk/catw = locate(/obj/grille/catwalk) in T
 	if(catw)
 		qdel(catw)
-		T.ReplaceWith("/turf/simulated/floor/feather", FALSE)
+		T.ReplaceWith(/turf/simulated/floor/feather, FALSE, force=force)
 		animate_flock_convert_complete(T)
 
 	if(istype(T, /turf/space))
@@ -705,11 +935,14 @@ var/flock_signal_unleashed = FALSE
 			FL = new /obj/lattice/flock(T)
 
 	for(var/obj/O in T)
+		if(istype(O, /obj/effect) || istype(O, /obj/overlay) || istype(O, /obj/particle) || istype(O, /obj/lattice/flock))
+			continue
 		if (istype(O, /obj/machinery/camera))
 			var/obj/machinery/camera/cam = O
 			if (cam.camera_status)
 				cam.break_camera()
 			continue
+		var/success = FALSE
 		for(var/keyPath in flock_conversion_paths)
 			if (!istype(O, keyPath))
 				continue
@@ -720,6 +953,7 @@ var/flock_signal_unleashed = FALSE
 				if (istype(O, /obj/machinery/door))
 					if (istype(O, /obj/machinery/door/firedoor/pyro) || istype(O, /obj/machinery/door/window) || istype(O, /obj/machinery/door/airlock/pyro/glass/windoor) || istype(O, /obj/machinery/door/poddoor/pyro/shutters) || istype(O, /obj/machinery/door/unpowered/wood))
 						qdel(O)
+						success = TRUE
 						break
 				if (istype(O, /obj/machinery/computer))
 					if (istype(O, /obj/machinery/computer/card/portable) || istype(O, /obj/machinery/computer/security/wooden_tv) || istype(O, /obj/machinery/computer/secure_data/detective_computer) || istype(O, /obj/machinery/computer/airbr) || istype(O, /obj/machinery/computer/tanning) || istype(O, /obj/machinery/computer/tour_console) || istype(O, /obj/machinery/computer/arcade) || istype(O, /obj/machinery/computer/tetris))
@@ -728,7 +962,7 @@ var/flock_signal_unleashed = FALSE
 					break
 			var/dir = O.dir
 			var/replacementPath = flock_conversion_paths[keyPath]
-			var/obj/converted = new replacementPath(T)
+			var/obj/converted = new replacementPath(T, null, O)
 			// if the object is a closet, it might not have spawned its contents yet
 			// so force it to do that first
 			if(istype(O, /obj/storage))
@@ -738,23 +972,28 @@ var/flock_signal_unleashed = FALSE
 			// if the object has contents, move them over!!
 			for (var/obj/stored_obj in O)
 				stored_obj.set_loc(converted)
+				if(fancy)
+					stored_obj.color = fancy_flock_matrix
 			for (var/mob/M in O)
 				M.set_loc(converted)
 			qdel(O)
 			converted.set_dir(dir)
 			animate_flock_convert_complete(converted)
+			success = TRUE
 			break
+		if(!success && fancy)
+			O.color = fancy_flock_matrix
 	return T
 
-/proc/mass_flock_convert_turf(var/turf/T, datum/flock/F)
+/proc/mass_flock_convert_turf(var/turf/T, datum/flock/F, force=FALSE, radius=15, delay=0.2 SECONDS, fancy=FALSE)
 	if(!T)
 		T = get_turf(usr)
 	if(!T)
 		return
 
-	flock_spiral_conversion(T, F)
+	flock_spiral_conversion(T, F, radius=radius, delay=delay, force=force, fancy=fancy)
 
-/proc/flock_spiral_conversion(var/turf/T, datum/flock/F)
+/proc/flock_spiral_conversion(turf/T, datum/flock/F, radius = 15, delay = 0.2 SECONDS, tutorial=FALSE, force=FALSE, fancy=FALSE)
 	if(!T) return
 	// spiral algorithm adapted from https://stackoverflow.com/questions/398299/looping-in-a-spiral
 	var/ox = T.x
@@ -766,13 +1005,13 @@ var/flock_signal_unleashed = FALSE
 	var/dy = -1
 	var/temp = 0
 
-	while(isturf(T))
-		if(istype(T, /turf/simulated) && !isfeathertile(T))
+	while(isturf(T) && x <= radius)
+		if((istype(T, /turf/simulated) || force) && !isfeathertile(T))
 			if (F)
-				F.claimTurf(flock_convert_turf(T))
+				F.claimTurf(flock_convert_turf(T, tutorial))
 			else
-				flock_convert_turf(T)
-			sleep(0.2 SECONDS)
+				flock_convert_turf(T, tutorial=tutorial, force=force, fancy=fancy)
+			sleep(delay)
 		LAGCHECK(LAG_LOW)
 		// figure out where next turf is
 		if (x == y || (x < 0 && x == -y) || (x > 0 && x == 1-y))
@@ -783,5 +1022,3 @@ var/flock_signal_unleashed = FALSE
 		y += dy
 		// get next turf
 		T = locate(ox + x, oy + y, z)
-
-

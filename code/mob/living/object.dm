@@ -19,10 +19,12 @@
 	gender = NEUTER
 
 	blinded = FALSE
-	anchored = FALSE
+	anchored = UNANCHORED
 	a_intent = "disarm"
 	can_bleed = FALSE
 	var/name_prefix = "living "
+
+	faction = FACTION_WRAITH
 
 	New(var/atom/loc, var/obj/possessed, var/mob/controller)
 		..(loc, null, null)
@@ -36,9 +38,6 @@
 		src.zone_sel = new(src)
 		src.attach_hud(zone_sel)
 
-		if (controller)
-			message_admins("[key_name(controller)] possessed [possessed_thing] at [log_loc(loc)].")
-
 		if (src.possessed_item)
 			src.possessed_item.cant_drop = TRUE
 			src.max_health = 25 * src.possessed_item.w_class
@@ -51,7 +50,7 @@
 				src.max_health = 100
 				src.health = 100
 			else
-				stack_trace("Tried to create a possessed object from invalid thing [src.possessed_thing] of type [src.possessed_thing.type]!")
+				stack_trace("Tried to create a possessed object from invalid thing [identify_object(src)]!")
 				boutput(controller, "<h3 class='alert'>Uh oh, you tried to possess something illegal! Here's a toolbox instead!</h3>")
 				src.possessed_thing = new /obj/item/storage/toolbox/artistic
 
@@ -62,12 +61,12 @@
 		possessed_thing.set_loc(src)
 
 		//Appearance Stuff
-		src.update_icon()
+		src.UpdateIcon()
 		src.desc = possessed_thing.desc
 		src.pixel_x = possessed_thing.pixel_x
 		src.pixel_y = possessed_thing.pixel_y
 		src.set_density(possessed_thing.density)
-		src.RL_SetOpacity(possessed_thing.opacity)
+		src.set_opacity(possessed_thing.opacity)
 		src.create_submerged_images()
 		src.flags = possessed_thing.flags
 		src.event_handler_flags = src.flags
@@ -95,6 +94,7 @@
 		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
 		remove_lifeprocess(/datum/lifeprocess/breath)
+		remove_lifeprocess(/datum/lifeprocess/radiation)
 
 	// Relay these procs
 
@@ -186,7 +186,7 @@
 			src.visible_message("<span class='alert'>[src] is hit by the [P]!</span>")
 
 	blob_act(var/power)
-		logTheThing("combat", src, null, "is hit by a blob")
+		logTheThing(LOG_COMBAT, src, "is hit by a blob")
 		if (isdead(src) || src.nodamage)
 			return
 
@@ -254,6 +254,7 @@
 				src.possessed_thing.set_loc(get_turf(src))
 			if (src.possessed_item)
 				possessed_item.cant_drop = initial(possessed_item.cant_drop)
+			qdel(src.dummy)
 
 		if (src.owner)
 			src.owner.set_loc(get_turf(src))
@@ -263,11 +264,11 @@
 				mind.transfer_to(src.owner)
 			else if (src.client)
 				src.client.mob = src.owner
-			else
+			else if (src.key) //This can be null in situations where owner.key is not!
 				src.owner.key = src.key
 		else
 			if(src.mind || src.client)
-				var/mob/dead/observer/O = new/mob/dead/observer()
+				var/mob/dead/observer/O = new/mob/dead/observer(src)
 				O.set_loc(get_turf(src))
 				if (isrestrictedz(src.z) && !restricted_z_allowed(src, get_turf(src)) && !(src.client && src.client.holder))
 					var/OS = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
@@ -282,7 +283,7 @@
 				if (src.mind)
 					src.mind.transfer_to(O)
 
-		playsound(src.loc, "sound/voice/wraith/wraithleaveobject.ogg", 40, 1, -1, 0.6)
+		playsound(src.loc, 'sound/voice/wraith/wraithleaveobject.ogg', 40, 1, -1, 0.6)
 
 		for (var/atom/movable/AM in src.contents)
 			AM.set_loc(src.loc)
@@ -331,6 +332,9 @@
 	proc/update_density()
 		src.density = src.possessed_thing.density
 
+	get_hud()
+		return src.hud
+
 /mob/living/object/ai_controlled
 	is_npc = 1
 	New()
@@ -369,7 +373,7 @@
 /datum/aiTask/timed/targeted/living_object/get_targets()
 	var/list/humans = list() // Only care about humans since that's all wraiths eat. TODO maybe borgs too?
 	for (var/mob/living/carbon/human/H in view(src.target_range, src.holder.owner))
-		if (isalive(H) && !H.nodamage)
+		if (isalive(H) && !H.nodamage && !H.bioHolder.HasEffect("Revenant"))
 			humans += H
 	return humans
 
@@ -442,13 +446,13 @@
 			spooker.set_a_intent(INTENT_HARM)
 		else if (istype(item, /obj/item/gun))
 			var/obj/item/gun/pew = item
-			if (pew.canshoot())
+			if (pew.canshoot(holder.owner))
 				spooker.set_a_intent(INTENT_HARM) // we can shoot, so... shoot
 			else
 				spooker.set_a_intent(INTENT_HELP) // otherwise go on help for gun whipping
 		else if (istype(item, /obj/item/old_grenade) || istype(item, /obj/item/chem_grenade || istype(item, /obj/item/pipebomb))) //cool paths tHANKS
 			spooker.self_interact() // arm grenades
-		else if (istype(item, /obj/item/katana)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
+		else if (istype(item, /obj/item/swords)) 		// this will also apply for non-limb-slicey katanas but it shouldn't really matter
 			if (ishuman(holder.target))
 				var/mob/living/carbon/human/H = holder.target
 				var/limbless = TRUE
@@ -467,6 +471,5 @@
 		else
 			spooker.set_a_intent(INTENT_HARM)
 			spooker.zone_sel.select_zone("head") // head for plates n stuff
-		spooker.hud.update_intent()
 
 	//TODO make guns fire at range?, c saber deflect (if possible i forget if arbitrary mobs can block)

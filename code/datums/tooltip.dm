@@ -97,7 +97,6 @@ var/global/list/atomTooltips = new()
 				"browserassets/js/animatePopup.js",
 				"browserassets/js/tooltip.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.svg",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
 				"browserassets/css/font-awesome.css",
@@ -117,7 +116,7 @@ var/global/list/atomTooltips = new()
 		var/list/windowIDs = params2list(windows)
 		for (var/windowID in windowIDs)
 			if (src.owner && dd_hasprefix(windowID, src.window))
-				winset(src.owner, windowID, "parent=")
+				winset(src.owner, windowID, "parent=none")
 
 
 	proc/add(atom/thing = null, clone = 1, stuck = 1)
@@ -550,8 +549,7 @@ var/global/list/atomTooltips = new()
 			qdel(t)
 
 		atomTooltips.Remove(src)
-
-	..()
+	. = ..()
 
 
 // DEBUG

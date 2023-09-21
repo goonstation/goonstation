@@ -5,8 +5,9 @@ var/global/list/detailed_delete_gc_count = list()
 
 #ifdef MACHINE_PROCESSING_DEBUG
 var/global/list/detailed_machine_timings = list()
-var/global/list/detailed_machine_power = list()
-var/global/list/detailed_machine_power_prev = list()
+var/global/detailed_machine_power_log_zlevels = (1 << Z_LEVEL_STATION)
+var/global/datum/machine_power_data/detailed_power_data
+var/global/datum/machine_power_data/detailed_power_data_last
 #endif
 
 #ifdef QUEUE_STAT_DEBUG
@@ -52,11 +53,15 @@ var/global
 	datum/hotspot_controller/hotspot_controller = new
 		//items that ask to be called every cycle
 
+	last_input_loop_time = 0
+
 	list/muted_keys = list()
 
 	server_start_time = 0
+	round_start_time = 0
 	round_time_check = 0			// set to world.timeofday when round starts, then used to calculate round time
 	defer_powernet_rebuild = 0		// true if net rebuild will be called manually after an event
+	list/deferred_powernet_objs = list()
 	machines_may_use_wired_power = 0
 	regex/url_regex = null
 	regex/full_url_regex = null
@@ -64,7 +69,6 @@ var/global
 	force_random_looks = 0			// same as above
 
 	list/default_mob_static_icons = list() // new mobs grab copies of these for themselves, or if their chosen type doesn't exist in the list, they generate their own and add it
-	list/mob_static_icons = list() // these are the images that are actually seen by ghostdrones instead of whatever mob
 	list/orbicons = list()
 
 	list/browse_item_icons = list()
@@ -77,7 +81,7 @@ var/global
 
 	list/factions = list()
 
-	list/obj/trait/traitList = list() //List of trait objects
+	list/datum/trait/traitList = list() //List of trait objects
 
 	list/spawned_in_keys = list() //Player keys that have played this round, to prevent that "jerk gets deleted by a bug, gets to respawn" thing.
 
@@ -88,6 +92,9 @@ var/global
 	list/station_areas = list()
 	/// The station_areas list is up to date. If something changes an area, make sure to set this to 0
 	area_list_is_up_to_date = 0
+
+	/// Contains objects in ID-based switched object groups, such as blinds and their switches
+	list/switched_objs = list()
 
 	already_a_dominic = 0 // no just shut up right now, I don't care
 
@@ -243,7 +250,7 @@ var/global
 	speechpopups = 1
 
 	monkeysspeakhuman = 0
-	traitorsseeeachother = FALSE
+	antagonists_see_each_other = FALSE
 	late_traitors = 1
 	no_automatic_ending = 0
 
@@ -253,9 +260,10 @@ var/global
 	diary = null
 	diary_name = null
 	hublog = null
-	game_version = "Goonstation 13 (r" + vcs_revision + ")"
+	game_version = "Goonstation 13 (r" + ORIGIN_REVISION + ")"
 
 	master_mode = "traitor"
+	next_round_mode = "traitor"
 
 	host = null
 	game_start_delayed = 0
@@ -290,6 +298,7 @@ var/global
 	toggles_enabled = 1
 	announce_banlogin = 1
 	announce_jobbans = 0
+	radio_audio_enabled = 1
 
 
 	outpost_destroyed = 0
@@ -302,6 +311,10 @@ var/global
 	spooky_light_mode = 0
 	// Default ghost invisibility. Set when the game is over
 	ghost_invisibility = INVIS_GHOST
+
+	// floating debug info for power usage
+	zamus_dumb_power_popups = 0
+
 
 	datum/titlecard/lobby_titlecard
 
@@ -317,35 +330,38 @@ var/global
 	netpass_cargo = null
 	netpass_syndicate = null //Detomatix
 
-	///////////////
+	//
 	//cyberorgan damage thresholds for emagging without emag
 	list/cyberorgan_brute_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 	list/cyberorgan_burn_threshold = list("heart" = 0, "cyber_lung_L" = 0, "cyber_lung_R" = 0, "cyber_kidney" = 0, "liver" = 0, "stomach" = 0, "intestines" = 0, "spleen" = 0, "pancreas" = 0, "appendix" = 0)
 
-	///////////////
-	list/logs = list ( //Loooooooooogs
-		"admin_help" = list (  ),
-		"speech" = list (  ),
-		"ooc" = list (  ),
-		"combat" = list (  ),
-		"station" = list (  ),
-		"pdamsg" = list (  ),
-		"admin" = list (  ),
-		"mentor_help" = list (  ),
-		"telepathy" = list (  ),
-		"bombing" = list (  ),
-		"signalers" = list (  ),
-		"atmos" = list (  ),
-		"debug" = list (  ),
-		"pathology" = list (  ),
-		"deleted" = list (  ),
-		"vehicle" = list (  ),
-		"tgui" = list (), //me 2
-		"computers" = list(),
-		"audit" = list()//im a rebel, i refuse to add that gross SPACING
+	/// Loooooooooogs
+	list/logs = list(
+		LOG_ADMIN		=	list(),
+		LOG_DEBUG		=	list(),
+		LOG_AHELP		=	list(),
+		LOG_AUDIT		=	list(),
+		LOG_MHELP		=	list(),
+		LOG_OOC			=	list(),
+		LOG_SPEECH		=	list(), // whisper and say combined
+		LOG_PDAMSG		=	list(),
+		LOG_TELEPATHY	=	list(),
+		LOG_COMBAT		=	list(),
+		LOG_BOMBING		=	list(),
+		LOG_STATION		=	list(),
+		LOG_VEHICLE		=	list(),
+		LOG_GAMEMODE	=	list(),
+		LOG_SIGNALERS	=	list(),
+		LOG_PATHOLOGY	=	list(),
+		LOG_TOPIC		=	list(),
+		LOG_CHEMISTRY	=	list(),
 	)
-	savefile/compid_file 	//The file holding computer ID information
-	do_compid_analysis = 1	//Should we be analysing the comp IDs of new clients?
+	/// The file holding computer ID information
+	savefile/compid_file
+
+	/// Should we be analysing the comp IDs of new clients?
+	do_compid_analysis = 1
+
 	list/warned_keys = list()	// tracking warnings per round, i guess
 
 	datum/dj_panel/dj_panel = new()
@@ -369,7 +385,6 @@ var/global
 	list/datum/powernet/powernets = null
 
 	join_motd = null
-	rules = null
 	forceblob = 0
 
 	halloween_mode = 0
@@ -386,17 +401,18 @@ var/global
 
 	// Zam note: this is horrible
 	forced_desussification = 0
+	forced_desussification_worse = 0
 
 	disable_next_click = 0
 
 	//airlockWireColorToIndex takes a number representing the wire color, e.g. the orange wire is always 1, the dark red wire is always 2, etc. It returns the index for whatever that wire does.
 	//airlockIndexToWireColor does the opposite thing - it takes the index for what the wire does, for example AIRLOCK_WIRE_IDSCAN is 1, AIRLOCK_WIRE_POWER1 is 2, etc. It returns the wire color number.
 	//airlockWireColorToFlag takes the wire color number and returns the flag for it (1, 2, 4, 8, 16, etc)
-	list/airlockWireColorToFlag = RandomAirlockWires()
+	list/airlockWireColorToFlag
 	list/airlockIndexToFlag
 	list/airlockIndexToWireColor
 	list/airlockWireColorToIndex
-	list/APCWireColorToFlag = RandomAPCWires()
+	list/APCWireColorToFlag
 	list/APCIndexToFlag
 	list/APCIndexToWireColor
 	list/APCWireColorToIndex
@@ -406,47 +422,11 @@ var/global
 
 	// SpyGuy global reaction structure to further recuce cpu usage in handle_reactions (Chemistry-Structure.dm)
 	list/total_chem_reactions = list()
-	list/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
+	list/datum/chemical_reaction/chem_reactions_by_id = list() //This sure beats processing the monster above if I want a particular reaction. =I
+	list/list/datum/chemical_reaction/chem_reactions_by_result = list() // Chemical reactions indexed by result ID
 
 	//SpyGuy: The reagents cache is now an associative list
 	list/reagents_cache = list()
-
-	// list of miscreants since mode is irrelevant
-	list/miscreants = list()
-
-	// Antag overlays for admin ghosts, Syndieborgs and the like (Convair880).
-	antag_generic = image('icons/mob/antag_overlays.dmi', icon_state = "generic")
-	antag_syndieborg = image('icons/mob/antag_overlays.dmi', icon_state = "syndieborg")
-	antag_traitor = image('icons/mob/antag_overlays.dmi', icon_state = "traitor")
-	antag_changeling = image('icons/mob/antag_overlays.dmi', icon_state = "changeling")
-	antag_wizard = image('icons/mob/antag_overlays.dmi', icon_state = "wizard")
-	antag_vampire = image('icons/mob/antag_overlays.dmi', icon_state = "vampire")
-	antag_hunter = image('icons/mob/antag_overlays.dmi', icon_state = "hunter")
-	antag_werewolf = image('icons/mob/antag_overlays.dmi', icon_state = "werewolf")
-	antag_emagged = image('icons/mob/antag_overlays.dmi', icon_state = "emagged")
-	antag_mindhack = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack")
-	antag_master = image('icons/mob/antag_overlays.dmi', icon_state = "mindhack_master")
-	antag_vampthrall = image('icons/mob/antag_overlays.dmi', icon_state = "vampthrall")
-	antag_head = image('icons/mob/antag_overlays.dmi', icon_state = "head")
-	antag_rev = image('icons/mob/antag_overlays.dmi', icon_state = "rev")
-	antag_revhead = image('icons/mob/antag_overlays.dmi', icon_state = "rev_head")
-	antag_syndicate = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
-	antag_spyleader = image('icons/mob/antag_overlays.dmi', icon_state = "spy")
-	antag_spyminion = image('icons/mob/antag_overlays.dmi', icon_state = "spyminion")
-	antag_gang = image('icons/mob/antag_overlays.dmi', icon_state = "gang")
-	antag_gang_leader = image('icons/mob/antag_overlays.dmi', icon_state = "gang_head")
-	antag_grinch = image('icons/mob/antag_overlays.dmi', icon_state = "grinch")
-	antag_wraith = image('icons/mob/antag_overlays.dmi', icon_state = "wraith")
-	antag_omnitraitor = image('icons/mob/antag_overlays.dmi', icon_state = "omnitraitor")
-	antag_blob = image('icons/mob/antag_overlays.dmi', icon_state = "blob")
-	antag_wrestler = image('icons/mob/antag_overlays.dmi', icon_state = "wrestler")
-	antag_spy_theft = image('icons/mob/antag_overlays.dmi', icon_state = "spy_thief")
-	antag_arcfiend = image('icons/mob/antag_overlays.dmi', icon_state = "arcfiend")
-
-	pod_wars_NT = image('icons/mob/antag_overlays.dmi', icon_state = "nanotrasen")
-	pod_wars_NT_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "nanocomm")
-	pod_wars_SY = image('icons/mob/antag_overlays.dmi', icon_state = "syndicate")
-	pod_wars_SY_CMDR = image('icons/mob/antag_overlays.dmi', icon_state = "syndcomm")
 
 	//SpyGuy: Oh my fucking god the QM shit. *cry *wail *sob *weep *vomit *scream
 	list/datum/supply_packs/qm_supply_cache = list()
@@ -470,11 +450,6 @@ var/global
 	centralConn = 1 //Are we able to connect to the central server?
 	centralConnTries = 0 //How many times have we tried and failed to connect?
 
-	/* nuclear reactor & parameter set, if it exists */
-	obj/machinery/power/nuke/fchamber/nuke_core = null
-	obj/machinery/power/nuke/nuke_turbine/nturbine = null
-	datum/nuke_knobset/nuke_knobs = null
-
 	//Resource Management
 	list/localResources = list()
 	list/cachedResources = list()
@@ -497,25 +472,61 @@ var/global
 
 	syndicate_currency = "[pick("Syndie","Baddie","Evil","Spooky","Dread","Yee","Murder","Illegal","Totally-Legit","Crime","Awful")][pick("-"," ")][pick("Credits","Bux","Tokens","Cash","Dollars","Tokens","Dollarydoos","Tickets","Souls","Doubloons","Pesos","Rubles","Rupees")]"
 
-	list/valid_modes = list("secret","action","intrigue","random","traitor","meteor","extended","monkey",
-		"nuclear","blob","restructuring","wizard","revolution", "revolution_extended","malfunction",
-		"spy","gang","disaster","changeling","vampire","mixed","mixed_rp", "construction","conspiracy","spy_theft",
-		"battle_royale", "vampire","everyone-is-a-traitor", "football", "flock", "arcfiend"
-#if defined(MAP_OVERRIDE_POD_WARS)
-		,"pod_wars"
-#endif
-	)
+	list/valid_modes = list("secret","action","intrigue","random") // Other modes added by build_valid_game_modes()
 
 	hardRebootFilePath = "data/hard-reboot"
 
-	/// The map object used to display the AI station map
-	obj/station_map/ai_station_map
+	datum/minimap_renderer/minimap_renderer
+	list/minimap_marker_targets = list()
+
+	/// When toggled on creating new /turf/space will be faster but they will be slightly broken
+	/// used when creating new z-levels
+	dont_init_space = FALSE
+
+	/// Icon states that exist for a given icon ref. Format is valid_icon_states[icon] = list(). Populated by is_valid_icon_state(), used for caching.
+	list/valid_icon_states = list()
+
+	list/allowed_favorite_ingredients = concrete_typesof(/obj/item/reagent_containers/food/snacks) - concrete_typesof(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter) - list(
+		/obj/item/reagent_containers/food/snacks/burger/humanburger,
+		/obj/item/reagent_containers/food/snacks/donut/custom/robust,
+		/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat,
+		/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock,
+		/obj/item/reagent_containers/food/snacks/ingredient/pepperoni,
+		/obj/item/reagent_containers/food/snacks/meatball,
+		/obj/item/reagent_containers/food/snacks/mushroom,
+		/obj/item/reagent_containers/food/snacks/pickle/trash,
+		/obj/item/reagent_containers/food/snacks/pizza/xmas,
+		/obj/item/reagent_containers/food/snacks/plant/glowfruit/spawnable,
+		/obj/item/reagent_containers/food/snacks/soup/custom,
+		/obj/item/reagent_containers/food/snacks/condiment/syndisauce,
+		/obj/item/reagent_containers/food/snacks/donkpocket_w,
+		/obj/item/reagent_containers/food/snacks/surstromming,
+		/obj/item/reagent_containers/food/snacks/hotdog/syndicate,
+		/obj/item/reagent_containers/food/snacks/dippable/tortilla_chip_spawner,
+		/obj/item/reagent_containers/food/snacks/pancake/classic,
+		/obj/item/reagent_containers/food/snacks/wonton_spawner,
+		/obj/item/reagent_containers/food/snacks/agar_block,
+		/obj/item/reagent_containers/food/snacks/sushi_roll/custom,
+#ifndef UNDERWATER_MAP
+		/obj/item/reagent_containers/food/snacks/healgoo,
+		/obj/item/reagent_containers/food/snacks/greengoo,
+#endif
+		/obj/item/reagent_containers/food/snacks/snowball,
+		/obj/item/reagent_containers/food/snacks/burger/vr,
+		/obj/item/reagent_containers/food/snacks/slimjim,
+		/obj/item/reagent_containers/food/snacks/bite,
+		/obj/item/reagent_containers/food/snacks/pickle_holder,
+		/obj/item/reagent_containers/food/snacks/pickle_holder/paper,
+		/obj/item/reagent_containers/food/snacks/snack_cake,
+		/obj/item/reagent_containers/food/snacks/snack_cake/golden,
+		/obj/item/reagent_containers/food/snacks/ice_cream/random,
+		/obj/item/reagent_containers/food/snacks/ice_cream/goodrandom)
 
 /proc/addGlobalRenderSource(var/image/I, var/key)
 	if(I && length(key) && !globalRenderSources[key])
 		addGlobalImage(I, "[key]-renderSourceImage")
 		I.render_target = key
-		I.appearance_flags = KEEP_APART
+		I.appearance_flags = KEEP_APART | PIXEL_SCALE
 		I.loc = renderSourceHolder
 		globalRenderSources[key] = I
 		return I
@@ -554,36 +565,6 @@ var/global
 		globalImages.Remove(key)
 	return
 
-/proc/addAIImage(var/image/I, var/key, var/low_priority=FALSE)
-	if(I && length(key))
-		if(low_priority)
-			aiImagesLowPriority[key] = I
-		else
-			aiImages[key] = I
-		for_by_tcl(M, /mob/living/silicon/ai)
-			if (M.client)
-				M << I
-		return I
-	return null
-
-/proc/getAIImage(var/key)
-	if(length(key) && aiImages[key]) return aiImages[key]
-	else if(length(key) && aiImagesLowPriority[key]) return aiImagesLowPriority[key]
-	else return null
-
-/proc/removeAIImage(var/key)
-	if(length(key) && aiImages[key])
-		for(var/client/C in clients)
-			C.images -= aiImages[key]
-		aiImages[key] = null
-		aiImages.Remove(key)
-	if(length(key) && aiImagesLowPriority[key])
-		for(var/client/C in clients)
-			C.images -= aiImagesLowPriority[key]
-		aiImagesLowPriority[key] = null
-		aiImagesLowPriority.Remove(key)
-	return
-
 /// Generates item icons for manufacturers and other things, used in UI dialogs. Sends to client if needed.
 // Note that a client that clears its cache won't get new icons. Deal with it. BYOND's browse_rsc is shite.
 /proc/getItemIcon(var/atom/path, var/state, var/dir, var/key = null, var/client/C)
@@ -617,3 +598,7 @@ var/global
 	browse_item_initial_done = 1
 	for (var/client/C in clients)
 		sendItemIcons(C)
+
+#ifdef TWITCH_BOT_ALLOWED
+var/global/mob/twitch_mob = 0
+#endif

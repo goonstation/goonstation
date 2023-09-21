@@ -18,10 +18,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	var/text_cooldown = "makes a subdued noise."
 	var/text_dud = "sputters and rattles a bit, then falls quiet."
 	var/flascustomization_first_color = "#FF0000"
-	var/sound/alarm_initial = "sound/machines/lavamoon_plantalarm.ogg"
-	var/sound/alarm_during = "sound/machines/alarm_a.ogg"
-	var/sound/alarm_final = "sound/machines/engine_alert1.ogg"
-	var/sound/sound_cooldown = "sound/machines/weaponoverload.ogg"
+	var/sound/alarm_initial = 'sound/machines/lavamoon_plantalarm.ogg'
+	var/sound/alarm_during = 'sound/machines/alarm_a.ogg'
+	var/sound/alarm_final = 'sound/machines/engine_alert1.ogg'
+	var/sound/sound_cooldown = 'sound/machines/weaponoverload.ogg'
 	var/doAlert = 0
 	var/blewUp = 0
 	var/animationScale = 3
@@ -46,7 +46,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		src.detonation_time = TIME + src.explode_delay
 		if(recharge_delay && ON_COOLDOWN(O, "bomb_cooldown", recharge_delay))
 			T.visible_message("<b><span class='alert'>[O] [text_cooldown]</span></b>")
-			playsound(T, sound_cooldown, 100, 1)
+			playsound(T, sound_cooldown, 100, TRUE)
 			SPAWN(3 SECONDS)
 				O.ArtifactDeactivated() // lol get rekt spammer
 			return
@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (warning_initial)
 			T.visible_message("<b><span class='alert'>[O] [warning_initial]</b></span>")
 		if (alarm_initial)
-			playsound(T, alarm_initial, 100, 1, doAlert?200:-1)
+			playsound(T, alarm_initial, 100, TRUE, doAlert?200:-1)
 		if (doAlert)
 			var/area/A = get_area(O)
 			command_alert("An extremely unstable object of [artitype.type_name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected", alert_origin = ALERT_ANOMALY)
@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return
 		var/turf/T = get_turf(O)
 		if(alarm_during)
-			playsound(T, alarm_during, 30, 1) // repeating noise, so people who come near later know it's a bomb
+			playsound(T, alarm_during, 30, TRUE) // repeating noise, so people who come near later know it's a bomb
 
 		if(TIME > src.detonation_time)
 			src.detonation_time = INFINITY
@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if (warning_final)
 				T.visible_message("<b><span class='alert'>[O] [warning_final]</b></span>")
 			if (alarm_final)
-				playsound(T, alarm_final, 100, 1, -1)
+				playsound(T, alarm_final, 100, TRUE, -1)
 			animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 			if(O.simple_light)
 				animate(O.simple_light, flags=ANIMATION_PARALLEL, time = 10 SECONDS, transform = matrix() * animationScale)
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, FALSE, 3)
 		new /obj/bhole(T,rand(100,300))
 
 		if (O)
@@ -234,6 +234,17 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	post_setup()
 		. = ..()
 		payload_type = rand(0,3)
+		var/payload_type_name = "unknown"
+		switch (payload_type)
+			if (0)
+				payload_type_name = "smoke"
+			if (1)
+				payload_type_name = "foam"
+			if (2)
+				payload_type_name = "propellant"
+			if (3)
+				payload_type_name = "fluid"
+
 		var/list/potential_reagents = list()
 		switch(artitype.name)
 			if ("ancient")
@@ -244,8 +255,8 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if ("martian")
 				// medicine, some poisons, some gross stuff
 				potential_reagents = list("charcoal","styptic_powder","salbutamol","anti_rad","silver_sulfadiazine","synaptizine",
-				"omnizine","synthflesh","saline","salicylic_acid","menthol","calomel","penteticacid","antihistamine","atropine",
-				"perfluorodecalin","ipecac","mutadone","insulin","epinephrine","cyanide","ketamine","toxin","neurotoxin","mutagen",
+				"omnizine","synthflesh","saline","salicylic_acid","menthol","calomel","penteticacid","antihistamine","atropine","solipsizine",
+				"perfluorodecalin","ipecac","mutadone","insulin","epinephrine","cyanide","ketamine","toxin","neurotoxin","neurodepressant","mutagen",
 				"fake_initropidril","toxic_slurry","jenkem","space_fungus","blood","vomit","gvomit","urine","meat_slurry","grease","butter")
 			if ("eldritch")
 				// all the worst stuff. all of it
@@ -253,20 +264,22 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				"phlogiston","thermite","infernite","foof","fuel","blackpowder","acid","amanitin","coniine","cyanide","curare",
 				"formaldehyde","lipolicide","initropidril","cholesterol","itching","pacid","pancuronium","polonium",
 				"sodium_thiopental","ketamine","sulfonal","toxin","venom","neurotoxin","mutagen","wolfsbane",
-				"toxic_slurry","histamine","sarin")
+				"toxic_slurry","histamine","saxitoxin","viper_venom","ricin")
 			else
 				// absolutely everything
 				potential_reagents = all_functional_reagent_ids
 
-		if (potential_reagents.len > 0)
+		if (length(potential_reagents) > 0)
 			var/looper = rand(2,5)
 			while (looper > 0)
 				var/reagent = pick(potential_reagents)
-				if(payload_type == 3 && ban_from_fluid.Find(reagent)) // do not pick stuff that is banned from fluid dump
-					continue
+				if(payload_type == 3) // do not pick stuff that is banned from fluid dump
+					var/datum/reagent/cached = reagents_cache[reagent]
+					if (cached.fluid_flags & FLUID_BANNED)
+						continue
 				looper--
 				payload_reagents += reagent
-			log_addendum = "Payload: [kText.list2text(payload_reagents, ", ")]"
+			log_addendum = "Payload: [payload_type_name], [kText.list2text(payload_reagents, ", ")]"
 
 		recharge_delay = rand(300,800)
 
@@ -280,7 +293,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			reaction_reagents += X
 
 		var/amountper = 0
-		if (reaction_reagents.len > 0)
+		if (length(reaction_reagents) > 0)
 			amountper = round(O.reagents.maximum_volume / reaction_reagents.len)
 		else
 			amountper = 20
@@ -300,6 +313,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 				O.reagents.smoke_start(50,1)
 			if(3)
 				location.fluid_react(O.reagents, O.reagents.total_volume)
+				var/datum/fluid_group/FG = location.active_liquid?.group
+				if(FG)
+					FG.base_evaporation_time = 30 SECONDS
+					FG.bonus_evaporation_time = 0 SECONDS
 
 		O.reagents.clear_reagents()
 
@@ -322,7 +339,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return
 		var/datum/artifact/bomb/transmute/A = src.artifact
 		O.setMaterial(A.mat)
-		boutput(user, "\The [O] turn\s into [A.mat.name]!")
+		boutput(user, "\The [O] turn\s into [A.mat.getName()]!")
 
 /datum/artifact/bomb/transmute
 	associated_object = /obj/machinery/artifact/bomb/transmute
@@ -335,7 +352,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 	warning_final = ""
 	alarm_initial = null
 	alarm_during = null
-	alarm_final = "sound/machines/satcrash.ogg"
+	alarm_final = 'sound/effects/glitchy1.ogg'
 	var/material = "gold"
 	var/datum/material/mat = null
 	var/affects_organic = 0 // 1 means material human, 2 means material statue
@@ -369,6 +386,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					10;"wiz_amethyst",
 					10;"wiz_emerald",
 					10;"wiz_sapphire",
+					5;"jean",
 					10;"starstone")
 			if("eldritch") // fuck you
 				material = pick(
@@ -392,6 +410,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 					50;"bone",
 					20;"blob",
 					20;"pizza",
+					5;"jean",
 					20;"butt")
 			if("ancient") // industrial type stuff
 				material = pick(
@@ -432,13 +451,13 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		mat = getMaterial(material)
 
-		warning_initial = "appears to be turning into [mat.name]."
-		warning_final = "begins transmuting nearby matter into [mat.name]!"
-		log_addendum = "Material: [mat.name]"
+		warning_initial = "appears to be turning into [mat.getName()]."
+		warning_final = "begins transmuting nearby matter into [mat.getName()]!"
+		log_addendum = "Material: [mat.getName()]"
 
-		var/matR = GetRedPart(mat.color)
-		var/matG = GetGreenPart(mat.color)
-		var/matB = GetBluePart(mat.color)
+		var/matR = GetRedPart(mat.getColor())
+		var/matG = GetGreenPart(mat.getColor())
+		var/matB = GetBluePart(mat.getColor())
 		lightColor = list(matR, matG, matB, 255)
 
 		range = rand(3,7)
@@ -452,9 +471,10 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (..())
 			return
 		var/base_offset = rand(1000)
-		O.add_filter("rays", 1, rays_filter(size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.color))
+		O.add_filter("rays", 1, rays_filter(size=0, density=20, factor=1, offset=base_offset, threshold=0, color=mat.getColor()))
 		animate(O.get_filter("rays"), size=16*range, time=0.5 SECONDS, offset=base_offset+50)
 		animate(size=32*range, time=0.5 SECONDS, offset=base_offset+50, alpha=0)
+		playsound(O.loc, 'sound/weapons/conc_grenade.ogg', 90, 1)
 
 		SPAWN(1 SECOND)
 			var/range_squared = range**2

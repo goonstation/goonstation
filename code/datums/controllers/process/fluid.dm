@@ -32,12 +32,12 @@
 
 		for (var/datum/fluid_group/FG in processing_fluid_drains)
 			LAGCHECK(LAG_LOW)
-			if (!FG) continue
+			if (QDELETED(FG)) continue
 
 			if (FG.queued_drains)
 				FG.reagents.skip_next_update = 1
 				FG.drain(FG.last_drain.active_liquid ? FG.last_drain.active_liquid : pick(FG.members), FG.queued_drains) //420 drain it
-				if(!FG)
+				if(QDELETED(FG))
 					continue
 				FG.queued_drains = 0
 				FG.last_drain = 0
@@ -55,7 +55,7 @@
 		for (var/datum/fluid_group/FG in processing_fluid_spreads)
 			if (world.time < FG.last_update_time + FG.avg_viscosity) continue
 			LAGCHECK(LAG_LOW)
-			if (!FG) continue
+			if (QDELETED(FG)) continue
 
 			FG.last_update_time = world.time
 			if (FG.update_once())
@@ -93,7 +93,7 @@
 			var/atom/selected_temp_expose = 0
 			for (var/datum/fluid_group/FG in processing_fluid_groups)
 				LAGCHECK(LAG_MED)
-				if (!FG) continue
+				if (QDELETED(FG)) continue
 				if (!FG.members || !length(FG.members)) continue
 
 				//temperature stuff
@@ -127,7 +127,7 @@
 					F.reagents.set_reagent_temp(F.reagents.total_temperature + change , 1)
 				*/
 				LAGCHECK(LAG_MED)
-				if (!FG) continue
+				if (QDELETED(FG)) continue
 				//evaporate stuff
 				if (FG.amt_per_tile <= FG.required_to_spread && !FG.updating)
 					avg_viscosity = FG.avg_viscosity
@@ -139,7 +139,7 @@
 						if (FG.reagents.get_master_reagent_name() == "blood")
 							for (var/obj/fluid/F in FG.members)
 								LAGCHECK(LAG_MED)
-								if (!F) continue
+								if (QDELETED(F)) continue
 								var/obj/decal/cleanable/blood/dynamic/B = make_cleanable(/obj/decal/cleanable/blood/dynamic,F.loc)
 								B.sample_reagent = "blood"
 								B.add_volume(F.color, do_fluid_react = 0)

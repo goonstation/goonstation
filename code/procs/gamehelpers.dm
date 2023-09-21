@@ -14,6 +14,7 @@ var/list/stinkThings = list("garbage can","trash heap","cesspool","toilet","pile
 var/list/stinkVerbs = list("took a shit","died","farted","threw up","wiped its ass")
 var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administrator")
 
+
 /proc/stinkString()
 	// i am five - ISN
 	switch (rand(1,4))
@@ -26,16 +27,9 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		else
 			return "[pick(stinkExclamations)], it smells like \a [pick(stinkThings)]'s [pick(stinkThingies)] in here!"
 
-//For fuck's sake.
-/*
-/proc/bubblesort(list/L)
-	var i, j
-	for(i=L.len, i>0, i--)
-		for(j=1, j<i, j++)
-			if(L[j] > L[j+1])
-				L.Swap(j, j+1)
-	return L
-*/
+// TODO convert the above to use a file/string picker
+
+
 /proc/get_local_apc(O)
 	var/turf/T = get_turf(O)
 	if (!T)
@@ -85,9 +79,13 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 /// For interacting with stuff.
 /proc/in_interact_range(atom/source, atom/user)
 	. = FALSE
+	var/mob/mobuser = user
+	ENSURE_TYPE(mobuser)
+	if(mobuser?.client?.holder?.ghost_interaction)
+		return TRUE
 	if(BOUNDS_DIST(source, user) == 0 || (IN_RANGE(source, user, 1))) // IN_RANGE is for general stuff, bounds_dist is for large sprites, presumably
 		return TRUE
-	else if (source in bible_contents && locate(/obj/item/storage/bible) in range(1, user)) // whoever added the global bibles, fuck you
+	else if (source in bible_contents && locate(/obj/item/bible) in range(1, user)) // whoever added the global bibles, fuck you
 		return TRUE
 	else
 		if (iscarbon(user))
@@ -103,7 +101,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 					//I really shouldnt put this here but i dont have a better idea
 					var/obj/overlay/O = new /obj/overlay ( locate(X,Y,Z) )
 					O.name = "sparkles"
-					O.anchored = 1
+					O.anchored = ANCHORED
 					O.set_density(0)
 					O.layer = FLY_LAYER
 					O.set_dir(pick(cardinal))
@@ -144,8 +142,10 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	return TRUE
 
 /proc/can_reach(mob/user, atom/target)
+	if(user.client?.holder?.ghost_interaction)
+		return TRUE
 	if (target in bible_contents)
-		target = locate(/obj/item/storage/bible) in range(1, user) // fuck bibles
+		target = locate(/obj/item/bible) in range(1, user) // fuck bibles
 		if (!target)
 			return 0
 	var/turf/UT = get_turf(user)
@@ -207,7 +207,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	. = list()
 
 	var/turf/T = get_turf(center)
-	if(length(T?.cameras))
+	if(length(T?.camera_coverage_emitters))
 		for_by_tcl(theAI, /mob/living/silicon/ai)
 			if (theAI.deployed_to_eyecam)
 				var/mob/living/intangible/aieye/AIeye = theAI.eyecam
@@ -253,7 +253,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	if(!the_atom) return
 	. = format_net_id("\ref[the_atom]")
 
-#define CLUWNE_NOISE_DELAY 50
+#define CLUWNE_NOISE_DELAY 5 SECONDS
 
 /proc/process_accents(var/mob/living/carbon/human/H, var/message)
 	// Separate the radio prefix (if it exists) and message so the accent can't destroy the prefix
@@ -282,18 +282,19 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 				messageEffects += "Muffled by [H.grabbed_by]"
 				break
 
+	var/do_laugh = FALSE
 	if (iscluwne(H))
 		message = honk(message)
 		messageEffects += "Cluwne Honk"
-		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
-			H.last_cluwne_noise = world.time
+		do_laugh = TRUE
+
 	if (ishorse(H))
 		message = neigh(message)
 		messageEffects += "Horse"
-		if (world.time >= (H.last_cluwne_noise + CLUWNE_NOISE_DELAY))
-			playsound(H, pick("sound/voice/cluwnelaugh1.ogg","sound/voice/cluwnelaugh2.ogg","sound/voice/cluwnelaugh3.ogg"), 35, 0, 0, H.get_age_pitch())
-			H.last_cluwne_noise = world.time
+		do_laugh = TRUE
+
+	if (do_laugh && !ON_COOLDOWN(H, "cluwne laugh", CLUWNE_NOISE_DELAY))
+		playsound(H, pick('sound/voice/cluwnelaugh1.ogg','sound/voice/cluwnelaugh2.ogg','sound/voice/cluwnelaugh3.ogg'), 35, 0, 0, H.get_age_pitch())
 
 	if ((H.reagents && H.reagents.get_reagent_amount("ethanol") > 30 && !isdead(H)) || H.traitHolder.hasTrait("alcoholic"))
 		if((H.reagents.get_reagent_amount("ethanol") > 125 && prob(20)))
@@ -323,7 +324,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 			message = say_gurgle(message)
 			messageEffects += "Gurgle"
 
-	if(H.mutantrace && !isdead(H))
+	if(!isdead(H))
 		message = H.mutantrace.say_filter(message)
 		messageEffects += "[H.mutantrace] say_filter()"
 
@@ -352,9 +353,11 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 #endif
 
 	if(phrase_log.is_uncool(message) && !wasUncool)
-		logTheThing("admin",H,null,"[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
+		logTheThing(LOG_ADMIN, H, "[H] tried to say [prefixAndMessage[2]] but it was garbled into [message] which is uncool by the following effects: "+jointext(messageEffects,", ")+". We garbled the bad words.")
 		message = replacetext(message,phrase_log.uncool_words,pick("urr","blargh","der","hurr","pllt"))
 	return prefix + message
+
+#undef CLUWNE_NOISE_DELAY
 
 
 /proc/can_see(atom/source, atom/target, length=5) // I couldnt be arsed to do actual raycasting :I This is horribly inaccurate.
@@ -569,6 +572,9 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 	//		 into the new area will not be moved.
 	if(!A || !src) return 0
 
+	if(!isnull(turf_to_skip) && !islist(turf_to_skip))
+		turf_to_skip = list(turf_to_skip)
+
 	var/list/turfs_src = get_area_turfs(src.type)
 	var/list/turfs_trg = get_area_turfs(A.type)
 
@@ -590,7 +596,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 
 	for (var/turf/S in turfs_src)
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
-		if(T?.loc != A || istype(S, turf_to_skip)) continue
+		if(T?.loc != A || istypes(S, turf_to_skip)) continue
 		T.ReplaceWith(S.type, keep_old_material = 0, force=1)
 		T.appearance = S.appearance
 		T.set_density(S.density)
@@ -600,9 +606,9 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
 		for (var/atom/movable/AM as anything in S)
 			if (istype(AM, /obj/effects/precipitation)) continue
-			if (istype(AM, /obj/forcefield) || istype(AM, /obj/overlay/tile_effect)) continue
+			if (istype(AM, /obj/overlay/tile_effect)) continue
 			if (!ignore_fluid && istype(AM, /obj/fluid)) continue
-			if (istype(AM, /obj/decal/tile_edge) && istype(S, turf_to_skip)) continue
+			if (istype(AM, /obj/decal/tile_edge) && istypes(S, turf_to_skip)) continue
 			AM.set_loc(T)
 		if(turftoleave)
 			S.ReplaceWith(turftoleave, keep_old_material = 0, force=1)
@@ -703,12 +709,18 @@ proc/ThrowRandom(var/atom/movable/A, var/dist = 10, var/speed = 1, var/list/para
 
 /// get_ouija_word_list
 // get a list of words for an ouija board
-proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/words_max = 8, var/include_nearby_mobs_chance = 40, var/include_most_mobs_chance = 20, include_said_phrases_chance = 10)
+proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 8,
+		include_nearby_mobs_chance = 40,
+		include_most_mobs_chance = 20,
+		include_said_phrases_chance = 10,
+		filename = "ouija_board.txt",
+		strings_category = "ouija_board_words"
+	)
 	var/list/words = list()
 
 	// Generic Ouija words
 	for(var/i in 1 to rand(words_min, words_max))
-		var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+		var/picked = pick(strings(filename, strings_category))
 		words |= picked
 
 	if (prob(include_nearby_mobs_chance))
@@ -728,7 +740,7 @@ proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/
 				// any actual antag
 				var/list/player_pool = list()
 				for (var/mob/M in mobs)
-					if (!M.client || istype(M, /mob/new_player) || !checktraitor(M))
+					if (!M.client || istype(M, /mob/new_player) || !M.mind?.is_antagonist())
 						continue
 					player_pool += M
 				if (length(player_pool))
@@ -736,7 +748,7 @@ proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/
 					words |= (M.real_name ? M.real_name : M.name)
 			if (1 to 5)
 				// fake wraith
-				words |= call(/mob/wraith/proc/make_name)()
+				words |= call(/mob/living/intangible/wraith/proc/make_name)()
 			if (6 to 10)
 				// fake blob (heh)
 				var/blobname = phrase_log.random_phrase("name-blob")
@@ -765,3 +777,30 @@ proc/get_ouija_word_list(var/atom/movable/source = null, var/words_min = 5, var/
 					words |= (M.real_name ? M.real_name : M.name)
 
 	return words
+
+
+// returns initial health of an item or an item type
+/proc/get_initial_item_health(obj/item/I)
+	if (initial(I.health))
+		return initial(I.health)
+	else
+		var/weight_class = initial(I.w_class)
+		switch (weight_class)
+			if (W_CLASS_TINY to W_CLASS_NORMAL)
+				return weight_class + 1
+			else
+				return weight_class + 2
+
+/// checks an item for an id card
+/proc/get_id_card(obj/item/I)
+	if (istype(I, /obj/item/card/id))
+		return I
+	if (istype(I, /obj/item/device/pda2))
+		var/obj/item/device/pda2/pda = I
+		return pda.ID_card
+	if (istype(I, /obj/item/clothing/lanyard))
+		var/obj/item/clothing/lanyard/lanyard = I
+		return lanyard.get_stored_id()
+	if (istype(I, /obj/item/magtractor))
+		var/obj/item/magtractor/mag = I
+		return get_id_card(mag.holding)

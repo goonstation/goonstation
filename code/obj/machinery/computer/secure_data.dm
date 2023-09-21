@@ -122,6 +122,10 @@
 			<td><a href="javascript:goBYOND('action=field;field=sex');">[src.active_record_general["sex"]]</a></td>
 		</tr>
 		<tr>
+			<th>Pronouns</th>
+			<td><a href="javascript:goBYOND('action=field;field=pronouns');">[src.active_record_general["pronouns"]]</a></td>
+		</tr>
+		<tr>
 			<th>Age</th>
 			<td><a href="javascript:goBYOND('action=field;field=age');">[src.active_record_general["age"]]</a></td>
 		</tr>
@@ -471,6 +475,12 @@
 								src.active_record_general["sex"] = "Female"
 							else
 								src.active_record_general["sex"] = "Male"
+					if ("pronouns")
+						if (istype(src.active_record_general, /datum/db_record))
+							var/datum/pronouns/pronouns = choose_pronouns(usr, "Please select pronouns:", "Security Records", src.active_record_general["pronouns"])
+							if (!pronouns || src.validate_can_still_use(current_general, current_security, usr))
+								return
+							src.active_record_general["pronouns"] = pronouns.name
 					if ("age")
 						if (istype(src.active_record_general, /datum/db_record))
 							var/t1 = input("Age:", "Security Records", src.active_record_general["age"], null) as num
@@ -607,7 +617,7 @@
 						if ("arrest")
 							src.active_record_security["criminal"] = "*Arrest*"
 							if (usr && src.active_record_general["name"])
-								logTheThing("station", usr, null, "[src.active_record_general["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
+								logTheThing(LOG_STATION, usr, "[src.active_record_general["name"]] is set to arrest by [usr] (using the ID card of [src.authenticated]) [log_loc(src)]")
 						if ("incarcerated")
 							src.active_record_security["criminal"] = "Incarcerated"
 						if ("parolled")
@@ -661,6 +671,7 @@
 				G["id"] = num2hex(rand(1, 1.6777215E7), 6)
 				G["rank"] = "Unassigned"
 				G["sex"] = "Unknown"
+				G["pronouns"] = "Unknown"
 				G["age"] = "Unknown"
 				G["fingerprint"] = "Unknown"
 				G["p_stat"] = "Active"
@@ -757,7 +768,7 @@
 			if ("print_record")
 				if (!( src.printing ))
 					src.printing = 1
-					playsound(src.loc, "sound/machines/printer_press.ogg", 50, 0)
+					playsound(src.loc, 'sound/machines/printer_press.ogg', 50, 0)
 					sleep(3 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper( src.loc )
 					P.info = "<center><b>Security Record</b></center><br>"
@@ -767,6 +778,8 @@
 						Name: [src.active_record_general["name"]] ID: [src.active_record_general["id"]]
 						<br>
 						<br>Sex: [src.active_record_general["sex"]]
+						<br>
+						<br>Pronouns: [src.active_record_general["pronouns"]]
 						<br>
 						<br>Age: [src.active_record_general["age"]]
 						<br>

@@ -32,7 +32,7 @@
 
 ////Dead sight
 		var/turf/T = owner.eye ? get_turf(owner.eye) : get_turf(owner) //They might be in a closet or something idk
-		if ((isdead(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK)) && (T && !isrestrictedz(T.z)))
+		if ((isdead(owner) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK)) && (T && (!isrestrictedz(T.z) || (owner.client?.adventure_view))))
 			owner.sight |= SEE_TURFS
 			owner.sight |= SEE_MOBS
 			owner.sight |= SEE_OBJS
@@ -110,15 +110,22 @@
 			owner.see_invisible = INVIS_ADVENTURE
 
 		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_THERMALVISION_MK2))
-			owner.sight |= SEE_MOBS //traitor item can see through walls
-			owner.sight &= ~SEE_BLACKNESS
+			owner.sight |= SEE_MOBS
 			if (owner.see_in_dark < SEE_DARK_FULL)
 				owner.see_in_dark = SEE_DARK_FULL
 			if (owner.see_invisible < INVIS_CLOAK)
 				owner.see_invisible = INVIS_CLOAK
 			if (owner.see_infrared < 1)
 				owner.see_infrared = 1
+			var/datum/client_image_group/image_group = get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY)
+			if (!(owner in image_group.subscribed_mobs_with_subcount))
+				image_group.add_mob(owner)
+
 			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
+		else
+			var/datum/client_image_group/image_group = get_image_group(CLIENT_IMAGE_GROUP_MOB_OVERLAY)
+			if (owner in image_group.subscribed_mobs_with_subcount)
+				image_group.remove_mob(owner)
 
 		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_THERMALVISION))	//  && (T && !isrestrictedz(T.z))
 			// This kinda fucks up the ability to hide things in infra writing in adv zones
@@ -133,12 +140,16 @@
 				owner.see_infrared = 1
 			owner.render_special.set_centerlight_icon("thermal", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))
 
-		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_MESONVISION) && (T && !isrestrictedz(T.z)))
-			owner.sight |= SEE_TURFS
-			owner.sight &= ~SEE_BLACKNESS
+		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_MESONVISION))
+			if(T && !isrestrictedz(T.z))
+				owner.sight |= SEE_TURFS
+				owner.sight &= ~SEE_BLACKNESS
 			if (owner.see_in_dark < initial(owner.see_in_dark) + 1)
 				owner.see_in_dark++
 			owner.render_special.set_centerlight_icon("meson", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255), wide = (owner.client?.widescreen))
+			if (owner.see_invisible < INVIS_INFRA)
+				owner.see_invisible = INVIS_INFRA
+
 
 		if (HAS_ATOM_PROPERTY(owner, PROP_MOB_NIGHTVISION))
 			owner.render_special.set_centerlight_icon("nightvision", rgb(0.5 * 255, 0.5 * 255, 0.5 * 255))

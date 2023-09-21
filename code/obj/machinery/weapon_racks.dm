@@ -19,11 +19,11 @@
 	icon = 'icons/obj/weapon_rack.dmi'
 	icon_state = "swordstand1"
 	var/amount = 1
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
 	var/stand_type = "katanastand"
-	var/contained_weapon = /obj/item/katana_sheath
+	var/contained_weapon = /obj/item/swords_sheaths/katana
 	var/contained_weapon_name = "katana"
 	var/recharges_contents = 0
 	var/max_amount = 1
@@ -68,13 +68,21 @@
 		req_access = list(access_security)
 
 		recharger
-			name = "taser recharger rack"
-			desc = "A taser rack that can charge up to 3 taser guns. Handy!"
+			name = "security weapon recharger rack"
+			desc = "A taser rack that can charge up to 3 security weapons. Handy!"
 			icon_state = "taser_charge_rack"
 			amount = 3
 			max_amount = 3
 			stand_type = "taser_charge_rack"
+			contained_weapon_name = "security weapon"
 			recharges_contents = 1
+
+			valid_item(obj/item/I)
+				return(istype(I, /obj/item/gun/energy/taser_gun) ||\
+				istype(I, /obj/item/gun/energy/tasershotgun) ||\
+				istype(I, /obj/item/gun/energy/tasersmg) ||\
+				istype(I, /obj/item/gun/energy/wavegun)
+				)
 
 			empty
 				icon_state = "taser_rack0"
@@ -133,7 +141,7 @@
 
 		SPAWN(1 SECOND)
 			if (!ispath(src.contained_weapon))
-				logTheThing("debug", src, null, "has a non-path contained_weapon, \"[src.contained_weapon]\", and is being disposed of to prevent errors")
+				logTheThing(LOG_DEBUG, src, "has a non-path contained_weapon, \"[src.contained_weapon]\", and is being disposed of to prevent errors")
 				qdel(src)
 				return
 			src.update()
@@ -154,16 +162,20 @@
 			src.updateUsrDialog()
 			return
 
+		if (src.panelopen && (issnippingtool(W) || ispulsingtool(W))) //Taken from fabricator code so tools open the hacking
+			src.Attackhand(user)
+			return
+
 		if (src.amount >= src.max_amount)
 			boutput(user, "You can't fit anything else in this rack.")
 			return
 		if (W.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
-			H.sever_limb(H.hand == 1 ? "l_arm" : "r_arm")
+			H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
 			boutput(user, "The [src]'s automated loader wirrs and rips off [H]'s arm!")
 			return
 		else
-			if (istype(W, src.contained_weapon))
+			if (valid_item(W))
 				user.drop_item()
 				W.set_loc(src)
 				src.amount ++
@@ -213,29 +225,39 @@
 			return
 
 		if (src.malfunction)
-			user.shock(src, 7500, user.hand == 1 ? "l_arm" : "r_arm", 1, 0)
+			user.shock(src, 7500, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0)
+
+			//Due to using attack_hand with items in hand this makes sure nothing unintended happenes while hacking like taking a weapon out with a tool
+		if ((user.find_tool_in_hand(TOOL_SNIPPING) || user.find_tool_in_hand(TOOL_PULSING)) && user.equipped())
+			return
 
 		if (!src.allowed(user) && !hacked)
 			boutput(user, "<span class='alert'>Access denied.</span>")
 			return
 
 		src.add_fingerprint(user)
-		var/obj/item/myWeapon = locate(src.contained_weapon) in src
+		var/obj/item/myWeapon
+		for(var/obj/item/I in src)
+			if(valid_item(I))
+				myWeapon = I
+				break
 		if (myWeapon)
 			if (src.amount >= 1)
 				src.amount--
 			user.put_in_hand_or_drop(myWeapon)
 			boutput(user, "You take [myWeapon] out of [src].")
+			logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
 		else
 			if (src.amount >= 1)
 				src.amount--
 				myWeapon = new src.contained_weapon(src.loc)
 				user.put_in_hand_or_drop(myWeapon)
 				boutput(user, "You take [myWeapon] out of [src].")
+				logTheThing(LOG_STATION, user, "takes [myWeapon] from the [src] [log_loc(src)].")
 		src.update()
-		try // : is bad, but let's try and do it anyway.
-			myWeapon:UpdateIcon() // Update the icon of the weapon, so it shows the right level of charge.
-		catch // Did : throw an exception? Catch it! Before it gets loose!
+		myWeapon?.UpdateIcon() // let it be known that this used to be in a try-catch for some fucking reason
+		if (src.amount <= 0) //prevents a runtime if it's empty
+			return
 
 	proc/update()
 		src.icon_state = "[src.stand_type][src.amount]"
@@ -244,7 +266,7 @@
 	process() // Override the normal process proc with this:
 		if(recharges_contents)
 			for(var/obj/item/A in src) // For each item(A) in the rack(src) ...
-				if(!istype(A, contained_weapon)) // Check if the item(A) is not(!) accepted in this kind of rack(contained_weapon) and then...
+				if(!valid_item(A)) // Check if the item(A) is not(!) accepted in this kind of rack(contained_weapon) and then...
 					continue // It's not accepted here! Vamoose! Skidaddle! Git outta here! (Move on without executing any further code in this proc.)
 				SEND_SIGNAL(A, COMSIG_CELL_CHARGE, 10)
 
@@ -260,7 +282,8 @@
 				return
 			else if (src.isWireColorCut(twire)) src.mend(twire)
 			else src.cut(twire)
-			src.updateUsrDialog()
+			//src.updateUsrDialog() currently does nothing
+			src.Attackhand(usr) //refreshes ui definitly not the most efficient way
 
 		if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
 			var/twire = text2num_safe(href_list["pulsewire"])
@@ -271,7 +294,8 @@
 				boutput(usr, "You can't pulse a cut wire.")
 				return
 			else src.pulse(twire)
-			src.updateUsrDialog()
+			//src.updateUsrDialog() currently does nothing
+			src.Attackhand(usr) //refreshes ui definitly not the most efficient way
 
 	proc/isWireColorCut(var/wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]
@@ -312,6 +336,9 @@
 			if (WIRE_POWER)
 				if (src.working) src.working = 0
 				else src.working = 1
+
+	proc/valid_item(obj/item/I)
+		return istype(I, contained_weapon)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if (!src.hacked)

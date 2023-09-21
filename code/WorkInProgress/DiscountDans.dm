@@ -114,7 +114,7 @@
 	desc = "Discount Dan's loves you too!"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 
 	deconstruct_flags = DECON_MULTITOOL
 

@@ -31,7 +31,7 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 	if(copytext(msg, 1, 2) != SPACEBEE_EXTENSION_ASAY_PREFIX)
 		return
 	usr = user // big brain idea or very stupid? you decide
-	logTheThing("admin", user, null, "Spacebee command: [msg]")
+	logTheThing(LOG_ADMIN, user, "Spacebee command: [msg]")
 	return src.process_raw_command(copytext(msg, 2), user)
 
 /// paginates a message in a way that fits into Discord messages
@@ -45,7 +45,7 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 	for(var/line in lines)
 		if(length(line) + 1 + current_length >= msg_length)
 			. = ircbot.export("admin", list("msg" = jointext(current_message, "\n")))
-			if(!.)
+			if(!. || .["status"] == "error")
 				return
 			current_message.Cut()
 			current_length = 0
@@ -57,7 +57,7 @@ var/global/datum/spacebee_extension_system/spacebee_extension_system = new
 /// replies to a given user on Discord
 /datum/spacebee_extension_system/proc/reply(msg, user)
 	ENSURE_USER
-	logTheThing("admin", user, null, "Spacebee command reply: [msg]")
+	logTheThing(LOG_ADMIN, user, "Spacebee command reply: [msg]")
 	if(config.env == "dev")
 		message_admins("Spacebee command reply to [user]: [replacetext(msg, "\n", "<br>")]")
 		return 1

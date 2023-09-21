@@ -1,4 +1,4 @@
-/mob/
+/mob
 	var/list/stun_resist_mods = list()
 
 
@@ -67,7 +67,8 @@
 	if(!src.use_stamina) return
 	if(!isnum(x)) return
 	stamina = min(stamina_max, stamina + x)
-	if(src.stamina_bar.last_update != TIME) src.stamina_bar.update_value(src)
+	if(src.stamina_bar && src.stamina_bar.last_update != TIME)
+		src.stamina_bar.update_value(src)
 	return
 
 //Removes stamina
@@ -167,7 +168,8 @@
 	return
 
 /mob/living/stamina_stun(stunmult = 1)
-	if(!src.use_stamina) return
+	if(!src.use_stamina || src.no_stamina_stuns)
+		return
 	if(src.stamina <= 0)
 		var/chance = STAMINA_SCALING_KNOCKOUT_BASE
 		chance += (src.stamina / STAMINA_NEG_CAP) * STAMINA_SCALING_KNOCKOUT_SCALER
@@ -178,10 +180,6 @@
 				src.force_laydown_standup()
 
 //new disorient thing
-
-#define DISORIENT_BODY 1
-#define DISORIENT_EYE 2
-#define DISORIENT_EAR 4
 
 /mob/proc/get_disorient_protection()
 	return min(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY), clamp(GET_ATOM_PROPERTY(src, PROP_MOB_DISORIENT_RESIST_BODY_MAX), 90, 100)) + 0
@@ -198,6 +196,8 @@
 
 /mob/proc/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY, stack_stuns = 1)
 	.= 1
+	if (src.no_stamina_stuns)
+		return FALSE
 	if (stunned)
 		if(stack_stuns)
 			src.changeStatus("stunned", stunned)
@@ -255,7 +255,7 @@
 
 /mob/living/silicon/do_disorient(var/stamina_damage, var/weakened, var/stunned, var/paralysis, var/disorient = 60, var/remove_stamina_below_zero = 0, var/target_type = DISORIENT_BODY, stack_stuns = 1)
 	// Apply the twitching disorient animation for as long as the maximum stun duration is.
-	src.changeStatus("cyborg-disorient", max(weakened, stunned, paralysis))
+	src.changeStatus("cyborg-disorient", max(weakened, stunned, paralysis, disorient))
 	. = ..()
 
 //STAMINA UTILITY PROCS

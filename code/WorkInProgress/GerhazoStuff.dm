@@ -9,24 +9,24 @@
 		real_name = "Cyalume Knight"
 		desc = "A knight of modern times."
 
-		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, slot_glasses)
-		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack, slot_back)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-		src.equip_new_if_possible(/obj/item/card/id/syndicate, slot_wear_id)
+		src.equip_new_if_possible(/obj/item/clothing/under/misc/syndicate, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/armor/cknight_robe, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/swat, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses, SLOT_GLASSES)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/cknight_hood, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/storage/backpack, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
 		var/obj/item/clothing/mask/gas/my_mask = new /obj/item/clothing/mask/gas/swat(src)
 		my_mask.vchange = new(src) // apply voice changer on the mask
-		src.equip_if_possible(my_mask, slot_wear_mask)
-		src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
+		src.equip_if_possible(my_mask, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/storage/belt/security, SLOT_BELT)
 
-		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, slot_r_store)
+		src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
 
 		my_sword = new /obj/item/sword(src)
 		my_sword.bladecolor = "P"
-		src.equip_if_possible(my_sword, slot_l_store)
+		src.equip_if_possible(my_sword, SLOT_L_STORE)
 
 		src.add_ability_holder(/datum/abilityHolder/cyalume_knight)
 		abilityHolder.addAbility(/datum/targetable/cyalume_knight/recall_sword)
@@ -90,7 +90,7 @@
 	name = "Cyalume Knight Helmet"
 	desc = "An ominous armored article of clothing."
 	icon_state = "cknight_hood"
-	see_face = 0
+	see_face = FALSE
 
 /atom/movable/screen/ability/topBar/cyalume_knight
 	clicked(params)
@@ -221,7 +221,7 @@
 			return 1
 
 		my_mob.visible_message("<span class='alert'><b>[holder.owner] raises his hand into the air wide open!</b></span>")
-		playsound(sword, 'sound/effects/gust.ogg', 70, 1)
+		playsound(sword, 'sound/effects/gust.ogg', 70, TRUE)
 
 		if (ismob(sword.loc))
 			if(sword.loc == my_mob)
@@ -232,18 +232,16 @@
 				HH.visible_message("<span class='alert'>[sword] somehow escapes [HH]'s grasp!</span>", "<span class='alert'>The [sword] somehow escapes your grasp!</span>")
 				HH.u_equip(sword)
 				sword.set_loc(get_turf(HH))
-		if (istype(sword.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = sword.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(sword)
-			sword.set_loc(get_turf(sword))
-			sword.visible_message("<span class='alert'>[sword] somehow escapes the [S_temp] that it was inside of!</span>")
+		if (sword.stored)
+			var/atom/previous_storage = sword.stored.linked_item
+			sword.stored.transfer_stored_item(sword, get_turf(sword))
+			sword.visible_message("<span class='alert'>[sword] somehow escapes the [previous_storage] that it was inside of!</span>")
 
 		// assuming no super weird things happened, the sword should be on the ground at this point
 		for(var/i=0, i<100, i++)
 			step_to(sword, my_mob)
 			if (BOUNDS_DIST(sword, my_mob) == 0)
-				playsound(my_mob, 'sound/effects/throw.ogg', 50, 1)
+				playsound(my_mob, 'sound/effects/throw.ogg', 50, TRUE)
 				sword.set_loc(get_turf(my_mob))
 				if (my_mob.put_in_hand(sword))
 					my_mob.visible_message("<span class='alert'><b>[my_mob] catches the [sword]!</b></span>")
@@ -257,7 +255,7 @@
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "crescent_white"
 	shot_sound = null
-	power = 0
+	damage = 0
 	dissipation_delay = 8
 	dissipation_rate = 5
 	damage_type = D_KINETIC
@@ -270,7 +268,6 @@
 		if (ishuman(hit))
 			var/mob/living/carbon/human/M = hit
 			var/turf/target = get_edge_target_turf(M, dirflag)
-			//if(!M.stat) M.emote("scream")
 			M.do_disorient(15, weakened = 10)
 			M.throw_at(target, 6, 3, throw_type = THROW_GUNIMPACT)
 			M.update_canmove()
@@ -308,7 +305,7 @@
 		var/current_angle = start_angle
 		var/i
 		for(i = 0; i < num_projectiles; i++)
-			var/obj/projectile/P = initialize_projectile_ST(holder.owner, fired_projectile, target)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(holder.owner, fired_projectile, target)
 			if (P)
 				P.mob_shooter = holder.owner
 				P.rotateDirection(current_angle)
@@ -599,7 +596,7 @@
 			M.take_oxygen_deprivation(-15)
 			M.losebreath = max(0, M.losebreath - 10)
 			M.visible_message("<span class='alert'>Some of [M]'s wounds slowly fade away!</span>", "<span class='alert'>Your wounds begin to fade away.</span>")
-			playsound(M, 'sound/items/mender.ogg', 50, 1)
+			playsound(M, 'sound/items/mender.ogg', 50, TRUE)
 		else
 			..()
 			boutput(M, "<span class='alert'>You don't have any lingering wounds to heal.</span>")
@@ -693,7 +690,7 @@
 /obj/item/mutation_orb
 	name = "empty orb"
 	desc = "You have a feeling you shouldn't be able to see this."
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	var/list/datum/mutation_orb_mutdata/mutations_to_add
 	var/envelop_message // envelops [user] in [envelop_message]
@@ -711,7 +708,7 @@
 		if(user.bioHolder && mutations_length)
 			var/turf/T = get_turf(user)
 			T.visible_message("<span class='notice'>\The [src] envelops [user] in [envelop_message] before [leaving_message]!</span>")
-			playsound(T, 'sound/effects/mag_warp.ogg', 70, 1)
+			playsound(T, 'sound/effects/mag_warp.ogg', 70, TRUE)
 			for (var/i = 1 to mutations_length)
 				var/datum/mutation_orb_mutdata/mut = mutations_to_add[i]
 
@@ -765,7 +762,7 @@
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "feather_fire"
 	color = "#ff8902"
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	attack(mob/M, mob/user)
 		return
@@ -790,7 +787,7 @@
 			var/obj/effects/heavenly_light/lightbeam = new /obj/effects/heavenly_light
 			lightbeam.set_loc(T)
 			lightbeam.alpha = 0
-			playsound(T, "sound/voice/heavenly.ogg", 100, 1, 0)
+			playsound(T, 'sound/voice/heavenly.ogg', 50, TRUE, 0)
 			animate(lightbeam, alpha=255, time=3.5 SECONDS)
 			SPAWN(30)
 				animate(lightbeam,alpha = 0, time=3.5 SECONDS)
@@ -825,7 +822,7 @@
 	desc = "You shouldn't see this."
 	icon = 'icons/misc/GerhazoStuff.dmi'
 	icon_state = "fabric"
-	hide_attack = 2
+	hide_attack = ATTACK_PARTIALLY_HIDDEN
 	var/list/datum/property_setter_property/properties_to_set
 	var/prefix_to_set = ""
 	var/suffix_to_set = ""
@@ -835,6 +832,24 @@
 		return
 
 	afterattack(var/atom/target, mob/user, flag)
+		if (istype(target, /obj/item/clothing/))
+			if (apply_property(target)) // some property got changed, display a message and delete src
+				var/turf/T = get_turf(target)
+				playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
+				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!</span>")
+				if (src.loc)
+					if (ishuman(src.loc))
+						var/mob/living/carbon/human/wearer = src.loc
+						wearer.update_clothing()
+						wearer.update_equipped_modifiers() // required for things like movespeed changes
+				qdel(src)
+			else // nothing got changed, stats might be at cap already
+				boutput(user, "<span class='notice'>You can't seem to find a way to improve \the [target] with \the [src].</span>")
+
+		else
+			..()
+
+	proc/apply_property(var/atom/target)
 		var/did_something = 0
 
 		if (istype(target, /obj/item/clothing/))
@@ -866,29 +881,17 @@
 							target_clothing.setProperty(property.property_name, property.property_value)
 							did_something = 1
 
-			if (did_something) // some property got changed, display a message and delete src
-				var/turf/T = get_turf(target)
-				playsound(T, "sound/impact_sounds/Generic_Stab_1.ogg", 25, 1)
-				T.visible_message("<span class='notice'>As [user] brings \the [src] towards \the [target], \the [src] begins to smoothly meld into \the [target]!</span>")
-				if (length(src.prefix_to_set))
-					target.name_prefix(prefix_to_set)
-					target.UpdateName()
-				if (length(src.suffix_to_set))
-					target.name_suffix(suffix_to_set)
-					target.UpdateName()
-				if (src.color_to_set)
-					target.color = src.color_to_set
-				if (src.loc)
-					if (ishuman(src.loc))
-						var/mob/living/carbon/human/wearer = src.loc
-						wearer.update_clothing()
-						wearer.update_equipped_modifiers() // required for things like movespeed changes
-				qdel(src)
-			else // nothing got changed, stats might be at cap already
-				boutput(user, "<span class='notice'>You can't seem to find a way to improve \the [target] with \the [src].</span>")
+				if(did_something)
+					if (length(src.prefix_to_set))
+						target.name_prefix(prefix_to_set)
+						target.UpdateName()
+					if (length(src.suffix_to_set))
+						target.name_suffix(suffix_to_set)
+						target.UpdateName()
+					if (src.color_to_set)
+						target.color = src.color_to_set
 
-		else
-			..()
+		return did_something
 
 /obj/item/property_setter/fire_jewel
 	name = "fire jewel"
@@ -942,3 +945,288 @@
 
 
 ////////////////////////////////////////////////// Clothing properties stuff ///////////////////////////////////////////////
+
+#ifdef SECRETS_ENABLED
+////////////////////////////////////////////////// PIZZA TOWER //////////////////////////////////////////////////
+
+// Mob, design and assets inspired and/or sourced from Pizza Tower, developed by Tour De Pizza, also known as Pizza Tower Guy, used with their permission.
+#define NOT_MOVING 0
+#define MOVING_RIGHT 1
+#define MOVING_UP 2
+#define MOVING_LEFT 3
+#define MOVING_DOWN 4
+
+/mob/living/critter/peppino
+	name = "extremely anxious looking chef"
+	real_name = "extremely anxious looking chef"
+	desc = "He looks like he's having a REALLY bad day."
+	icon = '+secret/icons/mob/peppino.dmi'
+	icon_state = "walk"
+	icon_state_dead = "dead"
+	density = 1
+	hand_count = 2
+	can_throw = 1
+	can_grab = 1
+	can_disarm = 1
+	blood_id = "pizza"
+	burning_suffix = "humanoid"
+	base_walk_delay = 1.6
+	base_move_delay = 1.6
+	var/base_movement_delay = 1.6
+	var/minimum_movement_delay = 0.58
+	var/momentum_step_increase = 0.15
+	var/machrun_animation_min_momentum = 1
+	var/last_location_x
+	var/last_location_y
+	var/last_bumped_object_timestamp = 0
+	var/combo_counter
+	var/last_combo_time = 0
+	var/combo_grace_time = 5 SECONDS
+	var/steps = 0
+
+	var/lastdirection = NOT_MOVING
+	var/momentum
+
+	New()
+		. = ..()
+		buildIcon()
+		last_location_x = src.loc.x
+		last_location_y = src.loc.y
+		add_stam_mod_max("AAAAAA", 999999)
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/pain_immune, src.type)
+		src.maptext_height = 32
+		src.maptext_width = 96
+		src.maptext_x = 36
+		src.maptext_y = 64
+
+		src.m_intent = "walk"
+		hud.update_mintent()
+
+		// dirty code for a loop since taking up an actual processing loop for a gimmick seems excessive
+		while(src)
+			if (!isdead(src) && world.time > src.next_move + 0.5 SECONDS) // stopped moving
+				src.momentum = 0
+				src.icon_state = "walk"
+				src.lastdirection = NOT_MOVING
+
+			if(world.time > last_combo_time + combo_grace_time)
+				combo_counter = 0
+				update_combo_counter()
+			sleep(0.5 SECONDS)
+
+	proc/buildIcon()
+		var/icon/icon_to_be_scaled = icon(src.icon)
+		icon_to_be_scaled.Scale(80, 80)
+		src.icon = icon(icon_to_be_scaled)
+		src.pixel_x = -24
+		src.pixel_y = -4
+
+	Login()
+		. = ..()
+		boutput(src, {"<h1><span class='alert'>PIZZA, PASTA.</span></h1>
+			<span class='notice'>Walk/run intent toggles MACH RUN.</span>
+			<br><span class='notice'>*scream, *fart and *dance have special effects.</span>"})
+
+	Life(datum/controller/process/mobs/parent)
+		. = ..()
+
+		// bad code to counteract other things resetting the sprite offset
+		src.pixel_x = -24
+		src.pixel_y = -4
+
+	bump(atom/A)
+		. = ..()
+		var/atom/movable/AM = A
+		if ((isturf(A) || isobj(A)) && momentum >= machrun_animation_min_momentum)
+			if(world.time > last_bumped_object_timestamp + 0.2 SECONDS)
+				flick("mach_hit_wall", src)
+				last_bumped_object_timestamp = world.time
+				animate_storage_thump(A)
+		if (ismob(AM) && momentum >= machrun_animation_min_momentum)
+			last_combo_time = world.time
+			combo_counter++;
+			update_combo_counter()
+			src.visible_message("<span class='alert'><B>[src]</B> slams into [A]!</span>")
+			playsound(AM.loc, 'sound/impact_sounds/Generic_Hit_heavy_1.ogg', 100, 1)
+			var/throw_dir = turn(get_dir(src, A),rand(-1,1)*45)
+			AM.throw_at(get_edge_cheap(src.loc, throw_dir),  20, 3)
+			var/obj/decal/batman_pow/pow = new /obj/decal/batman_pow/wham(AM.loc)
+			src.momentum = max(src.momentum - 0.15, 0)
+			animate_portal_appear(pow)
+			animate(pow, pixel_x = rand(-24,24), pixel_y = rand(4,28), easing = LINEAR_EASING, time = 10, flags = ANIMATION_PARALLEL)
+			SPAWN(1 SECOND) qdel(pow)
+
+	proc/update_combo_counter()
+		if(combo_counter > 0)
+			src.maptext = "<span class=\"vb c sh ol pixel\" style=\"color:#9966CC\">[combo_counter] COMBO!</span>"
+		else
+			src.maptext = ""
+
+		//"\n<span class='c pixel sh'>[bet_type_name]<span class='vga'>"
+
+
+	OnMove(source)
+		. = ..()
+		var/new_x = src.loc.x
+		var/new_y = src.loc.y
+		// 0 - didn't change, 1 - moving in that direction, -1 - moving in other direction
+		var/moved_right = new_x == last_location_x ? 0 : new_x > last_location_x ? 1 : -1
+		var/moved_up = new_y == last_location_y ? 0 : new_y > last_location_y ? 1 : -1
+
+		src.last_location_x = new_x
+		src.last_location_y = new_y
+
+		src.base_move_delay = base_movement_delay
+
+		steps++
+		if(momentum > machrun_animation_min_momentum)
+			if(steps >= 6)
+				playsound(src.loc, '+secret/sound/misc/peppino_mach4.ogg', 45)
+				steps = 0
+		else
+			if(steps >= 3)
+				playsound(src.loc, '+secret/sound/misc/peppino_step.ogg', 75)
+				steps = 0
+
+		if (world.time > src.next_move + 0.5 SECONDS)
+			anchored = UNANCHORED
+			momentum = 0
+			src.icon_state = "walk"
+			src.lastdirection = NOT_MOVING
+
+
+		if (src.m_intent == "walk")
+			anchored = UNANCHORED
+			momentum = 0
+			return
+
+		if(src.lastdirection == NOT_MOVING)
+			anchored = UNANCHORED
+			momentum = 0
+			update_current_moving_direction(moved_right, moved_up)
+			return
+
+		if(src.lastdirection == MOVING_RIGHT)
+			if(moved_right != 1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					flick("mach_right_to_left", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+		if(src.lastdirection == MOVING_LEFT)
+			if(moved_right != -1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					flick("mach_left_to_right", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+		if(src.lastdirection == MOVING_UP)
+			if(moved_up != 1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					if(moved_right == 1)
+						flick("mach_left_to_right", src)
+					else
+						flick("mach_right_to_left", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+		if(src.lastdirection == MOVING_DOWN)
+			if(moved_up != -1)
+				update_current_moving_direction(moved_right, moved_up)
+				if(momentum > machrun_animation_min_momentum)
+					if(moved_right == -1)
+						flick("mach_right_to_left", src)
+					else
+						flick("mach_left_to_right", src)
+					APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+					SPAWN(0.4 SECONDS)
+						REMOVE_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, src.type)
+				return
+
+		momentum += momentum_step_increase
+		var/current_movement_delay = max(minimum_movement_delay, base_movement_delay - momentum)
+
+		src.base_move_delay = current_movement_delay
+
+		if(momentum > machrun_animation_min_momentum)
+			anchored = ANCHORED // IMMOVABLE OBJECT, REINFORCED BY PIZZA CRUST, POWERED BY PASTA, NOTHING STOPS THE MACH RUN
+			src.icon_state = "machrun"
+
+
+
+
+
+	proc/update_current_moving_direction(var/moved_right, var/moved_up)
+		if(moved_right != 0)
+			src.lastdirection = moved_right == 1 ? MOVING_RIGHT : MOVING_LEFT
+		else if(moved_up != 0)
+			src.lastdirection = moved_up == 1 ? MOVING_UP : MOVING_DOWN
+		else
+			src.lastdirection = 0
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		switch (act)
+			if ("scream")
+				if (src.emote_check(voluntary, 50))
+					flick("scream", src)
+					playsound(src.loc, '+secret/sound/misc/peppino_scream.ogg', 90, 1)
+					return "<b><span class='alert'>[src] screams!</span></b>"
+			if ("dance")
+				if (src.emote_check(voluntary, 50))
+					flick("breakdance", src)
+					playsound(src.loc, '+secret/sound/misc/peppino_breakdance.ogg', 75)
+					return "<b><span class='alert'>[src] breaks out some sick moves!</span></b>"
+			if ("fart")
+				if (src.emote_check(voluntary, 50))
+					if(prob(50))
+						attack_twitch(src)
+					else
+						animate_buff_in(src)
+					flick("taunt_[rand(1,10)]", src)
+					playsound(src.loc, '+secret/sound/misc/peppino_taunt.ogg', 75)
+					return null
+		return null
+
+	specific_emote_type(var/act)
+		switch (act)
+			if ("scream")
+				return 2
+			if ("dance")
+				return 2
+			if ("fart")
+				return 2
+		return ..()
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handl"
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+
+	setup_healths()
+		add_hh_flesh(150, 0.85)
+		add_hh_flesh_burn(150, 0.85)
+		add_health_holder(/datum/healthHolder/toxin)
+		add_health_holder(/datum/healthHolder/suffocation)
+		add_health_holder(/datum/healthHolder/brain)
+
+
+#undef MOVING_RIGHT
+#undef MOVING_UP
+#undef MOVING_LEFT
+#undef MOVING_DOWN
+
+////////////////////////////////////////////////// PIZZA TOWER //////////////////////////////////////////////////
+#endif

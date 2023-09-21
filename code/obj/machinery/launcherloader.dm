@@ -10,7 +10,7 @@
 	density = 0
 	opacity = 0
 	layer = 2.6
-	anchored = 1
+	anchored = ANCHORED
 	plane = PLANE_NOSHADOW_BELOW
 
 	var/obj/machinery/mass_driver/driver = null
@@ -30,7 +30,7 @@
 			for(var/obj/machinery/mass_driver/D in range(1,src))
 				drivers += D
 			if(drivers.len)
-				if(drivers.len > 1)
+				if(length(drivers) > 1)
 					for(var/obj/machinery/mass_driver/D2 in drivers)
 						if(D2.id == src.id)
 							driver = D2
@@ -45,7 +45,7 @@
 		if(operating || !isturf(src.loc) || driver_operating) return
 		operating = 1
 		flick("launcher_loader_1",src)
-		playsound(src, "sound/effects/pump.ogg",50, 1)
+		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM in src.loc)
 				if(AM.anchored || AM == src || isobserver(AM) || isintangible(AM) || isflockmob(AM)) continue
@@ -113,7 +113,7 @@
 	desc = "Scans the barcode on objects and reroutes them accordingly."
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 	plane = PLANE_NOSHADOW_BELOW
 
@@ -149,7 +149,7 @@
 		operating = 1
 
 		flick("amdl_1",src)
-		playsound(src, "sound/effects/pump.ogg",50, 1)
+		playsound(src, 'sound/effects/pump.ogg', 50, TRUE)
 
 		SPAWN(0.3 SECONDS)
 			for(var/atom/movable/AM2 in src.loc)
@@ -325,15 +325,24 @@
 	// log account information for QM sales
 	var/obj/item/card/id/scan = null
 	var/datum/db_record/account = null
+	var/list/destinations = null
 
 
-	var/list/destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
+
+	connection_scan()
+		..()
+		destinations = global.map_settings.shipping_destinations
+
+
+	New()
+		..()
+		connection_scan()
 
 	proc/print(var/destination, var/amount)
 		if (printing)
 			return
 		printing = TRUE
-		playsound(src.loc, "sound/machines/printer_cargo.ogg", 75, 0)
+		playsound(src.loc, 'sound/machines/printer_cargo.ogg', 75, 0)
 		sleep(1.75 SECONDS)
 		for (var/i in 1 to amount)
 			var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
@@ -388,15 +397,15 @@
 			src.updateUsrDialog()
 
 	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-			if (istype(I, /obj/item/device/pda2) && I:ID_card) I = I:ID_card
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if (istype(id_card))
 			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
-			account = FindBankAccountByName(I:registered)
+			account = FindBankAccountByName(id_card.registered)
 			if(account)
 				var/enterpin = user.enter_pin("Barcode Computer")
-				if (enterpin == I:pin)
+				if (enterpin == id_card.pin)
 					boutput(user, "<span class='notice'>Card authorized.</span>")
-					src.scan = I
+					src.scan = id_card
 					src.updateUsrDialog()
 				else
 					boutput(user, "<span class='alert'>Pin number incorrect.</span>")
@@ -404,17 +413,17 @@
 			else
 				boutput(user, "<span class='alert'>No bank account associated with this ID found.</span>")
 				src.scan = null
-		else src.Attackhand(user)
+		else ..()
 		return
 
 /obj/machinery/computer/barcode/qm //has trader tags if there is one
 	name = "QM Barcode Computer"
 	desc = "Used to print barcode stickers for the cargo routing system, and to mark crates for sale to traders."
 	icon_state = "qm_barcode_comp"
+	circuit_type = /obj/item/circuitboard/barcode_qm
 
 	New()
 		..()
-
 	ui_static_data(mob/user)
 		. = ..()
 		var/list/traders = new()
@@ -457,7 +466,9 @@
 	attack()
 		return
 
-	afterattack(atom/target as mob|obj|turf, mob/user as mob, reach, params)
+	afterattack(atom/target, mob/user, reach, params)
+		if ((target.plane == PLANE_HUD && !isitem(target)) || isgrab(target)) //just don't stick hud stuff or grabs PLEASE
+			return
 		if(BOUNDS_DIST(get_turf(target), get_turf(src)) == 0 && istype(target, /atom/movable))
 			if(target==loc && target != user) return //Backpack or something
 			target:delivery_destination = destination
@@ -482,7 +493,19 @@
 						pox = text2num(params["icon-x"]) - 16 //round(A.bound_width/2)
 						poy = text2num(params["icon-y"]) - 16 //round(A.bound_height/2)
 						DEBUG_MESSAGE("pox [pox] poy [poy]")
-				src.stick_to(target, pox, poy)
+				src.stick_to(target, pox, poy, user)
+			if(isobj(target))
+				var/obj/O = target
+				if(O.artifact && src.scan)
+					var/datum/artifact/art = O.artifact
+					art.scan = src.scan
+					art.account = src.account
+					boutput(user, "<span class='notice'>[target] has been marked with your account routing information.</span>")
+					if(art.examine_hint)
+						art.examine_hint += " [target] belongs to [scan.registered]."
+					else
+						art.examine_hint = "[target] belongs to [scan.registered]."
+
 		return
 
 	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
@@ -495,4 +518,4 @@
 		var/atom/movable/target = over_object
 		usr.visible_message("<span class='notice'>[usr] sticks a [src.name] on [target].</span>")
 		target.delivery_destination = destination
-		src.stick_to(target, src.pixel_x, src.pixel_y)
+		src.stick_to(target, src.pixel_x, src.pixel_y, usr)

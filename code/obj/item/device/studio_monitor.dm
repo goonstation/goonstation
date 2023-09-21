@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
+	mats = 0
+
 /obj/item/device/radio/nukie_studio_monitor
 	name = "Studio Monitor"
 	desc = "An incredibly high quality studio monitor with an uncomfortable number of high voltage stickers. Manufactured by Funk-Tek"
@@ -5,16 +8,16 @@
 	icon_state = "amp_stack"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 
-	anchored = 0
+	anchored = UNANCHORED
 	speaker_range = 7
-	mats = 0
 	broadcasting = 0
 	listening = 0
 	chat_class = RADIOCL_INTERCOM
 	frequency = R_FREQ_LOUDSPEAKERS
 	locked_frequency = TRUE
 	rand_pos = 0
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBACK
 	w_class = W_CLASS_NORMAL
 	var/obj/effects/music/effect
 
@@ -43,7 +46,7 @@
 		return hear
 
 	speech_bubble()
-		UpdateOverlays(speech_bubble, "speech_bubble")
+		UpdateOverlays(global.living_speech_bubble, "speech_bubble")
 		SPAWN(1.5 SECONDS)
 			UpdateOverlays(null, "speech_bubble")
 
@@ -185,9 +188,9 @@
 		..()
 		if(!frame_img)
 			frame_img = image('icons/misc/abilities.dmi',"rock_frame")
-			frame_img.appearance_flags = RESET_COLOR
+			frame_img.appearance_flags = RESET_COLOR | PIXEL_SCALE
 			rocked_out_img = image('icons/misc/abilities.dmi',"rocked_out")
-			rocked_out_img.appearance_flags = RESET_COLOR
+			rocked_out_img.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.UpdateOverlays(frame_img, "frame")
 
 	execute_ability()
@@ -232,7 +235,7 @@
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in I.speakers)
-				playsound(src, "sound/musical_instruments/bard/tapping1.ogg", 60, 1, 5)
+				playsound(src, 'sound/musical_instruments/bard/tapping1.ogg', 60, TRUE, 5)
 				for (var/obj/machinery/light/L in view(7, get_turf(S)))
 					if (L.status == 2 || L.status == 1)
 						continue
@@ -265,7 +268,7 @@
 					continue
 
 				HH.setStatus("infrasound_nausea", 10 SECONDS)
-			playsound(src, "sound/musical_instruments/bard/riff.ogg", 60, 1, 5)
+			playsound(src, 'sound/musical_instruments/bard/riff.ogg', 60, TRUE, 5)
 			. = ..()
 
 	ultrasound
@@ -280,8 +283,8 @@
 				if(is_rock_immune(HH))
 					continue
 				HH.apply_sonic_stun(0, 0, 0, 0, 2, 8, 5)
-				HH.organHolder.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
-			playsound(src, "sound/musical_instruments/bard/tapping2.ogg", 60, 1, 5)
+				HH.organHolder?.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
+			playsound(src, 'sound/musical_instruments/bard/tapping2.ogg', 60, TRUE, 5)
 			. = ..()
 
 	focus
@@ -289,7 +292,7 @@
 		desc = "Clear Stuns and improves resistance"
 		icon_state = "focus"
 		status_effect_ids = list("music_focus")
-		sound_clip = "sound/musical_instruments/bard/tapping1.ogg"
+		sound_clip = 'sound/musical_instruments/bard/tapping1.ogg'
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
@@ -308,7 +311,7 @@
 
 					boutput(HH, "<span class='notice'>You feel refreshed and ready to get back into the fight.</span>")
 
-			logTheThing("combat", src.the_mob, null, "uses cancel stuns at [log_loc(src.the_mob)].")
+			logTheThing(LOG_COMBAT, src.the_mob, "uses cancel stuns at [log_loc(src.the_mob)].")
 			..()
 
 	// Songs
@@ -318,21 +321,21 @@
 		desc = "Gentle healing effect that improves your stamina."
 		icon_state = "chill_murder"
 		status_effect_ids = list("music_energized_big", "chill_murder")
-		sound_clip = "sound/musical_instruments/bard/lead2.ogg"
+		sound_clip = 'sound/musical_instruments/bard/lead2.ogg'
 
 	death_march
 		name = "Death March"
 		desc = "Move Faster, Longer, and Silently"
 		icon_state = "death_march"
 		status_effect_ids = list("music_refreshed_big")
-		sound_clip = "sound/musical_instruments/bard/riff.ogg"
+		sound_clip = 'sound/musical_instruments/bard/riff.ogg'
 
 	perseverance
 		name = "Perseverance"
 		desc = "Boosts health and improves stamina regeneration"
 		icon_state = "perseverance"
 		status_effect_ids = list("music_hp_up", "music_refreshed")
-		sound_clip = "sound/musical_instruments/bard/lead1.ogg"
+		sound_clip = 'sound/musical_instruments/bard/lead1.ogg'
 
 	epic_climax
 		name = "EPIC CLIMAX"
@@ -341,7 +344,7 @@
 		status_effect_ids = list("music_hp_up_big", "epic_climax")
 		song_duration = 69 SECONDS
 		cooldown = 5 MINUTES
-		sound_clip = "sound/musical_instruments/bard/tapping2.ogg"
+		sound_clip = 'sound/musical_instruments/bard/tapping2.ogg'
 
 		execute_ability()
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
@@ -362,18 +365,19 @@
 	var/obj/item/breaching_hammer/rock_sledge/instrument
 	var/obj/ability_button/nukie_rocker/song
 	var/looped
+	var/start_time
 	var/last_strum
 
 	New(Instrument, Effect)
 		instrument = Instrument
 		song = Effect
 		looped = 0
+		start_time = TIME
 		last_strum = instrument.strums
 
 		icon = instrument.icon
 		icon_state = instrument.icon_state
 		..()
-
 
 	onUpdate()
 		..()
@@ -413,12 +417,12 @@
 
 	onEnd()
 		..()
-		if(looped > ((src.song.song_duration)/src.duration) )
+		if(TIME - src.start_time > (src.song.song_duration) )
 			return // The Song... ends
 
 		if(last_strum != instrument.strums)
 			instrument.stop_notes()
-			looped++
+			src.looped++
 			src.onRestart()
 
 	proc/blast_to_speakers()
@@ -456,10 +460,10 @@
 		if(prob(10))
 			L.emote("shudder")
 		else if(prob(5))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			if(prob(5))
 				L.do_disorient(25, disorient=1 SECOND)
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 			icon_state = "miasma5"
 
 		return ..(timePassed)

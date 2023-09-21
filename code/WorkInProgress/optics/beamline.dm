@@ -34,8 +34,6 @@
 				src.beam.dispose()
 			return
 
-		use_power(power_usage)
-
 		if (!src.beam)
 			var/turf/beamTurf = get_step(src, src.dir)
 			if (!istype(beamTurf) || beamTurf.density)

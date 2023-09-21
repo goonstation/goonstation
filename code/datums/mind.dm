@@ -6,6 +6,7 @@ datum/mind
 	var/mob/virtual
 
 	var/memory
+	var/list/datum/dynamic_player_memory/dynamic_memories = list()
 	var/remembered_pin = null
 	var/last_memory_time = 0 //Give a small delay when adding memories to prevent spam. It could happen!
 	var/miranda // sec's miranda rights thingy.
@@ -33,26 +34,8 @@ datum/mind
 
 	var/list/datum/objective/objectives = list()
 	var/is_target = 0
-	var/list/purchased_traitor_items = list()
-	var/list/traitor_crate_items = list()
-	var/list/blob_absorb_victims = list()
-	var/list/spy_stolen_items = list()
-
-	var/datum/gang/gang = null //Associate a leader with their gang.
-
-	//Ability holders.
-	var/datum/abilityHolder/changeling/is_changeling = 0
 
 	var/list/intrinsic_verbs = list()
-
-	// For mindhack/vampthrall/spyminion master references, which are now tracked by ckey.
-	// Mob references are not very reliable and did cause trouble with automated mindhack status removal
-	// The relevant code snippets call a ckey -> mob reference lookup proc where necessary,
-	// namely ckey_to_mob(mob.mind.master) (Convair880).
-	var/master = null
-
-	var/dnr = 0
-	var/joined_observer = 0 //keep track of whether this player joined round as an observer (blocks them from bank payouts)
 
 	var/handwriting = null
 	var/color = null
@@ -61,18 +44,11 @@ datum/mind
 
 	var/datum/bank_purchaseable/purchased_bank_item = 0 //set when player readies up
 	var/join_time = 0
-	var/last_death_time = 0 // look, you can live a dozen lives in one round if you're (un)lucky enough
 
 	var/karma = 0 //fuck
 	var/const/karma_min = -420
 	var/const/karma_max = 69
-	var/damned = 0 // If 1, they go to hell when are die
-
-	// Capture when they die. Used in the round-end credits
-	//var/icon/death_icon = null
-
-	//avoid some otherwise frequent istype checks
-	var/stealth_objective = 0
+	var/damned = 0 //! If 1, they go to hell when are die
 
 	var/show_respawn_prompts = TRUE
 
@@ -86,7 +62,6 @@ datum/mind
 			src.handwriting = pick(handwriting_styles)
 			src.color = pick_string("colors.txt", "colors")
 			SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, M)
-		src.last_death_time = world.timeofday // I DON'T KNOW SHUT UP YOU'RE NOT MY REAL DAD
 
 	proc/transfer_to(mob/new_character)
 		Z_LOG_DEBUG("Mind/TransferTo", "Transferring \ref[src] (\ref[current], [current]) ...")
@@ -94,27 +69,38 @@ datum/mind
 			Z_LOG_DEBUG("Mind/TransferTo", "No new_character given, transfer aborted")
 			return
 
+		if (new_character == src.current)
+			CRASH("Tried to transfer mind of [identify_object(src.current)] to itself.")
+
 		Z_LOG_DEBUG("Mind/TransferTo", "New mob: \ref[new_character] ([new_character])")
 		if (new_character.disposed)
+			boutput(current, "<h3 class='alert'>You were about to be transferred into another body, but that body was pending deletion! You're a ghost now instead! Adminhelp if this is a problem.</h3>")
+			message_admins("Tried to transfer mind of mob [identify_object(current)] to qdel'd mob [identify_object(new_character)] God damnit.")
+			var/mob/dead/observer/obs = new(src.current)
+			src.transfer_to(obs)
+
+			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to qdel'd mob [new_character].")
+			CRASH("Tried to transfer mind [identify_object(src)] to qdel'd mob [identify_object(new_character)].")
+
+		if (new_character.client)
 			if (current)
-				boutput(current, "You were about to be transferred into another body, but that body was pending deletion! This may fuck everything up so if it does dial 1-800-CODER.")
-				message_admins("Tried to transfer mind of mob [current] (\ref[current], [key_name(current)]) to qdel'd mob [new_character] (\ref[new_character]) God damnit. Un-qdeling the mob and praying (this will probably fuck up).")
-				new_character.disposed = 0
+				boutput(current, "<h3 class='alert'>You were about to be transferred into another body, but that body was occupied!</h3>")
+				var/errmsg = "Tried to transfer mind of mob [identify_object(current)] to mob with an existing client [identify_object(new_character)]"
+				message_admins(errmsg)
+				CRASH(errmsg)
 			else
-				message_admins("Tried to transfer mind [src] (\ref[src]) to qdel'd mob [new_character] (\ref[new_character]) FIX THIS SHIT")
-
-			Z_LOG_ERROR("Mind/TransferTo", "Trying to transfer to a mob that's in the delete queue! Jesus fucking christ.")
-			//CRASH("Trying to transfer to a mob that's in the delete queue!")
-
+				message_admins("Tried to transfer mind [src] to mob with an existing client [new_character] (\ref[new_character]).")
+			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to mob with an existing client [new_character] [key_name(new_character)])")
+			return
+		var/mob/old_mob = null
 		if (current)
+			old_mob = current
 			if(current.client)
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
 				new_character.lastKnownIP = current.client.address
-				if(isghostdrone(src.current)) //clear the static overlays on death, qdel, being cloned, etc.
-					current.client.images.Remove(mob_static_icons)
 			current.mind = null
-			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current)
+			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current, new_character)
 
 		new_character.mind = src
 		current = new_character
@@ -125,10 +111,6 @@ datum/mind
 			current.addOverlaysClient(current.client)
 
 		Z_LOG_DEBUG("Mind/TransferTo", "Mind swapped, moving verbs")
-
-
-		//if (is_changeling)
-		//	new_character.make_changeling()
 
 		for (var/intrinsic_verb in intrinsic_verbs)
 			Z_LOG_DEBUG("Mind/TransferTo", "Adding [intrinsic_verb]")
@@ -142,7 +124,7 @@ datum/mind
 
 		Z_LOG_DEBUG("Mind/TransferTo", "Complete")
 
-		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current)
+		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current, old_mob)
 
 
 	proc/swap_with(mob/target)
@@ -181,12 +163,25 @@ datum/mind
 		if (isobserver(target))
 			target:delete_on_logout = 1
 
+	proc/get_player()
+		RETURN_TYPE(/datum/player)
+		if(ckey)
+			. = make_player(ckey)
+
 	proc/store_memory(new_text)
 		memory += "[new_text]<BR>"
+
+	proc/remove_dynamic_memories_by_type(dynamic_memory_type)
+		for (var/datum/dynamic_player_memory/dynamic_memory in src.dynamic_memories)
+			if (dynamic_memory.type == dynamic_memory_type)
+				src.dynamic_memories -= dynamic_memory
 
 	proc/show_memory(mob/recipient)
 		var/output = "<B>[current.real_name]'s Memory</B><HR>"
 		output += memory
+
+		for (var/datum/dynamic_player_memory/dynamic_memory in src.dynamic_memories)
+			output += dynamic_memory.memory_text
 
 		if (objectives.len>0)
 			output += "<HR><B>Objectives:</B><br>"
@@ -197,18 +192,22 @@ datum/mind
 				obj_count++
 
 		// Added (Convair880).
-		if (recipient.mind.master)
-			var/mob/mymaster = ckey_to_mob(recipient.mind.master)
-			if (mymaster)
-				output+= "<br><b>Your master:</b> [mymaster.real_name]"
+		var/datum/mind/master = recipient.mind.get_master()
+		if (master?.current)
+			output += "<br><b>Your master:</b> [master.current.real_name]"
 
 		recipient.Browse(output,"window=memory;title=Memory")
 
 	proc/set_miranda(new_text)
 		miranda = new_text
 
+	proc/get_miranda()
+		if (isproc(src.miranda)) //imfunctionalprogrammer
+			return call(src.miranda)()
+		return src.miranda
+
 	proc/show_miranda(mob/recipient)
-		var/output = "<B>[current.real_name]'s Miranda Rights</B><HR>[miranda]"
+		var/output = "<B>[current.real_name]'s Miranda Rights</B><HR>[src.get_miranda()]"
 
 		recipient.Browse(output,"window=miranda;title=Miranda Rights")
 
@@ -216,58 +215,125 @@ datum/mind
 		var/tod = time2text(world.realtime,"hh:mm:ss") //weasellos time of death patch
 		src.store_memory("Time of death: [tod]", 0)
 		// stuff for critter respawns
-		src.last_death_time = world.timeofday
+		src.get_player()?.last_death_time = world.timeofday
+
+	/// Returns whether this mind is a non-pseudo antagonist.
+	proc/is_antagonist()
+		// Handles pre-round antagonist assignments utilising `special_role`.
+		if (global.current_state < GAME_STATE_PLAYING)
+			return !!src.special_role
+
+		for (var/datum/antagonist/A as anything in src.antagonists)
+			if (!A.pseudo)
+				return TRUE
+
+		return FALSE
 
 	/// Gets an existing antagonist datum of the provided ID role_id.
 	proc/get_antagonist(role_id)
+		RETURN_TYPE(/datum/antagonist)
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
 				return A
 		return null
 
 	/// Attempts to add the antagonist datum of ID role_id to this mind.
-	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_ROUND_START, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, late_setup = FALSE)
+	proc/add_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
 		// Check for mutual exclusivity for real antagonists
-		if (respect_mutual_exclusives && !do_pseudo && length(src.antagonists))
+		if (respect_mutual_exclusives && !do_pseudo && !do_vr && length(src.antagonists))
 			for (var/datum/antagonist/A as anything in src.antagonists)
 				if (A.mutually_exclusive)
 					return FALSE
 		// To avoid wacky shenanigans, refuse to add multiple types of the same antagonist
-		if (!isnull(src.get_antagonist(role_id)))
+		if (!isnull(src.get_antagonist(role_id)) && !do_vr)
 			return FALSE
 		for (var/V in concrete_typesof(/datum/antagonist))
 			var/datum/antagonist/A = V
 			if (initial(A.id) == role_id)
-				src.antagonists.Add(new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, late_setup))
-				src.current.antagonist_overlay_refresh(TRUE, FALSE)
-				return !isnull(src.get_antagonist(role_id))
-		return FALSE
-
-	/// Attempts to remove existing antagonist datums of ID role_id from this mind.
-	proc/remove_antagonist(role_id)
-		for (var/datum/antagonist/A as anything in src.antagonists)
-			if (A.id == role_id)
-				A.remove_self(TRUE, FALSE)
-				src.antagonists.Remove(A)
-				if (!length(src.antagonists) && src.special_role == A.id)
-					src.special_role = null
-					ticker.mode.traitors.Remove(src)
-				qdel(A)
+				var/datum/antagonist/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup)
+				if (!new_datum || QDELETED(new_datum))
+					return FALSE
 				return TRUE
 		return FALSE
+
+	/// Attempts to add the subordinate antagonist datum of ID role_id to this mind.
+	proc/add_subordinate_antagonist(role_id, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_CONVERTED, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE, master)
+		if (!master)
+			return FALSE
+		// To avoid wacky shenanigans
+		if (!isnull(src.get_antagonist(role_id)) && !do_vr)
+			src.remove_antagonist(role_id, ANTAGONIST_REMOVAL_SOURCE_OVERRIDE)
+		for (var/V in concrete_typesof(/datum/antagonist/subordinate))
+			var/datum/antagonist/subordinate/A = V
+			if (initial(A.id) == role_id)
+				var/datum/antagonist/subordinate/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, master)
+				if (!new_datum || QDELETED(new_datum))
+					return FALSE
+				return TRUE
+		return FALSE
+
+	proc/add_generic_antagonist(role_id, display_name, do_equip = TRUE, do_objectives = TRUE, do_relocate = TRUE, silent = FALSE, source = ANTAGONIST_SOURCE_OTHER, respect_mutual_exclusives = TRUE, do_pseudo = FALSE, do_vr = FALSE, late_setup = FALSE)
+		if (!role_id || !display_name)
+			return FALSE
+		// Check for mutual exclusivity for real antagonists.
+		if (respect_mutual_exclusives && !do_pseudo && !do_vr && length(src.antagonists))
+			for (var/datum/antagonist/A as anything in src.antagonists)
+				if (A.mutually_exclusive)
+					return FALSE
+		// Refuse to add multiple types of the same antagonist.
+		if (!isnull(src.get_antagonist(role_id)) && !do_vr)
+			return FALSE
+		for (var/V in concrete_typesof(/datum/antagonist/generic))
+			var/datum/antagonist/generic/A = V
+			if (initial(A.id) == role_id)
+				var/datum/antagonist/generic/new_datum = new A(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, role_id, display_name)
+				if (!new_datum || QDELETED(new_datum))
+					return FALSE
+				return TRUE
+		var/datum/antagonist/generic/new_datum = new /datum/antagonist/generic(src, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, role_id, display_name)
+		if (!QDELETED(new_datum))
+			return TRUE
+		return FALSE
+
+	/// Attempts to remove existing antagonist datums of ID `role` from this mind, or if provided, a specific instance of an antagonist datum.
+	proc/remove_antagonist(role, source = null)
+		var/datum/antagonist/antagonist_role
+		if (istype(role, /datum/antagonist))
+			antagonist_role = role
+
+		else if (istext(role))
+			for (var/datum/antagonist/A as anything in src.antagonists)
+				if (A.id == role)
+					antagonist_role = A
+					break
+
+		if (!antagonist_role)
+			return FALSE
+		if (antagonist_role.faction)
+			antagonist_role.owner.current.faction &= ~antagonist_role.faction
+		antagonist_role.remove_self(TRUE, source)
+		src.antagonists.Remove(antagonist_role)
+		if (!length(src.antagonists) && src.special_role == antagonist_role.id)
+			src.special_role = null
+			ticker.mode.traitors.Remove(src)
+			ticker.mode.Agimmicks.Remove(src)
+		qdel(antagonist_role)
+
+		return TRUE
 
 	/// Removes ALL antagonists from this mind. Use with caution!
 	proc/wipe_antagonists()
 		for (var/datum/antagonist/A as anything in src.antagonists)
-			A.remove_self(TRUE, FALSE)
+			A.remove_self(TRUE)
 			src.antagonists.Remove(A)
 			qdel(A)
 		src.special_role = null
 		ticker.mode.traitors.Remove(src)
+		ticker.mode.Agimmicks.Remove(src)
 		return length(src.antagonists) <= 0
 
 	disposing()
-		logTheThing("debug", null, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")
+		logTheThing(LOG_DEBUG, null, "<b>Mind</b> Mind for \[[src.key ? src.key : "NO KEY"]] deleted!")
 		Z_LOG_DEBUG("Mind/Disposing", "Mind \ref[src] [src.key ? "([src.key])" : ""] deleted")
 		src.brain?.owner = null
 		if(src.current)
@@ -278,7 +344,7 @@ datum/mind
 	proc/on_ticker_add_log()
 		var/list/traits = list()
 		for(var/trait_id in src.current.traitHolder.traits)
-			var/obj/trait/trait = src.current.traitHolder.traits[trait_id]
+			var/datum/trait/trait = src.current.traitHolder.traits[trait_id]
 			traits += trait.name
 		. = "<br>Traits: [jointext(traits, ", ")]"
 

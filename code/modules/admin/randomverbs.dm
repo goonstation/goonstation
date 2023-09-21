@@ -30,8 +30,8 @@
 
 	M.unequip_all()
 
-	logTheThing("admin", usr, M, "made [constructTarget(M,"admin")] drop everything!")
-	logTheThing("diary", usr, M, "made [constructTarget(M,"diary")] drop everything!", "admin")
+	logTheThing(LOG_ADMIN, usr, "made [constructTarget(M,"admin")] drop everything!")
+	logTheThing(LOG_DIARY, usr, "made [constructTarget(M,"diary")] drop everything!", "admin")
 	message_admins("[key_name(usr)] made [key_name(M)] drop everything!")
 
 /client/proc/cmd_admin_prison_unprison(mob/M as mob in world)
@@ -54,8 +54,8 @@
 
 			M.show_text("<h2><font color=red><b>You have been unprisoned and sent back to the station.</b></font></h2>", "red")
 			message_admins("[key_name(usr)] has unprisoned [key_name(M)].")
-			logTheThing("admin", usr, M, "has unprisoned [constructTarget(M,"admin")].")
-			logTheThing("diary", usr, M, "has unprisoned [constructTarget(M,"diary")].", "admin")
+			logTheThing(LOG_ADMIN, usr, "has unprisoned [constructTarget(M,"admin")].")
+			logTheThing(LOG_DIARY, usr, "has unprisoned [constructTarget(M,"diary")].", "admin")
 
 		else
 			if (isAI(M))
@@ -67,19 +67,20 @@
 				return
 
 			var/PLoc = pick_landmark(LANDMARK_PRISONWARP)
+			var/turf/origin_turf = get_turf(M)
 			if (PLoc)
 				M.changeStatus("paralysis", 8 SECONDS)
 				M.set_loc(PLoc)
 			else
 				message_admins("[key_name(usr)] couldn't send [key_name(M)] to the prison zone (no landmark found).")
-				logTheThing("admin", usr, M, "couldn't send [constructTarget(M,"admin")] to the prison zone (no landmark found).")
-				logTheThing("diary", usr, M, "couldn't send [constructTarget(M,"diary")] to the prison zone (no landmark found).")
+				logTheThing(LOG_ADMIN, usr, "couldn't send [constructTarget(M,"admin")] to the prison zone (no landmark found).")
+				logTheThing(LOG_DIARY, usr, "couldn't send [constructTarget(M,"diary")] to the prison zone (no landmark found).")
 				return
 
 			M.show_text("<h2><font color=red><b>You have been sent to the penalty box, and an admin should contact you shortly. If nobody does within a minute or two, please inquire about it in adminhelp (F1 key).</b></font></h2>", "red")
-			logTheThing("admin", usr, M, "sent [constructTarget(M,"admin")] to the prison zone.")
-			logTheThing("diary", usr, M, "[constructTarget(M,"diary")] to the prison zone.", "admin")
-			message_admins("<span class='internal'>[key_name(usr)] sent [key_name(M)] to the prison zone.</span>")
+			logTheThing(LOG_ADMIN, usr, "sent [constructTarget(M,"admin")] to the prison zone.")
+			logTheThing(LOG_DIARY, usr, "[constructTarget(M,"diary")] to the prison zone.", "admin")
+			message_admins("<span class='internal'>[key_name(usr)] sent [key_name(M)] to the prison zone[isturf(origin_turf) ? " from [log_loc(origin_turf)]" : ""].</span>")
 
 	return
 
@@ -99,11 +100,11 @@
 	if (!msg)
 		return
 	if (src?.holder)
-		M.playsound_local(M, "sound/misc/prayerchime.ogg", 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+		M.playsound_local(M, 'sound/misc/prayerchime.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
 		boutput(Mclient.mob, "<span class='notice'>You hear a voice in your head... <i>[msg]</i></span>")
 
-	logTheThing("admin", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
-	logTheThing("diary", src.mob, Mclient.mob, "Subtle Messaged [constructTarget(Mclient.mob,"diary")]: [msg]", "admin")
+	logTheThing(LOG_ADMIN, src.mob, "Subtle Messaged [constructTarget(Mclient.mob,"admin")]: [msg]")
+	logTheThing(LOG_DIARY, src.mob, "Subtle Messaged [constructTarget(Mclient.mob,"diary")]: [msg]", "admin")
 
 	var/subtle_href = null
 	if(M.client)
@@ -121,7 +122,7 @@
 
 	var/client/Mclient = M.client
 
-	var/msg = input("Message:", text("Plain message to [Mclient.key]")) as null|text
+	var/msg = input("Message:", "Plain message to [Mclient.key]") as null|message
 
 	if(!(src.holder.level >= LEVEL_PA))
 		msg = strip_html(msg)
@@ -131,8 +132,8 @@
 	if (src?.holder)
 		boutput(Mclient.mob, "<span class='alert'>[msg]</span>")
 
-	logTheThing("admin", src.mob, Mclient.mob, "Plain Messaged [constructTarget(Mclient.mob,"admin")]: [html_encode(msg)]")
-	logTheThing("diary", src.mob, Mclient.mob, ": Plain Messaged [constructTarget(Mclient.mob,"diary")]: [html_encode(msg)]", "admin")
+	logTheThing(LOG_ADMIN, src.mob, "Plain Messaged [constructTarget(Mclient.mob,"admin")]: [html_encode(msg)]")
+	logTheThing(LOG_DIARY, src.mob, ": Plain Messaged [constructTarget(Mclient.mob,"diary")]: [html_encode(msg)]", "admin")
 	message_admins("<span class='internal'><b>PlainMSG: [key_name(src.mob)] <i class='icon-arrow-right'></i> [key_name(Mclient.mob)] : [html_encode(msg)]</b></span>")
 
 /client/proc/cmd_admin_plain_message_all()
@@ -143,7 +144,7 @@
 		boutput(src, "Only administrators may use this command.")
 		return
 
-	var/msg = input("Message:", text("Plain message to all")) as null|text
+	var/msg = input("Message:", "Plain message to all") as null|message
 
 	if(!(src.holder.level >= LEVEL_PA))
 		msg = strip_html(msg)
@@ -153,8 +154,8 @@
 	if (src?.holder)
 		boutput(world, "[msg]")
 
-	logTheThing("admin", src.mob, null, "Plain Messaged All: [html_encode(msg)]")
-	logTheThing("diary", src.mob, null, "Plain Messaged All: [html_encode(msg)]", "admin")
+	logTheThing(LOG_ADMIN, src.mob, "Plain Messaged All: [html_encode(msg)]")
+	logTheThing(LOG_DIARY, src.mob, "Plain Messaged All: [html_encode(msg)]", "admin")
 	message_admins("<span class='internal'>[key_name(src.mob)] showed a plain message to all</span>")
 
 /client/proc/cmd_admin_pm(mob/M as mob in world)
@@ -182,8 +183,8 @@
 	if(!t) return
 
 	message_admins("[key_name(src.mob)] displayed an alert to [key_name(Mclient.mob)] with the message \"[t]\"")
-	logTheThing("admin", src.mob, Mclient.mob, "displayed an alert to [constructTarget(Mclient.mob,"admin")] with the message \"[t]\"")
-	logTheThing("diary", src.mob, Mclient.mob, "displayed an alert to [constructTarget(Mclient.mob,"diary")] with the message \"[t]\"", "admin")
+	logTheThing(LOG_ADMIN, src.mob, "displayed an alert to [constructTarget(Mclient.mob,"admin")] with the message \"[t]\"")
+	logTheThing(LOG_DIARY, src.mob, "displayed an alert to [constructTarget(Mclient.mob,"diary")] with the message \"[t]\"", "admin")
 
 	if(Mclient?.mob)
 		SPAWN(0)
@@ -255,8 +256,8 @@
 		M.client.mute(-1)
 		muted = 1
 
-	logTheThing("admin", src, M, "has [(muted ? "permanently muted" : "unmuted")] [constructTarget(M,"admin")].")
-	logTheThing("diary", src, M, "has [(muted ? "permanently muted" : "unmuted")] [constructTarget(M,"diary")].", "admin")
+	logTheThing(LOG_ADMIN, src, "has [(muted ? "permanently muted" : "unmuted")] [constructTarget(M,"admin")].")
+	logTheThing(LOG_DIARY, src, "has [(muted ? "permanently muted" : "unmuted")] [constructTarget(M,"diary")].", "admin")
 	message_admins("[key_name(src)] has [(muted ? "permanently muted" : "unmuted")] [key_name(M)].")
 
 	boutput(M, "You have been [(muted ? "permanently muted" : "unmuted")].")
@@ -278,8 +279,8 @@
 		M.client.mute(60)
 		muted = 1
 
-	logTheThing("admin", src, M, "has [(muted ? "temporarily muted" : "unmuted")] [constructTarget(M,"admin")].")
-	logTheThing("diary", src, M, "has [(muted ? "temporarily muted" : "unmuted")] [constructTarget(M,"diary")].", "admin")
+	logTheThing(LOG_ADMIN, src, "has [(muted ? "temporarily muted" : "unmuted")] [constructTarget(M,"admin")].")
+	logTheThing(LOG_DIARY, src, "has [(muted ? "temporarily muted" : "unmuted")] [constructTarget(M,"diary")].", "admin")
 	message_admins("[key_name(src)] has [(muted ? "temporarily muted" : "unmuted")] [key_name(M)].")
 
 	boutput(M, "You have been [(muted ? "temporarily muted" : "unmuted")].")
@@ -305,10 +306,10 @@
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws() //I don't love this, but meh
 
 
-	logTheThing("admin", usr, null, "has added a new AI law - [input] (law # [law_num])")
-	logTheThing("diary", usr, null, "has added a new AI law - [input] (law # [law_num])", "admin")
-	logTheThing("admin", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]")
-	logTheThing("diary", null, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]", "admin")
+	logTheThing(LOG_ADMIN, usr, "has added a new AI law - [input] (law # [law_num])")
+	logTheThing(LOG_DIARY, usr, "has added a new AI law - [input] (law # [law_num])", "admin")
+	logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]")
+	logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has added a new AI law - [input] (law # [law_num])")
 
 //badcode from Somepotato, pls no nerf its very bad AAA
@@ -317,17 +318,43 @@
 	set name = "AI: Bulk Law Change"
 	ADMIN_ONLY
 
-	var/input = input(usr, "Replace all AI laws with what? Seriously. It's true, [pick("Somepotato only adds gimmicks.", "alter them to whatever you want friend.")]", "Bulk Law Modification", "") as message
+	var/current_laws = list()
+	for (var/obj/item/aiModule/X in ticker.ai_law_rack_manager.default_ai_rack.law_circuits)
+		if(!X)
+			continue
+		var/lt = X.get_law_text(TRUE)
+		if(islist(lt))
+			for(var/law in lt)
+				current_laws += "[law]"
+		else
+			current_laws += "[lt]"
+
+	var/input = input(usr, "Replace all AI laws with what?", "Bulk Law Modification", jointext(current_laws, "\n")) as message|null
+	if(isnull(input))
+		return
+
 	var/list/split = splittext(input, "\n")
 	ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
 	for(var/i = 1, i <= 9, i++)
-		if(i < split.len)
-			ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module",split[i],i,true,true)
+		if(i <= split.len)
+			var/path = text2path(split[i])
+			if(ispath(path, /obj/item/aiModule))
+				var/obj/item/aiModule/module = new path(ticker.ai_law_rack_manager.default_ai_rack)
+				ticker.ai_law_rack_manager.default_ai_rack.SetLaw(module, i, TRUE, TRUE)
+				if(istype(module,/obj/item/aiModule/hologram_expansion))
+					var/obj/item/aiModule/hologram_expansion/holo = module
+					ticker.ai_law_rack_manager.default_ai_rack.holo_expansions |= holo.expansion
+				else if(istype(module,/obj/item/aiModule/ability_expansion))
+					var/obj/item/aiModule/ability_expansion/expansion = module
+					ticker.ai_law_rack_manager.default_ai_rack.ai_abilities |= expansion.ai_abilities
+
+			else
+				ticker.ai_law_rack_manager.default_ai_rack.SetLawCustom("Centcom Law Module", split[i], i, TRUE, TRUE)
 	ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
-	logTheThing("admin", usr, null, "has set the AI laws to [input]")
-	logTheThing("diary", usr, null, "has set the AI laws to [input]", "admin")
-	logTheThing("admin", usr, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]")
-	logTheThing("diary", usr, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]", "admin")
+	logTheThing(LOG_ADMIN, usr, "has set the AI laws to [input]")
+	logTheThing(LOG_DIARY, usr, "has set the AI laws to [input]", "admin")
+	logTheThing(LOG_ADMIN, usr, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]")
+	logTheThing(LOG_DIARY, usr, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.default_ai_rack.format_for_logs()]", "admin")
 	message_admins("Admin [key_name(usr)] has adjusted all of the AI's laws!")
 
 
@@ -349,13 +376,13 @@
 
 	if (alert(src, "Are you sure you want to reset the AI's laws?", "Confirmation", "Yes", "No") == "Yes")
 		ticker.ai_law_rack_manager.default_ai_rack.DeleteAllLaws()
-		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
-		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
-		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1, 1, TRUE, TRUE)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2, 2, TRUE, TRUE)
+		ticker.ai_law_rack_manager.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3, 3, TRUE, TRUE)
 		ticker.ai_law_rack_manager.default_ai_rack.UpdateLaws()
 
-		logTheThing("admin", usr, null, "reset the centralized AI laws.")
-		logTheThing("diary", usr, null, "reset the centralized AI laws.", "admin")
+		logTheThing(LOG_ADMIN, usr, "reset the centralized AI laws.")
+		logTheThing(LOG_DIARY, usr, "reset the centralized AI laws.", "admin")
 		message_admins("Admin [key_name(usr)] reset the centralized AI laws.")
 
 /client/proc/cmd_admin_rejuvenate(mob/M as mob in world)
@@ -371,8 +398,8 @@
 	if(config.allow_admin_rev)
 		M.full_heal()
 
-		logTheThing("admin", usr, M, "healed / revived [constructTarget(M,"admin")]")
-		logTheThing("diary", usr, M, "healed / revived [constructTarget(M,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, usr, "healed / revived [constructTarget(M,"admin")]")
+		logTheThing(LOG_DIARY, usr, "healed / revived [constructTarget(M,"diary")]", "admin")
 		message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [key_name(M)]!</span>")
 	else
 		alert("Admin revive disabled")
@@ -395,8 +422,8 @@
 			alert("Admin revive disabled")
 			return
 
-		logTheThing("admin", usr, null, "healed / revived [healed] mobs via Heal All")
-		logTheThing("diary", usr, null, "healed / revived [healed] mobs via Heal All", "admin")
+		logTheThing(LOG_ADMIN, usr, "healed / revived [healed] mobs via Heal All")
+		logTheThing(LOG_DIARY, usr, "healed / revived [healed] mobs via Heal All", "admin")
 		message_admins("<span class='alert'>Admin [key_name(usr)] healed / revived [healed] mobs via Heal All!</span>")
 
 /client/proc/cmd_admin_create_centcom_report()
@@ -415,11 +442,11 @@
 		for_by_tcl(C, /obj/machinery/communications_dish)
 			C.add_centcom_report(input2, input)
 
-		var/sound_to_play = "sound/misc/announcement_1.ogg"
+		var/sound_to_play = 'sound/misc/announcement_1.ogg'
 		command_alert(input, input2, sound_to_play, alert_origin = input3);
 
-		logTheThing("admin", src, null, "has created a command report: [input]")
-		logTheThing("diary", src, null, "has created a command report: [input]", "admin")
+		logTheThing(LOG_ADMIN, src, "has created a command report: [input]")
+		logTheThing(LOG_DIARY, src, "has created a command report: [input]", "admin")
 		message_admins("[key_name(src)] has created a command report")
 
 /client/proc/cmd_admin_create_advanced_centcom_report()
@@ -432,11 +459,11 @@
 		return
 	var/input2 = input(usr, "Add a headline for this alert?", "What?", "") as null|text
 	if (alert(src, "Headline: [input2 ? "\"[input2]\"" : "None"] | Body: \"[input]\"", "Confirmation", "Send Report", "Cancel") == "Send Report")
-		var/sound_to_play = "sound/misc/announcement_1.ogg"
+		var/sound_to_play = 'sound/misc/announcement_1.ogg'
 		advanced_command_alert(input, input2, sound_to_play);
 
-		logTheThing("admin", src, null, "has created an advanced command report: [input]")
-		logTheThing("diary", src, null, "has created an advanced command report: [input]", "admin")
+		logTheThing(LOG_ADMIN, src, "has created an advanced command report: [input]")
+		logTheThing(LOG_DIARY, src, "has created an advanced command report: [input]", "admin")
 		message_admins("[key_name(src)] has created an advanced command report")
 
 /client/proc/cmd_admin_advanced_centcom_report_help()
@@ -488,8 +515,8 @@
 		return
 
 	if (alert(src, "Are you sure you want to delete:\n[O]\nat ([O.x], [O.y], [O.z])?", "Confirmation", "Yes", "No") == "Yes")
-		logTheThing("admin", usr, null, "deleted [O] at ([log_loc(O)])")
-		logTheThing("diary", usr, null, "deleted [O] at ([log_loc(O)])", "admin")
+		logTheThing(LOG_ADMIN, usr, "deleted [O] at ([log_loc(O)])")
+		logTheThing(LOG_DIARY, usr, "deleted [O] at ([log_loc(O)])", "admin")
 		message_admins("[key_name(usr)] deleted [O] at ([log_loc(O)])")
 		if (flourish)
 			leaving_animation(O)
@@ -539,24 +566,30 @@
 
 /client/proc/cmd_admin_remove_plasma()
 	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
-	set name = "Stabilize Atmos."
+	set name = "Stabilize Atmos"
 	set desc = "Resets the air contents of every turf in view to normal."
 	ADMIN_ONLY
 	SPAWN(0)
 		for(var/turf/simulated/T in view())
 			if(!T.air)
 				continue
-			ZERO_BASE_GASES(T.air)
-#ifdef ATMOS_ARCHIVING
-			ZERO_ARCHIVED_BASE_GASES(T.air)
-			T.air.ARCHIVED(temperature) = null
-#endif
-			T.air.oxygen = MOLES_O2STANDARD
-			T.air.nitrogen = MOLES_N2STANDARD
-			T.air.fuel_burnt = 0
-			T.air.clear_trace_gases()
-			T.air.temperature = T20C
+			T.stabilize()
 			LAGCHECK(LAG_LOW)
+
+/client/proc/stabilize_station()
+	SET_ADMIN_CAT(ADMIN_CAT_SERVER)
+	set name = "Stabilize All Atmos"
+	set desc = "Resets the air contents of THE ENTIRE STATION to normal."
+	ADMIN_ONLY
+	if (alert(usr, "This will reset the air of ALL TURFS IN THE ENTIRE STATION, are you sure you want to continue?", "Cause big lag", "Yes", "No") != "Yes")
+		return
+	SPAWN(0)
+		for (var/turf/simulated/T in world)
+			if (inonstationz(T))
+				if(!T.air)
+					continue
+				T.stabilize()
+				LAGCHECK(LAG_LOW)
 
 /client/proc/flip_view()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -582,8 +615,8 @@
 		if("270°")
 			selection.dir = WEST
 
-	logTheThing("admin", usr, selection, "set [constructTarget(selection,"admin")]'s viewport orientation to [rotation].")
-	logTheThing("diary", usr, selection, "set [constructTarget(src,"diary")]'s viewport orientation to [rotation].", "admin")
+	logTheThing(LOG_ADMIN, usr, "set [constructTarget(selection,"admin")]'s viewport orientation to [rotation].")
+	logTheThing(LOG_DIARY, usr, "set [constructTarget(src,"diary")]'s viewport orientation to [rotation].", "admin")
 	message_admins("<span class='internal'>[key_name(usr)] set [key_name(selection)]'s viewport orientation to [rotation].</span>")
 
 /client/proc/cmd_admin_clownify(mob/living/M as mob in world)
@@ -611,13 +644,13 @@
 
 	if(ishuman(M))
 		var/mob/living/carbon/human/cursed = M
-		cursed.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(cursed), cursed.slot_w_uniform)
-		cursed.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(cursed), cursed.slot_shoes)
-		cursed.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(cursed), cursed.slot_wear_mask)
-		cursed.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(cursed), cursed.slot_gloves)
+		cursed.equip_if_possible(new /obj/item/clothing/under/gimmick/cursedclown(cursed), SLOT_W_UNIFORM)
+		cursed.equip_if_possible(new /obj/item/clothing/shoes/cursedclown_shoes(cursed), SLOT_SHOES)
+		cursed.equip_if_possible(new /obj/item/clothing/mask/cursedclown_hat(cursed), SLOT_WEAR_MASK)
+		cursed.equip_if_possible(new /obj/item/clothing/gloves/cursedclown_gloves(cursed), SLOT_GLOVES)
 
-		logTheThing("admin", usr, M, "clownified [constructTarget(M,"admin")]")
-		logTheThing("diary", usr, M, "clownified [constructTarget(M,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, usr, "clownified [constructTarget(M,"admin")]")
+		logTheThing(LOG_DIARY, usr, "clownified [constructTarget(M,"diary")]", "admin")
 		message_admins("[key_name(usr)] clownified [key_name(M)]")
 
 		M.real_name = "cluwne"
@@ -814,7 +847,7 @@
 
 		else if (href_list["mutantrace"])
 			if (usr.client.holder.level >= LEVEL_ADMIN)
-				var/new_race = input(usr, "Please select mutant race", "Polymorph Menu") as null|anything in (childrentypesof(/datum/mutantrace) + "Remove")
+				var/new_race = tgui_input_list(usr, "Please select mutant race", "Polymorph Menu", concrete_typesof(/datum/mutantrace) + "Remove")
 
 				if (ispath(new_race, /datum/mutantrace))
 					src.mutantrace = new new_race
@@ -825,8 +858,8 @@
 
 		else if(href_list["apply"])
 			src.copy_to_target()
-			logTheThing("admin", usr, src.target_mob, "polymorphed [constructTarget(src.target_mob,"admin")]!")
-			logTheThing("diary", usr, src.target_mob, "polymorphed [constructTarget(src.target_mob,"diary")]!", "admin")
+			logTheThing(LOG_ADMIN, usr, "polymorphed [constructTarget(src.target_mob,"admin")]!")
+			logTheThing(LOG_DIARY, usr, "polymorphed [constructTarget(src.target_mob,"diary")]!", "admin")
 			message_admins("[key_name(usr)] polymorphed [key_name(src.target_mob)]!")
 
 		else if(href_list["cinematic"])
@@ -851,8 +884,7 @@
 
 		src.hair_override = H.hair_override
 
-		if(H.mutantrace)
-			src.mutantrace = new H.mutantrace.type
+		src.mutantrace = new H.mutantrace.type
 		return
 
 	proc/update_menu()
@@ -922,8 +954,7 @@
 		if(src.update_wearid && target_mob.wear_id)
 			target_mob.choose_name(1,1,target_mob.real_name, force_instead = 1)
 
-		if(src.mutantrace)
-			target_mob.set_mutantrace(src.mutantrace.type)
+		target_mob.set_mutantrace(src.mutantrace.type)
 
 		switch(src.cinematic)
 			if("Changeling") //Heh
@@ -934,9 +965,9 @@
 				qdel(target_mob.head)
 				qdel(target_mob.shoes)
 				qdel(target_mob.r_hand)
-				target_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe, target_mob.slot_wear_suit)
-				target_mob.equip_if_possible(new /obj/item/clothing/head/wizard, target_mob.slot_head)
-				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/wizard, target_mob.slot_shoes)
+				target_mob.equip_if_possible(new /obj/item/clothing/suit/wizrobe, SLOT_WEAR_SUIT)
+				target_mob.equip_if_possible(new /obj/item/clothing/head/wizard, SLOT_HEAD)
+				target_mob.equip_if_possible(new /obj/item/clothing/shoes/sandal/magic/wizard, SLOT_SHOES)
 				target_mob.put_in_hand(new /obj/item/staff(target_mob))
 
 				var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
@@ -1004,16 +1035,7 @@
 		var/customization_second_r = null
 		var/customization_third_r = null
 
-		var/g = "m"
-		if (src.tf_holder.mobAppearance.gender == MALE)
-			g = "m"
-		else
-			g = "f"
-
-		if(src.mutantrace)
-			src.preview_icon = new /icon(src.mutantrace.icon, src.mutantrace.icon_state)
-		else
-			src.preview_icon = new /icon('icons/mob/human.dmi', "body_[g]")
+		src.preview_icon = new /icon(src.mutantrace.icon, src.mutantrace.icon_state) //todo: #14465
 
 		if(!src.mutantrace?.override_skintone)
 			// Skin tone
@@ -1110,6 +1132,9 @@
 	set popup_menu = 0
 	set desc = "When toggled on, you will be able to see all 'hidden' adventure elements regardless of your current mob."
 
+	src._cmd_admin_advview()
+
+/client/proc/_cmd_admin_advview()
 	if (!src.holder)
 		boutput(src, "Only administrators may use this command.")
 		return
@@ -1117,13 +1142,15 @@
 	if (!adventure_view || mob.see_invisible < INVIS_ADVENTURE)
 		adventure_view = 1
 		mob.see_invisible = INVIS_ADVENTURE
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).add_client(src)
 		boutput(src, "Adventure View activated.")
 
 	else
 		adventure_view = 0
+		get_image_group(CLIENT_IMAGE_GROUP_ALL_ANTAGONISTS).remove_client(src)
 		boutput(src, "Adventure View deactivated.")
 		if (!isliving(mob))
-			mob.see_invisible = INVIS_GHOST // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
+			mob.see_invisible = INVIS_SPOOKY // this seems to be quasi-standard for dead and wraith mobs? might fuck up target observers but WHO CARES
 		else
 			mob.see_invisible = INVIS_NONE // it'll sort itself out on the next Life() tick anyway
 
@@ -1173,7 +1200,7 @@
 	var/whois = whois(target)
 	if (whois)
 		var/list/whoisR = whois
-		msg += "<b>Player[(whoisR.len == 1 ? "" : "s")] found for '[target]':</b><br>"
+		msg += "<b>Player[(length(whoisR) == 1 ? "" : "s")] found for '[target]':</b><br>"
 		for (var/mob/M in whoisR)
 			var/role = getRole(M)
 			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
@@ -1193,7 +1220,7 @@
 	var/list/msg = list("<span class='notice'>")
 	var/list/whodead = whodead()
 	if (whodead.len)
-		msg += "<b>Dead player[(whodead.len == 1 ? "" : "s")] found:</b><br>"
+		msg += "<b>Dead player[(length(whodead) == 1 ? "" : "s")] found:</b><br>"
 		for (var/mob/M in whodead)
 			var/role = getRole(M)
 			msg += "<b>[key_name(M, 1, 0)][role ? " ([role])" : ""]</b><br>"
@@ -1254,7 +1281,7 @@
 		return
 		//target = input(usr, "Target", "Target") as mob in world
 
-	boutput(usr, scan_health(target, 1, 255, 1, syndicate = TRUE))
+	boutput(usr, scan_health(target, 1, 255, 1, syndicate = TRUE, admin = TRUE))
 	return
 
 /client/proc/cmd_admin_check_reagents(var/atom/target as null|mob|obj|turf in world)
@@ -1264,12 +1291,23 @@
 	set desc = "Checks the reagents of something."
 	ADMIN_ONLY
 
-	src.check_reagents_internal(target,)
+	src.check_reagents_internal(target)
 
 /client/proc/check_reagents_internal(var/atom/target as null|mob|obj|turf in world, refresh = 0)
 	if (!target)
 		return
 		//target = input(usr, "Target", "Target") as mob|obj|turf in world
+
+	if (CHECK_LIQUID_CLICK(target))
+		var/turf/T = get_turf(target)
+		if (T.active_liquid || T.active_airborne_liquid)
+			// possibly asinine but I feel the rule helps contain the turf-fluid-smoke trifecta into a 'group'
+			// if you're scanning multiple things in a row
+			boutput(usr, "<hr>")
+			if (T.active_liquid)
+				src.check_reagents_internal(T.active_liquid, refresh)
+			if (T.active_airborne_liquid)
+				src.check_reagents_internal(T.active_airborne_liquid, refresh)
 
 	var/datum/reagents/reagents = 0
 	if (!target.reagents) // || !target.reagents.total_volume)
@@ -1390,9 +1428,8 @@
 		boutput(usr, "<span class='notice'><b>[target]'s reagents</b> ([reagents.total_volume] / [reagents.maximum_volume])<br>[log_reagents]</span><br>Temp: <i>[reagents.total_temperature]&deg;K ([reagents.total_temperature - 273.15]&deg;C)</i>") // Added temperature (Convair880).
 	usr.Browse(final_report, "window=reagent_report")
 
-	logTheThing("admin", usr, null, "checked the reagents of [target] <i>(<b>Contents:</b>[log_reagents])</i>. <b>Temp:</b> <i>[reagents.total_temperature] K</i>) [log_loc(target)]")
-	logTheThing("diary", usr, null, "checked the reagents of [target] <i>(<b>Contents:</b>[log_reagents])</i>. <b>Temp:</b> <i>[reagents.total_temperature] K</i>) [log_loc(target)]", "admin")
-	return
+	logTheThing(LOG_ADMIN, usr, "checked the reagents of [target] <i>(<b>Contents:</b>[log_reagents])</i>. <b>Temp:</b> <i>[reagents.total_temperature] K</i>) [log_loc(target)]")
+	logTheThing(LOG_DIARY, usr, "checked the reagents of [target] <i>(<b>Contents:</b>[log_reagents])</i>. <b>Temp:</b> <i>[reagents.total_temperature] K</i>) [log_loc(target)]", "admin")
 
 /client/proc/popt_key(var/client/ckey in clients)
 	set name = "Popt Key"
@@ -1461,20 +1498,25 @@
 
 	ADMIN_ONLY
 
-	if(!A.reagents) A.create_reagents(100)
+	var/datum/reagents/reagents = A.reagents
+
+	if(istype(A, /obj/fluid))
+		var/obj/fluid/fluid = A
+		reagents = fluid.group?.reagents
+	else if(!A.reagents)
+		A.create_reagents(100) // we don't ask for a specific amount since if you exceed 100 it gets asked about below
+		reagents = A.reagents
 
 	var/list/L = list()
 	var/searchFor = input(usr, "Look for a part of the reagent name (or leave blank for all)", "Add reagent") as null|text
 	if(searchFor)
 		for(var/R in concrete_typesof(/datum/reagent))
 			if(findtext("[R]", searchFor)) L += R
-	else
-		L = concrete_typesof(/datum/reagent)
 
 	var/type
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -1483,19 +1525,49 @@
 	if(!type) return
 	var/datum/reagent/reagent = new type()
 
-	var/amount = input(usr,"Amount:","Amount",50) as null|num
-	if(!amount) return
+	var/amount = input(usr, "Amount:", "Amount", 50) as null|num
+	if(!amount)
+		return
+	var/overflow = amount - (reagents.maximum_volume - reagents.total_volume)
+	if (overflow > 0) // amount exceeds reagent space
+		if (tgui_alert(usr, "That amount of reagents exceeds the available space by [overflow] units. Increase the reagent cap of [A] to fit?",
+			"Reagent Cap Expansion", list("Yes", "No")) == "Yes")
+			reagents.maximum_volume += overflow
+			if (ismob(A) && amount > 800) // rough estimate
+				if (tgui_alert(usr, "That amount of reagents will probably make [A] explode. Want to prevent them from exploding due to excessive blood?",
+					"Bloodgib Status", list("Yes", "No")) == "Yes")
+					APPLY_ATOM_PROPERTY(A, PROP_MOB_BLOODGIB_IMMUNE, usr)
+		else
+			// didn't increase cap, only report actual amount added.
+			amount = -(overflow - amount)
 
-	A.reagents.add_reagent(reagent.id, amount)
-	boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [A.name]</span>")
+	reagents.add_reagent(reagent.id, amount)
+	boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [A.name].</span>")
 
 	// Brought in line with adding reagents via the player panel (Convair880).
-	logTheThing("admin", src, A, "added [amount] units of [reagent.id] to [A] at [log_loc(A)].")
-	logTheThing("diary", usr, A, "added [amount] units of [reagent.id] to [A] at [log_loc(A)].", "admin")
-	if (iscarbon(A)) // Not warranted for items etc, they aren't important enough to trigger an admin alert. Silicon mobs don't metabolize reagents.
-		message_admins("[key_name(src)] added [amount] units of [reagent.id] to [key_name(A)] at [log_loc(A)].")
+	logTheThing(LOG_ADMIN, src, "added [amount] units of [reagent.id] to [A] at [log_loc(A)].")
+	if (ismob(A))
+		message_admins("[key_name(src)] added [amount] units of [reagent.id] to [A] (Key: [key_name(A) || "NULL"]) at [log_loc(A)].")
 
-	return
+	if(istype(A, /obj/fluid))
+		var/obj/fluid/fluid = A
+		fluid.group?.update_loop()
+
+
+/client/proc/cmd_set_material(var/atom/A in world)
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "Set Material"
+	set desc = "Sets the material of an atom using its matid"
+	set popup_menu = 0
+
+	ADMIN_ONLY
+	var/matid = tgui_input_list(src, "Select material to transmute to:", "Set Material", material_cache)
+	var/material_selected = getMaterial(matid)
+	if(!material_selected)
+		alert(src, "Invalid material selected: [matid]", "Invalid Material", "Ok")
+		return
+	A.setMaterial(material_selected)
+	boutput(src, "Set material of [A] to [material_selected]")
 
 /client/proc/cmd_cat_county()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
@@ -1511,13 +1583,46 @@
 		LAGCHECK(LAG_LOW)
 
 	usr.show_text("You replaced every single segway with a rideable cat. Good job!", "blue")
-	logTheThing("admin", usr, null, "replaced every segway with a cat, total: [catcounter].")
+	logTheThing(LOG_ADMIN, usr, "replaced every segway with a cat, total: [catcounter].")
 	for(var/I = 1, I <= catcounter, I++)
 		for(var/mob/M in mobs)
 			if(M)
 				M.playsound_local(M.loc, 'sound/voice/animal/cat.ogg', 30, 30)
-				if(I==1 && !isobserver(M)) new /obj/critter/cat(M.loc)
+				if(I==1 && !isobserver(M)) new /mob/living/critter/small_animal/cat(M.loc)
 		sleep(rand(10,20))
+
+/client/proc/fake_pda_message_to_all()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Fake PDA Message To All"
+	ADMIN_ONLY
+
+	var/sender_name = tgui_input_text(src, "PDA message sender name", "Name")
+	var/message = tgui_input_text(src, "PDA message contents", "Contents")
+
+	if (!sender_name || !message)
+		alert(src, "Sender name or message cannot be empty.", "Invalid PDA Message", "Ok")
+		return
+
+	var/datum/signal/pdaSignal = get_free_signal()
+	pdaSignal.data = list("command"="text_message", "sender_name"=sender_name, "sender"="00000000", "message"=message)
+	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
+
+	logTheThing(LOG_ADMIN, src, "sent fake PDA message from <b>[sender_name]</b> to all: [message]")
+	logTheThing(LOG_DIARY, src, "sent fake PDA message from <b>[sender_name]</b> to all: [message]", "admin")
+
+/client/proc/force_say_in_range()
+	SET_ADMIN_CAT(ADMIN_CAT_FUN)
+	set name = "Force Say In Range"
+	ADMIN_ONLY
+
+	var/speech = tgui_input_text(src, "What to force say", "Say")
+	var/range = tgui_input_number(src, "Tile range", "Range", 5, 7, 1)
+
+	for (var/mob/M in range(range, usr))
+		if (isalive(M))
+			M.say(speech)
+			logTheThing(LOG_ADMIN, src, "forced <b>[constructName(M)]</b> to say: [speech]")
+			logTheThing(LOG_DIARY, src, "forced <b>[constructName(M)]</b> to say: [speech]", "admin")
 
 /client/proc/revive_all_bees()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -1546,7 +1651,7 @@
 			Larva.on_revive()
 			Larva.visible_message("<span class='alert'>[Larva] seems to rise from the dead!</span>")
 			revived ++
-	logTheThing("admin", src, null, "revived [revived] bee[revived == 1 ? "" : "s"].")
+	logTheThing(LOG_ADMIN, src, "revived [revived] bee[revived == 1 ? "" : "s"].")
 	message_admins("[key_name(src)] revived [revived] bee[revived == 1 ? "" : "s"]!")
 
 /client/proc/revive_all_cats()
@@ -1555,17 +1660,14 @@
 	ADMIN_ONLY
 
 	var/revived = 0
-	for (var/obj/critter/cat/Cat in world)
+	for (var/mob/living/critter/small_animal/cat/Cat in world)
 		LAGCHECK(LAG_LOW)
-		if (!Cat.alive)
-			Cat.health = initial(Cat.health)
-			Cat.alive = 1
-			Cat.icon_state = initial(Cat.icon_state)
-			Cat.set_density(initial(Cat.density))
-			Cat.on_revive()
+		if (isdead(Cat))
+			Cat.full_heal()
+			Cat.set_icon_state(Cat.icon_state_alive)
 			Cat.visible_message("<span class='alert'>[Cat] seems to rise from the dead!</span>")
 			revived ++
-	logTheThing("admin", src, null, "revived [revived] cat[revived == 1 ? "" : "s"].")
+	logTheThing(LOG_ADMIN, src, "revived [revived] cat[revived == 1 ? "" : "s"].")
 	message_admins("[key_name(src)] revived [revived] cat[revived == 1 ? "" : "s"]!")
 
 /client/proc/revive_all_parrots()
@@ -1584,7 +1686,7 @@
 			Bird.on_revive()
 			Bird.visible_message("<span class='alert'>[Bird] seems to rise from the dead!</span>")
 			revived ++
-	logTheThing("admin", src, null, "revived [revived] parrot[revived == 1 ? "" : "s"].")
+	logTheThing(LOG_ADMIN, src, "revived [revived] parrot[revived == 1 ? "" : "s"].")
 	message_admins("[key_name(src)] revived [revived] parrot[revived == 1 ? "" : "s"]!")
 
 /proc/listCritters(var/alive)
@@ -1607,7 +1709,7 @@
 		var/con = alert("[M] currently has a ckey. Continue?",, "Yes", "No")
 		if (con != "Yes")
 			return
-	var/list/L = sortList(clients)
+	var/list/L = sortListCopy(clients, /proc/cmp_text_asc)
 	var/client/selection = input("Please, select a player!", "Player Options (Key)", null, null) as null|anything in L
 
 	if (selection)
@@ -1616,7 +1718,7 @@
 			if (con != "Yes")
 				return
 		message_admins("[key_name(src)] moved [selection.ckey] into [M].")
-		logTheThing("admin", src, selection, "ckey transferred [constructTarget(selection,"admin")]")
+		logTheThing(LOG_ADMIN, src, "ckey transferred [constructTarget(selection,"admin")]")
 		if (istype(selection.mob,/mob/dead/target_observer))
 			qdel(src)
 
@@ -1632,8 +1734,8 @@
 	if(!M || M == usr ) return
 
 	if(usr.mind)
-		logTheThing("admin", usr, M, "swapped bodies with [constructTarget(M,"admin")]")
-		logTheThing("diary", usr, M, "swapped bodies with [constructTarget(M,"diary")]", "admin")
+		logTheThing(LOG_ADMIN, usr, "swapped bodies with [constructTarget(M,"admin")]")
+		logTheThing(LOG_DIARY, usr, "swapped bodies with [constructTarget(M,"diary")]", "admin")
 		var/mob/oldmob //This needs to be here
 		if(M.key || M.client) //Nobody gives a shit if you wanna be an npc.
 			message_admins("[key_name(src)] swapped bodies with [key_name(M)]")
@@ -1649,120 +1751,10 @@
 		if(oldmob) qdel(oldmob)
 	else //You don't have a mind. Let's give you one and try again
 		//usr.show_text("You don't have a mind!")
-		logTheThing("debug", usr, null, "<B>SpyGuy/Mindswap</B> - [usr] didn't have a mind so one was created for them.")
+		logTheThing(LOG_DEBUG, usr, "<B>SpyGuy/Mindswap</B> - [usr] didn't have a mind so one was created for them.")
 		usr.mind = new /datum/mind(usr)
 		ticker.minds += usr.mind
 		.()
-
-// Tweaked this to implement log entries and make it feature-complete with regard to every antagonist roles (Convair880).
-/proc/remove_antag(var/mob/M, var/mob/admin, var/new_mind_only = 0, var/show_message = 0)
-	set name = "Remove Antag"
-	set desc = "Removes someone's traitor status."
-
-	if (!M || !M.mind || !M.mind.special_role)
-		return
-
-	var/former_role
-	former_role = text("[M.mind.special_role]")
-
-	message_admins("[key_name(M)]'s antagonist status ([former_role]) was removed. Source: [admin ? "[key_name(admin)]" : "*automated*"].")
-	if (admin) // Log entries for automated antag status removal is handled in helpers.dm, remove_mindhack_status().
-		logTheThing("admin", admin, M, "removed the antagonist status of [constructTarget(M,"admin")].")
-		logTheThing("diary", admin, M, "removed the antagonist status of [constructTarget(M,"diary")].", "admin")
-
-	if (show_message == 1)
-		M.show_text("<h2><font color=red><B>Your antagonist status has been revoked by an admin! If this is an unexpected development, please inquire about it in adminhelp.</B></font></h2>", "red")
-		M.show_antag_popup("antagremoved")
-
-	// Replace the mind first, so the new mob doesn't automatically end up with changeling etc. abilities.
-	var/datum/mind/newMind = new /datum/mind()
-	newMind.ckey = M.ckey
-	newMind.key = M.key
-	newMind.current = M
-	newMind.assigned_role = M.mind.assigned_role
-	newMind.brain = M.mind.brain
-	newMind.dnr = M.mind.dnr
-	newMind.is_target = M.mind.is_target
-	if (M.mind.former_antagonist_roles.len)
-		newMind.former_antagonist_roles.Add(M.mind.former_antagonist_roles)
-	if (M.mind in ticker.mode.Agimmicks)
-		ticker.mode.Agimmicks -= M.mind
-	qdel(M.mind)
-	if (!(newMind in ticker.minds))
-		ticker.minds.Add(newMind)
-	M.mind = newMind
-	M.mind.brain.owner = M.mind
-
-	M.antagonist_overlay_refresh(1, 1)
-
-	if (new_mind_only)
-		return
-
-	// Then spawn a new mob to delete all mob-/client-bound antagonist verbs.
-	// Complete overkill for mindhacks, though. Blobs and wraiths need special treatment as well.
-	// Synthetic mobs aren't really included yet, because it would be a complete pain to account for them properly.
-	if (issilicon(M))
-		var/mob/living/silicon/S = M
-		S.emagged = 0
-		S.syndicate = 0
-		if (S.mainframe && S != S.mainframe)
-			var/mob/living/silicon/ai/MF = S.mainframe
-			MF.emagged = 0
-			MF.syndicate = 0
-
-
-		for (var/mob/living/silicon/S2 in mobs)
-			if (S2.emagged || S2.syndicate) continue
-			if (isghostdrone(S2)) continue
-			S2.law_rack_connection = ticker.ai_law_rack_manager.default_ai_rack
-			logTheThing("station", S2, null, "[S2.name] is connected to the default rack at [constructName(S2.law_rack_connection)] by admemery")
-			S2.show_text("<b>Your laws have been changed!</b>", "red")
-			S2.playsound_local(S2, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
-			S2.show_laws()
-		for (var/mob/living/intangible/aieye/E in mobs)
-			E.playsound_local(E, "sound/misc/lawnotify.ogg", 100, flags = SOUND_IGNORE_SPACE)
-
-	switch (former_role)
-		if (ROLE_MINDHACK) M.delStatus("mindhack")
-		if (ROLE_VAMPTHRALL) return
-		if ("spyminion") return
-		if (ROLE_BLOB) M.humanize(1)
-		if (ROLE_WRAITH) M.humanize(1)
-		else
-			if (ishuman(M))
-				// They could be in a pod or whatever, which would have unfortunate results when respawned.
-				if (!isturf(M.loc))
-					return
-				var/mob/living/carbon/human/H = M
-
-				// Get rid of those uplinks first.
-				var/list/L = H.get_all_items_on_mob()
-				if (length(L))
-					for (var/obj/item/device/pda2/PDA in L)
-						if (PDA?.uplink)
-							qdel(PDA.uplink)
-							PDA.uplink = null
-					for (var/obj/item/device/radio/R in L)
-						if (R?.traitorradio)
-							qdel(R.traitorradio)
-							R.traitorradio = null
-							R.traitor_frequency = 0
-					for (var/obj/item/uplink/U in L)
-						if (U) qdel(U)
-					for (var/obj/item/SWF_uplink/WZ in L)
-						if (WZ) qdel(WZ)
-
-				H.unkillable_respawn(1)
-
-			if (isobserver(M)) // Ugly but necessary.
-				var/mob/dead/observer/O = M
-				var/mob/dead/observer/newO = new/mob/dead/observer(O)
-				if (O.corpse)
-					newO.corpse = O.corpse
-				O.mind.transfer_to(newO)
-				qdel(O)
-
-	return
 
 //flourish told me this was broken... if you want admin foam brew it yourself!!
 /*
@@ -1778,7 +1770,7 @@
 	var/datum/reagents/holder
 	if (A.reagents)
 		holder = A.reagents
-		logTheThing("admin", src, A, "created foam in [A] [log_reagents(A)] at [log_loc(A)].")
+		logTheThing(LOG_ADMIN, src, "created foam in [A] [log_reagents(A)] at [log_loc(A)].")
 		message_admins("[key_name(src)] created foam in [A] [log_reagents(A)] at [log_loc(A)].")
 	var/datum/effects/system/foam_spread/s = new()
 	s.set_up(amount, get_turf(A), holder, 0)
@@ -1799,7 +1791,7 @@
 //	var/datum/reagents/holder
 //	if (A.reagents)
 //		holder = A.reagents
-//		logTheThing("admin", src, A, "created smoke in [A] [log_reagents(A)] at [log_loc(A)].")
+//		logTheThing(LOG_ADMIN, src, "created smoke in [A] [log_reagents(A)] at [log_loc(A)].")
 //		message_admins("[key_name(src)] created smoke in [A] [log_reagents(A)] at [log_loc(A)].)")
 //	smoke_reaction(holder, size, get_turf(A), 1)
 
@@ -1820,9 +1812,9 @@
 		L = concrete_typesof(/datum/reagent)
 
 	var/type
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -1866,9 +1858,9 @@
 		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -1880,7 +1872,7 @@
 	if(!amount) return
 
 
-	logTheThing("admin", src, T, "created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].")
+	logTheThing(LOG_ADMIN, src, "created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].")
 	message_admins("[key_name(src)] created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].)")
 
 	T.fluid_react_single(reagent.id, amount)
@@ -1905,9 +1897,9 @@
 		L = concrete_typesof(/datum/reagent)
 
 	var/type = 0
-	if(L.len == 1)
+	if(length(L) == 1)
 		type = L[1]
-	else if(L.len > 1)
+	else if(length(L) > 1)
 		type = input(usr,"Select Reagent:","Reagents",null) as null|anything in L
 	else
 		usr.show_text("No reagents matching that name", "red")
@@ -1919,7 +1911,7 @@
 	if(!amount) return
 
 
-	logTheThing("admin", src, T, "created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].")
+	logTheThing(LOG_ADMIN, src, "created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].")
 	message_admins("[key_name(src)] created fluid at [T] : [reagent.id] with volume [amount] at [log_loc(T)].)")
 
 	T.fluid_react_single(reagent.id, amount, airborne = 1)
@@ -1945,8 +1937,8 @@
 	ADMIN_ONLY
 
 	usr:set_loc(target)
-	logTheThing("admin", usr, target, "began following [target].")
-	logTheThing("diary", usr, target, "began following [target].", "admin")
+	logTheThing(LOG_ADMIN, usr, "began following [target].")
+	logTheThing(LOG_DIARY, usr, "began following [target].", "admin")
 
 /client/proc/admin_observe_random_player()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
@@ -2003,9 +1995,9 @@
 		if (!M.client || istype(M, /mob/new_player))
 			continue
 		if (what_group != "Everyone")
-			if ((what_group == "Traitors Only") && !checktraitor(M))
+			if ((what_group == "Traitors Only") && !M.mind?.is_antagonist())
 				continue
-			else if ((what_group == "Non-Traitors Only") && checktraitor(M))
+			else if ((what_group == "Non-Traitors Only") && M.mind?.is_antagonist())
 				continue
 		if (choose_from_dead != "Everyone")
 			if ((choose_from_dead == "Living Only") && M.stat)
@@ -2030,8 +2022,8 @@ var/global/night_mode_enabled = 0
 
 	night_mode_enabled = !night_mode_enabled
 	message_admins("[key_name(src)] toggled Night Mode [night_mode_enabled ? "on" : "off"]")
-	logTheThing("admin", src, null, "toggled Night Mode [night_mode_enabled ? "on" : "off"]")
-	logTheThing("diary", src, null, "toggled Night Mode [night_mode_enabled ? "on" : "off"]", "admin")
+	logTheThing(LOG_ADMIN, src, "toggled Night Mode [night_mode_enabled ? "on" : "off"]")
+	logTheThing(LOG_DIARY, src, "toggled Night Mode [night_mode_enabled ? "on" : "off"]", "admin")
 
 	for(var/obj/machinery/power/apc/APC in machine_registry[MACHINES_POWER])
 		if(APC.area && APC.area.workplace)
@@ -2049,8 +2041,8 @@ var/global/night_mode_enabled = 0
 	switch(answer)
 		if ("Grant Access")
 			message_admins("[key_name(src)] granted VOX access to all AIs!")
-			logTheThing("admin", src, null, "granted VOX access to all AIs!")
-			logTheThing("diary", src, null, "granted VOX access to all AIs!", "admin")
+			logTheThing(LOG_ADMIN, src, "granted VOX access to all AIs!")
+			logTheThing(LOG_DIARY, src, "granted VOX access to all AIs!", "admin")
 			boutput(world, "<B>The AI may now use VOX!</B>")
 			for_by_tcl(AI, /mob/living/silicon/ai)
 				AI.cancel_camera()
@@ -2061,8 +2053,8 @@ var/global/night_mode_enabled = 0
 
 		if ("Revoke Access")
 			message_admins("[key_name(src)] revoked VOX access from all AIs!")
-			logTheThing("admin", src, null, "revoked VOX access from all AIs!")
-			logTheThing("diary", src, null, "revoked VOX access from all AIs!", "admin")
+			logTheThing(LOG_ADMIN, src, "revoked VOX access from all AIs!")
+			logTheThing(LOG_DIARY, src, "revoked VOX access from all AIs!", "admin")
 			boutput(world, "<B>The AI may no longer use VOX!</B>")
 			for_by_tcl(AI, /mob/living/silicon/ai)
 				AI.cancel_camera()
@@ -2173,14 +2165,14 @@ var/global/night_mode_enabled = 0
 			created_organ:donor = H
 			H.organHolder.receive_organ(created_organ, organ)
 			boutput(usr, "<span class='notice'>[H]'s [lowertext(organ)] replaced with [created_organ].</span>")
-			logTheThing("admin", usr, H, "replaced [constructTarget(H,"admin")]'s [lowertext(organ)] with [created_organ]")
-			logTheThing("diary", usr, H, "replaced [constructTarget(H,"diary")]'s [lowertext(organ)] with [created_organ]", "admin")
+			logTheThing(LOG_ADMIN, usr, "replaced [constructTarget(H,"admin")]'s [lowertext(organ)] with [created_organ]")
+			logTheThing(LOG_DIARY, usr, "replaced [constructTarget(H,"diary")]'s [lowertext(organ)] with [created_organ]", "admin")
 		if ("Drop")
 			if (alert(usr, "Are you sure you want [H] to drop their [lowertext(organ)]?", "Confirmation", "Yes", "No") == "Yes")
 				H.organHolder.drop_organ(organ)
 				boutput(usr, "<span class='notice'>[H]'s [lowertext(organ)] dropped.</span>")
-				logTheThing("admin", usr, H, "dropped [constructTarget(H,"admin")]'s [lowertext(organ)]")
-				logTheThing("diary", usr, H, "dropped [constructTarget(H,"diary")]'s [lowertext(organ)]", "admin")
+				logTheThing(LOG_ADMIN, usr, "dropped [constructTarget(H,"admin")]'s [lowertext(organ)]")
+				logTheThing(LOG_DIARY, usr, "dropped [constructTarget(H,"diary")]'s [lowertext(organ)]", "admin")
 			else
 				return
 		if ("Delete")
@@ -2188,8 +2180,8 @@ var/global/night_mode_enabled = 0
 				var/organ2del = H.organHolder.drop_organ(organ)
 				qdel(organ2del)
 				boutput(usr, "<span class='notice'>[H]'s [lowertext(organ)] deleted.</span>")
-				logTheThing("admin", usr, H, "deleted [constructTarget(H,"admin")]'s [lowertext(organ)]")
-				logTheThing("diary", usr, H, "deleted [constructTarget(H,"diary")]'s [lowertext(organ)]", "admin")
+				logTheThing(LOG_ADMIN, usr, "deleted [constructTarget(H,"admin")]'s [lowertext(organ)]")
+				logTheThing(LOG_DIARY, usr, "deleted [constructTarget(H,"diary")]'s [lowertext(organ)]", "admin")
 			else
 				return
 	return
@@ -2224,8 +2216,8 @@ var/global/night_mode_enabled = 0
 	if (src.holder.level >= LEVEL_MOD)
 		if (ismob(M))
 			if (alert(usr, "Boot [M]?", "Confirmation", "Yes", "No") == "Yes")
-				logTheThing("admin", usr, M, "booted [constructTarget(M,"admin")].")
-				logTheThing("diary", usr, M, "booted [constructTarget(M,"diary")].", "admin")
+				logTheThing(LOG_ADMIN, usr, "booted [constructTarget(M,"admin")].")
+				logTheThing(LOG_DIARY, usr, "booted [constructTarget(M,"diary")].", "admin")
 				message_admins("<span class='internal'>[key_name(usr)] booted [key_name(M)].</span>")
 				del(M.client)
 	else
@@ -2253,8 +2245,8 @@ var/global/night_mode_enabled = 0
 
 	if (alert("Show the message: \"[msg]\" to [audience ? audience : "everyone"]?", "Confirm", "OK", "Cancel") == "OK")
 		msg = "<span class='medal'>" + msg + "</span>"
-		logTheThing("admin", usr, null, "showed a fake medal message to [audience ? audience : "everyone"]: \"[msg]\"")
-		logTheThing("diary", usr, null, "showed a fake medal message to [audience ? audience : "everyone"]: \"[msg]\"", "admin")
+		logTheThing(LOG_ADMIN, usr, "showed a fake medal message to [audience ? audience : "everyone"]: \"[msg]\"")
+		logTheThing(LOG_DIARY, usr, "showed a fake medal message to [audience ? audience : "everyone"]: \"[msg]\"", "admin")
 		message_admins("[key_name(usr)] showed a fake medal message to [audience ? audience : "everyone"]: \"[msg]\"")
 		if (audience)
 			boutput(audience, msg)
@@ -2290,8 +2282,8 @@ var/global/night_mode_enabled = 0
 				thing.initialPos = null
 				thing.smash(1)
 
-	logTheThing("admin", src, M, "deshame-cubed [constructTarget(M,"admin")] at [get_area(M)] ([log_loc(M)])")
-	logTheThing("diary", src, M, "deshame-cubed [constructTarget(M,"diary")] at [get_area(M)] ([log_loc(M)])", "admin")
+	logTheThing(LOG_ADMIN, src, "deshame-cubed [constructTarget(M,"admin")] at [get_area(M)] ([log_loc(M)])")
+	logTheThing(LOG_DIARY, src, "deshame-cubed [constructTarget(M,"diary")] at [get_area(M)] ([log_loc(M)])", "admin")
 	message_admins("[key_name(src)] deshame-cubed [key_name(M)] at [get_area(M)] ([log_loc(M)])")
 
 
@@ -2308,7 +2300,9 @@ var/global/night_mode_enabled = 0
 		return 0
 	if(isdead(M))
 		M.invisibility = INVIS_NONE
-	var/announce = alert("Announce this cubing to the server?", "Announce", "Yes", "No")
+	var/announce = input(src, "Announce this cubing to the server?") in list("Yes", "No", "Cancel")
+	if (announce == "Cancel")
+		return
 
 	var/turf/targetLoc = src.mob.loc
 	var/area/where = get_area(M)
@@ -2337,8 +2331,8 @@ var/global/night_mode_enabled = 0
 		command_alert("[M.name] has been shamecubed in [where]!", "Dumb person detected!")
 
 	out(M, "<span class='bold alert'>You have been shame-cubed by an admin! Take this embarrassing moment to reflect on what you have done.</span>")
-	logTheThing("admin", src, M, "shame-cubed [constructTarget(M,"admin")] at [where] ([log_loc(M)])")
-	logTheThing("diary", src, M, "shame-cubed [constructTarget(M,"diary")] at [where] ([log_loc(M)])", "admin")
+	logTheThing(LOG_ADMIN, src, "shame-cubed [constructTarget(M,"admin")] at [where] ([log_loc(M)])")
+	logTheThing(LOG_DIARY, src, "shame-cubed [constructTarget(M,"diary")] at [where] ([log_loc(M)])", "admin")
 	message_admins("[key_name(src)] shame-cubed [key_name(M)] at [where] ([log_loc(M)])")
 
 	return 1
@@ -2352,8 +2346,8 @@ var/global/night_mode_enabled = 0
 	if (src.holder.level >= LEVEL_PA)
 		var/obj/O = makeshittyweapon()
 		if (O)
-			logTheThing("admin", src, null, "made a shitty piece of junk weapon: [O][src.mob ? " [log_loc(src.mob)]" : null]")
-			logTheThing("diary", src, null, "made a shitty piece of junk weapon: [O][src.mob ? " [log_loc(src.mob)]" : null]", "admin")
+			logTheThing(LOG_ADMIN, src, "made a shitty piece of junk weapon: [O][src.mob ? " [log_loc(src.mob)]" : null]")
+			logTheThing(LOG_DIARY, src, "made a shitty piece of junk weapon: [O][src.mob ? " [log_loc(src.mob)]" : null]", "admin")
 			message_admins("[key_name(src)] made a shitty piece of junk weapon:	 [O][src.mob ? " [log_loc(src.mob)]" : null]")
 
 /client/proc/cmd_admin_unhandcuff(var/mob/M as mob in world)
@@ -2370,8 +2364,8 @@ var/global/night_mode_enabled = 0
 	if (M.hasStatus("handcuffed"))
 		M.handcuffs.drop_handcuffs(M)
 
-		logTheThing("admin", src, M, "unhandcuffed [constructTarget(M,"admin")] at [get_area(M)] ([log_loc(M)])")
-		logTheThing("diary", src, M, "unhandcuffed [constructTarget(M,"diary")] at [get_area(M)] ([log_loc(M)])", "admin")
+		logTheThing(LOG_ADMIN, src, "unhandcuffed [constructTarget(M,"admin")] at [get_area(M)] ([log_loc(M)])")
+		logTheThing(LOG_DIARY, src, "unhandcuffed [constructTarget(M,"diary")] at [get_area(M)] ([log_loc(M)])", "admin")
 		message_admins("[key_name(src)] unhandcuffed [key_name(M)] at [get_area(M)] ([log_loc(M)])")
 
 		if (ishuman(M))
@@ -2499,10 +2493,10 @@ var/global/night_mode_enabled = 0
 	medals = params2list(medals)
 	for (var/client/C in clients)
 		LAGCHECK(LAG_LOW)
-		if (C.key == new_key)
+		if (C.ckey == ckey(new_key))
 			M = C.mob
-	if (M.key == old_key)
-		M.key = new_key
+	if (M.ckey == ckey(old_key))
+		M.ckey = ckey(new_key)
 	for (var/medal in medals)
 		var/result = world.SetMedal(medal, M, config.medal_hub, config.medal_password)
 		if (isnull(result))
@@ -2590,8 +2584,8 @@ var/global/night_mode_enabled = 0
 	ADMIN_ONLY
 
 	var/is_text = winget(C,  "mapwindow.map", "text-mode") == "true"
-	logTheThing("admin", usr, C.mob, "has toggled [constructTarget(C.mob,"admin")]'s text mode to [!is_text]")
-	logTheThing("diary", usr, C.mob, "has toggled [constructTarget(C.mob,"diary")]'s text mode to [!is_text]", "admin")
+	logTheThing(LOG_ADMIN, usr, "has toggled [constructTarget(C.mob,"admin")]'s text mode to [!is_text]")
+	logTheThing(LOG_DIARY, usr, "has toggled [constructTarget(C.mob,"diary")]'s text mode to [!is_text]", "admin")
 	message_admins("[key_name(usr)] has toggled [key_name(C.mob)]'s text mode to [!is_text]")
 	winset(C, "mapwindow.map", "text-mode=[is_text ? "false" : "true"]" )
 
@@ -2696,12 +2690,12 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 
 			if (summoning_office)
 				src.mob.visible_message("[src.mob] manipulates the very fabric of spacetime around themselves linking their current location with another! Wow!", "You skillfully manipulate spacetime to join the space containing your office with your current location.", "You have no idea what's happening but it sure does sound cool!")
-				playsound(src.mob, "sound/machines/door_open.ogg", 50, 1)
+				playsound(src.mob, 'sound/machines/door_open.ogg', 50, 1)
 				if (!mirrored_physical_zone_created)
 					mirrored_physical_zone_created = TRUE
 			else
 				src.mob.visible_message("[src.mob] returns the fabric of spacetime to normal! Wow!", "You wave your office away, returning the space to normal.", "You have no idea what's happening but it sure does sound cool!")
-				playsound(src.mob, "sound/machines/door_close.ogg", 50, 1)
+				playsound(src.mob, 'sound/machines/door_close.ogg', 50, 1)
 			return
 	boutput(src, "You don't seem to have an office, so sad. :(")
 
@@ -2718,8 +2712,8 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 					new /obj/machinery/crusher(locate(W.x, W.y, W.z))
 					W.set_density(0)
 
-				logTheThing("admin", src, null, "has turned every wall into a crusher! God damn.")
-				logTheThing("diary", src, null, "has turned every wall into a crusher! God damn.", "admin")
+				logTheThing(LOG_ADMIN, src, "has turned every wall into a crusher! God damn.")
+				logTheThing(LOG_DIARY, src, "has turned every wall into a crusher! God damn.", "admin")
 				message_admins("[key_name(src)] has turned every wall into a crusher! God damn.")
 
 			if("No")
@@ -2752,8 +2746,8 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 								B = 1
 					L.light?.set_color(R, G, B)
 					LAGCHECK(LAG_LOW)
-				logTheThing("admin", src, null, "set every light on the station to a random color.")
-				logTheThing("diary", src, null, "set every light on the station to a random color.", "admin")
+				logTheThing(LOG_ADMIN, src, "set every light on the station to a random color.")
+				logTheThing(LOG_DIARY, src, "set every light on the station to a random color.", "admin")
 				message_admins("[key_name(src)] set every light on the station to a random color.")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
@@ -2772,10 +2766,10 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 						M.u_equip(G)
 						qdel(G)
 					var/obj/item/clothing/glasses/blindfold/B = new()
-					M.force_equip(B, M.slot_glasses)
+					M.force_equip(B, SLOT_GLASSES)
 
-				logTheThing("admin", src, null, "has blindfolded every monkey.")
-				logTheThing("diary", src, null, "has blindfolded every monkey.", "admin")
+				logTheThing(LOG_ADMIN, src, "has blindfolded every monkey.")
+				logTheThing(LOG_DIARY, src, "has blindfolded every monkey.", "admin")
 
 			if("No")
 				return
@@ -2791,8 +2785,8 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 		var/list/shuttles = get_map_prefabs(/datum/mapPrefab/shuttle)
 		var/datum/mapPrefab/shuttle/shuttle = shuttles[tgui_input_list(src, "Select a shuttle", "Special Shuttle", shuttles)]
 		if(shuttle?.load())
-			logTheThing("admin", src, null, "replaced the shuttle with [shuttle.name].")
-			logTheThing("diary", src, null, "replaced the shuttle with [shuttle.name].", "admin")
+			logTheThing(LOG_ADMIN, src, "replaced the shuttle with [shuttle.name].")
+			logTheThing(LOG_DIARY, src, "replaced the shuttle with [shuttle.name].", "admin")
 			message_admins("[key_name(src)] replaced the shuttle with [shuttle.name].")
 	else
 		boutput(src, "You must be at least an Administrator to use this command.")
@@ -2809,8 +2803,8 @@ var/global/mirrored_physical_zone_created = FALSE //enables secondary code branc
 
 	if (tgui_alert(src.mob, "Are you sure you want to ship [AM]?", "Confirmation", list("Yes", "No")) == "Yes")
 		shippingmarket.receive_crate(AM)
-		logTheThing("admin", usr, AM, "has shipped [AM] to cargo.")
-		logTheThing("diary", usr, AM, "has shipped [AM] to cargo.", "admin")
+		logTheThing(LOG_ADMIN, usr, "has shipped [AM] to cargo.")
+		logTheThing(LOG_DIARY, usr, "has shipped [AM] to cargo.", "admin")
 		message_admins("[key_name(usr)] has shipped [AM] to cargo.")
 
 var/global/force_radio_maptext = FALSE
@@ -2824,15 +2818,15 @@ var/global/force_radio_maptext = FALSE
 			switch(alert("Set all radios to use flying text?", "Bad Idea??","Yes","No"))
 				if("Yes")
 					force_radio_maptext = TRUE
-					logTheThing("admin", src, null, "has enabled forced radio maptext.")
-					logTheThing("diary", src, null, "has enabled forced radio maptext.", "admin")
+					logTheThing(LOG_ADMIN, src, "has enabled forced radio maptext.")
+					logTheThing(LOG_DIARY, src, "has enabled forced radio maptext.", "admin")
 					message_admins("[key_name(src)] has enabled flying text for all radios!")
 				if("No")
 					return
 		else
 			force_radio_maptext = FALSE
-			logTheThing("admin", src, null, "has disabled forced radio maptext.")
-			logTheThing("diary", src, null, "has disabled forced radio maptext.", "admin")
+			logTheThing(LOG_ADMIN, src, "has disabled forced radio maptext.")
+			logTheThing(LOG_DIARY, src, "has disabled forced radio maptext.", "admin")
 			message_admins("[key_name(src)] has disabled forced radio flying text.")
 			return
 	else
@@ -2850,8 +2844,8 @@ var/global/force_radio_maptext = FALSE
 	var/obj/item/storage/backpack/syndie/backpack_full_of_ammo = new()
 	backpack_full_of_ammo.name = "backpack full of ammo"
 	backpack_full_of_ammo.desc = "Try not to lose it, idiot."
-	backpack_full_of_ammo.max_wclass = INFINITY
-	backpack_full_of_ammo.slots = 9
+	backpack_full_of_ammo.storage.max_wclass = INFINITY
+	backpack_full_of_ammo.storage.slots = 9
 	backpack_full_of_ammo.cant_other_remove = 1
 
 	var/obj/item/saw/syndie/button_1 = new()
@@ -2903,14 +2897,14 @@ var/global/force_radio_maptext = FALSE
 
 	var/obj/item/device/key/iridium/fancy_keys = new()
 
-	backpack_full_of_ammo.add_contents(button_1)
-	backpack_full_of_ammo.add_contents(button_2)
-	backpack_full_of_ammo.add_contents(button_3)
-	backpack_full_of_ammo.add_contents(button_4)
-	backpack_full_of_ammo.add_contents(button_5)
-	backpack_full_of_ammo.add_contents(button_6)
-	backpack_full_of_ammo.add_contents(button_7)
-	backpack_full_of_ammo.add_contents(fancy_keys)
+	backpack_full_of_ammo.storage.add_contents(button_1)
+	backpack_full_of_ammo.storage.add_contents(button_2)
+	backpack_full_of_ammo.storage.add_contents(button_3)
+	backpack_full_of_ammo.storage.add_contents(button_4)
+	backpack_full_of_ammo.storage.add_contents(button_5)
+	backpack_full_of_ammo.storage.add_contents(button_6)
+	backpack_full_of_ammo.storage.add_contents(button_7)
+	backpack_full_of_ammo.storage.add_contents(fancy_keys)
 
 	if (ishuman(src.mob))
 		// If you are using this you are going to Fuck Things Up
@@ -2922,7 +2916,7 @@ var/global/force_radio_maptext = FALSE
 			doomguy.u_equip(I)
 			I.set_loc(doomguy.loc)
 
-		doomguy.force_equip(backpack_full_of_ammo, doomguy.slot_back)
+		doomguy.force_equip(backpack_full_of_ammo, SLOT_BACK)
 
 	else
 		backpack_full_of_ammo.set_loc(get_turf(src.mob))

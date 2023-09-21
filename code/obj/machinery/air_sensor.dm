@@ -4,7 +4,7 @@ obj/machinery/air_sensor
 	name = "Gas Sensor"
 	desc = "A device that detects the composition of the air nearby."
 
-	anchored = 1
+	anchored = ANCHORED
 
 	var/id_tag
 	var/frequency = FREQ_AIR_ALARM_CONTROL
@@ -54,12 +54,6 @@ obj/machinery/air_sensor
 					signal.data["carbon_dioxide"] = round(100*air_sample.carbon_dioxide/total_moles)
 				if(output&32)
 					signal.data["nitrogen"] = round(100*air_sample.nitrogen/total_moles)
-				if(output&64)
-					var/tgmoles = 0
-					if(length(air_sample.trace_gases))
-						for(var/datum/gas/trace_gas as anything in air_sample.trace_gases)
-							tgmoles += trace_gas.moles
-					signal.data["other"] = round(100*tgmoles/total_moles)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
 	New()

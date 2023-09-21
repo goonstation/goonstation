@@ -25,7 +25,7 @@
 
 	attack_hand(mob/user)
 		if (user.find_in_hand(src) && src.on)
-			playsound(user, 'sound/misc/miccheck.ogg', 30, 1)
+			playsound(user, 'sound/misc/miccheck.ogg', 30, TRUE)
 			user.visible_message("<span class='emote'>[user] taps [src] with [his_or_her(user)] hand.</span>")
 		else
 			return ..()
@@ -65,11 +65,13 @@
 				S.visible_message("<span class='alert'>[S] lets out a horrible [pick("shriek", "squeal", "noise", "squawk", "screech", "whine", "squeak")]!</span>")
 				playsound(S.loc, 'sound/items/mic_feedback.ogg', 30, 1)
 
+TYPEINFO(/obj/mic_stand)
+	mats = 10
+
 /obj/mic_stand
 	name = "microphone stand"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "micstand"
-	mats = 10
 	layer = FLY_LAYER
 	var/obj/item/device/microphone/myMic = null
 
@@ -119,13 +121,15 @@
 		else
 			src.icon_state = "micstand-empty"
 
+TYPEINFO(/obj/loudspeaker)
+	mats = 15
+
 /obj/loudspeaker
 	name = "loudspeaker"
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "loudspeaker"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_MULTITOOL
 
 	New()

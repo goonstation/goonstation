@@ -72,11 +72,12 @@ Contents:
 	force_fullbright = 0
 	name = "Elevator"
 
-
 /area/moon/museum/west
+	name = "Museum of Lunar History West Wing"
 	icon_state = "red"
 
 /area/moon/museum/giftshop
+	name = "Museum of Lunar History Gift Shop"
 	icon_state = "green"
 
 /area/moon/monorail_station/museum
@@ -98,24 +99,24 @@ Contents:
 			if (istype( get_step(src, WEST), src.type))
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower right
-					set_dir(4)
+					set_dir(EAST)
 
 				else
 					//Upper right
-					set_dir(1)
+					set_dir(NORTH)
 
 			else
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower left
-					set_dir(8)
+					set_dir(WEST)
 
 				else
 					//Upper left
-					set_dir(2)
+					set_dir(SOUTH)
 
 
 	Entered(atom/A as mob|obj)
-		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/wraith) || istype(A, /mob/living/intangible))
+		if (istype(A, /obj/overlay/tile_effect) || istype(A, /mob/dead) || istype(A, /mob/living/intangible))
 			return ..()
 
 		var/turf/T = pick_landmark(isHemera ? LANDMARK_FALL_MOON_HEMERA : LANDMARK_FALL_MOON_MUSEUM)
@@ -710,7 +711,7 @@ Contents:
 					return
 
 
-				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && (istype(H.wear_id, /obj/item/card/id) || (istype(H.wear_id, /obj/item/device/pda2) && H.wear_id:ID_card)))
+				if (!(src.neat_things & NT_DISCOUNT) && !isdead(H) && istype(get_id_card(H.wear_id), /obj/item/card/id))
 					FOUND_NEAT(NT_DISCOUNT)
 						speak_with_maptext("Nanotrasen employees may be eligible for an employee discount.  Now checking Museum Central, please hold...")
 						sleep(5.5 SECONDS)
@@ -728,7 +729,7 @@ Contents:
 						END_NEAT
 					return
 
-				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/spacecash/buttcoin) in AM.contents))
+				if (!(src.neat_things & NT_PONZI) && (locate(/obj/item/currency/spacecash/buttcoin) in AM.contents))
 					FOUND_NEAT(NT_PONZI)
 						speak_with_maptext("Um, I'm sorry [AM], we do not accept blockchain-based cryptocurrency as payment.  You aren't one of those guys who yell about gold on the apollo flag or something, right?")
 						H.unlock_medal("To the Moon!",1)
@@ -836,7 +837,7 @@ Contents:
 /obj/machinery/door/poddoor/blast/lunar
 	name = "security door"
 	desc = "A security door used to separate museum compartments."
-	autoclose = 0
+	autoclose = FALSE
 	req_access_txt = ""
 
 /obj/machinery/door/poddoor/blast/lunar/tour
@@ -863,7 +864,7 @@ Contents:
 		src.icon_state = "bdoor[doordir]0"
 		SPAWN(1 SECOND)
 			src.set_density(0)
-			src.RL_SetOpacity(0)
+			src.set_opacity(0)
 			update_nearby_tiles()
 
 			if(operating == 1) //emag again
@@ -892,7 +893,7 @@ Contents:
 		src.icon_state = "bdoor[doordir]1"
 		src.set_density(1)
 		if (src.visible)
-			src.RL_SetOpacity(1)
+			src.set_opacity(1)
 		update_nearby_tiles()
 
 		sleep(1 SECOND)
@@ -909,11 +910,11 @@ Contents:
 	icon = 'icons/obj/doors/SL_doors.dmi'
 	icon_state = "airlock_closed"
 	icon_base = "airlock"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 1
-	autoclose = 0
-	cant_emag = 1
+	autoclose = FALSE
+	cant_emag = TRUE
 	req_access_txt = "999"
 
 	var/broken = 0
@@ -940,7 +941,7 @@ Contents:
 			flick("breakairlock1", src)
 			src.icon_state = "breakairlock2"
 			sleep (2)
-			src.opacity = 0
+			src.set_opacity(0)
 			sleep(0.6 SECONDS)
 			elecflash(src,power=2,exclude_center = 0)
 
@@ -957,7 +958,7 @@ Contents:
 /obj/decal/lunar_bootprint
 	name = "Neil Armstrong's genuine lunar bootprint"
 	desc = "The famous photographed bootprint is actually from Buzz Aldrin, but this is the genuine actual real replica of the FIRST step on the moon.  A corner of another world that is forever mankind."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = TURF_LAYER
 	icon = 'icons/misc/lunar.dmi'
@@ -986,7 +987,7 @@ Contents:
 	desc = "A really large mockup of the Earth's moon."
 	icon = 'icons/misc/lunar64.dmi'
 	icon_state = "moon"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	layer = MOB_LAYER + 1
 
@@ -1003,7 +1004,7 @@ Contents:
 /obj/decal/fakeobjects/lunar_lander
 	name = "Lunar module descent stage"
 	desc = "The descent stage of the Apollo 11 lunar module, which landed the first astronauts on the moon."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/misc/lunar64.dmi'
 	icon_state = "LEM"
@@ -1016,7 +1017,7 @@ Contents:
 	desc = "A piece of regolith. Or something. It is a heavy rock from the moon.  These used to be worth more."
 	icon = 'icons/misc/lunar.dmi'
 	icon_state = "moonrock"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/critter/mannequin
@@ -1045,7 +1046,7 @@ Contents:
 		src.attacking = 1
 		src.visible_message("<span class='alert'><B>[src]</B> awkwardly bashes [src.target]!</span>")
 		random_brute_damage(src.target, rand(5,15),1)
-		playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
+		playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 		SPAWN(1 SECOND)
 			src.attacking = 0
 
@@ -1056,15 +1057,15 @@ Contents:
 			return
 
 		if (prob(6))
-			playsound(src.loc, "sound/misc/automaton_tickhum.ogg", 60, 1)
+			playsound(src.loc, 'sound/misc/automaton_tickhum.ogg', 60, 1)
 			src.visible_message("<span class='alert'><b>[src] emits [pick("a soft", "a quiet", "a curious", "an odd", "an ominous", "a strange", "a forboding", "a peculiar", "a faint")] [pick("ticking", "tocking", "humming", "droning", "clicking")] sound.</span>")
 
 		if (prob(6))
-			playsound(src.loc, "sound/misc/automaton_ratchet.ogg", 60, 1)
+			playsound(src.loc, 'sound/misc/automaton_ratchet.ogg', 60, 1)
 			src.visible_message("<span class='alert'><b>[src] emits [pick("a peculiar", "a worried", "a suspicious", "a reassuring", "a gentle", "a perturbed", "a calm", "an annoyed", "an unusual")] [pick("ratcheting", "rattling", "clacking", "whirring")] noise.</span>")
 
 		if (prob(5))
-			playsound(src.loc, "sound/misc/automaton_scratch.ogg", 50, 1)
+			playsound(src.loc, 'sound/misc/automaton_scratch.ogg', 50, 1)
 			src.visible_message("<span class='alert'><b>[src]</b> [pick("turns", "pivots", "twitches", "spins")].</span>")
 			src.set_dir(pick(alldirs))
 
@@ -1131,7 +1132,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 	name = "maintenance access panel"
 	icon = 'icons/obj/airlock_machines.dmi'
 	icon_state = "museum_control"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	var/id_tag = null
@@ -1254,8 +1255,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		src: url('glass_tty_vt220.eot');
 		src: url('glass_tty_vt220.eot') format('embedded-opentype'),
 			 url('glass_tty_vt220.ttf') format('truetype'),
-			 url('glass_tty_vt220.woff') format('woff'),
-			 url('glass_tty_vt220.svg') format('svg');
+			 url('glass_tty_vt220.woff') format('woff');
 	}
 
 	body {background-color:#999876;}
@@ -1299,7 +1299,7 @@ obj/machinery/embedded_controller/radio/maintpanel
 		word-break: break-all;
 		background-color:#111F10;
 		color:#31C131;
-		font-family: Glass_TTY_VT220;
+		font-family: Glass_TTY_VT220 !important;
 		font-size: 14pt;
 	}
 
@@ -1624,14 +1624,15 @@ datum/computer/file/embedded_program/maintpanel
 			if (cmptext(copytext(setupEntry, 1, 5), "fake"))
 				. = text2path("/datum/maintpanel_device_entry/dummy[copytext(setupEntry, 5)]")
 				if (.)
-					src.device_entries += new . (src, entryName)
+					var/typ = .
+					src.device_entries += new typ (src, entryName)
 				else
 					src.device_entries += new /datum/maintpanel_device_entry/dummy (src, entryName)
 				continue
 
 			var/obj/controlTarget = locate(setupEntry)
 			if (!controlTarget)
-				logTheThing("debug", null, null, "Maint control panel at \[[master.x], [master.y], [master.z]] had invalid setup tag \"[setupEntry]\"")
+				logTheThing(LOG_DEBUG, null, "Maint control panel at \[[master.x], [master.y], [master.z]] had invalid setup tag \"[setupEntry]\"")
 				continue
 
 			if (istype(controlTarget, /obj/machinery/door/airlock))
@@ -1643,7 +1644,7 @@ datum/computer/file/embedded_program/maintpanel
 			else if (istype(controlTarget, /obj/critter/mannequin))
 				src.device_entries += new /datum/maintpanel_device_entry/mannequin (src, controlTarget, entryName)
 
-		while (src.device_entries.len < 16)
+		while (length(src.device_entries) < 16)
 			src.device_entries += new /datum/maintpanel_device_entry/dummy (src, pick("GEN$$E$C", "MANNEA83IN 13", "M@____$CC DOOR $$S9", "########?3"))
 
 	receive_user_command(command)
@@ -2076,7 +2077,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	desc = "This is a model of the \"dwarf\" plasma bomb held by the Space IRA in the 2004 Lunar Port Hostage Crisis.  At least, you hope it's a model."
 	icon = 'icons/misc/lunar.dmi'
 	icon_state = "dwarf_bomb"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 
 	var/well_fuck_its_armed = 0
@@ -2093,12 +2094,12 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 		SPAWN(1 SECOND)
 			src.visible_message("<span class='alert'>[src] gives a grumpy beep! <b><font style='font-size:200%;'>OH FUCK</font></b></span>")
 
-			playsound(src.loc, "sound/weapons/armbomb.ogg", 50)
+			playsound(src.loc, 'sound/weapons/armbomb.ogg', 50)
 
 			sleep(3 SECONDS)
 			//do tiny baby explosion noise
 			//Todo: a squeakier blast sound.
-			playsound(src.loc, "sound/effects/Explosion2.ogg", 40, 0, 0, 4)
+			playsound(src.loc, 'sound/effects/Explosion2.ogg', 40, 0, 0, 4)
 
 			new /obj/effects/explosion/tiny_baby (src.loc)
 			for (var/mob/living/carbon/unfortunate_jerk in range(1, src))
@@ -2137,7 +2138,7 @@ obj/machinery/embedded_controller/radio/maintpanel/mnx
 	icon = 'icons/misc/lunar.dmi'
 	icon_state = "junction_box"
 	pixel_y = 24
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	attackby(obj/item/C, mob/user)

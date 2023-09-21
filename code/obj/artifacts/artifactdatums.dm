@@ -1,7 +1,7 @@
 // MASTER DATUMS
 
 ABSTRACT_TYPE(/datum/artifact/)
-/datum/artifact/
+/datum/artifact
 	/// the actual /obj type that is the artifact for this datum
 	var/associated_object = null
 	/// a weighted commonness, the higher it is the more often the artifact will appear
@@ -26,7 +26,9 @@ ABSTRACT_TYPE(/datum/artifact/)
 	var/used_names = list()
 	// These are automatically handled. They're used to make the artifact glow different colors.
 	/// the glowy overlay used for when the artifact is activated
-	var/image/fx_image = null
+	var/obj/effect/artifact_glowie/fx_image = null
+	/// the glowy overlay used to ensure the glow is visible
+	var/obj/effect/artifact_glowie/fx_fallback = null
 	/// the actual /obj that belongs to this specific artifact instance
 	var/obj/holder = null
 
@@ -73,6 +75,11 @@ ABSTRACT_TYPE(/datum/artifact/)
 	/// An additional message displayed when examining, to hint at the artifact type (mainly used for more dangerous types)
 	var/examine_hint = null
 
+	/// ID of the cargo tech skimming a cut of the sale
+	var/obj/item/card/id/scan = null
+	/// Bank account info of the cargo tech skimming a cut of the sale
+	var/datum/db_record/account = null
+
 	/// The health of the artifact, can be damaged by stimuli, chems, etc
 	/// When it hits 0, the artifact will be destroyed (after triggering ArtifactDestroyed())
 	var/health = 100
@@ -110,9 +117,18 @@ ABSTRACT_TYPE(/datum/artifact/)
 		OTHER_START_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
 
 	disposing()
-		OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+		if(src.artitype)
+			OTHER_STOP_TRACKING_CAT(holder, TR_CAT_ARTIFACTS)
+
+		artitype = null
+		fx_image = null
 		holder = null
-		..()
+		faults = null
+		fault_types = null
+		triggers = null
+		scan = null
+		account = null
+		. = ..()
 
 	/// Whether or not the artifact is allowed to activate, usually just a sanity check, but artifact types can add more conditions (like cooldowns).
 	proc/may_activate(var/obj/O)
@@ -212,11 +228,10 @@ ABSTRACT_TYPE(/datum/artifact/art)
 	name = "energy bolt"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "u_laser"
-	power = 75
+	damage = 75
 	cost = 25
 	dissipation_rate = 0
 	dissipation_delay = 50
-	ks_ratio = 1
 	sname = "energy bolt"
 	shot_sound = 'sound/weapons/Taser.ogg'
 	shot_number = 1
@@ -246,7 +261,7 @@ ABSTRACT_TYPE(/datum/artifact/art)
 		src.dissipation_rate = rand(1,power)
 		src.dissipation_delay = rand(1,10)
 		src.ks_ratio = pick(0, 1, prob(10); (rand(0, 10000) / 10000))
-
+		src.generate_inverse_stats()
 		src.cost = rand(50,150)
 		if (prob(20))
 			src.window_pass = 1
@@ -264,9 +279,11 @@ ABSTRACT_TYPE(/datum/artifact/art)
 		. = ..()
 		src.dissipation_rate = 0
 		src.max_range = 13
-		src.power = max(10, src.power)
-		if(prob(90))
-			src.ks_ratio = 1
+		src.power = rand(20,50)
+		if(src.damage_type == D_RADIOACTIVE)
+			src.damage_type = pick(D_KINETIC,D_PIERCING,D_SLASHING,D_ENERGY,D_BURNING,D_RADIOACTIVE,D_TOXIC)
+		src.ks_ratio = 1
+		src.generate_inverse_stats()
 
 	on_pre_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()

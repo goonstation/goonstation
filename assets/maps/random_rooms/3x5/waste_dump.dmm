@@ -1,0 +1,142 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"e" = (
+/obj/item/reactor_component/fuel_rod/random_material{
+	pixel_x = 11
+	},
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/decal/cleanable/machine_debris/radioactive{
+	pixel_x = -21;
+	layer = 3.1
+	},
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/decal/cleanable/dirt/dirt4,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"t" = (
+/obj/item/device/geiger{
+	pixel_y = -7;
+	pixel_x = -2
+	},
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"u" = (
+/obj/decal/cleanable/machine_debris/radioactive{
+	pixel_y = 16
+	},
+/obj/decal/poster/wallsign/hazard_rad{
+	pixel_y = -32;
+	pixel_x = -3
+	},
+/obj/item/reactor_component/heat_exchanger/random_material,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/tombstone/nuclear_warning,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"x" = (
+/obj/item/nuclear_waste{
+	pixel_x = -11;
+	layer = 3.1;
+	pixel_y = 2
+	},
+/obj/item/nuclear_waste{
+	pixel_x = -7;
+	layer = 3.09;
+	pixel_y = 15
+	},
+/obj/item/nuclear_waste{
+	pixel_x = 8;
+	layer = 3.1
+	},
+/obj/item/nuclear_waste{
+	pixel_x = 6;
+	layer = 3.09;
+	pixel_y = 12
+	},
+/obj/item/plank,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"z" = (
+/obj/item/plank,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"D" = (
+/obj/item/nuclear_waste{
+	pixel_x = -5;
+	pixel_y = 9
+	},
+/obj/decal/poster/wallsign/hazard_rad{
+	pixel_y = 28;
+	pixel_x = -1
+	},
+/obj/item/nuclear_waste{
+	pixel_x = 7
+	},
+/obj/item/nuclear_waste{
+	pixel_x = -4;
+	pixel_y = -6
+	},
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"J" = (
+/obj/item/nuclear_waste{
+	pixel_x = 7
+	},
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"K" = (
+/obj/decal/cleanable/dirt/dirt5,
+/mob/living/critter/small_animal/cockroach,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/item/nuclear_waste,
+/obj/decal/poster/wallsign/hazard_rad{
+	pixel_y = -32;
+	pixel_x = 4
+	},
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+"V" = (
+/obj/item/nuclear_waste,
+/obj/fluid_spawner{
+	reagent_id = "radium";
+	amount = 30
+	},
+/obj/decal/poster/wallsign/hazard_rad{
+	pixel_y = 28;
+	pixel_x = 2
+	},
+/turf/simulated/floor/plating/random,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+D
+J
+K
+z
+u
+"}
+(2,1,1) = {"
+P
+e
+v
+r
+r
+"}
+(3,1,1) = {"
+V
+t
+i
+x
+S
+"}

@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 		if (ispath(src.furniture_type))
 			newThing = new src.furniture_type(T, src.contained_storage ? src.contained_storage : null)
 		else
-			stack_trace("[user] tries to build a piece of furniture from [src] ([src.type]) but its furniture_type is null and it is being deleted.")
+			stack_trace("[user] tries to build a piece of furniture from [identify_object(src)] but its furniture_type is null and it is being deleted.")
 			user.u_equip(src)
 			qdel(src)
 			return
@@ -52,7 +52,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 				newThing.setMaterial(src.material)
 			if (user)
 				newThing.add_fingerprint(user)
-				logTheThing("station", user, null, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.mat_id ? "[newThing.material.mat_id]" : "*UNKNOWN*"]) at [log_loc(T)].")
+				logTheThing(LOG_STATION, user, "builds \a [newThing] (<b>Material:</b> [newThing.material && newThing.material.getID() ? "[newThing.material.getID()]" : "*UNKNOWN*"]) at [log_loc(T)].")
 				user.u_equip(src)
 		qdel(src)
 		return newThing
@@ -86,12 +86,17 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			return ..()
 
 	afterattack(atom/target, mob/user)
-		if (!isturf(target) || target:density)
+		if (!isturf(target) || target.density)
 			return ..()
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), user)
 
 	attack_self(mob/user as mob)
 		actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, get_turf(user)), user)
+
+	mouse_drop(atom/movable/target)
+		. = ..()
+		if (HAS_ATOM_PROPERTY(usr, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING) && isturf(target))
+			actions.start(new /datum/action/bar/icon/furniture_build(src, src.furniture_name, src.build_duration, target), usr)
 
 	disposing()
 		if (src.contained_storage && length(src.contained_storage.contents))
@@ -129,21 +134,25 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_type = /obj/table/auto/desk
 	furniture_name = "desk"
 
+TYPEINFO(/obj/item/furniture_parts/table/wood)
+	mat_appearances_to_ignore = list("wood")
 /obj/item/furniture_parts/table/wood
-	name = "wood table parts"
+	name = "table parts"
 	desc = "A collection of parts that can be used to make a wooden table."
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	furniture_type = /obj/table/wood/auto
 	furniture_name = "wooden table"
+	default_material = "wood"
+	mat_changename = TRUE
 
 /obj/item/furniture_parts/table/wood/round
-	name = "round wood table parts"
+	name = "round table parts"
 	desc = "A collection of parts that can be used to make a round wooden table."
 	icon = 'icons/obj/furniture/table_wood_round.dmi'
 	furniture_type = /obj/table/wood/round/auto
 
 /obj/item/furniture_parts/table/wood/desk
-	name = "wood desk parts"
+	name = "desk parts"
 	desc = "A collection of parts that can be used to make a wooden desk."
 	icon = 'icons/obj/furniture/table_wood_desk.dmi'
 	furniture_type = /obj/table/wood/auto/desk
@@ -200,23 +209,18 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_type = /obj/table/nanotrasen/auto
 
 /* ---------- Glass Table Parts ---------- */
+TYPEINFO(/obj/item/furniture_parts/table/glass)
+	mat_appearances_to_ignore = list("glass")
 /obj/item/furniture_parts/table/glass
 	name = "glass table parts"
 	desc = "A collection of parts that can be used to make a glass table."
 	icon = 'icons/obj/furniture/table_glass.dmi'
-	mat_appearances_to_ignore = list("glass")
 	furniture_type = /obj/table/glass/auto
 	furniture_name = "glass table"
 	density_check = FALSE //FOR NOW
 	var/has_glass = 1
-	var/default_material = "glass"
+	default_material = "glass"
 
-	New()
-		..()
-		if (!src.material && default_material)
-			var/datum/material/M
-			M = getMaterial(default_material)
-			src.setMaterial(M)
 
 	UpdateName()
 		if (!src.has_glass)
@@ -288,26 +292,13 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	desc = "A collection of parts that can be used to make a rack."
 	icon = 'icons/obj/metal.dmi'
 	icon_state = "rack_base_parts"
+	item_state = "rack_parts"
 	stamina_damage = 25
 	stamina_cost = 22
 	stamina_crit_chance = 15
 	furniture_type = /obj/rack
 	furniture_name = "rack"
 	material_amt = 0.1
-
-//bookshelf part construction
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/plank))
-			user.visible_message("[user] starts to reinforce \the [src] with wood.", "You start to reinforce \the [src] with wood.")
-			if (!do_after(user, 2 SECONDS))
-				return
-			user.visible_message("[user] reinforces \the [src] with wood.",  "You reinforce \the [src] with wood.")
-			playsound(src.loc, "sound/items/Deconstruct.ogg", 50, 1)
-			new /obj/item/furniture_parts/bookshelf(get_turf(src))
-			qdel(src)
-			qdel(W)
-		else
-			..()
 
 /* ------- Single Table Parts ------- */
 
@@ -370,6 +361,8 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_type = /obj/stool
 	furniture_name = "stool"
 
+TYPEINFO(/obj/item/furniture_parts/woodenstool)
+	mat_appearances_to_ignore = list("wood")
 /obj/item/furniture_parts/woodenstool
 	name = "wooden stool parts"
 	desc = "A collection of parts that can be used to make a wooden stool."
@@ -379,6 +372,15 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	stamina_cost = 15
 	furniture_type = /obj/stool/wooden
 	furniture_name = "wooden stool"
+	default_material = "wood"
+
+/obj/item/furniture_parts/stool/pet_bed
+	name = "pet bed parts"
+	desc = "A collection of parts that can be used to make a pet bed."
+	icon = 'icons/obj/furniture/chairs.dmi'
+	icon_state = "comf_chair_parts-b"	// @TODO new icon, mprobably
+	furniture_type = /obj/stool/pet_bed
+	furniture_name = "pet bed"
 
 /obj/item/furniture_parts/stool/bee_bed
 	name = "bee bed parts"
@@ -450,27 +452,38 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 	furniture_type = /obj/stool/chair/pew
 
 /* ---------- Chair Parts ---------- */
-/obj/item/furniture_parts/wood_chair
-	name = "wooden chair parts"
-	desc = "A collection of parts that can be used to make a wooden chair."
+/obj/item/furniture_parts/dining_chair
+	name = "chair parts"
+	desc = "A collection of things you should not be seeing"
 	icon = 'icons/obj/furniture/chairs.dmi'
-	icon_state = "wchair_parts"
 	stamina_damage = 15
 	stamina_cost = 15
-	furniture_type = /obj/stool/chair/wooden
-	furniture_name = "wooden chair"
 
-/obj/item/furniture_parts/wood_chair/regal
-	name = "regal chair parts"
-	desc = "A collection of parts that can be used to make a regal chair."
-	icon_state = "regalchair_parts"
-	furniture_type = /obj/stool/chair/wooden/regal
+	wood
+		name = "wooden chair parts"
+		desc = "A collection of parts that can be used to make a wooden chair."
+		icon_state = "wchair_parts"
+		furniture_type = /obj/stool/chair/dining/wood
+		furniture_name = "wooden chair"
 
-/obj/item/furniture_parts/wood_chair/scrap
-	name = "scrap chair parts"
-	desc = "A collection of trash that can be used to make a scrap chair."
-	icon_state = "scrapchair_parts"
-	furniture_type = /obj/stool/chair/wooden/scrap
+	regal
+		name = "regal chair parts"
+		desc = "A collection of parts that can be used to make a regal chair."
+		icon_state = "regalchair_parts"
+		furniture_type = /obj/stool/chair/dining/regal
+
+	scrap
+		name = "scrap chair parts"
+		desc = "A collection of trash that can be used to make a scrap chair."
+		icon_state = "scrapchair_parts"
+		furniture_type = /obj/stool/chair/dining/scrap
+
+	industrial
+		name = "industrial chair parts"
+		desc = "An collection of rods and scaffolding that can be used to make an industrial chair."
+		icon_state = "ichair_parts"
+		furniture_type = /obj/stool/chair/dining/industrial
+		furniture_name = "industrial chair"
 
 /obj/item/furniture_parts/wheelchair
 	name = "wheelchair parts"
@@ -621,7 +634,7 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 			return
 		var/mob/source = owner
 		// cirrfix: ghost drones should be able to build furniture now
-		if(istype(source))
+		if(istype(source) && !HAS_ATOM_PROPERTY(source, PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING))
 			if(istype(source.equipped(), /obj/item/magtractor))
 				// check to see it's holding the right thing
 				var/obj/item/magtractor/M = source.equipped()
@@ -696,11 +709,11 @@ ABSTRACT_TYPE(/obj/item/furniture_parts)
 
 	onStart()
 		..()
-		playsound(the_furniture, "sound/items/Ratchet.ogg", 50, 1)
+		playsound(the_furniture, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_furniture].</span>")
 
 	onEnd()
 		..()
-		playsound(the_furniture, "sound/items/Deconstruct.ogg", 50, 1)
+		playsound(the_furniture, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		the_furniture:deconstruct() // yes a colon, bite me
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_furniture].</span>")

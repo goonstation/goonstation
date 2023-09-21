@@ -1,0 +1,14 @@
+@use '../../base.scss';
+
+// Colors, fonts, sizes, etc. for the boardgame interface.
+// Modify this file to change the look of the boardgame interface.
+
+$boardgame-layers: (
+  'board': 0,
+  'pieces': 1,
+  'notations': 0,
+  'overlay': 2,
+  'modal': 3,
+);
+
+$notations-size: 20px; // Applies to both horizontal and vertical notations

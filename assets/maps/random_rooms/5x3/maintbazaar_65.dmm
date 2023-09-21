@@ -1,0 +1,145 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/reagent_containers/food/drinks/bottle/ntbrew{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/ntbrew{
+	pixel_x = -8
+	},
+/obj/item/reagent_containers/food/drinks/bottle/ntbrew,
+/obj/item/reagent_containers/food/drinks/bottle/mead{
+	pixel_x = -4;
+	layer = 3.1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/mead{
+	pixel_x = 4;
+	layer = 3.1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/champagne/cristal_champagne{
+	pixel_x = 1;
+	pixel_y = 1;
+	layer = 3.2
+	},
+/obj/storage/crate/wooden{
+	name = "Surplus Alcohol"
+	},
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"b" = (
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/machinery/vendingframe,
+/turf/simulated/floor/carpet{
+	dir = 9;
+	icon_state = "fred6"
+	},
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/item/cable_coil{
+	pixel_x = 8;
+	pixel_y = 7;
+	amount = 10
+	},
+/turf/simulated/floor/carpet{
+	dir = 10;
+	icon_state = "fred6"
+	},
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"l" = (
+/obj/item/screwdriver{
+	pixel_x = -4;
+	pixel_y = -3
+	},
+/turf/simulated/floor/carpet{
+	dir = 6;
+	icon_state = "fred6"
+	},
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/shrub/random,
+/obj/item/sheet/glass{
+	icon_state = "sheet-g_1";
+	pixel_x = -7
+	},
+/obj/item/sheet/glass{
+	icon_state = "sheet-g_1";
+	pixel_x = 6;
+	pixel_y = 9
+	},
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"o" = (
+/obj/table/wood/auto,
+/obj/item/paper/book/from_file/vendbook{
+	pixel_y = 5
+	},
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"t" = (
+/obj/machinery/vendingframe,
+/turf/simulated/floor/carpet{
+	dir = 5;
+	icon_state = "fred6"
+	},
+/area/dmm_suite/clear_area)
+"w" = (
+/obj/item/sheet/glass{
+	icon_state = "sheet-g_1";
+	pixel_x = 3
+	},
+/obj/item/sheet/glass{
+	icon_state = "sheet-g_1";
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"L" = (
+/obj/item/wrench{
+	pixel_y = 3;
+	pixel_x = 6
+	},
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"Q" = (
+/obj/shrub/random,
+/obj/item/machineboard/vending/player,
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+"W" = (
+/obj/stool/chair/comfy{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+c
+e
+m
+"}
+(2,1,1) = {"
+t
+l
+w
+"}
+(3,1,1) = {"
+b
+k
+b
+"}
+(4,1,1) = {"
+W
+L
+a
+"}
+(5,1,1) = {"
+o
+b
+Q
+"}

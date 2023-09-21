@@ -4,6 +4,7 @@
  * @author Original Gomble (https://github.com/AndrewL97)
  * @author Changes Azrun
  * @author Changes Sovexe (https://github.com/Sovexe)
+ * @author Changes ZeWaka (https://github.com/ZeWaka)
  * @license MIT
  */
 
@@ -35,33 +36,33 @@ const ParticleIntegerEntry = (props, context) => {
 };
 
 const ParticleMatrixEntry = (props, context) => {
-  let { value, name } = props;
+  let { value, tooltip, name } = props;
   const { act } = useBackend(context);
-
 
   // Actual matrix, or matrix of 0
   value = value || [1, 0, 0, 1, 0, 0]; // this doesn't make sense, it should be [1, 0, 0, 0, 1, 0] but it's not
   return (
-    <Flex>
-      <Flex.Item>
-        {value.map((val, i) => (
-          <NumberInput
-            value={val}
-            key={i}
-            onDrag={(e, v) =>
-            {
-              value[i] = v;
-              act('modify_particle_value', {
-                new_data: {
-                  name: name,
-                  value: value,
-                  type: 'matrix',
-                },
-              }); }}
-          />))}
-      </Flex.Item>
-    </Flex>
-
+    <Tooltip position="bottom" content={tooltip}>
+      <Flex>
+        <Flex.Item>
+          {value.map((val, i) => (
+            <NumberInput
+              value={val}
+              key={i}
+              onDrag={(e, v) =>
+              {
+                value[i] = v;
+                act('modify_particle_value', {
+                  new_data: {
+                    name: name,
+                    value: value,
+                    type: 'matrix',
+                  },
+                }); }}
+            />))}
+        </Flex.Item>
+      </Flex>
+    </Tooltip>
   );
 };
 
@@ -77,26 +78,28 @@ const ParticleFloatEntry = (props, context) => {
     entry = ParticleFloatNonGenEntry(props, context);
   }
   return (
-    <Flex>
-      <Flex.Item>{ entry }</Flex.Item>
-      <Flex.Item align="right">
-        <Button.Checkbox
-          checked={isGen}
-          content="generator"
-          onClick={() => act('modify_particle_value', {
-            new_data: {
-              name: name,
-              value: isGen ? 0 : {
-                genType: 'num',
-                a: value,
-                b: value,
-                rand: "UNIFORM_RAND",
+    <Tooltip position="bottom" content={tooltip}>
+      <Flex>
+        <Flex.Item>{ entry }</Flex.Item>
+        <Flex.Item align="right">
+          <Button.Checkbox
+            checked={isGen}
+            content="generator"
+            onClick={() => act('modify_particle_value', {
+              new_data: {
+                name: name,
+                value: isGen ? 0 : {
+                  genType: 'num',
+                  a: value,
+                  b: value,
+                  rand: "UNIFORM_RAND",
+                },
+                type: isGen ? 'float' : 'generator',
               },
-              type: isGen ? 'float' : 'generator',
-            },
-          })} />
-      </Flex.Item>
-    </Flex>
+            })} />
+        </Flex.Item>
+      </Flex>
+    </Tooltip>
   );
 };
 
@@ -137,32 +140,34 @@ const ParticleVectorEntry = (props, context) => {
     entry = ParticleVectorNonGenEntry(props, context);
   }
   return (
-    <Flex>
-      <Flex.Item>{ entry }</Flex.Item>
-      <Flex.Item align="right">
-        <Button.Checkbox
-          checked={isGen}
-          content="generator"
-          onClick={() => act('modify_particle_value', {
-            new_data: {
-              name: name,
-              value: isGen ? [0, 0, 0] : {
-                genType: 'box',
-                a: value,
-                b: value,
-                rand: "UNIFORM_RAND",
+    <Tooltip position="bottom" content={tooltip}>
+      <Flex>
+        <Flex.Item>{ entry }</Flex.Item>
+        <Flex.Item align="right">
+          <Button.Checkbox
+            checked={isGen}
+            content="generator"
+            onClick={() => act('modify_particle_value', {
+              new_data: {
+                name: name,
+                value: isGen ? [0, 0, 0] : {
+                  genType: 'box',
+                  a: value,
+                  b: value,
+                  rand: "UNIFORM_RAND",
+                },
+                type: isGen ? 'vector' : 'generator',
               },
-              type: isGen ? 'vector' : 'generator',
-            },
-          })} />
-      </Flex.Item>
-    </Flex>
+            })} />
+        </Flex.Item>
+      </Flex>
+    </Tooltip>
   );
 };
 
 const ParticleVectorNonGenEntryVarLen = (len) => {
   return (props, context) => {
-    let { value, name } = props;
+    let { value, tooltip, name } = props;
     const { act } = useBackend(context);
 
     value = value || Array(len).fill(0);
@@ -171,26 +176,28 @@ const ParticleVectorNonGenEntryVarLen = (len) => {
     }
     value = value.slice(0, len);
     return (
-      <Flex>
-        <Flex.Item>
-          {value.map((val, i) => (
-            <NumberInput
-              value={val}
-              key={i}
-              width="40px"
-              onDrag={(e, v) =>
-              {
-                value[i] = v;
-                act('modify_particle_value', {
-                  new_data: {
-                    name: name,
-                    value: value,
-                    type: 'vector',
-                  },
-                }); }}
-            />))}
-        </Flex.Item>
-      </Flex>
+      <Tooltip position="bottom" content={tooltip}>
+        <Flex>
+          <Flex.Item>
+            {value.map((val, i) => (
+              <NumberInput
+                value={val}
+                key={i}
+                width="40px"
+                onDrag={(e, v) =>
+                {
+                  value[i] = v;
+                  act('modify_particle_value', {
+                    new_data: {
+                      name: name,
+                      value: value,
+                      type: 'vector',
+                    },
+                  }); }}
+              />))}
+          </Flex.Item>
+        </Flex>
+      </Tooltip>
     );
   };
 };
@@ -209,26 +216,28 @@ const ParticleVector2Entry = (props, context) => {
     entry = ParticleVectorNonGenEntryVarLen(2)(props, context);
   }
   return (
-    <Flex>
-      <Flex.Item>{ entry }</Flex.Item>
-      <Flex.Item align="right">
-        <Button.Checkbox
-          checked={isGen}
-          content="generator"
-          onClick={() => act('modify_particle_value', {
-            new_data: {
-              name: name,
-              value: isGen ? [0, 0] : {
-                genType: 'box',
-                a: value,
-                b: value,
-                rand: "UNIFORM_RAND",
+    <Tooltip position="bottom" content={tooltip}>
+      <Flex>
+        <Flex.Item>{ entry }</Flex.Item>
+        <Flex.Item align="right">
+          <Button.Checkbox
+            checked={isGen}
+            content="generator"
+            onClick={() => act('modify_particle_value', {
+              new_data: {
+                name: name,
+                value: isGen ? [0, 0] : {
+                  genType: 'box',
+                  a: value,
+                  b: value,
+                  rand: "UNIFORM_RAND",
+                },
+                type: isGen ? 'vector' : 'generator',
               },
-              type: isGen ? 'vector' : 'generator',
-            },
-          })} />
-      </Flex.Item>
-    </Flex>
+            })} />
+        </Flex.Item>
+      </Flex>
+    </Tooltip>
   );
 };
 
@@ -428,41 +437,43 @@ const ParticleColorEntry = (props, context) => {
     entry = ParticleColorNonGenEntry(props, context);
   }
   return (
-    <Flex>
-      <Flex.Item>{ entry }</Flex.Item>
-      <Flex.Item align="right">
-        <Button.Checkbox
-          checked={isGen}
-          content="generator"
-          onClick={() => act('modify_particle_value', {
-            new_data: {
-              name: name,
-              value: isGen ? "#ffffff" : {
-                genType: 'color',
-                a: value,
-                b: value,
-                rand: "UNIFORM_RAND",
+    <Tooltip position="bottom" content={tooltip}>
+      <Flex>
+        <Flex.Item>{ entry }</Flex.Item>
+        <Flex.Item align="right">
+          <Button.Checkbox
+            checked={isGen}
+            content="generator"
+            onClick={() => act('modify_particle_value', {
+              new_data: {
+                name: name,
+                value: isGen ? "#ffffff" : {
+                  genType: 'color',
+                  a: value,
+                  b: value,
+                  rand: "UNIFORM_RAND",
+                },
+                type: isGen ? 'color' : 'generator',
               },
-              type: isGen ? 'color' : 'generator',
-            },
-          })} />
-      </Flex.Item>
-    </Flex>
+            })} />
+        </Flex.Item>
+      </Flex>
+    </Tooltip>
   );
 };
 
 const ParticleIconEntry = (props, context) => {
-  const { value } = props;
+  const { value, tooltip } = props;
   const { act } = useBackend(context);
   return (
-    <>
+    <Tooltip position="bottom" content={tooltip}>
       <Button
         icon="pencil-alt"
         onClick={() => act('modify_icon_value')} />
       <Box inline ml={1}>
         {value}
       </Box>
-    </>
+    </Tooltip>
   );
 };
 
@@ -496,7 +507,7 @@ const particleEntryMap = {
 };
 
 const ParticleDataEntry = (props, context) => {
-  const { name, value } = props;
+  const { name } = props;
 
   const particleEntryTypes = {
     int: <ParticleIntegerEntry {...props} />,
@@ -522,7 +533,6 @@ const ParticleDataEntry = (props, context) => {
 };
 
 const ParticleEntry = (props, context) => {
-  const { act, data } = useBackend(context);
   const { particle } = props;
   return (
     <LabeledList>
@@ -634,28 +644,54 @@ export const Particool = (props, context) => {
               Particle
             </Box>
           }
-          buttons={!hasParticles ? (
-            <Button
-              icon="plus"
-              content="Add Particle"
-              onClick={() => act('add_particle')} />
-          ) : (<Button.Confirm
-            icon="minus"
-            content="Remove Particle"
-            onClick={() => act("remove_particle")} />)} >
+          buttons={
+            <>
+              { !!hasParticles
+              && <>
+                <Button
+                  icon="save"
+                  content="Save Particle"
+                  onClick={() => act('save_particle')}
+                />
+                <Button
+                  icon="file-image"
+                  content="Save Particle + Icon"
+                  onClick={() => act('save_particle_with_icon')}
+                /> {/* eslint-disable-next-line */}
+              </>}
+              <Button
+                icon="upload"
+                content="Load Particle"
+                onClick={() => act('load_particle')}
+              />
+              {!hasParticles ? (
+                <Button
+                  icon="plus"
+                  content="Add Particle"
+                  onClick={() => act('add_particle')} />
+              ) : (<Button.Confirm
+                icon="minus"
+                content="Remove Particle"
+                onClick={() => act("remove_particle")} />)}
+              <Button />
+            </>
+          } >
           <GeneratorHelp />
           <Box
-            inline
-            ml={2}
-            mr={1}>
-            Float change step:
+            mt={2}
+            mb={2}>
+            <Box
+              inline
+              mr={1}>
+              Float change step:
+            </Box>
+            <NumberInput
+              value={step}
+              step={0.001}
+              format={value => toFixed(value, numberOfDecimalDigits(step))}
+              width="70px"
+              onChange={(e, value) => setStep(value)} />
           </Box>
-          <NumberInput
-            value={step}
-            step={0.001}
-            format={value => toFixed(value, numberOfDecimalDigits(step))}
-            width="70px"
-            onChange={(e, value) => setStep(value)} />
           {!hasParticles ? (
             <Box>
               No particle

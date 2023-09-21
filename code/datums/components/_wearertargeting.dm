@@ -8,7 +8,7 @@ TYPEINFO(/datum/component/wearertargeting)
 /datum/component/wearertargeting
 	var/list/valid_slots = list()
 	var/list/signals = list()
-	var/proctype // = .proc/pass
+	var/proctype // = PROC_REF(pass)
 	var/mobtype = /mob/living
 	var/mob/current_user
 
@@ -19,8 +19,8 @@ TYPEINFO(/datum/component/wearertargeting)
 		return COMPONENT_INCOMPATIBLE
 	if (islist(_valid_slots))
 		src.valid_slots = _valid_slots
-	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, .proc/on_equip)
-	RegisterSignal(parent, COMSIG_ITEM_UNEQUIPPED, .proc/on_unequip)
+	RegisterSignal(parent, COMSIG_ITEM_EQUIPPED, PROC_REF(on_equip))
+	RegisterSignal(parent, COMSIG_ITEM_UNEQUIPPED, PROC_REF(on_unequip))
 
 /datum/component/wearertargeting/proc/on_equip(datum/source, mob/equipper, slot)
 	SHOULD_CALL_PARENT(1)

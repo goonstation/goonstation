@@ -12,16 +12,17 @@ export const Layout = props => {
   const {
     className,
     theme = 'nanotrasen',
+    mode = 'dark', /* |GOONSTATION-ADD| */
     children,
     ...rest
   } = props;
   return (
-    <div className={'theme-' + theme}>
+    <div className={classes(['theme-' + theme, 'mode-' + mode])}>
       <div
         className={classes([
           'Layout',
           className,
-          ...computeBoxClassName(rest),
+          computeBoxClassName(rest),
         ])}
         {...computeBoxProps(rest)}>
         {children}
@@ -43,7 +44,7 @@ const LayoutContent = props => {
         'Layout__content',
         scrollable && 'Layout__content--scrollable',
         className,
-        ...computeBoxClassName(rest),
+        computeBoxClassName(rest),
       ])}
       {...computeBoxProps(rest)}>
       {children}

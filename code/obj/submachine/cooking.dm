@@ -1,11 +1,13 @@
+TYPEINFO(/obj/submachine/chef_sink)
+	mats = 12
+
 /obj/submachine/chef_sink
 	name = "kitchen sink"
 	desc = "A water-filled unit intended for cookery purposes."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "sink"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 12
 	deconstruct_flags = DECON_WRENCH | DECON_WELDER
 	flags = NOSPLASH
 
@@ -29,7 +31,7 @@
 				fill -= W.reagents.total_volume
 				W.reagents.add_reagent("water", fill)
 				user.show_text("You fill [W] with water.", "blue")
-				playsound(src.loc, "sound/misc/pourdrink.ogg", 100, 1)
+				playsound(src.loc, 'sound/misc/pourdrink.ogg', 100, 1)
 		else if (istype(W, /obj/item/mop)) // dude whatever
 			var/fill = W.reagents.maximum_volume
 			if (W.reagents.total_volume >= fill)
@@ -38,9 +40,9 @@
 				fill -= W.reagents.total_volume
 				W.reagents.add_reagent("water", fill)
 				user.show_text("You wet [W].", "blue")
-				playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 		else if (istype(W, /obj/item/grab))
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
+			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 			user.visible_message("<span class='notice'>[user] dunks [W:affecting]'s head in the sink!</span>")
 		else if (W.burning)
 			W.combust_ended()
@@ -49,11 +51,15 @@
 			W.clean_forensic() // There's a global proc for this stuff now (Convair880).
 			if (istype(W, /obj/item/device/key/skull))
 				W.icon_state = "skull"
-			if (W.reagents)
+			if (istype(W, /obj/item/reagent_containers/mender))
+				var/obj/item/reagent_containers/mender/automender = W
+				if(automender.borg)
+					return
+			if (W.reagents && W.is_open_container())
 				W.reagents.clear_reagents()		// avoid null error
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
 			return src.Attackby(W, user)
 		return ..()
 
@@ -62,28 +68,94 @@
 		user.lastattacked = src
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
-			playsound(src.loc, "sound/impact_sounds/Liquid_Slosh_1.ogg", 25, 1)
 			if (H.gloves)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				user.visible_message("<span class='notice'>[user] cleans [his_or_her(user)] gloves.</span>")
+				if (H.sims)
+					user.show_text("If you want to improve your hygiene, you need to remove your gloves first.")
 				H.gloves.clean_forensic() // Ditto (Convair880).
 				H.set_clothing_icon_dirty()
 			else
-				user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
-				if (H.sims)
-					H.sims.affectMotive("Hygiene", 2)
-				H.blood_DNA = null // Don't want to use it here, though. The sink isn't a shower (Convair880).
-				H.blood_type = null
-				H.set_clothing_icon_dirty()
+				if(H.sims)
+					if (H.sims.getValue("Hygiene") < SIMS_HYGIENE_THRESHOLD_MESSY)
+						playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+						user.show_text("You're too messy for handwashing to be useful. You need a shower or a bath.", "red")
+					else
+						user.visible_message("<span class='notice'>[user] starts washing [his_or_her(user)] hands.</span>")
+						actions.start(new/datum/action/bar/private/handwashing(user,src),user)
+				else //simpler handwashing if hygiene isn't a concern
+					playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+					user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
+					H.blood_DNA = null
+					H.blood_type = null
+					H.forensics_blood_color = null
+					H.set_clothing_icon_dirty()
 		..()
+
+/datum/action/bar/private/handwashing
+	duration = 1 SECOND //roughly matches the rate of manual clicking
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED
+	id = "handwashing"
+	var/mob/living/carbon/human/user
+	var/obj/submachine/chef_sink/sink
+
+	New(usermob,sink)
+		user = usermob
+		src.sink = sink
+		..()
+
+	proc/checkStillValid()
+		if(BOUNDS_DIST(user, sink) > 1 || user == null || sink == null || user.l_hand || user.r_hand)
+			interrupt(INTERRUPT_ALWAYS)
+			return FALSE
+		return TRUE
+
+	onUpdate()
+		checkStillValid()
+		..()
+
+	onStart()
+		..()
+		if(BOUNDS_DIST(user, sink) > 1) user.show_text("You're too far from the sink!")
+		if(user.l_hand || user.r_hand) user.show_text("Both your hands need to be free to wash them!")
+		src.loopStart()
+
+
+	loopStart()
+		..()
+		if(!checkStillValid()) return
+		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+
+	onEnd()
+		if(!checkStillValid())
+			..()
+			return
+
+		var/cleanup_rate = 2
+		if(user.traitHolder.hasTrait("training_medical") || user.traitHolder.hasTrait("training_chef"))
+			cleanup_rate = 3
+		user.sims.affectMotive("Hygiene", cleanup_rate)
+		user.blood_DNA = null
+		user.blood_type = null
+		user.forensics_blood_color = null
+		user.set_clothing_icon_dirty()
+
+		src.onRestart()
+
+	onInterrupt()
+		..()
+
+
+TYPEINFO(/obj/submachine/ice_cream_dispenser)
+	mats = 18
 
 /obj/submachine/ice_cream_dispenser
 	name = "Ice Cream Dispenser"
 	desc = "A machine designed to dispense space ice cream."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "ice_creamer0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
 	var/list/flavors = list("chocolate","vanilla","coffee")
@@ -220,7 +292,7 @@
 		else ..()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_interact_range(W, user) && in_interact_range(src, user))
+		if ((istype(W, /obj/item/reagent_containers/food/snacks/ice_cream_cone) || istype(W, /obj/item/reagent_containers/glass/) || istype(W, /obj/item/reagent_containers/food/drinks/)) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
 			return src.Attackby(W, user)
 		return ..()
 
@@ -238,14 +310,16 @@
 
 var/list/oven_recipes = list()
 
+TYPEINFO(/obj/submachine/chef_oven)
+	mats = 18
+
 /obj/submachine/chef_oven
 	name = "oven"
 	desc = "A multi-cooking unit featuring a hob, grill, oven and more."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "oven_off"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	flags = NOSPLASH
 	var/emagged = 0
@@ -403,6 +477,8 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/sandwich_p(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_blt(src)
 			src.recipes += new /datum/cookingrecipe/sandwich_custom(src)
+			src.recipes += new /datum/cookingrecipe/mapo_tofu_meat(src)
+			src.recipes += new /datum/cookingrecipe/mapo_tofu_synth(src)
 			src.recipes += new /datum/cookingrecipe/ramen_bowl(src)
 			src.recipes += new /datum/cookingrecipe/udon_bowl(src)
 			src.recipes += new /datum/cookingrecipe/curry_udon_bowl(src)
@@ -427,17 +503,29 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/monkeyburger(src)
 			src.recipes += new /datum/cookingrecipe/synthburger(src)
 			src.recipes += new /datum/cookingrecipe/baconburger(src)
+			src.recipes += new /datum/cookingrecipe/spicychickensandwich_2(src)
 			src.recipes += new /datum/cookingrecipe/spicychickensandwich(src)
 			src.recipes += new /datum/cookingrecipe/chickensandwich(src)
 			src.recipes += new /datum/cookingrecipe/mysteryburger(src)
+			src.recipes += new /datum/cookingrecipe/synthbuttburger(src)
+			src.recipes += new /datum/cookingrecipe/cyberbuttburger(src)
 			src.recipes += new /datum/cookingrecipe/buttburger(src)
+			src.recipes += new /datum/cookingrecipe/synthheartburger(src)
+			src.recipes += new /datum/cookingrecipe/cyberheartburger(src)
+			src.recipes += new /datum/cookingrecipe/flockheartburger(src)
 			src.recipes += new /datum/cookingrecipe/heartburger(src)
+			src.recipes += new /datum/cookingrecipe/synthbrainburger(src)
+			src.recipes += new /datum/cookingrecipe/cyberbrainburger(src)
+			src.recipes += new /datum/cookingrecipe/flockbrainburger(src)
 			src.recipes += new /datum/cookingrecipe/flockburger(src)
 			src.recipes += new /datum/cookingrecipe/brainburger(src)
 			src.recipes += new /datum/cookingrecipe/fishburger(src)
 			src.recipes += new /datum/cookingrecipe/sloppyjoe(src)
 			src.recipes += new /datum/cookingrecipe/superchili(src)
 			src.recipes += new /datum/cookingrecipe/chili(src)
+			src.recipes += new /datum/cookingrecipe/fries(src)
+			src.recipes += new /datum/cookingrecipe/chilifries(src)
+			src.recipes += new /datum/cookingrecipe/chilifries_alt(src)
 			src.recipes += new /datum/cookingrecipe/queso(src)
 			src.recipes += new /datum/cookingrecipe/cheeseborger(src)
 			src.recipes += new /datum/cookingrecipe/roburger(src)
@@ -472,17 +560,20 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/spaghetti_t(src)
 			src.recipes += new /datum/cookingrecipe/spaghetti_p(src)
 			src.recipes += new /datum/cookingrecipe/breakfast(src)
+			src.recipes += new /datum/cookingrecipe/french_toast(src)
 			src.recipes += new /datum/cookingrecipe/elvischeesetoast(src)
 			src.recipes += new /datum/cookingrecipe/elvisbacontoast(src)
 			src.recipes += new /datum/cookingrecipe/elviseggtoast(src)
 			src.recipes += new /datum/cookingrecipe/cheesetoast(src)
 			src.recipes += new /datum/cookingrecipe/bacontoast(src)
 			src.recipes += new /datum/cookingrecipe/eggtoast(src)
+			src.recipes += new /datum/cookingrecipe/churro(src)
 			src.recipes += new /datum/cookingrecipe/nougat(src)
 			src.recipes += new /datum/cookingrecipe/candy_cane(src)
 			src.recipes += new /datum/cookingrecipe/cereal_honey(src)
 			src.recipes += new /datum/cookingrecipe/b_cupcake(src)
 			src.recipes += new /datum/cookingrecipe/beefood(src)
+			src.recipes += new /datum/cookingrecipe/zongzi(src)
 
 			src.recipes += new /datum/cookingrecipe/baguette(src)
 			src.recipes += new /datum/cookingrecipe/garlicbread_ch(src)
@@ -559,6 +650,7 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/sushi_roll(src)
 			src.recipes += new /datum/cookingrecipe/nigiri_roll(src)
 			src.recipes += new /datum/cookingrecipe/porridge(src)
+			src.recipes += new /datum/cookingrecipe/ratatouille(src)
 			// Put all single-ingredient recipes after this point
 			src.recipes += new /datum/cookingrecipe/pizza(src)
 			src.recipes += new /datum/cookingrecipe/pizza_fresh(src)
@@ -568,12 +660,12 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/oatmeal(src)
 			src.recipes += new /datum/cookingrecipe/salad(src)
 			src.recipes += new /datum/cookingrecipe/tomsoup(src)
+			src.recipes += new /datum/cookingrecipe/toasted_french(src)
 			src.recipes += new /datum/cookingrecipe/toast_brain(src)
 			src.recipes += new /datum/cookingrecipe/toast_banana(src)
 			src.recipes += new /datum/cookingrecipe/toast_elvis(src)
 			src.recipes += new /datum/cookingrecipe/toast_spooky(src)
 			src.recipes += new /datum/cookingrecipe/toast(src)
-			src.recipes += new /datum/cookingrecipe/fries(src)
 			src.recipes += new /datum/cookingrecipe/taco_shell(src)
 			src.recipes += new /datum/cookingrecipe/bacon(src)
 			src.recipes += new /datum/cookingrecipe/steak_h(src)
@@ -581,10 +673,13 @@ table#cooktime a#start {
 			src.recipes += new /datum/cookingrecipe/steak_s(src)
 			src.recipes += new /datum/cookingrecipe/steak_ling(src)
 			src.recipes += new /datum/cookingrecipe/fish_fingers(src)
+			src.recipes += new /datum/cookingrecipe/shrimp(src)
 			src.recipes += new /datum/cookingrecipe/hardboiled(src)
 			src.recipes += new /datum/cookingrecipe/bakedpotato(src)
 			src.recipes += new /datum/cookingrecipe/rice_ball(src)
 			src.recipes += new /datum/cookingrecipe/hotdog(src)
+			src.recipes += new /datum/cookingrecipe/cheesewheel(src)
+
 
 	Topic(href, href_list)
 		if ((BOUNDS_DIST(src, usr) > 0 && (!issilicon(usr) && !isAI(usr))) || !isliving(usr) || iswraith(usr) || isintangible(usr))
@@ -605,7 +700,8 @@ table#cooktime a#start {
 			var/derivename = 0
 			var/recipebonus = 0
 			var/recook = 0
-			if (src.heat == "High") cook_amt *= 2
+			if (src.heat == "High")
+				cook_amt *= 2
 
 			// If emagged produce random output.
 			if (emagged)
@@ -615,7 +711,7 @@ table#cooktime a#start {
 					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck))
 						contentsok = 0
 						break
-					if(istype(I, /obj/item/reagent_containers/food/snacks/yuckburn))
+					if(istype(I, /obj/item/reagent_containers/food/snacks/yuck/burn))
 						contentsok = 0
 						break
 					if(istype(I, /obj/item/reagent_containers/food))
@@ -672,7 +768,7 @@ table#cooktime a#start {
 					else if (cook_amt == R.cookbonus - 1) bonus = 1
 					else if (cook_amt <= R.cookbonus - 5) bonus = -1
 					else if (cook_amt >= R.cookbonus + 5)
-						output = /obj/item/reagent_containers/food/snacks/yuckburn
+						output = /obj/item/reagent_containers/food/snacks/yuck/burn
 						bonus = 0
 					break
 
@@ -688,7 +784,7 @@ table#cooktime a#start {
 						else if (cook_amt == F.quality - 1) F.quality = 1
 						else if (cook_amt <= F.quality - 5) F.quality = 0.5
 						else if (cook_amt >= F.quality + 5)
-							output = /obj/item/reagent_containers/food/snacks/yuckburn
+							output = /obj/item/reagent_containers/food/snacks/yuck/burn
 							bonus = 0
 			src.working = 1
 			src.icon_state = "oven_bake"
@@ -703,10 +799,11 @@ table#cooktime a#start {
 						else if (bonus == -1)
 							if (F.quality > 0.5)
 								F.quality = 0.5
-							F.heal_amt = 0
 						if (src.emagged)
 							F.from_emagged_oven = 1
 						F.set_loc(src.loc)
+						if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
+							src.food_crime(usr, F)
 				else
 					var/obj/item/reagent_containers/food/snacks/F
 					if (ispath(output))
@@ -714,13 +811,12 @@ table#cooktime a#start {
 					else
 						F = output
 						F.set_loc( get_turf(src) )
-
+					if (istype(F, /obj/item/reagent_containers/food/snacks/yuck))
+						src.food_crime(usr, F)
 					if (bonus == 1)
 						F.quality = 5
-					else if (bonus == -1)
-						F.quality = recipebonus - cook_amt
-						if (istype(F, /obj/item/reagent_containers/food/snacks))
-							F.heal_amt = 0
+					else
+						F.quality = clamp(5 - abs(recipebonus - cook_amt), 0, 5)
 					if (src.emagged && istype(F))
 						F.from_emagged_oven = 1
 					if (derivename)
@@ -736,7 +832,7 @@ table#cooktime a#start {
 								F.unlock_medal_when_eaten = "Space Ham" //replace the old fat person method
 				src.icon_state = "oven_off"
 				src.working = 0
-				playsound(src.loc, "sound/machines/ding.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/ding.ogg', 50, 1)
 				for (var/atom/movable/I in src.contents)
 					qdel(I)
 				src.updateUsrDialog()
@@ -768,6 +864,9 @@ table#cooktime a#start {
 				I.set_loc(src.loc)
 			src.updateUsrDialog()
 			return
+
+	proc/food_crime(mob/user, obj/item/food)
+		// logTheThing(LOG_STATION, src, "[key_name(user)] commits a horrible food crime, creating [food] with quality [food.quality].")
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)
@@ -825,7 +924,7 @@ table#cooktime a#start {
 		src.updateUsrDialog()
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored)
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && W.w_class <= W_CLASS_HUGE && !W.anchored && isalive(user) && !isintangible(user))
 			return src.Attackby(W, user)
 		return ..()
 
@@ -840,20 +939,22 @@ table#cooktime a#start {
 		return 1
 
 #define MIN_FLUID_INGREDIENT_LEVEL 10
+TYPEINFO(/obj/submachine/foodprocessor)
+	mats = 18
+
 /obj/submachine/foodprocessor
 	name = "Processor"
 	desc = "Refines various food substances into different forms."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "processor-off"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/working = 0
 	var/allowed = list(/obj/item/reagent_containers/food/, /obj/item/plant/, /obj/item/organ/brain, /obj/item/clothing/head/butt)
 
 	attack_hand(var/mob/user)
-		if (src.contents.len < 1)
+		if (length(src.contents) < 1)
 			boutput(user, "<span class='alert'>There is nothing in the processor!</span>")
 			return
 		if (src.working == 1)
@@ -909,7 +1010,8 @@ table#cooktime a#start {
 					new/obj/item/reagent_containers/food/snacks/ingredient/oatmeal/(src.loc)
 					qdel( P )
 				if (/obj/item/plant/oat/salt)
-					new/obj/item/reagent_containers/food/snacks/ingredient/salt/(src.loc)
+					var/obj/item/reagent_containers/food/snacks/ingredient/salt/F = new(src.loc)
+					F.reagents.add_reagent("salt", P.reagents.get_reagent_amount("salt")) // item/plant has no plantgenes :(
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/ingredient/rice_sprig)
 					new/obj/item/reagent_containers/food/snacks/ingredient/rice(src.loc)
@@ -932,27 +1034,27 @@ table#cooktime a#start {
 				if (/obj/item/reagent_containers/food/snacks/plant/chili/chilly)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/coldsauce/F = new(src.loc)
-					F.reagents.add_reagent("cryostylane", DNA.potency)
+					F.reagents.add_reagent("cryostylane", DNA?.get_effective_value("potency"))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/ghostchilisauce/F = new(src.loc)
-					F.reagents.add_reagent("ghostchilijuice", 5 + DNA.potency)
+					F.reagents.add_reagent("ghostchilijuice", 5 + DNA?.get_effective_value("potency"))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/chili)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/F = new(src.loc)
-					F.reagents.add_reagent("capsaicin", DNA.potency)
+					F.reagents.add_reagent("capsaicin", DNA?.get_effective_value("potency"))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/candy/chocolate/F = new(src.loc)
-					F.reagents.add_reagent("chocolate", DNA.potency)
+					F.reagents.add_reagent("chocolate", DNA?.get_effective_value("potency"))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/latte)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/cream/F = new(src.loc)
-					F.reagents.add_reagent("milk", DNA.potency)
+					F.reagents.add_reagent("milk", DNA?.get_effective_value("potency"))
 					qdel( P )
 				if (/obj/item/plant/sugar)
 					var/obj/item/reagent_containers/food/snacks/ingredient/sugar/F = new(src.loc)
@@ -980,7 +1082,9 @@ table#cooktime a#start {
 					new/obj/item/reagent_containers/food/snacks/popcorn(src.loc)
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/corn/pepper)
-					new/obj/item/reagent_containers/food/snacks/ingredient/pepper(src.loc)
+					var/datum/plantgenes/DNA = P:plantgenes
+					var/obj/item/reagent_containers/food/snacks/ingredient/pepper/F = new(src.loc)
+					F.reagents.add_reagent("pepper", DNA?.get_effective_value("potency"))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/avocado)
 					new/obj/item/reagent_containers/food/snacks/soup/guacamole(src.loc)
@@ -1009,12 +1113,15 @@ table#cooktime a#start {
 				if (/obj/item/plant/herb/tea)
 					new/obj/item/reagent_containers/food/snacks/condiment/matcha(src.loc)
 					qdel( P )
+				if (/obj/item/reagent_containers/food/snacks/plant/mustard)
+					new/obj/item/reagent_containers/food/snacks/condiment/mustard(src.loc)
+					qdel( P )
 		// Wind down
 		for(var/obj/item/S in src.contents)
 			S.set_loc(get_turf(src))
 		src.working = 0
 		src.icon_state = "processor-off"
-		playsound(src.loc, "sound/machines/ding.ogg", 100, 1)
+		playsound(src.loc, 'sound/machines/ding.ogg', 100, 1)
 		return
 
 	attack_ai(var/mob/user as mob)
@@ -1023,7 +1130,7 @@ table#cooktime a#start {
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/satchel/))
 			var/obj/item/satchel/S = W
-			if (S.contents.len < 1) boutput(user, "<span class='alert'>There's nothing in the satchel!</span>")
+			if (length(S.contents) < 1) boutput(user, "<span class='alert'>There's nothing in the satchel!</span>")
 			else
 				user.visible_message("<span class='notice'>[user] loads [S]'s contents into [src]!</span>")
 				var/amtload = 0
@@ -1033,9 +1140,9 @@ table#cooktime a#start {
 				for (var/obj/item/plant/P in S.contents)
 					P.set_loc(src)
 					amtload++
-				W:UpdateIcon()
+				S.UpdateIcon()
 				boutput(user, "<span class='notice'>[amtload] items loaded from satchel!</span>")
-				S.desc = "A leather bag. It holds [S.contents.len]/[S.maxitems] [S.itemstring]."
+				S.tooltip_rebuild = 1
 			return
 		else
 			var/proceed = 0
@@ -1066,7 +1173,7 @@ table#cooktime a#start {
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (BOUNDS_DIST(src, user) > 0 || !isliving(user) || iswraith(user) || isintangible(user))
+		if (BOUNDS_DIST(src, user) > 0 || !isliving(user) || iswraith(user) || isintangible(user) || !isalive(user) || isintangible(user))
 			return
 		if (is_incapacitated(user) || user.restrained())
 			return
@@ -1102,14 +1209,16 @@ table#cooktime a#start {
 
 var/list/mixer_recipes = list()
 
+TYPEINFO(/obj/submachine/mixer)
+	mats = 15
+
 /obj/submachine/mixer
 	name = "KitchenHelper"
 	desc = "A food Mixer."
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "blender"
 	density = 1
-	anchored = 1
-	mats = 15
+	anchored = ANCHORED
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/list/recipes = null
 	var/list/to_remove = list()
@@ -1184,7 +1293,7 @@ var/list/mixer_recipes = list()
 		return attack_hand(user)
 
 	MouseDrop_T(obj/item/W as obj, mob/user as mob)
-		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user))
+		if (istype(W) && in_interact_range(W, user) && in_interact_range(src, user) && isalive(user) && !isintangible(user))
 			return src.Attackby(W, user)
 		return ..()
 
@@ -1225,7 +1334,7 @@ var/list/mixer_recipes = list()
 		working = 1
 		src.UpdateIcon()
 		src.updateUsrDialog()
-		playsound(src.loc, "sound/machines/mixer.ogg", 50, 1)
+		playsound(src.loc, 'sound/machines/mixer.ogg', 50, 1)
 		var/output = null // /obj/item/reagent_containers/food/snacks/yuck
 		var/derivename = 0
 		for (var/datum/cookingrecipe/R in src.recipes)

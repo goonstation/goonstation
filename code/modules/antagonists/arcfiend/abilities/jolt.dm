@@ -10,7 +10,7 @@
 		Self-use is instantaneous, but burns you badly."
 	icon_state = "jolt"
 	cooldown = 2 MINUTES
-	pointCost = 500
+	pointCost = 200
 	targeted = TRUE
 	target_anything = TRUE
 
@@ -26,7 +26,7 @@
 				self_cast(target)
 				return
 			actions.start(new/datum/action/bar/private/icon/jolt(src.holder.owner, target, src.holder, src.wattage), src.holder.owner)
-			logTheThing("combat", src.holder.owner, target, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
+			logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 		else
 			return TRUE
 
@@ -42,12 +42,12 @@
 		H.force_laydown_standup()
 
 /datum/action/bar/private/icon/jolt
-	duration = 18 SECONDS
+	duration = 12 SECONDS
 	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ATTACKED | INTERRUPT_ACTION | INTERRUPT_ACT
 	id = "jolt"
 	icon = 'icons/mob/arcfiend.dmi'
 	icon_state = "jolt_icon"
-	
+
 	var/mob/living/user
 	var/mob/living/target
 	var/datum/abilityHolder/holder
@@ -71,7 +71,7 @@
 			src.interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(src.owner, "jolt", 1 SECOND))
-			playsound(src.holder.owner, "sound/effects/elec_bzzz.ogg", 25, TRUE)
+			playsound(src.holder.owner, 'sound/effects/elec_bzzz.ogg', 25, TRUE)
 			src.target.shock(src.user, wattage, ignore_gloves = TRUE)
 			if (src.target.bioHolder?.HasEffect("resist_electric"))
 				if (prob(20))
@@ -96,14 +96,16 @@
 
 	onEnd()
 		boutput(src.user, "<span class='alert'>You send a massive electrical surge through [src.target]'s body!</span>")
-		playsound(src.target, "sound/impact_sounds/Energy_Hit_3.ogg", 100)
-		playsound(src.target, "sound/effects/elec_bzzz.ogg", 25, TRUE)
+		playsound(src.target, 'sound/impact_sounds/Energy_Hit_3.ogg', 100)
+		playsound(src.target, 'sound/effects/elec_bzzz.ogg', 25, TRUE)
 		src.target.emote("twitch_v")
 		src.particles.spawning = FALSE
 		src.target.add_fingerprint(src.user)
 		if (!src.target.bioHolder?.HasEffect("resist_electric"))
 			boutput(src.target, "<span class='alert'><b>Your heart spasms painfully and stops beating!</b></span>")
 			src.target.contract_disease(/datum/ailment/malady/flatline, null, null, TRUE)
+			var/datum/abilityHolder/arcfiend/AH = src.holder
+			AH.hearts_stopped++
 		else
 			cure_arrest()
 		..()

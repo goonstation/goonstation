@@ -43,7 +43,7 @@
 	icon_state = "cleanbot0"
 	layer = 5
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/icon_state_base // defined in new, this is the base of the icon_state with the suffix removed, i.e. "cleanbot" without the "0", for easier modification of icon_states so long as the convention is followed
 
 	on = 1
@@ -113,7 +113,7 @@
 				src.reagents.clear_reagents()
 				src.reagents.add_reagent(src.reagent_emagged, 50)
 
-			logTheThing("station", src.emagger, null, "emagged a [src.name], setting it to spread [src.reagent_emagged] at [log_loc(src)].")
+			logTheThing(LOG_STATION, src.emagger, "emagged a [src.name], setting it to spread [src.reagent_emagged] at [log_loc(src)].")
 			return 1
 
 		return 0
@@ -305,7 +305,7 @@
 		src.icon_state = "[src.icon_state_base][src.on]"
 		src.cleanbottargets -= coords
 		src.target = null
-		src.anchored = 0
+		src.anchored = UNANCHORED
 
 
 	ex_act(severity)
@@ -337,7 +337,7 @@
 		src.exploding = 1
 		src.on = 0
 		src.visible_message("<span class='alert'><B>[src] blows apart!</B></span>", 1)
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 40, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 40, 1)
 
 		elecflash(src, radius=1, power=3, exclude_center = 0)
 
@@ -350,6 +350,9 @@
 
 		qdel(src)
 		return
+
+	is_open_container()
+		return TRUE
 
 	red
 		icon_state = "cleanbot-red0"
@@ -384,8 +387,8 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(master, "sound/impact_sounds/Liquid_Slosh_2.ogg", 25, 1)
-		master.anchored = 1
+		playsound(master, 'sound/impact_sounds/Liquid_Slosh_2.ogg', 25, TRUE)
+		master.anchored = ANCHORED
 		master.icon_state = "[master.icon_state_base]-c"
 		master.visible_message("<span class='alert'>[master] begins to clean the [T.name].</span>")
 		master.cleaning = 1

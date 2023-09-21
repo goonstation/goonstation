@@ -1,5 +1,5 @@
 ABSTRACT_TYPE(/area/supply)
-/area/supply/
+/area/supply
 	expandable = FALSE
 
 /area/supply/spawn_point //the area supplies are spawned at and fired from
@@ -53,22 +53,56 @@ ABSTRACT_TYPE(/area/supply)
 	icon = 'icons/obj/stationobjs.dmi' //Change this.
 	icon_state = "plasticflaps"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_1
 	event_handler_flags = USE_FLUID_ENTER
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WIRECUTTERS
+
+	var/static/list/connects_to = typecacheof(list(
+		/obj/machinery/door,
+		/obj/window,
+		/turf/simulated/wall/auto,
+		/turf/unsimulated/wall/auto,
+		/obj/plasticflaps
+	))
+
+/obj/plasticflaps/New()
+	..()
+	src.UpdateIcon()
+	src.update_neighbors()
+
+/obj/plasticflaps/update_icon()
+	..()
+	var/connectdir = get_connected_directions_bitflag(connects_to)
+	if (connectdir & NORTH || connectdir & SOUTH)
+		src.dir = EAST
+		return
+	if (connectdir & EAST || connectdir & WEST)
+		src.dir = NORTH
+
+/obj/plasticflaps/disposing()
+	..()
+	src.update_neighbors()
+
+/obj/plasticflaps/proc/update_neighbors()
+	for (var/turf/simulated/wall/auto/T in orange(1,src))
+		T.UpdateIcon()
+	for (var/obj/window/auto/O in orange(1,src))
+		O.UpdateIcon()
+	for (var/obj/grille/G in orange(1,src))
+		G.UpdateIcon()
 
 /obj/plasticflaps/Cross(atom/A)
 	if (isliving(A)) // You Shall Not Pass!
 		var/mob/living/M = A
 		if (isghostdrone(M)) // except for drones
-			return 1
+			return TRUE
 		else if (istype(A,/mob/living/critter/changeling/handspider) || istype(A,/mob/living/critter/changeling/eyespider))
-			return 1
-		else if (!M.can_lie && isdead(M))
-			return 1
+			return TRUE
+		else if (isdead(M))
+			return TRUE
 		else if(!M.lying) // or you're lying down
-			return 0
+			return FALSE
 	return ..()
 
 /obj/plasticflaps/ex_act(severity)
@@ -87,5 +121,5 @@ ABSTRACT_TYPE(/area/supply)
 	icon = 'icons/misc/mark.dmi'
 	name = "X"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0

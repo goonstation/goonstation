@@ -31,13 +31,12 @@ var/list/xp_cache = list()
 			var/xpTotal = get_xp(key, job)
 
 			html += {"<p>[job] +[xpEarned]xp</p>"}
-
-			if(xpTotal)
-				var/prc = (LEVEL_FOR_XP(xpTotal) - round(LEVEL_FOR_XP(xpTotal))) //This is required since modulo refuses to work. Thanks byond.
-				prc *= 100
-				prc = round(prc)
-				html += {"<span style="float:left">Level [round(LEVEL_FOR_XP(xpTotal)+1)]</span><span style="float:right">Level [round(LEVEL_FOR_XP(xpTotal)+2)]</span><br>"}
-				html += {"<div class="progress-bar"><div class="progress" style="width: [min(prc, 100)]%"></div></div><br><br>"}
+			if (isnull(xpTotal))
+				xpTotal = xpEarned // for local dev servers where get_xp will always return null
+			var/current_level = round(LEVEL_FOR_XP(xpTotal))
+			var/percent_complete = round((xpTotal / XP_FOR_LEVEL(current_level + 1))*100)
+			html += {"<span style="float:left">Level [current_level]</span><span style="float:right">Level [current_level+1]</span><br>"}
+			html += {"<div class="progress-bar"><div class="progress" style="width: [min(percent_complete, 100)]%"></div></div><br><br>"}
 
 		if(!hasEntries)
 			html += {"<p>No experience earned.</p><br>"}
@@ -127,7 +126,7 @@ var/global/awarded_xp = 0
 /proc/award_archived_round_xp()
 	if (awarded_xp)
 		message_admins("Tried to award job exp for the round more than once. Probably some fuckery is going on.")
-		logTheThing("debug", null, null, "Tried to award job exp for the round more than once. Probably some fuckery is going on.")
+		logTheThing(LOG_DEBUG, null, "Tried to award job exp for the round more than once. Probably some fuckery is going on.")
 		return
 	if (!islist(xp_archive))
 		return

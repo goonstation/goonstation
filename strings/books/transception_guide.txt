@@ -1,0 +1,113 @@
+<h1>PROTOTYPE SYSTEMS BRIEF: "TRANSCEPTION ARRAY"</h1>
+	<i>
+	<p>CONTENTS AUDITED BY PROJECT SUPERVISOR 2</p>
+	<p>CLEARED FOR RELEASE TO X-13 PERSONNEL</p>
+	</i>
+	<hr>
+	<h3>SYSTEMS MANIFEST</h3>
+	<br>
+	Personnel responsible for installation are to verify the presence and structural integrity of each element listed below before assembly begins.
+	<br>
+	<ul>
+		<li>MICROVOLTAGE CABINET ONE: Contains internal capacitor and primary stepdown hardware. Casing prominently labeled with the letter I. To be installed under Left Attunement Dish.
+		<li>MICROVOLTAGE CABINET TWO: Contains area power controller interface hardware and transception buffering systems. Casing prominently labeled with the letter A. To be installed under Right Attunement Dish.
+		<li>LEFT AND RIGHT ATTUNEMENT DISHES: Provides microscale on-the-fly adjustments to signal confinement and boosts conventional communications. Match base unit and dish by the letter on their connection point and place atop appropiate scaffold.
+		<li>BEAM CONFINEMENT UNITS 1-4: Performs encoding and focusing of long-range matter packet. Install bottom to top as numbered, in center scaffold; <b>ALIGNMENT MUST BE EXACT TO WITHIN 0.08 MILLIMETERS.</b>
+	</ul>
+	<br>
+	<hr>
+	<h3>ONBOARD INDICATORS</h3>
+	<br>
+	For an at-a-glance readout of current systems state, indicators have been built into Transception Array systems. Personnel operating these systems should familiarize themselves with the indicators' function.
+	<br>
+	<ul>
+		<li>Lower vertical indicator, Microvoltage Cabinet One (I): Indicates whether cabinet has detected sufficient spare grid power to charge internal capacitor.
+		<li>5-bar indicator stack, Microvoltage Cabinet One (I): Displays internal capacitor's state of charge in 20% intervals (rounded up).
+		<li>Lower vertical indicator, Microvoltage Cabinet Two (A): Indicates whether area power controller is detected and operational. This must be active for transception to occur.
+		<li>5-bar indicator stack, Microvoltage Cabinet Two (A): Displays area power controller's state of charge relative to standard failsafe threshold, displayed in 20% intervals (rounded up).
+		<li>Vertical running lights, Beam Confinement Units: Illuminated when "primed" (transception capability is active). An additional beam will be visible through core of confinement units on successful operation.
+		<li>Square indicator light, Left and Right Attunement Dishes: Glows green when "primed". Blinks yellow when array could be primed but is shut down due to the inbuilt power-draw failsafe.
+		<li>Vertical indicator lights, Left and Right Attunement Dishes: When illuminated, basic communcations capability is activated. Lack of illumination would likely indicate area power failure.
+	</ul>
+	<br>
+	<hr>
+	<h3>ELECTRICAL LOAD FROM TRANSCEPTION</h3>
+	<br>
+	The process of transception involves three distinct points of electrical load:
+	<br>
+	<ul>
+		<li>The "kick-start cost" drawn directly from a local cell, incurred at the exact moment when an object is sent or received through a transception
+		<li>A moderate but standard electrical load from the Transception Array's general systems, billed to its area power controller
+		<li>Another small electrical load from the pad that sent or received the cargo, billed to the area power controller of the pad's area
+	</ul>
+	<br>
+	This "kick-start cost" is the primary load; each transception directly expends 80 units of cell power (approximately 40,000 watts of burst load).
+	<br>
+	<br>
+	To mitigate this heavy cost, the Transception Array is equipped with an internal capacitor. This capacitor is user-replaceable with any Nanotrasen-standard power cell.
+	<br>
+	<br>
+	The internal capacitor automatically draws down spare electricity from the Site's electrical grid; the Transception Array Control console is capable of adjusting parameters for this behavior.
+	<br>
+	<br>
+	Target charge rate may be set from zero to 50,000 watts, while the required surplus may be set from 10,000 to 200,000 watts.
+	<br>
+	<br>
+	When total excess grid power (before the internal capacitor's draw is factored in) exceeds target charge rate plus required surplus, the cell will charge at the target charge rate.
+	<br>
+	<br>
+	Transceptions will first attempt to charge the "kick-start cost" to the internal capacitor, falling back to the area power controller's cell if the internal capacitor is depleted or absent.
+	<br>
+	<br>
+	To avoid entirely depleting area power, a failsafe is included in the array to deactivate transception when the area's power cell approaches 30% capacity.
+	<br>
+	<br>
+	Transception capability automatically reactivates when power exceeds the failsafe by 10%; the failsafe may also be reduced to a minimal threshold equal to the cost necessary for one transception.
+	<br>
+	<hr>
+	<h3>INTERLINK PROCEDURE</h3>
+	<br>
+	As the Array should be located within a confined-access space within reinforced surrounds, use of its transception capability is delegated to specialized transception pads, operated from interlink computers.
+	<br>
+	<br>
+	These interlink computers are wirelessly networked, and are capable of indexing nearby pads by network ping; they are also aware of cargo awaiting reception at the synchronous orbital unit.
+	<br>
+	<br>
+	Transception pads interface wirelessly with the interlink computers, but must be connected physically to the array by a contiguous span of electrical cable, with a cable terminus under the pad.
+	<br>
+	<br>
+	The operational sequencing for a single transception (sending or receiving of an object at a pad by way of the transception array) is as follows:
+	<br>
+	<ul>
+		<li>Interlink computer sends a wireless command to a selected transception pad; a "receive" command includes the index of cargo awaiting reception, while a "send" command does not.
+		<li>Transception pad receives this signal and polls for the transception array's presence and current operating status over the hard-wired connection.
+		<li>Array responds to poll; if poll is successful, the pad and array synchronize power systems and begin a transception operation, removing the cargo item from the queue (if pertinent).
+		<li>Upon successful discharge of the transception "kick-start cost", the cargo item in question will be sent or received.
+		<li>If transception fails (common causes would be a pad obstruction or lack of array power), the cargo item that is no longer inbound will be reintroduced to the queue.
+	</ul>
+	<br>
+	When polling for transception pads, each pad that replies will include a response code. The response codes are as follows:
+	<br>
+	<ul>
+		<li>OK: All systems interconnected and functional at time of network poll.
+		<li>ERR_WIRE: Array's presence is validated by interlink, but there is no physical cable connection from the pad to the array. Check the full cable run from the pads to the array for severance or other damage.
+		<li>ARRAY_POWER_LOW: Area power controller for the array is reaching failsafe levels. Ensure grid supply is online, and consider reconfiguration of internal capacitor supply if electrical generation is adequate.
+		<li>ERR_ARRAY: Array's transception capability is entirely unavailable. Possible causes are a lack of power, an activation of failsafe, or physical damage to the array; inspect array and area's APC visually.
+		<li>NO_WIRE_ENDPOINT: Pad has no cable terminus underneath. This indicates an improper installation, and is rectified by correctly placing a cable terminus beneath the pad.
+		<li>ERR_NO_ARRAY: Array's presence could not be validated by interlink, likely due to catastrophic damage. <b>IF ARRAY IS DAMAGED IRREPARABLY, USE BACKUP DISH TO CALL FOR IMMEDIATE EVACUATION.</B>
+	</ul>
+	<br>
+	<hr>
+	<h3>INTERNAL CAPACITOR FAILURE</h3>
+	<br>
+	Under rare circumstances, it is possible that the internal capacitor may rupture. To avoid catastrophic damage to surroundings, the cell compartment has been constructed with ablative shielding.
+	<br>
+	<br>
+	Use the following procedure to repair damage from a ruptured internal capacitor:
+	<br>
+	<ul>
+		<li>Repair casing damage with a welding tool.
+		<li>Clear any damaged scaffold rods by removing their bolts using a standard wrench. A crowbar may subsequently be necessary to remove the rods if damage is severe.
+		<li>Replace the compartment cover. Most metals should be adequate for a replacement cover.
+		<li>Replace any damaged scaffold rods and secure into place with a standard wrench.
+	</ul>

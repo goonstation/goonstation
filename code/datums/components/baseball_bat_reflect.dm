@@ -1,9 +1,9 @@
 /datum/component/holdertargeting/baseball_bat_reflect
 	dupe_mode = COMPONENT_DUPE_ALLOWED
 	signals = list(COMSIG_ATOM_HITBY_THROWN)
-	proctype = .proc/reflect
+	proctype = PROC_REF(reflect)
 
-TYPEINFO(/datum/component/baseball_bat_reflect)
+TYPEINFO(/datum/component/holdertargeting/baseball_bat_reflect)
 	initialization_args = list()
 
 /datum/component/holdertargeting/baseball_bat_reflect/proc/reflect(mob/owner, atom/movable/thing, datum/thrown_thing/thr)
@@ -49,9 +49,9 @@ TYPEINFO(/datum/component/baseball_bat_reflect)
 		)
 
 	if(!ON_COOLDOWN(owner, "baseball-bat-reflect-sound-spam", 1 DECI SECOND))
-		playsound(owner, "sound/items/woodbat.ogg", 50, 1)
+		playsound(owner, 'sound/items/woodbat.ogg', 50, TRUE)
 		if(homerun)
-			playsound(owner, "sound/items/batcheer.ogg", 50, 1)
+			playsound(owner, 'sound/items/batcheer.ogg', 50, TRUE)
 			owner.visible_message("<span class='alert'>[owner] hits \the [thing] with \the [src.parent] and scores a HOMERUN! Woah!!!!</span>")
 		else
 			owner.visible_message("<span class='alert'>[owner] hits \the [thing] with \the [src.parent]!</span>")

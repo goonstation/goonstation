@@ -134,17 +134,28 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 	if(!force && (prev_overlay == I) && hash == prev_data[P_ISTATE] ) //If it's the same image as the other one and the appearances match then do not update
 		return 0
 
+	// remove once https://www.byond.com/forum/post/2888142 is fixed
+	#if DM_VERSION >= 515
+	#warn "remove the below"
+	#endif
+	if(I)
+		for(var/ikey in overlay_refs)
+			if(ikey != key && overlay_refs[ikey][P_INDEX] > 0 && overlay_refs[ikey][P_ISTATE] == ref(I.appearance))
+				// logTheThing(LOG_DEBUG, null, "Attempt to add duplicate overlay appearances on [identify_object(src)] with keys [key] and [ikey].")
+				I.layer += 0.0000001 * rand()
+
 	var/index = prev_data[P_INDEX]
 	if(index > 0) //There is an existing overlay in place in this slot, remove it
-		if(index <= src.overlays.len)
+		if(index <= length(src.overlays))
 			src.overlays.Cut(index, index+1) //Fuck yoooou byond (this gotta be by index or it'll fail if the same thing's in overlays several times)
 		else
-			stack_trace("Overlays on [src.type] were modified by non-UpdateOverlays method. Ref: \ref[src]")
+			stack_trace("Overlays on [identify_object(src)] were modified by non-UpdateOverlays method.")
 
 		prev_data[P_INDEX] = 0
 		for(var/ikey in overlay_refs) //Because we're storing the position of each overlay in the list we need to shift our indices down to stay synched
 			var/list/L = overlay_refs[ikey]
-			if(L?.len > 0 && L[P_INDEX] >= index) L[P_INDEX]--
+			if(L?.len > 0 && L[P_INDEX] >= index)
+				L[P_INDEX]--
 
 	if(I)
 		src.overlays += I
@@ -163,8 +174,8 @@ ClearSpecificOverlays(1, "key0", "key1", "key2") 	//Same as above but retains ca
 			overlay_refs -= key
 	return 1
 
-/atom/proc/ClearAllOverlays(var/retain_cache=0) //Some men just want to watch the world burn
-	if(src.overlays.len)
+/atom/proc/ClearAllOverlays(retain_cache = FALSE) //Some men just want to watch the world burn
+	if(length(src.overlays))
 		if (!src.overlay_refs)
 			src.overlay_refs = list()
 		src.overlays.Cut()

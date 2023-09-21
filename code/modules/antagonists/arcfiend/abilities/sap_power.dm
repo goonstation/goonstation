@@ -30,19 +30,19 @@
 			return TRUE
 		if (!src.is_valid_target(target, src.holder.owner))
 			return TRUE
-		src.holder.owner.tri_message(target, 
+		src.holder.owner.tri_message(target,
 			"<span class='alert'>[src.holder.owner] places [his_or_her(src.holder.owner)] hand on [target]. A static charge fills the air.",
 			"<span class='alert'>You place your hand onto [target] and start draining [ismob(target) ? him_or_her(target) : "it"] of energy.</span>",
 			"<span class='alert'>[src.holder.owner] places [his_or_her(src.holder.owner)] hand onto you.</span>")
 		actions.start(new/datum/action/bar/private/icon/sap_power(src.holder.owner, target, holder), src.holder.owner)
-		logTheThing("combat", src.holder.owner, target, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
+		logTheThing(LOG_COMBAT, src.holder.owner, "[key_name(src.holder.owner)] used <b>[src.name]</b> on [key_name(target)] [log_loc(src.holder.owner)].")
 
 	castcheck()
 		. = ..()
 		if (src.holder.owner.restrained())
 			boutput(src.holder.owner, "<span class='alert'>You need an active working hand to sap power from things!</span>")
 			return FALSE
-	
+
 	proc/is_valid_target(atom/target, mob/user)
 		if (ismob(target))
 			var/mob/M = target
@@ -80,8 +80,10 @@
 		src.user = user
 		src.target = target
 		src.holder = holder
-		src.user.UpdateParticles(new/particles/arcfiend, "arcfiend")
 		P = src.user.GetParticles("arcfiend")
+		if (!P) // only needs to be made on the mob once
+			src.user.UpdateParticles(new/particles/arcfiend, "arcfiend")
+			P = src.user.GetParticles("arcfiend")
 
 	onUpdate()
 		..()
@@ -178,7 +180,7 @@
 			var/datum/effects/system/spark_spread/S = new /datum/effects/system/spark_spread
 			S.set_up(2, FALSE, src.holder.owner)
 			S.start()
-		playsound(owner.loc, "sound/effects/electric_shock_short.ogg", 30, TRUE, FALSE, pitch = 0.8)
+		playsound(owner.loc, 'sound/effects/electric_shock_short.ogg', 30, TRUE, FALSE, pitch = 0.8)
 		src.holder.owner.set_dir(get_dir(src.holder.owner, src.target))
 		src.target.add_fingerprint(holder.owner)
 		src.onRestart()

@@ -20,7 +20,7 @@
 	* create a type for it.
   */
 /proc/placeAllPrefabs()
-#if defined(RUNTIME_CHECKING)
+#if defined(CI_RUNTIME_CHECKING)
 	var/startTime = world.timeofday
 	boutput(world, "<span class='alert'>Generating prefabs...</span>")
 	var/list/prefab_types = filtered_concrete_typesof(/datum/mapPrefab/mining, /proc/filter_underwater_prefab)
@@ -44,7 +44,7 @@
 			T2.ReplaceWithSpaceForce()
 	boutput(world, "<span class='alert'>Generated prefabs Level in [((world.timeofday - startTime)/10)] seconds!")
 #else
-	CRASH("This proc only works if RUNTIME_CHECKING is defined")
+	CRASH("This proc only works if CI_RUNTIME_CHECKING is defined")
 #endif
 
 /proc/filter_underwater_prefab(var/prefab_type)

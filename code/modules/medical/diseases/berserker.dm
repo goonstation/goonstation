@@ -2,7 +2,7 @@
 	name = "Berserker"
 	max_stages = 2
 	spread = "Non-Contagious"
-	cure = "Anti-Psychotics"
+	cure = "Haloperidol"
 	reagentcure = list("haloperidol")
 	recureprob = 10
 	associated_reagent = "pubbie tears"
@@ -49,7 +49,7 @@
 							O.show_message(text("<span class='alert'><B>[] hits [] with their thrashing!</B></span>", affected_mob, M), 1)
 						random_brute_damage(M, damage,1)
 					else
-						playsound(affected_mob.loc, "sound/impact_sounds/Generic_Swing_1.ogg", 25, 1, -1)
+						playsound(affected_mob.loc, 'sound/impact_sounds/Generic_Swing_1.ogg', 25, 1, -1)
 						for(var/mob/O in viewers(affected_mob, null))
 							O.show_message(text("<span class='alert'><B>[] fails to hit [] with their thrashing!</B></span>", affected_mob, M), 1)
 						return

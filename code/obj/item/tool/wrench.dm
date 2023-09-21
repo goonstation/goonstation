@@ -5,7 +5,8 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/wrench.dmi'
 	icon_state = "wrench"
 
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_WRENCHING
 	health = 5
 	w_class = W_CLASS_SMALL
@@ -48,8 +49,8 @@
 	desc = "A heavy industrial wrench that packs a mean punch when used as a bludgeon. Can be applied to the Nuclear bomb to repair it in small increments."
 	icon_state = "wrench-battle" //todo: new sprites
 	item_state = "wrench-battle"
-	force = 10
-	stamina_damage = 35
+	force = 15
+	stamina_damage = 55
 
 	New()
 		..()
@@ -62,4 +63,19 @@
 /obj/item/wrench/yellow
 	desc = "A tool used to apply torque to turn nuts and bolts. This one has a bright yellow handle."
 	icon_state = "wrench-yellow"
+	item_state = "wrench"
+
+/obj/item/wrench/grey
+	desc = "A tool used to apply torque to turn nuts and bolts, sporting a droll grey grip."
+	icon_state = "wrench-grey"
+	item_state = "wrench"
+
+/obj/item/wrench/orange
+	desc = "A tool used to apply torque to turn nuts and bolts. But orange!"
+	icon_state = "wrench-orange"
+	item_state = "wrench"
+
+/obj/item/wrench/green
+	desc = "A tool used to apply torque to turn nuts and bolts. In green!"
+	icon_state = "wrench-green"
 	item_state = "wrench"

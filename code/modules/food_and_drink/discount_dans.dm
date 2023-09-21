@@ -187,7 +187,7 @@
 	var/activated = 0
 	initial_volume = 50
 	initial_reagents = list("msg"=9)
-	brew_result = list("sewage", "ethanol")
+	brew_result = list("sewage"=20, "ethanol"=20)
 	food_effects = list("food_sweaty")
 
 	New()
@@ -297,6 +297,7 @@
 			..()
 
 	heal(var/mob/M)
+		..()
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -307,7 +308,7 @@
 	proc/splat()
 		var/turf/T = get_turf(src)
 		if(!locate(/obj/decal/cleanable/vomit) in T)
-			playsound(T, "sound/impact_sounds/Slimy_Splat_1.ogg", 50, 1)
+			playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 			var/obj/decal/cleanable/vomit/filling = make_cleanable( /obj/decal/cleanable/vomit,src)
 			var/icon/fillicon = icon(filling.icon, filling.icon_state)
 			fillicon.MapColors(0.5, 0.25, 0)
@@ -330,7 +331,7 @@
 	var/color_prob = 100
 	initial_volume = 50
 	initial_reagents = list("badgrease"=3,"VHFCS"=9)
-	brew_result = list("sewage", "yuck")
+	brew_result = list("sewage"=20, "yuck"=20)
 	food_effects = list("food_sweaty")
 
 
@@ -340,7 +341,7 @@
 		icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 		icon_state = "snackcake2"
 		color_prob = 10
-		brew_result = list("sewage", "mucus")
+		brew_result = list("sewage"=20, "mucus"=20)
 
 	New()
 		..()
@@ -374,7 +375,8 @@
 	throwforce = 2
 	var/full = 1
 	var/traytype = 0
-	flags = ONBELT | TABLEPASS | FPRINT
+	flags = TABLEPASS | FPRINT
+	c_flags = ONBELT
 	stamina_damage = 0
 	stamina_cost = 0
 	rand_pos = 1
@@ -434,7 +436,7 @@
 	desc = "A self-heating TV dinner. You should probably use a fork."
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "tvdinnert"
-	needfork = 1
+	required_utensil = REQUIRED_UTENSIL_FORK
 	bites_left = 2
 	heal_amt = 2
 	doants = 0 //Ants aren't dumb enough to try to eat these.
@@ -559,6 +561,7 @@
 		return
 
 	heal(var/mob/M)
+		..()
 		if (prob(8))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")
@@ -583,10 +586,11 @@
 
 		var/i = 3
 		while(i-- > 0)
-			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","cleaner","luminol","poo","urine","nicotine","mint","tea","juice_lemon","juice_lime","juice_apple","juice_cherry","guacamole","egg","sewage","uranium"), 3)
+			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","cleaner","luminol","poo","urine","nicotine","mint","tea","juice_lemon","juice_lime","juice_apple","juice_banana","juice_cherry","guacamole","egg","sewage","uranium"), 3)
 
 
 	heal(var/mob/M)
+		..()
 		if (prob(5))
 			if (M.mind && M.mind.ckey)
 				boutput(M, "<span class='notice'>You find a shiny golden ticket in this bite!</span>")

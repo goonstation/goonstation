@@ -26,22 +26,22 @@
 		nodeText = "Greetings. You are connected to the assistant A.I. of the <i>SS Valiant</i>."
 		linkText = @"[Return]"
 
-		getNodeText(var/client/C)
+		getNodeText(client/C)
 			var/datum/dialogueMaster/telescopeValiant/M = master
-			switch(M.signal)
-				if(70 to 100)
-					if(master.getFlag(C, "valiantIntro"))
-						return "Please state your query."
-					else
-						return nodeText
-				if(40 to 69) //nice
-					return "Warning: Signal integrity compromised.<br>A stable connection can not be guaranteed."
-				if(10 to M.corruptionThreshold)
-					return "S_gn__icant data _oss d_tecte_. You might experi___e intermittent l_ss of connecti____"
-				if(-INFINITY to M.disconnectThreshold)
-					return "<i>The connection to the SS Valiant has been lost. There is nothing left to do here.</i>"
+			// not constant, can't switch
+			if (70 < M.signal && M.signal < INFINITY)
+				if(master.getFlag(C, "valiantIntro"))
+					return "Please state your query."
+				else
+					return nodeText
+			else if (40 < M.signal && M.signal < 70)
+				return "Warning: Signal integrity compromised.<br>A stable connection can not be guaranteed."
+			else if(10 < M.signal && M.signal < M.corruptionThreshold)
+				return "S_gn__icant data _oss d_tecte_. You might experi___e intermittent l_ss of connecti____"
+			else if(-INFINITY < M.signal && M.signal < M.disconnectThreshold)
+				return "<i>The connection to the SS Valiant has been lost. There is nothing left to do here.</i>"
 
-		getNodeImage(var/client/C)
+		getNodeImage(client/C)
 			var/datum/dialogueMaster/telescopeValiant/M = master
 			if(M.signal > M.disconnectThreshold)
 				return resource("images/traders/[nodeImage]")
@@ -190,6 +190,38 @@
 				return 1
 			else
 				return 0
+
+#ifdef ENABLE_ARTEMIS
+/* Artemis Dialogue */
+
+/datum/dialogueMaster/telescopeArtemis
+	dialogueName = "Artemis"
+	start = /datum/dialogueNode/telArtemisStart
+	visibleDialogue = 0
+
+/datum/dialogueNode
+	telArtemisStart
+		nodeImage = "static.png"
+		nodeText = "There appears to be a transponder signal from a NT science vessel."
+		linkText = "..."
+		links = list(/datum/dialogueNode/telArtemisEnable)
+
+	telArtemisEnable
+		linkText = "Save the location."
+		nodeText = "The location is now available at the long-range teleporter."
+
+		onActivate(var/client/C)
+			if(!special_places.Find("Artemis"))
+				special_places.Add("Artemis")
+			return
+
+		canShow(var/client/C)
+			if(!special_places.Find("Artemis"))
+				return 1
+			else
+				return 0
+#endif
+
 
 /* COW DINER DIALOGUE BELOW */
 

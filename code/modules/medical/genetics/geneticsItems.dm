@@ -1,3 +1,6 @@
+ADMIN_INTERACT_PROCS(/obj/item/genetics_injector, proc/admin_command_set_uses)
+ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_command_change_bioeffect)
+
 /obj/item/genetics_injector
 	name = "genetics injector"
 	desc = "A special injector designed to interact with one's genetic structure."
@@ -22,7 +25,7 @@
 			user.visible_message("<span class='alert'><b>[user.name] injects [himself_or_herself(user)] with [src]!</b></span>")
 			src.injected(user,user)
 		else
-			logTheThing("combat", user, M, "tries to inject [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
+			logTheThing(LOG_COMBAT, user, "tries to inject [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
 			actions.start(new/datum/action/bar/icon/genetics_injector(M,src), user)
 
 	proc/injected(var/mob/living/carbon/user,var/mob/living/carbon/target)
@@ -30,7 +33,7 @@
 			return 1
 		if(!istype(target.bioHolder))
 			return 1
-		logTheThing("combat", user, target, "injects [constructTarget(target,"combat")] with [src.name] at [log_loc(user)]")
+		logTheThing(LOG_COMBAT, user, "injects [constructTarget(target,"combat")] with [src.name] at [log_loc(user)]")
 		return 0
 
 	proc/update_appearance()
@@ -38,6 +41,16 @@
 			src.icon_state = "injector_2"
 			src.desc = "A [src] that has been used up. It should be recycled or disposed of."
 			src.name = "expended " + src.name
+		else
+			src.icon_state = initial(src.icon_state)
+			src.desc = initial(src.desc)
+			if(startswith(src.name, "expended "))
+				src.name = copytext(src.name, length("expended ") + 1)
+
+	proc/admin_command_set_uses()
+		set name = "Set Uses"
+		src.uses = tgui_input_number(usr, "Set [src]'s number of uses", "[src] uses", src.uses, 1000, 0)
+		src.update_appearance()
 
 	dna_injector
 		name = "dna injector"
@@ -50,6 +63,16 @@
 
 			target.bioHolder.AddEffectInstance(BE,1)
 			src.uses--
+			src.update_appearance()
+
+		proc/admin_command_change_bioeffect()
+			set name = "Change Bioeffect"
+			var/input = tgui_input_text(usr, "Enter a /datum/bioEffect path or partial name.", "Set Bioeffect", null, allowEmpty = TRUE)
+			var/datum/bioEffect/type_to_add = get_one_match(input, /datum/bioEffect, cmp_proc=/proc/cmp_text_asc)
+			if(isnull(type_to_add))
+				return
+			src.BE = new type_to_add
+			src.name = "[initial(src.name)] - [BE.name]"
 			src.update_appearance()
 
 	dna_activator
@@ -134,7 +157,8 @@
 	flags = FPRINT | TABLEPASS | CONDUCT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
-	hide_attack = 1
+	hide_attack = ATTACK_FULLY_HIDDEN
+	tool_flags = TOOL_SCREWING
 	var/obj/item/genetics_injector/dna_injector/payload = null
 
 	attack_self(var/mob/user as mob)
@@ -169,7 +193,7 @@
 			return
 		if (payload)
 			boutput(user, "<span class='alert'>You stab [M], injecting them.</span>")
-			logTheThing("combat", user, M, "stabs [constructTarget(M,"combat")] with the speed injector (<b>Payload:</b> [payload.name]).")
+			logTheThing(LOG_COMBAT, user, "stabs [constructTarget(M,"combat")] with the speed injector (<b>Payload:</b> [payload.name]).")
 			payload.injected(user,M)
 			qdel(payload)
 			payload = null
@@ -217,7 +241,7 @@
 				return
 
 		else
-			logTheThing("combat", user, M, "injects [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
+			logTheThing(LOG_COMBAT, user, "injects [constructTarget(M,"combat")] with [src.name] at [log_loc(user)]")
 
 			if(use_mode == SCRAMBLER_MODE_COPY)
 				src.copy_identity(user,M)

@@ -15,6 +15,16 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabSizeX = 17
 	prefabSizeY = 18
 
+/datum/mapPrefab/allocated/flock_tutorial
+	prefabPath = "assets/maps/allocated/flock_tutorial.dmm"
+	prefabSizeX = 31
+	prefabSizeY = 31
+
+/datum/mapPrefab/allocated/flock_showcase
+	prefabPath = "assets/maps/allocated/flock_showcase.dmm"
+	prefabSizeX = 21
+	prefabSizeY = 10
+
 /datum/mapPrefab/allocated/cruiser_syndicate
 	prefabPath = "assets/maps/allocated/cruiser_syndicate.dmm"
 	prefabSizeX = 7
@@ -24,3 +34,13 @@ ABSTRACT_TYPE(/datum/mapPrefab/allocated)
 	prefabPath = "assets/maps/allocated/cruiser_nanotrasen.dmm"
 	prefabSizeX = 7
 	prefabSizeY = 13
+
+/datum/mapPrefab/allocated/shuttle_transit
+	prefabPath = "assets/maps/allocated/shuttle_transit.dmm"
+	prefabSizeX = 32
+	prefabSizeY = 32
+
+/datum/mapPrefab/allocated/football
+	prefabPath = "assets/maps/allocated/football.dmm"
+	prefabSizeX = 294
+	prefabSizeY = 46

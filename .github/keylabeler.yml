@@ -14,7 +14,7 @@ labelMappings:
     "[BUG - MAJOR]": p-major
     "[MAJOR]": p-major
     "[BUG - MINOR]": p-minor
-    "[MINOR]": p--minor
+    "[MINOR]": p-minor
     "[BUG - TRIVIAL]": p-trivial
     "[TRIVIAL]": p-trivial
     "[BUG]": c-bug
@@ -41,8 +41,8 @@ labelMappings:
     "[REVERT]": c-revert
     "[REWORK]": c-rework
     "[SECRET]": a-secret
-    "[TGUI]": c-ui
-    "[UI]": c-ui
+    "[TGUI]": a-ui
+    "[UI]": a-ui
     "[TOOLS]": a-tooling
     "[TOOLING]": a-tooling
     "[EASY]": e-good-first-issue
@@ -52,3 +52,46 @@ labelMappings:
     "[WIKI]": e-add-to-wiki
     "[ADD TO WIKI]": e-add-to-wiki
     "[CONTEST]": e-contest
+    "[ADMIN]": a-admin
+    "[AI]": a-ai
+    "[ATMOS]": a-atmospherics
+    "[ATMOSPHERICS]": a-atmospherics
+    "[CATERING]": a-catering
+    "[CHEM]": a-chemistry
+    "[CHEMISTRY]": a-chemistry
+    "[CLOTHING]": a-clothing
+    "[CRITTER]": a-critters
+    "[CRITTERS]": a-critters
+    "[MOBS]": a-critters
+    "[GAME OBJECTS]": a-game-objects
+    "[OBJECTS]": a-game-objects
+    "[GAMEMODES]": a-gamemodes
+    "[GAME MODES]": a-gamemodes
+    "[MODES]": a-gamemodes
+    "[HYDRO]": a-hydroponics
+    "[HYDROPONICS]": a-hydroponics
+    "[INTERNAL]": a-internal
+    "[MAPPING]": a-mapping
+    "[MATERIALS]": a-materials
+    "[MATSCI]": a-materials
+    "[MEDICAL]": a-medical
+    "[MUTANTRACE]": a-mutantraces
+    "[SPECIES]": a-mutantraces
+    "[PLAYER ACTIONS]": a-player-actions
+    "[ACTIONS]": a-player-actions
+    "[SCIENCE]": a-science
+    "[SILICONS]": a-silicons
+    "[BORGS]": a-silicons
+    "[STATION SYSTEMS]": a-station-systems
+    "[STATUS EFFECTS]": a-status-effects
+    "[EVENTS]": a-events
+    "[RP]": a-rp
+    "[SPAWN]": a-respawning
+    "[SPAWNING]": a-respawning
+    "[RESPAWN]": a-respawning
+    "[RESPAWNING]": a-respawning
+    "[ROLEPLAY]": a-rp
+    "[VEHICLE]": a-vehicles
+    "[VEHICLES]": a-vehicles
+    "[TRAITS]": a-traits
+    "[TRAIT]": a-traits

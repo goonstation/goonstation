@@ -8,7 +8,7 @@
 	w_class = W_CLASS_TINY
 	force = null
 	throwforce = null
-	var/armed = 0
+	var/armed = FALSE
 	var/obj/item/chem_grenade/grenade = null
 	var/obj/item/old_grenade/grenade_old = null
 	var/obj/item/pipebomb/bomb/pipebomb = null
@@ -25,7 +25,7 @@
 
 	armed
 		icon_state = "mousetraparmed"
-		armed = 1
+		armed = TRUE
 
 		cleaner
 			name = "cleantrap"
@@ -61,7 +61,7 @@
 			clear_armer()
 
 		src.armed = !src.armed
-		playsound(user.loc, "sound/weapons/handcuffs.ogg", 30, 1, -3)
+		playsound(user.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -3)
 		return
 
 	proc/clear_armer()
@@ -69,7 +69,7 @@
 		armer = null
 
 	proc/set_armer(mob/user)
-		RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, .proc/clear_armer)
+		RegisterSignal(user, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(clear_armer))
 		armer = user
 
 	disposing()
@@ -77,6 +77,11 @@
 		. = ..()
 
 	attack_hand(mob/user)
+		if (ismobcritter(user))
+			var/mob/living/critter/critter = user
+			if (critter.ghost_spawned)
+				critter.show_text("<span class='alert'><b>Sensing the danger, you shy away from [src].</b></span>")
+				return
 		if (src.armed)
 			if ((user.get_brain_damage() >= 60 || user.bioHolder.HasEffect("clumsy")) && prob(50))
 				var/which_hand = "l_arm"
@@ -90,10 +95,16 @@
 		..()
 		return
 
+	pull(mob/living/critter/user)
+		if (istype(user) && user.ghost_spawned)
+			user.show_text("<span class='alert'><b>Sensing the danger, you shy away from [src].</b></span>")
+			return TRUE
+		return ..()
+
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/chem_grenade) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/chem_grenade/CG = C
-			if (CG.stage == 2 && !CG.state)
+			if (CG.stage == 2 && !CG.armed)
 				if(!(src in user.equipped_list()))
 					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
 					return
@@ -107,11 +118,11 @@
 
 				if(CG.is_dangerous)
 					message_admins("[key_name(user)] rigs [src] with [CG] at [log_loc(user)].")
-				logTheThing("bombing", user, null, "rigs [src] with [CG] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "rigs [src] with [CG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/old_grenade/) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/old_grenade/OG = C
-			if (OG.not_in_mousetraps == 0 && !OG.state)
+			if (OG.not_in_mousetraps == 0 && !OG.armed)
 				if(!(src in user.equipped_list()))
 					boutput(user, "<span class='alert'>You need to be holding [src] in order to attach anything to it.</span>")
 					return
@@ -125,7 +136,7 @@
 
 				if(OG.is_dangerous)
 					message_admins("[key_name(user)] rigs [src] with [OG] at [log_loc(user)].")
-				logTheThing("bombing", user, null, "rigs [src] with [OG] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "rigs [src] with [OG] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/pipebomb/bomb) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			var/obj/item/pipebomb/bomb/PB = C
@@ -142,7 +153,7 @@
 				src.w_class = max(src.w_class, C.w_class)
 
 				message_admins("[key_name(user)] rigs [src] with [PB] at [log_loc(user)].")
-				logTheThing("bombing", user, null, "rigs [src] with [PB] at [log_loc(user)].")
+				logTheThing(LOG_BOMBING, user, "rigs [src] with [PB] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/device/radio/signaler) && !src.grenade && !src.grenade_old && !src.pipebomb && !src.arm && !src.signaler && !src.butt && !src.buttbomb)
 			if(!(src in user.equipped_list()))
@@ -158,28 +169,7 @@
 			src.w_class = max(src.w_class, C.w_class)
 
 			message_admins("[key_name(user)] rigs [src] with [S] at [log_loc(user)].")
-			logTheThing("bombing", user, null, "rigs [src] with [S] at [log_loc(user)].")
-
-		else if (istype(C, /obj/item/pipebomb/frame))
-			var/obj/item/pipebomb/frame/PF = C
-			if(!(src in user.equipped_list()))
-				boutput(user, "<span class='alert'>You need to be holding [src] to do this.</span>")
-				return
-
-			if (PF.state > 2)
-				user.show_text("[PF] needs to be empty to be used.", "red")
-				return
-
-			// Pies won't do, they require a mob as the target. Obviously, the mousetrap roller is much more
-			// likely to bump into an inanimate object.
-			if (!src.grenade && !src.grenade_old && !src.pipebomb && !src.buttbomb)
-				user.show_text("[src] must have a grenade or pipe bomb attached first.", "red")
-				return
-
-			user.u_equip(src)
-			user.u_equip(PF)
-			new /obj/item/mousetrap_roller(get_turf(src), src, PF)
-			return
+			logTheThing(LOG_BOMBING, user, "rigs [src] with [S] at [log_loc(user)].")
 
 		else if (!src.arm && (istype(C, /obj/item/parts/robot_parts/arm) || istype(C, /obj/item/parts/human_parts/arm)) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
 			if(!(src in user.equipped_list()))
@@ -213,7 +203,7 @@
 			src.w_class = max(src.w_class, C.w_class)
 			user.show_text("You carefully set [C] in [src]'s [src.arm].", "blue")
 
-			logTheThing("bombing", user, null, "rigs [src] with [src.arm] and [C] at [log_loc(user)].")
+			logTheThing(LOG_BOMBING, user, "rigs [src] with [src.arm] and [C] at [log_loc(user)].")
 
 		else if (istype(C, /obj/item/clothing/head/butt) && !src.grenade && !src.grenade_old && !src.pipebomb  && !src.signaler && !src.butt && !src.buttbomb)
 			if(!(src in user.equipped_list()))
@@ -296,20 +286,46 @@
 				H.visible_message("<span class='alert'><B>[H] accidentally steps on the mousetrap.</B></span>",\
 				"<span class='alert'><B>You accidentally step on the mousetrap!</B></span>")
 
+		else if (istype(AM, /mob/living/critter/wraith/plaguerat/adult) && src.armed)
+			var/mob/living/critter/wraith/plaguerat/P = AM
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+			icon_state = "mousetrap"
+			src.armed = FALSE
+			clear_armer()
+			src.visible_message("<span class='alert'><b>[P] is caught in the trap and squeals in pain!</b></span>")
+			P.setStatus("stunned", 3 SECONDS)
+			random_brute_damage(P, 20)
+
+		else if (istype(AM, /mob/living/critter/wraith/plaguerat) && src.armed)
+			var/mob/living/critter/wraith/plaguerat/P = AM
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+			icon_state = "mousetrap"
+			src.armed = FALSE
+			clear_armer()
+			src.visible_message("<span class='alert'><b>[P] is caught in the trap and explodes violently into a rain of gibs!</b></span>")
+			P.gib()
+
+		else if (istype(AM, /mob/living/critter/small_animal/mouse/weak/mentor/admin) && src.armed) //The admin mouse fears not your puny attempt to squish it.
+			AM.visible_message("<span class='alert'>[src] blows up violently as soon as [AM] sets foot on it! [AM] looks amused at this poor attempt on it's life.</span>")
+			new/obj/effect/supplyexplosion(src.loc)
+			playsound(src.loc, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+			qdel(src)
+
+		else if (istype(AM, /mob/living/critter/small_animal/mouse) && (src.armed))
+			var/mob/living/critter/small_animal/mouse/M = AM
+			playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
+			icon_state = "mousetrap"
+			src.armed = FALSE
+			clear_armer()
+			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
+			M.death()
+
 		else if ((ismobcritter(AM)) && (src.armed))
 			var/mob/living/critter/C = AM
 			src.triggered(C)
 			C.visible_message("<span class='alert'><B>[C] accidentally triggers the mousetrap.</B></span>",\
 				"<span class='alert'><B>You accidentally trigger the mousetrap!</B></span>")
 
-		else if (istype(AM, /obj/critter/mouse) && (src.armed))
-			var/obj/critter/mouse/M = AM
-			playsound(src.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
-			icon_state = "mousetrap"
-			src.armed = 0
-			clear_armer()
-			src.visible_message("<span class='alert'><b>[M] is caught in the trap!</b></span>")
-			M.CritterDeath()
 		..()
 		return
 
@@ -324,55 +340,56 @@
 		if (!src || !src.armed)
 			return
 
-		var/obj/item/affecting = null
+		var/zone = null
 		if (target && ishuman(target))
 			var/mob/living/carbon/human/H = target
 			switch(type)
 				if ("feet")
-					if (!H.shoes)
-						affecting = H.organs[pick("l_leg", "r_leg")]
+					if (!H.shoes && !H.mutantrace?.can_walk_on_shards)
+						zone = pick("l_leg", "r_leg")
 						H.changeStatus("weakened", 3 SECONDS)
 				if ("l_arm", "r_arm")
 					if (!H.gloves)
-						affecting = H.organs[type]
+						zone = type
 						H.changeStatus("stunned", 3 SECONDS)
-			if (affecting)
-				affecting.take_damage(1, 0)
-				H.UpdateDamageIcon()
+			H.TakeDamage(zone, 1, 0, 0, DAMAGE_CRUSH)
 
 		else if (ismobcritter(target))
 			var/mob/living/critter/C = target
-			C.TakeDamage("All", 1)
+			if (C.ghost_spawned)
+				C.TakeDamage("All", 5)
+			else
+				C.TakeDamage("All", 1)
 
 		if (target)
-			playsound(target.loc, "sound/impact_sounds/Generic_Snap_1.ogg", 50, 1)
+			playsound(target.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 		src.icon_state = "mousetrap"
-		src.armed = 0
+		src.armed = FALSE
 
 		if (src.grenade)
-			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade]) at [log_loc(src)]")
 			src.grenade.explode()
 			src.grenade = null
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.grenade_old)
-			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
-			src.grenade_old.prime()
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.grenade_old]) at [log_loc(src)]")
+			src.grenade_old.detonate()
 			src.grenade_old = null
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-grenade")
 
 		else if (src.pipebomb)
-			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.pipebomb]) at [log_loc(src)]")
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-pipebomb")
 			src.pipebomb.do_explode()
 			src.pipebomb = null
 
 		else if (src.signaler)
-			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.signaler]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.signaler]) at [log_loc(src)]")
 			src.signaler.send_signal("ACTIVATE")
 
 		else if (src.pie && src.arm)
-			logTheThing("bombing", target, null, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
+			logTheThing(LOG_BOMBING, target, "triggers [src] (armed with: [src.arm] and [src.pie]) at [log_loc(src)]")
 			target.visible_message("<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at [target]!</b></span>",\
 			"<span class='alert'><b>[src]'s [src.arm] launches [src.pie] at you!</b></span>")
 			src.overlays -= image(src.pie.icon, src.pie.icon_state)
@@ -388,7 +405,7 @@
 			if (src.butt.sound_fart)
 				playsound(target, src.butt.sound_fart, 50)
 			else
-				playsound(target, "sound/voice/farts/poo2.ogg", 50)
+				playsound(target, 'sound/voice/farts/poo2.ogg', 50)
 
 		else if (src.buttbomb)
 			src.overlays -= image('icons/obj/items/weapons.dmi', "trap-buttbomb")
@@ -408,7 +425,7 @@
 	icon_state = "mousetrap_roller"
 	item_state = "mousetrap"
 	w_class = W_CLASS_TINY
-	var/armed = 0
+	var/armed = FALSE
 	var/obj/item/mousetrap/mousetrap = null
 	var/obj/item/pipebomb/frame/frame = null
 	var/payload = ""
@@ -488,11 +505,11 @@
 
 		user.visible_message("<span class='alert'>[user] starts up the [src.name].</span>", "You start up the [src.name]")
 		message_admins("[key_name(user)] releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
-		logTheThing("bombing", user, null, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
+		logTheThing(LOG_BOMBING, user, "releases a [src] (Payload: [src.payload]) at [log_loc(user)]. Direction: [dir2text(user.dir)].")
 
-		src.armed = 1
+		src.armed = TRUE
 		if (!(src.mousetrap?.armed))
-			src.mousetrap.armed = 1 // Must be armed or it won't work in mousetrap.triggered().
+			src.mousetrap.armed = TRUE // Must be armed or it won't work in mousetrap.triggered().
 			src.mousetrap.set_armer(user)
 		src.set_density(1)
 		user.u_equip(src)
@@ -519,5 +536,5 @@
 
 	Move(var/turf/new_loc,direction)
 		if (src.mousetrap.buttbomb && src.armed)
-			playsound(src, 'sound/voice/farts/poo2.ogg', 30, 0, 0, 1.8)
+			playsound(src, 'sound/voice/farts/poo2.ogg', 30, FALSE, 0, 1.8)
 		..()

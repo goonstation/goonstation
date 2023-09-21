@@ -10,6 +10,7 @@ var/list/asteroid_blocked_turfs = list()
 	var/list/ore_types_uncommon = list()
 	var/list/ore_types_rare = list()
 	var/list/events = list()
+	var/list/weighted_events = list()
 	// magnet vars
 	var/turf/magnetic_center = null
 	var/area/mining/magnet/magnet_area = null
@@ -23,7 +24,7 @@ var/list/asteroid_blocked_turfs = list()
 	var/list/small_encounters = list()
 	var/list/mining_encounters_selectable = list()
 
-	var/list/magnet_do_not_erase = list(/obj/securearea,/obj/forcefield/mining,/obj/grille/catwalk,/obj/grille/catwalk/cross, /obj/overlay)
+	var/list/magnet_do_not_erase = list(/obj/securearea,/obj/forcefield/mining,/obj/grille/catwalk, /obj/overlay)
 
 	New()
 		..()
@@ -43,7 +44,9 @@ var/list/asteroid_blocked_turfs = list()
 				continue
 
 			if (istype(O, /datum/ore/event/))
-				events += O
+				var/datum/ore/event/E = O
+				events += E
+				weighted_events[E] = initial(E.weight)
 				ore_types_common -= O
 			if (O.rarity_tier == 2)
 				ore_types_uncommon += O
@@ -76,10 +79,6 @@ var/list/asteroid_blocked_turfs = list()
 			magnetic_center = T
 			magnet_area = get_area(T)
 			break
-
-		for(var/turf/T in landmarks[LANDMARK_MAGNET_SHIELD])
-			var/obj/forcefield/mining/S = new /obj/forcefield/mining(T)
-			magnet_shields += S
 
 	proc/spawn_mining_z_asteroids(var/amt, var/zlev)
 		SPAWN(0)
@@ -152,7 +151,7 @@ var/list/asteroid_blocked_turfs = list()
 			if (3)
 				category = mining_controls.mining_encounters_rare
 
-		if (category.len < 1)
+		if (length(category) < 1)
 			category = mining_controls.mining_encounters_common
 
 		return pick(category)
@@ -168,21 +167,6 @@ var/list/asteroid_blocked_turfs = list()
 	luminosity = 1
 	expandable = 0
 
-	proc/check_for_unacceptable_content()
-		for (var/mob/living/L in src.contents)
-			if(!isintangible(L)) //neither blob overmind or AI eye should block this
-				return 1
-		for (var/obj/machinery/vehicle/V in src.contents)
-			return 1
-		for (var/obj/artifact/A in src.contents) // check if an artifact has someone inside
-			if (istype(A, /obj/artifact/prison))
-				var/datum/artifact/prison/P = A.artifact
-				if(istype(P.prisoner)) return 1
-			else if (istype(A, /obj/artifact/cloner))
-				var/datum/artifact/cloner/C = A.artifact
-				if(istype(C.clone)) return 1
-		return 0
-
 /obj/forcefield/mining
 	name = "magnetic forcefield"
 	desc = "A powerful field used by the mining magnet to attract minerals."
@@ -193,7 +177,16 @@ var/list/asteroid_blocked_turfs = list()
 	opacity = 0
 	density = 0
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
+
+	ex_act()
+		return
+
+	blob_act()
+		return
+
+	meteorhit()
+		return
 
 /// *** MISC *** ///
 

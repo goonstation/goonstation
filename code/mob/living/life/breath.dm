@@ -32,7 +32,7 @@
 					breathtimerstage = 0
 					breathtimernotifredundant = 0
 				if (15 to 34)
-					// this statement is intentionally left blank
+					; // this statement is intentionally left blank
 				if (34 to 51)
 					if (prob(5)) owner.emote("gasp")
 					if (!breathtimernotifredundant)
@@ -49,7 +49,7 @@
 						breathtimerstage = 3
 			switch(breathtimerstage)
 				if (0)
-					// this statement is intentionally left blank
+					; // this statement is intentionally left blank
 				if (1)
 					boutput(owner, "<span class='alert'>You need to breathe!</span>")
 					breathtimernotifredundant = 1
@@ -65,7 +65,7 @@
 
 		if (istype(owner.loc, /obj/))
 			var/obj/location_as_object = owner.loc
-			location_as_object.handle_internal_lifeform(owner, 0)
+			location_as_object.handle_internal_lifeform(owner, 0, get_multiplier())
 		..()
 
 	proc/breathe(datum/gas_mixture/environment)
@@ -143,7 +143,7 @@
 			owner.losebreath += (0.7 * mult)
 
 		if (owner.grabbed_by && length(owner.grabbed_by))
-			breath = get_breath_grabbed_by(BREATH_VOLUME)
+			breath = get_breath_grabbed_by(BREATH_VOLUME * mult)
 
 		if (!breath)
 			if (owner.losebreath>0) //Suffocating so do not take a breath
@@ -156,20 +156,20 @@
 						owner.emote("gasp")
 				if (isobj(owner.loc))
 					var/obj/location_as_object = owner.loc
-					location_as_object.handle_internal_lifeform(owner, 0)
+					location_as_object.handle_internal_lifeform(owner, 0, mult)
 				if (owner.losebreath <= 0)
 					boutput(owner, "<span class='notice'>You catch your breath.</span>")
 			else
 				//First, check for air from internal atmosphere (using an air tank and mask generally)
-				breath = get_breath_from_internal(BREATH_VOLUME)
+				breath = get_breath_from_internal(BREATH_VOLUME * mult)
 
 				//No breath from internal atmosphere so get breath from location
 				if (!breath)
 					if (isobj(owner.loc))
 						var/obj/location_as_object = owner.loc
-						breath = location_as_object.handle_internal_lifeform(owner, BREATH_VOLUME)
+						breath = location_as_object.handle_internal_lifeform(owner, BREATH_VOLUME, mult)
 					else if (isturf(owner.loc))
-						var/breath_moles = (TOTAL_MOLES(environment)*BREATH_PERCENTAGE)
+						var/breath_moles = (TOTAL_MOLES(environment) * BREATH_PERCENTAGE * mult)
 
 						breath = owner.loc.remove_air(breath_moles)
 
@@ -177,9 +177,9 @@
 					underwater = 0 // internals override underwater state
 					if (isobj(owner.loc))
 						var/obj/location_as_object = owner.loc
-						location_as_object.handle_internal_lifeform(owner, 0)
+						location_as_object.handle_internal_lifeform(owner, 0, mult)
 
-		breath?.volume = BREATH_VOLUME
+		breath?.volume = BREATH_VOLUME * mult
 		handle_breath(breath, underwater, mult = mult)
 
 		if (breath)
@@ -211,6 +211,7 @@
 
 		return null
 
+	///Return value is the number of lungs that successfully breathed
 	proc/handle_breath(datum/gas_mixture/breath, var/atom/underwater = 0, var/mult = 1) //'underwater' really applies for any reagent that gets deep enough. but what ever
 		if (owner.nodamage) return
 		var/area/A = get_area(owner)
@@ -247,10 +248,11 @@
 		left_breath.volume = breath.volume / 2
 		right_breath.volume = breath.volume / 2
 
+		var/success = 0
 		if (!human_owner?.organHolder?.left_lung?.broken)
-			human_owner?.organHolder?.left_lung?.breathe(left_breath, underwater, mult, status_updates)
+			success += human_owner?.organHolder?.left_lung?.breathe(left_breath, underwater, mult, status_updates)
 		if (!human_owner?.organHolder?.right_lung?.broken)
-			human_owner?.organHolder?.right_lung?.breathe(right_breath, underwater, mult, status_updates)
+			success += human_owner?.organHolder?.right_lung?.breathe(right_breath, underwater, mult, status_updates)
 
 		breath.merge(left_breath)
 		breath.merge(right_breath)
@@ -261,5 +263,5 @@
 		for(var/emote in status_updates.emotes)
 			human_owner?.emote(emote)
 
-		return 1
+		return success
 

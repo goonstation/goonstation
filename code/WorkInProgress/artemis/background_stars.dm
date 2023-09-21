@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 /obj/background_star
@@ -6,7 +8,10 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	var/parallax_multi = 1
 	icon = 'icons/misc/background_stars.dmi'
 	icon_state = "1"
+	mouse_opacity = 0
 
+	var/image/galaxy_icon
+	var/image/duplicate_galaxy_icon
 	var/actual_x = 0
 	var/actual_y = 0
 
@@ -26,12 +31,16 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 	var/max_r_squared = ARTEMIS_MAX_R_SQUARED //951^2 - sqrt(2)*672; radius of circle with the boundary box inscribed in it
 
-	//layer = TURF_LAYER-0.01
+	var/max_visibility = ARTEMIS_MAX_R_SQUARED_VIS
 
+	//layer = TURF_LAYER-0.01
 	//plane = -2
 
 	New()
 		..()
+#if defined(DEBUG_ARTEMIS)
+		mouse_opacity = 1
+#endif
 		appearance_flags |= PIXEL_SCALE
 		if(istype(src,/obj/background_star/galactic_object))
 			return
@@ -40,12 +49,19 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	proc/set_vars()
 
 		src.set_state()
+		var/theta
+		var/r
 
-		var/theta = rand(360)
-		var/r = rand(max_r)
+		do
+			theta = rand(360)
+			r = rand(max_r)
 
-		src.actual_x = r*sin(theta)
-		src.actual_y = r*cos(theta)
+			src.actual_x = r*sin(theta)
+			src.actual_y = r*cos(theta)
+		while((actual_y**2 + actual_x**2) > max_r_squared)
+
+		if(r > ARTEMIS_MAX_R_VIS)
+			src.alpha = 0
 
 		var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
 		M = M.Translate(actual_x,actual_y)
@@ -54,33 +70,38 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	proc/set_state()
 		var/state = rand(1,9)
 		icon_state = "[state]"
+		if(galaxy_icon)
+			galaxy_icon.icon_state = icon_state
+		if(duplicate_galaxy_icon)
+			duplicate_galaxy_icon.icon_state = icon_state
 
 		if(state<7)
-			parallax_multi = 2 + (0.5*((rand()*2)-1))
+			parallax_multi = 5 + (2*((rand()*2)-1))
 		else
-			parallax_multi = 3  + (1*((rand()*2)-1))
+			parallax_multi = 8  + (1*((rand()*2)-1))
 
 	proc/process()
+		SHOULD_NOT_SLEEP(TRUE) // Check that this isn't being slept
 		var/animate = 0
-		while(start)
-			if(!rot_mag && !vel_mag)
-				src.start = 0
-			if(rot_mag)
-				animate = 1
-				src.stars_rotate(rot_mag)
-			if(vel_mag)
-				animate = 1
-				src.stars_pan(vel_mag,vel_angle)
-			if(animate)
-				animate_stars()
-				animate = 0
-			sleep(animation_speed)
+		//while(start)
+		if(!rot_mag && !vel_mag)
+			src.start = 0
+		if(rot_mag)
+			animate = 1
+			src.stars_rotate(rot_mag)
+		if(vel_mag)
+			animate = 1
+			src.stars_pan(vel_mag,vel_angle)
+		if(animate)
+			animate_stars()
+			animate = 0
+			//sleep(animation_speed)
 		return
 
 	proc/stars_start()
 		src.start = 1
-		spawn(0)
-			src.process()
+		// spawn(0)
+		// 	src.process()
 		return
 
 	proc/stars_update(mag_pan,mag_rot,angle,ship_ang)
@@ -126,16 +147,10 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 		if(!src)
 			return
 
-		if((actual_y**2 + actual_x**2) > max_r_squared)
-
-			var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
-			M = M.Translate(actual_x,actual_y)
-			animate(src, transform = M, time = animation_speed, loop = 0, flags = ANIMATION_PARALLEL)
-
-			spawn(animation_speed-1)
-
+		var/r_sqrd = (actual_y**2 + actual_x**2)
+		if(r_sqrd > max_r_squared)
+			SPAWN(animation_speed-1)
 				var/apparent_angle = vel_angle - ship_angle
-
 				var/theta = apparent_angle + (90*((rand()*2)-1))
 
 				actual_x = max_r*sin(theta)
@@ -143,37 +158,52 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 				animate(src,flags=ANIMATION_END_NOW)
 				var/matrix/N = GLOBAL_ANIMATION_MATRIX.Reset()
-				N = N.Translate(actual_x,actual_y)
+				N = N.Translate(actual_x, actual_y)
 				src.transform = N
 				src.set_state()
-
 		else
-
+			if(r_sqrd > src.max_visibility)
+				if( src.alpha )
+					src.alpha = 0
+			else if(!src.alpha)
+				animate(src, time = animation_speed, alpha = 255)
 			var/matrix/M = GLOBAL_ANIMATION_MATRIX.Reset()
-			M = M.Translate(actual_x,actual_y)
+			M = M.Translate(actual_x, actual_y)
 			animate(src, transform = M, time = animation_speed, loop = 0, flags = ANIMATION_PARALLEL)
 
 
 /turf/background_canvas
 	icon = 'icons/misc/background_stars.dmi'
 	icon_state = "canvas"
-	//layer = TURF_LAYER-0.02
-	//plane = -3
+	plane = PLANE_SPACE
 	fullbright = 1
+	mouse_opacity = 0
 
 	New()
 		..()
 
 /obj/landmark/ship_marker
+	name = "ship marker"
 	var/ship_id = "artemis"
 	var/num_stars = 200
+	name_override = LANDMARK_SHIPS
 
 	New()
+		name = ship_id
+		src.data = src.ship_id
 		var/obj/background_star/S = null
 		for(var/i=0,i<num_stars,i++)
 			S = new/obj/background_star()
+			S.plane = PLANE_SPACE
 			S.loc = get_turf(src)
 			S.ships_id =  src.ship_id
+			S.galaxy_icon = image(S.icon, S, S.icon_state, S.layer)
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(S.galaxy_icon)
+			if(ship_id=="artemis")
+				S.duplicate_galaxy_icon = image(S.icon, S, S.icon_state, S.layer)
+				S.duplicate_galaxy_icon.pixel_x += (57 * 32)
+				get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_image(S.duplicate_galaxy_icon)
+			S.icon = null
 		..()
 
 /obj/background_star/manta
@@ -183,6 +213,12 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	set_state()
 		var/state = rand(1,4)
 		icon_state = "M-[state]"
+		if(galaxy_icon)
+			galaxy_icon.icon_state = icon_state
+		if(duplicate_galaxy_icon)
+			duplicate_galaxy_icon.icon_state = icon_state
 
 		if(state<7)
 			parallax_multi = 2 + (0.5*((rand()*2)-1))
+
+#endif

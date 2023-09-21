@@ -9,6 +9,27 @@
 	can_use_in_container = 1
 	interrupt_action_bars = 0
 	var/last_mimiced_name = ""
+	var/headset_icon_labels = list( // list for what changelings can mimic over radio, key refers to headset.icon_tooltip and is used in the selection menu and value refers to associated headset.icon_override, check headsets.dm
+		"Captain" = "cap",
+		"Head of Personnel" = "hop",
+		"Head of Security" = "hos",
+		"Head of Staff" = "head",
+		"Research Director" = "rd",
+		"Medical Director" = "md",
+		"Chief Engineer" = "ce",
+		"Nanotrasen Security Consultant" = "nt",
+		"Security" = "sec",
+		"Detective" = "det",
+		"Scientist" = "sci",
+		"Medical" = "med",
+		"Engineer" = "eng",
+		"Quartermaster" = "qm",
+		"Miner" = "Min",
+		"Civilian" = "civ",
+		"Radio Show Host" = "rh",
+		"Mailman" = "mail",
+		"Clown" = "clown")
+
 	cast(atom/target)
 		if (..())
 			return 1
@@ -33,11 +54,13 @@
 		if (H?.ears && istype(H.ears,/obj/item/device/radio/headset))
 			var/obj/item/device/radio/headset/headset = H.ears
 			if (headset.icon_override && findtext(mimic_message,";") || findtext(mimic_message,":"))
-				var/radio_override = input("Select a radio frequency to disguise as...", "Mimic Radio Message.", null, null) as null|anything in list("head","sec","eng","sci","med","qm","civ","cap","rd","md","ce","hop","hos","clown")
-				if (radio_override)
+				var/radio_tooltip = input("Select a radio frequency to disguise as...", "Mimic Radio Message.", null, null) as null|anything in headset_icon_labels
+				if (radio_tooltip)
+					var/radio_override = headset_icon_labels[radio_tooltip]
 					headset.icon_override = radio_override
+					headset.icon_tooltip = radio_tooltip
 
-		logTheThing("say", holder.owner, mimic_name, "[mimic_message] (<b>Mimicing ([constructTarget(mimic_name,"say")])</b>)")
+		logTheThing(LOG_SAY, holder.owner, "[mimic_message] (<b>Mimicing ([constructTarget(mimic_name,"say")])</b>)")
 		var/original_name = holder.owner.real_name
 		holder.owner.real_name = copytext(mimic_name, 1, MOB_NAME_MAX_LENGTH)
 		holder.owner.say(mimic_message)
@@ -47,5 +70,6 @@
 			var/obj/item/device/radio/headset/headset = H.ears
 			if (headset.icon_override)
 				headset.icon_override = initial(headset.icon_override)
+				headset.icon_tooltip = initial(headset.icon_tooltip)
 
 		return 0

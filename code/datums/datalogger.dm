@@ -37,6 +37,9 @@ var/global/datum/datalogger/game_stats
 		stats["admins"] = 0
 		stats["gunfire"] = 0
 		stats["grass_touched"] = 0
+		stats["slips"] = 0
+		stats["hydro_harvests"] = 0
+		stats["hydro_produce"] = 0
 	proc
 		Increment(var/p)
 			if(!(p in stats))
@@ -44,11 +47,20 @@ var/global/datum/datalogger/game_stats
 			stats[p]++
 			//DEBUG_MESSAGE("[p] = [stats[p]]")
 			return 1
+		IncrementBy(var/p, var/amt)
+			if(!(p in stats))
+				return null
+			stats[p] += amt
+			return 1
 		Decrement(var/p)
 			if(!(p in stats))
 				return null
 			stats[p]--
-//			boutput(world, "[p] = [stats[p]]")
+			return 1
+		DecrementBy(var/p, var/amt)
+			if(!(p in stats))
+				return null
+			stats[p] -= amt
 			return 1
 		SetValue(var/p, var/val)
 			if(!(p in stats))

@@ -14,22 +14,8 @@
 var/telesci_modifiers_set = 0
 
 proc/is_teleportation_allowed(var/turf/T)
-	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
-		if (istype(atom, /obj/machinery/telejam))
-			var/obj/machinery/telejam/TJ = atom
-			if (!TJ.active)
-				continue
-			if(IN_RANGE(TJ, T, TJ.range))
-				return FALSE
-		if (istype(atom, /obj/item/device/flockblocker))
-			var/obj/item/device/flockblocker/F = atom
-			if (!F.active)
-				continue
-			if(IN_RANGE(F, T, F.range))
-				return FALSE
-
-	for_by_tcl(N, /obj/blob/nucleus)
-		if(IN_RANGE(N, T, 3))
+	for (var/atom/A as anything in by_cat[TR_CAT_TELEPORT_JAMMERS])
+		if (IN_RANGE(A, T, GET_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER)))
 			return FALSE
 
 	// first check the always allowed turfs from map landmarks
@@ -48,18 +34,21 @@ proc/is_teleportation_allowed(var/turf/T)
 
 	return TRUE
 
+TYPEINFO(/obj/machinery/networked/telepad)
+	mats = 16
+
 /obj/machinery/networked/telepad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
 	name = "teleport pad"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
-	mats = 16
 	timeout = 10
 	desc = "Stand on this to have your wildest dreams come true!"
 	device_tag = "PNET_S_TELEPAD"
 	plane = PLANE_NOSHADOW_BELOW
+	power_usage = 200
 	var/recharging = 0
 	var/realx = 0
 	var/realy = 0
@@ -250,7 +239,7 @@ proc/is_teleportation_allowed(var/turf/T)
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.send(turfcheck)
 							sleep(0.5 SECONDS)
 
@@ -274,13 +263,13 @@ proc/is_teleportation_allowed(var/turf/T)
 									src.message_host("command=nack&cause=bad[turfcheck & 1 ? "x" : null][turfcheck & 2 ? "y" : null][turfcheck & 4 ? "z" : null]")
 								else
 									src.message_host("command=nack&cause=badxyz")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.badreceive()
 							else if(!is_teleportation_allowed(turfcheck))
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.receive(turfcheck)
 							sleep(0.5 SECONDS)
 
@@ -420,6 +409,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		return
 
 	process()
+		..()
 		if(status & (NOPOWER|BROKEN))
 			if (start_portal || end_portal)
 				qdel(start_portal)
@@ -429,8 +419,6 @@ proc/is_teleportation_allowed(var/turf/T)
 				badreceive()
 
 			return
-
-		use_power(200)
 
 		if (start_portal || end_portal)
 			use_power(50000) //Apparently this could run indefinitely on solar power. Fuck that. 25 000 -> 250 000
@@ -485,6 +473,9 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!target)
 			return 1
 
+		leaveresidual(target)
+		sleep(0.5 SECONDS)
+
 		var/list/stuff = list()
 		for(var/atom/movable/O as obj|mob in src.loc)
 			if(O.anchored) continue
@@ -493,13 +484,16 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
-			which.set_loc(target)
+				logTheThing(LOG_STATION, usr, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
+			else
+				logTheThing(LOG_STATION, usr, "sent [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
+			// teleblock checks should already be done
+			do_teleport(which,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+
 
 		showswirl_out(src.loc)
 		leaveresidual(src.loc)
 		showswirl(target)
-		leaveresidual(target)
 		use_power(1500)
 		if(prob(2) && prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
@@ -516,6 +510,9 @@ proc/is_teleportation_allowed(var/turf/T)
 			//boutput(usr, "Unknown interference prevents teleportation from that location!")
 			return 1
 
+		leaveresidual(receiveturf)
+		sleep(0.5 SECONDS)
+
 		var/list/stuff = list()
 		for(var/atom/movable/O as obj|mob in receiveturf)
 			if(O.anchored) continue
@@ -523,12 +520,13 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (stuff.len)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
-				logTheThing("station", usr, which, "received [constructTarget(which,"station")] from [log_loc(which)] to [log_loc(src)] with a telepad")
-			which.set_loc(src.loc)
+				logTheThing(LOG_STATION, usr, "received [constructTarget(which,"station")] from [log_loc(which)] to [log_loc(src)] with a telepad")
+			else
+				logTheThing(LOG_STATION, usr, "received [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
+			do_teleport(which,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
 		showswirl_out(receiveturf)
-		leaveresidual(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
@@ -553,17 +551,17 @@ proc/is_teleportation_allowed(var/turf/T)
 			if(O.anchored) continue
 			receive.Add(O)
 		for(var/atom/movable/O in send)
-			O.set_loc(target)
+			do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 			if(ismob(O))
-				logTheThing("station", usr, O, "sent [constructTarget(O,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
+				logTheThing(LOG_STATION, usr, "sent [constructTarget(O,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 
 		for(var/atom/movable/O in receive)
 			if(ismob(O))
-				logTheThing("station", usr, O, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
-			O.set_loc(src.loc)
+				logTheThing(LOG_STATION, usr, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
+			do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 		showswirl(src.loc)
 		showswirl(target)
-		use_power(500000)
+		use_power(400000)
 		if(prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
@@ -577,7 +575,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			start_portal = makeportal(src.loc, target)
 			if (start_portal)
 				end_portal = makeportal(target, src.loc)
-				logTheThing("station", usr, null, "created a portal to [log_loc(target)] at [log_loc(src.loc)] with a telepad")
+				logTheThing(LOG_STATION, usr, "created a portal to [log_loc(target)] at [log_loc(src.loc)] with a telepad")
 
 	proc/makeportal(var/turf/newloc, var/turf/destination)
 		var/obj/perm_portal/P = new /obj/perm_portal (newloc)
@@ -594,7 +592,7 @@ proc/is_teleportation_allowed(var/turf/T)
 			effect = pick("tempblind","minormutate","sorium","rads","fire","widescatter","brute")
 		else //MAJOR EFFECTS
 			effect = pick("gib","majormutate","mutatearea","fullscatter")
-		logTheThing("station", usr, null, "sends the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
+		logTheThing(LOG_STATION, usr, "sends the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
 		processbadeffect(effect)
 
 	proc/badreceive()
@@ -607,8 +605,8 @@ proc/is_teleportation_allowed(var/turf/T)
 			effect = pick("mediumsummon","sorium","rads","fire","getrandom")
 		else //MAJOR EFFECTS
 			effect = pick("mutatearea","areascatter","majorsummon")
-		logTheThing("station", usr, null, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
-		INVOKE_ASYNC(src, /obj/machinery/networked/telepad.proc/processbadeffect, effect)
+		logTheThing(LOG_STATION, usr, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/networked/telepad, processbadeffect), effect)
 
 	proc/processbadeffect(var/effect)
 		switch(effect)
@@ -616,7 +614,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("flash")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>A bright flash emnates from the [src]!</span>", 1)
-				playsound(src.loc, "sound/weapons/flashbang.ogg", 35, 1)
+				playsound(src.loc, 'sound/weapons/flashbang.ogg', 35, 1)
 				for (var/mob/N in viewers(src, null))
 					if (GET_DIST(N, src) <= 6)
 						N.apply_flash(30, 5)
@@ -625,7 +623,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("buzz")
 				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>You hear a loud buzz coming from the [src]!</span>", 1)
-				playsound(src.loc, "sound/machines/buzz-sigh.ogg", 50, 1)
+				playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 50, 1)
 				return
 			if("scatter") //stolen from hand tele, heh
 				var/list/turfs = new
@@ -639,7 +637,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("ignite")
@@ -673,11 +671,11 @@ proc/is_teleportation_allowed(var/turf/T)
 					M.throw_at(target, 10, 2)
 				return
 			if("rads")
-				for(var/turf/T in view(5,src.loc))
-					if(!T.reagents)
-						T.create_reagents(1000)
-					T.reagents.add_reagent("radium", 20)
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] begins to glow bright green!</span>", 1)
+				playsound(src, 'sound/weapons/ACgun2.ogg', 50, TRUE)
+				for (var/i in 1 to rand(3,5))
+					var/datum/projectile/neutron/projectile = new(15)
+					shoot_projectile_DIR(src, projectile, pick(alldirs))
+				src.visible_message("<span class='alert'>A bright green pulse emanates from the [src]!</span>")
 				return
 			if("fire")
 				fireflash(src.loc, 6) // cogwerks - lowered from 8, too laggy
@@ -695,7 +693,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("brute")
@@ -705,7 +703,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 			if("gib")
 				for(var/mob/living/M in src.loc)
-					logTheThing("combat", M, null, "was gibbed by a telescience fault at [log_loc(M)].")
+					logTheThing(LOG_COMBAT, M, "was gibbed by a telescience fault at [log_loc(M)].")
 					M.gib()
 				return
 			if("majormutate")
@@ -737,23 +735,23 @@ proc/is_teleportation_allowed(var/turf/T)
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("minorsummon")
 				var/summon = pick("pig","mouse","roach","rockworm")
 				switch(summon)
 					if("pig")
-						new /obj/critter/pig(src.loc)
+						new /mob/living/critter/small_animal/pig(src.loc)
 					if("mouse")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/mouse(src.loc)
+							new /mob/living/critter/small_animal/mouse(src.loc)
 					if("roach")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/roach(src.loc)
+							new /mob/living/critter/small_animal/cockroach(src.loc)
 					if("rockworm")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/rockworm(src.loc)
+							new /mob/living/critter/rockworm(src.loc)
 				return
 			if("tinyfire")
 				fireflash(src.loc, 3)
@@ -761,7 +759,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
+				var/summon = pick(/mob/living/critter/plant/maneater, /obj/critter/killertomato, /mob/living/critter/small_animal/wasp, /mob/living/critter/golem, /mob/living/critter/skeleton, /mob/living/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")
@@ -773,7 +771,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					turfs += T
 				var/turf = pick(turfs)
 				for(var/atom/movable/O as obj|mob in turf)
-					O.set_loc(src.loc)
+					do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				return
 			if("areascatter")
 				var/list/turfs = new
@@ -787,16 +785,16 @@ proc/is_teleportation_allowed(var/turf/T)
 					for(var/atom/movable/O as obj|mob in oview(src,5))
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("majorsummon")
 				var/summon = pick(
-					/obj/critter/zombie,
-					/obj/critter/bear,
+					/mob/living/critter/zombie,
+					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
-					/obj/critter/martian/soldier,
-					/obj/critter/lion,
+					/mob/living/critter/martian/soldier,
+					/mob/living/critter/lion,
 					/obj/critter/yeti,
 					/obj/critter/gunbot/drone,
 					/obj/critter/ancient_thing)
@@ -804,15 +802,17 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 
 
+TYPEINFO(/obj/machinery/networked/teleconsole)
+	mats = 14
+
 /obj/machinery/networked/teleconsole
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "s_teleport"
 	name = "teleport computer"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	device_tag = "SRV_TERMINAL"
 	timeout = 10
-	mats = 14
 	var/xtarget = 0
 	var/ytarget = 0
 	var/ztarget = 0
@@ -922,7 +922,7 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 
 			if("term_message","term_file")
-				var/message = signal.data["data"]
+				var/message = strip_html(signal.data["data"])
 				if (message)
 					message = replacetext(message, "|n", "<br>")
 
@@ -991,7 +991,7 @@ proc/is_teleportation_allowed(var/turf/T)
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W))
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.panel_open = !src.panel_open
 			boutput(user, "You [src.panel_open ? "unscrew" : "secure"] the cover.")
 			src.updateUsrDialog()
@@ -1081,11 +1081,11 @@ proc/is_teleportation_allowed(var/turf/T)
 			return
 
 		if (href_list["addbookmark"])
-			if(bookmarks.len >= max_bookmarks)
+			if(length(bookmarks) >= max_bookmarks)
 				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 				return
 			var/datum/teleporter_bookmark/bm = new
-			var/title = input(usr,"Enter name:","Name","New Bookmark") as text
+			var/title = tgui_input_text(usr, "Enter name:", "Name", "New Bookmark")
 			title = copytext(adminscrub(title), 1, 128)
 			if(!length(title)) return
 			bm.name = title

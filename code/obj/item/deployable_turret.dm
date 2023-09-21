@@ -6,7 +6,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 /obj/item/turret_deployer
 	name = "fucked up turret deployer that you shouldn't see"
 	desc = "this isn't going to spawn anything and will also probably yell errors at you"
-	icon = 'icons/obj/syndieturret.dmi'
+	icon = 'icons/obj/deployableturret.dmi'
 	force = 3
 	throwforce = 10
 	throw_speed = 1
@@ -72,6 +72,9 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+TYPEINFO(/obj/item/turret_deployer/riot)
+	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
+
 /obj/item/turret_deployer/riot
 	name = "N.A.R.C.S. Deployer"
 	desc = "A Nanotrasen Automatic Riot Control System Deployer. Use it in your hand to deploy."
@@ -79,9 +82,17 @@ ABSTRACT_TYPE(/obj/item/turret_deployer)
 	icon_state = "st_deployer"
 	w_class = W_CLASS_BULKY
 	icon_tag = "nt"
-	mats = list("INS-1"=10, "CON-1"=10, "CRY-1"=3, "MET-2"=2)
 	is_syndicate = 1
 	associated_turret = /obj/deployable_turret/riot
+
+/obj/item/turret_deployer/outpost
+	name = "Perimeter Turret Deployer"
+	desc = "A standard issue perimeter security turret deployer used on the frontier. Use it in your hand to deploy."
+	turret_health = 125
+	icon_state = "op_deployer"
+	w_class = W_CLASS_BULKY
+	icon_tag = "op"
+	associated_turret = /obj/deployable_turret/outpost
 
 /////////////////////////////
 //       Turret Code       //
@@ -91,8 +102,8 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 	name = "fucked up abstract turret that should never exist"
 	desc = "why did you do this"
-	icon = 'icons/obj/syndieturret.dmi'
-	anchored = 0
+	icon = 'icons/obj/deployableturret.dmi'
+	anchored = UNANCHORED
 	density = 1
 	var/health = 250
 	var/max_health = 250
@@ -116,10 +127,11 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	var/spread = 0
 	var/associated_deployer = null //what kind of turret deployer should this deconstruct to?
 	var/deconstructable = TRUE
+	var/can_toggle_activation = TRUE // whether you can enable or disable the turret with a screwdriver, used for map setpiece turrets
 
 	New(var/loc, var/direction)
 		..()
-		src.set_dir(direction)
+		src.set_dir(direction || src.dir) // don't set the dir if we weren't passed one
 		src.set_initial_angle()
 
 		src.icon_state = "[src.icon_tag]_base"
@@ -198,8 +210,8 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return
 
 			user.show_message(src.anchored ? "You start to unweld the turret from the floor." : "You start to weld the turret to the floor.")
-			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, .proc/toggle_anchored, null, W.icon, W.icon_state, \
-			  src.anchored ? "You unweld the turret from the floor." : "You weld the turret to the floor.", \
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(toggle_anchored), null, W.icon, W.icon_state, \
+			  src.anchored ? "[user] unwelds the turret from the floor." : "[user] welds the turret to the floor.", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if (isweldingtool(W) && (src.active))
@@ -211,8 +223,8 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				return
 
 			user.show_message("You start to repair the turret.")
-			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/repair, null, W.icon, W.icon_state, \
-			  "You repair some of the turret's damage.", \
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(repair), null, W.icon, W.icon_state, \
+			  "[user] repairs some of the turret's damage.", \
 			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if  (iswrenchingtool(W))
@@ -225,34 +237,40 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				user.update_cursor()
 				A.my_turret = src
 				A.user_turf = get_turf(user)
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
 
 			else
 				user.show_message("You begin to disassemble the turret.")
-				playsound(src.loc, "sound/items/Ratchet.ogg", 50, 1)
-				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, .proc/spawn_deployer, null, W.icon, W.icon_state, \
-				  "You disassemble the turret.", \
+				playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+				SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(spawn_deployer), null, W.icon, W.icon_state, \
+				  "[user] disassembles the turret.", \
 				  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else if (isscrewingtool(W))
 
-			if(!src.anchored)
-				user.show_message("<span class='notice'>The turret is too unstable to fire! Secure it to the ground with a welding tool first!</span>")
+			if(src.can_toggle_activation == TRUE)
+
+				if(!src.anchored)
+					user.show_message("<span class='notice'>The turret is too unstable to fire! Secure it to the ground with a welding tool first!</span>")
+					return
+
+				if (!src.deconstructable)
+					user.show_message("<span class='alert'>You can't power the turret off! The controls are too secure!</span>")
+					return
+
+				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, PROC_REF(toggle_activated), null, W.icon, W.icon_state, \
+			 	 "[user] powers the turret [src.active ? "off" : "on"].", \
+			 	 INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+
+			else
+				user.show_message("<span class='alert'>The activation switch is protected! You can't toggle the power!</span>")
 				return
-
-			if (!src.deconstructable)
-				user.show_message("<span class='alert'>You can't power the turret off! The controls are too secure!</span>")
-				return
-
-			playsound(src.loc, "sound/items/Screwdriver.ogg", 50, 1)
-
-			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/toggle_activated, null, W.icon, W.icon_state, \
-			  "You power the turret [src.active ? "off" : "on"].", \
-			  INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
 
 		else
 			src.health = src.health - W.force
-			playsound(get_turf(src), "sound/impact_sounds/Generic_Hit_Heavy_1.ogg", 25, 1)
+			playsound(get_turf(src), 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 25, 1)
 			attack_particle(user,src)
 			src.check_health()
 			..()
@@ -285,9 +303,9 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			return
 		src.quick_deploy_fuel--
 		src.visible_message("<span class='alert'>[src]'s quick deploy system engages, automatically securing it!</span>")
-		playsound(src.loc, "sound/items/Welder2.ogg", 30, 1)
+		playsound(src.loc, 'sound/items/Welder2.ogg', 30, 1)
 		set_projectile()
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.active = 1
 		src.icon_state = "[src.icon_tag]_idle"
 
@@ -319,7 +337,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 				damage_words = "to be on the verge of falling apart!"
 
 	proc/die()
-		playsound(src.loc, "sound/impact_sounds/Machinery_Break_1.ogg", 50, 1)
+		playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 		new /obj/decal/cleanable/robot_debris(src.loc)
 		qdel(src)
 
@@ -356,7 +374,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 			src.icon_state = "[src.icon_tag]_active"
 
-			playsound(src.loc, "sound/vox/woofsound.ogg", 40, 1)
+			playsound(src.loc, 'sound/vox/woofsound.ogg', 40, 1)
 
 		return src.target
 
@@ -364,24 +382,24 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		var/distance = GET_DIST(get_turf(C),get_turf(src))
 
 		if(distance > src.range)
-			return 0
+			return FALSE
 		if (!C)
-			return 0
+			return FALSE
 		if(!isliving(C) || isintangible(C))
-			return 0
+			return FALSE
 		if (C.health < 0)
-			return 0
-		if (C.stat == 2)
-			return 0
+			return FALSE
+		if (isdead(C))
+			return FALSE
 		for(var/atom/movable/some_loc in obj_loc_chain(C))
 			if(istype(some_loc, /obj/item)) // prevent shooting at pickled people and such
-				return 0
+				return FALSE
 		if (istype(C,/mob/living/carbon/human))
 			var/mob/living/carbon/human/H = C
 			if (H.hasStatus(list("resting", "weakened", "stunned", "paralysis"))) // stops it from uselessly firing at people who are already suppressed. It's meant to be a suppression weapon!
-				return 0
+				return FALSE
 		if (is_friend(C))
-			return 0
+			return FALSE
 
 		var/angle = get_angle(get_turf(src),get_turf(C))
 
@@ -391,9 +409,9 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		crossed_turfs = castRay(src,anglemod,distance)
 		for (var/turf/T in crossed_turfs)
 			if (T.opacity == 1)
-				return 0
+				return FALSE
 			if (T.density == 1)
-				return 0
+				return FALSE
 
 		angle = angle < 0 ? angle+360 : angle // make angles positive
 		angle = angle - src.external_angle
@@ -406,8 +424,8 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			angle = abs(angle)
 
 		if (angle <= (angle_arc_size/2)) //are we in the seeking arc?
-			return 1
-		return 0
+			return TRUE
+		return FALSE
 
 
 	proc/is_friend(var/mob/living/C) //tried to keep this generic in case you want to make a turret that only shoots monkeys or something
@@ -440,7 +458,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 /obj/deployable_turret/syndicate
 	name = "NAS-T"
 	desc = "A Nuclear Agent Sentry Turret."
-	projectile_type = /datum/projectile/bullet/ak47
+	projectile_type = /datum/projectile/bullet/akm
 	icon_tag = "st"
 	associated_deployer = /obj/item/turret_deployer/syndicate
 
@@ -453,10 +471,10 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		..()
 
 	is_friend(var/mob/living/C)
-		return istype(C.get_id(), /obj/item/card/id/syndicate) || istype(C, /mob/living/critter/robotic/gunbot/syndicate) //dumb lazy
+		return istype(C.get_id(), /obj/item/card/id/syndicate) || (C.faction && C.faction == FACTION_SYNDICATE) //dumb lazy
 
 /obj/deployable_turret/syndicate/active
-	anchored = 1
+	anchored = ANCHORED
 
 	New(loc)
 		..(src.loc, src.dir)
@@ -479,23 +497,46 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	is_friend(var/mob/living/C)
 		var/obj/item/card/id/I = C.get_id()
 		if(!istype(I))
-			return 0
-		switch(I.icon_state)
-			if("id_sec")
-				return 1
-			if("id_com")
-				return 1
-			if("gold")
-				return 1
-			else
-				return 0
+			return FALSE
+		. = (access_security in I.access) || (access_heads in I.access)
 
 /obj/deployable_turret/riot/active
-	anchored = 1
+	anchored = ANCHORED
 
 	New(loc)
 		..(src.loc, src.dir)
 		src.toggle_activated()
+
+/obj/deployable_turret/outpost // for a planetary outpost, it gon' shootcha!
+	name = "Perimeter Turret"
+	desc = "The red light seems to be pointed right at you. Uh oh..."
+	health = 125
+	max_health = 125
+	range = 7
+	projectile_type = /datum/projectile/bullet/revolver_38/lb
+	burst_size = 2
+	fire_rate = 1
+	angle_arc_size = 90
+	icon_tag = "op"
+	quick_deploy_fuel = 0
+	associated_deployer = /obj/item/turret_deployer/outpost
+
+/obj/deployable_turret/outpost/active
+	can_toggle_activation = FALSE // for map placement so people don't cheese them by rushing them with a screwdriver
+	anchored = ANCHORED
+
+	New(loc)
+		..(src.loc, src.dir)
+		src.toggle_activated()
+
+	north
+		dir=NORTH
+	south
+		dir=SOUTH
+	east
+		dir=EAST
+	west
+		dir=WEST
 
 /////////////////////////////
 //   Turret Ability Stuff  //
@@ -513,7 +554,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 
 	castcheck(var/mob/M)
 		if (M.client && M.client.holder)
-			return 1
+			return TRUE
 
 	handleCast(var/atom/target)
 
@@ -544,7 +585,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 			SPAWN(0)
 				src.my_turret.set_angle(get_angle(my_turret,target))
 
-			return 0
+			return FALSE
 
 /////////////////////////////
 //       User Manuals      //

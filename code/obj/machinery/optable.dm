@@ -1,11 +1,14 @@
+TYPEINFO(/obj/machinery/optable)
+	mats = 25
+
 /obj/machinery/optable
 	name = "Operating Table"
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "table2-idle"
+	pass_unstable = TRUE
 	desc = "A table that allows qualified professionals to perform delicate surgeries."
 	density = 1
-	anchored = 1
-	mats = 25
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 	var/mob/living/carbon/human/victim = null
 	var/strapped = 0
@@ -43,7 +46,7 @@
 	if (user.is_hulk())
 		user.visible_message("<span class='alert'>[user] destroys the table.</span>")
 		src.set_density(0)
-		logTheThing("combat", user, null, "uses hulk to smash an operating table at [log_loc(src)].")
+		logTheThing(LOG_COMBAT, user, "uses hulk to smash an operating table at [log_loc(src)].")
 		qdel(src)
 	return
 
@@ -58,11 +61,13 @@
 /obj/machinery/optable/proc/check_victim()
 	if(locate(/mob/living/carbon/human, src.loc))
 		var/mob/M = locate(/mob/living/carbon/human, src.loc)
-		if(M.hasStatus("resting"))
+		if(M.hasStatus("resting") || isunconscious(M) ||  M.traitHolder.hasTrait("training_medical"))
 			src.victim = M
 			icon_state = "table2-active"
 			return 1
-	src.victim = null
+	if (src.victim)
+		src.victim = null
+		src.computer?.victim = null
 	icon_state = "table2-idle"
 	return 0
 
@@ -112,7 +117,7 @@
 		boutput(user, "<span class='alert'>You need to be closer to the operating table.</span>")
 		return
 	if (BOUNDS_DIST(user, O) > 0)
-		boutput(user, "<span class='alert'>Your target needs to be near you to put them on the operating table.</span>")
+		boutput(user, "<span class='alert'>Your target needs to be near you to put [him_or_her(O)] on the operating table.</span>")
 		return
 
 	var/mob/living/carbon/C = O
@@ -137,4 +142,3 @@
 			src.victim = C
 		else
 			boutput(user, "<span class='alert'>You were interrupted!</span>")
-	return

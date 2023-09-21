@@ -9,27 +9,48 @@
 	icon_state = "flockmind"
 
 	var/started = FALSE
-	var/last_time
+	///Pity respawn max
+	var/max_respawns = 1
+
+	var/datum/tutorial_base/regional/flock/tutorial = null
 
 
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
 	..()
 
-	APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
-	src.last_time = world.timeofday
 
 	src.flock = F || new /datum/flock()
 	src.real_name = "Flockmind [src.flock.name]"
 	src.name = src.real_name
+	if(src.flock.name == "ba.ba") //this easteregg used with permission from Hempuli. Thanks Hempuli!
+		src.icon_state = "baba"
 	src.update_name_tag()
 	src.flock.registerFlockmind(src)
 	if (!F)
 		src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
 		src.addAbility(/datum/targetable/flockmindAbility/ping)
+		src.addAbility(/datum/targetable/flockmindAbility/tutorial)
 	else
 		src.started = TRUE
 		src.addAllAbilities()
+
+
+/mob/living/intangible/flock/flockmind/proc/start_tutorial()
+	if (src.tutorial)
+		return
+	src.tutorial = new(src)
+	if (src.tutorial.initial_turf)
+		src.tutorial.Start()
+	else
+		boutput(src, "<span class='alert'>Could not start tutorial! Please try again later or call Wire.</span>")
+		logTheThing(LOG_GAMEMODE, src, "Failed to set up flock tutorial, something went very wrong.")
+		src.tutorial = null
+
+/mob/living/intangible/flock/flockmind/select_drone(mob/living/critter/flock/drone/drone)
+	if(src.tutorial && !src.tutorial.PerformAction(FLOCK_ACTION_DRONE_SELECT))
+		return
+	..()
 
 /mob/living/intangible/flock/flockmind/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -46,7 +67,7 @@
 /mob/living/intangible/flock/flockmind/proc/getTraceToPromote()
 	var/list/eligible_traces = src.flock.getActiveTraces()
 	if (length(eligible_traces))
-		return tgui_input_list(src, "Choose Flocktrace to promote to Flockmind", "Promotion", sortList(eligible_traces))
+		return tgui_input_list(src, "Choose Flocktrace to promote to Flockmind", "Promotion", sortList(eligible_traces, /proc/cmp_text_asc))
 	else
 		return -1
 
@@ -57,10 +78,23 @@
 /mob/living/intangible/flock/flockmind/Life(datum/controller/process/mobs/parent)
 	if (..(parent))
 		return TRUE
-	if (src.started && src.flock)
+	if (!src.flock || src.flock.dead)
+		return
+	src.flock.stats.peak_compute = max(src.flock.stats.peak_compute, src.flock.total_compute())
+	if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD * 3 / 4)
+		if (!ON_COOLDOWN(src, "afk_message", FLOCK_AFK_COUNTER_THRESHOLD))
+			boutput(src, "<span class='flocksay'><b>\[SYSTEM: Sentience pause detected. Preparing promotion routines.\]</b></span>")
+		if (src.afk_counter > FLOCK_AFK_COUNTER_THRESHOLD)
+			var/list/traces = src.flock.getActiveTraces()
+			if (length(traces))
+				boutput(src, "<span class='flocksay'><b>\[SYSTEM: Lack of sentience confirmed. Self-programmed routines promoting new Flockmind.\]</b></span>")
+				var/mob/living/intangible/flock/trace/chosen_trace = pick(traces)
+				chosen_trace.promoteToFlockmind(FALSE)
+			src.afk_counter = 0
+	if (src.started)
 		if (src.flock.getComplexDroneCount())
 			return
-		for (var/obj/flock_structure/s in src.flock.structures)
+		for (var/obj/flock_structure/s as anything in src.flock.structures)
 			if (istype(s, /obj/flock_structure/egg) || istype(s, /obj/flock_structure/rift))
 				return
 		src.death()
@@ -68,17 +102,19 @@
 /mob/living/intangible/flock/flockmind/proc/spawnEgg()
 	if(src.flock)
 		new /obj/flock_structure/rift(get_turf(src), src.flock)
-		playsound(src, "sound/impact_sounds/Metal_Clang_1.ogg", 30, 1)
+		playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, TRUE)
 	else
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
 		return
 	src.removeAbility(/datum/targetable/flockmindAbility/spawnEgg)
+	src.removeAbility(/datum/targetable/flockmindAbility/tutorial)
 	src.addAllAbilities()
 
 /mob/living/intangible/flock/flockmind/proc/addAllAbilities()
 	src.addAbility(/datum/targetable/flockmindAbility/controlPanel)
 	src.addAbility(/datum/targetable/flockmindAbility/designateTile)
 	src.addAbility(/datum/targetable/flockmindAbility/designateEnemy)
+	src.addAbility(/datum/targetable/flockmindAbility/designateIgnore)
 	src.addAbility(/datum/targetable/flockmindAbility/partitionMind)
 	src.addAbility(/datum/targetable/flockmindAbility/splitDrone)
 	src.addAbility(/datum/targetable/flockmindAbility/healDrone)
@@ -88,7 +124,28 @@
 	src.addAbility(/datum/targetable/flockmindAbility/createStructure)
 	src.addAbility(/datum/targetable/flockmindAbility/deconstruct)
 
+/mob/living/intangible/flock/flockmind/proc/reset()
+	for (var/datum/targetable/ability in src.abilityHolder.abilities)
+		//do not remove the hidden drone control ability
+		if (istype(ability, /datum/targetable/flockmindAbility/droneControl))
+			continue
+		src.abilityHolder.removeAbilityInstance(ability)
+	src.addAbility(/datum/targetable/flockmindAbility/spawnEgg)
+	src.addAbility(/datum/targetable/flockmindAbility/ping)
+	src.addAbility(/datum/targetable/flockmindAbility/tutorial)
+	src.started = FALSE
+
 /mob/living/intangible/flock/flockmind/death(gibbed, relay_destroyed = FALSE, suicide = FALSE)
+	if (src.tutorial && !suicide)
+		return
+	src.emote("scream")
+	if (src.flock && src.flock.stats.peak_compute < 200 && src.flock.stats.respawns < src.max_respawns)
+		src.reset()
+		src.flock.perish(FALSE)
+		src.flock.stats.respawns++
+		logTheThing(LOG_GAMEMODE, src, "respawns using pity respawn number [src.flock.stats.respawns]")
+		boutput(src, "<span class='alert'><b>With no drones left in your Flock you retreat back into the Signal, ready to open another rift. You are now iteration [src.flock.stats.respawns + 1].</b></span>")
+		return
 	. = ..()
 	if(src.client)
 		if (relay_destroyed)
@@ -120,7 +177,7 @@
 	return O
 
 
-/mob/living/intangible/flock/flockmind/proc/partition()
+/mob/living/intangible/flock/flockmind/proc/partition(antagonist_source = ANTAGONIST_SOURCE_SUMMONED)
 	boutput(src, "<span class='flocksay'>Partitioning initiated. Stand by.</span>")
 
 	var/ghost_confirmation_delay = 30 SECONDS
@@ -131,31 +188,32 @@
 	text_messages.Add("You have been added to the list of eligible candidates. The game will pick a player soon. Good luck!")
 
 	message_admins("Sending Flocktrace offer to eligible ghosts. They have [ghost_confirmation_delay / 10] seconds to respond.")
-	var/list/candidates = dead_player_list(FALSE, ghost_confirmation_delay, text_messages)
+	var/list/candidates = dead_player_list(FALSE, ghost_confirmation_delay, text_messages, TRUE)
 
 	if (src.disposed)
 		message_admins("[src.real_name] has died during a Flocktrace respawn offer event.")
-		logTheThing("admin", null, null, "No Flocktraces were created for [src.real_name] due to their death.")
+		logTheThing(LOG_ADMIN, null, "No Flocktraces were created for [src.real_name] due to their death.")
 		return TRUE
 
 	if (!length(candidates))
 		message_admins("No ghosts responded to a Flocktrace offer from [src.real_name]")
-		logTheThing("admin", null, null, "No ghosts responded to Flocktrace offer from [src.real_name]")
+		logTheThing(LOG_ADMIN, null, "No ghosts responded to Flocktrace offer from [src.real_name]")
 		boutput(src, "<span class='flocksay'>Partition failure: unable to coalesce sentience.</span>")
 		return TRUE
 
-	if (!src.abilityHolder.pointCheck(FLOCKTRACE_COMPUTE_COST))
+	if ((antagonist_source == ANTAGONIST_SOURCE_SUMMONED) && !src.abilityHolder.pointCheck(FLOCKTRACE_COMPUTE_COST))
 		message_admins("A Flocktrace offer from [src.real_name] was sent but failed due to lack of compute.")
-		logTheThing("admin", null, null, "Flocktrace offer from [src.real_name] failed due to lack of compute.")
+		logTheThing(LOG_ADMIN, null, "Flocktrace offer from [src.real_name] failed due to lack of compute.")
 		boutput(src, "<span class='flocksay'>Partition failure: Compute required unavailable.</span>")
 		return TRUE
 
-	var/mob/picked = pick(candidates)
+	var/mob/picked = candidates[1]
 
 	message_admins("[picked.key] respawned as a Flocktrace under [src.real_name].")
-	logTheThing("admin", picked.key, null, "respawned as a Flocktrace under [src.real_name].")
+	log_respawn_event(picked.mind, "Flocktrace", src.real_name)
 
-	picked.make_flocktrace(get_turf(src), src.flock)
+	if (!picked.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, source = antagonist_source, master = src.flock.flockmind_mind))
+		logTheThing(LOG_DEBUG, "Failed to add flocktrace antagonist role to [key_name(picked)] during partition. THIS IS VERY BAD GO YELL AT A FLOCK CODER.")
 
 // old code for flocktrace respawns
 /datum/ghost_notification/respawn/flockdrone
@@ -164,21 +222,22 @@
 	icon_state = "flocktrace"
 
 /mob/living/intangible/flock/flockmind/proc/receive_ghosts(var/list/ghosts)
-	if(!ghosts || ghosts.len <= 0)
+	if(!ghosts || length(ghosts) <= 0)
 		boutput(src, "<span class='alert'>Unable to partition, please try again later.</span>")
 		return
 	var/list/valid_ghosts = list()
 	for(var/mob/dead/observer/O in ghosts)
 		if(O?.client)
 			valid_ghosts |= O
-	if(valid_ghosts.len <= 0)
+	if(length(valid_ghosts) <= 0)
 		SPAWN(1 SECOND)
 			boutput(src, "<span class='alert'>Unable to partition, please try again later.</span>")
 		return
 	// pick a random ghost
 	var/mob/dead/observer/winner = valid_ghosts[rand(1, valid_ghosts.len)]
 	if(winner) // probably a paranoid check
-		var/mob/living/trace = winner.make_flocktrace(get_turf(src), src.flock)
+		winner.mind?.add_subordinate_antagonist(ROLE_FLOCKTRACE, master = src.mind)
+		var/mob/living/trace = winner.mind.current
 		message_admins("[key_name(src)] made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
-		logTheThing("admin", src, trace, "made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
+		logTheThing(LOG_ADMIN, src, "made [key_name(trace)] a flocktrace via ghost volunteer respawn.")
 		flock_speak(null, "Trace partition \[ [trace.real_name] \] has been instantiated.", src.flock)

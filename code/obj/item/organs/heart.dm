@@ -2,7 +2,7 @@
 /*----------Heart----------*/
 /*=========================*/
 
-#define HEART_REAGENT_CAP 100
+#define HEART_REAGENT_CAP 330
 #define HEART_WRING_AMOUNT src.reagents.maximum_volume * 0.25
 /obj/item/organ/heart
 	name = "heart"
@@ -11,6 +11,7 @@
 	organ_holder_name = "heart"
 	organ_holder_location = "chest"
 	organ_holder_required_op_stage = 9
+	icon = 'icons/obj/items/organs/heart.dmi'
 	icon_state = "heart"
 	item_state = "heart"
 	// var/broken = 0		//Might still want this. As like a "dead organ var", maybe not needed at all tho?
@@ -40,8 +41,8 @@
 			return
 
 		if (!ON_COOLDOWN(src, "heart_wring", 2 SECONDS))
-			playsound(user, squeeze_sound, 30, 1)
-			logTheThing("combat", user, null, "wrings out [src] containing [log_reagents(src)] at [log_loc(user)].")
+			playsound(user, squeeze_sound, 30, TRUE)
+			logTheThing(LOG_CHEMISTRY, user, "wrings out [src] containing [log_reagents(src)] at [log_loc(user)].")
 			src.reagents.trans_to(get_turf(src), HEART_WRING_AMOUNT)
 			boutput(user, "<span class='notice'>You wring out \the [src].</span>")
 
@@ -132,6 +133,9 @@
 		..()
 		src.icon_state = pick("plant_heart", "plant_heart_bloom")
 
+TYPEINFO(/obj/item/organ/heart/cyber)
+	mats = 8
+
 /obj/item/organ/heart/cyber
 	name = "cyberheart"
 	desc = "A cybernetic heart. Is this thing really medical-grade?"
@@ -141,14 +145,13 @@
 	edible = 0
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
-	mats = 8
-	made_from = "pharosium"
+	default_material = "pharosium"
 	transplant_XP = 7
 	squeeze_sound = 'sound/voice/screams/Robot_Scream_2.ogg'
 
 	emp_act()
 		..()
-		if (src.broken)
+		if (src.emagged)
 			boutput(donor, "<span class='alert'><B>Your cyberheart malfunctions and shuts down!</B></span>")
 			donor.contract_disease(/datum/ailment/malady/flatline,null,null,1)
 
@@ -159,7 +162,7 @@
 	item_state = "flockdrone_heart"
 	body_image = "heart_flock"
 	created_decal = /obj/decal/cleanable/flockdrone_debris/fluid
-	made_from = "gnesis"
+	default_material = "gnesis"
 	var/resources = 0 // reagents for humans go in heart, resources for flockdrone go in heart, now, not the brain
 	var/flockjuice_limit = 20 // pump flockjuice into the human host forever, but only a small bit
 	var/min_blood_amount = 450

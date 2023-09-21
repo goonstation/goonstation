@@ -37,7 +37,6 @@
 		"-w"
 	],
 	"diffEditor.codeLens": true,
-	"vscode-as-git-mergetool.settingsAssistantOnStartup": false,
 	"errorLens.enabledDiagnosticLevels": [
 		"error",
 		"warning",

@@ -167,11 +167,7 @@ proc/debug_map_apc_count(delim,zlim)
 			if(T.active_hotspot)
 				burning = 1
 
-		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature] Kelvin, [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
-
-		if(GM.trace_gases)
-			for(var/datum/gas/trace_gas as anything in GM.trace_gases)
-				boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
+		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature]&deg;K ([GM.temperature - T0C]&deg;C), [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
 	fix_next_move()
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
@@ -182,6 +178,13 @@ proc/debug_map_apc_count(delim,zlim)
 			boutput(usr, "<span class='alert'>next_click is disabled and therefore so is this command!</span>")
 			return
 
+		for (var/client/C as anything in global.clients) //common cause of input loop crashes
+			if (!istype(C))
+				global.clients -= C
+
+		if (TIME - global.last_input_loop_time > 5 SECONDS) //it's probably crashed so restart
+			start_input_loop()
+
 		for(var/mob/M in mobs)
 			if(!M.client)
 				continue
@@ -191,8 +194,8 @@ proc/debug_map_apc_count(delim,zlim)
 					largest_click_time = M.next_click - world.time
 				else
 					largest_click_time = 0
-			logTheThing("admin", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]")
-			logTheThing("diary", M, null, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
+			logTheThing(LOG_ADMIN, M, "lastDblClick = [M.next_click]  world.time = [world.time]")
+			logTheThing(LOG_DIARY, M, "lastDblClick = [M.next_click]  world.time = [world.time]", "admin")
 			M.next_click = 0
 		message_admins("[key_name(largest_click_mob, 1)] had the largest click delay with [largest_click_time] frames / [largest_click_time/10] seconds!")
 		message_admins("world.time = [world.time]")
@@ -204,8 +207,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 		ADMIN_ONLY
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
-		input( src, "Enter '.debug profile' in the next command box. Blame BYOND.", "BYONDSucks", ".debug profile" )
-		winset( usr, null, "command=.command" )
+		winset( usr, null, "command=.profile" )
 		if (tgui_alert(usr, "Do you disable automatic profiling for 5 minutes.", "Debug",
 				list("Yes", "No"), timeout = 10 SECOND) == "Yes")
 			lag_detection_process.delay_disable_manual_profiling(5 MINUTES)
@@ -223,7 +225,7 @@ proc/debug_map_apc_count(delim,zlim)
 	proc/makeText(text, additional_flags=0, align_left=FALSE, moreattrib="", tall=FALSE)
 		var/mutable_appearance/mt = new
 		mt.plane = FLOAT_PLANE
-		mt.icon = 'icons/effects/effects.dmi'
+		mt.icon = 'icons/misc/debug.dmi'
 		mt.icon_state = "nothing"
 		mt.maptext = "<span class='pixel [align_left ? "l" : "r"] ol' [moreattrib]>[text]</span>"
 
@@ -234,7 +236,7 @@ proc/debug_map_apc_count(delim,zlim)
 			mt.maptext_x = -3
 		if(tall)
 			mt.maptext_height *= 2
-		mt.appearance_flags = RESET_COLOR | additional_flags
+		mt.appearance_flags = RESET_COLOR | PIXEL_SCALE | additional_flags
 		return mt
 
 	teleblocked
@@ -242,6 +244,35 @@ proc/debug_map_apc_count(delim,zlim)
 		help = "Red tiles are ones that are teleblocked, green ones can be teleported to."
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			img.app.color = is_teleportation_allowed(theTurf) ? "#0f0" : "#f00"
+
+	jps_inconsistent
+		name = "jps inconsistent"
+		help = "Uses a slightly expensive check to see whether turf instability is valid. Errors shown in red, number shows error (i.e. -1 is missing 1 atom)"
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			var/trueUnstable = initial(theTurf.pass_unstable)
+			for(var/atom/A as anything in theTurf.contents)
+				trueUnstable += A.pass_unstable
+			if(trueUnstable != theTurf.pass_unstable)
+				img.app.overlays = list(src.makeText(theTurf.pass_unstable - trueUnstable, RESET_ALPHA | RESET_COLOR))
+				img.app.color = "#f00"
+			else
+				img.app.alpha = 0
+
+	jps_unstable
+		name = "jps unstable"
+		help = "Red is unstable, green is stable, purple is illegal value"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.overlays = list(src.makeText(theTurf.pass_unstable, RESET_ALPHA | RESET_COLOR))
+			img.app.color = theTurf.pass_unstable >= 1 ? "#f00" : theTurf.pass_unstable ? "#70f" : "#0f0"
+
+	jps_cache
+		name = "jps cache"
+		help = "Grey is no cache. Green is passable, red is not."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(theTurf.passability_cache != null)
+				img.app.color = theTurf.passability_cache ? "#0f0" : "#f00"
+			else
+				img.app.alpha = 0
 
 	blowout
 		name = "radstorm safezones"
@@ -321,7 +352,7 @@ proc/debug_map_apc_count(delim,zlim)
 			if(!(area in processed_areas))
 				var/text_charge
 				if(!apc || apc.disposed)
-					text_charge = "N/A"
+					text_charge = "no APC"
 				else if(apc.status & BROKEN)
 					text_charge = "broken"
 				else if(!cell)
@@ -336,6 +367,8 @@ proc/debug_map_apc_count(delim,zlim)
 					if(apc.environ <= 2) off += "env"
 					if(length(off))
 						text_charge += "<br>OFF: [off.Join(" ")]"
+				if(!area.requires_power)
+					text_charge += "<br>inf power area"
 				img.app.overlays = list(src.makeText(text_charge, align_left=TRUE))
 				processed_areas += area
 
@@ -352,7 +385,7 @@ proc/debug_map_apc_count(delim,zlim)
 				if(group)
 					img.app.color = debug_color_of(group)
 					img.app.desc = "Group \ref[group]<br>[MOLES_REPORT(group.air)]Temperature=[group.air.temperature]<br/>Spaced=[group.spaced]"
-					if (group.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
+					if (group.spaced) img.app.overlays += image('icons/misc/debug.dmi', icon_state = "spaced")
 					/*
 					var/list/borders_space = list()
 					for(var/turf/spaceses in group.space_borders)
@@ -363,7 +396,7 @@ proc/debug_map_apc_count(delim,zlim)
 								if(dir & SOUTH) borders_space[++borders_space.len] = "SOUTH"
 								if(dir & EAST) borders_space[++borders_space.len] = "EAST"
 								if(dir & WEST) borders_space[++borders_space.len] = "WEST"
-								var/image/airrowe = image('icons/misc/air_debug.dmi', icon_state = "space", dir = dir)
+								var/image/airrowe = image('icons/misc/debug.dmi', icon_state = "arrow", dir = dir)
 								airrowe.appearance_flags = RESET_COLOR
 								img.app.overlays += airrowe
 					if(borders_space.len)
@@ -378,7 +411,7 @@ proc/debug_map_apc_count(delim,zlim)
 								if(dir & SOUTH) borders_individual[++borders_individual.len] = "SOUTH"
 								if(dir & EAST) borders_individual[++borders_individual.len] = "EAST"
 								if(dir & WEST) borders_individual[++borders_individual.len] = "WEST"
-								var/image/airrowe = image('icons/misc/air_debug.dmi', icon_state = "space", dir = dir)
+								var/image/airrowe = image('icons/misc/debug.dmi', icon_state = "arrow", dir = dir)
 								airrowe.appearance_flags = RESET_COLOR
 								img.app.overlays += airrowe
 					if(borders_individual.len)
@@ -392,7 +425,7 @@ proc/debug_map_apc_count(delim,zlim)
 								if(dir & SOUTH) borders_group[++borders_group.len] = "SOUTH"
 								if(dir & EAST) borders_group[++borders_group.len] = "EAST"
 								if(dir & WEST) borders_group[++borders_group.len] = "WEST"
-								var/image/airrowe = image('icons/misc/air_debug.dmi', icon_state = "space", dir = dir)
+								var/image/airrowe = image('icons/misc/debug.dmi', icon_state = "arrow", dir = dir)
 								airrowe.appearance_flags = RESET_COLOR
 								if(T.parent)
 									airrowe.color = debug_color_of(T.parent)
@@ -400,19 +433,19 @@ proc/debug_map_apc_count(delim,zlim)
 					if(borders_group.len)
 						img.app.desc += "<br/>(borders groups to the [borders_group.Join(" ")])"
 					if(theTurf in group.borders)
-						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "border")
+						var/image/mark = image('icons/misc/debug.dmi', icon_state = "border")
 						mark.appearance_flags = RESET_COLOR
 						img.app.overlays += mark
 					if(theTurf in group.space_borders)
-						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "space_border")
+						var/image/mark = image('icons/misc/debug.dmi', icon_state = "space_border")
 						mark.appearance_flags = RESET_COLOR
 						img.app.overlays += mark
 					if(theTurf in group.self_tile_borders)
-						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "individual_border")
+						var/image/mark = image('icons/misc/debug.dmi', icon_state = "individual_border")
 						mark.appearance_flags = RESET_COLOR
 						img.app.overlays += mark
 					if(theTurf in group.self_group_borders)
-						var/image/mark = image('icons/misc/air_debug.dmi', icon_state = "group_border")
+						var/image/mark = image('icons/misc/debug.dmi', icon_state = "group_border")
 						mark.appearance_flags = RESET_COLOR
 						img.app.overlays += mark
 				else
@@ -472,7 +505,8 @@ proc/debug_map_apc_count(delim,zlim)
 						else
 							O2_color = "#ff0000"
 
-					switch (air.temperature - T0C)
+					T_color = "#ffffff"
+					switch (TO_CELSIUS(air.temperature))
 						if (100 to INFINITY)
 							T_color = "#ff0000"
 						if (75 to 100)
@@ -488,7 +522,6 @@ proc/debug_map_apc_count(delim,zlim)
 						if (-INFINITY to -40)
 							T_color = "#0000ff"
 
-					T_color = "#ffffff"
 
 					//mt.maptext = "<span class='pixel r' style='color: white; -dm-text-outline: 1px black;'>[round(TOTAL_MOLES(air), 0.1)]\n[round(pressure, 1)]\n[round(air.temperature - T0C, 1)]</span>"
 					img.app.overlays = null
@@ -499,9 +532,9 @@ proc/debug_map_apc_count(delim,zlim)
 						gt.color = is_group
 						img.app.overlays += gt
 
-					if (group?.spaced) img.app.overlays += image('icons/misc/air_debug.dmi', icon_state = "spaced")
+					if (group?.spaced) img.app.overlays += image('icons/misc/debug.dmi', icon_state = "spaced")
 
-					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(air.temperature - T0C, 1)]</span>")
+					img.app.overlays += src.makeText("<span style='color: [O2_color];'>[round(O2_pp, 0.01)]</span>\n[round(pressure, 0.1)]\n<span style='color: [T_color];'>[round(TO_CELSIUS(air.temperature), 1)]</span>")
 
 
 					if (pressure > ONE_ATMOSPHERE)
@@ -527,9 +560,9 @@ proc/debug_map_apc_count(delim,zlim)
 			for(var/obj/decal/cleanable/writing/arte in theTurf)
 				built += "[arte.icon_state] artpiece by [arte.artist]"
 				artists |= arte.artist
-			if(artists.len >= 2)
+			if(length(artists) >= 2)
 				img.app.color = "#7f0000"
-			else if(artists.len == 1)
+			else if(length(artists) == 1)
 				img.app.color = debug_color_of(artists[1])
 			img.app.desc = built.Join("<br/>")
 
@@ -550,7 +583,7 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.alpha = 0
 			else if(0 in netnums)
 				img.app.color = "#ff0000"
-			else if(netnums.len >= 2)
+			else if(length(netnums) >= 2)
 				img.app.color = "#ffffff"
 			else
 				img.app.color = debug_color_of(netnums[1])
@@ -710,8 +743,8 @@ proc/debug_map_apc_count(delim,zlim)
 		name = "camera coverage"
 		help = {"blue - tile visible by a camera<br>without overlay - tile not visible by a camera<br>number - number of cameras seeing the tile"}
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
-			if(theTurf.cameras && length(theTurf.cameras))
-				img.app.overlays = list(src.makeText(theTurf.cameras.len))
+			if(theTurf.camera_coverage_emitters && length(theTurf.camera_coverage_emitters))
+				img.app.overlays = list(src.makeText(length(theTurf.camera_coverage_emitters)))
 				img.app.color = "#0000ff"
 			else
 				img.app.alpha = 0
@@ -854,31 +887,6 @@ proc/debug_map_apc_count(delim,zlim)
 			if(val)
 				img.app.overlays = list(src.makeText(round(val), RESET_ALPHA))
 
-	trace_gases // also known as Fart-o-Vision
-		name = "trace gases active"
-		GetInfo(turf/theTurf, image/debugoverlay/img)
-			. = ..()
-			var/air_group_trace = 0
-			var/direct_trace = 0
-			var/turf/simulated/sim = theTurf
-			if (istype(sim) && sim.air)
-				for(var/datum/gas/tg as anything in sim.air.trace_gases)
-					img.app.desc += "[tg.type] [tg.moles]<br>"
-					direct_trace = 1
-				if(sim?.parent?.air)
-					for(var/datum/gas/tg as anything in sim.parent.air.trace_gases)
-						img.app.desc += "(AG) [tg.type] [tg.moles]<br>"
-						air_group_trace = 1
-			if(air_group_trace && direct_trace)
-				img.app.color = "#ff0000"
-			else if(air_group_trace)
-				img.app.color = "#ff8800"
-			else if(direct_trace)
-				img.app.color = "#ffff00"
-			else
-				img.app.color = "#ffffff"
-				img.app.alpha = 50
-
 	wet_floors
 		name = "wet floors"
 		help = {"Shows wetness of the floors<br>1 - green = wet<br>2 - blue = lube<br>3 - red = superlube<br>slippery fluids, banana peels etc. not counted"}
@@ -993,7 +1001,9 @@ proc/debug_map_apc_count(delim,zlim)
 			var/temp = null
 			if(issimulatedturf(theTurf))
 				var/turf/simulated/sim = theTurf
-				if(sim.air)
+				if (sim.parent?.group_processing)
+					temp = sim.parent.air.temperature
+				else if(sim.air)
 					temp = sim.air.temperature
 			if(isnull(temp))
 				temp = theTurf.temperature
@@ -1156,6 +1166,269 @@ proc/debug_map_apc_count(delim,zlim)
 		OnStartRendering(client/C)
 			processed_areas = list()
 
+
+	landmarks
+		name = "landmarks"
+		help = "Displays map landmarks. Does NOT show landmarks that remove themselves."
+		var/list/turf_to_landmark
+
+		OnEnabled(client/C)
+			. = ..()
+			turf_to_landmark = list()
+			for(var/list/landmark_list in list(global.job_start_locations, global.landmarks))
+				for(var/name in landmark_list)
+					for(var/turf/T in landmark_list[name])
+						if(turf_to_landmark[T])
+							turf_to_landmark[T] += name
+						else
+							turf_to_landmark[T] = list(name)
+
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			if(!turf_to_landmark[theTurf])
+				img.app.alpha = 0
+				return
+			else
+				img.app.alpha = 180
+				img.app.desc = "Landmarks: [jointext(turf_to_landmark[theTurf], ", ")]"
+				var/landmark_text = "<span style='font-size:6pt'>[jointext(turf_to_landmark[theTurf], "<br>")]</span>"
+				img.app.overlays = list(src.makeText(landmark_text))
+				img.app.color = debug_color_of(landmark_text)
+
+	opaque_atom_count
+		name = "opaque atom count"
+		help = {"Shows how many opaque atoms are on a turf according to the turf var"}
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(theTurf.opaque_atom_count == 0)
+				img.app.alpha = 0
+				return
+			img.app.alpha = 100
+			img.app.overlays = list(src.makeText(theTurf.opaque_atom_count, RESET_ALPHA | RESET_COLOR))
+			if(theTurf.opaque_atom_count > 0)
+				img.app.color = "#55aa55"
+			else
+				img.app.color = "#aa5555"
+
+	perlin_noise_visualizer
+		name = "perlin noise visualizer"
+		help = "Visualize a given perlin noise seed and zoom"
+		var/seed = 42069
+		var/perlin_zoom = 65
+		var/square_drift = 2
+		var/drift_x
+		var/drift_y
+		var/list/noise_cache
+		OnEnabled(client/C)
+			. = ..()
+			var/turf/user_turf = get_turf(C.mob)
+			seed = tgui_input_number(C.mob, "Enter a seed value", "Seed Selection", seed, 50000,0)
+			if (isnull(seed)) seed = initial(seed)
+			perlin_zoom = tgui_input_number(C.mob, "Enter a zoom value, higher numbers mean slower transitions", "Zoom Selection", perlin_zoom, 500, 2)
+			if (isnull(perlin_zoom)) perlin_zoom = initial(perlin_zoom)
+			square_drift = tgui_input_number(C.mob, "Enter a drift value, controls intensity of randomized intermingling of biomes", "Drift Selection", square_drift, 10, 0)
+			if (isnull(square_drift)) square_drift = initial(square_drift)
+			noise_cache = new/list(world.maxx, world.maxy)
+			boutput(C, "rustg_noise_get_at_coordinates() Seed:[seed] Zoom:[perlin_zoom] Square Drift:[square_drift]")
+			for (var/turf/T as anything in block(locate(1, 1, user_turf.z), locate(world.maxx, world.maxy, user_turf.z)))
+				drift_x = (T.x + rand(-square_drift, square_drift)) / perlin_zoom
+				drift_y = (T.y + rand(-square_drift, square_drift)) / perlin_zoom
+				noise_cache[T.x][T.y] = text2num(rustg_noise_get_at_coordinates("[seed]", "[drift_x]", "[drift_y]"))
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			. = ..()
+			if (!length(noise_cache)) return
+			var/val = noise_cache[theTurf.x][theTurf.y]
+			img.app.color = rgb((val*255), 0, (255-val*255))
+			if(!isnull(val))
+				img.app.overlays = list(src.makeText(round(val*100)/100, RESET_ALPHA))
+
+	perlin_grid_noise_visualizer
+		name = "perlin grid noise visualizer"
+		help = "Visualize a given perlin noise grid"
+		var/seed = 42069
+		var/accuracy = 4
+		var/stamp_size = 16
+		var/lower_range = 0.5
+		var/upper_range = 1
+		var/noise_cache
+		var/world_size
+
+		OnEnabled(client/C)
+			. = ..()
+			seed = tgui_input_number(C.mob, "Enter a seed value", "Seed Selection", seed, 50000,0)
+			if (isnull(seed)) seed = initial(seed)
+			accuracy = tgui_input_number(C.mob, "Enter a accuracy value, how close to perlin", "Accuracy", accuracy, 500, 1)
+			if (isnull(accuracy)) accuracy = initial(accuracy)
+			stamp_size = tgui_input_number(C.mob, "Enter a stamp_size value, ??? ", "Stamp Size Selection", stamp_size, 32, 1)
+			if (isnull(stamp_size)) stamp_size = initial(stamp_size)
+			lower_range = tgui_input_number(C.mob, "Enter a lower_range value, Lower range to be active.", "Lower Range Selection", lower_range, 1.0, 0.0, round_input=FALSE)
+			if (isnull(lower_range)) lower_range = initial(lower_range)
+			upper_range = tgui_input_number(C.mob, "Enter a upper_range value, Upper range to be active.", "Upper Range Selection", upper_range, 1.0, 0.0, round_input=FALSE)
+			if (isnull(upper_range)) upper_range = initial(upper_range)
+			world_size = world.maxx
+			noise_cache = rustg_dbp_generate("[src.seed]", "[src.accuracy]", "[src.stamp_size]", "[src.world_size]", "[src.lower_range]", "[src.upper_range]")
+			boutput(C, "rustg_dbp_generate(\"[src.seed]\", \"[src.accuracy]\", \"[src.stamp_size]\", \"[src.world_size]\", \"[src.lower_range]\", \"[src.upper_range]\")")
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			. = ..()
+			if (!length(src.noise_cache)) return
+			var/index = theTurf.x * src.world_size + theTurf.y
+			var/val = 0
+			if(index <= length(noise_cache))
+				val = text2num(noise_cache[index])
+			img.app.color = rgb((val*255), 0, (255-val*255))
+			if(!isnull(val))
+				img.app.overlays = list(src.makeText(round(val*100)/100, RESET_ALPHA))
+
+	c_noise_visualizer
+		name = "cellular automata noise visualizer"
+		help = "Visualize a given cellular automata"
+		var/percentage = 55
+		var/smoothing_iterations = 1
+		var/birth_limit = 4
+		var/death_limit = 3
+		var/noise_cache
+		var/maxx
+
+		OnEnabled(client/C)
+			. = ..()
+			percentage = tgui_input_number(C.mob, "Chance of cell starting closed.", "Percentage", percentage, 99, 1)
+			smoothing_iterations = tgui_input_number(C.mob, "Iterate this many times.", "Iterations", 1, 1000, 0)
+			birth_limit = tgui_input_number(C.mob, "Number of neighboring cells is higher than this amount, a cell is born.", "Birth Limit", 6, 8, 0)
+			death_limit = tgui_input_number(C.mob, "Number of neighboring cells is lower than this amount, a cell dies.", "Death Limit", 3, 8, 0)
+			maxx = world.maxx
+			noise_cache = rustg_cnoise_generate("[src.percentage]", "[src.smoothing_iterations]", "[src.birth_limit]", "[src.death_limit]", "[maxx]", "[world.maxy]")
+			boutput(C, "rustg_cnoise_generate(\"[src.percentage]\", \"[src.smoothing_iterations]\", \"[src.birth_limit]\", \"[src.death_limit]\", \"[maxx]\", \"[world.maxy]\")")
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			. = ..()
+			if (!length(noise_cache)) return
+			var/val = text2num(noise_cache[theTurf.x * src.maxx + theTurf.y])
+			img.app.color = rgb((val*255), 0, (255-val*255))
+			if(!isnull(val))
+				img.app.overlays = list(src.makeText(round(val*100)/100, RESET_ALPHA))
+
+	worley_noise_visualizer
+		name = "worley noise visualizer"
+		help = "Visualize a given worley noise"
+		var/region_size = 32
+		var/threshold = 10
+		var/node_per_region_chance = 50
+		var/node_min = 1
+		var/node_max = 8
+		var/maxx
+		var/noise_cache
+
+		OnEnabled(client/C)
+			. = ..()
+			region_size = tgui_input_number(C.mob, "size of regions", "region_size", region_size, 300, 1)
+			threshold = tgui_input_number(C.mob, "If distance greater than threshold then alive", "threshold", threshold, 100, 0)
+			node_per_region_chance = tgui_input_number(C.mob, "chance of a node existing in a region.", "node_per_region_chance", node_per_region_chance, 100, 0)
+			node_min = tgui_input_number(C.mob, "minimum amount of nodes in a region", "node_min", node_min, 300, 0)
+			node_max = tgui_input_number(C.mob, "maximum amount of nodes in a region", "node_max", node_max, 300, 0)
+			maxx = world.maxx
+			noise_cache = rustg_worley_generate("[src.region_size]", "[src.threshold]", "[src.node_per_region_chance]", "[maxx]", "[src.node_min]", "[src.node_max]")
+			boutput(C, "rustg_worley_generate(\"[src.region_size]\", \"[src.threshold]\", \"[src.node_per_region_chance]\", \"[maxx]\", \"[src.node_min]\", \"[src.node_max]\")")
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			. = ..()
+			if (!length(src.noise_cache)) return
+			var/val = text2num(noise_cache[theTurf.x * src.maxx + theTurf.y])
+			img.app.color = rgb((val*255), 0, (255-val*255))
+			if(!isnull(val))
+				img.app.overlays = list(src.makeText(round(val*100)/100, RESET_ALPHA))
+
+	jps_passable_turfs
+		name = "jps passable turfs"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			img.app.alpha = 0
+			for(var/dir in alldirs)
+				var/turf/neigh = get_step(theTurf, dir)
+				if(!neigh || neigh == theTurf) continue
+				if(jpsTurfPassable(neigh, theTurf, usr))
+					var/image/I = image('icons/misc/debug.dmi', icon_state = "arrow", dir = dir)
+					I.alpha = 100
+					I.appearance_flags |= RESET_ALPHA
+					img.app.overlays += I
+
+	artifacts
+		name = "artifacts"
+		help = "Displays artifact types on the map"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/list/arts = list()
+			for(var/obj/O in theTurf)
+				if(O.artifact)
+					arts += O.artifact.type_name
+			if(!length(arts))
+				img.app.alpha = 0
+				return
+			img.app.alpha = 120
+			img.app.desc = "[jointext(arts, ", ")]"
+			var/art_text = "<span style='font-size:6pt'>[jointext(arts, "<br>")]</span>"
+			img.app.overlays = list(src.makeText(art_text, align_left=TRUE))
+			img.app.color = debug_color_of(art_text)
+
+	fishing_spots
+		name = "fishing spots"
+		help = "Displays fishing spots on the map.<br>Hover over a spot to see what fish are available there."
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/list/spots = list()
+			var/list/fish = list()
+			for(var/atom/movable/AM in theTurf)
+				if(global.fishing_spots[AM.type])
+					spots += AM.name
+					var/datum/fishing_spot/spot = global.fishing_spots[AM.type]
+					for(var/fish_type in spot.fish_available)
+						var/atom/fish_type_dummy = fish_type
+						fish += "[initial(fish_type_dummy.name)] x [spot.fish_available[fish_type]]"
+			if(theTurf.type in global.fishing_spots)
+				spots += theTurf.name
+				var/datum/fishing_spot/spot = global.fishing_spots[theTurf.type]
+				for(var/fish_type in spot.fish_available)
+					var/atom/fish_type_dummy = fish_type
+					fish += "[initial(fish_type_dummy.name)] x [spot.fish_available[fish_type]]"
+			if(!length(spots))
+				img.app.alpha = 0
+				return
+			img.app.alpha = 120
+			img.app.desc = jointext(fish, "<br>")
+			var/spot_text = "<span style='font-size:6pt'>[jointext(spots, "<br>")]</span>"
+			img.app.overlays = list(src.makeText(spot_text, align_left=TRUE))
+			img.app.color = debug_color_of(spot_text)
+
+	materials
+		name = "materials"
+		help = "Displays material of things.<br>Hover over a tile to see what is made out of them."
+		var/include_turfs = TRUE
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+			var/list/materials = list()
+			var/list/detailed_materials = list()
+			for(var/atom/movable/AM in theTurf)
+				if(AM.material)
+					materials |= AM.material.getName()
+					detailed_materials += "[AM.name] - [AM.material.getName()]"
+			if(include_turfs && theTurf.material)
+				materials |= theTurf.material.getName()
+				detailed_materials += "[theTurf.name] - [theTurf.material.getName()]"
+			if(!length(materials))
+				img.app.alpha = 0
+				return
+			materials = sortList(materials, /proc/cmp_text_dsc)
+			img.app.alpha = 120
+			img.app.desc = jointext(detailed_materials, "<br>")
+			var/material_text = "<span style='font-size:6pt'>[jointext(materials, "<br>")]</span>"
+			img.app.overlays = list(src.makeText(material_text, align_left=TRUE))
+			img.app.color = debug_color_of(material_text)
+
+	materials/no_turf
+		name = "materials (no turf)"
+		help = "Displays material of non-turf things.<br>Hover over a tile to see what is made out of them."
+		include_turfs = FALSE
+
+	reagents
+		name = "reagents"
+		help = "TODO"
+		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay
 
@@ -1181,7 +1454,7 @@ proc/debug_map_apc_count(delim,zlim)
 		src.appearance = app
 
 /mutable_appearance/debug_overlay_appearance
-	icon = 'icons/effects/white.dmi'
+	icon = 'icons/misc/debug.dmi'
 	plane = PLANE_SCREEN_OVERLAYS
 	override = 0
 	color = null

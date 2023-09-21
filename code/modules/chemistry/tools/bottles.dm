@@ -20,6 +20,7 @@
 	New()
 		if (!src.bottle_style)
 			src.bottle_style = "[rand(1,4)]"
+		src.UpdateIcon()
 		..()
 
 	on_reagent_change()
@@ -31,11 +32,10 @@
 		if (!(findtext(src.icon_state, "bottle", 1, length("bottle") + 1)))
 			return
 		src.underlays = null
-		if (reagents.total_volume)
+		if (reagents?.total_volume)
 			var/datum/color/average = reagents.get_average_color()
 			var/fluid_state = round(clamp((((src.reagents.total_volume / src.reagents.maximum_volume) * 4) + 1), 1, 4))
-			if (!src.fluid_image)
-				src.fluid_image = image('icons/obj/chemical.dmi', "fluid-bottle[bottle_style]-[fluid_state]", -1)
+			src.fluid_image = image('icons/obj/chemical.dmi', "fluid-bottle[bottle_style]-[fluid_state]", -1)
 			src.icon_state = "bottle[bottle_style]-[fluid_state]"
 			src.fluid_image.color = average.to_rgba()
 			src.underlays += src.fluid_image
@@ -158,7 +158,7 @@
 	New()
 		var/poison = pick_string("chemistry_tools.txt", "traitor_poison_bottle")
 		src.initial_reagents = poison
-		logTheThing("debug", src, null, "poison bottle spawned from string [poison], contains: [log_reagents(src)]")
+		logTheThing(LOG_CHEMISTRY, src, "poison bottle spawned from string [poison], contains: [log_reagents(src)]")
 		..()
 
 // gannets - large poison bottles for nuke op medics.
@@ -199,7 +199,7 @@
 
 /obj/item/reagent_containers/glass/bottle/haloperidol
 	name = "haloperidol bottle"
-	desc = "A small bottle of haloperidol, a powerful anti-psychotic."
+	desc = "A small bottle of haloperidol, a powerful sedative and anti-psychotic."
 	amount_per_transfer_from_this = 5
 	initial_reagents = "haloperidol"
 
@@ -425,6 +425,6 @@
 	name = "cleaner bottle"
 	desc = "A bottle filled with cleaning fluid."
 	icon_state = "largebottle-labeled"
-	initial_volume = 50
+	initial_volume = 100
 	initial_reagents = "cleaner"
 	amount_per_transfer_from_this = 10

@@ -6,7 +6,7 @@
 	organ_holder_location = "chest"
 	organ_holder_required_op_stage = 4
 	icon_state = "stomach"
-	FAIL_DAMAGE = 100
+	fail_damage = 100
 
 	//Do something with this when you figure out what the guy who made digestion and handle stomach was doing with stomach_contents and stomach_process - kyle
 	// on_transplant()
@@ -44,7 +44,7 @@
 			return 0
 		donor.handle_digestion(mult)
 
-		// if (src.get_damage() >= FAIL_DAMAGE && prob(src.get_damage() * 0.2))
+		// if (src.get_damage() >= fail_damage && prob(src.get_damage() * 0.2))
 		// 	donor.contract_disease(failure_disease,null,null,1)
 		return 1
 
@@ -57,7 +57,7 @@
 
 	attackby(obj/item/W, mob/user)
 		..()
-		if (src.contents && src.contents.len > 0 && istype(W, /obj/item/device/analyzer/healthanalyzer))
+		if (src.contents && length(src.contents) > 0 && istype(W, /obj/item/device/analyzer/healthanalyzer))
 			var/output = ""
 			var/list/L = list()
 			for (var/obj/O in src.contents)
@@ -77,16 +77,18 @@
 		..()
 		src.icon_state = pick("plant_stomach", "plant_stomach_bloom")
 
+TYPEINFO(/obj/item/organ/stomach/cyber)
+	mats = 6
+
 /obj/item/organ/stomach/cyber
 	name = "cyberstomach"
 	desc = "A fancy robotic stomach to replace one that someone's lost!"
 	icon_state = "cyber-stomach"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	mats = 6
 
 	on_transplant(mob/M)
 		. = ..()
