@@ -766,13 +766,13 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	var/col_r = 0.95
 	var/col_g = 0.7
 	var/col_b = 0.25
-	var/brightness = 1.0
-	var/datum/component/loctargeting/simple_light/light_c
+	var/brightness = 0.4
+	var/datum/component/loctargeting/medium_light/light_c
 
 	New()
 		..()
 		src.life_timer = rand(120,360)
-		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, col_r*255, col_g*255, col_b*255, 255 * brightness)
+		light_c = src.AddComponent(/datum/component/loctargeting/medium_light, col_r*255, col_g*255, col_b*255, 510 * brightness)
 		light_c.update(0)
 
 
