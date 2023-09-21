@@ -96,12 +96,20 @@ datum
 			id = "lungrot_bloom"
 			description = "highly toxic fungal colonies created in the enviroment of a weakened lung."
 			reagent_state = SOLID
-			minimum_to_infect = 2.5
+			minimum_to_infect = 7.5
 			fluid_r = 43
 			fluid_b = 54
 			fluid_g = 25
 			transparency = 166
 			disease = /datum/ailment/disease/lungrot
+
+			on_mob_life(var/mob/affected_mob, var/mult = 1)
+				if(!affected_mob)
+					affected_mob = holder.my_atom
+				//let's not make the lungrot reaction effectively double the depletion rate of miasma
+				affected_mob.reagents.add_reagent("miasma", mult * depletion_rate)
+				..()
+
 
 
 		disease/stringy_gibbis // Fake GBS

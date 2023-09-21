@@ -1531,7 +1531,6 @@ datum
 				..(M, mult)
 				return
 
-
 		harmful/mutagen // COGWERKS CHEM REVISION PROJECT. magic chemical, fine as is
 			name = "unstable mutagen"
 			id = "mutagen"

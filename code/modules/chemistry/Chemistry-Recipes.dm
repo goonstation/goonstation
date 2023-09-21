@@ -3676,8 +3676,8 @@
 		mix_sound = null
 
 		does_react(var/datum/reagents/holder)
-			//This reaction does only happen in carbon-based beings
-			return holder.my_atom && iscarbon(holder.my_atom)
+			//This reaction does only happen in carbon-based beings and for only as long as there is less than 15u lungrot in the person
+			return holder.my_atom && iscarbon(holder.my_atom) && (holder.get_reagent_amount("lungrot_bloom") < 15)
 
 
 	jenkem // moved this down so improperly mixed nutrients yield jenkem instead
