@@ -1,6 +1,4 @@
-this file is not actually used, it is an instruction.
-
-template:
+Template for API endpoint routes:
 ```dm
 /// [method type e.g. POST] [path e.g. /players/notes]
 /// [reference to the name of the file or what it does, e.g. Add]
@@ -22,6 +20,7 @@ Other notes:
 	- Under request, the parameters should match in the form of a list of strings matching the parameter names. If it says query parameters, use `queryParams`, if it says path parameters, use `routeParams`.
 	- Under request, the body should also match (in the form of a `/datum/apiBody`).
 	- Under responses, the name of the apiModel used should be there. If it isn't, just use `list("[name of field]")`.
+- The reason why the API files are formatted this way is so that "it's optimized so you can just copypaste stuff and change it via column/vertical select" ~ZeWaka.
 
 A proper example:
 ```dm
