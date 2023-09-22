@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 
 /// called every time a fishing rod's action loop finishes. returns 0 if catching a fish failed, returns 1 if it succeeds
 /datum/fishing_spot/proc/try_fish(var/mob/user, var/obj/item/fishing_rod/fishing_rod, atom/target)
-	if (user.bioHolder.HasEffect("clumsy") && prob(50))
+	if (user.bioHolder.HasEffect("clumsy") && prob(10))
 		var/mob/living/carbon/human/H = user
 		var/obj/picked_item
 		var/list/clothes_list = list()
