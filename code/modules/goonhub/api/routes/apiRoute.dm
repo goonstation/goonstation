@@ -8,8 +8,10 @@
 	var/method = null
 	/// Actual path of the api query, for example `/rounds`
 	var/path = null
-	/// Parameters for the call
-	var/list/parameters = null
+	/// Route parameters for the call, ie /rounds/{round_id}/ - Must be in order
+	var/list/routeParams = null
+	/// Query parameters for the call, ie /rounds?&id=3
+	var/list/queryParams = null
 	/// Body of the request, invalid for GET
 	var/datum/apiBody/body = null
 	/// The expected type upon deserialization
@@ -18,10 +20,16 @@
 
 /// Formats a given parameter associated list into a urlstring format
 /// E.g. `list("ckey"="zewaka") to `?&ckey=zewaka` and `list("x"=list("a", "b"))` to `?&x=a,b`
-/datum/apiRoute/proc/formatParams()
-	if (length(src.parameters))
-		var/paramListClone = src.parameters.Copy()
+/datum/apiRoute/proc/formatQueryParams()
+	if (length(src.queryParams))
+		var/paramListClone = src.queryParams.Copy()
 		for (var/key in paramListClone)
 			if (islist(paramListClone[key])) // Do we need to encode the value?
 				paramListClone[key] = jointext(paramListClone[key], ",") // lists become csvs by convention
 		. = list2params(.)
+
+/// Formats a given parameter list into a route-append format
+/// E.g. `list("tuesday", "wednesday")` to `tuesday/wednesday`
+/datum/apiRoute/proc/formatRouteParams()
+	if (length(src.routeParams))
+		return jointext(src.routeParams, "/")
