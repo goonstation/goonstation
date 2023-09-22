@@ -1062,6 +1062,7 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
+	default_shuttle = "east_density"
 	escape_dir = EAST
 
 	job_limits_override = list(

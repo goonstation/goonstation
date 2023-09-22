@@ -1,4 +1,43 @@
 
+(t)fri sep 22 23
+(u)Glamurio (Ryou) & DimWhat & Piesuu
+(p)15602
+(e)🎨⚖🎩|C-Sprites, C-Balance, A-Clothing
+(*)The captain has cut up their armor into individual parts, which can be equipped separately.
+(u)Glamurio (Ryou)
+(p)15326
+(e)💅🔄🔊📦|C-QoL, C-Rework, C-Sound, A-Game-Objects
+(*)PDA Emergency Alerts now have distinct visuals and jingles.
+(u)MylieDaniels, AveryQuill
+(p)15858
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds the Glaucus Fishing Rod, a 6 tc tacticool fishing rod for catching crew with disguised hooks. Available to Rancher and Angler traitors, as well as through surplus crates.
+(t)thu sep 21 23
+(u)MeggalBozale
+(p)15867
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Cyborgs should no longer recieve mutations.
+(u)LeahTheTech
+(p)15919
+(e)🎨⚖💊🍝|C-Sprites, C-Balance, A-Medical, A-Catering
+(*)Stomachs now have a capacity and can fill up if you eat too much, cyberstomachs have more. No longer can a single determined staffie consume the entire kitchen.
+(+)Undigestible items now remain in the stomach after being eaten by frying or matter eater and can be retrieved by cutting them out of the extracted stomach with a scalpel.
+(u)Flaborized
+(p)15738
+(e)🎨|C-Sprites
+(*)Added bunsen burners to chemistry. Allows you to heat beakers/condensers/others while still being able to access them, this includes letting you hook up condensers on top of them. Find one in the auxiliary cabinet with the condensers or print them at the sci fabricator.
+(t)wed sep 20 23
+(u)Sord
+(+)Singularity field generators max power 250 -> 100 so they will depower faster when not being charged.
+(+)You can now see what power level a field generator is at by poking it with a multi tool.
+(u)UnfunnyPerson
+(p)15547
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Added a randomized wig crate. Cargo can order this crate for 2000 credits.
+(u)TealSeer
+(p)15841
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Empty gas tanks can now be made at the general manufacturer for 0.1 sturdy metal.
 (t)tue sep 19 23
 (u)Smilg
 (p)15819

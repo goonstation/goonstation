@@ -257,3 +257,7 @@
 	additive_slowdown = -0.25
 
 
+// slowed down by hook
+
+/datum/movement_modifier/syndie_fishing
+	multiplicative_slowdown = 1.5

@@ -210,7 +210,7 @@
 */
 
 /obj/machinery/computer/ATM
-	name = "ATM"
+	name = "\improper ATM"
 	icon_state = "atm"
 
 	var/datum/db_record/accessed_record = null
@@ -453,7 +453,7 @@
 
 
 /obj/machinery/computer/bank_data
-	name = "Bank Records"
+	name = "bank records"
 	icon_state = "databank"
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -745,7 +745,7 @@
 		..()
 
 /obj/submachine/ATM
-	name = "ATM"
+	name = "\improper ATM"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "atm"
 	density = 0
@@ -1053,7 +1053,7 @@
 
 
 /obj/item/lotteryTicket
-	name = "Lottery Ticket"
+	name = "lottery ticket"
 	desc = "A winning lottery ticket perhaps...?"
 
 	icon = 'icons/obj/writing.dmi'
@@ -1075,7 +1075,7 @@
 
 		lotteryRound = wagesystem.lotteryRound
 
-		name = "Lottery Ticket. Round [lotteryRound]"
+		name = "lottery ticket (round [lotteryRound])"
 
 		var/dat = ""
 

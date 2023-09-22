@@ -1541,6 +1541,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item.dm"
 #include "code\obj\item_dispensers.dm"
 #include "code\obj\kitchenspike.dm"
+#include "code\obj\ladder.dm"
 #include "code\obj\landmark.dm"
 #include "code\obj\lattice.dm"
 #include "code\obj\machinery.dm"
