@@ -21,7 +21,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/slice_amount = 1						//! How many slices to spawn after slicing
 	var/slice_inert = FALSE						//! If the food is inert while slicing (ie chemical reactions won't occur)
 	var/slice_suffix = "slice" 					//! When we want to name them slices or wedges or what-have-you
+	var/did_stomach_react = 0					//! Has this already reacted when being digested
+	var/digest_count = 0						//! How digested is this while in stomach
+	var/dissolve_threshold = 20					//! How digested something needs to be before it dissolves
 	rc_flags = 0
+
+	///Slowly dissolve in stomach, releasing reagents
+	proc/process_stomach(mob/living/owner, var/process_rate = 5)
+		src.digest_count += process_rate
+		if (owner && src.reagents?.total_volume > 0)
+			if (!src.did_stomach_react)
+				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
+				src.did_stomach_react = 1
+
+			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)
+
+		if ((!src.reagents || src.reagents.total_volume <= 0) && src.digest_count > src.dissolve_threshold)
+			owner.organHolder.stomach.eject(src)
+			qdel(src)
 
 	proc/on_table()
 		if (!isturf(src.loc))
@@ -513,23 +530,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	edible = 1
 	rand_pos = 1
 	bites_left = 1
-	var/did_react = 0
-	var/digest_count = 0
-	var/dissolve_threshold = 20
-
-	proc/process_stomach(mob/living/owner, var/process_rate = 5)
-		src.digest_count += process_rate
-		if (owner && src.reagents?.total_volume > 0)
-			if (!src.did_react)
-				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
-				src.did_react = 1
-
-			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)
-
-		if ((!src.reagents || src.reagents.total_volume <= 0) && src.digest_count > src.dissolve_threshold)
-			owner.organHolder.stomach.eject(src)
-			qdel(src)
-
 
 
 /* ================================================ */

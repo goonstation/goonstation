@@ -141,8 +141,8 @@
 	proc/digest_food(mult = 1)
 		var/count_to_process = min(length(src.stomach_contents), 10)
 		var/count_left = count_to_process
-		for(var/obj/item/reagent_containers/food/snacks/bite/B in src.stomach_contents)
-			B.process_stomach(src.donor, (src.digestion_per_tick / count_to_process) * mult) //Takes an even amt of reagents from all stomach contents
+		for(var/obj/item/reagent_containers/food/food in src.stomach_contents)
+			food.process_stomach(src.donor, (src.digestion_per_tick / count_to_process) * mult) //Takes an even amt of reagents from all stomach contents
 			if(count_left-- <= 0)
 				break
 
