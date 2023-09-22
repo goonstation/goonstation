@@ -377,7 +377,7 @@ toxic - poisons
 
 
 /datum/projectile/laser/blaster
-	icon_state = "modproj"
+	icon_state = "bolt"
 	name = "blaster bolt"
 	sname = "blaster"
 	shot_sound = 'sound/weapons/laser_a.ogg'
@@ -387,24 +387,25 @@ toxic - poisons
 	damage = 33
 	color_red = 0
 	color_green = 1
-	color_blue = 0.1
+	color_blue = 0.3
 	shot_number = 1
 
 	burst
 		damage = 25
 		cost = 50
 		shot_number = 4
-		icon_state = "modproj2"
+		icon_state = "triple"
 		shot_sound = 'sound/weapons/laser_c.ogg'
 
 	blast
 		shot_sound = 'sound/weapons/laser_e.ogg'
-		damage = 66
+		damage = 33
 		cost = 100
-		icon_state = "crescent"
+		icon_state = "40mmgatling"
 		shot_number = 1
 
 /datum/projectile/laser/blaster/pod_pilot
+	icon_state = "modproj"
 	cost = 20
 	damage = 33
 	color_red = 0
