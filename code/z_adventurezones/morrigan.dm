@@ -3025,10 +3025,10 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 	desc = "Rather flimsy compared to those back home...."
 	icon = 'icons/obj/adventurezones/morrigan/weapons/weapon.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
-	icon_state = "baton"
+	icon_state = "synd_baton"
 	item_state = "synd_baton-off"
-	icon_on = "batonex"
-	icon_off = "baton"
+	icon_on = "synd_baton-A"
+	icon_off = "synd_baton"
 	item_on = "synd_baton-A"
 	item_off = "synd_baton-D"
 	force = 15
@@ -3042,6 +3042,7 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 		src.is_active = FALSE
 		src.UpdateIcon()
 		target.update_inhands()
+
 //projectiles
 /datum/projectile/bullet/optio/hitscanrail
 	name = "hardlight beam"
