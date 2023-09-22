@@ -1,5 +1,9 @@
 
 (t)fri sep 22 23
+(u)Glamurio (Ryou)
+(p)15326
+(e)💅🔄🔊📦|C-QoL, C-Rework, C-Sound, A-Game-Objects
+(*)PDA Emergency Alerts now have distinct visuals and jingles.
 (u)MylieDaniels, AveryQuill
 (p)15858
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
