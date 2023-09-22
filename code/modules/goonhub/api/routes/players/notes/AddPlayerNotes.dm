@@ -1,6 +1,6 @@
 
 /// POST /players/notes
-/// Add a new player note
+/// Add
 /datum/apiRoute/players/notes/post
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/players/notes"
