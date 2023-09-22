@@ -3038,7 +3038,7 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 
 	attack_self(var/mob/user)
 		if (src.flipped)
-			user.show_text("The internal safeties kick in stopping you from turning on the baton!", "red")
+			user.show_text("The internal safeties kick in stopping you from turning on the [src]", "red")
 			return
 		..()
 
@@ -3054,7 +3054,7 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 			src.is_active = FALSE
 			src.UpdateIcon()
 			user?.update_inhands()
-			user?.show_text("The internal safeties kick in turning off the baton!", "red")
+			user?.show_text("The internal safeties kick in turning off the [src]!", "red")
 		..()
 
 //projectiles
