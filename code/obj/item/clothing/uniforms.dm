@@ -891,12 +891,6 @@ TYPEINFO(/obj/item/clothing/under/shorts/luchador)
 	icon_state = "lucha3"
 	item_state = "lucha3"
 
-/obj/item/clothing/under/shorts/trashsinglet
-	name = "trash bag singlet"
-	desc = "It's time for the trashman to eat garbage and smash opponents!"
-	icon_state = "literaltrash"
-	item_state = "literaltrash"
-
 /obj/item/clothing/under/shorts/random_color
 	New()
 		..()
@@ -1385,12 +1379,6 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 	New()
 		icon_state = "sweater[pick(1,2,3)]"
 		..()
-
-/obj/item/clothing/under/gimmick/chaps
-	name = "assless chaps"
-	desc = "Now with 95% less chafing!"
-	icon_state = "chaps"
-	item_state = "chaps"
 
 /obj/item/clothing/under/gimmick/vault13
 	name = "Vault 13 Jumpsuit"

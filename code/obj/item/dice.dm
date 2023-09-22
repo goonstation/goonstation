@@ -92,7 +92,7 @@ var/list/rollList = list()
 						continue
 					apc.overload_lighting()
 
-				playsound(T, 'sound/effects/ghost.ogg', 75, 0)
+				playsound(T, 'sound/effects/ghost.ogg', 75, FALSE)
 				new /obj/critter/bloodling(T)
 #endif
 
@@ -461,7 +461,7 @@ var/list/rollList = list()
 						continue
 					apc.overload_lighting()
 
-				playsound(T, 'sound/effects/ghost.ogg', 75, 0)
+				playsound(T, 'sound/effects/ghost.ogg', 75, FALSE)
 				new /obj/critter/bloodling(T)
 #endif
 

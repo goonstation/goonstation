@@ -8,7 +8,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	desc = "A window."
 	density = 1
 	stops_space_move = 1
-	dir = 5 //full tile
+	dir = NORTHEAST //full tile
 	flags = FPRINT | USEDELAY | ON_BORDER | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = HAS_DIRECTIONAL_BLOCKING
@@ -33,7 +33,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	var/image/damage_image = null
 	default_material = "glass"
 	mat_changename = TRUE
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	pressure_resistance = 4*ONE_ATMOSPHERE
 	gas_impermeable = TRUE
 	anchored = ANCHORED
@@ -768,7 +768,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 /obj/window/auto
 	icon = 'icons/obj/window_pyro.dmi'
 	icon_state = "mapwin"
-	dir = 5
+	dir = NORTHEAST
 	health_multiplier = 2
 	alpha = 160
 	object_flags = 0 // so they don't inherit the HAS_DIRECTIONAL_BLOCKING flag from thindows
@@ -901,8 +901,8 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 	New()
 		..()
 		SPAWN(1 DECI SECOND)
-			ini_dir = 5//gurgle
-			set_dir(5)//grumble
+			ini_dir = NORTHEAST//gurgle
+			set_dir(NORTHEAST)//grumble
 
 	smash(var/actuallysmash)
 		if(actuallysmash)
@@ -1030,7 +1030,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 		opacity = 0
 		icon_state = "safetyrail"
 		layer = EFFECTS_LAYER_BASE
-		dir = 1
+		dir = NORTH
 		default_material = "steel"
 
 // flock windows

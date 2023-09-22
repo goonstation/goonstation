@@ -452,27 +452,38 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 	furniture_type = /obj/stool/chair/pew
 
 /* ---------- Chair Parts ---------- */
-/obj/item/furniture_parts/wood_chair
-	name = "wooden chair parts"
-	desc = "A collection of parts that can be used to make a wooden chair."
+/obj/item/furniture_parts/dining_chair
+	name = "chair parts"
+	desc = "A collection of things you should not be seeing"
 	icon = 'icons/obj/furniture/chairs.dmi'
-	icon_state = "wchair_parts"
 	stamina_damage = 15
 	stamina_cost = 15
-	furniture_type = /obj/stool/chair/wooden
-	furniture_name = "wooden chair"
 
-/obj/item/furniture_parts/wood_chair/regal
-	name = "regal chair parts"
-	desc = "A collection of parts that can be used to make a regal chair."
-	icon_state = "regalchair_parts"
-	furniture_type = /obj/stool/chair/wooden/regal
+	wood
+		name = "wooden chair parts"
+		desc = "A collection of parts that can be used to make a wooden chair."
+		icon_state = "wchair_parts"
+		furniture_type = /obj/stool/chair/dining/wood
+		furniture_name = "wooden chair"
 
-/obj/item/furniture_parts/wood_chair/scrap
-	name = "scrap chair parts"
-	desc = "A collection of trash that can be used to make a scrap chair."
-	icon_state = "scrapchair_parts"
-	furniture_type = /obj/stool/chair/wooden/scrap
+	regal
+		name = "regal chair parts"
+		desc = "A collection of parts that can be used to make a regal chair."
+		icon_state = "regalchair_parts"
+		furniture_type = /obj/stool/chair/dining/regal
+
+	scrap
+		name = "scrap chair parts"
+		desc = "A collection of trash that can be used to make a scrap chair."
+		icon_state = "scrapchair_parts"
+		furniture_type = /obj/stool/chair/dining/scrap
+
+	industrial
+		name = "industrial chair parts"
+		desc = "An collection of rods and scaffolding that can be used to make an industrial chair."
+		icon_state = "ichair_parts"
+		furniture_type = /obj/stool/chair/dining/industrial
+		furniture_name = "industrial chair"
 
 /obj/item/furniture_parts/wheelchair
 	name = "wheelchair parts"
@@ -698,11 +709,11 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 
 	onStart()
 		..()
-		playsound(the_furniture, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(the_furniture, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_furniture].</span>")
 
 	onEnd()
 		..()
-		playsound(the_furniture, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(the_furniture, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		the_furniture:deconstruct() // yes a colon, bite me
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_furniture].</span>")

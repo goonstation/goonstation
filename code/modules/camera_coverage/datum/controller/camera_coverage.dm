@@ -90,7 +90,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 	var/list/turf/prev_coverage = emitter.coverage ? emitter.coverage : list()
 	var/list/turf/new_coverage = list()
 
-	for (var/turf/T in (QDELETED(emitter) || !emitter.active) ? list() : view(emitter.range, emitter.parent))
+	for (var/turf/T in (QDELETED(emitter) || !emitter.active) ? list() : view(emitter.range, get_turf(emitter.parent)))
 		new_coverage += T
 
 	var/list/turf/not_covered = prev_coverage - new_coverage

@@ -178,7 +178,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		//name = "NT-SO Commander"
 		name = null
 		limit = 0
-		slot_suit = list(/obj/item/clothing/suit/armor/centcomm)
+		slot_suit = list(/obj/item/clothing/suit/armor/captain/centcomm)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
 		slot_head = list(/obj/item/clothing/head/centhat)
 		slot_belt = list(/obj/item/tank/emergency_oxygen/extended)
@@ -2056,7 +2056,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_TRADESMAN
 	limit = 1
 	change_name_on_spawn = 1
-	slot_jump = list(/obj/item/clothing/under/trash_bag)
+	slot_jump = list(/obj/item/clothing/under/gimmick/trashsinglet)
 	slot_foot = list(/obj/item/clothing/shoes/sandal)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_back = list(/obj/item/storage/backpack/satchel/anello)

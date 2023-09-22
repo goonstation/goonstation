@@ -2016,7 +2016,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			<td class='r'>[current_reagent.volume] units</td>
 		</tr>
 				"}
-
+		if (QDELETED(src.beaker))
+			src.beaker = null
 		if (src.beaker)
 			dat += {"
 		<tr><th colspan='2'>Container</th></tr>
@@ -2277,6 +2278,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/glass,
 		/datum/manufacture/glassR,
 		/datum/manufacture/atmos_can,
+		/datum/manufacture/gastank,
 		/datum/manufacture/player_module,
 		/datum/manufacture/cable,
 		/datum/manufacture/powercell,
@@ -2542,6 +2544,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/chembarrel,
 		/datum/manufacture/chembarrel/yellow,
 		/datum/manufacture/chembarrel/red,
+		/datum/manufacture/condenser,
+		/datum/manufacture/beaker_lid_box,
+		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,
 		/datum/manufacture/reagentscanner,
 		/datum/manufacture/dropper,
@@ -3042,7 +3047,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	blueprint = /datum/manufacture/mechanics/gunbot
 	override_name_desc = FALSE
 
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 /obj/machinery/manufacturer/artemis
 	name = "Scout Vessel Manufacturer"
 	desc = "A manufacturing unit that can produce equipment for scouting vessels."

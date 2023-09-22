@@ -188,6 +188,7 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		src.ai = new /datum/aiHolder/wanderer(src)
 
 
+ADMIN_INTERACT_PROCS(/mob/living/carbon/human/fathergrife, proc/chatter)
 /mob/living/carbon/human/fathergrife
 	real_name = "Father Grife"
 #ifdef IN_MAP_EDITOR
@@ -202,6 +203,8 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		src.equip_new_if_possible(/obj/item/clothing/shoes/red, SLOT_SHOES)
 		src.equip_new_if_possible(/obj/item/clothing/under/misc/chaplain, SLOT_W_UNIFORM)
 		src.traitHolder.addTrait("training_chaplain")
+		if(prob(20))
+			src.bioHolder.AddEffectInstance(random_accent())
 
 	initializeBioholder()
 		. = ..()
@@ -211,8 +214,28 @@ mob/living/carbon/human/cluwne/satan/megasatan //someone can totally use this fo
 		if (..(parent))
 			return 1
 
-		if(prob(1) && !src.stat)
-			SPAWN(0) src.say(pick("GRIFE!", "GAH!", "Can I interest you in worshipping Grife?", "Where's my beer?", "Donations, to the church of Grife?", "You a Grifer?"))
+		var/area/area = get_area(src)
+		if(prob(1) && can_act(src) && area?.active)
+			chatter()
+
+	proc/say_helper_job()
+		. = pick(get_all_jobs())
+
+	proc/say_helper_crewmember()
+		var/datum/db_record/record = pick(data_core.general.records)
+		. = record["full_name"]
+
+	proc/say_helper_logged_phrase()
+		. = capitalize(phrase_log.random_phrase("say"))
+
+	proc/chatter()
+		set name = "Chatter"
+		var/phrase = pick_smart_string("father_grife.txt", "say", list(
+			"job" = PROC_REF(say_helper_job),
+			"crewmember" = PROC_REF(say_helper_crewmember),
+			"logged_phrase" = PROC_REF(say_helper_logged_phrase)
+		))
+		src.say(phrase)
 
 	attackby(obj/item/W, mob/M)
 		if (istype(W, /obj/item/paper/postcard/owlery))

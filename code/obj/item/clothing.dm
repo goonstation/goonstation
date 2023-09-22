@@ -4,7 +4,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 	//var/obj/item/clothing/master = null
 	w_class = W_CLASS_SMALL
 
-	var/see_face = 1
+	var/see_face = TRUE
 	///Makes it so the item doesn't show up upon examining, currently only applied for gloves
 	var/nodescripition = FALSE
 

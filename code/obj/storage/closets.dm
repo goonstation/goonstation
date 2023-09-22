@@ -1,3 +1,7 @@
+
+TYPEINFO(/obj/storage/closet)
+	mat_appearances_to_ignore = list("steel")
+
 /obj/storage/closet
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
@@ -645,5 +649,5 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed$$mauxite"
 	default_material = "mauxite"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE

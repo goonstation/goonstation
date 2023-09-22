@@ -811,6 +811,33 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Tool"
 
+/datum/manufacture/condenser
+	name = "Chemical Condenser"
+	item_paths = list("molitz")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/reagent_containers/glass/condenser)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+/datum/manufacture/beaker_lid_box
+	name = "Beaker Lid Box"
+	item_paths = list("RUB")
+	item_amounts = list(2)
+	item_outputs = list(/obj/item/storage/box/beaker_lids)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
+
+/datum/manufacture/bunsen_burner
+	name = "Bunsen Burner"
+	item_paths = list("pharosium")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/bunsen_burner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
 
 ////////////////////////////////
 
@@ -1185,7 +1212,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Cybereye"
 	item_paths = list("CRY-1","MET-1","CON-1","INS-1")
 	item_amounts = list(2,1,2,1)
-	item_outputs = list(/obj/item/organ/eye/cyber)
+	item_outputs = list(/obj/item/organ/eye/cyber/configurable)
 	time = 20 SECONDS
 	create = 1
 	category = "Component"
@@ -1280,7 +1307,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Resource"
 
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 /******************** Artemis **************************/
 
 /datum/manufacture/nav_sat
@@ -2094,6 +2121,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("FAB-1")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/clothing/mask/breath)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/gastank
+	name = "Gas tank"
+	item_paths = list("MET-2")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/tank/empty)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"
@@ -2925,6 +2961,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/pod/preassembeled_parts
+	name = "Preassembeled Pod Frame Kit"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(45, 25, 19)
+	item_outputs = list(/obj/item/preassembled_frame_box/pod)
+	time = 50 SECONDS
+	create = 1
+	category = "Component"
+
 ABSTRACT_TYPE(/datum/manufacture/sub)
 
 /datum/manufacture/sub/parts
@@ -2963,6 +3008,15 @@ ABSTRACT_TYPE(/datum/manufacture/sub)
 	create = 1
 	category = "Component"
 
+/datum/manufacture/sub/preassembeled_parts
+	name = "Preassembeled Minisub Frame Kit"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(23, 12, 9)
+	item_outputs = list(/obj/item/preassembled_frame_box/sub)
+	time = 25 SECONDS
+	create = 1
+	category = "Component"
+
 ABSTRACT_TYPE(/datum/manufacture/putt)
 
 /datum/manufacture/putt/parts
@@ -2998,6 +3052,15 @@ ABSTRACT_TYPE(/datum/manufacture/putt)
 	item_amounts = list(5,5)
 	item_outputs = list(/obj/item/putt/control)
 	time = 5 SECONDS
+	create = 1
+	category = "Component"
+
+/datum/manufacture/putt/preassembeled_parts
+	name = "Preassembeled MiniPutt Frame Kit"
+	item_paths = list("MET-2","CON-1","CRY-1")
+	item_amounts = list(23, 12, 9)
+	item_outputs = list(/obj/item/preassembled_frame_box/putt)
+	time = 25 SECONDS
 	create = 1
 	category = "Component"
 

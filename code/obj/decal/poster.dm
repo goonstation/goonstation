@@ -624,6 +624,11 @@
 			desc = "A sign warning you of something."
 			icon_state = "wall_warning4"
 
+		warning_sus
+			name = "warning sign"
+			desc = "A sign warning you of something suspicious."
+			icon_state = "wall_sus"
+
 		statistics1
 			name = "statistics poster"
 			desc = "A poster with a bar chart depicting the rapid growth of chemistry lab related explosions. Although who the fuck even uses a bar chart when you could be using a line chart.."
