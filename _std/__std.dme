@@ -15,7 +15,7 @@
 #include "types.dm"					// stuff like childrentypesof()
 #include "datum.dm"					// hasvar()
 #include "macros\spawn.dm"			// SPAWN
-#include "plane.dm"                 // debug icons
+#include "plane.dm"					// debug icons
 #include "defines\abilities.dm"
 #include "defines\access.dm"
 #include "defines\actions.dm"
