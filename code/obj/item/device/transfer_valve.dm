@@ -513,10 +513,12 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	var/pressure = 0 // used to calculate credit value, in shippingmarket.dm proc/appraise_value
 	var/last_explode_time = 0
 	var/static/explosion_id = 0
-	desc = "A pressure crystal. We're not really sure how it works, but it does. Place this near where the epicenter of a bomb would be, \
-		then detonate the bomb. Afterwards, place the crystal in a tester to determine the strength.<br>\
-		Spent pressure crystals can be sold to researchers on the shipping market, for a credit sum depending on the measured power."
 	name = "pressure crystal"
+	desc = "A mysterious gadget that measures the power of bombs detonated over it. \
+		High measurements within the crystal can be very valuable on the shipping market."
+	HELP_MESSAGE_OVERRIDE("Place this where the epicenter of a bomb would be, then detonate the bomb. \
+		Afterwards, place the crystal in a pressure sensor to determine the explosion power.<br>\
+		Spent pressure crystals can be sold to researchers on the shipping market, for a credit sum depending on the measured power.")
 
 	examine()
 		. = ..()
