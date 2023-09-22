@@ -48,8 +48,8 @@ ABSTRACT_TYPE(/datum/fishing_spot)
 	[pick("big", "wriggly", "fat", "slimy", "fishy", "large", "high-quality", "nasty", "chompy", "real", "wily")] \
 	[prob(80) ? "[fish.name]" : pick("one", "catch", "chomper", "wriggler", "sunovagun", "sucker")]!")
 	user.put_in_hand_or_drop(fish)
-	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, 1)
-	playsound(user, 'sound/effects/fish_catch.ogg', 75, 1)
+	playsound(user, 'sound/items/fishing_rod_reel.ogg', 50, TRUE)
+	playsound(user, 'sound/effects/fish_catch.ogg', 75, TRUE)
 	fishing_rod.last_fished = TIME //set the last fished time
 	return 1
 

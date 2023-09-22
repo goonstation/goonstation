@@ -355,7 +355,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 		src.icon_state = "[base_icon_state][src.on]"
 		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
 		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
-		update_icon()
+		UpdateIcon()
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.update_clothing() // Immediately update the worn icon

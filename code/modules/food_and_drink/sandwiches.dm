@@ -557,6 +557,18 @@
 	initial_reagents = list("cholesterol"=1)
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
 
+/obj/item/reagent_containers/food/snacks/chilifries
+	name = "chili cheese fries"
+	desc = "Lightly salted potato fingers, topped with chili and cheese."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "chilifries"
+	bites_left = 6
+	heal_amt = 2
+	initial_volume = 5
+	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"= 10)
+	food_effects = list("food_hp_up")
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
+
 /obj/item/reagent_containers/food/snacks/macguffin
 	name = "sausage macguffin"
 	desc = "You might want to start over, I'm not exactly lovin' it."

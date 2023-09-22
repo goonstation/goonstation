@@ -683,7 +683,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 	make_reagents()
 		..()
-		reagents.add_reagent("ghostchilijuice",25)
+		reagents.add_reagent("capsaicin",25)
 
 	heal(var/mob/M)
 		..()

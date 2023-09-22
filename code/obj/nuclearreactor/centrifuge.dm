@@ -40,9 +40,9 @@
 					goodstuff.amount = round(extracted_fuel)
 					goodstuff.UpdateStackAppearance()
 					extracted_fuel -= goodstuff.amount
-					playsound(src, sound_process, 40, 1)
+					playsound(src, sound_process, 40, TRUE)
 				else
-					playsound(src, sound_grump, 40, 1)
+					playsound(src, sound_grump, 40, TRUE)
 				waste.setMaterial(getMaterial(waste.default_material), FALSE, FALSE, TRUE, FALSE)
 				waste.material.setProperty("spent_fuel", extracted_fuel)
 				extracted_fuel = 0
@@ -56,7 +56,7 @@
 
 		if (W.material && W.material.hasProperty("spent_fuel"))
 			boutput(user, "You load [W] into [src].")
-			playsound(src, sound_load, 40, 1)
+			playsound(src, sound_load, 40, TRUE)
 			W.set_loc(src)
 			user?.u_equip(W)
 			W.dropped(user)

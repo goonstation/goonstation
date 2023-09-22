@@ -83,7 +83,7 @@
 			var/mob/living/critter/flock/drone/F = grab.assailant
 			if (F.flock == src.flock)
 				return
-		playsound(src, 'sound/effects/electric_shock.ogg', 40, 1, -3)
+		playsound(src, 'sound/effects/electric_shock.ogg', 40, TRUE, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
 		var/mob/living/L = grab.assailant
 		L.shock(src, 5000)
@@ -561,7 +561,7 @@
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
-				playsound(src, 'sound/misc/flockmind/flockdrone_fart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, 'sound/misc/flockmind/flockdrone_fart.ogg', 60, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 				return "<b>[src]</b> [fart_message]"
 		if ("laugh")
 			if (src.emote_check(voluntary, 50))
@@ -638,7 +638,7 @@
 	if(src.floorrunning)
 		return
 	src.flock?.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_FLOORRUN, src)
-	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, 1, extrarange = -10)
+	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, TRUE, extrarange = -10)
 	src.floorrunning = TRUE
 	src.set_density(FALSE)
 	src.throws_can_hit_me = FALSE
@@ -661,7 +661,7 @@
 /mob/living/critter/flock/drone/proc/end_floorrunning(check_lights = FALSE)
 	if(!src.floorrunning)
 		return
-	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, 1, extrarange = -10)
+	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, TRUE, extrarange = -10)
 	src.floorrunning = FALSE
 	src.set_density(TRUE)
 	src.throws_can_hit_me = TRUE
@@ -866,7 +866,7 @@
 			if(91 to 100)
 				B = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock(my_turf)
 
-	playsound(src, 'sound/impact_sounds/Glass_Shatter_2.ogg', 30, 1, extrarange = -10)
+	playsound(src, 'sound/impact_sounds/Glass_Shatter_2.ogg', 30, TRUE, extrarange = -10)
 	if (src.organHolder)
 		src.organHolder.drop_organ("brain",src.loc)
 		src.organHolder.drop_organ("heart",src.loc)
@@ -1155,7 +1155,7 @@
 	var/mob/living/critter/flock/F = target
 	if(istype(F))
 		if(F.get_health_percentage() >= 1.0)
-			boutput(user, "<span class='alert'>They don't need to be repaired, they're in perfect condition.</span>")
+			boutput(user, "<span class='alert'>[capitalize(he_or_she_dont_or_doesnt(F))] need to be repaired, [hes_or_shes(F)] in perfect condition.</span>")
 			return
 		if (isdead(F))
 			return
@@ -1185,7 +1185,7 @@
 		boutput(user, "<span class='alert'>The imprisonment matrix doesn't work on flockdrones.</span>")
 		return
 	else if(istype(target.loc, /obj/flock_structure/cage))
-		boutput(user, "<span class='alert'>They're already imprisoned, you can't double-imprison them!</span>")
+		boutput(user, "<span class='alert'>[hes_or_shes(target)] already imprisoned, you can't double-imprison [him_or_her(target)]!</span>")
 	else
 		actions.start(new/datum/action/bar/flock_entomb(target), user)
 		return TRUE
@@ -1325,7 +1325,7 @@
 			I.change_stack_amount(-1)
 			return
 
-	playsound(flock_owner, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1, extrarange = -10)
+	playsound(flock_owner, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE, extrarange = -10)
 
 	if(length(I.contents))
 		var/anything_tumbled = FALSE

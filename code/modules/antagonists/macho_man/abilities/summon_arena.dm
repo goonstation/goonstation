@@ -58,7 +58,7 @@
 								spawn_animation1(FF)
 								sleep(10) // animation, also to simulate them coming in and slamming into the ground
 								FF.visible_message("<span class='alert'><B>[FF] slams and anchors itself into the ground!</B></span>")
-								playsound(T, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+								playsound(T, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 								for (var/mob/living/M in oviewers(ring_radius * 2, T))
 									shake_camera(M, 8, 24)
 						else // arena ropes

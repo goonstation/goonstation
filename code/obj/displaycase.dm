@@ -100,11 +100,11 @@
 	if (isscrewingtool(W)) // To bolt to the floor
 		if (src.anchored == 0)
 			src.anchored = ANCHORED
-			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
 			user.show_message("<span class='notice'>You bolt the display case to the floor.</span>")
 		else
 			src.anchored = UNANCHORED
-			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
 			user.show_message("<span class='notice'>You unbolt the display case from the floor.</span>")
 		return
 	else if (iswrenchingtool(W) && destroyed) // To disassemble when broken

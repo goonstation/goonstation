@@ -284,7 +284,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 					boutput(ui.user, "<span class='alert'>This item is not viable extraction produce.</span>")
 
 			if("splice_select")
-				playsound(src, 'sound/machines/keypress.ogg', 50, 1)
+				playsound(src, 'sound/machines/keypress.ogg', 50, TRUE)
 				var/obj/item/I = locate(params["splice_select_ref"]) in src
 				if (!istype(I))
 					return
@@ -336,19 +336,19 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 							for(var/datum/reagent/R in usable_reagents)
 								switch(S.HYPinfusionS(R.id,src))
 									if (1)
-										playsound(src, 'sound/machines/seed_destroyed.ogg', 50, 1)
+										playsound(src, 'sound/machines/seed_destroyed.ogg', 50, TRUE)
 										boutput(usr, "<span class='alert'>ERROR: Seed has been destroyed.</span>")
 										break
 									if (2)
-										playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
+										playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 										boutput(usr, "<span class='alert'>ERROR: Reagent lost.</span>")
 										break
 									if (3)
-										playsound(src, 'sound/machines/buzz-sigh.ogg', 50, 1)
+										playsound(src, 'sound/machines/buzz-sigh.ogg', 50, TRUE)
 										boutput(usr, "<span class='alert'>ERROR: Unknown error. Please try again.</span>")
 										break
 									else
-										playsound(src, 'sound/effects/zzzt.ogg', 50, 1)
+										playsound(src, 'sound/effects/zzzt.ogg', 50, TRUE)
 										boutput(usr, "<span class='notice'>Infusion of [R.name] successful.</span>")
 								src.inserted.reagents.remove_reagent(R.id,10)
 					update_static_data(ui.user, ui)
@@ -480,7 +480,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 							checked_strain.changes_after_splicing(DNA)
 
 					boutput(usr, "<span class='notice'>Splice successful.</span>")
-					playsound(src, 'sound/machines/ping.ogg', 50, 1)
+					playsound(src, 'sound/machines/ping.ogg', 50, TRUE)
 					//0 xp for a 100% splice, 4 xp for a 10% splice
 					JOB_XP(usr, "Botanist", clamp(round((100 - splice_chance) / 20), 0, 4))
 					if (!src.seedoutput) src.seeds.Add(S)
@@ -489,7 +489,7 @@ TYPEINFO(/obj/submachine/seed_manipulator)
 				else
 					// It fucked up - we don't need to do anything else other than tell the user
 					boutput(usr, "<span class='alert'>Splice failed.</span>")
-					playsound(src, 'sound/machines/seed_destroyed.ogg', 50, 1)
+					playsound(src, 'sound/machines/seed_destroyed.ogg', 50, TRUE)
 
 				// Now get rid of the old seeds and go back to square one
 				src.seeds.Remove(seed1)

@@ -1,82 +1,82 @@
 var/global/list/available_ai_shells = list()
 var/atom/movable/minimap_ui_handler/ai_minimap_ui
-var/global/list/ai_emotions = list("Annoyed" = "ai-annoyed_dol", \
-	"Annoyed (Inverted)" = "ai-annoyed_lod", \
-	"Baffled" = "ai-baffled_dol",\
-	"Baffled (Inverted)" = "ai-baffled_lod",\
-	"Blank" = "ai-blank_lod",\
-	"Blank (Inverted)" = "ai-blank_dol",\
-	"Cheeky" = "ai-cheeky_dol",\
-	"Cheeky (Inverted)" = "ai-cheeky_lod",\
-	"Colourbars" = "ai-colourbars",\
-	"Confused" = "ai-confused_dol",\
-	"Confused (Inverted)" = "ai-confused_lod",\
-	"Content" = "ai-content_dol",\
-	"Content (Inverted)" = "ai-content_lod",\
-	"Crecent" = "ai-crecent_dol",\
-	"Crecent (Inverted)" = "ai-crecent_lod",\
-	"Cursor" = "ai-cursor_dol",\
-	"Cursor (Inverted)" = "ai-cursor_lod",\
-	"Exclamation" = "ai-exclamation_dol",\
-	"Exclamation (Inverted)" = "ai-exclamation_lod",\
-	"Eye" = "ai-eye_dol",\
-	"Eye (Inverted)" = "ai-eye_lod",\
-	"Fidgety" = "ai-fidget_dol",\
-	"Fidgety (Inverted)" = "ai-fidget_lod",\
-	"Glitch" = "ai-glitch_dol",\
-	"Glitch (Inverted)" = "ai-glitch_lod",\
-	"Happy" = "ai-happy_dol", \
-	"Happy (Inverted)" = "ai-happy_lod", \
-	"Heart" = "ai-heart_dol",\
-	"Heart (Inverted)" = "ai-heart_lod",\
-	"Line" = "ai-line_dol",\
-	"Line (Inverted)" = "ai-line_lod",\
-	"Loading Bar" = "ai-loading_dol",\
-	"Loading Bar (Inverted)" = "ai-loading_lod",\
-	"Mad" = "ai-mad_dol",\
-	"Mad (Inverted)" = "ai-mad_lod",\
-	"Musical" = "ai-music_dol",\
-	"Musical (Inverted)" = "ai-music_lod",\
-	"Nanotrasen" = "ai-nanotrasen_dol",\
-	"Nanotrasen (Inverted)" = "ai-nanotrasen_lod",\
-	"Nervous" = "ai-nervous_dol",\
-	"Nervous (Inverted)" = "ai-nervous_lod",\
-	"Neutral" = "ai-neutral_dol",\
-	"Neutral (Inverted)" = "ai-neutral_lod",\
-	"Pensive" = "ai-pensive_dol",\
-	"Pensive (Inverted)" = "ai-pensive_lod",\
-	"Question" = "ai-question_dol",\
-	"Question (Inverted)" = "ai-question_lod",\
-	"Sad" = "ai-sad_dol",\
-	"Sad (Inverted)" = "ai-sad_lod",\
-	"Silly" = "ai-silly_dol",\
-	"Silly (Inverted)" = "ai-silly_lod",\
-	"Smug" = "ai-smug_dol",\
-	"Smug (Inverted)" = "ai-smug_lod",\
-	"Snoozing" = "ai-zzz_dol",\
-	"Snoozing (Inverted)" = "ai-zzz_lod",\
-	"Spooky" = "ai-spooky_dol",\
-	"Spooky (Inverted)" = "ai-spooky_lod",\
-	"Square" = "ai-square_dol",\
-	"Square (Inverted)" = "ai-square_lod",\
-	"Surprised" = "ai-surprised_dol",\
-	"Surprised (Inverted)" = "ai-surprised_lod",\
-	"Suspicious" = "ai-eyesemoji_dol",\
-	"Suspicious (Inverted)" = "ai-eyesemoji_lod",\
-	"Text" = "ai-text_dol",\
-	"Text (Inverted)" = "ai-text_lod",\
-	"Tired" = "ai-tired_dol",\
-	"Tired (Inverted)" = "ai-tired_lod",\
-	"Triangle" = "ai-triangle_dol",\
-	"Triangle (Inverted)" = "ai-triangle_lod",\
-	"Unimpressed" = "ai-unimpressed_dol",\
-	"Unimpressed (Inverted)" = "ai-unimpressed_lod",\
-	"Unsure" = "ai-unsure_dol",\
-	"Unsure (Inverted)" = "ai-unsure_lod",\
-	"Very Happy" = "ai-veryhappy_dol",\
-	"Very Happy (Inverted)" = "ai-veryhappy_lod",\
-	"Wink" = "ai-wink_dol",\
-	"Wink (Inverted)" = "ai-wink_lod") // this should be in typeinfo
+var/global/list/ai_emotions = list("Annoyed" = "ai_annoyed-dol", \
+	"Annoyed (Inverted)" = "ai_annoyed-lod", \
+	"Baffled" = "ai_baffled-dol",\
+	"Baffled (Inverted)" = "ai_baffled-lod",\
+	"Blank" = "ai_blank-dol",\
+	"Blank (Inverted)" = "ai_blank-lod",\
+	"Cheeky" = "ai_cheeky-dol",\
+	"Cheeky (Inverted)" = "ai_cheeky-lod",\
+	"Colourbars" = "ai_colourbars",\
+	"Confused" = "ai_confused-dol",\
+	"Confused (Inverted)" = "ai_confused-lod",\
+	"Content" = "ai_content-dol",\
+	"Content (Inverted)" = "ai_content-lod",\
+	"Crecent" = "ai_crecent-dol",\
+	"Crecent (Inverted)" = "ai_crecent-lod",\
+	"Cursor" = "ai_cursor-dol",\
+	"Cursor (Inverted)" = "ai_cursor-lod",\
+	"Exclamation" = "ai_exclamation-dol",\
+	"Exclamation (Inverted)" = "ai_exclamation-lod",\
+	"Eye" = "ai_eye-dol",\
+	"Eye (Inverted)" = "ai_eye-lod",\
+	"Fidgety" = "ai_fidget-dol",\
+	"Fidgety (Inverted)" = "ai_fidget-lod",\
+	"Glitch" = "ai_glitch-dol",\
+	"Glitch (Inverted)" = "ai_glitch-lod",\
+	"Happy" = "ai_happy-dol", \
+	"Happy (Inverted)" = "ai_happy-lod", \
+	"Heart" = "ai_heart-dol",\
+	"Heart (Inverted)" = "ai_heart-lod",\
+	"Line" = "ai_line-dol",\
+	"Line (Inverted)" = "ai_line-lod",\
+	"Loading Bar" = "ai_loading-dol",\
+	"Loading Bar (Inverted)" = "ai_loading-lod",\
+	"Mad" = "ai_mad-dol",\
+	"Mad (Inverted)" = "ai_mad-lod",\
+	"Musical" = "ai_music-dol",\
+	"Musical (Inverted)" = "ai_music-lod",\
+	"Nanotrasen" = "ai_nanotrasen-dol",\
+	"Nanotrasen (Inverted)" = "ai_nanotrasen-lod",\
+	"Nervous" = "ai_nervous-dol",\
+	"Nervous (Inverted)" = "ai_nervous-lod",\
+	"Neutral" = "ai_neutral-dol",\
+	"Neutral (Inverted)" = "ai_neutral-lod",\
+	"Pensive" = "ai_pensive-dol",\
+	"Pensive (Inverted)" = "ai_pensive-lod",\
+	"Question" = "ai_question-dol",\
+	"Question (Inverted)" = "ai_question-lod",\
+	"Sad" = "ai_sad-dol",\
+	"Sad (Inverted)" = "ai_sad-lod",\
+	"Silly" = "ai_silly-dol",\
+	"Silly (Inverted)" = "ai_silly-lod",\
+	"Smug" = "ai_smug-dol",\
+	"Smug (Inverted)" = "ai_smug-lod",\
+	"Snoozing" = "ai_zzz-dol",\
+	"Snoozing (Inverted)" = "ai_zzz-lod",\
+	"Spooky" = "ai_spooky-dol",\
+	"Spooky (Inverted)" = "ai_spooky-lod",\
+	"Square" = "ai_square-dol",\
+	"Square (Inverted)" = "ai_square-lod",\
+	"Surprised" = "ai_surprised-dol",\
+	"Surprised (Inverted)" = "ai_surprised-lod",\
+	"Suspicious" = "ai_eyesemoji-dol",\
+	"Suspicious (Inverted)" = "ai_eyesemoji-lod",\
+	"Text" = "ai_text-dol",\
+	"Text (Inverted)" = "ai_text-lod",\
+	"Tired" = "ai_tired-dol",\
+	"Tired (Inverted)" = "ai_tired-lod",\
+	"Triangle" = "ai_triangle-dol",\
+	"Triangle (Inverted)" = "ai_triangle-lod",\
+	"Unimpressed" = "ai_unimpressed-dol",\
+	"Unimpressed (Inverted)" = "ai_unimpressed-lod",\
+	"Unsure" = "ai_unsure-dol",\
+	"Unsure (Inverted)" = "ai_unsure-lod",\
+	"Very Happy" = "ai_veryhappy-dol",\
+	"Very Happy (Inverted)" = "ai_veryhappy-lod",\
+	"Wink" = "ai_wink-dol",\
+	"Wink (Inverted)" = "ai_wink-lod") // this should be in typeinfo
 /mob/living/silicon/ai
 	name = "AI"
 	voice_name = "synthesized voice"
@@ -118,7 +118,7 @@ var/global/list/ai_emotions = list("Annoyed" = "ai-annoyed_dol", \
 	var/power_mode = 0
 	var/power_area = null
 	var/obj/machinery/power/apc/local_apc = null
-	var/obj/item/device/radio/radio1 = null // See /mob/living/say() in living.dm for AI-related radio code.
+	var/obj/item/device/radio/radio1 = null // See /mob/living/say() in living.dm for ai_related radio code.
 	var/obj/item/device/radio/radio2 = null
 	var/obj/item/device/radio/radio3 = null
 	var/obj/item/device/pda2/internal_pda = null
@@ -126,8 +126,9 @@ var/global/list/ai_emotions = list("Annoyed" = "ai-annoyed_dol", \
 	var/moustache_mode = 0
 	var/status_message = null
 	var/mob/living/silicon/deployed_shell = null
+	var/locking = 0
 
-	var/faceEmotion = "ai-happy_dol"
+	var/faceEmotion = "ai_happy-dol"
 	var/faceColor = "#66B2F2"
 	var/list/custom_emotions = null
 
@@ -136,8 +137,8 @@ var/global/list/ai_emotions = list("Annoyed" = "ai-annoyed_dol", \
 /* To add a new skin:
 - Create the skin itself but also the overlay you want to have for when in battery mode
 - The name of the core icon state will be used to fetch the battery mode overlay, so your batmode overlay
-- should be the name of your core icon state with "batmode-" before it
-- Ditto for when the AI is online as normal (should you choose to have an overlay for this). Prefix with "apcmode-"
+- should be the name of your core icon state with "lights_bat-" before it
+- Ditto for when the AI is online as normal (should you choose to have an overlay for this). Prefix with "lights_apc-"
 - Add the icon state name to skinsList below, and while it's technically optional, you should also associate a short description with it
 - There is currently no support for significantly differently shaped cores, you'll have to do that yourself, sorry
 */
@@ -306,7 +307,7 @@ or don't if it uses a custom topopen overlay
 	src.coreSkin = skinToApply
 	src.set_color(global.random_color())
 	src.faceEmotion = global.ai_emotions[pick(global.ai_emotions)]
-	src.UpdateOverlays(SafeGetOverlayImage("backscreen", 'icons/mob/ai.dmi', "ai-blank"), "backscreen")
+	src.UpdateOverlays(SafeGetOverlayImage("backscreen", 'icons/mob/ai.dmi', "ai_blank"), "backscreen")
 	update_appearance()
 
 	src.eyecam = new /mob/living/intangible/aieye(src)
@@ -417,7 +418,7 @@ or don't if it uses a custom topopen overlay
 	if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 		var/obj/item/device/borg_linker/linker = W
 		if(src.dismantle_stage<2)
-			boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
+			boutput(user, "You need to open [src.name]'s cover before you can change [his_or_her(src)] law rack link.")
 			return
 
 		if(!src.law_rack_connection)
@@ -448,6 +449,7 @@ or don't if it uses a custom topopen overlay
 		if (src.dismantle_stage == 1)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
 			src.visible_message("<span class='alert'><b>[user.name]</b> opens [src.name]'s chassis cover.</span>")
+			src.locking = 0
 			src.dismantle_stage = 2
 		else if (src.dismantle_stage == 2)
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -505,6 +507,7 @@ or don't if it uses a custom topopen overlay
 					src.dismantle_stage = 0
 				else
 					src.dismantle_stage = 1
+				src.locking = 0
 				user.visible_message("<span class='alert'><b>[user.name]</b> [src.dismantle_stage ? "unlocks" : "locks"] [src.name]'s cover lock.</span>")
 			else boutput(user, "<span class='alert'>Access denied.</span>")
 
@@ -1242,8 +1245,8 @@ or don't if it uses a custom topopen overlay
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
-				if(faceEmotion != "ai-red" && faceEmotion != "ai-tetris")
-					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]_flip", src.layer+0.2), "actual_face")
+				if(faceEmotion != "ai_red" && faceEmotion != "ai_tetris")
+					UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', "[faceEmotion]-flip", src.layer+0.2), "actual_face")
 					SPAWN(0.5 SECONDS)
 						UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
@@ -1881,6 +1884,30 @@ or don't if it uses a custom topopen overlay
 		src.mind.transfer_to(target_shell)
 		return
 
+/mob/living/silicon/ai/verb/toggle_lock()
+	set category = "AI Commands"
+	set name = "Toggle Cover Lock"
+
+	if (src.dismantle_stage >= 2)
+		boutput(src, "<span class='alert'>You can't lock your cover when it's open!</span>")
+	else
+		if (src.locking)
+			boutput(src, "<span class='alert'>Your cover is currently locking, please be patient.</span>")
+		else if (src.dismantle_stage == 1)
+			src.locking = 1
+			boutput(src, "<span class='alert'>Locking cover...</span>")
+			SPAWN(12 SECONDS)
+				if (!src.locking)
+					boutput(src, "<span class='alert'>The lock was interrupted before it could finish!</span>")
+				else
+					src.dismantle_stage = 0
+					src.locking = 0
+					boutput(src, "<span class='alert'>You lock your cover lock.</span>")
+
+		else
+			src.dismantle_stage = 1
+			boutput(src, "<span class='alert'>You unlock your cover lock.</span>")
+
 /mob/living/silicon/ai/proc/eye_view()
 	if (isdead(src))
 		return
@@ -2257,32 +2284,32 @@ or don't if it uses a custom topopen overlay
 		if (src.cell && src.cell.charge < 100)
 			src.icon_state = coreSkin // I think just removing all icon_state updates should be fine but ai code is so
 		else // convoluted that I'm terrified of breaking some super specific thing by doing that
-			UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai-bsod"), "temp_face")
+			UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_bsod"), "temp_face")
 
 
 	else if (src.power_mode == -1 || src.health < 25 || src.getStatusDuration("paralysis"))
 		clearFaceOverlays(1)
-		UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai-stun_screen"), "temp_face")
+		UpdateOverlays(SafeGetOverlayImage("temp_face", 'icons/mob/ai.dmi', "ai_stun-screen"), "temp_face")
 
 	else
 		src.icon_state = coreSkin
 		UpdateOverlays(null, "temp_face") // we wanna get rid of the temporary BSOD/stun face overlays
 
-		var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai-white", src.layer)
+		var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/ai.dmi', "ai_white", src.layer)
 		I.color = faceColor
 		UpdateOverlays(I, "faceplate")
 
-		if (faceEmotion != "ai-tetris")
-			UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai-face_glow", src.layer+0.1), "face_glow")
+		if (faceEmotion != "ai_tetris")
+			UpdateOverlays(SafeGetOverlayImage("face_glow", 'icons/mob/ai.dmi', "ai_face-glow", src.layer+0.1), "face_glow")
 		else
 			UpdateOverlays(null, "face_glow")
 
 		UpdateOverlays(SafeGetOverlayImage("actual_face", 'icons/mob/ai.dmi', faceEmotion, src.layer+0.2), "actual_face")
 
 		if (src.power_mode == 1) // e.g get_image("batterymode-dwaine") which is the icon_state we want if coreSkin is "dwaine"
-			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "batmode-[coreSkin]"), "power-status")
+			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_bat-[coreSkin]"), "power-status")
 		else
-			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "apcmode-[coreSkin]"), "power-status")
+			src.UpdateOverlays(SafeGetOverlayImage("power-status", 'icons/mob/ai.dmi', "lights_apc-[coreSkin]"), "power-status")
 
 		if (src.moustache_mode == 1)
 			src.UpdateOverlays(SafeGetOverlayImage("moustache", 'icons/mob/ai.dmi', "moustache", src.layer+0.3), "moustache")
@@ -2292,17 +2319,17 @@ or don't if it uses a custom topopen overlay
 // ------ IF ADDING NEW CORE FRAMES PLEASE DEFINE WHICH OPEN OVERLAY TO USE HERE ------ //
 	if (src.dismantle_stage > 1)
 		if(coreSkin == "default" || coreSkin == "science" || coreSkin == "medical" || coreSkin == "syndicate" || coreSkin == "ntold" || coreSkin == "bee" || coreSkin == "shock")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-default"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_default"), "top")
 		else if(coreSkin == "gold" || coreSkin == "engineering" || coreSkin == "soviet")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-full"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_full"), "top")
 		else if(coreSkin == "dwaine" || coreSkin == "ailes" || coreSkin == "salvage" || coreSkin == "gardengear" || coreSkin == "telegun")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-split"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_split"), "top")
 		else if(coreSkin == "nt" || coreSkin == "industrial" || coreSkin == "lgun")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-uneven"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_uneven"), "top")
 		else if(coreSkin == "kingsway" || coreSkin == "clown" || coreSkin == "mime" || coreSkin == "tactical" || coreSkin == "mauxite")
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-bulky"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_bulky"), "top")
 		else
-			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "topopen-[coreSkin]"), "top")
+			src.UpdateOverlays(SafeGetOverlayImage("top", 'icons/mob/ai.dmi', "cover_[coreSkin]"), "top")
 
 	else
 		src.UpdateOverlays(null, "top")
@@ -2311,20 +2338,20 @@ or don't if it uses a custom topopen overlay
 		if (-INFINITY to 24)
 			src.UpdateOverlays(null, "burn")
 		if(25 to 49)
-			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "burn25"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-25"), "burn")
 		if(50 to 74)
-			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "burn50"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-50"), "burn")
 		if(75 to INFINITY)
-			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "burn75"), "burn")
+			src.UpdateOverlays(SafeGetOverlayImage("burn", 'icons/mob/ai.dmi', "dmg_burn-75"), "burn")
 	switch(src.bruteloss)
 		if (-INFINITY to 24)
 			src.UpdateOverlays(null, "brute")
 		if(25 to 49)
-			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "brute25"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-25"), "brute")
 		if(50 to 74)
-			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "brute50"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-50"), "brute")
 		if(75 to INFINITY)
-			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "brute75"), "brute")
+			src.UpdateOverlays(SafeGetOverlayImage("brute", 'icons/mob/ai.dmi', "dmg_brute-75"), "brute")
 
 /// Clears all overlays which constitute the displayed face/screen
 /mob/living/silicon/ai/proc/clearFaceOverlays(var/retain_cache=0)
@@ -2590,7 +2617,7 @@ proc/get_mobs_trackable_by_AI()
 	name = "\improper AI core frame"
 	desc = "A frame for an AI core."
 	icon = 'icons/mob/ai.dmi'
-	icon_state = "ai_frame0"
+	icon_state = "frame"
 	var/build_step = 0
 	var/obj/item/cell/cell = null
 	var/has_radios = 0
@@ -2612,14 +2639,14 @@ proc/get_mobs_trackable_by_AI()
 
 	New()
 		. = ..()
-		image_glass_overlay = image(icon, "ai_frame-glass", OBJ_LAYER+0.6)
-		image_wire_overlay = image(icon, "ai_frame-wires", OBJ_LAYER+0.5)
-		image_top_overlay = image(icon, "ai_frame-top", OBJ_LAYER+0.4)
+		image_glass_overlay = image(icon, "frame_glass", OBJ_LAYER+0.6)
+		image_wire_overlay = image(icon, "frame_wires", OBJ_LAYER+0.5)
+		image_top_overlay = image(icon, "frame_top", OBJ_LAYER+0.4)
 		// +0.3 is reserved for the core overlay; we can't define it here since we dunno what kind of core might be made!
-		image_cell_overlay = image(icon, "ai_frame-cell", OBJ_LAYER+0.25)
-		image_radio_overlay = image(icon, "ai_frame-radio", OBJ_LAYER+0.2)
-		image_interface_overlay = image(icon, "ai_frame-interface", OBJ_LAYER+0.15)
-		image_background_overlay = image(icon, "ai_frame-back", OBJ_LAYER+0.1)
+		image_cell_overlay = image(icon, "frame_cell", OBJ_LAYER+0.25)
+		image_radio_overlay = image(icon, "frame_radio", OBJ_LAYER+0.2)
+		image_interface_overlay = image(icon, "frame_interface", OBJ_LAYER+0.15)
+		image_background_overlay = image(icon, "frame_back", OBJ_LAYER+0.1)
 		// if someone map edited us in or something and set our build_step to 1 or 2, lets make sure we look the part!
 		if(!build_step || (build_step > 2))
 			build_step = 0 // if some bozo sets us to over 2 we need to default back to 0 so nothing breaks
@@ -2645,7 +2672,7 @@ proc/get_mobs_trackable_by_AI()
 					if (istype(W, /obj/item/sheet/mauxite))
 						skinToApply = "mauxite"
 					boutput(user, "You add plating to [src]!")
-					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 					src.UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
 					src.UpdateOverlays(src.image_background_overlay, "background")
 					src.UpdateOverlays(src.image_top_overlay, "top")
@@ -2664,7 +2691,7 @@ proc/get_mobs_trackable_by_AI()
 					if (G.change_stack_amount(-1))
 						src.build_step++
 						boutput(user, "You add glass to [src]!")
-						playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+						playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 						src.has_glass = 1
 						src.UpdateOverlays(src.image_glass_overlay, "glass")
 						return
@@ -2689,7 +2716,7 @@ proc/get_mobs_trackable_by_AI()
 			if (coil.use(3))
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.UpdateOverlays(src.image_wire_overlay, "wires")
 				if (coil.amount < 1)
 					user.drop_item()
@@ -2710,7 +2737,7 @@ proc/get_mobs_trackable_by_AI()
 			if (!src.cell)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.cell = W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -2728,7 +2755,7 @@ proc/get_mobs_trackable_by_AI()
 			if (src.has_radios < 3)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.has_radios++
 				qdel(W)
 				if (src.has_radios == 1) // we just added the first one, so this is the only time we need to worry about the overlays
@@ -2746,7 +2773,7 @@ proc/get_mobs_trackable_by_AI()
 			if (!src.has_interface)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.has_interface = 1
 				qdel(W)
 				src.UpdateOverlays(image_interface_overlay, "interface")
@@ -2802,7 +2829,7 @@ proc/get_mobs_trackable_by_AI()
 			return
 		src.build_step++
 		boutput(user, "You use the [W] to lay the exterior plating on the [src]!")
-		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 		qdel(plating)
 		skinToApply = plating.skin
 		UpdateOverlays(image(icon, skinToApply, OBJ_LAYER+0.3), "core")
@@ -2816,7 +2843,7 @@ proc/get_mobs_trackable_by_AI()
 		qdel(src.brain)
 		src.brain = new /obj/item/organ/brain/latejoin(src)
 		src.set_color(000000)
-		src.faceEmotion = "ai-blank"
+		src.faceEmotion = "ai_blank"
 		src.coreSkin = "cardboard"
 		src.update_appearance()
 		src.job = "AI"

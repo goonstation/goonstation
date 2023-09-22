@@ -105,17 +105,17 @@
 				donor_cell.use(overspill)
 				recipient_cell.charge += overspill
 				if (jumper.positive)
-					user.visible_message("<span class='notice'>[user] transfers some of their power to [apc]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of [his_or_her(user)] power to [apc]!</span>", "<span class='notice'>You transfer [overspill] charge. The APC is now fully charged.</span>")
 				else
-					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to themselves!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to [himself_or_herself(user)]!</span>", "<span class='notice'>You transfer [overspill] charge. You are now fully charged.</span>")
 					logTheThing(LOG_STATION, user, "drains [overspill] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
 			else
 				donor_cell.use(jumper.charge_amount)
 				recipient_cell.charge += jumper.charge_amount
 				if (jumper.positive)
-					user.visible_message("<span class='notice'>[user] transfers some of their power to [apc]!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of [his_or_her(user)] power to [apc]!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
 				else
-					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to yourself!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
+					user.visible_message("<span class='notice'>[user] transfers some of the power from [apc] to [himself_or_herself(user)]!</span>", "<span class='notice'>You transfer [jumper.charge_amount] charge.</span>")
 					logTheThing(LOG_STATION, user, "drains [jumper.charge_amount] power from the APC [apc] now [100*apc.cell.charge/apc.cell.maxcharge]% [log_loc(apc)]")
 				restart = TRUE
 			apc.charging = apc.chargemode
@@ -212,7 +212,7 @@
 				boutput(user, "This fitting isn't user-serviceable.")
 				return
 			boutput(user, "<span class='notice'>Removing fitting...</span>")
-			playsound(user, 'sound/machines/click.ogg', 50, 1)
+			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/remove_light, list(A, user), null, null, null, null)
 
 
@@ -222,7 +222,7 @@
 
 		if (istype(A, /turf/simulated/floor))
 			boutput(user, "<span class='notice'>Installing a floor bulb...</span>")
-			playsound(user, 'sound/machines/click.ogg', 50, 1)
+			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_floor_light, list(A, user), null, null, null, null)
 
 
@@ -235,7 +235,7 @@
 			if (locate(/obj/window) in B)
 				return
 			boutput(user, "<span class='notice'>Installing a wall [dispensing_fitting == /obj/machinery/light/small ? "bulb" : "tube"]...</span>")
-			playsound(user, 'sound/machines/click.ogg', 50, 1)
+			playsound(user, 'sound/machines/click.ogg', 50, TRUE)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/item/lamp_manufacturer/proc/add_wall_light, list(A, B, user), null, null, null, null)
 
 
@@ -258,7 +258,7 @@
 						loadAmount = loadAmount + src.max_ammo - (src.metal_ammo + loadAmount)
 					src.metal_ammo += loadAmount
 					S.change_stack_amount(-loadAmount)
-					playsound(src, 'sound/machines/click.ogg', 25, 1)
+					playsound(src, 'sound/machines/click.ogg', 25, TRUE)
 					src.inventory_counter.update_number(src.metal_ammo)
 					boutput(user, "You load the metal sheet into the lamp manufacturer.")
 			else
@@ -672,7 +672,7 @@ ported and crapped up by: haine
 			if (tank.label_name == switch_tank)
 				src.active_tank = tank
 				user.show_text("[src] is now dispensing [switch_tank].")
-				playsound(loc, 'sound/effects/pop.ogg', 50, 0) // Play a sound effect.
+				playsound(loc, 'sound/effects/pop.ogg', 50, FALSE) // Play a sound effect.
 				return
 
 	afterattack(obj/target, mob/user)
@@ -691,7 +691,7 @@ ported and crapped up by: haine
 
 			var/trans = src.active_tank.reagents.trans_to(target, amt_to_transfer)
 			user.show_text("You transfer [trans] unit\s of the solution to [target]. [active_tank.reagents.total_volume] unit\s remain.", "blue")
-			playsound(loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 0) // Play a sound effect.
+			playsound(loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, FALSE) // Play a sound effect.
 			processing_items |= src
 		else
 			return ..() // call your parents!!

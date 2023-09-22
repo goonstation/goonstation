@@ -1,5 +1,125 @@
 
+(t)tue sep 19 23
+(u)Smilg
+(p)15820
+(e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects
+(+)Assless chaps replaced with regular chaps.
+(t)mon sep 18 23
+(u)LeahTheTech
+(*)Clone records can now have notes attached.
+(t)sun sep 17 23
+(u)aloe
+(*)Mop buckets now have 7 slots of storage inside them, for normal-sized items or smaller. This means that to pour things into the bucket, you need to click drag the reagent container to the bucket.
+(t)sat sep 16 23
+(u)Ryou (Glamurio)
+(p)15262
+(e)🆕🎨📦🍝|C-Feature, C-Sprites, A-Game-Objects, A-Catering
+(+)Adds chili cheese fries. Yummy!
+(t)fri sep 15 23
+(u)Lord_Earthfire
+(p)14516
+(e)🪲⚖🔄🔊📡🌱🐁|C-Bug, C-Balance, C-Rework, C-Sound, A-AI, A-Hydroponics, A-Critters
+(*)The syndicate supplies its botanists with a majorly changed and more responsive man-eating plant strain! Check the minor changes for details.
+(+)Man-eating plants don't insta-stun anymore. Instead, they got a stamina draining attack that stuns if you run out of stamina
+(+)Man-eating plants now need to aggressive-grab their victims to devour them. They show a visible action bar.
+(+)The items of it's devoured victims can be retreived by butchering/gibbing the plant. It can occasionally vomit them out as well.
+(+)The scaling of the maneater got changed. Its health scales with endurance, its stamina and stamina regeneration with potency.
+(+)Feeding meat/people to the maneater increases endurance now. Even if it is already out of its tray!
+(+)If any chem-producing plant was spliced into the man-eating plant, it will inject its victim with this chemicals. The amount scales with yield.
+(+)Atrazine now works as an effective skin-penetrating poison against maneaters
+(+)Maneater seeds now start with "dominant genome", "inhibited potential" and "temporary spliceability" gene strains
+(u)Colossusw
+(p)15317
+(e)🆕🎨🌱|C-Feature, C-Sprites, A-Hydroponics
+(*)Overhauled Stinging Nettles slightly(minor changes for details).
+(+)Nettles now won't pass reagents to people wearing botany jumpsuits.
+(+)Nettles now have a 'smooth nettle' mutation that does not produce any histamine.
+(+)Nettles now are triggered by movement near them, on a cooldown inversely scaled to their endurance, as opposed to firing off randomly.
+(u)LeahTheTech
+(p)15503
+(e)⚖🌱|C-Balance, A-Hydroponics
+(*)Ricin and ghost chilli juice reagents are no longer present directly in their respective crops, instead requiring them to be brewed in a still.
+(u)Amylizzle
+(p)15796
+(e)⚖📦|C-Balance, A-Game-Objects
+(*)Nuclear meltdowns now scale with the amount of radioactive fuel in the reactor.
+(u)glowbold
+(p)15740
+(e)🆕🎨💅📦💡|C-Feature, C-Sprites, C-QoL, A-Game-Objects, A-Station-Systems
+(*)Using a T-ray scanner in-hand allows you to toggle seeing underfloor power cables, underfloor disposal pipes, and the station pipe blueprints independently.
+(t)thu sep 14 23
+(u)UnfunnyPerson
+(p)15644
+(e)🎨🔨🤖|C-Sprites, A-Player-Actions, A-Silicons
+(+)Flipping with an exposed brain as a cyborg will give the "Loose Brain" status effect. Flip with the status effect to launch your brain.
+(t)wed sep 13 23
+(u)Azrun & Jan.antilles
+(e)🐑🧣🧶|C-Feature
+(+)Knitting expanded allow for basic dyeing and cozy scarves.
+(u)DisturbHerb, Tyrant
+(p)15787
+(e)🆕🗺⚗|C-Feature, A-Mapping, A-Chemistry
+(*)Added the new orbital shakers to Chemical Labs, which shake glassware around and apply physical force to them.
+(u)Tyrant
+(p)15554
+(e)🆕🔨📦|C-Feature, A-Player-Actions, A-Game-Objects
+(+)Twirling a bloody knife will flick the blood off and onto the floor. Doesn't work if the blood is dried.
+(u)Retrino
+(p)15773
+(e)🎨|C-Sprites
+(+)Added 8 new faces to cyborg screenheads. Sly, Elated, Blush, Battery, Error, Loading, Pong, and Hypnotized
+(t)tue sep 12 23
+(u)Sord & Tarmunora
+(+)Singularity feeding changes: Base values (i.e.: bonuses from materials are unaffected) are generally higher, but have diminishing returns for any given type. Variety is the spice of life! Material(ore/bar) density*3, radioactive*4, neutron radioactive*6. Also feed a singularity a plutonium core to get a LOT of power.
+(u)Paaiii
+(p)15592
+(e)🗺🎨🔊|A-Mapping, C-Sprites, C-Sound
+(+)Resprited a bunch of old miscellaneous objects.
+(u)Paaiii
+(p)15595
+(e)⚖💅🤖|C-Balance, C-QoL, A-Silicons
+(+)Gives AIs a command to unlock their own core cover.
+(u)Bartimeus973
+(p)15564
+(e)🆕🎨🔨📦|C-Feature, C-Sprites, A-Player-Actions, A-Game-Objects
+(+)Some pies thrown by clowns have a chance to stick to people's faces.
+(u)aloe
+(+)Being fully heat resistant (usually from the fire resistance gene) now makes you immune to cremation.
+(u)FlameArrow57
+(p)15598
+(e)⚖💅🧛|C-Balance, C-QoL, A-Gamemodes
+(*)Roundstart blob respawn time increased to 15 minutes. Random event blobs will now have a 7 minute respawn time.
+(u)Lord_Earthfire
+(p)15687
+(e)🪲💅📦⚙|C-Bug, C-QoL, A-Game-Objects, A-Internal
+(+)Pipebomb- and beaker-assemblies should be more intutive to create now.
+(+)Standard pipebombs are now created by using a timer instead of a timer/igniter-assembly with a pipebomb frame.
+(u)Glamurio (Ryou)
+(p)15717
+(e)🆕⚗🍝|C-Feature, A-Chemistry, A-Catering
+(*)Added several new banana related drinks. See minor notes for details.
+(+)New banana juice recipes: Banana Milk (Banana, Milk), Fizzy Banana (Syrup, Banana, Coconut, Lime, Tonic), Dirty Banana (Rum, Banana, Chocolate, Milk), Sweet Surprise (Rum, Banana, Coconut), Sweet Dreams (Sweet Surprise, Capulettium)
+(u)Colossusqw
+(p)15709
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Smoke powder no longer fizzles into nothing when in a closed container, instead, reacting only when it is opened.
 (t)mon sep 11 23
+(u)Tyrant
+(p)15720
+(e)🗺🍝|A-Mapping, A-Catering
+(+)Oshan's Kitchen/bar now has a reagent extractor.
+(u)TealSeer
+(p)15768
+(e)🗺📦|A-Mapping, A-Game-Objects
+(+)Two artistic toolboxes now spawn on Donut 2 in the crew lounge and warehouse.
+(u)Garash
+(p)15783
+(e)🗺🔒🔄📄|A-Mapping, A-Secret, C-Rework, A-UI
+(+)New UI for the elevators, descend to the trench in style!
+(u)aloe
+(p)14916
+(e)🔎⚖🧫📦⚗|C-Code-Quality, C-Balance, C-Experimental, A-Game-Objects, A-Chemistry
+(*)Fluids are no longer clickable. Anything you used to click fluids with now works based on clicking the turf below the fluid. This also means that you can no longer see the most dominant reagent in a fluid by the name of the fluid.
 (u)Amylizzle
 (p)15791
 (e)💅📦|C-QoL, A-Game-Objects

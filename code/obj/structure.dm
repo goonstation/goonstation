@@ -179,20 +179,20 @@ obj/structure/ex_act(severity)
 		switch (interaction)
 			if (GIRDER_DISASSEMBLE)
 				verbing = "disassembling"
-				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, TRUE)
 			if (GIRDER_UNSECURESUPPORT)
 				verbing = "unsecuring support struts from"
-				playsound(the_girder, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			if (GIRDER_REMOVESUPPORT)
 				verbing = "removing support struts from"
-				playsound(the_girder, 'sound/items/Wirecutter.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Wirecutter.ogg', 100, TRUE)
 			if (GIRDER_DISLODGE)
 				verbing = "dislodging"
-				playsound(the_girder, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Crowbar.ogg', 100, TRUE)
 			if (GIRDER_REINFORCE)
 				verbing = "reinforcing"
 			if (GIRDER_SECURE)
-				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, TRUE)
 				verbing = "securing"
 			if (GIRDER_PLATE)
 				verbing = "plating"
@@ -204,7 +204,7 @@ obj/structure/ex_act(severity)
 		switch (interaction)
 			if (GIRDER_DISASSEMBLE)
 				verbens = "disassembles"
-				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, TRUE)
 				var/atom/A = new /obj/item/sheet(get_turf(the_girder))
 				if (the_girder.material)
 					A.setMaterial(the_girder.material)

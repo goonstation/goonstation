@@ -421,7 +421,7 @@
 /turf/simulated/floor/engine/caution/west,
 /area/shuttle/sea_elevator)
 "pk" = (
-/obj/machinery/computer/sea_elevator{
+/obj/machinery/computer/elevator/sea{
 	dir = 8
 	},
 /turf/simulated/floor/industrial,

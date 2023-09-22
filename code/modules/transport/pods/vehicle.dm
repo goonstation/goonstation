@@ -99,7 +99,7 @@
 			return null
 
 	Click(location,control,params)
-		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
 			var/mob/dead/observer/O = usr
 			if(src.pilot)
 				O.insert_observer(src.pilot)
@@ -1737,10 +1737,10 @@
 			var/datum/movement_controller/tank/M = movement_controller
 			if (M.squeal_sfx)
 				M.squeal_sfx = 0
-				playsound(src, 'sound/machines/car_screech.ogg', 40, 1)
+				playsound(src, 'sound/machines/car_screech.ogg', 40, TRUE)
 			if (M.accel_sfx)
 				M.accel_sfx = 0
-				playsound(src, 'sound/machines/rev_engine.ogg', 40, 1)
+				playsound(src, 'sound/machines/rev_engine.ogg', 40, TRUE)
 
 	get_move_velocity_magnitude()
 		.= movement_controller:velocity_magnitude

@@ -657,7 +657,7 @@ Urs' Hauntdog critter
 		if(act == "scream" && src.emote_check(voluntary, 50))
 			var/turf/T = get_turf(src)
 			var/hogg = pick('sound/voice/hagg_vorbis.ogg','sound/voice/hogg_vorbis.ogg','sound/voice/hogg_vorbis_the.ogg','sound/voice/hogg_vorbis_screams.ogg','sound/voice/hogg_with_scream.ogg','sound/voice/hoooagh2.ogg','sound/voice/hoooagh.ogg',)
-			playsound(T, hogg, 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(T, hogg, 60, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 			return "<span class='emote'><b>[src]</b> screeeams!</span>"
 		return null
 
@@ -675,7 +675,7 @@ Urs' Hauntdog critter
 			src.visible_message("[src] screams![prob(5) ? " ...uh?" : null]",\
 			"You screams!")
 			var/hogg = pick('sound/voice/hagg_vorbis.ogg','sound/voice/hogg_vorbis.ogg','sound/voice/hogg_vorbis_the.ogg','sound/voice/hogg_vorbis_screams.ogg','sound/voice/hogg_with_scream.ogg','sound/voice/hoooagh2.ogg','sound/voice/hoooagh.ogg',)
-			playsound(T, hogg, 60, 1)
+			playsound(T, hogg, 60, TRUE)
 			user.add_karma(1.5)
 
 // ########################

@@ -891,7 +891,7 @@
 /obj/item/paper/folded/ball/attack(mob/M, mob/user)
 	if (iscarbon(M) && M == user && src.sealed)
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and eats it.</span>")
-		playsound(M, 'sound/misc/gulp.ogg', 30, 1)
+		playsound(M, 'sound/misc/gulp.ogg', 30, TRUE)
 		eat_twitch(M)
 		var/obj/item/paper/P = src
 		user.u_equip(P)
