@@ -477,7 +477,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				B.reagents.maximum_volume = reagents.total_volume/((src.bites_left+1) || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
 				src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
 				var/mob/living/L = eater
-				L.organHolder.stomach.consume(B)
+				if (L.organHolder?.stomach)
+					L.organHolder.stomach.consume(B)
+				else
+					qdel(B)
 
 			if (length(src.food_effects) && isliving(eater) && eater.bioHolder)
 				var/mob/living/L = eater
