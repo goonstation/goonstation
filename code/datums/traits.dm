@@ -632,8 +632,8 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "training_mime"
 
 	onAdd(var/mob/owner)
-		owner.bioHolder.AddEffect("mute", magical=1)
-		owner.bioHolder.AddEffect("blankman", magical=1)
+		owner.bioHolder.AddEffect("mute", magical = TRUE)
+		owner.bioHolder.AddEffect("blankman", magical = TRUE)
 
 // Stats - Undetermined Border
 /datum/trait/athletic
