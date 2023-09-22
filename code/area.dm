@@ -2612,6 +2612,11 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Public Garden"
 	icon_state = "park"
 
+/area/station/crew_quarters/garden/sunlight
+	name = "Public Garden"
+	icon_state = "park"
+	ambient_light = CENTCOM_LIGHT
+
 /area/station/crewquarters/garbagegarbs //It's the clothing store on Manta
 	name = "Garbage Garbs clothing store"
 	icon_state = "green"
