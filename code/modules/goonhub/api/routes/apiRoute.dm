@@ -8,7 +8,7 @@
 	var/method = null
 	/// Actual path of the api query, for example `/rounds`
 	var/path = null
-	/// Route parameters for the call, ie /rounds/{round_id}/
+	/// Route parameters for the call, ie /rounds/{round_id}/ - Must be in order
 	var/list/routeParams = null
 	/// Query parameters for the call, ie /rounds?&id=3
 	var/list/queryParams = null
