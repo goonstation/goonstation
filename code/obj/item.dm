@@ -457,6 +457,11 @@ ABSTRACT_TYPE(/obj/item)
 				src.change_stack_amount(-1)
 				return
 			user.u_equip(src)
+			if (by_matter_eater && !istype(src, /obj/item/reagent_containers/food) && isliving(user))
+				var/mob/living/L = user
+				if (L.organHolder.stomach)
+					L.organHolder.stomach.consume(src)
+					return
 			qdel(src)
 		return TRUE
 
@@ -495,6 +500,11 @@ ABSTRACT_TYPE(/obj/item)
 				src.change_stack_amount(-1)
 				return
 			user.u_equip(src)
+			if (by_matter_eater && !istype(src, /obj/item/reagent_containers/food) && isliving(user))
+				var/mob/living/L = user
+				if (L.organHolder.stomach)
+					L.organHolder.stomach.consume(src)
+					return
 			qdel(src)
 		return TRUE
 
