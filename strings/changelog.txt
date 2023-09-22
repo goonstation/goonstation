@@ -1,5 +1,10 @@
 
 (t)thu sep 21 23
+(u)LeahTheTech
+(p)15919
+(e)🎨⚖💊🍝|C-Sprites, C-Balance, A-Medical, A-Catering
+(*)Stomachs now have a capacity and can fill up if you eat too much, cyberstomachs have more. No longer can a single determined staffie consume the entire kitchen.
+(+)Undigestible items now remain in the stomach after being eaten by frying or matter eater and can be retrieved by cutting them out of the extracted stomach with a scalpel.
 (u)Flaborized
 (p)15738
 (e)🎨|C-Sprites
