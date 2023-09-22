@@ -531,14 +531,8 @@ TYPEINFO(/obj/item/baton/ntso)
 	var/recharge_time = 5 SECONDS
 
 	attack_self(var/mob/user)
-		src.add_fingerprint(user)
-
 		if (!(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, cost_normal) & CELL_SUFFICIENT_CHARGE) && !(src.is_active))
 			boutput(user, "<span class='alert'>The [src.name] doesn't have enough power to be turned on.</span>")
-			return
-
-		if (src.flipped)
-			user.show_text("The internal safeties kick in stopping you from turning on the baton!", "red")
 			return
 
 		if (ON_COOLDOWN(src, "defib_cooldown", src.recharge_time)) // Shameless code steal
@@ -569,11 +563,3 @@ TYPEINFO(/obj/item/baton/ntso)
 		src.is_active = FALSE
 		src.UpdateIcon()
 		target.update_inhands()
-
-	intent_switch_trigger(var/mob/user)
-		if (src.is_active)
-			src.is_active = FALSE
-			src.UpdateIcon()
-			user?.update_inhands()
-			user?.show_text("The internal safeties kick in turning off the baton!", "red")
-		..()

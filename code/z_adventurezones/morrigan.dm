@@ -3036,12 +3036,26 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 	contraband = 4
 	can_swap_cell = FALSE
 
+	attack_self(var/mob/user)
+		if (src.flipped)
+			user.show_text("The internal safeties kick in stopping you from turning on the baton!", "red")
+			return
+		..()
+
 	the_stun(var/mob/target)
 		target.changeStatus("weakened", 5 SECONDS)
 		src.delStatus("defib_charged")
 		src.is_active = FALSE
 		src.UpdateIcon()
 		target.update_inhands()
+
+	intent_switch_trigger(var/mob/user)
+		if (src.is_active)
+			src.is_active = FALSE
+			src.UpdateIcon()
+			user?.update_inhands()
+			user?.show_text("The internal safeties kick in turning off the baton!", "red")
+		..()
 
 //projectiles
 /datum/projectile/bullet/optio/hitscanrail
