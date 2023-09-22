@@ -231,7 +231,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/head)
 			I.set_loc(src)
 			src.ai_interface = I
 			boutput(user, "<span class='notice'>You insert [I].</span>")
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)*/
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 			return
 
 		else if (iswrenchingtool(W))
