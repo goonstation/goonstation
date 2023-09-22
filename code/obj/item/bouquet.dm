@@ -45,7 +45,7 @@
 		boutput("This bouquet already has something hidden in it!")
 		return
 	// successfully hide item
-	SPAWN(1 DECISECOND)
+	SPAWN(1 DECI SECOND)
 		W.set_loc(src)
 		src.hiddenitem = TRUE
 		boutput("You stuff \the [W.name] into \the [src.name].")
