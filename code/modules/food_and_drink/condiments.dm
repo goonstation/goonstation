@@ -146,6 +146,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "Fluffy and fragrant."
 	icon_state = "butters"
 	heal_amt = 3
+	fill_amt = 2
 	initial_volume = 20
 
 	New()
