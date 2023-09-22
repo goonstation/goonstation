@@ -384,14 +384,14 @@ toxic - poisons
 	dissipation_delay = 6
 	dissipation_rate = 5
 	cost = 25
-	damage = 33
+	damage = 30
 	color_red = 0
 	color_green = 1
 	color_blue = 0.3
 	shot_number = 1
 
 	burst
-		damage = 25
+		damage = 20
 		cost = 50
 		shot_number = 4
 		icon_state = "triple"
@@ -399,7 +399,7 @@ toxic - poisons
 
 	blast
 		shot_sound = 'sound/weapons/laser_e.ogg'
-		damage = 33
+		damage = 30
 		cost = 100
 		icon_state = "40mmgatling"
 		shot_number = 1

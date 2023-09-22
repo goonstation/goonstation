@@ -893,6 +893,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/blaster)
 		projectiles = list(current_projectile)
 		c_flags |= ONBACK
+		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
 		..()
 
 
