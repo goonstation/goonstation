@@ -204,7 +204,6 @@
 		else
 			return
 	animate(src, pixel_x = movepx, pixel_y = movepy, time = 2, easing = EASE_IN, flags = ANIMATION_PARALLEL)
-	animate(pixel_x = movepx, pixel_y = movepy, time = 2, easing = EASE_IN)
 
 // pre prepared ones, for mapping
 // this one shouldn't be used btw
