@@ -996,6 +996,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	not_in_crates = 1
 	can_buy = UPLINK_TRAITOR
 
+/datum/syndicate_buylist/traitor/fishing_rod
+	name = "Barbed Fishing Rod"
+	item = /obj/item/syndie_fishing_rod
+	cost = 6
+	desc = "A tactical fishing rod designed to reel in and filet the biggest catch- enemies of the Syndicate. Bait the hologram lure by hitting it with an item, then maim foes with a barbed hook that causes more damage the longer they fight back."
+	job = list("Rancher", "Angler")
+	can_buy = UPLINK_TRAITOR
+
 /datum/syndicate_buylist/traitor/ai_laser
 	name = "AI Camera Laser Module"
 	item = /obj/item/aiModule/ability_expansion/laser
