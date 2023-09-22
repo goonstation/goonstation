@@ -859,7 +859,7 @@
 					M.name = "commander's gloves"
 					M.real_name = "commander's gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
-					H.set_clothing_icon_dirty()
+					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
 			if (H.head)
@@ -1030,7 +1030,7 @@
 					M.name = "CentCom gloves"
 					M.real_name = "CentCom gloves"
 					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
-					H.set_clothing_icon_dirty()
+					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
 			if (H.head)
