@@ -523,6 +523,9 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 			return FALSE
 
 	proc/pull_in_lure(mob/user)
+		if(QDELETED(src.lure))
+			src.lure = null
+			return
 		if (src.lure.owner)
 			src.lure.owner.visible_message("\The [src.lure] rips out of [src.lure.owner]!", "\The [src.lure] rips out of you!")
 			take_bleeding_damage(src.lure.owner, null, 5, DAMAGE_STAB)
