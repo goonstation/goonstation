@@ -1,5 +1,9 @@
 
 (t)thu sep 21 23
+(u)MeggalBozale
+(p)15867
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Cyborgs should no longer recieve mutations.
 (u)LeahTheTech
 (p)15919
 (e)🎨⚖💊🍝|C-Sprites, C-Balance, A-Medical, A-Catering
