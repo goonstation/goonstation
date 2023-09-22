@@ -181,7 +181,7 @@
 	if (status & BROKEN)
 		return
 
-	if (!online)
+	if (!online || isnull(powernet))
 		loaddemand = 0
 		return
 
