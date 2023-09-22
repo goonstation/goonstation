@@ -642,7 +642,7 @@
 	..()
 	src.hud?.update_health_indicator()
 
-///The deliberate act of using one's body to cover a live time-fused hand grenade. Returns "remaining" explosion power
+///The deliberate act of using one's body to cover a live time-fused hand grenade.
 /mob/living/carbon/human/proc/cover_explosion_with_body(power, brisance=1)
 
 	if(src.nodamage) return
