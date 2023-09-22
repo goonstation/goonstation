@@ -1156,6 +1156,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\models\vpn\VpnWhitelistResource.dm"
 #include "code\modules\goonhub\api\requests\apiBody.dm"
 #include "code\modules\goonhub\api\requests\MapsBody.dm"
+#include "code\modules\goonhub\api\requests\MapSwitchBody.dm"
 #include "code\modules\goonhub\api\requests\players\notes\AddPlayerNotesBody.dm"
 #include "code\modules\goonhub\api\routes\apiRoute.dm"
 #include "code\modules\goonhub\api\routes\Maps.dm"
