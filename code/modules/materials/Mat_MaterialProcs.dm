@@ -560,7 +560,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/carbon/C = M
 			if (C.bodytemperature > 0)
 				C.bodytemperature -= 2
-			if (C.bodytemperature > 100 && probmult(4))
+			if (C.bodytemperature > T0C && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
 		return
