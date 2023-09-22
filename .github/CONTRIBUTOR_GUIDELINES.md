@@ -140,6 +140,23 @@ To finish off a review, you leave some final overall comments by pressing the gr
 
 If two people leave reviews that approve the requested changes, then the PR automatically gains the `S-Ready-For-Final-Review` label, which is a signal for devs to review it themselves and possibly merge it.
 
+Here's a very basic checklist you can run through when reviewing pull requests (obviously you don't have to do them all in order, and some only apply to certain PRs):
+- Is changelog in the PR description written correctly? Are the correct labels applied? Does the PR description in general follow the standard format?
+- Are all the checks passing?
+- Do sprites look good? `Icondiffbot`` in the checks section can help you see the sprite changes easily.
+- Do any added sounds sound good?
+- Are licenses on everything as they have to be? Especially important for ported features.
+- Think about balance and about whether it fits thematically and mechanically with the game. Is it something we want in the game in the first place? Possibly apply an `Input-Wanted` or a `controversial` tag if it's not clear.
+- Read the code to see if there aren't direct bugs.
+- Read the code to see if there aren't weird non-obvious buggy interactions with other stuff.
+- Read the code to see if there aren't missed checks, edge cases, input verification security checks etc.
+- Is the code formatting and cleanliness good enough? Does it adhere to the Goonstation code guidelines (e.g. not using magic numbers, not using `.len`, etc.)?
+- Does it actually work? If you can be bothered, you can checkout the code locally and test it to see if it works as it should.
+- Other misc stuff (e.g. Is the sound cache rebuilt if new sounds were added? Are there no accidental other changes like removed sprites? Did all the merge conflicts resolutions work properly and not revert things?)
+- Could something be done better? Is there anything new that we could teach the PR submitter on an example of their own code? A more optimal way to do things?
+
+While it all comes to a developer's opinion at the end of the day, reviewing code is still extremely helpful for streamlining the final review process.
+
 ## License
 
 ### What if I change my mind about my contributions being published?
