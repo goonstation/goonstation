@@ -205,7 +205,6 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 /obj/background_star/manta
 	icon_state = "M-1"
-	//plane = 2 // above the ship
 
 	set_state()
 		var/state = rand(1,4)
