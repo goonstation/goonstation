@@ -152,6 +152,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "The tender and crunchy edible portion of a bamboo plant."
 	icon_state = "shoot"
 	food_color = "#B7B675"
+	fill_amt = 0.6
 	bites_left = 1
 
 /obj/item/reagent_containers/food/snacks/plant/tomato
@@ -466,6 +467,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	edible = 0
 	food_color = "#7FFF00"
 	validforhat = 1
+	fill_amt = 3
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/plant/melonslice
 	slice_amount = 6
@@ -1173,6 +1175,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	icon_state = "potato"
 	planttype = /datum/plant/veg/potato
 	bites_left = 1
+	fill_amt = 2
 	heal_amt = 0
 	food_color = "#F0E68C"
 	brew_result = list("vodka"=20)
@@ -1371,6 +1374,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	desc = "Tropical meat!"
 	icon_state = "coconut-meat"
 	planttype = /datum/plant/fruit/coconut
+	fill_amt = 0.5
 	bites_left = 1
 	heal_amt = 2
 	food_color = "#4D2600"

@@ -1187,6 +1187,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/crate/packing
 	containername = "Haberdasher's Crate"
 
+/datum/supply_packs/random_wigs
+	name = "Spare wigs crate"
+	desc = "7x assorted wigs."
+	category = "Civilian Department"
+	contains = list(/obj/item/clothing/head/wig/spawnable/random = 7)
+	cost = 2000
+	containertype = /obj/storage/crate/packing
+	containername = "Wig Crate"
+
 /datum/supply_packs/headbands
 	name = "Bargain Bows and Bands Box"
 	desc = "Headbands for all occasions."

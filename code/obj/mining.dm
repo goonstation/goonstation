@@ -2551,6 +2551,13 @@ TYPEINFO(/obj/submachine/cargopad)
 		..()
 
 	attack_hand(var/mob/user)
+		toggle(user)
+
+	attack_ai(mob/user)
+		. = ..()
+		toggle(user)
+
+	proc/toggle(mob/user)
 		if (src.active == 1)
 			boutput(user, "<span class='notice'>You switch the receiver off.</span>")
 			UpdateOverlays(null, "lights")

@@ -560,7 +560,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	var/Varpower = 0
 	var/active = 0
 	var/power = 20
-	var/max_power = 250
+	var/max_power = 100
 	var/state = UNWRENCHED
 	var/steps = 0
 	var/last_check = 0
@@ -637,7 +637,7 @@ TYPEINFO(/obj/machinery/field_generator)
 		if(src.active == 0)
 			src.set_active(1)
 			src.state = WELDED
-			src.power = 250
+			src.power = 100
 			src.anchored = ANCHORED
 			icon_state = "Field_Gen +a"
 		Varedit_start = 0
@@ -772,6 +772,9 @@ TYPEINFO(/obj/machinery/field_generator)
 		else if(state == WELDED)
 			boutput(user, "You start to cut the field generator free from the floor.")
 			return
+
+	if(ispulsingtool(W))
+		boutput(user, "<span class='alert'>The [src.name] is at [src.power]/100 power.</span>")
 
 	var/obj/item/card/id/id_card = get_id_card(W)
 	if (istype(id_card))

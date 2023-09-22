@@ -14,6 +14,7 @@
 	real_name = "ice cream"
 	bites_left = 4
 	heal_amt = 4
+	fill_amt = 3
 	food_color = null
 	var/flavor_name = null
 	var/image/cream_image = null
