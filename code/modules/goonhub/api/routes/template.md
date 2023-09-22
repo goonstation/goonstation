@@ -18,6 +18,7 @@ Other notes:
 - list of what to make is at https://staging.goonhub.com/docs/api, along with body and model needed.
 	- On the OpenAPI docs linked above, there are some details that need to match
 	- Under request, the parameters should match in the form of a list of strings matching the parameter names. If it says query parameters, use `queryParams`, if it says path parameters, use `routeParams`.
+	- If the path ends with something like `/{kind of routeParam}`, you don't need to include it in `src.path`. It gets appended automatically later on.
 	- Under request, the body should also match (in the form of a `/datum/apiBody`).
 	- Under responses, the name of the apiModel used should be there. If it isn't, just use `list("[name of field]")`.
 - The reason why the API files are formatted this way is so that "it's optimized so you can just copypaste stuff and change it via column/vertical select" ~ZeWaka.
@@ -28,7 +29,7 @@ A proper example:
 /// Update
 /datum/apiRoute/bans/update
 	method = RUSTG_HTTP_METHOD_PUT
-	path = "/bans/{ban}"
+	path = "/bans"
 	routeParams = list("ban")	// integer
 	body = /datum/apiBody/bans/add
 	correct_response = /datum/apiModel/Tracked/BanResource

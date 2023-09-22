@@ -2,6 +2,6 @@
 /// Delete
 /datum/apiRoute/bans/delete
 	method = RUSTG_HTTP_METHOD_DELETE
-	path = "/bans/{ban}"
+	path = "/bans"
 	routeParams = list("ban")	// integer (The ban ID)
 	correct_response = list("message")
