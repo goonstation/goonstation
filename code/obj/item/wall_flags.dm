@@ -3,12 +3,13 @@
 	desc = "Neat! It's folded up, ready to deploy."
 	icon = 'icons/obj/items/flag.dmi'
 	icon_state = "blank"
-	var/obj/decal/poster/flag/associated_flag = /obj/decal/poster/flag
+	/// Must by a type path of `/obj/decal/poster/flag`.
+	var/associated_flag = /obj/decal/poster/flag
 
 	afterattack(turf/simulated/T, mob/user)
 		if (locate(/obj/decal/poster/flag, T))
 			return
-		if (istype(T, /turf/simulated/wall/))
+		if (istype(T, /turf/simulated/wall/) || istype(T, /turf/unsimulated/wall))
 			var/obj/decal/poster/flag/new_flag = new src.associated_flag(T)
 			new_flag.flag_item = src
 			user.u_equip(src)
