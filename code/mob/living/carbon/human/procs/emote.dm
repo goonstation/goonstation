@@ -1645,19 +1645,15 @@
 							elecflash(src,power = 2)
 						else
 							//glowsticks
-							var/left_glowstick = istype (l_hand, /obj/item/device/light/glowstick)
-							var/right_glowstick = istype (r_hand, /obj/item/device/light/glowstick)
-							var/obj/item/device/light/glowstick/l_glowstick = null
-							var/obj/item/device/light/glowstick/r_glowstick = null
-							if (left_glowstick)
-								l_glowstick = l_hand
-							if (right_glowstick)
-								r_glowstick = r_hand
-							if ((left_glowstick && l_glowstick.on) || (right_glowstick && r_glowstick.on))
-								if (left_glowstick)
-									particleMaster.SpawnSystem(new /datum/particleSystem/glow_stick_dance(src.loc))
-								if (right_glowstick)
-									particleMaster.SpawnSystem(new /datum/particleSystem/glow_stick_dance(src.loc))
+							var/obj/item/device/light/glowstick/l_glowstick = src.find_type_in_hand(/obj/item/device/light/glowstick, "left")
+							var/obj/item/device/light/glowstick/r_glowstick = src.find_type_in_hand(/obj/item/device/light/glowstick, "right")
+							if (l_glowstick?.on || r_glowstick?.on)
+								if (l_glowstick?.on)
+									var/color = rgb(l_glowstick.col_r*255, l_glowstick.col_g*255, l_glowstick.col_b*255, l_glowstick.brightness*255)
+									particleMaster.SpawnSystem(new /datum/particleSystem/glow_stick_dance(src.loc, color))
+								if (r_glowstick?.on)
+									var/color = rgb(r_glowstick.col_r*255, r_glowstick.col_g*255, r_glowstick.col_b*255, r_glowstick.brightness*255)
+									particleMaster.SpawnSystem(new /datum/particleSystem/glow_stick_dance(src.loc, color))
 								var/dancemove = rand(1,6)
 								switch(dancemove)
 									if (1)
