@@ -523,6 +523,8 @@ TYPEINFO(/obj/item/baton/ntso)
 		src.process_charges(-INFINITY)
 
 /obj/item/baton/windup
+	name = "wind-up stun baton"
+	desc = "A no so standard issue baton for stunning people with. Requires a brief charge-up window to activate."
 	is_active = FALSE
 	pickup_sfx = 'sound/items/pickup_defib.ogg'
 
@@ -542,6 +544,7 @@ TYPEINFO(/obj/item/baton/ntso)
 		if (ON_COOLDOWN(src, "defib_cooldown", src.recharge_time)) // Shameless code steal
 			user.show_text("[src] is [src.hasStatus("defib_charged") ? "already primed" : "still recharging"]!", "red")
 			return
+
 		if (!src.hasStatus("defib_charged"))
 			user.visible_message("<span class='alert'>[user] begins to prime the [src].</span>",\
 			"<span class='notice'>You begin to prime the [src].</span>",\
@@ -572,5 +575,5 @@ TYPEINFO(/obj/item/baton/ntso)
 			src.is_active = FALSE
 			src.UpdateIcon()
 			user?.update_inhands()
-			user.show_text("The internal safeties kick in turning off the baton!", "red")
+			user?.show_text("The internal safeties kick in turning off the baton!", "red")
 		..()

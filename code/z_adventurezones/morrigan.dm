@@ -3022,7 +3022,7 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 // stun baton
 /obj/item/baton/windup/morrigan
 	name = "Mod.33 Izar"
-	desc = "Rather flimsy compared to those back home...."
+	desc = "An experimental stun baton, designed to incapacitate targets consistently. It has safeties against users stunning themselves."
 	icon = 'icons/obj/adventurezones/morrigan/weapons/weapon.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "synd_baton"
