@@ -415,7 +415,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	machine_registry_idx = MACHINES_ELEVATORBIODOME
 	areaLower = /area/shuttle/biodome_elevator/lower
 	areaUpper = /area/shuttle/biodome_elevator/upper
-	endTurfToLeave = /turf/unsimulated/floor/setpieces/ancient_pit/shaft
+	endTurfToLeave = /turf/unsimulated/floor/setpieces/ancient_pit/morrigan
 	logBioeleAccident = TRUE
 
 /obj/machinery/computer/elevator/sea
@@ -431,6 +431,14 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 	endTurfToLeave = /turf/unsimulated/floor/glassblock/transparent_cyan
 	location = 0
 	adminOnly = TRUE
+
+/obj/machinery/computer/elevator/morrigancargo
+	icon_state = "turret1"
+	machine_registry_idx = MACHINES_ELEVATORMORRIGAN
+	areaLower = /area/shuttle/morrigan_elevator/lower
+	areaUpper = /area/shuttle/morrigan_elevator/upper
+	endTurfToLeave = /turf/unsimulated/floor/setpieces/ancient_pit/morrigan
+
 
 /obj/machinery/computer/elevator/centcomm/hidden
 	name = "toilet paper holder";

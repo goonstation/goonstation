@@ -1000,6 +1000,32 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "Hobo Hovel"
 	icon_state = "crewquarters"
 
+/area/morrigan/derelict/cargo
+	name = "Derelict cargo area"
+	icon_state = "construction"
+
+/area/morrigan/derelict/inspector
+	name = "Inspector Office"
+	icon_state = "red"
+
+//elevator
+
+/area/shuttle/morrigan_elevator
+	name = "Elevator Shaft"
+	icon_state = "blue"
+	ambient_light = "#131414"
+	sound_loop = 'sound/ambience/morrigan/deriambience.ogg'
+/area/shuttle/morrigan_elevator/upper
+	name = "Elevator Upper Section"
+	icon_state = "shuttle"
+	force_fullbright = 0
+
+/area/shuttle/morrigan_elevator/lower
+	name = "Elevator Lower Section"
+	icon_state = "shuttle2"
+	force_fullbright = 0
+
+
 // Station areas
 
 /area/morrigan/station

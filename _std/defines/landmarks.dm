@@ -100,7 +100,7 @@
 #define LANDMARK_MORRIGAN_CRATE "morrigan_crate" //where your stuff ends up
 #define LANDMARK_MORRIGAN_TRANSPORT "morrigan_transport" // To the conveyor area at the prelude
 #define LANDMARK_MORRIGAN_PRISONER "morrigan_prisoner" // To the main station brig area
-
+#define LANDMARK_FALL_MORRIGAN_ELEVATOR "morriganfall" // falling in the derlict area
 /// allowed turfs for telesci
 #define LANDMARK_TELESCI "telesci"
 #define LANDMARK_LRT "lrt landmark"

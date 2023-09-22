@@ -2336,6 +2336,16 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 					fall_to(warptarget, A)
 					return
 				else ..()
+		morrigan
+			name = "Elevator Shaft"
+			target_landmark = LANDMARK_FALL_MORRIGAN_ELEVATOR
+
+			Entered(atom/A as mob|obj)
+				if (istype(A, /mob) && !istype(A, /mob/dead))
+					bioele_accident()
+				return ..()
+
+
 
 
 	bloodfloor
