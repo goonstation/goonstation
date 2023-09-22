@@ -1,6 +1,6 @@
 
 /// POST /players/participation
-/// Add a player antagonist for a given round
+/// Add a player participation for a given round
 /datum/apiRoute/PlayerParticipation
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/players/participation"
