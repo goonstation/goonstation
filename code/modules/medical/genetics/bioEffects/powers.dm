@@ -808,7 +808,6 @@
 	/// Grab whatever they're typing from the say/whisper/radio menu, or the command bar. Separate proc so we can return if the target client goes null
 	proc/steal_speech_text(mob/living/carbon/target)
 		var/client/target_client = target.client
-		var/found_text = FALSE
 		var/enteredtext = winget(target_client, "mainwindow.input", "text") // grab the text from the input bar
 		if (isnull(target_client)) return
 		if (length(enteredtext) > 5 && copytext(enteredtext, 1, 6) == "say \"") // check if the player is trying to say something
