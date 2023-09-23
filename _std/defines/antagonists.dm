@@ -3,7 +3,7 @@
 #define ANTAGONIST_SOURCE_ROUND_START null
 #define ANTAGONIST_SOURCE_LATE_JOIN "late-joining "
 #define ANTAGONIST_SOURCE_RANDOM_EVENT "random event "
-#define ANTAGONIST_SOURCE_ADMIN "admin-created "
+#define ANTAGONIST_SOURCE_ADMIN ""
 #define ANTAGONIST_SOURCE_MUTANT "antag-mutantrace "
 #define ANTAGONIST_SOURCE_SUMMONED "antag-summoned "
 #define ANTAGONIST_SOURCE_CONVERTED "antag-converted "
