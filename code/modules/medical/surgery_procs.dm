@@ -192,7 +192,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				"<span class='notice'>[patient == surgeon ? "You shove" : "<b>[surgeon]</b> shoves"] [chest_item] into your chest.</span>")
 
 			// Move equipped item to patient's chest
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 			chest_item.set_loc(patient)
 			patient.chest_item = chest_item
 
@@ -346,7 +346,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		if (surgeon.a_intent == INTENT_HARM)
 			if (patient.organHolder.head.op_stage == 0.0)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "head", damage_low, fluff)
@@ -362,7 +362,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				return 1
 
 			else if (patient.organHolder.head.op_stage == 2)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "head", damage_high, fluff2)
@@ -378,7 +378,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				return 1
 
 		else if (patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage == 1.0 && surgeon.find_in_hand(src, "right"))
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 			if (prob(screw_up_prob))
 				do_slipup(surgeon, patient, "head", damage_low, fluff)
@@ -394,7 +394,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return 1
 
 		else if (patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage == 1.0 && surgeon.find_in_hand(src, "left"))
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 			if (prob(screw_up_prob))
 				do_slipup(surgeon, patient, "head", damage_low, fluff)
@@ -411,7 +411,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		else if (patient.organHolder.head.scalp_op_stage <= 4.0)
 			if (patient.organHolder.head.scalp_op_stage == 0.0)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				var/removing_eye = (patient.organHolder.left_eye && patient.organHolder.left_eye.op_stage == 1.0) || (patient.organHolder.right_eye && patient.organHolder.right_eye.op_stage == 1.0)
 
@@ -434,7 +434,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				return 1
 
 			else if (patient.organHolder.head.scalp_op_stage == 2)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "head", damage_high, fluff2)
@@ -455,7 +455,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				patient.organHolder.head.scalp_op_stage = 3
 				return 1
 			else if (patient.organHolder.head.scalp_op_stage == 4.0)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "head", damage_low, fluff)
@@ -485,7 +485,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /* ---------- SCALPEL - BUTT ---------- */
 	if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HARM)
 		if (patient.butt_op_stage == 0.0)
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 			if (prob(screw_up_prob))
 				do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -501,7 +501,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return 1
 
 		else if (patient.butt_op_stage == 2)
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 			if (prob(screw_up_prob))
 				do_slipup(surgeon, patient, "chest", damage_high, fluff2)
@@ -525,7 +525,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == "grab")
 		// Chest cavity is not open
 		if(patient.chest_cavity_open == 0)
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> carefully cuts down [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src] and opens it.</span>",\
 				"<span class='notice'>You carefully cut down [surgeon == patient ? "your" : "[patient]'s"] chest with [src] and open it up.</span>",\
 				"<span class='notice'>[patient == surgeon ? "You carefully cut" : "<b>[surgeon]</b> carefully cuts"] down your chest with [src] and [patient == surgeon ? "open" : "opens"] it.</span>")
@@ -546,7 +546,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return 1
 		// Chest cavity is open and an item exists
 		else if(patient.chest_cavity_open == 1 && patient.chest_item != null)
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 			surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> cuts [patient.chest_item] out of [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src].</span>",\
 				"<span class='notice'>You cut [patient.chest_item] out of [surgeon == patient ? "your" : "[patient]'s"] chest with [src].</span>",\
 				"<span class='notice'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] [patient.chest_item] out of your chest with [src].</span>")
@@ -583,7 +583,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				return 1
 
 		if (length(patient.implant) > 0)
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 			surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> cuts into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest with [src]!</span>",\
 				"<span class='alert'>You cut into [surgeon == patient ? "your" : "[patient]'s"] chest with [src]!</span>",\
 				"<span class='alert'>[patient == surgeon ? "You cut" : "<b>[surgeon]</b> cuts"] into your chest with [src]!</span>")
@@ -675,7 +675,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (patient.organHolder.chest)
 			switch (patient.organHolder.chest.op_stage)
 				if (0)
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
 						return 1
@@ -690,7 +690,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//second cut, path for stomach/Intestines
 				if (1)
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -707,7 +707,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//remove liver with this cut
 				if (3)
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 					if (!patient.organHolder.liver)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -730,7 +730,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//remove intestines with this cut
 				if (4)
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 					if (!patient.organHolder.intestines)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -753,7 +753,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//path for kidneys/spleen/pancreas
 				if (5)
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -772,7 +772,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				// kyle-note fix this, it should be able to make a sound and damage if there's no spleen here
 				//remove spleen with this cut
 				if (6)
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 					if (!patient.organHolder.spleen)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -796,7 +796,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//heart path
 				if (8)
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_high, fluff2)
@@ -814,7 +814,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//tail path
 				if(10.0)
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -908,7 +908,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		if (surgeon.a_intent == INTENT_HARM)
 			if (patient.organHolder.head.op_stage == 1.0)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -924,7 +924,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				return 1
 
 			else if (patient.organHolder.head.op_stage == 3.0)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -948,7 +948,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 		else
 			if (patient.organHolder.head.scalp_op_stage == 1.0)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "head", damage_low, fluff)
@@ -969,7 +969,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				return 1
 
 			else if (patient.organHolder.head.scalp_op_stage == 3.0)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "head", damage_low, fluff)
@@ -995,7 +995,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				return 1
 
 			else if (patient.organHolder.head.scalp_op_stage == 5.0)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "head", damage_low, fluff)
@@ -1030,7 +1030,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	else if (surgeon.zone_sel.selecting == "chest" && surgeon.a_intent == INTENT_HARM)
 		switch (patient.butt_op_stage)
 			if (1)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -1046,7 +1046,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				return 1
 
 			if (3)
-				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+				playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 				if (prob(screw_up_prob))
 					do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -1073,7 +1073,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (patient.organHolder.chest)
 			switch (patient.organHolder.chest.op_stage)
 				if(0)	// Tail!
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
 						return 1
@@ -1093,7 +1093,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				if(11.0)	// Last of tail!
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -1116,7 +1116,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				if (1)
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -1133,7 +1133,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				if (5)
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -1149,7 +1149,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					return 1
 
 				if (9)
-					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 					if (!patient.organHolder.get_organ("heart"))
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -1586,7 +1586,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return 0
 
 		if (target_eye.op_stage == 0.0)
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 			if (prob(screw_up_prob))
 				do_slipup(surgeon, patient, "head", damage_low, fluff)
@@ -1602,7 +1602,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return 1
 
 		else if (target_eye.op_stage == 2)
-			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+			playsound(patient, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 
 			if (prob(screw_up_prob))
 				do_slipup(surgeon, patient, "head", damage_high, fluff2)
@@ -1671,7 +1671,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (patient.organHolder.chest)
 			switch (patient.organHolder.chest.op_stage)
 				if (0)
-					playsound(patient, 'sound/items/Scissor.ogg', 50, 1)
+					playsound(patient, 'sound/items/Scissor.ogg', 50, TRUE)
 
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -1688,7 +1688,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//second cut, path for appendix/liver
 				if (1)
-					playsound(patient, 'sound/items/Scissor.ogg', 50, 1)
+					playsound(patient, 'sound/items/Scissor.ogg', 50, TRUE)
 
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -1705,7 +1705,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//remove lungs
 				if (2)
-					playsound(patient, 'sound/items/Scissor.ogg', 50, 1)
+					playsound(patient, 'sound/items/Scissor.ogg', 50, TRUE)
 
 					var/obj/item/organ/lung/target_organ = null
 					var/target_side = null
@@ -1742,7 +1742,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				//remove appendix or liver
 				if (3)
 					//remove appendix with this cut
-					playsound(patient, 'sound/items/Scissor.ogg', 50, 1)
+					playsound(patient, 'sound/items/Scissor.ogg', 50, TRUE)
 
 					if (!patient.organHolder.appendix)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -1765,7 +1765,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				//path for stomach and intestines
 				if (4)
 					//remove stomach with this cut
-					playsound(patient, 'sound/items/Scissor.ogg', 50, 1)
+					playsound(patient, 'sound/items/Scissor.ogg', 50, TRUE)
 
 					if (!patient.organHolder.stomach)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -1789,7 +1789,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 				//paths for pancreas and kidneys
 				if (5)
 					//path for pancreas
-					playsound(patient, 'sound/items/Scissor.ogg', 50, 1)
+					playsound(patient, 'sound/items/Scissor.ogg', 50, TRUE)
 
 					if (prob(screw_up_prob))
 						do_slipup(surgeon, patient, "chest", damage_low, fluff)
@@ -1807,7 +1807,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//remove pancreas
 				if (6)
-					playsound(patient, 'sound/items/Scissor.ogg', 50, 1)
+					playsound(patient, 'sound/items/Scissor.ogg', 50, TRUE)
 
 					if (!patient.organHolder.pancreas)
 						src.surgeryConfusion(patient, surgeon, damage_low)
@@ -1831,7 +1831,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 
 				//remove kidneys
 				if (7)
-					playsound(patient, 'sound/items/Scissor.ogg', 50, 1)
+					playsound(patient, 'sound/items/Scissor.ogg', 50, TRUE)
 
 					var/obj/item/organ/kidney/target_organ = null
 					var/target_side = null
@@ -1906,7 +1906,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	DEBUG_MESSAGE("<b>[patient]'s surgery (performed by [surgeon])</b>")
 
 	if (surgeon.zone_sel.selecting == "chest")
-		playsound(patient, 'sound/items/Crowbar.ogg', 50, 1)	// Dont really need much surgery to remove a bone from a skeleton
+		playsound(patient, 'sound/items/Crowbar.ogg', 50, TRUE)	// Dont really need much surgery to remove a bone from a skeleton
 		surgeon.tri_message(patient, "<span class='alert'><b>[surgeon]</b> jams one end of the [src] just below [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
 			"<span class='alert'>You jam one end of the [src] just below [surgeon == patient ? "your" : "[patient]'s"] sacrum and pries [his_or_her(patient)] tail off!</span>",\
 			"<span class='alert'>[patient == surgeon ? "You jam" : "<b>[surgeon]</b> jams"] one end of the [src] just below your sacrum and [patient == surgeon ? "pry" : "pries"] your tail off!</span>")
@@ -1921,7 +1921,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return FALSE
 		H.op_stage = 2
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> pries [H] loose with [src].</span>")
-		playsound(patient, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(patient, 'sound/items/Crowbar.ogg', 50, TRUE)
 		return TRUE
 
 	else if (surgeon.zone_sel.selecting in patient.limbs.vars)
@@ -1930,7 +1930,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			return FALSE
 		limb.remove_stage = 2
 		surgeon.visible_message("<span class='alert'><b>[surgeon]</b> pries [limb] loose with [src].</span>")
-		playsound(patient, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(patient, 'sound/items/Crowbar.ogg', 50, TRUE)
 		return TRUE
 
 ////////////////////////////////////////////////////////////////////
@@ -1950,12 +1950,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (H.op_stage == 0)
 			H.op_stage = 1
 			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> loosens [H] with [src].</span>")
-			playsound(patient, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(patient, 'sound/items/Screwdriver.ogg', 50, TRUE)
 			return TRUE
 		else if (H.op_stage == 2)
 			patient.organHolder.drop_organ("head", get_turf(patient))
 			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [H] off with [src].</span>")
-			playsound(patient, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(patient, 'sound/items/Ratchet.ogg', 50, TRUE)
 			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s head with [src].")
 			return TRUE
 
@@ -1966,12 +1966,12 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		if (limb.remove_stage == 0)
 			limb.remove_stage = 1
 			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> loosens [limb] with [src].</span>")
-			playsound(patient, 'sound/items/Screwdriver.ogg', 50, 1)
+			playsound(patient, 'sound/items/Screwdriver.ogg', 50, TRUE)
 			return TRUE
 		else if (limb.remove_stage == 2)
 			limb.remove(FALSE)
 			surgeon.visible_message("<span class='alert'><b>[surgeon]</b> twists [limb] off with [src].</span>")
-			playsound(patient, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(patient, 'sound/items/Ratchet.ogg', 50, TRUE)
 			logTheThing(LOG_COMBAT, surgeon, "removed [constructTarget(patient,"combat")]'s [limb] with [src].")
 			return TRUE
 

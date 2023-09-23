@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/uniform_burst/blaster
 	name = "blaster wave"
 	sname = "wave fire"
-	spread_angle = 33
+	spread_angle = 25
 	cost = 200
 	pellets_to_fire = 5
 	spread_projectile_type = /datum/projectile/laser/blaster/blast
@@ -337,7 +337,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				sfloors -= Q
 
 	on_hit(var/atom/A)
-		playsound(A, 'sound/weapons/energy/LightningCannonImpact.ogg', 50, 1)
+		playsound(A, 'sound/weapons/energy/LightningCannonImpact.ogg', 50, TRUE)
 		var/list/sfloors = list()
 		for (var/turf/T in view(shock_range, A))
 			if (!T.density)
@@ -382,7 +382,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		fireflash_sm(get_turf(P), burn_range, temperature)
 
 	on_hit(var/atom/A)
-		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+		playsound(A, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
 		fireflash_sm(get_turf(A), blast_size, temperature)
 
 /datum/projectile/special/howitzer
@@ -425,7 +425,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 
 	on_hit(var/atom/A)
 		var/turf/T = get_turf(A)
-		playsound(A, 'sound/effects/ExplosionFirey.ogg', 60, 1)
+		playsound(A, 'sound/effects/ExplosionFirey.ogg', 60, TRUE)
 		if(!src.impacted)
 			playsound_global(world, 'sound/weapons/energy/howitzer_impact.ogg', 60)
 			src.impacted = 1
@@ -464,7 +464,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		//prevent playing all 50 sounds at once on rapid bounce
 		if(world.time >= last_sound_time + 1 DECI SECOND)
 			last_sound_time = world.time
-			playsound(A, hit_sound, 60, 1)
+			playsound(A, hit_sound, 60, TRUE)
 
 		if (explosive_hits)
 			SPAWN(0)
@@ -562,7 +562,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/desired_y = 0
 
 	var/rotate_proj = 1
-	var/face_desired_dir = 0
+	var/face_desired_dir = FALSE
 
 	goes_through_walls = 1
 
@@ -750,7 +750,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 				else
 					playsound(T, src.hit_sound, 60, 1)
 		else
-			playsound(A, 'sound/effects/mag_magmisimpact.ogg', 25, 1, -1)
+			playsound(A, 'sound/effects/mag_magmisimpact.ogg', 25, TRUE, -1)
 
 /datum/projectile/special/homing/magicmissile/weak
 	name = "magic minimissile"
@@ -768,7 +768,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	easemult = 0.3
 
 	rotate_proj = 1
-	face_desired_dir = 1
+	face_desired_dir = TRUE
 
 	goes_through_walls = 1
 
@@ -811,7 +811,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "spiritbat"
 	rotate_proj = 0
-	face_desired_dir = 1
+	face_desired_dir = TRUE
 	goes_through_walls = 1
 	is_magical = 1
 

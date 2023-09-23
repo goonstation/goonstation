@@ -2260,7 +2260,7 @@
 		return
 
 	if (!H.stat)
-		boutput(usr, "You can't eat [H] while they are conscious!")
+		boutput(usr, "You can't eat [H] while [hes_or_shes(H)] conscious!")
 		return
 
 	if (H.bioHolder.HasEffect("consumed"))
@@ -3384,6 +3384,8 @@
 		if (H.organHolder?.tail)
 			var/obj/item/organ/tail/T = H.organHolder.tail
 			T.colorize_tail(H.bioHolder.mobAppearance)
+		H.organHolder?.left_eye?.update_color(H.bioHolder?.mobAppearance, "L")
+		H.organHolder?.right_eye?.update_color(H.bioHolder?.mobAppearance, "R")
 		H?.bioHolder?.mobAppearance.UpdateMob()
 
 /mob/living/carbon/human/get_pronouns()

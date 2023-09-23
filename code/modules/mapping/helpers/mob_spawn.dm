@@ -35,7 +35,7 @@
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			M.set_loc(container)
-			container.update_icon()
+			container.UpdateIcon()
 		M.death(FALSE)
 
 /obj/mapping_helper/mob_spawn/corpse/critter/random/martian
@@ -161,7 +161,7 @@
 		if (src.container_type)
 			var/obj/container = new container_type(src.loc)
 			H.set_loc(container)
-			container.update_icon()
+			container.UpdateIcon()
 
 		if (src.appearance_override)
 			H.bioHolder.CopyOther(src.appearance_override, TRUE, FALSE, FALSE, FALSE)

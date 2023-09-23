@@ -340,6 +340,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	desc = "This closet was produced using the finest in applied optical illusion technology. When closed, it will dynamically assume the appearance of the floor tile underneath."
 
+	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
+		. = ..()
+		if(in_surplus_crate)
+			var/obj/storage/closet/syndi/closet = item
+			closet.open()
+
 /datum/syndicate_buylist/traitor/snidely
 	name = "Fake Moustache"
 	item = /obj/item/clothing/mask/moustache
@@ -988,6 +994,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "A grenade that holds up to 5 chicken eggs. Uses syndicate brainwashing to turn the chickens into hardened warriors immediately on detonation. Normally passive chickens will become aggressive. Use a wrench to unload it."
 	job = list("Rancher")
 	not_in_crates = 1
+	can_buy = UPLINK_TRAITOR
+
+/datum/syndicate_buylist/traitor/fishing_rod
+	name = "Barbed Fishing Rod"
+	item = /obj/item/syndie_fishing_rod
+	cost = 6
+	desc = "A tactical fishing rod designed to reel in and filet the biggest catch- enemies of the Syndicate. Bait the hologram lure by hitting it with an item, then maim foes with a barbed hook that causes more damage the longer they fight back."
+	job = list("Rancher", "Angler")
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/ai_laser

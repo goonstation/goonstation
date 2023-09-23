@@ -394,7 +394,7 @@ datum
 							M.setStatus("slowed", 5 SECONDS)
 						if (probmult(8) && !M.reagents?.get_reagent_amount("promethazine"))
 							M.visible_message("<span class='alert'>[M] vomits a lot of blood!</span>")
-							playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+							playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 							make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
 						else if (probmult(5))
 							boutput(M, "<span class='alert'>You feel a sudden pain in your chest.</span>")
@@ -1402,7 +1402,7 @@ datum
 					M.visible_message(pick("<span class='alert'><B>[M]</B>'s [pick("eyes", "arms", "legs")] bleed!</span>",\
 											"<span class='alert'><B>[M]</B> bleeds [pick("profusely", "from every wound")]!</span>",\
 											"<span class='alert'><B>[M]</B>'s [pick("chest", "face", "whole body")] bleeds!</span>"))
-					playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1) //some bloody effects
+					playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE) //some bloody effects
 					make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc)
 				else if (probmult(20))
 					make_cleanable(/obj/decal/cleanable/blood/splatter,M.loc) //some extra bloody effects

@@ -108,7 +108,7 @@
 			user.lastattacked = src
 			attack_particle(user,src)
 			hit_twitch(src)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_2.ogg', 100, TRUE)
 			src.splat(get_turf(src))
 			if(W.hit_type == DAMAGE_BURN)
 				src.take_damage(0, W.force, 0, W.hit_type)
@@ -169,7 +169,7 @@
 	proc/splat(turf/T)
 		if(!istype(T) || src.decal_done || !ispath(src.created_decal))
 			return FALSE
-		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
 		var/obj/decal/cleanable/cleanable = make_cleanable(src.created_decal, T)
 		cleanable.blood_DNA = src.blood_DNA
 		cleanable.blood_type = src.blood_type

@@ -1,5 +1,5 @@
 /obj/pod_base_critical_system
-	name = "Critical System"
+	name = "critical system"
 	icon = 'icons/obj/large/64x64.dmi'
 	icon_state = "critical_system"
 	anchored = ANCHORED
@@ -154,7 +154,7 @@
 //////////////special clone pod///////////////
 
 /obj/machinery/clonepod/pod_wars
-	name = "Cloning Pod Deluxe"
+	name = "cloning pod deluxe"
 	meat_level = 1.#INF
 	var/last_check = 0
 	var/check_delay = 10 SECONDS
@@ -218,7 +218,7 @@
 ////////////////////////////////////////////////
 
 /obj/forcefield/energyshield/perma/pod_wars
-	name = "Permanent Military-Grade Forcefield"
+	name = "permanent military-grade forcefield"
 	desc = "A permanent force field that prevents non-authorized entities from passing through it."
 	var/team_num = 0		//1 = NT, 2 = SY
 	gas_impermeable = TRUE
@@ -239,7 +239,7 @@
 
 ABSTRACT_TYPE(/obj/item/turret_deployer/pod_wars)
 /obj/item/turret_deployer/pod_wars
-	name = "Turret Deployer"
+	name = "turret deployer"
 	desc = "A turret deployment thingy. Use it in your hand to deploy."
 	icon_state = "st_deployer"
 	w_class = W_CLASS_BULKY
@@ -254,7 +254,7 @@ ABSTRACT_TYPE(/obj/item/turret_deployer/pod_wars)
 
 ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 /obj/deployable_turret/pod_wars
-	name = "Ship Defense Turret"
+	name = "ship defense turret"
 	desc = "A ship defense turret."
 	health = 100
 	max_health = 100
@@ -362,7 +362,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		dir=WEST
 
 /obj/item/shipcomponent/secondary_system/lock/pw_id
-	name = "ID Card Hatch Locking Unit"
+	name = "\improper ID card hatch locking unit"
 	desc = "A basic hatch locking mechanism with a ID card scanner."
 	system = "Lock"
 	f_active = 1
@@ -442,7 +442,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		team_num = TEAM_SYNDICATE
 
 /obj/item/device/pda_module/flashlight/nt_blue
-	name = "NanoTrasen Blue Flashlight Module"
+	name = "\improper NanoTrasen blue flashlight module"
 	desc = "Love (or work for) NanoTrasen? This'll be your favorite flashlight!"
 	lumlevel = 0.8
 	light_r = 61
@@ -451,7 +451,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 
 /obj/item/device/pda_module/flashlight/sy_red
-	name = "Syndicate Red Flashlight Module"
+	name = "\improper Syndicate red flashlight module"
 	desc = "Hate (or used to work for) NanoTrasen? This'll be your favorite flashlight!"
 	lumlevel = 0.8
 	//#ff4043
@@ -460,7 +460,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	light_b = 67
 
 /obj/item/disk/data/cartridge/pod_pilot
-	name = "\improper Standard Utility cartridge"
+	name = "standard utility cartridge"
 	desc = "A must for any one who braves the vast emptiness of space."
 	icon_state = "cart-network"
 
@@ -513,7 +513,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 			qdel(src)
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen
-	name = "Radio Headset"
+	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over... wait, isn't that frequency illegal?"
 	icon_state = "headset"
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
@@ -528,7 +528,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		icon_tooltip = "NanoTrasen Commander"
 
 /obj/item/device/radio/headset/pod_wars/syndicate
-	name = "Radio Headset"
+	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over... wait, isn't that frequency illegal?"
 	icon_state = "headset"
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
@@ -623,7 +623,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 
 			boutput(user, "<span class='notice'>This computer seems to be frozen on a space-weather tracking screen. It looks like a large ion storm will be passing this system in about <b class='alert'>[(cur_time)] minutes mission time</b>.<br>You can't input any commands to run the control protocols for this satelite...</span>")
-			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1, flags = SOUND_IGNORE_SPACE)
+			playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE, flags = SOUND_IGNORE_SPACE)
 			return 0
 		if (owner_team != get_pod_wars_team_num(user))
 			var/duration = is_commander(user) ? 10 SECONDS : 20 SECONDS
@@ -871,7 +871,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 		src.tier = tier
 
 		showswirl(src, 0)
-		playsound(loc, 'sound/effects/mag_warp.ogg', 100, 1, flags = SOUND_IGNORE_SPACE)
+		playsound(loc, 'sound/effects/mag_warp.ogg', 100, TRUE, flags = SOUND_IGNORE_SPACE)
 		//handle name, color, and access for types...
 		var/team_name_str
 		switch(team_num)
@@ -990,17 +990,17 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 ////////////// special pod wars cargo pads + mineral accumulators ///////////////
 
 /obj/submachine/cargopad/pod_wars/syndicate
-	name = "Lodbrok Mining Pad"
+	name = "\improper Lodbrok mining pad"
 	group = "syndicate"
 
 /obj/submachine/cargopad/pod_wars/nanotrasen
-	name = "NSV Pytheas Mining Pad"
+	name = "\improper NSV Pytheas mining pad"
 	group = "nanotrasen"
 
 /obj/machinery/oreaccumulator/pod_wars/syndicate
-	name = "Syndicate mineral accumulator"
+	name = "\improper Syndicate mineral accumulator"
 	group = "syndicate"
 
 /obj/machinery/oreaccumulator/pod_wars/nanotrasen
-	name = "NanoTrasen mineral accumulator"
+	name = "\improper NanoTrasen mineral accumulator"
 	group = "nanotrasen"

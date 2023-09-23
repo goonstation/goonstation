@@ -50,6 +50,6 @@
     martian.set_loc(T)
     elecflash(T,power = 3)
 
-    playsound(T, 'sound/effects/ghost2.ogg', 100, 1)
+    playsound(T, 'sound/effects/ghost2.ogg', 100, TRUE)
     holder.owner.visible_message("<span class='notice'><b>[holder.owner]</b> summons [martian.name]!</span>", "<span class='notice'>You pull [martian.real_name] through space to you!</span>")
     holder.owner.say("SUMMON!", 1)

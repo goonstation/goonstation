@@ -373,7 +373,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if (!anchored)
 			src.go_out()
 		user.show_text("You [src.anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
-		playsound(src, 'sound/items/Ratchet.ogg', 40, 0, 0)
+		playsound(src, 'sound/items/Ratchet.ogg', 40, FALSE, 0)
 		return
 	..()
 

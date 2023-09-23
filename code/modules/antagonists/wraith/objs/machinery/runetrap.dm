@@ -99,7 +99,7 @@
 		var/mob/M = AM
 		if(!checkRun(M)) return
 		flashpowder_reaction(get_turf(src), 40)
-		playsound(src, 'sound/weapons/flashbang.ogg', 25, 1)
+		playsound(src, 'sound/weapons/flashbang.ogg', 25, TRUE)
 		M.changeStatus("stunned", 4 SECONDS)
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A bright light flashes</span>")
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
@@ -117,7 +117,7 @@
 		var/turf/T = get_turf(M)
 		for (var/atom/A as anything in T.contents)
 			A.emp_act()
-		playsound(src, 'sound/effects/electric_shock_short.ogg', 30, 1)
+		playsound(src, 'sound/effects/electric_shock_short.ogg', 30, TRUE)
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! Your hair stands on end!</span>")
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
 		elecflash(src, 1, 1)
@@ -145,7 +145,7 @@
 		var/mob/M = AM
 		if(!checkRun(M)) return
 		fireflash(M, 1, TRUE)
-		playsound(src, 'sound/effects/mag_fireballlaunch.ogg', 50, 0)
+		playsound(src, 'sound/effects/mag_fireballlaunch.ogg', 50, FALSE)
 		src.visible_message("<span class='alert>[M] steps on [src] and triggers it! A flame engulfs them immediatly!</span>")
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)
 		elecflash(src, 1, 1)
@@ -203,7 +203,7 @@
 		M.remove_pulling()
 		M.changeStatus("weakened", 3 SECONDS)
 		boutput(M, "<span class='notice'>An ethereal force slips you!</span>")
-		playsound(M, 'sound/misc/slip.ogg', 50, 1, -3)
+		playsound(M, 'sound/misc/slip.ogg', 50, TRUE, -3)
 		var/atom/target = get_edge_target_turf(M, M.dir)
 		M.throw_at(target, 12, 1, throw_type = THROW_SLIP)
 		playsound(src, 'sound/voice/wraith/wraithraise3.ogg', 80)

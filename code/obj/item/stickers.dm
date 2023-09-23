@@ -68,7 +68,7 @@
 		src.active = 1
 		src.set_loc(A)
 
-		playsound(src, 'sound/items/sticker.ogg', 50, 1)
+		playsound(src, 'sound/items/sticker.ogg', 50, TRUE)
 		add_fingerprint(user)
 		logTheThing(LOG_STATION, user, "puts a [src]:[src.icon_state] sticker on [A] at [log_loc(A)]")
 

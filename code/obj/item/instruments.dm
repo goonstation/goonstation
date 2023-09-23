@@ -257,7 +257,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istool(W, TOOL_SCREWING | TOOL_WRENCHING))
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			src.anchored = !(src.anchored)
 			return
 		else
@@ -432,6 +432,42 @@
 
 	New()
 		src.icon_state = "elecguitar[rand(1,8)]"
+		src.item_state = src.icon_state
+		..()
+
+
+
+	attack(mob/M, mob/user)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Guitar_bonk1.ogg', 'sound/musical_instruments/Guitar_bonk2.ogg', 'sound/musical_instruments/Guitar_bonk3.ogg'), 50, 1, -1)
+		..()
+
+
+/* -------------------- Bass Guitar -------------------- */
+
+/obj/item/instrument/bass
+	name = "bass"
+	desc = "It's like a guitar. But cooler."
+	icon = 'icons/obj/large/64x32.dmi'
+	icon_state = "bass1"
+	item_state = "bass1"
+	two_handed = 1
+	force = 10
+	note_range = list("d2", "d5")
+	instrument_sound_directory = "sound/musical_instruments/bass/notes/"
+	note_time = 0.18 SECONDS
+	sounds_instrument = null
+	randomized_pitch = 0
+	use_new_interface = TRUE
+	//Start at D
+	key_offset = 3
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROD)
+
+	New()
+		src.icon_state = "bass[rand(1,9)]"
 		src.item_state = src.icon_state
 		..()
 
@@ -691,7 +727,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			boutput(user, "<span class='alert'>\The [src] needs time to recharge its spooky strength!</span>")
 			return
 		else
-			playsound(src, 'sound/musical_instruments/Bikehorn_2.ogg', 70, 0, 0, 0.5)
+			playsound(src, 'sound/musical_instruments/Bikehorn_2.ogg', 70, FALSE, 0, 0.5)
 			var/turf/T = get_turf(src)
 			if (!T)
 				return
@@ -713,8 +749,8 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			logTheThing(LOG_COMBAT, S, "was skeletonized by a dootdoot trumpet played by [constructTarget(M,"combat")] at [log_loc(src)].")
 			S.visible_message("<span class='alert'><b>[S.name]'s skeleton rips itself free upon hearing the song of its people!</b></span>")
 			playsound(S, S.gender == "female" ? 'sound/voice/screams/female_scream.ogg' : 'sound/voice/screams/male_scream.ogg', 50, 0, 0, S.get_age_pitch())
-			playsound(S, 'sound/effects/bubbles.ogg', 50, 0)
-			playsound(S, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 0)
+			playsound(S, 'sound/effects/bubbles.ogg', 50, FALSE)
+			playsound(S, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, FALSE)
 			var/bdna = null // For forensics (Convair880).
 			var/btype = null
 			if (S.bioHolder.Uid && S.bioHolder.bloodType)

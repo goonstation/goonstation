@@ -45,7 +45,7 @@
 	metal = ismetal
 	src.lube = islube
 	//NOW WHO THOUGH IT WOULD BE A GOOD IDEA TO PLAY THIS ON EVERY FOAM OBJ
-	//playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
+	//playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 
 	UpdateIcon()
 	if(metal)
@@ -167,7 +167,7 @@
 		if (src.lube) //lubefoam goes wheeeeeee!
 			if(!M.throwing && !M.lying)
 				M.remove_pulling()
-				playsound(src, 'sound/misc/slip.ogg', 50, 1, -3)
+				playsound(src, 'sound/misc/slip.ogg', 50, TRUE, -3)
 				boutput(M, "<span class='notice'>You slipped on the foam!</span>")
 				var/atom/target = get_edge_target_turf(M, M.dir)
 				switch (src.lube)
