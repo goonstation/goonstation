@@ -394,3 +394,214 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				continue
 			tfireflash(F,0.5,temp)
 
+/mob/living/critter/robotic/securitron
+	name = "securitron"
+	real_name = "securitron"
+#ifdef HALLOWEEN
+	desc = "A little security robot, apparently carved out of a pumpkin.  He looks...spooky?"
+	icon = 'icons/misc/halloween.dmi'
+#else
+	desc = "A little security robot.  He looks less than thrilled."
+	icon = 'icons/obj/bots/aibots.dmi'
+#endif
+	icon_state = "secbot0"
+	blood_id = "oil"
+	speechverb_say = "beeps"
+	speechverb_gasp = "warbles"
+	speechverb_stammer = "bleeps"
+	speechverb_exclaim = "boops"
+	speechverb_ask = "bloops"
+	stepsound = "step_plating"
+	robot_talk_understand = TRUE
+	density = FALSE
+	hand_count = 1
+	can_burn = FALSE
+	dna_to_absorb = 0
+	metabolizes = FALSE
+	custom_gib_handler = /proc/robogibs
+	stepsound = null
+	health_brute = 20
+	health_brute_vuln = 1
+	health_burn = 20
+	health_burn_vuln = 0.8
+	var/emagged = 0
+	var/emote_cooldown = 7 SECONDS
+	var/siren_active
+
+	New()
+		. = ..()
+		remove_lifeprocess(/datum/lifeprocess/blindness)
+		remove_lifeprocess(/datum/lifeprocess/viruses)
+		remove_lifeprocess(/datum/lifeprocess/blood)
+		remove_lifeprocess(/datum/lifeprocess/radiation)
+
+		new /obj/item/implant/access/infinite/captain(src)
+
+		src.abilityHolder.addAbility(/datum/targetable/critter/bot/handcuff)
+
+		APPLY_MOVEMENT_MODIFIER(src, /datum/movement_modifier/robot_base, "robot_health_slow_immunity")
+
+		get_image_group(CLIENT_IMAGE_GROUP_ARREST_ICONS).add_mob(src)
+
+		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/small_critter/med
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.icon_state = "handn"
+		HH.name = "long arm"
+		HH.limb_name = "long arm"
+		HH.can_hold_items = 1
+		HH.can_attack = 1
+		HH.can_range_attack = 1
+
+	setup_healths()
+		add_hh_robot(src.health_brute, src.health_brute_vuln)
+		add_hh_robot_burn(src.health_burn, src.health_burn_vuln)
+
+	get_melee_protection(zone, damage_type)
+		return 3
+
+	get_ranged_protection()
+		return 2
+
+	death(var/gibbed)
+		..(gibbed, 0)
+		if (!gibbed)
+			gib(src)
+		else
+			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
+			make_cleanable(/obj/decal/cleanable/oil,src.loc)
+
+	specific_emotes(var/act, var/param = null, var/voluntary = 0)
+		if (act == "scream")
+			src.siren()
+			return null
+		if (ON_COOLDOWN(src, "secbot_emote_cooldown", src.emote_cooldown))
+			return null
+		switch (act)
+			if ("laugh")
+				src.say("YOU CAN'T OUTRUN A RADIO.")
+				playsound(src, "sound/voice/bradio.ogg", 50, FALSE, 0, 1)
+			if ("fart")
+				src.say("YOUR MOVE, CREEP.")
+				playsound(src, "sound/voice/bcreep.ogg", 50, FALSE, 0, 1)
+			if ("salute")
+				src.say("HAVE A SECURE DAY.")
+				playsound(src, "sound/voice/bsecureday.ogg", 50, FALSE, 0, 1)
+			if ("snap")
+				src.say("GOD MADE TOMORROW FOR THE CROOKS WE DON'T CATCH TODAY.")
+				playsound(src, "sound/voice/bgod.ogg", 50, FALSE, 0, 1)
+			if ("flex")
+				src.say("I AM THE LAW.")
+				playsound(src, "sound/voice/biamthelaw.ogg", 50, FALSE, 0, 1)
+		return ..()
+
+	proc/siren()
+		if(siren_active)
+			return
+		SPAWN(0)
+			siren_active = TRUE
+			var/weeoo = 10
+			playsound(src, 'sound/machines/siren_police.ogg', 50, TRUE)
+			while (weeoo)
+				add_simple_light("secbot", list(255 * 0.9, 255 * 0.1, 255 * 0.1, 0.8 * 255))
+				sleep(0.2 SECONDS)
+				add_simple_light("secbot", list(255 * 0.1, 255 * 0.1, 255 * 0.9, 0.8 * 255))
+				sleep(0.2 SECONDS)
+				weeoo--
+
+			add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+			siren_active = FALSE
+
+/datum/targetable/critter/bot/handcuff
+	name = "Detain"
+	desc = "Attempts to handcuff a target."
+	targeted = TRUE
+	target_anything = TRUE
+	cooldown = 4 SECONDS
+	icon = 'icons/mob/critter_ui.dmi'
+	icon_state = "firebot_fire"
+
+	cast(atom/target)
+		if (..())
+			return TRUE
+		var/mob/living/carbon/human/H = target
+		if (!ishuman(target))
+			target = get_turf(target)
+		if (isturf(target))
+			H = locate(/mob/living/carbon/human) in target
+			if (!H)
+				boutput(holder.owner, "<span class='alert'>Nothing to detain there.</span>")
+				return TRUE
+		if (H == holder.owner)
+			return TRUE
+		if (!H.lying)
+			boutput(holder.owner, "<span class='alert'>The target must be lying down.</span>")
+			return TRUE
+		if (BOUNDS_DIST(holder.owner, H) > 0)
+			boutput(holder.owner, "<span class='alert'>That is too far away to detain.</span>")
+			return TRUE
+		var/mob/M = holder.owner
+		if (!isturf(M.loc))
+			boutput(holder.owner, "<span class='alert'>You'll need to get out of \the [M.loc] before trying to detain someone.")
+			return TRUE
+		if (target.hasStatus("handcuffed"))
+			boutput(holder.owner, "<span class='alert'>That target is already cuffed.</span>")
+			return TRUE
+		actions.start(new/datum/action/bar/icon/mob_secbot_cuff(M, H), M)
+		return 0
+
+/datum/action/bar/icon/mob_secbot_cuff
+	duration = 4 SECONDS
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	id = "secbot_cuff"
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "buddycuff"
+	var/mob/master
+	var/mob/living/carbon/human/target
+
+	New(var/mob/living/M, var/mob/living/carbon/human/H)
+		src.master = M
+		src.target = H
+		..()
+
+	onStart()
+		..()
+		playsound(master, 'sound/weapons/handcuffs.ogg', 30, TRUE, -2)
+		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [target]!</B></span>")
+
+	onEnd()
+		..()
+		if(ishuman(target))
+			target.handcuffs = new /obj/item/handcuffs/guardbot(target)
+			target.setStatus("handcuffed", duration = INFINITE_STATUS)
+			logTheThing(LOG_COMBAT, master, "handcuffs [constructTarget(target,"combat")] at [log_loc(master)].")
+
+			var/user_location = get_area(master)
+			var/turf/target_loc = get_turf(target)
+			if(!target_loc)
+				target_loc = get_turf(master)
+
+				//////PDA NOTIFY/////
+
+			var/message2send ="Notification: [target] detained by [master] in [user_location] at coordinates [target_loc.x], [target_loc.y]."
+
+			var/datum/signal/signal = get_free_signal()
+			signal.source = src
+			signal.data["sender"] = "00000000"
+			signal.data["command"] = "text_message"
+			signal.data["sender_name"] = "SECURITY-MAILBOT"
+			signal.data["group"] = list(MGD_SECURITY, MGA_ARREST)
+			signal.data["address_1"] = "00000000"
+			signal.data["message"] = message2send
+			SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "pda")
+
+	canRunCheck(in_start)
+		. = ..()
+		if ((BOUNDS_DIST(master, target) > 0) || master == null || target == null || target.hasStatus("handcuffed"))
+			interrupt(INTERRUPT_ALWAYS)
