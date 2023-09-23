@@ -156,28 +156,42 @@
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
 		logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
 
-#define ROBOT_DRUG_VOLUME 25
-		// Drug those robots (bit messy/evil but it actually works pretty cleanly)
+		//Robots get all hallucinatey
 		for (var/mob/living/L in global.mobs)
 			if (issilicon(L) || isAIeye(L))
 				if (prob(33))
-					var/had_reagents = FALSE
-					if (!L.reagents)
-						L.create_reagents(ROBOT_DRUG_VOLUME)
-						had_reagents = TRUE
-					L.metabolizes = TRUE
-					L.add_lifeprocess(/datum/lifeprocess/chems)
-					var/drugid = pick("LSD", "lsd_bee", "catdrugs", "bathsalts", "psilocybin")
-					L.reagents.add_reagent(drugid, ROBOT_DRUG_VOLUME)
+					var/timeout_seconds = rand(60,120) //1 to 2 minutes
+					switch (rand(1,5))
+						if(1) //lsd-like
+							var/datum/reagent/drug/LSD/drug_type = /datum/reagent/drug/LSD //it's a path so we can grab the static vars, and not do init
 
-					SPAWN(rand(1 MINUTE, 2 MINUTES))
-						if (!had_reagents)
-							qdel(L.reagents)
-						else
-							L.reagents.remove_reagent(drugid, ROBOT_DRUG_VOLUME)
-						L.metabolizes = initial(L.metabolizes)
-						L.remove_lifeprocess(/datum/lifeprocess/chems)
-#undef ROBOT_DRUG_VOLUME
+							L.AddComponent(/datum/component/hallucination/trippy_colors, timeout=timeout_seconds)
+							if(prob(60)) //monkey mode
+								L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=initial(drug_type.monkey_images), name_list=initial(drug_type.monkey_names), attacker_prob=20, max_attackers=3)
+							else
+								L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=null, name_list=null, attacker_prob=20, max_attackers=3)
+							L.AddComponent(/datum/component/hallucination/random_sound, timeout=timeout_seconds, sound_list=initial(drug_type.halluc_sounds), sound_prob=5)
+							L.AddComponent(/datum/component/hallucination/random_image_override, timeout=timeout_seconds, image_list=initial(drug_type.critter_image_list), target_list=list(/mob/living/carbon/human), range=6, image_prob=10, image_time=20, override=TRUE)
+						if(2) //lsbee
+							var/datum/reagent/drug/lsd_bee/drug_type = /datum/reagent/drug/lsd_bee //it's a path so we can grab the static vars, and not do init
+							var/bee_halluc = initial(drug_type.bee_halluc)
+							var/image/imagekey = pick(bee_halluc)
+							L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=10)
+						if(3)
+							var/datum/reagent/drug/catdrugs/drug_type = /datum/reagent/drug/catdrugs //it's a path so we can grab the static vars, and not do init
+							var/cat_halluc = initial(drug_type.cat_halluc)
+							var/image/imagekey = pick(cat_halluc)
+							L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=list(imagekey), name_list=cat_halluc[imagekey], attacker_prob=7, max_attackers=3)
+							L.AddComponent(/datum/component/hallucination/random_sound, timeout=timeout_seconds, sound_list=initial(drug_type.cat_sounds), sound_prob=20)
+						if(4) //hellshroom
+							var/bats = rand(2,3)
+							L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=list(new /image('icons/misc/AzungarAdventure.dmi', "hellbat")), name_list=list("hellbat"), attacker_prob=100, max_attackers=bats)
+							boutput(L, "<span class='alert'><b>A hellbat begins to chase you</b>!</span>")
+							L.emote("scream")
+						if(5) //mimicotoxin
+							L.AddComponent(/datum/component/hallucination/random_image_override, timeout=timeout_seconds, image_list=list(image('icons/misc/critter.dmi',"mimicface")), target_list=list(/obj/item, /mob/living), range=5, image_prob=2, image_time=10, override=FALSE)
+
+
 
 		SPAWN(message_delay * stage_delay)
 
