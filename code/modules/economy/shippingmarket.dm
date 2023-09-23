@@ -159,6 +159,8 @@
 		// so on average the % chance is actually about ~half this value.
 		var/hot_chance = rand(10, 33)
 
+		var/list/adjusted = list()
+
 		for (var/type in src.commodities)
 			var/datum/commodity/C = src.commodities[type]
 
@@ -181,8 +183,6 @@
 			else
 				// ... and bad rolls adjust on the lower one.
 				price_adjust += C.lowerfluc * price_mod
-
-			C.price = price_adjust
 
 			// At this point, the price is (hopefully) roughly on this
 			// unfortunately upside-down scale of probabilities:
@@ -217,8 +217,24 @@
 			//  the crusher's scraps exist.)
 			// We also strip off any weird decimals because it is 2053
 			// and the penny has been abolished, along with all other coins.
-			C.price = max(round(C.price), 0)
 
+			if(!adjusted[C])
+				C.price = max(round(C.price), 0)
+
+			else
+				adjusted += C
+				adjusted[C] = 1
+
+			if(C.linked_commodities)
+				for(var/linked in C.linked_commodities)
+					for(var/comtype in src.commodities)
+						var/datum/commodity/commodity = src.commodities[comtype]
+						if(!adjusted[commodity])
+							if(linked == commodity.type)
+								commodity.price = C.price * C.linked_commodities[linked]
+								commodity.indemand = C.indemand
+								adjusted += commodity
+								adjusted[commodity] = 1
 
 		// Shuffle trader visibility around a bit
 		for (var/datum/trader/T in src.active_traders)
