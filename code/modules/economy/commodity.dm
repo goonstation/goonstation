@@ -6,8 +6,8 @@
 	var/baseprice = 0 // Baseline selling price for this commodity
 	var/onmarket = 0 // Whether this item is currently being accepted for sale on the shipping market
 	var/indemand = 0 // Whether this item is currently being bought at a high price on the market
-	var/upperfluc = 0 // Highest this item's price can raise in one shift
-	var/lowerfluc = 0 // Lowest this item's price can drop in one shift (negative numbers only)
+	var/upperfluc = null // Highest this item's price can raise in one shift
+	var/lowerfluc = null // Lowest this item's price can drop in one shift (negative numbers only)
 	var/desc = "item" //Description for item
 	var/desc_buy = "There are several buyers interested in acquiring this item." //Description for player selling
 	var/desc_buy_demand = "This item is in high demand." //Descripition for player selling when in high demand
@@ -24,8 +24,10 @@
 	New()
 		. = ..()
 		baseprice = price
-		upperfluc = baseprice/2
-		lowerfluc = -baseprice/2
+		if(isnull(upperfluc))
+			upperfluc = baseprice/2
+		if(isnull(lowerfluc))
+			lowerfluc = -baseprice/2
 
 /*
 /datum/commodity/clothing
