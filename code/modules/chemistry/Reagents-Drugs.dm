@@ -349,23 +349,23 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				//pretty colors
-				M.AddComponent(/datum/component/hallucination/trippy_colors, 10)
+				M.AddComponent(/datum/component/hallucination/trippy_colors, timeout=10)
 
 				//get attacked
 				if(prob(60)) //monkey mode
-					M.AddComponent(/datum/component/hallucination/fake_attack, 10, monkey_images, monkey_names, 20)
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=monkey_images, name_list=monkey_names, attacker_prob=20, max_attackers=3)
 				else
-					M.AddComponent(/datum/component/hallucination/fake_attack, 10, null, null, 20)
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=null, name_list=null, attacker_prob=20, max_attackers=3)
 
 				//THE VOICES GET LOUDER
-				M.AddComponent(/datum/component/hallucination/random_sound, 10, src.halluc_sounds, 5)
+				M.AddComponent(/datum/component/hallucination/random_sound, timeout=10, sound_list=src.halluc_sounds, sound_prob=5)
 
 				if(probmult(8)) //display a random chat message
 					M.playsound_local(M.loc, pick(src.speech_sounds, 100, 1))
 					boutput(M, "<b>[pick(src.voice_names)]</b> says, \"[phrase_log.random_phrase("say")]\"")
 
 				//turn someone into a critter
-				M.AddComponent(/datum/component/hallucination/random_image_override, 10, critter_image_list, list(/mob/living/carbon/human), 6, 10, 20, TRUE)
+				M.AddComponent(/datum/component/hallucination/random_image_override, timeout=10, image_list=critter_image_list, target_list=list(/mob/living/carbon/human), range=6, image_prob=10, image_time=20, override=TRUE)
 				..()
 				return
 
@@ -406,7 +406,7 @@ datum
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 5)
 				var/image/imagekey = pick(bee_halluc)
-				M.AddComponent(/datum/component/hallucination/fake_attack, 10, list(imagekey), bee_halluc[imagekey], 10)
+				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=10)
 				if (probmult(12))
 					M.visible_message(pick("<b>[M]</b> makes a buzzing sound.", "<b>[M]</b> buzzes."),pick("BZZZZZZZZZZZZZZZ", "<span class='alert'><b>THE BUZZING GETS LOUDER</b></span>", "<span class='alert'><b>THE BUZZING WON'T STOP</b></span>"))
 				if (probmult(15))
@@ -921,6 +921,11 @@ datum
 			transparency = 20
 			viscosity = 0.14
 			thirst_value = -0.1
+			var/static/list/cat_halluc = list(
+				new /image('icons/misc/critter.dmi',"cat-ghost") = list("ghost cat"),
+				new /image('icons/misc/critter.dmi', "cat1-wild") = list("wild cat"),
+			)
+			var/static/list/cat_sounds = list('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg')
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -931,20 +936,10 @@ datum
 				if(probmult(9))
 					M.visible_message("<span class='notice'><b>[M.name]</b> meows! What the fuck?</span>")
 					playsound(M.loc, 'sound/voice/animal/cat.ogg', 50, 1)
-				if(probmult(7))
-					switch(rand(1,2))
-						if(1)
-							var/ghostcats = rand(1,3)
-							for(var/i = 0, i < ghostcats, i++)
-								fake_attackEx(M, 'icons/misc/critter.dmi', "cat-ghost", "ghost cat")
-								M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
-						if(2)
-							var/wildcats = rand(1,3)
-							for(var/i = 0, i < wildcats, i++)
-								fake_attackEx(M, 'icons/misc/critter.dmi', "cat1-wild", "wild cat")
-								M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
-				if(probmult(20))
-					M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
+
+				var/image/imagekey = pick(cat_halluc)
+				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=cat_halluc[imagekey], attacker_prob=7, max_attackers=3)
+				M.AddComponent(/datum/component/hallucination/random_sound, timeout=10, sound_list=src.cat_sounds, sound_prob=20)
 				..()
 				return
 
@@ -1186,8 +1181,7 @@ datum
 						src.breathefire(M)
 					if(check < 5)
 						var/bats = rand(2,3)
-						for(var/i = 0, i < bats, i++)
-						fake_attackEx(M, 'icons/misc/AzungarAdventure.dmi', "hellbat", "hellbat")
+						M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(new /image('icons/misc/AzungarAdventure.dmi', "hellbat")), name_list=list("hellbat"), attacker_prob=100, max_attackers=bats)
 						boutput(M, "<span class='alert'><b>A hellbat begins to chase you</b>!</span>")
 						M.emote("scream")
 					if(check < 20)

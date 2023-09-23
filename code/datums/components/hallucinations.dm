@@ -24,6 +24,8 @@ TYPEINFO(/datum/component/hallucination/fake_attack)
 		ARG_INFO("image_list", DATA_INPUT_LIST_BUILD, "List of images that the mob can hallucinate attacking, leave null for default"),
 		ARG_INFO("name_list", DATA_INPUT_LIST_BUILD, "List of names that the mob can hallucinate attacking, leave null for default"),
 		ARG_INFO("attacker_prob", DATA_INPUT_NUM, "probability of an attacker being spawned per mob life tick", 10),
+		ARG_INFO("max_attackers", DATA_INPUT_NUM, "number of attackers that can be active at one time", 5),
+
 	)
 
 TYPEINFO(/datum/component/hallucination/random_image_override)
@@ -46,9 +48,9 @@ TYPEINFO(/datum/component/hallucination/random_image_override)
 ///Generic hallucination effects - subclass for fancy effects
 ABSTRACT_TYPE(/datum/component/hallucination)
 /datum/component/hallucination
-	dupe_mode = COMPONENT_DUPE_ALLOWED//you can have lots of hallucinations
+	dupe_mode = COMPONENT_DUPE_SELECTIVE//you can have lots of hallucinations, from different sources, but maybe not duplicates from the same source (unless you wanna)
 	///expiry time, -1 means never
-	var/ttl = 0
+	var/ttl = -1
 	///Instead of typecasting every tick, let's just hold a nice ref
 	var/mob/parent_mob
 
@@ -67,6 +69,13 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		UnregisterFromParent()
 		qdel(src)
 
+/datum/component/hallucination/CheckDupeComponent(timeout)
+	if(timeout == -1)
+		src.ttl = timeout
+	else if(src.ttl != -1)
+		src.ttl = world.time + timeout SECONDS //reset timeout
+
+	return FALSE //false means create a new component, true means this is a dupe so don't create it
 /////////////////////////////////////////////////////////////
 //                    TRIPPY COLORS
 /////////////////////////////////////////////////////////////
@@ -74,16 +83,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 /// Trippy colors - apply an RGB swap to client's vision
 /datum/component/hallucination/trippy_colors
-	dupe_mode = COMPONENT_DUPE_UNIQUE_PASSARGS //you can only have one of these, but refresh the timeout
 	var/current_color_pattern = 0
 	var/pattern1 = list(0,0,1,0, 1,0,0,0, 0,1,0,0, 0,0,0,1, 0,0,0,0)
 	var/pattern2 = list(0,1,0,0, 0,0,1,0, 1,0,0,0, 0,0,0,1, 0,0,0,0)
-
-	Initialize(timeout=30)
-		if(src.ttl == -1)
-			return //if timeout is already infinite and this is a dupe, just do nothing
-		else
-			.=..()
 
 	do_mob_tick(mob, mult)
 		if(parent_mob.client && (current_color_pattern == 0 || probmult(20))) //trippy colours
@@ -133,6 +135,17 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 				parent_mob.playsound_local(origin, chosen, 100, 1)
 		. = ..()
 
+	CheckDupeComponent(timeout, sound_list, sound_prob)
+		if(sound_list ~= src.sound_list) //this is the same hallucination, just update timeout and prob
+			if(timeout == -1)
+				src.ttl = timeout
+			else if(src.ttl != -1)
+				src.ttl = world.time + timeout SECONDS //reset timeout
+			src.sound_prob = sound_prob
+			return TRUE //no duplicate
+		else
+			return FALSE //create a new hallucination
+
 /////////////////////////////////////////////////////////////
 //                    RANDOM IMAGE
 /////////////////////////////////////////////////////////////
@@ -167,6 +180,17 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 				qdel(halluc)
 		. = ..()
 
+	CheckDupeComponent(timeout, image_list, image_prob, image_time)
+		if(image_list ~= src.image_list) //this is the same hallucination, just update timeout and prob, time
+			if(timeout == -1)
+				src.ttl = timeout
+			else if(src.ttl != -1)
+				src.ttl = world.time + timeout SECONDS //reset timeout
+			src.image_prob = image_prob
+			src.image_time = image_time
+			return TRUE //no duplicate
+		else
+			return FALSE //create a new hallucination
 
 /////////////////////////////////////////////////////////////
 //                    FAKE ATTACK
@@ -177,15 +201,24 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/list/image_list
 	var/list/name_list
 	var/attacker_prob = 10
-	Initialize(timeout=30, image_list=null, name_list=null, attacker_prob=10)
+	var/max_attackers = 5
+	var/attacker_list = list()
+	Initialize(timeout=30, image_list=null, name_list=null, attacker_prob=10, max_attackers=5)
 		.=..()
 		if(. == COMPONENT_INCOMPATIBLE)
 			return .
 		src.image_list = image_list
 		src.name_list = name_list
 		src.attacker_prob = attacker_prob
+		src.max_attackers = max_attackers
 
 	do_mob_tick(mob, mult)
+		//I know it's kinda gross, but whatever
+		for(var/obj/fake_attacker/fakey in src.attacker_list)
+			if(fakey.disposed)
+				src.attacker_list -= fakey
+		if(length(attacker_list) > src.max_attackers)
+			return
 		if(probmult(attacker_prob))
 			var/obj/fake_attacker/F
 			var/image/halluc
@@ -222,8 +255,20 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 			if(!isnull(name_list))
 				F.name = pick(name_list)
+			src.attacker_list += F
 		..()
 
+	CheckDupeComponent(timeout, image_list, name_list, attacker_prob, max_attackers)
+		if(image_list ~= src.image_list && name_list ~= src.name_list) //this is the same hallucination, just update timeout and prob
+			if(timeout == -1)
+				src.ttl = timeout
+			else if(src.ttl != -1)
+				src.ttl = world.time + timeout SECONDS //reset timeout
+			src.attacker_prob = attacker_prob
+			src.max_attackers = max_attackers
+			return TRUE //no duplicate
+		else
+			return FALSE //create a new hallucination
 
 /////////////////////////////////////////////////////////////
 //                 RANDOM IMAGE OVERRIDE
@@ -253,9 +298,11 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		if(probmult(image_prob))
 			//pick a non dense turf in view
 			var/list/atom/potentials = list()
-			for(var/atom/A in view(parent_mob, range))
-				if(A.type in src.target_list)
-					potentials += A
+			for(var/atom/A in oview(parent_mob, range))
+				for(var/type in src.target_list)
+					if(istype(A, type))
+						potentials += A
+			if(!length(potentials)) return
 			var/atom/halluc_loc = pick(potentials)
 			var/image/halluc = new /image()
 			var/image/copyfrom = pick(src.image_list)
@@ -267,6 +314,19 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 				qdel(halluc)
 		. = ..()
 
+	CheckDupeComponent(timeout, image_list, target_list, range, image_prob, image_time, override)
+		if(image_list ~= src.image_list && src.target_list ~= target_list) //this is the same hallucination, just update timeout and prob, time
+			if(timeout == -1)
+				src.ttl = timeout
+			else if(src.ttl != -1)
+				src.ttl = world.time + timeout SECONDS //reset timeout
+			src.range = range
+			src.image_prob = image_prob
+			src.image_time = image_time
+			src.override = override
+			return TRUE //no duplicate
+		else
+			return FALSE //create a new hallucination
 
 /////////////////////////////////////////////////////////////
 //                    SUPPORTING CAST
