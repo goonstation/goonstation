@@ -1162,6 +1162,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\requests\players\PlayerPlaytimeBody.dm"
 #include "code\modules\goonhub\api\requests\players\notes\AddPlayerNotesBody.dm"
 #include "code\modules\goonhub\api\routes\apiRoute.dm"
+#include "code\modules\goonhub\api\routes\RandomEntries.dm"
 #include "code\modules\goonhub\api\routes\maps\Maps.dm"
 #include "code\modules\goonhub\api\routes\maps\MapSwitches.dm"
 #include "code\modules\goonhub\api\routes\players\PlayerAntags.dm"
