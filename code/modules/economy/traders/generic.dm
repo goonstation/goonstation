@@ -208,7 +208,7 @@
 /datum/commodity/trader/generic/jumpsuits
 	comname = "Jumpsuits"
 	comtype = /obj/item/clothing/under
-	price_boundary = list(PAY_UNTRAINED/3,PAY_TRADESMAN)
+	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
 	possible_names = list("We're drafting in some new staff soon, and need new jumpsuits.",
 	"We need any jumpsuits you can spare. Don't ask.")
 

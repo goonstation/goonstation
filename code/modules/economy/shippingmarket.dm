@@ -304,10 +304,12 @@
 				else
 					multiplier = 1
 				if(pack.amount && pack.amount > 1)
-					multiplier += pack.amount
+					multiplier *= pack.amount
 				for (var/ctype in src.commodities)
 					var/datum/commodity/C = src.commodities[ctype]
 					if(ispath(type,C.comtype))
+						if(C.indemand)
+							multiplier *= src.demand_multiplier
 						new_cost += C.price * multiplier
 
 			new_cost += src.points_per_crate
