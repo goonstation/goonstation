@@ -1,10 +1,10 @@
-/datum/apiBody/admins/post
+/datum/apiBody/gameadmins/put
 	var/ckey = "string"
 	var/name = "string"
 	var/discord_id = "string"
 	var/rank = "integer"
 
-/datum/apiBody/admins/post/New(
+/datum/apiBody/gameadmins/put/New(
 	ckey,
 	name,
 	discord_id,
@@ -16,7 +16,7 @@
 	src.discord_id = discord_id
 	src.rank = rank
 
-/datum/apiBody/admins/post/VerifyIntegrity()
+/datum/apiBody/gameadmins/put/VerifyIntegrity()
 	if (
 		isnull(src.ckey) \
 		|| isnull(src.name) \
@@ -25,7 +25,7 @@
 	)
 		return FALSE
 
-/datum/apiBody/admins/post/toJson()
+/datum/apiBody/gameadmins/put/toJson()
 	return json_encode(list(
 		"ckey"				= src.ckey,
 		"name"				= src.name,

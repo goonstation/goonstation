@@ -14,7 +14,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/Tracked/GameAdmin/VerifyIntegrity()
+/datum/apiModel/Tracked/GameAdminRank/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.rank) \
@@ -23,7 +23,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/GameAdmin/ToString()
+/datum/apiModel/Tracked/GameAdminRank/ToString()
 	. = list()
 	.["id"] = src.id
 	.["rank"] = src.rank

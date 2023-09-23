@@ -1,8 +1,8 @@
 
 /// POST /game-admins
 /// Add a new game admin
-/datum/apiRoute/admins/post
+/datum/apiRoute/gameadmins/post
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/game-admins"
-	body = /datum/apiBody/admins/post
+	body = /datum/apiBody/gameadmins/post
 	correct_response = /datum/apiModel/Tracked/GameAdminResource
