@@ -706,6 +706,35 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 			src.owner?.elecgib()
 		. = ..()
 
+/obj/item/implant/revenge/wasp
+	name = "wasp implant"
+	big_message = " buzzes, what?"
+	small_message = "buzzes loudly, uh oh!"
+	power = 4
+	/// did we change our user's faction? this is in case a botanist gets this implant then gets it removed
+	var/changed_faction = FALSE
+
+	implanted(var/mob/M, mob/I)
+		..()
+		if (istype(M) && M.faction != FACTION_BOTANY)
+			M.faction = FACTION_BOTANY
+			changed_faction = TRUE
+
+	on_remove(var/mob/M)
+		..()
+		if (istype(M) && changed_faction == TRUE)
+			M.faction = 0
+			changed_faction = FALSE
+
+	do_effect(power)
+		// enjoy your wasps
+		for (var/i in 1 to power)
+			new /mob/living/critter/small_animal/wasp/angry(get_turf(src))
+
+		SPAWN(1)
+			src.owner?.gib()
+		. = ..()
+
 
 /obj/item/implant/robotalk
 	name = "machine translator implant"
@@ -1667,6 +1696,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 	New()
 		src.imp = new /obj/item/implant/revenge/zappy(src)
+		..()
+
+/obj/item/implanter/wasp
+	name = "wasp implanter"
+	icon_state = "implanter1-g"
+	sneaky = TRUE
+	HELP_MESSAGE_OVERRIDE({"When someone dies while implanted with this, they will explode into a cloud of angry wasps. Suiciding will cause no cloud of wasps to appear. This implant will also make wasps friendly to the user."})
+
+	New()
+		src.imp = new /obj/item/implant/revenge/wasp(src)
 		..()
 
 /* ================================================================ */
