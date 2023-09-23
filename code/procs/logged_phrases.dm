@@ -31,7 +31,7 @@ var/global/datum/phrase_log/phrase_log = new
 
 /datum/phrase_log
 	var/list/phrases
-	var/max_length = 600
+	var/max_length = 2000
 	var/filename = "data/logged_phrases.json"
 	var/uncool_words_filename = "data/uncool_words.json"
 	var/list/original_lengths
