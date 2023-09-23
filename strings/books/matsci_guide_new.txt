@@ -711,6 +711,9 @@ Two additional notes on how <b>Melee Damage Protection</b> and <b><i>Ranged Dama
 <br>
 <br>
 You can directly transfer the stats of a material to an object by putting the material in the <b>Arc Electroplater</b> and then putting the desired object in with the plating. This process takes a few moments, and results in an object that is plated in and has the properties of your material.
+<section id="Enchanting"><h3>Enchanting</h3></section>
+Enchanting is done using rare magical crystals that can be alloyed with other materials and then made into an item or used to plate an item in the Arc Electroplater. When used on a non-wearable item, three additional damage of whatever the primary damage type is gets added.
+When used on a wearable item, three additional armor is added to the item when it is worn, though the stats on the armor itself do not reflect this.
 <section id="Infusing""><h3>Infusing</h3></section>
 As a final note, one can infuse a chemical into a material through an infusion process that utilizes starstone, and then use the material to go on and create more items in the Nano-Fabricator. These items then continuously dose the wearer or holder of the item with the chemical that was infused into the parent material.
 <br><br>
