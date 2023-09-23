@@ -286,6 +286,8 @@
 					multiplier = pack.contains[type]
 				else
 					multiplier = 1
+				if(pack.amount && pack.amount > 1)
+					multiplier += pack.amount
 				for (var/ctype in src.commodities)
 					var/datum/commodity/C = src.commodities[ctype]
 					if(ispath(type,C.comtype))
