@@ -804,7 +804,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 			user.update_inhands()
 		src.UpdateParticles(new/particles/roadflare_smoke,"roadflare_smoke")
 
-	proc/put_out(var/mob/user as mob)
+	proc/put_out(mob/user)
 		src.on = FLARE_BURNT
 		w_class = W_CLASS_POCKET_SIZED
 		src.firesource = FALSE
