@@ -826,6 +826,9 @@ TYPEINFO(/obj/item/device/light/floodlight)
 				src.light()
 
 	ex_act(severity)
+		..()
+		if (!istype(src))
+			return
 		if (src.on == FLARE_UNLIT)
 			src.visible_message("<span class='alert'>[src] ignites!</span>")
 			src.light()
