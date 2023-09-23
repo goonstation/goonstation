@@ -11890,15 +11890,11 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/northeast)
 "aNj" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/listeningpost)
 "aNk" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/listeningpost)
 "aNm" = (
 /obj/machinery/power/smes{
@@ -11945,9 +11941,7 @@
 /obj/machinery/light/incandescent/greenish{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/listeningpost)
 "aNv" = (
 /obj/decal/cleanable/oil,
@@ -11964,17 +11958,13 @@
 /area/station/security/main)
 "aNy" = (
 /obj/submachine/syndicate_teleporter,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/listeningpost)
 "aNz" = (
 /obj/machinery/light/incandescent/greenish{
 	dir = 4
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/listeningpost)
 "aNA" = (
 /turf/simulated/floor/plating/random,
@@ -12129,9 +12119,7 @@
 	desc = "This looks like a perfectly innocent weather satellite. It's locked up pretty tight to keep bath salts junkies from breaking in to steal the equipment.";
 	name = "Weather Satellite"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/listeningpost)
 "aOj" = (
 /obj/cable{
@@ -21912,9 +21900,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/teleporter)
 "bzD" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/space)
 "bzE" = (
 /turf/simulated/floor/carpet{
@@ -22321,15 +22307,11 @@
 /obj/rack,
 /obj/item/clothing/suit/space/syndicate,
 /obj/item/clothing/mask/medical,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/space)
 "bAL" = (
 /obj/machinery/light/small/floor/warm/very,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/space)
 "bAM" = (
 /obj/machinery/disposal/ore,
@@ -22698,9 +22680,7 @@
 /obj/item/clothing/shoes/black,
 /obj/item/clothing/gloves/swat,
 /obj/item/clothing/shoes/swat,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/space)
 "bBV" = (
 /obj/table/auto,
@@ -28089,9 +28069,7 @@
 /area/station/crew_quarters/lounge/port)
 "bTw" = (
 /obj/critter/gunbot/drone,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/space)
 "bTx" = (
 /obj/cable{
@@ -28864,9 +28842,7 @@
 /area/station/security/hos)
 "bWe" = (
 /obj/critter/gunbot/drone/heavydrone,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/space)
 "bWf" = (
 /obj/cable{
@@ -35734,9 +35710,7 @@
 /area/station/maintenance/inner/central)
 "fWc" = (
 /obj/landmark/spawner/loot,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
+/turf/unsimulated/floor/shuttle/red,
 /area/space)
 "fWR" = (
 /obj/machinery/firealarm/east,

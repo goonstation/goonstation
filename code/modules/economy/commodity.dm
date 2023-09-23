@@ -14,9 +14,12 @@
 	var/hidden = 0 //Sometimes traders won't say if they will buy something
 	var/haggleattempts = 0
 	var/amount = -1 // Used for QM traders - how much of a thing they have for sale, unlim if -1
+	// if its in the shopping cart, this is how many you're buying instead
 	///if true, subtypes of this item will be accepted by NPC traders
 	var/subtype_valid = TRUE
-	// if its in the shopping cart, this is how many you're buying instead
+	///are there any commodities linked to this one? used to balance pricing for related commodities e.g. sheets/ore/materials
+	///The key/value pair is commodity_type / ratio of relationship B/A where A is the current commodity's value related to linked commodity B
+	var/list/linked_commodities = null
 
 	New()
 		. = ..()
@@ -86,7 +89,10 @@
 	comtype = /obj/item/sheet
 	desc = "High-quality material sheets."
 	onmarket = 1
-	price = PAY_UNTRAINED/10
+	price = PAY_UNTRAINED/20
+	linked_commodities = list(
+		/datum/commodity/mat_bar = 10,
+	)
 /// pathology
 
 /datum/commodity/mat_bar
@@ -97,6 +103,9 @@
 	desc_buy_demand = "The colony on Regus X has had their main power reactor break down and need this item for repairs"
 	onmarket = 1
 	price = PAY_UNTRAINED/2
+	linked_commodities = list(
+		/datum/commodity/sheet = 0.1,
+	)
 
 /datum/commodity/ore
 	comname = "Rock"
