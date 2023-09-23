@@ -85,6 +85,7 @@
 		src._light_turf = get_turf(src)
 		src._light_turf.add_medium_light("reactor_light", list(255,255,255,255))
 		_comp_grid_overlay_update = TRUE
+		UpdateGasVolume()
 		UpdateIcon()
 
 	disposing()
@@ -179,7 +180,6 @@
 		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
 		air_contents.volume = air1.volume
 		gas_input?.volume = air_contents.volume
-		var/total_gas_volume = 0
 		_last_total_coolant_e = gas_input ? THERMAL_ENERGY(gas_input) : 0
 		var/total_thermal_e = 0
 		for(var/x=1 to REACTOR_GRID_WIDTH)
@@ -188,7 +188,6 @@
 					src.component_grid[x][y].loc = src
 					//flow gas through components
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
-					total_gas_volume += comp.gas_volume
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
 					gas_input?.volume -= comp.gas_volume
 					if(gas)
@@ -261,17 +260,13 @@
 		src.material_trigger_on_temp(src.temperature)
 
 		total_thermal_e += src.thermal_mass * src.temperature
-		total_gas_volume += src.reactor_vessel_gas_volume
 		if(src._debug_mode)
 			boutput(world, "Reactor dE: [engineering_notation(total_thermal_e - src._last_total_thermal_e)]J Coolant dE:[engineering_notation(coolant_thermal_e - src._last_total_coolant_e)]J")
 		src._last_total_thermal_e = total_thermal_e
 
-		src.air1.volume = total_gas_volume
-		src.air_contents.volume = total_gas_volume
-
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"temp=[temperature]&rads=[tmpRads]&flowrate=[total_gas_volume]")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"temp=[temperature]&rads=[tmpRads]&flowrate=[src.air_contents.volume]")
 		UpdateIcon()
 
 	attackby(obj/item/I, mob/user)
@@ -293,6 +288,16 @@
 		signal.data["address_1"] = "00000000"
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
+
+	proc/UpdateGasVolume()
+		var/total_gas_volume = src.reactor_vessel_gas_volume
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				if(src.component_grid[x][y])
+					var/obj/item/reactor_component/comp = src.component_grid[x][y]
+					total_gas_volume += comp.gas_volume
+		src.air1.volume = total_gas_volume
+		src.air_contents.volume = total_gas_volume
 
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
@@ -566,6 +571,7 @@
 		user.visible_message("<span class='alert'>[user] slides \a [equipped] into the reactor</span>", "<span class='alert'>You slide the [equipped] into the reactor.</span>")
 		tgui_process.update_uis(src)
 		_comp_grid_overlay_update = TRUE
+		UpdateGasVolume()
 		UpdateIcon()
 
 	proc/remove_comp_callback(var/x,var/y,var/mob/user)
@@ -576,6 +582,7 @@
 		src.component_grid[x][y] = null
 		tgui_process.update_uis(src)
 		_comp_grid_overlay_update = TRUE
+		UpdateGasVolume()
 		UpdateIcon()
 
 	proc/set_control_rods(var/val)
@@ -618,6 +625,8 @@
 						var/obj/decal/cleanable/debris = make_cleanable(/obj/decal/cleanable/machine_debris/radioactive, epicentre)
 						debris.streak_cleanable(dist_upper=20)
 					src.component_grid[x][y] = null //get rid of the internal ref once we've thrown it out
+		if(_comp_grid_overlay_update)
+			UpdateGasVolume()
 		if(severity <= 1)
 			qdel(src)
 		UpdateIcon()
