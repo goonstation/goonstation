@@ -1007,7 +1007,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/bee)
 	icon_state = "bee-map"
 #endif
 	mod = "bee-"
-	plane = PLANE_WALL-1 //We don't want depth shadows
+	plane = PLANE_NOSHADOW_BELOW
 
 	exterior // so i dont have to make more parts for it to look good
 		mod = "beeout-"
