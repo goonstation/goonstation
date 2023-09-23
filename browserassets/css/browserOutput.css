@@ -11,7 +11,7 @@ html, body {
 }
 body {
 	background: #fff;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Twemoji", "Segoe UI Emoji";
     font-size: 12px;
     line-height: 1.4;
 	overflow-x: hidden;
@@ -32,7 +32,6 @@ img.icon {
 a {color: #0000ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}
-.emoji {font-family: "Twemoji", "Segoe UI Emoji" !important;}
 img.emoji {
 	height: 1em;
 	width: 1em;
@@ -326,6 +325,8 @@ img.emoji {
 .system {color: #ff0000;}
 .ooc {color: #002eb8;}
 .looc {color: #4c6ccd;}
+.newbeeooc {color: #29AB87;}
+.newbeelooc {color: #8BC16E;}
 .adminooc {color: #b82e00;}
 .adminlooc {color: #cd6c4c;}
 .admin {color: #386aff;}
@@ -371,6 +372,7 @@ h1.alert, h2.alert {color: #000000;}
 .blobalert {color: #4c00ff; font-size: 1.5em; font-weight: bold;}
 .lawupdate {color: #6464ff}
 .monospace {font-family: monospace;}
+.helpmsg {color: #417c81; border: 1px solid #417c81; padding: 2px; margin: 2px 0; display: inline-block;}
 
 .rstandard {color: #008000;}
 .rintercom {color: #006080;}
@@ -382,6 +384,7 @@ h1.alert, h2.alert {color: #000000;}
 .rresearch {color: #461B7E;}
 .rcivilian {color: #A10082;}
 .rsyndicate {color: #962121;}
+.rintercomai {color: #39397d}
 .rother {color: #800080;}
 
 .connectionClosed, .fatalError {background: red; color: white; padding: 5px;}
@@ -407,6 +410,23 @@ h1.alert, h2.alert {color: #000000;}
 	margin-left: 0px !important;
 	margin-right: 0px !important;
 }
+/*intent styling for help messages (and whenever you need to refer to intents in chat)*/
+.help {
+	font-weight: bold;
+	color: #349E00;
+}
+.harm {
+	font-weight: bold;
+	color: #B51214;
+}
+.disarm {
+	font-weight: bold;
+	color: #EAC300;
+}
+.grab {
+	font-weight: bold;
+	color: #FF6A00;
+}
 
 /* bog-standard dark theme with easy, unsaturated colors */
 body.theme-dark { background-color: #23272a; color: #dfdfcf; }
@@ -424,6 +444,8 @@ body.theme-dark .emote { color: #888888; }
 body.theme-dark .subtle { color: #7A7471; }
 body.theme-dark .ooc {color: #688eff;}
 body.theme-dark .looc {color: #92a9ee;}
+body.theme-dark .newbeeooc {color: #29AB87;}
+body.theme-dark .newbeelooc {color: #8BC16E;}
 body.theme-dark .adminooc {color: #be6e53;}
 body.theme-dark .adminlooc {color: #ce8c76;}
 body.theme-dark .mentorooc {color: #a653ff;}
@@ -514,6 +536,7 @@ body.theme-dark h2.alert {color: #cfcfcf;}
 body.theme-dark .adminHearing .name[data-ctx] {border-bottom: 1px dotted rgb(219, 219, 219);}
 body.theme-dark .blobalert {color: #9c74fc; }
 body.theme-dark .lawupdate {color: #6464FF; }
+body.theme-dark .helpmsg {color: #98bdc2; border: 1px solid #98bdc2;}
 
 body.theme-dark .connectionClosed {background: rgb(192, 0, 0); color: white;}
 body.theme-dark .fatalError {background: rgb(192, 0, 0); color: white;}
@@ -529,4 +552,18 @@ body.theme-dark .rmedical {color: #00bbff;}
 body.theme-dark .rresearch {color: #bf83e2;}
 body.theme-dark .rcivilian {color: #ce45b2;}
 body.theme-dark .rsyndicate {color: #cf5757;}
+body.theme-dark .rintercomai {color: #7F7FE2}
 body.theme-dark .rother {color: #E896E5;}
+
+body.theme-dark .help {
+	color: #42CC00;
+}
+body.theme-dark .harm {
+	color: #D01416;
+}
+body.theme-dark .disarm {
+	color: #FFFF00;
+}
+body.theme-dark .grab {
+	color: #FF6A00;
+}

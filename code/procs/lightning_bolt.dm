@@ -1,6 +1,6 @@
 /proc/lightning_bolt(atom/center, var/caster, var/duration = 9 SECONDS)
 	showlightning_bolt(center)
-	playsound(center, 'sound/effects/lightning_strike.ogg', 70, 1)
+	playsound(center, 'sound/effects/lightning_strike.ogg', 70, TRUE)
 	elecflash(center,0, power=4, exclude_center = 0)
 	if(duration > 0 SECONDS)
 		residual_spark(center, caster, duration)

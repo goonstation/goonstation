@@ -192,7 +192,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (opening == -1)
 			return
 		src.opening = -1
-		src.RL_SetOpacity(1)
+		src.set_opacity(1)
 		src.set_density(1)
 		flick("wizard_false_wall_closing", src)
 		SPAWN(1 SECOND)
@@ -210,7 +210,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		SPAWN(1.2 SECONDS)
 			src.set_density(0)
 			src.opening = 0
-			src.RL_SetOpacity(0)
+			src.set_opacity(0)
 
 	opened
 		New()
@@ -307,10 +307,10 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	New()
 		..()
-		dummies += new /obj/border_dummy { dir = 1; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 2; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 4; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 8; }(src.loc)
+		dummies += new /obj/border_dummy { dir = NORTH; }(src.loc)
+		dummies += new /obj/border_dummy { dir = SOUTH; }(src.loc)
+		dummies += new /obj/border_dummy { dir = EAST; }(src.loc)
+		dummies += new /obj/border_dummy { dir = WEST; }(src.loc)
 		for (var/obj/item/O in get_turf(src))
 			O.pixel_y = 2
 			O.pixel_x = 0
@@ -699,6 +699,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 			apply_crystal()
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
+		. = ..()
 		if (varname == "dir")
 			update_dir(newvalue)
 			apply_crystal()
@@ -709,7 +710,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 			pixel_x = 0
 			pixel_y = 0
 			if (!(dir in cardinal))
-				src.set_dir(2)
+				src.set_dir(SOUTH)
 			switch (dir)
 				if (1)
 					pixel_y = -32
@@ -833,6 +834,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 		update_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
+		. = ..()
 		if (varname == "dir")
 			update_dir(newvalue)
 
@@ -841,8 +843,8 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 
 	proc/update_dir(var/D)
 		src.set_dir(D)
-		if (!(dir & 2))
-			src.set_dir(2)
+		if (!(dir & SOUTH))
+			src.set_dir(SOUTH)
 		pixel_y = 28
 		effect_overlay.set_dir(dir)
 

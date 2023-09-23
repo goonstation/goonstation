@@ -89,7 +89,7 @@
 
 		while (adulterants > 0)
 			adulterants--
-			reagents.add_reagent(pick(adulterant_safety), rand(1,3))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", adulterant_safety), rand(1,3))
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"

@@ -9,6 +9,8 @@
 #define CLIENT_IMAGE_GROUP_ARREST_ICONS "arrest_icons"
 #define CLIENT_IMAGE_GROUP_HEALTH_MON_ICONS "health_mon_icons"
 #define CLIENT_IMAGE_GROUP_PACKETVISION "packetvision"
+#define CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS "artemis_map_icons"
+#define CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS "artemis_ship_icons"
 #define CLIENT_IMAGE_GROUP_ILLUSSION "illusion_icons"
 #define CLIENT_IMAGE_GROUP_CURSES "curses_icons"
 #define CLIENT_IMAGE_GROUP_GHOSTDRONE "ghostdrone_static_icons"

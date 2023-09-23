@@ -141,10 +141,7 @@ var/global/lastStationNameChange = 0 //timestamp
 		station_name_whitelist_sectioned += list(whitelist_lists[section] = sortList(words, /proc/cmp_text_asc))
 
 		for (var/word in words)
-			station_name_whitelist += lowertext(word)
-
-			if (findtextEx(word, uppertext(word)))
-				station_name_whitelist[lowertext(word)] = list("allcaps" = 1)
+			station_name_whitelist[ckey(word)] = word
 
 
 //Verifies the given name matches a whitelist of words, only run on a manual setting of station name
@@ -166,7 +163,7 @@ var/global/lastStationNameChange = 0 //timestamp
 	var/formattedName = ""
 
 	for (var/word in words)
-		if (isnum(text2num(word)))
+		if (isnum(text2num(word)) && "[text2num(word)]" == word)
 			formattedName += "[word] "
 			continue
 
@@ -174,14 +171,7 @@ var/global/lastStationNameChange = 0 //timestamp
 			valid = 0
 			break
 
-		//Does word contain metadata?
-		if (islist(station_name_whitelist[lowertext(word)]))
-			//Is this word defined as allcaps in the original txtfile?
-			if (station_name_whitelist[lowertext(word)]["allcaps"])
-				formattedName += "[uppertext(word)] "
-
-		else
-			formattedName += "[capitalize(word)] "
+		formattedName += station_name_whitelist[lowertext(word)] + " "
 
 	return valid ? trim(formattedName) : valid
 

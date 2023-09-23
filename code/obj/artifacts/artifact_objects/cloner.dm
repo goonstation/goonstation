@@ -2,6 +2,16 @@
 	name = "artifact cloner"
 	associated_datum = /datum/artifact/cloner
 
+	Entered(atom/movable/AM, atom/old_loc)
+		. = ..()
+		if(isliving(AM))
+			APPLY_ATOM_PROPERTY(AM, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "cloner art")
+
+	Exited(atom/movable/AM, atom/new_loc)
+		. = ..()
+		if(isliving(AM))
+			REMOVE_ATOM_PROPERTY(AM, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "cloner art")
+
 /datum/artifact/cloner
 	associated_object = /obj/artifact/cloner
 	type_name = "Cloner"
@@ -62,12 +72,10 @@
 				clone.real_name = user.real_name
 				clone.UpdateName()
 
-			if(clone.client) // gross hack for resetting tg layout bleh bluh copied from cloner code
-				clone.client.set_layout(clone.client.tg_layout)
-
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
 				clone.is_npc = FALSE
+			APPLY_ATOM_PROPERTY(clone, PROP_MOB_SUPPRESS_LAYDOWN_SOUND, "cloner art")
 			clone.changeStatus("paralysis", imprison_time) // so they don't ruin the surprise
 			O.ArtifactFaultUsed(H)
 			O.ArtifactFaultUsed(clone)
@@ -77,26 +85,41 @@
 				// make original body evil
 				H.attack_alert = 0
 				H.ai_init()
-				SPAWN(rand(1 SECOND, 10 SECONDS))
+				SPAWN(randfloat(1 SECOND, 3 SECONDS))
 					if(H) // completely convincing dialogue
-						H.say(pick(
-							"Well, that was weird!",
-							"Huh",
-							"Maybe it's a [pick("healer","teleporter","plant helper")] type artifact?",
-							"What do you think it does?",
-							"That activated it, didn't it?",
-							"I don't feel any different.",
-							""))
+						if (prob(33))
+							H.say(pick(
+								"Well, that was weird!",
+								"Huh",
+								"Maybe it's a [pick("healer","teleporter","plant helper")] type artifact?",
+								"What do you think it does?",
+								"That activated it, didn't it?",
+								"I don't feel any different.",
+								""))
+							sleep(randfloat(1 SECOND, 3 SECONDS))
+							H.say(phrase_log.random_phrase("say"))
+						else
+							H.say(phrase_log.random_phrase("say"))
+							sleep(randfloat(1 SECOND, 3 SECONDS))
+							H.say(phrase_log.random_phrase("say"))
 					sleep(evil_delay)
 					if(H)
 						H.ai_aggressive = 1
 						H.ai_calm_down = 0
+					while (!isdead(H) && isnull(H.client))
+						sleep(randfloat(3 SECOND, 20 SECONDS))
+						H.say(phrase_log.random_phrase("say"))
 			else
 				// make clone evil
 				clone.attack_alert = 0
 				clone.ai_init()
 				clone.ai_aggressive = 1
 				clone.ai_calm_down = 0
+				var/mob/living/carbon/human/local_clone = clone
+				SPAWN(imprison_time)
+					while (!isdead(local_clone) && isnull(local_clone.client))
+						local_clone.say(phrase_log.random_phrase("say"))
+						sleep(randfloat(3 SECOND, 20 SECONDS))
 
 			SPAWN(imprison_time)
 				if (!O.disposed)

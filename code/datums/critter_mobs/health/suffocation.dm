@@ -12,8 +12,8 @@
 	var/co2_max = 9
 	var/toxins_min = 0
 	var/toxins_max = 0.4
-	var/sa_para_min = 1
-	var/sa_sleep_min = 5
+	var/n2o_para_min = 1
+	var/n2o_sleep_min = 5
 	var/fart_smell_min = 1
 	var/fart_vomit_min = 10
 	var/fart_choke_min = 15
@@ -101,24 +101,22 @@
 				else
 					TakeDamage(3 + toxin_damage)
 
-			if (length(breath.trace_gases))	// If there's some other shit in the air lets deal with it here.
-				var/datum/gas/sleeping_agent/SA = breath.get_trace_gas_by_type(/datum/gas/sleeping_agent)
-				if(SA)
-					var/SA_pp = (SA.moles/TOTAL_MOLES(breath))*breath_pressure
-					if (SA_pp > sa_para_min) // Enough to make us paralysed for a bit
-						holder.changeStatus("paralysis", 3 SECONDS)
-						if (SA_pp > sa_sleep_min) // Enough to make us sleep as well
-							holder.sleeping = max(holder.sleeping, 2)
-					else if (SA_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
-						if (prob(20))
-							holder.emote(pick("giggle", "laugh"))
+			// If there's some other shit in the air lets deal with it here.
+			var/N2O_pp = (breath.nitrous_oxide/TOTAL_MOLES(breath))*breath_pressure
+			if (N2O_pp > n2o_para_min) // Enough to make us paralysed for a bit
+				holder.changeStatus("paralysis", 3 SECONDS)
+				if (N2O_pp > n2o_sleep_min) // Enough to make us sleep as well
+					holder.sleeping = max(holder.sleeping, 2)
+			else if (N2O_pp > 0.01)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
+				if (prob(20))
+					holder.emote(pick("giggle", "laugh"))
 
 			var/FARD_pp = (breath.farts/TOTAL_MOLES(breath))*breath_pressure
 			if (prob(10) && (FARD_pp > fart_smell_min))
 				boutput(holder, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")
 				if ((FARD_pp > fart_vomit_min) && prob(50))
-					holder.visible_message("<span class='notice'>[holder] vomits from the [pick("stink","stench","awful odor")]!!</span>")
-					holder.vomit()
+					var/vomit_message = "<span class='notice'>[holder] vomits from the [pick("stink","stench","awful odor")]!!</span>"
+					holder.vomit(0, null, vomit_message)
 			if (FARD_pp > fart_choke_min)
 				TakeDamage(3 + o2_damage)
 				o2_damage++

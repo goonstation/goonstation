@@ -15,7 +15,7 @@
 	. = list()
 	. += ..()
 	if (isalive(usr))
-		. += "<br><span class='notice'>You look closely at <B>[src.name]</B>.</span>"
+		. += "<br><span class='notice'>You look closely at <B>[src.name] ([src.get_pronouns()])</B>.</span>"
 		sleep(GET_DIST(usr.client.eye, src) + 1)
 		if (!usr.client.eye)
 			return // heh heh
@@ -29,13 +29,11 @@
 			. = "<br>[src.bioHolder.mobAppearance.flavor_text]"
 		catch
 			//nop
-
-	. +=  "<br><span class='notice'>*---------*</span>"
-
 	// crappy hack because you can't do \his[src] etc
 	var/t_his = his_or_her(src)
 	var/t_him = him_or_her(src)
 
+	. +=  "<br><span class='notice'>*---------*</span>"
 	var/datum/ailment_data/found = src.find_ailment_by_type(/datum/ailment/disability/memetic_madness)
 	if (!ignore_checks && found)
 		if (!ishuman(usr))
@@ -115,11 +113,18 @@
 				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] yet doesn't seem to be that person!!!</span>"
 			else
 				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name].</span>"
-		else if (istype(src.wear_id, /obj/item/device/pda2) && src.wear_id:ID_card)
-			if (src.wear_id:ID_card:registered != src.real_name && in_interact_range(src, usr) && prob(10))
-				. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it yet doesn't seem to be that person!!!</span>"
+		else if ((istype(src.wear_id, /obj/item/device/pda2) && src.wear_id:ID_card) || istype(src.wear_id, /obj/item/clothing/lanyard))
+			var/obj/item/card/id/desc_id_card
+			if (istype(src.wear_id, /obj/item/clothing/lanyard))
+				var/obj/item/clothing/lanyard/lanyard = src.wear_id
+				desc_id_card = lanyard.get_stored_id()
 			else
-				. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(src.wear_id:ID_card)] [src.wear_id:ID_card:name] in it.</span>"
+				desc_id_card = src.wear_id:ID_card
+			if (desc_id_card)
+				if (desc_id_card.registered != src.real_name && in_interact_range(src, usr) && prob(10))
+					. += "<br><span class='alert'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(desc_id_card)] [desc_id_card.name] in it yet doesn't seem to be that person!!!</span>"
+				else
+					. += "<br><span class='notice'>[src.name] is wearing [bicon(src.wear_id)] [src.wear_id.name] with [bicon(desc_id_card)] [desc_id_card.name] in it.</span>"
 
 	if (src.arrestIcon?.icon_state)
 		if(global.client_image_groups?[CLIENT_IMAGE_GROUP_ARREST_ICONS]?.subscribed_mobs_with_subcount[usr]) // are you in the list of people who can see arrest icons??
@@ -133,19 +138,19 @@
 		var/count = 0
 		for (var/obj/item/implant/projectile/body_visible/dart/P in src.implant)
 			count++
-		. += "<br><span class='alert'>[src] has [count > 1 ? "darts" : "a dart"] stuck in them!</span>"
+		. += "<br><span class='alert'>[src] has [count > 1 ? "darts" : "a dart"] stuck in [him_or_her(src)]!</span>"
 
 	if (locate(/obj/item/implant/projectile/body_visible/syringe) in src.implant)
 		var/count = 0
 		for (var/obj/item/implant/projectile/body_visible/syringe/P in src.implant)
 			count++
-		. += "<br><span class='alert'>[src] has [count > 1 ? "syringes" : "a syringe"] stuck in them!</span>"
+		. += "<br><span class='alert'>[src] has [count > 1 ? "syringes" : "a syringe"] stuck in [him_or_her(src)]!</span>"
 
 	if (locate(/obj/item/implant/projectile/body_visible/arrow) in src.implant)
 		var/count = 0
 		for (var/obj/item/implant/projectile/body_visible/arrow/P in src.implant)
 			count++
-		. += "<br><span class='alert'>[src] has [count > 1 ? "arrows" : "an arrow"] stuck in them!</span>"
+		. += "<br><span class='alert'>[src] has [count > 1 ? "arrows" : "an arrow"] stuck in [him_or_her(src)]!</span>"
 
 	if (src.is_jittery)
 		switch(src.jitteriness)
@@ -387,7 +392,7 @@
 		var/count = 0
 		for (var/obj/O in src.juggling)
 			count ++
-			if (src.juggling.len > 1 && count == src.juggling.len)
+			if (length(src.juggling) > 1 && count == src.juggling.len)
 				items += " and [O]"
 				continue
 			items += ", [O]"

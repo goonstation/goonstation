@@ -1,17 +1,4 @@
-/*
-Every cycle, the pump uses the air in air_in to try and make air_out the perfect pressure.
-
-node1, air1, network1 correspond to input
-node2, a//ir2, network2 correspond to output
-
-Thus, the two variables affect pump operation are set in New():
-	air1.volume
-		This is the volume of gas available to the pump that may be transfered to the output
-	air2.volume
-		Higher quantities of this cause more air to be perfected later
-			but overall network volume is also increased as this increases...
-*/
-
+/// Shoves transfer_rate volume of gas from air1 to air2
 /obj/machinery/atmospherics/binary/volume_pump
 	name = "Gas pump"
 	desc = "A pump"
@@ -20,7 +7,7 @@ Thus, the two variables affect pump operation are set in New():
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW
 
-	var/on = 0
+	var/on = FALSE
 	var/transfer_rate = 200
 
 	var/frequency = 0
@@ -28,88 +15,86 @@ Thus, the two variables affect pump operation are set in New():
 
 	var/datum/pump_ui/volume_pump_ui/ui
 
-	New()
-		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+/obj/machinery/atmospherics/binary/volume_pump/New()
+	..()
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
-	update_icon()
-		if(node1&&node2)
-			icon_state = "intact_[on?("on"):("off")]"
+/obj/machinery/atmospherics/binary/volume_pump/update_icon()
+	if(node1&&node2)
+		icon_state = "intact_[on?("on"):("off")]"
+	else
+		if(node1)
+			icon_state = "exposed_1_off"
+		else if(node2)
+			icon_state = "exposed_2_off"
 		else
-			if(node1)
-				icon_state = "exposed_1_off"
-			else if(node2)
-				icon_state = "exposed_2_off"
-			else
-				icon_state = "exposed_3_off"
-			on = 0
+			icon_state = "exposed_3_off"
+		on = FALSE
 
-		return
+/obj/machinery/atmospherics/binary/volume_pump/process()
+	..()
+	if(!on)
+		return FALSE
 
-	process()
-		..()
-		if(!on)
-			return 0
+	var/transfer_ratio = max(1, transfer_rate/air1.volume)
 
-		var/transfer_ratio = max(1, transfer_rate/air1.volume)
+	var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
 
-		var/datum/gas_mixture/removed = air1.remove_ratio(transfer_ratio)
+	air2.merge(removed)
 
-		air2.merge(removed)
+	network1?.update = TRUE
+	network2?.update = TRUE
 
-		network1?.update = 1
+	return TRUE
 
-		network2?.update = 1
+/obj/machinery/atmospherics/binary/volume_pump/proc/broadcast_status()
+	var/datum/signal/signal = get_free_signal()
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.source = src
 
-		return 1
+	signal.data["tag"] = src.id
+	signal.data["device"] = "APV"
+	signal.data["power"] = src.on
+	signal.data["transfer_rate"] = src.transfer_rate
 
-	proc/broadcast_status()
-		var/datum/signal/signal = get_free_signal()
-		signal.transmission_method = 1 //radio signal
-		signal.source = src
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
 
-		signal.data["tag"] = id
-		signal.data["device"] = "APV"
-		signal.data["power"] = on
-		signal.data["transfer_rate"] = transfer_rate
+	return TRUE
 
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+/obj/machinery/atmospherics/binary/volume_pump/initialize()
+	..()
+	src.ui = new/datum/pump_ui/volume_pump_ui(src)
 
-		return 1
+/obj/machinery/atmospherics/binary/volume_pump/receive_signal(datum/signal/signal)
+	if(signal.data["tag"] && (signal.data["tag"] != id))
+		return FALSE
 
-	initialize()
-		..()
-		ui = new/datum/pump_ui/volume_pump_ui(src)
+	switch(signal.data["command"])
+		if("power_on")
+			on = TRUE
 
-	receive_signal(datum/signal/signal)
-		if(signal.data["tag"] && (signal.data["tag"] != id))
-			return 0
+		if("power_off")
+			on = FALSE
 
-		switch(signal.data["command"])
-			if("power_on")
-				on = 1
+		if("power_toggle")
+			on = !on
 
-			if("power_off")
-				on = 0
+		if("set_transfer_rate")
+			var/number = text2num_safe(signal.data["parameter"])
+			number = clamp(number, 0, src.air1.volume)
 
-			if("power_toggle")
-				on = !on
+			src.transfer_rate = number
 
-			if("set_transfer_rate")
-				var/number = text2num_safe(signal.data["parameter"])
-				number = clamp(number, 0, air1.volume)
+	if(signal.data["tag"])
+		SPAWN(0.5 SECONDS)
+			broadcast_status()
+	UpdateIcon()
 
-				transfer_rate = number
-
-		if(signal.data["tag"])
-			SPAWN(0.5 SECONDS) broadcast_status()
-		UpdateIcon()
-
-obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)
+/obj/machinery/atmospherics/binary/volume_pump/attackby(obj/item/W, mob/user)
 	if(ispulsingtool(W))
 		ui.show_ui(user)
 
-datum/pump_ui/volume_pump_ui
+/datum/pump_ui/volume_pump_ui
 	value_name = "Flow Rate"
 	value_units = "L/s"
 	min_value = 0
@@ -118,24 +103,24 @@ datum/pump_ui/volume_pump_ui
 	incr_lg = 100
 	var/obj/machinery/atmospherics/binary/volume_pump/our_pump
 
-datum/pump_ui/volume_pump_ui/New(obj/machinery/atmospherics/binary/volume_pump/our_pump)
+/datum/pump_ui/volume_pump_ui/New(obj/machinery/atmospherics/binary/volume_pump/our_pump)
 	..()
 	src.our_pump = our_pump
 	src.pump_name = our_pump.name
 
-datum/pump_ui/volume_pump_ui/set_value(val)
+/datum/pump_ui/volume_pump_ui/set_value(val)
 	our_pump.transfer_rate = val
 	our_pump.UpdateIcon()
 
-datum/pump_ui/volume_pump_ui/toggle_power()
+/datum/pump_ui/volume_pump_ui/toggle_power()
 	our_pump.on = !our_pump.on
 	our_pump.UpdateIcon()
 
-datum/pump_ui/volume_pump_ui/is_on()
+/datum/pump_ui/volume_pump_ui/is_on()
 	return our_pump.on
 
-datum/pump_ui/volume_pump_ui/get_value()
+/datum/pump_ui/volume_pump_ui/get_value()
 	return our_pump.transfer_rate
 
-datum/pump_ui/volume_pump_ui/get_atom()
+/datum/pump_ui/volume_pump_ui/get_atom()
 	return our_pump

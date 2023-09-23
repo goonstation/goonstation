@@ -33,6 +33,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	var/sound_deny = 0
 	var/has_crush = TRUE //flagged to true when the door has a secret admirer. also if the var == 1 then the door does have the ability to crush items.
 	var/close_trys = 0
+	var/autoclose_delay = 15 SECONDS
 
 	var/health = 400
 	var/health_max = 400
@@ -106,7 +107,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			// If we just return 0, they will be able to bump-open the door and get past regardless
 			// because mob paralysis doesn't take effect until the next tick.
 			if (prob(20) && !ON_COOLDOWN(H, "brainstumble_cooldown", 1 SECOND))
-				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, TRUE)
 				src.visible_message("<span class='alert'><b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!</span>")
 				if (!istype(H.head, /obj/item/clothing/head/helmet))
 					H.TakeDamageAccountArmor("head", 9, 0, 0, DAMAGE_BLUNT)
@@ -180,6 +181,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/disposing()
 		src.update_nearby_tiles()
+		if(ignore_light_or_cam_opacity)
+				ignore_light_or_cam_opacity = FALSE
+				src.set_opacity(0)
 		STOP_TRACKING
 		..()
 
@@ -450,7 +454,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	if (damage < 1)
 		return
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	switch(P.proj_data.damage_type)
 		if(D_KINETIC)
@@ -504,10 +508,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		play_animation("opening")
 		next_timeofday_opened = world.timeofday + (src.operation_time)
 		SPAWN(-1)
-			if (ignore_light_or_cam_opacity)
-				src.set_opacity(0)
-			else
-				src.RL_SetOpacity(0)
+			src.set_opacity(0)
 		src.use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
@@ -565,12 +566,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 					continue
 				var/mob_layer = L.layer	//Make it look like we're inside the door
 				L.layer = src.layer - 0.01
-				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
-				L.emote("scream")
+				if(!ON_COOLDOWN(L, "doorcrush", 0.5 SECONDS))
+					playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, TRUE)
+					L.emote("scream")
 
-				L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
+					L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
 
-				L.changeStatus("weakened", 3 SECONDS)
+					L.changeStatus("weakened", 3 SECONDS)
 				L.stuttering += 10
 				did_crush = 1
 				SPAWN(src.operation_time * 1.5 + crush_delay)
@@ -579,17 +581,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		sleep(src.operation_time)
 
 		if(src.visible)
-			if (ignore_light_or_cam_opacity)
-				src.set_opacity(1)
-			else
-				src.RL_SetOpacity(1)
+			src.set_opacity(1)
 
 		src.closed()
 
 		if(did_crush)
 			interrupt_autoclose = 1
 			src.visible_message("<span class='alert'>\The [src] whirrs [pick_string("descriptors.txt", "borg_shake")]!</span>")
-			playsound(src, 'sound/machines/hydraulic.ogg', 30,1)
+			playsound(src, 'sound/machines/hydraulic.ogg', 30,TRUE)
 			sleep(crush_delay) //If we crushed someone, wait a bit until resuming operations to prevent chaincrushing
 			src.operating = 0
 			src.open()
@@ -599,7 +598,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/proc/opened()
 	if(autoclose)
-		sleep(15 SECONDS)
+		sleep(src.autoclose_delay)
 		if(interrupt_autoclose)
 			interrupt_autoclose = 0
 		else
@@ -642,6 +641,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		if(!istype(D, /obj/machinery/door/window) && D.density)
 			return 0
 	return 1
+
+/obj/machinery/door/set_opacity(newopacity)
+	if(ignore_light_or_cam_opacity)
+		src.opacity = newopacity
+	else
+		. = ..()
 
 /turf/simulated/wall/proc/checkForMultipleDoors()
 	if(!src.loc)
@@ -703,14 +708,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/unpowered/martian/open()
 	if(src.locked) return
-	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 	. = ..()
 
 /obj/machinery/door/unpowered/martian/close()
-	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 	. = ..()
 
 // APRIL FOOLS
+TYPEINFO(/obj/machinery/door/unpowered/wood)
+	mat_appearances_to_ignore = list("wood")
 /obj/machinery/door/unpowered/wood
 	name = "door"
 	icon = 'icons/obj/doors/door_wood.dmi'
@@ -726,7 +733,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 	layer = EFFECTS_LAYER_UNDER_1
 	anchored = ANCHORED
 	autoclose = TRUE
-	mat_appearances_to_ignore = list("wood")
 	var/blocked = null
 	var/simple_lock = 0
 	var/lock_dir = null // what direction you can lock/unlock the door from
@@ -761,7 +767,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 /obj/machinery/door/unpowered/wood/attackby(obj/item/I, mob/user)
 	if (I) // eh, this'll work well enough.
-		src.material?.triggerOnHit(src, I, user, 1)
+		src.material_trigger_when_attacked(I, user, 1)
 	if (src.operating)
 		return
 	src.add_fingerprint(user)
@@ -785,7 +791,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 		return
 	if (user.is_hulk())
 		src.visible_message("<span class='alert'><B>[user] smashes through the door!</B></span>")
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 		src.operating = -1
 		src.set_unlocked()
 		open()
@@ -797,36 +803,36 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			close()
 	else if (src.density)
 		play_animation("deny")
-		playsound(src, 'sound/machines/door_locked.ogg', 50, 1, -2)
+		playsound(src, 'sound/machines/door_locked.ogg', 50, TRUE, -2)
 		boutput(user, "<span class='alert'>The door is locked!</span>")
 	return
 
 /obj/machinery/door/unpowered/wood/open()
 	if(src.locked) return
-	playsound(src, 'sound/machines/door_open.ogg', 50, 1)
+	playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/close()
-	playsound(src, 'sound/machines/door_close.ogg', 50, 1)
+	playsound(src, 'sound/machines/door_close.ogg', 50, TRUE)
 	. = ..()
 
-/obj/machinery/door/unpowered/wood/verb/simple_lock(mob/user)
+/obj/machinery/door/unpowered/wood/verb/simple_lock()
 	set name = "Lock Door"
 	set category = "Local"
 	set src in oview(1)
 
-	if (isdead(user) || isintangible(user))
+	if (isdead(usr) || isintangible(usr))
 		return
 	if (!src.density || src.operating)
-		boutput(user, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
+		boutput(usr, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
 		return
 	if (src.lock_dir)
-		var/checkdir = get_dir(src, user)
+		var/checkdir = get_dir(src, usr)
 		if (!(checkdir & src.lock_dir))
-			boutput(user, "<span class='alert'>[src]'s lock isn't on this side!</span>")
+			boutput(usr, "<span class='alert'>[src]'s lock isn't on this side!</span>")
 			return
 	src.toggle_locked()
-	src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
+	src.visible_message("<span class='notice'><B>[usr] [!src.locked ? "un" : null]locks [src].</B></span>")
 	return
 
 /datum/action/bar/icon/door_lockpick
@@ -861,7 +867,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 			return
 		if (prob(5) || (!the_door.simple_lock && prob(5)))
 			owner.visible_message("<span class='alert'>[owner] messes up while picking [src.the_door]'s lock!</span>")
-			playsound(the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
+			playsound(the_door, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

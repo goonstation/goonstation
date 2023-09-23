@@ -372,7 +372,8 @@
 				var/mob/M = mob_owner
 				C.dropped(M)
 				M.u_equip(C)
-			owner.visible_message("<span class='alert'>\The [owner][message]</span>")
+			if (!isnull(src.message))
+				owner.visible_message("<span class='alert'>\The [owner][message]</span>")
 			if (ismob(owner))
 				var/mob/fucko = owner
 				fucko.ghostize()
@@ -936,7 +937,7 @@
 			counter += timePassed
 			if (counter >= count && owner && !owner.hasStatus(list("weakened", "paralysis")) )
 				counter -= count
-				playsound(owner, sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
 
@@ -958,9 +959,14 @@
 			counter += timePassed
 			if (counter >= count && owner)
 				counter -= count
-				playsound(owner, sound, 17, 1, 0.4, 1.6)
+				playsound(owner, sound, 17, TRUE, 0.4, 1.6)
 				violent_twitch(owner)
 			. = ..(timePassed)
+		onAdd()
+			if(istype(owner, /mob/living/silicon/robot))
+				var/mob/living/silicon/robot/robot = owner
+				robot.lastgasp()
+			. = ..()
 
 	drunk
 		id = "drunk"
@@ -1338,8 +1344,7 @@
 					H.HealDamage("All", 1, 1, 1)
 					if (H.bleeding)
 						repair_bleeding_damage(H, 10, 1)
-				if (prob(10))
-					H.make_jittery(2)
+				H.make_jittery(1)
 
 				if (H.misstep_chance)
 					H.change_misstep_chance(-5)
@@ -1560,7 +1565,7 @@
 	onUpdate()
 		if (H.blood_volume > 400 && H.blood_volume > 0)
 			H.blood_volume -= units
-		if (prob(5))
+		if (prob(5) && !H.reagents?.has_reagent("promethazine"))
 			var/damage = rand(1,5)
 			var/bleed = rand(3,5)
 			H.visible_message("<span class='alert'>[H] [damage > 3 ? "vomits" : "coughs up"] blood!</span>", "<span class='alert'>You [damage > 3 ? "vomit" : "cough up"] blood!</span>")
@@ -1716,8 +1721,8 @@
 		if(weighted_average > 4)
 			weighted_average = 0
 		if(probmult(puke_prob))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 		return ..(timePassed)
 
 	proc/changeState()
@@ -1778,11 +1783,11 @@
 
 		if (states[1] || states[2])
 			if (states[1])
-				P.create_overlay(states[1], "#ff8820", direct, 'icons/effects/blood.dmi')
+				P.create_overlay(states[1], "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 			if (states[2])
-				P.create_overlay(states[2], "#ff8820", direct, 'icons/effects/blood.dmi')
+				P.create_overlay(states[2], "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 		else
-			P.create_overlay("smear2", "#ff8820", direct, 'icons/effects/blood.dmi')
+			P.create_overlay("smear2", "#ff8820", direct, 'icons/obj/decals/blood/blood.dmi')
 
 /datum/statusEffect/magnetized
 	id = "magnetized"
@@ -2093,8 +2098,8 @@
 		if(prob(2))
 			L.change_eye_blurry(rand(5,10))
 		if(prob(puke_prob))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 
 	//firstly: sorry
 	//secondly: second arg is a proportional scale. 1 is standard, 5 is every port-a-puke tick, 10 is mass emesis.
@@ -2335,6 +2340,30 @@
 #undef LAUNDERED_COLDPROT_AMOUNT
 #undef LAUNDERED_STAIN_TEXT
 
+/datum/statusEffect/quickcharged
+	id = "quick_charged"
+	name = "Quick charged"
+	icon_state = "stam-"
+	maxDuration = 0 MINUTES
+
+	getTooltip()
+		. = "The recharge upgrade has quickly charged you, this now prevents you from using another one again until it's safe for your battery to quick charge again."
+
+/datum/statusEffect/upgradedisabled
+	id = "upgrade_disabled"
+	name = "Upgrades disabled"
+	icon_state = "stam-"
+	maxDuration = 5 SECONDS
+
+	getTooltip()
+		. = "Your upgrades are currently disabled"
+	onAdd()
+		if(istype(owner, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/robot = owner
+			for (var/obj/item/roboupgrade/R in robot.contents)
+				if (R.activated) R.upgrade_deactivate(robot)
+		. = ..()
+
 /datum/statusEffect/criticalcondition
 	id = "critical_condition"
 	name = "Critical Condition"
@@ -2360,7 +2389,8 @@
 		. = ..()
 		REMOVE_ATOM_PROPERTY(H, PROP_MOB_STAMINA_REGEN_BONUS, "critical_condition")
 		H.remove_stam_mod_max("critical_condition")
-		H.changeStatus("recent_trauma", 90 SECONDS)
+		if (!isdead(H))
+			H.changeStatus("recent_trauma", 90 SECONDS)
 
 
 /datum/statusEffect/recenttrauma
@@ -2393,3 +2423,35 @@
 	name = "De-revving"
 	desc = "An implant is attempting to convert you from the revolution! Remove the implant!"
 	icon_state = "mindhack"
+
+/datum/statusEffect/interdictor //Status effect for letting people know they are protected from some spatial anomalies
+	id = "spatial_protection"
+	name = "Spatial Protection"
+	desc = "You are being protected from wormholes, radiation storms, and magnetic biofields."
+	icon_state = "blocking" //This gives the general idea that they are being protected, but could use a better icon
+	maxDuration = 4 SECONDS
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+	onAdd(optional=null)
+		owner.add_filter("protection", 1, outline_filter(color="#e6ec21"))
+		..()
+
+	onRemove()
+		owner.remove_filter("protection")
+		..()
+
+/datum/statusEffect/devera //Status effect for the devera hygiene protection
+	id = "devera_field"
+	name = "Devera Field"
+	desc = "You are being protected from grime gathering on you."
+	icon_state = "fragrant"
+	maxDuration = 4 SECONDS
+	effect_quality = STATUS_QUALITY_POSITIVE
+
+/datum/statusEffect/loose_brain
+	id = "loose_brain"
+	name = "Loose Brain"
+	desc = "You get the feeling that fliping with your brain exposed might not be a good idea..."
+	icon_state = "brain"
+	maxDuration = 2 MINUTES // I made this long so you can do gags where you fling your brain at someone
+	effect_quality = STATUS_QUALITY_NEGATIVE

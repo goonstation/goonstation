@@ -204,7 +204,7 @@ var/global/icon/wanted_poster_unknown = icon('icons/obj/decals/posters.dmi', "wa
 
 /mob/living/carbon/human/build_flat_icon(var/direction)
 	var/icon/return_icon
-	if (src.mutantrace)
+	if (src.mutantrace) //TODO: #14465
 		return_icon = icon(src.mutantrace.icon, src.mutantrace.icon_state, direction ? direction : null)
 	else
 		return_icon = icon('icons/mob/human.dmi', "body_[src.gender == MALE ? "m" : "f"]", direction ? direction : null)
@@ -502,7 +502,7 @@ TYPEINFO(/obj/submachine/poster_creator)
 			boutput(user, "<span class='alert'>\The [src] buzzes grumpily!</span>")
 			return
 		src.papers --
-		playsound(src, 'sound/machines/printer_dotmatrix.ogg', 30, 1)
+		playsound(src, 'sound/machines/printer_dotmatrix.ogg', 30, TRUE)
 		var/obj/item/poster/titled_photo/P = new (src.loc)
 		P.author = user.key
 		P.name = "Wanted: [src.plist["name"]]"

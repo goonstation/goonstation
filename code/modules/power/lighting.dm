@@ -150,7 +150,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 					directions = cardinal
 				for (var/dir in directions)
 					T = get_step(src,dir)
-					if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/wingrille_spawn) in T) || (locate(/obj/window) in T))
+					if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
 						var/is_jen_wall = 0 // jen walls' ceilings are narrower, so let's move the lights a bit further inward!
 						if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 							is_jen_wall = 1
@@ -239,6 +239,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 
 	broken //Made at first to replace a decal in cog1's wreckage area
 		name = "shattered light bulb"
+		icon_state = "bulb-broken"
 
 		New()
 			..()
@@ -252,6 +253,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			..()
 			autoposition()
 
+		netural
+			name = "incandescent light bulb"
+			light_type = /obj/item/light/bulb/neutral
 		greenish
 			name = "greenish incandescent light bulb"
 			light_type = /obj/item/light/bulb/greenish
@@ -285,6 +289,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			very
 				name = "very harsh incandescent light bulb"
 				light_type = /obj/item/light/bulb/harsh/very
+
+		broken //Made at first to replace a decal in cog1's wreckage area
+			name = "shattered light bulb"
+			icon_state = "bulb-broken"
+
+			New()
+				..()
+				current_lamp.light_status = LIGHT_BROKEN
 
 
 
@@ -336,6 +348,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		very
 			name = "very harsh incandescent light fixture"
 			light_type = /obj/item/light/bulb/harsh/very
+
+	broken
+		name = "shattered floor light"
+		icon_state = "floor-broken"
+
+		New()
+			..()
+			current_lamp.light_status = LIGHT_BROKEN
 
 /obj/machinery/light/emergency
 	icon_state = "ebulb1"
@@ -639,6 +659,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			light_type = /obj/item/light/tube/harsh/very
 
 	broken
+		name = "shattered light fixture"
+		icon_state = "tube-broken"
 
 		New()
 			..()
@@ -768,14 +790,15 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 			boutput(user, "This fitting isn't user-serviceable.")
 			return
 
+		var/lamp_cost = null
 		if (!inserted_lamp) //Taking charge/sheets
 			if (!M.check_ammo(user, M.cost_empty))
 				return
-			M.take_ammo(user, M.cost_empty)
+			lamp_cost = M.cost_empty
 		else
 			if (!M.check_ammo(user, M.cost_broken))
 				return
-			M.take_ammo(user, M.cost_broken)
+			lamp_cost = M.cost_broken
 		var/obj/item/light/L = null
 
 		if (fitting == "tube")
@@ -791,6 +814,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		insert(user, L)
 		if (!isghostdrone(user)) // Same as ghostdrone RCDs, no sparks
 			elecflash(user)
+		M.take_ammo(user, lamp_cost)
 		return
 
 
@@ -1279,6 +1303,9 @@ TYPEINFO(/obj/item/light)
 		color_r = 0.95
 		color_g = 0.95
 		color_b = 0.2
+
+		broken
+			light_status = LIGHT_BROKEN
 	yellowish
 		name = "yellowish light bulb"
 		desc = "Fancy."

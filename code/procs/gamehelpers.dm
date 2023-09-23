@@ -324,7 +324,7 @@ var/list/stinkThingies = list("ass","armpit","excretions","leftovers","administr
 			message = say_gurgle(message)
 			messageEffects += "Gurgle"
 
-	if(H.mutantrace && !isdead(H))
+	if(!isdead(H))
 		message = H.mutantrace.say_filter(message)
 		messageEffects += "[H.mutantrace] say_filter()"
 
@@ -740,7 +740,7 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 				// any actual antag
 				var/list/player_pool = list()
 				for (var/mob/M in mobs)
-					if (!M.client || istype(M, /mob/new_player) || !checktraitor(M))
+					if (!M.client || istype(M, /mob/new_player) || !M.mind?.is_antagonist())
 						continue
 					player_pool += M
 				if (length(player_pool))
@@ -790,3 +790,17 @@ proc/get_ouija_word_list(atom/movable/source = null, words_min = 5, words_max = 
 				return weight_class + 1
 			else
 				return weight_class + 2
+
+/// checks an item for an id card
+/proc/get_id_card(obj/item/I)
+	if (istype(I, /obj/item/card/id))
+		return I
+	if (istype(I, /obj/item/device/pda2))
+		var/obj/item/device/pda2/pda = I
+		return pda.ID_card
+	if (istype(I, /obj/item/clothing/lanyard))
+		var/obj/item/clothing/lanyard/lanyard = I
+		return lanyard.get_stored_id()
+	if (istype(I, /obj/item/magtractor))
+		var/obj/item/magtractor/mag = I
+		return get_id_card(mag.holding)

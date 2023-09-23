@@ -124,7 +124,7 @@
 			reward.run_on_spawn(item, user, FALSE, hostpda.uplink)
 			user.put_in_hand_or_drop(item)
 			if (istype(antag_role))
-				antag_role.redeemed_items.Add(item)
+				antag_role.redeemed_item_paths.Add(reward.type)
 		if (reward.item2)
 			new reward.item2(pda_turf)
 		if (reward.item3)
@@ -181,7 +181,7 @@
 
 /datum/game_mode/spy_theft/post_setup()
 	for(var/datum/mind/spy in traitors)
-		spy.add_antagonist(ROLE_SPY_THIEF)
+		spy.add_antagonist(ROLE_SPY_THIEF, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	SPAWN(5 SECONDS) //Some possible bounty items (like organs) need some time to get set up properly and be assigned names
 		build_bounty_list()
@@ -372,10 +372,6 @@
 	station_bounties[/obj/item/storage/belt/utility] = 1
 	station_bounties[/obj/item/storage/belt/security] = 2
 
-	station_bounties[/obj/item/instrument/large/piano/grand] = 1
-	station_bounties[/obj/item/instrument/large/piano] = 1
-	station_bounties[/obj/item/instrument/large/organ] = 1
-	station_bounties[/obj/item/instrument/large/jukebox] = 1
 	station_bounties[/obj/item/instrument/saxophone] = 1
 	station_bounties[/obj/item/instrument/bagpipe] = 1
 	station_bounties[/obj/item/instrument/bikehorn/dramatic] = 1
@@ -518,6 +514,11 @@
 	big_station_bounties[/obj/machinery/rkit] = 2
 	big_station_bounties[/obj/machinery/crusher] = 3
 
+	big_station_bounties[/obj/item/instrument/large/piano/grand] = 1
+	big_station_bounties[/obj/item/instrument/large/piano] = 1
+	big_station_bounties[/obj/item/instrument/large/organ] = 1
+	big_station_bounties[/obj/item/instrument/large/jukebox] = 1
+
 	active_bounties.len = 0
 
 	// Find matches for all our possible bounties
@@ -580,7 +581,7 @@
 	var/obj/obj_existing = null
 	var/big_picked=1
 	while(big_picked<=big_station_bounty_amt)
-		if (big_station_bounties.len <= 0)
+		if (length(big_station_bounties) <= 0)
 			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough big station bounties.")
 			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
@@ -619,7 +620,7 @@
 	var/obj/item_existing = null
 	var/item_picked=1
 	while(item_picked<=station_bounty_amt)
-		if (station_bounties.len <= 0)
+		if (length(station_bounties) <= 0)
 			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough item bounties.")
 			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break

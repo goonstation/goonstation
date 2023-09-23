@@ -12,6 +12,9 @@
 	var/remaining_ammunition = 0
 	var/muzzle_flash = null
 
+	/// Can it be removed by a player
+	var/removable = TRUE
+
 	icon = 'icons/obj/podweapons.dmi'		//remove this line.  or leave it. Could put these sprites in ship.dmi like how the original is
 	icon_state = "class-a"
 
@@ -164,6 +167,7 @@
 	firerate = 5
 	icon_state = "strelka"
 	muzzle_flash = "muzzle_flash_laser"
+	removable = FALSE
 
 /obj/item/shipcomponent/mainweapon/disruptor_light
 	name = "Mk.3 Disruptor"

@@ -45,7 +45,6 @@ CONTAINS:
 	New()
 		..()
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
@@ -116,7 +115,6 @@ CONTAINS:
 		..()
 		src.setItemSpecial(/datum/item_special/double)
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		BLOCK_SETUP(BLOCK_LARGE)
 
 	attack(mob/living/carbon/M, mob/user)
@@ -183,7 +181,6 @@ CONTAINS:
 	New()
 		..()
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
 
 
@@ -252,7 +249,7 @@ CONTAINS:
 
 		if (src.ammo < 1)
 			user.show_text("*click* *click*", "red")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 50, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 50, TRUE)
 			return ..()
 
 		if (user.a_intent != "help" && ishuman(M))
@@ -310,27 +307,6 @@ CONTAINS:
 				src.ammo--
 				surgery_limb.surgery(src)
 			return
-
-	attackby(obj/item/W, mob/user)
-		..()
-
-		if (istype(W,/obj/item/pipebomb/frame))
-			var/obj/item/pipebomb/frame/F = W
-			if (F.state < 2)
-				user.show_text("This might work better if [F] was hollowed out.")
-			else if (F.state == 2)
-				user.show_text("You combine [F] and [src]. This looks pretty unsafe!")
-				user.u_equip(F)
-				user.u_equip(src)
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-				var/obj/item/gun/kinetic/zipgun/Z = new/obj/item/gun/kinetic/zipgun
-				user.put_in_hand_or_drop(Z)
-				qdel(F)
-				qdel(src)
-
-			else
-				user.show_text("You can't seem to combine these two items this way.")
-		return
 
 
 // a mostly decorative thing from z2 areas I want to add to office closets
@@ -974,7 +950,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	icon_state = "bodybag"
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
-	object_flags = NO_GHOSTCRITTER
+	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1
@@ -1185,14 +1161,14 @@ TYPEINFO(/obj/machinery/defib_mount)
 				else if (clumsy && !doctor && prob(1)) // extreme clumsiness can lead to extremely unintended examination results
 					var/obj/item/organ/head/head = H.drop_organ("head")
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head and hits it clean off [H == user ? "[his_or_her(H)] own" : "[H]'s"] shoulders!</span>")
-					playsound(H, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, 1)
+					playsound(H, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, TRUE)
 					if (head)
 						head.throw_at(get_dir(user, H), 3, 3)
 					return
 
 				else if (clumsy && prob(33)) // WHACK
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head!</span>")
-					playsound(H, 'sound/impact_sounds/Generic_Hit_1.ogg', 80, 1)
+					playsound(H, 'sound/impact_sounds/Generic_Hit_1.ogg', 80, TRUE)
 					my_damage = (max(my_damage, 2) * 3)
 
 				else if (!headSurgeryCheck(H))
@@ -1212,7 +1188,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				if (!H.limbs || !H.
 */
 		H.TakeDamage(def_zone, my_damage)
-		playsound(H, my_sound, 80, 1)
+		playsound(H, my_sound, 80, TRUE)
 		return
 
 	//else if (isrobot(M)) // clonk clonk
@@ -1226,10 +1202,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 1
-
-	New()
-		..()
-		src.setMaterial(getMaterial("synthrubber"))
+	default_material = "synthrubber"
 
 /* ================================================== */
 /* -------------------- Penlight -------------------- */

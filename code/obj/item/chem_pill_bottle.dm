@@ -98,7 +98,7 @@
 				P.set_loc(T)
 				P = src.create_pill()
 				i--
-			if (src.pcount + src.contents.len > 0)
+			if (src.pcount + length(src.contents) > 0)
 				boutput(user, "<span class='notice'>You tip out a bunch of pills from [src] into [T].</span>")
 			else
 				boutput(user, "<span class='notice'>You tip out all the pills from [src] into [T].</span>")

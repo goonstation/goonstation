@@ -235,7 +235,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 			var/obj/item/breaching_hammer/rock_sledge/I = the_item
 
 			for(var/obj/item/device/radio/nukie_studio_monitor/S in I.speakers)
-				playsound(src, 'sound/musical_instruments/bard/tapping1.ogg', 60, 1, 5)
+				playsound(src, 'sound/musical_instruments/bard/tapping1.ogg', 60, TRUE, 5)
 				for (var/obj/machinery/light/L in view(7, get_turf(S)))
 					if (L.status == 2 || L.status == 1)
 						continue
@@ -268,7 +268,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 					continue
 
 				HH.setStatus("infrasound_nausea", 10 SECONDS)
-			playsound(src, 'sound/musical_instruments/bard/riff.ogg', 60, 1, 5)
+			playsound(src, 'sound/musical_instruments/bard/riff.ogg', 60, TRUE, 5)
 			. = ..()
 
 	ultrasound
@@ -284,7 +284,7 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 					continue
 				HH.apply_sonic_stun(0, 0, 0, 0, 2, 8, 5)
 				HH.organHolder?.damage_organs(brute=10, organs=list("liver", "heart", "left_kidney", "right_kidney", "stomach", "intestines","appendix", "pancreas", "tail"), probability=90)
-			playsound(src, 'sound/musical_instruments/bard/tapping2.ogg', 60, 1, 5)
+			playsound(src, 'sound/musical_instruments/bard/tapping2.ogg', 60, TRUE, 5)
 			. = ..()
 
 	focus
@@ -460,10 +460,10 @@ TYPEINFO(/obj/item/device/radio/nukie_studio_monitor)
 		if(prob(10))
 			L.emote("shudder")
 		else if(prob(5))
-			L.visible_message("<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>", "<span class='alert'>You puke all over yourself!</span>")
 			if(prob(5))
 				L.do_disorient(25, disorient=1 SECOND)
-			L.vomit()
+			var/vomit_message = "<span class='alert'>[L] pukes all over [himself_or_herself(L)].</span>"
+			L.vomit(0, null, vomit_message)
 			icon_state = "miasma5"
 
 		return ..(timePassed)

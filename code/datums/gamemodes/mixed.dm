@@ -11,7 +11,7 @@
 	var/has_wizards = TRUE
 	var/has_werewolves = TRUE
 
-	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 1, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
+	var/list/traitor_types = list(ROLE_TRAITOR = 1, ROLE_CHANGELING = 1, ROLE_VAMPIRE = 1 , ROLE_SPY_THIEF = 0.5, ROLE_WEREWOLF = 1, ROLE_ARCFIEND = 1)
 #if defined(MAP_OVERRIDE_NADIR)
 	var/list/major_threats = list(ROLE_WRAITH = 1, ROLE_FLOCKMIND = 1)
 #else
@@ -84,7 +84,12 @@
 				if(ROLE_CHANGELING) num_changelings++
 				if(ROLE_VAMPIRE) num_vampires++
 				if(ROLE_GRINCH) num_grinches++
-				if(ROLE_SPY_THIEF) num_spy_thiefs++
+				if(ROLE_SPY_THIEF)
+					if(j+1<num_enemies) //don't overcap
+						num_spy_thiefs += 2
+						j++
+					else
+						j-- //reroll
 				if(ROLE_WEREWOLF) num_werewolves++
 				if(ROLE_ARCFIEND) num_arcfiends++
 

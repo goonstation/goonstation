@@ -123,13 +123,14 @@
 		update_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
+		. = ..()
 		if (varname == "dir")
 			update_dir(newvalue)
 
 	proc/update_dir(var/D)
 		src.set_dir(D)
-		if (!(dir & 2))
-			src.set_dir(2)
+		if (!(dir & SOUTH))
+			src.set_dir(SOUTH)
 		pixel_y = 28
 		effect_overlay.set_dir(src.dir)
 

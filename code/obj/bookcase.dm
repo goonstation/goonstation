@@ -1,3 +1,5 @@
+TYPEINFO(/obj/bookshelf)
+	mat_appearances_to_ignore = list("wood")
 /obj/bookshelf
 	name = "bookshelf"
 	desc = "A storage unit designed to fit a lot of books. Been a while since you've seen one of these!"
@@ -5,7 +7,6 @@
 	icon_state = "bookshelf_small"
 	anchored = ANCHORED
 	density = 1
-	mat_appearances_to_ignore = list("wood")
 	var/capacity = 30 //how many books can it hold?
 	var/list/obj/item/paper/bookshelf_contents = list() //ordered list of books
 
@@ -182,6 +183,8 @@
 					curr_contents.Add(list(book_vars))
 			file_curr_books(curr_contents)
 
+TYPEINFO(/obj/item/furniture_parts/bookshelf)
+	mat_appearances_to_ignore = list("wood")
 /obj/item/furniture_parts/bookshelf
 	name = "bookshelf parts"
 	desc = "A collection of parts that can be used to construct a bookshelf."
@@ -189,4 +192,3 @@
 	icon_state = "bookshelf_parts"
 	furniture_type = /obj/bookshelf
 	furniture_name = "bookshelf"
-	mat_appearances_to_ignore = list("wood")

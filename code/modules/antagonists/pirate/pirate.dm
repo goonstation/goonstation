@@ -18,17 +18,17 @@
 		H.unequip_all(TRUE)
 
 		if (id == ROLE_PIRATE_CAPTAIN)
-			H.equip_if_possible(new /obj/item/clothing/under/shirt_pants_b(H), H.slot_w_uniform)
-			H.equip_if_possible(new /obj/item/clothing/suit/armor/pirate_captain_coat(H), H.slot_wear_suit)
-			H.equip_if_possible(new /obj/item/clothing/head/pirate_captain(H), H.slot_head)
-			H.equip_if_possible(new /obj/item/clothing/shoes/swat/heavy(H), H.slot_shoes)
-			H.equip_if_possible(new /obj/item/device/radio/headset/pirate/captain(H), H.slot_ears)
+			H.equip_if_possible(new /obj/item/clothing/under/shirt_pants_b(H), SLOT_W_UNIFORM)
+			H.equip_if_possible(new /obj/item/clothing/suit/armor/pirate_captain_coat(H), SLOT_WEAR_SUIT)
+			H.equip_if_possible(new /obj/item/clothing/head/pirate_captain(H), SLOT_HEAD)
+			H.equip_if_possible(new /obj/item/clothing/shoes/swat/heavy(H), SLOT_SHOES)
+			H.equip_if_possible(new /obj/item/device/radio/headset/pirate/captain(H), SLOT_EARS)
 
 		else if (id == ROLE_PIRATE_FIRST_MATE)
-			H.equip_if_possible(new /obj/item/clothing/under/gimmick/guybrush(H), H.slot_w_uniform)
-			H.equip_if_possible(new /obj/item/clothing/suit/armor/pirate_first_mate_coat(H), H.slot_wear_suit)
-			H.equip_if_possible(new /obj/item/clothing/head/pirate_first_mate(H), H.slot_head)
-			H.equip_if_possible(new /obj/item/device/radio/headset/pirate/first_mate(H), H.slot_ears)
+			H.equip_if_possible(new /obj/item/clothing/under/gimmick/guybrush(H), SLOT_W_UNIFORM)
+			H.equip_if_possible(new /obj/item/clothing/suit/armor/pirate_first_mate_coat(H), SLOT_WEAR_SUIT)
+			H.equip_if_possible(new /obj/item/clothing/head/pirate_first_mate(H), SLOT_HEAD)
+			H.equip_if_possible(new /obj/item/device/radio/headset/pirate/first_mate(H), SLOT_EARS)
 
 		else if (id == ROLE_PIRATE)
 			// Random clothing:
@@ -41,18 +41,18 @@
 							/obj/item/clothing/head/pirate_brn,
 							/obj/item/clothing/head/pirate_blk)
 
-			H.equip_if_possible(new jumpsuit, H.slot_w_uniform)
-			H.equip_if_possible(new hat, H.slot_head)
-			H.equip_if_possible(new /obj/item/device/radio/headset/pirate(H), H.slot_ears)
+			H.equip_if_possible(new jumpsuit, SLOT_W_UNIFORM)
+			H.equip_if_possible(new hat, SLOT_HEAD)
+			H.equip_if_possible(new /obj/item/device/radio/headset/pirate(H), SLOT_EARS)
 
-		H.equip_if_possible(new /obj/item/storage/backpack(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/reagent_containers/food/drinks/flask/pirate(H), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/pinpointer/gold_bee(H), H.slot_in_backpack)
-		H.equip_if_possible(new /obj/item/clothing/glasses/eyepatch/pirate(H), H.slot_glasses)
-		H.equip_if_possible(new /obj/item/requisition_token/pirate(H), H.slot_r_store)
-		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), H.slot_l_store)
-		H.equip_if_possible(new /obj/item/swords_sheaths/pirate(H), H.slot_belt)
+		H.equip_if_possible(new /obj/item/storage/backpack(H), SLOT_BACK)
+		H.equip_if_possible(new /obj/item/clothing/shoes/swat(H), SLOT_SHOES)
+		H.equip_if_possible(new /obj/item/reagent_containers/food/drinks/flask/pirate(H), SLOT_IN_BACKPACK)
+		H.equip_if_possible(new /obj/item/pinpointer/gold_bee(H), SLOT_IN_BACKPACK)
+		H.equip_if_possible(new /obj/item/clothing/glasses/eyepatch/pirate(H), SLOT_GLASSES)
+		H.equip_if_possible(new /obj/item/requisition_token/pirate(H), SLOT_R_STORE)
+		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
+		H.equip_if_possible(new /obj/item/swords_sheaths/pirate(H), SLOT_BELT)
 
 		H.equip_sensory_items()
 
@@ -71,6 +71,14 @@
 		image_group.remove_mind_mob_overlay(src.owner)
 		image_group.remove_mind(src.owner)
 
+	relocate()
+		var/mob/M = src.owner.current
+		if (id == ROLE_PIRATE_CAPTAIN)
+			M.set_loc(pick_landmark(LANDMARK_PIRATE_CAPTAIN, LANDMARK_LATEJOIN)) // Needed because if not spawned pirate get nulled
+		else if (id == ROLE_PIRATE_FIRST_MATE)
+			M.set_loc(pick_landmark(LANDMARK_PIRATE_FIRST_MATE, LANDMARK_LATEJOIN))
+		else
+			M.set_loc(pick_landmark(LANDMARK_PIRATE, LANDMARK_LATEJOIN))
 
 	first_mate
 		id = ROLE_PIRATE_FIRST_MATE
@@ -82,7 +90,8 @@
 		display_name = "\improper Pirate Captain"
 		antagonist_icon = "pirate_captain"
 
-
+TYPEINFO(/obj/gold_bee)
+	mat_appearances_to_ignore = list("gold")
 /obj/gold_bee
 	name = "\improper Gold Bee Statue"
 	desc = "The artist has painstainkly sculpted every individual strand of bee wool to achieve this breath-taking result. You could almost swear this bee is about to spontaneously take flight."
@@ -92,11 +101,12 @@
 	object_flags = NO_GHOSTCRITTER
 	density = 1
 	anchored = UNANCHORED
+	default_material = "gold"
+	mat_changename = FALSE
 	var/list/gibs = list()
 
 	New()
 		..()
-		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
 		for(var/i in 1 to 7)
 			gibs.Add(new /obj/item/stamped_bullion)
 			gibs.Add(new /obj/item/raw_material/gold)

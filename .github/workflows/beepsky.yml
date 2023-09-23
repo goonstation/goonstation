@@ -54,18 +54,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install i386 Architecture
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
-          sudo apt-get update
-
-      - name: Fetch cached i386 packages
-        uses: awalsh128/cache-apt-pkgs-action@v1
-        with:
-          packages: libstdc++6:i386
-          version: beepsky
-
       - name: Cache BYOND
         uses: actions/cache@v3
         with:
@@ -110,18 +98,6 @@ jobs:
           submodules: true
           token: '${{ secrets.ROBUDDYBOT_PAT }}'
 
-      - name: Install i386 Architecture
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo sed -i'' -E 's/^(deb|deb-src) http:\/\/(azure.archive|security).ubuntu.com/\1 [arch=amd64,i386] http:\/\/\2.ubuntu.com/' /etc/apt/sources.list
-          sudo apt-get update
-
-      - name: Fetch cached i386 packages
-        uses: awalsh128/cache-apt-pkgs-action@v1
-        with:
-          packages: libstdc++6:i386
-          version: beepsky
-
       - name: Cache BYOND
         uses: actions/cache@v3
         with:
@@ -159,7 +135,7 @@ jobs:
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
           tools/ci/build_tgui.sh
-          tools/ci/check_grep.sh
+          tools/ci/check_grep_secret.sh
           tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test

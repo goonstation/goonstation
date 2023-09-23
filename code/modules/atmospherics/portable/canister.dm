@@ -114,6 +114,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	icon_state = "empty"
 	casecolor = "empty"
 
+/obj/machinery/portable_atmospherics/canister/poo
+	name = "Canister \[POO\]"
+	icon_state = "orange"
+	casecolor = "orange"
+
 /obj/machinery/portable_atmospherics/canister/update_icon()
 	if (src.destroyed)
 		src.icon_state = "[src.casecolor]-1"
@@ -340,11 +345,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 				for(var/obj/item/reagent_containers/glass/G in range(4,T))
 					if(G.can_recycle)
-						G.smash()
+						G.shatter_chemically()
 
 				for(var/obj/item/reagent_containers/food/drinks/drinkingglass/G in range(4,T))
 					if(G.can_recycle)
-						G.smash()
+						G.shatter_chemically()
 
 				for(var/atom/movable/A in view(3, T)) // wreck shit
 					if(A.anchored) continue
@@ -393,13 +398,25 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 
 	else if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		if (length(porter.contents) >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
 		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")
 			src.contained = 1
 			src.set_loc(W)
 			elecflash(src)
+	else if (istype(W, /obj/item/reagent_containers/balloon))
+		var/obj/item/reagent_containers/balloon/balloon = W
+		var/amount = balloon.breaths * BREATH_VOLUME - TOTAL_MOLES(balloon.air)
+		if (amount <= 0)
+			boutput(user, "<span class='alert'>[balloon] is already full.</span>")
+			return
+		var/datum/gas_mixture/removed = src.air_contents.remove(amount)
+		balloon.air.merge(removed)
+		balloon.UpdateIcon()
+		playsound(get_turf(src), 'sound/machines/hiss.ogg', 50, 1)
+		user.visible_message("<span class='notice'>[user] fills [balloon] from [src].</span>", "<span class='notice'>You fill [balloon] from [src].</span>")
+		return
 	else if(!iswrenchingtool(W) && !istype(W, /obj/item/tank) && !istype(W, /obj/item/device/analyzer/atmospheric) && !istype(W, /obj/item/device/pda2))
 		src.visible_message("<span class='alert'>[user] hits the [src] with a [W]!</span>")
 		user.lastattacked = src
@@ -701,7 +718,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	//	src.det.detonate()
 	//	return
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	if(P.proj_data.damage_type == D_KINETIC)
 		src.health -= damage
@@ -736,8 +753,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 /obj/machinery/portable_atmospherics/canister/sleeping_agent/New()
 	..()
 	if (!src.isempty)
-		var/datum/gas/sleeping_agent/trace_gas = air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-		trace_gas.moles = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+		src.air_contents.nitrous_oxide = (src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.UpdateIcon()
 	return 1
 
@@ -761,6 +777,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/portable_atmospherics/canister, proc/toggle_
 	if (!src.isempty)
 		src.air_contents.oxygen = (O2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 		src.air_contents.nitrogen = (N2STANDARD*src.maximum_pressure*filled)*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+	src.UpdateIcon()
+	return 1
+
+/obj/machinery/portable_atmospherics/canister/poo/New()
+	..()
+	if (!src.isempty)
+		src.air_contents.oxygen = (src.maximum_pressure*filled * (2/3))*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
+		src.air_contents.toxins = (src.maximum_pressure*filled * (1/3))*air_contents.volume/(R_IDEAL_GAS_EQUATION*air_contents.temperature)
 	src.UpdateIcon()
 	return 1
 

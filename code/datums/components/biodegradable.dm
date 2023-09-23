@@ -11,4 +11,4 @@ TYPEINFO(/datum/component/biodegradable)
 /datum/component/biodegradable/proc/biodegrade(source)
 	var/obj/O = parent
 	if(O.reagents?.total_volume <= 0)
-		O.setStatus("acid", 1 SECOND, list("do_color" = FALSE, "message" = " biodegrades instantly.[prob(95) ? "": " DO NOT QUESTION THIS."]"))
+		O.setStatus("acid", 1 DECI SECOND, list("do_color" = FALSE, "message" = " biodegrades instantly.[prob(95) ? "": " DO NOT QUESTION THIS."]"))

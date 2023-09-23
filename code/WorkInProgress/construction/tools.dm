@@ -82,7 +82,7 @@
 			for (var/obj/critter/C in view(5, src))
 				if (C.alive)
 					targets += C
-		if (targets.len > 0)
+		if (length(targets) > 0)
 			if (!isPopping())
 				if (isDown())
 					popUp()
@@ -325,16 +325,16 @@ TYPEINFO(/obj/item/material_shaper)
 	proc/determine_material(var/obj/item/material_piece/D, mob/user as mob)
 		var/datum/material/DM = D.material
 		var/which = null
-		if ((DM.material_flags & MATERIAL_METAL) && (DM.material_flags & MATERIAL_CRYSTAL))
+		if ((DM.getMaterialFlags() & MATERIAL_METAL) && (DM.getMaterialFlags() & MATERIAL_CRYSTAL))
 			var/be_metal = 0
 			var/be_glass = 0
 			if (!metal)
 				be_metal = 1
-			else if (isSameMaterial(metal, DM))
+			else if (metal.isSameMaterial(DM))
 				be_metal = 1
 			if (!glass)
 				be_glass = 1
-			else if (isSameMaterial(glass, DM))
+			else if (glass.isSameMaterial(DM))
 				be_glass = 1
 			if (be_metal && be_glass)
 				which = input("Use [D] as?", "Pick", null) in list("metal", "glass")
@@ -346,19 +346,19 @@ TYPEINFO(/obj/item/material_shaper)
 				playsound(src.loc, sound_grump, 40, 1)
 				boutput(user, "<span class='alert'>[D] incompatible with current metal or glass.</span>")
 				return null
-		else if (DM.material_flags & MATERIAL_METAL)
+		else if (DM.getMaterialFlags() & MATERIAL_METAL)
 			if (!metal)
 				which = "metal"
-			else if (isSameMaterial(metal, DM))
+			else if (metal.isSameMaterial(DM))
 				which = "metal"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
 				boutput(user, "<span class='alert'>[D] incompatible with current metal.</span>")
 				return null
-		else if (DM.material_flags & MATERIAL_CRYSTAL)
+		else if (DM.getMaterialFlags() & MATERIAL_CRYSTAL)
 			if (!glass)
 				which = "glass"
-			else if (isSameMaterial(glass, DM))
+			else if (glass.isSameMaterial(DM))
 				which = "glass"
 			else
 				playsound(src.loc, sound_grump, 40, 1)
@@ -395,12 +395,12 @@ TYPEINFO(/obj/item/material_shaper)
 	examine()
 		. = ..()
 		if (metal)
-			. += "<span class='notice'>Metal: [metal_count] units of [metal.name].</span>"
+			. += "<span class='notice'>Metal: [metal_count] units of [metal.getName()].</span>"
 		else
 			. += "<span class='alert'>Metal: 0 units.</span>"
 
 		if (glass)
-			. += "<span class='notice'>Glass: [glass_count] units of [glass.name].</span>"
+			. += "<span class='notice'>Glass: [glass_count] units of [glass.getName()].</span>"
 		else
 			. += "<span class='alert'>Glass: 0 units</span>"
 
@@ -483,7 +483,7 @@ TYPEINFO(/obj/item/material_shaper)
 				var/datum/material/MT = M.material
 				if (!MT)
 					continue
-				if (isSameMaterial(MT, DM))
+				if (MT.isSameMaterial(DM))
 					playsound(src.loc, sound_process, 40, 1)
 					if (which == "metal")
 						metal_count += 10
@@ -520,19 +520,19 @@ TYPEINFO(/obj/item/room_planner)
 	var/turf_op = 0
 
 	var/list/wallicons = list(
-		"diner" = 'icons/turf/walls_derelict.dmi',
-		"martian" = 'icons/turf/walls_martian.dmi',
-		"shuttle blue" = 'icons/turf/walls_shuttle.dmi',
-		"shuttle white" = 'icons/turf/walls_shuttle-debris.dmi',
-		"shuttle dark" = 'icons/turf/walls_shuttle-debris.dmi',
-		"overgrown" = 'icons/turf/walls_overgrown.dmi',
-		"meat" = 'icons/turf/walls_meat.dmi',
-		"ancient" = 'icons/turf/walls_ancient.dmi',
-		"cave" = 'icons/turf/walls_cave.dmi',
-		"lead blue" = 'icons/turf/walls_lead.dmi',
-		"lead gray" = 'icons/turf/walls_lead.dmi',
-		"lead white" = 'icons/turf/walls_lead.dmi',
-		"ancient smooth" = 'icons/turf/walls_iomoon.dmi',
+		"diner" = 'icons/turf/walls/derelict.dmi',
+		"martian" = 'icons/turf/walls/martian.dmi',
+		"shuttle blue" = 'icons/turf/walls/shuttle/blue.dmi',
+		"shuttle white" = 'icons/turf/walls/shuttle/white.dmi',
+		"shuttle dark" = 'icons/turf/walls/shuttle/dark.dmi',
+		"overgrown" = 'icons/turf/walls/overgrown.dmi',
+		"meat" = 'icons/turf/walls/meat/meaty.dmi',
+		"ancient" = 'icons/turf/walls/ancient.dmi',
+		"cave" = 'icons/turf/walls/cave.dmi',
+		"lead blue" = 'icons/turf/walls/lead/blue.dmi',
+		"lead gray" = 'icons/turf/walls/lead/gray.dmi',
+		"lead white" = 'icons/turf/walls/lead/white.dmi',
+		"ancient smooth" = 'icons/turf/walls/ancient_smooth.dmi',
 	)
 	var/list/wallmods = list(
 		"diner" = "oldr-",
@@ -575,7 +575,7 @@ TYPEINFO(/obj/item/room_planner)
 		// selectedtype gets used as our iconstate for floors or the key to the lists for walls
 		if (mode == "floors")
 			selectedtype = null
-			states += icon_states('icons/turf/construction_floors.dmi')
+			states += (icon_states('icons/turf/construction_floors.dmi') - list("engine", "catwalk", "catwalk_narrow", "catwalk_cross"))
 			selectedicon = 'icons/turf/construction_floors.dmi'
 			var/newtype = tgui_input_list(message="What kind?", title="Marking", items=states)
 			if(newtype)
@@ -816,24 +816,24 @@ TYPEINFO(/obj/item/room_planner)
 		G.setMaterial(metal)
 
 		var/mask = bmask
-		if (mask & 1)
+		if (mask & NORTH)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.set_dir(1)
+			W.set_dir(NORTH)
 			W.setMaterial(glass)
 
-		if (mask & 2)
+		if (mask & SOUTH)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.set_dir(2)
+			W.set_dir(SOUTH)
 			W.setMaterial(glass)
 
-		if (mask & 4)
+		if (mask & EAST)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.set_dir(4)
+			W.set_dir(EAST)
 			W.setMaterial(glass)
 
-		if (mask & 8)
+		if (mask & WEST)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.set_dir(8)
+			W.set_dir(WEST)
 			W.setMaterial(glass)
 		qdel(src)
 

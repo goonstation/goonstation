@@ -77,9 +77,9 @@
 				sleep(0.3 SECONDS)
 				user.pixel_y = -4
 				sleep(0.3 SECONDS)
-				playsound(user, 'sound/effects/spring.ogg', 60, 1)
+				playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 
-			playsound(user, 'sound/machines/click.ogg', 60, 1)
+			playsound(user, 'sound/machines/click.ogg', 60, TRUE)
 			in_use = 0
 			user.transforming = 0
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
@@ -116,7 +116,7 @@
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
-			var/obj/decal/W = new /obj/decal/
+			var/obj/decal/W = new /obj/decal
 			W.icon = 'icons/obj/stationobjs.dmi'
 			W.icon_state = "fitnessweight-w"
 			W.set_loc(loc)
@@ -134,12 +134,12 @@
 					sleep(0.3 SECONDS)
 					user.pixel_y = (user.pixel_y == 3) ? 5 : 3
 
-				playsound(user, 'sound/effects/spring.ogg', 60, 1)
+				playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 
 			sleep(0.3 SECONDS)
 			user.pixel_y = 2
 			sleep(0.3 SECONDS)
-			playsound(user, 'sound/machines/click.ogg', 60, 1)
+			playsound(user, 'sound/machines/click.ogg', 60, TRUE)
 			in_use = 0
 			user.transforming = 0
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")

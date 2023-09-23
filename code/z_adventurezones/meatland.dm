@@ -86,7 +86,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "It keeps pulsing.  Ew.  Probably shouldn't put your hand in the..mouth?"
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "meatlumps"
-	dir = 4
+	dir = EAST
 
 /obj/stomachacid
 	name = "acid"
@@ -157,7 +157,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	anchored = ANCHORED
 	seekrange = 1
 	attack_range = 1
-	butcherable = 0
+	butcherable = BUTCHER_NOT_ALLOWED
 	density = 1
 	aggressive = 1
 	atkcarbon = 1
@@ -364,7 +364,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		if (!exploded_sentence || !length(exploded_sentence))
 			return 1
 
-		if (exploded_sentence.len > 1)
+		if (length(exploded_sentence) > 1)
 			if (prob(50))
 				exploded_sentence.Cut( rand(1, round(exploded_sentence.len / 2)))
 				exploded_sentence.len = max(5, exploded_sentence.len - rand(1,4))
@@ -432,99 +432,6 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		return
 
 #undef MEATHEAD_MAX_CUSTOM_UTTERANCES
-
-/obj/critter/blobman/meaty_martha
-	generic = 0
-	death_text = "%src% collapses into viscera..."
-
-	New()
-		..()
-		src.name = "[pick("grody", "clotty", "greasy", "meaty", "fleshy", "vile", "chunky", "putrid")] [pick("nugget", "bloblet", "pustule", "corpuscle", "viscera")]"
-		src.icon_state = pick("meaty_mouth", "polyp", "goop")
-
-	ChaseAttack(mob/M)
-		. = target_missing_limb(M)
-		if ((. == "r_arm" || . == "l_arm") && ishuman(M))
-			var/mob/living/carbon/human/H = M
-			src.visible_message("<span class='alert'><b>[src] latches onto [M]'s stump!!</b></span>")
-			boutput(M, "<span class='alert'>OH FUCK OH FUCK GET IT OFF GET IT OFF IT STINGS!</span>")
-			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-			M.emote("scream")
-			M.changeStatus("stunned", 2 SECONDS)
-			random_brute_damage(M, 3)
-			switch (.)
-				if ("r_arm")
-					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/right {remove_stage = 2;} (M)
-					H.limbs.vars["r_arm"] = part
-					part.holder = M
-
-				if ("l_arm")
-					var/obj/item/parts/human_parts/arm/meat_mutant/part = new /obj/item/parts/human_parts/arm/meat_mutant/left {remove_stage = 2;} (M)
-					H.limbs.vars["l_arm"] = part
-					part.holder = M
-
-			H.update_body()
-			H.update_clothing()
-			H.unlock_medal("My Bologna Has A First Name",1)
-			qdel(src)
-
-		else
-			src.visible_message("<span class='alert'><B>[src]</B> smacks against [M]!</span>")
-			src.set_loc(M.loc)
-			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
-			if(iscarbon(M))
-				if (prob(25))
-					M.changeStatus("weakened", 1 SECONDS)
-				random_brute_damage(M, rand(2,5), 1)
-
-	CritterDeath()
-		if (!src.alive) return
-		..()
-		if (src.loc)
-			gibs(src.loc)
-		qdel(src)
-
-	proc/update_meat_head_dialog(var/new_text)
-		if (!new_text || !length(ckey(new_text)))
-			return
-		var/obj/critter/monster_door/meat_head/main_meat_head = by_type[/obj/critter/monster_door/meat_head][1]
-		main_meat_head.update_meat_head_dialog(new_text)
-
-	proc/target_missing_limb(mob/living/carbon/human/testhuman)
-		if (!istype(testhuman) || !testhuman.limbs)
-			return null
-
-		if (!testhuman.limbs.l_arm)
-			return "l_arm"
-		else if (!testhuman.limbs.r_arm)
-			return "r_arm"
-		else if (!testhuman.limbs.r_leg)
-			return "r_leg"
-		else if (!testhuman.limbs.l_leg)
-			return "l_leg"
-
-		return null
-
-/obj/critter/zombie/meatmonaut
-	name = "Lost Cosmonaut"
-	desc = "Soviet presence near NT stations is rarely overt. For good reasons, as this fellow probably learned too late.  Seriously, where is his face? Grody."
-	icon = 'icons/misc/meatland.dmi'
-	icon_state = "sovmeat"
-	health = 26
-	brutevuln = 0.6
-	atcritter = 0
-	eats_brains = 0
-	generic = 0
-
-	ChaseAttack(mob/M)
-		if(!attacking)
-			src.CritterAttack(M)
-		return
-
-	CritterAttack(mob/M)
-		if (prob(20))
-			playsound(src.loc, 'sound/misc/meatmonaut1.ogg', 50, 0)
-		return ..()
 
 /obj/item/disk/data/fixed_disk/meatland
 
@@ -1156,7 +1063,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (signal?.data["authcode"] && !(signal.data["authcode"] in src.knownKeys))
 				knownKeys += signal.data["authcode"]
 
-				if (knownKeys.len >= 2 && !inPasswordRequestMode)
+				if (length(knownKeys) >= 2 && !inPasswordRequestMode)
 					inPasswordRequestMode = 1
 					src.print_text("&#x041F;&#x410;&#x0420;&#x41E;&#x41B;&#x42C;?")
 
@@ -1165,7 +1072,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 			if (signal?.data["authcode"] && (signal.data["authcode"] in src.knownKeys))
 				knownKeys -= signal.data["authcode"]
 
-				if (knownKeys.len < 2)
+				if (length(knownKeys) < 2)
 					inPasswordRequestMode = 0
 
 /obj/item/peripheral/cheget
@@ -1572,7 +1479,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 		src.w_class = initial(src.w_class)
 		return ..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!istype(target, /turf) || !istype(start, /turf))
 			return
 		if (target == user.loc || target == loc)
@@ -1594,7 +1501,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 			theGib.throw_at(target, 8, 2)
 			random_brute_damage(user, rand(5,15))
-			playsound(T, 'sound/impact_sounds/Flesh_Break_1.ogg', 40, 1)
+			playsound(T, 'sound/impact_sounds/Flesh_Break_1.ogg', 40, TRUE)
 
 			user.visible_message("<span class='alert'><b>[user]</b> blasts a lump of flesh at [target]!</span>")
 			if (prob(15))

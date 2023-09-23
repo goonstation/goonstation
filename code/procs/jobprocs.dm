@@ -25,7 +25,7 @@ var/global/totally_random_jobs = FALSE
 		if(!player.client || !player.client.preferences) //Well shit.
 			continue
 		var/datum/preferences/P  = player.client.preferences
-		if(checktraitor(player))
+		if(player.mind?.is_antagonist())
 			if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
 				if (J.cant_spawn_as_rev || ("loyalist" in P.traitPreferences.traits_selected)) //Why would an NT Loyalist be a revolutionary?
 					continue
@@ -186,7 +186,7 @@ var/global/totally_random_jobs = FALSE
 		var/datum/job/JOB = find_job_in_controller_by_string(player.client.preferences.job_favorite)
 		// Do a few checks to make sure they're allowed to have this job
 		if (ticker?.mode && istype(ticker.mode, /datum/game_mode/revolution))
-			if(checktraitor(player) && (JOB.cant_spawn_as_rev || JOB.cant_spawn_as_con))
+			if(player.mind?.is_antagonist() && (JOB.cant_spawn_as_rev || JOB.cant_spawn_as_con))
 				// Fixed AI, security etc spawning as rev heads. The special job picker doesn't care about that var yet,
 				// but I'm not gonna waste too much time tending to a basically abandoned game mode (Convair880).
 				continue
@@ -332,83 +332,84 @@ var/global/totally_random_jobs = FALSE
 /proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
 	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
 	if (JOB.slot_jump && length(JOB.slot_jump) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_jump), H.slot_w_uniform)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_jump), SLOT_W_UNIFORM)
 	else if (length(JOB.slot_jump))
-		H.equip_new_if_possible(JOB.slot_jump[1], H.slot_w_uniform)
+		H.equip_new_if_possible(JOB.slot_jump[1], SLOT_W_UNIFORM)
 	// Backpack and contents
 	if (JOB.slot_back && length(JOB.slot_back) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_back), H.slot_back)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_back), SLOT_BACK)
 	else if (length(JOB.slot_back))
-		H.equip_new_if_possible(JOB.slot_back[1], H.slot_back)
+		H.equip_new_if_possible(JOB.slot_back[1], SLOT_BACK)
 	if (JOB.slot_back && length(JOB.items_in_backpack))
 		for (var/X in JOB.items_in_backpack)
 			if(ispath(X))
-				H.equip_new_if_possible(X, H.slot_in_backpack)
+				H.equip_new_if_possible(X, SLOT_IN_BACKPACK)
 	// Belt and contents
 	if (JOB.slot_belt && length(JOB.slot_belt) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_belt), H.slot_belt)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_belt), SLOT_BELT)
 	else if (length(JOB.slot_belt))
-		H.equip_new_if_possible(JOB.slot_belt[1], H.slot_belt)
+		H.equip_new_if_possible(JOB.slot_belt[1], SLOT_BELT)
 	if (JOB.slot_belt && length(JOB.items_in_belt) && H.belt?.storage)
 		for (var/X in JOB.items_in_belt)
 			if(ispath(X))
-				H.equip_new_if_possible(X, H.slot_in_belt)
+				H.equip_new_if_possible(X, SLOT_IN_BELT)
 	// Footwear
 	if (JOB.slot_foot && length(JOB.slot_foot) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_foot), H.slot_shoes)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_foot), SLOT_SHOES)
 	else if (length(JOB.slot_foot))
-		H.equip_new_if_possible(JOB.slot_foot[1], H.slot_shoes)
+		H.equip_new_if_possible(JOB.slot_foot[1], SLOT_SHOES)
 	// Suit
 	if (JOB.slot_suit && length(JOB.slot_suit) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_suit), H.slot_wear_suit)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_suit), SLOT_WEAR_SUIT)
 	else if (length(JOB.slot_suit))
-		H.equip_new_if_possible(JOB.slot_suit[1], H.slot_wear_suit)
+		H.equip_new_if_possible(JOB.slot_suit[1], SLOT_WEAR_SUIT)
 	// Ears
 	if (JOB.slot_ears && length(JOB.slot_ears) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_ears), H.slot_ears)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_ears), SLOT_EARS)
 	else if (length(JOB.slot_ears))
-		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears[1],/obj/item/device/radio/headset)))
-			H.equip_new_if_possible(JOB.slot_ears[1], H.slot_ears)
+		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears[1],
+	/obj/item/device/radio/headset)))
+			H.equip_new_if_possible(JOB.slot_ears[1], SLOT_EARS)
 	// Mask
 	if (JOB.slot_mask && length(JOB.slot_mask) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_mask), H.slot_wear_mask)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_mask), SLOT_WEAR_MASK)
 	else if (length(JOB.slot_mask))
-		H.equip_new_if_possible(JOB.slot_mask[1], H.slot_wear_mask)
+		H.equip_new_if_possible(JOB.slot_mask[1], SLOT_WEAR_MASK)
 	// Gloves
 	if (JOB.slot_glov && length(JOB.slot_glov) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_glov), H.slot_gloves)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_glov), SLOT_GLOVES)
 	else if (length(JOB.slot_glov))
-		H.equip_new_if_possible(JOB.slot_glov[1], H.slot_gloves)
+		H.equip_new_if_possible(JOB.slot_glov[1], SLOT_GLOVES)
 	// Eyes
 	if (JOB.slot_eyes && length(JOB.slot_eyes) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_eyes), H.slot_glasses)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_eyes), SLOT_GLASSES)
 	else if (length(JOB.slot_eyes))
-		H.equip_new_if_possible(JOB.slot_eyes[1], H.slot_glasses)
+		H.equip_new_if_possible(JOB.slot_eyes[1], SLOT_GLASSES)
 	// Head
 	if (JOB.slot_head && length(JOB.slot_head) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_head), H.slot_head)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_head), SLOT_HEAD)
 	else if (length(JOB.slot_head))
-		H.equip_new_if_possible(JOB.slot_head[1], H.slot_head)
+		H.equip_new_if_possible(JOB.slot_head[1], SLOT_HEAD)
 	// Left pocket
 	if (JOB.slot_poc1 && length(JOB.slot_poc1) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_l_store)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_L_STORE)
 	else if (length(JOB.slot_poc1))
-		H.equip_new_if_possible(JOB.slot_poc1[1], H.slot_l_store)
+		H.equip_new_if_possible(JOB.slot_poc1[1], SLOT_L_STORE)
 	// Right pocket
 	if (JOB.slot_poc2 && length(JOB.slot_poc2) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc2), H.slot_r_store)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc2), SLOT_R_STORE)
 	else if (length(JOB.slot_poc2))
-		H.equip_new_if_possible(JOB.slot_poc2[1], H.slot_r_store)
+		H.equip_new_if_possible(JOB.slot_poc2[1], SLOT_R_STORE)
 	// Left hand
 	if (JOB.slot_lhan && length(JOB.slot_lhan) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_l_hand)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_L_HAND)
 	else if (length(JOB.slot_lhan))
-		H.equip_new_if_possible(JOB.slot_lhan[1], H.slot_l_hand)
+		H.equip_new_if_possible(JOB.slot_lhan[1], SLOT_L_HAND)
 	// Right hand
 	if (JOB.slot_rhan && length(JOB.slot_rhan) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), H.slot_r_hand)
+		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_R_HAND)
 	else if (length(JOB.slot_rhan))
-		H.equip_new_if_possible(JOB.slot_rhan[1], H.slot_r_hand)
+		H.equip_new_if_possible(JOB.slot_rhan[1], SLOT_R_HAND)
 
 	#ifdef APRIL_FOOLS
 	H.back?.setMaterial(getMaterial("jean"))
@@ -507,24 +508,35 @@ var/global/totally_random_jobs = FALSE
 
 		if (src.traitHolder && src.traitHolder.hasTrait("pilot"))		//Has the Pilot trait - they're drifting off-station in a pod. Note that environmental checks are not needed here.
 			SPAWN(0) //pod creation sleeps for... reasons
+				#define MAX_ALLOWED_ITERATIONS 300
 				var/turf/pilotSpawnLocation = null
 
-				#ifdef UNDERWATER_MAP										//This part of the code executes only if the map is a water one.
-				while(!istype(pilotSpawnLocation, /turf/space/fluid))		//Trying to find a valid spawn location.
-					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), Z_LEVEL_MINING)
-				if (pilotSpawnLocation)										//Sanity check.
-					src.set_loc(pilotSpawnLocation)
-				var/obj/machinery/vehicle/tank/minisub/V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
-				#else														//This part of the code executes only if the map is a space one.
-				while(!istype(pilotSpawnLocation, /turf/space))				//Trying to find a valid spawn location.
-					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(Z_LEVEL_DEBRIS, Z_LEVEL_MINING))
-				if (pilotSpawnLocation)										//Sanity check.
-					src.set_loc(pilotSpawnLocation)
-				var/obj/machinery/vehicle/miniputt/V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
+				var/valid_z_levels
+				#ifdef UNDERWATER_MAP
+				valid_z_levels = list(Z_LEVEL_MINING)
+				#else
+				valid_z_levels = list(Z_LEVEL_MINING, Z_LEVEL_DEBRIS)
 				#endif
-				for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
-					qdel(snappedDrone)
-				V.finish_board_pod(src)
+
+				// Counter to prevent infinite looping, in case space has been fully replaced
+				var/safety = 0
+				while(!istype(pilotSpawnLocation, /turf/space) && safety < MAX_ALLOWED_ITERATIONS)		//Trying to find a valid spawn location.
+					pilotSpawnLocation = locate(rand(1, world.maxx), rand(1, world.maxy), pick(valid_z_levels))
+					safety++
+				// If it isn't a space turf just skip this all, we didn't find one
+				if (istype(pilotSpawnLocation, /turf/space))								//Sanity check.
+					src.set_loc(pilotSpawnLocation)
+					var/obj/machinery/vehicle/V
+					if (istype(pilotSpawnLocation, /turf/space/fluid))
+						V = new/obj/machinery/vehicle/tank/minisub/pilot(pilotSpawnLocation)
+					else											//This part of the code executes only if the map is a space one.
+						V = new/obj/machinery/vehicle/miniputt/pilot(pilotSpawnLocation)
+					if (V)
+						for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
+							qdel(snappedDrone)
+						V.finish_board_pod(src)
+
+				#undef MAX_ALLOWED_ITERATIONS
 
 		if (src.traitHolder && src.traitHolder.hasTrait("sleepy"))
 			var/list/valid_beds = list()
@@ -581,13 +593,13 @@ var/global/totally_random_jobs = FALSE
 /mob/living/carbon/human/proc/equip_sensory_items()
 	if (src.traitHolder.hasTrait("blind"))
 		src.drop_from_slot(src.glasses)
-		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), src.slot_glasses)
+		src.equip_if_possible(new /obj/item/clothing/glasses/visor(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("shortsighted"))
 		src.drop_from_slot(src.glasses)
-		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), src.slot_glasses)
+		src.equip_if_possible(new /obj/item/clothing/glasses/regular(src), SLOT_GLASSES)
 	if (src.traitHolder.hasTrait("deaf"))
 		src.drop_from_slot(src.ears)
-		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), src.slot_ears)
+		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	equip_job_items(JOB, src)
@@ -595,7 +607,7 @@ var/global/totally_random_jobs = FALSE
 		if (src.back?.storage)
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
-				src.equip_if_possible(D, slot_in_backpack)
+				src.equip_if_possible(D, SLOT_IN_BACKPACK)
 				var/datum/computer/file/clone/R = new
 				R.fields["ckey"] = ckey(src.key)
 				R.fields["name"] = src.real_name
@@ -631,27 +643,27 @@ var/global/totally_random_jobs = FALSE
 
 			if(JOB.receives_badge)
 				var/obj/item/clothing/suit/security_badge/B = new /obj/item/clothing/suit/security_badge(src)
-				src.equip_if_possible(B, slot_in_backpack)
+				src.equip_if_possible(B, SLOT_IN_BACKPACK)
 				B.badge_owner_name = src.real_name
 				B.badge_owner_job = src.job
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
 		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
-		src.force_equip(E, slot_in_backpack, TRUE)
+		src.force_equip(E, SLOT_IN_BACKPACK, TRUE)
 		#ifdef UNDERWATER_MAP
 		var/obj/item/clothing/suit/space/diving/civilian/SSW = new /obj/item/clothing/suit/space/diving/civilian(src.loc)
-		src.force_equip(SSW, slot_in_backpack, TRUE)
+		src.force_equip(SSW, SLOT_IN_BACKPACK, TRUE)
 		var/obj/item/clothing/head/helmet/space/engineer/diving/civilian/SHW = new /obj/item/clothing/head/helmet/space/engineer/diving/civilian(src.loc)
-		src.force_equip(SHW, slot_in_backpack, TRUE)
+		src.force_equip(SHW, SLOT_IN_BACKPACK, TRUE)
 		#else
 		var/obj/item/clothing/suit/space/emerg/SSS = new /obj/item/clothing/suit/space/emerg(src.loc)
-		src.force_equip(SSS, slot_in_backpack, TRUE)
+		src.force_equip(SSS, SLOT_IN_BACKPACK, TRUE)
 		var/obj/item/clothing/head/emerg/SHS = new /obj/item/clothing/head/emerg(src.loc)
-		src.force_equip(SHS, slot_in_backpack, TRUE)
+		src.force_equip(SHS, SLOT_IN_BACKPACK, TRUE)
 		#endif
 		src.equip_new_if_possible(/obj/item/clothing/mask/breath, SLOT_WEAR_MASK)
 		var/obj/item/device/gps/GPSDEVICE = new /obj/item/device/gps(src.loc)
-		src.force_equip(GPSDEVICE, slot_in_backpack, TRUE)
+		src.force_equip(GPSDEVICE, SLOT_IN_BACKPACK, TRUE)
 
 	if (src.traitHolder?.hasTrait("stowaway") || src.traitHolder?.hasTrait("pilot"))
 		var/obj/item/device/pda2/pda = locate() in src
@@ -695,18 +707,18 @@ var/global/totally_random_jobs = FALSE
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
 		var/equipped = 0
-		if (src.back?.storage && src.equip_if_possible(trinket, slot_in_backpack))
+		if (src.back?.storage && src.equip_if_possible(trinket, SLOT_IN_BACKPACK))
 			equipped = 1
-		else if (src.belt?.storage && src.equip_if_possible(trinket, slot_in_belt))
+		else if (src.belt?.storage && src.equip_if_possible(trinket, SLOT_IN_BELT))
 			equipped = 1
 		if (!equipped)
-			if (!src.l_store && src.equip_if_possible(trinket, slot_l_store))
+			if (!src.l_store && src.equip_if_possible(trinket, SLOT_L_STORE))
 				equipped = 1
-			else if (!src.r_store && src.equip_if_possible(trinket, slot_r_store))
+			else if (!src.r_store && src.equip_if_possible(trinket, SLOT_R_STORE))
 				equipped = 1
-			else if (!src.l_hand && src.equip_if_possible(trinket, slot_l_hand))
+			else if (!src.l_hand && src.equip_if_possible(trinket, SLOT_L_HAND))
 				equipped = 1
-			else if (!src.r_hand && src.equip_if_possible(trinket, slot_r_hand))
+			else if (!src.r_hand && src.equip_if_possible(trinket, SLOT_R_HAND))
 				equipped = 1
 
 			if (!equipped) // we've tried most available storage solutions here now so uh just put it on the ground
@@ -773,8 +785,8 @@ var/global/totally_random_jobs = FALSE
 		C.access = JOB.access.Copy()
 		C.pronouns = src.get_pronouns()
 
-		if(!src.equip_if_possible(C, slot_wear_id))
-			src.equip_if_possible(C, slot_in_backpack)
+		if(!src.equip_if_possible(C, SLOT_WEAR_ID))
+			src.equip_if_possible(C, SLOT_IN_BACKPACK)
 
 		if(src.pin)
 			C.pin = src.pin
@@ -794,22 +806,22 @@ var/global/totally_random_jobs = FALSE
 		if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
 			cashModifier = 1.25
 
-		var/obj/item/spacecash/S = new /obj/item/spacecash
+		var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
 		S.setup(src,wagesystem.jobs[JOB.name] * cashModifier)
 
-		if (isnull(src.get_slot(slot_r_store)))
-			src.equip_if_possible(S, slot_r_store)
-		else if (isnull(src.get_slot(slot_l_store)))
-			src.equip_if_possible(S, slot_l_store)
+		if (isnull(src.get_slot(SLOT_R_STORE)))
+			src.equip_if_possible(S, SLOT_R_STORE)
+		else if (isnull(src.get_slot(SLOT_L_STORE)))
+			src.equip_if_possible(S, SLOT_L_STORE)
 		else
-			src.equip_if_possible(S, slot_in_backpack)
+			src.equip_if_possible(S, SLOT_IN_BACKPACK)
 	else
 		var/shitstore = rand(1,3)
 		switch(shitstore)
 			if(1)
-				src.equip_new_if_possible(/obj/item/pen, slot_r_store)
+				src.equip_new_if_possible(/obj/item/pen, SLOT_R_STORE)
 			if(2)
-				src.equip_new_if_possible(/obj/item/reagent_containers/food/drinks/water, slot_r_store)
+				src.equip_new_if_possible(/obj/item/reagent_containers/food/drinks/water, SLOT_R_STORE)
 
 
 /mob/living/carbon/human/proc/JobEquipSpawned(rank, no_special_spawn)
@@ -830,58 +842,127 @@ var/global/totally_random_jobs = FALSE
 
 	return
 
-// Convert mob to generic hard mode traitor or alternatively agimmick
-proc/antagify(mob/H, var/traitor_role, var/agimmick, var/do_objectives)
-	if (!(H.mind))
-		message_admins("Attempted to antagify [H] but could not find mind")
-		logTheThing(LOG_DEBUG, H, "Attempted to antagify [H] but could not find mind.")
-		return
-	if (!agimmick)
-		if (do_objectives)
-			var/list/eligible_objectives = typesof(/datum/objective/regular/) + typesof(/datum/objective/escape/) - /datum/objective/regular/
-			var/num_objectives = rand(1,3)
-			for(var/i = 0, i < num_objectives, i++)
-				var/select_objective = pick(eligible_objectives)
-				new select_objective(null, H.mind)
-				H.show_antag_popup("traitorhard")
-				ticker.mode.traitors |= H.mind
-	else
-		ticker.mode.Agimmicks |= H.mind
-		H.show_antag_popup("traitorgeneric")
-	if (traitor_role)
-		H.mind.special_role = traitor_role
-	else
-		H.mind.special_role = H.name
-
 //////////////////////////////////////////////
 // cogwerks - personalized trinkets project //
 /////////////////////////////////////////////
 
-var/list/trinket_safelist = list(/obj/item/basketball,/obj/item/instrument/bikehorn, /obj/item/brick, /obj/item/clothing/glasses/eyepatch,
-/obj/item/clothing/glasses/regular, /obj/item/clothing/glasses/sunglasses/tanning, /obj/item/clothing/gloves/boxing,
-/obj/item/clothing/mask/horse_mask, /obj/item/clothing/mask/clown_hat, /obj/item/clothing/head/cowboy, /obj/item/clothing/shoes/cowboy, /obj/item/clothing/shoes/moon,
-/obj/item/clothing/suit/sweater, /obj/item/clothing/suit/sweater/red, /obj/item/clothing/suit/sweater/green, /obj/item/clothing/suit/sweater/grandma, /obj/item/clothing/under/shorts,
-/obj/item/clothing/under/suit/pinstripe, /obj/item/cigpacket, /obj/item/coin, /obj/item/crowbar, /obj/item/pen/crayon/lipstick,
-/obj/item/dice, /obj/item/dice/d20, /obj/item/device/light/flashlight, /obj/item/device/key/random, /obj/item/extinguisher, /obj/item/firework,
-/obj/item/football, /obj/item/stamped_bullion, /obj/item/instrument/harmonica, /obj/item/horseshoe,
-/obj/item/kitchen/utensil/knife, /obj/item/raw_material/rock, /obj/item/pen/fancy, /obj/item/pen/odd, /obj/item/plant/herb/cannabis/spawnable,
-/obj/item/razor_blade,/obj/item/rubberduck, /obj/item/instrument/saxophone, /obj/item/scissors, /obj/item/screwdriver, /obj/item/skull, /obj/item/stamp,
-/obj/item/instrument/vuvuzela, /obj/item/wrench, /obj/item/device/light/zippo, /obj/item/reagent_containers/food/drinks/bottle/beer, /obj/item/reagent_containers/food/drinks/bottle/vintage,
-/obj/item/reagent_containers/food/drinks/bottle/vodka, /obj/item/reagent_containers/food/drinks/bottle/rum, /obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
-/obj/item/reagent_containers/food/snacks/burger, /obj/item/reagent_containers/food/snacks/burger/cheeseburger,
-/obj/item/reagent_containers/food/snacks/burger/moldy,/obj/item/reagent_containers/food/snacks/candy/chocolate, /obj/item/reagent_containers/food/snacks/chips,
-/obj/item/reagent_containers/food/snacks/cookie,/obj/item/reagent_containers/food/snacks/ingredient/egg,
-/obj/item/reagent_containers/food/snacks/ingredient/egg/bee,/obj/item/reagent_containers/food/snacks/plant/apple,
-/obj/item/reagent_containers/food/snacks/plant/banana, /obj/item/reagent_containers/food/snacks/plant/potato, /obj/item/reagent_containers/food/snacks/sandwich/pb,
-/obj/item/reagent_containers/food/snacks/sandwich/cheese, /obj/item/reagent_containers/syringe/krokodil, /obj/item/reagent_containers/syringe/morphine,
-/obj/item/reagent_containers/patch/LSD, /obj/item/reagent_containers/patch/lsd_bee, /obj/item/reagent_containers/patch/nicotine, /obj/item/reagent_containers/glass/bucket, /obj/item/reagent_containers/glass/beaker,
-/obj/item/reagent_containers/food/drinks/drinkingglass, /obj/item/reagent_containers/food/drinks/drinkingglass/shot,/obj/item/storage/pill_bottle/bathsalts,
-/obj/item/storage/pill_bottle/catdrugs, /obj/item/storage/pill_bottle/crank, /obj/item/storage/pill_bottle/cyberpunk, /obj/item/storage/pill_bottle/methamphetamine,
-/obj/item/spraybottle,/obj/item/staple_gun,/obj/item/clothing/head/NTberet,/obj/item/clothing/head/biker_cap, /obj/item/clothing/head/black, /obj/item/clothing/head/blue,
-/obj/item/clothing/head/chav, /obj/item/clothing/head/det_hat, /obj/item/clothing/head/green, /obj/item/clothing/head/helmet/hardhat, /obj/item/clothing/head/merchant_hat,
-/obj/item/clothing/head/mj_hat, /obj/item/clothing/head/red, /obj/item/clothing/head/that, /obj/item/clothing/head/wig, /obj/item/clothing/head/turban, /obj/item/dice/magic8ball,
-/obj/item/reagent_containers/food/drinks/mug/random_color, /obj/item/reagent_containers/food/drinks/skull_chalice, /obj/item/pen/marker/random, /obj/item/pen/crayon/random,
-/obj/item/clothing/gloves/yellow/unsulated, /obj/item/reagent_containers/food/snacks/fortune_cookie, /obj/item/instrument/triangle, /obj/item/instrument/tambourine, /obj/item/instrument/cowbell,
-/obj/item/toy/plush/small/bee, /obj/item/paper/book/from_file/the_trial, /obj/item/paper/book/from_file/deep_blue_sea, /obj/item/clothing/suit/bedsheet/cape/red, /obj/item/disk/data/cartridge/clown,
-/obj/item/clothing/mask/cigarette/cigar, /obj/item/device/light/sparkler, /obj/item/toy/sponge_capsule, /obj/item/reagent_containers/food/snacks/plant/pear, /obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
-/obj/item/seed/alien)
+var/list/trinket_safelist = list(
+	/obj/item/basketball,
+	/obj/item/instrument/bikehorn,
+	/obj/item/brick,
+	/obj/item/clothing/glasses/eyepatch,
+	/obj/item/clothing/glasses/regular,
+	/obj/item/clothing/glasses/sunglasses/tanning,
+	/obj/item/clothing/gloves/boxing,
+	/obj/item/clothing/mask/horse_mask,
+	/obj/item/clothing/mask/clown_hat,
+	/obj/item/clothing/head/cowboy,
+	/obj/item/clothing/shoes/cowboy,
+	/obj/item/clothing/shoes/moon,
+	/obj/item/clothing/suit/sweater,
+	/obj/item/clothing/suit/sweater/red,
+	/obj/item/clothing/suit/sweater/green,
+	/obj/item/clothing/suit/sweater/grandma,
+	/obj/item/clothing/under/shorts,
+	/obj/item/clothing/under/suit/pinstripe,
+	/obj/item/cigpacket,
+	/obj/item/coin,
+	/obj/item/crowbar,
+	/obj/item/pen/crayon/lipstick,
+	/obj/item/dice,
+	/obj/item/dice/d20,
+	/obj/item/device/light/flashlight,
+	/obj/item/device/key/random,
+	/obj/item/extinguisher,
+	/obj/item/firework,
+	/obj/item/football,
+	/obj/item/stamped_bullion,
+	/obj/item/instrument/harmonica,
+	/obj/item/horseshoe,
+	/obj/item/kitchen/utensil/knife,
+	/obj/item/raw_material/rock,
+	/obj/item/pen/fancy,
+	/obj/item/pen/odd,
+	/obj/item/plant/herb/cannabis/spawnable,
+	/obj/item/razor_blade,
+	/obj/item/rubberduck,
+	/obj/item/instrument/saxophone,
+	/obj/item/scissors,
+	/obj/item/screwdriver,
+	/obj/item/skull,
+	/obj/item/stamp,
+	/obj/item/instrument/vuvuzela,
+	/obj/item/wrench,
+	/obj/item/device/light/zippo,
+	/obj/item/reagent_containers/food/drinks/bottle/beer,
+	/obj/item/reagent_containers/food/drinks/bottle/vintage,
+	/obj/item/reagent_containers/food/drinks/bottle/vodka,
+	/obj/item/reagent_containers/food/drinks/bottle/rum,
+	/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+	/obj/item/reagent_containers/food/snacks/burger,
+	/obj/item/reagent_containers/food/snacks/burger/cheeseburger,
+	/obj/item/reagent_containers/food/snacks/burger/moldy,
+	/obj/item/reagent_containers/food/snacks/candy/chocolate,
+	/obj/item/reagent_containers/food/snacks/chips,
+	/obj/item/reagent_containers/food/snacks/cookie,
+	/obj/item/reagent_containers/food/snacks/ingredient/egg,
+	/obj/item/reagent_containers/food/snacks/ingredient/egg/bee,
+	/obj/item/reagent_containers/food/snacks/plant/apple,
+	/obj/item/reagent_containers/food/snacks/plant/banana,
+	/obj/item/reagent_containers/food/snacks/plant/potato,
+	/obj/item/reagent_containers/food/snacks/sandwich/pb,
+	/obj/item/reagent_containers/food/snacks/sandwich/cheese,
+	/obj/item/reagent_containers/syringe/krokodil,
+	/obj/item/reagent_containers/syringe/morphine,
+	/obj/item/reagent_containers/patch/LSD,
+	/obj/item/reagent_containers/patch/lsd_bee,
+	/obj/item/reagent_containers/patch/nicotine,
+	/obj/item/reagent_containers/glass/bucket,
+	/obj/item/reagent_containers/glass/beaker,
+	/obj/item/reagent_containers/food/drinks/drinkingglass,
+	/obj/item/reagent_containers/food/drinks/drinkingglass/shot,
+	/obj/item/storage/pill_bottle/bathsalts,
+	/obj/item/storage/pill_bottle/catdrugs,
+	/obj/item/storage/pill_bottle/crank,
+	/obj/item/storage/pill_bottle/cyberpunk,
+	/obj/item/storage/pill_bottle/methamphetamine,
+	/obj/item/spraybottle,
+	/obj/item/staple_gun,
+	/obj/item/clothing/head/NTberet,
+	/obj/item/clothing/head/biker_cap,
+	/obj/item/clothing/head/black,
+	/obj/item/clothing/head/blue,
+	/obj/item/clothing/head/chav,
+	/obj/item/clothing/head/det_hat,
+	/obj/item/clothing/head/green,
+	/obj/item/clothing/head/helmet/hardhat,
+	/obj/item/clothing/head/merchant_hat,
+	/obj/item/clothing/head/mj_hat,
+	/obj/item/clothing/head/red,
+	/obj/item/clothing/head/that,
+	/obj/item/clothing/head/wig,
+	/obj/item/clothing/head/turban,
+	/obj/item/dice/magic8ball,
+	/obj/item/reagent_containers/food/drinks/mug/random_color,
+	/obj/item/reagent_containers/food/drinks/skull_chalice,
+	/obj/item/pen/marker/random,
+	/obj/item/pen/crayon/random,
+	/obj/item/clothing/gloves/yellow/unsulated,
+	/obj/item/reagent_containers/food/snacks/fortune_cookie,
+	/obj/item/instrument/triangle,
+	/obj/item/instrument/tambourine,
+	/obj/item/instrument/cowbell,
+	/obj/item/toy/plush/small/bee,
+	/obj/item/paper/book/from_file/the_trial,
+	/obj/item/paper/book/from_file/deep_blue_sea,
+	/obj/item/clothing/suit/bedsheet/cape/red,
+	/obj/item/disk/data/cartridge/clown,
+	/obj/item/clothing/mask/cigarette/cigar,
+	/obj/item/device/light/sparkler,
+	/obj/item/toy/sponge_capsule,
+	/obj/item/reagent_containers/food/snacks/plant/pear,
+	/obj/item/reagent_containers/food/snacks/donkpocket/honk/warm,
+	/obj/item/seed/alien,
+	/obj/item/boarvessel,
+	/obj/item/boarvessel/forgery
+)

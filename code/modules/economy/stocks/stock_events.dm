@@ -171,7 +171,7 @@ ABSTRACT_TYPE(/datum/stock/event)
 				offenses = offense
 			else
 				offenses += ", [offense]"
-		while (prob(60) && O.len > 2)
+		while (prob(60) && length(O) > 2)
 		offenses += " and [prob(20) ? "attempted " : null][pick(O)]" // lazy
 		S.addEvent(src)
 

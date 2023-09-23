@@ -168,6 +168,7 @@ TRAYS
 
 	New()
 		..()
+		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/double)
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -379,7 +380,7 @@ TRAYS
 				A:lastattackertime = world.time
 			random_brute_damage(C, 15, 1)
 			take_bleeding_damage(C, null, 10, DAMAGE_CUT)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 
 /obj/item/kitchen/utensil/knife/bread
 	name = "bread knife"
@@ -454,9 +455,12 @@ TRAYS
 		allowed_food = /obj/item/reagent_containers/food/snacks/ingredient/egg
 		contained_food_name = "egg"
 
+		rancher
+			count = 4
+
 	lollipop
 		name = "lollipop bowl"
-		desc = "A little bowl of sugar-free lollipops, totally healthy in every way! They're medicinal, after all!"
+		desc = "A little bowl of lollipops, totally healthy in every way! They're medicinal, after all!"
 		icon_state = "lpop8"
 		count = 8
 		max_count = 8
@@ -465,6 +469,18 @@ TRAYS
 		contained_food = /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
 		allowed_food = /obj/item/reagent_containers/food/snacks/candy/lollipop
 		contained_food_name = "lollipop"
+		w_class = W_CLASS_SMALL
+
+	sugar_box
+		name = "sugar cubes"
+		desc = "A box containing sugar cubes, for sweetening both your day AND your coffee."
+		icon_state = "sugarbox"
+		count = 6
+		max_count = 6
+		box_type = "sugarbox"
+		contained_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
+		allowed_food = /obj/item/reagent_containers/food/snacks/candy/sugar_cube
+		contained_food_name = "sugar cube"
 		w_class = W_CLASS_SMALL
 
 	New()
@@ -507,7 +523,7 @@ TRAYS
 			return
 		src.add_fingerprint(user)
 		var/list/obj/item/reagent_containers/food/snacks/myFoodList = src.contents
-		if(myFoodList.len >= 1)
+		if(length(myFoodList) >= 1)
 			var/obj/item/reagent_containers/food/snacks/myFood = myFoodList[myFoodList.len]
 			if(src.count >= 1)
 				src.count--
@@ -615,12 +631,16 @@ TRAYS
 						// This will fail for non-edibles so we can just blindfire the proc at everything
 						src.add_contents(food_maybe)
 
-	proc/check_height()
+	proc/check_height(obj/item/plate/other) //we go down and then we go up because plates are bidirectional like that
 		. = 1
 		var/obj/item/plate/curr = src
 		while(istype(curr.loc, /obj/item/plate))
 			curr = curr.loc
 			.++
+		curr = (locate(/obj/item/plate) in other)
+		while (curr)
+			.++
+			curr = (locate(/obj/item/plate) in curr)
 
 	/// Attempts to add an item to the plate, if there's space. Returns TRUE if food is successfully added.
 	proc/add_contents(obj/item/food, mob/user, click_params)
@@ -637,7 +657,7 @@ TRAYS
 			if (src.plate_stacked)
 				boutput(user, "<span class='alert'>You can't stack anything on [src], it already has a plate stacked on it!</span>")
 				return
-			if (src.check_height() >= 7)
+			if (src.check_height(food) >= 7)
 				boutput(user, "<span class='alert'>You can't stack anything on [src], it's already stacked too high!</span>")
 				return
 
@@ -660,14 +680,14 @@ TRAYS
 
 		. = TRUE // If we got this far it's a valid plate content
 
+		src.place_on(food, user, click_params) // this handles pixel positioning
+		food.set_loc(src)
+
 		if (istype(food, /obj/item/plate/))
 			src.plate_stacked = TRUE
 		else
 			src.food_inside += food
 			src.space_left -= food.w_class
-
-		src.place_on(food, user, click_params) // this handles pixel positioning
-		food.set_loc(src)
 		src.vis_contents += food
 		food.appearance_flags |= RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM
 		food.vis_flags |= VIS_INHERIT_PLANE | VIS_INHERIT_LAYER
@@ -679,6 +699,8 @@ TRAYS
 
 	/// Removes a piece of food from the plate.
 	proc/remove_contents(obj/item/food)
+		if (!(food in src.contents))
+			return
 		MOVE_OUT_TO_TURF_SAFE(food, src)
 		src.vis_contents -= food
 		food.appearance_flags = initial(food.appearance_flags)
@@ -728,13 +750,13 @@ TRAYS
 
 	/// The plate shatters into shards and tosses its contents around.
 	proc/shatter(depth = 1)
-		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, TRUE)
 		var/turf/T = get_turf(src)
 		for (var/i in 1 to (2 - (depth > 1)))
 			var/obj/O = new /obj/item/raw_material/shard/glass
 			O.set_loc(T)
 			if(src.material)
-				O.setMaterial(copyMaterial(src.material))
+				O.setMaterial(src.material)
 			O.throw_at(get_offset_target_turf(T, rand(-4,4), rand(-4,4)), 7, 1)
 
 		src.shit_goes_everywhere(depth + 1)
@@ -754,10 +776,33 @@ TRAYS
 		if (isitem(a) && can_reach(user, src) && can_reach(user, a))
 			src.add_contents(a, user, params2list(params))
 
-	attack_self(mob/user) // in case you only have one arm or you stacked too many MONSTERs or something just dump a random piece of food
+	// in case you only have one arm or you stacked too many MONSTERs or something just dump a random piece of food
+	// chefs are too fancy for that and will instead get to name the dish
+	attack_self(mob/user)
 		. = ..()
-		if (length(src.contents))
-			src.remove_contents(pick(src.contents))
+		if(user.traitHolder?.hasTrait("training_chef"))
+			tooltip_rebuild = TRUE
+			var/holder = src.loc
+			var/str = copytext(html_encode(tgui_input_text(user, "Dish name?", "Set name")), 1, 64)
+
+			if (!length(str))
+				return
+
+			phrase_log.log_phrase("dish_name", str, no_duplicates=TRUE)
+
+			if (src.loc != holder)
+				return
+			if(url_regex?.Find(str))
+				return
+			if (length(str) > 64)
+				boutput(user, "<span class='alert'>Name too long.</span>")
+				return
+			src.name = "'[str]'"
+			boutput(user, "<span class='notice'>You name the dish '[str]'.</span>")
+			logTheThing(LOG_STATION, user, "names a dish \"[str]\".")
+		else
+			if (length(src.contents))
+				src.remove_contents(pick(src.contents))
 
 	attack(mob/M, mob/user)
 		if(user.a_intent == INTENT_HARM && src.is_plate)
@@ -998,13 +1043,13 @@ TRAYS
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
-		playsound(src, 'sound/weapons/trayhit.ogg', 25, 1)
+		playsound(src, 'sound/weapons/trayhit.ogg', 25, TRUE)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
 
 		if(tray_health == 0) //breakable trays because you flew too close to the sun, you tried to have unlimited damage AND stuns you fool, your hubris is too fat, too wide
 			src.visible_message("<b>\The [src] shatters!</b>")
-			playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 70, 1)
+			playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 70, TRUE)
 			new /obj/item/scrap(src.loc)
 			qdel(src)
 			return
@@ -1069,9 +1114,9 @@ TRAYS
 					skip = "ALL"
 				var/ingredienttype
 				if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat)) //setting ingredient type for the roller overlays
-					if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish))
+					if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet))
 						if(!fishflag)
-							if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/small))
+							if(istype(FOOD,/obj/item/reagent_containers/food/snacks/ingredient/meat/fish/fillet/small))
 								fishflag = "fillet-white"
 							else
 								fishflag = FOOD.icon_state
@@ -1179,14 +1224,6 @@ TRAYS
 	desc = "a table! with wheels!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "kitchen_island"
-
-/obj/item/fish/random // used by the Wholetuna Cordata plant
-	New()
-		..()
-		SPAWN(0)
-			var/fish = pick(/obj/item/fish/salmon,/obj/item/fish/carp,/obj/item/fish/bass)
-			new fish(get_turf(src))
-			qdel(src)
 
 /obj/item/tongs
 	name = "tongs"

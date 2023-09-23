@@ -192,7 +192,7 @@
 /turf/unsimulated/floor/cave,
 /area/shuttle/escape/centcom)
 "gI" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -200,7 +200,7 @@
 	},
 /area/centcom)
 "gJ" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-L"
 	},
@@ -320,7 +320,7 @@
 /turf/unsimulated/floor/cave,
 /area/shuttle/escape/centcom)
 "mg" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/cave,
 /area/shuttle/escape/centcom)
 "mq" = (
@@ -502,7 +502,7 @@
 	},
 /area/centcom)
 "xe" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-M"
 	},
@@ -771,7 +771,7 @@
 /turf/unsimulated/floor/cave,
 /area/shuttle/escape/centcom)
 "Ms" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/cave,
 /area/shuttle/escape/centcom)
 "Ng" = (
@@ -809,7 +809,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "PO" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	icon_state = "alt_heater-R"
 	},
@@ -1024,7 +1024,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "ZQ" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";

@@ -4,7 +4,6 @@
 	max_stages = 3
 	spread = "The patient's appendicitis is dangerously enlarged"
 	cure = "Removal of organ"
-	reagentcure = list("organ_drug3")
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1
@@ -46,9 +45,9 @@
 				H.ailments -= src
 				return
 			if (probmult(10))
-				H.vomit()
-				H.visible_message("<span class='alert'>[H] suddenly and violently vomits!</span>")
-			else if (probmult(2))
+				var/vomit_message = "<span class='alert'>[H] suddenly and violently vomits!</span>"
+				H.vomit(0, null, vomit_message)
+			else if (probmult(2) && !H.reagents?.has_reagent("promethazine"))
 				H.visible_message("<span class='alert'>[H] vomits blood!</span>")
 				playsound(H.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
 				random_brute_damage(H, rand(5,8))

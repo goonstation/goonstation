@@ -1,6 +1,6 @@
 /mob/living/critter/robotic/drone
-	name = "Drone"
-	real_name = "Drone"
+	name = "drone"
+	real_name = "drone"
 	var/drone_designation = "SC"
 	var/num_max = 999
 	desc = "An armed and automated Syndicate scout drone."
@@ -23,6 +23,8 @@
 	var/list/loot_table = list()
 	var/smashes_shit = 1
 	var/list/alert_sounds = list('sound/machines/whistlealert.ogg', 'sound/machines/whistlebeep.ogg')
+
+	faction = FACTION_SYNDICATE
 
 	New()
 		..()

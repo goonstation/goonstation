@@ -71,7 +71,7 @@
 					affecting.layer = initial(affecting.layer)
 				affecting.pixel_x = initial(affecting.pixel_x)
 				affecting.pixel_y = initial(affecting.pixel_y)
-				affecting.set_density(1)
+				affecting.set_density(initial(affecting.density))
 
 
 			if (state == GRAB_PIN)
@@ -137,6 +137,15 @@
 
 		UpdateIcon()
 
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if (state >= GRAB_AGGRESSIVE && !istype(target,/turf))
+			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container())
+				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src.affecting] [log_reagents(src.affecting)] to [target] at [log_loc(user)].")
+				var/trans = src.affecting.reagents.trans_to(target, 10)
+				if (trans)
+					boutput(user, "<span class='notice'>You dump [trans] units of the solution from [src.affecting] to [target].</span>")
+
 	attack(atom/target, mob/user)
 		if (check())
 			return
@@ -149,7 +158,7 @@
 
 
 	proc/process_kill(var/mob/living/carbon/human/H, mult = 1)
-		if(H)
+		if(H && !ischangeling(H))
 			choke_count += 1 * mult
 			H.remove_stamina((STAMINA_REGEN+8.5) * mult)
 			H.stamina_stun(mult)
@@ -167,7 +176,7 @@
 		if (!isturf(src.assailant.loc) || !(BOUNDS_DIST(src.assailant, src.affecting) == 0))
 			return
 
-		actions.interrupt(src.affecting, INTERRUPT_ALWAYS)
+		actions.interrupt(src.affecting, INTERRUPT_MOVE)
 
 		var/pxo = 0
 		var/pyo = 0
@@ -281,7 +290,8 @@
 		//src.affecting.stunned = max(src.affecting.stunned, 3)
 		if (ishuman(src.affecting))
 			var/mob/living/carbon/human/H = src.affecting
-			H.set_stamina(min(0, H.stamina))
+			if (!ischangeling(H))
+				H.set_stamina(min(0, H.stamina))
 
 		if (isliving(src.affecting))
 			src.affecting:was_harmed(src.assailant)
@@ -570,6 +580,8 @@
 
 	src.Bumped(M)
 	random_brute_damage(G.affecting, rand(2,3))
+	src.material_trigger_when_attacked(G.affecting, user, 1)
+	G.affecting.material_on_attack_use(user, src)
 	G.affecting.TakeDamage("chest", rand(4,5))
 	playsound(G.affecting.loc, "punch", 25, 1, -1)
 
@@ -577,6 +589,32 @@
 	G.dispose()
 	return 1
 
+/turf/grab_smash(obj/item/grab/G, mob/user)
+	var/mob/affecting = G.affecting //the parent disposes G
+	if(..())
+		var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
+		affecting.do_disorient(40, disorient = duration, stack_stuns = FALSE)
+
+/obj/window/grab_smash(obj/item/grab/G, mob/user)
+	if (!ismob(G.affecting) || BOUNDS_DIST(G.affecting, src) != 0)
+		return
+	G.affecting.TakeDamage("head", 5, 0)
+	src.damage_blunt(10)
+	if (QDELETED(src))
+		src.visible_message("<span class='alert'><B>[user] smashes [G.affecting]'s head straight through [src]!</B></span>")
+		logTheThing(LOG_COMBAT, user, "smashes [constructTarget(user,"combat")]'s head through [src]")
+		take_bleeding_damage(G.affecting, user, 15, DAMAGE_CUT, TRUE)
+		playsound(src.loc, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 50, 1)
+	else
+		src.visible_message("<span class='alert'><B>[user] slams [G.affecting]'s head into [src]!</B></span>")
+		logTheThing(LOG_COMBAT, user, "slams [constructTarget(user,"combat")]'s head into [src]")
+		playsound(src.loc, src.hitsound , 100, 1)
+
+	var/duration = (G.state > 0) ? 4 SECONDS : 2 SECONDS
+	G.affecting.do_disorient(20, disorient = duration, stack_stuns = FALSE)
+
+	G.dispose()
+	return 1
 
 /turf/simulated/floor/grab_smash(obj/item/grab/G as obj, mob/user as mob)
 	var/mob/M = G.affecting
@@ -597,24 +635,6 @@
 	attack_particle(user,src)
 
 /turf/unsimulated/floor/grab_smash(obj/item/grab/G as obj, mob/user as mob)
-	var/mob/M = G.affecting
-
-	if  (!(ismob(G.affecting)))
-		return 0
-
-	if (BOUNDS_DIST(src, M) > 0)
-		return 0
-
-	if (!G.can_pin)
-		return 0
-
-	if (isliving(G.affecting))
-		G.affecting:was_harmed(G.assailant)
-
-	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
-	attack_particle(user,src)
-
-/obj/fluid/grab_smash(obj/item/grab/G as obj, mob/user as mob)
 	var/mob/M = G.affecting
 
 	if  (!(ismob(G.affecting)))
@@ -822,8 +842,9 @@
 
 
 		if (assailant)
-			assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
-			assailant.delStatus("blocking")
+			if(assailant.hasStatus("blocking"))
+				assailant.visible_message("<span class='alert'>[assailant] lowers their defenses!</span>")
+				assailant.delStatus("blocking")
 			assailant.last_resist = world.time + COMBAT_BLOCK_DELAY
 		..()
 
@@ -873,13 +894,13 @@
 /obj/item/grab/block/proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
 	switch(hit_type)
 		if (DAMAGE_BLUNT)
-			playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, TRUE, -1)
 		if (DAMAGE_CUT)
-			playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, TRUE, -1)
 		if (DAMAGE_STAB)
-			playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, TRUE, -1)
 		if (DAMAGE_BURN)
-			playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, TRUE, -1)
 
 /obj/item/grab/block/handle_throw(mob/living/user, atom/target)
 	if (isturf(user.loc) && target)
@@ -913,11 +934,15 @@
 							damage += H.limbs.r_leg.limb_hit_bonus
 						else if (H.limbs.l_leg)
 							damage += H.limbs.l_leg.limb_hit_bonus
-
-					dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
-					playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
-					for (var/mob/O in AIviewers(user))
-						O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
+					if(issilicon(dive_attack_hit))
+						playsound(src.loc, 'sound/impact_sounds/Metal_Clang_3.ogg', 60, 1)
+						for (var/mob/O in AIviewers(user))
+							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!")
+					else
+						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
+						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
+						for (var/mob/O in AIviewers(user))
+							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
 					logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")
 
 

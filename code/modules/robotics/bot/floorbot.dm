@@ -162,9 +162,7 @@
 		src.UpdateIcon()
 	//Regular ID
 	else
-		if (istype(W, /obj/item/device/pda2) && W:ID_card)
-			W = W:ID_card
-		if (istype(W, /obj/item/card/id))
+		if (istype(get_id_card(W), /obj/item/card/id))
 			if (src.allowed(user))
 				src.locked = !src.locked
 				boutput(user, "You [src.locked ? "lock" : "unlock"] the [src] behaviour controls.")
@@ -542,7 +540,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		attack_twitch(master)
-		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 
 	onInterrupt()
 		. = ..()
@@ -552,7 +550,7 @@
 		..()
 		if (!master.target)
 			return
-		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 		if (new_tile)
 			// Make a new tile
 			var/obj/item/tile/T = new /obj/item/tile/steel
@@ -604,7 +602,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		attack_twitch(master)
-		playsound(master, 'sound/items/Welder.ogg', 50, 1)
+		playsound(master, 'sound/items/Welder.ogg', 50, TRUE)
 
 	onInterrupt()
 		. = ..()
@@ -612,7 +610,7 @@
 
 	onEnd()
 		..()
-		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+		playsound(master, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 		var/turf/simulated/floor/T = master.target
 		if(!istype(T))
 			interrupt(INTERRUPT_ALWAYS)

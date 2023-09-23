@@ -325,8 +325,8 @@ datum
 				if(M.health > 20)
 					M.take_toxin_damage(5 * mult, 1)	//calomel doesn't damage organs.
 				if(probmult(6))
-					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>")
-					M.vomit()
+					var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+					M.vomit(0, null, vomit_message)
 				if(probmult(4))
 					M.emote("piss")
 				..()
@@ -373,11 +373,12 @@ datum
 					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(15 * mult))
 				else if(M.bodytemperature > M.base_body_temp)
 					M.bodytemperature = max(M.base_body_temp, M.bodytemperature-(15 * mult))
-				var/oxyloss = M.get_oxygen_deprivation()
-				M.take_oxygen_deprivation(-INFINITY)
-				M.take_brain_damage(oxyloss * 0.025)
-				..()
-				return
+				if(volume >= 1)
+					var/oxyloss = M.get_oxygen_deprivation()
+					M.take_oxygen_deprivation(-INFINITY)
+					M.take_brain_damage(oxyloss / 15)
+					..()
+					return
 
 		medical/synthflesh
 			name = "synthetic flesh"
@@ -411,6 +412,7 @@ datum
 							repair_bleeding_damage(H, 80, 2)
 						if (ishuman(M))
 							var/mob/living/carbon/human/healed = M
+							healed.heal_slash_wound("all")
 							healed.heal_laser_wound("all")
 
 					var/silent = 0
@@ -430,12 +432,12 @@ datum
 
 			reaction_turf(var/turf/T, var/volume)
 				var/list/covered = holder.covered_turf()
-				if (covered.len > 9)
+				if (length(covered) > 9)
 					volume = (volume/covered.len)
 
 				if(volume >= 5)
 					if(!locate(/obj/decal/cleanable/blood/gibs) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable(/obj/decal/cleanable/blood/gibs,T)
 			/*reaction_obj(var/obj/O, var/volume)
 				if(istype(O,/obj/item/parts/robot_parts/robot_frame))
@@ -489,15 +491,15 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if( effect <= 1)
-						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+						M.vomit(0, null, vomit_message)
 					else if (effect <= 3) M.emote(pick("groan","moan"))
 					if (effect <= 8)
 						M.take_toxin_damage(1 * mult)
 				else if (severity == 2)
 					if( effect <= 2)
-						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+						M.vomit(0, null, vomit_message)
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes crazed and bloodshot!</span>")
 						M.dizziness += 8
@@ -822,14 +824,14 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if( effect <= 1)
-						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+						M.vomit(0, null, vomit_message)
 					else if (effect <= 3) M.emote(pick("groan","moan"))
 					if (effect <= 8) M.emote("collapse")
 				else if (severity == 2)
 					if( effect <= 2)
-						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+						M.vomit(0, null, vomit_message)
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
 						M.dizziness += 2
@@ -863,11 +865,11 @@ datum
 				if (severity == 1) //lesser
 					if (effect <= 2)
 						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
-						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
-						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 				else if (severity == 2) // greater
 					if (effect <= 2)
@@ -880,14 +882,14 @@ datum
 								LAGCHECK(LAG_LOW)
 								if (prob(40))
 									check.add_blood(H)
-							H.set_clothing_icon_dirty()
+							H.update_blood_all()
 					else if (effect <= 4)
 						M.visible_message("<span class='alert'>[M] coughs up a lot of blood!</span>")
-						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 						bleed(M, rand(5,10) * mult, 3 * mult)
 					else if (effect <= 8)
 						M.visible_message("<span class='alert'>[M] coughs up a little blood!</span>")
-						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+						playsound(M, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 						bleed(M, rand(1,2) * mult, 1 * mult)
 
 		medical/proconvertin // old name for factor VII, which is a protein that causes blood to clot. this stuff is seemingly just used for people with hemophilia but this is ss13 so let's give it to everybody who's bleeding a little, it's fine.
@@ -902,8 +904,8 @@ datum
 			depletion_rate = 0.3
 			overdose = 10
 			threshold = THRESHOLD_INIT
-			
-			
+
+
 			cross_threshold_over()
 				if(ismob(holder?.my_atom))
 					var/mob/M = holder.my_atom
@@ -968,7 +970,7 @@ datum
 						L.emote("cough")
 					else if (severity > 1 && prob(50))
 						L.visible_message("<span class='alert'>[L] coughs up a little blood!</span>")
-						playsound(L, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, 1)
+						playsound(L, 'sound/impact_sounds/Slimy_Splat_1.ogg', 30, TRUE)
 						bleed(L, rand(2,8) * mult, 3 * mult)
 					if (ishuman(M))
 						var/mob/living/carbon/human/H = M
@@ -1083,6 +1085,36 @@ datum
 				if (DNA.endurance < 0 && prob(50))
 					DNA.endurance++
 
+		medical/promethazine // This stops you from vomiting
+			name = "promethazine"
+			id = "promethazine"
+			description = "Promethazine is a anti-emetic agent."
+			reagent_state = LIQUID
+			fluid_r = 180
+			fluid_g = 255
+			fluid_b = 140
+			depletion_rate = 0.4
+			overdose = 100
+
+			do_overdose(var/severity, var/mob/M, var/mult = 1)
+				var/effect = ..(severity, M)
+				if (severity == 1)
+					if (effect <= 5)
+						boutput(M, "<span class='alert'><b>You feel tired.</b></span>")
+						M.changeStatus("slowed", 4 SECONDS)
+					if (effect <= 10)
+						boutput(M, "<span class='alert'><b>Your [pick("mouth", "tongue")] feels dry.</b></span>")
+				else if (severity == 2)
+					if (effect <= 5)
+						boutput(M, "<span class='alert'><b>You feel tired and dizzy.</b></span>")
+						M.dizziness += 8
+						M.changeStatus("slowed", 4 SECONDS)
+					else if (effect <= 12)
+						boutput(M, "<span class='alert'><b>Your vision blurs.</b></span>")
+						M.change_eye_blurry(4, 4)
+				..()
+				return
+
 		medical/ephedrine // COGWERKS CHEM REVISION PROJECT. poor man's epinephrine
 			name = "ephedrine"
 			id = "ephedrine"
@@ -1134,15 +1166,15 @@ datum
 				var/effect = ..(severity, M)
 				if (severity == 1)
 					if( effect <= 1)
-						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+						M.vomit(0, null, vomit_message)
 					else if (effect <= 3) M.emote(pick("groan","moan"))
 					if (effect <= 8)
 						M.take_toxin_damage(1 * mult)
 				else if (severity == 2)
 					if( effect <= 2)
-						M.visible_message("<span class='alert'>[M.name] suddenly and violently vomits!</span>")
-						M.vomit()
+						var/vomit_message = "<span class='alert'>[M.name] suddenly and violently vomits!</span>"
+						M.vomit(0, null, vomit_message)
 						M.add_karma(1)
 					else if (effect <= 5)
 						M.visible_message("<span class='alert'><b>[M.name]</b> staggers and drools, their eyes bloodshot!</span>")
@@ -1540,8 +1572,8 @@ datum
 				if(M.health > 25)
 					M.take_toxin_damage(1 * mult)
 				if(probmult(25))
-					M.visible_message("<span class='alert'>[M] pukes all over [himself_or_herself(M)]!</span>")
-					M.vomit()
+					var/vomit_message = "<span class='alert'>[M] pukes all over [himself_or_herself(M)].</span>"
+					M.vomit(0, null, vomit_message)
 				if(probmult(5))
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1)

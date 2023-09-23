@@ -27,6 +27,9 @@ var/list/datum/chem_request/chem_requests = list()
 	var/max_volume = 400
 	var/area_name = null
 
+	get_help_message(dist, mob/user)
+		return null
+
 	ui_data(mob/user)
 		. = list()
 		if (src.card)
@@ -43,8 +46,16 @@ var/list/datum/chem_request/chem_requests = list()
 		var/list/chems = list()
 		for (var/id in chem_reactions_by_id)
 			var/datum/chemical_reaction/reaction = chem_reactions_by_id[id]
-			if (reaction.result && !reaction.hidden)
-				var/datum/reagent/reagent = reagents_cache[reaction.result]
+			if (reaction.hidden)
+				continue
+			//eventual_result overrides the actual result
+			var/result = reaction.eventual_result || reaction.result
+			if (!result)
+				continue
+			if (!islist(result))
+				result = list(result)
+			for (var/result_id in result)
+				var/datum/reagent/reagent = reagents_cache[result_id]
 				if (reagent && !istype(reagent, /datum/reagent/fooddrink)) //all the cocktails clog the UI
 					chems[lowertext(reagent.name)] = reagent.id
 		for (var/id in basic_elements)
@@ -104,11 +115,10 @@ var/list/datum/chem_request/chem_requests = list()
 				. = TRUE
 
 	attackby(var/obj/item/I, mob/user)
-		if (istype(I, /obj/item/card/id) || (istype(I, /obj/item/device/pda2) && I:ID_card))
-			if (istype(I, /obj/item/device/pda2) && I:ID_card)
-				I = I:ID_card
+		var/obj/item/card/id/id_card = get_id_card(I)
+		if (istype(id_card))
 			boutput(user, "<span class='notice'>You swipe the ID card.</span>")
-			src.card = I
+			src.card = id_card
 			tgui_process.try_update_ui(user, src)
 		else src.Attackhand(user)
 
@@ -125,6 +135,9 @@ var/list/datum/chem_request/chem_requests = list()
 	req_access = list(access_chemistry)
 	object_flags = CAN_REPROGRAM_ACCESS
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
+
+	get_help_message(dist, mob/user)
+		return null
 
 	proc/get_age(var/datum/chem_request/request)
 		var/delta = ticker.round_elapsed_ticks - request.time

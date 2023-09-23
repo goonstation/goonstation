@@ -140,7 +140,7 @@ TYPEINFO(/obj/machinery/espresso_machine)
 		if (isAI(user) || !can_reach(user, O) || BOUNDS_DIST(user, src) > 1 || !can_act(user) )
 			return
 
-		src.attackby(O, user)
+		src.Attackby(O, user)
 
 	attack_hand(mob/user)
 		if (can_reach(user,src) && !(status & (NOPOWER|BROKEN)))
@@ -322,6 +322,10 @@ TYPEINFO(/obj/machinery/coffeemaker)
 /obj/machinery/coffeemaker/engineering
 	icon_state = "coffeemaker-eng"
 	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/engineering
+
+/obj/machinery/coffeemaker/command
+	icon_state = "coffeemaker-com"
+	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/command
 
 /* ===================================================== */
 /* ---------------------- Racks --------------------- */

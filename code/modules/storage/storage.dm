@@ -6,12 +6,12 @@
 
 /// add storage to an atom
 /atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), list/can_hold_exact = list(), list/prevent_holding = list(),
-		check_wclass = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_if_worn = FALSE)
+		check_wclass = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_if_worn = FALSE, list/params = list())
 	var/list/previous_storage = list()
 	for (var/obj/item/I as anything in src.storage?.get_contents())
 		previous_storage += I
 	src.remove_storage()
-	src.storage = new storage_type(src, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, opens_if_worn)
+	src.storage = new storage_type(src, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, opens_if_worn, params)
 	for (var/obj/item/I as anything in previous_storage)
 		src.storage.add_contents(I)
 
@@ -48,7 +48,7 @@
 	var/list/stored_items = null
 
 /datum/storage/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass, \
-		slots, sneaky, opens_if_worn)
+		slots, sneaky, opens_if_worn, list/params)
 	..()
 	src.stored_items = list()
 
@@ -62,6 +62,10 @@
 	src.slots = slots
 	src.sneaky = sneaky
 	src.opens_if_worn = opens_if_worn
+
+	if (istype(src.linked_item, /obj/item))
+		var/obj/item/I = src.linked_item
+		I.tooltip_rebuild = TRUE
 
 	RegisterSignal(src.linked_item, COMSIG_ITEM_DROPPED, PROC_REF(storage_item_on_drop))
 
@@ -77,6 +81,10 @@
 
 	qdel(src.hud)
 	src.hud = null
+
+	if (istype(src.linked_item, /obj/item))
+		var/obj/item/I = src.linked_item
+		I.tooltip_rebuild = TRUE
 
 	src.linked_item = null
 	src.stored_items = null
@@ -176,11 +184,11 @@
 			if (H.limbs)
 				if ((src.linked_item == H.l_hand && istype(H.limbs.l_arm, /obj/item/parts/human_parts/arm/left/item)) || \
 						(src.linked_item == H.r_hand && istype(H.limbs.r_arm, /obj/item/parts/human_parts/arm/right/item)))
-					return
+					return FALSE
 		// open storage
 		user.s_active?.master.hide_hud(user)
 		if (src.mousetrap_check(user))
-			return
+			return FALSE
 		src.show_hud(user)
 		src.linked_item.add_fingerprint(user)
 		animate_storage_rustle(src.linked_item)
@@ -190,6 +198,7 @@
 			if (M != user)
 				src.hide_hud(M)
 		src.hud.update(user)
+	return TRUE
 
 /// storage item is mouse dropped onto something
 /datum/storage/proc/storage_item_mouse_drop(mob/user, atom/over_object, src_location, over_location)
@@ -325,7 +334,7 @@
 
 /// when adding an item in
 /datum/storage/proc/add_contents(obj/item/I, mob/user = null, visible = TRUE)
-	if (user?.equipped() == I)
+	if (I in user?.equipped_list())
 		user.u_equip(I)
 	src.stored_items += I
 	I.set_loc(src.linked_item, FALSE)
@@ -341,7 +350,7 @@
 		var/obj/item/W = src.linked_item
 		W.tooltip_rebuild = TRUE
 	// for storages that change icon with contents
-	src.linked_item.UpdateIcon()
+	src.linked_item.UpdateIcon(user)
 
 	if (!istype(user))
 		return
@@ -363,6 +372,8 @@
 /datum/storage/proc/transfer_stored_item(obj/item/I, atom/location, add_to_storage = FALSE, mob/user = null)
 	if (!(I in src.get_contents()))
 		return
+	if(I.anchored) //Niche exception where items are anchored in storage. "Mech Components mainly"
+		return
 	src.stored_items -= I
 	src.hud.remove_item(I, user)
 	I.stored = null
@@ -375,7 +386,7 @@
 	if (istype(src.linked_item, /obj/item))
 		var/obj/item/W = src.linked_item
 		W.tooltip_rebuild = TRUE
-	src.linked_item.UpdateIcon()
+	src.linked_item.UpdateIcon(user)
 	if (location?.storage && add_to_storage)
 		location.storage.add_contents(I, user)
 	else
@@ -415,6 +426,10 @@
 	if (user.s_active == src.hud)
 		user.s_active = null
 		user.detach_hud(src.hud)
+
+/// if user sees the storage hud
+/datum/storage/proc/hud_shown(mob/user)
+	return user in src.hud.mobs
 
 /// emping storage emps everything inside
 /datum/storage/proc/storage_emp_act()

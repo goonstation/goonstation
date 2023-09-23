@@ -216,8 +216,6 @@ function output(message, group, skipNonEssential, forceScroll) {
     //  message = anchorme(message);
     // }
 
-    message = parseEmojis(message);
-
     opts.messageCount++;
 
     //Pop the top message off if history limit reached
@@ -613,7 +611,7 @@ $(function() {
         output('<span class="internal boldnshit">Loaded font size setting of: '+savedConfig.sfontSize+'</span>');
     }
     if (savedConfig.sfontType) {
-        $messages.css('font-family', savedConfig.sfontType);
+        $messages.css('font-family', savedConfig.sfontType + ", 'Twemoji', 'Segoe UI Emoji'");
         output('<span class="internal boldnshit">Loaded font type setting of: '+savedConfig.sfontType+'</span>');
     }
     if (savedConfig.spingDisabled) {
@@ -648,7 +646,11 @@ $(function() {
       opts.messageLimitEnabled = savedConfig.smessageLimitEnabled;
     }
 	if (savedConfig.soddMsgHighlight) {
-		opts.oddMsgHighlight = savedConfig.soddMsgHighlight;
+		if (savedConfig.soddMsgHighlight == 'true') {
+			opts.oddMsgHighlight = true;
+		} else if (savedConfig.soddMsgHighlight == 'false') {
+			opts.oddMsgHighlight = false;
+		}
 	}
 
     (function() {
@@ -861,7 +863,7 @@ $(function() {
 
     $('body').on('click', '#changeFont a', function(e) {
         var font = $(this).attr('data-font');
-        $messages.css('font-family', font);
+        $messages.css('font-family', font + ", 'Twemoji', 'Segoe UI Emoji'");
         setCookie('fonttype', font, 365);
     });
 

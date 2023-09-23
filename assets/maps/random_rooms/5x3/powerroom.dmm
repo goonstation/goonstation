@@ -85,7 +85,6 @@
 "J" = (
 /obj/machinery/power/smes,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/yellow/side{

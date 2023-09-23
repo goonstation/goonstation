@@ -146,6 +146,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 		return
 
 	onVarChanged(variable, oldval, newval)
+		. = ..()
 		if (variable == "grillitem")
 			if (!oldval && newval)
 				SubscribeToProcess()
@@ -273,7 +274,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 				for (var/mob/M in src.grillitem)
 					M.ghostize()
 			qdel(src.grillitem)
-			src.grillitem = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
+			src.grillitem = new /obj/item/reagent_containers/food/snacks/yuck/burn (src)
 			if (!src.grillitem.reagents)
 				src.grillitem.create_reagents(50)
 
@@ -318,7 +319,7 @@ TYPEINFO(/obj/machinery/shitty_grill)
 		if (ismob(grillitem))
 			shittysteak.bites_left = 5
 		else
-			shittysteak.bites_left = src.grillitem.w_class
+			shittysteak.bites_left = round(src.grillitem.w_class)
 		shittysteak.reagents = src.grillitem.reagents
 		shittysteak.reagents.my_atom = shittysteak
 

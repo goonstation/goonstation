@@ -1,8 +1,8 @@
 // Wraith
 
 /mob/living/intangible/wraith
-	name = "Wraith"
-	real_name = "Wraith"
+	name = "wraith"
+	real_name = "wraith"
 	desc = "Jesus Christ, how spooky."
 	icon = 'icons/mob/mob.dmi'
 #if defined(XMAS) || (BUILD_TIME_MONTH == 2 && BUILD_TIME_DAY == 14)
@@ -19,7 +19,6 @@
 	var/deaths = 0
 	var/datum/hud/wraith/hud
 	var/hud_path = /datum/hud/wraith
-	faction = MOB_AI_FACTION_WRAITH
 
 	var/atom/movable/overlay/animation = null
 
@@ -55,8 +54,12 @@
 	var/weak_tk = FALSE
 	///can the wraith hear ghosts? Toggleable with an ability
 	var/hearghosts = TRUE
+	/// what is our minion summoning marker, if we have any?
+	var/obj/spookMarker/spawn_marker = null
 
 	var/datum/movement_controller/movement_controller
+
+	faction = FACTION_WRAITH
 
 	//////////////
 	// Wraith Overrides
@@ -638,6 +641,7 @@
 	var/copied_desc = null
 	var/copied_name = null
 	var/copied_real_name = null
+	var/copied_pronouns = null
 	var/traps_laid = 0
 
 	New(var/mob/M)
@@ -663,15 +667,6 @@
 //////////////
 // Related procs and verbs
 //////////////
-
-// i am dumb - marq
-/mob/proc/wraithize()
-	if (src.mind || src.client)
-		message_admins("[key_name(usr)] made [key_name(src)] a wraith.")
-		logTheThing(LOG_ADMIN, usr, "made [constructTarget(src,"admin")] a wraith.")
-		src.mind.add_antagonist(ROLE_WRAITH)
-		return
-	return null
 
 /proc/visibleBodies(var/mob/M)
 	var/list/ret = new

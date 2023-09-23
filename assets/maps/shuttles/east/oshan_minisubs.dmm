@@ -72,7 +72,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "cn" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/shuttle{
 	dir = 8
 	},
@@ -109,7 +109,7 @@
 	opacity = 0;
 	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
@@ -119,11 +119,6 @@
 "fK" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/centcom)
-"gy" = (
-/turf/unsimulated/outdoors/grass,
-/turf/unsimulated/floor/shuttlebay,
-/turf/unsimulated/floor/shuttlebay,
-/area/shuttle/escape/centcom)
 "hL" = (
 /obj/decal/tile_edge/line/orange{
 	dir = 8;
@@ -162,7 +157,7 @@
 	opacity = 0;
 	hardened = 1
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
@@ -240,12 +235,8 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
-"lZ" = (
-/turf/unsimulated/outdoors/grass,
-/turf/unsimulated/floor/shuttlebay,
-/area/shuttle/escape/centcom)
 "mL" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -412,7 +403,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "wm" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
@@ -549,19 +540,12 @@
 	},
 /area/centcom)
 "AO" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-R"
 	},
 /turf/unsimulated/floor/plating,
-/area/shuttle/escape/centcom)
-"Bp" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0
-	},
-/turf/unsimulated/outdoors/grass,
-/turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "BQ" = (
 /obj/decal/fakeobjects/tallsmes,
@@ -580,7 +564,6 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/unsimulated/outdoors/grass,
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "CJ" = (
@@ -724,15 +707,8 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
-"Kn" = (
-/obj/machinery/door/airlock/pyro/external,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "delivery2"
-	},
-/turf/unsimulated/outdoors/grass,
-/area/centcom)
 "Mx" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -794,7 +770,6 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/unsimulated/outdoors/grass,
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "QC" = (
@@ -824,7 +799,6 @@
 	dir = 8;
 	icon_state = "alt_propulsion"
 	},
-/turf/unsimulated/outdoors/grass,
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "Ui" = (
@@ -848,7 +822,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	opacity = 0
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /obj/forcefield/energyshield/perma,
 /turf/unsimulated/floor/shuttle{
 	dir = 8;
@@ -867,7 +841,6 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/unsimulated/outdoors/grass,
 /turf/unsimulated/floor/shuttlebay,
 /area/shuttle/escape/centcom)
 "VU" = (
@@ -1129,21 +1102,21 @@ ym
 VU
 RT
 kK
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
 Sp
-lZ
-lZ
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
+Gl
+Gl
 qW
 kM
 AL
@@ -1157,21 +1130,21 @@ bq
 Hq
 PS
 kK
-lZ
-lZ
+Gl
+Gl
 Sp
-lZ
-lZ
-lZ
-lZ
-lZ
-Bp
+Gl
+Gl
+Gl
+Gl
+Gl
+PK
 AO
 Qe
-lZ
-lZ
+Gl
+Gl
 Sp
-lZ
+Gl
 Ui
 Ha
 bq
@@ -1185,19 +1158,19 @@ RT
 zh
 ri
 Da
-lZ
-Bp
+Gl
+PK
 wm
 Qe
-lZ
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
+Gl
 yp
 uh
 yp
-lZ
-Bp
+Gl
+PK
 wm
 Qe
 qW
@@ -1213,18 +1186,18 @@ Cl
 zZ
 iQ
 kK
-lZ
+Gl
 iT
 pk
 iT
-lZ
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
+Gl
 jn
 kB
 jn
-lZ
+Gl
 fc
 sT
 fc
@@ -1241,18 +1214,18 @@ Ao
 Oy
 zG
 kK
-lZ
+Gl
 jn
 Gh
 jn
-lZ
-lZ
+Gl
+Gl
 Sp
-lZ
+Gl
 Cp
 cn
 VO
-lZ
+Gl
 jn
 dw
 jn
@@ -1269,18 +1242,18 @@ Si
 Fk
 Si
 fK
-lZ
+Gl
 Cp
 cn
 VO
-lZ
-Bp
+Gl
+PK
 wm
 Qe
-lZ
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
+Gl
 Cp
 cn
 VO
@@ -1297,21 +1270,21 @@ jM
 Xa
 hV
 fK
-lZ
-lZ
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
+Gl
+Gl
 Vm
 Kh
 Vm
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
 fK
 ot
 Xa
@@ -1324,23 +1297,23 @@ aM
 aM
 aM
 pV
-Kn
-lZ
-lZ
-lZ
-lZ
-lZ
+yr
+Gl
+Gl
+Gl
+Gl
+Gl
 jn
 pw
 jn
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-Kn
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+yr
 Op
 aM
 aM
@@ -1353,21 +1326,21 @@ is
 is
 aa
 fK
-lZ
-lZ
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
+Gl
+Gl
 Cp
 cn
 VO
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
 fK
 AN
 is
@@ -1381,21 +1354,21 @@ aM
 aM
 pV
 yr
-lZ
+Gl
 Sp
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
+Gl
 Sp
-lZ
+Gl
 yr
 Op
 aM
@@ -1409,19 +1382,19 @@ VI
 oQ
 XO
 fK
-Bp
+PK
 wm
 Qe
-lZ
-lZ
+Gl
+Gl
 Sp
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
 Sp
-lZ
-lZ
-Bp
+Gl
+Gl
+PK
 wm
 Qe
 fK
@@ -1440,15 +1413,15 @@ fK
 yp
 uh
 yp
-lZ
+Gl
 PK
 wm
 Qe
-lZ
-Bp
+Gl
+PK
 AO
 Qe
-lZ
+Gl
 fc
 sT
 fc
@@ -1468,15 +1441,15 @@ kK
 jn
 kB
 jn
-lZ
+Gl
 yp
 uh
 yp
-lZ
+Gl
 yp
 uh
 yp
-lZ
+Gl
 jn
 dw
 jn
@@ -1496,15 +1469,15 @@ kK
 Cp
 cn
 VO
-lZ
+Gl
 jn
 kB
 jn
-lZ
+Gl
 jn
 kB
 jn
-lZ
+Gl
 Cp
 cn
 VO
@@ -1522,19 +1495,19 @@ Ao
 ev
 MP
 kU
-lZ
-lZ
-lZ
+Gl
+Gl
+Gl
 Cp
 cn
 VO
-lZ
+Gl
 Cp
 cn
 VO
-gy
-lZ
-lZ
+Gl
+Gl
+Gl
 Jz
 Gv
 dK

@@ -1,3 +1,35 @@
+(t)sat sep 23 23
+(u)pali
+(*)New verb Replace-Type that lets you replace a type with another type globally across the whole world.<br>Stuff just on the ground should work fine. Should also work ok for stuff like equipment and storage but other stuff like globally replacing organs or limbs is not yet fully supported.
+(t)mon sep 11 23
+(u)aloe probably?
+(*)You can't click fluids anymore. To accomodate this, using "check reagents" on a floor will check the reagents of a smoke/fluid (prioritizing smoke) on that tile. You can also use `+right-click in order to interact with smoke/fluid directly if needed. Fluid and smoke will have the most common reagent in the name when viewed through this menu.
+(t)mon aug 21 23
+(u)LeahTheTech
+(*)Added a new verb "Stabilize All Atmos" to reset all air on the entire station, in case that thing happens where there just isn't any air.
+(t)mon aug 7 23
+(u)LeahTheTech
+(*)Added better logging to detect hotwires, large power networks being connected to high power ones will now log to station log.
+(t)tue jul 11 23
+(u)Azrun
+(*)Bulk law changes now support paths (Now you can add hologram and ability modules)
+(t)tue jun 27 23
+(u)tarmunora
+(*)Admin PMs will display admin keys as ckey (as altkey) if alt key is set
+(t)fri jun 16 23
+(u)Sord
+(+)ASAY now shows your current alt key if you have one set
+(u)LeahTheTech
+(*)It is now once again possible to assign a custom objective when adding an antagonist to someone.
+(t)mon jun 05 23
+(u)LeahTheTech
+(*)Removed the old broken admin respawn-panel verb in favour of the new custom-ghost-spawn verb.
+(t)fri jun 02 23
+(u)LeahTheTech
+(*)Added a flock conversion build mode.
+(t)sat may 27 23
+(u)LeahTheTech
+(*)Added a new admin verb: Distribute Tokens. Gives an antag token to every <i>roundstart</i> antag.
 (t)tue may 23 23
 (u)pali
 (*)There's now a <b>Halt!</b> button in player options. It stops the player's movement for 5 seconds.<br>Intended for when someone prays and you want to fulfull their prayer but they just keep running away like a silly goose.

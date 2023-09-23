@@ -31,7 +31,7 @@ TYPEINFO(/obj/machinery/cashreg)
 
 	attackby(obj/item/O, mob/user)
 		// If attempting to use an ID or PDA with an ID inserted, attempt to register device to that ID. Else, they're paying for something.
-		if (istype(O, /obj/item/card/id) || istype(O, /obj/item/device/pda2))
+		if (istype(get_id_card(O), /obj/item/card/id))
 			if (!src.owner_account)
 				src.register_owner(user, user.get_id())
 			else
@@ -198,7 +198,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			boutput(user, "<span class='notice'>Sending transaction.</span>")
 			user.visible_message("<span class='notice'><b>[src] beeps affirmatively.</b> The transaction was successful!</span>")
 
-			playsound(src, 'sound/machines/printer_cargo.ogg', 50, 1)
+			playsound(src, 'sound/machines/printer_cargo.ogg', 50, TRUE)
 			SPAWN(3 SECONDS)
 				if (print_customer_copy)
 					src.print_receipt(payee, O.registered, transaction_price, transaction_tip, transaction_total, customer_copy = TRUE)

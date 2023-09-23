@@ -180,12 +180,52 @@
 
 #define rustg_noise_get_at_coordinates(seed, x, y) RUSTG_CALL(RUST_G, "noise_get_at_coordinates")(seed, x, y)
 
+/**
+ * Connects to a given redis server.
+ *
+ * Arguments:
+ * * addr - The address of the server, for example "redis://127.0.0.1/"
+ */
+#define rustg_redis_connect_rq(addr) RUSTG_CALL(RUST_G, "redis_connect_rq")(addr)
+/**
+ * Disconnects from a previously connected redis server
+ */
+/proc/rustg_redis_disconnect_rq() return RUSTG_CALL(RUST_G, "redis_disconnect_rq")()
+/**
+ * https://redis.io/commands/lpush/
+ *
+ * Arguments
+ * * key (string) - The key to use
+ * * elements (list) - The elements to push, use a list even if there's only one element.
+ */
+#define rustg_redis_lpush(key, elements) RUSTG_CALL(RUST_G, "redis_lpush")(key, json_encode(elements))
+/**
+ * https://redis.io/commands/lrange/
+ *
+ * Arguments
+ * * key (string) - The key to use
+ * * start (string) - The zero-based index to start retrieving at
+ * * stop (string) - The zero-based index to stop retrieving at (inclusive)
+ */
+#define rustg_redis_lrange(key, start, stop) RUSTG_CALL(RUST_G, "redis_lrange")(key, start, stop)
+/**
+ * https://redis.io/commands/lpop/
+ *
+ * Arguments
+ * * key (string) - The key to use
+ * * count (string|null) - The amount to pop off the list, pass null to omit (thus just 1)
+ *
+ * Note: `count` was added in Redis version 6.2.0
+ */
+#define rustg_redis_lpop(key, count) RUSTG_CALL(RUST_G, "redis_lpop")(key, count)
+
 #define rustg_time_microseconds(id) text2num(RUSTG_CALL(RUST_G, "time_microseconds")(id))
 #define rustg_time_milliseconds(id) text2num(RUSTG_CALL(RUST_G, "time_milliseconds")(id))
 #define rustg_time_reset(id) RUSTG_CALL(RUST_G, "time_reset")(id)
 
+/// Returns the timestamp as a string
 /proc/rustg_unix_timestamp()
-	return text2num(RUSTG_CALL(RUST_G, "unix_timestamp")())
+	return RUSTG_CALL(RUST_G, "unix_timestamp")()
 
 #define rustg_raw_read_toml_file(path) json_decode(RUSTG_CALL(RUST_G, "toml_file_to_json")(path) || "null")
 

@@ -44,8 +44,16 @@
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/proc/unscrew_monitor,\
 			list(W, user), W.icon, W.icon_state, null, null)
+			return
 		else
 			src.Attackhand(user)
+
+	get_help_message(dist, mob/user)
+		. = "You can use a <b>screwdriver</b> to unscrew the screen"
+		if (src.can_reconnect)
+			. += ",\nor a <b>multitool</b> to re-scan for equipment."
+		else
+			. += "."
 
 	proc/unscrew_monitor(obj/item/W as obj, mob/user as mob)
 		var/obj/computerframe/A = new /obj/computerframe(src.loc)

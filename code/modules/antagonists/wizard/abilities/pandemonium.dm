@@ -48,7 +48,7 @@
 			if("fireburst")
 				spell_result = "fireburst"
 				W.visible_message("<span class='alert'><B>[W]</B> radiates a wave of burning heat!</span>")
-				playsound(W, 'sound/effects/bamf.ogg', 80, 1)
+				playsound(W, 'sound/effects/bamf.ogg', 80, TRUE)
 				for (var/mob/living/carbon/human/H in range(6, W))
 					if ((H == W) && protectuser)
 						continue
@@ -59,7 +59,7 @@
 			if("babel")
 				spell_result = "babel accents"
 				W.visible_message("<span class='alert'><B>[W]</B> emits a faint smell of cheese!</span>")
-				playsound(W, 'sound/voice/farts/superfart.ogg', 80, 1)
+				playsound(W, 'sound/voice/farts/superfart.ogg', 80, TRUE)
 				for (var/mob/living/carbon/human/H in mobs)
 					if ((H == W) && protectuser)
 						continue
@@ -72,7 +72,7 @@
 			if("tripballs")
 				spell_result = "hallucinogenic aura"
 				W.visible_message("<span class='alert'><B>[W]</B> radiates a confusing aura!</span>")
-				playsound(W, 'sound/effects/bionic_sound.ogg', 80, 1)
+				playsound(W, 'sound/effects/bionic_sound.ogg', 80, TRUE)
 				for (var/mob/living/carbon/human/H in range(25, W))
 					if ((H == W) && protectuser)
 						continue

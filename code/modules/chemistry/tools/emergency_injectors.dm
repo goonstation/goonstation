@@ -48,7 +48,7 @@
 				src.reagents.trans_to(M, amount_per_transfer_from_this)
 				user.visible_message("<span class='alert'>[user] injects [M == user ? himself_or_herself(user) : M] with [src]!</span>",\
 				"<span class='alert'>You inject [M == user ? "yourself" : M] with [src]!</span>")
-				playsound(M, 'sound/items/hypo.ogg', 40, 0)
+				playsound(M, 'sound/items/hypo.ogg', 40, FALSE)
 				if(!src.reagents.total_volume)
 					src.empty = 1
 				return
@@ -68,7 +68,7 @@
 				src.reagents.trans_to(user, amount_per_transfer_from_this)
 				user.visible_message("<span class='alert'>[user] injects [himself_or_herself(user)] with [src]!</span>",\
 				"<span class='alert'>You inject yourself with [src]!</span>")
-				playsound(user, 'sound/items/hypo.ogg', 40, 0)
+				playsound(user, 'sound/items/hypo.ogg', 40, FALSE)
 				if(!src.reagents.total_volume)
 					src.empty = 1
 				return
@@ -214,7 +214,7 @@
 	label = "black"
 	desc = "An auto-injector containing uhh, well, y'see... Hmm. You're unsure on this one."
 	New()
-		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green_mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
+		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
 		..()
 
 
@@ -306,7 +306,9 @@
 /obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut
 	name = "Juggernaut injector"
 	desc = "A large syringe-like thing that automatically injects its contents into someone. This one contains juggernaut, a potent pain-killing chemical."
+	#ifdef SECRETS_ENABLED
 	initial_reagents = "juggernaut"
+	#endif
 	label = "bigred"
 	initial_volume = 60
 	amount_per_transfer_from_this = 20

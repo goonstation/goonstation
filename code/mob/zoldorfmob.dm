@@ -11,7 +11,6 @@
 	blinded = 0
 	anchored = ANCHORED
 	alpha = 180
-	stat = 0
 	var/autofree = 0
 	var/firstfortune = 1
 	var/free = 0
@@ -319,6 +318,7 @@
 
 /mob/proc/make_zoldorf(var/obj/machinery/playerzoldorf/pz) //ok this is a little weird, but its the other portion of the booth proc that handles the mob-side things and some of the booth things that need to be set before the original player is deleted
 	if (src.mind || src.client)
+		logTheThing(LOG_COMBAT, src, "was turned into Zoldorf at [log_loc(src)].")
 		var/mob/zoldorf/Z = new/mob/zoldorf(get_turf(src))
 
 		var/turf/T = get_turf(src)

@@ -36,7 +36,7 @@
 	pixel_x = -3;
 	pixel_y = 3
 	},
-/obj/item/raw_material/scrap_metal/steel,
+/obj/item/raw_material/scrap_metal,
 /turf/simulated/floor/airless/plating,
 /area/dmm_suite/clear_area)
 "R" = (

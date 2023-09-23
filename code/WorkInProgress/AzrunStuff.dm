@@ -2,10 +2,7 @@
 	// do not put this anywhere anyone can get it. it is for crime.
 	name = "(de/re)-construction device"
 	desc = "A magical saw-like device for unmaking things. Is that a soldering iron on the back?"
-
-	New()
-		..()
-		setMaterial(getMaterial("miracle"))
+	default_material = "miracle"
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (!isobj(target))
@@ -31,21 +28,13 @@
 	item_state = "sheet";
 	name = "Strange Blueprint"
 	interesting = "There is additional detail regarding the creation of flora and fauna."
-
-/obj/item/storage/desk_drawer/azrun/
-	spawn_contents = list(	/obj/item/raw_material/molitz_beta,\
-	/obj/item/raw_material/molitz_beta,\
-	/obj/item/raw_material/plasmastone,\
-	/obj/item/organ/lung/plasmatoid/left,\
-	/obj/item/pen/crayon/red,\
-
-)
 /obj/table/wood/auto/desk/azrun
-	New()
-		..()
-		var/obj/item/storage/desk_drawer/azrun/L = new(src)
-		src.desk_drawer = L
-
+	has_drawer = TRUE
+	drawer_contents = list(/obj/item/raw_material/molitz_beta,
+							/obj/item/raw_material/molitz_beta,
+							/obj/item/raw_material/plasmastone,
+							/obj/item/organ/lung/plasmatoid/left,
+							/obj/item/pen/crayon/red)
 
 /obj/item/storage/toilet/goldentoilet/azrun
 	name = "thinking throne"
@@ -121,9 +110,9 @@
 			var/datum/plantgenes/DNA = POT.plantgenes
 			var/datum/reagents/reagents_temp = new/datum/reagents(max(1,(50 + DNA.cropsize))) // Creating a temporary chem holder
 			reagents_temp.my_atom = POT
-
-			for (var/plantReagent in assoc_reagents)
-				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(assoc_reagents))))))
+			var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
+			for (var/plantReagent in plant_complete_reagents)
+				reagents_temp.add_reagent(plantReagent, 2 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * length(plant_complete_reagents))))))
 
 			SPAWN(0) // spawning to kick fluid processing out of machine loop
 				reagents_temp.smoke_start()
@@ -166,11 +155,12 @@
 		..()
 		projectile = new
 
-	proc/alter_projectile(var/obj/projectile/P)
+	proc/alter_projectile(var/datum/plantgenes/DNA, var/obj/projectile/P)
 		if (!P.reagents)
 			P.reagents = new /datum/reagents(P.proj_data.cost)
 			P.reagents.my_atom = P
-		for (var/plantReagent in assoc_reagents)
+		var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
+		for (var/plantReagent in plant_complete_reagents)
 			P.reagents.add_reagent(plantReagent, 2)
 
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
@@ -192,11 +182,11 @@
 					stuffnearby += X
 			if(length(stuffnearby))
 				var/mob/living/target = pick(stuffnearby)
-				var/datum/callback/C = new(src, PROC_REF(alter_projectile))
+				var/datum/callback/C = new(src, PROC_REF(alter_projectile), DNA)
 				if(prob(10))
-					shoot_projectile_ST(POT, projectile, get_step(target, pick(ordinal)), alter_proj=C)
+					shoot_projectile_ST_pixel_spread(POT, projectile, get_step(target, pick(ordinal)), alter_proj=C)
 				else
-					shoot_projectile_ST(POT, projectile, target, alter_proj=C)
+					shoot_projectile_ST_pixel_spread(POT, projectile, target, alter_proj=C)
 				POT.growth -= rand(1,5)
 			return
 
@@ -481,7 +471,7 @@
 /datum/targetable/ai/module/turret/deploy
 	name = "Deploy Turret"
 	desc = "Conviently place a turret for fun and compliance."
-	icon_state = "ai_template"
+	icon_state = "turret_deploy"
 	targeted = TRUE
 	target_anything = TRUE
 
@@ -534,10 +524,12 @@
 
 		if(get_turf(target) == get_turf(expansion.turret))
 			expansion.turret.target = null
+			icon_state = "turret_deploy"
 			return
 
 		expansion.turret.set_loc(floorturf)
 		expansion.turret.cover.set_loc(floorturf)
+		icon_state = "turret_undeploy"
 		if (floorturf.intact)
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			sleep(0.4 SECONDS)
@@ -557,8 +549,8 @@
 
 /datum/targetable/ai/module/turret/target
 	name = "Assign Target"
-	desc = "Assign a target for the target"
-	icon_state = "ai_template"
+	desc = "Assign a target for the turret"
+	icon_state = "target"
 	targeted = TRUE
 	cooldown = 2 SECONDS
 
@@ -585,7 +577,7 @@
 /datum/targetable/ai/module/turret/swap_bullets
 	name = "Change Lethality"
 	desc = "Lethal to Non-Lethal and Non-Lethal to Lethal!"
-	icon_state = "ai_template"
+	icon_state = "stun_turret"
 	cooldown = 2 SECONDS
 
 	cast(atom/target)
@@ -594,9 +586,8 @@
 		var/mode = expansion.turret.lasers ? "LETHAL" : "STUN"
 		logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] set deployable turret to [mode].")
 		boutput(holder.owner, "Turret now set to [mode].")
+		icon_state = expansion.turret.lasers ? "lethal_turret" : "stun_turret"
 		expansion.turret.power_change()
-
-
 /obj/machinery/turret/friend
 	var/mob/target
 
@@ -611,6 +602,58 @@
 		power_change()
 	..()
 	return
+
+/obj/item/aiModule/ability_expansion/assisted_guidance
+	name = "GPS Expansion Module"
+	desc = "A prototype GPS path module.  This module provides for the direct crew members."
+	lawText = "GPS EXPANSION MODULE"
+	highlight_color = rgb(110, 110, 110, 255)
+	ai_abilities = list(/datum/targetable/ai/module/gps_select)
+
+/datum/abilityHolder/silicon/ai
+	var/mob/assisted_target = null
+
+/datum/targetable/ai/module/gps_select
+	name = "Assisted Guidance"
+	desc = "Provide a target a GPS path to a target location. Herd the cats."
+	targeted = TRUE
+	target_anything = FALSE
+	icon_state = "gps"
+
+	var/datum/targetable/ai/module/gps_direct
+	var/mob/assisted
+
+	New()
+		. = ..()
+
+	cast(atom/target)
+		if (..())
+			return 1
+
+		var/datum/abilityHolder/silicon/ai/ai_holder = holder
+
+		if(assisted)
+			assisted.gpsToTurf(target, TRUE)
+			target_anything = FALSE
+			assisted = null
+		else
+			var/mob/possible_target = target
+			if(possible_target.client)
+				if (!locate(/obj/item/device/pda2) in possible_target)
+					boutput(ai_holder.owner, "<span class='alert'>Target does not have a PDA to use to assist!</span>")
+					return 1
+
+				assisted = target
+				target_anything = TRUE
+
+				ai_holder.owner.targeting_ability = src
+				ai_holder.owner.set_cursor('icons/cursors/point.dmi')
+				ai_holder.updateButtons()
+				boutput(ai_holder.owner, "<span class='notice'>Select a destination for your target!</span>")
+				return 1
+			else
+				boutput(ai_holder.owner, "<span class='alert'>Not a valid target to assist!</span>")
+				return 1
 
 
 /turf/unsimulated/floor
@@ -658,7 +701,12 @@
 	proc/sunrise()
 		color_shift_lights(list("#222", "#444","#ca2929", "#c4b91f", "#AAA", ), list(0, 10 SECONDS, 20 SECONDS, 15 SECONDS, 25 SECONDS))
 
-ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise)
+	proc/set_color()
+		var/color = input(usr, "Please select ambient light color.", "Color Menu") as color
+		color_shift_lights(list(color), list(3 SECONDS))
+
+
+ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/set_color)
 
 /proc/get_cone(turf/epicenter, radius, angle, width, heuristic, heuristic_args)
 	var/list/nodes = list()

@@ -69,7 +69,7 @@
 /datum/game_mode/conspiracy/post_setup()
 	for(var/datum/mind/conspirator in traitors)
 		if(istype(conspirator))
-			conspirator.add_antagonist(ROLE_CONSPIRATOR)
+			conspirator.add_antagonist(ROLE_CONSPIRATOR, source = ANTAGONIST_SOURCE_ROUND_START)
 
 	for (var/datum/mind/traitor in other_antags)
 		equip_antag(traitor)

@@ -67,7 +67,7 @@ datum
 
 				if(check < 8)
 					M.reagents.add_reagent(pick("methamphetamine", "crank", "neurotoxin"), rand(1,5))
-					M.visible_message("<span class='alert'><b>[M.name]</b> scratches at something under their skin!</span>")
+					M.visible_message("<span class='alert'><b>[M.name]</b> scratches at something under their [issilicon(M) ? "chassis" : "skin"]!</span>")
 					random_brute_damage(M, 5 * mult)
 				else if (check < 16)
 					switch(rand(1,2))
@@ -491,6 +491,87 @@ datum
 				if(probmult(7)) M.emote(pick("twitch","drool","moan","giggle"))
 				..()
 				return
+
+		drug/solipsizine
+			name = "solipsizine"
+			id = "solipsizine"
+			description = "A highly potent hallucinogenic substance that causes intense delirium and acute inability to percieve others."
+			reagent_state = LIQUID
+			depletion_rate = 0.2
+			addiction_prob = 8
+			fluid_r = 200
+			fluid_g = 120
+			fluid_b = 120
+			transparency = 50
+			var/counter = 1
+			var/list/invisible_people
+			var/list/mob/not_yet_invisible
+			var/datum/client_image_group/invisible_group
+			var/tick_counter = 0 // we actually count ticks, no mult here
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(isnull(invisible_people))
+					invisible_people = list()
+				if(!M) M = holder.my_atom
+				src.counter += 1 * mult //around half realtime
+				src.tick_counter += 1
+
+				if(probmult(3))
+					boutput(M, pick("<span class='notice'>You feel eerily alone..</span>",\
+									"<span class='notice'>You feel like everything's gone silent.</span>",\
+									"<span class='notice'>Everything seems so quiet all of a sudden.</span>",\
+									"<span class='notice'>You can hear your heart beating.</span>",\
+									"<span class='notice'>Something is wrong.</span>"))
+				else if(probmult(3))
+					M.emote(pick("shiver","shudder","drool"))
+
+				if(counter > 15) //turn everyone into nothing
+					if(M.ear_damage < 15 && M.ear_deaf < 5)
+						M.take_ear_damage(3 * mult, 1) //makes it so you can't hear people after a bit
+
+					var/list/candidates = null
+					// every 15 ticks we check for newly created mobs just in case
+					if(isnull(not_yet_invisible) || tick_counter % 15 == 0)
+						not_yet_invisible = by_type[/mob/living/carbon/human] - invisible_people
+					var/list/mob/current_viewers = viewers(M)
+					candidates = not_yet_invisible - current_viewers
+					not_yet_invisible &= current_viewers
+
+					if(length(candidates) > 0)  //makes the other people disappear
+						if (isnull(invisible_group))
+							invisible_group = new /datum/client_image_group
+							invisible_group.add_mob(M)
+						for(var/mob/living/carbon/human/chosen in candidates)
+							var/image/invisible_img = image(null, chosen, null, chosen.layer)
+							invisible_img.name = "\u200b"
+							invisible_img.override = TRUE
+							invisible_group.add_image(invisible_img)
+							invisible_people += chosen
+
+				if(counter > 25)                   //some side effects (not using a switch statement so the stages stack)
+					if(M.get_brain_damage() <= 40)
+						M.take_brain_damage(1 * mult) //some amount of brain damage
+					if(probmult(9) && !ON_COOLDOWN(M, "heartbeat_hallucination", 60 SECONDS)) //play some hearbeat sounds
+						M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 20, 1)
+				..()
+
+			on_remove()
+				. = ..()
+				if (ismob(holder.my_atom))
+					var/mob/M = holder.my_atom
+
+					if(!isnull(invisible_group) && (M.get_brain_damage() > 10))          //hits you and knocks you down for a little
+						M.visible_message("<span class='alert'><B>[M]</B> starts convulsing violently!</span>",\
+											"You feel as if your body is tearing itself apart!")
+						M.setStatusMin("weakened", 10 SECONDS)
+						M.make_jittery(500)
+
+				qdel(invisible_group)
+				qdel(invisible_people)
+				qdel(not_yet_invisible)
+				invisible_group = null
+				invisible_people = null
+				not_yet_invisible = null
 
 		drug/THC
 			name = "tetrahydrocannabinol"

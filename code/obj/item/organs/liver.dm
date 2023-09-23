@@ -5,6 +5,7 @@
 	organ_holder_name = "liver"
 	organ_holder_location = "chest"
 	organ_holder_required_op_stage = 3
+	icon = 'icons/obj/items/organs/liver.dmi'
 	icon_state = "liver"
 	failure_disease = /datum/ailment/disease/liver_failure
 
@@ -42,7 +43,7 @@ TYPEINFO(/obj/item/organ/liver/cyber)
 	desc = "A fancy robotic liver to replace one that someone's lost!"
 	icon_state = "cyber-liver"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0

@@ -170,6 +170,7 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/roboticist,\
 	/obj/item/clothing/shoes/black,\
 	/obj/item/clothing/suit/labcoat/robotics,\
+	/obj/item/clothing/suit/wintercoat/robotics,\
 	/obj/item/device/radio/headset/medical,\
 	/obj/item/device/pda2/medical/robotics,\
 	/obj/item/clothing/gloves/latex)

@@ -46,10 +46,14 @@
 	var/area/AR = get_area(hit_atom)
 	if(AR?.sanctuary)
 		return TRUE
-	src.material?.triggerOnAttack(src, src, hit_atom)
-	hit_atom.material?.triggerOnHit(hit_atom, src, null, 2)
-	for(var/atom/A in hit_atom)
-		A.material?.triggerOnAttacked(A, src, hit_atom, src)
+	src.material_on_attack_use(src, hit_atom)
+	hit_atom.material_trigger_when_attacked(src, null, 2)
+	if(ismob(hit_atom))
+		var/mob/hit_mob = hit_atom
+		for(var/atom/A in hit_mob)
+			A.material_trigger_on_mob_attacked(src, hit_atom, src, "chest")
+		for(var/atom/A in hit_mob.equipped())
+			A.material_trigger_on_mob_attacked(src, hit_atom, src, "chest")
 
 	if(!hit_atom)
 		return TRUE
@@ -62,7 +66,7 @@
 	var/impact_sfx = hit_atom.hitby(src, thr)
 	impact_sfx = src.overwrite_impact_sfx(impact_sfx,hit_atom, thr)
 	if(src && impact_sfx)
-		playsound(src, impact_sfx, 40, 1)
+		playsound(src, impact_sfx, 40, TRUE)
 
 /atom/movable/bump(atom/O)
 	if(src.throwing)

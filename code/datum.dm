@@ -31,5 +31,6 @@ var/global/list/deletedObjects = new
 
 /// called when a variable is admin-edited
 /datum/proc/onVarChanged(variable, oldval, newval)
+	SHOULD_CALL_PARENT(TRUE)
 
 // /datum/var/qdeltime = 0

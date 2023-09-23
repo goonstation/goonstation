@@ -55,19 +55,18 @@
 
 
 			var/datum/attackResults/msgs = user.calculate_melee_attack(target, 2, 9, 0, 0.7, 0) // 0.7x stamina damage. No crits.
-			msgs.damage_type = DAMAGE_BLUNT
-			user.attack_effects(target, user.zone_sel?.selecting)
-			msgs.flush(0)
+			if (msgs)
+				msgs.damage_type = DAMAGE_BLUNT
+				user.attack_effects(target, user.zone_sel?.selecting)
+				msgs.flush(0)
 
 			special_next = 0
 		else
 			user.melee_attack_normal(target, 0, 0, DAMAGE_BLUNT)
-		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	proc/help(mob/living/target, var/mob/living/user)
 		user.do_help(target)
-		user.lastattacked = target
 
 	proc/disarm(mob/living/target, var/mob/living/user)
 		if (special_next)
@@ -75,7 +74,6 @@
 			special_next = 0
 		else
 			user.disarm(target)
-		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	proc/grab(mob/living/target, var/mob/living/user)
@@ -85,7 +83,6 @@
 		if (issilicon(target))
 			return
 		user.grab_other(target)
-		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
 
 	//calls attack specials if we got em
@@ -95,15 +92,15 @@
 			if(disarm_special)
 				SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				disarm_special.pixelaction(target,params,user)
-				.= 1
+				return TRUE
 		else if (user.a_intent == "harm")
 			if(harm_special)
 				for (var/obj/item/cloaking_device/I in user)
 					SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 				harm_special.pixelaction(target,params,user)
-				.= 1
+				return TRUE
 		else
-			.= 0
+			return FALSE
 
 	proc/is_on_cooldown()
 		return GET_COOLDOWN(src, "limb_cooldown")
@@ -116,16 +113,11 @@
 /datum/limb/hitscan
 	var/brute = 5
 	var/burn = 0
-	var/cooldown = 30
-	var/next_shot_at = 0
 	var/image/default_obscurer
 
 	attack_range(atom/target, var/mob/user, params)
-		if (next_shot_at > ticker.round_elapsed_ticks)
-			return
 		user.visible_message("<b class='alert'>[user] fires at [target] with the [holder.name]!</b>")
 		playsound(user.loc, 'sound/weapons/lasermed.ogg', 100, 1)
-		next_shot_at = ticker.round_elapsed_ticks + cooldown
 		if (ismob(target))
 			var/mob/MT = target
 			if (prob(30))
@@ -133,11 +125,8 @@
 			else
 				MT.TakeDamageAccountArmor(user.zone_sel ? user.zone_sel.selecting : "All", brute, burn, 0, burn ? DAMAGE_BURN : DAMAGE_BLUNT)
 		elecflash(target.loc,power = 2)
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
-	is_on_cooldown()
-		if (ticker.round_elapsed_ticks < next_shot_at)
-			return next_shot_at - ticker.round_elapsed_ticks
-		return 0
 
 /datum/limb/railgun
 	var/cooldown = 50
@@ -161,11 +150,11 @@
 			return
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 
-		playsound(user, 'sound/effects/mag_warp.ogg', 50, 1)
+		playsound(user, 'sound/effects/mag_warp.ogg', 50, TRUE)
 		SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 			var/obj/target_r = new/obj/railgun_trg_dummy(target)
 
-			playsound(user, 'sound/weapons/railgun.ogg', 50, 1)
+			playsound(user, 'sound/weapons/railgun.ogg', 50, TRUE)
 			user.set_dir(get_dir(user, target))
 
 			var/list/affected = DrawLine(user, target_r, /obj/line_obj/railgun ,'icons/obj/projectiles.dmi',"WholeRailG",1,1,"HalfStartRailG","HalfEndRailG",OBJ_LAYER,1)
@@ -212,6 +201,7 @@
 	var/reload_time = 20 SECONDS
 	var/shots = 4
 	var/current_shots = 0
+	var/spread_angle = 8
 	var/reloading_str = "reloading"
 	var/image/default_obscurer
 	var/muzzle_flash = null
@@ -223,14 +213,13 @@
 		src.shoot(target, user, TRUE)
 
 	proc/shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
-		//slightly cursed ref usage because we can't use ON_COOLDOWN with datums
-		if (GET_COOLDOWN(user, "\ref[src] reload") && !current_shots)
+		if (GET_COOLDOWN(src, "[src] reload") && !current_shots)
 			boutput(user, "<span class='alert'>The [holder.name] is [reloading_str]!</span>")
 			return
 		else if (current_shots <= 0)
 			current_shots = shots
 		if (current_shots > 0)
-			if (ON_COOLDOWN(user, "\ref[src] shoot", src.cooldown))
+			if (ON_COOLDOWN(src, "[src] shoot", src.cooldown))
 				return
 			. = TRUE
 			current_shots--
@@ -239,12 +228,10 @@
 			else
 				src.shoot_range(target, user, params)
 		if (current_shots <= 0)
-			ON_COOLDOWN(user, "\ref[src] reload", src.reload_time)
+			ON_COOLDOWN(src, "[src] reload", src.reload_time)
 
 	proc/shoot_range(atom/target, var/mob/user, params)
-		var/pox = text2num(params["icon-x"]) - 16
-		var/poy = text2num(params["icon-y"]) - 16
-		shoot_projectile_ST_pixel(user, proj, target, pox, poy)
+		shoot_projectile_ST_pixel_spread(user, proj, target, spread_angle = src.spread_angle)
 		if (src.muzzle_flash)
 			if (isturf(user.loc))
 				var/turf/origin = user.loc
@@ -253,7 +240,7 @@
 
 	proc/shoot_pointblank(atom/target, var/mob/user)
 		for (var/i = 0; i < proj.shot_number; i++)
-			var/obj/projectile/P = initialize_projectile_pixel(user, proj, target, 0, 0)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(user, proj, target, 0, 0)
 			if (!P)
 				return FALSE
 			if(BOUNDS_DIST(user, target) == 0)
@@ -281,57 +268,71 @@
 		src.point_blank(target, user)
 
 	/// despite the name, this means reloading
-	is_on_cooldown(var/mob/user)
-		return GET_COOLDOWN(user, "\ref[src] reload")
+	is_on_cooldown()
+		return (GET_COOLDOWN(src, "[src] reload") || GET_COOLDOWN(src, "[src] shoot"))
 
 /datum/limb/gun/kinetic
 	shoot(atom/target, var/mob/user, var/pointblank = FALSE, params)
 		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
 			user.inertia_dir = get_dir(target, user)
 			step(user, user.inertia_dir)
+
 	arm38
 		proj = new/datum/projectile/bullet/revolver_38
 		shots = 3
 		current_shots = 3
-		cooldown = 30
-		reload_time = 200
+		cooldown = 3 SECONDS
+		reload_time = 20 SECONDS
 		muzzle_flash = "muzzle_flash"
+
+		fast
+			cooldown = 2 SECONDS
+			reload_time = 8 SECONDS
 
 	abg
 		proj = new/datum/projectile/bullet/abg
 		shots = 6
 		current_shots = 6
-		cooldown = 30
-		reload_time = 300
+		cooldown = 3 SECONDS
+		reload_time = 30 SECONDS
 		muzzle_flash = "muzzle_flash"
+
+	smg
+		proj = new/datum/projectile/bullet/bullet_9mm/smg
+		shots = 2
+		current_shots = 2
+		cooldown = 3 SECONDS
+		reload_time = 10 SECONDS
+		muzzle_flash = "muzzle_flash"
+		spread_angle = 15
 
 	artillery
 		proj = new/datum/projectile/bullet/autocannon
 		shots = 1
 		current_shots = 1
-		cooldown = 50
-		reload_time = 50
+		cooldown = 5 SECONDS
+		reload_time = 5 SECONDS
 
 	glitch
 		proj = new/datum/projectile/bullet/glitch
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 40
+		cooldown = 4 SECONDS
+		reload_time = 4 SECONDS
 
 	fire_elemental
 		proj = new/datum/projectile/bullet/flare
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 40
+		cooldown = 4 SECONDS
+		reload_time = 4 SECONDS
 
 	syringe
 		proj = new/datum/projectile/syringefilled
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 300
+		cooldown = 4 SECONDS
+		reload_time = 30 SECONDS
 
 	spike
 		proj = new/datum/projectile/special/spreader/uniform_burst/spikes
@@ -339,6 +340,7 @@
 		current_shots = 1
 		cooldown = 1 SECOND
 		reload_time = 1 SECOND
+		spread_angle = 0
 
 	rifle
 		proj = new/datum/projectile/bullet/assault_rifle
@@ -352,30 +354,32 @@
 		proj = new/datum/projectile/laser/light
 		shots = 1
 		current_shots = 1
-		cooldown = 30
-		reload_time = 30
+		cooldown = 3 SECONDS
+		reload_time = 3 SECONDS
 
 	cutter
 		proj = new/datum/projectile/laser/drill/cutter
 		shots = 1
 		current_shots = 1
-		cooldown = 30
-		reload_time = 30
+		cooldown = 3 SECONDS
+		reload_time = 3 SECONDS
+		spread_angle = 0
 
 	disruptor
 		proj = new/datum/projectile/disruptor/high
 		shots = 1
 		current_shots = 1
-		cooldown = 40
-		reload_time = 40
+		cooldown = 4 SECONDS
+		reload_time = 4 SECONDS
 
 /datum/limb/mouth
-	var/sound_attack = 'sound/voice/animal/werewolf_attack1.ogg'
+	var/sound_attack = 'sound/voice/animal/short_hiss.ogg'
 	var/dam_low = 3
 	var/dam_high = 9
 	var/custom_msg = null
 	var/miss_prob = 80
 	var/stam_damage_mult = 1
+	var/harm_intent_delay = COMBAT_CLICK_DELAY
 
 	attack_hand(atom/target, var/mob/user, var/reach)
 		if (ismob(target))
@@ -413,7 +417,65 @@
 		else
 			user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
 		user.lastattacked = target
-		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
+		ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
+
+
+
+/datum/limb/mouth/maneater
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_2.ogg'
+	dam_low = 8
+	dam_high = 12
+	custom_msg = null
+	miss_prob = 90
+	stam_damage_mult = 0
+	harm_intent_delay = COMBAT_CLICK_DELAY
+	var/human_stam_damage = 50 //! how much stam damage this limb should deal to living mobs
+	var/human_desorient_duration = 2 SECONDS //! how much desorient this limb should apply to living mobs
+	var/human_stun_duration = 5 SECONDS //! how much stun this limb should apply to living mobs
+	var/human_stun_cooldown = 6 SECONDS //! if this limb stunned: how long should this kind of limb not be able to stun the target; to prevent reapplication of stuns
+	var/list/chems_to_inject = null //! list of chems this limb should inject on targets
+	var/amount_to_inject = 3 //! amount of chems this limb should inject on targets
+
+/datum/limb/mouth/maneater/New(var/obj/item/parts/holder)
+	..()
+	src.chems_to_inject = list()
+
+/datum/limb/mouth/maneater/harm(mob/target, var/mob/user)
+	if (!user || !target)
+		return 0
+
+	if (!target.melee_attack_test(user))
+		return
+
+	if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
+
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
+		user.attack_effects(target, user.zone_sel?.selecting)
+		if (isliving(target) && !issilicon(target))
+			var/mob/living/victim = target
+			//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
+			if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
+				//If we dropped the Stamina below 0 and stunned the target, we put the stam damage on a cooldown
+				ON_COOLDOWN(victim, "maneater_paralysis", src.human_stun_cooldown)
+			//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
+			if (length(src.chems_to_inject) > 0)
+				var/chem_protection = 0
+				if (ishuman(victim))
+					chem_protection = ((100 - victim.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
+				var/injected_per_reagent = max(0.1 , chem_protection * src.amount_to_inject / length(src.chems_to_inject))
+				if (injected_per_reagent > 0.1)
+					for (var/plantReagent in src.chems_to_inject)
+						victim.reagents?.add_reagent(plantReagent, injected_per_reagent)
+
+		msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b><span class='combat'>[user] bites [target]!</span></b>"
+		msgs.played_sound = src.sound_attack
+		msgs.flush(0)
+	else
+		user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
+	user.lastattacked = target
+	if (user != target)
+		attack_twitch(user, 1.2, 1.2)
+	ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
 
 /// for cats/mice/etc
 /datum/limb/mouth/small
@@ -424,7 +486,7 @@
 
 	harm(mob/target, var/mob/user)
 		if (isghostcritter(user) && ishuman(target) && target.health < target.max_health * 0.8)
-			boutput(user, "Your spectral conscience refuses to damage this human any further.")
+			boutput(user, "<span class='alert'>Your spectral conscience refuses to damage this human any further.")
 			return 0
 		..()
 
@@ -503,7 +565,6 @@
 		ON_COOLDOWN(src, "limb_cooldown", 2 SECONDS)
 
 /datum/limb/zombie
-
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control) //TODO: Make this actually do damage to things instead of just smashing the thing.
 		if (!holder)
 			return
@@ -604,7 +665,7 @@
 
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if (no_logs != 1)
-			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with bear limbs at [log_loc(user)].")
+			logTheThing(LOG_COMBAT, user, "mauls [constructTarget(target,"combat")] with zombie limbs at [log_loc(user)].")
 
 		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 10, 1, can_punch = 0, can_kick = 0)
 		user.attack_effects(target, user.zone_sel?.selecting)
@@ -613,18 +674,19 @@
 		msgs.played_sound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 		msgs.damage_type = DAMAGE_BLUNT
 		msgs.flush(SUPPRESS_LOGS)
-		if (prob(40))
+		if (prob(40) && ishuman(user))
 			if (iscarbon(target))
 				var/mob/living/carbon/C = target
 				C.do_disorient(25, disorient=3 SECONDS)
 		if (ishuman(target) && ishuman(user))
 			var/mob/living/carbon/human/H = user
-			if (istype(H.mutantrace, /datum/mutantrace/zombie))
+			if (istype(H.mutantrace, /datum/mutantrace/zombie/can_infect))
 				target.changeStatus("z_pre_inf", rand(5,9) SECONDS)
 		else if (issilicon(target))
 			special_attack_silicon(target, user)
 
 		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
 
 /datum/limb/dualsaw
@@ -1350,7 +1412,7 @@
 			user.smash_through(target, list("grille"))
 			var/obj/O = target
 			if (isitem(O) && !O.anchored)
-				playsound(user,'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1, pitch = 1.7)
+				playsound(user,'sound/impact_sounds/Generic_Hit_1.ogg', 50, TRUE, pitch = 1.7)
 				var/turf/throw_to = get_edge_target_turf(user, get_dir(user,target))
 				O.throw_at(throw_to, 8, 2)
 
@@ -1435,7 +1497,7 @@
 		if(check_target_immunity( target ))
 			return 0
 		if (isghostcritter(user) && ishuman(target) && target.health < 75)
-			boutput(user, "Your spectral conscience refuses to damage this human any further.")
+			boutput(user, "<span class='alert'>Your spectral conscience refuses to damage this human any further.</span>")
 			return 0
 		var/quality = src.holder.quality
 		if (no_logs != 1)
@@ -1526,7 +1588,7 @@
 	harm(mob/target, var/mob/living/user, var/no_logs = 0)
 		if(check_target_immunity( target ))
 			return 0
-		if (istype(target,/mob/living/critter/small_animal/trilobite/ai_controlled))
+		if (istype(target,/mob/living/critter/small_animal/trilobite))
 			return 0
 		if (no_logs != 1)
 			logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with dash arms at [log_loc(user)].")
@@ -1578,7 +1640,37 @@
 		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("pummel", "pound", "mangle")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target]!</span></b>"
-		msgs.played_sound ='sound/impact_sounds/Generic_Hit_1.ogg'
+		msgs.played_sound =	'sound/impact_sounds/Generic_Hit_1.ogg'
+		msgs.flush(SUPPRESS_LOGS)
+		user.lastattacked = target
+		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
+
+/datum/limb/sword
+	help(mob/target, var/mob/living/user)
+		harm(target, user)
+
+	disarm(mob/target, var/mob/living/user)
+		harm(target, user)
+
+	grab(mob/target, var/mob/living/user)
+		harm(target, user)
+
+	harm(mob/target, var/mob/living/user, var/no_logs = 0)
+		if (!user || !target)
+			return 0
+
+		if (!target.melee_attack_test(user))
+			return
+
+		if (no_logs != 1)
+			logTheThing(LOG_COMBAT, user, "attacks [constructTarget(target,"combat")] with a bladed arm at [log_loc(user)].")
+
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 6, 12, rand(0, 2), can_punch = FALSE, can_kick = FALSE)
+		user.attack_effects(target, user.zone_sel?.selecting)
+		var/action = pick("stab", "slashe", "cut")
+		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with a blade!</span></b>"
+		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
+		msgs.damage_type = DAMAGE_CUT
 		msgs.flush(SUPPRESS_LOGS)
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)

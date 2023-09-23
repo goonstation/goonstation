@@ -4,17 +4,34 @@
   * Lots of functionality resides in this type.
   */
 TYPEINFO(/atom)
-	///A list of procs that should appear on the admin interact menu (must support being called without arguments)
+	/// A list of procs that should appear on the admin interact menu (must support being called without arguments)
 	var/list/admin_procs = null
+	/// A list of material IDs that should be ignored when applying appearance
+	var/list/mat_appearances_to_ignore = null
 /atom
 	layer = TURF_LAYER
 	plane = PLANE_DEFAULT
-	var/level = 2
+	/// Are we above or below the floor tile?
+	var/level = OVERFLOOR
 	var/flags = FPRINT
 	var/event_handler_flags = 0
 	var/tmp/temp_flags = 0
 	var/shrunk = 0
 	var/list/cooldowns
+
+	/// Material id of this object as a material id (lowercase string), set on New()
+	var/default_material = null
+	/// Does this object use appearance from the default material?
+	var/uses_default_material_appearance = FALSE
+	/// Does this object use the default material's name?
+	var/uses_default_material_name = FALSE
+
+	/// The message displayed when the atom is alt+doubleclicked, should contain a description of the atom's functionality.
+	/// You can also override get_help_message() to return a message dynamically (based on atom state or the user etc.)
+	/// Try to highlight the tools used to do stuff with <b></b> tags.
+	/// DO NOT override this directly, use HELP_MESSAGE_OVERRIDE instead.
+	/// Example: HELP_MESSAGE_OVERRIDE("Use a <b>screwdriver</b> to unscrew the cover.")
+	var/help_message = null
 
 	/// Override for the texture size used by setTexture.
 	var/texture_size = 0
@@ -70,11 +87,18 @@ TYPEINFO(/atom)
 	/// Whether the last material applied updated appearance. Used for re-applying material appearance on icon update
 	var/material_applied_appearance = FALSE
 
+	New(turf/newLoc)
+		. = ..()
+		// Lets stop having 5 implementations of this that all do it differently
+		if (!src.material && default_material)
+			var/datum/material/mat = istext(default_material) ? getMaterial(default_material) : default_material
+			src.setMaterial(mat)
+
 	proc/name_prefix(var/text_to_add, var/return_prefixes = 0, var/prepend = 0)
 		if( !name_prefixes ) name_prefixes = list()
 		var/prefix = ""
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_prefixes))
-			if (src.name_prefixes.len >= src.num_allowed_prefixes)
+			if (length(src.name_prefixes) >= src.num_allowed_prefixes)
 				src.remove_prefixes(1)
 			if(prepend)
 				src.name_prefixes.Insert(1, strip_html(text_to_add))
@@ -97,7 +121,7 @@ TYPEINFO(/atom)
 		if( !name_suffixes ) name_suffixes = list()
 		var/suffix = ""
 		if (istext(text_to_add) && length(text_to_add) && islist(src.name_suffixes))
-			if (src.name_suffixes.len >= src.num_allowed_suffixes)
+			if (length(src.name_suffixes) >= src.num_allowed_suffixes)
 				src.remove_suffixes(1)
 			src.name_suffixes += strip_html(text_to_add)
 		if (return_suffixes)
@@ -173,6 +197,11 @@ TYPEINFO(/atom)
 				src.delStatus(effect)
 			src.statusEffects = null
 		ClearAllParticles()
+
+		if (!isnull(chat_text))
+			qdel(chat_text)
+			chat_text = null
+
 		atom_properties = null
 		if(!ismob(src)) // I want centcom cloner to look good, sue me
 			ClearAllOverlays()
@@ -215,6 +244,15 @@ TYPEINFO(/atom)
 	  */
 	proc/is_open_container()
 		return flags & OPENCONTAINER
+
+	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
+	proc/set_open_container(value)
+		if (value)
+			ADD_FLAG(src.flags, OPENCONTAINER)
+		else
+			REMOVE_FLAG(src.flags, OPENCONTAINER)
+		src.reagents?.handle_reactions()
+
 
 	proc/transfer_all_reagents(var/atom/A as turf|obj|mob, var/mob/user as mob)
 		// trans from src to A
@@ -260,7 +298,7 @@ TYPEINFO(/atom)
 /atom/proc/ex_act(var/severity=0,var/last_touched=0)
 	return
 
-/atom/proc/reagent_act(var/reagent_id,var/volume)
+/atom/proc/reagent_act(var/reagent_id,var/volume,var/datum/reagentsholder_reagents)
 	if (!istext(reagent_id) || !isnum(volume) || volume < 1)
 		return 1
 	return 0
@@ -345,6 +383,7 @@ TYPEINFO(/atom)
 
 /// Changes the icon state and returns TRUE if the icon state changed.
 /atom/proc/set_icon_state(var/new_state)
+	SHOULD_CALL_PARENT(TRUE)
 	. = new_state != src.icon_state
 	src.icon_state = new_state
 	if(. && src.material_applied_appearance && src.material)
@@ -352,6 +391,16 @@ TYPEINFO(/atom)
 	signal_event("icon_updated")
 	// TODO: actual component signal here
 	// also TODO: use this proc instead of setting icon state directly probably
+
+/// Checks if the icon state in question exists. If it does it sets it and returns true. Otherwise returns false and doesn't change the icon state.
+/// You can supply the new_icon argument to also override src.icon. This will again only be overriden if the icon state + icon combination exists.
+/// Not intended for normal use. Current intended use is stuff like `src.try_set_icon_state(src.icon_state + "-autumn")` for seasonal modifiers etc.
+/atom/proc/try_set_icon_state(new_state, new_icon=null)
+	if(src.is_valid_icon_state(new_state, new_icon))
+		src.icon = new_icon
+		src.set_icon_state(new_state)
+		return TRUE
+	return FALSE
 
 /atom/proc/set_dir(var/new_dir)
 #ifdef COMSIG_ATOM_DIR_CHANGED
@@ -665,6 +714,34 @@ TYPEINFO(/atom)
 		update_mdir_light_visibility(src.dir)
 
 /atom/proc/get_desc(dist, mob/user)
+	// If we click something on/under the floor, then analyze fluid/smoke as well
+	// a million things don't call the parent for this but the things I care about don't override it so kicking it down the road
+	if (CHECK_LIQUID_CLICK(src))
+		var/turf/T = get_turf(src)
+		var/obj/fluid/liquid = T.active_liquid
+		var/obj/fluid/airborne/gas = T.active_airborne_liquid
+
+		// Bit roundabout to use get_desc here instead of keeping it all in reagent code,
+		// but we can't actually identify which fluid obj is being examined from within'
+		// fluid group code, as my_atom is null. Thus we need to go through the obj for the
+		// distance check.
+
+		// also reagent examining code is hell and you need to explicitly put this proc call in every get_desc() proc
+		// to have it actually show up in examining
+		if (liquid)
+			. += liquid.get_desc(get_dist(T, user), user)
+		if (gas)
+			. += gas.get_desc(get_dist(T, user), user)
+
+/// Override this if you want the alt+doubleclick help message to be dynamic (for example based on the state of deconstruction).
+/// For consistency you should always also override help_message at least to a placeholder never-to-be-seen string, this is important
+/// for the context menu functionality. Use the [HELP_MESSAGE_OVERRIDE] macro to do that.
+/atom/proc/get_help_message(dist, mob/user)
+	. = src.help_message
+
+/// A proc to give this item a special name when viewed in an admin context (just the tilde-rightclick menu for now but probably other places later)
+/atom/proc/admin_visible_name()
+	return src.name
 
 /**
   * a proc to completely override the standard formatting for examine text
@@ -773,10 +850,9 @@ TYPEINFO(/atom)
 	PROTECTED_PROC(TRUE)
 	if (src.storage?.storage_item_attack_by(W, user))
 		return
-	src.material?.triggerOnHit(src, W, user, 1)
+	src.material_trigger_when_attacked(W, user, 1)
 	if (user && W && !(W.flags & SUPPRESSATTACK))
 		user.visible_message("<span class='combat'><B>[user] hits [src] with [W]!</B></span>")
-	return
 
 //This will looks stupid on objects larger than 32x32. Might have to write something for that later. -Keelin
 /atom/proc/setTexture(var/texture, var/blendMode = BLEND_MULTIPLY, var/key = "texture")
@@ -915,6 +991,9 @@ TYPEINFO(/atom)
 	SEND_SIGNAL(src, COMSIG_ATOM_REAGENT_CHANGE)
 	return
 
+/atom/proc/on_reagent_transfer()
+	return
+
 /atom/proc/Bumped(AM as mob|obj)
 	SHOULD_NOT_SLEEP(TRUE)
 	return
@@ -951,7 +1030,7 @@ TYPEINFO(/atom)
 //Return an atom if you want to make the projectile's effects affect that instead.
 
 /atom/proc/bullet_act(var/obj/projectile/P)
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 	return
 
 
@@ -1072,21 +1151,57 @@ TYPEINFO(/atom)
 	if (newopacity == src.opacity)
 		return // Why even bother
 
+	var/on_turf = isturf(src.loc)
+
 	var/oldopacity = src.opacity
-	src.opacity = newopacity
+
+	if(!on_turf)
+		src.opacity = newopacity
+		SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
+		return
+
+	// the following happens only if we are on a turf
+	var/turf/our_turf = get_turf(src)
+
+	var/old_turf_total_opacity = our_turf.opacity + our_turf.opaque_atom_count
+	var/total_opacity_changed = (old_turf_total_opacity == 0) || (old_turf_total_opacity == 1 && newopacity == 0)
+
+	if(RL_Started && total_opacity_changed)
+		var/list/datum/light/lights = list()
+		for (var/turf/T in view(RL_MaxRadius, src))
+			if (T.RL_Lights)
+				lights |= T.RL_Lights
+
+		var/list/affected = list()
+		for (var/datum/light/light as anything in lights)
+			if (light.enabled)
+				affected |= light.strip(++RL_Generation)
+
+		if (src != our_turf)
+			our_turf.opaque_atom_count += newopacity ? 1 : -1
+		src.opacity = newopacity
+
+		for (var/datum/light/light as anything in lights)
+			if (light.enabled)
+				affected |= light.apply()
+		if (RL_Started)
+			for (var/turf/T as anything in affected)
+				RL_UPDATE_LIGHT(T)
+	else
+		our_turf.opaque_atom_count += newopacity ? 1 : -1
+		src.opacity = newopacity
 
 	SEND_SIGNAL(src, COMSIG_ATOM_SET_OPACITY, oldopacity)
 
-	if (isturf(src.loc))
-		// Not a turf, so we must send a signal to the turf
-		SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
+	// Not a turf, so we must send a signal to the turf
+	SEND_SIGNAL(src.loc, COMSIG_TURF_CONTENTS_SET_OPACITY, oldopacity, src)
 
 	// Below is a "smart" signal on a turf that only get called when the opacity
 	// actually changes in a meaningfull way. If atom is on a turf and we are
 	// obscuring vision in a turf that was originally not obscured. Or we are on a
 	// turf that is not obscuring vision, we were obscuring vision and are not
 	// anymore.
-	if (isturf(src.loc) && ((src.loc.opacity == 0 && src.opacity == 1) || (src.loc.opacity == 0 && oldopacity == 1 && src.opacity == 0)))
+	if (total_opacity_changed)
 		var/turf/T = src.loc
 		T.contents_set_opacity_smart(oldopacity, src)
 
@@ -1266,3 +1381,19 @@ TYPEINFO(/atom)
 	G.gift = src
 
 	return G
+
+/atom/onVarChanged(variable, oldval, newval)
+	. = ..()
+	switch(variable)
+		if("opacity")
+			src.opacity = oldval
+			src.set_opacity(newval)
+		if("density")
+			src.density = oldval
+			src.set_density(newval)
+		if("dir")
+			src.dir = oldval
+			src.set_dir(newval)
+		if("icon_state")
+			src.icon_state = oldval
+			src.set_icon_state(newval)

@@ -171,7 +171,7 @@
 	onAttach(datum/abilityHolder/holder)
 		. = ..()
 		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image('icons/obj/surgery.dmi', "brain1"), "brain_state")
+		B.UpdateOverlays(image('icons/obj/items/organs/brain.dmi', "brain1"), "brain_state")
 
 	castcheck()
 		. = isadmin(holder.owner)
@@ -192,7 +192,7 @@
 	updateObject()
 		var/mob/living/M = holder.owner
 		var/atom/movable/screen/ability/topBar/B = src.object
-		var/image/I = B.SafeGetOverlayImage("brain_state", 'icons/obj/surgery.dmi', "brain1")
+		var/image/I = B.SafeGetOverlayImage("brain_state", 'icons/obj/items/organs/brain.dmi', "brain1")
 		if(M.ai?.enabled || M.ai_active)
 			I.icon_state = "ai_brain"
 		else
@@ -218,5 +218,5 @@
 		. = ..()
 		var/turf/T = get_turf(target)
 		for(var/obj/O in T.cameras)
-			shoot_projectile_ST(O, current_projectile, T)
+			shoot_projectile_ST_pixel_spread(O, current_projectile, T)
 

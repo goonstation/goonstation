@@ -30,14 +30,6 @@
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
 
-	proc/MakeCatwalk(var/obj/item/rods/rods)
-		if (rods)
-			rods.change_stack_amount(-1)
-
-		var/obj/grille/catwalk/catwalk = new
-		catwalk.setMaterial(rods?.material)
-		catwalk.set_loc(src)
-
 	attackby(obj/item/C, mob/user, params)
 		if(istype(C, /obj/item/rods))
 			var/actionbar_duration = 2 SECONDS
@@ -63,6 +55,7 @@
 		. = ..()
 /turf/simulated/floor/airless/plating/catwalk/auto
 	icon = 'icons/turf/catwalk_support.dmi'
+	icon_state = "auto"
 
 	New()
 		. = ..()
@@ -90,6 +83,39 @@
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
 
+/turf/unsimulated/floor/airless/plating/catwalk/auto
+	icon = 'icons/turf/catwalk_support.dmi'
+	icon_state = "auto"
+
+	New()
+		. = ..()
+		UpdateIcon()
+		src.UpdateNeighbors()
+
+	update_icon()
+		. = ..()
+		var/connectdir = 0
+		for (var/dir in cardinal)
+			var/turf/T = get_step(src, dir)
+			if (istype(T, src))
+				connectdir |= dir
+
+		src.icon_state = "[connectdir]"
+
+	proc/UpdateNeighbors()
+		for (var/turf/simulated/floor/airless/plating/catwalk/auto/T in orange(1, src))
+			T.UpdateIcon()
+
+/turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon
+	name = "hot catwalk support"
+	icon_state = "auto_lava"
+	carbon_dioxide = 20
+	temperature = FIRE_MINIMUM_TEMPERATURE_TO_EXIST - 1
+
+	New()
+		..()
+		var/image/lava = image(icon = 'icons/turf/floors.dmi', icon_state = "lava", layer = src.layer - 0.1)
+		src.UpdateOverlays(lava, "lava")
 
 ////////////////////////////////////////////////////////////
 
@@ -100,7 +126,7 @@
 		..()
 		var/image/burn_overlay = image('icons/turf/floors.dmi',"floorscorched1")
 		burn_overlay.alpha = 200
-		UpdateOverlays(burn_overlay,"burn")
+		UpdateOverlays(burn_overlay, "burn")
 
 /turf/simulated/floor/airless/scorched2
 	burnt = 1
@@ -483,6 +509,8 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/circuit)
+	mat_appearances_to_ignore = list("pharosium")
 /turf/simulated/floor/airless/circuit
 	name = "transduction matrix"
 	desc = "An elaborate, faintly glowing matrix of isolinear circuitry."
@@ -490,11 +518,7 @@
 	RL_LumR = 0
 	RL_LumG = 0   //Corresponds to color of the icon_state.
 	RL_LumB = 0.3
-	mat_appearances_to_ignore = list("pharosium")
-
-	New()
-		..()
-		setMaterial(getMaterial("pharosium"), copy = FALSE)
+	default_material = "pharosium"
 
 /turf/simulated/floor/airless/circuit/green
 	icon_state = "circuit-green"
@@ -534,16 +558,14 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/carpet)
+	mat_appearances_to_ignore = list("cotton")
 /turf/simulated/floor/airless/carpet
 	name = "carpet"
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "red1"
-	mat_appearances_to_ignore = list("cotton")
 	mat_changename = 0
-
-	New()
-		plate_mat = getMaterial("cotton")
-		. = ..()
+	default_material = "cotton"
 
 	break_tile()
 		..()
@@ -738,15 +760,13 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/wood)
+	mat_appearances_to_ignore = list("wood")
 /turf/simulated/floor/airless/wood
 	icon_state = "wooden-2"
-	mat_appearances_to_ignore = list("wood")
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
-
-	New()
-		..()
-		setMaterial(getMaterial("wood"), copy = FALSE)
+	default_material = "wood"
 
 /turf/simulated/floor/airless/wood/two
 	icon_state = "wooden"
@@ -899,17 +919,15 @@
 
 /////////////////////////////////////////
 
+TYPEINFO(/turf/simulated/floor/airless/grass)
+	mat_appearances_to_ignore = list("steel","synthrubber")
 /turf/simulated/floor/airless/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
-	mat_appearances_to_ignore = list("steel","synthrubber")
 	mat_changename = 0
 	mat_changedesc = 0
-
-	New()
-		..()
-		setMaterial(getMaterial("synthrubber"), copy = FALSE)
+	default_material = "synthrubber"
 
 /turf/simulated/floor/airless/grass/leafy
 	icon_state = "grass_leafy"

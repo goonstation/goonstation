@@ -1,4 +1,4 @@
-/// Severed tail images go in 'icons/obj/surgery.dmi'
+/// Severed tail images go in 'icons/obj/organ/tail.dmi'
 /// on-mob tail images are defined by organ_image_icon
 /// both severed and on-mob tail icon_states are defined by just icon_state
 /// try to keep the names the same, or everything breaks
@@ -10,8 +10,9 @@
 	organ_holder_required_op_stage = 11
 	edible = 1
 	organ_image_icon = 'icons/mob/werewolf.dmi' // please keep your on-mob tail icon_states with the rest of your mob's sprites
+	icon = 'icons/obj/items/organs/tail.dmi'
 	icon_state = "tail-wolf"
-	made_from = "flesh"
+	default_material = "flesh"
 	var/tail_num = TAIL_NONE
 	var/colorful = FALSE /// if we need to colorize it
 	var/multipart_icon = FALSE /// if we need to run update_tail_icon

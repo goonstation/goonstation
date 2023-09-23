@@ -187,10 +187,10 @@ To remove:
 		} if(ishuman(target)) { \
 			var/mob/living/carbon/human/H = target; \
 			H.arrestIcon?.alpha = icon_alpha; \
-			if (H.implant_icons) { \
+			if (H.prodoc_icons) { \
 				var/image/I; \
-				for (var/implant in H.implant_icons) { \
-					I = H.implant_icons[implant]; \
+				for (var/implant in H.prodoc_icons) { \
+					I = H.prodoc_icons[implant]; \
 					I.alpha = icon_alpha; \
 				} \
 			} \
@@ -279,6 +279,12 @@ To remove:
 #define PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING(x) x("can_build_without_holding", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Mob can bulid furniture without holding them (for borgs)
 #define PROP_MOB_BLOODGIB_IMMUNE(x) x("bloodgib_immune", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Mob won't gib from having 1000+ effective blood
 #define PROP_MOB_OVERDOSE_WEAKNESS(x) x("overdose_weakness", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_SUPPRESS_LAYDOWN_SOUND(x) x("suppress_laydown_sound", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_SUPPRESS_DEATH_SOUND(x) x("suppress_death_sound", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_NO_MIASMA(x) x("no_miasma", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_NO_DECOMPOSITION(x) x("no_decomposition", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_HEARD_PITCH(x) x("heard_pitch", APPLY_ATOM_PROPERTY_PRODUCT, REMOVE_ATOM_PROPERTY_PRODUCT)
+
 /// Hides med/sec HUDs and name tags from the mob
 #define PROP_MOB_HIDE_ICONS(x) x("hide_icons", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_HIDE_ICONS)
 
@@ -297,6 +303,8 @@ To remove:
 #define PROP_ATOM_TELEPORT_JAMMER(x) x("teleport_jammer", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM, PROP_UPDATE_TELEBLOCK_CAT)
 #define PROP_ATOM_FLOCK_THING(x) x("flock_thing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_FLOATING(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+/// Thing will redirect clicks to a fluid on its tile when clicked by a relevant item (beaker mop etc)
+#define PROP_ATOM_DO_LIQUID_CLICKS(x) x("do_liquid_clicks", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
@@ -442,6 +450,7 @@ To remove:
 		} \
 	} while (0)
 
+//WARNING: there is currently no good default handling (i.e.: yielding 1 instead of null) for when the property is not set at all. You need to do it manually.
 #define APPLY_ATOM_PROPERTY_PRODUCT(target, property, do_update, update_macro, source, value) \
 	do { \
 		LAZYLISTINIT(target.atom_properties); \

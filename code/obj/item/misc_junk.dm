@@ -242,7 +242,7 @@ TYPEINFO(/obj/item/disk)
 	if (spam_flag == 0)
 		spam_flag = 1
 
-		playsound(user, 'sound/effects/mag_pandroar.ogg', 100, 0)
+		playsound(user, 'sound/effects/mag_pandroar.ogg', 100, FALSE)
 		for (var/mob/M in view(user))
 			if (M != user)
 				M.change_misstep_chance(50)
@@ -266,7 +266,7 @@ TYPEINFO(/obj/item/disk)
 	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
-		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
+		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE, -1)
 		playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 		user.visible_message("<span class='alert'><B>[user] bonks [M] on the head with [src]!</B></span>",\
 							"<span class='alert'><B>You bonk [M] on the head with [src]!</B></span>",\
@@ -615,16 +615,15 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	desc = "Radioactive waste produced as a by product of reprocessing fuel. It may still contain some fuel to be extracted."
 	icon = 'icons/misc/reactorcomponents.dmi'
 	icon_state = "waste"
+	default_material = "slag"
 
 	New()
 		. = ..()
-		src.setMaterial(getMaterial("slag"), FALSE, FALSE, TRUE)
 		src.AddComponent(/datum/component/radioactive, 20, FALSE, FALSE, 1)
 
 	ex_act(severity) //blowing up nuclear waste is always a good idea
 		var/turf/current_loc = get_turf(src)
 		var/datum/gas_mixture/leak_gas = new/datum/gas_mixture()
-		leak_gas.vacuum()
 		leak_gas.radgas += 100
 		current_loc.assume_air(leak_gas)
 		qdel(src)
@@ -643,3 +642,31 @@ TYPEINFO(/obj/item/reagent_containers/vape)
     The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited.<br>
 	<br>
 	...spooky!"}
+
+/obj/item/boarvessel
+	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	desc = "Oh my God! A REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
+	icon_state = "boarvessel"
+
+	attack_self(mob/user as mob)
+		user.visible_message("<span class='notice'>[user] pets [src]!</span>", "<span class='notice'>You pet [src]!</span>")
+
+/obj/item/boarvessel/forgery
+	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	desc = "Whatever, it's probably not a REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
+
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)
+
+/obj/item/yoyo
+	name = "Atomic Yo-Yo"
+	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "yoyo"
+	item_state = "yoyo"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROPE)

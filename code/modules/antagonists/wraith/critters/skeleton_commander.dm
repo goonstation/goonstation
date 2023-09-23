@@ -7,7 +7,6 @@
 	can_throw = 1
 	can_grab = 1
 	can_disarm = 1
-	faction = MOB_AI_FACTION_WRAITH
 	custom_gib_handler = /proc/bonegibs
 	icon = 'icons/mob/skeleton_commander.dmi'
 	icon_state = "skeleton_commander"
@@ -17,6 +16,8 @@
 	health_burn_vuln = 0.3
 	var/mob/living/intangible/wraith/master = null
 	var/deathsound = "sound/impact_sounds/plate_break.ogg"
+
+	faction = FACTION_WRAITH
 
 	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
@@ -103,9 +104,9 @@
 							hit = TRUE
 
 				if (!hit)
-					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, FALSE)
 				else
-					playsound(user, 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, 0)
+					playsound(user, 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, FALSE)
 				return 0
 			if (INTENT_GRAB)
 				if(!isturf(target.loc) && !isturf(target)) return
@@ -132,7 +133,7 @@
 							hit = TRUE
 
 				if (!hit)
-					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, FALSE)
 				else
 					playsound(user, 'sound/impact_sounds/Flesh_Stab_3.ogg', 80)
 
@@ -153,7 +154,7 @@
 						break
 
 				if (!hit)
-					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, FALSE)
 				else
 					playsound(user, 'sound/impact_sounds/Flesh_Stab_3.ogg', 80)
 

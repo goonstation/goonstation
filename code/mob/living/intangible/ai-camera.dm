@@ -12,16 +12,16 @@
 //Cyborgs /mob/living/silicon/robot  X
 
 /mob/living/intangible/aieye
-	name = "AI Eye"
+	name = "\improper AI eye"
 	icon = 'icons/mob/ai.dmi'
-	icon_state = "a-eye"
+	icon_state = "ai-eye"
 	density = 0
 	layer = 101
 	see_in_dark = SEE_DARK_FULL
-	stat = 0
+	stat = STAT_ALIVE
 	mob_flags = SEE_THRU_CAMERAS | USR_DIALOG_UPDATES_RANGE
 
-	can_lie = 0 //can't lie down, you're a floating ghostly eyeball
+	can_lie = FALSE //can't lie down, you're a floating ghostly eyeball
 	can_bleed = FALSE
 	metabolizes = FALSE
 	blood_id = null
@@ -54,31 +54,30 @@
 	Login()
 		.=..()
 		src.client.show_popup_menus = 1
-		//if (src.client)
-		//	src.client.show_popup_menus = 0
-		for(var/key in aiImages)
-			var/image/I = aiImages[key]
-			src.client << I
-		SPAWN(0)
+		var/client_color = src.client.color
+		src.client.color = "#000000"
+		SPAWN(0) //let's try not hanging the entire server for 6 seconds every time an AI has wonky internet
+			src.client.images += aiImages
+			src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
+			src.update_name_tag()
+			src.job = "AI"
+			if (src.mind)
+				src.mind.assigned_role = "AI"
+			animate(src.client, 0.3 SECONDS, color = client_color)
 			var/sleep_counter = 0
-			for(var/key in aiImagesLowPriority)
-				var/image/I = aiImagesLowPriority[key]
+			for(var/image/I as anything in aiImagesLowPriority)
 				src.client << I
 				if(sleep_counter++ % (300 * 10) == 0)
 					LAGCHECK(LAG_LOW)
 
 	Logout()
-		//if (src.client)
-		//	src.client.show_popup_menus = 1
 		var/client/cl = src.last_client
-		if(cl)
-			for(var/key in aiImages)
-				var/image/I = aiImages[key]
-				cl.images -= I
+		if (!cl)
+			return ..()
 		SPAWN(0)
+			cl?.images -= aiImages
 			var/sleep_counter = 0
-			for(var/key in aiImagesLowPriority)
-				var/image/I = aiImagesLowPriority[key]
+			for(var/image/I as anything in aiImagesLowPriority)
 				cl?.images -= I
 				if(sleep_counter++ % (300 * 10) == 0)
 					LAGCHECK(LAG_LOW)
@@ -243,7 +242,7 @@
 	say_understands(var/other)
 		if (ishuman(other))
 			var/mob/living/carbon/human/H = other
-			if (!H.mutantrace || !H.mutantrace.exclusive_language)
+			if (!H.mutantrace.exclusive_language)
 				return 1
 		if (isrobot(other))
 			return 1
@@ -453,6 +452,12 @@
 		set name = "Deploy to Shell"
 		if(mainframe)
 			mainframe.deploy_to()
+
+	verb/toggle_lock()
+		set category = "AI Commands"
+		set name = "Toggle Cover Lock"
+		if(mainframe)
+			mainframe.toggle_lock()
 
 	verb/open_nearest_door()
 		set category = "AI Commands"

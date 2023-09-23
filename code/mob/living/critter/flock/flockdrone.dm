@@ -22,7 +22,7 @@
 
 	var/damaged = 0 // used for state management for description showing, as well as preventing drones from screaming about being hit
 
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 
 	var/health_absorb_rate = 2 // how much item health is removed per tick when absorbing
 	var/resources_per_health = 4 // how much resources we get per item health
@@ -55,8 +55,9 @@
 	src.vis_contents += src.flock_name_tag
 
 	src.RegisterSignal(src, COMSIG_MOB_GRABBED, PROC_REF(do_antigrab))
-
-	if(!F || src.dormant) // we'be been flagged as dormant in the map editor or something
+	if (!F)
+		src.flock = get_default_flock()
+	if(src.dormant) // we'be been flagged as dormant in the map editor or something
 		src.dormantize()
 	else
 		src.add_simple_light("drone_light", rgb2num(glow_color))
@@ -82,7 +83,7 @@
 			var/mob/living/critter/flock/drone/F = grab.assailant
 			if (F.flock == src.flock)
 				return
-		playsound(src, 'sound/effects/electric_shock.ogg', 40, 1, -3)
+		playsound(src, 'sound/effects/electric_shock.ogg', 40, TRUE, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Anti-grapple countermeasures deployed.\]</b></span>")
 		var/mob/living/L = grab.assailant
 		L.shock(src, 5000)
@@ -144,7 +145,7 @@
 		boutput(pilot, "<span class='alert'>This drone is already being controlled.</span>")
 		return
 	//if we are in the tutorial don't let traces take control, and for minds run the tutorial check
-	if (src.flock.flockmind.tutorial && (pilot != src.flock.flockmind || !src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_CONTROL, src)))
+	if (src.flock.flockmind?.tutorial && (pilot != src.flock.flockmind || !src.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_DRONE_CONTROL, src)))
 		return
 	if (src.selected_by)
 		if (src.selected_by != pilot)
@@ -245,7 +246,7 @@
 				src.removeOverlayComposition(/datum/overlayComposition/flockmindcircuit/flocktrace_death)
 				src.updateOverlaysClient(src.client)
 		if (give_alerts && src.flock.z_level_check(src))
-			flock_speak(null, "Control of drone [src.real_name] surrended.", src.flock)
+			flock_speak(null, "Control of drone [src.real_name] surrendered.", src.flock)
 
 		controller = null
 		src.update_health_icon()
@@ -454,6 +455,15 @@
 	else
 		return ..()
 
+/mob/living/critter/flock/click(atom/target, list/params)
+	. = ..()
+	if (istype(target, /obj/machinery/door/feather) && !in_interact_range(target, src))
+		var/obj/machinery/door/feather/door = target
+		if (door.density)
+			door.open()
+		else
+			door.close()
+
 /mob/living/critter/flock/drone/DblClick(location, control, params)
 	. = ..()
 	var/mob/living/intangible/flock/F = usr
@@ -495,7 +505,7 @@
 		return // this isn't our drone
 	if (istype(flock_controller, /mob/living/intangible/flock/trace) && flock_controller.flock?.flockmind?.tutorial)
 		return
-	src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_DRAGMOVE, src)
+	src.flock.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_DRAGMOVE, src)
 	src.rally(over_location)
 
 /mob/living/critter/flock/drone/hotkey(var/name)
@@ -551,7 +561,7 @@
 		if ("fart") // i cannot ignore my heritage any longer
 			if (src.emote_check(voluntary, 50))
 				var/fart_message = pick_string("flockmind.txt", "flockdrone_fart")
-				playsound(src, 'sound/misc/flockmind/flockdrone_fart.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, 'sound/misc/flockmind/flockdrone_fart.ogg', 60, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 				return "<b>[src]</b> [fart_message]"
 		if ("laugh")
 			if (src.emote_check(voluntary, 50))
@@ -628,7 +638,7 @@
 	if(src.floorrunning)
 		return
 	src.flock?.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_FLOORRUN, src)
-	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, 1, extrarange = -10)
+	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, TRUE, extrarange = -10)
 	src.floorrunning = TRUE
 	src.set_density(FALSE)
 	src.throws_can_hit_me = FALSE
@@ -651,7 +661,7 @@
 /mob/living/critter/flock/drone/proc/end_floorrunning(check_lights = FALSE)
 	if(!src.floorrunning)
 		return
-	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, 1, extrarange = -10)
+	playsound(src, 'sound/misc/flockmind/flockdrone_floorrun.ogg', 30, TRUE, extrarange = -10)
 	src.floorrunning = FALSE
 	src.set_density(TRUE)
 	src.throws_can_hit_me = TRUE
@@ -685,7 +695,7 @@
 /mob/living/critter/flock/drone/proc/add_resources(amount)
 	src.resources += amount
 	if (src.flock)
-		src.flock.flockmind.tutorial?.PerformSilentAction(FLOCK_ACTION_GAIN_RESOURCES, src.resources)
+		src.flock.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_GAIN_RESOURCES, src.resources)
 		src.flock.stats.resources_gained += amount
 	var/datum/abilityHolder/composite/composite = src.abilityHolder
 	var/datum/abilityHolder/critter/flockdrone/aH = composite.getHolder(/datum/abilityHolder/critter/flockdrone)
@@ -848,15 +858,15 @@
 			if(0 to 45)
 				B = new /obj/item/raw_material/scrap_metal
 				B.set_loc(my_turf)
-				B.setMaterial(getMaterial("gnesis"), copy = FALSE)
+				B.setMaterial(getMaterial("gnesis"))
 			if(46 to 90)
 				B = new /obj/item/raw_material/shard
 				B.set_loc(my_turf)
-				B.setMaterial(getMaterial("gnesisglass"), copy = FALSE)
+				B.setMaterial(getMaterial("gnesisglass"))
 			if(91 to 100)
 				B = new /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget/flock(my_turf)
 
-	playsound(src, 'sound/impact_sounds/Glass_Shatter_2.ogg', 30, 1, extrarange = -10)
+	playsound(src, 'sound/impact_sounds/Glass_Shatter_2.ogg', 30, TRUE, extrarange = -10)
 	if (src.organHolder)
 		src.organHolder.drop_organ("brain",src.loc)
 		src.organHolder.drop_organ("heart",src.loc)
@@ -1035,7 +1045,7 @@
 	if (!istype(user))
 		return
 
-	if (user.flock?.flockmind?.tutorial && !user.flock.flockmind.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
+	if (user.flock?.flockmind?.tutorial && !user.flock.flockmind?.tutorial.PerformAction(FLOCK_ACTION_START_CONVERSION, target))
 		return
 	if(ismob(target) || iscritter(target)) //gods how I hate /obj/critter
 		if (!isflockmob(target))
@@ -1145,7 +1155,7 @@
 	var/mob/living/critter/flock/F = target
 	if(istype(F))
 		if(F.get_health_percentage() >= 1.0)
-			boutput(user, "<span class='alert'>They don't need to be repaired, they're in perfect condition.</span>")
+			boutput(user, "<span class='alert'>[capitalize(he_or_she_dont_or_doesnt(F))] need to be repaired, [hes_or_shes(F)] in perfect condition.</span>")
 			return
 		if (isdead(F))
 			return
@@ -1175,7 +1185,7 @@
 		boutput(user, "<span class='alert'>The imprisonment matrix doesn't work on flockdrones.</span>")
 		return
 	else if(istype(target.loc, /obj/flock_structure/cage))
-		boutput(user, "<span class='alert'>They're already imprisoned, you can't double-imprison them!</span>")
+		boutput(user, "<span class='alert'>[hes_or_shes(target)] already imprisoned, you can't double-imprison [him_or_her(target)]!</span>")
 	else
 		actions.start(new/datum/action/bar/flock_entomb(target), user)
 		return TRUE
@@ -1266,7 +1276,7 @@
 	var/ignore_amount = FALSE
 
 /datum/equipmentHolder/flockAbsorption/can_equip(var/obj/item/I)
-	if (istype(I, /obj/item/grab) || istype(I, /obj/item/spacebux))
+	if (istype(I, /obj/item/grab) || istype(I, /obj/item/currency/spacebux))
 		return FALSE
 	return ..()
 
@@ -1276,7 +1286,7 @@
 
 	var/mob/living/critter/flock/drone/F = holder
 	src.instant_absorb = item.amount > 1 && round(F.resources_per_health * item.health) == 0
-	src.ignore_amount = istype(item, /obj/item/spacecash)
+	src.ignore_amount = istype(item, /obj/item/currency/spacecash)
 
 	item.inventory_counter?.show_count()
 
@@ -1315,7 +1325,7 @@
 			I.change_stack_amount(-1)
 			return
 
-	playsound(flock_owner, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1, extrarange = -10)
+	playsound(flock_owner, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE, extrarange = -10)
 
 	if(length(I.contents))
 		var/anything_tumbled = FALSE

@@ -24,8 +24,23 @@ ABSTRACT_TYPE(/obj/item/roboupgrade)
 /obj/item/roboupgrade/proc/upgrade_activate(mob/living/silicon/robot/user)
 	if (!user)
 		return 1
-	if (!src.activated)
+	if(user.hasStatus("upgrade_disabled"))
+		boutput(user, "<span class='alert'>Your modules are currently disabled!</span>")
+		return 1
+	if (!src.activated && !src.active)
 		src.activated = 1
+	if (src.charges > 0)
+		src.charges--
+		if (src.charges == 0)
+			boutput(user, "[src] has been activated. It has been used up.")
+			user.upgrades.Remove(src)
+			qdel(src)
+		else
+			if (src.charges < 0)
+				boutput(user, "[src] has been activated.")
+			else
+				boutput(user, "[src] has been activated. [src.charges] uses left.")
+
 
 /obj/item/roboupgrade/proc/upgrade_deactivate(mob/living/silicon/robot/user)
 	if (!user)

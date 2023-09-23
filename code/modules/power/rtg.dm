@@ -10,6 +10,8 @@
 	process()
 		if (fuel_pellet?.material && fuel_pellet.material.hasProperty("radioactive"))
 			lastgen = (4800 + rand(-100, 100)) * fuel_pellet.material.getProperty("radioactive") * 0.75
+			if(!fuel_pellet.material.isMutable())
+				fuel_pellet.material = fuel_pellet.material.getMutable()
 			fuel_pellet.material.adjustProperty("radioactive", -1)
 			add_avail(lastgen)
 			UpdateIcon()
@@ -105,11 +107,7 @@
 	w_class = W_CLASS_TINY
 
 	cerenkite
-		New()
-			..()
-			src.setMaterial(getMaterial("cerenkite"))
+		default_material = "cerenkite"
 
 	erebite
-		New()
-			..()
-			src.setMaterial(getMaterial("erebite"))
+		default_material = "erebite"

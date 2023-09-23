@@ -136,10 +136,7 @@ TYPEINFO(/obj/machinery/phone)
 		if(src._health <= 0)
 			if(src.linked)
 				hang_up()
-			if (src.emagged)
-				src.explode()
-			else
-				src.gib(src.loc)
+			src.gib(src.loc)
 			qdel(src)
 
 	// Attempt to pick up the handset
@@ -158,7 +155,7 @@ TYPEINFO(/obj/machinery/phone)
 
 		src.icon_state = "[answered_icon]"
 		UpdateIcon()
-		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, 0)
+		playsound(user, 'sound/machines/phones/pick_up.ogg', 50, FALSE)
 
 		if(!src.ringing) // we are making an outgoing call
 			if(src.connected)

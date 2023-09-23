@@ -50,13 +50,6 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		removed.nitrogen = filtered_out.nitrogen
 		filtered_out.nitrogen = 0
 
-		if(length(removed.trace_gases))
-			var/datum/gas/filtered_gas
-			for(var/datum/gas/trace_gas as anything in removed.trace_gases)
-				filtered_gas = filtered_out.get_or_add_trace_gas_by_type(trace_gas.type)
-				filtered_gas.moles = trace_gas.moles
-				removed.remove_trace_gas(trace_gas)
-
 		//Remix the resulting gases
 		air_contents.merge(filtered_out)
 	return removed
@@ -90,7 +83,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		//smoke/fluid :
 		var/turf/my_turf = get_turf(src)
 		if (my_turf)
-			var/obj/fluid/F = my_turf.active_airborne_liquid
+			var/obj/fluid/airborne/F = my_turf.active_airborne_liquid
 			if (F?.group)
 				active_power_usage += (inlet_flow / 8) * 5 KILO WATTS
 				F.group.drain(F, inlet_flow / 8, src.buffer)
@@ -120,7 +113,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 /obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		if (length(porter.contents) >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
 		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")

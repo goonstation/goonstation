@@ -125,7 +125,7 @@ TYPEINFO(/obj/item/gun/energy)
 				return 1
 			boutput(user, "<span class='alert'>*click* *click*</span>")
 			if (!src.silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return 0
 
 
@@ -285,7 +285,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
-	shoot_delay = 10
+	shoot_delay = 8
 	can_dual_wield = FALSE
 	force = MELEE_DMG_RIFLE
 	two_handed = 1
@@ -338,7 +338,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 			if(ret["charge"] >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
 				src.charge_image.icon_state = "[src.icon_state]full"
-				//UpdateIcon()
+				src.UpdateOverlays(src.charge_image, "charge")
 			else
 				var/ratio = min(1, ret["charge"] / ret["max_charge"])
 				ratio = round(ratio, 0.25) * 100
@@ -360,7 +360,7 @@ TYPEINFO(/obj/item/gun/energy/egun)
 	var/nojobreward = 0 //used to stop people from scanning it and then getting both a lawbringer/sabre AND an egun.
 	muzzle_flash = "muzzle_flash_elec"
 	uses_charge_overlay = TRUE
-	charge_icon_state = "egunstun"
+	charge_icon_state = "energystun"
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt)
@@ -369,11 +369,11 @@ TYPEINFO(/obj/item/gun/energy/egun)
 		..()
 	update_icon()
 		if (current_projectile.type == /datum/projectile/laser)
-			charge_icon_state = "[icon_state]kill"
+			charge_icon_state = "energykill"
 			muzzle_flash = "muzzle_flash_laser"
 			item_state = "egun-kill"
 		else if (current_projectile.type == /datum/projectile/energy_bolt)
-			charge_icon_state = "[icon_state]stun"
+			charge_icon_state = "energystun"
 			muzzle_flash = "muzzle_flash_elec"
 			item_state = "egun"
 		..()
@@ -384,6 +384,14 @@ TYPEINFO(/obj/item/gun/energy/egun)
 
 	proc/noreward()
 		src.nojobreward = 1
+
+	captain
+		desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire. Decorated to match standard NT captain attire."
+		icon_state = "energy-cap"
+
+	head_of_security
+		desc = "The Five Points Armory Energy Gun. Double emitters with switchable fire modes, for stun bolts or lethal laser fire. 'HOS' is engraved in the side."
+		icon_state = "energy-hos"
 
 
 TYPEINFO(/obj/item/gun/energy/egun_jr)
@@ -538,7 +546,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 /obj/item/gun/energy/wavegun
 	name = "\improper Sancai wave gun"
 	icon = 'icons/obj/items/gun.dmi'
-	desc = "The versatile XIANG|GIESEL model '三才' with three monlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
+	desc = "The versatile XIANG|GIESEL model '三才' with three nonlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun"
 	item_state = "wave"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -596,7 +604,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 		..()
 		return
 
-	shoot(var/target,var/start,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user)) // No more attack messages for empty guns (Convair880).
 			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.9 SECONDS)
@@ -624,6 +632,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 	var/obj/machinery/computer/teleporter/our_teleporter = null // For checks before firing (Convair880).
 	uses_charge_overlay = TRUE
 	charge_icon_state = "teleport"
+	HELP_MESSAGE_OVERRIDE({"Use the teleport gun in hand to set it's destination. Destination list is pulled from all the currently activated teleporters."})
 
 	New()
 		set_current_projectile(new /datum/projectile/tele_bolt)
@@ -670,7 +679,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 			else
 				continue
 
-		if (L.len < 2)
+		if (length(L) < 2)
 			user.show_text("Error: no working teleporters detected.", "red")
 			return
 
@@ -719,7 +728,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 		TB.target = our_target
 		return ..(M, user)
 
-	shoot(var/target, var/start, var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!src.our_target)
 			user.show_text("Error: no target set. Please select a teleporter first.", "red")
 			return
@@ -768,8 +777,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 	mats = 0
 
 /obj/item/gun/energy/blaster_pistol
-	name = "blaster pistol"
-	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
+	name = "GRF Zap-Pistole"
+	desc = "A dangerous-looking blaster pistol from Giesel Radiofabrik. It's self-charging by a radioactive power cell."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "pistol"
 	w_class = W_CLASS_NORMAL
@@ -842,8 +851,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	mats = 0
 
 /obj/item/gun/energy/blaster_smg
-	name = "burst blaster"
-	desc = "A special issue blaster weapon, configured for burst fire. It's self-charging by a radioactive power cell."
+	name = "GRF Zap-Maschine"
+	desc = "A special issue blaster weapon from Giesel Radiofabrik, designed for burst fire. It's self-charging by a radioactive power cell."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "smg"
 	can_dual_wield = 0
@@ -868,8 +877,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 			return
 
 /obj/item/gun/energy/blaster_cannon
-	name = "blaster cannon"
-	desc = "A heavily overcharged blaster weapon, modified for extreme firepower. It's self-charging by a larger radioactive power cell."
+	name = "GRF Zap-Kanone"
+	desc = "A heavily overcharged blaster weapon from Giesel Radiofabrik, designed for repelling hostile boarding parties and swarms. It's self-charging by a larger radioactive power cell."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "cannon"
 	item_state = "rifle"
@@ -877,12 +886,14 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	force = 15
+	shoot_delay = 8
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 
 	New()
 		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/blaster)
 		projectiles = list(current_projectile)
 		c_flags |= ONBACK
+		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
 		..()
 
 
@@ -1073,7 +1084,7 @@ TYPEINFO(/obj/item/gun_parts)
 		projectiles = list(new/datum/projectile/bullet/glitch/gun)
 		..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user)) // No more attack messages for empty guns (Convair880).
 			playsound(user, 'sound/weapons/DSBFG.ogg', 75)
 			sleep(0.1 SECONDS)
@@ -1160,6 +1171,12 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	custom_cell_max_capacity = 100
 	var/obj/item/heldItem = null
 	tooltip_flags = REBUILD_DIST
+	HELP_MESSAGE_OVERRIDE({"Use the pickpocket gun in hand to alternate between three fire modes : <b>Steal</b>, <b>Plant</b> and <b>Harass</b>.\n
+							To remove an item from the pickpocket gun, hold the gun in one hand, then use your other hand on it.\n
+							To place an item into the pickpocket gun, hold the gun in one hand, then hit it with an item in your other hand.\n
+							While on <b>Steal</b>, the gun will attempt to steal the item of the target who's body part you are aiming at.\n
+							While on <b>Plant</b>, the gun will attempt to place an item on the target on the body part you are aiming at.\n
+							While on <b>Harass</b>, the gun will perform a debilitating effect on the target depending on the body part you are aiming at."})
 
 	New()
 		set_current_projectile(new/datum/projectile/pickpocket/steal)
@@ -1219,7 +1236,7 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 			return
 		return ..(M, user)
 
-	shoot(var/target, var/start, var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (istype(current_projectile, /datum/projectile/pickpocket/steal) && heldItem)
 			boutput(user, "Cannot steal items while gun is holding something!")
 			return
@@ -1359,7 +1376,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			are_you_the_law(M, msg[1])
 			return //AFAIK only humans have fingerprints/"palmprints(in judge dredd)" so just ignore any talk from non-humans arlight? it's not a big deal.
 
-		if(!src.projectiles && !src.projectiles.len > 1)
+		if(!src.projectiles && !length(src.projectiles) > 1)
 			boutput(M, "<span class='notice'>Gun broke. Call 1-800-CODER.</span>")
 			set_current_projectile(new/datum/projectile/energy_bolt/aoe)
 			item_state = "lawg-detain"
@@ -1503,7 +1520,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 			return 1
 		return 0
 
-	shoot(var/target,var/start,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (canshoot(user))
 			//removing this for now so anyone can shoot it. I PROBABLY will want it back, doing this for some light appeasement to see how it goes.
 			//shock the guy who tries to use this if they aren't the proper owner. (or if the gun is not emagged)
@@ -1705,7 +1722,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		if(++shotcount == 2 && istype(P.proj_data, /datum/projectile/laser/signifer_lethal/))
 			P.proj_data = new/datum/projectile/laser/signifer_lethal/brute
 
-	shoot()
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		shotcount = 0
 		. = ..()
 
@@ -1732,6 +1749,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	rechargeable = 0
 	shoot_delay = 8 DECI SECONDS
 	spread_angle = 3
+	can_dual_wield = 0
 	var/extended = FALSE
 
 	New()
@@ -1815,7 +1833,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		..()
 		return
 
-	shoot(var/target,var/start,var/mob/user) //it's experimental for a reason; use at your own risk!
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null) //it's experimental for a reason; use at your own risk!
 		if (canshoot(user))
 			if (GET_COOLDOWN(src, "raygun_cooldown"))
 				return

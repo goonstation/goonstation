@@ -15,7 +15,7 @@
 			return 1
 #ifdef RP_MODE
 		var/mob/living/intangible/wraith/wraith = holder.owner
-		if (istype(wraith) && length(wraith.poltergeists) >= 3)
+		if (istype(wraith) && length(wraith.poltergeists) >= 2)
 			boutput(wraith, "<span class='alert'>This world is already loud with the voices of your children. No more ghosts will come for now.</span>")
 			return 1
 #endif
@@ -35,6 +35,7 @@
 			return
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
+		W.spawn_marker = marker
 		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a poltergeist? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a poltergeist. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
@@ -44,7 +45,7 @@
 		usr.playsound_local(usr.loc, 'sound/voice/wraith/wraithportal.ogg', 50, 0)
 		message_admins("Sending poltergeist offer to eligible ghosts. They have [src.ghost_confirmation_delay / 10] seconds to respond.")
 		var/list/datum/mind/candidates = dead_player_list(1, src.ghost_confirmation_delay, text_messages, allow_dead_antags = 1)
-		if (!islist(candidates) || candidates.len <= 0)
+		if (!islist(candidates) || length(candidates) <= 0)
 			message_admins("Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
 			logTheThing(LOG_ADMIN, null, "Couldn't set up poltergeist ; no ghosts responded. Source: [src.holder]")
 			if (tries >= 1)
@@ -58,14 +59,10 @@
 					make_poltergeist(W, T, tries++)
 			return
 		var/datum/mind/lucky_dude = candidates[1]
-		if (lucky_dude.current)
-			//add poltergeist to master's list is done in /mob/living/intangible/wraith/potergeist/New
-			var/mob/living/intangible/wraith/poltergeist/P = new /mob/living/intangible/wraith/poltergeist(T, W, marker)
+		if (lucky_dude.add_subordinate_antagonist(ROLE_POLTERGEIST, source = ANTAGONIST_SOURCE_SUMMONED, master = W.mind))
 			log_respawn_event(lucky_dude, "poltergeist", src.holder.owner)
-			lucky_dude.transfer_to(P)
-			antagify(lucky_dude.current, null, 1)
 			message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
-			boutput(P, "<span class='notice'><b>You have been respawned as a poltergeist!</b></span>")
-			boutput(P, "[W] is your master! Spread mischeif and do their bidding!")
-			boutput(P, "Don't venture too far from your portal or your master!")
+			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
+			P.marker = marker
+		W.spawn_marker = null
