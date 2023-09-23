@@ -281,6 +281,17 @@
 		if(!owner.ear_disability)
 			owner.bioHolder.AddEffect("deaf", 0, 0, 0, 1)
 
+/datum/trait/dwarf
+	name = "Dwarf"
+	desc = "You are a dwarf. Rock and Stone and all that."
+	id = "dwarf"
+	icon_state = "dwarf"
+	category = list("body")
+	points = -1
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("dwarf", 0, 0, 0, 1)
+
 /datum/trait/nolegs
 	name = "Stumped"
 	desc = "Because of a freak accident involving a piano, a forklift, and lots of vodka, both of your legs had to be amputated. Fortunately, NT has kindly supplied you with a wheelchair out of the goodness of their heart. (due to regulations)"
@@ -712,6 +723,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 	onAdd(var/mob/owner)
 		owner.bioHolder?.AddEffect("resist_alcohol", 0, 0, 0, 1)
+
 
 /datum/trait/random_allergy
 	name = "Allergy"
