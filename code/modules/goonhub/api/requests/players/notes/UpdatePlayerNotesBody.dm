@@ -1,6 +1,6 @@
 
 /datum/apiBody/players/notes/update
-	var/game_admin_ckey	= "string"
+	var/game_admin_ckey		= "string"
 	var/server_id			= "string"
 	var/ckey				= "string"
 	var/note				= "string"
