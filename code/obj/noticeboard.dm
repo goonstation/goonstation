@@ -165,6 +165,6 @@ proc/save_noticeboards()
 	if(isnull(some_board))
 		logTheThing(LOG_DEBUG, null, "No persistent noticeboards to save.")
 		return
-	rustg_file_write(json_data, some_board.file_name)
+	rustg_file_write(json_encode(some_board.data), some_board.file_name)
 
 #undef PERSISTENT_NOTICEBOARD_VERSION
