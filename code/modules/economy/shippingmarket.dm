@@ -200,15 +200,14 @@
 			// If we had a good roll (> 0), roll a chance to make this
 			// item Hot™! Hot items get a bigger bonus to their current value,
 			// which is just pure random inflation.
-			C.indemand = 0
+			var/in_demand_modifier = 1
 			if (modifier_roll > 0 && prob(hot_chance))
 				// shit is on FIYAH! SELL SELL SELL!!
 				// Hot prices are marked up by +50% to +200%.
 				// This might be a bit much, but compensating for some of the
 				// commodities that achieved stupidly inflated prices in the
 				// old system. Can be adjusted down later if need be.
-				C.indemand = 1
-				C.price *= rand(150, 300) / 100
+				in_demand_modifier = rand(150, 300) / 100
 
 			// If (somehow) a price manages to become negative, make it
 			// zero again so you aren't charged for disposing of it.
@@ -219,9 +218,11 @@
 			// and the penny has been abolished, along with all other coins.
 
 			if(!adjusted[C])
-				C.price = max(round(C.price), 0)
-
-			else
+				if(in_demand_modifier > 1)
+					C.indemand = 1
+				else
+					C.indemand = 0
+				C.price = max(round(price_adjust*in_demand_modifier), 0)
 				adjusted += C
 				adjusted[C] = 1
 
