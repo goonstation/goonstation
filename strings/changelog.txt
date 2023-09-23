@@ -1,5 +1,7 @@
 
 (t)sat sep 23 23
+(u)tarmunora
+(*)Ion storm update: a few more things can happen to affected doors, and affected doors/APCs will have ai control disabled
 (u)Mantwerp
 (p)15934
 (e)🔊|C-Sound
