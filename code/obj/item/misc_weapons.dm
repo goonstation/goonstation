@@ -652,11 +652,12 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		processing_items.Add(src)
 
 	attack(mob/living/target, mob/user)
-		var/damage_tally = 0 // how much bonus damage we get on hit
-		for (var/mob/M in viewers(5, src.loc))
-			if (isrevolutionary(M))
-				damage_tally = min(25, damage_tally + 5)
-		random_brute_damage(target, damage_tally, TRUE)
+		if (isrevolutionary(user))
+			var/damage_tally = 0 // how much bonus damage we get on hit
+			for (var/mob/M in viewers(5, src.loc))
+				if (isrevolutionary(M))
+					damage_tally = min(25, damage_tally + 5)
+			random_brute_damage(target, damage_tally, TRUE)
 		..()
 
 	disposing()
