@@ -44228,6 +44228,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
