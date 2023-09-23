@@ -312,23 +312,21 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		var/turf/T = get_turf(attacked)
 		var/mob/attacked_mob = attacked
-		if(!attacked_mob || attacked_mob.anchored || ON_COOLDOWN(attacked_mob, "telecrystal_warp", 1 SECOND))
+		if(!istype(attacked_mob) || attacked_mob.anchored || ON_COOLDOWN(attacked_mob, "telecrystal_warp", 1 SECOND))
 			return
-		if(prob(33))
-			if(istype(attacked_mob) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
-				. = get_offset_target_turf(get_turf(attacked_mob), rand(-8, 8), rand(-8, 8))
-				var/fail_msg = ""
-				if (prob(25) && attacker == attacked_mob && isitem(owner))
-					var/obj/item/used_item = owner
-					fail_msg = " but you lose [used_item]!"
-					attacker.drop_item(used_item)
-					playsound(attacker.loc, 'sound/effects/poof.ogg', 90)
-				else
-					playsound(attacker.loc, "warp", 50)
-				attacked_mob.visible_message("<span class='alert'>[attacked_mob] is warped away!</span>")
-				boutput(attacked_mob, "<span class='alert'>You suddenly teleport... [fail_msg]</span>")
-				attacked_mob.set_loc(.)
-		return
+		if(prob(33) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
+			. = get_offset_target_turf(get_turf(attacked_mob), rand(-8, 8), rand(-8, 8))
+			var/fail_msg = ""
+			if (prob(25) && attacker == attacked_mob && isitem(owner))
+				var/obj/item/used_item = owner
+				fail_msg = " but you lose [used_item]!"
+				attacker.drop_item(used_item)
+				playsound(attacker.loc, 'sound/effects/poof.ogg', 90)
+			else
+				playsound(attacker.loc, "warp", 50)
+			attacked_mob.visible_message("<span class='alert'>[attacked_mob] is warped away!</span>")
+			boutput(attacked_mob, "<span class='alert'>You suddenly teleport... [fail_msg]</span>")
+			attacked_mob.set_loc(.)
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I, mult)
