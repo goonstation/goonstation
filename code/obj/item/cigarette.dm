@@ -260,7 +260,7 @@
 			if (human_target && rand(1,5) == 1)
 				SPAWN(0)
 				target.emote("cough")
-				if (rand(1, 5) == 1)
+				if prob(20)
 					target.drop_item()
 		else
 			var/message
