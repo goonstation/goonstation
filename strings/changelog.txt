@@ -1,5 +1,9 @@
 
 (t)sat sep 23 23
+(u)Mantwerp
+(p)15934
+(e)🔊|C-Sound
+(+)Electric guitars should sound a little more electric now.
 (u)Mantwerp and Mcdangus
 (p)15785
 (e)🎨🔊📦|C-Sprites, C-Sound, A-Game-Objects
