@@ -17,9 +17,11 @@
 #define PLANE_ABOVE_LIGHTING -50
 #define PLANE_BLACKNESS 0 // black tiles outisde of your vision render here
 #define PLANE_MOB_OVERLAY 5
+#define PLANE_ABOVE_BLACKNESS 7
 #define PLANE_MASTER_GAME 10
 #define PLANE_FLOCKVISION 22
 #define PLANE_OVERLAY_EFFECTS 25
+#define PLANE_MUL_OVERLAY_EFFECTS 26 //! Multiplicative blend mode
 #define PLANE_HUD 30
 #define PLANE_SCREEN_OVERLAYS 40
 
@@ -106,8 +108,10 @@ client
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_ABOVE_LIGHTING, name = "emissive_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_BLACKNESS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "blackness_plane", distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_MOB_OVERLAY, mouse_opacity = 0, name = "mob_overlay"))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_ABOVE_BLACKNESS, appearance_flags = NO_CLIENT_COLOR, name = "above_blackness_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_FLOCKVISION, appearance_flags = NO_CLIENT_COLOR, blend_mode = BLEND_OVERLAY, mouse_opacity = 0, name = "flockvision_plane"))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_OVERLAY_EFFECTS, mouse_opacity = 0, name = "overlay_effects_plane", is_screen = 1, distort = FALSE))
+		add_plane(new /atom/movable/screen/plane_parent(PLANE_MUL_OVERLAY_EFFECTS, mouse_opacity = 0, name = "mul_overlay_effects_plane", is_screen = 1, distort = FALSE, blend_mode = BLEND_MULTIPLY))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_HUD, appearance_flags = NO_CLIENT_COLOR, name = "hud_plane", is_screen = 1, distort = FALSE))
 		add_plane(new /atom/movable/screen/plane_parent(PLANE_SCREEN_OVERLAYS, appearance_flags = NO_CLIENT_COLOR, mouse_opacity = 0, name = "screen_overlays_plane", is_screen = 1, distort = FALSE))
 

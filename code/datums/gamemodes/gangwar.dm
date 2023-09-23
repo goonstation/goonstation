@@ -613,7 +613,7 @@ proc/broadcast_to_all_gangs(var/message)
 		"black ten-gallon hat" = /obj/item/clothing/head/westhat/black)
 
 /obj/item/spray_paint
-	name = "Spraypaint Can"
+	name = "spraypaint can"
 	desc = "A can of spray paint."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
@@ -768,7 +768,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /obj/ganglocker
 	desc = "Gang locker."
-	name = "Gang Closet"
+	name = "gang closet"
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "gang"
 	density = 1

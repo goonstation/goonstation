@@ -894,6 +894,22 @@ proc/ui_describe_reagents(atom/A)
 		..()
 
 	attackby(var/obj/item/W, mob/user)
+		if(istype(W, /obj/item/reagent_containers/iv_drip))
+			var/obj/item/reagent_containers/iv_drip/iv = W
+			if(!iv.slashed)
+				boutput(user, "<span class='alert'>The [iv.name] needs to be cut open first!</span>")
+				return
+			else if (reagents.total_volume >= reagents.maximum_volume)
+				boutput(user, "<span class='alert'>The [src] is too full!</span>")
+				return
+			else if (!iv.reagents.total_volume)
+				boutput(user, "<span class='alert'>The [iv.name] is empty!</span>")
+				return
+			else
+				user.visible_message("<span class = 'alert'>[user.name] splashes all the reagent in the [iv.name] onto the [src.name].</span>")
+				iv.reagents.reaction(src,TOUCH)
+				iv.reagents.clear_reagents()
+
 		if(istype(W, /obj/item/organ))
 			var/obj/item/organ/organ = W
 			if(!(organ.material.getMaterialFlags() & MATERIAL_ORGANIC))

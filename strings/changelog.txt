@@ -1,5 +1,35 @@
 
+(t)sat sep 23 23
+(u)Emily
+(*)Total QM Pricing Overhaul. Things now cost a lot less across the board.
+(*)Buying crates is now tied to market prices; you can no longer buy a crate and sell that same crate for profit.
 (t)fri sep 22 23
+(u)aloe
+(+)The empathic thought gene now shows you what people are about to say, if they're currently typing something.
+(u)spAAAce
+(p)15953
+(e)🆕📦🌱|C-Feature, A-Game-Objects, A-Hydroponics
+(+)Banana peels now scale to banana size, within reason
+(u)NewyearnewmeUwu
+(p)15937
+(e)🪲🔨💪|C-Bug, A-Player-Actions, A-Traits
+(+)Fixed clowns and mimes losing their career genes after cloning.
+(u)Flaborized
+(p)15854
+(e)⚗|A-Chemistry
+(+)You can now directly pour into synthflesh pustules from cut open blood bags.
+(u)DimWhat
+(p)15925
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Made nukie pistol holsters hold more stuff, and more types of stuff.
+(u)Glamurio (Ryou) & DimWhat & Piesuu
+(p)15602
+(e)🎨⚖🎩|C-Sprites, C-Balance, A-Clothing
+(*)The captain has cut up their armor into individual parts, which can be equipped separately.
+(u)Glamurio (Ryou)
+(p)15326
+(e)💅🔄🔊📦|C-QoL, C-Rework, C-Sound, A-Game-Objects
+(*)PDA Emergency Alerts now have distinct visuals and jingles.
 (u)MylieDaniels, AveryQuill
 (p)15858
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
