@@ -5,4 +5,4 @@
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/map-switch"
 	body = /datum/apiBody/mapswitch
-	correct_response = list(/datum/apiModel/Tracked/MapSwitch, "status")
+	correct_response = /datum/apiModel/Tracked/MapSwitch
