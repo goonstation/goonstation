@@ -258,8 +258,10 @@
 
 			var/mob/living/carbon/human/human_target = target
 			if (human_target && rand(1,5) == 1)
-				SPAWN(0) target.emote("cough")
-				target.drop_item()
+				SPAWN(0)
+				target.emote("cough")
+				if (rand(1, 5) == 1)
+					target.drop_item()
 		else
 			var/message
 			switch(rand(1, 10))
