@@ -19,31 +19,26 @@
 	var/label = "orange" // colors available as of the moment: orange, red, blue, green, yellow, purple, black, white, big red
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
+	New()
+		..()
+		src.item_state = "emerg_inj-[src.label]"
+		src.fluid_image = image(src.icon, "emerg_inj-fluid")
+		src.fluid_image.color = src.reagents.get_average_color().to_rgba()
+		src.vis_contents += src.fluid_image
+		src.UpdateIcon()
+
 	on_reagent_change()
 		..()
 		src.UpdateIcon()
 
 	update_icon()
-		//src.underlays = null
-		if (reagents.total_volume)
-			icon_state = "emerg_inj-[label]"
-			var/datum/color/average = reagents.get_average_color()
-			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "emerg_inj-fluid", -1)
-			src.fluid_image.color = average.to_rgba()
-			UpdateOverlays(fluid_image, "fluid")
-			//src.underlays += src.fluid_image
+		if (src.reagents.total_volume)
+			src.icon_state = "emerg_inj-[src.label]"
 		else
-			icon_state = "emerg_inj-[label]0"
-			flick("emerg_inj-[label]-flick", src)
-			//if (!src.fluid_image)
-			fluid_image.icon_state = "emerg_inj-fluid-flick"
-			//src.fluid_image.color = average.to_rgba()
-			UpdateOverlays(fluid_image, "fluid")
-			SPAWN_DBG(1 SECOND) //The injecting animation lasts 7,5 BYOND ticks, and then final frame (same as the empty sprite) lasts 2 seconds
-				UpdateOverlays(null, "fluid")
-
-		item_state = "emerg_inj-[label]"
+			src.icon_state = "emerg_inj-[src.label]0"
+			src.fluid_image = image(src.fluid_image, "emerg_inj-fluid-flick")
+			flick("emerg_inj-[src.label]-flick", src)
+		UpdateOverlays(src.fluid_image, "fluid")
 
 	attack(mob/M, mob/user)
 		if (iscarbon(M) || ismobcritter(M))
