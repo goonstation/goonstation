@@ -35,6 +35,8 @@
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
 	var/list/supply_history = list() // History of all approved requests, of type string
 
+	var/list/pressure_crystal_prices = list()
+
 	var/points_per_crate = 10
 
 	var/list/datum/req_contract/complete_orders = list()
@@ -397,6 +399,26 @@
 						break
 
 		return duckets
+
+	proc/appraise_pressure_crystal(var/obj/item/pressure_crystal/pc, var/sell = 1)
+		var/list/plist = src.pressure_crystal_prices
+		var/value = pc.pressure ** 1.1 * 400 // please change this if you can balance it better
+
+		var/i
+		for (i = 1, i < length(plist), i++)
+			var/percent = plist[i] / pc.pressure
+
+		if (sell)
+			src.pressure_crystal_prices.Add(pc.pressure)
+
+		return value
+
+	proc/pc_get_index_range(var/index)
+		var/i
+		var/step_max = 0
+		for (i = 0, i < floor(index / 10), i++)
+			var/step_max += 10 * 5 * (1 + i)
+		var/step_max += index % 10 * 5 * (1 + i)
 
 	proc/handle_returns(obj/storage/crate/sold_crate,var/return_code)
 		if(return_code == RET_INSUFFICIENT) //clarifies purpose for crate return
