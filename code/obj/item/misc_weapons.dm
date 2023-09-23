@@ -639,7 +639,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 8
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD
-	force = 7
+	force = 3
 	stamina_damage = 30
 	stamina_cost = 15
 	stamina_crit_chance = 10
@@ -650,6 +650,14 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_LARGE)
 		processing_items.Add(src)
+
+	attack(mob/living/target, mob/user)
+		var/damage_tally = 0 // how much bonus damage we get on hit
+		for (var/mob/M in viewers(5, src.loc))
+			if (isrevolutionary(M))
+				damage_tally = min(25, damage_tally + 5)
+		random_brute_damage(target, damage_tally, TRUE)
+		..()
 
 	disposing()
 		..()

@@ -544,6 +544,10 @@ THROWING DARTS
 			return
 		var/mob/living/carbon/human/H = src.owner
 		if (H.mind?.get_antagonist(ROLE_REVOLUTIONARY))
+			if (H.hasStatus("revspirit"))
+				if (prob(30))
+					H.show_text("<B>The presence of revolutionary leadership has temporarily allowed you to resist [src]!</B>", "blue")
+				return
 			H.TakeDamage("chest", 1.5*mult, 1.5*mult, 0)
 			if (H.health < 0)
 				H.changeStatus("paralysis", 5 SECONDS)
