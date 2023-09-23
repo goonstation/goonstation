@@ -768,7 +768,7 @@
 #undef REACTOR_MELTDOWN_TEMP
 /datum/projectile/neutron //neutron projectile for radiation shooting from reactor
 	name = "neutron"
-	icon_state = "trace"
+	icon_state = "neutron"
 	icon = 'icons/obj/projectiles.dmi'
 	invisibility = INVIS_INFRA
 	override_color = TRUE

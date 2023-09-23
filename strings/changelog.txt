@@ -1,5 +1,23 @@
 
+(t)sat sep 23 23
+(u)Mantwerp
+(p)15934
+(e)🔊|C-Sound
+(+)Electric guitars should sound a little more electric now.
+(u)Mantwerp and Mcdangus
+(p)15785
+(e)🎨🔊📦|C-Sprites, C-Sound, A-Game-Objects
+(*)Added a bass guitar. Get it from cargo, NOW!! Sprites and sounds by Mcdangus.
+(u)Emily
+(*)Total QM Pricing Overhaul. Things now cost a lot less across the board.
+(*)Buying crates is now tied to market prices; you can no longer buy a crate and sell that same crate for profit.
 (t)fri sep 22 23
+(u)aloe
+(+)The empathic thought gene now shows you what people are about to say, if they're currently typing something.
+(u)spAAAce
+(p)15953
+(e)🆕📦🌱|C-Feature, A-Game-Objects, A-Hydroponics
+(+)Banana peels now scale to banana size, within reason
 (u)NewyearnewmeUwu
 (p)15937
 (e)🪲🔨💪|C-Bug, A-Player-Actions, A-Traits

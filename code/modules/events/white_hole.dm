@@ -796,10 +796,9 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		if(triggered_by_event)
 			var/turf/T = get_turf(src)
-			for (var/mob/M in GET_NEARBY(T, 15))
-				if (M.client)
-					boutput(M, "<span class='alert'>The air grows light and thin. Something feels terribly wrong.</span>")
-					shake_camera(M, 5, 16)
+			for (var/client/C in GET_NEARBY(T, 15))
+				boutput(C, "<span class='alert'>The air grows light and thin. Something feels terribly wrong.</span>")
+				shake_camera(C.mob, 5, 16)
 			playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,-0.5)
 
 		processing_items |= src
