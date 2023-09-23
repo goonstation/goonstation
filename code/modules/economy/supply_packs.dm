@@ -108,7 +108,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/pen/sleepypen,
 					/obj/item/device/disguiser,
 					/obj/item/radiojammer)
-	cost = PAY_DONTBUYIT*5
+	cost = PAY_DONTBUYIT*4
 	containertype = /obj/storage/crate
 	containername = "Special Ops Crate"
 	syndicate = 1
