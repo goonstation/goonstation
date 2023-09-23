@@ -1,4 +1,7 @@
 (t)sun sep 24 23
+(u)Azrun
+(e)🐑🧶|C-Feature
+(+)Knitting expanded to allow for illegal modding of knitting needles.
 (u)LeahTheTech
 (+)The mixed gamemode should now have slightly more consistent numbers of antagonists.
 (u)Emily
