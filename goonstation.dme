@@ -1137,7 +1137,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\models\events\EventStationNameResource.dm"
 #include "code\modules\goonhub\api\models\events\EventTicketResource.dm"
 #include "code\modules\goonhub\api\models\maps\MapSwitch.dm"
-#include "code\modules\goonhub\api\models\maps\MapSwitchInternal.dm"
 #include "code\modules\goonhub\api\models\players\PlayerAntagResource.dm"
 #include "code\modules\goonhub\api\models\players\PlayerConnection.dm"
 #include "code\modules\goonhub\api\models\players\PlayerDataResource.dm"
