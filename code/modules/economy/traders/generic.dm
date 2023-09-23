@@ -186,7 +186,7 @@
 /datum/commodity/trader/generic/anyfood
 	comname = "Food"
 	comtype = /obj/item/reagent_containers/food/snacks
-	price_boundary = list(PAY_UNTRAINED/2,PAY_TRADESMAN/2)
+	price_boundary = list(PAY_UNTRAINED/4,PAY_UNTRAINED/2)
 	possible_names = list("We're ferrying food to the outer colonies, so sell us any extra you have.",
 	"An accident has lost us most of our food supplies, so we're willing to buy any you may have.")
 

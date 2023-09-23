@@ -105,10 +105,9 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/card/id/syndicate,
 					/obj/item/storage/box/emp_kit,
 					/obj/item/storage/box/tactical_kit,
-					/obj/item/pen/sleepypen,
 					/obj/item/device/disguiser,
 					/obj/item/radiojammer)
-	cost = PAY_DONTBUYIT*4
+	cost = PAY_EMBEZZLED*2
 	containertype = /obj/storage/crate
 	containername = "Special Ops Crate"
 	syndicate = 1
@@ -200,7 +199,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 					/obj/item/reagent_containers/food/snacks/ingredient/oatmeal = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/tortilla = 3,
 					/obj/item/reagent_containers/food/snacks/ingredient/pancake_batter = 2)
-	cost = PAY_TRADESMAN
+	cost = PAY_TRADESMAN*5
 	containertype = /obj/storage/crate/freezer
 	containername = "Catering: Dry Goods Crate"
 
@@ -264,7 +263,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	contains = list(/obj/item/storage/box/cablesbox = 2)
 	containername = "Electrical Supplies Crate - 2 pack"
 	category = "Basic Materials"
-	cost = PAY_DOCTORATE*2
+	cost = PAY_DOCTORATE*4
 	containertype = /obj/storage/crate
 
 /datum/supply_packs/engineering
