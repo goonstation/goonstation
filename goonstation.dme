@@ -1152,6 +1152,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\models\polls\PollOptionResource.dm"
 #include "code\modules\goonhub\api\models\polls\PollResource.dm"
 #include "code\modules\goonhub\api\models\rounds\GameRound.dm"
+#include "code\modules\goonhub\api\models\vpn\VpnCheckModel.dm"
 #include "code\modules\goonhub\api\models\vpn\VpnCheckResource.dm"
 #include "code\modules\goonhub\api\models\vpn\VpnWhitelistResource.dm"
 #include "code\modules\goonhub\api\requests\apiBody.dm"
