@@ -902,6 +902,13 @@ var/global/atom_emergency_stop = 0
 
 		if(QDELETED(A))
 			continue
+
+		if(ispath(replacement_typ, /mob/living/critter/mimic) && isobj(A))
+			var/mob/living/critter/mimic/replacer = new replacement_typ(get_turf(A))
+			replacer.disguise_as(A)
+			qdel(A)
+			continue
+
 		var/atom/loc = ismovable(A) ? A.loc : A
 		var/obj/item/itemA = A
 		ENSURE_TYPE(itemA)
