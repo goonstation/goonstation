@@ -850,6 +850,18 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
+			if (H.gloves)
+				var/obj/item/clothing/gloves/M = H.gloves
+				if (istype(M, /obj/item/clothing/gloves/swat/captain))
+					var/prev = M.name
+					M.icon_state = "centcomgloves"
+					M.item_state = "centcomgloves"
+					M.name = "commander's gloves"
+					M.real_name = "commander's gloves"
+					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					H.update_gloves(H.mutantrace.hand_offset)
+					succ = TRUE
+
 			if (H.head)
 				var/obj/item/clothing/M = H.head
 				if (istype(M, /obj/item/clothing/head/caphat))
@@ -1007,6 +1019,18 @@
 					M.name = "\improper CentCom space suit"
 					M.desc = "A suit that protects against low pressure environments. It is made specifically for CENTCOM executives. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.gloves)
+				var/obj/item/clothing/gloves/M = H.gloves
+				if (istype(M, /obj/item/clothing/gloves/swat/captain))
+					var/prev = M.name
+					M.icon_state = "centcomredgloves"
+					M.item_state = "centcomredgloves"
+					M.name = "CentCom gloves"
+					M.real_name = "CentCom gloves"
+					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
 			if (H.head)
