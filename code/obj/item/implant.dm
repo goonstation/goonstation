@@ -710,7 +710,7 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	name = "wasp implant"
 	big_message = " buzzes, what?"
 	small_message = "buzzes loudly, uh oh!"
-	power = 4
+	power = 8
 	/// did we change our user's faction? this is in case a botanist gets this implant then gets it removed
 	var/changed_faction = FALSE
 
