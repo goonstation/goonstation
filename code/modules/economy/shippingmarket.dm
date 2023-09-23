@@ -59,6 +59,10 @@
 			else
 				qdel(C)
 
+
+		SPAWN(300)
+			market_shift()
+
 		var/list/unique_traders = list(/datum/trader/gragg,/datum/trader/josh,/datum/trader/pianzi_hundan,
 		/datum/trader/vurdalak,/datum/trader/buford)
 
@@ -254,6 +258,8 @@
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
 
+		update_buy_prices()
+
 		SPAWN(5 SECONDS)
 			// 20% chance to shuffle out generic traders for a new one
 			// Do this after a short delay so QMs can finish any last-second deals
@@ -269,8 +275,33 @@
 
 			update_shipping_data()
 
+
+	proc/update_buy_prices() // update the buy price of items based on market fluctuations
+		var/new_cost = 0
+		var/multiplier = 1
+		for (var/datum/supply_packs/pack in qm_supply_cache)
+			new_cost = 0
+			for(var/type in pack.contains)
+				if(pack.contains[type] && pack.contains[type] > 1)
+					multiplier = pack.contains[type]
+				else
+					multiplier = 1
+				for (var/ctype in src.commodities)
+					var/datum/commodity/C = src.commodities[ctype]
+					if(ispath(type,C.comtype))
+						new_cost += C.price * multiplier
+
+			new_cost += src.points_per_crate
+
+			if(pack.cost < new_cost)
+				pack.cost = new_cost
+			if(pack.cost > new_cost && pack.cost > pack.basecost)
+				pack.cost = max(new_cost,pack.basecost)
+
+
+
 	proc/calculate_artifact_price(var/modifier, var/correctness)
-		return ((modifier**2) * 20000 * correctness)
+		return ((modifier**2) * PAY_EMBEZZLED * correctness)
 
 	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
 		var/price = 0
