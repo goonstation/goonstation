@@ -139,7 +139,7 @@
 	ircmsg["msgid"] = unique_message_id
 	ircbot.export_async("mentorhelp", ircmsg)
 
-	var/src_keyname = key_name(client.mob, mentor=TRUE, additional_url_data="&msgid=[unique_message_id]")
+	var/src_keyname = key_name(client.mob, 0, 0, 1, additional_url_data="&msgid=[unique_message_id]")
 
 	for (var/client/C)
 		if (C.holder)
