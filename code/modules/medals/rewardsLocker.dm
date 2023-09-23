@@ -901,17 +901,6 @@
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
-			if (H.gloves)
-				var/obj/item/clothing/M = H.gloves
-				if (istype(M, /obj/item/clothing/gloves/swat/captain))
-					var/prev = M.name
-					M.name = "commander's gloves"
-					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
-					M.icon_state = "centcomgloves"
-					M.item_state = "centcomgloves"
-					H.set_clothing_icon_dirty()
-					succ = TRUE
-
 			if (H.belt)
 				var/obj/item/M = H.belt
 				if (istype(M, /obj/item/swords_sheaths/captain))
@@ -1079,17 +1068,6 @@
 					M.desc = "A symbol of the CentCom Executive's rank, signifying they're the greatest VentCom Executive, and the source of all their power. (Base Item: [prev])"
 					M.icon_state = "captainbig-red"
 					M.item_state = "captainbig-red"
-					H.set_clothing_icon_dirty()
-					succ = TRUE
-
-			if (H.gloves)
-				var/obj/item/clothing/M = H.gloves
-				if (istype(M, /obj/item/clothing/gloves/swat/captain))
-					var/prev = M.name
-					M.name = "commander's gloves"
-					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
-					M.icon_state = "centcomredgloves"
-					M.item_state = "centcomredgloves"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
