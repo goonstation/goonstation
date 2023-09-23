@@ -1,5 +1,9 @@
 
 (t)sat sep 23 23
+(u)Mantwerp and Mcdangus
+(p)15785
+(e)🎨🔊📦|C-Sprites, C-Sound, A-Game-Objects
+(*)Added a bass guitar. Get it from cargo, NOW!! Sprites and sounds by Mcdangus.
 (u)Emily
 (*)Total QM Pricing Overhaul. Things now cost a lot less across the board.
 (*)Buying crates is now tied to market prices; you can no longer buy a crate and sell that same crate for profit.
