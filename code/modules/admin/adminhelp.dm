@@ -290,7 +290,7 @@
 					[t]
 					</div>
 					<div style="font-size: 90%; background: #fcc; font-weight: bold; border-top: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-						<a href=\"byond://?action=priv_msg&target=[user.ckey]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
+						<a href=\"byond://?action=priv_msg&target=[user.ckey]&msgid=[unique_message_id]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
 					</div>
 				</div>
 				"}, forceScroll=TRUE)
