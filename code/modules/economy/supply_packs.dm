@@ -1959,7 +1959,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	name = "Bass Guitar Kit"
 	desc = "1x Bass Guitar"
 	category = "Civilian Department"
-	cost = PAY_TRADESMAN*2
+	cost = 2000
 	containername = "Bass Guitar Kit"
 	contains = list(/obj/item/instrument/bass)
 	containertype = /obj/storage/crate/wooden
