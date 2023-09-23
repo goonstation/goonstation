@@ -164,7 +164,7 @@
 					switch (rand(1,5))
 						if(1) //lsd-like
 							var/datum/reagent/drug/LSD/drug_type = /datum/reagent/drug/LSD //it's a path so we can grab the static vars, and not do init
-
+							logTheThing(LOG_DIARY, null, "[L] gets [drug_type] like effect applied by ion storm")
 							L.AddComponent(/datum/component/hallucination/trippy_colors, timeout=timeout_seconds)
 							if(prob(60)) //monkey mode
 								L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=initial(drug_type.monkey_images), name_list=initial(drug_type.monkey_names), attacker_prob=20, max_attackers=3)
@@ -174,21 +174,25 @@
 							L.AddComponent(/datum/component/hallucination/random_image_override, timeout=timeout_seconds, image_list=initial(drug_type.critter_image_list), target_list=list(/mob/living/carbon/human), range=6, image_prob=10, image_time=20, override=TRUE)
 						if(2) //lsbee
 							var/datum/reagent/drug/lsd_bee/drug_type = /datum/reagent/drug/lsd_bee //it's a path so we can grab the static vars, and not do init
+							logTheThing(LOG_DIARY, null, "[L] gets [drug_type] like effect applied by ion storm")
 							var/bee_halluc = initial(drug_type.bee_halluc)
 							var/image/imagekey = pick(bee_halluc)
 							L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=10)
 						if(3)
 							var/datum/reagent/drug/catdrugs/drug_type = /datum/reagent/drug/catdrugs //it's a path so we can grab the static vars, and not do init
+							logTheThing(LOG_DIARY, null, "[L] gets [drug_type] like effect applied by ion storm")
 							var/cat_halluc = initial(drug_type.cat_halluc)
 							var/image/imagekey = pick(cat_halluc)
 							L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=list(imagekey), name_list=cat_halluc[imagekey], attacker_prob=7, max_attackers=3)
 							L.AddComponent(/datum/component/hallucination/random_sound, timeout=timeout_seconds, sound_list=initial(drug_type.cat_sounds), sound_prob=20)
 						if(4) //hellshroom
+							logTheThing(LOG_DIARY, null, "[L] gets hellshroom like effect applied by ion storm")
 							var/bats = rand(2,3)
 							L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=list(new /image('icons/misc/AzungarAdventure.dmi', "hellbat")), name_list=list("hellbat"), attacker_prob=100, max_attackers=bats)
 							boutput(L, "<span class='alert'><b>A hellbat begins to chase you</b>!</span>")
 							L.emote("scream")
 						if(5) //mimicotoxin
+							logTheThing(LOG_DIARY, null, "[L] gets mimicotoxin like effect applied by ion storm")
 							L.AddComponent(/datum/component/hallucination/random_image_override, timeout=timeout_seconds, image_list=list(image('icons/misc/critter.dmi',"mimicface")), target_list=list(/obj/item, /mob/living), range=5, image_prob=2, image_time=10, override=FALSE)
 
 
@@ -231,6 +235,8 @@ ABSTRACT_TYPE(/datum/ion_category)
 	proc/fuck_up()
 		if (!length(targets))
 			build_targets()
+		if (!length(targets))
+			return
 		for (var/i in 1 to amount)
 			var/atom/object = pick(targets)
 
