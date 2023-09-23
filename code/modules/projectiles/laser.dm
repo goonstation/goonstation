@@ -637,4 +637,4 @@ toxic - poisons
 
 /datum/projectile/laser/makeshift/very_powerful
 	damage = 22
-	cost = 3000 // high damage but at a cost
+	cost = 2500 // high damage but at a cost
