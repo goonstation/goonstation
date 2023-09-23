@@ -12132,8 +12132,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
 "aOc" = (
@@ -12150,8 +12150,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
 "aOf" = (
@@ -12261,8 +12261,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
 "aOD" = (
@@ -12273,8 +12273,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
 "aOF" = (
