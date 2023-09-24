@@ -1,4 +1,6 @@
 (t)sun sep 24 23
+(u)LeahTheTech
+(+)The mixed gamemode should now have slightly more consistent numbers of antagonists.
 (u)Emily
 (*)Pods now require fuel (plasma) to run modules other than basic movement. Be sure to turn off systems when not in use!
 (*)New Plasma Tank vendor available in pod bays. Fill up your tank there!
