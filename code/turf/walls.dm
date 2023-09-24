@@ -550,3 +550,12 @@ TYPEINFO(/turf/simulated/wall)
 /turf/simulated/wall/meteorhit(obj/M as obj)
 	dismantle_wall()
 	return 0
+
+/turf/simulated/wall/grass
+	name = "tall grass"
+	desc = "Looks like a... regular wall that's been painted in a grassy pattern. Clever!"
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "grass"
+
+/turf/simulated/wall/grass/leafy
+	icon_state = "grass_leafy"

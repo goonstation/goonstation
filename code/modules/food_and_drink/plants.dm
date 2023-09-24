@@ -945,7 +945,14 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 			var/index = findtext(src.name, "unpeeled")
 			src.name = splicetext(src.name, index, index + 9)
 			src.icon_state = "banana-fruit"
-			new /obj/item/bananapeel(user.loc)
+			var/obj/item/bananapeel/droppeel = new /obj/item/bananapeel(user.loc)
+			// Scale peel size to banana size
+			// If banana 80% normal size or larger, directly copy banana's size for the peel
+			if (src.transform.a >= 0.8)
+				droppeel.transform = src.transform
+			// Cap at 80% size so no micro peel from rotten bananas
+			else
+				droppeel.transform = matrix(0.8,0,0,0,0.8,0)
 		else
 			..()
 

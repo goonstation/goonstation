@@ -779,7 +779,7 @@
 
 /datum/achievementReward/ntso_commander
 	title = "(Skin set) NT-SO Commander Uniform"
-	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
+	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, sabres and captain uniforms."
 	required_medal = "Icarus"
 	once_per_round = FALSE
 
@@ -848,6 +848,18 @@
 					M.real_name = "commander's space suit"
 					M.desc = "A suit that protects against low pressure environments. It is made specifically for NanoTrasen commanders. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.gloves)
+				var/obj/item/clothing/gloves/M = H.gloves
+				if (istype(M, /obj/item/clothing/gloves/swat/captain))
+					var/prev = M.name
+					M.icon_state = "centcomgloves"
+					M.item_state = "centcomgloves"
+					M.name = "commander's gloves"
+					M.real_name = "commander's gloves"
+					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
 			if (H.head)
@@ -940,7 +952,7 @@
 //red captain medal, after all this time!
 /datum/achievementReward/centcom_executive
 	title = "(Skin Set) CENTCOM Executive Uniform"
-	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, sabres and captain uniforms."
+	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, sabres and captain uniforms."
 	required_medal = "Brown Pants" //Red shirt, brown pants.
 	once_per_round = FALSE
 
@@ -1007,6 +1019,18 @@
 					M.name = "\improper CentCom space suit"
 					M.desc = "A suit that protects against low pressure environments. It is made specifically for CENTCOM executives. (Base Item: [prev])"
 					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.gloves)
+				var/obj/item/clothing/gloves/M = H.gloves
+				if (istype(M, /obj/item/clothing/gloves/swat/captain))
+					var/prev = M.name
+					M.icon_state = "centcomredgloves"
+					M.item_state = "centcomredgloves"
+					M.name = "CentCom gloves"
+					M.real_name = "CentCom gloves"
+					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. (Base Item: [prev])"
+					H.update_gloves(H.mutantrace.hand_offset)
 					succ = TRUE
 
 			if (H.head)
