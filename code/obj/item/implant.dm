@@ -729,7 +729,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	do_effect(power)
 		// enjoy your wasps
 		for (var/i in 1 to power)
-			new /mob/living/critter/small_animal/wasp/angry(get_turf(src))
+			var/mob/living/critter/small_animal/wasp/W = new /mob/living/critter/small_animal/wasp/angry(get_turf(src))
+			W.lying = TRUE // So wasps dont hit other wasps when being flung
+			W.throw_at(get_edge_target_turf(get_turf(src), pick(alldirs)), rand(1,3 + round(power / 16)), 2)
+			SPAWN(1 SECOND)
+				W.lying = FALSE
 
 		SPAWN(1)
 			src.owner?.gib()
