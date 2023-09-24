@@ -375,8 +375,7 @@
 							qdel(O)
 						break
 					else if (istype(O, /obj/item/pressure_crystal))
-						var/obj/item/pressure_crystal/pc = O
-						duckets += pc.pressure ** 1.1 * 400 // please change this if you can balance it better
+						duckets += src.appraise_pressure_crystal(O, sell)
 						if (sell)
 							qdel(O)
 						break
@@ -409,21 +408,14 @@
 	proc/appraise_pressure_crystal(var/obj/item/pressure_crystal/pc, var/sell = 0)
 		if (pc.pressure <= 0)
 			return
-		var/index = ceil(pc.pressure / PC_SALES_RANGE_LENGTH)
+		var/index = "[ceil(pc.pressure / PC_SALES_RANGE_LENGTH)]"
 		var/value = pc.pressure ** 1.1 * 400 // please change this if you can balance it better
 		if (src.pressure_crystal_sales[index])
-			var/value *= src.pressure_crystal_sales[index]
+			value *= src.pressure_crystal_sales[index]
 		if (sell)
 			src.pressure_crystal_sales[index] = src.pressure_crystal_sales[index] ? \
 				src.pressure_crystal_sales[index] * PC_VALUE_DIMINISH_MULTIPLIER : PC_VALUE_DIMINISH_MULTIPLIER
 		return value
-
-	proc/pc_get_index_range(var/index)
-		var/i
-		var/step_max = 0
-		for (i = 0, i < floor(index / 10), i++)
-			var/step_max += 10 * 5 * (1 + i)
-		var/step_max += index % 10 * 5 * (1 + i)
 
 	proc/handle_returns(obj/storage/crate/sold_crate,var/return_code)
 		if(return_code == RET_INSUFFICIENT) //clarifies purpose for crate return
