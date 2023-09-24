@@ -62,6 +62,7 @@
 /datum/commodity/trader/gragg/char
 	comname = "Char"
 	comtype = /obj/item/raw_material/char
+	amount = 100
 	price_boundary = list(PAY_UNTRAINED,PAY_UNTRAINED*2)
 	possible_names = list("SELLING CHAR. NOT EVEN FOOD.",
 	"SELLING CHAR ORE. TRIED TO COOK. BURNT IT.",

@@ -239,7 +239,7 @@
 
 		// Shuffle trader visibility around a bit
 		for (var/datum/trader/T in src.active_traders)
-			if (T.hidden || (length(T.goods_sell) < T.max_goods_sell))
+			if (T.hidden)
 				if (prob(T.chance_arrive))
 					T.hidden = 0
 					T.current_message = pick(T.dialogue_greet)
@@ -326,7 +326,7 @@
 				for(var/datum/commodity/C2 in T.goods_sell)
 					if(C1.comtype == C2.comtype)
 						if(C1.indemand)
-							T.goods_sell -= C2
+							C2.amount = 0
 
 
 
