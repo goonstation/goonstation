@@ -15,7 +15,8 @@
 (*)Buying crates is now tied to market prices; you can no longer buy a crate and sell that same crate for profit.
 (+)Some Commodities are now linked on the shipping market with hard ratios between them; e.g., a sheet is worth one tenth of a material piece.
 (+)If an item goes hot on the market, traders that sell that exact item will run out of it.
-(+)Gragg no longer sells infinte char
+(+)Gragg no longer sells infinite char
+(+)Wishgranters give 25000 instead of 9 million
 (t)fri sep 22 23
 (u)aloe
 (+)The empathic thought gene now shows you what people are about to say, if they're currently typing something.
