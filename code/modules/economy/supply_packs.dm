@@ -1161,7 +1161,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "A flat-packed set of...trash and scrap parts. I guess you could make furniture out of it?"
 	contains = list(/obj/item/furniture_parts/table/scrap = 4,
 					/obj/item/furniture_parts/dining_chair/scrap = 4)
-	cost = PAY_EXECUTIVE*2
+	cost = PAY_TRADESMAN*2
 	containertype = /obj/storage/crate/wooden
 	containername = "Scrap Furnishings Crate"
 
