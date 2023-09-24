@@ -159,6 +159,8 @@
 		// so on average the % chance is actually about ~half this value.
 		var/hot_chance = rand(10, 33)
 
+		var/list/adjusted = list()
+
 		for (var/type in src.commodities)
 			var/datum/commodity/C = src.commodities[type]
 
@@ -182,8 +184,6 @@
 				// ... and bad rolls adjust on the lower one.
 				price_adjust += C.lowerfluc * price_mod
 
-			C.price = price_adjust
-
 			// At this point, the price is (hopefully) roughly on this
 			// unfortunately upside-down scale of probabilities:
 			//   |                                 | | v rare
@@ -200,15 +200,14 @@
 			// If we had a good roll (> 0), roll a chance to make this
 			// item Hot™! Hot items get a bigger bonus to their current value,
 			// which is just pure random inflation.
-			C.indemand = 0
+			var/in_demand_modifier = 1
 			if (modifier_roll > 0 && prob(hot_chance))
 				// shit is on FIYAH! SELL SELL SELL!!
 				// Hot prices are marked up by +50% to +200%.
 				// This might be a bit much, but compensating for some of the
 				// commodities that achieved stupidly inflated prices in the
 				// old system. Can be adjusted down later if need be.
-				C.indemand = 1
-				C.price *= rand(150, 300) / 100
+				in_demand_modifier = rand(150, 300) / 100
 
 			// If (somehow) a price manages to become negative, make it
 			// zero again so you aren't charged for disposing of it.
@@ -217,8 +216,26 @@
 			//  the crusher's scraps exist.)
 			// We also strip off any weird decimals because it is 2053
 			// and the penny has been abolished, along with all other coins.
-			C.price = max(round(C.price), 0)
 
+			if(!adjusted[C])
+				if(in_demand_modifier > 1)
+					C.indemand = 1
+				else
+					C.indemand = 0
+				C.price = max(round(price_adjust*in_demand_modifier), 0)
+				adjusted += C
+				adjusted[C] = 1
+
+			if(C.linked_commodities)
+				for(var/linked in C.linked_commodities)
+					for(var/comtype in src.commodities)
+						var/datum/commodity/commodity = src.commodities[comtype]
+						if(!adjusted[commodity])
+							if(linked == commodity.type)
+								commodity.price = C.price * C.linked_commodities[linked]
+								commodity.indemand = C.indemand
+								adjusted += commodity
+								adjusted[commodity] = 1
 
 		// Shuffle trader visibility around a bit
 		for (var/datum/trader/T in src.active_traders)
@@ -258,8 +275,6 @@
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
 
-		update_buy_prices()
-
 		SPAWN(5 SECONDS)
 			// 20% chance to shuffle out generic traders for a new one
 			// Do this after a short delay so QMs can finish any last-second deals
@@ -274,9 +289,12 @@
 				src.active_traders += new /datum/trader/generic(src)
 
 			update_shipping_data()
+			update_buy_prices()
 
 
-	proc/update_buy_prices() // update the buy price of items based on market fluctuations
+	/// update the buy price of items based on market fluctuations
+	/// remove in demand goods from traders; they're all out!
+	proc/update_buy_prices()
 		var/new_cost = 0
 		var/multiplier = 1
 		for (var/datum/supply_packs/pack in qm_supply_cache)
@@ -287,10 +305,12 @@
 				else
 					multiplier = 1
 				if(pack.amount && pack.amount > 1)
-					multiplier += pack.amount
+					multiplier *= pack.amount
 				for (var/ctype in src.commodities)
 					var/datum/commodity/C = src.commodities[ctype]
 					if(ispath(type,C.comtype))
+						if(C.indemand)
+							multiplier *= src.demand_multiplier
 						new_cost += C.price * multiplier
 
 			new_cost += src.points_per_crate
@@ -299,6 +319,17 @@
 				pack.cost = new_cost
 			if(pack.cost > new_cost && pack.cost > pack.basecost)
 				pack.cost = max(new_cost,pack.basecost)
+
+		for (var/ctype in src.commodities)
+			var/datum/commodity/C1 = src.commodities[ctype]
+			for(var/datum/trader/T in src.active_traders)
+				for(var/datum/commodity/C2 in T.goods_sell)
+					if(C1.comtype == C2.comtype)
+						if(C1.indemand)
+							C2.amount = 0
+
+
+
 
 
 
