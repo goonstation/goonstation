@@ -415,7 +415,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 	amount = 1
 	prob_of_happening = 10
 
-	valid_instance(/obj/machinery/bot/bot)
+	valid_instance(obj/machinery/bot/bot)
 		. = ..() && !bot.emagged
 
 
@@ -424,6 +424,6 @@ ABSTRACT_TYPE(/datum/ion_category)
 			if(valid_instance(bot))
 				targets += bot
 
-	action(/obj/machinery/bot/bot)
+	action(obj/machinery/bot/bot)
 		bot.emp_act()
 
