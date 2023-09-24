@@ -653,11 +653,11 @@ TYPEINFO(/obj/item/sword/pink/angel)
 
 	attack(mob/living/target, mob/user)
 		if (isrevolutionary(user))
-			var/damage_tally = 0 // how much bonus damage we get on hit
+			var/nearby_revs = 0
 			for (var/mob/M in viewers(5, src.loc))
 				if (isrevolutionary(M))
-					damage_tally = min(25, damage_tally + 5)
-			random_brute_damage(target, damage_tally, TRUE)
+					nearby_revs++
+			random_brute_damage(target, min(25, nearby_revs * 5), TRUE)
 		..()
 
 	disposing()

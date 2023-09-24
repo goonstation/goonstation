@@ -1319,7 +1319,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	name = "Revolutionary Sign"
 	item = /obj/item/revolutionary_sign
 	cost = 4
-	desc = "This large revolutionary sign will inspire all nearby revolutionaries and grant them small combat buffs. Additionally the sign will channel the fury of nearby revs to deal increased damage! Best used in conjunction with a horde of angry revolutionaries."
+	desc = "This large revolutionary sign will inspire all nearby revolutionaries and grant them small combat buffs. Additionally the sign will channel the fury of nearby revolutionaries to provide greater force when the sign is swung! Best used in conjunction with a horde of angry revolutionaries."
 
 /datum/syndicate_buylist/generic/head_rev/rev_dagger
 	name = "Sacrificial Dagger"
