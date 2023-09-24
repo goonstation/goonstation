@@ -16313,6 +16313,7 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/southeast)
 "hkc" = (
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/engine/caution/north,
 /area/station/hangar/sec)
 "hke" = (
@@ -32615,8 +32616,8 @@
 	pixel_y = -4
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_x = 25
 	},
 /turf/simulated/floor/black,
@@ -38200,8 +38201,8 @@
 	icon_state = "2-4"
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_y = 25
 	},
 /turf/simulated/floor/redblack,
@@ -42150,10 +42151,10 @@
 	})
 "ssO" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_y = 25;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
 	},
 /turf/space/fluid/acid,
 /area/space)

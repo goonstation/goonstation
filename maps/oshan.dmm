@@ -5711,8 +5711,7 @@
 /turf/simulated/floor/carpet/arcade/half,
 /area/station/crew_quarters/clown)
 "asK" = (
-/obj/table/reinforced/auto,
-/obj/item/storage/toolbox/mechanical,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
 "asL" = (
@@ -20633,6 +20632,7 @@
 	name = "Pod Bay Blast Door Control";
 	pixel_x = -22
 	},
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor,
 /area/station/hangar/main)
 "bvh" = (
@@ -21632,6 +21632,7 @@
 /obj/item/shipcomponent/secondary_system/orescoop,
 /obj/item/shipcomponent/secondary_system/cargo,
 /obj/item/shipcomponent/communications/mining,
+/obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
 "byC" = (
@@ -30117,7 +30118,7 @@
 /turf/simulated/floor/caution/north,
 /area/diner/hangar)
 "cav" = (
-/obj/landmark/spawner/loot,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/caution/north,
 /area/diner/hangar)
 "caw" = (
@@ -38948,10 +38949,10 @@
 /area/evilreaver/chapel)
 "lCt" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_y = 25;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
 	},
 /turf/space/fluid,
 /area/space)
@@ -41656,6 +41657,7 @@
 /area/station/hallway/primary/south)
 "pIo" = (
 /obj/machinery/light/incandescent/greenish,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor,
 /area/station/hangar/sec)
 "pIL" = (
@@ -41733,8 +41735,8 @@
 /area/station/medical/medbay/lobby)
 "pNy" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_x = 32
 	},
 /turf/simulated/floor/stairs/wide/other,
@@ -45297,8 +45299,8 @@
 /area/station/crew_quarters/jazz)
 "wfE" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_y = -33
 	},
 /turf/simulated/floor/black,

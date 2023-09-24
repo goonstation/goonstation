@@ -120,8 +120,8 @@
 	var/value = 1
 
 	New()
-		. = ..()
 		price *= value
+		. = ..()
 
 /datum/commodity/ore/mauxite
 	comname = "Mauxite"
@@ -163,7 +163,7 @@
 	comname = "Uqill"
 	comtype = /obj/item/raw_material/uqill
 	onmarket = 1
-	value = 3
+	value = 5
 
 /datum/commodity/ore/fibrilith // why is this worth a ton of money?? dropping the value to further upset QMs
 	comname = "Fibrilith"
@@ -205,20 +205,20 @@
 	comname = "Erebite"
 	comtype = /obj/item/raw_material/erebite
 	onmarket = 1
-	value = 3
+	value = 5
 
 /datum/commodity/ore/plasmastone
 	comname = "Plasmastone"
 	comtype = /obj/item/raw_material/plasmastone
 	onmarket = 1
-	value = 3
+	value = 5
 
 /datum/commodity/ore/telecrystal
 	comname = "Telecrystal"
 	comtype = /obj/item/raw_material/telecrystal
 	desc = "A large unprocessed telecrystal, a gemstone with space-warping properties."
 	onmarket = 1
-	value = 5
+	value = 7
 
 /datum/commodity/ore/syreline
 	comname = "Syreline"

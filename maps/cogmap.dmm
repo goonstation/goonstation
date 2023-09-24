@@ -14773,12 +14773,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/east)
 "aTm" = (
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
+/turf/simulated/wall/grass/leafy,
 /area/station/garden/owlery)
 "aTo" = (
 /obj/machinery/portable_atmospherics/pump,
@@ -24505,6 +24500,7 @@
 	dir = 8;
 	tag = ""
 	},
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "bzk" = (
@@ -46346,6 +46342,10 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"hzu" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
 "hzC" = (
 /obj/table/auto,
 /obj/item/device/analyzer/healthanalyzer{
@@ -46475,12 +46475,7 @@
 /area/station/maintenance/northwest)
 "hEd" = (
 /obj/tree,
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
+/turf/simulated/wall/grass/leafy,
 /area/station/garden/owlery)
 "hGk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -49362,10 +49357,10 @@
 /area/station/crew_quarters/market)
 "krI" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_x = 32;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_x = 32
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -51245,12 +51240,7 @@
 /obj/machinery/portableowl/attached{
 	name = "A Pretty Owl"
 	},
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
+/turf/simulated/wall/grass/leafy,
 /area/station/garden/owlery)
 "mrO" = (
 /obj/machinery/power/terminal{
@@ -53488,9 +53478,9 @@
 "ojy" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
 	id = "Sleeper_Access";
-	name = "Listening Post";
-	dir = 4
+	name = "Listening Post"
 	},
 /turf/simulated/floor,
 /area/listeningpost)
@@ -57078,8 +57068,8 @@
 /area/station/hangar/main)
 "rhf" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_x = 32
 	},
 /turf/simulated/floor/grey/side{
@@ -57802,12 +57792,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall{
-	density = 0;
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
+/turf/simulated/wall/grass/leafy{
+	density = 0
 	},
 /area/station/garden/owlery)
 "rSs" = (
@@ -62117,8 +62103,8 @@
 /area/station/security/main)
 "vDE" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_y = 25
 	},
 /turf/simulated/floor/stairs{
@@ -62831,12 +62817,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
+/turf/simulated/wall/grass/leafy,
 /area/station/garden/owlery)
 "wjf" = (
 /obj/item/cigbutt,
@@ -125779,7 +125760,7 @@ bLc
 bLc
 bLc
 bLc
-bLc
+hzu
 eIr
 cAo
 bFr

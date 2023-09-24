@@ -81,6 +81,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 
 	New()
 		..()
+		START_TRACKING
 		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitbyproj))
 		if(!no_camera)
 			src.cam = new /obj/machinery/camera(src)
@@ -100,6 +101,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		#endif
 
 	disposing()
+		STOP_TRACKING
 		botcard = null
 		qdel(chat_text)
 		chat_text = null

@@ -1229,7 +1229,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "apu" = (
-/obj/table/reinforced/auto,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "apv" = (
@@ -18414,8 +18414,8 @@
 	pixel_y = 9
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
-	pixel_y = -2;
-	pixel_x = 8
+	pixel_x = 8;
+	pixel_y = -2
 	},
 /obj/item/decoration/ashtray{
 	pixel_x = -4
@@ -24818,8 +24818,8 @@
 	},
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/external{
-	name = "Listening Post";
-	dir = 4
+	dir = 4;
+	name = "Listening Post"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -25986,10 +25986,10 @@
 /area/station/maintenance/inner/east)
 "hUm" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_x = 32;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_x = 32
 	},
 /turf/simulated/floor/airless/plating/jen,
 /area/space)
@@ -32108,6 +32108,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/black/grime,
 /area/station/hangar/qm)
 "jRn" = (
@@ -45899,8 +45900,8 @@
 	status = 2
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_x = -32
 	},
 /turf/simulated/floor/plating/jen,
@@ -56343,8 +56344,8 @@
 	dir = 1;
 	embed = 1;
 	icon_state = "shuttle-embed";
-	pixel_y = 25;
-	layer = 31
+	layer = 31;
+	pixel_y = 25
 	},
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/asylum/medbay)
@@ -58580,8 +58581,8 @@
 	pixel_y = 11
 	},
 /obj/item/reagent_containers/food/drinks/bottle/bojackson{
-	pixel_y = 9;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 9
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/ai_monitored/armory)
@@ -60170,8 +60171,8 @@
 /obj/stool/chair/red,
 /obj/machinery/bot/medbot/no_camera,
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_y = 35
 	},
 /turf/simulated/floor/grey/side,
@@ -69729,24 +69730,24 @@
 "vyc" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/drinks/bottle/champagne{
-	pixel_y = 19;
-	pixel_x = -4
+	pixel_x = -4;
+	pixel_y = 19
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
-	pixel_y = 2;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 2
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
 	pixel_x = 8;
 	pixel_y = 15
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/wine{
-	pixel_y = 5;
-	pixel_x = 1
+	pixel_x = 1;
+	pixel_y = 5
 	},
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf{
-	pixel_y = -10;
-	pixel_x = 5
+	pixel_x = 5;
+	pixel_y = -10
 	},
 /turf/simulated/floor/wood/eight,
 /area/station/ai_monitored/armory)
