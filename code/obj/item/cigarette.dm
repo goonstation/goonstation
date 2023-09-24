@@ -257,7 +257,7 @@
 			user.visible_message("<span class='alert'><B>[user]</B> blows smoke right into <B>[target]</B>'s face![message_append]</span>", group = "[user]_blow_smoke_at_[target]")
 
 			var/mob/living/carbon/human/human_target = target
-			if (human_target && prob(20))
+			if (human_target && !issmokeimmune(human_target) && prob(20))
 				target.emote("cough")
 				if(prob(20))
 					target.drop_item()
