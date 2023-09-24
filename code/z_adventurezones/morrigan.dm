@@ -2663,18 +2663,31 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	New()
 		. = ..()
 
+	//why
 	proc/put_item(var/obj/item/W, var/mob/user)
-		W.set_loc(src)
-		user.u_equip(W)
-		for (W in src)
-			for (var/obj in required_objects)
+		var/times_checked = 0
+		for (var/obj in required_objects)
+			if (times_checked < length(required_objects))
 				if (istype(W, obj))
-					return
+					W.set_loc(src)
+					user.u_equip(W)
+					times_checked = 0
+					boutput(user, "check succsess")
+					. = TRUE
+					break
 				else
-					sleep(2 SECONDS)
-					W.set_loc(src.loc)
-					src.visible_message("<span class='alert'><b>The chute spits [W] out! Looks like it doesn't accept it..</b></span>")
-					return
+					times_checked += 1
+					boutput(user, "checked")
+			else
+				. = FALSE
+				break
+		if (!.)
+			W.set_loc(src)
+			user.u_equip(W)
+			sleep(2 SECONDS)
+			W.set_loc(src.loc)
+			times_checked = 0
+			return
 
 	proc/check_contents()
 		var/items_collected = 0
@@ -2692,9 +2705,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	attackby(obj/item/W, mob/user)
 		if(src.functioning)
-			put_item(W, user)
-			check_contents()
-			return
+			if (!ON_COOLDOWN(src, "item_insert_cooldown", 3 SECONDS))
+				put_item(W, user)
+				check_contents()
+				return
+			else
+				boutput(user, "<span class='warning'><b>You have to wait before you put another item in!</b></span>")
+				return
 		else
 			boutput(user, "<span class='alert'><b>\The [src] doesn't seem to work!</b></span>")
 			return
