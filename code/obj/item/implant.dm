@@ -711,20 +711,16 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 	big_message = " buzzes, what?"
 	small_message = "buzzes loudly, uh oh!"
 	power = 8
-	/// did we change our user's faction? this is in case a botanist gets this implant then gets it removed
-	var/changed_faction = FALSE
 
 	implanted(var/mob/M, mob/I)
 		..()
-		if (istype(M) && M.faction != FACTION_BOTANY)
-			M.faction = FACTION_BOTANY
-			changed_faction = TRUE
+		if (istype(M))
+			M.faction |= FACTION_BOTANY
 
 	on_remove(var/mob/M)
 		..()
-		if (istype(M) && changed_faction == TRUE)
-			M.faction = 0
-			changed_faction = FALSE
+		if (istype(M))
+			M.faction &= ~FACTION_BOTANY
 
 	do_effect(power)
 		// enjoy your wasps
