@@ -58,7 +58,7 @@ const VendorSection = (_props, context) => {
             onClick={handleFillClick} />
         </LabeledList.Item>
         <LabeledList.Item label="Pressure">
-          <Flex inline width="100%">
+          <Flex>
             <Flex.Item>
               <Button
                 disabled={target_pressure === min_pressure}
