@@ -239,7 +239,7 @@
 
 		// Shuffle trader visibility around a bit
 		for (var/datum/trader/T in src.active_traders)
-			if (T.hidden)
+			if (T.hidden || (length(T.goods_sell) < T.max_goods_sell))
 				if (prob(T.chance_arrive))
 					T.hidden = 0
 					T.current_message = pick(T.dialogue_greet)
@@ -275,8 +275,6 @@
 		while(length(src.req_contracts) < src.max_req_contracts)
 			src.add_req_contract()
 
-		update_buy_prices()
-
 		SPAWN(5 SECONDS)
 			// 20% chance to shuffle out generic traders for a new one
 			// Do this after a short delay so QMs can finish any last-second deals
@@ -291,9 +289,12 @@
 				src.active_traders += new /datum/trader/generic(src)
 
 			update_shipping_data()
+			update_buy_prices()
 
 
-	proc/update_buy_prices() // update the buy price of items based on market fluctuations
+	/// update the buy price of items based on market fluctuations
+	/// remove in demand goods from traders; they're all out!
+	proc/update_buy_prices()
 		var/new_cost = 0
 		var/multiplier = 1
 		for (var/datum/supply_packs/pack in qm_supply_cache)
@@ -318,6 +319,17 @@
 				pack.cost = new_cost
 			if(pack.cost > new_cost && pack.cost > pack.basecost)
 				pack.cost = max(new_cost,pack.basecost)
+
+		for (var/ctype in src.commodities)
+			var/datum/commodity/C1 = src.commodities[ctype]
+			for(var/datum/trader/T in src.active_traders)
+				for(var/datum/commodity/C2 in T.goods_sell)
+					if(C1.comtype == C2.comtype)
+						if(C1.indemand)
+							T.goods_sell -= C2
+
+
+
 
 
 
