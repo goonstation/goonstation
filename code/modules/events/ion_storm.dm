@@ -411,3 +411,19 @@ ABSTRACT_TYPE(/datum/ion_category)
 				var/datum/computer/file/pda_program/emergency_alert/alert_prog = prog
 				alert_prog.send_alert(rand(1,4), TRUE)
 
+/datum/ion_category/station_bots
+	amount = 1
+	prob_of_happening = 10
+
+	valid_instance(/obj/machinery/bot/bot)
+		. = ..() && !bot.emagged
+
+
+	build_targets()
+		for_by_tcl(bot, /obj/machinery/bot)
+			if(valid_instance(bot))
+				targets += bot
+
+	action(/obj/machinery/bot/bot)
+		bot.emp_act()
+
