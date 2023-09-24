@@ -1,3 +1,7 @@
+
+TYPEINFO(/obj/storage/closet)
+	mat_appearances_to_ignore = list("steel")
+
 /obj/storage/closet
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."

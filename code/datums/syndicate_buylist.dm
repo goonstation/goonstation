@@ -844,7 +844,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = "Extra Large Shot Glasses"
 	item = /obj/item/storage/box/glassbox/syndie
 	cost = 2
-	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games! Those glasses also splash all the liquid inside them to whatever they hit when thrown!"
+	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games! Those glasses also force humans they are thrown at to take a partial sip before the glass shatters!"
 	job = list("Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -994,6 +994,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "A grenade that holds up to 5 chicken eggs. Uses syndicate brainwashing to turn the chickens into hardened warriors immediately on detonation. Normally passive chickens will become aggressive. Use a wrench to unload it."
 	job = list("Rancher")
 	not_in_crates = 1
+	can_buy = UPLINK_TRAITOR
+
+/datum/syndicate_buylist/traitor/fishing_rod
+	name = "Barbed Fishing Rod"
+	item = /obj/item/syndie_fishing_rod
+	cost = 6
+	desc = "A tactical fishing rod designed to reel in and filet the biggest catch- enemies of the Syndicate. Bait the hologram lure by hitting it with an item, then maim foes with a barbed hook that causes more damage the longer they fight back."
+	job = list("Rancher", "Angler")
 	can_buy = UPLINK_TRAITOR
 
 /datum/syndicate_buylist/traitor/ai_laser

@@ -473,7 +473,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 /obj/item/tank/emergency_oxygen/extended
 	name = "extended capacity pocket oxygen tank"
-	desc = "A an extended capacity version of the pocket emergency oxygen tank."
+	desc = "An extended capacity version of the pocket emergency oxygen tank."
 	icon_state = "ex_pocket_oxtank"
 
 	New()

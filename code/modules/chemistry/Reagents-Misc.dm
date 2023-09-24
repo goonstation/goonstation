@@ -1022,7 +1022,8 @@ datum
 				var/atom/Aloc = isturf(A) ? A : A.loc
 				for(var/atom/movable/AM in Aloc)
 					var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
-					if(glued_comp?.glued_to == A)
+					// possible idea for a future change: instead of direct deletion just decrease dries_up_time and only delete if <= current time
+					if(glued_comp?.glued_to == A && !isnull(glued_comp.glue_removal_time))
 						qdel(glued_comp)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)

@@ -35,7 +35,7 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/blue
 	desc = "A knit cap in blue."
 	icon_state = "blue"
-	item_state = "bgloves"
+	item_state = "blugloves"
 
 /obj/item/clothing/head/yellow
 	desc = "A knit cap in yellow."

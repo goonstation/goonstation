@@ -26,8 +26,8 @@
 					boutput(user, "<span class='alert'>Connection error: Drone already in use.</span>")
 
 /mob/living/silicon/drone
-	name = "Drone"
-	var/base_name = "Drone"
+	name = "drone"
+	var/base_name = "drone"
 	desc = "A small remote-controlled robot for doing risky work from afar."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "base"
@@ -53,7 +53,7 @@
 
 	New()
 		..()
-		name = "Drone [rand(1,9)]*[rand(10,99)]"
+		name = "drone [rand(1,9)]*[rand(10,99)]"
 		base_name = name
 		hud = new(src)
 		src.attach_hud(hud)

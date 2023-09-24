@@ -291,6 +291,7 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 	desc = "A suit of protective formal armor made for the station's captain."
 	icon_state = "caparmor"
 	item_state = "caparmor"
+	hides_from_examine = C_UNIFORM
 
 	setupProperties()
 		..()

@@ -254,6 +254,7 @@ TYPEINFO(/obj/item/rcd)
 						var/turf/simulated/wall/T = A:ReplaceWithWall()
 						T.inherit_area()
 						T.setMaterial(getMaterial(material_type))
+						T.girdermaterial = getMaterial(material_name)
 						log_construction(user, "builds a wall ([T])")
 						return
 

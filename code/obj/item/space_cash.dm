@@ -206,8 +206,8 @@
 
 // That's what tourists spawn with.
 	tourist
-		default_min_amount = 500
-		default_max_amount = 1500
+		default_min_amount = PAY_TRADESMAN
+		default_max_amount = PAY_EXECUTIVE
 
 // for couches
 	small

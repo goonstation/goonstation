@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/uniform_burst/blaster
 	name = "blaster wave"
 	sname = "wave fire"
-	spread_angle = 33
+	spread_angle = 25
 	cost = 200
 	pellets_to_fire = 5
 	spread_projectile_type = /datum/projectile/laser/blaster/blast

@@ -79,10 +79,10 @@
 			switch(wish)
 				if("I wish to become rich!")
 					O.visible_message("<span class='alert'>A ton of money falls out of thin air! Woah!</span>")
-					for(var/turf/T in range(user,1))
+					for(var/turf/T in range(user,2))
 						if (T.density)
 							continue
-						var/obj/item/currency/spacecash/million/S = new /obj/item/currency/spacecash/million
+						var/obj/item/currency/spacecash/thousand/S = new /obj/item/currency/spacecash/thousand
 						S.setup(T)
 
 				if("I wish for great power!")
