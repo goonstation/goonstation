@@ -1676,3 +1676,28 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				if(product.desc)
 					. += product.desc
 					. += "<br>"
+
+/datum/computer/file/pda_program/pressure_crystal_shopper
+	name = "Crystal Bazaar"
+	size = 2
+
+	return_text()
+		if(..())
+			return
+
+		. = src.return_text_header()
+
+		. += "<h4>The Pressure Crystal Market</h4> \
+			Pressure crystals! Researchers everywhere love them. But selling a crystal reduces demand. Here you can see what \
+			calibers of crystal are more or less valued than usual.<br><br>\
+			A few well-funded organizations have offered superior rates for crystals within certain measurement ranges. \
+			<br><br>"
+		for (var/i in shippingmarket.pressure_crystal_sales)
+			var/index = text2num(i)
+			var/range_min = (index - 1) * PRESSURE_CRYSTAL_SALES_RANGE_LENGTH
+			var/range_max = index * PRESSURE_CRYSTAL_SALES_RANGE_LENGTH
+			var/mult = shippingmarket.pressure_crystal_sales[i]
+			. += "[range_min] to [range_max] kiloblast: \
+				[mult > 1 ? "<B>" : ""]worth [round(mult * 100, 0.01)]% of normal. \
+				[mult > 1 ? "Maximum estimated value: [mult * range_max PRESSURE_CRYSTAL_VALUATION_FORMULA]</B> credits." : ""]<br>"
+		. += "<br>"
