@@ -246,6 +246,12 @@
 	/obj/item/clothing/mask/clown_hat,
 	/obj/item/storage/box/crayon,
 	/obj/item/storage/box/crayon/basic,
+	#ifdef AUTUMN
+	/obj/item/clothing/shoes/clown_shoes/autumn,
+	/obj/item/clothing/head/autumn_clown_hat,
+	/obj/item/clothing/mask/clown_hat/autumn,
+	/obj/item/clothing/under/gimmick/autumn_clown,
+	#endif
 	/obj/item/storage/box/balloonbox)
 
 	make_my_stuff()

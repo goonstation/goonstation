@@ -321,6 +321,13 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 			return
 		return ..()
 
+	autumn
+		name = "autumn clown shoes"
+		desc = "Wouldn't want to leaf these behind."
+		icon_state = "autumn_clown"
+		item_state = "autumn_clown"
+
+
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/tripsalot, list(SLOT_SHOES))

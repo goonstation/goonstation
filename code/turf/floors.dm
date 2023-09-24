@@ -1477,7 +1477,7 @@ TYPEINFO(/turf/simulated/floor/grass)
 
 /turf/simulated/floor/grass/leafy
 #ifdef AUTUMN
-	icon_state = "leafy_autumn"
+	icon_state = "grass_leafy_autumn"
 #else
 	icon_state = "grass_leafy"
 #endif
@@ -2456,7 +2456,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	desc = "some leafy grass."
 	icon = 'icons/turf/outdoors.dmi'
 #ifdef AUTUMN
-	icon_state = "leafy_autumn"
+	icon_state = "grass_leafy_autumn"
 	icon_state_edge = "leafy_autumnedge"
 #else
 	icon_state = "grass_leafy"

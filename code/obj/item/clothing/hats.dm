@@ -2060,3 +2060,21 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	New()
 		. = ..()
 		src.color = mult_color_matrix(normalize_color_to_matrix(src.color), normalize_color_to_matrix(list(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)))
+
+/obj/item/clothing/head/autumn_clown_hat
+	name = "autumnal clown's hat"
+	desc = "Careful to make sure it doesn't Fall off."
+	icon_state = "autumn_clown_hat"
+	item_state = "autumn_clown_hat"
+
+/obj/item/clothing/head/leaf_wreath
+	name = "leaf wreath"
+	desc = "A carefully made wreath of dried autumn leaves."
+	icon_state = "leaf_wreath"
+	item_state = "leaf_wreath"
+
+/obj/item/clothing/head/autumn_tree
+	name = "autumn tree hat"
+	desc = "A tiny seasonal tree for your head!!"
+	icon_state = "autumn_tree"
+	item_state = "autumn_tree"
