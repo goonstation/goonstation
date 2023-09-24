@@ -62,8 +62,8 @@
 
 #ifdef AUTUMN
 	New()
-		icon_state = pick("tree_red", "tree_yellow", "tree_orange")
 		..()
+		icon_state = pick("tree_red", "tree_yellow", "tree_orange")
 #endif
 
 	attackby(obj/item/I, mob/user)
@@ -219,11 +219,7 @@
 	name = "shrub"
 	desc = "A bush. Despite your best efforts, you can't tell if it's real or not."
 	icon = 'icons/misc/worlds.dmi'
-#ifdef AUTUMN
-	icon_state = "shrub_autumn"
-#else
 	icon_state = "shrub"
-#endif
 	anchored = ANCHORED
 	density = 0
 	layer = EFFECTS_LAYER_UNDER_1
@@ -253,6 +249,9 @@
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION)
 			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
+		#endif
+		#ifdef AUTUMN
+		src.try_set_icon_state(src.icon_state + "_autumn", src.icon) //this will change varedited shrubs into autumn versions but also won't break if there's no autumn version
 		#endif
 
 	ex_act(var/severity)
