@@ -133,7 +133,11 @@ TYPEINFO(/obj/item/rcd)
 	var/list/datum/contextAction/contexts = list()
 
 	get_desc()
-		. += "<br>It holds [matter]/[max_matter] [istype(src, /obj/item/rcd/material) ? material_type : "matter"]  units. It is currently set to "
+		var/mattertype = "matter"
+		if (istype(src, /obj/item/rcd/material))
+			var/datum/material/typecaster = getMaterial(material_type)
+			mattertype = typecaster.name
+		. += "<br>It holds [matter]/[max_matter] [mattertype]  units. It is currently set to "
 		switch (src.mode)
 			if (RCD_MODE_FLOORSWALLS)
 				. += "Floors/Walls"
@@ -933,7 +937,8 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 			boutput(user, "Recycling [W] just doesn't work.")
 		else if (istype(W, /obj/item/paper/book))
 			matter += 5
-			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [material_type]-units.")
+			var/datum/material/typecaster = getMaterial(material_type)
+			boutput(user, "\The [src] recycles [W], and now holds [src.matter]/[src.max_matter] [typecaster.name]-units.")
 			qdel(W)
 		else if (istype(W, /obj/item/paper))
 			matter += 0.5
