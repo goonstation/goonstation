@@ -3040,11 +3040,14 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		.["cardname"] = src.scan
 		.["bankMoney"] = account ? account["current_money"] : null
 
+		.["vend_type"] = src.vend_type
 		.["holding"] = holding
 		.["holding_pressure"] = holding ? MIXTURE_PRESSURE(holding.air_contents) : null
 		.["min_pressure"] = min_pressure
 		.["max_pressure"] = max_pressure
 		.["fill_cost"] = holding ? src.fill_cost() : null
+		.["air_cost"] = air_cost
+		.["current_fill"] = holding ? MIXTURE_PRESSURE(src.holding.air_contents) : 0
 
 		.["target_pressure"] = src.target_pressure
 
