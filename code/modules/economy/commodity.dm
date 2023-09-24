@@ -120,8 +120,8 @@
 	var/value = 1
 
 	New()
-		. = ..()
 		price *= value
+		. = ..()
 
 /datum/commodity/ore/mauxite
 	comname = "Mauxite"
