@@ -17143,8 +17143,8 @@
 /area/station/engine/engineering)
 "bvT" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_x = 32
 	},
 /turf/simulated/floor/grey/side{
@@ -21432,8 +21432,8 @@
 /area/station/crew_quarters/toilets)
 "cti" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_y = 25
 	},
 /turf/simulated/floor/stairs{
@@ -23098,10 +23098,10 @@
 /area/station/medical/dome)
 "dzG" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_x = 32;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_x = 32
 	},
 /turf/simulated/floor/plating/airless{
 	dir = 10;
@@ -27890,6 +27890,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/captain)
+"gZP" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/orangeblack/side{
+	dir = 4
+	},
+/area/station/hangar/main)
 "hbD" = (
 /obj/machinery/door/poddoor/pyro{
 	dir = 4;
@@ -32918,6 +32924,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
+"kKI" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/shuttlebay,
+/area/station/quartermaster/magnet)
 "kKR" = (
 /obj/table/reinforced/auto,
 /obj/item/clipboard,
@@ -33990,8 +34000,8 @@
 	dir = 1;
 	embed = 1;
 	icon_state = "shuttle-embed";
-	pixel_y = 25;
-	layer = 31
+	layer = 31;
+	pixel_y = 25
 	},
 /turf/unsimulated/floor{
 	desc = "";
@@ -42358,9 +42368,9 @@
 "rmH" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
 	id = "Sleeper_Access";
-	name = "Listening Post";
-	dir = 4
+	name = "Listening Post"
 	},
 /obj/forcefield/energyshield/perma/doorlink{
 	desc = "A door-linked force field that prevents gasses from passing through it.";
@@ -83862,7 +83872,7 @@ aaa
 aaa
 aaa
 bGU
-xtE
+kKI
 sZG
 wvT
 iCO
@@ -89799,7 +89809,7 @@ asW
 apu
 azd
 uRD
-uRD
+gZP
 avP
 apv
 pTo
