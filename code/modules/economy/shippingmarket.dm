@@ -1,6 +1,12 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
 #define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
+#define PC_SALES_RANGE_LENGTH 5 // The span size of each range for the pressure crystal sales list. Measured in explosion power
+#define PC_VALUE_DIMINISH_MULTIPLIER 0.5 // Every sale will multiply the current multiplier for its range by this value
+#define PC_HIGH_VALUE_RANGE_QUANTITY 7 // How many ranges will be given credit multipliers in New()?
+#define PC_BONUS_MULTIPLIER round(rand(3, 6), 0.1) // The multiplier to give to high value ranges
+#define PC_MAX_POWER_FOR_BONUS_GENERATION 230 // Bonuses won't be given to ranges above this explosion power value
+
 //Codes for requisition post-transaction returns handling
 ///Requisition was not used, conduct a standard QM sale
 #define RET_IGNORE 0
@@ -35,7 +41,7 @@
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
 	var/list/supply_history = list() // History of all approved requests, of type string
 
-	var/list/pressure_crystal_prices = list()
+	var/list/pressure_crystal_sales = list()
 
 	var/points_per_crate = 10
 
@@ -400,17 +406,16 @@
 
 		return duckets
 
-	proc/appraise_pressure_crystal(var/obj/item/pressure_crystal/pc, var/sell = 1)
-		var/list/plist = src.pressure_crystal_prices
+	proc/appraise_pressure_crystal(var/obj/item/pressure_crystal/pc, var/sell = 0)
+		if (pc.pressure <= 0)
+			return
+		var/index = ceil(pc.pressure / PC_SALES_RANGE_LENGTH)
 		var/value = pc.pressure ** 1.1 * 400 // please change this if you can balance it better
-
-		var/i
-		for (i = 1, i < length(plist), i++)
-			var/percent = plist[i] / pc.pressure
-
+		if (src.pressure_crystal_sales[index])
+			var/value *= src.pressure_crystal_sales[index]
 		if (sell)
-			src.pressure_crystal_prices.Add(pc.pressure)
-
+			src.pressure_crystal_sales[index] = src.pressure_crystal_sales[index] ? \
+				src.pressure_crystal_sales[index] * PC_VALUE_DIMINISH_MULTIPLIER : PC_VALUE_DIMINISH_MULTIPLIER
 		return value
 
 	proc/pc_get_index_range(var/index)
@@ -673,3 +678,8 @@
 
 #undef SUPPLY_OPEN_TIME
 #undef SUPPLY_CLOSE_TIME
+#undef PC_SALES_RANGE_LENGTH
+#undef PC_HIGH_VALUE_RANGE_QUANTITY
+#undef PC_BONUS_MULTIPLIER
+#undef PC_MAX_POWER_FOR_BONUS_GENERATION
+#undef PC_VALUE_DIMINISH_MULTIPLIER
