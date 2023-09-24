@@ -1136,7 +1136,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	initial_volume = 50
 	var/smashed = 0
 	var/shard_amt = 1
-	var/splash_on_smash = FALSE
 
 	var/image/fluid_image
 	var/image/image_ice
@@ -1421,11 +1420,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		if (!T)
 			qdel(src)
 			return
-		if(src.reagents && splash_on_smash)
-			var/amt = max(10, src.gulp_size)
-			src.reagents.reaction(A, react_volume = min(amt, src.reagents.total_volume))
-			src.reagents.remove_any(amt)
-			src.reagents.reaction(T)
+		if(src.reagents)
+			T.fluid_react(src.reagents, src.reagents.total_volume, FALSE)
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
@@ -1562,7 +1558,19 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50
-	splash_on_smash = TRUE
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		if(ishuman(A))
+			var/mob/living/carbon/human/H = A
+			var/lolwtf = prob(5) && ((H.head?.c_flags & COVERSMOUTH) || (H.wear_mask?.c_flags & COVERSMOUTH))
+			H.visible_message("<span class = 'alert'>[src] flies stright into [H]'s mouth! [lolwtf ? " How the hell does that work?":""]</span>", "<span class = 'alert'>[src] flies stright into your mouth! [lolwtf ? " How the hell did that happen?":""]</span>", "You hear breaking glass.")
+			if (src.reagents.total_volume)
+				logTheThing(LOG_CHEMISTRY, H, "is forced to drink from [src] [log_reagents(src)] at [log_loc(H)] thrown by [constructTarget(thr.thrown_by, "combat")].")
+				src.reagents.reaction(H, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(reagents.total_volume/2, (H.reagents?.maximum_volume - H.reagents?.total_volume))))
+				SPAWN(0.5 SECONDS)
+					if (src?.reagents && H?.reagents)
+						src.reagents.trans_to(H, reagents.total_volume/2)
+		. = ..()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"
