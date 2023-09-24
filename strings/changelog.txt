@@ -1,4 +1,6 @@
-
+(t)sun sep 24 23
+(u)Emily
+(*)Pods now require fuel (plasma) to run modules other than basic movement. Be sure to turn off systems when not in use!
 (t)sat sep 23 23
 (u)tarmunora
 (*)Ion storm update: a few more things can happen to affected doors, and affected doors/APCs will have ai control disabled. Keep an eye on Beepsky...
