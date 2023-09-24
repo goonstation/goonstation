@@ -886,11 +886,11 @@
 			can_hold += /obj/item/gun/energy/smgmine
 
 	morriganheavy
-		spawn_contents = list(/obj/item/gun/energy/laserifle, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
+		spawn_contents = list(/obj/item/gun/energy/laser_rifle, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
 
 		New()
 			..()
-			can_hold += /obj/item/gun/energy/laserifle
+			can_hold += /obj/item/gun/energy/laser_rifle
 
 	morriganmelee
 		spawn_contents = list(/obj/item/tactical_hammer, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
