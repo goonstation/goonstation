@@ -737,7 +737,19 @@
 /turf/simulated/floor/black,
 /area/station/security/hos)
 "aps" = (
-/obj/item/reagent_containers/iv_drip,
+/obj/storage/crate,
+/obj/item/wrapping_paper{
+	pixel_x = 3;
+	pixel_y = -4
+	},
+/obj/item/clothing/under/misc/mail{
+	pixel_x = -5
+	},
+/obj/item/clothing/head/mailcap{
+	pixel_x = 4;
+	pixel_y = 4
+	},
+/obj/item/scissors,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -9257,13 +9269,21 @@
 /area/station/medical/staff)
 "emL" = (
 /obj/table/auto,
-/obj/item/scalpel,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
+/obj/item/storage/firstaid/regular{
+	pixel_y = 6;
+	pixel_x = -8
 	},
-/obj/item/suture,
-/obj/item/storage/firstaid/regular,
+/obj/item/kitchen/utensil/fork{
+	pixel_y = 2;
+	pixel_x = 2
+	},
+/obj/item/kitchen/utensil/knife{
+	pixel_y = 4;
+	pixel_x = 6
+	},
+/obj/item/kitchen/utensil/spoon{
+	pixel_x = 13
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -10001,9 +10021,10 @@
 /area/station/science/hall)
 "eGi" = (
 /obj/table/auto,
-/obj/item/weldingtool,
-/obj/item/device/analyzer/healthanalyzer,
-/obj/item/reagent_containers/glass/bottle/epinephrine,
+/obj/item/reagent_containers/food/snacks/tvdinner{
+	pixel_y = 2;
+	pixel_x = -3
+	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -20703,22 +20724,6 @@
 	dir = 4
 	},
 /area/station/chapel/sanctuary)
-"iYt" = (
-/obj/storage/crate,
-/obj/item/wrapping_paper{
-	pixel_x = 3;
-	pixel_y = -4
-	},
-/obj/item/clothing/under/misc/mail{
-	pixel_x = -5
-	},
-/obj/item/clothing/head/mailcap{
-	pixel_x = 4;
-	pixel_y = 4
-	},
-/obj/item/scissors,
-/turf/simulated/floor/industrial,
-/area/station/storage/warehouse)
 "iYC" = (
 /obj/machinery/door/feather/friendly,
 /turf/simulated/floor/shuttle/flock,
@@ -39384,9 +39389,19 @@
 /area/station/medical/dome)
 "reM" = (
 /obj/table/auto,
-/obj/item/hemostat,
-/obj/item/scissors/surgical_scissors,
-/obj/item/staple_gun,
+/obj/item/hemostat{
+	pixel_x = 3;
+	pixel_y = 4
+	},
+/obj/item/wirecutters{
+	pixel_x = -8;
+	pixel_y = 2
+	},
+/obj/item/suture{
+	pixel_y = 9;
+	pixel_x = 6
+	},
+/obj/random_item_spawner/medicine/one,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -40643,8 +40658,17 @@
 /area/station/security/interrogation)
 "rKP" = (
 /obj/table/auto,
-/obj/machinery/defib_mount{
-	pixel_y = -4
+/obj/item/device/analyzer/healthanalyzer{
+	pixel_y = -2;
+	pixel_x = -2
+	},
+/obj/item/weldingtool{
+	pixel_y = 2;
+	pixel_x = 13
+	},
+/obj/item/staple_gun{
+	pixel_y = 5;
+	pixel_x = -3
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -106060,7 +106084,7 @@ drr
 hkH
 rZb
 aOb
-iYt
+pJt
 nes
 nes
 cFj
