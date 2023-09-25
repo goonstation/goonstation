@@ -519,6 +519,14 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		pressure += (rand()-0.5) * (pressure/1000)//its not extremely accurate.
 		icon_state = "pressure_[clamp(ex, 1, 3)]"
 
+	attackby(obj/item/thing, mob/user)
+		if (!istype(thing, /obj/item/device/pressure_sensor))
+			return ..()
+		var/obj/item/device/pressure_sensor/sensor = thing
+		if (sensor.insert_crystal(user, src))
+			user.visible_message("[user] scoops [src] into [sensor].",
+								"<span class='notice'>You scoop the crystal into [sensor].</span>")
+
 /obj/item/device/pressure_sensor
 	name = "pressure sensor"
 	icon = 'icons/obj/items/assemblies.dmi'
@@ -582,7 +590,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	attack_hand(mob/user)
 		if (src.loc != user || !user.find_in_hand(src))
 			..()
-		else if (src.remove_crystal(user))
+		else if (src.crystal && src.remove_crystal(user))
 			boutput(user, "<span class='notice'>You firmly grip [src]'s crystal and pull it from the device.</span>" )
 		else ..() // something about having two of these feels wrong
 
