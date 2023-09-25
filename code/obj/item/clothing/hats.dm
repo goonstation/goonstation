@@ -2039,25 +2039,25 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 
 	red
 		name = "red mushroom cap"
-		desc = "Makes your lungs feel a little fuzzy. Don't nibble on this one."
+		additional_desc = " Don't nibble on this one."
 		icon_state = "mushroom-red"
 		item_state = "mushroom-red"
 
 	shiitake
 		name = "shiitake mushroom cap"
-		desc = "Makes your lungs feel a little fuzzy. But it smells delectable."
+		additional_desc = " But it smells delectable."
 		icon_state = "mushroom-shiitake"
 		item_state = "mushroom-shiitake"
 
 	indigo
 		name = "indigo mushroom cap"
-		desc = "Makes your lungs feel a little fuzzy. It has an enticing blue hue."
+		additional_desc = " It has an enticing blue hue."
 		icon_state = "mushroom-indigo"
 		item_state = "mushroom-indigo"
 
 	inky
 		name = "inky mushroom cap"
-		desc = "Makes your lungs feel a little fuzzy. Impressively, the inkdrops never fully drip off."
+		additional_desc = " Impressively, the inkdrops never fully drip off."
 		icon_state = "mushroom-inky"
 		item_state = "mushroom-inky"
 
