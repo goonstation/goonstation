@@ -17,7 +17,9 @@ TYPEINFO(/datum/component/bouquet)
 
 /datum/component/bouquet/Initialize()
 	. = ..()
-	if(!istype(parent, /obj/item))
+	if (isnull(parent))
+		return COMPONENT_INCOMPATIBLE
+	if (!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	var/obj/item/W = parent
 	if (!W.is_valid_icon_state("[W.icon_state]_l", 'icons/obj/items/bouquets.dmi'))
