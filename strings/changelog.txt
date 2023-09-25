@@ -1,5 +1,7 @@
 
 (t)mon sep 25 23
+(u)LeahTheTech
+(*)Attacks which are entirely blocked by armour will no longer play their attack sound. This makes it much more obvious when your attack is doing nothing.
 (u)UnfunnyPerson
 (p)15962
 (e)⚖📦|C-Balance, A-Game-Objects
