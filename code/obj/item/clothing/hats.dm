@@ -1981,8 +1981,7 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	item_state = "stagbeetle"
 
 TYPEINFO(/obj/item/clothing/head/elephanthat)
-	random_types = list(
-		/obj/item/clothing/head/elephanthat/gold,
+	random_types = list(/obj/item/clothing/head/elephanthat/gold,
 		/obj/item/clothing/head/elephanthat/green,
 		/obj/item/clothing/head/elephanthat/pink,
 		/obj/item/clothing/head/elephanthat/blue
@@ -2026,8 +2025,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/elephanthat)
 	seal_hair = 1
 
 TYPEINFO(/obj/item/clothing/head/mushroomcap)
-	random_subtypes = list(
-		/obj/item/clothing/head/mushroomcap/red,
+	random_subtypes = list(/obj/item/clothing/head/mushroomcap/red,
 		/obj/item/clothing/head/mushroomcap/shiitake,
 		/obj/item/clothing/head/mushroomcap/indigo,
 		/obj/item/clothing/head/mushroomcap/inky
