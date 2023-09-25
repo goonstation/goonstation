@@ -2014,6 +2014,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\storage\floor_closets.dm"
 #include "code\obj\storage\large_storage_parent.dm"
 #include "code\obj\storage\loot_crates.dm"
+#include "code\obj\storage\pryable.dm"
 #include "code\obj\storage\secure_closets.dm"
 #include "code\obj\storage\secure_crates.dm"
 #include "code\obj\storage\wall_cabinet.dm"

@@ -790,7 +790,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Civilian Department"
 	contains = list(/obj/critter/parrot/random = 5)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/crate/packing
+	containertype = /obj/storage/crate/pryable/animal
 	containername = "Avian Import Kit"
 
 /datum/supply_packs/animal
@@ -799,7 +799,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Civilian Department"
 	contains = list (/obj/random_item_spawner/critter)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/crate/packing
+	containertype = /obj/storage/crate/pryable/animal
 	containername = "Animal Import Kit"
 
 /datum/supply_packs/pet_carrier
