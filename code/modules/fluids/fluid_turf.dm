@@ -342,8 +342,6 @@
 
 	Entered(var/atom/movable/AM)
 		. = ..()
-		if (istype(AM, /datum/projectile/))
-			return
 		if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
 			return
 		if (locate(/obj/lattice) in src)
