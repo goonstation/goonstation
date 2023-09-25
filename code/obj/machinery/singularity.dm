@@ -383,9 +383,11 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			if(isitem(A))
 				var/obj/item/I = A
 				gain *= I.amount
+
 		if (A.reagents)
 			gain += min(A.reagents.total_volume/4, 50)
-		else if (istype(A, /obj/machinery/nuclearbomb))
+
+		if (istype(A, /obj/machinery/nuclearbomb))
 			gain += 5000 //ten clowns
 			playsound_global(clients, 'sound/machines/singulo_start.ogg', 50)
 			SPAWN(1 SECOND)

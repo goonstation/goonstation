@@ -2663,18 +2663,31 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	New()
 		. = ..()
 
+	//why
 	proc/put_item(var/obj/item/W, var/mob/user)
-		W.set_loc(src)
-		user.u_equip(W)
-		for (W in src)
-			for (var/obj in required_objects)
+		var/times_checked = 0
+		for (var/obj in required_objects)
+			if (times_checked < length(required_objects))
 				if (istype(W, obj))
-					return
+					W.set_loc(src)
+					user.u_equip(W)
+					times_checked = 0
+					boutput(user, "check succsess")
+					. = TRUE
+					break
 				else
-					sleep(2 SECONDS)
-					W.set_loc(src.loc)
-					src.visible_message("<span class='alert'><b>The chute spits [W] out! Looks like it doesn't accept it..</b></span>")
-					return
+					times_checked += 1
+					boutput(user, "checked")
+			else
+				. = FALSE
+				break
+		if (!.)
+			W.set_loc(src)
+			user.u_equip(W)
+			sleep(2 SECONDS)
+			W.set_loc(src.loc)
+			times_checked = 0
+			return
 
 	proc/check_contents()
 		var/items_collected = 0
@@ -2692,9 +2705,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	attackby(obj/item/W, mob/user)
 		if(src.functioning)
-			put_item(W, user)
-			check_contents()
-			return
+			if (!ON_COOLDOWN(src, "item_insert_cooldown", 3 SECONDS))
+				put_item(W, user)
+				check_contents()
+				return
+			else
+				boutput(user, "<span class='warning'><b>You have to wait before you put another item in!</b></span>")
+				return
 		else
 			boutput(user, "<span class='alert'><b>\The [src] doesn't seem to work!</b></span>")
 			return
@@ -2978,44 +2995,43 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 				playsound(src, 'sound/ambience/morrigan/steamrelease.ogg', 70, 1)
 				ON_COOLDOWN(src, "rack delay", 1 SECONDS)
 //rifle unused but there for completion reasons i'm sick please help - rex
-TYPEINFO(/obj/item/gun/energy/laserifle)
+TYPEINFO(/obj/item/gun/energy/laser_rifle)
 	mats = null
-/obj/item/gun/energy/laserifle
+/obj/item/gun/energy/laser_rifle
 	name = "Mod. 201 Mimosa"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 	icon = 'icons/obj/adventurezones/morrigan/weapons/gunlarge.dmi'
-	icon_state = "laserifle"
+	icon_state = "laser_rifle"
 	desc = "The lastest product from Morrigan, a self charging rifle made for peace..or..war keeping with not stolen technology."
-	item_state = "laserifle"
+	item_state = "laser_rifle"
 	force = 10
 	two_handed = TRUE
 	can_swap_cell = FALSE
 	rechargeable = FALSE
 	uses_charge_overlay = TRUE
-	charge_icon_state = "laserifle"
+	charge_icon_state = "laser_rifle"
 	spread_angle = 3
 
 	New()
-		set_current_projectile(new/datum/projectile/laser/laseriflelethal)
-		projectiles = list(current_projectile,new/datum/projectile/laser/laseriflelesslethal)
+		set_current_projectile(new /datum/projectile/laser/rifle)
+		projectiles = list(current_projectile, new /datum/projectile/laser/rifle/stun)
 		..()
 
 	update_icon()
-		if (current_projectile.type == /datum/projectile/laser/laseriflelethal)
-			icon = 'icons/obj/adventurezones/morrigan/weapons/gunlarge.dmi'
-			charge_icon_state = "laserifle"
+		if (istype_exact(current_projectile, /datum/projectile/laser/rifle))
+			charge_icon_state = "laser_rifle"
 			muzzle_flash = "muzzle_flash_laser"
-			item_state = "laserifle"
-		else if (current_projectile.type == new/datum/projectile/laser/laseriflelesslethal)
-			icon = 'icons/obj/adventurezones/morrigan/weapons/gunlarge.dmi'
-			charge_icon_state = "laserifleless"
+			item_state = "laser_rifle"
+		else
+			charge_icon_state = "laser_rifleless"
 			muzzle_flash = "muzzle_flash_waveg"
-			item_state = "laserless"
+			item_state = "laser_rifleless"
 		..()
+
 	attack_self(var/mob/M)
 		..()
-		UpdateIcon()
+		src.UpdateIcon()
 		M.update_inhands()
 
 
@@ -3290,9 +3306,8 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 		if(proj.reflectcount >= 2)
 			elecflash(get_turf(hit),radius=0, power=1, exclude_center = 0)
 
-/datum/projectile/laser/laseriflelethal
+/datum/projectile/laser/rifle
 	name = "Lethal Mode"
-	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "redbolt"
 	shot_sound = 'sound/weapons/laserifle.ogg'
 	cost = 45
@@ -3302,9 +3317,8 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 	damage_type = D_ENERGY
 	hit_ground_chance = 30
 
-/datum/projectile/laser/laseriflelesslethal
+/datum/projectile/laser/rifle/stun
 	name = "Less-Lethal Mode"
-	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "laserifleless"
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	cost = 35
@@ -3312,8 +3326,6 @@ TYPEINFO(/obj/item/gun/energy/laserifle)
 	damage = 7
 	shot_number = 1
 	sname = "less-lethal"
-	damage_type = D_ENERGY
-	hit_ground_chance = 30
 
 	on_hit(atom/hit, angle, obj/projectile/O)
 		. = ..()

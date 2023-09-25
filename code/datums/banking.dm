@@ -66,8 +66,8 @@
 	proc/default_wages()
 
 		station_budget =      0
-		shipping_budget = 30000
-		research_budget = 20000
+		shipping_budget = PAY_EXECUTIVE*5
+		research_budget = PAY_EXECUTIVE*10
 		total_stipend = station_budget + shipping_budget + research_budget
 
 		// This is gonna throw up some crazy errors if it isn't done right!

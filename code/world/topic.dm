@@ -533,7 +533,7 @@
 					logTheThing(LOG_ADMIN, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"admin")]: [msg]")
 					logTheThing(LOG_DIARY, null, "Discord: [nick] Mentor PM'd [constructTarget(M,"diary")]: [msg]", "admin")
 
-					var/M_keyname = key_name(M, ,0, 0, 1, additional_url_data="&msgid=[msgid]")
+					var/M_keyname = key_name(M, 0, 0, 1, additional_url_data="&msgid=[msgid]")
 					for (var/client/C)
 						if (C.can_see_mentor_pms() && C.key != M.key)
 							if(C.holder)
