@@ -1,5 +1,9 @@
 
 (t)mon sep 25 23
+(u)Cheffie
+(p)15842
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)Crates ordered from cargo containing critters now need to be pried open upon arrival.
 (u)LeahTheTech
 (*)Attacks which are entirely blocked by armour will no longer play their attack sound. This makes it much more obvious when your attack is doing nothing.
 (u)UnfunnyPerson
