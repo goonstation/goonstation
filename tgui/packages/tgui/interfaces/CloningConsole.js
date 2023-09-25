@@ -68,10 +68,12 @@ export const CloningConsole = (props, context) => {
     cloneHack,
     clonesForCash,
     cloningWithRecords,
+    allowedToDelete,
   } = data;
 
   // N.B. uses `deletionTarget` that is shared with Records component
   const [deletionTarget, setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
+  const [viewingNote, setViewingNote] = useLocalState(context, 'viewingNote', '');
   const [tab, setTab] = useSharedState(context, 'tab', Tab.Records);
 
   if (!cloningWithRecords && tab === Tab.Records) {
@@ -123,6 +125,34 @@ export const CloningConsole = (props, context) => {
                 No
               </Button>
             </Box>
+          </Modal>
+        )}
+        {viewingNote && (
+          <Modal
+            mx={7}
+            width={25}
+            fontSize="15px"
+          >
+            <Button
+              fontSize="26px"
+              color="blue"
+              onClick={() => setViewingNote('')}
+              style={{ position: "absolute", top: "5px", right: "5px" }}
+            >
+              X
+            </Button>
+            {viewingNote.note}
+            {!!allowedToDelete && (
+              <Button
+                color="bad"
+                icon="trash"
+                mx={1}
+                onClick={() => {
+                  setViewingNote('');
+                  act("deleteNote", { ckey: viewingNote.ckey });
+                }}
+              />
+            )}
           </Modal>
         )}
         <Stack vertical fill>
@@ -383,6 +413,7 @@ const Records = (props, context) => {
   const records = data.cloneRecords || [];
   // N.B. uses `deletionTarget` that is shared with CloningConsole component
   const [, setDeletionTarget] = useLocalState(context, 'deletionTarget', '');
+  const [viewingNote, setViewingNote] = useLocalState(context, 'viewingNote', '');
 
   return (
     <Flex direction="column" height="100%">
@@ -419,7 +450,7 @@ const Records = (props, context) => {
               </Flex.Item>
               <Flex.Item
                 className="cloning-console__head__item"
-                style={{ 'width': '155px' }}
+                style={{ 'width': '180px' }}
               >
                 Actions
               </Flex.Item>
@@ -481,13 +512,21 @@ const Records = (props, context) => {
                     <Flex.Item
                       align="baseline"
                       className="cloning-console__body__item"
-                      style={{ 'width': '155px' }}
+                      style={{ 'width': '180px' }}
                     >
                       {!!allowedToDelete && (
-                        <Button
-                          icon="trash"
-                          color="bad"
-                          onClick={() => setDeletionTarget(record.ckey)} />
+                        <>
+                          <Button
+                            icon="trash"
+                            color="bad"
+                            onClick={() => setDeletionTarget(record.ckey)} />
+                          <Button
+                            icon="pencil"
+                            color="blue"
+                            onClick={() => act('editNote', { ckey: record.ckey })}
+                            tooltip="Edit note"
+                          />
+                        </>
                       )}
                       {!!disk && (
                         <Button
@@ -516,6 +555,15 @@ const Records = (props, context) => {
                         onClick={() => act('clone', { ckey: record.ckey })}>
                         Clone
                       </Button>
+                      {!!record.note && (
+                        <Button
+                          color="blue"
+                          circular
+                          icon="circle-exclamation"
+                          onClick={() => setViewingNote({ note: record.note, ckey: record.ckey })}
+                          tooltip="View note"
+                        />
+                      )}
                     </Flex.Item>
                   </Flex.Item>
                 ))}

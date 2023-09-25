@@ -74,8 +74,9 @@ var/datum/signal_holder/global_signal_holder
 	parent = raw_args[1]
 	var/list/arguments = raw_args.Copy(2)
 	if(Initialize(arglist(arguments)) == COMPONENT_INCOMPATIBLE)
+		var/datum/parent_value = src.parent //qdel nulls parent!!!
 		qdel(src, TRUE, TRUE)
-		CRASH("Incompatible [type] assigned to a [parent.type]! args: [json_encode(arguments)]")
+		CRASH("Incompatible [type] assigned to a [parent_value.type]! args: [json_encode(arguments)]")
 
 	_JoinParent(parent)
 

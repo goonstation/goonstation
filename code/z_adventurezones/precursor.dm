@@ -628,7 +628,7 @@
 	density = 1
 	anchored = ANCHORED
 	opacity = 1
-	dir = 4 // facing right or left
+	dir = EAST // facing right or left
 	var/active = 0
 	var/id = 1
 	var/obj/precursor_puzzle/controller/linked_controller = null

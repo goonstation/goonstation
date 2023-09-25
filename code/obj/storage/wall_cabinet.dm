@@ -38,15 +38,18 @@ TYPEINFO(/obj/item/storage/wall)
 			src.storage.add_contents(new /obj/item/storage/firstaid/oxygen(src))
 		if (prob(10))
 			src.storage.add_contents(new /obj/item/tank/air(src))
-		if (prob(2))
+		if (prob(4))
 			src.storage.add_contents(new /obj/item/tank/oxygen(src))
 		if (prob(2))
 			src.storage.add_contents(new /obj/item/clothing/mask/gas/emergency(src))
 		for (var/i=rand(2,3), i>0, i--)
+			src.storage.add_contents(new /obj/item/tank/emergency_oxygen(src))
 			if (prob(40))
 				src.storage.add_contents(new /obj/item/tank/mini_oxygen(src))
 			if (prob(40))
 				src.storage.add_contents(new /obj/item/clothing/mask/breath(src))
+
+		return 1
 
 /obj/item/storage/wall/fire
 	name = "firefighting supplies"
@@ -257,7 +260,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/under/gimmick/dolan = 1,
 	/obj/item/clothing/under/gimmick/butler = 1,
 	/obj/item/clothing/under/misc/mobster = 1,
-	/obj/item/clothing/under/gimmick/chaps= 1,
+	/obj/item/clothing/suit/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
 /obj/item/storage/wall/clothingrack/clothes_shooting_range //for the shooting range prefab; Consumerism.
@@ -266,7 +269,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/clothing/suit/wintercoat = 1,
 	/obj/item/clothing/suit/hitman = 1,
 	/obj/item/clothing/suit/johnny_coat = 1,
-	/obj/item/clothing/under/gimmick/chaps= 1,
+	/obj/item/clothing/suit/chaps= 1,
 	/obj/item/clothing/under/gimmick/shirtnjeans = 1)
 
 obj/item/storage/wall/clothingrack/hatrack

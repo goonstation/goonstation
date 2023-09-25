@@ -58,6 +58,8 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 					current_account.groups += G
 
 	disposing()
+		if (beaker)
+			REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 		beaker = null
 		if (current_account.user_id == src)
 			current_account.user_id = null
@@ -136,7 +138,8 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			ejected_beaker = src.beaker
 			user.put_in_hand_or_drop(ejected_beaker)
 
-		src.beaker =  B
+		src.beaker = B
+		APPLY_ATOM_PROPERTY(B, PROP_ITEM_IN_CHEM_DISPENSER, src)
 		if(!B.cant_drop)
 			user.drop_item()
 			if(!B.qdeled)
@@ -234,6 +237,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		if (src.health <= 0)
 			if (beaker)
 				beaker.set_loc(src.output_target ? src.output_target : get_turf(src))
+				REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 				beaker = null
 			src.visible_message("<span class='alert'><b>[name] falls apart into useless debris!</b></span>")
 			robogibs(src.loc)
@@ -245,6 +249,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		// borgs and people with item arms don't insert the beaker into the machine itself
 		// but whenever something would happen to the dispenser and the beaker is far it should disappear
 		if(beaker && BOUNDS_DIST(beaker, src) > 0)
+			REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 			beaker = null
 			src.UpdateIcon()
 
@@ -321,19 +326,21 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 							beaker.reagents?.handle_reactions()
 						else
 							beaker.set_loc(src.loc)
+					REMOVE_ATOM_PROPERTY(beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 					beaker = null
 					src.UpdateIcon()
 					. = TRUE
 				else
-					var/obj/item/reagent_containers/beaker = usr.equipped()
-					if (istype(beaker, glass_path))
-						if (beaker.current_lid)
-							boutput(ui.user, "<span class='alert'>You cannot put the [beaker.name] in the [src.name] while it has a lid on it.</span>")
+					var/obj/item/reagent_containers/newbeaker = usr.equipped()
+					if (istype(newbeaker, glass_path))
+						if (newbeaker.current_lid)
+							boutput(ui.user, "<span class='alert'>You cannot put the [newbeaker.name] in the [src.name] while it has a lid on it.</span>")
 							return
-						if(!beaker.cant_drop) // borgs and item arms
+						if(!newbeaker.cant_drop) // borgs and item arms
 							usr.drop_item()
-							beaker.set_loc(src)
-						src.beaker = beaker
+							newbeaker.set_loc(src)
+						src.beaker = newbeaker
+						APPLY_ATOM_PROPERTY(src.beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 						src.UpdateIcon()
 						. = TRUE
 			if ("remove")

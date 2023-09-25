@@ -17,7 +17,6 @@
 
 /mob/living/carbon/disposing()
 	STOP_TRACKING
-	stomach_contents = null
 	..()
 
 /mob/living/carbon/Move(NewLoc, direct)
@@ -65,35 +64,17 @@
 			if(src.getStatusDuration("slowed")< 10 SECONDS)
 				src.changeStatus("slowed", 2 SECONDS)
 
-/mob/living/carbon/relaymove(var/mob/user, direction)
-	if(user in src.stomach_contents)
-		if(prob(40))
-			for(var/mob/M in hearers(4, src))
-				if(M.client)
-					M.show_message(text("<span class='alert'>You hear something rumbling inside [src]'s stomach...</span>"), 2)
-			var/obj/item/I = user.equipped()
-			if(I?.force)
-				var/d = rand(round(I.force / 4), I.force)
-				src.TakeDamage("chest", d, 0)
-				for(var/mob/M in viewers(user, null))
-					if(M.client)
-						M.show_message(text("<span class='alert'><B>[user] attacks [src]'s stomach wall with the [I.name]!</span>"), 2)
-				playsound(user.loc, 'sound/impact_sounds/Slimy_Hit_3.ogg', 50, 1)
-
-				if(prob(get_brute_damage() - 50))
-					logTheThing(LOG_COMBAT, user, "gibs [constructTarget(src,"combat")] breaking out of their stomach at [log_loc(src)].")
-					src.gib()
+/mob/living/carbon/relaymove(mob/user, direction, delay, running)
+	src.organHolder?.stomach?.relaymove(user, direction, delay, running)
 
 /mob/living/carbon/gib(give_medal, include_ejectables)
-	for(var/mob/M in src)
-		if(M in src.stomach_contents)
-			src.stomach_contents.Remove(M)
-		if (!isobserver(M) && !isintangible(M))
-			src.visible_message("<span class='alert'><B>[M] bursts out of [src]!</B></span>")
-		else if (istype(M, /mob/dead/target_observer))
-			M.cancel_camera()
+	for (var/mob/dead/target_observer/obs in src)
+		obs.cancel_camera()
 
+	for(var/mob/M in src.organHolder?.stomach?.contents)
+		src.visible_message("<span class='alert'><B>[M] bursts out of [src]!</B></span>")
 		M.set_loc(src.loc)
+
 	. = ..(give_medal, include_ejectables)
 
 /mob/living/carbon/proc/urinate()

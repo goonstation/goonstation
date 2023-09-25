@@ -196,6 +196,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_get_type,
 		/client/proc/cmd_addComponentType,
 		/client/proc/cmd_removeComponentType,
+		/client/proc/cmd_replace_type,
 		/client/proc/cmd_lightsout,
 
 		/client/proc/vpn_whitelist_add,

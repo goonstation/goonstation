@@ -390,6 +390,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench."
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "ladder_on"
+	event_handler_flags = IMMUNE_TRENCH_WARP
 
 	var/obj/sea_ladder_deployed/linked_ladder
 	var/obj/item/sea_ladder/og_ladder_item = 0

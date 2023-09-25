@@ -873,16 +873,16 @@
 "Fi" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/sensor/mining{
-	pixel_y = 2;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 2
 	},
 /obj/item/shipcomponent/secondary_system/orescoop{
-	pixel_y = 9;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 9
 	},
 /obj/item/shipcomponent/secondary_system/lock/pw_id{
-	pixel_y = 2;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
@@ -1095,6 +1095,10 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
@@ -1509,10 +1513,7 @@
 	})
 "Xr" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 3;
-	pixel_x = 4
-	},
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "Xs" = (
