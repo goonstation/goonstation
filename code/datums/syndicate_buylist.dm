@@ -1013,7 +1013,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = "Reflective Glasses"
 	desc = "A randomly selected pair of glasses, with built-in sun and flash protection, covered by their 100%, one-way reflective shine!"
 	item = /obj/item/clothing/glasses/sunglasses/reflective
-	cost = 2
+	cost = 1
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP | UPLINK_HEAD_REV
 
 /////////////////////////////////////////// Surplus-exclusive items //////////////////////////////////////////////////
