@@ -392,6 +392,16 @@ TYPEINFO(/atom)
 	// TODO: actual component signal here
 	// also TODO: use this proc instead of setting icon state directly probably
 
+/// Checks if the icon state in question exists. If it does it sets it and returns true. Otherwise returns false and doesn't change the icon state.
+/// You can supply the new_icon argument to also override src.icon. This will again only be overriden if the icon state + icon combination exists.
+/// Not intended for normal use. Current intended use is stuff like `src.try_set_icon_state(src.icon_state + "-autumn")` for seasonal modifiers etc.
+/atom/proc/try_set_icon_state(new_state, new_icon=null)
+	if(src.is_valid_icon_state(new_state, new_icon))
+		src.icon = new_icon
+		src.set_icon_state(new_state)
+		return TRUE
+	return FALSE
+
 /atom/proc/set_dir(var/new_dir)
 #ifdef COMSIG_ATOM_DIR_CHANGED
 	if (src.dir != new_dir)

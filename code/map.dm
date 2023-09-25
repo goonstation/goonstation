@@ -1062,7 +1062,13 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
+	default_shuttle = "east_density"
 	escape_dir = EAST
+
+	job_limits_override = list(
+		/datum/job/civilian/cyborg = 0,
+	)
+
 
 	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2

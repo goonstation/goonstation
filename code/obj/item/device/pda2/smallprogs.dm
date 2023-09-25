@@ -828,15 +828,30 @@ Code:
 
 		last_transmission = ticker.round_elapsed_ticks
 		var/mailgroup
+		var/alert_color
+		var/alert_title
+		var/alert_sound
 		switch (round(mailgroupNum))
 			if (-INFINITY to 1)
 				mailgroup = MGD_MEDBAY
+				alert_color = "#337296"
+				alert_title = "Medical"
+				alert_sound = 'sound/items/medical_alert.ogg'
 			if (2)
 				mailgroup = MGO_ENGINEER
+				alert_color = "#a8732b"
+				alert_title = "Engineering"
+				alert_sound = 'sound/items/engineering_alert.ogg'
 			if (3)
 				mailgroup = MGD_SECURITY
+				alert_color = "#a30000"
+				alert_title = "Security"
+				alert_sound = 'sound/items/security_alert.ogg'
 			if (4 to INFINITY)
 				mailgroup = MGO_JANITOR
+				alert_color = "#993399"
+				alert_title = "Janitor"
+				alert_sound = 'sound/items/janitor_alert.ogg'
 
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.master
@@ -856,9 +871,9 @@ Code:
 		src.post_signal(signal)
 
 		if(isliving(usr) && !remote)
-			playsound(src.master, 'sound/items/security_alert.ogg', 60)
+			playsound(src.master, alert_sound, 60)
 			var/map_text = null
-			map_text = make_chat_maptext(usr, "Emergency alert sent.", "font-family: 'Helvetica'; color: #D30000; font-size: 7px;", alpha = 215)
+			map_text = make_chat_maptext(usr, "[alert_title] Emergency alert sent.", "font-family: 'Helvetica'; color: [alert_color]; font-size: 7px;", alpha = 215)
 			for (var/mob/O in hearers(usr))
 				O.show_message(assoc_maptext = map_text)
 			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>",

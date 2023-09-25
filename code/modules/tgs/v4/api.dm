@@ -213,8 +213,7 @@
 	export_lock = TRUE
 
 	last_interop_response = null
-	fdel(server_commands_json_path)
-	text2file(json, server_commands_json_path)
+	rustg_file_write(json, server_commands_json_path)
 
 	for(var/I = 0; I < EXPORT_TIMEOUT_DS && !last_interop_response; ++I)
 		sleep(1)

@@ -23,6 +23,7 @@
 	holder.vis_locs |= src
 	particle_refs[key] = holder
 	holder.appearance_flags |= effect_appearance_flags
+	return holder
 
 /atom/proc/ClearSpecificParticles(key)
 	if(!key)

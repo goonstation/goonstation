@@ -54,7 +54,7 @@
 		src.next_id++
 		state = STATE_DEPLOYING
 		..()
-		name = "Blob AI #[ai_id]"
+		name = "blob AI #[ai_id]"
 		real_name = name
 		deploy = locate(/datum/blob_ability/plant_nucleus) in abilities
 

@@ -658,3 +658,15 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)
+
+/obj/item/yoyo
+	name = "Atomic Yo-Yo"
+	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "yoyo"
+	item_state = "yoyo"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROPE)

@@ -113,7 +113,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	///This is what you use to change the temp of a reagent holder.
 	///Do not manually change the reagent unless you know what youre doing.
-	proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0)
+	proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0, cannot_be_cooled = FALSE)
 		if (!src.can_be_heated)
 			return
 		last_temp = total_temperature
@@ -140,6 +140,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/change = new_temperature - total_temperature
 
 		if(change < 0)
+			if(cannot_be_cooled)
+				return
 			change = -clamp(abs(change),change_min,change_cap)
 		else
 			change = clamp(abs(change),change_min,change_cap)
@@ -216,8 +218,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder")
-				continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_name = current.name
@@ -232,7 +232,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_id = current.id
@@ -240,12 +239,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		return largest_id
 
-	proc/get_master_color(var/ignore_smokepowder = 0)
+	proc/get_master_color()
 		var/largest_volume = 0
 		var/the_color = rgb(255,255,255,255)
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder" && ignore_smokepowder) continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_volume = current.volume
@@ -258,7 +256,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_volume = current.volume
@@ -271,7 +268,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_block_slippy = current.block_slippy
