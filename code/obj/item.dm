@@ -1673,3 +1673,18 @@ ABSTRACT_TYPE(/obj/item)
 /// attempt unique functionality when item is held in hand and and using the equip hotkey
 /obj/item/proc/try_specific_equip(mob/user)
 	return FALSE
+
+///human mobs covering the item with their bodies i.e. falling on a grenade
+/obj/item/proc/get_covering_mobs(pick_one_for_me = FALSE)
+	if (src.density || !istype(src.loc, /turf)) // item must be openly on a tile
+		return list()
+	var/turf/origin = src.loc
+	var/list/heroes = list()
+	for (var/mob/living/carbon/human/H in origin.contents) // mob must be on the same tile
+		if(!is_incapacitated(H) && H.lying && H.hasStatus("blocking"))
+			heroes.Add(H)
+	if (!length(heroes))
+		return list()
+	if (pick_one_for_me)
+		return pick(heroes)
+	return heroes
