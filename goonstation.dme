@@ -235,6 +235,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\datums\components\send_to_target_mob.dm"
 #include "code\datums\components\simplelight.dm"
 #include "code\datums\components\smartgun.dm"
+#include "code\datums\components\smartgun_homing.dm"
 #include "code\datums\components\sniper_wallpierce.dm"
 #include "code\datums\components\snowballs.dm"
 #include "code\datums\components\teleport_on_enter.dm"
