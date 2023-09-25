@@ -47,18 +47,15 @@
 	var/emagged = FALSE
 
 	/// Wire hacking component defintion
-	var/static/datum/wirePanel/panelDefintion/panel_def = new /datum/wirePanel/panelDefintion(
-		controls=list(WIRE_CONTROL_ACCESS, WIRE_CONTROL_GROUND, WIRE_CONTROL_POWER_A, WIRE_CONTROL_INERT),
-		color_pool=list("puce", "mauve", "ochre", "slate")
-	)
+	var/static/datum/wirePanel/panelDefintion/panel_def = new /datum/wirePanel/panelDefintion/weapon_stand
 
 /obj/machinery/weapon_stand/New()
 	..()
 	if (has_wire_panel)
 		src.flags |= TGUI_INTERACTIVE
 		AddComponent(/datum/component/wirePanel, src.panel_def)
-		RegisterSignal(src, COMSIG_WPANEL_SET_COVER, .proc/set_cover)
-		RegisterSignal(src, COMSIG_WPANEL_MOB_WIRE_ACT, .proc/mob_wire_act)
+		RegisterSignal(src, COMSIG_WPANEL_SET_COVER, PROC_REF(set_cover))
+		RegisterSignal(src, COMSIG_WPANEL_MOB_WIRE_ACT, PROC_REF(mob_wire_act))
 
 	if(!recharges_contents)
 		UnsubscribeProcess()
@@ -80,7 +77,7 @@
 	if (src.amount >= src.max_amount)
 		boutput(user, "You can't fit anything else in this rack.")
 		return
-	if (W.cant_drop == 1)
+	if (W.cant_drop)
 		var/mob/living/carbon/human/H = user
 		H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
 		boutput(user, "The [src]'s automated loader wirrs and rips off [H]'s arm!")
@@ -115,16 +112,10 @@
 			ui = new(user, src, "WirePanelWindow", src.name)
 			ui.open()
 
-/obj/machinery/weapon_stand/ui_static_data(mob/user)
-	. = ..()
-	.["wirePanelTheme"] = list(
-		"wireTheme" = WPANEL_THEME_PHYSICAL,
-		"controlTheme" = WPANEL_THEME_PHYSICAL,
-	)
 
 /obj/machinery/weapon_stand/proc/check_shock(mob/user)
-	var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
-	if (!HAS_FLAG(active_controls, WIRE_CONTROL_GROUND))
+	var/hacked_controls = SEND_SIGNAL(src, COMSIG_WPANEL_HACKED_CONTROLS)
+	if (HAS_FLAG(hacked_controls, WIRE_CONTROL_GROUND))
 		user.shock(src, 7500, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0)
 
 /obj/machinery/weapon_stand/attack_hand(mob/user)
@@ -135,14 +126,14 @@
 	src.add_fingerprint(user)
 
 	if (src.has_wire_panel)
-		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_STATE_CONTROLS)
-		if (!HAS_FLAG(active_controls, WIRE_CONTROL_POWER_A))
+		var/hacked_controls = SEND_SIGNAL(src, COMSIG_WPANEL_HACKED_CONTROLS)
+		if (hacked_controls && HAS_FLAG(hacked_controls, WIRE_CONTROL_POWER_A))
 			boutput(user, "<span class='alert'>Without power, the locks can't disengage!</span>")
 			return
 
 		check_shock(user)
 
-		if (!HAS_FLAG(active_controls, WIRE_CONTROL_ACCESS))
+		if (HAS_FLAG(hacked_controls, WIRE_CONTROL_ACCESS))
 			bypass_access = TRUE
 
 	// check access: authorized, emagged, or the access control is broken)
@@ -186,7 +177,7 @@
 	if (!src.emagged)
 		if(user)
 			boutput(user, "<span class='notice'>You disable the [src]'s cardlock!</span>")
-		src.emagged = 1
+		src.emagged = TRUE
 		src.updateUsrDialog()
 		return 1
 	else
@@ -230,7 +221,7 @@
 	max_amount = 3
 	stand_type = "taser_charge_rack"
 	contained_weapon_name = "security weapon"
-	recharges_contents = 1
+	recharges_contents = TRUE
 
 	valid_item(obj/item/I)
 		return(istype(I, /obj/item/gun/energy/taser_gun) ||\
@@ -242,7 +233,6 @@
 	empty
 		icon_state = "taser_rack0"
 		amount = 0
-
 
 /obj/machinery/weapon_stand/egun_rack
 	name = "energy gun rack"
@@ -262,7 +252,7 @@
 	amount = 3
 	max_amount = 3
 	stand_type = "egun_charge_rack"
-	recharges_contents = 1
+	recharges_contents = TRUE
 
 /obj/machinery/weapon_stand/shotgun_rack
 	name = "shotgun rack"
@@ -289,4 +279,13 @@
 	has_wire_panel = TRUE
 
 	recharger
-		recharges_contents = 1
+		recharges_contents = TRUE
+
+/datum/wirePanel/panelDefintion/weapon_stand
+	wire_definition = list(
+		list("puce", WIRE_CONTROL_ACCESS, WIRE_ACT_CUT_PULSE, WIRE_ACT_MEND_PULSE),
+		list("mauve", WIRE_CONTROL_GROUND, WIRE_ACT_CUT_PULSE, WIRE_ACT_MEND_PULSE),
+		list("ochre", WIRE_CONTROL_POWER, WIRE_ACT_CUT_PULSE, WIRE_ACT_MEND_PULSE),
+		list("slate", WIRE_CONTROL_INERT, WIRE_ACT_CUT_PULSE, WIRE_ACT_MEND_PULSE)
+	)
+

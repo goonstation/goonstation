@@ -9,8 +9,8 @@ export const WirePanelControls = {
   "WIRE_CONTROL_SILICON": (1<<5),
   "WIRE_CONTROL_ACCESS": (1<<6),
   "WIRE_CONTROL_SAFETY": (1<<7),
-  "WIRE_CONTROL_RESTRICT": (1<<8),
-  "WIRE_CONTROL_ACTIVATE": (1<<9),
+  "WIRE_CONTROL_LIMITER": (1<<8),
+  "WIRE_CONTROL_TRIGGER": (1<<9),
   "WIRE_CONTROL_RECEIVE": (1<<10),
   "WIRE_CONTROL_TRANSMIT": (1<<11),
 };
@@ -25,8 +25,8 @@ export const WirePanelControlLabels = {
   32: "AI Control",
   64: "ID Scanner",
   128: "Safety",
-  256: "Restrict",
-  512: "Activation",
+  256: "Limiter",
+  512: "Trigger",
   1024: "Receive",
   2048: "Transmit",
 };
@@ -46,16 +46,4 @@ export const WirePanelCoverStatus = {
   "WPANEL_COVER_CLOSED": 1,
   "WPANEL_COVER_BROKEN": 2,
   "WPANEL_COVER_LOCKED": 3,
-};
-
-// Wire Panel Component: Indicator Pattern
-export const WirePanelPatterns = {
-  "WPANEL_PATTERN_ON": "on",
-  "WPANEL_PATTERN_OFF": "off",
-  "WPANEL_PATTERN_BLINK": "blink",
-};
-
-export const WirePanelThemes = {
-  "WPANEL_THEME_TEXT": 0,
-  "WPANEL_THEME_PHYSICAL": 1,
 };

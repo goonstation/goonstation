@@ -148,6 +148,10 @@
 	icon_state = "engine_caution_west"
 	},
 /area/devzone)
+"cH" = (
+/obj/machinery/power/apc,
+/turf/simulated/floor,
+/area/devzone)
 "cK" = (
 /obj/forcefield/energyshield/perma{
 	dir = 4
@@ -248,6 +252,10 @@
 	},
 /turf/simulated/floor,
 /area/devzone)
+"eb" = (
+/obj/machinery/vending/pda,
+/turf/simulated/floor/orangeblack,
+/area/devzone)
 "ec" = (
 /turf/simulated/floor/bluewhite{
 	dir = 4
@@ -263,8 +271,16 @@
 /obj/forcefield/energyshield/perma,
 /turf/simulated/floor/engine/vacuum,
 /area/devzone)
+"eh" = (
+/obj/item/assembly/detonator,
+/turf/simulated/floor,
+/area/devzone)
 "el" = (
 /obj/machinery/nanofab/mining,
+/turf/simulated/floor,
+/area/devzone)
+"ep" = (
+/obj/submachine/seed_vendor,
 /turf/simulated/floor,
 /area/devzone)
 "eq" = (
@@ -404,6 +420,10 @@
 	},
 /turf/space,
 /area/devzone)
+"gP" = (
+/obj/machinery/door/airlock/pyro/weapons,
+/turf/simulated/floor/orangeblack,
+/area/devzone)
 "gT" = (
 /obj/machinery/portable_reclaimer,
 /obj/reagent_dispensers/fueltank,
@@ -487,6 +507,10 @@
 	width = 13
 	},
 /turf/space,
+/area/devzone)
+"hO" = (
+/obj/machinery/manufacturer,
+/turf/simulated/floor,
 /area/devzone)
 "hQ" = (
 /obj/machinery/networked/storage/tape_drive{
@@ -741,6 +765,10 @@
 	dir = 1
 	},
 /turf/simulated/floor/engine/glow/blue,
+/area/devzone)
+"kJ" = (
+/obj/machinery/bot/mulebot,
+/turf/simulated/floor,
 /area/devzone)
 "kM" = (
 /obj/cable{
@@ -1084,6 +1112,14 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor,
 /area/devzone)
+"oK" = (
+/obj/machinery/door/airlock,
+/turf/simulated/floor,
+/area/devzone)
+"oM" = (
+/obj/machinery/weapon_stand/shotgun_rack,
+/turf/simulated/floor,
+/area/devzone)
 "oR" = (
 /obj/forcefield/energyshield/perma{
 	dir = 1
@@ -1220,6 +1256,10 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/turf/simulated/floor,
+/area/devzone)
+"qo" = (
+/obj/machinery/vending/jobclothing/catering,
 /turf/simulated/floor,
 /area/devzone)
 "qs" = (
@@ -1410,6 +1450,10 @@
 	name = "Exhaust Vent"
 	},
 /turf/simulated/floor/engine/vacuum,
+/area/devzone)
+"tR" = (
+/obj/machinery/weapon_stand/rifle_rack/recharger,
+/turf/simulated/floor,
 /area/devzone)
 "tS" = (
 /obj/machinery/atmospherics/unary/cryo_cell,
@@ -1886,6 +1930,10 @@
 /obj/machinery/teleport/portal_generator,
 /turf/simulated/floor,
 /area/devzone)
+"AU" = (
+/obj/item/device/radio,
+/turf/simulated/floor,
+/area/devzone)
 "AV" = (
 /obj/machinery/hydro_growlamp,
 /obj/item/reagent_containers/glass/water_pipe{
@@ -1911,6 +1959,14 @@
 /obj/cable{
 	dir = null
 	},
+/turf/simulated/floor,
+/area/devzone)
+"Bl" = (
+/obj/machinery/door/airlock/pyro/engineering/alt,
+/turf/simulated/floor,
+/area/devzone)
+"Bo" = (
+/obj/machinery/nuclearbomb,
 /turf/simulated/floor,
 /area/devzone)
 "Bq" = (
@@ -2144,6 +2200,24 @@
 	allows_vehicles = 0;
 	icon_state = "engine_caution_north"
 	},
+/area/devzone)
+"ES" = (
+/obj/forcefield/energyshield/perma{
+	mouse_opacity = 0;
+	name = "Untouchable Permanent Atmospheric/Liquid Forcefield"
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable/brown,
+/obj/machinery/emitter{
+	dir = 1
+	},
+/obj/cable/brown{
+	icon_state = "0-2"
+	},
+/obj/item/assembly/detonator,
+/obj/item/assembly/detonator,
+/obj/item/assembly/detonator,
+/turf/simulated/floor,
 /area/devzone)
 "EX" = (
 /obj/machinery/atmospherics/unary/cold_sink/freezer,
@@ -2952,6 +3026,10 @@
 	dir = 8
 	},
 /turf/simulated/floor/engine/vacuum,
+/area/devzone)
+"Pp" = (
+/obj/machinery/vending/alcohol,
+/turf/simulated/floor,
 /area/devzone)
 "Pr" = (
 /obj/machinery/atmospherics/pipe/simple/insulated/cold{
@@ -5365,7 +5443,7 @@ Cn
 Cn
 Cn
 Tp
-HB
+ES
 DW
 ZD
 Yf
@@ -5626,8 +5704,8 @@ MY
 qH
 Yx
 ng
-Yx
-Yx
+oM
+tR
 Yx
 Yx
 PQ
@@ -5670,7 +5748,7 @@ qH
 Yx
 ng
 Yx
-Yx
+ep
 Yx
 vf
 AI
@@ -5710,10 +5788,10 @@ MY
 MY
 MY
 qH
-Yx
-ng
-Yx
-Yx
+Zx
+eb
+qo
+Pp
 Yx
 HW
 vu
@@ -5756,7 +5834,7 @@ qH
 Yx
 ng
 Yx
-Yx
+hO
 Yx
 HW
 rz
@@ -5799,7 +5877,7 @@ qH
 Yx
 ng
 Yx
-Yx
+kJ
 Yx
 HW
 Wv
@@ -5840,9 +5918,9 @@ MY
 MY
 qH
 Wg
-ng
-Yx
-Yx
+gP
+Bl
+oK
 Yx
 HW
 rz
@@ -5885,7 +5963,7 @@ qH
 Yx
 ng
 Yx
-Yx
+cH
 Yx
 HW
 vu
@@ -5928,7 +6006,7 @@ qH
 Yx
 ng
 Yx
-Yx
+AU
 Yx
 HW
 rz
@@ -5971,7 +6049,7 @@ qH
 Yx
 ng
 Yx
-Yx
+eh
 Yx
 HW
 Wv
@@ -6014,7 +6092,7 @@ qH
 Yx
 ng
 Yx
-Yx
+Bo
 Yx
 HW
 rz
