@@ -19,7 +19,7 @@
 		var/list/params = list( "parent" = viewport_id, "type" = "map", "pos" = "0,0", "size" = "256,256", "anchor1" = "0,0", "anchor2" = "100,100" )
 		winset(viewer, "map_[viewport_id]", list2params(params))
 		handler = new
-		handler.plane = 0
+		handler.plane = PLANE_BLACKNESS
 		handler.mouse_opacity = 0
 		handler.screen_loc = "map_[viewport_id]:1,1"
 		winshow( viewer, viewport_id, 1 )

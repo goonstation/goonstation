@@ -48,6 +48,7 @@
 	name = "N light switch";
 	pixel_y = 24
 	},
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/orangeblack/side{
 	dir = 1
 	},
@@ -1002,8 +1003,8 @@
 	dir = 6;
 	name = "autoname -  Mining";
 	network = "Mining";
-	tag = "";
-	pixel_y = 20
+	pixel_y = 20;
+	tag = ""
 	},
 /obj/stool/chair{
 	dir = 4
@@ -1985,8 +1986,8 @@
 	dir = 5;
 	name = "autoname - Mining";
 	network = "Mining";
-	tag = "";
-	pixel_x = -10
+	pixel_x = -10;
+	tag = ""
 	},
 /obj/machinery/vending/coffee,
 /obj/machinery/firealarm{
@@ -2333,8 +2334,8 @@
 "xU" = (
 /obj/machinery/shower{
 	dir = 4;
-	pixel_y = 6;
-	pixel_x = 10
+	pixel_x = 10;
+	pixel_y = 6
 	},
 /obj/machinery/drainage,
 /turf/simulated/floor/black,
@@ -3178,8 +3179,8 @@
 	dir = 5;
 	name = "autoname - Mining";
 	network = "Mining";
-	tag = "";
-	pixel_x = -10
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor/carpet/office,
 /area/mining/hangar)
@@ -3819,8 +3820,8 @@
 	dir = 6;
 	name = "autoname -  Mining";
 	network = "Mining";
-	tag = "";
-	pixel_y = 20
+	pixel_y = 20;
+	tag = ""
 	},
 /turf/simulated/floor/yellow/side{
 	dir = 1
@@ -4422,8 +4423,8 @@
 	dir = 8;
 	name = "autoname - Mining";
 	network = "Mining";
-	tag = "";
-	pixel_x = 10
+	pixel_x = 10;
+	tag = ""
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/noGenerate)
@@ -4493,8 +4494,8 @@
 	dir = 5;
 	name = "autoname - Mining";
 	network = "Mining";
-	tag = "";
-	pixel_x = -10
+	pixel_x = -10;
+	tag = ""
 	},
 /turf/simulated/floor,
 /area/mining/miningoutpost)
@@ -5513,8 +5514,8 @@
 	dir = 4;
 	name = "autoname - Mining";
 	network = "Mining";
-	tag = "";
-	pixel_x = -10
+	pixel_x = -10;
+	tag = ""
 	},
 /obj/machinery/firealarm{
 	dir = 8;

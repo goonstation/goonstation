@@ -74,7 +74,7 @@
 		ircmsg_fah["name"] = "First Adminhelp Notice"
 		// ircmsg_fah["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
 		ircmsg_fah["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
-		ircbot.export_async("help", ircmsg)
+		ircbot.export_async("help", ircmsg_fah)
 
 	ircbot.export_async("help", ircmsg)
 
@@ -139,7 +139,7 @@
 	ircmsg["msgid"] = unique_message_id
 	ircbot.export_async("mentorhelp", ircmsg)
 
-	var/src_keyname = key_name(client.mob, mentor=TRUE, additional_url_data="&msgid=[unique_message_id]")
+	var/src_keyname = key_name(client.mob, 0, 0, 1, additional_url_data="&msgid=[unique_message_id]")
 
 	for (var/client/C)
 		if (C.holder)
@@ -265,38 +265,6 @@
 		if (!( t ))
 			return
 
-		if (user.client.holder)
-			// Sender is admin
-			boutput(M, {"
-				<div style='border: 2px solid red; font-size: 110%;'>
-					<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-						Admin PM from [key_name(user, 0, 0, ckey_and_alt_key = TRUE)]
-					</div>
-					<div style="padding: 0.2em 0.5em;">
-					[t]
-					</div>
-					<div style="font-size: 90%; background: #fcc; font-weight: bold; border-top: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-						<a href=\"byond://?action=priv_msg&target=[user.ckey]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
-					</div>
-				</div>
-				"}, forceScroll=TRUE)
-			M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-			boutput(user, "<span class='ahelp' class=\"bigPM\">Admin PM to-<b>[key_name(M, 0, 0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[user.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
-			M.client.make_sure_chat_is_open()
-		else
-			// Sender is not admin
-			if (M.client && M.client.holder)
-				// But recipient is
-				boutput(M, "<span class='ahelp' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0, ckey_and_alt_key = TRUE)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
-				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-			else
-				boutput(M, "<span class='alert' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0, ckey_and_alt_key = TRUE)]</b>: [t]</span>")
-				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-			boutput(user, "<span class='ahelp' class=\"bigPM\">Reply PM to-<b>[key_name(M, 0, 0)]</b>: [t]</span>")
-
-		logTheThing(LOG_AHELP, user, "<b>PM'd [constructTarget(M,"admin_help")]</b>: [t]")
-		logTheThing(LOG_DIARY, user, "PM'd [constructTarget(M,"diary")]: [t]", "ahelp")
-
 		var/ircmsg[] = new()
 		ircmsg["key"] = user?.client ? user.client.key : ""
 		ircmsg["name"] = stripTextMacros(user.real_name)
@@ -310,6 +278,38 @@
 
 		var/user_keyname = key_name(user, 0, 0, ckey_and_alt_key = TRUE, additional_url_data="&msgid=[unique_message_id]")
 		var/M_keyname = key_name(M, 0, 0, additional_url_data="&msgid=[unique_message_id]")
+
+		if (user.client.holder)
+			// Sender is admin
+			boutput(M, {"
+				<div style='border: 2px solid red; font-size: 110%;'>
+					<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
+						Admin PM from [user_keyname]
+					</div>
+					<div style="padding: 0.2em 0.5em;">
+					[t]
+					</div>
+					<div style="font-size: 90%; background: #fcc; font-weight: bold; border-top: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
+						<a href=\"byond://?action=priv_msg&target=[user.ckey]&msgid=[unique_message_id]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
+					</div>
+				</div>
+				"}, forceScroll=TRUE)
+			M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
+			boutput(user, "<span class='ahelp' class=\"bigPM\">Admin PM to-<b>[M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[user.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+			M.client.make_sure_chat_is_open()
+		else
+			// Sender is not admin
+			if (M.client && M.client.holder)
+				// But recipient is
+				boutput(M, "<span class='ahelp' class=\"bigPM\">Reply PM from-<b>[user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
+			else
+				boutput(M, "<span class='alert' class=\"bigPM\">Reply PM from-<b>[user_keyname]</b>: [t]</span>")
+				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
+			boutput(user, "<span class='ahelp' class=\"bigPM\">Reply PM to-<b>[M_keyname]</b>: [t]</span>")
+
+		logTheThing(LOG_AHELP, user, "<b>PM'd [constructTarget(M,"admin_help")]</b>: [t]")
+		logTheThing(LOG_DIARY, user, "PM'd [constructTarget(M,"diary")]: [t]", "ahelp")
 
 		//we don't use message_admins here because the sender/receiver might get it too
 		for (var/client/CC)

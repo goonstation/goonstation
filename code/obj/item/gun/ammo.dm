@@ -1101,6 +1101,20 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
+/obj/item/ammo/bullets/pod_seeking_missile
+	sname = "pod-seeking missile"
+	name = "pod-seeking missile"
+	desc = "A high-explosive missile, equipped with pod-seeking guidance systems."
+	amount_left = 1
+	max_amount = 1
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "pod_seeking_missile"
+	ammo_type = new /datum/projectile/bullet/homing/pod_seeking_missile
+	ammo_cat = AMMO_ROCKET_RPG
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
+
 /obj/item/ammo/bullets/mrl
 	sname = "MRL rocket pack"
 	name = "MRL rocket pack"
