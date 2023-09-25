@@ -478,7 +478,7 @@ TYPEINFO(/obj/machinery/chem_shaker)
 TYPEINFO(/obj/machinery/chem_shaker/large)
 	mats = 25
 /obj/machinery/chem_shaker/large
-	name = "\improper Large Orbital Shaker"
+	name = "large orbital shaker"
 	icon_state = "orbital_shaker_large"
 	max_containers = 4
 	container_row_length = 2

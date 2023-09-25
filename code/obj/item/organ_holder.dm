@@ -19,7 +19,7 @@
 	var/obj/item/organ/liver = null
 	var/obj/item/organ/spleen = null
 	var/obj/item/organ/pancreas = null
-	var/obj/item/organ/stomach = null
+	var/obj/item/organ/stomach/stomach = null
 	var/obj/item/organ/intestines = null
 	var/obj/item/organ/appendix = null
 	var/obj/item/organ/tail = null
@@ -1589,13 +1589,8 @@
 		linked_organ.take_damage(20, 20) //not safe
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && length(L.stomach_process))
-				boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
-				for(var/obj/item/reagent_containers/food/snacks/bite/B in L.stomach_process)
-					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
-			else
-				boutput(L, "<span class='alert'>Your intestines crunch painfully in your gut. Maybe they would work better with some food to process.</span>")
-				linked_organ.take_damage(30) //owwww
+			boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
+			L.organHolder?.stomach?.handle_digestion()
 
 
 /datum/targetable/organAbility/projectilevomit
@@ -1612,7 +1607,7 @@
 
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && length(L.stomach_process))
+			if (length(L.organHolder.stomach.contents))
 				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
 				SPAWN(0)
 					for (var/i in 1 to 3)
@@ -1620,7 +1615,7 @@
 						O.throw_at(target, 8, 3, bonus_throwforce=5)
 						linked_organ.take_damage(3)
 						sleep(0.1 SECONDS)
-						if(linked_organ.broken || !length(L.stomach_process))
+						if(linked_organ.broken || !length(L.organHolder.stomach.contents))
 							break
 			else
 				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")

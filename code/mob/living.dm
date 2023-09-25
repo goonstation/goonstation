@@ -48,7 +48,6 @@
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
-	var/list/stomach_process = list() //digesting foods
 	var/list/skin_process = list() //digesting patches
 
 	var/sound_burp = 'sound/voice/burp.ogg'
@@ -116,8 +115,6 @@
 	var/list/stamina_mods_regen = list()
 	var/list/stamina_mods_max = list()
 
-	var/list/stomach_contents = list()
-
 	var/last_sleep = 0 //used for sleep_bubble
 
 	can_lie = TRUE
@@ -176,11 +173,8 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as anything in stomach_process)
-		qdel(A)
 	for (var/atom/A as anything in skin_process)
 		qdel(A)
-	stomach_process = null
 	skin_process = null
 
 	for(var/mob/living/intangible/aieye/E in src.contents)
