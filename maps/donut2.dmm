@@ -46174,7 +46174,7 @@
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "tNT" = (
-/obj/machinery/power/tracker,
+/obj/machinery/power/tracker/south,
 /obj/grille/catwalk{
 	dir = 6
 	},
