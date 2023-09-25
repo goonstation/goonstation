@@ -624,15 +624,22 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Botanist", "Apiculturist")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+	run_on_spawn(obj/item/our_item, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/implanter/wasp(our_item.loc)
+
 /datum/syndicate_buylist/traitor/wasp_crossbow
 	name = "Wasp Crossbow"
 	item = /obj/item/gun/energy/wasp
 	cost = 6
 	desc = "Become the member of the Space Cobra Unit you always wanted to be! Spread pain and fear far and wide using this scattershot wasp egg launcher! Through the power of sheer wasp-y fury, this crossbow will slowly recharge between shots and is guaranteed to light up your day with maniacal joy and to bring your enemies no end of sorrow."
-	not_in_crates = 1 //the value of the item goes down significantly for non-botanists since only botanists are treated kindly by wasps
 	vr_allowed = FALSE
 	job = list("Botanist", "Apiculturist")
 	can_buy = UPLINK_TRAITOR
+
+	run_on_spawn(obj/item/our_item, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/implanter/wasp(our_item.loc)
 
 /datum/syndicate_buylist/traitor/fakegrenade
 	name = "Fake Cleaner Grenades"
@@ -844,7 +851,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = "Extra Large Shot Glasses"
 	item = /obj/item/storage/box/glassbox/syndie
 	cost = 2
-	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games! Those glasses also splash all the liquid inside them to whatever they hit when thrown!"
+	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games! Those glasses also force humans they are thrown at to take a partial sip before the glass shatters!"
 	job = list("Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
@@ -1319,7 +1326,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic/head_rev)
 	name = "Revolutionary Sign"
 	item = /obj/item/revolutionary_sign
 	cost = 4
-	desc = "This large revolutionary sign will inspire all nearby revolutionaries and grant them small combat buffs. A rev head needs to be holding this sign for it to have any effect."
+	desc = "This large revolutionary sign will inspire all nearby revolutionaries and grant them small combat buffs. Additionally the sign will channel the fury of nearby revolutionaries to provide greater force when the sign is swung! Best used in conjunction with a horde of angry revolutionaries."
 
 /datum/syndicate_buylist/generic/head_rev/rev_dagger
 	name = "Sacrificial Dagger"

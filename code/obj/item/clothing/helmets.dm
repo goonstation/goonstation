@@ -836,7 +836,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	name = "blast helmet"
 	desc = "A thick head cover made of layers upon layers of space kevlar."
 	icon_state = "EOD"
-	item_state = "tdhelm"
+	item_state = "eod_helmet"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS
 	setupProperties()

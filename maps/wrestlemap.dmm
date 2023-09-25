@@ -1083,8 +1083,8 @@
 /obj/machinery/door_control{
 	id = "medbay_front";
 	name = "Medbay Door Control";
-	pixel_y = 26;
-	pixel_x = -23
+	pixel_x = -23;
+	pixel_y = 26
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -3983,12 +3983,12 @@
 	pixel_y = 16
 	},
 /obj/item/scissors/surgical_scissors{
-	pixel_y = -8;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -8
 	},
 /obj/item/storage/box/health_upgrade_kit{
-	pixel_y = 7;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 7
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/surgery/storage)
@@ -5103,8 +5103,8 @@
 /area/station/medical/dome)
 "cjB" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_x = -32
 	},
 /turf/simulated/floor/black,
@@ -5730,8 +5730,8 @@
 /obj/table/auto,
 /obj/item/wrestlingbell,
 /obj/item/remote/porter/port_a_nanomed{
-	pixel_y = -1;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = -1
 	},
 /obj/item/decoration/flower_vase{
 	pixel_x = 10
@@ -6749,8 +6749,8 @@
 "dat" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -9075,8 +9075,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_x = 32
 	},
 /turf/simulated/floor/redblack{
@@ -12413,17 +12413,17 @@
 	},
 /obj/machinery/phone,
 /obj/item/storage/pill_bottle/salbutamol{
-	pixel_y = -1;
-	pixel_x = 11
+	pixel_x = 11;
+	pixel_y = -1
 	},
 /obj/item/kitchen/food_box/lollipop{
-	pixel_y = 10;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 10
 	},
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -13349,8 +13349,8 @@
 /obj/machinery/cashreg,
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -13509,14 +13509,14 @@
 "fST" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/item/item_box/medical_patches/styptic{
-	pixel_y = 2;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 2
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
@@ -14445,8 +14445,8 @@
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -14968,10 +14968,10 @@
 	dir = 4
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_y = 25;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -15056,8 +15056,8 @@
 "gDD" = (
 /obj/machinery/conveyor/EW{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
@@ -17406,8 +17406,8 @@
 "hGz" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -19155,8 +19155,8 @@
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -19444,21 +19444,21 @@
 "iCB" = (
 /obj/item/paper_bin,
 /obj/item/pen{
-	rand_pos = 0;
 	pixel_x = -5;
-	pixel_y = -3
+	pixel_y = -3;
+	rand_pos = 0
 	},
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/stamp{
-	rand_pos = 0;
-	pixel_y = 6
+	pixel_y = 6;
+	rand_pos = 0
 	},
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -22064,8 +22064,8 @@
 "jEF" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
@@ -22605,8 +22605,8 @@
 "jOS" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/item/organ/appendix,
 /obj/cable{
@@ -27948,8 +27948,8 @@
 	},
 /obj/machinery/cashreg,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/orange,
@@ -28178,8 +28178,8 @@
 /obj/item/clipboard,
 /obj/machinery/light/lamp/black,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/blueblack{
@@ -29710,8 +29710,8 @@
 	pixel_y = 12
 	},
 /obj/item/storage/firstaid/brute{
-	pixel_y = 6;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/emergency_injector/epinephrine,
 /obj/item/reagent_containers/food/drinks/coffee{
@@ -30253,7 +30253,7 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "nlg" = (
-/obj/machinery/space_heater,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/caution/east,
 /area/station/hangar/qm)
 "nlV" = (
@@ -30664,8 +30664,8 @@
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -31439,17 +31439,17 @@
 /obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/clipboard{
-	pixel_y = 1;
-	pixel_x = 14
+	pixel_x = 14;
+	pixel_y = 1
 	},
 /obj/item/item_box/medical_patches/styptic{
-	pixel_y = 4;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 4
 	},
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -31525,8 +31525,8 @@
 "nOZ" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/plasticflaps,
 /obj/cable{
@@ -33858,6 +33858,7 @@
 /area/station/janitor/supply)
 "oPb" = (
 /obj/machinery/light,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "oPj" = (
@@ -41533,8 +41534,8 @@
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/orange,
@@ -41633,8 +41634,8 @@
 "slX" = (
 /obj/machinery/conveyor/NS{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/machinery/door_control{
 	id = "speedboost_crusher";
@@ -43422,8 +43423,8 @@
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/blueblack{
@@ -45048,8 +45049,8 @@
 	},
 /obj/machinery/conveyor/EW{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -45520,9 +45521,9 @@
 /area/station/maintenance/disposal)
 "tZa" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
 	id = "Sleeper_Access";
-	name = "Listening Post";
-	dir = 4
+	name = "Listening Post"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -48161,8 +48162,8 @@
 	},
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -51641,8 +51642,8 @@
 "wFC" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/cable{
 	icon_state = "4-8"

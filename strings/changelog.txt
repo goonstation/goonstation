@@ -1,5 +1,50 @@
 
+(t)mon sep 25 23
+(u)Kubius
+(p)16018
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Updated Nadir's Warrens surgery room to be more suitably Warrens-esque and adjusted plasma vending machine positions.
+(u)Cheffie
+(p)15842
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)Crates ordered from cargo containing critters now need to be pried open upon arrival.
+(u)LeahTheTech
+(*)Attacks which are entirely blocked by armour will no longer play their attack sound. This makes it much more obvious when your attack is doing nothing.
+(u)UnfunnyPerson
+(p)15962
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Revolutionary sign damage scales depending on how many revs are nearby the user
+(u)Emily
+(*)Prices of oxygen/plasma vendors lowered. Remember to turn off your pods' weapons systems when not in use!
+(+)Lowered prices of weapon pod systems at vendors
+(+)Martian vendor no longer infinite
+(u)Mr. Moriarty
+(p)14069
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(*)Replaced the Armoury's 40mm pod-seeking shells with a pod-targeting missile launcher. The launcher will display an aiming reticle over the pod being targeted.
+(t)sun sep 24 23
+(u)UnfunnyPerson
+(p)15982
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Added the wasp crossbow to surplus crates.
+(+)Wasp related items in surplus crates come with a wasp implant. The wasp implant will cause wasps to ignore the user and for the user to explode into wasps on death.
+(u)TealSeer
+(p)16006
+(e)🪲🧱🍝|C-Bug, A-Materials, A-Catering
+(+)Pizza made at the pizza vending machine should no longer taste horrible and make you sick.
+(u)Azrun
+(e)🐑🧶|C-Feature
+(+)Knitting expanded to allow for illegal modding of knitting needles.
+(u)LeahTheTech
+(+)The mixed gamemode should now have slightly more consistent numbers of antagonists.
+(u)Emily
+(*)Pods now require fuel (plasma) to run modules other than basic movement. Be sure to turn off systems when not in use!
+(*)New Plasma Tank vendor available in pod bays. Fill up your tank there!
 (t)sat sep 23 23
+(u)tarmunora
+(*)Ion storm update: a few more things can happen to affected doors, and affected doors/APCs will have ai control disabled. Keep an eye on Beepsky...
+(+)Drinking glasses once more splash their contents on the floor when shattered. Syndicate shot glasses do something else when thrown at a human...
+(+)Made flasks more robust
 (u)Mantwerp
 (p)15934
 (e)🔊|C-Sound
@@ -11,6 +56,12 @@
 (u)Emily
 (*)Total QM Pricing Overhaul. Things now cost a lot less across the board.
 (*)Buying crates is now tied to market prices; you can no longer buy a crate and sell that same crate for profit.
+(*)Rockbox Premium now defaults to purchased; no more fees that aren't from QM/Mining
+(+)Some Commodities are now linked on the shipping market with hard ratios between them; e.g., a sheet is worth one tenth of a material piece.
+(+)If an item goes hot on the market, traders that sell that exact item will run out of it.
+(+)Gragg no longer sells infinite char
+(+)Wishgranters give 25000 instead of 9 million
+(+)Clowns now make 200 spacebux instead of 2
 (t)fri sep 22 23
 (u)aloe
 (+)The empathic thought gene now shows you what people are about to say, if they're currently typing something.

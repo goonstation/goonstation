@@ -57358,6 +57358,9 @@
 /obj/item/instrument/guitar{
 	pixel_y = 7
 	},
+/obj/item/instrument/bass{
+	pixel_y = 4
+	},
 /turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "eaz" = (

@@ -6,23 +6,30 @@
 	var/baseprice = 0 // Baseline selling price for this commodity
 	var/onmarket = 0 // Whether this item is currently being accepted for sale on the shipping market
 	var/indemand = 0 // Whether this item is currently being bought at a high price on the market
-	var/upperfluc = 0 // Highest this item's price can raise in one shift
-	var/lowerfluc = 0 // Lowest this item's price can drop in one shift (negative numbers only)
+	var/upperfluc = null // Highest this item's price can raise in one shift
+	var/lowerfluc = null // Lowest this item's price can drop in one shift (negative numbers only)
 	var/desc = "item" //Description for item
 	var/desc_buy = "There are several buyers interested in acquiring this item." //Description for player selling
 	var/desc_buy_demand = "This item is in high demand." //Descripition for player selling when in high demand
 	var/hidden = 0 //Sometimes traders won't say if they will buy something
 	var/haggleattempts = 0
 	var/amount = -1 // Used for QM traders - how much of a thing they have for sale, unlim if -1
+	// if its in the shopping cart, this is how many you're buying instead
 	///if true, subtypes of this item will be accepted by NPC traders
 	var/subtype_valid = TRUE
-	// if its in the shopping cart, this is how many you're buying instead
+	///are there any commodities linked to this one? used to balance pricing for related commodities e.g. sheets/ore/materials
+	///The key/value pair is commodity_type / ratio of relationship B/A where A is the current commodity's value related to linked commodity B
+	var/list/linked_commodities = null
 
-	New()
+	New(atom/source, var/amount_sell_or_buy = -1)
 		. = ..()
 		baseprice = price
-		upperfluc = baseprice/2
-		lowerfluc = -baseprice/2
+		if(isnull(upperfluc))
+			upperfluc = baseprice/2
+		if(isnull(lowerfluc))
+			lowerfluc = -baseprice/2
+		if(amount_sell_or_buy > 0)
+			src.amount = amount_sell_or_buy
 
 /*
 /datum/commodity/clothing
@@ -86,7 +93,10 @@
 	comtype = /obj/item/sheet
 	desc = "High-quality material sheets."
 	onmarket = 1
-	price = PAY_UNTRAINED/10
+	price = PAY_UNTRAINED/20
+	linked_commodities = list(
+		/datum/commodity/mat_bar = 10,
+	)
 /// pathology
 
 /datum/commodity/mat_bar
@@ -97,6 +107,9 @@
 	desc_buy_demand = "The colony on Regus X has had their main power reactor break down and need this item for repairs"
 	onmarket = 1
 	price = PAY_UNTRAINED/2
+	linked_commodities = list(
+		/datum/commodity/sheet = 0.1,
+	)
 
 /datum/commodity/ore
 	comname = "Rock"
@@ -109,8 +122,8 @@
 	var/value = 1
 
 	New()
-		. = ..()
 		price *= value
+		. = ..()
 
 /datum/commodity/ore/mauxite
 	comname = "Mauxite"
@@ -152,7 +165,7 @@
 	comname = "Uqill"
 	comtype = /obj/item/raw_material/uqill
 	onmarket = 1
-	value = 3
+	value = 5
 
 /datum/commodity/ore/fibrilith // why is this worth a ton of money?? dropping the value to further upset QMs
 	comname = "Fibrilith"
@@ -194,20 +207,20 @@
 	comname = "Erebite"
 	comtype = /obj/item/raw_material/erebite
 	onmarket = 1
-	value = 3
+	value = 5
 
 /datum/commodity/ore/plasmastone
 	comname = "Plasmastone"
 	comtype = /obj/item/raw_material/plasmastone
 	onmarket = 1
-	value = 3
+	value = 5
 
 /datum/commodity/ore/telecrystal
 	comname = "Telecrystal"
 	comtype = /obj/item/raw_material/telecrystal
 	desc = "A large unprocessed telecrystal, a gemstone with space-warping properties."
 	onmarket = 1
-	value = 5
+	value = 7
 
 /datum/commodity/ore/syreline
 	comname = "Syreline"
@@ -343,49 +356,49 @@
 	comname = "Assault Laser Array"
 	comtype = /obj/item/shipcomponent/mainweapon/laser_ass
 	desc = "Usually only seen on cruiser-class ships. How the hell did this end up here?"
-	price = PAY_DONTBUYIT*10
+	price = PAY_DONTBUYIT*2
 
 /datum/commodity/podparts/blackarmor
 	comname = "Strange Armor Plating"
 	comtype = /obj/item/podarmor/armor_black
 	desc = "NT Special Ops vehicular armor plating, almost certainly stolen."
-	price = PAY_DONTBUYIT*2
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/redarmor
 	comname = "Syndicate Pod Armor"
 	comtype = /obj/item/podarmor/armor_red
 	desc = "A kit of Syndicate pod armor plating."
-	price = PAY_DONTBUYIT
+	price = PAY_EMBEZZLED
 
 /datum/commodity/podparts/goldarmor
 	comname = "Gold Pod Armor"
 	comtype = /obj/item/podarmor/armor_gold
 	desc = "A kit of gold-plated pod armor plating."
-	price = PAY_DONTBUYIT
+	price = PAY_EMBEZZLED*2
 
 /datum/commodity/podparts/ballistic
 	comname = "Ballistic System"
 	comtype = /obj/item/shipcomponent/mainweapon/gun
 	desc = "A pod-mounted kinetic weapon system."
-	price = PAY_DONTBUYIT*2
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/artillery
 	comname = "40mm Assault Platform"
 	comtype = /obj/item/shipcomponent/mainweapon/artillery
 	desc = "A pair of ballistic launchers, fires explosive 40mm shells."
-	price = PAY_DONTBUYIT*10
+	price = PAY_DONTBUYIT*2
 
 /datum/commodity/contraband/artillery_ammo
 	comname = "40mm HE Ammunition"
 	comtype = /obj/item/ammo/bullets/autocannon
 	desc = "High explosive grenades, for the resupplement of artillery assault platforms."
-	price = PAY_DONTBUYIT*4
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/cloak
 	comname = "Medusa Stealth System 300"
 	comtype = /obj/item/shipcomponent/secondary_system/cloak
 	desc = "A cloaking device for stealth recon vehicles."
-	price = PAY_DONTBUYIT*10
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/skin_stripe_r
 	comname = "Pod Paint Job Kit (Red Racing Stripes)"

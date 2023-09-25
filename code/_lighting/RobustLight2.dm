@@ -608,7 +608,7 @@ proc
 		//I'm going to keep to my later statement for this and above: "for fucks sake tobba" -ZeWaka
 
 /obj/overlay/tile_effect
-	event_handler_flags = IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 /*

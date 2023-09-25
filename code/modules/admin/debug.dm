@@ -1204,9 +1204,7 @@ var/datum/flock/testflock
 		if(!src.mob)
 			return
 		var/fname = "spawn_dbg.json"
-		if (fexists(fname))
-			fdel(fname)
-		text2file(json_encode(list("spawn" = detailed_spawn_dbg)), fname)
+		rustg_file_write(json_encode(list("spawn" = detailed_spawn_dbg)), fname)
 		var/tmp_file = file(fname)
 		usr << ftp(tmp_file)
 		fdel(fname)

@@ -907,6 +907,11 @@ var/global/atom_emergency_stop = 0
 			var/mob/living/critter/mimic/replacer = new replacement_typ(get_turf(A))
 			replacer.disguise_as(A)
 			qdel(A)
+			replace_count ++
+			replace_total ++
+			if (replace_count >= amount_to_replace)
+				replace_count = 0
+				sleep(sleep_time)
 			continue
 
 		var/atom/loc = ismovable(A) ? A.loc : A

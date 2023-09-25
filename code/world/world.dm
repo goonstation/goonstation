@@ -89,9 +89,7 @@
 
 
 /world/proc/save_mode(var/the_mode)
-	var/F = file("data/mode.txt")
-	fdel(F)
-	F << the_mode
+	rustg_file_write(the_mode, "data/mode.txt")
 	next_round_mode = the_mode
 
 

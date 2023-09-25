@@ -816,7 +816,9 @@
 	/obj/item/gun/energy/signifer2,
 	/obj/item/device/prisoner_scanner,
 	/obj/item/gun/energy/ntgun,
-	/obj/item/gun/energy/cornicen3)
+	/obj/item/gun/energy/cornicen3,
+	/obj/item/gun/kinetic/missile_launcher,
+	/obj/item/ammo/bullets/pod_seeking_missile)
 	check_wclass = 1
 
 // kiki's detective shoulder (holster)

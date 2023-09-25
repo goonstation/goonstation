@@ -46,6 +46,7 @@
 /datum/commodity/trader/generic/sheetmetal
 	comname = "Sheet Metal"
 	comtype = /obj/item/sheet/steel
+	amount = 1000
 	price_boundary = list(5,10)
 	possible_names = list("I'm selling sheets of construction-grade steel.",
 	"I'm selling sheets of steel. Below market price, guaranteed!")
@@ -61,6 +62,7 @@
 /datum/commodity/trader/generic/fabric
 	comname = "Cloth Fabric"
 	comtype = /obj/item/material_piece/cloth/cottonfabric
+	amount = 300
 	price_boundary = list(PAY_UNTRAINED/10,PAY_UNTRAINED/5)
 	possible_names = list("We have lots of cloth for sale. Good for making clothes with.",
 	"We have a great deal of cloth we need to shift soon, so please buy it!")
@@ -208,7 +210,7 @@
 /datum/commodity/trader/generic/jumpsuits
 	comname = "Jumpsuits"
 	comtype = /obj/item/clothing/under
-	price_boundary = list(PAY_UNTRAINED/3,PAY_TRADESMAN)
+	price_boundary = list(PAY_UNTRAINED,PAY_TRADESMAN)
 	possible_names = list("We're drafting in some new staff soon, and need new jumpsuits.",
 	"We need any jumpsuits you can spare. Don't ask.")
 

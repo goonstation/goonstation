@@ -17327,6 +17327,10 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"jzZ" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
 "jCG" = (
 /obj/machinery/power/furnace,
 /obj/cable/orange{
@@ -17597,6 +17601,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
+"ldr" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "lgg" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -18342,8 +18350,8 @@
 	layer = 3
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_y = -33
 	},
 /turf/simulated/floor/redblack,
@@ -19111,10 +19119,10 @@
 /area/station/engine/hotloop)
 "tgD" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_y = 35;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_y = 35
 	},
 /turf/space,
 /area/space)
@@ -19331,10 +19339,10 @@
 /area/station/hallway/primary/west)
 "urI" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_y = -33;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_y = -33
 	},
 /turf/space,
 /area/space)
@@ -19767,8 +19775,8 @@
 	pixel_y = 21
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_y = 25
 	},
 /turf/simulated/floor/redblack{
@@ -55459,7 +55467,7 @@ aaq
 aWk
 acJ
 abQ
-aru
+ldr
 aKG
 aVX
 avX
@@ -55489,7 +55497,7 @@ aCs
 aZJ
 aXl
 aTI
-aSr
+jzZ
 aTQ
 aSr
 aTI
