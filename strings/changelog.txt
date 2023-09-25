@@ -2,6 +2,7 @@
 (t)mon sep 25 23
 (u)Emily
 (*)Prices of oxygen/plasma vendors lowered. Remember to turn off your pods' weapons systems when not in use!
+(+)Lowered prices of weapon pod systems at vendors
 (u)Mr. Moriarty
 (p)14069
 (e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
