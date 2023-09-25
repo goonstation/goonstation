@@ -184,16 +184,39 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 
 /obj/item/clothing/glasses/sunglasses/reflective
 	allow_blind_sight = TRUE
-	var/static/list/possible_appearances = list(/obj/item/clothing/glasses/meson, /obj/item/clothing/glasses/thermal, /obj/item/clothing/glasses/visor,
-		/obj/item/clothing/glasses/healthgoggles, /obj/item/clothing/glasses/spectro)
+	var/appearance_chosen = FALSE
+	var/static/list/possible_appearances = list(
+		"Spectro goggles" = /obj/item/clothing/glasses/spectro,
+		"Health goggles" = /obj/item/clothing/glasses/healthgoggles,
+		"Meson goggles" = /obj/item/clothing/glasses/meson,
+		"Thermal goggles" = /obj/item/clothing/glasses/thermal,
+		"VISOR goggles" = /obj/item/clothing/glasses/visor)
 
 	New()
-		var/obj/item/clothing/glasses/picked_type = pick(src.possible_appearances)
+		var/obj/item/clothing/glasses/initial_type = /obj/item/clothing/glasses/regular
+		src.name = initial(initial_type.name)
+		src.desc = initial(initial_type.desc)
+		src.icon_state = initial(initial_type.icon_state)
+		src.item_state = initial(initial_type.item_state)
+		..()
+
+
+	attack_self(mob/user)
+		..()
+		if (src.appearance_chosen)
+			return
+		var/choice = tgui_input_list(user, "Choose the appearance of the glasses. Can only be done once.", "Set appearance", src.possible_appearances)
+		if (!choice)
+			return
+
+		var/obj/item/clothing/glasses/picked_type = src.possible_appearances[choice]
 		src.name = initial(picked_type.name)
 		src.desc = initial(picked_type.desc)
-		src.icon = initial(picked_type.icon)
 		src.icon_state = initial(picked_type.icon_state)
-		..()
+		src.item_state = initial(picked_type.item_state)
+
+		src.appearance_chosen = TRUE
+		src.tooltip_rebuild = TRUE
 
 /obj/item/clothing/glasses/sunglasses/tanning
 	desc = "Strangely ancient technology used to help provide rudimentary eye cover. This pair has a label that says: \"For tanning use only.\""
