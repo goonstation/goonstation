@@ -19,7 +19,14 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	var/team_num
 	/// Used for the toggle_hood component, should be the same as the default icon_state so it can get updated with medal rewards.
 	var/coat_style = null
+	// Used for the armor_suit proc to check if the suit has an armored variant
+	var/armor_variant = null
+	// Used for the remove_armor proc to return the armor to its default variant
+	var/default_variant = null
 
+	New()
+		..()
+		src.setup_components()
 
 	setupProperties()
 		..()
@@ -35,6 +42,74 @@ ABSTRACT_TYPE(/obj/item/clothing/suit)
 	unequipped(mob/user)
 		. = ..()
 		src.layer = initial(src.wear_layer)
+
+	proc/setup_components()
+		if (src.armor_variant)
+			// suit + armor -> armored suit (I know, right??)
+			src.AddComponent(/datum/component/assembly, /obj/item/clothing/suit/armor/vest, PROC_REF(armor_suit), FALSE)
+		if (src.default_variant)
+			// armored suit + scissors -> suit + armor
+			src.AddComponent(/datum/component/assembly, TOOL_CUTTING | TOOL_SNIPPING, PROC_REF(remove_armor), FALSE)
+
+	/// Armor Suit proc
+	proc/armor_suit(var/atom/to_combine_atom, var/mob/user)
+		user.u_equip(src)
+		user.u_equip(to_combine_atom)
+		var/obj/item/clothing/suit/armor/vest/armor = to_combine_atom
+		var/obj/item/clothing/suit/new_suit = src.armor_variant ? new src.armor_variant(user.loc) : new src.type(user.loc)
+
+		boutput(user, "<span class='notice'>You attach [armor] to [src].</span>")
+		playsound(src, 'sound/misc/zipper.ogg', 50, TRUE)
+		playsound(src, 'sound/items/Scissor.ogg', 50, TRUE)
+
+		user.put_in_hand_or_drop(new_suit)
+
+		//Since we changed the state, remove all assembly components
+		new_suit.RemoveComponentsOfType(/datum/component/assembly)
+		// Set armor_variant to null since it likely is a sub_variant of the non-armored variant
+		new_suit?.armor_variant = null
+
+	 	// covers variants like apiculturist's suit
+		new_suit.name = "armored [src.name]"
+		new_suit.desc = "[src.desc] Somebody slapped some bulky armor onto the chest."
+
+		new_suit.default_variant = src.type
+
+		new_suit.setup_components()
+
+		qdel(to_combine_atom)
+		qdel(src)
+
+		// Since the assembly was done, return TRUE
+		return TRUE
+
+	/// Remove Armor proc
+	proc/remove_armor(var/atom/to_combine_atom, var/mob/user)
+		user.u_equip(src)
+		var/obj/item/clothing/suit/armor/vest/armor = new /obj/item/clothing/suit/armor/vest(user.loc)
+		var/obj/item/clothing/suit/new_suit = src.default_variant ? new src.default_variant(user.loc) : new src.type(user.loc)
+
+		boutput(user, "<span class='notice'>You remove [armor] from [src].</span>")
+		playsound(src, 'sound/misc/zipper.ogg', 50, TRUE)
+		playsound(src, 'sound/items/Scissor.ogg', 50, TRUE)
+
+		user.put_in_hand_or_drop(new_suit)
+		user.put_in_hand_or_drop(armor)
+
+		//Since we changed the state, remove all assembly components
+		new_suit.RemoveComponentsOfType(/datum/component/assembly)
+		// Set armor_variant to null since it likely is a sub_variant of the non-armored variant
+		new_suit?.default_variant = null
+
+		// covers variants like apiculturist's suit
+		new_suit.armor_variant = src.type
+
+		new_suit.setup_components()
+
+		qdel(src)
+
+		// Since the assembly was done, return TRUE
+		return TRUE
 
 /obj/item/clothing/suit/hoodie
 	name = "hoodie"
@@ -242,6 +317,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_hazard.dmi'
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	armor_variant = /obj/item/clothing/suit/bio_suit/armored
 
 	setupProperties()
 		..()
@@ -253,17 +329,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 		setProperty("rangedprot", 0.5)
 		setProperty("movespeed", 0.3)
 		setProperty("disorient_resist", 15)
-
-/obj/item/clothing/suit/bio_suit/attackby(obj/item/W, mob/user)
-	var/turf/T = user.loc
-	if(istype(W, /obj/item/clothing/suit/armor/vest))
-		boutput(user, "<span class='notice'>You attach [W] to [src].</span>")
-		if (istype(src, /obj/item/clothing/suit/bio_suit/paramedic))
-			new/obj/item/clothing/suit/bio_suit/paramedic/armored(T)
-		else
-			new/obj/item/clothing/suit/bio_suit/armored(T)
-		qdel(W)
-		qdel(src)
 
 /obj/item/clothing/suit/bio_suit/janitor // Adhara stuff
 	name = "bio suit"
@@ -279,6 +344,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
 	protective_temperature = 3000
+	armor_variant = /obj/item/clothing/suit/bio_suit/paramedic/armored
 #ifdef MAP_OVERRIDE_NADIR
 	c_flags = SPACEWEAR
 	acid_survival_time = 5 MINUTES
@@ -299,6 +365,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	desc = "A suit that protects against biological contamination. Somebody slapped some bulky armor onto the chest."
 	icon_state = "armorbio"
 	item_state = "armorbio"
+	default_variant = /obj/item/clothing/suit/bio_suit
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -310,6 +377,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	desc = "An armored biosuit that protects against biological contamination and toolboxes."
 	icon_state = "ntbio"
 	item_state = "ntbio"
+	default_variant = null // no default nt bio suit
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -321,6 +389,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	desc = "A protective padded suit for emergency response personnel. Offers limited thermal and biological protection. Somebody slapped some armor onto the chest."
 	icon_state = "para_armor"
 	item_state = "paramedic"
+	default_variant = /obj/item/clothing/suit/bio_suit/paramedic
 	setupProperties()
 		..()
 		setProperty("meleeprot", 5)
@@ -981,6 +1050,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_SHOES
 	protective_temperature = 4500
+	armor_variant = /obj/item/clothing/suit/fire/armored
 
 	setupProperties()
 		..()
@@ -997,22 +1067,12 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	desc = "A suit that protects against fire and heat. Somebody slapped some bulky armor onto the chest."
 	icon_state = "fire_armor"
 	item_state = "fire_suit"
+	default_variant = /obj/item/clothing/suit/fire
 	setupProperties()
 		..()
 		setProperty("meleeprot", 6)
 		setProperty("rangedprot", 1)
 		setProperty("movespeed", 1)
-
-/obj/item/clothing/suit/fire/attackby(obj/item/W, mob/user)
-	var/turf/T = user.loc
-	if (istype(W, /obj/item/clothing/suit/armor/vest))
-		if (istype(src, /obj/item/clothing/suit/fire/heavy))
-			return
-		else
-			new /obj/item/clothing/suit/fire/armored(T)
-		boutput(user, "<span class='notice'>You attach [W] to [src].</span>")
-		qdel(W)
-		qdel(src)
 
 /obj/item/clothing/suit/fire/heavy
 	name = "heavy firesuit"
@@ -1020,7 +1080,7 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	icon_state = "thermal"
 	item_state = "thermal"
 	hides_from_examine = C_UNIFORM|C_SHOES|C_GLOVES
-
+	armor_variant = null // No armored variant
 	protective_temperature = 100000
 
 	setupProperties()
