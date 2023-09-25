@@ -1226,7 +1226,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 // Papers
 
-/obj/item/paper/toiletnote
+/obj/item/paper/morrigan/toiletnote
 	name = "Messy piece of paper"
 	icon_state = "paper_caution_bloody"
 	info ={"
@@ -1235,7 +1235,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	I have to get out of here before the wardens come back.
 	"}
 
-/obj/item/paper/complaint1
+/obj/item/paper/morrigan/complaint1
 	name = "Old piece of paper"
 	icon_state = "paper_burned"
 	info ={"
@@ -1245,7 +1245,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	I miss the old Captain, he wouldn't stand for these deplorable conditions, the power goes out constantly!
 	"}
 
-/obj/item/paper/rolecall
+/obj/item/paper/morrigan/rolecall
 	name = "Torn off piece of paper"
 	icon_state = "paper_burned"
 	info ={"
@@ -1258,7 +1258,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	<p>(the rest seems to be torn off...)</p>
 	"}
 
-/obj/item/paper/Cecomplaint
+/obj/item/paper/morrigan/Cecomplaint
 	name = "Old letter"
 	icon_state = "paper_burned"
 	info ={"
@@ -1271,7 +1271,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	Captain, please do something about this.
 	"}
 
-/obj/item/paper/notice_deri
+/obj/item/paper/morrigan/notice_deri
 	name = "Old email print-out"
 	icon_state = "paper_burned"
 	info ={"
@@ -1287,7 +1287,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	"}
 
-/obj/item/paper/inspectorlastwords
+/obj/item/paper/morrigan/inspectorlastwords
 	name = "Deranged Scribblings"
 	icon_state = "paper_caution"
 	info ={"
@@ -1296,7 +1296,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	...
 	"}
 
-/obj/item/paper/mindhackedcarla
+/obj/item/paper/morrigan/mindhackedcarla
 	name = "What am I doing?"
 	icon_state = "paper_caution"
 	info ={"
@@ -1305,14 +1305,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	I don't know who they are but something tells me, something... I must... wires...I must... obey...<br>
 	"}
 
-/obj/item/paper/hobotalk
+/obj/item/paper/morrigan/hobotalk
 	name = "Badly worded note"
 	icon_state = "paper"
 	info ={"
 	Ey dun evn kno y he insts abt goin out there we kno thms foks no good, ey git is adiktins thms crazies gon get him!
 	"}
 
-/obj/item/paper/laraman
+/obj/item/paper/morrigan/laraman
 	name = "LARA"
 	icon_state = "paper_caution"
 	info ={"
@@ -1321,7 +1321,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	Have you seen LARA ? please LARA ! Laraaaaaaa??
 	"}
 
-/obj/item/paper/hobonote
+/obj/item/paper/morrigan/hobonote
 	name = "Note"
 	icon_state = "paper_caution"
 	info ={"
@@ -1332,7 +1332,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	crazies over on the other side. Still hopin' we get a sign of Johnny sometime soon though. Went out to scout for some drugs days ago.
 	"}
 
-/obj/item/paper/hintjail
+/obj/item/paper/morrigan/hintjail
 	name = "Paper"
 	icon_state = "paper"
 	info ={"
@@ -1341,7 +1341,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	The sewers beneath.
 	"}
 
-/obj/item/paper/NTnote
+/obj/item/paper/morrigan/NTnote
 	name = "Hidden note"
 	icon_state = "paper"
 	info ={"
@@ -1353,7 +1353,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	-J
 	"}
 
-/obj/item/paper/secnote1
+/obj/item/paper/morrigan/secnote1
 	name = "New Prisoner #79"
 	icon_state = "paper"
 	info ={"
@@ -1372,7 +1372,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	<p>Incarcerate until cell available on Lero IV. No special treatment required. Confine in GenPop Brig.</p>
 	"}
 
-/obj/item/paper/secnote2
+/obj/item/paper/morrigan/secnote2
 	name = "New Prisoner #85"
 	icon_state = "paper"
 	info ={"
@@ -1390,7 +1390,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	<p>Instructions from Lero IV:</p>
 	<p>Incarcerate in solitary. Contract from third party. To be returned to Lero IV once cell available.</p>
 	"}
-/obj/item/paper/secnote3
+/obj/item/paper/morrigan/secnote3
 	name = "New Prisoner #88"
 	icon_state = "paper"
 	info ={"
@@ -1408,7 +1408,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	<p>Incarcerate in solitary until interrogation. Avoid all contact with other inmates.</p>
 	"}
 
-/obj/item/paper/morrigansciencecomplaint
+/obj/item/paper/morrigan/morrigansciencecomplaint
 	name = "Angry Note"
 	icon_state = "paper"
 	info ={"
@@ -1416,7 +1416,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	PUT THE DAMN TOOLS BACK. I'm sick and tired of having to beg to on an easter egg hunt for MY shit. If I catch them misplacing them one more time.<br>
 	"}
 
-/obj/item/paper/morriganclown
+/obj/item/paper/morrigan/morriganclown
 	name ="Nukies?"
 	icon_state = "paper"
 	info ={"
@@ -1425,7 +1425,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	-Klown
 	"}
 
-/obj/item/paper/MorriganHoS
+/obj/item/paper/morrigan/MorriganHoS
 	name = "Important Message From HQ"
 	icon_state = "paper"
 	info ={"
@@ -1440,7 +1440,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	-Syndicate High Command.
 	"}
 
-/obj/item/paper/MorriganHoS2
+/obj/item/paper/morrigan/MorriganHoS2
 	name = "Important Message From HQ"
 	icon_state = "paper"
 	info ={"
@@ -1455,7 +1455,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	-Syndicate High Command.
 	"}
 
-/obj/item/paper/morrigancaptain
+/obj/item/paper/morrigan/morrigancaptain
 	name = "Complaint to HQ"
 	icon_state = "paper"
 	info ={"
@@ -1468,7 +1468,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	--Transcript End. Audio Message Delivered.--
 	"}
 
-/obj/item/paper/morriganpda
+/obj/item/paper/morrigan/morriganpda
 	name = "Intercepted PDA Message"
 	icon_state = "paper"
 	info ={"
@@ -1478,7 +1478,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	--Transcript End. Message Delivered from PDA-Sorbert S. Haffings.--
 	"}
 
-/obj/item/paper/morriganalert
+/obj/item/paper/morrigan/morriganalert
 	name = "RECON DEFENSE PERIMETER ALERT"
 	icon_state = "paper"
 	info ={"
@@ -1492,14 +1492,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	<p style="text-align: center;"><br></p>
 	"}
 
-/obj/item/paper/morriganhos4
+/obj/item/paper/morrigan/morriganhos4
 	name = "Left over note"
 	icon_state = "paper"
 	info ={"
 
 	"}
 
-/obj/item/paper/morriganfactory
+/obj/item/paper/morrigan/morriganfactory
 	name = "intercepted PDA Message"
 	icon_state = "paper_caution_bloody"
 	info ={"
@@ -1513,7 +1513,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	--Transcript End. Message redacted and blocked from PDA -CORRUPTED--
 	"}
 
-/obj/item/paper/Morriganstatus
+/obj/item/paper/morrigan/Morriganstatus
 	name = "AUTOMATIC UPDATE SYSTEM"
 	icon_state = "paper"
 	info ={"
@@ -1532,7 +1532,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	<p style="text-align: center;">--Transcript End. Message Delivered to HQ.--</p>
 	"}
 
-/obj/item/paper/morriganling
+/obj/item/paper/morrigan/morriganling
 	name = "Intercepted PDA Message"
 	icon_state = "paper"
 	info ={"
@@ -1545,7 +1545,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	 --Transcript End. Message Delivered from PDA-Hubert V. Bronbor--
 	"}
 
-/obj/item/paper/morriganhop
+/obj/item/paper/morrigan/morriganhop
 	name = "Reminder! New ID Cards!"
 	icon_state = "paper"
 	info ={"
@@ -1556,7 +1556,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	--Transcript End. Message Delivered to all valid PDAs--
 	"}
 
-/obj/item/paper/morriganrd
+/obj/item/paper/morrigan/morriganrd
 	name = "You're Fired Nick"
 	icon_state = "paper"
 	info ={"
@@ -1567,7 +1567,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	--Transcript End. Message Delivered to PDA-Nickolas Eol and HQ--
 	"}
 
-/obj/item/paper/MorriganNT
+/obj/item/paper/morrigan/MorriganNT
 	name = "Midly Crumbled Note"
 	icon_state = "paper"
 	info ={"
@@ -1576,7 +1576,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	but it should probably do. I'll be waiting for you in the northern maints. Come alone please, you're the only one I trust.<br>
 	-A
 	"}
-/obj/item/paper/MorriganNT2
+/obj/item/paper/morrigan/MorriganNT2
 	name = "Intercepted PDA Message"
 	icon_state = "paper"
 	info ={"
@@ -1588,7 +1588,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	--Transcript End. Message Delivered from PDA-%#24EW#2 to $%@#!-32.--
 	"}
 
-/obj/item/paper/MorriganNT3
+/obj/item/paper/morrigan/MorriganNT3
 	name = "Slightly Damaged Note"
 	icon_state = "paper"
 	info ={"
@@ -1600,7 +1600,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	-J
 	"}
 
-/obj/item/paper/morrigancargo
+/obj/item/paper/morrigan/morrigancargo
 	name = "Order #781"
 	icon_state = "paper"
 	info = {"
@@ -1616,7 +1616,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	<p>Thank you for your purchase !</p>
 	"}
 
-/obj/item/paper/morrigancargo2
+/obj/item/paper/morrigan/morrigancargo2
 	name = "Order #385"
 	icon_state = "paper"
 	info = {"
@@ -1633,7 +1633,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	"}
 
 
-/obj/item/paper/morrigance
+/obj/item/paper/morrigan/morrigance
 	name = "In case you're locked out"
 	icon_state = "paper"
 	info = {"
@@ -1643,7 +1643,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	--Transcript End. Message Delivered to PDA-Matheos Nummer From PDA-Chief Engineer(Id WiP) and Security Department.--
 	"}
 
-/obj/item/paper/balor_IT
+/obj/item/paper/morrigan/balor_IT
 	name = "Note from IT"
 	icon_state = "paper"
 	info = {"Since some of you (Kingfisher) seem incapable of operating the damn teleporter without waking me up, here's an idiots guide:<br>
@@ -1654,7 +1654,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	- Technical Operative Banks
 	"}
 
-/obj/item/paper/sentinelunit
+/obj/item/paper/morrigan/sentinelunit
 	name = "Sentinel Unit"
 	icon_state = "paper"
 	info = {"
@@ -1681,7 +1681,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	<p>The Sentinel Unit comes pre-packed with state of the art AI able to identify friendly and non friendly individuals based off a multitude of customizable modules!</p>
 	<p>And much much more ! Order yours today !</p>
 	"}
-/obj/item/paper/cqcunit
+/obj/item/paper/morrigan/cqcunit
 	name = "CQC Unit"
 	icon_state = "paper"
 	info = {"
@@ -1704,7 +1704,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	<p>Your would be foes fleeing away at the sight of the fearsome CQC Unit ? Try the GRABBER tech Hookshot installed with all CQC units to bring your foes to you!</p>
 	<p>And much much more ! Order yours today !</p>
 	"}
-/obj/item/paper/riotunit
+/obj/item/paper/morrigan/riotunit
 	name = "Riot Unit"
 	icon_state = "paper"
 	info = {"

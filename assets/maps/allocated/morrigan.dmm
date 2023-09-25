@@ -3767,7 +3767,6 @@
 /obj/decal/fakeobjects/pipe{
 	dir = 1
 	},
-/obj/item/wrench/battle,
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/construction)
 "dCz" = (
@@ -4791,9 +4790,6 @@
 "evO" = (
 /obj/table/wood/round,
 /obj/item/plate,
-/obj/item/paper/MorriganNT{
-	pixel_y = -5
-	},
 /obj/item/reagent_containers/food/snacks/burger/baconburger,
 /obj/item/reagent_containers/food/drinks/bottle/beer{
 	pixel_y = 16;
@@ -13122,11 +13118,6 @@
 /obj/decoration/decorativeplant/plant3,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/medical/main)
-"lPr" = (
-/obj/storage/cart/trash,
-/obj/item/paper/MorriganNT2,
-/turf/unsimulated/floor/purple,
-/area/morrigan/station/civilian/janitor)
 "lPZ" = (
 /mob/living/critter/robotic/gunbot/morrigan/riotbot,
 /turf/unsimulated/floor/grey,
@@ -29413,7 +29404,7 @@ bNq
 kDc
 kdB
 kdB
-lPr
+ktC
 xSg
 fxo
 vOE

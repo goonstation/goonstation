@@ -188,3 +188,27 @@
 		name = "Lab Monkey Crate"
 		desc = "Warning: Contains live monkeys!"
 		req_access = list(access_medical_lockers, access_tox_storage)
+
+//puzzle for morrigan
+/obj/storage/secure/crate/morrigancargo
+	name = "Order #[rand(100, 10000)]"
+	req_access = list(access_morrigan_exit)
+
+	engineer
+		icon_state = "engcrate"
+		density = 1
+		icon_opened = "engcrate-open"
+		icon_closed = "engcrate"
+
+	medical
+		icon_state = "securemedicalcrate"
+		density = 1
+		icon_opened = "securemedicalcrateopen"
+		icon_closed = "securemedicalcrate"
+		weld_image_offset_Y = -2
+
+	security
+		icon_state = "weaponcrate"
+		density = 1
+		icon_opened = "weaponcrateopen"
+		icon_closed = "weaponcrate"

@@ -1179,3 +1179,12 @@ TYPEINFO(/obj/item/device/appraisal)
 				// don't bother bumping up other things
 				chat_text.show_to(user.client)
 
+/obj/item/device/morrigancargo
+	name = "cargo inspector"
+	desc = "Handheld scanner to verify contents of crates."
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
+	w_class = W_CLASS_SMALL
+	m_amt = 150
+	icon_state = "ticketwriter-alt"
+	item_state = "electronic"
