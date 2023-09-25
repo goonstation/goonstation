@@ -562,10 +562,10 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			. = ..()
 			return
 		if(BOUNDS_DIST(src_location, usr) > 0)
-			boutput(usr, "<span class='alert'>You are too far away from [src] to empty it.</span>")
+			//boutput(usr, "<span class='alert'>You are too far away from [src] to empty it.</span>")
 			return
 		if(BOUNDS_DIST(src_location, over_location) > 0)
-			boutput(usr, "<span class='alert'>That drop location is too far from [src].</span>")
+			//boutput(usr, "<span class='alert'>That drop location is too far from [src].</span>")
 			return
 		if (src.remove_crystal(usr, over_location))
 			usr.visible_message("[usr] removes the crystal from [src].",
@@ -584,6 +584,14 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			..()
 		else if (src.remove_crystal(user))
 			boutput(user, "<span class='notice'>You firmly grip [src]'s crystal and pull it from the device.</span>" )
+		else ..() // something about having two of these feels wrong
+
+	update_icon()
+		if (src.crystal)
+			var/image/pc = image(src.crystal.icon, src.crystal.icon_state)
+			src.UpdateOverlays(pc, "sensor")
+		else
+			src.UpdateOverlays(null, "sensor")
 
 	proc/insert_crystal(mob/user, obj/item/pressure_crystal/pc)
 		if (!istype(pc, /obj/item/pressure_crystal))
@@ -593,23 +601,19 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 							but can't manage to figure out how.</span>" )
 			return FALSE
 		user.drop_item()
-		pc.pixel_x = 0
-		pc.pixel_y = 0
 		pc.set_loc(src)
-		src.overlays += pc
-		src.wear_image.overlays += pc
 		src.crystal = pc
+		src.UpdateIcon()
 		return TRUE
 
 	proc/remove_crystal(mob/user, turf/spot)
 		if (!src.crystal)
 			boutput(user, "<span class='alert'>There's no crystal in this here device!</span>")
 			return FALSE
-		src.overlays = list()
-		src.wear_image.overlays = list()
 		if (spot)
 			src.crystal.set_loc(spot)
 		else
 			user.put_in_hand_or_drop(src.crystal)
 		src.crystal = null
+		src.UpdateIcon()
 		return TRUE
