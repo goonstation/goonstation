@@ -1986,34 +1986,31 @@ ABSTRACT_TYPE(/obj/item/clothing/head/elephanthat)
 	desc = "Quite cozy, if you don't mind the trunk smacking you in the face when you walk."
 	icon_state = "elephant-gold"
 	item_state = "elephant-gold"
-	var/hatcolor = "default"
 
 	gold
-		hatcolor = "gold"
 		icon_state = "elephant-gold"
 		item_state = "elephant-gold"
 
 	blue
-		hatcolor = "blue"
 		icon_state = "elephant-blue"
 		item_state = "elephant-blue"
 
 	pink
-		hatcolor = "pink"
 		icon_state = "elephant-pink"
 		item_state = "elephant-pink"
 
 	green
-		hatcolor = "green"
 		icon_state = "elephant-green"
 		item_state = "elephant-green"
 
 	random
 		New()
 			..()
-			hatcolor = pick("gold", "blue", "pink", "green")
-			item_state = "elephant-[hatcolor]"
-			icon_state = "elephant-[hatcolor]"
+			var/chosen_hat = pick(/obj/item/clothing/head/elephanthat/pink, /obj/item/clothing/head/elephanthat/green, /obj/item/clothing/head/elephanthat/blue, /obj/item/clothing/head/elephanthat/gold)
+            var/oldloc = src.loc
+            qdel(src)
+            src = new chosen_hat
+            src.loc = oldloc
 
 /obj/item/clothing/head/minotaurmask
 	name = "minotaur mask"
@@ -2028,43 +2025,39 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 	desc = "Makes your lungs feel a little fuzzy."
 	icon_state = "mushroom-red"
 	item_state = "mushroom-red"
-	var/hatcolor = "normal"
 
 	red
 		name = "red mushroom cap"
 		desc = "Makes your lungs feel a little fuzzy. Don't nibble on this one."
 		icon_state = "mushroom-red"
 		item_state = "mushroom-red"
-		hatcolor = "red"
 
 	shiitake
 		name = "shiitake mushroom cap"
 		desc = "Makes your lungs feel a little fuzzy. But it smells delectable."
 		icon_state = "mushroom-shiitake"
 		item_state = "mushroom-shiitake"
-		hatcolor = "shiitake" // yeah sure this is a color
 
 	indigo
 		name = "indigo mushroom cap"
 		desc = "Makes your lungs feel a little fuzzy. It has an enticing blue hue."
 		icon_state = "mushroom-indigo"
 		item_state = "mushroom-indigo"
-		hatcolor = "indigo"
 
 	inky
 		name = "inky mushroom cap"
 		desc = "Makes your lungs feel a little fuzzy. Impressively, the inkdrops never fully drip off."
 		icon_state = "mushroom-inky"
 		item_state = "mushroom-inky"
-		hatcolor = "inky"
 
 	random
 		New()
 			..()
-			hatcolor = pick("red", "shiitake", "indigo", "inky")
-			name = "[hatcolor] mushroom cap"
-			item_state = "mushroom-[hatcolor]"
-			icon_state = "mushroom-[hatcolor]"
+			var/chosen_hat = pick(/obj/item/clothing/head/mushroomcap/red, /obj/item/clothing/head/mushroomcap/shiitake, /obj/item/clothing/head/mushroomcap/indigo, /obj/item/clothing/head/mushroomcap/inky)
+            var/oldloc = src.loc
+            qdel(src)
+            src = new chosen_hat
+            src.loc = oldloc
 
 /obj/item/clothing/head/axehat
 	name = "axe headband"
