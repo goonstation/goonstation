@@ -354,49 +354,49 @@
 	comname = "Assault Laser Array"
 	comtype = /obj/item/shipcomponent/mainweapon/laser_ass
 	desc = "Usually only seen on cruiser-class ships. How the hell did this end up here?"
-	price = PAY_DONTBUYIT*10
+	price = PAY_DONTBUYIT*2
 
 /datum/commodity/podparts/blackarmor
 	comname = "Strange Armor Plating"
 	comtype = /obj/item/podarmor/armor_black
 	desc = "NT Special Ops vehicular armor plating, almost certainly stolen."
-	price = PAY_DONTBUYIT*2
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/redarmor
 	comname = "Syndicate Pod Armor"
 	comtype = /obj/item/podarmor/armor_red
 	desc = "A kit of Syndicate pod armor plating."
-	price = PAY_DONTBUYIT
+	price = PAY_EMBEZZLED
 
 /datum/commodity/podparts/goldarmor
 	comname = "Gold Pod Armor"
 	comtype = /obj/item/podarmor/armor_gold
 	desc = "A kit of gold-plated pod armor plating."
-	price = PAY_DONTBUYIT
+	price = PAY_EMBEZZLED*2
 
 /datum/commodity/podparts/ballistic
 	comname = "Ballistic System"
 	comtype = /obj/item/shipcomponent/mainweapon/gun
 	desc = "A pod-mounted kinetic weapon system."
-	price = PAY_DONTBUYIT*2
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/artillery
 	comname = "40mm Assault Platform"
 	comtype = /obj/item/shipcomponent/mainweapon/artillery
 	desc = "A pair of ballistic launchers, fires explosive 40mm shells."
-	price = PAY_DONTBUYIT*10
+	price = PAY_DONTBUYIT*2
 
 /datum/commodity/contraband/artillery_ammo
 	comname = "40mm HE Ammunition"
 	comtype = /obj/item/ammo/bullets/autocannon
 	desc = "High explosive grenades, for the resupplement of artillery assault platforms."
-	price = PAY_DONTBUYIT*4
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/cloak
 	comname = "Medusa Stealth System 300"
 	comtype = /obj/item/shipcomponent/secondary_system/cloak
 	desc = "A cloaking device for stealth recon vehicles."
-	price = PAY_DONTBUYIT*10
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/skin_stripe_r
 	comname = "Pod Paint Job Kit (Red Racing Stripes)"
