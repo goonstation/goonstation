@@ -139,10 +139,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			if (src.is_dangerous)
 				var/mob/living/carbon/human/hero = src.get_hero()
 				if(istype(hero))
-					for (var/i in 1 to (src.amount_to_spawn /2))
+					for (var/i in 1 to (src.amount_to_spawn / 2))
 						new payload(hero) // so they burst out
-					src.heroic_sacrifice(hero, -1)
 					qdel(src)
+					hero.gib()
 					return
 			new payload(T)
 			for (var/i in 1 to src.amount_to_spawn - 1)
@@ -258,13 +258,20 @@ TYPEINFO(/obj/item/old_grenade/graviton)
 				elecflash(src,power = 4)
 				qdel(src)
 				return
-			for (var/atom/movable/X in orange(9, T))
-				if (istypes(X, list(/obj/machinery/containment_field, /obj/machinery/field_generator, /obj/fluid, /obj/effect, /obj/overlay)))
-					continue
-				var/area/t = get_area(X)
-				if(t?.sanctuary) continue
-				if (prob(50) && X.anchored != 2)
-					step_towards(X,src)
+			playsound(src.loc, 'sound/effects/singsuck.ogg', 75, TRUE)
+			var/reach = 9
+			var/mob/living/carbon/human/hero = src.get_hero()
+			if (istype(hero))
+				reach = reach / 2
+				hero.TakeDamage("chest", 100, 0, 0, DAMAGE_CRUSH)
+			for (var/atom/movable/AM in orange(reach, T))
+				if (prob(50)) continue
+				if (AM.anchored == ANCHORED_ALWAYS) continue
+				if (HAS_ANY_FLAGS(AM.event_handler_flags, IMMUNE_SINGULARITY | IMMUNE_SINGULARITY_INACTIVE)) continue
+				if (istypes(AM, list(/obj/effect, /obj/overlay))) continue
+				var/area/t = get_area(AM)
+				if (t?.sanctuary) continue
+				step_towards(AM ,src)
 		qdel(src)
 		return
 
@@ -429,10 +436,11 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		if (T)
 			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
 			var/mob/living/carbon/human/hero = src.get_hero()
-			if(istype(hero, /mob/living/carbon/human))
-				src.heroic_sacrifice(hero, -1)
-				qdel(src) // they ate the whole thing
-				return
+			if(istype(hero) && src.custom_projectile_type)
+				for (var/i in 1 to (src.pellets_to_fire / 2 ))
+					var/obj/projectile/P = initialize_projectile_pixel_spread(src, new src.custom_projectile_type(), hero, 0, 0)
+					P.collide(hero)
+				src.pellets_to_fire = src.pellets_to_fire / 4
 			explosion(src, T, -1, -1, -0.25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = ANCHORED
@@ -496,14 +504,12 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 	detonate()
 		var/turf/T = ..()
 		if (T)
-			var/brisance = 2
 			var/power = 5.0
 			var/mob/living/carbon/human/hero = src.get_hero()
-			if(istype(hero, /mob/living/carbon/human))
-				brisance = 1
-				power = 2.5
-				src.heroic_sacrifice(hero, power)
-			explosion_new(src, T, power, brisance)
+			if(istype(hero))
+				hero.ex_act(1, src, power)
+				power = power / 2
+			explosion_new(src, T, power, 2)
 			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
 			O.anchored = ANCHORED
@@ -541,11 +547,18 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 
 			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 
+			var/base_damage = 16
+
+			var/mob/living/carbon/human/hero = src.get_hero()
+			if(istype(hero))
+				hero.take_ear_damage(base_damage)
+				base_damage = base_damage / 2
+
 			for (var/mob/living/M in hearers(8, T))
 				if(check_target_immunity(M)) continue
-				var/loud = 16 / (GET_DIST(M, T) + 1)
+				var/loud = base_damage / (GET_DIST(M, T) + 1)
 				if (src.loc == M.loc || src.loc == M)
-					loud = 16
+					loud = base_damage
 
 				var/weak = loud / 3
 				var/stun = loud
@@ -606,6 +619,19 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 		var/turf/T = ..()
 		if (T)
 			playsound(T, 'sound/items/Welder2.ogg', 25, TRUE)
+
+			var/reach = world.view - 1
+
+			var/mob/living/carbon/human/hero = src.get_hero()
+			if(istype(hero))
+				var/datum/organHolder/organs = hero.organHolder
+				if(istype(organs))
+					for(var/organ_slot in organs.organ_list)
+						var/obj/item/organ/O = organs.organ_list[organ_slot]
+						if(O?.robotic)
+							O.emp_act()
+				reach = reach / 2
+
 			T.hotspot_expose(700,125)
 
 			var/grenade = src // detaching the proc - in theory
@@ -619,7 +645,7 @@ TYPEINFO(/obj/item/old_grenade/singularity)
 			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
-			for (var/turf/tile in range(world.view-1, T))
+			for (var/turf/tile in range(reach, T))
 				for (var/atom/O in tile.contents)
 					var/area/t = get_area(O)
 					if(t?.sanctuary) continue
@@ -919,13 +945,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			armed = TRUE
 
 	///Enforce a dress code upon victims
-	proc/dress_up(mob/target)
+	proc/dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		return 0
-
-/obj/item/gimmickbomb/heroic_sacrifice(mob/M)
-	var/area/t = get_area(M)
-	if(t?.sanctuary) return
-	src.dress_up(M)
 
 /obj/item/gimmickbomb/owlgib
 	name = "Owl Bomb"
@@ -947,7 +968,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	icon_state = "owlbomb"
 	sound_beep = 'sound/voice/animal/hoot.ogg'
 
-	dress_up(mob/living/carbon/human/H)
+	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask)))
 			for(var/obj/item/clothing/O in H)
 				H.u_equip(O)
@@ -957,9 +978,11 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					O.layer = initial(O.layer)
 
 				var/obj/item/clothing/under/gimmick/owl/owlsuit = new /obj/item/clothing/under/gimmick/owl(H)
-				owlsuit.cant_self_remove = 1
+				owlsuit.cant_self_remove = cant_self_remove
+				owlsuit.cant_other_remove = cant_other_remove
 				var/obj/item/clothing/mask/owl_mask/owlmask = new /obj/item/clothing/mask/owl_mask(H)
-				owlmask.cant_self_remove = 1
+				owlmask.cant_self_remove = cant_self_remove
+				owlsuit.cant_other_remove = cant_other_remove
 
 				H.equip_if_possible(owlsuit, SLOT_W_UNIFORM)
 				H.equip_if_possible(owlmask, SLOT_WEAR_MASK)
@@ -967,8 +990,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 	detonate()
 		var/mob/living/carbon/human/hero = src.get_hero()
-		if(istype(hero, /mob/living/carbon/human))
-			src.heroic_sacrifice(hero)
+		if(istype(hero))
+			src.dress_up(hero, cant_self_remove=TRUE, cant_other_remove=TRUE)
 			..()
 			return
 
@@ -984,7 +1007,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 	desc = "A hotdog bomb? What the heck does that even mean?!"
 	icon_state = "hotdog"
 
-	dress_up(mob/living/carbon/human/H)
+	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
 		if (!(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
 			for(var/obj/item/clothing/O in H)
 				H.u_equip(O)
@@ -994,7 +1017,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 					O.layer = initial(O.layer)
 
 			var/obj/item/clothing/suit/gimmick/hotdog/suit = new /obj/item/clothing/suit/gimmick/hotdog(H)
-			suit.cant_self_remove = 1
+			suit.cant_self_remove = cant_self_remove
+			suit.cant_other_remove = cant_other_remove
 
 			H.equip_if_possible(suit, SLOT_WEAR_SUIT)
 			H.set_clothing_icon_dirty()
@@ -1002,8 +1026,8 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 
 	detonate()
 		var/mob/living/carbon/human/hero = src.get_hero()
-		if(istype(hero, /mob/living/carbon/human))
-			src.heroic_sacrifice(hero)
+		if(istype(hero))
+			src.dress_up(hero, cant_self_remove=TRUE, cant_other_remove=TRUE)
 			..()
 			return
 		for(var/mob/living/carbon/human/M in range(5, src))
@@ -1911,27 +1935,21 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 					strength_mult = 1.25
 				src.strength *= strength_mult
 
-			///Did someone dive onto the bomb? need for post-gib checks
-			var/meat_shield = FALSE
 			///Explosion center point
 			var/turf/origin = get_turf(src.loc)
+
 			///Mob who is diving on the bomb
 			var/mob/living/carbon/human/hero = src.get_hero()
-			if (istype(hero))
-				meat_shield = TRUE
 
-			// there goes my hero
-			if (meat_shield)
-				// watch him as he goes
-				src.strength = src.strength / 4 // halfish end output strength due to sqstrength
+
 
 			//do mod effects : pre-explosion
 			if (glowsticks)
 				make_cleanable( /obj/decal/cleanable/generic,origin)
 				var/radium_amt = 6 * glowsticks
-				if (meat_shield) // leave a radium puddle instead
+				if (istype(hero))
 					hero.reagents.add_reagent("radium", 10 * radium_amt, null, T0C + 300)
-				else
+				else // leave a radium puddle instead
 					for (var/turf/splat in view(1,src.loc))
 						make_cleanable( /obj/decal/cleanable/greenglow,splat)
 					for (var/mob/M in view(3,src.loc))
@@ -1944,7 +1962,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 					playsound(src.loc, 'sound/voice/farts/superfart.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
 				else
 					playsound(src.loc, 'sound/voice/farts/poo2.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
-				for (var/mob/M in view(meat_shield ? 1 : 3 + butt,src.loc))
+				for (var/mob/M in view(istype(hero) ? 1 : 3 + butt,src.loc))
 					ass_explosion(M, 0, 5)
 			if (confetti)
 				if (confetti > 1)
@@ -1968,7 +1986,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 				for (var/obj/O in view(1,src.loc))
 					O.throw_at(origin, 2, 2)
 			if (extra_shrapnel)
-				throw_shrapnel(origin, 4, extra_shrapnel * (meat_shield ? 1 : 3))
+				throw_shrapnel(origin, 4, extra_shrapnel * (istype(hero) ? 1 : 3))
 			if (cable && charge) //arc flash
 				var/target_count = 0
 				for (var/mob/living/L in view(5, src.loc))
@@ -1976,24 +1994,24 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 				if (target_count)
 					for (var/mob/living/L in oview(5, src.loc))
 						// reducing range increases impact, reduce mob shock intensity instead
-						arcFlash(src, L, max((charge*7) / (target_count * (meat_shield ? 2 : 1)), 1))
+						arcFlash(src, L, max((charge*7) / (target_count * (istype(hero) ? 2 : 1)), 1))
 				else
 					for (var/turf/T in oview(3,src.loc))
 						if (prob(2))
 							arcFlashTurf(src, T, max((charge*6) * rand(),1))
 			if (bleed)
-				for (var/mob/M in view(meat_shield ? 1 : 3,src.loc))
+				for (var/mob/M in view(istype(hero) ? 1 : 3,src.loc))
 					take_bleeding_damage(M, null, bleed * 3, DAMAGE_CUT)
 			if (src.reagents)
-				if (meat_shield)
+				if (istype(hero))
 					src.reagents.trans_to_direct(hero, src.reagents.total_volume / 2)
 				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12), src.loc))
 					src.reagents.reaction(T,1,5)
 
-			// there goes my hero
-			if(meat_shield && istype(hero, /mob/living/carbon/human))
-				// he's ordinary
-				src.heroic_sacrifice(hero, src.strength)
+			if (istype(hero))
+				if(src.strength >= 9)
+					hero.gib()
+				src.strength = max((src.strength * 0.75), (src.strength - 3))
 
 			src.blowthefuckup(src.strength, 0)
 
@@ -2039,7 +2057,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 					if (istype(O,/obj/item/reagent_containers/patch))
 						var/obj/item/reagent_containers/patch/P = O
 						P.good_throw = 1
-					O.throw_at(L, meat_shield ? 2 : 5, 3) // thrown short of target
+					O.throw_at(L, istype(hero) ? 2 : 5, 3) // thrown short of far targets
 					count--
 				if (count > 0)
 					for (var/turf/target in oview(4,src.loc))
@@ -2049,7 +2067,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 							if (istype(O,/obj/item/reagent_containers/patch))
 								var/obj/item/reagent_containers/patch/P = O
 								P.good_throw = 1
-							O.throw_at(target,meat_shield ? 2 : 4,3)
+							O.throw_at(target, istype(hero) ? 2 : 4, 3) // thrown short of far targets
 							count--
 						if (count <= 0)
 							break;
@@ -2077,7 +2095,6 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 			var/obj/critter/gunbot/drone/miniature_syndie/O = new /obj/critter/gunbot/drone/miniature_syndie(get_turf(src))
 			var/atom/target = get_edge_target_turf(src, pick(alldirs))
 			O.throw_at(target,4,3)
-
 		..()
 
 /obj/item/pipebomb/bomb/engineering
@@ -2133,11 +2150,6 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 			if (!M.stat)
 				M.emote("scream")
 
-
-
-
-
-
 /obj/proc/blowthefuckup(var/strength = 1, var/delete = 1) // dropping this to object-level so that I can use it for other things
 	var/T = get_turf(src)
 	src.visible_message("<span class='alert'>[src] explodes!</span>")
@@ -2184,7 +2196,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 	if (delete)
 		qdel(src)
 
-///Pick someone 'falling onto' the explosive
+///who, if anyone, is trying to cover the object
 /obj/item/proc/get_hero()
 	if (!istype(src.loc, /turf)) // must be on the floor/tile directly
 		return null
@@ -2192,15 +2204,11 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 	var/list/sacrifices = list()
 	for (var/mob/living/carbon/human/H in origin.contents)
 		// The deliberate act of using one's body to cover a live time-fused hand grenade
-		if(isalive(H) && H.lying && !isunconscious(H) && H.pulling == src)
+		if(isalive(H) && H.lying && H.hasStatus("blocking"))
 			sacrifices.Add(H)
 	if (!length(sacrifices))
 		return null
-	return pick(sacrifices)
-
-///Special case for heroic sacrifice
-/obj/item/proc/heroic_sacrifice(mob/living/carbon/human/H, strength)
-	logTheThing(LOG_COMBAT, src, "gibbed [constructTarget(H, "combat")] because they covered it with their body.")
-	src.visible_message("<span class='combat'><B>[H] dives onto [src], covering it with [his_or_her(H)] body!</B></span>")
-	// H.unlock_medal("Selfless Sacrifice?", 1) // "The ultimate sacrifice undoubtedly saved lives. Probably." // TODO: image
-	H.gib()
+	var/mob/living/carbon/human/hero = pick(sacrifices)
+	if (istype(hero))
+		src.visible_message("<span class='combat'><B>[hero] dives onto [src], covering it with [his_or_her(hero)] body!</B></span>")
+	return hero

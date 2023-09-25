@@ -1,6 +1,5 @@
 var/datum/explosion_controller/explosions
 #define RSS_SCALE 2
-#define ITEM_EXPLOSION_COVERED_REDUCTION_MULT 0.5
 //#define EXPLOSION_MAPTEXT_DEBUGGING
 /datum/explosion_controller
 	var/list/queued_explosions = list()
@@ -217,21 +216,10 @@ var/datum/explosion_controller/explosions
 			E.set_up(epicenter)
 			E.start()
 
+		var/radius = round(sqrt(power), 1) * brisance * range_cutoff_fraction
+
 		if (istype(source)) // Cannot read null.fingerprintslast
 			last_touched = source.fingerprintslast
-
-			if(istype(source, /obj/item))
-				var/list/covering_mobs = list()
-				for (var/mob/living/carbon/human/H in epicenter)
-					if(H.lying && H.hasStatus("blocking")) //trying to cover it
-						covering_mobs.Add(H)
-				var/mob/living/carbon/human/hero = PICK_OR_NULL(covering_mobs)
-				if(hero) //there goes my hero
-					hero.visible_message("<span class='alert'>[hero] wraps [his_or_her(hero)] body tightly around [src]!!</span>")
-					hero.cover_explosion_with_body(power, brisance)
-					power *= ITEM_EXPLOSION_COVERED_REDUCTION_MULT
-
-		var/radius = round(sqrt(power), 1) * brisance * range_cutoff_fraction
 
 		var/list/nodes = list()
 		var/list/blame = list()
@@ -296,4 +284,3 @@ var/datum/explosion_controller/explosions
 		src.epicenter = null
 
 #undef RSS_SCALE
-#undef ITEM_EXPLOSION_COVERED_REDUCTION_MULT
