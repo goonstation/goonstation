@@ -1,12 +1,10 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
 #define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
-#define PRESSURE_CRYSTAL_VALUATION_FORMULA ** 1.1 * 400 /// The full explosion-power-to-credits conversion formula
-#define PRESSURE_CRYSTAL_SALES_RANGE_LENGTH 5 /// The span size of each range for the pressure crystal sales list. Measured in explosion power
-#define PC_VALUE_DIMINISH_MULTIPLIER (rand(30, 60) / 100) // Every sale will multiply the current multiplier for its range by this value
-#define PC_HIGH_VALUE_RANGE_QUANTITY 7 // How many ranges will be given credit multipliers in New()?
-#define PC_BONUS_MULTIPLIER (rand(300, 600) / 100) // The multiplier to give to high value ranges. Bonus ranges are reset to 1x upon sale
-#define PC_MAX_POWER_FOR_BONUS_GENERATION 230 // Bonuses won't be given to ranges above this explosion power value
+/// The full explosion-power-to-credits conversion formula. Also used in smallprogs.dm
+#define PRESSURE_CRYSTAL_VALUATION(power) power ** 1.1 * 400
+/// The span size of each range. E.g.: 5 makes ranges 0-5, 5-10, 10-15 etc. Measured in explosion power. Also used in smallprogs.dm
+#define PRESSURE_CRYSTAL_SALES_RANGE_LENGTH 5
 
 //Codes for requisition post-transaction returns handling
 ///Requisition was not used, conduct a standard QM sale
@@ -101,12 +99,12 @@
 
 		src.launch_distance = get_dist(spawnpoint, target)
 
-		var/pcmi = PC_HIGH_VALUE_RANGE_QUANTITY
-		while (pcmi > 0) // Set up the high value pressure crystal targets
-			var/index = "[rand(1, ceil(PC_MAX_POWER_FOR_BONUS_GENERATION / PRESSURE_CRYSTAL_SALES_RANGE_LENGTH))]"
+		var/pcmi = 7 // How many ranges will be given credit multipliers
+		while (pcmi > 0)
+			var/index = "[rand(1, ceil(230 / PRESSURE_CRYSTAL_SALES_RANGE_LENGTH))]"
 			if (src.pressure_crystal_sales[index])
 				continue
-			src.pressure_crystal_sales[index] = PC_BONUS_MULTIPLIER
+			src.pressure_crystal_sales[index] = (rand(150, 400) / 100)
 			pcmi--
 
 	proc/add_commodity(var/datum/commodity/new_c)
@@ -418,14 +416,14 @@
 		if (pc.pressure <= 0)
 			return
 		var/index = "[ceil(pc.pressure / PRESSURE_CRYSTAL_SALES_RANGE_LENGTH)]"
-		var/value = pc.pressure PRESSURE_CRYSTAL_VALUATION_FORMULA
+		var/value = PRESSURE_CRYSTAL_VALUATION(pc.pressure)
 		if (src.pressure_crystal_sales[index])
 			value *= src.pressure_crystal_sales[index]
 		if (sell)
 			if (src.pressure_crystal_sales[index])
-				src.pressure_crystal_sales[index] = clamp(src.pressure_crystal_sales[index], 0.01, 1) * PC_VALUE_DIMINISH_MULTIPLIER
+				src.pressure_crystal_sales[index] = clamp(src.pressure_crystal_sales[index], 0.01, 1) * (rand(30, 60) / 100)
 			else
-				src.pressure_crystal_sales[index] = PC_VALUE_DIMINISH_MULTIPLIER
+				src.pressure_crystal_sales[index] = (rand(30, 60) / 100) // these 2 rands need to make a mult between 0 and 1
 		return value
 
 	proc/handle_returns(obj/storage/crate/sold_crate,var/return_code)
