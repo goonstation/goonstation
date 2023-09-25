@@ -171,7 +171,7 @@ TYPEINFO(/obj/item/sword)
 		var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
 		if (!S)
 			S = H.find_type_in_hand(/obj/item/sword, "left")
-		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
+		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus(list("stunned", "weakened", "paralysis"))))
 			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
@@ -639,7 +639,7 @@ TYPEINFO(/obj/item/sword/pink/angel)
 	throwforce = 8
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = EQUIPPED_WHILE_HELD
-	force = 7
+	force = 3
 	stamina_damage = 30
 	stamina_cost = 15
 	stamina_crit_chance = 10
@@ -650,6 +650,15 @@ TYPEINFO(/obj/item/sword/pink/angel)
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_LARGE)
 		processing_items.Add(src)
+
+	attack(mob/living/target, mob/user)
+		if (isrevolutionary(user))
+			var/nearby_revs = 0
+			for (var/mob/M in viewers(5, src.loc))
+				if (isrevolutionary(M))
+					nearby_revs++
+			random_brute_damage(target, min(25, nearby_revs * 5), TRUE)
+		..()
 
 	disposing()
 		..()

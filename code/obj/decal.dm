@@ -610,7 +610,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "Is it going to eat you if you get too close?"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
-	random_dir = 8
+	random_dir = WEST
 	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 

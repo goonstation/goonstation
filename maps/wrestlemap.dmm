@@ -577,7 +577,9 @@
 /obj/machinery/light/incandescent{
 	dir = 1
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "aju" = (
 /obj/decal/cleanable/paper,
@@ -725,7 +727,9 @@
 "amm" = (
 /obj/table/auto,
 /obj/random_item_spawner/desk_stuff,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "amn" = (
 /obj/machinery/camera{
@@ -735,7 +739,9 @@
 	pixel_y = 20;
 	tag = ""
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "amx" = (
 /obj/table/auto,
@@ -760,9 +766,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 8
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "anp" = (
 /turf/simulated/floor/caution/west,
@@ -879,7 +883,9 @@
 "apU" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "aqN" = (
 /obj/machinery/navbeacon/mule/ranch_north,
@@ -950,25 +956,11 @@
 	},
 /turf/simulated/grass,
 /area/station/garden/owlery)
-"asG" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4
-	},
-/turf/simulated/floor/shuttle,
-/area/shuttle/arrival/station)
 "asI" = (
 /obj/loudspeaker,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/research_outpost/protest)
-"asL" = (
-/obj/table/auto,
-/obj/machinery/light/incandescent{
-	dir = 8
-	},
-/obj/random_item_spawner/desk_stuff,
-/turf/simulated/floor/shuttle,
-/area/shuttle/arrival/station)
 "atc" = (
 /obj/grille/catwalk,
 /obj/cable{
@@ -1091,8 +1083,8 @@
 /obj/machinery/door_control{
 	id = "medbay_front";
 	name = "Medbay Door Control";
-	pixel_y = 26;
-	pixel_x = -23
+	pixel_x = -23;
+	pixel_y = 26
 	},
 /turf/simulated/floor/bluewhite{
 	dir = 8
@@ -1575,7 +1567,9 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "aHg" = (
 /turf/space/asteroid,
@@ -2314,9 +2308,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 1
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "aYH" = (
 /obj/rack,
@@ -3714,14 +3706,6 @@
 /obj/mapping_helper/access/medical_director,
 /turf/simulated/floor/white,
 /area/station/science/chemistry)
-"bFy" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1
-	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 1
-	},
-/area/space)
 "bFL" = (
 /obj/table/auto,
 /obj/item/bee_egg_carton,
@@ -3999,12 +3983,12 @@
 	pixel_y = 16
 	},
 /obj/item/scissors/surgical_scissors{
-	pixel_y = -8;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = -8
 	},
 /obj/item/storage/box/health_upgrade_kit{
-	pixel_y = 7;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 7
 	},
 /turf/simulated/floor/darkblue,
 /area/station/medical/medbay/surgery/storage)
@@ -5119,8 +5103,8 @@
 /area/station/medical/dome)
 "cjB" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_x = -32
 	},
 /turf/simulated/floor/black,
@@ -5746,8 +5730,8 @@
 /obj/table/auto,
 /obj/item/wrestlingbell,
 /obj/item/remote/porter/port_a_nanomed{
-	pixel_y = -1;
-	pixel_x = -7
+	pixel_x = -7;
+	pixel_y = -1
 	},
 /obj/item/decoration/flower_vase{
 	pixel_x = 10
@@ -5834,7 +5818,9 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "cBu" = (
 /obj/table/auto,
@@ -6008,7 +5994,7 @@
 	dir = 1;
 	icon_state = "alt_heater"
 	},
-/turf/simulated/shuttle/wall,
+/turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
@@ -6509,13 +6495,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/south)
-"cUd" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	dir = 1;
-	icon_state = "wall_space";
-	name = "window"
-	},
-/area/space)
 "cUu" = (
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/wall/auto/supernorn,
@@ -6589,7 +6568,7 @@
 /turf/space,
 /area/space)
 "cVC" = (
-/turf/simulated/shuttle/wall,
+/turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
@@ -6601,7 +6580,7 @@
 /area/station/crew_quarters/fitness)
 "cVT" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
-/turf/simulated/floor/shuttle,
+/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "cWe" = (
 /obj/machinery/disposal/morgue,
@@ -6724,7 +6703,9 @@
 /area/station/maintenance/east)
 "dae" = (
 /obj/landmark/gps_waypoint,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "daf" = (
 /obj/lattice{
@@ -6768,8 +6749,8 @@
 "dat" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -7105,7 +7086,9 @@
 /obj/stool/chair/comfy/shuttle{
 	dir = 4
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "diy" = (
 /turf/simulated/wall/auto/supernorn,
@@ -7523,7 +7506,9 @@
 /area/station/mining/cargo_staff_room)
 "drm" = (
 /obj/landmark/observer,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "drn" = (
 /obj/cable{
@@ -8404,7 +8389,7 @@
 /area/station/hallway/primary/south)
 "dJu" = (
 /obj/decal/cleanable/rust,
-/turf/simulated/shuttle/wall,
+/turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
@@ -9090,8 +9075,8 @@
 	icon_state = "1-2"
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_x = 32
 	},
 /turf/simulated/floor/redblack{
@@ -9148,11 +9133,6 @@
 /obj/cable,
 /turf/simulated/floor/specialroom/gym,
 /area/station/turret_protected/ai)
-"dZR" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	name = "window"
-	},
-/area/shuttle/arrival/station)
 "eah" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -9729,12 +9709,15 @@
 /turf/simulated/floor/stairs/wide,
 /area/station/hallway/primary/west)
 "ejD" = (
-/obj/table/auto,
 /obj/machinery/light/incandescent{
 	dir = 8
 	},
-/obj/item/storage/toolbox/emergency,
-/turf/simulated/floor/shuttle,
+/obj/machinery/sleeper/compact{
+	dir = 8
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "ejR" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/west,
@@ -10568,7 +10551,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 4
 	},
-/turf/simulated/shuttle/wall/corner,
+/turf/space,
 /area/shuttle/arrival/station)
 "eBA" = (
 /obj/cable{
@@ -11074,7 +11057,11 @@
 /area/station/com_dish/comdish)
 "eQP" = (
 /obj/machinery/light/incandescent,
-/turf/simulated/floor/shuttle,
+/obj/table/auto,
+/obj/item/storage/toolbox/emergency,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "eRc" = (
 /obj/table/auto,
@@ -11254,7 +11241,7 @@
 /area/space)
 "eUs" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "eUu" = (
 /obj/machinery/camera{
@@ -11788,7 +11775,9 @@
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "ffB" = (
 /obj/machinery/light/emergency{
@@ -12383,13 +12372,6 @@
 /obj/item/reagent_containers/glass/bottle/fruitful,
 /turf/simulated/floor/caution,
 /area/station/hydroponics/bay)
-"fvB" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	dir = 4;
-	icon_state = "wall_space";
-	name = "window"
-	},
-/area/shuttle/arrival/station)
 "fvC" = (
 /turf/simulated/floor/neutral/corner{
 	dir = 1
@@ -12431,17 +12413,17 @@
 	},
 /obj/machinery/phone,
 /obj/item/storage/pill_bottle/salbutamol{
-	pixel_y = -1;
-	pixel_x = 11
+	pixel_x = 11;
+	pixel_y = -1
 	},
 /obj/item/kitchen/food_box/lollipop{
-	pixel_y = 10;
-	pixel_x = -8
+	pixel_x = -8;
+	pixel_y = 10
 	},
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -12936,7 +12918,7 @@
 /area/station/crew_quarters/baroffice)
 "fHc" = (
 /obj/machinery/shuttle/engine/propulsion/burst{
-	dir = 4;
+	dir = 8;
 	icon_state = "alt_propulsion"
 	},
 /turf/space,
@@ -13367,8 +13349,8 @@
 /obj/machinery/cashreg,
 /obj/table/reinforced/chemistry/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
@@ -13527,14 +13509,14 @@
 "fST" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/item/item_box/medical_patches/styptic{
-	pixel_y = 2;
-	pixel_x = -5
+	pixel_x = -5;
+	pixel_y = 2
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbooth)
@@ -14088,9 +14070,7 @@
 /obj/indestructible/shuttle_corner{
 	dir = 8
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 4
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "gef" = (
 /turf/simulated/floor/white,
@@ -14465,8 +14445,8 @@
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -14988,10 +14968,10 @@
 	dir = 4
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_y = 25;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -15076,8 +15056,8 @@
 "gDD" = (
 /obj/machinery/conveyor/EW{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
@@ -17426,8 +17406,8 @@
 "hGz" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/cable{
 	icon_state = "1-8"
@@ -17607,9 +17587,8 @@
 	dir = 8;
 	icon_state = "alt_heater"
 	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "hJH" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
@@ -17995,12 +17974,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"hTL" = (
-/obj/machinery/sleep_console{
-	dir = 8
-	},
-/turf/simulated/floor/shuttle,
-/area/shuttle/arrival/station)
 "hTN" = (
 /obj/machinery/light/emergency{
 	dir = 1
@@ -19182,8 +19155,8 @@
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -19471,21 +19444,21 @@
 "iCB" = (
 /obj/item/paper_bin,
 /obj/item/pen{
-	rand_pos = 0;
 	pixel_x = -5;
-	pixel_y = -3
+	pixel_y = -3;
+	rand_pos = 0
 	},
 /obj/disposalpipe/segment/mail,
 /obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/stamp{
-	rand_pos = 0;
-	pixel_y = 6
+	pixel_y = 6;
+	rand_pos = 0
 	},
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -20791,7 +20764,9 @@
 /area/station/maintenance/northeast)
 "jax" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
 /area/shuttle/arrival/station)
 "jaM" = (
 /obj/machinery/light{
@@ -22089,8 +22064,8 @@
 "jEF" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
@@ -22630,8 +22605,8 @@
 "jOS" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/item/organ/appendix,
 /obj/cable{
@@ -27973,8 +27948,8 @@
 	},
 /obj/machinery/cashreg,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/orange,
@@ -28203,8 +28178,8 @@
 /obj/item/clipboard,
 /obj/machinery/light/lamp/black,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/blueblack{
@@ -29735,8 +29710,8 @@
 	pixel_y = 12
 	},
 /obj/item/storage/firstaid/brute{
-	pixel_y = 6;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 6
 	},
 /obj/item/reagent_containers/emergency_injector/epinephrine,
 /obj/item/reagent_containers/food/drinks/coffee{
@@ -30035,6 +30010,11 @@
 "ngE" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/research_director)
+"ngU" = (
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
+/area/shuttle/arrival/station)
 "ngX" = (
 /obj/cable{
 	icon_state = "4-10"
@@ -30273,7 +30253,7 @@
 /turf/simulated/floor/black,
 /area/station/security/brig)
 "nlg" = (
-/obj/machinery/space_heater,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/caution/east,
 /area/station/hangar/qm)
 "nlV" = (
@@ -30684,8 +30664,8 @@
 /obj/mapping_helper/access/medical,
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
@@ -31459,17 +31439,17 @@
 /obj/mapping_helper/access/medical,
 /obj/table/reinforced/auto,
 /obj/item/clipboard{
-	pixel_y = 1;
-	pixel_x = 14
+	pixel_x = 14;
+	pixel_y = 1
 	},
 /obj/item/item_box/medical_patches/styptic{
-	pixel_y = 4;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 4
 	},
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -31545,8 +31525,8 @@
 "nOZ" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/plasticflaps,
 /obj/cable{
@@ -33878,6 +33858,7 @@
 /area/station/janitor/supply)
 "oPb" = (
 /obj/machinery/light,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "oPj" = (
@@ -39563,6 +39544,16 @@
 	dir = 8
 	},
 /area/station/bridge)
+"rtA" = (
+/obj/machinery/light/incandescent{
+	dir = 1
+	},
+/obj/table/auto,
+/obj/random_item_spawner/desk_stuff,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
+/area/shuttle/arrival/station)
 "rtE" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk{
@@ -41543,8 +41534,8 @@
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/orange,
@@ -41643,8 +41634,8 @@
 "slX" = (
 /obj/machinery/conveyor/NS{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/machinery/door_control{
 	id = "speedboost_crusher";
@@ -42973,7 +42964,7 @@
 	icon_state = "alt_heater"
 	},
 /obj/decal/cleanable/rust,
-/turf/simulated/shuttle/wall,
+/turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
@@ -43432,8 +43423,8 @@
 /obj/item/paper_bin,
 /obj/item/pen/fancy,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 8;
-	autoclose = 0
+	autoclose = 0;
+	dir = 8
 	},
 /obj/mapping_helper/access/heads,
 /turf/simulated/floor/blueblack{
@@ -45058,8 +45049,8 @@
 	},
 /obj/machinery/conveyor/EW{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -45415,6 +45406,14 @@
 /area/abandonedship{
 	name = "Crashed Limo"
 	})
+"tTB" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
+/area/shuttle/arrival/station)
 "tUM" = (
 /obj/stool/chair{
 	dir = 1
@@ -45522,9 +45521,9 @@
 /area/station/maintenance/disposal)
 "tZa" = (
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
 	id = "Sleeper_Access";
-	name = "Listening Post";
-	dir = 4
+	name = "Listening Post"
 	},
 /turf/simulated/floor/black,
 /area/listeningpost)
@@ -47322,7 +47321,7 @@
 	},
 /area/station/solar/west)
 "uPn" = (
-/turf/simulated/floor/shuttle,
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "uPq" = (
 /obj/cable{
@@ -48163,8 +48162,8 @@
 	},
 /obj/mapping_helper/access/medical,
 /obj/machinery/door/airlock/pyro/glass/windoor{
-	dir = 1;
-	autoclose = 0
+	autoclose = 0;
+	dir = 1
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
@@ -51643,8 +51642,8 @@
 "wFC" = (
 /obj/machinery/conveyor/WE{
 	id = "disposals";
-	operating = 1;
-	move_lag = 16
+	move_lag = 16;
+	operating = 1
 	},
 /obj/cable{
 	icon_state = "4-8"
@@ -53647,6 +53646,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/station/bridge)
+"xvu" = (
+/obj/machinery/light/incandescent,
+/turf/unsimulated/floor/shuttle{
+	dir = 4
+	},
+/area/shuttle/arrival/station)
 "xvD" = (
 /obj/machinery/door/airlock/pyro/glass{
 	dir = 4;
@@ -54196,7 +54201,7 @@
 	})
 "xFL" = (
 /obj/table/auto,
-/obj/item/clothing/under/gimmick/chaps,
+/obj/item/clothing/suit/chaps,
 /obj/item/instrument/trumpet,
 /obj/item/clothing/glasses/sunglasses,
 /turf/simulated/floor/plating,
@@ -103084,11 +103089,11 @@ vnX
 vnX
 vnX
 vnX
-dII
+vnX
 fHc
 fHc
 fHc
-dII
+vnX
 vnX
 vnX
 yaT
@@ -103689,8 +103694,8 @@ vnX
 amV
 hJv
 cBo
-asL
-uPn
+ejD
+ngU
 ejD
 aHc
 hJv
@@ -103989,12 +103994,12 @@ vnX
 vnX
 vnX
 afe
-ajr
-uPn
-hTL
-uPn
-hTL
-uPn
+rtA
+ngU
+ngU
+ngU
+ngU
+ngU
 eQP
 afe
 eDf
@@ -104291,13 +104296,13 @@ vnX
 vnX
 hGG
 eUs
-uPn
+ngU
 diw
 diw
-uPn
+ngU
 diw
 diw
-uPn
+ngU
 jax
 cVT
 aTk
@@ -104593,13 +104598,13 @@ vnX
 vnX
 hGG
 eUs
-uPn
-uPn
-uPn
-uPn
-uPn
-uPn
-uPn
+ngU
+ngU
+ngU
+ngU
+ngU
+ngU
+ngU
 jax
 cVT
 aTk
@@ -104896,12 +104901,12 @@ vnX
 vnX
 afe
 ajr
-uPn
-uPn
-uPn
-uPn
-uPn
-eQP
+ngU
+ngU
+ngU
+ngU
+ngU
+xvu
 afe
 bYH
 vpn
@@ -105200,7 +105205,7 @@ eUs
 amm
 diw
 diw
-uPn
+ngU
 diw
 diw
 apU
@@ -105500,11 +105505,11 @@ vnX
 hGG
 eUs
 apU
-uPn
-uPn
+ngU
+ngU
 dae
-uPn
-uPn
+ngU
+ngU
 amm
 eUs
 eDf
@@ -105800,13 +105805,13 @@ vnX
 vnX
 vnX
 vnX
-bFy
-asG
+aXX
+tTB
 amn
-uPn
+ngU
 drm
-uPn
-uPn
+ngU
+ngU
 ffv
 gec
 eDf
@@ -106104,11 +106109,11 @@ vnX
 vnX
 hGG
 eUs
-uPn
+ngU
 diw
 diw
 diw
-uPn
+ngU
 eUs
 say
 eDf
@@ -106407,10 +106412,10 @@ vnX
 vnX
 afe
 ajr
-uPn
-uPn
-uPn
-uPn
+ngU
+ngU
+ngU
+xvu
 afe
 lVt
 eDf
@@ -106708,11 +106713,11 @@ vnX
 vnX
 hGG
 eUs
-uPn
+ngU
 diw
 diw
 diw
-uPn
+ngU
 jax
 uPn
 cVT
@@ -107010,11 +107015,11 @@ vnX
 vnX
 hGG
 eUs
-uPn
-uPn
-uPn
-uPn
-uPn
+ngU
+ngU
+ngU
+ngU
+ngU
 jax
 uPn
 cVT
@@ -107316,7 +107321,7 @@ ajr
 diw
 diw
 diw
-eQP
+xvu
 afe
 lVt
 eDf
@@ -107614,10 +107619,10 @@ vnX
 vnX
 vnX
 aXX
-uPn
-uPn
-uPn
-uPn
+tTB
+ngU
+ngU
+ngU
 ffv
 gec
 iAO
@@ -107916,11 +107921,11 @@ vnX
 vnX
 vnX
 vnX
-cUd
-dZR
-dZR
-dZR
-fvB
+aXX
+eUs
+eUs
+eUs
+gec
 vnX
 iAO
 eDf

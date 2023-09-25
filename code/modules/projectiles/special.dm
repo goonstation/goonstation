@@ -270,7 +270,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 /datum/projectile/special/spreader/uniform_burst/blaster
 	name = "blaster wave"
 	sname = "wave fire"
-	spread_angle = 33
+	spread_angle = 25
 	cost = 200
 	pellets_to_fire = 5
 	spread_projectile_type = /datum/projectile/laser/blaster/blast
@@ -562,7 +562,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	var/desired_y = 0
 
 	var/rotate_proj = 1
-	var/face_desired_dir = 0
+	var/face_desired_dir = FALSE
 
 	goes_through_walls = 1
 
@@ -768,7 +768,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	easemult = 0.3
 
 	rotate_proj = 1
-	face_desired_dir = 1
+	face_desired_dir = TRUE
 
 	goes_through_walls = 1
 
@@ -811,7 +811,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "spiritbat"
 	rotate_proj = 0
-	face_desired_dir = 1
+	face_desired_dir = TRUE
 	goes_through_walls = 1
 	is_magical = 1
 

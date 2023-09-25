@@ -152,7 +152,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle/weapon)
 	anchored = ANCHORED
 	density = 1
 	layer = 20
-	dir = 8
+	dir = WEST
 	var/icon_firing = "howitzer-firing"
 	var/sound_firing = 'sound/weapons/energy/howitzer_firing.ogg'
 	var/sound_shot = 'sound/weapons/energy/howitzer_shot.ogg'
@@ -176,7 +176,7 @@ ABSTRACT_TYPE(/obj/machinery/shuttle/weapon)
 	anchored = ANCHORED
 	density = 1
 	layer = 20
-	dir = 8
+	dir = WEST
 	var/icon_firing = "howitzerL-firing"
 	var/current_projectile = new/datum/projectile/bullet/howitzer
 

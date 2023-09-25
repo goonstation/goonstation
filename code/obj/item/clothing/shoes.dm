@@ -475,6 +475,12 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	c_flags = NOSLIP
 	compatible_species = list("cow", "human")
 
+/obj/item/clothing/shoes/swat/captain
+	name = "captain's boots"
+	desc = "A set of formal shoes with a protective layer underneath."
+	icon_state = "capboots"
+	item_state = "capboots"
+
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"
 	desc = "A pair of cute little pink rabbit slippers."

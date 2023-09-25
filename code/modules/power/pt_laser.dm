@@ -8,7 +8,7 @@
 	icon_state = "ptl"
 	density = 1
 	anchored = ANCHORED_ALWAYS
-	dir = 4
+	dir = EAST
 	bound_height = 96
 	bound_width = 96
 	var/output = 0		//power output of the beam
@@ -650,7 +650,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	luminosity = 1
 	mouse_opacity = 0

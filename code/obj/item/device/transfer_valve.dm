@@ -168,10 +168,16 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				tank_one.set_loc(get_turf(src))
 				tank_one = null
 				UpdateIcon()
+				if(src.equipped_in_slot)
+					var/mob/wearer = src.loc
+					wearer.update_clothing()
 			if(href_list["tanktwo"])
 				tank_two.set_loc(get_turf(src))
 				tank_two = null
 				UpdateIcon()
+				if(src.equipped_in_slot)
+					var/mob/wearer = src.loc
+					wearer.update_clothing()
 			if(href_list["open"])
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
@@ -297,12 +303,13 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			src.underlays += straps
 
 	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
-		src.tank_one_image = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]1")
-		src.tank_one_image_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]_under",)
-		src.tank_two_image = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]2")
-		src.tank_two_image_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]_under")
-		src.wear_image.overlays = list(tank_one_image, tank_two_image)
-		src.wear_image.underlays = list(tank_one_image_under, tank_two_image_under)
+		src.wear_image.overlays = list()
+		if(src.tank_one)
+			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]1")
+			src.wear_image.underlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]_under")
+		if(src.tank_two)
+			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_two_icon]2")
+			src.wear_image.underlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_two_icon]_under")
 
 		/*
 		Exadv1: I know this isn't how it's going to work, but this was just to check

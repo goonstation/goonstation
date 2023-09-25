@@ -62,6 +62,9 @@
 #elif defined(MAP_OVERRIDE_DESTINY)
 #include "destiny.dm"
 
+#elif defined(MAP_OVERRIDE_DENSITY2)
+#include "density2.dm"
+
 #elif defined(MAP_OVERRIDE_HORIZON)
 #include "horizon.dm"
 
@@ -76,6 +79,9 @@
 
 #elif defined(MAP_OVERRIDE_DENSITY)
 #include "density.dm"
+
+#elif defined(MAP_OVERRIDE_DENSITY2)
+#include "density2.dm"
 
 #elif defined(MAP_OVERRIDE_OZYMANDIAS)
 #include "ozymandias.dm"

@@ -35,7 +35,7 @@
 	pixel_x = 6;
 	pixel_y = 10
 	},
-/obj/item/clothing/under/gimmick/chaps{
+/obj/item/clothing/suit/chaps{
 	pixel_y = 2;
 	pixel_x = -8
 	},
