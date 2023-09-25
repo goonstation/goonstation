@@ -21,13 +21,15 @@
 	///The key/value pair is commodity_type / ratio of relationship B/A where A is the current commodity's value related to linked commodity B
 	var/list/linked_commodities = null
 
-	New()
+	New(atom/source, var/amount_sell_or_buy = -1)
 		. = ..()
 		baseprice = price
 		if(isnull(upperfluc))
 			upperfluc = baseprice/2
 		if(isnull(lowerfluc))
 			lowerfluc = -baseprice/2
+		if(amount_sell_or_buy > 0)
+			src.amount = amount_sell_or_buy
 
 /*
 /datum/commodity/clothing
