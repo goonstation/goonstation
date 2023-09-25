@@ -2808,6 +2808,12 @@
 /obj/disposalpipe/trunk/north,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
+"bpz" = (
+/obj/disposalpipe/segment/bent/west,
+/turf/simulated/floor/redblack/corner{
+	dir = 4
+	},
+/area/station/hangar/sec)
 "bpC" = (
 /obj/cable/orange{
 	icon_state = "0-4"
@@ -3006,6 +3012,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/redblack/corner{
 	dir = 1
 	},
@@ -8733,7 +8740,6 @@
 /turf/simulated/floor/carpet/blue/fancy/edge/south,
 /area/station/bridge)
 "dYT" = (
-/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/engine/caution/north,
 /area/station/hangar/sec)
 "dYV" = (
@@ -27328,8 +27334,7 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/kitchen)
 "lHq" = (
-/obj/machinery/disposal,
-/obj/disposalpipe/trunk/east,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/redblack{
 	dir = 9
 	},
@@ -28063,6 +28068,12 @@
 	dir = 1
 	},
 /area/station/science/hall)
+"lVa" = (
+/obj/disposalpipe/segment/bent/east,
+/turf/simulated/floor/redblack{
+	dir = 8
+	},
+/area/station/hangar/sec)
 "lVy" = (
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/power/apc/autoname_north,
@@ -36211,6 +36222,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/wood/two,
 /area/station/security/detectives_office)
+"pCd" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/industrial,
+/area/station/storage/warehouse)
 "pCj" = (
 /obj/machinery/light/small{
 	dir = 4;
@@ -39996,11 +40011,8 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
-/obj/storage/secure/crate/gear{
-	desc = "A secure crate for transferring contraband, and definitely not people.";
-	name = "Secure Transfer Crate";
-	req_access_txt = "1"
-	},
+/obj/machinery/disposal,
+/obj/disposalpipe/trunk/north,
 /turf/simulated/floor/redblack{
 	dir = 10
 	},
@@ -44574,10 +44586,10 @@
 	},
 /area/station/medical/medbay/lobby)
 "ttO" = (
-/obj/disposalpipe/segment/bent/west,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/redblack{
 	dir = 1
 	},
@@ -88582,7 +88594,7 @@ vuc
 hWc
 lHq
 poP
-poP
+lVa
 rsp
 fkb
 fJK
@@ -88884,7 +88896,7 @@ phq
 iGw
 ttO
 bsd
-qiW
+bpz
 pmO
 uBF
 qhX
@@ -106084,7 +106096,7 @@ drr
 hkH
 rZb
 aOb
-pJt
+xQI
 nes
 nes
 cFj
@@ -106388,9 +106400,9 @@ hFf
 vlO
 gdj
 wqY
-oxB
+pCd
 vlO
-xQI
+oxB
 wwm
 eNz
 mlm
