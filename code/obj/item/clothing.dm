@@ -60,7 +60,7 @@ ABSTRACT_TYPE(/obj/item/clothing)
 
 
 	UpdateName()
-		src.name = src.real_name ? src.real_name : initial(src.name)
+		src.name = src.real_name || initial(src.name)
 		if(src.material?.usesSpecialNaming())
 			src.name = src.material.specialNaming(src)
 		src.name = "[name_prefix(null, 1)][src.get_stains()][src.name][name_suffix(null, 1)]"
