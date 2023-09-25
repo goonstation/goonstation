@@ -342,6 +342,8 @@
 
 	Entered(var/atom/movable/AM)
 		. = ..()
+		if (istype(AM, /datum/projectile/))
+			return
 		if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
 			return
 		if (locate(/obj/lattice) in src)
@@ -542,6 +544,8 @@
 		return
 
 	Entered(atom/movable/AM as mob|obj)
+		if (istype(AM, /datum/projectile/))
+			return
 		if (HAS_FLAG(AM.event_handler_flags, IMMUNE_TRENCH_WARP))
 			return ..()
 		var/turf/T = pick_landmark(LANDMARK_FALL_SEA)
