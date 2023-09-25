@@ -403,8 +403,11 @@ var/global/debug_messages = 0
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
 		src.verbs += /client/proc/cmd_debug_del_all_check
 		boutput(usr, "Deleting [hsbitem]...")
+		var/station_only = alert("Only delete from the station Z?",,"Yes" ,"No")
 		var/numdeleted = 0
 		for(var/atom/O as anything in find_all_by_type(hsbitem, lagcheck=(background == "yes")))
+			if ((station_only == "Yes") && O.z != Z_LEVEL_STATION)
+				continue
 			qdel(O)
 			numdeleted++
 			if(background == "Yes")
@@ -443,9 +446,12 @@ var/global/debug_messages = 0
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
 		src.verbs += /client/proc/cmd_debug_del_all_check
 		boutput(usr, "Deleting [hsbitem]...")
+		var/station_only = alert("Only delete from the station Z?",,"Yes" ,"No")
 		var/numdeleted = 0
 		var/numtotal = 0
 		for(var/atom/O as anything in find_all_by_type(hsbitem, lagcheck=(background == "yes")))
+			if ((station_only == "Yes") && O.z != Z_LEVEL_STATION)
+				continue
 			numtotal++
 			if(prob(50))
 				qdel(O)
@@ -895,7 +901,7 @@ proc/display_camera_paths()
 	disconnect_camera_network()
 	build_camera_network()
 
-	if(camera_path_list.len > 0) //Refresh the display
+	if(length(camera_path_list) > 0) //Refresh the display
 		display_camera_paths()
 
 /* Wire note: View Runtimes supercedes this in a different way
@@ -1086,7 +1092,7 @@ proc/display_camera_paths()
 	src.animate_color(newColorMatrix)
 
 	var/matrixTable = "<table>"
-	var/isBigMatrix = (newColorMatrix.len == 20)
+	var/isBigMatrix = (length(newColorMatrix) == 20)
 	var/rows = isBigMatrix ? 5 : 4
 	for(var/row=1, row<=rows, row++)
 		matrixTable += "<tr>"
@@ -1198,9 +1204,7 @@ var/datum/flock/testflock
 		if(!src.mob)
 			return
 		var/fname = "spawn_dbg.json"
-		if (fexists(fname))
-			fdel(fname)
-		text2file(json_encode(list("spawn" = detailed_spawn_dbg)), fname)
+		rustg_file_write(json_encode(list("spawn" = detailed_spawn_dbg)), fname)
 		var/tmp_file = file(fname)
 		usr << ftp(tmp_file)
 		fdel(fname)

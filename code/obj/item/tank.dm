@@ -44,7 +44,6 @@ Contains:
 	New()
 		..()
 		src.air_contents = new /datum/gas_mixture
-		src.air_contents.vacuum()
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
 		processing_items |= src
@@ -301,6 +300,12 @@ Contains:
 
 ////////////////////////////////////////////////////////////
 
+/obj/item/tank/empty
+	name = "gas tank"
+	icon_state = "empty"
+
+////////////////////////////////////////////////////////////
+
 /obj/item/tank/anesthetic
 	name = "gas tank (sleeping agent)"
 	icon_state = "anesthetic"
@@ -310,9 +315,7 @@ Contains:
 	New()
 		..()
 		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		var/datum/gas/sleeping_agent/trace_gas = src.air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-		trace_gas.moles = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
-		return
+		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 
 ////////////////////////////////////////////////////////////
 
@@ -358,7 +361,7 @@ TYPEINFO(/obj/item/tank/jetpack)
 		src.icon_state = "[base_icon_state][src.on]"
 		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
 		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
-		update_icon()
+		UpdateIcon()
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.update_clothing() // Immediately update the worn icon
@@ -431,7 +434,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.volume = 18
+		src.air_contents.volume = 30
 		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 ////////////////////////////////////////////////////////////
@@ -470,7 +473,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 /obj/item/tank/emergency_oxygen/extended
 	name = "extended capacity pocket oxygen tank"
-	desc = "A an extended capacity version of the pocket emergency oxygen tank."
+	desc = "An extended capacity version of the pocket emergency oxygen tank."
 	icon_state = "ex_pocket_oxtank"
 
 	New()
@@ -491,6 +494,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
+	item_state = "em_oxtank"
 	flags = FPRINT | TABLEPASS | CONDUCT
 	c_flags = ONBELT
 	health = 5
@@ -504,7 +508,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 
 	New()
 		..()
-		src.air_contents.volume = 8
+		src.air_contents.volume = 15
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 

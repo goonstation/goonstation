@@ -94,6 +94,20 @@
 		..()
 		telescopeDialogue = new/datum/dialogueMaster/telescopeDojo(src)
 
+#ifdef ENABLE_ARTEMIS
+/datum/telescope_event/artemis
+	name = "Artemis"
+	name_undiscovered = "Encrypted NT signal"
+	id = "at"
+	size = 10
+	manual = 1
+	tags = TAG_TELEPORT_LOC
+
+	New()
+		..()
+		telescopeDialogue = new/datum/dialogueMaster/telescopeArtemis(src)
+#endif
+
 /datum/telescope_event/cow
 	name = "Void Diner"
 	name_undiscovered = "Unusual signal"

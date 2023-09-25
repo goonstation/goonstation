@@ -19,7 +19,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        map: ["COGMAP", "COGMAP2", "CLARION", "DONUT3", "DONUT2", "OSHAN", "KONDARU", "NADIR", "ATLAS", "SPACE_PREFAB", "UNDERWATER_PREFAB", "FULL"]
+        map: ["COGMAP", "COGMAP2", "CLARION", "DONUT3", "DONUT2", "OSHAN", "KONDARU", "NADIR", "ATLAS", "SPACE_PREFAB", "UNDERWATER_PREFAB", "RANDOM_ROOMS", "FULL"]
         compiletype: ["default"]
     steps:
       - uses: actions/checkout@v3
@@ -72,6 +72,11 @@ jobs:
         if: "matrix.map == 'UNDERWATER_PREFAB'"
         run: |
           tools/ci/dm.sh -DCIBUILD -DUNDERWATER_PREFAB_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
+
+      - name: Compile random rooms
+        if: "matrix.map == 'RANDOM_ROOMS'"
+        run: |
+          tools/ci/dm.sh -DCIBUILD -DRANDOM_ROOM_RUNTIME_CHECKING  -DIM_REALLY_IN_A_FUCKING_HURRY_HERE goonstation.dme
 
       - name: Compile with full pre-round setup
         if: "matrix.map == 'FULL'"

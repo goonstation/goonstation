@@ -174,7 +174,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 300))
-					playsound(src, 'sound/misc/lincolnshire.ogg', 65, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/misc/lincolnshire.ogg', 65, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> plays a song!</span>"
 			if ("fart")
 				return
@@ -397,7 +397,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 		words += pick(more_words)
 		return words
 
-ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
+ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleportation)
 /datum/targetable/critter/cryptid_plushie/teleportation
 	var/animation_ripples = 4
 	var/animation_waves = 3

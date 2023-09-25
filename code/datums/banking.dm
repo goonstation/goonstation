@@ -66,8 +66,8 @@
 	proc/default_wages()
 
 		station_budget =      0
-		shipping_budget = 30000
-		research_budget = 20000
+		shipping_budget = PAY_EXECUTIVE*5
+		research_budget = PAY_EXECUTIVE*10
 		total_stipend = station_budget + shipping_budget + research_budget
 
 		// This is gonna throw up some crazy errors if it isn't done right!
@@ -210,7 +210,7 @@
 */
 
 /obj/machinery/computer/ATM
-	name = "ATM"
+	name = "\improper ATM"
 	icon_state = "atm"
 
 	var/datum/db_record/accessed_record = null
@@ -226,7 +226,7 @@
 			boutput(user, "<span class='notice'>You swipe your ID card in the ATM.</span>")
 			src.scan = id_card
 			return
-		if(istype(I, /obj/item/spacecash/))
+		if(istype(I, /obj/item/currency/spacecash/))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 				src.accessed_record["current_money"] += I.amount
@@ -250,8 +250,8 @@
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
 			return
-		if(istype(I, /obj/item/spacebux))
-			var/obj/item/spacebux/SB = I
+		if(istype(I, /obj/item/currency/spacebux))
+			var/obj/item/currency/spacebux/SB = I
 			if(SB.spent == 1)
 				return
 			SB.spent = 1
@@ -259,12 +259,12 @@
 			user.client.add_to_bank(SB.amount)
 			boutput(user, "<span class='alert'>You deposit [SB.amount] spacebux into your account!</span>")
 			qdel(SB)
-		else if(istype(I, /obj/item/spacecash/))
+		else if(istype(I, /obj/item/currency/spacecash/))
 			if (src.accessed_record)
 				boutput(user, "<span class='notice'>You insert the cash into the ATM.</span>")
 
-				if(istype(I, /obj/item/spacecash/buttcoin))
-					boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
+				if(istype(I, /obj/item/currency/spacecash/buttcoin))
+					boutput(user, "<span class='success'>Your transaction will complete anywhere within 10 to 10e27 minutes from now.</span>")
 				else
 					src.accessed_record["current_money"] += I.amount
 
@@ -391,7 +391,7 @@
 					boutput(usr, "<span class='alert'>Insufficient funds in account.</span>")
 				else
 					src.accessed_record["current_money"] -= amount
-					var/obj/item/spacecash/S = new /obj/item/spacecash
+					var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
 
@@ -446,14 +446,14 @@
 				else
 					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)
-					var/obj/item/spacebux/newbux = new(src.loc, amount)
+					var/obj/item/currency/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)
 
 		src.updateUsrDialog()
 
 
 /obj/machinery/computer/bank_data
-	name = "Bank Records"
+	name = "bank records"
 	icon_state = "databank"
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -745,7 +745,7 @@
 		..()
 
 /obj/submachine/ATM
-	name = "ATM"
+	name = "\improper ATM"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "atm"
 	density = 0
@@ -783,7 +783,7 @@
 			src.scan = id_card
 			attack_hand(user)
 			return
-		if (istype(I, /obj/item/spacecash/))
+		if (istype(I, /obj/item/currency/spacecash/))
 			if (afterlife)
 				boutput(user, "<span class='alert'>On closer inspection, this ATM doesn't seem to have a deposit slot for credits!</span>")
 				return
@@ -819,8 +819,8 @@
 				qdel(I)
 			else boutput(user, "<span class='alert'>You need to log in before inserting a ticket!</span>")
 			return
-		if (istype(I, /obj/item/spacebux))
-			var/obj/item/spacebux/SB = I
+		if (istype(I, /obj/item/currency/spacebux))
+			var/obj/item/currency/spacebux/SB = I
 			if(SB.spent == 1)
 				return
 			SB.spent = 1
@@ -837,11 +837,11 @@
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
 			user.lastattacked = src
 			attack_particle(user,src)
-			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,1)
+			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,TRUE)
 			src.take_damage(damage, user)
 			user.visible_message("<span class='alert'><b>[user] bashes the [src] with [I]!</b></span>")
 		else
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,TRUE)
 			user.visible_message("<span class='alert'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
 			return
 
@@ -978,7 +978,7 @@
 					src.show_message("Insufficient funds in account.", "danger", "atm")
 				else
 					src.accessed_record["current_money"] -= amount
-					var/obj/item/spacecash/S = new /obj/item/spacecash
+					var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
 					S.setup(src.loc, amount)
 					usr.put_in_hand_or_drop(S)
 					src.show_message("Withdrawal successful.", "success", "atm")
@@ -995,7 +995,7 @@
 				else
 					logTheThing(LOG_DIARY, usr, "withdrew a spacebux token worth [amount].")
 					usr.client.add_to_bank(-amount)
-					var/obj/item/spacebux/newbux = new(src.loc, amount)
+					var/obj/item/currency/spacebux/newbux = new(src.loc, amount)
 					usr.put_in_hand_or_drop(newbux)
 				. = TRUE
 		src.add_fingerprint(usr)
@@ -1015,7 +1015,7 @@
 			src.broken = 1
 			src.visible_message("<span class='alert'><b>The [src.name] breaks apart and spews out cash!</b></span>")
 			src.icon_state = "[src.icon_state]_broken"
-			var/obj/item/C = pick(/obj/item/spacecash/hundred, /obj/item/spacecash/fifty, /obj/item/spacecash/ten)
+			var/obj/item/C = pick(/obj/item/currency/spacecash/hundred, /obj/item/currency/spacecash/fifty, /obj/item/currency/spacecash/ten)
 			C = new C(get_turf(src))
 			playsound(src.loc,'sound/impact_sounds/Machinery_Break_1.ogg', 50, 2)
 			playsound(src.loc,'sound/machines/capsulebuy.ogg', 50, 2)
@@ -1053,7 +1053,7 @@
 
 
 /obj/item/lotteryTicket
-	name = "Lottery Ticket"
+	name = "lottery ticket"
 	desc = "A winning lottery ticket perhaps...?"
 
 	icon = 'icons/obj/writing.dmi'
@@ -1075,7 +1075,7 @@
 
 		lotteryRound = wagesystem.lotteryRound
 
-		name = "Lottery Ticket. Round [lotteryRound]"
+		name = "lottery ticket (round [lotteryRound])"
 
 		var/dat = ""
 

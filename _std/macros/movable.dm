@@ -2,7 +2,8 @@
 if(istype(M, /mob/living/carbon/human)){\
 	var/mob/living/carbon/human/HumToDeanchor = M;\
 	if(HumToDeanchor.shoes?.magnetic || HumToDeanchor.mutantrace?.anchor_to_floor){\
-		HumToDeanchor.anchored = ANCHORED;}\
+		HumToDeanchor.anchored = ANCHORED;\
+		walk(HumToDeanchor, 0);}\
 	else{\
 		HumToDeanchor.anchored = UNANCHORED}}\
 else{\

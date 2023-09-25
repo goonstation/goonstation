@@ -3,9 +3,6 @@
 /// Is this an atom? idk ask mr. molecule man
 #define isatom(A) (isloc(A))
 
-/// Is this an atom that can move!!?
-#define isatommovable(A) (istype(A, /atom/movable))
-
 /// built-in isobj returns true for /atom/movable
 #define isobj(A) (istype(A, /obj))
 
@@ -113,3 +110,8 @@
 #define ANCHORED 1
 /// For an atom that's always immovable, even by stuff like black holes and gravity artifacts.
 #define ANCHORED_ALWAYS 2
+
+/// The atom is below the floor tiles.
+#define UNDERFLOOR 1
+/// The atom is above the floor tiles.
+#define OVERFLOOR 2

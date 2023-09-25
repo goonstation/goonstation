@@ -6,7 +6,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 -For the grenade and controller, check code/obj/sawflymisc.dm
 */
 /mob/living/critter/robotic/sawfly
-	name = "Ranodyne antipersonnel microdrone"
+	name = "\improper Ranodyne antipersonnel microdrone"
 	desc = "A folding antipersonnel drone, made by Ranodyne LLC. It'd be pretty cute if it wasn't trying to kill people."
 	icon = 'icons/obj/items/sawfly.dmi'
 	death_text = "%src% jutters and falls from the air, whirring to a stop."
@@ -22,7 +22,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	speechverb_ask = "hums"
 	health = 50 //this value's pretty arbitrary, since it's overridden when they get their healtholders
 	var/beeps = list('sound/machines/sawfly1.ogg','sound/machines/sawfly2.ogg','sound/machines/sawfly3.ogg')
-	var/friends = list()
 	var/retaliate = FALSE
 	misstep_chance = 40 //makes them behave more like drones, and harder to kite into a straightaway then shoot
 
@@ -33,8 +32,6 @@ This file is the critter itself, and all the custom procs it needs in order to f
 	can_disarm = FALSE
 	use_stamina = FALSE
 	use_stunned_icon = FALSE
-	butcherable = FALSE
-	can_bleed = FALSE
 	canbegrabbed = FALSE
 	can_lie = FALSE
 	can_burn = FALSE
@@ -50,7 +47,7 @@ This file is the critter itself, and all the custom procs it needs in order to f
 		remove_lifeprocess(/datum/lifeprocess/blood)
 
 		if(name == initial(name))
-			name = "Sawfly [pick(sawflynames)]-[rand(1,999)]"
+			name = "sawfly [pick(sawflynames)]-[rand(1,999)]"
 
 		animate_bumble(src) // gotta get the float goin' on
 		src.set_a_intent(INTENT_HARM) // incredibly stupid way of ensuring they aren't passable but it works

@@ -7,9 +7,10 @@
 
 import { BooleanLike } from "common/react";
 import { useBackend, useSharedState, useLocalState } from "../backend";
-import { Button, NumberInput, Section, Box, Table, Icon, Tabs, Input, Modal } from "../components";
+import { AnimatedNumber, Button, NumberInput, Section, Box, Table, Icon, Tabs, Input, Modal } from "../components";
 import { Window } from "../layouts";
 import { ReagentGraph, ReagentContainer, Reagent, ReagentList, MatterStateIconMap } from "./common/ReagentInfo";
+import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 
 type ChemDispenserData = {
   beakerName: string;
@@ -55,7 +56,7 @@ export const ChemDispenser = (props, context) => {
   return (
     <Window
       width={570}
-      height={705}
+      height={730}
       theme="ntos">
       <Window.Content scrollable>
         <Box>
@@ -264,6 +265,15 @@ export const BeakerContentsGraph = (props, context) => {
         </Tabs>
       ) as any}>
       <ReagentGraph container={container} sort={sortMap[sort].compareFunction} />
+      {!!(container && container.totalVolume) && (
+        <Box
+          fontSize={2}
+          color={getTemperatureColor(container.temperature)}
+          className={"ChemHeater__TemperatureNumber"}>
+          <Icon name={getTemperatureIcon(container.temperature)} pr={0.5} />
+          <AnimatedNumber value={container.temperature} /> K
+        </Box>
+      )}
     </Section>
   );
 };

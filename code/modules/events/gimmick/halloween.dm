@@ -30,7 +30,7 @@
 
 		//List of minor spooky things (several are spawned)
 		var/list/spooky_minor = list(/obj/item/storage/goodybag,
-		/obj/critter/zombie/security,
+		/mob/living/critter/zombie/security,
 		/obj/critter/spirit,
 		/mob/living/critter/blobman,
 		/mob/living/critter/spider/spacerachnid,

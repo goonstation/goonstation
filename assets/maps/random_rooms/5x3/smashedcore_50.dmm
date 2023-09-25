@@ -1,0 +1,384 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/cable_coil/blue/cut,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Functions almost like veins, on a purely superficial level.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2;
+	name = "power conduit";
+	tag = "icon-conduit (SOUTHWEST)"
+	},
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"b" = (
+/obj/item/cable_coil/cut/small,
+/obj/decal/cleanable/blood/tracks{
+	dir = 4;
+	pixel_y = -6
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Or, it was. It looks like it's been hastily severed by someone. Isn't that what they make power buttons for? Seems a poor way to turn something off.";
+	dir = 4;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "broken_powerline";
+	layer = 2;
+	name = "severed power conduit";
+	tag = "icon-conduit (EAST)"
+	},
+/obj/item/storage/toolbox/mechanical/empty{
+	pixel_x = 20;
+	pixel_y = 9;
+	name = "battered blue toolbox";
+	desc = "A dented blue toolbox, of the mechanical variety. It holds the essentials needed for making or breaking. Usually breaking."
+	},
+/turf/simulated/floor/caution/west,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/computer3frame/terminal{
+	dir = 8;
+	anchored = 1
+	},
+/obj/machinery/power/data_terminal,
+/obj/item/raw_material/shard/glass{
+	pixel_x = -14;
+	pixel_y = 12
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/item/cable_coil/yellow/cut/small,
+/turf/simulated/floor/caution/south,
+/area/dmm_suite/clear_area)
+"i" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Functions almost like veins, on a purely superficial level.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit";
+	layer = 2
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "An old network terminal, all of its connections torn out and cut.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "generic-p";
+	name = "powerless network terminal";
+	pixel_y = -8;
+	pixel_x = 3;
+	layer = 2.99
+	},
+/obj/item/disk/data/fixed_disk{
+	pixel_y = 28;
+	pixel_x = -1
+	},
+/obj/decal/cleanable/cobweb{
+	icon_state = "cobweb2";
+	pixel_y = 21;
+	pixel_x = 10;
+	desc = "The spider responsible sits dead in the middle of the web, surrounded by untouched flies."
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A networked printer. It's designed to print- emphasis on designed to. This particular printer seems to have given up the ghost, unresponsive in entirety apart from the blinking 'low ink' warning.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "printer-blink";
+	name = "printer";
+	pixel_x = -17;
+	layer = 2.99;
+	pixel_y = -9
+	},
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/ai_core_frame{
+	build_step = 2;
+	desc = "An older model of AI core, bashed up, yellowed, and gutted of electronics. The logo below the screen has been scratched off with something sharp.";
+	name = "Emptied AI Casing";
+	pixel_y = 8;
+	anchored = 1;
+	skinToApply = "dwaine"
+	},
+/obj/decal{
+	anchored = 1;
+	desc = "A raised floor tile with a data terminal wired onto it. The poor man's pedestal.";
+	icon = 'icons/effects/96x96.dmi';
+	icon_state = "oldai_t3";
+	layer = 2;
+	name = "raised pedestal";
+	pixel_x = -32;
+	pixel_y = -32
+	},
+/obj/machinery/light/small/floor/warm/very,
+/obj/item/raw_material/shard/glass{
+	pixel_y = -8;
+	pixel_x = 7
+	},
+/turf/simulated/floor/circuit/vintage,
+/area/dmm_suite/clear_area)
+"m" = (
+/obj/decal/fakeobjects/beacon{
+	desc = "A small tracking beacon that looks like it's been bashed apart with something blunt. Technical geniuses, the crew here were not. It seems to have at least turned it off, though, to give credit where due."
+	},
+/turf/simulated/floor/caution/north,
+/area/dmm_suite/clear_area)
+"v" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/poster/wallsign/hazard_caution{
+	desc = "A large 9 track magnetic tape storage unit.";
+	icon = 'icons/obj/large/32x64.dmi';
+	icon_state = "gannets_machine2";
+	name = "vacuum column tape drive";
+	pixel_x = -2;
+	pixel_y = -4
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server";
+	name = "wall";
+	pixel_y = 9;
+	pixel_x = -1;
+	layer = 2.97;
+	alpha = 0
+	},
+/turf/simulated/floor,
+/area/dmm_suite/clear_area)
+"G" = (
+/obj/item/cable_coil/green/cut/small{
+	pixel_y = 13
+	},
+/obj/decal/fakeobjects/tapedeck{
+	pixel_x = -6;
+	pixel_y = -1;
+	layer = 3.1;
+	name = "tape player"
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/item/luggable_computer{
+	pixel_y = 8;
+	pixel_x = -19;
+	name = "bulky laptop computer";
+	desc = "A bulky and old-fashioned laptop computer, dressed up like a briefcase, for ease of transport."
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 5
+	},
+/area/dmm_suite/clear_area)
+"H" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Functions almost like veins, on a purely superficial level.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2;
+	name = "power conduit";
+	tag = "icon-conduit (NORTH)"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "An ancient rack of server modules. It hums a strained melody to itself through decades of gathered dust.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "server";
+	name = "abandoned server";
+	pixel_y = 9;
+	pixel_x = -1;
+	layer = 2.97
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A bulky security camera that looks like it was taken right out of the early 2000s. It's been bashed up, lens shattered and wiring cut, but you could swear it's still tracking your movements.";
+	icon = 'icons/obj/monitors.dmi';
+	icon_state = "camerax";
+	name = "broken security camera";
+	pixel_y = 21
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "An electrical junction box with its front panel rusted open, trailing wires every which way.";
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "junctionbox_open";
+	name = "junction box";
+	pixel_y = 27;
+	pixel_x = 10;
+	layer = 2.9
+	},
+/obj/item/disk/data/tape/master/readonly{
+	pixel_x = -6;
+	pixel_y = -13
+	},
+/obj/item/disk/data/tape/guardbot_tools{
+	pixel_x = -4;
+	pixel_y = -9
+	},
+/obj/item/disk/data/tape/artifact_research{
+	pixel_y = -21;
+	pixel_x = 16
+	},
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"K" = (
+/obj/item/organ/brain{
+	pixel_y = -5;
+	pixel_x = 5;
+	icon_state = "borg_brain";
+	name = "half-dissassembled brain";
+	desc = "A beat up and battered brain, sourced from a cyborg or silicon of some sort. At least, you assume as much, from the miscellaneous electronics and wires trailing from where the two hemispheres have been split apart like a coconut.";
+	layer = 3.01
+	},
+/obj/decal/cleanable/blood/tracks{
+	dir = 8;
+	pixel_y = -6;
+	pixel_x = -10
+	},
+/obj/decal/cleanable/blood/gibs{
+	pixel_y = -8;
+	pixel_x = 3
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Functions almost like veins, on a purely superficial level.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit";
+	layer = 2
+	},
+/turf/simulated/floor/grime,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A bulky computer databank. It probably serves better purpose as a barricade than an actual computer now, with how old it looks.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "pathmanip-p";
+	name = "old computer databank";
+	pixel_x = -6;
+	pixel_y = 15;
+	layer = 2.98
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A networked tape drive that looks like it hasn't seen maintenance for a good few decades. Despite that, it clatters happily as it spins its magnetic tape, writing over old data to make room for the new.";
+	icon = 'icons/obj/networked.dmi';
+	icon_state = "tapedrive1";
+	name = "aged tape drive";
+	pixel_x = -12;
+	layer = 2.99
+	},
+/obj/decal/cleanable/oil,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A faded and peeling CAUTION sign. Whoever put it up didn't think to mention what you're meant to be cautious of. Maybe just cautious in general, of everything and anything?";
+	dir = 4;
+	icon = 'icons/obj/decals/wallsigns.dmi';
+	icon_state = "wall_caution";
+	layer = 2.5;
+	name = "caution sign";
+	tag = "icon-conduit (EAST)";
+	pixel_y = 32
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 6
+	},
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A mass of cables snaking out from the central pedestal to connect with the surrounding machinery. Functions almost like veins, on a purely superficial level.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit";
+	layer = 2
+	},
+/turf/simulated/floor/caution/east{
+	dir = 8
+	},
+/area/dmm_suite/clear_area)
+"T" = (
+/obj/decal/fakeobjects/cpucontroller{
+	pixel_x = 5;
+	pixel_y = 2;
+	desc = "A bulky computational powerhouse- or, at least, it would have been twenty-odd years ago. It's been aged, gutted of parts, and wires trail out of an open panel on its side. Even without a power source, a few of the LEDs are still flickering weakly.";
+	name = "aged mainframe";
+	layer = 2.98
+	},
+/obj/item/cell{
+	pixel_x = -13;
+	pixel_y = 13
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A faded and peeling CAUTION sign. Whoever put it up didn't think to mention what you're meant to be cautious of. Maybe just cautious in general, of everything and anything?";
+	dir = 4;
+	icon = 'icons/obj/decals/wallsigns.dmi';
+	icon_state = "wall_caution";
+	layer = 2.5;
+	name = "caution sign";
+	tag = "icon-conduit (EAST)";
+	pixel_y = 32
+	},
+/obj/item/disk/data/tape/master{
+	pixel_y = 28;
+	pixel_x = 11
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 10
+	},
+/area/dmm_suite/clear_area)
+"Y" = (
+/obj/item/raw_material/shard/glass{
+	pixel_x = -12;
+	pixel_y = 1
+	},
+/obj/item/wirecutters/grey{
+	pixel_y = 6;
+	pixel_x = -17;
+	desc = "A tool used to cut wires and bars of metal. The handle is a dull grey, indicative of an equally dull profession."
+	},
+/turf/simulated/floor/caution/corner/misc{
+	dir = 9
+	},
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+H
+a
+v
+"}
+(2,1,1) = {"
+P
+S
+G
+"}
+(3,1,1) = {"
+e
+k
+m
+"}
+(4,1,1) = {"
+T
+b
+Y
+"}
+(5,1,1) = {"
+i
+K
+c
+"}

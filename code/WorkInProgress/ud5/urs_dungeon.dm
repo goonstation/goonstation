@@ -33,7 +33,7 @@
 		if(length(adventure_elements_by_id[src.triggerable_id]))
 			src.triggerables = adventure_elements_by_id[src.triggerable_id]
 
-		if((src.triggerers.len > 0) && (src.triggerables.len > 0))
+		if((length(src.triggerers) > 0) && (length(src.triggerables) > 0))
 
 			for(var/Z in src.triggerers)
 
@@ -269,7 +269,7 @@
 				if (clear)
 					L += T3
 
-		if(!(L.len > 0))
+		if(!(length(L) > 0))
 			for (var/turf/T3 in get_area_turfs(/area/station,0))
 				if (!T3.density)
 					var/clear = 1
@@ -642,7 +642,7 @@ var/johnbill_ursdungeon_code = "0420"
 /obj/item/storage/secure/ssafe/diner_arcade
 	configure_mode = 0
 	random_code = 0
-	spawn_contents = list(/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/spacecash/random/small,/obj/item/spacecash/random/small)
+	spawn_contents = list(/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/clothing/glasses/urs_dungeon_entry,/obj/item/currency/spacecash/small,/obj/item/currency/spacecash/small)
 	New()
 		..()
 		src.code = johnbill_ursdungeon_code

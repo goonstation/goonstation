@@ -51,6 +51,8 @@ ABSTRACT_TYPE(/datum/antagonist)
 		src.pseudo = do_pseudo
 		src.vr = do_vr
 		if (!do_pseudo && !do_vr) // there is a special place in code hell for mind.special_role
+			LAZYLISTADD(antagonists["[src.id]"], src)
+
 			new_owner.special_role = id
 			if (source == ANTAGONIST_SOURCE_ADMIN)
 				ticker.mode.Agimmicks |= new_owner
@@ -68,10 +70,16 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (QDELETED(src))
 			return FALSE
+		RegisterSignal(src.owner, COMSIG_MIND_ATTACH_TO_MOB, PROC_REF(mind_attach))
+		RegisterSignal(src.owner, COMSIG_MIND_DETACH_FROM_MOB, PROC_REF(mind_detach))
 		src.owner.antagonists.Add(src)
 
-	Del()
+	disposing()
 		if (owner && !src.pseudo)
+			LAZYLISTREMOVE(antagonists["[src.id]"], src)
+			if (isnull(antagonists["[src.id]"]))
+				antagonists -= "[src.id]"
+
 			owner.former_antagonist_roles.Add(owner.special_role)
 			owner.special_role = null // this isn't ideal, since the system should support multiple antagonists. once special_role is worked around, this won't be an issue
 			if (src.assigned_by == ANTAGONIST_SOURCE_ADMIN)
@@ -144,6 +152,12 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 		if (do_relocate)
 			src.relocate()
+
+	proc/unsilence(announce=TRUE)
+		src.silent = FALSE
+		if (announce)
+			src.announce()
+			src.do_popup()
 
 	proc/add_to_image_groups()
 		if (!src.antagonist_icon)
@@ -226,12 +240,13 @@ ABSTRACT_TYPE(/datum/antagonist)
 	 */
 	proc/handle_round_end(log_data = FALSE)
 		. = list()
+		var/assigned_text = (assigned_by != ANTAGONIST_SOURCE_OTHER && assigned_by != ANTAGONIST_SOURCE_ADMIN) ? assigned_by : ""
 		if (owner.current)
 			// we conjugate assigned_by and display_name manually here,
 			// so that the text macro doesn't treat null assigned_by values as their own text and thus display weirdly
-			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_by + display_name]!"
+			. += "<b>[owner.current]</b> (played by <b>[owner.displayed_key]</b>) was \a [assigned_text + display_name]!"
 		else
-			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_by + display_name]!"
+			. += "<b>[owner.displayed_key]</b> (character destroyed) was \a [assigned_text + display_name]!"
 		if (length(owner.objectives))
 			var/obj_count = 1
 			for (var/datum/objective/objective as anything in owner.objectives)
@@ -260,6 +275,22 @@ ABSTRACT_TYPE(/datum/antagonist)
 	proc/on_death()
 		if (src.remove_on_death)
 			src.owner.remove_antagonist(src, ANTAGONIST_REMOVAL_SOURCE_DEATH)
+
+	proc/mind_attach(source, mob/new_mob, mob/old_mob)
+		if ((issilicon(new_mob) || isAI(new_mob)) && !(issilicon(old_mob) || isAI(old_mob)))
+			src.borged()
+
+	proc/mind_detach(source, mob/old_mob, mob/new_mob)
+		if ((issilicon(old_mob) || isAI(old_mob)) && !(issilicon(new_mob) || isAI(new_mob)))
+			src.unborged()
+
+	///Called when the player is made into a cyborg or AI
+	proc/borged()
+		return
+
+	///Called when the player is no longer a cybrorg or AI
+	proc/unborged()
+		return
 
 //this is stupid, but it's more reliable than trying to keep signals attached to mobs
 /mob/death()

@@ -60,8 +60,7 @@ obj/structure/ex_act(severity)
 	if (user.is_hulk())
 		if (prob(50))
 			playsound(user.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-			if (src.material)
-				src.material.triggerOnAttacked(src, user, user, src)
+			src.material_trigger_when_attacked(src, user, 1)
 			for (var/mob/N in AIviewers(user, null))
 				if (N.client)
 					shake_camera(N, 4, 1, 8)
@@ -73,8 +72,8 @@ obj/structure/ex_act(severity)
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					var/datum/material/defaultMaterial = getMaterial("steel")
+					A.setMaterial(defaultMaterial)
 				qdel(src)
 			else
 				if (prob(30))
@@ -82,8 +81,8 @@ obj/structure/ex_act(severity)
 					if (src.material)
 						A.setMaterial(src.material)
 					else
-						var/datum/material/M = getMaterial("steel")
-						A.setMaterial(M)
+						var/datum/material/defaultMaterial = getMaterial("steel")
+						A.setMaterial(defaultMaterial)
 				else
 					qdel(src)
 
@@ -119,7 +118,6 @@ obj/structure/ex_act(severity)
 
 		if (src.icon_state != "reinforced" && S.reinforcement)
 			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_REINFORCE, null, user), user)
-
 		else
 			actions.start(new /datum/action/bar/icon/girder_tool_interact(src, W, GIRDER_PLATE, null, user), user)
 	else
@@ -181,20 +179,20 @@ obj/structure/ex_act(severity)
 		switch (interaction)
 			if (GIRDER_DISASSEMBLE)
 				verbing = "disassembling"
-				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, TRUE)
 			if (GIRDER_UNSECURESUPPORT)
 				verbing = "unsecuring support struts from"
-				playsound(the_girder, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			if (GIRDER_REMOVESUPPORT)
 				verbing = "removing support struts from"
-				playsound(the_girder, 'sound/items/Wirecutter.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Wirecutter.ogg', 100, TRUE)
 			if (GIRDER_DISLODGE)
 				verbing = "dislodging"
-				playsound(the_girder, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Crowbar.ogg', 100, TRUE)
 			if (GIRDER_REINFORCE)
 				verbing = "reinforcing"
 			if (GIRDER_SECURE)
-				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, TRUE)
 				verbing = "securing"
 			if (GIRDER_PLATE)
 				verbing = "plating"
@@ -206,13 +204,13 @@ obj/structure/ex_act(severity)
 		switch (interaction)
 			if (GIRDER_DISASSEMBLE)
 				verbens = "disassembles"
-				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(the_girder, 'sound/items/Ratchet.ogg', 100, TRUE)
 				var/atom/A = new /obj/item/sheet(get_turf(the_girder))
 				if (the_girder.material)
 					A.setMaterial(the_girder.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					var/datum/material/defaultMaterial = getMaterial("steel")
+					A.setMaterial(defaultMaterial)
 				qdel(the_girder)
 			if (GIRDER_UNSECURESUPPORT)
 				verbens = "unsecured the support struts of"
@@ -233,8 +231,8 @@ obj/structure/ex_act(severity)
 				if (the_tool.material)
 					A.setMaterial(the_girder.material)
 				else
-					var/datum/material/M = getMaterial("steel")
-					A.setMaterial(M)
+					var/datum/material/defaultMaterial = getMaterial("steel")
+					A.setMaterial(defaultMaterial)
 				qdel(the_girder)
 			if (GIRDER_SECURE)
 				if (!istype(the_girder.loc, /turf/simulated/floor/))
@@ -250,15 +248,15 @@ obj/structure/ex_act(severity)
 				var/turf/Tsrc = get_turf(the_girder)
 				var/turf/simulated/wall/WALL
 				var/obj/item/sheet/S = the_tool
+				var/datum/material/defaultMaterial = getMaterial("steel")
+
 				if (S.reinforcement)
 					WALL = Tsrc.ReplaceWithRWall()
 				else
 					WALL = Tsrc.ReplaceWithWall()
-				if (the_girder.material)
-					WALL.setMaterial(the_girder.material)
-				else
-					var/datum/material/M = getMaterial("steel")
-					WALL.setMaterial(M)
+				WALL.setMaterial(S.material ? S.material : defaultMaterial)
+				WALL.girdermaterial = the_girder.material ? the_girder.material : defaultMaterial
+
 				WALL.inherit_area()
 				S?.change_stack_amount(-2)
 
@@ -269,8 +267,7 @@ obj/structure/ex_act(severity)
 	if (user.is_hulk())
 		if (prob(70))
 			playsound(user.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-			if (src.material)
-				src.material.triggerOnAttacked(src, user, user, src)
+			src.material_trigger_when_attacked(src, user, 1)
 			for (var/mob/N in AIviewers(user, null))
 				if (N.client)
 					shake_camera(N, 4, 1, 8)
@@ -299,19 +296,16 @@ obj/structure/ex_act(severity)
 		var/FloorIntact = T.intact
 		var/FloorBurnt = T.burnt
 		var/FloorName = T.name
-		var/oldmat = src.material
 
 		var/target_type = S.reinforcement ? /turf/simulated/wall/false_wall/reinforced : /turf/simulated/wall/false_wall
 
 		T.ReplaceWith(target_type, FALSE, FALSE, FALSE)
 		var/atom/A = src.loc
-		if(oldmat)
-			A.setMaterial(oldmat)
-		else
-			var/datum/material/M = getMaterial("steel")
-			A.setMaterial(M)
-
+		var/datum/material/defaultMaterial = getMaterial("steel")
 		var/turf/simulated/wall/false_wall/FW = A
+
+		FW.setMaterial(S.material ? S.material : defaultMaterial)
+		FW.girdermaterial = src.material ? src.material : defaultMaterial
 		FW.inherit_area()
 
 		FW.setFloorUnderlay(FloorIcon, FloorState, FloorIntact, 0, FloorBurnt, FloorName)
@@ -327,8 +321,8 @@ obj/structure/ex_act(severity)
 		if(src.material)
 			S.setMaterial(src.material)
 		else
-			var/datum/material/M = getMaterial("steel")
-			S.setMaterial(M)
+			var/datum/material/defaultMaterial = getMaterial("steel")
+			S.setMaterial(defaultMaterial)
 		playsound(src.loc, 'sound/items/Screwdriver.ogg', 75, 1)
 		qdel(src)
 		return

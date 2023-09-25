@@ -96,10 +96,16 @@ TYPEINFO(/obj/tug_cart)
 		if (BOUNDS_DIST(C, src) > 0 || load)
 			return
 
-		// if a create, close before loading
+		// if a crate, close before loading
 		var/obj/storage/crate/crate = C
 		if (istype(crate))
 			crate.close()
+
+		// if an item, ensure any mob holding it isn't anymore
+		var/obj/item/holdable = C
+		if (istype(holdable))
+			holdable.force_drop()
+
 		C.set_loc(src.loc)
 		SPAWN(0.2 SECONDS)
 			if (C && C.loc == src.loc)

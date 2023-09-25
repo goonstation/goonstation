@@ -49,7 +49,7 @@
 	attackby(obj/item/S, mob/user)
 		src.add_fingerprint(user)
 
-		if (istype(S, /obj/item/spacecash))
+		if (istype(S, /obj/item/currency/spacecash))
 			if (!mapSwitcher.playersVoting)
 				boutput(user, "<span class='alert'>There's no point in buying a vote when there's no vote going on.</span>")
 				return

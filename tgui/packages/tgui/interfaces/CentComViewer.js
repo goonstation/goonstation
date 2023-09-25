@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Button, LabeledList, Section, Stack } from '../components';
+import { Button, Input, LabeledList, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 const getBanLength = (bannedOn, expires) => {
@@ -121,7 +121,16 @@ export const CentComViewer = (props, context) => {
         <Stack fill vertical>
           <Stack.Item>
             <Section
-              title={`Ban Data for ${key}`}
+              title={
+                <>
+                  {`Ban Data for `}
+                  <Input
+                    width="50vw"
+                    value={key}
+                    onChange={(e, value) => act('updateKey', { value })}
+                  />
+                </>
+              }
               buttons={(
                 <Button.Checkbox
                   checked={filterInactive}

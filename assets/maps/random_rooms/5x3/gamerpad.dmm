@@ -1,0 +1,273 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/xmas_lights{
+	name = "LED lightstring";
+	desc = "Probably not repurposed x-mas lights, really adds to the gamer aesthetic.";
+	pixel_y = -32
+	},
+/turf/simulated/floor/wood/two,
+/area/space)
+"h" = (
+/obj/item/toy/plush/small/bunny{
+	pixel_x = 5;
+	pixel_y = 12
+	},
+/obj/table/wood/auto/desk,
+/obj/item/toy/plush/small/kitten{
+	pixel_x = 13;
+	pixel_y = 3
+	},
+/obj/item/device/light/lava_lamp/activated{
+	pixel_y = 11;
+	pixel_x = -7
+	},
+/obj/item/toy/figure/patreon{
+	pixel_x = -2;
+	pixel_y = 3
+	},
+/obj/decal/xmas_lights{
+	name = "LED lightstring";
+	desc = "Probably not repurposed x-mas lights, really adds to the gamer aesthetic.";
+	pixel_y = -32
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"k" = (
+/obj/item/clothing/lanyard{
+	name = "convention badge";
+	desc = "From SpaceCon 2041!";
+	pixel_y = -4;
+	pixel_x = -20
+	},
+/obj/machinery/light/incandescent/small{
+	dir = 1;
+	pixel_y = 31
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/grones{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/drinks/bottle/soda/gingerale{
+	pixel_y = 5;
+	pixel_x = 6
+	},
+/obj/item/crushed_can{
+	pixel_y = -10;
+	pixel_x = -1;
+	layer = 2
+	},
+/obj/decal/xmas_lights{
+	name = "LED lightstring";
+	desc = "Probably not repurposed x-mas lights, really adds to the gamer aesthetic.";
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"m" = (
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"n" = (
+/obj/item/crushed_can{
+	pixel_y = 7;
+	pixel_x = -6;
+	layer = 2
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge{
+	dir = 4
+	},
+/area/space)
+"o" = (
+/obj/table/wood/auto/desk,
+/obj/machinery/computer3/generic/personal{
+	name = "GAMING PC 3000";
+	desc = "Your epic gamer rig that someone built tirelessly from scratch.";
+	pixel_y = 10
+	},
+/obj/machinery/light/incandescent/small{
+	dir = 1;
+	pixel_y = 31
+	},
+/obj/decal/xmas_lights{
+	name = "LED lightstring";
+	desc = "Probably not repurposed x-mas lights, really adds to the gamer aesthetic.";
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/ne{
+	dir = 9
+	},
+/area/space)
+"u" = (
+/obj/item/toy/figure/patreon{
+	pixel_y = 9;
+	pixel_x = 5
+	},
+/obj/item/toy/figure/patreon{
+	pixel_y = 10;
+	pixel_x = -4
+	},
+/obj/item/toy/figure/patreon{
+	pixel_y = 2;
+	pixel_x = 7
+	},
+/obj/item/toy/figure/patreon{
+	pixel_x = -8
+	},
+/obj/table/wood/auto/desk,
+/obj/item/toy/figure/patreon{
+	pixel_y = 9;
+	pixel_x = -12
+	},
+/obj/item/toy/figure/patreon{
+	pixel_x = -8
+	},
+/obj/machinery/light/incandescent/small,
+/obj/decal/xmas_lights{
+	name = "LED lightstring";
+	desc = "Probably not repurposed x-mas lights, really adds to the gamer aesthetic.";
+	pixel_y = -32
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"w" = (
+/obj/item/storage/backpack/bearpack{
+	pixel_y = 11;
+	pixel_x = 6
+	},
+/obj/stool/chair/office/red{
+	name = "gamer chair";
+	desc = "An EPIC gamer certified chair that is NOT for kids. VERY professional.";
+	dir = 1;
+	pixel_x = 7;
+	pixel_y = 13
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/north{
+	dir = 8
+	},
+/area/space)
+"z" = (
+/obj/table/wood/auto/desk,
+/obj/item/clothing/ears/earmuffs{
+	pixel_x = -12;
+	name = "EPIC headset";
+	desc = "Keeps you warm, makes it hard to hear the haters.";
+	layer = 3.1
+	},
+/obj/machinery/light/lamp/green{
+	pixel_y = 17;
+	pixel_x = -6;
+	layer = 3.1
+	},
+/obj/item/toy/figure/patreon{
+	pixel_y = 8;
+	pixel_x = 6
+	},
+/obj/item/device/microphone{
+	name = "GAMER microphone";
+	layer = 3.1
+	},
+/obj/item/reagent_containers/food/drinks/cola/random{
+	pixel_y = 12;
+	pixel_x = -14
+	},
+/obj/item/toy/diploma{
+	name = "highschool diploma";
+	layer = 2;
+	pixel_y = 32
+	},
+/obj/decal/xmas_lights{
+	name = "LED lightstring";
+	desc = "Probably not repurposed x-mas lights, really adds to the gamer aesthetic.";
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/se{
+	dir = 5
+	},
+/area/space)
+"E" = (
+/obj/decal/xmas_lights{
+	name = "LED lightstring";
+	desc = "Probably not repurposed x-mas lights, really adds to the gamer aesthetic.";
+	pixel_y = 32
+	},
+/turf/simulated/floor/wood/two,
+/area/space)
+"F" = (
+/obj/item/clothing/suit/bedsheet/captain,
+/obj/item/toy/plush/small/possum,
+/obj/stool/bed,
+/obj/decal/xmas_lights{
+	name = "LED lightstring";
+	desc = "Probably not repurposed x-mas lights, really adds to the gamer aesthetic.";
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/arcade,
+/area/space)
+"H" = (
+/obj/item/toy/plush/small,
+/obj/machinery/light/lamp,
+/obj/decal/xmas_lights{
+	name = "LED lightstring";
+	desc = "Probably not repurposed x-mas lights, really adds to the gamer aesthetic.";
+	pixel_y = -32
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/sw{
+	dir = 6
+	},
+/area/space)
+"K" = (
+/obj/item/toy/figure/patreon{
+	pixel_y = -1;
+	pixel_x = 10
+	},
+/obj/machinery/light/incandescent/small,
+/obj/item/toy/figure/patreon{
+	pixel_y = -2;
+	pixel_x = 1
+	},
+/obj/item/reagent_containers/food/drinks/cola/random{
+	layer = 2;
+	pixel_y = 10
+	},
+/obj/item/reagent_containers/food/drinks/cola/random{
+	layer = 2;
+	pixel_y = 2;
+	pixel_x = -10
+	},
+/obj/decal/xmas_lights{
+	name = "LED lightstring";
+	desc = "Probably not repurposed x-mas lights, really adds to the gamer aesthetic.";
+	pixel_y = -32
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge{
+	dir = 10
+	},
+/area/space)
+"S" = (
+/obj/decoration/ceilingfan,
+/turf/simulated/floor/wood/two,
+/area/space)
+
+(1,1,1) = {"
+F
+m
+h
+"}
+(2,1,1) = {"
+k
+m
+u
+"}
+(3,1,1) = {"
+E
+S
+a
+"}
+(4,1,1) = {"
+o
+w
+K
+"}
+(5,1,1) = {"
+z
+n
+H
+"}

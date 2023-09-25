@@ -274,12 +274,11 @@ var/global/list/playersSeen = list()
 		var/data[] = new()
 
 		if (!mobRef)
-			data["ckey"] = input(src, "Ckey (lowercase, only alphanumeric, no spaces, leave blank to skip)", "Ban") as null|text
-			var/auto = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
-			if (auto == "No")
-				data["compID"] = input(src, "Computer ID", "Ban") as null|text
-				data["ip"] = input(src, "IP Address", "Ban") as null|text
-			else if (data["ckey"])
+			data["ckey"] = ckey(input(src, "Ckey, leave blank to skip", "Ban") as null|text)
+			var/auto_fill
+			if (data["ckey"])
+				auto_fill = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
+			if (auto_fill == "Yes")
 				var/list/response
 				try
 					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
@@ -290,6 +289,9 @@ var/global/list/playersSeen = list()
 					boutput(src, "<span class='alert'>No data found for target, IP and/or compID will be left blank.</span>")
 				data["ip"] = response["last_ip"]
 				data["compID"] = response["last_compID"]
+			else
+				data["compID"] = input(src, "Computer ID", "Ban") as null|text
+				data["ip"] = input(src, "IP Address", "Ban") as null|text
 		else
 			data["ckey"] = M.ckey
 			data["compID"] = M.computer_id
@@ -690,7 +692,7 @@ var/global/list/playersSeen = list()
 	if (fexists(banLog))
 		//Here we fetch the latest logID, increment it, then append our data as json
 		var/list/log = dd_file2list(banLog)
-		var/lastIndex = (log.len > 1 ? log.len - 1 : 1)
+		var/lastIndex = (length(log) > 1 ? log.len - 1 : 1)
 		var/lastRow = log[lastIndex]
 		var/list/rowDetails = splittext(lastRow, ":")
 		lastID = text2num(rowDetails[1])
@@ -842,7 +844,7 @@ var/global/list/playersSeen = list()
 	//Only operate on the log if it...exists and has stuff, naturally
 	if (fexists(banLog) && length(file2text(banLogF)) > 0)
 		var/list/log = dd_file2list(banLog)
-		var/lastIndex = (log.len > 1 ? log.len - 1 : 1)
+		var/lastIndex = (length(log) > 1 ? log.len - 1 : 1)
 		var/lastRow = log[lastIndex]
 		log = splittext(lastRow, ":")
 		latestLocalID = log[1]

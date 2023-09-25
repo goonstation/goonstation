@@ -49,7 +49,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 /// Return a new gas mixture with a specified amount of moles with the composition of our gas vars.
 /turf/remove_air(amount)
 	var/datum/gas_mixture/GM = new /datum/gas_mixture
-	var/sum = BASE_GASES_TOTAL_MOLES(src)
+	var/sum = TOTAL_MOLES(src)
 	if(sum)
 		#define _TRANSFER_AMOUNT_TO_GM(GAS, ...) GM.GAS = (GAS / sum) * amount;
 		APPLY_TO_GASES(_TRANSFER_AMOUNT_TO_GM)
@@ -195,8 +195,11 @@ var/global/list/turf/hotly_processed_turfs = list()
 		src.air.temperature = src.temperature
 
 		if(air_master)
-			air_master.tiles_to_update |= src
-			src.find_group()
+			if(explosions.exploding)
+				air_master.tiles_to_rebuild |= src
+			else
+				air_master.tiles_to_update |= src
+				src.find_group()
 
 	else
 		if(!air_master)
@@ -538,10 +541,9 @@ var/global/list/turf/hotly_processed_turfs = list()
 						src.mimic_temperature_solid(neighbor, neighbor.thermal_conductivity)
 
 	//Radiate excess tile heat to space
-	var/turf/space/sample_space = locate(/turf/space)
-	if(sample_space && (temperature > T0C))
-	//Considering 0 degC as te break even point for radiation in and out
-		src.mimic_temperature_solid(sample_space, FLOOR_HEAT_TRANSFER_COEFFICIENT)
+	if(temperature > T0C)
+		//Considering 0 degC as te break even point for radiation in and out
+		src.mimic_temperature_solid(locate(/turf/space), FLOOR_HEAT_TRANSFER_COEFFICIENT)
 
 	//Conduct with air on my tile if I have it
 	if(src.air)
@@ -678,3 +680,16 @@ var/global/list/turf/hotly_processed_turfs = list()
 			w.tilenotify(src)
 
 	return TRUE
+
+/turf/simulated/proc/stabilize()
+	ZERO_GASES(src.air)
+#ifdef ATMOS_ARCHIVING
+	ZERO_ARCHIVED_GASES(src.air)
+	src.air.ARCHIVED(temperature) = null
+#endif
+	src.air.oxygen = MOLES_O2STANDARD
+	src.air.nitrogen = MOLES_N2STANDARD
+	src.air.fuel_burnt = 0
+	src.air.temperature = T20C
+	if(src.parent?.group_processing)
+		src.parent?.suspend_group_processing()

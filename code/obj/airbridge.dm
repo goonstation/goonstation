@@ -82,16 +82,9 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 			for(var/turf/simulated/T in maintaining_turfs)
 				if(!T.air && T.density)
 					continue
-				ZERO_BASE_GASES(T.air)
-#ifdef ATMOS_ARCHIVING
-				ZERO_ARCHIVED_BASE_GASES(T.air)
-				T.air.ARCHIVED(temperature) = null
-#endif
-				T.air.oxygen = MOLES_O2STANDARD
-				T.air.nitrogen = MOLES_N2STANDARD
-				T.air.fuel_burnt = 0
-				T.air.remove_trace_gas()
-				T.air.temperature = T20C
+				if(T.parent?.group_processing)
+					T.parent.suspend_group_processing()
+				T.stabilize()
 				LAGCHECK(LAG_LOW)
 
 			working = 0
@@ -171,7 +164,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 						animate_turf_slideout(curr, src.floor_turf, dir, slide_delay)
 					curr.set_dir(dir)
 					maintaining_turfs.Add(curr)
-				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
+				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, TRUE)
 				sleep(slide_delay)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
@@ -227,7 +220,7 @@ ADMIN_INTERACT_PROCS(/obj/airbridge_controller, proc/toggle_bridge, proc/pressur
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)
 					animate_turf_slidein(curr, src.original_turf, opdir, slide_delay)
-				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
+				playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, TRUE)
 				sleep(slide_delay)
 				for(var/i = -tunnel_width, i <= tunnel_width, i++)
 					curr = get_steps(T, turn(dir, 90), i)

@@ -97,7 +97,7 @@
 	S.in_rush = 0
 
 	if(check_target_immunity(target))
-		boutput(src, "<span class='alert'>[target] braces themselves to stop your tackle effortlessly!</span>")
+		boutput(src, "<span class='alert'>[target] braces [himself_or_herself(target)] to stop your tackle effortlessly!</span>")
 		return
 
 	if (src.hasStatus("handcuffed"))
@@ -189,8 +189,7 @@
 	throw_range = 15
 	throwforce = 10
 	w_class = W_CLASS_HUGE
-	// look it is VERY IMPORTANT
-	plane = PLANE_HUD - 1
+	plane = PLANE_ABOVE_LIGHTING
 	var/obj/maptext_junk/indicator
 	var/mob/carrier = 0
 	var/mob/tosser = 0

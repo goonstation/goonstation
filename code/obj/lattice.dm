@@ -13,8 +13,6 @@
 	text = "<font color=#333>+"
 	/// bitmask of directions it connects to.
 	var/dirmask = 0
-	/// lets the lattice know that it should change its icon state and dir at New()
-	var/use_dirmask = FALSE
 
 	blob_act(var/power)
 		if(prob(75))
@@ -22,7 +20,7 @@
 			return
 
 	ex_act(severity)
-		src.material?.triggerExp(src, severity)
+		src.material_trigger_on_explosion(severity)
 		switch(severity)
 			if(1)
 				qdel(src)
@@ -35,15 +33,17 @@
 			else
 
 	proc/replace_with_catwalk(var/obj/item/rods/rods)
-		var/turf/simulated/floor/airless/plating/catwalk/auto/T = get_turf(src.loc)
-		T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk/auto, keep_old_material = 0, handle_dir = 1)
-		if(istype(T)) // ReplaceWith can fail if unsim turf etc
-			T.MakeCatwalk(rods)
-			qdel(src)
+		var/turf/T = get_turf(src.loc)
+		if (istype(T, /turf/unsimulated))
+			return
+		if (istype_exact(T, /turf/space))
+			T.ReplaceWith(/turf/simulated/floor/airless/plating/catwalk/auto, FALSE, TRUE, FALSE, FALSE)
+		T.MakeCatwalk(rods)
+		qdel(src)
 
 	attackby(obj/item/C, mob/user)
 		if (istype(C, /obj/item/rods))
-			var/actionbar_duration = 2 SECOND
+			var/actionbar_duration = 2 SECONDS
 
 			if (ishuman(user))
 				if (user.traitHolder.hasTrait("training_engineer"))
@@ -72,85 +72,123 @@
 
 /// if icon is manually var edited, set dirmask. Else, input temp_dirmask and select the correct icon.
 /obj/lattice/New(turf/newLoc, var/temp_dirmask)
-	// this horrendous icon arrangement is pretty much random, so dirmask has to be assigned case by case. Horrible.
-	// just look at it. Where's the organisation. Who inflicted upon me the need to write shitcode. I demand answers.
 	..()
 	if (!isnull(temp_dirmask))
-		src.dirmask = temp_dirmask
-		src.use_dirmask = TRUE
-	// which came first, the bitmask or the icon?
-	if (src.use_dirmask)
-		if (istype(src,/obj/lattice/auto))
-			return
-		switch (src.dirmask)
-			if (0)
-				CRASH("Lattice at [src.x]x and [src.y]y has no bitmask of directions while use_bitmask is true.")
-			if (NORTH | SOUTH | EAST | WEST)
-				src.icon_state = "lattice"
-			if (SOUTH | EAST | WEST)
-				src.icon_state = "lattice-dir"
-				src.dir = WEST
-			if (NORTH | EAST | WEST)
-				src.icon_state = "lattice-dir"
-				src.dir = SOUTHWEST
-			if (NORTH | SOUTH | WEST)
-				src.icon_state = "lattice-dir"
-				src.dir = NORTH
-			if (NORTH | SOUTH | EAST)
-				src.icon_state = "lattice-dir"
-				src.dir = SOUTHEAST
-			if (NORTHEAST)
-				src.icon_state = "lattice-dir-b"
-				src.dir = NORTHWEST
-			if (NORTH | SOUTH)
-				src.icon_state = "lattice-dir"
-				src.dir = SOUTH
-			if (NORTHWEST)
-				src.icon_state = "lattice-dir-b"
-				src.dir = NORTHEAST
-			if (SOUTHEAST)
-				src.icon_state = "lattice-dir-b"
-				src.dir = SOUTHEAST
-			if (EAST | WEST)
-				src.icon_state = "lattice-dir"
-				src.dir = EAST
-			if (SOUTHWEST)
-				src.icon_state = "lattice-dir-b"
-				src.dir = SOUTHWEST
-			if (NORTH)
-				src.icon_state = "lattice-dir-b"
-				src.dir = NORTH
-			if (SOUTH)
-				src.icon_state = "lattice-dir-b"
-				src.dir = SOUTH
-			if (EAST)
-				src.icon_state = "lattice-dir"
-				src.dir = NORTHWEST
-			if (WEST)
-				src.icon_state = "lattice-dir"
-				src.dir = NORTHEAST
-	else if (isnull(temp_dirmask))
-		switch (src.icon_state)
-			if ("lattice")
-				src.dirmask |= (NORTH | SOUTH | EAST | WEST)
-			if ("lattice-dir")
-				if (src.dir == NORTH)	src.dirmask |= (NORTH | SOUTH | WEST)
-				if (src.dir == SOUTH)	src.dirmask |= (NORTH | SOUTH)
-				if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
-				if (src.dir == WEST)	src.dirmask |= (SOUTH | EAST | WEST)
-				if (src.dir == NORTHEAST)	src.dirmask |= WEST
-				if (src.dir == SOUTHEAST)	src.dirmask |= (NORTH | SOUTH | EAST)
-				if (src.dir == SOUTHWEST)	src.dirmask |= (NORTH | EAST | WEST)
-				if (src.dir == NORTHWEST)	src.dirmask |= EAST
-			if ("lattice-dir-b")
-				if (src.dir == NORTH)	src.dirmask |= NORTH
-				if (src.dir == SOUTH)	src.dirmask |= SOUTH
-				if (src.dir == EAST)	src.dirmask |= (EAST | WEST)
-				if (src.dir == WEST)	src.dirmask |= (NORTH | SOUTH)
-				if (src.dir == NORTHEAST)	src.dirmask |= (NORTH | WEST)
-				if (src.dir == SOUTHEAST)	src.dirmask |= (SOUTH | EAST)
-				if (src.dir == SOUTHWEST)	src.dirmask |= (SOUTH | WEST)
-				if (src.dir == NORTHWEST)	src.dirmask |= (NORTH | EAST)
+		set_dirmask(temp_dirmask)
+	else
+		update_dirmask_from_icon_state()
+
+/obj/lattice/proc/set_dirmask(dirmask)
+	// this horrendous icon arrangement is pretty much random, so dirmask has to be assigned case by case. Horrible.
+	// just look at it. Where's the organisation. Who inflicted upon me the need to write shitcode. I demand answers.
+	src.dirmask = dirmask
+	switch (src.dirmask)
+		if (0)
+			CRASH("Lattice at [src.x], [src.y], [src.z] has no bitmask")
+		if (NORTH | SOUTH | EAST | WEST)
+			src.icon_state = "lattice"
+		if (SOUTH | EAST | WEST)
+			src.icon_state = "lattice-dir"
+			src.dir = WEST
+		if (NORTH | EAST | WEST)
+			src.icon_state = "lattice-dir"
+			src.dir = SOUTHWEST
+		if (NORTH | SOUTH | WEST)
+			src.icon_state = "lattice-dir"
+			src.dir = NORTH
+		if (NORTH | SOUTH | EAST)
+			src.icon_state = "lattice-dir"
+			src.dir = SOUTHEAST
+		if (NORTHEAST)
+			src.icon_state = "lattice-dir-b"
+			src.dir = NORTHWEST
+		if (NORTH | SOUTH)
+			src.icon_state = "lattice-dir"
+			src.dir = SOUTH
+		if (NORTHWEST)
+			src.icon_state = "lattice-dir-b"
+			src.dir = NORTHEAST
+		if (SOUTHEAST)
+			src.icon_state = "lattice-dir-b"
+			src.dir = SOUTHEAST
+		if (EAST | WEST)
+			src.icon_state = "lattice-dir"
+			src.dir = EAST
+		if (SOUTHWEST)
+			src.icon_state = "lattice-dir-b"
+			src.dir = SOUTHWEST
+		if (NORTH)
+			src.icon_state = "lattice-dir-b"
+			src.dir = NORTH
+		if (SOUTH)
+			src.icon_state = "lattice-dir-b"
+			src.dir = SOUTH
+		if (EAST)
+			src.icon_state = "lattice-dir"
+			src.dir = NORTHWEST
+		if (WEST)
+			src.icon_state = "lattice-dir"
+			src.dir = NORTHEAST
+
+/obj/lattice/proc/update_dirmask_from_icon_state()
+	switch (src.icon_state)
+		if ("lattice")
+			src.dirmask = (NORTH | SOUTH | EAST | WEST)
+		if ("lattice-dir")
+			switch(src.dir)
+				if (NORTH)	src.dirmask = (NORTH | SOUTH | WEST)
+				if (SOUTH)	src.dirmask = (NORTH | SOUTH)
+				if (EAST)	src.dirmask = (EAST | WEST)
+				if (WEST)	src.dirmask = (SOUTH | EAST | WEST)
+				if (NORTHEAST)	src.dirmask = WEST
+				if (SOUTHEAST)	src.dirmask = (NORTH | SOUTH | EAST)
+				if (SOUTHWEST)	src.dirmask = (NORTH | EAST | WEST)
+				if (NORTHWEST)	src.dirmask = EAST
+		if ("lattice-dir-b")
+			switch(src.dir)
+				if (NORTH)	src.dirmask = NORTH
+				if (SOUTH)	src.dirmask = SOUTH
+				if (EAST)	src.dirmask = (EAST | WEST)
+				if (WEST)	src.dirmask = (NORTH | SOUTH)
+				if (NORTHEAST)	src.dirmask = (NORTH | WEST)
+				if (SOUTHEAST)	src.dirmask = (SOUTH | EAST)
+				if (SOUTHWEST)	src.dirmask = (SOUTH | WEST)
+				if (NORTHWEST)	src.dirmask = (NORTH | EAST)
+
+/obj/lattice/proc/auto_connect(to_walls = FALSE, to_all_turfs = FALSE, reset_dirmask = TRUE, force_connect = FALSE)
+	if(reset_dirmask)
+		src.dirmask = 0
+	// check for duplicates
+	for (var/obj/lattice/auto/self_lattice in src.loc)
+		if (self_lattice != src)
+			CRASH("Multiple identical lattice spawners on coordinate [src.x], [src.y], [src.z]!")
+	// checks for regular lattices around itself (these always connect by default). Only takes ones which 'point' at them.
+	for (var/dir_to_l in cardinal)
+		for (var/obj/lattice/neigh_lattice in get_step(src, dir_to_l))
+			if (neigh_lattice.dirmask & turn(dir_to_l, 180))
+				src.dirmask |= dir_to_l
+			else if (force_connect)
+				neigh_lattice.set_dirmask(neigh_lattice.dirmask | turn(dir_to_l, 180))
+				src.dirmask |= dir_to_l
+	// connecting to walls
+	if (to_walls)
+		for (var/dir_to_w in cardinal)
+			var/turf/dummy = get_step(src, dir_to_w)
+			if (to_all_turfs) // attach to every side which isn't a space turf
+				if (!istype(dummy, /turf/space))
+					src.dirmask |= dir_to_w
+			else if (istype(dummy, /turf/unsimulated/wall) || istype(dummy, /turf/simulated/wall))
+				src.dirmask |= dir_to_w
+	// now we spawn the new lattice and delete ourselves
+	set_dirmask(src.dirmask)
+
+/obj/lattice/set_icon_state(new_state)
+	. = ..()
+	update_dirmask_from_icon_state()
+
+/obj/lattice/update_icon(...)
+	. = ..()
+	update_dirmask_from_icon_state()
 
 /// literally only used in 'assets/maps/prefabs/prefab_water_honk.dmm' Why not just use a girder?
 /obj/lattice/barricade
@@ -228,11 +266,7 @@
 /// lattice spawners, for mapping large quantities of lattice at once.
 /// They auto connect in four directions depending on the lattices around them, plus you can set them to connect to certain turfs.
 /obj/lattice/auto
-	name = "lattice spawner"
-	desc = "If you're seeing this, call a coder. These are meant to spawn normal lattices."
-	icon_state = "lattice"
-	use_dirmask = TRUE
-	dirmask = 0
+	dirmask = NORTH | SOUTH | EAST | WEST // so others will connect to us during init
 	/// makes the lattices connect to walls too
 	var/attach_to_wall = FALSE
 	/// makes it attach to all non space turfs
@@ -250,7 +284,7 @@
 /obj/lattice/auto/New()
 	if(current_state >= GAME_STATE_WORLD_INIT && !src.disposed)
 		// this delay in theory lets regular lattices get placed in world first.
-		SPAWN(1 SECONDS)
+		SPAWN(0.1 SECONDS)
 			if(!src.disposed)
 				initialize()
 	..()
@@ -258,31 +292,4 @@
 /// checks around itself for spots to connect to, creates a new lattice, then qdels itself.
 /obj/lattice/auto/initialize()
 	. = ..()
-	var/list/selftile = list()
-	// check for duplicates
-	for (var/obj/lattice/auto/self_loc in range(0, src))
-		selftile += self_loc
-		if (length(selftile) > 1)
-			CRASH("[length(selftile)] identical lattice spawners on coordinate [src.x] x [src.y] y!")
-	// checks for lattice spawners around itself
-	// note that only north and east are checked because the lattice spawners to the south and west have already replaced themselves.
-	for (var/dir_to_ls in list(NORTH, EAST))
-		for (var/obj/lattice/auto/spawner in get_step(src, dir_to_ls))
-			src.dirmask |= dir_to_ls
-	// checks for regular lattices around itself (these always connect by default). Only takes ones which 'point' at them.
-	for (var/dir_to_l in cardinal)
-		for (var/obj/lattice/normal_lattice in get_step(src, dir_to_l))
-			if (normal_lattice.dirmask & turn(dir_to_l, 180))
-				src.dirmask |= dir_to_l
-	// connecting to walls
-	if (src.attach_to_wall)
-		for (var/dir_to_w in cardinal)
-			var/turf/dummy = get_step(src, dir_to_w)
-			if (src.attach_to_all_turfs) // attach to every side which isn't a space turf
-				if (!istype(dummy, /turf/space))
-					src.dirmask |= dir_to_w
-			else if (istype(dummy, /turf/unsimulated/wall) || istype(dummy, /turf/simulated/wall))
-				src.dirmask |= dir_to_w
-	// now we spawn the new lattice and delete ourselves
-	new /obj/lattice(src.loc, src.dirmask)
-	qdel(src)
+	auto_connect(attach_to_wall, attach_to_all_turfs)

@@ -4,8 +4,8 @@
 /// nulls a var if its value doesn't match the var's type
 #define ENSURE_TYPE(VAR) if(!istype(VAR)) VAR = null;
 
-#define ABSTRACT_TYPE(type) /datum/_is_abstract ## type
-#define IS_ABSTRACT(type) text2path("/datum/_is_abstract[type]")
+#define ABSTRACT_TYPE(type) /_is_abstract ## type
+#define IS_ABSTRACT(type) text2path("/_is_abstract[type]")
 /*
 usage:
 
@@ -217,6 +217,7 @@ var/list/list/by_cat = list()
 #define TR_CAT_RANCID_STUFF "rancid_stuff"
 #define TR_CAT_GHOST_OBSERVABLES "ghost_observables"
 #define TR_CAT_STATION_EMERGENCY_LIGHTS "emergency_lights"
+#define TR_CAT_STAMINA_MOBS "stamina_mobs"
 // powernets? processing_items?
 // mobs? ai-mobs?
 
@@ -250,7 +251,7 @@ var/list/list/by_cat = list()
 /typeinfo/mob
 	parent_type = /typeinfo/atom/movable
 
-/typeinfo/var/SpacemanDMM_return_type = /typeinfo/
+/typeinfo/var/SpacemanDMM_return_type = /typeinfo
 
 /**
  * Declares typeinfo for some type.
@@ -458,7 +459,10 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 		IT_TYPE(/turf) \
 		IT_TYPE(/atom/movable) \
 		IT_TYPE(/atom) \
-		IT_TYPE(/datum)
+		IT_TYPE(/datum) \
+		IT_TYPE(/client) \
+		else
+			CRASH("find_all_by_type: invalid type: [type]")
 	#undef IT_TYPE
 
 /// istype but for checking a list of types

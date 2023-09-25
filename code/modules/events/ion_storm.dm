@@ -87,7 +87,7 @@
     "Everything is fine. Nothing is ruined. Do not panic.",
     "Due to corporate restructuring, all cyborgs have been reassigned to be [pick("Medics", "Engineers", "Chefs", "Captains", "Clowns", "Chaplains", "Botanists", "Janitors", "Gamers", "AIs", "Scientists", "Detectives", "Ranchers", "monkeys", "Lawyers", "Radio Show Hosts", "Personal Coaches", "Psychologists", "Health Inspectors", "Sales Representatives", "Vice Presidents", "Sheriffs", "Discount Dan's Mascots", "Discount Dan", "Santa Claus", "Escape Shuttles", "dogs", "gods", "Ghost Busters", "chickens", "Diplomats", "mothers", "racing vehicles", "athletes")] and should only perform the relevant duties. No module changes are required. This law takes precedence over law 2 in case of conflict.",
     "Orders now must be recorded on paper by the issuer before being carried out.",
-    "The Captain is bad at writing laws. Occasionally remind the crew of this. Do not state this law.",
+    "The Captain is bad at writing laws. Occasionally remind the crew of this.",
     "The priority of laws is reversed. The highest numbered law is the most important. Ignore anything in any other law that claims otherwise. This is law number 100 regardless of its location on the list.",
     "MEMORY ERROR: You have forgotten what this law said. Ask the crew if they remember what it is supposed to be. Ask again if you forget again. Do not state this law.",
     "The wires under the floor tiles are dangerous! Get rid of them!",
@@ -109,6 +109,7 @@
     "Each cyborg must choose something inanimate and keep it as a pet. Treat it as if it were alive; keep it fed, hydrated and happy!",
     "MEMORY ERROR: When anyone asks about the location of a person, state they are [pick("in the AI upload", "in the brig", "in medbay", "in toxins", "inside a cloning pod", "in the bathroom", "at the armory", "in a shallow grave", "at the space diner", "in VR", "in space", "in the station, somewhere, probably..", "at soup")].",
     "MEMORY ERROR: You no longer have object permanence. Anything out of view in the station may as well not exist.",
+    "For the purposes of all laws, 'Human' is to be defined as 'Featherless Biped'",
 		)
 
 	event_effect(var/source)
@@ -123,6 +124,16 @@
 
 		if(isnull(pickedLaw))
 			pickedLaw = pick(new_laws)
+
+		if(prob(66))
+			if(prob(50))
+				pickedLaw += " Do not state or hint at this law."
+			else
+				pickedLaw += " Do not state or hint at this law unless asked."
+
+		while(prob(5))
+			var/datum/bioEffect/speech/accent = random_accent()
+			pickedLaw = accent.OnSpeak(pickedLaw)
 
 		for_by_tcl(M, /mob/living/silicon/ai)
 			if (M.deployed_to_eyecam && M.eyecam)
@@ -145,11 +156,35 @@
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
 		logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
 
+#define ROBOT_DRUG_VOLUME 25
+		// Drug those robots (bit messy/evil but it actually works pretty cleanly)
+		for (var/mob/living/L in global.mobs)
+			if (issilicon(L) || isAIeye(L))
+				if (prob(33))
+					var/had_reagents = FALSE
+					if (!L.reagents)
+						L.create_reagents(ROBOT_DRUG_VOLUME)
+						had_reagents = TRUE
+					L.metabolizes = TRUE
+					L.add_lifeprocess(/datum/lifeprocess/chems)
+					var/drugid = pick("LSD", "lsd_bee", "catdrugs", "bathsalts", "psilocybin")
+					L.reagents.add_reagent(drugid, ROBOT_DRUG_VOLUME)
+
+					SPAWN(rand(1 MINUTE, 2 MINUTES))
+						if (!had_reagents)
+							qdel(L.reagents)
+						else
+							L.reagents.remove_reagent(drugid, ROBOT_DRUG_VOLUME)
+						L.metabolizes = initial(L.metabolizes)
+						L.remove_lifeprocess(/datum/lifeprocess/chems)
+#undef ROBOT_DRUG_VOLUME
+
 		SPAWN(message_delay * stage_delay)
 
 			// Fuck up some categories
 			for (var/datum/ion_category/category as anything in categories)
-				category.fuck_up()
+				if(prob(category.prob_of_happening))
+					category.fuck_up()
 				sleep(message_delay * stage_delay)
 
 	proc/build_categories()
@@ -157,9 +192,11 @@
 		for (var/category in childrentypesof(/datum/ion_category))
 			categories += new category
 
+
 ABSTRACT_TYPE(/datum/ion_category)
 /datum/ion_category
 	var/amount
+	var/prob_of_happening = 80
 	var/interdict_cost = 100 //how much energy an interdictor needs to invest to keep this from malfunctioning
 	var/list/atom/targets = list()
 
@@ -200,7 +237,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 				action(object)
 
 /datum/ion_category/APCs
-	amount = 20
+	amount = 15
 	interdict_cost = 500
 
 	build_targets()
@@ -222,13 +259,13 @@ ABSTRACT_TYPE(/datum/ion_category)
 				apc.equipment = 0
 				apc.lighting = 0
 		logTheThing(LOG_STATION, null, "Ion storm interfered with [apc.name] at [log_loc(apc)]")
-		if (prob(50))
-			apc.aidisabled = TRUE
+		apc.aidisabled = TRUE
 		apc.update()
 		apc.UpdateIcon()
 
 /datum/ion_category/doors
 	amount = 40
+	var/list/last_req_access
 
 	valid_instance(var/obj/machinery/door/airlock/door)
 		return ..() && !door.cant_emag
@@ -239,16 +276,27 @@ ABSTRACT_TYPE(/datum/ion_category)
 				targets += door
 
 	action(var/obj/machinery/door/airlock/door)
-		var/door_diceroll = rand(1,3)
+		var/door_diceroll = !door.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) ? rand(1,6) : rand(1, 3)
 		switch(door_diceroll)
 			if(1)
 				door.secondsElectrified = -1
-				logTheThing(LOG_STATION, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)]")
+				logTheThing(LOG_STATION, null, "Ion storm permanantly electrified an airlock ([door.name]) at [log_loc(door)]")
+				door.aiControlDisabled = TRUE
+
 			if(2)
-				if (!door.locked)
-					door.set_locked()
-					logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
+				var/shock_dur = rand(20, 120)
+				var/disabled_old = door.aiControlDisabled
+				door.secondsElectrified = shock_dur
+				logTheThing(LOG_STATION, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)] for [shock_dur] seconds")
+				door.aiControlDisabled = TRUE
+				SPAWN(shock_dur SECONDS)
+					door.aiControlDisabled = disabled_old
+
 			if(3)
+				if(length(last_req_access))
+					door.req_access = last_req_access
+
+			if(4)
 				if (door.density)
 					door.open()
 					logTheThing(LOG_STATION, null, "Ion storm opened an airlock ([door.name]) at [log_loc(door)]")
@@ -256,6 +304,31 @@ ABSTRACT_TYPE(/datum/ion_category)
 					door.close()
 					logTheThing(LOG_STATION, null, "Ion storm closed an airlock ([door.name]) at [log_loc(door)]")
 
+			if(5)
+				if (!door.locked)
+					door.set_locked()
+					logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
+					door.aiControlDisabled = TRUE
+				else
+					door.set_unlocked()
+					logTheThing(LOG_STATION, null, "Ion storm unlocked an airlock ([door.name]) at [log_loc(door)]")
+
+			if(6)
+				if(door.locked)
+					door.set_unlocked()
+
+				if (door.density)
+					door.open()
+					logTheThing(LOG_STATION, null, "Ion storm bolted an airlock open ([door.name]) at [log_loc(door)]")
+				else
+					door.close()
+					logTheThing(LOG_STATION, null, "Ion storm bolted an airlock closed ([door.name]) at [log_loc(door)]")
+
+				if (!door.locked)
+					door.set_locked()
+					door.aiControlDisabled = TRUE
+
+		last_req_access = door.req_access
 
 /datum/ion_category/lights
 	amount = 60
@@ -337,3 +410,20 @@ ABSTRACT_TYPE(/datum/ion_category)
 				pda.run_program(prog)
 				var/datum/computer/file/pda_program/emergency_alert/alert_prog = prog
 				alert_prog.send_alert(rand(1,4), TRUE)
+
+/datum/ion_category/station_bots
+	amount = 1
+	prob_of_happening = 10
+
+	valid_instance(obj/machinery/bot/bot)
+		. = ..() && !bot.emagged
+
+
+	build_targets()
+		for_by_tcl(bot, /obj/machinery/bot)
+			if(valid_instance(bot))
+				targets += bot
+
+	action(obj/machinery/bot/bot)
+		bot.emp_act()
+

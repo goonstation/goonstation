@@ -668,7 +668,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 		if(launched) return
 		else launched = 1
 		var/flying = 1
-		playsound(src, 'sound/effects/torpedolaunch.ogg', 100, 1)
+		playsound(src, 'sound/effects/torpedolaunch.ogg', 100, TRUE)
 		src.changeIcon()
 		var/aboutToBlow = 0
 		var/steps = 0

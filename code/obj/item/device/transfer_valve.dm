@@ -87,8 +87,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			if(tank_one && tank_two)
 				var/turf/T = get_turf(src)
 				var/butt = istype(tank_one, /obj/item/clothing/head/butt) || istype(tank_two, /obj/item/clothing/head/butt)
-				logTheThing(LOG_BOMBING, user, "made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
-				message_admins("[key_name(user)] made a transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+				logTheThing(LOG_BOMBING, user, "made a TTV tank transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
+				message_admins("[key_name(user)] made a TTV tank transfer valve [butt ? "butt" : "bomb"] at [log_loc(T)].")
 
 			UpdateIcon()
 			attacher = user
@@ -105,6 +105,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			user.drop_item()
 			item.set_loc(src)
 			boutput(user, "<span class='notice'>You attach the [item] to the valve controls!</span>")
+			logTheThing(LOG_BOMBING, user, "attaches the [item] to a TTV tank transfer valve.")
 			item.master = src
 
 			/*
@@ -167,19 +168,25 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				tank_one.set_loc(get_turf(src))
 				tank_one = null
 				UpdateIcon()
+				if(src.equipped_in_slot)
+					var/mob/wearer = src.loc
+					wearer.update_clothing()
 			if(href_list["tanktwo"])
 				tank_two.set_loc(get_turf(src))
 				tank_two = null
 				UpdateIcon()
+				if(src.equipped_in_slot)
+					var/mob/wearer = src.loc
+					wearer.update_clothing()
 			if(href_list["open"])
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
-					logTheThing(LOG_BOMBING, usr, "closed the valve on a tank transfer valve at [log_loc(bombturf)].")
-					message_admins("[key_name(usr)] closed the valve on a tank transfer valve at [log_loc(bombturf)].")
+					logTheThing(LOG_BOMBING, usr, "closed the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
+					message_admins("[key_name(usr)] closed the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
 				else
 					var/turf/bombturf = get_turf(src)
-					logTheThing(LOG_BOMBING, usr, "opened the valve on a tank transfer valve at [log_loc(bombturf)].")
-					message_admins("[key_name(usr)] opened the valve on a tank transfer valve at [log_loc(bombturf)].")
+					logTheThing(LOG_BOMBING, usr, "opened the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
+					message_admins("[key_name(usr)] opened the valve on a TTV tank transfer valve at [log_loc(bombturf)].")
 				toggle_valve()
 			if(href_list["rem_device"])
 				attached_device.set_loc(get_turf(src))
@@ -296,12 +303,13 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			src.underlays += straps
 
 	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
-		src.tank_one_image = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]1")
-		src.tank_one_image_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]_under",)
-		src.tank_two_image = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]2")
-		src.tank_two_image_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]_under")
-		src.wear_image.overlays = list(tank_one_image, tank_two_image)
-		src.wear_image.underlays = list(tank_one_image_under, tank_two_image_under)
+		src.wear_image.overlays = list()
+		if(src.tank_one)
+			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]1")
+			src.wear_image.underlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]_under")
+		if(src.tank_two)
+			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_two_icon]2")
+			src.wear_image.underlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_two_icon]_under")
 
 		/*
 		Exadv1: I know this isn't how it's going to work, but this was just to check
@@ -312,6 +320,10 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			src.valve_open = !valve_open
 			SPAWN(1 SECOND)
 				signalled = FALSE
+			if(valve_open)
+				playsound(src, 'sound/effects/valve_creak.ogg', 50, TRUE)
+			else
+				playsound(src, 'sound/effects/valve_creak.ogg', 50, TRUE, pitch=-1)
 			if(valve_open && force_dud)
 				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
 				logTheThing(LOG_BOMBING, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -359,7 +371,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 						throw_repeat--
 						step_away(L,get_turf(src),throw_speed)
 
-				T.air_contents.zero() //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
+				ZERO_GASES(T.air_contents) //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
 				qdel(B)
 				SPAWN(1 SECOND)
 					UpdateIcon()
@@ -369,8 +381,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				var/turf/bombturf = get_turf(src)
 				var/area/A = get_area(bombturf)
 				if(!A.dont_log_combat)
-					logTheThing(LOG_BOMBING, null, "Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
-					message_admins("Bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
+					logTheThing(LOG_BOMBING, null, "TTV tank transfer valve bomb opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
+					message_admins("TTV tank transfer valve bomb valve opened in [log_loc(bombturf)]. Last touched by [src.fingerprintslast]")
 
 				var/datum/gas_mixture/temp
 
@@ -379,7 +391,8 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				tank_two.air_contents.volume = tank_one.air_contents.volume
 				tank_two.air_contents.merge(temp)
 
-				temp = tank_two.air_contents.remove_ratio(0.5)
+				var/transfer_ratio = tank_one.air_contents.volume / (tank_one.air_contents.volume + tank_two.air_contents.volume)
+				temp = tank_two.air_contents.remove_ratio(transfer_ratio)
 				tank_one.air_contents.merge(temp)
 
 				SPAWN(2 SECONDS) // In case one tank bursts

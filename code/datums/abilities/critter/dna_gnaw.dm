@@ -24,15 +24,17 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return 1
-		playsound(target, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, 1, -1)
+		playsound(target, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, TRUE, -1)
 		var/mob/M = target
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] gnaws into [M]!</b></span>", "<span class='alert'>We sink our teeth into [M]!</span>")
 		if (istype(holder.owner, /mob/living/critter/changeling/handspider) && isliving(M))
 			var/mob/living/MT = M
 			//Only able to absorb 4 dna points from a living target (out of a total of 10)
-			if (istype (MT,/mob/living/carbon/human) && (istype(MT:mutantrace, /datum/mutantrace/monkey) || isnpc(MT)))
+			if (isnpcmonkey(MT))
 				boutput(holder.owner, "<span class='alert'>Our hunger will not be satisfied by this lesser being.</span>")
+			else if (isnpc(MT))
+				boutput(holder.owner, "<span class='alert'>The DNA of this target seems inferior somehow, you have no desire to feed on it.</span>")
 			else if (MT.dna_to_absorb > 0 && (isdead(MT) || MT.dna_to_absorb > 6))
 				var/absorbed = 1
 				if (isdead(MT) && MT.dna_to_absorb > 1)
@@ -41,7 +43,7 @@
 				holder.owner:absorbed_dna += absorbed
 				MT.dna_to_absorb -= absorbed
 
-				if (ishuman(MT))
+				if(ishuman(MT))
 					if (MT:blood_volume > 5)
 						MT:blood_volume -= 5
 
@@ -50,7 +52,7 @@
 					MT.real_name = "Unknown"
 					MT.bioHolder.AddEffect("husk")
 			else
-				boutput(holder.owner, "<span class='notice'>We cannot gain any DNA from [MT] in their current state.</span>")
+				boutput(holder.owner, "<span class='notice'>We cannot gain any DNA from [MT] in [his_or_her(MT)] current state.</span>")
 
 		holder.owner.TakeDamage("All", -5, -5)
 		M.TakeDamageAccountArmor("All", 5, 0, 0, DAMAGE_CRUSH)

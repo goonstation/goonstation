@@ -20,8 +20,8 @@
 						/mob/living/critter/small_animal/mouse,
 						/obj/critter/opossum,
 						/obj/critter/parrot/eclectus,
-						/obj/critter/pig,
-						/obj/critter/walrus)
+						/mob/living/critter/small_animal/pig,
+						/mob/living/critter/small_animal/walrus)
 
 /obj/item/toy/sponge_capsule/syndicate
 	colors = list("#FF0000", "#7F0000", "#FF6A00", "#FFD800", "#7F3300", "#7F6A00")
@@ -51,7 +51,7 @@
 /obj/item/toy/sponge_capsule/attack(mob/M, mob/user)
 	if (iscarbon(M) && M == user)
 		M.visible_message("<span class='notice'>[M] stuffs [src] into [his_or_her(M)] mouth and and eats it.</span>")
-		playsound(M, 'sound/misc/gulp.ogg', 30, 1)
+		playsound(M, 'sound/misc/gulp.ogg', 30, TRUE)
 		eat_twitch(M)
 		user.u_equip(src)
 		qdel(src)

@@ -109,7 +109,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/rally
 	name = "rallying"
 	weight = 0
-	can_be_adjacent_to_target = FALSE
+	distance_from_target = 0
 	max_dist = 0
 
 	New()
@@ -131,7 +131,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/replicate
 	name = "replicating"
 	weight = 7
-	can_be_adjacent_to_target = FALSE
+	distance_from_target = 0
 
 /datum/aiTask/sequence/goalbased/flock/replicate/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -139,7 +139,7 @@ stare
 
 /datum/aiTask/sequence/goalbased/flock/replicate/precondition()
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock || F.flock.flockmind.tutorial)
+	if (!F?.flock || F.flock.flockmind?.tutorial)
 		return
 	return F.can_afford(src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT
 
@@ -188,7 +188,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/nest
 	name = "nesting"
 	weight = 6
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 	max_dist = 2
 
 /datum/aiTask/sequence/goalbased/flock/nest/New(parentHolder, transTask)
@@ -198,7 +198,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/nest/precondition()
 	. = FALSE
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if (!F?.flock || F.flock.flockmind.tutorial)
+	if (!F?.flock || F.flock.flockmind?.tutorial)
 		return
 	if(F.can_afford(FLOCK_CONVERT_COST + src.current_egg_cost()) && F.flock.getComplexDroneCount() < FLOCK_DRONE_LIMIT)
 		. = TRUE
@@ -865,7 +865,7 @@ stare
 	name = "capturing"
 	weight = 15
 	max_dist = 12
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 	ai_turbo = TRUE
 
 /datum/aiTask/sequence/goalbased/flock/flockdrone_capture/New(parentHolder, transTask)
@@ -1017,7 +1017,7 @@ stare
 ///Since we don't want flockdrones building barricades randomly, this task only exists for the targetable version to inherit from
 /datum/aiTask/sequence/goalbased/flock/barricade
 	name = "barricading"
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 
 /datum/aiTask/sequence/goalbased/flock/barricade/New(parentHolder, transTask)
 	..(parentHolder, transTask)
@@ -1074,7 +1074,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/deconstruct
 	name = "deconstructing"
 	weight = 8
-	can_be_adjacent_to_target = TRUE
+	distance_from_target = 1
 
 /datum/aiTask/sequence/goalbased/flock/deconstruct/New(parentHolder, transTask)
 	..(parentHolder, transTask)

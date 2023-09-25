@@ -509,7 +509,7 @@ datum/light
 			#define APPLY(T) RL_APPLY_LIGHT_EXPOSED_ATTEN(T, src.x, src.y, \
 				src.brightness \
 				* clamp(((src.x - T.x)*(src.x - T.x) + (src.y - T.y)*(src.y - T.y)) / inner_radius, 0, 1) \
-				* clamp((outer_angular_size / 2 - angle_distance(arctan(T.x - src.x, T.y - src.y), center_angle)) / ((outer_angular_size - inner_angular_size) / 2), 0, 1) ** 2\
+				* clamp((outer_angular_size / 2 - abs(angledifference(arctan(T.x - src.x, T.y - src.y), center_angle))) / ((outer_angular_size - inner_angular_size) / 2), 0, 1) ** 2\
 				, height2, r, g, b)
 
 			// conversion from angles clock to normal angles

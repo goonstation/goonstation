@@ -156,6 +156,16 @@
 /mob/proc/get_ability_hotkey(mob/user, parameters)
 	if(!parameters["left"]) return
 	if(!user?.abilityHolder) return
+	if(istype(user.abilityHolder, /datum/abilityHolder/composite))
+		var/datum/abilityHolder/composite/holder = user.abilityHolder
+		for(var/datum/abilityHolder/H in holder.holders)
+			if(parameters["ctrl"] && H.ctrlPower)
+				return H.ctrlPower
+			if(parameters["alt"] && H.altPower)
+				return H.altPower
+			if(parameters["shift"] && H.shiftPower)
+				return H.shiftPower
+
 	if(parameters["ctrl"] && user.abilityHolder.ctrlPower)
 		return user.abilityHolder.ctrlPower
 	if(parameters["alt"] && user.abilityHolder.altPower)

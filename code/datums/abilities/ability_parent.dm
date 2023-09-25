@@ -50,17 +50,13 @@
 		owner = M
 		hud = new()
 		if(owner)
-			owner.attach_hud(hud)
-			if (ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.hud?.update_ability_hotbar()
+			onAttach(owner)
 
 	disposing()
 		for (var/atom/movable/screen/S in hud.objects)
 			if (hasvar(S, "master") && S:master == src)
 				S:master = null
-		if (owner)
-			owner.detach_hud(hud)
+		onRemove(owner)
 		hud.clear_master()
 		hud.mobs -= src
 
@@ -82,6 +78,18 @@
 		if (points_last != points)
 			points_last = points
 			src.updateText(0, src.x_occupied, src.y_occupied)
+
+	/// Called just before we're removed from a mob
+	proc/onRemove(mob/from_who)
+		SHOULD_CALL_PARENT(TRUE)
+		from_who?.detach_hud(hud)
+
+	proc/onAttach(mob/to_whom)
+		SHOULD_CALL_PARENT(TRUE)
+		to_whom.attach_hud(hud)
+		if (ishuman(to_whom))
+			var/mob/living/carbon/human/H = to_whom
+			H.hud?.update_ability_hotbar()
 
 	proc/updateCounters()
 		// this is probably dogshit but w/e
@@ -205,10 +213,9 @@
 		bonus = 0
 
 	proc/transferOwnership(var/newbody)
-		owner?.detach_hud(hud)
+		onRemove(owner)
 		owner = newbody
-		if(owner)
-			owner.attach_hud(hud)
+		onAttach(newbody)
 
 	proc/StatAbilities()
 		if (!rendered)
@@ -492,10 +499,10 @@
 
 		if (spell.target_selection_check == 1)
 			var/list/mob/targets = spell.target_reference_lookup()
-			if (targets.len <= 0)
+			if (length(targets) <= 0)
 				boutput(owner.holder.owner, "<span class='alert'>There's nobody in range.</span>")
 				use_targeted = 2 // Abort parent proc.
-			else if (targets.len == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
+			else if (length(targets) == 1) // Only one guy nearby, but we need the mob reference for handleCast() then.
 				use_targeted = 0
 				SPAWN(0)
 					spell.handleCast(targets[1])
@@ -827,6 +834,7 @@
 	var/desc = null
 
 	var/max_range = 10
+	var/disabled = FALSE // For actionbars or sustained actions
 	var/last_cast = 0
 	var/cooldown = 0
 	var/start_on_cooldown = FALSE
@@ -851,6 +859,7 @@
 	var/sticky = FALSE 						//! Targeting stays active after using spell if this is 1. click button again to disable the active spell.
 	var/ignore_sticky_cooldown = FALSE		//! If TRUE, Ability will stick to cursor even if ability goes on cooldown after first cast.
 	var/interrupt_action_bars = TRUE 		//! If TRUE, we will interrupt any action bars running with the INTERRUPT_ACT flag
+	var/cooldown_after_action = FALSE		//! if TRUE, cooldowns will be handled after action bars have ended. Needs action to call afterAction() on end.
 
 	var/action_key_number = -1 //Number hotkey assigned to this ability. Only used if > 0
 	var/waiting_for_hotkey = FALSE //If TRUE, the next number hotkey pressed will be bound to this.
@@ -889,17 +898,16 @@
 
 	proc
 		handleCast(atom/target, params)
-			var/datum/abilityHolder/localholder = src.holder
 			var/result = tryCast(target, params)
 #ifdef NO_COOLDOWNS
 			result = TRUE
 #endif
+			if (src.cooldown_after_action)
+				return // We call afterAction() when ending our action
 			// Do cooldown unless we explicitly say not to, OR there was a failure somewhere in the cast() proc which we relay
 			if (result != CAST_ATTEMPT_FAIL_NO_COOLDOWN && result != CAST_ATTEMPT_FAIL_CAST_FAILURE)
 				doCooldown()
 			afterCast()
-			if(!QDELETED(localholder))
-				localholder.updateButtons()
 
 		cast(atom/target)
 			if(interrupt_action_bars)
@@ -959,7 +967,7 @@
 				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
 			if (!castcheck(target))
 				src.holder.locked = FALSE
-				return CAST_ATTEMPT_FAIL_DO_COOLDOWN
+				return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 			var/datum/abilityHolder/localholder = src.holder
 			. = cast(target, params)
 			if(!QDELETED(localholder))
@@ -971,7 +979,10 @@
 			return
 
 		doCooldown()
+			var/datum/abilityHolder/localholder = src.holder
 			src.last_cast = world.time + src.cooldown
+			if(!QDELETED(localholder))
+				localholder.updateButtons()
 
 		castcheck(atom/target)
 			return 1
@@ -983,6 +994,11 @@
 
 		afterCast()
 			return
+
+		/// Used for abilities with action bars which don't want to do cooldowns until after
+		afterAction()
+			doCooldown()
+			afterCast()
 
 		Stat()
 			updateObject(holder.owner)
@@ -1130,6 +1146,7 @@
 		for (var/datum/abilityHolder/H in holders)
 			if (H.type == holderType)
 				H.composite_owner = null
+				H.onRemove(src.owner)
 				holders -= H
 		updateButtons()
 

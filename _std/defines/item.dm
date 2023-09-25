@@ -192,6 +192,7 @@
 
 #define W_CLASS_TINY 1
 #define W_CLASS_SMALL 2
+#define W_CLASS_POCKET_SIZED 2.5
 #define W_CLASS_NORMAL 3
 #define W_CLASS_BULKY 4
 #define W_CLASS_HUGE 5

@@ -48,10 +48,10 @@ TYPEINFO(/obj/item/storage/toilet)
 		else
 			user.visible_message("<span class='notice'>[user] gives [G.affecting] a swirlie!</span>", "<span class='notice'>You give [G.affecting] a swirlie. It's like Middle School all over again!</span>")
 
-		playsound(src, 'sound/effects/toilet_flush.ogg', 50, 1)
+		playsound(src, 'sound/effects/toilet_flush.ogg', 50, TRUE)
 		if (G.affecting.hasStatus("burning"))
 			G.affecting.changeStatus("burning", -2 SECONDS)
-			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, TRUE)
 			return
 		return
 	return ..()
@@ -114,7 +114,7 @@ TYPEINFO(/obj/item/storage/toilet)
 			src.add_fingerprint(user)
 	if((src.clogged < 1) || (!src.storage.is_full()) || (user.loc != src.loc))
 		user.visible_message("<span class='notice'>[user] flushes [src].</span>", "<span class='notice'>You flush [src].</span>")
-		playsound(src, 'sound/effects/toilet_flush.ogg', 50, 1)
+		playsound(src, 'sound/effects/toilet_flush.ogg', 50, TRUE)
 
 
 #ifdef UNDERWATER_MAP
@@ -138,10 +138,12 @@ TYPEINFO(/obj/item/storage/toilet)
 /obj/item/storage/toilet/suicide_in_hand = 0
 /obj/item/storage/toilet/suicide(var/mob/living/carbon/human/user as mob)
 	if (!ishuman(user) || !user.organHolder)
-		return 0
+		return FALSE
 
 	user.visible_message("<span class='alert'><b>[user] sticks [his_or_her(user)] head into [src] and flushes it, giving [him_or_her(user)]self an atomic swirlie!</b></span>")
 	var/obj/head = user.organHolder.drop_organ("head")
+	if (!head) // they were already headless or something else odd happened, just abort
+		return FALSE
 	if (src.clogged >= 1 || src.storage.is_full())
 		head.set_loc(src.loc)
 		playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)

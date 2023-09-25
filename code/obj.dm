@@ -85,7 +85,7 @@
 		. = ..()
 
 	ex_act(severity)
-		src.material?.triggerExp(src, severity)
+		src.material_trigger_on_explosion(severity)
 		switch(severity)
 			if(1)
 				changeHealth(-100)
@@ -104,10 +104,10 @@
 			pressure_resistance = max(20, (src.material.getProperty("density") - 5) * ONE_ATMOSPHERE)
 			throwforce = src.material.getProperty("hard")
 			throwforce = max(throwforce, initial(throwforce))
-			quality = src.material.quality
-			if(initial(src.opacity) && src.material.alpha <= MATERIAL_ALPHA_OPACITY)
+			quality = src.material.getQuality()
+			if(initial(src.opacity) && src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY)
 				set_opacity(0)
-			else if(initial(src.opacity) && !src.opacity && src.material.alpha > MATERIAL_ALPHA_OPACITY)
+			else if(initial(src.opacity) && !src.opacity && src.material.getAlpha() > MATERIAL_ALPHA_OPACITY)
 				set_opacity(1)
 
 	disposing()
@@ -209,6 +209,12 @@
 
 	proc/initialize()
 
+	proc/shatter_chemically(var/projectiles = TRUE) //!shatter effect, caused by chemicals inside object, should return TRUE if object actually shatters
+		return FALSE
+
+	proc/get_chemical_effect_position() //!how many pixels up or down chemistry reaction animations should shift, to fit the item it's reacting in
+		return 7 //default is up a bit since most objects are centered
+
 	attackby(obj/item/I, mob/user)
 // grabsmash
 		if (istype(I, /obj/item/grab/))
@@ -279,7 +285,7 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "There's no bedsheets left in [src]!")
+			boutput(user, "<span class='alert'>There's no bedsheets left in [src]!</span>")
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] bedsheet[s_es(src.amount)] in [src]."
@@ -307,7 +313,7 @@
 			if (src.amount <= 0)
 				src.icon_state = "bedbin0"
 		else
-			boutput(user, "There's no towels left in [src]!")
+			boutput(user, "<span class='alert'>There's no towels left in [src]!</span>")
 
 	get_desc()
 		. += "There's [src.amount ? src.amount : "no"] towel[s_es(src.amount)] in [src]."
@@ -356,7 +362,8 @@
 /obj/proc/alter_health()
 	return 1
 
-/obj/proc/hide(h)
+/// Whether or not to hide something based on the value of hide, usually whether or not the turf is intact.
+/obj/proc/hide(hide)
 	return
 
 /obj/proc/replace_with_explosive()
@@ -393,6 +400,8 @@
 		if (islist(params) && params["icon-y"] && params["icon-x"])
 			W.pixel_x = text2num(params["icon-x"]) - 16
 			W.pixel_y = text2num(params["icon-y"]) - 16
+		if(W.layer < src.layer)
+			W.layer = src.layer + 0.1
 		. = TRUE
 
 /obj/proc/receive_silicon_hotkey(var/mob/user)

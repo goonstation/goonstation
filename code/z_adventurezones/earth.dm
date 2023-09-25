@@ -247,12 +247,6 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 	varshie
 		ckey = "varshie"
 		name = "Office of Varshie"
-	virvatuli
-		ckey = "virvatuli"
-		name = "Office of Virvatuli"
-		sound_loop = 'sound/ambience/music/v_office_beats.ogg'
-		sound_loop_vol = 90
-		sound_group = "virva_office"
 	walpvrgis
 		ckey = "walpvrgis"
 		name = "Office of Walpvrgis"
@@ -614,7 +608,7 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 		L.set_density(TRUE)
 		L.set_a_intent(INTENT_HARM)
 		L.dir_locked = TRUE
-	playsound(clone, 'sound/machines/ding.ogg', 50, 1)
+	playsound(clone, 'sound/machines/ding.ogg', 50, TRUE)
 	clone.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")
 	var/static/list/obj/machinery/conveyor/conveyors = null
 	var/static/conveyor_running_count = 0

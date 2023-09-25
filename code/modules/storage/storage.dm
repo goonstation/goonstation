@@ -334,7 +334,7 @@
 
 /// when adding an item in
 /datum/storage/proc/add_contents(obj/item/I, mob/user = null, visible = TRUE)
-	if (user?.equipped() == I)
+	if (I in user?.equipped_list())
 		user.u_equip(I)
 	src.stored_items += I
 	I.set_loc(src.linked_item, FALSE)

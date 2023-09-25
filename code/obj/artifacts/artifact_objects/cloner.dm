@@ -72,9 +72,6 @@
 				clone.real_name = user.real_name
 				clone.UpdateName()
 
-			if(clone.client) // gross hack for resetting tg layout bleh bluh copied from cloner code
-				clone.client.set_layout(clone.client.tg_layout)
-
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
 				clone.is_npc = FALSE
@@ -118,9 +115,10 @@
 				clone.ai_init()
 				clone.ai_aggressive = 1
 				clone.ai_calm_down = 0
+				var/mob/living/carbon/human/local_clone = clone
 				SPAWN(imprison_time)
-					while (!isdead(clone) && isnull(clone.client))
-						clone.say(phrase_log.random_phrase("say"))
+					while (!isdead(local_clone) && isnull(local_clone.client))
+						local_clone.say(phrase_log.random_phrase("say"))
 						sleep(randfloat(3 SECOND, 20 SECONDS))
 
 			SPAWN(imprison_time)

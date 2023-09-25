@@ -169,10 +169,6 @@ proc/debug_map_apc_count(delim,zlim)
 
 		boutput(usr, "<span class='notice'>@[target.x],[target.y] ([GM.group_multiplier])<br>[MOLES_REPORT(GM)] t: [GM.temperature]&deg;K ([GM.temperature - T0C]&deg;C), [MIXTURE_PRESSURE(GM)] kPa [(burning)?("<span class='alert'>BURNING</span>"):(null)]</span>")
 
-		if(GM.trace_gases)
-			for(var/datum/gas/trace_gas as anything in GM.trace_gases)
-				boutput(usr, "[trace_gas.type]: [trace_gas.moles]")
-
 	fix_next_move()
 		SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 		set name = "Press this if everybody freezes up"
@@ -211,8 +207,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 		ADMIN_ONLY
 		world.SetConfig( "APP/admin", src.key, "role=admin" )
-		input( src, "Enter '.debug profile' in the next command box. Blame BYOND.", "BYONDSucks", ".debug profile" )
-		winset( usr, null, "command=.command" )
+		winset( usr, null, "command=.profile" )
 		if (tgui_alert(usr, "Do you disable automatic profiling for 5 minutes.", "Debug",
 				list("Yes", "No"), timeout = 10 SECOND) == "Yes")
 			lag_detection_process.delay_disable_manual_profiling(5 MINUTES)
@@ -357,7 +352,7 @@ proc/debug_map_apc_count(delim,zlim)
 			if(!(area in processed_areas))
 				var/text_charge
 				if(!apc || apc.disposed)
-					text_charge = "N/A"
+					text_charge = "no APC"
 				else if(apc.status & BROKEN)
 					text_charge = "broken"
 				else if(!cell)
@@ -372,6 +367,8 @@ proc/debug_map_apc_count(delim,zlim)
 					if(apc.environ <= 2) off += "env"
 					if(length(off))
 						text_charge += "<br>OFF: [off.Join(" ")]"
+				if(!area.requires_power)
+					text_charge += "<br>inf power area"
 				img.app.overlays = list(src.makeText(text_charge, align_left=TRUE))
 				processed_areas += area
 
@@ -563,9 +560,9 @@ proc/debug_map_apc_count(delim,zlim)
 			for(var/obj/decal/cleanable/writing/arte in theTurf)
 				built += "[arte.icon_state] artpiece by [arte.artist]"
 				artists |= arte.artist
-			if(artists.len >= 2)
+			if(length(artists) >= 2)
 				img.app.color = "#7f0000"
-			else if(artists.len == 1)
+			else if(length(artists) == 1)
 				img.app.color = debug_color_of(artists[1])
 			img.app.desc = built.Join("<br/>")
 
@@ -586,7 +583,7 @@ proc/debug_map_apc_count(delim,zlim)
 				img.app.alpha = 0
 			else if(0 in netnums)
 				img.app.color = "#ff0000"
-			else if(netnums.len >= 2)
+			else if(length(netnums) >= 2)
 				img.app.color = "#ffffff"
 			else
 				img.app.color = debug_color_of(netnums[1])
@@ -890,31 +887,6 @@ proc/debug_map_apc_count(delim,zlim)
 			if(val)
 				img.app.overlays = list(src.makeText(round(val), RESET_ALPHA))
 
-	trace_gases // also known as Fart-o-Vision
-		name = "trace gases active"
-		GetInfo(turf/theTurf, image/debugoverlay/img)
-			. = ..()
-			var/air_group_trace = 0
-			var/direct_trace = 0
-			var/turf/simulated/sim = theTurf
-			if (istype(sim) && sim.air)
-				for(var/datum/gas/tg as anything in sim.air.trace_gases)
-					img.app.desc += "[tg.type] [tg.moles]<br>"
-					direct_trace = 1
-				if(sim?.parent?.air)
-					for(var/datum/gas/tg as anything in sim.parent.air.trace_gases)
-						img.app.desc += "(AG) [tg.type] [tg.moles]<br>"
-						air_group_trace = 1
-			if(air_group_trace && direct_trace)
-				img.app.color = "#ff0000"
-			else if(air_group_trace)
-				img.app.color = "#ff8800"
-			else if(direct_trace)
-				img.app.color = "#ffff00"
-			else
-				img.app.color = "#ffffff"
-				img.app.alpha = 50
-
 	wet_floors
 		name = "wet floors"
 		help = {"Shows wetness of the floors<br>1 - green = wet<br>2 - blue = lube<br>3 - red = superlube<br>slippery fluids, banana peels etc. not counted"}
@@ -1029,7 +1001,9 @@ proc/debug_map_apc_count(delim,zlim)
 			var/temp = null
 			if(issimulatedturf(theTurf))
 				var/turf/simulated/sim = theTurf
-				if(sim.air)
+				if (sim.parent?.group_processing)
+					temp = sim.parent.air.temperature
+				else if(sim.air)
 					temp = sim.air.temperature
 			if(isnull(temp))
 				temp = theTurf.temperature
@@ -1430,11 +1404,11 @@ proc/debug_map_apc_count(delim,zlim)
 			var/list/detailed_materials = list()
 			for(var/atom/movable/AM in theTurf)
 				if(AM.material)
-					materials |= AM.material.name
-					detailed_materials += "[AM.name] - [AM.material.name]"
+					materials |= AM.material.getName()
+					detailed_materials += "[AM.name] - [AM.material.getName()]"
 			if(include_turfs && theTurf.material)
-				materials |= theTurf.material.name
-				detailed_materials += "[theTurf.name] - [theTurf.material.name]"
+				materials |= theTurf.material.getName()
+				detailed_materials += "[theTurf.name] - [theTurf.material.getName()]"
 			if(!length(materials))
 				img.app.alpha = 0
 				return

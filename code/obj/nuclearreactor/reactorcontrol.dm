@@ -181,12 +181,8 @@
 		switch(action)
 			if("adjustCR")
 				logTheThing(LOG_STATION, src, "[src.reactor_handle] control rod insertion configured to [params["crvalue"]]% by [ui.user]")
-				for(var/x=1 to length(src.reactor_handle.component_grid))
-					for(var/y=1 to length(src.reactor_handle.component_grid[1]))
-						if(src.reactor_handle.component_grid[x][y])
-							if(istype(src.reactor_handle.component_grid[x][y],/obj/item/reactor_component/control_rod))
-								var/obj/item/reactor_component/control_rod/CR = src.reactor_handle.component_grid[x][y]
-								CR.configured_insertion_level = text2num(params["crvalue"])/100
+				src.reactor_handle.set_control_rods(text2num(params["crvalue"]))
+
 			if("slot")
 				var/x = params["x"]
 				var/y = params["y"]

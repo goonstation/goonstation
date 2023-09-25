@@ -165,13 +165,13 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 			G.suppress_fire_msg = 1
 			for(var/atom/A as anything in local_targets)
 				for(var/i in 1 to local_targets[A])
-					G.shoot(get_turf(A), get_turf(user), user)
+					G.shoot(get_turf(A), get_turf(user), user, called_target = A)
 					sleep(1 DECI SECOND)
 
 			G.suppress_fire_msg = initial(G.suppress_fire_msg)
 		else
 			if(!ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
-				G.shoot(mouse_target, get_turf(user), user)
+				G.shoot(mouse_target, get_turf(user), user, called_target = mouse_target)
 		shooting = 0
 
 	tracked_targets = list()

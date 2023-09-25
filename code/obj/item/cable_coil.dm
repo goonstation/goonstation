@@ -87,9 +87,9 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 		if (!conductor)
 			return
 		if (insulator)
-			name = "[insulator.name]-insulated [conductor.name]-[base_name]"
+			name = "[insulator.getName()]-insulated [conductor.getName()]-[base_name]"
 		else
-			name = "uninsulated [conductor.name]-[base_name]"
+			name = "uninsulated [conductor.getName()]-[base_name]"
 
 	proc/use(var/used)
 		if (src.amount < used)
@@ -105,7 +105,7 @@ obj/item/cable_coil/abilities = list(/obj/ability_button/cable_toggle)
 			return 1
 
 	_update_stack_appearance()
-		update_icon()
+		UpdateIcon()
 
 	update_icon()
 		if (amount <= 0)
@@ -342,7 +342,7 @@ obj/item/cable_coil/proc/plop_a_cable(turf/overthere, mob/user, dir1, dir2)
 	NC.d1 = dir1
 	NC.d2 = dir2
 	NC.add_fingerprint()
-	NC.update_icon()
-	NC.update_network()
+	NC.UpdateIcon()
+	NC.update_network(user)
 	NC.log_wirelaying(user)
 	src.use(1)

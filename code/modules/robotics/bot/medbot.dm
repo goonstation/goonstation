@@ -55,7 +55,7 @@
 																				"haloperidol" = 15,
 																				"morphine" = 20,
 																				"cold_medicine" = 40,
-																				"simethicone" = 10,
+																				"anti_fart" = 10,
 																				"sulfonal" = 5, /* its an oldetimey sedative */
 																				"atropine" = 10,
 																				"methamphetamine" = 30,
@@ -705,7 +705,7 @@
 				sput_words += reagent_id_to_name(reagent)
 			smoke_reaction(sput, 1, get_turf(master))
 			master.visible_message("<span class='alert'>A shower of [english_list(sput_words)] shoots out of [master]'s hypospray!</span>")
-		playsound(master, 'sound/items/hypo.ogg', 80, 0)
+		playsound(master, 'sound/items/hypo.ogg', 80, FALSE)
 
 		master.KillPathAndGiveUp() // Don't discard the patient just yet, maybe they need more healing!
 		master.UpdateIcon()
