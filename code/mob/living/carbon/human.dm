@@ -1780,11 +1780,11 @@
 
 	if(I.two_handed)
 		if(src.l_hand == I)
-			if(src.r_hand != null)
+			if((src.r_hand != null) && (src.r_hand != I))
 				I.two_handed = 0
 				return FALSE
 		else if(src.r_hand == I)
-			if(src.l_hand != null)
+			if((src.l_hand != null) && (src.l_hand != I))
 				I.two_handed = 0
 				return FALSE
 		hud.set_visible(hud.lhand, 0)

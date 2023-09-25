@@ -1,5 +1,15 @@
 
+(t)mon sep 25 23
+(u)Mr. Moriarty
+(p)14069
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(*)Replaced the Armoury's 40mm pod-seeking shells with a pod-targeting missile launcher. The launcher will display an aiming reticle over the pod being targeted.
 (t)sun sep 24 23
+(u)UnfunnyPerson
+(p)15982
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Added the wasp crossbow to surplus crates.
+(+)Wasp related items in surplus crates come with a wasp implant. The wasp implant will cause wasps to ignore the user and for the user to explode into wasps on death.
 (u)TealSeer
 (p)16006
 (e)🪲🧱🍝|C-Bug, A-Materials, A-Catering
