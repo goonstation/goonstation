@@ -183,7 +183,10 @@ TYPEINFO(/obj/item/clothing/glasses/sunglasses/tanning)
 	mats = 4
 
 /obj/item/clothing/glasses/sunglasses/reflective
+	correct_bad_vision = TRUE
 	allow_blind_sight = TRUE
+	is_syndicate = TRUE
+
 	var/appearance_chosen = FALSE
 	var/static/list/possible_appearances = list(
 		"Spectro goggles" = /obj/item/clothing/glasses/spectro,
