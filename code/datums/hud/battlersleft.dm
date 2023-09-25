@@ -10,7 +10,8 @@
 		battlersleft.maptext_x = -(480 / 2) + 16
 		battlersleft.maptext_y = -320
 		battlersleft.maptext_height = 320
-		battlersleft.plane = 100
+		battlersleft.plane = PLANE_HUD
+		battlersleft.layer = 420
 		..()
 
 	proc/update_battlersleft(var/living_battlers)

@@ -107,13 +107,13 @@ ABSTRACT_TYPE(/obj/machinery/vending/meat)
 	create_products()
 		..()
 		// prices here are triple of the prefab_grill version where applicable
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 3, cost=90)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget, 5, cost=400)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish, 3, cost=300)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 6, cost=60)
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 3, cost=72)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat, 3, cost=PAY_UNTRAINED/5)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget, 5, cost=PAY_TRADESMAN)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/fish, 3, cost=PAY_TRADESMAN)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/synthmeat, 6, cost=PAY_UNTRAINED/3)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/monkeymeat, 3, cost=PAY_UNTRAINED/2)
 
-		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 5, cost=1000, hidden=1)
+		product_list += new/datum/data/vending_product(/obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat, 5, cost=PAY_DOCTORATE, hidden=1)
 
 // all of john's area specific lines here
 /area/var/john_talk = null
