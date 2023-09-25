@@ -520,12 +520,9 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		icon_state = "pressure_[clamp(ex, 1, 3)]"
 
 	attackby(obj/item/thing, mob/user)
-		if (!istype(thing, /obj/item/device/pressure_sensor))
-			return ..()
-		var/obj/item/device/pressure_sensor/sensor = thing
-		if (sensor.insert_crystal(user, src))
-			user.visible_message("[user] scoops [src] into [sensor].",
-								"<span class='notice'>You scoop the crystal into [sensor].</span>")
+		if (istype(thing, /obj/item/device/pressure_sensor))
+			thing.Attackby(src, user)
+		else ..()
 
 /obj/item/device/pressure_sensor
 	name = "pressure sensor"
@@ -559,9 +556,9 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	attackby(obj/item/thing, mob/user)
 		if(istype(thing, /obj/item/pressure_crystal) && src.insert_crystal(user, thing))
 			user.visible_message("[user] inserts [thing] into [src].",
-								"<span class='notice'>You gently place the crystal into [src].</span>")
+								"<span class='notice'>You insert the crystal into [src].</span>")
 		else if(src.crystal && thing.tool_flags & TOOL_PRYING && src.remove_crystal(user))
-			user.visible_message("[user] removes the crystal from [src].",
+			user.visible_message("[user] pries the crystal from [src].",
 								"<span class='notice'>You pry out [src]'s crystal.</span>")
 		else return ..()
 
@@ -577,7 +574,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			return
 		if (src.remove_crystal(usr, over_location))
 			usr.visible_message("[usr] removes the crystal from [src].",
-								"<span class='notice'>You put your weight on [src] and pull the crystal out of it.</span>")
+								"<span class='notice'>You pull the crystal out of [src].</span>")
 
 	MouseDrop_T(atom/movable/thing, mob/user)
 		. = ..()
@@ -591,7 +588,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		if (src.loc != user || !user.find_in_hand(src))
 			..()
 		else if (src.crystal && src.remove_crystal(user))
-			boutput(user, "<span class='notice'>You firmly grip [src]'s crystal and pull it from the device.</span>" )
+			boutput(user, "<span class='notice'>You extract the crystal from [src].</span>" )
 		else ..() // something about having two of these feels wrong
 
 	update_icon()
