@@ -10,7 +10,7 @@
 )
 	. = ..()
 	src.data	= data
-	src.meta		= meta
+	src.meta	= meta
 
 /datum/apiModel/VpnCheckModel/VerifyIntegrity()
 	if (
