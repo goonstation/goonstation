@@ -2,9 +2,9 @@
 #define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
 /// The full explosion-power-to-credits conversion formula. Also used in smallprogs.dm
-#define PRESSURE_CRYSTAL_VALUATION(power) power ** 1.1 * 400
-/// The span size of each range. E.g.: 5 makes ranges 0-5, 5-10, 10-15 etc. Measured in explosion power. Also used in smallprogs.dm
-#define PRESSURE_CRYSTAL_SALES_RANGE_LENGTH 5
+#define PRESSURE_CRYSTAL_VALUATION(power) power ** 1.1 * 100
+/// The number of peak points on the pressure crystal graph offering bonus credits
+#define PRESSURE_CRYSTAL_PEAK_COUNT 3
 
 //Codes for requisition post-transaction returns handling
 ///Requisition was not used, conduct a standard QM sale
@@ -40,7 +40,11 @@
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
 	var/list/supply_history = list() // History of all approved requests, of type string
 
+	// Both of these are string indexed because byond will whine and complain and explode otherwise
+	/// Previously sold pressure crystal values, will negatively affect future sales (associative list of pressure to credit value)
 	var/list/pressure_crystal_sales = list()
+	/// Pressure crystal market peaks, will positively affect future sales (associative list of pressure to multipliers)
+	var/list/pressure_crystal_peaks = list()
 
 	var/points_per_crate = 10
 
@@ -99,13 +103,10 @@
 
 		src.launch_distance = get_dist(spawnpoint, target)
 
-		var/pcmi = 7 // How many ranges will be given credit multipliers
-		while (pcmi > 0)
-			var/index = "[rand(1, ceil(230 / PRESSURE_CRYSTAL_SALES_RANGE_LENGTH))]"
-			if (src.pressure_crystal_sales[index])
-				continue
-			src.pressure_crystal_sales[index] = (rand(150, 400) / 100)
-			pcmi--
+		//set up pressure crystal market peaks
+		for (var/i in 1 to PRESSURE_CRYSTAL_PEAK_COUNT)
+			var/value = rand(1, 230)
+			src.pressure_crystal_peaks["[value]"] = (rand() * 2) + 1 //random number between 2 and 3
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
@@ -415,15 +416,31 @@
 	proc/appraise_pressure_crystal(var/obj/item/pressure_crystal/pc, var/sell = 0)
 		if (pc.pressure <= 0)
 			return
-		var/index = "[ceil(pc.pressure / PRESSURE_CRYSTAL_SALES_RANGE_LENGTH)]"
+		//calculate the base value
 		var/value = PRESSURE_CRYSTAL_VALUATION(pc.pressure)
-		if (src.pressure_crystal_sales[index])
-			value *= src.pressure_crystal_sales[index]
-		if (sell)
-			if (src.pressure_crystal_sales[index])
-				src.pressure_crystal_sales[index] = clamp(src.pressure_crystal_sales[index], 0.01, 1) * (rand(30, 60) / 100)
-			else
-				src.pressure_crystal_sales[index] = (rand(30, 60) / 100) // these 2 rands need to make a mult between 0 and 1
+		// message_admins("initial value: [value]")
+		//for each previously sold pressure crystal
+		for (var/sale in src.pressure_crystal_sales)
+			var/sale_value = text2num(sale)
+			//calculate a modifier based on the proximity of our current pressure to the previous one
+			//scales by a simple x^2 curve, stretched by the magnitude of the sale pressure (ie bigger bombs affect larger ranges)
+			//obligatory desmos: https://www.desmos.com/calculator/mumuykqlju
+			var/modifier = 1/(sale_value * 3) * ((pc.pressure - sale_value) ** 2)
+			if (modifier < 1) //a range cutoff to ensure we never add credit value
+				message_admins("scaling value by [modifier] due to sale at [sale_value]")
+				value *= modifier
+		for (var/peak in src.pressure_crystal_peaks)
+			var/peak_value = text2num(peak) //I hate byond lists
+			//very similar to above except inverted and bounded by the multiplier of the peak
+			//another desmos: https://www.desmos.com/calculator/ahhoxuwho8
+			var/modifier = -1/(peak_value * 3) * ((pc.pressure - peak_value) ** 2) + src.pressure_crystal_peaks[peak]
+			if (modifier > 1)
+				// message_admins("scaling value by [modifier] due to peak at [peak_value]")
+				value *= modifier
+		value = round(value)
+		// message_admins("final value: [value]")
+		if (sell && value > 0)
+			src.pressure_crystal_sales["[pc.pressure]"] = value
 		return value
 
 	proc/handle_returns(obj/storage/crate/sold_crate,var/return_code)
