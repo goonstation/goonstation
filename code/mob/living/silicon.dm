@@ -141,6 +141,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	if (door_loc && isrestrictedz(door_loc.z)) // Somebody will find a way to abuse it if I don't put this here.
 		usr.show_text("Unable to interface with door due to unknown interference.", "red")
 		return
+	if(isAI(src) && door_loc?.z != Z_LEVEL_STATION)
+		usr.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
 
 	if (istype(our_door, /obj/machinery/door/airlock/))
 		var/obj/machinery/door/airlock/A = our_door
