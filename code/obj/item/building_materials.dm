@@ -387,6 +387,17 @@ MATERIAL
 
 					currentRecipe = /datum/sheet_crafting_recipe/metal/construct
 
+				if ("barricade","zbarricade")
+					var/turf/T = get_turf(usr)
+					var/obj/item/sheet/wood/W = src
+					if (!istype(T, /turf/simulated/floor) || locate(W.wall_type) in T.contents)
+						boutput(usr,"<span class='alert'>You can't build that here.</span>")
+						return
+					if (params["recipeID"] == "barricade")
+						currentRecipe = /datum/sheet_crafting_recipe/wood/barricade
+					else
+						currentRecipe = /datum/sheet_crafting_recipe/zwood/zbarricade
+
 				if("smallwindow")
 					for (var/obj/window/window in get_turf(src))
 						//the same direction thindow or a full window
