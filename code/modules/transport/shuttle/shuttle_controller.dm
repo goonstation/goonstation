@@ -201,16 +201,19 @@ datum/shuttle_controller
 						announcement_done = 1
 
 					else if (announcement_done < 2 && timeleft < 30)
-						if (istype(src.sound_turf)) playsound(src.sound_turf, 'sound/effects/ship_charge.ogg', 100)
+						if (istype(src.sound_turf))
+							playsound(src.sound_turf, 'sound/effects/ship_charge.ogg', 100)
 						announcement_done = 2
 
 					else if (announcement_done < 3 && timeleft < 4)
-						if (istype(src.sound_turf)) playsound(src.sound_turf, 'sound/effects/ship_engage.ogg', 100)
+						if (istype(src.sound_turf))
+							playsound(src.sound_turf, 'sound/effects/ship_engage.ogg', 100)
 						announcement_done = 3
 
 					else if (announcement_done < 4 && timeleft < 1)
-						if (istype(src.sound_turf)) playsound(src.sound_turf, 'sound/effects/explosion_new4.ogg', 75)
-						if (istype(src.sound_turf)) playsound(src.sound_turf, 'sound/effects/flameswoosh.ogg', 75)
+						if (istype(src.sound_turf))
+							playsound(src.sound_turf, 'sound/effects/explosion_new4.ogg', 75)
+							playsound(src.sound_turf, 'sound/effects/flameswoosh.ogg', 75)
 						announcement_done = 4
 						if (src.airbridges.len)
 							for (var/obj/machinery/computer/airbr/S in src.airbridges)
