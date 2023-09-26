@@ -491,11 +491,19 @@ MATERIAL
 	icon_state = "sheet-m_5$wood"
 	default_material = "wood"
 	amount = 10
+	var/wall_type = /obj/structure/woodwall
 
 	afterattack(atom/target, mob/user)
-		
+		if (!isturf(target) || target.density)
+			return ..()
+		var/turf/T = target
+		if (locate(src.wall_type) in T.contents)
+			return ..()
+		actions.start(new /datum/action/bar/icon/build(src, wall_type, 5, src.material, 1, 'icons/ui/actions.dmi', "working", "a barricade", null, spot = target), user)
+
 	zwood
 		amount = 5
+		wall_type = /obj/structure/woodwall/anti_zombie
 
 /obj/item/sheet/bamboo
 	item_state = "sheet-metal"

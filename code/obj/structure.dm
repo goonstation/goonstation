@@ -348,7 +348,7 @@ TYPEINFO(/obj/structure/woodwall)
 		icon = 'icons/effects/VR.dmi'
 
 	anti_zombie
-		name = "anti-zombie wooden barricade"
+		name = "anti-zombie barricade"
 		anti_z = 1
 
 		get_desc()
