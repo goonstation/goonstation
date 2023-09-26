@@ -418,7 +418,6 @@
 			return
 		//calculate the base value
 		var/value = PRESSURE_CRYSTAL_VALUATION(pc.pressure)
-		// message_admins("initial value: [value]")
 		//for each previously sold pressure crystal
 		for (var/sale in src.pressure_crystal_sales)
 			var/sale_value = text2num(sale)
@@ -427,7 +426,6 @@
 			//obligatory desmos: https://www.desmos.com/calculator/mumuykqlju
 			var/modifier = 1/(sale_value * 3) * ((pc.pressure - sale_value) ** 2)
 			if (modifier < 1) //a range cutoff to ensure we never add credit value
-				message_admins("scaling value by [modifier] due to sale at [sale_value]")
 				value *= modifier
 		for (var/peak in src.pressure_crystal_peaks)
 			var/peak_value = text2num(peak) //I hate byond lists
@@ -435,10 +433,8 @@
 			//another desmos: https://www.desmos.com/calculator/ahhoxuwho8
 			var/modifier = -1/(peak_value * 3) * ((pc.pressure - peak_value) ** 2) + src.pressure_crystal_peaks[peak]
 			if (modifier > 1)
-				// message_admins("scaling value by [modifier] due to peak at [peak_value]")
 				value *= modifier
 		value = round(value)
-		// message_admins("final value: [value]")
 		if (sell && value > 0)
 			src.pressure_crystal_sales["[pc.pressure]"] = value
 		return value

@@ -1699,8 +1699,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			. += "[peak] kiloblast: \
 				[mult > 1 ? "<B>" : ""]worth [round(mult * 100, 0.01)]% of normal. \
 				[mult > 1 ? "Maximum estimated value: [round(mult * PRESSURE_CRYSTAL_VALUATION(peak_value))]</B> credits." : ""]<br>"
-		. += "<br>"
-		. += "<b>Pressure crystal values already sold:</b>\
+		. += "<br><b>Pressure crystal values already sold:</b>\
 			<br>"
 		for (var/value in shippingmarket.pressure_crystal_sales)
 			. += "[value] kiloblast for [shippingmarket.pressure_crystal_sales[value]] credits.<br>"
