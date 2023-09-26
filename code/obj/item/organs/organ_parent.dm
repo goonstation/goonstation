@@ -81,6 +81,8 @@
 	var/surgery_flags = SURGERY_NONE
 	var/removal_stage = 0
 	var/region = null
+	///Can this organ be inserted on either side? (literally just kidneys, wegh)
+	var/either_side = FALSE
 
 	attack(var/mob/living/carbon/M, var/mob/user)
 		if (!ismob(M))
@@ -405,7 +407,13 @@
 		var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 		var/obj/item/organ/organ_location = H.organHolder.get_organ(src.organ_holder_location)
 
-		if (!H.organHolder.get_organ(src.organ_holder_name))
+		var/full_organ_name = src.organ_holder_name
+		if (src.either_side)
+			if (user.l_hand == src)
+				full_organ_name = "left_[full_organ_name]"
+			else
+				full_organ_name = "right_[full_organ_name]"
+		if (!H.organHolder.get_organ(full_organ_name))
 
 			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!</span>",\
 				"<span class='alert'>You [fluff] [src] into [user == H ? "your" : "[H]'s"] [src.organ_holder_location]!</span>",\
@@ -413,7 +421,7 @@
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
-			H.organHolder.receive_organ(src, src.organ_holder_name, organ_location.op_stage)
+			H.organHolder.receive_organ(src, full_organ_name, organ_location.op_stage)
 			H.update_body()
 
 			return 1
