@@ -802,7 +802,7 @@ ABSTRACT_TYPE(/area/shuttle)
 				A.pixel_y = 0
 			if (A in passengers)
 				passengers -= A
-		..()
+			return TRUE
 
 /area/shuttle/elevator/icebase_elevator/upper
 	name = "Chasm Lift Upper Section"
