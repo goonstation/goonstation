@@ -1492,7 +1492,11 @@ or don't if it uses a custom topopen overlay
 			killswitch = 0
 			logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
 			// doink
-			src.brain.take_damage(5,5)
+			src.brain.take_damage(20,20)
+			if(src.fire_res_on_core)
+				src.TakeDamage( null, src.health)
+			else
+				src.TakeDamage( null, src.health, src.health)
 			src.eject_brain()
 
 
