@@ -26317,7 +26317,7 @@
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 8
 	},
-/area/space)
+/area/shuttle/research/outpost)
 "fLF" = (
 /obj/submachine/chef_sink/chem_sink{
 	layer = 3;
@@ -68661,7 +68661,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+aqI
 aqI
 aqI
 aqI
