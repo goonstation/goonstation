@@ -261,7 +261,7 @@
 		var/obj/item/reagent_containers/food/snacks/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			T.Eat(C, C, TRUE)
+			C.critter_eat(T)
 			has_started = TRUE
 
 /datum/aiTask/succeedable/critter/eat/on_reset()

@@ -33,6 +33,9 @@
 
 	var/mutation_sfx = 'sound/effects/plant_mutation.ogg'
 
+	///Override the crop's brew result
+	var/brew_result = null
+
 	proc/HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
 		lasterr = 0
 		if (!POT || !user) return 301
@@ -259,7 +262,7 @@
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
 	PTrange = list(75,null)
 	chance = 10
-	assoc_reagents = list("ghostchilijuice")
+	brew_result = "ghostchilijuice"
 
 // Pumpkin Mutations
 
@@ -300,8 +303,8 @@
 	name = "ricein"
 	name_prefix = "Ricin "
 	iconmod = "Rice"
-	assoc_reagents = list("ricin")
 	PTrange = list(60,null)
+	brew_result = "ricin"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 
 // Oat Mutations
@@ -487,6 +490,15 @@
 	crop = /obj/item/plant/herb/ipecacuanha/invigorating
 	assoc_reagents = list("methamphetamine")
 	chance = 10
+
+// Nettle Mutations
+
+/datum/plantmutation/stinging_nettle/smooth
+	name = "Dead Nettle"
+	name_prefix = "Smooth "
+	iconmod = "NettleSmooth"
+	crop = /obj/item/plant/herb/nettle/smooth
+	chance = 20
 
 // Venne Mutations
 

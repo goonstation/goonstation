@@ -2034,6 +2034,60 @@
 				boutput(user, "<span class='notice'>You need a snipping tool.</span>")
 				return FALSE
 			return TRUE
+#define BUNSEN_OFF "off"
+#define BUNSEN_LOW "low"
+#define BUNSEN_MEDIUM "medium"
+#define BUNSEN_HIGH "high"
+
+/datum/contextAction/bunsen
+	icon = 'icons/ui/context16x16.dmi'
+	name = "you shouldnt see me"
+	icon_state = "wrench"
+	icon_background = "bunsen_bg"
+	use_tooltip = FALSE
+	close_moved = TRUE
+
+	var/temperature = null
+
+	checkRequirements(var/obj/item/bunsen_burner/bunsen_burner, var/mob/user)
+		if(GET_DIST(bunsen_burner, user) > 1)
+			return FALSE
+		else
+			return TRUE
+
+	execute(var/obj/item/bunsen_burner/bunsen_burner, mob/user)
+		bunsen_burner.change_status(temperature)
+		bunsen_burner.UpdateIcon()
+		boutput(user, "<span class='notice'>You set the [bunsen_burner] to [temperature].</span>")
+
+	heat_off
+		name = "Off"
+		icon_state = "bunsen_off"
+
+		execute(var/obj/item/bunsen_burner/bunsen_burner, mob/user)
+			bunsen_burner.change_status(BUNSEN_OFF)
+			boutput(user, "<span class='notice'>You turn the [bunsen_burner] off.</span>")
+			bunsen_burner.UpdateIcon()
+
+	heat_low
+		name = "Low"
+		icon_state = "bunsen_1"
+		temperature = BUNSEN_LOW
+
+	heat_medium
+		name = "Medium"
+		icon_state = "bunsen_2"
+		temperature = BUNSEN_MEDIUM
+
+	heat_high
+		name = "High"
+		icon_state = "bunsen_3"
+		temperature = BUNSEN_HIGH
+
+#undef BUNSEN_OFF
+#undef BUNSEN_LOW
+#undef BUNSEN_MEDIUM
+#undef BUNSEN_HIGH
 /datum/contextAction/t_scanner
 	icon = 'icons/ui/context16x16.dmi'
 	icon_state = "dismiss"
