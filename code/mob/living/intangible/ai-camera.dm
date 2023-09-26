@@ -164,7 +164,6 @@
 					O.receive_silicon_hotkey(src)
 				else
 					src.show_text("Your mainframe was unable relay this command that far away!", "red")
-		return
 				return
 
 		//var/inrange = in_interact_range(target, src)
