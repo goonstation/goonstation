@@ -2956,17 +2956,50 @@ ABSTRACT_TYPE(/area/station/security)
 /area/station/security/brig/cell_block
 		name = "Cell Block"
 		icon_state = "brigcell"
+
 /area/station/security/brig/cell1
 		name = "Cell #1"
 		icon_state = "red"
+
 /area/station/security/brig/genpop
 		name = "Genpop Cell"
 		icon_state = "brig"
-/area/station/security/brig/solitary
-		name = "Solitary Confinement"
+
+/area/station/security/brig/genpop_n
+		name = "Genpop North Cell"
 		icon_state = "brig"
 
+/area/station/security/brig/genpop_s
+		name = "Genpop South Cell"
+		icon_state = "brig"
 
+/area/station/security/brig/solitary
+		name = "Solitary Confinement"
+		icon_state = "brigcell"
+
+/area/station/security/brig/solitary2
+		name = "Solitary Confinement #2"
+		icon_state = "brigcell"
+
+/area/station/security/brig/solitary3
+		name = "Solitary Confinement #3"
+		icon_state = "brigcell"
+
+/area/station/security/brig/solitary4
+		name = "Solitary Confinement #4"
+		icon_state = "brigcell"
+
+/area/station/security/brig/minibrig
+		name = "Mini Brig"
+		icon_state = "brigcell"
+
+/area/station/security/brig/minibrig2
+		name = "Mini Brig #2"
+		icon_state = "brigcell"
+
+/area/station/security/brig/minibrig3
+		name = "Mini Brig #3"
+		icon_state = "brigcell"
 
 /area/station/security/checkpoint
 	name = "Bridge Security Checkpoint"
@@ -3075,10 +3108,6 @@ ABSTRACT_TYPE(/area/station/security)
 /area/station/security/brig/south_side
 	name = "Brig Long-Term Cell - South Side"
 	icon_state = "brigcell_Sside"
-
-/area/station/security/brig/solitary
-	name = "Brig - Solitary Cells"
-	icon_state = "brigcell"
 
 /area/station/security/beepsky
 	name = "Beepsky's House"
