@@ -23,5 +23,3 @@
 		L[INDEX] = L[length(L)]; \
 		L.len-- \
 	}
-
-#define PICK_OR_NULL(L) (length(L) ? pick(L) : null)
