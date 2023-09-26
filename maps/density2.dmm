@@ -2841,6 +2841,7 @@
 	name = "Emergency EVA Equipment Shutter Control";
 	pixel_x = -24
 	},
+/obj/mapping_helper/access/eva,
 /turf/simulated/floor/darkblue,
 /area/station/bridge)
 "rH" = (
