@@ -5,4 +5,4 @@
 	method = RUSTG_HTTP_METHOD_GET
 	path = "/random-entries"
 	queryParams = list("type", "count")	// not sure if i should put 0 or "count" here.
-	correct_response = /datum/apiModel/randomEntries	//this model/resource/schema doesn't exist
+	correct_response = /datum/apiModel/Tracked/EventTicketResource // this looks correct? best to double check it
