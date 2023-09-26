@@ -132,7 +132,7 @@ Contents:
 	name = "icy cliff"
 	desc = "Looks dangerous."
 	icon_state = "snow_corner"
-	dir = 5
+	dir = NORTHEAST
 	carbon_dioxide = 100
 	nitrogen = 0
 	oxygen = 0

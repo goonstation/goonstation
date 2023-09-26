@@ -237,7 +237,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 				action(object)
 
 /datum/ion_category/APCs
-	amount = 20
+	amount = 15
 	interdict_cost = 500
 
 	build_targets()
@@ -259,13 +259,13 @@ ABSTRACT_TYPE(/datum/ion_category)
 				apc.equipment = 0
 				apc.lighting = 0
 		logTheThing(LOG_STATION, null, "Ion storm interfered with [apc.name] at [log_loc(apc)]")
-		if (prob(50))
-			apc.aidisabled = TRUE
+		apc.aidisabled = TRUE
 		apc.update()
 		apc.UpdateIcon()
 
 /datum/ion_category/doors
 	amount = 40
+	var/list/last_req_access
 
 	valid_instance(var/obj/machinery/door/airlock/door)
 		return ..() && !door.cant_emag
@@ -276,16 +276,27 @@ ABSTRACT_TYPE(/datum/ion_category)
 				targets += door
 
 	action(var/obj/machinery/door/airlock/door)
-		var/door_diceroll = rand(1,3)
+		var/door_diceroll = !door.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) ? rand(1,6) : rand(1, 3)
 		switch(door_diceroll)
 			if(1)
 				door.secondsElectrified = -1
-				logTheThing(LOG_STATION, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)]")
+				logTheThing(LOG_STATION, null, "Ion storm permanantly electrified an airlock ([door.name]) at [log_loc(door)]")
+				door.aiControlDisabled = TRUE
+
 			if(2)
-				if (!door.locked)
-					door.set_locked()
-					logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
+				var/shock_dur = rand(20, 120)
+				var/disabled_old = door.aiControlDisabled
+				door.secondsElectrified = shock_dur
+				logTheThing(LOG_STATION, null, "Ion storm electrified an airlock ([door.name]) at [log_loc(door)] for [shock_dur] seconds")
+				door.aiControlDisabled = TRUE
+				SPAWN(shock_dur SECONDS)
+					door.aiControlDisabled = disabled_old
+
 			if(3)
+				if(length(last_req_access))
+					door.req_access = last_req_access
+
+			if(4)
 				if (door.density)
 					door.open()
 					logTheThing(LOG_STATION, null, "Ion storm opened an airlock ([door.name]) at [log_loc(door)]")
@@ -293,6 +304,31 @@ ABSTRACT_TYPE(/datum/ion_category)
 					door.close()
 					logTheThing(LOG_STATION, null, "Ion storm closed an airlock ([door.name]) at [log_loc(door)]")
 
+			if(5)
+				if (!door.locked)
+					door.set_locked()
+					logTheThing(LOG_STATION, null, "Ion storm locked an airlock ([door.name]) at [log_loc(door)]")
+					door.aiControlDisabled = TRUE
+				else
+					door.set_unlocked()
+					logTheThing(LOG_STATION, null, "Ion storm unlocked an airlock ([door.name]) at [log_loc(door)]")
+
+			if(6)
+				if(door.locked)
+					door.set_unlocked()
+
+				if (door.density)
+					door.open()
+					logTheThing(LOG_STATION, null, "Ion storm bolted an airlock open ([door.name]) at [log_loc(door)]")
+				else
+					door.close()
+					logTheThing(LOG_STATION, null, "Ion storm bolted an airlock closed ([door.name]) at [log_loc(door)]")
+
+				if (!door.locked)
+					door.set_locked()
+					door.aiControlDisabled = TRUE
+
+		last_req_access = door.req_access
 
 /datum/ion_category/lights
 	amount = 60
@@ -374,4 +410,20 @@ ABSTRACT_TYPE(/datum/ion_category)
 				pda.run_program(prog)
 				var/datum/computer/file/pda_program/emergency_alert/alert_prog = prog
 				alert_prog.send_alert(rand(1,4), TRUE)
+
+/datum/ion_category/station_bots
+	amount = 1
+	prob_of_happening = 10
+
+	valid_instance(obj/machinery/bot/bot)
+		. = ..() && !bot.emagged
+
+
+	build_targets()
+		for_by_tcl(bot, /obj/machinery/bot)
+			if(valid_instance(bot))
+				targets += bot
+
+	action(obj/machinery/bot/bot)
+		bot.emp_act()
 

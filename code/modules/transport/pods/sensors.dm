@@ -133,7 +133,7 @@
 						target_pod.myhud.sensor_lock.mouse_opacity = 0
 
 		src.tracking_target = null
-		src.ship.myhud.tracking.set_dir(1)
+		src.ship.myhud.tracking.set_dir(NORTH)
 		animate(src.ship.myhud.tracking, transform = null, time = 10, loop = 0)
 
 		src.ship.myhud.tracking.icon_state = "off"

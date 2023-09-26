@@ -830,6 +830,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Tool"
 
 
+/datum/manufacture/bunsen_burner
+	name = "Bunsen Burner"
+	item_paths = list("pharosium")
+	item_amounts = list(5)
+	item_outputs = list(/obj/item/bunsen_burner)
+	time = 5 SECONDS
+	create = 1
+	category = "Tool"
+
 ////////////////////////////////
 
 /datum/manufacture/player_module
@@ -2112,6 +2121,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	item_paths = list("FAB-1")
 	item_amounts = list(1)
 	item_outputs = list(/obj/item/clothing/mask/breath)
+	time = 5 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/gastank
+	name = "Gas tank"
+	item_paths = list("MET-2")
+	item_amounts = list(1)
+	item_outputs = list(/obj/item/tank/empty)
 	time = 5 SECONDS
 	create = 1
 	category = "Clothing"

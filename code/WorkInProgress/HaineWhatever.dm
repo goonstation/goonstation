@@ -1288,7 +1288,7 @@ TYPEINFO(/obj/submachine/blackjack)
 		if (istype(AM, /obj/item))
 			user.u_equip(AM)
 		AM.set_loc(get_turf(M))
-		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [M] and removes their [AM.name] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [constructName(M)] and removes their [AM.name] at [log_loc(user)].")
 		return
 
 	custom_suicide = 1

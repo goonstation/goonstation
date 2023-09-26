@@ -985,7 +985,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/graveyard/loose_rock
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "rockwall"
-	dir = 4
+	dir = EAST
 	density = 1
 	opacity = 1
 	anchored = ANCHORED
