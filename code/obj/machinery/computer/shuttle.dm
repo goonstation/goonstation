@@ -407,27 +407,27 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 
 /obj/machinery/computer/elevator/icebase
 	machine_registry_idx = MACHINES_ELEVATORICEBASE
-	areaLower = /area/shuttle/icebase_elevator/lower
-	areaUpper = /area/shuttle/icebase_elevator/upper
+	areaLower = /area/shuttle/elevator/icebase_elevator/lower
+	areaUpper = /area/shuttle/elevator/icebase_elevator/upper
 	endTurfToLeave = /turf/simulated/floor/arctic_elevator_shaft
 
 /obj/machinery/computer/elevator/biodome
 	machine_registry_idx = MACHINES_ELEVATORBIODOME
-	areaLower = /area/shuttle/biodome_elevator/lower
-	areaUpper = /area/shuttle/biodome_elevator/upper
+	areaLower = /area/shuttle/elevator/biodome_elevator/lower
+	areaUpper = /area/shuttle/elevator/biodome_elevator/upper
 	endTurfToLeave = /turf/unsimulated/floor/setpieces/ancient_pit/shaft
 	logBioeleAccident = TRUE
 
 /obj/machinery/computer/elevator/sea
 	machine_registry_idx = MACHINES_ELEVATORSEA
-	areaLower = /area/shuttle/sea_elevator/lower
-	areaUpper = /area/shuttle/sea_elevator/upper
+	areaLower = /area/shuttle/elevator/sea_elevator/lower
+	areaUpper = /area/shuttle/elevator/sea_elevator/upper
 	endTurfToLeave = /turf/simulated/floor/specialroom/sea_elevator_shaft
 
 /obj/machinery/computer/elevator/centcomm
 	machine_registry_idx = MACHINES_ELEVATORCENTCOM
-	areaLower = /area/shuttle/centcom_elevator/lower
-	areaUpper = /area/shuttle/centcom_elevator/upper
+	areaLower = /area/shuttle/elevator/centcom_elevator/lower
+	areaUpper = /area/shuttle/elevator/centcom_elevator/upper
 	endTurfToLeave = /turf/unsimulated/floor/glassblock/transparent_cyan
 	location = 0
 	adminOnly = TRUE
@@ -474,30 +474,105 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 						C.visible_message("<span class='alert'>The elevator begins to move!</span>")
 						playsound(C.loc, 'sound/machines/elevator_move.ogg', 100, 0)
 						tgui_process.update_uis(C)
+
+					var/area/shuttle/elevator/current_location = location ? locate(areaUpper) : locate(areaLower)
+					if (istype(current_location,/area/shuttle/elevator))
+						var/area/shuttle/elevator/B = current_location
+						B.elevator_moving = TRUE
+					for (var/turf/T in current_location)
+						animate(T,pixel_y = location ? -64 : 64,time = 5 SECONDS)
+						if (!location)
+							T.plane = PLANE_NOSHADOW_BELOW
+						var/obj/overlay/floor_underlay = new /obj/overlay(T)
+						var/turf/dummy = endTurfToLeave
+						floor_underlay.icon = initial(dummy.icon)
+						floor_underlay.icon_state = initial(dummy.icon_state)
+						floor_underlay.layer = T.layer - 1
+						floor_underlay.mouse_opacity = 0
+						floor_underlay.plane = PLANE_FLOOR
+						floor_underlay = null
+						T.underlays += floor_underlay
+
+						for (var/atom/movable/AM in T)
+							if (istype(AM,/obj/effect) || istype(AM,/obj/overlay))
+								continue
+							current_location.passengers += AM
+							animate(AM,pixel_y = location ? -64 : 64,time = 5 SECONDS)
+							if (!location)
+								AM.plane = PLANE_DEFAULT
+							else
+								AM.plane = PLANE_FLOOR
+
 					SPAWN(5 SECONDS)
+						for (var/turf/T in current_location)
+							// reset
+							T.plane = initial(T.plane)
+							T.pixel_y = 0
+							T.underlays.Cut()
+							for (var/atom/movable/AM in T)
+								if (istype(AM,/obj/effect) || istype(AM,/obj/overlay))
+									continue
+								AM.pixel_y = 0
+								AM.plane = initial(AM.plane)
 						call_shuttle()
+						current_location.passengers.Cut()
+
 					. = TRUE
 
 
 /obj/machinery/computer/elevator/proc/call_shuttle()
+	var/list/turfs_src = get_area_turfs(location ? areaUpper : areaLower)
+	var/list/turfs_trg = get_area_turfs(location ? areaLower : areaUpper)
 
-	if(location == 0) // at bottom
-		var/area/start_location = locate(areaLower)
-		var/area/end_location = locate(areaUpper)
-		start_location.move_contents_to(end_location, startTurfToLeave, ignore_fluid = TRUE)
-		location = 1
-	else // at top
-		var/area/start_location = locate(areaUpper)
-		var/area/end_location = locate(areaLower)
-		for(var/mob/living/L in end_location) // oh dear, stay behind the yellow line kids
+	var/area/shuttle/elevator/destination = location ? locate(areaLower) : locate(areaUpper)
+	var/area/shuttle/elevator/source = location ? locate(areaUpper) : locate(areaLower)
+
+	if (location)
+		for(var/mob/living/L in locate(areaLower)) // oh dear, stay behind the yellow line kids
 			if(!isintangible(L))
 				SPAWN(1 DECI SECOND)
 					logTheThing(LOG_COMBAT, L, "was gibbed by an elevator at [log_loc(L)].")
 					L.gib()
 				if (logBioeleAccident)
 					bioele_accident()
-		start_location.move_contents_to(end_location, endTurfToLeave, ignore_fluid = TRUE)
-		location = 0
+
+	//start_location.move_contents_to(end_location, startTurfToLeave, ignore_fluid = TRUE)
+	// this didnt account for if the person is actually supposed to go with us ^
+	var/src_min_x = 0
+	var/src_min_y = 0
+	for (var/turf/T as anything in turfs_src)
+		if(T.x < src_min_x || !src_min_x) src_min_x	= T.x
+		if(T.y < src_min_y || !src_min_y) src_min_y	= T.y
+
+	var/trg_min_x = 0
+	var/trg_min_y = 0
+	var/trg_z = 0
+	for (var/turf/T as anything in turfs_trg)
+		if(T.x < trg_min_x || !trg_min_x) trg_min_x	= T.x
+		if(T.y < trg_min_y || !trg_min_y) trg_min_y	= T.y
+		trg_z = T.z
+
+	for (var/turf/S in turfs_src)
+		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
+		if(T?.loc != destination) continue
+		T.ReplaceWith(S.type, keep_old_material = 0, force=1)
+		T.appearance = S.appearance
+		T.set_density(S.density)
+		T.set_dir(S.dir)
+
+	for (var/turf/S in turfs_src)
+		var/turf/T = locate(S.x - src_min_x + trg_min_x, S.y - src_min_y + trg_min_y, trg_z)
+		for (var/atom/movable/AM as anything in S)
+			if (istype(AM, /obj/effects/precipitation)) continue
+			if (istype(AM, /obj/overlay/tile_effect)) continue
+			if (!(AM in source.passengers)) continue
+			AM.set_loc(T)
+		if(startTurfToLeave)
+			S.ReplaceWith(startTurfToLeave, keep_old_material = 0, force=1)
+		else
+			S.ReplaceWithSpaceForce()
+
+	location = !location
 
 	for(var/obj/machinery/computer/elevator/C in machine_registry[machine_registry_idx])
 		C.active = 0

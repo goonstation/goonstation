@@ -9478,7 +9478,7 @@
 "aOP" = (
 /obj/landmark/fall/ice/elevator,
 /turf/unsimulated/floor/plating/scorched,
-/area/shuttle/icebase_elevator/lower)
+/area/shuttle/elevator/icebase_elevator/lower)
 "aOQ" = (
 /obj/spacevine{
 	density = 1;
@@ -11128,7 +11128,7 @@
 "aUr" = (
 /obj/landmark/fall/biodome,
 /turf/unsimulated/floor/plating/scorched,
-/area/shuttle/biodome_elevator/lower)
+/area/shuttle/elevator/biodome_elevator/lower)
 "aUt" = (
 /turf/unsimulated/floor/caution/east,
 /area/crater/biodome/crew)
@@ -55966,7 +55966,7 @@
 /area/centcom/garden)
 "dPt" = (
 /turf/simulated/floor/sanitary,
-/area/shuttle/centcom_elevator/lower)
+/area/shuttle/elevator/centcom_elevator/lower)
 "dPu" = (
 /obj/decal/tile_edge/line/green{
 	dir = 5;
@@ -56009,7 +56009,7 @@
 	pixel_x = -4
 	},
 /turf/simulated/floor/sanitary,
-/area/shuttle/centcom_elevator/lower)
+/area/shuttle/elevator/centcom_elevator/lower)
 "dPB" = (
 /obj/machinery/light{
 	dir = 8;
@@ -58444,7 +58444,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
-/area/shuttle/biodome_elevator/upper)
+/area/shuttle/elevator/biodome_elevator/upper)
 "fll" = (
 /obj/machinery/light{
 	dir = 1
@@ -61235,7 +61235,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
-/area/shuttle/biodome_elevator/upper)
+/area/shuttle/elevator/biodome_elevator/upper)
 "isz" = (
 /obj/lattice{
 	dir = 1;
@@ -63037,7 +63037,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
-/area/shuttle/biodome_elevator/upper)
+/area/shuttle/elevator/biodome_elevator/upper)
 "kjH" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -68011,7 +68011,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
-/area/shuttle/icebase_elevator/upper)
+/area/shuttle/elevator/icebase_elevator/upper)
 "pmE" = (
 /obj/decal/fakeobjects/skeleton{
 	desc = "The remains of some poor cosmonaut fellow.";
@@ -69027,7 +69027,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
-/area/shuttle/icebase_elevator/upper)
+/area/shuttle/elevator/icebase_elevator/upper)
 "qoB" = (
 /obj/storage/closet/dresser,
 /obj/item/clothing/under/suit/hos/dress{
@@ -70666,7 +70666,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
-/area/shuttle/icebase_elevator/upper)
+/area/shuttle/elevator/icebase_elevator/upper)
 "rQp" = (
 /obj/admin_plaque{
 	name = "Sov's Office"
@@ -71359,7 +71359,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
-/area/shuttle/icebase_elevator/upper)
+/area/shuttle/elevator/icebase_elevator/upper)
 "sDG" = (
 /obj/machinery/computer/elevator/biodome,
 /turf/unsimulated/floor/caution/corner/ne,
@@ -72440,7 +72440,7 @@
 	},
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
-/area/shuttle/biodome_elevator/upper)
+/area/shuttle/elevator/biodome_elevator/upper)
 "uex" = (
 /obj/machinery/light{
 	dir = 8
@@ -74820,7 +74820,7 @@
 	pixel_x = -10
 	},
 /turf/simulated/floor/sanitary,
-/area/shuttle/centcom_elevator/lower)
+/area/shuttle/elevator/centcom_elevator/lower)
 "wDz" = (
 /obj/decal/fakeobjects/firelock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';

@@ -222,7 +222,7 @@ TYPEINFO(/obj/item/pinpointer)
 	icon_state = "trench_pinoff"
 	icon_type = "trench"
 	hudarrow_color = "#3395dd"
-	var/target_area = /area/shuttle/sea_elevator/lower
+	var/target_area = /area/shuttle/elevator/sea_elevator/lower
 
 	attack_self(mob/user)
 		if (!active)

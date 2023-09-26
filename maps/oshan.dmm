@@ -31735,7 +31735,7 @@
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/shuttle/sea_elevator/upper)
+/area/shuttle/elevator/sea_elevator/upper)
 "cgg" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -31743,7 +31743,7 @@
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/shuttle/sea_elevator/upper)
+/area/shuttle/elevator/sea_elevator/upper)
 "cgi" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -31751,7 +31751,7 @@
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/shuttle/sea_elevator/upper)
+/area/shuttle/elevator/sea_elevator/upper)
 "cgj" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
@@ -31763,7 +31763,7 @@
 	},
 /obj/decal/stripe_caution,
 /turf/simulated/floor,
-/area/shuttle/sea_elevator/upper)
+/area/shuttle/elevator/sea_elevator/upper)
 "cgl" = (
 /turf/space/fluid/warp_z5,
 /area/space)

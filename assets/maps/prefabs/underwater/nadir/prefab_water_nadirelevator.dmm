@@ -63,7 +63,7 @@
 "dd" = (
 /obj/landmark/fall/sea/elevator,
 /turf/simulated/floor/plating,
-/area/shuttle/sea_elevator/lower)
+/area/shuttle/elevator/sea_elevator/lower)
 "dh" = (
 /obj/grille/catwalk,
 /obj/decal/cleanable/cobweb,

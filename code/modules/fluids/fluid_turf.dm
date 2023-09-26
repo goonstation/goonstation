@@ -502,7 +502,7 @@
 	name = "elevator shaft"
 	desc = "It looks like it goes down a long ways."
 	icon_state = "moon_shaft"
-	var/const/area_type = /area/shuttle/sea_elevator/upper
+	var/const/area_type = /area/shuttle/elevator/sea_elevator/upper
 
 	New()
 		..()

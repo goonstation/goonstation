@@ -784,7 +784,27 @@ ABSTRACT_TYPE(/area/shuttle)
 	// Settings should match /area/grillnasium
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/grillnasium
 
-/area/shuttle/icebase_elevator/upper
+/area/shuttle/elevator
+	var/elevator_moving = FALSE
+	var/list/passengers = list()
+	var/top = FALSE
+
+	Entered(var/atom/movable/A, atom/oldloc)
+		..()
+		if (!elevator_moving)
+			passengers |= A
+
+	Exited(atom/movable/A)
+		if (top)
+			if (elevator_moving && isliving(A)) return FALSE
+		else
+			if (elevator_moving)
+				A.pixel_y = 0
+			if (A in passengers)
+				passengers -= A
+		..()
+
+/area/shuttle/elevator/icebase_elevator/upper
 	name = "Chasm Lift Upper Section"
 	icon_state = "shuttle"
 	filler_turf = "/turf/simulated/floor/arctic/abyss"
@@ -792,33 +812,39 @@ ABSTRACT_TYPE(/area/shuttle)
 	sound_group = "ice_moon"
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/ice_moon
 	occlude_foreground_parallax_layers = TRUE
+	top = TRUE
 
-/area/shuttle/icebase_elevator/lower
+/area/shuttle/elevator/icebase_elevator/lower
 	name = "Chasm Lift Lower Section"
 	icon_state = "shuttle2"
 	filler_turf = "/turf/simulated/floor/arctic/snow/ice"
 	force_fullbright = 0
 	sound_group = "ice_moon"
+	top = FALSE
 
-/area/shuttle/biodome_elevator/upper
+/area/shuttle/elevator/biodome_elevator/upper
 	name = "Biodome Lift Upper Section"
 	icon_state = "shuttle"
 	force_fullbright = 0
+	top = TRUE
 
-/area/shuttle/biodome_elevator/lower
+/area/shuttle/elevator/biodome_elevator/lower
 	name = "Biodome Lift Lower Section"
 	icon_state = "shuttle2"
 	force_fullbright = 0
+	top = FALSE
 
-/area/shuttle/centcom_elevator/upper
+/area/shuttle/elevator/centcom_elevator/upper
 	name = "Centcom Lift Upper Section"
 	icon_state = "shuttle"
 	force_fullbright = 0
+	top = TRUE
 
-/area/shuttle/centcom_elevator/lower
+/area/shuttle/elevator/centcom_elevator/lower
 	name = "Centcom Lift Lower Section"
 	icon_state = "shuttle2"
 	force_fullbright = 0
+	top = FALSE
 
 /area/shuttle/recovery_shuttle
 	name = "Recovery Shuttle Dock"
@@ -1519,15 +1545,17 @@ ABSTRACT_TYPE(/area/prefab)
 	name = "Sea Elevator Shaft"
 	icon_state = "blue"
 
-/area/shuttle/sea_elevator/lower
+/area/shuttle/elevator/sea_elevator/lower
 	name = "Lower Sea Elevator Shaft"
 	icon_state = "shuttle2"
 	filler_turf = "/turf/simulated/floor/plating"
+	top = FALSE
 
-/area/shuttle/sea_elevator/upper
+/area/shuttle/elevator/sea_elevator/upper
 	name = "Upper Sea Elevator Shaft"
 	icon_state = "shuttle"
 	filler_turf = "/turf/simulated/floor/specialroom/sea_elevator_shaft"
+	top = TRUE
 
 /area/dank_trench
 	name = "marijuana trench 2" //this is lowercase on purpose

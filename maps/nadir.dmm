@@ -7205,7 +7205,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 8
 	},
-/area/shuttle/sea_elevator/upper)
+/area/shuttle/elevator/sea_elevator/upper)
 "doO" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/science/bot_storage)
@@ -32066,7 +32066,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 1
 	},
-/area/shuttle/sea_elevator/upper)
+/area/shuttle/elevator/sea_elevator/upper)
 "nGo" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -40681,7 +40681,7 @@
 /turf/simulated/floor/engine/caution/corner{
 	dir = 4
 	},
-/area/shuttle/sea_elevator/upper)
+/area/shuttle/elevator/sea_elevator/upper)
 "rKK" = (
 /turf/simulated/floor/redblack{
 	dir = 4
@@ -40811,7 +40811,7 @@
 /area/station/ranch)
 "rNu" = (
 /turf/simulated/floor/engine/caution/corner,
-/area/shuttle/sea_elevator/upper)
+/area/shuttle/elevator/sea_elevator/upper)
 "rNU" = (
 /obj/disposalpipe/segment/brig{
 	dir = 1
