@@ -872,7 +872,18 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			else
 				src.mindwipe = !src.mindwipe
 				. = TRUE
-
+		if("editNote")
+			var/ckey = params["ckey"]
+			var/datum/db_record/selected_record = find_record(ckey)
+			var/note_text = tgui_input_text(usr, "Edit note of [selected_record["name"]]", "Edit note", selected_record["note"])
+			if (note_text)
+				selected_record["note"] = note_text
+			. = TRUE
+		if ("deleteNote")
+			var/ckey = params["ckey"]
+			var/datum/db_record/selected_record = find_record(ckey)
+			selected_record["note"] = null
+			. = TRUE
 
 /obj/machinery/computer/cloning/ui_data(mob/user)
 
@@ -928,6 +939,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			name = r["name"],
 			id = r["id"],
 			ckey = r["ckey"],
+			note = r["note"],
 			health = currentHealth,
 			implant = !isnull(implant),
 			saved = saved

@@ -597,10 +597,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 	sound_group = "mars"
 	sound_loop = 'sound/ambience/loop/Mars_Interior.ogg'
 	sound_loop_vol = 60
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/foreground/dust,
-		/atom/movable/screen/parallax_layer/foreground/dust/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/mars
 	occlude_foreground_parallax_layers = TRUE
 
 /area/marsoutpost/New()

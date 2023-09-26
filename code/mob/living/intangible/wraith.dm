@@ -1,8 +1,8 @@
 // Wraith
 
 /mob/living/intangible/wraith
-	name = "Wraith"
-	real_name = "Wraith"
+	name = "wraith"
+	real_name = "wraith"
 	desc = "Jesus Christ, how spooky."
 	icon = 'icons/mob/mob.dmi'
 #if defined(XMAS) || (BUILD_TIME_MONTH == 2 && BUILD_TIME_DAY == 14)

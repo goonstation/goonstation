@@ -189,8 +189,7 @@
 	throw_range = 15
 	throwforce = 10
 	w_class = W_CLASS_HUGE
-	// look it is VERY IMPORTANT
-	plane = PLANE_HUD - 1
+	plane = PLANE_ABOVE_LIGHTING
 	var/obj/maptext_junk/indicator
 	var/mob/carrier = 0
 	var/mob/tosser = 0

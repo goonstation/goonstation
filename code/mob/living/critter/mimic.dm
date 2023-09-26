@@ -1,5 +1,5 @@
 /mob/living/critter/mimic
-	name = "Mimic"
+	name = "mimic"
 	real_name = "mimic"
 	desc = null
 	icon = 'icons/misc/critter.dmi'

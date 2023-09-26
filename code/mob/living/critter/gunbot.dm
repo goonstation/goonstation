@@ -205,8 +205,8 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		return 2
 
 /mob/living/critter/robotic/gunbot/syndicate
-	name = "Syndicate robot"
-	real_name = "Syndicate robot"
+	name = "\improper Syndicate robot"
+	real_name = "\improper Syndicate robot"
 	desc = "A retrofitted Syndicate gunbot, it seems angry."
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mars_nuke_bot"
@@ -257,8 +257,8 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 		return 2.5
 
 /mob/living/critter/robotic/gunbot/syndicate/polaris
-	name = "Unmarked Robot"
-	real_name = "Unmarked Robot"
+	name = "\improper unmarked robot"
+	real_name = "\improper unmarked robot"
 	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn."
 	health_brute = 20
 	health_burn = 20

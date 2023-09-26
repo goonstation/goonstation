@@ -23,10 +23,11 @@
 /turf/space,
 /area/space)
 "aag" = (
-/turf/simulated/shuttle/wall{
+/obj/indestructible/shuttle_corner{
 	dir = 8;
-	icon_state = "wall3_space"
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aah" = (
 /obj/decal/fakeobjects/airmonitor_broken,
@@ -44,6 +45,10 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/space)
 "aal" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
 /turf/simulated/floor/airless,
 /area/space)
 "aam" = (
@@ -150,6 +155,10 @@
 /turf/space,
 /area/space)
 "aaz" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
 /turf/simulated/floor/airless/damaged4,
 /area/space)
 "aaA" = (
@@ -178,9 +187,10 @@
 /turf/simulated/floor/airless/damaged3,
 /area/space)
 "aaD" = (
-/turf/simulated/shuttle/wall{
-	icon_state = "wall3_space"
+/obj/indestructible/shuttle_corner{
+	icon_state = "wall3_trans"
 	},
+/turf/space,
 /area/space)
 "aaF" = (
 /obj/item/reagent_containers/food/snacks/ingredient/egg{
@@ -15960,6 +15970,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
@@ -23557,7 +23568,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "Brig - Solitary Cells";
+	areastring = "Solitary Confinement";
 	dir = 8;
 	name = "Brig - Solitary Cells APC";
 	pixel_x = -24
@@ -29483,9 +29494,9 @@
 "cmt" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
 	id = "Sleeper_Access";
-	name = "Listening Post";
-	dir = 4
+	name = "Listening Post"
 	},
 /turf/simulated/floor,
 /area/listeningpost)
@@ -29687,21 +29698,21 @@
 	desc = "Seems to be a pretty sturdy door.";
 	name = "Listening Post"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cna" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cnb" = (
 /obj/table/wood/auto,
 /obj/item/crowbar,
 /obj/item/crowbar,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cnc" = (
@@ -29715,14 +29726,14 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cne" = (
 /obj/submachine/syndicate_teleporter,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cnf" = (
@@ -29791,8 +29802,8 @@
 /area/listeningpost)
 "cnk" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cnl" = (
@@ -43536,6 +43547,10 @@
 	dir = 4
 	},
 /area/station/medical/medbay)
+"lNs" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/main)
 "lOf" = (
 /obj/cable/yellow{
 	icon_state = "4-8"
@@ -44228,6 +44243,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/item/scissors/surgical_scissors,
 /turf/simulated/floor/bluewhite{
 	dir = 8
 	},
@@ -46374,8 +46390,8 @@
 /area/station/hallway/secondary/exit)
 "odJ" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_x = -32
 	},
 /turf/simulated/floor/grey/side{
@@ -48908,6 +48924,7 @@
 	},
 /area/station/security/brig/solitary)
 "pZc" = (
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/grey/side{
 	dir = 1
 	},
@@ -50546,8 +50563,8 @@
 	pixel_y = -32
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_y = 25
 	},
 /turf/simulated/floor/black,
@@ -54180,6 +54197,7 @@
 /area/station/crew_quarters/quarters_east)
 "ufA" = (
 /obj/machinery/light,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/caution/east,
 /area/station/hangar/sec)
 "ufL" = (
@@ -56016,10 +56034,10 @@
 /area/station/medical/dome)
 "vvc" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_y = -33;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_y = -33
 	},
 /turf/simulated/floor/plating/airless/asteroid/dark,
 /area/listeningpost)
@@ -101869,7 +101887,7 @@ aaa
 aaa
 aaO
 acl
-acC
+lNs
 acC
 acC
 acC
