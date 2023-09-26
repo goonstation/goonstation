@@ -48355,6 +48355,7 @@
 /obj/cable{
 	icon_state = "0-4"
 	},
+/obj/machinery/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},

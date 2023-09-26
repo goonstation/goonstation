@@ -4185,6 +4185,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/cool,
+/obj/machinery/dialysis,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "anZ" = (

@@ -11067,6 +11067,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/blackwhite/side{
 	dir = 1
 	},
@@ -65336,8 +65338,7 @@
 /turf/space,
 /area/space)
 "ufs" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/machinery/dialysis,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "ufw" = (
