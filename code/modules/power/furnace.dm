@@ -21,6 +21,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 	New(new_loc)
 		..()
 		START_TRACKING
+		AddComponent(/datum/component/loctargeting/medium_directional_light/, 255, 110, 135, 125, src.active)
 
 	disposing()
 		STOP_TRACKING
@@ -37,6 +38,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 			if(!src.fuel)
 				src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down!</span>")
 				src.active = 0
+				SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
 		else
 			on_inactive()
 
@@ -79,6 +81,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
 		else
 			src.active = !src.active
+			src.active ? SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE) : SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
 			boutput(user, "You switch [src.active ? "on" : "off"] the furnace.")
 
 	attackby(obj/item/W, mob/user)
