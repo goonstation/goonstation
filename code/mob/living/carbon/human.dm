@@ -858,6 +858,8 @@
 	if(src.traitHolder)
 		newbody.traitHolder = src.traitHolder
 		newbody.traitHolder.owner = newbody
+		newbody.equip_sensory_items()
+
 	// Prone to causing runtimes, don't enable.
 /*	if (src.mutantrace && !src.spell_soulguard)
 		newbody.mutantrace = new src.mutantrace.type(newbody)*/
