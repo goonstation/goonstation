@@ -1,9 +1,9 @@
 
 /datum/apiBody/bans/check
-	var/server_id			= "string"
-	var/ckey				= "string"
-	var/comp_id				= "string"
-	var/ip					= "string"
+	var/server_id	= "string"
+	var/ckey		= "string"
+	var/comp_id		= "string"
+	var/ip			= "string"
 
 /datum/apiBody/bans/check/New(
 	server_id,
@@ -28,8 +28,8 @@
 
 /datum/apiBody/bans/check/toJson()
 	return json_encode(list(
-		"server_id"			= src.server_id,
-		"ckey"				= src.ckey,
-		"comp_id"			= src.comp_id,
-		"ip"				= src.ip
+		"server_id"	= src.server_id,
+		"ckey"		= src.ckey,
+		"comp_id"	= src.comp_id,
+		"ip"		= src.ip
 	))

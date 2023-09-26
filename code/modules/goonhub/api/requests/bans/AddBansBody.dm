@@ -1,13 +1,13 @@
 
 /datum/apiBody/bans/add
 	var/game_admin_ckey	= "string"
-	var/round_id			= 0
-	var/server_id			= "string"
-	var/ckey				= "string"
-	var/comp_id				= "string"
-	var/ip					= "string"
-	var/reason				= "string"
-	var/duration			= 0
+	var/round_id	= 0
+	var/server_id	= "string"
+	var/ckey		= "string"
+	var/comp_id		= "string"
+	var/ip			= "string"
+	var/reason		= "string"
+	var/duration	= 0
 
 /datum/apiBody/bans/add/New(
 	game_admin_ckey,
