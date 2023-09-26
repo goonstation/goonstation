@@ -1,4 +1,9 @@
 
+(t)tue sep 26 23
+(u)DisturbHerb
+(p)16024
+(e)🆕🗺💊📦|C-Feature, A-Mapping, A-Medical, A-Game-Objects
+(*)The latest advances in hemodialysis technology have been harnessed by your local medical bay. Clean your blood, today!
 (t)mon sep 25 23
 (u)Kubius
 (p)16018
