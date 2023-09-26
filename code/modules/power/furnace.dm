@@ -21,7 +21,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 	New(new_loc)
 		..()
 		START_TRACKING
-		AddComponent(/datum/component/loctargeting/medium_directional_light/, 255, 110, 135, 125, src.active)
+		AddComponent(/datum/component/loctargeting/medium_directional_light, 255, 110, 135, 125, src.active)
 
 	disposing()
 		STOP_TRACKING
