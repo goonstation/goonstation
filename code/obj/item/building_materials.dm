@@ -485,6 +485,8 @@ MATERIAL
 	default_material = "wood"
 	amount = 10
 
+	afterattack(atom/target, mob/user)
+		
 	zwood
 		amount = 5
 
