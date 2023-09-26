@@ -1092,13 +1092,13 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		if(istype(., /mob/living))
 			var/mob/living/L = .
-			L.is_npc = TRUE
 			if(ismobcritter(L))
 				L.TakeDamage("chest", rand(0, 15), rand(0, 15), rand(0, 15))
 			else
 				L.TakeDamage("chest", rand(0, 80), rand(0, 80), rand(0, 80))
 			if(ishuman(.))
 				var/mob/living/carbon/human/H = .
+				H.is_npc = TRUE
 				SPAWN(1)
 					var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
 					shuffle_list(limbs)
