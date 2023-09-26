@@ -1688,16 +1688,19 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 		. = src.return_text_header()
 
 		. += "<h4>The Pressure Crystal Market</h4> \
-			Pressure crystals! Researchers everywhere love them. But selling a crystal reduces demand. Here you can see what \
-			calibers of crystal are more or less valued than usual.<br><br>\
-			A few well-funded organizations have offered superior rates for crystals within certain measurement ranges. \
-			<br><br>"
-		for (var/i in shippingmarket.pressure_crystal_sales)
-			var/index = text2num(i)
-			var/range_min = (index - 1) * PRESSURE_CRYSTAL_SALES_RANGE_LENGTH
-			var/range_max = index * PRESSURE_CRYSTAL_SALES_RANGE_LENGTH
-			var/mult = shippingmarket.pressure_crystal_sales[i]
-			. += "[range_min] to [range_max] kiloblast: \
+			A few well-funded organizations will pay handsomely for crystals exposed to different pressure values. \
+			The bigger the boom, the higher the payout, although duplicate or similar data will be worth less.\
+			<br><br>\
+			<b>Certain pressure values are of particular interest and will reward bonuses:</b>\
+			<br>"
+		for (var/peak in shippingmarket.pressure_crystal_peaks)
+			var/peak_value = text2num(peak)
+			var/mult = shippingmarket.pressure_crystal_peaks[peak]
+			. += "[peak] kiloblast: \
 				[mult > 1 ? "<B>" : ""]worth [round(mult * 100, 0.01)]% of normal. \
-				[mult > 1 ? "Maximum estimated value: [mult * PRESSURE_CRYSTAL_VALUATION(range_max)]</B> credits." : ""]<br>"
+				[mult > 1 ? "Maximum estimated value: [round(mult * PRESSURE_CRYSTAL_VALUATION(peak_value))]</B> credits." : ""]<br>"
 		. += "<br>"
+		. += "<b>Pressure crystal values already sold:</b>\
+			<br>"
+		for (var/value in shippingmarket.pressure_crystal_sales)
+			. += "[value] kiloblast for [shippingmarket.pressure_crystal_sales[value]] credits.<br>"
