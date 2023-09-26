@@ -1022,11 +1022,11 @@ ABSTRACT_TYPE(/obj/item/implant/revenge)
 
 			implanted(var/mob/receiving_mob, var/mob/implanting_mob)
 				..()
-				RegisterSignal(receiving_mob, COMSIG_MOB_EXPLODES, PROC_REF(on_explosion_reaction))
+				RegisterSignal(receiving_mob, COMSIG_MOB_EX_ACT, PROC_REF(on_explosion_reaction))
 
-			on_remove(var/mob/loosing_mob)
+			on_remove(var/mob/losing_mob)
 				..()
-				UnregisterSignal(loosing_mob, COMSIG_MOB_EXPLODES)
+				UnregisterSignal(losing_mob, COMSIG_MOB_EX_ACT)
 
 			proc/on_explosion_reaction(var/mob/exploding_mob, var/severity)
 				if (ishuman(exploding_mob))
