@@ -1,4 +1,6 @@
 // The misc crap that used to clutter up item.dm and didn't fit elsewhere.
+TYPEINFO(/obj/item/lens/makeshift)
+	mat_appearances_to_ignore = list("lens_glass_weak", "lens_glass_medium", "lens_glass_strong")
 
 /obj/item/lens
 	name = "Lens"
@@ -9,6 +11,14 @@
 	throwforce = 1
 	force = 1
 	w_class = W_CLASS_TINY
+
+	makeshift
+		name = "salvaged lens"
+		desc = "A lens salvaged from a device of some kind. Maybe this could be used to craft something?"
+		icon = 'icons/obj/items/items.dmi'
+		icon_state = "salv_lens"
+		mat_changename = FALSE
+		material_amt = 0.2
 
 /obj/item/coil
 	desc = "A coil. Not really useful without additional components."

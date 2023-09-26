@@ -1861,8 +1861,8 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		projectiles = list(current_projectile)
 		..()
 
-#define HEAT_REMOVED_PER_PROCESS 15
-#define FIRE_THRESHOLD 150
+#define HEAT_REMOVED_PER_PROCESS 20
+#define FIRE_THRESHOLD 125
 // Makeshift Laser Rifle
 TYPEINFO(/obj/item/gun/energy/makeshift)
 	mats = 0
@@ -2126,14 +2126,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		var/obj/item/light/tube/T = new /obj/item/light/tube
 		attach_light(T)
 
-/obj/item/makeshift_lens
-	name = "salvaged lens"
-	desc = "A lens salvaged from a device of some kind. Maybe this could be used to craft something?"
-	icon = 'icons/obj/items/items.dmi'
-	icon_state = "salv_lens"
-	/// When put in a makeshift laser rifle, what proj to do switch to?
-	var/lens_proj = new/datum/projectile/laser/makeshift
-
 /obj/item/makeshift_laser_barrel
 	name = "pipe assembly"
 	desc = "A long empty pipe."
@@ -2182,41 +2174,30 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			icon_state = "makeshift-construction2"
 			update_icon()
 			src.RemoveComponentsOfType(/datum/component/assembly)
-			src.AddComponent(/datum/component/assembly, list(/obj/item/makeshift_lens, /obj/item/lens), PROC_REF(add_lens), FALSE)
+			src.AddComponent(/datum/component/assembly, /obj/item/lens, PROC_REF(add_lens), FALSE)
 			return TRUE
 
 	proc/add_lens(var/atom/to_combine_atom, var/mob/user)
-		if (istype(to_combine_atom, /obj/item/makeshift_lens))
-			var/obj/item/makeshift_lens/L = to_combine_atom
-			boutput(user,"<span class='notice'>You stuff [L] inside [src].</span>")
-			state = 2
-			lens_proj = L.lens_proj
-			user.u_equip(L)
-			qdel(L)
-			src.RemoveComponentsOfType(/datum/component/assembly)
-			src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(add_inside_wiring), FALSE)
-			return TRUE
+		var/obj/item/lens/L = to_combine_atom
+		boutput(user,"<span class='notice'>You stuff [L] inside [src].</span>")
+		state = 2
+		if (L.material)
+			switch(L.material.getProperty("reflective"))
+				if(0 to 2)
+					lens_proj = /datum/projectile/laser/makeshift
+				if(3 to 5)
+					lens_proj = /datum/projectile/laser/makeshift/medium
+				if(6 to 7)
+					lens_proj = /datum/projectile/laser/makeshift/powerful
+				if(8 to INFINITY)
+					lens_proj = /datum/projectile/laser/makeshift/very_powerful
 		else
-			var/obj/item/lens/L = to_combine_atom
-			boutput(user,"<span class='notice'>You stuff [L] inside [src].</span>")
-			state = 2
-			if (L.material)
-				switch(L.material.getProperty("reflective"))
-					if(0 to 2)
-						lens_proj = /datum/projectile/laser/makeshift
-					if(3 to 5)
-						lens_proj = /datum/projectile/laser/makeshift/medium
-					if(6 to 7)
-						lens_proj = /datum/projectile/laser/makeshift/powerful
-					if(8 to INFINITY)
-						lens_proj = /datum/projectile/laser/makeshift/very_powerful
-			else
-				lens_proj = /datum/projectile/laser/makeshift // just in case
-			user.u_equip(L)
-			qdel(L)
-			src.RemoveComponentsOfType(/datum/component/assembly)
-			src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(add_inside_wiring), FALSE)
-			return TRUE
+			lens_proj = /datum/projectile/laser/makeshift // just in case
+		user.u_equip(L)
+		qdel(L)
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(add_inside_wiring), FALSE)
+		return TRUE
 
 	proc/add_inside_wiring(var/atom/to_combine_atom, var/mob/user)
 		var/obj/item/cable_coil/C = to_combine_atom

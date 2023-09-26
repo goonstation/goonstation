@@ -35,8 +35,8 @@ TYPEINFO(/obj/item/device/flash)
 	var/min_flash_power = 0
 
 	proc/remove_lens(var/atom/to_combine_atom, var/mob/user)
-		var/obj/item/makeshift_lens/L = new /obj/item/makeshift_lens
-		L.lens_proj = /datum/projectile/laser/makeshift/powerful
+		var/obj/item/lens/makeshift/L = new /obj/item/lens/makeshift
+		L.setMaterial(getMaterial("lens_glass_strong"))
 		user.u_equip(src)
 		boutput(user,"<span class='notice'>You cut out a lens from [src], but destroy [src] in the process.</span>")
 		playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
