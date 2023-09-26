@@ -15970,6 +15970,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},

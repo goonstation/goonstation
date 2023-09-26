@@ -10998,6 +10998,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
+/obj/machinery/dialysis,
 /turf/simulated/floor/redblack{
 	dir = 8
 	},
