@@ -397,6 +397,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	proc/pry_open(var/mob/user)
 		playsound(src, 'sound/items/Crowbar.ogg', 60, 1)
 		src.pried_open = TRUE
+		src.locked = FALSE
 		src.open = TRUE
 		src.dump_contents(user)
 		src.UpdateIcon()
