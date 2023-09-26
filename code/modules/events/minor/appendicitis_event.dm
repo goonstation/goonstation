@@ -15,8 +15,8 @@
 			if (!H.organHolder?.appendix) continue // with appendix
 			if (H.organHolder?.appendix?.robotic) continue // that isn't robotic
 			potential_victims += H
-		if (potential_victims.len)
+		if (length(potential_victims))
 			var/num = rand(2, 4)
-			for (var/i = 0, i < num, i++)
+			for (var/i = 0, i < min(num, length(potential_victims)), i++)
 				var/mob/living/carbon/human/patient = pick(potential_victims)
 				patient?.contract_disease(/datum/ailment/disease/appendicitis,null,null,1)
