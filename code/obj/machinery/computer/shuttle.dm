@@ -476,9 +476,8 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 						tgui_process.update_uis(C)
 
 					var/area/shuttle/elevator/current_location = location ? locate(areaUpper) : locate(areaLower)
-					if (istype(current_location,/area/shuttle/elevator))
-						var/area/shuttle/elevator/B = current_location
-						B.elevator_moving = TRUE
+					var/area/shuttle/elevator/destination = location ? locate(areaLower) : locate(areaUpper)
+					current_location.elevator_moving = TRUE
 					for (var/turf/T in current_location)
 						animate(T,pixel_y = location ? -64 : 64,time = 5 SECONDS)
 						if (!location)
@@ -515,6 +514,8 @@ ABSTRACT_TYPE(/obj/machinery/computer/elevator)
 								AM.pixel_y = 0
 								AM.plane = initial(AM.plane)
 						call_shuttle()
+						current_location.elevator_moving = FALSE
+						destination.elevator_moving = FALSE
 						current_location.passengers.Cut()
 
 					. = TRUE
