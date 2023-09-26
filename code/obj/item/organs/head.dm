@@ -16,7 +16,7 @@
 	item_state = ""
 	edible = 0
 	rand_pos = 0 // we wanna override it below
-	made_from = "bone"
+	default_material = "bone"
 	tooltip_flags = REBUILD_ALWAYS //TODO: handle better??
 	max_damage = INFINITY
 	throw_speed = 1
@@ -57,28 +57,27 @@
 	var/obj/item/clothing/mask/wear_mask = null
 	var/obj/item/clothing/glasses/glasses = null
 
-	appearance_flags = KEEP_TOGETHER
+	appearance_flags = KEEP_TOGETHER | PIXEL_SCALE
 
 	New()
 		..()
-		SPAWN(0)
-			if (src.donor)
-				if(!src.bones)
-					src.bones = new /datum/bone(src)
-				src.bones.donor = src.donor
-				src.bones.parent_organ = src.organ_name
-				src.bones.name = "skull"
-				if (src.donor?.bioHolder?.mobAppearance)
-					src.donor_appearance = src.donor.bioHolder.mobAppearance
-					src.UpdateIcon(/*makeshitup*/ 0)
-				else //The heck?
-					src.UpdateIcon(/*makeshitup*/ 1)
-				if (src.donor.eye != null)
-					src.donor.set_eye(null)
-			else
+		if (src.donor)
+			if(!src.bones)
+				src.bones = new /datum/bone(src)
+			src.bones.donor = src.donor
+			src.bones.parent_organ = src.organ_name
+			src.bones.name = "skull"
+			if (src.donor?.bioHolder?.mobAppearance)
+				src.donor_appearance = src.donor.bioHolder.mobAppearance
+				src.UpdateIcon(/*makeshitup*/ 0)
+			else //The heck?
 				src.UpdateIcon(/*makeshitup*/ 1)
-			if (!src.chat_text)
-				src.chat_text = new(null, src)
+			if (src.donor.eye != null)
+				src.donor.set_eye(null)
+		else
+			src.UpdateIcon(/*makeshitup*/ 1)
+		if (!src.chat_text)
+			src.chat_text = new(null, src)
 
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
@@ -184,7 +183,10 @@
 			else
 				src.skintone = AHead.s_tone
 			src.head_image.color = src.skintone
-			src.name = "[src.donor_name]'s [src.organ_name]"
+			if(src.donor_name)
+				src.name = "[src.donor_name]'s [src.organ_name]"
+			else
+				src.name = src.organ_name
 
 		// The rest of this shit gets sent to update_face
 		// get and install eyes, if any.
@@ -285,22 +287,18 @@
 		src.head_image.pixel_x = 0
 		src.head_image.pixel_y = 0
 		actual_head.appearance = src.head_image
+		actual_head.color = null
+		actual_head.overlays += src.head_image
 		src.head_image_eyes_L.pixel_x = 0
 		src.head_image_eyes_L.pixel_y = 0
 		if(src.left_eye)
 			src.head_image_eyes_L.color = left_eye.iris_color
-		else
-			src.head_image_eyes_L.color = "#FFFFFF"
-			src.head_image_eyes_L.alpha = 0
-		actual_head.overlays += src.head_image_eyes_L
+			actual_head.overlays += src.head_image_eyes_L
 		src.head_image_eyes_R.pixel_x = 0
 		src.head_image_eyes_R.pixel_y = 0
 		if(src.right_eye)
 			src.head_image_eyes_R.color = right_eye.iris_color
-		else
-			src.head_image_eyes_R.color = "#FFFFFF"
-			src.head_image_eyes_R.alpha = 0
-		actual_head.overlays += src.head_image_eyes_R
+			actual_head.overlays += src.head_image_eyes_R
 
 		if(src.head_image_nose)
 			actual_head.overlays += src.head_image_nose
@@ -433,7 +431,7 @@
 				boutput(user, "<span class='alert'>[src.name] is already wearing [src.glasses.name]!</span>")
 			return
 		if (istype(W, /obj/item/cloth))
-			playsound(src, 'sound/items/towel.ogg', 25, 1)
+			playsound(src, 'sound/items/towel.ogg', 25, TRUE)
 			user.visible_message("<span class='notice'>[user] [pick("buffs", "shines", "cleans", "wipes", "polishes")] [src] with [W].</span>")
 			src.clean_forensic()
 			return
@@ -446,30 +444,30 @@
 			// scalpel surgery
 			if (iscuttingtool(W))
 				if (src.right_eye && src.right_eye.op_stage == 1.0 && user.find_in_hand(W) == user.r_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s right eye in with [W]!</span>",\
 					"<span class='alert'>You cut away the flesh holding [src]'s right eye in with [W]!</span>")
 					src.right_eye.op_stage = 2
 				else if (src.left_eye && src.left_eye.op_stage == 1.0 && user.find_in_hand(W) == user.l_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts away the flesh holding [src]'s left eye in with [W]!</span>",\
 					"<span class='alert'>You cut away the flesh holding [src]'s left eye in with [W]!</span>")
 					src.left_eye.op_stage = 2
 				else if (src.brain)
 					if (src.brain.op_stage == 0.0)
-						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 						user.visible_message("<span class='alert'><b>[user]</b> cuts [src] open with [W]!</span>",\
 						"<span class='alert'>You cut [src] open with [W]!</span>")
 						src.brain.op_stage = 1
 					else if (src.brain.op_stage == 2)
-						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 						user.visible_message("<span class='alert'><b>[user]</b> removes the connections to [src]'s brain with [W]!</span>",\
 						"<span class='alert'>You remove [src]'s connections to [src]'s brain with [W]!</span>")
 						src.brain.op_stage = 3
 					else
 						return ..()
 				else if (src.skull && src.skull.op_stage == 0.0)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					user.visible_message("<span class='alert'><b>[user]</b> cuts [src]'s skull away from the skin with [W]!</span>",\
 					"<span class='alert'>You cut [src]'s skull away from the skin with [W]!</span>")
 					src.skull.op_stage = 1
@@ -480,12 +478,12 @@
 			else if (istype(W, /obj/item/circular_saw) || istype(W, /obj/item/saw) || istype(W, /obj/item/kitchen/utensil/fork))
 				if (src.brain)
 					if (src.brain.op_stage == 1.0)
-						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
 						"<span class='alert'>You saw open [src]'s skull with [W]!</span>")
 						src.brain.op_stage = 2
 					else if (src.brain.op_stage == 3.0)
-						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+						playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 						user.visible_message("<span class='alert'><b>[user]</b> saws open [src]'s skull with [W]!</span>",\
 						"<span class='alert'>You saw open [src]'s skull with [W]!</span>")
 						src.brain.set_loc(get_turf(src))
@@ -493,7 +491,7 @@
 					else
 						return ..()
 				else if (src.skull && src.skull.op_stage == 1.0)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					user.visible_message("<span class='alert'><b>[user]</b> saws [src]'s skull out with [W]!</span>",\
 					"<span class='alert'>You saw [src]'s skull out with [W]!</span>")
 					src.skull.set_loc(get_turf(src))
@@ -504,23 +502,23 @@
 			// spoon surgery
 			else if (isspooningtool(W))
 				if (src.right_eye && src.right_eye.op_stage == 0.0 && user.find_in_hand(W) == user.r_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s right eye socket!</span>",\
 					"<span class='alert'>You insert [W] into [src]'s right eye socket!</span>")
 					src.right_eye.op_stage = 1
 				else if (src.left_eye && src.left_eye.op_stage == 0.0 && user.find_in_hand(W) == user.l_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					user.visible_message("<span class='alert'><b>[user]</b> inserts [W] into [src]'s left eye socket!</span>",\
 					"<span class='alert'>You insert [W] into [src]'s left eye socket!</span>")
 					src.left_eye.op_stage = 1
 				else if (src.right_eye && src.right_eye.op_stage == 2 && user.find_in_hand(W) == user.r_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s right eye with [W]!</span>",\
 					"<span class='alert'>You remove [src]'s right eye with [W]!</span>")
 					src.right_eye.set_loc(get_turf(src))
 					src.right_eye = null
 				else if (src.left_eye && src.left_eye.op_stage == 2 && user.find_in_hand(W) == user.l_hand)
-					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					playsound(src, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, TRUE)
 					user.visible_message("<span class='alert'><b>[user]</b> removes [src]'s left eye with [W]!</span>",\
 					"<span class='alert'>You remove [src]'s left eye with [W]!</span>")
 					src.left_eye.set_loc(get_turf(src))
@@ -550,7 +548,7 @@
 			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto [H == user ? "[his_or_her(H)]" : "[H]'s"] neck stump!</span>",\
 				"<span class='alert'>You [fluff] [src] onto [user == H ? "your" : "[H]'s"] neck stump!</span>",\
 				"<span class='alert'>[H == user ? "You" : "<b>[user]</b>"] [fluff][(fluff == "smoosh" || fluff == "squish" || fluff == "attach") ? "es" : "s"] [src] onto your neck stump!</span>")
-			playsound(H, 'sound/effects/attach.ogg', 50, 1)
+			playsound(H, 'sound/effects/attach.ogg', 50, TRUE)
 
 			if (user.find_in_hand(src))
 				user.u_equip(src)
@@ -634,7 +632,7 @@
 				if(HEAD_ROACH)
 					src.organ_name = "roach head"
 					src.desc = "Not the biggest bug you'll seen today, nor the last."
-					src.made_from = "chitin"
+					src.setMaterial(getMaterial("chitin"))
 
 				if(HEAD_FROG)
 					src.organ_name = "frog head"

@@ -43,29 +43,19 @@
 				H.update_face()
 		. = ..()
 
-	update_icon()
-		if (!src.change_iris)
-			return
-		var/side = "L"
-		if(src.body_side == R_ORGAN)
-			side = "R"
-		if (src.donor && src.donor.bioHolder && src.donor.bioHolder.mobAppearance) // good lord
-			var/datum/appearanceHolder/AH = src.donor.bioHolder.mobAppearance
-			src.update_color(AH, side)
-		change_iris = FALSE //only inherit color once if possible, if spawned without a doner, don't change color!
-
 	proc/update_color(datum/appearanceHolder/AH, side)
-		if (AH.customization_first.id == "hetcro[side]")
-			src.iris_color = AH.customization_first_color
-		else if (AH.customization_second.id == "hetcro[side]")
-			src.iris_color = AH.customization_second_color
-		else if (AH.customization_third.id == "hetcro[side]")
-			src.iris_color = AH.customization_third_color
-		else
-			src.iris_color = AH.e_color
-		var/image/iris_image = image(src.icon, src, "[iris_state_override || icon_state]-iris")
-		iris_image.color = iris_color
-		src.UpdateOverlays(iris_image, "iris")
+		if(src.change_iris)
+			if (AH.customization_first.id == "hetcro[side]")
+				src.iris_color = AH.customization_first_color
+			else if (AH.customization_second.id == "hetcro[side]")
+				src.iris_color = AH.customization_second_color
+			else if (AH.customization_third.id == "hetcro[side]")
+				src.iris_color = AH.customization_third_color
+			else
+				src.iris_color = AH.e_color
+			var/image/iris_image = image(src.icon, src, "[iris_state_override || icon_state]-iris")
+			iris_image.color = iris_color
+			src.UpdateOverlays(iris_image, "iris")
 
 
 	attach_organ(var/mob/living/carbon/M, var/mob/user)
@@ -146,7 +136,7 @@ TYPEINFO(/obj/item/organ/eye/cyber)
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0
-	made_from = "pharosium"
+	default_material = "pharosium"
 	show_on_examine = TRUE
 	change_iris = FALSE
 
@@ -180,7 +170,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/sunglass)
 	organ_name = "polarized cybereye"
 	desc = "A fancy electronic eye. It has a polarized filter on the lens for built-in protection from the sun and other harsh lightsources. Your night vision is fucked, though."
 	icon_state = "eye-sunglass"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.95 // darken a little
 	color_g = 0.95
 	color_b = 0.975 // kinda blue
@@ -204,7 +194,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/sechud)
 	organ_name = "\improper Security HUD cybereye"
 	desc = "A fancy electronic eye. It has a Security HUD system installed."
 	icon_state = "eye-sec"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.975 // darken a little, kinda red
 	color_g = 0.95
 	color_b = 0.95
@@ -235,7 +225,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/thermal)
 	organ_name = "thermal imager cybereye"
 	desc = "A fancy electronic eye. It lets you see through cloaks and enhances your night vision. Use caution around bright lights."
 	icon_state = "eye-thermal"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 1
 	color_g = 0.9 // red tint
 	color_b = 0.9
@@ -257,7 +247,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/meson)
 	organ_name = "mesonic imager cybereye"
 	desc = "A fancy electronic eye. It lets you see the structure of the station through walls. Trippy!"
 	icon_state = "eye-meson"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.9
@@ -286,7 +276,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/meson)
 
 	proc/toggle()
 		src.on = !src.on
-		playsound(assigned, 'sound/items/mesonactivate.ogg', 30, 1)
+		playsound(assigned, 'sound/items/mesonactivate.ogg', 30, TRUE)
 		if (src.on)
 			assigned.vision.set_scan(1)
 			APPLY_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)
@@ -302,7 +292,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/spectro)
 	organ_name = "spectroscopic imager cybereye"
 	desc = "A fancy electronic eye. It has an integrated minature Raman spectroscope for easy qualitative and quantitative analysis of chemical samples."
 	icon_state = "eye-spectro"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 1 // pink tint?
 	color_g = 0.9
 	color_b = 0.95
@@ -324,7 +314,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/prodoc)
 	organ_name = "\improper ProDoc Healthview cybereye"
 	desc = "A fancy electronic eye. It's fitted with an advanced miniature sensor array that allows you to quickly determine the physical condition of others."
 	icon_state = "eye-prodoc"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.925
@@ -360,7 +350,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/ecto)
 	organ_name = "ectosensor cybereye"
 	desc = "A fancy electronic eye. It lets you see spooky stuff."
 	icon_state = "eye-ecto"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.925
 	color_g = 1
 	color_b = 0.925
@@ -385,7 +375,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/camera)
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "Eye Cam"
 	var/camera_network = "Zeta"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	iris_color = "#0d0558"
 
 	New()
@@ -407,7 +397,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/nightvision)
 	organ_name = "night vision cybereye"
 	desc = "A fancy electronic eye. It has built-in image-intensifier tubes to allow vision in the dark. Keep away from bright lights."
 	icon_state = "eye-night"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 0.7
 	color_g = 1
 	color_b = 0.7
@@ -429,7 +419,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/laser)
 	organ_name = "laser cybereye"
 	desc = "A fancy electronic eye. It can fire a small laser."
 	icon_state = "eye-laser"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	color_r = 1
 	color_g = 0.85
 	color_b = 0.85
@@ -491,7 +481,7 @@ obj/item/organ/eye/skeleton
 	name = "boney eye"
 	desc = "Yes it also has eye sockets. How this works is unknown."
 	icon_state = "eye-bone"
-	made_from = "bone" //duh
+	default_material = "bone" //duh
 	blood_reagent = "calcium"
 	change_iris = 0
 

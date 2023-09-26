@@ -52,6 +52,12 @@ Contains:
 
 /obj/item/assembly/time_ignite/New()
 	..()
+	// Timer-Igniter Assembly + wired pipebomb -> timer-igniter pipebomb
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+	// Timer-Igniter Assembly + pipebomb -> timer-igniter pipebomb
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+	// Timer-Igniter Assembly + beaker -> timer-igniter beakerbomb
+	src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
@@ -126,61 +132,6 @@ Contains:
 		qdel(src)
 		return
 
-	if((istype(W, /obj/item/reagent_containers/glass/beaker) && !( src.status )))
-		if(!src.part3 && !src.part5)
-			src.part3 = W
-			W.master = src
-			W.layer = initial(W.layer)
-			user.u_equip(W)
-			W.set_loc(src)
-			src.c_state(0)
-
-			boutput(user, "You attach the timer/igniter assembly to the beaker.")
-		else boutput(user, "You must remove the beaker from the assembly before transferring chemicals to it!")
-		return
-
-	if((istype(W, /obj/item/pipebomb/frame) && !( src.status )))
-		var/obj/item/pipebomb/frame/F = W
-		if(!src.part3 && !src.part5 && F.state < 4)
-			boutput(user, "You have to add reagents and wires to the pipebomb before you can add an igniter.")
-			return
-		if(!src.part3 && !src.part5 && F.state == 4)
-			src.part4 = F
-			F.master = src
-			F.layer = initial(F.layer)
-			user.u_equip(F)
-			F.set_loc(src)
-
-			src.part5 = new /obj/item/pipebomb/bomb
-			src.part5.strength = F.strength
-			if (F.material)
-				src.part5.setMaterial(F.material)
-			user.u_equip(W)
-			src.part5 = src.part5
-			src.part5.master = src
-			src.part5.layer = initial(src.part5.layer)
-			src.part5.set_loc(src)
-			src.c_state(0)
-			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
-			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
-		else
-			boutput(user, "You can't add more then one pipebomb to the assembly.")
-
-	if((istype(W, /obj/item/pipebomb/bomb)))
-		if(!src.part3 && !src.part5)
-			src.part5 = W
-			W.master = src
-			W.layer = initial(W.layer)
-			user.u_equip(W)
-			W.set_loc(src)
-			src.c_state(0)
-			boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
-			logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
-			message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
-		else
-			boutput(user, "You can't add more then one pipebomb to the assembly.")
-
 	if (isscrewingtool(W))
 		src.status = !(src.status)
 		if (src.status)
@@ -229,7 +180,95 @@ Contains:
 		src.part3 = null
 		src.c_state(src.part1.timing)
 		boutput(usr, "<span class='notice'>You remove the timer/igniter assembly from the beaker.</span>")
+		//since the assembly is free of beakers, let's add the assembly components again
+		// Timer-Igniter Assembly + wired pipebomb -> timer-igniter pipebomb
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+		// Timer-Igniter Assembly + pipebomb -> timer-igniter pipebomb
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+		// Timer-Igniter Assembly + beaker -> timer-igniter beakerbomb
+		src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
+
+// Timer-igniter-assemblies
+
+///Beakerbomb-assembly
+/obj/item/assembly/time_ignite/proc/beakerbomb_assembly(var/atom/to_combine_atom, var/mob/user)
+	if(src.status)
+		boutput(user, "You need to unsecure the timer first.")
+		return
+	var/obj/item/reagent_containers/glass/beaker/manipulated_beaker = to_combine_atom
+	src.part3 = manipulated_beaker
+	manipulated_beaker.master = src
+	manipulated_beaker.layer = initial(manipulated_beaker.layer)
+	user.u_equip(manipulated_beaker)
+	manipulated_beaker.set_loc(src)
+	src.c_state(0)
+	boutput(user, "You attach the timer/igniter assembly to the beaker.")
+
+	//Since we completed the assembly, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+///Pipebomb-assembly out of standard pipebomb
+/obj/item/assembly/time_ignite/proc/pipebomb_assembly(var/atom/to_combine_atom, var/mob/user)
+	if(src.status)
+		boutput(user, "You need to unsecure the timer first.")
+		return
+	var/obj/item/pipebomb/bomb/manipulated_pipebomb = to_combine_atom
+	src.part5 = manipulated_pipebomb
+	manipulated_pipebomb.master = src
+	manipulated_pipebomb.layer = initial(manipulated_pipebomb.layer)
+	user.u_equip(manipulated_pipebomb)
+	manipulated_pipebomb.set_loc(src)
+	src.c_state(0)
+	boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
+	logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
+	message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
+
+	//Since we completed the assembly, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+
+///Pipebomb-assembly out of cabled pipebomb
+/obj/item/assembly/time_ignite/proc/pipebomb_frame_assembly(var/atom/to_combine_atom, var/mob/user)
+	if(src.status)
+		boutput(user, "You need to unsecure the timer first.")
+		return
+	var/obj/item/pipebomb/frame/manipulated_pipebomb = to_combine_atom
+	if(manipulated_pipebomb.state < 4)
+		boutput(user, "You have to add reagents and wires to the pipebomb before you can add an igniter.")
+		return
+
+	src.part4 = manipulated_pipebomb
+	manipulated_pipebomb.master = src
+	manipulated_pipebomb.layer = initial(manipulated_pipebomb.layer)
+	user.u_equip(manipulated_pipebomb)
+	manipulated_pipebomb.set_loc(src)
+
+	src.part5 = new /obj/item/pipebomb/bomb
+	src.part5.strength = manipulated_pipebomb.strength
+	if (manipulated_pipebomb.material)
+		src.part5.setMaterial(manipulated_pipebomb.material)
+	//add properties from item mods to the finished pipe bomb
+	src.part5.set_up_special_ingredients(manipulated_pipebomb.item_mods)
+	user.u_equip(manipulated_pipebomb)
+	src.part5 = src.part5
+	src.part5.master = src
+	src.part5.layer = initial(src.part5.layer)
+	src.part5.set_loc(src)
+	src.c_state(0)
+	boutput(user, "You attach the pipebomb to the timer/igniter assembly.")
+	logTheThing(LOG_BOMBING, user, "made Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
+	message_admins("[key_name(user)] made a Timer/Igniter/Pipebomb Assembly at [log_loc(src)].")
+
+	//Since we completed the assembly, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	// Since the assembly was done, return TRUE
+	return TRUE
+
 
 
 /////////////////////////////// Proximity/igniter /////////////////////////////////////
@@ -265,6 +304,12 @@ Contains:
 
 /obj/item/assembly/prox_ignite/New()
 	..()
+	// Proximity-Igniter Assembly + wired pipebomb -> Proximity-igniter pipebomb
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+	// Proximity-Igniter Assembly + pipebomb -> Proximity-igniter pipebomb
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+	// Proximity-Igniter Assembly + beaker -> Proximity-igniter beakerbomb
+	src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
@@ -345,61 +390,6 @@ Contains:
 		user.u_equip(src)
 		qdel(src)
 		return
-	if((istype(W, /obj/item/reagent_containers/glass/beaker) && !( src.status )))
-		if(!src.part3 && !src.part5)
-			src.part3 = W
-			W.master = src
-			W.layer = initial(W.layer)
-			user.u_equip(W)
-			W.set_loc(src)
-			src.c_state(0)
-
-			boutput(user, "You attach the proximity/igniter assembly to the beaker.")
-		else boutput(user, "You must remove the beaker from the assembly before transferring chemicals to it!")
-		return
-
-	if((istype(W, /obj/item/pipebomb/frame) && !( src.status )))
-		var/obj/item/pipebomb/frame/F = W
-		if(!src.part3 && !src.part5 && F.state < 4)
-			boutput(user, "You have to add reagents and wires to the pipebomb before you can add an igniter.")
-			return
-		if(!src.part3 && !src.part5 && F.state == 4)
-			src.part4 = F
-			F.master = src
-			F.layer = initial(F.layer)
-			user.u_equip(F)
-			F.set_loc(src)
-
-			src.part5 = new /obj/item/pipebomb/bomb
-			src.part5.strength = F.strength
-			if (F.material)
-				src.part5.setMaterial(F.material)
-			user.u_equip(W)
-			src.part5 = src.part5
-			src.part5.master = src
-			src.part5.layer = initial(src.part5.layer)
-			src.part5.set_loc(src)
-			src.c_state(0)
-			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
-			message_admins("[key_name(user)] made a Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
-		else
-			boutput(user, "You can't add more then one pipebomb to the assembly.")
-		return
-	if((istype(W, /obj/item/pipebomb/bomb)))
-		if(!src.part3 && !src.part5)
-			src.part5 = W
-			W.master = src
-			W.layer = initial(W.layer)
-			user.u_equip(W)
-			W.set_loc(src)
-			src.c_state(0)
-			boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
-			logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
-			message_admins("[key_name(user)] made a Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
-		else
-			boutput(user, "You can't add more then one pipebomb to the assembly.")
-
 	if (!isscrewingtool(W))
 		return
 	src.status = !(src.status)
@@ -448,7 +438,95 @@ Contains:
 		src.part3 = null
 		src.c_state(src.part1.timing)
 		boutput(usr, "<span class='notice'>You remove the Proximity/Igniter assembly from the beaker.</span>")
+		//since the assembly is free of beakers, let's add the assembly components again
+		// proximity-Igniter Assembly + wired pipebomb -> proximity-igniter pipebomb
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+		// proximity-Igniter Assembly + pipebomb -> proximity-igniter pipebomb
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+		// proximity-Igniter Assembly + beaker -> proximity-igniter beakerbomb
+		src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
+
+
+
+// proximity-ignite-assemblies
+
+///Beakerbomb-assembly
+/obj/item/assembly/prox_ignite/proc/beakerbomb_assembly(var/atom/to_combine_atom, var/mob/user)
+	if(src.status)
+		boutput(user, "You need to unsecure the timer first.")
+		return
+	var/obj/item/reagent_containers/glass/beaker/manipulated_beaker = to_combine_atom
+	src.part3 = manipulated_beaker
+	manipulated_beaker.master = src
+	manipulated_beaker.layer = initial(manipulated_beaker.layer)
+	user.u_equip(manipulated_beaker)
+	manipulated_beaker.set_loc(src)
+	src.c_state(0)
+	boutput(user, "You attach the proximity/igniter assembly to the beaker.")
+
+	//Since we completed the assembly, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+///Pipebomb-assembly out of standard pipebomb
+/obj/item/assembly/prox_ignite/proc/pipebomb_assembly(var/atom/to_combine_atom, var/mob/user)
+	if(src.status)
+		boutput(user, "You need to unsecure the timer first.")
+		return
+	var/obj/item/pipebomb/bomb/manipulated_pipebomb = to_combine_atom
+	src.part5 = manipulated_pipebomb
+	manipulated_pipebomb.master = src
+	manipulated_pipebomb.layer = initial(manipulated_pipebomb.layer)
+	user.u_equip(manipulated_pipebomb)
+	manipulated_pipebomb.set_loc(src)
+	src.c_state(0)
+	boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
+	logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
+	message_admins("[key_name(user)] made a Proximity/Igniter/Beaker Assembly at [log_loc(src)].")
+
+	//Since we completed the assembly, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+
+///Pipebomb-assembly out of cabled pipebomb
+/obj/item/assembly/prox_ignite/proc/pipebomb_frame_assembly(var/atom/to_combine_atom, var/mob/user)
+	if(src.status)
+		boutput(user, "You need to unsecure the timer first.")
+		return
+	var/obj/item/pipebomb/frame/manipulated_pipebomb = to_combine_atom
+	if(manipulated_pipebomb.state < 4)
+		boutput(user, "You have to add reagents and wires to the pipebomb before you can add an igniter.")
+		return
+	src.part4 = manipulated_pipebomb
+	manipulated_pipebomb.master = src
+	manipulated_pipebomb.layer = initial(manipulated_pipebomb.layer)
+	user.u_equip(manipulated_pipebomb)
+	manipulated_pipebomb.set_loc(src)
+
+	src.part5 = new /obj/item/pipebomb/bomb
+	src.part5.strength = manipulated_pipebomb.strength
+	if (manipulated_pipebomb.material)
+		src.part5.setMaterial(manipulated_pipebomb.material)
+	//add properties from item mods to the finished pipe bomb
+	src.part5.set_up_special_ingredients(manipulated_pipebomb.item_mods)
+	user.u_equip(manipulated_pipebomb)
+	src.part5 = src.part5
+	src.part5.master = src
+	src.part5.layer = initial(src.part5.layer)
+	src.part5.set_loc(src)
+	src.c_state(0)
+	boutput(user, "You attach the sensor/igniter assembly to the pipebomb.")
+	logTheThing(LOG_BOMBING, user, "made Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
+	message_admins("[key_name(user)] made a Proximity/Igniter/Pipebomb Assembly at [log_loc(src)].")
+
+	//Since we completed the assembly, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	// Since the assembly was done, return TRUE
+	return TRUE
 
 /////////////////////////////////////// Remote signaller/igniter //////////////////////////////////////
 
@@ -467,6 +545,12 @@ Contains:
 
 /obj/item/assembly/rad_ignite/New()
 	..()
+	// radio-Igniter Assembly + wired pipebomb -> radio-igniter pipebomb
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+	// radio-Igniter Assembly + pipebomb -> radio-igniter pipebomb
+	src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+	// radio-Igniter Assembly + beaker -> radio-igniter beakerbomb
+	src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	SPAWN(0)
 		if(!part1)
 			part1 = new(src)
@@ -523,60 +607,6 @@ Contains:
 		user.u_equip(src)
 		qdel(src)
 		return
-	if((istype(W, /obj/item/reagent_containers/glass/beaker) && !( src.status )))
-		if(!src.part3 && !src.part5)
-			src.part3 = W
-			W.master = src
-			W.layer = initial(W.layer)
-			user.u_equip(W)
-			W.set_loc(src)
-			src.c_state()
-
-			boutput(user, "You attach the radio/igniter assembly to the beaker.")
-		else boutput(user, "You must remove the beaker from the assembly before transferring chemicals to it!")
-		return
-
-	if((istype(W, /obj/item/pipebomb/frame) && !( src.status )))
-		var/obj/item/pipebomb/frame/F = W
-		if(!src.part3 && !src.part5 && F.state < 4)
-			boutput(user, "You have to add reagents and wires to the pipebomb before you can add an igniter.")
-			return
-		if(!src.part3 && !src.part5 && F.state == 4)
-			src.part4 = F
-			F.master = src
-			F.layer = initial(F.layer)
-			user.u_equip(F)
-			F.set_loc(src)
-
-			src.part5 = new /obj/item/pipebomb/bomb
-			src.part5.strength = F.strength
-			if (F.material)
-				src.part5.setMaterial(F.material)
-			user.u_equip(W)
-			src.part5 = src.part5
-			src.part5.master = src
-			src.part5.layer = initial(src.part5.layer)
-			src.part5.set_loc(src)
-			src.c_state()
-			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
-		else
-			boutput(user, "You can't add more then one pipebomb to the assembly.")
-		return
-	if((istype(W, /obj/item/pipebomb/bomb)))
-		if(!src.part3 && !src.part5)
-			src.part5 = W
-			W.master = src
-			W.layer = initial(W.layer)
-			user.u_equip(W)
-			W.set_loc(src)
-			src.c_state()
-			boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
-			logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
-			message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
-		else
-			boutput(user, "You can't add more then one pipebomb to the assembly.")
 
 	if (!isscrewingtool(W))
 		return
@@ -627,6 +657,13 @@ Contains:
 		src.part3 = null
 		src.c_state()
 		boutput(usr, "<span class='notice'>You remove the radio/igniter assembly from the beaker.</span>")
+		//since the assembly is free of beakers, let's add the assembly components again
+		// radio-Igniter Assembly + wired pipebomb -> radio-igniter pipebomb
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(pipebomb_frame_assembly), TRUE)
+		// radio-Igniter Assembly + pipebomb -> radio-igniter pipebomb
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/bomb, PROC_REF(pipebomb_assembly), TRUE)
+		// radio-Igniter Assembly + beaker -> radio-igniter beakerbomb
+		src.AddComponent(/datum/component/assembly, /obj/item/reagent_containers/glass/beaker, PROC_REF(beakerbomb_assembly), TRUE)
 	else boutput(usr, "<span class='alert'>That doesn't have a beaker attached to it!</span>")
 
 /obj/item/assembly/rad_ignite/c_state()
@@ -652,6 +689,88 @@ Contains:
 		src.underlays += part3.underlays
 		src.name = "Radio/Igniter/Beaker Assembly"
 	return
+
+// proximity-ignite-assemblies
+//Oh for fucks sake, why the fuck aren't these under a single parent? I have added these assembly procs three times already.
+
+
+///Beakerbomb-assembly
+/obj/item/assembly/rad_ignite/proc/beakerbomb_assembly(var/atom/to_combine_atom, var/mob/user)
+	if(src.status)
+		boutput(user, "You need to unsecure the timer first.")
+		return
+	var/obj/item/reagent_containers/glass/beaker/manipulated_beaker = to_combine_atom
+	src.part3 = manipulated_beaker
+	manipulated_beaker.master = src
+	manipulated_beaker.layer = initial(manipulated_beaker.layer)
+	user.u_equip(manipulated_beaker)
+	manipulated_beaker.set_loc(src)
+	src.c_state()
+	boutput(user, "You attach the radio/igniter assembly to the beaker.")
+
+	//Since we completed the assembly, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+///Pipebomb-assembly out of standard pipebomb
+/obj/item/assembly/rad_ignite/proc/pipebomb_assembly(var/atom/to_combine_atom, var/mob/user)
+	if(src.status)
+		boutput(user, "You need to unsecure the timer first.")
+		return
+	var/obj/item/pipebomb/bomb/manipulated_pipebomb = to_combine_atom
+	src.part5 = manipulated_pipebomb
+	manipulated_pipebomb.master = src
+	manipulated_pipebomb.layer = initial(manipulated_pipebomb.layer)
+	user.u_equip(manipulated_pipebomb)
+	manipulated_pipebomb.set_loc(src)
+	src.c_state()
+	boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
+	logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
+	message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
+
+	//Since we completed the assembly, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	// Since the assembly was done, return TRUE
+	return TRUE
+
+///Pipebomb-assembly out of cabled pipebomb
+/obj/item/assembly/rad_ignite/proc/pipebomb_frame_assembly(var/atom/to_combine_atom, var/mob/user)
+	if(src.status)
+		boutput(user, "You need to unsecure the timer first.")
+		return
+	var/obj/item/pipebomb/frame/manipulated_pipebomb = to_combine_atom
+	if(manipulated_pipebomb.state < 4)
+		boutput(user, "You have to add reagents and wires to the pipebomb before you can add an igniter.")
+		return
+
+	src.part4 = manipulated_pipebomb
+	manipulated_pipebomb.master = src
+	manipulated_pipebomb.layer = initial(manipulated_pipebomb.layer)
+	user.u_equip(manipulated_pipebomb)
+	manipulated_pipebomb.set_loc(src)
+	src.part5 = new /obj/item/pipebomb/bomb
+	src.part5.strength = manipulated_pipebomb.strength
+	if (manipulated_pipebomb.material)
+		src.part5.setMaterial(manipulated_pipebomb.material)
+	//add properties from item mods to the finished pipe bomb
+	src.part5.set_up_special_ingredients(manipulated_pipebomb.item_mods)
+	user.u_equip(manipulated_pipebomb)
+	src.part5 = src.part5
+	src.part5.master = src
+	src.part5.layer = initial(src.part5.layer)
+	src.part5.set_loc(src)
+	src.c_state()
+	boutput(user, "You attach the radio/igniter assembly to the pipebomb.")
+	logTheThing(LOG_BOMBING, user, "made Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
+	message_admins("[key_name(user)] made a Radio/Igniter/Pipebomb Assembly at [log_loc(user)].")
+
+
+	//Since we completed the assembly, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	// Since the assembly was done, return TRUE
+	return TRUE
+
 
 ///////////////////////////////// Health analyzer/igniter /////////////////////////////////////////////
 

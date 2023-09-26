@@ -46,7 +46,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		src.detonation_time = TIME + src.explode_delay
 		if(recharge_delay && ON_COOLDOWN(O, "bomb_cooldown", recharge_delay))
 			T.visible_message("<b><span class='alert'>[O] [text_cooldown]</span></b>")
-			playsound(T, sound_cooldown, 100, 1)
+			playsound(T, sound_cooldown, 100, TRUE)
 			SPAWN(3 SECONDS)
 				O.ArtifactDeactivated() // lol get rekt spammer
 			return
@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (warning_initial)
 			T.visible_message("<b><span class='alert'>[O] [warning_initial]</b></span>")
 		if (alarm_initial)
-			playsound(T, alarm_initial, 100, 1, doAlert?200:-1)
+			playsound(T, alarm_initial, 100, TRUE, doAlert?200:-1)
 		if (doAlert)
 			var/area/A = get_area(O)
 			command_alert("An extremely unstable object of [artitype.type_name] origin has been detected in [A]. The crew is advised to dispose of it immediately.", "Station Threat Detected", alert_origin = ALERT_ANOMALY)
@@ -71,7 +71,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			return
 		var/turf/T = get_turf(O)
 		if(alarm_during)
-			playsound(T, alarm_during, 30, 1) // repeating noise, so people who come near later know it's a bomb
+			playsound(T, alarm_during, 30, TRUE) // repeating noise, so people who come near later know it's a bomb
 
 		if(TIME > src.detonation_time)
 			src.detonation_time = INFINITY
@@ -82,7 +82,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 			if (warning_final)
 				T.visible_message("<b><span class='alert'>[O] [warning_final]</b></span>")
 			if (alarm_final)
-				playsound(T, alarm_final, 100, 1, -1)
+				playsound(T, alarm_final, 100, TRUE, -1)
 			animate(O, pixel_y = rand(-3,3), pixel_y = rand(-3,3),time = 1,loop = 10 SECONDS, easing = ELASTIC_EASING, flags=ANIMATION_PARALLEL)
 			if(O.simple_light)
 				animate(O.simple_light, flags=ANIMATION_PARALLEL, time = 10 SECONDS, transform = matrix() * animationScale)
@@ -200,7 +200,7 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		if (..())
 			return
 		var/turf/T = get_turf(O)
-		playsound(T, 'sound/machines/singulo_start.ogg', 90, 0, 3)
+		playsound(T, 'sound/machines/singulo_start.ogg', 90, FALSE, 3)
 		new /obj/bhole(T,rand(100,300))
 
 		if (O)
@@ -461,6 +461,18 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 		lightColor = list(matR, matG, matB, 255)
 
 		range = rand(3,7)
+
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "mat")
+			warning_initial = "appears to be turning into [mat.getName()]."
+			warning_final = "begins transmuting nearby matter into [mat.getName()]!"
+			log_addendum = "Material: [mat.getName()]"
+
+			var/matR = GetRedPart(mat.getColor())
+			var/matG = GetGreenPart(mat.getColor())
+			var/matB = GetBluePart(mat.getColor())
+			lightColor = list(matR, matG, matB, 255)
 
 	effect_activate(obj/O)
 		if(..())

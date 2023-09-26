@@ -125,7 +125,7 @@ TYPEINFO(/obj/item/gun/energy)
 				return 1
 			boutput(user, "<span class='alert'>*click* *click*</span>")
 			if (!src.silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return 0
 
 
@@ -285,7 +285,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
-	shoot_delay = 10
+	shoot_delay = 8
 	can_dual_wield = FALSE
 	force = MELEE_DMG_RIFLE
 	two_handed = 1
@@ -546,7 +546,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 /obj/item/gun/energy/wavegun
 	name = "\improper Sancai wave gun"
 	icon = 'icons/obj/items/gun.dmi'
-	desc = "The versatile XIANG|GIESEL model '三才' with three monlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
+	desc = "The versatile XIANG|GIESEL model '三才' with three nonlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun"
 	item_state = "wave"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -777,8 +777,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 	mats = 0
 
 /obj/item/gun/energy/blaster_pistol
-	name = "blaster pistol"
-	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
+	name = "GRF Zap-Pistole"
+	desc = "A dangerous-looking blaster pistol from Giesel Radiofabrik. It's self-charging by a radioactive power cell."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "pistol"
 	w_class = W_CLASS_NORMAL
@@ -851,8 +851,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	mats = 0
 
 /obj/item/gun/energy/blaster_smg
-	name = "burst blaster"
-	desc = "A special issue blaster weapon, configured for burst fire. It's self-charging by a radioactive power cell."
+	name = "GRF Zap-Maschine"
+	desc = "A special issue blaster weapon from Giesel Radiofabrik, designed for burst fire. It's self-charging by a radioactive power cell."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "smg"
 	can_dual_wield = 0
@@ -877,8 +877,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 			return
 
 /obj/item/gun/energy/blaster_cannon
-	name = "blaster cannon"
-	desc = "A heavily overcharged blaster weapon, modified for extreme firepower. It's self-charging by a larger radioactive power cell."
+	name = "GRF Zap-Kanone"
+	desc = "A heavily overcharged blaster weapon from Giesel Radiofabrik, designed for repelling hostile boarding parties and swarms. It's self-charging by a larger radioactive power cell."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "cannon"
 	item_state = "rifle"
@@ -886,12 +886,14 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	force = 15
+	shoot_delay = 8
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 
 	New()
 		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/blaster)
 		projectiles = list(current_projectile)
 		c_flags |= ONBACK
+		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
 		..()
 
 

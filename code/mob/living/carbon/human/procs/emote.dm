@@ -113,14 +113,14 @@
 
 
 						if (iscluwne(src))
-							playsound(src, 'sound/voice/farts/poo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 						else if (src.organ_istype("butt", /obj/item/clothing/head/butt/cyberbutt))
-							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
 							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
 						else
 							if (narrator_mode)
-								playsound(src, 'sound/vox/fart.ogg', 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+								playsound(src, 'sound/vox/fart.ogg', 50, FALSE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 							else
 								if (src.getStatusDuration("food_deep_fart"))
 									playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3, channel=VOLUME_CHANNEL_EMOTE)
@@ -612,9 +612,9 @@
 					maptext_out = "<I>uguus</I>"
 					m_type = 2
 					if (narrator_mode)
-						playsound(src, 'sound/vox/uguu.ogg', 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, 'sound/vox/uguu.ogg', 80, FALSE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					else
-						playsound(src, 'sound/voice/uguu.ogg', 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+						playsound(src, 'sound/voice/uguu.ogg', 80, FALSE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
@@ -659,6 +659,7 @@
 							else if (src.r_hand)
 								thing = src.r_hand
 						if (thing)
+							SEND_SIGNAL(thing, COMSIG_ITEM_TWIRLED, src, thing)
 							message = thing.on_spin_emote(src)
 							maptext_out = "<I>twirls [thing]</I>"
 							animate_spin(thing, prob(50) ? "L" : "R", 1, 0)
@@ -850,7 +851,7 @@
 					if (act == "gasp")
 						if (src.health <= 0)
 							var/dying_gasp_sfx = "sound/voice/gasps/[src.gender]_gasp_[pick(1,5)].ogg"
-							playsound(src, dying_gasp_sfx, 40, 0, 0, src.get_age_pitch())
+							playsound(src, dying_gasp_sfx, 40, FALSE, 0, src.get_age_pitch())
 						else
 							playsound(src, src.sound_gasp, 15, 0, 0, src.get_age_pitch())
 
@@ -1644,19 +1645,15 @@
 							elecflash(src,power = 2)
 						else
 							//glowsticks
-							var/left_glowstick = istype (l_hand, /obj/item/device/light/glowstick)
-							var/right_glowstick = istype (r_hand, /obj/item/device/light/glowstick)
-							var/obj/item/device/light/glowstick/l_glowstick = null
-							var/obj/item/device/light/glowstick/r_glowstick = null
-							if (left_glowstick)
-								l_glowstick = l_hand
-							if (right_glowstick)
-								r_glowstick = r_hand
-							if ((left_glowstick && l_glowstick.on) || (right_glowstick && r_glowstick.on))
-								if (left_glowstick)
-									particleMaster.SpawnSystem(new /datum/particleSystem/glow_stick_dance(src.loc))
-								if (right_glowstick)
-									particleMaster.SpawnSystem(new /datum/particleSystem/glow_stick_dance(src.loc))
+							var/obj/item/device/light/glowstick/l_glowstick = src.find_type_in_hand(/obj/item/device/light/glowstick, "left")
+							var/obj/item/device/light/glowstick/r_glowstick = src.find_type_in_hand(/obj/item/device/light/glowstick, "right")
+							if (l_glowstick?.on || r_glowstick?.on)
+								if (l_glowstick?.on)
+									var/color = rgb(l_glowstick.col_r*255, l_glowstick.col_g*255, l_glowstick.col_b*255, l_glowstick.brightness*255)
+									particleMaster.SpawnSystem(new /datum/particleSystem/glow_stick_dance(src.loc, color))
+								if (r_glowstick?.on)
+									var/color = rgb(r_glowstick.col_r*255, r_glowstick.col_g*255, r_glowstick.col_b*255, r_glowstick.brightness*255)
+									particleMaster.SpawnSystem(new /datum/particleSystem/glow_stick_dance(src.loc, color))
 								var/dancemove = rand(1,6)
 								switch(dancemove)
 									if (1)
@@ -1804,7 +1801,7 @@
 								src.reagents.del_reagent("mutagen")
 								src.reagents.add_reagent("spiders", ant_amt + mut_amt)
 								boutput(src, "<span class='notice'>The ants arachnify.</span>")
-								playsound(src, 'sound/effects/bubbles.ogg', 80, 1)
+								playsound(src, 'sound/effects/bubbles.ogg', 80, TRUE)
 
 			if ("flip")
 				if (src.emote_check(voluntary, 50))

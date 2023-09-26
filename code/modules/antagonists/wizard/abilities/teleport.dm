@@ -177,7 +177,7 @@
 		smoke.set_up(5, 0, src.loc)
 		smoke.attach(src)
 
-		playsound(destination, 'sound/effects/mag_teleport.ogg', 25, 1, -1)
+		playsound(destination, 'sound/effects/mag_teleport.ogg', 25, TRUE, -1)
 		src.set_loc(destination)
 		smoke.start()
 

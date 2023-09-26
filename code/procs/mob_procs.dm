@@ -459,9 +459,11 @@
 	src.mind.violated_hippocratic_oath = 1
 	return 1
 
+/// 'this man' vs 'this person'
 /proc/man_or_woman(var/mob/subject)
 	return subject.get_pronouns().preferredGender
 
+/// 'their cookie' vs 'her cookie'
 /proc/his_or_her(var/mob/subject)
 	return subject.get_pronouns().possessive
 
@@ -471,15 +473,35 @@
 /proc/he_or_she(var/mob/subject)
 	return subject.get_pronouns().subjective
 
+/// "they're outside" vs "he's outside"
 /proc/hes_or_shes(var/mob/subject)
 	var/datum/pronouns/pronouns = subject.get_pronouns()
 	return pronouns.subjective + (pronouns.pluralize ? "'re" : "'s")
 
+/// 'they are' vs 'he is'
 /proc/is_or_are(var/mob/subject)
-	return (subject.get_pronouns().pluralize ? "are" : "is")
+	return subject.get_pronouns().pluralize ? "are" : "is"
+
+/// 'they have' vs 'he has'
+/proc/has_or_have(var/mob/subject)
+	return subject.get_pronouns().pluralize ? "have" : "has"
 
 /proc/himself_or_herself(var/mob/subject)
 	return subject.get_pronouns().reflexive
+
+/// "he doesn't" vs "they don't"
+///
+/// should arguably just be 'does_or_doesnt' but i figure this is by far the dominant use of that so I'm rolling them together
+/proc/he_or_she_dont_or_doesnt(mob/subject)
+	return "[he_or_she(subject)] do[blank_or_es(subject)]n't"
+
+/// 'they run' vs 'he runs'
+/proc/blank_or_s(mob/subject)
+	return subject.get_pronouns().pluralize ? "" : "s"
+
+/// 'they smash' vs 'he smashes'
+/proc/blank_or_es(mob/subject)
+	return subject.get_pronouns().pluralize ? "" : "es"
 
 /mob/proc/get_explosion_resistance()
 	return min(GET_ATOM_PROPERTY(src, PROP_MOB_EXPLOPROT), 100) / 100

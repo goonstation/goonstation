@@ -610,7 +610,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "Is it going to eat you if you get too close?"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
-	random_dir = 8
+	random_dir = WEST
 	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 
@@ -641,6 +641,7 @@ obj/decal/fakeobjects/teleport_pad
 	opacity = 0
 	anchored = ANCHORED
 	plane = PLANE_FLOOR
+	mouse_opacity = 0
 
 /obj/decal/icefloor/Crossed(atom/movable/AM)
 	..()
@@ -657,6 +658,12 @@ obj/decal/fakeobjects/teleport_pad
 				M.TakeDamage("head", 5, 0, 0, DAMAGE_BLUNT)
 				M.visible_message("<span class='alert'><b>[M]</b> hits their head on [src]!</span>")
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_1.ogg', 50, 1)
+
+/obj/decal/icefloor/temperature_expose(datum/gas_mixture/air, exposed_temperature, exposed_volume)
+	. = ..()
+	if (exposed_temperature > T0C)
+		if(prob((exposed_temperature - T0C) * 0.1))
+			qdel(src)
 
 // These used to be static turfs derived from the standard grey floor tile and thus didn't always blend in very well (Convair880).
 /obj/decal/mule

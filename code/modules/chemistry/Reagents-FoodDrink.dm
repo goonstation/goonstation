@@ -144,6 +144,19 @@ datum
 			thirst_value = 0.75
 			value = 3 // 1 2
 
+		fooddrink/milk/banana_milk
+			name = "Banana Milk"
+			id = "banana_milk"
+			fluid_r = 255
+			fluid_g = 255
+			fluid_b = 170
+			transparency = 255
+			taste = "sweet"
+			description = "Banana-flavored milk; tastes like being a kid again."
+			reagent_state = LIQUID
+			thirst_value = 0.75
+			value = 3 // 1 2
+
 		fooddrink/milk/blue_milk
 			name = "blue milk"
 			id = "blue_milk"
@@ -185,6 +198,18 @@ datum
 			transparency = 190
 			taste = "sugary"
 			description = "A mix of fruit juices and sugar; tastes like being a kid again."
+			reagent_state = LIQUID
+			thirst_value = 2
+			value = 3
+
+		fooddrink/fizzy_banana
+			name = "Fizzy Banana"
+			id = "fizzy_banana"
+			fluid_r = 241
+			fluid_g = 255
+			fluid_b = 129
+			taste = list("tropical", "zesty")
+			description = "An fusion of sweet banana, tropical coconut, zesty lime, and bubbly tonic."
 			reagent_state = LIQUID
 			thirst_value = 2
 			value = 3
@@ -2328,7 +2353,7 @@ datum
 
 				if(volume >= 5 && prob(10))
 					if(!locate(/obj/decal/cleanable/blood/gibs) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable(/obj/decal/cleanable/blood/gibs,T)
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2907,7 +2932,7 @@ datum
 
 				if (volume >= 5)
 					if (!locate(/obj/decal/cleanable/ketchup) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						make_cleanable(/obj/decal/cleanable/ketchup,T)
 
 		fooddrink/mustard
@@ -4610,6 +4635,46 @@ datum
 				if (M.reagents.has_reagent("flockdrone_fluid"))
 					boutput(M, "<span class='alert'>The alien presence in your mind receeds a little.</span>")
 				flush(holder, 2 * mult, list("flockdrone_fluid")) //slightly better than calomel
+
+		fooddrink/alcoholic/dirty_banana
+			name = "Dirty Banana"
+			id = "dirty_banana"
+			fluid_r = 8
+			fluid_g = 65
+			fluid_b = 7
+			alch_strength = 0.1
+			description = "A decadence of rum, banana, chocolate, and milk blended to create a creamy, irresistible delight."
+			reagent_state = LIQUID
+			taste = list("sweet", "chocolatey")
+			thirst_value = 0.25
+
+		fooddrink/alcoholic/sweet_surprise
+			name = "Sweet Surprise"
+			id = "sweet_surprise"
+			description = "A tantalizing blend of rum, banana, and coconut that's like a tropical vacation in a glass."
+			reagent_state = LIQUID
+			alch_strength = 0.2
+			fluid_r = 255
+			fluid_g = 245
+			fluid_b = 170
+			taste = "tropical"
+			thirst_value = 0.25
+
+		fooddrink/alcoholic/sweet_dreams
+			name = "Sweet Dreams"
+			id = "sweet_dreams"
+			description = "A delightful concoction delivering a dreamy escape with each sip."
+			reagent_state = LIQUID
+			alch_strength = 0.2
+			fluid_r = 191
+			fluid_g = 212
+			fluid_b = 153
+			taste = "tropical"
+			thirst_value = 0.25
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				M.reagents.add_reagent("capulettium", 1 * mult)
+				..()
 
 		fooddrink/matcha
 			name = "matcha"

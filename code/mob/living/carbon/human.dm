@@ -1193,7 +1193,7 @@
 
 
 /mob/living/carbon/human/UpdateName()
-	var/id_name = src.wear_id?:registered
+	var/id_name = get_id_card(src.wear_id)?:registered
 	if (!face_visible())
 		if (id_name)
 			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
@@ -1217,6 +1217,10 @@
 			else
 				src.name = "[src.name_prefix(null, 1)][src.real_name][src.name_suffix(null, 1)]"
 				src.update_name_tag(src.real_name)
+
+
+/mob/living/carbon/human/admin_visible_name()
+	return src.real_name
 
 /mob/living/carbon/human/find_in_equipment(var/eqtype)
 	if (istype(w_uniform, eqtype))
@@ -1776,11 +1780,11 @@
 
 	if(I.two_handed)
 		if(src.l_hand == I)
-			if(src.r_hand != null)
+			if((src.r_hand != null) && (src.r_hand != I))
 				I.two_handed = 0
 				return FALSE
 		else if(src.r_hand == I)
-			if(src.l_hand != null)
+			if((src.l_hand != null) && (src.l_hand != I))
 				I.two_handed = 0
 				return FALSE
 		hud.set_visible(hud.lhand, 0)
@@ -1966,6 +1970,9 @@
 				I.equipped(src, SLOT_WEAR_ID)
 				equipped = 1
 				clothing_dirty |= C_ID
+			else if (istype(src.wear_id,/obj/item/clothing/lanyard)) // Lanyards
+				if (src.wear_id.storage.check_can_hold(I))
+					src.wear_id.storage.add_contents(I)
 		if (SLOT_EARS)
 			if (!src.ears && src.organHolder && src.organHolder.head)
 				src.ears = I
@@ -2256,7 +2263,7 @@
 		return
 
 	if (!H.stat)
-		boutput(usr, "You can't eat [H] while they are conscious!")
+		boutput(usr, "You can't eat [H] while [hes_or_shes(H)] conscious!")
 		return
 
 	if (H.bioHolder.HasEffect("consumed"))
@@ -3246,6 +3253,11 @@
 		return 1
 	return 0
 
+/mob/living/carbon/human/is_heat_resistant()
+	. = ..()
+	if (ischangeling(src)) // comic book weakness
+		return FALSE
+
 /mob/living/carbon/human/empty_hands()
 	var/h = src.hand
 	src.hand = 0
@@ -3375,6 +3387,8 @@
 		if (H.organHolder?.tail)
 			var/obj/item/organ/tail/T = H.organHolder.tail
 			T.colorize_tail(H.bioHolder.mobAppearance)
+		H.organHolder?.left_eye?.update_color(H.bioHolder?.mobAppearance, "L")
+		H.organHolder?.right_eye?.update_color(H.bioHolder?.mobAppearance, "R")
 		H?.bioHolder?.mobAppearance.UpdateMob()
 
 /mob/living/carbon/human/get_pronouns()

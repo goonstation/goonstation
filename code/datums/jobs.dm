@@ -160,7 +160,8 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_back = list(/obj/item/storage/backpack/captain)
 	slot_jump = list(/obj/item/clothing/under/rank/captain)
 	slot_suit = list(/obj/item/clothing/suit/armor/captain)
-	slot_foot = list(/obj/item/clothing/shoes/swat)
+	slot_foot = list(/obj/item/clothing/shoes/swat/captain)
+	slot_glov = list(/obj/item/clothing/gloves/swat/captain)
 	slot_head = list(/obj/item/clothing/head/caphat)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list(/obj/item/device/radio/headset/command/captain)
@@ -1007,11 +1008,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		if (!M)
 			return
 
-		// Yaaaaaay!
-		M.AddComponent(/datum/component/death_confetti)
 
-		M.bioHolder.AddEffect("clumsy", magical=1)
-		M.bioHolder.AddEffect("accent_comic", magical=1)
+		M.traitHolder.addTrait("training_clown")
 
 // AI and Cyborgs
 
@@ -1130,8 +1128,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		if (!M)
 			return
-		M.bioHolder.AddEffect("mute", magical=1)
-		M.bioHolder.AddEffect("blankman", magical=1)
+		M.traitHolder.addTrait("training_mime")
 
 /datum/job/special/attorney
 	name = "Attorney"
@@ -2747,11 +2744,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			M.set_mutantrace(morph)
 		var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
 		M.equip_if_possible(L, SLOT_WEAR_ID, FALSE)
-		M.spawnId(src)
 		var/obj/item/card/id = locate() in M
-		if (!id)
-			return
-		L.storage.add_contents(id, M, FALSE)
+		if (id)
+			L.storage.add_contents(id, M, FALSE)
 
 /datum/job/daily/saturday
 	name = "Musician"

@@ -1079,7 +1079,7 @@ TYPEINFO(/obj/machinery/conveyor_switch) {
 			if(PN)
 				var/power_to_use = 0
 
-				var/free_power = PN.newload - PN.avail
+				var/free_power = PN.avail - PN.newload
 				power_to_use = min ( maxdrain, free_power )
 				speedup = (power_to_use/maxdrain) * speedup_max
 

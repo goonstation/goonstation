@@ -672,7 +672,7 @@
 			..()
 
 /mob/living/critter/small_animal/bee/buddy
-	name = "B-33"
+	name = "\improper B-33"
 	desc = "It appears to be a hybrid of a domestic space-bee and a PR-6 Robuddy. How is that even possible?"
 	icon_state = "buddybee-wings"
 	icon_state_dead = "buddybee-dead"
@@ -1056,7 +1056,7 @@
 	non_admin_bee_allowed = 1
 
 /mob/living/critter/small_animal/bee/ascbee
-	name = "ASCBee"
+	name = "\improper ASCBee"
 	desc = "This bee looks rather... old school."
 	icon_body = "ascbee"
 	icon_state = "ascbee-wings"

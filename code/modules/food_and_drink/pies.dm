@@ -5,43 +5,54 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pie)
 	desc = "A null pie. You shouldn't be able to see this!"
 	item_state = "pie"
 	required_utensil = REQUIRED_UTENSIL_SPOON
+	fill_amt = 6
 	sliceable = FALSE
-	var/slicetype = /obj/item/reagent_containers/food/snacks/pieslice
+	slice_amount = 8
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice
 	var/splat = 0 // for thrown pies
 	food_effects = list("food_refreshed","food_cold")
+	///In the case of a thrown splattered pie, minimum amount of time we remain visually stuck on someone's face.
+	var/min_stuck_time = 5 SECONDS
+	///In the case of a thrown splattered pie, maximum amount of time we remain visually stuck on someone's face.
+	var/max_stuck_time = 10 SECONDS
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 		if (ismob(hit_atom) && src.splat)
 			var/mob/M = hit_atom
-			src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
-			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-			M.change_eye_blurry(rand(5,10))
-			M.take_eye_damage(rand(0, 2), 1)
-			if (prob(40))
-				JOB_XP(M, "Clown", 2)
+			var/mob/thrower = thr.thrown_by
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
+			if (thrower.mind?.assigned_role == "Clown" && ishuman(M) && (prob(50) || M.mind?.assigned_role == "Captain") && !M.GetOverlayImage("face_pie"))
+				var/mob/living/carbon/human/H = M
+				var/image/face_pie = image('icons/obj/foodNdrink/food_dessert.dmi', "face_pie")
+				src.visible_message("<span class='notice'>[src] splats right in [H]'s face and remains stuck there!</span>")
+				face_pie.layer = MOB_OVERLAY_BASE
+				face_pie.appearance_flags = RESET_COLOR | PIXEL_SCALE
+				var/overlay_key = "face_pie"
+				if(H.mutantrace.head_offset)
+					face_pie.pixel_y = H.mutantrace.head_offset
+				M.UpdateOverlays(face_pie, overlay_key)
+				src.set_loc(M)
+				M.bioHolder?.AddEffect("bad_eyesight")
+				JOB_XP(thrower, "Clown", 1)
+				SPAWN(rand(src.min_stuck_time, src.max_stuck_time))
+					if (QDELETED(M))
+						return
+					M.bioHolder?.RemoveEffect("bad_eyesight")
+					M.UpdateOverlays(null, overlay_key)
+					if (QDELETED(src))
+						return
+					src.visible_message("<span class='notice'>[src] falls off of [M]'s face.</span>")
+					src.set_loc(M.loc)
+					qdel(face_pie)
+				return
+			else
+				src.visible_message("<span class='alert'>[src] splats in [M]'s face!</span>")
+				M.change_eye_blurry(rand(5,10))
+				M.take_eye_damage(rand(0, 2), 1)
+				if (prob(40))
+					JOB_XP(M, "Clown", 2)
 		else
 			..()
-
-	attackby(obj/item/W, mob/user)
-		if (iscuttingtool(W) || issawingtool(W))
-			if(user.bioHolder.HasEffect("clumsy") && prob(50))
-				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
-				user.change_eye_blurry(5)
-				user.changeStatus("weakened", 3 SECONDS)
-				JOB_XP(user, "Clown", 2)
-				return
-
-			if(sliceable == FALSE)
-				return
-
-			var/turf/T = get_turf(src)
-			user.visible_message("[user] cuts [src] into slices.", "You cut [src] into slices.")
-			var/makeslices = 8
-			while (makeslices > 0)
-				new slicetype (T)
-				makeslices -= 1
-			qdel (src)
-		else ..()
 
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 /obj/item/reagent_containers/food/snacks/pieslice
@@ -123,7 +134,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 30
 	initial_reagents = list("juice_apple"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/apple
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/apple
 
 /obj/item/reagent_containers/food/snacks/pie/lime
 	name = "key lime pie"
@@ -134,7 +145,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 30
 	initial_reagents = list("juice_lime"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/lime
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/lime
 
 
 /obj/item/reagent_containers/food/snacks/pie/lemon
@@ -146,7 +157,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_lemon"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/lemon
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/lemon
 
 /obj/item/reagent_containers/food/snacks/pie/strawberry
 	name = "strawberry pie"
@@ -157,7 +168,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_strawberry"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/strawberry
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/strawberry
 
 /obj/item/reagent_containers/food/snacks/pie/pumpkin
 	name = "pumpkin pie"
@@ -168,7 +179,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_pumpkin"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/pumpkin
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/pumpkin
 
 /obj/item/reagent_containers/food/snacks/pie/cream
 	name = "cream pie"
@@ -269,7 +280,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_reagents = list("sugar"=20,"hugs"=10)
 	food_effects = list("food_sweaty","food_refreshed", "food_explosion_resist")
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/chocolate
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/chocolate
 
 /obj/item/reagent_containers/food/snacks/pie/pot
 	name = "space-chicken pot pie"
@@ -309,7 +320,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_raspberry"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/raspberry
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/raspberry
 
 /obj/item/reagent_containers/food/snacks/pie/blackberry
 	name = "blackberry pie"
@@ -320,7 +331,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_blackberry"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/blackberry
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/blackberry
 
 /obj/item/reagent_containers/food/snacks/pie/blueberry
 	name = "blueberry pie"
@@ -331,7 +342,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_blueberry"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/blueberry
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/blueberry
 
 /obj/item/reagent_containers/food/snacks/pie/cherry
 	name = "cherry pie"
@@ -342,4 +353,4 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	initial_volume = 32
 	initial_reagents = list("juice_cherry"=24)
 	sliceable = TRUE
-	slicetype = /obj/item/reagent_containers/food/snacks/pieslice/cherry
+	slice_product = /obj/item/reagent_containers/food/snacks/pieslice/cherry

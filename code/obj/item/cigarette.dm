@@ -144,7 +144,7 @@
 
 			SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
 
-			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
 
 	temperature_expose(datum/gas_mixture/air, temperature, volume)
 		if (src.on == 0)
@@ -257,8 +257,10 @@
 			user.visible_message("<span class='alert'><B>[user]</B> blows smoke right into <B>[target]</B>'s face![message_append]</span>", group = "[user]_blow_smoke_at_[target]")
 
 			var/mob/living/carbon/human/human_target = target
-			if (human_target && rand(1,5) == 1)
-				SPAWN(0) target.emote("cough")
+			if (human_target && !issmokeimmune(human_target) && prob(20))
+				target.emote("cough")
+				if(prob(20))
+					target.drop_item()
 		else
 			var/message
 			switch(rand(1, 10))
@@ -966,7 +968,7 @@
 		src.firesource = FIRESOURCE_OPEN_FLAME
 		src.icon_state = "match-lit"
 
-		playsound(user, 'sound/items/matchstick_light.ogg', 50, 1)
+		playsound(user, 'sound/items/matchstick_light.ogg', 50, TRUE)
 		light.enable()
 
 		processing_items |= src
@@ -979,11 +981,11 @@
 			src.icon_state = "match-broken"
 			src.name = "broken match"
 			if (user)
-				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, 1, 0, 2)
+				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 60, TRUE, 0, 2)
 		else
 			src.icon_state = "match-burnt"
 			src.name = "burnt-out match"
-			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
 
 		light.disable()
 
@@ -1171,7 +1173,7 @@
 		light.enable()
 		processing_items |= src
 		if (user != null)
-			playsound(user, 'sound/items/zippo_open.ogg', 30, 1)
+			playsound(user, 'sound/items/zippo_open.ogg', 30, TRUE)
 			user.update_inhands()
 
 	proc/deactivate(mob/user as mob)
@@ -1183,7 +1185,7 @@
 		light.disable()
 		processing_items.Remove(src)
 		if (user != null)
-			playsound(user, 'sound/items/zippo_close.ogg', 30, 1)
+			playsound(user, 'sound/items/zippo_close.ogg', 30, TRUE)
 			user.update_inhands()
 
 	attack(mob/target, mob/user)

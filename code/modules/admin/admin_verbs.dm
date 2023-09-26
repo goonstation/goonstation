@@ -196,6 +196,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_get_type,
 		/client/proc/cmd_addComponentType,
 		/client/proc/cmd_removeComponentType,
+		/client/proc/cmd_replace_type,
 		/client/proc/cmd_lightsout,
 
 		/client/proc/vpn_whitelist_add,
@@ -2165,20 +2166,21 @@ var/list/fun_images = list()
 		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
-		var/list/atom/atoms = list()
+		var/list/atom/atom_names = list()
 		for(var/atom/thing as anything in list(clicked_turf) + clicked_turf.contents)
 			if(thing.name)
-				atoms += thing
+				atom_names[thing.admin_visible_name()] = thing
 			else if(!istype(thing, /obj/effect) && !istype(thing, /obj/overlay/tile_effect))
 				if(initial(thing.name))
-					atoms["nameless [initial(thing.name)]"] = thing
+					atom_names["nameless [initial(thing.name)]"] = thing
 				else
-					atoms["nameless [thing.type]"] = thing
-		if (atoms.len)
-			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atoms)
-			if (isnull(A)) return
+					atom_names["nameless [thing.type]"] = thing
+		if (length(atom_names))
+			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atom_names)
+			if (isnull(A))
+				return
 		if(istext(A))
-			A = atoms[A]
+			A = atom_names[A]
 
 	var/title = "What do?"
 	var/list/verbs = list()
