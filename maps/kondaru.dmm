@@ -23568,7 +23568,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "Brig - Solitary Cells";
+	areastring = "Solitary Confinement";
 	dir = 8;
 	name = "Brig - Solitary Cells APC";
 	pixel_x = -24
