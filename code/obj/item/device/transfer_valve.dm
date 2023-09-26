@@ -566,11 +566,7 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		if (!src.crystal)
 			. = ..()
 			return
-		if(BOUNDS_DIST(src_location, usr) > 0)
-			//boutput(usr, "<span class='alert'>You are too far away from [src] to empty it.</span>")
-			return
-		if(BOUNDS_DIST(src_location, over_location) > 0)
-			//boutput(usr, "<span class='alert'>That drop location is too far from [src].</span>")
+		if(BOUNDS_DIST(src_location, usr) > 0 || BOUNDS_DIST(src_location, over_location) > 0)
 			return
 		if (src.remove_crystal(usr, over_location))
 			usr.visible_message("[usr] removes the crystal from [src].",
