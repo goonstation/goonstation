@@ -165,6 +165,7 @@ TYPEINFO(/obj/item/card/emag)
 
 /obj/item/card/id/nt
 	icon_state = "id_nt"
+	keep_icon = TRUE
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars
