@@ -807,7 +807,7 @@ var/global/totally_random_jobs = FALSE
 			cashModifier = 1.25
 
 		var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
-		S.setup(src,wagesystem.jobs[JOB.name] * cashModifier)
+		S.setup(src,round(wagesystem.jobs[JOB.name] * cashModifier))
 
 		if (isnull(src.get_slot(SLOT_R_STORE)))
 			src.equip_if_possible(S, SLOT_R_STORE)

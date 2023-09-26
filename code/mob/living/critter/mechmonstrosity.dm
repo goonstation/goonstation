@@ -1,6 +1,6 @@
 /mob/living/critter/mechmonstrosity
-	name = "Mechanical Monstrosity"
-	real_name = "mechmonstrosity"
+	name = "mechanical monstrosity"
+	real_name = "mechanical monstrosity"
 	desc = "A severely disfigured human torso which is forcibly kept alive by the mechanical parts.."
 	density = TRUE
 	icon = 'icons/misc/critter.dmi'
@@ -432,7 +432,7 @@
 		src.read_only = TRUE
 
 /mob/living/critter/robotic/crawler
-	name = "Crawling Monstrosity"
+	name = "crawling monstrosity"
 	desc = "A crawling mechanical monstrosity."
 	icon_state = "mechmonstrosity_c"
 	icon_state_dead = "mechmonstrosity_c-dead"

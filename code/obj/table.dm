@@ -233,8 +233,7 @@ TYPEINFO_NEW(/obj/table)
 
 		else if (istype(W,/obj/item/sheet/wood))
 			if (istype(src, /obj/table/reinforced/bar)) //why must you be so confusing
-				boutput(user, "<span class='notice'>You can't add more than one finish, that's just illogical!</span>")
-				return
+				return ..()
 			if (status != STATUS_STRONG || !istype(src, /obj/table/reinforced/auto))
 				boutput(user, "<span class='notice'>\The [src] is too weak to be modified!</span>")
 				return
@@ -780,7 +779,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 				/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
 				/obj/item/clothing/glasses/spectro,
-				/obj/item/device/reagentscanner = 2,
+				/obj/item/device/reagentscanner,
+				/obj/item/bunsen_burner,
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,
 				/obj/item/storage/box/beaker_lids,

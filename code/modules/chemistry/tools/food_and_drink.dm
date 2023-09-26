@@ -7,11 +7,11 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 /obj/item/reagent_containers/food
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
 	var/heal_amt = 0 							//! Amount this food heals for when eaten
+	var/fill_amt = 1							//! Amount of space this takes up in a stomach
 	var/required_utensil = null 				//! Which utensil we need to use to eat this
 	var/food_color = null 						//! Color for various food items
 	var/custom_food = TRUE 						//! Can it be used to make custom food like for pizzas
 	var/festivity = 0 							//! Amount of cheer this food adds/subtracts when eaten
-	var/brew_result = null 						//! What reagent will it make if it's brewable?
 	var/unlock_medal_when_eaten = null 			//! Add medal name here in the format of e.g. "That tasted funny".
 	var/from_emagged_oven = 0 					//! Was this food created by an emagged oven? To prevent re-rolling of food in emagged ovens.
 	var/doants = TRUE 							//! Will ants spawn to eat this food if it's on the floor
@@ -21,7 +21,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	var/slice_amount = 1						//! How many slices to spawn after slicing
 	var/slice_inert = FALSE						//! If the food is inert while slicing (ie chemical reactions won't occur)
 	var/slice_suffix = "slice" 					//! When we want to name them slices or wedges or what-have-you
+	var/did_stomach_react = 0					//! Has this already reacted when being digested
+	var/digest_count = 0						//! How digested is this while in stomach
+	var/dissolve_threshold = 20					//! How digested something needs to be before it dissolves
 	rc_flags = 0
+
+	///Slowly dissolve in stomach, releasing reagents
+	proc/process_stomach(mob/living/owner, var/process_rate = 5)
+		src.digest_count += process_rate
+		if (owner && src.reagents?.total_volume > 0)
+			if (!src.did_stomach_react)
+				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
+				src.did_stomach_react = 1
+
+			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)
+
+		if ((!src.reagents || src.reagents.total_volume <= 0) && src.digest_count > src.dissolve_threshold)
+			owner.organHolder.stomach.eject(src)
+			qdel(src)
 
 	proc/on_table()
 		if (!isturf(src.loc))
@@ -79,6 +96,12 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 	//slicing food can be done here using sliceable == TRUE, slice_amount, and slice_product
 	attackby(obj/item/W, mob/user)
 		if (src.sliceable && istool(W, TOOL_CUTTING | TOOL_SAWING))
+			if(user.bioHolder.HasEffect("clumsy") && prob(50))
+				user.visible_message("<span class='alert'><b>[user]</b> fumbles and jabs [himself_or_herself(user)] in the eye with [W].</span>")
+				user.change_eye_blurry(5)
+				user.changeStatus("weakened", 3 SECONDS)
+				JOB_XP(user, "Clown", 2)
+				return
 			var/turf/T = get_turf(src)
 			user.visible_message("[user] cuts [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].", "You cut [src] into [src.slice_amount] [src.slice_suffix][s_es(src.slice_amount)].")
 			var/amount_to_transfer = round(src.reagents.total_volume / src.slice_amount)
@@ -94,6 +117,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 
 	//This proc handles all the actions being done to the produce. use this proc to work with your slices after they were created (looking at all these slice code at plant produce...)
 	proc/process_sliced_products(var/obj/item/reagent_containers/food/slice, var/amount_to_transfer)
+		slice.fill_amt = src.fill_amt / src.slice_amount
 		slice.transform = src.transform // for botany crops
 		slice.reagents.clear_reagents() // dont need initial_reagents when you're inheriting reagents of another obj (no cheese duping >:[ )
 		slice.reagents.maximum_volume = amount_to_transfer
@@ -245,6 +269,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				if (!istype(tummy) || (tummy.broken || tummy.get_damage() > tummy.max_damage) || M?.bioHolder.HasEffect("rot_curse"))
 					M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but can't swallow!</span>",\
 					"<span class='notice'>You try to take a bite of [src], but can't swallow!</span>")
+					return 0
+				if (tummy.calculate_fullness() > tummy.capacity)
+					M.show_message("<span class='alert'>You're just too full to take another bite!</span>")
 					return 0
 				if (!H.organHolder.head)
 					M.visible_message("<span class='notice'>[M] tries to take a bite of [src], but they have no head!</span>",\
@@ -440,19 +467,20 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	proc/on_bite(mob/eater, mob/feeder, ethereal_eater)
 
 		if (isliving(eater))
-			if (src.reagents && src.reagents.total_volume) //only create food chunks for reagents
-				if(ethereal_eater)//ghost critters can get a little ingest reaction and a tiny amount of reagent, but won't actually take reagents
-					src.reagents.reaction(eater, INGEST, 3)
-					if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
-						src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
+			if(ethereal_eater)//ghost critters can get a little ingest reaction and a tiny amount of reagent, but won't actually take reagents
+				src.reagents.reaction(eater, INGEST, 3)
+				if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
+					src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
+			else
+				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
+				B.fill_amt = src.fill_amt/initial(src.bites_left) //so all the bites add up to the full item fillness
+				B.reagents.maximum_volume = reagents.total_volume/((src.bites_left+1) || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
+				src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
+				var/mob/living/L = eater
+				if (L.organHolder?.stomach)
+					L.organHolder.stomach.consume(B)
 				else
-					var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
-					B.set_loc(eater)
-					B.reagents.maximum_volume = reagents.total_volume/(src.bites_left+1 || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
-					src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
-					var/mob/living/L = eater
-					L.stomach_process += B
-
+					qdel(B)
 
 			if (length(src.food_effects) && isliving(eater) && eater.bioHolder)
 				var/mob/living/L = eater
@@ -505,21 +533,23 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	edible = 1
 	rand_pos = 1
 	bites_left = 1
-	var/did_react = 0
 
-	proc/process_stomach(mob/living/owner, var/process_rate = 5)
-		if (owner && src.reagents)
-			if (!src.did_react)
-				src.reagents.reaction(owner, INGEST, src.reagents.total_volume)
-				src.did_react = 1
+/obj/item/reagent_containers/food/snacks/takeout
+	name = "Chinese takeout carton"
+	desc = "Purports to contain \"General Zeng's Chicken.\"  How old is this?"
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "takeout"
+	heal_amt = 1
+	initial_volume = 60
 
-			src.reagents.trans_to(owner, process_rate, HAS_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) ? GET_ATOM_PROPERTY(owner, PROP_MOB_DIGESTION_EFFICIENCY) : 1)
-
-			if (src.reagents.total_volume <= 0)
-				owner.stomach_process -= src
-				qdel(src)
-
-
+	New()
+		..()
+		reagents.add_reagent("chickensoup", 10)
+		reagents.add_reagent("salt", 10)
+		reagents.add_reagent("grease", 5)
+		reagents.add_reagent("msg", 2)
+		reagents.add_reagent("VHFCS", 8)
+		reagents.add_reagent("egg",5)
 
 /* ================================================ */
 /* -------------------- Drinks -------------------- */
@@ -1106,7 +1136,6 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	initial_volume = 50
 	var/smashed = 0
 	var/shard_amt = 1
-	var/splash_on_smash = FALSE
 
 	var/image/fluid_image
 	var/image/image_ice
@@ -1391,11 +1420,8 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		if (!T)
 			qdel(src)
 			return
-		if(src.reagents && splash_on_smash)
-			var/amt = max(10, src.gulp_size)
-			src.reagents.reaction(A, react_volume = min(amt, src.reagents.total_volume))
-			src.reagents.remove_any(amt)
-			src.reagents.reaction(T)
+		if(src.reagents)
+			T.fluid_react(src.reagents, src.reagents.total_volume, FALSE)
 		T.visible_message("<span class='alert'>[src] shatters!</span>")
 		playsound(T, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
 		for (var/i=src.shard_amt, i > 0, i--)
@@ -1532,7 +1558,19 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	amount_per_transfer_from_this = 50
 	gulp_size = 50
 	initial_volume = 50
-	splash_on_smash = TRUE
+
+	throw_impact(atom/A, datum/thrown_thing/thr)
+		if(ishuman(A))
+			var/mob/living/carbon/human/H = A
+			var/lolwtf = prob(5) && ((H.head?.c_flags & COVERSMOUTH) || (H.wear_mask?.c_flags & COVERSMOUTH))
+			H.visible_message("<span class = 'alert'>[src] flies stright into [H]'s mouth! [lolwtf ? " How the hell does that work?":""]</span>", "<span class = 'alert'>[src] flies stright into your mouth! [lolwtf ? " How the hell did that happen?":""]</span>", "You hear breaking glass.")
+			if (src.reagents.total_volume)
+				logTheThing(LOG_CHEMISTRY, H, "is forced to drink from [src] [log_reagents(src)] at [log_loc(H)] thrown by [constructTarget(thr.thrown_by, "combat")].")
+				src.reagents.reaction(H, INGEST, clamp(reagents.total_volume, CHEM_EPSILON, min(reagents.total_volume/2, (H.reagents?.maximum_volume - H.reagents?.total_volume))))
+				SPAWN(0.5 SECONDS)
+					if (src?.reagents && H?.reagents)
+						src.reagents.trans_to(H, reagents.total_volume/2)
+		. = ..()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/oldf
 	name = "old fashioned glass"
@@ -1691,7 +1729,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 			src.in_glass = new P(src)
 		if (prob(5))
 			src.salted = TRUE
-		src.update_icon()
+		src.UpdateIcon()
 
 /obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane
 	// well, relatively sane, the dangerous drinks are still here but at least people won't be drinking initropidril again
@@ -1846,12 +1884,9 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 		src.UpdateIcon()
 
 		if (src.reagents.total_volume == 0)
-			update_icon()
 			icon_state = "pinkmug_empty"
 		else
-			update_icon()
 			icon_state = "pinkmug_full"
-		return
 
 /obj/item/reagent_containers/food/drinks/carafe
 	name = "coffee carafe"

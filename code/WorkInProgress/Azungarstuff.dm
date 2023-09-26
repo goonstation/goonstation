@@ -205,135 +205,135 @@
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "fpurple1"
 	innercross
-		dir = 1
+		dir = NORTH
 	outercross
-		dir = 4
+		dir = EAST
 
 /turf/unsimulated/floor/carpet/purple/standard/edge
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "purple2"
 
 	north
-		dir = 1
+		dir = NORTH
 	south
-		dir = 2
+		dir = SOUTH
 	east
-		dir = 4
+		dir = EAST
 	west
-		dir = 8
+		dir = WEST
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/standard/innercorner
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "purple3"
 
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 	north
-		dir = 1
+		dir = NORTH
 	south
-		dir = 2
+		dir = SOUTH
 	east
-		dir = 4
+		dir = EAST
 	west
-		dir = 8
+		dir = WEST
 	ne_triple
 		icon_state = "purple4"
-		dir = 5
+		dir = NORTHEAST
 	se_triple
 		icon_state = "purple4"
-		dir = 6
+		dir = SOUTHEAST
 	nw_triple
 		icon_state = "purple4"
-		dir = 9
+		dir = NORTHWEST
 	sw_triple
 		icon_state = "purple4"
-		dir = 10
+		dir = SOUTHWEST
 	ne_sw
 		icon_state = "purple1"
-		dir = 5
+		dir = NORTHEAST
 	nw_se
 		icon_state = "purple1"
-		dir = 9
+		dir = NORTHWEST
 	omni
 		icon_state = "purple1"
-		dir = 8
+		dir = WEST
 
 /turf/unsimulated/floor/carpet/purple/standard/narrow
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "purple6"
 
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 	T_north
-		dir = 1
+		dir = NORTH
 	T_south
-		dir = 2
+		dir = SOUTH
 	T_east
-		dir = 4
+		dir = EAST
 	T_west
-		dir = 8
+		dir = WEST
 	north
 		icon_state = "purple4"
-		dir = 1
+		dir = NORTH
 	south
 		icon_state = "purple4"
-		dir = 2
+		dir = SOUTH
 	east
 		icon_state = "purple4"
-		dir = 4
+		dir = EAST
 	west
 		icon_state = "purple4"
-		dir = 8
+		dir = WEST
 	solo
 		icon_state = "purple1"
-		dir = 4
+		dir = EAST
 	northsouth
 		icon_state = "purple1"
-		dir = 6
+		dir = SOUTHEAST
 	eastwest
 		icon_state = "purple1"
-		dir = 10
+		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/standard/junction
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "purple5"
 
 	sw_e
-		dir = 1
+		dir = NORTH
 	ne_w
-		dir = 2
+		dir = SOUTH
 	nw_s
-		dir = 4
+		dir = EAST
 	se_n
-		dir = 8
+		dir = WEST
 	sw_n
-		dir = 5
+		dir = NORTHEAST
 	nw_e
-		dir = 6
+		dir = SOUTHEAST
 	ne_s
-		dir = 9
+		dir = NORTHWEST
 	se_w
-		dir = 10
+		dir = SOUTHWEST
 
 //fancy subvariant///////////////////////
 
@@ -342,123 +342,123 @@
 	icon_state = "fpurple2"
 
 	north
-		dir = 1
+		dir = NORTH
 	south
-		dir = 2
+		dir = SOUTH
 	east
-		dir = 4
+		dir = EAST
 	west
-		dir = 8
+		dir = WEST
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/fancy/innercorner
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "fpurple3"
 
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 	north
-		dir = 1
+		dir = NORTH
 	south
-		dir = 2
+		dir = SOUTH
 	east
-		dir = 4
+		dir = EAST
 	west
-		dir = 8
+		dir = WEST
 	ne_triple
 		icon_state = "fpurple4"
-		dir = 5
+		dir = NORTHEAST
 	se_triple
 		icon_state = "fpurple4"
-		dir = 6
+		dir = SOUTHEAST
 	nw_triple
 		icon_state = "fpurple4"
-		dir = 9
+		dir = NORTHWEST
 	sw_triple
 		icon_state = "fpurple4"
-		dir = 10
+		dir = SOUTHWEST
 	ne_sw
 		icon_state = "fpurple1"
-		dir = 5
+		dir = NORTHEAST
 	nw_se
 		icon_state = "fpurple1"
-		dir = 9
+		dir = NORTHWEST
 	omni
 		icon_state = "fpurple1"
-		dir = 8
+		dir = WEST
 
 /turf/unsimulated/floor/carpet/purple/fancy/narrow
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "fpurple6"
 
 	ne
-		dir = 5
+		dir = NORTHEAST
 	se
-		dir = 6
+		dir = SOUTHEAST
 	nw
-		dir = 9
+		dir = NORTHWEST
 	sw
-		dir = 10
+		dir = SOUTHWEST
 	T_north
-		dir = 1
+		dir = NORTH
 	T_south
-		dir = 2
+		dir = SOUTH
 	T_east
-		dir = 4
+		dir = EAST
 	T_west
-		dir = 8
+		dir = WEST
 	north
 		icon_state = "fpurple4"
-		dir = 1
+		dir = NORTH
 	south
 		icon_state = "fpurple4"
-		dir = 2
+		dir = SOUTH
 	east
 		icon_state = "fpurple4"
-		dir = 4
+		dir = EAST
 	west
 		icon_state = "fpurple4"
-		dir = 8
+		dir = WEST
 	northsouth
 		icon_state = "fpurple1"
-		dir = 6
+		dir = SOUTHEAST
 	eastwest
 		icon_state = "fpurple1"
-		dir = 10
+		dir = SOUTHWEST
 
 /turf/unsimulated/floor/carpet/purple/fancy/junction
 	icon = 'icons/turf/carpet.dmi'
 	icon_state = "fpurple5"
 
 	sw_e
-		dir = 1
+		dir = NORTH
 	ne_w
-		dir = 2
+		dir = SOUTH
 	nw_s
-		dir = 4
+		dir = EAST
 	se_n
-		dir = 8
+		dir = WEST
 	sw_n
-		dir = 5
+		dir = NORTHEAST
 	nw_e
-		dir = 6
+		dir = SOUTHEAST
 	ne_s
-		dir = 9
+		dir = NORTHWEST
 	se_w
-		dir = 10
+		dir = SOUTHWEST
 
 /turf/unsimulated/wall/setpieces/Azarak/cavewall
 	name = "rock wall"

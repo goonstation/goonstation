@@ -722,14 +722,14 @@ var/global/noir = 0
 						if(cache.Find("Heads of Staff"))
 							tgui_alert(usr,"This person is banned from Heads of Staff. You must lift that ban first.")
 							return
-					logTheThing(LOG_ADMIN, usr, "unbanned [M](Offline) from [job]")
-					logTheThing(LOG_DIARY, usr, "unbanned [M](Offline) from [job]", "admin")
+					logTheThing(LOG_ADMIN, usr, "unbanned [constructName(M)](Offline) from [job]")
+					logTheThing(LOG_DIARY, usr, "unbanned [constructName(M)](Offline) from [job]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] unbanned [M](Offline) from [job]</span>")
 					addPlayerNote(M, usr.ckey, "[usr.ckey] unbanned [M](Offline) from [job]")
 					jobban_unban(M, job, usr.ckey)
 				else
-					logTheThing(LOG_ADMIN, usr, "banned [M](Offline) from [job]")
-					logTheThing(LOG_DIARY, usr, "banned [M](Offline) from [job]", "admin")
+					logTheThing(LOG_ADMIN, usr, "banned [constructName(M)](Offline) from [job]")
+					logTheThing(LOG_DIARY, usr, "banned [constructName(M)](Offline) from [job]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] banned [M](Offline) from [job]</span>")
 					addPlayerNote(M, usr.ckey, "[usr.ckey] banned [M](Offline) from [job]")
 					if(job == "Everything Except Assistant")
@@ -1485,8 +1485,8 @@ var/global/noir = 0
 				M.reagents.add_reagent(reagent.id, amount)
 				boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [M.name]</span>")
 
-				logTheThing(LOG_ADMIN, usr, "added [amount] units of [reagent.id] to [M] at [log_loc(M)].")
-				logTheThing(LOG_DIARY, usr, "added [amount] units of [reagent.id] to [M] at [log_loc(M)].", "admin")
+				logTheThing(LOG_ADMIN, usr, "added [amount] units of [reagent.id] to [constructName(M)] at [log_loc(M)].")
+				logTheThing(LOG_DIARY, usr, "added [amount] units of [reagent.id] to [constructName(M)] at [log_loc(M)].", "admin")
 				message_admins("[key_name(usr)] added [amount] units of [reagent.id] to [key_name(M)] at [log_loc(M)].")
 
 			else

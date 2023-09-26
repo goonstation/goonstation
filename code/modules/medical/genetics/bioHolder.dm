@@ -664,6 +664,8 @@ var/list/datum/bioEffect/mutini_effects = list()
 
 	proc/AddEffect(var/idToAdd, var/power = 0, var/timeleft = 0, var/do_stability = 1, var/magical = 0, var/safety = 0)
 		//Adds an effect to this holder. Returns the newly created effect if succesful else 0.
+		if(issilicon(src.owner))
+			return 0
 
 		if(HasEffect(idToAdd))
 			return 0

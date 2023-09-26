@@ -1191,7 +1191,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
-			H.brain = src.mob.organHolder?.drop_organ("brain", H)
+			if(H)
+				H.brain = src.mob.organHolder?.drop_organ("brain", H)
+			else
+				qdel(src.mob.organHolder?.drop_organ("brain", null)) //perish
 
 			for(var/i in 1 to rand(2, 5))
 				I = new/obj/item/material_piece/bone(src.mob.loc)

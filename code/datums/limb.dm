@@ -379,6 +379,7 @@
 	var/custom_msg = null
 	var/miss_prob = 80
 	var/stam_damage_mult = 1
+	var/harm_intent_delay = COMBAT_CLICK_DELAY
 
 	attack_hand(atom/target, var/mob/user, var/reach)
 		if (ismob(target))
@@ -416,7 +417,65 @@
 		else
 			user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
 		user.lastattacked = target
-		ON_COOLDOWN(src, "limb_cooldown", COMBAT_CLICK_DELAY)
+		ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
+
+
+
+/datum/limb/mouth/maneater
+	sound_attack = 'sound/impact_sounds/Flesh_Tear_2.ogg'
+	dam_low = 8
+	dam_high = 12
+	custom_msg = null
+	miss_prob = 90
+	stam_damage_mult = 0
+	harm_intent_delay = COMBAT_CLICK_DELAY
+	var/human_stam_damage = 50 //! how much stam damage this limb should deal to living mobs
+	var/human_desorient_duration = 2 SECONDS //! how much desorient this limb should apply to living mobs
+	var/human_stun_duration = 5 SECONDS //! how much stun this limb should apply to living mobs
+	var/human_stun_cooldown = 6 SECONDS //! if this limb stunned: how long should this kind of limb not be able to stun the target; to prevent reapplication of stuns
+	var/list/chems_to_inject = null //! list of chems this limb should inject on targets
+	var/amount_to_inject = 3 //! amount of chems this limb should inject on targets
+
+/datum/limb/mouth/maneater/New(var/obj/item/parts/holder)
+	..()
+	src.chems_to_inject = list()
+
+/datum/limb/mouth/maneater/harm(mob/target, var/mob/user)
+	if (!user || !target)
+		return 0
+
+	if (!target.melee_attack_test(user))
+		return
+
+	if (prob(src.miss_prob) || is_incapacitated(target)|| target.restrained())
+
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, dam_low, dam_high, 0, stam_damage_mult, !isghostcritter(user), can_punch = 0, can_kick = 0)
+		user.attack_effects(target, user.zone_sel?.selecting)
+		if (isliving(target) && !issilicon(target))
+			var/mob/living/victim = target
+			//we want to stun the target long enough to get grabbed in find themselves about to get eaten, but not long enough to not be able to have the chance to struggle out of the grab
+			if(!GET_COOLDOWN(victim, "maneater_paralysis") && victim.do_disorient(src.human_stam_damage, paralysis = src.human_stun_duration, disorient = src.human_desorient_duration, stack_stuns = FALSE))
+				//If we dropped the Stamina below 0 and stunned the target, we put the stam damage on a cooldown
+				ON_COOLDOWN(victim, "maneater_paralysis", src.human_stun_cooldown)
+			//after the stun, as a little treat for skilled botanist, a maneater that got splices in it tries to inject its victims
+			if (length(src.chems_to_inject) > 0)
+				var/chem_protection = 0
+				if (ishuman(victim))
+					chem_protection = ((100 - victim.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
+				var/injected_per_reagent = max(0.1 , chem_protection * src.amount_to_inject / length(src.chems_to_inject))
+				if (injected_per_reagent > 0.1)
+					for (var/plantReagent in src.chems_to_inject)
+						victim.reagents?.add_reagent(plantReagent, injected_per_reagent)
+
+		msgs.base_attack_message = src.custom_msg ? src.custom_msg : "<b><span class='combat'>[user] bites [target]!</span></b>"
+		msgs.played_sound = src.sound_attack
+		msgs.flush(0)
+	else
+		user.visible_message("<b><span class='combat'>[user] attempts to bite [target] but misses!</span></b>")
+	user.lastattacked = target
+	if (user != target)
+		attack_twitch(user, 1.2, 1.2)
+	ON_COOLDOWN(src, "limb_cooldown", harm_intent_delay)
 
 /// for cats/mice/etc
 /datum/limb/mouth/small

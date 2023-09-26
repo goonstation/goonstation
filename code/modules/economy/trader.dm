@@ -154,7 +154,7 @@
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
 				src.temp += {"<A href='?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
 				<B>Cost:</B> [N.price] [currency]<BR>
-				<B>Description:</B> [N.desc]<BR>
+				<B>Description:</B> [N.desc] Amount: [N.amount]<BR>
 				<A href='?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>"
 		//////////////////////////////////////////////
@@ -162,6 +162,12 @@
 		//////////////////////////////////////////////
 		else if (href_list["doorder"])
 			var/datum/db_record/account = null
+			var/datum/commodity/P = locate(href_list["doorder"]) in goods_for_purchase
+			var/amount_to_sell = INFINITY
+			var/amount_per_order = 50
+			if(P?.amount > -1)
+				amount_to_sell = P.amount
+			amount_to_sell = min(amount_per_order,amount_to_sell)
 			if(!barter)
 				if(!scan)
 					src.temp = {"You have to scan a card in first.<BR>
@@ -175,28 +181,29 @@
 				account = FindBankAccountByName(src.scan.registered)
 			if (barter || account)
 				var/quantity = 1
-				quantity = input("How many units do you want to purchase? Maximum: 50", "Trader Purchase", null, null) as num
+				quantity = input("How many units do you want to purchase? Maximum: [amount_to_sell]", "Trader Purchase", null, null) as num
 				if(!isnum_safe(quantity))
 					return
 				if (quantity < 1)
 					quantity = 0
 					return
-				else if (quantity >= 50)
-					quantity = 50
+				else if (quantity >= amount_to_sell)
+					quantity = amount_to_sell
 
 				////////////
-				var/datum/commodity/P = locate(href_list["doorder"]) in goods_for_purchase
 
 				if(P)
 					var/current_funds = src.barter ? barter_customers[usr] : account["current_money"]
-					if(shopping_cart.len + quantity > 50)
-						src.temp = {"Error. Maximum purchase limit of 50 items exceeded.<BR>
+					if(shopping_cart.len + quantity > amount_per_order)
+						src.temp = {"Error. Maximum purchase limit of [amount_per_order] items exceeded.<BR>
 						<BR><A href='?src=\ref[src];purchase=1'>OK</A>"}
 					else if(current_funds >= P.price * quantity)
 						if(barter)
 							barter_customers[usr] -= P.price * quantity
+							P.amount -= quantity
 						else
 							account["current_money"] -= P.price * quantity
+							P.amount -= quantity
 						if(log_trades)
 							logTheThing(LOG_STATION, usr, "bought ([quantity]) [P.comtype] from [src] at [log_loc(get_turf(src))]")
 						while(quantity-- > 0)
@@ -733,11 +740,11 @@
 
 	New()
 		..()
-		src.goods_sell += new /datum/commodity/ore/uqill(src) // cogwerks - changed from molitz, who the hell ever needs that
-		src.goods_sell += new /datum/commodity/ore/plasmastone(src) // no guns, no, bad
-		src.goods_sell += new /datum/commodity/ore/bohrum(src)
-		src.goods_sell += new /datum/commodity/ore/cerenkite(src)
-		src.goods_sell += new /datum/commodity/ore/telecrystal(src)
+		src.goods_sell += new /datum/commodity/ore/uqill(src,5) // cogwerks - changed from molitz, who the hell ever needs that
+		src.goods_sell += new /datum/commodity/ore/plasmastone(src,5) // no guns, no, bad
+		src.goods_sell += new /datum/commodity/ore/bohrum(src,20)
+		src.goods_sell += new /datum/commodity/ore/cerenkite(src,10)
+		src.goods_sell += new /datum/commodity/ore/telecrystal(src,5)
 
 		src.goods_buy += new /datum/commodity/laser_gun(src)
 		src.goods_buy += new /datum/commodity/relics/skull(src)
