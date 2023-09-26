@@ -789,12 +789,12 @@ ABSTRACT_TYPE(/area/shuttle)
 	var/list/passengers = list()
 	var/top = FALSE
 
-	Entered(var/atom/movable/A, atom/oldloc)
+	Enter(atom/movable/A)
 		..()
 		if (!elevator_moving)
 			passengers |= A
 
-	Exited(atom/movable/A)
+	Exit(atom/movable/A)
 		if (top)
 			if (elevator_moving && isliving(A)) return FALSE
 		else
