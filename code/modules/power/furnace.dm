@@ -31,11 +31,11 @@ TYPEINFO(/obj/machinery/power/furnace)
 	New(new_loc)
 		..()
 		START_TRACKING
-		src.point_light.set_brightness(0.3)
+		src.point_light.set_brightness(0.5)
 		src.point_light.set_color(src.col_r, src.col_g, src.col_b)
 		src.point_light.attach(src)
 
-		src.cone_light.set_brightness(1)
+		src.cone_light.set_brightness(0.7)
 		src.cone_light.set_color(src.col_r, src.col_g, src.col_b)
 		src.cone_light.outer_angular_size = src.outer_angular_size
 		src.cone_light.inner_angular_size = src.inner_angular_size
@@ -57,7 +57,6 @@ TYPEINFO(/obj/machinery/power/furnace)
 			if(!src.fuel)
 				src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down!</span>")
 				src.active = FALSE
-
 		else
 			on_inactive()
 
