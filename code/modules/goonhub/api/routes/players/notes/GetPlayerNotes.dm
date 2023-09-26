@@ -1,6 +1,6 @@
 
 /// GET /players/notes
-/// Get list
+/// List paginated and filtered player notes
 /datum/apiRoute/players/notes/get
 	method = RUSTG_HTTP_METHOD_GET
 	path = "/players/notes"
