@@ -92,6 +92,13 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
+		if (user.bioHolder.HasEffect("clumsy") && prob(10))
+			user.visible_message("<span class='alert'><b>[user]</b> fumbles with [src.rod] in [his_or_her(user)] haste and hits [himself_or_herself(user)] in the forehead with it!</span>")
+			user.changeStatus("weakened", 2 SECONDS)
+			playsound(user, 'sound/impact_sounds/tube_bonk.ogg', 50, 1)
+			interrupt(INTERRUPT_ALWAYS)
+			JOB_XP(user, "Clown", 1)
+			return
 
 		src.duration = max(0.5 SECONDS, rod.fishing_speed + (pick(1, -1) * (rand(0,40) / 10) SECONDS)) //translates to rod duration +- (0,4) seconds, minimum of 0.5 seconds
 		playsound(src.user, 'sound/items/fishing_rod_cast.ogg', 50, 1)
