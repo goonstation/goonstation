@@ -20834,7 +20834,8 @@
 /area/station/janitor/supply)
 "bXr" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 4
+	dir = 4;
+	level = 2
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -22463,15 +22464,6 @@
 	},
 /turf/simulated/floor,
 /area/station/science/testchamber/bombchamber)
-"dhX" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/camera/television{
-	c_tag = "test chamber";
-	dir = 4;
-	name = "camera - test chamber"
-	},
-/turf/simulated/floor/plating,
-/area/station/science/lobby)
 "dio" = (
 /obj/stool/chair/comfy{
 	dir = 8;
@@ -45908,11 +45900,12 @@
 	},
 /area/station/science/lobby)
 "tsa" = (
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 1
-	},
 /obj/machinery/meter{
 	pixel_y = 11
+	},
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 1;
+	level = 2
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -116461,7 +116454,7 @@ aaa
 aaa
 aaa
 adW
-dhX
+adW
 adW
 adW
 adW
