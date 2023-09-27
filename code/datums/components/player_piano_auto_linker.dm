@@ -50,9 +50,6 @@ TYPEINFO(/datum/component/player_piano_auto_linker)
 			sleep(0.1 SECOND)
 
 /datum/component/player_piano_auto_linker/proc/start_storing_pianos(obj/player_piano/piano, mob/user)
-	if (!src.can_store_piano(piano, user))
-		src.RemoveComponent()
-		return
 	boutput(user, "<span class='notice'>Now [parent] is storing pianos to link. Use it in hand to link them.</span>")
 	piano.is_stored = TRUE
 	src.pianos.Add(piano)

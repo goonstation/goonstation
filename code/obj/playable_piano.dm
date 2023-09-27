@@ -398,6 +398,18 @@ TYPEINFO(/obj/player_piano)
 		src.desc = "A piano that can take raw text and turn it into music! The future is now! The free user essentials box has been raided!" //jaaaaaaaank
 
 	proc/start_storing_pianos(obj/item/I, mob/user)
+		if (src.is_busy)
+			boutput(user, "<span class='alert'>Can't link a busy piano!</span>")
+			return
+		if (!src.panel_exposed)
+			boutput(user, "<span class='alert'>Can't link without an exposed panel!</span>")
+			return
+		if (length(src.linked_pianos))
+			boutput(user, "<span class='alert'>Can't link an already linked piano!</span>")
+			return
+		if (src.is_stored)
+			boutput(user, "<span class='alert'>Another device has already stored that piano!</span>")
+			return
 		I.AddComponent(/datum/component/player_piano_auto_linker, src, user)
 
 #undef MIN_TIMING
