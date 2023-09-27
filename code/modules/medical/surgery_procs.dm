@@ -14,9 +14,6 @@ So op_stage is a number that tells you how cut up the meatbag is.
 
 Step 3 - the exceptions
 
-The butt has it's own variable to count op_stage, patient.butt_op_stage (not on organHolder), which goes from 0 to 5
-butt_op_stage 3 is just before a butt is removed. 4 is a missing butt, and 5 is a cauterized gap where the butt was. When a butt is put back on, it goes back to 3
-
 Removing a head is done with patient.organHolder.head.op_stage and represents cuts to the neck. 3.0 is just before removing a head.
 
 Brain and skull use patient.organHolder.head.scalp_op_stage , ranging from 0.0 to 5.0 and is used to track an incisions in the top of the head/scalp.
