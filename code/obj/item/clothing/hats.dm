@@ -35,7 +35,7 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/blue
 	desc = "A knit cap in blue."
 	icon_state = "blue"
-	item_state = "bgloves"
+	item_state = "blugloves"
 
 /obj/item/clothing/head/yellow
 	desc = "A knit cap in yellow."
@@ -376,7 +376,7 @@ proc/filter_trait_hats(var/type)
 					var/boop = "hand"
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.equip_if_possible(W, H.slot_wear_mask))
+						if (H.equip_if_possible(W, SLOT_WEAR_MASK))
 							boop = "mouth"
 						else
 							H.put_in_hand_or_drop(W) //Put it in their hand
@@ -450,7 +450,7 @@ proc/filter_trait_hats(var/type)
 		if (!n_name)
 			return
 		n_name = copytext(html_encode(n_name), 1, 32)
-		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && usr.stat == 0))
+		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && isalive(usr)))
 			src.phrase = n_name
 			logTheThing(LOG_SAY, usr, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)
@@ -770,7 +770,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "Good god, this thing STINKS. Is that mold on the inner lining? Ugh."
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
-	see_face = 0
+	see_face = FALSE
 	seal_hair = 1
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
@@ -784,7 +784,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "It's a paper hat!"
 	icon_state = "paper"
 	item_state = "lgloves"
-	see_face = 1
+	see_face = TRUE
 	body_parts_covered = HEAD
 
 /obj/item/paper_hat/attackby(obj/item/W, mob/user)
@@ -796,19 +796,25 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 				src.color = P.font_color
 				src.desc = "A colorful paper hat"
 
+/obj/item/clothing/head/tinfoil_hat
+	name = "tinfoil hat"
+	desc = "Protects the wearer from mindcontrol and, apparently, weak martian psychic blasts which do not involve the liquification of brains."
+	icon_state = "tinfoil"
+	item_state = "tinfoil"
+
 /obj/item/clothing/head/towel_hat
 	name = "towel hat"
 	desc = "A white towel folded all into a fancy hat. NOT a turban!" // @;)
 	icon_state = "towelhat"
 	item_state = "lgloves"
-	see_face = 1
+	see_face = TRUE
 	body_parts_covered = HEAD
 
 /obj/item/clothing/head/crown
 	name = "crown"
 	desc = "Yeah, big deal, you got a fancy crown, what does that do for you against the <b>HORRORS OF SPACE</b>, tough guy?"
 	icon_state = "crown"
-	see_face = 1
+	see_face = TRUE
 	body_parts_covered = HEAD
 	setupProperties()
 		..()

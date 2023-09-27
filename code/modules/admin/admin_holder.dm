@@ -58,7 +58,7 @@
 				C.chatOutput.getContextFlag()
 				src.load_admin_prefs()
 
-		if (!admin_interact_atom_verbs || admin_interact_atom_verbs.len <= 0)
+		if (!admin_interact_atom_verbs || length(admin_interact_atom_verbs) <= 0)
 			admin_interact_atom_verbs = list(\
 			"Spin",\
 			"Rotate",\
@@ -66,7 +66,7 @@
 			"Emag",\
 			)
 
-		if (!admin_interact_verbs || admin_interact_verbs.len <= 0)
+		if (!admin_interact_verbs || length(admin_interact_verbs) <= 0)
 			admin_interact_verbs = list()
 			admin_interact_verbs["obj"] = list(\
 			"Get Thing",\
@@ -117,6 +117,7 @@
 			admin_interact_verbs["turf"] = list(\
 			"Jump To Turf",\
 			"Air Status",\
+			"Check Reagents",\
 			"Create Explosion",\
 			"Create Fluid",\
 			"Create Smoke",\

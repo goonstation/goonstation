@@ -3,7 +3,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "p" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/variableTurf/clear,
 /area/allowGenerate)
 

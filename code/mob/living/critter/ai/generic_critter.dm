@@ -261,7 +261,7 @@
 		var/obj/item/reagent_containers/food/snacks/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			T.Eat(C, C, TRUE)
+			C.critter_eat(T)
 			has_started = TRUE
 
 /datum/aiTask/succeedable/critter/eat/on_reset()
@@ -325,7 +325,7 @@
 	if(C && T && BOUNDS_DIST(C, T) == 0)
 		C.set_dir(get_dir(C, T))
 		if(C.can_critter_attack()) //if we can't attack, just do nothing until we can
-			C.critter_attack(holder.target)
+			C.critter_retaliate(holder.target)
 			src.has_started = TRUE
 	else if(C && T)
 		//we're not in punching range, let's fix that by moving back to the move subtask

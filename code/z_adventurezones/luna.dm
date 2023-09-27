@@ -99,20 +99,20 @@ Contents:
 			if (istype( get_step(src, WEST), src.type))
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower right
-					set_dir(4)
+					set_dir(EAST)
 
 				else
 					//Upper right
-					set_dir(1)
+					set_dir(NORTH)
 
 			else
 				if (istype( get_step(src, NORTH), src.type))
 					//Lower left
-					set_dir(8)
+					set_dir(WEST)
 
 				else
 					//Upper left
-					set_dir(2)
+					set_dir(SOUTH)
 
 
 	Entered(atom/A as mob|obj)
@@ -1644,7 +1644,7 @@ datum/computer/file/embedded_program/maintpanel
 			else if (istype(controlTarget, /obj/critter/mannequin))
 				src.device_entries += new /datum/maintpanel_device_entry/mannequin (src, controlTarget, entryName)
 
-		while (src.device_entries.len < 16)
+		while (length(src.device_entries) < 16)
 			src.device_entries += new /datum/maintpanel_device_entry/dummy (src, pick("GEN$$E$C", "MANNEA83IN 13", "M@____$CC DOOR $$S9", "########?3"))
 
 	receive_user_command(command)

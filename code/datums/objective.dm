@@ -51,7 +51,7 @@ ABSTRACT_TYPE(/datum/objective)
 					continue
 				possible_targets += possible_target
 
-		if(possible_targets.len > 0)
+		if(length(possible_targets) > 0)
 			target = pick(possible_targets)
 			target.current.mind.is_target = 1
 
@@ -380,7 +380,7 @@ proc/create_fluff(datum/mind/target)
 	medal_name = "Untapped Potential"
 
 	check_completion()
-		if(ticker.mode.traitors.len + ticker.mode.Agimmicks.len <= 1)
+		if(ticker.mode.traitors.len + length(ticker.mode.Agimmicks) <= 1)
 			return 1 // Because apparently you can get this as a solo traitor aaaaaa
 		for (var/datum/mind/M in ticker.mode.traitors + ticker.mode.Agimmicks)
 			if (!M.current)
@@ -792,7 +792,7 @@ proc/create_fluff(datum/mind/target)
 		if (!istype(O))
 			return 0
 
-		if (O.blobs.len >= blobtiletarget)
+		if (length(O.blobs) >= blobtiletarget)
 			return 1
 
 /datum/objective/specialist/flock
@@ -851,7 +851,7 @@ proc/create_fluff(datum/mind/target)
 				if(possible_target.current.mind.is_target) continue
 				possible_targets += possible_target
 
-		if(possible_targets.len > 0)
+		if(length(possible_targets) > 0)
 			target = pick(possible_targets)
 			target.current.mind.is_target = 1
 
@@ -1090,13 +1090,13 @@ proc/create_fluff(datum/mind/target)
 
 	check_completion()
 		if(emergency_shuttle.location<SHUTTLE_LOC_RETURNED)
-			return 0
+			return FALSE
 
-		if(!owner.current || owner.current.stat ==2)
-			return 0
+		if(!owner.current || isdead(owner.current))
+			return FALSE
 
 		if(isghostcritter(owner.current))
-			return 0
+			return FALSE
 
 		return in_centcom(src.owner.current)
 
@@ -1108,26 +1108,26 @@ proc/create_fluff(datum/mind/target)
 
 	check_completion()
 		if(emergency_shuttle.location<SHUTTLE_LOC_RETURNED)
-			return 0
+			return FALSE
 
-		if(!owner.current || owner.current.stat ==2)
-			return 0
+		if(!owner.current || isdead(owner.current))
+			return FALSE
 
 		if(isghostcritter(owner.current))
-			return 0
+			return FALSE
 
 		var/area/shuttle = locate(map_settings.escape_centcom)
 
 		for(var/mob/living/player in mobs)
 			if (isblob(player))
 				for (var/obj/blob/B in shuttle.contents)
-					return 0
+					return FALSE
 			else if (player.mind && (player.mind != owner))
 				if (!isdead(player) && !isghostcritter(player)) //they're not dead
 					if (in_centcom(player))
-						return 0
+						return FALSE
 
-		return 1
+		return TRUE
 
 /datum/objective/escape/survive
 	explanation_text = "Stay alive until the end of the shift. It doesn't matter whether you're on station or not."
@@ -1146,8 +1146,8 @@ proc/create_fluff(datum/mind/target)
 	check_completion()
 		if(isghostdrone(owner.current))
 			return 1
-
-		if(!owner.current || isdead(owner.current))
+		
+		if(!owner.current || isdead(owner.current) || isVRghost(owner.current))
 			return 1
 
 		return 0
@@ -1177,7 +1177,7 @@ proc/create_fluff(datum/mind/target)
 					continue
 				possible_targets += possible_target
 
-		if(possible_targets.len > 0)
+		if(length(possible_targets) > 0)
 			target = pick(possible_targets)
 
 		if(!(target?.current))
@@ -1197,22 +1197,22 @@ proc/create_fluff(datum/mind/target)
 	var/list/datum/mind/accomplices = list()
 
 	check_completion()
-		if(emergency_shuttle.location<SHUTTLE_LOC_RETURNED)
-			return 0
+		if(emergency_shuttle.location < SHUTTLE_LOC_RETURNED)
+			return FALSE
 
-		if(!owner.current || owner.current.stat ==2)
-			return 0
+		if(!owner.current || isdead(owner.current))
+			return FALSE
 
 		if(isghostcritter(owner.current))
-			return 0
+			return FALSE
 
 		for(var/mob/living/player in mobs)
 			if (player.mind && (player.mind != owner) && !(player.mind in accomplices))
 				if (!isdead(player)) //they're not dead
 					if (in_centcom(player))
-						return 0
+						return FALSE
 
-		return 1
+		return TRUE
 
 /////////////////////////////////////////////////////////
 // Conspirator objectives                              //
@@ -1386,7 +1386,7 @@ proc/create_fluff(datum/mind/target)
 					continue
 				possible_targets += possible_target
 
-		if(possible_targets.len > 0)
+		if(length(possible_targets) > 0)
 			target = pick(possible_targets)
 			target.current.mind.is_target = 1
 
@@ -1533,7 +1533,7 @@ proc/create_fluff(datum/mind/target)
 			if(!initial(objective.enabled))
 				src.escape_choices -= X
 
-		if (escape_choices.len > 0)
+		if (length(escape_choices) > 0)
 			var/escape_path = pick(escape_choices)
 			if (ispath(escape_path))
 				var/datum/objective/objective = new escape_path(null, enemy)

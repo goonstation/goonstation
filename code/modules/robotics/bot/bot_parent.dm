@@ -1,5 +1,6 @@
 // AI (i.e. game AI, not the AI player) controlled bots
 
+ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 /obj/machinery/bot
 	icon = 'icons/obj/bots/aibots.dmi'
 	layer = MOB_LAYER
@@ -80,6 +81,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitbyproj))
 		if(!no_camera)
 			src.cam = new /obj/machinery/camera(src)
@@ -99,6 +101,7 @@
 		#endif
 
 	disposing()
+		STOP_TRACKING
 		botcard = null
 		qdel(chat_text)
 		chat_text = null
@@ -136,10 +139,7 @@
 		var/turf/T = get_turf(src)
 		if(isnull(T))
 			return FALSE
-		for (var/mob/M in GET_NEARBY(T, src.hash_check_range))
-			if(M.client)
-				return TRUE
-		return FALSE
+		return length(GET_NEARBY(T, src.hash_check_range))
 
 	// Generic default. Override for specific bots as needed.
 	bullet_act(var/obj/projectile/P)
@@ -163,6 +163,10 @@
 
 	proc/explode()
 		return
+
+	proc/admin_command_speak()
+		set name = "Speak"
+		src.speak(tgui_input_text(usr, "Speak message through [src]", "Speak", ""))
 
 	proc/speak(var/message, var/sing, var/just_float, var/just_chat)
 		if (!src.on || !message || src.muted)

@@ -92,7 +92,7 @@
 				/mob/living/critter/robotic/repairbot,
 				/mob/living/critter/robotic/repairbot/security,
 				/mob/living/critter/robotic/repairbot/security,
-				/obj/critter/gunbot/heavy,
+				/mob/living/critter/robotic/gunbot,
 				/obj/machinery/bot/medbot/terrifying,
 				/obj/machinery/bot/medbot/terrifying)
 				if(prob(3))
@@ -107,7 +107,7 @@
 				/obj/critter/killertomato,
 				/obj/critter/spore,
 				/mob/living/critter/small_animal/rattlesnake,
-				/obj/critter/martian/warrior,
+				/mob/living/critter/martian/warrior,
 				/obj/machinery/bot/firebot/emagged,
 				/obj/machinery/bot/secbot/emagged,
 				/obj/machinery/bot/medbot/mysterious/emagged,

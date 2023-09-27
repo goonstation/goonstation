@@ -142,4 +142,4 @@
 		I.layer = initial(I.layer)
 		I.throw_at(target, 8, 2, bonus_throwforce=8)
 
-		playsound(src, 'sound/effects/singsuck.ogg', 40, 1)
+		playsound(src, 'sound/effects/singsuck.ogg', 40, TRUE)

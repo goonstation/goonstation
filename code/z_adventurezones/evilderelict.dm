@@ -137,8 +137,8 @@ var/maniac_previous_victim = "Unknown"
 /obj/machinery/checkpointbot
 	name = "PR-1 Automated Checkpoint"
 	desc = "The great-great-great-great-great grandfather of the PR-6 Guardbuddy, and it's almost in mint condition!"
-	icon = 'icons/misc/evilreaverstation.dmi'
-	icon_state = "pr1_0"
+	icon = 'icons/obj/bots/robuddy/pr-1.dmi'
+	icon_state = "body"
 	anchored = ANCHORED
 	density = 1
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
@@ -150,8 +150,10 @@ var/maniac_previous_victim = "Unknown"
 			if(iscarbon(AM))
 				alert = 1
 				playsound(src.loc, 'sound/machines/whistlealert.ogg', 50, 1)
-				icon_state = "pr1_1"
-				flick("pr1_a",src)
+
+				src.UpdateOverlays(image(src.icon, "face-sad"), "emotion")
+				src.UpdateOverlays(image(src.icon, "lights-on"), "lights")
+
 				for(var/obj/machinery/door/poddoor/P in by_type[/obj/machinery/door])
 					if (P.id == src.id)
 						if (!P.density)
@@ -166,9 +168,11 @@ var/maniac_previous_victim = "Unknown"
 						PA.info = "<center>YOU DO NOT BELONG HERE<BR><font size=30>LEAVE NOW</font></center>" //rude!
 						PA.name = "Paper - PR1-OUT"
 
-					icon_state = "pr1_0"
+					src.UpdateOverlays(null, "emotion")
+
 					sleep(30 SECONDS)
 					alert = 0
+					src.UpdateOverlays(null, "lights")
 
 
 

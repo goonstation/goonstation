@@ -74,21 +74,20 @@ datum/mind
 
 		Z_LOG_DEBUG("Mind/TransferTo", "New mob: \ref[new_character] ([new_character])")
 		if (new_character.disposed)
-			boutput(current, "You were about to be transferred into another body, but that body was pending deletion! You're a ghost now instead! Adminhelp if this is a problem.")
+			boutput(current, "<h3 class='alert'>You were about to be transferred into another body, but that body was pending deletion! You're a ghost now instead! Adminhelp if this is a problem.</h3>")
 			message_admins("Tried to transfer mind of mob [identify_object(current)] to qdel'd mob [identify_object(new_character)] God damnit.")
 			var/mob/dead/observer/obs = new(src.current)
 			src.transfer_to(obs)
 
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to qdel'd mob [new_character].")
-			stack_trace("Tried to transfer mind [identify_object(src)] to qdel'd mob [identify_object(new_character)].")
-			return
+			CRASH("Tried to transfer mind [identify_object(src)] to qdel'd mob [identify_object(new_character)].")
 
 		if (new_character.client)
 			if (current)
-				boutput(current, "You were about to be transferred into another body, but that body was occupied!")
+				boutput(current, "<h3 class='alert'>You were about to be transferred into another body, but that body was occupied!</h3>")
 				var/errmsg = "Tried to transfer mind of mob [identify_object(current)] to mob with an existing client [identify_object(new_character)]"
 				message_admins(errmsg)
-				stack_trace(errmsg)
+				CRASH(errmsg)
 			else
 				message_admins("Tried to transfer mind [src] to mob with an existing client [new_character] (\ref[new_character]).")
 			Z_LOG_ERROR("Mind/TransferTo", "Tried to transfer mind [(current ? "of mob " + key_name(current) : src)] to mob with an existing client [new_character] [key_name(new_character)])")
@@ -218,8 +217,21 @@ datum/mind
 		// stuff for critter respawns
 		src.get_player()?.last_death_time = world.timeofday
 
+	/// Returns whether this mind is a non-pseudo antagonist.
+	proc/is_antagonist()
+		// Handles pre-round antagonist assignments utilising `special_role`.
+		if (global.current_state < GAME_STATE_PLAYING)
+			return !!src.special_role
+
+		for (var/datum/antagonist/A as anything in src.antagonists)
+			if (!A.pseudo)
+				return TRUE
+
+		return FALSE
+
 	/// Gets an existing antagonist datum of the provided ID role_id.
 	proc/get_antagonist(role_id)
+		RETURN_TYPE(/datum/antagonist)
 		for (var/datum/antagonist/A as anything in src.antagonists)
 			if (A.id == role_id)
 				return A

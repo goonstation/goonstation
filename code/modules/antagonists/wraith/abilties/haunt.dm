@@ -31,11 +31,11 @@
 			if ((istype(W, /mob/living/intangible/wraith/wraith_trickster)))	//Trickster can appear as a human, living or dead.
 				var/mob/living/intangible/wraith/wraith_trickster/T = holder.owner
 				if (T.copied_appearance != null)
-					var/mob/living/critter/wraith/trickster_puppet/puppet = new /mob/living/critter/wraith/trickster_puppet(get_turf(T), T)
+					var/mob/living/critter/wraith/trickster_puppet/puppet = new /mob/living/critter/wraith/trickster_puppet(get_turf(T), T, T.copied_name, T.copied_real_name)
+					puppet.name_tag.set_info_tag(T.copied_pronouns)
+					puppet.name_tag.set_name(puppet.name, strip_parentheses=TRUE)
 					T.mind.transfer_to(puppet)
 					puppet.appearance = T.copied_appearance
-					puppet.name = T.copied_name
-					puppet.real_name = T.copied_real_name
 					puppet.desc = T.copied_desc
 					puppet.traps_laid = T.traps_laid
 					puppet.playsound_local(puppet.loc, 'sound/voice/wraith/wraithhaunt.ogg', 40, 0)

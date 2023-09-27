@@ -197,7 +197,7 @@
 	login_success = 0
 
 	if(findtext(src.key, "Telnet @"))
-		boutput(src, "Sorry, this game does not support Telnet.")
+		boutput(src, "<h1 class='alert'>Sorry, this game does not support Telnet.</span>")
 		preferences = new
 		sleep(5 SECONDS)
 		del(src)
@@ -229,16 +229,6 @@
 
 	if (!isnewplayer(src.mob))
 		src.loadResources()
-
-/*
-	SPAWN(rand(4,18))
-		if(proxy_check(src.address))
-			logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Using a Tor Proxy Exit Node", "access")
-			if (announce_banlogin) message_admins("<span class='internal'>Failed Login: [src] - Using a Tor Proxy Exit Node (IP: [src.address], ID: [src.computer_id])</span>")
-			boutput(src, "You may not connect through TOR.")
-			SPAWN(0) del(src)
-			return
-*/
 
 	src.volumes = default_channel_volumes.Copy()
 
@@ -412,7 +402,7 @@
 #ifndef IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME
 				//preferences.randomizeLook()
 				preferences.ShowChoices(src.mob)
-				src.mob.Browse(grabResource("html/tgControls.html"),"window=tgcontrolsinfo;size=600x400;title=TG Controls Help")
+				tgui_alert(src, content_window = "tgControls", do_wait = FALSE)
 				boutput(src, "<span class='alert'>Welcome! You don't have a character profile saved yet, so please create one. If you're new, check out the <a target='_blank' href='https://wiki.ss13.co/Getting_Started#Fundamentals'>quick-start guide</a> for how to play!</span>")
 				//hey maybe put some 'new player mini-instructional' prompt here
 				//ok :)
@@ -926,7 +916,7 @@ var/global/curr_day = null
 
 /client/verb/ping()
 	set name = "Ping"
-	boutput(usr, "Pong")
+	boutput(usr, "<span class='hint'>Pong</span>")
 
 #ifdef RP_MODE
 /client/proc/cmd_rp_rules()
@@ -952,7 +942,7 @@ var/global/curr_day = null
 	var/datum/game_server/game_server = global.game_servers.find_server(server)
 
 	if (server)
-		boutput(usr, "You are being redirected to [game_server.name]...")
+		boutput(usr, "<h3 class='success'>You are being redirected to [game_server.name]...</span>")
 		usr << link(game_server.url)
 
 /client/verb/download_sprite(atom/A as null|mob|obj|turf in view(1))
@@ -967,13 +957,13 @@ var/global/curr_day = null
 		src.mob.update_cursor()
 		A = promise.wait_for_value()
 	if(!A)
-		boutput(src, "No target selected.")
+		boutput(src, "<span class='alert'>No target selected.</span>")
 		return
 	if(GET_DIST(src.mob, A) > 1 && !(src.holder || istype(src.mob, /mob/dead)))
-		boutput(src, "Target is too far away (it needs to be next to you).")
+		boutput(src, "<span class='alert'>Target is too far away (it needs to be next to you).</span>")
 		return
 	if(!src.holder && ON_COOLDOWN(src.player, "download_sprite", 5 SECONDS))
-		boutput(src, "Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))].")
+		boutput(src, "<span class='alert'>Verb on cooldown for [time_to_text(ON_COOLDOWN(src.player, "download_sprite", 0))].</span>")
 		return
 	var/icon/icon = getFlatIcon(A)
 	src << ftp(icon, "[ckey(A.name)]_[time2text(world.realtime,"YYYY-MM-DD")].png")
@@ -1038,7 +1028,12 @@ var/global/curr_day = null
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
+			ircmsg["previous_msgid"] = href_list["msgid"]
+			var/unique_message_id = md5("priv_msg_irc" + json_encode(ircmsg))
+			ircmsg["msgid"] = unique_message_id
 			ircbot.export_async("pm", ircmsg)
+
+			var/src_keyname = key_name(src.mob, 0, 0, additional_url_data="&msgid=[unique_message_id]")
 
 			//we don't use message_admins here because the sender/receiver might get it too
 			for (var/client/C)
@@ -1048,10 +1043,10 @@ var/global/curr_day = null
 					if (C.player_mode && !C.player_mode_ahelp)
 						continue
 					else
-						boutput(K, "<span class='ahelp'><b>PM: [key_name(src.mob,0,0)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
+						boutput(K, "<span class='ahelp'><b>PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: [t]</span>")
 
 		if ("priv_msg")
-			do_admin_pm(href_list["target"], usr) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
+			do_admin_pm(href_list["target"], usr, previous_msgid=href_list["msgid"]) // See \admin\adminhelp.dm, changed to work off of ckeys instead of mobs.
 
 		if ("mentor_msg_irc")
 			if (!usr || !usr.client)
@@ -1072,17 +1067,22 @@ var/global/curr_day = null
 			ircmsg["key2"] = target
 			ircmsg["name2"] = "Discord"
 			ircmsg["msg"] = html_decode(t)
+			ircmsg["previous_msgid"] = href_list["msgid"]
+			var/unique_message_id = md5("mentor_msg_irc" + json_encode(ircmsg))
+			ircmsg["msgid"] = unique_message_id
 			ircbot.export_async("mentorpm", ircmsg)
 
+			var/src_keyname = key_name(src.mob, 0, 0, 1, additional_url_data="&msgid=[unique_message_id]")
+
 			//we don't use message_admins here because the sender/receiver might get it too
-			var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>"
+			var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [src_keyname] <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>"
 			for (var/client/C)
 				if (C.can_see_mentor_pms() && C.key != usr.key)
 					if (C.holder)
 						if (C.player_mode && !C.player_mode_mhelp)
 							continue
 						else //Message admins
-							boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
+							boutput(C, "<span class='mhelp'><b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target] (Discord)</b>: <span class='message'>[t]</span></span>")
 					else //Message mentors
 						boutput(C, mentormsg)
 
@@ -1103,38 +1103,44 @@ var/global/curr_day = null
 				if (!src || !src.mob) //ZeWaka: Fix for null.client
 					return
 
-				if (src.holder)
-					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-					M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
-					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
-				else
-					if (M.client && M.client.holder)
-						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
-						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
-					else
-						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [key_name(src.mob,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
-					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>")
-
-				logTheThing(LOG_MHELP, src.mob, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
-				logTheThing(LOG_DIARY, src.mob, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
-
 				var/ircmsg[] = new()
 				ircmsg["key"] = src.mob && src ? src.key : ""
 				ircmsg["name"] = stripTextMacros(src.mob.real_name)
 				ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
 				ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 				ircmsg["msg"] = html_decode(t)
+				ircmsg["previous_msgid"] = href_list["msgid"]
+				var/unique_message_id = md5("mentor_msg" + json_encode(ircmsg))
+				ircmsg["msgid"] = unique_message_id
 				ircbot.export_async("mentorpm", ircmsg)
 
-				var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)] <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]</b>: <span class='message'>[t]</span></span>"
+				var/src_keyname = key_name(src.mob, 0, 0, 1, additional_url_data="&msgid=[unique_message_id]")
+				var/target_keyname = key_name(M, 0, 0, 1, additional_url_data="&msgid=[unique_message_id]")
+
+				if (src.holder)
+					boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [src_keyname]</b>: <span class='message'>[t]</span></span>")
+					M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+					boutput(src.mob, "<span class='mhelp'><b>MENTOR PM: TO [target_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[src.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+				else
+					if (M.client && M.client.holder)
+						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+					else
+						boutput(M, "<span class='mhelp'><b>MENTOR PM: FROM [src_keyname]</b>: <span class='message'>[t]</span></span>")
+						M.playsound_local(M, 'sound/misc/mentorhelp.ogg', 100, flags = SOUND_IGNORE_SPACE, channel = VOLUME_CHANNEL_MENTORPM)
+					boutput(usr, "<span class='mhelp'><b>MENTOR PM: TO [target_keyname]</b>: <span class='message'>[t]</span></span>")
+
+				logTheThing(LOG_MHELP, src.mob, "Mentor PM'd [constructTarget(M,"mentor_help")]: [t]")
+				logTheThing(LOG_DIARY, src.mob, "Mentor PM'd [constructTarget(M,"diary")]: [t]", "admin")
+
+				var/mentormsg = "<span class='mhelp'><b>MENTOR PM: [src_keyname] <i class='icon-arrow-right'></i> [target_keyname]</b>: <span class='message'>[t]</span></span>"
 				for (var/client/C)
 					if (C.can_see_mentor_pms() && C.key != usr.key && (M && C.key != M.key))
 						if (C.holder)
 							if (C.player_mode && !C.player_mode_mhelp)
 								continue
 							else
-								boutput(C, "<span class='mhelp'><b>MENTOR PM: [key_name(src.mob,0,0,1)][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0,1)]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
+								boutput(C, "<span class='mhelp'><b>MENTOR PM: [src_keyname][(src.mob.real_name ? "/"+src.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[src.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [target_keyname]/[M.real_name] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[t]</span></span>")
 						else
 							boutput(C, mentormsg)
 
@@ -1206,7 +1212,7 @@ var/global/curr_day = null
 	var/client/C = input("For who", "For who", null) in clients
 	var/wavelength_shift = input("Shift wavelength bounds by <x> nm, should be in the range of -370 to 370", "Wavelength shift", 0) as num
 	if (wavelength_shift < -370 || wavelength_shift > 370)
-		boutput(usr, "Invalid value.")
+		boutput(usr, "<span class='admin'>Invalid value.</span>")
 		return
 	var/s_r = 0
 	var/s_g = 0
@@ -1267,18 +1273,14 @@ var/global/curr_day = null
 	set hidden = 1
 	set name = "toggle-parallax"
 
-#ifndef UNDERWATER_MAP
 	if ((winget(src, "menu.toggle_parallax", "is-checked") == "true") && parallax_enabled)
-		src.screen -= src.parallax_controller?.parallax_layers
+		qdel(src.parallax_controller)
 		src.parallax_controller = new(null, src)
 		src.mob?.register_parallax_signals()
 
 	else if (src.parallax_controller)
-		src.screen -= src.parallax_controller.parallax_layers
 		qdel(src.parallax_controller)
-		src.parallax_controller = null
 		src.mob?.unregister_parallax_signals()
-#endif
 
 /client/verb/apply_view_tint()
 	set hidden = 1
@@ -1407,6 +1409,7 @@ var/global/curr_day = null
 		H.hud.add_object(H.stamina_bar, initial(H.stamina_bar.layer), "EAST-1, NORTH")
 		if(H.sims)
 			H.sims.add_hud()
+		H.update_equipment_screen_loc()
 
 /client/verb/set_tg_layout()
 	set hidden = 1

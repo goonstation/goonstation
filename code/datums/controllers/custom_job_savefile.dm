@@ -55,7 +55,12 @@ datum/job_controller/proc/savefile_save(client/user, profileNum=1)
 	F["[profileNum]_slot_rhan"] << src.job_creator.slot_rhan
 	F["[profileNum]_access"] << src.job_creator.access
 	F["[profileNum]_change_name_on_spawn"] << src.job_creator.change_name_on_spawn
-	F["[profileNum]_special_spawn_location"] << src.job_creator.special_spawn_location
+	if(istext(src.job_creator.special_spawn_location))
+		F["[profileNum]_special_spawn_location"] << src.job_creator.special_spawn_location
+	else if(ismovable(src.job_creator.special_spawn_location) || isturf(src.job_creator.special_spawn_location))
+		var/atom/A = src.job_creator.special_spawn_location
+		var/turf/T = get_turf(A)
+		F["[profileNum]_special_spawn_location_coords"] << list(T.x, T.y, T.z)
 	F["[profileNum]_bio_effects"] << src.job_creator.bio_effects
 	F["[profileNum]_objective"] << src.job_creator.objective
 	F["[profileNum]_receives_implant"] << src.job_creator.receives_implant
@@ -114,7 +119,16 @@ datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
 	F["[profileNum]_slot_rhan"] >> src.job_creator.slot_rhan
 	F["[profileNum]_access"] >> src.job_creator.access
 	F["[profileNum]_change_name_on_spawn"] >> src.job_creator.change_name_on_spawn
-	F["[profileNum]_special_spawn_location"] >> src.job_creator.special_spawn_location
+	src.job_creator.special_spawn_location = null
+	var/maybe_spawn_loc = null
+	F["[profileNum]_special_spawn_location"] >> maybe_spawn_loc
+	if(istext(maybe_spawn_loc))
+		src.job_creator.special_spawn_location = maybe_spawn_loc
+	else
+		var/list/maybe_coords = null
+		F["[profileNum]_special_spawn_location_coords"] >> maybe_coords
+		if(islist(maybe_coords))
+			src.job_creator.special_spawn_location = locate(maybe_coords[1], maybe_coords[2], maybe_coords[3])
 	F["[profileNum]_bio_effects"] >> src.job_creator.bio_effects
 	F["[profileNum]_objective"] >> src.job_creator.objective
 	F["[profileNum]_receives_implant"] >> src.job_creator.receives_implant
@@ -152,3 +166,35 @@ datum/job_controller/proc/savefile_get_job_name(client/user, var/profileNum = 1)
 		return 0
 
 	return job_name
+
+datum/job_controller/proc/savefile_get_job_names(client/user)
+
+	if (!savefile_path_exists(user.ckey))
+		return null
+
+	var/path = savefile_path(user.ckey)
+
+	var/savefile/F = new /savefile(path, -1)
+
+	var/list/job_names = list()
+	for(var/i in 1 to CUSTOMJOB_SAVEFILE_PROFILES_MAX)
+		var/job_name = null
+		F["[i]_job_name"] >> job_name
+		job_names += job_name
+
+	return job_names
+
+
+datum/job_controller/proc/savefile_fix(client/user)
+	if (!savefile_path_exists(user.ckey))
+		return
+	var/savefile/F = new /savefile(src.savefile_path(user.ckey), -1)
+	for(var/i in 1 to CUSTOMJOB_SAVEFILE_PROFILES_MAX)
+		var/spawn_loc
+		F["[i]_special_spawn_location"] >> spawn_loc
+		if(istype(spawn_loc, /datum))
+			F["[i]_special_spawn_location"] << null
+			var/job_name = null
+			F["[i]_job_name"] >> job_name
+			message_admins("Fixing savefile for [user.ckey] - [job_name].")
+	F.Flush()

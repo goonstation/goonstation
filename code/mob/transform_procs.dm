@@ -56,7 +56,6 @@
 		respawned.key = src.key
 		if (src.mind)
 			src.mind.transfer_to(respawned)
-		respawned.Login()
 		respawned.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 
 		qdel(src)
@@ -112,14 +111,14 @@
 	if (!mobile && !do_not_move && job_start_locations["AI"])
 		O.set_loc(pick(job_start_locations["AI"]))
 
-	boutput(O, "<B>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</B>")
-	boutput(O, "<B>To look at other parts of the station, double-click yourself to get a camera menu.</B>")
-	boutput(O, "<B>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</B>")
-	boutput(O, "To use something, simply click it.")
-	boutput(O, "Use the prefix <B>:s</B> to speak to fellow silicons through binary.")
+	boutput(O, "<b class='hint'>You are playing the station's AI. The AI cannot move, but can interact with many objects while viewing them (through cameras).</b>")
+	boutput(O, "<b class='hint'>To look at other parts of the station, double-click yourself to get a camera menu.</b>")
+	boutput(O, "<b class='hint'>While observing through a camera, you can use most (networked) devices which you can see, such as computers, APCs, intercoms, doors, etc.</b>")
+	boutput(O, "<span class='hint'>To use something, simply click it.")
+	boutput(O, "<span class='hint'>Use the prefix <b>:s</b> to speak to fellow silicons through binary.</span>")
 
 	O.show_laws()
-	boutput(O, "<b>These laws may be changed by other players.</b>")
+	boutput(O, "<b class='hint'>These laws may be changed by other players.</b>")
 
 	O.verbs += /mob/living/silicon/ai/proc/ai_call_shuttle
 	O.verbs += /mob/living/silicon/ai/proc/show_laws_verb
@@ -280,10 +279,10 @@
 			src.client.mob = O
 		src.mind?.transfer_to(O)
 		O.set_loc(src.loc)
-		boutput(O, "<B>You are a Robot.</B>")
-		boutput(O, "<B>You're more or less a Cyborg but have no organic parts.</B>")
-		boutput(O, "To use something, simply double-click it.")
-		boutput(O, "Use say \":s to speak in binary.")
+		boutput(O, "<b class='hint'>You are a Robot.</b>")
+		boutput(O, "<b class='hint'>You're more or less a Cyborg but have no organic parts.</b>")
+		boutput(O, "<b class='hint'>To use something, simply double-click it.</b>")
+		boutput(O, "<b class='hint'>Use say \":s to speak in binary.</b>")
 
 		dispose()
 		return O
@@ -301,10 +300,10 @@
 		src.mind?.transfer_to(O)
 		O.Namepick()
 		O.set_loc(src.loc)
-		boutput(O, "<B>You are a Mainframe Unit.</B>")
-		boutput(O, "<B>You cant do much on your own but can take remote command of nearby empty Robots.</B>")
-		boutput(O, "Press Deploy to search for nearby bots to command.")
-		boutput(O, "Use say \":s to speak in binary.")
+		boutput(O, "<b class='hint'>You are a Mainframe Unit.</b>")
+		boutput(O, "<b class='hint'>You cant do much on your own but can take remote command of nearby empty Robots.</b>")
+		boutput(O, "<b class='hint'>Press Deploy to search for nearby bots to command.</b>")
+		boutput(O, "<b class='hint'>Use say \":s to speak in binary.</b>")
 
 		dispose()
 		return O
@@ -492,7 +491,7 @@ var/list/antag_respawn_critter_types =  list(/mob/living/critter/small_animal/fl
 	if (length(types))
 		C = selfmob.make_critter(pick(types), spawnpoint, ghost_spawned=TRUE)
 	else
-		traitor = checktraitor(selfmob)
+		traitor = selfmob.mind?.is_antagonist()
 		if (traitor)
 			C = selfmob.make_critter(pick(antag_respawn_critter_types), spawnpoint, ghost_spawned=TRUE)
 		else

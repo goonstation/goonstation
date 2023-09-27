@@ -1,6 +1,6 @@
 /mob/living/intangible/blob_overmind
-	name = "Blob Overmind"
-	real_name = "Blob Overmind"
+	name = "blob overmind"
+	real_name = "blob overmind"
 	desc = "The disembodied consciousness of a big pile of goop."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "blob"
@@ -68,10 +68,10 @@
 	var/debuff_duration = 1200 //deciseconds. 1200 = 2 minutes
 
 	//give blobs who get rekt soon after starting another chance
-	var/current_try = 1
-	var/extra_tries_max = 2
-	var/extra_try_period = 3000 //3000 = 5 minutes
-	var/extra_try_timestamp = 0
+	var/spawn_time = 0
+	var/respawned = FALSE
+
+	var/random_event_spawn = FALSE
 
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
 
@@ -98,13 +98,13 @@
 		src.sight |= SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF
 		src.see_invisible = INVIS_SPOOKY
 		src.see_in_dark = SEE_DARK_FULL
-		my_material = copyMaterial(getMaterial("blob"))
-		my_material.color = "#ffffff"
-		initial_material = copyMaterial(getMaterial("blob"))
+		src.my_material = getMaterial("blob")
+		src.my_material = src.my_material.getMutable()
+		src.my_material.setColor("#ffffff")
+		initial_material = getMaterial("blob")
 
 		//set start grace-period timestamp
-		var/extraGrace = rand(600, 1800) //add between 1 min and 3 mins extra
-		src.extra_try_timestamp = world.timeofday + extra_try_period + extraGrace
+		src.spawn_time = TIME
 
 		src.nucleus_overlay = image('icons/mob/blob.dmi', null, "reflective_overlay")
 		src.nucleus_overlay.alpha = 0
@@ -136,7 +136,7 @@
 		if (..(parent))
 			return 1
 
-		if (started && (nuclei.len == 0 || blobs.len == 0))
+		if (started && (length(nuclei) == 0 || length(blobs) == 0))
 			death()
 			return
 
@@ -145,7 +145,7 @@
 			src.debuff_timestamp = 0
 			out(src, "<span class='alert'><b>You can feel your former power returning!</b></span>")
 
-		if (blobs.len > 0)
+		if (length(blobs) > 0)
 			/**
 			 * at 2175 blobs, blob points max will reach about 350. It will begin decreasing sharply after that
 			 * This is a size penalty. Basically if the blob gets too damn big, the crew has some chance of
@@ -175,11 +175,11 @@
 				return
 
 		if (starter_buff == 1)
-			if (blobs.len >= 25)
+			if (length(blobs) >= 25)
 				boutput(src, "<span class='alert'><b>You no longer have the starter assistance.</b></span>")
 				starter_buff = 0
 
-		if (blobs.len >= next_evo_point)
+		if (length(blobs) >= next_evo_point)
 			next_evo_point += initial(next_evo_point)
 			evo_points++
 			boutput(src, "<span class='notice'><b>You have expanded enough to earn one evo point! You will be granted another at size [next_evo_point]. Good luck!</b></span>")
@@ -189,12 +189,12 @@
 			evo_points++
 			boutput(src, "<span class='notice'><b>You have perfomed enough spreads to earn one evo point! You will be granted another after placing [next_pity_point] tiles. Good luck!</b></span>")
 
-		if (blobs.len >= next_extra_nucleus)
+		if (length(blobs) >= next_extra_nucleus)
 			next_extra_nucleus += initial(next_extra_nucleus)
 			extra_nuclei++
 			boutput(src, "<span class='notice'><b>You have expanded enough to earn one extra nucleus! You will be granted another at size [next_extra_nucleus]. Good luck!</b></span>")
 
-		src.nucleus_reflectivity = src.blobs.len < 151 ? 100 : 100 - ((src.blobs.len - 150)/2)
+		src.nucleus_reflectivity = length(src.blobs) < 151 ? 100 : 100 - ((src.blobs.len - 150)/2)
 		var/old_alpha = src.nucleus_overlay.alpha
 		var/new_alpha = clamp(src.nucleus_reflectivity * 2, 0, 255)
 		if(abs(old_alpha - new_alpha) >= 25 || (old_alpha != new_alpha && (new_alpha == 0 || old_alpha == 0)))
@@ -211,11 +211,11 @@
 		. = ..()
 
 		//if within grace period, respawn
-		if (src.current_try < src.extra_tries_max && world.timeofday <= src.extra_try_timestamp)
-			src.extra_try_timestamp = 0
-			src.current_try++
+		var/respawn_time = !src.random_event_spawn ? 15 MINUTES : 7 MINUTES
+		if (!src.respawned && (TIME - src.spawn_time <= respawn_time))
+			src.respawned = TRUE
 			src.reset()
-			out(src, "<span class='notice'><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready for round [src.current_try]!</b></span>")
+			boutput(src, "<span class='notice'><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready to try again!</b></span>")
 
 		//no grace, go die scrub
 		else
@@ -353,9 +353,10 @@
 		src.upgrade_id = 1
 		src.lipids = new()
 		src.nuclei = new()
-		src.my_material = copyMaterial(getMaterial("blob"))
-		src.my_material.color = "#ffffff"
-		src.initial_material = copyMaterial(getMaterial("blob"))
+		src.my_material = getMaterial("blob")
+		src.my_material = src.my_material.getMutable()
+		src.my_material.setColor("#ffffff")
+		src.initial_material = getMaterial("blob")
 		src.organ_color = initial(src.organ_color)
 		src.debuff_timestamp = 0
 

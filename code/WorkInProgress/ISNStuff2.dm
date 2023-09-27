@@ -96,14 +96,6 @@
 		return 1
 	return 0
 
-/mob/proc/is_heat_resistant()
-	if (!src)
-		return 0
-	if(src.bioHolder && src.bioHolder.HasOneOfTheseEffects("fire_resist") || src.bioHolder.HasEffect("thermal_resist") > 1)
-		return 1
-	if(src.nodamage)
-		return 1
-	return 0
 
 // Hallucinations
 
@@ -143,6 +135,7 @@
 	density = 1
 	opacity = 0
 	anchored = ANCHORED
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	var/has_processing_loop = 0
 
 	New(var/turf/loc)

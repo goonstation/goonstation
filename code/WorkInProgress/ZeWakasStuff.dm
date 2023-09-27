@@ -15,11 +15,11 @@
 // playsound($1, '$2'
 // Greek Adventurezone Thingy
 
-/turf/unsimulated/greek/
+/turf/unsimulated/greek
 	name = "Greek Adventurezone Sprites"
 	icon = 'icons/turf/adventure_gannets.dmi'
 
-/turf/unsimulated/wall/greek/
+/turf/unsimulated/wall/greek
 	name = "Greek Adventurezone Sprites"
 	icon = 'icons/turf/adventure_gannets.dmi'
 
@@ -132,8 +132,9 @@
 	name = "cyclops"
 	real_name = "cyclops"
 	desc = "The Eye stares straight into your soul. Creepy."
-	density = 1
+	icon = 'icons/mob/critter/humanoid/cyclops.dmi'
 	icon_state = "greek-cyclops"
+	density = 1
 	health = 70
 	wanderer = 0
 	aggressive = 1

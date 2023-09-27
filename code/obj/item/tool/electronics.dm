@@ -5,7 +5,7 @@
 
 //Electronics parts
 
-/obj/item/electronics/
+/obj/item/electronics
 	name = "electronic thing"
 	icon = 'icons/obj/electronics.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
@@ -140,6 +140,13 @@
 /obj/item/electronics/frame/proc/kickout(source, mob/stowaway)
 	if(istype(stowaway))
 		stowaway.set_loc(get_turf(source))
+	else
+		for(var/atom/movable/AM in stowaway)
+			kickout(source, AM)
+
+/obj/item/electronics/frame/Entered(atom/movable/AM, atom/OldLoc)
+	. = ..()
+	kickout(src, AM)
 
 /obj/item/electronics/frame/attackby(obj/item/W, mob/user)
 	if(istype(W,/obj/item/electronics/))
@@ -243,13 +250,13 @@
 				var/dirr = input("Select A Direction!", "UDLR", null, null) in list("Up","Down","Left","Right")
 				switch(dirr)
 					if("Up")
-						src.set_dir(1)
+						src.set_dir(NORTH)
 					if("Down")
-						src.set_dir(2)
+						src.set_dir(SOUTH)
 					if("Left")
-						src.set_dir(8)
+						src.set_dir(WEST)
 					if("Right")
-						src.set_dir(4)
+						src.set_dir(EAST)
 			boutput(user, "Ready to deploy!")
 			if (tgui_alert(user, "Ready to deploy?", "Confirmation", list("Yes", "No")) == "Yes")
 				boutput(user, "<span class='alert'>Place box and solder to deploy!</span>")
@@ -937,8 +944,8 @@
 		playsound(user.loc, 'sound/items/Deconstruct.ogg', 50, 1)
 		user.visible_message("<B>[user.name]</B> deconstructs [target].")
 
-		var/obj/item/electronics/frame/F = new
 		var/turf/target_loc = get_turf(target)
+		var/obj/item/electronics/frame/F = new(target_loc)
 		F.name = "[target.name] frame"
 		if(O.deconstruct_flags & DECON_DESTRUCT)
 			F.store_type = O.type
@@ -950,16 +957,15 @@
 				M.u_equip(O)
 			O.set_loc(F)
 		// move frame to the location after object is gone, so crushers do not crusher themselves
-		F.set_loc(target_loc)
 		F.viewstat = 2
 		F.secured = 2
 		F.icon_state = "dbox_big"
 		F.w_class = W_CLASS_BULKY
 
 		elecflash(src,power=2)
-
-		O.was_deconstructed_to_frame(user)
-		F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
+		if(!QDELETED(O))
+			O.was_deconstructed_to_frame(user)
+			F.RegisterSignal(O, COMSIG_ATOM_ENTERED, TYPE_PROC_REF(/obj/item/electronics/frame, kickout))
 
 	MouseDrop_T(atom/target, mob/user)
 		if (!isobj(target))
@@ -996,7 +1002,7 @@
 			boutput(user, "<span class='alert'>You cannot bring yourself to deconstruct [target] in this area.</span>")
 			return
 
-		if (O.decon_contexts && O.decon_contexts.len <= 0) //ready!!!
+		if (O.decon_contexts && length(O.decon_contexts) <= 0) //ready!!!
 			boutput(user, "Deconstructing [O], please remain still...")
 			playsound(user.loc, 'sound/effects/pop.ogg', 50, 1)
 			actions.start(new/datum/action/bar/icon/deconstruct_obj(target,src,(decon_complexity * 2.5 SECONDS)), user)

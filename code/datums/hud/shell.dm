@@ -1,10 +1,9 @@
 /datum/hud/shell
-	var/atom/movable/screen/hud
-		tool1
-		tool2
-		tool3
-		charge
-		eyecam
+	var/atom/movable/screen/hud/tool1
+	var/atom/movable/screen/hud/tool2
+	var/atom/movable/screen/hud/tool3
+	var/atom/movable/screen/hud/charge
+	var/atom/movable/screen/hud/eyecam
 
 	var/list/last_tools = list()
 	var/list/atom/movable/screen/hud/tool_selector_bg = list()
@@ -36,6 +35,24 @@
 		update_active_tool()
 		update_tools()
 		update_tool_selector()
+
+	disposing()
+		qdel(src.tool1)
+		src.tool1 = null
+		qdel(src.tool2)
+		src.tool2 = null
+		qdel(src.tool3)
+		src.tool3 = null
+		qdel(src.charge)
+		src.charge = null
+		qdel(src.eyecam)
+		src.eyecam = null
+		src.last_tools = null
+		qdel(src.tool_selector_bg)
+		src.tool_selector_bg = null
+		src.tool_selector_tools = null
+		src.master = null
+		. = ..()
 
 	clear_master()
 		master = null
@@ -124,9 +141,9 @@
 
 
 			tool_selector_bg.len = 0
-			if (tool_selector_tools.len > 0)
+			if (length(tool_selector_tools) > 0)
 				tool_selector_bg += create_screen("", "", 'icons/mob/hud_robot.dmi', "tools-top", "CENTER+2:16, SOUTH+[tool_selector_tools.len]", HUD_LAYER+1)
-			if (tool_selector_tools.len > 1)
+			if (length(tool_selector_tools) > 1)
 				tool_selector_bg += create_screen("", "", 'icons/mob/hud_robot.dmi', "tools-mid", "CENTER+2:16, SOUTH+1 to CENTER+2:16, SOUTH+[tool_selector_tools.len-1]", HUD_LAYER+1)
 
 			if (!show_tool_selector)

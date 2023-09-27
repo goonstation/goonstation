@@ -83,7 +83,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 		//smoke/fluid :
 		var/turf/my_turf = get_turf(src)
 		if (my_turf)
-			var/obj/fluid/F = my_turf.active_airborne_liquid
+			var/obj/fluid/airborne/F = my_turf.active_airborne_liquid
 			if (F?.group)
 				active_power_usage += (inlet_flow / 8) * 5 KILO WATTS
 				F.group.drain(F, inlet_flow / 8, src.buffer)
@@ -113,7 +113,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/scrubber)
 /obj/machinery/portable_atmospherics/scrubber/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/atmosporter))
 		var/obj/item/atmosporter/porter = W
-		if (porter.contents.len >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
+		if (length(porter.contents) >= porter.capacity) boutput(user, "<span class='alert'>Your [W] is full!</span>")
 		else if (src.anchored) boutput(user, "<span class='alert'>\The [src] is attached!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] collects the [src].</span>", "<span class='notice'>You collect the [src].</span>")

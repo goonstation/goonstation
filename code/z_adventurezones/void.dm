@@ -19,11 +19,7 @@ CONTENTS:
 	sound_group = "void"
 	sound_loop = 'sound/ambience/spooky/Void_Song.ogg'
 	ambient_light = rgb(6.9, 4.20, 6.9)
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/void,
-		/atom/movable/screen/parallax_layer/void/clouds_1,
-		/atom/movable/screen/parallax_layer/void/clouds_2,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/void
 
 /area/crunch/New()
 	. = ..()
@@ -391,7 +387,7 @@ TYPEINFO(/turf/simulated/floor/void)
 		return valid_mindswap(chair1?.buckled_guy) && valid_mindswap(chair2?.buckled_guy)
 
 	proc/valid_mindswap(mob/living/L)
-		. = 0
+		. = 1
 		if(!istype(L))
 			return
 

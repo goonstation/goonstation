@@ -31,5 +31,5 @@
 				boutput(src.holder.owner, "<span class='alert'>[M]'s soul is inadequate for your purposes.</span>")
 				return TRUE
 		else
-			boutput(src.holder.owner, "<span class='alert'>Your target must be dead in order to steal their soul.</span>")
+			boutput(src.holder.owner, "<span class='alert'>Your target must be dead in order to steal [his_or_her(M)] soul.</span>")
 			return TRUE

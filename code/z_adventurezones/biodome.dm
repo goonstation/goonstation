@@ -374,16 +374,15 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "Lava"
 	desc = "The floor is lava. Oh no."
 	icon_state = "lava"
-	var/deadly = 1
-	fullbright = 0
-	pathable = 0
-	can_replace_with_stuff = 1
+	pathable = FALSE
+	can_replace_with_stuff = TRUE
+	var/deadly = TRUE
+	var/no_fly_zone = FALSE
 
 	Entered(atom/movable/O, atom/old_loc)
 		..()
-		if(src.deadly && !(isnull(old_loc) || O.anchored == 2))
-			if (istype(O, /obj/critter) && O:flying)
-				return
+		if(src.deadly && !(isnull(old_loc) || O.anchored == ANCHORED_ALWAYS))
+			return_if_overlay_or_effect(O)
 
 			if (istype(O, /obj/projectile))
 				return
@@ -391,7 +390,25 @@ SYNDICATE DRONE FACTORY AREAS
 			if (isintangible(O))
 				return
 
-			return_if_overlay_or_effect(O)
+			if (istype(O, /obj/critter))
+				var/obj/critter/C = O
+				if (C.flying)
+					return
+
+			if (isliving(O))
+				var/mob/living/M = O
+				if (M.mind?.damned)
+					melt_away(M)
+					return
+
+			if (check_target_immunity(O, TRUE))
+				return
+
+			if (HAS_ATOM_PROPERTY(O, PROP_ATOM_FLOATING) && !src.no_fly_zone)
+				if (isliving(O))
+					var/mob/living/M = O
+					M.setStatusMin("burning", 5 SECONDS)
+				return
 
 			if (O.throwing && !isliving(O))
 				SPAWN(0.8 SECONDS)
@@ -400,7 +417,6 @@ SYNDICATE DRONE FACTORY AREAS
 				return
 
 			melt_away(O)
-
 
 	proc/melt_away(atom/movable/O)
 		#ifdef CHECK_MORE_RUNTIMES
@@ -412,17 +428,18 @@ SYNDICATE DRONE FACTORY AREAS
 				var/mob/living/M = O
 				var/mob/living/carbon/human/H = M
 				if (istype(H))
-					H.unkillable = 0
-				if(!M.stat) M.emote("scream")
+					H.unkillable = FALSE
+				if(!M.stat)
+					M.emote("scream")
 				src.visible_message("<span class='alert'><B>[M]</B> falls into the [src] and melts away!</span>")
 				logTheThing(LOG_COMBAT, M, "was firegibbed by [src] ([src.type]) at [log_loc(M)].")
-				M.firegib() // thanks ISN!
+				M.firegib(drop_equipment = FALSE) // thanks ISN!
 		else
 			src.visible_message("<span class='alert'><B>[O]</B> falls into the [src] and melts away!</span>")
 			qdel(O)
 
-	ex_act(severity)
-		return
+/turf/unsimulated/floor/lava/nofly
+	no_fly_zone = TRUE
 
 /obj/decal/lightshaft
 	name = "light"
@@ -558,7 +575,7 @@ SYNDICATE DRONE FACTORY AREAS
 	name = "strange wall"
 	desc = "This wall seems strangely out-of-place."
 	icon_state = "cave-0"
-	icon = 'icons/turf/walls_cave.dmi'
+	icon = 'icons/turf/walls/cave.dmi'
 
 	var/active = 0
 
@@ -673,7 +690,7 @@ SYNDICATE DRONE FACTORY AREAS
 
 		var/list/affected = DrawLine(src.loc, target_r, /obj/line_obj/whip ,'icons/obj/projectiles.dmi',"WholeWhip",1,1,"HalfStartWhip","HalfEndWhip",OBJ_LAYER,1)
 
-		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Snap_1.ogg', 40, TRUE)
 
 		for(var/obj/O in affected)
 			O.anchored = ANCHORED //Proc wont spawn the right object type so lets do that here.
@@ -755,7 +772,7 @@ SYNDICATE DRONE FACTORY AREAS
 		if(ismob(AM))
 			if(AM:client)
 				ready = 0
-				playsound(src, 'sound/effects/exlow.ogg', 40, 0)
+				playsound(src, 'sound/effects/exlow.ogg', 40, FALSE)
 				var/turf/spawnloc = get_step(get_step(get_step(src, NORTH), NORTH), NORTH)
 				new/obj/boulder_trap_boulder(spawnloc)
 				playsound(src.loc, 'sound/impact_sounds/Stone_Scrape_1.ogg', 40, 1)
@@ -968,7 +985,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/graveyard/loose_rock
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "rockwall"
-	dir = 4
+	dir = EAST
 	density = 1
 	opacity = 1
 	anchored = ANCHORED
@@ -1191,7 +1208,7 @@ SYNDICATE DRONE FACTORY AREAS
 				for(var/turf/T in range(2,middle))
 					make_cleanable(/obj/decal/cleanable/greenglow,T)
 				sleep(1 SECOND)
-				playsound_global(world, 'sound/effects/mag_pandroar.ogg', 60) // heh
+				playsound_global(world, 'sound/effects/mag_pandroar.ogg', 40) // heh
 				shake_camera(usr, 15, 16, 0.5)
 				new/obj/item/alchemy/stone(middle)
 				sleep(0.2 SECONDS)

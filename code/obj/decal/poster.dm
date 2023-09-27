@@ -624,6 +624,11 @@
 			desc = "A sign warning you of something."
 			icon_state = "wall_warning4"
 
+		warning_sus
+			name = "warning sign"
+			desc = "A sign warning you of something suspicious."
+			icon_state = "wall_sus"
+
 		statistics1
 			name = "statistics poster"
 			desc = "A poster with a bar chart depicting the rapid growth of chemistry lab related explosions. Although who the fuck even uses a bar chart when you could be using a line chart.."
@@ -841,7 +846,7 @@
 			icon = 'icons/effects/96x32.dmi'
 			icon_state = "fuq3"
 			bound_width  = 96
-			plane = -99
+			plane = PLANE_NOSHADOW_ABOVE
 
 		psa_bucket
 			desc = "<span class='alert'><i>Stuck</i></b></span> behind a mop bucket? Never fear! Just <span class='notice'><i>slide</i></span> yourself over it!"
@@ -875,6 +880,7 @@
 			var/icon_glass = "rddiploma1"
 			var/icon_award = "rddiploma"
 			var/icon_empty = "frame"
+			var/glass_type = /obj/item/sheet/glass
 			icon_state = "rddiploma"
 			pixel_y = -6
 
@@ -907,7 +913,7 @@
 						src.usage_state = 1
 						src.icon_state = icon_glass
 						user.visible_message("[user] takes off the glass frame.", "You take off the glass frame.")
-						var/obj/item/sheet/glass/G = new /obj/item/sheet/glass()
+						var/obj/item/sheet/glass/G = new glass_type()
 						G.amount = 1
 						src.add_fingerprint(user)
 						user.put_in_hand_or_drop(G)
@@ -939,6 +945,7 @@
 				if (src.usage_state == 1)
 					if (istype(W, /obj/item/sheet/glass))
 						if (W.amount >= 1)
+							src.glass_type = W.type
 							playsound(src.loc, 'sound/machines/click.ogg', 50, 1)
 							user.u_equip(W)
 							qdel(W)
@@ -953,7 +960,7 @@
 		framed_award/hos_medal
 			name = "framed medal"
 			desc = "A dusty old war medal."
-			award_type = /obj/item/clothing/suit/hosmedal/
+			award_type = /obj/item/clothing/suit/hosmedal
 			award_name = "medal"
 			owner_job = "Head of Security"
 			icon_glass = "medal1"
@@ -990,7 +997,7 @@
 		framed_award/firstbill
 			name = "framed space currency"
 			desc = "A single bill of space currency."
-			award_type = /obj/item/firstbill/
+			award_type = /obj/item/firstbill
 			award_name = "first bill"
 			owner_job = "Head of Personnel"
 			icon_glass = "hopcredit1"
@@ -1010,7 +1017,7 @@
 		framed_award/rddiploma
 			name = "research directors diploma"
 			desc = "A fancy space diploma."
-			award_type = /obj/item/rddiploma/
+			award_type = /obj/item/rddiploma
 
 			get_desc(dist)
 				if(award_text)
@@ -1032,7 +1039,7 @@
 		framed_award/mdlicense
 			name = "medical directors medical license"
 			desc = "There's just no way this is real."
-			award_type = /obj/item/mdlicense/
+			award_type = /obj/item/mdlicense
 			award_name = "medical license"
 			owner_job = "Medical Director"
 			icon_glass = "mdlicense1"
@@ -1092,7 +1099,7 @@
 
 	proc/clear_banner()
 		if (src.material)
-			src.color = src.material.color
+			src.color = src.material.getColor()
 		else
 			src.color = "#ffffff" // In case the material is null
 		src.overlays = null
