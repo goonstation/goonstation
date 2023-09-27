@@ -1077,7 +1077,7 @@
 	actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
 	return
 
-/obj/machinery/vehicle/proc/eject_pod(mob/user, dead_only=FALSE)
+/obj/machinery/vehicle/proc/eject_pod(var/mob/user, var/dead_only = 0)
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot
 		if (!dead_only)
 			leave_pod(M)
@@ -1086,7 +1086,6 @@
 			if(M.stat || !M.client)
 				leave_pod(M)
 				boutput(user, "<span class='alert'>You pull [M] out of [src].</span>")
-
 			else if(!isliving(M))
 				leave_pod(M)
 				boutput(user, "<span class='alert'>You scrape [M] out of [src].</span>")
@@ -1101,6 +1100,7 @@
 		boutput(user, "<span class='alert'>You [pick("scrape","scrub","clean")] [O] out of [src].</span>")
 		var/floor = get_turf(src)
 		O.set_loc(floor)
+
 
 /datum/action/bar/board_pod
 	duration = 20
