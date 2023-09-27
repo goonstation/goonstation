@@ -139,6 +139,11 @@ proc/filter_trait_hats(var/type)
 		setProperty("disorient_resist_ear", 5)
 		setProperty("space_movespeed", 0.5)
 
+/obj/item/clothing/head/emerg/science
+	name = "bomb retreival hood"
+	desc = "A suit that protects against low pressure environments for a short time. Given to science since they blew up the more expensive ones."
+	// TODO science colours sprite for this
+
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
 	icon_state = "radiation"
