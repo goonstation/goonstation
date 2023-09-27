@@ -57,7 +57,7 @@
 				return
 			var/mob/living/carbon/human/target = M //can't equip to mobs unless they are human
 			if(target.glasses)
-				boutput(user, "<span class='alert'>[target] is already wearing something on their eyes!</span>")
+				boutput(user, "<span class='alert'>[target] is already wearing something on [his_or_her(target)] eyes!</span>")
 				return
 			actions.start(new/datum/action/bar/icon/otherItem(user, target, user.equipped(), SLOT_GLASSES, 1.3 SECONDS) , user) //Uses extended timer to make up for previously having to manually equip to someone's eyes.
 			return
@@ -90,7 +90,7 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 		src.item_state = "[src.base_state][src.on ? null : "-off"]"
 		set_icon_state("[src.base_state][src.on ? null : "-off"]")
 		toggler.update_clothing()
-		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
 		if (ishuman(toggler))
 			var/mob/living/carbon/human/H = toggler
 			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
@@ -174,7 +174,7 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 		if(H.mind)
 			if(H.mind.assigned_role == "Detective" && !src.already_worn)
 				src.already_worn = 1
-				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, 0)
+				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, FALSE)
 				user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
 	..()
 	return
@@ -285,6 +285,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
 	upgraded = TRUE
+	is_syndicate = TRUE
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"

@@ -365,6 +365,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/portable_atmospherics/canister/toxins,
 /turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "bH" = (
@@ -2324,6 +2325,12 @@
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
+"iY" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/unsimulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/team2/mining)
 "jc" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1;
@@ -4501,7 +4508,7 @@
 /area/pod_wars/team1/bridge)
 "rr" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_old = null;
 	icon_state = "norn-R-3"
 	},
@@ -9888,6 +9895,7 @@
 /area/pod_wars/spacejunk/fstation/observatory)
 "Na" = (
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/portable_atmospherics/canister/toxins,
 /turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "Nd" = (
@@ -238447,7 +238455,7 @@ ED
 Ts
 QK
 HI
-jD
+iY
 Ux
 Bg
 Ux
@@ -239953,7 +239961,7 @@ ED
 Ts
 XP
 HI
-jD
+iY
 cI
 Ux
 Ux

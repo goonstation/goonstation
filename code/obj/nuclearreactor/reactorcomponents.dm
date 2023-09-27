@@ -246,7 +246,7 @@ ABSTRACT_TYPE(/obj/item/reactor_component)
 
 /obj/item/reactor_component/fuel_rod/glowsticks
 	name = "makeshift fuel rod"
-	desc = "A fuel rod fo- hey this is just a bundle of glowsticks!"
+	desc = "A fuel rod fo- hey this is just a squashed glowstick!"
 	melting_point = T0C+400 //plastic glowsticks melt easy
 
 	New(material)

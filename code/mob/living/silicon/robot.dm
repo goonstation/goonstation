@@ -578,6 +578,13 @@
 								src.buckled = null
 								if(isunconscious(src))
 									setalive(src) //reset stat to ensure emote comes out
+					if (src.brainexposed && src.part_head && src.part_head.brain)
+						if (src.hasStatus("loose_brain"))
+							src.eject_brain(fling = TRUE)
+							src.delStatus("loose_brain")
+							message = "<B>[src]</B> does a flip but their brain is sent flying!"
+						else
+							src.changeStatus("loose_brain", 2 MINUTES)
 
 			if("flex", "flexmuscles")
 				if(!part_arm_r || !part_arm_l)
@@ -827,7 +834,7 @@
 					var/damage_reduced_by = min(damage, R.damage_reduction)
 					src.cell.use(damage_reduced_by * R.cell_drain_per_damage_reduction)
 					damage -= damage_reduced_by
-					playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
+					playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 			if (damage <= 0)
 				boutput(usr, "<span class='notice'>Your shield completely blocks the attack!</span>")
 				return 1
@@ -859,12 +866,12 @@
 				var/obj/item/roboupgrade/physshield/S = R
 				src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
 				boutput(src, "<span class='notice'>Your force shield absorbs some of the blast!</span>")
-				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
 				var/obj/item/roboupgrade/fireshield/S = R
 				src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
 				boutput(src, "<span class='notice'>Your fire shield absorbs the heat of the blast!</span>")
-				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 				fire_protect = TRUE
 
 		if(!power)
@@ -977,7 +984,7 @@
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		if(isshell(src) || src.part_head.ai_interface)
-			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, their laws can't be overwritten!</span>")
+			boutput(user, "<span class='alert'>Emagging an AI shell wouldn't work, [his_or_her(src)] laws can't be overwritten!</span>")
 			return 0 //emags don't do anything to AI shells
 		if (!src.emaggable)
 			boutput(user, "<span class='alert'>You try to swipe your emag along [src]'s interface, but it grows hot in your hand and you almost drop it!")
@@ -1112,7 +1119,7 @@
 		if (istype(W,/obj/item/device/borg_linker) && !isghostdrone(user))
 			var/obj/item/device/borg_linker/linker = W
 			if(!opened)
-				boutput(user, "You need to open [src.name]'s cover before you can change their law rack link.")
+				boutput(user, "You need to open [src.name]'s cover before you can change [his_or_her(src)] law rack link.")
 				return
 			if(isshell(src) || src.part_head.ai_interface)
 				boutput(user,"You need to use this on the AI core directly!")
@@ -1228,6 +1235,8 @@
 					src.locking = 0
 				brainexposed = !brainexposed
 				boutput(user, "The head compartment has been [brainexposed ? "opened" : "closed"].")
+				if (!brainexposed)
+					src.delStatus("loose_brain")
 			src.update_appearance()
 
 		else if (istype(get_id_card(W), /obj/item/card/id))	// trying to unlock the interface with an ID card
@@ -1357,7 +1366,7 @@
 				boutput(user, "<span class='alert'>There's no head to remove!</span>")
 				return
 
-			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
 			switch(action)
 				if("Remove Chest")
 					if(src.part_chest.robot_movement_modifier)
@@ -1419,8 +1428,8 @@
 					update_bodypart("l_leg")
 				else return
 			src.module_active = null
-			src.update_appearance()
 			hud.set_active_tool(null)
+			src.update_appearance()
 			return
 
 		else if (istype(W,/obj/item/parts/robot_parts/) && src.wiresexposed)
@@ -1481,7 +1490,7 @@
 			RP.set_loc(src)
 			if(RP.robot_movement_modifier)
 				APPLY_MOVEMENT_MODIFIER(src, RP.robot_movement_modifier, RP.type)
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 			boutput(user, "<span class='notice'>You successfully attach the piece to [src.name].</span>")
 			src.update_bodypart(RP.slot)
 		else ..()
@@ -2124,6 +2133,7 @@
 			src.visible_message("<span class='alert'>[src]'s panel slams shut!</span>")
 		if (src.brainexposed)
 			brainexposed = 0
+			src.delStatus("loose_brain")
 			src.visible_message("<span class='alert'>[src]'s head compartment slams shut!</span>")
 			opened = 1
 			src.visible_message("<span class='alert'>[src]'s panel blows open!</span>")
@@ -2625,6 +2635,8 @@
 					eye_light.color = list(0, 0, 0, 0, 0, 0, 0, 0, 0, 0.5, 0.5, 0.5)
 					eye_light.plane = PLANE_LIGHTING
 					src.UpdateOverlays(eye_light, "eye_light")
+			else if (!src.part_head && !isdead(src))
+				src.death()
 
 		if (part == "chest" || update_all)
 			if (src.part_chest && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
@@ -2634,6 +2646,8 @@
 					src.i_chest.color = color_matrix
 				else
 					src.i_chest = null
+			else if (!src.part_chest && !isdead(src))
+				src.death()
 
 		if (part == "l_leg" || update_all)
 			if (src.part_leg_l && !src.automaton_skin && !src.alohamaton_skin && !src.metalman_skin)
@@ -2812,7 +2826,10 @@
 				var/image/clothed_image = U.wear_image
 				if (!clothed_image)
 					continue
-				clothed_image.icon_state = U.icon_state
+				if (U.wear_state)
+					clothed_image.icon_state = U.wear_state
+				else
+					clothed_image.icon_state = U.icon_state
 				//under_image.layer = MOB_CLOTHING_LAYER
 				clothed_image.alpha = U.alpha
 				clothed_image.color = U.color
@@ -2849,14 +2866,14 @@
 				var/damage_reduced_by = min(burn, S.damage_reduction)
 				src.cell.use(damage_reduced_by * S.cell_drain_per_damage_reduction)
 				burn -= damage_reduced_by
-				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 				continue
 			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated)
 				var/obj/item/roboupgrade/physshield/S = R
 				var/damage_reduced_by = min(brute, S.damage_reduction)
 				src.cell.use(damage_reduced_by * S.cell_drain_per_damage_reduction)
 				brute -= damage_reduced_by
-				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 				continue
 		if (burn == 0 && brute == 0)
 			boutput(usr, "<span class='notice'>Your shield completely blocks the attack!</span>")
@@ -2994,7 +3011,7 @@
 
 	proc/compborg_lose_limb(var/obj/item/parts/robot_parts/part)
 
-		playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 40, TRUE)
 		if (istype(src.loc,/turf/)) make_cleanable(/obj/decal/cleanable/robot_debris, src.loc)
 		elecflash(src,power = 2)
 

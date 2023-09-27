@@ -85,6 +85,7 @@
 		src._light_turf = get_turf(src)
 		src._light_turf.add_medium_light("reactor_light", list(255,255,255,255))
 		_comp_grid_overlay_update = TRUE
+		UpdateGasVolume()
 		UpdateIcon()
 
 	disposing()
@@ -179,7 +180,6 @@
 		var/datum/gas_mixture/gas_input = air1.remove(transfer_moles)
 		air_contents.volume = air1.volume
 		gas_input?.volume = air_contents.volume
-		var/total_gas_volume = 0
 		_last_total_coolant_e = gas_input ? THERMAL_ENERGY(gas_input) : 0
 		var/total_thermal_e = 0
 		for(var/x=1 to REACTOR_GRID_WIDTH)
@@ -188,7 +188,6 @@
 					src.component_grid[x][y].loc = src
 					//flow gas through components
 					var/obj/item/reactor_component/comp = src.component_grid[x][y]
-					total_gas_volume += comp.gas_volume
 					var/datum/gas_mixture/gas = comp.processGas(gas_input)
 					gas_input?.volume -= comp.gas_volume
 					if(gas)
@@ -261,17 +260,13 @@
 		src.material_trigger_on_temp(src.temperature)
 
 		total_thermal_e += src.thermal_mass * src.temperature
-		total_gas_volume += src.reactor_vessel_gas_volume
 		if(src._debug_mode)
 			boutput(world, "Reactor dE: [engineering_notation(total_thermal_e - src._last_total_thermal_e)]J Coolant dE:[engineering_notation(coolant_thermal_e - src._last_total_coolant_e)]J")
 		src._last_total_thermal_e = total_thermal_e
 
-		src.air1.volume = total_gas_volume
-		src.air_contents.volume = total_gas_volume
-
 		src.network1?.update = TRUE
 		src.network2?.update = TRUE
-		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"temp=[temperature]&rads=[tmpRads]&flowrate=[total_gas_volume]")
+		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"temp=[temperature]&rads=[tmpRads]&flowrate=[src.air_contents.volume]")
 		UpdateIcon()
 
 	attackby(obj/item/I, mob/user)
@@ -293,6 +288,16 @@
 		signal.data["address_1"] = "00000000"
 
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)
+
+	proc/UpdateGasVolume()
+		var/total_gas_volume = src.reactor_vessel_gas_volume
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				if(src.component_grid[x][y])
+					var/obj/item/reactor_component/comp = src.component_grid[x][y]
+					total_gas_volume += comp.gas_volume
+		src.air1.volume = total_gas_volume
+		src.air_contents.volume = total_gas_volume
 
 	proc/processCasingGas(var/datum/gas_mixture/inGas)
 		if(src.current_gas)
@@ -374,20 +379,39 @@
 		world << alarm //ew
 		command_alert("A nuclear reactor aboard the station has catastrophically overloaded. Radioactive debris, nuclear fallout, and coolant fires are likely. Immediate evacuation of the surrounding area is strongly advised.", "NUCLEAR MELTDOWN")
 
-		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad)")
+
 		//explode, throw radioactive components everywhere, dump rad gas, throw radioactive debris everywhere
 		src.melted = TRUE
+		var/meltdown_badness = 0
 		if(!src.current_gas)
 			src.current_gas = new/datum/gas_mixture()
-		src.current_gas.radgas += 6000
-		src.current_gas.temperature = src.temperature
+
+		//determine how bad this meltdown should be
+		//basically this is a points system, more points = worser
+		//at 49 fresh melted cerenkite rods, this is 1080 (feasible, but difficult). at 49 fresh melted plutonium rods this is 3038 (basically upper limit - it would be insane to reach this without admemes)
+		//at 3 fresh melted cerenkite rods this is 60 (most common meltdown due to pipeburn)
+		//total sum of radioactive junk
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				if(src.component_grid[x][y])
+					var/obj/item/reactor_component/comp = src.component_grid[x][y]
+					//more radioactive material = higher score. Doubled if the component is already melted.
+					meltdown_badness += (comp.material.getProperty("radioactive")*2 + comp.material.getProperty("n_radioactive")*5 + comp.material.getProperty("spent_fuel")*10) * (1 + comp.melted)
+					if(istype(comp, /obj/item/reactor_component/gas_channel))
+						var/obj/item/reactor_component/gas_channel/gascomp = comp
+						src.current_gas.merge(gascomp.air_contents) //grab all the gas in the channels and put it back in the reactor so it can be vented into engineering
+
+		src.current_gas.radgas += meltdown_badness*15
+		src.current_gas.temperature = max(src.temperature, src.current_gas.temperature)
 		var/turf/current_loc = get_turf(src)
 		current_loc.assume_air(current_gas)
 
 		for(var/i = 1 to rand(5,20))
 			shoot_projectile_XY(src, new /datum/projectile/bullet/wall_buster_shrapnel(), rand(-10,10), rand(-10,10))
 
-		explosion_new(src,current_loc,2500,1,0,360,TRUE)
+		logTheThing(LOG_STATION, src, "[src] CATASTROPHICALLY OVERLOADS (this is bad) meltdown badness: [meltdown_badness]")
+
+		explosion_new(src, current_loc, max(100, meltdown_badness*5), TRUE, 0, 360, TRUE)
 		SPAWN(15 SECONDS)
 			alarm.repeat = FALSE //haha this is horrendous, this cannot be the way to do this
 			alarm.status = SOUND_UPDATE
@@ -515,7 +539,7 @@
 					if(!equipped)
 						return
 
-					if(!istype(equipped,/obj/item/reactor_component))
+					if(!istype(equipped,/obj/item/reactor_component) && !istype(equipped,/obj/item/device/light/glowstick))
 						ui.user.visible_message("<span class='alert'>[ui.user] tries to shove \a [equipped] into the reactor. Silly [ui.user]!</span>", "<span class='alert'>You try to put \a [equipped] into the reactor. You feel very foolish.</span>")
 						return
 
@@ -528,14 +552,26 @@
 	proc/insert_comp_callback(var/x,var/y,var/mob/user,var/obj/item/reactor_component/equipped)
 		if(src.component_grid[x][y])
 			return FALSE
-		src.component_grid[x][y]=equipped
-		user.u_equip(equipped)
-		equipped.set_loc(src)
+		if(istype(equipped,/obj/item/device/light/glowstick))
+			var/obj/item/device/light/glowstick/stick = equipped
+			var/datum/material/glowstick_mat = getMaterial("glowstick")
+			glowstick_mat = glowstick_mat.getMutable()
+			glowstick_mat.setColor(rgb(stick.col_r*255, stick.col_g*255, stick.col_b*255))
+			var/obj/item/reactor_component/fuel_rod/glowsticks/result_rod = new /obj/item/reactor_component/fuel_rod/glowsticks(glowstick_mat)
+			src.component_grid[x][y]=result_rod
+			result_rod.set_loc(src)
+			user.u_equip(equipped)
+			qdel(equipped)
+		else
+			src.component_grid[x][y]=equipped
+			user.u_equip(equipped)
+			equipped.set_loc(src)
 		playsound(src, 'sound/machines/law_insert.ogg', 80)
 		logTheThing(LOG_STATION, user, "[constructName(user)] <b>inserts</b> component into nuclear reactor([src]): [equipped] at slot [x],[y]")
 		user.visible_message("<span class='alert'>[user] slides \a [equipped] into the reactor</span>", "<span class='alert'>You slide the [equipped] into the reactor.</span>")
 		tgui_process.update_uis(src)
 		_comp_grid_overlay_update = TRUE
+		UpdateGasVolume()
 		UpdateIcon()
 
 	proc/remove_comp_callback(var/x,var/y,var/mob/user)
@@ -546,6 +582,7 @@
 		src.component_grid[x][y] = null
 		tgui_process.update_uis(src)
 		_comp_grid_overlay_update = TRUE
+		UpdateGasVolume()
 		UpdateIcon()
 
 	proc/set_control_rods(var/val)
@@ -588,6 +625,8 @@
 						var/obj/decal/cleanable/debris = make_cleanable(/obj/decal/cleanable/machine_debris/radioactive, epicentre)
 						debris.streak_cleanable(dist_upper=20)
 					src.component_grid[x][y] = null //get rid of the internal ref once we've thrown it out
+		if(_comp_grid_overlay_update)
+			UpdateGasVolume()
 		if(severity <= 1)
 			qdel(src)
 		UpdateIcon()
@@ -611,13 +650,13 @@
 			var/list/chosen_slot = pick(free_slots)
 			user.set_loc(src)
 			SPAWN(1 SECOND)
-				playsound(user, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, 1)
+				playsound(user, 'sound/impact_sounds/Flesh_Tear_2.ogg', 50, TRUE)
 				user.emote("scream")
 			SPAWN(2.5 SECONDS)
-				playsound(user, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1)
+				playsound(user, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, TRUE)
 				user.emote("scream")
 			SPAWN(4 SECONDS)
-				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
+				playsound(user, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, TRUE)
 				var/obj/item/reactor_component/fuel_rod/meat_rod = new /obj/item/reactor_component/fuel_rod("flesh")
 				meat_rod.material.setName(user.name)
 				if(user.bioHolder && user.bioHolder.HasEffect("radioactive"))
@@ -712,6 +751,14 @@
 					src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("cerenkite")
 		..()
 
+/obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/insane
+	New()
+		for(var/x=1 to REACTOR_GRID_WIDTH)
+			for(var/y=1 to REACTOR_GRID_HEIGHT)
+				src.component_grid[x][y] = new /obj/item/reactor_component/fuel_rod("plutonium")
+				src.component_grid[x][y].melt()
+		..()
+
 /obj/machinery/atmospherics/binary/nuclear_reactor/prefilled/glowstick
 	New()
 		var/datum/material/glowstick_mat = getMaterial("glowstick")
@@ -730,7 +777,7 @@
 #undef REACTOR_MELTDOWN_TEMP
 /datum/projectile/neutron //neutron projectile for radiation shooting from reactor
 	name = "neutron"
-	icon_state = "trace"
+	icon_state = "neutron"
 	icon = 'icons/obj/projectiles.dmi'
 	invisibility = INVIS_INFRA
 	override_color = TRUE

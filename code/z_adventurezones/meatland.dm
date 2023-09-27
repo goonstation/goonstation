@@ -86,7 +86,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "It keeps pulsing.  Ew.  Probably shouldn't put your hand in the..mouth?"
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "meatlumps"
-	dir = 4
+	dir = EAST
 
 /obj/stomachacid
 	name = "acid"
@@ -1501,7 +1501,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 
 			theGib.throw_at(target, 8, 2)
 			random_brute_damage(user, rand(5,15))
-			playsound(T, 'sound/impact_sounds/Flesh_Break_1.ogg', 40, 1)
+			playsound(T, 'sound/impact_sounds/Flesh_Break_1.ogg', 40, TRUE)
 
 			user.visible_message("<span class='alert'><b>[user]</b> blasts a lump of flesh at [target]!</span>")
 			if (prob(15))

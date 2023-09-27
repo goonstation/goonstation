@@ -709,11 +709,11 @@ TYPEINFO(/obj/item/furniture_parts/woodenstool)
 
 	onStart()
 		..()
-		playsound(the_furniture, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(the_furniture, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_furniture].</span>")
 
 	onEnd()
 		..()
-		playsound(the_furniture, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(the_furniture, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		the_furniture:deconstruct() // yes a colon, bite me
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_furniture].</span>")

@@ -51,7 +51,7 @@
 			logTheThing(LOG_STATION, src.emagger, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
 
 		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-		playsound(src, 'sound/weapons/flash.ogg', 50, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 50, TRUE)
 		flick("cambot-spark", src)
 		src.emagged = 1
 		return 1
@@ -285,7 +285,7 @@
 					if (ismob(target))
 						var/mob/M = target
 						M.apply_flash(30, 8, 0, 0, 0, rand(0, 2), 0, 0, 100)
-					playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+					playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 
 			// don't sit there taking pictures of the same thing over and over
 			if (!(target in src.photographed))

@@ -1380,12 +1380,6 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 		icon_state = "sweater[pick(1,2,3)]"
 		..()
 
-/obj/item/clothing/under/gimmick/chaps
-	name = "assless chaps"
-	desc = "Now with 95% less chafing!"
-	icon_state = "chaps"
-	item_state = "chaps"
-
 /obj/item/clothing/under/gimmick/vault13
 	name = "Vault 13 Jumpsuit"
 	desc = "A svelte jumpsuit strangely similar to station-issued versions."

@@ -131,7 +131,7 @@ var/global
 		src.messageQueue = null
 		if (ua)
 			//For persistent user tracking
-			apiHandler.queryAPI("versions/add", list(
+			apiHandler?.queryAPI("versions/add", list(
 				"ckey" = src.owner.ckey,
 				"userAgent" = ua,
 				"byondMajor" = src.owner.byond_version,

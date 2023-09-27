@@ -81,6 +81,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 
 	New()
 		..()
+		START_TRACKING
 		RegisterSignal(src, COMSIG_ATOM_HITBY_PROJ, PROC_REF(hitbyproj))
 		if(!no_camera)
 			src.cam = new /obj/machinery/camera(src)
@@ -100,6 +101,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		#endif
 
 	disposing()
+		STOP_TRACKING
 		botcard = null
 		qdel(chat_text)
 		chat_text = null
@@ -137,10 +139,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		var/turf/T = get_turf(src)
 		if(isnull(T))
 			return FALSE
-		for (var/mob/M in GET_NEARBY(T, src.hash_check_range))
-			if(M.client)
-				return TRUE
-		return FALSE
+		return length(GET_NEARBY(T, src.hash_check_range))
 
 	// Generic default. Override for specific bots as needed.
 	bullet_act(var/obj/projectile/P)

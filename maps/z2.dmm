@@ -5,90 +5,15 @@
 "aab" = (
 /turf/space/no_replace,
 /area/space)
-"aaw" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
-/area/iomoon/caves)
-"aaz" = (
-/obj/map/light/lava,
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
-/area/iomoon/caves)
 "aaA" = (
 /obj/map/light/lava,
 /turf/unsimulated/wall/auto/adventure/iomoon,
 /area/iomoon/caves)
-"aaD" = (
-/obj/map/light/lava,
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor{
-	icon_state = "iocrust_edge"
-	},
-/area/iomoon/caves)
-"aaE" = (
-/obj/map/light/lava,
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/floor/lava,
-/area/iomoon/caves)
-"aaF" = (
-/obj/map/light/lava,
-/obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/floor/lava,
-/area/iomoon/caves)
-"aaJ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "aaP" = (
 /obj/table/syndicate/auto,
 /obj/item/nukeop_minimap_controller,
 /turf/unsimulated/floor/carpet/red/decal/innercross,
 /area/syndicate_station/battlecruiser)
-"aaR" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor,
-/area/iomoon)
-"aaS" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor,
-/area/iomoon)
 "aaZ" = (
 /obj/overlay{
 	density = 1;
@@ -102,64 +27,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
-"abe" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor{
-	dir = 6;
-	icon_state = "iocrust_edge"
-	},
-/area/iomoon/caves)
-"abf" = (
-/obj/lattice{
-	dir = 4;
-	icon_state = "lattice-dir"
-	},
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor,
-/area/iomoon)
-"abm" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "abn" = (
 /turf/unsimulated/wall/auto/adventure/shuttle{
 	opacity = 0
 	},
 /area/hospital/samostrel)
-"abo" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor,
-/area/iomoon)
 "abp" = (
 /turf/unsimulated/wall/auto/adventure/hospital,
 /area/hospital)
 "abr" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/hospital/samostrel)
-"abs" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins)
 "abt" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -188,7 +66,7 @@
 	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
 	dir = 1;
 	icon = 'icons/misc/hospital.dmi';
-	icon_state = "sovcomp1";
+	icon_state = "sovcomp3";
 	name = "broken computer"
 	},
 /turf/unsimulated/floor/caution/south,
@@ -199,13 +77,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"abC" = (
-/obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor,
-/area/iomoon)
 "abD" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -1541,7 +1412,8 @@
 "afX" = (
 /obj/decal/fakeobjects/firelock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "fdoor0"
+	icon_state = "fdoor0";
+	dir = 8
 	},
 /turf/unsimulated/floor/blackwhite/whitegrime,
 /area/hospital/samostrel)
@@ -1709,22 +1581,6 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
-"agv" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/floor/void,
-/area/crunch)
-"agw" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/floor/void,
-/area/crunch)
 "agE" = (
 /obj/machinery/door_control{
 	desc = "A remote control switch for the outer blast door.";
@@ -2166,33 +2022,6 @@
 	dir = 1
 	},
 /area/hospital/samostrel)
-"ahG" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/floor/plating,
-/area/crunch)
-"ahH" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/floor/plating,
-/area/crunch)
-"ahJ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
-/area/afterlife/hell)
 "ahK" = (
 /obj/machinery/light/worn{
 	brightness = 2;
@@ -2303,41 +2132,9 @@
 	},
 /turf/unsimulated/floor/lunar,
 /area/moon)
-"aib" = (
-/obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
-/area/afterlife/hell)
 "aic" = (
 /obj/map/light/lava,
 /turf/unsimulated/wall/auto/adventure/iomoon,
-/area/afterlife/hell)
-"aid" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
-/area/afterlife/hell)
-"aie" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
 /area/afterlife/hell)
 "aif" = (
 /obj/indestructible/shuttle_corner{
@@ -4247,9 +4044,9 @@
 "aqy" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "A pod door.  One that is definitely stuck.";
-	dir = 4;
+	dir = 8;
 	icon = 'icons/obj/doors/sovblastdoor.dmi';
-	icon_state = "bdoorsinglebroken";
+	icon_state = "bdoorsinglebroke";
 	name = "pod bay door"
 	},
 /obj/rail{
@@ -8024,12 +7821,6 @@
 /obj/item/raw_material/telecrystal,
 /turf/unsimulated/floor/cave,
 /area/crater/cave)
-"aJr" = (
-/turf/unsimulated/wall/setpieces/stranger{
-	icon = 'icons/turf/walls_ancient.dmi';
-	icon_state = "ancient-12"
-	},
-/area/crater/cave)
 "aJs" = (
 /turf/unsimulated/floor/setpieces{
 	desc = "A strange jet black set of metal stairs.";
@@ -10232,10 +10023,6 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/lower_arctic/mining)
-"aQo" = (
-/obj/machinery/computer/icebase_elevator,
-/turf/unsimulated/floor/grime,
-/area/lower_arctic/mining)
 "aQr" = (
 /obj/spacevine,
 /turf/unsimulated/floor/green/side{
@@ -11205,12 +10992,6 @@
 "aTL" = (
 /obj/grille/steel,
 /turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/crew)
-"aTM" = (
-/obj/machinery/computer/biodome_elevator,
-/turf/unsimulated/floor/caution/corner/nw{
-	dir = 1
-	},
 /area/crater/biodome/crew)
 "aTN" = (
 /obj/machinery/light/emergency{
@@ -13774,10 +13555,6 @@
 /obj/item/cigpacket,
 /turf/unsimulated/floor/grime,
 /area/upper_arctic/mining)
-"bck" = (
-/obj/machinery/computer/icebase_elevator,
-/turf/unsimulated/floor/grime,
-/area/upper_arctic/mining)
 "bcl" = (
 /obj/decal/fakeobjects/skeleton{
 	desc = "Uh oh.";
@@ -15046,15 +14823,6 @@
 	icon_state = "plating_dusty1"
 	},
 /area/marsoutpost)
-"bgh" = (
-/obj/decal/fakeobjects{
-	dir = 1;
-	icon = 'icons/turf/walls_icemoon.dmi';
-	icon_state = "details";
-	name = "symbols"
-	},
-/turf/unsimulated/wall/auto/adventure/icemoon/interior,
-/area/precursor)
 "bgi" = (
 /obj/map/light/cyan,
 /obj/decal/fakeobjects{
@@ -15102,9 +14870,6 @@
 	},
 /turf/unsimulated/floor/grime,
 /area/marsoutpost)
-"bgr" = (
-/turf/unsimulated/wall/auto/adventure/icemoon/interior,
-/area/precursor)
 "bgs" = (
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/yellow{
@@ -15190,14 +14955,6 @@
 "bgE" = (
 /obj/precursor_puzzle/machine,
 /turf/unsimulated/floor/setpieces/bluefloor,
-/area/precursor)
-"bgF" = (
-/obj/decal/fakeobjects{
-	icon = 'icons/turf/walls_icemoon.dmi';
-	icon_state = "details";
-	name = "symbols"
-	},
-/turf/unsimulated/wall/auto/adventure/icemoon/interior,
 /area/precursor)
 "bgH" = (
 /turf/unsimulated/floor/yellow/side{
@@ -15352,16 +15109,6 @@
 	name = "space gizmo"
 	},
 /turf/unsimulated/floor/setpieces/bluefloor,
-/area/precursor)
-"bhh" = (
-/obj/map/light/cyan,
-/obj/decal/fakeobjects{
-	dir = 1;
-	icon = 'icons/turf/walls_icemoon.dmi';
-	icon_state = "details";
-	name = "symbols"
-	},
-/turf/unsimulated/wall/auto/adventure/icemoon/interior,
 /area/precursor)
 "bhi" = (
 /obj/creepy_sound_trigger,
@@ -16461,12 +16208,6 @@
 	name = "strange surface"
 	},
 /area/crater/cave/lower)
-"bkc" = (
-/turf/unsimulated/wall/setpieces/stranger{
-	icon = 'icons/turf/walls_ancient.dmi';
-	icon_state = "ancient-2"
-	},
-/area/crater/cave/lower)
 "bkd" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -17178,12 +16919,6 @@
 	},
 /turf/unsimulated/floor/setpieces/bluefloor,
 /area/precursor)
-"bmc" = (
-/obj/precursor_puzzle/controller{
-	id = "SHIELD_HALL"
-	},
-/turf/unsimulated/wall/auto/adventure/icemoon/interior,
-/area/precursor)
 "bmd" = (
 /turf/unsimulated/floor/red/side,
 /area/drone)
@@ -17438,12 +17173,6 @@
 	id = "PIT_ROOM"
 	},
 /turf/unsimulated/floor/setpieces/bluefloor,
-/area/precursor)
-"bmU" = (
-/obj/precursor_puzzle/controller{
-	id = "PIT_ROOM"
-	},
-/turf/unsimulated/wall/auto/adventure/icemoon/interior,
 /area/precursor)
 "bmV" = (
 /obj/precursor_puzzle/rotator{
@@ -18037,13 +17766,6 @@
 	icon = 'icons/turf/floors.dmi';
 	icon_state = "ancient";
 	name = "strange surface"
-	},
-/area/crater/cave/lower)
-"bop" = (
-/obj/map/light/dimreddish,
-/turf/unsimulated/wall/setpieces/stranger{
-	icon = 'icons/turf/walls_ancient.dmi';
-	icon_state = "ancient-2"
 	},
 /area/crater/cave/lower)
 "boq" = (
@@ -19965,31 +19687,6 @@
 	},
 /turf/unsimulated/floor/shuttle/yellow,
 /area/shuttle/john/owlery)
-"bvA" = (
-/obj/surgery_tray,
-/obj/item/circular_saw{
-	pixel_x = 3;
-	pixel_y = 12
-	},
-/obj/item/scalpel,
-/obj/item/staple_gun{
-	pixel_x = 5
-	},
-/obj/item/weldingtool,
-/obj/item/hemostat,
-/obj/item/surgical_spoon,
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
-	},
-/obj/decal/tile_edge/stripe{
-	dir = 6;
-	icon_state = "bot2"
-	},
-/obj/item/suture,
-/obj/item/scissors/surgical_scissors,
-/turf/unsimulated/floor/white,
-/area/syndicate_station/medbay)
 "bvE" = (
 /obj/juggleplaque{
 	desc = "Syndicate Battlecruiser Cairngorm - Out of these mountains, Out of the defiant torment of Plutonic rock, Out of fire, terror, blackness and upheaval, Leap the clear burns, Living water.";
@@ -20274,13 +19971,6 @@
 	icon_state = "iocrust_edge"
 	},
 /area/iomoon/caves)
-"bxa" = (
-/obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/floor/lava,
-/area/iomoon)
 "bxb" = (
 /turf/unsimulated/iomoon/ancient_wall{
 	dir = 4
@@ -21806,14 +21496,6 @@
 	icon_state = "fred1"
 	},
 /area/iomoon/base)
-"bDL" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/floor/lava,
-/area/iomoon)
 "bDQ" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -22306,14 +21988,6 @@
 	name = "power conduit"
 	},
 /turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins/boss_chamber)
-"bFY" = (
-/obj/decal/fakeobjects{
-	icon = 'icons/turf/walls_iomoon.dmi';
-	icon_state = "details";
-	name = "symbols"
-	},
-/turf/unsimulated/wall/auto/adventure/iomoon/interior,
 /area/iomoon/robot_ruins/boss_chamber)
 "bFZ" = (
 /obj/decal/glow{
@@ -22903,34 +22577,6 @@
 	},
 /turf/unsimulated/iomoon/ancient_floor,
 /area/iomoon/robot_ruins/boss_chamber)
-"bIe" = (
-/obj/decal/glow{
-	anchored = 1;
-	brightness = 2;
-	color_b = 0.8;
-	color_g = 1;
-	color_r = 0;
-	desc = "Some manner of glowing power conveyor.";
-	dir = 4;
-	icon = 'icons/obj/machines/heavy_fiber.dmi';
-	icon_state = "";
-	name = "power conduit"
-	},
-/obj/overlay{
-	bound_height = 64;
-	bound_width = 64;
-	desc = "An enormous artifact of some sort. You feel uncomfortable just being near it.";
-	icon = 'icons/effects/64x64.dmi';
-	icon_state = "powercore_ring2";
-	layer = 3.9;
-	name = "central ring";
-	pixel_x = 16;
-	pixel_y = 17
-	},
-/turf/unsimulated/iomoon/ancient_floor{
-	icon_state = "ancientfloor2"
-	},
-/area/iomoon/robot_ruins/boss_chamber)
 "bIf" = (
 /obj/decal/glow{
 	anchored = 1;
@@ -23087,20 +22733,6 @@
 "bIA" = (
 /obj/decal/cleanable/ash,
 /turf/unsimulated/iomoon/ancient_floor,
-/area/iomoon/robot_ruins/boss_chamber)
-"bIB" = (
-/obj/overlay{
-	bound_height = 160;
-	bound_width = 160;
-	desc = "An enormous artifact of some sort. You feel uncomfortable just being near it.";
-	icon = 'icons/effects/160x160.dmi';
-	icon_state = "powercore_ring3";
-	layer = 3.9;
-	name = "enormous artifact"
-	},
-/turf/unsimulated/iomoon/ancient_floor{
-	icon_state = "ancientfloor2"
-	},
 /area/iomoon/robot_ruins/boss_chamber)
 "bIC" = (
 /obj/machinery/shuttle/engine/propulsion{
@@ -26105,10 +25737,6 @@
 	dir = 1
 	},
 /area/crypt/sigma)
-"bTc" = (
-/obj/machinery/computer/biodome_elevator,
-/turf/unsimulated/floor/caution/corner/ne,
-/area/crypt/sigma)
 "bTd" = (
 /obj/submachine/chem_extractor{
 	dir = 4
@@ -27900,6 +27528,9 @@
 	name = "Fleshy Floor"
 	},
 /area/meat_derelict/main)
+"bZH" = (
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/precursor)
 "bZJ" = (
 /obj/table/auto,
 /obj/item/cell/supercell/charged,
@@ -30156,7 +29787,8 @@
 /obj/machinery/door/poddoor/blast/single{
 	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
 	id = "meatstation1";
-	name = "Safety Interlock"
+	name = "Safety Interlock";
+	dir = 4
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -31217,7 +30849,9 @@
 	},
 /area/meat_derelict/soviet)
 "cly" = (
-/obj/machinery/door/unpowered/shuttle,
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
@@ -49367,6 +49001,14 @@
 	icon_state = "floor"
 	},
 /area/centcom)
+"doh" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor,
+/area/iomoon)
 "doL" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This blast door looks rusted over.  Junk.";
@@ -49505,13 +49147,6 @@
 	},
 /turf/unsimulated/floor/caution/corner/ne,
 /area/hospital/underground)
-"dpH" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon = 'icons/turf/walls_hospital.dmi'
-	},
-/turf/unsimulated/floor/plating/scorched,
-/area/hospital/underground)
 "dpP" = (
 /obj/lattice{
 	dir = 6;
@@ -49628,9 +49263,7 @@
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "drV" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -49753,9 +49386,7 @@
 /area/hospital/underground)
 "dsu" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -50191,9 +49822,7 @@
 /area/crypt/sigma/lab)
 "dvi" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -56335,30 +55964,6 @@
 	},
 /turf/unsimulated/floor/seabed,
 /area/centcom/garden)
-"dPs" = (
-/obj/item/storage/toilet/random{
-	dir = 4;
-	pixel_x = -8
-	},
-/obj/decal/fakeobjects{
-	icon = 'icons/obj/decoration.dmi';
-	icon_state = "rung";
-	name = "hand rail";
-	pixel_y = 16
-	},
-/obj/submachine/centcom_elevator{
-	desc = "a not at all suspicious toilet paper holder.";
-	icon = 'icons/obj/decoration.dmi';
-	icon_state = "toiletholder";
-	name = "toilet paper holder";
-	pixel_y = 32
-	},
-/obj/machinery/light{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor/sanitary,
-/area/shuttle/centcom_elevator/lower)
 "dPt" = (
 /turf/simulated/floor/sanitary,
 /area/shuttle/centcom_elevator/lower)
@@ -56897,10 +56502,6 @@
 	icon_state = "tile1"
 	},
 /obj/table/reinforced/bar/auto,
-/obj/decal/tile_edge/line/black{
-	dir = 4;
-	icon_state = "tile1"
-	},
 /obj/machinery/glass_recycler{
 	glass_amt = 50
 	},
@@ -57191,14 +56792,6 @@
 /obj/machinery/bot/skullbot/gold,
 /obj/map/light/brightwhite,
 /turf/unsimulated/floor/specialroom/gym,
-/area/afterlife/bar)
-"dSV" = (
-/obj/table/wood/round/auto,
-/obj/map/light/white,
-/obj/item/instrument/electricguitar{
-	pixel_y = 3
-	},
-/turf/unsimulated/floor/wood/two,
 /area/afterlife/bar)
 "dSW" = (
 /obj/table/wood/round/auto,
@@ -57623,16 +57216,6 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating,
 /area/crater/biodome/research)
-"dWW" = (
-/obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
-/area/iomoon/caves)
 "dXD" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -57646,6 +57229,17 @@
 /obj/table/nanotrasen/auto,
 /turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
+"dXT" = (
+/obj/map/light/lava,
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor{
+	icon_state = "iocrust_edge"
+	},
+/area/iomoon/caves)
 "dYd" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -57668,6 +57262,17 @@
 "dYr" = (
 /turf/unsimulated/floor/stairs/wood/wide,
 /area/centcom/gallery)
+"dYs" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor{
+	dir = 6;
+	icon_state = "iocrust_edge"
+	},
+/area/iomoon/caves)
 "dYP" = (
 /obj/spacevine,
 /turf/unsimulated/wall/auto/lead/blue,
@@ -57744,6 +57349,20 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"eal" = (
+/obj/table/wood/round/auto,
+/obj/map/light/white,
+/obj/item/instrument/electricguitar{
+	pixel_y = -3
+	},
+/obj/item/instrument/guitar{
+	pixel_y = 7
+	},
+/obj/item/instrument/bass{
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "eaz" = (
 /obj/storage/crate/classcrate{
 	desc = "A crate for XIANG|GIESEL training materials.";
@@ -57782,6 +57401,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"ecj" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/meat_derelict/main)
 "edm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -58511,9 +58136,7 @@
 /area/centcom/offices/zamujasa)
 "eTR" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -58647,7 +58270,9 @@
 	},
 /area/moon/museum)
 "fbU" = (
-/obj/critter/monster_door,
+/obj/critter/monster_door{
+	dir = 4
+	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/guts)
 "fcf" = (
@@ -58705,6 +58330,17 @@
 	dir = 4
 	},
 /area/owlery/office)
+"fgg" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/iomoon/caves)
 "fgG" = (
 /obj/item/casing/shotgun/blue,
 /obj/decal/cleanable/blood/gibs,
@@ -58719,6 +58355,10 @@
 	name = "launcher doors"
 	},
 /area/drone/assembly)
+"fgO" = (
+/obj/machinery/computer/elevator/icebase,
+/turf/unsimulated/floor/grime,
+/area/upper_arctic/mining)
 "fgU" = (
 /obj/grille/steel,
 /obj/item/raw_material/shard/glass,
@@ -59131,6 +58771,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"fDS" = (
+/obj/precursor_puzzle/controller{
+	id = "PIT_ROOM"
+	},
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/precursor)
 "fFv" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -59703,14 +59349,6 @@
 /obj/decal/cleanable/cobweb2,
 /turf/unsimulated/floor/white/grime,
 /area/crypt/sigma/kitchen)
-"gkL" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/floor/lava,
-/area/iomoon)
 "glz" = (
 /obj/lattice,
 /turf/unsimulated/floor/void,
@@ -60197,6 +59835,16 @@
 	name = "broken door"
 	},
 /area/hospital/samostrel)
+"gNx" = (
+/obj/map/light/cyan,
+/obj/decal/fakeobjects{
+	dir = 1;
+	icon = 'icons/turf/walls/precursor.dmi';
+	icon_state = "details";
+	name = "symbols"
+	},
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/precursor)
 "gNI" = (
 /turf/unsimulated/floor/airless/plating/damaged2,
 /area/crunch)
@@ -60283,6 +59931,15 @@
 	icon_state = "logo_xg13"
 	},
 /area/iomoon/base)
+"gVY" = (
+/obj/stool/chair/dining/regal{
+	anchored = 1;
+	dir = 8
+	},
+/turf/unsimulated/floor/carpet/regalcarpet/border{
+	dir = 6
+	},
+/area/centcom/gallery)
 "gXe" = (
 /turf/unsimulated/floor/carpet/green/fancy/edge/nw,
 /area/centcom/offices{
@@ -60337,9 +59994,7 @@
 /area/centcom/lounge)
 "gZG" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -60385,6 +60040,17 @@
 /obj/storage/closet/thunderdome/red,
 /turf/unsimulated/floor/plating,
 /area/sim/tdome/tdome2)
+"hdA" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/afterlife/hell)
 "hep" = (
 /obj/machinery/door/unpowered/wood/lily{
 	dir = 8;
@@ -60455,6 +60121,15 @@
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/crunch)
+"hhE" = (
+/obj/decal/fakeobjects{
+	dir = 1;
+	icon = 'icons/turf/walls/ancient_smooth.dmi';
+	icon_state = "details";
+	name = "symbols"
+	},
+/turf/unsimulated/wall/auto/adventure/iomoon/interior,
+/area/iomoon/robot_ruins)
 "hir" = (
 /obj/lattice{
 	dir = 1;
@@ -60581,6 +60256,14 @@
 /obj/machinery/door/unpowered/wood/stall,
 /turf/unsimulated/floor/specialroom/freezer,
 /area/iomoon/base)
+"hqz" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "hqN" = (
 /obj/stool/chair/couch/purple{
 	dir = 8
@@ -61073,6 +60756,10 @@
 /obj/item/staff/monkey_staff,
 /turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
+"hQs" = (
+/obj/machinery/computer/elevator/icebase,
+/turf/unsimulated/floor/grime,
+/area/lower_arctic/mining)
 "hQy" = (
 /obj/item/instrument/saxophone,
 /obj/decal/fakeobjects{
@@ -61256,6 +60943,17 @@
 	dir = 9
 	},
 /area/crunch/wtc)
+"idj" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/iomoon/caves)
 "idw" = (
 /obj/decal/fakeobjects/pipe,
 /turf/unsimulated/floor/plating,
@@ -62551,6 +62249,16 @@
 "jnw" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/solarium)
+"jnB" = (
+/obj/indestructible/shuttle_corner{
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/iomoon/caves)
 "jog" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/unsimulated/floor/wood/eight{
@@ -62901,13 +62609,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
-"jMx" = (
-/obj/indestructible/shuttle_corner{
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/floor/plating,
-/area/iomoon/base/underground)
 "jMC" = (
 /obj/storage/crate,
 /turf/unsimulated/floor{
@@ -63025,9 +62726,7 @@
 	icon_state = "blue"
 	})
 "jRS" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -63079,7 +62778,7 @@
 "jUW" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This blast door looks rusted over.  Junk.";
-	dir = 10;
+	dir = 1;
 	icon = 'icons/obj/doors/blastdoor.dmi';
 	icon_state = "bdoorbroken";
 	name = "rusty blastdoor"
@@ -63192,6 +62891,14 @@
 	dir = 9
 	},
 /area/centcom/gallery)
+"kbz" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "kce" = (
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
@@ -63225,6 +62932,12 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base/underground)
+"kdt" = (
+/obj/precursor_puzzle/controller{
+	id = "SHIELD_HALL"
+	},
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/precursor)
 "kdD" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -63325,6 +63038,14 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/shuttle/biodome_elevator/upper)
+"kjH" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/floor/lava,
+/area/iomoon)
 "kkO" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	desc = "Oh sure it looks the same, but all the connections and mounting points are different.  Also all the screw heads are those awful triangular ones.";
@@ -63368,20 +63089,6 @@
 	opacity = 1
 	},
 /area/adventure/channel)
-"kmA" = (
-/obj/map/light/lava,
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/floor/lava{
-	density = 1;
-	desc = "It's hard to see past this bubble in the pyroclastic flows.";
-	name = "Far Lava";
-	opacity = 1
-	},
-/area/iomoon)
 "kmF" = (
 /obj/decal/tile_edge/stripe/big{
 	dir = 8
@@ -63482,6 +63189,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait)
+"krl" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "krS" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -63523,6 +63238,14 @@
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/staffhall)
+"kuN" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/turf/walls/ancient_smooth.dmi';
+	icon_state = "details";
+	name = "symbols"
+	},
+/turf/unsimulated/wall/auto/adventure/iomoon/interior,
+/area/iomoon/robot_ruins)
 "kvr" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "beach-0"
@@ -63770,6 +63493,15 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
+"kIU" = (
+/obj/decal/fakeobjects{
+	dir = 1;
+	icon = 'icons/turf/walls/precursor.dmi';
+	icon_state = "details";
+	name = "symbols"
+	},
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/precursor)
 "kJE" = (
 /obj/machinery/bot/medbot/no_camera,
 /turf/unsimulated/floor/red,
@@ -64314,6 +64046,14 @@
 /obj/machinery/vending/cola/blue,
 /turf/unsimulated/floor/void,
 /area/void_diner)
+"llu" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/void,
+/area/crunch)
 "llH" = (
 /obj/invisible_teleporter/receive_only{
 	id = "murderentry"
@@ -64572,6 +64312,14 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel)
+"lxy" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/turf/walls/ancient_smooth.dmi';
+	icon_state = "details";
+	name = "symbols"
+	},
+/turf/unsimulated/wall/auto/adventure/iomoon/interior,
+/area/iomoon/robot_ruins/boss_chamber)
 "lxN" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -64769,14 +64517,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
-"lJy" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/floor/lava,
-/area/iomoon)
 "lKe" = (
 /obj/grille/catwalk{
 	dir = 9;
@@ -64866,15 +64606,6 @@
 	dir = 4
 	},
 /area/centcom)
-"lPG" = (
-/obj/map/light/lava,
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/floor/lava,
-/area/iomoon/caves)
 "lPH" = (
 /obj/machinery/chem_dispenser/alcohol,
 /turf/unsimulated/outdoors/grass,
@@ -64949,6 +64680,14 @@
 	},
 /turf/unsimulated/grass,
 /area/centcom/lounge)
+"lTF" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/martian,
+/area/crunch)
 "lUk" = (
 /obj/decal/icefloor,
 /mob/living/critter/spider/ice,
@@ -65577,6 +65316,14 @@
 	},
 /turf/space,
 /area/wizard_station_space)
+"mCX" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/void,
+/area/crunch)
 "mDg" = (
 /obj/stool/bar,
 /turf/unsimulated/floor/carpet{
@@ -65661,6 +65408,14 @@
 	dir = 4
 	},
 /area/centcom)
+"mHR" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor,
+/area/iomoon)
 "mIm" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -65772,6 +65527,12 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/leah)
+"mNW" = (
+/turf/unsimulated/wall/setpieces/stranger{
+	icon = 'icons/turf/walls/ancient.dmi';
+	icon_state = "ancient-12"
+	},
+/area/crater/cave)
 "mOs" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose/syndicate_horizontal,
 /turf/unsimulated/floor/shuttlebay,
@@ -65823,6 +65584,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"mTv" = (
+/obj/indestructible/shuttle_corner{
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/floor/plating,
+/area/iomoon/base/underground)
 "mUi" = (
 /obj/admin_plaque{
 	name = "Studenterhue's Office"
@@ -65874,6 +65642,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"mVR" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/floor/plating,
+/area/iomoon/base/underground)
 "mWd" = (
 /obj/disposaloutlet{
 	dir = 1;
@@ -66038,6 +65814,15 @@
 	},
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"neB" = (
+/obj/machinery/door/unpowered/shuttle{
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/hospital/samostrel)
 "nfK" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -66190,14 +65975,6 @@
 	icon_state = "shore-40"
 	},
 /area/titlescreen)
-"noq" = (
-/obj/indestructible/shuttle_corner{
-	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "noM" = (
 /obj/machinery/door/airlock/pyro/command/centcom{
 	dir = 4
@@ -66514,7 +66291,8 @@
 /turf/unsimulated/wall/generic{
 	icon = 'icons/obj/doors/shuttle.dmi';
 	icon_state = "door1";
-	name = "broken door"
+	name = "broken door";
+	dir = 4
 	},
 /area/meat_derelict/soviet)
 "nAf" = (
@@ -66622,6 +66400,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"nFQ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor,
+/area/iomoon)
 "nHE" = (
 /obj/decal/cleanable/dirt/dirt2,
 /turf/unsimulated/floor/grime,
@@ -66735,6 +66521,20 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"nMZ" = (
+/obj/map/light/lava,
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/floor/lava{
+	density = 1;
+	desc = "It's hard to see past this bubble in the pyroclastic flows.";
+	name = "Far Lava";
+	opacity = 1
+	},
+/area/iomoon)
 "nNp" = (
 /obj/decal/tile_edge/line/black{
 	dir = 4;
@@ -66771,15 +66571,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"nOw" = (
-/obj/stool/chair/dining/{
-	anchored = 1;
-	dir = 8
-	},
-/turf/unsimulated/floor/carpet/regalcarpet/border{
-	dir = 6
-	},
-/area/centcom/gallery)
 "nOC" = (
 /obj/item/scrap,
 /obj/decal/cleanable/blood,
@@ -66992,6 +66783,14 @@
 	},
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
+"nWF" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "nWG" = (
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
@@ -67715,14 +67514,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
-"oLy" = (
-/obj/indestructible/shuttle_corner{
-	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "oNa" = (
 /obj/machinery/conveyor/EW{
 	id = "ddan"
@@ -67739,17 +67530,6 @@
 /obj/item/shipcomponent/mainweapon/disruptor,
 /turf/unsimulated/floor/caution/north,
 /area/drone/office)
-"oOy" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
-/area/iomoon/caves)
 "oPt" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -67830,6 +67610,12 @@
 	name = "virtual lead wall"
 	},
 /area/sim/gunsim/lobby)
+"oTH" = (
+/obj/machinery/computer/elevator/biodome,
+/turf/unsimulated/floor/caution/corner/nw{
+	dir = 1
+	},
+/area/crater/biodome/crew)
 "oTY" = (
 /obj/lattice{
 	dir = 1;
@@ -68145,6 +67931,17 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"piL" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/iomoon/caves)
 "pjz" = (
 /obj/tree,
 /turf/unsimulated/grass,
@@ -68560,17 +68357,6 @@
 /obj/railing/orange/reinforced,
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon)
-"pAZ" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/iomoon/floor{
-	name = "silicate cave floor";
-	temperature = 313.15
-	},
-/area/iomoon/caves)
 "pCf" = (
 /obj/lattice,
 /obj/machinery/vending/coffee,
@@ -68605,13 +68391,23 @@
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
 	icon = 'icons/obj/doors/shuttle.dmi';
-	name = "rusted hatch"
+	name = "rusted hatch";
+	dir = 8
 	},
 /turf/unsimulated/floor{
 	icon = 'icons/turf/shuttle.dmi';
 	icon_state = "floor3"
 	},
 /area/meat_derelict/soviet)
+"pDX" = (
+/obj/map/light/lava,
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/floor/lava,
+/area/iomoon/caves)
 "pEv" = (
 /obj/lattice{
 	dir = 10;
@@ -69293,6 +69089,14 @@
 	icon_state = "red2"
 	},
 /area/afterlife/bar)
+"qrF" = (
+/obj/decal/fakeobjects{
+	icon = 'icons/turf/walls/precursor.dmi';
+	icon_state = "details";
+	name = "symbols"
+	},
+/turf/unsimulated/wall/auto/adventure/icemooninterior,
+/area/precursor)
 "qrR" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/gauntlet/viewing)
@@ -69371,6 +69175,14 @@
 	},
 /turf/unsimulated/floor/airless/plating/catwalk/auto/iomoon,
 /area/iomoon/caves)
+"qvo" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/plating,
+/area/crunch)
 "qvU" = (
 /obj/decal/cleanable/blood{
 	icon_state = "left_bloodygloves_c"
@@ -69473,6 +69285,14 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"qCy" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "qCA" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 1;
@@ -69710,6 +69530,14 @@
 	},
 /turf/unsimulated/floor/green,
 /area/owlery/owllock)
+"qNe" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/floor/lava,
+/area/iomoon)
 "qOj" = (
 /obj/disposalpipe/trunk{
 	dir = 4
@@ -69927,14 +69755,6 @@
 	dir = 1
 	},
 /area/iomoon/base)
-"rae" = (
-/obj/decal/fakeobjects{
-	icon = 'icons/turf/walls_iomoon.dmi';
-	icon_state = "details";
-	name = "symbols"
-	},
-/turf/unsimulated/wall/auto/adventure/iomoon/interior,
-/area/iomoon/robot_ruins)
 "ral" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -69945,9 +69765,7 @@
 /area/hospital)
 "raS" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -70343,6 +70161,18 @@
 "rtI" = (
 /turf/unsimulated/floor/martian,
 /area/crunch)
+"rtJ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
+	dir = 4;
+	icon = 'icons/misc/hospital.dmi';
+	icon_state = "sovcomp1";
+	name = "broken computer"
+	},
+/turf/unsimulated/floor/caution/east,
+/area/hospital/samostrel)
 "rtM" = (
 /obj/crevice/meatland,
 /turf/unsimulated/floor/setpieces/bloodfloor{
@@ -71007,6 +70837,15 @@
 "rZe" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/drone/office)
+"rZE" = (
+/obj/map/light/lava,
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/floor/lava,
+/area/iomoon/caves)
 "sad" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This blast door looks rusted over.  Junk.";
@@ -71521,6 +71360,10 @@
 /obj/decal/stripe_delivery,
 /turf/unsimulated/floor/plating,
 /area/shuttle/icebase_elevator/upper)
+"sDG" = (
+/obj/machinery/computer/elevator/biodome,
+/turf/unsimulated/floor/caution/corner/ne,
+/area/crypt/sigma)
 "sDR" = (
 /obj/machinery/shuttle/engine/propulsion{
 	dir = 1;
@@ -71581,14 +71424,6 @@
 	},
 /turf/unsimulated/floor/carpet/arcade,
 /area/sim/racing_entry)
-"sHX" = (
-/obj/indestructible/shuttle_corner{
-	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "sHZ" = (
 /obj/item/paper{
 	pixel_x = 7;
@@ -71763,6 +71598,18 @@
 	dir = 4
 	},
 /area/iomoon/base)
+"sQU" = (
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "This shuttle door is really jammed.  What's the point of it then?  WHAT IS THE POINT";
+	icon = 'icons/obj/doors/shuttle.dmi';
+	name = "rusted hatch";
+	dir = 8
+	},
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/hospital/samostrel)
 "sRi" = (
 /turf/unsimulated/floor/grey/corner{
 	dir = 4
@@ -71846,14 +71693,6 @@
 	dir = 4
 	},
 /area/crunch/wtc)
-"tdn" = (
-/obj/indestructible/shuttle_corner{
-	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
-	icon_state = "diagonal"
-	},
-/turf/unsimulated/floor/martian,
-/area/crunch)
 "tdU" = (
 /obj/machinery/vending/alcohol,
 /turf/unsimulated/outdoors/grass,
@@ -72065,15 +71904,6 @@
 /obj/item/suture,
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/kyle)
-"tuk" = (
-/obj/decal/fakeobjects{
-	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	icon_state = "details";
-	name = "symbols"
-	},
-/turf/unsimulated/wall/auto/adventure/iomoon/interior,
-/area/iomoon/robot_ruins)
 "tuw" = (
 /turf/unsimulated/wall/auto/lead/white{
 	desc = "The outer shell of some large microwave array thing.";
@@ -72166,6 +71996,14 @@
 /obj/effects/precipitation/rain/dense/tile,
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/aloe)
+"tzJ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/floor/lava,
+/area/iomoon)
 "tAi" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle{
@@ -72408,6 +72246,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"tUX" = (
+/obj/indestructible/shuttle_corner{
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/floor/lava,
+/area/iomoon)
 "tVB" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -72771,6 +72616,14 @@
 	},
 /turf/unsimulated/wall/auto/supernorn/wood,
 /area/wizard_station)
+"uqJ" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon = 'icons/turf/walls/martian.dmi';
+	icon_state = "diagonal"
+	},
+/turf/unsimulated/floor/plating,
+/area/crunch)
 "ura" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -72804,6 +72657,14 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"uss" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/ancient_floor,
+/area/iomoon/robot_ruins)
 "usD" = (
 /obj/item/paper/book/from_file/space_law,
 /turf/unsimulated/floor/redblack{
@@ -73123,6 +72984,14 @@
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/crunch)
+"uJK" = (
+/obj/map/light/lava,
+/obj/indestructible/shuttle_corner{
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/floor/lava,
+/area/iomoon/caves)
 "uJX" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/upper_arctic/hall)
@@ -73140,9 +73009,7 @@
 /area/moon/museum/west)
 "uKz" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -73379,6 +73246,17 @@
 	name = "sand"
 	},
 /area/centcom/offices/enakai)
+"vcq" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/afterlife/hell)
 "vcR" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -73671,6 +73549,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"vpA" = (
+/turf/unsimulated/wall/setpieces/stranger{
+	icon = 'icons/turf/walls/ancient.dmi';
+	icon_state = "ancient-2"
+	},
+/area/crater/cave/lower)
 "vqe" = (
 /obj/machinery/coffeemaker/research,
 /obj/table/wood/auto,
@@ -73791,6 +73675,18 @@
 	icon_state = "shore-8"
 	},
 /area/titlescreen)
+"vwd" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor,
+/area/iomoon)
 "vwU" = (
 /obj/decal/tile_edge/line/green{
 	icon_state = "line1"
@@ -73891,6 +73787,13 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"vGx" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon = 'icons/turf/walls/asteroid_dark.dmi'
+	},
+/turf/unsimulated/floor/plating/scorched,
+/area/hospital/underground)
 "vGz" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -74172,6 +74075,17 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/syndicate_station_space)
+"vSX" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/afterlife/hell)
 "vTo" = (
 /obj/machinery/door/airlock/pyro/classic{
 	locked = 1
@@ -74351,14 +74265,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
-"wcY" = (
-/obj/indestructible/shuttle_corner{
-	dir = 1;
-	icon = 'icons/turf/walls_iomoon.dmi';
-	name = "silicate crust"
-	},
-/turf/unsimulated/floor/plating,
-/area/iomoon/base/underground)
 "wdj" = (
 /obj/storage/secure/closet/engineering/engineer,
 /turf/unsimulated/floor/plating,
@@ -74465,6 +74371,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"wjW" = (
+/obj/indestructible/shuttle_corner{
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor,
+/area/iomoon)
 "wky" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -74553,6 +74466,14 @@
 	},
 /turf/unsimulated/floor/white/grime,
 /area/marsoutpost)
+"wmD" = (
+/turf/unsimulated/wall/generic{
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "broken door";
+	dir = 8
+	},
+/area/meat_derelict/soviet)
 "wmE" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
@@ -74880,6 +74801,26 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"wDg" = (
+/obj/item/storage/toilet/random{
+	dir = 4;
+	pixel_x = -8
+	},
+/obj/decal/fakeobjects{
+	icon = 'icons/obj/decoration.dmi';
+	icon_state = "rung";
+	name = "hand rail";
+	pixel_y = 16
+	},
+/obj/machinery/computer/elevator/centcomm/hidden{
+	pixel_y = 32
+	},
+/obj/machinery/light{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/sanitary,
+/area/shuttle/centcom_elevator/lower)
 "wDz" = (
 /obj/decal/fakeobjects/firelock_broken{
 	icon = 'icons/obj/doors/SL_doors.dmi';
@@ -74920,6 +74861,18 @@
 /obj/storage/closet/iomoon,
 /turf/unsimulated/floor/industrial,
 /area/iomoon/base)
+"wEY" = (
+/obj/map/light/lava,
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/iomoon/caves)
 "wFO" = (
 /obj/indestructible/shuttle_corner{
 	icon_state = "wall3_trans"
@@ -75070,9 +75023,7 @@
 /turf/unsimulated/grass,
 /area/owlery/owllock)
 "wLj" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
+/obj/npc/trader/random,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -75206,13 +75157,6 @@
 /obj/decal/fakeobjects/pipe,
 /turf/unsimulated/floor/caution/north,
 /area/iomoon/base/underground)
-"wPi" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8;
-	icon = 'icons/turf/walls_hospital.dmi'
-	},
-/turf/unsimulated/floor/plating,
-/area/hospital/underground)
 "wPn" = (
 /obj/decoration/bookcase{
 	desc = "It's all paperback copies of science fiction and fantasy novels!";
@@ -75331,6 +75275,13 @@
 /obj/decal/cleanable/blood,
 /turf/unsimulated/floor/black,
 /area/owlery/office)
+"wXl" = (
+/obj/map/light/dimreddish,
+/turf/unsimulated/wall/setpieces/stranger{
+	icon = 'icons/turf/walls/ancient.dmi';
+	icon_state = "ancient-2"
+	},
+/area/crater/cave/lower)
 "wXp" = (
 /obj/shrub/dead{
 	dir = 4
@@ -75732,6 +75683,13 @@
 	},
 /turf/unsimulated/nicegrass/random,
 /area/centcom/garden)
+"xvq" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon = 'icons/turf/walls/asteroid_dark.dmi'
+	},
+/turf/unsimulated/floor/plating,
+/area/hospital/underground)
 "xvJ" = (
 /obj/storage/closet/dresser,
 /obj/item/card/id/pod_wars/syndicate{
@@ -76133,12 +76091,22 @@
 "xLv" = (
 /turf/unsimulated/wall/generic{
 	desc = "It's sealed shut.";
-	dir = 1;
+	dir = 8;
 	icon = 'icons/obj/doors/sovblastdoor.dmi';
 	icon_state = "bdoorsingle1";
 	name = "pod bay door"
 	},
 /area/hospital/samostrel)
+"xMm" = (
+/obj/indestructible/shuttle_corner{
+	icon = 'icons/turf/walls/silicate.dmi';
+	name = "silicate crust"
+	},
+/turf/unsimulated/iomoon/floor{
+	name = "silicate cave floor";
+	temperature = 313.15
+	},
+/area/afterlife/hell)
 "xMn" = (
 /turf/unsimulated/floor/marble/border_wb{
 	dir = 6
@@ -77432,8 +77400,8 @@ boV
 boV
 boV
 boV
-lJy
-bxa
+kjH
+tUX
 boW
 boW
 boW
@@ -77733,7 +77701,7 @@ boW
 boW
 boW
 boV
-lJy
+kjH
 boH
 boH
 boW
@@ -77758,7 +77726,7 @@ boW
 boW
 boW
 boW
-lJy
+kjH
 aaa
 aaa
 aaa
@@ -78034,7 +78002,7 @@ boW
 boW
 boW
 boW
-lJy
+kjH
 boH
 boH
 boH
@@ -78339,7 +78307,7 @@ boW
 boH
 boH
 boH
-bDL
+qNe
 boW
 boW
 boW
@@ -78638,9 +78606,9 @@ boW
 boW
 boW
 boW
-gkL
+tzJ
 boH
-bDL
+qNe
 boV
 boW
 boW
@@ -78663,7 +78631,7 @@ boW
 boW
 boW
 boW
-lJy
+kjH
 boH
 aaa
 aaa
@@ -78964,7 +78932,7 @@ boW
 boW
 boW
 boW
-lJy
+kjH
 boH
 boH
 aaa
@@ -79265,7 +79233,7 @@ boW
 boW
 boV
 boV
-lJy
+kjH
 boH
 boH
 boH
@@ -79305,7 +79273,7 @@ bKw
 bKw
 bKw
 bKw
-agv
+llu
 bTU
 bTU
 bTU
@@ -79532,7 +79500,7 @@ aIo
 aIo
 aIo
 aaa
-bxa
+tUX
 boV
 boW
 boW
@@ -79565,7 +79533,7 @@ boW
 boW
 boW
 boW
-lJy
+kjH
 boH
 boH
 boH
@@ -79608,10 +79576,10 @@ bKw
 bKw
 bKw
 bTU
-tdn
+kbz
 rtI
 rtI
-noq
+hqz
 bTU
 bTU
 bIY
@@ -79914,7 +79882,7 @@ rtI
 rtI
 rtI
 rtI
-noq
+hqz
 bTU
 bIY
 bIY
@@ -80137,7 +80105,7 @@ aIo
 aIo
 aaa
 boH
-bxa
+tUX
 boW
 boW
 boV
@@ -80212,7 +80180,7 @@ bKw
 bRa
 bKw
 bTU
-oLy
+lTF
 rtI
 rtI
 rtI
@@ -80222,9 +80190,9 @@ bTU
 bTU
 bTU
 bTU
-tdn
+kbz
 wxy
-noq
+hqz
 bTU
 bTU
 bTU
@@ -80233,7 +80201,7 @@ bTU
 bTU
 bTU
 bTU
-ahG
+qvo
 bLy
 bLn
 bLn
@@ -80471,7 +80439,7 @@ boW
 boW
 boW
 boW
-gkL
+tzJ
 boH
 boH
 boH
@@ -80513,28 +80481,28 @@ bKw
 bKw
 bKw
 bKw
-agw
+mCX
 bTU
-oLy
+lTF
 rtI
 rtI
 rtI
 bTU
-tdn
+kbz
 rtI
-noq
+hqz
 bTU
 tZy
 rtI
 rtI
 bTU
-tdn
+kbz
 rtI
 rtI
 bTU
-tdn
+kbz
 riK
-noq
+hqz
 bTU
 bLy
 bLn
@@ -80818,7 +80786,7 @@ bKw
 bKw
 bTU
 bTU
-oLy
+lTF
 rtI
 sLa
 bTU
@@ -81077,7 +81045,7 @@ boW
 boW
 boW
 boW
-gkL
+tzJ
 boH
 boH
 boH
@@ -81118,7 +81086,7 @@ bKw
 bKw
 bKw
 bKw
-agw
+mCX
 bTU
 bTU
 wJM
@@ -81134,11 +81102,11 @@ rtI
 bTU
 uKg
 rtI
-sHX
+krl
 bTU
-oLy
+lTF
 sLa
-sHX
+krl
 bTU
 bLy
 bLn
@@ -81441,7 +81409,7 @@ bTU
 bTU
 bTU
 bTU
-ahH
+uqJ
 bLn
 bLn
 bLn
@@ -81647,7 +81615,7 @@ aIo
 aIo
 aaa
 boH
-bDL
+qNe
 boW
 boW
 bpc
@@ -81728,17 +81696,17 @@ bTU
 rtI
 rtI
 bTU
-oLy
+lTF
 rtI
-sHX
+krl
 bTU
-oLy
+lTF
 rtI
-sHX
+krl
 bTU
 rtI
 rtI
-noq
+hqz
 bTU
 bTU
 aDC
@@ -81985,7 +81953,7 @@ bpR
 bpR
 bqo
 boW
-gkL
+tzJ
 boH
 aaa
 aaa
@@ -82029,7 +81997,7 @@ bIY
 bTU
 owK
 rtI
-noq
+hqz
 bTU
 wJM
 bTU
@@ -82037,7 +82005,7 @@ bTU
 bTU
 wJM
 bTU
-tdn
+kbz
 rtI
 rtI
 xXy
@@ -82342,7 +82310,7 @@ rtI
 rtI
 rtI
 rtI
-sHX
+krl
 bTU
 bTU
 aDC
@@ -82631,7 +82599,7 @@ bIY
 bIY
 bIY
 bTU
-oLy
+lTF
 rtI
 rtI
 rtI
@@ -82892,7 +82860,7 @@ bpD
 bpD
 bqp
 boV
-gkL
+tzJ
 aaa
 aaa
 aaa
@@ -82936,16 +82904,16 @@ bTU
 bTU
 uKg
 rtI
-sHX
+krl
 bTU
 bTU
 bTU
 bTU
 bTU
 bTU
-oLy
+lTF
 rtI
-sHX
+krl
 bTU
 bIY
 bTU
@@ -83157,7 +83125,7 @@ aIo
 aIo
 aaa
 boH
-bxa
+tUX
 boW
 boW
 boW
@@ -84063,7 +84031,7 @@ aIo
 aIo
 aaa
 boH
-bDL
+qNe
 boW
 boW
 boW
@@ -86818,7 +86786,7 @@ bqp
 boW
 boV
 boV
-lJy
+kjH
 aaa
 aaa
 aaa
@@ -87119,7 +87087,7 @@ bpE
 brx
 boW
 boV
-lJy
+kjH
 boH
 aaa
 aaa
@@ -87687,7 +87655,7 @@ aIo
 aIo
 aaa
 boH
-bxa
+tUX
 boV
 boV
 bqn
@@ -87990,7 +87958,7 @@ aIo
 aaa
 boH
 boH
-bxa
+tUX
 boW
 bpU
 bpT
@@ -88024,7 +87992,7 @@ bpD
 bqp
 boW
 boW
-lJy
+kjH
 boH
 boH
 aaa
@@ -89534,7 +89502,7 @@ izT
 boV
 boW
 boW
-gkL
+tzJ
 boH
 boH
 aaa
@@ -90066,7 +90034,7 @@ aLN
 aLR
 ehJ
 bbN
-bck
+fgO
 bcy
 bcy
 ehJ
@@ -90139,7 +90107,7 @@ boV
 boW
 boW
 boV
-gkL
+tzJ
 boH
 aaa
 aaa
@@ -90743,7 +90711,7 @@ bqq
 bpR
 bqo
 boV
-lJy
+kjH
 boH
 aaa
 aaa
@@ -91644,11 +91612,11 @@ lJg
 oJz
 izT
 bsX
-abo
+doh
 boH
-abC
+wjW
 bqp
-lJy
+kjH
 boH
 boH
 aaa
@@ -92247,7 +92215,7 @@ izT
 izT
 ans
 izT
-abf
+vwd
 boH
 aaa
 aaa
@@ -93540,16 +93508,16 @@ ctn
 ctn
 ctn
 ctn
-ahJ
-aid
+hdA
+vcq
 ctn
 ctn
 ctn
 ctn
 ctn
 ctn
-ahJ
-aid
+hdA
+vcq
 ctn
 ctn
 ctn
@@ -94009,23 +93977,23 @@ aIp
 aIp
 aIp
 aIp
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
 aaa
 aaa
 wXY
@@ -94303,31 +94271,31 @@ aJi
 aJE
 aJi
 aIp
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgF
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+qrF
 bij
 bij
 bij
-bgr
-bgr
+bZH
+bZH
 bkK
-bgF
+qrF
 bkK
-bgr
+bZH
 bkK
-bgF
+qrF
 bij
 bij
 bij
 bnF
-bgr
+bZH
 aaa
 aaa
 wXY
@@ -94605,7 +94573,7 @@ aJE
 aJE
 aJE
 bfh
-bgr
+bZH
 bfQ
 bfQ
 bfQ
@@ -94613,7 +94581,7 @@ bfQ
 bfQ
 bfQ
 bhA
-bgr
+bZH
 bik
 bfQ
 bfQ
@@ -94628,8 +94596,8 @@ bfQ
 bfQ
 bfQ
 bfQ
-bgr
-bgr
+bZH
+bZH
 aaa
 aaa
 wXY
@@ -94907,31 +94875,31 @@ aJE
 aJE
 aJE
 aJE
-bgr
+bZH
 bfQ
 bfQ
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
 bfB
-bgr
-bgF
+bZH
+qrF
 bij
 bij
 bij
-bgr
-bgr
+bZH
+bZH
 bkK
-bgF
+qrF
 bkK
-bgr
+bZH
 bkK
-bgF
+qrF
 bij
 bij
 bij
 bnF
-bgr
+bZH
 aaa
 aaa
 wXY
@@ -95212,28 +95180,28 @@ aJE
 bfB
 bfR
 bgi
-bgr
+bZH
 onh
 bfQ
 bfQ
 eWQ
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgh
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+kIU
 biU
 biU
-bgr
-bgr
+bZH
+bZH
 aaa
 aaa
 wXY
@@ -95511,15 +95479,15 @@ aJE
 aJE
 aJE
 aJE
-bgr
+bZH
 bfQ
 bfQ
-bgr
-bgr
+bZH
+bZH
 bfQ
 bfQ
 bfQ
-bgr
+bZH
 bgE
 bij
 biA
@@ -95530,12 +95498,12 @@ biA
 bij
 bfQ
 bhA
-bgr
+bZH
 bmE
 bfQ
 bfQ
 bnG
-bgr
+bZH
 aaa
 aaa
 wXY
@@ -95569,7 +95537,7 @@ oJz
 oJz
 jhY
 izT
-aaR
+mHR
 boH
 aaa
 kuv
@@ -95665,7 +95633,7 @@ cup
 cwG
 ctS
 ctB
-aid
+vcq
 ctn
 aaa
 "}
@@ -95813,10 +95781,10 @@ aJE
 aJE
 aJE
 aJi
-bgr
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
+bZH
 nCH
 bfQ
 bfQ
@@ -95832,12 +95800,12 @@ biA
 bij
 bfQ
 bhA
-bgr
-bgr
+bZH
+bZH
 bfQ
 bfQ
-bgr
-bgr
+bZH
+bZH
 aaa
 aaa
 wXY
@@ -95967,7 +95935,7 @@ cty
 cwG
 ctS
 ctA
-aie
+vSX
 ctn
 aaa
 "}
@@ -96117,9 +96085,9 @@ aIp
 aIp
 aIp
 aIp
-bgr
-bgr
-bgh
+bZH
+bZH
+kIU
 bfQ
 bfQ
 bfQ
@@ -96134,12 +96102,12 @@ biA
 bij
 bfQ
 bhA
-bgr
+bZH
 bmE
 bfQ
 bfQ
 bnG
-bgr
+bZH
 aaa
 aaa
 wXY
@@ -96421,11 +96389,11 @@ aIp
 aIp
 aIp
 aIp
-bgr
+bZH
 bfQ
 bfQ
 mVD
-bgr
+bZH
 bgE
 bij
 biA
@@ -96436,12 +96404,12 @@ biA
 bij
 bfQ
 bhA
-bgr
-bgr
+bZH
+bZH
 biA
 biA
-bgr
-bgr
+bZH
+bZH
 aaa
 aaa
 wXY
@@ -96723,19 +96691,19 @@ aIC
 aIC
 aJi
 aIp
-bgr
-bgr
+bZH
+bZH
 bfB
-bgr
-bgr
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
+bZH
+bZH
 biU
-bgr
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
+bZH
 bfQ
 bfQ
 bfQ
@@ -96743,7 +96711,7 @@ bfQ
 bfQ
 bfQ
 bfQ
-bgr
+bZH
 aaa
 aaa
 wXY
@@ -97025,27 +96993,27 @@ aIC
 aIC
 aIC
 aIp
-bgh
+kIU
 bfQ
 bfQ
 bhE
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
 biT
 bhC
 biT
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
 aaa
 aaa
 wXY
@@ -97175,7 +97143,7 @@ cty
 cwG
 ctS
 ctA
-aid
+vcq
 ctn
 aaa
 "}
@@ -97327,11 +97295,11 @@ aIp
 aIp
 aIC
 aIp
-bgr
+bZH
 bfQ
 bfQ
 bfQ
-bgF
+qrF
 bmE
 bfQ
 bfQ
@@ -97339,19 +97307,19 @@ bhC
 bfQ
 bfQ
 bnG
-bgr
+bZH
 blK
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
 bmT
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
 aaa
 aaa
 boH
-bDL
+qNe
 boV
 bpU
 bpE
@@ -97381,7 +97349,7 @@ bDZ
 bpD
 bpD
 bpD
-abo
+doh
 boH
 aaa
 kuv
@@ -97477,7 +97445,7 @@ cty
 cwG
 cur
 ctA
-aie
+vSX
 ctn
 aaa
 "}
@@ -97629,19 +97597,19 @@ aIp
 aIp
 bgj
 aIp
-bgr
+bZH
 bfQ
 bhg
 bfQ
-bgr
-bgr
+bZH
+bZH
 bfQ
 bfQ
 bhC
 bfQ
 bfQ
-bgr
-bgr
+bZH
+bZH
 bij
 bij
 bij
@@ -97649,7 +97617,7 @@ bij
 bij
 biU
 bij
-bgr
+bZH
 aaa
 aaa
 boH
@@ -97682,7 +97650,7 @@ bpD
 bpD
 bpD
 bpD
-abo
+doh
 boH
 boH
 aaa
@@ -97765,7 +97733,7 @@ dqe
 dbi
 aaa
 ctn
-ahJ
+hdA
 ctC
 ctA
 ctx
@@ -97931,11 +97899,11 @@ aLt
 aIC
 aIC
 aIp
-bgr
+bZH
 bfQ
-bhh
+gNx
 bfQ
-bgr
+bZH
 bin
 bfQ
 biU
@@ -97943,15 +97911,15 @@ bnH
 biU
 bfQ
 blb
-bgr
-bgh
+bZH
+kIU
 blZ
 blZ
 blZ
-bgh
+kIU
 bhC
-bgr
-bgr
+bZH
+bZH
 aaa
 aaa
 boH
@@ -98067,7 +98035,7 @@ dqe
 dbi
 aaa
 ctn
-aib
+xMm
 ctB
 ctA
 cty
@@ -98233,11 +98201,11 @@ aLt
 aIp
 aIC
 aIp
-bgF
+qrF
 bfQ
 bhg
 bfQ
-bgr
+bZH
 bim
 bfQ
 bhC
@@ -98245,7 +98213,7 @@ bjF
 bhC
 bfQ
 bim
-bgr
+bZH
 blL
 bxS
 bxS
@@ -98253,7 +98221,7 @@ bxS
 blL
 bhC
 bnJ
-bgr
+bZH
 aaa
 aaa
 boH
@@ -98286,7 +98254,7 @@ bpD
 bEa
 bpD
 bpD
-aaR
+mHR
 boH
 boH
 aaa
@@ -98535,11 +98503,11 @@ aIC
 aIC
 aIC
 aIp
-bgr
+bZH
 bfQ
 bfQ
 bfQ
-bgh
+kIU
 bio
 bfQ
 biU
@@ -98547,15 +98515,15 @@ bij
 biU
 bfQ
 blc
-bgr
-bgh
+bZH
+kIU
 blZ
 blZ
 blZ
-bmU
+fDS
 bhC
-bgr
-bgr
+bZH
+bZH
 aaa
 aaa
 boH
@@ -98837,19 +98805,19 @@ aIC
 aIC
 aIC
 aIp
-bgF
+qrF
 bfQ
 bfQ
 bhE
-bgr
-bgr
+bZH
+bZH
 bfQ
 bfQ
 bhC
 bfQ
 bfQ
-bgr
-bgr
+bZH
+bZH
 bij
 bij
 bij
@@ -98857,7 +98825,7 @@ bij
 bij
 biU
 bij
-bgr
+bZH
 aaa
 aaa
 boH
@@ -98890,7 +98858,7 @@ bpD
 bpD
 bpD
 bpD
-abo
+doh
 boH
 boH
 aaa
@@ -99139,11 +99107,11 @@ aIp
 aIC
 aLt
 aIp
-bgr
-bgr
+bZH
+bZH
 bfB
-bgr
-bgr
+bZH
+bZH
 bmE
 bfQ
 bfQ
@@ -99151,15 +99119,15 @@ bhC
 bfQ
 bfQ
 bnG
-bgr
+bZH
 blM
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
 bmV
-bgr
+bZH
 bfQ
-bgr
+bZH
 aaa
 aaa
 boH
@@ -99187,11 +99155,11 @@ bpD
 bpD
 bpD
 bpD
-abo
+doh
 boH
-abC
+wjW
 bpD
-abo
+doh
 boH
 boH
 boH
@@ -99445,23 +99413,23 @@ aIp
 bgT
 bhi
 bgT
-bgr
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
+bZH
 bjE
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
 bYU
-bgr
+bZH
 aaa
 aaa
 boH
@@ -99484,8 +99452,8 @@ boW
 boW
 bqw
 bpD
-abo
-abC
+doh
+wjW
 byg
 bpD
 bpD
@@ -99749,21 +99717,21 @@ aIC
 aIp
 aIp
 aIp
-bgr
+bZH
 bij
 bij
-bgr
+bZH
 bkL
-bgr
-bgh
+bZH
+kIU
 blN
-bgr
-bgh
+bZH
+kIU
 bmF
-bgr
+bZH
 bij
 bij
-bgr
+bZH
 aaa
 aaa
 boH
@@ -99786,12 +99754,12 @@ boW
 bqn
 bqZ
 bpD
-aaR
-aaS
+mHR
+nFQ
 bpD
 bpD
 bpD
-aaR
+mHR
 boH
 boH
 boH
@@ -100051,7 +100019,7 @@ aIC
 aIp
 bhX
 aIp
-bgr
+bZH
 bfQ
 bfQ
 bYU
@@ -100062,10 +100030,10 @@ bfQ
 bmb
 bmb
 bfQ
-bgF
+qrF
 bfQ
 bYW
-bgr
+bZH
 aaa
 aaa
 boH
@@ -100195,7 +100163,7 @@ ctx
 cub
 ctW
 ctA
-aid
+vcq
 ctn
 aaa
 "}
@@ -100353,10 +100321,10 @@ aIC
 aIC
 aIC
 aIp
-bgr
+bZH
 bfQ
 bfQ
-bgF
+qrF
 bfQ
 bfQ
 bfQ
@@ -100367,7 +100335,7 @@ bfQ
 bYU
 bfQ
 bYW
-bgr
+bZH
 aaa
 aaa
 boH
@@ -100396,10 +100364,10 @@ bpD
 bpD
 bpD
 bpD
-aaR
-aaS
+mHR
+nFQ
 bpD
-aaR
+mHR
 boH
 boH
 boH
@@ -100497,7 +100465,7 @@ cty
 cwG
 ctS
 ctA
-aie
+vSX
 ctn
 aaa
 "}
@@ -100655,25 +100623,25 @@ aIC
 aIp
 bbs
 aIp
-bgr
+bZH
 biV
 biV
-bgr
+bZH
 bkM
-bgr
-bgh
+bZH
+kIU
 blO
-bmc
-bgh
+kdt
+kIU
 biV
-bgr
+bZH
 biV
 biV
-bgr
+bZH
 aaa
 aaa
 boH
-bxa
+tUX
 boV
 boW
 bqw
@@ -100780,7 +100748,7 @@ cwC
 dSx
 dSJ
 cwC
-dSV
+eal
 dSS
 dbi
 aaa
@@ -100957,21 +100925,21 @@ aIC
 aJi
 qBW
 aIp
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
-bgr
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
+bZH
 aaa
 aaa
 boH
@@ -101305,7 +101273,7 @@ bpD
 bpD
 bpD
 bpD
-abo
+doh
 boH
 boH
 boH
@@ -101606,7 +101574,7 @@ bpD
 bpD
 bpD
 bzs
-abo
+doh
 boH
 boH
 boH
@@ -101907,7 +101875,7 @@ lvB
 byg
 byg
 jPL
-abo
+doh
 boH
 boH
 boH
@@ -101996,8 +101964,8 @@ ctn
 ctn
 ctn
 ctn
-aib
-aie
+xMm
+vSX
 ctn
 ctn
 ctn
@@ -102429,7 +102397,7 @@ aIp
 nFE
 aOO
 aOO
-aQo
+hQs
 aQY
 nFE
 aIC
@@ -102485,7 +102453,7 @@ bjK
 aaa
 aaa
 boH
-bDL
+qNe
 boV
 boV
 boV
@@ -102651,7 +102619,7 @@ bqW
 btp
 lzl
 dhr
-bvA
+bwa
 dhP
 did
 dim
@@ -102800,8 +102768,8 @@ izT
 izT
 bpD
 bpD
-abo
-abC
+doh
+wjW
 bpD
 bqP
 brx
@@ -102813,7 +102781,7 @@ lXb
 dbt
 dbt
 tyt
-aaR
+mHR
 boH
 boH
 boH
@@ -103102,8 +103070,8 @@ izT
 bpD
 bpD
 bpD
-aaR
-aaS
+mHR
+nFQ
 bqP
 brx
 boW
@@ -103116,7 +103084,7 @@ dbD
 dbt
 tyt
 bpD
-aaR
+mHR
 boH
 boH
 aaa
@@ -103419,7 +103387,7 @@ udF
 ltS
 bpD
 bpD
-aaR
+mHR
 boH
 aaa
 bMw
@@ -103693,7 +103661,7 @@ bjK
 aaa
 aaa
 boH
-bxa
+tUX
 boV
 boV
 bqw
@@ -105232,7 +105200,7 @@ boW
 boW
 boW
 boW
-kmA
+nMZ
 aaa
 bMw
 aab
@@ -105807,7 +105775,7 @@ bjK
 aaa
 aaa
 boH
-bDL
+qNe
 boW
 boW
 boW
@@ -107265,7 +107233,7 @@ aIr
 aIr
 aIr
 rtc
-aTM
+oTH
 wOR
 wOR
 aVU
@@ -113370,7 +113338,7 @@ btb
 btb
 btb
 btb
-wcY
+mVR
 wSI
 kHd
 xgN
@@ -113671,7 +113639,7 @@ btb
 btb
 btb
 btb
-wcY
+mVR
 wSI
 oGu
 nBk
@@ -113973,7 +113941,7 @@ btb
 btb
 btb
 btb
-jMx
+mTv
 rHr
 rHr
 rHr
@@ -116100,7 +116068,7 @@ gJz
 txy
 txy
 txy
-aaw
+piL
 bva
 aaA
 aaA
@@ -116386,14 +116354,14 @@ biL
 biL
 aaa
 bva
-pAZ
+idj
 bwU
-aaw
+piL
 bva
 bva
 bva
 bva
-pAZ
+idj
 bwU
 dbf
 bwU
@@ -116405,7 +116373,7 @@ bBJ
 buB
 bwU
 byr
-lPG
+rZE
 bva
 aaa
 aaa
@@ -116691,9 +116659,9 @@ bva
 bwU
 btW
 buy
-aaz
+wEY
 aaA
-aaD
+dXT
 bwU
 bwU
 bwU
@@ -116990,7 +116958,7 @@ bjm
 biL
 aaa
 bva
-dWW
+jnB
 btX
 buz
 buY
@@ -117293,7 +117261,7 @@ biL
 aaa
 bva
 bva
-dWW
+jnB
 buA
 buY
 bvG
@@ -117898,7 +117866,7 @@ aaa
 aaa
 bva
 bva
-dWW
+jnB
 buY
 bvH
 bwl
@@ -118204,7 +118172,7 @@ bva
 aaA
 aaA
 aaA
-dWW
+jnB
 bwU
 bwU
 buY
@@ -118218,7 +118186,7 @@ bzb
 bza
 bEz
 bEV
-abe
+dYs
 bva
 aaa
 bFS
@@ -118822,7 +118790,7 @@ txy
 txy
 bwU
 bwU
-oOy
+fgg
 bva
 aaa
 bFR
@@ -119110,7 +119078,7 @@ aaa
 bva
 bva
 bva
-pAZ
+idj
 bwU
 buY
 bzb
@@ -119123,7 +119091,7 @@ bDo
 bBJ
 bBJ
 bwU
-oOy
+fgg
 bva
 bva
 aaa
@@ -119411,7 +119379,7 @@ blx
 aaa
 bva
 aaA
-aaE
+pDX
 bwX
 bwX
 bys
@@ -120015,7 +119983,7 @@ blx
 aaa
 bva
 aaA
-aaF
+uJK
 bwY
 bwY
 bwY
@@ -120028,7 +119996,7 @@ bwU
 bwU
 bwU
 buB
-oOy
+fgg
 bva
 bva
 bva
@@ -120318,7 +120286,7 @@ aaa
 bva
 bva
 bva
-dWW
+jnB
 buB
 bwU
 bwU
@@ -120329,7 +120297,7 @@ bwU
 bwU
 bwU
 bwU
-oOy
+fgg
 bva
 bva
 bva
@@ -120374,7 +120342,7 @@ aDY
 nuo
 mIm
 uwZ
-bTc
+sDG
 bTz
 bTz
 bUk
@@ -120623,12 +120591,12 @@ bva
 bva
 bva
 bva
-dWW
+jnB
 bwU
-oOy
-dWW
+fgg
+jnB
 bwU
-oOy
+fgg
 bva
 bva
 bva
@@ -121227,7 +121195,7 @@ aaa
 bva
 bva
 bva
-pAZ
+idj
 bwU
 bva
 bva
@@ -121531,7 +121499,7 @@ bxE
 bva
 bwU
 bwU
-aaw
+piL
 bva
 bva
 bxE
@@ -122112,7 +122080,7 @@ blx
 blx
 biL
 biL
-bop
+wXl
 biL
 biL
 bjm
@@ -122401,8 +122369,8 @@ aIr
 aaa
 biL
 biL
-bkc
-bkc
+vpA
+vpA
 biL
 biL
 bjm
@@ -122736,7 +122704,7 @@ aaa
 brV
 ahX
 ahX
-aaJ
+uss
 bxb
 bqb
 bqb
@@ -123037,7 +123005,7 @@ blx
 aaa
 bpo
 ahX
-aaJ
+uss
 bqb
 bzf
 bqb
@@ -123339,7 +123307,7 @@ blx
 aaa
 bpo
 ahX
-tuk
+hhE
 bqb
 bpo
 bqb
@@ -124255,7 +124223,7 @@ bpo
 bqb
 bqb
 bpo
-rae
+kuN
 bqb
 bqb
 bpo
@@ -124547,7 +124515,7 @@ blx
 aaa
 bpo
 bpo
-tuk
+hhE
 bqb
 bqb
 bqb
@@ -126374,7 +126342,7 @@ bqb
 bBY
 bqb
 bBY
-abm
+nWF
 ahX
 ahX
 aaa
@@ -126879,7 +126847,7 @@ aaa
 bAt
 bAt
 aIK
-aJr
+mNW
 aJQ
 aKm
 aIK
@@ -127280,7 +127248,7 @@ brn
 bpo
 brl
 bpo
-abs
+qCy
 ahX
 ahX
 bFN
@@ -128489,7 +128457,7 @@ brT
 bpo
 bpo
 bFN
-bFY
+lxy
 bGw
 bGw
 bGw
@@ -128798,7 +128766,7 @@ bGa
 bHq
 bGa
 bHq
-bIB
+bGa
 bGw
 bGw
 bFN
@@ -129099,7 +129067,7 @@ bGa
 bGa
 bHq
 bGa
-bIe
+bHq
 bGa
 bGa
 bGw
@@ -129232,7 +129200,7 @@ maa
 gxU
 uOZ
 aCr
-dpH
+vGx
 duq
 duq
 duq
@@ -129533,7 +129501,7 @@ imO
 maa
 gxU
 doL
-dpH
+vGx
 duq
 duq
 duq
@@ -130745,7 +130713,7 @@ duq
 duq
 duq
 aGx
-wPi
+xvq
 duq
 duq
 duq
@@ -131048,7 +131016,7 @@ duq
 duq
 aGx
 gxU
-wPi
+xvq
 duq
 duq
 aaa
@@ -131502,7 +131470,7 @@ bpo
 bpo
 bpo
 bqb
-rae
+kuN
 bEn
 bEI
 bqH
@@ -132399,7 +132367,7 @@ bpo
 bpo
 bpo
 bpo
-rae
+kuN
 bqb
 bpo
 bpo
@@ -133596,7 +133564,7 @@ boz
 aaa
 bpo
 bpo
-tuk
+hhE
 brl
 brl
 bpo
@@ -141264,7 +141232,7 @@ cli
 cli
 cly
 cli
-nzs
+wmD
 cli
 cli
 ckB
@@ -141554,7 +141522,7 @@ oeC
 hfT
 aqL
 aqL
-chN
+ecj
 chN
 chN
 bXx
@@ -142168,7 +142136,7 @@ cba
 ckB
 cli
 cli
-nzs
+wmD
 jhl
 pDK
 cli
@@ -143149,7 +143117,7 @@ lEM
 rUx
 dsw
 dux
-nOw
+gVY
 ykL
 ykL
 oDT
@@ -145587,7 +145555,7 @@ aES
 aES
 aES
 sWb
-dPs
+wDg
 dPz
 sWb
 dPV
@@ -160222,7 +160190,7 @@ abr
 abr
 abr
 abr
-adZ
+neB
 abr
 rnA
 adt
@@ -160520,7 +160488,7 @@ abF
 abT
 abr
 acn
-abF
+rtJ
 abr
 eQe
 aea
@@ -162034,7 +162002,7 @@ abr
 abr
 abr
 abr
-adZ
+neB
 abr
 eQe
 aeU
@@ -163556,13 +163524,13 @@ abB
 abB
 abB
 abr
-xkk
+sQU
 abr
 abr
-adZ
+neB
 abr
 abr
-adZ
+neB
 abr
 lac
 lph

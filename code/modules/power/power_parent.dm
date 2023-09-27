@@ -62,6 +62,10 @@
 	detailed_power_data.log_machine(src, amount)
 #endif
 
+	if(powernet && src.z == Z_LEVEL_STATION && !istype(src, /obj/machinery/power/smes) && !istype(get_area(src), /area/listeningpost))
+		station_power_generation["[round(world.time / ( 1 MINUTE ))]"] += amount
+
+
 /obj/machinery/power/proc/add_load(var/amount)
 	if(powernet && powernet.newload + amount <= powernet.avail)
 		powernet.newload += amount
@@ -79,6 +83,8 @@
 	else
 		return 0
 
+
+var/list/station_power_generation = list()
 
 // the powernet datum
 // each contiguous network of cables & nodes

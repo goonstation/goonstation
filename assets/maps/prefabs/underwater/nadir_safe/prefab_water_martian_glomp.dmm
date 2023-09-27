@@ -6,7 +6,7 @@
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal";
 	name = "withered wall"
 	},
@@ -45,7 +45,7 @@
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal";
 	name = "withered wall"
 	},
@@ -55,7 +55,7 @@
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal";
 	name = "withered wall"
 	},
@@ -89,7 +89,7 @@
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 9;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal";
 	name = "withered wall"
 	},
@@ -129,7 +129,7 @@
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal";
 	name = "withered wall"
 	},
@@ -166,7 +166,7 @@
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 10;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal";
 	name = "withered wall"
 	},
@@ -176,7 +176,7 @@
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 6;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal";
 	name = "withered wall"
 	},
@@ -201,7 +201,7 @@
 /obj/indestructible/shuttle_corner{
 	desc = "Grody. How long has this been here?";
 	dir = 5;
-	icon = 'icons/turf/walls_martian.dmi';
+	icon = 'icons/turf/walls/martian.dmi';
 	icon_state = "diagonal";
 	name = "withered wall"
 	},

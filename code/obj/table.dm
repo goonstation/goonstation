@@ -21,7 +21,7 @@ TYPEINFO_NEW(/obj/table)
 	material_amt = 0.2
 	var/parts_type = /obj/item/furniture_parts/table
 	default_material = null
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	var/auto = 0
 	var/status = null //1=weak|welded, 2=strong|unwelded
 	var/image/working_image = null
@@ -140,7 +140,7 @@ TYPEINFO_NEW(/obj/table)
 			victim.changeStatus("weakened", 3 SECONDS)
 			victim.force_laydown_standup()
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 		src.material_trigger_when_attacked(victim, user, 1)
 
 
@@ -277,7 +277,7 @@ TYPEINFO_NEW(/obj/table)
 			if (src.lock_id && src.lock_id == K.id)
 				src.drawer_locked = !src.drawer_locked
 				user.visible_message("[user] [!src.drawer_locked ? "un" : null]locks [src].")
-				playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 			else
 				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s desk drawer lock.</span>")
 			return
@@ -459,7 +459,7 @@ TYPEINFO(/obj/table/wood)
 	desc = "A table made from solid oak, which is quite rare in space."
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 	default_material = "wood"
 
@@ -544,7 +544,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 	name = "table"
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0$$mauxite"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
 	default_material = "mauxite"
 
@@ -583,7 +583,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 			victim.changeStatus("weakened", 4 SECONDS)
 			victim.force_laydown_standup()
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src], collapsing it instantly!</b></span>")
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 		deconstruct()
 
 TYPEINFO(/obj/table/syndicate)
@@ -786,7 +786,8 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 				/obj/item/storage/box/patchbox,
 				/obj/item/storage/box/syringes,
 				/obj/item/clothing/glasses/spectro,
-				/obj/item/device/reagentscanner = 2,
+				/obj/item/device/reagentscanner,
+				/obj/item/bunsen_burner,
 				/obj/item/reagent_containers/dropper/mechanical,
 				/obj/item/storage/box/lglo_kit,
 				/obj/item/storage/box/beaker_lids,
@@ -1095,7 +1096,7 @@ TYPEINFO(/obj/table/glass)
 				smashprob = round(smashprob / 2, 1)
 
 			if (src.place_on(W, user, params))
-				playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 100, 1)
+				playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 100, TRUE)
 			else if (W && user.a_intent != "help")
 				DEBUG_MESSAGE("[src] smashprob = ([smashprob] * 1.5) (result [(smashprob * 1.5)])")
 				smashprob = (smashprob * 1.5)
@@ -1117,7 +1118,7 @@ TYPEINFO(/obj/table/glass)
 		victim.set_loc(src.loc)
 		victim.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 		src.material_trigger_when_attacked(victim, user, 1)
 		if ((prob(src.reinforced ? 60 : 80)) || (user.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))))
 			src.smash()
@@ -1135,7 +1136,7 @@ TYPEINFO(/obj/table/glass)
 			if ((prob(src.reinforced ? 60 : 80)))
 				logTheThing(LOG_COMBAT, thr.user, "throws [constructTarget(M,"combat")] into a glass table, breaking it")
 				src.visible_message("<span class='alert'>[M] smashes through [src]!</span>")
-				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 				src.smash()
 				if (M.loc != src.loc)
 					step(M, get_dir(M, src))
@@ -1147,7 +1148,7 @@ TYPEINFO(/obj/table/glass)
 	place_on(obj/item/W as obj, mob/user as mob, params)
 		..()
 		if (. == 1) // successfully put thing on table, make a noise because we are a fancy special glass table
-			playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 100, 1)
+			playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 100, TRUE)
 			return 1
 
 	set_up()
@@ -1305,7 +1306,7 @@ TYPEINFO(/obj/table/glass)
 				return
 			else if (prob(8))
 				owner.visible_message("<span class='alert'>[owner] messes up while picking [the_table]'s lock!</span>")
-				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
@@ -1315,7 +1316,7 @@ TYPEINFO(/obj/table/glass)
 		switch (interaction)
 			if (TABLE_DISASSEMBLE)
 				verbing = "disassembling"
-				playsound(the_table, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Ratchet.ogg', 50, TRUE)
 			if (TABLE_WEAKEN)
 				verbing = "weakening"
 				the_tool:try_weld(owner,0,-1)
@@ -1324,10 +1325,10 @@ TYPEINFO(/obj/table/glass)
 				the_tool:try_weld(owner,0,-1)
 			if (TABLE_ADJUST)
 				verbing = "adjusting the shape of"
-				playsound(the_table, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Screwdriver.ogg', 50, TRUE)
 			if (TABLE_LOCKPICK)
 				verbing = "picking the lock on"
-				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins [verbing] [the_table].</span>")
 
 	onEnd()
@@ -1336,7 +1337,7 @@ TYPEINFO(/obj/table/glass)
 		switch (interaction)
 			if (TABLE_DISASSEMBLE)
 				verbens = "disassembles"
-				playsound(the_table, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Deconstruct.ogg', 50, TRUE)
 				the_table.deconstruct()
 			if (TABLE_WEAKEN)
 				verbens = "weakens"
@@ -1351,7 +1352,7 @@ TYPEINFO(/obj/table/glass)
 				verbens = "picks the lock on"
 				if (the_table.has_drawer)
 					the_table.drawer_locked = FALSE
-				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] [verbens] [the_table].</span>")
 
 /datum/action/bar/icon/fold_folding_table
@@ -1386,13 +1387,13 @@ TYPEINFO(/obj/table/glass)
 	onStart()
 		..()
 		if (the_tool)
-			playsound(the_table, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(the_table, 'sound/items/Ratchet.ogg', 50, TRUE)
 		else
-			playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, 1)
+			playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_table].</span>")
 
 	onEnd()
 		..()
-		playsound(the_table, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(the_table, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_table].</span>")
 		the_table.deconstruct()

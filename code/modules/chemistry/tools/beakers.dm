@@ -181,6 +181,9 @@
 	icon_state = "largebottle-burn"
 	initial_reagents = "silver_sulfadiazine"
 
+/obj/item/reagent_containers/glass/beaker/large/cyborg
+	shatter_immune = TRUE
+
 /*  Now found in hydroponics.dm!
 
 /obj/item/reagent_containers/glass/beaker/large/happy_plant //I have to test too many fucking plant-related issues atm so I'm adding this just to make my life less annoying
@@ -206,7 +209,7 @@
 
 /obj/item/reagent_containers/glass/flask
 	name = "flask"
-	desc = "Looks pretty fragile, better not drop this."
+	desc = "Looks surprisingly robust."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "eflask"
@@ -237,10 +240,6 @@
 			src.underlays += fluid_image
 		else
 			src.icon_state = src.icon_style
-
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		..()
-		src.shatter_chemically()
 
 /obj/item/reagent_containers/glass/flask/round
 	name = "round flask"

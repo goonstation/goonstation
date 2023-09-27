@@ -1,3 +1,9 @@
+(t)sat sep 23 23
+(u)pali
+(*)New verb Replace-Type that lets you replace a type with another type globally across the whole world.<br>Stuff just on the ground should work fine. Should also work ok for stuff like equipment and storage but other stuff like globally replacing organs or limbs is not yet fully supported.
+(t)mon sep 11 23
+(u)aloe probably?
+(*)You can't click fluids anymore. To accomodate this, using "check reagents" on a floor will check the reagents of a smoke/fluid (prioritizing smoke) on that tile. You can also use `+right-click in order to interact with smoke/fluid directly if needed. Fluid and smoke will have the most common reagent in the name when viewed through this menu.
 (t)mon aug 21 23
 (u)LeahTheTech
 (*)Added a new verb "Stabilize All Atmos" to reset all air on the entire station, in case that thing happens where there just isn't any air.

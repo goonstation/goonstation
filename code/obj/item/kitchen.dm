@@ -168,6 +168,7 @@ TRAYS
 
 	New()
 		..()
+		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/double)
 
 	attack(mob/living/carbon/M, mob/living/carbon/user)
@@ -379,7 +380,7 @@ TRAYS
 				A:lastattackertime = world.time
 			random_brute_damage(C, 15, 1)
 			take_bleeding_damage(C, null, 10, DAMAGE_CUT)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 
 /obj/item/kitchen/utensil/knife/bread
 	name = "bread knife"
@@ -749,7 +750,7 @@ TRAYS
 
 	/// The plate shatters into shards and tosses its contents around.
 	proc/shatter(depth = 1)
-		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/plate_break.ogg', 50, TRUE)
 		var/turf/T = get_turf(src)
 		for (var/i in 1 to (2 - (depth > 1)))
 			var/obj/O = new /obj/item/raw_material/shard/glass
@@ -1042,13 +1043,13 @@ TRAYS
 
 	unique_attack_garbage_fuck(mob/M as mob, mob/user as mob)
 		M.TakeDamageAccountArmor("head", src.force, 0, 0, DAMAGE_BLUNT)
-		playsound(src, 'sound/weapons/trayhit.ogg', 25, 1)
+		playsound(src, 'sound/weapons/trayhit.ogg', 25, TRUE)
 		src.visible_message("\The [src] falls out of [user]'s hands due to the impact!")
 		user.drop_item(src)
 
 		if(tray_health == 0) //breakable trays because you flew too close to the sun, you tried to have unlimited damage AND stuns you fool, your hubris is too fat, too wide
 			src.visible_message("<b>\The [src] shatters!</b>")
-			playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 70, 1)
+			playsound(src, 'sound/impact_sounds/Metal_Hit_Light_1.ogg', 70, TRUE)
 			new /obj/item/scrap(src.loc)
 			qdel(src)
 			return
