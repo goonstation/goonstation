@@ -20833,9 +20833,6 @@
 /turf/simulated/floor,
 /area/station/janitor/supply)
 "bXr" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 4
 	},
@@ -21289,6 +21286,12 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/exit)
+"crm" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "crE" = (
 /mob/living/silicon/hivebot/eyebot,
 /turf/simulated/floor/circuit/green,
@@ -23693,9 +23696,6 @@
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "dWD" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
 	},
@@ -34812,9 +34812,6 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "lOz" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 6
 	},
@@ -37774,6 +37771,9 @@
 	},
 /obj/machinery/atmospherics/binary/valve{
 	name = "purge valve"
+	},
+/obj/cable{
+	icon_state = "0-8"
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -43101,6 +43101,15 @@
 	},
 /turf/space,
 /area/station/solar/aisat)
+"rDc" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/station/science/lab)
 "rDh" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -45899,12 +45908,6 @@
 	},
 /area/station/science/lobby)
 "tsa" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 1
 	},
@@ -50113,6 +50116,9 @@
 	id = "outpostbombtest";
 	name = "Bomb Launch Button";
 	pixel_y = 24
+	},
+/obj/cable{
+	icon_state = "2-4"
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -131859,7 +131865,7 @@ acG
 alf
 alf
 wuK
-eDg
+crm
 afy
 alf
 lms
@@ -132160,7 +132166,7 @@ aaa
 aaa
 iEt
 oMn
-afy
+eDg
 lOz
 ipV
 alf
@@ -132462,7 +132468,7 @@ awQ
 acG
 alf
 qwh
-afy
+eDg
 dWD
 iFU
 alf
@@ -132764,7 +132770,7 @@ adQ
 aaa
 bsn
 cKW
-mXg
+rDc
 tsa
 tMJ
 bZd
