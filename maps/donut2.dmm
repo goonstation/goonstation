@@ -30107,7 +30107,7 @@
 	},
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 10;
+	drive_range = 40;
 	id = "outpostbombtest"
 	},
 /turf/simulated/floor/plating,
@@ -52046,7 +52046,7 @@
 "xSb" = (
 /obj/machinery/mass_driver{
 	dir = 1;
-	drive_range = 10;
+	drive_range = 40;
 	id = "outpostbombtest"
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
