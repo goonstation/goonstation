@@ -1,4 +1,10 @@
 
+(t)wed sep 27 23
+(u)Smilg
+(p)15933
+(e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science
+(*)Pressure crystals from Vendomats, when used, can now be sold for credits via Cargo. Work in Toxins today!
+(+)New program for Scientist PDAs that shows you previously sold pressure crystals, and their bounties.
 (t)tue sep 26 23
 (u)Emily
 (*)Repeatedly buying the same crate from the market will "exhaust" supply, causing the price to increase. Exhaustion decays with each shipping market shift.
