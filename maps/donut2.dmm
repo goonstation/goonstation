@@ -48383,6 +48383,12 @@
 /obj/machinery/light_switch/east,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/bar)
+"vkq" = (
+/obj/item/device/camera_viewer{
+	network = "Zeta"
+	},
+/turf/space,
+/area/space)
 "vkx" = (
 /obj/machinery/door/airlock/pyro/maintenance/alt{
 	req_access = null
@@ -48559,7 +48565,9 @@
 /area/listeningpost)
 "vri" = (
 /obj/table/reinforced/chemistry/auto,
-/obj/item/device/camera_viewer,
+/obj/item/device/camera_viewer{
+	network = "Zeta"
+	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "vrj" = (
@@ -127535,7 +127543,7 @@ aaa
 aaa
 aaa
 aaa
-aaa
+vkq
 aaa
 aaa
 aaa
