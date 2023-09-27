@@ -135,6 +135,7 @@
 	reclaim_fail = 15
 	var/talk_prob = 10
 	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","HECK","FRICK","JESUS")
+	var/empowered_maptext_style = "font-weight: bold;"
 	icon_state  = "bad"
 
 	OnLife(var/mult)
@@ -145,7 +146,11 @@
 		if (isdead(L))
 			return
 		if (probmult(talk_prob))
-			L.say(pick(talk_strings))
+			var/mob/living/carbon/human/H = L
+			if(istype(H) && src.power > 1)
+				H.say(pick(talk_strings), unique_maptext_style=empowered_maptext_style)
+			else
+				L.say(pick(talk_strings))
 
 /datum/bioEffect/shortsighted
 	name = "Diminished Optic Nerves"

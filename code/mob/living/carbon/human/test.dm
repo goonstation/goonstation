@@ -9,7 +9,7 @@
 		src.AddComponent(/datum/component/health_maptext)
 
 
-	say(message, ignore_stamina_winded)
+	say(message, ignore_stamina_winded, unique_maptext_style, maptext_animation_colors)
 		if(!shutup)
 			. = ..()
 
