@@ -58195,7 +58195,7 @@
 /area/station/routing/depot)
 "shc" = (
 /obj/machinery/drainage,
-/obj/disposalpipe/chicken_neck_snapper/horizontal,
+/obj/disposalpipe/chicken_disposal_pipe/horizontal,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "shp" = (

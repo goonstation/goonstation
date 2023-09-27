@@ -17205,7 +17205,7 @@
 /obj/cable{
 	icon_state = "0-2"
 	},
-/obj/disposalpipe/chicken_neck_snapper/horizontal,
+/obj/disposalpipe/chicken_disposal_pipe/horizontal,
 /obj/machinery/drainage,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/south)

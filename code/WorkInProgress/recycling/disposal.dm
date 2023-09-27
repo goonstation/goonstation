@@ -884,7 +884,7 @@
 TYPEINFO(/obj/disposalpipe/loafer)
 	mats = 100
 
-/obj/disposalpipe/chicken_neck_snapper
+/obj/disposalpipe/chicken_disposal_pipe
 	name = "humane chicken processor"
 	desc = "a pipe segment designed to convert alive chickens into dead chickens"
 	icon_state = "pipe-loaf0"

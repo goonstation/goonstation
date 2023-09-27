@@ -67656,7 +67656,7 @@
 	},
 /area/station/solar/south)
 "orX" = (
-/obj/disposalpipe/chicken_neck_snapper/horizontal,
+/obj/disposalpipe/chicken_disposal_pipe/horizontal,
 /obj/machinery/drainage,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/catering)

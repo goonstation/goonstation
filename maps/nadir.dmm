@@ -36807,7 +36807,7 @@
 	dir = 8;
 	pixel_x = -12
 	},
-/obj/disposalpipe/chicken_neck_snapper/vertical,
+/obj/disposalpipe/chicken_disposal_pipe/vertical,
 /obj/machinery/drainage,
 /turf/simulated/floor/specialroom/freezer,
 /area/station/crew_quarters/catering)
