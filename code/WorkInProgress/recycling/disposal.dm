@@ -933,7 +933,8 @@ TYPEINFO(/obj/disposalpipe/loafer)
 					take_bleeding_damage(M, null, 10, DAMAGE_CUT)
 
 					if(!isdead(M))
-						M:emote("scream")
+						if(ishuman(M))
+							M:emote("scream")
 
 
 		var/nextdir = nextdir(H.dir)
