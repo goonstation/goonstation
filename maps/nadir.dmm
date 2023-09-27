@@ -30149,6 +30149,10 @@
 	dir = 4
 	},
 /area/station/quartermaster/cargooffice)
+"mOT" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/unsimulated/wall/trench,
+/area/space)
 "mPl" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/caution/corner/ne,
@@ -39997,6 +40001,10 @@
 	dir = 6
 	},
 /area/station/ai_monitored/armory)
+"rse" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space/fluid/acid/clear,
+/area/space)
 "rsn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -62407,7 +62415,7 @@ oeA
 oeA
 oeA
 oeA
-oeA
+mOT
 oeA
 oeA
 oeA
@@ -117245,7 +117253,7 @@ rJg
 iMT
 iMT
 iMT
-rJg
+rse
 rJg
 rJg
 iMT

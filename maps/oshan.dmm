@@ -34817,6 +34817,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
+"eLI" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space/fluid,
+/area/space)
 "eLJ" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Sauna"
@@ -54831,7 +54835,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+eLI
 aTs
 aTs
 aqn
@@ -109110,7 +109114,7 @@ aqn
 bFU
 bFU
 bFU
-aqn
+eLI
 aqn
 aqn
 bFU

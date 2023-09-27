@@ -4782,8 +4782,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "lc" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "ld" = (
 /obj/machinery/computer/genetics{
 	dir = 1;

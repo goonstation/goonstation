@@ -40461,6 +40461,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grey,
 /area/station/science/bot_storage)
+"jxG" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "jyD" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4
@@ -65799,7 +65803,7 @@ ciD
 ciD
 ciM
 ciD
-aaa
+jxG
 aaa
 aaa
 aaa
@@ -132141,7 +132145,7 @@ wzw
 wzw
 wzw
 aaa
-aaa
+jxG
 wzw
 wzw
 wzw

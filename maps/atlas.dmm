@@ -7548,8 +7548,9 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "ayX" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "ayZ" = (
 /obj/machinery/conveyor/SN{
 	id = "outbound";
