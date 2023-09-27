@@ -2027,7 +2027,7 @@
 /turf/simulated/floor/red,
 /area/station/security/main)
 "lO" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "lP" = (
@@ -3113,7 +3113,7 @@
 /obj/machinery/conveyor/WE{
 	id = "qmin"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	dir = 4
 	},
 /turf/simulated/floor/purple/checker,
@@ -3669,7 +3669,7 @@
 /obj/machinery/conveyor/WE{
 	id = "qmout"
 	},
-/obj/plasticflaps{
+/obj/strip_door{
 	dir = 4
 	},
 /turf/simulated/floor/purple/checker,
@@ -4355,7 +4355,7 @@
 	id = "garbage";
 	operating = 1
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "CE" = (
@@ -4407,7 +4407,7 @@
 /obj/machinery/conveyor/NS{
 	id = "cargo_dispense_belt"
 	},
-/obj/plasticflaps,
+/obj/strip_door,
 /obj/machinery/door/poddoor{
 	id = "cargodispense";
 	name = "Cargo Routing Door"

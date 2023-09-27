@@ -19974,10 +19974,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay)
-"iki" = (
-/turf/simulated/floor,
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/security/brig)
 "ikU" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -87441,7 +87437,7 @@ eCr
 rFm
 wQW
 xOy
-iki
+oDO
 tfk
 sWM
 syF
