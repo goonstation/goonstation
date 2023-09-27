@@ -849,7 +849,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	lens_weak
 		mat_id = "lens_glass_weak"
-		name = "low-quality lens glass"
+		name = "low-quality reflective glass"
 		desc = "Low quality glass used to create lenses for various devices."
 		alpha = 150
 
@@ -861,7 +861,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	lens_medium
 		mat_id = "lens_glass_medium"
-		name = "medium-quality lens glass"
+		name = "medium-quality reflective glass"
 		desc = "Medium quality glass used to create lenses for various devices."
 		alpha = 200
 
@@ -873,7 +873,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	lens_strong
 		mat_id = "lens_glass_strong"
-		name = "high-quality lens glass"
+		name = "high-quality reflective glass"
 		desc = "High quality glass used to create lenses for various devices."
 		alpha = 225
 
