@@ -10358,8 +10358,8 @@
 	},
 /area/russian/radiation)
 "bzt" = (
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/simulated/floor{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -50338,7 +50338,7 @@
 	},
 /area/russian/radiation)
 "kXu" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/plating{
 	broken = 1;

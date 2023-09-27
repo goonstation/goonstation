@@ -473,7 +473,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if("window treatment")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,rand(3,10)*10*req_quant)
 			if("wood")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/item/plank,rand(5,12)*req_quant)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/item/sheet,rand(5,12)*req_quant)
 			if("solvent")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/acetone,rand(4,8)*10*req_quant)
 			if("detailing metal")
@@ -491,7 +491,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				if("window treatment")
 					src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,rand(3,10)*10)
 				if("wood")
-					src.rc_entries += rc_buildentry(/datum/rc_entry/item/plank,rand(5,12))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/sheet,rand(5,12))
 				if("solvent")
 					src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/acetone,rand(4,8)*10)
 				if("detailing metal")
@@ -519,8 +519,8 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	chem_ids = "silicate"
 	feemod = 18
 
-/datum/rc_entry/item/plank
-	name = "wooden plank"
+/datum/rc_entry/item/sheet
+	name = "wooden sheet"
 	typepath = /obj/item/sheet/wood
 	exactpath = TRUE
 	feemod = 1220
