@@ -22,6 +22,10 @@
 		if(comment)
 			S.delivery_destination = comment
 
+		object.exhaustion += 1
+		if(object.exhaustion > 10)
+			object.cost = round(object.cost*(1+object.exhaustion/50))
+
 		return S
 
 //SUPPLY PACKS
@@ -43,6 +47,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	var/id = 0 //What jobs can order it
 	var/whos_id = null //linked ID
 	var/basecost // the original cost
+	///This value will be used to increase the price of the supply pack if it's bought too many times.
+	var/exhaustion = 0
 
 	New()
 		. = ..()
