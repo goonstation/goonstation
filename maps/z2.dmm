@@ -11510,7 +11510,7 @@
 /area/upper_arctic/exterior/surface)
 "aVl" = (
 /obj/decal/cleanable/cobweb,
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aVm" = (
@@ -11967,8 +11967,8 @@
 	icon_state = "2-4"
 	},
 /obj/decal/cleanable/dirt,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "aWU" = (
@@ -15377,7 +15377,7 @@
 "bib" = (
 /obj/storage/crate,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
 "bic" = (
@@ -32308,7 +32308,7 @@
 /obj/decal/wallscroll/scroll3{
 	pixel_y = 32
 	},
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cqF" = (
@@ -63059,11 +63059,11 @@
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum)
 "klK" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate,
 /turf/unsimulated/floor/plating,
 /area/hospital)

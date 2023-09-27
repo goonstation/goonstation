@@ -1725,7 +1725,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\paint.dm"
 #include "code\obj\item\pet_carrier.dm"
 #include "code\obj\item\pinpointer.dm"
-#include "code\obj\item\plank.dm"
 #include "code\obj\item\plants.dm"
 #include "code\obj\item\playing_cards.dm"
 #include "code\obj\item\power_stones.dm"

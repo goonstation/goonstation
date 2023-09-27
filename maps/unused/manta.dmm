@@ -32170,10 +32170,10 @@
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
 "bNb" = (
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/item/paper/book/ratbook,
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/lowerport)
 "bNc" = (

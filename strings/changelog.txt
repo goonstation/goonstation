@@ -1,5 +1,9 @@
 
 (t)wed sep 27 23
+(u)MeggalBozale
+(p)15921
+(e)🗺💅🧱📦|A-Mapping, C-QoL, A-Materials, A-Game-Objects
+(+)Wooden planks are mostly replaced with instances of wood sheets, meaning spare planks can be used to furnish tables now.
 (u)Smilg
 (p)15933
 (e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science

@@ -11260,7 +11260,7 @@
 /area/ghostdrone_factory)
 "aLe" = (
 /obj/decal/cleanable/cobweb,
-/obj/item/plank,
+/obj/item/sheet/wood,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
@@ -11310,7 +11310,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aLp" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
