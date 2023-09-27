@@ -1289,8 +1289,6 @@ ABSTRACT_TYPE(/obj/item)
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
-	msgs.played_sound = src.hitsound
-
 	var/power = src.force + src.getProperty("searing")
 
 	if(hasProperty("unstable"))
@@ -1362,6 +1360,9 @@ ABSTRACT_TYPE(/obj/item)
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1
+
+	if (!armor_blocked)
+		msgs.played_sound = src.hitsound
 
 	if (src.leaves_slash_wound && power > 0 && hit_area == "chest" && ishuman(M))
 		var/num = rand(0, 2)

@@ -4185,6 +4185,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/cool,
+/obj/machinery/dialysis,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "anZ" = (
@@ -36675,10 +36676,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
-"hGx" = (
-/obj/machinery/glass_recycler/chemistry,
-/turf/space/fluid,
-/area/space)
 "hGR" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 1;
@@ -48492,7 +48489,7 @@ aqn
 aqn
 aqn
 aqn
-hGx
+aqn
 aqn
 aTs
 aqn
