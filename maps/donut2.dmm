@@ -40648,7 +40648,8 @@
 /obj/machinery/power/apc{
 	name = "Bomb Testing Area APC";
 	dir = 4;
-	pixel_x = 24
+	pixel_x = 24;
+	areastring = "Bomb Testing Chamber"
 	},
 /obj/cable{
 	icon_state = "0-8"
