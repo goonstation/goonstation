@@ -884,6 +884,78 @@
 TYPEINFO(/obj/disposalpipe/loafer)
 	mats = 100
 
+/obj/disposalpipe/chicken_neck_snapper
+	name = "humane chicken processor"
+	desc = "a pipe segment designed to convert alive chickens into dead chickens"
+	icon_state = "pipe-loaf0"
+	var/is_doing_stuff = FALSE
+
+	horizontal
+		dir = EAST
+	vertical
+		dir = NORTH
+
+	New()
+		..()
+
+		dpdir = dir | turn(dir, 180)
+		update()
+
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		dpdir = dir | turn(dir, 180)
+		update()
+
+	update()
+		..()
+		src.name = initial(src.name)
+
+	transfer(var/obj/disposalholder/H)
+		while(src.is_doing_stuff)
+			sleep(1 SECOND)
+		src.is_doing_stuff = TRUE
+
+		if (H.contents.len)
+			playsound(src.loc, 'sound/machines/mixer.ogg', 30, 1)
+			//src.visible_message("<b>[src] activates!</b>") // Processor + loop = SPAM
+			src.icon_state = "pipe-loaf1"
+
+			for (var/atom/movable/thing in H)
+
+				LAGCHECK(LAG_MED)
+
+				if (isliving(thing))
+					playsound(src.loc, pick('sound/impact_sounds/Wood_Hit_1.ogg','sound/impact_sounds/Flesh_Stab_1.ogg'), 30, 1)
+					var/mob/living/M = thing
+					logTheThing(LOG_COMBAT, M, "was maimed by the [log_object(src)] at [log_loc(src)]")
+
+					random_brute_damage(M, 25, 1)
+					take_bleeding_damage(M, null, 10, DAMAGE_CUT)
+
+					if(!isdead(M))
+						M:emote("scream")
+
+
+		var/nextdir = nextdir(H.dir)
+		H.set_dir(nextdir)
+		var/turf/T = H.nextloc()
+		var/obj/disposalpipe/P = H.findpipe(T)
+
+		src.is_doing_stuff = FALSE
+
+		if(P)
+			// find other holder in next loc, if inactive merge it with current
+			var/obj/disposalholder/H2 = locate() in P
+			if(H2 && !H2.active)
+				H.merge(H2)
+
+			H.set_loc(P)
+		else			// if wasn't a pipe, then set loc to turf
+			H.set_loc(T)
+			return null
+
+		return P
+
 /obj/disposalpipe/loafer
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."

@@ -25004,6 +25004,15 @@
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = 22;
+	pixel_y = 1
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "hCA" = (
@@ -43675,9 +43684,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "nst" = (
-/obj/machinery/disposal/small/west{
-	name = "Kitchen Freezer Chute"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge2"
@@ -43685,6 +43691,11 @@
 /obj/disposalpipe/trunk/morgue{
 	dir = 8;
 	name = "kitchen freezer pipe"
+	},
+/obj/machinery/floorflusher{
+	desc = "A chute for sending things to the kitchen";
+	id = "ranch_flusher";
+	name = "Kitchen Chute"
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 1
@@ -62355,6 +62366,9 @@
 	dir = 4;
 	name = "kitchen freezer pipe"
 	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "tkA" = (
@@ -63910,6 +63924,7 @@
 /area/station/hallway/secondary/exit)
 "tJz" = (
 /obj/submachine/seed_vendor,
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "tJA" = (
@@ -72817,11 +72832,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "wsK" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "kitchen freezer pipe"
-	},
+/obj/disposalpipe/chicken_neck_snapper/horizontal,
+/obj/machinery/drainage,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "wsM" = (
