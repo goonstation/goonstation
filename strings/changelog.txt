@@ -1,5 +1,8 @@
 
 (t)wed sep 27 23
+(u)Emily
+(*)Upped rooster chances for most types of roosters
+(*)Most ranches now have a flusher instead of a chute leading to the kitchen, so you can flush your unwanted chickens while they're still alive. (Warning: they will not arrive alive).
 (u)Colossusqw
 (p)15741
 (e)🆕⚗|C-Feature, A-Chemistry
