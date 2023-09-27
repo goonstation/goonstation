@@ -859,7 +859,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 #endif
 	mod = "asteroid-"
 	light_mod = "wall-"
-	plane = PLANE_WALL-1
+	plane = PLANE_NOSHADOW_BELOW
 	layer = ASTEROID_LAYER
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	default_material = "rock"
@@ -1237,7 +1237,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/image/edge_overlay = image('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
-			edge_overlay.plane = PLANE_WALL-1
+			edge_overlay.plane = PLANE_NOSHADOW_BELOW
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[dir_from]")
@@ -2551,6 +2551,13 @@ TYPEINFO(/obj/submachine/cargopad)
 		..()
 
 	attack_hand(var/mob/user)
+		toggle(user)
+
+	attack_ai(mob/user)
+		. = ..()
+		toggle(user)
+
+	proc/toggle(mob/user)
 		if (src.active == 1)
 			boutput(user, "<span class='notice'>You switch the receiver off.</span>")
 			UpdateOverlays(null, "lights")

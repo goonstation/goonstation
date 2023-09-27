@@ -804,9 +804,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 				R["sex"] = M.gender
 				R["pronouns"] = M.get_pronouns().name
 				R["age"] = M.bioHolder.age
-				if (M.gloves)
-					R["fingerprint"] = "Unknown"
-				else
+				if (!M.gloves)
 					R["fingerprint"] = M.bioHolder.fingerprints
 				R["p_stat"] = "Active"
 				R["m_stat"] = "Stable"

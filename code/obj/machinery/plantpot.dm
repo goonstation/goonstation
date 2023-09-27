@@ -1032,7 +1032,7 @@ TYPEINFO(/obj/machinery/plantpot)
 		var/datum/plantgenes/DNA = src.plantgenes
 		var/datum/plantmutation/MUT = DNA.mutation
 		if(!growing)
-			logTheThing(LOG_DEBUG, null, "<b>Hydro Controls</b>: Plant pot at \[[x],[y],[z]] used by ([user]) attempted a harvest without having a current plant.")
+			logTheThing(LOG_DEBUG, user, "<b>Hydro Controls</b>: Plant pot at \[[x],[y],[z]] used by ([user]) attempted a harvest without having a current plant.")
 			return
 
 		if(growing.harvested_proc)
@@ -2027,7 +2027,7 @@ TYPEINFO(/obj/machinery/hydro_mister)
 				if(isnull(potential_target.reagents) || istype(potential_target, /obj/machinery/hydro_mister))
 					//we never pour chems in stuff without reagents or other botanical misters
 					continue
-				if(!istype(potential_target, /obj/machinery/plantpot) && !src.emagged || !is_open_container(potential_target))
+				if(!istype(potential_target, /obj/machinery/plantpot) && !src.emagged || !potential_target.is_open_container(TRUE))
 					//if we are not emagged, we never transfer in non-plantpots
 					//if emagged, we only transfer into open containers
 					continue

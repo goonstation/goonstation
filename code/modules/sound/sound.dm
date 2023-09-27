@@ -171,8 +171,8 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 
 	// at this multiple of the max range the sound will be below TOO_QUIET level, derived from falloff equation lower in the code
 	var/rangemult = 0.18/(-(TOO_QUIET + 0.0542  * vol)/(TOO_QUIET - vol))**(10/17)
-	for (var/mob/M in GET_NEARBY(source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
-		var/client/C = M.client
+	for (var/client/C in GET_NEARBY(source_turf, rangemult * (MAX_SOUND_RANGE + extrarange)))
+		var/mob/M = C.mob
 		if (!C)
 			continue
 

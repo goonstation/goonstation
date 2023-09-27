@@ -858,6 +858,9 @@
 	if(src.traitHolder)
 		newbody.traitHolder = src.traitHolder
 		newbody.traitHolder.owner = newbody
+		if (src.spell_soulguard)
+			newbody.equip_sensory_items()
+
 	// Prone to causing runtimes, don't enable.
 /*	if (src.mutantrace && !src.spell_soulguard)
 		newbody.mutantrace = new src.mutantrace.type(newbody)*/
@@ -1193,7 +1196,7 @@
 
 
 /mob/living/carbon/human/UpdateName()
-	var/id_name = src.wear_id?:registered
+	var/id_name = get_id_card(src.wear_id)?:registered
 	if (!face_visible())
 		if (id_name)
 			src.name = "[src.name_prefix(null, 1)][id_name][src.name_suffix(null, 1)]"
@@ -1780,11 +1783,11 @@
 
 	if(I.two_handed)
 		if(src.l_hand == I)
-			if(src.r_hand != null)
+			if((src.r_hand != null) && (src.r_hand != I))
 				I.two_handed = 0
 				return FALSE
 		else if(src.r_hand == I)
-			if(src.l_hand != null)
+			if((src.l_hand != null) && (src.l_hand != I))
 				I.two_handed = 0
 				return FALSE
 		hud.set_visible(hud.lhand, 0)
@@ -1970,6 +1973,9 @@
 				I.equipped(src, SLOT_WEAR_ID)
 				equipped = 1
 				clothing_dirty |= C_ID
+			else if (istype(src.wear_id,/obj/item/clothing/lanyard)) // Lanyards
+				if (src.wear_id.storage.check_can_hold(I))
+					src.wear_id.storage.add_contents(I)
 		if (SLOT_EARS)
 			if (!src.ears && src.organHolder && src.organHolder.head)
 				src.ears = I
@@ -3384,6 +3390,8 @@
 		if (H.organHolder?.tail)
 			var/obj/item/organ/tail/T = H.organHolder.tail
 			T.colorize_tail(H.bioHolder.mobAppearance)
+		H.organHolder?.left_eye?.update_color(H.bioHolder?.mobAppearance, "L")
+		H.organHolder?.right_eye?.update_color(H.bioHolder?.mobAppearance, "R")
 		H?.bioHolder?.mobAppearance.UpdateMob()
 
 /mob/living/carbon/human/get_pronouns()

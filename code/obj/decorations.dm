@@ -386,6 +386,9 @@
 				. = ..()
 				src.dir = pick(cardinal)
 
+	dead
+		name = "Dead shrub"
+		icon_state = "shrub-dead"
 
 //It'll show up on multitools
 /obj/shrub/syndicateplant
