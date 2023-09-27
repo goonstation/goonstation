@@ -1,7 +1,7 @@
 
 /// PUT /rounds/end/{gameRound}
 /// End a game round.
-/datum/apiRoute/gameround/end
+/datum/apiRoute/rounds/end
 	method = RUSTG_HTTP_METHOD_PUT
 	path = "/rounds/end"
 	routeParams = list("gameRound")

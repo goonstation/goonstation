@@ -1,10 +1,10 @@
 
-/datum/apiBody/gameround/post
+/datum/apiBody/rounds/post
 	var/map					= "string"
 	var/server_id			= "string"
 	var/rp_mode				= FALSE
 
-/datum/apiBody/gameround/post/New(
+/datum/apiBody/rounds/post/New(
 	map,
 	server_id,
 	rp_mode
@@ -14,7 +14,7 @@
 	src.server_id = server_id
 	src.rp_mode = rp_mode
 
-/datum/apiBody/gameround/post/VerifyIntegrity()
+/datum/apiBody/rounds/post/VerifyIntegrity()
 	if (
 		isnull(src.map) \
 		|| isnull(src.server_id) \
@@ -22,7 +22,7 @@
 	)
 		return FALSE
 
-/datum/apiBody/gameround/post/toJson()
+/datum/apiBody/rounds/post/toJson()
 	return json_encode(list(
 		"map"				= src.map,
 		"server_id"			= src.server_id,
