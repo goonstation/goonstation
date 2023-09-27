@@ -1455,6 +1455,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
 	access = access_heads
 
+/datum/supply_packs/pressure_crystals_qt5
+	name = "Pressure Crystal Resupply"
+	desc = "Five (5) pressure crystals used in high-energy research."
+	category = "Research Department"
+	contains = list(/obj/item/pressure_crystal = 5)
+	cost = 2500
+	containertype = /obj/storage/crate
+	containername = "Pressure Crystal Crate"
+
 /* ================================================= */
 /* -------------------- Complex -------------------- */
 /* ================================================= */

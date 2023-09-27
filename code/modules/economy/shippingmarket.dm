@@ -1,6 +1,11 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
 #define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
+/// The full explosion-power-to-credits conversion formula. Also used in smallprogs.dm
+#define PRESSURE_CRYSTAL_VALUATION(power) power ** 1.1 * 100
+/// The number of peak points on the pressure crystal graph offering bonus credits
+#define PRESSURE_CRYSTAL_PEAK_COUNT 3
+
 //Codes for requisition post-transaction returns handling
 ///Requisition was not used, conduct a standard QM sale
 #define RET_IGNORE 0
@@ -34,6 +39,12 @@
 
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
 	var/list/supply_history = list() // History of all approved requests, of type string
+
+	// Both of these are string indexed because byond will whine and complain and explode otherwise
+	/// Previously sold pressure crystal values, will negatively affect future sales (associative list of pressure to credit value)
+	var/list/pressure_crystal_sales = list()
+	/// Pressure crystal market peaks, will positively affect future sales (associative list of pressure to multipliers)
+	var/list/pressure_crystal_peaks = list()
 
 	var/points_per_crate = 10
 
@@ -95,6 +106,11 @@
 			break
 
 		src.launch_distance = get_dist(spawnpoint, target)
+
+		//set up pressure crystal market peaks
+		for (var/i in 1 to PRESSURE_CRYSTAL_PEAK_COUNT)
+			var/value = rand(1, 230)
+			src.pressure_crystal_peaks["[value]"] = (rand() * 2) + 1 //random number between 2 and 3
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
@@ -433,6 +449,11 @@
 						if (sell)
 							qdel(O)
 						break
+					else if (istype(O, /obj/item/pressure_crystal))
+						duckets += src.appraise_pressure_crystal(O, sell)
+						if (sell)
+							qdel(O)
+						break
 					else if (O.artifact && sell)
 						src.sell_artifact(O, O.artifact)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
@@ -458,6 +479,32 @@
 						break
 
 		return duckets
+
+	proc/appraise_pressure_crystal(var/obj/item/pressure_crystal/pc, var/sell = 0)
+		if (pc.pressure <= 0)
+			return
+		//calculate the base value
+		var/value = PRESSURE_CRYSTAL_VALUATION(pc.pressure)
+		//for each previously sold pressure crystal
+		for (var/sale in src.pressure_crystal_sales)
+			var/sale_value = text2num(sale)
+			//calculate a modifier based on the proximity of our current pressure to the previous one
+			//scales by a simple x^2 curve, stretched by the magnitude of the sale pressure (ie bigger bombs affect larger ranges)
+			//obligatory desmos: https://www.desmos.com/calculator/mumuykqlju
+			var/modifier = 1/(sale_value * 3) * ((pc.pressure - sale_value) ** 2)
+			if (modifier < 1) //a range cutoff to ensure we never add credit value
+				value *= modifier
+		for (var/peak in src.pressure_crystal_peaks)
+			var/peak_value = text2num(peak) //I hate byond lists
+			//very similar to above except inverted and bounded by the multiplier of the peak
+			//another desmos: https://www.desmos.com/calculator/ahhoxuwho8
+			var/modifier = -1/(peak_value * 3) * ((pc.pressure - peak_value) ** 2) + src.pressure_crystal_peaks[peak]
+			if (modifier > 1)
+				value *= modifier
+		value = round(value)
+		if (sell && value > 0)
+			src.pressure_crystal_sales["[pc.pressure]"] = value
+		return value
 
 	proc/handle_returns(obj/storage/crate/sold_crate,var/return_code)
 		if(return_code == RET_INSUFFICIENT) //clarifies purpose for crate return
