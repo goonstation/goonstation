@@ -230,7 +230,6 @@ TYPEINFO(/obj/machinery/power/furnace)
 		else if (istype(W, /obj/item/clothing/head/)) fuel += 20
 		else if (istype(W, /obj/item/clothing/suit/)) fuel += 40
 		else if (istype(W, /obj/item/clothing/under/)) fuel += 30
-		else if (istype(W, /obj/item/plank)) fuel += 100
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuck/burn)) fuel += 120
 		else if (istype(W, /obj/item/reagent_containers/food/fish/lava_fish)) fuel += 150
 		else if (istype(W, /obj/item/reagent_containers/food/fish/igneous_fish)) fuel += 250

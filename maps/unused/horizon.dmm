@@ -6096,11 +6096,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
-"ast" = (
-/obj/item/plank,
-/obj/item/plank,
-/turf/simulated/floor,
-/area/station/storage/tools)
 "asu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11708,11 +11703,6 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
-"aJc" = (
-/obj/item/plank,
-/obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "aJd" = (
@@ -21138,6 +21128,20 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor,
 /area/station/storage/tools)
+"bik" = (
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/obj/disposalpipe/segment/morgue{
+	dir = 4;
+	name = "crematorium pipe"
+	},
+/turf/simulated/floor/carpet/green/fancy/edge/east,
+/area/station/crew_quarters/clown)
 "bim" = (
 /obj/machinery/light{
 	dir = 8;
@@ -44009,6 +44013,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/listeningpost/power)
+"cwF" = (
+/obj/decal/cleanable/dirt,
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/plating,
+/area/listeningpost/power)
 "cwG" = (
 /obj/marker/supplymarker,
 /turf/simulated/floor/plating,
@@ -46572,25 +46588,6 @@
 	},
 /turf/space,
 /area/space)
-"cNg" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/obj/disposalpipe/segment/transport,
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/forcefield/energyshield/perma{
-	desc = "A permanent force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Permanent Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "cNT" = (
 /obj/disposalpipe/segment/transport,
 /obj/disposalpipe/segment/mineral{
@@ -46898,6 +46895,21 @@
 "dnV" = (
 /turf/simulated/floor/stairs/wide/middle,
 /area/station/hallway/secondary/exit)
+"doe" = (
+/obj/machinery/conveyor/WE{
+	name = "cargo belt - east";
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	doordir = "single";
+	icon_state = "bdoorsingle1";
+	id = "mports_door";
+	name = "Cargo Export"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "doI" = (
 /obj/machinery/vending/cards,
 /turf/simulated/floor/black,
@@ -47594,6 +47606,11 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/hallway/primary/east)
+"esF" = (
+/obj/item/sheet/wood,
+/obj/disposalpipe/junction/middle/east,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "esS" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -47736,6 +47753,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"eGi" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "eHj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48554,15 +48575,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/auxillary)
-"gbh" = (
-/obj/disposalpipe/segment/mineral{
-	dir = 4
-	},
-/turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-R-3"
-	},
-/area/station/crew_quarters/fitness)
 "gbq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/cable,
@@ -48808,6 +48820,11 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/darkpurple,
 /area/station/storage/eva)
+"gsI" = (
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/turf/simulated/floor,
+/area/station/storage/tools)
 "gtP" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
@@ -48912,16 +48929,6 @@
 /obj/structure/girder/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/crew_quarters/barber_shop)
-"gEe" = (
-/obj/strip_door,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/cargo{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/science/bot_storage)
 "gFL" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -49090,6 +49097,18 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/substation/north)
+"hbB" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment{
+	dir = 4
+	},
+/turf/simulated/wall/false_wall/reinforced{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-R-3"
+	},
+/area/station/engine/elect)
 "hdb" = (
 /obj/storage/secure/closet/medical/uniforms,
 /obj/cable{
@@ -49825,6 +49844,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"ilc" = (
+/obj/strip_door,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/cargo{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/science/bot_storage)
 "ina" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50095,6 +50124,21 @@
 /obj/mapping_helper/access/medical_director,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/md)
+"iHm" = (
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	doordir = "single";
+	icon_state = "bdoorsingle1";
+	id = "imports_door";
+	name = "Cargo Import"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "iIK" = (
 /obj/machinery/door/airlock/pyro{
 	name = "office"
@@ -50628,20 +50672,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/station/hallway/primary/west)
-"jEe" = (
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown,
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "crematorium pipe"
-	},
-/turf/simulated/floor/carpet/green/fancy/edge/east,
-/area/station/crew_quarters/clown)
 "jEo" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52163,6 +52193,25 @@
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
 	})
+"mgA" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/disposalpipe/segment/transport,
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
+/obj/forcefield/energyshield/perma{
+	desc = "A permanent force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Permanent Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "mgU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -52301,9 +52350,6 @@
 	dir = 4
 	},
 /area/station/janitor/office)
-"mpY" = (
-/turf/space,
-/area/shuttle_sound_spawn)
 "mqh" = (
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -52958,6 +53004,20 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"nqm" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "qm_dock_out"
+	},
+/obj/forcefield/energyshield/perma{
+	desc = "A permanent force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Permanent Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "nqU" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment{
@@ -53271,21 +53331,6 @@
 /obj/item/clothing/suit/bedsheet/black,
 /turf/simulated/floor/white,
 /area/station/security/brig/genpop)
-"nSI" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/strip_door,
-/obj/machinery/door/poddoor/blast{
-	dir = 4;
-	doordir = "single";
-	icon_state = "bdoorsingle1";
-	id = "mports_door";
-	name = "Cargo Export"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "nTp" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -54065,18 +54110,6 @@
 /obj/disposalpipe/segment/ejection,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
-"pcf" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment{
-	dir = 4
-	},
-/turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-R-3"
-	},
-/area/station/engine/elect)
 "pfP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
@@ -57024,14 +57057,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
-"ucY" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/se)
 "udc" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -58013,18 +58038,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/main)
-"vFi" = (
-/obj/decal/cleanable/dirt,
-/obj/npc/trader/robot/syndicate,
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/plating,
-/area/listeningpost/power)
 "vFq" = (
 /obj/machinery/r_door_control/podbay/mainpod1/new_walls/south,
 /turf/space,
@@ -58688,21 +58701,6 @@
 	dir = 1
 	},
 /area/station/engine/engineering)
-"wzW" = (
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/strip_door,
-/obj/machinery/door/poddoor/blast{
-	dir = 4;
-	doordir = "single";
-	icon_state = "bdoorsingle1";
-	id = "imports_door";
-	name = "Cargo Import"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "wAG" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -59476,6 +59474,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"xBB" = (
+/obj/machinery/conveyor/WE{
+	name = "cargo belt - east";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/se)
 "xBS" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -59517,20 +59523,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"xOm" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "qm_dock_out"
-	},
-/obj/forcefield/energyshield/perma{
-	desc = "A permanent force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Permanent Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "xPj" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 4
@@ -59690,6 +59682,15 @@
 /area/station/science/artifact{
 	name = "Artifact Lounge"
 	})
+"xYr" = (
+/obj/disposalpipe/segment/mineral{
+	dir = 4
+	},
+/turf/simulated/wall/false_wall/reinforced{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-R-3"
+	},
+/area/station/crew_quarters/fitness)
 "xZt" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -84143,7 +84144,7 @@ aae
 aaa
 aPW
 aSX
-pcf
+hbB
 aSX
 aPW
 aPW
@@ -84155,7 +84156,7 @@ ehO
 bvs
 bxG
 bAA
-gbh
+xYr
 bFZ
 bIZ
 bIZ
@@ -88979,7 +88980,7 @@ gbq
 wgu
 bcn
 bfj
-jEe
+bik
 blb
 bnN
 bqX
@@ -98357,7 +98358,7 @@ bno
 bqf
 bqn
 bvE
-aJc
+esF
 mzm
 aFo
 aFb
@@ -108910,7 +108911,7 @@ aIu
 nQB
 bas
 bas
-gEe
+ilc
 bas
 blR
 boN
@@ -116796,7 +116797,7 @@ fGR
 fGR
 cnM
 fGR
-ucY
+xBB
 fGR
 fGR
 aaa
@@ -129115,7 +129116,7 @@ jje
 jje
 jje
 aaa
-mpY
+eGi
 jje
 jje
 jje
@@ -132770,13 +132771,13 @@ aAk
 aDa
 aEb
 arH
-nSI
+doe
 clg
 clg
 buL
 clg
 clg
-wzW
+iHm
 clg
 eGf
 bLm
@@ -133656,7 +133657,7 @@ aaa
 aaa
 aro
 arK
-ast
+gsI
 cjW
 arC
 asb
@@ -134282,9 +134283,9 @@ bnc
 arH
 bmU
 bqa
-xOm
+nqm
 buH
-cNg
+mgA
 bzR
 bCE
 bzU
@@ -139833,7 +139834,7 @@ iqq
 cvD
 cvU
 cvJ
-vFi
+cwF
 cxc
 cxw
 cxx

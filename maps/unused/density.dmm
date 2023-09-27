@@ -1185,6 +1185,18 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
+"cY" = (
+/obj/decal/cleanable/dirt,
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/obj/machinery/light{
+	dir = 1;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/plating/random,
+/area/station/crew_quarters/clown)
 "cZ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/clown)
@@ -4735,9 +4747,6 @@
 /obj/cable,
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
-"lc" = (
-/turf/space,
-/area/shuttle_sound_spawn)
 "ld" = (
 /obj/machinery/computer/genetics{
 	dir = 1;
@@ -6491,21 +6500,18 @@
 /obj/decal/fakeobjects/sink,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/kitchen)
+"vf" = (
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/janitor/supply)
 "vP" = (
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /turf/simulated/floor/red,
 /area/station/security/main)
-"wv" = (
-/obj/strip_door,
-/obj/machinery/door/poddoor{
-	id = "cargodock_out";
-	name = "Cargo Routing Door"
-	},
-/obj/machinery/conveyor/WE{
-	id = "qmout"
-	},
-/turf/simulated/floor/caution/northsouth,
-/area/station/quartermaster/office)
 "wZ" = (
 /obj/cable{
 	icon_state = "0-4";
@@ -6525,18 +6531,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/research)
-"AR" = (
-/obj/decal/cleanable/dirt,
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown,
-/obj/machinery/light{
-	dir = 1;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_y = 21
-	},
-/turf/simulated/floor/plating/random,
-/area/station/crew_quarters/clown)
+"xn" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "Ch" = (
 /obj/storage/secure/closet/security/forensics,
 /obj/item/reagent_containers/glass/bottle/formaldehyde,
@@ -6562,7 +6560,12 @@
 /obj/machinery/clonepod,
 /turf/simulated/floor/white,
 /area/station/medical/research)
-"CB" = (
+"GM" = (
+/obj/table/wood/auto,
+/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
+/turf/simulated/floor/specialroom/bar,
+/area/station/crew_quarters/bar)
+"Lc" = (
 /obj/strip_door,
 /obj/machinery/door/poddoor{
 	id = "cargodock_in";
@@ -6573,15 +6576,10 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/office)
-"Eh" = (
+"Ov" = (
 /obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/security/main)
-"GM" = (
-/obj/table/wood/auto,
-/obj/item/reagent_containers/food/snacks/cake/chocolate/gateau,
-/turf/simulated/floor/specialroom/bar,
-/area/station/crew_quarters/bar)
 "Ri" = (
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
@@ -6603,14 +6601,17 @@
 	icon_state = "fred2"
 	},
 /area/station/chapel/sanctuary)
-"Xp" = (
-/obj/machinery/conveyor/SN{
-	id = "garbage";
-	operating = 1
-	},
+"YN" = (
 /obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/janitor/supply)
+/obj/machinery/door/poddoor{
+	id = "cargodock_out";
+	name = "Cargo Routing Door"
+	},
+/obj/machinery/conveyor/WE{
+	id = "qmout"
+	},
+/turf/simulated/floor/caution/northsouth,
+/area/station/quartermaster/office)
 
 (1,1,1) = {"
 aa
@@ -43316,7 +43317,7 @@ aa
 aa
 aa
 aa
-lc
+xn
 aa
 aa
 aa
@@ -52643,9 +52644,9 @@ ab
 nr
 aq
 ax
-Eh
+Ov
 aO
-Eh
+Ov
 ax
 bl
 bu
@@ -55977,9 +55978,9 @@ bR
 cK
 cK
 cU
-CB
+Lc
 bL
-wv
+YN
 bL
 fx
 fS
@@ -56887,7 +56888,7 @@ dA
 eb
 eA
 fd
-Xp
+vf
 fV
 gq
 gT
@@ -57184,7 +57185,7 @@ fm
 fm
 fm
 ab
-AR
+cY
 dB
 ec
 eB

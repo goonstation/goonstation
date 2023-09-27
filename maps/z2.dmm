@@ -11508,11 +11508,6 @@
 	dir = 1
 	},
 /area/upper_arctic/exterior/surface)
-"aVl" = (
-/obj/decal/cleanable/cobweb,
-/obj/item/plank,
-/turf/unsimulated/floor/arctic/snow/ice,
-/area/lower_arctic/lower)
 "aVm" = (
 /turf/unsimulated/floor/stairs/wide{
 	dir = 8
@@ -11957,18 +11952,6 @@
 /obj/machinery/power/furnace,
 /obj/decal/cleanable/cobweb,
 /obj/decal/cleanable/dirt,
-/turf/unsimulated/floor/plating/scorched,
-/area/crater/biodome/maint)
-"aWT" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "2-4"
-	},
-/obj/decal/cleanable/dirt,
-/obj/item/plank,
-/obj/item/plank,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "aWU" = (
@@ -15373,12 +15356,6 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/white/grime,
-/area/marsoutpost)
-"bib" = (
-/obj/storage/crate,
-/obj/item/storage/toolbox/mechanical,
-/obj/item/plank,
-/turf/unsimulated/floor/wood,
 /area/marsoutpost)
 "bic" = (
 /obj/stool/bed,
@@ -29778,6 +29755,22 @@
 /obj/table/auto,
 /turf/unsimulated/floor/grime,
 /area/meat_derelict/entry)
+"ciq" = (
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/poddoor/blast/single{
+	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
+	id = "meatstation1";
+	name = "Safety Interlock";
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/meat_derelict/entry)
 "cir" = (
 /obj/meatlight{
 	brightness = 4
@@ -32272,27 +32265,6 @@
 /obj/decal/fakeobjects/swordrack{
 	pixel_y = 32
 	},
-/turf/unsimulated/floor/wood/two,
-/area/dojo)
-"cqE" = (
-/obj/item/material_piece/organic/wood{
-	pixel_y = -10
-	},
-/obj/item/material_piece/organic/wood,
-/obj/item/material_piece/organic/wood{
-	pixel_y = 10
-	},
-/obj/item/material_piece/organic/wood{
-	pixel_y = 5
-	},
-/obj/item/material_piece/organic/wood{
-	pixel_y = -5
-	},
-/obj/item/material_piece/organic/wood,
-/obj/decal/wallscroll/scroll3{
-	pixel_y = 32
-	},
-/obj/item/plank,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cqF" = (
@@ -48492,6 +48464,13 @@
 	},
 /turf/space/shuttle_transit,
 /area/shuttle_transit_space/west)
+"dlc" = (
+/obj/strip_door,
+/obj/river{
+	dir = 4
+	},
+/turf/unsimulated/grass,
+/area/owlery/Owlmait2)
 "dld" = (
 /obj/indestructible/shuttle_corner{
 	dir = 9;
@@ -57326,6 +57305,20 @@
 	},
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"eal" = (
+/obj/table/wood/round/auto,
+/obj/map/light/white,
+/obj/item/instrument/electricguitar{
+	pixel_y = -3
+	},
+/obj/item/instrument/guitar{
+	pixel_y = 7
+	},
+/obj/item/instrument/bass{
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/wood/two,
+/area/afterlife/bar)
 "eaz" = (
 /obj/storage/crate/classcrate{
 	desc = "A crate for XIANG|GIESEL training materials.";
@@ -57364,6 +57357,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"ecj" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/meat_derelict/main)
 "edm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -58138,6 +58137,15 @@
 	},
 /turf/unsimulated/wall/auto/lead/gray,
 /area/sim/tdome/tdome1)
+"eVI" = (
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/storage/crate,
+/turf/unsimulated/floor/plating,
+/area/hospital)
 "eWy" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -58226,6 +58234,12 @@
 	dir = 1
 	},
 /area/moon/museum)
+"fbU" = (
+/obj/critter/monster_door{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/meat_derelict/guts)
 "fcf" = (
 /obj/machinery/light/small,
 /obj/stool/chair{
@@ -59767,22 +59781,6 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
-"gLN" = (
-/obj/decal/fakeobjects/firelock_broken{
-	dir = 4;
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "fdoor0"
-	},
-/obj/machinery/door/poddoor/blast/single{
-	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
-	id = "meatstation1";
-	name = "Safety Interlock";
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/meat_derelict/entry)
 "gLP" = (
 /obj/machinery/door/unpowered/wood{
 	dir = 8
@@ -60451,6 +60449,18 @@
 	dir = 5
 	},
 /area/centcom/offices/aloe)
+"hze" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/decal/cleanable/dirt,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/turf/unsimulated/floor/plating/scorched,
+/area/crater/biodome/maint)
 "hzM" = (
 /obj/tree,
 /turf/unsimulated/floor/grass/leafy,
@@ -60785,6 +60795,13 @@
 	icon_state = "logo_xg10"
 	},
 /area/iomoon/base)
+"hSI" = (
+/obj/machinery/conveyor/SN{
+	id = "owlery_trash"
+	},
+/obj/strip_door,
+/turf/unsimulated/floor/grime,
+/area/owlery/Owlmait)
 "hSU" = (
 /turf/unsimulated/floor/void,
 /area/void_diner)
@@ -60859,6 +60876,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"hYy" = (
+/obj/machinery/conveyor/SN{
+	id = "owlery_trash"
+	},
+/obj/strip_door,
+/turf/unsimulated/floor/plating,
+/area/owlery/Owlmait)
 "hZA" = (
 /turf/unsimulated/floor/carpet/darkcarpet/border{
 	dir = 6
@@ -61795,12 +61819,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/sim/gunsim/lobby)
-"iXK" = (
-/obj/critter/monster_door{
-	dir = 4
-	},
-/turf/unsimulated/floor/plating,
-/area/meat_derelict/guts)
 "iXR" = (
 /obj/spacevine{
 	icon_state = "vine-light2"
@@ -62872,13 +62890,6 @@
 	},
 /turf/unsimulated/floor/martian,
 /area/crunch)
-"kcc" = (
-/obj/machinery/conveyor/SN{
-	id = "owlery_trash"
-	},
-/obj/strip_door,
-/turf/unsimulated/floor/plating,
-/area/owlery/Owlmait)
 "kce" = (
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
@@ -63038,15 +63049,6 @@
 "kkX" = (
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum)
-"klK" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/storage/crate,
-/turf/unsimulated/floor/plating,
-/area/hospital)
 "klN" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -64977,14 +64979,6 @@
 	opacity = 0
 	},
 /area/centcom/lobby)
-"mmb" = (
-/turf/unsimulated/wall/generic{
-	icon = 'icons/obj/doors/shuttle.dmi';
-	icon_state = "door1";
-	name = "broken door";
-	dir = 4
-	},
-/area/meat_derelict/soviet)
 "mmr" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/tug)
@@ -65304,13 +65298,6 @@
 	dir = 10
 	},
 /area/void_diner)
-"mEi" = (
-/obj/machinery/conveyor/SN{
-	id = "owlery_trash"
-	},
-/obj/strip_door,
-/turf/unsimulated/floor/grime,
-/area/owlery/Owlmait)
 "mEy" = (
 /obj/stool/bench/blue/auto,
 /obj/machinery/light{
@@ -65389,20 +65376,6 @@
 	dir = 4
 	},
 /area/centcom)
-"mHL" = (
-/obj/table/wood/round/auto,
-/obj/map/light/white,
-/obj/item/instrument/electricguitar{
-	pixel_y = -3
-	},
-/obj/item/instrument/guitar{
-	pixel_y = 7
-	},
-/obj/item/instrument/bass{
-	pixel_y = 4
-	},
-/turf/unsimulated/floor/wood/two,
-/area/afterlife/bar)
 "mHR" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -65477,12 +65450,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
-"mKV" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/meat_derelict/main)
 "mLm" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -66288,6 +66255,14 @@
 "nzm" = (
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/nw,
 /area/centcom/offices/rodney)
+"nzs" = (
+/turf/unsimulated/wall/generic{
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "broken door";
+	dir = 4
+	},
+/area/meat_derelict/soviet)
 "nAf" = (
 /turf/unsimulated/floor/dojo/stonestair,
 /area/titlescreen)
@@ -68892,13 +68867,6 @@
 	dir = 8
 	},
 /area/crunch/wtc)
-"qcL" = (
-/obj/strip_door,
-/obj/river{
-	dir = 4
-	},
-/turf/unsimulated/grass,
-/area/owlery/Owlmait2)
 "qcZ" = (
 /turf/unsimulated/floor/dream/beach{
 	icon_state = "shore-47"
@@ -70518,6 +70486,11 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"rIM" = (
+/obj/decal/cleanable/cobweb,
+/obj/item/sheet/wood,
+/turf/unsimulated/floor/arctic/snow/ice,
+/area/lower_arctic/lower)
 "rIS" = (
 /mob/living/critter/small_animal/mouse,
 /turf/unsimulated/floor/cave,
@@ -72499,6 +72472,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/meat_derelict/entry)
+"uhq" = (
+/obj/storage/crate,
+/obj/item/storage/toolbox/mechanical,
+/obj/item/sheet/wood,
+/turf/unsimulated/floor/wood,
+/area/marsoutpost)
 "uhA" = (
 /obj/lattice,
 /obj/cable{
@@ -76601,6 +76580,27 @@
 "ykL" = (
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"ylH" = (
+/obj/item/material_piece/organic/wood{
+	pixel_y = -10
+	},
+/obj/item/material_piece/organic/wood,
+/obj/item/material_piece/organic/wood{
+	pixel_y = 10
+	},
+/obj/item/material_piece/organic/wood{
+	pixel_y = 5
+	},
+/obj/item/material_piece/organic/wood{
+	pixel_y = -5
+	},
+/obj/item/material_piece/organic/wood,
+/obj/decal/wallscroll/scroll3{
+	pixel_y = 32
+	},
+/obj/item/sheet/wood,
+/turf/unsimulated/floor/wood/two,
+/area/dojo)
 "ylS" = (
 /mob/living/critter/robotic/repairbot,
 /turf/unsimulated/iomoon/ancient_floor,
@@ -86901,9 +86901,9 @@ aBY
 cBQ
 cBb
 cCz
-mEi
+hSI
 iPA
-kcc
+hYy
 iIT
 iIT
 gHt
@@ -93572,7 +93572,7 @@ cQf
 cPf
 cRR
 cGK
-qcL
+dlc
 cGK
 cGK
 cUh
@@ -97098,7 +97098,7 @@ coR
 cnH
 cox
 cpq
-cqE
+ylH
 cqK
 cqT
 cpv
@@ -100748,7 +100748,7 @@ cwC
 dSx
 dSJ
 cwC
-mHL
+eal
 dSS
 dbi
 aaa
@@ -103913,7 +103913,7 @@ aIC
 aIC
 aIp
 aIp
-aVl
+rIM
 aIC
 aIC
 aIp
@@ -115995,7 +115995,7 @@ wkV
 aUM
 aVx
 wkV
-aWT
+hze
 aXD
 wkV
 aZr
@@ -119814,7 +119814,7 @@ adG
 aee
 adG
 aeX
-klK
+eVI
 mmz
 mmz
 wmh
@@ -133841,7 +133841,7 @@ bgK
 aTs
 bho
 aTs
-bib
+uhq
 aTs
 biO
 bjx
@@ -140021,7 +140021,7 @@ pdZ
 cba
 ckB
 cli
-mmb
+nzs
 cli
 cli
 ckB
@@ -140919,7 +140919,7 @@ aqL
 aqL
 aqL
 aqL
-gLN
+ciq
 aqL
 aqL
 ftm
@@ -141522,7 +141522,7 @@ oeC
 hfT
 aqL
 aqL
-mKV
+ecj
 chN
 chN
 bXx
@@ -144244,7 +144244,7 @@ cgK
 cgK
 bWB
 bZd
-iXK
+fbU
 bZd
 bZd
 cdF

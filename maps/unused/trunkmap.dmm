@@ -22380,6 +22380,20 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"bwM" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost)
 "bwN" = (
 /turf/simulated/floor{
 	icon_state = "carpetW"
@@ -23159,9 +23173,6 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
-"bzF" = (
-/turf/space,
-/area/shuttle_sound_spawn)
 "bzL" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -25676,13 +25687,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
-"dDG" = (
-/obj/strip_door,
-/obj/machinery/conveyor/WE{
-	id = "QM"
-	},
-/turf/simulated/floor/grime,
-/area/station/quartermaster/office)
 "dFC" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -25751,6 +25755,18 @@
 	toxins = 70000
 	},
 /area/station/atmos/highcap_storage)
+"dRx" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "qm_dock_out"
+	},
+/obj/machinery/door/poddoor{
+	id = "QM-dock-out";
+	name = "Supply Dock Selling Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "dSC" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/shuttlebay,
@@ -25994,11 +26010,6 @@
 /mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass/leafy,
 /area/station/science/chemistry)
-"eLp" = (
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown,
-/turf/simulated/floor/plating/airless,
-/area/station/maintenance/south)
 "eNv" = (
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
@@ -26300,20 +26311,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
-"fHA" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/npc/trader/robot/syndicate,
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost)
 "fJX" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -26735,17 +26732,6 @@
 /obj/reagent_dispensers/heliumtank,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
-"hjl" = (
-/obj/machinery/conveyor/WE{
-	id = "QMLoad"
-	},
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor";
-	name = "Supply Dock Loading Door"
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
 "hlF" = (
 /obj/machinery/power/solar{
 	id = "eastsolar";
@@ -27226,18 +27212,6 @@
 "iJI" = (
 /turf/simulated/floor,
 /area/station/ai_monitored/armory)
-"iKq" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "qm_dock_out"
-	},
-/obj/machinery/door/poddoor{
-	id = "QM-dock-out";
-	name = "Supply Dock Selling Door"
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
 "iKX" = (
 /obj/grille/steel,
 /obj/window/reinforced{
@@ -28573,6 +28547,11 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor,
 /area/station/security/prison)
+"mlk" = (
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/turf/simulated/floor/plating/airless,
+/area/station/maintenance/south)
 "mlO" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 1;
@@ -28608,6 +28587,10 @@
 	dir = 4
 	},
 /area/station/science/chemistry)
+"mqj" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "mqQ" = (
 /obj/pool{
 	dir = 4;
@@ -29389,6 +29372,13 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
+"psO" = (
+/obj/strip_door,
+/obj/machinery/conveyor/WE{
+	id = "QM"
+	},
+/turf/simulated/floor/grime,
+/area/station/quartermaster/office)
 "pwu" = (
 /obj/machinery/the_singularitygen,
 /turf/simulated/floor/plating/airless,
@@ -30532,6 +30522,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"sMW" = (
+/obj/machinery/conveyor/WE{
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "sNg" = (
 /obj/table/wood{
 	dir = 9
@@ -39948,7 +39949,7 @@ agy
 agu
 agu
 agu
-fHA
+bwM
 afz
 btR
 btR
@@ -61260,12 +61261,12 @@ aaa
 aaa
 aab
 amK
-iKq
+dRx
 amK
 aab
 aab
 amK
-hjl
+sMW
 bFA
 aaa
 aaa
@@ -61869,7 +61870,7 @@ bxX
 apA
 apA
 bDA
-hjl
+sMW
 bFB
 apA
 aqK
@@ -66988,8 +66989,8 @@ aQO
 aPt
 ahm
 ahu
-dDG
-dDG
+psO
+psO
 boz
 ahX
 bqB
@@ -95392,7 +95393,7 @@ bCv
 bDu
 bEn
 bva
-eLp
+mlk
 bog
 bog
 xuV
@@ -102635,7 +102636,7 @@ bgN
 bgN
 bgN
 bgN
-bzF
+mqj
 aaa
 aaa
 aaa

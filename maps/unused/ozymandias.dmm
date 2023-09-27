@@ -4440,6 +4440,12 @@
 	dir = 9
 	},
 /area/station/medical/medbay)
+"biY" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-12"
+	},
+/area/station/maintenance/southwest)
 "bjg" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -7426,6 +7432,12 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/north)
+"cbI" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-12"
+	},
+/area/station/maintenance/inner/nw)
 "cbN" = (
 /obj/machinery/door/airlock/pyro/medical{
 	dir = 4
@@ -9367,6 +9379,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/core)
+"cCp" = (
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/storage/crate,
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "cCq" = (
 /turf/simulated/floor/neutral/corner{
 	dir = 4
@@ -10891,12 +10913,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/west)
-"cWU" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-12"
-	},
-/area/station/maintenance/southwest)
 "cWW" = (
 /obj/machinery/atmospherics/pipe/simple/overfloor{
 	dir = 1
@@ -11421,6 +11437,22 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
+"deF" = (
+/obj/strip_door,
+/obj/forcefield/energyshield/perma,
+/obj/machinery/conveyor/SN{
+	id = "cannedfartbelt";
+	name = "gas transit belt"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "ozygasbelt";
+	name = "Gas Transit Door"
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/engine/hotloop)
 "deN" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/disposalpipe/segment/transport{
@@ -13036,6 +13068,12 @@
 /obj/machinery/light/small/floor,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
+"dBq" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-3"
+	},
+/area/station/maintenance/inner/ne)
 "dBr" = (
 /obj/disposalpipe/segment/brig,
 /turf/simulated/floor/purple/side{
@@ -15994,6 +16032,12 @@
 	dir = 1
 	},
 /area/station/engine/hotloop)
+"eoc" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-12"
+	},
+/area/station/crew_quarters/quartersA)
 "eoj" = (
 /obj/table/reinforced/bar/auto{
 	name = "wooden table"
@@ -16444,22 +16488,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/exit)
-"esX" = (
-/obj/strip_door,
-/obj/forcefield/energyshield/perma,
-/obj/machinery/conveyor/SN{
-	id = "cannedfartbelt";
-	name = "gas transit belt"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "ozygasbelt";
-	name = "Gas Transit Door"
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/engine/hotloop)
 "etf" = (
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/south)
@@ -18253,12 +18281,6 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/maintenance/solar/west)
-"ePy" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-3"
-	},
-/area/station/maintenance/west)
 "ePF" = (
 /obj/machinery/light{
 	dir = 4;
@@ -19312,12 +19334,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"feX" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-12"
-	},
-/area/station/maintenance/inner/nw)
 "feY" = (
 /obj/machinery/light{
 	dir = 1;
@@ -29300,6 +29316,12 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
+"hFm" = (
+/obj/item/sheet/wood,
+/turf/simulated/floor/industrial,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "hFu" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
@@ -29510,12 +29532,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
-"hJA" = (
-/obj/item/plank,
-/turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "hJB" = (
 /obj/item/storage/wall/clothingrack/dresses{
 	dir = 4
@@ -37942,6 +37958,15 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor,
 /area/station/engine/elect)
+"jYE" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-12"
+	},
+/area/station/hallway/secondary/construction2{
+	icon_state = "crewquarters";
+	name = "Warrens Hall"
+	})
 "jYL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -39942,6 +39967,12 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"kyt" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-12"
+	},
+/area/station/engine/engineering/ce)
 "kyx" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
@@ -41994,22 +42025,6 @@
 /obj/structure/girder,
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
-"lbC" = (
-/obj/strip_door,
-/obj/forcefield/energyshield/perma,
-/obj/machinery/conveyor/SN{
-	id = "cannedfartbelt";
-	name = "gas transit belt"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "ozygasbelt";
-	name = "Gas Transit Door"
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/engine/gas)
 "lbE" = (
 /obj/machinery/computer3/generic/communications,
 /obj/cable{
@@ -45742,12 +45757,6 @@
 /obj/disposalpipe/segment/bent/west,
 /turf/simulated/floor/grass,
 /area/station/medical/dome)
-"lVU" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-12"
-	},
-/area/station/engine/engineering/ce)
 "lVV" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/carpet/blue/fancy/innercorner/nw_se,
@@ -47461,6 +47470,22 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/solar/west)
+"mti" = (
+/obj/strip_door,
+/obj/forcefield/energyshield/perma,
+/obj/machinery/conveyor/SN{
+	id = "cannedfartbelt";
+	name = "gas transit belt"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "ozygasbelt";
+	name = "Gas Transit Door"
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/engine/gas)
 "mtn" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -48702,16 +48727,6 @@
 	dir = 4
 	},
 /area/station/crewquarters/garbagegarbs)
-"mJp" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/storage/crate,
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
 "mJy" = (
 /obj/machinery/conveyor/SN{
 	id = "qmswapabout"
@@ -51141,23 +51156,6 @@
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/grime,
 /area/station/maintenance/southwest)
-"nwu" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "cargo_swapabout";
-	layer = 3.2;
-	name = "Cargo Transfer";
-	opacity = 0
-	},
-/obj/machinery/conveyor/SN{
-	id = "qmswapabout"
-	},
-/obj/strip_door{
-	layer = 3
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
 "nwQ" = (
 /obj/machinery/sleeper{
 	dir = 4
@@ -55430,15 +55428,6 @@
 "oxX" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/market)
-"oxY" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-12"
-	},
-/area/station/hallway/secondary/construction2{
-	icon_state = "crewquarters";
-	name = "Warrens Hall"
-	})
 "oyb" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -56448,13 +56437,6 @@
 "oLO" = (
 /turf/simulated/floor/carpet/green/fancy/edge/south,
 /area/station/crew_quarters/courtroom)
-"oLR" = (
-/obj/npc/trader/exclown,
-/obj/stool/chair,
-/turf/simulated/floor/carpet/arcade,
-/area/station/crew_quarters/clown{
-	name = "Honkington's Abode"
-	})
 "oMd" = (
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/grey/blackgrime/other,
@@ -56517,12 +56499,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/treatment1)
-"oMB" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-12"
-	},
-/area/station/maintenance/east)
 "oMI" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/mail/vertical,
@@ -64915,6 +64891,12 @@
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
 /area/station/solar/west)
+"qTM" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-3"
+	},
+/area/station/maintenance/west)
 "qTN" = (
 /obj/stool/chair/blue{
 	dir = 8
@@ -65663,6 +65645,23 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/west)
+"rfb" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "cargo_swapabout";
+	layer = 3.2;
+	name = "Cargo Transfer";
+	opacity = 0
+	},
+/obj/machinery/conveyor/SN{
+	id = "qmswapabout"
+	},
+/obj/strip_door{
+	layer = 3
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "rff" = (
 /turf/simulated/floor/yellow/checker,
 /area/station/hydroponics/bay)
@@ -69979,6 +69978,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/north)
+"sjJ" = (
+/obj/npc/trader/robot/syndicate,
+/turf/simulated/floor,
+/area/listeningpost)
 "sjR" = (
 /obj/table/reinforced/auto,
 /obj/item/gun/kinetic/riot40mm{
@@ -71164,6 +71167,13 @@
 /obj/rack,
 /turf/simulated/floor/grey,
 /area/ghostdrone_factory)
+"sxd" = (
+/obj/npc/trader/exclown,
+/obj/stool/chair,
+/turf/simulated/floor/carpet/arcade,
+/area/station/crew_quarters/clown{
+	name = "Honkington's Abode"
+	})
 "sxn" = (
 /obj/machinery/atmospherics/pipe/manifold{
 	dir = 2
@@ -72965,6 +72975,12 @@
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/green/checker,
 /area/station/crew_quarters/quartersA)
+"sSO" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-12"
+	},
+/area/station/maintenance/east)
 "sSQ" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating,
@@ -73450,12 +73466,6 @@
 	},
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
-"sYa" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-12"
-	},
-/area/station/chapel/office)
 "sYr" = (
 /obj/machinery/computer/power_monitor/smes{
 	dir = 8;
@@ -74092,12 +74102,6 @@
 /area/station/crew_quarters/toilets{
 	name = "Dockside Restroom"
 	})
-"tgy" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-3"
-	},
-/area/station/maintenance/inner/ne)
 "tgJ" = (
 /obj/decal/poster/wallsign/space,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -88744,14 +88748,6 @@
 /obj/machinery/disposal,
 /turf/simulated/floor/redblack,
 /area/station/security/hos)
-"wFL" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-12"
-	},
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "wFQ" = (
 /obj/machinery/door/airlock/pyro/maintenance,
 /obj/cable{
@@ -90011,12 +90007,6 @@
 	do_not_irradiate = 1;
 	name = "Engineering Air Hookups"
 	})
-"wWx" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls/supernorn/smooth.dmi';
-	icon_state = "norn-12"
-	},
-/area/station/crew_quarters/quartersA)
 "wWz" = (
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/toilets{
@@ -90149,6 +90139,12 @@
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/grey,
 /area/station/hallway/secondary/west)
+"wYp" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-12"
+	},
+/area/station/chapel/office)
 "wYq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -94675,10 +94671,6 @@
 /area/station/hallway/secondary/entry{
 	name = "Arrival Shuttle Hallway"
 	})
-"ycn" = (
-/obj/npc/trader/robot/syndicate,
-/turf/simulated/floor,
-/area/listeningpost)
 "ycr" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/proto)
@@ -95152,6 +95144,14 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/black/grime,
 /area/station/maintenance/disposal)
+"yhK" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
+	icon_state = "norn-12"
+	},
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "yhM" = (
 /obj/rack,
 /obj/item/sponge,
@@ -105104,7 +105104,7 @@ wPG
 akK
 akK
 rsK
-ycn
+sjJ
 qEJ
 qEJ
 iOi
@@ -121045,7 +121045,7 @@ wGG
 wGG
 wGG
 wGG
-wFL
+yhK
 rCI
 rCI
 rCI
@@ -122874,7 +122874,7 @@ fXG
 vpM
 vpM
 vpM
-wFL
+yhK
 wLP
 aJu
 aJu
@@ -124080,7 +124080,7 @@ xNf
 fXG
 uOx
 vHi
-wFL
+yhK
 rCI
 fXG
 ydz
@@ -125281,7 +125281,7 @@ nvM
 jwQ
 bmT
 evH
-wFL
+yhK
 qZa
 wIk
 wfZ
@@ -125582,7 +125582,7 @@ nvM
 nvM
 tqB
 teh
-hJA
+hFm
 fXG
 fXG
 fXG
@@ -126171,7 +126171,7 @@ acs
 bBC
 xYa
 fKe
-wFL
+yhK
 kXf
 qgV
 vRo
@@ -127703,7 +127703,7 @@ lCk
 tKz
 nGE
 rMZ
-oLR
+sxd
 vQf
 tKz
 dSM
@@ -129799,7 +129799,7 @@ xxX
 kSS
 gjW
 tIH
-cWU
+biY
 rFk
 grJ
 grJ
@@ -130117,7 +130117,7 @@ ygf
 acs
 sAd
 rFk
-oxY
+jYE
 lKU
 xLw
 fBn
@@ -130715,7 +130715,7 @@ kcD
 wnW
 wnW
 xUI
-cWU
+biY
 grJ
 rXA
 pPl
@@ -133052,7 +133052,7 @@ uSZ
 uSZ
 uSZ
 uSZ
-ePy
+qTM
 hTi
 hTi
 hTi
@@ -134286,7 +134286,7 @@ sGk
 trL
 sGk
 cnS
-wWx
+eoc
 kdu
 oHO
 sGk
@@ -135237,13 +135237,13 @@ pNB
 jMt
 xVf
 itt
-sYa
+wYp
 grJ
 acs
 grJ
 eYK
 nZA
-cWU
+biY
 xdf
 vdQ
 tIK
@@ -139081,7 +139081,7 @@ vyq
 xzk
 bGn
 bGn
-feX
+cbI
 oyk
 cFi
 xiQ
@@ -153347,7 +153347,7 @@ cqJ
 sZO
 bFI
 pOH
-mJp
+cCp
 uDV
 cqr
 sOO
@@ -154524,7 +154524,7 @@ tyo
 cTK
 pZK
 mJy
-nwu
+rfb
 raf
 aRz
 aRz
@@ -157545,7 +157545,7 @@ qMh
 fRK
 wCU
 tSl
-oMB
+sSO
 fYu
 luf
 hDO
@@ -158107,7 +158107,7 @@ iqR
 ybP
 ybP
 wwQ
-tgy
+dBq
 wwQ
 fzC
 prc
@@ -158664,9 +158664,9 @@ gyr
 wQX
 mdK
 eob
-esX
+deF
 oBo
-lbC
+mti
 cjF
 pHd
 qws
@@ -168979,7 +168979,7 @@ mOR
 tBD
 hZR
 vgO
-lVU
+kyt
 gzN
 qNj
 aJu

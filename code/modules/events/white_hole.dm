@@ -606,7 +606,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/machinery/bot/medbot = 5,
 			/obj/machinery/bot/medbot/mysterious/emagged = 1,
 			/datum/reagent/blood = 5,
-			/datum/reagent/fooddrink/coffee = 2,
+			/datum/reagent/fooddrink/caffeinated/coffee = 2,
 			/obj/item/paper = 1,
 			/obj/item/sticker/postit = 0.5,
 		),
