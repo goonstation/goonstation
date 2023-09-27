@@ -4,10 +4,10 @@ import { ReagentBar } from './common/ReagentInfo';
 import { clamp, round } from 'common/math';
 
 import {
-  Stack,
   Button,
   Section,
   Slider,
+  Stack,
   Tabs,
 } from '../components';
 
