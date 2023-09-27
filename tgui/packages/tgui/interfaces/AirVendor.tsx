@@ -7,7 +7,7 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Dimmer, Flex, LabeledList, Section, Slider } from "../components";
+import { Button, Dimmer, LabeledList, Section, Slider, Stack } from "../components";
 import { Window } from '../layouts';
 import { VendorCashTable } from './common/VendorCashTable';
 import { GasTankInfo } from './GasTank';
@@ -16,7 +16,7 @@ type AirVendorParams = {
   cash: number,
   cardname: string,
   bankMoney: number,
-  vend_type:string,
+  vend_type: string,
   holding: string,
   holding_pressure: number,
   min_pressure: number,
@@ -58,14 +58,14 @@ const VendorSection = (_props, context) => {
             onClick={handleFillClick} />
         </LabeledList.Item>
         <LabeledList.Item label="Pressure">
-          <Flex>
-            <Flex.Item>
+          <Stack>
+            <Stack.Item>
               <Button
                 disabled={target_pressure === min_pressure}
                 onClick={() => handleChangePressure(min_pressure)}
                 content="Min" />
-            </Flex.Item>
-            <Flex.Item grow mx={1}>
+            </Stack.Item>
+            <Stack.Item grow>
               <Slider
                 value={target_pressure}
                 fillValue={Math.min(current_fill, max_pressure)}
@@ -75,14 +75,14 @@ const VendorSection = (_props, context) => {
                 stepPixelSize={4}
                 onChange={(_e: any, value: number) => handleChangePressure(value)}
               />
-            </Flex.Item>
-            <Flex.Item>
+            </Stack.Item>
+            <Stack.Item>
               <Button
                 disabled={target_pressure === max_pressure}
                 onClick={() => handleChangePressure(max_pressure)}
                 content="Max" />
-            </Flex.Item>
-          </Flex>
+            </Stack.Item>
+          </Stack>
         </LabeledList.Item>
       </LabeledList>
     </Section>
