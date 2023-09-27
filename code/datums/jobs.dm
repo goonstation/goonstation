@@ -2744,11 +2744,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			M.set_mutantrace(morph)
 		var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
 		M.equip_if_possible(L, SLOT_WEAR_ID, FALSE)
-		M.spawnId(src)
 		var/obj/item/card/id = locate() in M
-		if (!id)
-			return
-		L.storage.add_contents(id, M, FALSE)
+		if (id)
+			L.storage.add_contents(id, M, FALSE)
 
 /datum/job/daily/saturday
 	name = "Musician"

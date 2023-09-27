@@ -807,7 +807,7 @@
 	/obj/item/mousetrap,
 	/obj/item/mousetrap/armed,
 	/obj/item/paper,
-	/obj/item/plank,
+	/obj/item/sheet/wood,
 	/obj/item/plate,
 	/obj/item/pen,
 	/obj/item/pen/crayon/random,

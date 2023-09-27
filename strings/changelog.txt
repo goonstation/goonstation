@@ -1,4 +1,65 @@
+
+(t)wed sep 27 23
+(u)MeggalBozale
+(p)15921
+(e)🗺💅🧱📦|A-Mapping, C-QoL, A-Materials, A-Game-Objects
+(+)Wooden planks are mostly replaced with instances of wood sheets, meaning spare planks can be used to furnish tables now.
+(u)Smilg
+(p)15933
+(e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science
+(*)Pressure crystals from Vendomats, when used, can now be sold for credits via Cargo. Work in Toxins today!
+(+)New program for Scientist PDAs that shows you previously sold pressure crystals, and their bounties.
+(t)tue sep 26 23
+(u)Emily
+(*)Repeatedly buying the same crate from the market will "exhaust" supply, causing the price to increase. Exhaustion decays with each shipping market shift.
+(u)Garash
+(p)15784
+(e)🎨🔄📄|C-Sprites, C-Rework, A-UI
+(+)Fluid canisters now use a Context Actions menu.
+(u)NewyearnewmeUwu
+(p)15931
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Added some fishing related mishaps for clowns.
+(u)DisturbHerb
+(p)16024
+(e)🆕🗺💊📦|C-Feature, A-Mapping, A-Medical, A-Game-Objects
+(*)The latest advances in hemodialysis technology have been harnessed by your local medical bay. Clean your blood, today!
+(t)mon sep 25 23
+(u)Kubius
+(p)16018
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Updated Nadir's Warrens surgery room to be more suitably Warrens-esque and adjusted plasma vending machine positions.
+(u)Cheffie
+(p)15842
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)Crates ordered from cargo containing critters now need to be pried open upon arrival.
+(u)LeahTheTech
+(*)Attacks which are entirely blocked by armour will no longer play their attack sound. This makes it much more obvious when your attack is doing nothing.
+(u)UnfunnyPerson
+(p)15962
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Revolutionary sign damage scales depending on how many revs are nearby the user
+(u)Emily
+(*)Prices of oxygen/plasma vendors lowered. Remember to turn off your pods' weapons systems when not in use!
+(+)Lowered prices of weapon pod systems at vendors
+(+)Martian vendor no longer infinite
+(u)Mr. Moriarty
+(p)14069
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(*)Replaced the Armoury's 40mm pod-seeking shells with a pod-targeting missile launcher. The launcher will display an aiming reticle over the pod being targeted.
 (t)sun sep 24 23
+(u)UnfunnyPerson
+(p)15982
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Added the wasp crossbow to surplus crates.
+(+)Wasp related items in surplus crates come with a wasp implant. The wasp implant will cause wasps to ignore the user and for the user to explode into wasps on death.
+(u)TealSeer
+(p)16006
+(e)🪲🧱🍝|C-Bug, A-Materials, A-Catering
+(+)Pizza made at the pizza vending machine should no longer taste horrible and make you sick.
+(u)Azrun
+(e)🐑🧶|C-Feature
+(+)Knitting expanded to allow for illegal modding of knitting needles.
 (u)LeahTheTech
 (+)The mixed gamemode should now have slightly more consistent numbers of antagonists.
 (u)Emily

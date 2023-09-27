@@ -87,6 +87,7 @@
 	icon_state = "0-1-thick"
 	iconmod = "-thick"
 	color = "#075C90"
+	event_handler_flags = IMMUNE_TRENCH_WARP
 
 	condcutor_default = "pharosium"
 	insulator_default = "synthblubber"

@@ -15970,6 +15970,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
+/obj/machinery/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 10
 	},
@@ -23567,7 +23568,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/apc{
-	areastring = "Brig - Solitary Cells";
+	areastring = "Solitary Confinement";
 	dir = 8;
 	name = "Brig - Solitary Cells APC";
 	pixel_x = -24
@@ -24070,11 +24071,11 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/toilets)
 "bRg" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate,
 /obj/cable{
 	icon_state = "0-4"

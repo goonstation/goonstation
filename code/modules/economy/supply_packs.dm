@@ -22,6 +22,10 @@
 		if(comment)
 			S.delivery_destination = comment
 
+		object.exhaustion += 1
+		if(object.exhaustion > 10)
+			object.cost = round(object.cost*(1+object.exhaustion/50))
+
 		return S
 
 //SUPPLY PACKS
@@ -43,6 +47,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	var/id = 0 //What jobs can order it
 	var/whos_id = null //linked ID
 	var/basecost // the original cost
+	///This value will be used to increase the price of the supply pack if it's bought too many times.
+	var/exhaustion = 0
 
 	New()
 		. = ..()
@@ -790,7 +796,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Civilian Department"
 	contains = list(/obj/critter/parrot/random = 5)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/crate/packing
+	containertype = /obj/storage/crate/pryable/animal
 	containername = "Avian Import Kit"
 
 /datum/supply_packs/animal
@@ -799,7 +805,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Civilian Department"
 	contains = list (/obj/random_item_spawner/critter)
 	cost = PAY_IMPORTANT*2
-	containertype = /obj/storage/crate/packing
+	containertype = /obj/storage/crate/pryable/animal
 	containername = "Animal Import Kit"
 
 /datum/supply_packs/pet_carrier
@@ -1448,6 +1454,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/secure/crate
 	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
 	access = access_heads
+
+/datum/supply_packs/pressure_crystals_qt5
+	name = "Pressure Crystal Resupply"
+	desc = "Five (5) pressure crystals used in high-energy research."
+	category = "Research Department"
+	contains = list(/obj/item/pressure_crystal = 5)
+	cost = 2500
+	containertype = /obj/storage/crate
+	containername = "Pressure Crystal Crate"
 
 /* ================================================= */
 /* -------------------- Complex -------------------- */
