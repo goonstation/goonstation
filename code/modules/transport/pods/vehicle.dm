@@ -1078,31 +1078,29 @@
 	return
 
 /obj/machinery/vehicle/proc/eject_pod(mob/user, dead_only=FALSE)
-	var/ejected_something = FALSE
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot
 		if (!dead_only)
 			leave_pod(M)
 			boutput(user, "<span class='alert'>You yank [M] out of [src].</span>")
-			ejected_something = TRUE
 		else
 			if(M.stat || !M.client)
 				leave_pod(M)
 				boutput(user, "<span class='alert'>You pull [M] out of [src].</span>")
-				ejected_something = TRUE
+
 			else if(!isliving(M))
 				leave_pod(M)
 				boutput(user, "<span class='alert'>You scrape [M] out of [src].</span>")
-				ejected_something = TRUE
+
+	var/obj/item/shipcomponent/secondary_system/cargo/hold = src.sec_system
+	if(istype(hold))
+		for(var/mob/M in hold.load)
+			hold.unload(M, user.loc)
+			boutput(user, "<span class='alert'>You dump [M] out from the [hold] of [src].</span>")
 
 	for(var/obj/decal/cleanable/O in src)
 		boutput(user, "<span class='alert'>You [pick("scrape","scrub","clean")] [O] out of [src].</span>")
 		var/floor = get_turf(src)
 		O.set_loc(floor)
-		ejected_something = TRUE
-
-	if (!ejected_something)
-		boutput(user, "<span class='alert'>Nothing was inside the cabin of [src]!</span>")
-
 
 /datum/action/bar/board_pod
 	duration = 20
