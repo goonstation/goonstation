@@ -80,6 +80,7 @@
 	///Which type of surgery tools do we need to operate on this organ?
 	var/surgery_flags = SURGERY_NONE
 	var/removal_stage = 0
+	///In which region is this organ supposed to be implanted? E.g. RIBS for the heart and lungs
 	var/region = null
 	///Can this organ be inserted on either side? (literally just kidneys, wegh)
 	var/either_side = FALSE
@@ -373,26 +374,24 @@
 		var/mob/living/carbon/human/H = M
 		if (!H.organHolder)
 			return FALSE
-		if (H.organHolder.chest?.op_stage >= 2)
+		switch (src.region)
 			//Check if our relevant region is opened up. For example hearts need the ribs to be opened up
-			switch (src.region)
-				if (null)
+			if (null)
+				return TRUE
+			if (RIBS)
+				if (H.organHolder.ribs_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
 					return TRUE
-				if (RIBS)
-					if (H.organHolder.ribs_stage == REGION_OPENED)
-						return TRUE
-					return FALSE
-				if (ABDOMINAL)
-					if (H.organHolder.abdominal_stage == REGION_OPENED)
-						return TRUE
-					return FALSE
-				if (SUBCOSTAL)
-					if (H.organHolder.subcostal_stage == REGION_OPENED)
-						return TRUE
-				if (FLANKS)
-					if (H.organHolder.flanks_stage == REGION_OPENED)
-						return TRUE
-			return TRUE
+				return FALSE
+			if (ABDOMINAL)
+				if (H.organHolder.abdominal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
+					return TRUE
+				return FALSE
+			if (SUBCOSTAL)
+				if (H.organHolder.subcostal_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
+					return TRUE
+			if (FLANKS)
+				if (H.organHolder.flanks_stage == REGION_OPENED && H.organHolder.chest?.op_stage >= 2)
+					return TRUE
 
 		return FALSE
 
@@ -406,6 +405,7 @@
 
 		var/fluff = pick("insert", "shove", "place", "drop", "smoosh", "squish")
 		var/obj/item/organ/organ_location = H.organHolder.get_organ(src.organ_holder_location)
+		src.removal_stage = 0
 
 		var/full_organ_name = src.organ_holder_name
 		if (src.either_side)

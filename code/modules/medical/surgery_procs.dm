@@ -191,8 +191,8 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			if(surgeon.find_type_in_hand(/obj/item/suture/))
 				patient.chest_item_sewn = TRUE
 				surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest and sutures it up.</span>",\
-					"<span class='notice'>You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest and sutures it up.</span>",\
-					"<span class='notice'>[patient == surgeon ? "You shove" : "<b>[surgeon]</b> shoves"] [chest_item] into your chest and suture it up.</span>")
+					"<span class='notice'>You shove [chest_item] into [surgeon == patient ? "your" : "[patient]'s"] chest and suture it up.</span>",\
+					"<span class='notice'>[patient == surgeon ? "You shove [chest_item] into your chest and suture it up" : "<b>[surgeon]</b> shoves [chest_item] into your chest and sutures it up"].</span>")
 				patient.TakeDamage("chest", rand(5, 15), 0)
 			else
 				surgeon.tri_message(patient, "<span class='notice'><b>[surgeon]</b> shoves [chest_item] into [patient == surgeon ? "[his_or_her(patient)]" : "[patient]'s"] chest.</span>",\
