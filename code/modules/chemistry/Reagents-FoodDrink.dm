@@ -2370,43 +2370,21 @@ datum
 			fluid_g = 28
 			fluid_b = 16
 			transparency = 245
-			addiction_prob = 2//5
-			addiction_prob2 = 20
-			addiction_min = 10
-			max_addiction_severity = "LOW"
 			thirst_value = 0.3
 			bladder_value = -0.1
 			energy_value = 0.3
-			stun_resist = 7
+			depletion_rate = 1
 			taste = "bitter"
 			threshold = THRESHOLD_INIT
-			var/caffeine_rush = 2
-
-			cross_threshold_over()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", src.caffeine_rush)
-				..()
-
-			cross_threshold_under()
-				if(ismob(holder?.my_atom))
-					var/mob/M = holder.my_atom
-					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
-				..()
+			var/caffeine_content = 0.5
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				M.dizziness = max(0,M.dizziness-5)
-				M.changeStatus("drowsy", -5 SECONDS)
-				M.sleeping = 0
-				if(M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
-				M.make_jittery(3)
+				M.reagents.add_reagent("caffeine", caffeine_content * mult)
 
 		fooddrink/coffee/fresh
 			name = "freshly brewed coffee"
 			id = "coffee_fresh"
-			addiction_prob2 = 10
 			thirst_value = 1
 			energy_value = 0.6
 			taste = "bitter"
@@ -2420,9 +2398,8 @@ datum
 			fluid_b = 14
 			thirst_value = 0.25
 			energy_value = 0.8
-			caffeine_rush = 3
-			stun_resist = 10
 			taste = list("rich", "fragrant")
+			caffeine_content = 0.8
 			threshold = THRESHOLD_INIT
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2435,8 +2412,9 @@ datum
 			description = "An expresso is a strong black coffee with more stupid."
 			taste = "coffee yum"
 			stun_resist = 25
-			caffeine_rush = 4
 			threshold = THRESHOLD_INIT
+			depletion_rate = 0.4
+			caffeine_content = 1
 			var/killer = 0
 
 			on_mob_life(var/mob/M, var/mult = 1)
@@ -2453,22 +2431,17 @@ datum
 			name = "decaf espresso"
 			id = "decafespresso"
 			description = "A decaf espresso contains less caffeine than a regular espresso."
-			caffeine_rush = 2
-			addiction_prob = 1
-			addiction_prob2 = 5
 			energy_value = 0
+			caffeine_content = 0.5
 
 		fooddrink/coffee/mate
 			name = "mate"
 			id = "mate"
 			description = "Basically coffee but green."
-			depletion_rate = 0.2
+			depletion_rate = 0.5
 			thirst_value = 0.25
 			energy_value = 0.2
-			caffeine_rush = 2
-			addiction_prob = 1
-			addiction_prob2 = 2
-			stun_resist = 3
+			caffeine_content = 0.5
 			fluid_r = 107
 			fluid_g = 188
 			fluid_b = 20
@@ -2484,6 +2457,7 @@ datum
 			fluid_b = 45
 			transparency = 170
 			overdose = 25
+			depletion_rate = 0.4
 			addiction_prob = 4
 			addiction_prob2 = 10
 			var/tickcounter = 0
@@ -2493,7 +2467,7 @@ datum
 			stun_resist = 25
 			taste = "supercharged"
 			threshold = THRESHOLD_INIT
-			caffeine_rush = 3
+			caffeine_content = 0.8
 
 
 			cross_threshold_over()
