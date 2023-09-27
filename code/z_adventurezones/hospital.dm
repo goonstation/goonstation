@@ -224,7 +224,7 @@
 					spawnloc = tempTurf
 
 				var/obj/stool/bed/gurney = new /obj/stool/bed/moveable/hospital/halloween (spawnloc)
-				playsound(src, 'sound/machines/squeaky_rolling.ogg', 40, 0) //Maybe a squeaky wheel metal noise??
+				playsound(src, 'sound/machines/squeaky_rolling.ogg', 40, FALSE) //Maybe a squeaky wheel metal noise??
 
 				gurney.throw_at(get_edge_target_turf(src, WEST), 20, 1)
 

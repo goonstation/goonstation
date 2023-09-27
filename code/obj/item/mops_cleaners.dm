@@ -634,7 +634,7 @@ TRASH BAG
 			if (target.reagents)
 				target.reagents.trans_to(src, 5)
 			target.remove_filter(list("paint_color", "paint_pattern"))
-			playsound(src, 'sound/items/sponge.ogg', 20, 1)
+			playsound(src, 'sound/items/sponge.ogg', 20, TRUE)
 			if (ismob(target))
 				animate_smush(target)
 

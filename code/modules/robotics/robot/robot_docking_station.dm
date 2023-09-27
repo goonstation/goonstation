@@ -373,7 +373,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if (!anchored)
 			src.go_out()
 		user.show_text("You [src.anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
-		playsound(src, 'sound/items/Ratchet.ogg', 40, 0, 0)
+		playsound(src, 'sound/items/Ratchet.ogg', 40, FALSE, 0)
 		return
 	..()
 
@@ -977,6 +977,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (user == src.occupant)
 				boutput(user, "<span class='alert'>You can't modify your own power cell!</span>")
 				return
+			if (isAIeye(user))
+				boutput(user, "<span class='alert'>You have to be physically present for this!</span>")
+				return
 			var/mob/living/silicon/robot/R = src.occupant
 			var/cellRef = params["cellRef"]
 			if(cellRef)
@@ -997,6 +1000,9 @@ TYPEINFO(/obj/machinery/recharge_station)
 			. = TRUE
 		if("cell-remove")
 			if (!isrobot(src.occupant))
+				return
+			if (isAIeye(user))
+				boutput(user, "<span class='alert'>You have to be physically present for this!</span>")
 				return
 			if (user == src.occupant)
 				boutput(user, "<span class='alert'>You can't modify your own power cell!</span>")

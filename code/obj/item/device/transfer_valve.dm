@@ -168,10 +168,16 @@ TYPEINFO(/obj/item/device/transfer_valve)
 				tank_one.set_loc(get_turf(src))
 				tank_one = null
 				UpdateIcon()
+				if(src.equipped_in_slot)
+					var/mob/wearer = src.loc
+					wearer.update_clothing()
 			if(href_list["tanktwo"])
 				tank_two.set_loc(get_turf(src))
 				tank_two = null
 				UpdateIcon()
+				if(src.equipped_in_slot)
+					var/mob/wearer = src.loc
+					wearer.update_clothing()
 			if(href_list["open"])
 				if (valve_open)
 					var/turf/bombturf = get_turf(src)
@@ -297,12 +303,13 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			src.underlays += straps
 
 	update_wear_image(mob/living/carbon/human/H, override) // Doing above but for mutantraces if they have a special varient.
-		src.tank_one_image = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]1")
-		src.tank_one_image_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_one_icon]_under",)
-		src.tank_two_image = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]2")
-		src.tank_two_image_under = image(src.wear_image.icon,"[override ? "back-" : ""][tank_two_icon]_under")
-		src.wear_image.overlays = list(tank_one_image, tank_two_image)
-		src.wear_image.underlays = list(tank_one_image_under, tank_two_image_under)
+		src.wear_image.overlays = list()
+		if(src.tank_one)
+			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]1")
+			src.wear_image.underlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_one_icon]_under")
+		if(src.tank_two)
+			src.wear_image.overlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_two_icon]2")
+			src.wear_image.underlays += image(src.wear_image.icon, "[override ? "back-" : ""][tank_two_icon]_under")
 
 		/*
 		Exadv1: I know this isn't how it's going to work, but this was just to check
@@ -314,9 +321,9 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			SPAWN(1 SECOND)
 				signalled = FALSE
 			if(valve_open)
-				playsound(src, 'sound/effects/valve_creak.ogg', 50, 1)
+				playsound(src, 'sound/effects/valve_creak.ogg', 50, TRUE)
 			else
-				playsound(src, 'sound/effects/valve_creak.ogg', 50, 1, pitch=-1)
+				playsound(src, 'sound/effects/valve_creak.ogg', 50, TRUE, pitch=-1)
 			if(valve_open && force_dud)
 				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
 				logTheThing(LOG_BOMBING, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -509,17 +516,41 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 /obj/item/pressure_crystal
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "pressure_3"
-	var/pressure = 0
-	var/total_pressure = 0
-	desc = "A pressure crystal. We're not really sure how it works, but it does. Place this near where the epicenter of a bomb would be, then detonate the bomb. Afterwards, place the crystal in a tester to determine the strength."
-	name = "Pressure Crystal"
+	w_class = W_CLASS_SMALL
+	var/pressure = 0 // used to calculate credit value, in shippingmarket.dm proc/appraise_value
+	var/last_explode_time = 0
+	var/static/explosion_id = 0
+	name = "pressure crystal"
+	desc = "A mysterious gadget that measures the power of bombs detonated over it. \
+		High measurements within the crystal can be very valuable on the shipping market."
+	HELP_MESSAGE_OVERRIDE("Place this where the epicenter of a bomb would be, then detonate the bomb. \
+		Afterwards, place the crystal in a pressure sensor to determine the explosion power.<br>\
+		Spent pressure crystals can be sold to researchers on the shipping market, for a credit sum depending on the measured power.")
+
+	examine()
+		. = ..()
+		if (src.pressure)
+			. += "<br><span class='notice'>This crystal has already measured something. Another explosion will overwrite the previous results.</span>"
+
 	ex_act(var/ex, var/inf, var/factor)
-		pressure = factor || (4-clamp(ex, 1, 3))*2
-		total_pressure += pressure
-		pressure += (rand()-0.5) * (pressure/1000)//its not extremely accurate.
-		icon_state = "pressure_[clamp(ex, 1, 3)]"
+		var/exp_power = (factor / 2) ** 2 || (4-clamp(ex, 1, 3))*2 // we made it extremely accurate
+
+		if (src.explosion_id == exp_power * world.time)
+			return // we don't want peeps stacking 50 crystals on 1 explosion
+			// this only stops stacking, or making rings of crystals - you can still make a line of valuable crystals from the epicenter
+
+		if (src.last_explode_time < world.time)
+			src.pressure = exp_power
+		else // sum the power of multiple explosions at roughly the same instant, but diminishingly
+			// preferring stronger explosions, too
+			src.pressure = max(src.pressure, exp_power) + sqrt(min(src.pressure, exp_power))
+
+		src.icon_state = "pressure_[clamp(ex, 1, 3)]"
+		src.last_explode_time = world.time
+		src.explosion_id = exp_power * world.time
+
 /obj/item/device/pressure_sensor
-	name = "Pressure Sensor"
+	name = "pressure sensor"
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "pressure_tester"
 	desc = "Put in a pressure crystal to determine the strength of the explosion."
@@ -529,9 +560,10 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			boutput( user, "<b>There's no crystal in this here device!</b>")
 		else
 			if(crystal.pressure)
-				boutput( user, "The reader reads <b>[crystal.pressure/25]</b> kilojoules." )
+				boutput( user, "The reader reads <b>[crystal.pressure]</b> kiloblast." )
 			else
-				boutput( user, "The reader reads a firm 0. It guilts you into trying to read an unexploded pressure crystal, and seems to have succeeded. You feel ashamed for being so compelled by a device that has nothing more than a slot and a number display.")
+				boutput( user, "The reader reads a firm 0. It guilts you into trying to read an unexploded pressure crystal, and seems to have \
+					succeeded. You feel ashamed for being so compelled by a device that has nothing more than a slot and a number display.")
 	ex_act()
 		qdel(src)
 	attackby(obj/item/thing, mob/user)
@@ -552,10 +584,6 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			overlays = list()
 			wear_image.overlays = list()
 			boutput( user, "You pry out the crystal." )
-			if(prob(src.crystal.total_pressure / 45))
-				boutput( user, "<b class='alert'>It shatters!</b>" )
-				qdel(src.crystal)
-				return
 			src.crystal.set_loc(user.loc)
 			src.crystal = null
 			return

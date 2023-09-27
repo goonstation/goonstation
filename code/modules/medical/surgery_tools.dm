@@ -249,7 +249,7 @@ CONTAINS:
 
 		if (src.ammo < 1)
 			user.show_text("*click* *click*", "red")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 50, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 50, TRUE)
 			return ..()
 
 		if (user.a_intent != "help" && ishuman(M))
@@ -1041,6 +1041,24 @@ TYPEINFO(/obj/machinery/defib_mount)
 			src.w_class = W_CLASS_TINY
 			src.Attackhand(usr)
 
+	attackby(obj/item/W, mob/user, params)
+		if(length(src.contents) && istool(W, TOOL_CUTTING | TOOL_SNIPPING)) //don't cut open empty bags, what's the point?
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(cut_open), null, W.icon, W.icon_state, "[user] cuts open [src]!", null)
+		else
+			. = ..()
+
+	proc/cut_open()
+		for (var/obj/O in src)
+			O.set_loc(get_turf(src))
+		for (var/mob/M in src)
+			M.changeStatus("weakened", 0.5 SECONDS)
+			M.set_loc(get_turf(src))
+		var/obj/decal/cleanable/balloon/B = make_cleanable(/obj/decal/cleanable/balloon, get_turf(src))
+		B.icon_state = "balloon_black_pop"
+		B.name = "body bag"
+		B.desc = "The remains of a body bag"
+		qdel(src)
+
 	proc/open()
 		playsound(src, src.sound_zipper, 100, 1, , 6)
 		for (var/obj/O in src)
@@ -1161,14 +1179,14 @@ TYPEINFO(/obj/machinery/defib_mount)
 				else if (clumsy && !doctor && prob(1)) // extreme clumsiness can lead to extremely unintended examination results
 					var/obj/item/organ/head/head = H.drop_organ("head")
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head and hits it clean off [H == user ? "[his_or_her(H)] own" : "[H]'s"] shoulders!</span>")
-					playsound(H, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, 1)
+					playsound(H, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, TRUE)
 					if (head)
 						head.throw_at(get_dir(user, H), 3, 3)
 					return
 
 				else if (clumsy && prob(33)) // WHACK
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head!</span>")
-					playsound(H, 'sound/impact_sounds/Generic_Hit_1.ogg', 80, 1)
+					playsound(H, 'sound/impact_sounds/Generic_Hit_1.ogg', 80, TRUE)
 					my_damage = (max(my_damage, 2) * 3)
 
 				else if (!headSurgeryCheck(H))
@@ -1188,7 +1206,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				if (!H.limbs || !H.
 */
 		H.TakeDamage(def_zone, my_damage)
-		playsound(H, my_sound, 80, 1)
+		playsound(H, my_sound, 80, TRUE)
 		return
 
 	//else if (isrobot(M)) // clonk clonk

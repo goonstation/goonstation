@@ -139,11 +139,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/traymachine, proc/eject_tray, proc/collect_t
 
 	// stop the tray from extending into solid things
 	if (T.density && !istype(get_area(src), /area/solarium)) // Solarium gets an exception because this is a hilarious way to get Helios
-		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+		playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 		return
 	for(var/obj/O in T) // we still want to extend into mobs, no iterating over them
 		if (O.density && O.anchored) // it's ok to pull in unanchored stuff I guess!
-			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 			return
 
 	my_tray.set_dir(src.dir)
@@ -545,7 +545,7 @@ ABSTRACT_TYPE(/obj/machine_tray)
 								H.emote("scream")
 							if (i % (2 SECONDS))
 								boutput(H, "<span class='alert'>[pick("Your skin is melting!", "This false sun burns just like a real one!", "The light! <b>IT BURNS</b>!")]</span>")
-								playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+								playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 50, TRUE)
 							if (isdead(H))
 								make_cleanable(/obj/decal/cleanable/ash, src)
 								H.unequip_all()

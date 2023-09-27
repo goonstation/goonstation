@@ -5,7 +5,7 @@
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE_NOWARP
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP | IMMUNE_TRENCH_WARP
 	density = FALSE
 	canmove = TRUE
 	blinded = FALSE
@@ -16,7 +16,6 @@
 	var/delete_on_logout = TRUE
 	var/delete_on_logout_reset = TRUE
 	var/obj/item/clothing/head/wig/wig = null
-	var/in_point_mode = FALSE
 	var/datum/hud/ghost_observer/hud
 	var/auto_tgui_open = TRUE
 	/// Observer menu TGUI datum. Can be null.
@@ -35,24 +34,10 @@
 
 	..()
 
-/mob/dead/observer/proc/toggle_point_mode(var/force_off = FALSE)
-	if (force_off)
-		src.in_point_mode = FALSE
-	else
-		src.in_point_mode = !(src.in_point_mode)
-	src.update_cursor()
-
-/mob/dead/observer/hotkey(name)
-	switch (name)
-		if ("togglepoint")
-			src.toggle_point_mode()
-		else
-			. = ..()
-
 /mob/dead/observer/update_cursor()
 	..()
 	if (src.client)
-		if (src.in_point_mode || src.client.check_key(KEY_POINT))
+		if (src.client.check_key(KEY_POINT))
 			src.set_cursor('icons/cursors/point.dmi')
 		else if (src.client.check_key(KEY_EXAMINE))
 			src.set_cursor('icons/cursors/examine.dmi')
@@ -60,10 +45,8 @@
 /mob/dead/observer/click(atom/target, params, location, control)
 	// If we have an ability active, skip all this and go straight to parent call.
 	if (!src.targeting_ability)
-		if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
+		if (src.client && src.client.check_key(KEY_POINT))
 			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-			if (src.in_point_mode)
-				src.toggle_point_mode()
 			return
 		if (ismob(target) && !src.client.check_key(KEY_EXAMINE) && !istype(target, /mob/dead))
 			src.insert_observer(target)

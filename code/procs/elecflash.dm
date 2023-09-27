@@ -40,7 +40,7 @@ var/global/mutable_appearance/elecflash_ma = null
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
 					chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
-					playsound(T, sound, 50, 1)
+					playsound(T, sound, 50, TRUE)
 			else
 				chain_to += T
 	else	// copy paste also!
@@ -49,7 +49,7 @@ var/global/mutable_appearance/elecflash_ma = null
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
 					chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
-					playsound(T, sound, 50, 1)
+					playsound(T, sound, 50, TRUE)
 			else
 				chain_to += T
 
@@ -61,7 +61,7 @@ var/global/mutable_appearance/elecflash_ma = null
 					if (!(T.active_liquid.group in fluid_groups_touched))
 						fluid_groups_touched += T.active_liquid.group
 						chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
-						playsound(T, sound, 50, 1)
+						playsound(T, sound, 50, TRUE)
 				else
 					chain_to += T
 		if (length(chain_to) < 2)
@@ -92,7 +92,7 @@ var/global/mutable_appearance/elecflash_ma = null
 
 
 
-	playsound(center_turf, sound, 50, 1)
+	playsound(center_turf, sound, 50, TRUE)
 
 	SPAWN(3 SECONDS)
 		for(var/atom in elecs)

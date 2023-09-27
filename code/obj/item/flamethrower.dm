@@ -335,7 +335,7 @@ A Flamethrower in various states of assembly
 	try_specific_equip(mob/user)
 		. = FALSE
 		if (istype(user.back, /obj/item/tank/jetpack/backtank))
-			user.back.attackby(src, user)
+			user.back.Attackby(src, user)
 			return TRUE
 
 /obj/item/gun/flamethrower/backtank/napalm
@@ -564,7 +564,7 @@ A Flamethrower in various states of assembly
 
 	/// dump the thing on the ground
 	var/obj/item/old_thing = (. == "tank") ? src.gastank : src.fueltank
-	playsound(src, 'sound/weapons/gunload_light.ogg', 25, 1)
+	playsound(src, 'sound/weapons/gunload_light.ogg', 25, TRUE)
 	if(ismob(user))
 		user.put_in_hand_or_drop(old_thing)
 	else
@@ -583,7 +583,7 @@ A Flamethrower in various states of assembly
 
 	tgui_process.update_uis(src)
 	SPAWN(0.5 SECONDS)
-		playsound(src, 'sound/effects/valve_creak.ogg', 40, 1)
+		playsound(src, 'sound/effects/valve_creak.ogg', 40, TRUE)
 	return TRUE
 
 /obj/item/gun/flamethrower/assembled/attackby(obj/item/W, mob/user as mob)
@@ -640,7 +640,7 @@ A Flamethrower in various states of assembly
 			if(!src.gastank || !src.fueltank)
 				return
 			lit = !lit
-			playsound(src, 'sound/misc/lightswitch.ogg', 20, 1)
+			playsound(src, 'sound/misc/lightswitch.ogg', 20, TRUE)
 			if(lit)
 				icon_state = "flamethrower_ignite_on"
 				item_state = "flamethrower1"
@@ -669,13 +669,13 @@ A Flamethrower in various states of assembly
 				fuel = "_fuel"
 			icon_state = "flamethrower_no_oxy[fuel]"
 			item_state = "flamethrower0"
-			playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
+			playsound(src, 'sound/effects/valve_creak.ogg', 15, TRUE)
 			var/remove_sound = "sound/items/pickup_[clamp(round(src.w_class), 1, 3)].ogg"
 			if(A?.pickup_sfx)
 				remove_sound = A.pickup_sfx
 			SPAWN(0.2 SECONDS)
 				if(src)
-					playsound(src, remove_sound, 30, 1)
+					playsound(src, remove_sound, 30, TRUE)
 
 
 		if ("remove_fuel")
@@ -697,14 +697,14 @@ A Flamethrower in various states of assembly
 			var/remove_sound = "sound/items/pickup_[clamp(round(src.w_class), 1, 3)].ogg"
 			if(A?.pickup_sfx)
 				remove_sound = A.pickup_sfx
-			playsound(src, remove_sound, 30, 1)
+			playsound(src, remove_sound, 30, TRUE)
 			SPAWN(0.5 SECONDS)
 				if(src)
-					playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
+					playsound(src, 'sound/effects/valve_creak.ogg', 15, TRUE)
 
 		if ("change_mode")
 			var/new_mode = params["mode"]
-			playsound(src, 'sound/effects/valve_creak.ogg', 15, 1)
+			playsound(src, 'sound/effects/valve_creak.ogg', 15, TRUE)
 			src.current_projectile.fullauto_valid = 1
 			src.current_projectile.shot_number = 1
 			switch(new_mode)
@@ -741,7 +741,7 @@ A Flamethrower in various states of assembly
 				return
 			var/tempnum = text2num_safe(params["temperature"])
 			src.base_temperature = clamp(tempnum, src.min_temperature, src.max_temperature)
-			playsound(src, 'sound/misc/lightswitch.ogg', 20, 1)
+			playsound(src, 'sound/misc/lightswitch.ogg', 20, TRUE)
 
 		if ("change_volume")
 			var/tempnum = text2num_safe(params["volume"])

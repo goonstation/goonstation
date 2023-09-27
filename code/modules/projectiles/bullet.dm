@@ -1421,12 +1421,14 @@ datum/projectile/bullet/autocannon
     var/easemult = 0.
 
     var/auto_find_targets = 1
+    var/list/targets = list()
     var/homing_active = 1
 
     var/desired_x = 0
     var/desired_y = 0
 
     var/rotate_proj = 1
+    var/max_rotation_rate = 1
     var/face_desired_dir = 0
 
     precalculated = FALSE
@@ -1440,6 +1442,10 @@ datum/projectile/bullet/autocannon
             for(var/mob/M in view(P,15))
                 if (M == P.shooter) continue
                 P.targets += M
+
+        if (length(src.targets))
+            P.targets = src.targets
+            src.targets = list()
 
     proc/calc_desired_x_y(var/obj/projectile/P)
         .= 0
@@ -1472,7 +1478,7 @@ datum/projectile/bullet/autocannon
                     angle_diff -= 360
                 else if (angle_diff < -180)
                     angle_diff += 360
-                angle_diff = -clamp(angle_diff, -1, 1)
+                angle_diff = -clamp(angle_diff, -src.max_rotation_rate, src.max_rotation_rate)
                 P.rotateDirection(angle_diff)
 
         ..()
@@ -1509,6 +1515,48 @@ datum/projectile/bullet/autocannon
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
 		return
+
+/datum/projectile/bullet/homing/pod_seeking_missile
+	name = "pod-seeking missile"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "pod_seeking_missile"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	damage = 15
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bhole-large"
+
+	max_rotation_rate = 7
+	max_speed = 30
+	start_speed = 30
+	shot_delay = 1 SECONDS
+	auto_find_targets = FALSE
+
+	on_launch()
+		..()
+		for (var/obj/machinery/vehicle/pod in src.targets)
+			var/message = "Pod-seeking missile lock-on detected!"
+			for(var/mob/M in pod)
+				M.playsound_local(src, 'sound/machines/whistlealert.ogg', 25)
+				boutput(M, pod.ship_message(message))
+
+	on_hit(atom/hit)
+		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth))
+			explosion_new(null, get_turf(hit), 12)
+
+			if(istype(hit, /obj/machinery/vehicle))
+				var/obj/machinery/vehicle/vehicle = hit
+				vehicle.health -= vehicle.maxhealth / 4
+
+		else
+			new /obj/effects/rendersparks(hit.loc)
+			if(ishuman(hit))
+				var/mob/living/carbon/human/M = hit
+				boutput(M, "<span class='alert'>You are struck by a [src.name]! Thankfully it was not armed.</span>")
+				M.do_disorient(stunned = 40)
 
 /datum/projectile/bullet/antisingularity
 	name = "Singularity buster rocket"
@@ -1684,7 +1732,7 @@ datum/projectile/bullet/autocannon
 		for(var/atom/a in hit)
 			a.icon_state = pick(icon_states(a.icon))
 
-		playsound(hit, 'sound/machines/glitch3.ogg', 50, 1)
+		playsound(hit, 'sound/machines/glitch3.ogg', 50, TRUE)
 
 /datum/projectile/bullet/glitch/gun
 	damage = 1
@@ -1739,7 +1787,7 @@ datum/projectile/bullet/autocannon
 			if(istype(H.wear_mask, /obj/item/clothing/mask/clown_hat))
 				clown_tally += 1
 			if(clown_tally > 0)
-				playsound(H, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
+				playsound(H, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE)
 
 			if (H.job == "Clown" || clown_tally >= 2)
 				H.drop_from_slot(H.shoes)

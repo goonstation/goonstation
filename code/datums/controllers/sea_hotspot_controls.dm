@@ -376,9 +376,9 @@
 			explosion(src, phenomena_point, -1, -1, 2, 3)
 
 		if ((phenomena_flags & PH_EX) || (phenomena_flags & PH_FIRE_WEAK) || (phenomena_flags & PH_FIRE))
-			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, 1, 0.1, 0.7)
+			playsound(phenomena_point, 'sound/misc/ground_rumble_big.ogg', 65, TRUE, 0.1, 0.7)
 		else if (found)
-			playsound(phenomena_point, 'sound/misc/ground_rumble.ogg', 70, 1, 0.1, 1)
+			playsound(phenomena_point, 'sound/misc/ground_rumble.ogg', 70, TRUE, 0.1, 1)
 
 		//hey recurse at this arbitrary heat value, thanks
 		if (heat > 8000 + (8000 * recursion))
@@ -560,7 +560,7 @@
 
 
 					if (true_center) //stomper does this anywya, lets let them dowse for the true center instead of accidntally stomping and being annoying
-						playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
+						playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 						if (true_center > 1)
 							for (var/mob/O in hearers(src, null))
 								O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"[true_center] centers have been located!\"</span></span>", 2)
@@ -983,7 +983,7 @@ TYPEINFO(/obj/machinery/power/stomper)
 
 		for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 			if (BOUNDS_DIST(src, H.center.turf()) == 0)
-				playsound(src, 'sound/machines/twobeep.ogg', 50, 1,0.1,0.7)
+				playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE,0.1,0.7)
 				for (var/mob/O in hearers(src, null))
 					O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
 
@@ -1018,7 +1018,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	mats = 20
 
 /obj/item/clothing/shoes/stomp_boots
-	name = "Stomper Boots"
+	name = "stomper boots"
 	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
 	icon_state = "stompboots"
 	kick_bonus = 3
@@ -1089,7 +1089,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 
 						for (var/datum/sea_hotspot/H in hotspot_controller.get_hotspots_list(get_turf(src)))
 							if (BOUNDS_DIST(src, H.center.turf()) == 0)
-								playsound(src, 'sound/machines/twobeep.ogg', 50, 1, 0.1, 0.7)
+								playsound(src, 'sound/machines/twobeep.ogg', 50, TRUE, 0.1, 0.7)
 								for (var/mob/O in hearers(jumper, null))
 									O.show_message("<span class='subtle'><span class='game say'><span class='name'>[src]</span> beeps, \"Hotspot pinned.\"</span></span>", 2)
 
@@ -1111,14 +1111,14 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 				the_mob.changeStatus("paralysis", 5 SECONDS)
 				the_mob.changeStatus("weakened", 5 SECONDS)
 				container.visible_message("<span class='alert'><b>[the_mob.loc]</b> emits a loud thump and rattles a bit.</span>")
-				playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+				playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 				animate_storage_thump(container)
 		else
 			var/cooldown_in_seconds = GET_COOLDOWN(src, "stomp") / 10
 			boutput(the_mob, "<span class='alert'>The stomper boots are recharging. The integrated timer shows <b>\"00:[(cooldown_in_seconds < 10 ? "0" : "")][cooldown_in_seconds]\"</b>.</span>")
 
 /obj/item/clothing/shoes/stomp_boots/extreme
-	name = "STOMP BOOTS HYPERMURDER EDITION"
+	name = "\improper STOMP BOOTS HYPERMURDER EDITION"
 	desc = "PAPA'S GOT A BRAND NEW SHOE"
 	abilities = list(/obj/ability_button/stomper_boot_stomp/extreme)
 
@@ -1215,7 +1215,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	New(Turf)
 		T = Turf
 		..()
-		playsound(T, 'sound/effects/shovel1.ogg', 50, 1, 0.3)
+		playsound(T, 'sound/effects/shovel1.ogg', 50, TRUE, 0.3)
 
 	onUpdate()
 		..()
@@ -1243,7 +1243,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 		if (!found)
 			new /obj/venthole(T)
 
-		playsound(T, 'sound/effects/shovel3.ogg', 50, 1, 0.3)
+		playsound(T, 'sound/effects/shovel3.ogg', 50, TRUE, 0.3)
 
 
 	fast

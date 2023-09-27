@@ -8,6 +8,7 @@
 
 #define RELAYMOVE_DELAY 1 SECOND
 
+ABSTRACT_TYPE(/obj/storage)
 ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
 	name = "storage"
@@ -38,6 +39,10 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	//Offsets for the weld icon, rather than make icons for every slightly off crate or closet
 	var/weld_image_offset_X = 0 //Positive is right, negative is left
 	var/weld_image_offset_Y = 0 //Positive is up, negative is down
+	/// If the storage needs a crowbar to open it
+	var/needs_prying = FALSE
+	/// If the storage is pried open, prevents closing
+	var/pried_open = FALSE
 	var/locked = 0
 	var/emagged = 0
 	var/jiggled = 0
@@ -176,6 +181,13 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	alter_health()
 		. = get_turf(src)
 
+	get_desc()
+		. = ..()
+		if (src.needs_prying && !src.open)
+			. += " Its shut tightly."
+		else if (src.pried_open)
+			. += " The door has been pried open, it won't close anymore."
+
 	Click(location, control, params)
 		// lets you open when inside of it
 		if((usr in src) && can_act(usr))
@@ -214,7 +226,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
 					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>")
-				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 				var/shakes = 5
 				while (shakes > 0)
 					shakes--
@@ -252,7 +264,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			return src.Attackby(null, user)
 
 	attackby(obj/item/I, mob/user)
-		if (istype(I, /obj/item/satchel/))
+		if (istype(I, /obj/item/satchel))
 			if(src.secure && src.locked)
 				user.show_text("Access Denied", "red")
 				return
@@ -282,7 +294,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 			if (isweldingtool(I))
 				var/obj/item/weldingtool/weldingtool = I
 				if(weldingtool.welding)
-					if (src._health <= 0)
+					if (src._health <= 0 && !src.pried_open)
 						if(!weldingtool.try_weld(user, 1, burn_eyes = TRUE))
 							return
 						src._health = src._max_health
@@ -309,13 +321,17 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 						I.set_loc(src.loc)
 				return
 
-		else if (!src.open && isweldingtool(I))
-			if(!I:try_weld(user, 1, burn_eyes = TRUE))
+		else if (!src.open)
+			if (isweldingtool(I))
+				if (!I:try_weld(user, 1, burn_eyes = TRUE))
+					return
+				var/positions = src.get_welding_positions()
+				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
+					list(I, user), null, positions[1], positions[2]),user)
 				return
-			var/positions = src.get_welding_positions()
-			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
-				list(I, user), null, positions[1], positions[2]),user)
-			return
+			else if (ispryingtool(I) && src.needs_prying)
+				SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 1 SECOND, /obj/storage/proc/pry_open, user, I.icon, I.icon_state,\
+				"[user] pries open \the [src]", INTERRUPT_ACTION | INTERRUPT_STUNNED)
 
 		if (src.secure)
 			if (src.emagged)
@@ -377,6 +393,15 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 					break
 		if(found_negative)
 			src.AddComponent(/datum/component/extradimensional_storage/storage)
+
+	proc/pry_open(var/mob/user)
+		playsound(src, 'sound/items/Crowbar.ogg', 60, 1)
+		src.pried_open = TRUE
+		src.locked = FALSE
+		src.open = TRUE
+		src.dump_contents(user)
+		src.UpdateIcon()
+		p_class = initial(p_class)
 
 	proc/weld_action(obj/item/W, mob/user)
 		if(src.open)
@@ -629,6 +654,9 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		if (src._health <= 0)
 			visible_message("<span class='alert'>[src] can't close; it's been smashed open!</span>")
 			return 0
+		if (src.pried_open)
+			visible_message("<span class='alert'>[src] can't close; the prying broke its hinges!</span>")
+			return 0
 		if (!src.can_close())
 			visible_message("<span class='alert'>[src] can't close; looks like it's too full!</span>")
 			return 0
@@ -698,7 +726,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	proc/can_open()
 		. = TRUE
-		if (src.welded || src.locked)
+		if (src.welded || src.locked || src.needs_prying)
 			return 0
 
 	proc/count_turf_items()
@@ -899,12 +927,12 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 
 	onStart()
 		..()
-		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins taking apart [the_storage].</span>")
 
 	onEnd()
 		..()
-		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)

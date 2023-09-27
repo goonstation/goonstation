@@ -4660,6 +4660,19 @@
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/combustion_chamber)
+"aqh" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	light_type = /obj/item/light/tube/light_purpleish;
+	pixel_y = 21
+	},
+/obj/table/reinforced/chemistry/auto/chemstorage,
+/obj/machinery/chem_shaker/large/chemistry,
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/station/science/chemistry)
 "aqj" = (
 /obj/machinery/turret,
 /obj/decal/stripe_delivery,
@@ -11984,6 +11997,25 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/circuit/red,
 /area/listeningpost)
+"aNP" = (
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/redblack{
+	dir = 9
+	},
+/area/listeningpost)
 "aNQ" = (
 /turf/simulated/floor/redblack{
 	dir = 5
@@ -12057,14 +12089,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/syndicate_teleporter)
-"aOb" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/listeningpost/syndicate_teleporter)
 "aOc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -12074,14 +12098,6 @@
 	},
 /obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/syndicate_teleporter)
-"aOd" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
 /area/listeningpost/syndicate_teleporter)
 "aOf" = (
 /obj/lattice{
@@ -12186,25 +12202,9 @@
 	dir = 1
 	},
 /area/listeningpost)
-"aOC" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/listeningpost/syndicate_teleporter)
 "aOD" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/syndicate_teleporter)
-"aOE" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
 /area/listeningpost/syndicate_teleporter)
 "aOF" = (
 /obj/decal/cleanable/ash,
@@ -13918,9 +13918,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"aUb" = (
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
 "aUc" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
@@ -15978,6 +15975,19 @@
 	dir = 5
 	},
 /area/station/solar/north)
+"bHa" = (
+/obj/machinery/conveyor/NS{
+	id = "inbound";
+	name = "cargo belt - south";
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "cargo_inbound";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "bKM" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -15985,6 +15995,15 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
+"bNz" = (
+/obj/machinery/door_control/antagscanner{
+	entrance_scanner = 1;
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = -33
+	},
+/turf/space,
+/area/space)
 "bQk" = (
 /obj/shrub,
 /obj/decal/tile_edge/line/blue{
@@ -16094,6 +16113,18 @@
 /obj/item/clothing/gloves/ring/gold,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/heads)
+"cuA" = (
+/obj/machinery/firealarm/north,
+/obj/machinery/glass_recycler/chemistry{
+	pixel_y = 14
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/table/reinforced/chemistry/auto/allinone,
+/obj/item/paper/labdrawertips,
+/turf/simulated/floor/purplewhite{
+	dir = 5
+	},
+/area/station/science/chemistry)
 "cvv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
@@ -16308,6 +16339,19 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"dSC" = (
+/obj/storage/closet,
+/obj/item/tank/oxygen,
+/obj/machinery/light{
+	layer = 3
+	},
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = -33
+	},
+/turf/simulated/floor/redblack,
+/area/listeningpost)
 "dSE" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16726,19 +16770,6 @@
 	dir = 9
 	},
 /area/station/mining/staff_room)
-"gqK" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	light_type = /obj/item/light/tube/light_purpleish;
-	pixel_y = 21
-	},
-/obj/table/reinforced/chemistry/auto/chemstorage,
-/obj/machinery/chem_shaker/large/chemistry,
-/turf/simulated/floor/purplewhite{
-	dir = 9
-	},
-/area/station/science/chemistry)
 "guq" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/white,
@@ -16802,6 +16833,10 @@
 	},
 /turf/simulated/floor/black,
 /area/station/ai_monitored/armory)
+"gYu" = (
+/obj/machinery/dialysis,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "gZp" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -16931,6 +16966,23 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"hGC" = (
+/obj/storage/closet,
+/obj/item/tank/oxygen,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost)
 "hQO" = (
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/red/side{
@@ -17058,19 +17110,6 @@
 /obj/effects/background_objects/x5,
 /turf/simulated/floor/carpet/arcade,
 /area/station/bridge/captain)
-"izI" = (
-/obj/machinery/conveyor/NS{
-	id = "inbound";
-	name = "cargo belt - south";
-	operating = 1
-	},
-/obj/strip_door,
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "cargo_inbound";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "iAi" = (
 /obj/machinery/computer/bank_data{
 	dir = 4
@@ -17090,6 +17129,14 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"iBi" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
 "iCx" = (
 /obj/disposalpipe/segment/ejection,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -17220,6 +17267,20 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"jBX" = (
+/obj/machinery/conveyor/WE{
+	id = "trash";
+	name = "cargo belt - east";
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "crusher";
+	name = "Crusher Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/janitor/office)
 "jCG" = (
 /obj/machinery/power/furnace,
 /obj/cable/orange{
@@ -17227,6 +17288,19 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/listeningpost/power)
+"jDO" = (
+/obj/machinery/conveyor/SN{
+	id = "outbound";
+	name = "cargo belt - north";
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/pyro/shutters{
+	id = "cargo_outbound";
+	name = "Cargo Door"
+	},
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "jEN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17287,6 +17361,15 @@
 	},
 /turf/simulated/floor/caution/corner/sw,
 /area/station/engine/hotloop)
+"jTt" = (
+/obj/machinery/conveyor/SN{
+	id = "outbound";
+	name = "cargo belt - north";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "jUk" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -17427,6 +17510,15 @@
 	},
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/solar/north)
+"kDr" = (
+/obj/machinery/door_control/antagscanner{
+	entrance_scanner = 1;
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = 35
+	},
+/turf/space,
+/area/space)
 "kEq" = (
 /obj/machinery/light{
 	dir = 8;
@@ -17452,6 +17544,23 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
+"kIA" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
+"kLv" = (
+/obj/machinery/conveyor/NS{
+	id = "inbound";
+	name = "cargo belt - south";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/office)
 "kNc" = (
 /obj/lattice{
 	dir = 4;
@@ -17462,15 +17571,6 @@
 	},
 /turf/space,
 /area/space)
-"kOI" = (
-/obj/machinery/conveyor/SN{
-	id = "outbound";
-	name = "cargo belt - north";
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "kOT" = (
 /obj/table/auto,
 /obj/random_item_spawner/tools,
@@ -17480,13 +17580,6 @@
 /obj/machinery/power/apc/autoname_south,
 /turf/simulated/floor/black,
 /area/station/storage/tools)
-"kQc" = (
-/obj/strip_door,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/plating,
-/area/station/chapel/office)
 "kUi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -17517,6 +17610,10 @@
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"lhy" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
 "liS" = (
 /obj/machinery/light{
 	dir = 4;
@@ -17579,20 +17676,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
-"lsc" = (
-/obj/machinery/conveyor/WE{
-	id = "trash";
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/strip_door,
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "crusher";
-	name = "Crusher Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/janitor/office)
 "ltM" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -17719,20 +17802,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/storage/tools)
-"mgM" = (
-/obj/machinery/conveyor/WE{
-	id = "delivery";
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/strip_door,
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "cargo_shutter";
-	name = "Safety Shutters"
-	},
-/turf/simulated/floor/yellow,
-/area/station/quartermaster/office)
 "mkq" = (
 /obj/cable/orange{
 	icon_state = "2-8"
@@ -18176,19 +18245,6 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/north)
-"olR" = (
-/obj/machinery/conveyor/SN{
-	id = "outbound";
-	name = "cargo belt - north";
-	operating = 1
-	},
-/obj/strip_door,
-/obj/machinery/door/poddoor/pyro/shutters{
-	id = "cargo_outbound";
-	name = "Cargo Door"
-	},
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "oph" = (
 /obj/decal/mule/beacon,
 /obj/machinery/navbeacon/mule/chapel_north/east,
@@ -18285,19 +18341,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"oYk" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
-/obj/machinery/light{
-	layer = 3
-	},
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = -33
-	},
-/turf/simulated/floor/redblack,
-/area/listeningpost)
 "paq" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -18402,6 +18445,16 @@
 	dir = 1
 	},
 /area/station/mining/staff_room)
+"pHg" = (
+/obj/strip_door,
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet{
+	bcolor = "red";
+	icon_state = "bedsheet-red"
+	},
+/obj/machinery/bot/secbot/beepsky,
+/turf/simulated/floor/plating/random,
+/area/station/maintenance/west)
 "pHn" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/cable{
@@ -18689,6 +18742,13 @@
 /obj/decal/mule/dropoff,
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"qOb" = (
+/obj/strip_door,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/chapel/office)
 "qOn" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -18867,40 +18927,12 @@
 	icon_state = "fblue2"
 	},
 /area/station/bridge/captain)
-"saL" = (
-/obj/stool/chair/office/red{
-	dir = 8
-	},
-/obj/npc/trader/robot/syndicate,
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/simulated/floor/redblack{
-	dir = 9
-	},
-/area/listeningpost)
 "sck" = (
 /obj/cable{
 	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
-"scT" = (
-/obj/machinery/conveyor/NS{
-	id = "inbound";
-	name = "cargo belt - south";
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/office)
 "ses" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19016,6 +19048,14 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
+"sWu" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
 "sWU" = (
 /obj/machinery/firealarm/north,
 /obj/disposalpipe/segment/mail/horizontal,
@@ -19087,15 +19127,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
-"tgD" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 35;
-	entrance_scanner = 1
-	},
-/turf/space,
-/area/space)
 "tmb" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -19307,15 +19338,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"urI" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = -33;
-	entrance_scanner = 1
-	},
-/turf/space,
-/area/space)
 "uzo" = (
 /obj/lattice{
 	dir = 4;
@@ -19458,18 +19480,6 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
-"vbV" = (
-/obj/machinery/firealarm/north,
-/obj/machinery/glass_recycler/chemistry{
-	pixel_y = 14
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/table/reinforced/chemistry/auto/allinone,
-/obj/item/paper/labdrawertips,
-/turf/simulated/floor/purplewhite{
-	dir = 5
-	},
-/area/station/science/chemistry)
 "vbX" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	dir = 1;
@@ -19584,16 +19594,20 @@
 	},
 /turf/simulated/floor/blue,
 /area/station/science/lab)
-"vLb" = (
-/obj/strip_door,
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet{
-	bcolor = "red";
-	icon_state = "bedsheet-red"
+"vLA" = (
+/obj/machinery/conveyor/WE{
+	id = "delivery";
+	name = "cargo belt - east";
+	operating = 1
 	},
-/obj/machinery/bot/secbot/beepsky,
-/turf/simulated/floor/plating/random,
-/area/station/maintenance/west)
+/obj/strip_door,
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "cargo_shutter";
+	name = "Safety Shutters"
+	},
+/turf/simulated/floor/yellow,
+/area/station/quartermaster/office)
 "vPH" = (
 /obj/machinery/light{
 	dir = 1;
@@ -19725,6 +19739,18 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/white,
 /area/station/science/lab)
+"wzJ" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
+"wHh" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
 "wJs" = (
 /obj/machinery/power/apc/autoname_south,
 /obj/cable{
@@ -19758,23 +19784,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"xce" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 25
-	},
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/listeningpost)
 "xdB" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -55459,7 +55468,7 @@ aaq
 aWk
 acJ
 abQ
-aru
+wzJ
 aKG
 aVX
 avX
@@ -55489,7 +55498,7 @@ aCs
 aZJ
 aXl
 aTI
-aSr
+lhy
 aTQ
 aSr
 aTI
@@ -61828,7 +61837,7 @@ azM
 any
 axg
 aCA
-gqK
+aqh
 ain
 aEC
 aCz
@@ -62398,9 +62407,9 @@ aaa
 aaJ
 aaS
 aaZ
-kOI
+jTt
 ayZ
-olR
+jDO
 awL
 adB
 adY
@@ -63036,7 +63045,7 @@ aDK
 aXk
 aDw
 aCA
-vbV
+cuA
 aQd
 aEF
 aFl
@@ -63316,7 +63325,7 @@ aQy
 akY
 abH
 abH
-mgM
+vLA
 abH
 aca
 alU
@@ -63606,9 +63615,9 @@ aBS
 atM
 aVw
 aRX
-scT
+kLv
 aRX
-izI
+bHa
 aim
 adB
 adY
@@ -69077,7 +69086,7 @@ aUg
 aFy
 aSS
 awb
-aUb
+gYu
 ayg
 aFz
 aKk
@@ -73274,7 +73283,7 @@ aaa
 aaa
 afa
 adN
-vLb
+pHg
 aeu
 aez
 afz
@@ -76297,7 +76306,7 @@ acz
 adl
 aew
 aew
-kQc
+qOb
 ahi
 ahY
 aiR
@@ -77837,7 +77846,7 @@ aUB
 aUB
 azf
 aFa
-lsc
+jBX
 aFa
 aIm
 aIm
@@ -93054,7 +93063,7 @@ aaa
 aaa
 ohq
 aNG
-saL
+aNP
 aOi
 aOu
 aNG
@@ -95765,7 +95774,7 @@ aaa
 aaa
 aaa
 aaa
-urI
+bNz
 agK
 aMX
 aNf
@@ -95781,7 +95790,7 @@ aOO
 aNf
 aMX
 aYB
-tgD
+kDr
 aaa
 aaa
 aaa
@@ -96373,7 +96382,7 @@ aaa
 aRI
 aMX
 aNe
-xce
+hGC
 aUH
 aNe
 aNY
@@ -96381,7 +96390,7 @@ aJf
 aOB
 aNe
 aUH
-oYk
+dSC
 aNe
 aMX
 aXU
@@ -97584,9 +97593,9 @@ aNe
 aNr
 aHr
 aNL
-aOb
+wHh
 aWX
-aOC
+iBi
 aNL
 aHr
 aOR
@@ -98188,9 +98197,9 @@ aNh
 aMP
 aXH
 aNL
-aOd
+sWu
 aOt
-aOE
+kIA
 aNL
 aXH
 aMP

@@ -10,7 +10,6 @@
 	var/base_icon_state = "computer_generic"
 	var/temp = "<b>Thinktronic BIOS V2.1</b><br>"
 	var/temp_add = null
-	var/do_scroll_bottom = FALSE
 	var/obj/item/disk/data/fixed_disk/hd = null
 	var/datum/computer/file/terminal_program/active_program
 	var/datum/computer/file/terminal_program/host_program //active is set to this when the normal active quits, if available
@@ -342,7 +341,6 @@
 /obj/machinery/computer3/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
 	if(!ui)
-		src.do_scroll_bottom = TRUE
 		ui = new(user, src, "Terminal")
 		ui.open()
 
@@ -375,9 +373,7 @@
 		"user" = user,
 		"fontColor" = src.setup_font_color, // display monochrome values
 		"bgColor" = src.setup_bg_color,
-		"doScrollBottom" = src.do_scroll_bottom
 	)
-	src.do_scroll_bottom = FALSE
 
 /obj/machinery/computer3/ui_act(action, params)
 	. = ..()
@@ -444,7 +440,6 @@
 	if (src.temp_add)
 		src.temp += src.temp_add
 		src.temp_add = null
-		src.do_scroll_bottom = TRUE
 
 /obj/machinery/computer3/process()
 	if(status & BROKEN)

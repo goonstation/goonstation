@@ -43,29 +43,19 @@
 				H.update_face()
 		. = ..()
 
-	update_icon()
-		if (!src.change_iris)
-			return
-		var/side = "L"
-		if(src.body_side == R_ORGAN)
-			side = "R"
-		if (src.donor && src.donor.bioHolder && src.donor.bioHolder.mobAppearance) // good lord
-			var/datum/appearanceHolder/AH = src.donor.bioHolder.mobAppearance
-			src.update_color(AH, side)
-		change_iris = FALSE //only inherit color once if possible, if spawned without a doner, don't change color!
-
 	proc/update_color(datum/appearanceHolder/AH, side)
-		if (AH.customization_first.id == "hetcro[side]")
-			src.iris_color = AH.customization_first_color
-		else if (AH.customization_second.id == "hetcro[side]")
-			src.iris_color = AH.customization_second_color
-		else if (AH.customization_third.id == "hetcro[side]")
-			src.iris_color = AH.customization_third_color
-		else
-			src.iris_color = AH.e_color
-		var/image/iris_image = image(src.icon, src, "[iris_state_override || icon_state]-iris")
-		iris_image.color = iris_color
-		src.UpdateOverlays(iris_image, "iris")
+		if(src.change_iris)
+			if (AH.customization_first.id == "hetcro[side]")
+				src.iris_color = AH.customization_first_color
+			else if (AH.customization_second.id == "hetcro[side]")
+				src.iris_color = AH.customization_second_color
+			else if (AH.customization_third.id == "hetcro[side]")
+				src.iris_color = AH.customization_third_color
+			else
+				src.iris_color = AH.e_color
+			var/image/iris_image = image(src.icon, src, "[iris_state_override || icon_state]-iris")
+			iris_image.color = iris_color
+			src.UpdateOverlays(iris_image, "iris")
 
 
 	attach_organ(var/mob/living/carbon/M, var/mob/user)
@@ -286,7 +276,7 @@ TYPEINFO(/obj/item/organ/eye/cyber/meson)
 
 	proc/toggle()
 		src.on = !src.on
-		playsound(assigned, 'sound/items/mesonactivate.ogg', 30, 1)
+		playsound(assigned, 'sound/items/mesonactivate.ogg', 30, TRUE)
 		if (src.on)
 			assigned.vision.set_scan(1)
 			APPLY_ATOM_PROPERTY(donor, PROP_MOB_MESONVISION, src)

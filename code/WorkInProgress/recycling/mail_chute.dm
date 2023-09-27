@@ -102,7 +102,7 @@
 		ZERO_GASES(air_contents)
 
 		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
 		sleep(0.5 SECONDS) // wait for animation to finish
 
 

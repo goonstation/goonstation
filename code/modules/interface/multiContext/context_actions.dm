@@ -457,7 +457,7 @@
 	proc/success_feedback(atom/target, mob/user)
 		user.show_text(replacetext(success_text, "%target%", target), "blue")
 		if (success_sound)
-			playsound(target, success_sound, 50, 1)
+			playsound(target, success_sound, 50, TRUE)
 
 	proc/omnitool_swap(atom/target, mob/user, obj/item/tool/omnitool/omni)
 		if (!(omni_mode in omni.modes))
@@ -1289,3 +1289,105 @@
 		return robospray in user
 	execute(var/obj/item/robospray/robospray, var/mob/user)
 		robospray.change_reagent(src.reagent_id, user)
+
+#define BUNSEN_OFF "off"
+#define BUNSEN_LOW "low"
+#define BUNSEN_MEDIUM "medium"
+#define BUNSEN_HIGH "high"
+
+/datum/contextAction/bunsen
+	icon = 'icons/ui/context16x16.dmi'
+	name = "you shouldnt see me"
+	icon_state = "wrench"
+	icon_background = "bunsen_bg"
+	use_tooltip = FALSE
+	close_moved = TRUE
+
+	var/temperature = null
+
+	checkRequirements(var/obj/item/bunsen_burner/bunsen_burner, var/mob/user)
+		if(GET_DIST(bunsen_burner, user) > 1)
+			return FALSE
+		else
+			return TRUE
+
+	execute(var/obj/item/bunsen_burner/bunsen_burner, mob/user)
+		bunsen_burner.change_status(temperature)
+		bunsen_burner.UpdateIcon()
+		boutput(user, "<span class='notice'>You set the [bunsen_burner] to [temperature].</span>")
+
+	heat_off
+		name = "Off"
+		icon_state = "bunsen_off"
+
+		execute(var/obj/item/bunsen_burner/bunsen_burner, mob/user)
+			bunsen_burner.change_status(BUNSEN_OFF)
+			boutput(user, "<span class='notice'>You turn the [bunsen_burner] off.</span>")
+			bunsen_burner.UpdateIcon()
+
+	heat_low
+		name = "Low"
+		icon_state = "bunsen_1"
+		temperature = BUNSEN_LOW
+
+	heat_medium
+		name = "Medium"
+		icon_state = "bunsen_2"
+		temperature = BUNSEN_MEDIUM
+
+	heat_high
+		name = "High"
+		icon_state = "bunsen_3"
+		temperature = BUNSEN_HIGH
+
+#undef BUNSEN_OFF
+#undef BUNSEN_LOW
+#undef BUNSEN_MEDIUM
+#undef BUNSEN_HIGH
+/datum/contextAction/t_scanner
+	icon = 'icons/ui/context16x16.dmi'
+	icon_state = "dismiss"
+	close_clicked = TRUE
+	close_moved = FALSE
+	var/base_icon_state = ""
+
+	checkRequirements(var/obj/item/device/t_scanner/t_scanner, mob/user)
+		return t_scanner in user
+
+	active
+		name = "Active"
+		desc = "Toggle T-ray scanner"
+		icon_state = "tray_scanner_off"
+		base_icon_state = "tray_scanner_"
+
+		execute(var/obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_on(!t_scanner.on)
+			var/obj/ability_button/tscanner_toggle/tscanner_button = locate(/obj/ability_button/tscanner_toggle) in t_scanner.ability_buttons
+			tscanner_button.icon_state = t_scanner.on ? "tray_on" : "tray_off"
+
+	underfloor_cables
+		name = "Cables"
+		desc = "Current underfloor cables"
+		icon_state = "tray_cable_on"
+		base_icon_state = "tray_cable_"
+
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_underfloor_cables(!t_scanner.show_underfloor_cables, user)
+
+	underfloor_disposal_pipes
+		name = "Disposal Pipes"
+		desc = "Current underfloor disposal pipes"
+		icon_state = "tray_pipes_on"
+		base_icon_state = "tray_pipes_"
+
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_underfloor_disposal_pipes(!t_scanner.show_underfloor_disposal_pipes, user)
+
+	blueprint_disposal_pipes
+		name = "Pipe Blueprints"
+		desc = "Original pipe blueprints"
+		icon_state = "tray_blueprint_on"
+		base_icon_state = "tray_blueprint_"
+
+		execute(obj/item/device/t_scanner/t_scanner, mob/user)
+			t_scanner.set_blueprint_disposal_pipes(!t_scanner.show_blueprint_disposal_pipes, user)

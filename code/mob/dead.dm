@@ -1,6 +1,6 @@
 /mob/dead
 	stat = STAT_DEAD
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	pass_unstable = FALSE
 	///Our corpse, if one exists
 	var/mob/living/corpse
@@ -112,7 +112,7 @@
 				var/fluff = pick("spooky", "eerie", "ectoplasmic", "frightening", "terrifying", "ghoulish", "ghostly", "haunting", "morbid")
 				var/fart_on_other = 0
 				for (var/obj/item/bible/B in src.loc)
-					playsound(src, 'sound/voice/farts/poo2.ogg', 7, 0, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2.ogg', 7, FALSE, 0, src.get_age_pitch() * 0.4, channel=VOLUME_CHANNEL_EMOTE)
 					break
 				for (var/mob/living/M in src.loc)
 					message = "<B>[src]</B> lets out \an [fluff] fart in [M]'s face!"
