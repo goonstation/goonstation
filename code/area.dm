@@ -3226,6 +3226,9 @@ ABSTRACT_TYPE(/area/station/janitor)
 	sound_environment = 5
 	workplace = 1
 
+/area/station/science/testchamber/bombchamber
+	name = "Bomb Testing Chamber"
+
 ABSTRACT_TYPE(/area/station/science)
 /area/station/science
 	//name = "Research Outpost Zeta"
