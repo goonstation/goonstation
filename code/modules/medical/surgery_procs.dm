@@ -170,6 +170,13 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 /proc/insertChestItem(var/mob/living/carbon/human/patient, var/mob/surgeon, var/obj/item/chest_item)
 	// Check if surgeon is targeting chest while there's a hole in patient's chest
 	if (surgeon.zone_sel.selecting == "chest" && patient.organHolder?.chest?.op_stage > 1)
+		//First, check if the object is an organ, then check if we can attach it. If we can, do so.
+		if (istype(chest_item, /obj/item/organ))
+			var/obj/item/organ/an_organ = chest_item
+			var/success = an_organ.attach_organ(patient, surgeon)
+			if (success)
+				return FALSE
+
 		// Check if patient has item in chest already
 		if (patient.chest_item == null)
 			if(chest_item.w_class > W_CLASS_NORMAL && !(chest_item.type in chestitem_whitelist))
