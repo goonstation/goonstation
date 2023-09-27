@@ -967,7 +967,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "arpdavale"
 		ckey = "mintyphresh"
 
-	444explorer
+	fourfourfourexplorer
 		name = "\improper Minty"
 		icon_state = "minty"
 		ckey = "444explorer"
