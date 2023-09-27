@@ -1831,7 +1831,7 @@
 		icon_state = "scalpel"
 		success_text = "cuts some tissues"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "slips up and slices something important looking"
+		slipup_text = " slips up and slices something important looking"
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())
@@ -1849,7 +1849,7 @@
 		icon_state = "saw"
 		success_text = "saws various connections to the organ"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "doesn't hold the saw properly and messes up"
+		slipup_text = " doesn't hold the saw properly and messes up"
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())
@@ -1867,7 +1867,7 @@
 		icon_state = "scissor"
 		success_text = "snips out various veins and tendons"
 		success_sound = 'sound/items/Scissor.ogg'
-		slipup_text = "snips directly into the organ"
+		slipup_text = " snips directly into the organ"
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())
@@ -2027,7 +2027,7 @@
 		icon_state = "scalpel"
 		success_text = "slices open the flesh potecting the organs"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "slips up and stabs into the patient"
+		slipup_text = " slips up and stabs into the patient"
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())
@@ -2045,7 +2045,7 @@
 		icon_state = "saw"
 		success_text = "saws open the ribcage"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
-		slipup_text = "doesn't hold the saw properly and cracks a rib"
+		slipup_text = " doesn't hold the saw properly and cracks a rib"
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())
@@ -2063,7 +2063,7 @@
 		icon_state = "scissor"
 		success_text = "snips out various tissues and tendons"
 		success_sound = 'sound/items/Scissor.ogg'
-		slipup_text = "loses control of the scissors and drags it across the patient's entire chest"
+		slipup_text = " loses control of the scissors and drags it across the patient's entire chest"
 
 		checkRequirements(atom/target, mob/user)
 			if (!user.equipped())

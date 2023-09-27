@@ -1517,7 +1517,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 		var/damage = calc_surgery_damage(src.surgeon, damage = rand(5,10))
 		var/slipup_message = "messes up mid-surgery"
 		if (src.rip_out_organ)
-			slipup_message = "loses [his_or_her(src.surgeon)] grips on the [src.organ_name]"
+			slipup_message = " loses [his_or_her(src.surgeon)] grips on the [src.organ_name]"
 		do_slipup(src.surgeon, src.target, "chest", damage, slipup_message)
 
 	onEnd()
