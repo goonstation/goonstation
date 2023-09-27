@@ -1532,7 +1532,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			var/obj/item/organ/the_organ = src.target.organHolder.drop_organ(src.organ_path)
 			the_organ.take_damage(rand(20, 35), 0, 0)
 			src.surgeon.put_in_hand_or_drop(the_organ)
-			src.surgeon.visible_message("<span class='notice'>[src.surgeon] cuts out [src.target]'s [src.organ_name].</span>")
+			src.surgeon.visible_message("<span class='notice'>[src.surgeon] rips out [src.target]'s [src.organ_name].</span>")
 			playsound(src.target, 'sound/impact_sounds/Slimy_Hit_3.ogg', 50, 1, -1)
 			if (isalive(src.target) && prob(30))
 				src.target.emote("scream")

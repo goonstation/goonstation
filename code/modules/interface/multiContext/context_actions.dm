@@ -1429,6 +1429,7 @@
 		desc = "Open the patient's ribcage"
 		icon_state = "ribs"
 		surgery_flags = SURGERY_CUTTING | SURGERY_SAWING | SURGERY_SNIPPING
+		var/open = FALSE
 
 		execute(atom/target, mob/user)
 			..()
@@ -1438,7 +1439,7 @@
 				if (!region_complexity)
 					boutput(user, "<span class='alert'>The patient's ribs region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
-			if (H.organHolder.rib_contexts && length(H.organHolder.rib_contexts) <= 0)
+			if (src.open)
 				if (!H.organHolder.build_inside_ribs_buttons())
 					boutput(user, "<span class='notice'>[H] doesn't have any organs in their ribs region!</span>")
 					return
@@ -1448,11 +1449,21 @@
 				boutput(user, "<span class='alert'>You begin surgery on [H]'s ribs region.</span>")
 				return
 
+		checkRequirements(atom/target, mob/user)
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder.rib_contexts && length(H.organHolder.rib_contexts) <= 0)
+				src.open = TRUE
+				return TRUE
+			else
+				src.open = FALSE
+			. = ..()
+
 	subcostal
 		name = "Subcostal"
 		desc = "Open the subcostal region"
 		icon_state = "subcostal"
 		surgery_flags = SURGERY_CUTTING | SURGERY_SNIPPING
+		var/open = FALSE
 
 		execute(atom/target, mob/user)
 			..()
@@ -1462,7 +1473,7 @@
 				if (!region_complexity)
 					boutput(user, "<span class='alert'>The patient's subcostal region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
-			if (H.organHolder.subcostal_contexts && length(H.organHolder.subcostal_contexts) <= 0)
+			if (src.open)
 				if (!H.organHolder.build_inside_subcostal_buttons())
 					boutput(user, "<span class='notice'>[H] doesn't have any organs in their subcostal region!</span>")
 					return
@@ -1472,11 +1483,21 @@
 				boutput(user, "<span class='alert'>You begin surgery on [H]'s subcostal region.</span>")
 				return
 
+		checkRequirements(atom/target, mob/user)
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder.subcostal_contexts && length(H.organHolder.subcostal_contexts) <= 0)
+				src.open = TRUE
+				return TRUE
+			else
+				src.open = FALSE
+			. = ..()
+
 	abdomen
 		name = "Abdomen"
 		desc = "Open the abdominal region"
 		icon_state = "abdominal"
 		surgery_flags = SURGERY_CUTTING | SURGERY_SNIPPING
+		var/open = FALSE
 
 		execute(atom/target, mob/user)
 			..()
@@ -1486,7 +1507,7 @@
 				if (!region_complexity)
 					boutput(user, "<span class='alert'>The patient's abdominal region cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
-			if (H.organHolder.abdomen_contexts && length(H.organHolder.abdomen_contexts) <= 0)
+			if (src.open)
 				if (!H.organHolder.build_inside_abdomen_buttons())
 					boutput(user, "<span class='notice'>[H] doesn't have any organs in their abdominal region!</span>")
 					return
@@ -1496,11 +1517,21 @@
 				boutput(user, "<span class='alert'>You begin surgery on [H]'s abdominal region.</span>")
 				return
 
+		checkRequirements(atom/target, mob/user)
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder.abdomen_contexts && length(H.organHolder.abdomen_contexts) <= 0)
+				src.open = TRUE
+				return TRUE
+			else
+				src.open = FALSE
+			. = ..()
+
 	flanks
 		name = "Flanks"
 		desc = "Open the patient's flanks"
 		icon_state = "flanks"
 		surgery_flags = SURGERY_CUTTING | SURGERY_SNIPPING
+		var/open = FALSE
 
 		execute(atom/target, mob/user)
 			..()
@@ -1510,7 +1541,7 @@
 				if (!region_complexity)
 					boutput(user, "<span class='alert'>The patient's flanks cannot be opened. Something went wrong. Dial 1-800-coder.</span>")
 					return
-			if (H.organHolder.flanks_contexts && length(H.organHolder.flanks_contexts) <= 0)
+			if (src.open)
 				if (!H.organHolder.build_inside_flanks_buttons())
 					boutput(user, "<span class='notice'>[H] doesn't have any organs in their flanks!</span>")
 					return
@@ -1519,6 +1550,15 @@
 				user.showContextActions(H.organHolder.flanks_contexts, H, H.organHolder.contextLayout)
 				boutput(user, "<span class='alert'>You begin surgery on [H]'s flanks.</span>")
 				return
+
+		checkRequirements(atom/target, mob/user)
+			var/mob/living/carbon/human/H = target
+			if (H.organHolder.flanks_contexts && length(H.organHolder.flanks_contexts) <= 0)
+				src.open = TRUE
+				return TRUE
+			else
+				src.open = FALSE
+			. = ..()
 
 /// Organ context action to pick an organ to operate on
 /datum/contextAction/organs
@@ -1533,7 +1573,7 @@
 			var/mob/living/carbon/human/H = target
 			if (!surgeryCheck(H, user))
 				return
-			if (H.organHolder)
+			if (H.organHolder?.chest?.op_stage >= 2)
 				//Check if the organ didn't get removed in the meantime
 				var/datum/organHolder/organs = H.organHolder
 				if (!organs.organ_list[src.organ_path])
