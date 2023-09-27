@@ -297,6 +297,9 @@ MATERIAL
 		if (src?.material?.getID() == "cardboard")
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+		if (src?.material?.getID() == "plastic")
+			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/plastic))
+				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 		if (src?.material?.getMaterialFlags() & MATERIAL_WOOD)
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
@@ -503,6 +506,11 @@ MATERIAL
 		if (isrobot(usr))
 			var/mob/living/silicon/robot/R = usr
 			R.cell.use(use_amount * 200)
+
+/obj/item/sheet/plastic
+	item_state = "sheet-metal"
+	default_material = "plastic"
+	color = "#baccd3"
 
 // RODS
 /obj/item/rods
@@ -1044,8 +1052,14 @@ MATERIAL
 	amount = 50
 /obj/item/sheet/glass/crystal/reinforced/fullstack
 	amount = 50
+/obj/item/sheet/plastic/fullstack
+	amount = 50
+
+// Rods
 /obj/item/rods/steel/fullstack
 	amount = 50
+
+// Tiles
 /obj/item/tile/steel/fullstack
 	amount = 80
 /obj/item/tile/cardboard/fullstack
@@ -1058,6 +1072,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/metal)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/glass)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/cardboard)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe/plastic)
 /datum/sheet_crafting_recipe
 	var/recipe_id //The ID of the recipe, used for TGUI act()s
 	var/name
@@ -1363,7 +1378,15 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			sheet_cost = 6
 			icon = 'icons/obj/doors/SL_doors.dmi'
 			icon_state = "wood1"
-
+	plastic
+		fl_tiles
+			recipe_id = "fl_tiles"
+			craftedType = /obj/item/tile
+			name = "Floor Tile"
+			yield = 4
+			can_craft_multiples = TRUE
+			icon = 'icons/obj/metal.dmi'
+			icon_state = "tile_5"
 
 /proc/sheet_crafting_recipe_get_ui_data(var/recipePath)
 	var/datum/sheet_crafting_recipe/typedRecipePath = recipePath

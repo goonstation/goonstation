@@ -249,8 +249,6 @@
 	mat_changename = FALSE
 
 ABSTRACT_TYPE(/obj/item/material_piece/rubber)
-/obj/item/material_piece/rubber
-
 /obj/item/material_piece/rubber/latex
 	name = "sheet"
 	desc = "A sheet of latex."
