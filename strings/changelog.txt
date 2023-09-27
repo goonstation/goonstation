@@ -4,7 +4,7 @@
 (p)15741
 (e)🆕⚗|C-Feature, A-Chemistry
 (*)Caffeine is now it's own standalone chem.
-(+)Caffeine is formed by caffeinated drinks as they deplete, and it's effects can vary wildly based on volume, much like current ethanol.
+(+)Caffeine is formed by caffeinated drinks (coffees, unadulterated tea/matcha, cola) as they deplete, and its effects can vary wildly based on volume, much like current ethanol.
 (u)Lord_Earthfire
 (p)16019
 (e)⚖📦⚙|C-Balance, A-Game-Objects, A-Internal
