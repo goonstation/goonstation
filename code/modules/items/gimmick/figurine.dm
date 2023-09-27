@@ -970,7 +970,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 	444explorer
 		name = "\improper Minty"
 		icon_state = "minty"
-		ckey = 444explorer
+		ckey = "444explorer"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
