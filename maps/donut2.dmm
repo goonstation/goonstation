@@ -1548,13 +1548,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor,
 /area/station/science/lab)
-"ahf" = (
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "ahg" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio,
@@ -1661,10 +1654,10 @@
 /obj/machinery/networked/test_apparatus/gas_sensor{
 	setup_tag = "TOP"
 	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /obj/cable{
 	icon_state = "0-8"
 	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "ahD" = (
@@ -19789,12 +19782,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/quartermaster/magnet)
-"bHl" = (
-/obj/machinery/atmospherics/pipe/simple/insulated{
-	dir = 6
-	},
-/turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/science/lab)
 "bHo" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -25039,6 +25026,12 @@
 	dir = 1
 	},
 /area/station/medical/robotics)
+"eOQ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 10
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/science/lab)
 "ePd" = (
 /obj/machinery/camera{
 	c_tag = "Central Hallway South";
@@ -30852,6 +30845,12 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"jgg" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "jhb" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/glass_recycler/bar,
@@ -31671,17 +31670,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
-"jJi" = (
-/obj/machinery/atmospherics/unary/outlet_injector{
-	dir = 8;
-	icon_state = "on";
-	on = 1
-	},
-/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
-	dir = 5
-	},
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "jJj" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -32856,7 +32844,7 @@
 /area/station/science/testchamber)
 "kzw" = (
 /obj/machinery/atmospherics/pipe/manifold{
-	dir = 4;
+	dir = 8;
 	level = 2
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -38127,6 +38115,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/janitor/office)
+"odM" = (
+/obj/machinery/atmospherics/pipe/simple/junction,
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "oev" = (
 /obj/landmark/kudzu,
 /turf/simulated/floor/grass/leafy,
@@ -41679,20 +41671,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/substation/west)
-"qAy" = (
-/obj/machinery/atmospherics/unary/vent_pump{
-	dir = 8;
-	external_pressure_bound = 0;
-	icon_state = "in";
-	initialize_directions = 1;
-	internal_pressure_bound = 4000;
-	on = 1;
-	pressure_checks = 2;
-	pump_direction = 0
-	},
-/obj/machinery/atmospherics/pipe/simple/junction,
-/turf/simulated/floor/engine/vacuum,
-/area/station/science/lab)
 "qAT" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -43180,6 +43158,10 @@
 /obj/machinery/firealarm,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/exit)
+"rGg" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/turf/simulated/floor/engine/vacuum,
+/area/station/science/lab)
 "rGr" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -51921,20 +51903,14 @@
 /area/station/science/artifact)
 "xLp" = (
 /obj/rack,
-/obj/item/clothing/suit/space/emerg{
-	name = "bomb retreival suit"
-	},
-/obj/item/clothing/head/emerg{
-	pixel_y = 12;
-	pixel_x = -2;
-	name = "bomb retreival hood"
-	},
 /obj/item/tank/jetpack/micro{
 	pixel_x = 5
 	},
 /obj/machinery/light/incandescent{
 	dir = 4
 	},
+/obj/item/clothing/suit/space/emerg/science,
+/obj/item/clothing/head/emerg/science,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "xLI" = (
@@ -52134,13 +52110,13 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "xRw" = (
-/obj/machinery/atmospherics/pipe/simple/junction,
 /obj/machinery/sparker{
 	dir = 2;
 	id = "tox_ignition2";
 	pixel_x = -8;
 	pixel_y = 10
 	},
+/obj/machinery/atmospherics/pipe/simple/junction,
 /turf/simulated/floor/engine/vacuum,
 /area/station/science/lab)
 "xRE" = (
@@ -52159,6 +52135,7 @@
 	id = "outpostbombtest"
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
+/obj/mapping_helper/access/tox,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "xSh" = (
@@ -132507,10 +132484,10 @@ qwh
 bFN
 jTM
 bGW
-bHl
-qAy
-ahf
-jJi
+alf
+uWa
+iRE
+cei
 alf
 cei
 iRE
@@ -132812,7 +132789,7 @@ bHb
 kzw
 xRw
 ahC
-fXQ
+jgg
 wNb
 eYy
 igT
@@ -133111,10 +133088,10 @@ myj
 hFS
 nGB
 bGS
-alf
-eYy
-eYy
-eYy
+eOQ
+odM
+rGg
+fXQ
 alf
 eYy
 eYy
