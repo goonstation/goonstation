@@ -1540,7 +1540,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 			var/screw_up_prob = calc_screw_up_prob(src.target, src.surgeon)
 			if (prob(screw_up_prob))
 				var/damage = calc_surgery_damage(src.surgeon, screw_up_prob, rand(5,10))
-				do_slipup(src.surgeon, src.target, "chest", damage, pick("messes up", "slips up", "makes a mess", "stabs directly into [src.target]'s organs"))
+				do_slipup(src.surgeon, src.target, "chest", damage, pick(" messes up", " slips up", " makes a mess", " stabs directly into [src.target]'s organs"))
 				return
 			src.surgeon.tri_message(src.target, "<span class='notice'><b>[src.surgeon]</b> takes out [src.surgeon == src.target ? "[his_or_her(src.target)]" : "[src.target]'s"] [src.organ_name].</span>",\
 				"<span class='notice'>You take out [src.surgeon == src.target ? "your" : "[src.target]'s"] [src.organ_name].</span>",\
@@ -1588,7 +1588,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 	onInterrupt()
 		..()
 		var/damage = calc_surgery_damage(src.surgeon, damage = rand(5,10))
-		do_slipup(src.surgeon, src.target, "chest", damage, "clamps a little too hard")
+		do_slipup(src.surgeon, src.target, "chest", damage, " clamps a little too hard")
 
 	onEnd()
 		..()
