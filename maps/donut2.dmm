@@ -34354,7 +34354,7 @@
 /area/station/crew_quarters/arcade/dungeon)
 "lyQ" = (
 /obj/grille/catwalk,
-/turf/unsimulated/floor/airless/plating/catwalk/auto,
+/turf/simulated/floor/airless/plating/catwalk/auto,
 /area/space)
 "lzh" = (
 /obj/disposalpipe/segment/morgue{
