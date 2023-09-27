@@ -38538,6 +38538,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "cvD" = (
+/obj/machinery/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},

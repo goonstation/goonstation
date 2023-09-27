@@ -54002,6 +54002,7 @@
 	pixel_x = -10
 	},
 /obj/disposalpipe/segment,
+/obj/machinery/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 8
 	},

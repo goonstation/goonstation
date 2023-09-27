@@ -2838,7 +2838,10 @@
 								R["name"] = newname
 								if (R["full_name"])
 									R["full_name"] = newname
-						for (var/obj/item/card/id/ID in src.contents)
+						for (var/obj/item/I in src.contents)
+							var/obj/item/card/id/ID = get_id_card(I)
+							if (!ID)
+								continue
 							ID.registered = newname
 							ID.update_name()
 						for (var/obj/item/device/pda2/PDA in src.contents)

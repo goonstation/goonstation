@@ -1051,6 +1051,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				if (bag_it)
 					var/obj/item/body_bag/bag = new(src.loc)
 					bag.UpdateIcon()
+					human.is_npc = TRUE // NPC is set for direct mob returns separately
 					human.set_loc(bag)
 					. = bag
 			if("geneinjector")
@@ -1096,6 +1097,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 				L.TakeDamage("chest", rand(0, 80), rand(0, 80), rand(0, 80))
 			if(ishuman(.))
 				var/mob/living/carbon/human/H = .
+				H.is_npc = TRUE
 				SPAWN(1)
 					var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
 					shuffle_list(limbs)

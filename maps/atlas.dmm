@@ -14017,6 +14017,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aUb" = (
+/obj/machinery/dialysis,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "aUc" = (
