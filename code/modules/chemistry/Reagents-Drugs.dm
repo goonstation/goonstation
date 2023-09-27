@@ -517,11 +517,8 @@ datum
 				var/mob/M = holder.my_atom // All of the caffeine regen properties in a single place
 				if (M.reagents.get_reagent_amount(src.id) <= threshold)
 					return // Shouldn't add any stun resist to a chem that isn't there
-				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]")
-				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]")
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]", stun_resist)
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]", stun_resist)
-				REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", stamina_regen)
 				return
 
@@ -540,46 +537,50 @@ datum
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				var/caffeine_amt = holder.get_reagent_amount(src.id)
-				if (M.get_eye_blurry()) //reducess vision blurryness
-					M.change_eye_blurry(-1 * mult)
-				if (M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
-					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
+
 				if (heart_failure_counter > 150 && ishuman(M)) // This has to get pretty high for bad things to happen
 					var/mob/living/L = M
 					L.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
 					heart_failure_counter = 0
 
-				if (caffeine_amt > 30) //Large amounts don't last as much as smaller trace amounts
-					depletion_rate = 0.2
-					M.sleeping = 0 //Causes insomnia
-				else
-					depletion_rate = 0.1
+				switch(caffeine_amt) //use ~midpoints for depeletion rate thresholds - need stronger coffees or blends to overcaffeinate
+					if(0 to 3)
+						depletion_rate = 0.05
+					if(3 to 10)
+						depletion_rate = 0.1
+					if(10 to 30)
+						depletion_rate = 0.2
+					if(30 to 50)
+						depletion_rate = 0.4
+					if(50 to INFINITY)
+						depletion_rate = 0.5
 
 				switch(caffeine_amt)
 					if(0 to 5)   //This is your trace amount of caffeine, doesn't do much
 						expected_stamina_regen = 1
 						expected_stun_resist   = 3
 
-					if(5 to 20)  //A regular coffe mug's worth
+					if(5 to 20)  //A regular coffee mug's worth
 						if (M.get_eye_blurry() && prob(75))
 							M.change_eye_blurry(-1 * mult)
 						expected_stamina_regen = 2
 						expected_stun_resist   = 7
-						M.dizziness = max(0,M.dizziness-3)
-						M.changeStatus("drowsy", -3 SECONDS) //Helps combat that morning fatigue
+						M.dizziness = max(0, M.dizziness-3)
+						M.changeStatus("drowsy", -2 * mult SECONDS) //Helps combat that morning fatigue
 						if (prob(25))
 							M.make_jittery(10 * mult)
 
 					if(20 to 40) //A significant amount of caffeine
 						if (M.get_eye_blurry())
 							M.change_eye_blurry(-1 * mult)
-						expected_stamina_regen = 3
+						expected_stamina_regen = 4
 						expected_stun_resist   = 12
-						M.changeStatus("drowsy", -5 SECONDS)
-						M.dizziness = max(0,M.dizziness-5)
+						M.changeStatus("drowsy", -4 * mult SECONDS)
+						M.dizziness = max(0, M.dizziness-5)
+						M.sleeping = 0 //Causes insomnia
 						if (prob(35))
 							M.make_jittery(10 * mult)
-						if (probmult(9) && !ON_COOLDOWN(M, "Caffeine Message", 12 SECONDS)) // Keeps down that emote span
+						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS)) // Keeps down that emote span
 							boutput(M, pick("<span class='notice'>You a slight twitch in your arm.</span>",\
 									"<span class='notice'>You feel a slight tension in your shoulders.</span>",\
 									"<span class='notice'>You feel resltess and anxious.</span>",\
@@ -590,12 +591,14 @@ datum
 					if(40 to 60) //A unhealthy amount of caffeine
 						if (M.get_eye_blurry())
 							M.change_eye_blurry(-2 * mult)
-						expected_stamina_regen = 4
+						expected_stamina_regen = 6
 						expected_stun_resist   = 20
-						M.changeStatus("drowsy", -10 SECONDS)
-						M.dizziness = max(0,M.dizziness-7)
+						M.changeStatus("drowsy", -10 * mult SECONDS)
+						M.dizziness = max(0, M.dizziness-7)
 						M.make_jittery(10 * mult)
-						if (probmult(9) && !ON_COOLDOWN(M, "Caffeine Message", 12 SECONDS)) // Keeps down that emote span
+						M.change_misstep_chance(1 * mult)
+						M.sleeping = 0
+						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS)) // Keeps down that emote span
 							boutput(M, pick("<span class='notice'>You a slight twitch in your arm.</span>",\
 									"<span class='notice'>You feel a slight tension in your shoulders.</span>",\
 									"<span class='notice'>You feel resltess and anxious.</span>",\
@@ -606,15 +609,17 @@ datum
 							M.emote(pick("twitch","twitch_v","blink_r", "shiver"))
 						heart_failure_counter += mult //This can be bad for you over time
 
-					if(60 to INFINITY)  //Too much coffee. Way bad for you.
+					if(60 to INFINITY)  //Too much coffee. Way bad for you. This is actually non-trivial to reach now
 						if (M.get_eye_blurry())
-							M.change_eye_blurry(-1 * mult)
-						expected_stamina_regen = 5
+							M.change_eye_blurry(-3 * mult)
+						expected_stamina_regen = 8
 						expected_stun_resist   = 25
+						M.change_misstep_chance(4 * mult)
 						M.changeStatus("drowsy", -15 SECONDS)
 						M.dizziness = max(0,M.dizziness-10)
 						M.make_jittery(15 * mult)
-						if (probmult(13) && !ON_COOLDOWN(M, "Caffeine Message", 8 SECONDS))
+						M.sleeping = 0
+						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS))
 							boutput(M, pick("<span class='alert'>You feel your chest clutching for a moment.</span>",\
 									"<span class='alert'>YOU ARE ENERGY INCARNATE.</span>",\
 									"<span class='alert'>YOU FEEL LIKE YOU COULD CONQUER THE WORLD.</span>",\
@@ -627,8 +632,7 @@ datum
 							M.emote(pick("shiver","twitch_v","blink_r","wheeze"))
 						else if(probmult(9) && !ON_COOLDOWN(M, "feeling_own heartbeat", 60 SECONDS)) //This can't be good for you
 							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 20, 1)
-						else if(M.canmove && isturf(M.loc) && probmult(20))
-							step(M, pick(cardinal)) //Makes it hard for you to stay still
+							M.take_toxin_damage(5)
 						heart_failure_counter += 5 * mult // This can be really bad for you
 
 				if (stun_resist != expected_stun_resist || stamina_regen != expected_stamina_regen)

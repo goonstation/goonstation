@@ -2240,7 +2240,7 @@ datum
 							boutput(L, "<span class='alert'>Oh christ too hot!!!!</span>")
 							L.update_burning(25)
 
-		fooddrink/space_cola
+		fooddrink/caffeinated/space_cola
 			name = "cola"
 			id = "cola"
 			description = "A refreshing beverage."
@@ -2253,6 +2253,7 @@ datum
 			thirst_value = 0.75
 			viscosity = 0.4
 			bladder_value = -0.2
+			caffeine_content = 0.15
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				M.changeStatus("drowsy", -10 SECONDS)
@@ -2361,7 +2362,17 @@ datum
 				if(prob(4))
 					M.reagents.add_reagent("cholesterol", rand(1,3) * mult)
 
-		fooddrink/coffee
+		fooddrink/caffeinated
+			name = "caffeinated reagent parent"
+			description = "You shouldn't be seeing this ingame. If you do, report it to a coder."
+
+			var/caffeine_content = 0.3 //0.12u caffeine/cycle, enough for a "standard" mug of coffee's worth
+			on_mob_life(var/mob/M, var/mult = 1)
+				..()
+				M.reagents.add_reagent("caffeine", caffeine_content * depletion_rate * mult)
+
+
+		fooddrink/caffeinated/coffee
 			name = "coffee"
 			id = "coffee"
 			description = "Coffee is a brewed drink prepared from roasted seeds, commonly called coffee beans, of the coffee plant."
@@ -2373,23 +2384,22 @@ datum
 			thirst_value = 0.3
 			bladder_value = -0.1
 			energy_value = 0.3
-			depletion_rate = 1
 			taste = "bitter"
-			threshold = THRESHOLD_INIT
-			var/caffeine_content = 0.5
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
-				M.reagents.add_reagent("caffeine", caffeine_content * mult)
+				if (M.bodytemperature < M.base_body_temp) // So it doesn't act like supermint
+					M.bodytemperature = min(M.base_body_temp, M.bodytemperature+(5 * mult))
 
-		fooddrink/coffee/fresh
+		fooddrink/caffeinated/coffee/fresh
 			name = "freshly brewed coffee"
 			id = "coffee_fresh"
 			thirst_value = 1
 			energy_value = 0.6
 			taste = "bitter"
+			caffeine_content = 0.4
 
-		fooddrink/coffee/espresso //the good stuff
+		fooddrink/caffeinated/coffee/espresso //the good stuff
 			name = "espresso"
 			id = "espresso"
 			description = "An espresso is a strong black coffee with more caffeine."
@@ -2399,14 +2409,14 @@ datum
 			thirst_value = 0.25
 			energy_value = 0.8
 			taste = list("rich", "fragrant")
-			caffeine_content = 0.8
+			caffeine_content = 0.6
 			threshold = THRESHOLD_INIT
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				..()
 				M.make_jittery(1)
 
-		fooddrink/coffee/espresso/expresso // the stupid stuff
+		fooddrink/caffeinated/coffee/espresso/expresso // the stupid stuff
 			name = "expresso"
 			id = "expresso"
 			description = "An expresso is a strong black coffee with more stupid."
@@ -2427,14 +2437,14 @@ datum
 				random_chem_blacklisted = 1
 				killer = 1
 
-		fooddrink/coffee/espresso/decaf
+		fooddrink/caffeinated/coffee/espresso/decaf
 			name = "decaf espresso"
 			id = "decafespresso"
 			description = "A decaf espresso contains less caffeine than a regular espresso."
 			energy_value = 0
-			caffeine_content = 0.5
+			caffeine_content = 0.2
 
-		fooddrink/coffee/mate
+		fooddrink/caffeinated/coffee/mate
 			name = "mate"
 			id = "mate"
 			description = "Basically coffee but green."
@@ -2447,7 +2457,7 @@ datum
 			fluid_b = 20
 			taste = "bitter"
 
-		fooddrink/coffee/energydrink
+		fooddrink/caffeinated/coffee/energydrink
 			name = "energy drink"
 			id = "energydrink"
 			description = "An energy drink is a liquid plastic with a high amount of caffeine."
@@ -2467,7 +2477,7 @@ datum
 			stun_resist = 25
 			taste = "supercharged"
 			threshold = THRESHOLD_INIT
-			caffeine_content = 0.8
+			caffeine_content = 1
 
 
 			cross_threshold_over()
@@ -2506,7 +2516,7 @@ datum
 				else if (ishuman(M) && ((severity == 2 && probmult(3 + tickcounter / 25)) || (severity == 1 && probmult(tickcounter / 50))))
 					M:contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
 
-		fooddrink/tea
+		fooddrink/caffeinated/tea
 			name = "tea"
 			id = "tea"
 			description = "An aromatic beverage derived from the leaves of the camellia sinensis plant."
@@ -2522,6 +2532,7 @@ datum
 			addiction_prob2 = 1
 			addiction_min = 10
 			minimum_reaction_temperature = -INFINITY
+			caffeine_content = 0.2
 			var/list/flushed_reagents = list("toxin","toxic_slurry")
 
 			reaction_temperature(exposed_temperature, exposed_volume)
@@ -4660,7 +4671,7 @@ datum
 			reagent_state = SOLID
 			taste = "grass-like"
 
-		fooddrink/matchatea
+		fooddrink/caffeinated/matchatea
 			name = "matcha tea"
 			id = "matchatea"
 			fluid_r = 5

@@ -612,6 +612,7 @@ datum
 
 		//WHY IS SWEET ***TEA*** A SUBTYPE OF SUGAR?!?!?!?!
 			//Because it's REALLY sweet
+			//also it's not even tea anymore. there's no caffeine left, just sugar. My god.
 
 		sugar/sweet_tea
 			name = "sweet tea"
