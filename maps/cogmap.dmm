@@ -36528,9 +36528,6 @@
 "coU" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
-"coX" = (
-/turf/space,
-/area/shuttle_sound_spawn)
 "cpa" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -51397,6 +51394,10 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/medsci)
+"mvt" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "mvL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -67889,7 +67890,7 @@ adC
 adC
 adC
 adC
-adC
+mvt
 adC
 adC
 adC
@@ -113119,7 +113120,7 @@ kXL
 uLB
 adC
 adC
-coX
+mvt
 kgh
 kgh
 kgh

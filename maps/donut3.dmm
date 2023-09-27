@@ -53797,6 +53797,13 @@
 "qyH" = (
 /turf/simulated/floor/plating/jen,
 /area/station/crew_quarters/arcade/dungeon)
+"qyJ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/landmark/shuttle_subwoofer,
+/turf/simulated/floor/plating/jen,
+/area/station/hallway/secondary/exit)
 "qyQ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -61101,6 +61108,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
+"sOJ" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "sOZ" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -84914,7 +84925,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+sOJ
 rdj
 rdj
 rdj
@@ -139443,7 +139454,7 @@ qRB
 qRB
 qRB
 qRB
-xDL
+qyJ
 wQk
 sdZ
 xCY

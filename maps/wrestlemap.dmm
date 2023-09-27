@@ -27406,8 +27406,9 @@
 /turf/simulated/floor/black,
 /area/station/bridge)
 "lXt" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "lXv" = (
 /obj/decal/tile_edge/line/black{
 	dir = 1;
