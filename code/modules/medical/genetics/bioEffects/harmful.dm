@@ -135,7 +135,7 @@
 	reclaim_fail = 15
 	var/talk_prob = 10
 	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","HECK","FRICK","JESUS")
-	var/empowered_popup_style = "font-family: 'Comic Sans MS'; font-size: 8px;"
+	var/empowered_popup_style = "font-weight: bold;"
 	icon_state  = "bad"
 
 	OnLife(var/mult)
