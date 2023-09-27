@@ -320,6 +320,9 @@
 			if(pack.cost > new_cost && pack.cost > pack.basecost)
 				pack.cost = max(new_cost,pack.basecost)
 
+			if(pack.exhaustion > 0)
+				pack.exhaustion = round(pack.exhaustion*0.5)
+
 		for (var/ctype in src.commodities)
 			var/datum/commodity/C1 = src.commodities[ctype]
 			for(var/datum/trader/T in src.active_traders)

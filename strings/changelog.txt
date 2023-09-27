@@ -1,5 +1,7 @@
 
 (t)tue sep 26 23
+(u)Emily
+(*)Repeatedly buying the same crate from the market will "exhaust" supply, causing the price to increase. Exhaustion decays with each shipping market shift.
 (u)Garash
 (p)15784
 (e)🎨🔄📄|C-Sprites, C-Rework, A-UI
