@@ -29,14 +29,27 @@
 	if (client.mob.mind)
 		client.mob.add_karma(-1)
 
-//	for_no_raisin(client.mob, msg)
+	var/logLine = global.logLength + 1
+	var/dead = isdead(client.mob) ? "Dead " : ""
+	var/antag_text = ""
+	for (var/datum/antagonist/antag in client.mob.mind.antagonists)
+		antag_text += "[antag.display_name] " // we want a trailing space (until we don't. but default to yes)
+	var/ircmsg[] = new()
+	ircmsg["key"] = client.key
+	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][antag_text][client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][trim(antag_text)]]")
+	ircmsg["msg"] = html_decode(msg)
+	ircmsg["log_link"] = "https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html#l[logLine]"
+	var/unique_message_id = md5("ahelp" + json_encode(ircmsg))
+	ircmsg["msgid"] = unique_message_id
+
+	var/keyname = key_name(client.mob, 0, 0, additional_url_data="&msgid=[unique_message_id]")
 
 	for (var/client/C)
 		if (C.holder)
 			if (C.player_mode && !C.player_mode_ahelp)
 				continue
 			else
-				boutput(C, "<span class='ahelp'><font size='3'><b><span class='alert'>HELP: </span>[key_name(client.mob,0,0)][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [msg]</font></span>")
+				boutput(C, "<span class='ahelp'><font size='3'><b><span class='alert'>HELP: </span>[keyname][(client.mob.real_name ? "/"+client.mob.real_name : "")] <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [msg]</font></span>")
 				switch(C.holder.audible_ahelps)
 					if(PM_AUDIBLE_ALERT)
 						C.mob.playsound_local(C.mob.loc, 'sound/misc/newsting.ogg', 50, 1)
@@ -52,24 +65,17 @@
 #endif
 	boutput(client.mob, "<span class='ahelp'><font size='3'><b><span class='alert'>HELP: </span> You</b>: [msg]</font></span>")
 	logTheThing(LOG_AHELP, client.mob, "HELP: [msg]")
-	var/logLine = global.logLength
 	logTheThing(LOG_DIARY, client.mob, "HELP: [msg]", "ahelp")
 
 	if (!first_adminhelp_happened)
 		first_adminhelp_happened = 1
-		var/ircmsg[] = new()
-		ircmsg["key"] = "Loggo"
-		ircmsg["name"] = "First Adminhelp Notice"
-		// ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
-		ircmsg["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
-		ircbot.export_async("help", ircmsg)
+		var/ircmsg_fah[] = new()
+		ircmsg_fah["key"] = "Loggo"
+		ircmsg_fah["name"] = "First Adminhelp Notice"
+		// ircmsg_fah["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-get.php?id=[config.server_id]&date=[roundLog_date]"
+		ircmsg_fah["msg"] = "Logs for this round can be found here: https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html"
+		ircbot.export_async("help", ircmsg_fah)
 
-	var/dead = isdead(client.mob) ? "Dead " : ""
-	var/ircmsg[] = new()
-	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role] [client.mob.job]]" : (istype(client.mob, /mob/new_player) ? "<not ingame>" : "[stripTextMacros(client.mob.real_name)] \[[dead][client.mob.mind?.special_role]]")
-	ircmsg["msg"] = html_decode(msg)
-	ircmsg["log_link"] = "https://mini.xkeeper.net/ss13/admin/log-viewer.php?server=[config.server_id]&redownload=1&view=[roundLog_date].html#l[logLine]"
 	ircbot.export_async("help", ircmsg)
 
 	return msg
@@ -124,20 +130,30 @@
 	if (client?.ismuted())
 		return
 
+	var/dead = isdead(client.mob) ? "Dead" : ""
+	var/ircmsg[] = new()
+	ircmsg["key"] = client.key
+	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead] [client.mob.job]]" : (dead ? "[stripTextMacros(client.mob.real_name)] \[[dead]\]" : stripTextMacros(client.mob.real_name))
+	ircmsg["msg"] = html_decode(msg)
+	var/unique_message_id = md5("mhelp" + json_encode(ircmsg))
+	ircmsg["msgid"] = unique_message_id
+	ircbot.export_async("mentorhelp", ircmsg)
+
+	var/src_keyname = key_name(client.mob, 0, 0, 1, additional_url_data="&msgid=[unique_message_id]")
 
 	for (var/client/C)
 		if (C.holder)
 			if (C.player_mode && !C.player_mode_mhelp)
 				continue
 			else
-				var/rendered = "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
+				var/rendered = "<span class='mhelp'><b>MENTORHELP: [src_keyname]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span> <A HREF='?src=\ref[C.holder];action=adminplayeropts;targetckey=[client.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: <span class='message'>[msg]</span></span>"
 				boutput(C,  "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
 		else if (C?.can_see_mentor_pms())
 			if(istype(C.mob, /mob/dead/observer) || C.mob.type == /mob/dead/target_observer || C.mob.type == /mob/dead/target_observer/mentor_mouse_observer || istype(C.mob, /mob/living/critter/small_animal/mouse/weak/mentor))
-				var/rendered = "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span></b>: <span class='message'>[msg]</span></span>"
+				var/rendered = "<span class='mhelp'><b>MENTORHELP: [src_keyname]<span class='name text-normal' data-ctx='\ref[src.mind]'>[(client.mob.real_name ? "/"+client.mob.real_name : "")]</span></b>: <span class='message'>[msg]</span></span>"
 				boutput(C, "<span class='adminHearing' data-ctx='[C.chatOutput.ctxFlag]'>[rendered]</span>")
 			else
-				boutput(C, "<span class='mhelp'><b>MENTORHELP: [key_name(client.mob,0,0,1)]</b>: <span class='message'>[msg]</span></span>")
+				boutput(C, "<span class='mhelp'><b>MENTORHELP: [src_keyname]</b>: <span class='message'>[msg]</span></span>")
 
 	boutput(client.mob, "<span class='mhelp'><b>MENTORHELP: You</b>: [msg]</span>")
 	logTheThing(LOG_MHELP, client.mob, "MENTORHELP: [msg]")
@@ -145,12 +161,6 @@
 #ifdef DATALOGGER
 	game_stats.Increment("mentorhelps")
 #endif
-	var/dead = isdead(client.mob) ? "Dead" : ""
-	var/ircmsg[] = new()
-	ircmsg["key"] = client.key
-	ircmsg["name"] = client.mob.job ? "[stripTextMacros(client.mob.real_name)] \[[dead] [client.mob.job]]" : (dead ? "[stripTextMacros(client.mob.real_name)] \[[dead]\]" : stripTextMacros(client.mob.real_name))
-	ircmsg["msg"] = html_decode(msg)
-	ircbot.export_async("mentorhelp", ircmsg)
 
 /mob/verb/pray(msg as text)
 	set category = "Commands"
@@ -231,7 +241,7 @@
 						M.client.chatOutput.playDectalk(audio["audio"], "prayer by [src] ([src.ckey]) to [M.ckey]", vol)
 	return msg
 
-/proc/do_admin_pm(var/C, var/mob/user) //C is a passed ckey
+/proc/do_admin_pm(var/C, var/mob/user, previous_msgid=null) //C is a passed ckey
 
 	var/mob/M = ckey_to_mob(C)
 	if(M)
@@ -255,45 +265,51 @@
 		if (!( t ))
 			return
 
-		if (user.client.holder)
-			// Sender is admin
-			boutput(M, {"
-				<div style='border: 2px solid red; font-size: 110%;'>
-					<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-						Admin PM from [key_name(user, 0, 0, ckey_and_alt_key = TRUE)]
-					</div>
-					<div style="padding: 0.2em 0.5em;">
-					[t]
-					</div>
-					<div style="font-size: 90%; background: #fcc; font-weight: bold; border-top: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
-						<a href=\"byond://?action=priv_msg&target=[user.ckey]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
-					</div>
-				</div>
-				"}, forceScroll=TRUE)
-			M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-			boutput(user, "<span class='ahelp' class=\"bigPM\">Admin PM to-<b>[key_name(M, 0, 0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[user.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
-			M.client.make_sure_chat_is_open()
-		else
-			// Sender is not admin
-			if (M.client && M.client.holder)
-				// But recipient is
-				boutput(M, "<span class='ahelp' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0, ckey_and_alt_key = TRUE)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
-				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-			else
-				boutput(M, "<span class='alert' class=\"bigPM\">Reply PM from-<b>[key_name(user, 0, 0, ckey_and_alt_key = TRUE)]</b>: [t]</span>")
-				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
-			boutput(user, "<span class='ahelp' class=\"bigPM\">Reply PM to-<b>[key_name(M, 0, 0)]</b>: [t]</span>")
-
-		logTheThing(LOG_AHELP, user, "<b>PM'd [constructTarget(M,"admin_help")]</b>: [t]")
-		logTheThing(LOG_DIARY, user, "PM'd [constructTarget(M,"diary")]: [t]", "ahelp")
-
 		var/ircmsg[] = new()
 		ircmsg["key"] = user?.client ? user.client.key : ""
 		ircmsg["name"] = stripTextMacros(user.real_name)
 		ircmsg["key2"] = (M != null && M.client != null && M.client.key != null) ? M.client.key : ""
 		ircmsg["name2"] = (M != null && M.real_name != null) ? stripTextMacros(M.real_name) : ""
 		ircmsg["msg"] = html_decode(t)
+		ircmsg["previous_msgid"] = previous_msgid
+		var/unique_message_id = md5("adminpm" + json_encode(ircmsg))
+		ircmsg["msgid"] = unique_message_id
 		ircbot.export_async("pm", ircmsg)
+
+		var/user_keyname = key_name(user, 0, 0, ckey_and_alt_key = TRUE, additional_url_data="&msgid=[unique_message_id]")
+		var/M_keyname = key_name(M, 0, 0, additional_url_data="&msgid=[unique_message_id]")
+
+		if (user.client.holder)
+			// Sender is admin
+			boutput(M, {"
+				<div style='border: 2px solid red; font-size: 110%;'>
+					<div style="color: black; background: #f88; font-weight: bold; border-bottom: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
+						Admin PM from [user_keyname]
+					</div>
+					<div style="padding: 0.2em 0.5em;">
+					[t]
+					</div>
+					<div style="font-size: 90%; background: #fcc; font-weight: bold; border-top: 1px solid red; text-align: center; padding: 0.2em 0.5em;">
+						<a href=\"byond://?action=priv_msg&target=[user.ckey]&msgid=[unique_message_id]" style='color: #833; font-weight: bold;'>&lt; Click to Reply &gt;</a></div>
+					</div>
+				</div>
+				"}, forceScroll=TRUE)
+			M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
+			boutput(user, "<span class='ahelp' class=\"bigPM\">Admin PM to-<b>[M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[user.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+			M.client.make_sure_chat_is_open()
+		else
+			// Sender is not admin
+			if (M.client && M.client.holder)
+				// But recipient is
+				boutput(M, "<span class='ahelp' class=\"bigPM\">Reply PM from-<b>[user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[M.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
+			else
+				boutput(M, "<span class='alert' class=\"bigPM\">Reply PM from-<b>[user_keyname]</b>: [t]</span>")
+				M << sound('sound/misc/adminhelp.ogg', volume=100, wait=0)
+			boutput(user, "<span class='ahelp' class=\"bigPM\">Reply PM to-<b>[M_keyname]</b>: [t]</span>")
+
+		logTheThing(LOG_AHELP, user, "<b>PM'd [constructTarget(M,"admin_help")]</b>: [t]")
+		logTheThing(LOG_DIARY, user, "PM'd [constructTarget(M,"diary")]: [t]", "ahelp")
 
 		//we don't use message_admins here because the sender/receiver might get it too
 		for (var/client/CC)
@@ -303,4 +319,4 @@
 				if (K.client.player_mode && !K.client.player_mode_ahelp)
 					continue
 				else
-					boutput(K, "<span class='ahelp'><b>PM: [key_name(user,0,0, ckey_and_alt_key = TRUE)][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [key_name(M,0,0)][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")
+					boutput(K, "<span class='ahelp'><b>PM: [user_keyname][(user.real_name ? "/"+user.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[user.ckey]' class='popt'><i class='icon-info-sign'></i></A> <i class='icon-arrow-right'></i> [M_keyname][(M.real_name ? "/"+M.real_name : "")] <A HREF='?src=\ref[K.client.holder];action=adminplayeropts;targetckey=[M.ckey]' class='popt'><i class='icon-info-sign'></i></A></b>: [t]</span>")

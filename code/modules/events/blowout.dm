@@ -58,12 +58,9 @@
 
 
 	#ifndef UNDERWATER_MAP
-			var/list/params = list("scroll_angle" = rand(0, 359))
-
-			for (var/client/client in clients)
-				client.parallax_controller?.recolour_parallax_layers(src.space_color, 3 SECONDS)
-
-			add_global_parallax_layer(/atom/movable/screen/parallax_layer/blowout_clouds, 3 SECONDS, layer_params = params)
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_STATION, src.space_color, 3 SECONDS)
+			ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/blowout_clouds, 3 SECONDS)
+			GET_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/blowout_clouds)?.scroll_angle = rand(0, 359)
 	#endif
 
 			world << siren
@@ -101,10 +98,8 @@
 			command_alert("All radiation alerts onboard [station_name(1)] have been cleared. You may now leave the tunnels freely. Maintenance doors will regain their normal access requirements shortly.", "All Clear", alert_origin = ALERT_WEATHER)
 
 	#ifndef UNDERWATER_MAP
-			for (var/client/client in clients)
-				client.parallax_controller?.recolour_parallax_layers(list(), 3 SECONDS)
-
-			remove_global_parallax_layer(/atom/movable/screen/parallax_layer/blowout_clouds, 3 SECONDS)
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_STATION, list(), 3 SECONDS)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/blowout_clouds, 3 SECONDS)
 	#endif
 
 			sleep(rand(25 SECONDS,50 SECONDS))

@@ -112,7 +112,7 @@
 		for(var/i = 1, i <= cableimgs.len, i++)
 			var/image/cimg = image(cicon)
 			cimg.layer = 100
-			cimg.plane = 100
+			cimg.plane = PLANE_ABOVE_BLACKNESS
 			cableimgs[i] = cimg//@MBC this is how you'd do phasing
 		return ..()
 
@@ -204,7 +204,7 @@
 						img.invisibility = INVIS_NONE
 						img.alpha = 255
 						img.layer = 100
-						img.plane = 100
+						img.plane = PLANE_ABOVE_BLACKNESS
 						img.loc = locate(C.x, C.y, C.z)
 				power = round(power)
 				power--
@@ -232,7 +232,7 @@
 		if(D)
 			dummy.invisibility = INVIS_ALWAYS
 
-		playsound(src, 'sound/effects/shielddown2.ogg', 40, 1)
+		playsound(src, 'sound/effects/shielddown2.ogg', 40, TRUE)
 		var/obj/overlay/O = new/obj/overlay(get_turf(target))
 		O.name = "Energy"
 		O.anchored = ANCHORED
@@ -266,7 +266,7 @@
 
 			activating = 1
 
-			playsound(src, 'sound/effects/singsuck.ogg', 40, 1)
+			playsound(src, 'sound/effects/singsuck.ogg', 40, TRUE)
 			var/obj/overlay/O = new/obj/overlay(get_turf(user))
 			O.name = "Energy"
 			O.anchored = ANCHORED

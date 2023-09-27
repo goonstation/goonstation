@@ -128,7 +128,7 @@ var/HasturPresent = 0
 
 	on_pet(mob/user)
 		random_brute_damage(user, rand(5,10))
-		boutput(user,"<font color=red><b>Sharp tentacle slaps [user] away as they attempt to pet [src]!</b></font>")
+		boutput(user,"<font color=red><b>Sharp tentacle slaps [user] away as [he_or_she(user)] attempt to pet [src]!</b></font>")
 
 
 //DEVOUR ABILITY// - Pretty much just a changeling re-do
@@ -184,7 +184,7 @@ var/HasturPresent = 0
 			M.addOverlayComposition(/datum/overlayComposition/insanity)
 			M.updateOverlaysClient(M.client)
 			boutput(M, pick("<font color=purple><b>The reality around you fades out..</b></font>","<font color=purple><b>Suddenly your mind feels extremely frail and vulnerable..</b></font>","<font color=purple><b>Your sanity starts to fail you...</b></font>"))
-			playsound(M, 'sound/ambience/spooky/Void_Song.ogg', 50, 1)
+			playsound(M, 'sound/ambience/spooky/Void_Song.ogg', 50, TRUE)
 			SPAWN(62 SECONDS)
 				M.removeOverlayComposition(/datum/overlayComposition/insanity)
 				M.updateOverlaysClient(M.client)
@@ -283,11 +283,11 @@ var/HasturPresent = 0
 			return
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 
-		playsound(user, 'sound/misc/hastur/tentacle_hit.ogg', 50, 1)
+		playsound(user, 'sound/misc/hastur/tentacle_hit.ogg', 50, TRUE)
 		SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 			var/obj/target_r = new/obj/tentacle_trg_dummy(target)
 
-			playsound(user, 'sound/misc/hastur/tentacle_hit.ogg', 50, 1)
+			playsound(user, 'sound/misc/hastur/tentacle_hit.ogg', 50, TRUE)
 			user.visible_message("<span class='alert'><B>[user] sends a sharp tentacle flying!</B></span>")
 			user.set_dir(get_dir(user, target))
 
@@ -309,7 +309,7 @@ var/HasturPresent = 0
 				for(var/mob/living/M in src_turf)
 					if(M == O || M == user) continue
 					if (ishuman(M))
-						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 						take_bleeding_damage(M, M, 15)
 						M.visible_message("<span class='alert'>[M] gets stabbed by a sharp, spiked tentacle!</span>")
 						random_brute_damage(M, rand(10,20),1)
@@ -350,11 +350,11 @@ var/HasturPresent = 0
 			return
 		next_shot_at = ticker.round_elapsed_ticks + cooldown
 
-		playsound(user, 'sound/misc/hastur/tentacle_hit.ogg', 50, 1)
+		playsound(user, 'sound/misc/hastur/tentacle_hit.ogg', 50, TRUE)
 		SPAWN(rand(1,3)) // so it might miss, sometimes, maybe
 			var/obj/target_r = new/obj/tentacle_trg_dummy(target)
 
-			playsound(user, 'sound/misc/hastur/tentacle_hit.ogg', 50, 1)
+			playsound(user, 'sound/misc/hastur/tentacle_hit.ogg', 50, TRUE)
 			user.visible_message("<span class='alert'><B>[user] sends a grabbing tentacle flying!</B></span>")
 			user.set_dir(get_dir(user, target))
 
@@ -378,7 +378,7 @@ var/HasturPresent = 0
 					var/turf/destination = get_turf(user)
 					if (destination)
 						do_teleport(M, destination, 1, sparks=0) ///You will appear adjacent to Hastur.
-						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+						playsound(M, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 						M.changeStatus("paralysis", 2 SECONDS)
 						M.visible_message("<span class='alert'>[M] gets grabbed by a tentacle and dragged!</span>")
 

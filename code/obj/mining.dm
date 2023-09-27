@@ -851,7 +851,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		/obj/machinery/door/poddoor/blast/asteroid
 	))
 /turf/simulated/wall/auto/asteroid
-	icon = 'icons/turf/walls_asteroid.dmi'
+	icon = 'icons/turf/walls/asteroid.dmi'
 #ifdef PERSPECTIVE_EDITOR_WALL
 	icon_state = "asteroid-perspective-map"
 #else
@@ -859,7 +859,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 #endif
 	mod = "asteroid-"
 	light_mod = "wall-"
-	plane = PLANE_WALL-1
+	plane = PLANE_NOSHADOW_BELOW
 	layer = ASTEROID_LAYER
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	default_material = "rock"
@@ -909,7 +909,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				if (length(color_vals))
 					var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 					algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
-					algea.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+					algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
 					UpdateOverlays(algea, "glow_algae")
 					add_medium_light("glow_algae", color_vals)
 
@@ -1042,7 +1042,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/image/algea = image('icons/obj/sealab_objects.dmi', "algae")
 			var/color_vals = list(rand(100,200), rand(100,200), rand(100,200), 30)  // random colors, muted
 			algea.color = rgb(color_vals[1], color_vals[2], color_vals[3])
-			algea.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+			algea.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
 			UpdateOverlays(algea, "glow_algae")
 			add_medium_light("glow_algae", color_vals)
 
@@ -1207,15 +1207,15 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 		src.ore_overlays()
 
 	proc/top_overlays() // replaced what was here with cool stuff for autowalls
-		var/image/top_overlay = image('icons/turf/walls_asteroid.dmi',"top[src.topnumber]")
-		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask2[src.icon_state]"))
+		var/image/top_overlay = image('icons/turf/walls/asteroid.dmi',"top[src.topnumber]")
+		top_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask2[src.icon_state]"))
 		top_overlay.layer = ASTEROID_TOP_OVERLAY_LAYER
 		UpdateOverlays(top_overlay, "ast_top_rock")
 
 	proc/ore_overlays()
 		if(src.ore) // make sure ores dont turn invisible
-			var/image/ore_overlay = image('icons/turf/walls_asteroid.dmi',"[src.ore?.name][src.orenumber]")
-			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls_asteroid.dmi',"mask-side_[src.icon_state]"))
+			var/image/ore_overlay = image('icons/turf/walls/asteroid.dmi',"[src.ore?.name][src.orenumber]")
+			ore_overlay.filters += filter(type="alpha", icon=icon('icons/turf/walls/asteroid.dmi',"mask-side_[src.icon_state]"))
 			ore_overlay.layer = ASTEROID_ORE_OVERLAY_LAYER // so meson goggle nerds can still nerd away
 			src.UpdateOverlays(ore_overlay, "ast_ore")
 
@@ -1234,10 +1234,10 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			if (skip_this)
 				A.ClearSpecificOverlays("ast_edge_[dir_from]")
 				continue
-			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[dir_from]")
+			var/image/edge_overlay = image('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
-			edge_overlay.plane = PLANE_WALL-1
+			edge_overlay.plane = PLANE_NOSHADOW_BELOW
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[dir_from]")
@@ -1306,7 +1306,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.hardness /= 2
 		else
 			src.hardness = 0
-		src.UpdateOverlays(image('icons/turf/walls_asteroid.dmi', "weakened"), "asteroid_weakened")
+		src.UpdateOverlays(image('icons/turf/walls/asteroid.dmi', "weakened"), "asteroid_weakened")
 
 	proc/damage_asteroid(var/power,var/allow_zero = 0)
 		// use this for stuff that arent mining tools but still attack asteroids
@@ -1427,7 +1427,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	mat_appearances_to_ignore = list("rock")
 /turf/simulated/floor/plating/airless/asteroid
 	name = "asteroid"
-	icon = 'icons/turf/walls_asteroid.dmi'
+	icon = 'icons/turf/walls/asteroid.dmi'
 	icon_state = "astfloor1"
 	plane = PLANE_FLOOR //Try to get the edge overlays to work with shadowing. I dare ya.
 	oxygen = 0.001
@@ -1529,7 +1529,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			if (skip_this)
 				A.ClearSpecificOverlays("ast_edge_[dir_from]")
 				continue
-			var/image/edge_overlay = image('icons/turf/walls_asteroid.dmi', "edge[dir_from]")
+			var/image/edge_overlay = image('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.plane = PLANE_FLOOR
 			edge_overlay.layer = TURF_EFFECTS_LAYER
@@ -2551,6 +2551,13 @@ TYPEINFO(/obj/submachine/cargopad)
 		..()
 
 	attack_hand(var/mob/user)
+		toggle(user)
+
+	attack_ai(mob/user)
+		. = ..()
+		toggle(user)
+
+	proc/toggle(mob/user)
 		if (src.active == 1)
 			boutput(user, "<span class='notice'>You switch the receiver off.</span>")
 			UpdateOverlays(null, "lights")

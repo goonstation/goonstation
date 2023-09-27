@@ -1,6 +1,6 @@
 /mob/living/intangible/blob_overmind
-	name = "Blob Overmind"
-	real_name = "Blob Overmind"
+	name = "blob overmind"
+	real_name = "blob overmind"
 	desc = "The disembodied consciousness of a big pile of goop."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "blob"
@@ -68,10 +68,10 @@
 	var/debuff_duration = 1200 //deciseconds. 1200 = 2 minutes
 
 	//give blobs who get rekt soon after starting another chance
-	var/current_try = 1
-	var/extra_tries_max = 2
-	var/extra_try_period = 3000 //3000 = 5 minutes
-	var/extra_try_timestamp = 0
+	var/spawn_time = 0
+	var/respawned = FALSE
+
+	var/random_event_spawn = FALSE
 
 	var/last_blob_life_tick = 0 //needed for mult to properly work for blob abilities
 
@@ -104,8 +104,7 @@
 		initial_material = getMaterial("blob")
 
 		//set start grace-period timestamp
-		var/extraGrace = rand(600, 1800) //add between 1 min and 3 mins extra
-		src.extra_try_timestamp = world.timeofday + extra_try_period + extraGrace
+		src.spawn_time = TIME
 
 		src.nucleus_overlay = image('icons/mob/blob.dmi', null, "reflective_overlay")
 		src.nucleus_overlay.alpha = 0
@@ -212,11 +211,11 @@
 		. = ..()
 
 		//if within grace period, respawn
-		if (src.current_try < src.extra_tries_max && world.timeofday <= src.extra_try_timestamp)
-			src.extra_try_timestamp = 0
-			src.current_try++
+		var/respawn_time = !src.random_event_spawn ? 15 MINUTES : 7 MINUTES
+		if (!src.respawned && (TIME - src.spawn_time <= respawn_time))
+			src.respawned = TRUE
 			src.reset()
-			out(src, "<span class='notice'><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready for round [src.current_try]!</b></span>")
+			boutput(src, "<span class='notice'><b>In a desperate act of self preservation you avoid your untimely death by concentrating what energy you had left! You feel ready to try again!</b></span>")
 
 		//no grace, go die scrub
 		else

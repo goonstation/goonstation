@@ -232,7 +232,7 @@
 	windowCall("setUIState", json)
 
 /datum/chemicompiler_core/proc/parseCBF(string, button)
-	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@","#")
+	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@", "#", "*")
 	var/l = length(string)
 	var/list/inst = new
 	var/token
@@ -369,6 +369,8 @@
 				if("#") //move individual reagent from container
 					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
 					isolateReagent(sx, tx, ax, data[dp+1])
+				if("*")
+					loopUsed = 30	//explicit NOP
 				else
 
 			if(length(data) < dp + 1)

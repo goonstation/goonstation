@@ -19,7 +19,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 
 	heal(var/mob/living/M)
 		..()
-		if (prob(33))
+		if (!(istype(M, /mob/living/critter/plant/maneater)) && prob(33))
 			boutput(M, "<span class='alert'>You briefly think you probably shouldn't be eating raw meat.</span>")
 			M.contract_disease(/datum/ailment/disease/food_poisoning, null, null, 1) // path, name, strain, bypass resist
 
@@ -164,6 +164,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	icon_state = "bacon"
 	initial_reagents = list("porktonium"=10)
 	blood = 0
+	fill_amt = 0.5 //it's only one strip
 
 	New()
 		..()
@@ -216,6 +217,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 	food_color = "#FFFFFF"
 	initial_volume = 20
 	initial_reagents = list("egg"=5)
+	fill_amt = 0.5
 	doants = 0 // They're protected by a shell
 
 	throw_impact(atom/A, datum/thrown_thing/thr)
@@ -509,7 +511,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 			if (baton.is_active) //baton is on
 				if (user.a_intent != "harm")
 					if (user.traitHolder.hasTrait("training_security"))
-						playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, 1, -1) //bit quieter than a baton hit
+						playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, TRUE, -1) //bit quieter than a baton hit
 						user.visible_message("<span class='notice'>[user] [pick("expertly", "deftly", "casually", "smoothly")] baton-fries the dough, yielding a tasty donut.</span>", group = "batonfry")
 						var/obj/item/reagent_containers/food/snacks/donut/result = new /obj/item/reagent_containers/food/snacks/donut(src.loc)
 						user.u_equip(src)
@@ -519,7 +521,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 						boutput(user, "<span class='alert'>You just aren't experienced enough to baton-fry.</span>")
 				else
 					user.visible_message("<b class='alert'>[user] tries to baton fry the dough, but fries [his_or_her(user)] hand instead!</b>")
-					playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, 1, -1)
+					playsound(src, 'sound/impact_sounds/Energy_Hit_3.ogg', 30, TRUE, -1)
 					user.do_disorient(baton.stamina_damage, weakened = baton.stun_normal_weakened * 10, disorient = 80) //cut from batoncode to bypass all the logging stuff
 			else
 				boutput(user, "<span class='notice'>You [user.a_intent == "harm" ? "beat" : "prod"] the dough. The dough doesn't react.</span>")
@@ -550,6 +552,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 	icon_state = "dough-strip"
 	food_color = "#FFFFF"
 	custom_food = 0
+	fill_amt = 0.5
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/snacks/ingredient/dough_strip))
@@ -901,6 +904,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient/wheat_noodles)
 	desc = "Everything's better with it."
 	icon_state = "butter"
 	heal_amt = 0
+	fill_amt = 2
 	food_color = "#FFFF00"
 	initial_volume = 25
 	initial_reagents = "butter"
@@ -929,6 +933,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	doants = 0
 	initial_volume = 40
 	initial_reagents = "pepperoni"
+	fill_amt = 2
 	sliceable = TRUE
 	slice_product = /obj/item/reagent_containers/food/snacks/ingredient/pepperoni
 	slice_amount = 4
@@ -987,6 +992,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	custom_food = 1
 	initial_volume = 15
 	initial_reagents = list("juice_tomato"=4)
+	fill_amt = 0.3
 
 /obj/item/reagent_containers/food/snacks/ingredient/cheeseslice
 	name = "slice of cheese"
@@ -997,6 +1003,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 	custom_food = 1
 	initial_volume = 15
 	initial_reagents = list("cheese"=1)
+	fill_amt = 0.3
 
 	heal(var/mob/M)
 		if (istype(M, /mob/living/critter/wraith/plaguerat))
