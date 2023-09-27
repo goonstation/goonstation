@@ -213,9 +213,9 @@ TYPEINFO(/obj/player_piano)
 		return 0
 
 	proc/is_pulser_auto_linking(var/mob/M)
-		if(hasvar(M, "l_hand") && ispulsingtool(M.l_hand) && SEND_SIGNAL(M.l_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
-		if(hasvar(M, "r_hand") && ispulsingtool(M.r_hand) && SEND_SIGNAL(M.r_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
-		if(hasvar(M, "module_states"))
+		if(hasvar(M, "l_hand") && istype(M.l_hand, /obj/item) && ispulsingtool(M.l_hand) && SEND_SIGNAL(M.l_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
+		if(hasvar(M, "r_hand") && istype(M.r_hand, /obj/item) && ispulsingtool(M.r_hand) && SEND_SIGNAL(M.r_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
+		if(hasvar(M, "module_states") && istype(M:module_states, /list))
 			for(var/atom/A in M:module_states)
 				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
 					return TRUE
