@@ -35410,10 +35410,6 @@
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor/purple/side,
 /area/station/maintenance/west)
-"mkl" = (
-/obj/grille/catwalk,
-/turf/unsimulated/floor/airless/plating/catwalk/auto,
-/area/station/science/lab)
 "mkJ" = (
 /obj/table/auto,
 /obj/machinery/cell_charger,
@@ -133687,8 +133683,8 @@ aaa
 aaa
 aaa
 aaa
-mkl
-mkl
+vfX
+vfX
 cFO
 afy
 xLp
@@ -133990,7 +133986,7 @@ aaa
 aaa
 aaa
 aaa
-mkl
+vfX
 alf
 bsn
 alf
