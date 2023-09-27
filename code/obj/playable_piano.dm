@@ -125,7 +125,7 @@ TYPEINFO(/obj/player_piano)
 
 		else if (istype(W, /obj/item/sheet/wood) && W.amount > 0) //replacing panel
 			var/obj/item/sheet/wood/wood = W
-			if (panel_exposed == 1 && !is_busy)
+			if (panel_exposed == 1 && !is_busy && !is_stored)
 				user.visible_message("[user] starts replacing the piano's maintenance panel...", "You start replacing the piano's maintenance panel...")
 				if (!do_after(user, 3 SECONDS) || panel_exposed != 1)
 					return
