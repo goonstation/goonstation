@@ -29,16 +29,14 @@ var/global/datum/eventRecorder/eventRecorder
 
 	/// Push the event queue to the server
 	proc/process()
-		var/eventsLength = length(src.events)
-		if (!eventsLength || (!src.connected && !src.connect())) return
+		if (!length(src.events) || (!src.connected && !src.connect())) return
 
-		var/list/eventsToSend = src.events.Copy(1, eventsLength + 1)
-		var/res = rustg_redis_lpush(config.goonhub_events_channel, json_encode(eventsToSend))
+		var/res = rustg_redis_lpush(config.goonhub_events_channel, json_encode(src.events))
 		var/list/lRes = json_decode(res)
 
 		if (lRes["success"])
-			src.events.Cut(1, eventsLength + 1)
-			src.eventsPushed += eventsLength
+			src.eventsPushed += length(src.events)
+			src.events.Cut()
 		else
 			var/msg = lRes["content"]
 			var/logMsg = "Failed to push data to Goonhub Event Recording service. Reason: [msg]"
