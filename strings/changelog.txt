@@ -1,4 +1,6 @@
-
+(t)thu sep 27 23
+(u)Emily
+(+)Standardized Requisition payouts to the new system and made minor balance tweaks to some that were too hard to fulfill (e.g. pizza, blood requisitions).
 (t)wed sep 27 23
 (u)Emily
 (*)Upped rooster chances for most types of roosters
