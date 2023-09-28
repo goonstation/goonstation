@@ -1,25 +1,19 @@
 //this is designed for sounds - but maybe could be adapted for more collision / range checking stuff in the future
 
 /// Get cliented mobs from a given atom within a given range. Careful, because range is actually `max(CELL_SIZE, range)`
-#define GET_NEARBY(A,range) ((A.z <= 0 || A.z > length(spatial_z_maps)) ? null : spatial_z_maps[A.z].get_nearby(A,range))
+#define GET_NEARBY(maptype, A, range) (get_singleton(maptype).get_nearby(A, range))
 
-#define CELL_POSITION(X,Y) (clamp(((round(X / cellsize)) + (round(Y / cellsize)) * cellwidth) + 1, 1, length(hashmap)))
+#define CELL_POSITION(X, Y, Z) (round(X / cellsize) + round(Y / cellsize) * cellwidth + (Z - 1) * rows * cols + 1)
 
-#define ADD_BUCKET(X,Y) (. |= CELL_POSITION(X, Y))
+#define ADD_BUCKET(X, Y, Z) (. |= CELL_POSITION(X, Y, Z))
 
-/// The global spatial Z map list, used for our spatial hashing
-var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
+#define ADD_TO_MAP(TARGET, TARGET_POS) \
+	if (TARGET_POS.z) { \
+	LAZYLISTADD(hashmap[CELL_POSITION(TARGET_POS.x, TARGET_POS.y, TARGET_POS.z)], TARGET); \
+	buckets_holding_atom |= CELL_POSITION(TARGET_POS.x, TARGET_POS.y, TARGET_POS.z); \
+	}
 
-/proc/init_spatial_maps()
-	. = new /list(world.maxz)
-	for (var/zlevel in 1 to world.maxz)
-		.[zlevel] = new/datum/spatial_hashmap(zlevel)
-
-/proc/init_spatial_map(zlevel)
-	if(length(spatial_z_maps) < world.maxz)
-		spatial_z_maps.len = world.maxz
-	spatial_z_maps[zlevel] = new/datum/spatial_hashmap(zlevel)
-
+ABSTRACT_TYPE(/datum/spatial_hashmap)
 /datum/spatial_hashmap
 	var/cellsize = 30 // 300x300 -> 10x10
 	var/update_cooldown = 5 //! in actual server ticks (not deciseconds)
@@ -27,17 +21,17 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 	var/list/list/hashmap
 	var/cols
 	var/rows
+	var/zlevels
 	var/width
 	var/height
 	var/cellwidth
+	var/cellheight
 
 	var/last_update = 0
 
-	var/my_z = 0
-
 	var/tmp/list/buckets_holding_atom
 
-	New(z, w = null, h = null, cs = null)
+	New(w = null, h = null, cs = null)
 		..()
 
 		if(isnull(w))
@@ -52,17 +46,16 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		cols = ceil(w / cellsize) // for very small maps - we want always at least one cell
 		rows = ceil(h / cellsize)
 
-		hashmap = new /list(cols * rows)
-
-		for (var/i in 1 to cols * rows)
-			hashmap[i] = list()
+		hashmap = list()
+		hashmap.len = cols * rows * world.maxz
 
 		width = w
 		height = h
+		zlevels = world.maxz
 
 		cellwidth = width / cellsize
 
-		my_z = z
+		buckets_holding_atom = list()
 
 	/* unused, could be useful later idk
 	proc/clear()
@@ -75,24 +68,37 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 	*/
 
 	proc/update()
+		if (world.maxz > src.zlevels)
+			src.zlevels = world.maxz
+			src.hashmap.len = src.cols * src.rows * src.zlevels
 		last_update = world.time
-		for (var/i in 1 to cols*rows) //clean
+		for (var/i in buckets_holding_atom)
 			hashmap[i].len = 0
-		for (var/client/C in clients) //register
-			var/turf/T = get_turf(C.mob)
-			if (T?.z == my_z)
-				hashmap[CELL_POSITION(T.x, T.y)] += C
-			//a formal spatial map implementation would place an atom into any bucket its bounds occupy (register proc instead of the above line). We don't need that here
-			//register(C.mob)
+		buckets_holding_atom.len = 0
+		add_targets()
+
+	/**
+	 * Implement in children.
+	 * Example:
+	 * ```
+	 * for (var/atom/A in some_list_of_atoms_you_care_about)
+	 *	var/turf/T = get_turf(A)
+	 *	ADD_TO_MAP(A, T)
+	 * ```
+	 */
+	proc/add_targets()
 
 	proc/get_atom_id(atom/A, atomboundsize = 30)
+		if(!A.z)
+			return null
+
 		//usually in this kinda collision detection code you'd want to map the corners of a square....
 		//but this is for our sounds system, where the shapes of collision actually resemble a diamond
 		//so : sample 8 points around the edges of the diamond shape created by our atom
 
 		. = list()
 
-		ADD_BUCKET(A.x, A.y)
+		ADD_BUCKET(A.x, A.y, A.z)
 
 		var/min_x = 0
 		var/min_y = 0
@@ -104,38 +110,66 @@ var/global/list/datum/spatial_hashmap/spatial_z_maps = init_spatial_maps()
 		min_y = A.y - atomboundsize
 		max_x = A.x + atomboundsize
 		max_y = A.y + atomboundsize
-		ADD_BUCKET(min_x,A.y)
-		ADD_BUCKET(max_x,A.y)
-		ADD_BUCKET(A.x,min_y)
-		ADD_BUCKET(A.x,max_y)
+		ADD_BUCKET(min_x, A.y, A.z)
+		ADD_BUCKET(max_x, A.y, A.z)
+		ADD_BUCKET(A.x, min_y, A.z)
+		ADD_BUCKET(A.x, max_y, A.z)
 
 		//NW,NE,SW,SE
 		min_x = A.x - (atomboundsize * (sqrt(2)/2))
 		min_y = A.y - (atomboundsize * (sqrt(2)/2))
 		max_x = A.x + (atomboundsize * (sqrt(2)/2))
 		max_y = A.y + (atomboundsize * (sqrt(2)/2))
-		ADD_BUCKET(min_x,min_y)
-		ADD_BUCKET(min_x,max_y)
-		ADD_BUCKET(max_x,min_y)
-		ADD_BUCKET(max_x,max_y)
+		ADD_BUCKET(min_x, min_y, A.z)
+		ADD_BUCKET(min_x, max_y, A.z)
+		ADD_BUCKET(max_x, min_y, A.z)
+		ADD_BUCKET(max_x, max_y, A.z)
 
 	proc/get_nearby(atom/A, range = 30)
 		RETURN_TYPE(/list)
-
-		if(A.z != src.my_z)
-			CRASH("get_nearby called on a spatial hashmap for a different z level")
 
 		//sneaky... rest period where we lazily refuse to update
 		if (world.time > last_update + (world.tick_lag * update_cooldown))
 			update()
 
 		// if the range is higher than cell size, we can miss cells!
-		range = min(range,cellsize)
+		range = min(range, cellsize)
 
 		. = list()
 		for (var/id in get_atom_id(A, range))
-			. += hashmap[id]
+			if(length(hashmap[id]))
+				. += hashmap[id]
 
+/datum/spatial_hashmap/clients
+	cellsize = 30 // 300x300 -> 10x10
+	update_cooldown = 5
+
+	add_targets()
+		for (var/client/C in clients)
+			var/turf/T = get_turf(C.mob)
+			ADD_TO_MAP(C, T)
+			// a formal spatial map implementation would place an atom into any bucket its bounds occupy (register proc instead of the above line). We don't need that here
+			// register(C.mob))
+
+ABSTRACT_TYPE(/datum/spatial_hashmap/by_type)
+/datum/spatial_hashmap/by_type
+	var/type_to_track
+
+	add_targets()
+		for(var/atom/A as anything in by_type[type_to_track])
+			var/turf/T = get_turf(A)
+			ADD_TO_MAP(A, T)
+
+/datum/spatial_hashmap/by_type/chickens
+	cellsize = 10
+	update_cooldown = 50
+	type_to_track = /mob/living/critter/small_animal/ranch_base/chicken
+
+/datum/spatial_hashmap/by_type/shrub // for testing, ok??
+	cellsize = 10
+	update_cooldown = 5
+	type_to_track = /obj/shrub
 
 #undef CELL_POSITION
 #undef ADD_BUCKET
+#undef ADD_TO_MAP
