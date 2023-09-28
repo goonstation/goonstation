@@ -128,9 +128,15 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	proc/get_nearby(atom/A, range = 30)
 		RETURN_TYPE(/list)
 
+		if(!A.z)
+			return list()
+
 		//sneaky... rest period where we lazily refuse to update
 		if (world.time > last_update + (world.tick_lag * update_cooldown))
 			update()
+
+		if(A.z > src.zlevels)
+			return list()
 
 		// if the range is higher than cell size, we can miss cells!
 		range = min(range, cellsize)
