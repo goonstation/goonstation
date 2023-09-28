@@ -15,5 +15,5 @@
 
 /datum/apiBody/rounds/update/put/toJson()
 	return json_encode(list(
-		"game_type"				= src.game_type,
+		"game_type"	= src.game_type,
 	))
