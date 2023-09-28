@@ -48095,7 +48095,7 @@
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -49763,7 +49763,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 5;
 	pixel_y = 3
 	},
@@ -53269,7 +53269,7 @@
 	pixel_x = -1;
 	pixel_y = 3
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -1;
 	pixel_y = -7
 	},
