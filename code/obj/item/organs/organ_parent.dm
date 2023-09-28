@@ -408,11 +408,13 @@
 		src.removal_stage = 0
 
 		var/full_organ_name = src.organ_holder_name
-		if (src.either_side)
-			if (user.l_hand == src)
-				full_organ_name = "left_[full_organ_name]"
+		if (src.either_side)//Kidneys can go on the left or right, doesn't matter. Useful for cyber/synth kidneys
+			if (!H.organHolder.get_organ("left_kidney"))
+				full_organ_name = "left_kidney"
+			else if (!H.organHolder.get_organ("right_kidney"))
+				full_organ_name = "right_kidney"
 			else
-				full_organ_name = "right_[full_organ_name]"
+				return 0
 		if (!H.organHolder.get_organ(full_organ_name))
 
 			user.tri_message(H, "<span class='alert'><b>[user]</b> [fluff][fluff == "smoosh" || fluff == "squish" ? "es" : "s"] [src] into [H == user ? "[his_or_her(H)]" : "[H]'s"] [src.organ_holder_location]!</span>",\
