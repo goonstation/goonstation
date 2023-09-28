@@ -737,7 +737,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 
 	toggle(var/mob/toggler)
 		..()
-		toggler.playsound_local(src, 'sound/items/mesonactivate.ogg', 40, TRUE)
+		toggler.playsound_local(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
 		if (src.equipped_in_slot == SLOT_GLASSES && src.on)
 			processing_items |= src
 		else
