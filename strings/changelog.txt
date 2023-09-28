@@ -1,3 +1,9 @@
+
+(t)thu sep 28 23
+(u)Smilg
+(p)16040
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pressure sensor can now use empty hand, and mouse drop.
 (t)thu sep 27 23
 (u)Emily
 (+)Standardized Requisition payouts to the new system and made minor balance tweaks to some that were too hard to fulfill (e.g. pizza, blood requisitions).
