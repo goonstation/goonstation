@@ -2033,7 +2033,8 @@ TYPEINFO(/obj/item/clothing/head/mushroomcap)
 ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 /obj/item/clothing/head/mushroomcap
 	name = "mushroom cap"
-	desc = "Makes your lungs feel a little fuzzy."
+	desc = "Makes your lungs feel a little fuzzy.[additional_desc]"
+	var/additional_desc = ""
 	icon_state = "mushroom-red"
 	item_state = "mushroom-red"
 
