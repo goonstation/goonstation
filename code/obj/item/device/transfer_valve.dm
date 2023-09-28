@@ -554,13 +554,11 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		qdel(src)
 
 	attackby(obj/item/thing, mob/user)
-		if(istype(thing, /obj/item/pressure_crystal) && src.insert_crystal(user, thing))
+		if (!istype(thing, /obj/item/pressure_crystal))
+			return ..()
+		if (src.insert_crystal(user, thing))
 			user.visible_message("[user] inserts [thing] into [src].",
 								"<span class='notice'>You insert the crystal into [src].</span>")
-		else if(src.crystal && thing.tool_flags & TOOL_PRYING && src.remove_crystal(user))
-			user.visible_message("[user] pries the crystal from [src].",
-								"<span class='notice'>You pry out [src]'s crystal.</span>")
-		else return ..()
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		if (!src.crystal)
