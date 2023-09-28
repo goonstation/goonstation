@@ -1594,6 +1594,27 @@
 					logTheThing(LOG_COMBAT, user, "removed [constructTarget(H,"combat")]'s [src.name].")
 					organs.drop_organ(src.organ_path)
 					playsound(H, 'sound/impact_sounds/Slimy_Cut_1.ogg', 50, 1)
+					switch(organ_target.region)
+						if (RIBS)
+							if (!organs.build_inside_ribs_buttons())
+								user.showContextActions(organs.contexts, H, organs.contextLayout)
+							else
+								user.showContextActions(organs.inside_ribs_contexts, organs.donor, organs.contextLayout)
+						if (SUBCOSTAL)
+							if (!organs.build_inside_subcostal_buttons())
+								user.showContextActions(organs.contexts, H, organs.contextLayout)
+							else
+								user.showContextActions(organs.inside_subcostal_contexts, organs.donor, organs.contextLayout)
+						if (ABDOMINAL)
+							if (!organs.build_inside_abdomen_buttons())
+								user.showContextActions(organs.contexts, H, organs.contextLayout)
+							else
+								user.showContextActions(organs.inside_abdomen_contexts, organs.donor, organs.contextLayout)
+						if (FLANKS)
+							if (!organs.build_inside_flanks_buttons())
+								user.showContextActions(organs.contexts, H, organs.contextLayout)
+							else
+								user.showContextActions(organs.inside_flanks_contexts, organs.donor, organs.contextLayout)
 				else
 					user.showContextActions(organ_target.surgery_contexts, organ_target, organ_target.contextLayout)
 					boutput(user, "<span class='notice'>You begin surgery on [H]'s [src.name].</span>")
