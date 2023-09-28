@@ -725,7 +725,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		..()
 
 /obj/item/clothing/glasses/toggleable/atmos
-	name = "atmospheric scanner goggles"
+	name = "pressure visualization goggles"
 	desc = "Goggles with an integrated local atmospheric pressure scanner, capable of providing a visualization of surrounding air pressure."
 	icon_state = "atmos"
 	item_state = "glasses"
