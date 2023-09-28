@@ -2011,7 +2011,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/elephanthat)
 
 	random
 		New()
-			var/old_loc = src.loc
+				var/old_loc = src.loc
        		qdel(src)
 			src = get_random_subtype(/obj/item/clothing/head/elephanthat,TRUE)
 			src.set_loc(old_loc)
@@ -2064,7 +2064,7 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 
 	random
 		New()
-			var/old_loc = src.loc
+				var/old_loc = src.loc
         	qdel(src)
         	src = get_random_subtype(/obj/item/clothing/head/mushroomcap,TRUE)
         	src.set_loc(old_loc)
