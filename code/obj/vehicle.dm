@@ -771,7 +771,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 	..()
 
 /obj/vehicle/floorbuffer/is_open_container()
-	return 2
+	return ISOPEN_BIG
 
 /obj/vehicle/floorbuffer/bump(atom/AM as mob|obj|turf)
 	if(in_bump)

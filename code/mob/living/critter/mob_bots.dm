@@ -118,7 +118,7 @@ ABSTRACT_TYPE(/mob/living/critter/robotic/bot)
 				return TRUE
 
 		is_open_container()
-			return TRUE
+			return ISOPEN_TRUE
 
 		emagged
 			brute_hp = 50

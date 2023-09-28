@@ -352,7 +352,7 @@
 		return
 
 	is_open_container()
-		return TRUE
+		return ISOPEN_TRUE
 
 	red
 		icon_state = "cleanbot-red0"

@@ -365,7 +365,10 @@
 			qdel(src)
 
 	is_open_container()
-		return !is_sealed
+		if (src.is_sealed)
+			return ISOPEN_FALSE
+		else
+			return ISOPEN_TRUE
 
 
 	proc/setup_soda() // made to be overridden, so that the Spess-Pepsi/Space-Coke debacle can continue

@@ -40,10 +40,11 @@
 #define THRESHOLD_INIT THRESHOLD_UNDER
 
 // Defines for is_open_container returns and checking.
-// Usually you'll just check for truthyness but sometimes you need specifics
+// Usually you'll just check for truthyness but sometimes you need specifics.
 #define ISOPEN_FALSE	0		// closed container
-#define ISOPEN_TRUE		(1<<0)	// generally open container. Stuff goes in and out.
+#define ISOPEN_TRUE		1		// generally open container. Stuff goes in and out.
 #define ISOPEN_IN_ONLY	(1<<1)	// stuff can only go in, and can't come back out.
 #define ISOPEN_OUT_ONLY	(1<<2)	// stuff can only go out, not in.
 #define ISOPEN_SMALL	(1<<3)	// only for small things like syringes and droppers. Narrow entrance.
-#define ISOPEN_BIG		(1<<4)	// can't be picked up by syringes or droppers or dip arrows. Imagine it being connected to a tap?? idk
+#define ISOPEN_BIG		(1<<4)	// can't be picked up by syringes or droppers or dip arrows. Imagine it being connected to a tap?? idk.
+// ISOPEN_BIG is used in the clonepod and floor buffer internal tank only. shrug

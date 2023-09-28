@@ -243,7 +243,8 @@ TYPEINFO(/atom)
 	  * returns true if open, false if closed
 	  */
 	proc/is_open_container(input = FALSE)
-		return flags & OPENCONTAINER
+		if (flags & OPENCONTAINER)
+			return ISOPEN_TRUE
 
 	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
 	proc/set_open_container(value)

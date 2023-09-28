@@ -473,7 +473,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 	icon_state = "mender"
 	var/image/fluid_image
 	var/tampered = 0
-	var/borg = 0
+	var/borg = FALSE
 	initial_volume = 200
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH | ATTACK_SELF_DELAY | ACCEPTS_MOUSEDROP_REAGENTS
 	c_flags = ONBELT
@@ -494,7 +494,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 			src.reagents.temperature_cap = 330
 			src.reagents.temperature_min = 270
 			src.reagents.temperature_reagents(change_min = 0, change_cap = 0)
-		if(borg)
+		if(src.borg)
 			src.flags &= ~ACCEPTS_MOUSEDROP_REAGENTS
 
 	on_reagent_change(add)
@@ -509,8 +509,8 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 
 
 	is_open_container()
-		if (borg)
-			.= 0
+		if (src.borg)
+			. = ISOPEN_FALSE
 		else
 			. = ..()
 
@@ -554,7 +554,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 		..()
 
 	attack(mob/M, mob/user)
-		if (src.borg == 1 && !issilicon(user))
+		if (src.borg && !issilicon(user))
 			user.show_text("This item is not designed with organic users in mind.", "red")
 			return
 
@@ -597,7 +597,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 				params.Add("silent")
 
 			reagents.reaction(M, TOUCH, react_volume = use_volume_adjusted, paramslist = params)
-			if (!borg)
+			if (!src.borg)
 				reagents.trans_to(M, use_volume_adjusted/2) // Patches should primarily be for topically drugs (Convair880).
 				reagents.remove_any(use_volume_adjusted/2)
 			else
@@ -613,7 +613,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 
 	medbot
 		name = "brute auto-mender"
-		borg = 1
+		borg = TRUE
 
 	high_capacity
 		initial_volume = 500
@@ -623,7 +623,7 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 
 	medbot
 		name = "burn auto-mender"
-		borg = 1
+		borg = TRUE
 
 	high_capacity
 		initial_volume = 500

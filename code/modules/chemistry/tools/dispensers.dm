@@ -377,7 +377,10 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		isburst = TRUE
 
 	is_open_container()
-		return isburst
+		if (isburst)
+			return ISOPEN_TRUE
+		else
+			return ISOPEN_FALSE
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"

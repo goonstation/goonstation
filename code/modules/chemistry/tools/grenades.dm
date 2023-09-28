@@ -27,7 +27,7 @@
 	move_triggered = 1
 	duration_put = 0.25 SECONDS //crime
 	var/is_dangerous = TRUE
-	var/detonating = 0
+	var/detonating = FALSE
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
 	HELP_MESSAGE_OVERRIDE({"Hit the grenade casing with a fuse to begin.
@@ -42,7 +42,10 @@
 		src.create_reagents(150000)
 
 	is_open_container()
-		return src.detonating
+		if (src.detonating)
+			return ISOPEN_TRUE
+		else
+			return ISOPEN_FALSE
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)
@@ -187,7 +190,7 @@
 	proc/explode()
 		src.reagents.my_atom = src //hax
 		var/has_reagents = 0
-		src.detonating = 1
+		src.detonating = TRUE
 		for (var/obj/item/reagent_containers/glass/G in beakers)
 			if (G.reagents.total_volume) has_reagents = 1
 

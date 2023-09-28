@@ -272,5 +272,6 @@ About the Tools:
 			If it's 0, you'll need to write your own custom reagent
 			transfer code since you will not be able to use the standard
 			tools to manipulate it.
+			Now uses defines like ISOPEN_OUT_ONLY. Most cases can just use truthy though.
 
 */

@@ -84,7 +84,10 @@
 			return
 
 	is_open_container()
-		return !src.tied
+		if (src.tied)
+			return ISOPEN_FALSE
+		else
+			return ISOPEN_TRUE
 
 	throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
 		. = ..()
@@ -203,7 +206,7 @@
 				src.tied = TRUE
 
 	afterattack(obj/target, mob/user)
-		if (is_reagent_dispenser(target) || (target.is_open_container() == -1 && target.reagents)) //A dispenser. Transfer FROM it TO us.
+		if (is_reagent_dispenser(target) || (target.is_open_container() == ISOPEN_OUT_ONLY && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				user.show_text("[target] is empty.", "red")
 				return

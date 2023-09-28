@@ -348,7 +348,7 @@
 		src.enter_bathtub(target)
 
 	is_open_container()
-		return 1
+		return ISOPEN_TRUE
 
 /obj/item/clothing/head/apprentice
 	proc/fantasia()

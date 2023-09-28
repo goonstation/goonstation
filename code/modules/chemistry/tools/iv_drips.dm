@@ -69,7 +69,7 @@
 		signal_event("icon_updated")
 
 	is_open_container()
-		return 1
+		return ISOPEN_TRUE
 
 	pickup(mob/user)
 		..()

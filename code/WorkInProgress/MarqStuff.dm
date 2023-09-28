@@ -441,7 +441,7 @@
 			return 1
 		else
 			var/obj/item/I = target
-			if (istype(I) && I.is_open_container() == 1 && I.reagents)
+			if (istype(I) && I.is_open_container() && I.reagents)
 				if (reagents.total_volume == reagents.maximum_volume)
 					boutput(user, "<span class='alert'>[src] is already coated in the maximum amount of reagents it can hold.</span>")
 				else if (!I.reagents.total_volume)

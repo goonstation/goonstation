@@ -265,7 +265,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		qdel(src)
 
 	is_open_container()
-		.= -1
+		return ISOPEN_OUT_ONLY
 
 	disposing()
 		if (src.reagents.total_volume > 0)
