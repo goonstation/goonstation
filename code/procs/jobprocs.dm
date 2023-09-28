@@ -680,6 +680,7 @@ var/global/totally_random_jobs = FALSE
 		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+		src.update_colorful_parts()
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
