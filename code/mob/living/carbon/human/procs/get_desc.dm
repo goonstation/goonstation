@@ -214,6 +214,8 @@
 						. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open!</B></span>"
 					else
 						. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open and [t_his] heart has been removed!</B></span>"
+					if (!src.chest_cavity_clamped)
+						. += "<br><span class='alert'><B>Blood is slowly seeping out of [src.name]'s un-clamped chest wound.</B></span>"
 			//tailstuff
 			if (src.organHolder.tail) // Has a tail?
 				// Comment if their tail deviates from the norm.

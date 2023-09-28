@@ -365,7 +365,7 @@
 		if (prob(1) && prob(5))
 			src.handle_random_emotes()
 
-		if (src.organHolder?.chest?.op_stage > 1 && !src.chest_cavity_clamped && prob(10)) //Going around with a gaping unsutured wound is a bad idea
+		if (src.organHolder?.chest?.op_stage > 0 && !src.chest_cavity_clamped && prob(10)) //Going around with a gaping unsutured wound is a bad idea
 			take_bleeding_damage(src, null, rand(5, 10))
 
 	src.handle_pathogens()

@@ -573,6 +573,7 @@ var/global/list/chestitem_whitelist = list(/obj/item/gnomechompski, /obj/item/gn
 					take_bleeding_damage(patient, surgeon, damage_low, surgery_bleed = TRUE)
 					patient.organHolder.chest.op_stage ++
 					patient.chest_cavity_clamped = FALSE	//Start bleeding all over the place until we are clamped or sutured
+					patient.visible_message("<span class='alert'>[patient] begins bleeding profusely from [his_or_her(patient)] open chest wound. Clamping the bleeders may alleviate this issue.</span>")
 					return TRUE
 				if (1)
 					src.surgeryConfusion(patient, surgeon, damage_high)
