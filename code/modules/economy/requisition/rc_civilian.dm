@@ -383,42 +383,45 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/yourowngift
 	name = "wrapped gift of your choice"
 	typepath = /obj/item/gift
-	feemod = 600
+	feemod = PAY_TRADESMAN*4
 
 /datum/rc_entry/food/cake
 	name = "cake"
 	typepath = /obj/item/reagent_containers/food/snacks/cake
-	feemod = 2500
+	feemod = PAY_TRADESMAN*4
 
 /datum/rc_entry/food/cookie
 	name = "cookie"
 	typepath = /obj/item/reagent_containers/food/snacks/cookie
-	feemod = 600
+	feemod = PAY_TRADESMAN*2
 
 /datum/rc_entry/food/pizza
 	name = "slices' worth of pizza"
+	commodity = /datum/commodity/
 	typepath = /obj/item/reagent_containers/food/snacks/pizza
-	feemod = 120
+	feemod = PAY_UNTRAINED
 
 /datum/rc_entry/reagent/cola
 	name = "cola"
 	chem_ids = "cola"
-	feemod = 20
+	feemod = PAY_UNTRAINED/10
 
 /datum/rc_entry/item/chaps
 	name = "chaps"
 	typepath = /obj/item/clothing/suit/chaps
-	feemod = 5000
+	feemod = PAY_EXECUTIVE*2
 
 /datum/rc_entry/food/grapes
 	name = "grapes"
+	commodity = /datum/commodity/produce
 	typepath = /obj/item/reagent_containers/food/snacks/plant/grape
-	feemod = 450
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/food/banana
 	name = "banana"
+	commodity = /datum/commodity/produce
 	typepath = /obj/item/reagent_containers/food/snacks/plant/banana
-	feemod = 300
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/item/cannabis
 	name = "cannabis"
@@ -428,17 +431,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/glitter
 	name = "glitter"
 	chem_ids = "glitter"
-	feemod = 160
+	feemod = PAY_UNTRAINED
 
 /datum/rc_entry/item/paperhat
 	name = "paper hat"
 	typepath = /obj/item/clothing/head/paper_hat
-	feemod = 110
+	feemod = PAY_UNTRAINED
 
 
 /datum/req_contract/civilian/architecture
 	//name = "Architecture Deluxe"
-	payout = 5200
+	payout = PAY_EMBEZZLED
 	var/list/namevary = list("Structural Setup","Brick by Brick","New Construction","Building Supply","Structure Fabrication","Asset Development")
 	var/list/desc_thingbuilt = list("A planetary habitation site","A new deluxe retreat","A new station wing","An affiliated construction project")
 	var/list/desc_progress = list("currently underway","delayed by supply difficulties","planned for near-term assembly","commissioned by a third party")
@@ -504,40 +507,42 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/stack/rock
 	name = "rock"
+	commodity = /datum/commodity/ore
 	typepath = /obj/item/raw_material/rock
-	feemod = 250
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/seed/grass
 	name = "grass seed"
 	cropname = "Grass"
-	feemod = 300
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/reagent/silicate
 	contained_in = /obj/item/reagent_containers/glass
 	container_name = "Bottles"
 	name = "liquid silicate"
 	chem_ids = "silicate"
-	feemod = 18
+	feemod = PAY_DOCTORATE/10
 
 /datum/rc_entry/item/sheet
 	name = "wooden sheet"
+	commodity = /datum/commodity/sheet
 	typepath = /obj/item/sheet/wood
 	exactpath = TRUE
-	feemod = 1220
+	feemod = PAY_IMPORTANT
 
 /datum/rc_entry/reagent/acetone
 	name = "acetone"
 	chem_ids = "acetone"
-	feemod = 18
+	feemod = PAY_DOCTORATE/10
 
 /datum/rc_entry/stack/cobryl
 	name = "cobryl"
 	commodity = /datum/commodity/ore/cobryl
 	typepath_alt = /obj/item/material_piece/cobryl
-	feemod = 450
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/stack/syreline
 	name = "syreline"
 	commodity = /datum/commodity/ore/syreline
 	typepath_alt = /obj/item/material_piece/syreline
-	feemod = 1100
+	feemod = PAY_IMPORTANT
