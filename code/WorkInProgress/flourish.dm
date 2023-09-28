@@ -86,7 +86,8 @@ TYPEINFO(/datum/component/pet)
 	name = "digital timer"
 	density = 0
 	icon = null
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = 420
 	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 	maptext = ""
 	var/time_left = 600

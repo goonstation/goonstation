@@ -616,7 +616,7 @@ proc/broadcast_to_all_gangs(var/message)
 		"rhino beetle helm" = /obj/item/clothing/head/rhinobeetle)
 
 /obj/item/spray_paint
-	name = "Spraypaint Can"
+	name = "spraypaint can"
 	desc = "A can of spray paint."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
@@ -771,7 +771,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /obj/ganglocker
 	desc = "Gang locker."
-	name = "Gang Closet"
+	name = "gang closet"
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "gang"
 	density = 1

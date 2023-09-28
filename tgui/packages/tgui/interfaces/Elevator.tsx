@@ -7,7 +7,7 @@
 
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Section, Button } from '../components';
+import { Button, Section } from '../components';
 
 type ElevatorParams = {
   location: string,

@@ -2396,8 +2396,9 @@
 /turf/simulated/floor/black,
 /area/station/hallway/primary/north)
 "akj" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "akk" = (
 /obj/disposalpipe/segment/mail,
 /obj/machinery/navbeacon{

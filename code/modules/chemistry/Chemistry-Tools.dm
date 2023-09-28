@@ -284,7 +284,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (target.is_open_container() && target.reagents && !isturf(target) && src.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+		else if (target.is_open_container(TRUE) && target.reagents && !isturf(target) && src.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
 			if(istype(target, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/t = target
 				if(t.current_lid)
@@ -512,7 +512,7 @@ proc/ui_describe_reagents(atom/A)
 		return TRUE
 
 	is_open_container()
-		if(..() && !istype(src.loc, /obj/machinery/chem_dispenser))
+		if(..() && !GET_ATOM_PROPERTY(src, PROP_ITEM_IN_CHEM_DISPENSER))
 			return 1
 
 /* =================================================== */
@@ -894,6 +894,22 @@ proc/ui_describe_reagents(atom/A)
 		..()
 
 	attackby(var/obj/item/W, mob/user)
+		if(istype(W, /obj/item/reagent_containers/iv_drip))
+			var/obj/item/reagent_containers/iv_drip/iv = W
+			if(!iv.slashed)
+				boutput(user, "<span class='alert'>The [iv.name] needs to be cut open first!</span>")
+				return
+			else if (reagents.total_volume >= reagents.maximum_volume)
+				boutput(user, "<span class='alert'>The [src] is too full!</span>")
+				return
+			else if (!iv.reagents.total_volume)
+				boutput(user, "<span class='alert'>The [iv.name] is empty!</span>")
+				return
+			else
+				user.visible_message("<span class = 'alert'>[user.name] splashes all the reagent in the [iv.name] onto the [src.name].</span>")
+				iv.reagents.reaction(src,TOUCH)
+				iv.reagents.clear_reagents()
+
 		if(istype(W, /obj/item/organ))
 			var/obj/item/organ/organ = W
 			if(!(organ.material.getMaterialFlags() & MATERIAL_ORGANIC))

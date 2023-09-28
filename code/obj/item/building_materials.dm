@@ -298,8 +298,12 @@ MATERIAL
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 		if (src?.material?.getMaterialFlags() & MATERIAL_WOOD)
-			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
-				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+			if (istype(src,/obj/item/sheet/wood/zwood))
+				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/zwood))
+					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+			else
+				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
+					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 
 		.["itemList"] = availableRecipes
 
@@ -382,6 +386,17 @@ MATERIAL
 					if (!amount_check(2,usr)) return
 
 					currentRecipe = /datum/sheet_crafting_recipe/metal/construct
+
+				if ("barricade","zbarricade")
+					var/turf/T = get_turf(usr)
+					var/obj/item/sheet/wood/W = src
+					if (!istype(T, /turf/simulated/floor) || locate(W.wall_type) in T.contents)
+						boutput(usr,"<span class='alert'>You can't build that here.</span>")
+						return
+					if (params["recipeID"] == "barricade")
+						currentRecipe = /datum/sheet_crafting_recipe/wood/barricade
+					else
+						currentRecipe = /datum/sheet_crafting_recipe/zwood/zbarricade
 
 				if("smallwindow")
 					for (var/obj/window/window in get_turf(src))
@@ -484,9 +499,22 @@ MATERIAL
 
 /obj/item/sheet/wood
 	item_state = "sheet-metal"
-	icon_state = "sheet-m_5$wood"
+	icon_state = "sheet-m_5$$wood"
 	default_material = "wood"
 	amount = 10
+	var/wall_type = /obj/structure/woodwall
+
+	afterattack(atom/target, mob/user)
+		if (!isturf(target) || target.density)
+			return ..()
+		var/turf/T = target
+		if (locate(src.wall_type) in T.contents)
+			return ..()
+		actions.start(new /datum/action/bar/icon/build(src, wall_type, 5, src.material, 1, 'icons/ui/actions.dmi', "working", "a barricade", null, spot = target), user)
+
+/obj/item/sheet/wood/zwood
+	amount = 5
+	wall_type = /obj/structure/woodwall/anti_zombie
 
 /obj/item/sheet/bamboo
 	item_state = "sheet-metal"
@@ -1065,6 +1093,8 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/metal)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/glass)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/cardboard)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe/zwood)
+
 /datum/sheet_crafting_recipe
 	var/recipe_id //The ID of the recipe, used for TGUI act()s
 	var/name
@@ -1365,6 +1395,14 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon = 'icons/obj/doors/SL_doors.dmi'
 			icon_state = "wood1"
 
+	zwood
+		zbarricade
+			recipe_id = "zbarricade"
+			craftedType = /obj/structure/woodwall/anti_zombie
+			name = "Zombie Barricade"
+			sheet_cost = 5
+			icon = 'icons/obj/structures.dmi'
+			icon_state = "woodwall"
 
 /proc/sheet_crafting_recipe_get_ui_data(var/recipePath)
 	var/datum/sheet_crafting_recipe/typedRecipePath = recipePath

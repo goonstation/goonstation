@@ -4,7 +4,7 @@
 	var/const/rockbox_standard_fee = 5
 	var/rockbox_client_fee_min = 1
 	var/rockbox_client_fee_pct = 10
-	var/rockbox_premium_purchased = 0
+	var/rockbox_premium_purchased = 1
 
 var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 

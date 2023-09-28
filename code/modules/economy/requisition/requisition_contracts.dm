@@ -109,6 +109,17 @@ ABSTRACT_TYPE(/datum/rc_entry/food)
 	///Must-be-whole switch. If true, food must be at initial bites_left value and is counted by whole units; if false, it is counted by bites left.
 	var/must_be_whole = TRUE
 
+	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path if not initially specified.
+	var/commodity
+
+	New()
+		if(src.commodity) // Fetch configuration data from commodity if specified
+			var/datum/commodity/CM = src.commodity
+			if(!src.typepath) src.typepath = initial(CM.comtype)
+			src.feemod += initial(CM.baseprice)
+			src.feemod += initial(CM.upperfluc)
+		..()
+
 	rc_eval(obj/item/reagent_containers/food/snacks/eval_item)
 		. = ..()
 		if(rollcount >= count) return // Standard skip-if-complete
