@@ -771,7 +771,7 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 			//make more orange if over one atmosphere
 			new_overlay.color = rgb(91 * (max(1,relative_pressure)), 103, 231 / (max(1,relative_pressure)))
 			new_overlay.alpha = 0
-			animate(new_overlay, alpha=200 * relative_pressure, time=2 DECI SECONDS)
+			animate(new_overlay, alpha=min(200, 200 * relative_pressure), time=2 DECI SECONDS)
 			animate(alpha=0, time=2 SECONDS)
 			src.atmos_overlays += new_overlay
 			M.client.images += new_overlay
