@@ -392,7 +392,7 @@ toxic - poisons
 
 	on_launch(var/obj/projectile/P)
 		. = ..()
-		P.AddComponent(/datum/component/radioactive, 10, FALSE, FALSE, 1)
+		P.AddComponent(/datum/component/radioactive, 15, FALSE, FALSE, 1)
 
 	burst
 		damage = 15
