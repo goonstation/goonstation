@@ -216,7 +216,7 @@ TYPEINFO(/obj/machinery/plantpot)
 	density = 1
 	event_handler_flags = null
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR
-	flags = NOSPLASH|ACCEPTS_MOUSEDROP_REAGENTS
+	flags = NOSPLASH | ACCEPTS_MOUSEDROP_REAGENTS | OPENCONTAINER
 	processing_tier = PROCESSING_SIXTEENTH
 	machine_registry_idx = MACHINES_PLANTPOTS
 	power_usage = 25
@@ -365,6 +365,9 @@ TYPEINFO(/obj/machinery/plantpot)
 		..()
 		src.do_update_water_icon = 1
 		src.update_water_level()
+
+	is_open_container(input = FALSE)
+		. = input && ..()
 
 	power_change()
 		. = ..()
