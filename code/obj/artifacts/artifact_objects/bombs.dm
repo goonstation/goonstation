@@ -462,6 +462,18 @@ ABSTRACT_TYPE(/datum/artifact/bomb)
 
 		range = rand(3,7)
 
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if(variable == "mat")
+			warning_initial = "appears to be turning into [mat.getName()]."
+			warning_final = "begins transmuting nearby matter into [mat.getName()]!"
+			log_addendum = "Material: [mat.getName()]"
+
+			var/matR = GetRedPart(mat.getColor())
+			var/matG = GetGreenPart(mat.getColor())
+			var/matB = GetBluePart(mat.getColor())
+			lightColor = list(matR, matG, matB, 255)
+
 	effect_activate(obj/O)
 		if(..())
 			return

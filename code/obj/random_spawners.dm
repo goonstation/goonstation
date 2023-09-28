@@ -807,7 +807,7 @@
 	/obj/item/mousetrap,
 	/obj/item/mousetrap/armed,
 	/obj/item/paper,
-	/obj/item/plank,
+	/obj/item/sheet/wood,
 	/obj/item/plate,
 	/obj/item/pen,
 	/obj/item/pen/crayon/random,
@@ -1323,8 +1323,8 @@
 /obj/random_item_spawner/dressup
 	name = "random gimmick clothing spawner"
 	icon_state = "rand_gimmick"
-	min_amt2spawn = 15
-	max_amt2spawn = 20
+	min_amt2spawn = 5
+	max_amt2spawn = 10
 	items2spawn = list(
 		/obj/item/clothing/under/gimmick/macho,
 		/obj/item/clothing/under/gimmick/bowling,

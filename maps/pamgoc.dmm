@@ -46575,22 +46575,22 @@
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
 	pixel_x = -9
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 4;
 	pixel_y = 1
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 2;
 	pixel_y = -1
 	},
@@ -56569,8 +56569,9 @@
 /turf/space,
 /area/shuttle/mining/station)
 "cCV" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "cCW" = (
 /turf/space,
 /area/supply/sell_point)

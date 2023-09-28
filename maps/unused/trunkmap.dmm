@@ -23193,8 +23193,9 @@
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
 "bzF" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "bzL" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";

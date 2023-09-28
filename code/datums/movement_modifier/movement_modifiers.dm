@@ -253,3 +253,7 @@
 	health_deficiency_adjustment = -30
 	additive_slowdown = -0.4
 
+// slowed down by hook
+
+/datum/movement_modifier/syndie_fishing
+	multiplicative_slowdown = 1.5
