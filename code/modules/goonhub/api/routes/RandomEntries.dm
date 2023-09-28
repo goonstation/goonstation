@@ -5,4 +5,7 @@
 	method = RUSTG_HTTP_METHOD_GET
 	path = "/random-entries"
 	queryParams = list("type", "count")	// not sure if i should put 0 or "count" here.
-	correct_response = /datum/apiModel/Tracked/EventTicketResource // this looks correct? best to double check it
+	correct_response = list(/datum/apiModel/Tracked/EventTicketResource,
+							/datum/apiModel/Tracked/EventFineResource,
+							/datum/apiModel/Tracked/EventAiLawResource,
+							/datum/apiModel/Tracked/EventStationNameResource)	// this may or may not work
