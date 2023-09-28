@@ -107,7 +107,7 @@ ABSTRACT_TYPE(/datum/rc_entry/food)
 	///If true, requires precise path; if false (default), sub-paths are accepted.
 	var/exactpath = FALSE
 	///Must-be-whole switch. If true, food must be at initial bites_left value and is counted by whole units; if false, it is counted by bites left.
-	var/must_be_whole = FALSE
+	var/must_be_whole = TRUE
 
 	rc_eval(obj/item/reagent_containers/food/snacks/eval_item)
 		. = ..()
