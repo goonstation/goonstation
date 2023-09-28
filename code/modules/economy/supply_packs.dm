@@ -436,7 +436,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Engineering Department"
 	contains = list(/obj/item/mining_tool/power_pick,
 					/obj/item/mining_tool/powerhammer,
-					/obj/item/clothing/glasses/meson,
+					/obj/item/clothing/glasses/toggleable/meson,
 					/obj/item/oreprospector,
 					/obj/item/satchel/mining = 2,
 					/obj/item/breaching_charge/mining = 3)
