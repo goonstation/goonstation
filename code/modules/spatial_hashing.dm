@@ -143,7 +143,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 
 		. = list()
 		for (var/id in get_atom_id(A, range))
-			if(length(hashmap[id]))
+			if(id > 0 && length(hashmap[id]))
 				. += hashmap[id]
 
 /datum/spatial_hashmap/clients
