@@ -7,7 +7,7 @@
 
 import { useBackend } from '../../backend';
 import { Window } from '../../layouts';
-import { Section, Stack, Button, Box, ProgressBar } from '../../components';
+import { Box, Button, ProgressBar, Section, Stack } from '../../components';
 import { PortableHoldingTank } from '../common/PortableAtmos';
 import { LocalGeneratorData } from './type';
 
