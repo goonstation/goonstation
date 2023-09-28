@@ -2920,6 +2920,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/atmos_goggles,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,
 		/datum/manufacture/breathmask,

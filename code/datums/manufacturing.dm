@@ -2063,6 +2063,15 @@ ABSTRACT_TYPE(/datum/manufacture)
 	create = 1
 	category = "Clothing"
 
+/datum/manufacture/atmos_goggles
+	name = "Pressure Visualization Goggles"
+	item_paths = list("CRY-1","CON-1")
+	item_amounts = list(3,2)
+	item_outputs = list(/obj/item/clothing/glasses/toggleable/atmos)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
+
 /datum/manufacture/geoscanner
 	name = "Geological Scanner"
 	item_paths = list("MET-1","CON-1","CRY-1")
