@@ -1,5 +1,9 @@
 
 (t)thu sep 28 23
+(u)LeahTheTech
+(p)16082
+(e)🆕🗺🎨💅|C-Feature, A-Mapping, C-Sprites, C-QoL
+(*)Added pressure visualization goggles which show surrounding atmospheric pressure when worn, found in engineering lockers.
 (u)Flaborized
 (p)15812
 (e)🎨⚗|C-Sprites, A-Chemistry
