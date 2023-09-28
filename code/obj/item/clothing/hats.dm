@@ -1981,7 +1981,7 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	item_state = "stagbeetle"
 
 TYPEINFO(/obj/item/clothing/head/elephanthat)
-	random_types = list(/obj/item/clothing/head/elephanthat/gold,
+	random_subtypes = list(/obj/item/clothing/head/elephanthat/gold,
 		/obj/item/clothing/head/elephanthat/green,
 		/obj/item/clothing/head/elephanthat/pink,
 		/obj/item/clothing/head/elephanthat/blue
@@ -2011,11 +2011,11 @@ ABSTRACT_TYPE(/obj/item/clothing/head/elephanthat)
 
 	random
 		New()
-			var/old_loc = src.loc
-        		qdel(src)
-        		src = get_random_subtype(/obj/item/clothing/head/elephanthat,TRUE)
-        		src.set_loc(old_loc)
-        		..()
+		var/old_loc = src.loc
+        qdel(src)
+        src = get_random_subtype(/obj/item/clothing/head/elephanthat,TRUE)
+        src.set_loc(old_loc)
+        ..()
 
 /obj/item/clothing/head/minotaurmask
 	name = "minotaur mask"
