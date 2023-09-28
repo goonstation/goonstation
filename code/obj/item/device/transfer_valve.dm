@@ -526,12 +526,12 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	HELP_MESSAGE_OVERRIDE("Place this where the epicenter of a bomb would be, then detonate the bomb. \
 		Afterwards, place the crystal in a pressure sensor to determine the explosion power.<br>\
 		Spent pressure crystals can be sold to researchers on the shipping market, for a credit sum depending on the measured power.")
-    
+
 	attackby(obj/item/thing, mob/user)
 		if (istype(thing, /obj/item/device/pressure_sensor))
 			thing.Attackby(src, user)
 		else ..()
-  
+
 	examine()
 		. = ..()
 		if (src.pressure)
@@ -577,9 +577,10 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			boutput( user, "<span class='notice'>The display reads a firm 0. It guilts you into trying to read an unexploded pressure crystal, \
 							and seems to have succeeded. You feel ashamed for being so compelled by a device that \
 							has nothing more than a slot and a number display.</span>")
-      
-	ex_act()
+
+	ex_act(var/ex, var/inf, var/factor)
 		if (src.crystal)
+			src.crystal.ex_act(ex, inf, factor)
 			src.crystal.set_loc(src.loc)
 		qdel(src)
 
