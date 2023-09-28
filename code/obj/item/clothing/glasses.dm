@@ -723,7 +723,8 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		if(src.equipped_in_slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_mob(user)
 		..()
-
+TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
+	mats = 6
 /obj/item/clothing/glasses/toggleable/atmos
 	name = "pressure visualization goggles"
 	desc = "Goggles with an integrated local atmospheric pressure scanner, capable of providing a visualization of surrounding air pressure."
