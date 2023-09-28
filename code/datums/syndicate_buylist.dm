@@ -340,6 +340,12 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	cost = 1
 	desc = "This closet was produced using the finest in applied optical illusion technology. When closed, it will dynamically assume the appearance of the floor tile underneath."
 
+	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
+		. = ..()
+		if(in_surplus_crate)
+			var/obj/storage/closet/syndi/closet = item
+			closet.open()
+
 /datum/syndicate_buylist/traitor/snidely
 	name = "Fake Moustache"
 	item = /obj/item/clothing/mask/moustache
@@ -838,7 +844,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	name = "Extra Large Shot Glasses"
 	item = /obj/item/storage/box/glassbox/syndie
 	cost = 2
-	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games!"
+	desc = "A box of shot glasses that hold WAAAY more that normal. Cheat at drinking games! Those glasses also splash all the liquid inside them to whatever they hit when thrown!"
 	job = list("Bartender")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 

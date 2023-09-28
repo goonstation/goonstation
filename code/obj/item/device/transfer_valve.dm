@@ -313,6 +313,10 @@ TYPEINFO(/obj/item/device/transfer_valve)
 			src.valve_open = !valve_open
 			SPAWN(1 SECOND)
 				signalled = FALSE
+			if(valve_open)
+				playsound(src, 'sound/effects/valve_creak.ogg', 50, TRUE)
+			else
+				playsound(src, 'sound/effects/valve_creak.ogg', 50, TRUE, pitch=-1)
 			if(valve_open && force_dud)
 				message_admins("A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [key_name(src.fingerprintslast)]")
 				logTheThing(LOG_BOMBING, null, "A bomb valve would have opened at [log_loc(src)] but was forced to dud! Last touched by: [src.fingerprintslast ? "[src.fingerprintslast]" : "*null*"]")
@@ -360,7 +364,7 @@ TYPEINFO(/obj/item/device/transfer_valve)
 						throw_repeat--
 						step_away(L,get_turf(src),throw_speed)
 
-				T.air_contents.zero() //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
+				ZERO_GASES(T.air_contents) //I could also make it vent the gas, I guess, but then it'd be off-limits to non-antagonists. Challenge mode: make a safe ttb?
 				qdel(B)
 				SPAWN(1 SECOND)
 					UpdateIcon()

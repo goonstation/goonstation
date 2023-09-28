@@ -195,8 +195,11 @@ var/global/list/turf/hotly_processed_turfs = list()
 		src.air.temperature = src.temperature
 
 		if(air_master)
-			air_master.tiles_to_update |= src
-			src.find_group()
+			if(explosions.exploding)
+				air_master.tiles_to_rebuild |= src
+			else
+				air_master.tiles_to_update |= src
+				src.find_group()
 
 	else
 		if(!air_master)
@@ -540,7 +543,7 @@ var/global/list/turf/hotly_processed_turfs = list()
 	//Radiate excess tile heat to space
 	if(temperature > T0C)
 		//Considering 0 degC as te break even point for radiation in and out
-		src.mimic_temperature_solid(air_master.space_sample, FLOOR_HEAT_TRANSFER_COEFFICIENT)
+		src.mimic_temperature_solid(locate(/turf/space), FLOOR_HEAT_TRANSFER_COEFFICIENT)
 
 	//Conduct with air on my tile if I have it
 	if(src.air)

@@ -1,3 +1,15 @@
+proc/random_accent()
+	RETURN_TYPE(/datum/bioEffect/speech)
+	var/static/list/datum/bioEffect/speech/accents = null
+	if(isnull(accents))
+		for(var/bio_type in concrete_typesof(/datum/bioEffect/speech, FALSE))
+			var/datum/bioEffect/speech/effect = new bio_type()
+			if(!effect.acceptable_in_mutini || !effect.occur_in_genepools || !effect.mixingdesk_allowed)
+				continue
+			LAZYLISTADD(accents, effect)
+	. = pick(accents)
+
+
 /datum/parse_result
 	var/string = ""
 	var/chars_used = 0

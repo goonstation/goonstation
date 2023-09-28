@@ -19865,7 +19865,7 @@
 /area/zeta/patients)
 "Wp" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = /obj/item/captaingun
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)

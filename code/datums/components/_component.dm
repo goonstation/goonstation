@@ -434,6 +434,18 @@ var/datum/signal_holder/global_signal_holder
 	return islist(components) ? components : list(components)
 
 /**
+  * Calls RemoveComponent on all components of a given type that are attached to this datum
+  *
+  * Arguments:
+  * * c_type The component type path
+  */
+
+/datum/proc/RemoveComponentsOfType(c_type)
+	var/list/datum/component/component_to_remove_list = src.GetComponents(c_type)
+	for (var/datum/component/component_to_remove as anything in component_to_remove_list)
+		component_to_remove.RemoveComponent()
+
+/**
   * Creates an instance of `new_type` in the datum and attaches to it as parent
   *
   * Sends the [COMSIG_COMPONENT_ADDED] signal to the datum

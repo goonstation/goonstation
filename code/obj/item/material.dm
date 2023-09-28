@@ -19,7 +19,7 @@
 	event_handler_flags = USE_FLUID_ENTER
 	/// Does the raw material item get its name set?
 	mat_changename = FALSE
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	default_material = null
 
 	New()
@@ -108,7 +108,7 @@
 				S.satchel.UpdateIcon()
 				if (length(S.satchel.contents) >= S.satchel.maxitems)
 					boutput(H, "<span class='alert'>Your ore scoop's satchel is full!</span>")
-					playsound(H, 'sound/machines/chime.ogg', 20, 1)
+					playsound(H, 'sound/machines/chime.ogg', 20, TRUE)
 		else if (istype(AM,/obj/machinery/vehicle/))
 			var/obj/machinery/vehicle/V = AM
 			if (istype(V.sec_system,/obj/item/shipcomponent/secondary_system/orescoop))
@@ -866,13 +866,13 @@
 			//But loading a container is more noticable and there should be less
 			if (.)
 				user.visible_message("<b>[user.name]</b> loads [W] into [src].")
-				playsound(src, sound_load, 40, 1)
+				playsound(src, sound_load, 40, TRUE)
 		else if (W?.cant_drop)
 			boutput(user, "<span class='alert'>You can't put that in [src] when it's attached to you!</span>")
 			return ..()
 		else if (load_reclaim(W, user))
 			boutput(user, "You load [W] into [src].")
-			playsound(src, sound_load, 40, 1)
+			playsound(src, sound_load, 40, TRUE)
 		else
 			. = ..()
 
@@ -974,7 +974,7 @@
 			if(!src.is_valid(M))
 				continue
 			M.set_loc(src)
-			playsound(src, sound_load, 40, 1)
+			playsound(src, sound_load, 40, TRUE)
 			sleep(0.5)
 			if (user.loc != staystill) break
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
