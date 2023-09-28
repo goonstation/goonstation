@@ -1162,6 +1162,8 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\requests\bans\CheckBansBody.dm"
 #include "code\modules\goonhub\api\requests\gameadmins\AddGameAdminsBody.dm"
 #include "code\modules\goonhub\api\requests\gameadmins\UpdateGameAdminsBody.dm"
+#include "code\modules\goonhub\api\requests\gameround\EndGameRoundBody.dm"
+#include "code\modules\goonhub\api\requests\gameround\UpdateGameRoundBody.dm"
 #include "code\modules\goonhub\api\requests\players\notes\AddPlayerNotesBody.dm"
 #include "code\modules\goonhub\api\requests\players\notes\UpdatePlayerNotesBody.dm"
 #include "code\modules\goonhub\api\requests\rounds\AddGameRoundBody.dm"
