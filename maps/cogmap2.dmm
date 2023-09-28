@@ -39295,7 +39295,7 @@
 "cjR" = (
 /obj/table/auto,
 /obj/item/storage/box/diskbox,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -72881,7 +72881,7 @@
 /area/station/maintenance/central)
 "uBX" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
