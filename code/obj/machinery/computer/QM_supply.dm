@@ -1065,7 +1065,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	complement of items with the contract's Requisitions tag.<br>
 	<br>
 	<B>Items packed for requisition can be validated with a<br>
-	standard cargo scanner; ensure correct label is applied.</B><br>
+	standard cargo appraiser; ensure correct label is applied.</B><br>
 	Insufficient or extra items will be returned to you.<br>
 	<br>
 	One contract at a time may be pinned, which reserves it<br>
