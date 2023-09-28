@@ -348,7 +348,7 @@ TYPEINFO(/obj/structure/woodwall)
 		icon = 'icons/effects/VR.dmi'
 
 	anti_zombie
-		name = "anti-zombie wooden barricade"
+		name = "anti-zombie barricade"
 		anti_z = 1
 
 		get_desc()
@@ -403,8 +403,8 @@ TYPEINFO(/obj/structure/woodwall)
 			return
 
 	attackby(var/obj/item/W, mob/user)
-		if (istype(W, /obj/item/plank))
-			actions.start(new /datum/action/bar/icon/plank_repair_wall(W, src, 30), user)
+		if (istype(W,/obj/item/sheet/wood))
+			actions.start(new /datum/action/bar/icon/wood_repair_wall(W, src, 30), user)
 			return
 		..()
 		user.lastattacked = src
@@ -412,3 +412,56 @@ TYPEINFO(/obj/structure/woodwall)
 		src.health -= W.force
 		checkhealth()
 		return
+
+/datum/action/bar/icon/wood_repair_wall
+	id = "wood_repair_wall"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	#ifdef HALLOWEEN
+	duration = 20
+	#else
+	duration = 30
+	#endif
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/item/sheet/wood/wood
+	var/obj/structure/woodwall/wall
+
+	New(var/obj/item/sheet/wood/wood, var/obj/structure/woodwall/wall, var/duration_i)
+		..()
+		src.wood = wood
+		src.wall = wall
+		if (!wall)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		if (duration_i)
+			duration = duration_i
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
+
+	onUpdate()
+		..()
+		if (wood == null || wood.amount < 1 || owner == null || BOUNDS_DIST(owner, wall) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+		var/mob/source = owner
+		if (istype(source) && wood != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+		if (prob(20))
+			playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
+
+	onStart()
+		..()
+		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
+		owner.visible_message("<span class='notice'>[owner] begins repairing [wall]!</span>")
+
+	onEnd()
+		..()
+		owner.visible_message("<span class='notice'>[owner] uses a [wood] to completely repair the [wall]!</span>")
+		playsound(wall.loc, 'sound/impact_sounds/Wood_Hit_1.ogg', rand(50,90), 1)
+		//do repair shit.
+		wall.health = wall.health_max
+		wall.checkhealth()
+		wood.change_stack_amount(-1)

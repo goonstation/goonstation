@@ -150,10 +150,15 @@
 	attack_hand(mob/user)
 		src.try_vault(user)
 
+	attack_ai(mob/user)
+		if(!can_reach(user, src) || isAI(user) || isAIeye(user))
+			return
+		return src.attack_hand(user)
+
 	Bumped(var/mob/AM as mob)
 		. = ..()
 		if(!istype(AM)) return
-		if(AM.client?.check_key(KEY_RUN))
+		if(AM.client?.check_key(KEY_RUN) || AM.client?.check_key(KEY_BOLT))
 			src.try_vault(AM, TRUE)
 
 	proc/try_vault(mob/user, use_owner_dir = FALSE)

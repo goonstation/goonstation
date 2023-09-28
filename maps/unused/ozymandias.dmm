@@ -29501,7 +29501,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "hJA" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -48702,11 +48702,11 @@
 	},
 /area/station/crewquarters/garbagegarbs)
 "mJp" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grime,
@@ -84817,7 +84817,7 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-	
+
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{

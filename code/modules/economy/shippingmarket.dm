@@ -1,6 +1,11 @@
 #define SUPPLY_OPEN_TIME 1 SECOND //Time it takes to open supply door in seconds.
 #define SUPPLY_CLOSE_TIME 15 SECONDS //Time it takes to close supply door in seconds.
 
+/// The full explosion-power-to-credits conversion formula. Also used in smallprogs.dm
+#define PRESSURE_CRYSTAL_VALUATION(power) power ** 1.1 * 100
+/// The number of peak points on the pressure crystal graph offering bonus credits
+#define PRESSURE_CRYSTAL_PEAK_COUNT 3
+
 //Codes for requisition post-transaction returns handling
 ///Requisition was not used, conduct a standard QM sale
 #define RET_IGNORE 0
@@ -35,6 +40,12 @@
 	var/list/supply_requests = list() // Pending requests, of type /datum/supply_order
 	var/list/supply_history = list() // History of all approved requests, of type string
 
+	// Both of these are string indexed because byond will whine and complain and explode otherwise
+	/// Previously sold pressure crystal values, will negatively affect future sales (associative list of pressure to credit value)
+	var/list/pressure_crystal_sales = list()
+	/// Pressure crystal market peaks, will positively affect future sales (associative list of pressure to multipliers)
+	var/list/pressure_crystal_peaks = list()
+
 	var/points_per_crate = 10
 
 	var/list/datum/req_contract/complete_orders = list()
@@ -58,6 +69,10 @@
 				add_commodity(C)
 			else
 				qdel(C)
+
+
+		SPAWN(300)
+			market_shift()
 
 		var/list/unique_traders = list(/datum/trader/gragg,/datum/trader/josh,/datum/trader/pianzi_hundan,
 		/datum/trader/vurdalak,/datum/trader/buford)
@@ -91,6 +106,11 @@
 			break
 
 		src.launch_distance = get_dist(spawnpoint, target)
+
+		//set up pressure crystal market peaks
+		for (var/i in 1 to PRESSURE_CRYSTAL_PEAK_COUNT)
+			var/value = rand(1, 230)
+			src.pressure_crystal_peaks["[value]"] = (rand() * 2) + 1 //random number between 2 and 3
 
 	proc/add_commodity(var/datum/commodity/new_c)
 		src.commodities["[new_c.comtype]"] = new_c
@@ -155,6 +175,8 @@
 		// so on average the % chance is actually about ~half this value.
 		var/hot_chance = rand(10, 33)
 
+		var/list/adjusted = list()
+
 		for (var/type in src.commodities)
 			var/datum/commodity/C = src.commodities[type]
 
@@ -178,8 +200,6 @@
 				// ... and bad rolls adjust on the lower one.
 				price_adjust += C.lowerfluc * price_mod
 
-			C.price = price_adjust
-
 			// At this point, the price is (hopefully) roughly on this
 			// unfortunately upside-down scale of probabilities:
 			//   |                                 | | v rare
@@ -196,15 +216,14 @@
 			// If we had a good roll (> 0), roll a chance to make this
 			// item Hot™! Hot items get a bigger bonus to their current value,
 			// which is just pure random inflation.
-			C.indemand = 0
+			var/in_demand_modifier = 1
 			if (modifier_roll > 0 && prob(hot_chance))
 				// shit is on FIYAH! SELL SELL SELL!!
 				// Hot prices are marked up by +50% to +200%.
 				// This might be a bit much, but compensating for some of the
 				// commodities that achieved stupidly inflated prices in the
 				// old system. Can be adjusted down later if need be.
-				C.indemand = 1
-				C.price *= rand(150, 300) / 100
+				in_demand_modifier = rand(150, 300) / 100
 
 			// If (somehow) a price manages to become negative, make it
 			// zero again so you aren't charged for disposing of it.
@@ -213,8 +232,26 @@
 			//  the crusher's scraps exist.)
 			// We also strip off any weird decimals because it is 2053
 			// and the penny has been abolished, along with all other coins.
-			C.price = max(round(C.price), 0)
 
+			if(!adjusted[C])
+				if(in_demand_modifier > 1)
+					C.indemand = 1
+				else
+					C.indemand = 0
+				C.price = max(round(price_adjust*in_demand_modifier), 0)
+				adjusted += C
+				adjusted[C] = 1
+
+			if(C.linked_commodities)
+				for(var/linked in C.linked_commodities)
+					for(var/comtype in src.commodities)
+						var/datum/commodity/commodity = src.commodities[comtype]
+						if(!adjusted[commodity])
+							if(linked == commodity.type)
+								commodity.price = C.price * C.linked_commodities[linked]
+								commodity.indemand = C.indemand
+								adjusted += commodity
+								adjusted[commodity] = 1
 
 		// Shuffle trader visibility around a bit
 		for (var/datum/trader/T in src.active_traders)
@@ -268,9 +305,55 @@
 				src.active_traders += new /datum/trader/generic(src)
 
 			update_shipping_data()
+			update_buy_prices()
+
+
+	/// update the buy price of items based on market fluctuations
+	/// remove in demand goods from traders; they're all out!
+	proc/update_buy_prices()
+		var/new_cost = 0
+		var/multiplier = 1
+		for (var/datum/supply_packs/pack in qm_supply_cache)
+			new_cost = 0
+			for(var/type in pack.contains)
+				if(pack.contains[type] && pack.contains[type] > 1)
+					multiplier = pack.contains[type]
+				else
+					multiplier = 1
+				if(pack.amount && pack.amount > 1)
+					multiplier *= pack.amount
+				for (var/ctype in src.commodities)
+					var/datum/commodity/C = src.commodities[ctype]
+					if(ispath(type,C.comtype))
+						if(C.indemand)
+							multiplier *= src.demand_multiplier
+						new_cost += C.price * multiplier
+
+			new_cost += src.points_per_crate
+
+			if(pack.cost < new_cost)
+				pack.cost = new_cost
+			if(pack.cost > new_cost && pack.cost > pack.basecost)
+				pack.cost = max(new_cost,pack.basecost)
+
+			if(pack.exhaustion > 0)
+				pack.exhaustion = round(pack.exhaustion*0.5)
+
+		for (var/ctype in src.commodities)
+			var/datum/commodity/C1 = src.commodities[ctype]
+			for(var/datum/trader/T in src.active_traders)
+				for(var/datum/commodity/C2 in T.goods_sell)
+					if(C1.comtype == C2.comtype)
+						if(C1.indemand)
+							C2.amount = 0
+
+
+
+
+
 
 	proc/calculate_artifact_price(var/modifier, var/correctness)
-		return ((modifier**2) * 20000 * correctness)
+		return ((modifier**2) * PAY_EMBEZZLED * correctness)
 
 	proc/sell_artifact(obj/sell_art, var/datum/artifact/sell_art_datum)
 		var/price = 0
@@ -366,6 +449,11 @@
 						if (sell)
 							qdel(O)
 						break
+					else if (istype(O, /obj/item/pressure_crystal))
+						duckets += src.appraise_pressure_crystal(O, sell)
+						if (sell)
+							qdel(O)
+						break
 					else if (O.artifact && sell)
 						src.sell_artifact(O, O.artifact)
 		else // Please excuse this duplicate code, I'm gonna change trader commodity lists into associative ones later I swear
@@ -391,6 +479,32 @@
 						break
 
 		return duckets
+
+	proc/appraise_pressure_crystal(var/obj/item/pressure_crystal/pc, var/sell = 0)
+		if (pc.pressure <= 0)
+			return
+		//calculate the base value
+		var/value = PRESSURE_CRYSTAL_VALUATION(pc.pressure)
+		//for each previously sold pressure crystal
+		for (var/sale in src.pressure_crystal_sales)
+			var/sale_value = text2num(sale)
+			//calculate a modifier based on the proximity of our current pressure to the previous one
+			//scales by a simple x^2 curve, stretched by the magnitude of the sale pressure (ie bigger bombs affect larger ranges)
+			//obligatory desmos: https://www.desmos.com/calculator/mumuykqlju
+			var/modifier = 1/(sale_value * 3) * ((pc.pressure - sale_value) ** 2)
+			if (modifier < 1) //a range cutoff to ensure we never add credit value
+				value *= modifier
+		for (var/peak in src.pressure_crystal_peaks)
+			var/peak_value = text2num(peak) //I hate byond lists
+			//very similar to above except inverted and bounded by the multiplier of the peak
+			//another desmos: https://www.desmos.com/calculator/ahhoxuwho8
+			var/modifier = -1/(peak_value * 3) * ((pc.pressure - peak_value) ** 2) + src.pressure_crystal_peaks[peak]
+			if (modifier > 1)
+				value *= modifier
+		value = round(value)
+		if (sell && value > 0)
+			src.pressure_crystal_sales["[pc.pressure]"] = value
+		return value
 
 	proc/handle_returns(obj/storage/crate/sold_crate,var/return_code)
 		if(return_code == RET_INSUFFICIENT) //clarifies purpose for crate return

@@ -768,6 +768,7 @@
 
 // I moved the log entries from human.dm to make them global (Convair880).
 /mob/ex_act(severity, last_touched)
+	SEND_SIGNAL(src, COMSIG_MOB_EX_ACT, severity)
 	logTheThing(LOG_COMBAT, src, "is hit by an explosion (Severity: [severity]) at [log_loc(src)]. Explosion source last touched by [last_touched]")
 	return
 
@@ -2207,7 +2208,7 @@
 	src.emote("scream")
 	src.gib()
 
-/mob/proc/anvilgib(height = 7, use_shadow=TRUE, anvil_type=/obj/table/anvil)
+/mob/proc/anvilgib(height = 7, use_shadow=TRUE, anvil_type=/obj/table/anvil/gimmick)
 	logTheThing(LOG_COMBAT, src, "is anvil-gibbed at [log_loc(src)].")
 	src.transforming = TRUE
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "anvilgib")
@@ -2838,7 +2839,10 @@
 								R["name"] = newname
 								if (R["full_name"])
 									R["full_name"] = newname
-						for (var/obj/item/card/id/ID in src.contents)
+						for (var/obj/item/I in src.contents)
+							var/obj/item/card/id/ID = get_id_card(I)
+							if (!ID)
+								continue
 							ID.registered = newname
 							ID.update_name()
 						for (var/obj/item/device/pda2/PDA in src.contents)

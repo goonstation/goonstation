@@ -214,7 +214,7 @@
 			src.on = 1
 			var/mob/M = W.affecting
 			src.occupant = M
-			src.update_icon()
+			UpdateIcon()
 			cycle_max = CYCLE_TIME_MOB_INSIDE
 			if (!processing_items.Find(src))
 				processing_items.Add(src)

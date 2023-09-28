@@ -1,6 +1,6 @@
 /mob/living/critter/robotic/drone
-	name = "Drone"
-	real_name = "Drone"
+	name = "drone"
+	real_name = "drone"
 	var/drone_designation = "SC"
 	var/num_max = 999
 	desc = "An armed and automated Syndicate scout drone."

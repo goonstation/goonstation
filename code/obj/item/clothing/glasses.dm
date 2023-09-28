@@ -285,6 +285,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
 	upgraded = TRUE
+	is_syndicate = TRUE
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"

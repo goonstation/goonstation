@@ -219,6 +219,8 @@
 	#define COMSIG_MOB_UPDATE_DAMAGE "mob_update_damage"
 	/// Sent when a mob resists, return TRUE to prevent other resist code from running
 	#define COMSIG_MOB_RESIST "mob_resist"
+	/// Sent when the mob is affected by an explosion
+	#define COMSIG_MOB_EX_ACT "mob_explosion_act"
 
 	// ---- cloaking device signal ----
 
