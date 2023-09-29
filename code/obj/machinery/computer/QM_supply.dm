@@ -1066,7 +1066,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	standard cargo appraiser; ensure correct label is applied.</B><br>
 	Insufficient or extra items will be returned to you.<br>
 	<br>
-	One contract at a time may be pinned, which reserves it<br>
+	Most contracts may be "pinned", which reserves them<br>
 	for your use, even through market shifts.<br>
 	<br>
 	When fulfilling third-party contracts, you <B>must</B><br>
