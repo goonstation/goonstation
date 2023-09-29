@@ -1,5 +1,9 @@
 
 (t)fri sep 29 23
+(u)Flappybat & Flaborized
+(p)15797
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds emergency flares to the game, when a glowstick just won't cut it! These come as standard issue in emergency toolboxes. Just be careful around flammable gas...
 (u)TealSeer
 (p)16083
 (e)🪲📦|C-Bug, A-Game-Objects
