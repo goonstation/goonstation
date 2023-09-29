@@ -46,7 +46,7 @@ jobs:
         uses: spacestation13/dmi-duplicate-state-checker@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          folders_to_search: icons,assets
+          folders_to_search: ./icons,./assets
 
       - name: Run Linter
         id: linter
@@ -102,7 +102,7 @@ jobs:
       - uses: actions/checkout@v3
         with:
           submodules: true
-          token: '${{ secrets.ROBUDDYBOT_PAT }}'
+          token: "${{ secrets.ROBUDDYBOT_PAT }}"
 
       - name: Cache BYOND
         uses: actions/cache@v3
