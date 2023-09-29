@@ -293,6 +293,8 @@ ABSTRACT_TYPE(/datum/req_contract)
 	var/weight = 100
 
 	///A baseline amount of cash you'll be given for fulfilling the requisition; this is modified by entries
+	///The current thinking as of the time of writing this comment is for this to be 10 times some salary's wage,
+	///times an additional modifier based on difficulty
 	var/payout = 0
 	///List of contract entry datums; sent cargo will be passed into these for evaluation
 	var/list/rc_entries = list()
