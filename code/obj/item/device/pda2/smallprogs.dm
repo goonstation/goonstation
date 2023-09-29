@@ -1691,3 +1691,30 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				if(product.desc)
 					. += product.desc
 					. += "<br>"
+
+/datum/computer/file/pda_program/pressure_crystal_shopper
+	name = "Crystal Bazaar"
+	size = 2
+
+	return_text()
+		if(..())
+			return
+
+		. = src.return_text_header()
+
+		. += "<h4>The Pressure Crystal Market</h4> \
+			A few well-funded organizations will pay handsomely for crystals exposed to different pressure values. \
+			The bigger the boom, the higher the payout, although duplicate or similar data will be worth less.\
+			<br><br>\
+			<b>Certain pressure values are of particular interest and will reward bonuses:</b>\
+			<br>"
+		for (var/peak in shippingmarket.pressure_crystal_peaks)
+			var/peak_value = text2num(peak)
+			var/mult = shippingmarket.pressure_crystal_peaks[peak]
+			. += "[peak] kiloblast: \
+				[mult > 1 ? "<B>" : ""]worth [round(mult * 100, 0.01)]% of normal. \
+				[mult > 1 ? "Maximum estimated value: [round(mult * PRESSURE_CRYSTAL_VALUATION(peak_value))]</B> credits." : ""]<br>"
+		. += "<br><b>Pressure crystal values already sold:</b>\
+			<br>"
+		for (var/value in shippingmarket.pressure_crystal_sales)
+			. += "[value] kiloblast for [shippingmarket.pressure_crystal_sales[value]] credits.<br>"

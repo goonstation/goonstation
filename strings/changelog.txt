@@ -1,5 +1,64 @@
 
+(t)thu sep 28 23
+(u)LeahTheTech
+(p)16082
+(e)🆕🗺🎨💅|C-Feature, A-Mapping, C-Sprites, C-QoL
+(*)Added pressure visualization goggles which show surrounding atmospheric pressure when worn, found in engineering lockers.
+(u)Flaborized
+(p)15812
+(e)🎨⚗|C-Sprites, A-Chemistry
+(*)Some small chemistry changes to pyrosium and cryostylane, including an area of effect heat/cool effect. More detailed description in minor logs.
+(+)Pyrosium can now be mixed with magnesium to create a 3x3 area of effect heating effect, and cryostylane can be mixed with iodine for a cold version of the same thing.
+(+)Pyrosium, cryostylane reactions now longer use up the oxygen/magnesium/iodine until the end of the reaction. This means it'll still deplete the oxygen, but you only technically need 1u to carry out the full reaction.
+(u)Smilg
+(p)16040
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pressure sensor can now use empty hand, and mouse drop.
+(t)thu sep 27 23
+(u)Emily
+(+)Standardized Requisition payouts to the new system and made minor balance tweaks to some that were too hard to fulfill (e.g. pizza, blood requisitions).
+(t)wed sep 27 23
+(u)Emily
+(*)Upped rooster chances for most types of roosters
+(*)Most ranches now have a flusher instead of a chute leading to the kitchen, so you can flush your unwanted chickens while they're still alive. (Warning: they will not arrive alive).
+(u)Colossusqw
+(p)15741
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Caffeine is now it's own standalone chem.
+(+)Caffeine is formed by caffeinated drinks (coffees, unadulterated tea/matcha, cola) as they deplete, and its effects can vary wildly based on volume, much like current ethanol.
+(u)Lord_Earthfire
+(p)16019
+(e)⚖📦⚙|C-Balance, A-Game-Objects, A-Internal
+(+)Syringes, fired from the syringe gun, stuck in a human desintegrate when that human is affected by an explosion.
+(u)MeggalBozale
+(p)15921
+(e)🗺💅🧱📦|A-Mapping, C-QoL, A-Materials, A-Game-Objects
+(+)Wooden planks are mostly replaced with instances of wood sheets, meaning spare planks can be used to furnish tables now.
+(u)Smilg
+(p)15933
+(e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science
+(*)Pressure crystals from Vendomats, when used, can now be sold for credits via Cargo. Work in Toxins today!
+(+)New program for Scientist PDAs that shows you previously sold pressure crystals, and their bounties.
+(t)tue sep 26 23
+(u)Emily
+(*)Repeatedly buying the same crate from the market will "exhaust" supply, causing the price to increase. Exhaustion decays with each shipping market shift.
+(u)Garash
+(p)15784
+(e)🎨🔄📄|C-Sprites, C-Rework, A-UI
+(+)Fluid canisters now use a Context Actions menu.
+(u)NewyearnewmeUwu
+(p)15931
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Added some fishing related mishaps for clowns.
+(u)DisturbHerb
+(p)16024
+(e)🆕🗺💊📦|C-Feature, A-Mapping, A-Medical, A-Game-Objects
+(*)The latest advances in hemodialysis technology have been harnessed by your local medical bay. Clean your blood, today!
 (t)mon sep 25 23
+(u)Kubius
+(p)16018
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Updated Nadir's Warrens surgery room to be more suitably Warrens-esque and adjusted plasma vending machine positions.
 (u)Cheffie
 (p)15842
 (e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects

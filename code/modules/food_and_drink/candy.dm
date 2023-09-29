@@ -345,7 +345,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	afterattack(obj/target, mob/user, flag)
 		..()
-		if (target.is_open_container() && target.reagents)
+		if (target.is_open_container(TRUE) && target.reagents)
 			if (target.reagents.total_volume >= target.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return

@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Flex, Box, Stack, Tabs, Icon } from '../components';
+import { Box, Button, Flex, Icon, Section, Stack, Tabs } from '../components';
 import { Window } from '../layouts';
 
 import { capitalize } from '../../common/string';

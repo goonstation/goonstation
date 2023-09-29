@@ -11067,6 +11067,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/iv_stand,
+/obj/item/reagent_containers/iv_drip/blood,
 /turf/simulated/floor/blackwhite/side{
 	dir = 1
 	},
@@ -25002,6 +25004,15 @@
 /obj/item/reagent_containers/food/snacks/plant/corn{
 	doants = 0
 	},
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = 22;
+	pixel_y = 1
+	},
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "hCA" = (
@@ -38905,7 +38916,7 @@
 /area/station/library/reading1)
 "lUS" = (
 /obj/rack,
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -4;
 	pixel_y = 2
 	},
@@ -43673,9 +43684,6 @@
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "nst" = (
-/obj/machinery/disposal/small/west{
-	name = "Kitchen Freezer Chute"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
 	icon_state = "xtra_bigstripe-edge2"
@@ -43683,6 +43691,11 @@
 /obj/disposalpipe/trunk/morgue{
 	dir = 8;
 	name = "kitchen freezer pipe"
+	},
+/obj/machinery/floorflusher{
+	desc = "A chute for sending things to the kitchen";
+	id = "ranch_flusher";
+	name = "Kitchen Chute"
 	},
 /turf/simulated/floor/white/checker2{
 	dir = 1
@@ -45130,7 +45143,7 @@
 	pixel_x = 14;
 	pixel_y = 2
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 1;
 	pixel_y = 10
 	},
@@ -46034,7 +46047,7 @@
 /turf/simulated/floor/circuit/off,
 /area/station/medical/robotics)
 "ohB" = (
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 1;
 	pixel_y = 7
 	},
@@ -53784,6 +53797,13 @@
 "qyH" = (
 /turf/simulated/floor/plating/jen,
 /area/station/crew_quarters/arcade/dungeon)
+"qyJ" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/obj/landmark/shuttle_subwoofer,
+/turf/simulated/floor/plating/jen,
+/area/station/hallway/secondary/exit)
 "qyQ" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -61088,6 +61108,10 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
+"sOJ" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "sOZ" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -62352,6 +62376,9 @@
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "kitchen freezer pipe"
+	},
+/obj/railing/orange/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -63908,6 +63935,7 @@
 /area/station/hallway/secondary/exit)
 "tJz" = (
 /obj/submachine/seed_vendor,
+/obj/railing/orange/reinforced,
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "tJA" = (
@@ -65336,8 +65364,7 @@
 /turf/space,
 /area/space)
 "ufs" = (
-/obj/iv_stand,
-/obj/item/reagent_containers/iv_drip/blood,
+/obj/machinery/dialysis,
 /turf/simulated/floor/blue,
 /area/station/medical/medbay/treatment)
 "ufw" = (
@@ -72816,11 +72843,8 @@
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/ne)
 "wsK" = (
-/obj/decal/cleanable/dirt/jen,
-/obj/disposalpipe/segment/morgue{
-	dir = 4;
-	name = "kitchen freezer pipe"
-	},
+/obj/disposalpipe/chicken_disposal_pipe/horizontal,
+/obj/machinery/drainage,
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
 "wsM" = (
@@ -76871,7 +76895,7 @@
 /area/station/hallway/primary/east)
 "xxG" = (
 /obj/rack,
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -4;
 	pixel_y = 2
 	},
@@ -84901,7 +84925,7 @@ rdj
 rdj
 rdj
 rdj
-rdj
+sOJ
 rdj
 rdj
 rdj
@@ -139430,7 +139454,7 @@ qRB
 qRB
 qRB
 qRB
-xDL
+qyJ
 wQk
 sdZ
 xCY

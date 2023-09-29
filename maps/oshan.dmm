@@ -4185,6 +4185,7 @@
 	icon_state = "line1"
 	},
 /obj/machinery/light/incandescent/cool,
+/obj/machinery/dialysis,
 /turf/simulated/floor/white,
 /area/station/medical/medbay/surgery)
 "anZ" = (
@@ -10618,7 +10619,7 @@
 "aIL" = (
 /obj/table/auto,
 /obj/item/storage/box/diskbox,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/device/flash,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
@@ -23117,11 +23118,11 @@
 /turf/simulated/floor/darkpurple,
 /area/station/ai_monitored/storage/eva)
 "bDx" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate/bloody,
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
@@ -23280,10 +23281,10 @@
 /obj/item/material_piece/coral,
 /obj/item/material_piece/coral,
 /obj/item/material_piece/coral,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/space/fluid,
 /area/space)
 "bEa" = (
@@ -23438,7 +23439,7 @@
 /turf/simulated/floor,
 /area/station/hallway/primary/south)
 "bEs" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/space/fluid,
 /area/space)
 "bEt" = (
@@ -33010,7 +33011,7 @@
 "clW" = (
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/storage/crate{
 	open = 1
 	},
@@ -34816,6 +34817,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/science/chemistry)
+"eLI" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space/fluid,
+/area/space)
 "eLJ" = (
 /obj/machinery/door/airlock/pyro/alt{
 	name = "Sauna"
@@ -36675,10 +36680,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/radio/lab)
-"hGx" = (
-/obj/machinery/glass_recycler/chemistry,
-/turf/space/fluid,
-/area/space)
 "hGR" = (
 /obj/machinery/door/airlock/pyro/security/alt{
 	dir = 1;
@@ -48492,7 +48493,7 @@ aqn
 aqn
 aqn
 aqn
-hGx
+aqn
 aqn
 aTs
 aqn
@@ -54834,7 +54835,7 @@ aqn
 aqn
 aqn
 aqn
-aqn
+eLI
 aTs
 aTs
 aqn
@@ -109113,7 +109114,7 @@ aqn
 bFU
 bFU
 bFU
-aqn
+eLI
 aqn
 aqn
 bFU
