@@ -1,5 +1,9 @@
 
 (t)fri sep 29 23
+(u)Tarmunora
+(p)15759
+(e)🪲🤖|C-Bug, A-Silicons
+(*)Fixed bug allowing cyborgs to open-hand interact with atoms under certain circumstances
 (u)MeggalBozale
 (p)15957
 (e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
