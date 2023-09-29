@@ -8,7 +8,7 @@
 #define ADD_BUCKET(X, Y, Z) (. |= CELL_POSITION(X, Y, Z))
 
 #define ADD_TO_MAP(TARGET, TARGET_POS) \
-	if (TARGET_POS.z) { \
+	if (TARGET_POS?.z) { \
 	LAZYLISTADD(hashmap[CELL_POSITION(TARGET_POS.x, TARGET_POS.y, TARGET_POS.z)], TARGET); \
 	buckets_holding_atom |= CELL_POSITION(TARGET_POS.x, TARGET_POS.y, TARGET_POS.z); \
 	}
