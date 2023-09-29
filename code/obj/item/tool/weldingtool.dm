@@ -54,7 +54,7 @@
 		src.add_fingerprint(user)
 		if (ishuman(M) && (user.a_intent != INTENT_HARM))
 			var/mob/living/carbon/human/H = M
-			if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+			if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_OPENED && user.zone_sel.selecting == "chest"))
 				if (!src.cautery_surgery(H, user, 15, src.welding))
 					return ..()
 			else if (user.zone_sel.selecting != "chest" && user.zone_sel.selecting != "head" && H.limbs.vars[user.zone_sel.selecting])

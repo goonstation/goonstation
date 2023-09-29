@@ -129,6 +129,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "apple pie"
 	desc = "Is there anything more Space-American?"
 	icon_state = "applepie"
+	item_state = "apple_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
@@ -140,6 +141,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "key lime pie"
 	desc = "Tart, sweet, and with a dollop of cream on top."
 	icon_state = "limepie"
+	item_state = "lime_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 30
@@ -152,6 +154,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "lemon meringue pie"
 	desc = "A fine use of fruit curd."
 	icon_state = "lemonpie"
+	item_state = "lemon_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -163,6 +166,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "strawberry pie"
 	desc = "It smells like summertime memories."
 	icon_state = "strawberrypie"
+	item_state = "strawberry_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -174,6 +178,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "pumpkin pie"
 	desc = "An autumn favourite."
 	icon_state = "pumpie"
+	item_state = "pumpkin_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -185,6 +190,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "cream pie"
 	desc = "More often used in pranks than culinary matters..."
 	icon_state = "creampie"
+	item_state = "cream_pie"
 	splat = 1
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	throwforce = 0
@@ -233,6 +239,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "slurry pie"
 	desc = "Though dangerous to eat raw, the slurrypod produces a fine, tart pie noted for its curative properties."
 	icon_state = "slurrypie"
+	item_state = "slurry_pie"
 	bites_left = 3
 	heal_amt = 5
 	initial_volume = 30
@@ -243,6 +250,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "bacon pie"
 	desc = "Named in honor of Sir Francis Bacon, who tragically died as the result of an early experiment into the field of bacon ice cream."
 	icon_state = "baconpie"
+	item_state = "bacon_pie"
 	bites_left = 3
 	heal_amt = 6
 	initial_volume = 80
@@ -259,6 +267,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "moon pie" // it's 2020 jabronis, out with the ableism ;)
 	desc = "Thicc."
 	icon_state = "asspie"
+	item_state = "butt_pie"
 	splat = 1
 	throwforce = 0
 	force = 0
@@ -274,6 +283,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "chocolate mud pie"
 	desc = "Like a chocolate cake, but a pie, and also very different."
 	icon_state = "chocolatepie"
+	item_state = "chocolate_pie"
 	heal_amt = 6
 	bites_left = 3
 	initial_volume = 30
@@ -286,6 +296,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "space-chicken pot pie"
 	desc = "Space-chickens are identical to regular chickens, but in space.  This is a pastry filled with their cooked flesh, some vegetables, and a cream gravy."
 	icon_state = "chickenpie"
+	item_state = "pot_pie"
 	heal_amt = 6
 	bites_left = 3
 	initial_volume = 30
@@ -296,6 +307,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "chicken \"pot\" pie"
 	desc = "Something about this pie seems off.  Guaranteed to get you pie-in-the-sky high."
 	icon_state = "weedpie"
+	item_state = "weed_pie"
 	heal_amt = 4
 	bites_left = 3
 	initial_volume = 30
@@ -306,6 +318,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "stargazy pie"
 	desc = "The snack that stares back."
 	icon_state = "fishpie"
+	item_state = "fish_pie"
 	heal_amt = 4
 	bites_left = 3
 	initial_volume = 30
@@ -315,6 +328,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "raspberry pie"
 	desc = "Those are fresh raspberries, too. Oh man."
 	icon_state = "raspberrypie"
+	item_state = "raspberry_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -326,6 +340,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "blackberry pie"
 	desc = "The stains will be oh so worth it."
 	icon_state = "blackberrypie"
+	item_state = "blackberry_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -337,6 +352,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "blueberry pie"
 	desc = "Blueberries cook up purple, who knew?"
 	icon_state = "blueberrypie"
+	item_state = "blueberry_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32
@@ -348,6 +364,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	name = "cherry pie"
 	desc = "It looks so good, it brings a tear to you eye."
 	icon_state = "cherrypie"
+	item_state = "cherry_pie"
 	bites_left = 3
 	heal_amt = 4
 	initial_volume = 32

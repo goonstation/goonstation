@@ -276,7 +276,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	//name = "Birthday Party"
 	payout = PAY_TRADESMAN*10*2
 	hide_item_payouts = TRUE
-	weight = 80
+	weight = 70
 	var/list/namevary = list("Birthday Party","Birthday Bash","Surprise Party","One Year Older")
 	var/list/desc_event = list("party","celebration","gathering","party","event") //yes party twice
 
@@ -547,3 +547,116 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	commodity = /datum/commodity/ore/syreline
 	typepath_alt = /obj/item/material_piece/syreline
 	feemod = PAY_IMPORTANT
+
+/datum/req_contract/civilian/robotics
+	//name = "Borg Buds"
+	payout = PAY_TRADESMAN*10
+	var/list/namevary = list("Robot Overhaul","Loose Sprockets","Parts Wanted","Servo Service")
+	var/list/desc_whatbork = list("mining operation","security post","automated refueling station","cultivation platform","hazardous material processor")
+	var/list/desc_whatget = list(
+		"a selection of robotics components",
+		"specialized hardware",
+		"NT-spec replacement parts",
+		"high-grade cybernetics equipment",
+		"specified robotics equipment",
+		"made-to-order components",
+		"expedited delivery of listed items")
+	var/list/desc_whyget = list(
+		"to repair erroneous function in on-site cyborgs",
+		"to complete a site-wide machinery overhaul",
+		"in furtherance of efficiency improvements",
+		"as spares for mission-critical robotics",
+		"precisely as enumerated in contract",
+		"suitable for long-term use",
+		"for maintenance of their guard bots")
+	var/list/desc_flavorize = list(
+		null,
+		null,
+		" Attempts at passing off rusted components as adequate will be met with legal action.",
+		" Please electrically ground each item before packing.",
+		" Quality control was lacking in prior order from another supplier; please ensure no cracks or cuts.",
+		" Individual packaging of items within shipment should not be necessary."
+	)
+
+	New()
+		src.name = pick(namevary)
+		src.flavor_desc = "An affiliated [pick(desc_whatbork)] is seeking [pick(desc_whatget)] [pick(desc_whyget)].[pick(desc_flavorize)]"
+		src.payout += rand(0,30) * 10
+
+		var/botsets = 1
+		if(prob(30)) botsets = 2
+
+		if(prob(60))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,rand(2,5))
+		else
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/head,botsets)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/chest,botsets)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/arm_l,botsets)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/arm_r,botsets)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/leg_l,botsets)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/leg_r,botsets)
+
+		if(prob(55))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/borgmodule,rand(2,4))
+			if(prob(30)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/multitool,1)
+
+		if(prob(45))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/powercell,botsets)
+			if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/crowbar,1)
+
+		if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/prox_sensor,rand(1,3))
+		if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cable,rand(8,25))
+		if(prob(20)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/interfaceboard,1)
+
+		..()
+
+/datum/rc_entry/item/robot_arm_any
+	name = "robot arm (any grade/facing)"
+	typepath = /obj/item/parts/robot_parts/arm
+	feemod = PAY_TRADESMAN
+
+/datum/rc_entry/item/botpart_std
+	name = "beepy boopy boye (you shouldn't see this)"
+	typepath = /obj/item/parts/robot_parts/drone
+	exactpath = TRUE
+	feemod = PAY_TRADESMAN*2
+
+/datum/rc_entry/item/botpart_std/head
+	name = "standard cyborg head"
+	typepath = /obj/item/parts/robot_parts/head/standard
+
+/datum/rc_entry/item/botpart_std/chest
+	name = "standard cyborg chest"
+	typepath = /obj/item/parts/robot_parts/chest/standard
+
+/datum/rc_entry/item/botpart_std/arm_l
+	name = "standard cyborg left arm"
+	typepath = /obj/item/parts/robot_parts/arm/left/standard
+
+/datum/rc_entry/item/botpart_std/arm_r
+	name = "standard cyborg right arm"
+	typepath = /obj/item/parts/robot_parts/arm/right/standard
+
+/datum/rc_entry/item/botpart_std/leg_l
+	name = "standard cyborg left leg"
+	typepath = /obj/item/parts/robot_parts/leg/left/standard
+
+/datum/rc_entry/item/botpart_std/leg_r
+	name = "standard cyborg right leg"
+	typepath = /obj/item/parts/robot_parts/leg/right/standard
+
+/datum/rc_entry/item/powercell
+	name = "standard 15000u power cell"
+	typepath = /obj/item/cell/supercell
+	typepath_alt = /obj/item/cell/supercell/charged
+	feemod = PAY_IMPORTANT
+
+/datum/rc_entry/item/borgmodule
+	name = "cyborg module"
+	typepath = /obj/item/robot_module
+	feemod = PAY_DOCTORATE
+
+/datum/rc_entry/item/prox_sensor
+	name = "proximity sensor"
+	typepath = /obj/item/device/prox_sensor
+	feemod = PAY_TRADESMAN

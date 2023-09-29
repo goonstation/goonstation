@@ -1031,10 +1031,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if(RC)
 				if(RC.pinned)
 					RC.pinned = FALSE
-					shippingmarket.has_pinned_contract = FALSE
-				else if(!shippingmarket.has_pinned_contract)
+				else
 					RC.pinned = TRUE
-					shippingmarket.has_pinned_contract = TRUE
 			src.requisitions_update()
 
 		if ("requis_list")
@@ -1068,7 +1066,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	standard cargo appraiser; ensure correct label is applied.</B><br>
 	Insufficient or extra items will be returned to you.<br>
 	<br>
-	One contract at a time may be pinned, which reserves it<br>
+	Most contracts may be "pinned", which reserves them<br>
 	for your use, even through market shifts.<br>
 	<br>
 	When fulfilling third-party contracts, you <B>must</B><br>
@@ -1106,12 +1104,20 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.printing = 1
 	playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 	SPAWN(2 SECONDS)
-		var/obj/item/paper/thermal/P = new(src.loc)
+		var/obj/item/paper/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"
 		P.info += uppertext(contract.requis_desc)
+		if(contract.payout > 0 || length(contract.item_rewarders) && !contract.hide_item_payouts)
+			P.info += "<br>CONTRACT REWARD:"
+			if(contract.payout > 0) P.info += "<br>[contract.payout] CREDITS"
+			if(!contract.hide_item_payouts)
+				for(var/datum/rc_itemreward/RI in contract.item_rewarders)
+					if(RI.count) P.info += "<br>[RI.count]X [uppertext(RI.name)]"
+					else P.info += "<br>[uppertext(RI.name)]"
 		P.info += "</center></font>"
 		P.name = "Requisition: [contract.name]"
+		P.icon_state = "thermal_paper"
 		src.printing = 0
 
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)
