@@ -47,6 +47,10 @@
 	reinforced = TRUE
 	var/securedstate = 2
 
+/obj/machinery/camera/television/auto
+	name = "autoname"
+	c_tag = "autotag"
+
 /obj/machinery/camera/television/attackby(obj/item/W, mob/user)
 	..()
 	if (isscrewingtool(W)) //to move them
