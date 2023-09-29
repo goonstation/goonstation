@@ -199,3 +199,237 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	build_reward()
 		var/seed = new /obj/item/seed/alien
 		return seed
+
+//Prototypist contract; payout is significantly lower than usual on purpose, since you get "paid in items"
+/datum/req_contract/scientific/prototypist
+	//name = "Wheatley Moment"
+	payout = PAY_DOCTORATE
+	weight = 8000
+	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
+	var/list/prototypists = list(
+		//"Construction equipment company",
+		"Mining technologist",
+		//"Biochemical research centre",
+		"Engineering firm"
+	)
+	var/list/protogoals = list(
+		"prototyping of a new product",
+		"use in devising an improved manufacturing method",
+		"refinement of an offered product"
+	)
+	var/list/desc_bonusflavor = list(
+		"Funds are scarce due to budgetary restrictions; a cut of the product will be offered in return.",
+		"Requisition fulfiller receives a small stake in the current production run.",
+		"Assisting party will receive accreditation in a major publication, and a complementary product sample.",
+		"Primary funding is locked up in inventory, so a partial barter is offered - see contract details."
+	)
+
+	New()
+		src.name = pick(namevary)
+		var/prototypist = pick(prototypists) //subvariation 1
+		var/goal = pick(protogoals) //subvariation 2
+		src.flavor_desc = "[prototypist] seeking supplies for [goal]. [pick(desc_bonusflavor)]"
+		src.payout += rand(0,80) * 10
+
+		switch(prototypist)
+			if("Mining technologist")
+				if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/molitz_minprice,rand(1,3))
+				if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pharosium_minprice,rand(1,3))
+				if(prob(80) || !length(src.rc_entries))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/stack/mauxite_minprice,rand(1,3))
+
+				if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/multitool,1)
+				if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cable,rand(8,12))
+
+				switch(goal)
+					if("prototyping of a new product")
+						src.item_rewarders += new /datum/rc_itemreward/turbohammer
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cerenkite_minprice,1)
+					if("use in devising an improved manufacturing method")
+						src.item_rewarders += new /datum/rc_itemreward/manyboom
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/char,rand(2,5))
+						src.payout += PAY_TRADESMAN * 10
+					if("refinement of an offered product")
+						src.item_rewarders += new /datum/rc_itemreward/concussive_insul
+						src.rc_entries += rc_buildentry(/datum/rc_entry/item/free_insuls,1)
+
+			if("Engineering firm")
+				if(prob(60))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/tscan,rand(2,4))
+				else
+					if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/mainboard_noprice,rand(1,3))
+				if(prob(70) || !length(src.rc_entries))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pharosium_minprice,rand(1,3))
+
+				if(prob(60))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/interval_timer,rand(1,2))
+				else
+					if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/graviton,rand(1,2))
+				if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/lens,1)
+
+				switch(goal)
+					if("prototyping of a new product")
+						src.item_rewarders += new /datum/rc_itemreward/biorcd
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/viscerite_minprice,2)
+						src.rc_entries += rc_buildentry(/datum/rc_entry/item/dna_activator,1)
+					if("use in devising an improved manufacturing method")
+						src.item_rewarders += new /datum/rc_itemreward/production_line
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/claretine_minprice,2)
+						//src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,1)
+					if("refinement of an offered product")
+						src.item_rewarders += new /datum/rc_itemreward/upgraded_welders
+						src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering_noprice,rand(1,2))
+
+		..()
+
+/datum/rc_entry/stack/mauxite_minprice
+	name = "mauxite"
+	commodity = /datum/commodity/ore/mauxite
+	typepath_alt = /obj/item/material_piece/mauxite
+
+/datum/rc_entry/stack/pharosium_minprice
+	name = "pharosium"
+	commodity = /datum/commodity/ore/pharosium
+	typepath_alt = /obj/item/material_piece/pharosium
+
+/datum/rc_entry/stack/molitz_minprice
+	name = "molitz"
+	commodity = /datum/commodity/ore/molitz
+	typepath_alt = /obj/item/material_piece/molitz
+
+/datum/rc_entry/stack/cerenkite_minprice
+	name = "cerenkite"
+	commodity = /datum/commodity/ore/cerenkite
+	typepath_alt = /obj/item/material_piece/cerenkite
+
+/datum/rc_entry/stack/viscerite_minprice
+	name = "viscerite"
+	commodity = /datum/commodity/ore/viscerite
+	typepath_alt = /obj/item/material_piece/viscerite
+
+/datum/rc_entry/item/free_insuls
+	name = "NT-standard insulated gloves"
+	typepath = /obj/item/clothing/gloves/yellow
+
+/datum/rc_entry/item/tscan
+	name = "T-ray scanner"
+	typepath = /obj/item/device/t_scanner
+
+/datum/rc_entry/item/mainboard_noprice
+	name = "computer mainboard"
+	typepath = /obj/item/motherboard
+
+/datum/rc_entry/item/soldering_noprice
+	name = "soldering iron"
+	typepath = /obj/item/electronics/soldering
+
+/datum/rc_entry/item/dna_activator
+	name = "human DNA sample (injector or activator)"
+	typepath = /obj/item/genetics_injector
+
+/datum/rc_entry/stack/claretine_minprice
+	name = "claretine"
+	commodity = /datum/commodity/ore/claretine
+	typepath_alt = /obj/item/material_piece/claretine
+
+/datum/rc_entry/item/graviton
+	name = "graviton accelerator"
+	typepath = /obj/item/mechanics/accelerator
+
+/datum/rc_entry/item/interval_timer
+	name = "automatic signaller component"
+	typepath = /obj/item/mechanics/interval_timer
+
+/datum/rc_entry/item/magnet_link
+	name = "NT vehicle-grade magnet link array"
+	typepath = /obj/item/shipcomponent/communications/mining
+
+//mining technologist rewards
+
+/datum/rc_itemreward/turbohammer
+	name = "TC-7 Turbohammer"
+	build_reward()
+		var/theitem = new /obj/item/mining_tool/powerhammer/turbo
+		return theitem
+
+/datum/rc_itemreward/manyboom
+	name = "standard mining charge"
+
+	New()
+		..()
+		count = rand(5,9) * 2
+
+	build_reward()
+		var/list/charges = list()
+		for(var/i in 1 to count)
+			charges += new /obj/item/breaching_charge/mining
+		return charges
+
+/datum/rc_itemreward/concussive_insul
+	name = "insulated concussive gauntlets"
+
+	New()
+		..()
+		count = rand(2,3)
+
+	build_reward()
+		var/list/yielder = list()
+		for(var/i in 1 to count)
+			yielder += new /obj/item/clothing/gloves/concussive/insulated
+		return yielder
+
+//engineering firm rewards
+
+/datum/rc_itemreward/biorcd
+	name = "biomimetic rapid construction device"
+	build_reward()
+		var/theitem = new /obj/item/rcd/material/viscerite
+		return theitem
+
+/datum/rc_itemreward/production_line
+	name = "engineering equipment"
+	var/list/possible_rewards = list(/obj/item/cable_coil,
+	/obj/item/rcd_ammo/medium,
+	/obj/item/sheet/mauxite,
+	/obj/item/interdictor_rod/sigma,
+	/obj/item/cell/supercell/charged,
+	/obj/item/storage/belt/utility,
+	/obj/item/fuel_pellet/cerenkite)
+
+	New()
+		..()
+		count = rand(4,6) * 2
+
+	build_reward()
+		var/list/yielder = list()
+		var/rewardthing = pick(possible_rewards)
+		if(rewardthing == /obj/item/fuel_pellet/cerenkite)
+			var/obj/item/electronics/frame/F = new
+			F.store_type = /obj/machinery/power/rtg
+			F.name = "Leigong RTG frame"
+			F.viewstat = 2
+			F.secured = 2
+			F.icon_state = "dbox_big"
+			F.w_class = W_CLASS_BULKY
+			yielder += F
+		for(var/i in 1 to count)
+			yielder += new rewardthing
+		return yielder
+
+/datum/rc_itemreward/upgraded_welders
+	name = "high-capacity welding tool"
+
+	New()
+		..()
+		count = rand(3,5)
+
+	build_reward()
+		var/list/yielder = list()
+		for(var/i in 1 to count)
+			yielder += new /obj/item/weldingtool/high_cap
+		return yielder
+
+
+
+
+

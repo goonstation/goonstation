@@ -949,6 +949,36 @@ TYPEINFO(/obj/item/rcd/material/cardboard)
 			boutput(user, "\The [src] pulps [W], and now holds [src.matter]/[src.max_matter] [material_name]-units.")
 			qdel(W)
 
+/obj/item/rcd/material/viscerite
+	name = "biomimetic rapid construction device"
+	desc = "Have you ever wanted to build with meat? No? Too bad."
+	force = 0
+	shits_sparks = 0
+
+	material_name = "viscerite"
+	restricted_materials = list("viscerite")
+	safe_deconstruct = TRUE
+
+	modes = list(RCD_MODE_FLOORSWALLS, RCD_MODE_DECONSTRUCT, RCD_MODE_WINDOWS)
+
+	attackby(obj/item/W, mob/user)
+		if (istype(W, /obj/item/rcd_ammo))
+			..()
+		else if (isExploitableObject(W))
+			boutput(user, "Recycling [W] just doesn't work.")
+		else if (istype(W, /obj/item/raw_material/martian))
+			matter += 10
+			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			qdel(W)
+		else if (istype(W, /obj/item/material_piece/viscerite))
+			matter += 10
+			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			qdel(W)
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuck))
+			matter += 0.5
+			boutput(user, "\The [src] absorbs [W] into its internal buffer, and now holds [src.matter]/[src.max_matter] [material_name]-units.")
+			qdel(W)
+
 ////////
 //AMMO//
 ////////
