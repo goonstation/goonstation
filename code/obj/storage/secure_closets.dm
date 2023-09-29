@@ -769,6 +769,7 @@ ADMIN_INTERACT_PROCS(/obj/storage/secure/closet, proc/break_open)
 	spawn_contents = list(/obj/item/clothing/suit/fire,
 	/obj/item/clothing/head/helmet/firefighter,
 	/obj/item/device/analyzer/atmospheric/upgraded,
+	/obj/item/clothing/glasses/toggleable/atmos,
 	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/toolbox/mechanical,
 	/obj/item/extinguisher,
