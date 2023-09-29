@@ -414,6 +414,7 @@ var/list/admin_verbs = list(
 		/client/proc/debug_image_deletions_clear,
 #endif
 		/client/proc/distribute_tokens,
+		/client/proc/spawn_all_type
 		),
 
 	7 = list(
@@ -2508,3 +2509,25 @@ var/list/fun_images = list()
 				client.set_antag_tokens(client.antag_tokens + 1)
 				break
 	boutput(src, "Roundstart antags given tokens: [total]")
+
+/client/proc/spawn_all_type()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Spawn All Of A Type"
+	set desc = "Creates one of every subtype instance of a type at your loc."
+	ADMIN_ONLY
+	var/total = 0
+	var/spawn_input = input("Enter path", "Enter Path") as null|text
+	var/spawn_path = get_one_match(spawn_input, /atom/movable, FALSE)
+	if (!spawn_path)
+		return
+	var/list/spawn_matches = concrete_typesof(spawn_path)
+	if (!spawn_matches.len)
+		return
+	var/turf/T = get_turf(usr)
+	if (!T)
+		return
+	for (var/i = 1; i <= spawn_matches.len; i++)
+		var/obj/item/I = spawn_matches[i]
+		new I(T)
+		total++
+	boutput(src, "Created [total] types.")
