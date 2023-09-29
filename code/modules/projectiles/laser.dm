@@ -377,7 +377,7 @@ toxic - poisons
 
 
 /datum/projectile/laser/blaster
-	icon_state = "bolt"
+	icon_state = "modproj"
 	name = "blaster bolt"
 	sname = "blaster"
 	shot_sound = 'sound/weapons/laser_a.ogg'
@@ -385,24 +385,35 @@ toxic - poisons
 	dissipation_rate = 5
 	cost = 25
 	damage = 30
-	color_red = 0
+	color_red = 0.2
 	color_green = 1
-	color_blue = 0.3
+	color_blue = 0.5
 	shot_number = 1
 
+	on_launch(var/obj/projectile/P)
+		. = ..()
+		P.AddComponent(/datum/component/radioactive, 15, FALSE, FALSE, 1)
+
 	burst
-		damage = 20
+		damage = 15
 		cost = 50
 		shot_number = 4
-		icon_state = "triple"
+		icon_state = "modproj2"
 		shot_sound = 'sound/weapons/laser_c.ogg'
 
 	blast
 		shot_sound = 'sound/weapons/laser_e.ogg'
 		damage = 30
 		cost = 100
-		icon_state = "40mmgatling"
+		icon_state = "crescent"
 		shot_number = 1
+
+	cannon
+		shot_sound = 'sound/weapons/energy/howitzer_shot.ogg'
+		damage = 80
+		cost = 200
+		icon_state = "crescent"
+		brightness = 1.2
 
 /datum/projectile/laser/blaster/pod_pilot
 	icon_state = "modproj"

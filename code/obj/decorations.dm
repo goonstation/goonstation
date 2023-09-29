@@ -236,6 +236,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		max_uses = rand(0, 5)
 		spawn_chance = rand(1, 40)
 		if (prob(5))
@@ -244,6 +245,10 @@
 		if(src.z == Z_LEVEL_STATION)
 			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
 		#endif
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	ex_act(var/severity)
 		switch(severity)

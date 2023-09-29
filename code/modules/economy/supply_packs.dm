@@ -22,6 +22,10 @@
 		if(comment)
 			S.delivery_destination = comment
 
+		object.exhaustion += 1
+		if(object.exhaustion > 10)
+			object.cost = round(object.cost*(1+object.exhaustion/50))
+
 		return S
 
 //SUPPLY PACKS
@@ -43,6 +47,8 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	var/id = 0 //What jobs can order it
 	var/whos_id = null //linked ID
 	var/basecost // the original cost
+	///This value will be used to increase the price of the supply pack if it's bought too many times.
+	var/exhaustion = 0
 
 	New()
 		. = ..()
@@ -430,7 +436,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	category = "Engineering Department"
 	contains = list(/obj/item/mining_tool/power_pick,
 					/obj/item/mining_tool/powerhammer,
-					/obj/item/clothing/glasses/meson,
+					/obj/item/clothing/glasses/toggleable/meson,
 					/obj/item/oreprospector,
 					/obj/item/satchel/mining = 2,
 					/obj/item/breaching_charge/mining = 3)
@@ -1283,8 +1289,9 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/light
 	name = "Lighting Crate"
-	desc = "Afraid of the dark? Lighten up your life with a couple of torches and a pile of glowsticks."
-	contains = list(/obj/item/device/light/glowstick = 8,
+	desc = "Afraid of the dark? Lighten up your life with a couple of torches, some emergency flares and a pile of glowsticks."
+	contains = list(/obj/item/device/light/glowstick = 6,
+					/obj/item/roadflare = 3,
 					/obj/item/device/light/flashlight = 2)
 	cost = PAY_UNTRAINED*2
 	containertype = /obj/storage/crate/packing
@@ -1448,6 +1455,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	containertype = /obj/storage/secure/crate
 	containername = "AI Law Rack ManuDrive Crate (Cardlocked \[Heads])"
 	access = access_heads
+
+/datum/supply_packs/pressure_crystals_qt5
+	name = "Pressure Crystal Resupply"
+	desc = "Five (5) pressure crystals used in high-energy research."
+	category = "Research Department"
+	contains = list(/obj/item/pressure_crystal = 5)
+	cost = 2500
+	containertype = /obj/storage/crate
+	containername = "Pressure Crystal Crate"
 
 /* ================================================= */
 /* -------------------- Complex -------------------- */
