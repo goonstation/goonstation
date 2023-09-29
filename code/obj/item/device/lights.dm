@@ -769,7 +769,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 	New()
 		..()
-		AddComponent(/datum/component/loctargeting/medium_light, col_r*255, col_g*255, col_b*255, 510 * brightness, FALSE)
+		AddComponent(/datum/component/loctargeting/sm_light, col_r*255, col_g*255, col_b*255, 510 * brightness, FALSE)
 
 	process()
 		if (src.on == FLARE_LIT)
