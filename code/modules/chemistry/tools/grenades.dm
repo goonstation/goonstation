@@ -30,10 +30,7 @@
 	var/detonating = 0
 	///damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
-	HELP_MESSAGE_OVERRIDE({"Hit the grenade casing with a fuse to begin.
-							Hit the grenade casing with a small beaker to load it inside, up to two.
-							Hit a loaded grenade casing with a <b>screwdriver</b> to finish it. Use it in hand to begin the countdown.
-							Hit a finished grenade with an igniter assembly to add it to the grenade casing."})
+	HELP_MESSAGE_OVERRIDE("")
 
 	New()
 		..()
@@ -44,8 +41,23 @@
 	is_open_container()
 		return src.detonating
 
+	get_help_message(dist, mob/user)
+		. = ..()
+		switch(stage)
+			if(0)
+				. += "Hit the grenade casing with a fuse to begin the assembly."
+			if(1)
+				if (length(beakers) < 2)
+					. += "Hit the grenade casing with a small beaker to load it inside, up to two."
+				if(length(.))
+					. += "<br>"
+				. += "Hit a loaded grenade casing with a <b>screwdriver</b> to finish it. Then use it in hand to begin the countdown."
+			if(2)
+				if(!istype(src.loc, /obj/item/assembly/chem_bomb))
+					. += "Hit the finished grenade with an igniter assembly to add it to the grenade casing."
+
 	attackby(obj/item/W, mob/user)
-		if (istype(W,/obj/item/grenade_fuse) && !stage)
+		if (istype(W, /obj/item/grenade_fuse) && !stage)
 			boutput(user, "<span class='notice'>You add [W] to the metal casing.</span>")
 			playsound(src, 'sound/items/Screwdriver2.ogg', 25, -3)
 			qdel(W) //Okay so we're not really adding anything here. cheating.
