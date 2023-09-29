@@ -259,13 +259,13 @@
 				if (ispath(O.objecttype, /obj/machinery/power/apc))
 					src.apc_list[O] = pos
 					continue
-				new/dmm_suite/preloader(pos, list( // this doesn't spawn the objects, only presets their properties
+				var/list/properties = list(
 					"layer" = O.layer,
 					"pixel_x" = O.px,
 					"pixel_y" = O.py,
-					"dir" = O.direction,
-					"icon_state" = O.icon_state,
-				))
+					"dir" = O.direction)
+				if (!isnull(O.icon_state)) properties["icon_state"] = O.icon_state // required for old blueprint support
+				new/dmm_suite/preloader(pos, properties) // this doesn't spawn the objects, only presets their properties
 				new O.objecttype(pos) // need this part to also spawn the objects
 
 	proc/prepare_build(mob/user)
@@ -910,6 +910,7 @@
 				message += "<span class='notice'>Save Blueprint: Saves a blueprint of the marked area to the server. Most structures will be saved, but it can not save all types of objects.</span><br>"
 				message += "<span class='notice'>Your saved blueprints are accessed solely by its Blueprint Name, so note it down.</span><br>"
 				message += "<span class='notice'>Delete Blueprint: Permanently deletes the active blueprint from the server.</span><br>"
+				message += "<span class='notice'>Outdated blueprints can be migrated using the 'Migrate blueprint' local verb.</span><br>"
 				boutput(user, message)
 				return
 
@@ -932,6 +933,66 @@
 		using = user
 		updateOverlays()
 		return
+
+/obj/item/blueprint_marker/verb/migrate_bigfile_blueprint()
+	// this is a tucked-away verb because it's niche and for old stuff, don't want it on the tool's main menu
+	set name = "Migrate blueprint"
+	set desc = "Attempt to convert an older blueprint to the latest save system."
+	set category = "Local"
+	set src in usr
+	var/mob/user = usr
+	if (!user.client) return
+	boutput(user, "<span class='notice'>Looking for older blueprints to convert. If this process doesn't work, sorry, I tried my best.</span>")
+
+	var/savefile/save = new/savefile("data/blueprints.dat")
+	save.cd = "/"
+	if (!save.dir.Find("[user.client.ckey]"))
+		boutput(user, "<span class='alert'>Your user wasn't found in the blueprints file. Stopping.</span>")
+		return
+	save.cd = "/[user.client.ckey]"
+	var/list/bplist = save.dir
+
+	if (!length(bplist))
+		boutput(user, "<span class='alert'>No blueprints found. Stopping.</span>")
+		return
+	var/input = tgui_input_list(user, "Select a blueprint to migrate.", "Blueprints", bplist)
+	if (!input) return
+	var/old_save_path = "/[user.client.ckey]/[input]"
+	save.cd = old_save_path
+	var/new_save_name = strip_html(tgui_input_text(user, "Input the name for the new, migrated blueprint. \
+		Old name was: [input]", "New Blueprint Name"))
+	if (!new_save_name) return
+
+	var/savefile/new_save = new/savefile("data/blueprints/[user.client.ckey]/[new_save_name].dat")
+	new_save.cd = "/"
+	new_save["sizex"] << save["sizex"]
+	new_save["sizey"] << save["sizey"]
+	new_save["roomname"] << new_save_name
+	new_save["author"] << user.client.ckey
+	var/turf_count = 0
+	var/obj_count = 0
+
+	for (var/A in save.dir)
+		if(A == "sizex" || A == "sizey" || A == "roomname") continue
+		save.cd = "[old_save_path]/[A]"
+		new_save.cd = "/tiles/[A]"
+
+		new_save["type"] << save["type"]
+		new_save["dir"] << save["dir"]
+		new_save["state"] << save["state"]
+		turf_count++
+		for (var/B in save.dir)
+			if(B == "type" || B == "state" || B == "dir") continue
+			save.cd = "[old_save_path]/[A]/[B]"
+			new_save.cd = "/tiles/[A]/objects/[B]"
+
+			new_save["dir"] << save["dir"]
+			new_save["type"] << save["type"]
+			new_save["layer"] << save["layer"]
+			new_save["pixelx"] << save["pixelx"]
+			new_save["pixely"] << save["pixely"]
+			obj_count++
+	boutput(user, "<span class='notice'>Created blueprint file [new_save_name]. Copied [turf_count] tiles and [obj_count] objects.</span>")
 
 #undef REBUILD_COST_OBJECT_METAL
 #undef REBUILD_COST_OBJECT_CRYSTAL
