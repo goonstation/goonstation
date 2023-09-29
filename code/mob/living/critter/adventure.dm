@@ -271,6 +271,7 @@
 	name = "strange robot"
 	real_name = "strange robot"
 	desc = "It looks like some sort of floating repair bot or something?"
+	icon = 'icons/mob/critter/robotic/ancient/repairbot.dmi'
 	icon_state = "ancient_repairbot"
 	hand_count = 1
 	can_throw = FALSE
