@@ -1,4 +1,9 @@
 
+(t)fri sep 29 23
+(u)TealSeer
+(p)16083
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The ID computer should now let you add/remove Brig access as normal.
 (t)thu sep 28 23
 (u)Emily
 (*)Chickens now get grumpy when they're in crowded areas. They need their space!
