@@ -2069,11 +2069,12 @@ ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
 
 	random
 		New()
-			var/old_loc = src.loc
-        qdel(src)
-        src = get_random_subtype(/obj/item/clothing/head/mushroomcap,TRUE)
-        src.set_loc(old_loc)
-        ..()
+			var/obj/item/clothing/head/mushroomcap/rand_type = get_random_subtype(/obj/item/clothing/head/mushroomcap)
+			name = initial(rand_type)
+			additional_desc = initial(rand_type.additional_desc)
+			icon_state = initial(rand_type.icon_state)
+			item_state = initial(rand_type.item_state)
+			. = ..()
 
 /obj/item/clothing/head/axehat
 	name = "axe headband"
