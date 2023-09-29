@@ -599,14 +599,16 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		..()
 
 	throw_impact(mob/hit_atom, datum/thrown_thing/thr)
-		if (isliving(hit_atom) && hit_atom.equipped() == src.rod)
-			return
-		else
+		if (istype(hit_atom))
 			src.try_embed(hit_atom, FALSE)
+			return
 		return ..()
 
 	proc/try_embed(mob/M, do_weaken = TRUE)
-		if (istype(M) && isliving(M) && !M.nodamage)
+		if (istype(M) && isliving(M))
+			var/area/AR = get_area(M)
+			if (AR?.sanctuary || M.nodamage || (src.rod in M.equipped_list(check_for_magtractor = 0)))
+				return TRUE
 			if (do_weaken)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.TakeDamage(M.hand == LEFT_HAND ? "l_arm": "r_arm", 15, 0, 0, DAMAGE_STAB)

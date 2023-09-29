@@ -2027,7 +2027,7 @@ TYPEINFO(/obj/machinery/hydro_mister)
 				if(isnull(potential_target.reagents) || istype(potential_target, /obj/machinery/hydro_mister))
 					//we never pour chems in stuff without reagents or other botanical misters
 					continue
-				if(!istype(potential_target, /obj/machinery/plantpot) && !src.emagged || !potential_target.is_open_container(TRUE))
+				if(!(istype(potential_target, /obj/machinery/plantpot) || src.emagged && potential_target.is_open_container(TRUE)))
 					//if we are not emagged, we never transfer in non-plantpots
 					//if emagged, we only transfer into open containers
 					continue

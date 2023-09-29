@@ -998,6 +998,9 @@
 				src.light()
 
 	ex_act(severity)
+		..()
+		if (QDELETED(src))
+			return
 		if (src.on == MATCH_UNLIT)
 			src.visible_message("<span class='alert'>The [src] ignites!</span>")
 			src.light()

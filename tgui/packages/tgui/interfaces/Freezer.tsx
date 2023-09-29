@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
-import { Box, Button, Knob, Section, Stack, Icon, AnimatedNumber } from '../components';
+import { AnimatedNumber, Box, Button, Icon, Knob, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { formatPressure } from '../format';
 

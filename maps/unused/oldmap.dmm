@@ -2372,10 +2372,6 @@
 	},
 /turf/simulated/floor,
 /area/engine/engineering)
-"fE" = (
-/obj/item/clothing/glasses/meson,
-/turf/simulated/floor,
-/area/storage/tech)
 "fF" = (
 /turf/simulated/floor,
 /area/storage/tech)
@@ -15061,10 +15057,6 @@
 "JU" = (
 /turf/simulated/wall,
 /area/zeta/bot_storage)
-"JV" = (
-/obj/strip_door,
-/turf/simulated/floor/caution/northsouth,
-/area/zeta/bot_storage)
 "JW" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -19720,6 +19712,10 @@
 	},
 /turf/simulated/floor,
 /area/hallway/primary/east)
+"UO" = (
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor,
+/area/storage/tech)
 "UU" = (
 /obj/cable{
 	icon_state = "4-8";
@@ -19979,6 +19975,10 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
 /area/hallway/primary/central)
+"XK" = (
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth,
+/area/zeta/bot_storage)
 "XL" = (
 /obj/machinery/atmospherics/trinary/filter{
 	dir = 1;
@@ -29950,8 +29950,8 @@ en
 aO
 eW
 fk
-fE
-fE
+UO
+UO
 fj
 gu
 gu
@@ -96285,7 +96285,7 @@ FC
 IU
 EM
 JB
-JV
+XK
 KB
 KE
 KE

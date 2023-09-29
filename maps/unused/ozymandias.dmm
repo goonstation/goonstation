@@ -9379,16 +9379,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/core)
-"cCp" = (
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/storage/crate,
-/obj/disposalpipe/segment/mail/vertical,
-/turf/simulated/floor/grime,
-/area/station/storage/warehouse)
 "cCq" = (
 /turf/simulated/floor/neutral/corner{
 	dir = 4
@@ -11437,22 +11427,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
-"deF" = (
-/obj/strip_door,
-/obj/forcefield/energyshield/perma,
-/obj/machinery/conveyor/SN{
-	id = "cannedfartbelt";
-	name = "gas transit belt"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "ozygasbelt";
-	name = "Gas Transit Door"
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/engine/hotloop)
 "deN" = (
 /obj/machinery/atmospherics/binary/valve,
 /obj/disposalpipe/segment/transport{
@@ -11549,6 +11523,15 @@
 	},
 /turf/simulated/floor/white,
 /area/station/crew_quarters/pool)
+"dfL" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/storage)
 "dfO" = (
 /turf/simulated/floor/yellow/checker,
 /area/station/routing{
@@ -27493,6 +27476,22 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/ghostdrone_factory)
+"hhY" = (
+/obj/strip_door,
+/obj/forcefield/energyshield/perma,
+/obj/machinery/conveyor/SN{
+	id = "cannedfartbelt";
+	name = "gas transit belt"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "ozygasbelt";
+	name = "Gas Transit Door"
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/engine/hotloop)
 "hih" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -29316,12 +29315,6 @@
 	},
 /turf/simulated/floor/black,
 /area/station/crew_quarters/cafeteria)
-"hFm" = (
-/obj/item/sheet/wood,
-/turf/simulated/floor/industrial,
-/area/station/hallway/secondary/construction{
-	name = "The Warrens"
-	})
 "hFu" = (
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
@@ -29532,6 +29525,12 @@
 	},
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
+"hJA" = (
+/obj/item/sheet/wood,
+/turf/simulated/floor/industrial,
+/area/station/hallway/secondary/construction{
+	name = "The Warrens"
+	})
 "hJB" = (
 /obj/item/storage/wall/clothingrack/dresses{
 	dir = 4
@@ -30868,21 +30867,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/eva)
-"iec" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 0;
-	name = "autoname - SS13";
-	pixel_y = 20
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/engine/storage)
 "iej" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 6
@@ -33686,6 +33670,15 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/grey,
 /area/station/medical/breakroom)
+"iPV" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/storage)
 "iQg" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/disposalpipe/segment/food,
@@ -38543,6 +38536,23 @@
 	},
 /turf/simulated/floor/green,
 /area/station/crewquarters/garbagegarbs)
+"kfD" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	density = 0;
+	icon_state = "pdoor0";
+	id = "cargo_swapabout";
+	layer = 3.2;
+	name = "Cargo Transfer";
+	opacity = 0
+	},
+/obj/machinery/conveyor/SN{
+	id = "qmswapabout"
+	},
+/obj/strip_door{
+	layer = 3
+	},
+/turf/simulated/floor/orangeblack,
+/area/station/quartermaster/office)
 "kfN" = (
 /obj/stool/chair/blue,
 /obj/machinery/light{
@@ -42940,15 +42950,6 @@
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"lnn" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/engine/storage)
 "lnq" = (
 /obj/machinery/vending/coffee,
 /obj/machinery/light/emergency{
@@ -47470,22 +47471,6 @@
 /obj/decal/stripe_caution,
 /turf/simulated/floor/orangeblack,
 /area/station/maintenance/solar/west)
-"mti" = (
-/obj/strip_door,
-/obj/forcefield/energyshield/perma,
-/obj/machinery/conveyor/SN{
-	id = "cannedfartbelt";
-	name = "gas transit belt"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/machinery/door/poddoor/pyro{
-	id = "ozygasbelt";
-	name = "Gas Transit Door"
-	},
-/turf/simulated/floor/caution/westeast,
-/area/station/engine/gas)
 "mtn" = (
 /obj/disposalpipe/segment/horizontal,
 /obj/cable{
@@ -48727,6 +48712,16 @@
 	dir = 4
 	},
 /area/station/crewquarters/garbagegarbs)
+"mJp" = (
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/storage/crate,
+/obj/disposalpipe/segment/mail/vertical,
+/turf/simulated/floor/grime,
+/area/station/storage/warehouse)
 "mJy" = (
 /obj/machinery/conveyor/SN{
 	id = "qmswapabout"
@@ -50306,18 +50301,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
-"nhH" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
-/obj/machinery/status_display{
-	pixel_y = 30
-	},
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/engine/storage)
 "nhJ" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -51218,6 +51201,16 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/maintenance/disposal)
+"nxL" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/glasses/toggleable/meson,
+/obj/item/device/radio/intercom/engineering,
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/storage)
 "nyi" = (
 /obj/machinery/conveyor/SN{
 	id = "qmin"
@@ -65422,6 +65415,21 @@
 	dir = 8
 	},
 /area/station/hallway/secondary/west)
+"rbA" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/glasses/toggleable/meson,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 8
+	},
+/area/station/engine/storage)
 "rbG" = (
 /obj/table/reinforced/bar/auto,
 /obj/machinery/light/lamp/black,
@@ -65645,23 +65653,6 @@
 /obj/mapping_helper/access/maint,
 /turf/simulated/floor/plating,
 /area/station/atmos/hookups/west)
-"rfb" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	density = 0;
-	icon_state = "pdoor0";
-	id = "cargo_swapabout";
-	layer = 3.2;
-	name = "Cargo Transfer";
-	opacity = 0
-	},
-/obj/machinery/conveyor/SN{
-	id = "qmswapabout"
-	},
-/obj/strip_door{
-	layer = 3
-	},
-/turf/simulated/floor/orangeblack,
-/area/station/quartermaster/office)
 "rff" = (
 /turf/simulated/floor/yellow/checker,
 /area/station/hydroponics/bay)
@@ -70702,16 +70693,6 @@
 "ssG" = (
 /turf/simulated/floor/circuit,
 /area/space)
-"ssL" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
-/obj/item/device/radio/intercom/engineering,
-/turf/simulated/floor/yellow/side{
-	dir = 4
-	},
-/area/station/engine/storage)
 "ssN" = (
 /obj/reagent_dispensers/fueltank,
 /turf/simulated/floor/plating,
@@ -73845,6 +73826,18 @@
 "tdn" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/crew_quarters/data)
+"tdt" = (
+/obj/table/auto,
+/obj/item/clothing/gloves/yellow,
+/obj/item/clothing/ears/earmuffs,
+/obj/item/clothing/glasses/toggleable/meson,
+/obj/machinery/status_display{
+	pixel_y = 30
+	},
+/turf/simulated/floor/yellow/side{
+	dir = 4
+	},
+/area/station/engine/storage)
 "tdA" = (
 /obj/machinery/drainage,
 /turf/simulated/floor/sanitary,
@@ -81660,6 +81653,22 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/station/quartermaster/cargobay)
+"uXY" = (
+/obj/strip_door,
+/obj/forcefield/energyshield/perma,
+/obj/machinery/conveyor/SN{
+	id = "cannedfartbelt";
+	name = "gas transit belt"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/poddoor/pyro{
+	id = "ozygasbelt";
+	name = "Gas Transit Door"
+	},
+/turf/simulated/floor/caution/westeast,
+/area/station/engine/gas)
 "uXZ" = (
 /obj/machinery/conveyor/NS{
 	id = "qmsend"
@@ -90211,15 +90220,6 @@
 "wZd" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/storage/tech)
-"wZj" = (
-/obj/table/auto,
-/obj/item/clothing/gloves/yellow,
-/obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
-/turf/simulated/floor/yellow/side{
-	dir = 8
-	},
-/area/station/engine/storage)
 "wZn" = (
 /obj/pool/perspective{
 	dir = 9;
@@ -125582,7 +125582,7 @@ nvM
 nvM
 tqB
 teh
-hFm
+hJA
 fXG
 fXG
 fXG
@@ -153347,7 +153347,7 @@ cqJ
 sZO
 bFI
 pOH
-cCp
+mJp
 uDV
 cqr
 sOO
@@ -154524,7 +154524,7 @@ tyo
 cTK
 pZK
 mJy
-rfb
+kfD
 raf
 aRz
 aRz
@@ -158664,9 +158664,9 @@ gyr
 wQX
 mdK
 eob
-deF
+hhY
 oBo
-mti
+uXY
 cjF
 pHd
 qws
@@ -160205,7 +160205,7 @@ utO
 jUJ
 xSP
 ykD
-wZj
+iPV
 sTd
 gDq
 xwt
@@ -161111,7 +161111,7 @@ utO
 bNF
 iQH
 ykD
-nhH
+tdt
 xXP
 bTw
 xwt
@@ -161715,7 +161715,7 @@ utO
 bNF
 iQH
 ykD
-iec
+rbA
 sTd
 gDq
 xwt
@@ -162621,7 +162621,7 @@ cpH
 flA
 iQH
 ykD
-ssL
+nxL
 xXP
 bTw
 xwt
@@ -163225,7 +163225,7 @@ utO
 eQS
 iQH
 ykD
-wZj
+iPV
 sTd
 gDq
 xwt
@@ -164131,7 +164131,7 @@ utO
 uoN
 xSP
 ykD
-lnn
+dfL
 xXP
 bTw
 xwt

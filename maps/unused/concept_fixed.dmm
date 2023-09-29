@@ -4136,13 +4136,6 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/station/quartermaster/storage)
-"ait" = (
-/obj/machinery/conveyor/WE{
-	id = "cargo"
-	},
-/obj/strip_door,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "aiu" = (
 /obj/machinery/conveyor/WE{
 	id = "cargo"
@@ -6993,14 +6986,6 @@
 	icon_state = "rwindow";
 	dir = 8
 	},
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"anO" = (
-/obj/table{
-	icon_state = "tabledir";
-	dir = 4
-	},
-/obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "anP" = (
@@ -29216,12 +29201,6 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/courtroom)
-"bfK" = (
-/obj/strip_door{
-	name = "Beepsky's room"
-	},
-/turf/simulated/floor/plating,
-/area/station/crew_quarters/courtroom)
 "bfL" = (
 /obj/disposalpipe/segment{
 	dir = 4;
@@ -32994,10 +32973,6 @@
 	dir = 4
 	},
 /area/space)
-"bmV" = (
-/obj/strip_door,
-/turf/simulated/floor/caution/northsouth,
-/area/space)
 "bmW" = (
 /obj/machinery/door/firedoor/border_only{
 	dir = 1
@@ -35281,6 +35256,10 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
+"mjU" = (
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth,
+/area/space)
 "nhs" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -35294,6 +35273,12 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
+"nAt" = (
+/obj/strip_door{
+	name = "Beepsky's room"
+	},
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/courtroom)
 "ozv" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -35310,6 +35295,14 @@
 /area/station/ai_monitored/storage/secure{
 	name = "Mixing Room"
 	})
+"pcx" = (
+/obj/table{
+	icon_state = "tabledir";
+	dir = 4
+	},
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "qyw" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
@@ -35360,6 +35353,13 @@
 /obj/item/coin,
 /turf/simulated/floor,
 /area/station/crew_quarters/heads)
+"xTf" = (
+/obj/machinery/conveyor/WE{
+	id = "cargo"
+	},
+/obj/strip_door,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 
 (1,1,1) = {"
 cqb
@@ -53142,7 +53142,7 @@ alU
 alU
 amQ
 anp
-anO
+pcx
 aop
 aoM
 apn
@@ -56077,8 +56077,8 @@ ags
 ags
 ags
 ags
-ait
-ait
+xTf
+xTf
 aiS
 ajd
 ajv
@@ -57304,7 +57304,7 @@ beU
 beU
 bez
 bez
-bfK
+nAt
 bez
 bez
 cqb
@@ -81011,7 +81011,7 @@ ckz
 bmf
 ckW
 bmG
-bmV
+mjU
 ckW
 cmd
 cmd

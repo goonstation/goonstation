@@ -4739,16 +4739,6 @@
 /obj/window/reinforced/west,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"apK" = (
-/obj/rack{
-	dir = 1
-	},
-/obj/item/clothing/suit/fire,
-/obj/item/tank/emergency_oxygen,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/meson,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "apS" = (
 /obj/grille/steel,
 /obj/window/reinforced/east,
@@ -9139,16 +9129,6 @@
 	dir = 4
 	},
 /obj/item/circuitboard/powermonitor_smes,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
-"aFz" = (
-/obj/item/device/radio/intercom{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/clothing/glasses/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aFA" = (
@@ -23173,6 +23153,10 @@
 /obj/window/reinforced/north,
 /turf/simulated/floor/plating,
 /area/station/hangar/main)
+"bzF" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "bzL" = (
 /obj/machinery/conveyor/SN{
 	name = "cargo belt - north";
@@ -25755,18 +25739,6 @@
 	toxins = 70000
 	},
 /area/station/atmos/highcap_storage)
-"dRx" = (
-/obj/machinery/mass_driver{
-	dir = 8;
-	id = "qm_dock_out"
-	},
-/obj/machinery/door/poddoor{
-	id = "QM-dock-out";
-	name = "Supply Dock Selling Door"
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
 "dSC" = (
 /obj/machinery/vehicle/pod_smooth/industrial,
 /turf/simulated/floor/shuttlebay,
@@ -26832,6 +26804,16 @@
 /obj/stool,
 /turf/simulated/floor,
 /area/station/science/chemistry)
+"hCF" = (
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "hDv" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -28587,10 +28569,6 @@
 	dir = 4
 	},
 /area/station/science/chemistry)
-"mqj" = (
-/obj/landmark/shuttle_subwoofer,
-/turf/space,
-/area/space)
 "mqQ" = (
 /obj/pool{
 	dir = 4;
@@ -28995,6 +28973,18 @@
 "nUR" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"nVB" = (
+/obj/machinery/mass_driver{
+	dir = 8;
+	id = "qm_dock_out"
+	},
+/obj/machinery/door/poddoor{
+	id = "QM-dock-out";
+	name = "Supply Dock Selling Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "nWH" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -29372,13 +29362,6 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
-"psO" = (
-/obj/strip_door,
-/obj/machinery/conveyor/WE{
-	id = "QM"
-	},
-/turf/simulated/floor/grime,
-/area/station/quartermaster/office)
 "pwu" = (
 /obj/machinery/the_singularitygen,
 /turf/simulated/floor/plating/airless,
@@ -29827,6 +29810,13 @@
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/white,
 /area/russian)
+"qNi" = (
+/obj/strip_door,
+/obj/machinery/conveyor/WE{
+	id = "QM"
+	},
+/turf/simulated/floor/grime,
+/area/station/quartermaster/office)
 "qNl" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -30346,6 +30336,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"sdi" = (
+/obj/rack{
+	dir = 1
+	},
+/obj/item/clothing/suit/fire,
+/obj/item/tank/emergency_oxygen,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "sdH" = (
 /obj/disposalpipe/segment{
 	dir = 1;
@@ -30522,17 +30522,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"sMW" = (
-/obj/machinery/conveyor/WE{
-	id = "QMLoad"
-	},
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor";
-	name = "Supply Dock Loading Door"
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
 "sNg" = (
 /obj/table/wood{
 	dir = 9
@@ -31993,6 +31982,17 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
+"wPP" = (
+/obj/machinery/conveyor/WE{
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "wQi" = (
 /obj/machinery/access_button{
 	dir = 1;
@@ -58513,7 +58513,7 @@ ayc
 aze
 aAR
 aDB
-aFz
+hCF
 aHI
 aHY
 aMi
@@ -61261,12 +61261,12 @@ aaa
 aaa
 aab
 amK
-dRx
+nVB
 amK
 aab
 aab
 amK
-sMW
+wPP
 bFA
 aaa
 aaa
@@ -61870,7 +61870,7 @@ bxX
 apA
 apA
 bDA
-sMW
+wPP
 bFB
 apA
 aqK
@@ -66704,7 +66704,7 @@ bCK
 jul
 aoa
 aoJ
-apK
+sdi
 bAL
 bAL
 uDx
@@ -66989,8 +66989,8 @@ aQO
 aPt
 ahm
 ahu
-psO
-psO
+qNi
+qNi
 boz
 ahX
 bqB
@@ -67006,7 +67006,7 @@ amX
 amS
 anX
 aoJ
-apK
+sdi
 bAL
 bAL
 asT
@@ -67308,7 +67308,7 @@ amX
 amS
 aoa
 aoJ
-apK
+sdi
 bAL
 sOw
 asT
@@ -102636,7 +102636,7 @@ bgN
 bgN
 bgN
 bgN
-mqj
+bzF
 aaa
 aaa
 aaa

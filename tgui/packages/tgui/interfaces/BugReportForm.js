@@ -5,7 +5,7 @@
  */
 
 import { useBackend, useLocalState } from '../backend';
-import { Flex, Section, Input } from '../components';
+import { Flex, Input, Section } from '../components';
 import { ButtonCheckbox } from '../components/Button';
 import { Window } from '../layouts';
 

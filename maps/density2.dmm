@@ -1378,9 +1378,6 @@
 "hB" = (
 /turf/space,
 /area/shuttle/escape/station)
-"hC" = (
-/turf/space,
-/area/shuttle_sound_spawn)
 "hH" = (
 /turf/space,
 /area/shuttle/research/station)
@@ -1951,6 +1948,15 @@
 /obj/landmark/start/job/botanist,
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
+"lr" = (
+/obj/machinery/conveyor/WE{
+	id = "qmin"
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/turf/simulated/floor/purple/checker,
+/area/station/quartermaster/office)
 "lt" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -2024,10 +2030,6 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/simulated/floor/red,
-/area/station/security/main)
-"lO" = (
-/obj/strip_door,
 /turf/simulated/floor/red,
 /area/station/security/main)
 "lP" = (
@@ -3109,15 +3111,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/showers)
-"tO" = (
-/obj/machinery/conveyor/WE{
-	id = "qmin"
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/turf/simulated/floor/purple/checker,
-/area/station/quartermaster/office)
 "tP" = (
 /obj/cable/orange{
 	icon_state = "1-8"
@@ -3627,6 +3620,17 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
+"xv" = (
+/obj/machinery/conveyor/NS{
+	id = "cargo_dispense_belt"
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor{
+	id = "cargodispense";
+	name = "Cargo Routing Door"
+	},
+/turf/simulated/floor/purple/checker,
+/area/station/quartermaster/office)
 "xC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3665,15 +3669,6 @@
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
-"xS" = (
-/obj/machinery/conveyor/WE{
-	id = "qmout"
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/turf/simulated/floor/purple/checker,
-/area/station/quartermaster/office)
 "xU" = (
 /obj/machinery/conveyor/WE{
 	id = "qmout"
@@ -4350,14 +4345,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
-"CC" = (
-/obj/machinery/conveyor/SN{
-	id = "garbage";
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/janitor/supply)
 "CE" = (
 /obj/stool/chair/comfy/blue{
 	dir = 4
@@ -4403,17 +4390,6 @@
 /obj/landmark/start/job/medical_director,
 /turf/simulated/floor/carpet/red/fancy/narrow/T_east,
 /area/station/bridge)
-"CP" = (
-/obj/machinery/conveyor/NS{
-	id = "cargo_dispense_belt"
-	},
-/obj/strip_door,
-/obj/machinery/door/poddoor{
-	id = "cargodispense";
-	name = "Cargo Routing Door"
-	},
-/turf/simulated/floor/purple/checker,
-/area/station/quartermaster/office)
 "CQ" = (
 /turf/simulated/floor/stairs/wood{
 	dir = 5
@@ -4638,6 +4614,15 @@
 /obj/mapping_helper/access/mining,
 /turf/simulated/floor/purple/checker,
 /area/station/science)
+"Eg" = (
+/obj/machinery/conveyor/WE{
+	id = "qmout"
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/turf/simulated/floor/purple/checker,
+/area/station/quartermaster/office)
 "Ei" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -4910,6 +4895,10 @@
 /obj/machinery/vending/snack,
 /turf/simulated/floor/wood/two,
 /area/station/bridge)
+"FJ" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "FL" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/engine,
@@ -5126,6 +5115,14 @@
 /area/station/quartermaster/magnet)
 "Hf" = (
 /obj/storage/secure/closet/civilian/janitor,
+/turf/simulated/floor/plating,
+/area/station/janitor/supply)
+"Hg" = (
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	operating = 1
+	},
+/obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
 "Hj" = (
@@ -6987,6 +6984,10 @@
 	icon_state = "wooden"
 	},
 /area/station/hallway/secondary/entry)
+"Up" = (
+/obj/strip_door,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "Us" = (
 /obj/machinery/door/airlock/pyro/reinforced/arrivals,
 /obj/forcefield/energyshield/perma/doorlink{
@@ -50073,7 +50074,7 @@ Rf
 Rv
 iX
 ky
-lO
+Up
 gX
 mY
 hz
@@ -53083,7 +53084,7 @@ Rf
 hB
 hB
 hB
-hC
+FJ
 hB
 hB
 hB
@@ -57635,7 +57636,7 @@ Dk
 ri
 tA
 VY
-CP
+xv
 yp
 XC
 Ha
@@ -58235,9 +58236,9 @@ pT
 qP
 rj
 pP
-tO
+lr
 pP
-xS
+Eg
 pP
 Cz
 Et
@@ -59145,7 +59146,7 @@ tU
 vO
 xY
 zR
-CC
+Hg
 EJ
 Gr
 Hp
