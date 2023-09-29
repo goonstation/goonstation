@@ -1352,28 +1352,6 @@
 	regenRate = 0
 	tabName = "Body"
 
-/atom/movable/screen/ability/topBar/organ
-	clicked(params)
-		var/datum/targetable/organAbility/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(usr.loc))
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr:targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			usr.targeting_ability = owner
-			usr.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-
 /datum/targetable/organAbility
 	icon = 'icons/mob/organ_abilities.dmi'
 	icon_state = "template"
@@ -1384,38 +1362,6 @@
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
 	var/obj/item/organ/linked_organ = null
-
-	New()
-		var/atom/movable/screen/ability/topBar/organ/B = new /atom/movable/screen/ability/topBar/organ(null)
-		B.name = src.name
-		B.desc = src.desc
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		src.object = B
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/organ()
-			object.icon = src.icon
-			object.owner = src
-		if (disabled)
-			object.name = "[src.name] (unavailable)"
-			object.icon_state = src.icon_state + "_cd"
-		else if (src.last_cast > world.time)
-			object.name = "[src.name] ([round((src.last_cast-world.time)/10)])"
-			object.icon_state = src.icon_state + "_cd"
-		else if (toggled)
-			if (is_on)
-				object.name = "[src.name] (on)"
-				object.icon_state = src.icon_state
-			else
-				object.name = "[src.name] (off)"
-				object.icon_state = src.icon_state + "_cd"
-		else
-			object.name = src.name
-			object.icon_state = src.icon_state
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
