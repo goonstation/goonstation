@@ -423,6 +423,8 @@ var/list/access_name_lookup //Generated at round start.
 	switch(A)
 		if(access_cargo)
 			return "Cargo Bay"
+		if(access_brig)
+			return "Brig"
 		if(access_security)
 			return "Security"
 		if(access_forensics_lockers)
