@@ -207,7 +207,6 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	weight = 8000
 	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
 	var/list/prototypists = list(
-		//"Construction equipment company",
 		"Mining technologist",
 		//"Biochemical research centre",
 		"Engineering firm"
@@ -388,21 +387,35 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/rc_itemreward/production_line
 	name = "engineering equipment"
-	var/list/possible_rewards = list(/obj/item/cable_coil,
-	/obj/item/rcd_ammo/medium,
-	/obj/item/sheet/mauxite,
-	/obj/item/interdictor_rod/sigma,
-	/obj/item/cell/supercell/charged,
-	/obj/item/storage/belt/utility,
-	/obj/item/fuel_pellet/cerenkite)
+	var/list/possible_rewards = list("cable coil",
+		"RCD cartridges",
+		"10-sheet mauxite pack",
+		"high-grade power cell",
+		"utility belt",
+		"RTG pellets + Leigong RTG"
+	)
+	var/rewardthing
 
 	New()
 		..()
+		name = pick(possible_rewards)
+		switch(name)
+			if("cable coil")
+				rewardthing = /obj/item/cable_coil
+			if("RCD cartridges")
+				rewardthing = /obj/item/rcd_ammo/medium
+			if("10-sheet mauxite pack")
+				rewardthing = /obj/item/sheet/mauxite
+			if("high-grade power cell")
+				rewardthing = /obj/item/cell/supercell/charged
+			if("utility belt")
+				rewardthing = /obj/item/storage/belt/utility
+			if("RTG pellets + Leigong RTG")
+				rewardthing = /obj/item/fuel_pellet/cerenkite
 		count = rand(4,6) * 2
 
 	build_reward()
 		var/list/yielder = list()
-		var/rewardthing = pick(possible_rewards)
 		if(rewardthing == /obj/item/fuel_pellet/cerenkite)
 			var/obj/item/electronics/frame/F = new
 			F.store_type = /obj/machinery/power/rtg
