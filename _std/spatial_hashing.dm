@@ -166,10 +166,10 @@ ABSTRACT_TYPE(/datum/spatial_hashmap/by_type)
 			var/turf/T = get_turf(A)
 			ADD_TO_MAP(A, T)
 
-/datum/spatial_hashmap/by_type/chickens
+/datum/spatial_hashmap/by_type/ranch_animals
 	cellsize = 10
 	update_cooldown = 50
-	type_to_track = /mob/living/critter/small_animal/ranch_base/chicken
+	type_to_track = /mob/living/critter/small_animal/ranch_base
 
 /datum/spatial_hashmap/by_type/shrub // for testing, ok??
 	cellsize = 10
