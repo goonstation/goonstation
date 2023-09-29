@@ -30247,10 +30247,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/cargooffice)
-"mOT" = (
-/obj/landmark/shuttle_subwoofer,
-/turf/unsimulated/wall/trench,
-/area/space)
 "mPl" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/caution/corner/ne,
@@ -62623,7 +62619,7 @@ oeA
 oeA
 oeA
 oeA
-mOT
+oeA
 oeA
 oeA
 oeA
