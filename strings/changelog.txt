@@ -1,5 +1,9 @@
 
 (t)fri sep 29 23
+(u)pali
+(p)15458
+(e)🧫🧛|C-Experimental, A-Gamemodes
+(*)Experiment: Gang members are recruited randomly at roundstart instead of being recruited manually.<br>Give feedback <a href="https://forum.ss13.co/showthread.php?tid=21701">here</a>.
 (u)Bartimeus973
 (p)15630
 (e)⚖🔄💊🔨|C-Balance, C-Rework, A-Medical, A-Player-Actions
