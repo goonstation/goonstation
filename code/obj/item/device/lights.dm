@@ -842,7 +842,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 			if (ishuman(M))
 				if (src.on > 0)
 					var/mob/living/carbon/human/H = M
-					if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+					if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
 						src.cautery_surgery(H, user, 5, src.on)
 						return ..()
 					else
