@@ -31905,7 +31905,7 @@
 	pixel_y = 5
 	},
 /obj/item/screwdriver,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "nns" = (
@@ -40131,7 +40131,7 @@
 "tOd" = (
 /obj/table/reinforced/auto,
 /obj/item/device/infra_sensor,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},

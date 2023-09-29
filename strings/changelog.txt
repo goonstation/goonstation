@@ -1,5 +1,13 @@
 
 (t)thu sep 28 23
+(u)Kubius
+(p)16078
+(e)🆕|C-Feature
+(+)Indiscriminate food requisitions are now properly indiscriminate, and requisition cargo scanning should now be more discoverable.
+(u)LeahTheTech
+(p)16082
+(e)🆕🗺🎨💅|C-Feature, A-Mapping, C-Sprites, C-QoL
+(*)Added pressure visualization goggles which show surrounding atmospheric pressure when worn, found in engineering lockers.
 (u)Flaborized
 (p)15812
 (e)🎨⚗|C-Sprites, A-Chemistry

@@ -8569,7 +8569,7 @@
 "azf" = (
 /obj/rack,
 /obj/item/wrench,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/clothing/shoes/magnetic,
 /turf/simulated/floor/yellow,
 /area/station/engine/inner)
@@ -31750,7 +31750,7 @@
 "bLY" = (
 /obj/table/auto,
 /obj/item/storage/box/diskbox,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/device/flash,
 /turf/simulated/floor,
 /area/station/storage/tech)
@@ -33957,7 +33957,7 @@
 "eNQ" = (
 /obj/rack,
 /obj/item/wrench,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/clothing/shoes/magnetic,
 /obj/machinery/light/incandescent/netural{
 	dir = 1;
@@ -39414,7 +39414,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/cable{
 	icon_state = "4-8"
 	},

@@ -13500,7 +13500,7 @@
 /obj/item/tank/jetpack/micro{
 	pixel_x = 8
 	},
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer{
 	pixel_x = -3;
@@ -16514,7 +16514,7 @@
 /area/station/medical/medbay/lobby)
 "bsH" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/crowbar,
 /obj/item/device/t_scanner,
 /obj/item/storage/toolbox/electrical,
@@ -16829,7 +16829,7 @@
 /area/station/hallway/primary/south)
 "buE" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/crowbar,
 /obj/item/device/t_scanner,
 /obj/item/storage/toolbox/electrical,
@@ -23305,7 +23305,7 @@
 /obj/item/tank/jetpack/micro{
 	pixel_x = 8
 	},
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer{
 	pixel_x = -3;
@@ -33348,7 +33348,7 @@
 /obj/item/tank/jetpack/micro{
 	pixel_x = 8
 	},
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/clothing/suit/space/engineer,
 /obj/item/clothing/head/helmet/space/engineer{
 	pixel_x = -3;
@@ -36775,7 +36775,7 @@
 "ngz" = (
 /obj/table/auto,
 /obj/item/disk/data/cartridge/atmos,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/disk/data/floppy/read_only/terminal_os,
 /obj/item/disk/data/cartridge/diagnostics{
 	pixel_x = 16;

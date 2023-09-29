@@ -4753,7 +4753,7 @@
 /obj/item/clothing/suit/fire,
 /obj/item/tank/emergency_oxygen,
 /obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "apS" = (
@@ -9155,7 +9155,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aFA" = (
