@@ -251,6 +251,7 @@
 	stage = 2
 	is_dangerous = FALSE
 	launcher_damage = 10
+	help_message = null
 
 	New()
 		..()
@@ -273,6 +274,7 @@
 	stage = 2
 	is_dangerous = FALSE
 	launcher_damage = 10
+	help_message = null
 
 	New()
 		..()
@@ -294,6 +296,7 @@
 	stage = 2
 	is_dangerous = FALSE
 	launcher_damage = 5
+	help_message = null
 
 	New()
 		..()
@@ -314,6 +317,7 @@
 	icon_state = "cleaner"
 	icon_state_armed = "cleaner1"
 	stage = 2
+	help_message = null
 
 	New()
 		..()
@@ -344,6 +348,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	stage = 2
 	is_syndicate = 1
 	is_dangerous = FALSE
+	help_message = null
 
 	New()
 		..()
@@ -406,6 +411,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state = "cryo"
 	icon_state_armed = "cryo1"
 	stage = 2
+	help_message = null
 
 	New()
 		..()
@@ -422,6 +428,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state = "incendiary"
 	icon_state_armed = "incendiary1"
 	stage = 2
+	help_message = null
 
 	New()
 		..()
@@ -436,6 +443,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state = "incendiary-highrange"
 	icon_state_armed = "incendiary-highrange1"
 	stage = 2
+	help_message = null
 
 	New()
 		..()
@@ -455,6 +463,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state = "shock"
 	icon_state_armed = "shock1"
 	stage = 2
+	help_message = null
 
 	New()
 		..()
@@ -472,6 +481,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state_armed = "pepper1"
 	stage = 2
 	launcher_damage = 20
+	help_message = null
 
 	New()
 		..()
@@ -493,6 +503,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state = "saxitoxin"
 	icon_state_armed = "saxitoxin1"
 	stage = 2
+	help_message = null
 
 	New()
 		..()
@@ -517,6 +528,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	stage = 2
 	is_dangerous = FALSE
 	launcher_damage = 5
+	help_message = null
 
 	New()
 		..()
@@ -541,6 +553,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	stage = 2
 	is_dangerous = FALSE
 	launcher_damage = 10
+	help_message = null
 
 	New()
 		..()
@@ -563,6 +576,7 @@ TYPEINFO(/obj/item/chem_grenade/flashbang/revolution)
 	icon_state = "incendiary"
 	icon_state_armed = "incendiary1"
 	stage = 2
+	help_message = null
 
 	New()
 		..()
