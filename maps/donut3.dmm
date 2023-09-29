@@ -61108,10 +61108,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
-"sOJ" = (
-/obj/landmark/shuttle_subwoofer,
-/turf/space,
-/area/space)
 "sOZ" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -84925,7 +84921,7 @@ rdj
 rdj
 rdj
 rdj
-sOJ
+rdj
 rdj
 rdj
 rdj

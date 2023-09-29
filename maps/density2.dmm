@@ -1379,8 +1379,9 @@
 /turf/space,
 /area/shuttle/escape/station)
 "hC" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "hH" = (
 /turf/space,
 /area/shuttle/research/station)
