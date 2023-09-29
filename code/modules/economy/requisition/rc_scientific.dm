@@ -204,7 +204,6 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/req_contract/scientific/prototypist
 	//name = "Wheatley Moment"
 	payout = PAY_DOCTORATE
-	weight = 8000
 	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
 	var/list/prototypists = list("Safety equipment manufacturer",
 		"Mining technologist",
@@ -213,13 +212,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	)
 	var/list/protogoals = list(
 		"prototyping of a new product",
-		"use in devising an improved manufacturing method",
+		"use in devising an improved manufacturing procedure",
 		"refinement of an offered product"
 	)
 	var/list/desc_bonusflavor = list(
 		"Funds are scarce due to budgetary restrictions; a cut of the product will be offered in return.",
 		"Requisition fulfiller receives a small stake in the current production run.",
-		"Assisting party will receive accreditation in a major publication, and a complementary product sample.",
+		"Assisting party will receive accreditation in a major publication, and exclusive (limited) preliminary access.",
 		"Primary funding is locked up in inventory, so a partial barter is offered - see contract details."
 	)
 
@@ -235,16 +234,22 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 				if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/fibrilith_minprice,rand(1,3))
 				if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cotton,rand(1,3))
 				if(prob(30)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pharosium_minprice,1)
-				if(prob(80) || !length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/matanalyzer,1)
+				if(prob(70) || !length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/matanalyzer,1)
 
 				switch(goal)
 					if("prototyping of a new product")
 						src.item_rewarders += new /datum/rc_itemreward/cool_suit
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/fancy_cloth,2)
-					if("use in devising an improved manufacturing method")
+						src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,20)
+					if("use in devising an improved manufacturing procedure")
 						src.item_rewarders += new /datum/rc_itemreward/suit_set
+						src.rc_entries += rc_buildentry(/datum/rc_entry/item/coil,1)
+						src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,1)
+						src.rc_entries += rc_buildentry(/datum/rc_entry/item/control_unit,1)
 					if("refinement of an offered product")
 						src.item_rewarders += new /datum/rc_itemreward/suv_suit
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/fancy_cloth,2)
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/uqill_minprice,1)
 
 			if("Mining technologist")
 				if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/molitz_minprice,rand(1,3))
@@ -260,7 +265,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 					if("prototyping of a new product")
 						src.item_rewarders += new /datum/rc_itemreward/turbohammer
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cerenkite_minprice,1)
-					if("use in devising an improved manufacturing method")
+					if("use in devising an improved manufacturing procedure")
 						src.item_rewarders += new /datum/rc_itemreward/manyboom
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/char,rand(2,5))
 						src.payout += PAY_TRADESMAN * 10
@@ -287,10 +292,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 						src.item_rewarders += new /datum/rc_itemreward/biorcd
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/viscerite_minprice,2)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/dna_activator,1)
-					if("use in devising an improved manufacturing method")
+					if("use in devising an improved manufacturing procedure")
 						src.item_rewarders += new /datum/rc_itemreward/production_line
-						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/claretine_minprice,2)
-						//src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,1)
+						if(prob(40))
+							src.rc_entries += rc_buildentry(/datum/rc_entry/item/control_unit,1)
+						else
+							src.rc_entries += rc_buildentry(/datum/rc_entry/stack/claretine,2)
+						src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,1)
 					if("refinement of an offered product")
 						src.item_rewarders += new /datum/rc_itemreward/upgraded_welders
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering_noprice,rand(1,2))
@@ -310,6 +318,16 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/matanalyzer
 	name = "material analyzer"
 	typepath = /obj/item/device/matanalyzer
+
+/datum/rc_entry/stack/fancy_cloth
+	name = "high-grade cloth (carbon or bee wool)"
+	typepath = /obj/item/material_piece/cloth/carbon
+	typepath_alt = /obj/item/material_piece/cloth/beewool
+
+/datum/rc_entry/stack/uqill_minprice
+	name = "uqill"
+	commodity = /datum/commodity/ore/uqill
+	typepath_alt = /obj/item/material_piece/uqill
 
 /datum/rc_entry/stack/mauxite_minprice
 	name = "mauxite"
@@ -360,10 +378,11 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	name = "human DNA sample (injector or activator)"
 	typepath = /obj/item/genetics_injector
 
-/datum/rc_entry/stack/claretine_minprice
+/datum/rc_entry/stack/claretine
 	name = "claretine"
 	commodity = /datum/commodity/ore/claretine
 	typepath_alt = /obj/item/material_piece/claretine
+	feemod = PAY_DOCTORATE
 
 /datum/rc_entry/item/graviton
 	name = "graviton accelerator"
@@ -373,12 +392,18 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	name = "automatic signaller component"
 	typepath = /obj/item/mechanics/interval_timer
 
+/datum/rc_entry/item/control_unit
+	name = "programmable control unit"
+	typepath = /obj/item/mechanics/mc14500
+
 /datum/rc_entry/item/magnet_link
 	name = "NT vehicle-grade magnet link array"
 	typepath = /obj/item/shipcomponent/communications/mining
 
+
 //safety equipment manufacturer rewards
-/datum/rc_itemreward/suv_suit
+
+/datum/rc_itemreward/cool_suit
 	name = "prototype space suit set"
 	build_reward()
 		var/list/theitems = list()
@@ -433,6 +458,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		theitems += new /obj/item/clothing/head/helmet/space/industrial
 		return theitems
 
+
 //mining technologist rewards
 
 /datum/rc_itemreward/turbohammer
@@ -466,6 +492,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		for(var/i in 1 to count)
 			yielder += new /obj/item/clothing/gloves/concussive/insulated
 		return yielder
+
 
 //engineering firm rewards
 

@@ -1843,7 +1843,12 @@ TYPEINFO(/obj/item/mining_tool/drill)
 	name = "TC-7 Turbohammer"
 	desc = "A prototype high-impact mining tool with a self-charging power cell. It's warm to the touch."
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
-	dig_strength = 5
+	digcost = 4
+
+	New()
+		..()
+		var/datum/component/cell_holder/holder_adjust = src.GetComponent(/datum/component/cell_holder)
+		holder_adjust.swappable_cell = FALSE
 
 /obj/item/mining_tool/power_shovel
 	name = "power shovel"
