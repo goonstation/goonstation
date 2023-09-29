@@ -27416,12 +27416,12 @@
 /turf/simulated/floor/plating,
 /area/station/science/testchamber/bombchamber)
 "gGv" = (
-/obj/machinery/door/airlock/pyro/sci_alt,
 /obj/mapping_helper/access/tox,
 /obj/mapping_helper/firedoor_spawn,
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/machinery/door/airlock/pyro/toxins_alt,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "gGB" = (
@@ -32217,13 +32217,13 @@
 	dir = 4;
 	icon_state = "pipe-s"
 	},
-/obj/machinery/door/airlock/pyro/sci_alt{
-	dir = 4
-	},
 /obj/mapping_helper/firedoor_spawn,
 /obj/mapping_helper/access/tox,
 /obj/cable{
 	icon_state = "4-8"
+	},
+/obj/machinery/door/airlock/pyro/toxins_alt{
+	dir = 4
 	},
 /turf/simulated/floor/white,
 /area/station/science/lab)
@@ -37171,11 +37171,9 @@
 /turf/simulated/wall/grass/leafy,
 /area/station/garden/owlery)
 "nzs" = (
-/obj/machinery/light/incandescent{
-	dir = 8
-	},
 /obj/table/reinforced/chemistry/auto,
 /obj/item/storage/toolbox/electrical,
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "nzT" = (
@@ -37752,20 +37750,15 @@
 /turf/simulated/wall/auto/supernorn,
 /area/space)
 "nTC" = (
-/obj/machinery/power/apc{
-	name = "Bomb Testing Area APC";
-	dir = 4;
-	pixel_x = 24;
-	areastring = "Bomb Testing Chamber"
-	},
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/atmospherics/binary/valve{
 	name = "purge valve"
 	},
+/obj/machinery/light/incandescent,
 /obj/cable{
-	icon_state = "0-8"
+	icon_state = "1-8"
 	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
@@ -39224,7 +39217,6 @@
 	id = "outpostbombtest"
 	},
 /obj/machinery/door/airlock/pyro/glass/windoor,
-/obj/mapping_helper/access/tox,
 /turf/simulated/floor/plating,
 /area/station/science/lab)
 "oMU" = (
@@ -45433,10 +45425,16 @@
 /area/station/atmos/highcap_storage)
 "sYs" = (
 /obj/machinery/atmospherics/pipe/simple/insulated,
-/obj/machinery/light/incandescent{
-	dir = 4
-	},
 /obj/machinery/portable_atmospherics/scrubber,
+/obj/machinery/power/apc{
+	name = "Bomb Testing Area APC";
+	dir = 4;
+	pixel_x = 24;
+	areastring = "Bomb Testing Chamber"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "sYx" = (
@@ -50101,9 +50099,6 @@
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "wuK" = (
-/obj/machinery/light/incandescent{
-	dir = 1
-	},
 /obj/machinery/activation_button/driver_button{
 	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
 	id = "outpostbombtest";
@@ -50113,6 +50108,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
+/obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "wvm" = (
@@ -50177,14 +50173,10 @@
 /area/station/science/teleporter)
 "wwn" = (
 /obj/rack,
-/obj/item/tank/jetpack/micro{
-	pixel_x = 5
-	},
-/obj/machinery/light/incandescent{
-	dir = 4
-	},
 /obj/item/clothing/suit/space/emerg/science,
 /obj/item/clothing/head/emerg/science,
+/obj/machinery/light/incandescent,
+/obj/item/tank/air,
 /turf/simulated/floor/black,
 /area/station/science/lab)
 "wwA" = (
