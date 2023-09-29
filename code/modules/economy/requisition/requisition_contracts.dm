@@ -95,10 +95,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 	rc_eval(obj/eval_item)
 		. = ..()
 		if(rollcount >= count) return // Standard skip-if-complete
+		var/valid_item = FALSE
 		if(src.exactpath) // More fussy type evaluation
-			if(eval_item.type != typepath || (typepath_alt && eval_item.type != typepath_alt)) return
+			if(eval_item.type == typepath || (typepath_alt && eval_item.type == typepath_alt)) valid_item = TRUE
 		else // Regular type evaluation
-			if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt))) return
+			if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt))) valid_item = TRUE
+		if(!valid_item) return
 		src.rollcount++
 		. = TRUE
 
