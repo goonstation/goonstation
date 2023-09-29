@@ -1373,6 +1373,14 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	icon_state = "space-neon"
 	item_state = "space-neon"
 
+/obj/item/clothing/suit/space/neon/prototype
+	name = "SpaceLite Mk.IV suit"
+	desc = "A deluxe space suit in snazzy colors, built with a composite weave that makes movement easier wihout compromising on durability."
+
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0.1)
+
 /obj/item/clothing/suit/space/custom // Used for nanofabs
 	icon_state = "spacemat"
 	inhand_image_icon = "s_suit"

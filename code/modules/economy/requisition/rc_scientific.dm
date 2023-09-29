@@ -200,13 +200,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		var/seed = new /obj/item/seed/alien
 		return seed
 
-//Prototypist contract; payout is significantly lower than usual on purpose, since you get "paid in items"
+//Prototypist contract; payout in cash is significantly lower than usual on purpose, since you get "paid in items"
 /datum/req_contract/scientific/prototypist
 	//name = "Wheatley Moment"
 	payout = PAY_DOCTORATE
 	weight = 8000
 	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
-	var/list/prototypists = list(
+	var/list/prototypists = list("Safety equipment manufacturer",
 		"Mining technologist",
 		//"Biochemical research centre",
 		"Engineering firm"
@@ -231,6 +231,21 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		src.payout += rand(0,80) * 10
 
 		switch(prototypist)
+			if("Safety equipment manufacturer")
+				if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/fibrilith_minprice,rand(1,3))
+				if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cotton,rand(1,3))
+				if(prob(30)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pharosium_minprice,1)
+				if(prob(80) || !length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/matanalyzer,1)
+
+				switch(goal)
+					if("prototyping of a new product")
+						src.item_rewarders += new /datum/rc_itemreward/cool_suit
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/fancy_cloth,2)
+					if("use in devising an improved manufacturing method")
+						src.item_rewarders += new /datum/rc_itemreward/suit_set
+					if("refinement of an offered product")
+						src.item_rewarders += new /datum/rc_itemreward/suv_suit
+
 			if("Mining technologist")
 				if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/molitz_minprice,rand(1,3))
 				if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pharosium_minprice,rand(1,3))
@@ -239,6 +254,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 				if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/multitool,1)
 				if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cable,rand(8,12))
+				if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/coil,1)
 
 				switch(goal)
 					if("prototyping of a new product")
@@ -264,7 +280,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 					src.rc_entries += rc_buildentry(/datum/rc_entry/item/interval_timer,rand(1,2))
 				else
 					if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/graviton,rand(1,2))
-				if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/lens,1)
+				if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/coil,1)
 
 				switch(goal)
 					if("prototyping of a new product")
@@ -280,6 +296,20 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering_noprice,rand(1,2))
 
 		..()
+
+/datum/rc_entry/stack/fibrilith_minprice
+	name = "fibrilith"
+	commodity = /datum/commodity/ore/fibrilith
+	typepath_alt = /obj/item/material_piece/fibrilith
+
+/datum/rc_entry/stack/cotton
+	name = "cotton"
+	typepath = /obj/item/raw_material/cotton
+	typepath_alt = /obj/item/material_piece/cloth/cottonfabric
+
+/datum/rc_entry/item/matanalyzer
+	name = "material analyzer"
+	typepath = /obj/item/device/matanalyzer
 
 /datum/rc_entry/stack/mauxite_minprice
 	name = "mauxite"
@@ -309,6 +339,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/free_insuls
 	name = "NT-standard insulated gloves"
 	typepath = /obj/item/clothing/gloves/yellow
+
+/datum/rc_entry/item/coil
+	name = "nano-fabricated metal coil"
+	typepath = /obj/item/coil/small
 
 /datum/rc_entry/item/tscan
 	name = "T-ray scanner"
@@ -342,6 +376,62 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/magnet_link
 	name = "NT vehicle-grade magnet link array"
 	typepath = /obj/item/shipcomponent/communications/mining
+
+//safety equipment manufacturer rewards
+/datum/rc_itemreward/suv_suit
+	name = "prototype space suit set"
+	build_reward()
+		var/list/theitems = list()
+		theitems += new /obj/item/clothing/suit/space/neon/prototype
+		theitems += new /obj/item/clothing/head/helmet/space/neon/prototype
+		return theitems
+
+/datum/rc_itemreward/suit_set
+	name = "buncha suits"
+	var/list/possible_rewards = list("paramedic suit",
+		"heavy firesuit",
+		"light space suit set",
+		"emergency space suit set",
+		"radiation suit set"
+	)
+	var/rewardthing1
+	var/rewardthing2
+
+	New()
+		..()
+		name = pick(possible_rewards)
+		count = rand(4,6)
+		switch(name)
+			if("paramedic suit")
+				rewardthing1 = /obj/item/clothing/suit/bio_suit/paramedic
+			if("heavy firesuit")
+				rewardthing1 = /obj/item/clothing/suit/fire/heavy
+			if("light space suit set")
+				rewardthing1 = /obj/item/clothing/suit/space/light
+				rewardthing2 = /obj/item/clothing/head/helmet/space/light
+			if("emergency space suit set")
+				count *= 2
+				rewardthing1 = /obj/item/clothing/suit/space/emerg
+				rewardthing2 = /obj/item/clothing/head/emerg
+			if("radiation suit set")
+				rewardthing1 = /obj/item/clothing/head/rad_hood
+				rewardthing2 = /obj/item/clothing/suit/rad
+
+	build_reward()
+		var/list/yielder = list()
+		for(var/i in 1 to count)
+			yielder += new rewardthing1
+			if(rewardthing2)
+				yielder += new rewardthing2
+		return yielder
+
+/datum/rc_itemreward/suv_suit
+	name = "hazard-rated suit set"
+	build_reward()
+		var/list/theitems = list()
+		theitems += new /obj/item/clothing/suit/space/suv
+		theitems += new /obj/item/clothing/head/helmet/space/industrial
+		return theitems
 
 //mining technologist rewards
 
