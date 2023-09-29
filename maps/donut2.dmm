@@ -21980,16 +21980,6 @@
 /area/station/chapel/sanctuary)
 "cLH" = (
 /obj/machinery/power/data_terminal,
-/obj/machinery/networked/telepad,
-/obj/cable{
-	icon_state = "0-4"
-	},
-/obj/cable{
-	icon_state = "0-8"
-	},
-/obj/cable,
-/obj/machinery/power/data_terminal,
-/obj/machinery/networked/telepad,
 /obj/cable{
 	icon_state = "0-4"
 	},
@@ -21998,6 +21988,7 @@
 	},
 /obj/cable,
 /mob/living/carbon/human/npc/monkey/albert,
+/obj/machinery/networked/telepad,
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
 "cMe" = (
