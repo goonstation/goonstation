@@ -508,6 +508,15 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/staple)
 		..()
 
+	set_current_projectile(datum/projectile/newProj)
+		..()
+		if(src.current_projectile.cost > 1)
+			if(src.current_projectile.shot_number < src.current_projectile.cost)
+				src.current_projectile.power = src.current_projectile.cost/src.current_projectile.shot_number
+			src.current_projectile.cost = 1
+		if(src.current_projectile.shot_number > 1)
+			src.current_projectile.shot_number = 1
+
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(failured)
