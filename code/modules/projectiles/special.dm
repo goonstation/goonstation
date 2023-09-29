@@ -949,7 +949,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(src.hit_sound)
 			playsound(hit, src.hit_sound, 50, 1)
 		if(ismob(hit) && typetospawn && !hasspawned)
-		//if(typetospawn && !hasspawned)
 			hasspawned = TRUE
 			. = new typetospawn(get_turf(hit))
 		else
