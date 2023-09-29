@@ -997,7 +997,7 @@
 
 	ex_act(severity)
 		..()
-		if (!istype(src))
+		if (QDELETED(src))
 			return
 		if (src.on == MATCH_UNLIT)
 			src.visible_message("<span class='alert'>The [src] ignites!</span>")

@@ -766,13 +766,10 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	var/col_g = 0.7
 	var/col_b = 0.25
 	var/brightness = 0.4
-	var/datum/component/loctargeting/medium_light/light_c
 
 	New()
 		..()
-		light_c = src.AddComponent(/datum/component/loctargeting/medium_light, col_r*255, col_g*255, col_b*255, 510 * brightness)
-		light_c.update(0)
-
+		AddComponent(/datum/component/loctargeting/medium_light, col_r*255, col_g*255, col_b*255, 510 * brightness, FALSE)
 
 	process()
 		if (src.on == FLARE_LIT)
@@ -796,9 +793,9 @@ TYPEINFO(/obj/item/device/light/floodlight)
 		src.icon_state = "roadflare-lit"
 
 		playsound(user, 'sound/items/matchstick_light.ogg', 80, FALSE)
-		light_c.enable()
+		SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
 
-		src.life_time = (world.time + rand(1800,3600))
+		src.life_time = (world.time + rand(180 SECONDS,360 SECONDS))
 		processing_items |= src
 		if (istype(user))
 			user.update_inhands()
@@ -813,7 +810,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 		src.name = "burnt-out emergency flare"
 
 		playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, FALSE)
-		light_c.disable()
+		SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
 		if (istype(user))
 			user.update_inhands()
 		processing_items.Remove(src)
@@ -827,7 +824,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 	ex_act(severity)
 		..()
-		if (!istype(src))
+		if (QDELETED(src))
 			return
 		if (src.on == FLARE_UNLIT)
 			src.visible_message("<span class='alert'>[src] ignites!</span>")
