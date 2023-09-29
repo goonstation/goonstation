@@ -49494,6 +49494,9 @@
 /obj/machinery/light/incandescent/harsh{
 	dir = 8
 	},
+/obj/item/clothing/suit/space/emerg/science,
+/obj/item/clothing/head/emerg/science,
+/obj/item/tank/air,
 /turf/simulated/floor/black,
 /area/station/science/storage)
 "pcj" = (
