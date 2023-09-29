@@ -1334,7 +1334,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/zwood)
 			icon_state = "wstool"
 		chair
 			recipe_id = "wood_chair"
-			craftedType = /obj/stool/chair/dining/constructed
+			craftedType = /obj/stool/chair/dining/wood/constructed
 			name = "Chair"
 			icon = 'icons/obj/furniture/chairs.dmi'
 			icon_state = "chair_wooden"
