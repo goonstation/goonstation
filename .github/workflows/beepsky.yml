@@ -46,6 +46,7 @@ jobs:
         uses: spacestation13/dmi-duplicate-state-checker@v1
         with:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          folders_to_search: icons,assets
 
       - name: Run Linter
         id: linter
