@@ -17,5 +17,4 @@ ABSTRACT_TYPE(/datum/eventRecordBody/TracksPlayer)
 		return FALSE
 
 /datum/eventRecordBody/TracksPlayer/ToList()
-	. = ..()
 	. = list("player_id" = src.player_id)
