@@ -1981,7 +1981,8 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	item_state = "stagbeetle"
 
 TYPEINFO(/obj/item/clothing/head/elephanthat)
-	random_subtypes = list(/obj/item/clothing/head/elephanthat/gold,
+	random_subtypes = list(
+		/obj/item/clothing/head/elephanthat/gold,
 		/obj/item/clothing/head/elephanthat/green,
 		/obj/item/clothing/head/elephanthat/pink,
 		/obj/item/clothing/head/elephanthat/blue
