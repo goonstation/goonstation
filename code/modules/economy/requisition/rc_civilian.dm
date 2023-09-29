@@ -263,6 +263,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/food/any
 	name = "solid food, preferably nutritious"
 	typepath = /obj/item/reagent_containers/food/snacks
+	must_be_whole = FALSE
 	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/reagent/water
