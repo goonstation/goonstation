@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 /datum/req_contract/scientific/internalaffairs //get it?
 	//name = "Don't Ask Too Many Questions"
-	payout = 5000
+	payout = PAY_DOCTORATE*10*2
 	weight = 80
 	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","ERROR: CANNOT VERIFY ORIGIN","Organ Study")
 	var/list/desc_begins = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
@@ -30,12 +30,11 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 
 ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/organ
-	feemod = 2550
+	feemod = PAY_IMPORTANT*2
 	exactpath = TRUE
 
 /datum/rc_entry/item/organ/appendix
 	name = "appendix"
-	feemod = 400
 	commodity = /datum/commodity/bodyparts/appendix
 
 /datum/rc_entry/item/organ/heart
@@ -54,7 +53,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 /datum/req_contract/scientific/spectrometry
 	//name = "Totally Will Not Result In A Resonance Cascade"
-	payout = 3300
+	payout = PAY_DOCTORATE*10*2
 	var/list/namevary = list("Beamline Calibration","Spectral Analysis","Chromatic Analysis","Refraction Survey","Component Restock","Photonics Project")
 	var/list/desc_wherestudy = list(
 		"Optics calibration laboratory",
@@ -92,35 +91,36 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/item/lens
 	name = "nano-fabricated lens"
 	typepath = /obj/item/lens
-	feemod = 2000
+	feemod = PAY_IMPORTANT
 
 /datum/rc_entry/stack/gemstone
 	name = "non-anomalous gemstone"
+	commodity = /datum/commodity/ore/gemstone
 	typepath = /obj/item/raw_material/gemstone
-	feemod = 3500
+	feemod = PAY_IMPORTANT
 
 /datum/rc_entry/stack/telec
 	name = "telecrystal"
 	commodity = /datum/commodity/ore/telecrystal
 	typepath_alt = /obj/item/material_piece/telecrystal
-	feemod = 1240 //augmented by commodity price
+	feemod = PAY_IMPORTANT //augmented by commodity price
 
 /datum/rc_entry/reagent/cryox
 	name = "cryoxadone coolant"
 	chem_ids = "cryoxadone"
-	feemod = 90
+	feemod = PAY_DOCTORATE/3
 
 /datum/rc_entry/item/lambdarod
 	name = "Lambda phase-control rod"
 	typepath = /obj/item/interdictor_rod
 	exactpath = TRUE
-	feemod = 11000
+	feemod = PAY_IMPORTANT*10
 
 
 
 /datum/req_contract/scientific/botanical
 	//name = "Feed Me, Seymour (Butz)"
-	payout = 2500
+	payout = PAY_TRADESMAN*10*2
 	var/list/namevary = list("Botanical Prototyping","Hydroponic Acclimation","Cultivar Propagation","Plant Genotype Study","Botanical Advancement")
 	var/list/desc_wherestudy = list(
 		"An affiliated hydroponics lab",
@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/seed/scientific
 	name = "genetically fussy seed"
 	cropname = "Durian"
-	feemod = 1000
+	feemod = PAY_DOCTORATE*3
 	var/crop_genpath = /datum/plant
 
 	fruit

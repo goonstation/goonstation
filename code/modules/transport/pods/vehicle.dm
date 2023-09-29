@@ -7,6 +7,7 @@
 	anchored = ANCHORED
 	stops_space_move = 1
 	status = REQ_PHYSICAL_ACCESS
+	var/numbers_in_name = TRUE //! Whether to append a random number to the name of the vehicle
 	var/datum/effects/system/ion_trail_follow/ion_trail = null
 	var/mob/pilot = null //The mob which actually flys the ship
 	var/capacity = 3 //How many passengers the ship can hold
@@ -87,8 +88,7 @@
 			return atmostank.remove_air(amount)
 
 		else
-			if (life_support) //ZeWaka: Fix for null.power_used
-				life_support.power_used = 0
+			life_support?.power_used = 0
 			var/turf/T = get_turf(src)
 			return T.remove_air(amount)
 
@@ -99,7 +99,7 @@
 			return null
 
 	Click(location,control,params)
-		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
 			var/mob/dead/observer/O = usr
 			if(src.pilot)
 				O.insert_observer(src.pilot)
@@ -186,7 +186,7 @@
 
 		switch(W.hit_type)
 			if (DAMAGE_BURN)
-				src.material?.triggerTemp(src, W.force * 1000)
+				src.material_trigger_on_temp(W.force * 1000)
 				if (prob(W.force*2))
 					playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 1, -1)
 					for (var/mob/M in src)
@@ -471,7 +471,7 @@
 
 		log_shot(P, src)
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		var/damage = round(P.power, 1.0)
 
@@ -490,7 +490,7 @@
 				src.health -= damage/2
 				hitsound = 'sound/impact_sounds/Metal_Hit_Lowfi_1.ogg'
 			if(D_BURNING)
-				src.material?.triggerTemp(src, 5000)
+				src.material_trigger_on_temp(5000)
 				src.health -= damage/3
 				hitsound = 'sound/items/Welder.ogg'
 			if(D_SPECIAL) //blob
@@ -726,6 +726,18 @@
 		if(sec_system)
 			if(sec_system.active)
 				sec_system.run_component()
+			if(src.engine && engine.active)
+				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
+				var/datum/gas_mixture/consumed = src.fueltank.remove_air(usage)
+				var/toxins = consumed?.toxins
+				if(isnull(toxins))
+					toxins = 0
+
+				if(usage)
+					if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
+						engine.deactivate()
+				consumed?.dispose()
+
 #ifdef MAP_OVERRIDE_NADIR
 		if(src.acid_damage_multiplier > 0)
 			var/T = get_turf(src)
@@ -1423,7 +1435,8 @@
 
 /obj/machinery/vehicle/New()
 	..()
-	name += "[pick(rand(1, 999))]"
+	if(src.name == initial(src.name) && numbers_in_name)
+		name += "[pick(rand(1, 999))]"
 	if(prob(1))
 		var/new_name = phrase_log.random_phrase("vehicle")
 		if(new_name)
@@ -1466,6 +1479,8 @@
 	src.lights.ship = src
 	src.components += src.lights
 
+	src.engine.deactivate() // gotta not use up all that fuel!
+
 	START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 
 /obj/machinery/vehicle/get_movement_controller()
@@ -1490,19 +1505,19 @@
 		boutput(user, "<span class='alert'>[src] is locked!</span>")
 		return
 
-	if(isliving(O) && O:stat != 2)
-		if (O == user)
-			src.board_pod(O)
-		else
-			boutput(user, "<span class='alert'>You can't shove someone else into a pod.</span>")
-
-		return
+	if(isliving(O))
+		var/mob/living/M = O
+		if (M == user)
+			src.board_pod(M)
+			return
+		else if (!isdead(M))
+			boutput(user, "<span class='alert'>You can't shove someone else into a pod unless they are dead!</span>")
+			return
 
 	var/obj/item/shipcomponent/secondary_system/SS = src.sec_system
 	if (!SS)
 		return
 	SS.Clickdrag_ObjectToPod(user,O)
-	return
 
 /obj/machinery/vehicle/mouse_drop(over_object, src_location, over_location)
 	if (!usr.client || !isliving(usr) || isintangible(usr))
@@ -1715,6 +1730,7 @@
 	name = "tank"
 	icon = 'icons/obj/machines/8dirvehicles.dmi'
 	icon_state = "minisub_body"
+	numbers_in_name = FALSE
 	var/body_type = "minisub"
 	var/obj/item/shipcomponent/locomotion/locomotion = null //wheels treads hovermagnets etc
 	uses_weapon_overlays = 0
@@ -1728,10 +1744,6 @@
 	ram_self_damage_multiplier = 0.14
 	//var/datum/movement_controller/pod/movement_controller
 
-	New()
-		..()
-		name = "minisub"
-
 	Move(NewLoc,Dir=0,step_x=0,step_y=0)
 		.=..(NewLoc,Dir,step_x,step_y)
 
@@ -1739,10 +1751,10 @@
 			var/datum/movement_controller/tank/M = movement_controller
 			if (M.squeal_sfx)
 				M.squeal_sfx = 0
-				playsound(src, 'sound/machines/car_screech.ogg', 40, 1)
+				playsound(src, 'sound/machines/car_screech.ogg', 40, TRUE)
 			if (M.accel_sfx)
 				M.accel_sfx = 0
-				playsound(src, 'sound/machines/rev_engine.ogg', 40, 1)
+				playsound(src, 'sound/machines/rev_engine.ogg', 40, TRUE)
 
 	get_move_velocity_magnitude()
 		.= movement_controller:velocity_magnitude
@@ -1773,6 +1785,7 @@
 			locomotion = null
 
 /obj/machinery/vehicle/tank/minisub
+	name = "minisub"
 	body_type = "minisub"
 	event_handler_flags = USE_FLUID_ENTER | IMMUNE_MANTA_PUSH
 	acid_damage_multiplier = 0.5

@@ -27,14 +27,7 @@
 /obj/item/paper/safehouse/delivery_note{
 	desc = "A Test Report Card, Seems Something Went Wrong.";
 	name = "Engine Test 53";
-	info = "<b>Seems that a part of the card is burnt.</b>
-			<br>Engine Report 53
-			<br>
-			<br>-------------------------------------------
-			<br>The engine seems to be acting normaly without any errors i suspect we can use this engine very very so-
-			<br>-------------------------------------------
-			<br>Rest of the card is burnt off
-			"
+	info = "<b>Seems that a part of the card is burnt.</b><br>Engine Report 53<br><br>-------------------------------------------<br>The engine seems to be acting normaly without any errors i suspect we can use this engine very very so-<br>-------------------------------------------<br>Rest of the card is burnt off"
 	},
 /obj/decal/cleanable/dirt/dirt3,
 /obj/decal/fakeobjects/lightbulb_broken,

@@ -251,7 +251,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		var/damage = 0
 		damage = round(((P.power/3)*P.proj_data.ks_ratio), 1.0)
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		if (!damage)
 			return
@@ -628,7 +628,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					var/ejectamt = 0
 					var/turf/ejectturf = get_turf(usr)
 					for(var/obj/item/O in src.contents)
-						if (O.material && O.material.mat_id == mat_id)
+						if (O.material && O.material.getID() == mat_id)
 							if (!ejectamt)
 								ejectamt = input(usr,"How many material pieces do you want to eject?","Eject Materials") as num
 								if (ejectamt <= 0 || src.mode != "ready" || BOUNDS_DIST(src, usr) > 0 || !isnum_safe(ejectamt))
@@ -647,7 +647,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 								O.set_loc(get_output_location(O))
 							else
 								var/obj/item/material_piece/P = new O.type
-								P.setMaterial(copyMaterial(O.material))
+								P.setMaterial(O.material)
 								P.change_stack_amount(ejectamt - P.amount)
 								O.change_stack_amount(-ejectamt)
 								P.set_loc(get_output_location(O))
@@ -1613,11 +1613,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (pattern == "ALL") // anything at all
 			return TRUE
 		if (pattern == "ORG|RUB")
-			return mat.material_flags & MATERIAL_RUBBER || mat.material_flags & MATERIAL_ORGANIC
+			return mat.getMaterialFlags() & MATERIAL_RUBBER || mat.getMaterialFlags() & MATERIAL_ORGANIC
 		if (pattern == "RUB")
-			return mat.material_flags & MATERIAL_RUBBER
+			return mat.getMaterialFlags() & MATERIAL_RUBBER
 		if (pattern == "WOOD")
-			return mat.material_flags & MATERIAL_WOOD
+			return mat.getMaterialFlags() & MATERIAL_WOOD
 		else if (copytext(pattern, 4, 5) == "-") // wildcard
 			var/firstpart = copytext(pattern, 1, 4)
 			var/secondpart = text2num_safe(copytext(pattern, 5))
@@ -1626,7 +1626,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				// go ahead and clean it up a bit
 				if ("MET")
 
-					if (mat.material_flags & MATERIAL_METAL)
+					if (mat.getMaterialFlags() & MATERIAL_METAL)
 						// maux hardness = 15
 						// bohr hardness = 33
 						switch(secondpart)
@@ -1637,7 +1637,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 							else
 								return TRUE
 				if ("CRY")
-					if (mat.material_flags & MATERIAL_CRYSTAL)
+					if (mat.getMaterialFlags() & MATERIAL_CRYSTAL)
 
 						switch(secondpart)
 							if(2)
@@ -1655,9 +1655,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 				if ("INS")
 					switch(secondpart)
 						if(2)
-							return mat.getProperty("electrical") <= 2 && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
+							return mat.getProperty("electrical") <= 2 && (mat.getMaterialFlags() & (MATERIAL_CLOTH | MATERIAL_RUBBER))
 						else
-							return mat.getProperty("electrical") <= 4 && (mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER))
+							return mat.getProperty("electrical") <= 4 && (mat.getMaterialFlags() & (MATERIAL_CLOTH | MATERIAL_RUBBER))
 				if ("DEN")
 					switch(secondpart)
 						if(2)
@@ -1665,7 +1665,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 						else
 							return mat.getProperty("density") >= 4
 				if ("POW")
-					if (mat.material_flags & MATERIAL_ENERGY)
+					if (mat.getMaterialFlags() & MATERIAL_ENERGY)
 						switch(secondpart)
 							if(3)
 								return mat.getProperty("radioactive") >= 5 //soulsteel and erebite basically
@@ -1674,8 +1674,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 							else
 								return TRUE
 				if ("FAB")
-					return mat.material_flags & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC)
-		else if (pattern == mat.mat_id) // specific material id
+					return mat.getMaterialFlags() & (MATERIAL_CLOTH | MATERIAL_RUBBER | MATERIAL_ORGANIC)
+				if ("GEM")
+					return istype(mat, /datum/material/crystal/gemstone)
+		else if (pattern == mat.getID()) // specific material id
 			return TRUE
 		return FALSE
 
@@ -1710,7 +1712,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 				var/amount = M.item_amounts[i]
 				src.update_resource_amount(mat_id, -amount)
 				for (var/obj/item/I in src.contents)
-					if (I.material && istype(I, src.base_material_class) && I.material.mat_id == mat_id)
+					if (I.material && istype(I, src.base_material_class) && I.material.getID() == mat_id)
 						var/target_amount = round(src.resource_amounts[mat_id] / 10)
 						if (!target_amount)
 							src.contents -= I
@@ -2014,7 +2016,8 @@ TYPEINFO(/obj/machinery/manufacturer)
 			<td class='r'>[current_reagent.volume] units</td>
 		</tr>
 				"}
-
+		if (QDELETED(src.beaker))
+			src.beaker = null
 		if (src.beaker)
 			dat += {"
 		<tr><th colspan='2'>Container</th></tr>
@@ -2127,7 +2130,10 @@ TYPEINFO(/obj/machinery/manufacturer)
 
 	proc/eject_manudrive(mob/living/user)
 		src.drive_recipes = null
-		user.put_in_hand_or_drop(manudrive)
+		if (GET_DIST(user, src) <= 1)
+			user.put_in_hand_or_drop(manudrive)
+		else
+			manudrive.set_loc(src.loc)
 		src.manudrive = null
 
 	proc/load_item(obj/item/O, mob/living/user)
@@ -2141,12 +2147,12 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (istype(O, src.base_material_class) && O.material)
 			var/obj/item/material_piece/P = O
 			for(var/obj/item/material_piece/M in src.contents)
-				if (istype(M, P) && M.material && isSameMaterial(M.material, P.material))
+				if (istype(M, P) && M.material && M.material.isSameMaterial(P.material))
 					M.change_stack_amount(P.amount)
-					src.update_resource_amount(M.material.mat_id, P.amount * 10, M.material)
+					src.update_resource_amount(M.material.getID(), P.amount * 10, M.material)
 					qdel(P)
 					return
-			src.update_resource_amount(P.material.mat_id, P.amount * 10, P.material)
+			src.update_resource_amount(P.material.getID(), P.amount * 10, P.material)
 
 		O.set_loc(src)
 
@@ -2182,11 +2188,11 @@ TYPEINFO(/obj/machinery/manufacturer)
 		if (src.resource_amounts[mat_id] == 0)
 			stored_materials_by_id -= mat_id
 		else if (mat_added && !(mat_id in stored_materials_by_id))
-			stored_materials_by_id[mat_id] = copyMaterial(mat_added)
+			stored_materials_by_id[mat_id] = mat_added
 
 	proc/get_our_material(mat_id)
 		if (mat_id in src.stored_materials_by_id)
-			return copyMaterial(src.stored_materials_by_id[mat_id])
+			return src.stored_materials_by_id[mat_id]
 		return getMaterial(mat_id)
 
 	proc/claim_free_resources()
@@ -2199,7 +2205,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 					P.set_loc(src)
 					if (free_resource_amt > 1)
 						P.change_stack_amount(free_resource_amt - P.amount)
-					src.update_resource_amount(P.material.mat_id, free_resource_amt * 10)
+					src.update_resource_amount(P.material.getID(), free_resource_amt * 10)
 			free_resource_amt = 0
 		else
 			logTheThing(LOG_DEBUG, null, "<b>obj/manufacturer:</b> [src.name]-[src.type] empty free resources list!")
@@ -2272,6 +2278,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/glass,
 		/datum/manufacture/glassR,
 		/datum/manufacture/atmos_can,
+		/datum/manufacture/gastank,
 		/datum/manufacture/player_module,
 		/datum/manufacture/cable,
 		/datum/manufacture/powercell,
@@ -2537,6 +2544,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/chembarrel,
 		/datum/manufacture/chembarrel/yellow,
 		/datum/manufacture/chembarrel/red,
+		/datum/manufacture/condenser,
+		/datum/manufacture/beaker_lid_box,
+		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,
 		/datum/manufacture/reagentscanner,
 		/datum/manufacture/dropper,
@@ -2910,6 +2920,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/atmos_goggles,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,
 		/datum/manufacture/breathmask,
@@ -3037,6 +3048,16 @@ TYPEINFO(/obj/machinery/manufacturer)
 	blueprint = /datum/manufacture/mechanics/gunbot
 	override_name_desc = FALSE
 
+#ifdef ENABLE_ARTEMIS
+/obj/machinery/manufacturer/artemis
+	name = "Scout Vessel Manufacturer"
+	desc = "A manufacturing unit that can produce equipment for scouting vessels."
+	icon_state = "fab-hangar"
+	icon_base = "hangar"
+	accept_blueprints = 0
+	available = list(
+	/datum/manufacture/nav_sat)
+#endif
 /******************** Nadir Resonators *******************/
 
 /obj/item/paper/manufacturer_blueprint/resonator_type_ax

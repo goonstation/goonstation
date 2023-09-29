@@ -15,7 +15,7 @@
 			return 1
 #ifdef RP_MODE
 		var/mob/living/intangible/wraith/wraith = holder.owner
-		if (istype(wraith) && length(wraith.poltergeists) >= 3)
+		if (istype(wraith) && length(wraith.poltergeists) >= 2)
 			boutput(wraith, "<span class='alert'>This world is already loud with the voices of your children. No more ghosts will come for now.</span>")
 			return 1
 #endif
@@ -35,6 +35,7 @@
 			return
 
 		var/obj/spookMarker/marker = new /obj/spookMarker(T)
+		W.spawn_marker = marker
 		var/list/text_messages = list()
 		text_messages.Add("Would you like to respawn as a poltergeist? Your name will be added to the list of eligible candidates.")
 		text_messages.Add("You are eligible to be respawned as a poltergeist. You have [src.ghost_confirmation_delay / 10] seconds to respond to the offer.")
@@ -63,5 +64,5 @@
 			message_admins("[lucky_dude.key] respawned as a poltergeist for [src.holder.owner].")
 			usr.playsound_local(usr.loc, 'sound/voice/wraith/ghostrespawn.ogg', 50, 0)
 			var/mob/living/intangible/wraith/poltergeist/P = lucky_dude.current
-			P.set_loc(T)
 			P.marker = marker
+		W.spawn_marker = null

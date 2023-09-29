@@ -62,6 +62,8 @@ datum
 		var/threshold = null
 		/// Has this chem been in the person's bloodstream for at least one cycle?
 		var/initial_metabolized = FALSE
+		///Is it banned from various fluid types, see _std/defines/reagents.dm
+		var/fluid_flags = 0
 
 		New()
 			..()
@@ -167,23 +169,26 @@ datum
 				if(INGEST)
 					var/datum/ailment_data/addiction/AD = M.addicted_to_reagent(src)
 					if (AD)
-						boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
 						M.make_jittery(-5)
 						AD.last_reagent_dose = world.timeofday
-						AD.stage = 1
+						if (AD.stage != 1)
+							boutput(M, "<span class='notice'><b>You feel slightly better, but for how long?</b></span>")
+							AD.stage = 1
 
-			M.material?.triggerChem(M, src, volume)
+			M.material_trigger_on_chems(src, volume)
 			for(var/atom/A in M)
-				if(A.material) A.material.triggerChem(A, src, volume)
+				A.material_trigger_on_chems(src, volume)
+			for(var/atom/equipped_stuff in M.equipped())
+				equipped_stuff.material_trigger_on_chems(src, volume)
 			return did_not_react
 
 		proc/reaction_obj(var/obj/O, var/volume) //By default we transfer a small part of the reagent to the object
 								//if it can hold reagents. nope!
-			O.material?.triggerChem(O, src, volume)
+			O.material_trigger_on_chems(src, volume)
 			return 1
 
 		proc/reaction_turf(var/turf/T, var/volume)
-			T.material?.triggerChem(T, src, volume)
+			T.material_trigger_on_chems(src, volume)
 			return 1 // returns 1 to spawn fluid. Checked in 'reaction()' proc of Chemistry-Holder.dm
 
 
@@ -380,7 +385,7 @@ datum
 			reaction_turf(var/turf/T, var/volume)
 				if(volume >= 5)
 					if(!locate(/turf/unsimulated/floor/void) in T)
-						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+						playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 						new /turf/unsimulated/floor/void(T)
 
 		//	When finished, exposure to or consumption of this drug should basically duplicate the

@@ -21,6 +21,95 @@
 		if (!gene_pool || !gene_stat)
 			return 0
 
+	/// This proc is called after a seed is created and received all changes associated with being spliced
+	/// This should also be called whenever you have changes that need to be done whenever this commut touches a seed
+	proc/changes_after_splicing(var/datum/plantgenes/gene_pool)
+		if (gene_pool)
+			return TRUE
+
+	/// This proc is called when a plant or seed firstly receives the gene strain in question e.g. through HYPaddCommut, HYPnewcommutcheck.
+	/// Use this if you want to manipulate the plantgenes if its the first time the generation of seeds gains it
+	/// This is not called when a seed receive this plant gene through passing along the generation e.g. splicing or HYPpassplantgenes.
+	proc/on_addition(var/datum/plantgenes/gene_pool)
+		if (gene_pool)
+			return TRUE
+
+	/// This proc is called when a plant or seed firstly receives the gene strain in question e.g. throught splicing or HYPpassplantgenes.
+	/// call this if you want a certain effect to happen multiple times each generation.
+	proc/on_passing(var/datum/plantgenes/gene_pool)
+		if (gene_pool)
+			return TRUE
+
+	/// This proc is called when a plant or seed removes the gene strain in question e.g. through HYPremoveCommut
+	/// This may be usefull for some whacky gene strains that do something when added and decides at some point to remove themselves and e.g. tank stats as a result
+	proc/on_removal(var/datum/plantgenes/gene_pool)
+		if (gene_pool)
+			return TRUE
+
+/datum/plant_gene_strain/temporary_splice_stabilizer
+	name = "Temporary Spliceability"
+	desc = "This seed was stabilized using advanced technology to be spliced once and won't be able to be spliced afterwards."
+
+	changes_after_splicing(var/datum/plantgenes/gene_pool)
+		. = ..()
+		if (.)
+			//we remove this commut and add splice disabler
+			HYPremoveCommut(gene_pool, /datum/plant_gene_strain/temporary_splice_stabilizer)
+			HYPaddCommut(gene_pool, /datum/plant_gene_strain/splicing/disabled)
+
+/datum/plant_gene_strain/overpowering_genome
+	name = "Overpowering Genome"
+	desc = "This seed's genomes are all dominant at all times"
+
+	on_addition(var/datum/plantgenes/gene_pool)
+		. = ..()
+		if (.)
+			gene_pool.d_species = 1
+			gene_pool.d_growtime = 1
+			gene_pool.d_harvtime = 1
+			gene_pool.d_cropsize = 1
+			gene_pool.d_harvests = 1
+			gene_pool.d_potency = 1
+			gene_pool.d_endurance = 1
+
+	on_passing(var/datum/plantgenes/gene_pool)
+		. = ..()
+		if (.)
+			gene_pool.d_species = 1
+			gene_pool.d_growtime = 1
+			gene_pool.d_harvtime = 1
+			gene_pool.d_cropsize = 1
+			gene_pool.d_harvests = 1
+			gene_pool.d_potency = 1
+			gene_pool.d_endurance = 1
+
+
+/datum/plant_gene_strain/accepting_genome
+	name = "Accepting Genome"
+	desc = "This seed's genomes are all recessive at all times"
+
+	on_addition(var/datum/plantgenes/gene_pool)
+		. = ..()
+		if (. && !HYPCheckCommut(gene_pool, /datum/plant_gene_strain/overpowering_genome))
+			gene_pool.d_species = 0
+			gene_pool.d_growtime = 0
+			gene_pool.d_harvtime = 0
+			gene_pool.d_cropsize = 0
+			gene_pool.d_harvests = 0
+			gene_pool.d_potency = 0
+			gene_pool.d_endurance = 0
+
+	on_passing(var/datum/plantgenes/gene_pool)
+		. = ..()
+		if (. && !HYPCheckCommut(gene_pool, /datum/plant_gene_strain/overpowering_genome))
+			gene_pool.d_species = 0
+			gene_pool.d_growtime = 0
+			gene_pool.d_harvtime = 0
+			gene_pool.d_cropsize = 0
+			gene_pool.d_harvests = 0
+			gene_pool.d_potency = 0
+			gene_pool.d_endurance = 0
+
 /datum/plant_gene_strain/immunity_toxin
 	name = "Toxin Immunity"
 	desc = "This genetic strain enables a plant to wholly resist damage from toxic substances."
@@ -36,6 +125,10 @@
 /datum/plant_gene_strain/metabolism_fast
 	name = "Fast Metabolism"
 	desc = "This gene causes a plant to grow faster, but also consume water more rapidly."
+
+/datum/plant_gene_strain/inert
+	name = "Inert"
+	desc = "This gene causes the plants produce to spawn, most of the time, without additional chemicals."
 
 /datum/plant_gene_strain/metabolism_slow
 	name = "Slow Metabolism"
@@ -82,7 +175,7 @@
 		if (!gene_pool || !gene_stat)
 			return 0
 		if (gene_stat == "potency")
-			return max(0, value_base * src.quality_mult)
+			return max(value_base * src.quality_mult * -1, value_base * src.quality_mult)
 
 /datum/plant_gene_strain/quality/inferior
 	name = "Inferior Quality"
@@ -94,7 +187,7 @@
 		if (!gene_pool || !gene_stat)
 			return 0
 		if (gene_stat == "potency")
-			return min(0, value_base * src.quality_mult)
+			return min(value_base * src.quality_mult * -1, value_base * src.quality_mult)
 
 /datum/plant_gene_strain/splicing
 	name = "Splice Enabler"
@@ -110,7 +203,6 @@
 	name = "Splice Disabler"
 	desc = "Chromosomal alterations prevent seeds from this plant from being spliced at all."
 	negative = 1
-	chance = 100
 	splice_mod = 100
 
 /datum/plant_gene_strain/damage_res
@@ -221,3 +313,8 @@
 	name = "Enzymatic"
 	desc = "Produce harvested from this plant may contain powerful enzymes."
 	reagents_to_add = list ("booster_enzyme")
+
+/datum/plant_gene_strain/reagent_blacklist
+	name = "Inhibited Potential"
+	desc = "Produce harvested from this plant won't contain special dangerous chemicals"
+	var/list/reagents_to_remove = list("ghostchilijuice", "potassium", "lithium")

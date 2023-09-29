@@ -19,7 +19,7 @@
 	var/obj/item/organ/liver = null
 	var/obj/item/organ/spleen = null
 	var/obj/item/organ/pancreas = null
-	var/obj/item/organ/stomach = null
+	var/obj/item/organ/stomach/stomach = null
 	var/obj/item/organ/intestines = null
 	var/obj/item/organ/appendix = null
 	var/obj/item/organ/tail = null
@@ -411,7 +411,7 @@
 			else if(organ == tail)
 				organ = "tail"
 			else
-				return 0 // what the fuck are you trying to remove
+				return null // what the fuck are you trying to remove
 
 		switch (lowertext(organ))
 
@@ -436,7 +436,7 @@
 
 			if ("head")
 				if (!src.head)
-					return 0
+					return null
 				var/obj/item/organ/head/myHead = src.head
 				if (src.brain && !isskeleton(src.donor)) // skeletons move their brain elsewhere so they can detach their head without dying
 					myHead.brain = src.drop_organ("brain", myHead)
@@ -486,7 +486,7 @@
 
 			if ("skull")
 				if (!src.skull)
-					return 0
+					return null
 				var/obj/item/skull/mySkull = src.skull
 				mySkull.set_loc(location)
 				mySkull.holder = null
@@ -497,7 +497,7 @@
 
 			if ("brain")
 				if (!src.brain)
-					return 0
+					return null
 				var/obj/item/organ/brain/myBrain = src.brain
 				if (!myBrain.owner) //Oh no, they have no mind!
 					if (src.donor.ghost)
@@ -531,7 +531,7 @@
 
 			if ("left_eye")
 				if (!src.left_eye)
-					return 0
+					return null
 				var/obj/item/organ/eye/myLeftEye = src.left_eye
 				myLeftEye.set_loc(location)
 				myLeftEye.on_removal()
@@ -543,7 +543,7 @@
 
 			if ("right_eye")
 				if (!src.right_eye)
-					return 0
+					return null
 				var/obj/item/organ/eye/myRightEye = src.right_eye
 				myRightEye.set_loc(location)
 				myRightEye.on_removal()
@@ -555,7 +555,7 @@
 
 			if ("chest")
 				if (!src.chest)
-					return 0
+					return null
 				var/obj/item/organ/chest/myChest = src.chest
 				myChest.set_loc(location)
 				myChest.on_removal()
@@ -566,7 +566,7 @@
 
 			if ("heart")
 				if (!src.heart)
-					return 0
+					return null
 				var/obj/item/organ/heart/myHeart = src.heart
 				//Commented this out for some reason I forget. I'm sure I'll remember what it is one day. -kyle
 				// if (src.heart.robotic)
@@ -582,7 +582,7 @@
 
 			if ("left_lung")
 				if (!src.left_lung)
-					return 0
+					return null
 				var/obj/item/organ/lung/left/myLeftLung = src.left_lung
 				myLeftLung.set_loc(location)
 				myLeftLung.on_removal()
@@ -595,7 +595,7 @@
 
 			if ("right_lung")
 				if (!src.right_lung)
-					return 0
+					return null
 				var/obj/item/organ/lung/right/myRightLung = src.right_lung
 				myRightLung.set_loc(location)
 				myRightLung.on_removal()
@@ -608,7 +608,7 @@
 
 			if ("butt")
 				if (!src.butt)
-					return 0
+					return null
 				var/obj/item/clothing/head/butt/myButt = src.butt
 				myButt.set_loc(location)
 				myButt.holder = null
@@ -620,7 +620,7 @@
 
 			if ("left_kidney")
 				if (!src.left_kidney)
-					return 0
+					return null
 				var/obj/item/organ/kidney/left/myleft_kidney = src.left_kidney
 				myleft_kidney.set_loc(location)
 				myleft_kidney.on_removal()
@@ -632,7 +632,7 @@
 
 			if ("right_kidney")
 				if (!src.right_kidney)
-					return 0
+					return null
 				var/obj/item/organ/kidney/right/myright_kidney = src.right_kidney
 				myright_kidney.set_loc(location)
 				myright_kidney.on_removal()
@@ -644,7 +644,7 @@
 
 			if ("liver")
 				if (!src.liver)
-					return 0
+					return null
 				var/obj/item/organ/liver/myliver = src.liver
 				myliver.set_loc(location)
 				myliver.on_removal()
@@ -656,7 +656,7 @@
 
 			if ("stomach")
 				if (!src.stomach)
-					return 0
+					return null
 				var/obj/item/organ/stomach/mystomach = src.stomach
 				mystomach.set_loc(location)
 				mystomach.on_removal()
@@ -668,7 +668,7 @@
 
 			if ("intestines")
 				if (!src.intestines)
-					return 0
+					return null
 				var/obj/item/organ/intestines/myintestines = src.intestines
 				myintestines.set_loc(location)
 				myintestines.on_removal()
@@ -680,7 +680,7 @@
 
 			if ("spleen")
 				if (!src.spleen)
-					return 0
+					return null
 				var/obj/item/organ/spleen/myspleen = src.spleen
 				myspleen.set_loc(location)
 				myspleen.on_removal()
@@ -692,7 +692,7 @@
 
 			if ("pancreas")
 				if (!src.pancreas)
-					return 0
+					return null
 				var/obj/item/organ/pancreas/mypancreas = src.pancreas
 				mypancreas.set_loc(location)
 				mypancreas.on_removal()
@@ -704,7 +704,7 @@
 
 			if ("appendix")
 				if (!src.appendix)
-					return 0
+					return null
 				var/obj/item/organ/appendix/myappendix = src.appendix
 				myappendix.set_loc(location)
 				myappendix.on_removal()
@@ -716,7 +716,7 @@
 
 			if ("tail")
 				if (!src.tail)
-					return 0
+					return null
 				var/obj/item/organ/tail/mytail = src.tail
 				mytail.set_loc(location)
 				mytail.on_removal()
@@ -1156,7 +1156,7 @@
 			if (istype(I, /obj/item/organ))
 				var/obj/item/organ/O = I
 				O.on_transplant(src.donor)
-			if (is_full_robotic())
+			if (is_full_robotic() && !istype(src.donor:mutantrace, /datum/mutantrace/cyberman))
 				donor.unlock_medal("Spaceship of Theseus", 1)
 			return 1
 
@@ -1352,28 +1352,6 @@
 	regenRate = 0
 	tabName = "Body"
 
-/atom/movable/screen/ability/topBar/organ
-	clicked(params)
-		var/datum/targetable/organAbility/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(usr.loc))
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr:targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			usr.targeting_ability = owner
-			usr.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-
 /datum/targetable/organAbility
 	icon = 'icons/mob/organ_abilities.dmi'
 	icon_state = "template"
@@ -1384,38 +1362,6 @@
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
 	var/obj/item/organ/linked_organ = null
-
-	New()
-		var/atom/movable/screen/ability/topBar/organ/B = new /atom/movable/screen/ability/topBar/organ(null)
-		B.name = src.name
-		B.desc = src.desc
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		src.object = B
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/organ()
-			object.icon = src.icon
-			object.owner = src
-		if (disabled)
-			object.name = "[src.name] (unavailable)"
-			object.icon_state = src.icon_state + "_cd"
-		else if (src.last_cast > world.time)
-			object.name = "[src.name] ([round((src.last_cast-world.time)/10)])"
-			object.icon_state = src.icon_state + "_cd"
-		else if (toggled)
-			if (is_on)
-				object.name = "[src.name] (on)"
-				object.icon_state = src.icon_state
-			else
-				object.name = "[src.name] (off)"
-				object.icon_state = src.icon_state + "_cd"
-		else
-			object.name = src.name
-			object.icon_state = src.icon_state
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
@@ -1485,7 +1431,7 @@
 		var/mult = src.eye_proj == /datum/projectile/laser/eyebeams ? 1 : 0
 		holder.owner.visible_message("<span class='combat'><b>[holder.owner]</b> shoots [mult ? "eye beams" : "an eye beam"]!</span>")
 		var/datum/projectile/PJ = new eye_proj
-		shoot_projectile_ST(holder.owner, PJ, T)
+		shoot_projectile_ST_pixel_spread(holder.owner, PJ, T)
 
 /datum/projectile/laser/eyebeams/left
 	icon_state = "eyebeamL"
@@ -1589,13 +1535,8 @@
 		linked_organ.take_damage(20, 20) //not safe
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && length(L.stomach_process))
-				boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
-				for(var/obj/item/reagent_containers/food/snacks/bite/B in L.stomach_process)
-					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
-			else
-				boutput(L, "<span class='alert'>Your intestines crunch painfully in your gut. Maybe they would work better with some food to process.</span>")
-				linked_organ.take_damage(30) //owwww
+			boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
+			L.organHolder?.stomach?.handle_digestion()
 
 
 /datum/targetable/organAbility/projectilevomit
@@ -1612,7 +1553,7 @@
 
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && length(L.stomach_process))
+			if (length(L.organHolder.stomach.contents))
 				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
 				SPAWN(0)
 					for (var/i in 1 to 3)
@@ -1620,7 +1561,7 @@
 						O.throw_at(target, 8, 3, bonus_throwforce=5)
 						linked_organ.take_damage(3)
 						sleep(0.1 SECONDS)
-						if(linked_organ.broken || !length(L.stomach_process))
+						if(linked_organ.broken || !length(L.organHolder.stomach.contents))
 							break
 			else
 				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")

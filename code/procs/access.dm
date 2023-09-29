@@ -207,7 +207,7 @@
 						access_all_personal_lockers, access_tech_storage, access_maint_tunnels, access_bar, access_janitor,
 						access_crematorium, access_kitchen, access_robotics, access_cargo, access_supply_console,
 						access_research, access_hydro, access_ranch, access_mail, access_ai_upload, access_pathology, access_researchfoyer,
-						access_telesci)
+						access_telesci, access_teleporter)
 		if("Head of Security")
 #ifdef RP_MODE
 			var/list/hos_access = get_all_accesses()
@@ -347,7 +347,7 @@
 			return list(access_bar)
 		if("Waiter")
 			return list(access_bar, access_kitchen)
-		if("Clown", "Boxer", "Barber", "Mime")
+		if("Clown", "Boxer", "Barber", "Mime", "Dungeoneer")
 			return list(access_maint_tunnels)
 		if("Assistant", "Staff Assistant", "Technical Assistant", "Radio Show Host")
 			return list(access_maint_tunnels, access_tech_storage)
@@ -423,6 +423,8 @@ var/list/access_name_lookup //Generated at round start.
 	switch(A)
 		if(access_cargo)
 			return "Cargo Bay"
+		if(access_brig)
+			return "Brig"
 		if(access_security)
 			return "Security"
 		if(access_forensics_lockers)

@@ -1,0 +1,1599 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ad" = (
+/obj/storage/crate,
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/random_item_spawner/medicine/one,
+/obj/random_item_spawner/junk/maybe_few,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"au" = (
+/obj/structure/woodwall,
+/turf/simulated/floor/plating,
+/area/pod_wars/spacejunk/reliant)
+"aK" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"ba" = (
+/obj/machinery/microwave,
+/obj/table/auto,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"cv" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/cable,
+/obj/item/raw_material/shard/glass,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"fr" = (
+/obj/submachine/chef_sink{
+	density = 0;
+	dir = 8;
+	name = "utility sink";
+	pixel_y = 3
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"gn" = (
+/obj/storage/crate,
+/obj/random_item_spawner/snacks/one_or_zero,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"gH" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"gJ" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"gV" = (
+/obj/machinery/light/incandescent/netural,
+/obj/storage/crate,
+/obj/random_item_spawner/med_kit/maybe_few,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"hH" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"hZ" = (
+/obj/stool/bench/blue/auto,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"iH" = (
+/obj/storage/crate,
+/obj/random_item_spawner/snacks/one_or_zero,
+/obj/random_item_spawner/med_tool/one_or_zero,
+/obj/random_item_spawner/junk/maybe_few,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"iK" = (
+/turf/variableTurf/clear,
+/area/pod_wars/spacejunk/reliant)
+"iU" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/orange,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"jH" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"kj" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"kK" = (
+/obj/table/auto,
+/obj/random_item_spawner/tableware/some,
+/obj/random_item_spawner/snacks/one_or_zero,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"mD" = (
+/obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/obj/item/kitchen/food_box/lollipop,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"nn" = (
+/obj/stool/bench/blue/auto,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"pq" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"pB" = (
+/obj/machinery/vending/cola/blue,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"qi" = (
+/obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"qI" = (
+/obj/machinery/chem_dispenser/alcohol,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"qQ" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"rA" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"ts" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"tN" = (
+/obj/machinery/computer/power_monitor/console_upper{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/machinery/power/data_terminal,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"tX" = (
+/obj/machinery/light/incandescent/netural,
+/obj/deployable_turret/outpost/active/south,
+/turf/simulated/floor/airless/black,
+/area/pod_wars/spacejunk/reliant)
+"uv" = (
+/obj/storage/crate,
+/obj/random_item_spawner/medicine/one,
+/obj/random_item_spawner/med_tool/one_or_zero,
+/obj/random_item_spawner/med_kit/one_or_zero,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"uS" = (
+/obj/item/raw_material/shard/glass,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"va" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass/command{
+	req_access = null
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"vg" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/red,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"vn" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/pod_wars/spacejunk/reliant)
+"vT" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/storage/crate,
+/obj/random_item_spawner/tools/one_or_zero,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"wc" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/storage/crate,
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/med_kit/one_or_zero,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"wn" = (
+/obj/machinery/vending/snack,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"wr" = (
+/obj/reagent_dispensers/fueltank,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"wy" = (
+/obj/machinery/computer/announcement/console_lower{
+	dir = 4;
+	name = "NSV Reliant Announcement Computer";
+	req_access = null
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"wI" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"xq" = (
+/obj/machinery/power/smes/magical,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"yk" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"ze" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/pod_wars/spacejunk/reliant)
+"zj" = (
+/obj/machinery/power/apc/autoname_east,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"zI" = (
+/obj/deployable_turret/outpost/active/north,
+/turf/simulated/floor/airless/plating,
+/area/pod_wars/spacejunk/reliant)
+"zU" = (
+/obj/machinery/door/airlock/pyro/glass{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Ag" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "alt_propulsion"
+	},
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/pod_wars/spacejunk/reliant)
+"AJ" = (
+/obj/table/reinforced/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/shrub/dead{
+	pixel_y = 12
+	},
+/obj/machinery/light/small/floor/netural,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"AO" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"AS" = (
+/obj/storage/closet,
+/obj/item/mop,
+/obj/item/mop,
+/obj/item/mop,
+/obj/item/mop,
+/obj/item/sponge,
+/obj/item/sponge,
+/obj/item/sponge,
+/obj/item/sponge,
+/obj/item/spraybottle/cleaner,
+/obj/item/spraybottle/cleaner,
+/obj/item/reagent_containers/glass/bottle/cleaner,
+/obj/item/reagent_containers/glass/bottle/cleaner,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Bn" = (
+/obj/table/reinforced/auto,
+/obj/machinery/recharger,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Cg" = (
+/obj/machinery/deep_fryer,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Cz" = (
+/obj/stool/chair/comfy/shuttle/red{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Db" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"DF" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/turf/space,
+/area/pod_wars/spacejunk/reliant)
+"Ee" = (
+/obj/control_point_computer{
+	dir = 4;
+	name = "Reliant Control Console"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Er" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Fi" = (
+/obj/storage/secure/closet/fridge,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/obj/item/reagent_containers/food/snacks/ingredient/cheese,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Fs" = (
+/obj/storage/crate,
+/obj/random_item_spawner/tools/maybe_few,
+/obj/item/storage/belt/utility,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Ga" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/pod_wars/spacejunk/reliant)
+"Gq" = (
+/obj/loudspeaker,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"GG" = (
+/obj/item/raw_material/scrap_metal,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"HT" = (
+/obj/decal/fakeobjects{
+	desc = "It seems to be locked";
+	dir = 4;
+	icon = 'icons/obj/computerpanel.dmi';
+	icon_state = "securitycomputer2";
+	name = "Weapons Console"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Ia" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/storage/crate,
+/obj/random_item_spawner/snacks/one_or_zero,
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/medicine/one,
+/obj/random_item_spawner/med_tool/one_or_zero,
+/obj/random_item_spawner/junk/maybe_few,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"In" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/door/airlock/pyro/glass/command{
+	req_access = null
+	},
+/obj/structure/woodwall,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"JI" = (
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"KL" = (
+/obj/shrub/captainshrub,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"KM" = (
+/obj/structure/woodwall,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Ls" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/pod_wars/spacejunk/reliant)
+"LH" = (
+/obj/machinery/door/airlock/pyro/glass,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"MK" = (
+/obj/table/auto,
+/obj/machinery/glass_recycler,
+/obj/item/storage/box/glassbox,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"NE" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"NH" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"NU" = (
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 4;
+	icon_state = "alt_propulsion"
+	},
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/pod_wars/spacejunk/reliant)
+"Ox" = (
+/obj/item/raw_material/shard/glass,
+/turf/simulated/floor/plating,
+/area/pod_wars/spacejunk/reliant)
+"Oz" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"OR" = (
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"QK" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Rt" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/pod_wars/spacejunk/reliant)
+"Rv" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/floor/airless/plating,
+/area/pod_wars/spacejunk/reliant)
+"RM" = (
+/obj/machinery/light/incandescent/netural,
+/obj/deployable_turret/outpost/active/north,
+/turf/simulated/floor/plating,
+/area/pod_wars/spacejunk/reliant)
+"RT" = (
+/obj/machinery/chem_dispenser/soda,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Sg" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/storage/crate,
+/obj/random_item_spawner/tools/one_or_zero,
+/obj/random_item_spawner/shoe/one_or_zero,
+/obj/random_item_spawner/junk/maybe_few,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Sk" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/airless/plating,
+/area/pod_wars/spacejunk/reliant)
+"Sl" = (
+/turf/simulated/floor/airless/black,
+/area/pod_wars/spacejunk/reliant)
+"So" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/floor/airless/plating,
+/area/pod_wars/spacejunk/reliant)
+"SM" = (
+/obj/mopbucket,
+/obj/item/reagent_containers/glass/bucket,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Vp" = (
+/obj/machinery/power/terminal{
+	dir = 8
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/pod_wars/spacejunk/reliant)
+"Vy" = (
+/obj/rack,
+/obj/random_item_spawner/hat/one,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"VM" = (
+/obj/storage/secure/closet/personal/empty,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"VY" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/storage/crate,
+/obj/random_item_spawner/shoe/one_or_zero,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Wf" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Xm" = (
+/turf/simulated/floor/plating,
+/area/pod_wars/spacejunk/reliant)
+"Xs" = (
+/turf/simulated/floor/airless/plating,
+/area/pod_wars/spacejunk/reliant)
+"XA" = (
+/obj/machinery/shuttle/engine/heater{
+	dir = 4;
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/floor/airless/plating,
+/area/pod_wars/spacejunk/reliant)
+"XV" = (
+/obj/item/raw_material/scrap_metal,
+/turf/variableTurf/clear,
+/area/pod_wars/spacejunk/reliant)
+"Yv" = (
+/obj/decal/fakeobjects{
+	desc = "It seems to be locked";
+	dir = 4;
+	icon = 'icons/obj/computerpanel.dmi';
+	icon_state = "engine1";
+	name = "Engineering Console"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Yw" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"YN" = (
+/obj/storage/crate,
+/obj/machinery/light/incandescent/netural,
+/turf/simulated/floor/black,
+/area/pod_wars/spacejunk/reliant)
+"Zx" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir";
+	tag = "icon-lattice-dir (EAST)"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ZN" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+
+(1,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+ZN
+NH
+NH
+NH
+NH
+NH
+NH
+QK
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(2,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+ZN
+Db
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gH
+QK
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(3,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+Zx
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+Zx
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(4,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+Rt
+Ga
+Ga
+Ga
+Ga
+Ga
+Ga
+Ga
+Ga
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(5,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+Rt
+Rt
+JI
+tN
+wy
+OR
+Ee
+Yv
+HT
+JI
+Rt
+Rt
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(6,1,1) = {"
+gJ
+gJ
+gJ
+uS
+gJ
+Xs
+Ga
+OR
+Cz
+aK
+OR
+OR
+aK
+aK
+OR
+Ga
+KL
+Rt
+Rt
+Rt
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(7,1,1) = {"
+gJ
+Xm
+gJ
+Xs
+Xs
+Xs
+Ga
+OR
+Er
+OR
+OR
+OR
+OR
+OR
+OR
+Ga
+OR
+VM
+YN
+Vy
+Ga
+gJ
+gJ
+gJ
+GG
+gJ
+"}
+(8,1,1) = {"
+gJ
+gJ
+gJ
+Xs
+Sk
+Sk
+In
+Wf
+AO
+AJ
+qi
+mD
+AJ
+Wf
+Wf
+va
+Wf
+Wf
+Wf
+kj
+ze
+NE
+NE
+NE
+NE
+cv
+"}
+(9,1,1) = {"
+gJ
+uS
+gJ
+uS
+Xs
+zI
+Ga
+OR
+OR
+yk
+pq
+qQ
+yk
+OR
+OR
+Ga
+OR
+OR
+SM
+fr
+Ga
+gJ
+gJ
+gJ
+gJ
+GG
+"}
+(10,1,1) = {"
+gJ
+gJ
+uS
+gJ
+Xs
+Xs
+Ga
+OR
+OR
+yk
+OR
+Er
+yk
+OR
+OR
+Ga
+AS
+vg
+Rt
+Rt
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(11,1,1) = {"
+gJ
+gJ
+gJ
+uS
+Rt
+Rt
+Ga
+OR
+OR
+OR
+OR
+Er
+OR
+OR
+OR
+Ga
+Rt
+Rt
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(12,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+Rt
+Rt
+gV
+OR
+OR
+OR
+Er
+OR
+OR
+JI
+Rt
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+DF
+DF
+gJ
+"}
+(13,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+Rt
+Gq
+OR
+OR
+OR
+Er
+OR
+OR
+Gq
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+DF
+DF
+gJ
+"}
+(14,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+Rt
+Rt
+Rt
+zU
+Ga
+vn
+zU
+Rt
+Rt
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+DF
+DF
+gJ
+"}
+(15,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+Rt
+Rt
+Rt
+Rt
+JI
+OR
+OR
+Er
+OR
+JI
+Rt
+Rt
+Rt
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+DF
+DF
+gJ
+"}
+(16,1,1) = {"
+gJ
+gJ
+Rt
+Rt
+Rt
+OR
+OR
+hH
+OR
+OR
+iH
+vT
+OR
+OR
+hH
+OR
+OR
+Rt
+Rt
+gJ
+gJ
+gJ
+gJ
+DF
+DF
+gJ
+"}
+(17,1,1) = {"
+gJ
+gJ
+gJ
+Xm
+hH
+OR
+OR
+Ga
+OR
+OR
+uv
+Ia
+OR
+OR
+Ga
+OR
+OR
+hH
+Sl
+Xs
+DF
+DF
+DF
+DF
+DF
+gJ
+"}
+(18,1,1) = {"
+gJ
+gJ
+gJ
+RM
+Ga
+OR
+JI
+Ga
+OR
+OR
+gn
+VY
+OR
+OR
+Ga
+OR
+JI
+Ga
+tX
+Xs
+gJ
+gJ
+gJ
+DF
+DF
+gJ
+"}
+(19,1,1) = {"
+gJ
+gJ
+gJ
+Xm
+hH
+OR
+OR
+Ga
+OR
+OR
+ad
+Sg
+OR
+OR
+Ga
+OR
+OR
+hH
+Sl
+Xs
+DF
+DF
+DF
+DF
+DF
+gJ
+"}
+(20,1,1) = {"
+gJ
+gJ
+Rt
+Rt
+Rt
+OR
+OR
+hH
+OR
+OR
+iH
+wc
+OR
+OR
+hH
+OR
+OR
+Rt
+Rt
+gJ
+gJ
+gJ
+gJ
+DF
+DF
+gJ
+"}
+(21,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+Rt
+Rt
+Rt
+Rt
+JI
+OR
+OR
+Er
+OR
+JI
+Rt
+Rt
+Rt
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+DF
+DF
+gJ
+"}
+(22,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+Rt
+hZ
+hZ
+OR
+OR
+Er
+OR
+OR
+MK
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+DF
+DF
+gJ
+"}
+(23,1,1) = {"
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+Rt
+kK
+kK
+OR
+OR
+Er
+OR
+OR
+qI
+Rt
+gJ
+gJ
+gJ
+uS
+gJ
+gJ
+gJ
+DF
+DF
+gJ
+"}
+(24,1,1) = {"
+gJ
+gJ
+gJ
+Rt
+Ga
+Ga
+Rt
+nn
+hZ
+OR
+OR
+Er
+OR
+OR
+RT
+Rt
+Ox
+Ox
+iK
+gJ
+uS
+gJ
+gJ
+DF
+DF
+gJ
+"}
+(25,1,1) = {"
+gJ
+Rt
+Ga
+Rt
+Fi
+Ga
+OR
+OR
+OR
+OR
+OR
+Er
+OR
+OR
+OR
+OR
+au
+OR
+XV
+Xm
+iK
+gJ
+uS
+gJ
+gJ
+gJ
+"}
+(26,1,1) = {"
+Rt
+Rt
+Cg
+JI
+OR
+LH
+jH
+Wf
+Wf
+Wf
+Wf
+Yw
+Wf
+Wf
+rA
+wI
+KM
+OR
+OR
+XV
+iK
+Rt
+gJ
+gJ
+gJ
+gJ
+"}
+(27,1,1) = {"
+Rt
+Rt
+OR
+OR
+OR
+Ga
+Er
+Bn
+wr
+Fs
+Fs
+Fs
+Fs
+ts
+zj
+Er
+au
+OR
+OR
+OR
+iK
+XV
+gJ
+uS
+gJ
+gJ
+"}
+(28,1,1) = {"
+Rt
+Rt
+ba
+pB
+wn
+Ga
+Er
+Rt
+Ga
+Ga
+Ga
+Ga
+Ga
+Ga
+Rt
+Er
+au
+iU
+OR
+OR
+iK
+Rt
+gJ
+gJ
+gJ
+gJ
+"}
+(29,1,1) = {"
+Rt
+Rt
+Ga
+Ga
+Ga
+Rt
+xq
+Rt
+XA
+Rv
+So
+XA
+Rv
+So
+Rt
+xq
+Rt
+Ga
+Xm
+Xm
+Rt
+Rt
+gJ
+gJ
+gJ
+gJ
+"}
+(30,1,1) = {"
+gJ
+Rt
+XA
+Rv
+So
+Rt
+Vp
+Rt
+NU
+NU
+NU
+NU
+NU
+Ag
+Rt
+Vp
+Rt
+XA
+Xs
+iK
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(31,1,1) = {"
+gJ
+Rt
+NU
+NU
+NU
+gJ
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+Rt
+gJ
+NU
+NU
+Ls
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(32,1,1) = {"
+gJ
+Rt
+gJ
+gJ
+gJ
+gJ
+Oz
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+Oz
+gJ
+gJ
+gJ
+gJ
+Rt
+gJ
+gJ
+gJ
+gJ
+gJ
+"}
+(33,1,1) = {"
+gJ
+Oz
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+gJ
+Oz
+gJ
+gJ
+gJ
+gJ
+gJ
+"}

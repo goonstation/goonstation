@@ -43,7 +43,7 @@ TYPEINFO(/obj/item/organ/liver/cyber)
 	desc = "A fancy robotic liver to replace one that someone's lost!"
 	icon_state = "cyber-liver"
 	// item_state = "heart_robo1"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	robotic = 1
 	created_decal = /obj/decal/cleanable/oil
 	edible = 0

@@ -33,6 +33,9 @@
 
 	var/mutation_sfx = 'sound/effects/plant_mutation.ogg'
 
+	///Override the crop's brew result
+	var/brew_result = null
+
 	proc/HYPharvested_proc_M(var/obj/machinery/plantpot/POT, var/mob/user)
 		lasterr = 0
 		if (!POT || !user) return 301
@@ -71,6 +74,14 @@
 
 	///When the plant is put in a decorative pot
 	proc/HYPpotted_proc_M(var/obj/decorative_pot/POT, var/grow_level)
+		return
+
+	///When the plant mutates to this mutation and you need to adjusted its stats/commuts (either in seed in plantmaster or pot)
+	proc/HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
+		return
+
+	///When the plant mutates to this mutation and you want something special (like mutates with a burst of flames)
+	proc/HYPon_mutation_pot(var/datum/plant/parent_plant, var/obj/machinery/plantpot/passed_plantpot, var/datum/plantgenes/passed_genes)
 		return
 
 // Tomato Mutations
@@ -204,7 +215,7 @@
 		var/thud_prob = clamp(DNA?.get_effective_value("endurance") / 2, 0, 100)
 
 		if (prob(thud_prob))
-			playsound(POT, 'sound/effects/exlow.ogg', 30, 1)
+			playsound(POT, 'sound/effects/exlow.ogg', 30, TRUE)
 			animate_wiggle_then_reset(POT)
 
 
@@ -251,7 +262,7 @@
 	crop = /obj/item/reagent_containers/food/snacks/plant/chili/ghost_chili
 	PTrange = list(75,null)
 	chance = 10
-	assoc_reagents = list("ghostchilijuice")
+	brew_result = "ghostchilijuice"
 
 // Pumpkin Mutations
 
@@ -292,8 +303,8 @@
 	name = "ricein"
 	name_prefix = "Ricin "
 	iconmod = "Rice"
-	assoc_reagents = list("ricin")
 	PTrange = list(60,null)
+	brew_result = "ricin"
 	crop = /obj/item/reagent_containers/food/snacks/ingredient/rice_sprig
 
 // Oat Mutations
@@ -325,7 +336,7 @@
 
 		if (POT.growth > (P.growtime - DNA?.get_effective_value("growtime")) && prob(fart_prob))
 			POT.visible_message("<span class='alert'><b>[POT]</b> farts!</span>")
-			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+			playsound(POT, 'sound/voice/farts/poo2.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 			// coder.Life()
 			// whoops undefined proc
 
@@ -480,6 +491,15 @@
 	assoc_reagents = list("methamphetamine")
 	chance = 10
 
+// Nettle Mutations
+
+/datum/plantmutation/stinging_nettle/smooth
+	name = "Dead Nettle"
+	name_prefix = "Smooth "
+	iconmod = "NettleSmooth"
+	crop = /obj/item/plant/herb/nettle/smooth
+	chance = 20
+
 // Venne Mutations
 
 /datum/plantmutation/venne/toxic
@@ -503,9 +523,16 @@
 /datum/plantmutation/hcordata/fish
 	name = "Wholetuna Cordata"
 	iconmod = "Wholetuna"
-	crop = /obj/item/fish/botany
+	crop = list(/obj/item/reagent_containers/food/fish/salmon,
+				/obj/item/reagent_containers/food/fish/carp,
+				/obj/item/reagent_containers/food/fish/bass)
+	assoc_reagents = list("fishoil")
 	dont_rename_crop = TRUE
 	special_proc_override = TRUE
+
+	HYPon_mutation_general(var/datum/plant/parent_plant, var/datum/plantgenes/passed_genes)
+		HYPaddCommut(passed_genes, /datum/plant_gene_strain/inert)
+		return
 
 	HYPspecial_proc_M(var/obj/machinery/plantpot/POT)
 		..()

@@ -1,12 +1,13 @@
 /mob/living/critter/mimic
-	name = "Mimic"
+	name = "mimic"
+	real_name = "mimic"
 	desc = null
 	icon = 'icons/misc/critter.dmi'
 	icon_state = "mimicface"
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/mimic
 	can_lie = FALSE
-	butcherable = FALSE
+	butcherable = BUTCHER_NOT_ALLOWED
 	health_brute = 20
 	health_burn = 20
 	health_brute_vuln = 0.75
@@ -71,6 +72,9 @@
 	proc/disguise_as(var/obj/target)
 		src.appearance = target
 		src.dir = target.dir
+		src.invisibility = initial(src.invisibility)
+		src.alpha = max(src.alpha, 200)
+		src.plane = initial(src.plane)
 		src.overlay_refs = target.overlay_refs?.Copy() //this is necessary to preserve overlay management metadata
 		src.start_hiding()
 

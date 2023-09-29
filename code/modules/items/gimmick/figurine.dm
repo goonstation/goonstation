@@ -62,10 +62,10 @@
 			if (prob(1)) // VERY rarely give a super-fancy material
 				var/list/rare_material_varieties = list("gold", "spacelag", "diamond", "ruby", "garnet", "topaz", "citrine", "peridot", "emerald", "jade", "aquamarine",
 				"sapphire", "iolite", "amethyst", "alexandrite", "uqill", "uqillglass", "telecrystal", "miracle", "starstone", "flesh", "blob", "bone", "beeswax", "carbonfibre")
-				src.setMaterial(getMaterial(pick(rare_material_varieties)), copy = FALSE)
+				src.setMaterial(getMaterial(pick(rare_material_varieties)))
 			else // silly basic "rare" varieties of things that should probably just be fancy paintjobs or plastics, but whoever made these things are idiots and just made them out of the actual stuff.  I guess.
 				var/list/material_varieties = list("steel", "glass", "silver", "quartz", "rosequartz", "plasmaglass", "onyx", "jasper", "malachite", "lapislazuli")
-				src.setMaterial(getMaterial(pick(material_varieties)), copy = FALSE)
+				src.setMaterial(getMaterial(pick(material_varieties)))
 
 		if (src.icon_state == "fig-floorpills")
 			src.create_reagents(30)
@@ -96,16 +96,16 @@
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/toy/figure))
 			if(user:a_intent == INTENT_HELP)
-				playsound(src, 'sound/items/toys/figure-kiss.ogg', 15, 1)
+				playsound(src, 'sound/items/toys/figure-kiss.ogg', 15, TRUE)
 				user.visible_message("<span class='alert'>[user] makes the [W.name] and the [src.name] kiss and kiss and kiss!</span>")
 			else if(user:a_intent == INTENT_DISARM)
-				playsound(src, 'sound/items/toys/figure-knock.ogg', 15, 1)
+				playsound(src, 'sound/items/toys/figure-knock.ogg', 15, TRUE)
 				user.visible_message("<span class='alert'>[user] makes the [W.name] knock over and fart on the [src.name]!</span>")
 			else if(user:a_intent == INTENT_GRAB)
-				playsound(src, 'sound/items/toys/figure-headlock.ogg', 15, 1)
+				playsound(src, 'sound/items/toys/figure-headlock.ogg', 15, TRUE)
 				user.visible_message("<span class='alert'>[user] has [W.name] put the [src.name] in a headlock!</span>")
 			else if(user:a_intent == INTENT_HARM)
-				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 15, 1, 0.1, 2.5)
+				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 15, TRUE, 0.1, 2.5)
 				user.visible_message("<span class='alert'>[user] bangs the [W.name] into the [src.name] over and over!</span>")
 		else if (W.force > 1 && src.icon_state == "fig-shelterfrog" || src.icon_state == "fig-shelterfrog-dead")
 			playsound(src.loc, W.hitsound, 50, 1, -1)
@@ -195,7 +195,7 @@ var/list/figure_high_rarity = list(\
 /datum/figure_info/omnitraitor,
 /datum/figure_info/shitty_bill,
 /datum/figure_info/don_glabs,
-/datum/figure_info/father_jack,
+/datum/figure_info/father_grife,
 /datum/figure_info/inspector,
 /datum/figure_info/coach,
 /datum/figure_info/sous_chef,
@@ -486,9 +486,9 @@ var/list/figure_patreon_rarity = concrete_typesof(/datum/figure_info/patreon)
 		name = "\improper Donald \"Don\" Glabs"
 		icon_state = "don"
 
-	father_jack
-		name = "\improper Father Jack"
-		icon_state = "jack"
+	father_grife
+		name = "\improper Father Grife"
+		icon_state = "grife"
 
 #ifdef XMAS
 	santa
@@ -966,6 +966,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Arp Davale"
 		icon_state = "arpdavale"
 		ckey = "mintyphresh"
+
+	fourfourfourexplorer
+		name = "\improper Minty"
+		icon_state = "minty"
+		ckey = "444explorer"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"

@@ -109,6 +109,17 @@ ABSTRACT_TYPE(/datum/rc_entry/food)
 	///Must-be-whole switch. If true, food must be at initial bites_left value and is counted by whole units; if false, it is counted by bites left.
 	var/must_be_whole = TRUE
 
+	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path if not initially specified.
+	var/commodity
+
+	New()
+		if(src.commodity) // Fetch configuration data from commodity if specified
+			var/datum/commodity/CM = src.commodity
+			if(!src.typepath) src.typepath = initial(CM.comtype)
+			src.feemod += initial(CM.baseprice)
+			src.feemod += initial(CM.upperfluc)
+		..()
+
 	rc_eval(obj/item/reagent_containers/food/snacks/eval_item)
 		. = ..()
 		if(rollcount >= count) return // Standard skip-if-complete
@@ -147,7 +158,7 @@ ABSTRACT_TYPE(/datum/rc_entry/stack)
 		if(rollcount >= count) return // Standard skip-if-complete
 		if(!istype(eval_item)) return // If it's not an item, it's not a stackable
 		if(mat_id) // If we're checking for materials, do that here with a tag comparison
-			if(!eval_item.material || eval_item.material.mat_id != src.mat_id)
+			if(!eval_item.material || eval_item.material.getID() != src.mat_id)
 				return
 		if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt)))
 			rollcount += eval_item.amount
@@ -282,6 +293,8 @@ ABSTRACT_TYPE(/datum/req_contract)
 	var/weight = 100
 
 	///A baseline amount of cash you'll be given for fulfilling the requisition; this is modified by entries
+	///The current thinking as of the time of writing this comment is for this to be 10 times some salary's wage,
+	///times an additional modifier based on difficulty
 	var/payout = 0
 	///List of contract entry datums; sent cargo will be passed into these for evaluation
 	var/list/rc_entries = list()

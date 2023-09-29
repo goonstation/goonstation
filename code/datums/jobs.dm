@@ -12,6 +12,7 @@
 	///can you roll this job if you rolled antag with a non-traitor-allowed favourite job (e.g.: prevent sec mains from forcing only captain antag rounds)
 	var/allow_antag_fallthrough = TRUE
 	var/allow_spy_theft = 1
+	var/can_join_gangs = TRUE
 	var/cant_spawn_as_rev = 0 // For the revoltion game mode. See jobprocs.dm for notes etc (Convair880).
 	var/cant_spawn_as_con = 0 // Prevents this job spawning as a conspirator in the conspiracy gamemode.
 	var/requires_whitelist = 0
@@ -133,6 +134,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	linkcolor = "#00CC00"
 	slot_card = /obj/item/card/id/command
 	map_can_autooverride = 0
+	can_join_gangs = FALSE
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
@@ -158,7 +160,8 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_back = list(/obj/item/storage/backpack/captain)
 	slot_jump = list(/obj/item/clothing/under/rank/captain)
 	slot_suit = list(/obj/item/clothing/suit/armor/captain)
-	slot_foot = list(/obj/item/clothing/shoes/swat)
+	slot_foot = list(/obj/item/clothing/shoes/swat/captain)
+	slot_glov = list(/obj/item/clothing/gloves/swat/captain)
 	slot_head = list(/obj/item/clothing/head/caphat)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
 	slot_ears = list(/obj/item/device/radio/headset/command/captain)
@@ -175,7 +178,7 @@ ABSTRACT_TYPE(/datum/job/command)
 		//name = "NT-SO Commander"
 		name = null
 		limit = 0
-		slot_suit = list(/obj/item/clothing/suit/armor/centcomm)
+		slot_suit = list(/obj/item/clothing/suit/armor/captain/centcomm)
 		slot_jump = list(/obj/item/clothing/under/misc/turds)
 		slot_head = list(/obj/item/clothing/head/centhat)
 		slot_belt = list(/obj/item/tank/emergency_oxygen/extended)
@@ -235,6 +238,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	receives_miranda = 1
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
@@ -315,7 +319,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_head = list(/obj/item/clothing/head/helmet/hardhat/chief_engineer)
-	slot_eyes = list(/obj/item/clothing/glasses/meson)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
 	slot_jump = list(/obj/item/clothing/under/rank/chief_engineer)
 	slot_ears = list(/obj/item/device/radio/headset/command/ce)
 	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
@@ -456,6 +460,7 @@ ABSTRACT_TYPE(/datum/job/security)
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_implant = /obj/item/implant/health/security/anti_mindhack
@@ -744,7 +749,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	wages = PAY_TRADESMAN
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_mask = list(/obj/item/clothing/mask/breath)
-	slot_eyes = list(/obj/item/clothing/glasses/meson)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
 	slot_belt = list(/obj/item/storage/belt/mining/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/overalls)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
@@ -964,7 +969,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	low_priority_job = 1
 	cant_allocate_unwanted = 1
 	map_can_autooverride = 0
-	slot_jump = list(/obj/item/clothing/under/rank)
+	slot_jump = list(/obj/item/clothing/under/rank/assistant)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
@@ -1003,11 +1008,8 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		if (!M)
 			return
 
-		// Yaaaaaay!
-		M.AddComponent(/datum/component/death_confetti)
 
-		M.bioHolder.AddEffect("clumsy", magical=1)
-		M.bioHolder.AddEffect("accent_comic", magical=1)
+		M.traitHolder.addTrait("training_clown")
 
 // AI and Cyborgs
 
@@ -1085,8 +1087,51 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Construction Worker")
 		return
 
-/datum/job/special/lawyer
-	name = "Lawyer"
+/datum/job/special/hairdresser
+	name = "Hairdresser"
+	wages = PAY_UNTRAINED
+	limit = 0
+	slot_jump = list(/obj/item/clothing/under/misc/barber)
+	slot_head = list(/obj/item/clothing/head/boater_hat)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_poc1 = list(/obj/item/scissors)
+	slot_poc2 = list(/obj/item/razor_blade)
+	slot_ears = list(/obj/item/device/radio/headset/civilian)
+
+	New()
+		..()
+		src.access = get_access("Barber")
+		return
+
+/datum/job/special/mime
+	name = "Mime"
+	limit = 1
+	wages = PAY_DUMBCLOWN*2 // lol okay whatever
+	slot_belt = list(/obj/item/device/pda2)
+	slot_head = list(/obj/item/clothing/head/mime_bowler)
+	slot_mask = list(/obj/item/clothing/mask/mime)
+	slot_jump = list(/obj/item/clothing/under/misc/mime/alt)
+	slot_suit = list(/obj/item/clothing/suit/scarf)
+	slot_glov = list(/obj/item/clothing/gloves/latex)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+	slot_poc1 = list(/obj/item/pen/crayon/white)
+	slot_poc2 = list(/obj/item/paper)
+	items_in_backpack = list(/obj/item/baguette)
+	change_name_on_spawn = 1
+
+	New()
+		..()
+		src.access = get_access("Mime")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		M.traitHolder.addTrait("training_mime")
+
+/datum/job/special/attorney
+	name = "Attorney"
 	linkcolor = "#FF0000"
 	wages = PAY_DOCTORATE
 	limit = 0
@@ -1094,7 +1139,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_jump = list(/obj/item/clothing/under/misc/lawyer)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/briefcase)
-	slot_rhan = list(/obj/item/paper/book/from_file/space_law)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 
 	New()
@@ -1102,8 +1146,9 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Lawyer")
 		return
 
-/datum/job/special/lawyer/judge
+/datum/job/special/attorney/judge
 	name = "Judge"
+	limit = 0
 
 	New()
 		..()
@@ -1116,6 +1161,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_TRADESMAN
 	allow_traitors = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_con = 1
 	cant_spawn_as_rev = 1
 	receives_badge = 1
@@ -1250,76 +1296,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		src.access = get_access("Technical Assistant")
 		return
 
-/datum/job/special/boxer
-	name = "Boxer"
-	wages = PAY_UNTRAINED
-	limit = 0
-	slot_jump = list(/obj/item/clothing/under/shorts)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_glov = list(/obj/item/clothing/gloves/boxing)
-	alt_names = list("Boxer", "Fighter", "Wrestler")
-	change_name_on_spawn = 1
-
-	New()
-		..()
-		src.access = get_access("Boxer")
-		return
-
-/datum/job/special/barber
-	name = "Barber"
-	wages = PAY_UNTRAINED
-	limit = 0
-	slot_jump = list(/obj/item/clothing/under/misc/barber)
-	slot_head = list(/obj/item/clothing/head/boater_hat)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_poc1 = list(/obj/item/scissors)
-	slot_poc2 = list(/obj/item/razor_blade)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-
-	New()
-		..()
-		src.access = get_access("Barber")
-		return
-
-/datum/job/special/mailman
-	name = "Mailman"
-	wages = PAY_TRADESMAN
-	limit = 0
-	slot_jump = list(/obj/item/clothing/under/misc/mail/syndicate)
-	slot_head = list(/obj/item/clothing/head/mailcap)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_back = list(/obj/item/storage/backpack/satchel)
-	slot_ears = list(/obj/item/device/radio/headset/mail)
-	items_in_backpack = list(/obj/item/wrapping_paper, /obj/item/paper_bin, /obj/item/scissors, /obj/item/stamp)
-	alt_names = list("Head of Deliverying", "Head of Mailmanning")
-
-	New()
-		..()
-		src.access = get_access("Mailman")
-		return
-
-/datum/job/special/tourist
-	name = "Tourist"
-	limit = 0
-	linkcolor = "#FF99FF"
-	slot_back = list()
-	slot_belt = list(/obj/item/storage/fanny)
-	slot_jump = list(/obj/item/clothing/under/misc/tourist)
-	slot_poc1 = list(/obj/item/camera_film)
-	slot_poc2 = list(/obj/item/currency/spacecash/tourist) // Exact amount is randomized.
-	slot_foot = list(/obj/item/clothing/shoes/tourist)
-	slot_lhan = list(/obj/item/camera)
-	slot_rhan = list(/obj/item/storage/photo_album)
-	change_name_on_spawn = 1
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		if(prob(25))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
-			M.set_mutantrace(morph)
-
 
 /datum/job/special/space_cowboy
 	name = "Space Cowboy"
@@ -1341,43 +1317,6 @@ ABSTRACT_TYPE(/datum/job/civilian)
 		..()
 		src.access = get_access("Space Cowboy")
 		return
-
-/datum/job/special/mime
-	name = "Mime"
-	limit = 1
-	wages = PAY_DUMBCLOWN*2 // lol okay whatever
-	slot_belt = list(/obj/item/device/pda2)
-	slot_head = list(/obj/item/clothing/head/mime_bowler)
-	slot_mask = list(/obj/item/clothing/mask/mime)
-	slot_jump = list(/obj/item/clothing/under/misc/mime/alt)
-	slot_suit = list(/obj/item/clothing/suit/scarf)
-	slot_glov = list(/obj/item/clothing/gloves/latex)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_poc1 = list(/obj/item/pen/crayon/white)
-	slot_poc2 = list(/obj/item/paper)
-	items_in_backpack = list(/obj/item/baguette)
-	change_name_on_spawn = 1
-
-	New()
-		..()
-		src.access = get_access("Mime")
-		return
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.bioHolder.AddEffect("mute", magical=1)
-		M.bioHolder.AddEffect("blankman", magical=1)
-
-/datum/job/special/musician
-	name = "Musician"
-	wages = PAY_UNTRAINED
-	slot_jump = list(/obj/item/clothing/under/suit/pinstripe)
-	slot_head = list(/obj/item/clothing/head/flatcap)
-	slot_foot = list(/obj/item/clothing/shoes/brown)
-	slot_ears = list(/obj/item/device/radio/headset/civilian)
-	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
 
 // randomizd gimmick jobs
 
@@ -1429,7 +1368,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	name = "VIP"
 	wages = PAY_EXECUTIVE
 	linkcolor = "#FF0000"
-	slot_jump = list(/obj/item/clothing/under/suit)
+	slot_jump = list(/obj/item/clothing/under/suit/black)
 	slot_head = list(/obj/item/clothing/head/that)
 	slot_eyes = list(/obj/item/clothing/glasses/monocle)
 	slot_foot = list(/obj/item/clothing/shoes/black)
@@ -2113,7 +2052,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_TRADESMAN
 	limit = 1
 	change_name_on_spawn = 1
-	slot_jump = list(/obj/item/clothing/under/trash_bag)
+	slot_jump = list(/obj/item/clothing/under/gimmick/trashsinglet)
 	slot_foot = list(/obj/item/clothing/shoes/sandal)
 	slot_belt = list(/obj/item/device/pda2)
 	slot_back = list(/obj/item/storage/backpack/satchel/anello)
@@ -2464,6 +2403,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	wages = PAY_IMPORTANT
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	receives_miranda = 1
@@ -2515,7 +2455,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
 	slot_foot = list(/obj/item/clothing/shoes/magnetic)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
-	slot_eyes = list(/obj/item/clothing/glasses/meson)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_card = /obj/item/card/id/command
@@ -2586,6 +2526,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	requires_supervisor_job = "Head of Security"
 	allow_traitors = 0
 	allow_spy_theft = 0
+	can_join_gangs = FALSE
 	cant_spawn_as_rev = 1
 	receives_badge = 1
 	receives_miranda = 1
@@ -2677,44 +2618,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			return
 		M.cubeize(INFINITY)
 
-/datum/job/special/AI
-	name = "AI"
-	linkcolor = "#999999"
-	limit = 0
-	wages = 0
-	allow_traitors = 0
-	cant_spawn_as_rev = 1
-	slot_ears = list()
-	slot_card = null
-	slot_back = list()
-	slot_belt = list()
-	items_in_backpack = list()
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		return M.AIize()
-
-/datum/job/special/cyborg
-	name = "Cyborg"
-	linkcolor = "#999999"
-	limit = 0
-	wages = 0
-	allow_traitors = 0
-	cant_spawn_as_rev = 1
-	slot_ears = list()
-	slot_card = null
-	slot_back = list()
-	slot_belt = list()
-	items_in_backpack = list()
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		return M.Robotize_MK2()
-
 /datum/job/special/ghostdrone
 	name = "Drone"
 	linkcolor = "#999999"
@@ -2749,32 +2652,24 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		return
 
 /datum/job/daily/monday
-	name = "Mime"
+	name = "Dungeoneer"
 	limit = 1
-	wages = PAY_DUMBCLOWN*2
+	wages = PAY_UNTRAINED
 	slot_belt = list(/obj/item/device/pda2)
-	slot_head = list(/obj/item/clothing/head/mime_bowler)
-	slot_mask = list(/obj/item/clothing/mask/mime)
-	slot_jump = list(/obj/item/clothing/under/misc/mime/alt)
-	slot_suit = list(/obj/item/clothing/suit/scarf)
-	slot_glov = list(/obj/item/clothing/gloves/latex)
-	slot_foot = list(/obj/item/clothing/shoes/black)
-	slot_poc1 = list(/obj/item/pen/crayon/white)
+	slot_mask = list(/obj/item/clothing/mask/skull)
+	slot_jump = list(/obj/item/clothing/under/color/brown)
+	slot_suit = list(/obj/item/clothing/suit/cultist/nerd)
+	slot_glov = list(/obj/item/clothing/gloves/black)
+	slot_foot = list(/obj/item/clothing/shoes/brown)
+	slot_poc1 = list(/obj/item/pen/omni)
 	slot_poc2 = list(/obj/item/paper)
-	items_in_backpack = list(/obj/item/baguette)
+	items_in_backpack = list(/obj/item/storage/box/nerd_kit)
 	change_name_on_spawn = 1
 
 	New()
 		..()
-		src.access = get_access("Mime")
+		src.access = get_access("Dungeoneer")
 		return
-
-	special_setup(var/mob/living/carbon/human/M)
-		..()
-		if (!M)
-			return
-		M.bioHolder.AddEffect("mute", magical=1)
-		M.bioHolder.AddEffect("blankman", magical=1)
 
 /datum/job/daily/tuesday
 	name = "Barber"
@@ -2845,8 +2740,13 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 		if(prob(33))
-			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian)
+			var/morph = pick(/datum/mutantrace/lizard,/datum/mutantrace/skeleton,/datum/mutantrace/ithillid,/datum/mutantrace/martian,/datum/mutantrace/amphibian,/datum/mutantrace/blob,/datum/mutantrace/cow)
 			M.set_mutantrace(morph)
+		var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
+		M.equip_if_possible(L, SLOT_WEAR_ID, FALSE)
+		var/obj/item/card/id = locate() in M
+		if (id)
+			L.storage.add_contents(id, M, FALSE)
 
 /datum/job/daily/saturday
 	name = "Musician"

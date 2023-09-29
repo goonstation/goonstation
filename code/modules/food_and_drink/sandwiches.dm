@@ -1,6 +1,7 @@
 
 /obj/item/reagent_containers/food/snacks/sandwich
 	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	fill_amt = 3
 	bites_left = 4
 	heal_amt = 2
 	var/hname = null
@@ -206,6 +207,7 @@
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "hburger"
 	item_state = "burger"
+	fill_amt = 3
 	bites_left = 5
 	heal_amt = 2
 	food_color ="#663300"
@@ -253,17 +255,17 @@
 		reagents.add_reagent("love", 15)
 
 /obj/item/reagent_containers/food/snacks/burger/heartburger/synth
-	name = "heartburger"
+	name = "synthetic heartburger"
 	desc = "A hearty meal, made with Love. This one seems to contain a green synthetic heart."
 	icon_state = "synthheartburger"
 
 /obj/item/reagent_containers/food/snacks/burger/heartburger/cyber
-	name = "heartburger"
+	name = "cyber heartburger"
 	desc = "A hearty meal, made with Love. This one seems to contain a shiny cyberheart."
 	icon_state = "roboheartburger"
 
 /obj/item/reagent_containers/food/snacks/burger/heartburger/flock
-	name = "heartburger"
+	name = "flock heartburger"
 	desc = "A hearty meal, made with Love. This one seems to cotain a teal pulsing octahedron."
 	icon_state = "flockheartburger"
 
@@ -276,17 +278,17 @@
 	meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
 /obj/item/reagent_containers/food/snacks/burger/brainburger/synth
-	name = "brainburger"
+	name = "synthetic brainburger"
 	desc = "A strange looking burger. It looks almost sentient. It seems to contain a green synthetic brain."
 	icon_state = "synthbrainburger"
 
 /obj/item/reagent_containers/food/snacks/burger/brainburger/cyber
-	name = "brainburger"
+	name = "cyber brainburger"
 	desc = "A strange looking burger. It looks almost sentient. It seems to contain a Spontaneous Intelligence Creation Core."
 	icon_state = "robobrainburger"
 
 /obj/item/reagent_containers/food/snacks/burger/brainburger/flock
-	name = "brainburger"
+	name = "flock brainburger"
 	desc = "A strange looking burger. It looks almost sentient. It seems to contain an odd crystal."
 	icon_state = "flockbrainburger"
 
@@ -366,7 +368,7 @@
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
-	brew_result = "beepskybeer"
+	brew_result = list("beepskybeer"=20)
 	initial_reagents = list("cholesterol"=5,"nanites"=20)
 
 /obj/item/reagent_containers/food/snacks/burger/cheeseborger
@@ -376,7 +378,7 @@
 	bites_left = 3
 	heal_amt = 1
 	food_color = "#C8C8C8"
-	brew_result = "beepskybeer"
+	brew_result = list("beepskybeer"=20)
 	initial_reagents = list("cholesterol"=5,"nanites"=20)
 
 /obj/item/reagent_containers/food/snacks/burger/synthburger
@@ -510,6 +512,7 @@
 	name = "THE MONSTER"
 	desc = "There are no words to describe the sheer unhealthiness of this abomination."
 	icon_state = "giantburger"
+	fill_amt = 10
 	bites_left = 20
 	heal_amt = 3
 	throwforce = 10
@@ -551,10 +554,23 @@
 	desc = "Lightly salted potato fingers."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "fries"
+	fill_amt = 2
 	bites_left = 6
 	heal_amt = 1
 	initial_volume = 5
 	initial_reagents = list("cholesterol"=1)
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
+
+/obj/item/reagent_containers/food/snacks/chilifries
+	name = "chili cheese fries"
+	desc = "Lightly salted potato fingers, topped with chili and cheese."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "chilifries"
+	bites_left = 6
+	heal_amt = 2
+	initial_volume = 5
+	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"= 10)
+	food_effects = list("food_hp_up")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
 
 /obj/item/reagent_containers/food/snacks/macguffin

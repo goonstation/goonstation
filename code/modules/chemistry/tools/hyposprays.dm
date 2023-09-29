@@ -175,7 +175,7 @@ TYPEINFO(/obj/item/reagent_containers/hypospray)
 			target.reagents.trans_to(src, src.reagents.maximum_volume)
 			return
 
-		if (isobj(target) && target.is_open_container() && target.reagents)
+		if (isobj(target) && target.is_open_container(TRUE) && target.reagents)
 			if (!src.reagents || !src.reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is already empty.</span>")
 				return

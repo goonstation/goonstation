@@ -85,7 +85,7 @@
 
 	var/the_slot = null
 	if (leader.back?.storage && !leader.back.storage.is_full())
-		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), leader.slot_in_backpack)
+		leader.equip_if_possible(new /obj/item/storage/box/spykit(leader), SLOT_IN_BACKPACK)
 		the_slot = "backpack"
 	else
 		var/obj/K2 = new /obj/item/storage/box/spykit(get_turf(leader))
@@ -187,7 +187,7 @@
 	..() // Admin-assigned antagonists or whatever.
 
 /obj/item/device/spy_implanter
-	name = "Multi-Use Implanter"
+	name = "multi-use implanter"
 	desc = "A specialized, self-sanitizing implantation implement that may be used to inject multiple implants. As a trade-off, it cannot be reloaded outside of the factory."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "revimplanter4"

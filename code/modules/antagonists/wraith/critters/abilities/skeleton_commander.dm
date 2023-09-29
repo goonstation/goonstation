@@ -12,7 +12,7 @@
 	/obj/critter/ancient_thing,
 	/mob/living/critter/robotic/repairbot/security,
 	/obj/critter/gunbot/drone/buzzdrone,
-	/obj/critter/mechmonstrositycrawler,
+	/mob/living/critter/robotic/crawler,
 	/obj/critter/bat/buff,
 	/mob/living/critter/lion,
 	/mob/living/critter/skeleton/wraith,

@@ -9,6 +9,7 @@
 	anchored = ANCHORED
 	layer = LATTICE_LAYER
 	plane = PLANE_FLOOR
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	//	flags = CONDUCT
 	text = "<font color=#333>+"
 	/// bitmask of directions it connects to.
@@ -20,7 +21,7 @@
 			return
 
 	ex_act(severity)
-		src.material?.triggerExp(src, severity)
+		src.material_trigger_on_explosion(severity)
 		switch(severity)
 			if(1)
 				qdel(src)
@@ -266,9 +267,6 @@
 /// lattice spawners, for mapping large quantities of lattice at once.
 /// They auto connect in four directions depending on the lattices around them, plus you can set them to connect to certain turfs.
 /obj/lattice/auto
-	name = "lattice spawner"
-	desc = "If you're seeing this, call a coder. These are meant to spawn normal lattices."
-	icon_state = "lattice"
 	dirmask = NORTH | SOUTH | EAST | WEST // so others will connect to us during init
 	/// makes the lattices connect to walls too
 	var/attach_to_wall = FALSE
