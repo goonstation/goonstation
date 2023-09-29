@@ -613,13 +613,13 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/robot_arm_any
 	name = "robot arm (any grade/facing)"
 	typepath = /obj/item/parts/robot_parts/arm
-	feemod = PAY_TRADESMAN*2
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/item/botpart_std
 	name = "beepy boopy boye (you shouldn't see this)"
 	typepath = /obj/item/parts/robot_parts/drone
 	exactpath = TRUE
-	feemod = PAY_TRADESMAN*3
+	feemod = PAY_TRADESMAN*2
 
 /datum/rc_entry/item/botpart_std/head
 	name = "standard cyborg head"
@@ -649,14 +649,14 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "standard 15000u power cell"
 	typepath = /obj/item/cell/supercell
 	typepath_alt = /obj/item/cell/supercell/charged
-	feemod = PAY_IMPORTANT * 2
+	feemod = PAY_IMPORTANT
 
 /datum/rc_entry/item/borgmodule
 	name = "cyborg module"
 	typepath = /obj/item/robot_module
-	feemod = PAY_IMPORTANT
+	feemod = PAY_DOCTORATE
 
 /datum/rc_entry/item/prox_sensor
 	name = "proximity sensor"
 	typepath = /obj/item/device/prox_sensor
-	feemod = PAY_TRADESMAN * 2
+	feemod = PAY_TRADESMAN
