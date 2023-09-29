@@ -4,7 +4,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, Flex, Section, Dropdown, NumberInput } from '../components';
+import { Box, Button, Dropdown, Flex, NumberInput, Section } from '../components';
 import { Window } from '../layouts';
 
 export const CAViewer = (props, context) => {

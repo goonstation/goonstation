@@ -267,16 +267,6 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	spread_angle = 180
 	pellets_to_fire = 20
 
-/datum/projectile/special/spreader/uniform_burst/blaster
-	name = "blaster wave"
-	sname = "wave fire"
-	spread_angle = 33
-	cost = 200
-	pellets_to_fire = 5
-	spread_projectile_type = /datum/projectile/laser/blaster/blast
-	shot_sound = 'sound/weapons/laser_f.ogg'
-
-
 /datum/projectile/special/spreader/uniform_burst/spikes
 	name = "spike wave"
 	sname = "spike wave"

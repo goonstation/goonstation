@@ -9,6 +9,7 @@
 	anchored = ANCHORED
 	layer = LATTICE_LAYER
 	plane = PLANE_FLOOR
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	//	flags = CONDUCT
 	text = "<font color=#333>+"
 	/// bitmask of directions it connects to.
