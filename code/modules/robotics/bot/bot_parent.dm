@@ -139,7 +139,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/bot, proc/admin_command_speak)
 		var/turf/T = get_turf(src)
 		if(isnull(T))
 			return FALSE
-		return length(GET_NEARBY(T, src.hash_check_range))
+		return length(GET_NEARBY(/datum/spatial_hashmap/clients, T, src.hash_check_range))
 
 	// Generic default. Override for specific bots as needed.
 	bullet_act(var/obj/projectile/P)

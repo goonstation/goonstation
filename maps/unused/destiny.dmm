@@ -35211,7 +35211,7 @@
 /area/station/maintenance/outer/sw)
 "llu" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/aiModule/oneHuman,
 /obj/item/aiModule/makeCaptain,
 /obj/item/aiModule/freeform,
@@ -39083,8 +39083,8 @@
 /obj/item/clothing/suit/rad,
 /obj/item/clothing/head/rad_hood,
 /obj/item/clothing/head/rad_hood,
-/obj/item/clothing/glasses/meson,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/yellow/side{
 	dir = 1
 	},
@@ -57361,7 +57361,7 @@
 /area/space)
 "wAx" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/screwdriver,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)

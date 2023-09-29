@@ -30846,7 +30846,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -42934,7 +42934,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -50294,7 +50294,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
@@ -70689,7 +70689,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -84817,7 +84817,7 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-
+	
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -90198,7 +90198,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},

@@ -77,6 +77,8 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 	entryclass = RC_ITEM
 	///Type path of the item the entry is looking for.
 	var/typepath
+	///Optional alternate type path to look for. Useful when an item has two functionally interchangeable forms, such as an empty or charged power cell.
+	var/typepath_alt
 	///If true, requires precise path; if false (default), sub-paths are accepted.
 	var/exactpath = FALSE
 	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path if not initially specified.
@@ -93,8 +95,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item)
 	rc_eval(obj/eval_item)
 		. = ..()
 		if(rollcount >= count) return // Standard skip-if-complete
-		if(src.exactpath && eval_item.type != typepath) return // More fussy type evaluation
-		else if(!istype(eval_item,typepath)) return // Regular type evaluation
+		var/valid_item = FALSE
+		if(src.exactpath) // More fussy type evaluation
+			if(eval_item.type == typepath || (typepath_alt && eval_item.type == typepath_alt)) valid_item = TRUE
+		else // Regular type evaluation
+			if(istype(eval_item,typepath) || (typepath_alt && istype(eval_item,typepath_alt))) valid_item = TRUE
+		if(!valid_item) return
 		src.rollcount++
 		. = TRUE
 
@@ -293,6 +299,8 @@ ABSTRACT_TYPE(/datum/req_contract)
 	var/weight = 100
 
 	///A baseline amount of cash you'll be given for fulfilling the requisition; this is modified by entries
+	///The current thinking as of the time of writing this comment is for this to be 10 times some salary's wage,
+	///times an additional modifier based on difficulty
 	var/payout = 0
 	///List of contract entry datums; sent cargo will be passed into these for evaluation
 	var/list/rc_entries = list()
@@ -412,7 +420,6 @@ ABSTRACT_TYPE(/datum/req_contract)
 					for(var/atom/X in contents_index)
 						if(X) qdel(X)
 					return REQ_RETURN_FULLSALE
-				if(src.pinned) shippingmarket.has_pinned_contract = FALSE //tell shipping market pinned contract was fulfilled
 				. = REQ_RETURN_SALE //sale, but may be leftover items. find out by culling
 				for(var/atom/X in contents_to_cull)
 					if(X) qdel(X)

@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/req_contract/civilian)
 
 /datum/req_contract/civilian/event_catering
 	name = "Event Catering"
-	payout = 9000
+	payout = PAY_IMPORTANT*10
 	weight = 60
 	var/list/desc_event = list("reception","formal event","welcoming party","going-away party","commemorative dinner","dinner")
 	var/list/desc_honorific = list("an esteemed","an infamous","a famous","a renowned")
@@ -47,53 +47,53 @@ ABSTRACT_TYPE(/datum/rc_entry/item/caterfood)
 /datum/rc_entry/item/caterfood/sandwich
 	name = "sandwich"
 	typepath = /obj/item/reagent_containers/food/snacks/sandwich
-	feemod = 1400
+	feemod = PAY_TRADESMAN*4
 
 /datum/rc_entry/item/caterfood/burger
 	name = "burger"
 	typepath = /obj/item/reagent_containers/food/snacks/burger
-	feemod = 1550
+	feemod = PAY_TRADESMAN*4
 
 /datum/rc_entry/item/caterfood/soup
 	name = "pre-portioned soup bowl"
 	typepath = /obj/item/reagent_containers/food/snacks/soup
-	feemod = 1160
+	feemod = PAY_TRADESMAN*4
 
 /datum/rc_entry/item/caterfood/salad
 	name = "pre-portioned salad"
 	typepath = /obj/item/reagent_containers/food/snacks/salad
-	feemod = 920
+	feemod = PAY_TRADESMAN*3
 
 ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/reagent/caterdrink/appletini
 	name = "appletini"
 	chem_ids = "appletini"
-	feemod = 90
+	feemod = PAY_IMPORTANT/10
 
 /datum/rc_entry/reagent/caterdrink/fruitpunch
 	name = "fruit punch"
 	chem_ids = "fruit_punch"
-	feemod = 90
+	feemod = PAY_IMPORTANT/10
 
 /datum/rc_entry/reagent/caterdrink/spacecuba
 	name = "space-cuba libre"
 	chem_ids = "libre"
-	feemod = 50
+	feemod = PAY_IMPORTANT/10
 
 /datum/rc_entry/reagent/caterdrink/margarita
 	name = "margarita"
 	chem_ids = "margarita"
-	feemod = 40
+	feemod = PAY_IMPORTANT/10
 
 /datum/rc_entry/reagent/caterdrink/champagne
 	name = "champagne"
 	chem_ids = "champagne"
-	feemod = 50
+	feemod = PAY_IMPORTANT/10
 
 
 /datum/req_contract/civilian/furnishing
 	//name = "Interior Outfitting"
-	payout = 3200
+	payout = PAY_EMBEZZLED
 	var/list/namevary = list("Interior Outfitting","Furnishing Assistance","Interior Decorating","Occupancy Preparations","Last-Minute Furnishing")
 	var/list/desc_whatitdoes = list("A new gaming","An extraction","A medical","A research","A cartographic","A transit")
 	var/list/desc_whatitis = list("vessel","station","platform","outpost")
@@ -131,42 +131,42 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/stack/floortiles
 	name = "floor tile"
 	typepath = /obj/item/tile
-	feemod = 60
+	feemod = PAY_TRADESMAN/5
 
 /datum/rc_entry/reagent/carpet
 	name = "liquid carpet"
 	chem_ids = "carpet"
-	feemod = 120
+	feemod = PAY_DOCTORATE/2
 
 /datum/rc_entry/item/table
 	name = "table"
 	typepath = /obj/item/furniture_parts/table
-	feemod = 300
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/item/rack
 	name = "rack part set"
 	typepath = /obj/item/furniture_parts/rack
-	feemod = 250
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/item/chair
 	name = "folding chair"
 	typepath = /obj/item/chair/folded
-	feemod = 230
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/item/light_bulb
 	name = "light bulb"
 	typepath = /obj/item/light/bulb
-	feemod = 90
+	feemod = PAY_TRADESMAN/5
 
 /datum/rc_entry/item/light_tube
 	name = "light tube"
 	typepath = /obj/item/light/tube
-	feemod = 80
+	feemod = PAY_TRADESMAN/5
 
 
 /datum/req_contract/civilian/greytide
 	//name = "Crew Embarcation"
-	payout = 1800
+	payout = PAY_UNTRAINED*10*2
 	var/list/namevary = list("Crew Embarcation","Crew Onboarding","New Hands on Deck","Expedited Outfitting","Personnel Rotation")
 	var/list/desc_task = list("mining","hydroponics","cargo handling","engineering","medical","research","cartographic")
 	var/list/desc_place = list("vessel","station","platform","outpost")
@@ -207,17 +207,17 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/jumpsuit
 	name = "black jumpsuit"
 	typepath = /obj/item/clothing/under/color
-	feemod = 450
+	feemod = PAY_TRADESMAN*1.5
 	exactpath = TRUE
 
 	any
 		name = "single-color jumpsuit"
-		feemod = 300
+		feemod = PAY_TRADESMAN
 		exactpath = FALSE
 
 	scrubs
 		name = "medical scrubs"
-		feemod = 680
+		feemod = PAY_DOCTORATE
 		typepath = /obj/item/clothing/under/scrub
 		exactpath = FALSE
 
@@ -248,34 +248,35 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/item/backpack
 	name = "backpack"
 	typepath = /obj/item/storage/backpack
-	feemod = 800
+	feemod = PAY_TRADESMAN*4
 
 /datum/rc_entry/item/shoes
 	name = "pair of shoes"
 	typepath = /obj/item/clothing/shoes
-	feemod = 380
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/item/headset
 	name = "radio headset"
 	typepath = /obj/item/device/radio/headset
-	feemod = 940
+	feemod = PAY_IMPORTANT
 
 /datum/rc_entry/food/any
 	name = "solid food, preferably nutritious"
 	typepath = /obj/item/reagent_containers/food/snacks
-	feemod = 250
+	must_be_whole = FALSE
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/reagent/water
 	name = "water"
 	chem_ids = "water"
-	feemod = 10
+	feemod = PAY_UNTRAINED/10
 
 
 /datum/req_contract/civilian/birthdaybash
 	//name = "Birthday Party"
-	payout = 3500
+	payout = PAY_TRADESMAN*10*2
 	hide_item_payouts = TRUE
-	weight = 80
+	weight = 70
 	var/list/namevary = list("Birthday Party","Birthday Bash","Surprise Party","One Year Older")
 	var/list/desc_event = list("party","celebration","gathering","party","event") //yes party twice
 
@@ -546,3 +547,116 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	commodity = /datum/commodity/ore/syreline
 	typepath_alt = /obj/item/material_piece/syreline
 	feemod = PAY_IMPORTANT
+
+/datum/req_contract/civilian/robotics
+	//name = "Borg Buds"
+	payout = PAY_TRADESMAN*10
+	var/list/namevary = list("Robot Overhaul","Loose Sprockets","Parts Wanted","Servo Service")
+	var/list/desc_whatbork = list("mining operation","security post","automated refueling station","cultivation platform","hazardous material processor")
+	var/list/desc_whatget = list(
+		"a selection of robotics components",
+		"specialized hardware",
+		"NT-spec replacement parts",
+		"high-grade cybernetics equipment",
+		"specified robotics equipment",
+		"made-to-order components",
+		"expedited delivery of listed items")
+	var/list/desc_whyget = list(
+		"to repair erroneous function in on-site cyborgs",
+		"to complete a site-wide machinery overhaul",
+		"in furtherance of efficiency improvements",
+		"as spares for mission-critical robotics",
+		"precisely as enumerated in contract",
+		"suitable for long-term use",
+		"for maintenance of their guard bots")
+	var/list/desc_flavorize = list(
+		null,
+		null,
+		" Attempts at passing off rusted components as adequate will be met with legal action.",
+		" Please electrically ground each item before packing.",
+		" Quality control was lacking in prior order from another supplier; please ensure no cracks or cuts.",
+		" Individual packaging of items within shipment should not be necessary."
+	)
+
+	New()
+		src.name = pick(namevary)
+		src.flavor_desc = "An affiliated [pick(desc_whatbork)] is seeking [pick(desc_whatget)] [pick(desc_whyget)].[pick(desc_flavorize)]"
+		src.payout += rand(0,30) * 10
+
+		var/botsets = 1
+		if(prob(30)) botsets = 2
+
+		if(prob(60))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,rand(2,5))
+		else
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/head,botsets)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/chest,botsets)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/arm_l,botsets)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/arm_r,botsets)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/leg_l,botsets)
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/botpart_std/leg_r,botsets)
+
+		if(prob(55))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/borgmodule,rand(2,4))
+			if(prob(30)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/multitool,1)
+
+		if(prob(45))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/powercell,botsets)
+			if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/basictool/crowbar,1)
+
+		if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/prox_sensor,rand(1,3))
+		if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cable,rand(8,25))
+		if(prob(20)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/interfaceboard,1)
+
+		..()
+
+/datum/rc_entry/item/robot_arm_any
+	name = "robot arm (any grade/facing)"
+	typepath = /obj/item/parts/robot_parts/arm
+	feemod = PAY_TRADESMAN
+
+/datum/rc_entry/item/botpart_std
+	name = "beepy boopy boye (you shouldn't see this)"
+	typepath = /obj/item/parts/robot_parts/drone
+	exactpath = TRUE
+	feemod = PAY_TRADESMAN*2
+
+/datum/rc_entry/item/botpart_std/head
+	name = "standard cyborg head"
+	typepath = /obj/item/parts/robot_parts/head/standard
+
+/datum/rc_entry/item/botpart_std/chest
+	name = "standard cyborg chest"
+	typepath = /obj/item/parts/robot_parts/chest/standard
+
+/datum/rc_entry/item/botpart_std/arm_l
+	name = "standard cyborg left arm"
+	typepath = /obj/item/parts/robot_parts/arm/left/standard
+
+/datum/rc_entry/item/botpart_std/arm_r
+	name = "standard cyborg right arm"
+	typepath = /obj/item/parts/robot_parts/arm/right/standard
+
+/datum/rc_entry/item/botpart_std/leg_l
+	name = "standard cyborg left leg"
+	typepath = /obj/item/parts/robot_parts/leg/left/standard
+
+/datum/rc_entry/item/botpart_std/leg_r
+	name = "standard cyborg right leg"
+	typepath = /obj/item/parts/robot_parts/leg/right/standard
+
+/datum/rc_entry/item/powercell
+	name = "standard 15000u power cell"
+	typepath = /obj/item/cell/supercell
+	typepath_alt = /obj/item/cell/supercell/charged
+	feemod = PAY_IMPORTANT
+
+/datum/rc_entry/item/borgmodule
+	name = "cyborg module"
+	typepath = /obj/item/robot_module
+	feemod = PAY_DOCTORATE
+
+/datum/rc_entry/item/prox_sensor
+	name = "proximity sensor"
+	typepath = /obj/item/device/prox_sensor
+	feemod = PAY_TRADESMAN

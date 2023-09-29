@@ -217,7 +217,7 @@
 	name = "tea"
 	desc = "A fine cup of tea.  Possibly Earl Grey.  Temperature undetermined."
 	icon_state = "tea0"
-	item_state = "coffee"
+	item_state = "tea"
 	initial_volume = 50
 	initial_reagents = "tea"
 

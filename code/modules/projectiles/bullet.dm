@@ -1544,7 +1544,7 @@ datum/projectile/bullet/autocannon
 				boutput(M, pod.ship_message(message))
 
 	on_hit(atom/hit)
-		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth))
+		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank))
 			explosion_new(null, get_turf(hit), 12)
 
 			if(istype(hit, /obj/machinery/vehicle))

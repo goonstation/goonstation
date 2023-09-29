@@ -4,9 +4,10 @@
 	desc = "A little meat sack containing acid for the digestion of food. Like most things that come out of living creatures, you can probably eat it."
 	organ_holder_name = "stomach"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 4
 	icon_state = "stomach"
 	fail_damage = 100
+	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
+	region = ABDOMINAL
 	///How much food can we fit, based on `fill_amt` var on food items
 	var/capacity = 7
 	///How much food and other stuff we have (also based on `fill_amt`)

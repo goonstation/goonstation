@@ -10619,7 +10619,7 @@
 "aIL" = (
 /obj/table/auto,
 /obj/item/storage/box/diskbox,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/device/flash,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
@@ -33011,7 +33011,7 @@
 "clW" = (
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/storage/crate{
 	open = 1
 	},
@@ -54835,7 +54835,7 @@ aqn
 aqn
 aqn
 aqn
-eLI
+aqn
 aTs
 aTs
 aqn
