@@ -1,5 +1,9 @@
 
 (t)fri sep 29 23
+(u)MeggalBozale
+(p)15957
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)NT has spent a few million credits stocking its stations with newly printed guides to material science, featuring minor spelling corrections and updated material values.
 (u)Flappybat & Flaborized
 (p)15797
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
