@@ -1621,8 +1621,8 @@
 	for (var/mob/M in range(range, usr))
 		if (isalive(M))
 			M.say(speech)
-			logTheThing(LOG_ADMIN, src, "forced <b>[M]</b> to say: [speech]")
-			logTheThing(LOG_DIARY, src, "forced <b>[M]</b> to say: [speech]", "admin")
+			logTheThing(LOG_ADMIN, src, "forced <b>[constructName(M)]</b> to say: [speech]")
+			logTheThing(LOG_DIARY, src, "forced <b>[constructName(M)]</b> to say: [speech]", "admin")
 
 /client/proc/revive_all_bees()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

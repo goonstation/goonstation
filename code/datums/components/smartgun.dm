@@ -12,6 +12,7 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	var/turf/mouse_target
 	var/stopping
 	var/shooting
+	var/type_to_target = /mob/living
 	var/tracking
 	var/list/tracked_targets
 	var/list/image/targeting_images
@@ -101,7 +102,6 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 		src.mouse_target = get_step(src.mouse_target, direct)
 
 /datum/component/holdertargeting/smartgun/proc/retarget(mob/M, object, location, control, params)
-
 	var/turf/T
 	var/atom/movable/screen/fullautoAimHUD/F = object
 	if(istype(F) && aimer)
@@ -120,37 +120,37 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	shotcount = 0
 	while(!stopping)
 		if(!shooting && checkshots(parent, user) > shotcount)
-			for(var/mob/living/M in range(2, mouse_target))
-				ON_COOLDOWN(M, "smartgun_last_tracked_\ref[src]", 1.5 SECONDS)
-				if(tracked_targets[M] < src.maxlocks && src.is_valid_target(user, M) && shotcount < src.checkshots(parent, user))
-					tracked_targets[M] += 1
+			for(var/atom/A as anything in range(2, mouse_target))
+				ON_COOLDOWN(A, "smartgun_last_tracked_\ref[src]", 1.5 SECONDS)
+				if(tracked_targets[A] < src.maxlocks && src.is_valid_target(user, A) && shotcount < src.checkshots(parent, user))
+					tracked_targets[A] += 1
 					shotcount++
-					src.update_targeting_images(M)
-			for(var/mob/living/M in tracked_targets)
-				if(!GET_COOLDOWN(M, "smartgun_last_tracked_\ref[src]"))
-					tracked_targets[M]--
+					src.update_targeting_images(A)
+			for(var/atom/A as anything in tracked_targets)
+				if(!GET_COOLDOWN(A, "smartgun_last_tracked_\ref[src]"))
+					tracked_targets[A]--
 					shotcount--
-					src.update_targeting_images(M)
-					if(tracked_targets[M] <= 0)
-						tracked_targets -= M
+					src.update_targeting_images(A)
+					if(tracked_targets[A] <= 0)
+						tracked_targets -= A
 
 		sleep(0.6 SECONDS)
 
 	stopping = 0
 	tracking = 0
 
-/datum/component/holdertargeting/smartgun/proc/update_targeting_images(mob/M)
+/datum/component/holdertargeting/smartgun/proc/update_targeting_images(atom/A)
 	if(!src.aimer)
 		return
-	if(tracked_targets[M] > 0)
-		if(!targeting_images[M])
-			targeting_images[M] = image(icon('icons/cursors/target/flat.dmi', "all"), M, pixel_y = 32)
-			aimer.images += targeting_images[M]
-			targeting_images[M].maptext_y = 3
-		targeting_images[M].maptext = "<span class='pixel c ol'>[tracked_targets[M]]</span>"
+	if(tracked_targets[A] > 0)
+		if(!targeting_images[A])
+			targeting_images[A] = image(icon('icons/cursors/target/flat.dmi', "all"), A, pixel_y = 32)
+			aimer.images += targeting_images[A]
+			targeting_images[A].maptext_y = 3
+		targeting_images[A].maptext = "<span class='pixel c ol'>[tracked_targets[A]]</span>"
 	else
-		aimer.images -= targeting_images[M]
-		targeting_images -= M
+		aimer.images -= targeting_images[A]
+		targeting_images -= A
 
 /image/targeting_image
 
@@ -163,9 +163,9 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	spawn(0)
 		if(length(local_targets))
 			G.suppress_fire_msg = 1
-			for(var/mob/living/M in local_targets)
-				for(var/i in 1 to local_targets[M])
-					G.shoot(get_turf(M), get_turf(user), user, called_target = M)
+			for(var/atom/A as anything in local_targets)
+				for(var/i in 1 to local_targets[A])
+					G.shoot(get_turf(A), get_turf(user), user, called_target = A)
 					sleep(1 DECI SECOND)
 
 			G.suppress_fire_msg = initial(G.suppress_fire_msg)
@@ -177,9 +177,9 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	tracked_targets = list()
 	shotcount = 0
 	if(aimer)
-		for(var/mob/M in targeting_images)
-			aimer.images -= targeting_images[M]
-			targeting_images -= M
+		for(var/atom/A as anything in targeting_images)
+			aimer.images -= targeting_images[A]
+			targeting_images -= A
 
 /datum/component/holdertargeting/smartgun/proc/stop_tracking_targets(mob/user)
 	if(tracking)
@@ -187,12 +187,12 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	tracked_targets = list()
 	mouse_target = null
 	if(aimer)
-		for(var/mob/M in targeting_images)
-			aimer.images -= targeting_images[M]
-			targeting_images -= M
+		for(var/atom/A as anything in targeting_images)
+			aimer.images -= targeting_images[A]
+			targeting_images -= A
 
 /datum/component/holdertargeting/smartgun/proc/is_valid_target(mob/user, mob/M)
-	return M != user && !isdead(M)
+	return (istype(M) && M != user && !isdead(M))
 
 /datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G, mob/user)
 	var/list/ret = list()

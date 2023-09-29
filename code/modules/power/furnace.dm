@@ -14,13 +14,33 @@ TYPEINFO(/obj/machinery/power/furnace)
 	var/maxfuel = 1000
 	var/genrate = 20000
 	var/stoked = 0 // engine ungrump
-	custom_suicide = 1
+	custom_suicide = TRUE
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
+
+	// lights
+	var/datum/light/cone/cone_light = new /datum/light/cone
+	var/datum/light/point/point_light = new /datum/light/point
+	var/col_r = 0.69
+	var/col_g = 0.23
+	var/col_b = 0.01
+	var/outer_angular_size = 90
+	var/inner_angular_size = 75
+	var/inner_radius = 2
 
 	New(new_loc)
 		..()
 		START_TRACKING
+		src.point_light.set_brightness(0.5)
+		src.point_light.set_color(src.col_r, src.col_g, src.col_b)
+		src.point_light.attach(src)
+
+		src.cone_light.set_brightness(0.7)
+		src.cone_light.set_color(src.col_r, src.col_g, src.col_b)
+		src.cone_light.outer_angular_size = src.outer_angular_size
+		src.cone_light.inner_angular_size = src.inner_angular_size
+		src.cone_light.inner_radius = src.inner_radius
+		src.cone_light.attach(src)
 
 	disposing()
 		STOP_TRACKING
@@ -36,7 +56,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 					stoked--
 			if(!src.fuel)
 				src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down!</span>")
-				src.active = 0
+				src.active = FALSE
 		else
 			on_inactive()
 
@@ -55,8 +75,12 @@ TYPEINFO(/obj/machinery/power/furnace)
 				var/image/I = GetOverlayImage("active")
 				if(!I) I = image('icons/obj/power.dmi', "furn-burn")
 				UpdateOverlays(I, "active")
+				src.point_light.enable()
+				src.cone_light.enable()
 			else
 				UpdateOverlays(null, "active", 0, 1) //Keep it in cache for when it's toggled
+				src.point_light.disable()
+				src.cone_light.disable()
 
 		var/fuel_state = round(min((src.fuel / src.maxfuel) * 5, 4))
 		//At max fuel, the state will be 4, aka all bars, then it will lower / increase as fuel is added
@@ -73,7 +97,9 @@ TYPEINFO(/obj/machinery/power/furnace)
 
 
 	was_deconstructed_to_frame(mob/user)
-		src.active = 0
+		src.active = FALSE
+		src.point_light.disable()
+		src.cone_light.disable()
 
 	attack_hand(var/mob/user)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
@@ -83,11 +109,11 @@ TYPEINFO(/obj/machinery/power/furnace)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/grab))
+			var/obj/item/grab/grab = W
 			if (!src.active)
-				boutput(user, "<span class='alert'>It'd probably be easier to dispose of them while the furnace is active...</span>")
+				boutput(user, "<span class='alert'>It'd probably be easier to dispose of [him_or_her(grab.affecting)] while the furnace is active...</span>")
 				return
 			else
-				var/obj/item/grab/grab = W
 				var/mob/target = grab.affecting
 				if (!isdead(grab.affecting))
 					boutput(user, "<span class='alert'>[grab.affecting.name] needs to be dead first!</span>")
@@ -141,7 +167,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 						src.fuel = src.maxfuel
 						boutput(user, "<span class='notice'>The furnace is now full!</span>")
 						break
-				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "<span class='notice'>You finish loading [crate] into [src]!</span>")
 				return
 
@@ -159,7 +185,7 @@ TYPEINFO(/obj/machinery/power/furnace)
 				sleep(0.3 SECONDS)
 				if (user.loc != staystill)
 					break
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 
 		src.updateUsrDialog()
@@ -230,7 +256,6 @@ TYPEINFO(/obj/machinery/power/furnace)
 		else if (istype(W, /obj/item/clothing/head/)) fuel += 20
 		else if (istype(W, /obj/item/clothing/suit/)) fuel += 40
 		else if (istype(W, /obj/item/clothing/under/)) fuel += 30
-		else if (istype(W, /obj/item/plank)) fuel += 100
 		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuck/burn)) fuel += 120
 		else if (istype(W, /obj/item/reagent_containers/food/fish/lava_fish)) fuel += 150
 		else if (istype(W, /obj/item/reagent_containers/food/fish/igneous_fish)) fuel += 250

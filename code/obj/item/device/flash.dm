@@ -150,7 +150,7 @@ TYPEINFO(/obj/item/device/flash)
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
-	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	flick(src.animation_type, src)
 	if (!src.turboflash)
 		src.use++
@@ -240,7 +240,7 @@ TYPEINFO(/obj/item/device/flash)
 			return
 
 	// Play animations.
-	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	flick(src.animation_type, src)
 
 	if (isrobot(user))
@@ -436,6 +436,6 @@ TYPEINFO(/obj/item/device/flash/revolution)
 
 	on_counterrev(mob/living/M, mob/user)
 		. = ..()
-		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1, 0, 0.6)
+		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, TRUE, 0, 0.6)
 		user.show_text("Hold still to override . . . ", "red")
 		actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)

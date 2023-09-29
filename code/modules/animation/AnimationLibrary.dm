@@ -617,6 +617,33 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	icon_state = "shine"
 	plane = PLANE_OVERLAY_EFFECTS
 
+/obj/particle/cryo_sparkle
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "cryo-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("cryo-1", "cryo-2", "cryo-3", "cryo-4") //slightly different timings on these to give a less static look
+		..()
+
+/obj/particle/fire_puff
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "flame-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("flame-1", "flame-2", "flame-3", "flame-4")
+		..()
+
+/obj/particle/heat_swirl
+	icon = 'icons/effects/chemistry_effects.dmi'
+	icon_state = "heat-1"
+	plane = PLANE_OVERLAY_EFFECTS
+
+	New()
+		icon_state = pick("heat-1", "heat-2", "heat-3", "heat-4")
+		..()
+
 /proc/chemistry_particle(var/datum/reagents/holder, var/datum/chemical_reaction/reaction)
 	if(!istype(holder.my_atom, /obj) || !holder.my_atom.loc)
 		return
@@ -1263,7 +1290,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1280,7 +1307,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1297,7 +1324,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 	swirl.set_loc(target_turf)
 	swirl.pixel_y = 10
 	if (play_sound)
-		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 	SPAWN(1.5 SECONDS)
 		if (swirl)
 			swirl.pixel_y = 0
@@ -1483,7 +1510,7 @@ proc/muzzle_flash_any(var/atom/movable/A, var/firing_angle, var/muzzle_anim, var
 		var/mob/M = A
 		APPLY_ATOM_PROPERTY(M, PROP_MOB_CANTMOVE, M.type)
 	if (play_sound)
-		playsound(center, 'sound/effects/darkspawn.ogg', 50,0)
+		playsound(center, 'sound/effects/darkspawn.ogg', 50,FALSE)
 	SPAWN(5 SECONDS)
 		var/turf/TA = locate(A.x - size, A.y - size, A.z)
 		var/turf/TB = locate(A.x + size, A.y + size, A.z)
@@ -1553,7 +1580,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 /proc/animate_storage_thump(var/atom/A, wiggle=6)
 	if(!istype(A))
 		return
-	playsound(A, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+	playsound(A, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 	var/orig_x = A.pixel_x
 	var/orig_y = A.pixel_y
 	animate(A, pixel_x=orig_x, pixel_y=orig_y, flags=ANIMATION_PARALLEL, time=0.01 SECONDS)
@@ -1771,7 +1798,7 @@ var/global/icon/scanline_icon = icon('icons/effects/scanning.dmi', "scanline")
 	beam.Scale(scale_x, 1)
 	beam.plane = PLANE_ABOVE_LIGHTING
 	beam.layer = NOLIGHT_EFFECTS_LAYER_BASE
-	playsound(T, 'sound/weapons/hadar_impact.ogg', 30, 1)
+	playsound(T, 'sound/weapons/hadar_impact.ogg', 30, TRUE)
 	animate(beam, time = beam_time / 2, pixel_y = abs(scale_y * 32 / 2 + 16), transform = M, flags = ANIMATION_PARALLEL)
 	animate(time = beam_time / 2, transform = matrix(0,0,0,0,scale_y,0))
 	SPAWN(beam_time / 2)

@@ -998,7 +998,7 @@
 
 	proc/bust_speaker()
 		src.visible_message("<span class='alert'>[src]'s tiny speaker explodes!</span>")
-		playsound(src, 'sound/impact_sounds/Machinery_Break_1.ogg', 20, 1)
+		playsound(src, 'sound/impact_sounds/Machinery_Break_1.ogg', 20, TRUE)
 		elecflash(src, radius=1, power=1, exclude_center = 0)
 		src.speaker_busted = 1
 
@@ -1176,7 +1176,7 @@ ThinkOS 7 comes with several useful applications built in, these include:<br>
 <li>Messenger: Send messages between all enabled PDAs.  Can also send the current file in the clipboard.</li>
 <li>File Browser: Manage and execute programs in the internal drive or loaded cartridge.</li>
 <li>Atmos Scanner: Using patented AirScan technology.</li>
-<li>Modules: Light up your life with a flashlight, or see right through the floor with a T-Scanner! The choice is yours!</li>
+<li>Modules: Light up your life with a flashlight, or see right through the floor with a T-ray Scanner! The choice is yours!</li>
 </ul></i>
 <b>To send a file with the messenger:</b><br>
 Enter the file browser and copy the file you want to send.  Now enter the messenger and select *send file*.<br>

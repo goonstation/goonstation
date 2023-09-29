@@ -1043,13 +1043,13 @@
 		if(bar_gun.shotsLeft == 1 || src.ammofab)
 			bar_gun.shotsLeft = 0
 			if(src.hat)
-				playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
+				playsound(src, 'sound/weapons/Gunshot.ogg', 100, TRUE)
 				src.visible_message("<span class='alert'><B>BOOM!</B> [src] misses its head... screen... thing, and shoots its hat off!</span>")
 				src.hat.set_loc(get_turf(src))
 				src.hat = null
 				set_emotion("sad")
 			else if (prob(50))
-				playsound(src, 'sound/weapons/Gunshot.ogg', 100, 1)
+				playsound(src, 'sound/weapons/Gunshot.ogg', 100, TRUE)
 				src.visible_message("<span class='alert'><B>BOOM!</B> [src] shoots itself right in its dumb face and explodes!</span>")
 				src.explode()
 			else
@@ -1064,7 +1064,7 @@
 					src.visible_message("<span class='alert'><B>BOOM!</B> [src] misses its head... screen... thing, sending the bullet flying!</span>")
 		if(bar_gun.shotsLeft > 1)
 			bar_gun.shotsLeft--
-			playsound(src, 'sound/weapons/Gunclick.ogg', 80, 1)
+			playsound(src, 'sound/weapons/Gunclick.ogg', 80, TRUE)
 			src.visible_message("<span class='alert'>[src] points the gun at itself. Click!</span>")
 
 		if (bar_gun.shotsLeft == 0)
@@ -1570,7 +1570,7 @@
 						ShootTheGun(target)
 						src.visible_message("<span class='alert'><B>[src] fires [src.budgun] at [target]!</B></span>")
 					else
-						playsound(src, 'sound/weapons/Gunclick.ogg', 60, 1)
+						playsound(src, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 					if (ChargeUrLaser())
 						SPAWN(1 SECOND)
 							elecflash(get_turf(src), 1, power=1, exclude_center = 0)
@@ -1915,7 +1915,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		playsound(master, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
+		playsound(master, 'sound/weapons/handcuffs.ogg', 30, TRUE, -2)
 		master.visible_message("<span class='alert'><B>[master] is trying to put handcuffs on [task.arrest_target]!</B></span>")
 
 	onInterrupt(flag)
@@ -2224,7 +2224,7 @@ TYPEINFO(/obj/item/device/guardbot_tool)
 
 			var/list/dummies = new/list()
 
-			playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
+			playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 			if(isturf(target))
 				target_r = new/obj/elec_trg_dummy(target)

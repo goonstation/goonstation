@@ -565,7 +565,7 @@
 				src.now_pushing = 0
 				var/atom/source = A
 				src.visible_message("<span class='alert'><B>[src]</B>'s bounces off [A]!</span>")
-				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
+				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/throw_dir = turn(get_dir(A, src),rand(-1,1)*45)
 				src.throw_at(get_edge_cheap(source, throw_dir),  20, 3)
 				logTheThing(LOG_COMBAT, src, "with reagents [log_reagents(src)] is flubber bounced [dir2text(throw_dir)] due to impact with turf [log_object(A)] [log_reagents(A)] at [log_loc(src)].")
@@ -596,13 +596,13 @@
 					if (tmob.hasStatus("spatial_protection"))
 						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 						var/atom/source = get_turf(tmob)
-						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
 						return
 					// like repels - bump them away from each other
 					src.now_pushing = 0
 					var/atom/source = get_turf(tmob)
 					src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s identical magnetic fields repel each other!</span>")
-					playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 100, 1)
+					playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 100, TRUE)
 					tmob.throw_at(get_edge_cheap(source, get_dir(src, tmob)),  20, 3)
 					src.throw_at(get_edge_cheap(source, get_dir(tmob, src)),  20, 3)
 					return
@@ -613,7 +613,7 @@
 
 				var/atom/source = get_turf(tmob)
 				src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s bounce off each other!</span>")
-				playsound(source, 'sound/misc/boing/6.ogg', 100, 1)
+				playsound(source, 'sound/misc/boing/6.ogg', 100, TRUE)
 				var/target_dir = get_dir(src, tmob)
 				var/src_dir = get_dir(tmob, src)
 				tmob.throw_at(get_edge_cheap(source, target_dir),  20, 3)
@@ -642,7 +642,7 @@
 					if (tmob.hasStatus("spatial_protection"))
 						src.visible_message("<span class='alert'><B>[src]</B> and <B>[tmob]</B>'s magnetic fields briefly flare, then fade.</span>")
 						var/atom/source = get_turf(tmob)
-						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, 1)
+						playsound(source, 'sound/impact_sounds/Energy_Hit_1.ogg', 30, TRUE)
 						return
 					// opposite attracts - fling everything nearby at these dumbasses
 					src.now_pushing = 1
@@ -662,7 +662,7 @@
 						var/turf/Q = pick(sfloors)
 						arcFlashTurf(src, Q, 3000)
 						sfloors -= Q
-					playsound(source, 'sound/effects/suck.ogg', 100, 1)
+					playsound(source, 'sound/effects/suck.ogg', 100, TRUE)
 					for(var/atom/movable/M in view(5, source))
 						if(M.anchored || M == source) continue
 						if(throw_charge > 0)
@@ -768,6 +768,7 @@
 
 // I moved the log entries from human.dm to make them global (Convair880).
 /mob/ex_act(severity, last_touched)
+	SEND_SIGNAL(src, COMSIG_MOB_EX_ACT, severity)
 	logTheThing(LOG_COMBAT, src, "is hit by an explosion (Severity: [severity]) at [log_loc(src)]. Explosion source last touched by [last_touched]")
 	return
 
@@ -2094,7 +2095,7 @@
 			src.gib()
 			return
 		src.show_text("<span style=\"font-weight:bold; font-style:italic; color:red; font-family:'Comic Sans MS', sans-serif; font-size:200%;\">It's coming!!!</span>")
-		playsound(the_turf, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 70, 1)
+		playsound(the_turf, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 70, TRUE)
 
 		floorcluwne.loc=the_turf //I actually do want to bypass Entered() and Exit() stuff now tyvm
 		animate_slide(the_turf, 0, -24, duration)
@@ -2202,12 +2203,12 @@
 /mob/proc/smite_gib()
 	var/turf/T = get_turf(src)
 	showlightning_bolt(T)
-	playsound(T, 'sound/effects/lightning_strike.ogg', 50, 1)
+	playsound(T, 'sound/effects/lightning_strike.ogg', 50, TRUE)
 	src.unequip_all()
 	src.emote("scream")
 	src.gib()
 
-/mob/proc/anvilgib(height = 7, use_shadow=TRUE, anvil_type=/obj/table/anvil)
+/mob/proc/anvilgib(height = 7, use_shadow=TRUE, anvil_type=/obj/table/anvil/gimmick)
 	logTheThing(LOG_COMBAT, src, "is anvil-gibbed at [log_loc(src)].")
 	src.transforming = TRUE
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTMOVE, "anvilgib")
@@ -2838,7 +2839,10 @@
 								R["name"] = newname
 								if (R["full_name"])
 									R["full_name"] = newname
-						for (var/obj/item/card/id/ID in src.contents)
+						for (var/obj/item/I in src.contents)
+							var/obj/item/card/id/ID = get_id_card(I)
+							if (!ID)
+								continue
 							ID.registered = newname
 							ID.update_name()
 						for (var/obj/item/device/pda2/PDA in src.contents)
@@ -3032,7 +3036,7 @@
 		if(!the_turf)
 			src.gib() // ghostize will handle the rest.
 			return
-		playsound(the_turf, 'sound/effects/damnation.ogg', 50, 1)
+		playsound(the_turf, 'sound/effects/damnation.ogg', 50, TRUE)
 
 		satan.loc=the_turf //I actually do want to bypass Entered() and Exit() stuff now tyvm
 		animate_slide(the_turf, 0, -24, duration)

@@ -137,6 +137,8 @@ ABSTRACT_TYPE(/obj/item)
 	var/tmp/last_tick_duration = 1 // amount of time spent between previous tick and this one (1 = normal)
 	var/tmp/last_processing_tick = -1
 
+	var/brew_result = null //! What reagent will it make if it's brewable?
+
 	/// This is the safe way of changing 2-handed-ness at runtime. Use this please.
 	proc/setTwoHanded(var/twohanded = 1)
 		if(ismob(src.loc))
@@ -455,6 +457,11 @@ ABSTRACT_TYPE(/obj/item)
 				src.change_stack_amount(-1)
 				return
 			user.u_equip(src)
+			if (by_matter_eater && !istype(src, /obj/item/reagent_containers/food) && isliving(user))
+				var/mob/living/L = user
+				if (L.organHolder.stomach)
+					L.organHolder.stomach.consume(src)
+					return
 			qdel(src)
 		return TRUE
 
@@ -493,6 +500,11 @@ ABSTRACT_TYPE(/obj/item)
 				src.change_stack_amount(-1)
 				return
 			user.u_equip(src)
+			if (by_matter_eater && !istype(src, /obj/item/reagent_containers/food) && isliving(user))
+				var/mob/living/L = user
+				if (L.organHolder.stomach)
+					L.organHolder.stomach.consume(src)
+					return
 			qdel(src)
 		return TRUE
 
@@ -1277,8 +1289,6 @@ ABSTRACT_TYPE(/obj/item)
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
-	msgs.played_sound = src.hitsound
-
 	var/power = src.force + src.getProperty("searing")
 
 	if(hasProperty("unstable"))
@@ -1340,16 +1350,19 @@ ABSTRACT_TYPE(/obj/item)
 		block_spark(M,armor=1)
 		switch(hit_type)
 			if (DAMAGE_BLUNT)
-				playsound(M, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_blunt.ogg', 50, TRUE, -1, pitch=1.5)
 			if (DAMAGE_CUT)
-				playsound(M, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_cut.ogg', 50, TRUE, -1, pitch=1.5)
 			if (DAMAGE_STAB)
-				playsound(M, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_stab.ogg', 50, TRUE, -1, pitch=1.5)
 			if (DAMAGE_BURN)
-				playsound(M, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1, pitch=1.5)
+				playsound(M, 'sound/impact_sounds/block_burn.ogg', 50, TRUE, -1, pitch=1.5)
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1
+
+	if (!armor_blocked)
+		msgs.played_sound = src.hitsound
 
 	if (src.leaves_slash_wound && power > 0 && hit_area == "chest" && ishuman(M))
 		var/num = rand(0, 2)

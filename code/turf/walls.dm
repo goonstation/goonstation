@@ -109,7 +109,7 @@ TYPEINFO(/turf/simulated/wall)
 		return //..(parts, user)
 
 	if(!instantly && W && !W.disposed)
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		boutput(user, "You begin to attach the light fixture to [src]...")
 		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/wall/proc/finish_attaching,\
 			list(W, user, dir), W.icon, W.icon_state, null, null)
@@ -283,7 +283,7 @@ TYPEINFO(/turf/simulated/wall)
 				return
 
 	boutput(user, "<span class='notice'>You hit the [src.name] but nothing happens!</span>")
-	playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
+	playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
 	interact_particle(user,src)
 	return
 
@@ -446,7 +446,7 @@ TYPEINFO(/turf/simulated/wall)
 		if (src.d_state == 4)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Detaching support rods.</span>")
-			playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 100, TRUE)
 			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 5
@@ -457,7 +457,7 @@ TYPEINFO(/turf/simulated/wall)
 
 	else if (issnippingtool(W))
 		if (src.d_state == 0)
-			playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
+			playsound(src, 'sound/items/Wirecutter.ogg', 100, TRUE)
 			src.d_state = 1
 			var/atom/A = new /obj/item/rods( src )
 			if (src.material)
@@ -468,7 +468,7 @@ TYPEINFO(/turf/simulated/wall)
 	else if (isscrewingtool(W))
 		if (src.d_state == 1)
 			var/turf/T = user.loc
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			boutput(user, "<span class='notice'>Removing support lines.</span>")
 			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
@@ -482,7 +482,7 @@ TYPEINFO(/turf/simulated/wall)
 		if (src.d_state == 3)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying cover off.</span>")
-			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
+			playsound(src, 'sound/items/Crowbar.ogg', 100, TRUE)
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 4
@@ -493,7 +493,7 @@ TYPEINFO(/turf/simulated/wall)
 		else if (src.d_state == 6)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying outer sheath off.</span>")
-			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
+			playsound(src, 'sound/items/Crowbar.ogg', 100, TRUE)
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
@@ -550,3 +550,12 @@ TYPEINFO(/turf/simulated/wall)
 /turf/simulated/wall/meteorhit(obj/M as obj)
 	dismantle_wall()
 	return 0
+
+/turf/simulated/wall/grass
+	name = "tall grass"
+	desc = "Looks like a... regular wall that's been painted in a grassy pattern. Clever!"
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "grass"
+
+/turf/simulated/wall/grass/leafy
+	icon_state = "grass_leafy"

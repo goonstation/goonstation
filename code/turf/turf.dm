@@ -376,9 +376,9 @@ proc/generate_space_color()
 		starlight.color = starlight_color_override ? starlight_color_override : src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
-		src.underlays += starlight
+		src.underlays = list(starlight)
 	else
-		src.underlays -= starlight
+		src.underlays = null
 	#endif
 
 // override for space turfs, since they should never hide anything
@@ -1150,7 +1150,7 @@ TYPEINFO(/turf/simulated)
 		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
 
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
-		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 		R.change_stack_amount(-1)
 		var/obj/lattice/lattice = new(src)
 		lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
@@ -1164,7 +1164,7 @@ TYPEINFO(/turf/simulated)
 		if (T.amount >= 1)
 			for(var/obj/lattice/L in src)
 				qdel(L)
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 			T.build(src)
 
 #if defined(MAP_OVERRIDE_POD_WARS)
@@ -1295,7 +1295,7 @@ TYPEINFO(/turf/simulated)
 								if (1)
 									new /obj/item/skull {desc = "A skull.  That was robbed.  From a grave.";} ( src )
 								if (2)
-									new /obj/item/plank {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
+									new /obj/item/sheet/wood {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
 								if (3)
 									new /obj/item/clothing/under/suit/pinstripe {name = "old pinstripe suit"; desc  = "A pinstripe suit.  That was stolen.  Off of a buried corpse.";} ( src )
 								else

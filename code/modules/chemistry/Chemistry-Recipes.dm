@@ -113,7 +113,7 @@
 				holder.del_reagent("hydrogen")
 				holder.del_reagent("platinum")
 			var/location = get_turf(holder.my_atom)
-			playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(location, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			elecflash(location)
 			for (var/mob/living/M in all_viewers(5, location))
 				if (issilicon(M) || isintangible(M))
@@ -141,7 +141,7 @@
 				holder.del_reagent("lumen")
 				holder.del_reagent("propellant")
 			var/location = get_turf(holder.my_atom)
-			playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(location, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			elecflash(location)
 			for (var/mob/living/M in all_viewers(5, location))
 				if (issilicon(M) || isintangible(M))
@@ -171,7 +171,7 @@
 				holder.del_reagent("phosphorus")
 				holder.del_reagent("potassium")
 			var/location = get_turf(holder.my_atom)
-			playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(location, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			elecflash(location)
 			for (var/mob/living/M in all_viewers(5, location))
 				if (issilicon(M) || isintangible(M))
@@ -199,7 +199,7 @@
 				holder.del_reagent("lumen")
 				holder.del_reagent("smokepowder")
 			var/location = get_turf(holder.my_atom)
-			playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(location, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			elecflash(location)
 			for (var/mob/living/M in all_viewers(5, location))
 				if (issilicon(M) || isintangible(M))
@@ -227,7 +227,7 @@
 				holder.del_reagent("fluorosurfactant")
 				holder.del_reagent("water")
 			var/location = get_turf(holder.my_atom)
-			playsound(location, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(location, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			elecflash(location)
 			for (var/mob/living/M in all_viewers(5, location))
 				if (issilicon(M) || isintangible(M))
@@ -4782,30 +4782,100 @@
 	pyrosium_heat
 		name = "pyrosium heating"
 		id = "pyrosium_heat"
-		required_reagents = list("pyrosium" = 1, "oxygen" = 1)
+		required_reagents = list("pyrosium" = 1, "oxygen" = 0)
 		result_amount = 1
 		reaction_speed = 1
 		reaction_temp_divider = 25
 		instant = 0 //This one should actually not be instant
 		mix_phrase = "The mixture starts to rapidly fizzle and heat up."
 		hidden = TRUE
+		stateful = TRUE
+		var/count = 0
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
+			count ++
 			holder.temperature_reagents(holder.total_temperature + created_volume*200, 400, change_min = 1)
+
+		on_end_reaction(var/datum/reagents/holder)
+			holder.remove_reagent("oxygen", count)
+
+	pyrosium_area_heat
+		name = "pyrosium area heating"
+		id = "pyrosium_area_heat"
+		required_reagents = list("pyrosium" = 1, "magnesium" = 0)
+		result_amount = 1
+		reaction_speed = 1
+		instant = FALSE
+		mix_phrase = "The mixture gives off very hot air."
+		hidden = TRUE
+		stateful = TRUE
+		var/count = 0
+
+		on_reaction(var/datum/reagents/holder)
+			count++
+			for(var/turf/T in range(1, get_turf(holder.my_atom)))
+				for(var/mob/mob in T)
+					if(!mob.is_heat_resistant())
+						mob.bodytemperature += 10
+				T.hotspot_expose(1000, 100, holder.my_atom)
+				var/obj/particle/heat_swirl/swirl = new /obj/particle/heat_swirl
+				swirl.set_loc(T)
+				SPAWN(2 SECONDS)
+					qdel(swirl)
+
+		on_end_reaction(var/datum/reagents/holder)
+			holder.remove_reagent("magnesium", count)
 
 	cryostylane_cold
 		name = "cryostylane chilling"
 		id = "cryostylane_cold"
-		required_reagents = list("cryostylane" = 1, "oxygen" = 1)
+		required_reagents = list("cryostylane" = 1, "oxygen" = 0)
 		result_amount = 1
 		reaction_speed = 1
 		reaction_temp_divider = 15
 		instant = 0 //This one should actually not be instant
 		mix_phrase = "The mixture begins to rapidly freeze."
 		hidden = TRUE
+		stateful = TRUE
+		var/count = 0
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
+			count++
 			holder.temperature_reagents(holder.total_temperature - created_volume*200, 400, change_min = 1)
+
+		on_end_reaction(var/datum/reagents/holder)
+			holder.remove_reagent("oxygen", count)
+
+	cryostylane_area_cooling
+		name = "cryostylane area cooling"
+		id = "cryoxadone_area_cooling"
+		required_reagents = list("cryostylane"= 1, "iodine" = 0)
+		result_amount = 1
+		instant = FALSE
+		reaction_speed = 1
+		temperature_change = -5
+		mix_phrase = "The solution gives off cold fumes."
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		reaction_icon_state = list("reaction_sparkle-1", "reaction_sparkle-2")
+		reaction_icon_color = "#8e38ff"
+		hidden = TRUE
+		stateful = TRUE
+		var/count = 0
+
+		on_reaction(var/datum/reagents/holder)
+			count++
+			for(var/turf/T in range(1, get_turf(holder.my_atom)))
+				for(var/mob/mob in T)
+					if(!mob.is_cold_resistant() || ischangeling(mob))
+						mob.bodytemperature -= 10
+				T.hotspot_expose(0, 100, holder.my_atom)
+				var/obj/particle/cryo_sparkle/sparkle = new /obj/particle/cryo_sparkle
+				sparkle.set_loc(T)
+				SPAWN(2 SECONDS)
+					qdel(sparkle)
+
+		on_end_reaction(var/datum/reagents/holder)
+			holder.remove_reagent("iodine", count)
 
 	reversium
 		name = "Reversium"

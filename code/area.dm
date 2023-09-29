@@ -144,8 +144,8 @@ TYPEINFO(/area)
 	/// default environment for sounds - see sound datum vars documentation for the presets.
 	var/sound_environment = 1
 
-	/// A list of parallax layer types to be added to a client's screen on entering this area.
-	var/list/area_parallax_layers = list()
+	/// The parallax layer render source group that this area should use.
+	var/area_parallax_render_source_group = null
 	/// Whether foreground parallax layers should be occluded from rendering over the contents of this area.
 	var/occlude_foreground_parallax_layers = FALSE
 
@@ -772,13 +772,7 @@ ABSTRACT_TYPE(/area/shuttle)
 /area/shuttle/john/owlery
 	name = "John's Bus Owlery Dock"
 	icon_state = "shuttle2"
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/typhon/donut3,
-		/atom/movable/screen/parallax_layer/asteroids_far,
-		/atom/movable/screen/parallax_layer/asteroids_near,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/owlery
 
 /area/shuttle/john/mining
 	name = "John's Bus Outpost Dock"
@@ -788,11 +782,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	name = "John's Bus Factory Dock"
 	icon_state = "shuttle"
 	// Settings should match /area/grillnasium
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/asteroids_far
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/grillnasium
 
 /area/shuttle/icebase_elevator/upper
 	name = "Chasm Lift Upper Section"
@@ -800,10 +790,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	filler_turf = "/turf/simulated/floor/arctic/abyss"
 	force_fullbright = 0
 	sound_group = "ice_moon"
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/foreground/snow,
-		/atom/movable/screen/parallax_layer/foreground/snow/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/ice_moon
 	occlude_foreground_parallax_layers = TRUE
 
 /area/shuttle/icebase_elevator/lower
@@ -977,11 +964,6 @@ ABSTRACT_TYPE(/area/shuttle_particle_spawn)
 	icon_state = "shuttle_transit_stars_w"
 	star_dir = "_w"
 
-/area/shuttle_sound_spawn
-	name = "Shuttle Subwoofers"
-	icon_state = "shuttle_transit_sound"
-	teleport_blocked = TRUE
-	requires_power = FALSE
 
 // zewaka - actual areas below //
 
@@ -1366,11 +1348,7 @@ TYPEINFO(/area/diner)
 	icon_state = "purple"
 	requires_power = FALSE
 	sound_environment = 12
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/void,
-		/atom/movable/screen/parallax_layer/void/clouds_1,
-		/atom/movable/screen/parallax_layer/void/clouds_2,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/void
 
 /area/tech_outpost
 	name = "Tech Outpost"
@@ -2089,6 +2067,11 @@ TYPEINFO(/area/station/hallway)
 	sound_environment = 10
 	station_map_colour = MAPC_HALLWAY
 
+/area/station/hallway/arrivals
+	name = "Arrival Hallway"
+	do_not_irradiate = 1
+	icon_state = "pink"
+
 ABSTRACT_TYPE(/area/station/hallway/primary)
 /area/station/hallway/primary
   name = "Primary Hallway"
@@ -2624,6 +2607,11 @@ ABSTRACT_TYPE(/area/station/crew_quarters/radio)
 	name = "Public Garden"
 	icon_state = "park"
 
+/area/station/crew_quarters/garden/sunlight
+	name = "Public Garden"
+	icon_state = "park"
+	ambient_light = CENTCOM_LIGHT
+
 /area/station/crewquarters/garbagegarbs //It's the clothing store on Manta
 	name = "Garbage Garbs clothing store"
 	icon_state = "green"
@@ -2963,17 +2951,50 @@ ABSTRACT_TYPE(/area/station/security)
 /area/station/security/brig/cell_block
 		name = "Cell Block"
 		icon_state = "brigcell"
+
 /area/station/security/brig/cell1
 		name = "Cell #1"
 		icon_state = "red"
+
 /area/station/security/brig/genpop
 		name = "Genpop Cell"
 		icon_state = "brig"
-/area/station/security/brig/solitary
-		name = "Solitary Confinement"
+
+/area/station/security/brig/genpop_n
+		name = "Genpop North Cell"
 		icon_state = "brig"
 
+/area/station/security/brig/genpop_s
+		name = "Genpop South Cell"
+		icon_state = "brig"
 
+/area/station/security/brig/solitary
+		name = "Solitary Confinement"
+		icon_state = "brigcell"
+
+/area/station/security/brig/solitary2
+		name = "Solitary Confinement #2"
+		icon_state = "brigcell"
+
+/area/station/security/brig/solitary3
+		name = "Solitary Confinement #3"
+		icon_state = "brigcell"
+
+/area/station/security/brig/solitary4
+		name = "Solitary Confinement #4"
+		icon_state = "brigcell"
+
+/area/station/security/brig/minibrig
+		name = "Mini Brig"
+		icon_state = "brigcell"
+
+/area/station/security/brig/minibrig2
+		name = "Mini Brig #2"
+		icon_state = "brigcell"
+
+/area/station/security/brig/minibrig3
+		name = "Mini Brig #3"
+		icon_state = "brigcell"
 
 /area/station/security/checkpoint
 	name = "Bridge Security Checkpoint"
@@ -3082,10 +3103,6 @@ ABSTRACT_TYPE(/area/station/security)
 /area/station/security/brig/south_side
 	name = "Brig Long-Term Cell - South Side"
 	icon_state = "brigcell_Sside"
-
-/area/station/security/brig/solitary
-	name = "Brig - Solitary Cells"
-	icon_state = "brigcell"
 
 /area/station/security/beepsky
 	name = "Beepsky's House"
@@ -3203,6 +3220,9 @@ ABSTRACT_TYPE(/area/station/janitor)
 	icon_state = "yellow"
 	sound_environment = 5
 	workplace = 1
+
+/area/station/science/testchamber/bombchamber
+	name = "Bomb Testing Chamber"
 
 ABSTRACT_TYPE(/area/station/science)
 /area/station/science
@@ -3580,11 +3600,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	icon_state = "red"
 	sanctuary = 1
 	teleport_blocked = 1
-	area_parallax_layers = list(
-	/atom/movable/screen/parallax_layer/space_1,
-	/atom/movable/screen/parallax_layer/space_2,
-	/atom/movable/screen/parallax_layer/asteroids_far
-	)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/magpie
 
 /// Used to allow the exterior of the Magpie to render parallax layers.
 /area/salvager_space
@@ -3592,11 +3608,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	sanctuary = 1
 	teleport_blocked = 1
 	// Must match /area/salvager
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/asteroids_far
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/magpie
 
 /area/salvager/pod
 	name = "Magpie Launch Area"
@@ -3618,21 +3630,13 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	sound_environment = 2
 	teleport_blocked = 1
 	sound_group = "syndicate_station"
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/cairngorm
 
 /// Used to allow the exterior of the Cairngorm to render parallax layers.
 /area/syndicate_station_space
 	name = "Syndicate Station Space"
 	teleport_blocked = 1
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/cairngorm
 
 /area/syndicate_station/battlecruiser
 	name = "Syndicate Battlecruiser Cairngorm"
@@ -3646,11 +3650,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 /area/syndicate_station/assault_pod
 	name = "forward assault pod"
 	icon_state = "red"
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1/south,
-		/atom/movable/screen/parallax_layer/space_2/south,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse/south,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/assault_pod
 
 /area/syndicate_station/medbay
 	name = "medical bay"
@@ -3665,11 +3665,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	requires_power = 0
 	sound_environment = 4
 	teleport_blocked = 1
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/wizard_den
 
 	CanEnter(atom/movable/A)
 		var/mob/living/M = A
@@ -3682,11 +3678,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 
 /area/wizard_station_space
 	name = "Wizard's Den Space"
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/wizard_den
 
 ABSTRACT_TYPE(/area/station/ai_monitored)
 /area/station/ai_monitored

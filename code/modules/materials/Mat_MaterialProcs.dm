@@ -72,10 +72,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/ffart_pickup
 	execute(var/mob/M, var/obj/item/I)
-		SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
-			if(I in M.get_all_items_on_mob())
-				M.remove_item(I)
-				I.set_loc(get_turf(I))
+		if(!I.cant_drop)
+			SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
+				if(I in M.get_all_items_on_mob())
+					M.remove_item(I)
+					I.set_loc(get_turf(I))
 		return
 
 /datum/materialProc/brullbar_temp_onlife
@@ -311,23 +312,21 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		var/turf/T = get_turf(attacked)
 		var/mob/attacked_mob = attacked
-		if(!attacked_mob || attacked_mob.anchored || ON_COOLDOWN(attacked_mob, "telecrystal_warp", 1 SECOND))
+		if(!istype(attacked_mob) || attacked_mob.anchored || ON_COOLDOWN(attacked_mob, "telecrystal_warp", 1 SECOND))
 			return
-		if(prob(33))
-			if(istype(attacked_mob) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
-				. = get_offset_target_turf(get_turf(attacked_mob), rand(-8, 8), rand(-8, 8))
-				var/fail_msg = ""
-				if (prob(25) && attacker == attacked_mob && isitem(owner))
-					var/obj/item/used_item = owner
-					fail_msg = " but you lose [used_item]!"
-					attacker.drop_item(used_item)
-					playsound(attacker.loc, 'sound/effects/poof.ogg', 90)
-				else
-					playsound(attacker.loc, "warp", 50)
-				attacked_mob.visible_message("<span class='alert'>[attacked_mob] is warped away!</span>")
-				boutput(attacked_mob, "<span class='alert'>You suddenly teleport... [fail_msg]</span>")
-				attacked_mob.set_loc(.)
-		return
+		if(prob(33) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
+			. = get_offset_target_turf(get_turf(attacked_mob), rand(-8, 8), rand(-8, 8))
+			var/fail_msg = ""
+			if (prob(25) && attacker == attacked_mob && isitem(owner))
+				var/obj/item/used_item = owner
+				fail_msg = " but you lose [used_item]!"
+				attacker.drop_item(used_item)
+				playsound(attacker.loc, 'sound/effects/poof.ogg', 90)
+			else
+				playsound(attacker.loc, "warp", 50)
+			attacked_mob.visible_message("<span class='alert'>[attacked_mob] is warped away!</span>")
+			boutput(attacked_mob, "<span class='alert'>You suddenly teleport... [fail_msg]</span>")
+			attacked_mob.set_loc(.)
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I, mult)
@@ -424,7 +423,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 			//sparkles
 			animate_flash_color_fill_inherit(owner,"#ff0000",4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakagentb.ogg', 50, 1, 8)
+			playsound(owner, 'sound/effects/leakagentb.ogg', 50, TRUE, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
 		else //no plasma present, or this is just normal molitz - you get just plain oxygen
@@ -433,7 +432,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			air.merge(payload) //add it to the target air
 			//blue sparkles
 			animate_flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
+			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 
 
 		molitz.setProperty("molitz_bubbles", iterations-1)
@@ -459,9 +458,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			if(iterations >= 1)
-				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
+				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 			if(iterations == 0)
-				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, 1, 5)
+				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, TRUE, 5)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
 			payload.temperature = T20C
@@ -548,7 +547,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/L = entering
 			if(L.slip(walking_matters = 1))
 				boutput(L, "You slip on the icy floor!")
-				playsound(owner, 'sound/misc/slip.ogg', 30, 1)
+				playsound(owner, 'sound/misc/slip.ogg', 30, TRUE)
 		return
 
 /datum/materialProc/ice_life
@@ -559,7 +558,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/carbon/C = M
 			if (C.bodytemperature > 0)
 				C.bodytemperature -= 2
-			if (C.bodytemperature > 100 && probmult(4))
+			if (C.bodytemperature > T0C && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
 		return

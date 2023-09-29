@@ -290,6 +290,21 @@ TRASH BAG
 	icon_state = "mop_orange"
 	item_state = "mop_orange"
 
+/obj/item/mop/orange/battleworn
+	desc = "It's been through some shit."
+	name = "battleworn mop"
+	rarity = 6
+	force = 6
+	quality = 80
+
+	New()
+		..()
+		src.setProperty("impact", 2)
+		src.setProperty("block", 20)
+		src.setProperty("frenzy", 1)
+		setItemSpecial(/datum/item_special/whirlwind)
+
+
 /obj/item/mop/New()
 	..()
 	src.create_reagents(20)
@@ -634,7 +649,7 @@ TRASH BAG
 			if (target.reagents)
 				target.reagents.trans_to(src, 5)
 			target.remove_filter(list("paint_color", "paint_pattern"))
-			playsound(src, 'sound/items/sponge.ogg', 20, 1)
+			playsound(src, 'sound/items/sponge.ogg', 20, TRUE)
 			if (ismob(target))
 				animate_smush(target)
 

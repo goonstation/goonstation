@@ -104,9 +104,9 @@
 							hit = TRUE
 
 				if (!hit)
-					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, FALSE)
 				else
-					playsound(user, 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, 0)
+					playsound(user, 'sound/impact_sounds/Flesh_Cut_1.ogg', 50, FALSE)
 				return 0
 			if (INTENT_GRAB)
 				if(!isturf(target.loc) && !isturf(target)) return
@@ -133,7 +133,7 @@
 							hit = TRUE
 
 				if (!hit)
-					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, FALSE)
 				else
 					playsound(user, 'sound/impact_sounds/Flesh_Stab_3.ogg', 80)
 
@@ -154,7 +154,7 @@
 						break
 
 				if (!hit)
-					playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(user, 'sound/effects/swoosh.ogg', 50, FALSE)
 				else
 					playsound(user, 'sound/impact_sounds/Flesh_Stab_3.ogg', 80)
 

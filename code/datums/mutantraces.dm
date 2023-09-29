@@ -1191,7 +1191,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
-			H.brain = src.mob.organHolder?.drop_organ("brain", H)
+			if(H)
+				H.brain = src.mob.organHolder?.drop_organ("brain", H)
+			else
+				qdel(src.mob.organHolder?.drop_organ("brain", null)) //perish
 
 			for(var/i in 1 to rand(2, 5))
 				I = new/obj/item/material_piece/bone(src.mob.loc)
@@ -1233,7 +1236,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
 					else
 						H.changeStatus("spry", 1 MINUTE)
-						playsound(H, 'sound/effects/smear.ogg', 50, 1)
+						playsound(H, 'sound/effects/smear.ogg', 50, TRUE)
 						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
 						src.uses--
 						if (!src.uses)
@@ -2198,7 +2201,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			transfer_blood(src.mob, beaker, 10)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
-			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
+			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container(TRUE))
 				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
 				playsound(src.mob, 'sound/misc/pourdrink.ogg', 50, 1)
 				transfer_blood(src.mob, milk_target, 10)

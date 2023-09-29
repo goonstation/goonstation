@@ -4,7 +4,7 @@
 	var/const/rockbox_standard_fee = 5
 	var/rockbox_client_fee_min = 1
 	var/rockbox_client_fee_pct = 10
-	var/rockbox_premium_purchased = 0
+	var/rockbox_premium_purchased = 1
 
 var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
@@ -1060,16 +1060,21 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 
 /obj/machinery/computer/supplycomp/proc/requisitions_update()
-	src.temp = "<h2>Open Requisition Contracts</h2><div style='text-align: center;'>"
-	src.temp += "To fulfill these contracts, please send full requested<br>"
-	src.temp += "complement of items with the contract's Requisitions tag.<br>"
-	src.temp += "Insufficient or extra items will be returned to you.<br><br>"
-	src.temp += "One contract at a time may be pinned, which reserves it<br>"
-	src.temp += "for your use, even through market shifts.<br><br>"
-	src.temp += "When fulfilling third-party contracts, you <B>must</B><br>"
-	src.temp += "send the included requisition sheet; please be aware<br>"
-	src.temp += "<B>third-party returns are at clients' discretion</B><br>"
-	src.temp += "and your shipment may not be returned if insufficient."
+	src.temp = {"<h2>Open Requisition Contracts</h2><div style='text-align: center;'>
+	To fulfill these contracts, please send full requested<br>
+	complement of items with the contract's Requisitions tag.<br>
+	<br>
+	<B>Items packed for requisition can be validated with a<br>
+	standard cargo appraiser; ensure correct label is applied.</B><br>
+	Insufficient or extra items will be returned to you.<br>
+	<br>
+	One contract at a time may be pinned, which reserves it<br>
+	for your use, even through market shifts.<br>
+	<br>
+	When fulfilling third-party contracts, you <B>must</B><br>
+	send the included requisition sheet; please be aware<br>
+	<B>third-party returns are at clients' discretion</B><br>
+	and your shipment may not be returned if insufficient."}
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
 		src.temp += "<h3>[RC.name][RC.pinned ? " (Pinned)" : null]</h3>"
 		src.temp += "Contract Reward:"

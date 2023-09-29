@@ -8,7 +8,7 @@
 	icon_state = "ptl"
 	density = 1
 	anchored = ANCHORED_ALWAYS
-	dir = 4
+	dir = EAST
 	bound_height = 96
 	bound_width = 96
 	var/output = 0		//power output of the beam
@@ -362,10 +362,7 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
-			if(online)
-				src.start_firing()
-			else
-				src.stop_firing()
+			src.process(1)
 			. = TRUE
 		if("setOutput")
 			. = TRUE
@@ -520,7 +517,7 @@ TYPEINFO(/obj/laser_sink/mirror)
 
 /obj/laser_sink/mirror/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
 		src.anchored = !src.anchored
 	else
@@ -591,13 +588,13 @@ TYPEINFO(/obj/laser_sink/splitter)
 //todo: componentize anchoring behaviour
 /obj/laser_sink/splitter/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
 		src.anchored = !src.anchored
 	else if (ispryingtool(I))
 		if (ON_COOLDOWN(src, "rotate", 0.3 SECONDS))
 			return
-		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 50, TRUE)
 		src.dir = turn(src.dir, 90)
 	else
 		..()
@@ -650,7 +647,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	luminosity = 1
 	mouse_opacity = 0
