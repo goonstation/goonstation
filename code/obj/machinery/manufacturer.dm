@@ -2548,6 +2548,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/beaker_lid_box,
 		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,
+		/datum/manufacture/atmos_goggles,
 		/datum/manufacture/reagentscanner,
 		/datum/manufacture/dropper,
 		/datum/manufacture/mechdropper,
