@@ -61,7 +61,7 @@
 	if (!isturf(user.loc))
 		user.show_text("You can't teleport from inside a container.", "red")
 		return
-	if (user.cell.charge < src.cell_drain_per_teleport)
+	if (!istype(user.cell) || (user.cell.charge < src.cell_drain_per_teleport))
 		user.show_text("Your cell is too low.", "red")
 		return
 
