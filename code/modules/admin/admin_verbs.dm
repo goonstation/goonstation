@@ -2521,7 +2521,7 @@ var/list/fun_images = list()
 	if (!spawn_path)
 		return
 	var/list/spawn_matches = concrete_typesof(spawn_path)
-	if (!spawn_matches.len)
+	if (!length(spawn_matches))
 		return
 	var/turf/T = get_turf(usr)
 	if (!T)
