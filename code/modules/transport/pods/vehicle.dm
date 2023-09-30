@@ -1074,8 +1074,11 @@
 		boutput(usr, "<span class='alert'>[src] is locked!</span>")
 		return
 
-	actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
-	return
+	for(var/mob/M in src)
+		actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
+		return
+
+	boutput(usr, "<span class='alert'>No one is in [src].</span>")
 
 /obj/machinery/vehicle/proc/eject_pod(var/mob/user, var/dead_only = 0)
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot
@@ -1089,12 +1092,6 @@
 			else if(!isliving(M))
 				leave_pod(M)
 				boutput(user, "<span class='alert'>You scrape [M] out of [src].</span>")
-
-	var/obj/item/shipcomponent/secondary_system/cargo/hold = src.sec_system
-	if(istype(hold))
-		for(var/mob/M in hold.load)
-			hold.unload(M, user.loc)
-			boutput(user, "<span class='alert'>You dump [M] out from the [hold] of [src].</span>")
 
 	for(var/obj/decal/cleanable/O in src)
 		boutput(user, "<span class='alert'>You [pick("scrape","scrub","clean")] [O] out of [src].</span>")
