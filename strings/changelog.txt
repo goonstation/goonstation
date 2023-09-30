@@ -2,6 +2,7 @@
 (t)fri sep 29 23
 (u)Emily
 (+)Zipguns now fire one bullet at a time for ammo types that usually fire in bursts
+(+)Pews can be reshaped with screwdrivers and turned with crowbars.
 (u)Waffleloffle
 (p)15927
 (e)🎨🎩|C-Sprites, A-Clothing
