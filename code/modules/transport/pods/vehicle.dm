@@ -1074,7 +1074,7 @@
 		boutput(usr, "<span class='alert'>[src] is locked!</span>")
 		return
 
-	for(var/mob/M in src)
+	if(locate(/mob) in src.contents)
 		actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
 		return
 
