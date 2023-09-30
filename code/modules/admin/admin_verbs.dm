@@ -2516,6 +2516,8 @@ var/list/fun_images = list()
 	set desc = "Creates one of every subtype instance of a type at your loc."
 	ADMIN_ONLY
 	var/spawn_input = input(src, "Enter path", "Enter Path") as null|text
+	if (spawn_input == "")
+		return
 	var/spawn_path = get_one_match(spawn_input, /atom/movable, FALSE)
 	if (!spawn_path)
 		return
