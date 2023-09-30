@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "candy"
 	heal_amt = 1
+	fill_amt = 0.3 //You can eat a lot of candy
 	real_name = "candy"
 	var/sugar_content = 50
 	var/razor_blade = 0 //Is this BOOBYTRAPPED CANDY?
@@ -344,7 +345,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	afterattack(obj/target, mob/user, flag)
 		..()
-		if (target.is_open_container() && target.reagents)
+		if (target.is_open_container(TRUE) && target.reagents)
 			if (target.reagents.total_volume >= target.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return

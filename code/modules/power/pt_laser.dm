@@ -362,10 +362,7 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
-			if(online)
-				src.start_firing()
-			else
-				src.stop_firing()
+			src.process(1)
 			. = TRUE
 		if("setOutput")
 			. = TRUE
@@ -650,7 +647,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	luminosity = 1
 	mouse_opacity = 0
