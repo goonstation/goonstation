@@ -2515,18 +2515,21 @@ var/list/fun_images = list()
 	set name = "Spawn All Of A Type"
 	set desc = "Creates one of every subtype instance of a type at your loc."
 	ADMIN_ONLY
-	var/total = 0
-	var/spawn_input = input("Enter path", "Enter Path") as null|text
+	var/spawn_input = input(src, "Enter path", "Enter Path") as null|text
 	var/spawn_path = get_one_match(spawn_input, /atom/movable, FALSE)
 	if (!spawn_path)
 		return
 	var/list/spawn_matches = concrete_typesof(spawn_path)
 	if (!length(spawn_matches))
 		return
+	if (length(spawn_matches) > 99)
+		var/response = input(src, "High number of types: [length(spawn_matches)] - Type YES to continue", "Caution!") as null|text
+		if (lowertext(response) != "yes")
+			return
 	var/turf/T = get_turf(usr)
 	if (!T)
 		return
 	for (var/type as anything in spawn_matches)
 		new type(T)
-		total++
+	logTheThing(LOG_ADMIN, src, "Created [length(spawn_matches)] types of: [spawn_path] at ([log_loc(usr)]")
 	boutput(src, "Created [length(spawn_matches)] types.")
