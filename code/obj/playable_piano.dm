@@ -114,16 +114,16 @@ TYPEINFO(/obj/player_piano)
 					return
 				playsound(user, 'sound/items/Crowbar.ogg', 65, TRUE)
 				user.visible_message("[user] prys off the piano's maintenance panel.","You pry off the maintenance panel.")
-				var/obj/item/plank/P = new(get_turf(user))
-				P.name = "Piano Maintenance Panel"
-				P.desc = "A cover for the internal workings of a piano. Better not lose it."
+				var/obj/item/sheet/wood/panel = new(get_turf(user))
+				panel.amount = 1
 				panel_exposed = 1
 				UpdateIcon()
 			else
 				boutput(user, "There's nothing to pry off of \the [src].")
 
-		else if (istype(W, /obj/item/plank)) //replacing panel
-			if (panel_exposed == 1 && W.name != "wooden plank" && !is_busy)
+		else if (istype(W, /obj/item/sheet/wood) && W.amount > 0) //replacing panel
+			var/obj/item/sheet/wood/wood = W
+			if (panel_exposed == 1 && !is_busy)
 				user.visible_message("[user] starts replacing the piano's maintenance panel...", "You start replacing the piano's maintenance panel...")
 				if (!do_after(user, 3 SECONDS) || panel_exposed != 1)
 					return
@@ -131,7 +131,7 @@ TYPEINFO(/obj/player_piano)
 				user.visible_message("[user] replaces the maintenance panel!", "You replace the maintenance panel!")
 				panel_exposed = 0
 				UpdateIcon(0)
-				qdel(W)
+				wood.change_stack_amount(-1)
 
 		else if (issnippingtool(W)) //turning off looping... forever!
 			if (is_looping == 2)

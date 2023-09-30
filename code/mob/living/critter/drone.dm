@@ -1,12 +1,12 @@
 /mob/living/critter/robotic/drone
-	name = "Drone"
-	real_name = "Drone"
+	name = "drone"
+	real_name = "drone"
 	var/drone_designation = "SC"
 	var/num_max = 999
 	desc = "An armed and automated Syndicate scout drone."
 	density = 1
-	icon = 'icons/obj/ship.dmi'
-	icon_state = "drone"
+	icon = 'icons/mob/critter/robotic/drone/phaser.dmi'
+	icon_state = "drone_phaser"
 	custom_gib_handler = /proc/robogibs
 	hand_count = 1
 	can_throw = 0
@@ -61,7 +61,8 @@
 		if (dying)
 			return
 		dying = 1
-		overlays += image('icons/obj/ship.dmi', "dying-overlay")
+		var/image/dying_overlay = SafeGetOverlayImage("dying", 'icons/mob/critter/robotic/drone/overlays.dmi', "dying-overlay", MOB_OVERLAY_BASE)
+		src.UpdateOverlays(dying_overlay, "dying")
 		SPAWN(2 SECONDS)
 			ghostize()
 			var/turf/L = get_turf(src)

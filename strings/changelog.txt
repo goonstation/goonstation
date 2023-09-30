@@ -1,5 +1,228 @@
 
+(t)fri sep 29 23
+(u)Emily
+(+)Zipguns now fire one bullet at a time for ammo types that usually fire in bursts
+(+)Pews can be reshaped with screwdrivers and turned with crowbars.
+(u)Waffleloffle
+(p)15927
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds some particularly costumey headwear, available for purchase at the Clothing Booth during the month of Spooktober.
+(u)Kubius
+(p)16092
+(e)🆕⚖|C-Feature, C-Balance
+(*)Further requisition system improvements. Notable changes: No limit on pinned contracts, fewer and longer-lasting Aid contracts, and a new Civilian contract.
+(u)pali
+(p)15458
+(e)🧫🧛|C-Experimental, A-Gamemodes
+(*)Experiment: Gang members are recruited randomly at roundstart instead of being recruited manually.<br>Give feedback <a href="https://forum.ss13.co/showthread.php?tid=21701">here</a>.
+(u)Bartimeus973
+(p)15630
+(e)⚖🔄💊🔨|C-Balance, C-Rework, A-Medical, A-Player-Actions
+(*)Organ surgery is now redone! Instructions are found in the surgery handbook. For more details click on the PR number in the top right!
+(u)aloe
+(p)15833
+(e)⚖💡🎭|C-Balance, A-Station-Systems, A-RP
+(+)Removed security's access to the crematorium on the RP servers.
+(u)Tarmunora
+(p)15759
+(e)🪲🤖|C-Bug, A-Silicons
+(*)Fixed bug allowing cyborgs to open-hand interact with atoms under certain circumstances
+(u)MeggalBozale
+(p)15957
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)NT has spent a few million credits stocking its stations with newly printed guides to material science, featuring minor spelling corrections and updated material values.
+(u)Flappybat & Flaborized
+(p)15797
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds emergency flares to the game, when a glowstick just won't cut it! These come as standard issue in emergency toolboxes. Just be careful around flammable gas...
+(u)TealSeer
+(p)16083
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The ID computer should now let you add/remove Brig access as normal.
+(t)thu sep 28 23
+(u)Emily
+(*)Chickens now get grumpy when they're in crowded areas. They need their space!
+(+)Standardized Requisition payouts to the new system and made minor balance tweaks to some that were too hard to fulfill (e.g. pizza, blood requisitions).
+(u)Kubius
+(p)16078
+(e)🆕|C-Feature
+(+)Indiscriminate food requisitions are now properly indiscriminate, and requisition cargo scanning should now be more discoverable.
+(u)LeahTheTech
+(p)16082
+(e)🆕🗺🎨💅|C-Feature, A-Mapping, C-Sprites, C-QoL
+(*)Added pressure visualization goggles which show surrounding atmospheric pressure when worn, found in engineering lockers.
+(u)Flaborized
+(p)15812
+(e)🎨⚗|C-Sprites, A-Chemistry
+(*)Some small chemistry changes to pyrosium and cryostylane, including an area of effect heat/cool effect. More detailed description in minor logs.
+(+)Pyrosium can now be mixed with magnesium to create a 3x3 area of effect heating effect, and cryostylane can be mixed with iodine for a cold version of the same thing.
+(+)Pyrosium, cryostylane reactions now longer use up the oxygen/magnesium/iodine until the end of the reaction. This means it'll still deplete the oxygen, but you only technically need 1u to carry out the full reaction.
+(u)Smilg
+(p)16040
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pressure sensor can now use empty hand, and mouse drop.
+(t)wed sep 27 23
+(u)Emily
+(*)Upped rooster chances for most types of roosters
+(*)Most ranches now have a flusher instead of a chute leading to the kitchen, so you can flush your unwanted chickens while they're still alive. (Warning: they will not arrive alive).
+(u)Colossusqw
+(p)15741
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Caffeine is now it's own standalone chem.
+(+)Caffeine is formed by caffeinated drinks (coffees, unadulterated tea/matcha, cola) as they deplete, and its effects can vary wildly based on volume, much like current ethanol.
+(u)Lord_Earthfire
+(p)16019
+(e)⚖📦⚙|C-Balance, A-Game-Objects, A-Internal
+(+)Syringes, fired from the syringe gun, stuck in a human desintegrate when that human is affected by an explosion.
+(u)MeggalBozale
+(p)15921
+(e)🗺💅🧱📦|A-Mapping, C-QoL, A-Materials, A-Game-Objects
+(+)Wooden planks are mostly replaced with instances of wood sheets, meaning spare planks can be used to furnish tables now.
+(u)Smilg
+(p)15933
+(e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science
+(*)Pressure crystals from Vendomats, when used, can now be sold for credits via Cargo. Work in Toxins today!
+(+)New program for Scientist PDAs that shows you previously sold pressure crystals, and their bounties.
+(t)tue sep 26 23
+(u)Emily
+(*)Repeatedly buying the same crate from the market will "exhaust" supply, causing the price to increase. Exhaustion decays with each shipping market shift.
+(u)Garash
+(p)15784
+(e)🎨🔄📄|C-Sprites, C-Rework, A-UI
+(+)Fluid canisters now use a Context Actions menu.
+(u)NewyearnewmeUwu
+(p)15931
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)Added some fishing related mishaps for clowns.
+(u)DisturbHerb
+(p)16024
+(e)🆕🗺💊📦|C-Feature, A-Mapping, A-Medical, A-Game-Objects
+(*)The latest advances in hemodialysis technology have been harnessed by your local medical bay. Clean your blood, today!
+(t)mon sep 25 23
+(u)Kubius
+(p)16018
+(e)🆕🗺|C-Feature, A-Mapping
+(+)Updated Nadir's Warrens surgery room to be more suitably Warrens-esque and adjusted plasma vending machine positions.
+(u)Cheffie
+(p)15842
+(e)🎨💅📦|C-Sprites, C-QoL, A-Game-Objects
+(+)Crates ordered from cargo containing critters now need to be pried open upon arrival.
+(u)LeahTheTech
+(*)Attacks which are entirely blocked by armour will no longer play their attack sound. This makes it much more obvious when your attack is doing nothing.
+(u)UnfunnyPerson
+(p)15962
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Revolutionary sign damage scales depending on how many revs are nearby the user
+(u)Emily
+(*)Prices of oxygen/plasma vendors lowered. Remember to turn off your pods' weapons systems when not in use!
+(+)Lowered prices of weapon pod systems at vendors
+(+)Martian vendor no longer infinite
+(u)Mr. Moriarty
+(p)14069
+(e)🆕🎨💅📦|C-Feature, C-Sprites, C-QoL, A-Game-Objects
+(*)Replaced the Armoury's 40mm pod-seeking shells with a pod-targeting missile launcher. The launcher will display an aiming reticle over the pod being targeted.
+(t)sun sep 24 23
+(u)UnfunnyPerson
+(p)15982
+(e)🆕🔨|C-Feature, A-Player-Actions
+(+)Added the wasp crossbow to surplus crates.
+(+)Wasp related items in surplus crates come with a wasp implant. The wasp implant will cause wasps to ignore the user and for the user to explode into wasps on death.
+(u)TealSeer
+(p)16006
+(e)🪲🧱🍝|C-Bug, A-Materials, A-Catering
+(+)Pizza made at the pizza vending machine should no longer taste horrible and make you sick.
+(u)Azrun
+(e)🐑🧶|C-Feature
+(+)Knitting expanded to allow for illegal modding of knitting needles.
+(u)LeahTheTech
+(+)The mixed gamemode should now have slightly more consistent numbers of antagonists.
+(u)Emily
+(*)Pods now require fuel (plasma) to run modules other than basic movement. Be sure to turn off systems when not in use!
+(*)New Plasma Tank vendor available in pod bays. Fill up your tank there!
+(t)sat sep 23 23
+(u)tarmunora
+(*)Ion storm update: a few more things can happen to affected doors, and affected doors/APCs will have ai control disabled. Keep an eye on Beepsky...
+(+)Drinking glasses once more splash their contents on the floor when shattered. Syndicate shot glasses do something else when thrown at a human...
+(+)Made flasks more robust
+(u)Mantwerp
+(p)15934
+(e)🔊|C-Sound
+(+)Electric guitars should sound a little more electric now.
+(u)Mantwerp and Mcdangus
+(p)15785
+(e)🎨🔊📦|C-Sprites, C-Sound, A-Game-Objects
+(*)Added a bass guitar. Get it from cargo, NOW!! Sprites and sounds by Mcdangus.
+(u)Emily
+(*)Total QM Pricing Overhaul. Things now cost a lot less across the board.
+(*)Buying crates is now tied to market prices; you can no longer buy a crate and sell that same crate for profit.
+(*)Rockbox Premium now defaults to purchased; no more fees that aren't from QM/Mining
+(+)Some Commodities are now linked on the shipping market with hard ratios between them; e.g., a sheet is worth one tenth of a material piece.
+(+)If an item goes hot on the market, traders that sell that exact item will run out of it.
+(+)Gragg no longer sells infinite char
+(+)Wishgranters give 25000 instead of 9 million
+(+)Clowns now make 200 spacebux instead of 2
+(t)fri sep 22 23
+(u)aloe
+(+)The empathic thought gene now shows you what people are about to say, if they're currently typing something.
+(u)spAAAce
+(p)15953
+(e)🆕📦🌱|C-Feature, A-Game-Objects, A-Hydroponics
+(+)Banana peels now scale to banana size, within reason
+(u)NewyearnewmeUwu
+(p)15937
+(e)🪲🔨💪|C-Bug, A-Player-Actions, A-Traits
+(+)Fixed clowns and mimes losing their career genes after cloning.
+(u)Flaborized
+(p)15854
+(e)⚗|A-Chemistry
+(+)You can now directly pour into synthflesh pustules from cut open blood bags.
+(u)DimWhat
+(p)15925
+(e)⚖📦|C-Balance, A-Game-Objects
+(+)Made nukie pistol holsters hold more stuff, and more types of stuff.
+(u)Glamurio (Ryou) & DimWhat & Piesuu
+(p)15602
+(e)🎨⚖🎩|C-Sprites, C-Balance, A-Clothing
+(*)The captain has cut up their armor into individual parts, which can be equipped separately.
+(u)Glamurio (Ryou)
+(p)15326
+(e)💅🔄🔊📦|C-QoL, C-Rework, C-Sound, A-Game-Objects
+(*)PDA Emergency Alerts now have distinct visuals and jingles.
+(u)MylieDaniels, AveryQuill
+(p)15858
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds the Glaucus Fishing Rod, a 6 tc tacticool fishing rod for catching crew with disguised hooks. Available to Rancher and Angler traitors, as well as through surplus crates.
+(t)thu sep 21 23
+(u)MeggalBozale
+(p)15867
+(e)🪲🔨|C-Bug, A-Player-Actions
+(+)Cyborgs should no longer recieve mutations.
+(u)LeahTheTech
+(p)15919
+(e)🎨⚖💊🍝|C-Sprites, C-Balance, A-Medical, A-Catering
+(*)Stomachs now have a capacity and can fill up if you eat too much, cyberstomachs have more. No longer can a single determined staffie consume the entire kitchen.
+(+)Undigestible items now remain in the stomach after being eaten by frying or matter eater and can be retrieved by cutting them out of the extracted stomach with a scalpel.
+(u)Flaborized
+(p)15738
+(e)🎨|C-Sprites
+(*)Added bunsen burners to chemistry. Allows you to heat beakers/condensers/others while still being able to access them, this includes letting you hook up condensers on top of them. Find one in the auxiliary cabinet with the condensers or print them at the sci fabricator.
+(t)wed sep 20 23
+(u)Sord
+(+)Singularity field generators max power 250 -> 100 so they will depower faster when not being charged.
+(+)You can now see what power level a field generator is at by poking it with a multi tool.
+(u)UnfunnyPerson
+(p)15547
+(e)🆕🎩|C-Feature, A-Clothing
+(+)Added a randomized wig crate. Cargo can order this crate for 2000 credits.
+(u)TealSeer
+(p)15841
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Empty gas tanks can now be made at the general manufacturer for 0.1 sturdy metal.
 (t)tue sep 19 23
+(u)Smilg
+(p)15819
+(e)🆕🤖|C-Feature, A-Silicons
+(+)Cyborg cell cables can now be used on other cyborgs.
 (u)Smilg
 (p)15820
 (e)🆕🗺🎨📦|C-Feature, A-Mapping, C-Sprites, A-Game-Objects

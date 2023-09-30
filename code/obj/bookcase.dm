@@ -119,9 +119,7 @@ TYPEINFO(/obj/bookshelf)
 	proc/file_curr_books(var/list/curr_contents)
 		if (!curr_contents.len)
 			return
-		if(fexists(file_name))
-			fdel(file_name) //we rly dont want a duplicate, or to accidentally output twice to the file, it could screw the whole thing up
-		text2file(json_encode(curr_contents), file_name)
+		rustg_file_write(json_encode(curr_contents), file_name)
 
 	proc/build_old_contents(var/list/old_contents) //this goes and takes our giant weird list and makes it into books
 		for (var/list/book_vars in old_contents)

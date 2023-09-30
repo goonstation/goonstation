@@ -434,7 +434,11 @@
 	var/warp_dir = "warp"
 	New()
 		var/datum/overlayDefinition/warp = new()
+#if defined(HALLOWEEN) && defined(SECRETS_ENABLED)
+		warp.d_icon = '+secret/icons/effects/overlays/warp.dmi'
+#else
 		warp.d_icon = 'icons/effects/overlays/warp.dmi'
+#endif
 		warp.d_icon_state = src.warp_dir
 		warp.d_blend_mode = 1
 		warp.d_layer = BACKGROUND_LAYER

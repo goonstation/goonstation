@@ -4667,6 +4667,19 @@
 /obj/decal/poster/wallsign/fire,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/combustion_chamber)
+"aqh" = (
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	light_type = /obj/item/light/tube/light_purpleish;
+	pixel_y = 21
+	},
+/obj/table/reinforced/chemistry/auto/chemstorage,
+/obj/machinery/chem_shaker/large/chemistry,
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/station/science/chemistry)
 "aqj" = (
 /obj/machinery/turret,
 /obj/decal/stripe_delivery,
@@ -7524,9 +7537,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/plating,
 /area/station/science/storage)
-"ayX" = (
-/turf/space,
-/area/shuttle_sound_spawn)
 "ayZ" = (
 /obj/machinery/conveyor/SN{
 	id = "outbound";
@@ -11235,12 +11245,6 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
-"aLe" = (
-/obj/decal/cleanable/cobweb,
-/obj/item/plank,
-/obj/decal/cleanable/dirt,
-/turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
 "aLf" = (
 /obj/machinery/launcher_loader/north{
 	id = "ghostsat"
@@ -11285,11 +11289,6 @@
 /obj/decal/cleanable/robot_debris/limb,
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/random,
-/area/ghostdrone_factory)
-"aLp" = (
-/obj/item/plank,
-/obj/landmark/spawner/artifact,
-/turf/simulated/floor/grime,
 /area/ghostdrone_factory)
 "aLq" = (
 /turf/simulated/floor/airless{
@@ -12105,14 +12104,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/listeningpost/syndicate_teleporter)
-"aOb" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 9
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/listeningpost/syndicate_teleporter)
 "aOc" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1
@@ -12122,14 +12113,6 @@
 	},
 /obj/machinery/power/apc/autoname_north/noaicontrol,
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/syndicate_teleporter)
-"aOd" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 5
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
 /area/listeningpost/syndicate_teleporter)
 "aOf" = (
 /obj/lattice{
@@ -12234,25 +12217,9 @@
 	dir = 1
 	},
 /area/listeningpost)
-"aOC" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/listeningpost/syndicate_teleporter)
 "aOD" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/circuit/red,
-/area/listeningpost/syndicate_teleporter)
-"aOE" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
 /area/listeningpost/syndicate_teleporter)
 "aOF" = (
 /obj/decal/cleanable/ash,
@@ -13982,9 +13949,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"aUb" = (
-/turf/simulated/floor/bluewhite,
-/area/station/medical/medbay)
 "aUc" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 1;
@@ -16181,6 +16145,27 @@
 /obj/item/clothing/gloves/ring/gold,
 /turf/simulated/floor/blue,
 /area/station/crew_quarters/heads)
+"ctd" = (
+/obj/machinery/light_switch/auto,
+/obj/machinery/crema_switch{
+	pixel_x = 5;
+	pixel_y = 28
+	},
+/obj/machinery/vending/jobclothing/chaplain,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
+"cuA" = (
+/obj/machinery/firealarm/north,
+/obj/machinery/glass_recycler/chemistry{
+	pixel_y = 14
+	},
+/obj/disposalpipe/segment/mail/horizontal,
+/obj/table/reinforced/chemistry/auto/allinone,
+/obj/item/paper/labdrawertips,
+/turf/simulated/floor/purplewhite{
+	dir = 5
+	},
+/area/station/science/chemistry)
 "cvv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
@@ -16324,6 +16309,10 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay)
+"dqw" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "drv" = (
 /obj/machinery/atmospherics/pipe/simple/insulated{
 	dir = 9
@@ -16469,6 +16458,14 @@
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blue,
 /area/station/science/lab)
+"evN" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
 "evY" = (
 /obj/machinery/computer/secure_data/detective_computer,
 /obj/machinery/camera{
@@ -16593,6 +16590,14 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
+"fbU" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 9
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
 "fcV" = (
 /obj/machinery/power/apc/autoname_east,
 /obj/machinery/atmospherics/binary/valve,
@@ -16640,6 +16645,11 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
+"flG" = (
+/obj/item/sheet/wood,
+/obj/landmark/spawner/artifact,
+/turf/simulated/floor/grime,
+/area/ghostdrone_factory)
 "fmi" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -16759,19 +16769,6 @@
 /obj/machinery/firealarm/north,
 /turf/simulated/floor/orangeblack,
 /area/station/storage/eva)
-"fSt" = (
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	light_type = /obj/item/light/tube/light_purpleish;
-	pixel_y = 21
-	},
-/obj/table/reinforced/chemistry/auto/chemstorage,
-/obj/machinery/chem_shaker/large/chemistry,
-/turf/simulated/floor/purplewhite{
-	dir = 9
-	},
-/area/station/science/chemistry)
 "fUd" = (
 /obj/machinery/power/terminal{
 	dir = 8
@@ -17018,6 +17015,14 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"hQa" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 5
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
 "hQO" = (
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/red/side{
@@ -17056,6 +17061,23 @@
 	},
 /turf/simulated/floor/red,
 /area/station/security/brig/genpop)
+"ibY" = (
+/obj/storage/closet,
+/obj/item/tank/oxygen,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = 25
+	},
+/turf/simulated/floor/redblack{
+	dir = 1
+	},
+/area/listeningpost)
 "ieQ" = (
 /obj/rack,
 /obj/item/clothing/suit/space,
@@ -17103,6 +17125,14 @@
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
+"iqy" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
+	},
+/area/listeningpost/syndicate_teleporter)
 "irx" = (
 /obj/machinery/power/smes{
 	chargelevel = 15000;
@@ -17664,6 +17694,12 @@
 /obj/mapping_helper/access/cargo,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
+"lxy" = (
+/obj/decal/cleanable/cobweb,
+/obj/item/sheet/wood,
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/plating/random,
+/area/ghostdrone_factory)
 "lHo" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -18122,6 +18158,19 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"nTh" = (
+/obj/storage/closet,
+/obj/item/tank/oxygen,
+/obj/machinery/light{
+	layer = 3
+	},
+/obj/machinery/door_control/antagscanner{
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = -33
+	},
+/turf/simulated/floor/redblack,
+/area/listeningpost)
 "nUY" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4
@@ -18253,6 +18302,10 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
+"oMY" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "oPh" = (
 /obj/table/auto,
 /obj/item/bee_egg_carton,
@@ -18302,19 +18355,6 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/white,
 /area/station/science/lab)
-"oYk" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
-/obj/machinery/light{
-	layer = 3
-	},
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = -33
-	},
-/turf/simulated/floor/redblack,
-/area/listeningpost)
 "paq" = (
 /obj/railing/orange/reinforced{
 	dir = 8
@@ -18807,6 +18847,10 @@
 /obj/decal/mule/dropoff,
 /turf/simulated/floor/orangeblack,
 /area/station/engine/engineering)
+"ruj" = (
+/obj/machinery/dialysis,
+/turf/simulated/floor/bluewhite,
+/area/station/medical/medbay)
 "rxv" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -18970,15 +19014,6 @@
 	},
 /turf/simulated/floor,
 /area/station/mining/refinery)
-"sSW" = (
-/obj/machinery/light_switch/auto,
-/obj/machinery/crema_switch{
-	pixel_x = 5;
-	pixel_y = 28
-	},
-/obj/machinery/vending/jobclothing/chaplain,
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office)
 "sTu" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -19085,15 +19120,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/hotloop)
-"tgD" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 35;
-	entrance_scanner = 1
-	},
-/turf/space,
-/area/space)
 "tmb" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -19305,15 +19331,10 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
 /area/station/hallway/primary/west)
-"urI" = (
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = -33;
-	entrance_scanner = 1
-	},
-/turf/space,
-/area/space)
+"uxu" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
 "uzo" = (
 /obj/lattice{
 	dir = 4;
@@ -19456,6 +19477,15 @@
 	},
 /turf/simulated/floor/wood,
 /area/station/crew_quarters/cafeteria)
+"uYn" = (
+/obj/machinery/door_control/antagscanner{
+	entrance_scanner = 1;
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = 35
+	},
+/turf/space,
+/area/space)
 "vbX" = (
 /obj/machinery/atmospherics/binary/passive_gate{
 	dir = 1;
@@ -19508,6 +19538,15 @@
 	dir = 8
 	},
 /area/station/mining/staff_room)
+"voD" = (
+/obj/machinery/door_control/antagscanner{
+	entrance_scanner = 1;
+	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
+	pixel_y = -33
+	},
+/turf/space,
+/area/space)
 "vvA" = (
 /obj/machinery/computer/announcement{
 	announces_arrivals = 1;
@@ -19649,18 +19688,6 @@
 	dir = 8
 	},
 /area/station/hallway/primary/north)
-"wij" = (
-/obj/machinery/firealarm/north,
-/obj/machinery/glass_recycler/chemistry{
-	pixel_y = 14
-	},
-/obj/disposalpipe/segment/mail/horizontal,
-/obj/table/reinforced/chemistry/auto/allinone,
-/obj/item/paper/labdrawertips,
-/turf/simulated/floor/purplewhite{
-	dir = 5
-	},
-/area/station/science/chemistry)
 "wlm" = (
 /obj/displaycase{
 	displayed = /obj/item/captaingun
@@ -19746,35 +19773,6 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
-"wSV" = (
-/obj/machinery/power/apc/autoname_north,
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/phone/wall{
-	pixel_x = 23;
-	pixel_y = 2
-	},
-/obj/item/ghostboard,
-/turf/simulated/floor/carpet/grime,
-/area/station/chapel/office)
-"xce" = (
-/obj/storage/closet,
-/obj/item/tank/oxygen,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 21
-	},
-/obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
-	id = "Sleeper_Access";
-	pixel_y = 25
-	},
-/turf/simulated/floor/redblack{
-	dir = 1
-	},
-/area/listeningpost)
 "xdB" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -19923,6 +19921,18 @@
 /mob/living/carbon/human/npc/monkey/mrs_muggles,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/east)
+"xFT" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/phone/wall{
+	pixel_x = 23;
+	pixel_y = 2
+	},
+/obj/item/ghostboard,
+/turf/simulated/floor/carpet/grime,
+/area/station/chapel/office)
 "xLn" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -55459,7 +55469,7 @@ aaq
 aWk
 acJ
 abQ
-aru
+oMY
 aKG
 aVX
 avX
@@ -55489,7 +55499,7 @@ aCs
 aZJ
 aXl
 aTI
-aSr
+uxu
 aTQ
 aSr
 aTI
@@ -59184,10 +59194,10 @@ aaa
 aaa
 aaa
 aLc
-aLe
+lxy
 aLh
 aLl
-aLp
+flG
 aLt
 aLD
 aLK
@@ -61828,7 +61838,7 @@ azM
 any
 axg
 aCA
-fSt
+aqh
 ain
 aEC
 aCz
@@ -63036,7 +63046,7 @@ aDK
 aXk
 aDw
 aCA
-wij
+cuA
 aQd
 aEF
 aFl
@@ -69077,7 +69087,7 @@ aUg
 aFy
 aSS
 awb
-aUb
+ruj
 ayg
 aFz
 aKk
@@ -72052,7 +72062,7 @@ avh
 avh
 avh
 aaa
-ayX
+dqw
 avh
 avh
 avh
@@ -75391,7 +75401,7 @@ mes
 aek
 aew
 aew
-sSW
+ctd
 agm
 abn
 aiO
@@ -75994,7 +76004,7 @@ aaa
 ach
 rxv
 aew
-wSV
+xFT
 mGr
 ajf
 ahX
@@ -95765,7 +95775,7 @@ aaa
 aaa
 aaa
 aaa
-urI
+voD
 agK
 aMX
 aNf
@@ -95781,7 +95791,7 @@ aOO
 aNf
 aMX
 aYB
-tgD
+uYn
 aaa
 aaa
 aaa
@@ -96373,7 +96383,7 @@ aaa
 aRI
 aMX
 aNe
-xce
+ibY
 aUH
 aNe
 aNY
@@ -96381,7 +96391,7 @@ aJf
 aOB
 aNe
 aUH
-oYk
+nTh
 aNe
 aMX
 aXU
@@ -97584,9 +97594,9 @@ aNe
 aNr
 aHr
 aNL
-aOb
+fbU
 aWX
-aOC
+iqy
 aNL
 aHr
 aOR
@@ -98188,9 +98198,9 @@ aNh
 aMP
 aXH
 aNL
-aOd
+hQa
 aOt
-aOE
+evN
 aNL
 aXH
 aMP

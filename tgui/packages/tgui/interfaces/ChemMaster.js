@@ -6,10 +6,10 @@
  */
 
 import { useBackend } from "../backend";
-import { LabeledControls, Input, Box, NumberInput, Button, Dimmer, Image, SectionEx, Stack, Modal } from '../components';
+import { Box, Button, Dimmer, Image, Input, LabeledControls, Modal, NumberInput, SectionEx, Stack } from '../components';
 import { Window } from '../layouts';
 import { NoContainer, ReagentGraph, ReagentList } from './common/ReagentInfo';
-import { useSharedState, useLocalState } from "../backend";
+import { useLocalState, useSharedState } from "../backend";
 
 const ICON_LIST_PILLS = 0;
 const ICON_LIST_BOTTLES = 1;
