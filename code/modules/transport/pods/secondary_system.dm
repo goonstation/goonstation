@@ -213,8 +213,12 @@
 	if (!length(src.load))
 		boutput(user, "<span class='alert'>[src] has nothing to unload.</span>")
 		return
-	var/turf/T = get_turf(A)
 
+	var/crate = input(user, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
+	if(!crate)
+		return
+
+	var/turf/T = get_turf(A)
 	var/inrange = 0
 	for(var/turf/ST in src.ship.locs)
 		if (in_interact_range(T,ST) && in_interact_range(user,ST))
@@ -232,9 +236,6 @@
 			boutput(user, "<span class='alert'>That tile is blocked by [O].</span>")
 			return
 
-	var/crate = input(user, "Choose which cargo to unload..", "Choose cargo")  as null|anything in load
-	if(!crate)
-		return
 	unload(crate,T)
 	return
 
