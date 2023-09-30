@@ -48,7 +48,13 @@
 			if (isliving(M))
 				var/mob/living/L = M
 				L.hibernating = 0
-				L.removeOverlayComposition(/datum/overlayComposition/blinded)
+				if (!L.bioHolder.HasEffect("blind"))
+					L.removeOverlayComposition(/datum/overlayComposition/blinded)
+				else
+					if(ishuman(L))
+						var/mob/living/carbon/human/H = L
+						if (H.glasses?.allow_blind_sight)
+							L.removeOverlayComposition(/datum/overlayComposition/blinded)
 		for (var/obj/O in src)
 			O.set_loc(T)
 		..()
@@ -70,6 +76,11 @@
 		boutput(person, "<b>Cryo-recovery process initiated.  Please wait . . .</b>")
 		if (!person.bioHolder.HasEffect("blind"))
 			person.removeOverlayComposition(/datum/overlayComposition/blinded)
+		else
+			if(ishuman(person))
+				var/mob/living/carbon/human/H = person
+				if (H.glasses?.allow_blind_sight)
+					person.removeOverlayComposition(/datum/overlayComposition/blinded)
 		return 1
 
 	proc/process()
@@ -295,7 +306,13 @@
 		for (var/mob/living/L in stored_mobs)
 			if (L.loc != src)
 				L.hibernating = 0
+			if (!L.bioHolder.HasEffect("blind"))
 				L.removeOverlayComposition(/datum/overlayComposition/blinded)
+			else
+				if(ishuman(L))
+					var/mob/living/carbon/human/H = L
+					if (H.glasses?.allow_blind_sight)
+						L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				stored_mobs[L] = null
 				stored_mobs -= L
 				if(!isnull(L.loc)) // loc only goes null when you ghost, probably
