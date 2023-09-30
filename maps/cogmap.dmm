@@ -4920,7 +4920,7 @@
 /area/station/crew_quarters/cafeteria)
 "asg" = (
 /obj/disposalpipe/segment/mail,
-/obj/stool/chair/comfy{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -4948,7 +4948,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "asi" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -5395,7 +5395,7 @@
 /area/station/crew_quarters/cafeteria)
 "atx" = (
 /obj/disposalpipe/segment/mail,
-/obj/stool/chair/comfy{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -5443,7 +5443,7 @@
 /turf/simulated/floor/carpet,
 /area/station/crew_quarters/cafeteria)
 "atA" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
@@ -6260,7 +6260,7 @@
 /area/station/crew_quarters/cafeteria)
 "avX" = (
 /obj/disposalpipe/segment/mail,
-/obj/stool/chair/comfy{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /turf/simulated/floor/carpet{
@@ -6283,7 +6283,7 @@
 	},
 /area/station/crew_quarters/cafeteria)
 "avZ" = (
-/obj/stool/chair/comfy{
+/obj/stool/chair/dining/wood{
 	dir = 8
 	},
 /turf/simulated/floor/carpet{
