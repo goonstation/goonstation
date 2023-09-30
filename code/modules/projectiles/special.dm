@@ -951,6 +951,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(ismob(hit) && typetospawn && !hasspawned)
 			hasspawned = TRUE
 			. = new typetospawn(get_turf(hit))
+		else
+			on_end(projectile)
 		return
 
 
