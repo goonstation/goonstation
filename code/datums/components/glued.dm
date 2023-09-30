@@ -76,7 +76,7 @@ TYPEINFO(/datum/component/glued)
 	qdel(src)
 
 /datum/component/glued/proc/on_attackhand(atom/movable/parent, mob/user)
-	if(user?.a_intent == INTENT_HELP && !isintangible(user))
+	if(user?.a_intent == INTENT_HELP && !isintangible(user) && can_act(user) && can_reach(user, parent))
 		src.start_ungluing(parent, user)
 	else
 		src.glued_to.Attackhand(user)
