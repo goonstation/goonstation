@@ -357,10 +357,10 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		name = "grass"
 		New()
 			..()
+		#ifdef AUTUMN
+			try_set_icon_state(src.icon_state + "_autumn", src.icon)
+		#endif
 			set_dir(pick(cardinal))
-#ifdef AUTUMN
-		try_set_icon_state(src.icon_state + "_autumn", src.icon)
-#endif
 		dense
 			name = "dense grass"
 			desc = "whoa, this is some dense grass. wow."
