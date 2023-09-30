@@ -2529,4 +2529,4 @@ var/list/fun_images = list()
 	for (var/type as anything in spawn_matches)
 		new type(T)
 		total++
-	boutput(src, "Created [total] types.")
+	boutput(src, "Created [length(spawn_matches)] types.")
