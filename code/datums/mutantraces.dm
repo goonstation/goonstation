@@ -1587,12 +1587,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			if("jump")
 				. = "<B>[src.mob.name]</B> jumps!"
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					. = "<B>[src.mob]</B> screams!"
 					playsound(src.mob, src.sound_monkeyscream, 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("fart")
 				if(farting_allowed && (!src.mob.reagents || !src.mob.reagents.has_reagent("anti_fart")))
-					if (!src.mob.emote_check(voluntary, 10))
+					if (!src.mob.emote_check(voluntary, 5 SECONDS))
 						return
 					var/fart_on_other = 0
 					for(var/mob/living/M in src.mob.loc)
@@ -2125,7 +2125,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 	emote(var/act, var/voluntary)
 		switch(act)
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					. = "<B>[src.mob]</B> moos!"
 					playsound(src.mob, 'sound/voice/screams/moo.ogg', 50, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("milk")
@@ -2325,7 +2325,7 @@ TYPEINFO(/datum/mutantrace/pug)
 	emote(var/act, var/voluntary)
 		switch(act)
 			if ("scream")
-				if (src.mob.emote_check(voluntary, 50))
+				if (src.mob.emote_check(voluntary, 5 SECONDS))
 					. = "<B>[src.mob]</B> BWAHCAWCKs!"
 					playsound(src.mob, 'sound/voice/screams/chicken_bawk.ogg', 50, 0, 0, src.mob.get_age_pitch())
 
