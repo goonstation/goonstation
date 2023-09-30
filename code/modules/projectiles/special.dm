@@ -995,6 +995,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	window_pass = 0
 	typetospawn = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
 
+	on_pre_hit(atom/hit, angle, obj/projectile/O)
+		if (istype(hit, /mob/living/critter/small_animal/wasp))
+			return TRUE
+		. = ..()
+
 	on_hit(atom/hit, direction, projectile)
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
 		if(istype(W))
