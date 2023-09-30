@@ -190,26 +190,54 @@
 		req_access = list(access_medical_lockers, access_tox_storage)
 
 //puzzle for morrigan
-/obj/storage/secure/crate/morrigancargo
-	name = "Order"
-	req_access = list(access_morrigan_exit)
-	New()
-		..()
-		name = "Order #[rand(100, 10000)]"
+/obj/storage/crate/morrigancargo
+	name = "Morrigan Cargo Crate"
+	//locked = TRUE
+	var/contraband_items = list()
+	var/random_shit_to_spawn = list()
+	var/max_contra_amount = 2
+	var/contra_contained = 0 //will be useful for contraband check
+
+	make_my_stuff()
+		.=..()
+		if (.)
+			name = "Order #[rand(100,10000)]"
+			var/amount_to_spawn = rand(2, 5)
+			for (var/amount = 0, amount < amount_to_spawn, amount++)
+				var/thing_to_spawn = pick(random_shit_to_spawn)
+				var/contra_to_spawn = pick(contraband_items)
+				src.contents += new thing_to_spawn
+				if (prob(10) && contra_contained < max_contra_amount)
+					src.contents += new contra_to_spawn
+					contra_contained += 1
 
 
-/obj/storage/secure/crate/morrigancargo/engineer
-	icon_state = "engcrate"
-	icon_opened = "engcrate-open"
-	icon_closed = "engcrate"
+	engineer
+		icon_state = "engcrate"
+		density = 1
+		icon_opened = "engcrate-open"
+		icon_closed = "engcrate"
+		contraband_items = list(/obj/item/gun/kinetic/revolver)
+		random_shit_to_spawn = list(/obj/item/storage/toolbox/mechanical/orange_tools,
+		/obj/item/clothing/head/helmet/welding,
+		/obj/item/clothing/suit/wintercoat/engineering)
+		spawn_contents = list(/obj/item/clothing/suit/wintercoat/engineering)
 
-/obj/storage/secure/crate/morrigancargo/medical
-	icon_state = "securemedicalcrate"
-	icon_opened = "securemedicalcrateopen"
-	icon_closed = "securemedicalcrate"
-	weld_image_offset_Y = -2
+	medical
+		icon_state = "securemedicalcrate"
+		density = 1
+		icon_opened = "securemedicalcrateopen"
+		icon_closed = "securemedicalcrate"
+		weld_image_offset_Y = -2
+		contraband_items = list(/obj/item/gun/kinetic/revolver)
+		random_shit_to_spawn = list(/obj/item/scalpel)
+		spawn_contents = (/obj/item/device/analyzer/healthanalyzer)
 
-/obj/storage/secure/crate/morrigancargo/security
-	icon_state = "weaponcrate"
-	icon_opened = "weaponcrateopen"
-	icon_closed = "weaponcrate"
+	security
+		icon_state = "weaponcrate"
+		density = 1
+		icon_opened = "weaponcrateopen"
+		icon_closed = "weaponcrate"
+		contraband_items = list(/obj/item/gun/kinetic/revolver)
+		random_shit_to_spawn = list(/obj/item/storage/box/body_bag)
+		spawn_contents = list(/obj/item/kitchen/food_box/donut_box)
