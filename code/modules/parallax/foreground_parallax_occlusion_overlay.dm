@@ -3,6 +3,13 @@
 	icon_state = "overlay-0"
 	plane = PLANE_FOREGROUND_PARALLAX_OCCLUSION
 
+/obj/foreground_parallax_occlusion
+	mouse_opacity = 0
+	icon = 'icons/misc/foreground_parallax_occlusion_overlay.dmi'
+	icon_state = "overlay-255"
+	plane = PLANE_FOREGROUND_PARALLAX_OCCLUSION
+
+
 /turf/New()
 	. = ..()
 	var/area/A = get_area(src)

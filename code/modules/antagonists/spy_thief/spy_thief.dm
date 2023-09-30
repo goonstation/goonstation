@@ -73,7 +73,7 @@
 		if (!uplink_source)
 			uplink_source = new /obj/item/device/pda2(H)
 			loc_string = "in your backpack"
-			if (H.equip_if_possible(uplink_source, H.slot_in_backpack) == 0)
+			if (H.equip_if_possible(uplink_source, SLOT_IN_BACKPACK) == 0)
 				uplink_source.set_loc(get_turf(H))
 				loc_string = "on the floor"
 
@@ -89,11 +89,11 @@
 
 		// Provide the owner with a spy camera.
 		if (!H.r_store)
-			H.equip_if_possible(new /obj/item/camera/spy(H), H.slot_r_store)
+			H.equip_if_possible(new /obj/item/camera/spy(H), SLOT_R_STORE)
 		else if (!H.l_store)
-			H.equip_if_possible(new /obj/item/camera/spy(H), H.slot_l_store)
+			H.equip_if_possible(new /obj/item/camera/spy(H), SLOT_L_STORE)
 		else if (H.back?.storage && !H.back.storage.is_full())
-			H.equip_if_possible(new /obj/item/camera/spy(H), H.slot_in_backpack)
+			H.equip_if_possible(new /obj/item/camera/spy(H), SLOT_IN_BACKPACK)
 		else
 			var/obj/camera = new /obj/item/camera/spy(get_turf(H))
 			H.put_in_hand_or_drop(camera)

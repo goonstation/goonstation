@@ -50,17 +50,13 @@
 		owner = M
 		hud = new()
 		if(owner)
-			owner.attach_hud(hud)
-			if (ishuman(owner))
-				var/mob/living/carbon/human/H = owner
-				H.hud?.update_ability_hotbar()
+			onAttach()
 
 	disposing()
 		for (var/atom/movable/screen/S in hud.objects)
 			if (hasvar(S, "master") && S:master == src)
 				S:master = null
-		if (owner)
-			owner.detach_hud(hud)
+		onRemove()
 		hud.clear_master()
 		hud.mobs -= src
 
@@ -85,7 +81,15 @@
 
 	/// Called just before we're removed from a mob
 	proc/onRemove()
-		return
+		SHOULD_CALL_PARENT(TRUE)
+		owner?.detach_hud(hud)
+
+	proc/onAttach()
+		SHOULD_CALL_PARENT(TRUE)
+		owner.attach_hud(hud)
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			H.hud?.update_ability_hotbar()
 
 	proc/updateCounters()
 		// this is probably dogshit but w/e
@@ -209,10 +213,9 @@
 		bonus = 0
 
 	proc/transferOwnership(var/newbody)
-		owner?.detach_hud(hud)
+		onRemove()
 		owner = newbody
-		if(owner)
-			owner.attach_hud(hud)
+		onAttach(newbody)
 
 	proc/StatAbilities()
 		if (!rendered)

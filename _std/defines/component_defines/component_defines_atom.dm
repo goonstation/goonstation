@@ -209,6 +209,10 @@
 	#define COMSIG_MOB_EMOTE "mob_emote"
 	/// Sent when a mob is checking for an active energy shield
 	#define COMSIG_MOB_SHIELD_ACTIVATE "mob_shield_activate"
+	/// Sent when a mob flips, return TRUE to skip the rest of the flip emote coded, argument is (voluntary)
+	#define COMSIG_MOB_FLIP "mob_flip"
+	/// Sent when UpdateDamage() is called (prev_health)
+	#define COMSIG_MOB_UPDATE_DAMAGE "mob_update_damage"
 
 	// ---- cloaking device signal ----
 

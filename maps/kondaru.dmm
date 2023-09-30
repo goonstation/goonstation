@@ -751,6 +751,7 @@
 "acw" = (
 /obj/machinery/mass_driver{
 	dir = 4;
+	drive_range = 32;
 	id = "nw_router_east"
 	},
 /turf/simulated/floor/airless/plating,
@@ -1159,6 +1160,7 @@
 	})
 "adB" = (
 /obj/machinery/mass_driver{
+	drive_range = 64;
 	id = "nw_router_south"
 	},
 /turf/simulated/floor/airless/plating,
@@ -8342,7 +8344,7 @@
 "aDk" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 50;
+	drive_range = 114;
 	id = "trashgun"
 	},
 /obj/machinery/door/poddoor/pyro{
@@ -8533,7 +8535,7 @@
 "aDN" = (
 /obj/machinery/mass_driver{
 	dir = 8;
-	drive_range = 50;
+	drive_range = 115;
 	id = "trashgun"
 	},
 /turf/simulated/floor/black/grime,
@@ -17780,6 +17782,7 @@
 "boM" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 65;
 	id = "kd_mednorth"
 	},
 /turf/simulated/floor/airless/plating,
@@ -19435,6 +19438,7 @@
 /area/station/hangar/engine)
 "bwq" = (
 /obj/machinery/mass_driver{
+	drive_range = 16;
 	id = "kd_medsouth"
 	},
 /turf/simulated/floor/airless/plating,
@@ -24830,6 +24834,7 @@
 "bPt" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 17;
 	id = "kd_scinorth"
 	},
 /turf/simulated/floor/airless/plating,
@@ -26472,6 +26477,7 @@
 /area/station/crew_quarters/catering)
 "bVV" = (
 /obj/machinery/mass_driver{
+	drive_range = 19;
 	id = "kd_scisouth"
 	},
 /turf/simulated/floor/airless/plating,
@@ -29477,6 +29483,7 @@
 "chU" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 18;
 	id = "sw_router_north"
 	},
 /turf/simulated/floor/airless/plating,
@@ -29500,6 +29507,7 @@
 "cic" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 9;
 	id = "kd_qmnorth"
 	},
 /turf/simulated/floor/airless/plating,
@@ -29529,6 +29537,7 @@
 "cik" = (
 /obj/machinery/mass_driver{
 	dir = 8;
+	drive_range = 59;
 	id = "kd_qmwest"
 	},
 /turf/simulated/floor/airless/plating,
@@ -29578,6 +29587,7 @@
 "cix" = (
 /obj/machinery/mass_driver{
 	dir = 4;
+	drive_range = 60;
 	id = "sw_router_east"
 	},
 /turf/simulated/floor/airless/plating,
@@ -30751,7 +30761,7 @@
 /turf/simulated/floor/orangeblack,
 /area/listeningpost)
 "clP" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /turf/simulated/floor/grey/side{
 	dir = 4
 	},
@@ -35955,6 +35965,14 @@
 	dir = 9
 	},
 /area/station/engine/monitoring)
+"eYN" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 16;
+	id = "kd_scinorth"
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/southwest)
 "eZq" = (
 /obj/table/wood/auto,
 /obj/random_item_spawner/medicine,
@@ -36035,6 +36053,7 @@
 "fcO" = (
 /obj/machinery/mass_driver{
 	dir = 1;
+	drive_range = 10;
 	id = "kondaru_qmfetch"
 	},
 /obj/decal/stripe_delivery,
@@ -39818,6 +39837,14 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/station/engine/core)
+"iiz" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 59;
+	id = "sw_router_east"
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
 "iiL" = (
 /obj/storage/secure/closet/security/equipment,
 /obj/machinery/power/apc/autoname_east,
@@ -42232,6 +42259,14 @@
 	dir = 1
 	},
 /area/station/crew_quarters/ce)
+"jXY" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 64;
+	id = "kd_mednorth"
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "jYd" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 1;
@@ -43102,6 +43137,13 @@
 /obj/machinery/portable_atmospherics/canister/carbon_dioxide,
 /turf/simulated/floor/caution/north,
 /area/station/engine/gas)
+"kNb" = (
+/obj/machinery/mass_driver{
+	drive_range = 17;
+	id = "kd_medsouth"
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/west)
 "kNj" = (
 /obj/storage/secure/closet/personal,
 /obj/cable{
@@ -52093,12 +52135,7 @@
 /turf/space,
 /area/space)
 "sdA" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "heisenbed"
-	},
+/obj/stool/bee_bed/heisenbee,
 /obj/item/reagent_containers/food/snacks/beefood{
 	pixel_x = 8;
 	pixel_y = 8
@@ -53326,6 +53363,13 @@
 	},
 /turf/simulated/floor/grey,
 /area/station/crew_quarters/catering)
+"taF" = (
+/obj/machinery/mass_driver{
+	drive_range = 20;
+	id = "kd_scisouth"
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/maintenance/southwest)
 "taS" = (
 /obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/escape,
@@ -55452,6 +55496,15 @@
 "uIC" = (
 /turf/simulated/floor/plating,
 /area/station/maintenance/inner/west)
+"uJv" = (
+/obj/machinery/mass_driver{
+	drive_range = 65;
+	id = "nw_router_south"
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/routing/eva{
+	name = "Router Cabinet"
+	})
 "uKA" = (
 /obj/disposalpipe/segment/morgue{
 	dir = 4
@@ -56142,6 +56195,16 @@
 	},
 /turf/space,
 /area/space)
+"vlq" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	drive_range = 31;
+	id = "nw_router_east"
+	},
+/turf/simulated/floor/airless/plating,
+/area/station/routing/eva{
+	name = "Router Cabinet"
+	})
 "vlr" = (
 /obj/machinery/weapon_stand/taser_rack/recharger/empty,
 /obj/machinery/light,
@@ -59211,6 +59274,14 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/primary/north)
+"xIu" = (
+/obj/machinery/mass_driver{
+	dir = 1;
+	drive_range = 17;
+	id = "sw_router_north"
+	},
+/turf/simulated/floor/airless/plating,
+/area/space)
 "xII" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -60019,7 +60090,7 @@
 /turf/simulated/floor/plating,
 /area/station/security/secwing)
 "ykM" = (
-/obj/machinery/vending/alcohol,
+/obj/machinery/vending/alcohol/with_ammo,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 8;
@@ -90163,7 +90234,7 @@ aaa
 rUW
 jdn
 jjy
-bPt
+eYN
 bPt
 vRn
 bTI
@@ -90443,7 +90514,7 @@ aaa
 aaa
 aaa
 acb
-boM
+jXY
 boM
 bsB
 uPl
@@ -90470,7 +90541,7 @@ bTC
 qMf
 bTE
 bUK
-bVV
+taF
 bVV
 afw
 aaa
@@ -90681,7 +90752,7 @@ ach
 acv
 acN
 adg
-adB
+uJv
 adB
 aaa
 uGT
@@ -90751,7 +90822,7 @@ aMt
 buc
 xJs
 ucj
-bwq
+kNb
 bwq
 aaa
 aaa
@@ -90791,7 +90862,7 @@ aaa
 aaa
 aaa
 aaa
-chU
+xIu
 chU
 cij
 ciq
@@ -91282,7 +91353,7 @@ aaa
 aaa
 aaa
 ach
-acw
+vlq
 acO
 aaa
 amc
@@ -91399,7 +91470,7 @@ aaa
 aci
 aaa
 aci
-cix
+iiz
 cpy
 aaa
 aaa

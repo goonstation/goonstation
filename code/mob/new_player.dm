@@ -1,6 +1,6 @@
 
 var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
-mob/new_player
+/mob/new_player
 	anchored = ANCHORED
 
 	var/ready = 0
@@ -12,11 +12,11 @@ mob/new_player
 	var/antag_fallthrough = FALSE
 
 #ifdef TWITCH_BOT_ALLOWED
-	var/twitch_bill_spawn = 0
+	var/twitch_bill_spawn = FALSE
 #endif
 
-	density = 0
-	stat = 2
+	density = FALSE
+	stat = STAT_DEAD
 	canmove = 0
 
 	anchored = ANCHORED	//  don't get pushed around
@@ -27,7 +27,7 @@ mob/new_player
 		. = ..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
 	#ifdef I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO
-		ready = 1
+		ready = TRUE
 	#endif
 
 	// How could this even happen? Regardless, no log entries for unaffected mobs (Convair880).

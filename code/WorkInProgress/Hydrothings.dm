@@ -631,8 +631,8 @@
 				var/obj/item/clothing/mask/owl_mask/owlmask = new /obj/item/clothing/mask/owl_mask(M)
 				owlmask.cant_self_remove = 1
 
-				M.equip_if_possible(owlsuit, M.slot_w_uniform)
-				M.equip_if_possible(owlmask, M.slot_wear_mask)
+				M.equip_if_possible(owlsuit, SLOT_W_UNIFORM)
+				M.equip_if_possible(owlmask, SLOT_WEAR_MASK)
 				M.set_clothing_icon_dirty()
 
 /obj/item/gun/energy/wonkgun
@@ -1394,8 +1394,8 @@ var/list/owlery_sounds = list('sound/voice/animal/hoot.ogg','sound/ambience/owlz
 				var/obj/item/clothing/mask/owl_mask/owlmask = new /obj/item/clothing/mask/owl_mask(M2)
 				owlmask.cant_self_remove = 1
 
-				M2.equip_if_possible(owlsuit, M2.slot_w_uniform)
-				M2.equip_if_possible(owlmask, M2.slot_wear_mask)
+				M2.equip_if_possible(owlsuit, SLOT_W_UNIFORM)
+				M2.equip_if_possible(owlmask, SLOT_WEAR_MASK)
 				M2.set_clothing_icon_dirty()
 
 ///////GREG THE COOL AWESOME ROBOT TRADER/////////////////

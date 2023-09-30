@@ -211,6 +211,7 @@ var/datum/respawn_controls/respawn_controller
 	respawn_controller.doRespawn(src.ckey)
 
 /atom/movable/screen/respawn_timer
+	name = "Respawn Timer"
 	screen_loc = "CENTER, NORTH"
 	maptext_width = 32 * 5
 	maptext_x = -32 * 2

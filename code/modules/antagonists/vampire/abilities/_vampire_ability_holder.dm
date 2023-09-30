@@ -141,6 +141,14 @@
 		.["Total:"] = round(src.vamp_blood)
 		return
 
+	onAttach()
+		..()
+		RegisterSignal(owner, COMSIG_MOB_FLIP, PROC_REF(launch_bat_orbiters))
+
+	onRemove()
+		..()
+		UnregisterSignal(owner, COMSIG_MOB_FLIP)
+
 	onLife(var/mult = 1)
 		..()
 		if (!(the_coffin?.disposed) && isturf(owner.loc) && istype(the_coffin,/obj/storage/closet/coffin))
