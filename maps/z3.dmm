@@ -21147,7 +21147,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/obj/item/paper/balor_IT{
+/obj/item/paper/morrigan/balor_IT{
 	pixel_x = -5;
 	layer = 3.1
 	},

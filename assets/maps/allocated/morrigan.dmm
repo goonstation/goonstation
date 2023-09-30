@@ -2315,7 +2315,6 @@
 	icon_state = "chair_couch-blue";
 	name = "ratty blue couch"
 	},
-/obj/machinery/light/worn,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "caL" = (
@@ -2715,9 +2714,6 @@
 "cxg" = (
 /obj/stool/chair/comfy,
 /obj/item/storage/backpack/satchel,
-/obj/machinery/light/worn{
-	dir = 4
-	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "cxF" = (
@@ -12543,9 +12539,6 @@
 /obj/decorative_pot,
 /obj/item/cigbutt,
 /obj/item/reagent_containers/food/snacks/cookie/spooky,
-/obj/machinery/light/worn{
-	dir = 1
-	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "lsR" = (
@@ -15622,6 +15615,10 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"nUu" = (
+/obj/item/device/prox_sensor,
+/turf/unsimulated/floor/black,
+/area/morrigan/station/engineering/exports)
 "nUM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -16373,7 +16370,7 @@
 	id = "pipe_two";
 	switch_type = /obj/disposalpipe/junction/right/south;
 	pixel_x = -62;
-	pixel_y = -52
+	pixel_y = -48
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/security/brig)
@@ -17175,7 +17172,7 @@
 /obj/lever/pipeswitch{
 	id = "pipe_three";
 	switch_type = /obj/disposalpipe/junction/middle/south;
-	pixel_y = -20
+	pixel_y = -15
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/security/brig)
@@ -19457,7 +19454,6 @@
 "rAd" = (
 /obj/grille/steel,
 /obj/window/auto/reinforced/indestructible,
-/obj/decal/poster/wallsign/morrigan,
 /obj/fakeobjects/morrigan/broken_lockdown,
 /turf/simulated/floor/engine,
 /area/morrigan/station/hallway)
@@ -20468,7 +20464,7 @@
 /obj/lever/pipeswitch{
 	id = "pipe_four";
 	switch_type = /obj/disposalpipe/junction/right/west;
-	pixel_y = -21
+	pixel_y = -14
 	},
 /obj/machinery/light/small,
 /turf/unsimulated/floor/plating/damaged1,
@@ -21407,19 +21403,19 @@
 	layer = 8;
 	name = "window"
 	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Some kind of weirdo Soviet computer console.  It's probably broken.";
-	dir = 4;
-	icon = 'icons/misc/hospital.dmi';
-	icon_state = "sovcomp2";
-	name = "broken computer"
-	},
 /obj/decal/tile_edge/stripe/big{
 	dir = 1
 	},
 /obj/decal/tile_edge/stripe/big,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "dterm0";
+	name = "broken computer";
+	dir = 4
+	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
 "tzr" = (
@@ -23899,7 +23895,6 @@
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/factory)
 "vLB" = (
-/obj/critter/gunbot/drone/laser,
 /turf/unsimulated/floor/plating/scorched,
 /area/morrigan/station/passage)
 "vMS" = (
@@ -28334,7 +28329,7 @@ kTX
 seq
 seq
 seq
-seq
+nUu
 seq
 seq
 seq

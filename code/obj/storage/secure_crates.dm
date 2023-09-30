@@ -191,24 +191,25 @@
 
 //puzzle for morrigan
 /obj/storage/secure/crate/morrigancargo
-	name = "Order #[rand(100, 10000)]"
+	name = "Order"
 	req_access = list(access_morrigan_exit)
+	New()
+		..()
+		name = "Order #[rand(100, 10000)]"
 
-	engineer
-		icon_state = "engcrate"
-		density = 1
-		icon_opened = "engcrate-open"
-		icon_closed = "engcrate"
 
-	medical
-		icon_state = "securemedicalcrate"
-		density = 1
-		icon_opened = "securemedicalcrateopen"
-		icon_closed = "securemedicalcrate"
-		weld_image_offset_Y = -2
+/obj/storage/secure/crate/morrigancargo/engineer
+	icon_state = "engcrate"
+	icon_opened = "engcrate-open"
+	icon_closed = "engcrate"
 
-	security
-		icon_state = "weaponcrate"
-		density = 1
-		icon_opened = "weaponcrateopen"
-		icon_closed = "weaponcrate"
+/obj/storage/secure/crate/morrigancargo/medical
+	icon_state = "securemedicalcrate"
+	icon_opened = "securemedicalcrateopen"
+	icon_closed = "securemedicalcrate"
+	weld_image_offset_Y = -2
+
+/obj/storage/secure/crate/morrigancargo/security
+	icon_state = "weaponcrate"
+	icon_opened = "weaponcrateopen"
+	icon_closed = "weaponcrate"
