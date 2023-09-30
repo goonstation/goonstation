@@ -2383,17 +2383,17 @@
 	var/turf/T = get_turf(src)
 	var/datum/gas_mixture/gas = new /datum/gas_mixture
 	if(oxyplasmafart == PLASMAFART)
-		gas.toxins += 5
+		gas.toxins += 3
 	if(oxyplasmafart == OXYFART)
-		gas.oxygen += 5
+		gas.oxygen += 3
 	if(src.reagents && src.reagents.get_reagent_amount("fartonium") > 6.9)
-		gas.farts = 42.0
+		gas.farts =  20.4
 	else if(src.reagents && src.reagents.get_reagent_amount("egg") > 6.9)
-		gas.farts = 13.37
+		gas.farts = 6.8
 	else if(src.reagents && src.reagents.get_reagent_amount("refried_beans") > 6.9)
-		gas.farts = 9.001
+		gas.farts = 5
 	else
-		gas.farts = 4.20
+		gas.farts = 3.21
 	gas.temperature = T20C
 	gas.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 	if (T)

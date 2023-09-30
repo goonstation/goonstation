@@ -1592,7 +1592,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					playsound(src.mob, src.sound_monkeyscream, 80, 0, 0, src.mob.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 			if ("fart")
 				if(farting_allowed && (!src.mob.reagents || !src.mob.reagents.has_reagent("anti_fart")))
-					if (!src.mob.emote_check(voluntary, 5 SECONDS))
+					if (!src.mob.emote_check(voluntary, 3 SECONDS))
 						return
 					var/fart_on_other = 0
 					for(var/mob/living/M in src.mob.loc)
