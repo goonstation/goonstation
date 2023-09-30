@@ -707,6 +707,13 @@ ABSTRACT_TYPE(/obj/item)
 
 	params = params2list(params)
 
+	if (ishuman(over_object) && ishuman(usr) && !src.storage)
+		var/mob/living/carbon/human/patient = over_object
+		var/mob/living/carbon/human/surgeon = usr
+		if (surgeryCheck(patient, surgeon))
+			if (insertChestItem(patient, surgeon, src))
+				return
+
 	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
@@ -1210,10 +1217,6 @@ ABSTRACT_TYPE(/obj/item)
 	if (!M || !user) // not sure if this is the right thing...
 		return
 
-	if (surgeryCheck(M, user))		// Check for surgery-specific actions
-		if(insertChestItem(M, user))	// Puting item in patient's chest
-			return
-
 	if (src.Eat(M, user)) // All those checks were done in there anyway
 		return
 
@@ -1289,8 +1292,6 @@ ABSTRACT_TYPE(/obj/item)
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
-	msgs.played_sound = src.hitsound
-
 	var/power = src.force + src.getProperty("searing")
 
 	if(hasProperty("unstable"))
@@ -1362,6 +1363,9 @@ ABSTRACT_TYPE(/obj/item)
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1
+
+	if (!armor_blocked)
+		msgs.played_sound = src.hitsound
 
 	if (src.leaves_slash_wound && power > 0 && hit_area == "chest" && ishuman(M))
 		var/num = rand(0, 2)

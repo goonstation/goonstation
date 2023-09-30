@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from "../backend";
-import { LabeledList, NumberInput, Button, Section, Dimmer } from "../components";
+import { Button, Dimmer, LabeledList, NumberInput, Section } from "../components";
 import { Window } from '../layouts';
 import { VendorCashTable } from './common/VendorCashTable';
 import { GasTankInfo } from './GasTank';

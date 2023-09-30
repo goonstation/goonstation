@@ -468,14 +468,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 		if (isliving(eater))
 			if(ethereal_eater)//ghost critters can get a little ingest reaction and a tiny amount of reagent, but won't actually take reagents
-				src.reagents.reaction(eater, INGEST, 3)
-				if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
-					src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
+				if(src.reagents)
+					src.reagents.reaction(eater, INGEST, 3)
+					if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
+						src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
 			else
 				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
 				B.fill_amt = src.fill_amt/initial(src.bites_left) //so all the bites add up to the full item fillness
-				B.reagents.maximum_volume = reagents.total_volume/((src.bites_left+1) || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
-				src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
+				if(src.reagents)
+					B.reagents.maximum_volume = reagents.total_volume/((src.bites_left+1) || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
+					src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
 				var/mob/living/L = eater
 				if (L.organHolder?.stomach)
 					L.organHolder.stomach.consume(B)
@@ -750,7 +752,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 			var/trans = target.reagents.trans_to(src, transferamt)
 			boutput(user, "<span class='notice'>You fill [src] with [trans] units of the contents of [target].</span>")
 
-		else if (target.is_open_container() && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
+		else if (target.is_open_container(TRUE) && target.reagents) //Something like a glass. Player probably wants to transfer TO it.
 			if (!reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] is empty.</span>")
 				return
@@ -1851,7 +1853,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	name = "espresso cup"
 	desc = "A fancy espresso cup, for sipping in the finest establishments." //*tip
 	icon_state = "fancycoffee"
-	item_state = "coffee"
+	item_state = "espresso"
 	initial_volume = 20
 	gulp_size = 2.5
 	g_amt = 2.5 //might be broken still, Whatever

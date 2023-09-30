@@ -3059,11 +3059,11 @@
 /turf/simulated/floor/plating,
 /area/station/quartermaster/office)
 "hq" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate,
 /obj/machinery/light{
 	dir = 4;

@@ -242,6 +242,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		max_uses = rand(0, 5)
 		spawn_chance = rand(1, 40)
 		if (prob(5))
@@ -253,6 +254,10 @@
 		#ifdef AUTUMN
 		src.try_set_icon_state(src.icon_state + "_autumn", src.icon) //this will change varedited shrubs into autumn versions but also won't break if there's no autumn version
 		#endif
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	ex_act(var/severity)
 		switch(severity)

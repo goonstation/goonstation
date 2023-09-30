@@ -21,13 +21,15 @@
 	///The key/value pair is commodity_type / ratio of relationship B/A where A is the current commodity's value related to linked commodity B
 	var/list/linked_commodities = null
 
-	New()
+	New(atom/source, var/amount_sell_or_buy = -1)
 		. = ..()
 		baseprice = price
 		if(isnull(upperfluc))
 			upperfluc = baseprice/2
 		if(isnull(lowerfluc))
 			lowerfluc = -baseprice/2
+		if(amount_sell_or_buy > 0)
+			src.amount = amount_sell_or_buy
 
 /*
 /datum/commodity/clothing
@@ -151,7 +153,7 @@
 	comname = "Gemstone"
 	comtype = /obj/item/raw_material/gemstone
 	onmarket = 1
-	value = 1.5
+	value = 4
 
 /datum/commodity/ore/cobryl
 	comname = "Cobryl"
@@ -354,49 +356,49 @@
 	comname = "Assault Laser Array"
 	comtype = /obj/item/shipcomponent/mainweapon/laser_ass
 	desc = "Usually only seen on cruiser-class ships. How the hell did this end up here?"
-	price = PAY_DONTBUYIT*10
+	price = PAY_DONTBUYIT*2
 
 /datum/commodity/podparts/blackarmor
 	comname = "Strange Armor Plating"
 	comtype = /obj/item/podarmor/armor_black
 	desc = "NT Special Ops vehicular armor plating, almost certainly stolen."
-	price = PAY_DONTBUYIT*2
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/redarmor
 	comname = "Syndicate Pod Armor"
 	comtype = /obj/item/podarmor/armor_red
 	desc = "A kit of Syndicate pod armor plating."
-	price = PAY_DONTBUYIT
+	price = PAY_EMBEZZLED
 
 /datum/commodity/podparts/goldarmor
 	comname = "Gold Pod Armor"
 	comtype = /obj/item/podarmor/armor_gold
 	desc = "A kit of gold-plated pod armor plating."
-	price = PAY_DONTBUYIT
+	price = PAY_EMBEZZLED*2
 
 /datum/commodity/podparts/ballistic
 	comname = "Ballistic System"
 	comtype = /obj/item/shipcomponent/mainweapon/gun
 	desc = "A pod-mounted kinetic weapon system."
-	price = PAY_DONTBUYIT*2
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/artillery
 	comname = "40mm Assault Platform"
 	comtype = /obj/item/shipcomponent/mainweapon/artillery
 	desc = "A pair of ballistic launchers, fires explosive 40mm shells."
-	price = PAY_DONTBUYIT*10
+	price = PAY_DONTBUYIT*2
 
 /datum/commodity/contraband/artillery_ammo
 	comname = "40mm HE Ammunition"
 	comtype = /obj/item/ammo/bullets/autocannon
 	desc = "High explosive grenades, for the resupplement of artillery assault platforms."
-	price = PAY_DONTBUYIT*4
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/cloak
 	comname = "Medusa Stealth System 300"
 	comtype = /obj/item/shipcomponent/secondary_system/cloak
 	desc = "A cloaking device for stealth recon vehicles."
-	price = PAY_DONTBUYIT*10
+	price = PAY_DONTBUYIT
 
 /datum/commodity/podparts/skin_stripe_r
 	comname = "Pod Paint Job Kit (Red Racing Stripes)"

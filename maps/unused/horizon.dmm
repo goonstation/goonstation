@@ -6097,8 +6097,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
 "ast" = (
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "asu" = (
@@ -11711,7 +11711,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "aJc" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
@@ -52339,8 +52339,9 @@
 	},
 /area/station/janitor/office)
 "mpY" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "mqh" = (
 /obj/disposalpipe/segment/cargo{
 	dir = 4

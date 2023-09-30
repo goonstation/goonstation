@@ -3,8 +3,8 @@ import { useBackend } from '../../backend';
 import { adjustSizes, handleEvents } from './utils/window';
 import { Component } from 'inferno';
 
-import { Icon, Box, Dimmer } from '../../components';
-import { useStates, BoardgameData } from './utils';
+import { Box, Dimmer, Icon } from '../../components';
+import { BoardgameData, useStates } from './utils';
 import { TitleBar } from './Components/common/TitleBar';
 import { HeldPieceRenderer } from './Components/common/HeldPieceRenderer';
 import { BoardgameContents } from './Components/common/BoardgameContents';

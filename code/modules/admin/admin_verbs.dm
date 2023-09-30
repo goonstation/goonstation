@@ -2440,11 +2440,11 @@ var/list/fun_images = list()
 			return
 		if(rounds_duration)
 			message_admins("[src] has disabled the whitelist for [rounds_duration] round\s.")
-			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for [rounds_duration] round\s.")
+			logTheThing(LOG_ADMIN, src, "Disabled the whitelist for [rounds_duration] round\s.")
 			world.save_intra_round_value("whitelist_disabled", rounds_duration)
 		else
 			message_admins("[src] has disabled the whitelist for the rest of the round.")
-			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for the rest of the round.")
+			logTheThing(LOG_ADMIN, src, "Disabled the whitelist for the rest of the round.")
 		config.whitelistEnabled = FALSE
 		config.roundsLeftWithoutWhitelist = rounds_duration
 	else
@@ -2458,7 +2458,7 @@ var/list/fun_images = list()
 				boutput(C, "<span class='alert' style='font-size: 2.5em;'>You have been kicked from the server because the whitelist got enabled and you are not whitelisted.</span>")
 				del(C)
 		message_admins("[src] has enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
-		logTheThing(LOG_ADMIN, src, null, "Enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
+		logTheThing(LOG_ADMIN, src, "Enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
 		world.save_intra_round_value("whitelist_disabled", 0)
 
 	set_station_name(src.mob, manual=FALSE, name=station_name)

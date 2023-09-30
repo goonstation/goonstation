@@ -6,11 +6,11 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Box, Icon, AnimatedNumber, Section, LabeledList, ProgressBar, Dimmer } from "../components";
+import { AnimatedNumber, Box, Button, Dimmer, Icon, LabeledList, ProgressBar, Section } from "../components";
 import { Window } from '../layouts';
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 import { ReagentGraph, ReagentList } from './common/ReagentInfo';
-import { HealthStat, damageNum } from './common/HealthStat';
+import { damageNum, HealthStat } from './common/HealthStat';
 import { MobStatuses } from './common/MobStatus';
 import { KeyHealthIndicators } from './common/KeyHealthIndicators/index';
 
