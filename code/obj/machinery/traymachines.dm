@@ -352,6 +352,11 @@ ABSTRACT_TYPE(/obj/machine_tray)
 	icon_state = "crema_active"
 	playsound(src.loc, 'sound/machines/crematorium.ogg', 90, 0)
 
+	for (var/obj/O in contents)
+		if (istype(O, /obj/item/body_bag))
+			var/obj/item/body_bag/bag = O
+			bag.cut_open()
+
 	for (var/mob/living/L in contents)
 		if (L in non_tray_contents)
 			continue
