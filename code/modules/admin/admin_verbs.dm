@@ -2526,8 +2526,7 @@ var/list/fun_images = list()
 	var/turf/T = get_turf(usr)
 	if (!T)
 		return
-	for (var/i = 1; i <= spawn_matches.len; i++)
-		var/obj/item/I = spawn_matches[i]
-		new I(T)
+	for (var/type as anything in spawn_matches)
+		new type(T)
 		total++
 	boutput(src, "Created [total] types.")
