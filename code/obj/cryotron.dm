@@ -301,14 +301,11 @@
 		return 0
 
 	proc/ensure_storage()
-		if (!stored_mobs.len)
-			return
 		for (var/mob/living/L in stored_mobs)
 			if (L.loc != src)
 				L.hibernating = 0
-			if (!L.bioHolder.HasEffect("blind"))
-				L.removeOverlayComposition(/datum/overlayComposition/blinded)
-			else
+				if (!L.bioHolder.HasEffect("blind"))
+					L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if (H.glasses?.allow_blind_sight)
