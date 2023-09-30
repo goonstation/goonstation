@@ -196,7 +196,7 @@
 
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
-				if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+				if (H.bleeding || (H.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
 					if (src.cautery_surgery(H, user, 5, src.on))
 						return
 			if (M.getStatusDuration("burning") && src.on == 0)
@@ -998,6 +998,9 @@
 				src.light()
 
 	ex_act(severity)
+		..()
+		if (QDELETED(src))
+			return
 		if (src.on == MATCH_UNLIT)
 			src.visible_message("<span class='alert'>The [src] ignites!</span>")
 			src.light()
@@ -1085,7 +1088,7 @@
 					smoke.light(user, "<span class='alert'><b>[user]</b> lights [fella]'s [smoke] with [src].</span>")
 					fella.set_clothing_icon_dirty()
 					return
-				else if (fella.bleeding || (fella.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+				else if (fella.bleeding || (fella.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
 					src.cautery_surgery(fella, user, 5, src.on)
 					return ..()
 				else
@@ -1199,7 +1202,7 @@
 					fella.set_clothing_icon_dirty()
 					return
 
-			if (fella.bleeding || (fella.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+			if (fella.bleeding || (fella.organHolder?.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
 				if (src.cautery_surgery(target, user, 10, src.on))
 					return
 

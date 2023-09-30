@@ -3,12 +3,12 @@
 /// Get cliented mobs from a given atom within a given range. Careful, because range is actually `max(CELL_SIZE, range)`
 #define GET_NEARBY(maptype, A, range) (get_singleton(maptype).get_nearby(A, range))
 
-#define CELL_POSITION(X, Y, Z) (round(X / cellsize) + round(Y / cellsize) * cellwidth + (Z - 1) * rows * cols + 1)
+#define CELL_POSITION(X, Y, Z) (clamp(round((X - 1) / cellsize), 0, cols - 1) + clamp(round((Y - 1) / cellsize), 0, rows - 1) * cols + (Z - 1) * rows * cols + 1)
 
 #define ADD_BUCKET(X, Y, Z) (. |= CELL_POSITION(X, Y, Z))
 
 #define ADD_TO_MAP(TARGET, TARGET_POS) \
-	if (TARGET_POS.z) { \
+	if (TARGET_POS?.z) { \
 	LAZYLISTADD(hashmap[CELL_POSITION(TARGET_POS.x, TARGET_POS.y, TARGET_POS.z)], TARGET); \
 	buckets_holding_atom |= CELL_POSITION(TARGET_POS.x, TARGET_POS.y, TARGET_POS.z); \
 	}
@@ -24,8 +24,6 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 	var/zlevels
 	var/width
 	var/height
-	var/cellwidth
-	var/cellheight
 
 	var/last_update = 0
 
@@ -52,8 +50,6 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 		width = w
 		height = h
 		zlevels = world.maxz
-
-		cellwidth = width / cellsize
 
 		buckets_holding_atom = list()
 
@@ -143,7 +139,7 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 
 		. = list()
 		for (var/id in get_atom_id(A, range))
-			if(id > 0 && id <= length(hashmap) && length(hashmap[id]))
+			if(length(hashmap[id]))
 				. += hashmap[id]
 
 /datum/spatial_hashmap/clients
