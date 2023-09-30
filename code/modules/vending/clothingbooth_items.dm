@@ -1242,7 +1242,7 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/autumn_jacket)
 
 	jacket
 		name = "Autumn Jacket"
-		path = /obj/item/clothing/suit/autumn_jacket
+		path = /obj/item/clothing/suit/jacket/autumn_jacket
 
 ABSTRACT_TYPE(/datum/clothingbooth_item/autumn_hat)
 

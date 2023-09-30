@@ -2457,7 +2457,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	icon = 'icons/turf/outdoors.dmi'
 #ifdef AUTUMN
 	icon_state = "grass_leafy_autumn"
-	icon_state_edge = "leafy_autumnedge"
+	icon_state_edge = "leafy_edge_autumn"
 #else
 	icon_state = "grass_leafy"
 	icon_state_edge = "grass_leafyedge"

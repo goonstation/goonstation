@@ -324,8 +324,8 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 	autumn
 		name = "autumn clown shoes"
 		desc = "Wouldn't want to leaf these behind."
-		icon_state = "autumn_clown"
-		item_state = "autumn_clown"
+		icon_state = "clown_autumn"
+		item_state = "clown_autumn"
 
 
 /obj/item/clothing/shoes/clown_shoes/New()

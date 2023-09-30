@@ -2187,7 +2187,7 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	body_parts_covered = TORSO
 	c_flags = ONBACK
 
-/obj/item/clothing/suit/autumn_jacket
+/obj/item/clothing/suit/jacket/autumn_jacket
 	name = "autumn jacket"
 	desc = "A jacket made to look like a pumpkin. It could just as easily be an orange though..."
 	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'

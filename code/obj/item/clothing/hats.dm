@@ -2061,11 +2061,11 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 		. = ..()
 		src.color = mult_color_matrix(normalize_color_to_matrix(src.color), normalize_color_to_matrix(list(-1,0,0, 0,-1,0, 0,0,-1, 1,1,1)))
 
-/obj/item/clothing/head/autumn_clown_hat
+/obj/item/clothing/head/clown_autumn_hat
 	name = "autumnal clown's hat"
 	desc = "Careful to make sure it doesn't Fall off."
-	icon_state = "autumn_clown_hat"
-	item_state = "autumn_clown_hat"
+	icon_state = "clown_autumn_hat"
+	item_state = "clown_autumn_hat"
 
 /obj/item/clothing/head/leaf_wreath
 	name = "leaf wreath"

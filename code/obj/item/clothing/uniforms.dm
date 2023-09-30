@@ -1849,8 +1849,8 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 
 //Seasonal Stuff
 
-/obj/item/clothing/under/gimmick/autumn_clown
+/obj/item/clothing/under/gimmick/clown_autumn
 	name = "autumn clown suit"
 	desc = "Lets you celebrate the season while still remaining autumnomous."
-	icon_state = "autumn_clown"
-	item_state = "autumn_clown"
+	icon_state = "clown_autumn"
+	item_state = "clown_autumn"

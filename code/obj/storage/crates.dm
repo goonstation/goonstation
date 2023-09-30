@@ -248,9 +248,9 @@
 	/obj/item/storage/box/crayon/basic,
 	#ifdef AUTUMN
 	/obj/item/clothing/shoes/clown_shoes/autumn,
-	/obj/item/clothing/head/autumn_clown_hat,
+	/obj/item/clothing/head/clown_autumn_hat,
 	/obj/item/clothing/mask/clown_hat/autumn,
-	/obj/item/clothing/under/gimmick/autumn_clown,
+	/obj/item/clothing/under/gimmick/clown_autumn,
 	#endif
 	/obj/item/storage/box/balloonbox)
 
