@@ -95,7 +95,7 @@
 
 			if ("fart")
 				var/oxyplasmafart = 0
-				if (src.emote_check(voluntary, 5 SECONDS) && farting_allowed && (!src.reagents || !src.reagents.has_reagent("anti_fart")))
+				if (src.emote_check(voluntary, 3 SECONDS) && farting_allowed && (!src.reagents || !src.reagents.has_reagent("anti_fart")))
 					if (!src.get_organ("butt"))
 						m_type = 1
 						if (prob(10))
