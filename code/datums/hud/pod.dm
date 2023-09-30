@@ -88,7 +88,6 @@
 		if (master.engine)
 			if (master.engine.active)
 				engine.icon_state = "engine-on"
-				wormhole.overlays.len = 0
 			else
 				engine.icon_state = "engine-off"
 
