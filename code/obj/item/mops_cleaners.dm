@@ -562,7 +562,7 @@ TRASH BAG
 		var/turf/T = src.loc
 		if (T.active_liquid && T.active_liquid.group)
 			T.active_liquid.group.drain(T.active_liquid,1,src)
-	else if (istype(src.loc, turf/space/fluid))
+	else if (istype(src.loc, /turf/space/fluid))
 		src.reagents.add_reagent(ocean_reagent_id,10)
 
 /obj/item/sponge/proc/get_action_options(atom/target)
