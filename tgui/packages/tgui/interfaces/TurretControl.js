@@ -1,6 +1,6 @@
 import { Window } from '../layouts';
 import { useBackend } from '../backend';
-import { Button, Section, Box, Stack } from '../components';
+import { Box, Button, Section, Stack } from '../components';
 import { randInt } from './common/mathUtils';
 import { glitch } from './common/stringUtils';
 

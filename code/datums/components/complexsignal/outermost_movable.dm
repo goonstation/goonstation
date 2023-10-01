@@ -41,13 +41,15 @@
 	src.on_turf_change(thing, previous_loc)
 
 /datum/component/complexsignal/outermost_movable/proc/on_turf_change(atom/movable/thing, atom/previous_loc)
+	var/atom/movable/outermost_movable = src.get_outermost_movable()
+
 	var/turf/old_turf = get_turf(previous_loc)
-	var/turf/new_turf = get_turf(parent)
+	var/turf/new_turf = get_turf(outermost_movable)
 	if (old_turf != new_turf)
 		SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_TURF_CHANGED, old_turf, new_turf)
 
 		var/turf/old_area = get_area(previous_loc)
-		var/area/new_area = get_area(parent)
+		var/area/new_area = get_area(outermost_movable)
 		if (old_area != new_area)
 			SEND_COMPLEX_SIGNAL(src, XSIG_MOVABLE_AREA_CHANGED, old_area, new_area)
 

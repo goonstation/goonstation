@@ -611,7 +611,7 @@
 		var/poured = FALSE
 		if(istype(src.equipped(), /obj/item/reagent_containers/glass) || prob(20))
 			for(var/obj/item/reagent_containers/container in view(1, src))
-				if(container != src.equipped() && container.is_open_container() && container.reagents?.total_volume < container.reagents?.maximum_volume)
+				if(container != src.equipped() && container.is_open_container(TRUE) && container.reagents?.total_volume < container.reagents?.maximum_volume)
 					src.ai_attack_target(container, src.equipped())
 					poured = TRUE
 					break
@@ -781,7 +781,7 @@
 		var/obj/item/gun/kinetic/GN = src.r_hand
 		for(var/obj/item/ammo/bullets/BB in src.contents)
 			src.l_hand = BB
-			GN:attackby(BB,src)
+			GN:Attackby(BB,src)
 			src.u_equip(BB)
 			src.l_hand = null
 			if (BB)

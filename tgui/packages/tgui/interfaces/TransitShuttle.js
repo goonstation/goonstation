@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Section, Divider, Button, Table, BlockQuote } from '../components';
+import { BlockQuote, Button, Divider, Section, Table } from '../components';
 import { Window } from '../layouts';
 
 export const TransitShuttle = (props, context) => {
