@@ -543,6 +543,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							return .("list") // The user cancelled the order
 						O.comment = html_encode(O.comment)
 						wagesystem.shipping_budget -= P.cost
+						if (O.address)
+							src.send_pda_message(O.address, "Your order of [P.name] has been approved.")
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
 						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -615,13 +617,15 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				var/datum/supply_order/order = locate(href_list["what"]) in shippingmarket.supply_requests
 				if(!istype(order))
 					return
-				src.reject_message(order)
+				if (order.address)
+					src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
 				shippingmarket.supply_requests -= order
 				. = {"Request denied."}
 
 			if ("clear")
 				for(var/datum/supply_order/order as anything in shippingmarket.supply_requests)
-					src.reject_message(order)
+					if (order.address)
+						src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
 				shippingmarket.supply_requests = null
 				shippingmarket.supply_requests = new/list()
 				. = {"All requests have been cleared."}
@@ -1297,15 +1301,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	return 1
 
 /// Message order owners on rejection, if an address was provided
-/obj/machinery/computer/supplycomp/proc/reject_message(datum/supply_order/order)
-	if (!order.address)
-		return
+/obj/machinery/computer/supplycomp/proc/send_pda_message(address, message)
 	var/datum/signal/newsignal = get_free_signal()
 	newsignal.source = src
 	newsignal.data["command"] = "text_message"
 	newsignal.data["sender_name"] = "CARGO-MAILBOT"
-	newsignal.data["message"] = "Your order of [order.object.name] has been denied."
-	newsignal.data["address_1"] = order.address
+	newsignal.data["message"] = message
+	newsignal.data["address_1"] = address
 	newsignal.data["sender"] = "00000000"
 
 	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
