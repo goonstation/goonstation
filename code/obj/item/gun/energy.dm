@@ -319,7 +319,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 	is_syndicate = 1
 	silenced = 1 // No conspicuous text messages, please (Convair880).
 	hide_attack = ATTACK_FULLY_HIDDEN
-	custom_cell_max_capacity = 100 // Those self-charging ten-shot radbows were a bit overpowered (Convair880)
+	can_swap_cell = FALSE
 	muzzle_flash = null
 	uses_charge_overlay = TRUE
 	charge_icon_state = "crossbow"
@@ -1589,7 +1589,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	projectiles = null
 	is_syndicate = 1
 	silenced = 1
-	custom_cell_max_capacity = 100
+	can_swap_cell = FALSE
 
 	New()
 		set_current_projectile(new/datum/projectile/special/spreader/quadwasp)
