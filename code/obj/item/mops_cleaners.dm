@@ -557,11 +557,14 @@ TRASH BAG
 
 /obj/item/sponge/process()
 	if (!src.reagents) return
-	if (!istype(src.loc,/turf/simulated/floor)) return
+	if (!istype(src.loc,/turf/simulated/floor) && !istype(src.loc,/turf/space/fluid) ) return
 	if (src.reagents && src.reagents.total_volume >= src.reagents.maximum_volume) return
 	var/turf/simulated/floor/T = src.loc
 	if (T.active_liquid && T.active_liquid.group)
 		T.active_liquid.group.drain(T.active_liquid,1,src)
+	var/turf/space/fluid/F = src.loc
+	if(istype(F))
+		src.reagents.add_reagent(ocean_reagent_id,10)
 
 /obj/item/sponge/proc/get_action_options(atom/target)
 	if (CHECK_LIQUID_CLICK(target))
