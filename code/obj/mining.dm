@@ -1430,12 +1430,12 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	icon = 'icons/turf/walls/asteroid.dmi'
 	icon_state = "astfloor1"
 	plane = PLANE_FLOOR //Try to get the edge overlays to work with shadowing. I dare ya.
-	oxygen = 0.001
-	nitrogen = 0.001
+	oxygen = 0
+	nitrogen = 0
 	temperature = TCMB
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
-	has_material = FALSE
+	default_material = null
 	var/sprite_variation = 1
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null

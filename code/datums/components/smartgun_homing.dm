@@ -37,7 +37,7 @@
 	type_to_target = /obj
 
 /datum/component/holdertargeting/smartgun/homing/pod/is_valid_target(mob/user, atom/A)
-	return ((istype(A, /obj/critter/gunbot/drone) || istype(A, /obj/machinery/vehicle/miniputt) || istype(A, /obj/machinery/vehicle/pod_smooth)) && !A.invisibility)
+	return ((istype(A, /obj/critter/gunbot/drone) || istype(A, /obj/machinery/vehicle/miniputt) || istype(A, /obj/machinery/vehicle/pod_smooth) || istype(A, /obj/machinery/vehicle/tank)) && !A.invisibility)
 
 /datum/component/holdertargeting/smartgun/homing/pod/track_targets(mob/user)
 	set waitfor = 0

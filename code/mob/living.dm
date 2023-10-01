@@ -41,7 +41,7 @@
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/silhouette
 	var/image/static_image = null
-	var/butt_op_stage = 0.0 // sigh
+	var/in_point_mode = 0
 	var/dna_to_absorb = 1
 
 	var/canspeak = 1

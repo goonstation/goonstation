@@ -6,10 +6,10 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Chart, Modal, Section, Stack, Button } from '../components';
+import { Box, Button, Chart, Modal, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { formatSiUnit } from '../format';
-import { processStatsData, getStatsMax } from './common/graphUtils';
+import { getStatsMax, processStatsData } from './common/graphUtils';
 
 /**
  * Generates stack items of labeled charts for display

@@ -535,6 +535,7 @@ var/global/totally_random_jobs = FALSE
 						for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
 							qdel(snappedDrone)
 						V.finish_board_pod(src)
+						V.life_support?.activate()
 
 				#undef MAX_ALLOWED_ITERATIONS
 

@@ -152,6 +152,7 @@
 		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 		if (GH.spooking)
 			GH.stop_spooking()
+	. = ..()
 #endif
 
 /mob/dead/observer/bullet_act(var/obj/projectile/P)

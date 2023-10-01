@@ -136,7 +136,7 @@
 	for (var/mob/living/M in oviewers(8, holder.owner))
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			if (istype(H.glasses,/obj/item/clothing/glasses/meson))
+			if (istype(H.glasses,/obj/item/clothing/glasses/toggleable/meson))
 				M.show_text("You look directly into [holder.owner.name], good thing you had your protective eyewear on!", "green")
 				return
 		M.changeStatus("stunned", 3 SECONDS)

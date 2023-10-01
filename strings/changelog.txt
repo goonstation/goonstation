@@ -1,5 +1,79 @@
 
+(t)fri sep 29 23
+(u)Emily
+(+)Zipguns now fire one bullet at a time for ammo types that usually fire in bursts
+(+)Pews can be reshaped with screwdrivers and turned with crowbars.
+(u)Waffleloffle
+(p)15927
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds some particularly costumey headwear, available for purchase at the Clothing Booth during the month of Spooktober.
+(u)Kubius
+(p)16092
+(e)🆕⚖|C-Feature, C-Balance
+(*)Further requisition system improvements. Notable changes: No limit on pinned contracts, fewer and longer-lasting Aid contracts, and a new Civilian contract.
+(u)pali
+(p)15458
+(e)🧫🧛|C-Experimental, A-Gamemodes
+(*)Experiment: Gang members are recruited randomly at roundstart instead of being recruited manually.<br>Give feedback <a href="https://forum.ss13.co/showthread.php?tid=21701">here</a>.
+(u)Bartimeus973
+(p)15630
+(e)⚖🔄💊🔨|C-Balance, C-Rework, A-Medical, A-Player-Actions
+(*)Organ surgery is now redone! Instructions are found in the surgery handbook. For more details click on the PR number in the top right!
+(u)aloe
+(p)15833
+(e)⚖💡🎭|C-Balance, A-Station-Systems, A-RP
+(+)Removed security's access to the crematorium on the RP servers.
+(u)Tarmunora
+(p)15759
+(e)🪲🤖|C-Bug, A-Silicons
+(*)Fixed bug allowing cyborgs to open-hand interact with atoms under certain circumstances
+(u)MeggalBozale
+(p)15957
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)NT has spent a few million credits stocking its stations with newly printed guides to material science, featuring minor spelling corrections and updated material values.
+(u)Flappybat & Flaborized
+(p)15797
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds emergency flares to the game, when a glowstick just won't cut it! These come as standard issue in emergency toolboxes. Just be careful around flammable gas...
+(u)TealSeer
+(p)16083
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The ID computer should now let you add/remove Brig access as normal.
+(t)thu sep 28 23
+(u)Emily
+(*)Chickens now get grumpy when they're in crowded areas. They need their space!
+(+)Standardized Requisition payouts to the new system and made minor balance tweaks to some that were too hard to fulfill (e.g. pizza, blood requisitions).
+(u)Kubius
+(p)16078
+(e)🆕|C-Feature
+(+)Indiscriminate food requisitions are now properly indiscriminate, and requisition cargo scanning should now be more discoverable.
+(u)LeahTheTech
+(p)16082
+(e)🆕🗺🎨💅|C-Feature, A-Mapping, C-Sprites, C-QoL
+(*)Added pressure visualization goggles which show surrounding atmospheric pressure when worn, found in engineering lockers.
+(u)Flaborized
+(p)15812
+(e)🎨⚗|C-Sprites, A-Chemistry
+(*)Some small chemistry changes to pyrosium and cryostylane, including an area of effect heat/cool effect. More detailed description in minor logs.
+(+)Pyrosium can now be mixed with magnesium to create a 3x3 area of effect heating effect, and cryostylane can be mixed with iodine for a cold version of the same thing.
+(+)Pyrosium, cryostylane reactions now longer use up the oxygen/magnesium/iodine until the end of the reaction. This means it'll still deplete the oxygen, but you only technically need 1u to carry out the full reaction.
+(u)Smilg
+(p)16040
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pressure sensor can now use empty hand, and mouse drop.
 (t)wed sep 27 23
+(u)Emily
+(*)Upped rooster chances for most types of roosters
+(*)Most ranches now have a flusher instead of a chute leading to the kitchen, so you can flush your unwanted chickens while they're still alive. (Warning: they will not arrive alive).
+(u)Colossusqw
+(p)15741
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Caffeine is now it's own standalone chem.
+(+)Caffeine is formed by caffeinated drinks (coffees, unadulterated tea/matcha, cola) as they deplete, and its effects can vary wildly based on volume, much like current ethanol.
+(u)Lord_Earthfire
+(p)16019
+(e)⚖📦⚙|C-Balance, A-Game-Objects, A-Internal
+(+)Syringes, fired from the syringe gun, stuck in a human desintegrate when that human is affected by an explosion.
 (u)MeggalBozale
 (p)15921
 (e)🗺💅🧱📦|A-Mapping, C-QoL, A-Materials, A-Game-Objects

@@ -499,7 +499,7 @@ MATERIAL
 
 /obj/item/sheet/wood
 	item_state = "sheet-metal"
-	icon_state = "sheet-m_5$wood"
+	icon_state = "sheet-m_5$$wood"
 	default_material = "wood"
 	amount = 10
 	var/wall_type = /obj/structure/woodwall
@@ -512,9 +512,9 @@ MATERIAL
 			return ..()
 		actions.start(new /datum/action/bar/icon/build(src, wall_type, 5, src.material, 1, 'icons/ui/actions.dmi', "working", "a barricade", null, spot = target), user)
 
-	zwood
-		amount = 5
-		wall_type = /obj/structure/woodwall/anti_zombie
+/obj/item/sheet/wood/zwood
+	amount = 5
+	wall_type = /obj/structure/woodwall/anti_zombie
 
 /obj/item/sheet/bamboo
 	item_state = "sheet-metal"
@@ -1334,7 +1334,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/zwood)
 			icon_state = "wstool"
 		chair
 			recipe_id = "wood_chair"
-			craftedType = /obj/stool/chair/dining/constructed
+			craftedType = /obj/stool/chair/dining/wood/constructed
 			name = "Chair"
 			icon = 'icons/obj/furniture/chairs.dmi'
 			icon_state = "chair_wooden"
