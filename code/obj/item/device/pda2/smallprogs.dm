@@ -1262,7 +1262,6 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 			O.object = P
 			O.orderedby = src.master.owner
-			O.address = src.master.net_id
 			O.console_location = get_area(src.master)
 			shippingmarket.supply_requests += O
 			src.temp = "Request sent to Supply Console. The Quartermasters will process your request as soon as possible.<BR>"

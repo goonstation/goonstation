@@ -9,7 +9,6 @@
 	var/orderedby = null
 	var/comment = null
 	var/whos_id = null
-	var/address = null
 	var/console_location = null
 
 	proc/create(var/mob/orderer)

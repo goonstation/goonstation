@@ -543,8 +543,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							return .("list") // The user cancelled the order
 						O.comment = html_encode(O.comment)
 						wagesystem.shipping_budget -= P.cost
-						if (O.address)
-							src.send_pda_message(O.address, "Your order of [P.name] has been approved.")
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
 						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -614,20 +612,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				return .
 
 			if ("remove")
-				var/datum/supply_order/order = locate(href_list["what"]) in shippingmarket.supply_requests
-				if(!istype(order))
-					return
-				if (order.address)
-					src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
-				shippingmarket.supply_requests -= order
+				shippingmarket.supply_requests -= locate(href_list["what"])
+				// todo: fancy "your request got denied, doofus" message?
 				. = {"Request denied."}
 
 			if ("clear")
-				for(var/datum/supply_order/order as anything in shippingmarket.supply_requests)
-					if (order.address)
-						src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
 				shippingmarket.supply_requests = null
 				shippingmarket.supply_requests = new/list()
+				// todo: message people that their stuff's been denied?
 				. = {"All requests have been cleared."}
 
 		return .
@@ -1300,16 +1292,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		return 0
 	return 1
 
-/// Message order owners on rejection, if an address was provided
-/obj/machinery/computer/supplycomp/proc/send_pda_message(address, message)
-	var/datum/signal/newsignal = get_free_signal()
-	newsignal.source = src
-	newsignal.data["command"] = "text_message"
-	newsignal.data["sender_name"] = "CARGO-MAILBOT"
-	newsignal.data["message"] = message
-	newsignal.data["address_1"] = address
-	newsignal.data["sender"] = "00000000"
+/obj/machinery/computer/supplycomp/proc/post_signal(var/command)
+	var/datum/signal/status_signal = get_free_signal()
+	status_signal.source = src
+	status_signal.transmission_method = 1
+	status_signal.data["command"] = command
+	status_signal.data["address_tag"] = "STATDISPLAY"
 
-	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
 
 #undef ORDER_LABEL_MAX_LEN
