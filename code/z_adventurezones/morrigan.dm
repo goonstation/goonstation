@@ -2344,7 +2344,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			launch_with_missile(AM, target_turf, null, "arrival_missile_synd")
 
 //Suit stuff
+/obj/item/clothing/suit/armor/heavy/morrigan
+	icon_state = "heavy_s"
 
+/obj/item/clothing/suit/armor/morrigan
+	icon_state = "armorvest_s"
+
+/obj/item/clothing/head/helmet/riot/morrigan
+	icon_state = "riot_s"
 /obj/item/clothing/suit/space/syndiehos
 	name = "Head of Security's coat"
 	desc = "A slightly armored jacket favored by Syndicate security personnel!"
