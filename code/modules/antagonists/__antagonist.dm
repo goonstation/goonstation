@@ -9,7 +9,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 
 	/// If TRUE, this antagonist has an associated browser window (ideally with the same ID as itself) that will be displayed in do_popup() by default.
 	var/has_info_popup = TRUE
-	/// If TRUE, this antagonist will not have their own entry in the end of round credits antagonist tab, rather they will be displayed in a list below the primary entries.
+	/// If TRUE, this antagonist will not have their own entry in the end of round credits antagonists tab, rather they will be displayed in a list below the primary entries.
 	var/succinct_end_of_round_antagonist_entry = FALSE
 	/// If TRUE, no other antagonists can be naturally gained if this one is active. Admins can still manually add new ones.
 	var/mutually_exclusive = TRUE
@@ -242,6 +242,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (!isnull(src.success_medal))
 			src.owner.current.unlock_medal(src.success_medal, TRUE)
 
+	/// Returns a list of data to be passed to the end of round credits pertaining to this antagonist, such as items purchased, units of blood drank, and so forth.
 	proc/get_statistics()
 		return
 

@@ -102,7 +102,7 @@
 			),
 		),
 
-		// Antagonist Tab Data:
+		// Antagonists Tab Data:
 		"game_mode" = src.antagonist_tab_data[ANTAGONIST_TAB_GAME_MODE],
 		"verbose_antagonist_data" = src.antagonist_tab_data[ANTAGONIST_TAB_VERBOSE_DATA],
 		"succinct_antagonist_data" = src.antagonist_tab_data[ANTAGONIST_TAB_SUCCINCT_DATA],
