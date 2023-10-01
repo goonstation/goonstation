@@ -2170,6 +2170,12 @@ TYPEINFO(/obj/item/cargotele)
 
 #undef SILICON_POWER_COST_MOD
 
+/obj/item/cargotele/efficient
+	name = "Hedron cargo transporter"
+	desc = "A device for teleporting crated goods. It's modified a bit from the standard design, and boasts a 20% efficiency improvement on the label."
+	cost = 20
+	icon_state = "cargotelegreen"
+
 /obj/item/cargotele/traitor
 	cost = 15
 	///The account to credit for sales

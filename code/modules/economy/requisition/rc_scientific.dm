@@ -93,6 +93,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	typepath = /obj/item/lens
 	feemod = PAY_IMPORTANT
 
+	free
+		feemod = 0
+
 /datum/rc_entry/stack/gemstone
 	name = "non-anomalous gemstone"
 	commodity = /datum/commodity/ore/gemstone
@@ -104,6 +107,9 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	commodity = /datum/commodity/ore/telecrystal
 	typepath_alt = /obj/item/material_piece/telecrystal
 	feemod = PAY_IMPORTANT //augmented by commodity price
+
+	minprice
+		feemod = 0
 
 /datum/rc_entry/reagent/cryox
 	name = "cryoxadone coolant"
@@ -200,14 +206,16 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		var/seed = new /obj/item/seed/alien
 		return seed
 
-//Prototypist contract; payout in cash is significantly lower than usual on purpose, since you get "paid in items"
+//Prototypist contract; payout in cash is notably lower than usual on purpose, since you get "paid in items"
 /datum/req_contract/scientific/prototypist
 	//name = "Wheatley Moment"
 	payout = PAY_DOCTORATE
+	weight = 130
+
 	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
 	var/list/prototypists = list("Safety equipment manufacturer",
 		"Mining technologist",
-		//"Biochemical research centre",
+		"Directed energy laboratory",
 		"Engineering firm"
 	)
 	var/list/protogoals = list(
@@ -250,6 +258,28 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 						src.item_rewarders += new /datum/rc_itemreward/suv_suit
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/fancy_cloth,2)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/uqill_minprice,1)
+
+			if("Directed energy laboratory")
+				if(prob(40))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/free_insuls,rand(1,2))
+				if(prob(80) || !length(src.rc_entries))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/item/lens/free,rand(1,2))
+
+				if(prob(80))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/stack/claretine/minprice,rand(2,3))
+				else
+					src.rc_entries += rc_buildentry(/datum/rc_entry/stack/electrum,1)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cable,30)
+
+				switch(goal)
+					if("prototyping of a new product")
+						src.item_rewarders += new /datum/rc_itemreward/hedron
+						src.rc_entries += rc_buildentry(/datum/rc_entry/item/laser_drill,1)
+					if("use in devising an improved manufacturing procedure")
+						src.item_rewarders += new /datum/rc_itemreward/beam_devices
+					if("refinement of an offered product")
+						src.item_rewarders += new /datum/rc_itemreward/cargotele
+						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/telec/minprice,1)
 
 			if("Mining technologist")
 				if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/molitz_minprice,rand(1,3))
@@ -378,11 +408,24 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	name = "human DNA sample (injector or activator)"
 	typepath = /obj/item/genetics_injector
 
+/datum/rc_entry/item/laser_drill
+	name = "handheld laser drill"
+	typepath = /obj/item/mining_tool/drill
+
 /datum/rc_entry/stack/claretine
 	name = "claretine"
 	commodity = /datum/commodity/ore/claretine
 	typepath_alt = /obj/item/material_piece/claretine
 	feemod = PAY_DOCTORATE
+
+	minprice
+		feemod = 0
+
+/datum/rc_entry/stack/electrum
+	name = "electrum"
+	typepath = /obj/item/material_piece
+	typepath = /obj/item/raw_material
+	feemod = PAY_IMPORTANT
 
 /datum/rc_entry/item/graviton
 	name = "graviton accelerator"
@@ -458,6 +501,44 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		theitems += new /obj/item/clothing/head/helmet/space/industrial
 		return theitems
 
+
+//directed energy laboratory rewards
+
+/datum/rc_itemreward/hedron
+	name = "prototype multifunction tool"
+	build_reward()
+		var/theitem = new /obj/item/mining_tool/hedron_beam
+		return theitem
+
+/datum/rc_itemreward/beam_devices
+	name = "surplus directed-energy equipment"
+	var/list/possible_rewards = list(/obj/item/shipcomponent/mainweapon/mining,
+		/obj/item/shipcomponent/mainweapon/laser,
+		/obj/item/shipcomponent/mainweapon/taser,
+		/obj/item/gun/energy/phaser_small,
+		/obj/item/gun/energy/taser_gun,
+		/obj/item/gun/energy/egun_jr,
+		/obj/machinery/emitter,
+		/obj/item/interdictor_rod/epsilon,
+		/obj/item/interdictor_rod/sigma
+	)
+
+	New()
+		..()
+		count = rand(2,3)
+
+	build_reward()
+		var/list/yielder = list()
+		for(var/i in 1 to count)
+			var/beamy = pick(possible_rewards)
+			yielder += new beamy
+		return yielder
+
+/datum/rc_itemreward/cargotele
+	name = "upgraded cargo transporter"
+	build_reward()
+		var/theitem = new /obj/item/cargotele/efficient
+		return theitem
 
 //mining technologist rewards
 
