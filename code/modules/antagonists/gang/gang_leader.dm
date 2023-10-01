@@ -103,47 +103,52 @@
 			else
 				boutput(src.owner.current, "<span class='alert'>You have no gang members, ouch!</span>")
 
-	handle_round_end(log_data)
-		. = list()
-		. += "<br><h3><span class='regular'>[src.gang.gang_name]</span></h3>"
+	get_statistics()
+		var/list/purchased_items = list()
+		for (var/obj/purchased_item as anything in src.gang.items_purchased)
+			purchased_items += list(
+				list(
+					"icon" = "[icon2base64(icon(initial(purchased_item.icon), initial(purchased_item.icon_state), frame = 1))]",
+					"name" = "[initial(purchased_item.name)] x[src.gang.items_purchased[purchased_item]]",
+				)
+			)
 
-		// Announce gang leader.
-		if(src.owner.current)
-			. += "<h4><span class='regular'>Gang Leader: [src.owner.current] (played by [src.owner.displayed_key])</span></h4>"
-		else
-			. += "<h4><span class='regular'>Gang Leader: [owner.displayed_key] (character destroyed)</span></h4>"
-
-		// Announce gang members.
-		var/members = "<h4><span class='regular'>Members:</span></h4>"
-		if(!length(src.gang.members))
-			members += "None!"
-		else
-			var/count = 0
-			for(var/datum/mind/member in src.gang.members)
-				count++
-				if(member.current)
-					members += "[member.current.real_name] (played by <b>[member.displayed_key]</b>)[(count == length(src.gang.members)) ? "." : ", " ]"
-				else
-					members += "[member.displayed_key]</b> (character destroyed)[(count == length(src.gang.members)) ? "." : ", " ]"
-
-		. += members
-
-		// Announce gang purchases.
-		var/items = "<br><h4><span class='regular'>Items Purchased:</span></h4>"
-		if (!length(src.gang.items_purchased))
-			items += "None!"
-		else
-			for (var/obj/purchased_item as anything in src.gang.items_purchased)
-				var/number_of_purchased_items = src.gang.items_purchased[purchased_item]
-				items += "[number_of_purchased_items] [bicon(purchased_item)] [purchased_item.name][s_es(number_of_purchased_items)], "
-
-		. += items
-
-		// Announce various scores.
-		. += "<br><b>Areas Owned:</b> [src.gang.num_areas_controlled()]"
-		. += "<b>Turf Score:</b> [src.gang.score_turf]"
-		. += "<b>Cash Pile:</b> [src.gang.score_cash * 200][CREDIT_SIGN]"
-		. += "<b>Guns Stashed:</b> [src.gang.score_gun]"
-		. += "<b>Drug Score:</b> [src.gang.score_drug]"
-		. += "<b>Event Score:</b> [src.gang.score_event]"
-		. += "<b>Total Score: [src.gang.gang_score()]</b>"
+		return list(
+			list(
+				"name" = "Gang Name",
+				"value" = "[src.gang.gang_name]",
+			),
+			list(
+				"name" = "Purchased Items",
+				"type" = "itemList",
+				"value" = purchased_items,
+			),
+			list(
+				"name" = "Areas Owned",
+				"value" = "[src.gang.num_areas_controlled()]",
+			),
+			list(
+				"name" = "Turf Score",
+				"value" = "[src.gang.score_turf]",
+			),
+			list(
+				"name" = "Cash Pile",
+				"value" = "[src.gang.score_cash * 200][CREDIT_SIGN]",
+			),
+			list(
+				"name" = "Guns Stashed",
+				"value" = "[src.gang.score_gun]",
+			),
+			list(
+				"name" = "Drug Score",
+				"value" = "[src.gang.score_drug]",
+			),
+			list(
+				"name" = "Event Score",
+				"value" = "[src.gang.score_event]",
+			),
+			list(
+				"name" = "Total Score",
+				"value" = "[src.gang.gang_score()]",
+			),
+		)

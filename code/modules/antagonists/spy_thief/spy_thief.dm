@@ -108,31 +108,41 @@
 
 		..(override)
 
-	handle_round_end(log_data)
-		var/list/dat = ..()
-		if (length(dat))
-			var/num_of_stolen_items = length(src.stolen_items)
-			var/stolen_item_detail
-			if (num_of_stolen_items)
-				stolen_item_detail = "<br>They stole: "
-				for (var/obj/stolen_item as anything in src.stolen_items)
-					stolen_item_detail += "[bicon(stolen_item)] [stolen_item.name], "
-				stolen_item_detail = copytext(stolen_item_detail, 1, -2)
-			dat.Insert(2, "They stole [num_of_stolen_items <= 0 ? "nothing" : "[num_of_stolen_items] item[s_es(num_of_stolen_items)]"] with their spy thief uplink![stolen_item_detail]")
-
-			var/num_of_redeemed_items = length(src.redeemed_item_paths)
-			var/redeemed_item_detail
-			if (num_of_redeemed_items)
-				redeemed_item_detail = "<br>They redeemed: "
-				// We type the loop as /datumm/syndicate_buylist for easier var access, but we're really iterating over a list of paths
-				for (var/datum/syndicate_buylist/redeemed_entry as anything in src.redeemed_item_paths)
-					// Get the path of the actual item the buylist entry spawns
-					var/obj/item_type = initial(redeemed_entry.item)
-					redeemed_item_detail += "[bicon(icon(initial(item_type.icon), initial(item_type.icon_state)))] [initial(item_type.name)], "
-				redeemed_item_detail = copytext(redeemed_item_detail, 1, -2) // cut off the final comma and space
-			dat.Insert(3, "They redeemed [num_of_redeemed_items <= 0 ? "nothing" : "[num_of_redeemed_items] item[s_es(num_of_redeemed_items)]"] with their spy thief uplink![redeemed_item_detail]")
+	handle_round_end()
+		. = ..()
 
 		if (length(src.stolen_items) >= 7)
 			src.owner.current.unlock_medal("Professional thief", TRUE)
 
-		return dat
+	get_statistics()
+		var/list/stolen_items = list()
+		for (var/obj/stolen_item as anything in src.stolen_items)
+			stolen_items += list(
+				list(
+					"icon" = "[icon2base64(icon(initial(stolen_item.icon), initial(stolen_item.icon_state), frame = 1))]",
+					"name" = "[stolen_item.name]",
+				)
+			)
+
+		var/list/redeemed_items = list()
+		for (var/datum/syndicate_buylist/redeemed_entry as anything in src.redeemed_item_paths)
+			var/obj/item_type = initial(redeemed_entry.item)
+			redeemed_items += list(
+				list(
+					"icon" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1))]",
+					"name" = "[redeemed_entry.name]",
+				)
+			)
+
+		return list(
+			list(
+				"name" = "Stolen Items",
+				"type" = "itemList",
+				"value" = stolen_items,
+			),
+			list(
+				"name" = "Redeemed Items",
+				"type" = "itemList",
+				"value" = redeemed_items,
+			),
+		)

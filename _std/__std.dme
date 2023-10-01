@@ -41,6 +41,7 @@
 #include "defines\component_defines\component_defines_special.dm"
 #include "defines\computer.dm"
 #include "defines\construction.dm"
+#include "defines\crew_credits.dm"
 #include "defines\critter.dm"
 #include "defines\data_input.dm"
 #include "defines\dialogue.dm"

@@ -4,6 +4,8 @@
 	antagonist_icon = "rev_head"
 
 	var/static/list/datum/mind/heads_of_staff
+	/// A list of items that this head revolutionary has purchased using their uplink.
+	var/list/datum/syndicate_buylist/purchased_items = list()
 
 	New()
 		if (!src.heads_of_staff)
@@ -124,3 +126,22 @@
 	unborged()
 		SPAWN(0) //see above
 			src.add_to_image_groups()
+
+	get_statistics()
+		var/list/purchased_items = list()
+		for (var/datum/syndicate_buylist/purchased_item as anything in src.purchased_items)
+			var/obj/item_type = initial(purchased_item.item)
+			purchased_items += list(
+				list(
+					"icon" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1))]",
+					"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
+				)
+			)
+
+		return list(
+			list(
+				"name" = "Purchased Items",
+				"type" = "itemList",
+				"value" = purchased_items,
+			)
+		)

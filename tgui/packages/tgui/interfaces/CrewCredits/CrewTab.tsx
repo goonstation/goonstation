@@ -1,37 +1,26 @@
 /**
  * @file
  * @copyright 2023
- * @author glowbold (https://github.com/pgmzeta)
+ * @author Original glowbold (https://github.com/pgmzeta)
+ * @author Changes Mr. Moriarty (https://github.com/Mister-Moriarty)
  * @license MIT
- */
+*/
 
-import { BooleanLike } from 'common/react';
-import { useBackend } from '../backend';
-import { Icon, Section, Stack } from '../components';
-import { Window } from '../layouts';
+import { useBackend } from '../../backend';
+import { Icon, Section, Stack, Box } from '../../components';
+import { CrewTabData, GroupBlockProps, CrewMemberProps } from './type';
 
-interface CrewCreditsData {
-  groups: GroupBlockProps[];
-}
-
-export const CrewCredits = (props, context) => {
-  const { data } = useBackend<CrewCreditsData>(context);
+export const CrewTab = (props, context) => {
+  const { data } = useBackend<CrewTabData>(context);
   return (
-    <Window title="Crew Credits" width={600} height={600}>
-      <Window.Content scrollable>
-        {data.groups?.map(
-          (group, index) =>
-            data.groups[index].crew.length > 0 && <GroupBlock key={index} title={group.title} crew={group.crew} />
-        )}
-      </Window.Content>
-    </Window>
+    <Box>
+      {data.groups?.map(
+        (group, index) =>
+          data.groups[index].crew.length > 0 && <GroupBlock key={index} title={group.title} crew={group.crew} />
+      )}
+    </Box>
   );
 };
-
-interface GroupBlockProps {
-  title: string;
-  crew: CrewMemberProps[];
-}
 
 const GroupBlock = (props: GroupBlockProps) => {
   const { title: group_title, crew } = props;
@@ -65,14 +54,6 @@ const GroupBlock = (props: GroupBlockProps) => {
     </Section>
   );
 };
-
-interface CrewMemberProps {
-  real_name: string;
-  dead: BooleanLike;
-  player: string;
-  role: string;
-  head?: BooleanLike;
-}
 
 const CrewMember = (props: CrewMemberProps) => {
   const { real_name, dead, player, role, head } = props;
