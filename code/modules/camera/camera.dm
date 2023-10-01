@@ -309,34 +309,35 @@
 	var/turf/T = null
 	var/list/directions = null
 	var/pixel_offset = 10 // this will get overridden if jen wall
-	if (src.dir != SOUTH) // i.e. if the dir has been varedited to east/west/north
-		directions = list(turn(src.dir, 180)) // the east sprite sits on a west wall so some inversion is needed
+	T = get_step(src, turn(src.dir, 180)) // lets first check if we can attach to a wall with our dir
+	if (istype(T, /turf/simulated/wall) || istype(T, /turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
+		directions = list(turn(src.dir, 180))
 	else
 		directions = cardinal // check each direction
 
-	for (var/D in directions)
+	for (var/D as anything in directions)
 		T = get_step(src, D)
 		if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
 			if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 				pixel_offset = 12 // jen walls are slightly taller so the offset needs to increase
-				if (!alt) // this uses the alternate sprites which happen to coincide with diagonal dirs
-					src.set_dir(turn(D, 180))
-				else
-					switch (D) // this is horrid but it works ish
-						if (NORTH)
-							src.set_dir(SOUTHEAST)
-						if (SOUTH)
-							src.set_dir(SOUTHWEST)
-						if (EAST)
-							src.set_dir(NORTHWEST)
-						if (WEST)
-							src.set_dir(NORTHEAST)
-				switch (D) // north facing ones don't need to be offset ofc
-					if (EAST)
-						src.pixel_x = pixel_offset
-					if (WEST)
-						src.pixel_x = -pixel_offset
+			if (alt) // this uses the alternate sprites which happen to coincide with diagonal dirs
+				switch (D) // this is horrid but it works ish
 					if (NORTH)
-						src.pixel_y = pixel_offset * 2
+						src.set_dir(SOUTHEAST)
+					if (SOUTH)
+						src.set_dir(SOUTHWEST)
+					if (EAST)
+						src.set_dir(NORTHWEST)
+					if (WEST)
+						src.set_dir(NORTHEAST)
+			else
+				src.set_dir(turn(D, 180))
+			switch (D) // north facing ones don't need to be offset ofc
+				if (EAST)
+					src.pixel_x = pixel_offset
+				if (WEST)
+					src.pixel_x = -pixel_offset
+				if (NORTH)
+					src.pixel_y = pixel_offset * 2
 		T = null
 
