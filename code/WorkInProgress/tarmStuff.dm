@@ -740,7 +740,7 @@ TYPEINFO(/obj/item/device/geiger)
 
 //DIRTY DIRTY PLAYERS
 TYPEINFO(/obj/submachine/laundry_machine/portable)
-	mats = list("telecrystal" = 5, "MET-2" = 15, "CON-1" = 10)
+	mats = 0
 
 /obj/submachine/laundry_machine/portable
 	name = "Port-A-Laundry"
