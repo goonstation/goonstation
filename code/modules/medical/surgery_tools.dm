@@ -1050,10 +1050,10 @@ TYPEINFO(/obj/machinery/defib_mount)
 
 	proc/cut_open()
 		for (var/obj/O in src)
-			O.set_loc((src.loc))
+			O.set_loc(get_turf(src.loc))
 		for (var/mob/M in src)
 			M.changeStatus("weakened", 0.5 SECONDS)
-			M.set_loc((src.loc))
+			M.set_loc(get_turf(src.loc))
 		var/obj/decal/cleanable/balloon/B = make_cleanable(/obj/decal/cleanable/balloon, get_turf(src))
 		B.icon_state = "balloon_black_pop"
 		B.name = "body bag"
