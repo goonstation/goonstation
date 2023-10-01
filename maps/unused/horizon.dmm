@@ -2813,6 +2813,14 @@
 	},
 /turf/space,
 /area/space)
+"ahR" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/obj/disposalpipe/segment/horizontal,
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "ahU" = (
 /obj/grille/steel,
 /obj/window/auto,
@@ -3402,15 +3410,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating,
-/area/station/storage/emergency2{
-	name = "Hilarious Storage B"
-	})
-"ajY" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/disposalpipe/junction/left/south,
-/turf/simulated/floor/black,
 /area/station/storage/emergency2{
 	name = "Hilarious Storage B"
 	})
@@ -6098,8 +6097,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
 "ast" = (
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "asu" = (
@@ -6413,15 +6412,6 @@
 "atv" = (
 /turf/simulated/floor/caution/south,
 /area/station/crew_quarters/quartersB)
-"atw" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 4;
-	name = "old wooden chair"
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/caution/corner/se,
-/area/station/crew_quarters/quartersB)
 "atx" = (
 /obj/machinery/computer/stockexchange{
 	dir = 8
@@ -6458,17 +6448,6 @@
 "atE" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/hallway/secondary/entry)
-"atF" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/landmark/start/job/assistant,
-/obj/disposalpipe/segment{
-	dir = 4;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
 "atG" = (
 /obj/table/wood/round/auto,
 /obj/shrub{
@@ -6483,14 +6462,6 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/disposalpipe/segment/horizontal,
-/turf/simulated/floor,
-/area/station/hallway/secondary/entry)
-"atH" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/landmark/start/job/assistant,
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
@@ -6854,11 +6825,6 @@
 /area/station/hallway/secondary/entry)
 "auV" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/ne,
-/area/station/hallway/secondary/entry)
-"auW" = (
-/obj/stool/chair/wooden,
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "auX" = (
 /obj/lattice,
@@ -7576,13 +7542,6 @@
 /area/station/hallway/secondary/entry)
 "awY" = (
 /turf/simulated/floor/carpet/blue/fancy/innercorner/ne_sw,
-/area/station/hallway/secondary/entry)
-"awZ" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "axa" = (
 /obj/machinery/power/tracker/north,
@@ -8524,14 +8483,6 @@
 /obj/landmark/pest,
 /turf/simulated/floor/carpet/purple/fancy,
 /area/station/crew_quarters/quartersB)
-"azz" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/landmark/start/job/assistant,
-/obj/disposalpipe/segment/transport,
-/turf/simulated/floor/carpet/purple/fancy,
-/area/station/crew_quarters/quartersB)
 "azA" = (
 /obj/reagent_dispensers/watertank/fountain,
 /turf/simulated/floor/carpet/purple/fancy,
@@ -8553,17 +8504,6 @@
 	name = "glow - YELLOW"
 	},
 /turf/simulated/floor/carpet/grime,
-/area/station/crew_quarters/quartersB)
-"azF" = (
-/obj/stool/chair/wooden,
-/obj/landmark/start/job/assistant,
-/obj/disposalpipe/segment/transport{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/white/checker{
-	dir = 6
-	},
 /area/station/crew_quarters/quartersB)
 "azG" = (
 /obj/machinery/disposal/transport{
@@ -9493,13 +9433,6 @@
 /obj/storage/secure/closet/personal,
 /turf/simulated/floor/purple/side,
 /area/station/hallway/secondary/east)
-"aCO" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/carpet/purple/fancy/edge/west,
-/area/station/hallway/secondary/east)
 "aCP" = (
 /obj/table/wood/round,
 /obj/shrub{
@@ -9510,19 +9443,6 @@
 	pixel_y = 14
 	},
 /turf/simulated/floor/carpet/purple/fancy,
-/area/station/hallway/secondary/east)
-"aCQ" = (
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/hallway/secondary/east)
 "aCR" = (
 /obj/machinery/vending/cola/blue,
@@ -11791,7 +11711,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "aJc" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
@@ -12376,9 +12296,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 8
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -12416,9 +12334,7 @@
 	},
 /area/station/medical/medbay)
 "aKL" = (
-/obj/machinery/atmospherics/unary/cryo_cell{
-	pipe_direction = 8
-	},
+/obj/machinery/atmospherics/unary/cryo_cell,
 /obj/disposalpipe/segment/morgue{
 	dir = 4
 	},
@@ -14249,14 +14165,6 @@
 /obj/machinery/vehicle/miniputt/indyputt,
 /turf/simulated/floor/engine,
 /area/station/hangar/qm)
-"aPH" = (
-/obj/stool/chair/wooden,
-/obj/landmark/start/job/assistant,
-/obj/disposalpipe/segment/mineral{
-	dir = 4
-	},
-/turf/simulated/floor/neutral,
-/area/station/crew_quarters/courtroom)
 "aPI" = (
 /obj/machinery/door/airlock/pyro/command{
 	dir = 4;
@@ -14762,11 +14670,6 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
-"aRe" = (
-/obj/stool/chair/wooden,
-/obj/landmark/start/job/chaplain,
-/turf/simulated/floor/wood/two,
-/area/station/chapel/office)
 "aRg" = (
 /obj/shrub{
 	dir = 10;
@@ -15220,24 +15123,6 @@
 /obj/decal/poster/wallsign/stencil/right/e,
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/engine/engineering)
-"aSb" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/landmark/start/job/assistant,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 4;
-	name = "autoname - SS13";
-	pixel_x = -10;
-	tag = ""
-	},
-/obj/disposalpipe/segment/transport{
-	dir = 1;
-	icon_state = "pipe-c"
-	},
-/turf/simulated/floor/neutral,
-/area/station/crew_quarters/courtroom)
 "aSc" = (
 /obj/decal/cleanable/dirt/dirt3,
 /obj/decal/cleanable/oil,
@@ -15316,16 +15201,6 @@
 	name = "space fern";
 	pixel_y = 14
 	},
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/neutral,
-/area/station/crew_quarters/courtroom)
-"aSq" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/landmark/start/job/assistant,
 /obj/disposalpipe/segment/transport{
 	dir = 4
 	},
@@ -15945,13 +15820,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/innercorner/south,
 /area/station/bridge/captain)
-"aTX" = (
-/obj/table/wood/auto,
-/obj/displaycase{
-	displayed = new/obj/item/captaingun
-	},
-/turf/simulated/floor/carpet/blue/fancy/innercorner/south,
-/area/station/bridge/captain)
 "aTY" = (
 /obj/stool/bed,
 /obj/item/clothing/suit/bedsheet{
@@ -16085,22 +15953,6 @@
 "aUj" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 4
-	},
-/turf/simulated/floor/wood/two,
-/area/station/chapel/sanctuary)
-"aUk" = (
-/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
-	dir = 4
-	},
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 9;
-	name = "autoname - SS13";
-	pixel_x = 10;
-	tag = ""
-	},
-/obj/stool/chair/wooden{
-	dir = 1
 	},
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
@@ -16458,13 +16310,6 @@
 /obj/filing_cabinet,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/heads)
-"aVr" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/neutral,
-/area/station/crew_quarters/courtroom)
 "aVt" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -17053,13 +16898,6 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
-"aWX" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/wood/two,
-/area/station/chapel/office)
 "aWY" = (
 /obj/machinery/door/unpowered/wood/pyro{
 	dir = 8;
@@ -21317,9 +21155,7 @@
 	pixel_x = 10
 	},
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
@@ -23506,15 +23342,6 @@
 /area/station/crew_quarters/info{
 	name = "Net Cafe"
 	})
-"bov" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/decal/poster/wallsign/teaparty{
-	pixel_y = 32
-	},
-/turf/simulated/floor/carpet/blue/fancy/edge/west,
-/area/station/hallway/primary/central)
 "bow" = (
 /obj/table/wood/round/auto,
 /obj/item/reagent_containers/food/snacks/donut,
@@ -23522,15 +23349,6 @@
 	dir = 1;
 	layer = 9.1;
 	pixel_y = 21
-	},
-/turf/simulated/floor/carpet/blue/fancy,
-/area/station/hallway/primary/central)
-"box" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/stool/chair/wooden{
-	dir = 8
 	},
 /turf/simulated/floor/carpet/blue/fancy,
 /area/station/hallway/primary/central)
@@ -26703,21 +26521,6 @@
 	},
 /turf/simulated/floor/escape,
 /area/station/hallway/primary/central)
-"byv" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/red/standard/edge/nw,
-/area/station/hallway/primary/central)
 "byw" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26729,18 +26532,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/carpet/red/standard/edge/north,
-/area/station/hallway/primary/central)
-"byx" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/disposalpipe/segment/produce{
-	dir = 4
-	},
-/turf/simulated/floor/carpet/red/standard/edge/ne,
 /area/station/hallway/primary/central)
 "byy" = (
 /obj/cable{
@@ -27581,19 +27372,6 @@
 /obj/disposalpipe/segment/mineral,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/fitness)
-"bAr" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/landmark/start/job/assistant,
-/obj/machinery/atmospherics/pipe/manifold{
-	dir = 4
-	},
-/obj/machinery/alarm{
-	pixel_y = 20
-	},
-/turf/simulated/floor/carpet/red/standard/edge/nw,
-/area/station/crew_quarters/fitness)
 "bAs" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light_switch/north,
@@ -27606,19 +27384,6 @@
 	network = "arcadevr"
 	},
 /obj/item/decoration/ashtray,
-/turf/simulated/floor/carpet/red/standard/edge/north,
-/area/station/crew_quarters/fitness)
-"bAt" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/landmark/start/job/assistant,
-/obj/machinery/light_switch/north,
-/obj/machinery/light{
-	dir = 1;
-	layer = 9.1;
-	pixel_y = 22
-	},
 /turf/simulated/floor/carpet/red/standard/edge/north,
 /area/station/crew_quarters/fitness)
 "bAu" = (
@@ -28318,19 +28083,6 @@
 "bCQ" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/garden/owlery)
-"bCR" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 4;
-	name = "old wooden chair"
-	},
-/obj/landmark/start/job/assistant,
-/obj/machinery/light/emergency{
-	dir = 8;
-	pixel_x = -10
-	},
-/turf/simulated/floor/carpet/purple/fancy/edge/nw,
-/area/station/hallway/secondary/west)
 "bCS" = (
 /obj/table/wood/round/auto,
 /obj/item/storage/box/nerd_kit,
@@ -28364,20 +28116,6 @@
 /obj/item/dice,
 /obj/item/dice,
 /turf/simulated/floor/carpet/purple/fancy/edge/north,
-/area/station/hallway/secondary/west)
-"bCV" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 8;
-	name = "old wooden chair"
-	},
-/obj/landmark/start/job/assistant,
-/obj/machinery/light/emergency{
-	dir = 4;
-	pixel_x = 10
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/station/hallway/secondary/west)
 "bCW" = (
 /turf/simulated/wall/auto/supernorn,
@@ -29325,15 +29063,6 @@
 "bFB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/garden/owlery)
-"bFC" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 4;
-	name = "old wooden chair"
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/carpet/purple/fancy/edge/west,
-/area/station/hallway/secondary/west)
 "bFD" = (
 /obj/table/wood/round/auto,
 /obj/item/coin,
@@ -29354,21 +29083,6 @@
 /obj/item/clothing/head/apprentice,
 /obj/item/dice/d10,
 /turf/simulated/floor/carpet/purple/fancy,
-/area/station/hallway/secondary/west)
-"bFG" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 8;
-	name = "old wooden chair"
-	},
-/obj/landmark/start/job/assistant,
-/obj/machinery/firealarm{
-	dir = 4;
-	pixel_x = 26;
-	pixel_y = 1
-	},
-/obj/disposalpipe/segment,
-/turf/simulated/floor/carpet/purple/fancy/edge/east,
 /area/station/hallway/secondary/west)
 "bFJ" = (
 /obj/cable{
@@ -30306,20 +30020,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/core)
-"bIE" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 4;
-	name = "old wooden chair"
-	},
-/obj/machinery/light{
-	dir = 8;
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/carpet/purple/fancy/edge/sw,
-/area/station/hallway/secondary/west)
 "bIF" = (
 /obj/table/wood/round/auto,
 /obj/item/paper/book/from_file/critter_compendium,
@@ -30336,21 +30036,6 @@
 /obj/table/wood/round/auto,
 /obj/item/paper/book/from_file/monster_manual,
 /turf/simulated/floor/carpet/purple/fancy/edge,
-/area/station/hallway/secondary/west)
-"bII" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 8;
-	name = "old wooden chair"
-	},
-/obj/machinery/light{
-	dir = 4;
-	layer = 9.1;
-	pixel_x = 10
-	},
-/obj/landmark/start/job/assistant,
-/obj/disposalpipe/segment,
-/turf/simulated/floor/carpet/purple/fancy/edge/se,
 /area/station/hallway/secondary/west)
 "bIK" = (
 /obj/cable{
@@ -34783,15 +34468,6 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/station/crew_quarters/quarters_south)
-"bVn" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 4;
-	name = "old wooden chair"
-	},
-/obj/landmark/start/job/assistant,
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/quarters_south)
 "bVo" = (
 /obj/table/wood/round/auto{
 	desc = "This table is also pretty dang old.";
@@ -34799,21 +34475,6 @@
 	},
 /obj/item/clothing/mask/breath,
 /obj/item/device/light/candle/small,
-/turf/simulated/floor/wood/two,
-/area/station/crew_quarters/quarters_south)
-"bVp" = (
-/obj/stool/chair/wooden{
-	desc = "An antique chair.";
-	dir = 8;
-	name = "old wooden chair"
-	},
-/obj/landmark/start/job/assistant,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 10;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quarters_south)
 "bVq" = (
@@ -37989,19 +37650,6 @@
 	},
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/east)
-"cdy" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/obj/landmark/start/job/assistant,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
-	dir = 4
-	},
-/turf/simulated/floor/red/side,
-/area/station/hallway/primary/east)
 "cdE" = (
 /obj/disposalpipe/segment/brig{
 	dir = 8
@@ -38027,19 +37675,6 @@
 /obj/machinery/light/emergency,
 /obj/machinery/atmospherics/pipe/simple/color_pipe/yellow_pipe{
 	dir = 1
-	},
-/turf/simulated/floor/red/side,
-/area/station/hallway/primary/east)
-"cdI" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/obj/landmark/start/job/assistant,
-/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
-	dir = 4
 	},
 /turf/simulated/floor/red/side,
 /area/station/hallway/primary/east)
@@ -44422,14 +44057,7 @@
 /area/listeningpost/power)
 "cwF" = (
 /obj/decal/cleanable/dirt,
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -47119,6 +46747,15 @@
 	},
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/maintenance/southeast)
+"cXt" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 4;
+	name = "old wooden chair"
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/caution/corner/se,
+/area/station/crew_quarters/quartersB)
 "cXK" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/station/storage/emergency{
@@ -47222,6 +46859,19 @@
 /obj/machinery/disposal,
 /turf/simulated/floor/plating,
 /area/station/storage/auxillary)
+"dhv" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/station/hallway/secondary/east)
 "dhE" = (
 /obj/lattice{
 	dir = 9;
@@ -47313,16 +46963,6 @@
 /obj/disposalpipe/junction/right/east,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
-"dri" = (
-/obj/stool/chair/wooden,
-/obj/landmark/start/job/assistant,
-/obj/disposalpipe/segment/transport{
-	dir = 4
-	},
-/turf/simulated/floor/white/checker{
-	dir = 6
-	},
-/area/station/crew_quarters/quartersB)
 "drk" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -48010,6 +47650,15 @@
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
 	})
+"ewa" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/simulated/floor/carpet/blue/fancy,
+/area/station/hallway/primary/central)
 "ewH" = (
 /obj/machinery/light/small{
 	dir = 4
@@ -48993,6 +48642,19 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
+"gcy" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/light_switch/north,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 22
+	},
+/turf/simulated/floor/carpet/red/standard/edge/north,
+/area/station/crew_quarters/fitness)
 "gdq" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -49302,6 +48964,19 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/medbay)
+"gHs" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
+	dir = 4
+	},
+/turf/simulated/floor/red/side,
+/area/station/hallway/primary/east)
 "gHK" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49367,6 +49042,17 @@
 	},
 /turf/space,
 /area/space)
+"gSL" = (
+/obj/stool/chair/dining/wood,
+/obj/landmark/start/job/assistant,
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/white/checker{
+	dir = 6
+	},
+/area/station/crew_quarters/quartersB)
 "gVb" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 4;
@@ -49432,7 +49118,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3"
 	},
 /area/station/engine/elect)
@@ -49623,6 +49309,13 @@
 	dir = 4
 	},
 /area/station/engine/hotloop)
+"hpM" = (
+/obj/table/wood/auto,
+/obj/displaycase{
+	displayed = /obj/item/captaingun
+	},
+/turf/simulated/floor/carpet/blue/fancy/innercorner/south,
+/area/station/bridge/captain)
 "hpO" = (
 /obj/machinery/light/small{
 	dir = 1;
@@ -49806,6 +49499,13 @@
 	dir = 4
 	},
 /turf/simulated/floor/plating/random,
+/area/station/crew_quarters/courtroom)
+"hEi" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/neutral,
 /area/station/crew_quarters/courtroom)
 "hHj" = (
 /obj/cable{
@@ -50060,6 +49760,16 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/sanitary/white,
 /area/station/storage/auxillary)
+"ibI" = (
+/obj/stool/chair/dining/wood,
+/obj/landmark/start/job/assistant,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/white/checker{
+	dir = 6
+	},
+/area/station/crew_quarters/quartersB)
 "ibK" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/segment/food{
@@ -50885,6 +50595,15 @@
 	},
 /turf/simulated/floor/carpet/red/standard/edge/south,
 /area/station/security/main)
+"jtw" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/decal/poster/wallsign/teaparty{
+	pixel_y = 32
+	},
+/turf/simulated/floor/carpet/blue/fancy/edge/west,
+/area/station/hallway/primary/central)
 "jwT" = (
 /obj/cable{
 	icon_state = "2-9"
@@ -51570,6 +51289,14 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/white,
 /area/station/medical/cdc)
+"kCU" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/obj/disposalpipe/segment/transport,
+/turf/simulated/floor/carpet/purple/fancy,
+/area/station/crew_quarters/quartersB)
 "kFm" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/disposalpipe/junction/middle/east,
@@ -51858,6 +51585,24 @@
 	},
 /turf/space,
 /area/space)
+"lhr" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 4;
+	name = "autoname - SS13";
+	pixel_x = -10;
+	tag = ""
+	},
+/obj/disposalpipe/segment/transport{
+	dir = 1;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/neutral,
+/area/station/crew_quarters/courtroom)
 "lig" = (
 /obj/machinery/light/small,
 /obj/disposalpipe/segment{
@@ -52043,6 +51788,15 @@
 	dir = 10
 	},
 /area/station/engine/coldloop)
+"lBj" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 4;
+	name = "old wooden chair"
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/quarters_south)
 "lBv" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/transport,
@@ -52585,8 +52339,9 @@
 	},
 /area/station/janitor/office)
 "mpY" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "mqh" = (
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -52782,6 +52537,22 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/black,
 /area/station/storage/auxillary)
+"mIp" = (
+/obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
+	dir = 4
+	},
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 9;
+	name = "autoname - SS13";
+	pixel_x = 10;
+	tag = ""
+	},
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/turf/simulated/floor/wood/two,
+/area/station/chapel/sanctuary)
 "mIx" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -53272,6 +53043,15 @@
 "nrz" = (
 /turf/simulated/floor/black,
 /area/station/storage/auxillary)
+"nsq" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 4;
+	name = "old wooden chair"
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/hallway/secondary/west)
 "nsB" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/security/hos/horizon)
@@ -53386,6 +53166,20 @@
 	dir = 4
 	},
 /turf/simulated/floor/wood,
+/area/station/hallway/secondary/west)
+"nEg" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 8;
+	name = "old wooden chair"
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/light/emergency{
+	dir = 4;
+	pixel_x = 10
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet/purple/fancy/edge/ne,
 /area/station/hallway/secondary/west)
 "nEG" = (
 /obj/disposalpipe/segment{
@@ -53593,7 +53387,7 @@
 /obj/item/device/audio_log,
 /obj/item/camera,
 /obj/item/device/radio/headset/multifreq,
-/obj/item/storage/box/trackimp_kit2,
+/obj/item/storage/box/trackimp_kit,
 /turf/simulated/floor/purpleblack,
 /area/station/science/artifact{
 	name = "Artifact Lounge"
@@ -53811,6 +53605,13 @@
 	},
 /turf/simulated/floor/neutral,
 /area/station/crew_quarters/courtroom)
+"omi" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/carpet/purple/fancy/edge/west,
+/area/station/hallway/secondary/east)
 "omB" = (
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 4
@@ -54242,6 +54043,20 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/pharmacy)
+"oTh" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 4;
+	name = "old wooden chair"
+	},
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/carpet/purple/fancy/edge/sw,
+/area/station/hallway/secondary/west)
 "oVa" = (
 /obj/item/wrench,
 /turf/simulated/floor/grey/blackgrime,
@@ -54275,6 +54090,13 @@
 /obj/machinery/light,
 /turf/simulated/floor,
 /area/station/hallway/primary/east)
+"oXr" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
 "oZm" = (
 /obj/disposalpipe/segment,
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -55319,6 +55141,19 @@
 	dir = 4
 	},
 /area/space)
+"qQq" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4
+	},
+/obj/machinery/alarm{
+	pixel_y = 20
+	},
+/turf/simulated/floor/carpet/red/standard/edge/nw,
+/area/station/crew_quarters/fitness)
 "qQv" = (
 /turf/simulated/floor/carpet{
 	dir = 10;
@@ -55395,6 +55230,21 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/science/teleporter)
+"qXR" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 8;
+	name = "old wooden chair"
+	},
+/obj/machinery/light{
+	dir = 4;
+	layer = 9.1;
+	pixel_x = 10
+	},
+/obj/landmark/start/job/assistant,
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet/purple/fancy/edge/se,
+/area/station/hallway/secondary/west)
 "qYg" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -55407,6 +55257,21 @@
 	dir = 4
 	},
 /area/station/hallway/secondary/east)
+"rai" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 8;
+	name = "old wooden chair"
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 10;
+	name = "autoname - SS13";
+	tag = ""
+	},
+/turf/simulated/floor/wood/two,
+/area/station/crew_quarters/quarters_south)
 "rdr" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -56283,6 +56148,18 @@
 "swg" = (
 /turf/space,
 /area/shuttle/mining/station)
+"sws" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/standard/edge/ne,
+/area/station/hallway/primary/central)
 "swx" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -56469,6 +56346,14 @@
 /obj/disposalpipe/segment/bent/north,
 /turf/simulated/floor/yellow/side,
 /area/station/maintenance/outer/se)
+"sIR" = (
+/obj/stool/chair/dining/wood,
+/obj/landmark/start/job/assistant,
+/obj/disposalpipe/segment/mineral{
+	dir = 4
+	},
+/turf/simulated/floor/neutral,
+/area/station/crew_quarters/courtroom)
 "sJB" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -56538,6 +56423,16 @@
 	icon_state = "wall3_space"
 	},
 /area/ghostdrone_factory)
+"sSc" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/obj/disposalpipe/segment/transport{
+	dir = 4
+	},
+/turf/simulated/floor/neutral,
+/area/station/crew_quarters/courtroom)
 "sSL" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -57398,6 +57293,21 @@
 /obj/disposalpipe/segment/bent/south,
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"uya" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 8;
+	name = "old wooden chair"
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/firealarm{
+	dir = 4;
+	pixel_x = 26;
+	pixel_y = 1
+	},
+/obj/disposalpipe/segment,
+/turf/simulated/floor/carpet/purple/fancy/edge/east,
+/area/station/hallway/secondary/west)
 "uyk" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -57882,6 +57792,17 @@
 /obj/railing/orange/reinforced,
 /turf/simulated/floor/grasstodirt,
 /area/station/ranch)
+"vki" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/landmark/start/job/assistant,
+/obj/disposalpipe/segment{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "vkq" = (
 /obj/machinery/atmospherics/pipe/simple/heat_exchanging{
 	dir = 4
@@ -58020,6 +57941,11 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
+"vxm" = (
+/obj/stool/chair/dining/wood,
+/obj/landmark/start/job/chaplain,
+/turf/simulated/floor/wood/two,
+/area/station/chapel/office)
 "vxy" = (
 /obj/machinery/light/small{
 	dir = 8;
@@ -58539,6 +58465,13 @@
 	dir = 8
 	},
 /area/station/engine/coldloop)
+"wiC" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
+	},
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "wlW" = (
 /obj/lattice{
 	dir = 6;
@@ -58673,6 +58606,11 @@
 /area/station/crew_quarters/jazz{
 	requires_power = 0
 	})
+"wvJ" = (
+/obj/stool/chair/dining/wood,
+/obj/landmark/start/job/assistant,
+/turf/simulated/floor,
+/area/station/hallway/secondary/entry)
 "wwo" = (
 /obj/machinery/atmospherics/binary/valve/notify_admins{
 	dir = 4
@@ -58810,6 +58748,19 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/bar)
+"wDz" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/atmospherics/pipe/simple/color_pipe/green_pipe{
+	dir = 4
+	},
+/turf/simulated/floor/red/side,
+/area/station/hallway/primary/east)
 "wDD" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -58858,6 +58809,21 @@
 /obj/landmark/gps_waypoint,
 /turf/simulated/floor/darkblue/checker,
 /area/station/teleporter)
+"wFy" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/standard/edge/nw,
+/area/station/hallway/primary/central)
 "wHj" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -59381,6 +59347,19 @@
 /obj/machinery/arc_electroplater,
 /turf/simulated/floor/engine,
 /area/station/mining/refinery)
+"xqM" = (
+/obj/stool/chair/dining/wood{
+	desc = "An antique chair.";
+	dir = 4;
+	name = "old wooden chair"
+	},
+/obj/landmark/start/job/assistant,
+/obj/machinery/light/emergency{
+	dir = 8;
+	pixel_x = -10
+	},
+/turf/simulated/floor/carpet/purple/fancy/edge/nw,
+/area/station/hallway/secondary/west)
 "xrt" = (
 /obj/disposalpipe/junction/left/north,
 /turf/simulated/floor,
@@ -59641,6 +59620,15 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
+"xVw" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/disposalpipe/junction/left/south,
+/turf/simulated/floor/black,
+/area/station/storage/emergency2{
+	name = "Hilarious Storage B"
+	})
 "xVC" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
@@ -59699,7 +59687,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3"
 	},
 /area/station/crew_quarters/fitness)
@@ -76014,9 +76002,9 @@ bsS
 aVF
 bxm
 ogx
-bCR
-bFC
-bIE
+xqM
+nsq
+oTh
 bAc
 bxF
 aaa
@@ -77222,9 +77210,9 @@ bsW
 bvc
 bxq
 bAf
-bCV
-bFG
-bII
+nEg
+uya
+qXR
 bLM
 bxF
 aaa
@@ -81449,7 +81437,7 @@ tOD
 bth
 bvj
 bxA
-bAr
+qQq
 bDd
 bFT
 bIT
@@ -81481,7 +81469,7 @@ ahO
 aiy
 aiZ
 gLC
-ajY
+xVw
 gLC
 akL
 ryl
@@ -82053,7 +82041,7 @@ bqE
 wKb
 bvl
 bxB
-bAt
+gcy
 bDe
 srU
 bIV
@@ -85347,7 +85335,7 @@ asV
 awH
 axG
 ayJ
-azz
+kCU
 xzG
 dxN
 qRl
@@ -87461,7 +87449,7 @@ avG
 bKM
 axK
 ayP
-azF
+gSL
 aAt
 asJ
 arE
@@ -87757,13 +87745,13 @@ add
 arE
 asI
 ata
-atw
+cXt
 ayN
 bem
 bKM
 arJ
 ayQ
-dri
+ibI
 aAu
 asJ
 arE
@@ -88095,7 +88083,7 @@ uaG
 dzW
 aNq
 cNT
-aSb
+lhr
 aYl
 bMl
 bPi
@@ -88396,9 +88384,9 @@ byj
 aMI
 thr
 aPU
-aPH
+sIR
 aSp
-aVr
+hEi
 bMl
 bPj
 vwp
@@ -88699,7 +88687,7 @@ aMI
 uVy
 aPU
 tgr
-aSq
+sSc
 dKY
 bMl
 bMl
@@ -98327,7 +98315,7 @@ aaa
 aaa
 aaa
 atb
-atF
+vki
 bds
 bKE
 awa
@@ -98931,7 +98919,7 @@ aaa
 aaa
 aaa
 atb
-atH
+ahR
 auV
 awb
 auV
@@ -99234,9 +99222,9 @@ aaa
 aaa
 atb
 atI
-auW
+wvJ
 awc
-awZ
+wiC
 atb
 atb
 aaa
@@ -101980,7 +101968,7 @@ kri
 bfQ
 biP
 aOl
-bov
+jtw
 bwi
 ePs
 xjd
@@ -102584,11 +102572,11 @@ bcS
 bfS
 biR
 aHS
-box
+ewa
 brC
 bvX
 rxb
-byv
+wFy
 bBr
 bEg
 bEg
@@ -103192,7 +103180,7 @@ boz
 bwk
 ePs
 xjd
-byx
+sws
 bBr
 bEh
 qGX
@@ -103200,7 +103188,7 @@ bJH
 bMW
 bPO
 jpI
-bVn
+lBj
 bEe
 bZO
 cbt
@@ -103804,7 +103792,7 @@ bJK
 bMY
 bPP
 bSO
-bVp
+rai
 bEe
 bZO
 cbz
@@ -107107,7 +107095,7 @@ aJW
 aMi
 aOw
 aRb
-aTX
+hpM
 aWU
 ban
 wFt
@@ -109220,9 +109208,9 @@ aIv
 aKb
 aMk
 aOA
-aRe
+vxm
 aUb
-aWX
+oXr
 bas
 bdf
 bgp
@@ -112543,7 +112531,7 @@ aKl
 aMt
 byV
 aRm
-aUk
+mIp
 gxF
 bay
 bay
@@ -116782,7 +116770,7 @@ bZR
 erV
 buf
 bCa
-cdy
+gHs
 qNy
 bES
 sKn
@@ -117386,7 +117374,7 @@ trF
 bsb
 buh
 vSw
-cdI
+wDz
 qNy
 qNy
 qNy
@@ -129751,7 +129739,7 @@ asn
 pLq
 aFq
 aCv
-aCO
+omi
 aGJ
 aIc
 fPY
@@ -130355,7 +130343,7 @@ asv
 aFi
 aBL
 aCG
-aCQ
+dhv
 aGJ
 crC
 mxE

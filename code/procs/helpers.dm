@@ -138,7 +138,7 @@ var/global/obj/fuckyou/flashDummy
 					target_r = L
 					continue
 
-	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, 1)
+	playsound(target, 'sound/effects/elec_bigzap.ogg', 30, TRUE)
 
 	var/list/affected = DrawLine(from, target_r, /obj/line_obj/elec ,'icons/obj/projectiles.dmi',"WholeLghtn",1,1,"HalfStartLghtn","HalfEndLghtn",OBJ_LAYER,1,PreloadedIcon='icons/effects/LghtLine.dmi')
 
@@ -689,7 +689,8 @@ proc/get_angle(atom/a, atom/b)
 //Include details shows traitor status etc
 //Admins replaces the src ref for links with a placeholder for message_admins
 //Mentor just changes the private message link
-/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null, ckey_and_alt_key = FALSE)
+/proc/key_name(var/whom, var/include_details = 1, var/admins = 1, var/mentor = 0, var/custom_href=null, mob/user=null, ckey_and_alt_key = FALSE,
+		additional_url_data = null)
 	var/mob/the_mob = null
 	var/client/the_client = null
 	var/the_key = ""
@@ -743,9 +744,9 @@ proc/get_angle(atom/a, atom/b)
 			text += "*no client*"
 	else
 		if (!isnull(the_mob))
-			if(custom_href) text += "<a href=\"[custom_href]\">"
-			else if(mentor) text += "<a href=\"byond://?action=mentor_msg&target=[the_mob.ckey]\">"
-			else text += "<a href=\"byond://?action=priv_msg&target=[the_mob.ckey]\">"
+			if(custom_href) text += "<a href=\"[custom_href][additional_url_data]\">"
+			else if(mentor) text += "<a href=\"byond://?action=mentor_msg&target=[the_mob.ckey][additional_url_data]\">"
+			else text += "<a href=\"byond://?action=priv_msg&target=[the_mob.ckey][additional_url_data]\">"
 
 		if (the_client)
 			if (the_client.holder && the_client.stealth && !include_details)
@@ -2150,10 +2151,10 @@ var/list/lowercase_letters = list("a", "b", "c", "d", "e", "f", "g", "h", "i", "
 		if (S == "glassware")
 			for (var/obj/item/reagent_containers/glass/G in view(CT, range))
 				if(G.can_recycle)
-					G.smash()
+					G.shatter_chemically()
 			for (var/obj/item/reagent_containers/food/drinks/drinkingglass/G2 in range(CT, range))
 				if(G2.can_recycle)
-					G2.smash()
+					G2.shatter_chemically()
 
 	return 1
 
@@ -2587,3 +2588,10 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 	for (var/point in points)
 		. += point - prev
 		prev = point
+
+
+/// Returns the sum of densities of all atoms in the given turf including the turf itself
+proc/total_density(turf/T)
+	. = T.density
+	for (var/atom/A in T)
+		. += A.density

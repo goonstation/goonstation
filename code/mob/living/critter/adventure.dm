@@ -12,6 +12,7 @@
 	name = "transposed scientist"
 	real_name = "transposed scientist"
 	desc = "A fellow who seems to have been shunted between dimensions. Not a good state to be in."
+	icon = 'icons/mob/critter/humanoid/crunched.dmi'
 	icon_state = "crunched"
 	icon_state_dead = "crunched"
 	hand_count = 2
@@ -112,6 +113,7 @@
 	name = "darkness"
 	real_name = "darkness"
 	desc = "Oh god."
+	icon = 'icons/mob/critter/humanoid/shade.dmi'
 	icon_state = "shade"
 	icon_state_dead = "shade" //doesn't have a dead icon, just fades away
 	death_text = null //has special spooky voice lines
@@ -269,6 +271,7 @@
 	name = "strange robot"
 	real_name = "strange robot"
 	desc = "It looks like some sort of floating repair bot or something?"
+	icon = 'icons/mob/critter/robotic/ancient/repairbot.dmi'
 	icon_state = "ancient_repairbot"
 	hand_count = 1
 	can_throw = FALSE
@@ -432,6 +435,7 @@
 	name = "town guard"
 	real_name = "town guard"
 	desc = "An angry man dressed in medieval armor."
+	icon = 'icons/mob/critter/humanoid/town_guard.dmi'
 	icon_state = "townguard"
 	icon_state_dead = "townguard-dead"
 	hand_count = 2
@@ -510,14 +514,14 @@
 		// Hand 2 = SWORD Hand 1 = ARM
 		if (is_incapacitated(target))
 			src.set_a_intent(INTENT_HARM)
-			src.active_hand = 1
+			set_hand(1)
 			return ..() // Punch / Kick them
 		if (prob(30))
 			src.set_a_intent(INTENT_DISARM)
-			src.active_hand = 1
+			src.set_hand(1)
 			return src.hand_attack(target) // Disarm them
 		src.set_a_intent(INTENT_HARM)
-		src.active_hand = 2
+		set_hand(2)
 		return ..() // Stab them
 
 	proc/HALT()

@@ -496,7 +496,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	critter_respawn
 		name = "Alt Ghost Critter"
 		cost = 1000
-		icon = 'icons/misc/critter.dmi'
+		icon = 'icons/mob/critter/robotic/boogie.dmi'
 		icon_state = "boogie"
 		var/list/respawn_critter_types = list(/mob/living/critter/small_animal/boogiebot/weak, /mob/living/critter/small_animal/figure/weak)
 
@@ -766,8 +766,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (isAI(M))
 				var/mob/living/silicon/ai/A = M
-				A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai-red")
-				A.faceEmotion = "ai-red"
+				A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai_red")
+				A.faceEmotion = "ai_red"
 				A.set_color("#EE0000")
 				return 1
 			return 0

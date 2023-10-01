@@ -47,6 +47,11 @@
 	afterattack(obj/target, mob/user, flag)
 		if (!src.reagents || !target.reagents)
 			return
+		if(istype(target, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/t = target
+			if(t.current_lid)
+				boutput(user, "<span class='alert'>You cannot transfer liquids with the [target.name] while it has a lid on it!</span>")
+				return
 
 		if ((src.customizable_settings_available && src.transfer_mode == TO_SELF) || (!src.customizable_settings_available && !src.reagents.total_volume))
 			var/t = min(src.transfer_amount, target.reagents.total_volume) // Can't draw more than THEY have.
@@ -71,7 +76,7 @@
 				if (target.reagents.total_volume >= target.reagents.maximum_volume)
 					boutput(user, "<span class='alert'>[target] is full.</span>")
 					return
-				if (target.is_open_container() != 1 && !ismob(target) && !istype(target, /obj/item/reagent_containers/food)) // You can inject humans and food but you can't remove the shit.
+				if (target.is_open_container(TRUE) != 1 && !ismob(target) && !istype(target, /obj/item/reagent_containers/food)) // You can inject humans and food but you can't remove the shit.
 					boutput(user, "<span class='alert'>You cannot directly fill this object.</span>")
 					return
 

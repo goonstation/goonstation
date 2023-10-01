@@ -52,15 +52,17 @@
 //Item function flags
 
 /// apply to an item's flags to use the item's intent_switch_trigger() proc. This will be called when intent is switched while this item is in hand.
-#define USE_INTENT_SWITCH_TRIGGER 1
+#define USE_INTENT_SWITCH_TRIGGER (1<<0)
 /// allows special attacks to be performed on help and grab intent with this item
-#define USE_SPECIALS_ON_ALL_INTENTS 2
+#define USE_SPECIALS_ON_ALL_INTENTS (1<<1)
 /// prevents items from creating smoke while burning
-#define SMOKELESS 4
+#define SMOKELESS (1<<2)
 /// makes items immune to acid
-#define IMMUNE_TO_ACID 8
+#define IMMUNE_TO_ACID (1<<3)
 /// prevents items from heating anything up while burning
-#define COLD_BURN 16
+#define COLD_BURN (1<<4)
+/// Prevents an item from being placed inside of a storage container, regardless of the item's `w_class` or the storage's `can_hold` list.
+#define UNSTORABLE (1<<5)
 
 //tool flags
 #define TOOL_CLAMPING 1
@@ -83,6 +85,11 @@
 #define OMNI_MODE_PULSING 5
 #define OMNI_MODE_CUTTING 6
 #define OMNI_MODE_WELDING 7
+
+//fluid_canister flags
+#define FLUID_CANISTER_MODE_OFF 1
+#define FLUID_CANISTER_MODE_SLURP 2
+#define FLUID_CANISTER_MODE_PISS 3
 
 //tooltip flags for rebuilding
 

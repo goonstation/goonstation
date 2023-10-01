@@ -125,7 +125,7 @@ TYPEINFO(/obj/item/gun/energy)
 				return 1
 			boutput(user, "<span class='alert'>*click* *click*</span>")
 			if (!src.silenced)
-				playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+				playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return 0
 
 
@@ -285,7 +285,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
-	shoot_delay = 10
+	shoot_delay = 8
 	can_dual_wield = FALSE
 	force = MELEE_DMG_RIFLE
 	two_handed = 1
@@ -338,7 +338,7 @@ TYPEINFO(/obj/item/gun/energy/crossbow)
 				src.charge_image.appearance_flags = PIXEL_SCALE | RESET_COLOR | RESET_ALPHA
 			if(ret["charge"] >= 37) //this makes it only enter its "final" sprite when it's actually able to fire, if you change the amount of charge regen or max charge the bow has, make this number one charge increment before full charge
 				src.charge_image.icon_state = "[src.icon_state]full"
-				//UpdateIcon()
+				src.UpdateOverlays(src.charge_image, "charge")
 			else
 				var/ratio = min(1, ret["charge"] / ret["max_charge"])
 				ratio = round(ratio, 0.25) * 100
@@ -436,7 +436,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
 /obj/item/gun/energy/ntgun
 	name = "laser assault rifle"
-	icon_state = "ntneutral100"
+	icon_state = "nt"
 	desc = "Rather futuristic assault rifle with two firing modes."
 	item_state = "ntgun"
 	force = 10
@@ -445,7 +445,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 	spread_angle = 6
 	cell_type = /obj/item/ammo/power_cell/med_power
 	uses_charge_overlay = TRUE
-	charge_icon_state = "nt"
+	charge_icon_state = "ntstun"
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/ntburst)
@@ -546,7 +546,7 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 /obj/item/gun/energy/wavegun
 	name = "\improper Sancai wave gun"
 	icon = 'icons/obj/items/gun.dmi'
-	desc = "The versatile XIANG|GIESEL model '三才' with three monlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
+	desc = "The versatile XIANG|GIESEL model '三才' with three nonlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun"
 	item_state = "wave"
 	cell_type = /obj/item/ammo/power_cell/med_power
@@ -632,6 +632,7 @@ TYPEINFO(/obj/item/gun/energy/teleport)
 	var/obj/machinery/computer/teleporter/our_teleporter = null // For checks before firing (Convair880).
 	uses_charge_overlay = TRUE
 	charge_icon_state = "teleport"
+	HELP_MESSAGE_OVERRIDE({"Use the teleport gun in hand to set it's destination. Destination list is pulled from all the currently activated teleporters."})
 
 	New()
 		set_current_projectile(new /datum/projectile/tele_bolt)
@@ -776,14 +777,15 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 	mats = 0
 
 /obj/item/gun/energy/blaster_pistol
-	name = "blaster pistol"
-	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
+	name = "GRF Zap-Pistole"
+	desc = "A dangerous-looking particle blaster pistol from Giesel Radiofabrik. It's self-charging by a radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "pistol"
 	w_class = W_CLASS_NORMAL
 	force = 5
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
+	rarity = 3
 
 
 	/*
@@ -850,14 +852,15 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	mats = 0
 
 /obj/item/gun/energy/blaster_smg
-	name = "burst blaster"
-	desc = "A special issue blaster weapon, configured for burst fire. It's self-charging by a radioactive power cell."
+	name = "GRF Zap-Maschine"
+	desc = "A special issue particle blaster from Giesel Radiofabrik, designed for burst fire. It's self-charging by a radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "smg"
 	can_dual_wield = 0
 	w_class = W_CLASS_NORMAL
 	force = 7
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
+	rarity = 4
 
 
 	New()
@@ -876,8 +879,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 			return
 
 /obj/item/gun/energy/blaster_cannon
-	name = "blaster cannon"
-	desc = "A heavily overcharged blaster weapon, modified for extreme firepower. It's self-charging by a larger radioactive power cell."
+	name = "GRF Zap-Kanone"
+	desc = "A heavy particle blaster from Giesel Radiofabrik, designed for high damage. It's self-charging by a larger radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "cannon"
 	item_state = "rifle"
@@ -885,12 +888,15 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	two_handed = 1
 	w_class = W_CLASS_BULKY
 	force = 15
+	shoot_delay = 8
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	rarity = 5
 
 	New()
-		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/blaster)
+		set_current_projectile(new /datum/projectile/laser/blaster/cannon)
 		projectiles = list(current_projectile)
 		c_flags |= ONBACK
+		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
 		..()
 
 
@@ -1168,6 +1174,12 @@ TYPEINFO(/obj/item/gun/energy/pickpocket)
 	custom_cell_max_capacity = 100
 	var/obj/item/heldItem = null
 	tooltip_flags = REBUILD_DIST
+	HELP_MESSAGE_OVERRIDE({"Use the pickpocket gun in hand to alternate between three fire modes : <b>Steal</b>, <b>Plant</b> and <b>Harass</b>.\n
+							To remove an item from the pickpocket gun, hold the gun in one hand, then use your other hand on it.\n
+							To place an item into the pickpocket gun, hold the gun in one hand, then hit it with an item in your other hand.\n
+							While on <b>Steal</b>, the gun will attempt to steal the item of the target who's body part you are aiming at.\n
+							While on <b>Plant</b>, the gun will attempt to place an item on the target on the body part you are aiming at.\n
+							While on <b>Harass</b>, the gun will perform a debilitating effect on the target depending on the body part you are aiming at."})
 
 	New()
 		set_current_projectile(new/datum/projectile/pickpocket/steal)

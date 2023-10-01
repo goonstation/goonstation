@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.eject_rider(crashed=FALSE, selfdismount=TRUE, ejectall=FALSE)
 
 	Click(location,control,params)
-		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
 			var/mob/dead/observer/O = usr
 			if(src.rider)
 				O.insert_observer(src.rider)
@@ -942,7 +942,7 @@ TYPEINFO(/obj/vehicle/floorbuffer)
 			src.icon_state = "buffer[FB.sprayer_active]"
 			if (FB.rider)
 				FB.icon_state = "[FB.icon_base][FB.sprayer_active]"
-			playsound(the_mob, 'sound/machines/click.ogg', 50, 1)
+			playsound(the_mob, 'sound/machines/click.ogg', 50, TRUE)
 		return
 
 /obj/ability_button/fbuffer_status
@@ -977,6 +977,10 @@ TYPEINFO(/obj/vehicle/clowncar)
 	soundproofing = 5
 	var/second_icon = "clowncar2" //animated jiggling for the clowncar
 	var/peel_count = 5
+	HELP_MESSAGE_OVERRIDE({"While wearing two or more pieces of clown attire, <b>click drag</b> yourself to the car while next to it to enter it.
+							Driving into someone stuns them. If someone is lying down, <b>click drag</b> them to the car to force them inside.
+							Driving into a wall will force all the occupants out and stun the driver.
+							Click on the car while inside to get out. Click on the car while outside to free all the occupants."})
 
 /obj/vehicle/clowncar/do_special_on_relay(mob/user as mob, dir)
 	for (var/mob/living/L in src)
@@ -990,7 +994,7 @@ TYPEINFO(/obj/vehicle/clowncar)
 	moving = 1
 	if(!(world.timeofday - src.antispam <= 60))
 		src.antispam = world.timeofday
-		playsound(src, 'sound/machines/rev_engine.ogg', 50, 1)
+		playsound(src, 'sound/machines/rev_engine.ogg', 50, TRUE)
 		playsound(src.loc, 'sound/machines/rev_engine.ogg', 50, 1)
 		//play engine sound
 	return
@@ -1664,7 +1668,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 		if (car.peel_count <= 0)
 			boutput(src.the_mob, "<span class='alert'>No peels left!</span>")
 			return
-		playsound(car, 'sound/machines/click.ogg', 50, 1)
+		playsound(car, 'sound/machines/click.ogg', 50, TRUE)
 		new /obj/item/bananapeel(get_turf(car))
 		car.peel_count--
 
@@ -1693,7 +1697,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 	icon_state = moving_state
 	if(!(world.timeofday - src.antispam <= 60))
 		src.antispam = world.timeofday
-		playsound(src, 'sound/machines/rev_engine.ogg', 50, 1)
+		playsound(src, 'sound/machines/rev_engine.ogg', 50, TRUE)
 		playsound(src.loc, 'sound/machines/rev_engine.ogg', 50, 1)
 		//play engine sound
 		return
@@ -1842,7 +1846,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 			var/turf/simulated/wall/T = AM
 			T.dismantle_wall(1)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 			boutput(rider, "<span class='alert'><b>You crash through the wall!</b></span>")
 			for(var/mob/C in viewers(src))
 				shake_camera(C, 10, 16)
@@ -1867,7 +1871,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 			var/turf/target = get_edge_target_turf(src, src.dir)
 			M.throw_at(target, 10, 2)
 		playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 		in_bump = 0
 		return
 	if(isobj(AM))
@@ -1881,7 +1885,7 @@ TYPEINFO(/obj/vehicle/adminbus)
 				C.show_message("<span class='alert'><b>The [src] crashes into [O]!</b></span>", 1)
 			var/turf/target = get_edge_target_turf(src, src.dir)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
-			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 40, TRUE)
 			O.throw_at(target, 10, 2)
 			if(istype(O, /obj/window) || istype(O, /obj/grille) || istype(O, /obj/machinery/door) || istype(O, /obj/structure/girder) || istype(O, /obj/foamedmetal))
 				qdel(O)

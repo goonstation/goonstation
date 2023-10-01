@@ -326,7 +326,7 @@
 			else						// otherwise limit to 10 tiles
 				target = get_ranged_target_turf(T, direction, 10)
 
-			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 			for(var/atom/movable/AM in H)
 				AM.set_loc(T)
 				AM.pipe_eject(direction)
@@ -336,7 +336,7 @@
 
 		else	// no specified direction, so throw in random direction
 
-			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -884,6 +884,79 @@
 TYPEINFO(/obj/disposalpipe/loafer)
 	mats = 100
 
+/obj/disposalpipe/chicken_disposal_pipe
+	name = "humane chicken processor"
+	desc = "a pipe segment designed to convert alive chickens into dead chickens"
+	icon_state = "pipe-loaf0"
+	var/is_doing_stuff = FALSE
+
+	horizontal
+		dir = EAST
+	vertical
+		dir = NORTH
+
+	New()
+		..()
+
+		dpdir = dir | turn(dir, 180)
+		update()
+
+	was_built_from_frame(mob/user, newly_built)
+		. = ..()
+		dpdir = dir | turn(dir, 180)
+		update()
+
+	update()
+		..()
+		src.name = initial(src.name)
+
+	transfer(var/obj/disposalholder/H)
+		while(src.is_doing_stuff)
+			sleep(1 SECOND)
+		src.is_doing_stuff = TRUE
+
+		if (H.contents.len)
+			playsound(src.loc, 'sound/machines/mixer.ogg', 30, 1)
+			//src.visible_message("<b>[src] activates!</b>") // Processor + loop = SPAM
+			src.icon_state = "pipe-loaf1"
+
+			for (var/atom/movable/thing in H)
+
+				LAGCHECK(LAG_MED)
+
+				if (isliving(thing))
+					playsound(src.loc, pick('sound/impact_sounds/Wood_Hit_1.ogg','sound/impact_sounds/Flesh_Stab_1.ogg'), 30, 1)
+					var/mob/living/M = thing
+					logTheThing(LOG_COMBAT, M, "was maimed by the [log_object(src)] at [log_loc(src)]")
+
+					random_brute_damage(M, 25, 1)
+					take_bleeding_damage(M, null, 10, DAMAGE_CUT)
+
+					if(!isdead(M))
+						if(ishuman(M))
+							M:emote("scream")
+
+
+		var/nextdir = nextdir(H.dir)
+		H.set_dir(nextdir)
+		var/turf/T = H.nextloc()
+		var/obj/disposalpipe/P = H.findpipe(T)
+
+		src.is_doing_stuff = FALSE
+
+		if(P)
+			// find other holder in next loc, if inactive merge it with current
+			var/obj/disposalholder/H2 = locate() in P
+			if(H2 && !H2.active)
+				H.merge(H2)
+
+			H.set_loc(P)
+		else			// if wasn't a pipe, then set loc to turf
+			H.set_loc(T)
+			return null
+
+		return P
+
 /obj/disposalpipe/loafer
 	name = "disciplinary loaf processor"
 	desc = "A pipe segment designed to convert detritus into a nutritionally-complete meal for inmates."
@@ -1343,10 +1416,10 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 		if (allowDump)
 			flick("unblockoutlet-open", src)
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
-			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 
 
 			for(var/atom/movable/AM in H)
@@ -1414,10 +1487,10 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/einstein_loaf)
 
 		if (things_to_dump.len)
 			flick("unblockoutlet-open", src)
-			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 			sleep(2 SECONDS)	//wait until correct animation frame
-			playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+			playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 
 			for (var/atom/movable/AM in things_to_dump)
 				AM.set_loc(src.loc)
@@ -1862,10 +1935,10 @@ TYPEINFO(/obj/disposaloutlet)
 					M.mail_tag = H.mail_tag
 
 		flick("outlet-open", src)
-		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/warning-buzzer.ogg', 50, FALSE, 0)
 
 		sleep(2 SECONDS)	//wait until correct animation frame
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 
 		var/turf/expel_loc = get_turf(src)
 		while(locate(src.type) in get_step(expel_loc, src.dir))
@@ -1942,12 +2015,12 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 			segment.fix_sprite()
 		else if(istype(pipe, /obj/disposalpipe/junction))
 			var/obj/disposalpipe/segment/horiz = new(pipe.loc)
-			horiz.dpdir = 1 | 2
-			horiz.set_dir(1)
+			horiz.dpdir = NORTH | SOUTH
+			horiz.set_dir(NORTH)
 			horiz.fix_sprite()
 			var/obj/disposalpipe/segment/vert = new(pipe.loc)
-			vert.dpdir = 4 | 8
-			vert.set_dir(4)
+			vert.dpdir = EAST | WEST
+			vert.set_dir(EAST)
 			vert.fix_sprite()
 			qdel(pipe)
 		if(istype(pipe, /obj/disposalpipe/segment))
@@ -2088,7 +2161,7 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 		var/obj/disposalpipe/trunk/current = new src.trunk_type(src.loc)
 		current.dir = directions[1]
 		current.dpdir = src.dpdir
-		update_icon(current)
+		UpdateIcon(current)
 		qdel(src)
 	else if (length(directions) == 2)
 	// turns into a normal pipe segment
@@ -2105,12 +2178,12 @@ ABSTRACT_TYPE(/obj/disposalpipe/auto)
 				if (SOUTHWEST)
 					src.dir = SOUTH
 			src.icon_state = "pipe-c"
-			update_icon(src)
+			UpdateIcon(src)
 		else
 		// straight pipe
 			src.dir = directions[1]
 			src.icon_state = "pipe-s"
-			update_icon(src)
+			UpdateIcon(src)
 	else
 	// DO NOT MAKE JUNCTIONS, FOOLS.
 		CRASH("Pipe Spawners can't make junctions!\nPipe coords: [src.x] x, [src.y] y, [src.z] z.")

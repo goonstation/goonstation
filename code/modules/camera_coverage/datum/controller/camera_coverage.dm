@@ -9,7 +9,7 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
  * Called at world setup, creates an image on all turfs that will overlay for the AI when a turf is not visible in the camera coverage. At the end will update all camera coverage.
  */
 /datum/controller/camera_coverage/proc/setup()
-#if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
+#if defined(SKIP_CAMERA_COVERAGE) && !defined(SPACEMAN_DMM)
 	return
 #endif
 #if !defined(MAP_OVERRIDE_POD_WARS) && !defined(UPSCALED_MAP) && !defined(MAP_OVERRIDE_EVENT)
@@ -84,13 +84,13 @@ var/global/datum/controller/camera_coverage/camera_coverage_controller
 	PRIVATE_PROC(TRUE)
 	// This is a list of turfs that require an update.
 	. = list()
-#if defined(IM_REALLY_IN_A_FUCKING_HURRY_HERE) && !defined(SPACEMAN_DMM)
+#if defined(SKIP_CAMERA_COVERAGE) && !defined(SPACEMAN_DMM)
 	return
 #endif
 	var/list/turf/prev_coverage = emitter.coverage ? emitter.coverage : list()
 	var/list/turf/new_coverage = list()
 
-	for (var/turf/T in (QDELETED(emitter) || !emitter.active) ? list() : view(emitter.range, emitter.parent))
+	for (var/turf/T in (QDELETED(emitter) || !emitter.active) ? list() : view(emitter.range, get_turf(emitter.parent)))
 		new_coverage += T
 
 	var/list/turf/not_covered = prev_coverage - new_coverage

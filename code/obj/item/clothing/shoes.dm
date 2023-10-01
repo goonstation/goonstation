@@ -391,12 +391,9 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	desc = "They magically stop you from slipping on magical hazards. It's not the mesh on the underside that does that. It's MAGIC. Read a fucking book."
 	c_flags = NOSLIP
 	magical = 1
-	laces = LACES_NONE
-	step_sound = "step_flipflop"
-	step_priority = STEP_PRIORITY_LOW
 	duration_remove = 10 SECONDS
 
-	/// Subtype that wizards spawn with, and is in their vendor. Cows can wear them, unlike regular sandals (might also be useful in the future)
+/// Subtype that wizards spawn with, and is in their vendor. Cows can wear them, unlike regular sandals (might also be useful in the future)
 /obj/item/clothing/shoes/sandal/magic/wizard
 	compatible_species = list("human", "cow")
 
@@ -477,6 +474,12 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	magnetic = 1
 	c_flags = NOSLIP
 	compatible_species = list("cow", "human")
+
+/obj/item/clothing/shoes/swat/captain
+	name = "captain's boots"
+	desc = "A set of formal shoes with a protective layer underneath."
+	icon_state = "capboots"
+	item_state = "capboots"
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"

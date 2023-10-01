@@ -1,7 +1,7 @@
 /atom/var/ignore_simple_light_updates = 0 //to avoid double-updating on diagonal steps when we are really only taking a single step
 
 /obj/overlay/simple_light
-	event_handler_flags = IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	anchored = ANCHORED_ALWAYS
 	mouse_opacity = 0
 	layer = LIGHTING_LAYER_BASE
@@ -424,3 +424,43 @@
 
 // update_medium_light_visibility() is called in /atom/Move and /atom/set_loc
 // see atom.dm for details
+
+/turf/proc/contains_simple_light()
+	for (var/atom/thing as anything in src.contents)
+		if (thing.simple_light?.invisibility == INVIS_NONE)
+			return TRUE
+		for(var/obj/overlay/simple_light/medium/light in thing.medium_lights)
+			if (light.invisibility == INVIS_NONE)
+				return TRUE
+
+///An approximation of "is there a simple light shining on this turf", it's slow and bad but that's the price we pay for simple lights
+/turf/proc/SL_lit()
+	//first we check our own turf
+	if (src.contains_simple_light())
+		return TRUE
+	//then neighbouring turfs
+	for (var/turf/T in block(locate(src.x + 1, src.y + 1, src.z), locate(src.x - 1, src.y - 1, src.z)))
+		if (T.contains_simple_light())
+			return TRUE
+	//finally we check in compass directions for directional lights shining on us
+	for (var/scan_dir in alldirs)
+		var/list/turf/turfs = list() //build a list of the three lines of turfs in this direction to check for light sources
+		for (var/i in -1 to 1)
+			var/turf/start_turf = get_steps(src, turn(scan_dir, 90), i)
+			if (start_turf?.opacity)
+				continue
+			var/turf/target_turf = get_steps(src, scan_dir, 5) //apparently all directional lights are exactly 5 tiles long??
+			if(target_turf)
+				var/turf/reached_turf = getlineopaqueblocked(src,target_turf)
+				turfs += block(start_turf, reached_turf)
+
+		for (var/turf/T in turfs)
+			for (var/atom/movable/thing in T.contents) //find something with a directional light
+				for (var/obj/overlay/simple_light/medium/directional/light in thing.mdir_lights)
+					if (light.invisibility != INVIS_NONE)
+						continue
+					//this assumes that lights always point in the same direction as their parent object, but lights don't seem to store dir so :iiam:
+					var/turf/light_target = locate(T.x + round((light.pixel_x + 32)/32), T.y + round((light.pixel_y + 32)/32), T.z)
+					var/dist = GET_DIST(src, light_target)
+					if (dist <= 1)
+						return TRUE

@@ -49,6 +49,9 @@ toxic - poisons
 
 	hit_mob_sound = 'sound/impact_sounds/Flesh_Stab_2.ogg'
 
+	/// can it ricochet off a wall?
+	var/ricochets = FALSE
+
 //no caliber
 /datum/projectile/bullet/staple
 	name = "staple"
@@ -82,6 +85,7 @@ toxic - poisons
 	casing = /obj/item/casing/small
 	impact_image_state = "bhole-small"
 	silentshot = 1 // It's supposed to be a stealth weapon, right (Convair880)?
+	ricochets = TRUE
 
 /datum/projectile/bullet/bullet_22/smartgun
 	shot_sound = 'sound/weapons/smartgun.ogg'
@@ -93,6 +97,7 @@ toxic - poisons
 	damage_type = D_KINETIC
 	hit_type = DAMAGE_CUT
 	implanted = /obj/item/implant/projectile/bullet_22HP
+	ricochets = TRUE
 
 /datum/projectile/bullet/custom
 	name = "bullet"
@@ -115,6 +120,7 @@ toxic - poisons
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
+	ricochets = TRUE
 
 	armor_piercing
 		damage_type = D_PIERCING
@@ -146,6 +152,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 	fullauto_valid = 1
+	ricochets = TRUE
 
 /datum/projectile/bullet/minigun/turret
 	damage = 15
@@ -163,6 +170,7 @@ toxic - poisons
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
+	ricochets = TRUE
 
 /datum/projectile/bullet/rifle_3006
 	name = "bullet"
@@ -276,6 +284,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_308
 	casing = /obj/item/casing/rifle
 	var/slow = 1
+	ricochets = TRUE
 
 	on_hit(atom/hit, direction, obj/projectile/P)
 		if(slow && ishuman(hit))
@@ -310,6 +319,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
 	impact_image_state = "bhole-small"
+	ricochets = TRUE
 
 	smg
 		damage = 20
@@ -373,6 +383,7 @@ toxic - poisons
 	impact_image_state = "bhole-small"
 	implanted = /obj/item/implant/projectile/bullet_9mm
 	casing = /obj/item/casing/small
+	ricochets = TRUE
 
 /datum/projectile/bullet/veritate/burst
 	sname = "burst fire"
@@ -390,6 +401,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_357
 	impact_image_state = "bhole-small"
 	casing = /obj/item/casing/medium
+	ricochets = TRUE
 
 /datum/projectile/bullet/revolver_357/AP
 	damage = 50
@@ -414,6 +426,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_38
 	impact_image_state = "bhole-small"
 	casing = /obj/item/casing/medium
+	ricochets = TRUE
 
 /datum/projectile/bullet/revolver_38/lb
 	shot_sound = 'sound/weapons/lb_execute.ogg'
@@ -434,6 +447,7 @@ toxic - poisons
 	ie_type = "T"
 	hit_type = null
 	impact_image_state = null // stun bullets shouldn't actually enter walls should they?
+	ricochets = FALSE
 
 //0.393
 /datum/projectile/bullet/foamdart
@@ -525,6 +539,7 @@ toxic - poisons
 	implanted = /obj/item/implant/projectile/bullet_45
 	impact_image_state = "bhole-small"
 	casing = /obj/item/casing/medium
+	ricochets = TRUE
 
 //0.58
 /datum/projectile/bullet/flintlock
@@ -643,6 +658,7 @@ toxic - poisons
 	dissipation_rate = 5
 	dissipation_delay = 8
 	damage_type = D_KINETIC
+	ricochets = TRUE
 
 /datum/projectile/bullet/grenade_fragment
 	name = "grenade fragment"
@@ -654,6 +670,7 @@ toxic - poisons
 	dissipation_rate = 5
 	dissipation_delay = 8
 	damage_type = D_KINETIC
+	ricochets = TRUE
 
 /datum/projectile/bullet/buckshot // buckshot pellets generates by shotguns
 	name = "buckshot"
@@ -673,6 +690,7 @@ toxic - poisons
 	dissipation_delay = 4
 	damage_type = D_SLASHING
 	casing = /obj/item/casing/shotgun/gray
+	ricochets = TRUE
 
 //for makeshift shotgun shells- don't ever use these directly, use the spreader projectiles in special.dm
 
@@ -1403,12 +1421,14 @@ datum/projectile/bullet/autocannon
     var/easemult = 0.
 
     var/auto_find_targets = 1
+    var/list/targets = list()
     var/homing_active = 1
 
     var/desired_x = 0
     var/desired_y = 0
 
     var/rotate_proj = 1
+    var/max_rotation_rate = 1
     var/face_desired_dir = 0
 
     precalculated = FALSE
@@ -1422,6 +1442,10 @@ datum/projectile/bullet/autocannon
             for(var/mob/M in view(P,15))
                 if (M == P.shooter) continue
                 P.targets += M
+
+        if (length(src.targets))
+            P.targets = src.targets
+            src.targets = list()
 
     proc/calc_desired_x_y(var/obj/projectile/P)
         .= 0
@@ -1454,7 +1478,7 @@ datum/projectile/bullet/autocannon
                     angle_diff -= 360
                 else if (angle_diff < -180)
                     angle_diff += 360
-                angle_diff = -clamp(angle_diff, -1, 1)
+                angle_diff = -clamp(angle_diff, -src.max_rotation_rate, src.max_rotation_rate)
                 P.rotateDirection(angle_diff)
 
         ..()
@@ -1491,6 +1515,48 @@ datum/projectile/bullet/autocannon
 			T.hotspot_expose(700,125)
 			explosion_new(null, T, 15, range_cutoff_fraction = 0.45)
 		return
+
+/datum/projectile/bullet/homing/pod_seeking_missile
+	name = "pod-seeking missile"
+	window_pass = 0
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "pod_seeking_missile"
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_BLUNT
+	damage = 15
+	dissipation_delay = 30
+	cost = 1
+	shot_sound = 'sound/weapons/rocket.ogg'
+	impact_image_state = "bhole-large"
+
+	max_rotation_rate = 7
+	max_speed = 30
+	start_speed = 30
+	shot_delay = 1 SECONDS
+	auto_find_targets = FALSE
+
+	on_launch()
+		..()
+		for (var/obj/machinery/vehicle/pod in src.targets)
+			var/message = "Pod-seeking missile lock-on detected!"
+			for(var/mob/M in pod)
+				M.playsound_local(src, 'sound/machines/whistlealert.ogg', 25)
+				boutput(M, pod.ship_message(message))
+
+	on_hit(atom/hit)
+		if (istype(hit, /obj/critter/gunbot/drone) || istype(hit, /obj/machinery/vehicle/miniputt) || istype(hit, /obj/machinery/vehicle/pod_smooth)|| istype(hit, /obj/machinery/vehicle/tank))
+			explosion_new(null, get_turf(hit), 12)
+
+			if(istype(hit, /obj/machinery/vehicle))
+				var/obj/machinery/vehicle/vehicle = hit
+				vehicle.health -= vehicle.maxhealth / 4
+
+		else
+			new /obj/effects/rendersparks(hit.loc)
+			if(ishuman(hit))
+				var/mob/living/carbon/human/M = hit
+				boutput(M, "<span class='alert'>You are struck by a [src.name]! Thankfully it was not armed.</span>")
+				M.do_disorient(stunned = 40)
 
 /datum/projectile/bullet/antisingularity
 	name = "Singularity buster rocket"
@@ -1601,6 +1667,17 @@ datum/projectile/bullet/autocannon
 	casing = null
 	impact_image_state = "bhole-staple"
 
+	shrapnel_implant
+		implanted = /obj/item/implant/projectile/shrapnel
+
+/datum/projectile/bullet/glass_shard // for explosions of glass
+	name = "glass"
+	damage_type = D_PIERCING
+	icon_state = "glass"
+	implanted = /obj/item/implant/projectile/glass_shard
+	window_pass = FALSE
+	damage = 6
+
 /datum/projectile/bullet/howitzer
 	name = "howitzer round"
 	brightness = 0.7
@@ -1655,7 +1732,7 @@ datum/projectile/bullet/autocannon
 		for(var/atom/a in hit)
 			a.icon_state = pick(icon_states(a.icon))
 
-		playsound(hit, 'sound/machines/glitch3.ogg', 50, 1)
+		playsound(hit, 'sound/machines/glitch3.ogg', 50, TRUE)
 
 /datum/projectile/bullet/glitch/gun
 	damage = 1
@@ -1710,7 +1787,7 @@ datum/projectile/bullet/autocannon
 			if(istype(H.wear_mask, /obj/item/clothing/mask/clown_hat))
 				clown_tally += 1
 			if(clown_tally > 0)
-				playsound(H, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)
+				playsound(H, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE)
 
 			if (H.job == "Clown" || clown_tally >= 2)
 				H.drop_from_slot(H.shoes)

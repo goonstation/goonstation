@@ -72,10 +72,11 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 /datum/materialProc/ffart_pickup
 	execute(var/mob/M, var/obj/item/I)
-		SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
-			if(I in M.get_all_items_on_mob())
-				M.remove_item(I)
-				I.set_loc(get_turf(I))
+		if(!I.cant_drop)
+			SPAWN(2 SECOND) //1 second is a little to harsh to since it slips right out of the nanofab/cruicble
+				if(I in M.get_all_items_on_mob())
+					M.remove_item(I)
+					I.set_loc(get_turf(I))
 		return
 
 /datum/materialProc/brullbar_temp_onlife
@@ -144,14 +145,12 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/generic_fireflash
-	var/lastTrigger = 0
-
-	execute(var/atom/location, var/temp)
+	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 200)
 			return
-		if(world.time - lastTrigger < 1200) return
-		lastTrigger = world.time
-		fireflash(get_turf(location), 1)
+		if(ON_COOLDOWN(owner, "generic_mat_fireflash", 120 SECONDS))
+			return
+		fireflash(get_turf(owner), 1)
 		return
 
 /datum/materialProc/generic_itchy_onlife
@@ -256,41 +255,35 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/generic_explosive
-	var/lastTrigger = 0
-
-	execute(var/atom/location, var/temp)
+	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 100)
 			return
-		if(world.time - lastTrigger < 100) return
-		lastTrigger = world.time
-		var/turf/tloc = get_turf(location)
-		explosion(location, tloc, 1, 2, 3, 4)
-		location.visible_message("<span class='alert'>[location] explodes!</span>")
+		if(ON_COOLDOWN(owner, "generic_mat_explosive", 10 SECONDS))
+			return
+		var/turf/tloc = get_turf(owner)
+		explosion(owner, tloc, 1, 2, 3, 4)
+		owner.visible_message("<span class='alert'>[owner] explodes!</span>")
 		return
 
 /datum/materialProc/flash_hit
-	var/last_trigger = 0
 	desc = "Every now and then it produces some bright sparks."
 
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked, var/atom/weapon)
-		if((world.time - last_trigger) >= 600)
-			last_trigger = world.time
-			attacked.visible_message("<span class='alert'>[owner] emits a flash of light!</span>")
-			for (var/mob/living/carbon/M in all_viewers(5, attacked))
-				M.apply_flash(8, 0, 0, 0, 3)
-		return
+		if(ON_COOLDOWN(owner, "mat_flash_hit", 60 SECONDS))
+			return
+		attacked.visible_message("<span class='alert'>[owner] emits a flash of light!</span>")
+		for (var/mob/living/carbon/M in all_viewers(5, attacked))
+			M.apply_flash(8, 0, 0, 0, 3)
 
 /datum/materialProc/smoke_hit
 	desc = "Faint wisps of smoke rise from it."
-	var/last_trigger = 0
 
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked, var/atom/weapon)
-		if((world.time - last_trigger) >= 200)
-			last_trigger = world.time
-			attacked.visible_message("<span class='alert'>[owner] emits a puff of smoke!</span>")
-			for(var/turf/T in view(1, attacked))
-				harmless_smoke_puff(get_turf(T))
-		return
+		if(ON_COOLDOWN(owner, "mat_flash_hit", 20 SECONDS))
+			return
+		attacked.visible_message("<span class='alert'>[owner] emits a puff of smoke!</span>")
+		for(var/turf/T in view(1, attacked))
+			harmless_smoke_puff(get_turf(T))
 
 /datum/materialProc/gold_add
 	desc = "It's very shiny."
@@ -319,23 +312,21 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 	execute(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		var/turf/T = get_turf(attacked)
 		var/mob/attacked_mob = attacked
-		if(!attacked_mob || attacked_mob.anchored || ON_COOLDOWN(attacked_mob, "telecrystal_warp", 1 SECOND))
+		if(!istype(attacked_mob) || attacked_mob.anchored || ON_COOLDOWN(attacked_mob, "telecrystal_warp", 1 SECOND))
 			return
-		if(prob(33))
-			if(istype(attacked_mob) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
-				. = get_offset_target_turf(get_turf(attacked_mob), rand(-8, 8), rand(-8, 8))
-				var/fail_msg = ""
-				if (prob(25) && attacker == attacked_mob && isitem(owner))
-					var/obj/item/used_item = owner
-					fail_msg = " but you lose [used_item]!"
-					attacker.drop_item(used_item)
-					playsound(attacker.loc, 'sound/effects/poof.ogg', 90)
-				else
-					playsound(attacker.loc, "warp", 50)
-				attacked_mob.visible_message("<span class='alert'>[attacked_mob] is warped away!</span>")
-				boutput(attacked_mob, "<span class='alert'>You suddenly teleport... [fail_msg]</span>")
-				attacked_mob.set_loc(.)
-		return
+		if(prob(33) && !isrestrictedz(T.z)) // Haine fix for undefined proc or verb /turf/simulated/floor/set loc()
+			. = get_offset_target_turf(get_turf(attacked_mob), rand(-8, 8), rand(-8, 8))
+			var/fail_msg = ""
+			if (prob(25) && attacker == attacked_mob && isitem(owner))
+				var/obj/item/used_item = owner
+				fail_msg = " but you lose [used_item]!"
+				attacker.drop_item(used_item)
+				playsound(attacker.loc, 'sound/effects/poof.ogg', 90)
+			else
+				playsound(attacker.loc, "warp", 50)
+			attacked_mob.visible_message("<span class='alert'>[attacked_mob] is warped away!</span>")
+			boutput(attacked_mob, "<span class='alert'>You suddenly teleport... [fail_msg]</span>")
+			attacked_mob.set_loc(.)
 
 /datum/materialProc/telecrystal_life
 	execute(var/mob/M, var/obj/item/I, mult)
@@ -432,7 +423,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 
 			//sparkles
 			animate_flash_color_fill_inherit(owner,"#ff0000",4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakagentb.ogg', 50, 1, 8)
+			playsound(owner, 'sound/effects/leakagentb.ogg', 50, TRUE, 8)
 			if(!particleMaster.CheckSystemExists(/datum/particleSystem/sparklesagentb, owner))
 				particleMaster.SpawnSystem(new /datum/particleSystem/sparklesagentb(owner))
 		else //no plasma present, or this is just normal molitz - you get just plain oxygen
@@ -441,7 +432,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			air.merge(payload) //add it to the target air
 			//blue sparkles
 			animate_flash_color_fill_inherit(owner,"#0000FF",4, 2 SECONDS)
-			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
+			playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 
 
 		molitz.setProperty("molitz_bubbles", iterations-1)
@@ -467,9 +458,9 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		var/turf/target = get_turf(owner)
 		if(sev > 0 && sev < 4) // Use pipebombs not canbombs!
 			if(iterations >= 1)
-				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, 1, 5)
+				playsound(owner, 'sound/effects/leakoxygen.ogg', 50, TRUE, 5)
 			if(iterations == 0)
-				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, 1, 5)
+				playsound(owner, 'sound/effects/molitzcrumble.ogg', 50, TRUE, 5)
 			var/datum/gas_mixture/payload = new /datum/gas_mixture
 			payload.oxygen = 50
 			payload.temperature = T20C
@@ -514,35 +505,31 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 		return
 
 /datum/materialProc/erebite_temp
-	var/lastTrigger = 0
-
-	execute(var/atom/location, var/temp)
+	execute(var/atom/owner, var/temp)
 		if(temp < T0C + 900) return
-		if(world.time - lastTrigger < 100) return
-		lastTrigger = world.time
+		if(ON_COOLDOWN(owner, "erebite_temp", 10 SECONDS))
+			return
 		if((temp < T0C + 1200) && prob(80)) return //some leeway for triggering at lower temps
-		var/turf/tloc = get_turf(location)
-		explosion(location, tloc, 0, 1, 2, 3)
-		location.visible_message("<span class='alert'>[location] explodes!</span>")
+		var/turf/tloc = get_turf(owner)
+		explosion(owner, tloc, 0, 1, 2, 3)
+		owner.visible_message("<span class='alert'>[owner] explodes!</span>")
 		return
 
 /datum/materialProc/erebite_exp
-	var/lastTrigger = 0
-
-	execute(var/atom/location, var/sev)
-		if(world.time - lastTrigger < 100) return
-		lastTrigger = world.time
-		var/turf/tloc = get_turf(location)
+	execute(var/atom/owner, var/sev)
+		if(ON_COOLDOWN(owner, "erebite_exp", 10 SECONDS))
+			return
+		var/turf/tloc = get_turf(owner)
 		if(sev > 0 && sev < 4)
-			location.visible_message("<span class='alert'>[location] explodes!</span>")
+			owner.visible_message("<span class='alert'>[owner] explodes!</span>")
 			switch(sev)
 				if(1)
-					explosion(location, tloc, 0, 1, 2, 3)
+					explosion(owner, tloc, 0, 1, 2, 3)
 				if(2)
-					explosion(location, tloc, -1, 0, 1, 2)
+					explosion(owner, tloc, -1, 0, 1, 2)
 				if(3)
-					explosion(location, tloc, -1, -1, 0, 1)
-			qdel(location)
+					explosion(owner, tloc, -1, -1, 0, 1)
+			qdel(owner)
 		return
 
 /datum/materialProc/slippery_attack
@@ -560,7 +547,7 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/L = entering
 			if(L.slip(walking_matters = 1))
 				boutput(L, "You slip on the icy floor!")
-				playsound(owner, 'sound/misc/slip.ogg', 30, 1)
+				playsound(owner, 'sound/misc/slip.ogg', 30, TRUE)
 		return
 
 /datum/materialProc/ice_life
@@ -571,22 +558,20 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 			var/mob/living/carbon/C = M
 			if (C.bodytemperature > 0)
 				C.bodytemperature -= 2
-			if (C.bodytemperature > 100 && probmult(4))
+			if (C.bodytemperature > T0C && probmult(4))
 				boutput(C, "Your [I] melts from your body heat!")
 				qdel(I)
 		return
 
 /datum/materialProc/soulsteel_entered
-	var/lastTrigger = 0
 	execute(var/obj/item/owner, var/atom/movable/entering)
 		if (!isobj(owner)) return
 		if (istype(entering, /mob/dead/observer) && prob(33))
 			var/mob/dead/observer/O = entering
 			if(O.observe_round) return
-			if(world.time - lastTrigger < 1800)
+			if(ON_COOLDOWN(owner, "soulsteel_revive", 3 MINUTES))
 				boutput(entering, "<span class='alert'>[owner] can not be possessed again so soon!</span>")
 				return
-			lastTrigger = world.time
 			var/mob/mobenter = entering
 			logTheThing(LOG_COMBAT, mobenter, "soulsteel-possesses [owner] at [log_loc(owner)].")
 			if(mobenter.client)
@@ -595,8 +580,6 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				OB.max_health = 8
 				OB.canspeak = 0
 				OB.show_antag_popup("soulsteel")
-
-		return
 
 /datum/materialProc/reflective_onbullet
 	execute(var/atom/owner, var/atom/attacked, var/obj/projectile/projectile)
@@ -749,3 +732,13 @@ triggerOnEntered(var/atom/owner, var/atom/entering)
 				attacker.visible_message("<span class='alert'>Cuts apart [owner], revealing space!</span>","<span class='alert'>You finish cutting apart [owner], revealing space.</span>","The sound of cutting cardboard stops.")
 				floor_owner.ReplaceWithSpace()
 				return
+
+/datum/materialProc/glowstick_add
+	desc = "It has a chemical glow."
+	max_generations = 1
+	var/datum/component/loctargeting/sm_light/light_c
+
+	execute(var/atom/owner)
+		var/list/color = rgb2num(owner.material.getColor())
+		light_c = owner.AddComponent(/datum/component/loctargeting/sm_light, color[1], color[2], color[3], 255 * 0.33)
+		light_c.update(1)

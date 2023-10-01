@@ -378,11 +378,8 @@
 			if (nectarTransferAmt <= 0)
 				return
 
-			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents)))
-				var/list/additional_reagents = planter.current.assoc_reagents
-				if (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents))
-					additional_reagents = additional_reagents | planter.plantgenes.mutation.assoc_reagents
-
+			var/list/additional_reagents = HYPget_assoc_reagents(planter.current, planter.plantgenes)
+			if (length(additional_reagents))
 				planter.reagents.remove_reagent("nectar", nectarTransferAmt*0.75)
 				user.reagents.add_reagent("honey", nectarTransferAmt*0.75)
 				for (var/X in additional_reagents)
@@ -675,7 +672,7 @@
 			..()
 
 /mob/living/critter/small_animal/bee/buddy
-	name = "B-33"
+	name = "\improper B-33"
 	desc = "It appears to be a hybrid of a domestic space-bee and a PR-6 Robuddy. How is that even possible?"
 	icon_state = "buddybee-wings"
 	icon_state_dead = "buddybee-dead"
@@ -1059,7 +1056,7 @@
 	non_admin_bee_allowed = 1
 
 /mob/living/critter/small_animal/bee/ascbee
-	name = "ASCBee"
+	name = "\improper ASCBee"
 	desc = "This bee looks rather... old school."
 	icon_body = "ascbee"
 	icon_state = "ascbee-wings"

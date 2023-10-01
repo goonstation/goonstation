@@ -205,7 +205,7 @@
 	New()
 		. = ..()
 		src.appearance_flags |= KEEP_TOGETHER
-		var/image/blood_overlay = image('icons/effects/blood.dmi', "itemblood")
+		var/image/blood_overlay = image('icons/obj/decals/blood/blood.dmi', "itemblood")
 		blood_overlay.appearance_flags = PIXEL_SCALE | RESET_COLOR
 		blood_overlay.color = "#ff0000"
 		blood_overlay.alpha = 150

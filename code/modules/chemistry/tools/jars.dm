@@ -40,6 +40,10 @@
 			boutput(user, "<span class='alert'>You can't seem to fit [grab.affecting] into \the [src].</span>")
 			return
 
+		if(W.contraband)
+			boutput(user, "<span class='alert'>[W] is too illegal to fit into the jar.</span>")
+			return
+
 		if(W.cant_drop)
 			boutput(user, "<span class='alert'>You can't put that in the jar.</span>")
 			return
@@ -52,6 +56,18 @@
 		W.set_loc(src)
 		user.visible_message("<span class='notice'><b>[user]</b> puts [W] into [src].</span>", "<span class='notice'>You stuff [W] into [src].</span>")
 		src.UpdateIcon()
+		src.update()
+
+	proc/update()
+		src.w_class = initial(src.w_class)
+		for(var/obj/item/item in src)
+			src.w_class = max(src.w_class, item.w_class)
+		var/obj/loc_storage = src.loc
+		if(loc_storage.storage)
+			if(loc_storage.storage.max_wclass < src.w_class)
+				var/turf/T = get_turf(src)
+				src.set_loc(T)
+				src.visible_message("<span class='alert'>[src] is too full to fit into [loc_storage] and tubmles onto [T].</span>")
 
 	get_desc(dist, mob/user)
 		. = ..()
@@ -94,6 +110,7 @@
 		user.put_in_hand_or_drop(yoinked_out_thing)
 		user.visible_message("<span class='notice'><b>[user]</b> pulls [yoinked_out_thing] out of [src].</span>","<span class='notice'>You pull [yoinked_out_thing] out of [src].</span>")
 		src.UpdateIcon()
+		src.update()
 		return TRUE
 
 	on_reagent_change()

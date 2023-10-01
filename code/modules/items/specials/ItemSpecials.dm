@@ -391,7 +391,7 @@
 			sleep(0.2)
 
 		afterUse(user)
-		playsound(master, 'sound/impact_sounds/Rush_Slash.ogg', 50, 0)
+		playsound(master, 'sound/impact_sounds/Rush_Slash.ogg', 50, FALSE)
 		return
 
 /datum/item_special/throwing
@@ -416,7 +416,7 @@
 				copy.set_loc(step)
 				copy.throw_at(target, 20, 3, params)
 				afterUse(usr)
-				playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 		return
 
 /datum/item_special/simple
@@ -458,7 +458,7 @@
 			afterUse(user)
 
 			if (!hit)
-				playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 		return
 
 	kendo_light
@@ -529,7 +529,7 @@
 
 			afterUse(user)
 			if (!hit)
-				playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 		return
 
 	kendo_thrust
@@ -637,9 +637,9 @@
 			afterUse(user)
 			if (!hit)
 				if (!ignition)
-					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 				else
-					playsound(master, 'sound/effects/flame.ogg', 50, 0)
+					playsound(master, 'sound/effects/flame.ogg', 50, FALSE)
 		return
 
 	csaber //no stun and less damage than normal csaber hit ( see sword/attack() )
@@ -798,7 +798,7 @@
 						A.throw_at(get_edge_target_turf(A,direction), 5, 3)
 
 			afterUse(user)
-			playsound(master, 'sound/effects/exlow.ogg', 50, 0)
+			playsound(master, 'sound/effects/exlow.ogg', 50, FALSE)
 		return
 
 /datum/item_special/slam/no_item_attack //slam without item attackby
@@ -845,7 +845,7 @@
 						A.throw_at(get_edge_target_turf(A,direction), 5, 3)
 
 			afterUse(user)
-			playsound(user, 'sound/effects/exlow.ogg', 50, 0)
+			playsound(user, 'sound/effects/exlow.ogg', 50, FALSE)
 		return
 
 
@@ -874,7 +874,7 @@
 
 			showEffect("whirlwind", NORTH)
 			afterUse(usr)
-			playsound(master, 'sound/effects/swoosh_double.ogg', 100, 0)
+			playsound(master, 'sound/effects/swoosh_double.ogg', 100, FALSE)
 		return
 
 //Disarm and Harm are odd ones out. They have no master item, they are attached to a limb. As such, some vars (like all of our item damage/crit modifiers) won't affect these. See the top of the limb.dm file if you want to adjust how they are enacted
@@ -926,7 +926,7 @@
 			afterUse(user)
 
 			if (!hit)
-				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0)
+				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, FALSE)
 		return
 
 /datum/item_special/harm
@@ -974,7 +974,7 @@
 			afterUse(user)
 
 			if (!hit)
-				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0)
+				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, FALSE)
 		return
 
 /datum/item_special/swipe/limb //meant for use on limbs
@@ -1023,7 +1023,7 @@
 
 			afterUse(user)
 			if (!hit)
-				playsound(user, 'sound/effects/swoosh.ogg', 50, 0)
+				playsound(user, 'sound/effects/swoosh.ogg', 50, FALSE)
 		return
 
 ABSTRACT_TYPE(/datum/item_special/spark)
@@ -1079,7 +1079,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 							break
 			afterUse(user)
 			//if (!hit)
-			playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
+			playsound(master, 'sound/effects/sparks6.ogg', 70, FALSE)
 		return 1
 
 
@@ -1092,7 +1092,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			var/mob/M = hit
 			M.TakeDamage("chest", 0, rand(2 * mult, 5 * mult), 0, DAMAGE_BLUNT)
 			M.bodytemperature += (4 * mult)
-			playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+			playsound(hit, 'sound/effects/electric_shock.ogg', 60, TRUE, 0.1, 2.8)
 
 		logTheThing(LOG_COMBAT, usr, "'s spark special attack hits [constructTarget(hit,"combat")] at [log_loc(hit)].")
 
@@ -1101,7 +1101,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		if(user.a_intent != INTENT_DISARM) return //only want this to deploy on disarm intent
 		if(!istype(master, /obj/item/baton) || get_dist_pixel_squared(user, target, params) <= ITEMSPECIAL_PIXELDIST_SQUARED) return
 		if(!master:can_stun())
-			playsound(master, 'sound/weapons/Gunclick.ogg', 50, 0, 0.1, 2)
+			playsound(master, 'sound/weapons/Gunclick.ogg', 50, FALSE, 0.1, 2)
 			return
 		..()
 		if(master && istype(master, /obj/item/baton))
@@ -1162,7 +1162,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 					hit = 1
 					break
 			if (!hit)
-				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
+				playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, FALSE, 0.1, 1.4)
 
 			SPAWN(secondhitdelay)
 
@@ -1177,7 +1177,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						hit = 1
 						break
 				if (!hit)
-					playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, 0, 0.1, 1.4)
+					playsound(user, 'sound/impact_sounds/Generic_Swing_1.ogg', 40, FALSE, 0.1, 1.4)
 
 			afterUse(user)
 
@@ -1319,10 +1319,10 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						crit.blob_act(8) //REMOVE WHEN WE ADD BURNING OBJCRITTERS
 					break
 
-				playsound(master, 'sound/effects/flame.ogg', 50, 0)
+				playsound(master, 'sound/effects/flame.ogg', 50, FALSE)
 			else
 				turf.hotspot_expose(T0C + 50, 50)
-				playsound(master, 'sound/effects/spark_lighter.ogg', 50, 0)
+				playsound(master, 'sound/effects/spark_lighter.ogg', 50, FALSE)
 
 			afterUse(user)
 		return
@@ -1423,15 +1423,15 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 					//fake harmbaton it
 					A.Attackby(master, user, params, 1)
 					hit = 1
-					playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
+					playsound(master, 'sound/effects/sparks6.ogg', 70, FALSE)
 					break
 
 			afterUse(user)
 			if (!hit)
 				if (E.type == /obj/itemspecialeffect/simple)
-					playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
+					playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 				else
-					playsound(master, 'sound/effects/sparks1.ogg', 70, 0)
+					playsound(master, 'sound/effects/sparks1.ogg', 70, FALSE)
 
 		return
 
@@ -1453,7 +1453,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 				var/mob/M = hit
 				M.TakeDamage("chest", 0, rand(2 * mult,5 * mult), 0, DAMAGE_BLUNT)
 				M.bodytemperature += (4 * mult)
-				playsound(hit, 'sound/effects/electric_shock.ogg', 60, 1, 0.1, 2.8)
+				playsound(hit, 'sound/effects/electric_shock.ogg', 60, TRUE, 0.1, 2.8)
 			logTheThing(LOG_COMBAT, usr, "'s spark special attack hits [constructTarget(hit,"combat")] at [log_loc(hit)].")
 
 /datum/item_special/katana_dash
@@ -1558,7 +1558,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 					break
 			afterUse(user)
 			//if (!hit)
-			playsound(master, 'sound/effects/sparks6.ogg', 70, 0)
+			playsound(master, 'sound/effects/sparks6.ogg', 70, FALSE)
 		return
 
 	proc/on_hit(var/mob/hit)
@@ -1690,7 +1690,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 			afterUse(user)
 			//if (!hit)
-			playsound(user, 'sound/effects/swoosh.ogg', 40, 1, pitch = 2.3)
+			playsound(user, 'sound/effects/swoosh.ogg', 40, TRUE, pitch = 2.3)
 		return
 
 /datum/item_special/nunchucks
@@ -1750,7 +1750,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 			afterUse(user)
 			if (!hit)
-				playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 		return
 
 
@@ -1806,7 +1806,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 						tile.throw_at(target, tile.throw_range, tile.throw_speed, params, bonus_throwforce = 3)
 
 			if (!hit)
-				playsound(master, 'sound/effects/swoosh.ogg', 50, 0)
+				playsound(master, 'sound/effects/swoosh.ogg', 50, FALSE)
 		return
 
 /obj/itemspecialeffect

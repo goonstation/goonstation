@@ -7,20 +7,6 @@
 #define ABSTRACT_VIOLATION_CRASH
 #endif
 
-#ifdef IM_REALLY_IN_A_FUCKING_HURRY_HERE
-#define SKIP_FEA_SETUP 1
-#define SKIP_Z5_SETUP 1
-#define SKIP_PLANETS_SETUP 1
-#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME 1 //Skip changelogs
-#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO 1 //Automatically ready up and start the game ASAP. No input required.
-#endif
-
-#ifndef IM_REALLY_IN_A_FUCKING_HURRY_HERE
-#define SKIP_FEA_SETUP 0 //Skip atmos setup
-#define SKIP_Z5_SETUP 0 //Skip z5 gen
-#define SKIP_PLANETS_SETUP 0
-#endif
-
 // Server side profiler stuff for when you want to profile how laggy the game is
 // FULL_ROUND
 //   Start profiling immediately, save profiler data when world is rebooting (data/profile/xxxxxxxx-full.log)
@@ -64,18 +50,21 @@
 
 #if (BUILD_TIME_MONTH == 10)
 #define HALLOWEEN 1
-#elif (BUILD_TIME_MONTH == 9) || (BUILD_TIME_MONTH == 10) || (BUILD_TIME_MONTH == 11)
+#endif
+#if (BUILD_TIME_MONTH == 9) || (BUILD_TIME_MONTH == 10) || (BUILD_TIME_MONTH == 11)
 #define AUTUMN 1
-#elif (BUILD_TIME_MONTH == 12)
+#endif
+#if (BUILD_TIME_MONTH == 12)
 #define XMAS 1
-#elif (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 1)
+#endif
+#if (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 1)
 #define CANADADAY 1
 #endif
 
 // other toggles
 
 #define FOOTBALL_MODE 1
-#define ENABLE_ARTEMIS 0
+//#define ENABLE_ARTEMIS
 //#define RP_MODE
 
 #ifdef Z_LOG_ENABLE

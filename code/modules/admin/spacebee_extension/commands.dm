@@ -288,7 +288,19 @@
 		for(var/client/C)
 			if (C.ckey == ckey)
 				var/mob/M = C.mob
-				if (M && ismob(M) && !isAI(M) && !isobserver(M))
+				var/area/A = get_area(M)
+				if (ismob(M) && istype(A, /area/prison/cell_block/wards))
+					var/ASLoc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
+					if (ASLoc)
+						M.set_loc(ASLoc)
+
+					M.show_text("<h2><font color=red><b>You have been unprisoned and sent back to the station.</b></font></h2>", "red")
+					logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
+					logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
+					system.reply("Unprisoned [ckey].", user)
+					return
+
+				else if (M && ismob(M) && !isAI(M) && !isobserver(M))
 					var/prison = pick_landmark(LANDMARK_PRISONWARP)
 					if (prison)
 						M.changeStatus("paralysis", 8 SECONDS)
@@ -482,7 +494,6 @@
 			target.mind.damned = 0
 			target.mind.transfer_to(newM)
 		target.mind = null
-		newM.Login()
 		newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 		qdel(target)
 

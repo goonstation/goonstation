@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { clamp01, scale, keyOfMatchingRange, toFixed } from 'common/math';
+import { clamp01, keyOfMatchingRange, scale, toFixed } from 'common/math';
 import { classes, pureComponentHooks } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { CSS_COLORS } from '../constants';

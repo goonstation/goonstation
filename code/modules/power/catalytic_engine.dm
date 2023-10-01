@@ -170,7 +170,7 @@
 	var/obj/overlay/ovr_clamp
 
 	///Directionality to be given to overlays; should be 4 for right unit and 8 for left
-	var/overlay_dir = 1
+	var/overlay_dir = NORTH
 	///Rod condition reference for overlay; should update when rod is expended
 	var/rod_condition = 100
 	///Rod viability reference for overlay; should update when rod is installed, based on viability for the unit type
@@ -190,7 +190,7 @@
 	left
 		name = "catalytic anode unit"
 		icon_state = "base-l"
-		overlay_dir = 8
+		overlay_dir = WEST
 		gentype = GEN_ANODE
 
 		populated
@@ -199,7 +199,7 @@
 	right
 		name = "catalytic cathode unit"
 		icon_state = "base-r"
-		overlay_dir = 4
+		overlay_dir = EAST
 		gentype = GEN_CATHODE
 
 		populated
@@ -232,7 +232,7 @@
 			if(src.contained_rod)
 				if(src.toggling) return
 				boutput(user, "<span class='notice'>You [ejected_by_bot ? "eject" : "remove"] \the [contained_rod] from [src]'s retention clamp.</span>")
-				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 				src.contained_rod.UpdateIcon()
 				if(ejected_by_bot)
 					src.contained_rod.set_loc(src.loc)
@@ -253,7 +253,7 @@
 			if(!src.contained_rod)
 				if(src.toggling) return
 				boutput(user, "<span class='notice'>You insert \the [I] into [src]'s retention clamp.</span>")
-				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 				user.u_equip(I)
 				I.set_loc(src)
@@ -285,7 +285,7 @@
 			if(!src.contained_rod)
 				if(src.toggling) return
 				boutput(user, "<span class='notice'>You insert \the [O] into [src]'s retention clamp.</span>")
-				playsound(src, 'sound/items/Deconstruct.ogg', 40, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 				O.set_loc(src)
 				src.contained_rod = O
@@ -324,7 +324,7 @@
 
 			src.ovr_door.icon_state = "nonvis"
 			flick("door-open",src.ovr_door)
-			playsound(src, 'sound/machines/sleeper_open.ogg', 40, 1)
+			playsound(src, 'sound/machines/sleeper_open.ogg', 40, TRUE)
 
 			if(src.contained_rod)
 				src.ovr_rod.icon_state = "rod-high"
@@ -349,7 +349,7 @@
 
 				src.ovr_door.icon_state = "door-shut"
 				flick("door-close",src.ovr_door)
-				playsound(src, 'sound/machines/sleeper_close.ogg', 40, 1)
+				playsound(src, 'sound/machines/sleeper_close.ogg', 40, TRUE)
 
 				SPAWN(0.6 SECONDS)
 
