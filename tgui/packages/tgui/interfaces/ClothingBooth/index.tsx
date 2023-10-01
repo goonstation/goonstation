@@ -1,6 +1,6 @@
 import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Dropdown, Section, Stack, Image } from '../../components';
+import { Box, Button, Divider, Dropdown, Image, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
 import { ClothingBoothData } from './type';
 

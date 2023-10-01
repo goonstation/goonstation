@@ -496,7 +496,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	critter_respawn
 		name = "Alt Ghost Critter"
 		cost = 1000
-		icon = 'icons/misc/critter.dmi'
+		icon = 'icons/mob/critter/robotic/boogie.dmi'
 		icon_state = "boogie"
 		var/list/respawn_critter_types = list(/mob/living/critter/small_animal/boogiebot/weak, /mob/living/critter/small_animal/figure/weak)
 

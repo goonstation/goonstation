@@ -721,6 +721,11 @@ TYPEINFO(/obj/machinery/clonepod)
 		src.operating = 0
 		src.attempting = 0
 
+		if (!src.occupant)
+			src.occupant = locate(/mob) in src
+		if (!src.occupant)
+			return
+
 		if ((src.occupant.max_health - src.occupant.health) > (heal_level + 30) && src.occupant.bioHolder)
 			// this seems to often not work right, changing 20 to 50
 			// changing to 30 and rewriting to consider the /damage/ someone has;

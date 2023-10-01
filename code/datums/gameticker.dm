@@ -642,10 +642,27 @@ var/global/current_state = GAME_STATE_INVALID
 			if (player.mind.assigned_role in wagesystem.jobs)
 				job_wage = wagesystem.jobs[player.mind.assigned_role]
 
+			var/job_wage_converted = 100
+			switch(job_wage)
+				if(0 to PAY_DUMBCLOWN)
+					job_wage_converted = 100
+				if(PAY_DUMBCLOWN+1 to PAY_UNTRAINED)
+					job_wage_converted = PAY_UNTRAINED
+				if(PAY_UNTRAINED+1 to PAY_TRADESMAN)
+					job_wage_converted = PAY_TRADESMAN
+				if(PAY_TRADESMAN+1 to PAY_DOCTORATE)
+					job_wage_converted = PAY_DOCTORATE
+				if(PAY_DOCTORATE+1 to PAY_IMPORTANT)
+					job_wage_converted = PAY_IMPORTANT
+				if(PAY_IMPORTANT+1 to INFINITY)
+					job_wage_converted = PAY_EXECUTIVE
+
+			job_wage = job_wage_converted
+
 			if (isrobot(player))
-				job_wage = 500
+				job_wage = PAY_DOCTORATE
 			if (isAI(player) || isshell(player))
-				job_wage = 900
+				job_wage = PAY_IMPORTANT
 
 			//if part-time, reduce wage
 			if (player.mind.join_time > 5400) //grace period of 9 mins after roundstart to be a full-time employee
@@ -780,6 +797,8 @@ var/global/current_state = GAME_STATE_INVALID
 	award_archived_round_xp()
 
 	logTheThing(LOG_DEBUG, null, "Spawned XP")
+
+	logTheThing(LOG_DEBUG, null, "Power Generation: [json_encode(station_power_generation)]")
 
 	SPAWN(0)
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")

@@ -1,10 +1,10 @@
-import { Table, Box } from "../../../components";
+import { Box, Table } from "../../../components";
 import { pluralize } from '../stringUtils';
 import {
-  DisplayTempImplantRowProps,
-  DisplayTemperatureProps,
   DisplayBloodPressureProps,
   DisplayBrainProps,
+  DisplayTemperatureProps,
+  DisplayTempImplantRowProps,
 } from './type';
 
 export const KeyHealthIndicators = props => {

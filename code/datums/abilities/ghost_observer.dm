@@ -583,10 +583,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return 1
 
 		start_spooking()
-		//////////////////////////////////////////////////////////////////////
-		sleep(time_to_manifest)
-		//////////////////////////////////////////////////////////////////////
-		stop_spooking()
+		SPAWN(time_to_manifest)
+			stop_spooking()
 
 
 

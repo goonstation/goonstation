@@ -830,7 +830,7 @@
 			var/saniStr = strip_html_tags(sanitize(html_encode(P.info)))
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,saniStr)
 			if(del_paper)
-				del(W)
+				qdel(W)
 			return 1
 		return 0
 

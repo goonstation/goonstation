@@ -8,7 +8,7 @@
 import { Fragment } from 'inferno';
 import { useBackend } from '../../backend';
 import { Box, Collapsible, Divider, Icon, ItemList, LabeledList, Section, Stack } from '../../components';
-import { AntagonistTabData, VerboseAntagonistProps, AntagonistStatisticsProps } from './type';
+import { AntagonistStatisticsProps, AntagonistTabData, VerboseAntagonistProps } from './type';
 
 export const AntagonistsTab = (props, context) => {
   const { data } = useBackend<AntagonistTabData>(context);

@@ -7,8 +7,8 @@
 */
 
 import { useBackend } from '../../backend';
-import { Icon, Section, Stack, Box } from '../../components';
-import { CrewTabData, GroupBlockProps, CrewMemberProps } from './type';
+import { Box, Icon, Section, Stack } from '../../components';
+import { CrewMemberProps, CrewTabData, GroupBlockProps } from './type';
 
 export const CrewTab = (props, context) => {
   const { data } = useBackend<CrewTabData>(context);

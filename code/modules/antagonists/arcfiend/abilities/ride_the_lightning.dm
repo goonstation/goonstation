@@ -33,7 +33,7 @@
 		for (var/i in 1 to length(src.cable_images))
 			var/image/cimg = image(cicon)
 			cimg.layer = 100
-			cimg.plane = 100
+			cimg.plane = PLANE_ABOVE_BLACKNESS
 			src.cable_images[i] = cimg
 
 	cast(atom/target)
@@ -81,7 +81,7 @@
 				img.invisibility = 0
 				img.alpha = 255
 				img.layer = 100
-				img.plane = 100
+				img.plane = PLANE_ABOVE_BLACKNESS
 				img.loc = locate(C.x, C.y, C.z)
 
 		src.holder.owner.client.images += src.cable_images
