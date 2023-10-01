@@ -52,25 +52,25 @@
 	north
 		icon_state = "camera"
 		sticky = FALSE
-		dir = NORTH
+		dir = SOUTH
+		pixel_y = 20
 
 	south
 		icon_state = "camera"
 		sticky = FALSE
-		dir = SOUTH
-		pixel_y = 20
+		dir = NORTH
 
 	east
 		icon_state = "camera"
 		sticky = FALSE
-		dir = EAST
-		pixel_x = -10
+		dir = WEST
+		pixel_x = 10
 
 	west
 		icon_state = "camera"
 		sticky = FALSE
-		dir = WEST
-		pixel_x = 10
+		dir = EAST
+		pixel_x = -10
 
 /obj/machinery/camera/auto/alt
 #ifdef IN_MAP_EDITOR
@@ -81,25 +81,26 @@
 	north
 		icon_state = "camera"
 		sticky = FALSE
-		dir = SOUTHWEST
+		dir = SOUTHEAST
+		pixel_y = 20
 
 	south
 		icon_state = "camera"
 		sticky = FALSE
-		dir = SOUTHEAST
-		pixel_y = 20
+		dir = SOUTHWEST
 
 	east
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTHWEST
+		pixel_x = 10
+
+	west
 		icon_state = "camera"
 		sticky = FALSE
 		dir = NORTHEAST
 		pixel_x = -10
 
-	west
-		icon_state = "camera"
-		sticky = FALSE
-		dir = NORTHWEST
-		pixel_x = 10
 
 /obj/machinery/camera/proc/autoposition(var/alt)
 	if (!src.sticky)
