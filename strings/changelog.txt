@@ -2,6 +2,8 @@
 (t)sun oct 1 23
 (u)Tarmunora
 (+)Waspbow projectiles no longer deal impact damage
+(+)Waspbow/radbow/etc now use/have 60u/shot instead of 40u
+(+)Fixed oversight causing disruptor cells to charge at twice the intended rate
 (t)fri sep 29 23
 (u)Emily
 (+)Zipguns now fire one bullet at a time for ammo types that usually fire in bursts
