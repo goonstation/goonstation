@@ -48,7 +48,7 @@
 			if (isliving(M))
 				var/mob/living/L = M
 				L.hibernating = 0
-				if (!L.bioHolder.HasEffect("blind"))
+				if (isnull(L.bioHolder) || !L.bioHolder.HasEffect("blind"))
 					L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				else
 					if(ishuman(L))
