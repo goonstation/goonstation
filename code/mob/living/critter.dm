@@ -136,16 +136,6 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		else
 			src.organHolder = new/datum/organHolder/critter(src, custom_brain_type)
 
-		src.abilityHolder = new /datum/abilityHolder/composite(src)
-		if (islist(src.add_abilities) && length(src.add_abilities))
-			for (var/abil in src.add_abilities)
-				if (ispath(abil))
-					abilityHolder.addAbility(abil)
-
-		SPAWN(0.5 SECONDS) //if i don't spawn, no abilities even show up
-			if (abilityHolder)
-				abilityHolder.updateButtons()
-
 		..()
 
 		hud = new custom_hud_type(src)
@@ -158,6 +148,17 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 
 		health_update_queue |= src
+
+		if(!src.abilityHolder)
+			src.abilityHolder = new /datum/abilityHolder/composite(src)
+		if (islist(src.add_abilities) && length(src.add_abilities))
+			for (var/abil in src.add_abilities)
+				if (ispath(abil))
+					abilityHolder.addAbility(abil)
+
+		SPAWN(0.5 SECONDS) //if i don't spawn, no abilities even show up
+			if (abilityHolder)
+				abilityHolder.updateButtons()
 
 		#ifdef NO_CRITTERS
 		START_TRACKING_CAT(TR_CAT_DELETE_ME)
