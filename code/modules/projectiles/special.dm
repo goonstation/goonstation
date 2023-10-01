@@ -951,6 +951,8 @@ ABSTRACT_TYPE(/datum/projectile/special)
 		if(ismob(hit) && typetospawn && !hasspawned)
 			hasspawned = TRUE
 			. = new typetospawn(get_turf(hit))
+		else
+			on_end(projectile)
 		return
 
 
@@ -992,6 +994,11 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	cost = 10
 	window_pass = 0
 	typetospawn = /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
+
+	on_pre_hit(atom/hit, angle, obj/projectile/O)
+		if (istype(hit, /mob/living/critter/small_animal/wasp))
+			return TRUE
+		. = ..()
 
 	on_hit(atom/hit, direction, projectile)
 		var/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry/W = ..()
