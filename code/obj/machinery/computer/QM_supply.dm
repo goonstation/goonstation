@@ -539,6 +539,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						var/default_comment = ""
 						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
 						if (isnull(O.comment))
+							shippingmarket.supply_requests += O
 							return .("list") // The user cancelled the order
 						O.comment = html_encode(O.comment)
 						wagesystem.shipping_budget -= P.cost
@@ -551,6 +552,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						. = {"<strong>Thanks for your order.</strong>"}
 					else
 						. = {"<strong>Insufficient funds in shipping budget.</strong>"}
+						shippingmarket.supply_requests += O
 				else
 					//Comes from the orderform
 
@@ -610,14 +612,18 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				return .
 
 			if ("remove")
-				shippingmarket.supply_requests -= locate(href_list["what"])
-				// todo: fancy "your request got denied, doofus" message?
+				var/datum/supply_order/order = locate(href_list["what"]) in shippingmarket.supply_requests
+				if(!istype(order))
+					return
+				src.reject_message(order)
+				shippingmarket.supply_requests -= order
 				. = {"Request denied."}
 
 			if ("clear")
+				for(var/datum/supply_order/order as anything in shippingmarket.supply_requests)
+					src.reject_message(order)
 				shippingmarket.supply_requests = null
 				shippingmarket.supply_requests = new/list()
-				// todo: message people that their stuff's been denied?
 				. = {"All requests have been cleared."}
 
 		return .
@@ -1290,13 +1296,18 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		return 0
 	return 1
 
-/obj/machinery/computer/supplycomp/proc/post_signal(var/command)
-	var/datum/signal/status_signal = get_free_signal()
-	status_signal.source = src
-	status_signal.transmission_method = 1
-	status_signal.data["command"] = command
-	status_signal.data["address_tag"] = "STATDISPLAY"
+/// Message order owners on rejection, if an address was provided
+/obj/machinery/computer/supplycomp/proc/reject_message(datum/supply_order/order)
+	if (!order.address)
+		return
+	var/datum/signal/newsignal = get_free_signal()
+	newsignal.source = src
+	newsignal.data["command"] = "text_message"
+	newsignal.data["sender_name"] = "CARGO-MAILBOT"
+	newsignal.data["message"] = "Your order of [order.object.name] has been denied."
+	newsignal.data["address_1"] = order.address
+	newsignal.data["sender"] = "00000000"
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
+	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
 
 #undef ORDER_LABEL_MAX_LEN
