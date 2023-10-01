@@ -1310,7 +1310,7 @@
 				src.check_reagents_internal(T.active_airborne_liquid, refresh)
 
 	var/datum/reagents/reagents = 0
-	if (!target.reagents) // || !target.reagents.total_volume)
+	if (!target.reagents || (isturf(target) && !target.reagents.total_volume)) // || !target.reagents.total_volume)
 		if (istype(target,/obj/fluid))
 			var/obj/fluid/F = target
 			if (F.group && F.group.reagents)

@@ -580,7 +580,7 @@ TYPEINFO(/obj/stool/chair)
 		if (src.foldable)
 			. += "It can be <b>folded</b> up to carry by clicking on it. "
 		if (src.securable)
-			. += "It can be <b>secured to the floor</b> with a screwing tool."
+			. += "It can be <b>secured to the floor</b> with a screwing tool. "
 
 	New()
 		if (src.dir == NORTH)
@@ -1251,6 +1251,32 @@ TYPEINFO(/obj/stool/chair/dining/wood)
 		..()
 		if (arm_icon_state)
 			src.UpdateIcon()
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		. += "You can reshape it with a screwdriving tool. You can turn it with a crowbar."
+
+
+	attackby(obj/item/W, mob/user)
+		if(isscrewingtool(W))
+			switch(src.icon_state)
+				if("pewL")
+					src.icon_state = "pewC"
+				if("pewC")
+					src.icon_state = "pewR"
+				if("pewR")
+					src.icon_state = "pew"
+				if("pew")
+					src.icon_state = "pewL"
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
+			user.visible_message("<span class='notice'>[user] reshapes the pew.</span>", "<span class='notice'>You reshape the pew.</span>")
+			src.update_icon()
+			return
+		if(ispryingtool(W))
+			src.dir = turn(src.dir,90)
+			src.update_icon()
+			return
+		. = ..()
 
 	update_icon()
 		if (src.dir == NORTH)

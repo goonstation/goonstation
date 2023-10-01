@@ -403,7 +403,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/repair/on_reset()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2) // nanite spray
 		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_hands() // for observers
 
@@ -481,7 +481,7 @@ stare
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2)  // nanite spray
 		F.set_a_intent(INTENT_HELP)
 		F.hud?.update_hands() // for observers
 
@@ -967,7 +967,7 @@ stare
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2)  // nanite spray
 		F.set_a_intent(INTENT_HARM)
 		F.hud?.update_hands() // for observers
 
@@ -1029,7 +1029,7 @@ stare
 /datum/aiTask/sequence/goalbased/flock/barricade/on_reset()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2) // nanite spray
 		F.set_a_intent(INTENT_DISARM)
 		F.hud?.update_hands() // for observers
 
@@ -1090,7 +1090,7 @@ stare
 	..()
 	var/mob/living/critter/flock/drone/F = holder.owner
 	if(F)
-		F.active_hand = 2 // nanite spray
+		F.set_hand(2)  // nanite spray
 		F.set_a_intent(INTENT_HARM)
 		F.hud?.update_hands() // for observers
 

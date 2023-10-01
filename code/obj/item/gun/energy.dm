@@ -436,7 +436,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
 /obj/item/gun/energy/ntgun
 	name = "laser assault rifle"
-	icon_state = "ntneutral100"
+	icon_state = "nt"
 	desc = "Rather futuristic assault rifle with two firing modes."
 	item_state = "ntgun"
 	force = 10
@@ -445,7 +445,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 	spread_angle = 6
 	cell_type = /obj/item/ammo/power_cell/med_power
 	uses_charge_overlay = TRUE
-	charge_icon_state = "nt"
+	charge_icon_state = "ntstun"
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/ntburst)
