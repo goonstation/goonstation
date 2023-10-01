@@ -1,5 +1,5 @@
 #define ORDER_LABEL_MAX_LEN 32 // The "order label" refers to the label you can specify when ordering something through cargo.
-
+#define SUPPLY_PRINT_COOLDOWN 2 SECONDS //! Amount of time before supply consoles can print again
 /datum/rockbox_globals
 	var/const/rockbox_standard_fee = 5
 	var/rockbox_client_fee_min = 1
@@ -1045,9 +1045,27 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			src.requisitions_update()
 
 		if ("print_req")
-			if(!src.printing)
+			if(!GET_COOLDOWN(src, "print"))
 				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
 				src.print_requisition(RC)
+			else
+				boutput(usr, "<span class='alert'>It's still cooling off from the last print!</span>")
+
+		if ("print_req_barcode")
+			if(!GET_COOLDOWN(src, "print"))
+				var/datum/req_contract/RC = locate(href_list["subaction"]) in shippingmarket.req_contracts
+				src.print_barcode(RC, RC.req_code)
+			else
+				boutput(usr, "<span class='alert'>It's still cooling off from the last print!</span>")
+
+		if ("print_trader_barcode")
+			if(!GET_COOLDOWN(src, "print"))
+				var/datum/trader/T = locate(href_list["subaction"]) in shippingmarket.active_traders
+				if (!src.trader_sanity_check(T))
+					return
+				src.print_barcode(T.name, T.crate_tag)
+			else
+				boutput(usr, "<span class='alert'>It's still cooling off from the last print!</span>")
 
 		if ("mainmenu")
 			src.temp = null
@@ -1099,11 +1117,11 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		else
 			src.temp += "<A href='[topicLink("pin_contract","\ref[RC]")]'>[RC.pinned ? "Unpin Contract" : "Pin Contract"]</A><br>"
 		src.temp += "<A href='[topicLink("print_req","\ref[RC]")]'>Print List</A>"
+		src.temp += " • <A href='[topicLink("print_req_barcode","\ref[RC]")]'>Print Barcode</A>"
 
 /obj/machinery/computer/supplycomp/proc/print_requisition(var/datum/req_contract/contract)
-	src.printing = 1
-	playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
-	SPAWN(2 SECONDS)
+	if (!ON_COOLDOWN(src, "print", SUPPLY_PRINT_COOLDOWN))
+		playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 		var/obj/item/paper/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"
@@ -1118,7 +1136,20 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		P.info += "</center></font>"
 		P.name = "Requisition: [contract.name]"
 		P.icon_state = "thermal_paper"
-		src.printing = 0
+
+/obj/machinery/computer/supplycomp/proc/print_barcode(to_name, destination)
+	playsound(src.loc, 'sound/machines/printer_cargo.ogg', 60, 0)
+	if (!ON_COOLDOWN(src, "print", SUPPLY_PRINT_COOLDOWN))
+		var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
+		B.name = "Barcode Sticker ([to_name])"
+		B.destination = destination
+
+/obj/machinery/computer/supplycomp/proc/print_trader_barcode(datum/trader/trader)
+	playsound(src.loc, 'sound/machines/printer_cargo.ogg', 60, 0)
+	if (!ON_COOLDOWN(src, "print", SUPPLY_PRINT_COOLDOWN))
+		var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
+		B.name = "Barcode Sticker ([trader.name])"
+		B.destination = trader.crate_tag
 
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)
 	if (!dialogue || !T)
@@ -1215,7 +1246,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 
 		if ("buying")
-			bottomText += "<h3>Wanted Goods</h3><ul class='shoplist'>"
+			bottomText += "<h3>Wanted Goods</h3><div style='text-align: center;'><A href='[topicLink("print_trader_barcode","\ref[T]")]'>Print Barcode</A></div><ul class='shoplist'>"
 			for (var/datum/commodity/trader/C in T.goods_buy)
 				if (C.hidden)
 					continue
@@ -1229,13 +1260,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					</li>
 					"}
 
-			bottomText += {"
-				</ul>
-				<br>
-				<br><em>To sell goods to this trader, print a barcode for <strong>[T.name]</strong> on the barcode computer, attach it to a crate containing the goods, and send the crate out the 'sell' mass driver.
-				<br>
-				<br>Load no more than 50 items into a crate at once, or the trader's cargo computer may not be able to keep up!</em>
-				"}
+			bottomText += {"</ul>"}
 
 		if ("selling")
 			bottomText += "<h3>Goods For Sale</h3><ul class='shoplist'>"
@@ -1299,4 +1324,5 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
 
+#undef SUPPLY_PRINT_COOLDOWN
 #undef ORDER_LABEL_MAX_LEN
