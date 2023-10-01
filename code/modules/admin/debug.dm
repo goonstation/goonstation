@@ -390,7 +390,9 @@ var/global/debug_messages = 0
 	set desc = "Delete all instances of the selected type."
 
 	// to prevent REALLY stupid deletions
+#ifdef LIVE_SERVER
 	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
+#endif
 	var/hsbitem = get_one_match(typename, /atom)
 	var/background =  alert("Run the process in the background?",,"Yes" ,"No")
 
