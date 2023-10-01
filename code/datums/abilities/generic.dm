@@ -179,11 +179,13 @@
 	cast(atom/target)
 		..()
 		var/mob/living/M = holder.owner
-		if (M.ai && M.is_npc)
-			if(M.ai.enabled )
+		if (M.ai)
+			if(M.ai.enabled)
 				M.ai.disable()
+				M.is_npc = FALSE
 			else
 				M.ai.enable()
+				M.is_npc = TRUE
 		else if( M.is_npc && ishuman(M) )
 			var/mob/living/carbon/human/H = M
 			H.ai_set_active(!H.ai_active)
