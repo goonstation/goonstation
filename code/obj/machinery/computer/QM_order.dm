@@ -111,9 +111,8 @@
 																						 1px 1px 0 #000;}
 		</style>
 		<script type="text/javascript">
-			// apparently just normal ol "a href=#fuck" links dont work in byond
-			// im at a loss for words
-			function are_you_fucking_shitting_me(h) {
+			// same-page anchor "a href=#id" links dont work in byond
+			function scroll_to_id(h) {
 				var top = document.getElementById(h).offsetTop;
 				window.scrollTo(0, top);
 			}
@@ -123,7 +122,7 @@
 		var/buy_list = ""
 		var/catnum = 0
 		for (var/foundCategory in global.QM_CategoryList)
-			src.temp += "[catnum ? " &middot; " : ""] <a href='javascript:are_you_fucking_shitting_me(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
+			src.temp += "[catnum ? " &middot; " : ""] <a href='javascript:scroll_to_id(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
 
 			buy_list += {"<div class='categoryGroup' id='[foundCategory]' style='border-color:#666'>
 							<a name='category-[catnum]' id='category-[catnum]'></a><b class='title' style='background:#ccc'>[foundCategory]</b>"}
@@ -136,7 +135,7 @@
 					buy_list += "<tr><td><a href='?src=\ref[src];doorder=\ref[S]'><b><u>[S.name]</u></b></a></td><td>[S.cost]</td><td>[S.desc]</td></tr>"
 				LAGCHECK(LAG_LOW)
 
-			buy_list += "</table></div><a href='javascript:are_you_fucking_shitting_me(\"top\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>Back to top</a><hr>"
+			buy_list += "</table></div><a href='javascript:scroll_to_id(\"top\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>Back to top</a><hr>"
 			catnum++
 
 		src.temp += "<BR><HR><BR>"
