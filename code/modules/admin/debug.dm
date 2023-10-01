@@ -389,17 +389,17 @@ var/global/debug_messages = 0
 	set name = "Del-All"
 	set desc = "Delete all instances of the selected type."
 
-	// to prevent REALLY stupid deletions
-#ifdef LIVE_SERVER
+	// to prevent REALLY stupid deletions on live
 	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
-#endif
 	var/hsbitem = get_one_match(typename, /atom)
 	var/background =  alert("Run the process in the background?",,"Yes" ,"No")
 
+#ifdef LIVE_SERVER
 	for(var/V in blocked)
 		if(V == hsbitem)
 			boutput(usr, "Can't delete that you jerk!")
 			return
+#endif
 	if(hsbitem)
 		src.delete_state = DELETE_RUNNING
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
