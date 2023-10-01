@@ -545,33 +545,35 @@ TYPEINFO(/obj/machinery/sleeper)
 				move_inside()
 			else
 				return
-		else if (can_operate(user))
+		else if (can_operate(user,target))
 			var/previous_user_intent = user.a_intent
 			user.set_a_intent(INTENT_GRAB)
 			user.drop_item()
 			target.Attackhand(user)
 			user.set_a_intent(previous_user_intent)
 			SPAWN(user.combat_click_delay + 2)
-				if (can_operate(user))
+				if (can_operate(user,target))
 					if (istype(user.equipped(), /obj/item/grab))
 						src.Attackby(user.equipped(), user)
 
-	proc/can_operate(var/mob/M)
-		if (!(BOUNDS_DIST(src, M) == 0))
+	proc/can_operate(var/mob/M, var/mob/living/target)
+		if (!isalive(M))
+			return FALSE
+		if (BOUNDS_DIST(src, M) > 0)
 			return FALSE
 		if (istype(M) && is_incapacitated(M))
 			return FALSE
 		if (src.occupant)
-			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
+			boutput(M, "<span class='notice'><B>\The [src] is already occupied!</B></span>")
 			return FALSE
-		if (!ishuman(M))
-			boutput(usr, "<span class='alert'>You can't seem to fit into \the [src].</span>")
+		if(ismobcritter(target))
+			boutput(M, "<span class='alert'><B>\The [src] doesn't support this body type.</B></span>")
 			return FALSE
-		if (src.occupant)
-			usr.show_text("The [src.name] is already occupied!", "red")
+		if (!ishuman(target))
+			boutput(usr, "<span class='alert'>\The [src] only accepts humanoid lifeforms.</span>")
 			return FALSE
 
-		. = TRUE
+		.= TRUE
 
 	verb/move_inside()
 		set src in oview(1)
@@ -579,7 +581,7 @@ TYPEINFO(/obj/machinery/sleeper)
 
 		if (!src) return
 
-		if (!can_operate(usr)) return
+		if (!can_operate(usr,usr)) return
 
 		usr.remove_pulling()
 		usr.set_loc(src)
@@ -596,7 +598,7 @@ TYPEINFO(/obj/machinery/sleeper)
 		eject_occupant(user)
 
 	mouse_drop(mob/user as mob)
-		if (can_operate(user))
+		if (can_operate(user,user))
 			eject_occupant(user)
 		else
 			..()

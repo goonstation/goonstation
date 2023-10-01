@@ -97,9 +97,6 @@ TYPEINFO(/obj/machinery/genetics_scanner)
 		if(!iscarbon(target) )
 			boutput(M, "<span class='alert'><B>The scanner supports only carbon based lifeforms.</B></span>")
 			return 0
-		if (src.occupant)
-			boutput(M, "<span class='notice'><B>The scanner is already occupied!</B></span>")
-			return 0
 		if (src.locked)
 			boutput(M, "<span class='alert'><B>You need to unlock the scanner first.</B></span>")
 			return 0
