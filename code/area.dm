@@ -3861,7 +3861,7 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 /area/station/turret_protected/AIbaseoutside
 	name = "AI Perimeter Defenses"
 	icon_state = "AIt"
-	requires_power = 0
+	requires_power = FALSE
 	sound_environment = 12
 	minimaps_to_render_on = null
 
@@ -3888,7 +3888,14 @@ TYPEINFO(/area/station/turret_protected/AIbaseoutside)
 /area/station/turret_protected/armory_outside
 	name = "Armory Outer Perimeter"
 	icon_state = "secext"
-	do_not_irradiate = 1
+	do_not_irradiate = TRUE
+	requires_power = FALSE
+	minimaps_to_render_on = null
+
+/area/station/turret_protected/upload_outside
+	name = "AI Upload Outer Perimeter"
+	icon_state = "ai_upload"
+	do_not_irradiate = TRUE
 	requires_power = FALSE
 	minimaps_to_render_on = null
 
