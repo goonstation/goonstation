@@ -556,7 +556,7 @@
 "aGx" = (
 /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{
 	dir = 2;
-	
+
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
@@ -3344,14 +3344,14 @@
 /area/swampzone/heights)
 "dXv" = (
 /obj/table/wood/round/auto,
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 12;
 	pixel_y = 5
 	},
@@ -6940,7 +6940,7 @@
 "ikB" = (
 /obj/machinery/atmospherics/pipe/tank/toxins{
 	dir = 2;
-	
+
 	},
 /obj/cable{
 	icon_state = "1-4"
@@ -7476,7 +7476,7 @@
 /turf/unsimulated/floor/auto/grass/leafy,
 /area/space)
 "iTi" = (
-/obj/machinery/computer/biodome_elevator,
+/obj/machinery/computer/elevator/biodome,
 /turf/unsimulated/floor/caution/corner/ne,
 /area/crypt/sigma)
 "iTk" = (
@@ -7568,13 +7568,13 @@
 /area/syndicate_station)
 "iWd" = (
 /obj/rack,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/unsimulated/floor/wood/four,
 /area/swampzone/interiors/outbuildings)
 "iWK" = (
@@ -10579,8 +10579,8 @@
 /area/swampzone/interiors/bonktek)
 "mAI" = (
 /obj/storage/crate/wooden,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/unsimulated/floor/wood/four,
 /area/swampzone/interiors/outbuildings)
 "mCp" = (
@@ -14060,7 +14060,7 @@
 	},
 /area/crypt/sigma/morgue)
 "qPk" = (
-/obj/machinery/computer/biodome_elevator,
+/obj/machinery/computer/elevator/biodome,
 /turf/unsimulated/floor/caution/corner/nw{
 	dir = 1
 	},
@@ -16277,8 +16277,8 @@
 	icon_state = "2-4"
 	},
 /obj/decal/cleanable/dirt,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "tBE" = (

@@ -148,7 +148,7 @@ obj/machinery/vehicle/miniputt/pilot
 	New()
 		..()
 		//Phaser
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon
+		src.m_w_system = new /obj/item/shipcomponent/mainweapon(src)
 		src.m_w_system.ship = src
 		src.components += src.m_w_system
 
@@ -168,7 +168,7 @@ obj/machinery/vehicle/miniputt/pilot
 	New()
 		..()
 		//Phaser
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon
+		src.m_w_system = new /obj/item/shipcomponent/mainweapon(src)
 		src.m_w_system.ship = src
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
@@ -413,7 +413,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		qdel(src)
 
 /obj/item/sub/frame_box
-	name = "Minisib Frame Kit"
+	name = "Minisub Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
@@ -1230,7 +1230,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin1"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
 
 /obj/item/podarmor/armor_custom
 	name = "Pod Armor"
@@ -1240,7 +1243,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin1"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
 
 /obj/item/podarmor/armor_heavy
 	name = "Heavy Pod Armor"
@@ -1250,7 +1256,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin2"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nanoputt,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/heavy,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/heavy)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/heavy,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nanoputt,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/heavy,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/heavy)
 
 /obj/item/podarmor/nt_light
 	name = "Light NT Pod Armor"
@@ -1259,7 +1268,9 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	icon_state = "dbox"
 	overlay_state = "pod_skinB"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_light,
-		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_light)
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_light,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_light,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_light)
 
 /obj/item/podarmor/nt_robust
 	name = "Robust NT Pod Armor"
@@ -1268,7 +1279,9 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	icon_state = "dbox"
 	overlay_state = "pod_skinBF"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_robust,
-		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_robust)
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_robust,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_robust,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_robust)
 
 /obj/item/podarmor/sy_light
 	name = "Light Syndicate Pod Armor"
@@ -1277,7 +1290,9 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	icon_state = "dbox"
 	overlay_state = "pod_skinR"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_light,
-		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_light)
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_light,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_light,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_light)
 
 /obj/item/podarmor/sy_robust
 	name = "Robust Syndicate Pod Armor"
@@ -1286,7 +1301,9 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	icon_state = "dbox"
 	overlay_state = "pod_skinRF"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_robust,
-		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_robust)
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_robust,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_robust,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_robust)
 
 
 /obj/item/podarmor/armor_black
@@ -1297,7 +1314,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin3"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/black,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/black,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/black)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/black,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/black,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/black,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/black)
 
 /obj/item/podarmor/armor_red
 	name = "Syndicate Pod Armor"
@@ -1307,7 +1327,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin2"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/syndiputt,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/syndicate,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/syndisub)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/syndisub,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/syndiputt,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/syndicate,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/syndisub)
 
 /obj/item/podarmor/armor_industrial
 	name = "Industrial Pod Armor"
@@ -1317,7 +1340,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin3"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/indyputt,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/industrial,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/industrial)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/industrial,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/indyputt,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/industrial,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/industrial)
 
 /obj/item/podarmor/armor_gold
 	name = "Gold Pod Armor"
@@ -1326,7 +1352,9 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	icon_state = "dbox"
 	overlay_state = "skin4"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/gold,
-		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold)
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/gold,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold)
 
 /obj/item/pod/frame_box
 	name = "Pod Frame Kit"

@@ -209,7 +209,7 @@
 
 /obj/item/reagent_containers/glass/flask
 	name = "flask"
-	desc = "Looks pretty fragile, better not drop this."
+	desc = "Looks surprisingly robust."
 	icon = 'icons/obj/chemical.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	icon_state = "eflask"
@@ -240,10 +240,6 @@
 			src.underlays += fluid_image
 		else
 			src.icon_state = src.icon_style
-
-	throw_impact(atom/A, datum/thrown_thing/thr)
-		..()
-		src.shatter_chemically()
 
 /obj/item/reagent_containers/glass/flask/round
 	name = "round flask"

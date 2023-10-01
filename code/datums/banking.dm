@@ -66,8 +66,8 @@
 	proc/default_wages()
 
 		station_budget =      0
-		shipping_budget = 30000
-		research_budget = 20000
+		shipping_budget = PAY_EXECUTIVE*5
+		research_budget = PAY_EXECUTIVE*10
 		total_stipend = station_budget + shipping_budget + research_budget
 
 		// This is gonna throw up some crazy errors if it isn't done right!
@@ -210,7 +210,7 @@
 */
 
 /obj/machinery/computer/ATM
-	name = "ATM"
+	name = "\improper ATM"
 	icon_state = "atm"
 
 	var/datum/db_record/accessed_record = null
@@ -453,7 +453,7 @@
 
 
 /obj/machinery/computer/bank_data
-	name = "Bank Records"
+	name = "bank records"
 	icon_state = "databank"
 	req_access = list(access_heads)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -745,7 +745,7 @@
 		..()
 
 /obj/submachine/ATM
-	name = "ATM"
+	name = "\improper ATM"
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "atm"
 	density = 0
@@ -837,11 +837,11 @@
 		if (damage >= 5) //if it has five or more force, it'll do damage. prevents very weak objects from rattling the thing.
 			user.lastattacked = src
 			attack_particle(user,src)
-			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,1)
+			playsound(src, 'sound/impact_sounds/Glass_Hit_1.ogg', 50,TRUE)
 			src.take_damage(damage, user)
 			user.visible_message("<span class='alert'><b>[user] bashes the [src] with [I]!</b></span>")
 		else
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50,TRUE)
 			user.visible_message("<span class='alert'><b>[user] uselessly bumps the [src] with [I]!</b></span>")
 			return
 
@@ -1053,7 +1053,7 @@
 
 
 /obj/item/lotteryTicket
-	name = "Lottery Ticket"
+	name = "lottery ticket"
 	desc = "A winning lottery ticket perhaps...?"
 
 	icon = 'icons/obj/writing.dmi'
@@ -1075,7 +1075,7 @@
 
 		lotteryRound = wagesystem.lotteryRound
 
-		name = "Lottery Ticket. Round [lotteryRound]"
+		name = "lottery ticket (round [lotteryRound])"
 
 		var/dat = ""
 

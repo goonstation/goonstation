@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Chart, LabeledList, Stack, NumberInput } from '../components';
+import { Chart, LabeledList, NumberInput, Stack } from '../components';
 import { formatPower } from '../format';
 import { Window } from '../layouts';
 

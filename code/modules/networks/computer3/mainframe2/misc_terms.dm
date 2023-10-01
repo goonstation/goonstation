@@ -2749,7 +2749,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 	var/obj/beam/next
 	var/limit = 48
 
-	dir = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	anchored = ANCHORED
 	flags = TABLEPASS
@@ -2803,7 +2802,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "ibeam"
 	invisibility = INVIS_CLOAK
-	dir = 2
 	//var/obj/beam/ir_beam/next = null
 	var/obj/machinery/networked/secdetector/master = null
 	//var/limit = 24
@@ -3221,7 +3219,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 	desc = "A rather threatening beam of photons!"
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "h7beam1"
-	dir = 2
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	var/power = 1 //How dangerous is this beam, anyhow? 1-5. 1-3 cause minor teleport hops and radiation damage, 4 tends to deposit people in a place separate from their stuff (or organs), and 5 tears their molecules apart
 	//var/obj/beam/h7_beam/next = null
@@ -3786,13 +3783,13 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				if (!src.active)
 					src.visible_message("<b>[src.name]</b> pings.")
 					src.active = 0
-					playsound(src, 'sound/machines/buzz-two.ogg', 50, 1)
+					playsound(src, 'sound/machines/buzz-two.ogg', 50, TRUE)
 					src.UpdateIcon()
 				return
 
 			src.visible_message("<b>[src.name]</b> pings.")
 			src.active = 0
-			playsound(src, 'sound/machines/chime.ogg', 50, 1)
+			playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
 			src.UpdateIcon()
 
 		return
@@ -3993,7 +3990,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 			src.sensed[2] = "0"
 
 		src.visible_message("<b>[src.name]</b> registers an impact and chimes.")
-		playsound(src, 'sound/machines/chime.ogg', 50, 1)
+		playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
 
 /obj/machinery/networked/test_apparatus/electrobox
 	name = "Electrical Testing Apparatus"
@@ -4399,7 +4396,7 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 
 					SPAWN(5 SECONDS)
 						src.visible_message("<b>[src.name]</b> finishes working and shuts down.")
-						playsound(src, 'sound/machines/chime.ogg', 50, 1)
+						playsound(src, 'sound/machines/chime.ogg', 50, TRUE)
 						active = 0
 						src.UpdateIcon()
 				else

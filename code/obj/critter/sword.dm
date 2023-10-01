@@ -89,7 +89,7 @@
 				logTheThing(LOG_COMBAT, src, "has been defeated.")
 				message_admins("The Syndicate Weapon: Orion Retribution Device has been defeated.")
 
-			playsound(src, 'sound/effects/ship_engage.ogg', 100, 1)
+			playsound(src, 'sound/effects/ship_engage.ogg', 100, TRUE)
 
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			var/death_loc = get_center()
@@ -132,7 +132,7 @@
 		check_health()
 
 		if(prob(5))
-			playsound(src, 'sound/machines/giantdrone_boop1.ogg', 55, 1)
+			playsound(src, 'sound/machines/giantdrone_boop1.ogg', 55, TRUE)
 
 		if(task == "following path" && mode)
 			follow_path()

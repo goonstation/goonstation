@@ -83,7 +83,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		covered_cache_volume = total_volume
 
 	proc/play_mix_sound(var/mix_sound)
-		playsound(my_atom, mix_sound, 80, 1, 3)
+		playsound(my_atom, mix_sound, 80, TRUE, 3)
 
 	proc/copy_to(var/datum/reagents/target, var/multiplier = 1, var/do_not_react = 0, var/copy_temperature = 0)
 		if(!target || target == src) return
@@ -113,7 +113,7 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	///This is what you use to change the temp of a reagent holder.
 	///Do not manually change the reagent unless you know what youre doing.
-	proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0)
+	proc/temperature_reagents(exposed_temperature, exposed_volume = 100, exposed_heat_capacity = 100, change_cap = 15, change_min = 0.0000001,loud = 0, cannot_be_cooled = FALSE)
 		if (!src.can_be_heated)
 			return
 		last_temp = total_temperature
@@ -140,6 +140,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/change = new_temperature - total_temperature
 
 		if(change < 0)
+			if(cannot_be_cooled)
+				return
 			change = -clamp(abs(change),change_min,change_cap)
 		else
 			change = clamp(abs(change),change_min,change_cap)
@@ -216,8 +218,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder")
-				continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_name = current.name
@@ -232,7 +232,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_id = current.id
@@ -240,12 +239,11 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 		return largest_id
 
-	proc/get_master_color(var/ignore_smokepowder = 0)
+	proc/get_master_color()
 		var/largest_volume = 0
 		var/the_color = rgb(255,255,255,255)
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder" && ignore_smokepowder) continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_volume = current.volume
@@ -258,7 +256,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_volume = current.volume
@@ -271,7 +268,6 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		var/largest_volume = 0
 
 		for(var/reagent_id in reagent_list)
-			if(reagent_id == "smokepowder") continue
 			var/datum/reagent/current = reagent_list[reagent_id]
 			if(current.volume > largest_volume)
 				largest_block_slippy = current.block_slippy
@@ -446,7 +442,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					//end my copy+paste
 
 
-					if(round(amount, CHEM_EPSILON) >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
+					if(round(amount, CHEM_EPSILON) >= B_required_volume || ((locate(C.type) in old_reactions) && amount >= CHEM_EPSILON && !C.instant))
+						//This will mean you can have < 1 stuff not react OR the reaction is non-instant and already processing. This SHOULD be fine.
 						total_matching_reagents++
 						created_volume = min(created_volume, amount * (C.result_amount ? C.result_amount : 1) / B_required_volume)
 					else
@@ -940,15 +937,15 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 	/// returns text description of reagent(s)
 	/// plus exact text of reagents if using correct equipment
 	proc/get_description(mob/user, rc_flags=0)
-		if(rc_flags == 0)	// Report nothing about the reagents in this case
+		if (rc_flags == 0)	// Report nothing about the reagents in this case
 			return null
 
-		if(reagent_list.len)
+		if (length(reagent_list))
 			. += get_inexact_description(rc_flags)
 			if(rc_flags & RC_SPECTRO)
 				. += get_exact_description(user)
-
-		else
+		// if we didn't add ANY text in the above code, add this placeholder text
+		if (!length(.))
 			. += "<span class='notice'>Nothing in it.</span>"
 
 
@@ -1009,14 +1006,18 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(rc_flags & RC_VISIBLE)
 			if(rc_flags & RC_SCALE)
 				. += "<span class='notice'>It contains [total_volume] units of \a [t]-colored [state_text].</span>"
-			else
+			//blurgh
+			else if (full_text && istype(src, /datum/reagents/fluid_group))
+				. += "<span class='notice'>It is \a [full_text] [t]-colored [state_text].</span>"
+			else if (full_text)
 				. += "<span class='notice'>It is [full_text] of \a [t]-colored [state_text].</span>"
+			else
+				. += "<span class='notice'>It is \a [t]-colored [state_text].</span>"
 		else
 			if(rc_flags & RC_SCALE)
 				. += "<span class='notice'>It contains [total_volume] units.</span>"
-			else
-				if(rc_flags & RC_FULLNESS)
-					. += "<span class='notice'>It is [full_text].</span>"
+			else if((rc_flags & RC_FULLNESS) && full_text)
+				. += "<span class='notice'>It is [full_text].</span>"
 
 		return .
 
@@ -1202,6 +1203,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 			classic_smoke_reaction(src, min(round(volume / 5), 4), location = my_atom ? get_turf(my_atom) : 0)
 		else
 			smoke_reaction(src, round(min(5, round(volume/10))), location = my_atom ? get_turf(my_atom) : 0)
+
+	proc/is_airborne()
+		return FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////
 

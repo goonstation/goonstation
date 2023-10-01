@@ -4685,7 +4685,7 @@
 	pixel_y = 21
 	},
 /obj/table/reinforced/chemistry/auto/chemstorage,
-/obj/item/paper/labdrawertips,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 9
 	},
@@ -7548,8 +7548,9 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "ayX" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "ayZ" = (
 /obj/machinery/conveyor/SN{
 	id = "outbound";
@@ -11260,7 +11261,7 @@
 /area/ghostdrone_factory)
 "aLe" = (
 /obj/decal/cleanable/cobweb,
-/obj/item/plank,
+/obj/item/sheet/wood,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
@@ -11310,7 +11311,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aLp" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
@@ -12132,8 +12133,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 9
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
 "aOc" = (
@@ -12150,8 +12151,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 5
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
 "aOf" = (
@@ -12261,8 +12262,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 10
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
 "aOD" = (
@@ -12273,8 +12274,8 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 6
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost/syndicate_teleporter)
 "aOF" = (
@@ -14017,6 +14018,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aUb" = (
+/obj/machinery/dialysis,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "aUc" = (
@@ -16222,6 +16224,7 @@
 	},
 /obj/disposalpipe/segment/mail/horizontal,
 /obj/table/reinforced/chemistry/auto/allinone,
+/obj/item/paper/labdrawertips,
 /turf/simulated/floor/purplewhite{
 	dir = 5
 	},
@@ -17326,6 +17329,10 @@
 	dir = 4
 	},
 /area/station/hallway/primary/north)
+"jzZ" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/engine,
+/area/station/hangar/main)
 "jCG" = (
 /obj/machinery/power/furnace,
 /obj/cable/orange{
@@ -17596,6 +17603,10 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor/yellow,
 /area/station/engine/elect)
+"ldr" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/engine,
+/area/station/mining/staff_room)
 "lgg" = (
 /obj/machinery/power/apc/autoname_north,
 /obj/cable{
@@ -18341,8 +18352,8 @@
 	layer = 3
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_y = -33
 	},
 /turf/simulated/floor/redblack,
@@ -19110,10 +19121,10 @@
 /area/station/engine/hotloop)
 "tgD" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_y = 35;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_y = 35
 	},
 /turf/space,
 /area/space)
@@ -19330,10 +19341,10 @@
 /area/station/hallway/primary/west)
 "urI" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_y = -33;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_y = -33
 	},
 /turf/space,
 /area/space)
@@ -19766,8 +19777,8 @@
 	pixel_y = 21
 	},
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_y = 25
 	},
 /turf/simulated/floor/redblack{
@@ -55458,7 +55469,7 @@ aaq
 aWk
 acJ
 abQ
-aru
+ldr
 aKG
 aVX
 avX
@@ -55488,7 +55499,7 @@ aCs
 aZJ
 aXl
 aTI
-aSr
+jzZ
 aTQ
 aSr
 aTI

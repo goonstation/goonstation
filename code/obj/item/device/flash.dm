@@ -150,7 +150,7 @@ TYPEINFO(/obj/item/device/flash)
 			sleep(0.5 SECONDS)
 			qdel(animation)
 
-	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	flick(src.animation_type, src)
 	if (!src.turboflash)
 		src.use++
@@ -240,7 +240,7 @@ TYPEINFO(/obj/item/device/flash)
 			return
 
 	// Play animations.
-	playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+	playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 	flick(src.animation_type, src)
 
 	if (isrobot(user))
@@ -299,7 +299,7 @@ TYPEINFO(/obj/item/device/flash)
 			if (!H.client || !H.mind)
 				user.show_text("[H] is braindead and cannot be converted.", "red")
 			else if (locate(/obj/item/implant/counterrev) in H.implant)
-				user.show_text("There seems to be something preventing [H] from revolting.", "red")
+				src.on_counterrev(M, user)
 				.= 0.5
 				nostun = 1
 			else if (!H.can_be_converted_to_the_revolution())
@@ -316,6 +316,8 @@ TYPEINFO(/obj/item/device/flash)
 			if (!nostun)
 				M.apply_flash(1, 2, 0, 0, 0, 0, 0, burning, 100, stamina_damage = 210, disorient_time = 40)
 
+/obj/item/device/flash/proc/on_counterrev(mob/living/M, mob/user)
+	user.show_text("There seems to be something preventing [M] from revolting.", "red")
 
 /obj/item/device/flash/proc/process_burnout(mob/user as mob)
 	tooltip_rebuild = 1
@@ -432,20 +434,8 @@ TYPEINFO(/obj/item/device/flash/revolution)
 	attackby(obj/item/W, mob/user)
 		return
 
-	attack(mob/living/M, mob/user)
-		flash_mob(M, user, 0)
-		flash_mob(M, user, 1)
-
-
-	flash_mob(mob/living/M as mob, mob/user as mob, var/convert = 1)
-		if (!convert && M.mind && M.mind.get_antagonist(ROLE_HEAD_REVOLUTIONARY))
-			user.show_text("[src] refuses to flash!", "red")
-			return
-		else
-			playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, 1 , 0, 0.6)
-			var/convert_result = convert(M,user)
-			if (convert_result == 0.5)
-				user.show_text("Hold still to override . . . ", "red")
-				actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)
-			if (convert_result)
-				..()
+	on_counterrev(mob/living/M, mob/user)
+		. = ..()
+		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 30, TRUE, 0, 0.6)
+		user.show_text("Hold still to override . . . ", "red")
+		actions.start(new/datum/action/bar/icon/rev_flash(src,M), user)

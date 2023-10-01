@@ -487,7 +487,7 @@ TYPEINFO(/turf/simulated/wall/auto/supernorn/wood)
 /turf/simulated/wall/auto/supernorn/material
 	icon_state = "mapwall"
 	default_material = "steel"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
 
 /turf/simulated/wall/auto/supernorn/material/bamboo
@@ -832,7 +832,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/supernorn/wood)
 		/obj/plasticflaps
 	))
 /turf/unsimulated/wall/auto/supernorn/wood
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	default_material = "wood"
 	icon_state = "mapwall$$wood"
 
@@ -867,7 +867,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/virtual)
 /turf/unsimulated/wall/auto/coral
 	default_material = "coral"
 	mat_changename = TRUE
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 
 // lead wall resprite by skeletonman0.... hooray for smoothwalls!
 //ABSTRACT_TYPE(/turf/unsimulated/wall/auto/lead) // zewaka: unsimwall/auto used in places - parent abstract tree
@@ -1007,7 +1007,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/bee)
 	icon_state = "bee-map"
 #endif
 	mod = "bee-"
-	plane = PLANE_WALL-1 //We don't want depth shadows
+	plane = PLANE_NOSHADOW_BELOW
 
 	exterior // so i dont have to make more parts for it to look good
 		mod = "beeout-"
@@ -1263,29 +1263,29 @@ TYPEINFO(/turf/unsimulated/wall/auto/adventure/fake_window)
 			if (WALL_CUTRERODS)
 				self_message = "You begin to cut the reinforced rods."
 				message = "[owner] begins to cut \the [the_wall]'s reinforced rods."
-				playsound(the_wall, 'sound/items/Wirecutter.ogg', 100, 1)
+				playsound(the_wall, 'sound/items/Wirecutter.ogg', 100, TRUE)
 			if (WALL_REMOVERERODS)
 				self_message = "You begin to remove the reinforced rods."
 				message = "[owner] begins to remove \the [the_wall]'s reinforced rods."
-				playsound(the_wall, 'sound/items/Screwdriver.ogg', 100, 1)
+				playsound(the_wall, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			if (WALL_SLICECOVER)
 				self_message = "You begin to slice the metal cover."
 				message = "[owner] begins to slice \the [the_wall]'s metal cover."
 			if (WALL_PRYCOVER)
 				self_message = "You begin to pry the metal cover apart."
 				message = "[owner] begins to pry \the [the_wall]'s metal cover apart."
-				playsound(the_wall, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(the_wall, 'sound/items/Crowbar.ogg', 100, TRUE)
 			if (WALL_LOOSENSUPPORTRODS)
 				self_message = "You begin to loosen the support rods."
 				message = "[owner] begins to loosen \the [the_wall]'s support rods."
-				playsound(the_wall, 'sound/items/Ratchet.ogg', 100, 1)
+				playsound(the_wall, 'sound/items/Ratchet.ogg', 100, TRUE)
 			if (WALL_REMOVESUPPORTRODS)
 				self_message = "You begin to remove the support rods."
 				message = "[owner] begins to remove \the [the_wall]'s support rods."
 			if (WALL_PRYSHEATH)
 				self_message = "You begin to pry the outer sheath off."
 				message = "[owner] begins to pry \the [the_wall]'s outer sheath off."
-				playsound(the_wall, 'sound/items/Crowbar.ogg', 100, 1)
+				playsound(the_wall, 'sound/items/Crowbar.ogg', 100, TRUE)
 		owner.visible_message("<span class='alert'>[message]</span>", "<span class='notice'>[self_message]</span>")
 
 	onEnd()

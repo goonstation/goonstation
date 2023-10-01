@@ -115,7 +115,7 @@
 			else if (isvampire(HH))
 				boutput(M, "<span class='alert'>[HH] doesn't seem to be affected by the bite much at all!</span>")
 			else if (ischangeling(HH))
-				boutput(M, "<span class='alert'>Your teeth seem to sink into [HH]'s skin but can't grab purchase. You don't think it's worth it trying to infect them!</span>")
+				boutput(M, "<span class='alert'>Your teeth seem to sink into [HH]'s skin but can't grab purchase. You don't think it's worth it trying to infect [him_or_her(HH)]!</span>")
 			else if (isabomination(HH))
 				boutput(M, "<span class='alert'>This abomination doesn't seem to be able to take any werewolf DNA into its collective!</span>")
 			else if (iswrestler(HH))

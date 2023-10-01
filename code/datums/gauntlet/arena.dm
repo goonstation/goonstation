@@ -8,7 +8,7 @@
 			process()
 
 /obj/literal_firewall
-	name = "Firewall"
+	name = "firewall"
 	desc = "Man, your port doesn't feel like it's allowed through there! If only there was a way to open it."
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"

@@ -1,16 +1,15 @@
 /mob/living/critter/robotic/scuttlebot
 	name = "scuttlebot"
 	desc = "A strangely hat shaped robot looking to spy on your deepest secrets"
-	density = 0
-	custom_gib_handler = /proc/gibs
+	icon = 'icons/mob/critter/robotic/scuttlebot.dmi'
+	icon_state = "scuttlebot"
 	flags = TABLEPASS | DOORPASS
 	hand_count = 1
-	can_help = 1
-	can_throw = 1
-	can_grab = 0
-	can_disarm = 1
-	fits_under_table = 1
-	icon_state = "scuttlebot"
+	can_help = TRUE
+	can_throw = TRUE
+	can_grab = FALSE
+	can_disarm = TRUE
+	fits_under_table = TRUE
 	speechverb_say = "beeps"
 	speechverb_exclaim = "boops"
 	speechverb_ask = "beeps curiously"
@@ -59,7 +58,7 @@
 
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, pitch=1.4, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, pitch=1.4, channel=VOLUME_CHANNEL_EMOTE)
 					return pick("[src] unleashes the tiniest robotic toot.", "[src] sends out a ridiculously pitched fart.")
 
 			if ("burp")

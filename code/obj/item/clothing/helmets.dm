@@ -400,7 +400,7 @@
 
 			proc/toggle(var/mob/toggler)
 				src.on = !src.on
-				playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
+				playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
 				if (ishuman(toggler))
 					var/mob/living/carbon/human/H = toggler
 					if (istype(H.head, /obj/item/clothing/head/helmet/space/syndicate/specialist/engineer)) //handling of the rest is done in life.dm
@@ -756,8 +756,9 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	proc/emote_handler(mob/source, var/emote)
 		switch(emote)
 			if ("nod")
-				src.flip_down(source, silent=TRUE)
-				boutput(source, "<span class='hint'>You nod, dropping the welding mask over your face.</span>")
+				if (src.up)
+					src.flip_down(source, silent=TRUE)
+					boutput(source, "<span class='hint'>You nod, dropping the welding mask over your face.</span>")
 
 	proc/obscure(mob/user)
 		user.addOverlayComposition(/datum/overlayComposition/weldingmask)
@@ -836,7 +837,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/camera)
 	name = "blast helmet"
 	desc = "A thick head cover made of layers upon layers of space kevlar."
 	icon_state = "EOD"
-	item_state = "tdhelm"
+	item_state = "eod_helmet"
 	c_flags = COVERSEYES | BLOCKCHOKE
 	hides_from_examine = C_EARS
 	setupProperties()
@@ -988,7 +989,7 @@ TYPEINFO(/obj/item/clothing/head/helmet/space/industrial)
 		src.item_state = "[initial(src.item_state)][src.visor_enabled ? "-on" : null]"
 		set_icon_state("[initial(src.icon_state)][src.visor_enabled ? "-on" : null]")
 		user.update_clothing()
-		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
 
 		// Check that the user is human & the helmet is worn
 		if (!ishuman(user))

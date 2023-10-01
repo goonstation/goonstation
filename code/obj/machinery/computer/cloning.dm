@@ -178,7 +178,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_dead_scanning = 1
 		user.drop_item()
-		logTheThing(LOG_STATION, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, user, "has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 
 	else if (istype(W, /obj/item/cloneModule/minderaser))
@@ -188,7 +188,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		user.visible_message("[user] installs [W] into [src].", "You install [W] into [src].")
 		src.allow_mind_erasure = 1
 		user.drop_item()
-		logTheThing(LOG_STATION, src, "[user] has added clone module ([W]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, user, "has added clone module ([W]) to ([src]) at [log_loc(user)].")
 		qdel(W)
 	else if (istype(W, /obj/item/cloneModule/genepowermodule))
 		var/obj/item/cloneModule/genepowermodule/module = W
@@ -201,7 +201,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		src.BE = module.BE
 		user.drop_item()
 		user.visible_message("[user] installs [module] into [src].", "You install [module] into [src].")
-		logTheThing(LOG_STATION, src, "[user] has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
+		logTheThing(LOG_STATION, user, "has added clone module ([W] - [module.BE]) to ([src]) at [log_loc(user)].")
 		qdel(module)
 
 
@@ -615,11 +615,11 @@ TYPEINFO(/obj/machinery/clone_scanner)
 	proc/set_lock(var/lock_status)
 		if(lock_status && !locked)
 			locked = 1
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			boutput(occupant, "<span class='alert'>\The [src] locks shut!</span>")
 		else if(!lock_status && locked)
 			locked = 0
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			boutput(occupant, "<span class='notice'>\The [src] unlocks!</span>")
 
 	// Meat grinder functionality.
@@ -663,7 +663,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		process_timer = timer_length
 		set_lock(1)
 		boutput(occupant, "<span style='color:red;font-weight:bold'>A whirling blade slowly begins descending upon you!</span>")
-		playsound(src, 'sound/machines/mixer.ogg', 50, 1)
+		playsound(src, 'sound/machines/mixer.ogg', 50, TRUE)
 		SubscribeToProcess()
 
 	proc/start_strip()
@@ -702,7 +702,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		src.occupant.TakeDamage(zone="All", brute=damage)
 		bleed(occupant, damage * 2, 0)
 		if(prob(50))
-			playsound(src, 'sound/machines/mixer.ogg', 50, 1)
+			playsound(src, 'sound/machines/mixer.ogg', 50, TRUE)
 		if(prob(30))
 			SPAWN(0.3 SECONDS)
 				playsound(src.loc, pick('sound/impact_sounds/Flesh_Stab_1.ogg', \
@@ -872,7 +872,18 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			else
 				src.mindwipe = !src.mindwipe
 				. = TRUE
-
+		if("editNote")
+			var/ckey = params["ckey"]
+			var/datum/db_record/selected_record = find_record(ckey)
+			var/note_text = tgui_input_text(usr, "Edit note of [selected_record["name"]]", "Edit note", selected_record["note"])
+			if (note_text)
+				selected_record["note"] = note_text
+			. = TRUE
+		if ("deleteNote")
+			var/ckey = params["ckey"]
+			var/datum/db_record/selected_record = find_record(ckey)
+			selected_record["note"] = null
+			. = TRUE
 
 /obj/machinery/computer/cloning/ui_data(mob/user)
 
@@ -928,6 +939,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			name = r["name"],
 			id = r["id"],
 			ckey = r["ckey"],
+			note = r["note"],
 			health = currentHealth,
 			implant = !isnull(implant),
 			saved = saved

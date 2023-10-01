@@ -91,7 +91,7 @@
 
 		//Commence owie
 		take_bleeding_damage(target, null, rand(8, 16), DAMAGE_BLUNT)	//My
-		playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1) //head,
+		playsound(target, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE) //head,
 		target.emote("scream") 									//FUCKING
 		target.TakeDamage("head", rand(12, 18), 0) 				//OW!
 		target.changeStatus("weakened", 4 SECONDS)
@@ -766,3 +766,10 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	var/obj/item/clothing/mask/bandana/bandana_to_spawn = pick(possible_bandana)
 	new bandana_to_spawn(src.loc)
 	qdel(src)
+
+/obj/item/clothing/mask/tengu
+	name = "tengu mask"
+	desc = "Traditionally thought to repel evil spirits, thanks to the tengu's alarming face. Maybe it works on staffies, too."
+	item_state = "tengu"
+	icon_state = "tengu"
+	see_face = FALSE

@@ -5,7 +5,7 @@
 	regular = FALSE
 
 	/// Makes it so gang members are chosen randomly at roundstart instead of being recruited.
-	var/random_gangs = FALSE
+	var/random_gangs = TRUE
 
 	antag_token_support = TRUE
 	var/list/gangs = list()
@@ -425,11 +425,14 @@ proc/broadcast_to_all_gangs(var/message)
 		while(src.gang_name == "Gang Name")
 			var/choice = "Accept"
 			if(src.leader?.current)
-				choice = tgui_alert(src.leader?.current, "Name: [temporary_name].", "Approve Your Gang's Name", list("Accept", "Reselect", "Randomise"))
+				// if the leader is disconnected, this tgui_alert call will return null, breaking everything. Default to "Accept" and give them the random name
+				choice = tgui_alert(src.leader?.current, "Name: [temporary_name].", "Approve Your Gang's Name", list("Accept", "Reselect", "Randomise")) || "Accept"
 			switch(choice)
 				if ("Accept")
 					if (temporary_name in src.used_names)
 						boutput(src.leader.current, "<span class='alert'>Another gang has this name.</span>")
+						// to prevent the incredibly slim chance that a disconncted gang leader rolls the same name as an existing gang
+						temporary_name = generate_random_name()
 						continue
 
 					src.gang_name = temporary_name
@@ -445,6 +448,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 				if ("Randomise")
 					temporary_name = generate_random_name()
+
 
 		// add the gang to their displayed name for antag and round end stuff. works hopefully??
 		var/datum/antagonist/leader_antag = src.leader.get_antagonist(ROLE_GANG_LEADER)
@@ -606,10 +610,13 @@ proc/broadcast_to_all_gangs(var/message)
 		"psychedelic hat" = /obj/item/clothing/head/psyche,
 		"Snake's bandana" = /obj/item/clothing/head/snake,
 		"powdered wig" = /obj/item/clothing/head/powdered_wig,
-		"black ten-gallon hat" = /obj/item/clothing/head/westhat/black)
+		"black ten-gallon hat" = /obj/item/clothing/head/westhat/black,
+		"red mushroom cap" = /obj/item/clothing/head/mushroomcap/red,
+		"stag beetle helm" = /obj/item/clothing/head/stagbeetle,
+		"rhino beetle helm" = /obj/item/clothing/head/rhinobeetle)
 
 /obj/item/spray_paint
-	name = "Spraypaint Can"
+	name = "spraypaint can"
 	desc = "A can of spray paint."
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "spraycan"
@@ -728,7 +735,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 		target_area.being_captured = 1
 		S.in_use = 1
-		playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)	//maybe just repeat the appropriate amount of times
+		playsound(target_turf, 'sound/machines/hiss.ogg', 50, TRUE)	//maybe just repeat the appropriate amount of times
 
 	onUpdate()
 		..()
@@ -737,7 +744,7 @@ proc/broadcast_to_all_gangs(var/message)
 			return
 
 		if(prob(15))
-			playsound(target_turf, 'sound/machines/hiss.ogg', 50, 1)
+			playsound(target_turf, 'sound/machines/hiss.ogg', 50, TRUE)
 
 	onInterrupt(var/flag)
 		boutput(owner, "<span class='alert'>You were interrupted!</span>")
@@ -764,7 +771,7 @@ proc/broadcast_to_all_gangs(var/message)
 
 /obj/ganglocker
 	desc = "Gang locker."
-	name = "Gang Closet"
+	name = "gang closet"
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "gang"
 	density = 1

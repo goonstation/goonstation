@@ -50,6 +50,8 @@
 	#define COMSIG_ATOM_SET_OPACITY "atom_set_opacity"
 	/// get radioactivity level of atom (0 if signal not registered - ie, has no radioactive component) (return_val as a list)
 	#define COMSIG_ATOM_RADIOACTIVITY "atom_get_radioactivity"
+	/// when this atom has clean_forensic called, send this signal.
+	#define COMSIG_ATOM_CLEANED "atom_cleaned"
 
 // ---- minimap ----
 
@@ -151,6 +153,8 @@
 	#define COMSIG_ITEM_PROCESS "itm_process"
 	/// After attacking any atom (not just mob) with this item (item, atom/target, mob/user, reach, params)
 	#define COMSIG_ITEM_AFTERATTACK "itm_afterattack"
+	/// When the item in hand is twirl emoted and spun in hand. (user, item)
+	#define COMSIG_ITEM_TWIRLED "itm_twirled"
 
 	// ---- bomb assembly signals ----
 
@@ -215,6 +219,8 @@
 	#define COMSIG_MOB_UPDATE_DAMAGE "mob_update_damage"
 	/// Sent when a mob resists, return TRUE to prevent other resist code from running
 	#define COMSIG_MOB_RESIST "mob_resist"
+	/// Sent when the mob is affected by an explosion
+	#define COMSIG_MOB_EX_ACT "mob_explosion_act"
 
 	// ---- cloaking device signal ----
 

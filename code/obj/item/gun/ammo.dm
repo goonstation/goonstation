@@ -204,7 +204,7 @@
 		if(K.sound_load_override)
 			playsound(K, K.sound_load_override, 50, 1)
 		else
-			playsound(K, sound_load, 50, 1)
+			playsound(K, sound_load, 50, TRUE)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
@@ -443,7 +443,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
 		..()
@@ -1099,6 +1099,20 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	ammo_cat = AMMO_ROCKET_RPG
 	w_class = W_CLASS_NORMAL
 	delete_on_reload = 1
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
+
+/obj/item/ammo/bullets/pod_seeking_missile
+	sname = "pod-seeking missile"
+	name = "pod-seeking missile"
+	desc = "A high-explosive missile, equipped with pod-seeking guidance systems."
+	amount_left = 1
+	max_amount = 1
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "pod_seeking_missile"
+	ammo_type = new /datum/projectile/bullet/homing/pod_seeking_missile
+	ammo_cat = AMMO_ROCKET_RPG
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = TRUE
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
 /obj/item/ammo/bullets/mrl
