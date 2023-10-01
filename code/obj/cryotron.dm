@@ -302,6 +302,9 @@
 
 	proc/ensure_storage()
 		for (var/mob/living/L in stored_mobs)
+			if(QDELETED(L))
+				stored_mobs -= L
+				continue
 			if (L.loc != src)
 				L.hibernating = 0
 				if (!L.bioHolder.HasEffect("blind"))
