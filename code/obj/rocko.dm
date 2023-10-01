@@ -102,7 +102,8 @@ obj/item/rocko
 			if(src.can_mob_observe(O))
 				O.show_message("<span class='game say bold'><span class='name'>[src.name]</span> says, <span class='message'>\"[message]\"</span></span>", 2, assoc_maptext = chat_text)
 
-	proc/emote(message, maptext_out)
+	emote(message, maptext_out)
+		..()
 		var/list/targets
 		var/image/chat_maptext/chat_text = null
 

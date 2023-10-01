@@ -207,6 +207,8 @@ TYPEINFO(/atom)
 			ClearAllOverlays()
 
 		src.remove_storage()
+		qdel(src.listen_tree)
+		qdel(src.say_tree)
 		..()
 
 	proc/Turn(var/rot)
@@ -318,6 +320,68 @@ TYPEINFO(/atom)
 
 /atom/proc/allow_drop()
 	return 1
+
+
+/// Listen module tree. Can be null if no input modules are registered.
+/atom/var/datum/listen_module_tree/listen_tree = null
+/// Listen modifiers this atom *starts* with. It will not be updated or used again after init.
+/atom/var/list/start_listen_modifiers = null
+/// Listen inputs this atom *starts* with. It will not be updated or used again after init.
+/atom/var/list/start_listen_inputs = null
+/// Listen languages this atom *starts* with. It will not be updated or used again after init. Note this is the languages that the atom understands when heard.
+/atom/var/list/start_listen_languages = null
+
+/atom/New() //I hate this syntax
+	if(length(src.start_listen_inputs)) //only instantiate the tree if we're gonna use it
+		src.ensure_listen_tree()
+	..()
+
+/// This proc is the final call from the listen tree, and determines what happens when this atom recieves a message. It is essentially the counterpart to say()
+/// Note that maptext is handled in /mob/hear() because /atom doesn't have .client
+/atom/proc/hear(var/datum/say_message/message)
+	boutput(src, message.format_for_output())
+
+
+/// Speech module tree. Lazy loaded on first say() call.
+/atom/var/datum/speech_module_tree/say_tree = null
+/// Accents this atom *starts* with. It will not be updated or used again after init.
+/atom/var/list/start_speech_accents = null
+/// Speech modifiers this atom *starts* with. It will not be updated or used again after init.
+/atom/var/list/start_speech_modifiers = null
+/// Speech outputs this atom *starts* with. It will not be updated or used again after init.
+/atom/var/list/start_speech_outputs = list("spoken")
+/// Default language for speaking
+/atom/var/say_language = "english"
+///Primary entry point for all say code. Message is the text you want to say. It will be mutated by the speech tree. Flags lets you set additional flags on the message, it defaults to 0.
+/atom/proc/say(var/message as text, var/flags = 0)
+	SHOULD_CALL_PARENT(TRUE)
+	if (dd_hasprefix(message, "*")) // no dead emote spam
+		return src.emote(copytext(message, 2),1)
+
+	var/datum/say_message/said = new(message, src, src.say_language)
+	if(!length(said.content))
+		return
+	said.flags |= flags
+	src.ensure_say_tree()
+	SEND_SIGNAL(src, COMSIG_ATOM_SAY, said)
+	SEND_GLOBAL_SIGNAL(COMSIG_ATOM_SAY, said)
+	src.say_tree.process(said)
+
+/atom/proc/ensure_say_tree()
+	if(!src.say_tree)
+		src.say_tree = new(src.start_speech_accents, src.start_speech_modifiers, src.start_speech_outputs)
+	return src.say_tree
+
+/atom/proc/ensure_listen_tree()
+	if(!src.listen_tree)
+		src.listen_tree = new(src, src.start_listen_inputs, src.start_listen_modifiers, src.start_listen_languages)
+	return src.listen_tree
+
+/// Stub proc. If you want atoms to emote, you can code it yourself.
+/atom/proc/emote(act, voluntary = 0, atom/target)
+	set waitfor = FALSE
+	SHOULD_CALL_PARENT(TRUE)
+	return FALSE
 
 // not actually overriden because we want to avoid the overhead if possible. This provides documentation
 #ifdef SPACEMAN_DMM

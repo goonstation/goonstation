@@ -2589,6 +2589,18 @@ proc/connectdirs_to_byonddirs(var/connectdir_bitflag)
 		. += point - prev
 		prev = point
 
+/**Replaces tokens in an input string with a desired replacement token from a text file. Primarily used for accents and similar speech modifiers.
+ * Tokens are separated by whitespace.
+*/
+/proc/find_replace_in_string(input, text_file_path = "language/pirate.txt")
+	var/list/tokens = splittext(input, regex("\\b", "i"))
+	var/list/modded_tokens = list()
+	for (var/token in tokens)
+		var/replacement = strings(text_file_path, lowertext(token), 1)
+		if (replacement)
+			token = replacetext(token, lowertext(token), replacement)
+		modded_tokens += token
+	. = jointext(modded_tokens, "")
 
 /// Returns the sum of densities of all atoms in the given turf including the turf itself
 proc/total_density(turf/T)

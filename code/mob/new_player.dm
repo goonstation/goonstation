@@ -23,6 +23,14 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 
 	var/datum/spend_spacebux/bank_menu
 
+	//Newsay stuff
+	start_listen_modifiers = null
+	start_listen_inputs = list("ooc")
+	start_speech_accents = null
+	start_speech_modifiers = list("client_checks")
+	start_speech_outputs = list("ooc")
+	start_listen_languages = null
+
 	New()
 		. = ..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_INVISIBILITY, src, INVIS_ALWAYS)
@@ -893,9 +901,12 @@ a.latejoin-card:hover {
 			qdel(src)
 
 	say(message)
-		if(dd_hasprefix(message, "*"))
+		if(dd_hasprefix(message, "*")) //no emotes for you
 			return
-		src.ooc(message)
+		if(!dd_hasprefix(message, ":ooc"))
+			..(":ooc [message]")
+		else
+			..()
 
 #ifdef TWITCH_BOT_ALLOWED
 	proc/try_force_into_bill() //try to put the twitch mob into shittbill

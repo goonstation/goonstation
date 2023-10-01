@@ -1012,6 +1012,10 @@
 				M.show_message(thisR, 2)
 
 	say(message = "")
+#ifdef NEWSPEECH
+		if(message) //suppress unreachable code error
+			return ..()
+#endif
 		message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
 		if (!message)
 			return

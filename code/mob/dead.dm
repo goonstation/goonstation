@@ -4,7 +4,12 @@
 	pass_unstable = FALSE
 	///Our corpse, if one exists
 	var/mob/living/corpse
-
+	start_listen_modifiers = list("maptext")
+	start_listen_inputs = list("ears","deadchat","blobchat","ooc","looc")
+	start_speech_accents = null
+	start_speech_modifiers = list("singing")
+	start_speech_outputs = list("deadchat","ooc","looc")
+	start_listen_languages = null
 // dead
 /mob/dead/New()
 	..()
@@ -62,42 +67,6 @@
 
 /mob/dead/projCanHit(datum/projectile/P)
 	return P.hits_ghosts
-
-/mob/dead/say(var/message)
-	message = trim(copytext(sanitize(message), 1, MAX_MESSAGE_LEN))
-
-	if (!message)
-		return
-
-	if (dd_hasprefix(message, "*"))
-		return src.emote(copytext(message, 2),1)
-
-	logTheThing(LOG_DIARY, src, "(GHOST): [message]", "say")
-
-	if (src.client && src.client.ismuted())
-		boutput(src, "<b class='alert'>You are currently muted and may not speak.</b>")
-		return
-
-	if(src?.client?.preferences.auto_capitalization)
-		message = capitalize(message)
-
-	phrase_log.log_phrase("deadsay", message)
-	. = src.say_dead(message)
-
-	for (var/mob/M in hearers(null, null))
-		if (!M.stat)
-			if (M.job == "Chaplain")
-				if (prob (80))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-				else
-					M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
-			else
-				if (prob(90))
-					return
-				else if (prob (95))
-					M.show_message("<span class='game'><i>You hear muffled speech... but nothing is there...</i></span>", 2)
-				else
-					M.show_message("<span class='game'><i>[stutter(message)]</i></span>", 2)
 
 /mob/dead/emote(var/act, var/voluntary = 0) // fart
 	if (!deadchat_allowed)

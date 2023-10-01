@@ -13,7 +13,7 @@
 	var/inhibit_updates = 0
 	var/announces_arrivals = 0
 	var/arrival_announcements_enabled = 1
-	var/say_language = "english"
+	say_language = "english"
 	var/arrivalalert = "$NAME has signed up as $JOB."
 	var/departurealert = "$NAME the $JOB has entered cryogenic storage."
 	var/obj/item/device/radio/intercom/announcement_radio = null

@@ -1,8 +1,7 @@
-/mob/proc/say()
-	return
 
-/mob/proc/whisper(message, forced=FALSE)
-	return
+
+/mob/proc/whisper(message)
+	return src.say(message, flags=SAYFLAG_WHISPER)
 
 /mob/verb/whisper_verb(message as text)
 	set name = "whisper"
@@ -12,13 +11,7 @@
 	set name = "say"
 	if (!message)
 		return
-	if (src.client && url_regex?.Find(message) && !client.holder)
-		boutput(src, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
-		boutput(src, "<span class='alert'>&emsp;<b>\"[message]</b>\"</span>")
-		return
 	src.say(message)
-	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
-		logTheThing(LOG_SAY, src, "SAY: [html_encode(message)] [log_loc(src)]")
 
 /mob/verb/sa_verb(message as text)
 	set name = "sa"
@@ -37,11 +30,6 @@
 	set name = "say_main_radio"
 	set desc = "Speaking on the main radio frequency"
 	set hidden = 1
-	if (src.capitalize_speech())
-		var/i = 1
-		while (copytext(msg, i, i+1) == " ")
-			i++
-		msg = capitalize(copytext(msg, i))
 	src.say_verb(";" + msg)
 
 /mob/living/say_radio()
@@ -551,9 +539,9 @@
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [class? class : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
 //no, voluntary is not a boolean. screm
-/mob/proc/emote(act, voluntary = 0, atom/target)
-	set waitfor = FALSE
-	SHOULD_CALL_PARENT(TRUE)
+/mob/emote(act, voluntary = 0, atom/target)
+	set waitfor = FALSE //this shouldn't be necessary, but I think set SpacemanDMM_should_not_sleep isn't respecting /mob/parent_type = /atom/movable
+	.=..()
 	SEND_SIGNAL(src, COMSIG_MOB_EMOTE, act, voluntary, target)
 
 /mob/proc/emote_check(voluntary = 1, time = 1 SECOND, admin_bypass = TRUE, dead_check = TRUE)
@@ -588,90 +576,8 @@
 			boutput(src, "<span class='notice'>You are no longer listening to messages on the OOC channel.</span>")
 
 /mob/verb/ooc(msg as text)
-	if (IsGuestKey(src.key))
-		boutput(src, "You are not authorized to communicate over these channels.")
-		return
-	if (oocban_isbanned(src))
-		boutput(src, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
-		return
+	say(":ooc [msg]")
 
-	msg = trim(copytext(html_encode(msg), 1, MAX_MESSAGE_LEN))
-	if (!msg)
-		return
-	else if (!src.client.preferences.listen_ooc)
-		return
-	else if (!ooc_allowed && !src.client.holder)
-		boutput(usr, "OOC is currently disabled. For gameplay questions, try <a href='byond://winset?command=mentorhelp'>mentorhelp</a>.")
-		return
-	else if (!dooc_allowed && !src.client.holder && (src.client.deadchat != 0))
-		boutput(usr, "OOC for dead mobs has been turned off.")
-		return
-	else if (src.client && src.client.ismuted())
-		boutput(usr, "You are currently muted and cannot talk in OOC.")
-		return
-	else if (findtext(msg, "byond://") && !src.client.holder)
-		boutput(src, "<B>Advertising other servers is not allowed.</B>")
-		logTheThing(LOG_ADMIN, src, "has attempted to advertise in OOC.")
-		logTheThing(LOG_DIARY, src, "has attempted to advertise in OOC.", "admin")
-		message_admins("[key_name(src)] has attempted to advertise in OOC.")
-		return
-
-	logTheThing(LOG_DIARY, src, ": [msg]", "ooc")
-	phrase_log.log_phrase("ooc", msg)
-
-#ifdef DATALOGGER
-	game_stats.ScanText(msg)
-#endif
-
-	for (var/client/C in clients)
-		// DEBUGGING
-		if (!C.preferences)
-			logTheThing(LOG_DEBUG, null, "[C] (\ref[C]): client.preferences is null")
-
-		if (C.preferences && !C.preferences.listen_ooc)
-			continue
-
-		var ooc_class = ""
-		var display_name = src.key
-		var/ooc_icon = ""
-
-		if (src.client.stealth || src.client.alt_key)
-			if (!C.holder)
-				display_name = src.client.fakekey
-			else
-				display_name += " (as [src.client.fakekey])"
-
-		if (src.client.holder && (!src.client.stealth || C.holder))
-			if (src.client.holder.level == LEVEL_BABBY)
-				ooc_class = "gfartooc"
-			else
-				ooc_class = "adminooc"
-		else if (src.client.is_mentor() && !src.client.stealth)
-			ooc_class = "mentorooc"
-		else if (src.client.player.is_newbee)
-			ooc_class = "newbeeooc"
-			ooc_icon = "Newbee"
-
-		if( src.client.cloud_available() && src.client.cloud_get("donor") )
-			msg = replacetext(msg, ":shelterfrog:", "<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")
-
-		if (src.client.has_contestwinner_medal)
-			msg = replacetext(msg, ":shelterbee:", "<img src='http://stuff.goonhub.com/shelterbee.png' width=32>")
-
-		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
-		if (ooc_icon)
-			rendered = {"
-			<div class='tooltip'>
-				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[ooc_icon].png")]\">
-				<span class="tooltiptext">[ooc_icon]</span>
-			</div>
-			"} + rendered
-		if (C.holder)
-			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
-
-		boutput(C, rendered)
-
-	logTheThing(LOG_OOC, src, "OOC: [msg]")
 
 /mob/proc/listen_looc()
 	set name = "(Un)Mute LOOC"
@@ -685,118 +591,7 @@
 			boutput(src, "<span class='notice'>You are no longer listening to messages on the LOOC channel.</span>")
 
 /mob/verb/looc(msg as text)
-	if (IsGuestKey(src.key))
-		boutput(src, "You are not authorized to communicate over these channels.")
-		return
-	if (oocban_isbanned(src))
-		boutput(src, "You are currently banned from using OOC and LOOC, you may appeal at https://forum.ss13.co/index.php")
-		return
-
-	msg = trim(copytext(html_encode(sanitize(msg)), 1, MAX_MESSAGE_LEN))
-	if (!msg)
-		return
-	else if (!src.client.preferences.listen_looc)
-		return
-	else if (!looc_allowed && !src.client.holder)
-		boutput(usr, "LOOC is currently disabled.")
-		return
-	else if (!dooc_allowed && !src.client.holder && (src.client.deadchat != 0))
-		boutput(usr, "LOOC for dead mobs has been turned off.")
-		return
-	else if (src.client && src.client.ismuted())
-		boutput(usr, "You are currently muted and cannot talk in LOOC.")
-		return
-	else if (findtext(msg, "byond://") && !src.client.holder)
-		boutput(src, "<B>Advertising other servers is not allowed.</B>")
-		logTheThing(LOG_ADMIN, src, "has attempted to advertise in LOOC.")
-		logTheThing(LOG_DIARY, src, "has attempted to advertise in LOOC.", "admin")
-		message_admins("[key_name(src)] has attempted to advertise in LOOC.")
-		return
-
-	logTheThing(LOG_DIARY, src, ": [msg]", "ooc")
-
-#ifdef DATALOGGER
-	game_stats.ScanText(msg)
-#endif
-
-	var/list/recipients = list()
-
-	for (var/client/C in clients)
-		if (!C.mob)
-			continue
-		if (C.preferences && !C.preferences.listen_looc)
-			continue
-		if (C.holder && !C.only_local_looc && !C.player_mode) // is admin with global looc enabled and not in player mode
-			recipients += C
-		else if (IN_RANGE(C.mob, src, LOOC_RANGE)) // is in range to hear looc
-			recipients += C
-
-	var looc_style = ""
-	if (src.client.holder && !src.client.stealth)
-		if (src.client.holder.level == LEVEL_BABBY)
-			looc_style = "color: #4cb7db;"
-		else
-			looc_style = "color: #cd6c4c;"
-	else if (src.client.is_mentor() && !src.client.stealth)
-		looc_style = "color: #a24cff;"
-	else if (src.client.player.is_newbee)
-		looc_style = "color: #8BC16E;"
-
-	var/image/chat_maptext/looc_text = null
-	looc_text = make_chat_maptext(src, "\[LOOC: [msg]]", looc_style)
-	if(looc_text)
-		looc_text.measure(src.client)
-		for(var/image/chat_maptext/I in src.chat_text.lines)
-			if(I != looc_text)
-				I.bump_up(looc_text.measured_height)
-
-	phrase_log.log_phrase("looc", msg)
-	for (var/client/C in recipients)
-		// DEBUGGING
-		if (!C.preferences)
-			logTheThing(LOG_DEBUG, null, "[C] (\ref[C]): client.preferences is null")
-
-		if (C.preferences && !C.preferences.listen_ooc)
-			continue
-
-		var looc_class = ""
-		var display_name = src.key
-		var/looc_icon = ""
-
-		if (src.client.stealth || src.client.alt_key)
-			if (!C.holder)
-				display_name = src.client.fakekey
-			else
-				display_name += " (as [src.client.fakekey])"
-
-		if (src.client.holder && (!src.client.stealth || C.holder))
-			if (src.client.holder.level == LEVEL_BABBY)
-				looc_class = "gfartlooc"
-			else
-				looc_class = "adminlooc"
-		else if (src.client.is_mentor() && !src.client.stealth)
-			looc_class = "mentorlooc"
-		else if (src.client.player.is_newbee)
-			looc_class = "newbeelooc"
-			looc_icon = "Newbee"
-
-		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
-		if (looc_icon)
-			rendered = {"
-			<div class='tooltip'>
-				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[looc_icon].png")]\">
-				<span class="tooltiptext">[looc_icon]</span>
-			</div>
-			"} + rendered
-		if (C.holder)
-			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
-
-		boutput(C, rendered)
-		var/mob/M = C.mob
-		if(speechpopups && M.chat_text && !C.preferences?.flying_chat_hidden)
-			looc_text.show_to(C)
-
-	logTheThing(LOG_OOC, src, "LOOC: [msg]")
+	say(":looc [msg]")
 
 /mob/proc/heard_say(var/mob/other)
 	return
