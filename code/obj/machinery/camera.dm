@@ -245,7 +245,6 @@
 			C.c_south = null
 		if (C.c_west == src)
 			C.c_west = null
-		//C.removeNode(src)
 
 	src.referrers = null
 
@@ -253,10 +252,6 @@
 
 	dirty_cameras |= referrers
 	camnet_needs_rebuild = 1
-
-	//logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Camera destroyed. Camera network needs a rebuild! Number of dirty cameras: [dirty_cameras.len]")
-	//connect_camera_list(referrers)
-
 
 /obj/machinery/camera/ex_act(severity)
 	if(src.invuln)
@@ -293,8 +288,6 @@
 		return
 	if (src.network != user.network || !(src.camera_status))
 		return
-	//if (istype(user, /mob/living/silicon/ai/hologram))
-	//	return
 	user.current = src
 	user.set_eye(src)
 
@@ -302,15 +295,6 @@
 
 /obj/machinery/camera/proc/disconnect_viewers()
 	for(var/mob/O in mobs)
-		/* Not needed with new AI cam system
-		if (isAI(O))
-			var/mob/living/silicon/ai/OAI = O
-			if (OAI && OAI.current == src)
-				if( OAI.camera_overlay_check(src) )
-					boutput(OAI, "Your regain your connection to the camera.")
-				else
-					boutput(OAI, "Your connection to the camera has been lost.")
-		*/
 		if(O.eye == src)
 			O.set_eye(null)
 			boutput(O, "The screen bursts into static.")
@@ -469,11 +453,6 @@
 	if(!C.vars[dir_var] || force_connection)
 		var/obj/machinery/camera/candidate = null
 		candidate = getCameraMove(C, direction)
-		/*
-		if(!candidate)
-			logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] didn't get a candidate when heading [dir2text(direction)].")
-			return
-		*/
 		if(candidate && C.z == candidate.z && C.network == candidate.network) // && (!camera_network_reciprocity || !candidate.vars[rec_var]))
 			C.vars[dir_var] = candidate
 			candidate.addToReferrers(C)
@@ -481,9 +460,3 @@
 			if(camera_network_reciprocity && (!candidate.vars[rec_var]))
 				candidate.vars[rec_var] = C
 				C.addToReferrers(candidate)
-/*
-		else
-			logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] rejected. cand z = [candidate.z], C z = [C.z]; cand net = [candidate.network], C net = [C.network]; reciprocity = [camera_network_reciprocity], rec_var:[rec_var] ( [isnull(candidate.vars[rec_var]) ? "null" : "not null"] )")
-	else
-		logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Camera at [log_loc(C)] rejected because [dir_var] was already set.")
-		*/
