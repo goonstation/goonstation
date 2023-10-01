@@ -603,22 +603,22 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	requests(subaction, href_list)
 		if (!isnull(subaction))
-		switch (subaction)
-			if ("remove")
-				var/datum/supply_order/order = locate(href_list["what"]) in shippingmarket.supply_requests
-				if(!istype(order))
-					return
-				if (order.address)
-					src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
-				shippingmarket.supply_requests -= order
-					. = {"Request denied.<br>"}
-
-			if ("clear")
-				for(var/datum/supply_order/order as anything in shippingmarket.supply_requests)
+			switch (subaction)
+				if ("remove")
+					var/datum/supply_order/order = locate(href_list["what"]) in shippingmarket.supply_requests
+					if(!istype(order))
+						return
 					if (order.address)
 						src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
-				shippingmarket.supply_requests = null
-				shippingmarket.supply_requests = new/list()
+					shippingmarket.supply_requests -= order
+					. = {"Request denied.<br>"}
+
+				if ("clear")
+					for(var/datum/supply_order/order as anything in shippingmarket.supply_requests)
+						if (order.address)
+							src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
+					shippingmarket.supply_requests = null
+					shippingmarket.supply_requests = new/list()
 					. = {"All requests have been cleared.<br>"}
 
 		. += "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
