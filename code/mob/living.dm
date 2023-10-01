@@ -1061,6 +1061,9 @@
 		var/datum/mutantrace/skeleton/S = H.mutantrace
 		if (S.head_tracker)
 			say_location = S.head_tracker
+			if(!skip_open_mics_in_range)
+				for (var/atom/A as anything in all_view(message_range, S.head_tracker))
+					A.hear_talk(src,messages,heardname,lang_id)
 	if (isturf(say_location.loc))
 		listening = all_hearers(message_range, say_location)
 		if (ismob(say_location))
