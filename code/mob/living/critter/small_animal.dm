@@ -225,7 +225,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		..()
 
 	can_critter_eat()
-		src.active_hand = 2 // mouth hand
+		set_hand(2) // mouth hand
 		src.set_a_intent(INTENT_HELP)
 		return can_act(src,TRUE)
 

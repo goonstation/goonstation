@@ -317,7 +317,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				else
 					src.wake_from_hibernation()
 			// We were harmed, and our ai wants to fight back. Also we don't have anything else really important going on
-			if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate() && M != src)
+			if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate() && M != src && src.is_npc)
 				var/datum/aiTask/sequence/goalbased/retaliate/task_instance = src.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(src.ai, src.ai.default_task))
 				task_instance.targetted_mob = M
 				task_instance.start_time = TIME
@@ -663,11 +663,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			return
 		var/obj/item/old = src.equipped()
 		if (active_hand < hands.len)
-			active_hand++
-			hand = active_hand
+			set_hand(active_hand + 1)
 		else
-			active_hand = 1
-			hand = active_hand
+			set_hand(1)
 		hud.update_hands()
 		src.update_inhands()
 		if (old != src.equipped())
@@ -774,7 +772,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				HH.holder = src
 				hands += HH
 			active_hand = 1
-			hand = active_hand
+			set_hand(1)
 
 	proc/post_setup_hands()
 		if (hand_count)
