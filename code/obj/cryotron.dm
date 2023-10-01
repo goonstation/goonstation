@@ -310,7 +310,6 @@
 					var/mob/living/carbon/human/H = L
 					if (H.glasses?.allow_blind_sight)
 						L.removeOverlayComposition(/datum/overlayComposition/blinded)
-				stored_mobs[L] = null
 				stored_mobs -= L
 				if(!isnull(L.loc)) // loc only goes null when you ghost, probably
 					stored_crew_names -= L.real_name // you shouldn't be removed from the list when you ghost
