@@ -261,6 +261,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	message = trim(html_encode(message))
+	message = src.check_singing_prefix(message)
 
 	if (!message)
 		return
