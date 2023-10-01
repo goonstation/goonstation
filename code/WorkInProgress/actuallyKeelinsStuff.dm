@@ -214,7 +214,6 @@ Returns:
 	S.filters += filter(type="layer", render_source = "*hidden_game_plane")
 	S.filters += filter(type="color", color=list(0.2,0.05,0.05, 0.1,0.3,0.2, 0.1,0.1,0.4, 0,0,0)) //Alpha method preserves interaction but you can use object outside your range and alpha gets destroyed
 	S.filters += filter(type="alpha", render_source="*test")										//Going with this because i only need visibility
-	//S.plane = PLANE_LIGHTING - 1  //If we want lighting
 	usr << I
 	usr.client.screen += S
 	S.appearance_flags = KEEP_TOGETHER
@@ -2589,8 +2588,8 @@ Returns:
 
 	for(var/turf/T in random_floor_turfs)
 		if(prob(3))
-			new/obj/item/plank(T)
-			new/obj/item/plank(T)
+			new/obj/item/sheet/wood(T)
+			new/obj/item/sheet/wood(T)
 		else if(prob(1) && prob(40))
 			new/obj/item/gun/kinetic/spes(T)
 			new/obj/item/ammo/bullets/a12(T)

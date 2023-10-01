@@ -170,7 +170,7 @@
 	var/obj/overlay/ovr_clamp
 
 	///Directionality to be given to overlays; should be 4 for right unit and 8 for left
-	var/overlay_dir = 1
+	var/overlay_dir = NORTH
 	///Rod condition reference for overlay; should update when rod is expended
 	var/rod_condition = 100
 	///Rod viability reference for overlay; should update when rod is installed, based on viability for the unit type
@@ -190,7 +190,7 @@
 	left
 		name = "catalytic anode unit"
 		icon_state = "base-l"
-		overlay_dir = 8
+		overlay_dir = WEST
 		gentype = GEN_ANODE
 
 		populated
@@ -199,7 +199,7 @@
 	right
 		name = "catalytic cathode unit"
 		icon_state = "base-r"
-		overlay_dir = 4
+		overlay_dir = EAST
 		gentype = GEN_CATHODE
 
 		populated

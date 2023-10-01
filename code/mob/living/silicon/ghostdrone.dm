@@ -364,10 +364,8 @@
 			src.examine_verb(target) // in theory, usr should be us, this is shit though
 			return
 
-		if (src.in_point_mode || src.client?.check_key(KEY_POINT))
+		if (src.client?.check_key(KEY_POINT))
 			src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-			if (src.in_point_mode)
-				src.toggle_point_mode()
 			return
 
 		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking

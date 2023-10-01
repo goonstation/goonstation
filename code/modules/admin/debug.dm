@@ -389,15 +389,17 @@ var/global/debug_messages = 0
 	set name = "Del-All"
 	set desc = "Delete all instances of the selected type."
 
-	// to prevent REALLY stupid deletions
+	// to prevent REALLY stupid deletions on live
 	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
 	var/hsbitem = get_one_match(typename, /atom)
 	var/background =  alert("Run the process in the background?",,"Yes" ,"No")
 
+#ifdef LIVE_SERVER
 	for(var/V in blocked)
 		if(V == hsbitem)
 			boutput(usr, "Can't delete that you jerk!")
 			return
+#endif
 	if(hsbitem)
 		src.delete_state = DELETE_RUNNING
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
@@ -1204,9 +1206,7 @@ var/datum/flock/testflock
 		if(!src.mob)
 			return
 		var/fname = "spawn_dbg.json"
-		if (fexists(fname))
-			fdel(fname)
-		text2file(json_encode(list("spawn" = detailed_spawn_dbg)), fname)
+		rustg_file_write(json_encode(list("spawn" = detailed_spawn_dbg)), fname)
 		var/tmp_file = file(fname)
 		usr << ftp(tmp_file)
 		fdel(fname)

@@ -16,7 +16,6 @@
 
 	var/broken = 0
 	var/burnt = 0
-	var/has_material = TRUE
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
@@ -27,8 +26,6 @@
 
 	New()
 		..()
-		if (has_material && isnull(default_material))
-			setMaterial(getMaterial("steel"))
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -1311,7 +1308,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 	mat_appearances_to_ignore = list("steel")
 /turf/simulated/floor/snow
 	name = "snow"
-	has_material = FALSE
+	default_material = null
 	icon_state = "snow1"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
@@ -2096,7 +2093,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 					actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
 			else
 				actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
-		else if (S?.material?.getMaterialFlags() & MATERIAL_CRYSTAL)
+		else if ((S?.material?.getMaterialFlags() & MATERIAL_CRYSTAL) && !(locate(/obj/window) in src))
 			if(S.reinforcement)
 				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.rwindows : /obj/window/reinforced, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
 			else
