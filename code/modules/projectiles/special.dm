@@ -897,7 +897,7 @@ ABSTRACT_TYPE(/datum/projectile/special)
 	shot_number = 1
 	silentshot = 1 //any noise will be handled by the egg splattering anyway
 	damage = 60
-	cost = 40
+	cost = 60
 	dissipation_rate = 70
 	dissipation_delay = 0
 	window_pass = 0

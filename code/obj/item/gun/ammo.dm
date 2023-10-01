@@ -1397,8 +1397,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	m_amt = 18000
 	g_amt = 38000
 	charge = 40
-	max_charge = 40
-	recharge_rate = 5
+	max_charge = 60
+	recharge_rate = 2.5
 
 
 /obj/item/ammo/power_cell/self_charging/custom
@@ -1438,7 +1438,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"
 	desc = "A self-contained radioisotope power cell that very slowly recharges an internal capacitor. Holds 40PU."
-	recharge_rate = 1.5 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
+	recharge_rate = 2 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
 
 /obj/item/ammo/power_cell/self_charging/disruptor
 	name = "Power Cell - Disruptor Charger"
