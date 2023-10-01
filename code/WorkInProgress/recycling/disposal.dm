@@ -138,7 +138,8 @@
 		if(last_sound + 6 < world.time)
 			playsound(src.loc, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
 			last_sound = world.time
-			damage_pipe()
+			if(!istype(user,/mob/living/critter/small_animal))
+				damage_pipe()
 			if(prob(30))
 				slowed++
 
