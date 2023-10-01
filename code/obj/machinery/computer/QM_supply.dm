@@ -602,15 +602,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 
 	requests(subaction, href_list)
+		if (!isnull(subaction))
 		switch (subaction)
-			if (null, "list")
-				. = "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
-				for(var/datum/supply_order/SO in shippingmarket.supply_requests)
-					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
-
-				. += {"</ul>"}
-				return .
-
 			if ("remove")
 				var/datum/supply_order/order = locate(href_list["what"]) in shippingmarket.supply_requests
 				if(!istype(order))
@@ -618,7 +611,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				if (order.address)
 					src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
 				shippingmarket.supply_requests -= order
-				. = {"Request denied."}
+					. = {"Request denied.<br>"}
 
 			if ("clear")
 				for(var/datum/supply_order/order as anything in shippingmarket.supply_requests)
@@ -626,7 +619,13 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
 				shippingmarket.supply_requests = null
 				shippingmarket.supply_requests = new/list()
-				. = {"All requests have been cleared."}
+					. = {"All requests have been cleared.<br>"}
+
+		. += "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
+		for(var/datum/supply_order/SO in shippingmarket.supply_requests)
+			. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
+
+		. += {"</ul>"}
 
 		return .
 
