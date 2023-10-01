@@ -989,8 +989,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\camera\coverage\datum\controller\process\camera_coverage_emitter_queue.dm"
 #include "code\modules\camera\coverage\datum\controller\process\camera_coverage_all.dm"
 #include "code\modules\camera\coverage\datum\component\camera_coverage_emitter.dm"
-#include "code\modules\camera\camera.dm"
-#include "code\modules\camera\network.dm"
 #include "code\modules\chemistry\chem_requester.dm"
 #include "code\modules\chemistry\chemicompiler_core.dm"
 #include "code\modules\chemistry\Chemistry-Dispenser.dm"
