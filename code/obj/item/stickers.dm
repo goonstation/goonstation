@@ -409,7 +409,7 @@
 	var/obj/machinery/camera/camera = null
 	var/camera_tag = "sticker"
 	var/camera_network = "stickers"
-	var/tv_network = "Zeta"
+	var/tv_network = "public"
 	var/sec_network = "SS13"
 
 	var/has_selectable_skin = 1 //
@@ -577,7 +577,7 @@
 	icon_state = "monitor"
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
-	network = "stickers"
+	networks = list("stickers")
 
 /obj/item/storage/box/spy_sticker_kit
 	name = "spy sticker kit"

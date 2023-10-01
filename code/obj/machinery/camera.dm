@@ -7,13 +7,17 @@
 	text = ""
 
 	var/network = "SS13"
+	/// Used by autoname: EX "security camera"
+	var/prefix = "security"
+	/// Used by autoname: EX "camera - west primary hallway"
+	var/uses_area_name = FALSE
+	// These stack: EX "security camera - west primary hallway"
 	layer = EFFECTS_LAYER_UNDER_1
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/camera_status = TRUE
 	anchored = ANCHORED
 	var/invuln = null
-	var/last_paper = 0
 	///Cameras only the AI can see through
 	var/ai_only = FALSE
 	///Cant be snipped by wirecutters
@@ -31,21 +35,68 @@
 	/// Robust light
 	var/datum/light/point/light
 
-	ranch
-		name = "autoname"
-		network = "ranch"
-		color = "#AAFF99"
-		c_tag = "autotag"
+	/*
+	Autoname
+	Set by having "autoname" anywhere in the name variable.
+	Sets the name of the camera based on prefix and uses_area_name. Default is "camera".
+ 	prefix is attached as a prefix to "camera" and area name is attached as suffix seperated by -.
+
+	Autotag
+	Set by having "autotag" anywhere in the c_tag variable.
+	Sets the tag of the camera to the name of the area.
+	All cameras are tallied regardless of this tag to apply a number to them.
+	*/
+
+/obj/machinery/camera/ranch
+	name = "autoname - ranch"
+	c_tag = "autotag"
+	network = "ranch"
+	prefix = "ranch"
+	color = "#AAFF99"
+
+/// AI only camera
+/obj/machinery/camera/AI
+	name = "autoname - AI"
+	c_tag = "autotag"
+	prefix = "AI"
+	ai_only = TRUE
+
+/// Mining outpost cameras
+/obj/machinery/camera/mining
+	name = "autoname - mining"
+	c_tag = "autotag"
+	network = "Mining"
+	prefix = "mining"
+	color = "#daa85c"
+
+/// Science outpost cameras
+/obj/machinery/camera/science
+	name = "autoname - science"
+	c_tag = "autotag"
+	prefix = "outpost"
+	color = "#b88ed2"
+
+/obj/machinery/camera/virtual
+	name = "autoname - VR"
+	c_tag = "autotag"
+	invisibility = INVIS_ALWAYS
+	network = "VR"
 
 /obj/machinery/camera/television
 	name = "television camera"
 	desc = "A bulky stationary camera for wireless broadcasting of live feeds."
-	network = "Zeta" // why not.
 	icon_state = "television"
+	network = "public"
+	prefix = null
+	uses_area_name = TRUE
 	anchored = ANCHORED
 	density = 1
 	reinforced = TRUE
 	var/securedstate = 2
+
+/obj/machinery/camera/television/auto
+	name = "autoname - television"
+	c_tag = "autotag"
 
 /obj/machinery/camera/television/attackby(obj/item/W, mob/user)
 	..()
@@ -105,6 +156,10 @@
 	icon_state = "mobilevision"
 	securedstate = null //No bugginess thank you
 
+/obj/machinery/camera/television/mobile/science
+	name = "mobile television - science"
+	c_tag = "science mobile"
+
 /obj/machinery/camera/New()
 	..()
 	var/area/area = get_area(src)
@@ -115,6 +170,7 @@
 							/area/station/turret_protected/AIbasecore1)
 	if (locate(area) in aiareas)
 		src.ai_only = TRUE
+		src.prefix = "AI"
 
 	AddComponent(/datum/component/camera_coverage_emitter)
 
@@ -290,9 +346,8 @@
 		return
 
 	if (istype(W, /obj/item/paper))
-		if (last_paper && ( (last_paper + 80) >= world.time))
+		if (!ON_COOLDOWN(src, "paper_camera", 8 SECONDS))
 			return
-		last_paper = world.time
 		var/obj/item/paper/X = W
 		boutput(user, "You hold a paper up to the camera ...")
 		for(var/mob/O in mobs)
@@ -308,116 +363,47 @@
 						X.ui_interact(O)
 						logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 
-//Return a working camera that can see a given mob
-//or null if none
+/// Return true if mob is on a turf with camera coverage
 /proc/seen_by_camera(var/mob/M)
-	.= 0
-	if (isturf(M.loc))
-		var/turf/T = M.loc
-		. = (T.camera_coverage_emitters && length(T.camera_coverage_emitters))
-
-/obj/machinery/camera/motion
-	name = "Motion Security Camera"
-	var/list/motionTargets = list()
-	var/detectTime = 0
-	var/locked = 1
-
-/obj/machinery/camera/motion/process()
-	// motion camera event loop
-	. = ..()
-	if (detectTime > 0)
-		var/elapsed = world.time - detectTime
-		if (elapsed > 300)
-			triggerAlarm()
-	else if (detectTime == -1)
-		for (var/mob/target in motionTargets)
-			if (isdead(target)) lostTarget(target)
-
-/obj/machinery/camera/motion/proc/newTarget(var/mob/target)
-	if (isAI(target)) return 0
-	if (detectTime == 0)
-		detectTime = world.time // start the clock
-	if (!(target in motionTargets))
-		motionTargets += target
-	return 1
-
-/obj/machinery/camera/motion/proc/lostTarget(var/mob/target)
-	if (target in motionTargets)
-		motionTargets -= target
-	if (length(motionTargets) == 0)
-		cancelAlarm()
-
-/obj/machinery/camera/motion/proc/cancelAlarm()
-	if (detectTime == -1)
-		for (var/mob/living/silicon/aiPlayer in mobs)
-			if (camera_status) aiPlayer.cancelAlarm("Motion", src.loc.loc)
-	detectTime = 0
-	return 1
-
-/obj/machinery/camera/motion/proc/triggerAlarm()
-	if (!detectTime) return 0
-	for (var/mob/living/silicon/aiPlayer in mobs)
-		if (camera_status) aiPlayer.triggerAlarm("Motion", src.loc.loc, src)
-	detectTime = -1
-	return 1
-
-/obj/machinery/camera/motion/attackby(obj/item/W, mob/user)
-	if (issnippingtool(W) && locked == 1) return
-	if (isscrewingtool(W))
-		var/turf/T = user.loc
-		boutput(user, text("<span class='notice'>[]ing the access hatch... (this is a long process)</span>", (locked) ? "Open" : "Clos"))
-		sleep(10 SECONDS)
-		if ((user.loc == T && user.equipped() == W && !( user.stat )))
-			src.locked ^= 1
-			boutput(user, text("<span class='notice'>The access hatch is now [].</span>", (locked) ? "closed" : "open"))
-
-	..() // call the parent to (de|re)activate
-
-	if (issnippingtool(W)) // now handle alarm on/off...
-		if (camera_status) // ok we've just been reconnected... send an alarm!
-			detectTime = world.time - 301
-			triggerAlarm()
-		else
-			for (var/mob/living/silicon/aiPlayer in mobs) // manually cancel, to not disturb internal state
-				aiPlayer.cancelAlarm("Motion", src.loc.loc)
-
-/obj/machinery/camera/proc/snipcamera(user)
-	if (src.camera_status)
-		src.break_camera(user)
-	else
-		src.repair_camera(user)
-	// now disconnect anyone using the camera
-	src.disconnect_viewers()
-	return
-
+	var/turf/T = get_turf(M)
+	. = (T.camera_coverage_emitters && length(T.camera_coverage_emitters))
 
 /*------------------------------------
 		CAMERA NETWORK STUFF
 ------------------------------------*/
 
-/proc/name_autoname_cameras()
-	var/list/counts_by_area = list()
-	var/list/obj/machinery/camera/first_cam_by_area = list()
-	for(var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
-		if(!istype(C)) continue
+/proc/setup_cameras()
+	var/list/counts_by_tag = list()
+	var/list/obj/machinery/camera/first_cam_by_tag = list()
+	for (var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
+		var/area/where = get_area(C)
+		var/name_build_string = ""
+		var/tag_we_use = null
 		if (dd_hasprefix(C.name, "autoname"))
-			var/area/where = get_area(C)
-			if (isarea(where))
-				C.name = "security camera"
-				if(!dd_hasprefix(C.c_tag, "autotag"))
-					continue
-				if(!counts_by_area[where])
-					counts_by_area[where] = 1
-					C.c_tag = "[where.name]"
-					first_cam_by_area[where] = C
-				else
-					if(counts_by_area[where] == 1)
-						first_cam_by_area[where].c_tag = "[where.name] 1"
-					counts_by_area[where]++
-					C.c_tag = "[where.name] [counts_by_area[where]]"
+			if (C.prefix)
+				name_build_string += "[C.prefix] "
+			name_build_string += "camera"
+			if (C.uses_area_name)
+				name_build_string += " - [where.name]"
+			C.name = name_build_string
+
+		if (dd_hasprefix(C.c_tag, "autotag"))
+			tag_we_use = where.name
+		else
+			tag_we_use = C.c_tag
+
+		if (!counts_by_tag[tag_we_use])
+			counts_by_tag[tag_we_use] = 1
+			C.c_tag = "[tag_we_use]"
+			first_cam_by_tag[tag_we_use] = C
+		else
+			if (counts_by_tag[tag_we_use] == 1)
+				first_cam_by_tag[tag_we_use].c_tag = "[tag_we_use] 1"
+			counts_by_tag[tag_we_use]++
+			C.c_tag = "[tag_we_use] [counts_by_tag[tag_we_use]]"
 
 /proc/build_camera_network()
-	name_autoname_cameras()
+	setup_cameras()
 	var/list/cameras = by_type[/obj/machinery/camera]
 	if (!isnull(cameras))
 		connect_camera_list(cameras)

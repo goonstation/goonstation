@@ -78,7 +78,7 @@
 
 /datum/commodity/trader/pianzi/cameraviewers
 	comname = "Camera Viewing Devices"
-	comtype = /obj/item/device/camera_viewer
+	comtype = /obj/item/device/camera_viewer/security
 	amount = 3
 	price_boundary = list(PAY_TRADESMAN,PAY_DOCTORATE)
 	possible_alt_types = list(/obj/item/device/light/flashlight)

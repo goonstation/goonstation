@@ -571,10 +571,10 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		. = ..()
 		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
-	gauntlet
-		name = "The Gauntlet Arena"
-		has_camera = 1
-		cam_network = "Zeta"
+/obj/observable/gauntlet
+	name = "The Gauntlet Arena"
+	has_camera = 1
+	cam_network = "public"
 
 /datum/gauntletDrop
 	var/name = "Drop"

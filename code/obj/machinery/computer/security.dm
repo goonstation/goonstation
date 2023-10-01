@@ -104,16 +104,16 @@
 	icon_state = "security_det"
 	circuit_type = /obj/item/circuitboard/security_tv
 
-	small
-		name = "Television"
-		desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"
-		network = "Zeta"
-		icon_state = "security_tv"
-		circuit_type = /obj/item/circuitboard/small_tv
-		density = FALSE
+/obj/machinery/computer/security/wooden_tv/small
+	name = "Television"
+	desc = "These channels seem to mostly be about robuddies. What is this, some kind of reality show?"
+	network = "public"
+	icon_state = "security_tv"
+	circuit_type = /obj/item/circuitboard/small_tv
+	density = FALSE
 
-		power_change()
-			return
+	power_change()
+		return
 
 // -------------------- VR --------------------
 /obj/machinery/computer/security/wooden_tv/small/virtual

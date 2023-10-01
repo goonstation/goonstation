@@ -30,7 +30,7 @@
 		/obj/item/gun/kinetic/foamdartgun/borg,
 		/obj/item/device/detective_scanner,
 		/obj/item/device/audio_log, // TODO: make larger and non-ejectable version?
-		/obj/item/device/camera_viewer,
+		/obj/item/device/camera_viewer/security,
 		/obj/item/hand_labeler,
 		/obj/item/device/ticket_writer,
 		/obj/item/sec_tape/vended,
@@ -76,7 +76,7 @@
 		/obj/item/sponge,
 		/obj/item/mop,
 		/obj/item/lamp_manufacturer,
-		/obj/item/device/camera_viewer,
+		/obj/item/device/camera_viewer/public,
 		// TODO: some sort of nutrient dispenser?
 		/obj/item/tongs,
 		/obj/item/kitchen/utensil/knife/bread,
