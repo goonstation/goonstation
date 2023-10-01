@@ -13,16 +13,17 @@
 	var/uses_area_name = FALSE
 	// These stack: EX "security camera - west primary hallway"
 	layer = EFFECTS_LAYER_UNDER_1
+	/// The camera tag which identifies this camera
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/camera_status = TRUE
 	anchored = ANCHORED
-	var/invuln = null
-	///Cameras only the AI can see through
+	var/invuln = FALSE
+	/// Cameras only the AI can see through
 	var/ai_only = FALSE
-	///Cant be snipped by wirecutters
+	/// Cant be snipped by wirecutters
 	var/reinforced = FALSE
-	/// automatically offsets and snaps to perspective walls. mainly for regular security cams
+	/// automatically offsets and snaps to perspective walls. Not for televisions or internal cameras.
 	var/sticky = FALSE
 	/// do auto position cameras use the alternate diagonal sprites?
 	var/alternate_sprites = FALSE
@@ -241,7 +242,17 @@
 		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
 		add_fingerprint(user)
 
-// Auto stuff starts here
+
+/obj/machinery/camera/proc/snipcamera(user)
+	if (src.camera_status)
+		src.break_camera(user)
+	else
+		src.repair_camera(user)
+	// now disconnect anyone using the camera
+	src.disconnect_viewers()
+	return
+
+/* ====== Auto Cameras ====== */
 
 /obj/machinery/camera/auto
 	name = "autoname"
@@ -274,10 +285,12 @@
 	prefix = "outpost"
 	color = "#b88ed2"
 
+/// Invisible cameras for VR
 /obj/machinery/camera/auto/virtual
 	name = "autoname - VR"
-	network = "VR
+	network = "VR"
 	invisibility = INVIS_ALWAYS
+	invuln = TRUE
 
 /obj/machinery/camera/auto/alt
 #ifdef IN_MAP_EDITOR
