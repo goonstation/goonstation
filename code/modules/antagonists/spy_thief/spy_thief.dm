@@ -119,7 +119,7 @@
 		for (var/obj/stolen_item as anything in src.stolen_items)
 			stolen_items += list(
 				list(
-					"icon" = "[icon2base64(icon(initial(stolen_item.icon), initial(stolen_item.icon_state), frame = 1))]",
+					"iconBase64" = "[icon2base64(icon(initial(stolen_item.icon), initial(stolen_item.icon_state), frame = 1))]",
 					"name" = "[stolen_item.name]",
 				)
 			)
@@ -129,7 +129,7 @@
 			var/obj/item_type = initial(redeemed_entry.item)
 			redeemed_items += list(
 				list(
-					"icon" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1))]",
+					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1))]",
 					"name" = "[redeemed_entry.name]",
 				)
 			)

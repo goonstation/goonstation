@@ -1,11 +1,22 @@
 /**
  * @file
- * @copyright 2021
+ * @copyright 2023
  * @author Mordent (https://github.com/mordent-goonstation)
+ * @author Mr. Moriarty (https://github.com/Mister-Moriarty)
  * @license ISC
  */
 
 import { Flex, Image } from '..';
+
+interface ItemListProps {
+  items: ItemListItemProps[];
+  nothing_text: string;
+}
+
+interface ItemListItemProps {
+  name: string;
+  iconBase64?: string;
+}
 
 export const ItemList = (props: ItemListProps) => {
   const {
@@ -23,13 +34,13 @@ export const ItemList = (props: ItemListProps) => {
       inline
       align="center"
       key={index}>
-      {!!item.icon && (
+      {!!item.iconBase64 && (
         <Flex.Item>
           <Image
             height="32px"
             width="32px"
             pixelated
-            src={`data:image/png;base64,${item.icon}`}
+            src={`data:image/png;base64,${item.iconBase64}`}
           />
         </Flex.Item>
       )}
@@ -42,13 +53,3 @@ export const ItemList = (props: ItemListProps) => {
     </Flex>
   ));
 };
-
-interface ItemListProps {
-  items: ItemListItemProps[];
-  nothing_text: string;
-}
-
-interface ItemListItemProps {
-  name: string;
-  icon: string;
-}

@@ -14,35 +14,14 @@ export const AntagonistsTab = (props, context) => {
   const { data } = useBackend<AntagonistTabData>(context);
 
   return (
-    <Box>
-      <Section>
-        <Stack
-          vertical
-          align="center"
-          my={3}>
-          <Stack.Item
-            mb={-2.5}
-            italic>
-            The Game Mode Was:
-          </Stack.Item>
-          <Stack.Item
-            fontSize={2.75}
-            bold>
-            {data.game_mode}
-          </Stack.Item>
-        </Stack>
-      </Section>
+    <Fragment>
+      <GameModeDisplay
+        game_mode={data.game_mode}
+      />
       {data.verbose_antagonist_data?.map((antagonist, index) =>
         (<Antagonist
           key={index}
-          antagonist_roles={antagonist.antagonist_roles}
-          real_name={antagonist.real_name}
-          player={antagonist.player}
-          job_role={antagonist.job_role}
-          status={antagonist.status}
-          objectives={antagonist.objectives}
-          antagonist_statistics={antagonist.antagonist_statistics}
-          subordinate_antagonists={antagonist.subordinate_antagonists}
+          {...antagonist}
         />)
       )}
       {!!data.succinct_antagonist_data.length && (
@@ -53,7 +32,33 @@ export const AntagonistsTab = (props, context) => {
           />
         </Section>
       )}
-    </Box>
+    </Fragment>
+  );
+};
+
+const GameModeDisplay = (props) => {
+  const {
+    game_mode,
+  } = props;
+
+  return (
+    <Section>
+      <Stack
+        vertical
+        align="center"
+        my={3}>
+        <Stack.Item
+          mb={-2.5}
+          italic>
+          The Game Mode Was:
+        </Stack.Item>
+        <Stack.Item
+          fontSize={2.75}
+          bold>
+          {game_mode}
+        </Stack.Item>
+      </Stack>
+    </Section>
   );
 };
 

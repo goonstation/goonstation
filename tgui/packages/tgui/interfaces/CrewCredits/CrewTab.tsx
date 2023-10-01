@@ -4,7 +4,7 @@
  * @author Original glowbold (https://github.com/pgmzeta)
  * @author Changes Mr. Moriarty (https://github.com/Mister-Moriarty)
  * @license MIT
-*/
+ */
 
 import { useBackend } from '../../backend';
 import { Box, Icon, Section, Stack } from '../../components';
