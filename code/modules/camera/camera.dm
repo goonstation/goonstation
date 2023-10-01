@@ -149,7 +149,6 @@
 	else
 		update_coverage() // explosion happened, probably destroyed nearby turfs, better rebuild
 		..(severity)
-	return
 
 /obj/machinery/camera/emp_act()
 	..()
@@ -242,7 +241,6 @@
 		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
 		add_fingerprint(user)
 
-
 /obj/machinery/camera/proc/snipcamera(user)
 	if (src.camera_status)
 		src.break_camera(user)
@@ -250,7 +248,6 @@
 		src.repair_camera(user)
 	// now disconnect anyone using the camera
 	src.disconnect_viewers()
-	return
 
 /obj/machinery/camera/ranch
 	name = "autoname - ranch"
@@ -340,4 +337,3 @@
 				if (NORTH)
 					src.pixel_y = pixel_offset * 2
 		T = null
-
