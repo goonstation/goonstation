@@ -252,7 +252,8 @@
 						<a href='[playeropt_link(M, "tysongib")]'>Tyson</a> &bull;
 						<a href='[playeropt_link(M, "flockgib")]'>Flock</a> &bull;
 						<a href='[playeropt_link(M, "damn")]'>(Un)Damn</a> &bull;
-						<a href='[playeropt_link(M, "rapture")]'>Rapture</a>
+						<a href='[playeropt_link(M, "rapture")]'>Rapture</a> &bull;
+						<a href='[playeropt_link(M, "anvilgib")]'>Anvil</a>
 					</div>
 					<div class='l'>Misc</div>
 					<div class='r'>
@@ -359,6 +360,7 @@
 				<div class='optionGroup' style='border-color: #B57EDC;'>
 					<h2 style='background-color: #B57EDC;'>Antagonist Options</h2>
 					<div>
+						[jobban_isbanned(M, "Syndicate") ? "<div class='antag'>⚠ This player is antag banned ⚠</div>" : ""]
 						<div class='l'>Options</div>
 						<div class='r'>
 							<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a> &bull;

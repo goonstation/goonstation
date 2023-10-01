@@ -217,7 +217,7 @@
 	name = "tea"
 	desc = "A fine cup of tea.  Possibly Earl Grey.  Temperature undetermined."
 	icon_state = "tea0"
-	item_state = "coffee"
+	item_state = "tea"
 	initial_volume = 50
 	initial_reagents = "tea"
 
@@ -333,6 +333,7 @@
 		var/drop_this_shit = 0 //i promise this is useful
 		if (src.is_sealed)
 			is_sealed = 0
+			src.set_open_container(TRUE)
 			can_chug = 1
 			splash_all_contents = TRUE
 			incompatible_with_chem_dispensers = FALSE

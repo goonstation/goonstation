@@ -212,7 +212,7 @@ TYPEINFO(/obj/flock_structure)
 	if (!location)
 		location = get_turf(src)
 	visible_message("<span class='alert'>[src.name] violently breaks apart!</span>")
-	playsound(location, 'sound/impact_sounds/Glass_Shatter_2.ogg', 50, 1)
+	playsound(location, 'sound/impact_sounds/Glass_Shatter_2.ogg', 50, TRUE)
 	flockdronegibs(location)
 	var/num_pieces = rand(2,8)
 	var/atom/movable/B

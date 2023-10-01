@@ -10,7 +10,8 @@
 			return controller.hotkey(src, name)
 	return ..()
 
-/mob/keys_changed(keys, changed)
+/mob/proc/keys_changed(keys, changed)
+	set waitfor = 0
 	if (changed & KEY_EXAMINE && src.client)
 		if (keys & KEY_EXAMINE)
 			if (HAS_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES))
@@ -181,9 +182,8 @@
 								src.inertia_dir = 0
 					else if (isrobot(src) || isghostdrone(src) || isshell(src))
 						if (src:jetpack)
-							if (!src:jeton)
-								spacemove = 0
-								src.inertia_dir = 0
+							spacemove = 0
+							src.inertia_dir = 0
 
 					if (!spacemove) // yes, this is dumb
 						// also fuck it.

@@ -37,7 +37,7 @@
 		return 0
 	user.canmove = 0
 	user.visible_message("<span class='alert'><b>[user] jams one end of [src] into one of [his_or_her(user)] eye sockets, closing the loop through the other!")
-	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 	user.emote("scream")
 	SPAWN(1 SECOND)
 		user.visible_message("<span class='alert'><b>[user] yanks the other end of [src] as hard as [he_or_she(user)] can, ripping [his_or_her(user)] skull clean out of [his_or_her(user)] head! [pick("Jesus christ!","Holy shit!","What the fuck!?","Oh my god!")]</b></span>")
@@ -45,7 +45,7 @@
 		if (skull)
 			skull.set_loc(user.loc)
 		make_cleanable( /obj/decal/cleanable/blood,user.loc)
-		playsound(user, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+		playsound(user, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, TRUE)
 		health_update_queue |= user
 
 /* do not do this thing here:
@@ -98,9 +98,9 @@
 		var/handslost = !istype(H.limbs.l_arm,/obj) + !istype(H.limbs.r_arm,/obj)
 		switch(handslost)
 			if (1)
-				boutput(user, "<span class='alert'>[H.name] only has one arm, you still try to handcuff [his_or_her(H)]!</span>")
+				boutput(user, "<span class='alert'>[H.name] only has one arm, you still try to handcuff [him_or_her(H)]!</span>")
 			if (2)
-				boutput(user, "<span class='alert'>[H.name] has no arms, you can't handcuff them!</span>")
+				boutput(user, "<span class='alert'>[H.name] has no arms, you can't handcuff [him_or_her(H)]!</span>")
 				return
 
 		if (H.hasStatus("handcuffed"))

@@ -479,6 +479,8 @@
 				qdel(P)
 		for (var/obj/item/electronics/E in gauntlet)
 			qdel(E)
+		for(var/obj/item/material_piece/M in gauntlet)
+			qdel(M)
 
 		current_level++
 		current_waves.len = 0
@@ -1223,7 +1225,7 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		name = "Man Eater"
 		point_cost = 5
 		count = 2
-		types = list(/obj/critter/maneater)
+		types = list(/mob/living/critter/plant/maneater)
 
 	fallback
 		name = "Floating Eyes"

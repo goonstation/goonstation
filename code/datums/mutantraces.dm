@@ -251,6 +251,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 		return
 
 	/// Called when our mob dies.  Returning a true value will short circuit the normal death proc right before deathgasp/headspider/etc
+	/// Rturn values are [MUTRACE_ONDEATH_NOTHING], [MUTRACE_ONDEATH_REVIVED], [MUTRACE_ONDEATH_DEFER_DELETE] etc.
 	proc/onDeath(gibbed)
 		return
 
@@ -1024,7 +1025,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 						if(strain == 2) // spitter ranged zombie
 							make_spitter(src.mob)
 
-		return 1
+		return MUTRACE_ONDEATH_REVIVED
 
 /datum/mutantrace/zombie/can_infect
 
@@ -1190,7 +1191,10 @@ ABSTRACT_TYPE(/datum/mutantrace)
 
 			//good fucking god i hate skeletons
 			var/obj/item/organ/head/H = I || src.head_tracker
-			H.brain = src.mob.organHolder?.drop_organ("brain", H)
+			if(H)
+				H.brain = src.mob.organHolder?.drop_organ("brain", H)
+			else
+				qdel(src.mob.organHolder?.drop_organ("brain", null)) //perish
 
 			for(var/i in 1 to rand(2, 5))
 				I = new/obj/item/material_piece/bone(src.mob.loc)
@@ -1212,7 +1216,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			var/mob/dead/observer/newmob = src.mob.ghostize()
 			newmob?.corpse = null
 
-			qdel(src.mob)
+			return MUTRACE_ONDEATH_DEFER_DELETE
 
 /obj/item/joint_wax
 	name = "joint wax"
@@ -1232,7 +1236,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 						boutput(user, "<span class='alert'>The joint wax is empty!</alert>")
 					else
 						H.changeStatus("spry", 1 MINUTE)
-						playsound(H, 'sound/effects/smear.ogg', 50, 1)
+						playsound(H, 'sound/effects/smear.ogg', 50, TRUE)
 						H.visible_message("<span class='notice'>[user] applies some joint wax to [H].</notice>")
 						src.uses--
 						if (!src.uses)
@@ -2197,7 +2201,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			transfer_blood(src.mob, beaker, 10)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
-			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
+			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container(TRUE))
 				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
 				playsound(src.mob, 'sound/misc/pourdrink.ogg', 50, 1)
 				transfer_blood(src.mob, milk_target, 10)
@@ -2375,8 +2379,8 @@ TYPEINFO(/datum/mutantrace/pug)
 	genetics_removable = FALSE
 	mutant_folder = 'icons/mob/human.dmi' // vOv
 	mutant_organs = list(\
-		"left_eye"=/obj/item/organ/eye/cyber,\
-		"right_eye"=/obj/item/organ/eye/cyber,\
+		"left_eye"=/obj/item/organ/eye/cyber/configurable,\
+		"right_eye"=/obj/item/organ/eye/cyber/configurable,\
 		"heart"=/obj/item/organ/heart/cyber,\
 		"appendix"=/obj/item/organ/appendix/cyber,\
 		"intestines"=/obj/item/organ/intestines/cyber,\

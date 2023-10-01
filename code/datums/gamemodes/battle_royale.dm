@@ -370,8 +370,8 @@ proc/hide_weapons_everywhere(var/total_battlers = 1)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/EOD)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/hoscape)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/heavy)
-	armor_supplies.Add(/obj/item/clothing/suit/armor/centcomm)
-	armor_supplies.Add(/obj/item/clothing/suit/armor/centcommcoat)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/captain/centcomm)
+	armor_supplies.Add(/obj/item/clothing/suit/armor/capcoat/centcomm)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/captain)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/batman)
 	armor_supplies.Add(/obj/item/clothing/suit/armor/football)
@@ -477,7 +477,6 @@ proc/equip_battler(mob/living/carbon/human/battler)
 		/obj/item/clothing/under/gimmick/dolan,
 		/obj/item/clothing/under/gimmick/jetson,
 		/obj/item/clothing/under/gimmick/princess,
-		/obj/item/clothing/under/gimmick/chaps,
 		/obj/item/clothing/under/gimmick/vault13,
 		/obj/item/clothing/under/gimmick/murph,
 		/obj/item/clothing/under/gimmick/sealab,

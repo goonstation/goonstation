@@ -19,7 +19,7 @@
 	var/obj/item/organ/liver = null
 	var/obj/item/organ/spleen = null
 	var/obj/item/organ/pancreas = null
-	var/obj/item/organ/stomach = null
+	var/obj/item/organ/stomach/stomach = null
 	var/obj/item/organ/intestines = null
 	var/obj/item/organ/appendix = null
 	var/obj/item/organ/tail = null
@@ -47,6 +47,33 @@
 		"appendix"="/obj/item/organ/appendix",
 		"butt"="/obj/item/clothing/head/butt",
 		"tail"="/obj/item/organ/tail")
+	///List of buttons used in chest organ surgery
+	var/list/datum/contextAction/contexts = list()
+	var/datum/contextLayout/contextLayout = new /datum/contextLayout/experimentalcircle
+	///List of buttons used in back surgery (tail/butt)
+	var/list/datum/contextAction/back_contexts = list()
+
+	//List of buttons used to open specific regions of the person
+	var/list/datum/contextAction/rib_contexts = null
+	var/list/datum/contextAction/abdomen_contexts = null
+	var/list/datum/contextAction/flanks_contexts = null
+	var/list/datum/contextAction/subcostal_contexts = null
+
+	//List of buttons showing all the organs inside a region
+	var/list/datum/contextAction/inside_ribs_contexts = null
+	var/list/datum/contextAction/inside_abdomen_contexts = null
+	var/list/datum/contextAction/inside_flanks_contexts = null
+	var/list/datum/contextAction/inside_subcostal_contexts = null
+	///How cut up is our back for surgery purposes
+	var/back_op_stage = BACK_SURGERY_CLOSED
+	///How cut up are our ribs?
+	var/ribs_stage = REGION_CLOSED
+	///How cut up is our subcostal region?
+	var/subcostal_stage = REGION_CLOSED
+	///How cut up is our abdominal region?
+	var/abdominal_stage = REGION_CLOSED
+	///How cut up are our flanks?
+	var/flanks_stage = REGION_CLOSED
 
 	New(var/mob/living/L, var/ling)
 		..()
@@ -56,6 +83,230 @@
 			src.donor = L
 		if (src.donor && !ling) // so changers just get the datum and not a metric fuckton of organs
 			src.create_organs()
+
+	proc/build_region_buttons()
+
+		if (!src.chest)	//Can't do surgery without a chest to operate on
+			return null
+		src.contexts = list()
+
+		//begin by adding regions
+		var/datum/contextAction/surgery_region/ribs/ribs_action = new /datum/contextAction/surgery_region/ribs(src.ribs_stage)
+		src.contexts += ribs_action
+		var/datum/contextAction/surgery_region/subcostal/subcostal_action = new /datum/contextAction/surgery_region/subcostal(src.subcostal_stage)
+		src.contexts += subcostal_action
+		var/datum/contextAction/surgery_region/abdomen/abdomen_action = new /datum/contextAction/surgery_region/abdomen(src.abdominal_stage)
+		src.contexts += abdomen_action
+		var/datum/contextAction/surgery_region/flanks/flanks_action = new /datum/contextAction/surgery_region/flanks(src.flanks_stage)
+		src.contexts += flanks_action
+
+		//possible parasite removal surgery
+		if (length(donor.ailments) > 0)
+			for (var/datum/ailment_data/an_ailment in donor.ailments)
+				if (an_ailment.cure == "Surgery")
+					var/datum/contextAction/surgery_region/parasite/parasite_action = new /datum/contextAction/surgery_region/parasite()
+					src.contexts += parasite_action
+					break
+
+		//possible chest item removal surgery
+		if (ishuman(src.donor))
+			var/mob/living/carbon/human/H = src.donor
+			if (H.chest_item)
+				var/datum/contextAction/surgery_region/chest_item/item_action = new /datum/contextAction/surgery_region/chest_item()
+				src.contexts += item_action
+
+		for (var/obj/item/implant/I in donor.implant)
+			if (!istype(I, /obj/item/implant/projectile)) //We dont want bullets/shrapnel
+				var/datum/contextAction/surgery_region/implant/implant_action = new /datum/contextAction/surgery_region/implant()
+				src.contexts += implant_action
+				break
+
+		return length(src.contexts)
+
+	proc/close_surgery_regions()
+		src.rib_contexts = null
+		src.abdomen_contexts = null
+		src.flanks_contexts = null
+		src.subcostal_contexts = null
+		src.ribs_stage = REGION_CLOSED
+		src.abdominal_stage = REGION_CLOSED
+		src.flanks_stage = REGION_CLOSED
+		src.subcostal_stage = REGION_CLOSED
+		for(var/thing in src.organ_list)
+			if(thing == "all")
+				continue
+			var/obj/item/organ/O = organ_list[thing]
+			if(istype(O) && O.donor)
+				O.surgery_contexts = null
+
+	proc/build_back_surgery_buttons()
+		src.back_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/back_surgery))
+			var/datum/contextAction/back_surgery/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				src.back_contexts += action
+		return length(src.back_contexts)
+
+	proc/build_rib_region_buttons(var/datum/contextAction/surgery_region/region)
+		if (src.rib_contexts != null)
+			return TRUE
+
+		src.rib_contexts = list()
+
+		if (region.surgery_flags & SURGERY_CUTTING)
+			var/datum/contextAction/region_surgery/cut/action = new
+			action.region = "ribs"
+			src.rib_contexts += action
+		if (region.surgery_flags & SURGERY_SNIPPING)
+			var/datum/contextAction/region_surgery/snip/action = new
+			action.region = "ribs"
+			src.rib_contexts += action
+		if (region.surgery_flags & SURGERY_SAWING)
+			var/datum/contextAction/region_surgery/saw/action = new
+			action.region = "ribs"
+			src.rib_contexts += action
+		.+= length(src.rib_contexts)
+
+	proc/build_subcostal_region_buttons(var/datum/contextAction/surgery_region/region)
+		if (src.subcostal_contexts != null)
+			return TRUE
+
+		src.subcostal_contexts = list()
+
+		if (region.surgery_flags & SURGERY_CUTTING)
+			var/datum/contextAction/region_surgery/cut/action = new
+			action.region = "subcostal"
+			src.subcostal_contexts += action
+		if (region.surgery_flags & SURGERY_SNIPPING)
+			var/datum/contextAction/region_surgery/snip/action = new
+			action.region = "subcostal"
+			src.subcostal_contexts += action
+		if (region.surgery_flags & SURGERY_SAWING)
+			var/datum/contextAction/region_surgery/saw/action = new
+			action.region = "subcostal"
+			src.subcostal_contexts += action
+		.+= length(src.subcostal_contexts)
+
+	proc/build_abdomen_region_buttons(var/datum/contextAction/surgery_region/region)
+		if (src.abdomen_contexts != null)
+			return TRUE
+
+		src.abdomen_contexts = list()
+
+		if (region.surgery_flags & SURGERY_CUTTING)
+			var/datum/contextAction/region_surgery/cut/action = new
+			action.region = "abdomen"
+			src.abdomen_contexts += action
+		if (region.surgery_flags & SURGERY_SNIPPING)
+			var/datum/contextAction/region_surgery/snip/action = new
+			action.region = "abdomen"
+			src.abdomen_contexts += action
+		if (region.surgery_flags & SURGERY_SAWING)
+			var/datum/contextAction/region_surgery/saw/action = new
+			action.region = "abdomen"
+			src.abdomen_contexts += action
+		.+= length(src.abdomen_contexts)
+
+	proc/build_flanks_region_buttons(var/datum/contextAction/surgery_region/region)
+		if (src.flanks_contexts != null)
+			return TRUE
+
+		src.flanks_contexts = list()
+
+		if (region.surgery_flags & SURGERY_CUTTING)
+			var/datum/contextAction/region_surgery/cut/action = new
+			action.region = "flanks"
+			src.flanks_contexts += action
+		if (region.surgery_flags & SURGERY_SNIPPING)
+			var/datum/contextAction/region_surgery/snip/action = new
+			action.region = "flanks"
+			src.flanks_contexts += action
+		if (region.surgery_flags & SURGERY_SAWING)
+			var/datum/contextAction/region_surgery/saw/action = new
+			action.region = "flanks"
+			src.flanks_contexts += action
+		.+= length(src.flanks_contexts)
+
+	proc/build_inside_ribs_buttons()
+		.= null
+
+		src.inside_ribs_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/ribs))
+			var/datum/contextAction/organs/ribs/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_ribs_contexts += action
+
+		.+= length(inside_ribs_contexts)
+
+	proc/build_inside_abdomen_buttons()
+		.= null
+
+		src.inside_abdomen_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/abdominal))
+			var/datum/contextAction/organs/abdominal/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_abdomen_contexts += action
+
+		.+= length(inside_abdomen_contexts)
+
+	proc/build_inside_subcostal_buttons()
+		.= null
+
+		src.inside_subcostal_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/subcostal))
+			var/datum/contextAction/organs/subcostal/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_subcostal_contexts += action
+
+		.+= length(inside_subcostal_contexts)
+
+	proc/build_inside_flanks_buttons()
+		.= null
+
+		src.inside_flanks_contexts = list()
+
+		for(var/actionType in childrentypesof(/datum/contextAction/organs/flanks))
+			var/datum/contextAction/organs/flanks/action = new actionType()
+			if (src.organ_list[action.organ_path])
+				var/obj/item/organ/O = src.get_organ(action.organ_path)
+				switch (O.removal_stage)
+					if (0)
+						action.icon_background = "bg"
+					if (1)
+						action.icon_background = "yellowbg"
+					if (2)
+						action.icon_background = "greenbg"
+				src.inside_flanks_contexts += action
+
+		.+= length(inside_flanks_contexts)
 
 	disposing()
 		src.organ_list.len = 0
@@ -142,6 +393,14 @@
 		tail = null
 
 		donor = null
+
+		if (src.contexts)
+			for(var/datum/contextAction/C in src.contexts)
+				C.dispose()
+		if (src.back_contexts)
+			for(var/datum/contextAction/C in src.contexts)
+				C.dispose()
+
 		..()
 
 	proc/handle_organs(var/mult = 1)
@@ -322,7 +581,7 @@
 		if (!src.butt)
 			src.butt = new /obj/item/clothing/head/butt(src.donor, src)
 			organ_list["butt"] = butt
-			src.donor.butt_op_stage = 0
+			src.back_op_stage = BACK_SURGERY_CLOSED
 			src.donor.update_body()
 
 		if (!src.left_kidney)
@@ -613,7 +872,6 @@
 				myButt.set_loc(location)
 				myButt.holder = null
 				src.butt = null
-				src.donor.butt_op_stage = 4
 				src.donor.update_body()
 				src.organ_list["butt"] = null
 				return myButt
@@ -1022,7 +1280,7 @@
 				newButt.set_loc(src.donor)
 				newButt.holder = src
 				organ_list["butt"] = newButt
-				src.donor.butt_op_stage = op_stage
+				src.back_op_stage = op_stage
 				success = 1
 
 			if ("left_kidney")
@@ -1352,28 +1610,6 @@
 	regenRate = 0
 	tabName = "Body"
 
-/atom/movable/screen/ability/topBar/organ
-	clicked(params)
-		var/datum/targetable/organAbility/spell = owner
-		if (!istype(spell))
-			return
-		if (!spell.holder)
-			return
-		if (!isturf(usr.loc))
-			return
-		if (spell.targeted && usr.targeting_ability == owner)
-			usr:targeting_ability = null
-			usr.update_cursor()
-			return
-		if (spell.targeted)
-			if (world.time < spell.last_cast)
-				return
-			usr.targeting_ability = owner
-			usr.update_cursor()
-		else
-			SPAWN(0)
-				spell.handleCast()
-
 /datum/targetable/organAbility
 	icon = 'icons/mob/organ_abilities.dmi'
 	icon_state = "template"
@@ -1384,38 +1620,6 @@
 	var/toggled = 0
 	var/is_on = 0   // used if a toggle ability
 	var/obj/item/organ/linked_organ = null
-
-	New()
-		var/atom/movable/screen/ability/topBar/organ/B = new /atom/movable/screen/ability/topBar/organ(null)
-		B.name = src.name
-		B.desc = src.desc
-		B.icon = src.icon
-		B.icon_state = src.icon_state
-		B.owner = src
-		src.object = B
-
-	updateObject()
-		..()
-		if (!src.object)
-			src.object = new /atom/movable/screen/ability/topBar/organ()
-			object.icon = src.icon
-			object.owner = src
-		if (disabled)
-			object.name = "[src.name] (unavailable)"
-			object.icon_state = src.icon_state + "_cd"
-		else if (src.last_cast > world.time)
-			object.name = "[src.name] ([round((src.last_cast-world.time)/10)])"
-			object.icon_state = src.icon_state + "_cd"
-		else if (toggled)
-			if (is_on)
-				object.name = "[src.name] (on)"
-				object.icon_state = src.icon_state
-			else
-				object.name = "[src.name] (off)"
-				object.icon_state = src.icon_state + "_cd"
-		else
-			object.name = src.name
-			object.icon_state = src.icon_state
 
 	proc/incapacitationCheck()
 		var/mob/living/M = holder.owner
@@ -1589,13 +1793,8 @@
 		linked_organ.take_damage(20, 20) //not safe
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && length(L.stomach_process))
-				boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
-				for(var/obj/item/reagent_containers/food/snacks/bite/B in L.stomach_process)
-					B.process_stomach(L, (B.reagents.total_volume)) //all of the food!
-			else
-				boutput(L, "<span class='alert'>Your intestines crunch painfully in your gut. Maybe they would work better with some food to process.</span>")
-				linked_organ.take_damage(30) //owwww
+			boutput(L, "<span class='notice'>You force your cyberintestines to rapidly process the contents of your stomach.</span>")
+			L.organHolder?.stomach?.handle_digestion()
 
 
 /datum/targetable/organAbility/projectilevomit
@@ -1612,7 +1811,7 @@
 
 		if(istype(holder.owner, /mob/living))
 			var/mob/living/L = holder.owner
-			if (L.stomach_process && length(L.stomach_process))
+			if (length(L.organHolder.stomach.contents))
 				L.visible_message("<span class='alert'>[L] convulses and vomits right at [target]!</span>", "<span class='alert'>You upchuck some of your cyberstomach contents at [target]!</span>")
 				SPAWN(0)
 					for (var/i in 1 to 3)
@@ -1620,7 +1819,7 @@
 						O.throw_at(target, 8, 3, bonus_throwforce=5)
 						linked_organ.take_damage(3)
 						sleep(0.1 SECONDS)
-						if(linked_organ.broken || !length(L.stomach_process))
+						if(linked_organ.broken || !length(L.organHolder.stomach.contents))
 							break
 			else
 				boutput(L, "<span class='alert'>You try to vomit, but your cyberstomach has nothing left inside!</span>")

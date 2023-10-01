@@ -78,7 +78,7 @@
 					return
 				src.falling = TRUE
 				src.animate_fall()
-				playsound(src, 'sound/effects/treefall.ogg', 70, 0)
+				playsound(src, 'sound/effects/treefall.ogg', 70, FALSE)
 				src.visible_message("<span class='alert'>\The [src] falls!</span>", "<span class='alert'>You hear a [src] fall, and thus prove that it has.</span>")
 				SPAWN(src.fall_time)
 					src.falling = FALSE
@@ -236,6 +236,7 @@
 
 	New()
 		..()
+		START_TRACKING
 		max_uses = rand(0, 5)
 		spawn_chance = rand(1, 40)
 		if (prob(5))
@@ -244,6 +245,10 @@
 		if(src.z == Z_LEVEL_STATION)
 			src.UpdateOverlays(image(src.icon, "[icon_state]-xmas"), "xmas")
 		#endif
+
+	disposing()
+		STOP_TRACKING
+		. = ..()
 
 	ex_act(var/severity)
 		switch(severity)
@@ -265,7 +270,7 @@
 			graze(user)
 			return 0
 
-		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, -1)
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, -1)
 
 		var/original_x = pixel_x
 		var/original_y = pixel_y
@@ -329,7 +334,7 @@
 		user.lastattacked = src
 		hit_twitch(src)
 		attack_particle(user,src)
-		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, 1, 0)
+		playsound(src, 'sound/impact_sounds/Bush_Hit.ogg', 50, TRUE, 0)
 		src.take_damage(W.force)
 		user.visible_message("<span class='alert'><b>[user] hacks at [src] with [W]!</b></span>")
 
@@ -386,6 +391,9 @@
 				. = ..()
 				src.dir = pick(cardinal)
 
+	dead
+		name = "Dead shrub"
+		icon_state = "shrub-dead"
 
 //It'll show up on multitools
 /obj/shrub/syndicateplant
@@ -795,7 +803,7 @@
 	proc/toggle_group()
 		if(!ON_COOLDOWN(src, "toggle", 1 SECOND))
 			switched_obj_toggle(SWOB_SIGNAGE,src.id,!(src.on))
-			playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
+			playsound(src, 'sound/misc/lightswitch.ogg', 50, TRUE)
 
 	attack_hand(mob/user)
 		src.toggle_group()
@@ -1217,7 +1225,7 @@ obj/decoration/ceilingfan
 				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
-				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				boutput(user, "<span class='alert'>With a single flick of [his_or_her(user)] wrist, [user] smoothly lights [src] with [W]. Damn [hes_or_shes(user)] cool.</span>")
 				src.lit = 1
 				UpdateIcon()
 
@@ -1580,7 +1588,7 @@ obj/decoration/gibberBroken
 				UpdateIcon()
 
 			if (istype(W, /obj/item/device/light/zippo) && W:on)
-				boutput(user, "<span class='alert'>With a single flick of their wrist, [user] smoothly lights [src] with [W]. Damn they're cool.</span>")
+				boutput(user, "<span class='alert'>With a single flick of [his_or_her(user)] wrist, [user] smoothly lights [src] with [W]. Damn [hes_or_shes(user)] cool.</span>")
 				src.lit = 1
 				UpdateIcon()
 
@@ -1615,7 +1623,7 @@ obj/decoration/gibberBroken
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the floor bolts of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return

@@ -132,8 +132,9 @@
 	name = "cyclops"
 	real_name = "cyclops"
 	desc = "The Eye stares straight into your soul. Creepy."
-	density = 1
+	icon = 'icons/mob/critter/humanoid/cyclops.dmi'
 	icon_state = "greek-cyclops"
+	density = 1
 	health = 70
 	wanderer = 0
 	aggressive = 1

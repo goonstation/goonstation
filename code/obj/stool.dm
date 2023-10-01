@@ -27,7 +27,7 @@
 	pressure_resistance = 3*ONE_ATMOSPHERE
 	layer = STORAGE_LAYER //dumb
 	default_material = "steel"
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	var/allow_unbuckle = 1
 	var/mob/living/buckled_guy = null
 	var/deconstructable = 1
@@ -94,7 +94,7 @@
 			boutput(user, "You can't buckle anyone in before the game starts.")
 			return FALSE
 		if (to_buckle.buckled)
-			boutput(user, "They're already buckled into something!", "red")
+			boutput(user, "[capitalize(hes_or_shes(to_buckle))] already buckled into something!", "red")
 			return FALSE
 		if (BOUNDS_DIST(src, user) > 0 || to_buckle.loc != src.loc || user.restrained() || is_incapacitated(user) || !isalive(user))
 			return FALSE
@@ -127,7 +127,7 @@
 	proc/toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -201,6 +201,7 @@ TYPEINFO(/obj/stool/wooden)
 /obj/stool/wooden
 	name = "wooden stool"
 	icon_state = "wstool"
+	default_material = "wood"
 	desc = "Like a stool, but just made out of wood."
 	parts_type = /obj/item/furniture_parts/woodenstool
 
@@ -415,7 +416,7 @@ TYPEINFO(/obj/stool/wooden)
 		to_buckle.set_loc(src.loc)
 
 		to_buckle.set_clothing_icon_dirty()
-		playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+		playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 		to_buckle.setStatus("buckled", duration = INFINITE_STATUS)
 		return TRUE
 
@@ -426,7 +427,7 @@ TYPEINFO(/obj/stool/wooden)
 			buckled_guy.buckled = null
 			buckled_guy.force_laydown_standup()
 			src.buckled_guy = null
-			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 
 	proc/tuck_sheet(var/obj/item/clothing/suit/bedsheet/newsheet as obj, var/mob/user as mob)
 		if (!newsheet || newsheet.cape || (src.sheet == newsheet && newsheet.loc == src.loc)) // if we weren't provided a new bedsheet, the new bedsheet we got is tied into a cape, or the new bedsheet is actually the one we already have and is still in the same place as us...
@@ -579,7 +580,7 @@ TYPEINFO(/obj/stool/chair)
 		if (src.foldable)
 			. += "It can be <b>folded</b> up to carry by clicking on it. "
 		if (src.securable)
-			. += "It can be <b>secured to the floor</b> with a screwing tool."
+			. += "It can be <b>secured to the floor</b> with a screwing tool. "
 
 	New()
 		if (src.dir == NORTH)
@@ -616,7 +617,7 @@ TYPEINFO(/obj/stool/chair)
 			return
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "unscrews [src] from" : "secures [src] to"] the floor.")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
 		src.p_class = src.anchored ? initial(src.p_class) : 2
 		return
@@ -776,7 +777,7 @@ TYPEINFO(/obj/stool/chair)
 		if (has_butt)
 			playsound(src, (has_butt.sound_fart ? has_butt.sound_fart : 'sound/voice/farts/fart1.ogg'), 50, 1)
 		else
-			playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+			playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 		return TRUE
 
 
@@ -806,7 +807,7 @@ TYPEINFO(/obj/stool/chair)
 
 		src.buckled_guy = null
 
-		playsound(src, 'sound/misc/belt_click.ogg', 50, 1)
+		playsound(src, 'sound/misc/belt_click.ogg', 50, TRUE)
 
 	ex_act(severity)
 		for (var/mob/M in src.loc)
@@ -908,7 +909,7 @@ TYPEINFO(/obj/stool/chair)
 /obj/stool/chair/material
 	name = "material chair"
 	desc = "A chair made from a material"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
 
 /obj/stool/chair/material/mauxite
@@ -1182,35 +1183,51 @@ TYPEINFO(/obj/stool/chair/comfy/wheelchair)
 		unbuckle()
 
 /* ======================================================= */
-/* -------------------- Wooden Chairs -------------------- */
+/* -------------------- Dining Chairs -------------------- */
 /* ======================================================= */
 
-TYPEINFO(/obj/stool/chair/wooden)
+TYPEINFO(/obj/stool/chair/dining/wood)
 	mat_appearances_to_ignore = list("wood")
-/obj/stool/chair/wooden
-	name = "wooden chair"
-	icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
+/obj/stool/chair/dining/
+	name = "dining chair"
+	icon_state = "chair_wooden"
+	desc = "You shouldn't be seeing this!"
 	comfort_value = 3
 	foldable = 0
 	anchored = UNANCHORED
 	//deconstructable = 0
-	parts_type = /obj/item/furniture_parts/wood_chair
 
-	constructed //no "wood wood chair"
-		name = "chair"
+
+
+	wood
+		name = "wooden chair"
+		desc = "A wooden dining chair. neat."
+		icon_state = "chair_wooden" // this sprite is bad I will fix it at some point
+		parts_type = /obj/item/furniture_parts/dining_chair/wood
+
+		constructed //no "wood wood chair"
+			name = "chair"
+
 	regal
 		name = "regal chair"
 		desc = "Much more comfortable than the average dining chair, and much more expensive."
 		icon_state = "regalchair"
 		comfort_value = 7
-		parts_type = /obj/item/furniture_parts/wood_chair/regal
+		parts_type = /obj/item/furniture_parts/dining_chair/regal
 
 	scrap
 		name = "scrap chair"
 		desc = "Hopefully you didn't pay actual money for this."
 		icon_state = "scrapchair"
 		comfort_value = 7
-		parts_type = /obj/item/furniture_parts/wood_chair/scrap
+		parts_type = /obj/item/furniture_parts/dining_chair/scrap
+
+	industrial
+		name = "industrial chair"
+		desc = "Repurposed scaffolding in the shape of a chair."
+		icon_state = "chair_industrial"
+		comfort_value = 7
+		parts_type = /obj/item/furniture_parts/dining_chair/industrial
 
 /* ============================================== */
 /* -------------------- Pews -------------------- */
@@ -1234,6 +1251,32 @@ TYPEINFO(/obj/stool/chair/wooden)
 		..()
 		if (arm_icon_state)
 			src.UpdateIcon()
+
+	get_help_message(dist, mob/user)
+		. = ..()
+		. += "You can reshape it with a screwdriving tool. You can turn it with a crowbar."
+
+
+	attackby(obj/item/W, mob/user)
+		if(isscrewingtool(W))
+			switch(src.icon_state)
+				if("pewL")
+					src.icon_state = "pewC"
+				if("pewC")
+					src.icon_state = "pewR"
+				if("pewR")
+					src.icon_state = "pew"
+				if("pew")
+					src.icon_state = "pewL"
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
+			user.visible_message("<span class='notice'>[user] reshapes the pew.</span>", "<span class='notice'>You reshape the pew.</span>")
+			src.update_icon()
+			return
+		if(ispryingtool(W))
+			src.dir = turn(src.dir,90)
+			src.update_icon()
+			return
+		. = ..()
 
 	update_icon()
 		if (src.dir == NORTH)
@@ -1418,7 +1461,7 @@ TYPEINFO(/obj/stool/chair/wooden)
 	toggle_secure(mob/user as mob)
 		if (user)
 			user.visible_message("<b>[user]</b> [src.anchored ? "loosens" : "tightens"] the castors of [src].[istype(src.loc, /turf/space) ? " It doesn't do much, though, since [src] is in space and all." : null]")
-		playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 		src.anchored = !(src.anchored)
 		return
 

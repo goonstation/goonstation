@@ -42,6 +42,7 @@ var/global/list/mapNames = list(
 	"Mushroom" =			list("id" = "MUSHROOM",		"settings" = "mushroom",		"playerPickable" = FALSE),
 	"Trunkmap" =			list("id" = "TRUNKMAP",		"settings" = "trunkmap",		"playerPickable" = FALSE),
 	//"Density" = 			list("id" = "DENSITY",		"settings" = "density",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 30),
+	"Density2" = 			list("id" = "DENSITY2",		"settings" = "density2",			"playerPickable" = FALSE,	"MaxPlayersAllowed" = 20),
 	"Ozymandias" =			list("id" = "OZYMANDIAS",	"settings" = "ozymandias",		"playerPickable" = FALSE,	"MinPlayersAllowed" = 40),
 	"Bellerophon Fleet" =	list("id" = "FLEET",		"settings" = "fleet",			"playerPickable" = FALSE),
 	//"Icarus" =			list("id" = "ICARUS",		"settings" = "icarus",			"playerPickable" = FALSE),
@@ -74,7 +75,7 @@ var/global/list/mapNames = list(
 				map_settings = new /datum/map_settings
 				CRASH("A mapName entry for '[src.name]' wasn't found!")
 
-			setup_z_level_parallax_settings()
+			setup_z_level_parallax_render_sources()
 		..()
 
 //Setting maps to be underwater is handled in the map config file, aka [mapname].dm
@@ -88,10 +89,31 @@ var/global/list/mapNames = list(
 	var/arrivals_type = MAP_SPAWN_SHUTTLE
 	var/dir_fore = null
 
-	var/list/atom/movable/screen/parallax_layer/parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+	/// The default parallax render source types that `Z_LEVEL_NULL` should use.
+	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(0) = list()
+	/// The default parallax render source types that `Z_LEVEL_STATION` should use.
+	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
+		)
+	/// The default parallax render source types that `Z_LEVEL_ADVENTURE` should use.
+	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(2) = list()
+	/// The default parallax render source types that `Z_LEVEL_DEBRIS` should use.
+	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/asteroids_far,
+		/atom/movable/screen/parallax_render_source/asteroids_near,
+		)
+	/// The default parallax render source types that `Z_LEVEL_SECRET` should use.
+	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(4) = list()
+	/// The default parallax render source types that `Z_LEVEL_MINING` should use.
+	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/asteroids_far,
+		/atom/movable/screen/parallax_render_source/asteroids_near,
 		)
 
 	var/walls = /turf/simulated/wall/auto
@@ -128,6 +150,8 @@ var/global/list/mapNames = list(
 	var/merchant_left_station = /area/shuttle/merchant_shuttle/left_station
 	var/merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom
 	var/merchant_right_station = /area/shuttle/merchant_shuttle/right_station
+	var/list/shipping_destinations = list("Airbridge", "Cafeteria", "EVA", "Engine", "Disposals", "QM", "Catering", "MedSci", "Security") //These have to match the ones on the cargo routers for the routers to work.
+	/// default shipping destinations
 
 	var/list/valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
@@ -219,11 +243,11 @@ var/global/list/mapNames = list(
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 	style = "spess"
 
-	parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/asteroids_far,
-		/atom/movable/screen/parallax_layer/asteroids_near,
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/asteroids_far,
+		/atom/movable/screen/parallax_render_source/asteroids_near,
 		)
 
 	arrivals_type = MAP_SPAWN_CRYO
@@ -331,12 +355,12 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/typhon/cogmap,
-		/atom/movable/screen/parallax_layer/planet/mundus,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/typhon/cogmap,
+		/atom/movable/screen/parallax_render_source/planet/mundus,
+		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
 	windows = /obj/window/auto
@@ -398,12 +422,12 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/typhon/cogmap2,
-		/atom/movable/screen/parallax_layer/planet/iustitia,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/typhon/cogmap2,
+		/atom/movable/screen/parallax_render_source/planet/iustitia,
+		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
 	windows = /obj/window/auto
@@ -426,6 +450,7 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
+	shipping_destinations = list("Arrivals","Catering","Disposals","Engine","Escape","Export","MedSci","Security","Trader","QM")
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the central research sector hub" = list(/area/station/science/lobby),
@@ -454,11 +479,11 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/typhon/donut2,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/typhon/donut2,
+		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
 	escape_dir = NORTH
@@ -499,11 +524,11 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/jen
 	rwalls = /turf/simulated/wall/auto/reinforced/jen
 
-	parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/typhon/donut3,
-		/atom/movable/screen/parallax_layer/asteroids_near/sparse,
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/typhon/donut3,
+		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
 	escape_dir = NORTH
@@ -550,11 +575,11 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/typhon/kondaru,
-		/atom/movable/screen/parallax_layer/asteroids_far/kondaru,
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/typhon/kondaru,
+		/atom/movable/screen/parallax_render_source/asteroids_far/kondaru,
 		)
 
 	arrivals_type = MAP_SPAWN_CRYO
@@ -579,6 +604,7 @@ var/global/list/mapNames = list(
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap
+	shipping_destinations = list("Catering","Disposal","Engineering","Export","Medbay","Mining","Research","Pod Bay","Security","QM")
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
 		"the quartermaster's front office" = list(/area/station/quartermaster/office),
@@ -649,9 +675,9 @@ var/global/list/mapNames = list(
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
 
-	parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1/west,
-		/atom/movable/screen/parallax_layer/space_2/west,
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1/west,
+		/atom/movable/screen/parallax_render_source/space_2/west,
 		)
 
 	walls = /turf/simulated/wall/auto/supernorn
@@ -695,9 +721,9 @@ var/global/list/mapNames = list(
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
 
-	parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1/south,
-		/atom/movable/screen/parallax_layer/space_2/south,
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1/south,
+		/atom/movable/screen/parallax_render_source/space_2/south,
 		)
 
 	walls = /turf/simulated/wall/auto/supernorn
@@ -778,7 +804,9 @@ var/global/list/mapNames = list(
 
 	arrivals_type = MAP_SPAWN_MISSILE
 
-	parallax_layers = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
@@ -830,7 +858,9 @@ var/global/list/mapNames = list(
 	display_name = "Nadir Extraction Site"
 	goonhub_map = "https://goonhub.com/maps/nadir"
 
-	parallax_layers = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
 
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
@@ -883,7 +913,9 @@ var/global/list/mapNames = list(
 	style = "ship"
 	arrivals_type = MAP_SPAWN_CRYO
 
-	parallax_layers = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list()
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list()
 
 	windows = /obj/window/auto
 	windows_thin = /obj/window/pyro
@@ -1048,15 +1080,44 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
 
 	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
-		"the central research sector hub" = list(/area/station/science/lobby),
 		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
-		"the thermo-electric generator room" = list(/area/station/engine/core),
-		"the refinery (arc smelter)" = list(/area/station/quartermaster/refinery),
-		"the medbay" = list(/area/station/medical/medbay, /area/station/medical/medbay/surgery),
-		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria),
-		"the net cafe" = list(/area/station/crew_quarters/info),
-		"the artifact lab" = list(/area/station/science/artifact),
-		"the genetics lab" = list(/area/station/medical/research))
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria))
+
+/datum/map_settings/density2 // I just copied cog2 for now, ok????
+	name = "density2"
+	walls = /turf/simulated/wall/auto/supernorn
+	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
+
+	windows = /obj/window/auto
+	windows_thin = /obj/window/pyro
+	rwindows = /obj/window/auto/reinforced
+	rwindows_thin = /obj/window/reinforced/pyro
+	windows_crystal = /obj/window/auto/crystal
+	windows_rcrystal = /obj/window/auto/crystal/reinforced
+	window_layer_full = COG2_WINDOW_LAYER
+	window_layer_north = GRILLE_LAYER+0.1
+	window_layer_south = FLY_LAYER+1
+	auto_windows = TRUE
+
+	ext_airlocks = /obj/machinery/door/airlock/pyro/external
+	airlock_style = "pyro"
+
+	default_shuttle = "east_density"
+	escape_dir = EAST
+
+	job_limits_override = list(
+		/datum/job/civilian/cyborg = 0,
+	)
+
+
+	merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap2
+	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap2
+	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap2
+	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap2
+
+	valid_nuke_targets = list("the main security room" = list(/area/station/security/main),
+		"the cargo bay (QM)" = list(/area/station/quartermaster/office),
+		"the station's cafeteria" = list(/area/station/crew_quarters/cafeteria))
 
 /datum/map_settings/ozymandias
 	name = "OZYMANDIAS"
@@ -1150,9 +1211,9 @@ var/global/list/mapNames = list(
 	arrivals_type = MAP_SPAWN_CRYO
 	dir_fore = NORTH
 
-	parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1/west,
-		/atom/movable/screen/parallax_layer/space_2/west,
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1/west,
+		/atom/movable/screen/parallax_render_source/space_2/west,
 		)
 
 	walls = /turf/simulated/wall/auto/supernorn

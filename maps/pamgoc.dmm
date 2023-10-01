@@ -5081,14 +5081,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -11474,9 +11467,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "ayR" = (
@@ -23738,11 +23729,8 @@
 /area/station/security/main)
 "bcw" = (
 /obj/item/device/radio/intercom,
-/obj/item/clothing/under/suit/dress,
-/obj/item/clothing/under/suit/dress{
-	desc = "A black dress. Very formal.";
-	name = "black dress"
-	},
+/obj/item/clothing/under/suit/black/dress,
+/obj/item/clothing/under/suit/black/dress,
 /obj/item/clothing/head/mime_beret,
 /obj/item/clothing/head/mime_bowler,
 /obj/item/clothing/under/misc/mime,
@@ -35613,7 +35601,7 @@
 	pixel_x = -12;
 	pixel_y = 9
 	},
-/obj/item/clothing/under/suit{
+/obj/item/clothing/under/suit/black{
 	name = "Mortician Suit";
 	pixel_x = 4;
 	pixel_y = 4
@@ -42974,7 +42962,7 @@
 /area/station/ai_monitored/storage/eva)
 "bVZ" = (
 /obj/rack,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 8;
 	pixel_y = 8
 	},
@@ -46587,22 +46575,22 @@
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
 	pixel_x = -9
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 4;
 	pixel_y = 1
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 2;
 	pixel_y = -1
 	},
@@ -48107,7 +48095,7 @@
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -48468,7 +48456,7 @@
 /area/station/bridge)
 "chO" = (
 /obj/table/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_y = 15
 	},
 /obj/item/device/gps{
@@ -49775,7 +49763,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 5;
 	pixel_y = 3
 	},
@@ -52989,7 +52977,7 @@
 /area/station/bridge)
 "coy" = (
 /obj/table/wood/round/auto,
-/obj/item/storage/box/trackimp_kit2{
+/obj/item/storage/box/trackimp_kit{
 	pixel_x = 8;
 	pixel_y = 13
 	},
@@ -53281,7 +53269,7 @@
 	pixel_x = -1;
 	pixel_y = 3
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -1;
 	pixel_y = -7
 	},
@@ -56581,8 +56569,9 @@
 /turf/space,
 /area/shuttle/mining/station)
 "cCV" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "cCW" = (
 /turf/space,
 /area/supply/sell_point)
@@ -57916,7 +57905,7 @@
 /area/station/crew_quarters/locker)
 "fdV" = (
 /obj/displaycase{
-	displayed = new/obj/item/captaingun
+	displayed = /obj/item/captaingun
 	},
 /obj/window/reinforced{
 	dir = 2
@@ -58547,8 +58536,7 @@
 	pixel_x = 10
 	},
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 1
+	dir = 1
 	},
 /turf/simulated/floor/redwhite{
 	dir = 6
@@ -59691,8 +59679,7 @@
 /area/station/routing/sortingRoom)
 "iNj" = (
 /obj/machinery/atmospherics/unary/cryo_cell{
-	dir = 1;
-	pipe_direction = 1
+	dir = 1
 	},
 /turf/simulated/floor/redwhite{
 	dir = 10

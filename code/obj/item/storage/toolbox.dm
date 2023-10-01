@@ -72,7 +72,8 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	spawn_contents = list(/obj/item/crowbar/red,\
 	/obj/item/extinguisher,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/device/radio)
+	/obj/item/device/radio,\
+	/obj/item/roadflare)
 
 /obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"
@@ -213,7 +214,7 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 			var/obj/item/grab/G = W
 			if(!G.affecting) return
 			if(!G.affecting.stat && !G.affecting.restrained() && !G.affecting.getStatusDuration("weakened"))
-				boutput(user, "<span class='alert'>They're moving too much to feed to His Grace!</span>")
+				boutput(user, "<span class='alert'>[capitalize(hes_or_shes(G.affecting))] moving too much to feed to His Grace!</span>")
 				return
 			user.visible_message("<span class='alert'><b>[user] is trying to feed [G.affecting] to [src]!</b></span>")
 			if(!do_mob(user, G.affecting, 30)) return
