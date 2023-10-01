@@ -488,7 +488,7 @@ TYPEINFO(/obj/machinery/networked/telepad)
 			if(ismob(which))
 				logTheThing(LOG_STATION, usr, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 			else
-				logTheThing(LOG_STATION, usr, "sent [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
+				logTheThing(LOG_STATION, usr, "sent [log_object(which)] from [log_loc(which)] to [log_loc(target)] with a telepad")
 			// teleblock checks should already be done
 			do_teleport(which,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 

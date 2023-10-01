@@ -414,7 +414,7 @@
 	icon_state = "meson1"
 
 	execute_ability()
-		var/obj/item/clothing/glasses/meson/J = the_item
+		var/obj/item/clothing/glasses/toggleable/meson/J = the_item
 		J.AttackSelf(the_mob)
 		if(J.on) icon_state = "meson1"
 		else  icon_state = "meson0"
@@ -428,6 +428,19 @@
 
 	execute_ability()
 		var/obj/item/clothing/head/helmet/space/syndicate/specialist/engineer/J = the_item
+		J.AttackSelf(the_mob)
+		if(J.on) icon_state = "meson1"
+		else  icon_state = "meson0"
+		..()
+
+////////////////////////////////////////////////////////////
+
+/obj/ability_button/atmos_goggle_toggle //goggle toggle
+	name = "Toggle Atmos Goggles"
+	icon_state = "meson1"
+
+	execute_ability()
+		var/obj/item/clothing/glasses/toggleable/atmos/J = the_item
 		J.AttackSelf(the_mob)
 		if(J.on) icon_state = "meson1"
 		else  icon_state = "meson0"

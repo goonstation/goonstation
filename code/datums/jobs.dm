@@ -319,7 +319,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_head = list(/obj/item/clothing/head/helmet/hardhat/chief_engineer)
-	slot_eyes = list(/obj/item/clothing/glasses/meson)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
 	slot_jump = list(/obj/item/clothing/under/rank/chief_engineer)
 	slot_ears = list(/obj/item/device/radio/headset/command/ce)
 	slot_poc1 = list(/obj/item/paper/book/from_file/pocketguide/engineering)
@@ -361,7 +361,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 
-	slot_back = list(/obj/item/storage/backpack)
+	slot_back = list(/obj/item/storage/backpack/research)
 	slot_belt = list(/obj/item/device/pda2/research_director)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_jump = list(/obj/item/clothing/under/rank/research_director)
@@ -394,7 +394,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	cant_spawn_as_rev = 1
 	announce_on_join = 1
 
-	slot_back = list(/obj/item/storage/backpack)
+	slot_back = list(/obj/item/storage/backpack/medic)
 	slot_glov = list(/obj/item/clothing/gloves/latex)
 	slot_belt = list(/obj/item/storage/belt/medical/prepared)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
@@ -749,7 +749,7 @@ ABSTRACT_TYPE(/datum/job/engineering)
 	wages = PAY_TRADESMAN
 	slot_back = list(/obj/item/storage/backpack/engineering)
 	slot_mask = list(/obj/item/clothing/mask/breath)
-	slot_eyes = list(/obj/item/clothing/glasses/meson)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
 	slot_belt = list(/obj/item/storage/belt/mining/prepared)
 	slot_jump = list(/obj/item/clothing/under/rank/overalls)
 	slot_foot = list(/obj/item/clothing/shoes/orange)
@@ -1268,6 +1268,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	limit = 0
 	wages = PAY_TRADESMAN
 	slot_belt = list(/obj/item/device/pda2/atmos)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/atmos)
 	slot_jump = list(/obj/item/clothing/under/misc/atmospheric_technician)
 	slot_foot = list(/obj/item/clothing/shoes/black)
 	slot_lhan = list(/obj/item/storage/toolbox/mechanical)
@@ -2455,7 +2456,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso)
 	slot_foot = list(/obj/item/clothing/shoes/magnetic)
 	slot_glov = list(/obj/item/clothing/gloves/yellow)
-	slot_eyes = list(/obj/item/clothing/glasses/meson)
+	slot_eyes = list(/obj/item/clothing/glasses/toggleable/meson)
 	slot_ears = list(/obj/item/device/radio/headset/command/nt) //needs their own secret channel
 	slot_mask = list(/obj/item/clothing/mask/gas/NTSO)
 	slot_card = /obj/item/card/id/command
@@ -2744,11 +2745,9 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			M.set_mutantrace(morph)
 		var/obj/item/clothing/lanyard/L = new /obj/item/clothing/lanyard(M.loc)
 		M.equip_if_possible(L, SLOT_WEAR_ID, FALSE)
-		M.spawnId(src)
 		var/obj/item/card/id = locate() in M
-		if (!id)
-			return
-		L.storage.add_contents(id, M, FALSE)
+		if (id)
+			L.storage.add_contents(id, M, FALSE)
 
 /datum/job/daily/saturday
 	name = "Musician"
@@ -2759,6 +2758,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/civilian)
 	items_in_backpack = list(/obj/item/instrument/saxophone,/obj/item/instrument/guitar,/obj/item/instrument/bagpipe,/obj/item/instrument/fiddle)
+	change_name_on_spawn = 1
 
 /datum/job/battler
 	name = "Battler"

@@ -5,7 +5,7 @@
 	icon_state = "ghost"
 	layer = NOLIGHT_EFFECTS_LAYER_BASE
 	plane = PLANE_NOSHADOW_ABOVE_NOWARP
-	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP
+	event_handler_flags =  IMMUNE_MANTA_PUSH | IMMUNE_SINGULARITY | USE_FLUID_ENTER | MOVE_NOCLIP | IMMUNE_TRENCH_WARP
 	density = FALSE
 	canmove = TRUE
 	blinded = FALSE
@@ -152,6 +152,7 @@
 		var/datum/abilityHolder/ghost_observer/GH = src.abilityHolder
 		if (GH.spooking)
 			GH.stop_spooking()
+	. = ..()
 #endif
 
 /mob/dead/observer/bullet_act(var/obj/projectile/P)

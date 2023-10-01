@@ -367,7 +367,7 @@ proc/generate_space_color()
 	#ifndef CI_RUNTIME_CHECKING
 	if(fullbright)
 		if(!starlight)
-			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x = -32, pixel_y = -32)
+			starlight = image('icons/effects/overlays/simplelight.dmi', "starlight", pixel_x = -32, pixel_y = -32)
 			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
@@ -1295,7 +1295,7 @@ TYPEINFO(/turf/simulated)
 								if (1)
 									new /obj/item/skull {desc = "A skull.  That was robbed.  From a grave.";} ( src )
 								if (2)
-									new /obj/item/plank {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
+									new /obj/item/sheet/wood {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
 								if (3)
 									new /obj/item/clothing/under/suit/pinstripe {name = "old pinstripe suit"; desc  = "A pinstripe suit.  That was stolen.  Off of a buried corpse.";} ( src )
 								else

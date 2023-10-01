@@ -508,6 +508,15 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		set_current_projectile(new/datum/projectile/bullet/staple)
 		..()
 
+	set_current_projectile(datum/projectile/newProj)
+		..()
+		if(src.current_projectile.cost > 1)
+			if(src.current_projectile.shot_number < src.current_projectile.cost)
+				src.current_projectile.power = src.current_projectile.cost/src.current_projectile.shot_number
+			src.current_projectile.cost = 1
+		if(src.current_projectile.shot_number > 1)
+			src.current_projectile.shot_number = 1
+
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(failured)
@@ -1655,6 +1664,119 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 			set_current_projectile(new/datum/projectile/bullet/breach_flashbang)
 
 //1.58
+/obj/item/gun/kinetic/missile_launcher
+	name = "pod-targeting missile launcher"
+	desc = "A collapsible, infantry portable, pod-targeting missile launcher."
+	icon = 'icons/obj/large/64x32.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon_state = "missile_launcher"
+	item_state = "missile_launcher"
+	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	uses_multiple_icon_states = TRUE
+	has_empty_state = TRUE
+	w_class = W_CLASS_BULKY
+	throw_speed = 2
+	throw_range = 4
+	force = MELEE_DMG_LARGE
+	contraband = 8
+	ammo_cats = list(AMMO_ROCKET_ALL)
+	max_ammo_capacity = 1
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	muzzle_flash = "muzzle_flash_launch"
+	default_magazine = /obj/item/ammo/bullets/pod_seeking_missile
+	var/collapsed
+
+	New()
+		ammo = new default_magazine
+		ammo.amount_left = 0
+		set_current_projectile(new /datum/projectile/bullet/homing/pod_seeking_missile)
+		AddComponent(/datum/component/holdertargeting/smartgun/homing/pod, 1)
+		src.set_collapsed_state(TRUE)
+		..()
+
+	update_icon()
+		if (src.collapsed)
+			src.icon = 'icons/obj/items/gun.dmi'
+			src.icon_state = "missile_launcher-collapsed"
+			src.item_state = "missile_launcher-collapsed"
+
+		else
+			src.icon = 'icons/obj/large/64x32.dmi'
+			src.icon_state = "missile_launcher"
+
+			if (src.ammo.amount_left < 1)
+				src.item_state = "missile_launcher-empty"
+			else
+				src.item_state = "missile_launcher"
+
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			H.update_inhands()
+
+		. = ..()
+
+	canshoot(mob/user)
+		if (src.collapsed)
+			boutput(user, "<span class='alert'>You need to extend the [src.name] before you can fire!</span>")
+			return FALSE
+		. = ..()
+
+	attack_self(mob/user)
+		src.set_collapsed_state(!src.collapsed)
+
+		..()
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/ammo/bullets) && src.collapsed)
+			boutput(user, "<span class='alert'>You can't load a missile into the chamber! You'll have to extend the [src.name] first!</span>")
+			return
+		..()
+
+	proc/set_collapsed_state(var/collapsed)
+		if (src.setTwoHanded(!collapsed))
+			src.collapsed = collapsed
+
+			if (src.collapsed)
+				src.item_function_flags &= ~UNSTORABLE
+				src.w_class = W_CLASS_NORMAL
+				src.has_empty_state = FALSE
+
+			else
+				src.item_function_flags |= UNSTORABLE
+				src.w_class = W_CLASS_BULKY
+				src.has_empty_state = TRUE
+
+			src.UpdateIcon()
+			// Update HUD inhands, as they seem to dislike icon file changes paired with changing twohandedness.
+			if (ishuman(src.loc))
+				var/mob/living/carbon/human/H = src.loc
+				H.updateTwoHanded(src, !src.collapsed)
+
+			if (src.collapsed)
+				src.unload()
+
+	proc/unload()
+		if (src.ammo.amount_left <= 0)
+			return
+
+		var/obj/item/ammo/bullets/missile = new src.ammo.type
+		missile.amount_left = src.ammo.amount_left
+		missile.name = src.ammo.name
+		missile.icon = src.ammo.icon
+		missile.icon_state = src.ammo.icon_state
+		missile.ammo_type = src.ammo.ammo_type
+		missile.UpdateIcon()
+
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			H.put_in_hand_or_drop(missile)
+
+		src.ammo.amount_left = 0
+		src.ammo.refillable = FALSE
+		src.UpdateIcon()
+
+
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /obj/item/gun/kinetic/rpg7
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."

@@ -526,7 +526,7 @@ TYPEINFO(/obj/item/room_planner)
 		"shuttle white" = 'icons/turf/walls/shuttle/white.dmi',
 		"shuttle dark" = 'icons/turf/walls/shuttle/dark.dmi',
 		"overgrown" = 'icons/turf/walls/overgrown.dmi',
-		"meat" = 'icons/turf/walls/meat/meaty.dmi',
+		"meat" = 'icons/turf/walls/meat/meatier.dmi',
 		"ancient" = 'icons/turf/walls/ancient.dmi',
 		"cave" = 'icons/turf/walls/cave.dmi',
 		"lead blue" = 'icons/turf/walls/lead/blue.dmi',

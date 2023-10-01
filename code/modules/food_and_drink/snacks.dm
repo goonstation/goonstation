@@ -89,6 +89,8 @@
 			w_class = W_CLASS_TINY
 
 		src.setMaterial(getMaterial("pizza"), appearance = 0, setname = 0)
+		// this is a funny workaround for the fact that any pizza not made by cooking will have quality reset to 0 from the above call
+		src.quality = 1
 		if (prob(1))
 			SPAWN( rand(300, 900) )
 				src.visible_message("<b>[src]</b> <i>says, \"I'm pizza.\"</i>")

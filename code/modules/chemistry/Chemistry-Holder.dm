@@ -442,7 +442,8 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 					//end my copy+paste
 
 
-					if(round(amount, CHEM_EPSILON) >= B_required_volume) //This will mean you can have < 1 stuff not react. This is fine.
+					if(round(amount, CHEM_EPSILON) >= B_required_volume || ((locate(C.type) in old_reactions) && amount >= CHEM_EPSILON && !C.instant))
+						//This will mean you can have < 1 stuff not react OR the reaction is non-instant and already processing. This SHOULD be fine.
 						total_matching_reagents++
 						created_volume = min(created_volume, amount * (C.result_amount ? C.result_amount : 1) / B_required_volume)
 					else

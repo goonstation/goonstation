@@ -284,7 +284,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/misc/pourdrink2.ogg', 50, 1, 0.1)
 
-		else if (target.is_open_container() && target.reagents && !isturf(target) && src.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
+		else if (target.is_open_container(TRUE) && target.reagents && !isturf(target) && src.is_open_container()) //Something like a glass. Player probably wants to transfer TO it.
 			if(istype(target, /obj/item/reagent_containers))
 				var/obj/item/reagent_containers/t = target
 				if(t.current_lid)
@@ -1035,6 +1035,8 @@ proc/ui_describe_reagents(atom/A)
 		..()
 
 	process()
+		if (QDELETED(src.current_container))
+			src.current_container = null
 		if(is_currently_burning && current_container)
 			heat_container()
 		..()

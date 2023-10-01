@@ -2971,7 +2971,7 @@ TYPEINFO(/obj/machinery/vending/janitor)
 	var/datum/gas_mixture/gas_prototype = null
 
 	var/target_pressure = ONE_ATMOSPHERE
-	var/air_cost = 0.1 // units: credits / ( kPa * L )
+	var/air_cost = 0.06 // units: credits / ( kPa * L )
 
 	light_r =0.4
 	light_g = 0.4
@@ -3040,11 +3040,14 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		.["cardname"] = src.scan
 		.["bankMoney"] = account ? account["current_money"] : null
 
+		.["vend_type"] = src.vend_type
 		.["holding"] = holding
 		.["holding_pressure"] = holding ? MIXTURE_PRESSURE(holding.air_contents) : null
 		.["min_pressure"] = min_pressure
 		.["max_pressure"] = max_pressure
 		.["fill_cost"] = holding ? src.fill_cost() : null
+		.["air_cost"] = air_cost
+		.["current_fill"] = holding ? MIXTURE_PRESSURE(src.holding.air_contents) : 0
 
 		.["target_pressure"] = src.target_pressure
 
@@ -3089,24 +3092,24 @@ TYPEINFO(/obj/machinery/vending/janitor)
 							src.fill()
 		. = TRUE
 
-	plasma
-		name = "Plasma Vending Machine"
-		desc = "The perfect place to buy fuel for your pod."
-		icon_state = "Pvend"
-		icon_panel = "Pvend-panel"
-		icon_off = "Pvend-off"
-		icon_broken = "Pvend-broken"
-		icon_fallen = "Pvend-fallen"
-		slogan_list = list("You know what's more dangerous than plasma? Running out of it!",
-		"Plasma, because every great story begins with a bad decision",
-		"Ever want to be a shooting star?",
-		"Plasma, it's like WiFi for your lungs!",
-		"If you're not living on the edge, you're taking up too much space.")
-		air_cost = 0.2
-		light_r =0.8
-		light_g = 0.5
-		light_b = 0.3
-		vend_type = "plasma"
+/obj/machinery/vending/air_vendor/plasma
+	name = "Plasma Vending Machine"
+	desc = "The perfect place to buy fuel for your pod."
+	icon_state = "Pvend"
+	icon_panel = "Pvend-panel"
+	icon_off = "Pvend-off"
+	icon_broken = "Pvend-broken"
+	icon_fallen = "Pvend-fallen"
+	slogan_list = list("You know what's more dangerous than plasma? Running out of it!",
+	"Plasma, because every great story begins with a bad decision",
+	"Ever want to be a shooting star?",
+	"Plasma, it's like WiFi for your lungs!",
+	"If you're not living on the edge, you're taking up too much space.")
+	air_cost = 0.08
+	light_r =0.8
+	light_g = 0.5
+	light_b = 0.3
+	vend_type = "plasma"
 
 ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 

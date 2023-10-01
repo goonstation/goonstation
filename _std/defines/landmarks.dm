@@ -20,6 +20,7 @@
 // shuttle landmarks
 #define LANDMARK_SHUTTLE_CENTCOM "shuttle-centcom"
 #define LANDMARK_SHUTTLE_TRANSIT "shuttle-transit"
+#define LANDMARK_SHUTTLE_SOUND "shuttle-subwoofer"
 
 // nukies
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"

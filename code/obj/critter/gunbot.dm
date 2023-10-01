@@ -4,8 +4,8 @@ TYPEINFO(/obj/critter/gunbot)
 /obj/critter/gunbot
 	name = "Robot"
 	desc = "A Security Robot, something seems a bit off."
-	icon = 'icons/mob/robots.dmi'
-	icon_state = "syndibot"
+	icon = 'icons/mob/critter/robotic/gunbot.dmi'
+	icon_state = "gunbot_light"
 	density = 1
 	health = 50
 	aggressive = 1

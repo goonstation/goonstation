@@ -76,6 +76,7 @@ VUVUZELA
 			return
 		opened = 1
 		icon_state = "crushed-5"
+		w_class = W_CLASS_TINY
 		playsound(user.loc, 'sound/items/can_open.ogg', 50, 0)
 
 		SPAWN(0.5 SECONDS)

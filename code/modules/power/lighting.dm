@@ -1080,6 +1080,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light, proc/broken, proc/admin_toggle, proc/
 		var/state = !A.power_light || shipAlertState == SHIP_ALERT_BAD
 		seton(state)
 
+/obj/machinery/light/emergency/insert()
+	..()
+	power_change()
 
 // the light item
 // can be tube or bulb subtypes

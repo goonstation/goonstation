@@ -567,7 +567,7 @@ rules:
   ## Enforce spacing between rest and spread operators and their expressions
   # rest-spread-spacing: error
   ## Enforce sorted import declarations within modules
-  # sort-imports: error
+  sort-imports: [error, { ignoreCase: true, ignoreDeclarationSort: true }]
   ## Require symbol descriptions
   # symbol-description: error
   ## Require or disallow spacing around embedded expressions of template
