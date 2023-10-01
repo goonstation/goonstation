@@ -1,4 +1,6 @@
-
+(t)sat sep 30 23
+(u)Emily
+(*)More critters can now properly toggle their AI on/off when you're playing them. RP as an NPC with even more authenticity!
 (t)fri sep 29 23
 (u)Emily
 (+)Zipguns now fire one bullet at a time for ammo types that usually fire in bursts
