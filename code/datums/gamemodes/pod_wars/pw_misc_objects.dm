@@ -718,7 +718,9 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 	get_desc()
 		var/string = "pristine"
-		if (health >= (health_max/2))
+		if (health == health_max)
+			string = "pristine"
+		else if (health >= (health_max/2))
 			string = "a bit scuffed"
 		else
 			string = "almost destroyed"

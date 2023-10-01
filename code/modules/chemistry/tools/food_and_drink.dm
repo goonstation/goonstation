@@ -121,6 +121,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		slice.transform = src.transform // for botany crops
 		slice.reagents.clear_reagents() // dont need initial_reagents when you're inheriting reagents of another obj (no cheese duping >:[ )
 		slice.reagents.maximum_volume = amount_to_transfer
+		slice.quality = src.quality
 		if (src.slice_inert)
 			if (!slice.reagents)
 				slice.reagents = new //when the created produce didn't spawned with some reagents in them, we need that

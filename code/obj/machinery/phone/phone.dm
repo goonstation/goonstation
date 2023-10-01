@@ -374,7 +374,8 @@ TYPEINFO(/obj/machinery/phone)
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
 		var/mob/T = src.parent.linked.handset.holder
 		if(T?.client)
-			T.show_message(processed, 2)
+			if(GET_DIST(src.parent.linked.handset,src.parent.linked.handset.holder)<1)
+				T.show_message(processed, 2)
 			M.show_message(processed, 2)
 
 			for (var/obj/item/device/radio/intercom/I in range(3, T))

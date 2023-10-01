@@ -225,7 +225,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 		..()
 
 	can_critter_eat()
-		src.active_hand = 2 // mouth hand
+		set_hand(2) // mouth hand
 		src.set_a_intent(INTENT_HELP)
 		return can_act(src,TRUE)
 
@@ -3485,6 +3485,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	flags = TABLEPASS | DOORPASS
 	fits_under_table = 1
 	hand_count = 1
+	icon = 'icons/mob/critter/robotic/boogie.dmi'
 	icon_state = "boogie"
 	icon_state_dead = "boogie-dead"
 	speechverb_say = "sings"

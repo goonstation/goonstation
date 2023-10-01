@@ -207,27 +207,24 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	use_bite_mask = FALSE
 
 	throw_impact(atom/hit_atom, datum/thrown_thing/thr)
-		if (contents)
-			var/atom/movable/random_content
-			if (length(contents) >= 1)
-				random_content = pick(contents)
-			else
-				random_content = src
-
- 			hit_atom.Attackby(random_content, thr?.user)
-			//for afterattack, we want to filter out mobs since pies hit also the turf the person is standing on. Also, we need to call it on an actual item
-			if (hit_atom && random_content && istype(random_content, /obj/item) && ismob(hit_atom))
-				var/obj/item/randomed_item = random_content
-				randomed_item.AfterAttack(hit_atom, thr?.user)
-
-
+		var/atom/movable/random_content = src
+		if(length(src.contents) >= 1)
+			random_content = pick(src.contents)
+		if(random_content && thr.user && istype(random_content, /obj/item))
+			var/obj/item/randomed_item = random_content
+			playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+			//for Attackby, we specifically need any atom as target (TIL ID-pies to open doors are a thing and it fills me with joy)
+			hit_atom.Attackby(randomed_item, thr.user)
 			if (ismob(hit_atom))
-				playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
-				var/mob/M = hit_atom
-				if (M == thr.user)
+				var/mob/hit_mob = hit_atom
+				//for AfterAttack, we specifically need a mob as target
+				randomed_item.AfterAttack(hit_mob, thr.user)
+				if (hit_mob == thr.user)
 					src.visible_message("<span class='alert'>[thr.user] fumbles and smacks the [src] into their own face!</span>")
 				else
-					src.visible_message("<span class='alert'>[src] smacks into [M]!</span>")
+					src.visible_message("<span class='alert'>[src] smacks into [hit_mob]!</span>")
+		else
+			..()
 
 	Exited(atom/movable/Obj, newloc)
 		. = ..()

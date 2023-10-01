@@ -2726,7 +2726,7 @@
 		name = "Kerosene"
 		id = "kerosene"
 		result = "kerosene"
-		min_temperature = T0C + 600
+		min_temperature = T0C + 550
 		required_reagents = list("cyclopentanol" = 1, "oxygen" = 3, "acetone" = 1, "hydrogen" = 1, "aluminium" = 1, "nickel" = 1)
 		result_amount = 3
 		mix_phrase = "This pungent odor could probably melt steel."
