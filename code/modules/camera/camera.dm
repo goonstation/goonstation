@@ -252,6 +252,13 @@
 	src.disconnect_viewers()
 	return
 
+/obj/machinery/camera/ranch
+	name = "autoname - ranch"
+	c_tag = "autotag"
+	network = "ranch"
+	prefix = "ranch"
+	color = "#AAFF99"
+
 /* ====== Auto Cameras ====== */
 
 /obj/machinery/camera/auto
