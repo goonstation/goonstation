@@ -971,6 +971,7 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Minty"
 		icon_state = "minty"
 		ckey = "444explorer"
+
 	jonaleia
 		name = "\improper Arcas Lake-Younger"
 		icon_state = "arcas"
