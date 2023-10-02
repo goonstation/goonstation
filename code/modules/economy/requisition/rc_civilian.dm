@@ -786,6 +786,6 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				name = "pod locking mechanism"
 				typepath = /obj/item/shipcomponent/secondary_system/lock
 			if(8 to 10)
-				name = "ship positioning system"
+				name = "ship's navigation GPS"
 				typepath = /obj/item/shipcomponent/secondary_system/gps
 		..()
