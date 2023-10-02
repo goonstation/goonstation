@@ -571,14 +571,6 @@
 	radio_path = /obj/item/device/radio/spy/det_only
 	pinpointer_category = TR_CAT_SPY_STICKERS_DET
 
-/obj/item/device/camera_viewer/sticker
-	name = "camera monitor"
-	desc = "A portable video monitor connected to a network of spy cameras."
-	icon_state = "monitor"
-	item_state = "electronic"
-	w_class = W_CLASS_SMALL
-	networks = list("stickers")
-
 /obj/item/storage/box/spy_sticker_kit
 	name = "spy sticker kit"
 	desc = "Includes everything you need to spy on your unsuspecting co-workers!"
