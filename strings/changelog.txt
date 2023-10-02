@@ -1,5 +1,9 @@
 
 (t)mon oct 02 23
+(u)Kubius
+(p)16194
+(e)🪲🆕|C-Bug, C-Feature
+(+)Introduced an additional new civilian requisition centering around pod components and adjusted the seed requisition item rewards.
 (u)Smilg
 (p)15774
 (e)🆕📦|C-Feature, A-Game-Objects
