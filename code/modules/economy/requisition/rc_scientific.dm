@@ -538,7 +538,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 				rewardthing = /obj/item/storage/belt/utility
 			if("RTG pellets + Leigong RTG")
 				rewardthing = /obj/item/fuel_pellet/cerenkite
-		count = rand(4,6) * 2
+		count = rand(4,6)
 
 	build_reward()
 		var/list/yielder = list()
