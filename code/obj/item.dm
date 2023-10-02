@@ -602,6 +602,8 @@ ABSTRACT_TYPE(/obj/item)
 	var/added = 0
 	var/imrobot
 	var/imdrone
+	if(QDELETED(other))
+		return added
 	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
 		if (imrobot)
 			max_stack = 300
