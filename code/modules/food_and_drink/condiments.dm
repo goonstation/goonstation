@@ -70,10 +70,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 /obj/item/reagent_containers/food/snacks/condiment/hotsauce
 	name = "hot sauce"
-	desc = "Dangerously spicy!"
+	desc = "Spicy!"
 	icon_state = "sachet-hot"
-	initial_volume = 100
-	initial_reagents = "capsaicin"
+	initial_volume = 30
+	initial_reagents = "hotsauce"
 
 /obj/item/reagent_containers/food/snacks/condiment/coldsauce
 	name = "cold sauce"

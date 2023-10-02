@@ -576,7 +576,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#2DAB1F"
-	initial_reagents = list("mint"=20,"capsaicin"=10)
+	initial_reagents = list("mint"=20,"hotsauce"=10)
 	food_effects = list("food_refreshed", "food_energized")
 
 /obj/item/reagent_containers/food/snacks/soup/refried_beans
@@ -597,7 +597,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
-	initial_reagents = list("capsaicin"=20)
+	initial_reagents = list("hotsauce"=20)
 	food_effects = list("food_warm","food_sweaty")
 	meal_time_flags = MEAL_TIME_LUNCH
 
@@ -609,7 +609,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	bites_left = 6
 	heal_amt = 2
 	food_color = "#FF8C00"
-	initial_reagents = list("capsaicin"=10)
+	initial_reagents = list("cheese"=10,"hotsauce"=10)
 	food_effects = list("food_warm","food_space_farts")
 
 /obj/item/reagent_containers/food/snacks/soup/superchili
@@ -1275,7 +1275,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 1
 	bites_left = 5
 	initial_volume = 60
-	initial_reagents = list("capsaicin"=50,"omnizine"=5,"synaptizine"=5)
+	initial_reagents = list("hotsauce"=50,"omnizine"=5,"synaptizine"=5)
 	food_effects = list("food_energized","food_brute","food_burn")
 	meal_time_flags = MEAL_TIME_DINNER
 	/// Is this pizza under high security? (ie will it burn non security members who eat it)
@@ -2904,7 +2904,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 2
 	bites_left = 4
 	initial_volume = 20
-	initial_reagents = list("currypowder"=10, "capsaicin"=5, "water_holy"=5)
+	initial_reagents = list("currypowder"=10, "hotsauce"=5, "water_holy"=5)
 	food_effects = list("food_hp_up","food_tox","food_warm")
 
 /obj/item/reagent_containers/food/snacks/potatocurry
@@ -2943,7 +2943,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 2
 	bites_left = 5
 	initial_volume = 25
-	initial_reagents = list("currypowder"=10, "capsaicin"=5, "salicylic_acid"=10)
+	initial_reagents = list("currypowder"=10, "hotsauce"=5, "salicylic_acid"=10)
 	food_effects = list("food_brute","food_tox","food_warm")
 
 /obj/item/reagent_containers/food/snacks/ramen_bowl
@@ -2995,7 +2995,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 3
 	bites_left = 5
 	initial_volume = 25
-	initial_reagents = "capsaicin"
+	initial_reagents = "hotsauce"
 	food_effects = list("food_tox", "food_rad_resist", "food_disease_resist", "food_warm")
 
 /obj/item/reagent_containers/food/snacks/mapo_tofu_synth
@@ -3008,7 +3008,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	heal_amt = 3
 	bites_left = 5
 	initial_volume = 25
-	initial_reagents = "capsaicin"
+	initial_reagents = "hotsauce"
 	food_effects = list("food_tox", "food_rad_resist", "food_disease_resist", "food_warm")
 
 

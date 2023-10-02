@@ -1058,7 +1058,7 @@
 		name = "Michelada"
 		id = "michelada"
 		result = "michelada"
-		required_reagents = list("beer" = 1, "juice_tomato" = 1, "capsaicin" = 1)
+		required_reagents = list("beer" = 1, "juice_tomato" = 1, "hotsauce" = 1)
 		result_amount = 3
 		mix_phrase = "A tiny mariachi pops out of the container and doots at you before disappearing into the drink."
 		mix_sound = 'sound/musical_instruments/Bikehorn_2.ogg'
@@ -1616,7 +1616,7 @@
 		name = "Prairie Fire"
 		id = "pfire"
 		result = "pfire"
-		required_reagents = list("tequila" = 1, "capsaicin" = 1)
+		required_reagents = list("tequila" = 1, "hotsauce" = 1)
 		result_amount = 2
 		mix_phrase = "The hot sauce and tequila mix to create a frat boy's worst nightmare."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -1991,7 +1991,7 @@
 		name = "Spiced Rum"
 		id = "spicedrum"
 		result = "spicedrum"
-		required_reagents = list("rum" = 1, "capsaicin" = 1)
+		required_reagents = list("rum" = 1, "hotsauce" = 1)
 		result_amount = 2
 		mix_phrase = "You feel like you might have misunderstood the recipe."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -2145,7 +2145,7 @@
 		name = "Mexican Hot Chocolate"
 		id = "mexicanhotchocolate"
 		result = "mexicanhotchocolate"
-		required_reagents = list("capsaicin" = 1, "chocolate_milk"= 2)
+		required_reagents = list("hotsauce" = 1, "chocolate_milk"= 2)
 		result_amount = 3
 		mix_phrase = "A spicy smell drifts up from the chocolate."
 

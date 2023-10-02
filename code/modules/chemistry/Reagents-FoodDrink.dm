@@ -80,7 +80,7 @@ datum
 			thirst_value = 0.6
 			bladder_value = -0.2
 			viscosity = 0.3
-			var/list/flushed_reagents = list("capsaicin")
+			var/list/flushed_reagents = list("capsaicin","hotsauce")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -2155,9 +2155,12 @@ datum
 						M.bodytemperature += rand(5,20) * mult
 				M.stuttering += rand(0,2)
 				M.bodytemperature += rand(0,3) * mult
-				if(prob(10))
+				if (holder.get_reagent_amount(src.id) >= 3)
+					if(prob(10))
+						M.emote(pick("cough"))
+						M.setStatusMin("stunned", 1 SECOND * mult)
+				if(prob(25))
 					M.emote(pick("cough"))
-					M.setStatusMin("stunned", 1 SECOND * mult)
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -2944,6 +2947,21 @@ datum
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				M.reagents.add_reagent("salt", 0.5 * mult)
+				..()
+
+		fooddrink/hotsauce
+			name = "hot sauce"
+			id = "hotsauce"
+			description = "A spicy red condiment made from processed chilis."
+			reagent_state = SOLID
+			fluid_r = 200
+			fluid_g = 33
+			fluid_b = 0
+			transparency = 255
+			taste = "spicy"
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				M.reagents.add_reagent("capsaicin", 0.3 * mult)
 				..()
 
 		fooddrink/porktonium

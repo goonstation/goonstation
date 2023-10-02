@@ -569,7 +569,7 @@
 	bites_left = 6
 	heal_amt = 2
 	initial_volume = 5
-	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"= 10)
+	initial_reagents = list("cholesterol"=1, "hotsauce"=10, "cheese"= 10)
 	food_effects = list("food_hp_up")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
 
