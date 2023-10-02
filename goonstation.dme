@@ -982,6 +982,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\barber\barber_shop.dm"
 #include "code\modules\camera\camera.dm"
 #include "code\modules\camera\monitor.dm"
+#include "code\modules\camera\motion.dm"
 #include "code\modules\camera\network.dm"
 #include "code\modules\camera\television.dm"
 #include "code\modules\camera\coverage\datum\component\camera_coverage_emitter.dm"
