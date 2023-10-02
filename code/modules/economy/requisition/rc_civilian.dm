@@ -263,7 +263,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 /datum/rc_entry/food/any
 	name = "solid food, preferably nutritious"
 	typepath = /obj/item/reagent_containers/food/snacks
-	must_be_whole = FALSE
+	food_integrity = FOOD_REQ_BY_ITEM
 	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/reagent/water
@@ -400,6 +400,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "slices' worth of pizza"
 	commodity = /datum/commodity/
 	typepath = /obj/item/reagent_containers/food/snacks/pizza
+	food_integrity = FOOD_REQ_BY_BITE
 	feemod = PAY_UNTRAINED
 
 /datum/rc_entry/reagent/cola

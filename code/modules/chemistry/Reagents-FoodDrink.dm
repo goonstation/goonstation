@@ -2188,7 +2188,7 @@ datum
 				else if (method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if((issmokeimmune(H) && ((H.glasses?.c_flags & COVERSEYES) || (H.head?.c_flags & COVERSEYES))))
+						if((issmokeimmune(H) && ((H.glasses?.c_flags & COVERSEYES) || (H.head?.c_flags & COVERSEYES) || (H.wear_mask?.c_flags & COVERSEYES))))
 							return
 					if(isrobocritter(M) || istype(M, /mob/living/critter/fire_elemental)) // robotic critters and fire elementals will be immune, but not organic critters.
 						return

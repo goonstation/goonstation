@@ -1,4 +1,18 @@
 
+(t)mon oct 02 23
+(u)Tyrant
+(p)16201
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Clarion now has a capsule vending machine.
+(t)sun oct 01 23
+(u)UnfunnyPerson
+(p)16123
+(e)📦|A-Game-Objects
+(+)Laundry machines can now be scanned with a mechscanner
+(u)Tarmunora
+(+)Waspbow projectiles no longer deal impact damage
+(+)Waspbow/radbow/etc now use/have 60u/shot instead of 40u
+(+)Fixed oversight causing disruptor cells to charge at twice the intended rate
 (t)fri sep 29 23
 (u)Emily
 (+)Zipguns now fire one bullet at a time for ammo types that usually fire in bursts
