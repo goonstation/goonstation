@@ -760,6 +760,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/power/apc, proc/toggle_operating, proc/zapSt
 		return FALSE
 
 /obj/machinery/power/apc/proc/onBiteWire(mob/user, list/params)
+	if (issilicon(user) || isAIeye(user))
+		boutput(user, "You don't have teeth, dummy!")
+		return FALSE
 	if (!src.canPhysicallyAccess(user))
 		boutput(user, "You are too far away to bite a wire!")
 		return FALSE

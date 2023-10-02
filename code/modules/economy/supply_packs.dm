@@ -1289,8 +1289,9 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/light
 	name = "Lighting Crate"
-	desc = "Afraid of the dark? Lighten up your life with a couple of torches and a pile of glowsticks."
-	contains = list(/obj/item/device/light/glowstick = 8,
+	desc = "Afraid of the dark? Lighten up your life with a couple of torches, some emergency flares and a pile of glowsticks."
+	contains = list(/obj/item/device/light/glowstick = 6,
+					/obj/item/roadflare = 3,
 					/obj/item/device/light/flashlight = 2)
 	cost = PAY_UNTRAINED*2
 	containertype = /obj/storage/crate/packing

@@ -1,5 +1,49 @@
 
+(t)sun oct 01 23
+(u)UnfunnyPerson
+(p)16123
+(e)📦|A-Game-Objects
+(+)Laundry machines can now be scanned with a mechscanner
+(u)Tarmunora
+(+)Waspbow projectiles no longer deal impact damage
+(+)Waspbow/radbow/etc now use/have 60u/shot instead of 40u
+(+)Fixed oversight causing disruptor cells to charge at twice the intended rate
 (t)fri sep 29 23
+(u)Emily
+(+)Zipguns now fire one bullet at a time for ammo types that usually fire in bursts
+(+)Pews can be reshaped with screwdrivers and turned with crowbars.
+(u)Waffleloffle
+(p)15927
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds some particularly costumey headwear, available for purchase at the Clothing Booth during the month of Spooktober.
+(u)Kubius
+(p)16092
+(e)🆕⚖|C-Feature, C-Balance
+(*)Further requisition system improvements. Notable changes: No limit on pinned contracts, fewer and longer-lasting Aid contracts, and a new Civilian contract.
+(u)pali
+(p)15458
+(e)🧫🧛|C-Experimental, A-Gamemodes
+(*)Experiment: Gang members are recruited randomly at roundstart instead of being recruited manually.<br>Give feedback <a href="https://forum.ss13.co/showthread.php?tid=21701">here</a>.
+(u)Bartimeus973
+(p)15630
+(e)⚖🔄💊🔨|C-Balance, C-Rework, A-Medical, A-Player-Actions
+(*)Organ surgery is now redone! Instructions are found in the surgery handbook. For more details click on the PR number in the top right!
+(u)aloe
+(p)15833
+(e)⚖💡🎭|C-Balance, A-Station-Systems, A-RP
+(+)Removed security's access to the crematorium on the RP servers.
+(u)Tarmunora
+(p)15759
+(e)🪲🤖|C-Bug, A-Silicons
+(*)Fixed bug allowing cyborgs to open-hand interact with atoms under certain circumstances
+(u)MeggalBozale
+(p)15957
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)NT has spent a few million credits stocking its stations with newly printed guides to material science, featuring minor spelling corrections and updated material values.
+(u)Flappybat & Flaborized
+(p)15797
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds emergency flares to the game, when a glowstick just won't cut it! These come as standard issue in emergency toolboxes. Just be careful around flammable gas...
 (u)TealSeer
 (p)16083
 (e)🪲📦|C-Bug, A-Game-Objects
