@@ -39,9 +39,9 @@ TYPEINFO(/datum/component/hallucination/random_image_override)
 	)
 
 
-/////////////////////////////////////////////////////////////
+//#########################################################
 //                HALLUCINATION COMPONENTS
-/////////////////////////////////////////////////////////////
+//#########################################################
 
 
 ///Generic hallucination effects - subclass for fancy effects
@@ -75,9 +75,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		src.ttl = world.time + timeout SECONDS //reset timeout
 
 	return FALSE //false means create a new component, true means this is a dupe so don't create it
-/////////////////////////////////////////////////////////////
+//#########################################################
 //                    TRIPPY COLORS
-/////////////////////////////////////////////////////////////
+//#########################################################
 
 
 /// Trippy colors - apply an RGB swap to client's vision
@@ -103,9 +103,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			animate(parent_mob.client, color = null, time = 2 SECONDS, easing = SINE_EASING)
 
 
-/////////////////////////////////////////////////////////////
+//#########################################################
 //                    RANDOM SOUNDS
-/////////////////////////////////////////////////////////////
+//#########################################################
 
 /// Random sound - play a sound from a list with a prob per life tick
 /datum/component/hallucination/random_sound
@@ -145,9 +145,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		else
 			return FALSE //create a new hallucination
 
-/////////////////////////////////////////////////////////////
+//#########################################################
 //                    RANDOM IMAGE
-/////////////////////////////////////////////////////////////
+//#########################################################
 
 /// Random image - hallucinate an image on a visible tile with prob per life tick
 /datum/component/hallucination/random_image
@@ -192,9 +192,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		else
 			return FALSE //create a new hallucination
 
-/////////////////////////////////////////////////////////////
+//#########################################################
 //                    FAKE ATTACK
-/////////////////////////////////////////////////////////////
+//#########################################################
 
 /// Fake attack - hallucinate being attacked by something
 /datum/component/hallucination/fake_attack
@@ -270,9 +270,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		else
 			return FALSE //create a new hallucination
 
-/////////////////////////////////////////////////////////////
+//#########################################################
 //                 RANDOM IMAGE OVERRIDE
-/////////////////////////////////////////////////////////////
+//#########################################################
 
 /// Random image override - hallucinate an image on a filtered atom in view with prob per life tick, with an option to add as overlay or replace the icon
 /datum/component/hallucination/random_image_override
@@ -328,9 +328,9 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		else
 			return FALSE //create a new hallucination
 
-/////////////////////////////////////////////////////////////
+//#########################################################
 //                    SUPPORTING CAST
-/////////////////////////////////////////////////////////////
+//#########################################################
 
 
 /datum/hallucinated_sound
