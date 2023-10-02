@@ -292,6 +292,7 @@ To remove:
 #define PROP_OBJ_GOLFABLE(x) x("golfable", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 //-------------------- ITEM PROPS -----------------------
+#define PROP_ITEM_IN_CHEM_DISPENSER(x) x("in_chem_dispenser", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 //------------------- MOVABLE PROPS ---------------------
 #define PROP_MOVABLE_CONTRABAND_OVERRIDE(x) x("contraband_pverride", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX) //! Thing is considered to have this contraband value, takes max if has multiple of these props
@@ -303,6 +304,8 @@ To remove:
 #define PROP_ATOM_TELEPORT_JAMMER(x) x("teleport_jammer", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM, PROP_UPDATE_TELEBLOCK_CAT)
 #define PROP_ATOM_FLOCK_THING(x) x("flock_thing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_FLOATING(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+/// Thing will redirect clicks to a fluid on its tile when clicked by a relevant item (beaker mop etc)
+#define PROP_ATOM_DO_LIQUID_CLICKS(x) x("do_liquid_clicks", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 
 // In lieu of comments, these are the indexes used for list access in the macros below.

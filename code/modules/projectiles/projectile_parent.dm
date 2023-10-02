@@ -15,6 +15,7 @@
 	layer = EFFECTS_LAYER_BASE
 	anchored = ANCHORED
 	animate_movement = FALSE
+	event_handler_flags = IMMUNE_TRENCH_WARP
 
 	/// Projectile data; almost all specific projectile information and functionality lives here
 	var/datum/projectile/proj_data = null
@@ -41,7 +42,7 @@
 	var/turf/orig_turf
 
 	///Default dir, set to in do_step()
-	var/facing_dir = 1
+	var/facing_dir = NORTH
 	/// Whether this projectile was shot point-blank style (clicking an adjacent mob). Adjusts the log entry accordingly
 	var/was_pointblank = FALSE
 
@@ -820,7 +821,7 @@ ABSTRACT_TYPE(/datum/projectile)
 
 	if (play_shot_sound)
 		if (narrator_mode)
-			playsound(S, 'sound/vox/shoot.ogg', 50, 1)
+			playsound(S, 'sound/vox/shoot.ogg', 50, TRUE)
 		else if(DATA.shot_sound && DATA.shot_volume && shooter)
 			playsound(S, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
 			if (isobj(shooter))

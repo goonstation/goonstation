@@ -694,7 +694,7 @@
 	name = "autoname - SS13"
 	},
 /obj/item/room_planner,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
 "bI" = (
@@ -1034,7 +1034,7 @@
 /area/station/crew_quarters/garden)
 "cH" = (
 /obj/item/room_planner,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/red,
 /area/station/storage/warehouse)
 "cI" = (
@@ -1192,9 +1192,7 @@
 "cY" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/machinery/light{
 	dir = 1;
 	icon_state = "tube1";
@@ -4784,8 +4782,9 @@
 /turf/simulated/floor/plating,
 /area/station/maintenance/central)
 "lc" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "ld" = (
 /obj/machinery/computer/genetics{
 	dir = 1;

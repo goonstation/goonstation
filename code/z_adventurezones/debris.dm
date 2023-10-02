@@ -26,7 +26,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/martian)
 
 /turf/simulated/wall/auto/martian
 	name = "organic wall"
-	icon = 'icons/turf/walls_martian.dmi'
+	icon = 'icons/turf/walls/martian.dmi'
 	icon_state = "martian-0"
 	mod = "martian-"
 

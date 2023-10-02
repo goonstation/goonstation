@@ -261,7 +261,7 @@
 		var/obj/item/reagent_containers/food/snacks/T = holder.target
 		if(C && T && BOUNDS_DIST(holder.owner, holder.target) == 0)
 			holder.owner.set_dir(get_dir(holder.owner, holder.target))
-			T.Eat(C, C, TRUE)
+			C.critter_eat(T)
 			has_started = TRUE
 
 /datum/aiTask/succeedable/critter/eat/on_reset()
@@ -292,6 +292,9 @@
 	max_dist = 7
 	var/has_started = FALSE
 	var/persistence = 0
+	/// to make us only try to attack every other AI tick, hopefully mirroring default AI attack task behaviour
+	/// TODO: replace this mess with actual attack rate variables or something
+	var/tick = FALSE
 
 
 /datum/aiTask/succeedable/retaliate/failed()
@@ -325,8 +328,10 @@
 	if(C && T && BOUNDS_DIST(C, T) == 0)
 		C.set_dir(get_dir(C, T))
 		if(C.can_critter_attack()) //if we can't attack, just do nothing until we can
-			C.critter_retaliate(holder.target)
-			src.has_started = TRUE
+			src.tick = !src.tick
+			if (src.tick)
+				C.critter_retaliate(holder.target)
+				src.has_started = TRUE
 	else if(C && T)
 		//we're not in punching range, let's fix that by moving back to the move subtask
 		var/datum/aiTask/sequence/goalbased/retaliate/parent_task = holder.current_task

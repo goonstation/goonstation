@@ -30,7 +30,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 		var/turf/T = get_turf(user)
 		T.visible_message("<span class='alert'>The [cosmeticSource.name] suddenly emits a burst of flame!</span>")
 		fireflash(T, 0)
-		playsound(T, 'sound/effects/bamf.ogg', 100, 1)
+		playsound(T, 'sound/effects/bamf.ogg', 100, TRUE)
 
 /datum/artifact_fault/irradiate
 	// irradiates the victim
@@ -55,7 +55,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			return
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'>The [O.name] suddenly deactivates!</span>")
-		playsound(T, 'sound/effects/shielddown2.ogg', 100, 1)
+		playsound(T, 'sound/effects/shielddown2.ogg', 100, TRUE)
 		O.ArtifactDeactivated()
 
 /datum/artifact_fault/warp
@@ -68,7 +68,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 			return
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'>The [cosmeticSource.name] warps [user.name] away!</span>")
-		playsound(T, 'sound/effects/mag_warp.ogg', 100, 1)
+		playsound(T, 'sound/effects/mag_warp.ogg', 100, TRUE)
 		var/turf/destination = pick(random_floor_turfs)
 		logTheThing(LOG_COMBAT, user, "was teleported by artifact fault from [log_loc(user)] to [log_loc(destination)]")
 		user.set_loc(destination)
@@ -132,7 +132,7 @@ ABSTRACT_TYPE(/datum/artifact_fault/)
 				I.dropped(user)
 		var/turf/T = get_turf(O)
 		T.visible_message("<span class='alert'><b>The [cosmeticSource.name] utterly annihilates [user.name]!</b></span>")
-		playsound(T, 'sound/effects/elec_bigzap.ogg', 40, 1) // seriously 100 volume on this file? Are you trying to deafen players?
+		playsound(T, 'sound/effects/elec_bigzap.ogg', 40, TRUE) // seriously 100 volume on this file? Are you trying to deafen players?
 		logTheThing(LOG_COMBAT, user, "was elecgibbed by an artifact fault from [O] at [log_loc(user)].")
 		user.elecgib()
 

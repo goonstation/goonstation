@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { BlockQuote, Button, Collapsible, Box, Section } from '../components';
+import { BlockQuote, Box, Button, Collapsible, Section } from '../components';
 import { Window } from '../layouts';
 
 export const AIRack = (props, context) => {

@@ -1,6 +1,7 @@
 
 /obj/item/reagent_containers/food/snacks/sandwich
 	icon = 'icons/obj/foodNdrink/food_bread.dmi'
+	fill_amt = 3
 	bites_left = 4
 	heal_amt = 2
 	var/hname = null
@@ -206,6 +207,7 @@
 	icon = 'icons/obj/foodNdrink/food_meals.dmi'
 	icon_state = "hburger"
 	item_state = "burger"
+	fill_amt = 3
 	bites_left = 5
 	heal_amt = 2
 	food_color ="#663300"
@@ -510,6 +512,7 @@
 	name = "THE MONSTER"
 	desc = "There are no words to describe the sheer unhealthiness of this abomination."
 	icon_state = "giantburger"
+	fill_amt = 10
 	bites_left = 20
 	heal_amt = 3
 	throwforce = 10
@@ -551,10 +554,23 @@
 	desc = "Lightly salted potato fingers."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "fries"
+	fill_amt = 2
 	bites_left = 6
 	heal_amt = 1
 	initial_volume = 5
 	initial_reagents = list("cholesterol"=1)
+	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
+
+/obj/item/reagent_containers/food/snacks/chilifries
+	name = "chili cheese fries"
+	desc = "Lightly salted potato fingers, topped with chili and cheese."
+	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+	icon_state = "chilifries"
+	bites_left = 6
+	heal_amt = 2
+	initial_volume = 5
+	initial_reagents = list("cholesterol"=1, "capsaicin"=10, "cheese"= 10)
+	food_effects = list("food_hp_up")
 	meal_time_flags = MEAL_TIME_LUNCH | MEAL_TIME_SNACK
 
 /obj/item/reagent_containers/food/snacks/macguffin

@@ -6,6 +6,7 @@ var/global/the_automaton = null
 /obj/critter/automaton
 	name = "automaton"
 	desc = "What is this thing? A toy? A machine? What is it doing? Why does it seem to be watching you?"
+	icon = 'icons/mob/critter/robotic/automaton.dmi'
 	icon_state = "automaton"
 	health = 1000 // what kind of jerk would kill it
 	anchored = ANCHORED
@@ -35,11 +36,6 @@ var/global/the_automaton = null
 		SPAWN(1 SECOND)
 			if (!the_automaton)
 				the_automaton = src
-
-	disposing()
-		if (the_automaton == src)
-			the_automaton = null
-		..()
 
 	disposing()
 		if (the_automaton == src)
@@ -123,7 +119,7 @@ var/global/the_automaton = null
 				switch (current_loc.type)
 					if (/area/solarium)
 
-						src.set_dir(4)
+						src.set_dir(EAST)
 						if (!src.muted)
 							src.visible_message("<span class='alert'><b>[src]</b> stares into the sun.</span>")
 					if (/area/station/engine/core)
@@ -409,7 +405,7 @@ var/global/the_automaton = null
 		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 		swirl.set_loc(target_turf)
 		swirl.pixel_y = 10
-		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 		SPAWN(1.5 SECONDS)
 			swirl.pixel_y = 0
 			qdel(swirl)

@@ -4442,7 +4442,7 @@
 /area/station/medical/medbay)
 "biY" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-12"
 	},
 /area/station/maintenance/southwest)
@@ -7434,7 +7434,7 @@
 /area/station/hallway/secondary/north)
 "cbI" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-12"
 	},
 /area/station/maintenance/inner/nw)
@@ -13044,7 +13044,7 @@
 /area/station/crew_quarters/cafeteria)
 "dBq" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-3"
 	},
 /area/station/maintenance/inner/ne)
@@ -16008,7 +16008,7 @@
 /area/station/engine/hotloop)
 "eoc" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-12"
 	},
 /area/station/crew_quarters/quartersA)
@@ -29501,7 +29501,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "hJA" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -30846,7 +30846,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -37934,7 +37934,7 @@
 /area/station/engine/elect)
 "jYE" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-12"
 	},
 /area/station/hallway/secondary/construction2{
@@ -39943,7 +39943,7 @@
 /area/station/hallway/primary/south)
 "kyt" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-12"
 	},
 /area/station/engine/engineering/ce)
@@ -42934,7 +42934,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -48702,11 +48702,11 @@
 	},
 /area/station/crewquarters/garbagegarbs)
 "mJp" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grime,
@@ -50294,7 +50294,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
@@ -64877,7 +64877,7 @@
 /area/station/solar/west)
 "qTM" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-3"
 	},
 /area/station/maintenance/west)
@@ -69962,14 +69962,7 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/north)
 "sjJ" = (
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /turf/simulated/floor,
 /area/listeningpost)
 "sjR" = (
@@ -70696,7 +70689,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -71158,9 +71151,7 @@
 /turf/simulated/floor/grey,
 /area/ghostdrone_factory)
 "sxd" = (
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/stool/chair,
 /turf/simulated/floor/carpet/arcade,
 /area/station/crew_quarters/clown{
@@ -72969,7 +72960,7 @@
 /area/station/crew_quarters/quartersA)
 "sSO" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-12"
 	},
 /area/station/maintenance/east)
@@ -84826,7 +84817,7 @@
 "vJl" = (
 /obj/machinery/manufacturer/general/grody{
 	free_resource_amt = 2;
-
+	
 	},
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
@@ -90133,7 +90124,7 @@
 /area/station/hallway/secondary/west)
 "wYp" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-12"
 	},
 /area/station/chapel/office)
@@ -90207,7 +90198,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},
@@ -95155,7 +95146,7 @@
 /area/station/maintenance/disposal)
 "yhK" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-12"
 	},
 /area/station/hallway/secondary/construction{

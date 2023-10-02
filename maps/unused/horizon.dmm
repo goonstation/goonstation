@@ -6097,8 +6097,8 @@
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
 "ast" = (
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/simulated/floor,
 /area/station/storage/tools)
 "asu" = (
@@ -11711,7 +11711,7 @@
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "aJc" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
@@ -21155,9 +21155,7 @@
 	pixel_x = 10
 	},
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
@@ -44059,14 +44057,7 @@
 /area/listeningpost/power)
 "cwF" = (
 /obj/decal/cleanable/dirt,
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -49127,7 +49118,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3"
 	},
 /area/station/engine/elect)
@@ -52348,8 +52339,9 @@
 	},
 /area/station/janitor/office)
 "mpY" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "mqh" = (
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -59695,7 +59687,7 @@
 	dir = 4
 	},
 /turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3"
 	},
 /area/station/crew_quarters/fitness)

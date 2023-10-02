@@ -359,4 +359,4 @@ ABSTRACT_TYPE(/datum/targetable/changeling/critter)
 		H.transferOwnership(H.owner)
 		H.temp_controller = HO
 
-		boutput(H.owner, "<h1><font color=red>You have reawakened to serve your host [H.master]! You must follow their commands and protect our form!</font></h1>")
+		boutput(H.owner, "<h1><font color=red>You have reawakened to serve your host [H.master]! You must follow [his_or_her(H.master)] commands and protect our form!</font></h1>")

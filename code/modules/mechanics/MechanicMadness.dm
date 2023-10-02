@@ -716,14 +716,14 @@
 
 		flick("comp_flush1", src)
 		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
 
 		H.start(src) // start the holder processing movement
 
 	proc/expel(var/obj/disposalholder/H)
 
 		var/turf/target
-		playsound(src, 'sound/machines/hiss.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/hiss.ogg', 50, FALSE, 0)
 		for(var/atom/movable/AM in H)
 			target = get_offset_target_turf(src.loc, rand(5)-rand(5), rand(5)-rand(5))
 
@@ -830,7 +830,7 @@
 			var/saniStr = strip_html_tags(sanitize(html_encode(P.info)))
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,saniStr)
 			if(del_paper)
-				del(W)
+				qdel(W)
 			return 1
 		return 0
 
@@ -869,6 +869,7 @@
 	icon_state = "secdetector0"
 	can_rotate = 1
 	cabinet_banned = TRUE // abusable. B&
+	one_per_tile = TRUE //also abusable
 	var/range = 5
 	var/list/beamobjs = new/list(5)//just to avoid someone doing something dumb and making it impossible for us to clear out the beams
 	var/active = 0
@@ -3967,9 +3968,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (ON_COOLDOWN(src, "movement_delay", move_lag))
 			return
 		var/direction = text2num_safe(input.signal)
-		if (direction == null)
+		if (!direction)
 			direction = dirname_to_dir(input.signal)
-		if (direction == null)
+		if (!(direction in alldirs))
 			return
 		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))
@@ -3990,7 +3991,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		var/direction = text2num_safe(input.signal)
 		if (!direction)
 			direction = dirname_to_dir(input.signal)
-		if (!direction)
+		if (!(direction in alldirs)) // without this someone could pass 16 or 32 to jump across z-levels, welcome to the forbidden UP and DOWN dirs
 			return
 		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))

@@ -161,17 +161,13 @@
 /obj/indestructible/shuttle_corner{
 	dir = 1
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 1
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "aaL" = (
 /obj/indestructible/shuttle_corner{
 	dir = 0
 	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 8
-	},
+/turf/space,
 /area/shuttle/arrival/station)
 "aaN" = (
 /obj/machinery/mass_driver{
@@ -192,7 +188,9 @@
 	dir = 1;
 	icon_state = "alt_heater"
 	},
-/turf/simulated/shuttle/wall,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "3"
+	},
 /area/shuttle/arrival/station)
 "aaT" = (
 /turf/simulated/shuttle/wall/cockpit/window{
@@ -303,9 +301,8 @@
 /turf/simulated/floor,
 /area/station/hallway/secondary/entry)
 "abM" = (
-/turf/simulated/shuttle/wall/cockpit/window{
-	name = "window"
-	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "abS" = (
 /obj/machinery/atmospherics/pipe/simple{
@@ -1256,9 +1253,7 @@
 /obj/cable{
 	icon_state = "2-4"
 	},
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "afm" = (
@@ -3710,9 +3705,6 @@
 	dir = 8
 	},
 /obj/rack,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
 /obj/item/tank/air{
 	pixel_x = -6;
 	pixel_y = 4
@@ -4871,6 +4863,9 @@
 "arS" = (
 /obj/disposalpipe/segment/produce,
 /obj/machinery/drainage,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "arW" = (
@@ -14781,12 +14776,7 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/primary/east)
 "aTm" = (
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
+/turf/simulated/wall/grass/leafy,
 /area/station/garden/owlery)
 "aTo" = (
 /obj/machinery/portable_atmospherics/pump,
@@ -23398,7 +23388,7 @@
 	pixel_x = 1;
 	pixel_y = 3
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 1;
 	pixel_y = -7
 	},
@@ -24513,6 +24503,7 @@
 	dir = 8;
 	tag = ""
 	},
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/shuttlebay,
 /area/station/hangar/main)
 "bzk" = (
@@ -28349,22 +28340,22 @@
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
 	pixel_x = 9
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -29185,7 +29176,7 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 4;
 	pixel_y = 6
 	},
@@ -36537,9 +36528,6 @@
 "coU" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
-"coX" = (
-/turf/space,
-/area/shuttle_sound_spawn)
 "cpa" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -37718,6 +37706,7 @@
 	pixel_y = 32
 	},
 /obj/table/reinforced/chemistry/auto/firstaid,
+/obj/machinery/chem_shaker/large/chemistry,
 /turf/simulated/floor/purplewhite{
 	dir = 1
 	},
@@ -38549,6 +38538,7 @@
 	},
 /area/station/medical/medbay/surgery)
 "cvD" = (
+/obj/machinery/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -39769,8 +39759,9 @@
 	},
 /area/listeningpost)
 "cAB" = (
-/obj/decal/fakeobjects/shuttlethruster{
-	dir = 4
+/obj/machinery/shuttle/engine/propulsion{
+	dir = 8;
+	icon_state = "alt_propulsion"
 	},
 /turf/space,
 /area/abandonedship)
@@ -39842,14 +39833,7 @@
 /obj/cable{
 	icon_state = "1-8"
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -39881,34 +39865,24 @@
 	},
 /area/listeningpost)
 "cAR" = (
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cAS" = (
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cAT" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/listeningpost)
-"cAU" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/fakeobjects/shuttlethruster{
+/turf/unsimulated/floor/shuttle/red{
 	dir = 4
 	},
-/turf/space,
-/area/abandonedship)
+/area/listeningpost)
 "cAX" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -39996,14 +39970,14 @@
 	dir = 4;
 	name = "Weather Satellite"
 	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cBh" = (
 /obj/submachine/syndicate_teleporter,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cBi" = (
@@ -40066,8 +40040,8 @@
 /area/listeningpost)
 "cBr" = (
 /obj/machinery/light,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+/turf/unsimulated/floor/shuttle/red{
+	dir = 4
 	},
 /area/listeningpost)
 "cBt" = (
@@ -41732,6 +41706,12 @@
 	},
 /turf/simulated/floor/white,
 /area/station/hangar/medical)
+"dGc" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "dGl" = (
 /obj/machinery/door_timer/solitary{
 	pixel_x = -24
@@ -42474,11 +42454,7 @@
 	},
 /obj/landmark/start/latejoin,
 /obj/stool/chair/comfy/shuttle,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "emz" = (
 /obj/disposalpipe/segment/mail{
@@ -43382,6 +43358,9 @@
 /obj/railing/orange/reinforced{
 	dir = 8
 	},
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "eVK" = (
@@ -43594,12 +43573,9 @@
 	},
 /area/space)
 "fgR" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8
+/obj/machinery/shuttle/engine/heater{
+	dir = 8;
+	icon_state = "alt_heater"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
@@ -43631,14 +43607,6 @@
 /obj/effects/background_objects/fortuna,
 /turf/space,
 /area/space)
-"fhL" = (
-/obj/indestructible/shuttle_corner{
-	dir = 8
-	},
-/turf/simulated/shuttle/wall/corner{
-	dir = 4
-	},
-/area/shuttle/arrival/station)
 "fhM" = (
 /obj/submachine/seed_manipulator{
 	dir = 8
@@ -44770,12 +44738,6 @@
 	},
 /turf/simulated/floor/purple,
 /area/station/crew_quarters/quartersA)
-"gcg" = (
-/obj/indestructible/shuttle_corner{
-	dir = 4
-	},
-/turf/simulated/shuttle/wall/corner,
-/area/shuttle/arrival/station)
 "gci" = (
 /obj/decal/fakeobjects/airmonitor_broken,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -45490,11 +45452,7 @@
 /area/space)
 "gKy" = (
 /obj/landmark/observer,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "gKO" = (
 /obj/cable,
@@ -45608,14 +45566,6 @@
 	dir = 5
 	},
 /area/station/medical/medbay/psychiatrist)
-"gNJ" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
-/area/shuttle/arrival/station)
 "gNP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -46396,6 +46346,10 @@
 	},
 /turf/simulated/floor,
 /area/station/quartermaster/office)
+"hzu" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/shuttlebay,
+/area/station/hangar/qm)
 "hzC" = (
 /obj/table/auto,
 /obj/item/device/analyzer/healthanalyzer{
@@ -46525,12 +46479,7 @@
 /area/station/maintenance/northwest)
 "hEd" = (
 /obj/tree,
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
+/turf/simulated/wall/grass/leafy,
 /area/station/garden/owlery)
 "hGk" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
@@ -46549,11 +46498,7 @@
 /area/station/engine/gas)
 "hGH" = (
 /obj/table/reinforced/auto,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "hHC" = (
 /obj/cable{
@@ -46922,11 +46867,7 @@
 	dir = 1;
 	icon_state = "alt_heater"
 	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
+/turf/unsimulated/floor/plating,
 /area/shuttle/arrival/station)
 "hXV" = (
 /obj/cable{
@@ -47446,11 +47387,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "iyO" = (
 /obj/machinery/light{
@@ -48216,11 +48153,7 @@
 	layer = 9.1;
 	pixel_x = 10
 	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "jqS" = (
 /obj/machinery/conveyor/EW{
@@ -49235,16 +49168,6 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/engine)
-"kic" = (
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8
-	},
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "kiI" = (
 /obj/storage/crate,
 /turf/simulated/floor/plating,
@@ -49363,11 +49286,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "kqf" = (
 /obj/machinery/status_display,
@@ -49442,10 +49361,10 @@
 /area/station/crew_quarters/market)
 "krI" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
+	entrance_scanner = 1;
 	id = "Sleeper_Access";
-	pixel_x = 32;
-	entrance_scanner = 1
+	name = "Dubious Hand Scanner";
+	pixel_x = 32
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
@@ -51325,12 +51244,7 @@
 /obj/machinery/portableowl/attached{
 	name = "A Pretty Owl"
 	},
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
+/turf/simulated/wall/grass/leafy,
 /area/station/garden/owlery)
 "mrO" = (
 /obj/machinery/power/terminal{
@@ -51480,6 +51394,10 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/medsci)
+"mvt" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "mvL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -52056,11 +51974,7 @@
 /area/station/engine/coldloop)
 "mWr" = (
 /obj/storage/closet/emergency,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
+/turf/unsimulated/floor/shuttle/white,
 /area/shuttle/arrival/station)
 "mWz" = (
 /obj/table/auto,
@@ -53189,11 +53103,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/arrivals{
 	dir = 8
 	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "nRZ" = (
 /obj/machinery/door/airlock/pyro/maintenance{
@@ -53576,9 +53486,9 @@
 "ojy" = (
 /obj/decal/stripe_delivery,
 /obj/machinery/door/airlock/pyro/reinforced/syndicate{
+	dir = 4;
 	id = "Sleeper_Access";
-	name = "Listening Post";
-	dir = 4
+	name = "Listening Post"
 	},
 /turf/simulated/floor,
 /area/listeningpost)
@@ -57004,13 +56914,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/engine/inner)
-"qXN" = (
-/obj/lattice,
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "qYs" = (
 /obj/grille/catwalk,
 /obj/cable/orange{
@@ -57173,8 +57076,8 @@
 /area/station/hangar/main)
 "rhf" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_x = 32
 	},
 /turf/simulated/floor/grey/side{
@@ -57897,12 +57800,8 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/turf/simulated/wall{
-	density = 0;
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
+/turf/simulated/wall/grass/leafy{
+	density = 0
 	},
 /area/station/garden/owlery)
 "rSs" = (
@@ -58211,6 +58110,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
+/obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "sez" = (
@@ -58293,6 +58193,11 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
+"shc" = (
+/obj/machinery/drainage,
+/obj/disposalpipe/chicken_disposal_pipe/horizontal,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "shp" = (
 /obj/table/auto,
 /obj/cable{
@@ -58367,16 +58272,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
-"slE" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/obj/decal/fakeobjects/shuttleengine{
-	dir = 8
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "slQ" = (
 /obj/machinery/firealarm/west,
 /obj/machinery/light{
@@ -58746,13 +58641,6 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
-"sFE" = (
-/obj/lattice{
-	dir = 8;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "sFO" = (
 /obj/disposalpipe/trunk/mail{
 	dir = 1
@@ -59405,12 +59293,20 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/reagent_dispensers/watertank/big,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/railing/orange/reinforced{
 	dir = 4
+	},
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = -22;
+	pixel_y = 31
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -59466,7 +59362,7 @@
 /area/station/medical/medbay/surgery)
 "tjI" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -5;
 	pixel_y = 3
 	},
@@ -60152,13 +60048,6 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
-"tSC" = (
-/obj/lattice{
-	dir = 10;
-	icon_state = "lattice-dir"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/abandonedship)
 "tSK" = (
 /turf/simulated/wall/false_wall/reinforced,
 /area/station/maintenance/northeast)
@@ -60280,11 +60169,7 @@
 "tUY" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "tVf" = (
 /obj/grille/steel,
@@ -60619,11 +60504,7 @@
 	layer = 9.1;
 	pixel_x = -10
 	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "ugg" = (
 /obj/decal/tile_edge/stripe/extra_big{
@@ -61046,11 +60927,7 @@
 /turf/simulated/floor/green,
 /area/station/hydroponics/lobby)
 "uwt" = (
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "uwB" = (
 /turf/simulated/floor/bluewhite{
@@ -61202,11 +61079,7 @@
 /area/station/hallway/secondary/exit)
 "uCM" = (
 /obj/item/device/radio/beacon,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "uCP" = (
 /obj/stool/bed/moveable,
@@ -61797,11 +61670,7 @@
 "vdx" = (
 /obj/landmark/start/latejoin,
 /obj/stool/chair/comfy/shuttle,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "vdC" = (
 /obj/reagent_dispensers/compostbin,
@@ -62256,8 +62125,8 @@
 /area/station/security/main)
 "vDE" = (
 /obj/machinery/door_control/antagscanner{
-	name = "Dubious Hand Scanner";
 	id = "Sleeper_Access";
+	name = "Dubious Hand Scanner";
 	pixel_y = 25
 	},
 /turf/simulated/floor/stairs{
@@ -62554,15 +62423,17 @@
 /area/station/medical/medbay)
 "vPu" = (
 /obj/machinery/camera/ranch,
-/obj/machinery/disposal/botany{
-	name = "Produce Chute - Kitchen"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge2"
 	},
 /obj/disposalpipe/trunk/produce,
 /obj/machinery/firealarm/north,
 /obj/decal/stripe_delivery,
+/obj/machinery/floorflusher{
+	desc = "A chute for sending things to the kitchen";
+	id = "ranch_flusher";
+	name = "Kitchen Chute"
+	},
 /turf/simulated/floor,
 /area/station/ranch)
 "vPw" = (
@@ -62970,12 +62841,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
-/turf/simulated/wall{
-	desc = "Upon closer inspection, you see that this is a cleverly painted wall.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "grass";
-	name = "tall grass"
-	},
+/turf/simulated/wall/grass/leafy,
 /area/station/garden/owlery)
 "wjf" = (
 /obj/item/cigbutt,
@@ -63626,11 +63492,7 @@
 	pixel_x = 3
 	},
 /obj/item/device/radio/intercom,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
+/turf/unsimulated/floor/shuttle/white,
 /area/shuttle/arrival/station)
 "wFv" = (
 /obj/machinery/power/smes{
@@ -63803,11 +63665,7 @@
 /obj/machinery/door/airlock/pyro/reinforced/arrivals{
 	dir = 4
 	},
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor"
-	},
+/turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
 "wQe" = (
 /obj/lattice{
@@ -64023,11 +63881,7 @@
 /area/station/engine/hotloop)
 "xbR" = (
 /obj/machinery/sleeper/compact,
-/turf/unsimulated/floor{
-	desc = "";
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
+/turf/unsimulated/floor/shuttle/white,
 /area/shuttle/arrival/station)
 "xcW" = (
 /obj/disposalpipe/segment,
@@ -64721,6 +64575,12 @@
 /obj/machinery/firealarm/west,
 /turf/simulated/floor/shuttlebay,
 /area/station/mining/staff_room)
+"xKK" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/space,
+/area/shuttle/arrival/station)
 "xKS" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4
@@ -72565,7 +72425,7 @@ adC
 adC
 adC
 cAB
-cAU
+cAB
 adC
 adC
 cAB
@@ -72866,10 +72726,10 @@ adC
 adC
 adC
 adC
-slE
-qXN
+fgR
+fgR
 adC
-kic
+oct
 fgR
 cBQ
 cBQ
@@ -73168,11 +73028,11 @@ adC
 adC
 adC
 oct
-sFE
+oct
 uwL
 oct
 oct
-tSC
+oct
 oct
 cBQ
 cBQ
@@ -111024,7 +110884,7 @@ adC
 adC
 aaI
 aaP
-gcg
+xKK
 aak
 aaq
 hnF
@@ -111327,12 +111187,12 @@ aaJ
 aaL
 niO
 fYA
-gNJ
+abM
 niO
 niO
 wPo
 niO
-gcg
+xKK
 adC
 aam
 hnF
@@ -111635,7 +111495,7 @@ vdx
 uwt
 kqa
 hGH
-aaT
+xKK
 aaJ
 adC
 hnF
@@ -112843,7 +112703,7 @@ vdx
 uwt
 iyq
 tUY
-aaV
+dGc
 aaJ
 adC
 hnF
@@ -113139,12 +112999,12 @@ aaJ
 aaK
 niO
 nvq
-gNJ
+abM
 niO
 niO
 nRP
 niO
-fhL
+dGc
 adC
 aaf
 hnF
@@ -113260,7 +113120,7 @@ kXL
 uLB
 adC
 adC
-coX
+mvt
 kgh
 kgh
 kgh
@@ -113440,7 +113300,7 @@ adC
 adC
 aaI
 aaP
-fhL
+dGc
 aak
 aaw
 hnF
@@ -117993,7 +117853,7 @@ aie
 aie
 amj
 ang
-aox
+shc
 apK
 aqX
 apA
@@ -125924,7 +125784,7 @@ bLc
 bLc
 bLc
 bLc
-bLc
+hzu
 eIr
 cAo
 bFr

@@ -5081,14 +5081,7 @@
 /obj/cable{
 	icon_state = "1-4"
 	},
-/obj/npc/trader/robot{
-	icon = 'icons/mob/robots.dmi';
-	icon_state = "syndibot";
-	illegal = 1;
-	name = "C.A.R.L.";
-	productset = 3;
-	trader_area = "/area/listeningpost"
-	},
+/obj/npc/trader/robot/syndicate,
 /obj/decal/glow{
 	brightness = 3;
 	color_b = 0.35;
@@ -11474,9 +11467,7 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /turf/simulated/floor/plating,
 /area/station/crew_quarters/clown)
 "ayR" = (
@@ -46584,22 +46575,22 @@
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
 	pixel_x = -9
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 6;
 	pixel_y = 3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 5;
 	pixel_y = 2
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 4;
 	pixel_y = 1
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = 2;
 	pixel_y = -1
 	},
@@ -48104,7 +48095,7 @@
 	pixel_x = -4;
 	pixel_y = -4
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -4;
 	pixel_y = 6
 	},
@@ -49772,7 +49763,7 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 5;
 	pixel_y = 3
 	},
@@ -53278,7 +53269,7 @@
 	pixel_x = -1;
 	pixel_y = 3
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -1;
 	pixel_y = -7
 	},
@@ -56578,8 +56569,9 @@
 /turf/space,
 /area/shuttle/mining/station)
 "cCV" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "cCW" = (
 /turf/space,
 /area/supply/sell_point)

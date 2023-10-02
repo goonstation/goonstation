@@ -90,7 +90,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			target.visible_message(
 				"<span class='alert'><b>[challenger]</b> slaps [target] in the face with the [src]!</span>"
 			)
-		playsound(target, 'sound/impact_sounds/Generic_Snap_1.ogg', 100, 1)
+		playsound(target, 'sound/impact_sounds/Generic_Snap_1.ogg', 100, TRUE)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))
@@ -380,6 +380,24 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "swat_NT"
 	item_state = "swat_NT"
 
+/obj/item/clothing/gloves/swat/captain
+	name = "captain's gloves"
+	desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
+	icon_state = "capgloves"
+	item_state = "capgloves"
+
+	centcomm
+		name = "commander's gloves"
+		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
+		icon_state = "centcomgloves"
+		item_state = "centcomgloves"
+
+	centcommred
+		name = "commander's gloves"
+		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
+		icon_state = "centcomredgloves"
+		item_state = "centcomredgloves"
+
 /obj/item/clothing/gloves/stungloves
 	name = "stun gloves"
 	desc = "These gloves are electrically charged."
@@ -637,7 +655,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			var/list/dummies = new/list()
 
-			playsound(user, 'sound/effects/elec_bigzap.ogg', 40, 1)
+			playsound(user, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 			SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 

@@ -138,19 +138,19 @@
 		var/count = 0
 		for (var/obj/item/implant/projectile/body_visible/dart/P in src.implant)
 			count++
-		. += "<br><span class='alert'>[src] has [count > 1 ? "darts" : "a dart"] stuck in them!</span>"
+		. += "<br><span class='alert'>[src] has [count > 1 ? "darts" : "a dart"] stuck in [him_or_her(src)]!</span>"
 
 	if (locate(/obj/item/implant/projectile/body_visible/syringe) in src.implant)
 		var/count = 0
 		for (var/obj/item/implant/projectile/body_visible/syringe/P in src.implant)
 			count++
-		. += "<br><span class='alert'>[src] has [count > 1 ? "syringes" : "a syringe"] stuck in them!</span>"
+		. += "<br><span class='alert'>[src] has [count > 1 ? "syringes" : "a syringe"] stuck in [him_or_her(src)]!</span>"
 
 	if (locate(/obj/item/implant/projectile/body_visible/arrow) in src.implant)
 		var/count = 0
 		for (var/obj/item/implant/projectile/body_visible/arrow/P in src.implant)
 			count++
-		. += "<br><span class='alert'>[src] has [count > 1 ? "arrows" : "an arrow"] stuck in them!</span>"
+		. += "<br><span class='alert'>[src] has [count > 1 ? "arrows" : "an arrow"] stuck in [him_or_her(src)]!</span>"
 
 	if (src.is_jittery)
 		switch(src.jitteriness)
@@ -207,16 +207,15 @@
 
 		if (src.organHolder.chest)
 			if (src.organHolder.chest.op_stage > 0.0)
-				if (src.organHolder.chest.op_stage < 9.0)
+				if (src.organHolder.chest.op_stage < 2.0)
 					. += "<br><span class='alert'><B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B></span>"
-				if (src.organHolder.chest.op_stage >= 9.0 && src.organHolder.chest.op_stage < 10.0)
+				if (src.organHolder.chest.op_stage >= 2.0)
 					if (src.organHolder.heart)
 						. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open!</B></span>"
 					else
 						. += "<br><span class='alert'><B>[src.name]'s chest is cut wide open and [t_his] heart has been removed!</B></span>"
-				else if(src.organHolder.chest.op_stage > 0.0)
-					. += "<br><span class='alert'><B>[src.name] has an indeterminate number of small surgical scars on [t_his] chest!</B></span>"
-
+					if (!src.chest_cavity_clamped)
+						. += "<br><span class='alert'><B>Blood is slowly seeping out of [src.name]'s un-clamped chest wound.</B></span>"
 			//tailstuff
 			if (src.organHolder.tail) // Has a tail?
 				// Comment if their tail deviates from the norm.
@@ -226,11 +225,11 @@
 					else
 						. += "<br><span class='notice'>[src.name] has [src.organHolder.tail.name] attached just above [t_his] butt.</span>"
 				// don't bother telling people that you have the tail you're supposed to have. nobody congratulates me for having all my legs
-				if (src.organHolder.chest.op_stage >= 10.0 && src.mob_flags & ~IS_BONEY) // assive ass wound? and not a skeleton?
+				if (src.organHolder.back_op_stage >= BACK_SURGERY_OPENED && src.mob_flags & ~IS_BONEY) // assive ass wound? and not a skeleton?
 					. += "<br><span class='alert'><B>[src.name] has a long incision around the base of [t_his] tail!</B></span>"
 
 			else // missing a tail?
-				if (src.organHolder.chest.op_stage >= 10.0) // first person to call this a tailhole is getting dropkicked into the sun
+				if (src.organHolder.back_op_stage >= BACK_SURGERY_OPENED) // first person to call this a tailhole is getting dropkicked into the sun
 					if (src.mob_flags & SHOULD_HAVE_A_TAIL) // Are they supposed to have a tail?
 						if (!src.organHolder.butt) // Also missing a butt?
 							. += "<br><span class='alert'><B>[src.name] has a large incision at the base of [t_his] back where [t_his] tail should be!</B></span>"
@@ -248,8 +247,8 @@
 			. += "<br><span class='alert'><B>[src.name]'s entire chest is missing!</B></span>"
 
 
-		if (src.butt_op_stage > 0)
-			if (src.butt_op_stage >= 4)
+		if (src.organHolder.back_op_stage > BACK_SURGERY_CLOSED)
+			if (!src.organHolder.butt)
 				. += "<br><span class='alert'><B>[src.name]'s butt seems to be missing!</B></span>"
 			else
 				. += "<br><span class='alert'><B>[src.name] has an open incision on [t_his] butt!</B></span>"
@@ -282,8 +281,6 @@
 			var/limbtxt = src.limbs.r_leg.on_holder_examine()
 			if (limbtxt)
 				. += "<br><span class='notice'>[src.name] [limbtxt] right leg.</span>"
-	if (src.chest_cavity_open)
-		. += "<br><span class='alert'><B>[src.name] has a large gaping hole down [t_his] chest!</B></span>"
 	if (src.bleeding && !isdead(src))
 		switch (src.bleeding)
 			if (1 to 2)

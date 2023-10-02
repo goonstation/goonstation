@@ -10,7 +10,7 @@ MATERIAL
 /proc/window_reinforce_callback(var/datum/action/bar/icon/build/B, var/obj/window/reinforced/W)
 	sheet_crafting_callback(B)
 
-	W.ini_dir = 2
+	W.ini_dir = SOUTH
 	if (!istype(W) || !usr) //Wire: Fix for Cannot read null.loc (|| !usr)
 		return
 	if (B.sheet.reinforcement)
@@ -63,7 +63,7 @@ MATERIAL
 	default_material = "steel"
 	///the material id string (lowercase) of the starting reinforcement
 	var/default_reinforcement = null
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 
 	New()
 		..()
@@ -298,8 +298,12 @@ MATERIAL
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 		if (src?.material?.getMaterialFlags() & MATERIAL_WOOD)
-			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
-				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+			if (istype(src,/obj/item/sheet/wood/zwood))
+				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/zwood))
+					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+			else
+				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
+					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 
 		.["itemList"] = availableRecipes
 
@@ -383,7 +387,22 @@ MATERIAL
 
 					currentRecipe = /datum/sheet_crafting_recipe/metal/construct
 
+				if ("barricade","zbarricade")
+					var/turf/T = get_turf(usr)
+					var/obj/item/sheet/wood/W = src
+					if (!istype(T, /turf/simulated/floor) || locate(W.wall_type) in T.contents)
+						boutput(usr,"<span class='alert'>You can't build that here.</span>")
+						return
+					if (params["recipeID"] == "barricade")
+						currentRecipe = /datum/sheet_crafting_recipe/wood/barricade
+					else
+						currentRecipe = /datum/sheet_crafting_recipe/zwood/zbarricade
+
 				if("smallwindow")
+					for (var/obj/window/window in get_turf(src))
+						//the same direction thindow or a full window
+						if (window.dir == usr.dir || !(window.dir in cardinal))
+							return
 					if (src.reinforcement)
 						a_type = map_settings ? map_settings.rwindows_thin : /obj/window/reinforced
 					else
@@ -394,7 +413,10 @@ MATERIAL
 					a_callback = /proc/window_reinforce_callback
 
 				if("bigwindow")
-					if (!amount_check(2,usr)) return
+					if (locate(/obj/window) in get_turf(usr))
+						return
+					if (!amount_check(2,usr))
+						return
 					if (src.reinforcement)
 						a_type = map_settings ? map_settings.rwindows : /obj/window/reinforced
 					else
@@ -477,9 +499,22 @@ MATERIAL
 
 /obj/item/sheet/wood
 	item_state = "sheet-metal"
-	icon_state = "sheet-m_5$wood"
+	icon_state = "sheet-m_5$$wood"
 	default_material = "wood"
 	amount = 10
+	var/wall_type = /obj/structure/woodwall
+
+	afterattack(atom/target, mob/user)
+		if (!isturf(target) || target.density)
+			return ..()
+		var/turf/T = target
+		if (locate(src.wall_type) in T.contents)
+			return ..()
+		actions.start(new /datum/action/bar/icon/build(src, wall_type, 5, src.material, 1, 'icons/ui/actions.dmi', "working", "a barricade", null, spot = target), user)
+
+/obj/item/sheet/wood/zwood
+	amount = 5
+	wall_type = /obj/structure/woodwall/anti_zombie
 
 /obj/item/sheet/bamboo
 	item_state = "sheet-metal"
@@ -526,7 +561,7 @@ MATERIAL
 	rand_pos = 1
 	inventory_counter_enabled = 1
 	material_amt = 0.05
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 
 	New()
 		..()
@@ -956,7 +991,7 @@ MATERIAL
 				if (istype(T, /turf/simulated/floor))
 					// If it's still a floor, attempt to place or replace the floor tile
 					var/turf/simulated/floor/F = T
-					F.attackby(src, user)
+					F.Attackby(src, user)
 					tooltip_rebuild = 1
 				else
 					boutput(user, "You cannot build on or repair this turf!")
@@ -1058,6 +1093,8 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/metal)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/glass)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/cardboard)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe/zwood)
+
 /datum/sheet_crafting_recipe
 	var/recipe_id //The ID of the recipe, used for TGUI act()s
 	var/name
@@ -1297,7 +1334,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon_state = "wstool"
 		chair
 			recipe_id = "wood_chair"
-			craftedType = /obj/stool/chair/dining/constructed
+			craftedType = /obj/stool/chair/dining/wood/constructed
 			name = "Chair"
 			icon = 'icons/obj/furniture/chairs.dmi'
 			icon_state = "chair_wooden"
@@ -1358,6 +1395,14 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon = 'icons/obj/doors/SL_doors.dmi'
 			icon_state = "wood1"
 
+	zwood
+		zbarricade
+			recipe_id = "zbarricade"
+			craftedType = /obj/structure/woodwall/anti_zombie
+			name = "Zombie Barricade"
+			sheet_cost = 5
+			icon = 'icons/obj/structures.dmi'
+			icon_state = "woodwall"
 
 /proc/sheet_crafting_recipe_get_ui_data(var/recipePath)
 	var/datum/sheet_crafting_recipe/typedRecipePath = recipePath
@@ -1377,7 +1422,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 	if(isnull(.))
 		var/dir = SOUTH
 		if (recipeID == "bigwindow")
-			dir = 5 //full tile
+			dir = NORTHEAST //full tile
 
 		var/icon/result_icon = icon(icon, icon_state, dir)
 

@@ -17,6 +17,7 @@
 	can_burn = TRUE
 	can_break = TRUE
 	var/has_material = TRUE
+
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
@@ -27,8 +28,6 @@
 
 	New()
 		..()
-		if (has_material && isnull(default_material))
-			setMaterial(getMaterial("steel"))
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -1314,7 +1313,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 	mat_appearances_to_ignore = list("steel")
 /turf/simulated/floor/snow
 	name = "snow"
-	has_material = FALSE
+	default_material = null
 	icon_state = "snow1"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
@@ -1684,7 +1683,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (istype(C, /obj/item/tile))
 		var/obj/item/tile/T = C
 		if (T.amount >= 1)
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 			T.build(src)
 		return
 
@@ -1831,7 +1830,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (!user || !istype(W, /obj/item/light_parts/floor))
 		return
 	if(!instantly)
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		boutput(user, "You begin to attach the light fixture to [src]...")
 		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/floor/proc/finish_attaching,\
 			list(W, user), W.icon, W.icon_state, null, null)
@@ -1877,7 +1876,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		user.unlock_medal("Misclick", 1)
 
 	to_plating()
-	playsound(src, 'sound/items/Crowbar.ogg', 80, 1)
+	playsound(src, 'sound/items/Crowbar.ogg', 80, TRUE)
 
 /turf/simulated/floor/attackby(obj/item/C, mob/user, params)
 
@@ -1900,7 +1899,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (src.reinforced && ((isweldingtool(C) && C:try_weld(user,0,-1,1,1)) || iswrenchingtool(C)))
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		if(iswrenchingtool(C))
-			playsound(src, 'sound/items/Ratchet.ogg', 80, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 80, TRUE)
 		if(do_after(user, 3 SECONDS))
 			if(!src.reinforced)
 				return
@@ -1954,7 +1953,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 				if(C.material)
 					src.setMaterial(C.material)
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 
 				if(!istype(src.material, /datum/material/metal/steel))
 					logTheThing(LOG_STATION, user, "constructs a floor (<b>Material:</b>: [src.material && src.material.getName() ? "[src.material.getName()]" : "*UNKNOWN*"]) at [log_loc(src)].")
@@ -2053,7 +2052,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 					actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
 			else
 				actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
-		else if (S?.material?.getMaterialFlags() & MATERIAL_CRYSTAL)
+		else if ((S?.material?.getMaterialFlags() & MATERIAL_CRYSTAL) && !(locate(/obj/window) in src))
 			if(S.reinforcement)
 				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.rwindows : /obj/window/reinforced, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
 			else
@@ -2090,7 +2089,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (I.material)
 		src.setMaterial(I.material)
 	I.change_stack_amount(-2)
-	playsound(src, 'sound/items/Deconstruct.ogg', 80, 1)
+	playsound(src, 'sound/items/Deconstruct.ogg', 80, TRUE)
 
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
@@ -2200,7 +2199,7 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 
 		attackby(obj/item/W, mob/user)
 			if (istype(W, /obj/item/device/key/generic/coldsteel))
-				playsound(src, 'sound/effects/mag_warp.ogg', 50, 1)
+				playsound(src, 'sound/effects/mag_warp.ogg', 50, TRUE)
 				src.visible_message("<span class='notice'><b>[src] slides away!</b></span>")
 				src.ReplaceWithSpace() // make sure the area override says otherwise - maybe this sucks
 

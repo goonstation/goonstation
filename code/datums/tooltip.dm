@@ -490,8 +490,8 @@ var/global/list/atomTooltips = new()
 		viewCenterX = (text2num(viewSizes[1])-1)/2
 		viewCenterY = (text2num(viewSizes[2])-1)/2
 
-	var/xDist = screenCenter.x - src.x
-	var/yDist = screenCenter.y - src.y
+	var/xDist = screenCenter ? screenCenter.x - src.x : 0
+	var/yDist = screenCenter ? screenCenter.y - src.y : 0
 	var/screenX = (viewCenterX + 1) - xDist
 	var/screenY = (viewCenterY + 1) - yDist
 

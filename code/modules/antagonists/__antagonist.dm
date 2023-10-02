@@ -240,7 +240,7 @@ ABSTRACT_TYPE(/datum/antagonist)
 	 */
 	proc/handle_round_end(log_data = FALSE)
 		. = list()
-		var/assigned_text = assigned_by != ANTAGONIST_SOURCE_OTHER ? assigned_by : ""
+		var/assigned_text = (assigned_by != ANTAGONIST_SOURCE_OTHER && assigned_by != ANTAGONIST_SOURCE_ADMIN) ? assigned_by : ""
 		if (owner.current)
 			// we conjugate assigned_by and display_name manually here,
 			// so that the text macro doesn't treat null assigned_by values as their own text and thus display weirdly

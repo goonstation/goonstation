@@ -2847,7 +2847,7 @@
 	floorintact = 1;
 	floorname = "plating";
 	gas_impermeable = 1;
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3";
 	layer = 1.9;
 	mod = "norn-R-"
@@ -6413,7 +6413,7 @@
 	floorintact = 1;
 	floorname = "plating";
 	gas_impermeable = 1;
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_state = "norn-R-3";
 	layer = 1.9;
 	mod = "norn-R-"
@@ -10358,8 +10358,8 @@
 	},
 /area/russian/radiation)
 "bzt" = (
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/simulated/floor{
 	burnt = 1;
 	desc = " It is made of steel.";
@@ -32338,9 +32338,7 @@
 /area/russian/radiation)
 "dgf" = (
 /obj/stool/chair/syndicate,
-/obj/npc/trader/exclown{
-	trader_area = "/area/station/crew_quarters/clown"
-	},
+/obj/npc/trader/exclown,
 /obj/disposalpipe/segment/morgue{
 	dir = 4;
 	name = "crematorium pipe"
@@ -36413,11 +36411,12 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
+/obj/landmark/shuttle_subwoofer,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
 	},
-/area/shuttle_sound_spawn)
+/area/shuttle/arrival/station)
 "dVi" = (
 /obj/stool/chair/comfy/shuttle/brown{
 	dir = 4
@@ -50340,7 +50339,7 @@
 	},
 /area/russian/radiation)
 "kXu" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/plating{
 	broken = 1;
