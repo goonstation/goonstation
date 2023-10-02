@@ -2954,7 +2954,7 @@ datum
 			id = "hotsauce"
 			description = "A spicy red condiment made from processed chilis."
 			reagent_state = SOLID
-			fluid_r = 200
+			fluid_r = 180
 			fluid_g = 33
 			fluid_b = 0
 			transparency = 255
