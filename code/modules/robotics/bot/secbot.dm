@@ -288,6 +288,11 @@
 		Status: <A href='?src=\ref[src];power=1'>[src.on ? "On" : "Off"]</A><BR>
 		Behaviour controls are [src.locked ? "locked" : "unlocked"]"}
 
+		if(!src.emagged)
+			if(src.allowed(user))
+				if (user.a_intent == INTENT_DISARM || user.a_intent == INTENT_GRAB)
+					src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
+
 		if(!src.locked)
 			dat += {"<hr>
 			Check for Unauthorised Equipment: <A href='?src=\ref[src];operation=idcheck'>[src.idcheck ? "Yes" : "No"]</A><BR>
