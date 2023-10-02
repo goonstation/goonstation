@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/mining_tool/hedron_beam)
+	mats = list("MET-2"=15, "CON-1"=8, "claretine"=10, "koshmarite"=2 )
+
 /obj/item/mining_tool/hedron_beam
 	name = "\improper Hedron beam device"
 	desc = "A prototype multifunctional industrial tool capable of rapidly switching between welding and mining modes."

@@ -210,11 +210,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/req_contract/scientific/prototypist
 	//name = "Wheatley Moment"
 	payout = PAY_DOCTORATE
-	weight = 130
+	weight = 120
 
 	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
 	var/list/prototypists = list("Safety equipment manufacturer",
-		"Mining technologist",
 		"Directed energy laboratory",
 		"Engineering firm"
 	)
@@ -281,28 +280,6 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 						src.item_rewarders += new /datum/rc_itemreward/cargotele
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/telec/minprice,1)
 
-			if("Mining technologist")
-				if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/molitz_minprice,rand(1,3))
-				if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pharosium_minprice,rand(1,3))
-				if(prob(80) || !length(src.rc_entries))
-					src.rc_entries += rc_buildentry(/datum/rc_entry/stack/mauxite_minprice,rand(1,3))
-
-				if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/multitool,1)
-				if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cable,rand(8,12))
-				if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/coil,1)
-
-				switch(goal)
-					if("prototyping of a new product")
-						src.item_rewarders += new /datum/rc_itemreward/turbohammer
-						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cerenkite_minprice,1)
-					if("use in devising an improved manufacturing procedure")
-						src.item_rewarders += new /datum/rc_itemreward/manyboom
-						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/char,rand(2,5))
-						src.payout += PAY_TRADESMAN * 10
-					if("refinement of an offered product")
-						src.item_rewarders += new /datum/rc_itemreward/concussive_insul
-						src.rc_entries += rc_buildentry(/datum/rc_entry/item/free_insuls,1)
-
 			if("Engineering firm")
 				if(prob(60))
 					src.rc_entries += rc_buildentry(/datum/rc_entry/item/tscan,rand(2,4))
@@ -359,25 +336,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	commodity = /datum/commodity/ore/uqill
 	typepath_alt = /obj/item/material_piece/uqill
 
-/datum/rc_entry/stack/mauxite_minprice
-	name = "mauxite"
-	commodity = /datum/commodity/ore/mauxite
-	typepath_alt = /obj/item/material_piece/mauxite
-
 /datum/rc_entry/stack/pharosium_minprice
 	name = "pharosium"
 	commodity = /datum/commodity/ore/pharosium
 	typepath_alt = /obj/item/material_piece/pharosium
-
-/datum/rc_entry/stack/molitz_minprice
-	name = "molitz"
-	commodity = /datum/commodity/ore/molitz
-	typepath_alt = /obj/item/material_piece/molitz
-
-/datum/rc_entry/stack/cerenkite_minprice
-	name = "cerenkite"
-	commodity = /datum/commodity/ore/cerenkite
-	typepath_alt = /obj/item/material_piece/cerenkite
 
 /datum/rc_entry/stack/viscerite_minprice
 	name = "viscerite"
