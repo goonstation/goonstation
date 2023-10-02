@@ -1741,7 +1741,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\obj\item\sponge_capsule.dm"
 #include "code\obj\item\stickers.dm"
 #include "code\obj\item\stun_baton.dm"
-#include "code\obj\item\swingsign.dm"
 #include "code\obj\item\table_rack_parts.dm"
 #include "code\obj\item\tank.dm"
 #include "code\obj\item\teleportation.dm"
