@@ -1,5 +1,9 @@
 
 (t)mon oct 02 23
+(u)Smilg
+(p)15774
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)ABCU blueprints updated+fixed internally. You can migrate old blueprints with a blueprint marker tool.
 (u)Tyrant
 (p)16201
 (e)🪲🗺|C-Bug, A-Mapping
