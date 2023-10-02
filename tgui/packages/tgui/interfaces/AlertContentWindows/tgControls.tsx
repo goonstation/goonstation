@@ -6,6 +6,7 @@
  */
 import { AlertContentWindow } from './types';
 import { Box, Image } from '../../components';
+import { resolveAsset } from '../../assets';
 
 export const tgControls: AlertContentWindow = {
   width: 470,
@@ -20,6 +21,6 @@ export const tgControls: AlertContentWindow = {
       <Box my={1.5}>
         Save your profile in Character Setup to dismiss this alert.
       </Box>
-      <Image src="images/tg_control_info.png" />
+      <Image src={resolveAsset("images/tg_control_info.png")} />
     </>),
 };
