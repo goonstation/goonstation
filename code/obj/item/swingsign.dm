@@ -45,10 +45,10 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 			return
 		else if (isscrewingtool(W))
 			if(secured)
-				boutput(user, "<span class='notice'>You unsecure [src].</span>")
+				boutput(user, "<span class='notice'>You unsecure the swing sign.</span>")
 				anchored = UNANCHORED
 			else
-				boutput(user, "<span class='notice'>You secure [src].</span>")
+				boutput(user, "<span class='notice'>You secure the swing sign.</span>")
 				anchored = ANCHORED
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			secured = !secured
