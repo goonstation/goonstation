@@ -24,7 +24,7 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		var/list/displayed_cameras = list()
 
 		for (var/obj/machinery/camera/camera as anything in cameras)
-			if (camera.network in src.networks)
+			if (camera.network in src.network)
 				if (camera.ai_only && !src.can_view_ai)
 					continue
 				displayed_cameras[text("[][]", camera.c_tag, (camera.camera_status ? null : " (Deactivated)"))] = camera
