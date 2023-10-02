@@ -662,7 +662,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/req_contract/civilian/pod
 	//name = "Space Hogg"
-	payout = PAY_TRADESMAN*5
+	payout = PAY_TRADESMAN*10
 	var/list/namevary = list("Back in the Shop","Vehicular Teardown","Rebuild Assistance","Nuts and Bolts")
 	var/list/flavor_descs = list(
 		"I'm overhauling my daily driver and my usual suppliers are giving me a lead time of weeks. Get everything together and I'll pay way too much.",
