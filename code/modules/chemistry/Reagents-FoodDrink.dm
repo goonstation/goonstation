@@ -2157,8 +2157,8 @@ datum
 				M.bodytemperature += rand(0,3) * mult
 				if(prob(25))
 					M.emote(pick("cough"))
-					if (holder.get_reagent_amount(src.id) >= 3 && prob(40)
-						(M.setStatusMin("stunned", 1 SECOND * mult)
+					if (holder.get_reagent_amount(src.id) >= 3 && prob(40))
+						M.setStatusMin("stunned", 1 SECOND * mult)
 				
 				..()
 
