@@ -1714,14 +1714,6 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		T.hitsound_uncharged = 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg'
 		AddComponent(/datum/component/wearertargeting/unarmedblock/concussive, list(SLOT_GLOVES))
 
-/obj/item/clothing/gloves/concussive/insulated
-	name = "insulated concussion gauntlets"
-	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools. This pair has integrated electrical insulation."
-
-	setupProperties()
-		..()
-		setProperty("conductivity", 0)
-
 /obj/item/mining_tool/power_pick
 	name = "power pick"
 	desc = "An energised mining tool."
@@ -1838,17 +1830,6 @@ TYPEINFO(/obj/item/mining_tool/drill)
 				return 0
 			else
 				. = ..()
-
-/obj/item/mining_tool/powerhammer/turbo
-	name = "TC-7 Turbohammer"
-	desc = "A prototype high-impact mining tool with a self-charging power cell. It's warm to the touch."
-	cell_type = /obj/item/ammo/power_cell/self_charging/medium
-	digcost = 4
-
-	New()
-		..()
-		var/datum/component/cell_holder/holder_adjust = src.GetComponent(/datum/component/cell_holder)
-		holder_adjust.swappable_cell = FALSE
 
 /obj/item/mining_tool/power_shovel
 	name = "power shovel"

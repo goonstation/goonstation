@@ -502,40 +502,6 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		var/theitem = new /obj/item/cargotele/efficient
 		return theitem
 
-//mining technologist rewards
-
-/datum/rc_itemreward/turbohammer
-	name = "TC-7 Turbohammer"
-	build_reward()
-		var/theitem = new /obj/item/mining_tool/powerhammer/turbo
-		return theitem
-
-/datum/rc_itemreward/manyboom
-	name = "standard mining charge"
-
-	New()
-		..()
-		count = rand(5,9) * 2
-
-	build_reward()
-		var/list/charges = list()
-		for(var/i in 1 to count)
-			charges += new /obj/item/breaching_charge/mining
-		return charges
-
-/datum/rc_itemreward/concussive_insul
-	name = "insulated concussive gauntlets"
-
-	New()
-		..()
-		count = rand(2,3)
-
-	build_reward()
-		var/list/yielder = list()
-		for(var/i in 1 to count)
-			yielder += new /obj/item/clothing/gloves/concussive/insulated
-		return yielder
-
 
 //engineering firm rewards
 
