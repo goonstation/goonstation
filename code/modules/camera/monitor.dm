@@ -8,7 +8,7 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	icon_state = "monitor"
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
-	var/list/networks
+	var/list/network
 	var/obj/machinery/camera/current = null
 	var/can_view_ai = FALSE
 
@@ -49,47 +49,47 @@ TYPEINFO(/obj/item/device/camera_viewer)
 
 /obj/item/device/camera_viewer/public
 	desc = "A portable video monitor, connected the public camera network."
-	networks = list("public")
+	network = list("public")
 
 /obj/item/device/camera_viewer/security
 	name = "security monitor"
 	desc = "A portable video monitor, connected the security camera network."
-	networks = list("SS13", "Zeta", "Mining")
+	network = list("SS13", "Zeta", "Mining")
 	color = "#e49191"
 
 /obj/item/device/camera_viewer/ranch
 	name = "baby monitor"
 	desc = "A portable video monitor, connected to the ranch camera network."
-	networks = list("ranch")
+	network = list("ranch")
 	color = "#AAFF99"
 
 /obj/item/device/camera_viewer/telesci
 	name = "expedition monitor"
 	desc = "A portable video monitor, connected to multiple expedition cameras."
-	networks = list("telesci")
+	network = list("telesci")
 	color = "#efb4e5"
 
 /obj/item/device/camera_viewer/robot
 	name = "robot monitor"
 	desc = "A portable video monitor, connected multiple internal machine cameras."
-	networks = list("Robots")
+	network = list("Robots")
 	color = "#899a95"
 
 /obj/item/device/camera_viewer/outpost/science
 	name = "science outpost monitor"
 	desc = "A portable video monitor, connected the science outpost camera network."
-	networks = list("Zeta")
+	network = list("Zeta")
 	color = "#b88ed2"
 
 /obj/item/device/camera_viewer/outpost/mining
 	name = "mining outpost monitor"
 	desc = "A portable video monitor, connected the mining outpost camera network."
-	networks = list("Mining")
+	network = list("Mining")
 	color = "#daa85c"
 
 /obj/item/device/camera_viewer/omniview
 	name = "ADMIN CRIMES MONITOR"
 	desc = "A portable video monitor, connected to EVERY NETWORK!"
-	networks = list("Mining", "Zeta", "Robots", "ranch", "SS13", "public")
+	network = list("Mining", "Zeta", "Robots", "ranch", "SS13", "public", "VR")
 	can_view_ai = TRUE
 	default_material = "miracle"
