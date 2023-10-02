@@ -1,4 +1,3 @@
-ABSTRACT_TYPE(/obj/item/device/camera_viewer)
 TYPEINFO(/obj/item/device/camera_viewer)
 	mats = 6
 
@@ -8,7 +7,7 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	icon_state = "monitor"
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL
-	var/list/network
+	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
 	var/can_view_ai = FALSE
 
