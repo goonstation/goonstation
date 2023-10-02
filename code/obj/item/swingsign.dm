@@ -13,7 +13,6 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	desc = "A foldable sign for writing annoucements or advertisements."
 	icon = 'icons/obj/furniture/swingsign.dmi'
 	icon_state = "blank"
-<<<<<<< HEAD
 	throwforce = 10
 	density = 1
 	anchored = UNANCHORED
@@ -29,22 +28,6 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	var/maxmessagerows = 10
 	/// Max width of the message
 	var/maxmessagecols = 40
-=======
-	//deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH
-	throwforce = 10
-	density = 1
-	anchored = UNANCHORED
-
-	var/message = "" //Stored message
-	var/defaultdesc = "A foldable sign for writing annoucements or advertisements."
-	var/descpreamble = "It says:<br><div style='text-align:center'>"//There's a /div in SetMessage. If changing the preamble remember to respect it.
-	var/secured = FALSE
-	var/maxcrashdamage = 5 //Damage when thrown into a swing sign
-	var/maxmessagerows = 10 //Max length of the message
-	var/maxmessagecols = 40 //Max width of the message
-
-	//INHERITANCE ====================
->>>>>>> 6d6a8dcfd7455a0ba389ab2ae097696d8265bd9e
 
 	attack_hand(mob/user)
 		if (!isliving(user)) return
@@ -55,7 +38,6 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 		else
 			boutput(user, "<span alert='notice'>Sign is too tightly secured to fold!</span>")
 		return
-<<<<<<< HEAD
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/pen))
@@ -67,38 +49,14 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 				anchored = UNANCHORED
 			else
 				boutput(user, "<span class='notice'>You secure the swing sign.</span>")
-=======
-		//..()
-	///obj/swingsign/
-	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/pen))
-			ui_interact(user)//Do I pass the message now or can I access it in the UI code via magic?
-			return
-		else if (isscrewingtool(W))
-			if(secured)
-				boutput(user, "<span class='notice'>You unsecure [src].</span>")
-				anchored = UNANCHORED
-			else
-				boutput(user, "<span class='notice'>You secure [src].</span>")
->>>>>>> 6d6a8dcfd7455a0ba389ab2ae097696d8265bd9e
 				anchored = ANCHORED
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			secured = !secured
 			return
-<<<<<<< HEAD
 		..()
 
 	hitby(atom/movable/M, datum/thrown_thing/thr)
 		if (isliving(M) && M.throwing)
-=======
-		else if (istype(W,/obj/item/deconstructor))
-			return
-		..()
-
-	///obj/swingsign/
-	hitby(atom/movable/M, datum/thrown_thing/thr)
-		if (iscarbon(M) && M.throwing)
->>>>>>> 6d6a8dcfd7455a0ba389ab2ae097696d8265bd9e
 			var/mob/living/L = M
 			var/area/T = get_area(src)
 			if(T?.sanctuary)
@@ -108,7 +66,6 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 			L.changeStatus("stunned", 1 SECONDS)
 			src.visible_message("<b><font color=red>[M] is people-stopped by [src]!</font></b>")
 			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg',50,1)
-<<<<<<< HEAD
 			fold() //Change to item
 			return
 		..()
@@ -149,52 +106,6 @@ suicide(var/mob/user as mob)
 	update_icon()
 
 
-=======
-			fold() //Change to to item
-			return
-		..()
-
-	/obj/swingsign/custom_suicide = 1
-	///obj/swingsign/
-	suicide(var/mob/user as mob)
-		if (!src.user_can_suicide(user))
-			return 0
-		user.visible_message("<span class='alert'><b>[user] puts [his_or_her(user)] head between [src]'s legs and clamps them shut!</b></span>")
-		user.TakeDamage("head", 250, 0)
-		playsound(src, 'sound/items/woodbat.ogg',50,1)
-		fold()
-		return 1
-
-	//UI =============================
-
-	//Lord give me patience for this bs
-	/obj/swingsign/ui_interact(mob/user, datum/tgui/ui)
-		ui = tgui_process.try_update_ui(user, src, ui)
-		if(!ui)
-			ui = new(user, src, "SwingSign")
-			ui.open()
-
-	/obj/swingsign/ui_data(mob/user)
-		. = list(
-			"message" = src.message,
-			"maxRows" = src.maxmessagerows,
-			"maxCols" = src.maxmessagecols
-		)
-
-	/obj/swingsign/ui_act(action, params)
-		. = ..()
-		if (.)
-			return
-		if(action == "save_message")
-			var/new_message = params["message"]
-			//if(length(new_message) > maxmessagelength) //Length checks moved to SwingSigh.js
-			//	return FALSE
-			setmessage(new_message)
-			. = TRUE
-		update_icon()
-
-	//OTHER PROCS ====================
->>>>>>> 6d6a8dcfd7455a0ba389ab2ae097696d8265bd9e
 	proc/setmessage(var/newmessage)
 		message = newmessage
 		if(message == "")
@@ -211,10 +122,6 @@ suicide(var/mob/user as mob)
 			C.setMaterial(src.material)
 		if (src.icon_state)
 			C.icon_state = "folded"
-<<<<<<< HEAD
-=======
-			//C.item_state = C.icon_state
->>>>>>> 6d6a8dcfd7455a0ba389ab2ae097696d8265bd9e
 		if (src.message)
 			C.message = src.message
 
@@ -240,19 +147,14 @@ TYPEINFO(/obj/item/swingsignfolded)
 	material_amt = 0.1
 	hitsound = 'sound/impact_sounds/folding_chair.ogg'
 
-<<<<<<< HEAD
 	/// Stored message for the deployed object
 	var/message = ""
-=======
-	var/message = ""//Stored message for deployed object
->>>>>>> 6d6a8dcfd7455a0ba389ab2ae097696d8265bd9e
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_LARGE)
 
-<<<<<<< HEAD
 	attack_self(mob/user as mob)
 		if(cant_drop == 1)
 			boutput(user, "You can't unfold the [src] when its attached to your arm!")
@@ -266,34 +168,14 @@ TYPEINFO(/obj/item/swingsignfolded)
 			newSwingsign.setmessage(src.message)//Pass the message onto the object. Calling swingsign.message directly won't update the desc.
 
 		boutput(user, "You unfold the [newSwingsign].")
-=======
-	/obj/item/swingsignfolded/attack_self(mob/user as mob)
-		if(cant_drop == 1)
-			boutput(user, "You can't unfold the [src] when its attached to your arm!")
-			return
-		var/obj/swingsign/S = null
-		S = new/obj/swingsign/(user.loc)
-
-		if (src.material)
-			S.setMaterial(src.material)
-		if (src.message)
-			S.setmessage(src.message)//Pass the message onto the object. Calling swingsign.message directly won't update the desc.
-
-		boutput(user, "You unfold the [S].")
->>>>>>> 6d6a8dcfd7455a0ba389ab2ae097696d8265bd9e
 
 		playsound(user, 'sound/impact_sounds/Clock_slap.ogg',50,1)
 		user.drop_item()
 		qdel(src)
 		return
 
-<<<<<<< HEAD
 	/// Basically copied this from stool.dm /obj/item/chair/folded/attack
 	attack(atom/target as mob, mob/user as mob, params)
-=======
-	//Basically copied this from stool.dm /obj/item/chair/folded/attack
-	/obj/item/swingsignfolded/attack(atom/target as mob, mob/user as mob, params)
->>>>>>> 6d6a8dcfd7455a0ba389ab2ae097696d8265bd9e
 		var/oldcrit = src.stamina_crit_chance
 		if(iswrestler(user))
 			src.stamina_crit_chance = 100
