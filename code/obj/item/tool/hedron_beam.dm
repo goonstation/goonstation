@@ -49,7 +49,7 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 		if (!src.status)
 			if(use_amt == -1)
 				use_amt = fuel_amt
-			if (!src.process_charges(use_amt*4))
+			if (!src.process_charges(use_amt*5))
 				boutput(user, "<span class='notice'>Cannot weld - cell insufficiently charged.</span>")
 				return 0
 			if(noisy)
