@@ -1,4 +1,9 @@
 
+(t)mon oct 02 23
+(u)Tyrant
+(p)16201
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Clarion now has a capsule vending machine.
 (t)sun oct 01 23
 (u)UnfunnyPerson
 (p)16123
