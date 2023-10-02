@@ -2158,7 +2158,7 @@ datum
 				if(prob(25))
 					M.emote(pick("cough"))
 					if (holder.get_reagent_amount(src.id) >= 3 && prob(40)
-						M.setStatusMin("stunned", 1 SECOND * mult)
+						(M.setStatusMin("stunned", 1 SECOND * mult)
 				
 				..()
 
