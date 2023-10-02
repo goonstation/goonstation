@@ -206,22 +206,25 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		var/seed = new /obj/item/seed/alien
 		return seed
 
+
+#define NUM_PROTOTYPISTS 3
+
+#define PROTOTYPIST_SAFETY 1
+#define PROTOTYPIST_ENERGY 2
+#define PROTOTYPIST_ENGINEER 3
+
+#define NUM_GOALS 3
+
+#define GOAL_PROTOTYPING 1
+#define GOAL_MANUFACTURE 2
+#define GOAL_REFINEMENT 3
+
 //Prototypist contract; payout in cash is notably lower than usual on purpose, since you get "paid in items"
 /datum/req_contract/scientific/prototypist
-	//name = "Wheatley Moment"
 	payout = PAY_DOCTORATE
 	weight = 120
 
 	var/list/namevary = list("Prototyping Assistance","Cutting-Edge Endeavor","Investment Opportunity","Limited Run","Overhaul Project")
-	var/list/prototypists = list("Safety equipment manufacturer",
-		"Directed energy laboratory",
-		"Engineering firm"
-	)
-	var/list/protogoals = list(
-		"prototyping of a new product",
-		"use in devising an improved manufacturing procedure",
-		"refinement of an offered product"
-	)
 	var/list/desc_bonusflavor = list(
 		"Funds are scarce due to budgetary restrictions; a cut of the product will be offered in return.",
 		"Requisition fulfiller receives a small stake in the current production run.",
@@ -231,34 +234,49 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 	New()
 		src.name = pick(namevary)
-		var/prototypist = pick(prototypists) //subvariation 1
-		var/goal = pick(protogoals) //subvariation 2
-		src.flavor_desc = "[prototypist] seeking supplies for [goal]. [pick(desc_bonusflavor)]"
 		src.payout += rand(0,80) * 10
 
-		switch(prototypist)
-			if("Safety equipment manufacturer")
+		///Identifier of the "prototypist", using defines set up above; associated with what category of product is being developed by the client.
+		var/prototypist_id = rand(1,NUM_PROTOTYPISTS)
+		/**
+		 * Identifier of the prototypist's goal, using defines set up above.
+		 * Prototyping goals are developing a novel product; this should be something you can't get anywhere else with a distinct capability.
+		 * Manufacture goals are upgrading production for an existing product; these should reward multiple already-existing items (can be dissimilar).
+		 * Refinement goals are improving quality or material use efficiency of an existing product; this can sometimes be novel, and sometimes just a high-tier item.
+ 		*/
+		var/goal_id = rand(1,NUM_GOALS)
+
+		var/prototypist_desc //for later description building
+		var/goal_desc //ditto
+
+		switch(prototypist_id)
+			if(PROTOTYPIST_SAFETY)
+				prototypist_desc = "Safety equipment manufacturer"
 				if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/fibrilith_minprice,rand(1,3))
 				if(prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cotton,rand(1,3))
 				if(prob(30)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/pharosium_minprice,1)
 				if(prob(70) || !length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/matanalyzer,1)
 
-				switch(goal)
-					if("prototyping of a new product")
+				switch(goal_id)
+					if(GOAL_PROTOTYPING)
+						goal_desc = "prototyping of an upgraded environment suit"
 						src.item_rewarders += new /datum/rc_itemreward/cool_suit
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/fancy_cloth,2)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,20)
-					if("use in devising an improved manufacturing procedure")
+					if(GOAL_MANUFACTURE)
+						goal_desc = "improvement of a suit manufacture line"
 						src.item_rewarders += new /datum/rc_itemreward/suit_set
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/coil,1)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,1)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/control_unit,1)
-					if("refinement of an offered product")
+					if(GOAL_REFINEMENT)
+						goal_desc = "refinement of a hazard suit assembly procedure"
 						src.item_rewarders += new /datum/rc_itemreward/suv_suit
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/fancy_cloth,2)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/uqill_minprice,1)
 
-			if("Directed energy laboratory")
+			if(PROTOTYPIST_ENERGY)
+				prototypist_desc = "Directed energy laboratory"
 				if(prob(40))
 					src.rc_entries += rc_buildentry(/datum/rc_entry/item/free_insuls,rand(1,2))
 				if(prob(80) || !length(src.rc_entries))
@@ -270,17 +288,21 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 					src.rc_entries += rc_buildentry(/datum/rc_entry/stack/electrum,1)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/stack/cable,30)
 
-				switch(goal)
-					if("prototyping of a new product")
+				switch(goal_id)
+					if(GOAL_PROTOTYPING)
+						goal_desc = "prototyping of a multifunctional industrial tool"
 						src.item_rewarders += new /datum/rc_itemreward/hedron
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/laser_drill,1)
-					if("use in devising an improved manufacturing procedure")
+					if(GOAL_MANUFACTURE)
+						goal_desc = "enhancement of the quality assurance process"
 						src.item_rewarders += new /datum/rc_itemreward/beam_devices
-					if("refinement of an offered product")
+					if(GOAL_REFINEMENT)
+						goal_desc = "augmentation of cargo transporter functionality"
 						src.item_rewarders += new /datum/rc_itemreward/cargotele
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/telec/minprice,1)
 
-			if("Engineering firm")
+			if(PROTOTYPIST_ENGINEER)
+				prototypist_desc = "Engineering firm"
 				if(prob(60))
 					src.rc_entries += rc_buildentry(/datum/rc_entry/item/tscan,rand(2,4))
 				else
@@ -294,23 +316,40 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 					if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/graviton,rand(1,2))
 				if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/coil,1)
 
-				switch(goal)
-					if("prototyping of a new product")
+				switch(goal_id)
+					if(GOAL_PROTOTYPING)
+						goal_desc = "prototyping of a tool for biodegradable construction"
 						src.item_rewarders += new /datum/rc_itemreward/biorcd
 						src.rc_entries += rc_buildentry(/datum/rc_entry/stack/viscerite_minprice,2)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/dna_activator,1)
-					if("use in devising an improved manufacturing procedure")
+					if(GOAL_MANUFACTURE)
+						goal_desc = "production line efficiency improvements"
 						src.item_rewarders += new /datum/rc_itemreward/production_line
 						if(prob(40))
 							src.rc_entries += rc_buildentry(/datum/rc_entry/item/control_unit,1)
 						else
 							src.rc_entries += rc_buildentry(/datum/rc_entry/stack/claretine,2)
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/robot_arm_any,1)
-					if("refinement of an offered product")
+					if(GOAL_REFINEMENT)
+						goal_desc = "fuel encapsulation lining improvements"
 						src.item_rewarders += new /datum/rc_itemreward/upgraded_welders
 						src.rc_entries += rc_buildentry(/datum/rc_entry/item/soldering_noprice,rand(1,2))
 
+		src.flavor_desc = "[prototypist_desc] seeking supplies for [goal_desc]. [pick(desc_bonusflavor)]"
+
 		..()
+
+#undef NUM_PROTOTYPISTS
+
+#undef PROTOTYPIST_SAFETY
+#undef PROTOTYPIST_ENERGY
+#undef PROTOTYPIST_ENGINEER
+
+#undef NUM_GOALS
+
+#undef GOAL_PROTOTYPING
+#undef GOAL_MANUFACTURE
+#undef GOAL_REFINEMENT
 
 /datum/rc_entry/stack/fibrilith_minprice
 	name = "fibrilith"
