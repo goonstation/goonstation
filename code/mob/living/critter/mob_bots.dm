@@ -420,13 +420,21 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	metabolizes = FALSE
 	custom_gib_handler = /proc/robogibs
 	stepsound = null
-	health_brute = 20
+	health_brute = 25
 	health_brute_vuln = 1
-	health_burn = 20
+	health_burn = 25
 	health_burn_vuln = 0.8
 	var/emagged = 0
 	var/emote_cooldown = 7 SECONDS
-	var/siren_active
+	var/siren_active = FALSE
+	var/list/req_access = list(access_security)
+	var/check_contraband = TRUE
+	var/check_records = TRUE
+	// TRUE if detaining, FALSE if arresting
+	var/arrest_type = FALSE
+	var/report_arrests = TRUE
+	var/list/datum/contextAction/contexts = list()
+	var/datum/contextLayout/configContextLayout = new /datum/contextLayout/experimentalcircle
 
 	New()
 		. = ..()
@@ -446,6 +454,9 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+
+		for(var/actionType in childrentypesof(/datum/contextAction/securitron)) //see context_actions.dm
+			src.contexts += new actionType()
 
 	setup_hands()
 		..()
@@ -517,6 +528,59 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 			add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 			siren_active = FALSE
+
+	attack_hand(mob/M, params)
+		if (M.a_intent == INTENT_HELP && src.allowed(M))
+			M.showContextActions(src.contexts, src, src.configContextLayout)
+		else
+			..()
+
+	proc/configure(var/setting, var/mob/M)
+		switch(setting)
+			if ("check_contraband")
+				src.check_contraband = !src.check_contraband
+				src.say("Ten-Four. Contraband Checks: [src.check_contraband ? "ENGAGED" : "DISENGAGED"].")
+				return src.check_contraband
+			if ("check_records")
+				src.check_records = !src.check_records
+				src.say("Ten-Four. Security Records: [src.check_records ? "REFERENCED" : "IGNORED"].")
+				return src.check_records
+			if ("arrest_type")
+				src.arrest_type = !src.arrest_type
+				src.say("Ten-Four. Arrest Mode: [src.arrest_type ? "DETAIN" : "RESTRAIN"].")
+				return src.arrest_type
+			if ("report_arrests")
+				src.report_arrests = !src.report_arrests
+				src.say("Ten-Four. [src.report_arrests ? "Reporting arrests on [FREQ_PDA]" : "No longer reporting arrests"].")
+				return src.report_arrests
+
+	proc/allowed(mob/M)
+		//check if it doesn't require any access at all
+		if(src.check_access(null))
+			return 1
+		if(src.check_access(M.equipped()))
+			return 1
+		if(ishuman(M))
+			var/mob/living/carbon/human/H = M
+			//if they are holding or wearing a card that has access, that works
+			if(src.check_access(H.wear_id))
+				return 1
+		return 0
+
+	proc/check_access(obj/item/I)
+		if(!istype(src.req_access, /list)) //something's very wrong
+			return 1
+
+		var/obj/item/card/id/id_card = get_id_card(I)
+		var/list/L = src.req_access
+		if(!L.len) //no requirements
+			return 1
+		if(!istype(id_card, /obj/item/card/id) || !id_card:access) //not ID or no access
+			return 0
+		for(var/req in src.req_access)
+			if(!(req in id_card:access)) //doesn't have this access
+				return 0
+		return 1
 
 /datum/targetable/critter/bot/handcuff
 	name = "Detain"

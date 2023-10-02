@@ -2196,3 +2196,59 @@
 
 		execute(obj/item/device/t_scanner/t_scanner, mob/user)
 			t_scanner.set_blueprint_disposal_pipes(!t_scanner.show_blueprint_disposal_pipes, user)
+
+/datum/contextAction/securitron
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	desc = ""
+	icon_state = "secbot_power_on"
+	var/base_icon_state = "secbot_power_"
+	var/setting
+
+	execute(var/mob/living/critter/robotic/securitron/securitron, var/mob/user)
+		if (!istype(securitron) || !securitron.allowed(user))
+			return
+		var/toggled_result = securitron.configure(setting, user)
+		src.icon_state = "[src.base_icon_state][toggled_result ? "on" : "off"]"
+
+	checkRequirements(var/mob/living/critter/robotic/securitron/securitron, var/mob/user)
+		if (!issilicon(user) && GET_DIST(securitron, user) > 1)
+			return FALSE
+		else
+			return TRUE
+
+	power
+		name = "Main Power"
+		desc = "Toggle main power"
+		icon_state = "secbot_power_on"
+		base_icon_state = "secbot_power_"
+		setting = "power"
+
+	check_contraband
+		name = "Contraband Check"
+		desc = "Toggle contraband checks"
+		icon_state = "secbot_contra_on"
+		base_icon_state = "secbot_contra_"
+		setting = "check_contraband"
+
+	check_records
+		name = "Records Check"
+		desc = "Toggle security record checks"
+		icon_state = "secbot_records_on"
+		base_icon_state = "secbot_records_"
+		setting = "check_records"
+
+	arrest_type
+		name = "Detain Mode"
+		desc = "Toggle between detain and arrest mode"
+		icon_state = "secbot_detain_off"
+		base_icon_state = "secbot_detain_"
+		setting = "arrest_type"
+
+	report_arrests
+		name = "Report Arrests"
+		desc = "Toggle reporting arrests"
+		icon_state = "secbot_detain_off"
+		base_icon_state = "secbot_detain_"
+		setting = "report_arrests"
+
