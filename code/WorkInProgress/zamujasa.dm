@@ -44,7 +44,8 @@
 	density = 0
 	opacity = 0
 	icon = null
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = -420
 	maptext = ""
 
 
@@ -712,7 +713,7 @@
 		if (src.last_count != runtime_count)
 			src.last_count = runtime_count
 			animate_storage_rustle(src)
-			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[runtime_count]</span>\nruntimes</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232
@@ -732,7 +733,7 @@
 		if (src.last_count != harddel_count)
 			src.last_count = harddel_count
 			animate_storage_rustle(src)
-			playsound(src, 'sound/mksounds/gotitem.ogg', 33, 0)
+			playsound(src, 'sound/mksounds/gotitem.ogg', 33, FALSE)
 			src.maptext = "<span class='ps2p sh vb c'><span style='font-size: 12px;'>[harddel_count]</span>\nharddels</span>"
 			src.maptext_x = -100
 			src.maptext_width = 232
@@ -745,7 +746,8 @@
 	icon = null
 	anchored = ANCHORED_ALWAYS
 	density = 0
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = -420
 
 	var/datum/monitored = null
 	var/monitored_var = null
@@ -1435,7 +1437,8 @@
 		src.maptext_x = -100
 		src.maptext_height = 64
 		src.maptext_width = 232
-		src.plane = 100
+		src.plane = PLANE_HUD
+		src.layer = 420
 		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 1
 
@@ -1455,7 +1458,8 @@
 		src.maptext_x = -100
 		src.maptext_height = 64
 		src.maptext_width = 232
-		src.plane = 100
+		src.plane = PLANE_HUD
+		src.layer = 420
 		src.anchored = ANCHORED_ALWAYS
 		src.mouse_opacity = 1
 		src.maptext = {"<div class='c pixel sh' style="background: #00000080;"><strong>-- Welcome to Goonstation! --</strong>
@@ -1477,7 +1481,8 @@ Read the rules, don't grief, and have fun!</div>"}
 		src.maptext_width = 320
 		src.maptext_x = -(320 / 2) + 16
 		src.maptext_height = 48
-		src.plane = 100
+		src.plane = PLANE_HUD
+		src.layer = 420
 		src.set_text("")
 
 	disposing()
@@ -1695,7 +1700,8 @@ Other Goonstation servers:[serverList]</span>"})
 	density = 0
 	opacity = 0
 	icon = null
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = -420
 	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 	maptext = ""
 	var/gib_time = 60

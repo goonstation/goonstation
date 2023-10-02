@@ -226,7 +226,7 @@
 				dat += "<A href='byond://?src=\ref[src];op=stop'>Stop</A><BR>"
 				dat += "<A href='byond://?src=\ref[src];op=go'>Proceed</A><BR>"
 				dat += "<A href='byond://?src=\ref[src];op=home'>Return to Home</A><BR>"
-				dat += "<A href='byond://?src=\ref[src];op=destination'>Set Destination</A><BR>"
+				dat += "<A href='byond://?src=\ref[src];op=setdest'>Set Destination</A><BR>"
 				dat += "<A href='byond://?src=\ref[src];op=setid'>Set Bot ID</A><BR>"
 				dat += "<A href='byond://?src=\ref[src];op=sethome'>Set Home</A><BR>"
 				dat += "<A href='byond://?src=\ref[src];op=autoret'>Toggle Auto Return Home</A> ([auto_return ? "On":"Off"])<BR>"
@@ -552,9 +552,9 @@
 							else
 								newdir = newdir | dir
 								if(newdir == 3)
-									newdir = 1
+									newdir = NORTH
 								else if(newdir == 12)
-									newdir = 4
+									newdir = EAST
 								B.set_dir(newdir)
 							bloodiness--
 

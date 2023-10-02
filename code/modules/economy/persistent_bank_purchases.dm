@@ -82,18 +82,18 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			I.name = "[H.real_name][pick_string("trinkets.txt", "modifiers")] [I.name]"
 			I.quality = rand(5,80)
 			var/equipped = 0
-			if (H.back?.storage && H.equip_if_possible(I, H.slot_in_backpack))
+			if (H.back?.storage && H.equip_if_possible(I, SLOT_IN_BACKPACK))
 				equipped = 1
-			else if (H.belt?.storage && H.equip_if_possible(I, H.slot_in_belt))
+			else if (H.belt?.storage && H.equip_if_possible(I, SLOT_IN_BELT))
 				equipped = 1
 			if (!equipped)
-				if (!H.l_store && H.equip_if_possible(I, H.slot_l_store))
+				if (!H.l_store && H.equip_if_possible(I, SLOT_L_STORE))
 					equipped = 1
-				else if (!H.r_store && H.equip_if_possible(I, H.slot_r_store))
+				else if (!H.r_store && H.equip_if_possible(I, SLOT_R_STORE))
 					equipped = 1
-				else if (!H.l_hand && H.equip_if_possible(I, H.slot_l_hand))
+				else if (!H.l_hand && H.equip_if_possible(I, SLOT_L_HAND))
 					equipped = 1
-				else if (!H.r_hand && H.equip_if_possible(I, H.slot_r_hand))
+				else if (!H.r_hand && H.equip_if_possible(I, SLOT_R_HAND))
 					equipped = 1
 
 				if (!equipped)
@@ -496,7 +496,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 	critter_respawn
 		name = "Alt Ghost Critter"
 		cost = 1000
-		icon = 'icons/misc/critter.dmi'
+		icon = 'icons/mob/critter/robotic/boogie.dmi'
 		icon_state = "boogie"
 		var/list/respawn_critter_types = list(/mob/living/critter/small_animal/boogiebot/weak, /mob/living/critter/small_animal/figure/weak)
 
@@ -649,7 +649,7 @@ var/global/list/persistent_bank_purchaseables =	list(\
 			if (ishuman(M))
 				var/mob/living/carbon/human/H = M
 				var/obj/item/storage/lunchbox/L = pick(childrentypesof(/obj/item/storage/lunchbox))
-				if ((!H.l_hand && H.equip_if_possible(new L(H), H.slot_l_hand)) || (!H.r_hand && H.equip_if_possible(new L(H), H.slot_r_hand)) || (H.back?.storage && H.equip_if_possible(new L(H), H.slot_in_backpack)))
+				if ((!H.l_hand && H.equip_if_possible(new L(H), SLOT_L_HAND)) || (!H.r_hand && H.equip_if_possible(new L(H), SLOT_R_HAND)) || (H.back?.storage && H.equip_if_possible(new L(H), SLOT_IN_BACKPACK)))
 					return 1
 			return 0
 
@@ -766,8 +766,8 @@ var/global/list/persistent_bank_purchaseables =	list(\
 		Create(var/mob/living/M)
 			if (isAI(M))
 				var/mob/living/silicon/ai/A = M
-				A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai-red")
-				A.faceEmotion = "ai-red"
+				A.custom_emotions = ai_emotions | list("ROGUE(reward)" = "ai_red")
+				A.faceEmotion = "ai_red"
 				A.set_color("#EE0000")
 				return 1
 			return 0

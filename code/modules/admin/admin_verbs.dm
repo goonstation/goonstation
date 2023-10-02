@@ -126,6 +126,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_intercom_help,
 		/client/proc/cmd_dectalk,
 		/client/proc/cmd_admin_remove_plasma,
+		/client/proc/stabilize_station,
 		/client/proc/toggle_death_confetti,
 		/client/proc/cmd_admin_unhandcuff,
 		/client/proc/admin_toggle_lighting,
@@ -193,6 +194,9 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_rotate_type,
 		/client/proc/cmd_spin_type,
 		/client/proc/cmd_get_type,
+		/client/proc/cmd_addComponentType,
+		/client/proc/cmd_removeComponentType,
+		/client/proc/cmd_replace_type,
 		/client/proc/cmd_lightsout,
 
 		/client/proc/vpn_whitelist_add,
@@ -292,6 +296,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_buttgib,
 		/client/proc/cmd_admin_tysongib,
 		/client/proc/cmd_admin_smitegib,
+		/client/proc/cmd_admin_anvilgib,
 		/client/proc/removeOther,
 		/client/proc/toggle_map_voting,
 		/client/proc/show_admin_lag_hacks,
@@ -409,6 +414,7 @@ var/list/admin_verbs = list(
 		/client/proc/debug_image_deletions_clear,
 #endif
 		/client/proc/distribute_tokens,
+		/client/proc/spawn_all_type
 		),
 
 	7 = list(
@@ -441,7 +447,6 @@ var/list/admin_verbs = list(
 		///client/proc/dbg_objectprop,
 		// /client/proc/remove_camera_paths_verb,
 		// /client/proc/show_runtime_window,
-		/client/proc/cmd_chat_debug,
 		/client/proc/toggleIrcbotDebug,
 		/datum/admins/proc/toggle_bone_system,
 		/client/proc/cmd_randomize_handwriting,
@@ -886,7 +891,7 @@ var/list/special_pa_observing_verbs = list(
 		alert("You cannot perform this action. You must be of a higher administrative rank!", null, null, null, null, null)
 		return
 	if(!M.client.warned)
-		M.Browse(rules, "window=rules;size=480x320")
+		M << link("http://wiki.ss13.co/Rules")
 		boutput(M, "<span class='alert'><B>You have been warned by an administrator. This is the only warning you will receive.</B></span>")
 		M.client.warned = 1
 		message_admins("<span class='internal'>[src.ckey] warned [M.ckey].</span>")
@@ -1274,7 +1279,7 @@ var/list/fun_images = list()
 				S.icon = 'icons/effects/ULIcons.dmi'
 				S.icon_state = "etc"
 				S.color = transparentColor
-				S.UpdateOverlays(null, "starlight", 1)
+				S.underlays -= S.starlight
 
 	var/confirm5 = tgui_alert(src.mob, "Make everything full bright?", "Fullbright?", list("Yes", "No"))
 	if (confirm5 == "Yes")
@@ -1345,20 +1350,6 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	view_client_compid_list(usr, C)
-
-/client/proc/cmd_chat_debug(var/client/C in clients)
-	set name = "Debug Chat"
-	set desc = "Opens a firebug console in the target's chat area"
-	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
-
-	ADMIN_ONLY
-
-	if (src != C)
-		var/trigger = (C.holder ? src.key : (src.stealth || src.fakekey ? src.fakekey : src.key))
-		ehjax.send(C, "browseroutput", list("firebug" = 1, "trigger" = trigger))
-		message_admins("[key_name(src)] has enabled Debug Chat mode on [key_name(C)]")
-	else
-		ehjax.send(C, "browseroutput", list("firebug" = 1))
 
 /client/proc/blobsay(msg as text)
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
@@ -1534,6 +1525,10 @@ var/list/fun_images = list()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set desc = "Sends a message as voice to all players"
 	set popup_menu = 0
+
+	if (!isadmin(src) && !src.non_admin_dj)
+		boutput(src, "Only administrators or those with access may use this command.")
+		return FALSE
 
 	var/msg
 	if (length(args))
@@ -2172,20 +2167,21 @@ var/list/fun_images = list()
 		var/x_shift = round(text2num(parameters["icon-x"]) / 32)
 		var/y_shift = round(text2num(parameters["icon-y"]) / 32)
 		clicked_turf = locate(clicked_turf.x + x_shift, clicked_turf.y + y_shift, clicked_turf.z)
-		var/list/atom/atoms = list()
+		var/list/atom/atom_names = list()
 		for(var/atom/thing as anything in list(clicked_turf) + clicked_turf.contents)
 			if(thing.name)
-				atoms += thing
+				atom_names[thing.admin_visible_name()] = thing
 			else if(!istype(thing, /obj/effect) && !istype(thing, /obj/overlay/tile_effect))
 				if(initial(thing.name))
-					atoms["nameless [initial(thing.name)]"] = thing
+					atom_names["nameless [initial(thing.name)]"] = thing
 				else
-					atoms["nameless [thing.type]"] = thing
-		if (atoms.len)
-			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atoms)
-			if (isnull(A)) return
+					atom_names["nameless [thing.type]"] = thing
+		if (length(atom_names))
+			A = tgui_input_list(src, "Which item to admin-interact with?", "Admin interact", atom_names)
+			if (isnull(A))
+				return
 		if(istext(A))
-			A = atoms[A]
+			A = atom_names[A]
 
 	var/title = "What do?"
 	var/list/verbs = list()
@@ -2401,6 +2397,7 @@ var/list/fun_images = list()
 
 	global.phrase_log?.upload_uncool_words()
 	global.phrase_log?.load()
+	boutput(src, "Uncool words uploaded successfully")
 
 
 /client/proc/whitelist_add_temp(ckey as text)
@@ -2444,17 +2441,17 @@ var/list/fun_images = list()
 			return
 		if(rounds_duration)
 			message_admins("[src] has disabled the whitelist for [rounds_duration] round\s.")
-			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for [rounds_duration] round\s.")
+			logTheThing(LOG_ADMIN, src, "Disabled the whitelist for [rounds_duration] round\s.")
 			world.save_intra_round_value("whitelist_disabled", rounds_duration)
 		else
 			message_admins("[src] has disabled the whitelist for the rest of the round.")
-			logTheThing(LOG_ADMIN, src, null, "Disabled the whitelist for the rest of the round.")
+			logTheThing(LOG_ADMIN, src, "Disabled the whitelist for the rest of the round.")
 		config.whitelistEnabled = FALSE
 		config.roundsLeftWithoutWhitelist = rounds_duration
 	else
 		var/kick_existing = tgui_alert(src, "Do you want to kick all players who are not whitelisted?", "Kick non-whitelisted players?", list("Yes", "No")) == "Yes"
 		config.whitelistEnabled = TRUE
-		config.roundsLeftWithoutWhitelist = 0
+		config.roundsLeftWithoutWhitelist = -1
 		if(kick_existing)
 			for(var/client/C in clients)
 				if(C.holder || (C in global.whitelistCkeys))
@@ -2462,7 +2459,7 @@ var/list/fun_images = list()
 				boutput(C, "<span class='alert' style='font-size: 2.5em;'>You have been kicked from the server because the whitelist got enabled and you are not whitelisted.</span>")
 				del(C)
 		message_admins("[src] has enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
-		logTheThing(LOG_ADMIN, src, null, "Enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
+		logTheThing(LOG_ADMIN, src, "Enabled the whitelist [kick_existing ? "and kicked all non-whitelisted players" : ""]")
 		world.save_intra_round_value("whitelist_disabled", 0)
 
 	set_station_name(src.mob, manual=FALSE, name=station_name)
@@ -2512,3 +2509,29 @@ var/list/fun_images = list()
 				client.set_antag_tokens(client.antag_tokens + 1)
 				break
 	boutput(src, "Roundstart antags given tokens: [total]")
+
+/client/proc/spawn_all_type()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Spawn All Of A Type"
+	set desc = "Creates one of every subtype instance of a type at your loc."
+	ADMIN_ONLY
+	var/spawn_input = input(src, "Enter path", "Enter Path") as null|text
+	if (spawn_input == "")
+		return
+	var/spawn_path = get_one_match(spawn_input, /atom/movable, FALSE)
+	if (!spawn_path)
+		return
+	var/list/spawn_matches = concrete_typesof(spawn_path)
+	if (!length(spawn_matches))
+		return
+	if (length(spawn_matches) > 99)
+		var/response = input(src, "High number of types: [length(spawn_matches)] - Type YES to continue", "Caution!") as null|text
+		if (lowertext(response) != "yes")
+			return
+	var/turf/T = get_turf(usr)
+	if (!T)
+		return
+	for (var/type as anything in spawn_matches)
+		new type(T)
+	logTheThing(LOG_ADMIN, src, "Created [length(spawn_matches)] types of: [spawn_path] at ([log_loc(usr)]")
+	boutput(src, "Created [length(spawn_matches)] types.")

@@ -287,22 +287,22 @@ ABSTRACT_TYPE(/datum/buildmode)
 
 		if (icon_y <= 11)
 			if (icon_x <= 11)
-				dir = 10
+				dir = SOUTHWEST
 			else if (icon_x >= 22)
-				dir = 6
+				dir = SOUTHEAST
 			else
-				dir = 2
+				dir = SOUTH
 		else if (icon_y >= 22)
 			if (icon_x <= 11)
-				dir = 9
+				dir = NORTHWEST
 			else if (icon_x >= 22)
-				dir = 5
+				dir = NORTHEAST
 			else
-				dir = 1
+				dir = NORTH
 		else if (icon_x <= 16)
-			dir = 8
+			dir = WEST
 		else
-			dir = 4
+			dir = EAST
 
 		holder.dir = dir
 

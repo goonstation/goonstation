@@ -112,7 +112,7 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 /obj/machinery/power/lgenerator/proc/eject_tank(var/mob/user as mob)
 	if(internalTank)
 		internalTank.set_loc(loc)
-		user.put_in_hand_or_eject(internalTank) // try to eject it into the users hand, if we can
+		user?.put_in_hand_or_eject(internalTank) // try to eject it into the users hand, if we can
 		internalTank = null
 		src.UpdateIcon()
 	return
@@ -158,6 +158,8 @@ TYPEINFO(/obj/machinery/power/lgenerator)
 			src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down! [src.internalTank] is ejected!</span>")
 			playsound(src.loc, 'sound/machines/buzz-two.ogg', 100, 0)
 			src.eject_tank(null)
+			src.active = FALSE
+			src.UpdateIcon()
 			return
 
 		switch (src.chargeAPC)

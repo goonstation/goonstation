@@ -14,66 +14,271 @@
 	*/
 ABSTRACT_TYPE(/datum/material)
 /datum/material
-	/// The atom that this material is applied to
-	var/atom/owner = null
+	///Is this a mutable instance? Defaults to true so creating new materials returns a mutable instance by default
+	VAR_PRIVATE/tmp/mutable = TRUE
 	/// used to retrieve instances of these base materials from the cache.
-	var/mat_id = "ohshitium"
+	VAR_PROTECTED/mat_id = "ohshitium"
+	/// Whether this material should be stored in the material cache - only used for base types, modifying at runtime has no effect
+	var/cached = TRUE
 	/// Name of the material, used for combination and scanning
-	var/name = "Youshouldneverseemeium"
+	VAR_PROTECTED/name = "Youshouldneverseemeium"
 	/// Description of the material, used for scanning
-	var/desc = "This is a custom material."
-
-	/// Holds the parent materials.
-	var/list/parent_materials = list()
+	VAR_PROTECTED/desc = "This is a custom material."
 	/// List of all the various [/datum/material_property] that apply.
-	var/list/properties = list()
-
-	/// Compound generation
-	var/generation = 0
-
-	/// Can this be mixed with other materials?
-	var/canMix = 1
-	/// Can this only be used after being combined with another material?
-	var/mixOnly = 0
-
+	VAR_PROTECTED/list/properties = list()
 	/// Various flags. See [material_properties.dm]
-	var/material_flags = 0
+	VAR_PROTECTED/material_flags = 0
 	/// In percent of a base value. How much this sells for.
-	var/value = 100
+	VAR_PROTECTED/value = 100
 
+	//naming stuff
 	/// words that go before the name, used in combination
-	var/list/prefixes = list()
+	VAR_PROTECTED/list/prefixes = list()
 	/// words that go after the name, used in combination
-	var/list/suffixes = list()
+	VAR_PROTECTED/list/suffixes = list()
 	/// Whether the specaialNaming proc is called when this material is applied.
-	var/special_naming = FALSE
+	VAR_PROTECTED/special_naming = FALSE
 
+	//Vars for alloys
+	/// Holds the parent materials.
+	VAR_PROTECTED/list/parent_materials = list()
+	/// Compound generation
+	VAR_PROTECTED/generation = 0
+	/// Can this be mixed with other materials?
+	VAR_PROTECTED/canMix = 1
+	/// Can this only be used after being combined with another material?
+	VAR_PROTECTED/mixOnly = 0
+
+	//material appearance vars
 	/// if not null, texture will be set when mat is applied.
-	var/texture = ""
+	VAR_PROTECTED/texture = ""
 	/// How to blend the [/datum/material/var/texture].
-	var/texture_blend = BLEND_ADD
-
+	VAR_PROTECTED/texture_blend = BLEND_ADD
 	/// Should this even color the objects made from it? Mostly used for base station materials like steel
-	var/applyColor = 1
+	VAR_PROTECTED/applyColor = TRUE
 	/// The color of the material
-	var/color = "#FFFFFF"
+	VAR_PROTECTED/color = "#FFFFFF"
 	/// The "transparency" of the material. Kept as alpha for logical reasons. Displayed as percentage ingame.
-	var/alpha = 255
+	VAR_PROTECTED/alpha = 255
 	/// The 'quality' of the material
-	var/quality = 0
+	VAR_PROTECTED/quality = 0
 
 	/// The actual value of edibility. Changes internally and sets [/datum/material/var/edible].
-	var/edible_exact = 0
+	VAR_PROTECTED/edible_exact = 0
 	/// The functional value of edibility. Edible or not? This is what you check from the outside to see if material is edible. See [/datum/material/var/edible_exact].
-	var/edible = 0
+	VAR_PROTECTED/edible = 0
 
-	var/owner_hasentered_added = FALSE
+	//triggers
+	//IF YOU CHANGE THESE IN ANY WAY, YOU MUST UPDATE _std/defines/materials.dm
+	/// Called when exposed to temperatures.
+	VAR_PROTECTED/list/triggersTemp = list()
+	/// Called when exposed to chemicals.
+	VAR_PROTECTED/list/triggersChem = list()
+	/// Called when owning object is picked up.
+	VAR_PROTECTED/list/triggersPickup = list()
+	/// Called when owning object is dropped.
+	VAR_PROTECTED/list/triggersDrop = list()
+	/// Called when exposed to explosions.
+	VAR_PROTECTED/list/triggersExp = list()
+	/// Called when the material is added to an object
+	VAR_PROTECTED/list/triggersOnAdd = list()
+	/// Called when the material is removed from an object
+	VAR_PROTECTED/list/triggersOnRemove = list()
+	/// Called when the life proc of a mob that has the owning item equipped runs.
+	VAR_PROTECTED/list/triggersOnLife = list()
+	/// Called when the owning object is used to attack something or someone.
+	VAR_PROTECTED/list/triggersOnAttack = list()
+	/// Called when a mob wearing the owning object is attacked.
+	VAR_PROTECTED/list/triggersOnAttacked = list()
+	/// Called when a mob wearing the owning object is shot.
+	VAR_PROTECTED/list/triggersOnBullet = list()
+	/// Called when *something* enters a turf with the material assigned. Also called on all objects on the turf with a material.
+	VAR_PROTECTED/list/triggersOnEntered = list()
+	/// Called when someone eats a thing with this material assigned.
+	VAR_PROTECTED/list/triggersOnEat = list()
+	/// Called when blob hits something with this material assigned.
+	VAR_PROTECTED/list/triggersOnBlobHit = list()
+	/// Called when an obj hits something with this material assigned.
+	VAR_PROTECTED/list/triggersOnHit = list()
+
 
 	New()
 		. = ..()
 		for(var/datum/material_property/propPath as anything in concrete_typesof(/datum/material_property))
 			if(initial(propPath.default_value) > 0)
 				src.setProperty(initial(propPath.id), initial(propPath.default_value))
+
+	//getters for all the protected vars
+	proc/getID()
+		return src.mat_id
+
+	proc/getName()
+		return src.name
+
+	proc/getDesc()
+		return src.desc
+
+	proc/getMaterialFlags()
+		return src.material_flags
+
+	proc/getValue()
+		return src.value
+
+	proc/getQuality()
+		return src.quality
+
+	proc/usesSpecialNaming()
+		return src.special_naming
+
+	proc/getPrefixes()
+		return src.prefixes.Copy()
+
+	proc/getSuffixes()
+		return src.suffixes.Copy()
+
+	proc/getTexture()
+		return src.texture
+
+	proc/getTextureBlendMode()
+		return src.texture_blend
+
+	proc/shouldApplyColor()
+		return src.applyColor
+
+	proc/getColor()
+		return src.color
+
+	proc/getAlpha()
+		return src.alpha
+
+	proc/getEdible()
+		return src.edible
+
+	proc/getCanMix()
+		return src.canMix
+
+	proc/getMixOnly()
+		return src.mixOnly
+
+	proc/getMaterialProperties()
+		return src.properties.Copy()
+
+	proc/getParentMaterials()
+		return src.parent_materials.Copy()
+
+	proc/isMutable()
+		return src.mutable
+
+	//setters for protected vars
+	proc/setID(var/id)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.mat_id = id
+
+	proc/setName(var/name)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.name = name
+
+	proc/setColor(var/color)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.color = color
+
+	proc/setCanMix(var/mix)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.canMix = mix
+
+	proc/setQuality(var/quality)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		src.quality = quality
+
+	//mutability procs
+
+	///Returns a mutable version of this material. Will return a copy of this material if it is already mutable.
+	///The reason this is a separate proc and not using in getMaterial() is prevent cargo-culting accidentally reintroducing the
+	///issue this was supposed to fix. Force the coders to explicitly ask for a mutable instance, demand to know why they want it to be mutable in reviews!
+	proc/getMutable()
+		return src.copyMaterial() //copy is mutable by default
+
+	///Returns an immutable version of this material. Will return this material if it is already immutable.
+	proc/getImmutable()
+		if(!src.mutable)
+			return src
+		else
+			var/datum/material/immutable = src.copyMaterial()
+			immutable.mutable = FALSE
+			return immutable
+
+	proc/copyMaterial()
+		var/datum/material/M = new src.type()
+		M.properties = mergeProperties(src.properties, rightBias = 0)
+		for(var/X in src.vars)
+			if(!issaved(src.vars[X])) continue
+			if(X in triggerVars)
+				M.vars[X] = getFusedTriggers(src.vars[X], list(), M) //Pass in an empty list to basically copy the first one.
+			else
+				if(istype(src.vars[X],/list))
+					var/list/oldList = src.vars[X]
+					M.vars[X] = oldList.Copy()
+				else
+					M.vars[X] = src.vars[X]
+		return M
+
+	///Compares a material to this one to determine if stacking should be allowed.
+	proc/isSameMaterial(var/datum/material/M2)
+		if(src == M2) //since we're actually doing mutable/immutable now, we can frequently shortcut this with an actual equal check
+			return TRUE
+
+		if(isnull(M2))
+			return FALSE
+
+		if(length(src.properties) != length(M2.properties) || src.getID() != M2.getID())
+			return FALSE
+
+		if(src.value != M2.value || src.name != M2.name  || src.color ~! M2.color ||src.alpha != M2.alpha || src.getMaterialFlags() != M2.getMaterialFlags() || src.texture != M2.texture)
+			return FALSE
+
+		for(var/datum/material_property/P1 in src.properties)
+			if(M2.getProperty(P1.id) != src.properties[P1]) return FALSE
+		for(var/datum/material_property/P2 in M2.properties)
+			if(src.getProperty(P2.id) != M2.properties[P2]) return FALSE
+
+		for(var/X in triggerVars)
+			for(var/datum/material_property/A in src.vars[X])
+				if(!(locate(A.type) in M2.vars[X])) return FALSE
+
+			for(var/datum/material_property/B in M2.vars[X])
+				if(!(locate(B.type) in src.vars[X])) return FALSE
+
+		return TRUE
+
+	//utility procs
+
+	///Time for some super verbose proc names.
+	proc/getMaterialTraitDesc()
+		var/string = ""
+		var/list/allTriggers = (src.triggersTemp + src.triggersChem + src.triggersPickup + src.triggersDrop + src.triggersExp + src.triggersOnAdd + src.triggersOnLife + src.triggersOnAttack + src.triggersOnAttacked + src.triggersOnEntered)
+		for(var/datum/materialProc/P in allTriggers)
+			if(length(P.desc))
+				if(length(string))
+					if(!findtext(string,P.desc))
+						string += " " + P.desc
+				else
+					string = P.desc
+		return string
+
+	proc/getMaterialPrefixList()
+		. = list()
+		for(var/datum/material_property/P as anything in src.properties)
+			if(src.properties[P] >= P.prefix_high_min)
+				. |= P.getAdjective(src)
+			else if(src.properties[P] <= P.prefix_low_max)
+				. |= P.getAdjective(src)
+
+	//material procs
 
 	proc/getProperty(var/property, var/type = VALUE_CURRENT)
 		for(var/datum/material_property/P in properties)
@@ -88,6 +293,8 @@ ABSTRACT_TYPE(/datum/material)
 		return 0
 
 	proc/removeProperty(var/property)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutable material!")
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
 				P.onRemoved(src)
@@ -96,28 +303,34 @@ ABSTRACT_TYPE(/datum/material)
 		return
 
 	proc/adjustProperty(var/property, var/value)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutable material!")
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
-				P.changeValue(src, properties[P] + value)
+				src.properties[P] = clamp(properties[P]+value, P.min_value, P.max_value)
+				P.onValueChanged(src, properties[P])
 				return
-		//setProperty(property, value)
 		return
 
 	proc/setProperty(var/property, var/value)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutable material!")
 		for(var/datum/material_property/P in properties)
 			if(P.id == property)
-				P.changeValue(src, value)
+				src.properties[P] = clamp(value, P.min_value, P.max_value)
+				P.onValueChanged(src, src.properties[P])
 				return
 
-		if(!materialProps.len) //Required so that compile time object materials can have properties.
+		if(!length(materialProps)) //Required so that compile time object materials can have properties.
 			buildMaterialPropertyCache()
 
-		for(var/datum/material_property/X in materialProps)
-			if(X.id == property)
-				properties.Add(X)
-				X.onAdded(src, value)
-				X.changeValue(src, value)
-
+		//if it's not already in .properties, add it and trigger onadd
+		for(var/datum/material_property/P in materialProps)
+			if(P.id == property)
+				properties.Add(P)
+				P.onAdded(src, value)
+				src.properties[P] = clamp(value, P.min_value, P.max_value)
+				P.onValueChanged(src, src.properties[P])
 		return
 
 	proc/hasProperty(var/property)
@@ -126,12 +339,39 @@ ABSTRACT_TYPE(/datum/material)
 				return 1
 		return 0
 
-	proc/addTrigger(var/list/L, var/datum/materialProc/D)
+	///Triggers is specified using one of the TRIGGER_ON_ defines
+	proc/addTrigger(var/triggerListName as text, var/datum/materialProc/D)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		var/list/L = src.vars[triggerListName]
 		for(var/datum/materialProc/P in L)
 			if(P.type == D.type) return 0
 		L.Add(D)
 		L[D] = 0
 		return
+
+	///Triggers is specified using one of the TRIGGER_ON_ defines
+	proc/removeTrigger(var/triggerListName as text, var/inType)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		var/list/L = src.vars[triggerListName]
+		for(var/datum/materialProc/P in L)
+			if(P.type == inType)
+				L.Remove(P)
+		return
+
+	///Triggers is specified using one of the TRIGGER_ON_ defines
+	proc/removeAllTriggers(var/triggerListName as text)
+		if(!src.mutable)
+			CRASH("Attempted to mutate an immutatble material!")
+		var/list/L = src.vars[triggerListName]
+		L.Cut()
+		return
+
+	///Triggers is specified using one of the TRIGGER_ON_ defines
+	proc/countTriggers(var/triggerListName as text)
+		var/list/L = src.vars[triggerListName]
+		return length(L)
 
 	proc/interpolateName(datum/material/other, t)
 		. = getInterpolatedName(src.name, other.name, t)
@@ -139,65 +379,22 @@ ABSTRACT_TYPE(/datum/material)
 	proc/specialNaming(atom/target)
 		. = target.name
 
-	proc/removeTrigger(var/list/L, var/inType)
-		for(var/datum/materialProc/P in L)
-			if(P.type == inType)
-				L.Remove(P)
-		return
-
-	proc/fail()
-		del(owner)
-		return
-
-	/// Called when exposed to temperatures.
-	var/list/triggersTemp = list()
-	/// Called when exposed to chemicals.
-	var/list/triggersChem = list()
-	/// Called when owning object is picked up.
-	var/list/triggersPickup = list()
-	/// Called when owning object is dropped.
-	var/list/triggersDrop = list()
-	/// Called when exposed to explosions.
-	var/list/triggersExp = list()
-	/// Called when the material is added to an object
-	var/list/triggersOnAdd = list()
-	/// Called when the material is removed from an object
-	var/list/triggersOnRemove = list()
-	/// Called when the life proc of a mob that has the owning item equipped runs.
-	var/list/triggersOnLife = list()
-	/// Called when the owning object is used to attack something or someone.
-	var/list/triggersOnAttack = list()
-	/// Called when a mob wearing the owning object is attacked.
-	var/list/triggersOnAttacked = list()
-	/// Called when a mob wearing the owning object is shot.
-	var/list/triggersOnBullet = list()
-	/// Called when *something* enters a turf with the material assigned. Also called on all objects on the turf with a material.
-	var/list/triggersOnEntered = list()
-	/// Called when someone eats a thing with this material assigned.
-	var/list/triggersOnEat = list()
-	/// Called when blob hits something with this material assigned.
-	var/list/triggersOnBlobHit = list()
-	/// Called when an obj hits something with this material assigned.
-	var/list/triggersOnHit = list()
-
-
-
 	proc/triggerOnEntered(var/atom/owner, var/atom/entering)
 		for(var/datum/materialProc/X in triggersOnEntered)
 			X.execute(owner, entering)
 		return
 
-	proc/triggerOnAttacked(var/obj/item/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
+	proc/triggerOnAttacked(var/atom/owner, var/mob/attacker, var/mob/attacked, var/atom/weapon)
 		for(var/datum/materialProc/X in triggersOnAttacked)
 			X.execute(owner, attacker, attacked, weapon)
 		return
 
-	proc/triggerOnBullet(var/obj/item/owner, var/atom/attacked, var/obj/projectile/projectile)
+	proc/triggerOnBullet(var/atom/owner, var/atom/attacked, var/obj/projectile/projectile)
 		for(var/datum/materialProc/X in triggersOnBullet)
 			X.execute(owner, attacked, projectile)
 		return
 
-	proc/triggerOnAttack(var/obj/item/owner, var/mob/attacker, var/mob/attacked)
+	proc/triggerOnAttack(var/atom/owner, var/mob/attacker, var/atom/attacked)
 		for(var/datum/materialProc/X in triggersOnAttack)
 			X.execute(owner, attacker, attacked)
 		return
@@ -252,17 +449,90 @@ ABSTRACT_TYPE(/datum/material)
 			X.execute(owner, blobPower)
 		return
 
-	proc/triggerOnHit(var/atom/owner, var/obj/attackobj, var/mob/attacker, var/meleeorthrow)
+	proc/triggerOnHit(var/atom/owner, var/atom/attackatom, var/mob/attacker, var/meleeorthrow)
 		for(var/datum/materialProc/X in triggersOnHit)
-			X.execute(owner, attackobj, attacker, meleeorthrow)
+			X.execute(owner, attackatom, attacker, meleeorthrow)
 		return
 
-
+//Material definitions
 /datum/material/interpolated
 	mat_id = "imcoderium"
 	name = "imcoderium"
 	desc = "You should not be seeing this"
 	color = "#6f00ff"
+	cached = FALSE
+
+	///Create an interpolated material from two input materials, with bias. Bias of 0 is entirely mat1, bias of 1 is entirely mat2
+	New(var/datum/material/mat1,var/datum/material/mat2,var/bias)
+		..()
+		if(isnull(mat1) || isnull(mat2))
+			return
+		var/left_bias = 1 - bias
+		src.quality = round(mat1.quality * left_bias + mat2.quality * bias)
+
+		src.prefixes = (mat1.prefixes | mat2.prefixes)
+		src.suffixes = (mat1.suffixes | mat2.suffixes)
+
+		src.value = round(mat1.value *left_bias+ mat2.value * bias)
+		src.name = mat1.interpolateName(mat2, 0.5)
+		src.desc = "This is an alloy of [mat1.name] and [mat2.name]"
+		src.mat_id = "([mat1.getID()]+[mat2.getID()])"
+		src.alpha = round(mat1.alpha *left_bias+ mat2.alpha * bias)
+		if(islist(mat1.color) || islist(mat2.color))
+			var/list/colA = normalize_color_to_matrix(mat1.color)
+			var/list/colB = normalize_color_to_matrix(mat2.color)
+			src.color = list()
+			for(var/i in 1 to length(colA))
+				src.color += colA[i] *left_bias+ colB[i] * bias
+		else
+			src.color = rgb(round(GetRedPart(mat1.color) *left_bias+ GetRedPart(mat2.color) * bias), round(GetGreenPart(mat1.color) *left_bias+ GetGreenPart(mat2.color) * bias), round(GetBluePart(mat1.color) *left_bias+ GetBluePart(mat2.color) * bias))
+		src.properties = mergeProperties(mat1.properties, mat2.properties, bias)
+
+		src.edible_exact = mat1.edible_exact * left_bias + mat2.edible_exact * bias
+		if(src.edible_exact >= 0.5) src.edible = TRUE
+		else src.edible = FALSE
+
+		src.special_naming = FALSE // the naming proc doesn't carry over anyway
+
+		src.mixOnly = FALSE
+
+		//haha gross
+		for(var/triggername in triggerVars)
+			src.vars[triggername] = getFusedTriggers(mat1.vars[triggername], mat2.vars[triggername], src)
+			handleTriggerGenerations(src.vars[triggername])
+
+		//Make sure the newly merged properties are informed about the fact that they just changed. Has to happen after triggers.
+		for(var/datum/material_property/nProp in src.properties)
+			nProp.onValueChanged(src, src.properties[nProp])
+
+		//Texture merging. SUPER DUPER UGLY AAAAH
+		if(mat2.texture && !mat1.texture)
+			src.texture = mat2.texture
+			src.texture_blend = mat2.texture_blend
+		else if (mat1.texture && !mat2.texture)
+			src.texture = mat1.texture
+			src.texture_blend = mat1.texture_blend
+		else if (mat1.texture && mat2.texture)
+			if(mat1.generation == mat2.generation)
+				//Mat1 has higher priority in this case. Optional: implement some shitty blended texture thing. probably a bad idea.
+				src.texture = mat1.texture
+				src.texture_blend = mat1.texture_blend
+			else
+				if(mat1.generation < mat2.generation)
+					src.texture = mat1.texture
+					src.texture_blend = mat1.texture_blend
+				else
+					src.texture = mat2.texture
+					src.texture_blend = mat2.texture_blend
+		//
+
+		src.material_flags = mat1.material_flags | mat2.material_flags
+
+		src.parent_materials.Add(mat1)
+		src.parent_materials.Add(mat2)
+
+		//RUN VALUE CHANGED ON ALL PROPERTIES TO TRIGGER PROPERS EVENTS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 // Metals
 
@@ -409,7 +679,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
 
-		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
 
 /datum/material/metal/gold
@@ -429,7 +699,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		setProperty("electrical", 7)
 		setProperty("thermal", 7)
 
-		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
 
 /datum/material/metal/silver
@@ -507,7 +777,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		..()
 		setProperty("density", 8)
 		setProperty("hard", 1)
-		addTrigger(triggersOnAdd, new /datum/materialProc/spacelag_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/spacelag_add())
 
 
 /datum/material/metal/iridiumalloy
@@ -535,7 +805,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 	New()
 		..()
 		material_flags |= MATERIAL_ENERGY
-		addTrigger(triggersOnAdd, new /datum/materialProc/negative_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/negative_add())
 
 
 //GIVE THIS STATS AND SPECIAL EFFECTS.
@@ -550,7 +820,7 @@ ABSTRACT_TYPE(/datum/material/metal)
 		material_flags|= MATERIAL_ENERGY
 		setProperty("density", 4)
 		setProperty("hard", 2)
-		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
+		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
 
 // Crystals
@@ -584,15 +854,14 @@ ABSTRACT_TYPE(/datum/material/crystal)
 	desc = "Molitz is a common crystalline substance."
 	color = "#FFFFFF"
 	alpha = 180
-	var/unexploded = 1
-	var/iterations = 4
 
 	New()
 		..()
 		setProperty("density", 3)
 		setProperty("hard", 4)
-		addTrigger(triggersTemp, new /datum/materialProc/molitz_temp())
-		addTrigger(triggersExp, new /datum/materialProc/molitz_exp())
+		setProperty("molitz_bubbles", 4)
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/molitz_exp())
 
 	beta
 		mat_id = "molitz_b"
@@ -603,8 +872,8 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		New()
 			..()
 			// no need to remove molitz_on_hit, all it does is call molitz_temp
-			removeTrigger(triggersTemp, /datum/materialProc/molitz_temp)
-			addTrigger(triggersTemp, new /datum/materialProc/molitz_temp/agent_b())
+			removeTrigger(TRIGGERS_ON_TEMP, /datum/materialProc/molitz_temp)
+			addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/molitz_temp/agent_b())
 			return
 
 /datum/material/crystal/claretine
@@ -634,12 +903,12 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 6)
 		setProperty("radioactive", 8)
 
-		addTrigger(triggersOnAdd, new /datum/materialProc/erebite_flash())
-		addTrigger(triggersTemp, new /datum/materialProc/erebite_temp())
-		addTrigger(triggersExp, new /datum/materialProc/erebite_exp())
-		addTrigger(triggersOnAttack, new /datum/materialProc/generic_explode_attack(33))
-		addTrigger(triggersOnAttacked, new /datum/materialProc/generic_explode_attack(33))
-		addTrigger(triggersOnHit, new /datum/materialProc/generic_explode_attack(33))
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/erebite_flash())
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/erebite_temp())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/erebite_exp())
+		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/generic_explode_attack(33))
+		addTrigger(TRIGGERS_ON_ATTACKED, new /datum/materialProc/generic_explode_attack(33))
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/generic_explode_attack(33))
 
 
 /datum/material/crystal/plasmastone
@@ -656,10 +925,11 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 5)
 		setProperty("radioactive", 2)
 		setProperty("flammable", 8)
+		setProperty("plasma_offgas", 10)
 
-		addTrigger(triggersTemp, new /datum/materialProc/plasmastone())
-		addTrigger(triggersExp, new /datum/materialProc/plasmastone())
-		addTrigger(triggersOnHit, new /datum/materialProc/plasmastone_on_hit())
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/plasmastone())
+		addTrigger(TRIGGERS_ON_EXPLOSION, new /datum/materialProc/plasmastone())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/plasmastone_on_hit())
 
 
 /datum/material/crystal/plasmaglass
@@ -692,7 +962,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 				name = "clear [src.name]"
 				setProperty("density", 6)
 				setProperty("hard", 7)
-				addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
+				addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 			if(2)
 				value = 500
 				name = "flawed [src.name]"
@@ -878,9 +1148,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 1)
 		setProperty("hard", 2)
 		setProperty("reflective", 8)
-		addTrigger(triggersOnLife, new /datum/materialProc/telecrystal_life())
-		addTrigger(triggersOnEntered, new /datum/materialProc/telecrystal_entered())
-		addTrigger(triggersOnAttack, new /datum/materialProc/telecrystal_onattack())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/telecrystal_life())
+		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/telecrystal_entered())
+		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/telecrystal_onattack())
 
 
 
@@ -892,14 +1162,14 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	New()
 		..()
-		addTrigger(triggersOnAdd, new /datum/materialProc/miracle_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/miracle_add())
 		quality = rand(-50, 100)
 		alpha = rand(20, 255)
 		setProperty("density", rand(1, 8))
 		setProperty("hard", rand(1, 8))
 		setProperty("reflective", rand(1, 9))
 		setProperty("chemical", rand(1, 8))
-		addTrigger(triggersTemp, new /datum/materialProc/temp_miraclium())
+		addTrigger(TRIGGERS_ON_TEMP, new /datum/materialProc/temp_miraclium())
 
 
 /datum/material/crystal/starstone
@@ -917,7 +1187,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 9)
 		setProperty("hard", 9)
 		setProperty("electrical", 1)
-		addTrigger(triggersOnAdd, new /datum/materialProc/gold_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/gold_add())
 
 
 /datum/material/crystal/ice
@@ -935,9 +1205,9 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("electrical", 6)
 		setProperty("density", 1)
 		setProperty("hard", 2)
-		addTrigger(triggersOnLife, new /datum/materialProc/ice_life())
-		addTrigger(triggersOnAttack, new /datum/materialProc/slippery_attack())
-		addTrigger(triggersOnEntered, new /datum/materialProc/slippery_entered())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/ice_life())
+		addTrigger(TRIGGERS_ON_ATTACK, new /datum/materialProc/slippery_attack())
+		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/slippery_entered())
 
 
 /datum/material/crystal/wizard
@@ -949,7 +1219,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		..()
 		setProperty("density", 6)
 		setProperty("hard", 6)
-		addTrigger(triggersOnAdd, new /datum/materialProc/enchanted_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/enchanted_add())
 
 
 	quartz // basically wizard glass
@@ -1017,7 +1287,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 5)
 		setProperty("hard", 1)
 		setProperty("flammable", 5)
-		addTrigger(triggersOnEat, new /datum/materialProc/oneat_blob())
+		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_blob())
 
 
 
@@ -1035,7 +1305,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		material_flags |= MATERIAL_CLOTH
 		setProperty("density", 3)
 		setProperty("hard", 1)
-		//addTrigger(triggersOnEat, new /datum/materialProc/oneat_flesh())
+		//addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_flesh())
 
 
 	butt
@@ -1048,8 +1318,14 @@ ABSTRACT_TYPE(/datum/material/organic)
 
 		New()
 			..()
-			addTrigger(triggersPickup, new /datum/materialProc/onpickup_butt)
-			addTrigger(triggersOnHit, new /datum/materialProc/onpickup_butt)
+			addTrigger(TRIGGERS_ON_PICKUP, new /datum/materialProc/onpickup_butt)
+			addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/onpickup_butt)
+
+	greymatter
+		mat_id = "greymatter"
+		name = "grey matter"
+		desc = "It makes your brain think good."
+		color = "#b99696"
 
 /datum/material/organic/char
 	mat_id = "char"
@@ -1095,7 +1371,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("hard", 1)
 		setProperty("chemical", 6)
 		setProperty("flammable", 2)
-		addTrigger(triggersOnEat, new /datum/materialProc/oneat_viscerite())
+		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_viscerite())
 
 
 /datum/material/organic/bone
@@ -1151,8 +1427,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 2)
 		setProperty("hard", 1)
 		setProperty("flammable", 4)
-		addTrigger(triggersOnBlobHit, new /datum/materialProc/cardboard_blob_hit())
-		addTrigger(triggersOnHit, new /datum/materialProc/cardboard_on_hit())
+		addTrigger(TRIGGERS_ON_BLOBHIT, new /datum/materialProc/cardboard_blob_hit())
+		addTrigger(TRIGGERS_ON_HIT, new /datum/materialProc/cardboard_on_hit())
 
 
 /datum/material/organic/chitin
@@ -1194,7 +1470,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 2)
 		setProperty("hard", 1)
 		setProperty("flammable", 4)
-		// addTrigger(triggersOnEat, new /datum/materialProc/oneat_honey())
+		// addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_honey())
 		// maybe make it sticky somehow?
 
 
@@ -1209,8 +1485,8 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("density", 3)
 		setProperty("hard", 2)
 		setProperty("thermal", 1)
-		addTrigger(triggersOnAdd, new /datum/materialProc/ffart_add())
-		addTrigger(triggersPickup, new /datum/materialProc/ffart_pickup())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/ffart_add())
+		addTrigger(TRIGGERS_ON_PICKUP, new /datum/materialProc/ffart_pickup())
 
 
 /datum/material/organic/hamburgris
@@ -1225,7 +1501,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("chemical", 7)
 		setProperty("thermal", 2)
 		setProperty("flammable", 1)
-		addTrigger(triggersOnLife, new /datum/materialProc/generic_reagent_onlife("cholesterol", 1))
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/generic_reagent_onlife("cholesterol", 1))
 
 
 
@@ -1270,7 +1546,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 		material_flags |= MATERIAL_ENERGY
 		setProperty("density", 1)
 		setProperty("hard", 1)
-		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/ethereal_add())
 // Fabrics
 
 ABSTRACT_TYPE(/datum/material/fabric)
@@ -1410,7 +1686,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 
 	New()
 		..()
-		addTrigger(triggersOnLife, new /datum/materialProc/generic_itchy_onlife())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/generic_itchy_onlife())
 
 
 /datum/material/fabric/spidersilk
@@ -1440,6 +1716,18 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("thermal", 9)
 		setProperty("electrical", 7)
 
+/datum/material/metal/censorium
+	mat_id = "censorium"
+	name = "censorium"
+	desc = "A charred rock. Doesn't do much."
+	color = "#948686"
+
+	New()
+		..()
+		setProperty("flammable", 2)
+		setProperty("density", 2)
+		setProperty("hard", 2)
+		setProperty("thermal", 1)
 
 /datum/material/fabric/hauntium
 	mat_id = "hauntium"
@@ -1454,8 +1742,8 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("density", 1)
 		setProperty("hard", 1)
 		setProperty("electrical", 1)
-		addTrigger(triggersOnAdd, new /datum/materialProc/ethereal_add())
-		addTrigger(triggersOnEntered, new /datum/materialProc/soulsteel_entered())
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/ethereal_add())
+		addTrigger(TRIGGERS_ON_ENTERED, new /datum/materialProc/soulsteel_entered())
 
 
 /datum/material/fabric/ectofibre
@@ -1473,7 +1761,7 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("thermal", 9)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
-		addTrigger(triggersOnLife, new /datum/materialProc/generic_itchy_onlife())
+		addTrigger(TRIGGERS_ON_LIFE, new /datum/materialProc/generic_itchy_onlife())
 
 
 /datum/material/fabric/dyneema
@@ -1573,3 +1861,22 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("n_radioactive", 5)
 		setProperty("radioactive", 3)
 		setProperty("electrical", 7)
+
+/// Material for bundles of glowsticks as fuel rods
+/datum/material/metal/glowstick
+	mat_id = "glowstick"
+	name = "glowsticks" //"it is made of glowsticks"
+	canMix = 0 //don't make alloys of this
+	desc = "It's just a bunch of glowsticks stuck together. How is this an ingot?"
+	color = "#00e618"
+	alpha = 200
+	quality = 60
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 3)
+		setProperty("radioactive", 1)
+		setProperty("electrical", 2)
+		setProperty("thermal", 3)
+		addTrigger(TRIGGERS_ON_ADD, new /datum/materialProc/glowstick_add())

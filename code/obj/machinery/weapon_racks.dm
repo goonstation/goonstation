@@ -162,13 +162,18 @@
 			src.updateUsrDialog()
 			return
 
+		if (src.panelopen && (issnippingtool(W) || ispulsingtool(W))) //Taken from fabricator code so tools open the hacking
+			src.Attackhand(user)
+			return
+
 		if (src.amount >= src.max_amount)
 			boutput(user, "You can't fit anything else in this rack.")
 			return
 		if (W.cant_drop == 1)
 			var/mob/living/carbon/human/H = user
-			H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
-			boutput(user, "The [src]'s automated loader wirrs and rips off [H]'s arm!")
+			if(istype(H))
+				H.sever_limb(H.hand == LEFT_HAND ? "l_arm" : "r_arm")
+				boutput(user, "The [src]'s automated loader wirrs and rips off [H]'s arm!")
 			return
 		else
 			if (valid_item(W))
@@ -223,6 +228,10 @@
 		if (src.malfunction)
 			user.shock(src, 7500, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0)
 
+			//Due to using attack_hand with items in hand this makes sure nothing unintended happenes while hacking like taking a weapon out with a tool
+		if ((user.find_tool_in_hand(TOOL_SNIPPING) || user.find_tool_in_hand(TOOL_PULSING)) && user.equipped())
+			return
+
 		if (!src.allowed(user) && !hacked)
 			boutput(user, "<span class='alert'>Access denied.</span>")
 			return
@@ -274,7 +283,8 @@
 				return
 			else if (src.isWireColorCut(twire)) src.mend(twire)
 			else src.cut(twire)
-			src.updateUsrDialog()
+			//src.updateUsrDialog() currently does nothing
+			src.Attackhand(usr) //refreshes ui definitly not the most efficient way
 
 		if ((href_list["pulsewire"]) && (src.panelopen || isAI(usr)))
 			var/twire = text2num_safe(href_list["pulsewire"])
@@ -285,7 +295,8 @@
 				boutput(usr, "You can't pulse a cut wire.")
 				return
 			else src.pulse(twire)
-			src.updateUsrDialog()
+			//src.updateUsrDialog() currently does nothing
+			src.Attackhand(usr) //refreshes ui definitly not the most efficient way
 
 	proc/isWireColorCut(var/wireColor)
 		var/wireFlag = APCWireColorToFlag[wireColor]

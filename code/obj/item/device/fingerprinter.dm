@@ -13,6 +13,9 @@
 	/// List of prints currently scanned into the device. Each print maps to the name of the owner.
 	var/list/current_prints
 	var/mode = FINGERPRINT_READ
+	HELP_MESSAGE_OVERRIDE({"Toggle modes by using the fingerprinter in hand.
+							While on <b>"Read"</b> mode, use the tool on someone or something that has prints on it to add all the prints to the tool's print database.
+							While on <b>"Plant"</b> mode, use the tool on anything to add any prints from the database on it."})
 
 	New()
 		. = ..()

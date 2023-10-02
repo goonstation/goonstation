@@ -102,7 +102,7 @@
 /mob/living/intangible/flock/flockmind/proc/spawnEgg()
 	if(src.flock)
 		new /obj/flock_structure/rift(get_turf(src), src.flock)
-		playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1)
+		playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, TRUE)
 	else
 		boutput(src, "<span class='alert'>You don't have a flock, it's not going to listen to you! Also call a coder, this should be impossible!</span>")
 		return

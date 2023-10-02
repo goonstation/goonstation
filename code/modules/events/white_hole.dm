@@ -53,7 +53,9 @@
 		if (!istype(T,/turf/))
 			if(isnull(random_floor_turfs))
 				build_random_floor_turf_list()
-			T = pick(random_floor_turfs)
+			while(isnull(T) || istype(T, /turf/simulated/floor/airless/plating/catwalk) || total_density(T) > 0)
+				T = pick(random_floor_turfs)
+				if(prob(1)) break // prevent infinite loop
 
 		if(isnull(grow_duration))
 			grow_duration = 2 MINUTES + rand(-30 SECONDS, 30 SECONDS)
@@ -67,6 +69,7 @@
 		logTheThing(LOG_ADMIN, usr, "Spawned a white hole anomaly with origin [whitehole.source_location] at [log_loc(T)]")
 
 
+ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 /obj/whitehole
 	name = "white hole"
 	icon = 'icons/effects/160x160.dmi'
@@ -342,7 +345,7 @@
 			/mob/living/carbon/human/normal/engineer = 0.5,
 			/mob/living/carbon/human/normal/chiefengineer = 0.1,
 			/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
-			/obj/item/clothing/glasses/meson = 0.5,
+			/obj/item/clothing/glasses/toggleable/meson = 0.5,
 			/obj/item/old_grenade/graviton = 0.2,
 			/obj/gravity_well_generator = 0.5,
 			/obj/item/raw_material/scrap_metal = 4,
@@ -387,7 +390,7 @@
 		"hell" = list(
 			"fireflash" = 15,
 			/obj/hotspot = 10,
-			/obj/critter/lavacrab = 5,
+			/mob/living/critter/small_animal/crab/lava = 5,
 			/obj/submachine/slot_machine = 5,
 			#ifdef SECRETS_ENABLED
 			/obj/critter/slime/magma = 2,
@@ -430,7 +433,7 @@
 			/obj/item/paper = 3,
 			/obj/critter/killertomato = 0.5,
 			/mob/living/critter/small_animal/cat/synth = 1,
-			/mob/living/critter/maneater = 0.3,
+			/mob/living/critter/plant/maneater = 0.3,
 		),
 		"maint" = list(
 			/obj/decal/cleanable/rust = 10,
@@ -526,7 +529,7 @@
 			/obj/item/hand_tele = 2,
 			/obj/machinery/shipalert = 1,
 			/obj/item/storage/box/PDAbox = 1,
-			/obj/item/storage/box/trackimp_kit2 = 1,
+			/obj/item/storage/box/trackimp_kit = 1,
 			/obj/item/cigarbox/gold = 2,
 			/obj/item/paper/book/from_file/captaining_101 = 1,
 			/obj/shrub/captainshrub = 0.5,
@@ -603,7 +606,7 @@
 			/obj/machinery/bot/medbot = 5,
 			/obj/machinery/bot/medbot/mysterious/emagged = 1,
 			/datum/reagent/blood = 5,
-			/datum/reagent/fooddrink/coffee = 2,
+			/datum/reagent/fooddrink/caffeinated/coffee = 2,
 			/obj/item/paper = 1,
 			/obj/item/sticker/postit = 0.5,
 		),
@@ -620,7 +623,7 @@
 			/obj/item/device/flash = 3,
 			/obj/item/clothing/head/beret/prisoner = 5,
 			/obj/item/clothing/shoes/orange = 5,
-			/obj/item/clothing/under/misc = 5,
+			/obj/item/clothing/under/misc/prisoner = 5,
 			/obj/item/clothing/shoes/swat = 2,
 			/obj/item/clothing/head/red = 4,
 			/obj/item/clothing/head/helmet/siren = 2,
@@ -703,7 +706,7 @@
 			/obj/item/nuclear_waste = 20,
 			/obj/decal/cleanable/machine_debris/radioactive = 20,
 			/obj/item/storage/pill_bottle/antirad = 15,
-			/obj/item/clothing/glasses/meson = 1,
+			/obj/item/clothing/glasses/toggleable/meson = 1,
 			/obj/item/reagent_containers/emergency_injector/anti_rad = 15,
 			/obj/storage/closet/radiation = 10,
 			/obj/item/reagent_containers/pill/antirad = 10,
@@ -793,13 +796,16 @@
 
 		if(triggered_by_event)
 			var/turf/T = get_turf(src)
-			for (var/mob/M in GET_NEARBY(T, 15))
-				if (M.client)
-					boutput(M, "<span class='alert'>The air grows light and thin. Something feels terribly wrong.</span>")
-					shake_camera(M, 5, 16)
-			playsound(src,'sound/effects/creaking_metal1.ogg',100,0,5,-0.5)
+			for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, T, 15))
+				boutput(C, "<span class='alert'>The air grows light and thin. Something feels terribly wrong.</span>")
+				shake_camera(C.mob, 5, 16)
+			playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,-0.5)
 
 		processing_items |= src
+
+	proc/admin_activate()
+		set name = "Activate"
+		start_time = TIME - grow_duration
 
 	bullet_act(obj/projectile/P)
 		shoot_reflected_to_sender(P, src)
@@ -841,7 +847,7 @@
 			for_by_tcl(IX, /obj/machinery/interdictor)
 				if (IX.expend_interdict(500, src))
 					if(prob(20))
-						playsound(IX,'sound/machines/alarm_a.ogg',20,0,5,-1.5)
+						playsound(IX,'sound/machines/alarm_a.ogg',20,FALSE,5,-1.5)
 						IX.visible_message("<span class='alert'><b>[IX] emits an anti-gravitational anomaly warning!</b></span>")
 					if(state != "active")
 						grow_duration += 4 SECOND
@@ -858,7 +864,7 @@
 			if(state == "static")
 				state = "growing"
 				src.visible_message("<span class='alert'><b>[src] begins to uncollapse out of itself!</b></span>")
-				playsound(src,'sound/machines/engine_alert3.ogg',100,0,5,-0.5)
+				playsound(src,'sound/machines/engine_alert3.ogg',100,FALSE,5,-0.5)
 				if (random_events.announce_events && triggered_by_event)
 					command_alert("A severe anti-gravitational anomaly has been detected on the [station_or_ship()] in [get_area(src)]. It will uncollapse into a white hole. Consider quarantining it off.", "Gravitational Anomaly", alert_origin = ALERT_ANOMALY)
 			return
@@ -866,7 +872,7 @@
 		if(state == "growing")
 			state = "active"
 			src.visible_message("<span class='alert'><b>[src] uncollapses into a white hole!</b></span>")
-			playsound(src, 'sound/machines/singulo_start.ogg', 90, 0, 5, -1)
+			playsound(src, 'sound/machines/singulo_start.ogg', 90, FALSE, 5, -1)
 			animate(src, transform = matrix(1.2, MATRIX_SCALE), time = 0.3 SECONDS, loop = 0, easing = BOUNCE_EASING)
 			animate(transform = matrix(1, MATRIX_SCALE), time = 0.3 SECONDS, loop = 0, easing = BOUNCE_EASING)
 
@@ -875,7 +881,7 @@
 			SPAWN(0)
 				animate(src, transform = matrix() / 100, time = 3 SECONDS, loop = 0)
 			state = "dying"
-			playsound(src, 'sound/machines/singulo_start.ogg', 90, 0, 5, -2)
+			playsound(src, 'sound/machines/singulo_start.ogg', 90, FALSE, 5, -2)
 
 		// push or throw things away from the white hole
 		for (var/atom/movable/X in range(7,src))
@@ -934,7 +940,7 @@
 				target = src.get_target_mob()
 			if(isnull(target))
 				target = locate(rand(-7, 7) + src.x, rand(-7, 7) + src.y, src.z)
-			. = shoot_projectile_ST(src, new spawn_type, target)
+			. = shoot_projectile_ST_pixel_spread(src, new spawn_type, target)
 		else if(ispath(spawn_type, /datum/reagent))
 			var/datum/reagent/dummy = spawn_type
 			var/reagent_id = initial(dummy.id)
@@ -1045,6 +1051,7 @@
 				if (bag_it)
 					var/obj/item/body_bag/bag = new(src.loc)
 					bag.UpdateIcon()
+					human.is_npc = TRUE // NPC is set for direct mob returns separately
 					human.set_loc(bag)
 					. = bag
 			if("geneinjector")
@@ -1090,6 +1097,7 @@
 				L.TakeDamage("chest", rand(0, 80), rand(0, 80), rand(0, 80))
 			if(ishuman(.))
 				var/mob/living/carbon/human/H = .
+				H.is_npc = TRUE
 				SPAWN(1)
 					var/list/limbs = list("l_arm", "r_arm", "l_leg", "r_leg")
 					shuffle_list(limbs)
@@ -1302,7 +1310,9 @@
 		var/obj/whitehole/whitehole = target
 		if(!istype(whitehole))
 			CRASH("generate_fish called on whitehole fishing spot with non-whitehole target")
-		. = whitehole.generate_thing(whitehole.source_location)
+		var/atom/fish = whitehole.generate_thing(whitehole.source_location)
+		fish.name += "fish"
+		return fish
 
 	try_fish(mob/user, obj/item/fishing_rod/fishing_rod, atom/target)
 		. = ..()

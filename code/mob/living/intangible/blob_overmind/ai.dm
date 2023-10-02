@@ -54,7 +54,7 @@
 		src.next_id++
 		state = STATE_DEPLOYING
 		..()
-		name = "Blob AI #[ai_id]"
+		name = "blob AI #[ai_id]"
 		real_name = name
 		deploy = locate(/datum/blob_ability/plant_nucleus) in abilities
 
@@ -318,8 +318,8 @@
 						return
 
 					color = random_color()
-					my_material.color = color
-					initial_material.color = color
+					my_material.setColor(color)
+					initial_material.setColor(color)
 					var/r = hex2num(copytext(color, 2, 4))
 					var/g = hex2num(copytext(color, 4, 6))
 					var/b = hex2num(copytext(color, 6))

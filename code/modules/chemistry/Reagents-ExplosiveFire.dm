@@ -159,7 +159,7 @@ datum
 			reaction_obj(var/obj/O, var/volume)
 				if (!holder)
 					return
-				if (volume >= 5 && holder.total_temperature >= T0C + 400 && (istype(O, /obj/steel_beams) || (O.material && O.material.mat_id == "steel")))
+				if (volume >= 5 && holder.total_temperature >= T0C + 400 && (istype(O, /obj/steel_beams) || (O.material && O.material.getID() == "steel")))
 					O.visible_message("<span class='alert'>[O] melts!</span>")
 					qdel(O)
 
@@ -182,7 +182,7 @@ datum
 					return
 				if (!istype(T) || volume < 5 || holder.total_temperature < T0C + 400)
 					return
-				if (T.material && T.material.mat_id == "steel")
+				if (T.material && T.material.getID() == "steel")
 					//T.visible_message("<span class='alert'>[T] melts!</span>")
 					T.ex_act(2)
 
@@ -197,6 +197,7 @@ datum
 			transparency = 255
 			volatility = 1.5
 			minimum_reaction_temperature = T0C+100
+			fluid_flags = FLUID_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				var/turf/simulated/A = holder.my_atom
@@ -242,20 +243,7 @@ datum
 			fluid_g = 200
 			fluid_b = 200
 			transparency = 230
-			minimum_reaction_temperature = T0C+25
-			var/ignited = 0
-
-			reaction_temperature(exposed_temperature, exposed_volume)
-				var/datum/reagents/myholder = holder
-				var/vol = volume
-				myholder.del_reagent(id)
-				if(!myholder?.my_atom?.is_open_container() && !istype(myholder, /datum/reagents/fluid_group))
-					if(myholder.my_atom)
-						for(var/mob/M in AIviewers(5, get_turf(myholder.my_atom)))
-							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
-				else if(!ignited)
-					ignited = 1
-					myholder.smoke_start(vol) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
+			// Heat reaction moved to reactions to account for opening and closing containers
 
 		combustible/propellant
 			name = "aerosol propellant"
@@ -266,21 +254,6 @@ datum
 			fluid_g = 200
 			fluid_b = 255
 			transparency = 230
-			minimum_reaction_temperature = T0C + 100
-			var/ignited = FALSE
-
-			reaction_temperature(exposed_temperature, exposed_volume)
-				var/datum/reagents/myholder = holder
-				if(!holder?.my_atom?.is_open_container())
-					if(holder.my_atom)
-						for(var/mob/M in AIviewers(5, get_turf(holder.my_atom)))
-							boutput(M, "<span class='notice'>With nowhere to go, the smoke settles.</span>")
-				else if(!ignited)
-					ignited = TRUE
-					var/vol = volume
-					SPAWN(1 DECI SECOND)
-						myholder.smoke_start(vol,classic = 1) //moved to a proc in Chemistry-Holder.dm so that the instant reaction and powder can use the same proc
-				myholder.del_reagent(id)
 
 		combustible/sonicpowder
 			name = "hootingium"
@@ -472,6 +445,7 @@ datum
 			transparency = 150
 			viscosity = 0.7
 			minimum_reaction_temperature = 1000
+			fluid_flags = FLUID_SMOKE_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				holder.del_reagent(id)
@@ -667,6 +641,7 @@ datum
 			depletion_rate = 0.05
 			penetrates_skin = 1 // think of it as just being all over them i guess
 			minimum_reaction_temperature = T0C+200
+			fluid_flags = FLUID_BANNED | FLUID_STACKING_BANNED
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				if(src.reacting)
@@ -726,6 +701,9 @@ datum
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
+						if(istype(holder.my_atom, /obj))
+							var/obj/container = holder.my_atom
+							container.shatter_chemically(projectiles = TRUE)
 
 			reaction_obj(var/obj/O, var/volume)
 				return
@@ -835,3 +813,19 @@ datum
 
 			reaction_temperature(exposed_temperature, exposed_volume)
 				bang()
+
+		combustible/photophosphide
+			id = "photophosphide"
+			name = "photophosphide"
+			random_chem_blacklisted = TRUE //probably for the best ??
+			description = "A photosensitive explosive reagent that detonates when exposed to relatively small amounts of light."
+			reagent_state = SOLID
+			fluid_r = 149
+			fluid_g = 119
+			fluid_b = 163
+			transparency = 255
+			taste = "sandy"
+			fluid_flags = FLUID_BANNED | FLUID_STACKING_BANNED | FLUID_SMOKE_BANNED
+
+			reaction_turf()
+				return

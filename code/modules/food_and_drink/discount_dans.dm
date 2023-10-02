@@ -5,6 +5,7 @@
 	icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 	icon_state = "noodlecup"
 	heal_amt = 1
+	fill_amt = 3
 	var/activated = 0
 	initial_volume = 60
 	can_recycle = FALSE
@@ -183,11 +184,12 @@
 	icon_state = "burrito"
 	bites_left = 3
 	heal_amt = 2
+	fill_amt = 3
 	doants = 0 //Ants aren't dumb enough to try to eat these.
 	var/activated = 0
 	initial_volume = 50
 	initial_reagents = list("msg"=9)
-	brew_result = list("sewage", "ethanol")
+	brew_result = list("sewage"=20, "ethanol"=20)
 	food_effects = list("food_sweaty")
 
 	New()
@@ -308,7 +310,7 @@
 	proc/splat()
 		var/turf/T = get_turf(src)
 		if(!locate(/obj/decal/cleanable/vomit) in T)
-			playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+			playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 			var/obj/decal/cleanable/vomit/filling = make_cleanable( /obj/decal/cleanable/vomit,src)
 			var/icon/fillicon = icon(filling.icon, filling.icon_state)
 			fillicon.MapColors(0.5, 0.25, 0)
@@ -331,7 +333,7 @@
 	var/color_prob = 100
 	initial_volume = 50
 	initial_reagents = list("badgrease"=3,"VHFCS"=9)
-	brew_result = list("sewage", "yuck")
+	brew_result = list("sewage"=20, "yuck"=20)
 	food_effects = list("food_sweaty")
 
 
@@ -341,7 +343,7 @@
 		icon = 'icons/obj/foodNdrink/food_discountdans.dmi'
 		icon_state = "snackcake2"
 		color_prob = 10
-		brew_result = list("sewage", "mucus")
+		brew_result = list("sewage"=20, "mucus"=20)
 
 	New()
 		..()
@@ -439,6 +441,7 @@
 	required_utensil = REQUIRED_UTENSIL_FORK
 	bites_left = 2
 	heal_amt = 2
+	fill_amt = 4 //it's a whole dinner!
 	doants = 0 //Ants aren't dumb enough to try to eat these.
 	var/activated = 0
 	initial_volume = 50
@@ -576,6 +579,7 @@
 	icon_state = "strudel"
 	bites_left = 2
 	heal_amt = 2
+	fill_amt = 2
 	doants = 0
 	initial_volume = 30
 	initial_reagents = list("juice_strawberry"=15,"vanilla"=6)
@@ -586,7 +590,7 @@
 
 		var/i = 3
 		while(i-- > 0)
-			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","cleaner","luminol","poo","urine","nicotine","mint","tea","juice_lemon","juice_lime","juice_apple","juice_cherry","guacamole","egg","sewage","uranium"), 3)
+			reagents.add_reagent(pick("beff","sugar","eggnog","chocolate","cleaner","luminol","poo","urine","nicotine","mint","tea","juice_lemon","juice_lime","juice_apple","juice_banana","juice_cherry","guacamole","egg","sewage","uranium"), 3)
 
 
 	heal(var/mob/M)

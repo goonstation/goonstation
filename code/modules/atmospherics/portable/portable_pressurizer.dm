@@ -146,7 +146,7 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			material_progress = 0
 			if(length(src.contents))
 				target_material = pick(src.contents)
-				if((target_material.amount > 1) && (target_material.material?.name in src.whitelist))
+				if((target_material.amount > 1) && (target_material.material?.getName() in src.whitelist))
 					var/atom/movable/splitStack = target_material.split_stack(target_material.amount-1)
 					splitStack.set_loc(src)
 				target_material.set_loc(null)
@@ -162,8 +162,8 @@ TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
 			var/progress = min(src.process_rate * 5,100-material_progress)
 			var/datum/gas_mixture/GM = new /datum/gas_mixture
 			GM.temperature = T20C
-			if(target_material.material?.name in src.whitelist)
-				switch(target_material.material.name)
+			if(target_material.material?.getName() in src.whitelist)
+				switch(target_material.material.getName())
 					if("molitz")
 						GM.oxygen += 1500 * progress / 100
 					if("viscerite")

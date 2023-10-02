@@ -11,6 +11,7 @@
 	var/current_bucket
 	var/n_occupants = 0
 	var/max_occupants = INFINITY
+	HELP_MESSAGE_OVERRIDE({"Click on someone on <span class='grab'>grab</span> intent, then click on the Port-A-Puke with the grab to place them inside. They will come out automatically once they reach deep critical status or die."})
 
 
 	New()
@@ -160,7 +161,7 @@
 		if (iswrenchingtool(I))
 			anchored = !anchored
 			user.show_text("You [anchored ? "attach" : "release"] \the [src]'s floor clamps", "red")
-			playsound(src, 'sound/items/Ratchet.ogg', 40, 0, 0)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, FALSE, 0)
 			return
 
 		. = ..()

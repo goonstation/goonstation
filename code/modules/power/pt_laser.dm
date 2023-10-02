@@ -8,7 +8,7 @@
 	icon_state = "ptl"
 	density = 1
 	anchored = ANCHORED_ALWAYS
-	dir = 4
+	dir = EAST
 	bound_height = 96
 	bound_width = 96
 	var/output = 0		//power output of the beam
@@ -118,11 +118,11 @@
 	if(terminal && !(src.status & BROKEN))
 		src.excess = (terminal.surplus() + load_last_tick) //otherwise the charge used by this machine last tick is counted against the charge available to it this tick aaaaaaaaaaaaaa
 		if(charging && src.excess >= src.chargelevel)		// if there's power available, try to charge
-			var/load = min(capacity-charge, chargelevel)		// charge at set rate, limited to spare capacity
-			charge += load * mult		// increase the charge
-			add_load(load)		// add the load to the terminal side network
-			load_last_tick = load
-			if (!src.is_charging) src.is_charging = TRUE
+			var/load = min(capacity-charge, chargelevel)	// charge at set rate, limited to spare capacity
+			if(terminal.add_load(load))						// attempt to add the load to the terminal side network
+				charge += load * mult						// increase the charge if we did
+				load_last_tick = load
+				if (!src.is_charging) src.is_charging = TRUE
 		else
 			load_last_tick = 0
 			if (src.is_charging) src.is_charging = FALSE
@@ -283,11 +283,6 @@
 			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
 			qdel(O)
 
-/obj/machinery/power/pt_laser/add_load(var/amount)
-	if(terminal?.powernet)
-		terminal.powernet.newload += amount
-
-
 /obj/machinery/power/pt_laser/proc/can_fire()
 	return abs(src.output) <= src.charge
 
@@ -367,10 +362,7 @@
 		//Output controls
 		if("toggleOutput")
 			src.online = !src.online
-			if(online)
-				src.start_firing()
-			else
-				src.stop_firing()
+			src.process(1)
 			. = TRUE
 		if("setOutput")
 			. = TRUE
@@ -525,7 +517,7 @@ TYPEINFO(/obj/laser_sink/mirror)
 
 /obj/laser_sink/mirror/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
 		src.anchored = !src.anchored
 	else
@@ -596,13 +588,13 @@ TYPEINFO(/obj/laser_sink/splitter)
 //todo: componentize anchoring behaviour
 /obj/laser_sink/splitter/attackby(obj/item/I, mob/user)
 	if (isscrewingtool(I))
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
+		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		user.visible_message("<span class='notice'>[user] [src.anchored ? "un" : ""]screws [src] [src.anchored ? "from" : "to"] the floor.</span>")
 		src.anchored = !src.anchored
 	else if (ispryingtool(I))
 		if (ON_COOLDOWN(src, "rotate", 0.3 SECONDS))
 			return
-		playsound(src, 'sound/items/Crowbar.ogg', 50, 1)
+		playsound(src, 'sound/items/Crowbar.ogg', 50, TRUE)
 		src.dir = turn(src.dir, 90)
 	else
 		..()
@@ -655,7 +647,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser
 	icon = 'icons/obj/power.dmi'
 	icon_state = "ptl_beam"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	density = 0
 	luminosity = 1
 	mouse_opacity = 0
@@ -841,7 +833,7 @@ TYPEINFO(/obj/laser_sink/splitter)
 /obj/linked_laser/ptl/try_propagate()
 	. = ..()
 	var/turf/T = get_next_turf()
-	if (!T) //edge of z_level
+	if (!T || istype(T, /turf/unsimulated/wall/trench)) //edge of z_level or oshan trench
 		var/obj/laser_sink/ptl_seller/seller = get_singleton(/obj/laser_sink/ptl_seller)
 		if (seller.incident(src))
 			src.sink = seller

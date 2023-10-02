@@ -20,6 +20,7 @@
 // shuttle landmarks
 #define LANDMARK_SHUTTLE_CENTCOM "shuttle-centcom"
 #define LANDMARK_SHUTTLE_TRANSIT "shuttle-transit"
+#define LANDMARK_SHUTTLE_SOUND "shuttle-subwoofer"
 
 // nukies
 #define LANDMARK_SYNDICATE "Syndicate-Spawn"
@@ -100,6 +101,8 @@
 #define LANDMARK_LRT "lrt landmark"
 #define LANDMARK_SAMOSTREL_WARP "samostrel"
 #define LANDMARK_EVIL_CHEF_CORPSE "evilchef_corpse"
+#define LANDMARK_PLANETS "artemis planets"
+#define LANDMARK_SHIPS "artemis ships"
 
 // Visual mirror warp modes
 #define LANDMARK_VM_WARP_NONE 0

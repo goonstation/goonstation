@@ -100,11 +100,11 @@ TYPEINFO(/obj/item/camera/large)
 		if (user.find_in_hand(src) && user.mind && user.mind.special_role == ROLE_SPY_THIEF) // No metagming this
 			if (!src.flash_mode)
 				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
-				playsound(user, 'sound/items/pickup_defib.ogg', 100, 1)
+				playsound(user, 'sound/items/pickup_defib.ogg', 100, TRUE)
 				src.icon_state = "camera_flash"
 			else
 				user.show_text("You use the secret switch to set the camera to take photos.", "blue")
-				playsound(user, 'sound/items/putback_defib.ogg', 100, 1)
+				playsound(user, 'sound/items/putback_defib.ogg', 100, TRUE)
 				src.icon_state = "camera"
 			src.flash_mode = !src.flash_mode
 			src.UpdateIcon()
@@ -148,7 +148,7 @@ TYPEINFO(/obj/item/camera/large)
 		var/mob/M = target
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
-		playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 		flick("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
@@ -387,18 +387,17 @@ TYPEINFO(/obj/item/camera_film/large)
 				if (iscarbon(M))
 					var/mob/living/carbon/temp = M
 					if (temp.l_hand || temp.r_hand)
-						var/they_are = M.gender == "male" ? "He's" : M.gender == "female" ? "She's" : "They're" // I wanna just use he_or_she() but it wouldn't really work
 						if (temp.l_hand)
-							holding = "[they_are] holding \a [temp.l_hand]"
+							holding = "[hes_or_shes(M)] holding \a [temp.l_hand]"
 						if (temp.r_hand)
 							if (holding)
 								holding += " and \a [temp.r_hand]."
 							else
-								holding = "[they_are] holding \a [temp.r_hand]."
+								holding = "[hes_or_shes(M)] holding \a [temp.r_hand]."
 						else if (holding)
 							holding += "."
 
-				var/they_look = M.gender == "male" ? "he looks" : M.gender == "female" ? "she looks" : "they look"
+				var/they_look = "[he_or_she(M)] look[M.get_pronouns().pluralize ? null : "s"]"
 				var/health_info = M.health < 75 ? " - [they_look][M.health < 25 ? " really" : null] hurt" : null
 				if (powerflash && M == target && !M.eyes_protected_from_light())
 					if (!health_info)

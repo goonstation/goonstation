@@ -4,6 +4,8 @@ SPACE CLEANER
 MOP
 SPONGES??
 WET FLOOR SIGN
+HANDHELD VACUUM
+TRASH BAG
 
 */
 /obj/item/spraybottle
@@ -288,6 +290,21 @@ WET FLOOR SIGN
 	icon_state = "mop_orange"
 	item_state = "mop_orange"
 
+/obj/item/mop/orange/battleworn
+	desc = "It's been through some shit."
+	name = "battleworn mop"
+	rarity = 6
+	force = 6
+	quality = 80
+
+	New()
+		..()
+		src.setProperty("impact", 2)
+		src.setProperty("block", 20)
+		src.setProperty("frenzy", 1)
+		setItemSpecial(/datum/item_special/whirlwind)
+
+
 /obj/item/mop/New()
 	..()
 	src.create_reagents(20)
@@ -304,48 +321,45 @@ WET FLOOR SIGN
 	if(reagents?.total_volume)
 		. += "<span class='notice'>[src] is wet!</span>"
 
-/obj/item/mop/afterattack(atom/A, mob/user as mob)// the main utility of all moppage and mopkind
+/obj/item/mop/afterattack(atom/A, mob/user)// the main utility of all moppage and mopkind
 	if (ismob(A))
 		return
+	if (CHECK_LIQUID_CLICK(A))
+		var/turf/T = get_turf(A)
+		A = T.active_liquid || A // if we target a turf with an active liquid, target the liquid. else target the initial target
+
 	if ((src.reagents.total_volume < 1 || mopcount >= 9) && !istype(A, /obj/fluid))
 		boutput(user, "<span class='notice'>Your mop is dry!</span>", group = "mop")
 		return
 
-	if(istype(A, /obj/fluid/airborne)) // no mopping up smoke
-		var/turf/T = get_turf(A)
-		if(T.active_liquid)
-			A = T.active_liquid
-		else
-			A = T
 	if (istype(A, /turf/simulated) || istype(A, /obj/decal/cleanable) || istype(A, /obj/fluid))
-		//user.visible_message("<span class='alert'><B>[user] begins to clean [A].</B></span>")
-		actions.start(new/datum/action/bar/icon/mop_thing(src,A), user)
-	return
+		actions.start(new/datum/action/bar/icon/mop_thing(src, A), user)
 
 /obj/item/mop/proc/clean(atom/A, mob/user as mob)
-	var/turf/U = get_turf(A)
+	var/turf/T = get_turf(A)
 	JOB_XP(user, "Janitor", 2)
 	playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 
 	// Some people use mops for heat-delayed fireballs and stuff.
 	// Mopping the floor with just water isn't of any interest, however (Convair880).
 	if (src.reagents.total_volume && (!src.reagents.has_reagent("water") || (src.reagents.has_reagent("water") && length(src.reagents.reagent_list) > 1)))
-		logTheThing(LOG_CHEMISTRY, user, "mops [U && isturf(U) ? "[U]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
+		logTheThing(LOG_CHEMISTRY, user, "mops [T && isturf(T) ? "[T]" : "[A]"] with chemicals [log_reagents(src)] at [log_loc(user)].")
 
-	if (U && isturf(U))
-		src.reagents.reaction(U,1,5)
+	var/obj/fluid/target_fluid = T.active_liquid || A // we check for existing fluid here because we create a fluid below if there isn't one
+
+	if (T)
+		src.reagents.reaction(T, 1, 5)
 		src.reagents.remove_any(5)
 		mopcount++
 
-	var/obj/fluid/target_fluid = A
 	if (istype(target_fluid))
 		user.show_text("You soak up [target_fluid] with [src].", "blue", group = "mop")
 		if (src.reagents && target_fluid.group)
 			target_fluid.group.drain(target_fluid,1,src)
 		if (mopcount > 0)
 			mopcount--
-	else if (U && isturf(U))
-		U.clean_forensic()
+	else if (T)
+		T.clean_forensic()
 		user.show_text("You have mopped up [A]!", "blue", group = "mop")
 	else
 		A.clean_forensic()
@@ -367,9 +381,6 @@ WET FLOOR SIGN
 			user.visible_message("[user] raises a mop as a lance!", "You raise the mop into jousting position.")
 			S.joustingTool = src
 	else
-		for (var/obj/fluid/fluid in user.loc)
-			src.AfterAttack(fluid, user)
-			return
 		if (isturf(user.loc))
 			src.AfterAttack(user.loc, user)
 
@@ -386,7 +397,7 @@ WET FLOOR SIGN
 	item_state = "mop_old"
 	desc = "This thing looks ancient, but it sure does get the job done!"
 
-	afterattack(atom/A, mob/user as mob)
+	afterattack(atom/A, mob/user)
 		if (src.reagents.total_volume < 1 || mopcount >= 5)
 			boutput(user, "<span class='notice'>Your mop is dry!</span>")
 			return
@@ -462,6 +473,11 @@ WET FLOOR SIGN
 			sponge_size(S, size)
 		return 0
 
+#define SPONGE_SOAK "Soak up"
+#define SPONGE_DRY "Dry"
+#define SPONGE_WIPE "Wipe down"
+#define SPONGE_WRING "Wring out"
+#define SPONGE_WET "Wet"
 /obj/item/sponge
 	name = "sponge"
 	desc = "After careful analysis, you've come to the conclusion that the strange object is, in fact, a sponge."
@@ -541,125 +557,117 @@ WET FLOOR SIGN
 
 /obj/item/sponge/process()
 	if (!src.reagents) return
-	if (!istype(src.loc,/turf/simulated/floor)) return
-	if (src.reagents && src.reagents.total_volume >= src.reagents.maximum_volume) return
-	var/turf/simulated/floor/T = src.loc
-	if (T.active_liquid && T.active_liquid.group)
-		T.active_liquid.group.drain(T.active_liquid,1,src)
+	if (src.reagents.total_volume >= src.reagents.maximum_volume) return
+	if (isfloor(src.loc))
+		var/turf/T = src.loc
+		if (T.active_liquid && T.active_liquid.group)
+			T.active_liquid.group.drain(T.active_liquid,1,src)
+	else if (istype(src.loc, /turf/space/fluid))
+		src.reagents.add_reagent(ocean_reagent_id,10)
 
-/obj/item/sponge/afterattack(atom/target, mob/user as mob)
+/obj/item/sponge/proc/get_action_options(atom/target)
+	if (CHECK_LIQUID_CLICK(target))
+		var/turf/T = get_turf(target)
+		if (T.active_liquid)
+			return list(SPONGE_SOAK) // only soak if we click a fluid
+
+	. = list()
+	if (CHECK_LIQUID_CLICK(target))
+		var/turf/simulated/T = get_turf(target)
+		if (T.reagents?.total_volume)
+			. |= SPONGE_SOAK
+		else if (T.wet)
+			. |= SPONGE_DRY
+	if (src.reagents.total_volume)
+		. |= SPONGE_WIPE
+		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
+			. |= SPONGE_WRING
+	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
+		if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
+			. |= SPONGE_WET
+
+/obj/item/sponge/afterattack(atom/target, mob/user)
 	if (!src.reagents)
 		return ..()
 
-	if(istype(target, /obj/fluid/airborne)) // no sponging up smoke
-		target = get_turf(target)
-	if (!isarea(target))
-		var/list/choices = list()
-		var/target_is_fluid = istype(target,/obj/fluid)
-		if (target_is_fluid)
-			choices |= "Soak up"
-		else if (istype(target, /turf/simulated))
-			var/turf/simulated/T = target
-			if (T.reagents && T.reagents.total_volume || T.active_liquid)
-				choices |= "Soak up"
-			if (T.wet)
-				choices |= "Dry"
-			if (src.reagents.total_volume)
-				choices |= "Wipe down"
-		if (src.reagents.total_volume && !target_is_fluid)
-			choices |= "Wipe down"
-			if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
-				choices |= "Wring out"
-		if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
-			if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
-				choices |= "Wet"
+	var/list/choices = src.get_action_options(target)
 
-		if (!choices.len)
-			boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
-			return
+	if (!length(choices))
+		boutput(user, "<span class='notice'>You can't think of anything to do with [src].</span>")
+		return
 
-		var/selection
-		if (length(choices) == 1) // at spy's request the sponge will default to the only thing it can do ARE YOU HAPPY NOW SPY
-			selection = choices[1]
-		else
-			selection = input(user, "What do you want to do with [src]?", "Selection") as null|anything in choices
-		if (isnull(selection) || user.equipped() != src || BOUNDS_DIST(user, target) > 0)
-			return
-
-		switch (selection)
-			if ("Soak up")
-				if (src.reagents.total_volume >= src.reagents.maximum_volume)
-					user.show_text("[src] is full! Wring it out first.", "blue")
-					return
-
-				var/turf/T = target
-				var/obj/fluid/F = target
-
-				if (!F && T?.active_liquid)
-					F = T.active_liquid
-
-				if (!(T?.reagents) && !istype(F))
-					return
-
-				if (F)
-					if (F.group)
-						F.group.drain(F,1,src)
-					else
-						F.removed()
-					user.visible_message("[user] soaks up [F] with [src].",\
-					"<span class='notice'>You soak up [F] with [src].</span>", group="soak")
-				else
-					target.reagents.trans_to(src, 15)
-					user.visible_message("[user] soaks up the mess on [target] with [src].",\
-					"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soak")
-
-				JOB_XP(user, "Janitor", 1)
-				return
-
-			if ("Dry")
-				if (!istype(target, /turf/simulated)) // really, how?? :I
-					return
-				var/turf/simulated/T = target
-				user.visible_message("[user] dries up [T] with [src].",\
-				"<span class='notice'>You dry up [T] with [src].</span>")
-				JOB_XP(user, "Janitor", 1)
-				src.reagents.add_reagent("water", rand(5,15))
-				T.wet = 0
-				return
-
-			if ("Wipe down")
-				user.visible_message("[user] wipes down [target] with [src].",\
-				"<span class='notice'>You wipe down [target] with [src].</span>")
-				if (src.reagents.has_reagent("water"))
-					target.clean_forensic()
-				src.reagents.reaction(target, TOUCH, 5)
-				src.reagents.remove_any(5)
-				JOB_XP(user, "Janitor", 3)
-				if (target.reagents)
-					target.reagents.trans_to(src, 5)
-				target.remove_filter(list("paint_color", "paint_pattern"))
-				playsound(src, 'sound/items/sponge.ogg', 20, 1)
-				if (ismob(target))
-					animate_smush(target)
-				return
-
-			if ("Wring out")
-				user.visible_message("<span class='alert'>[user] wrings [src] out into [target].</span>")
-				if (target.reagents)
-					src.reagents.trans_to(target, src.reagents.total_volume)
-				return
-
-			if ("Wet")
-				var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)
-				user.visible_message("<span class='alert'>[user] wets [src] in [target].</span>")
-				if (target.reagents)
-					target.reagents.trans_to(src, fill_amt)
-				else
-					src.reagents.add_reagent("water", fill_amt)
-					JOB_XP(user, "Janitor", 1)
-				return
+	var/selection
+	if (length(choices) == 1) // at spy's request the sponge will default to the only thing it can do ARE YOU HAPPY NOW SPY
+		selection = choices[1]
 	else
-		..()
+		selection = input(user, "What do you want to do with [src]?", "Selection") as null|anything in choices
+	if (isnull(selection) || user.equipped() != src || BOUNDS_DIST(user, target) > 0)
+		return
+
+	switch (selection)
+		if (SPONGE_SOAK)
+			if (src.reagents.total_volume >= src.reagents.maximum_volume)
+				user.show_text("[src] is full! Wring it out first.", "blue")
+				return
+
+			var/turf/T = get_turf(target)
+			var/obj/fluid/F
+
+			if (T.active_liquid)
+				F = T.active_liquid
+
+			if (F)
+				if (F.group)
+					F.group.drain(F,1,src)
+				else
+					F.removed()
+				user.visible_message("[user] soaks up [F] with [src].",\
+				"<span class='notice'>You soak up [F] with [src].</span>", group="soak")
+			else
+				target.reagents.trans_to(src, 15)
+				user.visible_message("[user] soaks up the mess on [target] with [src].",\
+				"<span class='notice'>You soak up the mess on [target] with [src].</span>", group="soak")
+
+			JOB_XP(user, "Janitor", 1)
+
+		if (SPONGE_DRY)
+			if (!istype(target, /turf/simulated)) // really, how?? :I
+				return
+			var/turf/simulated/T = target
+			user.visible_message("[user] dries up [T] with [src].",\
+			"<span class='notice'>You dry up [T] with [src].</span>")
+			JOB_XP(user, "Janitor", 1)
+			src.reagents.add_reagent("water", rand(5,15))
+			T.wet = 0
+
+		if (SPONGE_WIPE)
+			user.visible_message("[user] wipes down [target] with [src].",\
+			"<span class='notice'>You wipe down [target] with [src].</span>")
+			if (src.reagents.has_reagent("water"))
+				target.clean_forensic()
+			src.reagents.reaction(target, TOUCH, 5)
+			src.reagents.remove_any(5)
+			JOB_XP(user, "Janitor", 3)
+			if (target.reagents)
+				target.reagents.trans_to(src, 5)
+			target.remove_filter(list("paint_color", "paint_pattern"))
+			playsound(src, 'sound/items/sponge.ogg', 20, TRUE)
+			if (ismob(target))
+				animate_smush(target)
+
+		if (SPONGE_WRING)
+			user.visible_message("<span class='alert'>[user] wrings [src] out into [target].</span>")
+			if (target.reagents)
+				src.reagents.trans_to(target, src.reagents.total_volume)
+
+		if (SPONGE_WET)
+			var/fill_amt = (src.reagents.maximum_volume - src.reagents.total_volume)
+			user.visible_message("<span class='alert'>[user] wets [src] in [target].</span>")
+			if (target.reagents)
+				target.reagents.trans_to(src, fill_amt)
+			else
+				src.reagents.add_reagent("water", fill_amt)
+				JOB_XP(user, "Janitor", 1)
 /obj/item/sponge/ghostdronesafe
 	name = "Integrated sponge"
 	desc = "A cleaning utensil with an associated drainage system to prevent excess fluids from dripping when wrung out."
@@ -677,6 +685,14 @@ WET FLOOR SIGN
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "sponge-cheese"
 	item_state = "sponge"
+
+#undef SPONGE_SOAK
+#undef SPONGE_DRY
+#undef SPONGE_WIPE
+#undef SPONGE_WRING
+#undef SPONGE_WET
+
+
 
 
 /obj/item/caution
@@ -884,7 +900,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
 	item_function_flags = USE_SPECIALS_ON_ALL_INTENTS
 	var/obj/item/reagent_containers/glass/bucket/bucket
-	var/obj/item/clothing/under/trash_bag/trashbag
+	var/obj/item/trash_bag/trashbag
 
 	New()
 		..()
@@ -1000,7 +1016,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 				. = FALSE
 			else
 				var/obj/fluid/airborne/F = T.active_airborne_liquid
-				F.group.reagents.skip_next_update = 1
+				F.group.reagents.skip_next_update = TRUE
 				F.group.update_amt_per_tile()
 				var/amt = min(F.group.amt_per_tile, src.bucket.reagents.maximum_volume - src.bucket.reagents.total_volume)
 				F.group.drain(F, amt / max(1, F.group.amt_per_tile), src.bucket)
@@ -1049,7 +1065,7 @@ TYPEINFO(/obj/item/handheld_vacuum)
 		. |= success
 
 	attackby(obj/item/W, mob/user, params, is_special=0)
-		if(istype(W, /obj/item/clothing/under/trash_bag))
+		if(istype(W, /obj/item/trash_bag))
 			if(isnull(src.trashbag))
 				boutput(user, "<span class='notice'>You insert \the [W] into \the [src].")
 				src.trashbag = W
@@ -1192,3 +1208,73 @@ TYPEINFO(/obj/item/handheld_vacuum/overcharged)
 		animate(alpha=0, time=0.21 SECONDS, easing=SINE_EASING)
 		SPAWN(0.5 SECONDS)
 			qdel(src)
+
+
+/obj/item/trash_bag
+	name = "trash bag"
+	desc = "A flimsy bag for filling with things that are no longer wanted."
+	icon = 'icons/obj/janitor.dmi'
+	inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'	// Avoid icon duplication with the clothing
+	icon_state = "trashbag-f"
+	item_state = "trashbag"
+	uses_multiple_icon_states = TRUE
+	w_class = W_CLASS_TINY
+	rand_pos = TRUE
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	tooltip_flags = REBUILD_DIST
+	var/base_state = "trashbag"
+	var/clothing_type = /obj/item/clothing/under/gimmick/trashsinglet
+
+	New()
+		..()
+		src.create_storage(/datum/storage/no_hud, prevent_holding = list(/obj/item/trash_bag), max_wclass = W_CLASS_NORMAL, slots = 20,
+			params = list("use_inventory_counter" = TRUE, "variable_weight" = TRUE, "max_weight" = 20))
+
+	attackby(obj/item/I, mob/user)
+		if (issnippingtool(I))
+			var/action = tgui_input_list(user, "What do you want to do with [src]?", "Trash Bag", list("Cut into an outfit", "Add to contents"))
+			if (!action)
+				return
+			if (action == "Cut into an outfit")
+				boutput(user, "You begin cutting up [src].")
+				if (!do_after(user, 3 SECONDS))
+					boutput(user, "<span class='alert'>You were interrupted!</span>")
+					return
+				else
+					var/obj/item/clothing/under/gimmick/trashsinglet/trash_outfit = new clothing_type(get_turf(src))
+					playsound(src.loc, 'sound/items/Scissor.ogg', 100, 1)
+					user.u_equip(src)
+					for(var/obj/item/contents as anything in src.storage.get_contents())
+						src.storage.transfer_stored_item(contents, trash_outfit, TRUE)
+					usr.put_in_hand_or_drop(trash_outfit)
+					user.visible_message("<span class='notice'>[user] cuts their [src] into an outfit of questionably fashionable.</span>")
+					qdel(src)
+					return
+		..()
+
+	update_icon(mob/user)
+		if (!src.storage || !length(src.storage.get_contents()))
+			src.icon_state = src.base_state + "-f"
+
+		else if (length(src.storage.get_contents()))
+			src.icon_state = src.base_state
+
+		if (ismob(user))
+			user.update_inhands()
+
+	get_desc(dist)
+		..()
+		if (dist > 2)
+			return
+		if (src.storage.is_full())
+			. += "It's totally full."
+		else
+			. += "There's still some room to hold something."
+
+/obj/item/trash_bag/biohazard
+	name = "hazardous waste bag"
+	desc = "A flimsy bag for filling with things that are no longer wanted and are also covered in blood or puke or other gross biohazards. It's not any sturdier than a normal trash bag, though, so be careful with the needles!"
+	icon_state = "biobag-f"
+	item_state = "biobag"
+	base_state = "biobag"
+	clothing_type = /obj/item/clothing/under/gimmick/trashsinglet/biohazard

@@ -17,7 +17,7 @@
 	var/balloon_color = "white"
 	var/last_reag_total = 0
 	var/tied = FALSE
-	//how many breaths should this balloon fill with at a canister
+	/// how many breaths should this balloon fill with at a canister
 	var/breaths = 5
 	var/datum/gas_mixture/air = new
 
@@ -82,12 +82,7 @@
 				if (T)
 					T.visible_message("<span class='alert'>[src] bursts!</span>")
 			return
-/*		if (src.reagents.total_volume > 30)
-			if (prob(50))
-				user.visible_message("<span class='alert'>[src] is overfilled and bursts! <b>[curse]</b></span>")
-				smash()
-				return
-*/
+
 	is_open_container()
 		return !src.tied
 
@@ -134,7 +129,6 @@
 					user.visible_message("<b>[user]</b> fumbles with [src]!", \
 					"<span class='alert'>You fumble with [src]!</span>")
 					src.burst_chance(user, 100)
-//					user.update_inhands()
 				else
 					if (user.losebreath)
 						boutput(user, "<span class='alert'>You need to catch your breath first!</span>")
@@ -178,8 +172,6 @@
 						if ("bee")
 							A.color = "#FFDD00"
 					H.losebreath ++
-					//SPAWN(4 SECONDS)
-						//H.losebreath --
 					qdel(src)
 
 			if ("Inhale")
@@ -236,7 +228,7 @@
 			src.reagents.reaction(T)
 		if (T)
 			T.visible_message("<span class='alert'>[src] bursts!</span>")
-		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
 		var/obj/decal/cleanable/balloon/decal = make_cleanable(/obj/decal/cleanable/balloon,T)
 		decal.icon_state = "balloon_[src.balloon_color]_pop"
 
@@ -262,13 +254,14 @@
 	w_class = W_CLASS_SMALL
 
 /obj/item/balloon_animal/random
-	New()
-		..()
-		var/animal = pick("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
-		src.name = "[animal]-shaped balloon"
-		src.desc = "A little [animal], made out of a balloon! How spiffy!"
-		src.icon_state = "animal-[animal]"
-		src.color = random_saturated_hex_color()
+
+/obj/item/balloon_animal/random/New()
+	..()
+	var/animal = pick("bee", "dog", "spider", "pie", "owl", "rockworm", "martian", "fermid", "fish")
+	src.name = "[animal]-shaped balloon"
+	src.desc = "A little [animal], made out of a balloon! How spiffy!"
+	src.icon_state = "animal-[animal]"
+	src.color = random_saturated_hex_color()
 
 /obj/item/reagent_containers/balloon/naturally_grown
 	desc = "Water balloon fights are a classic way to have fun in the summer. I don't know that chlorine trifluoride balloon fights hold the same appeal for most people. These balloons appear to have been grown naturally."

@@ -24,7 +24,7 @@
 		var/turf/T = get_turf(src)
 		T.fluid_react_single("hot_dog", 3000)
 		new /obj/effect/supplyexplosion(T)
-		playsound(T, 'sound/effects/ExplosionFirey.ogg', 100, 1)
+		playsound(T, 'sound/effects/ExplosionFirey.ogg', 100, TRUE)
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
 			H.limbs.sever("all")
@@ -86,7 +86,8 @@ TYPEINFO(/datum/component/pet)
 	name = "digital timer"
 	density = 0
 	icon = null
-	plane = PLANE_HUD - 1
+	plane = PLANE_HUD
+	layer = 420
 	appearance_flags = TILE_BOUND | RESET_COLOR | RESET_ALPHA | RESET_TRANSFORM | KEEP_APART | PIXEL_SCALE
 	maptext = ""
 	var/time_left = 600

@@ -35,7 +35,7 @@ proc/filter_trait_hats(var/type)
 /obj/item/clothing/head/blue
 	desc = "A knit cap in blue."
 	icon_state = "blue"
-	item_state = "bgloves"
+	item_state = "blugloves"
 
 /obj/item/clothing/head/yellow
 	desc = "A knit cap in yellow."
@@ -138,6 +138,11 @@ proc/filter_trait_hats(var/type)
 		setProperty("disorient_resist_eye", 9)
 		setProperty("disorient_resist_ear", 5)
 		setProperty("space_movespeed", 0.5)
+
+/obj/item/clothing/head/emerg/science
+	name = "bomb retreival hood"
+	desc = "A suit that protects against low pressure environments for a short time. Given to science since they blew up the more expensive ones."
+	// TODO science colours sprite for this
 
 /obj/item/clothing/head/rad_hood
 	name = "Class II radiation hood"
@@ -376,7 +381,7 @@ proc/filter_trait_hats(var/type)
 					var/boop = "hand"
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if (H.equip_if_possible(W, H.slot_wear_mask))
+						if (H.equip_if_possible(W, SLOT_WEAR_MASK))
 							boop = "mouth"
 						else
 							H.put_in_hand_or_drop(W) //Put it in their hand
@@ -450,7 +455,7 @@ proc/filter_trait_hats(var/type)
 		if (!n_name)
 			return
 		n_name = copytext(html_encode(n_name), 1, 32)
-		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && usr.stat == 0))
+		if (((src.loc == usr || (src.loc && src.loc.loc == usr)) && isalive(usr)))
 			src.phrase = n_name
 			logTheThing(LOG_SAY, usr, "sets the activation phrase on DetGadget hat: [n_name]")
 		src.add_fingerprint(usr)
@@ -770,7 +775,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "Good god, this thing STINKS. Is that mold on the inner lining? Ugh."
 	icon_state = "wizardnec"
 	item_state = "wizardnec"
-	see_face = 0
+	see_face = FALSE
 	seal_hair = 1
 	hides_from_examine = C_EARS|C_MASK|C_GLASSES
 
@@ -784,7 +789,7 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "It's a paper hat!"
 	icon_state = "paper"
 	item_state = "lgloves"
-	see_face = 1
+	see_face = TRUE
 	body_parts_covered = HEAD
 
 /obj/item/paper_hat/attackby(obj/item/W, mob/user)
@@ -807,14 +812,14 @@ TYPEINFO(/obj/item/clothing/head/that/gold)
 	desc = "A white towel folded all into a fancy hat. NOT a turban!" // @;)
 	icon_state = "towelhat"
 	item_state = "lgloves"
-	see_face = 1
+	see_face = TRUE
 	body_parts_covered = HEAD
 
 /obj/item/clothing/head/crown
 	name = "crown"
 	desc = "Yeah, big deal, you got a fancy crown, what does that do for you against the <b>HORRORS OF SPACE</b>, tough guy?"
 	icon_state = "crown"
-	see_face = 1
+	see_face = TRUE
 	body_parts_covered = HEAD
 	setupProperties()
 		..()
@@ -1960,6 +1965,127 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	icon_state = "space_replica"
 	item_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
+
+/obj/item/clothing/head/giraffehat
+	name = "giraffe hat"
+	desc = "Great for finally reaching those tender tree-top leaves."
+	icon = 'icons/obj/large/32x48.dmi'
+	icon_state = "giraffehat"
+	item_state = "giraffehat"
+
+/obj/item/clothing/head/rhinobeetle
+	name = "rhino beetle helm"
+	desc = "A lightweight helm styled like a rhinocerous beetle's horn. Not sturdy enough for you to flip your enemies over with, sadly."
+	icon_state = "rhinobeetle"
+	item_state = "rhinobeetle"
+
+/obj/item/clothing/head/stagbeetle
+	name = "stag beetle helm"
+	desc = "A lightweight helm styled like a stag beetle's mandibles. Not actually a functional set of grabbers, unfortunately."
+	icon_state = "stagbeetle"
+	item_state = "stagbeetle"
+
+TYPEINFO(/obj/item/clothing/head/elephanthat)
+	random_subtypes = list(
+		/obj/item/clothing/head/elephanthat/gold,
+		/obj/item/clothing/head/elephanthat/green,
+		/obj/item/clothing/head/elephanthat/pink,
+		/obj/item/clothing/head/elephanthat/blue
+	)
+ABSTRACT_TYPE(/obj/item/clothing/head/elephanthat)
+/obj/item/clothing/head/elephanthat
+	name = "elephant hat"
+	desc = "Quite cozy, if you don't mind the trunk smacking you in the face when you walk."
+	icon_state = "elephant-gold"
+	item_state = "elephant-gold"
+
+	gold
+		icon_state = "elephant-gold"
+		item_state = "elephant-gold"
+
+	blue
+		icon_state = "elephant-blue"
+		item_state = "elephant-blue"
+
+	pink
+		icon_state = "elephant-pink"
+		item_state = "elephant-pink"
+
+	green
+		icon_state = "elephant-green"
+		item_state = "elephant-green"
+
+	random
+		New()
+			. = ..()
+			var/obj/item/rand_type = get_random_subtype(/obj/item/clothing/head/elephanthat)
+			icon_state = initial(rand_type.icon_state)
+			item_state = initial(rand_type.item_state)
+
+/obj/item/clothing/head/minotaurmask
+	name = "minotaur mask"
+	desc = "For a more bull-headed approach."
+	icon_state = "minotaur"
+	item_state = "minotaur"
+	seal_hair = 1
+
+TYPEINFO(/obj/item/clothing/head/mushroomcap)
+	random_subtypes = list(
+		/obj/item/clothing/head/mushroomcap/red,
+		/obj/item/clothing/head/mushroomcap/shiitake,
+		/obj/item/clothing/head/mushroomcap/indigo,
+		/obj/item/clothing/head/mushroomcap/inky
+	)
+ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
+/obj/item/clothing/head/mushroomcap
+	name = "mushroom cap"
+	desc = "Makes your lungs feel a little fuzzy."
+	var/additional_desc = ""
+	icon_state = "mushroom-red"
+	item_state = "mushroom-red"
+
+	New()
+		. = ..()
+		desc += additional_desc
+
+	red
+		name = "red mushroom cap"
+		additional_desc = " Don't nibble on this one."
+		icon_state = "mushroom-red"
+		item_state = "mushroom-red"
+
+	shiitake
+		name = "shiitake mushroom cap"
+		additional_desc = " But it smells delectable."
+		icon_state = "mushroom-shiitake"
+		item_state = "mushroom-shiitake"
+
+	indigo
+		name = "indigo mushroom cap"
+		additional_desc = " It has an enticing blue hue."
+		icon_state = "mushroom-indigo"
+		item_state = "mushroom-indigo"
+
+	inky
+		name = "inky mushroom cap"
+		additional_desc = " Impressively, the inkdrops never fully drip off."
+		icon_state = "mushroom-inky"
+		item_state = "mushroom-inky"
+
+	random
+		New()
+			var/obj/item/clothing/head/mushroomcap/rand_type = get_random_subtype(/obj/item/clothing/head/mushroomcap)
+			name = initial(rand_type)
+			additional_desc = initial(rand_type.additional_desc)
+			icon_state = initial(rand_type.icon_state)
+			item_state = initial(rand_type.item_state)
+			. = ..()
+
+/obj/item/clothing/head/axehat
+	name = "axe headband"
+	desc = "Alarmingly comfortable."
+	icon_state = "axehat"
+	item_state = "axehat"
 
 // fishing hats
 
