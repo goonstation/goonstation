@@ -633,11 +633,12 @@ var/global/list/mapNames = list(
 	walls = /turf/simulated/wall/auto/supernorn
 	rwalls = /turf/simulated/wall/auto/reinforced/supernorn
 
-	parallax_layers = list(
-		/atom/movable/screen/parallax_layer/space_1,
-		/atom/movable/screen/parallax_layer/space_2,
-		/atom/movable/screen/parallax_layer/typhon/kondaru,
-		/atom/movable/screen/parallax_layer/asteroids_far/kondaru,
+	Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
+		/atom/movable/screen/parallax_render_source/space_1,
+		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/typhon,
+		/atom/movable/screen/parallax_render_source/asteroids_far/kondaru,
+		/atom/movable/screen/parallax_render_source/asteroids_near/sparse
 		)
 
 	arrivals_type = MAP_SPAWN_SHUTTLE
