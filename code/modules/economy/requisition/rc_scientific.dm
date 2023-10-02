@@ -150,10 +150,13 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		if(prob(60)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/fruit,rand(1,3))
 		if(!length(src.rc_entries) || prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/crop,rand(1,3))
 		if(length(src.rc_entries) == 1 || prob(30)) src.rc_entries += rc_buildentry(/datum/rc_entry/seed/scientific/veg,rand(1,3))
-		if(length(src.rc_entries) == 3) src.item_rewarders += new /datum/rc_itemreward/strange_seed
+		if(length(src.rc_entries) == 3) src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
 		src.payout += 8000 * length(src.rc_entries)
 
-		src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
+		if(prob(70))
+			src.item_rewarders += new /datum/rc_itemreward/strange_seed
+		else
+			src.item_rewarders += new /datum/rc_itemreward/uv_lamp_frame
 		..()
 
 /datum/rc_entry/seed/scientific
@@ -199,3 +202,15 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	build_reward()
 		var/seed = new /obj/item/seed/alien
 		return seed
+
+/datum/rc_itemreward/uv_lamp_frame
+	name = "ultraviolet botanical lamp"
+
+	build_reward()
+		var/obj/item/electronics/frame/F = new
+		F.store_type = /obj/machinery/hydro_growlamp
+		F.name = "UV Grow Lamp frame"
+		F.viewstat = 2
+		F.secured = 2
+		F.icon_state = "dbox"
+		return F

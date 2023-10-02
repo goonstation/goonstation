@@ -1878,7 +1878,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
-	slot_mask = list(/obj/item/clothing/head/werewolf)
+	slot_head = list(/obj/item/clothing/head/werewolf)
 	slot_jump = list(/obj/item/clothing/under/shorts)
 	slot_suit = list(/obj/item/clothing/suit/gimmick/werewolf)
 	slot_ears = list(/obj/item/device/radio/headset)
