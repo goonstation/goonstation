@@ -315,6 +315,41 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "nomask"
 
 //fake objects
+/obj/item/broken_stun
+	name = "broken taser gun"
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "broken_taser"
+	desc = "Totally busted..."
+	item_state = "energy"
+	force = 5
+
+/obj/item/broken_signi
+	name = "destroyed signifier gun"
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "broken_signi"
+	desc = "It's burnt, the cell must've exploded"
+	item_state = "energy"
+	force = 5
+
+/obj/item/broken_mod21
+	name = "unsalvagable mod.21 gun"
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "broken_mod21"
+	desc = "About as useful as a stick."
+	item_state = "energy"
+	force = 5
+
+/obj/item/broken_optio
+	name = "spent optio gun"
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "broken_optio"
+	desc = "Mangled beyond repair..."
+	item_state = "energy"
+	force = 5
 /obj/decal/fakeobjects/hafmech
 	name = "Strange Machine"
 	icon = 'icons/obj/adventurezones/morrigan/decoration.dmi'
@@ -889,7 +924,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	New()
 		..()
 		src.equip_new_if_possible((/obj/item/clothing/head/helmet/hardhat), SLOT_HEAD)
-		src.equip_new_if_possible((/obj/item/clothing/glasses/meson), SLOT_GLASSES)
+		src.equip_new_if_possible((/obj/item/clothing/glasses/toggleable/meson), SLOT_GLASSES)
 		src.equip_new_if_possible((/obj/item/clothing/under/misc/casualjeansyel), SLOT_W_UNIFORM)
 		src.equip_new_if_possible((/obj/item/clothing/suit/hi_vis), SLOT_WEAR_SUIT)
 		src.equip_new_if_possible((/obj/item/clothing/gloves/yellow), SLOT_GLOVES)
@@ -2033,6 +2068,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 // Critter area
 /mob/living/critter/robotic/gunbot/morrigan
 
+	New()
+		..()
+		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
+		if (src.uses_eye_light)
+			var/image/eye_light = SafeGetOverlayImage("eye_light", 'icons/obj/adventurezones/morrigan/critter.dmi', "eye-[base_icon_state]")
+			eye_light.plane = PLANE_SELFILLUM
+			src.UpdateOverlays(eye_light, "eye_light")
+
 /mob/living/critter/robotic/gunbot/morrigan/gunbot
 	name = "Syndicate Sentinel Unit"
 	real_name = "Syndicate Sentinel Unit"
@@ -2042,7 +2085,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	is_npc = TRUE
 	speak_lines = TRUE
 	icon_state = "mars_nuke_bot"
-	eye_light_icon = "mars_nuke_bot_eye"
 
 	seek_target(range)
 		. = ..()
@@ -2068,7 +2110,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
 	icon_state = "clawbot"
 	ai_type = /datum/aiHolder/aggressive
-	eye_light_icon = "clawbot-eye"
 
 	New()
 		..()
@@ -2122,7 +2163,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
 	icon_state = "riotbot"
 	ai_type = /datum/aiHolder/ranged
-	eye_light_icon = "riotbot-eye"
+
 
 	New()
 		..()
@@ -2182,7 +2223,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
 	icon_state = "engineerbot"
 	ai_type = /datum/aiHolder/aggressive
-	eye_light_icon = "engineerbot-eye"
+
 
 	New()
 		..()
@@ -2229,7 +2270,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
 	icon_state = "medibot"
 	ai_type = /datum/aiHolder/ranged
-	eye_light_icon = "medibot-eye"
+
 
 
 	New()
@@ -2752,12 +2793,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	desc = "Not your usual colors..."
 	icon_state = "swathaf"
 	item_state = "swathaf"
-
 	color_r = 0.8
 	color_g = 0.8
 	color_b = 0.8
 
 //WEAPONS-------------------------------------------------------------------------------
+//40mm launcher ( skin )
+
+/obj/item/gun/kinetic/riot40mm/morrigan
+	icon_state = "s40mm"
+	item_state = "s40mm"
 
 //Railgun
 TYPEINFO(/obj/item/gun/energy/railgun_experimental)

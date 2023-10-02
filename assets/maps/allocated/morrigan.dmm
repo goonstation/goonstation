@@ -3966,6 +3966,10 @@
 /obj/decal/stripe_caution,
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"dMt" = (
+/obj/item/broken_stun,
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/station/factory)
 "dNt" = (
 /obj/decal/cleanable/fungus,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -5295,6 +5299,7 @@
 /obj/item/casing/rifle_loud{
 	dir = 6
 	},
+/obj/item/broken_mod21,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/passage)
 "eTV" = (
@@ -5525,6 +5530,7 @@
 /area/morrigan/station/passage)
 "fcI" = (
 /obj/table/reinforced/auto,
+/obj/item/reagent_containers/food/snacks/donut/custom/sturdy,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
 "fcR" = (
@@ -6092,6 +6098,8 @@
 	pixel_y = -8;
 	pixel_x = 6
 	},
+/obj/item/shipcomponent/mainweapon/disruptor,
+/obj/item/shipcomponent/mainweapon/disruptor,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
 "fGt" = (
@@ -9242,7 +9250,6 @@
 "itd" = (
 /obj/storage/secure/closet/morrigan/security,
 /obj/item/clothing/gloves/black,
-/obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/handcuffs,
 /obj/item/clothing/mask/gas/swat,
@@ -9257,6 +9264,7 @@
 /obj/item/clothing/head/morrigan/sberet,
 /obj/item/clothing/shoes/swat,
 /obj/item/storage/backpack/security,
+/obj/item/clothing/suit/armor/morrigan,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "itq" = (
@@ -9410,7 +9418,6 @@
 "iyD" = (
 /obj/storage/secure/closet/morrigan/security,
 /obj/item/clothing/gloves/black,
-/obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/handcuffs,
 /obj/item/clothing/mask/gas/swat,
@@ -9425,6 +9432,7 @@
 /obj/item/clothing/head/morrigan/sberet,
 /obj/item/clothing/shoes/swat,
 /obj/item/storage/backpack/security,
+/obj/item/clothing/suit/armor/morrigan,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "iAq" = (
@@ -9660,12 +9668,15 @@
 /area/morrigan/derelict)
 "iNm" = (
 /obj/rack,
-/obj/item/clothing/head/helmet/EOD{
-	pixel_x = 7;
-	pixel_y = 9
-	},
 /obj/machinery/light/emergencyflashing{
 	dir = 4
+	},
+/obj/item/clothing/suit/armor/heavy/morrigan{
+	pixel_y = -10
+	},
+/obj/item/clothing/head/helmet/riot/morrigan{
+	pixel_y = 7;
+	pixel_x = 8
 	},
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/armory)
@@ -10751,6 +10762,7 @@
 /obj/item/electronics/fuse{
 	pixel_y = 17
 	},
+/obj/item/motherboard,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/engineering/eng)
 "jJf" = (
@@ -14249,6 +14261,10 @@
 /obj/machinery/light/incandescent,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/medical/main)
+"mND" = (
+/obj/item/broken_signi,
+/turf/unsimulated/floor/engine/glow,
+/area/morrigan/station/factory)
 "mNQ" = (
 /mob/living/critter/small_animal/slug,
 /obj/shrub{
@@ -17623,18 +17639,14 @@
 /area/morrigan/station/security/armory)
 "pSS" = (
 /obj/rack,
-/obj/item/gun/kinetic/riot40mm{
-	pixel_x = -2;
-	pixel_y = 5
-	},
 /obj/item/wrench/grey,
 /obj/item/wrench/grey{
 	pixel_y = -5;
 	pixel_x = 2
 	},
-/obj/item/old_grenade/stinger,
-/obj/item/old_grenade/stinger,
 /obj/machinery/light/incandescent/netural,
+/obj/item/gun/kinetic/riot40mm/morrigan,
+/obj/item/old_grenade/high_explosive,
 /turf/unsimulated/floor/minitiles/black,
 /area/morrigan/station/security/main)
 "pTt" = (
@@ -18925,16 +18937,6 @@
 /obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
-"rcS" = (
-/obj/item/broken_egun{
-	icon_state = "optio_1";
-	icon = 'icons/obj/items/gun.dmi';
-	item_state = "protopistol";
-	desc = "This gun's cell hold seems totally fried...";
-	name = "broken gun"
-	},
-/turf/unsimulated/floor/engine/glow,
-/area/morrigan/station/factory)
 "rdp" = (
 /obj/grille/catwalk/jen,
 /obj/decal/cleanable/dirt/dirt2,
@@ -19523,6 +19525,7 @@
 /area/morrigan/derelict)
 "rDU" = (
 /obj/decal/cleanable/blood/tracks,
+/obj/item/broken_optio,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/factory)
 "rES" = (
@@ -19748,7 +19751,6 @@
 /area/morrigan/station/command/bridge)
 "rSs" = (
 /obj/table/auto,
-/obj/item/reagent_containers/food/snacks/donut/custom/robust,
 /obj/item/reagent_containers/emergency_injector/epinephrine{
 	pixel_y = 7
 	},
@@ -19757,6 +19759,7 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
+/obj/item/reagent_containers/food/snacks/donut/custom/sturdiest,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
 "rSW" = (
@@ -20619,7 +20622,6 @@
 /area/morrigan/routing/transport)
 "sHC" = (
 /obj/storage/secure/closet/morrigan/ce,
-/obj/item/clothing/glasses/meson,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/head/goggles/yellow,
 /obj/item/clothing/shoes/magnetic,
@@ -23178,7 +23180,6 @@
 "uYk" = (
 /obj/storage/secure/closet/morrigan/security,
 /obj/item/clothing/gloves/black,
-/obj/item/clothing/suit/armor/vest,
 /obj/item/clothing/glasses/sunglasses,
 /obj/item/handcuffs,
 /obj/item/clothing/mask/gas/swat,
@@ -23192,6 +23193,7 @@
 /obj/item/clothing/head/morrigan/sberet,
 /obj/item/clothing/shoes/swat,
 /obj/item/storage/backpack/security,
+/obj/item/clothing/suit/armor/morrigan,
 /turf/unsimulated/floor/shiny,
 /area/morrigan/station/security/main)
 "uYm" = (
@@ -23585,6 +23587,7 @@
 /obj/machinery/light/incandescent/broken{
 	dir = 4
 	},
+/obj/item/broken_mod21,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/passage)
 "vuL" = (
@@ -25775,6 +25778,7 @@
 	pixel_y = -10;
 	dir = 10
 	},
+/obj/item/broken_stun,
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "xtS" = (
@@ -26297,6 +26301,7 @@
 /obj/machinery/light/incandescent/broken{
 	dir = 4
 	},
+/obj/item/broken_optio,
 /turf/unsimulated/floor/engine,
 /area/morrigan/station/passage)
 "xUE" = (
@@ -33912,7 +33917,7 @@ apl
 qyb
 wNb
 joF
-rcS
+ykr
 mXR
 ljs
 ent
@@ -34020,7 +34025,7 @@ vYN
 ykr
 pxE
 eAv
-ykr
+mND
 qeL
 fby
 ykr
@@ -34943,7 +34948,7 @@ gHb
 xIf
 gEV
 tVM
-fby
+dMt
 ykr
 mdz
 cZC
