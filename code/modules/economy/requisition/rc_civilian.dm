@@ -528,7 +528,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "wooden sheet"
 	typepath = /obj/item/sheet
 	mat_id = "wood"
-	feemod = PAY_UNTRAINED
+	feemod = PAY_UNTRAINED/2
 
 /datum/rc_entry/reagent/acetone
 	name = "acetone"
