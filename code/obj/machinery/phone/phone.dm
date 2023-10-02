@@ -167,7 +167,7 @@ TYPEINFO(/obj/machinery/phone)
 		else
 			src.ringing = FALSE
 			src.linked.ringing = FALSE
-			if(src.linked.handset.holder)
+			if(src.linked.handset.holder && GET_DIST(src.linked.handset,src.linked.handset.holder) < 1)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -199,7 +199,7 @@ TYPEINFO(/obj/machinery/phone)
 			if(src.linked && src.linked.answered == FALSE)
 				if(src.last_ring >= 2)
 					src.last_ring = 0
-					if(src.handset && src.handset.holder)
+					if(src.handset && src.handset.holder && GET_DIST(src.handset,src.handset.holder) < 1)
 						src.handset.holder.playsound_local(src.handset.holder,'sound/machines/phones/ring_outgoing.ogg' ,40,0)
 			else
 				if(src.last_ring >= 2)
@@ -274,7 +274,7 @@ TYPEINFO(/obj/machinery/phone)
 			if(!src.linked.answered) // nobody picked up. Go back to not-ringing state
 				src.linked.icon_state = "[src.linked.phone_icon]"
 				src.linked.UpdateIcon()
-			else if(src.linked.handset && src.linked.handset.holder)
+			else if(src.linked.handset && src.linked.handset.holder && GET_DIST(src.linked.handset,src.linked.handset.holder) < 1)
 				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_hangup.ogg',50,0)
 			src.linked.ringing = FALSE
 			src.linked.linked = null
@@ -293,7 +293,8 @@ TYPEINFO(/obj/machinery/phone)
 			return
 		src.dialing = TRUE
 		tgui_process?.update_uis(src)
-		src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
+		if(src.handset.holder && GET_DIST(src.handset,src.handset.holder) < 1)
+			src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
 		src.last_called = target.unlisted ? "Undisclosed" : "[target.phone_id]"
 		SPAWN(4 SECONDS)
 			// Is it busy?
@@ -366,6 +367,9 @@ TYPEINFO(/obj/machinery/phone)
 			src.parent.hang_up()
 			processing_items.Remove(src)
 			qdel(src)
+		if(GET_DIST(src,src.holder) >= 1)
+			src.holder = null
+
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
 		..()
