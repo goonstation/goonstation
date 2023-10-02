@@ -36453,6 +36453,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/vending/capsule,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "qSy" = (

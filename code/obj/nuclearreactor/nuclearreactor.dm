@@ -783,7 +783,7 @@
 	override_color = TRUE
 	color_icon = "#00FF00"
 	power = 100
-	cost = 20
+	cost = 30
 //Kill/Stun ratio
 	ks_ratio = 1.0
 //name of the projectile setting, used when you change a guns setting

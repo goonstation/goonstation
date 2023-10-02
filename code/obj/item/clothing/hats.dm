@@ -1966,6 +1966,127 @@ TYPEINFO(/obj/item/clothing/head/lesbian_hat)
 	item_state = "space_replica"
 	desc = "A replica of an old space helmet. Looks spaceworthy regardless."
 
+/obj/item/clothing/head/giraffehat
+	name = "giraffe hat"
+	desc = "Great for finally reaching those tender tree-top leaves."
+	icon = 'icons/obj/large/32x48.dmi'
+	icon_state = "giraffehat"
+	item_state = "giraffehat"
+
+/obj/item/clothing/head/rhinobeetle
+	name = "rhino beetle helm"
+	desc = "A lightweight helm styled like a rhinocerous beetle's horn. Not sturdy enough for you to flip your enemies over with, sadly."
+	icon_state = "rhinobeetle"
+	item_state = "rhinobeetle"
+
+/obj/item/clothing/head/stagbeetle
+	name = "stag beetle helm"
+	desc = "A lightweight helm styled like a stag beetle's mandibles. Not actually a functional set of grabbers, unfortunately."
+	icon_state = "stagbeetle"
+	item_state = "stagbeetle"
+
+TYPEINFO(/obj/item/clothing/head/elephanthat)
+	random_subtypes = list(
+		/obj/item/clothing/head/elephanthat/gold,
+		/obj/item/clothing/head/elephanthat/green,
+		/obj/item/clothing/head/elephanthat/pink,
+		/obj/item/clothing/head/elephanthat/blue
+	)
+ABSTRACT_TYPE(/obj/item/clothing/head/elephanthat)
+/obj/item/clothing/head/elephanthat
+	name = "elephant hat"
+	desc = "Quite cozy, if you don't mind the trunk smacking you in the face when you walk."
+	icon_state = "elephant-gold"
+	item_state = "elephant-gold"
+
+	gold
+		icon_state = "elephant-gold"
+		item_state = "elephant-gold"
+
+	blue
+		icon_state = "elephant-blue"
+		item_state = "elephant-blue"
+
+	pink
+		icon_state = "elephant-pink"
+		item_state = "elephant-pink"
+
+	green
+		icon_state = "elephant-green"
+		item_state = "elephant-green"
+
+	random
+		New()
+			. = ..()
+			var/obj/item/rand_type = get_random_subtype(/obj/item/clothing/head/elephanthat)
+			icon_state = initial(rand_type.icon_state)
+			item_state = initial(rand_type.item_state)
+
+/obj/item/clothing/head/minotaurmask
+	name = "minotaur mask"
+	desc = "For a more bull-headed approach."
+	icon_state = "minotaur"
+	item_state = "minotaur"
+	seal_hair = 1
+
+TYPEINFO(/obj/item/clothing/head/mushroomcap)
+	random_subtypes = list(
+		/obj/item/clothing/head/mushroomcap/red,
+		/obj/item/clothing/head/mushroomcap/shiitake,
+		/obj/item/clothing/head/mushroomcap/indigo,
+		/obj/item/clothing/head/mushroomcap/inky
+	)
+ABSTRACT_TYPE(/obj/item/clothing/head/mushroomcap)
+/obj/item/clothing/head/mushroomcap
+	name = "mushroom cap"
+	desc = "Makes your lungs feel a little fuzzy."
+	var/additional_desc = ""
+	icon_state = "mushroom-red"
+	item_state = "mushroom-red"
+
+	New()
+		. = ..()
+		desc += additional_desc
+
+	red
+		name = "red mushroom cap"
+		additional_desc = " Don't nibble on this one."
+		icon_state = "mushroom-red"
+		item_state = "mushroom-red"
+
+	shiitake
+		name = "shiitake mushroom cap"
+		additional_desc = " But it smells delectable."
+		icon_state = "mushroom-shiitake"
+		item_state = "mushroom-shiitake"
+
+	indigo
+		name = "indigo mushroom cap"
+		additional_desc = " It has an enticing blue hue."
+		icon_state = "mushroom-indigo"
+		item_state = "mushroom-indigo"
+
+	inky
+		name = "inky mushroom cap"
+		additional_desc = " Impressively, the inkdrops never fully drip off."
+		icon_state = "mushroom-inky"
+		item_state = "mushroom-inky"
+
+	random
+		New()
+			var/obj/item/clothing/head/mushroomcap/rand_type = get_random_subtype(/obj/item/clothing/head/mushroomcap)
+			name = initial(rand_type)
+			additional_desc = initial(rand_type.additional_desc)
+			icon_state = initial(rand_type.icon_state)
+			item_state = initial(rand_type.item_state)
+			. = ..()
+
+/obj/item/clothing/head/axehat
+	name = "axe headband"
+	desc = "Alarmingly comfortable."
+	icon_state = "axehat"
+	item_state = "axehat"
+
 // fishing hats
 
 /obj/item/clothing/head/fish_fear_me

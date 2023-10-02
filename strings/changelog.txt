@@ -1,5 +1,30 @@
 
+(t)mon oct 02 23
+(u)Smilg
+(p)15774
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)ABCU blueprints updated+fixed internally. You can migrate old blueprints with a blueprint marker tool.
+(u)Tyrant
+(p)16201
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Clarion now has a capsule vending machine.
+(t)sun oct 01 23
+(u)UnfunnyPerson
+(p)16123
+(e)📦|A-Game-Objects
+(+)Laundry machines can now be scanned with a mechscanner
+(u)Tarmunora
+(+)Waspbow projectiles no longer deal impact damage
+(+)Waspbow/radbow/etc now use/have 60u/shot instead of 40u
+(+)Fixed oversight causing disruptor cells to charge at twice the intended rate
 (t)fri sep 29 23
+(u)Emily
+(+)Zipguns now fire one bullet at a time for ammo types that usually fire in bursts
+(+)Pews can be reshaped with screwdrivers and turned with crowbars.
+(u)Waffleloffle
+(p)15927
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds some particularly costumey headwear, available for purchase at the Clothing Booth during the month of Spooktober.
 (u)Kubius
 (p)16092
 (e)🆕⚖|C-Feature, C-Balance

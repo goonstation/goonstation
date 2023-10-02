@@ -2,7 +2,8 @@
 	name = "D²o-|"
 	drone_designation = "Glitch"
 	desc = "A highly dÄ:;g$r+us $yn§i#a{e $'+~`?? ???? ? ???? ??"
-	icon_state = "glitchdrone"
+	icon = 'icons/mob/critter/robotic/drone/glitch.dmi'
+	icon_state = "drone_glitch"
 	alert_sounds = list('sound/machines/glitch1.ogg', 'sound/machines/glitch2.ogg')
 
 	setup_hands()

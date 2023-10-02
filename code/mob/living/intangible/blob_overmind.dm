@@ -11,6 +11,7 @@
 	anchored = ANCHORED
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
+	voice_type = null
 
 	var/datum/tutorial_base/regional/blob/tutorial
 	var/attack_power = 1
