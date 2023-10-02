@@ -25,7 +25,6 @@ TYPEINFO(/datum/component/hallucination/fake_attack)
 		ARG_INFO("name_list", DATA_INPUT_LIST_BUILD, "List of names that the mob can hallucinate attacking, leave null for default"),
 		ARG_INFO("attacker_prob", DATA_INPUT_NUM, "probability of an attacker being spawned per mob life tick", 10),
 		ARG_INFO("max_attackers", DATA_INPUT_NUM, "number of attackers that can be active at one time", 5),
-
 	)
 
 TYPEINFO(/datum/component/hallucination/random_image_override)
@@ -155,6 +154,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/list/image_list
 	var/image_prob = 10
 	var/image_time = 20 SECONDS
+
 	Initialize(timeout=30, image_list=null, image_prob=10, image_time=20 SECONDS)
 		.=..()
 		if(. == COMPONENT_INCOMPATIBLE || length(image_list) == 0)
