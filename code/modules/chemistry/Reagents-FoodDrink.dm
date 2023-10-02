@@ -2155,12 +2155,11 @@ datum
 						M.bodytemperature += rand(5,20) * mult
 				M.stuttering += rand(0,2)
 				M.bodytemperature += rand(0,3) * mult
-				if (holder.get_reagent_amount(src.id) >= 3)
-					if(prob(10))
-						M.emote(pick("cough"))
-						M.setStatusMin("stunned", 1 SECOND * mult)
 				if(prob(25))
 					M.emote(pick("cough"))
+					if (holder.get_reagent_amount(src.id) >= 3 && prob(40)
+						M.setStatusMin("stunned", 1 SECOND * mult)
+				
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
