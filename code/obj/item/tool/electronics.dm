@@ -622,10 +622,11 @@
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.data["command"] = "text_message"
-		newsignal.data["sender_name"] = "RKIT-MAILBOT"
+		newsignal.data["sender_name"] = "DEVICE-SCAN"
 		newsignal.data["message"] = message
 		if (target) newsignal.data["address_1"] = target
-		newsignal.data["group"] = list(MGO_ENGINEER, MGA_RKIT)
+		newsignal.data["group"] = MGD_ENGINEERING
+		newsignal.data["topic"] = MSG_TOPIC_RKIT
 		newsignal.data["sender"] = src.net_id
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 

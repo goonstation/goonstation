@@ -279,10 +279,11 @@
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		signal.data["command"] = "text_message"
-		signal.data["sender_name"] = "ENGINE-MAILBOT"
-		signal.data["group"] = list(MGO_ENGINEER, MGA_ENGINE)
+		signal.data["sender_name"] = "NTBMK-CONTROL"
+		signal.data["group"] = MGD_ENGINEERING
+		signal.data["topic"] = MSG_TOPIC_ENGINE
 		if(crisis)
-			signal.data["group"] += MGA_CRISIS
+			signal.data["topic"] = MSG_TOPIC_CRISIS
 		signal.data["message"] = msg
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"

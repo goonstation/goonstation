@@ -5,22 +5,28 @@
 	icon_state = "mailchute"
 	desc = "A pneumatic mail-delivery chute."
 	icon_style = "mail"
-	var/mail_tag = null
-	//var/destination_tag = null // dropped to parent /obj/machinery/disposal
-	var/list/destinations = list()
 	var/frequency = FREQ_MAIL_CHUTE
-	var/last_inquire = 0 //No signal spamming etc
-	var/autoname = 0
-
-	var/message = null
-	var/mailgroup = null
-	var/mailgroup2 = null
 	var/net_id = null
 	var/pdafrequency = FREQ_PDA
+	var/last_inquire = 0 //No signal spamming etc
+	var/list/destinations = list()
+
+	/// Chute's address in the disposals system
+	var/mail_tag = null
+	/// Automatically
+	var/autoname = FALSE
+	/// Set TRUE in code and it will self-replace with a message string for PDA groups
+	var/message = null
+	/// Primary mailgroup
+	var/mailgroup = null
+	/// Secondary mailgroup (for the few that need it)
+	var/mailgroup2 = null
+
+
 
 	New()
 		..()
-		if (src.autoname == 1 && !isnull(src.mail_tag))
+		if (src.autoname == TRUE && !isnull(src.mail_tag))
 			src.name = "mail chute ([src.mail_tag])"
 
 		if (!src.net_id)
@@ -120,7 +126,7 @@
 
 		if (message)
 			var/myarea = get_area(src)
-			message = "Mail delivery alert in [myarea]."
+			message = "Mail has arrived in [myarea]."
 
 			if (message && (mailgroup || mailgroup2))
 				var/groups = list()
@@ -128,15 +134,15 @@
 					groups += mailgroup
 				if (mailgroup2)
 					groups += mailgroup2
-				groups += MGA_MAIL
 
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
 				newsignal.data["command"] = "text_message"
-				newsignal.data["sender_name"] = "CHUTE-MAILBOT"
+				newsignal.data["sender_name"] = "CARGO-MAIL"
 				newsignal.data["message"] = "[message]"
 				newsignal.data["address_1"] = "00000000"
 				newsignal.data["group"] = groups
+				newsignal.data["topic"] = MSG_TOPIC_DELIVERY
 				newsignal.data["sender"] = src.net_id
 
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
@@ -151,17 +157,17 @@
 	janitor
 		name = "Janitor"
 		mail_tag = "janitor"
-		mailgroup = "janitor"
+		mailgroup = MGJ_JANITOR
 		message = 1
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = MGD_KITCHEN
+		mailgroup = MGT_CATERING
 		message = 1
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = MGD_BOTANY
+		mailgroup = MGT_HYDROPONICS
 		message = 1
 	security
 		name = "Security"
@@ -187,27 +193,27 @@
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = MGD_SPIRITUALAFFAIRS
+		mailgroup = MGJ_SPIRITUAL
 		message = 1
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEERING
 		message = 1
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEERING
 		message = 1
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGD_MINING
+		mailgroup = MGJ_MINING
 		message = 1
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = MGD_CARGO
+		mailgroup = MGJ_CARGO
 		message = 1
 
 		refinery
@@ -233,20 +239,17 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = MGD_MEDBAY
-		mailgroup2 = MGD_MEDRESEACH
+		mailgroup = MGD_MEDICAL
 		message = 1
 
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = MGD_MEDRESEACH
-			mailgroup2 = null
+			mailgroup = MGJ_ROBOTICS
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = MGD_MEDRESEACH
-			mailgroup2 = null
+			mailgroup = MGJ_GENETICS
 		pathology
 			name = "Pathology"
 			mail_tag = "pathology"
@@ -343,7 +346,7 @@
 	janitor
 		name = "Janitor"
 		mail_tag = "janitor"
-		mailgroup = "janitor"
+		mailgroup = MGJ_JANITOR
 		message = 1
 
 		north
@@ -359,7 +362,7 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = MGD_KITCHEN
+		mailgroup = MGT_CATERING
 		message = 1
 
 		north
@@ -375,7 +378,7 @@
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = MGD_BOTANY
+		mailgroup = MGT_HYDROPONICS
 		message = 1
 
 		north
@@ -451,7 +454,7 @@
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = MGD_SPIRITUALAFFAIRS
+		mailgroup = MGJ_SPIRITUAL
 		message = 1
 
 		north
@@ -467,7 +470,7 @@
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEERING
 		message = 1
 
 		north
@@ -483,7 +486,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_ENGINEER
+		mailgroup = MGD_ENGINEERING
 		message = 1
 
 		north
@@ -499,7 +502,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGD_MINING
+		mailgroup = MGJ_MINING
 		message = 1
 
 		north
@@ -515,7 +518,7 @@
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = MGD_CARGO
+		mailgroup = MGJ_CARGO
 		message = 1
 
 		north
@@ -603,8 +606,7 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = MGD_MEDBAY
-		mailgroup2 = MGD_MEDRESEACH
+		mailgroup = MGD_MEDICAL
 		message = 1
 
 		north
@@ -620,8 +622,7 @@
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = MGD_MEDRESEACH
-			mailgroup2 = null
+			mailgroup = MGJ_ROBOTICS
 
 			north
 				dir = NORTH
@@ -636,8 +637,7 @@
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = MGD_MEDRESEACH
-			mailgroup2 = null
+			mailgroup = MGJ_GENETICS
 
 			north
 				dir = NORTH

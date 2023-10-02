@@ -626,7 +626,7 @@
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	var/trunk_type = /obj/disposalpipe/trunk/regular
-	dpdir = 0	
+	dpdir = 0
 	regular
 		trunk_type = /obj/disposalpipe/trunk/regular
 	mail
@@ -2106,15 +2106,15 @@ TYPEINFO(/obj/disposaloutlet)
 				groups += mailgroup
 			if (mailgroup2)
 				groups += mailgroup2
-			groups += MGA_MAIL
 
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
+			newsignal.data["sender_name"] = "CARGO-CHUTE"
 			newsignal.data["message"] = "[message]"
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = groups
+			newsignal.data["topic"] = MSG_TOPIC_DELIVERY
 			newsignal.data["sender"] = src.net_id
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)

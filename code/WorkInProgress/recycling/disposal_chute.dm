@@ -595,10 +595,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CHUTE-MAILBOT"
+			newsignal.data["sender_name"] = "CARGO-CHUTE"
 			newsignal.data["message"] = "[message]"
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = list(mailgroup, MGA_MAIL)
+			newsignal.data["group"] = mailgroup
+			newsignal.data["topic"] = MSG_TOPIC_DELIVERY
 			newsignal.data["sender"] = src.net_id
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)

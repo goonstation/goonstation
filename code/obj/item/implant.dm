@@ -32,7 +32,7 @@ THROWING DARTS
 
 	//For PDA/signal alert stuff on implants
 	var/uses_radio = 0
-	var/list/mailgroups = null
+	var/list/mail_groups = null
 	var/net_id = null
 	var/pda_alert_frequency = FREQ_PDA
 
@@ -51,7 +51,7 @@ THROWING DARTS
 		owner = null
 		former_implantee = null
 		if (uses_radio)
-			mailgroups.Cut()
+			mail_groups.Cut()
 		. = ..()
 
 	proc/can_implant(mob/target, mob/user)
@@ -143,7 +143,7 @@ THROWING DARTS
 				if (istype(T))
 					return " at [T.x],[T.y],[T.z]"
 
-	proc/send_message(var/message, var/alertgroup, var/sender_name)
+	proc/send_message(var/message, var/topic, var/sender_name)
 		DEBUG_MESSAGE("sending message: [message]")
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
@@ -152,7 +152,8 @@ THROWING DARTS
 		newsignal.data["message"] = "[message]"
 
 		newsignal.data["address_1"] = "00000000"
-		newsignal.data["group"] = mailgroups + alertgroup
+		newsignal.data["group"] = mail_groups
+		newsignal.data["topic"] = topic
 		newsignal.data["sender"] = src.net_id
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
@@ -261,7 +262,7 @@ THROWING DARTS
 	scan_category = "health"
 	var/healthstring = ""
 	uses_radio = 1
-	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
+	mail_groups = list(MGD_MEDICAL, MGJ_SPIRITUAL)
 
 	implanted(mob/M, mob/I)
 		..()
@@ -327,7 +328,7 @@ THROWING DARTS
 	proc/health_alert()
 		if (!src.owner)
 			return
-		src.send_message("HEALTH ALERT: [src.owner] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
+		src.send_message("HEALTH ALERT: [src.owner] in [get_area(src)]: [src.sensehealth()]", MSG_TOPIC_CRITICAL, "MEDTRAK")
 
 	proc/death_alert()
 		if (!src.owner)
@@ -344,15 +345,15 @@ THROWING DARTS
 		else
 			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "has been clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning record.")
 
-		src.send_message(message, MGA_DEATH, "HEALTH-MAILBOT")
+		src.send_message(message, MSG_TOPIC_DEATH, "MEDTRAK")
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
 
 	death_alert()
-		mailgroups.Add(MGD_SECURITY)
+		mail_groups.Add(MGD_SECURITY)
 		..()
-		mailgroups.Remove(MGD_SECURITY)
+		mail_groups.Remove(MGD_SECURITY)
 
 /obj/item/implant/health/security/anti_mindhack
 	name = "mind protection health implant"
@@ -434,7 +435,7 @@ THROWING DARTS
 	name = "tracking implant"
 	//life_tick_energy = 0.1
 	uses_radio = 1
-	mailgroups = list(MGD_SECURITY)
+	mail_groups = list(MGD_SECURITY)
 	var/id = 1
 	var/frequency = FREQ_TRACKING_IMPLANT		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
 
@@ -450,7 +451,7 @@ THROWING DARTS
 		if (!src.owner)
 			return
 		var/message = "TRACKING IMPLANT LOST: [src.owner][src.get_coords()] in [get_area(src)], "
-		src.send_message(message, MGA_TRACKING, "TRACKER-MAILBOT")
+		src.send_message(message, MSG_TOPIC_TRACKING, "MAILBOT")
 		..()
 
 /obj/item/implant/pod_wars

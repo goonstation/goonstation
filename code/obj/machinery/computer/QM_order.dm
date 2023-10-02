@@ -159,7 +159,7 @@
 
 					// pda alert ////////
 					var/datum/signal/pdaSignal = get_free_signal()
-					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [O.object] ordered by [O.orderedby] using personal account at [O.console_location].")
+					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-SUPPLY",  "group"=MGJ_CARGO, "topic"=MSG_TOPIC_SHIPPING, "sender"="00000000", "message"="Notification: [O.object] ordered by [O.orderedby] using personal account at [O.console_location].")
 					SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 					//////////////////
 			else
@@ -171,7 +171,7 @@
 
 				// pda alert ////////
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-SUPPLY",  "group"=MGJ_CARGO, "topic"=MSG_TOPIC_REQUEST, "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 				//////////////////
 		else
@@ -239,7 +239,7 @@
 				src.temp = "Transaction successful. Thank you for your patronage.<BR>"
 				////// PDA NOTIFY/////
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_SHIPPING), "sender"="00000000", "message"="Notification: [transaction] credits transfered to shipping budget from [src.scan.registered].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-SUPPLY",  "group"=MGJ_CARGO, "topic"=MSG_TOPIC_SHIPPING, "sender"="00000000", "message"="Notification: [transaction] credits transfered to shipping budget from [src.scan.registered].")
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 				//////////
 				src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>OK</A>"

@@ -18,7 +18,6 @@
 	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "englog"
 	var/setup_mail_freq = FREQ_PDA //Which freq do we report to?
-	var/setup_mailgroup = MGO_ENGINEER //The PDA mailgroup used when alerting engineer pdas.
 
 
 	initialize()
@@ -267,8 +266,9 @@
 			//Create a PDA mass-message string.
 			signal.data["address_1"] = "00000000"
 			signal.data["command"] = "text_message"
-			signal.data["sender_name"] = "ENGINE-MAILBOT"
-			signal.data["group"] = list(src.setup_mailgroup, MGA_ENGINE) //Only engineer PDAs should be informed.
+			signal.data["sender_name"] = "ENGINE-MASTER"
+			signal.data["group"] = MGD_ENGINEERING
+			signal.data["topic"] = MSG_TOPIC_ENGINE
 			signal.data["message"] = "Notice: [event_string]"
 
 			src.log_string += "<br>Event notification sent."

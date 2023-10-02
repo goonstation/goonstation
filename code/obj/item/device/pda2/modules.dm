@@ -284,7 +284,6 @@ TYPEINFO(/obj/item/device/pda_module)
 	icon_state = "pdamod_alert"
 	setup_use_menu_badge = 1
 	abilities = list(/obj/ability_button/pda_security_alert)
-	var/list/mailgroups = list(MGD_SECURITY)
 
 	return_menu_badge()
 		var/text = "<a href='byond://?src=\ref[src];toggle=1'>Send Alert</a>"
@@ -309,7 +308,8 @@ TYPEINFO(/obj/item/device/pda_module)
 		signal.data["address_1"] = "00000000"
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.host.owner
-		signal.data["group"] = mailgroups + MGA_CRISIS
+		signal.data["group"] = MGD_SECURITY
+		signal.data["topic"] = MSG_TOPIC_CRISIS
 		var/area/A = get_area(src.host)
 		signal.data["message"]  = "<b><span class='alert'>***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "nowhere"]!"
 		src.host.post_signal(signal)

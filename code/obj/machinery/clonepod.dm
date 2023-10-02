@@ -48,7 +48,6 @@ TYPEINFO(/obj/machinery/clonepod)
 	var/failed_tick_counter = 0 // goes up while someone is stuck in there and there's not enough meat to clone them, after so many ticks they'll get dumped out
 
 	var/message = null
-	var/list/mailgroups
 	var/net_id = null
 	var/pdafrequency = FREQ_PDA
 
@@ -67,7 +66,6 @@ TYPEINFO(/obj/machinery/clonepod)
 	New()
 		..()
 		req_access = list(access_medical_lockers) //For premature unlocking.
-		mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
 		src.create_reagents(100)
 
@@ -86,7 +84,6 @@ TYPEINFO(/obj/machinery/clonepod)
 
 
 	disposing()
-		mailgroups.len = 0
 		genResearch?.clonepods?.Remove(src) //Bye bye
 		connected?.linked_pods -= src
 		if(connected?.scanner?.pods)
@@ -124,11 +121,12 @@ TYPEINFO(/obj/machinery/clonepod)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.data["command"] = "text_message"
-		newsignal.data["sender_name"] = "CLONEPOD-MAILBOT"
+		newsignal.data["sender_name"] = "CLONEPOD-MAIL"
 		newsignal.data["message"] = "[msg]"
 
 		newsignal.data["address_1"] = "00000000"
-		newsignal.data["group"] = mailgroups + MGA_CLONER
+		newsignal.data["group"] = MGD_MEDICAL
+		newsignal.data["topic"] = MSG_TOPIC_CLONER
 		newsignal.data["sender"] = src.net_id
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")

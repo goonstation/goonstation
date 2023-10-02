@@ -34,38 +34,39 @@ var/list/assistant_occupations = list(
 //	"Mechanic",
 //	"Atmospheric Technician","Atmospheric Technician","Atmospheric Technician",
 
+// e-mails
 var/list/job_mailgroup_list = list(
 	"Captain" = MGD_COMMAND,
 	"Head of Personnel" = MGD_COMMAND,
 	"Head of Security" = MGD_COMMAND,
 	"Medical Director" = MGD_COMMAND,
+	"Medical Director" = MGD_MEDICAL,
 	"Research Director" = MGD_COMMAND,
 	"Chief Engineer" = MGD_COMMAND,
-	"Quartermaster" = MGD_CARGO,
-	"Engineer" = MGD_STATIONREPAIR,
-	"Janitor" = MGD_STATIONREPAIR,
-	"Miner" = MGD_MINING,
-	"Botanist" = MGD_BOTANY,
-	"Medical Director" = MGD_MEDRESEACH,
-	"Roboticist" = MGD_MEDRESEACH,
-	"Geneticist" = MGD_MEDRESEACH,
-	"Pathologist" = MGD_MEDRESEACH,
-	"Medical Doctor" = MGD_MEDBAY,
-	"Chaplain" = MGD_SPIRITUALAFFAIRS)
+	"Quartermaster" = MGD_ENGINEERING,
+	"Engineer" = MGD_ENGINEERING,
+	"Janitor" = MGJ_JANITOR,
+	"Miner" = MGD_ENGINEERING,
+	"Botanist" = MGT_HYDROPONICS,
+	"Rancher" = MGT_HYDROPONICS,
+	"Roboticist" = MGD_MEDICAL,
+	"Geneticist" = MGD_MEDICAL,
+	"Medical Doctor" = MGD_MEDICAL,
+	"Chaplain" = MGJ_SPIRITUAL)
 
-//Used for PDA department paging.
-var/list/page_departments = list(
+
+// Groups that show on messenger by default
+var/list/pageable_groups = list(
 	"Command" = MGD_COMMAND,
 	"Security" = MGD_SECURITY,
-	"Medbay" = MGD_MEDBAY,
-	"Med Research" = MGD_MEDRESEACH,
-	"Research" = MGD_SCIENCE,
-	"Station Repair" = MGD_STATIONREPAIR,
-	"Cargo" = MGD_CARGO,
-	"Botany" = MGD_BOTANY,
-	"Bar / Kitchen" = MGD_KITCHEN,
-	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS,
-	"Mining" = MGD_MINING)
+	"Medical" = MGD_MEDICAL,
+	"Science" = MGD_SCIENCE,
+	"Station Repair" = MGT_REPAIR,
+	"Cargo" = MGJ_CARGO,
+	"Hydroponics" = MGT_HYDROPONICS,
+	"Bar / Kitchen" = MGT_CATERING,
+	"Spiritual Affairs" = MGJ_SPIRITUAL,
+	"Mining" = MGJ_MINING)
 
 /proc/get_all_jobs()
 	var/all_jobs = list()

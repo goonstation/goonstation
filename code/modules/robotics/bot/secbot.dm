@@ -519,7 +519,7 @@
 			var/bot_location = get_area(src)
 			var/datum/signal/pdaSignal = get_free_signal()
 			var/message2send = "Notification: [src] destroyed in [bot_location]! Officer down!"
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT", "group"=list(MGD_SECURITY, MGA_DEATH), "sender"="00000000", "message"="[message2send]")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITRON", "group"=MGD_SECURITY, "topic"=MSG_TOPIC_DEATH, "sender"="00000000", "message"="[message2send]")
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 		if(src.exploding) return
@@ -857,7 +857,8 @@
 			signal.data["sender"] = src.botnet_id
 			signal.data["command"] = "text_message"
 			signal.data["sender_name"] = src
-			signal.data["group"] = list(MGD_SECURITY, MGA_ARREST)
+			signal.data["group"] = MGD_SECURITY
+			signal.data["topic"] = MSG_TOPIC_ARREST
 			signal.data["address_1"] = "00000000"
 			signal.data["message"] = message2send
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "pda")
@@ -1326,8 +1327,9 @@
 				signal.source = src
 				signal.data["sender"] = "00000000"
 				signal.data["command"] = "text_message"
-				signal.data["sender_name"] = "SECURITY-MAILBOT"
-				signal.data["group"] = list(MGD_SECURITY, MGA_ARREST)
+				signal.data["sender_name"] = "SECURITRON"
+				signal.data["group"] = MGD_SECURITY
+				signal.data["topic"] = MSG_TOPIC_ARREST
 				signal.data["address_1"] = "00000000"
 				signal.data["message"] = message2send
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, "pda")

@@ -161,7 +161,7 @@
 					var/datum/signal/signal = get_free_signal()
 					signal.data["sender"] = "00000000"
 					signal.data["command"] = "text_message"
-					signal.data["sender_name"] = "PAYROLL-MAILBOT"
+					signal.data["sender_name"] = "STATION-PAYROLL"
 					signal.data["address_1"] = t["pda_net_id"]
 					signal.data["message"] = "[t["wage"]] credits have been deposited into your bank account. You have [t["current_money"]] credits total."
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal)

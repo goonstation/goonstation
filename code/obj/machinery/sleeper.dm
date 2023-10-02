@@ -672,8 +672,6 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 	p_class = 1.2
 	var/homeloc = null
 	allow_self_service = 0
-	/// Mailgroups it'll try to send PDA notifications to
-	var/list/mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH)
 
 	New()
 		..()
@@ -745,10 +743,10 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		return
 
 	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
-	var/alertgroup = MGA_MEDCRIT
+	var/topic = MSG_TOPIC_CRITICAL
 	if (isdead(occupant))
 		PDAalert += "deceased body - please process the occupant as soon as possible."
-		alertgroup = MGA_DEATH
+		topic = MSG_TOPIC_DEATH
 	else if (occupant.health < 0)
 		PDAalert += "patient in critical condition - respond and treat immediately."
 	else
@@ -756,7 +754,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 	var/datum/signal/PDAsignal = get_free_signal()
 
-	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT",  "group"=mailgroups+alertgroup, "sender"="00000000", "message"="[PDAalert]")
+	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="MEDTRAK-MAIL",  "group"=MGD_MEDICAL, "topic"=topic, "sender"="00000000", "message"="[PDAalert]")
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, PDAsignal)
 
 

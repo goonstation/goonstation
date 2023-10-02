@@ -51,17 +51,20 @@
 	var/setup_system_os_path = /datum/computer/file/pda_program/os/main_os //Needs an operating system to...operate!!
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
-	var/mailgroups = list(MGO_STAFF,MGD_PARTY) //What default mail groups the PDA is part of.
-	var/default_muted_mailgroups = list() //What mail groups should the PDA ignore by default
-	var/reserved_mailgroups = list( // Job-specific mailgroups that cannot be joined or left
+	var/mail_groups = list(MSG_PARTY_LINE) //What default mail groups the PDA is part of.
+
+	var/reserved_mail_groups = list( // Job-specific mail_groups that cannot be joined or left
 		// Departments
-		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_MINING, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
-		// Other
-		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
-		// Alerts
-		MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS, MGA_TRACKING,
+		MGD_COMMAND, MGD_SECURITY, MGD_MEDICAL, MGD_SCIENCE, MGD_ENGINEERING,
+		// Teams
+		MGT_HYDROPONICS, MGT_CATERING, MGT_REPAIR, MGT_SILICON,
+		// Jobs
+		MGJ_AI, MGJ_ROBOTICS, MGJ_GENETICS, MGJ_CARGO, MGJ_MINING, MGJ_JANITOR, MGJ_SPIRITUAL,
 	)
-	var/alertgroups = list(MGA_MAIL, MGA_RADIO) // What mail groups that we're not a member of should we be able to mute?
+	/// Mail topics this PDA is subscribed to
+	var/mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_SALES)
+	/// Mail topics muted by default
+	var/default_muted_topics = list() //What mail topics should the PDA ignore by default
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
 	/// Syndie sound programs can blow out the speakers and render it forever *silent*
@@ -72,19 +75,20 @@
 	/// A temporary ringtone set for preview purposed
 	var/datum/ringtone/r_tone_temp
 	/// A list of ringtones tied to an alert -- Overrides whatever settings set for their mailgroup. Typically remains static in length
-	var/list/alert_ringtones = list(MGA_MAIL = null,\
-																	MGA_CHECKPOINT = null,\
-																	MGA_ARREST = null,\
-																	MGA_DEATH = null,\
-																	MGA_MEDCRIT = null,\
-																	MGA_CLONER = null,\
-																	MGA_ENGINE = null,\
-																	MGA_RKIT = null,\
-																	MGA_SALES = null,\
-																	MGA_SHIPPING = null,\
-																	MGA_CARGOREQUEST = null,\
-																	MGA_CRISIS = null,\
-																	MGA_RADIO = null)
+	var/list/alert_ringtones = list(MSG_TOPIC_DELIVERY = null,\
+									MSG_TOPIC_RADIO = null,\
+									MSG_TOPIC_CHECKPOINT = null,\
+									MSG_TOPIC_ARREST = null,\
+									MSG_TOPIC_DEATH = null,\
+									MSG_TOPIC_CRITICAL = null,\
+									MSG_TOPIC_CLONER = null,\
+									MSG_TOPIC_ENGINE = null,\
+									MSG_TOPIC_RKIT = null,\
+									MSG_TOPIC_SALES = null,\
+									MSG_TOPIC_SHIPPING = null,\
+									MSG_TOPIC_REQUEST = null,\
+									MSG_TOPIC_CRISIS = null,\
+									MSG_TOPIC_RADIO = null)
 
 	/// mailgroup-specific ringtones, added on the fly!
 	var/list/mailgroup_ringtones = list()
@@ -102,14 +106,14 @@
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/captain
 		setup_drive_size = 32
-		mailgroups = list(MGD_COMMAND,MGD_PARTY)
+		mail_groups = list(MGD_COMMAND, MSG_PARTY_LINE)
 
 	heads
 		icon_state = "pda-h"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/head
 		setup_drive_size = 32
-		mailgroups = list(MGD_COMMAND,MGD_PARTY)
+		mail_groups = list(MGD_COMMAND, MSG_PARTY_LINE)
 
 	hos
 		icon_state = "pda-hos"
@@ -117,8 +121,8 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
-		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
+		mail_groups = list(MGD_SECURITY,MGD_COMMAND,MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_CHECKPOINT, MSG_TOPIC_ARREST, MSG_TOPIC_DEATH, MSG_TOPIC_CRISIS, MSG_TOPIC_TRACKING)
 
 	ntso
 		icon_state = "pda-nt"
@@ -126,8 +130,8 @@
 		setup_default_cartridge = /obj/item/disk/data/cartridge/hos //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
 		setup_default_module = /obj/item/device/pda_module/alert
 		setup_drive_size = 32
-		mailgroups = list(MGD_SECURITY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
+		mail_groups = list(MGD_SECURITY,MGD_COMMAND,MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_CHECKPOINT, MSG_TOPIC_ARREST, MSG_TOPIC_DEATH, MSG_TOPIC_CRISIS, MSG_TOPIC_TRACKING)
 
 	ai
 		icon_state = "pda-h"
@@ -136,16 +140,18 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list( // keep in sync with the list of reserved mail groups
+		mail_groups = list( // keep in sync with the list of reserved mail groups
 			// Departments
-			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_MINING, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
-			// Other
-			MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
+			MGD_COMMAND, MGD_SECURITY, MGD_MEDICAL, MGD_SCIENCE, MGD_ENGINEERING,
+			// Teams
+			MGT_HYDROPONICS, MGT_CATERING, MGT_SILICON, MGT_REPAIR,
+			// Jobs
+			MGJ_AI, MGJ_ROBOTICS, MGJ_GENETICS, MGJ_CARGO, MGJ_MINING, MGJ_JANITOR,
 			// start in party line by default
-			MGD_PARTY,
+			MSG_PARTY_LINE,
 		)
-		default_muted_mailgroups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_RKIT)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_ENGINE, MGA_RKIT, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_CRISIS) // keep in sync with the list of mail alert groups
+		default_muted_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_SALES, MSG_TOPIC_SHIPPING, MSG_TOPIC_REQUEST, MSG_TOPIC_RKIT)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_CHECKPOINT, MSG_TOPIC_ARREST, MSG_TOPIC_DEATH, MSG_TOPIC_CRITICAL, MSG_TOPIC_CLONER, MSG_TOPIC_ENGINE, MSG_TOPIC_RKIT, MSG_TOPIC_SALES, MSG_TOPIC_SHIPPING, MSG_TOPIC_REQUEST, MSG_TOPIC_CRISIS) // keep in sync with the list of mail alert groups
 
 	cyborg
 		icon_state = "pda-h"
@@ -154,71 +160,72 @@
 		ejectable_cartridge = 0
 		setup_drive_size = 1024
 		bombproof = 1
-		mailgroups = list(MGO_SILICON,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH)
-		default_muted_mailgroups = list(MGA_RKIT)
+		mail_groups = list(MGT_SILICON, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_DEATH)
+		default_muted_topics = list(MSG_TOPIC_RKIT)
 
 	research_director
 		icon_state = "pda-rd"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/research_director
 		setup_drive_size = 32
-		mailgroups = list(MGD_SCIENCE,MGD_COMMAND,MGD_PARTY)
+		mail_groups = list(MGD_SCIENCE, MGD_COMMAND, MSG_PARTY_LINE)
 
 	medical_director
 		icon_state = "pda-md"
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		setup_drive_size = 32
-		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
+		mail_groups = list(MGD_MEDICAL, MGJ_ROBOTICS, MGJ_GENETICS, MGD_COMMAND, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_DEATH, MSG_TOPIC_CRITICAL, MSG_TOPIC_CLONER, MSG_TOPIC_CRISIS)
 
 	medical
 		name = "Medical PDA"
 		icon_state = "pda-m"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical
-		mailgroups = list(MGD_MEDBAY ,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS)
+		mail_groups = list(MGD_MEDICAL, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_DEATH, MSG_TOPIC_CRITICAL, MSG_TOPIC_CLONER, MSG_TOPIC_CRISIS)
 
 		robotics
 			name = "Robotics PDA"
-			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
-			alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT, MGA_CLONER, MGA_CRISIS, MGA_SALES)
-			default_muted_mailgroups = list(MGA_SALES)
+			mail_groups = list(MGD_MEDICAL, MGJ_ROBOTICS, MSG_PARTY_LINE)
+			mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_DEATH, MSG_TOPIC_CRITICAL, MSG_TOPIC_CLONER, MSG_TOPIC_CRISIS, MSG_TOPIC_SALES)
+			default_muted_topics = list(MSG_TOPIC_SALES)
 
 	genetics
 		name = "Genetics PDA"
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
-		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
+		mail_groups = list(MGD_MEDICAL, MGJ_GENETICS, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_SALES)
 
 	security
 		name = "Security PDA"
 		icon_state = "pda-s"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/security
 		setup_default_module = /obj/item/device/pda_module/alert
-		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
+		mail_groups = list(MGD_SECURITY, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_CHECKPOINT, MSG_TOPIC_ARREST, MSG_TOPIC_DEATH, MSG_TOPIC_CRISIS, MSG_TOPIC_TRACKING)
 
 	forensic
 		name = "Forensic PDA"
 		icon_state = "pda-s"
 		setup_default_pen = /obj/item/clothing/mask/cigarette
 		setup_default_cartridge = /obj/item/disk/data/cartridge/forensic
-		mailgroups = list(MGD_SECURITY,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_CHECKPOINT, MGA_ARREST, MGA_DEATH, MGA_CRISIS, MGA_TRACKING)
+		mail_groups = list(MGD_SECURITY, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_CHECKPOINT, MSG_TOPIC_ARREST, MSG_TOPIC_DEATH, MSG_TOPIC_CRISIS, MSG_TOPIC_TRACKING)
 
 	toxins
 		icon_state = "pda-tox"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/toxins
-		mailgroups = list(MGD_SCIENCE,MGD_PARTY)
+		mail_groups = list(MGD_SCIENCE, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_SALES)
 
 	quartermaster
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
-		mailgroups = list(MGD_CARGO,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST)
+		mail_groups = list(MGJ_CARGO, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_SALES, MSG_TOPIC_SHIPPING, MSG_TOPIC_REQUEST)
 
 	clown
 		icon_state = "pda-clown"
@@ -252,12 +259,12 @@
 	janitor
 		icon_state = "pda-j"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/janitor
-		mailgroups = list(MGO_JANITOR,MGD_STATIONREPAIR,MGD_PARTY)
+		mail_groups = list(MGJ_JANITOR, MGT_REPAIR, MSG_PARTY_LINE)
 
 	chaplain
 		icon_state = "pda-holy"
-		mailgroups = list(MGD_SPIRITUALAFFAIRS,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_DEATH, MGA_MEDCRIT)
+		mail_groups = list(MGJ_SPIRITUAL, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_DEATH, MSG_TOPIC_CRITICAL)
 
 	atmos
 		name = "Atmos PDA"
@@ -269,39 +276,39 @@
 		icon_state = "pda-e"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/engineer
 		setup_default_module = /obj/item/device/pda_module/tray //mechanics used to have these
-		mailgroups = list(MGO_ENGINEER,MGD_STATIONREPAIR,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_RKIT, MGA_CRISIS)
+		mail_groups = list(MGD_ENGINEERING, MGT_REPAIR, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_ENGINE, MSG_TOPIC_RKIT, MSG_TOPIC_CRISIS)
 
 	technical_assistant
 		name = "Technical Assistant PDA"
 		icon_state = "pda-e" //tech ass is too broad to have a set cartridge but should get alerts
-		mailgroups = list(MGD_STATIONREPAIR,MGD_PARTY)
+		mail_groups = list(MGT_REPAIR, MSG_PARTY_LINE)
 		setup_default_module = /obj/item/device/pda_module/tray
-		alertgroups = list(MGA_MAIL,MGA_RADIO)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO)
 
 	mining
 		icon_state = "pda-e"
-		mailgroups = list(MGD_MINING,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
+		mail_groups = list(MGJ_MINING, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_SALES)
 
 	chiefengineer
 		icon_state = "pda-ce"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
 		setup_default_module = /obj/item/device/pda_module/tray
-		mailgroups = list(MGO_ENGINEER,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
-		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_ENGINE, MGA_CRISIS, MGA_SALES, MGA_CARGOREQUEST, MGA_SHIPPING, MGA_RKIT)
+		mail_groups = list(MGD_ENGINEERING, MGJ_MINING, MGT_REPAIR, MGJ_CARGO, MGD_COMMAND, MSG_PARTY_LINE)
+		mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_ENGINE, MSG_TOPIC_CRISIS, MSG_TOPIC_SALES, MSG_TOPIC_REQUEST, MSG_TOPIC_SHIPPING, MSG_TOPIC_RKIT)
 
 	chef
-		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
+		mail_groups = list(MGT_CATERING, MSG_PARTY_LINE)
 
 	bartender
 		setup_default_cartridge = /obj/item/disk/data/cartridge/bartender
-		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
+		mail_groups = list(MGT_CATERING, MSG_PARTY_LINE)
 
 	botanist
 		icon_state = "pda-hydro"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/botanist
-		mailgroups = list(MGD_BOTANY,MGD_PARTY)
+		mail_groups = list(MGT_HYDROPONICS, MSG_PARTY_LINE)
 
 	syndicate
 		icon_state = "pda-syn"
@@ -362,8 +369,8 @@
 		src.hd.root.add_file(new /datum/computer/file/pda_program/emergency_alert)
 		src.hd.root.add_file(new /datum/computer/file/pda_program/gps)
 		src.hd.root.add_file(new /datum/computer/file/pda_program/cargo_request(src))
-		if(length(src.default_muted_mailgroups))
-			src.host_program.muted_mailgroups = src.default_muted_mailgroups
+		if(length(src.default_muted_topics))
+			src.host_program.muted_topics = src.default_muted_topics
 		if(ismob(src.loc))
 			var/mob/mob = src.loc
 			get_all_character_setup_ringtones()

@@ -833,12 +833,12 @@ Code:
 		var/alert_sound
 		switch (round(mailgroupNum))
 			if (-INFINITY to 1)
-				mailgroup = MGD_MEDBAY
+				mailgroup = MGD_MEDICAL
 				alert_color = "#337296"
 				alert_title = "Medical"
 				alert_sound = 'sound/items/medical_alert.ogg'
 			if (2)
-				mailgroup = MGO_ENGINEER
+				mailgroup = MGD_ENGINEERING
 				alert_color = "#a8732b"
 				alert_title = "Engineering"
 				alert_sound = 'sound/items/engineering_alert.ogg'
@@ -848,7 +848,7 @@ Code:
 				alert_title = "Security"
 				alert_sound = 'sound/items/security_alert.ogg'
 			if (4 to INFINITY)
-				mailgroup = MGO_JANITOR
+				mailgroup = MGJ_JANITOR
 				alert_color = "#993399"
 				alert_title = "Janitor"
 				alert_sound = 'sound/items/janitor_alert.ogg'
@@ -858,7 +858,8 @@ Code:
 		signal.data["address_1"] = "00000000"
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.master.owner
-		signal.data["group"] = list(mailgroup, MGA_CRISIS)
+		signal.data["group"] = mailgroup
+		signal.data["topic"] = MSG_TOPIC_CRISIS
 		var/area/an_area = get_area(src.master)
 
 		if (isAIeye(usr))
@@ -1270,7 +1271,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			if (!antispam || (antispam < (ticker.round_elapsed_ticks)) )
 				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGA_CARGOREQUEST), "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MARKET",  "group"=MGJ_CARGO, "topic"=MSG_TOPIC_REQUEST, "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 			//////////////////
