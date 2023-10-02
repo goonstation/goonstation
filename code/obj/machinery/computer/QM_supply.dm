@@ -1144,13 +1144,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		B.name = "Barcode Sticker ([to_name])"
 		B.destination = destination
 
-/obj/machinery/computer/supplycomp/proc/print_trader_barcode(datum/trader/trader)
-	playsound(src.loc, 'sound/machines/printer_cargo.ogg', 60, 0)
-	if (!ON_COOLDOWN(src, "print", SUPPLY_PRINT_COOLDOWN))
-		var/obj/item/sticker/barcode/B = new/obj/item/sticker/barcode(src.loc)
-		B.name = "Barcode Sticker ([trader.name])"
-		B.destination = trader.crate_tag
-
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)
 	if (!dialogue || !T)
 		return
