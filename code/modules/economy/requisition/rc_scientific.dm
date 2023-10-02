@@ -93,8 +93,8 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	typepath = /obj/item/lens
 	feemod = PAY_IMPORTANT
 
-	free
-		feemod = 0
+/datum/rc_entry/item/lens/free
+	feemod = 0
 
 /datum/rc_entry/stack/gemstone
 	name = "non-anomalous gemstone"
@@ -108,8 +108,8 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	typepath_alt = /obj/item/material_piece/telecrystal
 	feemod = PAY_IMPORTANT //augmented by commodity price
 
-	minprice
-		feemod = 0
+/datum/rc_entry/stack/telec/minprice
+	feemod = 0
 
 /datum/rc_entry/reagent/cryox
 	name = "cryoxadone coolant"
@@ -419,8 +419,8 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	typepath_alt = /obj/item/material_piece/claretine
 	feemod = PAY_DOCTORATE
 
-	minprice
-		feemod = 0
+/datum/rc_entry/stack/claretine/minprice
+	feemod = 0
 
 /datum/rc_entry/stack/electrum
 	name = "electrum"

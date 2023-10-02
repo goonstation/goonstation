@@ -20,11 +20,11 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 	proc/mode_toggle()
 		if(src.status)
 			set_icon_state("hedron-W")
-			flick(("hedron-MtoW"), src)
+			flick("hedron-MtoW", src)
 			src.power_down()
 		else
 			set_icon_state("hedron-M")
-			flick(("hedron-WtoM"), src)
+			flick("hedron-WtoM", src)
 			src.dig_strength = 3
 			src.power_up()
 
@@ -33,8 +33,6 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 		..()
 
 	attack_self(var/mob/user as mob)
-		if (!digcost)
-			return
 		if (src.process_charges(0))
 			if(GET_COOLDOWN(src, "depowered"))
 				boutput(user, "<span class='alert'>[src] mode-cycled recently and can't switch modes yet.</span>")
@@ -45,16 +43,16 @@ TYPEINFO(/obj/item/mining_tool/hedron_beam)
 		else
 			boutput(user, "<span class='alert'>No charge left in [src]. Cannot enter mining mode.</span>")
 
-	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=1, var/burn_eyes=0)
+	proc/try_weld(mob/user, var/fuel_amt = 2, var/use_amt = -1, var/noisy=TRUE, var/burn_eyes=FALSE)
 		if (!src.status)
 			if(use_amt == -1)
 				use_amt = fuel_amt
-			if (!src.process_charges(use_amt*5))
+			if (!src.process_charges(use_amt*5)) //no "fuel", no weld
 				boutput(user, "<span class='notice'>Cannot weld - cell insufficiently charged.</span>")
-				return 0
+				return FALSE
 			if(noisy)
 				playsound(user.loc, list('sound/items/Welder.ogg', 'sound/items/Welder2.ogg')[noisy], 35, 1)
-			return 1 //welding, has fuel
+			return TRUE //welding, has "fuel"
 		//in mining mode? no welding 4 u
 		boutput(user, "<span class='notice'>[src] is in mining mode and can't currently weld.</span>")
-		return 0
+		return FALSE
