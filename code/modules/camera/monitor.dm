@@ -87,6 +87,11 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	network = list("Mining")
 	color = "#daa85c"
 
+/obj/item/device/camera_viewer/sticker
+	name = "camera monitor"
+	desc = "A portable video monitor connected to a network of spy cameras."
+	network = list("stickers")
+
 /obj/item/device/camera_viewer/omniview
 	name = "ADMIN CRIMES MONITOR"
 	desc = "A portable video monitor, connected to EVERY NETWORK!"
