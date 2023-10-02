@@ -153,7 +153,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 		if(length(src.rc_entries) == 3) src.item_rewarders += new /datum/rc_itemreward/plant_cartridge
 		src.payout += 8000 * length(src.rc_entries)
 
-		if(prob(80))
+		if(prob(70))
 			src.item_rewarders += new /datum/rc_itemreward/strange_seed
 		else
 			src.item_rewarders += new /datum/rc_itemreward/uv_lamp_frame
@@ -202,3 +202,15 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	build_reward()
 		var/seed = new /obj/item/seed/alien
 		return seed
+
+/datum/rc_itemreward/uv_lamp_frame
+	name = "ultraviolet botanical lamp"
+
+	build_reward()
+		var/obj/item/electronics/frame/F = new
+		F.store_type = /obj/machinery/hydro_growlamp
+		F.name = "UV Grow Lamp frame"
+		F.viewstat = 2
+		F.secured = 2
+		F.icon_state = "dbox"
+		return F
