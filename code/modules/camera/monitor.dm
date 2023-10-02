@@ -79,7 +79,7 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	name = "science outpost monitor"
 	desc = "A portable video monitor, connected the science outpost camera network."
 	network = list("Zeta")
-	color = "#b88ed2"
+	color = "#efb4e5"
 
 /obj/item/device/camera_viewer/outpost/mining
 	name = "mining outpost monitor"

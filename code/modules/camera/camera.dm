@@ -289,7 +289,7 @@
 	name = "autoname - science"
 	network = "Zeta"
 	prefix = "outpost"
-	color = "#b88ed2"
+	color = "#efb4e5"
 
 /// Invisible cameras for VR
 /obj/machinery/camera/auto/virtual
