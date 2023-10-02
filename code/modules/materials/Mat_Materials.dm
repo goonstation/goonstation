@@ -1373,6 +1373,19 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("flammable", 2)
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_viscerite())
 
+/datum/material/organic/tensed_viscerite
+	mat_id = "tensed_viscerite"
+	name = "tensed viscerite"
+	desc = "Fleshy mass drawn out under tension. It's translucent and thready."
+	color = "#dd81ff"
+	alpha = 180
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 3)
+		setProperty("chemical", 8)
+		setProperty("flammable", 2)
 
 /datum/material/organic/bone
 	mat_id = "bone"
