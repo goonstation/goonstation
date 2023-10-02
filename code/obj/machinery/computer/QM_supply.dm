@@ -127,7 +127,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	var/hacked = 0
 	var/tradeamt = 1
 	var/in_dialogue_box = 0
-	var/printing = 0
 	var/obj/item/card/id/scan = null
 	var/list/datum/supply_pack
 
