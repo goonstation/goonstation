@@ -730,17 +730,17 @@ proc/ui_describe_reagents(atom/A)
 			try_adding_container(over_object, usr)
 
 	set_loc(newloc, storage_check)
-		if (src.loc != newloc && src.connected_containers.len > 0)
+		if (src.loc != newloc && length(src.connected_containers))
 			src.remove_all_containers()
 		. = ..()
 
 	Move()
-		if(src.connected_containers.len > 0)
+		if(length(src.connected_containers))
 			src.remove_all_containers()
 		..()
 
 	attack_hand(var/mob/user)
-		if(src.connected_containers.len > 0)
+		if(length(src.connected_containers))
 			src.remove_all_containers()
 			boutput(user, "<span class='alert'>You remove all connections to the [src.name].</span>")
 		..()
@@ -770,7 +770,7 @@ proc/ui_describe_reagents(atom/A)
 		if (GET_DIST(container, src) > 1)
 			usr.show_text("The [src.name] is too far away from the [container.name]!", "red")
 			return
-		if(src.connected_containers.len >= src.max_amount_of_containers)
+		if(length(src.connected_containers) >= src.max_amount_of_containers)
 			boutput(user, "<span class='alert'>The [src.name] can only be connected to [max_amount_of_containers] containers!</span>")
 		else
 			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
@@ -796,7 +796,7 @@ proc/ui_describe_reagents(atom/A)
 			remove_container(container)
 
 	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
-		if(src.connected_containers.len <= 0) //if we have no beaker, dump the reagents into condenser
+		if(length(src.connected_containers) <= 0) //if we have no beaker, dump the reagents into condenser
 			src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
 		else
 			add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate)
@@ -806,17 +806,17 @@ proc/ui_describe_reagents(atom/A)
 		for(var/obj/container in connected_containers)
 			if(container.reagents.maximum_volume > container.reagents.total_volume) //don't bother with this if it's already full, move onto other containers
 				non_full_containers.Add(container)
-		if(non_full_containers.len <= 0)	//all full? backflow!!
+		if(!length(non_full_containers))	//all full? backflow!!
 			src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
-		else
-			var/divided_amount = (amount / non_full_containers.len) //cut the reagents needed into chunks
-			for(var/obj/container in non_full_containers)
-				var/remaining_container_space = container.reagents.maximum_volume - container.reagents.total_volume
-				if(remaining_container_space < divided_amount) 																			//if there's more reagent to add than the beaker can hold...
-					container.reagents.add_reagent(reagent, remaining_container_space, sdata, temp_new, donotreact, donotupdate) //...add what we can to the beaker...
-					src.add_reagents_to_containers(reagent, divided_amount - remaining_container_space, sdata, temp_new, donotreact, donotupdate)  //...then run the whole proc again with the remaining reagent, evenly distributing to remaining containers
-				else
-					container.reagents.add_reagent(reagent, divided_amount, sdata, temp_new, donotreact, donotupdate)
+			return
+		var/divided_amount = (amount / length(non_full_containers)) //cut the reagents needed into chunks
+		for(var/obj/container in non_full_containers)
+			var/remaining_container_space = container.reagents.maximum_volume - container.reagents.total_volume
+			if(remaining_container_space < divided_amount) 																			//if there's more reagent to add than the beaker can hold...
+				container.reagents.add_reagent(reagent, remaining_container_space, sdata, temp_new, donotreact, donotupdate) //...add what we can to the beaker...
+				src.add_reagents_to_containers(reagent, divided_amount - remaining_container_space, sdata, temp_new, donotreact, donotupdate)  //...then run the whole proc again with the remaining reagent, evenly distributing to remaining containers
+			else
+				container.reagents.add_reagent(reagent, divided_amount, sdata, temp_new, donotreact, donotupdate)
 
 	disposing()
 		src.remove_container()
