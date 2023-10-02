@@ -743,10 +743,10 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 		return
 
 	var/PDAalert = "[src.name] has returned to [get_area(src.homeloc)] with a "
-	var/topic = MSG_TOPIC_CRITICAL
+	var/alertgroup = MGA_MEDCRIT
 	if (isdead(occupant))
 		PDAalert += "deceased body - please process the occupant as soon as possible."
-		topic = MSG_TOPIC_DEATH
+		alertgroup = MGA_DEATH
 	else if (occupant.health < 0)
 		PDAalert += "patient in critical condition - respond and treat immediately."
 	else
@@ -754,7 +754,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 	var/datum/signal/PDAsignal = get_free_signal()
 
-	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="MEDTRAK-MAIL",  "group"=MGD_MEDICAL, "topic"=topic, "sender"="00000000", "message"="[PDAalert]")
+	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="MEDTRAK-MAIL",  "group"=MGD_MEDBAY, "alert"=alertgroup, "sender"="00000000", "message"="[PDAalert]")
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, PDAsignal)
 
 

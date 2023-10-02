@@ -833,12 +833,12 @@ Code:
 		var/alert_sound
 		switch (round(mailgroupNum))
 			if (-INFINITY to 1)
-				mailgroup = MGD_MEDICAL
+				mailgroup = MGD_MEDBAY
 				alert_color = "#337296"
 				alert_title = "Medical"
 				alert_sound = 'sound/items/medical_alert.ogg'
 			if (2)
-				mailgroup = MGD_ENGINEERING
+				mailgroup = MGO_ENGINEER
 				alert_color = "#a8732b"
 				alert_title = "Engineering"
 				alert_sound = 'sound/items/engineering_alert.ogg'
@@ -848,7 +848,7 @@ Code:
 				alert_title = "Security"
 				alert_sound = 'sound/items/security_alert.ogg'
 			if (4 to INFINITY)
-				mailgroup = MGJ_JANITOR
+				mailgroup = MGO_JANITOR
 				alert_color = "#993399"
 				alert_title = "Janitor"
 				alert_sound = 'sound/items/janitor_alert.ogg'
@@ -859,7 +859,7 @@ Code:
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.master.owner
 		signal.data["group"] = mailgroup
-		signal.data["topic"] = MSG_TOPIC_CRISIS
+		signal.data["topic"] = MGA_CRISIS
 		var/area/an_area = get_area(src.master)
 
 		if (isAIeye(usr))
@@ -867,14 +867,14 @@ Code:
 			if (!(eye_loc.camera_coverage_emitters && length(eye_loc.camera_coverage_emitters)))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
+		signal.data["message"] = "[alert_title] emergency at [an_area ? an_area.name : "!UNKNOWN!"]"
 
 		src.post_signal(signal)
 
 		if(isliving(usr) && !remote)
 			playsound(src.master, alert_sound, 60)
 			var/map_text = null
-			map_text = make_chat_maptext(usr, "[alert_title] Emergency alert sent.", "font-family: 'Helvetica'; color: [alert_color]; font-size: 7px;", alpha = 215)
+			map_text = make_chat_maptext(usr, "[alert_title] emergency alert sent.", "font-family: 'Helvetica'; color: [alert_color]; font-size: 7px;", alpha = 215)
 			for (var/mob/O in hearers(usr))
 				O.show_message(assoc_maptext = map_text)
 			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>",
@@ -1271,7 +1271,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			if (!antispam || (antispam < (ticker.round_elapsed_ticks)) )
 				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MARKET",  "group"=MGJ_CARGO, "topic"=MSG_TOPIC_REQUEST, "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-",  "group"=MGD_CARGO, "topic"=MGA_CARGOREQUEST, "sender"="00000000", "message"="[O.object] requested by [O.orderedby] at [O.console_location].")
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 			//////////////////

@@ -70,37 +70,37 @@
 					src.selectedRT = "ring1"
 				var/datum/ringtone/ring_tone_temp = src.ring_list[src.selectedRT]
 				var/applyLink = "<a href='?src=\ref[src];applyTone=[src.selectedRT]'>Primary</a>"
-				var/alertLink = "<a href='?src=\ref[src];setToneGenSlot=["topic"]'>Topic</a>"
-				var/mailLink = "<a href='?src=\ref[src];setToneGenSlot=["mailgroup"]'>Mail Group</a>"
+				var/alertLink = "<a href='?src=\ref[src];setToneGenSlot=["alert"]'>Alert</a>"
+				var/mailLink = "<a href='?src=\ref[src];setToneGenSlot=["mailgroup"]'>Mailgroup</a>"
 				dat += "Set [ring_tone_temp] as which ringtone?<br>"
 				dat += "[applyLink] | [alertLink] | [mailLink]<br><br>"
 				dat += "<br><a href='?src=\ref[src];resetMenu=1'>Cancel</a><br>"
 				dat += "[src.dividerThing]<br><br>"
 
-			if("topic")
+			if("alert")
 				if(!src.selectedRT)
 					src.selectedRT = "ring1"
-				if(!length(src.master.mail_topics) || !length(src.master.alert_ringtones))
+				if(!length(src.master.alert_ringtones))
 					src.subMenu = null
-					dat += "Error retrieving topic types. Please refresh the page and contact customer support at 1-800-IMC-ODER."
+					dat += "Error retrieving alert types. Please refresh the page and contact customer support at 1-800-IMC-ODER."
 				else
 					var/datum/ringtone/ring_tone_temp = src.ring_list[src.selectedRT]
 					dat += "Please select an alert type to use [ring_tone_temp].<br><br>"
-					for(var/alert in src.master.mail_topics)
-						dat += "<a href='?src=\ref[src];applyTone=[alert]'>[alert]</a><br>"
+					for(var/alert in src.master.alert_ringtones)
+						dat += "<a href='?src=\ref[src];applyTone=[alert[1]]'>[alert[1]]</a><br>"
 					dat += "<br><a href='?src=\ref[src];resetMenu=1'>Cancel</a><br>"
 					dat += "[src.dividerThing]<br><br>"
 
 			if("mailgroup")
 				if(!src.selectedRT)
 					src.selectedRT = "ring1"
-				if(!length(src.master?.mail_groups))
+				if(!length(src.master?.mailgroups))
 					src.subMenu = null
-					dat += "Error retrieving mail groups. Please be a part of at least one mail group and try again. If this error persists, please contact customer support at 1-800-IMC-ODER."
+					dat += "Error retrieving mailgroups. Please be a part of at least one mailgroup and try again. If this error persists, please contact customer support at 1-800-IMC-ODER."
 				else
 					var/datum/ringtone/ring_tone_temp = src.ring_list[src.selectedRT]
 					dat += "Please select a mailgroup to use [ring_tone_temp].<br><br>"
-					for(var/mailgroup in src.master.mail_groups)
+					for(var/mailgroup in src.master.mailgroups)
 						dat += "<a href='?src=\ref[src];applyTone=[mailgroup]'>[mailgroup]</a><br>"
 					dat += "<br><a href='?src=\ref[src];resetMenu=1'>Cancel</a><br>"
 					dat += "[src.dividerThing]<br><br>"

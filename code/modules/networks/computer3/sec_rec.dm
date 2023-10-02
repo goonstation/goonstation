@@ -820,8 +820,8 @@
 			signal.data["command"] = "text_message"
 			signal.data["sender_name"] = "SECMATE-MAIL"
 			signal.data["group"] = MGD_SECURITY
-			signal.data["topic"] = MSG_TOPIC_ARREST
-			signal.data["message"] = "Alert! Crewman \"[perp_name]\" has been flagged for arrest by [src.authenticated]!"
+			signal.data["alert"] = MGA_ARREST
+			signal.data["message"] = "Crewmember \"[perp_name]\" has been flagged for arrest by [src.authenticated]!"
 
 			src.log_string += "<br>Arrest notification sent."
 			last_arrest_report = world.time

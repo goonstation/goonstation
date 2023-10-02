@@ -6,8 +6,7 @@
 	included_cosmetic = /datum/robot_cosmetic/engineering
 	included_tools = /datum/robot/module_tool_creator/recursive/module/engineering
 	radio_type = /obj/item/device/radio/headset/engineer
-	mail_groups = list(MGD_ENGINEERING, MGT_REPAIR, MGT_SILICON, MSG_PARTY_LINE)
-	mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_ENGINE, MSG_TOPIC_CRISIS, MSG_TOPIC_RKIT)
+	mailgroups = list(MGO_ENGINEER, MGD_STATIONREPAIR, MGO_SILICON, MGD_PARTY )
 
 /datum/robot_cosmetic/engineering
 	fx = list(255, 255, 0)

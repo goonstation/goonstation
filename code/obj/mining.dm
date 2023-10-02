@@ -2483,31 +2483,31 @@ TYPEINFO(/obj/submachine/cargopad)
 	podbay
 		name = "Pod Bay Pad"
 	hydroponic
-		mailgroup = MGT_HYDROPONICS
+		mailgroup = MGD_BOTANY
 		name = "Hydroponics Pad"
 	robotics
-		mailgroup = MGJ_ROBOTICS
+		mailgroup = MGO_ROBOTICS
 		name = "Robotics Pad"
 	artlab
 		mailgroup = MGD_SCIENCE
 		name = "Artifact Lab Pad"
 	engineering
-		mailgroup = MGD_ENGINEERING
+		mailgroup = MGO_ENGINEER
 		name = "Engineering Pad"
 	mechanics
-		mailgroup = MGD_ENGINEERING
+		mailgroup = MGO_ENGINEER
 		name = "Mechanics Pad"
 	magnet
-		mailgroup = MGJ_MINING
+		mailgroup = MGD_MINING
 		name = "Mineral Magnet Pad"
 	miningoutpost
-		mailgroup = MGJ_MINING
+		mailgroup = MGD_MINING
 		name = "Mining Outpost Pad"
 	qm
-		mailgroup = MGJ_CARGO
+		mailgroup = MGD_CARGO
 		name = "QM Pad"
 	qm2
-		mailgroup = MGJ_CARGO
+		mailgroup = MGD_CARGO
 		name = "QM Pad 2"
 	researchoutpost
 		mailgroup = MGD_SCIENCE
@@ -2522,17 +2522,17 @@ TYPEINFO(/obj/submachine/cargopad)
 		if (!src.mailgroup)
 			var/area/area = get_area(src)
 			if (istype(area, /area/station/hydroponics) || istype(area, /area/station/storage/hydroponics) || istype(area, /area/station/ranch))
-				src.mailgroup = MGT_HYDROPONICS
+				src.mailgroup = MGD_BOTANY
 			else if (istype(area, /area/station/medical/robotics))
-				src.mailgroup = MGJ_ROBOTICS
+				src.mailgroup = MGO_ROBOTICS
 			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
 				src.mailgroup = MGD_SCIENCE
 			else if (istype(area, /area/station/engine))
-				src.mailgroup = MGD_ENGINEERING
+				src.mailgroup = MGO_ENGINEER
 			else if (istype(area, /area/station/mining) || istype(area, /area/mining))
-				src.mailgroup = MGJ_MINING
+				src.mailgroup = MGD_MINING
 			else if (istype(area, /area/station/quartermaster))
-				src.mailgroup = MGJ_CARGO
+				src.mailgroup = MGD_CARGO
 
 		if (src.active) //in case of map edits etc
 			UpdateOverlays(image('icons/obj/objects.dmi', "cpad-rec"), "lights")
@@ -2573,7 +2573,7 @@ TYPEINFO(/obj/submachine/cargopad)
 		if (!src.mailgroup)
 			return
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-PAD",  "group"=src.mailgroup, "topic"=MSG_TOPIC_DELIVERY, "sender"="00000000", "message"="Incoming delivery to [src.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-PAD",  "group"=src.mailgroup, "topic"=MGA_DELIVERY, "sender"="00000000", "message"="Incoming delivery to [src.name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 // satchels -> obj/item/satchel.dm

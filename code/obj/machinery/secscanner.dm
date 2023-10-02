@@ -71,7 +71,7 @@ TYPEINFO(/obj/machinery/secscanner)
 				var/scan_location = get_area(src)
 
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECMATE-MAIL",  "group"=MGD_SECURITY, "topic"=MSG_TOPIC_CHECKPOINT, "sender"="00000000", "message"="Notification: An item [I.name] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECMATE-MAIL",  "group"=MGD_SECURITY, "alert"=MGA_CHECKPOINT, "sender"="00000000", "message"="An item [I.name] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 				last_perp = I.name
@@ -115,7 +115,7 @@ TYPEINFO(/obj/machinery/secscanner)
 
 						if (perpname != last_perp || contraband != last_contraband)
 							var/datum/signal/pdaSignal = get_free_signal()
-							pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECMATE-MAIL",  "group"=MGD_SECURITY, "topic"=MSG_TOPIC_CHECKPOINT, "sender"="00000000", "message"="NOTIFICATION: [uppertext(perpname)] FAILED A VIBE CHECK AT [uppertext(scan_location)]! BAD VIBES LEVEL : [contraband]")
+							pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECMATE-MAIL",  "group"=MGD_SECURITY, "alert"=MGA_CHECKPOINT, "sender"="00000000", "message"="[uppertext(perpname)] FAILED A VIBE CHECK AT [uppertext(scan_location)]! BAD VIBES LEVEL : [contraband]")
 							SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 						last_perp = perpname
@@ -152,7 +152,7 @@ TYPEINFO(/obj/machinery/secscanner)
 
 					if (perpname != last_perp || contraband != last_contraband)
 						var/datum/signal/pdaSignal = get_free_signal()
-						pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECMATE-MAIL",  "group"=MGD_SECURITY, "topic"=MSG_TOPIC_CHECKPOINT, "sender"="00000000", "message"="Notification: [perpname] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
+						pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECMATE-MAIL",  "group"=MGD_SECURITY, "alert"=MGA_CHECKPOINT, "sender"="00000000", "message"="[perpname] failed checkpoint scan at [scan_location]! Threat Level : [contraband]")
 						SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 					last_perp = perpname

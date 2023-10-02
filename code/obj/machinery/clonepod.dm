@@ -123,10 +123,9 @@ TYPEINFO(/obj/machinery/clonepod)
 		newsignal.data["command"] = "text_message"
 		newsignal.data["sender_name"] = "CLONEPOD-MAIL"
 		newsignal.data["message"] = "[msg]"
-
 		newsignal.data["address_1"] = "00000000"
-		newsignal.data["group"] = MGD_MEDICAL
-		newsignal.data["topic"] = MSG_TOPIC_CLONER
+		newsignal.data["group"] = MGD_MEDBAY
+		newsignal.data["alert"] = MGA_CLONER
 		newsignal.data["sender"] = src.net_id
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")

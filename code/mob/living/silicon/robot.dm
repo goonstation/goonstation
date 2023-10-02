@@ -1959,8 +1959,7 @@
 				src.radio = src.ai_radio
 			else
 				src.radio = RM.radio
-				src.internal_pda.mail_groups = RM.mail_groups
-				src.internal_pda.mail_topics = RM.mail_topics
+				src.internal_pda.mailgroups = RM.mailgroups
 			src.ears = src.radio
 			src.radio.set_loc(src)
 
@@ -1981,8 +1980,7 @@
 				src.radio = src.ai_radio
 			else
 				src.radio = src.default_radio
-				src.internal_pda.mail_groups = initial(src.internal_pda.mail_groups)
-				src.internal_pda.mail_topics = initial(src.internal_pda.mail_topics)
+				src.internal_pda.mailgroups = initial(src.internal_pda.mailgroups)
 			src.ears = src.radio
 		return RM
 
@@ -2559,8 +2557,8 @@
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
 			newsignal.data["message"] = message
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = list(MGJ_ROBOTICS, MGT_SILICON)
-			newsignal.data["topic"] = list(MSG_TOPIC_DEATH)
+			newsignal.data["group"] = list(MGO_ROBOTICS, MGO_SILICON)
+			newsignal.data["alert"] = list(MGA_DEATH)
 			newsignal.data["sender"] = net_id
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)

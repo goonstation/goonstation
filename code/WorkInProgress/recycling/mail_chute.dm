@@ -142,7 +142,7 @@
 				newsignal.data["message"] = "[message]"
 				newsignal.data["address_1"] = "00000000"
 				newsignal.data["group"] = groups
-				newsignal.data["topic"] = MSG_TOPIC_DELIVERY
+				newsignal.data["alert"] = MGA_DELIVERY
 				newsignal.data["sender"] = src.net_id
 
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
@@ -157,17 +157,17 @@
 	janitor
 		name = "Janitor"
 		mail_tag = "janitor"
-		mailgroup = MGJ_JANITOR
+		mailgroup = MGO_JANITOR
 		message = 1
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = MGT_CATERING
+		mailgroup = MGD_KITCHEN
 		message = 1
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = MGT_HYDROPONICS
+		mailgroup = MGD_BOTANY
 		message = 1
 	security
 		name = "Security"
@@ -193,27 +193,27 @@
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = MGJ_SPIRITUAL
+		mailgroup = MGD_SPIRITUALAFFAIRS
 		message = 1
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = MGD_ENGINEERING
+		mailgroup = MGO_ENGINEER
 		message = 1
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGD_ENGINEERING
+		mailgroup = MGO_ENGINEER
 		message = 1
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGJ_MINING
+		mailgroup = MGD_MINING
 		message = 1
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = MGJ_CARGO
+		mailgroup = MGD_CARGO
 		message = 1
 
 		refinery
@@ -239,17 +239,17 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = MGD_MEDICAL
+		mailgroup = MGD_MEDBAY
 		message = 1
 
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = MGJ_ROBOTICS
+			mailgroup = MGO_ROBOTICS
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = MGJ_GENETICS
+			mailgroup = MGO_GENETICS
 		pathology
 			name = "Pathology"
 			mail_tag = "pathology"
@@ -346,7 +346,7 @@
 	janitor
 		name = "Janitor"
 		mail_tag = "janitor"
-		mailgroup = MGJ_JANITOR
+		mailgroup = MGO_JANITOR
 		message = 1
 
 		north
@@ -362,7 +362,7 @@
 	kitchen
 		name = "Kitchen"
 		mail_tag = "kitchen"
-		mailgroup = MGT_CATERING
+		mailgroup = MGD_KITCHEN
 		message = 1
 
 		north
@@ -378,7 +378,7 @@
 	hydroponics
 		name = "Hydroponics"
 		mail_tag = "hydroponics"
-		mailgroup = MGT_HYDROPONICS
+		mailgroup = MGD_BOTANY
 		message = 1
 
 		north
@@ -454,7 +454,7 @@
 	chapel
 		name = "Chapel"
 		mail_tag = "chapel"
-		mailgroup = MGJ_SPIRITUAL
+		mailgroup = MGD_SPIRITUALAFFAIRS
 		message = 1
 
 		north
@@ -470,7 +470,7 @@
 	engineering
 		name = "Engineering"
 		mail_tag = "engineering"
-		mailgroup = MGD_ENGINEERING
+		mailgroup = MGO_ENGINEER
 		message = 1
 
 		north
@@ -486,7 +486,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGD_ENGINEERING
+		mailgroup = MGO_ENGINEER
 		message = 1
 
 		north
@@ -502,7 +502,7 @@
 	mining
 		name = "Mining"
 		mail_tag = "mining"
-		mailgroup = MGJ_MINING
+		mailgroup = MGD_MINING
 		message = 1
 
 		north
@@ -518,7 +518,7 @@
 	qm
 		name = "QM"
 		mail_tag = "QM"
-		mailgroup = MGJ_CARGO
+		mailgroup = MGD_CARGO
 		message = 1
 
 		north
@@ -606,7 +606,7 @@
 	medbay
 		name = "Medbay"
 		mail_tag = "medbay"
-		mailgroup = MGD_MEDICAL
+		mailgroup = MGD_MEDBAY
 		message = 1
 
 		north
@@ -622,7 +622,7 @@
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = MGJ_ROBOTICS
+			mailgroup = MGO_ROBOTICS
 
 			north
 				dir = NORTH
@@ -637,7 +637,7 @@
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = MGJ_GENETICS
+			mailgroup = MGO_GENETICS
 
 			north
 				dir = NORTH

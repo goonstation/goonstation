@@ -335,11 +335,11 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	proc/notify_sale(var/budget_inc, var/split_with = 0)
 		var/datum/signal/pdaSignal = get_free_signal()
 
-		var/string = "Notification: [budget_inc] credits earned from last booth sale."
+		var/string = "[budget_inc] credits earned from last booth sale."
 		if (split_with)
-			string += "Splitting half of profits with [split_with]."
+			string += " Splitting half of profits with [split_with]."
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENE-BOOTH", "group"=MGJ_GENETICS, "topic"=MSG_TOPIC_SALES, "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENE-BOOTH", "group"=MGO_GENETICS, "alert"=MGA_SALES, "sender"="00000000", "message"=string)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 		//playsound BEEP BEEEEEEEEEEP
@@ -347,9 +347,9 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	proc/notify_empty(var/datum/geneboothproduct/GBP)
 		var/datum/signal/pdaSignal = get_free_signal()
 
-		var/string = "Notification: [GBP.name] has sold out!"
+		var/string = "[GBP.name] has sold out!"
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENE-BOOTH", "group"=MGJ_GENETICS, "topic"=MSG_TOPIC_SALES, "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENE-BOOTH", "group"=MGO_GENETICS, "alert"=MGA_SALES, "sender"="00000000", "message"=string)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 	Cross(var/mob/M)

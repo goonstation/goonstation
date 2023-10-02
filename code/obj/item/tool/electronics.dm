@@ -625,8 +625,8 @@
 		newsignal.data["sender_name"] = "DEVICE-SCAN"
 		newsignal.data["message"] = message
 		if (target) newsignal.data["address_1"] = target
-		newsignal.data["group"] = MGD_ENGINEERING
-		newsignal.data["topic"] = MSG_TOPIC_RKIT
+		newsignal.data["group"] = MGO_ENGINEER
+		newsignal.data["alert"] = MGA_RKIT
 		newsignal.data["sender"] = src.net_id
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
@@ -692,7 +692,7 @@
 				//And don't send a message if we're not the host
 				return //But we already had that blueprint, so we do leave
 
-			pda_message(target, "Notice: Item already in database.")
+			pda_message(target, "Item already in database.")
 
 			return
 	var/strippedName = scanFile.scannedName
@@ -702,7 +702,7 @@
 	if(src.net_id != host_ruck || command != "add") //Only the host sends PDA messages, and we don't send them for internal transfer
 		return
 
-	pda_message(target, "Notice: Item entered into database.")
+	pda_message(target, "Item entered into database.")
 
 /obj/machinery/rkit/receive_signal(datum/signal/signal)
 	if(status & NOPOWER)
@@ -824,10 +824,10 @@
 				add_count++
 		if (add_count==  1)
 			boutput(user, "<span class='notice'>[add_count] new items entered into kit.</span>")
-			pda_message(null, "Notice: Item entered into database.")
+			pda_message(null, "Item entered into database.")
 		else if (add_count > 0)
 			boutput(user, "<span class='notice'>[add_count] new items entered into kit.</span>")
-			pda_message(null, "Notice: [add_count] new items entered into database.")
+			pda_message(null, "[add_count] new items entered into database.")
 		else
 			boutput(user, "<span class='alert'>No new items entered into kit.</span>")
 

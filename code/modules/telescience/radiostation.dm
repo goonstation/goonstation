@@ -291,7 +291,7 @@
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
 			// no just a topic so it goes to all PDAs
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="NSV-RENANIN", "sender"="00000000", "message"="Now playing: [R].", "group"=MSG_PARTY_LINE, "topic" = MSG_TOPIC_RADIO)
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="NSV-RENANIN", "sender"="00000000", "message"="Now playing: [R].", "group"=MGD_PARTY , "topic" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 #ifdef UNDERWATER_MAP
 			EXTEND_COOLDOWN(global, "music", 500 SECONDS)
@@ -838,7 +838,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 			user.client.play_music_radio(tape_inside.audio)
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("command"="text_message", "sender_name"="NSV-RENANIN", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MSG_PARTY_LINE, "topic" = MSG_TOPIC_RADIO)
+			pdaSignal.data = list("command"="text_message", "sender_name"="NSV-RENANIN", "sender"="00000000", "message"="Now playing: [src.tape_inside.audio_type] for [src.tape_inside.name_of_thing].", "group" = MGD_PARTY , "topic" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 			EXTEND_COOLDOWN(src, "play", 600 SECONDS)
 

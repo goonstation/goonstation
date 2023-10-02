@@ -229,26 +229,26 @@
 				src.visible_message("<span class='alert'><b>The [src] begins to smoke!</b></span>")
 				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and may meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
-					src.alertPDA("ALERT: [src] has reached a dangerous temperature. Intervene immediately to prevent meltdown.")
+					src.alertPDA("[src] has reached a dangerous temperature. Intervene immediately to prevent meltdown.")
 			if(temperature >= REACTOR_ON_FIRE_TEMP && !src.GetParticles("overheat_fire"))
 				src.UpdateParticles(new/particles/nuke_overheat_fire(get_turf(src)),"overheat_fire")
 				src.visible_message("<span class='alert'><b>The [src] begins to burn!</b></span>")
 				logTheThing(LOG_STATION, src, "[src] is at [temperature]K and is likely to meltdown")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
-					src.alertPDA("ALERT: [src] has reached CRITICAL temperature. MELTDOWN IMMINENT.", crisis = TRUE)
+					src.alertPDA("[src] has reached CRITICAL temperature. MELTDOWN IMMINENT.", crisis = TRUE)
 			else if(temperature < REACTOR_ON_FIRE_TEMP && src.GetParticles("overheat_fire"))
 				src.visible_message("<span class='alert'><b>The [src] stops burning.</b></span>")
 				logTheThing(LOG_STATION, src, "[src] is cooling from 2500K")
 				src.ClearSpecificParticles("overheat_fire")
 				if(!ON_COOLDOWN(src, "pda_temp_alert_critical", 30 SECONDS)) //prevent spam when it's on the edge
-					src.alertPDA("ALERT: [src] has cooled below critical temperature. Meltdown averted. Have a nice day.", crisis = TRUE)
+					src.alertPDA("[src] has cooled below critical temperature. Meltdown averted. Have a nice day.", crisis = TRUE)
 		else
 			if(src.GetParticles("overheat_smoke"))
 				src.visible_message("<span class='alert'><b>The [src] stops smoking.</b></span>")
 				logTheThing(LOG_STATION, src, "[src] is cooling from [temperature]K")
 				src.ClearSpecificParticles("overheat_smoke")
 				if(!ON_COOLDOWN(src, "pda_temp_alert", 30 SECONDS)) //prevent spam when it's on the edge
-					src.alertPDA("ALERT: [src] has cooled below dangerous temperature. Have a nice day.")
+					src.alertPDA("[src] has cooled below dangerous temperature. Have a nice day.")
 
 		src.radiationLevel = tmpRads
 		if(tmpRads > 1000 || temperature > REACTOR_MELTDOWN_TEMP)
@@ -280,11 +280,11 @@
 		signal.source = src
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = "NTBMK-CONTROL"
-		signal.data["group"] = MGD_ENGINEERING
-		signal.data["topic"] = MSG_TOPIC_ENGINE
+		signal.data["group"] = MGO_ENGINEER
+		signal.data["alert"] = MGA_ENGINE
 		if(crisis)
-			signal.data["topic"] = MSG_TOPIC_CRISIS
-		signal.data["message"] = msg
+			signal.data["alert"] = MGA_CRISIS
+		signal.data["message"] = "[msg]"
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"
 

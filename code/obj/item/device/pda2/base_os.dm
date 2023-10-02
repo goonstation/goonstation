@@ -58,8 +58,8 @@
 		var/list/recent_callers = list()
 		/// List of messengers we don't want to hear from anymore -- set by name, not address_1!
 		var/list/blocked_numbers = list()
-		/// List of mailgroups we don't want to hear from anymore
-		var/list/muted_topics = list()
+		/// List of mailgroups/alertgroups we don't want to hear from anymore
+		var/list/muted_groups = list()
 		/// Whether there's a PDA-report packet-reply-triggered UI update queued
 		var/report_refresh_queued = FALSE
 
@@ -176,8 +176,8 @@
 							var/count = 0
 							if(expand_departments_list)
 								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Collapse DEPT list*</a>"
-								for (var/department_id in pageable_groups)
-									. += "<li><a href='byond://?src=\ref[src];input=message;target=[pageable_groups[department_id]];department=1'>DEPT-[department_id]</a></li>"
+								for (var/department_id in page_departments)
+									. += "<li><a href='byond://?src=\ref[src];input=message;target=[page_departments[department_id]];department=1'>DEPT-[department_id]</a></li>"
 							else
 								. += "<a href='byond://?src=\ref[src];toggle_departments_list=1;refresh=1'>*Expand DEPT list*</a>"
 
@@ -204,7 +204,7 @@
 								count++
 							. += "</ul>"
 
-							if (count == 0 && !length(pageable_groups))
+							if (count == 0 && !length(page_departments))
 								. += "None detected.<br>"
 
 					else if (src.message_mode == 1)
@@ -292,15 +292,15 @@
 
 					. += "<br>"
 
-				if(MODE_GROUPS) // Groups and topics and their ringtones
-					if(length(src.master.mail_groups))
+				if(MODE_GROUPS) // Groups and alerts and their ringtones
+					if(length(src.master.mailgroups))
 						. += "<h4>SpaceMessenger V4.0.5</h4>"
 						. += "<a href='byond://?src=\ref[src];mode=[MODE_MESSAGE]'>Back</a><br>"
 						. += "<h4>Mailgroups</h4><br>"
 						. += "<a href='byond://?src=\ref[src];input=mailgroup'>Join/create group</a>"
 						. += "<table cellspacing=5>"
 
-						for(var/mailgrp in src.master.mail_groups)
+						for(var/mailgrp in src.master.mailgroups)
 							var/datum/ringtone/rt = null
 							var/rtButton = "Default"
 							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["mailgroup"];entry=[mailgrp]'>Block</a>"
@@ -314,9 +314,9 @@
 							if((mailgrp in src.master.mailgroup_ringtones) && istype(src.master.mailgroup_ringtones[mailgrp], /datum/ringtone))
 								rt = src.master.mailgroup_ringtones[mailgrp]
 								rtButton = "<a href='byond://?src=\ref[src];delMGTone=[mailgrp]'>[rt.name]</a>"
-							if(mailgrp in src.muted_topics)
+							if(mailgrp in src.muted_groups)
 								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["mailgroup"];entry=[mailgrp]'>Unblock</a>"
-							if(mailgrp in src.master.reserved_mail_groups)
+							if(mailgrp in src.master.reserved_mailgroups)
 								leaveButton = ""
 							. += "<tr><td>[mailgrp]</td><td>[rtButton]</td><td>[msgButton]</td><td>[sendButton]</td><td>[muteButton]</td><td>[leaveButton]</td></tr>"
 						. += "</table>"
@@ -324,14 +324,14 @@
 						. += "<h4>Alert Settings</h4>"
 						. += "<table cellspacing=5>"
 
-						for(var/topic in src.master.mail_topics)
+						for(var/topic in src.master.alert_ringtones)
 							var/datum/ringtone/rt = null
 							var/rtButton = "Default"
 							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["mailgroup"];entry=[topic]'>Mute</a>"
 							if(istype(src.master.alert_ringtones[topic], /datum/ringtone))
 								rt = src.master.alert_ringtones[topic]
 								rtButton = "<a href='byond://?src=\ref[src];delATone=[topic]'>[rt.name]</a>"
-							if(topic in src.muted_topics)
+							if(topic in src.muted_groups)
 								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["mailgroup"];entry=[topic]'>Unmute</a>"
 							. += "<tr><td>[topic]</td><td>[rtButton]</td><td>[muteButton]</td></tr>"
 
@@ -391,9 +391,9 @@
 				switch(href_list["type"])
 					if("mailgroup")
 						if(href_list["manageBlock"] == "add")
-							src.muted_topics += href_list["entry"]
+							src.muted_groups += href_list["entry"]
 						if(href_list["manageBlock"] == "remove")
-							src.muted_topics -= href_list["entry"]
+							src.muted_groups -= href_list["entry"]
 					if("single")
 						if(href_list["manageBlock"] == "add")
 							src.blocked_numbers += href_list["entry"]
@@ -592,11 +592,11 @@
 						cleanGroupname = replacetext(cleanGroupname, "|", "")
 						cleanGroupname =  sanitize(adminscrub(strip_html(cleanGroupname)))
 
-						if (cleanGroupname in src.master.reserved_mail_groups)
+						if (cleanGroupname in src.master.reserved_mailgroups)
 							// You can't join one of these!
 							src.master.display_message("You may not join [cleanGroupname] - this group is private")
 							return
-						src.master.mail_groups += cleanGroupname
+						src.master.mailgroups += cleanGroupname
 
 
 
@@ -627,13 +627,13 @@
 					if("leave_group")
 						var/groupname = href_list["groupname"]
 						if (groupname)
-							src.master.mail_groups -= groupname
+							src.master.mailgroups -= groupname
 					if("mute_group")
 						var/groupname = href_list["groupname"]
-						if (groupname in src.muted_topics)
-							src.muted_topics -= groupname
+						if (groupname in src.muted_groups)
+							src.muted_groups -= groupname
 						else
-							src.muted_topics += groupname
+							src.muted_groups += groupname
 
 
 			else if(href_list["note_func"]) //Note program specific topic junk
@@ -793,18 +793,18 @@
 			if (islist(signal.data["group"]))
 				var/any_member = FALSE
 				for (var/group in signal.data["group"])
-					if (group in src.master.mail_groups)
+					if (group in src.master.mailgroups)
 						any_member = TRUE
 						break
 				if (!any_member) // not a member of any specified group; discard
 					return
 			else if (signal.data["group"])
-				if (!(signal.data["group"] in src.master.mail_groups))
+				if (!(signal.data["group"] in src.master.mailgroups))
 					return
 
- 			// not a topic we can subscribe to
-			if (!(signal.data["topic"] in src.master.mail_topics))
-				return
+			if (signal.data["alert"])
+				if(signal.data["alert"] in src.muted_groups)
+					return // don't want it
 
 			var/filename = signal.data["file_name"]
 			var/sender = signal.data["sender"]
@@ -816,42 +816,37 @@
 			var/groupAddress = signal.data["group"]
 			var/topic = signal.data["topic"]
 
-			if(topic && (topic in src.muted_topics)) // Check to see if we have muted this group. The network card already checked if we are a member.
-				return
-
-			if((sender in src.blocked_numbers))
-				return
-
 			switch(signal.data["command"])
 				if("text_message")
 					if(!message_on || !signal.data["message"])
 						return
 
-					var/senderName = signal.data["sender_name"]
-					if(!senderName)
-						senderName = "!Unknown!"
+					if(!sendername)
+						sendername = "!UNKNOWN!"
 
-					var/senderAssignment = signal.data["sender_assignment"]
-					var/messageFrom = senderName
-					if (senderAssignment)
-						messageFrom = "[messageFrom] - [senderAssignment]"
+					var/messageFrom = sendername
+					if (senderassignment)
+						messageFrom = "[messageFrom] - [senderassignment]"
 
-					if((length(signal.data["sender"]) == 8) && (is_hex(signal.data["sender"])) )
-						if (!(signal.data["sender"] in src.detected_pdas))
-							src.detected_pdas += signal.data["sender"]
-						src.detected_pdas[signal.data["sender"]] = senderName
-						src.master.pdasay_autocomplete[senderName] = signal.data["sender"]
+					// only add real PDAs to PDASAY...
+					if((length(sender) == 8) && (is_hex(sender)) )
+						if (!(sender in src.detected_pdas))
+							src.detected_pdas += sender
+						src.detected_pdas[sender] = sendername
+						src.master.pdasay_autocomplete[sendername] = sender
 
-					//Only add the reply link if the sender is another pda2.
+					// ...but don't expose spoofed messages immediately(?)
+					src.AddCaller(sender, sendername)
+					var/senderstring = "From <a href='byond://?src=\ref[src];input=message;target=[sender]'>[messageFrom]</a>"
 
-					src.AddCaller(signal.data["sender"], senderName)
-
-					var/senderstring = "From <a href='byond://?src=\ref[src];input=message;target=[signal.data["sender"]]'>[messageFrom]</a>"
 					if (groupAddress)
 						if (islist(groupAddress))
 							senderstring += " to [jointext(groupAddress,", ")]"
 						else
 							senderstring += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1'>[groupAddress]</a>"
+
+					if (topic)
+						senderstring += " ([topic])"
 
 					src.message_note += "<i><b>&larr; [senderstring]:</b></i><br>[signal.data["message"]]<br>"
 					var/alert_beep = null //Don't beep if set to silent.
@@ -865,7 +860,7 @@
 							if (src.master)
 								src.master.explode()
 
-					if(senderName in src.blocked_numbers)
+					if(sendername in src.blocked_numbers)
 						return
 
 					var/previewtext = ((islist(signalTag) && ("preview_message" in signalTag)) || signalTag == "preview_message")
@@ -873,13 +868,27 @@
 					if(src.master.r_tone?.readMessages)
 						src.master.r_tone.MessageAction(signal.data["message"])
 
-					src.master.display_alert(alert_beep, previewtext, groupAddress, src.ManageRecentCallers(senderName))
-					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[signal.data["sender"]]'>[messageFrom]</a>"
+					src.master.display_alert(alert_beep, previewtext, groupAddress, src.ManageRecentCallers(sendername))
+
+					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[sender]'>[messageFrom]</a> to "
+
 					if (groupAddress)
-						if (islist(groupAddress))
-							displayMessage += " to [jointext(groupAddress,", ")]"
-						else
-							displayMessage += " to <a href='byond://?src=\ref[src];input=message;[(groupAddress in src.master.mail_topics) ? "" : "target=[groupAddress]"];department=1'>[groupAddress]</a>"
+						if(!islist(groupAddress))
+							groupAddress = list(groupAddress)
+
+						var/list/msg_groups = list()
+						for(var/msg_group in groupAddress)
+							msg_groups += list("<a href='byond://?src=\ref[src];input=message;[(msg_group in src.master.mailgroups) ? "" : "target=[msg_group]"];department=1'>[msg_group]</a>")
+
+						displayMessage += msg_groups.Join(", ")
+
+						if (topic == MGA_CRISIS)
+							displayMessage += " (<span class='alert'>(!!!CRISIS ALERT!!!)</span>)"
+						else if (topic)
+							displayMessage += " ([topic])"
+					else
+						displayMessage += "<a href='byond://?src=\ref[src];input=message;target=[sender]'>[sendername]</a>"
+
 					displayMessage += ":</b></i> [signal.data["message"]]"
 					src.master.display_message(displayMessage)
 
@@ -894,7 +903,7 @@
 						return
 
 					if(!sendername)
-						sendername = "!Unknown!"
+						sendername = "!UNKNOWN!"
 
 					var/messageFrom = sendername
 					if (senderassignment)

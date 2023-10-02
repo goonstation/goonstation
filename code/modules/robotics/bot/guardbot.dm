@@ -1967,7 +1967,7 @@
 			master.speak(message2send)
 		else
 			message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="BUDDY-BOT", "group"=MGD_SCIENCE, "topic"=MSG_TOPIC_ARREST, "sender"="00000000", "message"="[message2send]")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="BUDDY-BOT", "group"=MGD_SCIENCE, "alert"=MGA_ARREST, "sender"="00000000", "message"="[message2send]")
 		SEND_SIGNAL(master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 	/// Interrupts the action if the bot cant (or shouldnt be able to) continue cuffing

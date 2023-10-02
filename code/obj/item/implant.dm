@@ -262,7 +262,7 @@ THROWING DARTS
 	scan_category = "health"
 	var/healthstring = ""
 	uses_radio = 1
-	mail_groups = list(MGD_MEDICAL, MGJ_SPIRITUAL)
+	mail_groups = list(MGD_MEDBAY, MGD_SPIRITUALAFFAIRS)
 
 	implanted(mob/M, mob/I)
 		..()
@@ -328,7 +328,7 @@ THROWING DARTS
 	proc/health_alert()
 		if (!src.owner)
 			return
-		src.send_message("HEALTH ALERT: [src.owner] in [get_area(src)]: [src.sensehealth()]", MSG_TOPIC_CRITICAL, "MEDTRAK")
+		src.send_message("[src.owner] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "MEDTRAK-MAIL")
 
 	proc/death_alert()
 		if (!src.owner)
@@ -339,13 +339,12 @@ THROWING DARTS
 			if(cl_implant.owner != src.owner)
 				continue
 			cloner_areas += "[cl_implant.scanned_here]"
-		var/message = "DEATH ALERT: [src.owner] in [myarea], " //youre lucky im not onelining this
-		if (he_or_she(src.owner) == "they")
-			message += "they " + (length(cloner_areas) ? "have been clone-scanned in [jointext(cloner_areas, ", ")]." : "do not have a cloning record.")
+		var/message = "[src.owner] in [myarea], "
+		if (length(cloner_areas))
+			message += "matching cloning records found in [jointext(cloner_areas, ", ")]."
 		else
-			message += he_or_she(src.owner) + " " + (length(cloner_areas) ? "has been clone-scanned in [jointext(cloner_areas, ", ")]." : "does not have a cloning record.")
-
-		src.send_message(message, MSG_TOPIC_DEATH, "MEDTRAK")
+			message += "no cloning record on file."
+		src.send_message(message, MGA_DEATH, "MEDTRAK-MAIL")
 
 /obj/item/implant/health/security
 	name = "health implant - security issue"
@@ -451,7 +450,7 @@ THROWING DARTS
 		if (!src.owner)
 			return
 		var/message = "TRACKING IMPLANT LOST: [src.owner][src.get_coords()] in [get_area(src)], "
-		src.send_message(message, MSG_TOPIC_TRACKING, "MAILBOT")
+		src.send_message(message, MGA_TRACKING, "MAILBOT")
 		..()
 
 /obj/item/implant/pod_wars

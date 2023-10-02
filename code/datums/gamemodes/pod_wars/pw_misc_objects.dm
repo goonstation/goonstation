@@ -412,7 +412,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 ////////////////////PDAs and PDA Accessories/////////////////////
 /obj/item/device/pda2/pod_wars
 	setup_default_cartridge = /obj/item/disk/data/cartridge/pod_pilot //hos cart gives access to manifest compared to regular sec cart, useful for NTSO
-	mail_groups = list()
+	mailgroups = list()
 	bombproof = 1
 	var/team_num 			// 1 TEAM_NANOTRASEN, 2 TEAM_SYNDICATE
 

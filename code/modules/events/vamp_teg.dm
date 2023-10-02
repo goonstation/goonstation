@@ -185,9 +185,9 @@
 		signal.source = src.generator
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = "ENGINE-MASTER"
-		signal.data["group"] = MGD_ENGINEERING
-		signal.data["topic"] = MSG_TOPIC_ENGINE
-		signal.data["message"] = "Notice: [event_string]"
+		signal.data["group"] = MGO_ENGINEER
+		signal.data["alert"] = MGA_ENGINE
+		signal.data["message"] = "[event_string]"
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"
 

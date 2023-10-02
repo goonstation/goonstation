@@ -40,33 +40,33 @@ var/list/job_mailgroup_list = list(
 	"Head of Personnel" = MGD_COMMAND,
 	"Head of Security" = MGD_COMMAND,
 	"Medical Director" = MGD_COMMAND,
-	"Medical Director" = MGD_MEDICAL,
+	"Medical Director" = MGD_MEDBAY,
 	"Research Director" = MGD_COMMAND,
 	"Chief Engineer" = MGD_COMMAND,
-	"Quartermaster" = MGD_ENGINEERING,
-	"Engineer" = MGD_ENGINEERING,
-	"Janitor" = MGJ_JANITOR,
-	"Miner" = MGD_ENGINEERING,
-	"Botanist" = MGT_HYDROPONICS,
-	"Rancher" = MGT_HYDROPONICS,
-	"Roboticist" = MGD_MEDICAL,
-	"Geneticist" = MGD_MEDICAL,
-	"Medical Doctor" = MGD_MEDICAL,
-	"Chaplain" = MGJ_SPIRITUAL)
+	"Quartermaster" = MGO_ENGINEER,
+	"Engineer" = MGO_ENGINEER,
+	"Janitor" = MGO_JANITOR,
+	"Miner" = MGO_ENGINEER,
+	"Botanist" = MGD_BOTANY,
+	"Rancher" = MGD_BOTANY,
+	"Roboticist" = MGD_MEDBAY,
+	"Geneticist" = MGD_MEDBAY,
+	"Medical Doctor" = MGD_MEDBAY,
+	"Chaplain" = MGD_SPIRITUALAFFAIRS)
 
 
 // Groups that show on messenger by default
-var/list/pageable_groups = list(
+var/list/page_departments = list(
 	"Command" = MGD_COMMAND,
 	"Security" = MGD_SECURITY,
-	"Medical" = MGD_MEDICAL,
+	"Medical" = MGD_MEDBAY,
 	"Science" = MGD_SCIENCE,
-	"Station Repair" = MGT_REPAIR,
-	"Cargo" = MGJ_CARGO,
-	"Hydroponics" = MGT_HYDROPONICS,
-	"Bar / Kitchen" = MGT_CATERING,
-	"Spiritual Affairs" = MGJ_SPIRITUAL,
-	"Mining" = MGJ_MINING)
+	"Station Repair" = MGD_STATIONREPAIR,
+	"Cargo" = MGD_CARGO,
+	"Hydroponics" = MGD_BOTANY,
+	"Bar / Kitchen" = MGD_KITCHEN,
+	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS,
+	"Mining" = MGD_MINING)
 
 /proc/get_all_jobs()
 	var/all_jobs = list()

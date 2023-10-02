@@ -6,8 +6,7 @@
 	included_cosmetic = /datum/robot_cosmetic/medical
 	included_tools = /datum/robot/module_tool_creator/recursive/module/medical
 	radio_type = /obj/item/device/radio/headset/medical
-	mail_groups = list(MGD_MEDICAL, MGJ_ROBOTICS, MGT_SILICON, MGJ_GENETICS, MSG_PARTY_LINE)
-	mail_topics = list(MSG_TOPIC_DELIVERY, MSG_TOPIC_RADIO, MSG_TOPIC_DEATH, MSG_TOPIC_CRITICAL, MSG_TOPIC_CLONER, MSG_TOPIC_CRISIS, MSG_TOPIC_SALES)
+	mailgroups = list(MGD_MEDBAY, MGO_ROBOTICS, MGO_SILICON, MGO_GENETICS, MGD_PARTY)
 
 /datum/robot_cosmetic/medical
 	head_mod = "Medical Mirror"

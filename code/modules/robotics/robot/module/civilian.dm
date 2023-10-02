@@ -6,7 +6,7 @@
 	included_cosmetic = /datum/robot_cosmetic/civilian
 	included_tools = /datum/robot/module_tool_creator/recursive/module/civilian
 	radio_type = /obj/item/device/radio/headset/civilian
-	mail_groups = list(MGT_HYDROPONICS, MGJ_JANITOR, MGT_REPAIR, MGT_SILICON, MSG_PARTY_LINE)
+	mailgroups = list(MGD_BOTANY, MGO_JANITOR, MGD_STATIONREPAIR, MGO_SILICON, MGD_PARTY )
 
 /datum/robot_cosmetic/civilian
 	fx = list(255, 0, 0)
