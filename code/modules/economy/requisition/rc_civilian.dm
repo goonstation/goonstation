@@ -524,9 +524,10 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	chem_ids = "silicate"
 	feemod = PAY_DOCTORATE/10
 
-/datum/rc_entry/item/sheet
+/datum/rc_entry/stack/sheet
 	name = "wooden sheet"
-	typepath = /obj/item/sheet/wood
+	typepath = /obj/item/sheet
+	mat_id = "wood"
 	feemod = PAY_UNTRAINED
 
 /datum/rc_entry/reagent/acetone
