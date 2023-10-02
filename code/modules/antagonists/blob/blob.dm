@@ -56,6 +56,6 @@
 		return list(
 			list(
 				"name" = "Absorbed Lifeforms",
-				"value" = "[english_list(absorbed_lifeforms, nothing_text = "Noone.")]",
+				"value" = "[english_list(absorbed_lifeforms, nothing_text = "No-one.")]",
 			)
 		)

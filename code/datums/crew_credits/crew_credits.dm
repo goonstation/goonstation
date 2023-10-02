@@ -39,8 +39,6 @@
 		ui.open()
 
 /datum/crewCredits/ui_static_data(mob/user)
-	. = ..()
-
 	return src.crew_credits_data
 
 /// Populates `crew_credits_data` with the data to be passed to the UI.
@@ -239,14 +237,21 @@
 		else
 			status = "Alive, Off Station"
 
-	else if (istype(mind.current, /mob/dead))
-		var/mob/dead/player = mind.current
+	else
+		var/mob/corpse
 
-		if (!player.corpse)
+		if (istype(mind.current, /mob/dead))
+			var/mob/dead/player = mind.current
+			corpse = player.corpse
+
+		else
+			corpse = mind.current
+
+		if (!corpse)
 			status = "Dead, Body Destroyed"
-		else if (player.corpse.z == Z_LEVEL_STATION)
+		else if (corpse.z == Z_LEVEL_STATION)
 			status = "Dead, On Station"
-		else if (istype(get_area(player.corpse.z), /area/centcom) || istype(get_area(player.corpse.z), /area/shuttle/escape) )
+		else if (istype(get_area(corpse.z), /area/centcom) || istype(get_area(corpse.z), /area/shuttle/escape) )
 			status = "Dead, At CentComm"
 		else
 			status = "Dead, Off Station"

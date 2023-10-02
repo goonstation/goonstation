@@ -242,7 +242,11 @@ ABSTRACT_TYPE(/datum/antagonist)
 		if (!isnull(src.success_medal))
 			src.owner.current.unlock_medal(src.success_medal, TRUE)
 
-	/// Returns a list of data to be passed to the end of round credits pertaining to this antagonist, such as items purchased, units of blood drank, and so forth.
+	/**
+	 *	Returns a list of data to be passed to the end of round credits pertaining to this antagonist, such as items purchased, units of blood drank, and so forth.
+	 *	Should return a list of "name"-"value" associative lists.
+	 *	If an item list utilising item icons is to be used, the "type" index should be set to "itemList", and "value" should itself be a list of "iconBase64"-"name" associative lists.
+	 */
 	proc/get_statistics()
 		return
 
