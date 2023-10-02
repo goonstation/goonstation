@@ -6,6 +6,7 @@
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	text = ""
 
+	/// Used by camera monitors to display certain cameras only
 	var/network = "SS13"
 	/// Used by autoname: EX "security camera"
 	var/prefix = "security"
@@ -18,6 +19,7 @@
 	var/c_tag_order = 999
 	var/camera_status = TRUE
 	anchored = ANCHORED
+	/// Can't be destroyed by explosions
 	var/invuln = FALSE
 	/// Cameras only the AI can see through
 	var/ai_only = FALSE
@@ -34,7 +36,7 @@
 	var/obj/machinery/camera/c_west = null
 	var/obj/machinery/camera/c_south = null
 
-	//Here's a list of cameras pointing to this camera for reprocessing purposes
+	/// Here's a list of cameras pointing to this camera for reprocessing purposes
 	var/list/obj/machinery/camera/referrers = list()
 
 	/// Robust light
@@ -307,14 +309,14 @@
 	var/list/directions = null
 	var/pixel_offset = 10 // this will get overridden if jen wall
 	T = get_step(src, turn(src.dir, 180)) // lets first check if we can attach to a wall with our dir
-	if (istype(T, /turf/simulated/wall) || istype(T, /turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
+	if (wall_window_check(T))
 		directions = list(turn(src.dir, 180))
 	else
 		directions = cardinal // check each direction
 
 	for (var/D as anything in directions)
 		T = get_step(src, D)
-		if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
+		if (wall_window_check(T))
 			if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
 				pixel_offset = 12 // jen walls are slightly taller so the offset needs to increase
 			if (alt) // this uses the alternate sprites which happen to coincide with diagonal dirs
