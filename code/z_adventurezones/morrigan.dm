@@ -321,16 +321,16 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "broken_taser"
 	desc = "Totally busted..."
-	item_state = "energy"
+	item_state = "taser"
 	force = 5
 
 /obj/item/broken_signi
-	name = "destroyed signifier gun"
+	name = "destroyed signifer gun"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "broken_signi"
 	desc = "It's burnt, the cell must've exploded"
-	item_state = "energy"
+	item_state = "signifer_2"
 	force = 5
 
 /obj/item/broken_mod21
@@ -339,7 +339,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "broken_mod21"
 	desc = "About as useful as a stick."
-	item_state = "energy"
+	item_state = "hafpistol"
 	force = 5
 
 /obj/item/broken_optio
@@ -348,7 +348,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "broken_optio"
 	desc = "Mangled beyond repair..."
-	item_state = "energy"
+	item_state = "protopistol"
 	force = 5
 /obj/decal/fakeobjects/hafmech
 	name = "Strange Machine"
@@ -356,6 +356,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	bound_width = 128
 	bound_height = 128
 	density = TRUE
+	anchored = TRUE
 /obj/decal/fakeobjects/hafmech
 	name = "Big Machine"
 	desc = "This does not come in smaller sizes..."
@@ -2696,16 +2697,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	layer = OBJ_LAYER + 1
 
 //funny chute
+/obj/item/railgunpart
+	name = "Railgun Part"
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "railpart"
+	desc = "You're not too sure what to do with this."
 
 /obj/item/collecting_chute
-
-	name = "collecting chute"
-	desc = "put stuff in it"
+	name = "Collection chute"
+	desc = "Semms like you're supposed to put stuff in it..."
 	icon = 'icons/obj/disposal.dmi'
-	icon_state = "disposal"
+	icon_state = "matdrop"
 	anchored = ANCHORED
 	density = TRUE
-	var/required_objects = list(/obj/item/fishing_rod, /obj/item/gun/energy/railgun_experimental) //temporary
+	var/required_objects = list(/obj/item/railgunpart)
 	var/functioning = TRUE
 
 	New()

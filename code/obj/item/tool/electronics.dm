@@ -34,6 +34,7 @@
 	src.icon_state = pick("batt1", "batt2", "batt3")
 	randompix()
 	..()
+
 ////////////////////////////////////////////////////////////////up
 /obj/item/electronics/board
 	name = "board"

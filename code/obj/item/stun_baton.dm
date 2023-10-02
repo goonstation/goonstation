@@ -524,9 +524,9 @@ TYPEINFO(/obj/item/baton/ntso)
 
 /obj/item/baton/windup
 	name = "wind-up stun baton"
-	desc = "A no so standard issue baton for stunning people with. Requires a brief charge-up window to activate."
+	desc = "A not so standard issue baton for stunning people with. Requires a brief charge-up window to activate."
 	is_active = FALSE
-	pickup_sfx = 'sound/items/pickup_defib.ogg'
+	pickup_sfx = 'sound/items/pickup_2.ogg'
 
 	var/recharge_time = 5 SECONDS
 
@@ -543,7 +543,7 @@ TYPEINFO(/obj/item/baton/ntso)
 			user.visible_message("<span class='alert'>[user] begins to prime the [src].</span>",\
 			"<span class='notice'>You begin to prime the [src].</span>",\
 			"<span class='alert'>You hear an electrical whine.</span>")
-			playsound(user, 'sound/items/defib_charge.ogg', 90, 0)
+			playsound(user, 'sound/effects/chargeupbaton.ogg', 90, 0)
 			SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 0.2 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_on]", null, INTERRUPT_NONE)
 
 	proc/charge(var/mob/user) // Defib code but its exactly what we want here
