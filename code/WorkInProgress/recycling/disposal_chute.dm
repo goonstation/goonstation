@@ -223,6 +223,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		if (!src.fits_in(MO))
 			return
 
+		// if it has just been shot out of a mail chute, don't accept it.
 		if (MO.just_ejected_from_disposal)
 			return
 
