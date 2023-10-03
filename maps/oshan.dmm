@@ -10619,7 +10619,7 @@
 "aIL" = (
 /obj/table/auto,
 /obj/item/storage/box/diskbox,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/device/flash,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tech)
@@ -33011,7 +33011,7 @@
 "clW" = (
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/storage/crate{
 	open = 1
 	},
@@ -43628,12 +43628,11 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/landmark/start/job/detective,
 /obj/item/reagent_containers/food/snacks/popcorn{
-	bites_left = 100;
 	desc = "Those chickens are up to something...";
 	name = "suspicious popcorn"
 	},
-/obj/landmark/start/job/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "tdO" = (
@@ -54835,7 +54834,7 @@ aqn
 aqn
 aqn
 aqn
-eLI
+aqn
 aTs
 aTs
 aqn

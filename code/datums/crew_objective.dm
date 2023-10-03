@@ -941,7 +941,7 @@ ABSTRACT_TYPE(/datum/objective/crew/staffassistant)
 	check_completion()
 		if(owner.current && ishuman(owner.current))
 			var/mob/living/carbon/human/H = owner.current
-			if(H.butt_op_stage == 4) return 1
+			if (H.organHolder && !H.organHolder.get_organ("butt")) return 1
 		return 0
 
 /datum/objective/crew/staffassistant/wearbutt

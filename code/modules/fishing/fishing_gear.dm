@@ -359,7 +359,7 @@ TYPEINFO(/obj/item/fish_portal)
 	can_hold = 	list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
-	mats = list("MET-3"=15, "WOOD"=5)
+	mats = list("MET-3"=15, "WOOD"=5, "POW-2"=5, "CON-2"=5)
 
 /obj/item/syndie_fishing_rod
 	name = "\improper Glaucus fishing rod"

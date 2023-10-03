@@ -707,6 +707,13 @@ ABSTRACT_TYPE(/obj/item)
 
 	params = params2list(params)
 
+	if (ishuman(over_object) && ishuman(usr) && !src.storage)
+		var/mob/living/carbon/human/patient = over_object
+		var/mob/living/carbon/human/surgeon = usr
+		if (surgeryCheck(patient, surgeon))
+			if (insertChestItem(patient, surgeon, src))
+				return
+
 	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action
 		if (user == over_object)
 			actions.start(new /datum/action/bar/private/icon/pickup(src), user)
@@ -1210,10 +1217,6 @@ ABSTRACT_TYPE(/obj/item)
 	if (!M || !user) // not sure if this is the right thing...
 		return
 
-	if (surgeryCheck(M, user))		// Check for surgery-specific actions
-		if(insertChestItem(M, user))	// Puting item in patient's chest
-			return
-
 	if (src.Eat(M, user)) // All those checks were done in there anyway
 		return
 
@@ -1547,7 +1550,8 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/proc/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	if(src in user.juggling)
 		return ""
-	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
+
+	if (((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5)) && !src.cant_drop)
 		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
 		user.u_equip(src)
 		src.set_loc(user.loc)

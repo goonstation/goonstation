@@ -5,7 +5,7 @@
 	icon_state = "proj_crab"
 
 	stun = 50
-	cost = 30
+	cost = 40
 	dissipation_rate = 1
 	dissipation_delay = 20
 	sname = "claw"

@@ -4962,6 +4962,10 @@
 	pixel_x = -15
 	},
 /obj/machinery/firealarm/east,
+/obj/item/pen/crayon/golden{
+	pixel_y = 7;
+	pixel_x = -6
+	},
 /turf/simulated/floor/black,
 /area/station/bridge/hos{
 	name = "Head of Personnel's Quarters"
@@ -30247,10 +30251,6 @@
 	dir = 4
 	},
 /area/station/quartermaster/cargooffice)
-"mOT" = (
-/obj/landmark/shuttle_subwoofer,
-/turf/unsimulated/wall/trench,
-/area/space)
 "mPl" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/caution/corner/ne,
@@ -62623,7 +62623,7 @@ oeA
 oeA
 oeA
 oeA
-mOT
+oeA
 oeA
 oeA
 oeA

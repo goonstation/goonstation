@@ -90,7 +90,7 @@
 /area/station/engine/monitoring)
 "aaq" = (
 /obj/table/reinforced/bar/auto,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/carpet/green/fancy/narrow/east,
 /area/station/engine/monitoring)
 "aar" = (
@@ -1591,7 +1591,7 @@
 	pixel_x = 11;
 	pixel_y = 2
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -5;
 	pixel_y = 9
 	},
@@ -10148,7 +10148,7 @@
 	pixel_x = -6;
 	pixel_y = 5
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -5;
 	pixel_y = 9
 	},
@@ -10868,7 +10868,7 @@
 	pixel_x = 11;
 	pixel_y = -4
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -3
 	},
 /obj/machinery/status_display{
@@ -11086,7 +11086,7 @@
 /obj/item/wrench{
 	pixel_x = 8
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -5;
 	pixel_y = 9
 	},
@@ -19212,7 +19212,7 @@
 /area/station/hallway/secondary/north)
 "iyy" = (
 /obj/stool/bench/yellow/auto,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/landmark/start/job/engineer,
 /turf/simulated/floor/caution/west,
 /area/station/engine/storage)
@@ -24780,7 +24780,7 @@
 /area/station/hydroponics/lobby)
 "kOX" = (
 /obj/decal/tile_edge/stripe,
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -7
 	},
 /obj/item/device/multitool{
@@ -37554,7 +37554,7 @@
 	dir = 6;
 	icon_state = "bot2"
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -5;
 	pixel_y = 9
 	},
@@ -43702,11 +43702,11 @@
 	icon_state = "4-8"
 	},
 /obj/table/reinforced/bar/auto,
-/obj/item/clothing/glasses/meson,
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson,
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_y = 5
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_y = 10
 	},
 /obj/item/clothing/ears/earmuffs{
@@ -53000,7 +53000,7 @@
 /area/station/crew_quarters/jazz)
 "xiI" = (
 /obj/stool/bench/yellow/auto,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/landmark/start/job/engineer,
 /turf/simulated/floor/caution/east,
 /area/station/engine/engineering/breakroom)
