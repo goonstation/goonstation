@@ -2070,25 +2070,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		return pick("Whatever.", "Just bugger off already will you?", "Fuck off already.", "Cool, mate.")
 
 // Critter area
-/mob/living/critter/robotic/gunbot/morrigan
-
-	New()
-		..()
-		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
-		if (src.uses_eye_light)
-			var/image/eye_light = SafeGetOverlayImage("eye_light", 'icons/obj/adventurezones/morrigan/critter.dmi', "eye-[base_icon_state]")
-			eye_light.plane = PLANE_SELFILLUM
-			src.UpdateOverlays(eye_light, "eye_light")
 
 /mob/living/critter/robotic/gunbot/morrigan/gunbot
 	name = "Syndicate Sentinel Unit"
 	real_name = "Syndicate Sentinel Unit"
+	icon_state = "nukebot"
+	base_icon_state = "nukebot"
 	desc = "One of Morrigan's classic models... best avoid it."
 	health_brute = 20
 	health_burn = 20
 	is_npc = TRUE
 	speak_lines = TRUE
-	icon_state = "mars_nuke_bot"
 
 	seek_target(range)
 		. = ..()
@@ -2108,11 +2100,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /mob/living/critter/robotic/gunbot/morrigan/meleebot
 	name = "Syndicate CQC Unit"
 	real_name = "Syndicate CQC Unit"
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "clawbot"
+	base_icon_state = "clawbot"
 	desc = "A security robot specially designed for close quarters combat. Prone to overheating.."
 	health_brute = 20
 	health_burn = 10
-	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
-	icon_state = "clawbot"
 	ai_type = /datum/aiHolder/aggressive
 
 	New()
@@ -2161,13 +2154,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /mob/living/critter/robotic/gunbot/morrigan/riotbot
 	name = "Syndicate Suppression Unit"
 	real_name = "Syndicate Suppression Unit"
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "riotbot"
+	base_icon_state = "riotbot"
 	desc = "A sturdy version with a shield for increased survivability. Not nearly as lethal as the others though."
 	health_brute = 30
 	health_burn = 30
-	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
-	icon_state = "riotbot"
-	ai_type = /datum/aiHolder/ranged
-
 
 	New()
 		..()
@@ -2221,13 +2213,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /mob/living/critter/robotic/gunbot/morrigan/engineerbot
 	name = "Syndicate MULTI Unit"
 	real_name = "Syndicate MULTI Unit"
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "engineerbot"
+	base_icon_state = "engineerbot"
 	desc = "An engnieering unit, you can somehow feel that it's angry at you."
 	health_brute = 20
 	health_burn = 10
-	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
-	icon_state = "engineerbot"
-	ai_type = /datum/aiHolder/aggressive
 
+	ai_type = /datum/aiHolder/aggressive
 
 	New()
 		..()
@@ -2268,14 +2261,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /mob/living/critter/robotic/gunbot/morrigan/medibot
 	name = "Syndicate Medical Unit"
 	real_name = "Syndicate Medical Unit"
+	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
+	icon_state = "medibot"
+	base_icon_state = "medibot"
 	desc = "A medical unit, doesn't pose as much of a threat. Looks a little smaller than the other ones."
 	health_brute = 20
 	health_burn = 10
-	icon = 'icons/obj/adventurezones/Morrigan/critter.dmi'
-	icon_state = "medibot"
-	ai_type = /datum/aiHolder/ranged
-
-
 
 	New()
 		..()
