@@ -352,15 +352,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	</style>
 	<script type="text/javascript">
-	// apparently just normal ol "a href=#fuck" links dont work in byond
-	// im at a loss for words
-	function are_you_fucking_shitting_me(h) {
-		var top = document.getElementById(h).offsetTop;
-		window.scrollTo(0, top - 65); /* ehhhhHHHHHHHHhhhhhhhhhhh */
-	}
-
-	// lol because chui uses its own shitty inner scrolling crap this doesnt work OH WELL
-	// if u use chui u get nothing good day sir.
+		// same-page anchor "a href=#id" links dont work in byond
+		// doesn't work for CHUI as it has its own scrolling logic
+		function scroll_to_id(h) {
+			var top = document.getElementById(h).offsetTop;
+			window.scrollTo(0, top);
+		}
 	</script>
 
 	<div id="fakeTopBar">
@@ -488,7 +485,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				for (var/foundCategory in global.QM_CategoryList)
 					//var/categorycolor = random_color() //I must say, I simply love the colors this generates.
 
-					. += "[catnum ? " &middot; " : ""] <a href='javascript:are_you_fucking_shitting_me(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
+					. += "[catnum ? " &middot; " : ""] <a href='javascript:scroll_to_id(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
 
 					ordershit += {"
 			<a name='category-[catnum]' id='category-[catnum]'></a><h3>[foundCategory]</h3>
