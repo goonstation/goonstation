@@ -1186,3 +1186,49 @@ Frequency:
 				still_needed += "an AI interface board"
 			boutput(user, "\The [src] needs [still_needed.len ? english_list(still_needed) : "bugfixing (please call a coder)"] before you can activate it.")
 			return
+
+
+
+/datum/statusEffect/low_signal
+	id = "low_signal"
+	name = "Low Signal"
+	desc = "You have reduced signal to your shell."
+	icon_state = "low_signal"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(optional)
+		. = ..()
+		if (!ismob(owner)) return
+		var/mob/M = owner
+		M.addOverlayComposition(/datum/overlayComposition/low_signal)
+
+	onUpdate(timePassed)
+		. = ..()
+		if (ishivebot(owner))
+			var/mob/living/silicon/hivebot/H = owner
+			if(H.module_active || H.module_states[1] || H.module_states[2] || H.module_states[3])
+				H.module_active = null
+				H.module_states[1] = null
+				H.module_states[2] = null
+				H.module_states[3] = null
+				H.hud.update_tools()
+				H.hud.update_tool_selector()
+				H.hud.update_active_tool()
+				H.show_text("Insufficient signal to maintain control of tools.")
+
+
+	onRemove()
+		. = ..()
+		if (QDELETED(owner) || !ismob(owner)) return
+		var/mob/M = owner
+		M.removeOverlayComposition(/datum/overlayComposition/low_signal)
+
+/datum/lifeprocess/hivebot_signal
+	process(var/datum/gas_mixture/environment)
+		if(hivebot_owner?.mainframe)
+			if((hivebot_owner.mainframe.z == hivebot_owner.z) || (inunrestrictedz(hivebot_owner) && inonstationz(hivebot_owner.mainframe)))
+				hivebot_owner.delStatus("low_signal")
+			else
+				hivebot_owner.setStatus("low_signal", INFINITE_STATUS)
+		..()
