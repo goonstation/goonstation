@@ -42,14 +42,12 @@
 	var/image/silhouette
 	var/image/static_image = null
 	var/in_point_mode = 0
-	var/butt_op_stage = 0.0 // sigh
 	var/dna_to_absorb = 1
 
 	var/canspeak = 1
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
-	var/list/stomach_process = list() //digesting foods
 	var/list/skin_process = list() //digesting patches
 
 	var/sound_burp = 'sound/voice/burp.ogg'
@@ -117,8 +115,6 @@
 	var/list/stamina_mods_regen = list()
 	var/list/stamina_mods_max = list()
 
-	var/list/stomach_contents = list()
-
 	var/last_sleep = 0 //used for sleep_bubble
 
 	can_lie = TRUE
@@ -177,11 +173,8 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as anything in stomach_process)
-		qdel(A)
 	for (var/atom/A as anything in skin_process)
 		qdel(A)
-	stomach_process = null
 	skin_process = null
 
 	for(var/mob/living/intangible/aieye/E in src.contents)
@@ -456,8 +449,6 @@
 				else
 					src.hasStatus("resting") ? src.delStatus("resting") : src.setStatus("resting", INFINITE_STATUS)
 					src.force_laydown_standup()
-		if ("togglepoint")
-			src.toggle_point_mode()
 		if ("say_radio")
 			src.say_radio()
 		else
@@ -481,10 +472,8 @@
 		src.examine_verb(target)
 		return
 
-	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
+	if (src.client && src.client.check_key(KEY_POINT))
 		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-		if (src.in_point_mode)
-			src.toggle_point_mode()
 		return
 
 	if (src.restrained())
@@ -576,7 +565,7 @@
 /mob/living/update_cursor()
 	..()
 	if (src.client)
-		if (src.in_point_mode || src.client.check_key(KEY_POINT))
+		if (src.client.check_key(KEY_POINT))
 			src.set_cursor('icons/cursors/point.dmi')
 			return
 
@@ -595,14 +584,6 @@
 /mob/living/key_up(key)
 	if (key == "alt" || key == "ctrl" || key == "shift")
 		update_cursor()
-
-/mob/living/proc/toggle_point_mode(var/force_off = 0)
-	if (force_off)
-		src.in_point_mode = 0
-		src.update_cursor()
-		return
-	src.in_point_mode = !(src.in_point_mode)
-	src.update_cursor()
 
 /mob/living/point_at(var/atom/target, var/pixel_x, var/pixel_y)
 	if (!isturf(src.loc) || !isalive(src) || src.restrained())
@@ -2031,9 +2012,10 @@
 				if (stun > 0)
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
-				src.reagents?.add_reagent("radium", damage/4) //fuckit
+				src.take_radiation_dose(damage / (40 * (1 + src.radiation_dose * 1.25)) SIEVERTS, TRUE)
+				src.reagents?.add_reagent("uranium", damage / 40) //this is mooostly for flavour
 				var/orig_val = GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)
-				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -5)
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -6)
 				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)
 					SPAWN(30 SECONDS)
 						REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile")

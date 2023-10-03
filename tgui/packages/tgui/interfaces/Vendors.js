@@ -1,6 +1,6 @@
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Box, Button, Section, Image } from 'tgui/components';
+import { Box, Button, Image, Section } from 'tgui/components';
 import { Collapsible, Divider, Flex, LabeledList, Stack } from '../components';
 import { VendorCashTable } from './common/VendorCashTable';
 

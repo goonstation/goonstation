@@ -1612,6 +1612,15 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	icon_state = "hotdogsuit"
 	over_hair = TRUE
 
+/obj/item/clothing/suit/gimmick/pickle
+	name = "pickle suit"
+	desc = "Smells horribly of vinegar."
+	body_parts_covered = HEAD|TORSO|LEGS|ARMS
+	wear_layer = MOB_FULL_SUIT_LAYER // ?????
+	hides_from_examine = C_UNIFORM|C_EARS
+	icon_state = "picklesuit"
+	over_hair = TRUE
+
 /obj/item/clothing/under/gimmick/vampire
 	name = "absurdly stylish suit and vest"
 	desc = "You can<i>count</i> on this suit and vest to make you look real suave, yeah."
@@ -1973,3 +1982,12 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 /obj/item/clothing/under/gimmick/trashsinglet/biohazard
 	icon_state = "biobag"
 	item_state = "biobag"
+
+/obj/item/clothing/suit/chaps
+	name = "chaps"
+	desc = "Sturdy, protective leg coverings made with space leather."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit_gimmick.dmi'
+	icon_state = "chaps"
+	item_state = "chaps"

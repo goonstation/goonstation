@@ -1310,7 +1310,7 @@
 				src.check_reagents_internal(T.active_airborne_liquid, refresh)
 
 	var/datum/reagents/reagents = 0
-	if (!target.reagents) // || !target.reagents.total_volume)
+	if (!target.reagents || (isturf(target) && !target.reagents.total_volume)) // || !target.reagents.total_volume)
 		if (istype(target,/obj/fluid))
 			var/obj/fluid/F = target
 			if (F.group && F.group.reagents)
@@ -1621,8 +1621,8 @@
 	for (var/mob/M in range(range, usr))
 		if (isalive(M))
 			M.say(speech)
-			logTheThing(LOG_ADMIN, src, "forced <b>[M]</b> to say: [speech]")
-			logTheThing(LOG_DIARY, src, "forced <b>[M]</b> to say: [speech]", "admin")
+			logTheThing(LOG_ADMIN, src, "forced <b>[constructName(M)]</b> to say: [speech]")
+			logTheThing(LOG_DIARY, src, "forced <b>[constructName(M)]</b> to say: [speech]", "admin")
 
 /client/proc/revive_all_bees()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)

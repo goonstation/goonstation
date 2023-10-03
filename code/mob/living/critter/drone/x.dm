@@ -1,7 +1,8 @@
 /mob/living/critter/robotic/drone/x
 	drone_designation = "X"
 	desc = "An experimental and extremely dangerous Syndicate railgun drone."
-	icon_state = "drone3"
+	icon = 'icons/mob/critter/robotic/drone/railgun.dmi'
+	icon_state = "drone_railgun"
 
 	setup_hands()
 		..()

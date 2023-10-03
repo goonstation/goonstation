@@ -284,10 +284,9 @@ obj/decal/fakeobjects/cargopad
 
 /obj/decal/fakeobjects/robot/security
 	name = "robot"
-	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "mars_sec_bot"
+	icon = 'icons/mob/critter/robotic/gunbot.dmi'
+	icon_state = "gunbot"
 
 	hugo
 		name = "HUGO"
@@ -610,7 +609,7 @@ obj/decal/fakeobjects/teleport_pad
 	desc = "Is it going to eat you if you get too close?"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "alienflower"
-	random_dir = 8
+	random_dir = WEST
 	anchored = ANCHORED
 	plane = PLANE_DEFAULT
 

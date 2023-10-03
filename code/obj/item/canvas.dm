@@ -338,6 +338,17 @@
 		src.icon = src.art
 		src.pixel_artists = world.load_intra_round_value("persistent_canvas_artists_[id]") || list()
 
+	proc/load_from_file()
+		var/file = input(usr, "Please select the image to load.", "Load Image", null) as null|icon
+		if(isnull(file))
+			return
+		src.art = icon(file)
+		src.art.Crop(1, 1, bound_width, bound_height)
+		src.icon = src.art
+
+	proc/save_to_local_file()
+		usr << ftp(src.art, "canvas_[src.name]_[time2text(world.realtime,"YYYY-MM-DD")].png")
+
 	proc/save_to_id(id)
 		world.save_intra_round_value("persistent_canvas_[id]", src.art)
 		world.save_intra_round_value("persistent_canvas_artists_[id]", src.pixel_artists)
@@ -420,12 +431,16 @@
 		if((user.ckey in src.artists) && (!admin_override || user?.client?.holder?.level < LEVEL_PA))
 			return null
 
+	attackby(obj/item/W, mob/user)
+		; // don't call parent to prevent paint can nonsense
+
 	Click(location, control, params)
 		. = ..()
 		pop_open_a_browser_box(usr)
 
 	reagent_act()
 		return
+
 	ex_act(severity)
 		return
 

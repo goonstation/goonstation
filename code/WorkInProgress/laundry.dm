@@ -5,6 +5,9 @@
 #define CYCLE_TIME_MOB_INSIDE 5
 #define CYCLE_TIME 10
 
+TYPEINFO(/obj/submachine/laundry_machine)
+	mats = 20
+
 /obj/submachine/laundry_machine
 	name = "laundry machine"
 	desc = "A combined washer/dryer unit used for cleaning clothes."
@@ -214,7 +217,7 @@
 			src.on = 1
 			var/mob/M = W.affecting
 			src.occupant = M
-			src.update_icon()
+			UpdateIcon()
 			cycle_max = CYCLE_TIME_MOB_INSIDE
 			if (!processing_items.Find(src))
 				processing_items.Add(src)

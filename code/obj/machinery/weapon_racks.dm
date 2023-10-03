@@ -268,7 +268,7 @@
 
 /obj/machinery/weapon_stand/rifle_rack
 	name = "pulse rifle rack"
-	desc = "A rack that charges up to 3 pulse rifles."
+	desc = "A rack that holds up to 3 pulse rifles."
 	icon_state = "pulserifle_rack"
 	amount = 3
 	max_amount = 3
@@ -278,8 +278,9 @@
 	req_access = list(access_security)
 	has_wire_panel = TRUE
 
-	recharger
-		recharges_contents = TRUE
+/obj/machinery/weapon_stand/rifle_rack/recharger
+	desc = "A rack that recharges up to 3 pulse rifles."
+	recharges_contents = TRUE
 
 /datum/wirePanel/panelDefintion/weapon_stand
 	wire_definition = list(

@@ -99,7 +99,7 @@
 			return null
 
 	Click(location,control,params)
-		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
 			var/mob/dead/observer/O = usr
 			if(src.pilot)
 				O.insert_observer(src.pilot)
@@ -726,6 +726,18 @@
 		if(sec_system)
 			if(sec_system.active)
 				sec_system.run_component()
+			if(src.engine && engine.active)
+				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
+				var/datum/gas_mixture/consumed = src.fueltank.remove_air(usage)
+				var/toxins = consumed?.toxins
+				if(isnull(toxins))
+					toxins = 0
+
+				if(usage)
+					if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
+						engine.deactivate()
+				consumed?.dispose()
+
 #ifdef MAP_OVERRIDE_NADIR
 		if(src.acid_damage_multiplier > 0)
 			var/T = get_turf(src)
@@ -1062,8 +1074,11 @@
 		boutput(usr, "<span class='alert'>[src] is locked!</span>")
 		return
 
-	actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
-	return
+	if(locate(/mob) in src.contents)
+		actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
+		return
+
+	boutput(usr, "<span class='alert'>No one is in [src].</span>")
 
 /obj/machinery/vehicle/proc/eject_pod(var/mob/user, var/dead_only = 0)
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot
@@ -1466,6 +1481,8 @@
 	src.lights = new /obj/item/shipcomponent/pod_lights/pod_1x1( src )
 	src.lights.ship = src
 	src.components += src.lights
+
+	src.engine.deactivate() // gotta not use up all that fuel!
 
 	START_TRACKING_CAT(TR_CAT_PODS_AND_CRUISERS)
 

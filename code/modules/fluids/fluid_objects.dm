@@ -245,12 +245,17 @@ TYPEINFO(/obj/machinery/fluid_canister)
 
 	var/contained = 0
 
+	var/list/datum/contextAction/contexts = list()
+
 	New()
+		contextLayout = new /datum/contextLayout/experimentalcircle
 		..()
+		for(var/actionType in childrentypesof(/datum/contextAction/fluid_canister))
+			src.contexts += new actionType()
+
 		src.reagents = new /datum/reagents(bladder)
 		src.reagents.my_atom = src
 		UpdateIcon()
-
 
 	ex_act(severity)
 		var/turf/T = get_turf(src)
@@ -312,63 +317,24 @@ TYPEINFO(/obj/machinery/fluid_canister)
 
 		UpdateOverlays(SafeGetOverlayImage("working", 'icons/obj/fluid.dmi', overlay_istate), "working")
 
-	Topic(href, href_list)
-		if (usr.stat || usr.restrained())
-			return
-		if (BOUNDS_DIST(src, usr) == 0)
-			src.add_dialog(usr)
-
-			if (href_list["slurp"])
-				slurping = 1
-				pissing = 0
-				UpdateIcon()
-
-			if (href_list["piss"])
-				slurping = 0
-				pissing = 1
-				UpdateIcon()
-
-			if (href_list["off"])
-				slurping = 0
-				pissing = 0
-				UpdateIcon()
-
-			src.updateUsrDialog()
-			src.add_fingerprint(usr)
-		else
-			usr.Browse(null, "window=fluid_canister")
-			return
-		return
-
-	attack_hand(var/mob/user)
-		src.add_dialog(user)
-		var/offtext
-		var/intext
-		var/outtext
-		var/activetext
-		var/width = 400
-		var/height = 200
-
-		offtext = "<A href='?src=\ref[src];off=1'>OFF</A>"
-		intext = "<A href='?src=\ref[src];slurp=1'>IN</A>"
-		outtext = "<A href='?src=\ref[src];piss=1'>OUT</A>"
-
-		activetext = "OFF"
+		var/activetext = "OFF"
 		if (slurping) activetext = "IN"
 		if (pissing) activetext = "OUT"
+		desc = initial(desc) + \
+			" The pump is set to <em>[activetext]</em>." + \
+			" It's currently holding <em>[src.reagents.total_volume] units</em>."
 
-		var/output_text = {"<div id="canister">
-								<div class="header">
-									<B>[name]</B><BR>
-									Pump : [activetext]<BR>
-									Set: [offtext] - [intext] - [outtext]<BR><BR>
-									Volume: [src.reagents.total_volume] units<BR>
-								</div>
-								<hr>
-							</div>"}
+		for(var/datum/contextAction/fluid_canister/button in src.contexts)
+			switch (button.type)
+				if (/datum/contextAction/fluid_canister/off)
+					button.icon_state = activetext == "OFF" ? "off" : "off_active"
+				if (/datum/contextAction/fluid_canister/slurp)
+					button.icon_state = activetext == "IN" ? "in_active" : "in"
+				if (/datum/contextAction/fluid_canister/piss)
+					button.icon_state = activetext == "OUT" ? "out_active" : "out"
 
-		user.Browse(output_text, "window=fluid_canister;size=[width]x[height]")
-		onclose(user, "fluid_canister")
+	attack_hand(var/mob/user)
+		user.showContextActions(src.contexts, src, src.contextLayout)
 		return
 
 /obj/machinery/fluid_canister/attackby(obj/item/W, mob/user)
@@ -381,6 +347,54 @@ TYPEINFO(/obj/machinery/fluid_canister)
 			src.set_loc(W)
 			elecflash(user)
 	..()
+
+/obj/machinery/fluid_canister/proc/change_mode(var/mode)
+	switch (mode)
+		if (FLUID_CANISTER_MODE_OFF)
+			slurping = 0
+			pissing = 0
+			UpdateIcon()
+		if (FLUID_CANISTER_MODE_SLURP)
+			slurping = 1
+			pissing = 0
+			UpdateIcon()
+		if (FLUID_CANISTER_MODE_PISS)
+			slurping = 0
+			pissing = 1
+			UpdateIcon()
+
+/datum/contextAction/fluid_canister
+	icon = 'icons/ui/context16x16.dmi'
+	close_clicked = TRUE
+	close_moved = TRUE
+	desc = ""
+	var/mode = FLUID_CANISTER_MODE_OFF
+
+	execute(var/obj/machinery/fluid_canister/fluid_canister)
+		if (!istype(fluid_canister))
+			return
+		fluid_canister.change_mode(src.mode)
+
+	checkRequirements(var/obj/machinery/fluid_canister/fluid_canister, var/mob/user)
+		if (user.stat || user.restrained())
+			return FALSE
+		if (!in_interact_range(fluid_canister, user))
+			return FALSE
+		return TRUE
+
+	off
+		name = "OFF"
+		icon_state = "off"
+		mode = FLUID_CANISTER_MODE_OFF
+	slurp
+		name = "IN"
+		icon_state = "in"
+		mode = FLUID_CANISTER_MODE_SLURP
+	piss
+		name = "OUT"
+		icon_state = "out"
+		mode = FLUID_CANISTER_MODE_PISS
+
 ///////////////////
 //////canister/////
 ///////////////////
@@ -390,6 +404,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	desc = "A deployable sea ladder that will allow you to descend to and ascend from the trench."
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "ladder_on"
+	event_handler_flags = IMMUNE_TRENCH_WARP
 
 	var/obj/sea_ladder_deployed/linked_ladder
 	var/obj/item/sea_ladder/og_ladder_item = 0

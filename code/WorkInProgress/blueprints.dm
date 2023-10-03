@@ -1,3 +1,16 @@
+// balance defines
+#define REBUILD_COST_OBJECT_METAL 0.9 // each of these measured in sheets.
+#define REBUILD_COST_OBJECT_CRYSTAL 1.5
+#define REBUILD_COST_TURF_METAL 1
+#define REBUILD_COST_TURF_CRYSTAL 0.5
+#define BAR_SHEET_VALUE 10
+// code defines
+#define SELECT_SKIP 0
+#define SELECT_FIRST_CORNER 1
+#define DESELECT_FIRST_CORNER 2
+#define SELECT_SECOND_CORNER 3
+#define DESELECT_SECOND_CORNER 4
+
 /obj/abcuMarker
 	desc = "Denotes a valid tile."
 	icon = 'icons/obj/objects.dmi'
@@ -19,22 +32,31 @@
 /obj/machinery/abcu
 	icon = 'icons/obj/objects.dmi'
 	icon_state = "builder"
-	name = "Automated Blueprint Construction Unit (ABC-U)"
-	desc = "This fine piece of machinery can construct entire rooms from blueprints."
+	name = "\improper ABC Unit"
+	desc = "An Automated Blueprint Construction Unit. \
+		This fine piece of machinery can construct entire rooms from blueprints."
 	density = 1
 	opacity = 0
 	anchored = UNANCHORED
+	processing_tier = PROCESSING_FULL
 
-	var/invalidCount = 0
+	var/invalid_count = 0
+	var/building = FALSE
+	var/build_index = 1
+	var/build_end = 0
+	var/list/markers = list()
+	var/list/apc_list = list()
+	var/metal_owed = 0
+	var/crystal_owed = 0
+	var/tile_cost_processed = FALSE
 
-	var/obj/item/blueprint/currentBp = null
-	var/locked = 0
-	var/building = 0
-
+	var/obj/item/blueprint/current_bp = null
+	var/locked = FALSE
+	var/paused = FALSE
 	var/off_x = 0
 	var/off_y = 0
 
-	var/list/markers = new/list()
+
 
 	New()
 		..()
@@ -46,99 +68,287 @@
 
 	attackby(obj/item/W, mob/user)
 		if(istype(W, /obj/item/blueprint))
-			if(currentBp)
+			if(src.current_bp)
 				boutput(user, "<span class='alert'>Theres already a blueprint in the machine.</span>")
 				return
 			else
 				boutput(user, "<span class='notice'>You insert the blueprint into the machine.</span>")
 				user.drop_item()
 				W.set_loc(src)
-				currentBp = W
+				src.current_bp = W
 				return
-		else if (istype(W, /obj/item/sheet))
-			boutput(user, "<span class='notice'>You insert the sheet into the machine.</span>")
+		else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+			boutput(user, "<span class='notice'>You insert the material into the machine.</span>")
 			user.drop_item()
 			W.set_loc(src)
 			return
 		return
 
 	attack_hand(mob/user)
-		if(building)
-			boutput(user, "<span class='alert'>The machine is currently constructing something. Best not touch it until it's done.</span>")
+		if(src.building && !src.paused)
+			if (tgui_alert(user, "Pause the construction?", "ABCU", list("Yes", "No")) == "Yes")
+				src.pause_build()
 			return
 
-		var/list/options = list(locked ? "Unlock":"Lock", "Begin Building", "Dump Materials", "Check Materials" ,currentBp ? "Eject Blueprint":null)
-		var/input = input(user,"Select option:","Option") in options
-		switch(input)
+		var/list/option_list = list(
+			"Check Materials",
+			"Resume Construction",
+			src.locked ? "Unlock" : "Lock",
+			"Begin Building",
+			"Dump Materials",
+			"Eject Blueprint",
+			"Cancel Build",
+		)
+		var/user_input = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", option_list)
+		if (!user_input) return
+
+		switch(user_input)
 			if("Unlock")
-				if(!locked || building) return
-				boutput(user, "<span class='notice'>The machine unlocks and shuts down.</span>")
-				deactivate()
+				if (src.building)
+					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
+					return
+				if(!src.locked) return
+				src.deactivate()
 
 			if("Lock")
-				if(locked || building) return
-				if(!currentBp)
-					boutput(user, "<span class='alert'>The machine requires a blueprint before it can be locked</span>")
+				if (src.building)
+					boutput(user, "<span class='alert'>Lock status can't be changed with a build in progress.</span>")
 					return
-				boutput(user, "<span class='notice'>The machine locks into place and begins humming softly.</span>")
-				activate()
+				if(src.locked) return
+				if(!src.current_bp)
+					boutput(user, "<span class='alert'>The machine requires a blueprint before it can be locked.</span>")
+					return
+				src.activate(user)
 
 			if("Begin Building")
-				if(building) return
-				if(!locked)
+				if(src.building)
+					boutput(user, "<span class='alert'>A build job is already in progress.</span>")
+					return
+				if(!src.locked)
 					boutput(user, "<span class='alert'>The machine must be locked into place before activating it.</span>")
 					return
-				if(!currentBp)
+				if(!src.current_bp)
 					boutput(user, "<span class='alert'>The machine requires a blueprint before it can build anything.</span>")
 					return
-				build()
+				src.prepare_build(user)
 
 			if("Eject Blueprint")
-				if(building) return
-				if(locked)
-					boutput(user, "<span class='alert'>Can not eject blueprint while machine is locked.</span>")
+				if(src.locked || src.building)
+					boutput(user, "<span class='alert'>Can not eject blueprint while machine is locked or building.</span>")
 					return
-				currentBp.set_loc(src.loc)
-				currentBp = null
+				if (!src.current_bp)
+					boutput(user, "<span class='alert'>No blueprint to eject.</span>")
+					return
+				src.current_bp.set_loc(src.loc)
+				src.current_bp = null
 
 			if("Dump Materials")
-				if(building) return
 				for(var/obj/o in src)
-					if(o == currentBp) continue
+					if(o == src.current_bp) continue
 					o.set_loc(src.loc)
 
 			if("Check Materials")
-				if(building) return
-				var/metal_cnt = 0
-				var/glass_cnt = 0
+				src.audit_inventory(user)
 
-				for(var/obj/O in src)
-					if(O == currentBp) continue
-					if(istype(O, /obj/item/sheet))
-						var/obj/item/sheet/S = O
-						if (S.material)
-							if (S.material.getMaterialFlags() & MATERIAL_METAL)
-								metal_cnt += S.amount
-							if (S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
-								glass_cnt += S.amount
+			if ("Resume Construction")
+				if (!src.building)
+					boutput(user, "<span class='alert'>There's no build in progress.</span>")
+					return
+				if (!src.paused)
+					boutput(user, "<span class='alert'>[src] is already unpaused.</span>")
+					return
+				src.unpause_build()
 
-				boutput(user, "<span class='notice'>Currently loaded :</span>")
-				boutput(user, "<span class='notice'>[metal_cnt] of [currentBp ? currentBp.req_metal : "-"] required metal</span>")
-				boutput(user, "<span class='notice'>[glass_cnt] of [currentBp ? currentBp.req_glass : "-"] required glass</span>")
+			if ("Cancel Build")
+				if (!src.building)
+					boutput(user, "<span class='alert'>There's no build in progress.</span>")
+					return
+				src.end_build()
 		return
+
+	process()
+		..()
+		if (!src.building) return
+		if (src.build_index > src.build_end)
+			src.end_build()
+			return
+
+		var/datum/tileinfo/tile = src.current_bp.roominfo[src.build_index]
+		if (isnull(tile.tiletype))
+			src.build_index++
+			return
+
+		// try to consume materials for this tile
+		if (!src.tile_cost_processed)
+			var/obj_count = length(tile.objects)
+			src.metal_owed += REBUILD_COST_TURF_METAL + REBUILD_COST_OBJECT_METAL * obj_count
+			src.crystal_owed += REBUILD_COST_TURF_CRYSTAL + REBUILD_COST_OBJECT_CRYSTAL * obj_count
+			src.tile_cost_processed = TRUE
+		for (var/obj/item in src)
+			if (src.metal_owed <= 0 && src.crystal_owed <= 0) break
+			if (item == src.current_bp) continue
+
+			if (istype(item, /obj/item/sheet))
+				var/obj/item/sheet/sheets = item
+				if (!sheets.material) continue
+				if (src.metal_owed && sheets.material.getMaterialFlags() & MATERIAL_METAL)
+					var/sheets_consumed = ceil(min(sheets.amount, src.metal_owed))
+					sheets.change_stack_amount(-sheets_consumed)
+					src.metal_owed -= sheets_consumed
+					continue
+				if (src.crystal_owed && sheets.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					var/sheets_consumed = ceil(min(sheets.amount, src.crystal_owed))
+					sheets.change_stack_amount(-sheets_consumed)
+					src.crystal_owed -= sheets_consumed
+					continue
+
+			else if (istype(item, /obj/item/material_piece))
+				var/obj/item/material_piece/bars = item
+				if (!bars.material) continue
+				if (src.metal_owed && bars.material.getMaterialFlags() & MATERIAL_METAL)
+					var/bars_consumed = ceil(min(bars.amount, src.metal_owed / BAR_SHEET_VALUE))
+					bars.change_stack_amount(-bars_consumed)
+					src.metal_owed -= bars_consumed * BAR_SHEET_VALUE
+					continue
+				if (src.crystal_owed && bars.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					var/bars_consumed = ceil(min(bars.amount, src.crystal_owed / BAR_SHEET_VALUE))
+					bars.change_stack_amount(-bars_consumed)
+					src.crystal_owed -= bars_consumed * BAR_SHEET_VALUE
+					continue
+
+		if (src.metal_owed > 0 || src.crystal_owed > 0)
+			src.pause_build()
+			src.visible_message("<span class='alert'>[src] does not have enough materials to continue construction.</span>")
+			playsound(src.loc, 'sound/machines/buzz-sigh.ogg', 20)
+			return
+		// now build the tile if we paid for it
+		var/turf/pos = locate(text2num(tile.posx) + src.x,text2num(tile.posy) + src.y, src.z)
+		for(var/obj/O in src.markers)
+			if(O.loc == pos)
+				qdel(O)
+				break
+
+		src.make_tile(tile, pos)
+		src.tile_cost_processed = FALSE
+		src.build_index++
+
+	proc/make_tile(var/datum/tileinfo/tile, var/turf/pos)
+		set waitfor = 0
+		SPAWN(0)
+			var/obj/overlay/V = new/obj/overlay(pos)
+			V.icon = 'icons/obj/objects.dmi'
+			V.icon_state = "buildeffect"
+			V.name = "energy"
+			V.anchored = ANCHORED
+			V.set_density(0)
+			V.layer = EFFECTS_LAYER_BASE
+
+			sleep(1.5 SECONDS)
+
+			qdel(V)
+
+			if(tile.tiletype != null)
+				var/turf/new_tile = pos
+				new_tile.ReplaceWith(tile.tiletype)
+				new_tile.icon_state = tile.state
+				new_tile.set_dir(tile.direction)
+				new_tile.inherit_area()
+
+			for(var/datum/objectinfo/O in tile.objects)
+				if (O.objecttype == null) continue
+				if (ispath(O.objecttype, /obj/machinery/power/apc))
+					src.apc_list[O] = pos
+					continue
+				var/list/properties = list(
+					"layer" = O.layer,
+					"pixel_x" = O.px,
+					"pixel_y" = O.py,
+					"dir" = O.direction)
+				if (!isnull(O.icon_state)) properties["icon_state"] = O.icon_state // required for old blueprint support
+				new/dmm_suite/preloader(pos, properties) // this doesn't spawn the objects, only presets their properties
+				new O.objecttype(pos) // need this part to also spawn the objects
+
+	proc/prepare_build(mob/user)
+		if(src.invalid_count)
+			boutput(usr, "<span class='alert'>The machine can not build on anything but empty space. Check for red markers.</span>")
+			return
+
+		src.build_end = length(src.current_bp.roominfo)
+		if (src.build_end <= 0)
+			return
+
+		src.building = TRUE
+		src.paused = FALSE
+		src.build_index = 1
+		src.icon_state = "builder1"
+		SubscribeToProcess()
+		src.visible_message("<span class='notice'>[src] starts to buzz and vibrate. The operation light blinks on.</span>")
+		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.current_bp.name], authored by [src.current_bp.author]")
+
+	proc/end_build()
+		for (var/datum/objectinfo/N in src.apc_list)
+			new N.objecttype(src.apc_list[N])
+		src.apc_list = new/list
+
+		src.building = FALSE
+		UnsubscribeProcess()
+		src.deactivate()
+
+		src.icon_state = "builder"
+		makepowernets()
+		src.visible_message("<span class='notice'>[src] whirrs to a stop. The operation light flashes twice and turns off.</span>")
+
+	proc/audit_inventory(mob/user)
+		var/metal_count = 0
+		var/crystal_count = 0
+		for(var/obj/O in src)
+			if(O == src.current_bp) continue
+			if (istype(O, /obj/item/sheet))
+				var/obj/item/sheet/sheets = O
+				if (!sheets.material) continue
+				if (sheets.material.getMaterialFlags() & MATERIAL_METAL)
+					metal_count += sheets.amount
+				if (sheets.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					crystal_count += sheets.amount
+			else if (istype(O, /obj/item/material_piece))
+				var/obj/item/material_piece/bars = O
+				if (!bars.material) continue
+				if (bars.material.getMaterialFlags() & MATERIAL_METAL)
+					metal_count += bars.amount * BAR_SHEET_VALUE
+				if (bars.material.getMaterialFlags() & MATERIAL_CRYSTAL)
+					crystal_count += bars.amount * BAR_SHEET_VALUE
+		if (user)
+			var/message = "<span class='notice'>The machine is holding [metal_count] metal, and [crystal_count] crystal, measured in sheets.</span>"
+			if (src.current_bp)
+				message += "<br><span class='notice'>Its current blueprint requires [src.current_bp.req_metal] metal,"
+				message += " and [src.current_bp.req_glass] crystal, measured in sheets.</span>"
+			boutput(user, message)
+		return list(metal_count, crystal_count)
+
+	proc/unpause_build()
+		src.paused = FALSE
+		src.icon_state = "builder1"
+		SubscribeToProcess()
+		src.visible_message("<span class='notice'>[src] starts to buzz and vibrate.</span>")
+
+	proc/pause_build()
+		src.paused = TRUE
+		src.icon_state = "builder"
+		UnsubscribeProcess()
+		src.visible_message("<span class='notice'>[src] releases a small puff of steam, then quiets down.</span>")
 
 	proc/deactivate()
-		for(var/obj/O in markers)
+		for(var/obj/O in src.markers)
 			qdel(O)
-		locked = 0
-		anchored = UNANCHORED
-		return
+		src.locked = FALSE
+		src.anchored = UNANCHORED
+		src.visible_message("[src] disengages its anchors.")
 
-	proc/activate()
-		locked = 1
-		anchored = ANCHORED
-		invalidCount = 0
-		for(var/datum/tileinfo/T in currentBp.roominfo)
+	proc/activate(mob/user)
+		src.locked = TRUE
+		src.anchored = ANCHORED
+		src.invalid_count = 0
+		for(var/datum/tileinfo/T in src.current_bp.roominfo)
 			var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
 			var/obj/abcuMarker/O = null
 
@@ -146,85 +356,11 @@
 				O = new/obj/abcuMarker(pos)
 			else
 				O = new/obj/abcuMarker/red(pos)
-				invalidCount++
+				src.invalid_count++
 
-			markers.Add(O)
-		boutput(usr, "<span class='notice'>Building this will require [currentBp.req_metal] metal and [currentBp.req_glass] glass sheets.</span>")
-		return
-
-	proc/build()
-		var/metal_cnt = 0
-		var/glass_cnt = 0
-
-		if(invalidCount)
-			boutput(usr, "<span class='alert'>The machine can not build on anything but empty space. Check for red markers.</span>")
-			return
-
-		for(var/obj/O in src)
-			if(O == currentBp) continue
-			if(istype(O, /obj/item/sheet))
-				var/obj/item/sheet/S = O
-				if (S.material)
-					if (S.material.getMaterialFlags() & MATERIAL_METAL)
-						metal_cnt += S.amount
-					if (S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
-						glass_cnt += S.amount
-
-		if(metal_cnt < currentBp.req_metal || glass_cnt < currentBp.req_glass)
-			boutput(usr, "<span class='alert'>The machine buzzes in protest. Seems like it doesn't have enough material to work with.</span>")
-			return
-
-		boutput(usr, "<span class='notice'>The machine starts to buzz and vibrate.</span>")
-
-		building = 1
-		icon_state = "builder1"
-
-		SPAWN(0)
-
-			for(var/datum/tileinfo/T in currentBp.roominfo)
-				var/turf/pos = locate(text2num(T.posx) + src.x,text2num(T.posy) + src.y, src.z)
-
-				var/obj/overlay/V = new/obj/overlay(pos)
-				V.icon = 'icons/obj/objects.dmi'
-				V.icon_state = "buildeffect"
-				V.name = "energy"
-				V.anchored = ANCHORED
-				V.set_density(0)
-				V.layer = EFFECTS_LAYER_BASE
-
-				sleep(1.5 SECONDS)
-
-				qdel(V)
-
-				for(var/obj/O in markers)
-					if(O.loc == pos)
-						qdel(O)
-						break
-				if(T.tiletype != null)
-					var/turf/newTile = get_turf(pos)
-					newTile.ReplaceWith(T.tiletype)
-					newTile.icon_state = T.state
-					newTile.set_dir(T.direction)
-					newTile.inherit_area()
-
-				for(var/datum/objectinfo/O in T.objects)
-					if(O.objecttype == null) continue
-					var/atom/A = new O.objecttype(pos)
-					A.set_dir(O.direction)
-					A.layer = O.layer
-					A.pixel_x = O.px
-					A.pixel_y = O.py
-
-
-			for(var/obj/J in src)
-				qdel(J)
-
-			building = 0
-			icon_state = "builder"
-			makepowernets()
-			qdel(src) //Blah
-
-		return
+			src.markers.Add(O)
+		boutput(user, "<span class='notice'>Building this will require [src.current_bp.req_metal] metal and [src.current_bp.req_glass] glass sheets.</span>")
+		src.visible_message("[src] locks into place and begins humming softly.")
 
 /datum/objectinfo
 	var/objecttype = null
@@ -232,6 +368,7 @@
 	var/layer = 0
 	var/px = 0
 	var/py = 0
+	var/icon_state = ""
 
 /datum/tileinfo
 	var/list/objects = new/list()
@@ -240,93 +377,95 @@
 	var/tiletype = null
 	var/posx = 0
 	var/posy = 0
+	var/icon = ""
 
 /verb/adminCreateBlueprint()
-	set name = "Create Blueprint"
+	set name = "Blueprint Create"
 	set desc = "Allows creation of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
-	var/list/bps = new/list()
-	var/savefile/save = new/savefile("data/blueprints.dat")
-	save.cd = "/"
+	var/list/userlist = flist("data/blueprints/")
+	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
+	if(!inputuser) return
+	var/list/bplist = flist("data/blueprints/[inputuser]")
+	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
+	if(!inputbp) return
 
-	for(var/currckey in save.dir)
-		save.cd = "/[currckey]"
-		for(var/currroom in save.dir)
-			save.cd = "/[currckey]/[currroom]"
-			bps.Add("[currckey]/[currroom]")
+	var/savefile/selectedbp = new/savefile("data/blueprints/[inputuser]/[inputbp]")
+	var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(usr))
 
-	save.cd = "/"
+	selectedbp.cd = "/"
+	var/roomname = selectedbp["roomname"]
+	bp.size_x = selectedbp["sizex"]
+	bp.size_y = selectedbp["sizey"]
+	bp.author = selectedbp["author"]
 
-	if(!length(bps))
-		boutput(usr, "<span class='alert'>No blueprints found.</span>")
-		return
-	var/input = tgui_input_list(usr, "Select a blueprint to create.", "Blueprints", bps)
-	if(!input) return
-	var/list/split = splittext(input, "/")
-	var/key = input
-	if(save.dir.Find("[split[1]]"))
-		save.cd = "/[split[1]]"
-		if(save.dir.Find("[split[2]]"))
-			var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(usr))
+	selectedbp.cd = "/tiles" // cd to tiles
+	for (var/A in selectedbp.dir) // and now loop on every listing in tiles
+		selectedbp.cd = "/tiles/[A]"
+		var/list/coords = splittext(A, ",")
+		var/datum/tileinfo/tf = new/datum/tileinfo()
+		tf.posx = coords[1]
+		tf.posy = coords[2]
+		tf.tiletype = selectedbp["type"]
+		tf.state = selectedbp["state"]
+		tf.direction = selectedbp["dir"]
+		tf.icon = selectedbp["icon"]
+		bp.req_metal += 1
+		bp.req_glass += 0.5
+		selectedbp.cd = "/tiles/[A]/objects"
+		for (var/B in selectedbp.dir)
+			selectedbp.cd = "/tiles/[A]/objects/[B]"
+			var/datum/objectinfo/O = new/datum/objectinfo()
+			O.objecttype = selectedbp["type"]
+			O.direction = selectedbp["dir"]
+			O.layer = selectedbp["layer"]
+			O.px = selectedbp["pixelx"]
+			O.py = selectedbp["pixely"]
+			O.icon_state = selectedbp["icon_state"]
+			bp.req_metal += 0.9
+			bp.req_glass += 1.5
+			tf.objects.Add(O)
+		bp.roominfo.Add(tf)
+	bp.name = "Blueprint '[roomname]'"
+	bp.req_metal = round(bp.req_metal)
+	bp.req_glass = round(bp.req_glass)
 
-			save.cd = "/[key]"
-			boutput(usr, "<span class='notice'>Printed Blueprint for '[save["roomname"]]'</span>")
-			var/roomname = save["roomname"]
-			bp.size_x = save["sizex"]
-			bp.size_y = save["sizey"]
-
-			for (var/A in save.dir)
-				if(A == "sizex" || A == "sizey" || A == "roomname") continue
-				save.cd = "/[key]/[A]"
-				var/list/coords = splittext(A, ",")
-				var/datum/tileinfo/tf = new/datum/tileinfo()
-				tf.posx = coords[1]
-				tf.posy = coords[2]
-				tf.tiletype = save["type"]
-				tf.state = save["state"]
-				tf.direction = save["dir"]
-				for (var/B in save.dir)
-					if(B == "type" || B == "state") continue
-					save.cd = "/[key]/[A]/[B]"
-					var/datum/objectinfo/O = new/datum/objectinfo()
-					O.objecttype = save["type"]
-					O.direction = save["dir"]
-					O.layer = save["layer"]
-					O.px = save["pixelx"]
-					O.py = save["pixely"]
-					tf.objects.Add(O)
-				bp.roominfo.Add(tf)
-				bp.name = "Blueprint '[roomname]'"
+	boutput(usr, "<span class='notice'>Printed blueprint for '[roomname]'.</span>")
+	return
 
 /verb/adminDeleteBlueprint()
-	set name = "Delete Blueprint"
+	set name = "Blueprint Delete"
 	set desc = "Allows deletion of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
-	var/list/bps = new/list()
-	var/savefile/save = new/savefile("data/blueprints.dat")
-	save.cd = "/"
+	var/list/userlist = flist("data/blueprints/")
+	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
+	if(!inputuser) return
+	var/list/bplist = flist("data/blueprints/[inputuser]")
+	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
+	if(!inputbp) return
+	fdel("data/blueprints/[inputuser]/[inputbp]")
+	boutput(usr, "<span class='notice'>Deleted [inputuser]'s [inputbp].</span>")
 
-	for(var/currckey in save.dir)
-		save.cd = "/[currckey]"
-		for(var/currroom in save.dir)
-			save.cd = "/[currckey]/[currroom]"
-			bps.Add("[currckey]/[currroom]")
+/verb/adminDumpBlueprint()
+	set name = "Blueprint Dump"
+	set desc = "Dumps readable HTML blueprint, of any user, to your client folder."
+	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
-	save.cd = "/"
+	var/list/userlist = flist("data/blueprints/")
+	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
+	if(!inputuser) return
+	var/list/bplist = flist("data/blueprints/[inputuser]")
+	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
+	if(!inputbp) return
 
-	if(!length(bps))
-		boutput(usr, "<span class='alert'>No blueprints found.</span>")
-		return
-	var/input = tgui_input_list(usr, "Select a blueprint to create.", "Blueprints", bps)
-	if(!input) return
-	var/list/split = splittext(input, "/")
-	if(save.dir.Find("[split[1]]"))
-		save.cd = "/[split[1]]"
-		if(save.dir.Find("[split[2]]"))
-			save.dir.Remove("[split[2]]")
-			boutput(usr, "<span class='alert'>Blueprint [split[2]] deleted..</span>")
+	var/savefile/selectedbp = new/savefile("data/blueprints/[inputuser]/[inputbp]")
+	selectedbp.ExportText("/","data/blueprints/[inputuser]/[inputbp].txt")
+	usr.client.Export("data/blueprints/[inputuser]/[inputbp].txt")
+	fdel("data/blueprints/[inputuser]/[inputbp].txt")
+
+	boutput(usr, "<span class='notice'>Dumped blueprint to BYOND user data folder.</span>")
 
 /obj/item/blueprint
 	name = "Blueprint"
@@ -341,6 +480,8 @@
 
 	var/size_x = 0
 	var/size_y = 0
+
+	var/author = ""
 
 	var/list/roominfo = new/list()
 /*
@@ -365,15 +506,10 @@
 			//rebuild powernets etc.
 */
 
-#define SELECT_SKIP 0
-#define SELECT_FIRST_CORNER 1
-#define DESELECT_FIRST_CORNER 2
-#define SELECT_SECOND_CORNER 3
-#define DESELECT_SECOND_CORNER 4
-
 /obj/item/blueprint_marker
-	name = "Blueprint Marker"
-	desc = "A tool used to map rooms for the creation of blueprints."
+	name = "blueprint marker"
+	desc = "A tool used to map rooms for the creation of blueprints. \
+		Blueprints can be used in an ABC Unit to reconstruct a saved room."
 	icon = 'icons/obj/items/device.dmi'
 
 	icon_state = "blueprintmarker"
@@ -411,7 +547,6 @@
 	"/obj/machinery/firealarm", \
 	"/obj/machinery/power/apc", \
 	"/obj/machinery/alarm", \
-	"/obj/machinery/power/terminal", \
 	"/obj/machinery/disposal", \
 	"/obj/machinery/gibber",
 	"/obj/machinery/floorflusher",
@@ -443,7 +578,6 @@
 	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
-	var/static/savefile/save = new/savefile("data/blueprints.dat")
 
 	pixelaction(atom/target, params, mob/user)
 		if(GET_DIST(src,target) > 10) return
@@ -582,20 +716,12 @@
 		return
 
 	proc/saveMarked(var/name = "", var/applyWhitelist = 1)
-		save.cd = "/"
-		if(!save.dir.Find("[usr.client.ckey]"))
-			save.dir.Add("[usr.client.ckey]")
-		save.cd = "/[usr.client.ckey]"
-
-		if(save.dir.Find(name))
+		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
+		if (fexists("[savepath]"))
 			if (alert(usr, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
 				return
-			save.dir.Remove(name)
-			save.dir.Add(name)
-			save.cd = "/[usr.client.ckey]/" + name
-		else
-			save.dir.Add(name)
-			save.cd = "/[usr.client.ckey]/" + name
+			fdel("[savepath]")
+		var/savefile/save = new/savefile("[savepath]")
 
 		var/minx = 100000000
 		var/miny = 100000000
@@ -613,20 +739,23 @@
 		var/sizex = (maxx - minx) + 1
 		var/sizey = (maxy - miny) + 1
 
+		save.cd = "/"
 		save["sizex"] << sizex
 		save["sizey"] << sizey
 		save["roomname"] << roomname
+		save["author"] << usr.client.ckey
+		save.dir.Add("tiles")
 
 		for(var/atom/curr in roomList)
 			var/posx = (curr.x - minx)
 			var/posy = (curr.y - miny)
 
-			save.cd = "/[usr.client.ckey]/" + name
-			save.dir.Add("[posx],[posy]")
-			save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]"
+			save.cd = "/tiles/[posx],[posy]"
 			save["type"] << curr.type
 			save["dir"] << curr.dir
 			save["state"] << curr.icon_state
+			if (curr.icon != initial(curr.icon))
+				save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
 
 			for(var/obj/o in curr)
 				var/permitted = 0
@@ -644,84 +773,81 @@
 
 				if(permitted || !applyWhitelist)
 					var/id = "\ref[o]"
-					save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]"
+					save.cd = "/tiles/[posx],[posy]/objects"
 					while(save.dir.Find(id))
 						id = id + "I"
-					save.dir.Add("[id]")
-					save.cd = "/[usr.client.ckey]/[name]/[posx],[posy]/[id]"
+					save.cd = "[id]"
 					save["dir"] << o.dir
 					save["type"] << o.type
 					save["layer"] << o.layer
 					save["pixelx"] << o.pixel_x
 					save["pixely"] << o.pixel_y
+					save["icon_state"] << o.icon_state
 
 		boutput(usr, "<span class='notice'>Saved blueprint as '[name]'. </span>")
 		return
 
 	proc/printSaved(var/name = "")
-		save.cd = "/"
-		if(save.dir.Find("[usr.client.ckey]"))
-			save.cd = "/[usr.client.ckey]/"
-			if(save.dir.Find(name))
-				var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
-				prints_left--
-
-				save.cd = "/[usr.client.ckey]/" + name
-				boutput(usr, "<span class='notice'>Printed Blueprint for '[save["roomname"]]'</span>")
-				var/roomname = save["roomname"]
-				bp.size_x = save["sizex"]
-				bp.size_y = save["sizey"]
-
-				for (var/A in save.dir)
-					if(A == "sizex" || A == "sizey" || A == "roomname") continue
-					save.cd = "/[usr.client.ckey]/[name]/[A]"
-					var/list/coords = splittext(A, ",")
-					var/datum/tileinfo/tf = new/datum/tileinfo()
-					tf.posx = coords[1]
-					tf.posy = coords[2]
-					tf.tiletype = save["type"]
-					tf.state = save["state"]
-					tf.direction = save["dir"]
-					bp.req_metal += 1
-					bp.req_glass += 0.5
-					for (var/B in save.dir)
-						if(B == "type" || B == "state") continue
-						save.cd = "/[usr.client.ckey]/[name]/[A]/[B]"
-						var/datum/objectinfo/O = new/datum/objectinfo()
-						O.objecttype = save["type"]
-						O.direction = save["dir"]
-						O.layer = save["layer"]
-						O.px = save["pixelx"]
-						O.py = save["pixely"]
-						bp.req_metal += 0.9
-						bp.req_glass += 1.5
-						tf.objects.Add(O)
-					bp.roominfo.Add(tf)
-					bp.name = "Blueprint '[roomname]'"
-					bp.req_metal = round(bp.req_metal)
-					bp.req_glass = round(bp.req_glass)
-				return
-			else
-				boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
-
-		else
-			boutput(usr, "<span class='alert'>No blueprints found for user.</span>")
+		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
+		var/savefile/save = new/savefile("[savepath]") // if it's not an existing file, this makes an empty new one
+		if (isnull(save["roomname"]) && isnull(save["sizex"])) // double check
+			boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
+			fdel("[savepath]") // so we kill it
 			return
-	proc/delSaved(var/name = "")
-		save.cd = "/"
-		if(save.dir.Find("[usr.client.ckey]"))
-			save.cd = "/[usr.client.ckey]/"
-			if(save.dir.Find(name))
-				if (strip_html(input(usr,"Really delete this blueprint? Input blueprint name to confirm.","Blueprint Deletion","") as text) != name)
-					boutput(usr, "<span class='alert'>Failed to delete blueprint '[name]': input did not match blueprint name.</span>")
-					return
-				save.dir.Remove(name)
-				boutput(usr, "<span class='alert'>Blueprint [name] deleted..</span>")
-			else
-				boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
-		else
-			boutput(usr, "<span class='alert'>No blueprints found for user.</span>")
 
+		var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
+		prints_left--
+
+		save.cd = "/"
+		var/roomname = save["roomname"]
+		bp.size_x = save["sizex"]
+		bp.size_y = save["sizey"]
+		bp.author = save["author"]
+
+		save.cd = "/tiles" // cd to tiles
+		for (var/A in save.dir) // and now loop on every listing in tiles
+			save.cd = "/tiles/[A]"
+			var/list/coords = splittext(A, ",")
+			var/datum/tileinfo/tf = new/datum/tileinfo()
+			tf.posx = coords[1]
+			tf.posy = coords[2]
+			tf.tiletype = save["type"]
+			tf.state = save["state"]
+			tf.direction = save["dir"]
+			tf.icon = save["icon"]
+			bp.req_metal += 1
+			bp.req_glass += 0.5
+			save.cd = "/tiles/[A]/objects"
+			for (var/B in save.dir)
+				save.cd = "/tiles/[A]/objects/[B]"
+				var/datum/objectinfo/O = new/datum/objectinfo()
+				O.objecttype = save["type"]
+				O.direction = save["dir"]
+				O.layer = save["layer"]
+				O.px = save["pixelx"]
+				O.py = save["pixely"]
+				O.icon_state = save["icon_state"]
+				bp.req_metal += 0.9
+				bp.req_glass += 1.5
+				tf.objects.Add(O)
+			bp.roominfo.Add(tf)
+			bp.name = "Blueprint '[roomname]'"
+			bp.req_metal = round(bp.req_metal)
+			bp.req_glass = round(bp.req_glass)
+
+		boutput(usr, "<span class='notice'>Printed blueprint for '[roomname]'.</span>")
+		return
+
+	proc/delSaved(var/name = "")
+		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
+		if (fexists("[savepath]"))
+			if (strip_html(input(usr,"Really delete this blueprint? Input blueprint name to confirm.","Blueprint Deletion","") as text) != name)
+				boutput(usr, "<span class='alert'>Failed to delete blueprint '[name]': input did not match blueprint name.</span>")
+				return
+			fdel("[savepath]")
+			boutput(usr, "<span class='alert'>Blueprint [name] deleted.</span>")
+		else
+			boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
 
 	attack_self(mob/user as mob)
 		if(!user.client)
@@ -784,6 +910,7 @@
 				message += "<span class='notice'>Save Blueprint: Saves a blueprint of the marked area to the server. Most structures will be saved, but it can not save all types of objects.</span><br>"
 				message += "<span class='notice'>Your saved blueprints are accessed solely by its Blueprint Name, so note it down.</span><br>"
 				message += "<span class='notice'>Delete Blueprint: Permanently deletes the active blueprint from the server.</span><br>"
+				message += "<span class='notice'>Outdated blueprints can be migrated using the 'Migrate blueprint' local verb.</span><br>"
 				boutput(user, message)
 				return
 
@@ -807,6 +934,71 @@
 		updateOverlays()
 		return
 
+/obj/item/blueprint_marker/verb/migrate_bigfile_blueprint()
+	// this is a tucked-away verb because it's niche and for old stuff, don't want it on the tool's main menu
+	set name = "Migrate blueprint"
+	set desc = "Attempt to convert an older blueprint to the latest save system."
+	set category = "Local"
+	set src in usr
+	var/mob/user = usr
+	if (!user.client) return
+	boutput(user, "<span class='notice'>Looking for older blueprints to convert. If this process doesn't work, sorry, I tried my best.</span>")
+
+	var/savefile/save = new/savefile("data/blueprints.dat")
+	save.cd = "/"
+	if (!save.dir.Find("[user.client.ckey]"))
+		boutput(user, "<span class='alert'>Your user wasn't found in the blueprints file. Stopping.</span>")
+		return
+	save.cd = "/[user.client.ckey]"
+	var/list/bplist = save.dir
+
+	if (!length(bplist))
+		boutput(user, "<span class='alert'>No blueprints found. Stopping.</span>")
+		return
+	var/input = tgui_input_list(user, "Select a blueprint to migrate.", "Blueprints", bplist)
+	if (!input) return
+	var/old_save_path = "/[user.client.ckey]/[input]"
+	save.cd = old_save_path
+	var/new_save_name = strip_html(tgui_input_text(user, "Input the name for the new, migrated blueprint. \
+		Old name was: [input]", "New Blueprint Name"))
+	if (!new_save_name) return
+
+	var/savefile/new_save = new/savefile("data/blueprints/[user.client.ckey]/[new_save_name].dat")
+	new_save.cd = "/"
+	new_save["sizex"] << save["sizex"]
+	new_save["sizey"] << save["sizey"]
+	new_save["roomname"] << new_save_name
+	new_save["author"] << user.client.ckey
+	var/turf_count = 0
+	var/obj_count = 0
+
+	for (var/A in save.dir)
+		if(A == "sizex" || A == "sizey" || A == "roomname") continue
+		save.cd = "[old_save_path]/[A]"
+		new_save.cd = "/tiles/[A]"
+
+		new_save["type"] << save["type"]
+		new_save["dir"] << save["dir"]
+		new_save["state"] << save["state"]
+		turf_count++
+		for (var/B in save.dir)
+			if(B == "type" || B == "state" || B == "dir") continue
+			save.cd = "[old_save_path]/[A]/[B]"
+			new_save.cd = "/tiles/[A]/objects/[B]"
+
+			new_save["dir"] << save["dir"]
+			new_save["type"] << save["type"]
+			new_save["layer"] << save["layer"]
+			new_save["pixelx"] << save["pixelx"]
+			new_save["pixely"] << save["pixely"]
+			obj_count++
+	boutput(user, "<span class='notice'>Created blueprint file [new_save_name]. Copied [turf_count] tiles and [obj_count] objects.</span>")
+
+#undef REBUILD_COST_OBJECT_METAL
+#undef REBUILD_COST_OBJECT_CRYSTAL
+#undef REBUILD_COST_TURF_METAL
+#undef REBUILD_COST_TURF_CRYSTAL
+#undef BAR_SHEET_VALUE
 #undef SELECT_SKIP
 #undef SELECT_FIRST_CORNER
 #undef DESELECT_FIRST_CORNER
