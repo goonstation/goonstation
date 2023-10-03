@@ -411,7 +411,6 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	speechverb_stammer = "bleeps"
 	speechverb_exclaim = "boops"
 	speechverb_ask = "bloops"
-	stepsound = "step_plating"
 	robot_talk_understand = TRUE
 	density = FALSE
 	hand_count = 1
@@ -423,15 +422,16 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	health_brute = 25
 	health_brute_vuln = 1
 	health_burn = 25
-	health_burn_vuln = 0.8
+	health_burn_vuln = 1.25
+	var/power = TRUE
+	var/beacon_freq = FREQ_NAVBEACON
 	var/emagged = 0
 	var/emote_cooldown = 7 SECONDS
 	var/siren_active = FALSE
 	var/list/req_access = list(access_security)
 	var/check_contraband = TRUE
 	var/check_records = TRUE
-	// TRUE if detaining, FALSE if arresting
-	var/arrest_type = FALSE
+	var/is_detaining = FALSE
 	var/report_arrests = TRUE
 	var/list/datum/contextAction/contexts = list()
 	var/datum/contextLayout/configContextLayout = new /datum/contextLayout/experimentalcircle
@@ -453,6 +453,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 		for(var/actionType in childrentypesof(/datum/contextAction/securitron)) //see context_actions.dm
@@ -487,6 +488,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		else
 			playsound(src.loc, 'sound/impact_sounds/Machinery_Break_1.ogg', 50, 1)
 			make_cleanable(/obj/decal/cleanable/oil,src.loc)
+
+	attack_ai(mob/user as mob)
+		if (src.power && src.emagged)
+			boutput(user, "<span class='alert'>[src] refuses your authority!</span>")
+			return
+		user.showContextActions(src.contexts, src, src.configContextLayout)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		if (act == "scream")
@@ -529,14 +536,22 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 			add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 			siren_active = FALSE
 
-	attack_hand(mob/M, params)
-		if (M.a_intent == INTENT_HELP && src.allowed(M))
-			M.showContextActions(src.contexts, src, src.configContextLayout)
+	attack_hand(mob/user, params)
+		if (user.a_intent == INTENT_HELP && src.allowed(user))
+			user.showContextActions(src.contexts, src, src.configContextLayout)
 		else
 			..()
 
 	proc/configure(var/setting, var/mob/M)
 		switch(setting)
+			if ("power")
+				src.power = !src.power
+				if (src.power)
+					src.say("Ten-Forty One. [src.name]: ONLINE.")
+					add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+				else
+					remove_simple_light("secbot")
+				return src.power
 			if ("check_contraband")
 				src.check_contraband = !src.check_contraband
 				src.say("Ten-Four. Contraband Checks: [src.check_contraband ? "ENGAGED" : "DISENGAGED"].")
@@ -546,13 +561,15 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				src.say("Ten-Four. Security Records: [src.check_records ? "REFERENCED" : "IGNORED"].")
 				return src.check_records
 			if ("arrest_type")
-				src.arrest_type = !src.arrest_type
-				src.say("Ten-Four. Arrest Mode: [src.arrest_type ? "DETAIN" : "RESTRAIN"].")
-				return src.arrest_type
+				src.is_detaining = !src.is_detaining
+				src.say("Ten-Four. Arrest Mode: [src.is_detaining ? "DETAIN" : "RESTRAIN"].")
+				return src.is_detaining
 			if ("report_arrests")
 				src.report_arrests = !src.report_arrests
 				src.say("Ten-Four. [src.report_arrests ? "Reporting arrests on [FREQ_PDA]" : "No longer reporting arrests"].")
 				return src.report_arrests
+
+	proc/locate_beacon()
 
 	proc/allowed(mob/M)
 		//check if it doesn't require any access at all
@@ -669,3 +686,14 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		. = ..()
 		if ((BOUNDS_DIST(master, target) > 0) || master == null || target == null || target.hasStatus("handcuffed"))
 			interrupt(INTERRUPT_ALWAYS)
+
+
+/mob/living/critter/robotic/securitron/bowling
+	name = "bowlatron"
+	real_name = "bowlatron"
+	throw_speed = 0.75
+
+	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
+		throw_unlimited = TRUE
+		..()
