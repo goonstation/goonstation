@@ -73,7 +73,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "Spicy!"
 	icon_state = "sachet-hot"
 	initial_volume = 30
-	initial_reagents = "hotsauce"
+	initial_reagents = "juice_chili"
 
 /obj/item/reagent_containers/food/snacks/condiment/coldsauce
 	name = "cold sauce"

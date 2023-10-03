@@ -80,7 +80,7 @@ datum
 			thirst_value = 0.6
 			bladder_value = -0.2
 			viscosity = 0.3
-			var/list/flushed_reagents = list("capsaicin","hotsauce")
+			var/list/flushed_reagents = list("capsaicin","juice_chili")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
@@ -2159,7 +2159,7 @@ datum
 					M.emote(pick("cough"))
 					if (holder.get_reagent_amount(src.id) >= 3 && prob(40))
 						M.setStatusMin("stunned", 1 SECOND * mult)
-				
+
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -2948,21 +2948,6 @@ datum
 				M.reagents.add_reagent("salt", 0.5 * mult)
 				..()
 
-		fooddrink/hotsauce
-			name = "hot sauce"
-			id = "hotsauce"
-			description = "A spicy red condiment made from processed chilis."
-			reagent_state = SOLID
-			fluid_r = 180
-			fluid_g = 33
-			fluid_b = 0
-			transparency = 255
-			taste = "spicy"
-
-			on_mob_life(var/mob/M, var/mult = 1)
-				M.reagents.add_reagent("capsaicin", 0.3 * mult)
-				..()
-
 		fooddrink/porktonium
 			name = "porktonium"
 			id = "porktonium"
@@ -3487,6 +3472,21 @@ datum
 			thirst_value = 1.5
 			bladder_value = -1.5
 			taste = "nutritious"
+
+		fooddrink/juice_chili
+			name = "chili juice"
+			id = "juice_chili"
+			description = "Juice derived from chilis, spicy!"
+			reagent_state = SOLID
+			fluid_r = 180
+			fluid_g = 33
+			fluid_b = 0
+			transparency = 255
+			taste = "spicy"
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				M.reagents.add_reagent("capsaicin", 0.3 * mult)
+				..()
 
 		fooddrink/juice_strawberry
 			name = "strawberry juice"

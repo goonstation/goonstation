@@ -640,6 +640,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 	heal_amt = 2
 	initial_volume = 100
 	food_effects = list("food_refreshed")
+	brew_result = list("juice_chili"=20)
 
 	make_reagents()
 		..()
