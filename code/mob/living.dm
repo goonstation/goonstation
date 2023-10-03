@@ -1384,6 +1384,10 @@
 	set src in view(1)
 	set category = "Local"
 
+	if (usr == src)
+		boutput(usr,"<span class='alert'>You can't give items to yourself!</span>")
+		return
+
 	SPAWN(0.7 SECONDS) //secret spawn delay, so you can't spam this during combat for a free "stun"
 		if (usr && isliving(usr) && !issilicon(usr) && BOUNDS_DIST(src, usr) == 0)
 			var/mob/living/L = usr
