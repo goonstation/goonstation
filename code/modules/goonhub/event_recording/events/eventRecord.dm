@@ -9,6 +9,10 @@
 	/// Body of the event
 	var/datum/eventRecordBody/body = null
 
+	/// Shortcut method to send this event to the event recorder
 	proc/send(list/fieldValues)
 		src.body = new src.body(fieldValues)
 		eventRecorder.add(src)
+
+	/// Override to build event parameters
+	proc/buildAndSend()
