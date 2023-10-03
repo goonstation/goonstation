@@ -9,5 +9,6 @@
 	/// Body of the event
 	var/datum/eventRecordBody/body = null
 
-	proc/setBody(list/fieldValues)
+	proc/send(list/fieldValues)
 		src.body = new src.body(fieldValues)
+		eventRecorder.add(src)

@@ -4,7 +4,7 @@
 	eventType = "death"
 	body = /datum/eventRecordBody/TracksPlayer/death
 
-	setBody(
+	send(
 		player_id,
 		mob_name,
 		mob_job,
