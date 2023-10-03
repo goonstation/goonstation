@@ -43,10 +43,14 @@
 				return
 
 		if (holder.owner.wizard_spellpower(src))
-			elecflash(target,power = 4, exclude_center = 0)
+			elecflash(target,power = 1, exclude_center = 1) // this was cool, but ended up backfiring and hitting the wizard, so now it is purely visual
 			//target.elecgib()
 			arcFlash(holder.owner, target, 0) // we just want the effect, the damage is taken care of below
 			target.TakeDamage("chest", 0, burn_damage / target_damage_modifier, 0, DAMAGE_BURN)
+			target.changeStatus("stunned", 6 SECONDS)
+			target.changeStatus("weakened", 6 SECONDS)
+			target.do_disorient(100, disorient = 40, remove_stamina_below_zero = 1)
+			target.stuttering += 10
 			var/count = 0
 			for (var/mob/living/L in oview(src.arc_range, target))
 				if (iswizard(L))
@@ -55,10 +59,22 @@
 			for (var/mob/living/L in oview(src.arc_range, target))
 				if (iswizard(L))
 					continue
-				arcFlash(target, L, max(src.wattage / count, 1)) // adds some randomness to the damage
-				L.TakeDamage("chest", 0, burn_damage / count, 0, DAMAGE_BURN)
+				arcFlash(target, L, 0) // this was cool, but ended up backfiring and hitting the wizard, so now it is purely visual and the damage is handled manually
+				var/applied_wattage = max(src.wattage / count, 1)
+				var/shock_damage = 0
+				if (applied_wattage > 7500)
+					shock_damage = (max(rand(10,20), round(applied_wattage * 0.00004)))
+					L.changeStatus("stunned", 1 SECONDS)
+				else if (applied_wattage > 5000)
+					shock_damage = 15
+				else if (applied_wattage > 2500)
+					shock_damage = 5
+				else
+					shock_damage = 1
+				L.TakeDamage("chest", 0, (burn_damage+shock_damage) / count, 0, DAMAGE_BURN)
+				L.do_disorient(100, disorient = 40, remove_stamina_below_zero = 1)
 		else
-			elecflash(target,power = 2)
+			elecflash(target,power = 1)
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
 			target.visible_message("<span class='alert'>[target] is severely burned by an electrical charge!</span>")
 			target.lastattacker = holder.owner
