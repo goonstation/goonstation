@@ -475,7 +475,7 @@ for some reason I brought it back and tried to clean it up a bit and I regret ev
 			var/mob/living/carbon/human/H = M
 			if (H.bioHolder?.HasEffect("blind") || H.blinded)
 				return
-			else if (istype(H.glasses,/obj/item/clothing/glasses/meson))
+			else if (istype(H.glasses,/obj/item/clothing/glasses/toggleable/meson))
 				M.show_text("You look directly into [src.name], good thing you had your protective eyewear on!", "green")
 				return
 			// remaining eye(s) meson cybereyes?
@@ -916,7 +916,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	pass_unstable = TRUE
 	anchored = ANCHORED
 	density = 1
-	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	var/active = 1
 	var/power = 10
 	var/delay = 5

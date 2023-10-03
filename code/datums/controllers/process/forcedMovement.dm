@@ -1,5 +1,3 @@
-/obj/effect/event_handler_flags = IMMUNE_MANTA_PUSH //mbc dont know where to put this because we have no master effects file lol lets leave it here, maybe someone wil clean up later >:)
-
 proc/BeginSpacePush(var/atom/movable/A)
 	if (!(A.temp_flags & SPACE_PUSHING))
 		spacePushList += A

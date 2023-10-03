@@ -239,6 +239,7 @@
 /obj/critter/ancient_thing
 	name = "???"
 	desc = "What the hell is that?"
+	icon = 'icons/mob/critter/robotic/ancient/robot.dmi'
 	icon_state = "ancientrobot"
 	dead_state = "ancientrobot" // fades away
 	death_text = "%src% fades away."

@@ -60,7 +60,8 @@
 
 	var/last_b_state = 1
 
-	var/chest_cavity_open = FALSE
+	///Has our chest cavity been clamped by hemostats?
+	var/chest_cavity_clamped = FALSE
 	var/obj/item/chest_item = null	// Item stored in chest cavity
 	var/chest_item_sewn = FALSE		// Item is sewn in or is loose
 
@@ -858,6 +859,9 @@
 	if(src.traitHolder)
 		newbody.traitHolder = src.traitHolder
 		newbody.traitHolder.owner = newbody
+		if (src.spell_soulguard)
+			newbody.equip_sensory_items()
+
 	// Prone to causing runtimes, don't enable.
 /*	if (src.mutantrace && !src.spell_soulguard)
 		newbody.mutantrace = new src.mutantrace.type(newbody)*/

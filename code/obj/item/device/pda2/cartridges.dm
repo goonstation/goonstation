@@ -136,6 +136,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portasci(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pressure_crystal_shopper(src))
 			src.read_only = 1
 
 	medical_director
@@ -237,6 +238,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pressure_crystal_shopper(src))
 			src.read_only = 1
 
 	bartender
@@ -247,6 +249,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 		New()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.read_only = 1

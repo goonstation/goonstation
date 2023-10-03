@@ -7548,8 +7548,9 @@
 /turf/simulated/floor/plating,
 /area/station/science/storage)
 "ayX" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "ayZ" = (
 /obj/machinery/conveyor/SN{
 	id = "outbound";
@@ -11260,7 +11261,7 @@
 /area/ghostdrone_factory)
 "aLe" = (
 /obj/decal/cleanable/cobweb,
-/obj/item/plank,
+/obj/item/sheet/wood,
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
@@ -11310,7 +11311,7 @@
 /turf/simulated/floor/plating/random,
 /area/ghostdrone_factory)
 "aLp" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /obj/landmark/spawner/artifact,
 /turf/simulated/floor/grime,
 /area/ghostdrone_factory)
@@ -14017,6 +14018,7 @@
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "aUb" = (
+/obj/machinery/dialysis,
 /turf/simulated/floor/bluewhite,
 /area/station/medical/medbay)
 "aUc" = (
