@@ -284,7 +284,7 @@
 		signal.data["alert"] = MGA_ENGINE
 		if(crisis)
 			signal.data["alert"] = MGA_CRISIS
-		signal.data["message"] = "[msg]"
+		signal.data["message"] = msg
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"
 

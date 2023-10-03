@@ -34,23 +34,21 @@ var/list/assistant_occupations = list(
 //	"Mechanic",
 //	"Atmospheric Technician","Atmospheric Technician","Atmospheric Technician",
 
-// e-mails
 var/list/job_mailgroup_list = list(
 	"Captain" = MGD_COMMAND,
 	"Head of Personnel" = MGD_COMMAND,
 	"Head of Security" = MGD_COMMAND,
 	"Medical Director" = MGD_COMMAND,
-	"Medical Director" = MGD_MEDBAY,
 	"Research Director" = MGD_COMMAND,
 	"Chief Engineer" = MGD_COMMAND,
-	"Quartermaster" = MGO_ENGINEER,
-	"Engineer" = MGO_ENGINEER,
-	"Janitor" = MGO_JANITOR,
-	"Miner" = MGO_ENGINEER,
+	"Quartermaster" = MGD_CARGO,
+	"Engineer" = MGD_STATIONREPAIR,
+	"Janitor" = MGD_STATIONREPAIR,
+	"Miner" = MGD_MINING,
 	"Botanist" = MGD_BOTANY,
 	"Rancher" = MGD_BOTANY,
-	"Roboticist" = MGD_MEDBAY,
-	"Geneticist" = MGD_MEDBAY,
+	"Roboticist" = MGO_ROBOTICS,
+	"Geneticist" = MGO_GENETICS,
 	"Medical Doctor" = MGD_MEDBAY,
 	"Chaplain" = MGD_SPIRITUALAFFAIRS)
 
@@ -63,7 +61,7 @@ var/list/page_departments = list(
 	"Science" = MGD_SCIENCE,
 	"Station Repair" = MGD_STATIONREPAIR,
 	"Cargo" = MGD_CARGO,
-	"Hydroponics" = MGD_BOTANY,
+	"Hydroponics" = MGD_BOTANY, // rancher too
 	"Bar / Kitchen" = MGD_KITCHEN,
 	"Spiritual Affairs" = MGD_SPIRITUALAFFAIRS,
 	"Mining" = MGD_MINING)

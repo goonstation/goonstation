@@ -311,7 +311,7 @@ TYPEINFO(/obj/item/device/pda_module)
 		signal.data["group"] = MGD_SECURITY
 		signal.data["topic"] = MGA_CRISIS
 		var/area/A = get_area(src.host)
-		signal.data["message"]  = "***SECURITY BACKUP REQUESTED*** Location: [A ? A.name : "!UNKNOWN!"]!"
+		signal.data["message"]  = "<b><span class='alert'>SECURITY BACKUP NEEDED! Location: [A ? A.name : "!UNKNOWN!"]!</span></b>"
 		src.host.post_signal(signal)
 
 		if(isliving(user))

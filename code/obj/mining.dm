@@ -2529,7 +2529,7 @@ TYPEINFO(/obj/submachine/cargopad)
 				src.mailgroup = MGD_SCIENCE
 			else if (istype(area, /area/station/engine))
 				src.mailgroup = MGO_ENGINEER
-			else if (istype(area, /area/station/mining) || istype(area, /area/mining))
+			else if (istype(area, /area/station/mining) || istype(area, /area/station/quartermaster/refinery) || istype(area, /area/mining))
 				src.mailgroup = MGD_MINING
 			else if (istype(area, /area/station/quartermaster))
 				src.mailgroup = MGD_CARGO

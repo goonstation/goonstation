@@ -1,6 +1,5 @@
-// Mail Groups
-// Dedicated PDA channels to groups of the crew.
-// Apart from Party Line, they cannot be joined or left.
+// Mail Groups (by Department)
+// These have buttons to contact them in the messaging app on the PDA.
 #define MGD_PARTY "Party Line" //Is the clown the head of the Party department?
 #define MGD_COMMAND "command"
 #define MGD_SECURITY "security"
@@ -12,6 +11,9 @@
 #define MGD_KITCHEN "kitchen"
 #define MGD_SPIRITUALAFFAIRS "spiritualaffairs"
 #define MGD_MINING "mining"
+
+// Mail Groups (Other)
+// These cannot be joined or left.
 #define MGO_AI "ai"
 #define MGO_SILICON "silicon"
 #define MGO_JANITOR "janitor"
@@ -21,7 +23,7 @@
 
 // PDA Message Alert Groups
 // Alerts group together automated messages from station systems.
-// They allow users ignore some topics without muting groups.
+// They allow users ignore topics without leaving groups.
 #define MGA_DELIVERY "Delivery Notice"
 #define MGA_CHECKPOINT "Checkpoint Alert"
 #define MGA_ARREST "Arrest Alert"

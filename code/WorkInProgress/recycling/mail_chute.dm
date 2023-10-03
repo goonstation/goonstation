@@ -5,28 +5,21 @@
 	icon_state = "mailchute"
 	desc = "A pneumatic mail-delivery chute."
 	icon_style = "mail"
+	var/mail_tag = null
+	var/list/destinations = list()
 	var/frequency = FREQ_MAIL_CHUTE
+	var/last_inquire = 0 //No signal spamming etc
+	var/autoname = 0
+	var/message = null
+	var/mailgroup = null
+	var/mailgroup2 = null
 	var/net_id = null
 	var/pdafrequency = FREQ_PDA
-	var/last_inquire = 0 //No signal spamming etc
-	var/list/destinations = list()
-
-	/// Chute's address in the disposals system
-	var/mail_tag = null
-	/// Automatically
-	var/autoname = FALSE
-	/// Set TRUE in code and it will self-replace with a message string for PDA groups
-	var/message = null
-	/// Primary mailgroup
-	var/mailgroup = null
-	/// Secondary mailgroup (for the few that need it)
-	var/mailgroup2 = null
-
 
 
 	New()
 		..()
-		if (src.autoname == TRUE && !isnull(src.mail_tag))
+		if (src.autoname == 1 && !isnull(src.mail_tag))
 			src.name = "mail chute ([src.mail_tag])"
 
 		if (!src.net_id)
