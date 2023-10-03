@@ -1,7 +1,7 @@
 
 import { useBackend } from "../../../backend";
 import { Box, Button, Collapsible, Dimmer, Icon } from "../../../components";
-import type { WireData, WirePanelData } from './type';
+import type { WirePanelData } from './type';
 import { WirePanelActions, WirePanelControlLabels, WirePanelControls, WirePanelCoverStatus } from './const';
 import { BooleanLike } from "common/react";
 import { Fragment } from "inferno";
@@ -20,7 +20,7 @@ export const WirePanel = (props, context) => {
         wire_panel.wires.map((wire, i) => {
           return (
             <Wire
-              key={i}
+              key={wire.color_name}
               dm_index={i+1}
               color_name={wire.color_name}
               color_value={wire.color_value}
@@ -30,14 +30,13 @@ export const WirePanel = (props, context) => {
           ); }
         )
       }
+      <Indicators
+        control_lights={wire_panel.control_lights}
+        hacked_controls={wire_panel.hacked_controls}
+      />
     </Box>
   );
 };
-
-interface WireProperties {
-  wires: WireData[],
-  act_wire: any
-}
 
 interface WireProps {
   dm_index: number
@@ -88,18 +87,18 @@ const Indicators = (data: IndicatorProperties) => {
   const { control_lights, hacked_controls } = data;
   return (
     <Box className="panel_indicators">
-      { (control_lights & WirePanelControls.WIRE_CONTROL_GROUND) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_GROUND]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_GROUND && "On"}</Box>}
-      { (control_lights & WirePanelControls.WIRE_CONTROL_POWER_A) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_POWER_A]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_POWER_A && "On"} </Box>}
-      { (control_lights & WirePanelControls.WIRE_CONTROL_POWER_B) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_POWER_B]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_POWER_B && "On"} </Box>}
-      { (control_lights & WirePanelControls.WIRE_CONTROL_BACKUP_A) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_BACKUP_A]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_BACKUP_A && "On"} </Box>}
-      { (control_lights & WirePanelControls.WIRE_CONTROL_BACKUP_B) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_BACKUP_B]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_BACKUP_B && "On"} </Box>}
-      { (control_lights & WirePanelControls.WIRE_CONTROL_SILICON) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_SILICON]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_SILICON && "On"} </Box>}
-      { (control_lights & WirePanelControls.WIRE_CONTROL_ACCESS) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_ACCESS]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_ACCESS && "On"} </Box>}
-      { (control_lights & WirePanelControls.WIRE_CONTROL_SAFETY) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_SAFETY]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_SAFETY && "On"} </Box>}
-      { (control_lights & WirePanelControls.WIRE_CONTROL_LIMITER) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_LIMITER]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_LIMITER && "On"} </Box>}
-      { (control_lights & WirePanelControls.WIRE_CONTROL_TRIGGER) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_TRIGGER]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_TRIGGER && "On"} </Box>}
-      { (control_lights & WirePanelControls.WIRE_CONTROL_RECEIVE) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_RECEIVE]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_RECEIVE && "On"} </Box>}
-      { (control_lights & WirePanelControls.WIRE_CONTROL_TRANSMIT) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_TRANSMIT]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_TRANSMIT && "On"} </Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_GROUND) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_GROUND]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_GROUND && "On" || "Off"}</Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_POWER_A) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_POWER_A]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_POWER_A && "On" || "Off"} </Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_POWER_B) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_POWER_B]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_POWER_B && "On" || "Off"} </Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_BACKUP_A) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_BACKUP_A]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_BACKUP_A && "On" || "Off"} </Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_BACKUP_B) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_BACKUP_B]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_BACKUP_B && "On" || "Off"} </Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_SILICON) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_SILICON]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_SILICON && "On" || "Off"} </Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_ACCESS) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_ACCESS]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_ACCESS && "On" || "Off"} </Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_SAFETY) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_SAFETY]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_SAFETY && "On" || "Off"} </Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_LIMITER) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_LIMITER]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_LIMITER && "On" || "Off"} </Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_TRIGGER) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_TRIGGER]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_TRIGGER && "On" || "Off"} </Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_RECEIVE) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_RECEIVE]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_RECEIVE && "On" || "Off"} </Box>}
+      { (control_lights & WirePanelControls.WIRE_CONTROL_TRANSMIT) && <Box className="indicator_label">{WirePanelControlLabels[WirePanelControls.WIRE_CONTROL_TRANSMIT]}: {hacked_controls & WirePanelControls.WIRE_CONTROL_TRANSMIT && "On" || "Off"} </Box>}
     </Box>
   );
 };
