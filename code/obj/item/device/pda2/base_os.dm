@@ -870,7 +870,7 @@
 
 					src.master.display_alert(alert_beep, previewtext, groupAddress, src.ManageRecentCallers(sendername))
 
-					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[sender]'>[messageFrom]</a> to "
+					var/displayMessage = "<i><b>[bicon(master)] <a href='byond://?src=\ref[src];input=message;norefresh=1;target=[sender]'>[messageFrom]</a>"
 
 					if (groupAddress)
 						if(!islist(groupAddress))
@@ -883,10 +883,10 @@
 							else
 								msg_groups += list("[msg_group]")
 
-						displayMessage += msg_groups.Join(", ")
+						displayMessage += " to [msg_groups.Join(", ")]"
 
 						if (alert == MGA_CRISIS)
-							displayMessage += " (<span class='alert'>(!!!CRISIS ALERT!!!)</span>)"
+							displayMessage += " <span class='alert'>(CRISIS ALERT)</span>"
 						else if (alert)
 							displayMessage += " ([alert])"
 
