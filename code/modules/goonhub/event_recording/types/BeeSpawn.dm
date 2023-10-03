@@ -1,5 +1,5 @@
 
-/datum/eventRecordBody/bee_spawn
+/datum/eventRecordBody/BeeSpawn
 	fields = list(
 		"name" // string
 	)

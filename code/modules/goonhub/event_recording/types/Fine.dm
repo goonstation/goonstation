@@ -1,5 +1,5 @@
 
-/datum/eventRecordBody/TracksPlayer/fine
+/datum/eventRecordBody/TracksPlayer/Fine
 	fields = list(
 		"target", // string
 		"reason", // string

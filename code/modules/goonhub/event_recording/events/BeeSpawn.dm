@@ -1,8 +1,8 @@
 
 /// Record a bee spawn
-/datum/eventRecord/bee_spawn
+/datum/eventRecord/BeeSpawn
 	eventType = "bee_spawn"
-	body = /datum/eventRecordBody/bee_spawn
+	body = /datum/eventRecordBody/BeeSpawn
 
 	send(
 		name

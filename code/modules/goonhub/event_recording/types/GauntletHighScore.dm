@@ -1,5 +1,5 @@
 
-/datum/eventRecordBody/gauntlet_high_score
+/datum/eventRecordBody/GauntletHighScore
 	fields = list(
 		"names", // string
 		"score", // int

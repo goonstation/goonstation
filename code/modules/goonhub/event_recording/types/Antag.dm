@@ -1,5 +1,5 @@
 
-/datum/eventRecordBody/TracksPlayer/antag
+/datum/eventRecordBody/TracksPlayer/Antag
 	fields = list(
 		"mob_name", // string
 		"mob_job", // string

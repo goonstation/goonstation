@@ -1,8 +1,8 @@
 
 /// Record a player death
-/datum/eventRecord/death
+/datum/eventRecord/Death
 	eventType = "death"
-	body = /datum/eventRecordBody/TracksPlayer/death
+	body = /datum/eventRecordBody/TracksPlayer/Death
 
 	send(
 		player_id,
@@ -25,7 +25,7 @@
 		if (!T) T = M
 
 		src.send(
-			0, // TODO: get player ID (when API system exists to populate that)
+			M.mind.get_player().id,
 			M.real_name,
 			M.job,
 			T.x,

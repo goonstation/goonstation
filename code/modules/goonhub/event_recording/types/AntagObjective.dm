@@ -1,5 +1,5 @@
 
-/datum/eventRecordBody/TracksPlayer/antag_objective
+/datum/eventRecordBody/TracksPlayer/AntagObjective
 	fields = list(
 		"objective", // string
 		"success" // boolean

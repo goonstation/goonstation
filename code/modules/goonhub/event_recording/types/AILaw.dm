@@ -1,5 +1,5 @@
 
-/datum/eventRecordBody/TracksPlayer/ai_law
+/datum/eventRecordBody/TracksPlayer/AILaw
 	fields = list(
 		"ai_name", // string
 		"law_number", // int

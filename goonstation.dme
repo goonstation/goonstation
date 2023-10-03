@@ -2151,7 +2151,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\procs\resourceManagement.dm"
 #include "code\procs\scanprocs.dm"
 #include "code\procs\scorestats.dm"
-#include "code\procs\stat_logging.dm"
 #include "code\procs\station_name.dm"
 #include "code\procs\string_cache.dm"
 #include "code\procs\string_picker.dm"

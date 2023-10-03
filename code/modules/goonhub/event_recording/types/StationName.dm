@@ -1,5 +1,5 @@
 
-/datum/eventRecordBody/station_name
+/datum/eventRecordBody/StationName
 	fields = list(
 		"name" // string
 	)

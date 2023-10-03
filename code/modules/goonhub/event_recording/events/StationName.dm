@@ -1,8 +1,8 @@
 
 /// Record a new station name
-/datum/eventRecord/station_name
+/datum/eventRecord/StationName
 	eventType = "station_name"
-	body = /datum/eventRecordBody/station_name
+	body = /datum/eventRecordBody/StationName
 
 	send(
 		name

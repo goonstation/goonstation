@@ -1,8 +1,8 @@
 
 /// Record a new ticket
-/datum/eventRecord/ticket
+/datum/eventRecord/Ticket
 	eventType = "ticket"
-	body = /datum/eventRecordBody/TracksPlayer/ticket
+	body = /datum/eventRecordBody/TracksPlayer/Ticket
 
 	send(
 		player_id,
@@ -13,3 +13,13 @@
 		issuer_ckey
 	)
 		. = ..(args)
+
+	buildAndSend(datum/ticket/T, mob/living/M)
+		src.send(
+			M.mind.get_player().id,
+			T.target,
+			T.reason,
+			M.real_name,
+			M.job,
+			M.ckey
+		)

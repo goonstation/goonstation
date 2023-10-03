@@ -1,8 +1,8 @@
 
 /// Record a new fine
-/datum/eventRecord/fine
+/datum/eventRecord/Fine
 	eventType = "fine"
-	body = /datum/eventRecordBody/TracksPlayer/fine
+	body = /datum/eventRecordBody/TracksPlayer/Fine
 
 	send(
 		player_id,
@@ -14,3 +14,14 @@
 		amount
 	)
 		. = ..(args)
+
+	buildAndSend(datum/fine/F, mob/living/M)
+		src.send(
+			M.mind.get_player().id,
+			F.target,
+			F.reason,
+			M.real_name,
+			M.job,
+			M.ckey,
+			F.amount
+		)
