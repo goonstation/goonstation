@@ -21,18 +21,20 @@
 
 		ground = holder.owner.lying
 
-		var/obj/overlay/P = new/obj/overlay()
-		P.name = holder.owner.name
-		P.icon = holder.owner.icon
-		P.icon_state = holder.owner.icon_state
-		P.set_density(1)
-		P.desc = "Wait ... that's not [P.name]!!!"
+		// This is the dummy people actually see
+		var/obj/overlay/doppel = new/obj/overlay()
+		doppel.name = holder.owner.name
+		doppel.icon = holder.owner.icon
+		doppel.icon_state = holder.owner.icon_state
+		doppel.set_density(1)
+		doppel.desc = "Wait ... that's not [doppel.name]!!!"
 
-		var/obj/dummy/spell_doppel/D = new/obj/dummy/spell_doppel()
+		// This is the dummy the player controls to move
+		var/obj/dummy/spell_doppel/mover = new/obj/dummy/spell_doppel()
 
 		for(var/X in holder.owner.overlays)
 			var/image/I = X
-			P.overlays += I
+			doppel.overlays += I
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))
 			holder.owner.say("GIN EMUS") // ^-- No speech bubble.
@@ -40,21 +42,23 @@
 
 		var/turf/curr_turf = get_turf(holder.owner)
 
-		P.set_dir(the_dir)
-		P.set_loc(curr_turf)
-		D.set_loc(curr_turf)
-		holder.owner.set_loc(D)
+		doppel.set_dir(the_dir)
+		doppel.set_loc(curr_turf)
+		mover.set_loc(curr_turf)
+		holder.owner.set_loc(mover)
 
 		if(!ground)
 			SPAWN(0)
-				while(P)
-					step(P, the_dir)
+				while(doppel)
+					step(doppel, the_dir)
 					sleep(0.2 SECONDS)
 
 		SPAWN(10 SECONDS)
-			holder.owner.set_loc(D.loc)
-			qdel(D)
-			qdel(P)
+			holder.owner.set_loc(mover.loc)
+			for (var/obj/junk_to_dump in mover.contents)
+				junk_to_dump.set_loc(get_turf(holder.owner))
+			qdel(mover)
+			qdel(doppel)
 
 /obj/dummy/spell_doppel
 	name = ""
