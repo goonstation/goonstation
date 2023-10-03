@@ -177,9 +177,6 @@ TYPEINFO(/obj/strip_door)
 		if (ispryingtool(I))
 			playsound(src.loc, 'sound/items/Crowbar.ogg', 30, 1, -2)
 			src.change_direction()
-		if (isscrewingtool(I))
-			playsound(src.loc, 'sound/items/Screwdriver.ogg', 30, 1, -2)
-			SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/screw_flaps, null, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 		if(src.flap_material)
 			if (issnippingtool(I))
 				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, /obj/strip_door/proc/snip_flaps, user, I.icon, I.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
@@ -206,12 +203,6 @@ TYPEINFO(/obj/strip_door)
 		flaps.setMaterial(src.flap_material)
 		user.put_in_hand_or_drop(flaps)
 		src.reset_flaps()
-
-	proc/screw_flaps() // hehe
-		if (!src.anchored)
-			src.anchored = ANCHORED
-		else
-			src.anchored = UNANCHORED
 
 /obj/marker/supplymarker
 	icon_state = "X"
