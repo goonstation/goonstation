@@ -574,7 +574,7 @@ TYPEINFO(/obj/stool/chair)
 		anchored = UNANCHORED
 
 	get_help_message(dist, mob/user)
-		. = "You can <b>sit</b> on it by standing on the same tile then click draging yourself to the chair or using the Block hotkey with any intent except <b>Grab</b>. "
+		. = "You can <b>sit</b> on it by standing on the same tile then click dragging yourself to the chair or using the Block hotkey with any intent except <b>Grab</b>. "
 		if (src.climbable)
 			. += "It will be <b>climbed on</b> if you are using the <b>Grab intent</b>. "
 		if (src.foldable)

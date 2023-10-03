@@ -138,6 +138,7 @@
 			var/obj/item/organ/O = organ_list[thing]
 			if(istype(O) && O.donor)
 				O.surgery_contexts = null
+				O.removal_stage = 0
 
 	proc/build_back_surgery_buttons()
 		src.back_contexts = list()

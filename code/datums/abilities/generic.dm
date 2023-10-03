@@ -169,9 +169,6 @@
 	cooldown = 0
 
 	onAttach(datum/abilityHolder/holder)
-		if (!isadmin(holder.owner))
-			holder.removeAbilityInstance(src)
-			return
 		. = ..()
 		var/atom/movable/screen/ability/topBar/B = src.object
 		B.UpdateOverlays(image('icons/obj/items/organs/brain.dmi', "brain1"), "brain_state")

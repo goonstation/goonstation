@@ -2649,8 +2649,9 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			if(findtext(W.name,"seal")) // for you, spacemarine9
 				src.visible_message("<span class='emote'><b>[src]</b> [pick("groans","yelps")]!</span>")
 				src.visible_message("<span class='notice'><b>[src]</b> gets frightened by [snack]!</span>")
-				src.ai.move_away(user, 10)
-				SPAWN(1 SECOND) walk(src,0)
+				if(src.is_npc)
+					src.ai.move_away(user, 10)
+					SPAWN(1 SECOND) walk(src,0)
 				return
 
 			if(prob(5))
@@ -2663,7 +2664,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 			src.HealDamage("all", 10, 10)
 		else
 			src.visible_message("<span class='emote'><b>[src]</b> [pick("groans","yelps")]!</span>")
-			src.ai.move_away(user, 10)
+			if(src.is_npc)
+				src.ai.move_away(user, 10)
 			return ..()
 
 	was_harmed(var/mob/M as mob, var/obj/item/weapon, var/special, var/intent)
@@ -2698,7 +2700,8 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 		for (var/mob/living/critter/small_animal/seal/seal in view(7, src))
 			if (!(is_incapacitated(seal) && seal.ai?.enabled))
 				seal.visible_message("<span class='emote'><b>[seal]</b> [pick("groans","yelps")]!</span>")
-				seal.ai.move_away(src, 10)
+				if(seal.is_npc)
+					seal.ai.move_away(src, 10)
 
 		..()
 
