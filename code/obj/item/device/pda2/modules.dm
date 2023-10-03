@@ -309,7 +309,7 @@ TYPEINFO(/obj/item/device/pda_module)
 		signal.data["command"] = "text_message"
 		signal.data["sender_name"] = src.host.owner
 		signal.data["group"] = MGD_SECURITY
-		signal.data["topic"] = MGA_CRISIS
+		signal.data["alert"] = MGA_CRISIS
 		var/area/A = get_area(src.host)
 		signal.data["message"]  = "<b><span class='alert'>SECURITY BACKUP NEEDED! Location: [A ? A.name : "!UNKNOWN!"]!</span></b>"
 		src.host.post_signal(signal)

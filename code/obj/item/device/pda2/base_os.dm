@@ -814,7 +814,7 @@
 			var/filesize = signal.data["file_size"]
 			var/signalTag = signal.data["tag"]
 			var/groupAddress = signal.data["group"]
-			var/topic = signal.data["topic"]
+			var/alert = signal.data["alert"]
 
 			switch(signal.data["command"])
 				if("text_message")
@@ -845,8 +845,8 @@
 						else
 							senderstring += " to <a href='byond://?src=\ref[src];input=message;target=[groupAddress];department=1'>[groupAddress]</a>"
 
-					if (topic)
-						senderstring += " ([topic])"
+					if (alert)
+						senderstring += " ([alert])"
 
 					src.message_note += "<i><b>&larr; [senderstring]:</b></i><br>[signal.data["message"]]<br>"
 					var/alert_beep = null //Don't beep if set to silent.
@@ -878,14 +878,17 @@
 
 						var/list/msg_groups = list()
 						for(var/msg_group in groupAddress)
-							msg_groups += list("<a href='byond://?src=\ref[src];input=message;[(msg_group in src.master.mailgroups) ? "" : "target=[msg_group]"];department=1'>[msg_group]</a>")
+							if (msg_group in src.master.mailgroups)
+								msg_groups += list("<a href='byond://?src=\ref[src];input=message;target=[msg_group];department=1'>[msg_group]</a>")
+							else
+								msg_groups += list("[msg_group]")
 
 						displayMessage += msg_groups.Join(", ")
 
-						if (topic == MGA_CRISIS)
+						if (alert == MGA_CRISIS)
 							displayMessage += " (<span class='alert'>(!!!CRISIS ALERT!!!)</span>)"
-						else if (topic)
-							displayMessage += " ([topic])"
+						else if (alert)
+							displayMessage += " ([alert])"
 					else
 						displayMessage += "<a href='byond://?src=\ref[src];input=message;target=[sender]'>[sendername]</a>"
 
