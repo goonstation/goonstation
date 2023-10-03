@@ -154,7 +154,7 @@
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
 				src.temp += {"<A href='?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
 				<B>Cost:</B> [N.price] [currency]<BR>
-				<B>Description:</B> [N.desc] Amount: [N.amount]<BR>
+				<B>Description:</B> [N.desc] Amount: [N.amount > -1 ? N.amount : "Infinite"]<BR>
 				<A href='?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>"
 		//////////////////////////////////////////////
@@ -200,10 +200,12 @@
 					else if(current_funds >= P.price * quantity)
 						if(barter)
 							barter_customers[usr] -= P.price * quantity
-							P.amount -= quantity
+							if(P.amount > 0)
+								P.amount -= quantity
 						else
 							account["current_money"] -= P.price * quantity
-							P.amount -= quantity
+							if(P.amount > 0)
+								P.amount -= quantity
 						if(log_trades)
 							logTheThing(LOG_STATION, usr, "bought ([quantity]) [P.comtype] from [src] at [log_loc(get_turf(src))]")
 						while(quantity-- > 0)
@@ -629,7 +631,7 @@
 
 	New()
 		..()
-		icon_state = pick("martian","martianP","martianW","martianSP","mars_bot","welder","petbee","lavacrab","boogie","walrus","owl","goose","swan","gull","parrot","possum","bumblespider","big_spide[pick("","-red","-blue","-green")]")
+		icon_state = pick("martian","martianP","martianW","martianSP","welder","petbee","lavacrab","walrus","owl","goose","swan","gull","parrot","possum","bumblespider","big_spide[pick("","-red","-blue","-green")]") //"mars_bot" "boogie"
 		if (icon_state in list("owl","goose","swan","gull"))
 			icon = 'icons/misc/bird.dmi'
 		else if (icon_state == "parrot")

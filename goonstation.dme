@@ -579,7 +579,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\mob\living\silicon\hivebot\hivebot_statusupdate.dm"
 #include "code\mob\living\silicon\hivebot\mainframe.dm"
 #include "code\mob\wraith\poltergeist.dm"
-#include "code\modules\spatial_hashing.dm"
 #include "code\modules\admin\abilitymanager.dm"
 #include "code\modules\admin\admin.dm"
 #include "code\modules\admin\admin_holder.dm"

@@ -527,6 +527,11 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		Afterwards, place the crystal in a pressure sensor to determine the explosion power.<br>\
 		Spent pressure crystals can be sold to researchers on the shipping market, for a credit sum depending on the measured power.")
 
+	attackby(obj/item/thing, mob/user)
+		if (istype(thing, /obj/item/device/pressure_sensor))
+			thing.Attackby(src, user)
+		else ..()
+
 	examine()
 		. = ..()
 		if (src.pressure)
@@ -554,37 +559,92 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	icon = 'icons/obj/items/assemblies.dmi'
 	icon_state = "pressure_tester"
 	desc = "Put in a pressure crystal to determine the strength of the explosion."
+
 	var/obj/item/pressure_crystal/crystal
+
+	examine()
+		. = ..()
+		if (src.crystal?.pressure)
+			. += "<br><span class='notice'>The display reads: <b>[src.crystal.pressure] kiloblast.</b></span>"
+
 	attack_self(mob/user as mob)
-		if(!crystal)
-			boutput( user, "<b>There's no crystal in this here device!</b>")
+		if(!src.crystal)
+			boutput( user, "<span class='alert'>There's no crystal in this here device!</span>")
+			return
+		if(src.crystal.pressure)
+			boutput( user, "<span class='notice'>The display reads: <b>[src.crystal.pressure] kiloblast.</b></span>" )
 		else
-			if(crystal.pressure)
-				boutput( user, "The reader reads <b>[crystal.pressure]</b> kiloblast." )
-			else
-				boutput( user, "The reader reads a firm 0. It guilts you into trying to read an unexploded pressure crystal, and seems to have \
-					succeeded. You feel ashamed for being so compelled by a device that has nothing more than a slot and a number display.")
-	ex_act()
+			boutput( user, "<span class='notice'>The display reads a firm 0. It guilts you into trying to read an unexploded pressure crystal, \
+							and seems to have succeeded. You feel ashamed for being so compelled by a device that \
+							has nothing more than a slot and a number display.</span>")
+
+	ex_act(var/ex, var/inf, var/factor)
+		if (src.crystal)
+			src.crystal.ex_act(ex, inf, factor)
+			src.crystal.set_loc(src.loc)
 		qdel(src)
+
 	attackby(obj/item/thing, mob/user)
-		if(istype(thing, /obj/item/pressure_crystal))
-			if(src.crystal)
-				boutput( user, "You contemplate how to place the crystal in an occupied sensor, but can't manage to figure out how." )
-			else
-				src.crystal = thing
-				thing.pixel_x = 0
-				thing.pixel_y = 0
-				boutput( user, "You insert the crystal." )
-				overlays += thing
-				user.drop_item()
-				crystal.set_loc(src)
-				wear_image.overlays += src.crystal
+		if (!istype(thing, /obj/item/pressure_crystal))
+			return ..()
+		if (src.insert_crystal(user, thing))
+			user.visible_message("[user] inserts [thing] into [src].",
+								"<span class='notice'>You insert the crystal into [src].</span>")
+
+	mouse_drop(atom/over_object, src_location, over_location)
+		if (!src.crystal)
+			. = ..()
 			return
-		else if(thing.tool_flags & TOOL_PRYING && src.crystal)
-			overlays = list()
-			wear_image.overlays = list()
-			boutput( user, "You pry out the crystal." )
-			src.crystal.set_loc(user.loc)
-			src.crystal = null
+
+		if(BOUNDS_DIST(src_location, usr) > 0 || BOUNDS_DIST(src_location, over_location) > 0)
 			return
-		else return ..()
+		if (src.remove_crystal(usr, over_location))
+			usr.visible_message("[usr] removes the crystal from [src].",
+								"<span class='notice'>You pull the crystal out of [src].</span>")
+
+	MouseDrop_T(atom/movable/thing, mob/user)
+		. = ..()
+		if (!istype(thing, /obj/item/pressure_crystal))
+			return
+		if (src.insert_crystal(user, thing))
+			user.visible_message("[user] drops [thing] into [src].",
+								"<span class='notice'>You drop the crystal into [src].</span>")
+
+	attack_hand(mob/user)
+		if (src.loc != user || !user.find_in_hand(src))
+			..()
+		else if (src.crystal && src.remove_crystal(user))
+			boutput(user, "<span class='notice'>You extract the crystal from [src].</span>" )
+		else ..() // something about having two of these feels wrong
+
+	update_icon()
+		if (src.crystal)
+			var/image/pc = image(src.crystal.icon, src.crystal.icon_state)
+			src.UpdateOverlays(pc, "sensor")
+		else
+			src.UpdateOverlays(null, "sensor")
+
+	proc/insert_crystal(mob/user, obj/item/pressure_crystal/pc)
+		if (!istype(pc, /obj/item/pressure_crystal))
+			return FALSE
+		if (src.crystal)
+			boutput(user, "<span class='alert'>You contemplate how to place the crystal in an occupied sensor, \
+							but can't manage to figure out how.</span>" )
+			return FALSE
+		user.drop_item()
+		pc.set_loc(src)
+		src.crystal = pc
+		src.UpdateIcon()
+		return TRUE
+
+	proc/remove_crystal(mob/user, turf/spot)
+		if (!src.crystal)
+			boutput(user, "<span class='alert'>There's no crystal in this here device!</span>")
+			return FALSE
+		if (spot)
+			src.crystal.set_loc(spot)
+		else
+			user.put_in_hand_or_drop(src.crystal)
+		src.crystal = null
+		src.UpdateIcon()
+		return TRUE

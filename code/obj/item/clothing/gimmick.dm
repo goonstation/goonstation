@@ -1612,6 +1612,15 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	icon_state = "hotdogsuit"
 	over_hair = TRUE
 
+/obj/item/clothing/suit/gimmick/pickle
+	name = "pickle suit"
+	desc = "Smells horribly of vinegar."
+	body_parts_covered = HEAD|TORSO|LEGS|ARMS
+	wear_layer = MOB_FULL_SUIT_LAYER // ?????
+	hides_from_examine = C_UNIFORM|C_EARS
+	icon_state = "picklesuit"
+	over_hair = TRUE
+
 /obj/item/clothing/under/gimmick/vampire
 	name = "absurdly stylish suit and vest"
 	desc = "You can<i>count</i> on this suit and vest to make you look real suave, yeah."

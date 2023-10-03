@@ -23388,7 +23388,7 @@
 	pixel_x = 1;
 	pixel_y = 3
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 1;
 	pixel_y = -7
 	},
@@ -29176,7 +29176,7 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 4;
 	pixel_y = 6
 	},
@@ -59362,7 +59362,7 @@
 /area/station/medical/medbay/surgery)
 "tjI" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -5;
 	pixel_y = 3
 	},
@@ -67890,7 +67890,7 @@ adC
 adC
 adC
 adC
-mvt
+adC
 adC
 adC
 adC
