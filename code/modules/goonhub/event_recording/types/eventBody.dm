@@ -7,16 +7,15 @@ ABSTRACT_TYPE(/datum/eventRecordBody)
 
 /datum/eventRecordBody/New(list/fieldValues)
 	. = ..()
+	src.setValues(fieldValues)
 	if (!VerifyIntegrity())
 #if defined(SPACEMAN_DMM)
 		return
 #elif DM_VERSION >= 515 || defined(OPENDREAM) // Yay, actual sanity!
-		throw EXCEPTION("malformed [__TYPE__] [src.ToString()]")
+		throw EXCEPTION("malformed [__TYPE__] [json_encode(src.ToList())]")
 #else
-		return
-		//throw EXCEPTION("malformed [....] [src.ToString()]")
+		throw EXCEPTION("malformed event [json_encode(src.ToList())]")
 #endif
-	src.setValues(fieldValues)
 
 /datum/eventRecordBody/proc/setValues(list/fieldValues)
 	var/idx = 1

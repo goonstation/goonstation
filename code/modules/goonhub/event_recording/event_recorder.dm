@@ -20,8 +20,8 @@ var/global/datum/eventRecorder/eventRecorder
 		if (res)
 			src.connected = FALSE
 			var/logMsg = "Failed to connect to Goonhub Event Recording service. Reason: [res]"
-			logTheThing(LOG_DEBUG, null, logMsg)
-			logTheThing(LOG_DIARY, null, logMsg, "debug")
+			logTheThing(LOG_DEBUG, null, "<b>Event Recorder:</b> [logMsg]")
+			logTheThing(LOG_DIARY, null, "Event Recorder: [logMsg]", "debug")
 			return FALSE
 
 		src.connected = TRUE
@@ -40,8 +40,8 @@ var/global/datum/eventRecorder/eventRecorder
 		else
 			var/msg = lRes["content"]
 			var/logMsg = "Failed to push data to Goonhub Event Recording service. Reason: [msg]"
-			logTheThing(LOG_DEBUG, null, logMsg)
-			logTheThing(LOG_DIARY, null, logMsg, "debug")
+			logTheThing(LOG_DEBUG, null, "<b>Event Recorder:</b> [logMsg]")
+			logTheThing(LOG_DIARY, null, "Event Recorder: [logMsg]", "debug")
 
 	/// Add an event to the event queue
 	proc/add(datum/eventRecord/event)

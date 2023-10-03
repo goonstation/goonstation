@@ -11,8 +11,13 @@
 
 	/// Shortcut method to send this event to the event recorder
 	proc/send(list/fieldValues)
-		src.body = new src.body(fieldValues)
-		eventRecorder.add(src)
+		try
+			src.body = new src.body(fieldValues)
+			eventRecorder.add(src)
+		catch (var/exception/e)
+			var/logMsg = "Failed to send data to Goonhub Event Recording service. Reason: [e.name]"
+			logTheThing(LOG_DEBUG, null, " <b>Event Recorder:</b> [logMsg]")
+			logTheThing(LOG_DIARY, null, "Event Recorder: [logMsg]", "debug")
 
 	/// Override to build event parameters
 	proc/buildAndSend()

@@ -9,9 +9,7 @@ ABSTRACT_TYPE(/datum/eventRecordBody/TracksPlayer)
 	. = ..(fieldValues.Copy(2, 0))
 
 /datum/eventRecordBody/TracksPlayer/VerifyIntegrity()
-	if (
-		isnull(src.player_id)
-	)
+	if (!src.player_id)
 		return FALSE
 
 	return TRUE
