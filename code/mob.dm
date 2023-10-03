@@ -2842,9 +2842,16 @@
 						for (var/obj/item/I in src.contents)
 							var/obj/item/card/id/ID = get_id_card(I)
 							if (!ID)
-								continue
-							ID.registered = newname
-							ID.update_name()
+								if(length(I.contents)>0)
+									for(var/obj/item/J in I.contents)
+										var/obj/item/card/id/ID_maybe = get_id_card(J)
+										if(!ID_maybe)
+											continue
+										if(ID_maybe && ID_maybe.registered == src.real_name)
+											ID = ID_maybe
+							if(ID)
+								ID.registered = newname
+								ID.update_name()
 						for (var/obj/item/device/pda2/PDA in src.contents)
 							PDA.registered = newname
 							PDA.owner = newname

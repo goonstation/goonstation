@@ -88,11 +88,14 @@
 		if (master.engine)
 			if (master.engine.active)
 				engine.icon_state = "engine-on"
-				wormhole.overlays.len = 0
 			else
 				engine.icon_state = "engine-off"
-				if (!wormhole.overlays.len)
-					wormhole.overlays += missing
+
+		if (master.engine?.active && master.sensors?.active)
+			wormhole.overlays.len = 0
+		else
+			if (!wormhole.overlays.len)
+				wormhole.overlays += missing
 
 		if (master.life_support)
 			if (master.life_support.active)

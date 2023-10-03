@@ -121,6 +121,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		slice.transform = src.transform // for botany crops
 		slice.reagents.clear_reagents() // dont need initial_reagents when you're inheriting reagents of another obj (no cheese duping >:[ )
 		slice.reagents.maximum_volume = amount_to_transfer
+		slice.quality = src.quality
 		if (src.slice_inert)
 			if (!slice.reagents)
 				slice.reagents = new //when the created produce didn't spawned with some reagents in them, we need that
@@ -468,14 +469,16 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 		if (isliving(eater))
 			if(ethereal_eater)//ghost critters can get a little ingest reaction and a tiny amount of reagent, but won't actually take reagents
-				src.reagents.reaction(eater, INGEST, 3)
-				if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
-					src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
+				if(src.reagents)
+					src.reagents.reaction(eater, INGEST, 3)
+					if(!ON_COOLDOWN(src, "critter_reagent_copy_\ref[eater]", 15 SECONDS))
+						src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
 			else
 				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
 				B.fill_amt = src.fill_amt/initial(src.bites_left) //so all the bites add up to the full item fillness
-				B.reagents.maximum_volume = reagents.total_volume/((src.bites_left+1) || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
-				src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
+				if(src.reagents)
+					B.reagents.maximum_volume = reagents.total_volume/((src.bites_left+1) || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
+					src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
 				var/mob/living/L = eater
 				if (L.organHolder?.stomach)
 					L.organHolder.stomach.consume(B)
@@ -1851,7 +1854,7 @@ ADMIN_INTERACT_PROCS(/obj/item/reagent_containers/food/drinks/drinkingglass, pro
 	name = "espresso cup"
 	desc = "A fancy espresso cup, for sipping in the finest establishments." //*tip
 	icon_state = "fancycoffee"
-	item_state = "coffee"
+	item_state = "espresso"
 	initial_volume = 20
 	gulp_size = 2.5
 	g_amt = 2.5 //might be broken still, Whatever

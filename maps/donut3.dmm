@@ -38916,7 +38916,7 @@
 /area/station/library/reading1)
 "lUS" = (
 /obj/rack,
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -4;
 	pixel_y = 2
 	},
@@ -45143,7 +45143,7 @@
 	pixel_x = 14;
 	pixel_y = 2
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 1;
 	pixel_y = 10
 	},
@@ -46047,7 +46047,7 @@
 /turf/simulated/floor/circuit/off,
 /area/station/medical/robotics)
 "ohB" = (
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 1;
 	pixel_y = 7
 	},
@@ -61108,10 +61108,6 @@
 	},
 /turf/simulated/floor/plating/jen,
 /area/station/maintenance/outer/north)
-"sOJ" = (
-/obj/landmark/shuttle_subwoofer,
-/turf/space,
-/area/space)
 "sOZ" = (
 /obj/decal/tile_edge/stripe/corner/extra_big2{
 	dir = 9
@@ -76895,7 +76891,7 @@
 /area/station/hallway/primary/east)
 "xxG" = (
 /obj/rack,
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -4;
 	pixel_y = 2
 	},
@@ -84925,7 +84921,7 @@ rdj
 rdj
 rdj
 rdj
-sOJ
+rdj
 rdj
 rdj
 rdj

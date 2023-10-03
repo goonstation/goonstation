@@ -243,6 +243,7 @@ TYPEINFO(/obj/item/device/radio/intercom)
 	broadcasting = TRUE
 	device_color = "#820A16"
 	hardened = TRUE
+	locked_frequency = TRUE
 
 	initialize()
 		if(istype(ticker.mode, /datum/game_mode/nuclear))

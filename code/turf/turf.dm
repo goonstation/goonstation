@@ -367,7 +367,7 @@ proc/generate_space_color()
 	#ifndef CI_RUNTIME_CHECKING
 	if(fullbright)
 		if(!starlight)
-			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x = -32, pixel_y = -32)
+			starlight = image('icons/effects/overlays/simplelight.dmi', "starlight", pixel_x = -32, pixel_y = -32)
 			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING

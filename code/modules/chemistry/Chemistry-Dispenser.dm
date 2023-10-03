@@ -18,7 +18,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 	icon = 'icons/obj/chemical.dmi'
 	icon_state = "dispenser"
 	var/icon_base = "dispenser"
-	flags = NOSPLASH | TGUI_INTERACTIVE
+	flags = FPRINT | NOSPLASH | TGUI_INTERACTIVE
 	object_flags = NO_GHOSTCRITTER
 	var/health = 400
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
@@ -70,6 +70,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 	attackby(var/obj/item/reagent_containers/glass/B, var/mob/user)
 		remove_distant_beaker()
+		src.add_fingerprint(user)
 		if (istype(B, /obj/item/card/id) || istype(B, /obj/item/card/data))
 			var/obj/item/card/id/ID = B
 			if (src.user_id)
@@ -132,11 +133,12 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			B.reagents.handle_reactions()
 			return
 		*/
-		var/ejected_beaker = null
+		var/obj/item/reagent_containers/glass/ejected_beaker = null
 		if (src.beaker?.loc == src)
-			beaker.reagents?.handle_reactions()
+			src.beaker.reagents?.handle_reactions()
 			ejected_beaker = src.beaker
 			user.put_in_hand_or_drop(ejected_beaker)
+			REMOVE_ATOM_PROPERTY(ejected_beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 
 		src.beaker = B
 		APPLY_ATOM_PROPERTY(B, PROP_ITEM_IN_CHEM_DISPENSER, src)
@@ -305,6 +307,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 		if(..())
 			return
 		remove_distant_beaker()
+		src.add_fingerprint(usr)
 		switch(action)
 			if ("dispense")
 				if (!beaker || !(params["reagentId"] in dispensable_reagents))
