@@ -344,6 +344,7 @@
 				AM.set_loc(T)
 				AM.pipe_eject(0)
 				AM?.throw_at(target, 5, 1)
+				AM.set_just_ejected()
 
 			H.vent_gas(T)	// all gas vent to turf
 			qdel(H)
@@ -626,7 +627,7 @@
 	name = "disposal pipe spawner"
 	icon_state = "pipe-spawner"
 	var/trunk_type = /obj/disposalpipe/trunk/regular
-	dpdir = 0	
+	dpdir = 0
 	regular
 		trunk_type = /obj/disposalpipe/trunk/regular
 	mail
@@ -2137,6 +2138,7 @@ TYPEINFO(/obj/disposaloutlet)
 			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)
 			AM.throw_at(target, src.throw_range, src.throw_speed)
+			AM.set_just_ejected()
 		H.vent_gas(src.loc)
 		qdel(H)
 
@@ -2229,3 +2231,12 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 					pipe.set_dir(new_dir)
 				break
 	pipe.fix_sprite()
+
+// prevents stuff that has just been launched out of a chute from going straight into another
+/atom/movable/
+	var/just_ejected_from_disposal = FALSE
+
+/atom/movable/proc/set_just_ejected()
+	src.just_ejected_from_disposal = TRUE
+	SPAWN(2 SECONDS) // that should be enough right
+		src.just_ejected_from_disposal = FALSE
