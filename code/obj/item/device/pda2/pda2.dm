@@ -79,7 +79,7 @@
 									MGA_RKIT = null,\
 									MGA_SALES = null,\
 									MGA_SHIPPING = null,\
-									MGA_CARGOREQUEST = null,\
+									MGA_CREWREQUEST = null,\
 									MGA_CRISIS = null,\
 									MGA_RADIO = null)
 
@@ -139,7 +139,7 @@
 			// start in party line by default
 			MGD_PARTY,
 		)
-		default_muted_groups = list(MGA_DELIVERY, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_RKIT)
+		default_muted_groups = list(MGA_DELIVERY, MGA_SALES, MGA_SHIPPING, MGA_CREWREQUEST, MGA_RKIT)
 
 	cyborg
 		icon_state = "pda-h"

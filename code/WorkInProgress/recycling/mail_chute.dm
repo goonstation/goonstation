@@ -6,10 +6,12 @@
 	desc = "A pneumatic mail-delivery chute."
 	icon_style = "mail"
 	var/mail_tag = null
+	//var/destination_tag = null // dropped to parent /obj/machinery/disposal
 	var/list/destinations = list()
 	var/frequency = FREQ_MAIL_CHUTE
 	var/last_inquire = 0 //No signal spamming etc
 	var/autoname = 0
+
 	var/message = null
 	var/mailgroup = null
 	var/mailgroup2 = null
@@ -131,7 +133,7 @@
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
 				newsignal.data["command"] = "text_message"
-				newsignal.data["sender_name"] = "CARGO-MAIL"
+				newsignal.data["sender_name"] = "CARGO-CHUTE"
 				newsignal.data["message"] = "[message]"
 				newsignal.data["address_1"] = "00000000"
 				newsignal.data["group"] = groups

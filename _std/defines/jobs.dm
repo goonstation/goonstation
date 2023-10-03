@@ -1,5 +1,6 @@
 // Mail Groups (by Department)
 // These have buttons to contact them in the messaging app on the PDA.
+// Apart from Party Line, they cannot be joined or left.
 #define MGD_PARTY "Party Line" //Is the clown the head of the Party department?
 #define MGD_COMMAND "command"
 #define MGD_SECURITY "security"
@@ -21,8 +22,8 @@
 #define MGO_ROBOTICS "robotics"
 #define MGO_GENETICS "genetics"
 
-// PDA Message Alert Groups
-// Alerts group together automated messages from station systems.
+// Alert Groups
+// From automated messages from station systems.
 // They allow users ignore topics without leaving groups.
 #define MGA_DELIVERY "Delivery Notice"
 #define MGA_CHECKPOINT "Checkpoint Alert"
@@ -34,7 +35,7 @@
 #define MGA_RKIT "Ruckingenur"
 #define MGA_SALES "Sales Notice"
 #define MGA_SHIPPING "Shipping Notice"
-#define MGA_CARGOREQUEST "Crew Request"
+#define MGA_CREWREQUEST "Crew Request"
 #define MGA_CRISIS "Crisis Alert"
 #define MGA_RADIO "Radio Station"
 #define MGA_TRACKING "Tracking Alert"

@@ -573,8 +573,7 @@
 				if(return_handling == RET_INSUFFICIENT)
 					var/datum/signal/pdaSignal = get_free_signal()
 					var/returnmsg = "No contract fulfilled by Requisition crate. Returning as sent."
-					if(delivery_code == "REQ-THIRDPARTY")
-						returnmsg = "Third-party delivery requires physical requisition sheet. Returning as sent."
+					if(delivery_code == "REQ-THIRDPARTY") returnmsg = "Third-party delivery requires physical requisition sheet. Returning as sent."
 					pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-EXPORT",  "group"=MGD_CARGO, "alert"=MGA_SALES, "sender"="00000000", "message"="[returnmsg]")
 					pdaSignal.transmission_method = TRANSMISSION_RADIO
 					radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)

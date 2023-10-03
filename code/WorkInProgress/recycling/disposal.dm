@@ -2110,7 +2110,7 @@ TYPEINFO(/obj/disposaloutlet)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CARGO-CHUTE"
+			newsignal.data["sender_name"] = "CARGO-OUTLET"
 			newsignal.data["message"] = "[message]"
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = groups

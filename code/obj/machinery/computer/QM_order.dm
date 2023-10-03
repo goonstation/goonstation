@@ -171,7 +171,7 @@
 
 				// pda alert ////////
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-SUPPLY",  "group"=MGD_CARGO, "alert"=MGA_CARGOREQUEST, "sender"="00000000", "message"="[O.object] requested by [O.orderedby] at [O.console_location].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-SUPPLY",  "group"=MGD_CARGO, "alert"=MGA_CREWREQUEST, "sender"="00000000", "message"="[O.object] requested by [O.orderedby] at [O.console_location].")
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 				//////////////////
 		else

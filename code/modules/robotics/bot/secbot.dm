@@ -519,7 +519,7 @@
 			var/bot_location = get_area(src)
 			var/datum/signal/pdaSignal = get_free_signal()
 			var/message2send = "[src] destroyed in [bot_location]! Officer down!"
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITRON", "group"=MGD_SECURITY, "alert"=MGA_DEATH, "sender"="00000000", "message"="[message2send]")
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SEC-MAILBOT", "group"=MGD_SECURITY, "alert"=MGA_DEATH, "sender"="00000000", "message"="[message2send]")
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 		if(src.exploding) return
@@ -1327,7 +1327,7 @@
 				signal.source = src
 				signal.data["sender"] = "00000000"
 				signal.data["command"] = "text_message"
-				signal.data["sender_name"] = "SECURITRON"
+				signal.data["sender_name"] = "SEC-MAILBOT"
 				signal.data["group"] = MGD_SECURITY
 				signal.data["alert"] = MGA_ARREST
 				signal.data["address_1"] = "00000000"

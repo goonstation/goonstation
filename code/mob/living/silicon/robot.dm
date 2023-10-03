@@ -2558,7 +2558,7 @@
 			newsignal.data["message"] = message
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = list(MGO_ROBOTICS, MGO_SILICON)
-			newsignal.data["alert"] = list(MGA_DEATH)
+			newsignal.data["alert"] = MGA_DEATH
 			newsignal.data["sender"] = net_id
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
