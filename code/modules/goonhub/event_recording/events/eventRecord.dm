@@ -8,3 +8,6 @@
 	var/eventType = null
 	/// Body of the event
 	var/datum/eventRecordBody/body = null
+
+	proc/setBody(list/fieldValues)
+		src.body = new src.body(fieldValues)
