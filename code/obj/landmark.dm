@@ -536,6 +536,7 @@ var/global/list/job_start_locations = list()
 /obj/landmark/fall/morriganderlict
 	name = LANDMARK_FALL_MORRIGAN_ELEVATOR
 
+
 /* ===== Visual Contents ===== */
 
 /obj/landmark/viscontents_spawn

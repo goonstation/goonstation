@@ -155,6 +155,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /obj/landmark/morrigan_prisoner
 	name = LANDMARK_MORRIGAN_PRISONER
 
+/obj/landmark/morrigan_crate_puzzle
+	name = LANDMARK_MORRIGAN_CRATE_PUZZLE
+
 // ID Cards
 /obj/item/card/id/morrigan
 
@@ -2326,6 +2329,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 /obj/morrigan_teleporter/prisoner
 	landmark = LANDMARK_MORRIGAN_PRISONER
+
 
 /obj/fakeobjects/morrigan_teleporter
 	name = "short-range teleporter"

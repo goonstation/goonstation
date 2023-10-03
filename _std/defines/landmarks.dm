@@ -102,6 +102,7 @@
 #define LANDMARK_MORRIGAN_TRANSPORT "morrigan_transport" // To the conveyor area at the prelude
 #define LANDMARK_MORRIGAN_PRISONER "morrigan_prisoner" // To the main station brig area
 #define LANDMARK_FALL_MORRIGAN_ELEVATOR "morriganfall" // falling in the derlict area
+#define LANDMARK_MORRIGAN_CRATE_PUZZLE "morrigan_cargo" // where cargo spawns for puzzle
 /// allowed turfs for telesci
 #define LANDMARK_TELESCI "telesci"
 #define LANDMARK_LRT "lrt landmark"
