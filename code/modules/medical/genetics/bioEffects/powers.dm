@@ -1370,7 +1370,7 @@
 	msgGain = "You suddenly smell vinegar."
 	msgLose = "You feel less well preserved."
 	transmute_material = "pickle"
-	power = 1
+	power = 2
 	occur_in_genepools = 0
 	probability = 0
 	scanner_visibility = 0
