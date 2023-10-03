@@ -2701,64 +2701,53 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "matdrop"
 	anchored = ANCHORED
 	density = TRUE
-	var/required_objects = list(/obj/item/railgunpart)
-	var/functioning = TRUE
-
-	New()
-		. = ..()
-
-	//why
-	proc/put_item(var/obj/item/W, var/mob/user)
-		var/times_checked = 0
-		for (var/obj in required_objects)
-			if (times_checked < length(required_objects))
-				if (istype(W, obj))
-					W.set_loc(src)
-					user.u_equip(W)
-					times_checked = 0
-					boutput(user, "check succsess")
-					. = TRUE
-					break
-				else
-					times_checked += 1
-					boutput(user, "checked")
-			else
-				. = FALSE
-				break
-		if (!.)
-			W.set_loc(src)
-			user.u_equip(W)
-			sleep(2 SECONDS)
-			W.set_loc(src.loc)
-			times_checked = 0
-			return
-
-	proc/check_contents()
-		var/items_collected = 0
-		for (var/item in src)
-			for (var/required_item in required_objects)
-				if (istype(item, required_item))
-					items_collected += 1
-		if (length(required_objects) == items_collected)
-			src.visible_message("<span class='alert'><b>\The [src] makes a beep!</b></span>")
-			playsound(src, 'sound/effects/zzzt.ogg', 50, TRUE)
-			src.functioning = FALSE
-			return
-		else
-			return
+	var/required_object = /obj/item/railgunpart
+	var/complete = FALSE
+	var/amount_required = 3
 
 	attackby(obj/item/W, mob/user)
-		if(src.functioning)
-			if (!ON_COOLDOWN(src, "item_insert_cooldown", 3 SECONDS))
-				put_item(W, user)
-				check_contents()
-				return
-			else
-				boutput(user, "<span class='warning'><b>You have to wait before you put another item in!</b></span>")
-				return
+		if (src.complete)
+			return ..()
+		if (ON_COOLDOWN(src, "item_insert_cooldown", 3 SECONDS))
+			boutput(user, "<span class='warning'>You have to wait before you put another item in!</span>")
+			return ..()
+		put_item(W, user)
+
+	proc/put_item(var/obj/item/W, var/mob/user)
+		if (!istype(W, src.required_object))
+			W.set_loc(src)
+			user.u_equip(W)
+			SPAWN(2 SECONDS)
+				playsound(src, 'sound/machines/ping.ogg', 40, TRUE)
 		else
-			boutput(user, "<span class='alert'><b>\The [src] doesn't seem to work!</b></span>")
+			W.set_loc(src)
+			user.u_equip(W)
+			SPAWN(2 SECONDS)
+				W?.set_loc(get_turf(src))
+				playsound(src, 'sound/machines/buzz-two.ogg', 40, TRUE)
 			return
+		if (length(src.contents) >= src.amount_required)
+			playsound(src, 'sound/machines/chime.ogg', 40, TRUE)
+			src.complete = TRUE
+			for_by_tcl(D, /obj/machinery/door/airlock/pyro/engineering/railgun_door)
+				D.open()
+			for (var/item as anything in src.contents)
+				qdel(item)
+		// TODO ADD OFF STATE
+
+/obj/machinery/door/airlock/pyro/engineering/railgun_door
+	name = "railgun storage"
+	autoclose = FALSE
+	hardened = TRUE
+	cant_emag = TRUE
+
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 //gas mask please i beg
 
