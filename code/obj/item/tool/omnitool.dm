@@ -38,7 +38,7 @@
 
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
-		if(mode = OMNI_MODE_PULSING)
+		if(mode == OMNI_MODE_PULSING)
 			get_and_return_netid(target,user)
 
 	get_desc()
