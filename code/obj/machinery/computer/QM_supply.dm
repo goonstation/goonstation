@@ -1252,7 +1252,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					</li>
 					"}
 
-			bottomText += {"</ul>"}
+			bottomText += {"</ul><br><em>To sell goods to this trader, print a barcode for <strong>[T.name]</strong>, attach it to a crate containing the goods, and send the crate out the 'sell' mass driver.</em>"}
 
 		if ("selling")
 			bottomText += "<h3>Goods For Sale</h3><ul class='shoplist'>"
