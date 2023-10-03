@@ -36,6 +36,11 @@
 		else
 			..()
 
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if(mode = OMNI_MODE_PULSING)
+			get_and_return_netid(target,user)
+
 	get_desc()
 		. += "It is currently set to "
 		switch(src.mode)
@@ -244,7 +249,6 @@
 			return
 
 		..()
-		return
 
 	New()
 		. = ..()
