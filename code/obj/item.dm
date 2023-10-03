@@ -1550,7 +1550,8 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/proc/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	if(src in user.juggling)
 		return ""
-	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
+
+	if (((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5)) && !src.cant_drop)
 		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
 		user.u_equip(src)
 		src.set_loc(user.loc)

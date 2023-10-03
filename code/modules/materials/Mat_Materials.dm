@@ -1682,6 +1682,23 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		. = replace_first_consonant_cluster(target.name, copytext(src.name , 1, 2))
 
 
+/datum/material/organic/pickle
+	mat_id = "pickle"
+	name = "pickle"
+	desc = "Pure pickle, presumably pickled previously."
+	color = "#b8db56"
+	texture = "pickle"
+	texture_blend = BLEND_MULTIPLY
+	edible_exact = 1
+	edible = 1
+
+	New()
+		..()
+		setProperty("density", 2)
+		setProperty("hard", 1)
+		setProperty("thermal", 2)
+		setProperty("flammable", 2)
+
 /datum/material/fabric/fibrilith
 	mat_id = "fibrilith"
 	name = "fibrilith"

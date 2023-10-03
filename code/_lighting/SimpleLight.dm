@@ -1,7 +1,7 @@
 /atom/var/ignore_simple_light_updates = 0 //to avoid double-updating on diagonal steps when we are really only taking a single step
 
 /obj/overlay/simple_light
-	event_handler_flags = IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	anchored = ANCHORED_ALWAYS
 	mouse_opacity = 0
 	layer = LIGHTING_LAYER_BASE

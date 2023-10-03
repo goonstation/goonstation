@@ -112,8 +112,14 @@ ABSTRACT_TYPE(/datum/rc_entry/food)
 	var/typepath
 	///If true, requires precise path; if false (default), sub-paths are accepted.
 	var/exactpath = FALSE
-	///Must-be-whole switch. If true, food must be at initial bites_left value and is counted by whole units; if false, it is counted by bites left.
-	var/must_be_whole = TRUE
+	/**
+	 * Food integrity determines how the requisition handles bites_left.
+	 * FOOD_REQ_BY_ITEM means each individual item fulfills one count, regardless of how many bites it has left.
+	 * FOOD_REQ_BY_BITE means each bite fulfills one count - useful for orders of sliceable foods like pizza.
+	 * FOOD_REQ_INTACT means the item's bites_left must be equal to the initial defined, suitable for items like fresh produce that should arrive intact.
+	 * If you are making a requisition for a particular food item and it's not sliceable, leave this with its default value.
+	 */
+	var/food_integrity = FOOD_REQ_INTACT
 
 	///Commodity path. If defined, will augment the per-item payout with the highest market rate for that commodity, and set the type path if not initially specified.
 	var/commodity
@@ -131,11 +137,14 @@ ABSTRACT_TYPE(/datum/rc_entry/food)
 		if(rollcount >= count) return // Standard skip-if-complete
 		if(src.exactpath && eval_item.type != typepath) return // More fussy type evaluation
 		else if(!istype(eval_item,typepath)) return // Regular type evaluation
-		if(must_be_whole)
-			if(eval_item.bites_left != initial(eval_item.bites_left)) return
-			src.rollcount++
-		else
-			src.rollcount += eval_item.bites_left
+		switch(food_integrity)
+			if(FOOD_REQ_INTACT)
+				if(eval_item.bites_left != initial(eval_item.bites_left)) return
+				src.rollcount++
+			if(FOOD_REQ_BY_BITE)
+				src.rollcount += eval_item.bites_left
+			if(FOOD_REQ_BY_ITEM)
+				src.rollcount++
 		. = TRUE
 
 ABSTRACT_TYPE(/datum/rc_entry/stack)
