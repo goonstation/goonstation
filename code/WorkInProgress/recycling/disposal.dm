@@ -341,10 +341,10 @@
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
+				AM.set_just_ejected()
 				AM.set_loc(T)
 				AM.pipe_eject(0)
 				AM?.throw_at(target, 5, 1)
-				AM.set_just_ejected()
 
 			H.vent_gas(T)	// all gas vent to turf
 			qdel(H)
@@ -2135,10 +2135,10 @@ TYPEINFO(/obj/disposaloutlet)
 		while(locate(src.type) in get_step(expel_loc, src.dir))
 			expel_loc = get_step(expel_loc, src.dir)
 		for(var/atom/movable/AM in H)
+			AM.set_just_ejected()
 			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)
 			AM.throw_at(target, src.throw_range, src.throw_speed)
-			AM.set_just_ejected()
 		H.vent_gas(src.loc)
 		qdel(H)
 
