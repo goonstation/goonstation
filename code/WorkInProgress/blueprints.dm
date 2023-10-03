@@ -46,6 +46,7 @@
 	var/build_end = 0
 	var/list/markers = list()
 	var/list/apc_list = list()
+	var/list/turfs_to_pressurize = list()
 	var/metal_owed = 0
 	var/crystal_owed = 0
 	var/tile_cost_processed = FALSE
@@ -53,6 +54,7 @@
 	var/obj/item/blueprint/current_bp = null
 	var/locked = FALSE
 	var/paused = FALSE
+	var/do_pressurize = TRUE
 	var/off_x = 0
 	var/off_y = 0
 
@@ -98,6 +100,7 @@
 			"Dump Materials",
 			"Eject Blueprint",
 			"Cancel Build",
+			src.do_pressurize ? "Disable Auto-Pressurize" : "Activate Auto-Pressurize",
 		)
 		var/user_input = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", option_list)
 		if (!user_input) return
@@ -164,6 +167,13 @@
 					boutput(user, "<span class='alert'>There's no build in progress.</span>")
 					return
 				src.end_build()
+
+			if ("Disable Auto-Pressurize", "Activate Auto-Pressurize")
+				src.do_pressurize = !src.do_pressurize
+				if (src.do_pressurize)
+					boutput(user, "<span class='notice'>After ending a build, built floors will now be pressurized to standard air mix.</span>")
+				else
+					boutput(user, "<span class='notice'>No longer pressurizing built floors to standard air mix.</span>")
 		return
 
 	process()
@@ -244,15 +254,16 @@
 			V.layer = EFFECTS_LAYER_BASE
 
 			sleep(1.5 SECONDS)
-
 			qdel(V)
 
+			var/is_impermeable = FALSE
 			if(tile.tiletype != null)
 				var/turf/new_tile = pos
 				new_tile.ReplaceWith(tile.tiletype)
 				new_tile.icon_state = tile.state
 				new_tile.set_dir(tile.direction)
 				new_tile.inherit_area()
+				is_impermeable = new_tile.gas_impermeable
 
 			for(var/datum/objectinfo/O in tile.objects)
 				if (O.objecttype == null) continue
@@ -266,7 +277,11 @@
 					"dir" = O.direction)
 				if (!isnull(O.icon_state)) properties["icon_state"] = O.icon_state // required for old blueprint support
 				new/dmm_suite/preloader(pos, properties) // this doesn't spawn the objects, only presets their properties
-				new O.objecttype(pos) // need this part to also spawn the objects
+				var/atom/new_obj = new O.objecttype(pos) // need this part to also spawn the objects
+				is_impermeable += new_obj.gas_impermeable
+
+			if (src.do_pressurize && !is_impermeable)
+				src.turfs_to_pressurize[pos] = TRUE
 
 	proc/prepare_build(mob/user)
 		if(src.invalid_count)
@@ -286,9 +301,31 @@
 		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.current_bp.name], authored by [src.current_bp.author]")
 
 	proc/end_build()
-		for (var/datum/objectinfo/N in src.apc_list)
-			new N.objecttype(src.apc_list[N])
-		src.apc_list = new/list
+		SPAWN(2 SECONDS) // gotta wait for make_tile() to finish
+			for (var/datum/objectinfo/N in src.apc_list)
+				new N.objecttype(src.apc_list[N])
+			src.apc_list = new/list
+
+			if (src.do_pressurize)
+				var/I
+				for (I = 1, I < length(src.turfs_to_pressurize), I++)
+					var/turf/simulated/T = src.turfs_to_pressurize[I]
+					if (!T.air) continue
+					if (T.parent?.group_processing)
+						var/count = length(T.parent.members)
+						var/datum/gas_mixture/gas_add = new /datum/gas_mixture
+						gas_add.temperature = T20C
+						gas_add.oxygen = clamp(MOLES_O2STANDARD * count - T.parent.air.oxygen, 0, INFINITY)
+						gas_add.nitrogen = clamp(MOLES_N2STANDARD * count - T.parent.air.nitrogen, 0, INFINITY)
+						T.parent.air.merge(gas_add)
+						src.turfs_to_pressurize.Remove(T.parent.members)
+					else
+						var/datum/gas_mixture/gas_add = new /datum/gas_mixture
+						gas_add.temperature = T20C
+						gas_add.oxygen = clamp(MOLES_O2STANDARD - T.air.oxygen, 0, INFINITY)
+						gas_add.nitrogen = clamp(MOLES_N2STANDARD - T.air.nitrogen, 0, INFINITY)
+						T.assume_air(gas_add)
+			src.turfs_to_pressurize = new/list
 
 		src.building = FALSE
 		UnsubscribeProcess()
