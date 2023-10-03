@@ -1,5 +1,7 @@
 /// for client variables and stuff that has to persist between connections
 /datum/player
+	/// the ID of the player as provided by the Goonhub API
+	var/id = 0
 	/// the key of the client object that this datum is attached to
 	var/key
 	/// the ckey of the client object that this datum is attached to
