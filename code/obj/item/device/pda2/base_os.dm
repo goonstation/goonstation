@@ -330,7 +330,7 @@
 							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["mailgroup"];entry=[alert]'>Mute</a>"
 							if(istype(src.master.alert_ringtones[alert], /datum/ringtone))
 								rt = src.master.alert_ringtones[alert]
-								rtButton = "<a href='byond://?src=\ref[src];delATone=[topic]'>[rt.name]</a>"
+								rtButton = "<a href='byond://?src=\ref[src];delATone=[alert]'>[rt.name]</a>"
 							if(alert in src.muted_groups)
 								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["mailgroup"];entry=[alert]'>Unmute</a>"
 							. += "<tr><td>[alert]</td><td>[rtButton]</td><td>[muteButton]</td></tr>"
@@ -889,8 +889,6 @@
 							displayMessage += " (<span class='alert'>(!!!CRISIS ALERT!!!)</span>)"
 						else if (alert)
 							displayMessage += " ([alert])"
-					else
-						displayMessage += "<a href='byond://?src=\ref[src];input=message;target=[]'>[]</a>"
 
 					displayMessage += ":</b></i> [signal.data["message"]]"
 					src.master.display_message(displayMessage)

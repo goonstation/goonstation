@@ -403,7 +403,7 @@
 
 		// give PDA group messages
 		var/datum/signal/pdaSignal = get_free_signal()
-		var/message = "Notification: [price] credits earned from outgoing artifact \'[sell_art.name]\'. "
+		var/message = "[price] credits earned from outgoing artifact \'[sell_art.name]\'. "
 		if(pap)
 			if (pap.lastAnalysis == 3)
 				message += "Analysis was correct."
