@@ -836,6 +836,9 @@
 	if(core)
 		core.resources = src.resources
 		src.pay_resources(src.resources) // just in case any weirdness happens let's pre-empt the dupe bug
+
+	if(absorber.item)
+		absorber.drop(absorber.item)
 	..()
 	src.icon_state = "drone-dead"
 	src.set_density(FALSE)
@@ -1300,6 +1303,8 @@
 		animate(item)
 		if(item.material)
 			item.setMaterialAppearance(item.material)
+		item.UpdateIcon()
+		item.dropped(holder)
 	..()
 
 /datum/equipmentHolder/flockAbsorption/proc/tick(mult)
