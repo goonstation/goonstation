@@ -351,7 +351,7 @@ ABSTRACT_TYPE(/datum/req_contract)
 					if(length(rceed.gene_reqs))
 						src.requis_desc += "[rce.count]x [rceed.cropname] seed with following traits:<br>"
 						for(var/index in rceed.gene_reqs)
-							src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or higher<br>"
+							src.requis_desc += "* [index]: [rceed.gene_reqs[index]] or greater<br>"
 					else
 						src.requis_desc += "[rce.count]x [rceed.cropname] seed<br>"
 			src.payout += rce.feemod * rce.count
