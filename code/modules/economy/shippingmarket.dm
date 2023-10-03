@@ -614,7 +614,7 @@
 		pending_crates.Add(shipped_thing)
 
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-IMPORT", "group"=MGD_CARGO "alert"=MGA_SHIPPING), "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-IMPORT", "group"=MGD_CARGO "alert"=MGA_SHIPPING, "sender"="00000000", "message"="New shipment pending transport: [shipped_thing.name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 #else
