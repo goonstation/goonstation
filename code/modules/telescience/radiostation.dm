@@ -290,8 +290,7 @@
 			user.client.play_music_radio(record_inside.song, R)
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
-			// no just a topic so it goes to all PDAs
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="NSV-RENANIN", "sender"="00000000", "message"="Now playing: [R].", "group"=MGD_PARTY , "alert"= MGA_RADIO)
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="NSV-RENANIN", "sender"="00000000", "message"="Now playing: [R].", "group"=MGD_PARTY , "alert" = MGA_RADIO)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 #ifdef UNDERWATER_MAP
 			EXTEND_COOLDOWN(global, "music", 500 SECONDS)
