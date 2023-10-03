@@ -1660,6 +1660,7 @@
 		if (isdead(M) && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
+	speech_bubble.icon_state = "speech"
 	show_speech_bubble(speech_bubble)
 
 /mob/living/carbon/human/u_equip(obj/item/W)
