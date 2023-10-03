@@ -324,16 +324,16 @@
 						. += "<h4>Alert Settings</h4>"
 						. += "<table cellspacing=5>"
 
-						for(var/topic in src.master.alert_ringtones)
+						for(var/alert in src.master.alert_ringtones)
 							var/datum/ringtone/rt = null
 							var/rtButton = "Default"
-							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["mailgroup"];entry=[topic]'>Mute</a>"
-							if(istype(src.master.alert_ringtones[topic], /datum/ringtone))
-								rt = src.master.alert_ringtones[topic]
+							var/muteButton = "<a href='byond://?src=\ref[src];manageBlock=["add"];type=["mailgroup"];entry=[alert]'>Mute</a>"
+							if(istype(src.master.alert_ringtones[alert], /datum/ringtone))
+								rt = src.master.alert_ringtones[alert]
 								rtButton = "<a href='byond://?src=\ref[src];delATone=[topic]'>[rt.name]</a>"
-							if(topic in src.muted_groups)
-								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["mailgroup"];entry=[topic]'>Unmute</a>"
-							. += "<tr><td>[topic]</td><td>[rtButton]</td><td>[muteButton]</td></tr>"
+							if(alert in src.muted_groups)
+								muteButton = "<a href='byond://?src=\ref[src];manageBlock=["remove"];type=["mailgroup"];entry=[alert]'>Unmute</a>"
+							. += "<tr><td>[alert]</td><td>[rtButton]</td><td>[muteButton]</td></tr>"
 
 				if(MODE_ADDRESSBOOK) // Specific names sent to us, also ringtones
 					. += "<h4>SpaceMessenger V4.0.5</h4>"
@@ -890,7 +890,7 @@
 						else if (alert)
 							displayMessage += " ([alert])"
 					else
-						displayMessage += "<a href='byond://?src=\ref[src];input=message;target=[sender]'>[sendername]</a>"
+						displayMessage += "<a href='byond://?src=\ref[src];input=message;target=[]'>[]</a>"
 
 					displayMessage += ":</b></i> [signal.data["message"]]"
 					src.master.display_message(displayMessage)

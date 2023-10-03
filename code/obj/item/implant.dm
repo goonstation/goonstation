@@ -143,7 +143,7 @@ THROWING DARTS
 				if (istype(T))
 					return " at [T.x],[T.y],[T.z]"
 
-	proc/send_message(var/message, var/topic, var/sender_name)
+	proc/send_message(var/message, var/alert, var/sender_name)
 		DEBUG_MESSAGE("sending message: [message]")
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
@@ -153,7 +153,7 @@ THROWING DARTS
 
 		newsignal.data["address_1"] = "00000000"
 		newsignal.data["group"] = mail_groups
-		newsignal.data["topic"] = topic
+		newsignal.data["alert"] = alert
 		newsignal.data["sender"] = src.net_id
 
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)
@@ -434,7 +434,7 @@ THROWING DARTS
 	name = "tracking implant"
 	//life_tick_energy = 0.1
 	uses_radio = 1
-	mail_groups = list(MGD_SECURITY)
+	mail_groups = MGD_SECURITY
 	var/id = 1
 	var/frequency = FREQ_TRACKING_IMPLANT		//This is the nonsense frequency that the implant uses. I guess it was never finished. -kyle
 

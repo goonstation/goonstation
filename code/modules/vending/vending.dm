@@ -1241,7 +1241,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 
 /obj/machinery/vending/snack
 	name = "snack machine"
-	desc = "Tasty treats for crew eats."
+	desc = "Tasty treats for crewman eats."
 	pay = 1
 	icon_state = "snack"
 	icon_panel = "snack-panel"
