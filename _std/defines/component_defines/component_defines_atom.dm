@@ -55,7 +55,7 @@
 
 	/// TGUI helper; call in `ui_data` and pass in a list (mob/user, list/data)
 	#define COMSIG_ATOM_UI_DATA "atom_ui_data"
-	/// TGUI helper; call in `ui_static_data` and pass in a list (mob/user, list/data)
+/// TGUI helper; call in `ui_static_data` and pass in a list (mob/user, list/data)
 	#define COMSIG_ATOM_UI_STATIC_DATA "atom_ui_static_data"
 	/// TGUI helper; call in `ui_act` (action, list/params, datum/tgui/ui)
 	#define COMSIG_ATOM_UI_ACT "wpanel_ui_act"
@@ -179,22 +179,17 @@
 
 	// ---- wire panel signals ----
 
-	/// When a mob attempts an action on a wire (mob/user, wire, action)
+	/// When a mob attempts an action on a wire (mob/user, wire_color, action)
 	#define COMSIG_WPANEL_MOB_WIRE_ACT "wpanel_mob_wire_act"
-	/// Ion storm handler ()
-	#define COMSIG_WPANEL_ION_STORM "wpanel_ion_storm"
-	/// Disable Random Wire ()
-	#define COMSIG_WPANEL_DISABLE_RANDOM_WIRE "wpanel_disable_random_wire"
-
 	/// Set the cover status `WPANEL_COVER_*` (mob/user, status)
 	#define COMSIG_WPANEL_SET_COVER "wpanel_set_cover"
-	/// Set a wire control to be TRUE or FALSE (mob/user, controls, new_status)
-	#define COMSIG_WPANEL_SET_CONTROL "wpanel_set_control"
+	/// Set hacked controls status to TRUE or FALSE (mob/user, controls, new_status)
+	#define COMSIG_WPANEL_SET_CONTROLS "wpanel_set_controls"
 
-	/// Returns state `WPANEL_COVER_*` of cover ()
+	/// Returns state `WPANEL_COVER_*` of cover
 	#define COMSIG_WPANEL_STATE_COVER "wpanel_state_cover"
- 	/// Returns bitmask of active wire controls ()
-	#define COMSIG_WPANEL_STATE_CONTROLS "wpanel_state_controls"
+ 	/// Returns bitmask of hacked wire controls
+	#define COMSIG_WPANEL_HACKED_CONTROLS "wpanel_hacked_controls"
 
 // ---- mob signals ----
 
