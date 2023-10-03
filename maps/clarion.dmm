@@ -437,6 +437,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
+/obj/window/reinforced/west,
 /turf/simulated/floor/grass/random/alt,
 /area/station/garden/aviary)
 "abY" = (
@@ -1717,6 +1718,7 @@
 	dir = 1
 	},
 /obj/machinery/disposal/mail,
+/obj/window/reinforced/east,
 /turf/simulated/floor/bluegreen/side,
 /area/station/hallway/secondary/exit)
 "aiz" = (

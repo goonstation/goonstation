@@ -59151,6 +59151,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
+/obj/window/reinforced/south,
 /turf/simulated/floor/sanitary/white,
 /area/station/medical/morgue)
 "shi" = (

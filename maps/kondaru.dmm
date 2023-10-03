@@ -4341,6 +4341,7 @@
 "apA" = (
 /obj/machinery/disposal/mail/autoname/public/podbay,
 /obj/disposalpipe/trunk/mail/west,
+/obj/window/reinforced/east,
 /turf/simulated/floor/black/side{
 	dir = 1
 	},
@@ -6923,6 +6924,7 @@
 "aAe" = (
 /obj/machinery/disposal/mail/autoname/chapel,
 /obj/disposalpipe/trunk/mail/east,
+/obj/window/reinforced/north,
 /turf/simulated/floor/wood/two,
 /area/station/chapel/sanctuary)
 "aAf" = (
@@ -9288,6 +9290,7 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/east,
 /obj/machinery/light,
+/obj/window/reinforced/west,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/engineering)
 "aIX" = (
@@ -10373,6 +10376,7 @@
 	pixel_y = 21
 	},
 /obj/disposalpipe/trunk/south,
+/obj/window/reinforced/west,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -12008,7 +12012,6 @@
 "aVa" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
-/obj/machinery/disposal,
 /obj/machinery/light/emergency{
 	dir = 1;
 	pixel_y = 16
@@ -13834,6 +13837,7 @@
 "bcX" = (
 /obj/machinery/disposal/mail/autoname/medbay,
 /obj/disposalpipe/trunk/mail/west,
+/obj/window/reinforced/south,
 /turf/simulated/floor/blueblack{
 	dir = 8
 	},
@@ -18436,6 +18440,7 @@
 	dir = 1;
 	pixel_y = 21
 	},
+/obj/window/reinforced/west,
 /turf/simulated/floor/darkblue,
 /area/station/janitor/office)
 "bwN" = (
@@ -22520,6 +22525,7 @@
 "bLJ" = (
 /obj/machinery/disposal/mail/autoname/research,
 /obj/disposalpipe/trunk/mail/north,
+/obj/window/reinforced/south,
 /turf/simulated/floor/purple,
 /area/station/science/lobby)
 "bLK" = (
@@ -27971,6 +27977,7 @@
 	layer = 9.1;
 	pixel_y = 21
 	},
+/obj/window/reinforced/west,
 /turf/simulated/floor/black,
 /area/station/medical/robotics)
 "chs" = (
@@ -33406,6 +33413,7 @@
 	pixel_y = 20
 	},
 /obj/machinery/firealarm/north,
+/obj/window/reinforced/east,
 /turf/simulated/floor/bluewhite{
 	dir = 1
 	},
@@ -36367,6 +36375,7 @@
 "gpE" = (
 /obj/machinery/disposal/mail/autoname/public/escape,
 /obj/disposalpipe/trunk/mail/west,
+/obj/window/reinforced/north,
 /turf/simulated/floor/escape/corner{
 	dir = 4
 	},
@@ -44748,6 +44757,7 @@
 	pixel_x = -12
 	},
 /obj/disposalpipe/trunk/east,
+/obj/window/reinforced/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/catering)
 "mLE" = (
@@ -54852,6 +54862,7 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/south,
 /obj/machinery/firealarm/north,
+/obj/window/reinforced/east,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
 "uyR" = (
@@ -54927,6 +54938,7 @@
 	name = "Ranch"
 	},
 /obj/disposalpipe/trunk/mail/east,
+/obj/window/reinforced/west,
 /turf/simulated/floor/caution/misc{
 	dir = 4
 	},
@@ -58835,6 +58847,7 @@
 "xyz" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
+/obj/window/reinforced/south,
 /turf/simulated/floor/darkblue/checker,
 /area/station/crew_quarters/radio/news_office)
 "xzv" = (

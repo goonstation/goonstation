@@ -1238,6 +1238,7 @@
 	name = "mail chute-'Artifact Lab'"
 	},
 /obj/disposalpipe/trunk/mail/east,
+/obj/window/reinforced/south,
 /turf/simulated/floor/white/checker2{
 	dir = 8
 	},
@@ -1426,6 +1427,7 @@
 	name = "mail chute-'Chemistry'"
 	},
 /obj/disposalpipe/trunk/mail,
+/obj/window/reinforced/west,
 /turf/simulated/floor/purplewhite,
 /area/station/science/chemistry)
 "agK" = (
@@ -3855,6 +3857,7 @@
 "arZ" = (
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk,
+/obj/window/reinforced/west,
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster/office)
 "asb" = (
@@ -3995,6 +3998,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
+/obj/window/reinforced/south,
 /turf/simulated/floor,
 /area/station/hangar/arrivals)
 "asG" = (
@@ -15918,6 +15922,7 @@
 /obj/machinery/recharger/wall/sticky{
 	dir = 1
 	},
+/obj/window/reinforced/east,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},

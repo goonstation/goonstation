@@ -6630,6 +6630,7 @@
 /obj/machinery/disposal/mail/autoname{
 	mail_tag = "crew quarters"
 	},
+/obj/window/reinforced/east,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "avK" = (
@@ -7437,6 +7438,7 @@
 	},
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/west,
+/obj/window/reinforced/south,
 /turf/simulated/floor/yellow,
 /area/station/engine/engineering)
 "ayw" = (
@@ -13213,6 +13215,7 @@
 	mail_tag = "mechanics"
 	},
 /obj/machinery/light/incandescent/warm,
+/obj/window/reinforced/south,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -13335,6 +13338,7 @@
 	mail_tag = "escape"
 	},
 /obj/disposalpipe/trunk/mail/west,
+/obj/window/reinforced/north,
 /turf/simulated/floor/darkpurple/side{
 	dir = 8
 	},
@@ -16431,6 +16435,7 @@
 "bgn" = (
 /obj/disposalpipe/trunk/east,
 /obj/machinery/disposal,
+/obj/window/reinforced/west,
 /turf/simulated/floor/grass,
 /area/station/hydroponics/bay)
 "bgo" = (
@@ -24777,6 +24782,7 @@
 	tag = ""
 	},
 /obj/decal/stripe_delivery,
+/obj/window/reinforced/west,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "bID" = (
@@ -27030,6 +27036,7 @@
 /obj/disposalpipe/trunk/east{
 	dir = 1
 	},
+/obj/window/reinforced/south,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},

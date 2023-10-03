@@ -2927,6 +2927,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 8
 	},
+/obj/window/reinforced/north,
 /turf/simulated/floor/blue/side{
 	dir = 4
 	},
@@ -10627,6 +10628,7 @@
 	},
 /obj/disposalpipe/trunk/ejection,
 /obj/machinery/power/apc/autoname_north,
+/obj/window/reinforced/east,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -14211,6 +14213,7 @@
 /obj/cable{
 	icon_state = "1-2"
 	},
+/obj/window/reinforced/east,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "aRB" = (
@@ -30994,6 +30997,7 @@
 	message = 1;
 	name = "mail chute-'Research'"
 	},
+/obj/window/reinforced/west,
 /turf/simulated/floor/purple/side,
 /area/station/science/lobby)
 "bXH" = (
@@ -32783,6 +32787,7 @@
 	name = "mail chute-'Robotics'"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/window/reinforced/east,
 /turf/simulated/floor,
 /area/station/medical/robotics)
 "cdp" = (
@@ -54850,6 +54855,7 @@
 /obj/disposalpipe/trunk/mail{
 	dir = 1
 	},
+/obj/window/reinforced/east,
 /turf/simulated/floor/blue/checker,
 /area/station/medical/research)
 "ppr" = (
@@ -58649,6 +58655,7 @@
 	mail_tag = "sortingroom";
 	name = "mail chute-'Sorting Room'"
 	},
+/obj/window/reinforced/east,
 /turf/simulated/floor,
 /area/station/routing/sortingRoom)
 "sFS" = (

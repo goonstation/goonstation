@@ -1859,6 +1859,7 @@
 "agb" = (
 /obj/machinery/disposal/mail/autoname/public/crewB,
 /obj/disposalpipe/trunk/mail/east,
+/obj/window/reinforced/west,
 /turf/simulated/floor/grime,
 /area/station/crew_quarters/quartersB)
 "agc" = (
@@ -2845,6 +2846,7 @@
 "ajc" = (
 /obj/disposalpipe/trunk/mail/east,
 /obj/machinery/disposal/mail/autoname/security/detective,
+/obj/window/reinforced/west,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "ajd" = (
@@ -9009,6 +9011,7 @@
 "aAQ" = (
 /obj/disposalpipe/trunk/mail/east,
 /obj/machinery/disposal/mail/autoname/kitchen,
+/obj/window/reinforced/north,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "aAR" = (
@@ -10900,8 +10903,11 @@
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aFY" = (
-/obj/machinery/disposal,
+/obj/machinery/disposal/small/north{
+	pixel_y = 32
+	},
 /obj/disposalpipe/trunk,
+/obj/window/reinforced/east,
 /turf/simulated/floor/specialroom/bar,
 /area/station/crew_quarters/cafeteria)
 "aFZ" = (
@@ -12389,6 +12395,8 @@
 /obj/machinery/disposal/mail/autoname/hydroponics,
 /obj/disposalpipe/trunk/mail/north,
 /obj/decal/stripe_caution,
+/obj/window/reinforced/east,
+/obj/window/reinforced/north,
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "aKw" = (
@@ -14174,6 +14182,7 @@
 	},
 /obj/disposalpipe/trunk/mail/south,
 /obj/machinery/disposal/mail/autoname/public/crewA,
+/obj/window/reinforced/north,
 /turf/simulated/floor/black,
 /area/station/crew_quarters/quartersA)
 "aPs" = (
@@ -18378,7 +18387,7 @@
 /turf/simulated/floor/caution/northsouth,
 /area/station/maintenance/northeast)
 "bbt" = (
-/obj/machinery/disposal,
+/obj/machinery/disposal/small/south,
 /obj/disposalpipe/trunk{
 	dir = 1
 	},
@@ -31219,6 +31228,7 @@
 "bLO" = (
 /obj/machinery/disposal/mail/autoname/engineering,
 /obj/disposalpipe/trunk/mail/north,
+/obj/window/reinforced/east,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -32816,6 +32826,7 @@
 /obj/machinery/status_display{
 	pixel_y = -30
 	},
+/obj/window/reinforced/east,
 /turf/simulated/floor/wood{
 	icon_state = "wooden"
 	},
@@ -33283,6 +33294,7 @@
 "bRm" = (
 /obj/machinery/disposal/mail/autoname/security,
 /obj/disposalpipe/trunk/mail,
+/obj/window/reinforced/west,
 /turf/simulated/floor/red/side{
 	dir = 1
 	},
@@ -41029,6 +41041,7 @@
 /obj/machinery/light/emergency{
 	dir = 4
 	},
+/obj/window/reinforced/west,
 /turf/simulated/floor/blue/side{
 	dir = 6
 	},
@@ -42835,6 +42848,7 @@
 "ctR" = (
 /obj/disposalpipe/trunk/mail/north,
 /obj/machinery/disposal/mail/autoname/qm/refinery,
+/obj/window/reinforced/east,
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
 	},
@@ -44879,11 +44893,12 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
+/obj/disposalpipe/trunk/mail/east,
+/obj/machinery/disposal/mail/small/autoname/checkpoint/cargo/south,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/cargo)
 "czL" = (
-/obj/disposalpipe/trunk/mail/south,
-/obj/machinery/disposal/mail/small/autoname/checkpoint/cargo/west,
+/obj/disposalpipe/segment/mail/bent/south,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/cargo)
 "czM" = (
@@ -45482,6 +45497,7 @@
 /obj/machinery/light,
 /obj/machinery/disposal/mail/autoname/mechanics,
 /obj/disposalpipe/trunk/mail/west,
+/obj/window/reinforced/east,
 /turf/simulated/floor/yellow/side,
 /area/station/engine/elect)
 "cBB" = (
@@ -48297,6 +48313,7 @@
 /obj/disposalpipe/trunk/mail/east,
 /obj/machinery/disposal/mail/autoname/qm,
 /obj/decal/stripe_caution,
+/obj/window/reinforced/west,
 /turf/simulated/floor,
 /area/station/quartermaster/office)
 "cJO" = (
@@ -48584,6 +48601,7 @@
 /obj/disposalpipe/trunk/mail/east,
 /obj/machinery/disposal/mail/autoname/research,
 /obj/decal/stripe_caution,
+/obj/window/reinforced/south,
 /turf/simulated/floor,
 /area/station/science/lobby)
 "cKF" = (
@@ -51939,6 +51957,7 @@
 "cUg" = (
 /obj/disposalpipe/trunk/mail/west,
 /obj/machinery/disposal/mail/autoname/medbay/genetics,
+/obj/window/reinforced/east,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -52952,6 +52971,7 @@
 	icon_state = "2-8"
 	},
 /obj/landmark/start/job/security_officer,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/cargo)
 "cWX" = (
@@ -55788,6 +55808,7 @@
 /area/station/maintenance/solar/south)
 "deV" = (
 /obj/machinery/flasher/portable,
+/obj/disposalpipe/segment/mail/horizontal,
 /turf/simulated/floor/specialroom/bar,
 /area/station/security/checkpoint/cargo)
 "deW" = (

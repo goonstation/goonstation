@@ -3625,6 +3625,7 @@
 	},
 /obj/machinery/power/apc/autoname_north,
 /obj/disposalpipe/trunk/south,
+/obj/window/reinforced/west,
 /turf/simulated/floor/dirt,
 /area/station/ranch)
 "bDH" = (
@@ -19129,6 +19130,7 @@
 	name = "autoname - SS13";
 	tag = ""
 	},
+/obj/window/reinforced/east,
 /turf/simulated/floor/blueblack,
 /area/station/medical/robotics)
 "ijX" = (
@@ -30573,6 +30575,7 @@
 /obj/sign_switch/east{
 	id = "kitchenopen"
 	},
+/obj/window/reinforced/south,
 /turf/simulated/floor/specialroom/cafeteria,
 /area/station/crew_quarters/kitchen)
 "mXd" = (
@@ -36081,6 +36084,7 @@
 	},
 /obj/disposalpipe/trunk/south,
 /obj/machinery/disposal,
+/obj/window/reinforced/east,
 /turf/simulated/floor/blueblack{
 	dir = 1
 	},
@@ -47411,6 +47415,7 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/window/reinforced/west,
 /turf/simulated/floor/blueblack,
 /area/station/medical/medbay)
 "uwR" = (
