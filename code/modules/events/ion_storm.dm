@@ -265,7 +265,6 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/doors
 	amount = 40
-	var/list/last_req_access
 
 	valid_instance(var/obj/machinery/door/airlock/door)
 		return ..() && !door.cant_emag
@@ -277,6 +276,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(var/obj/machinery/door/airlock/door)
 		var/door_diceroll = !door.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) ? rand(1,6) : rand(1, 3)
+		var/safe = door.safety
 		switch(door_diceroll)
 			if(1)
 				door.secondsElectrified = -1
@@ -293,15 +293,16 @@ ABSTRACT_TYPE(/datum/ion_category)
 					door.aiControlDisabled = disabled_old
 
 			if(3)
-				if(length(last_req_access))
-					door.req_access = last_req_access
+				door.aiDisabledIdScanner = TRUE
 
 			if(4)
 				if (door.density)
 					door.open()
 					logTheThing(LOG_STATION, null, "Ion storm opened an airlock ([door.name]) at [log_loc(door)]")
 				else
+					door.safety = 0
 					door.close()
+					door.safety = safe
 					logTheThing(LOG_STATION, null, "Ion storm closed an airlock ([door.name]) at [log_loc(door)]")
 
 			if(5)
@@ -321,14 +322,14 @@ ABSTRACT_TYPE(/datum/ion_category)
 					door.open()
 					logTheThing(LOG_STATION, null, "Ion storm bolted an airlock open ([door.name]) at [log_loc(door)]")
 				else
+					door.safety = 0
 					door.close()
+					door.safety = safe
 					logTheThing(LOG_STATION, null, "Ion storm bolted an airlock closed ([door.name]) at [log_loc(door)]")
 
 				if (!door.locked)
 					door.set_locked()
 					door.aiControlDisabled = TRUE
-
-		last_req_access = door.req_access
 
 /datum/ion_category/lights
 	amount = 60
