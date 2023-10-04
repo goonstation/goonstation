@@ -413,12 +413,11 @@ ABSTRACT_TYPE(/datum/ion_category)
 				alert_prog.send_alert(rand(1,4), TRUE)
 
 /datum/ion_category/station_bots
-	amount = 1
-	prob_of_happening = 10
+	amount = 2
+	prob_of_happening = 20
 
 	valid_instance(obj/machinery/bot/bot)
-		. = ..() && !bot.emagged
-
+		. = ..() && !bot.emagged && (!istype(bot, /obj/machinery/bot/guardbot) && !istype(bot, /obj/machinery/bot/secbot) || prob(50))
 
 	build_targets()
 		for_by_tcl(bot, /obj/machinery/bot)
