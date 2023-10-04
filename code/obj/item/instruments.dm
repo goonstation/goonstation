@@ -106,6 +106,7 @@
 	proc/play(var/mob/user)
 		if (pick_random_note && length(sounds_instrument))
 			play_note(rand(1, length(sounds_instrument)),user)
+			src.show_play_message(user)
 		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
@@ -657,6 +658,25 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			else
 				sleep(5 SECONDS)
 		return 1
+
+/obj/item/instrument/whistle/security
+	name = "security whistle"
+	desc = "A whistle with a red stripe. Good for getting the attention of nearby securitrons."
+	icon_state = "whistle-sec"
+	contraband = 4 //beepsky takes stolen whistles seriously
+	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby securitrons to follow your pointing, point at a perp to have them arrested.")
+
+	post_play_effect(mob/user)
+		var/list/bots = list()
+		for (var/obj/machinery/bot/secbot/secbot in view(user.client.view, user)) //cursed awful byond screen syntax
+			if (secbot.emagged)
+				continue
+			secbot.KillPathAndGiveUp(1)
+			secbot.speak("Awaiting command...")
+			bots += secbot
+		if (length(bots))
+			user.AddComponent(/datum/component/secbot_command, bots, 3 SECONDS)
+
 
 /* -------------------- Vuvuzela -------------------- */
 
