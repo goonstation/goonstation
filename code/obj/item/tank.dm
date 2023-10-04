@@ -92,7 +92,7 @@ Contains:
 		return FALSE
 
 	proc/set_release_pressure(pressure)
-		distribute_pressure = clamp(pressure, 0, TANK_MAX_RELEASE_PRESSURE)
+		distribute_pressure = clamp(pressure, 1, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if (iscarbon(src.loc))
