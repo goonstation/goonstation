@@ -754,7 +754,7 @@ TYPEINFO(/obj/machinery/sleeper/port_a_medbay)
 
 	var/datum/signal/PDAsignal = get_free_signal()
 
-	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="MEDTRAK-MAIL",  "group"=MGD_MEDBAY, "alert"=alertgroup, "sender"="00000000", "message"="[PDAalert]")
+	PDAsignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="HEALTH-MAILBOT", "group"=MGD_MEDBAY, "alert"=alertgroup, "sender"="00000000", "message"="[PDAalert]")
 	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, PDAsignal)
 
 

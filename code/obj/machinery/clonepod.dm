@@ -121,7 +121,7 @@ TYPEINFO(/obj/machinery/clonepod)
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.data["command"] = "text_message"
-		newsignal.data["sender_name"] = "CLONEPOD-MAIL"
+		newsignal.data["sender_name"] = "CLONEPOD-MAILBOT"
 		newsignal.data["message"] = "[msg]"
 		newsignal.data["address_1"] = "00000000"
 		newsignal.data["group"] = MGD_MEDBAY

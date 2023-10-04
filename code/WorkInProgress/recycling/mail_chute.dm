@@ -18,7 +18,6 @@
 	var/net_id = null
 	var/pdafrequency = FREQ_PDA
 
-
 	New()
 		..()
 		if (src.autoname == 1 && !isnull(src.mail_tag))
@@ -133,7 +132,7 @@
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
 				newsignal.data["command"] = "text_message"
-				newsignal.data["sender_name"] = "CARGO-CHUTE"
+				newsignal.data["sender_name"] = "MAIL-CHUTE"
 				newsignal.data["message"] = "[message]"
 				newsignal.data["address_1"] = "00000000"
 				newsignal.data["group"] = groups

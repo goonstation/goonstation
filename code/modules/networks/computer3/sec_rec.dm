@@ -818,7 +818,7 @@
 
 			//Create a PDA mass-message string.
 			signal.data["command"] = "text_message"
-			signal.data["sender_name"] = "SEC-MAILBOT"
+			signal.data["sender_name"] = "SECMATE-MAILBOT"
 			signal.data["group"] = MGD_SECURITY
 			signal.data["alert"] = MGA_ARREST
 			signal.data["message"] = "Crewmember \"[perp_name]\" has been flagged for arrest by [src.authenticated]!"

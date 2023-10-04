@@ -23,8 +23,7 @@
 #define MGO_GENETICS "genetics"
 
 // Alert Groups
-// From automated messages from station systems.
-// They allow users ignore topics without leaving groups.
+// Used by automated messages to allow users to ignore some types without muting groups.
 #define MGA_DELIVERY "Delivery Notice"
 #define MGA_CHECKPOINT "Checkpoint Alert"
 #define MGA_ARREST "Arrest Alert"
@@ -32,7 +31,7 @@
 #define MGA_MEDCRIT "Near-Death Alert"
 #define MGA_CLONER "Cloner Alert"
 #define MGA_ENGINE "Engine Alert"
-#define MGA_RKIT "Ruckingenur"
+#define MGA_RKIT "Scan Notice"
 #define MGA_SALES "Sales Notice"
 #define MGA_SHIPPING "Shipping Notice"
 #define MGA_CREWREQUEST "Crew Request"

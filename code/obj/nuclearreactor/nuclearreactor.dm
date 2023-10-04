@@ -279,7 +279,7 @@
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
 		signal.data["command"] = "text_message"
-		signal.data["sender_name"] = "NTBMK-CONTROL"
+		signal.data["sender_name"] = "ENGINE-CONTROL"
 		signal.data["group"] = MGO_ENGINEER
 		signal.data["alert"] = MGA_ENGINE
 		if(crisis)

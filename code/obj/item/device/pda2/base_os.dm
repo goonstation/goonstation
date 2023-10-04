@@ -888,7 +888,7 @@
 						if (alert == MGA_CRISIS)
 							displayMessage += " <span class='alert'>(CRISIS ALERT)</span>"
 						else if (alert)
-							displayMessage += " ([alert])"
+							displayMessage += " ([uppertext(alert)])"
 
 					displayMessage += ":</b></i> [signal.data["message"]]"
 					src.master.display_message(displayMessage)

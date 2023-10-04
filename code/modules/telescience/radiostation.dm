@@ -288,15 +288,18 @@
 			if (!R)
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
 			user.client.play_music_radio(record_inside.song, R)
-			/// PDA message ///
-			var/datum/signal/pdaSignal = get_free_signal()
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="NSV-RENANIN", "sender"="00000000", "message"="Now playing: [R].", "group"=MGD_PARTY , "alert" = MGA_RADIO)
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
+ pdaSignal, null, "pda")
 #ifdef UNDERWATER_MAP
+			var/sender_name = "LOCAL-DJ"
 			EXTEND_COOLDOWN(global, "music", 500 SECONDS)
 #else
+			var/sender_name = "NSV-RENANIN"
 			EXTEND_COOLDOWN(global, "music", 300 SECONDS)
 #endif
+			/// PDA message ///
+			var/datum/signal/pdaSignal = get_free_signal()
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"=sender_name, "sender"="00000000", "message"="Now playing: [R].", "group"=MGD_PARTY, "alert"=MGA_RADIO)
+			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET,
 	else
 		..()
 

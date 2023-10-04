@@ -595,7 +595,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			var/datum/signal/newsignal = get_free_signal()
 			newsignal.source = src
 			newsignal.data["command"] = "text_message"
-			newsignal.data["sender_name"] = "CARGO-CHUTE"
+			newsignal.data["sender_name"] = "DISPOSAL-CHUTE"
 			newsignal.data["message"] = "[message]"
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = mailgroup

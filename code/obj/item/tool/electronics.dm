@@ -622,7 +622,7 @@
 		var/datum/signal/newsignal = get_free_signal()
 		newsignal.source = src
 		newsignal.data["command"] = "text_message"
-		newsignal.data["sender_name"] = "DEVICE-SCAN"
+		newsignal.data["sender_name"] = "RUCKINGENUR"
 		newsignal.data["message"] = message
 		if (target) newsignal.data["address_1"] = target
 		newsignal.data["group"] = MGO_ENGINEER
