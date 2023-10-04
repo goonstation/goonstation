@@ -1864,7 +1864,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		projectiles = list(current_projectile)
 		..()
 
-#define HEAT_REMOVED_PER_PROCESS 20
+#define HEAT_REMOVED_PER_PROCESS 15
 #define FIRE_THRESHOLD 125
 // Makeshift Laser Rifle
 TYPEINFO(/obj/item/gun/energy/makeshift)
@@ -2111,7 +2111,11 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				src.visible_message("<span class='alert'>[src]'s light tube violently explodes!</span>")
 				do_explode()
 				return
-			heat += rand(15,20)
+			var/datum/projectile/laser/makeshift/possible_laser
+			if (istype(possible_laser))
+				heat += rand(possible_laser.heat_low, possible_laser.heat_high)
+			else
+				heat += rand(15,20)
 			update_icon()
 			if (heat > 120 || (heat > 100 && prob(25)))
 				boutput(user,"<span class='alert'>[src] bursts into flame!</span>")

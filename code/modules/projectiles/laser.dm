@@ -635,10 +635,14 @@ toxic - poisons
 			hit.setStatus("cornicened")
 
 /datum/projectile/laser/makeshift
-	cost = 1500
+	cost = 2500
 	shot_sound = 'sound/weapons/laserlight.ogg'
 	icon_state = "laser_tiny"
 	damage = 14
+	/// lower bounds of heat added to the makeshift laser rifle this was fired from
+	var/heat_low = 20
+	/// higher bounds of heat added to the makeshift laser rifle this was fired from
+	var/heat_high = 25
 
 /datum/projectile/laser/makeshift/medium
 	damage = 16
@@ -648,4 +652,5 @@ toxic - poisons
 
 /datum/projectile/laser/makeshift/very_powerful
 	damage = 22
-	cost = 2500 // high damage but at a cost
+	heat_low = 25
+	heat_high = 30 // high damage but at a cost
