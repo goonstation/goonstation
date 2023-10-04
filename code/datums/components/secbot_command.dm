@@ -27,5 +27,7 @@
 		if (iscarbon(target))
 			secbot.EngageTarget(target, FALSE, FALSE, TRUE)
 		else
-			secbot.summon_bot(get_turf(target))
+			var/turf/T = get_turf(target)
+			if (checkTurfPassable(T))
+				secbot.summon_bot(T)
 	src.RemoveComponent()
