@@ -661,7 +661,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 
 /obj/item/instrument/whistle/security
 	name = "security whistle"
-	desc = "A whistle with a red stripe. Good for getting the attention of nearby securitrons.”
+	desc = "A whistle with a red stripe. Good for getting the attention of nearby securitrons."
 	icon_state = "whistle-sec"
 	contraband = 4 //beepsky takes stolen whistles seriously
 	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby securitrons to follow your pointing, point at a perp to have them arrested.")
