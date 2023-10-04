@@ -19,13 +19,16 @@
 
 
 /// Formats a given parameter associated list into a urlstring format
-/// E.g. `list("ckey"="zewaka") to `?&ckey=zewaka` and `list("x"=list("a", "b"))` to `?&x=a,b`
+/// E.g. `list("ckey"="zewaka") to `?&ckey=zewaka` and `list("x"=list("a" = "foo", "b" = "bar"))` to `?&x[a]=foo&x[b]=bar`
 /datum/apiRoute/proc/formatQueryParams()
 	if (length(src.queryParams))
-		var/paramListClone = src.queryParams.Copy()
-		for (var/key in paramListClone)
-			if (islist(paramListClone[key])) // Do we need to encode the value?
-				paramListClone[key] = jointext(paramListClone[key], ",") // lists become csvs by convention
+		. = list()
+		for (var/key in src.queryParams)
+			if (islist(src.queryParams[key])) // Do we need to encode the value?
+				for (var/subKey in src.queryParams[key])
+					.["[key]\[[subKey]\]"] = src.queryParams[key][subKey]
+			else
+				.[key] = src.queryParams[key]
 		. = list2params(.)
 
 /// Formats a given parameter list into a route-append format
