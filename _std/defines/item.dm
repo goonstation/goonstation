@@ -48,11 +48,17 @@
 #define UNCRUSHABLE              (1<<23)
 
 // Defines for is_open_container returns and checking. Don't check them directly, use the procs.
-#define ISOPEN_FALSE	0		//! closed container
-#define ISOPEN_INWARD	(1<<24)	//! stuff can go in
-#define ISOPEN_OUTWARD	(1<<25)	//! stuff can come out
-#define ISOPEN_SMALL	(1<<26)	//! stuff can be moved only by small things like syringes and droppers. Narrow entrance.
-#define ISOPEN_BOTH		ISOPEN_INWARD | ISOPEN_OUTWARD	//! stuff can go both in and out. Full openness.
+/// stuff can go in
+#define ISOPEN_INWARD			(1<<24)
+//// stuff can come out
+#define ISOPEN_OUTWARD			(1<<25)
+/// stuff can go both in and out. The general use case.
+#define ISOPEN_BOTH				ISOPEN_INWARD | ISOPEN_OUTWARD
+
+/// stuff can be put in only by small things like syringes and droppers. Narrow entrance.
+#define ISOPEN_SMALL_INWARD		(1<<26)
+/// it is a syringe or dropper. It can put stuff into ISOPEN_SMALL_OUTWARD.
+#define ISOPEN_SMALL_OUTWARD	(1<<27)
 
 
 //Item function flags

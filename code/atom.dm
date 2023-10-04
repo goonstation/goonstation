@@ -246,7 +246,7 @@ TYPEINFO(/atom)
 	  * returns TRUE if you can access insides, FALSE if closed.
 	  * child procs may override this for special behaviours.
 	  */
-	proc/is_open_container(inward = FALSE, outward = FALSE, small = TRUE)
+	proc/is_open_container(inward = FALSE, outward = FALSE, small = FALSE)
 		. = FALSE
 		// if the checking thing isn't small, then fail regardless of flow direction
 		if (!small && (flags & ISOPEN_SMALL))
@@ -264,11 +264,11 @@ TYPEINFO(/atom)
 			return TRUE
 
 	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
-	proc/set_open_container(value)
-		if (value)
-			ADD_FLAG(src.flags, value)
+	proc/set_open_container(open)
+		if (open)
+			ADD_FLAG(src.flags, ISOPEN_BOTH)
 		else
-			REMOVE_FLAG(src.flags, value)
+			REMOVE_FLAG(src.flags, ISOPEN_BOTH)
 		src.reagents?.handle_reactions()
 
 
