@@ -341,7 +341,7 @@
 			for(var/atom/movable/AM in H)
 				target = get_offset_target_turf(T, rand(5)-rand(5), rand(5)-rand(5))
 
-				AM.set_just_ejected()
+				ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 				AM.set_loc(T)
 				AM.pipe_eject(0)
 				AM?.throw_at(target, 5, 1)
@@ -2135,7 +2135,7 @@ TYPEINFO(/obj/disposaloutlet)
 		while(locate(src.type) in get_step(expel_loc, src.dir))
 			expel_loc = get_step(expel_loc, src.dir)
 		for(var/atom/movable/AM in H)
-			AM.set_just_ejected()
+			ON_COOLDOWN(AM, "PipeEject", 2 SECONDS)
 			AM.set_loc(expel_loc)
 			AM.pipe_eject(dir)
 			AM.throw_at(target, src.throw_range, src.throw_speed)
@@ -2232,11 +2232,3 @@ proc/pipe_reconnect_disconnected(var/obj/disposalpipe/pipe, var/new_dir, var/mak
 				break
 	pipe.fix_sprite()
 
-// prevents stuff that has just been launched out of a chute from going straight into another
-/atom/movable/
-	var/just_ejected_from_disposal = FALSE
-
-/atom/movable/proc/set_just_ejected()
-	src.just_ejected_from_disposal = TRUE
-	SPAWN(2 SECONDS) // that should be enough right
-		src.just_ejected_from_disposal = FALSE
