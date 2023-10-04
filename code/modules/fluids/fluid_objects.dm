@@ -235,6 +235,7 @@ TYPEINFO(/obj/machinery/fluid_canister)
 	icon_state = "blue0"
 	name = "fluid canister"
 	desc = "A canister that can drink large amounts of fluid and spit it out somewhere else. Gross."
+	flags = ISOPEN_OUTWARD
 	var/bladder = 20000 //how much I can hold
 	var/slurp = 10 //tiles of fluid to drain per tick
 	var/piss = 500 //amt of reagents to piss out per tick
@@ -263,9 +264,6 @@ TYPEINFO(/obj/machinery/fluid_canister)
 		src.reagents.clear_reagents()
 		..(severity)
 		qdel(src)
-
-	is_open_container()
-		return ISOPEN_OUT_ONLY
 
 	disposing()
 		if (src.reagents.total_volume > 0)

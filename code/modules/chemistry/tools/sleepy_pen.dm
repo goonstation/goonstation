@@ -48,7 +48,7 @@
 	name = "greasy pen"
 	icon_state = "pen-greasy"
 	desc = "Holy shit...that pen is fucking greasy."
-	flags = FPRINT | TABLEPASS | NOSPLASH | ISOPEN_BOTH
+	flags = FPRINT | TABLEPASS | NOSPLASH | ISOPEN_BOTH | ISOPEN_SMALL_OUTWARD
 	c_flags = ONBELT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 

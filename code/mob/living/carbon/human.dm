@@ -483,9 +483,9 @@
 
 /mob/living/carbon/human/is_open_container()
 	if (src.organHolder?.head)
-		return ISOPEN_FALSE
+		return TRUE
 	else
-		return ISOPEN_TRUE
+		return FALSE
 
 /mob/living/carbon/human/disposing()
 	for(var/obj/item/I in src)

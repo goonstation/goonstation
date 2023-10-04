@@ -83,12 +83,6 @@
 					T.visible_message("<span class='alert'>[src] bursts!</span>")
 			return
 
-	is_open_container()
-		if (src.tied)
-			return ISOPEN_FALSE
-		else
-			return ISOPEN_TRUE
-
 	throw_begin(atom/target, turf/thrown_from, mob/thrown_by)
 		. = ..()
 		var/curse = pick("Fuck","Shit","Hell","Damn","Darn","Crap","Hellfarts","Pissdamn","Son of a-")
@@ -204,9 +198,10 @@
 				H.visible_message("<span class='alert'><B>[H] ties off [src]!</B></span>",\
 				"<span class='alert'><b>You tie off the opening of [src]!</b></span>")
 				src.tied = TRUE
+				src.set_open_container(FALSE)
 
 	afterattack(obj/target, mob/user)
-		if (is_reagent_dispenser(target) || (target.is_open_container() == ISOPEN_OUT_ONLY && target.reagents)) //A dispenser. Transfer FROM it TO us.
+		if (is_reagent_dispenser(target) || (target.is_open_container(FALSE, TRUE) && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				user.show_text("[target] is empty.", "red")
 				return

@@ -274,9 +274,5 @@ About the Tools:
 			tools to manipulate it.
 			Set inward or outward args to TRUE depending on the interaction
 			for better checking.
-			The small arg means that the container is only open if
-			interacted with by small devices like syringes or droppers.
-			Think of it having a small opening. Set it to true if you're
-			Using a syringe or dropper or similar.
 
 */

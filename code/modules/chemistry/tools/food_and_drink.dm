@@ -737,7 +737,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				var/trans = src.reagents.trans_to(target_turf, src.splash_all_contents ? src.reagents.total_volume : src.amount_per_transfer_from_this)
 				boutput(user, "<span class='notice'>You transfer [trans] units of the solution to [target_turf].</span>")
 
-		else if (is_reagent_dispenser(target)|| (target.is_open_container() == ISOPEN_OUT_ONLY && target.reagents)) //A dispenser. Transfer FROM it TO us.
+		else if (is_reagent_dispenser(target)|| (target.is_open_container(FALSE, TRUE) && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return

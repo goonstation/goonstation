@@ -377,10 +377,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 		isburst = TRUE
 
 	is_open_container()
-		if (isburst)
-			return ISOPEN_TRUE
-		else
-			return ISOPEN_FALSE
+		return isburst
 
 /obj/reagent_dispensers/heliumtank
 	name = "heliumtank"
@@ -487,7 +484,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			qdel(W)
 
 		if (istool(W, TOOL_WRENCHING))
-			if(src.flags & ISOPEN_BOTH)
+			if(src.is_open_container(TRUE, TRUE, FALSE))
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid closed!")
 			else
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid open!")

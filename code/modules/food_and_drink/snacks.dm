@@ -845,7 +845,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 
 
 	is_open_container()
-		return ISOPEN_TRUE
+		return TRUE
 
 /obj/item/reagent_containers/food/snacks/waffles
 	name = "waffles"

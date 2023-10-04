@@ -242,15 +242,11 @@ TYPEINFO(/atom)
 	  * Takes arguments of whether this openness is for the purpose of pouring something in or out. And size.
 	  * - inward means you're checking if something can go in.
 	  * - outward means you're checking if it can go out.
-	  * - small means that the thing checking isn't a small device like syringe or dropper
 	  * returns TRUE if you can access insides, FALSE if closed.
 	  * child procs may override this for special behaviours.
 	  */
-	proc/is_open_container(inward = FALSE, outward = FALSE, small = FALSE)
+	proc/is_open_container(inward = FALSE, outward = FALSE)
 		. = FALSE
-		// if the checking thing isn't small, then fail regardless of flow direction
-		if (!small && (flags & ISOPEN_SMALL))
-			return FALSE
 
 		if (!inward && !outward)
 			CRASH("is_open_container called without setting an inward or outward direction of flow.")

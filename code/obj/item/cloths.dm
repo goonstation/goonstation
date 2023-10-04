@@ -57,7 +57,7 @@ ABSTRACT_TYPE(/obj/item/cloth)
 		src.reagents.trans_to(chokehold.affecting, 0.5 * mult)
 
 /obj/item/cloth/is_open_container()
-	. = ISOPEN_TRUE
+	. = TRUE
 
 ABSTRACT_TYPE(/obj/item/cloth/towel)
 /obj/item/cloth/towel

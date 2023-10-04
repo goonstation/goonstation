@@ -524,7 +524,7 @@
 		src.reagents.clear_reagents()
 
 	is_open_container()
-		return ISOPEN_TRUE
+		return TRUE
 
 /* ================================================= */
 /* -------------------- Packets -------------------- */

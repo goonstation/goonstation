@@ -14,7 +14,7 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "IV"
 	w_class = W_CLASS_TINY
-	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ISOPEN_BOTH
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK | ISOPEN_BOTH | ISOPEN_SMALL_OUTWARD
 	rc_flags = RC_VISIBLE | RC_FULLNESS | RC_SPECTRO
 	amount_per_transfer_from_this = 5
 	initial_volume = 250//100
@@ -69,7 +69,7 @@
 		signal_event("icon_updated")
 
 	is_open_container()
-		return ISOPEN_TRUE
+		return ISOPEN_BOTH
 
 	pickup(mob/user)
 		..()

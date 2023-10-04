@@ -510,9 +510,9 @@ TYPEINFO(/obj/item/reagent_containers/mender)
 
 	is_open_container()
 		if (src.borg)
-			. = ISOPEN_FALSE
+			return FALSE
 		else
-			. = ..()
+			..()
 
 	proc/can_operate_on(atom/A)
 		.= (iscarbon(A) || ismobcritter(A))

@@ -42,10 +42,7 @@
 		src.create_reagents(150000)
 
 	is_open_container()
-		if (src.detonating)
-			return ISOPEN_TRUE
-		else
-			return ISOPEN_FALSE
+		return src.detonating
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W,/obj/item/grenade_fuse) && !stage)

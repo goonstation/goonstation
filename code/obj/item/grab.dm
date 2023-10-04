@@ -1008,7 +1008,7 @@
 			src.reagents.trans_to(chokehold.affecting, 0.5 * mult)
 
 	is_open_container()
-		. = ISOPEN_TRUE
+		. = TRUE
 
 
 

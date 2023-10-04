@@ -269,7 +269,7 @@ proc/ui_describe_reagents(atom/A)
 
 			playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1, 0.3)
 
-		else if ((is_reagent_dispenser(target) || (target.is_open_container() == ISOPEN_OUT_ONLY && target.reagents))) //A dispenser. Transfer FROM it TO us.
+		else if ((is_reagent_dispenser(target) || (target.is_open_container(FALSE, TRUE) && target.reagents))) //A dispenser. Transfer FROM it TO us.
 			if (target.reagents && !target.reagents.total_volume)
 				boutput(user, "<span class='alert'>[target] is empty.</span>")
 				return
@@ -513,7 +513,7 @@ proc/ui_describe_reagents(atom/A)
 
 	is_open_container()
 		if(..() && !GET_ATOM_PROPERTY(src, PROP_ITEM_IN_CHEM_DISPENSER))
-			return ISOPEN_TRUE
+			return TRUE
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */
