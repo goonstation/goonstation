@@ -922,7 +922,7 @@ ADMIN_INTERACT_PROCS(/turf/unsimulated/floor, proc/sunset, proc/sunrise, proc/se
 	check_match(obj/item/craftingitem)
 		if(..() && length(reagents_req))
 			var/obj/item/reagent_containers/RC = craftingitem
-			if(RC.is_open_container())
+			if(RC.is_open_container(FALSE))
 				var/datum/reagents/R = new(100)
 				RC.reagents.trans_to_direct(R, reagent_volume)
 				. = TRUE

@@ -563,9 +563,9 @@ TRASH BAG
 			. |= SPONGE_DRY
 	if (src.reagents.total_volume)
 		. |= SPONGE_WIPE
-		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
+		if ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container(TRUE)) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink) || istype(target, /obj/mopbucket))
 			. |= SPONGE_WRING
-	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container()) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
+	if (src.reagents.total_volume < src.reagents.maximum_volume && ((istype(target, /obj/item/reagent_containers/glass) && target.is_open_container(FALSE)) || istype(target, /obj/machinery/bathtub) || istype(target, /obj/submachine/chef_sink)) || istype(target, /obj/mopbucket))
 		if (istype(target, /obj/submachine/chef_sink) || (target.reagents && target.reagents.total_volume))
 			. |= SPONGE_WET
 

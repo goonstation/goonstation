@@ -58,7 +58,7 @@
 	attackby(obj/item/I, mob/user)
 		if (!I)
 			return
-		if (I.is_open_container(TRUE) && I.reagents)
+		if (I.is_open_container(FALSE) && I.reagents)
 			if (istype(I, /obj/item/clothing/mask/cigarette)) //Apparently you can smush a lit cigarette into a pill and destroy both
 				return
 			afterattack(I, user)	//Probably weird but afterattack contains the dissolving code

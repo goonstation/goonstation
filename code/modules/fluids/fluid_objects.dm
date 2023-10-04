@@ -101,7 +101,7 @@ TYPEINFO(/obj/machinery/drainage/big)
 			src.UpdateIcon()
 			return
 
-		if (I.is_open_container() && I.reagents)
+		if (I.is_open_container(FALSE) && I.reagents)
 			boutput(user, "<span class='alert'>You dump all the reagents into the drain.</span>") // we add NOSPLASH so the default beaker/glass-splash doesn't occur
 			I.reagents.remove_any(I.reagents.total_volume) // just dump it all out
 			return

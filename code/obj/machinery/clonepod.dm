@@ -152,8 +152,11 @@ TYPEINFO(/obj/machinery/clonepod)
 		else
 			. += "<br>Biomatter reserves are [meat_pct]% full."
 
-	is_open_container()
-		return ISOPEN_INWARD
+	is_open_container(inward)
+		if (inward)
+			return TRUE
+		else
+			return FALSE
 
 	update_icon()
 		if (src.portable) // no need here
@@ -1156,8 +1159,11 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			else
 		return
 
-	is_open_container()
-		return ISOPEN_INWARD
+	is_open_container(inward)
+		if (inward)
+			return TRUE
+		else
+			return FALSE
 
 	custom_suicide = 1
 	suicide(var/mob/user as mob)

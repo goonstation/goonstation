@@ -163,7 +163,7 @@
 			src.material_uses = initial(src.material_uses)
 
 	afterattack(atom/target, mob/user)
-		if (target.is_open_container())
+		if (target.is_open_container(FALSE))
 			if (src.reagents.maximum_volume <= src.reagents.total_volume)
 				boutput(user, "<span class='alert'>The pen is totally coated!</span>")
 				return

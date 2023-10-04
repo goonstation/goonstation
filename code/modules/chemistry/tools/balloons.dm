@@ -201,7 +201,7 @@
 				src.set_open_container(FALSE)
 
 	afterattack(obj/target, mob/user)
-		if (is_reagent_dispenser(target) || (target.is_open_container(FALSE, TRUE) && target.reagents)) //A dispenser. Transfer FROM it TO us.
+		if (is_reagent_dispenser(target) || (target.is_open_container(FALSE) && target.reagents)) //A dispenser. Transfer FROM it TO us.
 			if (!target.reagents.total_volume && target.reagents)
 				user.show_text("[target] is empty.", "red")
 				return

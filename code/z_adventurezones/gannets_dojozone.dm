@@ -237,7 +237,7 @@ Contents:
 
 	afterattack(var/atom/target, var/mob/user)
 		var/obj/item/reagent_containers/RC = target
-		var/can_quench = istype(RC) && RC.is_open_container()  && RC.reagents.total_volume >= 120
+		var/can_quench = istype(RC) && RC.is_open_container(TRUE)  && RC.reagents.total_volume >= 120
 		if(!QDELETED(src) && can_quench && (src.strikes > (src.strikes_to_complete * 0.25)) && (src.temperature > T0C+1000))
 			if( src.strikes > src.strikes_to_complete )
 				if(RC.reagents.has_reagent("reversium",1))

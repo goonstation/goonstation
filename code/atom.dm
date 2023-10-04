@@ -238,33 +238,28 @@ TYPEINFO(/atom)
 	proc/return_air()
 		return null
 	/**
-	  * Convenience proc to see if a container is open for chemistry handling
-	  * Takes arguments of whether this openness is for the purpose of pouring something in or out. And size.
-	  * - inward means you're checking if something can go in.
-	  * - outward means you're checking if it can go out.
-	  * returns TRUE if you can access insides, FALSE if closed.
-	  * child procs may override this for special behaviours.
+	  * Convenience proc to see if a container is open for chemistry handling.
+	  * - Takes arguments of whether this openness is for the purpose of pouring something in or out.
+	  * - `TRUE` means you're checking chems go in. `FALSE` means pouring outward. Leaving it null means checking either way.
+	  * - returns `TRUE` if you can access insides, `FALSE` if closed.
+	  * - child procs may override this for special behaviours, such as checking size.
 	  */
-	proc/is_open_container(inward = FALSE, outward = FALSE)
+	proc/is_open_container(inward)
 		. = FALSE
-
-		if (!inward && !outward)
-			CRASH("is_open_container called without setting an inward or outward direction of flow.")
-
-		if (inward && (flags & ISOPEN_INWARD))
+		if (isnull(inward) && (src.flags & ISOPEN_BOTH))
 			return TRUE
-		if (outward && (flags & ISOPEN_OUTWARD))
+		if (inward && (src.flags & ISOPEN_INWARD))
 			return TRUE
-		// this might not be needed?
-		if (flags & ISOPEN_BOTH)
+		if (!inward && (src.flags & ISOPEN_OUTWARD))
 			return TRUE
 
-	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
-	proc/set_open_container(open)
+	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result.
+	/// First arg is boolean, second (optional) arg is which way the opencontainer is being shut.
+	proc/set_open_container(open, which_ways_to_change = ISOPEN_BOTH)
 		if (open)
-			ADD_FLAG(src.flags, ISOPEN_BOTH)
+			ADD_FLAG(src.flags, which_ways_to_change)
 		else
-			REMOVE_FLAG(src.flags, ISOPEN_BOTH)
+			REMOVE_FLAG(src.flags, which_ways_to_change)
 		src.reagents?.handle_reactions()
 
 

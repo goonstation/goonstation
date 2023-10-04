@@ -484,7 +484,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			qdel(W)
 
 		if (istool(W, TOOL_WRENCHING))
-			if(src.is_open_container(TRUE, TRUE, FALSE))
+			if(src.is_open_container())
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid closed!")
 			else
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid open!")

@@ -68,9 +68,6 @@
 			src.UpdateOverlays(null, "inj_dr")
 		signal_event("icon_updated")
 
-	is_open_container()
-		return ISOPEN_BOTH
-
 	pickup(mob/user)
 		..()
 		src.UpdateIcon()
