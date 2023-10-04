@@ -169,6 +169,9 @@
 				src.end_build()
 
 			if ("Disable Auto-Pressurize", "Activate Auto-Pressurize")
+				if(src.building)
+					boutput(user, "<span class='alert'>You can't change the pressurization setting while a build is in progress.</span>")
+					return
 				src.do_pressurize = !src.do_pressurize
 				if (src.do_pressurize)
 					boutput(user, "<span class='notice'>After ending a build, built floors will now be pressurized to standard air mix.</span>")
@@ -256,14 +259,12 @@
 			sleep(1.5 SECONDS)
 			qdel(V)
 
-			var/is_impermeable = FALSE
 			if(tile.tiletype != null)
 				var/turf/new_tile = pos
 				new_tile.ReplaceWith(tile.tiletype)
 				new_tile.icon_state = tile.state
 				new_tile.set_dir(tile.direction)
 				new_tile.inherit_area()
-				is_impermeable = new_tile.gas_impermeable
 
 			for(var/datum/objectinfo/O in tile.objects)
 				if (O.objecttype == null) continue
@@ -277,10 +278,9 @@
 					"dir" = O.direction)
 				if (!isnull(O.icon_state)) properties["icon_state"] = O.icon_state // required for old blueprint support
 				new/dmm_suite/preloader(pos, properties) // this doesn't spawn the objects, only presets their properties
-				var/atom/new_obj = new O.objecttype(pos) // need this part to also spawn the objects
-				is_impermeable += new_obj.gas_impermeable
+				new O.objecttype(pos) // need this part to also spawn the objects
 
-			if (src.do_pressurize && !is_impermeable)
+			if (src.do_pressurize)
 				src.turfs_to_pressurize[pos] = TRUE
 
 	proc/prepare_build(mob/user)
