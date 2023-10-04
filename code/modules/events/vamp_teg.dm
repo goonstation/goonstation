@@ -184,7 +184,7 @@
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src.generator
 		signal.data["command"] = "text_message"
-		signal.data["sender_name"] = "ENGINE-CONTROL"
+		signal.data["sender_name"] = "ENGINE-MAILBOT"
 		signal.data["group"] = MGO_ENGINEER
 		signal.data["alert"] = MGA_ENGINE
 		signal.data["message"] = event_string

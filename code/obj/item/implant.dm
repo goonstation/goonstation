@@ -328,7 +328,7 @@ THROWING DARTS
 	proc/health_alert()
 		if (!src.owner)
 			return
-		src.send_message("[src.owner] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "MEDTRAK-MAIL")
+		src.send_message("[src.owner] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
 
 	proc/death_alert()
 		if (!src.owner)
