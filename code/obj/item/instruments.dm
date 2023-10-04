@@ -663,6 +663,7 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	name = "security whistle"
 	desc = "A whistle. Good for getting attention. This one has a red stripe on it."
 	icon_state = "whistle-sec"
+	contraband = 4 //beepsky takes stolen whistles seriously
 	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby securitrons to follow your pointing, point at a perp to have them arrested.")
 
 	post_play_effect(mob/user)
