@@ -13,7 +13,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 		boutput(M, "<span class='alert'>It's just not good enough on its own...</span>")
 
 	afterattack(atom/target, mob/user, flag)
-		if (!src.reagents || src.qdeled || src.disposed) return //how
+		if (!src.reagents || !src.reagents?.total_volume || QDELETED(src)) return //how
+		if (istype(target, /obj/item/reagent_containers/food/snacks/condiment))
+			boutput(user, "<span class='alert'>You can't flavour a condiment!</span>")
+			return
 
 		if (istype(target, /obj/item/reagent_containers/food/snacks/))
 			user.visible_message("<span class='notice'>[user] adds [src] to \the [target].</span>", "<span class='notice'>You add [src] to \the [target].</span>")
