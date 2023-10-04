@@ -1044,7 +1044,7 @@ TYPEINFO(/obj/submachine/foodprocessor)
 				if (/obj/item/reagent_containers/food/snacks/plant/chili)
 					var/datum/plantgenes/DNA = P:plantgenes
 					var/obj/item/reagent_containers/food/snacks/condiment/hotsauce/F = new(src.loc)
-					F.reagents.add_reagent("capsaicin", DNA?.get_effective_value("potency"))
+					F.reagents.add_reagent("juice_chili", DNA?.get_effective_value("potency"))
 					qdel( P )
 				if (/obj/item/reagent_containers/food/snacks/plant/coffeeberry/mocha)
 					var/datum/plantgenes/DNA = P:plantgenes
