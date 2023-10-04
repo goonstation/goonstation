@@ -287,7 +287,10 @@
 
 	proc/end_build()
 		for (var/datum/objectinfo/N in src.apc_list)
-			new N.objecttype(src.apc_list[N])
+			var/atom/new_obj = new N.objecttype(src.apc_list[N])
+			new_obj.dir = N.direction
+			new_obj.pixel_x = N.px
+			new_obj.pixel_y = N.py
 		src.apc_list = new/list
 
 		src.building = FALSE
