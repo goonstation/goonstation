@@ -22,14 +22,14 @@
 /// E.g. `list("ckey"="zewaka") to `?&ckey=zewaka` and `list("x"=list("a" = "foo", "b" = "bar"))` to `?&x[a]=foo&x[b]=bar`
 /datum/apiRoute/proc/formatQueryParams()
 	if (length(src.queryParams))
-		var/list/ret = list()
+		. = list()
 		for (var/key in src.queryParams)
 			if (islist(src.queryParams[key])) // Do we need to encode the value?
 				for (var/subKey in src.queryParams[key])
-					ret["[key]\[[subKey]\]"] = src.queryParams[key][subKey]
+					.["[key]\[[subKey]\]"] = src.queryParams[key][subKey]
 			else
-				ret[key] = src.queryParams[key]
-		. = list2params(ret)
+				.[key] = src.queryParams[key]
+		. = list2params(.)
 
 /// Formats a given parameter list into a route-append format
 /// E.g. `list("tuesday", "wednesday")` to `tuesday/wednesday`
