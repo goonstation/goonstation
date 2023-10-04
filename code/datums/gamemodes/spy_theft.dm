@@ -386,7 +386,7 @@
 	station_bounties[/obj/item/instrument/tambourine] = 1
 
 	station_bounties[/obj/item/clothing/glasses/blindfold] = 1
-	station_bounties[/obj/item/clothing/glasses/meson] = 1
+	station_bounties[/obj/item/clothing/glasses/toggleable/meson] = 1
 	station_bounties[/obj/item/clothing/glasses/sunglasses/sechud] = 2
 	station_bounties[/obj/item/clothing/glasses/sunglasses] = 1
 	station_bounties[/obj/item/clothing/glasses/visor] = 1

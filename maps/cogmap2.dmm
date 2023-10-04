@@ -6549,6 +6549,15 @@
 /obj/machinery/drone_recharger,
 /turf/simulated/floor/plating,
 /area/station/hangar/arrivals)
+"aur" = (
+/obj/disposalpipe/segment/produce{
+	dir = 8;
+	icon_state = "pipe-c"
+	},
+/turf/simulated/floor/green/side{
+	dir = 1
+	},
+/area/station/crew_quarters/arcade)
 "aus" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -9589,11 +9598,18 @@
 /obj/machinery/atmospherics/pipe/simple/color_pipe/cyan_pipe{
 	dir = 9
 	},
+/obj/disposalpipe/segment/produce{
+	dir = 4;
+	icon_state = "pipe-c"
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
 /area/station/hydroponics/bay)
 "aCg" = (
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -9605,7 +9621,7 @@
 	name = "utility sink"
 	},
 /obj/machinery/light,
-/obj/disposalpipe/segment/produce,
+/obj/disposalpipe/junction/right/north,
 /turf/simulated/floor/green/side{
 	dir = 5
 	},
@@ -11929,6 +11945,7 @@
 	pixel_x = -10;
 	tag = ""
 	},
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/stairs{
 	dir = 1;
 	icon_state = "Stairs2_wide"
@@ -14733,6 +14750,7 @@
 /obj/storage/crate,
 /obj/item/paper/book/from_file/hydroponicsguide,
 /obj/item/paper/book/from_file/hydroponicsguide,
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -15374,16 +15392,16 @@
 /turf/simulated/floor/plating/scorched,
 /area/station/garden/owlery)
 "aSV" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/decal/cleanable/cobweb{
 	icon_state = "cobweb2"
 	},
@@ -15497,19 +15515,41 @@
 	pixel_y = 21
 	},
 /obj/machinery/vending/cigarette,
+/obj/railing/orange/reinforced{
+	dir = 4
+	},
 /turf/simulated/floor/green/side{
 	dir = 9
 	},
 /area/station/crew_quarters/arcade)
 "aTl" = (
-/obj/shrub{
-	dir = 1
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "xtra_bigstripe-edge2"
 	},
-/turf/simulated/floor/green/side{
-	dir = 1
+/obj/decal/stripe_delivery,
+/obj/machinery/floorflusher{
+	desc = "A chute for sending things to the kitchen";
+	id = "ranch_flusher";
+	name = "Kitchen Chute"
 	},
+/obj/disposalpipe/trunk/produce{
+	dir = 4
+	},
+/turf/simulated/floor,
 /area/station/crew_quarters/arcade)
 "aTn" = (
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = -22;
+	pixel_y = 31
+	},
+/obj/disposalpipe/segment/produce{
+	dir = 4
+	},
 /turf/simulated/floor/green/side{
 	dir = 1
 	},
@@ -16037,6 +16077,9 @@
 /turf/simulated/floor,
 /area/station/security/checkpoint/arrivals)
 "aUI" = (
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/green/corner,
 /area/station/crew_quarters/arcade)
 "aUM" = (
@@ -18129,6 +18172,9 @@
 	},
 /area/station/crew_quarters/arcade/dungeon)
 "baJ" = (
+/obj/shrub{
+	dir = 1
+	},
 /turf/simulated/floor/green/side{
 	dir = 10
 	},
@@ -39249,7 +39295,7 @@
 "cjR" = (
 /obj/table/auto,
 /obj/item/storage/box/diskbox,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
@@ -42702,11 +42748,11 @@
 /turf/simulated/floor/plating,
 /area/station/storage/warehouse)
 "ctK" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/item/clothing/gloves/fingerless,
 /obj/item/clothing/mask/balaclava,
 /obj/item/storage/pill_bottle/cyberpunk,
@@ -46506,8 +46552,9 @@
 	},
 /area/station/hallway/secondary/exit)
 "cEK" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "cEL" = (
 /obj/machinery/atmospherics/pipe/vent{
 	dir = 4
@@ -54798,11 +54845,11 @@
 	},
 /area/station/medical/cdc)
 "dbS" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate,
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
@@ -66107,9 +66154,9 @@
 /area/research_outpost)
 "myv" = (
 /obj/decal/woodclutter,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /mob/living/critter/small_animal/cockroach{
 	health = 30;
 	name = "Maude"
@@ -66905,6 +66952,7 @@
 	},
 /area/research_outpost)
 "nCq" = (
+/obj/disposalpipe/segment/produce,
 /turf/simulated/floor/stairs{
 	icon_state = "Stairs_wide"
 	},
@@ -67607,6 +67655,11 @@
 	icon_state = "catwalk_cross"
 	},
 /area/station/solar/south)
+"orX" = (
+/obj/disposalpipe/chicken_disposal_pipe/horizontal,
+/obj/machinery/drainage,
+/turf/simulated/floor/plating,
+/area/station/crew_quarters/catering)
 "osq" = (
 /obj/structure/girder,
 /obj/item/storage/pill_bottle/cyberpunk{
@@ -69036,6 +69089,10 @@
 "qmv" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/crew_quarters/arcade/dungeon)
+"qnl" = (
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor,
+/area/station/hydroponics/bay)
 "qoq" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -71051,6 +71108,11 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/orangeblack,
 /area/station/hangar/main)
+"swB" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/arcade)
 "sxL" = (
 /obj/machinery/atmospherics/binary/valve{
 	dir = 4;
@@ -72819,7 +72881,7 @@
 /area/station/maintenance/central)
 "uBX" = (
 /obj/table/reinforced/auto,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/light{
 	dir = 4;
 	layer = 9.1;
@@ -74983,6 +75045,10 @@
 /obj/disposalpipe/segment/food,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/catwalk/north)
+"xMs" = (
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor/green/side,
+/area/station/hydroponics/bay)
 "xMN" = (
 /obj/cable/orange{
 	icon_state = "0-2"
@@ -75283,6 +75349,12 @@
 /obj/disposalpipe/trunk/mail/west,
 /turf/simulated/floor/black,
 /area/station/medical/medbay/pharmacy)
+"yfB" = (
+/obj/disposalpipe/segment/produce,
+/turf/simulated/floor/grass{
+	name = "astroturf"
+	},
+/area/station/hydroponics/bay)
 "yfP" = (
 /obj/machinery/door/airlock/pyro/engineering,
 /obj/mapping_helper/firedoor_spawn,
@@ -101788,18 +101860,18 @@ azq
 aAI
 aCf
 aIX
-aEF
-aEF
-aEF
-aEF
-aEF
+qnl
+qnl
+qnl
+qnl
+qnl
 nCq
-aJa
-azn
-azn
+xMs
+yfB
+yfB
 aQY
-aSk
-aTn
+swB
+aur
 baK
 pFR
 aXE
@@ -103597,7 +103669,7 @@ atj
 alc
 axD
 azs
-aAM
+orX
 aCj
 aDr
 awh

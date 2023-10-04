@@ -794,7 +794,7 @@ ABSTRACT_TYPE(/datum/manufacture)
 	category = "Tool"
 
 /datum/manufacture/engivac
-	name = "Materiel Vacuum"
+	name = "Material Vacuum"
 	item_paths = list("MET-1","CON-1","CRY-1")
 	item_amounts = list(10,5,5)
 	item_outputs = list(/obj/item/engivac)
@@ -2058,7 +2058,16 @@ ABSTRACT_TYPE(/datum/manufacture)
 	name = "Optical Meson Scanner"
 	item_paths = list("CRY-1","CON-1")
 	item_amounts = list(3,2)
-	item_outputs = list(/obj/item/clothing/glasses/meson)
+	item_outputs = list(/obj/item/clothing/glasses/toggleable/meson)
+	time = 10 SECONDS
+	create = 1
+	category = "Clothing"
+
+/datum/manufacture/atmos_goggles
+	name = "Pressure Visualization Goggles"
+	item_paths = list("CRY-1","CON-1")
+	item_amounts = list(3,2)
+	item_outputs = list(/obj/item/clothing/glasses/toggleable/atmos)
 	time = 10 SECONDS
 	create = 1
 	category = "Clothing"
@@ -3533,11 +3542,11 @@ ABSTRACT_TYPE(/datum/manufacture/pod/weapon)
 	create = 1
 	category = "Ammo"
 /datum/manufacture/plank	//
-	name = "Plank/Barricade"
-	item_paths = list("MET-1")
+	name = "Barricade Planks"
+	item_paths = list("WOOD")
 	item_amounts = list(1)
-	item_outputs = list(/obj/item/plank/anti_zombie)
-	time = 5 SECONDS
+	item_outputs = list(/obj/item/sheet/wood/zwood)
+	time = 1 SECOND
 	create = 1
 	category = "Medicine"
 /datum/manufacture/brute_kit	//

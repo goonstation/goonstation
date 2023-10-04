@@ -153,7 +153,7 @@
 	comname = "Gemstone"
 	comtype = /obj/item/raw_material/gemstone
 	onmarket = 1
-	value = 1.5
+	value = 4
 
 /datum/commodity/ore/cobryl
 	comname = "Cobryl"
@@ -238,7 +238,7 @@
 	comname = "Stamped Gold Bullion"
 	comtype = /obj/item/stamped_bullion
 	onmarket = 1
-	price = PAY_EMBEZZLED
+	price = PAY_EMBEZZLED*2
 
 /datum/commodity/laser_gun
 	comname = "Laser Gun"

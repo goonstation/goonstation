@@ -4863,6 +4863,9 @@
 "arS" = (
 /obj/disposalpipe/segment/produce,
 /obj/machinery/drainage,
+/obj/railing/orange/reinforced{
+	dir = 1
+	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
 "arW" = (
@@ -23385,7 +23388,7 @@
 	pixel_x = 1;
 	pixel_y = 3
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 1;
 	pixel_y = -7
 	},
@@ -28337,22 +28340,22 @@
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine{
 	pixel_x = 9
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -6;
 	pixel_y = 3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -5;
 	pixel_y = 2
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -4;
 	pixel_y = 1
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -3
 	},
-/obj/item/plank{
+/obj/item/sheet/wood{
 	pixel_x = -2;
 	pixel_y = -1
 	},
@@ -29173,7 +29176,7 @@
 	pixel_x = 4;
 	pixel_y = -4
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = 4;
 	pixel_y = 6
 	},
@@ -36525,9 +36528,6 @@
 "coU" = (
 /turf/simulated/floor/shuttlebay,
 /area/station/hallway/secondary/exit)
-"coX" = (
-/turf/space,
-/area/shuttle_sound_spawn)
 "cpa" = (
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4
@@ -43357,6 +43357,9 @@
 	},
 /obj/railing/orange/reinforced{
 	dir = 8
+	},
+/obj/railing/orange/reinforced{
+	dir = 4
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -51391,6 +51394,10 @@
 	},
 /turf/simulated/floor,
 /area/station/routing/medsci)
+"mvt" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "mvL" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -58103,6 +58110,7 @@
 /obj/railing/orange/reinforced{
 	dir = 1
 	},
+/obj/reagent_dispensers/watertank/big,
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "sez" = (
@@ -58185,6 +58193,11 @@
 	},
 /turf/simulated/floor/grime,
 /area/station/routing/depot)
+"shc" = (
+/obj/machinery/drainage,
+/obj/disposalpipe/chicken_disposal_pipe/horizontal,
+/turf/simulated/floor/black,
+/area/station/crew_quarters/catering)
 "shp" = (
 /obj/table/auto,
 /obj/cable{
@@ -59280,12 +59293,20 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
-/obj/reagent_dispensers/watertank/big,
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/railing/orange/reinforced{
 	dir = 4
+	},
+/obj/railing/orange/reinforced{
+	dir = 8
+	},
+/obj/machinery/activation_button/flusher_button{
+	id = "ranch_flusher";
+	name = "Kitchen Chute Activation Button";
+	pixel_x = -22;
+	pixel_y = 31
 	},
 /turf/simulated/floor/wood/seven,
 /area/station/ranch)
@@ -59341,7 +59362,7 @@
 /area/station/medical/medbay/surgery)
 "tjI" = (
 /obj/table/auto,
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -5;
 	pixel_y = 3
 	},
@@ -62402,15 +62423,17 @@
 /area/station/medical/medbay)
 "vPu" = (
 /obj/machinery/camera/ranch,
-/obj/machinery/disposal/botany{
-	name = "Produce Chute - Kitchen"
-	},
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "xtra_bigstripe-edge2"
 	},
 /obj/disposalpipe/trunk/produce,
 /obj/machinery/firealarm/north,
 /obj/decal/stripe_delivery,
+/obj/machinery/floorflusher{
+	desc = "A chute for sending things to the kitchen";
+	id = "ranch_flusher";
+	name = "Kitchen Chute"
+	},
 /turf/simulated/floor,
 /area/station/ranch)
 "vPw" = (
@@ -113097,7 +113120,7 @@ kXL
 uLB
 adC
 adC
-coX
+mvt
 kgh
 kgh
 kgh
@@ -117830,7 +117853,7 @@ aie
 aie
 amj
 ang
-aox
+shc
 apK
 aqX
 apA

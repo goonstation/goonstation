@@ -83,6 +83,11 @@
 			F.explosion_immune = initial(F.explosion_immune)
 		. = ..()
 
+	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
+		if(mat1.getTexture()) //sigh
+			return
+		. = ..()
+
 	proc/_set_statorload_mechchomp(var/datum/mechanicsMessage/inp)
 		if(!length(inp.signal)) return
 		var/newload = text2num(inp.signal)
