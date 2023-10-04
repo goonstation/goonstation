@@ -58,6 +58,10 @@
 
 		UpdateIcon()
 
+		if(src.type == /obj/machinery/power/pt_laser) // DELETE THIS ZOMG
+			new /obj/machinery/power/pt_laser/reverse(get_turf(src)) // DELETE THIS ZOMG
+			qdel(src)
+
 /obj/machinery/power/pt_laser/disposing()
 	qdel(src.laser)
 	src.laser = null
@@ -469,6 +473,200 @@
 			return 1 //tells the caller to remove L from the laser's affecting_mobs
 
 	return 0
+
+/obj/machinery/power/pt_laser/reverse
+	name = "power reception laser"
+	desc = "Harness a laser beam from a vast distances across space to receive power."
+
+	var/cost_per_mw = 1000
+	var/lifetime_spending = 0
+
+/obj/machinery/power/pt_laser/reverse/proc/get_power_cost(input)
+	var/input_mw = input / 1e6
+	return input_mw * src.cost_per_mw
+
+/obj/machinery/power/pt_laser/reverse/process(mult)
+	//store machine state to see if we need to update the icon overlays
+	var/last_disp = chargedisplay()
+	var/last_onln = online
+	var/last_llt = load_last_tick
+	var/last_firing = firing
+	var/dont_update = 0
+	var/adj_input = abs(src.output)
+
+	if(terminal && !(src.status & BROKEN))
+		var/power = min(capacity-src.charge, src.chargelevel*mult)
+		if(power)
+			terminal.add_avail(power)
+			charge -= power
+
+
+	if(src.online) // if it's switched on
+		if(!firing) //not firing
+			if(can_fire()) //have power to fire
+				start_firing() //creates all the laser objects then activates the right ones
+				dont_update = 1 //so the firing animation runs
+		else if(!can_fire()) //firing but not enough charge to sustain
+			stop_firing()
+		else //firing and have enough power to carry on
+			for(var/mob/living/L in affecting_mobs) //has to happen every tick
+				if (!locate(/obj/linked_laser/ptl) in get_turf(L)) //safety because Uncross is somehow unreliable
+					affecting_mobs -= L
+					continue
+				if(burn_living(L,adj_input*PTLEFFICIENCY)) //returns 1 if they are gibbed, 0 otherwise
+					affecting_mobs -= L
+
+			if(length(blocking_objects) > 0)
+				melt_blocking_objects()
+			power_sold(adj_input)
+
+	// only update icon if state changed
+	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
+		UpdateIcon()
+
+/obj/machinery/power/pt_laser/reverse/can_fire()
+	return wagesystem.station_budget >= get_power_cost(abs(output))
+
+/obj/machinery/power/pt_laser/reverse/power_sold(adjusted_output)
+	var/proportion = 0
+	for (var/obj/linked_laser/ptl/laser in src.selling_lasers)
+		proportion += laser.power
+
+	if (round(adjusted_output) == 0)
+		return FALSE
+
+	if(can_fire())
+		charge += adjusted_output
+		var/money_to_charge = get_power_cost(abs(output))
+		//wagesystem.station_budget =  max(wagesystem.station_budget - money_to_charge, 0 )
+		lifetime_spending += money_to_charge
+	else
+		stop_firing()
+
+/obj/machinery/power/pt_laser/reverse/broken_state_topic(mob/user)
+	if (wagesystem.station_budget)
+		return UI_INTERACTIVE
+	return ..()
+
+/obj/machinery/power/pt_laser/reverse/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "PowerReceptionLaser")
+		ui.open()
+
+/obj/machinery/power/pt_laser/reverse/ui_data(mob/user)
+	. = list(
+		"capacity" = src.capacity,
+		"charge" = src.charge | 0,
+		"isEmagged" = src.emagged,
+		"isChargingEnabled" = src.charging,
+		"excessPower" = src.excess,
+		"gridLoad" = src.terminal?.powernet.load,
+		"inputLevel" = src.output, // src.chargelevel
+		"inputMultiplier" = src.input_multi,
+		"inputNumber" = src.input_number,
+		"isCharging" = src.is_charging,
+		"isFiring" = src.firing,
+		"isLaserEnabled" = src.online,
+		"lifetimeSpending" = src.lifetime_earnings,
+		"name" = src.name,
+		"outputLevel" = src.chargelevel, // src.output
+		"outputMultiplier" = src.output_multi,
+		"outputNumber" = src.input_number,
+		"totalGridPower" = src.terminal?.powernet.avail,
+	)
+
+/obj/machinery/power/pt_laser/reverse/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
+	if(!ui || ui.status != UI_INTERACTIVE)
+		return 1
+	switch(action)
+		//Input controls
+		if("toggleInput")
+			src.online = !src.online
+			src.process(1)
+			. = TRUE
+		if("setInput")
+			. = TRUE
+			if (src.emagged)
+				src.input_number = clamp(params["setInput"], -999, 999)
+			else
+				src.input_number = clamp(params["setInput"], 0, 999)
+			src.output = src.input_number * src.input_multi
+			if(!src.output || !src.can_fire())
+				src.stop_firing()
+				return
+			if (src.firing)
+				src.update_laser_power()
+			else if (src.online)
+				src.start_firing()
+		if("inputW")
+			src.input_multi = 1 WATT
+			src.output = src.input_number * src.input_multi
+			src.update_laser_power()
+			. = TRUE
+		if("inputkW")
+			src.input_multi = 1 KILO WATT
+			src.output = src.input_number * src.input_multi
+			src.update_laser_power()
+			. = TRUE
+		if("inputMW")
+			src.input_multi = 1 MEGA WATT
+			src.output = src.input_number * src.input_multi
+			src.update_laser_power()
+			. = TRUE
+		if("inputGW")
+			src.input_multi = 1 GIGA WATT
+			src.output = src.input_number * src.input_multi
+			src.update_laser_power()
+			. = TRUE
+		if("inputTW")
+			src.input_multi = 1 TERA WATT
+			src.output = src.input_number * src.input_multi
+			src.update_laser_power()
+			. = TRUE
+		//Output controls
+		if("toggleOutput")
+			src.charging = !src.charging
+			. = TRUE
+		if("setOutput")
+			src.output_number = clamp(params["setOutput"], 0, 999)
+			src.chargelevel = src.output_number * src.output_multi
+			. = TRUE
+		if("outputW")
+			src.output_multi = 1 WATT
+			src.chargelevel = src.output_number * src.output_multi
+			. = TRUE
+		if("outputkW")
+			src.output_multi = 1 KILO WATT
+			src.chargelevel = src.output_number * src.output_multi
+			. = TRUE
+		if("outputMW")
+			src.output_multi = 1 MEGA WATT
+			src.chargelevel = src.output_number * src.output_multi
+			. = TRUE
+		if("outputGW")
+			src.output_multi = 1 GIGA WATT
+			src.chargelevel = src.output_number * src.output_multi
+			. = TRUE
+		if("outputTW")
+			src.output_multi = 1 TERA WATT
+			src.chargelevel = src.output_number * src.output_multi
+			. = TRUE
+
+/obj/machinery/power/pt_laser/reverse/start_firing()
+	if (!src.output)
+		return
+	var/turf/T = get_barrel_turf()
+	if(!T) return //just in case
+	T=get_edge_cheap(T, src.dir)
+
+	firing = TRUE
+	UpdateIcon(1)
+	src.laser = new(T, turn(src.dir,180))
+	src.laser.source = src
+	src.laser.try_propagate()
+
+	melt_blocking_objects()
 
 ABSTRACT_TYPE(/obj/laser_sink)
 ///The abstract concept of a thing that does stuff when hit by a laser
