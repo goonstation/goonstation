@@ -1363,6 +1363,29 @@
 		linked_power.using = 0
 		return
 
+/datum/bioEffect/power/midas/pickle
+	name = "Pickle Touch"
+	id = "pickle"
+	desc = "Allows the subject to induce spontaneous pickling at will."
+	msgGain = "You suddenly smell vinegar."
+	msgLose = "You feel less well preserved."
+	transmute_material = "pickle"
+	power = 2
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	ability_path = /datum/targetable/geneticsAbility/midas/pickle
+
+/datum/targetable/geneticsAbility/midas/pickle
+	name = "Pickle Touch"
+	desc = "Instantly pickle an object"
+
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////

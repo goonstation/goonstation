@@ -20305,7 +20305,6 @@
 	icon_state = "2-4"
 	},
 /obj/mapping_helper/access/heads,
-/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = -10
 	},
@@ -20324,6 +20323,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "Bridge"
 	},
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "edo" = (
@@ -36453,6 +36453,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/vending/capsule,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "qSy" = (

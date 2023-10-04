@@ -229,6 +229,7 @@
 		icon = 'icons/mob/mob.dmi'
 		alpha = 255
 		plane = PLANE_OVERLAY_EFFECTS
+		appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 
 

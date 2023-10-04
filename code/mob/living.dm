@@ -2012,9 +2012,10 @@
 				if (stun > 0)
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
-				src.reagents?.add_reagent("radium", damage/4) //fuckit
+				src.take_radiation_dose(damage / (40 * (1 + src.radiation_dose * 1.25)) SIEVERTS, TRUE)
+				src.reagents?.add_reagent("uranium", damage / 40) //this is mooostly for flavour
 				var/orig_val = GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)
-				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -5)
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -6)
 				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)
 					SPAWN(30 SECONDS)
 						REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile")
