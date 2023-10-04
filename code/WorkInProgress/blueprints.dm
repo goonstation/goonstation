@@ -281,7 +281,7 @@
 				new O.objecttype(pos) // need this part to also spawn the objects
 
 			if (src.do_pressurize)
-				src.turfs_to_pressurize[pos] = TRUE
+				src.turfs_to_pressurize.Add(pos)
 
 	proc/prepare_build(mob/user)
 		if(src.invalid_count)
