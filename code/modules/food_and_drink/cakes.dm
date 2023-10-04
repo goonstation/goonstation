@@ -492,7 +492,7 @@
 			frost_cake(W,user)
 			return
 		else if(istype(W,/obj/item/reagent_containers/food/snacks/cake))
-			if(!(src == W))
+			if(src != W)
 				stack_cake(W,user)
 				return
 		else if(cake_candle.len && !(litfam) && (W.firesource))
