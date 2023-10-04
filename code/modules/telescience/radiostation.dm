@@ -288,7 +288,6 @@
 			if (!R)
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
 			user.client.play_music_radio(record_inside.song, R)
- pdaSignal, null, "pda")
 #ifdef UNDERWATER_MAP
 			var/sender_name = "LOCAL-DJ"
 			EXTEND_COOLDOWN(global, "music", 500 SECONDS)
