@@ -51,7 +51,3 @@ var/global/datum/eventRecorder/eventRecorder
 		data["created_at"] = time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")
 
 		src.events += list(data)
-
-	proc/call_example()
-		var/datum/eventRecord/Death/deathEvent = new
-		deathEvent.send(1, "Father Ted", "Priest?", 50, 50, 3, 0, 0, 300, 300, 0, "Feck!")

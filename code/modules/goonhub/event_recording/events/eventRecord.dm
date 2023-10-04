@@ -1,5 +1,3 @@
-
-
 /// Base eventCall type
 /// Represents a predefined event we can send to the Goonhub event recorder
 /// SECURITY: Sanitization occurs right before output
@@ -21,3 +19,4 @@
 
 	/// Override to build event parameters
 	proc/buildAndSend()
+		return

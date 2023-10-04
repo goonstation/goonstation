@@ -18,7 +18,7 @@
 	buildAndSend(datum/antagonist/antagonist_role)
 		var/datum/mind/M = antagonist_role.owner
 
-		var/traitor_type = M.special_role
+		var/traitor_type = antagonist_role.id
 		var/special
 		switch(traitor_type)
 			if (ROLE_CHANGELING)
