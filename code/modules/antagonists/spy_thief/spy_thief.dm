@@ -130,7 +130,7 @@
 			redeemed_items += list(
 				list(
 					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1))]",
-					"name" = "[redeemed_entry.name]",
+					"name" = "[initial(redeemed_entry.name)]",
 				)
 			)
 
