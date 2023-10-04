@@ -411,7 +411,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 	icon_state = "barrel-blue"
 	amount_per_transfer_from_this = 25
 	p_class = 3
-	flags = FPRINT | FLUID_SUBMERGE | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FPRINT | FLUID_SUBMERGE | ISOPEN_BOTH | ACCEPTS_MOUSEDROP_REAGENTS
 	var/base_icon_state = "barrel-blue"
 	var/funnel_active = TRUE //if TRUE, allows players pouring liquids from beakers with just one click instead of clickdrag, for convenience
 	var/image/fluid_image = null
@@ -487,7 +487,7 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			qdel(W)
 
 		if (istool(W, TOOL_WRENCHING))
-			if(src.flags & OPENCONTAINER)
+			if(src.flags & ISOPEN_BOTH)
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid closed!")
 			else
 				user.visible_message("<b>[user]</b> wrenches the [src]'s lid open!")

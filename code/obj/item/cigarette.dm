@@ -516,7 +516,7 @@
 // WHY
 /obj/item/clothing/mask/cigarette/custom
 	desc = "There could be anything in this."
-	flags = FPRINT|TABLEPASS|OPENCONTAINER
+	flags = FPRINT|TABLEPASS|ISOPEN_BOTH
 
 	New()
 		..()

@@ -244,7 +244,7 @@
 		dirty_reason = reason
 		update_dish_icon()
 
-	flags = TABLEPASS | CONDUCT | FPRINT | OPENCONTAINER
+	flags = TABLEPASS | CONDUCT | FPRINT | ISOPEN_BOTH
 
 
 /obj/item/reagent_containers/glass/vial

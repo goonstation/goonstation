@@ -265,13 +265,18 @@ About the Tools:
 			It simply tells us how much to transfer when
 			'pouring' our reagents into something else.
 
-		atom/proc/is_open_container()
-			Checks atom/var/flags & OPENCONTAINER.
-			If this returns 1 , you can use syringes, beakers etc
+		atom/proc/is_open_container(inward, outward, small)
+			Checks atom/var/flags & ISOPEN_BOTH or similar flags.
+			If this returns TRUE , you can use syringes, beakers etc
 			to manipulate the contents of this object.
-			If it's 0, you'll need to write your own custom reagent
+			If it's FALSE, you'll need to write your own custom reagent
 			transfer code since you will not be able to use the standard
 			tools to manipulate it.
-			Now uses defines like ISOPEN_OUT_ONLY. Most cases can just use truthy though.
+			Set inward or outward args to TRUE depending on the interaction
+			for better checking.
+			The small arg means that the container is only open if
+			interacted with by small devices like syringes or droppers.
+			Think of it having a small opening. Set it to true if you're
+			Using a syringe or dropper or similar.
 
 */

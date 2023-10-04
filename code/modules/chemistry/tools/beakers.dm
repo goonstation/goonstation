@@ -166,7 +166,7 @@
 	initial_volume = 400
 	amount_per_transfer_from_this = 25
 	incompatible_with_chem_dispensers = 1
-	flags = FPRINT | TABLEPASS | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | ISOPEN_BOTH
 	rc_flags = RC_SCALE
 
 /obj/item/reagent_containers/food/drinks/reserve/brute

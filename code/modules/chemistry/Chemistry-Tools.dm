@@ -197,7 +197,7 @@ proc/ui_describe_reagents(atom/A)
 	var/splash_all_contents = 1
 	///For internal tanks and other things that definitely should not shatter
 	var/shatter_immune = FALSE
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
+	flags = FPRINT | TABLEPASS | ISOPEN_BOTH | SUPPRESSATTACK | ACCEPTS_MOUSEDROP_REAGENTS
 
 	// this proc is a mess ow
 	afterattack(obj/target, mob/user , flag)
@@ -528,7 +528,7 @@ proc/ui_describe_reagents(atom/A)
 	item_state = "bucket"
 	amount_per_transfer_from_this = 10
 	initial_volume = 120
-	flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
+	flags = FPRINT | ISOPEN_BOTH | SUPPRESSATTACK
 	rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	can_recycle = FALSE
 	var/helmet_bucket_type = /obj/item/clothing/head/helmet/bucket
@@ -672,7 +672,7 @@ proc/ui_describe_reagents(atom/A)
 	initial_volume = 50
 	amount_per_transfer_from_this = 10
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | ISOPEN_BOTH | SUPPRESSATTACK
 
 /obj/item/reagent_containers/glass/large
 	name = "large reagent glass"
@@ -682,7 +682,7 @@ proc/ui_describe_reagents(atom/A)
 	item_state = "beaker"
 	rc_flags = RC_SCALE | RC_VISIBLE | RC_SPECTRO
 	amount_per_transfer_from_this = 10
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | SUPPRESSATTACK
+	flags = FPRINT | TABLEPASS | ISOPEN_BOTH | SUPPRESSATTACK
 
 /obj/item/reagent_containers/glass/dispenser/surfactant
 	name = "reagent glass (surfactant)"
@@ -714,7 +714,7 @@ proc/ui_describe_reagents(atom/A)
 	incompatible_with_chem_dispensers = TRUE //could maybe be ok? idk
 	can_recycle = FALSE //made of glass, but would be a waste and almost certainly accidental so no
 	splash_all_contents = FALSE
-	object_flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
+	object_flags = FPRINT | ISOPEN_BOTH | SUPPRESSATTACK
 	initial_volume = 100
 	accepts_lid = TRUE
 	var/obj/item/current_container = null //! the container currently attached to the condenser
