@@ -782,7 +782,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "pistol"
 	w_class = W_CLASS_NORMAL
-	force = 5
+	force = MELEE_DMG_PISTOL
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	rarity = 3
@@ -858,7 +858,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	icon_state = "smg"
 	can_dual_wield = 0
 	w_class = W_CLASS_NORMAL
-	force = 7
+	force = MELEE_DMG_PISTOL
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 	rarity = 4
 
@@ -878,6 +878,35 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 			src.icon_state = "smg[ratio]"
 			return
 
+/obj/item/gun/energy/blaster_carbine
+	name = "GRF Zap-Karabiner"
+	desc = "A blaster carbine from Giesel Radiofabrik, designed for longer range engagements. It's self-charging by a radioactive power cell. Beware of Bremsstrahulung backscatter."
+	icon = 'icons/obj/large/48x32.dmi'
+	icon_state = "blaster-carbine"
+	item_state = "rifle"
+	can_dual_wield = 0
+	two_handed = 1
+	w_class = W_CLASS_BULKY
+	force = MELEE_DMG_RIFLE
+	cell_type = /obj/item/ammo/power_cell/self_charging/medium
+	rarity = 4
+
+
+	New()
+		set_current_projectile(new /datum/projectile/laser/blaster/carbine)
+		projectiles = list(current_projectile)
+		..()
+
+
+	update_icon()
+		..()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "blaster-carbine[ratio]"
+			return
+
 /obj/item/gun/energy/blaster_cannon
 	name = "GRF Zap-Kanone"
 	desc = "A heavy particle blaster from Giesel Radiofabrik, designed for high damage. It's self-charging by a larger radioactive power cell. Beware of Bremsstrahlung backscatter."
@@ -887,7 +916,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	can_dual_wield = 0
 	two_handed = 1
 	w_class = W_CLASS_BULKY
-	force = 15
+	force = MELEE_DMG_RIFLE
 	shoot_delay = 8
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 	rarity = 5

@@ -192,7 +192,7 @@
 	spawn_contents = list(/obj/item/handcuffs = 3,\
 	/obj/item/device/flash,\
 	/obj/item/reagent_containers/food/snacks/donut,\
-	/obj/item/instrument/whistle)
+	/obj/item/instrument/whistle/security)
 	prevent_holding = list(/obj/item/storage)
 
 	empty
@@ -201,7 +201,7 @@
 /obj/item/storage/security_pouch/assistant
 	spawn_contents = list(/obj/item/handcuffs = 2,\
 	/obj/item/device/flash = 2,\
-	/obj/item/instrument/whistle,\
+	/obj/item/instrument/whistle/security,\
 	/obj/item/reagent_containers/food/snacks/donut/custom/frosted)
 
 /obj/item/storage/ntsc_pouch

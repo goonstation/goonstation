@@ -1,4 +1,9 @@
 
+(t)wed oct 04 23
+(u)LeahTheTech
+(p)16260
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(*)Added a security whistle that all security officers and assistants start with. Blowing it will let you command nearby securitrons by pointing.
 (t)mon oct 02 23
 (u)nerkson and LeahTheTech
 (*)New halloween job: pickle. Has the ability to turn things into pickle. Also looks like a pickle. Pickle.
