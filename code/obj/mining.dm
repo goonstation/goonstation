@@ -2573,7 +2573,7 @@ TYPEINFO(/obj/submachine/cargopad)
 		if (!src.mailgroup)
 			return
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-PAD",  "group"=src.mailgroup, "alert"=MGA_DELIVERY, "sender"="00000000", "message"="Incoming delivery to [src.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SUPPLY-MAILBOT",  "group"=src.mailgroup, "alert"=MGA_DELIVERY, "sender"="00000000", "message"="Incoming delivery to [src.name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 // satchels -> obj/item/satchel.dm
