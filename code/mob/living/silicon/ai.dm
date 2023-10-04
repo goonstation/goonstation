@@ -1872,11 +1872,11 @@ or don't if it uses a custom topopen overlay
 	var/list/bodies = new/list()
 
 	for (var/mob/living/silicon/hivebot/H in available_ai_shells)
-		if (H.shell && !H.dependent && !isdead(H) && H.z == src.z)
+		if (H.shell && !H.dependent && !isdead(H) && get_step(H, 0)?.z == get_step(src, 0)?.z)
 			bodies += H
 
 	for (var/mob/living/silicon/robot/R in available_ai_shells)
-		if (R.shell && !R.dependent && !isdead(R) && R.z == src.z)
+		if (R.shell && !R.dependent && !isdead(R) && get_step(R, 0)?.z == get_step(src, 0)?.z)
 			bodies += R
 
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
