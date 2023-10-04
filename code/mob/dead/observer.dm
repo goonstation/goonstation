@@ -83,6 +83,7 @@
 		point_invisibility = INVIS_NONE
 #endif
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
+		..()
 		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color="#5c00e6", invisibility=point_invisibility, pointer=src)
 
 
