@@ -42,14 +42,12 @@
 	var/image/silhouette
 	var/image/static_image = null
 	var/in_point_mode = 0
-	var/butt_op_stage = 0.0 // sigh
 	var/dna_to_absorb = 1
 
 	var/canspeak = 1
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
-	var/list/stomach_process = list() //digesting foods
 	var/list/skin_process = list() //digesting patches
 
 	var/sound_burp = 'sound/voice/burp.ogg'
@@ -117,15 +115,14 @@
 	var/list/stamina_mods_regen = list()
 	var/list/stamina_mods_max = list()
 
-	var/list/stomach_contents = list()
-
 	var/last_sleep = 0 //used for sleep_bubble
 
 	can_lie = TRUE
 
 	var/const/singing_prefix = "%"
 
-	var/void_mindswappable = FALSE //are we compatible with the void mindswapper?
+	var/void_mindswappable = FALSE //! are we compatible with the void mindswapper?
+	var/do_hurt_slowdown = TRUE //! do we slow down when hurt?
 
 /mob/living/New(loc, datum/appearanceHolder/AH_passthru, datum/preferences/init_preferences, ignore_randomizer=FALSE)
 	START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
@@ -138,9 +135,17 @@
 		src.ensure_bp_list()
 
 	if (src.use_stamina)
-		src.stamina_bar = new(src)
 		//stamina bar gets added to the hud in subtypes human and critter... im sorry.
 		//eventual hud merger pls
+		src.stamina_bar = new(src)
+
+		var/turf/T = get_turf(src)
+		var/area/AR = get_area(src)
+		if(isnull(T) || T.z <= Z_LEVEL_STATION || AR.active)
+			START_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
+		else
+			src.skipped_mobs_list |= SKIPPED_STAMINA_MOBS
+			LAZYLISTADDUNIQUE(AR.mobs_not_in_global_mobs_list, src)
 
 	if (src.isFlying)
 		APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
@@ -160,16 +165,16 @@
 	ai_target_old.len = 0
 	move_laying = null
 
+	if(use_stamina)
+		STOP_TRACKING_CAT(TR_CAT_STAMINA_MOBS)
+
 	if(stamina_bar)
 		for (var/datum/hud/thishud in huds)
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as anything in stomach_process)
-		qdel(A)
 	for (var/atom/A as anything in skin_process)
 		qdel(A)
-	stomach_process = null
 	skin_process = null
 
 	for(var/mob/living/intangible/aieye/E in src.contents)
@@ -444,8 +449,6 @@
 				else
 					src.hasStatus("resting") ? src.delStatus("resting") : src.setStatus("resting", INFINITE_STATUS)
 					src.force_laydown_standup()
-		if ("togglepoint")
-			src.toggle_point_mode()
 		if ("say_radio")
 			src.say_radio()
 		else
@@ -469,10 +472,8 @@
 		src.examine_verb(target)
 		return
 
-	if (src.in_point_mode || (src.client && src.client.check_key(KEY_POINT)))
+	if (src.client && src.client.check_key(KEY_POINT))
 		src.point_at(target, text2num(params["icon-x"]), text2num(params["icon-y"]))
-		if (src.in_point_mode)
-			src.toggle_point_mode()
 		return
 
 	if (src.restrained())
@@ -564,7 +565,7 @@
 /mob/living/update_cursor()
 	..()
 	if (src.client)
-		if (src.in_point_mode || src.client.check_key(KEY_POINT))
+		if (src.client.check_key(KEY_POINT))
 			src.set_cursor('icons/cursors/point.dmi')
 			return
 
@@ -583,14 +584,6 @@
 /mob/living/key_up(key)
 	if (key == "alt" || key == "ctrl" || key == "shift")
 		update_cursor()
-
-/mob/living/proc/toggle_point_mode(var/force_off = 0)
-	if (force_off)
-		src.in_point_mode = 0
-		src.update_cursor()
-		return
-	src.in_point_mode = !(src.in_point_mode)
-	src.update_cursor()
 
 /mob/living/point_at(var/atom/target, var/pixel_x, var/pixel_y)
 	if (!isturf(src.loc) || !isalive(src) || src.restrained())
@@ -1248,7 +1241,7 @@
 					else
 						// if we're a critter or on a different z level, and we don't have a client, they probably don't care
 						// we do want to show station monkey speech etc, but not transposed scientists and trench monkeys and whatever
-						if ((!ishuman(src) || (src.z != M.z)) && !src.client)
+						if ((!ishuman(src) || (get_z(src) != get_z(M))) && !src.client)
 							return
 						M.show_message(thisR, 2, assoc_maptext = chat_text)
 			else if(istype(M, /mob/zoldorf))
@@ -1482,6 +1475,9 @@
 	if (src.last_resist > world.time)
 		return
 	src.last_resist = world.time + 20
+
+	if(SEND_SIGNAL(src, COMSIG_MOB_RESIST))
+		return TRUE
 
 	if (isobj(src.loc))
 		var/obj/container = src.loc
@@ -1733,16 +1729,17 @@
 	if (src.nodamage)
 		return .
 
-	var/health_deficiency = 0
-	if (src.max_health > 0)
-		health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
-	else
-		health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
+	if (src.do_hurt_slowdown)
+		var/health_deficiency = 0
+		if (src.max_health > 0)
+			health_deficiency = ((src.max_health-src.health)/src.max_health)*100 + health_deficiency_adjustment // cogwerks // let's treat this like pain
+		else
+			health_deficiency = (src.max_health-src.health) + health_deficiency_adjustment
 
-	if (health_deficiency >= 30)
-		. += (health_deficiency / 35)
+		if (health_deficiency >= 30)
+			. += (health_deficiency / 35)
 
-	.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
+		.= src.special_movedelay_mod(.,space_movement,aquatic_movement)
 
 	. = min(., maximum_slowdown)
 
@@ -2015,9 +2012,10 @@
 				if (stun > 0)
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
-				src.reagents?.add_reagent("radium", damage/4) //fuckit
+				src.take_radiation_dose(damage / (50 * (1 + src.radiation_dose)) SIEVERTS, TRUE)
+				src.reagents?.add_reagent("uranium", damage / 50) //this is mooostly for flavour
 				var/orig_val = GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)
-				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -5)
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -6)
 				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)
 					SPAWN(30 SECONDS)
 						REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile")

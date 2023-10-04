@@ -272,9 +272,9 @@
 			else
 				if(!ON_COOLDOWN(src, "vent_bonk", 1 SECOND))
 					if(running)
-						playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, 0, 0)
+						playsound(src, 'sound/impact_sounds/Metal_Clang_1.ogg', 50, FALSE, 0)
 					else
-						playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+						playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 
 
 		return delay

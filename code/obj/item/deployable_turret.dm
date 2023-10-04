@@ -498,15 +498,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 		var/obj/item/card/id/I = C.get_id()
 		if(!istype(I))
 			return FALSE
-		switch(I.icon_state)
-			if("id_sec")
-				return TRUE
-			if("id_com")
-				return TRUE
-			if("gold")
-				return TRUE
-			else
-				return FALSE
+		. = (access_security in I.access) || (access_heads in I.access)
 
 /obj/deployable_turret/riot/active
 	anchored = ANCHORED
@@ -524,7 +516,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	projectile_type = /datum/projectile/bullet/revolver_38/lb
 	burst_size = 2
 	fire_rate = 1
-	angle_arc_size = 90
+	angle_arc_size = 60
 	icon_tag = "op"
 	quick_deploy_fuel = 0
 	associated_deployer = /obj/item/turret_deployer/outpost

@@ -20,10 +20,19 @@
 		randomize_look(H, change_gender=FALSE)
 		H.bioHolder.mobAppearance.flavor_text = null
 		H.unequip_all(TRUE)
-		H.equip_sensory_items()
 
 		H.equip_if_possible(new /obj/item/clothing/head/helmet/space/engineer/salvager(H), SLOT_HEAD)
 		H.equip_if_possible(new /obj/item/clothing/suit/space/salvager(H), SLOT_WEAR_SUIT)
+		H.equip_if_possible(new /obj/item/clothing/glasses/salvager(H), SLOT_GLASSES)
+
+		var/obj/item/clothing/glasses/G = H.glasses
+		if(istype(G))
+			if (H.traitHolder.hasTrait("shortsighted"))
+				G.correct_bad_vision = TRUE
+			if (H.traitHolder.hasTrait("blind"))
+				G.allow_blind_sight = TRUE
+
+		H.equip_sensory_items()
 
 		var/obj/item/device/radio/headset/headset = H.ears
 		if(!headset)
@@ -31,9 +40,6 @@
 			H.equip_if_possible(headset, SLOT_EARS)
 		else
 			headset.protected_radio = TRUE
-
-		//headset.frequency = src.pick_radio_freq()
-		//H.mind.store_memory("<b>Salvager Radio frequency:</b> [headset.frequency]")
 
 		// Allow for Salvagers to have a secure channel
 		headset.secure_frequencies = list("z" = src.pick_radio_freq())

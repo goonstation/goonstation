@@ -204,7 +204,7 @@
 		if(K.sound_load_override)
 			playsound(K, K.sound_load_override, 50, 1)
 		else
-			playsound(K, sound_load, 50, 1)
+			playsound(K, sound_load, 50, TRUE)
 
 		if (K.ammo.amount_left < 0)
 			K.ammo.amount_left = 0
@@ -443,7 +443,7 @@
 
 	New()
 		..()
-		src.update_icon()
+		src.UpdateIcon()
 
 	update_icon()
 		..()
@@ -1101,6 +1101,20 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	delete_on_reload = 1
 	sound_load = 'sound/weapons/gunload_mprt.ogg'
 
+/obj/item/ammo/bullets/pod_seeking_missile
+	sname = "pod-seeking missile"
+	name = "pod-seeking missile"
+	desc = "A high-explosive missile, equipped with pod-seeking guidance systems."
+	amount_left = 1
+	max_amount = 1
+	icon = 'icons/obj/projectiles.dmi'
+	icon_state = "pod_seeking_missile"
+	ammo_type = new /datum/projectile/bullet/homing/pod_seeking_missile
+	ammo_cat = AMMO_ROCKET_RPG
+	w_class = W_CLASS_NORMAL
+	delete_on_reload = TRUE
+	sound_load = 'sound/weapons/gunload_mprt.ogg'
+
 /obj/item/ammo/bullets/mrl
 	sname = "MRL rocket pack"
 	name = "MRL rocket pack"
@@ -1182,7 +1196,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "Airzooka Tactical Replacement Trashbag"
 	sname = "air"
 	desc = "A tactical trashbag for use in a Donk Co Airzooka."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "trashbag"
 	m_amt = 40000
 	g_amt = 0
@@ -1195,7 +1209,7 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 	name = "Airzooka Tactical Replacement Trashbag: Xtreme Edition"
 	sname = "air"
 	desc = "A tactical trashbag for use in a Donk Co Airzooka, now with plasma lining."
-	icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
+	icon = 'icons/obj/janitor.dmi'
 	icon_state = "biobag"
 	m_amt = 40000
 	g_amt = 0
@@ -1377,14 +1391,14 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/power_cell/self_charging
 	name = "Power Cell - Atomic"
-	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 40PU."
+	desc = "A self-contained radioisotope power cell that slowly recharges an internal capacitor. Holds 60PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	m_amt = 18000
 	g_amt = 38000
-	charge = 40
-	max_charge = 40
-	recharge_rate = 5
+	charge = 60
+	max_charge = 60
+	recharge_rate = 2.5
 
 
 /obj/item/ammo/power_cell/self_charging/custom
@@ -1423,8 +1437,8 @@ ABSTRACT_TYPE(/obj/item/ammo/bullets/pipeshot)
 
 /obj/item/ammo/power_cell/self_charging/slowcharge
 	name = "Power Cell - Atomic Slowcharge"
-	desc = "A self-contained radioisotope power cell that very slowly recharges an internal capacitor. Holds 40PU."
-	recharge_rate = 1.5 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
+	desc = "A self-contained radioisotope power cell that very slowly recharges an internal capacitor. Holds 60PU."
+	recharge_rate = 2 // cogwerks: raised from 1.0 because radbows were terrible!!!!!
 
 /obj/item/ammo/power_cell/self_charging/disruptor
 	name = "Power Cell - Disruptor Charger"

@@ -333,6 +333,11 @@
 /mob/living/carbon/human/npc/monkey/horse,
 /turf/simulated/floor/black,
 /area/space)
+"bi" = (
+/obj/machinery/disposal/mail/autoname,
+/obj/disposalpipe/segment/auto/mail,
+/turf/simulated/floor,
+/area/space)
 "bk" = (
 /turf/simulated/floor/carpet/red/fancy/innercorner/north,
 /area/space)
@@ -668,6 +673,11 @@
 /turf/simulated/wall/auto/jen/cyan{
 	icon_state = "2"
 	},
+/area/space)
+"cN" = (
+/obj/machinery/disposal/transport,
+/obj/disposalpipe/segment/auto/transport,
+/turf/simulated/floor,
 /area/space)
 "cO" = (
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
@@ -1148,9 +1158,22 @@
 	},
 /turf/simulated/floor,
 /area/space)
+"eS" = (
+/obj/shrub{
+	dir = 4
+	},
+/obj/disposalpipe/segment/auto/food,
+/turf/simulated/floor,
+/area/space)
 "eT" = (
 /turf/simulated/wall/auto/jen/dark3{
 	icon_state = "5"
+	},
+/area/space)
+"eU" = (
+/turf/simulated/wall/false_wall/reinforced{
+	icon = 'icons/turf/walls/supernorn.dmi';
+	icon_state = "R12"
 	},
 /area/space)
 "eV" = (
@@ -1948,11 +1971,6 @@
 	name = "Mail Junction - place"
 	},
 /turf/simulated/floor/yellow,
-/area/space)
-"ie" = (
-/obj/machinery/disposal/transport,
-/obj/disposalpipe/auto/transport,
-/turf/simulated/floor,
 /area/space)
 "if" = (
 /obj/item/device/radio/intercom/bridge{
@@ -2924,12 +2942,6 @@
 	icon_state = "13"
 	},
 /turf/simulated/floor/yellow,
-/area/space)
-"lI" = (
-/obj/shrub{
-	dir = 4
-	},
-/turf/simulated/floor,
 /area/space)
 "lJ" = (
 /turf/simulated/floor/carpet/green/standard/junction/sw_n,
@@ -4760,6 +4772,10 @@
 	},
 /turf/simulated/floor/plating/random,
 /area/space)
+"sF" = (
+/obj/disposalpipe/segment/auto/ejection,
+/turf/simulated/floor/yellow,
+/area/space)
 "sG" = (
 /obj/decal/tile_edge/line/red{
 	dir = 5;
@@ -5967,6 +5983,12 @@
 	icon_state = "8"
 	},
 /area/space)
+"xQ" = (
+/obj/disposalpipe/junction/auto{
+	dir = 1
+	},
+/turf/simulated/floor/yellow,
+/area/space)
 "xT" = (
 /turf/simulated/floor/carpet/purple/standard/narrow/north,
 /area/space)
@@ -6576,6 +6598,12 @@
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/airless/solar,
+/area/space)
+"zQ" = (
+/obj/disposalpipe/junction/auto{
+	dir = 4
+	},
+/turf/simulated/floor/yellow,
 /area/space)
 "zS" = (
 /turf/simulated/wall/auto/reinforced/jen/purple{
@@ -7389,11 +7417,6 @@
 	icon_state = "R2"
 	},
 /area/space)
-"Dy" = (
-/obj/machinery/disposal/ore,
-/obj/disposalpipe/auto/mineral,
-/turf/simulated/floor/yellow,
-/area/space)
 "DA" = (
 /turf/simulated/floor/carpet/green/fancy/junction/ne_s,
 /area/space)
@@ -7450,11 +7473,6 @@
 /turf/simulated/wall/auto/supernorn/wood{
 	icon_state = "2"
 	},
-/area/space)
-"DR" = (
-/obj/machinery/disposal/brig,
-/obj/disposalpipe/auto/brig,
-/turf/simulated/floor/yellow,
 /area/space)
 "DS" = (
 /obj/table/reinforced/industrial/auto{
@@ -8573,6 +8591,12 @@
 "IC" = (
 /turf/simulated/floor/carpet/purple/standard/narrow/east,
 /area/space)
+"ID" = (
+/obj/disposalpipe/junction/auto{
+	dir = 8
+	},
+/turf/simulated/floor,
+/area/space)
 "IE" = (
 /obj/table/reinforced/industrial/auto{
 	icon_state = "2"
@@ -8911,6 +8935,11 @@
 	icon_state = "SS13-Centred4"
 	},
 /area/space)
+"JY" = (
+/obj/machinery/disposal,
+/obj/disposalpipe/segment/auto/regular,
+/turf/simulated/floor,
+/area/space)
 "JZ" = (
 /turf/unsimulated/wall/setpieces/hospital/window{
 	dir = 4
@@ -9169,11 +9198,6 @@
 /turf/simulated/wall/auto/reinforced/jen/orange{
 	icon_state = "R5"
 	},
-/area/space)
-"La" = (
-/obj/machinery/disposal/morgue,
-/obj/disposalpipe/auto/morgue,
-/turf/simulated/floor,
 /area/space)
 "Lb" = (
 /obj/item/device/radio/intercom/cargo{
@@ -9517,6 +9541,10 @@
 	},
 /turf/simulated/floor/yellow,
 /area/space)
+"Mo" = (
+/obj/disposalpipe/segment/auto/produce,
+/turf/simulated/floor/yellow,
+/area/space)
 "Mp" = (
 /turf/simulated/floor{
 	icon_state = "SS13-Centred3"
@@ -9562,6 +9590,11 @@
 	icon_state = "line2"
 	},
 /turf/simulated/floor/black,
+/area/space)
+"MC" = (
+/obj/machinery/disposal/ore,
+/obj/disposalpipe/segment/auto/mineral,
+/turf/simulated/floor/yellow,
 /area/space)
 "MD" = (
 /obj/lattice/directional_icons{
@@ -9808,10 +9841,6 @@
 /turf/unsimulated/wall/setpieces/leadwall{
 	icon_state = "leadcap"
 	},
-/area/space)
-"NA" = (
-/obj/machinery/disposal,
-/turf/simulated/floor,
 /area/space)
 "NB" = (
 /obj/grille/catwalk{
@@ -10227,6 +10256,11 @@
 "Pi" = (
 /turf/simulated/floor/carpet/green/fancy/narrow/nw,
 /area/space)
+"Pj" = (
+/obj/machinery/disposal/brig,
+/obj/disposalpipe/segment/auto/brig,
+/turf/simulated/floor/yellow,
+/area/space)
 "Pk" = (
 /obj/disposalpipe/trunk/food{
 	dir = 1
@@ -10338,12 +10372,6 @@
 	dir = 4
 	},
 /turf/simulated/floor/yellow,
-/area/space)
-"PJ" = (
-/turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn.dmi';
-	icon_state = "12"
-	},
 /area/space)
 "PL" = (
 /turf/simulated/wall/auto/reinforced/jen/yellow{
@@ -11352,6 +11380,11 @@
 	},
 /turf/simulated/floor,
 /area/space)
+"Te" = (
+/obj/machinery/disposal/morgue,
+/obj/disposalpipe/segment/auto/morgue,
+/turf/simulated/floor,
+/area/space)
 "Tf" = (
 /turf/simulated/floor/carpet/blue/fancy/junction/ne_s,
 /area/space)
@@ -11577,10 +11610,6 @@
 "TU" = (
 /turf/simulated/floor/carpet/green/fancy/narrow/south,
 /area/space)
-"TV" = (
-/obj/machinery/disposal/mail/autoname,
-/turf/simulated/floor,
-/area/space)
 "TX" = (
 /obj/table/wood/round/auto{
 	icon_state = "9"
@@ -11671,6 +11700,12 @@
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	icon_state = "catwalk_cross"
+	},
+/area/space)
+"Un" = (
+/turf/simulated/wall/false_wall{
+	icon = 'icons/turf/walls/supernorn.dmi';
+	icon_state = "12"
 	},
 /area/space)
 "Uo" = (
@@ -12414,12 +12449,6 @@
 	},
 /turf/simulated/floor/black,
 /area/space)
-"WY" = (
-/turf/simulated/wall/false_wall/reinforced{
-	icon = 'icons/turf/walls_supernorn.dmi';
-	icon_state = "R12"
-	},
-/area/space)
 "Xb" = (
 /obj/machinery/conveyor/SW,
 /turf/simulated/floor,
@@ -12685,6 +12714,10 @@
 /turf/simulated/wall/auto/reinforced/jen/green{
 	icon_state = "R1"
 	},
+/area/space)
+"Yi" = (
+/obj/disposalpipe/junction/auto,
+/turf/simulated/floor,
 /area/space)
 "Yk" = (
 /turf/simulated/floor/carpet/blue/standard/edge/se,
@@ -13196,7 +13229,7 @@ iK
 SD
 pw
 vc
-PJ
+Un
 da
 yr
 WQ
@@ -13271,7 +13304,7 @@ Ue
 Us
 eQ
 PI
-WY
+eU
 LT
 yU
 uQ
@@ -13724,10 +13757,10 @@ iw
 fJ
 iw
 xd
-La
+Te
 xd
 xI
-DR
+Pj
 xI
 vP
 zk
@@ -13949,10 +13982,10 @@ zi
 wz
 Hq
 mA
-Dy
+MC
 mA
 WW
-ie
+cN
 WW
 zD
 kv
@@ -14475,7 +14508,7 @@ yp
 FM
 Wy
 ML
-ut
+sF
 qM
 wS
 yO
@@ -14549,12 +14582,12 @@ ut
 iw
 aK
 xo
-ut
+Mo
 iw
 Rw
 Ks
 nA
-lI
+eS
 Vv
 "}
 (20,1,1) = {"
@@ -15068,7 +15101,7 @@ Fo
 ut
 iw
 zu
-TV
+bi
 zu
 iw
 ro
@@ -15291,10 +15324,10 @@ ut
 iw
 ut
 iw
-ut
-iw
-ut
-iw
+xQ
+Yi
+zQ
+ID
 ut
 nm
 rv
@@ -15518,7 +15551,7 @@ iw
 ut
 Cg
 LW
-NA
+JY
 LW
 EC
 ut

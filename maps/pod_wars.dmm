@@ -365,6 +365,7 @@
 	icon_state = "4-8"
 	},
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/portable_atmospherics/canister/toxins,
 /turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "bH" = (
@@ -2324,6 +2325,12 @@
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
+"iY" = (
+/obj/machinery/portable_atmospherics/canister/toxins,
+/turf/unsimulated/floor/yellow/side{
+	dir = 1
+	},
+/area/pod_wars/team2/mining)
 "jc" = (
 /obj/submachine/chef_sink/chem_sink{
 	dir = 1;
@@ -2785,13 +2792,7 @@
 /turf/simulated/floor/purple,
 /area/pod_wars/spacejunk/fstation/crewquarters)
 "kV" = (
-/obj/item/device/radio/intercom{
-	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show.";
-	device_color = "#E52780";
-	icon = 'icons/obj/radiostation.dmi';
-	icon_state = "mixtable-1";
-	name = "broadcast radio"
-	},
+/obj/item/device/radio/intercom/radiostation,
 /obj/table/wood/auto,
 /turf/simulated/floor/black,
 /area/pod_wars/spacejunk/reliant)
@@ -4507,7 +4508,7 @@
 /area/pod_wars/team1/bridge)
 "rr" = (
 /turf/simulated/wall/false_wall{
-	icon = 'icons/turf/walls_supernorn_smooth.dmi';
+	icon = 'icons/turf/walls/supernorn/smooth.dmi';
 	icon_old = null;
 	icon_state = "norn-R-3"
 	},
@@ -9113,7 +9114,7 @@
 	},
 /area/pod_wars/spacejunk/fstation)
 "JI" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 4
 	},
 /obj/machinery/light/incandescent/netural,
@@ -9894,6 +9895,7 @@
 /area/pod_wars/spacejunk/fstation/observatory)
 "Na" = (
 /obj/decal/tile_edge/stripe/extra_big,
+/obj/machinery/portable_atmospherics/canister/toxins,
 /turf/unsimulated/floor,
 /area/pod_wars/team1/hangar)
 "Nd" = (
@@ -10657,7 +10659,7 @@
 /turf/simulated/floor,
 /area/pod_wars/spacejunk/fstation)
 "Qk" = (
-/obj/stool/chair/wooden{
+/obj/stool/chair/dining/wood{
 	dir = 1
 	},
 /obj/cable{
@@ -11804,7 +11806,7 @@
 	},
 /area/pod_wars/team1/starboardhall)
 "UW" = (
-/obj/stool/chair/wooden,
+/obj/stool/chair/dining/wood,
 /turf/unsimulated/floor/wood/seven,
 /area/pod_wars/spacejunk/fstation/bar)
 "UX" = (
@@ -238453,7 +238455,7 @@ ED
 Ts
 QK
 HI
-jD
+iY
 Ux
 Bg
 Ux
@@ -239959,7 +239961,7 @@ ED
 Ts
 XP
 HI
-jD
+iY
 cI
 Ux
 Ux

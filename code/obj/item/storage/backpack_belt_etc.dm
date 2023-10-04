@@ -674,7 +674,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/wearertargeting/energy_shield/ceshield, list(SLOT_BELT), 0.75, 0.2, FALSE, 5) //blocks 3/4 of incoming damage, up to 200 points, on a full charge, but loses charge quickly while active
+		AddComponent(/datum/component/wearertargeting/energy_shield/ceshield, list(SLOT_BELT), 0.75, 0.3, FALSE, 5) //blocks 3/4 of incoming damage, up to 200 points, on a full charge, but loses charge quickly while active
 		var/obj/item/ammo/power_cell/self_charging/cell = new/obj/item/ammo/power_cell/self_charging{recharge_rate = 3; recharge_delay = 10 SECONDS}
 		AddComponent(/datum/component/cell_holder, cell, FALSE, 100, FALSE)
 		cell.set_loc(null) //otherwise it takes a slot in the belt. aaaaa
@@ -816,7 +816,9 @@
 	/obj/item/gun/energy/signifer2,
 	/obj/item/device/prisoner_scanner,
 	/obj/item/gun/energy/ntgun,
-	/obj/item/gun/energy/cornicen3)
+	/obj/item/gun/energy/cornicen3,
+	/obj/item/gun/kinetic/missile_launcher,
+	/obj/item/ammo/bullets/pod_seeking_missile)
 	check_wclass = 1
 
 // kiki's detective shoulder (holster)
@@ -880,6 +882,7 @@
 ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 /obj/item/storage/belt/gun
 	var/gun_type
+	check_wclass = TRUE
 
 	New()
 		..()
@@ -904,11 +907,9 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	desc = "A stylish leather belt for holstering a revolver and it's ammo."
 	icon_state = "revolver_belt"
 	item_state = "revolver_belt"
-	slots = 4
-	check_wclass = 0
+	slots = 6
 	gun_type = /obj/item/gun/kinetic/revolver
-	can_hold = list(/obj/item/ammo/bullets/a357)
-	can_hold_exact = list(/obj/item/gun/kinetic/revolver)
+	can_hold = list(/obj/item/gun/kinetic/revolver)
 	spawn_contents = list(/obj/item/gun/kinetic/revolver, /obj/item/ammo/bullets/a357 = 2, /obj/item/ammo/bullets/a357/AP)
 
 /obj/item/storage/belt/gun/pistol
@@ -916,11 +917,9 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	desc = "A rugged belt fitted with a pistol holster and some magazine pouches."
 	icon_state = "pistol_belt"
 	item_state = "pistol_belt"
-	slots = 5
-	check_wclass = 0
+	slots = 6
 	gun_type = /obj/item/gun/kinetic/pistol
-	can_hold = list(/obj/item/ammo/bullets/bullet_9mm)
-	can_hold_exact = list(/obj/item/gun/kinetic/pistol)
+	can_hold = list(/obj/item/gun/kinetic/pistol)
 	spawn_contents = list(/obj/item/gun/kinetic/pistol, /obj/item/ammo/bullets/bullet_9mm = 4)
 
 /obj/item/storage/belt/gun/smartgun
@@ -928,11 +927,9 @@ ABSTRACT_TYPE(/obj/item/storage/belt/gun)
 	desc = "A rugged belt fitted with a smart pistol holster and some magazine pouches."
 	icon_state = "smartgun_belt"
 	item_state = "smartgun_belt"
-	slots = 5
-	check_wclass = 0
+	slots = 6
 	gun_type = /obj/item/gun/kinetic/pistol/smart/mkII
-	can_hold = list(/obj/item/ammo/bullets/bullet_22/smartgun)
-	can_hold_exact = list(/obj/item/gun/kinetic/pistol/smart/mkII)
+	can_hold = list(/obj/item/gun/kinetic/pistol/smart/mkII)
 	spawn_contents = list(/obj/item/gun/kinetic/pistol/smart/mkII, /obj/item/ammo/bullets/bullet_22/smartgun = 4)
 
 
@@ -986,6 +983,7 @@ TYPEINFO(/obj/item/storage/belt/wrestling)
 	is_syndicate = 1
 	item_function_flags = IMMUNE_TO_ACID
 	var/fake = 0		//So the moves are all fake.
+	HELP_MESSAGE_OVERRIDE({"In addition to granting the wearer wrestler abilities, it also gives them the wrestler passives detailed "} + EXTERNAL_LINK("https://wiki.ss13.co/Wrestler#Passives", "here") + ".")
 
 	equipped(var/mob/user)
 		..()

@@ -140,7 +140,7 @@
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
 		if (state >= GRAB_AGGRESSIVE && !istype(target,/turf))
-			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container())
+			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container(TRUE))
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src.affecting] [log_reagents(src.affecting)] to [target] at [log_loc(user)].")
 				var/trans = src.affecting.reagents.trans_to(target, 10)
 				if (trans)
@@ -652,24 +652,6 @@
 	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
 	attack_particle(user,src)
 
-/obj/fluid/grab_smash(obj/item/grab/G as obj, mob/user as mob)
-	var/mob/M = G.affecting
-
-	if  (!(ismob(G.affecting)))
-		return 0
-
-	if (BOUNDS_DIST(src, M) > 0)
-		return 0
-
-	if (!G.can_pin)
-		return 0
-
-	if (isliving(G.affecting))
-		G.affecting:was_harmed(G.assailant)
-
-	actions.start(new/datum/action/bar/icon/pin_target(G.affecting, G, src), G.assailant)
-	attack_particle(user,src)
-
 /obj/decal/cleanable/grab_smash(obj/item/grab/G as obj, mob/user as mob)
 	var/mob/M = G.affecting
 
@@ -912,13 +894,13 @@
 /obj/item/grab/block/proc/play_block_sound(var/hit_type = DAMAGE_BLUNT)
 	switch(hit_type)
 		if (DAMAGE_BLUNT)
-			playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_blunt.ogg', 50, TRUE, -1)
 		if (DAMAGE_CUT)
-			playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_cut.ogg', 50, TRUE, -1)
 		if (DAMAGE_STAB)
-			playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_stab.ogg', 50, TRUE, -1)
 		if (DAMAGE_BURN)
-			playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, 1, -1)
+			playsound(src, 'sound/impact_sounds/block_burn.ogg', 50, TRUE, -1)
 
 /obj/item/grab/block/handle_throw(mob/living/user, atom/target)
 	if (isturf(user.loc) && target)
@@ -958,7 +940,7 @@
 							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]! What [pick_string("descriptors.txt", "borg_punch")]!")
 					else
 						dive_attack_hit.TakeDamageAccountArmor("chest", damage, 0, 0, DAMAGE_BLUNT)
-						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, 1, -1)
+						playsound(user, 'sound/impact_sounds/Generic_Hit_2.ogg', 50, TRUE, -1)
 						for (var/mob/O in AIviewers(user))
 							O.show_message("<span class='alert'><B>[user] slides into [dive_attack_hit]!</B></span>", 1)
 					logTheThing(LOG_COMBAT, user, "slides into [dive_attack_hit] at [log_loc(dive_attack_hit)].")

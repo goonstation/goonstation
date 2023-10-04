@@ -344,7 +344,7 @@
 			owner.changeStatus("paralysis", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
-			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			animate_storage_thump(container)
 
 		return
@@ -708,13 +708,10 @@
 			return 1
 
 		if (isdead(read))
-			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have their mind read.</span>")
-			return
-		if (read.health < 0)
-			boutput(owner, "<span class='alert'>[read.name] is dying, and their thoughts are too scrambled to read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have [his_or_her(read)] mind read.</span>")
 			return
 
-		boutput(usr, "<span class='notice'>Mind Reading of [read.name]:</b></span>")
+		boutput(owner, "<span class='notice'>Mind Reading of [read.name]:</b></span>")
 		var/pain_condition = read.health
 		// lower health means more pain
 		var/list/randomthoughts = list("what to have for lunch","the future","the past","money",
@@ -757,6 +754,10 @@
 			else
 				boutput(owner, "<span class='notice'><b>Mood</b>: You sense strange thoughts from [read.name].</span>")
 
+		var/speech = steal_speech_text(read)
+		if (length(speech))
+			thoughts = "thinking about [speech]"
+
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = read
 			if (H.pin)
@@ -767,7 +768,6 @@
 			boutput(read, "<span class='alert'>You sense [owner.name] reading your mind.</span>")
 		else if (read.traitHolder.hasTrait("training_chaplain"))
 			boutput(read, "<span class='alert'>You sense someone intruding upon your thoughts...</span>")
-		return
 
 	cast_misfire(atom/target)
 		if (..())
@@ -794,10 +794,7 @@
 			return 1
 
 		if (isdead(read))
-			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have their mind read.</span>")
-			return
-		if (read.health < 0)
-			boutput(owner, "<span class='alert'>[read.name] is dying, and their thoughts are too scrambled to read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have [his_or_her(read)] mind read.</span>")
 			return
 
 		boutput(read, "<span class='alert'>Somehow, you sense <b>[owner]</b> trying and failing to read your mind!</span>")
@@ -805,6 +802,31 @@
 		owner.emote("scream")
 		owner.changeStatus("paralysis", 5 SECONDS)
 		owner.changeStatus("stunned", 7 SECONDS)
+
+	/// Mostly stolen from laspgasp() (thanks pali)
+	///
+	/// Grab whatever they're typing from the say/whisper/radio menu, or the command bar. Separate proc so we can return if the target client goes null
+	proc/steal_speech_text(mob/living/carbon/target)
+		var/client/target_client = target.client
+		var/enteredtext = winget(target_client, "mainwindow.input", "text") // grab the text from the input bar
+		if (isnull(target_client)) return
+		if (length(enteredtext) > 5 && copytext(enteredtext, 1, 6) == "say \"") // check if the player is trying to say something
+			enteredtext = copytext(enteredtext, 6, 0) // grab the text they were trying to say
+			enteredtext = "saying something like <i>\"[enteredtext]\"</i>, in an old-fashioned way."
+		if (!length(enteredtext))
+			for (var/window_type in list("say", "radiosay", "whisper"))
+				enteredtext = winget(target_client, "[window_type]window.say-input", "text")
+				if (isnull(target_client)) return
+				if (length(enteredtext))
+					switch(window_type)
+						if ("say")
+							enteredtext = "saying something like <i>\"[enteredtext]\"</i>"
+						if ("radiosay")
+							enteredtext = "saying something like <i>;\"[enteredtext]\"</i>"
+						if ("whisper")
+							enteredtext = "whispering something like <i>\"[enteredtext]\"</i>"
+					break
+		return enteredtext
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1119,6 +1141,7 @@
 
 		var/turf/T = get_turf(target)
 
+
 		var/datum/bioEffect/power/eyebeams/EB = linked_power
 		var/projectile_path = ispath(EB.projectile_path) ? EB.projectile_path : text2path(EB.projectile_path)
 		if(linked_power.power > 1)
@@ -1127,6 +1150,23 @@
 			projectile_path = /datum/projectile/laser/eyebeams/stun
 		if (!ispath(projectile_path))
 			projectile_path = /datum/projectile/laser/eyebeams
+
+		if (!EB.stun_mode && ishuman(owner)) // remember to take off your headgear if you want to fire the laser
+			var/mob/living/carbon/human/H = owner
+			var/obj/item/I
+			if (istype(H.glasses) && H.glasses.c_flags & COVERSEYES)
+				I = H.glasses
+			else if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSEYES)
+				I = H.wear_mask
+			else if (istype(H.head) && H.head.c_flags & COVERSEYES)
+				I = H.head
+			else if (istype(H.wear_suit) && H.wear_suit.c_flags & COVERSEYES)
+				I = H.wear_suit
+			if (istype(I)) // or it might go
+				I.combust() // POOF
+				holder.owner.visible_message("<span class='combat'><b>[holder.owner]'s [I.name] catches on fire!</b></span>",\
+				"<span class='combat'><b>Your [I.name] catches on fire!</b> Maybe you should have taken it off first!</span>")
+				return
 
 		owner.visible_message("<span class='alert'><b>[owner.name]</b> shoots eye beams!</span>")
 		var/datum/projectile/laser/eyebeams/PJ = new projectile_path
@@ -1322,6 +1362,29 @@
 			the_object.setMaterial(getMaterial("flesh"))
 		linked_power.using = 0
 		return
+
+/datum/bioEffect/power/midas/pickle
+	name = "Pickle Touch"
+	id = "pickle"
+	desc = "Allows the subject to induce spontaneous pickling at will."
+	msgGain = "You suddenly smell vinegar."
+	msgLose = "You feel less well preserved."
+	transmute_material = "pickle"
+	power = 2
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	ability_path = /datum/targetable/geneticsAbility/midas/pickle
+
+/datum/targetable/geneticsAbility/midas/pickle
+	name = "Pickle Touch"
+	desc = "Instantly pickle an object"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1885,24 +1948,20 @@
 		return
 
 	OnLife(var/mult)
-		if(..()) return
-		if (isliving(owner))
-			var/mob/living/L = owner
-			var/turf/T = get_turf(L)
+		if(..())
+			return
+		if (!src.active)
+			return
+		if (!isliving(owner))
+			return
 
-			if (T && isturf(T))
-				var/area/A = get_area(T)
-				if (istype(T, /turf/space) || (A && (istype(A, /area/shuttle/) || istype(A, /area/shuttle_transit_space) || A.name == "Space" || A.name == "Ocean")))
-					src.cloak_decloak(2)
+		var/mob/living/L = owner
+		var/turf/T = get_turf(L)
 
-				else
-					if (T.RL_GetBrightness() < 0.2 && can_act(owner) && src.active)
-						src.cloak_decloak(1)
-					else
-						src.cloak_decloak(2)
-			else
-				src.cloak_decloak(2)
-		return
+		if (!isturf(T) || T.is_lit())
+			src.cloak_decloak(2)
+		else if (can_act(src.owner))
+			src.cloak_decloak(1)
 
 /datum/targetable/geneticsAbility/darkcloak
 	name = "Cloak of Darkness"
@@ -1918,6 +1977,7 @@
 		if (DC.active)
 			boutput(usr, "You stop using your cloak of darkness.")
 			DC.active = 0
+			DC.cloak_decloak(2)
 		else
 			boutput(usr, "You start using your cloak of darkness.")
 			DC.active = 1

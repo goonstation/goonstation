@@ -31,7 +31,7 @@ var/global/datum/phrase_log/phrase_log = new
 
 /datum/phrase_log
 	var/list/phrases
-	var/max_length = 600
+	var/max_length = 2000
 	var/filename = "data/logged_phrases.json"
 	var/uncool_words_filename = "data/uncool_words.json"
 	var/list/original_lengths
@@ -78,8 +78,8 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\bmorb(?!id)")
 		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"), "i")
 		var/list/sussy_word_list = list(
-			@"\bsus(:?|sy)\b",
-			@"\bpog(:?|gers|gies)\b",
+			@"\bsus(?:sy)?\b",
+			@"\bpog(?:gers|gies)?\b",
 			@"\bbaka\b",
 			@"😳",
 			@"amon?g",
@@ -95,7 +95,7 @@ var/global/datum/phrase_log/phrase_log = new
 			@"ligma",
 			@"ඞ",
 			@"we do a little .",
-			@"\b.ower\s?gam(:?er?|ing)",
+			@"\b.ower\s?gam(?:er?|ing)",
 			@"\bowo",
 			@"\buwu",
 			@"forgor",
@@ -106,7 +106,7 @@ var/global/datum/phrase_log/phrase_log = new
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(
-			@"\bl(:?ol)+\b",
+			@"\bl(?:ol)+\b",
 			@"\blmao+",
 			@"\bwt[hf]+\b",
 			@"\bsmh\b",
@@ -115,7 +115,7 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\bid[ck]\b",
 			@"\bic\b",
 			@"\bl?ooc\b",
-			@"\b(:?fail\s?)?rp\b"
+			@"\b(?:fail\s?)?rp\b"
 		)
 		ic_sussy_words = regex(jointext(ic_sussy_word_list, "|"), "i")
 
@@ -196,10 +196,7 @@ var/global/datum/phrase_log/phrase_log = new
 		var/new_uncool = input("Upload a json list of uncool words.", "Uncool words", null) as null|file
 		if(isnull(new_uncool))
 			return
-		if(fexists(src.uncool_words_filename))
-			fdel(src.uncool_words_filename)
-		text2file(file2text(new_uncool), src.uncool_words_filename)
-		boutput(usr, "ok")
+		rustg_file_write(file2text(new_uncool), src.uncool_words_filename)
 
 	proc/save()
 		if(isnull(src.phrases))
@@ -215,8 +212,7 @@ var/global/datum/phrase_log/phrase_log = new
 					else
 						phrases.Swap(i, rand(i, length(phrases)))
 				src.phrases[category] = phrases.Copy(1, src.max_length + 1)
-		fdel(src.filename)
-		text2file(json_encode(src.phrases), src.filename)
+		rustg_file_write(json_encode(src.phrases), src.filename)
 
 	/// Gets a random phrase from the Goonhub API database, categories are "ai_laws", "tickets", "fines"
 	proc/random_api_phrase(category)

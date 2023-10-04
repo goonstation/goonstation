@@ -2373,7 +2373,7 @@
 /turf/simulated/floor,
 /area/engine/engineering)
 "fE" = (
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor,
 /area/storage/tech)
 "fF" = (
@@ -19865,7 +19865,7 @@
 /area/zeta/patients)
 "Wp" = (
 /obj/displaycase{
-	displayed = new /obj/item/captaingun
+	displayed = /obj/item/captaingun
 	},
 /turf/simulated/floor,
 /area/crew_quarters/captain)

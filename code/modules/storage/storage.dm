@@ -304,7 +304,7 @@
 	if (!W)
 		return STORAGE_CANT_HOLD
 
-	if (W.cant_drop)
+	if (W.cant_drop || (W.item_function_flags & UNSTORABLE))
 		return STORAGE_WONT_FIT
 
 	for (var/type in src.prevent_holding)
@@ -334,7 +334,7 @@
 
 /// when adding an item in
 /datum/storage/proc/add_contents(obj/item/I, mob/user = null, visible = TRUE)
-	if (user?.equipped() == I)
+	if (I in user?.equipped_list())
 		user.u_equip(I)
 	src.stored_items += I
 	I.set_loc(src.linked_item, FALSE)
