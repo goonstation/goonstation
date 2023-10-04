@@ -1,6 +1,6 @@
 /mob/living/intangible/blob_overmind
-	name = "Blob Overmind"
-	real_name = "Blob Overmind"
+	name = "blob overmind"
+	real_name = "blob overmind"
 	desc = "The disembodied consciousness of a big pile of goop."
 	icon = 'icons/mob/mob.dmi'
 	icon_state = "blob"
@@ -11,6 +11,7 @@
 	anchored = ANCHORED
 	use_stamina = 0
 	mob_flags = SPEECH_BLOB
+	voice_type = null
 
 	var/datum/tutorial_base/regional/blob/tutorial
 	var/attack_power = 1

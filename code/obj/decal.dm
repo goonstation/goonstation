@@ -284,10 +284,9 @@ obj/decal/fakeobjects/cargopad
 
 /obj/decal/fakeobjects/robot/security
 	name = "robot"
-	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "mars_sec_bot"
+	icon = 'icons/mob/critter/robotic/gunbot.dmi'
+	icon_state = "gunbot"
 
 	hugo
 		name = "HUGO"

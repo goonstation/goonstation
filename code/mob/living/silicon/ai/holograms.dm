@@ -182,6 +182,7 @@
 	density = 0
 	alpha = 0		//animates to 180 in New
 	// plane = PLANE_HUD
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	var/duration = 30 SECONDS
 	var/mob/living/silicon/ai/owner
 	var/hologram_value = 1

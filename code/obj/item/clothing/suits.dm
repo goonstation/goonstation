@@ -1141,6 +1141,11 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 		..()
 		setProperty("space_movespeed", 1.5)
 
+/obj/item/clothing/suit/space/emerg/science
+	name = "bomb retreival suit"
+	desc = "A suit that protects against low pressure environments for a short time. Given to science since they blew up the more expensive ones."
+	// TODO science colours sprite for this
+
 /obj/item/clothing/suit/space/captain
 	name = "captain's space suit"
 	desc = "A suit that protects against low pressure environments and is green."
