@@ -24,8 +24,6 @@
 #define DOORPASS						 (1<<10)
 /// automagically talk into this object when a human is holding it (Phone handset!)
 #define TALK_INTO_HAND 			 (1<<11)
-/// is an open container for chemistry purposes. don't check this flag directly, use obj.is_open_container()
-#define OPENCONTAINER				 (1<<12)
 /// No beaker etc. splashing. For Chem machines etc.
 #define NOSPLASH 						 (1<<13)
 /// No attack when hitting stuff with this item.
@@ -48,6 +46,14 @@
 #define CLICK_DELAY_IN_CONTENTS  (1<<22)
 /// If an item cannot be crushed by the crusher
 #define UNCRUSHABLE              (1<<23)
+
+// Defines for is_open_container returns and checking. Don't check them directly, use the procs.
+#define ISOPEN_FALSE	0		//! closed container
+#define ISOPEN_INWARD	(1<<24)	//! stuff can go in
+#define ISOPEN_OUTWARD	(1<<25)	//! stuff can come out
+#define ISOPEN_SMALL	(1<<26)	//! stuff can be moved only by small things like syringes and droppers. Narrow entrance.
+#define ISOPEN_BOTH		ISOPEN_INWARD | ISOPEN_OUTWARD	//! stuff can go both in and out. Full openness.
+
 
 //Item function flags
 

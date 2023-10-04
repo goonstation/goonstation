@@ -239,22 +239,36 @@ TYPEINFO(/atom)
 		return null
 	/**
 	  * Convenience proc to see if a container is open for chemistry handling
-	  * Takes an argument of whether this openness is for the purpose of pouring something in or not (this should maybe just be a separate flag but we ran out of bits okay)
-	  * returns ISOPEN_TRUE if open, ISOPEN_FALSE if closed. Functionally the same as TRUE and FALSE.
-	  * child procs may override these two for special behaviours: see the define definitions.
+	  * Takes arguments of whether this openness is for the purpose of pouring something in or out. And size.
+	  * - inward means you're checking if something can go in.
+	  * - outward means you're checking if it can go out.
+	  * - small means that the thing checking isn't a small device like syringe or dropper
+	  * returns TRUE if you can access insides, FALSE if closed.
+	  * child procs may override this for special behaviours.
 	  */
-	proc/is_open_container(input = FALSE)
-		if (flags & OPENCONTAINER)
-			return ISOPEN_TRUE
-		else
-			return ISOPEN_FALSE
+	proc/is_open_container(inward = FALSE, outward = FALSE, small = TRUE)
+		. = FALSE
+		// if the checking thing isn't small, then fail regardless of flow direction
+		if (!small && (flags & ISOPEN_SMALL))
+			return FALSE
+
+		if (!inward && !outward)
+			CRASH("is_open_container called without setting an inward or outward direction of flow.")
+
+		if (inward && (flags & ISOPEN_INWARD))
+			return TRUE
+		if (outward && (flags & ISOPEN_OUTWARD))
+			return TRUE
+		// this might not be needed?
+		if (flags & ISOPEN_BOTH)
+			return TRUE
 
 	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result
 	proc/set_open_container(value)
 		if (value)
-			ADD_FLAG(src.flags, OPENCONTAINER)
+			ADD_FLAG(src.flags, value)
 		else
-			REMOVE_FLAG(src.flags, OPENCONTAINER)
+			REMOVE_FLAG(src.flags, value)
 		src.reagents?.handle_reactions()
 
 
