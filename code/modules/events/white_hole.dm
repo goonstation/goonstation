@@ -345,7 +345,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/mob/living/carbon/human/normal/engineer = 0.5,
 			/mob/living/carbon/human/normal/chiefengineer = 0.1,
 			/mob/living/carbon/human/npc/monkey/mr_rathen = 0.5,
-			/obj/item/clothing/glasses/meson = 0.5,
+			/obj/item/clothing/glasses/toggleable/meson = 0.5,
 			/obj/item/old_grenade/graviton = 0.2,
 			/obj/gravity_well_generator = 0.5,
 			/obj/item/raw_material/scrap_metal = 4,
@@ -706,7 +706,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 			/obj/item/nuclear_waste = 20,
 			/obj/decal/cleanable/machine_debris/radioactive = 20,
 			/obj/item/storage/pill_bottle/antirad = 15,
-			/obj/item/clothing/glasses/meson = 1,
+			/obj/item/clothing/glasses/toggleable/meson = 1,
 			/obj/item/reagent_containers/emergency_injector/anti_rad = 15,
 			/obj/storage/closet/radiation = 10,
 			/obj/item/reagent_containers/pill/antirad = 10,
@@ -796,7 +796,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 
 		if(triggered_by_event)
 			var/turf/T = get_turf(src)
-			for (var/client/C in GET_NEARBY(T, 15))
+			for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, T, 15))
 				boutput(C, "<span class='alert'>The air grows light and thin. Something feels terribly wrong.</span>")
 				shake_camera(C.mob, 5, 16)
 			playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,-0.5)

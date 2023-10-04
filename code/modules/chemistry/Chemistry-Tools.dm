@@ -1035,6 +1035,8 @@ proc/ui_describe_reagents(atom/A)
 		..()
 
 	process()
+		if (QDELETED(src.current_container))
+			src.current_container = null
 		if(is_currently_burning && current_container)
 			heat_container()
 		..()

@@ -135,7 +135,7 @@ Shield and graivty well generators
 	density = 1
 	opacity = 0
 	anchored = ANCHORED
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP
 	gas_impermeable = TRUE
 
 	New()
@@ -155,16 +155,6 @@ Shield and graivty well generators
 			return source.update_nearby_tiles(need_rebuild)
 
 		return 1
-
-/obj/shieldwall
-	name = "shield"
-	desc = "An energy shield."
-	icon = 'icons/effects/effects.dmi'
-	icon_state = "test"
-	density = 1
-	opacity = 0
-	anchored = ANCHORED
-
 
 TYPEINFO(/obj/gravity_well_generator)
 	mats = 14
