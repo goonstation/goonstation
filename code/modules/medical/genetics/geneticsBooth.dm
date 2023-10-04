@@ -339,7 +339,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 		if (split_with)
 			string += " Splitting half of profits with [split_with]."
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENE-BOOTH", "group"=MGO_GENETICS, "alert"=MGA_SALES, "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=MGO_GENETICS, "alert"=MGA_SALES, "sender"="00000000", "message"=string)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 		//playsound BEEP BEEEEEEEEEEP
@@ -349,7 +349,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 		var/string = "[GBP.name] has sold out!"
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENE-BOOTH", "group"=MGO_GENETICS, "alert"=MGA_SALES, "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=MGO_GENETICS, "alert"=MGA_SALES, "sender"="00000000", "message"=string)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 	Cross(var/mob/M)
