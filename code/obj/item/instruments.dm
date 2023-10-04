@@ -669,6 +669,8 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	post_play_effect(mob/user)
 		var/list/bots = list()
 		for (var/obj/machinery/bot/secbot/secbot in view(user.client.view, user)) //cursed awful byond screen syntax
+			if (secbot.emagged)
+				continue
 			secbot.KillPathAndGiveUp(1)
 			secbot.speak("Awaiting command...")
 			bots += secbot
