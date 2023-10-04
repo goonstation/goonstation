@@ -288,11 +288,11 @@
 			if (!R)
 				R = record_inside.record_name ? record_inside.record_name : pick("rad tunes","hip jams","cool music","neat sounds","magnificent melodies","fantastic farts")
 			user.client.play_music_radio(record_inside.song, R)
+			var/sender_name = "NSV-RENANIN"
 #ifdef UNDERWATER_MAP
-			var/sender_name = "LOCAL-DJ"
+			sender_name = "LOCAL-DJ"
 			EXTEND_COOLDOWN(global, "music", 500 SECONDS)
 #else
-			var/sender_name = "NSV-RENANIN"
 			EXTEND_COOLDOWN(global, "music", 300 SECONDS)
 #endif
 			/// PDA message ///
