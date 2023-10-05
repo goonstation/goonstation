@@ -249,7 +249,7 @@
 			return FALSE
 		for (var/obj/O in obj_turf)
 			// girder for soul, window for thindow (fuck thindow)
-			if (istype(O, /obj/structure/girder) || istype(O, /obj/window))
+			if (istype(O, /obj/structure/girder) || istype(O, /obj/window) || istype(O, /obj/railing))
 				continue
 			if (O.density)
 				boutput(owner, "<span class='alert'>You try to build \the [obj_name], but there's \the [O] in the way!</span>")
