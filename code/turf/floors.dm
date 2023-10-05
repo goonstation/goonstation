@@ -2008,7 +2008,7 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		var/obj/item/sheet/S = C
 		if (!S.amount_check(2,user)) return
 		if (S?.material?.getMaterialFlags() & MATERIAL_METAL)
-			var/msg = "a girder"
+			var/msg = "the girder"
 
 			if(!girder_egg)
 				var/count = 0
@@ -2088,16 +2088,16 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 				msg = insert_girder[min(count+1, insert_girder.len)]
 				if(count >= 69) //nice
 					girder_egg = 1
-					actions.start(new /datum/action/bar/icon/build(S, /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, 2, null, 1, 'icons/obj/structures.dmi', "girder egg", msg, null), user)
+					actions.start(new /datum/action/bar/icon/build(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/townguard/passive, src.loc, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder egg", name = msg), user)
 				else
-					actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
+					actions.start(new /datum/action/bar/icon/build(/obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
 			else
-				actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, 2, S.material, 1, 'icons/obj/structures.dmi', "girder", msg, null, spot = src), user)
+				actions.start(new /datum/action/bar/icon/build(S, /obj/structure/girder, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/structures.dmi', "girder", name = msg), user)
 		else if ((S?.material?.getMaterialFlags() & MATERIAL_CRYSTAL) && !(locate(/obj/window) in src))
 			if(S.reinforcement)
-				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.rwindows : /obj/window/reinforced, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
+				actions.start(new /datum/action/bar/icon/build(map_settings ? map_settings.rwindows : /obj/window/reinforced, src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/window.dmi', "window", /proc/window_reinforce_full_callback, "a full window"), user)
 			else
-				actions.start(new /datum/action/bar/icon/build(S, map_settings ? map_settings.windows : /obj/window, 2, S.material, 1, 'icons/obj/window.dmi', "window", "a full window", /proc/window_reinforce_full_callback, spot = src), user)
+				actions.start(new /datum/action/bar/icon/build(map_settings ? map_settings.windows : /obj/window, 			  src, 1, 3 SECONDS, S, 2, null, null, S.material, 'icons/obj/window.dmi', "window", /proc/window_reinforce_full_callback, "a full window"), user)
 
 	if(istype(C, /obj/item/cable_coil))
 		if(!intact)

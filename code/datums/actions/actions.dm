@@ -184,33 +184,77 @@
 			INVOKE_ASYNC(src.owner, src.proc_path, arglist(src.proc_args))
 
 /datum/action/bar/icon/build
-	duration = 30
-	var/obj/item/sheet/sheet
-	var/objtype
-	var/cost
-	var/datum/material/mat
-	var/amount
-	var/objname
-	var/callback = null
-	var/obj/item/sheet/sheet2 // in case you need to pull from more than one sheet
-	var/cost2 // same as above
-	var/spot
-	New(var/obj/item/sheet/csheet, var/cobjtype, var/ccost, var/datum/material/cmat, var/camount, var/cicon, var/cicon_state, var/cobjname, var/post_action_callback = null, var/obj/item/sheet/csheet2, var/ccost2, var/spot)
+	/// Custom name of the object for messages if needed, otherwise just the object's initial name
+	var/obj_name
+	var/obj_turf
+	var/obj_type
+	/// Amount of the object which will be made when we're done
+	var/obj_amt
+	var/obj/item/sheet/sheet1
+	var/obj/item/sheet/sheet2
+	var/cost1
+	var/cost2
+	/// Are we using a second sheet (e.g. Glass table parts)
+	var/has_sheet2
+	var/datum/material/obj_mat
+	/// Callback once the thing is constructed
+	var/post_callback
+	//New(var/obj/item/sheet/csheet, var/obj/cobjtype, var/ccost, var/datum/material/cmat, var/camount, var/cicon, var/cicon_state, var/cobjname, var/post_action_callback = null, var/obj/item/sheet/csheet2, var/ccost2, var/spot)
+	New(var/obj/otype, var/target, var/oamt, var/btime, var/s1, var/c1, var/s2, var/c2, var/datum/material/omat, var/c_icon = null, var/c_icon_state = null, var/callback = null, var/name = null)
 		..()
-		icon = cicon
-		icon_state = cicon_state
-		sheet = csheet
-		objtype = cobjtype
-		cost = ccost
-		mat = cmat
-		amount = camount
-		objname = cobjname
-		callback = post_action_callback
-		src.spot = spot
-		if (csheet2)
-			sheet2 = csheet2
-		if (ccost2)
-			cost2 = ccost2
+		resumable = FALSE
+		obj_type = otype
+		obj_name = (!name) ? initial(otype.name) : name
+		obj_turf = get_turf(target || owner)
+		obj_amt = oamt
+		obj_mat = omat
+		duration = btime
+		sheet1 = s1
+		cost1 = c1
+		sheet2 = s2
+		cost2 = c2
+		has_sheet2 = (s2 != null)
+		post_callback = callback
+		// You need both to set a custom icon, there's no warning but you are expected to know this
+		if (c_icon && c_icon_state)
+			icon = c_icon
+			icon_state = c_icon_state
+		else
+			icon = initial(otype.icon)
+			icon_state = initial(otype.icon_state)
+
+	/// Return TRUE if both sheets are there and valid, else false
+	proc/has_valid_sheets()
+		if (QDELETED(sheet1) || (has_sheet2 && QDELETED(sheet2)))
+			boutput(owner, "<span class='notice'>You have nothing to build with!</span>")
+			return FALSE
+		if (sheet1.amount < cost1)
+			boutput(owner, "<span class='notice'>You don't have enough [sheet1]\s to build \the [obj_name] with!</span>")
+			return FALSE
+		if (has_sheet2 && sheet2.amount < cost2)
+			boutput(owner, "<span class='notice'>You don't have enough [sheet2]\s to build \the [obj_name] with!</span>")
+			return FALSE
+		if (ismob(owner))
+			var/mob/M = owner
+			if (!in_interact_range(sheet1, M))
+				boutput(owner, "<span class='notice'>You dropped \the [sheet1]\s, how are you going to finish \the [obj_name]?</span>")
+				return FALSE
+			if (has_sheet2 && !in_interact_range(sheet2, M))
+				boutput(owner, "<span class='notice'>\the [sheet2]\s have to be closer to build \the [obj_name]!</span>")
+				return FALSE
+		return TRUE
+
+	proc/has_dense_object()
+		if (!obj_turf)
+			return FALSE
+		for (var/obj/O in obj_turf)
+			// girder for soul, window for thindow (fuck thindow)
+			if (istype(O, /obj/structure/girder) || istype(O, /obj/window))
+				continue
+			if (O.density)
+				boutput(owner, "<span class='alert'>You try to build \the [obj_name], but there's \the [O] in the way!</span>")
+				return TRUE
+		return FALSE
 
 	onStart()
 		..()
@@ -218,59 +262,47 @@
 #if defined(MAP_OVERRIDE_POD_WARS)
 		if (owner)
 			boutput(owner, "<span class='alert'>What are you gonna do with this? You have a very particular set of skills, and building is not one of them...</span>")
-			resumable = FALSE
 			interrupt(INTERRUPT_ALWAYS)
 			return
 #endif
-
-		if(ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if(H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
-				duration = round(duration / 2)
-
-		if(QDELETED(sheet))
-			boutput(owner, "<span class='notice'>You have nothing to build with!</span>")
+		if (!src.has_valid_sheets() || !src.obj_turf || src.has_dense_object())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
-		owner.visible_message("<span class='notice'>[owner] begins assembling [objname]!</span>")
+		if (ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			if (H.traitHolder.hasTrait("carpenter") || H.traitHolder.hasTrait("training_engineer"))
+				duration = round(duration / 2)
+
+		owner.visible_message("<span class='notice'>[owner] begins assembling \the [obj_name]!</span>")
 
 	onUpdate()
 		. = ..()
-		if(QDELETED(sheet) || sheet.amount < cost)
+		if (!src.has_valid_sheets())
 			interrupt(INTERRUPT_ALWAYS)
-		if (ismob(owner))
-			var/mob/M = owner
-			if(!equipped_or_holding(sheet, M))
-				interrupt(INTERRUPT_ALWAYS)
-				return
+			return
 
 	onEnd()
 		..()
-		if(QDELETED(sheet) || sheet.amount < cost)
+		if (!src.has_valid_sheets() || src.has_dense_object())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		if (ismob(owner))
-			var/mob/M = owner
-			if(!equipped_or_holding(sheet, M))
-				interrupt(INTERRUPT_ALWAYS)
-				return
-		owner.visible_message("<span class='notice'>[owner] assembles [objname]!</span>")
-		var/obj/item/R = new objtype(get_turf(spot || owner))
-		R.setMaterial(mat)
+		owner.visible_message("<span class='notice'>[owner] assembles \the [obj_name]!</span>")
+		var/obj/item/R = new obj_type(obj_turf)
+		R.setMaterial(obj_mat)
 		if (istype(R))
-			R.amount = amount
+			R.amount = obj_amt
 			R.inventory_counter?.update_number(R.amount)
 		R.set_dir(owner.dir)
-		sheet.change_stack_amount(-cost)
+		sheet1.change_stack_amount(-cost1)
 		if (sheet2 && cost2)
 			sheet2.change_stack_amount(-cost2)
-		logTheThing(LOG_STATION, owner, "builds [objname] (<b>Material:</b> [mat && istype(mat) && mat.getID() ? "[mat.getID()]" : "*UNKNOWN*"]) at [log_loc(owner)].")
-		if(isliving(owner))
+		logTheThing(LOG_STATION, owner, "builds \the [obj_name] (<b>Material:</b> [obj_mat && istype(obj_mat) && obj_mat.getID() ? "[obj_mat.getID()]" : "*UNKNOWN*"]) at [log_loc(owner)].")
+		if (isliving(owner))
 			var/mob/living/M = owner
 			R.add_fingerprint(M)
-		if (callback)
-			call(callback)(src, R)
+		if (post_callback)
+			call(post_callback)(src, R)
 
 /datum/action/bar/icon/cruiser_repair
 	id = "genproc"
