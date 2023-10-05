@@ -1,4 +1,9 @@
 
+(t)thu oct 05 23
+(u)Flaborized
+(p)16180
+(e)🆕|C-Feature
+(*)Chemical condensers can now be attached to up to four containers, splitting their output evenly through them.
 (t)wed oct 04 23
 (u)LeahTheTech
 (p)16260
