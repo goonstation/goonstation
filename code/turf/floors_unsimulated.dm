@@ -10,7 +10,9 @@
 	icon_state = "floor"
 	thermal_conductivity = 0.04
 	heat_capacity = 225000
-
+	// Related to overlay application in break/burn_tile() only
+	can_burn = TRUE
+	can_break = TRUE
 
 /turf/unsimulated/floor/attackby(obj/item/C, mob/user, params)
 
@@ -645,8 +647,9 @@ TYPEINFO(/turf/unsimulated/floor/circuit)
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
-
-	allows_vehicles = 1
+	allows_vehicles = TRUE
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/engine/vacuum
 	name = "vacuum floor"
@@ -989,6 +992,8 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 	icon_state = "glass_small"
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/glassblock/large
 	icon_state = "glass_large"
@@ -1016,10 +1021,14 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 	allows_vehicles = 1
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 /////////////////////////////////////////
 /turf/unsimulated/floor/auto
 	name = "auto edging turf"
+	can_burn = FALSE
+	can_break = FALSE
 
 	///turf won't draw edges on turfs with higher or equal priority
 	var/edge_priority_level = 0

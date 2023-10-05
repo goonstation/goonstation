@@ -95,6 +95,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	var/pull_w_class = W_CLASS_SMALL
 
+	///Whether or not we attack mobs with the neutral faction flag
+	var/ai_attacks_neutral = FALSE
 	///If the mob has an ai, turn this to TRUE if you want it to fight back upon being attacked
 	var/ai_retaliates = FALSE
 	///If the mob has an ai, and ai_retaliates is TRUE, how many attacks should we endure before attacking back?
@@ -1346,8 +1348,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (isintangible(C)) return FALSE
 		if (isdead(C)) return FALSE
 		if (istype(C, src.type)) return FALSE
+		if (isghostcritter(C) || isghostdrone(C)) return FALSE
 		if (C in src.friends) return FALSE
-		return !src.faction || !(C.faction & src.faction) //if we don't have a faction we hate everyone
+		return faction_check(src, C, src.ai_attacks_neutral)
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_scavenge_target(var/range = 5)
