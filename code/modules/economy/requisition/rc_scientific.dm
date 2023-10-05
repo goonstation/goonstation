@@ -466,8 +466,8 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	name = "prototype space suit set"
 	build_reward()
 		var/list/theitems = list()
-		theitems += new /obj/item/clothing/suit/space/neon/prototype
-		theitems += new /obj/item/clothing/head/helmet/space/neon/prototype
+		theitems += new /obj/item/clothing/suit/space/custom/prototype
+		theitems += new /obj/item/clothing/head/helmet/space/custom/prototype
 		return theitems
 
 /datum/rc_itemreward/suit_set

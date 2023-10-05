@@ -1809,6 +1809,20 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("flammable", 1)
 
 
+/datum/material/fabric/exoweave
+	mat_id = "exoweave"
+	name = "ExoWeave"
+	desc = "A prototype composite fabric designed for EVA activity, comprised primarily of carbon fibers treated with a silica-based solution."
+	color = "#3d666b"
+
+	New()
+		..()
+		setProperty("density", 5)
+		setProperty("hard", 4)
+		setProperty("chemical", 7)
+		setProperty("thermal", 9)
+		setProperty("electrical", 8)
+
 
 /datum/material/fabric/beewool
 	mat_id = "beewool"

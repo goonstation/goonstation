@@ -124,14 +124,6 @@
 	item_state = "space-cute"
 	desc = "Helps protect against vacuum. Comes in a unique, flashy style."
 
-/obj/item/clothing/head/helmet/space/neon/prototype
-	name = "SpaceLite Mk.IV helmet"
-	desc = "Helps protect against vacuum. Built with distinctive style and a lightweight composite weave."
-
-	setupProperties()
-		..()
-		setProperty("space_movespeed", 0)
-
 /obj/item/clothing/head/helmet/space/custom
 	name = "bespoke space helmet"
 	desc = "A custom built helmet with a fancy visor!"
@@ -182,6 +174,13 @@
 		// Add back the helmet texture since we overide the material apparance
 		if (helmMat.getTexture())
 			src.setTexture(helmMat.getTexture(), helmMat.getTextureBlendMode(), "material")
+
+/obj/item/clothing/head/helmet/space/custom/prototype
+	New()
+		..()
+		var/weave = getMaterial("exoweave")
+		var/augment = getMaterial("plasmaglass")
+		src.set_custom_mats(weave,augment)
 
 // Sealab helmets
 

@@ -1378,14 +1378,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	icon_state = "space-neon"
 	item_state = "space-neon"
 
-/obj/item/clothing/suit/space/neon/prototype
-	name = "SpaceLite Mk.IV suit"
-	desc = "A deluxe space suit in snazzy colors, built with a composite weave that makes movement easier wihout compromising on durability."
-
-	setupProperties()
-		..()
-		setProperty("space_movespeed", 0.1)
-
 /obj/item/clothing/suit/space/custom // Used for nanofabs
 	icon_state = "spacemat"
 	inhand_image_icon = "s_suit"
@@ -1412,6 +1404,13 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 		setProperty("meleeprot", 3 + prot)
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)
+
+/obj/item/clothing/suit/space/custom/prototype
+	New()
+		..()
+		var/weave = getMaterial("exoweave")
+		var/augment = getMaterial("bohrum")
+		src.set_custom_mats(weave,augment)
 
 // Light space suits
 /obj/item/clothing/suit/space/light // Lighter suits that don't impede movement, but have way less armor
