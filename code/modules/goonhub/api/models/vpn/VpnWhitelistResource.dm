@@ -1,6 +1,7 @@
 
 /// VpnWhitelistResource
 /datum/apiModel/VpnWhitelistResource
+	var/id 						= null // integer
 	var/game_admin_id	= null // integer
 	var/ckey			= null // string
 	var/created_at		= null // date-time

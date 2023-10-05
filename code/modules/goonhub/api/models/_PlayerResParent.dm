@@ -25,6 +25,7 @@ ABSTRACT_TYPE(/datum/apiModel/Tracked/PlayerRes)
 		|| isnull(src.updated_at) \
 	)
 		return FALSE
+	return TRUE
 
 /datum/apiModel/Tracked/PlayerRes/ToString()
 	. = list()

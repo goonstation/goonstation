@@ -3,6 +3,7 @@ ABSTRACT_TYPE(/datum/apiModel/Tracked)
 /// Tracked - ABSTRACT
 /// Anything with the two timestamp fields inherit from this
 /datum/apiModel/Tracked
+	var/id = null // int
 	var/created_at	= null // date-time
 	var/updated_at	= null // date-time
 
@@ -23,6 +24,7 @@ ABSTRACT_TYPE(/datum/apiModel/Tracked)
 		|| isnull(src.updated_at) \
 	)
 		return FALSE
+	return TRUE
 
 /datum/apiModel/Tracked/ToString()
 	. = list()

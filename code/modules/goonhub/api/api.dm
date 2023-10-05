@@ -88,7 +88,7 @@ var/global/datum/apiHandler/apiHandler
 			src.apiError("API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]", forceErrorException)
 			return
 
-		var/req_route = "[config.goonhub_api_endpoint]/[route.path][route.routeParams ? "/[route.formatRouteParams()]" : ""]/?[route.formatQueryParams()]"
+		var/req_route = "[config.goonhub_api_endpoint][route.path][route.routeParams ? "/[route.formatRouteParams()]" : ""]/?[route.formatQueryParams()]"
 
 		var/headers = list(
 			"Accept" = "application/json",
@@ -107,7 +107,8 @@ var/global/datum/apiHandler/apiHandler
 
 		// Actual request
 		var/datum/http_request/request = new()
-		request.prepare(route.method, req_route, route.body.toJson(), headers, "")
+		var/req_body = route.body ? route.body.toJson() : ""
+		request.prepare(route.method, req_route, req_body, headers, "")
 		request.begin_async()
 		var/time_started = TIME
 		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
@@ -143,23 +144,30 @@ var/global/datum/apiHandler/apiHandler
 		// At this point we assume the request was a success, so reset the error counter
 		trackRecentError(TRUE)
 
-		if (forceResponse)
-			// Parse the response
-			var/list/data
+		// Parse the response
+		var/list/data
+		try
+			data = json_decode(response.body)
+		catch
+			// pass
 
-			try
-				data = json_decode(response.body)
-			catch
-				// pass
+		// Bad data format
+		if (!data)
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: JSON decode error during <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
+			logTheThing(LOG_DIARY, null, "API Error: JSON decode error during [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
 
-			if (!data)
-				logTheThing(LOG_DEBUG, null, "<b>API Error</b>: JSON decode error during <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
-				logTheThing(LOG_DIARY, null, "API Error: JSON decode error during [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
+			if (attempt < maxApiRetries)
+				return retryApiQuery(args, attempt = attempt)
 
-				if (attempt < maxApiRetries)
-					return retryApiQuery(args, attempt = attempt)
+			src.apiError("API Error: JSON decode error during [req_route]")
 
-				src.apiError("API Error: JSON decode error during [req_route]")
+		// Validation
+		var/datum/apiModel/model = new route.correct_response
+		model.setupFromResponse(data)
+		if (!model.VerifyIntegrity())
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Verification error during <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
+			logTheThing(LOG_DIARY, null, "API Error: Verification error during [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
+			src.apiError("API Error: Verification error during [req_route]")
+			return
 
-			return data
-		return 1
+		return model

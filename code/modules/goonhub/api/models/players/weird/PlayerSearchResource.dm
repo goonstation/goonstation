@@ -1,6 +1,7 @@
 
 /// PlayerSearchResource
 /datum/apiModel/PlayerSearchResource
+	var/id = null // int
 	var/ip			= null 	// string
 	var/comp_id		= null 	// string
 	var/player_id	= null 	// string
