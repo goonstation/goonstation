@@ -2844,7 +2844,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one produces crates, carts, that sort of thing. Y'know, box stuff."
 	icon_state = "fab-crates"
 	icon_base = "crates"
-	free_resource_amt = 2
+	free_resource_amt = 1
 	free_resources = list(/obj/item/material_piece/steel,
 		/obj/item/material_piece/organic/wood)
 	accept_blueprints = FALSE
