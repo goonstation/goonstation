@@ -830,7 +830,7 @@
 			var/saniStr = strip_html_tags(sanitize(html_encode(P.info)))
 			SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,saniStr)
 			if(del_paper)
-				del(W)
+				qdel(W)
 			return 1
 		return 0
 
@@ -3968,9 +3968,9 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		if (ON_COOLDOWN(src, "movement_delay", move_lag))
 			return
 		var/direction = text2num_safe(input.signal)
-		if (direction == null)
+		if (!direction)
 			direction = dirname_to_dir(input.signal)
-		if (direction == null)
+		if (!(direction in alldirs))
 			return
 		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))
@@ -3991,7 +3991,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		var/direction = text2num_safe(input.signal)
 		if (!direction)
 			direction = dirname_to_dir(input.signal)
-		if (!direction)
+		if (!(direction in alldirs)) // without this someone could pass 16 or 32 to jump across z-levels, welcome to the forbidden UP and DOWN dirs
 			return
 		var/obj/item/storage/S = src.stored?.linked_item
 		if (!walk_check(S))

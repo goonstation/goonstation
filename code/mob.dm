@@ -3143,7 +3143,8 @@
 	src.point_at(A)
 
 /mob/proc/point_at(var/atom/target, var/pixel_x, var/pixel_y) //overriden by living and dead
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_POINT, target)
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))
 	set name = "Pull / Unpull"

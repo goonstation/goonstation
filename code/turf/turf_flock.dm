@@ -9,7 +9,6 @@ TYPEINFO(/turf/simulated/floor/feather)
 	var/flock_id = "Conduit"
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "floor"
-	flags = USEDELAY
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	default_material = "gnesis"
@@ -36,6 +35,7 @@ TYPEINFO(/turf/simulated/floor/feather)
 	light.attach(src)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection, report_unarmed=FALSE, report_thrown=FALSE, report_proj=FALSE)
+	flags |= USEDELAY
 
 /turf/simulated/floor/feather/special_desc(dist, mob/user)
 	if (!isflockmob(user))
@@ -195,7 +195,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	default_material = "gnesis"
-	var/broken = FALSE
+	broken = FALSE
 	var/on = FALSE
 
 	// update_icon()
