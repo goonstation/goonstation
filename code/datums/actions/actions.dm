@@ -199,7 +199,7 @@
 	var/datum/material/obj_mat
 	/// Callback once the thing is constructed
 	var/post_callback
-	//New(var/obj/item/sheet/csheet, var/obj/cobjtype, var/ccost, var/datum/material/cmat, var/camount, var/cicon, var/cicon_state, var/cobjname, var/post_action_callback = null, var/obj/item/sheet/csheet2, var/ccost2, var/spot)
+
 	New(var/obj/otype, var/target, var/oamt, var/btime, var/s1, var/c1, var/s2, var/c2, var/datum/material/omat, var/c_icon = null, var/c_icon_state = null, var/callback = null, var/name = null)
 		..()
 		resumable = FALSE
