@@ -3364,7 +3364,6 @@
 /turf/simulated/wall/auto/supernorn,
 /area/station/hallway/secondary/researchshuttle)
 "aqi" = (
-/obj/table/reinforced,
 /obj/item/clipboard,
 /obj/item/paper_bin,
 /obj/item/pen/marker/blue,
@@ -3373,6 +3372,7 @@
 	pixel_x = -7
 	},
 /obj/item/stamp,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/yellow/side,
 /area/station/quartermaster/office)
 "aqk" = (
@@ -27788,7 +27788,6 @@
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
 "gTk" = (
-/obj/table/reinforced,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -27796,6 +27795,7 @@
 /obj/mapping_helper/firedoor_spawn,
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/access/cargo,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "gTm" = (
@@ -50012,7 +50012,6 @@
 /turf/simulated/floor/white,
 /area/station/crew_quarters/observatory)
 "wqN" = (
-/obj/table/reinforced,
 /obj/cable{
 	icon_state = "4-8"
 	},
@@ -50021,6 +50020,7 @@
 /obj/machinery/door/airlock/pyro/glass/windoor,
 /obj/mapping_helper/access/cargo,
 /obj/mapping_helper/firedoor_spawn,
+/obj/table/reinforced/auto,
 /turf/simulated/floor/yellow,
 /area/station/quartermaster/office)
 "wrA" = (
