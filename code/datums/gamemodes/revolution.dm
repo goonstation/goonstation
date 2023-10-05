@@ -16,10 +16,14 @@
 	var/list/datum/mind/head_revolutionaries = list()
 	var/list/datum/mind/revolutionaries = list()
 	var/finished = 0
+	var/waittime = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
-	var/const/TrackerTime_min = 27 MINUTES //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/TrackerTime_max = 30 MINUTES //upper bound on time before intercept arrives (in tenths of seconds)
+	var/waittimed = FALSE
+	var/trackertime = 0
+	var/const/trackertime_min = 27 MINUTES //lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/trackertime_max = 30 MINUTES //upper bound on time before intercept arrives (in tenths of seconds)
+	var/trackertimed = FALSE
 	var/const/min_revheads = 3
 	var/const/max_revheads = 5
 	var/const/pop_divisor = 15
@@ -80,6 +84,8 @@
 	return 1
 
 /datum/game_mode/revolution/post_setup()
+	waittime = rand(waittime_l, waittime_h)
+	trackertime = rand(trackertime_min, trackertime_max)
 #ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
 	var/list/heads = get_living_heads()
 	if(!head_revolutionaries || !heads)
@@ -92,13 +98,9 @@
 	for(var/datum/mind/rev_mind in head_revolutionaries)
 		rev_mind.add_antagonist(ROLE_HEAD_REVOLUTIONARY, source = ANTAGONIST_SOURCE_ROUND_START)
 
-	SPAWN(rand(waittime_l, waittime_h))
-		send_intercept()
-	SPAWN(rand(TrackerTime_min, TrackerTime_max))
-		send_tracker()
-
 /datum/game_mode/revolution/send_intercept()
 	..(src.head_revolutionaries)
+	waittimed = TRUE
 
 /datum/game_mode/revolution/proc/send_tracker()
 	command_alert("Foreign mutiny located [station_or_ship()]wide, a program to track revolutionary leaders have been sent to all crew member PDA's.", "Central Command Security Alert", 'sound/misc/announcement_1.ogg', alert_origin = "Watchful Eye Sensor Array Update")
@@ -111,6 +113,7 @@
 	signal2.data_file = (new /datum/computer/file/pda_program/headtracker)
 	signal2.data = list("command"="file_send", "file_name" = "Nanotrasen Command Tracker", "file_ext" = "PPROG", "file_size" = "1", "tag" = "auto_fileshare", "sender"="00000000")
 	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(signal2)
+	trackertimed = TRUE
 
 #ifndef THE_REVOLUTION_WILL_NOT_BE_TELEVISED
 /datum/game_mode/revolution/process()
@@ -121,6 +124,10 @@
 	if (world.time > win_check_freq)
 		win_check_freq += win_check_freq
 		check_win()
+	if (TIME >= waittime && !waittimed)
+		send_intercept()
+	if (TIME >= trackertime && !trackertimed)
+		send_tracker()
 #endif
 
 /datum/game_mode/revolution/check_win()
