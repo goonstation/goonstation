@@ -957,6 +957,7 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 /mob/living/critter/small_animal/dog/george/orwell
 	name = "Orwell"
 	icon_state = "corgi"
+	icon_state_dead = "corgi-lying"
 	dogtype = "corgi"
 
 /* ============================================== */

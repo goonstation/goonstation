@@ -204,9 +204,10 @@
 		checkhealth()
 
 	updateDialog()
-		for(var/client/C)
-			if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
-				src.open_parts_panel(C.mob)
+		. = ..()
+		// for(var/client/C)
+		// 	if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
+		// 		src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
 		if (is_incapacitated(usr) || usr.restrained())

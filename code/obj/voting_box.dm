@@ -79,18 +79,17 @@
 							bribeAmount = S.amount
 							bribeJerk = user.real_name
 							map_vote_holder.voting_box(src,chosen)
+						S.amount = 0
+						user.u_equip(S)
+						S.dropped(user)
+						qdel( S )
+						animate_storage_rustle(src)
+						playsound(src.loc, 'sound/machines/ping.ogg', 75)
+						SPAWN(1 SECOND)
+							playsound(src.loc, 'sound/machines/paper_shredder.ogg', 90, 1)
 				else
 					boutput(user, "<span class='alert'>You can't buy a vote when you haven't voted, doofus.</span>")
 					return
-
-			S.amount = 0
-			user.u_equip(S)
-			S.dropped(user)
-			qdel( S )
-			animate_storage_rustle(src)
-			playsound(src.loc, 'sound/machines/ping.ogg', 75)
-			SPAWN(1 SECOND)
-				playsound(src.loc, 'sound/machines/paper_shredder.ogg', 90, 1)
 			return
 
 

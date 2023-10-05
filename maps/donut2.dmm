@@ -45849,13 +45849,6 @@
 /obj/machinery/chemicompiler_stationary,
 /turf/simulated/floor/engine,
 /area/station/science/testchamber)
-"tpw" = (
-/obj/disposalpipe/segment/mail,
-/obj/storage/secure/closet/personal,
-/turf/simulated/floor/red/side{
-	dir = 4
-	},
-/area/station/hallway/primary/east)
 "tpV" = (
 /obj/shrub{
 	dir = 6
@@ -92652,7 +92645,7 @@ bST
 aOc
 kTw
 aQf
-tpw
+aQM
 aQM
 aRC
 aMP
