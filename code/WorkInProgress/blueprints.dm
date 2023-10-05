@@ -506,6 +506,141 @@
 			//rebuild powernets etc.
 */
 
+#define WHITELIST_OBJECTS list(
+	/obj/stool,
+	/obj/grille,
+	/obj/window,
+	/obj/machinery/door,
+	/obj/cable,
+	/obj/table,
+	/obj/rack,
+	/obj/structure,
+	/obj/disposalpipe,
+//	/obj/machinery/vending,  //No cheap buckshot/oddcigs/chemdepots. Use a mechscanner
+	/obj/machinery/light,
+	/obj/machinery/door_control,
+	/obj/machinery/light_switch,
+	/obj/machinery/camera,
+	/obj/item/device/radio/intercom,
+	/obj/machinery/firealarm,
+	/obj/machinery/power/apc,
+	/obj/machinery/alarm,
+	/obj/machinery/disposal,
+	/obj/machinery/gibber,
+	/obj/machinery/floorflusher,
+	/obj/machinery/activation_button/driver_button,
+	/obj/machinery/door_control,
+	/obj/machinery/disposal,
+	/obj/submachine/chef_oven,
+	/obj/submachine/chef_sink,
+	/obj/machinery/launcher_loader,
+	/obj/machinery/optable,
+	/obj/machinery/mass_driver,
+//	/obj/reagent_dispensers,  //No free helium/fuel/omni/raj/etc from abcu
+	/obj/machinery/sleeper,
+	/obj/machinery/sleep_console,
+	/obj/submachine/slot_machine,
+	/obj/machinery/deep_fryer,
+	/obj/submachine/ATM,
+	/obj/submachine/ice_cream_dispenser,
+	/obj/machinery/portable_atmospherics,
+	/obj/machinery/ai_status_display,
+	/obj/securearea,
+	/obj/submachine/mixer,
+	/obj/submachine/foodprocessor,
+)
+
+#define BLACKLIST_OBJECTS list(
+	/obj/disposalpipe/loafer,
+	/obj/submachine/slot_machine/item,
+	/obj/machinery/portable_atmospherics/canister,
+)
+
+#define WHITELIST_TURFS list(/turf/simulated)
+
+/datum/abcu_blueprint
+	var/cost_metal = 0
+	var/cost_crystal = 0
+
+	var/size_x = 0
+	var/size_y = 0
+
+	var/author = ""
+
+	var/list/roominfo = list()
+
+proc/save_abcu_blueprint(mob/user, list/turf_list, var/name = "", var/use_whitelist = 1)
+	var/savepath = "data/blueprints/[user.client.ckey]/[name].dat"
+	if (fexists("[savepath]"))
+		if (alert(usr, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
+			return
+		fdel("[savepath]")
+	var/savefile/save = new/savefile("[savepath]")
+
+	var/minx = 100000000
+	var/miny = 100000000
+
+	var/maxx = 0
+	var/maxy = 0
+
+	for(var/turf/t as anything in roomList)
+		if(t.x < minx) minx = t.x
+		if(t.y < miny) miny = t.y
+
+		if(t.x > maxx) maxx = t.x
+		if(t.y > maxy) maxy = t.y
+
+	var/sizex = (maxx - minx) + 1
+	var/sizey = (maxy - miny) + 1
+
+	save.cd = "/"
+	save["sizex"] << sizex
+	save["sizey"] << sizey
+	save["roomname"] << roomname
+	save["author"] << usr.client.ckey
+	save.dir.Add("tiles")
+
+	for(var/atom/curr in turf_list)
+		var/posx = (curr.x - minx)
+		var/posy = (curr.y - miny)
+
+		save.cd = "/tiles/[posx],[posy]"
+		save["type"] << curr.type
+		save["dir"] << curr.dir
+		save["state"] << curr.icon_state
+		if (curr.icon != initial(curr.icon))
+			save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
+
+		for(var/obj/o in curr)
+			var/permitted = 0
+			for(var/p in permittedObjectTypes)
+				var/type = text2path(p)
+				if(istype(o, type))
+					permitted = 1
+					break
+
+			for(var/p in blacklistedObjectTypes)
+				var/type = text2path(p)
+				if(istype(o, type))
+					permitted = 0
+					break//no
+
+			if(permitted || !applyWhitelist)
+				var/id = "\ref[o]"
+				save.cd = "/tiles/[posx],[posy]/objects"
+				while(save.dir.Find(id))
+					id = id + "I"
+				save.cd = "[id]"
+				save["dir"] << o.dir
+				save["type"] << o.type
+				save["layer"] << o.layer
+				save["pixelx"] << o.pixel_x
+				save["pixely"] << o.pixel_y
+				save["icon_state"] << o.icon_state
+
+	boutput(usr, "<span class='notice'>Saved blueprint as '[name]'. </span>")
+	return
+
 /obj/item/blueprint_marker
 	name = "blueprint marker"
 	desc = "A tool used to map rooms for the creation of blueprints. \
