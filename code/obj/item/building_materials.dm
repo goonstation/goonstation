@@ -1394,6 +1394,13 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/zwood)
 			sheet_cost = 6
 			icon = 'icons/obj/doors/SL_doors.dmi'
 			icon_state = "wood1"
+		swing_sign
+			recipe_id = "swing_sign"
+			craftedType = /obj/item/swingsignfolded
+			name = "Swing Sign"
+			sheet_cost = 2
+			icon = 'icons/obj/furniture/swingsign.dmi'
+			icon_state = "written"
 
 	zwood
 		zbarricade
