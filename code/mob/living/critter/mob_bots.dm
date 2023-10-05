@@ -693,7 +693,22 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	real_name = "bowlatron"
 	throw_speed = 0.75
 
+	New()
+		. = ..()
+
+		RegisterSignal(src, COMSIG_MOVABLE_HIT_THROWN, PROC_REF(electric_bowling_strike))
+
 	throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
 			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
 		throw_unlimited = TRUE
 		..()
+
+	proc/electric_bowling_strike(mob/thrown_mob, atom/target, datum/thrown_thing/thrown_thing)
+		if	(isturf(target) && !target.density)
+			return
+		thrown_mob.visible_message("<span class='alert'>[thrown_mob] unleashes a flash of electricity on impact!</span>")
+		elecflash(src.loc, 1, 2, 1)
+		if (ismob(target))
+			var/mob/M = target
+			M.do_disorient(150, weakened = 120, disorient = 60)
+
