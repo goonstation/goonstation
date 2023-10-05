@@ -104,6 +104,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "Not related to any kind of crop."
 	icon_state = "cream" //ITS NOT A GODDAMN COOKIE
 	food_color = "#F8F8F8"
+	initial_volume = 10
+	initial_reagents = list("cream"=10)
 
 /obj/item/reagent_containers/food/snacks/condiment/custard
 	name = "custard"
