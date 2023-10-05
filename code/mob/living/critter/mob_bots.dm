@@ -415,6 +415,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	density = FALSE
 	hand_count = 1
 	can_burn = FALSE
+	can_grab = TRUE
+	can_disarm = TRUE
 	dna_to_absorb = 0
 	metabolizes = FALSE
 	custom_gib_handler = /proc/robogibs
@@ -423,8 +425,10 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	health_brute_vuln = 1
 	health_burn = 25
 	health_burn_vuln = 1.25
+	var/net_id
 	var/power = TRUE
 	var/beacon_freq = FREQ_NAVBEACON
+	var/control_freq = FREQ_BOT_CONTROL
 	var/emagged = 0
 	var/emote_cooldown = 7 SECONDS
 	var/siren_active = FALSE
@@ -438,6 +442,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 	New()
 		. = ..()
+		src.net_id = generate_net_id(src)
+
 		remove_lifeprocess(/datum/lifeprocess/blindness)
 		remove_lifeprocess(/datum/lifeprocess/viruses)
 		remove_lifeprocess(/datum/lifeprocess/blood)
@@ -453,11 +459,22 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 
 		add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
 
+		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("control", control_freq)
 		MAKE_DEFAULT_RADIO_PACKET_COMPONENT("beacon", beacon_freq)
 		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 		for(var/actionType in childrentypesof(/datum/contextAction/securitron)) //see context_actions.dm
 			src.contexts += new actionType()
+
+		#ifdef I_AM_ABOVE_THE_LAW
+		START_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+
+	disposing()
+		#ifdef I_AM_ABOVE_THE_LAW
+		STOP_TRACKING_CAT(TR_CAT_DELETE_ME)
+		#endif
+		..()
 
 	setup_hands()
 		..()
@@ -570,6 +587,33 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				return src.report_arrests
 
 	proc/locate_beacon()
+		return
+
+	proc/receive_signal(datum/signal/signal)
+		if(!src.power)
+			return
+
+		var/signal_command = signal.data["command"]
+		// process all-bot input
+		if(signal_command=="bot_status")
+			src.send_status()
+
+	proc/send_status()
+		var/datum/signal/signal = get_free_signal()
+		signal.source = src
+		signal.data["sender"] = src.net_id
+		signal.data["type"] = "secbot"
+		signal.data["name"] = name
+		signal.data["loca"] = get_area(src)
+		signal.data["mode"] = 1
+		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, control_freq)
+
+	proc/assess_perp(mob/living/perp)
+		if(src.emagged)
+			return 10 //Everyone is a criminal!
+		else
+			// saving this here while i go make contraband more signals based.
+			return 0
 
 	proc/allowed(mob/M)
 		//check if it doesn't require any access at all
