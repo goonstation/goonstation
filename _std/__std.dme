@@ -148,6 +148,7 @@
 #include "macros\transfers.dm"
 #include "macros\turf.dm"
 #include "macros\twitch_sbill.dm"
+#include "macros\vars.dm"
 #include "macros\vehicles.dm"
 #include "address.dm"
 #include "color.dm"
