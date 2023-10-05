@@ -197,6 +197,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 	force = 0
 	bites_left = 2
 	heal_amt = 6
+	initial_reagents = list("cream"=10)
 
 /obj/item/reagent_containers/food/snacks/pie/anything
 	name = "anything pie"

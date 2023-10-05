@@ -223,7 +223,9 @@ datum
 			viscosity = 0.1
 
 			on_mob_life(var/mob/M, var/mult = 1)
-				M.reagents.add_reagent(list("cholesterol", "milk"), 0.5 * mult)
+				if(prob(25))
+					M.reagents.add_reagent(("milk"), 1 * mult)
+					M.reagents.add_reagent(("cholesterol"), 1 * mult)
 				..()
 
 
