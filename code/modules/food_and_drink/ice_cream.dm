@@ -19,7 +19,7 @@
 	var/flavor_name = null
 	var/image/cream_image = null
 	initial_volume = 40
-	initial_reagents = list("cream"=10)
+	initial_reagents = list("cream" = 10)
 	food_effects = list("food_cold")
 	use_bite_mask = FALSE
 
