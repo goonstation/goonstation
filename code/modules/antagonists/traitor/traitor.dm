@@ -109,7 +109,7 @@
 			var/obj/item_type = initial(purchased_item.item)
 			purchased_items += list(
 				list(
-					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1))]",
+					"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
 					"name" = "[purchased_item.name] ([purchased_item.cost] TC)",
 				)
 			)
@@ -128,7 +128,7 @@
 				var/obj/item_type = initial(crate_item.item)
 				crate_items += list(
 					list(
-						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1))]",
+						"iconBase64" = "[icon2base64(icon(initial(item_type.icon), initial(item_type.icon_state), frame = 1, dir = initial(item_type.dir)))]",
 						"name" = "[crate_item.name]",
 					)
 				)
