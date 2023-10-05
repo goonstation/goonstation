@@ -717,8 +717,9 @@ proc/ui_describe_reagents(atom/A)
 	object_flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
 	initial_volume = 100
 	accepts_lid = TRUE
-	var/obj/item/current_container = null //! the container currently attached to the condenser
+	var/list/connected_containers = list() //! the containers currently connected to the condenser
 	var/image/fluid_image = null
+	var/max_amount_of_containers = 4
 
 	mouse_drop(atom/over_object, src_location, over_location)
 		if(over_object == src)
@@ -729,19 +730,19 @@ proc/ui_describe_reagents(atom/A)
 			try_adding_container(over_object, usr)
 
 	set_loc(newloc, storage_check)
-		if (src.loc != newloc && src.current_container)
-			src.remove_container()
+		if (src.loc != newloc && length(src.connected_containers))
+			src.remove_all_containers()
 		. = ..()
 
 	Move()
-		if (src.current_container)
-			src.remove_container()
+		if(length(src.connected_containers))
+			src.remove_all_containers()
 		..()
 
 	attack_hand(var/mob/user)
-		if(current_container)
-			remove_container()
-			boutput(user, "<span class='alert'>You remove the connection to the [src.name].</span>")
+		if(length(src.connected_containers))
+			src.remove_all_containers()
+			boutput(user, "<span class='alert'>You remove all connections to the [src.name].</span>")
 		..()
 
 	on_reagent_change()
@@ -769,8 +770,8 @@ proc/ui_describe_reagents(atom/A)
 		if (GET_DIST(container, src) > 1)
 			usr.show_text("The [src.name] is too far away from the [container.name]!", "red")
 			return
-		if(current_container)
-			boutput(user, "<span class='alert'>The [src.name] is already connected to the [current_container.name]!</span>")
+		if(length(src.connected_containers) >= src.max_amount_of_containers)
+			boutput(user, "<span class='alert'>The [src.name] can only be connected to [max_amount_of_containers] containers!</span>")
 		else
 			boutput(user, "<span class='notice'>You hook the [container.name] up to the [src.name].</span>")
 			//this is a mess but we need it to disconnect if ANYTHING happens
@@ -780,27 +781,42 @@ proc/ui_describe_reagents(atom/A)
 			var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + get_chemical_effect_position())
 			result.lineImage.pixel_x = -src.pixel_x
 			result.lineImage.pixel_y = -src.pixel_y
-			src.UpdateOverlays(result.lineImage, "tube")
-			current_container = container
+			src.UpdateOverlays(result.lineImage, "tube\ref[container]")
+			src.connected_containers.Add(container)
 
-	proc/remove_container()
-		src.UpdateOverlays(null, "tube")
-		UnregisterSignal(current_container, COMSIG_ATTACKHAND)
-		UnregisterSignal(current_container, XSIG_OUTERMOST_MOVABLE_CHANGED)
-		UnregisterSignal(current_container, COMSIG_MOVABLE_MOVED)
-		current_container = null
+	proc/remove_container(var/obj/container)
+		src.UpdateOverlays(null, "tube\ref[container]")
+		UnregisterSignal(container, COMSIG_ATTACKHAND)
+		UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
+		UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
+		src.connected_containers.Remove(container)
+
+	proc/remove_all_containers()
+		for(var/obj/container in src.connected_containers)
+			remove_container(container)
 
 	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
-		if(!current_container) //if we have no beaker, dump the reagents into condenser
+		if(length(src.connected_containers) <= 0) //if we have no beaker, dump the reagents into condenser
 			src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
 		else
-			var/remaining_container_space = current_container.reagents.maximum_volume - current_container.reagents.total_volume
-			if(remaining_container_space < amount) 																			//if there's more reagent to add than the beaker can hold...
-				current_container.reagents.add_reagent(reagent, remaining_container_space, sdata, temp_new, donotreact, donotupdate) //...add what we can to the beaker...
-				src.reagents.add_reagent(reagent, amount - remaining_container_space, sdata, temp_new, donotreact, donotupdate)  //...then backflow remaining chems into the condenser
+			add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate)
 
+	proc/add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+		var/list/non_full_containers = list()
+		for(var/obj/container in connected_containers)
+			if(container.reagents.maximum_volume > container.reagents.total_volume) //don't bother with this if it's already full, move onto other containers
+				non_full_containers.Add(container)
+		if(!length(non_full_containers))	//all full? backflow!!
+			src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+			return
+		var/divided_amount = (amount / length(non_full_containers)) //cut the reagents needed into chunks
+		for(var/obj/container in non_full_containers)
+			var/remaining_container_space = container.reagents.maximum_volume - container.reagents.total_volume
+			if(remaining_container_space < divided_amount) 																			//if there's more reagent to add than the beaker can hold...
+				container.reagents.add_reagent(reagent, remaining_container_space, sdata, temp_new, donotreact, donotupdate) //...add what we can to the beaker...
+				src.add_reagents_to_containers(reagent, divided_amount - remaining_container_space, sdata, temp_new, donotreact, donotupdate)  //...then run the whole proc again with the remaining reagent, evenly distributing to remaining containers
 			else
-				current_container.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+				container.reagents.add_reagent(reagent, divided_amount, sdata, temp_new, donotreact, donotupdate)
 
 	disposing()
 		src.remove_container()
