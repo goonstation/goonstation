@@ -3858,7 +3858,7 @@
 		name = "Firefighting foam"
 		id = "ff-foam"
 		result = "ff-foam"
-		required_reagents = list("chlorine" = 1, "carbon" = 1, "sulfur" = 1)
+		required_reagents = list("bromine" = 1, "carbon" = 1, "sulfur" = 1)
 		result_amount = 3
 		mix_phrase = "The mixture bubbles gently."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
