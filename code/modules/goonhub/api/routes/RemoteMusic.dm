@@ -5,4 +5,4 @@
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/remote-music"
 	body = /datum/apiBody/remoteMusic
-	correct_response = "message"
+	correct_response = /datum/apiModel/Message

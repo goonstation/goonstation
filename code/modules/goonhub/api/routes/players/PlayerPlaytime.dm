@@ -5,4 +5,4 @@
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/players/playtime/bulk"
 	body = /datum/apiBody/players/playtime
-	correct_response = "message"
+	correct_response = /datum/apiModel/Message

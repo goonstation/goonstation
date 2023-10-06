@@ -5,4 +5,4 @@
 	method = RUSTG_HTTP_METHOD_DELETE
 	path = "/game-admins"
 	routeParams = list("gameAdmin") // integer
-	correct_response = "string"
+	correct_response = /datum/apiModel/Message

@@ -5,4 +5,4 @@
 	method = RUSTG_HTTP_METHOD_GET
 	path = "/players/notes"
 	queryParams = list("filters", "sort_by", "descending", "per_page") // string[], string, string, string
-	correct_response = "string"
+	correct_response = /datum/apiModel/PlayerNoteResource
