@@ -36,3 +36,6 @@
 /datum/apiRoute/proc/formatRouteParams()
 	if (length(src.routeParams))
 		return jointext(src.routeParams, "/")
+
+/datum/apiRoute/proc/buildBody(list/fieldValues)
+	src.body = new src.body(fieldValues)
