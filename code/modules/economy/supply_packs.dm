@@ -485,7 +485,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	desc = "For use with existing Ranch."
 	category = "Civilian Department"
 	contains = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep)
-	cost = PAY_TRADESMAN*4
+	cost = PAY_TRADESMAN*10
 	containertype = /obj/storage/crate
 	containername = "Wool Production Kit"
 
