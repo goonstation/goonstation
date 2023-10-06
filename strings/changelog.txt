@@ -1,5 +1,9 @@
 
 (t)fri oct 06 23
+(u)Lord_Earthfire
+(p)16302
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Firefighting Foam's recipe was changed. The new recipe is: (1) Chlorine + (1) Nickel + (1) Carbon -> (2) Carbon Tetrachloride + (1) Nickel
 (u)LeahTheTech
 (+)Pocket and emergency oxygen tanks no longer fit on TTVs (they had no sprites anyway)
 (u)Lord_Earthfire
