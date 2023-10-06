@@ -17,7 +17,7 @@ ABSTRACT_TYPE(/datum/apiModel/Paginated)
 	src.links = links
 	src.meta = meta
 
-/datum/apiModel/Paginated/setupFromResponse(response)
+/datum/apiModel/Paginated/SetupFromResponse(response)
 	. = ..()
 	src.links = response["links"]
 	src.meta = response["meta"]

@@ -163,7 +163,7 @@ var/global/datum/apiHandler/apiHandler
 
 		// Validation
 		var/datum/apiModel/model = new route.correct_response
-		model.setupFromResponse(data)
+		model.SetupFromResponse(data)
 		if (!model.VerifyIntegrity())
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Verification error during <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
 			logTheThing(LOG_DIARY, null, "API Error: Verification error during [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")

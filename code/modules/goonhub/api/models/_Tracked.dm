@@ -21,7 +21,6 @@ ABSTRACT_TYPE(/datum/apiModel/Tracked)
 	if (
 		isnull(src.id) \
 		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
 	)
 		return FALSE
 	return TRUE

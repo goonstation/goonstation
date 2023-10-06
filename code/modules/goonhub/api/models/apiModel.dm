@@ -13,5 +13,5 @@ ABSTRACT_TYPE(/datum/apiModel)
 /datum/apiModel/proc/ToString()
 	return
 
-/datum/apiModel/proc/setupFromResponse()
+/datum/apiModel/proc/SetupFromResponse()
 	return

@@ -8,39 +8,24 @@
 	var/crashed		= null // boolean
 	var/ended_at	= null // date-time
 
-/datum/apiModel/Tracked/GameRound/New(
-	id,
-	server_id,
-	map,
-	game_type,
-	rp_mode,
-	crashed,
-	ended_at,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/GameRound/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.server_id = server_id
-	src.map = map
-	src.game_type = game_type
-	src.rp_mode = rp_mode
-	src.crashed = crashed
-	src.ended_at = ended_at
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.id = response["id"]
+	src.server_id = response["server_id"]
+	src.map = response["map"]
+	src.game_type = response["game_type"]
+	src.rp_mode = response["rp_mode"]
+	src.crashed = response["crashed"]
+	src.ended_at = response["ended_at"]
+	src.created_at = response["created_at"]
+	src.updated_at = response["updated_at"]
 
 /datum/apiModel/Tracked/GameRound/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.server_id) \
-		|| isnull(src.map) \
-		|| isnull(src.game_type) \
+		isnull(src.server_id) \
 		|| isnull(src.rp_mode) \
 		|| isnull(src.crashed) \
-		|| isnull(src.ended_at) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
 	)
 		return FALSE
 

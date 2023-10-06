@@ -2,10 +2,10 @@
 /// BanResourceList
 /datum/apiModel/Paginated/BanResourceList
 
-/datum/apiModel/Paginated/BanResourceList/setupFromResponse(response)
+/datum/apiModel/Paginated/BanResourceList/SetupFromResponse(response)
 	. = ..()
 	src.data = list()
 	for (var/list/item in response["data"])
 		var/datum/apiModel/Tracked/BanResource/ban = new()
-		ban.setupFromResponse(item)
+		ban.SetupFromResponse(item)
 		src.data.Add(ban)
