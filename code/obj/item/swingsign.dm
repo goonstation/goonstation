@@ -91,7 +91,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 			return
 		..()
 
-	/obj/swingsign/custom_suicide = 1
+	custom_suicide = 1
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
