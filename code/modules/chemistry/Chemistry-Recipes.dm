@@ -3991,7 +3991,7 @@
 		id = "ammonia"
 		result = "ammonia"
 		required_reagents = list("hydrogen" = 3, "nitrogen" = 1)
-		inhibitors = list("chlorine") //to prevent conflict with atrazine
+		inhibitors = list("chlorine" = 1) //to prevent conflict with atrazine
 		result_amount = 3
 		mix_phrase = "The mixture bubbles, emitting an acrid reek."
 
@@ -5041,7 +5041,7 @@
 		result_amount = 5 //14
 		mix_phrase = "The mixture of particles settles together with ease."
 		mix_sound = 'sound/misc/fuse.ogg'
-		inhibitors = list("sulfur")
+		inhibitors = list("sulfur" = 1)
 
 	okay_cement //lime, alumina, magnesia, iron (iii) oxide
 		name = "okay cement"
@@ -5051,7 +5051,7 @@
 		result_amount = 4 //13
 		mix_phrase = "The mixture of particles settles together complacently."
 		mix_sound = 'sound/misc/fuse.ogg'
-		inhibitors = list("gypsum")
+		inhibitors = list("gypsum" = 1)
 
 	poor_cement //lime, alumina, iron (iii) oxide
 		name = "poor cement"
@@ -5061,7 +5061,7 @@
 		result_amount = 2 //
 		mix_phrase = "The mixture of particles settles together... barely."
 		mix_sound = 'sound/misc/fuse.ogg'
-		inhibitors = list("magnesium")
+		inhibitors = list("magnesium" = 1)
 
 	perfect_concrete
 		name = "perfect concrete"

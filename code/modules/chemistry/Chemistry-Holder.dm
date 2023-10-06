@@ -450,7 +450,10 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						break
 				if(total_matching_reagents == C.required_reagents.len)
 					for (var/inhibitor in C.inhibitors)
-						if (src.has_reagent(inhibitor))
+						var/inhibitor_amount_to_check = 0
+						if (C.inhibitors[inhibitor])
+							inhibitor_amount_to_check = C.inhibitors[inhibitor]
+						if (src.has_reagent(inhibitor, inhibitor_amount_to_check))
 							continue reaction_loop
 
 					if(!C.does_react(src))
