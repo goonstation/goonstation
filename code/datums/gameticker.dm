@@ -508,13 +508,35 @@ var/global/current_state = GAME_STATE_INVALID
 			if (elapsed > 0)
 				ticker.round_elapsed_ticks += elapsed
 
+	proc/sendEvents()
+		// Antags and antag objectives
+		for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
+			var/datum/mind/M = antagonist_role.owner
+			var/datum/eventRecord/Antag/antagEvent = new()
+			antagEvent.buildAndSend(antagonist_role)
+
+			if (M.objectives)
+				for (var/datum/objective/objective in M.objectives)
+	#ifdef CREW_OBJECTIVES
+					if (istype(objective, /datum/objective/crew)) continue
+	#endif
+					var/datum/eventRecord/AntagObjective/antagObjectiveEvent = new()
+					antagObjectiveEvent.buildAndSend(antagonist_role, objective)
+
+		// AI Laws
+		for_by_tcl(aiPlayer, /mob/living/silicon/ai)
+			var/laws[] = new()
+			if (aiPlayer.law_rack_connection)
+				laws = aiPlayer.law_rack_connection.format_for_irc()
+			for (var/key in laws)
+				var/datum/eventRecord/AILaw/aiLawEvent = new()
+				aiLawEvent.buildAndSend(aiPlayer, key, laws[key])
+
+
 /datum/controller/gameticker/proc/declare_completion()
 	//End of round statistic collection for goonhub
 	save_flock_stats()
-	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] statlog_traitors")
-	statlog_traitors()
-	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] statlog_ailaws")
-	statlog_ailaws(0)
+	src.sendEvents()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] round_end_data")
 	round_end_data(1) //Export round end packet (normal completion)
 
