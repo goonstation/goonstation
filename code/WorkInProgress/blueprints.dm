@@ -484,76 +484,54 @@
 	var/author = ""
 
 	var/list/roominfo = new/list()
-/*
-	attack_self(mob/user as mob)
-		for(var/datum/tileinfo/T in roominfo)
-			var/turf/pos = locate(text2num(T.posx) + user.x,text2num(T.posy) + user.y, user.z) //Change
-			//boutput(world, "[pos.x]-[pos.y]-[pos.z] # [pos]")
-			for(var/datum/objectinfo/O in T.objects)
-				//boutput(world, newObjType + " - " + O.objecttype)
-				if(O.objecttype == null) continue
-				var/atom/A = new O.objecttype(pos)
-				A.set_dir(O.direction)
-				A.layer = O.layer
-				A.pixel_x = O.px
-				A.pixel_y = O.py
 
-			//boutput(world, newTilePath + " - " + T.tiletype)
-			if(T.tiletype != null)
-				var/turf/newTile = new T.tiletype(pos)
-				newTile.icon_state = T.state
-
-			//rebuild powernets etc.
-*/
-
-#define WHITELIST_OBJECTS list(
-	/obj/stool,
-	/obj/grille,
-	/obj/window,
-	/obj/machinery/door,
-	/obj/cable,
-	/obj/table,
-	/obj/rack,
-	/obj/structure,
-	/obj/disposalpipe,
-//	/obj/machinery/vending,  //No cheap buckshot/oddcigs/chemdepots. Use a mechscanner
-	/obj/machinery/light,
-	/obj/machinery/door_control,
-	/obj/machinery/light_switch,
-	/obj/machinery/camera,
-	/obj/item/device/radio/intercom,
-	/obj/machinery/firealarm,
-	/obj/machinery/power/apc,
-	/obj/machinery/alarm,
-	/obj/machinery/disposal,
-	/obj/machinery/gibber,
-	/obj/machinery/floorflusher,
-	/obj/machinery/activation_button/driver_button,
-	/obj/machinery/door_control,
-	/obj/machinery/disposal,
-	/obj/submachine/chef_oven,
-	/obj/submachine/chef_sink,
-	/obj/machinery/launcher_loader,
-	/obj/machinery/optable,
-	/obj/machinery/mass_driver,
-//	/obj/reagent_dispensers,  //No free helium/fuel/omni/raj/etc from abcu
-	/obj/machinery/sleeper,
-	/obj/machinery/sleep_console,
-	/obj/submachine/slot_machine,
-	/obj/machinery/deep_fryer,
-	/obj/submachine/ATM,
-	/obj/submachine/ice_cream_dispenser,
-	/obj/machinery/portable_atmospherics,
-	/obj/machinery/ai_status_display,
-	/obj/securearea,
-	/obj/submachine/mixer,
-	/obj/submachine/foodprocessor,
+// whitelists/blacklists applied during both saving and loading, so they're freely alterable
+#define WHITELIST_OBJECTS list( \
+	/obj/stool, \
+	/obj/grille, \
+	/obj/window, \
+	/obj/machinery/door, \
+	/obj/cable, \
+	/obj/table, \
+	/obj/rack, \
+	/obj/structure, \
+	/obj/disposalpipe, \
+	/obj/machinery/light, \
+	/obj/machinery/door_control, \
+	/obj/machinery/light_switch, \
+	/obj/machinery/camera, \
+	/obj/item/device/radio/intercom, \
+	/obj/machinery/firealarm, \
+	/obj/machinery/power/apc, \
+	/obj/machinery/alarm, \
+	/obj/machinery/disposal, \
+	/obj/machinery/gibber, \
+	/obj/machinery/floorflusher, \
+	/obj/machinery/activation_button/driver_button, \
+	/obj/machinery/door_control, \
+	/obj/machinery/disposal, \
+	/obj/submachine/chef_oven, \
+	/obj/submachine/chef_sink, \
+	/obj/machinery/launcher_loader, \
+	/obj/machinery/optable, \
+	/obj/machinery/mass_driver, \
+	/obj/machinery/sleeper, \
+	/obj/machinery/sleep_console, \
+	/obj/submachine/slot_machine, \
+	/obj/machinery/deep_fryer, \
+	/obj/submachine/ATM, \
+	/obj/submachine/ice_cream_dispenser, \
+	/obj/machinery/portable_atmospherics, \
+	/obj/machinery/ai_status_display, \
+	/obj/securearea, \
+	/obj/submachine/mixer, \
+	/obj/submachine/foodprocessor, \
 )
 
-#define BLACKLIST_OBJECTS list(
-	/obj/disposalpipe/loafer,
-	/obj/submachine/slot_machine/item,
-	/obj/machinery/portable_atmospherics/canister,
+#define BLACKLIST_OBJECTS list( \
+	/obj/disposalpipe/loafer, \
+	/obj/submachine/slot_machine/item, \
+	/obj/machinery/portable_atmospherics/canister, \
 )
 
 #define WHITELIST_TURFS list(/turf/simulated)
@@ -561,18 +539,21 @@
 /datum/abcu_blueprint
 	var/cost_metal = 0
 	var/cost_crystal = 0
-
 	var/size_x = 0
 	var/size_y = 0
-
 	var/author = ""
-
 	var/list/roominfo = list()
 
-proc/save_abcu_blueprint(mob/user, list/turf_list, var/name = "", var/use_whitelist = 1)
-	var/savepath = "data/blueprints/[user.client.ckey]/[name].dat"
+proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = 1)
+	if (!user || !user.client)
+		return
+	var/input = strip_html(tgui_input_text(user, "Blueprint Name", "Set a name for your new blueprint.", null, 54))
+	if (!input)
+		return
+
+	var/savepath = "data/blueprints/[user.client.ckey]/[input].dat"
 	if (fexists("[savepath]"))
-		if (alert(usr, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
+		if (alert(user, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
 			return
 		fdel("[savepath]")
 	var/savefile/save = new/savefile("[savepath]")
@@ -583,7 +564,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/name = "", var/use_whitel
 	var/maxx = 0
 	var/maxy = 0
 
-	for(var/turf/t as anything in roomList)
+	for(var/turf/t as anything in turf_list)
 		if(t.x < minx) minx = t.x
 		if(t.y < miny) miny = t.y
 
@@ -596,9 +577,9 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/name = "", var/use_whitel
 	save.cd = "/"
 	save["sizex"] << sizex
 	save["sizey"] << sizey
-	save["roomname"] << roomname
-	save["author"] << usr.client.ckey
-	save.dir.Add("tiles")
+	save["roomname"] << input
+	save["author"] << user.client.ckey
+	//save.dir.Add("tiles")
 
 	for(var/atom/curr in turf_list)
 		var/posx = (curr.x - minx)
@@ -612,34 +593,22 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/name = "", var/use_whitel
 			save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
 
 		for(var/obj/o in curr)
-			var/permitted = 0
-			for(var/p in permittedObjectTypes)
-				var/type = text2path(p)
-				if(istype(o, type))
-					permitted = 1
-					break
+			if (use_whitelist && (!istypes(o, WHITELIST_OBJECTS) || istypes(o, BLACKLIST_OBJECTS)))
+				continue
 
-			for(var/p in blacklistedObjectTypes)
-				var/type = text2path(p)
-				if(istype(o, type))
-					permitted = 0
-					break//no
+			var/id = "\ref[o]"
+			save.cd = "/tiles/[posx],[posy]/objects"
+			while(save.dir.Find(id))
+				id = id + "I"
+			save.cd = "[id]"
+			save["dir"] << o.dir
+			save["type"] << o.type
+			save["layer"] << o.layer
+			save["pixelx"] << o.pixel_x
+			save["pixely"] << o.pixel_y
+			save["icon_state"] << o.icon_state
 
-			if(permitted || !applyWhitelist)
-				var/id = "\ref[o]"
-				save.cd = "/tiles/[posx],[posy]/objects"
-				while(save.dir.Find(id))
-					id = id + "I"
-				save.cd = "[id]"
-				save["dir"] << o.dir
-				save["type"] << o.type
-				save["layer"] << o.layer
-				save["pixelx"] << o.pixel_x
-				save["pixely"] << o.pixel_y
-				save["icon_state"] << o.icon_state
-
-	boutput(usr, "<span class='notice'>Saved blueprint as '[name]'. </span>")
-	return
+	boutput(user, "<span class='notice'>Saved blueprint as '[input]'. </span>")
 
 /obj/item/blueprint_marker
 	name = "blueprint marker"
@@ -1028,7 +997,8 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/name = "", var/use_whitel
 				return
 
 			if("Save Blueprint")
-				saveMarked(roomname)
+				//saveMarked(roomname)
+				save_abcu_blueprint(user, roomList)
 				return
 
 			if("Delete Blueprint")
