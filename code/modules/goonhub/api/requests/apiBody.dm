@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/datum/apiBody)
 /// Represents the body of an API request - ABSTRACT
 /// Everything is generally required unless annotated as such
 /datum/apiBody
-	var/list/fields
+	var/list/fields = list()
 	var/list/values = list()
 
 /datum/apiBody/New(list/fieldValues)
