@@ -187,7 +187,7 @@
 	/// Custom name of the object for messages if needed, otherwise just the object's initial name
 	var/obj_name
 	var/obj_turf
-	var/obj_type
+	var/obj/obj_type
 	/// Amount of the object which will be made when we're done
 	var/obj_amt
 	var/obj/item/sheet/sheet1
@@ -244,6 +244,8 @@
 				return FALSE
 		return TRUE
 
+	/// Checks if there's a dense object on a turf, with notable exceptions for soul and directional things. Procs like can_crossed_by(AM) cannot be
+	/// used because we haven't made the thing yet, so there's no /atom/movable to use. If there's a way to do this nicely in the future replace pls
 	proc/has_dense_object()
 		if (!obj_turf)
 			return FALSE
@@ -265,7 +267,11 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 #endif
-		if (!src.has_valid_sheets() || !src.obj_turf || src.has_dense_object())
+		if (!src.has_valid_sheets() || !src.obj_turf)
+			interrupt(INTERRUPT_ALWAYS)
+			return
+
+		if (initial(src.obj_type.density) && src.has_dense_object())
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -284,7 +290,7 @@
 
 	onEnd()
 		..()
-		if (!src.has_valid_sheets() || src.has_dense_object())
+		if (!src.has_valid_sheets() || (initial(src.obj_type.density) && src.has_dense_object()))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		owner.visible_message("<span class='notice'>[owner] assembles \the [obj_name]!</span>")

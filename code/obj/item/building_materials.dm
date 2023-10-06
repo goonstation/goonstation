@@ -271,8 +271,7 @@ MATERIAL
 			ui.open()
 
 	attack_self(mob/user as mob)
-		if (isturf(user.loc))
-			ui_interact(user)
+		ui_interact(user)
 
 	ui_data(mob/user)
 		. = list()
@@ -465,7 +464,6 @@ MATERIAL
 					a_cost = initial(currentRecipe.sheet_cost)
 				if (!a_callback)
 					a_callback = /proc/sheet_crafting_callback
-
 				actions.start(new /datum/action/bar/icon/build(a_type, src.loc, a_amount, 3 SECONDS, src, a_cost, null, null, src.material, initial(currentRecipe.icon), initial(currentRecipe.icon_state), a_callback), usr)
 				. = TRUE
 
