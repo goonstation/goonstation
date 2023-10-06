@@ -626,7 +626,7 @@ ADMIN_INTERACT_PROCS(/obj/window, proc/smash)
 			if (!(the_tool in M.equipped_list()))
 				interrupt(INTERRUPT_ALWAYS)
 				return
-		boutput(owner, "<span class='notice'>You dissasembled \the [the_window]!</span>")
+		boutput(owner, "<span class='notice'>You disassemble \the [the_window]!</span>")
 		var/obj/item/sheet/A = new /obj/item/sheet(get_turf(the_window))
 		if(the_window.material)
 			A.setMaterial(the_window.material)
