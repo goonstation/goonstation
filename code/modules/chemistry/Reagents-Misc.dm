@@ -613,7 +613,7 @@ datum
 		fffoam
 			name = "firefighting foam"
 			id = "ff-foam"
-			description = "Carbon Tetrachloride is a foam used for fire suppression."
+			description = "Carbon tetrachloride is used for fire suppression."
 			reagent_state = LIQUID
 			fluid_r = 195
 			fluid_g = 195
