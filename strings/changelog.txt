@@ -1,5 +1,9 @@
 
 (t)fri oct 06 23
+(u)Lord_Earthfire
+(p)16297
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Capsaicin has a cooldown between stuns now but high-dosage capsaicin stuns more often add oxygen deprivation.
 (u)BatElite
 (p)15970
 (e)🎨💊📦|C-Sprites, A-Medical, A-Game-Objects
