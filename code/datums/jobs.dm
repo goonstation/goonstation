@@ -1878,7 +1878,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 	wages = PAY_UNTRAINED
 	limit = 1
 	change_name_on_spawn = 1
-	slot_mask = list(/obj/item/clothing/head/werewolf)
+	slot_head = list(/obj/item/clothing/head/werewolf)
 	slot_jump = list(/obj/item/clothing/under/shorts)
 	slot_suit = list(/obj/item/clothing/suit/gimmick/werewolf)
 	slot_ears = list(/obj/item/device/radio/headset)
@@ -2140,6 +2140,35 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		be.safety = 1
 		be.altered = 1
 		M?.mind?.miranda = "Evildoer! You have been apprehended by a hero of space justice!"
+
+/datum/job/special/halloween/pickle
+	name = "Pickle"
+	wages = PAY_DUMBCLOWN
+	limit = 1
+	change_name_on_spawn = 1
+	slot_ears = list(/obj/item/device/radio/headset)
+	slot_suit = list(/obj/item/clothing/suit/gimmick/pickle)
+	slot_jump = list(/obj/item/clothing/under/color/green)
+	slot_belt = list(/obj/item/device/pda2)
+	slot_foot = list(/obj/item/clothing/shoes/black)
+
+	New()
+		..()
+		src.access = get_access("Staff Assistant")
+		return
+
+	special_setup(var/mob/living/carbon/human/M)
+		..()
+		if (!M)
+			return
+		var/obj/item/trinket = M.trinket.deref()
+		trinket.setMaterial(getMaterial("pickle"))
+		for (var/i in 1 to 3)
+			var/type = pick(trinket_safelist)
+			var/obj/item/pickle = new type(M.loc)
+			pickle.setMaterial(getMaterial("pickle"))
+			M.equip_if_possible(pickle, SLOT_IN_BACKPACK)
+		M.bioHolder.AddEffect("pickle", magical=1)
 
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter

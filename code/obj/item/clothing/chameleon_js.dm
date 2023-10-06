@@ -541,9 +541,8 @@
 	desc = "Nice and comfy on those cold space evenings."
 	icon_state = "hoodie"
 	item_state = "hoodie"
-	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
 	uses_multiple_icon_states = TRUE
 	over_hair = FALSE
 	var/list/clothing_choices = list()
