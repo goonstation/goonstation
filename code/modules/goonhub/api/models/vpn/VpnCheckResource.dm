@@ -1,6 +1,7 @@
 
 /// VpnCheckResource
 /datum/apiModel/VpnCheckResource
+	var/id 				= null // integer
 	var/round_id	= null // integer
 	var/ip			= null // integer
 	var/service		= null // string

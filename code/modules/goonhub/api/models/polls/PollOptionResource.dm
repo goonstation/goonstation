@@ -1,6 +1,7 @@
 
 /// PollOptionResource
 /datum/apiModel/PollOptionResource
+	var/id 						= null // integer
 	var/poll_id				= null // integer
 	var/option				= null // integer
 	var/position			= null // string

@@ -5,31 +5,18 @@ ABSTRACT_TYPE(/datum/apiModel/Tracked/PlayerRes)
 /datum/apiModel/Tracked/PlayerRes
 	var/player_id	= null // integer
 
-/datum/apiModel/Tracked/PlayerRes/New(
-	id,
-	player_id,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/PlayerRes/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.player_id = player_id
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.player_id = response["player_id"]
 
 /datum/apiModel/Tracked/PlayerRes/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.player_id) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
+		isnull(src.player_id) \
 	)
 		return FALSE
 
 /datum/apiModel/Tracked/PlayerRes/ToString()
-	. = list()
-	.["id"] = src.id
+	. = ..()
 	.["player_id"] = src.player_id
-	.["created_at"] = src.created_at
-	.["updated_at"] = src.updated_at
 	return json_encode(.)
