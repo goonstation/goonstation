@@ -705,6 +705,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
+	initial_reagents = list("cream"=10)
 	food_effects = list("food_tox", "food_disease_resist")
 
 /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/amanita
@@ -714,8 +715,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
-	initial_volume = 30
-	initial_reagents = list("amanitin"=30)
+	initial_reagents = list("amanitin"=30, "cream"=10)
 	food_effects = list("food_disease_resist", "food_rad_resist")
 
 /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin
@@ -725,8 +725,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/soup)
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 2
-	initial_volume = 60
-	initial_reagents = list("psilocybin"=20,"LSD"=20,"space_drugs"=20)
+	initial_reagents = list("psilocybin"=20,"LSD"=20,"space_drugs"=20, "cream"=10)
 	food_effects = list("food_tox", "food_disease_resist", "food_rad_resist")
 
 /obj/item/reagent_containers/food/snacks/salad

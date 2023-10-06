@@ -1491,6 +1491,24 @@ datum/cookingrecipe/flockbrainburger
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/salad
 
+/datum/cookingrecipe/creamofamanita
+	item1 = /obj/item/reagent_containers/food/snacks/mushroom/amanita
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	cookbonus = 8
+	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/amanita
+
+/datum/cookingrecipe/creamofpsilocybin
+	item1 = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	cookbonus = 8
+	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin
+
+/datum/cookingrecipe/creamofmushroom
+	item1 = /obj/item/reagent_containers/food/snacks/mushroom
+	item2 = /obj/item/reagent_containers/food/snacks/condiment/cream
+	cookbonus = 8
+	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom
+
 //Delightful Halloween Recipes
 /datum/cookingrecipe/candy_apple
 	item1 = /obj/item/reagent_containers/food/snacks/plant/apple/stick
@@ -1685,20 +1703,6 @@ datum/cookingrecipe/flockbrainburger
 	item1 = /obj/item/organ/brain
 	cookbonus = 10
 	output = /obj/item/reagent_containers/food/snacks/mashedbrains
-
-/datum/cookingrecipe/creamofmushroom
-	item1 = /obj/item/reagent_containers/food/snacks/mushroom
-	item2 = /obj/item/reagent_containers/food/drinks/milk
-	cookbonus = 5
-	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom
-
-/datum/cookingrecipe/creamofmushroom/amanita
-	item1 = /obj/item/reagent_containers/food/snacks/mushroom/amanita
-	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/amanita
-
-/datum/cookingrecipe/creamofmushroom/psilocybin
-	item1 = /obj/item/reagent_containers/food/snacks/mushroom/psilocybin
-	output = /obj/item/reagent_containers/food/snacks/soup/creamofmushroom/psilocybin
 
 /datum/cookingrecipe/meatpaste
 	item1 =  /obj/item/reagent_containers/food/snacks/ingredient/meat
