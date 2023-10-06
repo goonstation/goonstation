@@ -1,4 +1,6 @@
-
+(t)fri oct 06 23
+(u)Emily
+(*)Something mysterious has appeared in the ranch! What could it be?
 (t)thu oct 05 23
 (u)Azrun
 (p)16028
