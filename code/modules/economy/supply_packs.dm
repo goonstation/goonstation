@@ -1137,7 +1137,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 
 /datum/supply_packs/counterrevimplant
 	name = "Counter-Revolutionary Kit"
-	desc = "Implanters and counter-revolutionary implants to supress rebellion against Nanotrasen."
+	desc = "Implanters and counter-revolutionary implants to suppress rebellion against Nanotrasen."
 	category = "Security Department"
 	contains = list(/obj/item/implantcase/counterrev = 4,
 					/obj/item/implanter = 2)
@@ -1644,7 +1644,7 @@ ABSTRACT_TYPE(/datum/supply_packs/complex)
 	containername = "Status Display Kit"
 
 /datum/supply_packs/complex/eppd_kit
-	name = "Emergency Pressurzation Kit"
+	name = "Emergency Pressurization Kit"
 	desc = "Frames: 1x Extreme-Pressure Pressurization Device"
 	category = "Engineering Department"
 	frames = list(/obj/machinery/portable_atmospherics/pressurizer)
