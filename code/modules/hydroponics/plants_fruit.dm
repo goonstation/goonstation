@@ -164,7 +164,7 @@ ABSTRACT_TYPE(/datum/plant/fruit)
 	harvests = 4
 	endurance = 3
 	genome = 15
-	assoc_reagents = list("potassium")
+	assoc_reagents = list("juice_banana", "potassium")
 	commuts = list(/datum/plant_gene_strain/immortal,/datum/plant_gene_strain/growth_slow)
 
 /datum/plant/fruit/lime

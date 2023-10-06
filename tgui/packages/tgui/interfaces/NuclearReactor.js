@@ -1,5 +1,5 @@
 import { useBackend } from '../backend';
-import { Button, Knob, Box, Section, Table, RoundGauge } from '../components';
+import { Box, Button, Knob, RoundGauge, Section, Table } from '../components';
 import { Window } from '../layouts';
 import { Flex } from '../components';
 import { capitalize } from './common/stringUtils';

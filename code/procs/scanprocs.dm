@@ -465,7 +465,7 @@
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
 
-/proc/scan_reagents(atom/A as turf|obj|mob, show_temp = TRUE, var/single_line = FALSE, visible = FALSE, medical = FALSE, admin = FALSE)
+/proc/scan_reagents(atom/A, show_temp = TRUE, visible = FALSE, medical = FALSE, admin = FALSE)
 	if (!A)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -485,7 +485,7 @@
 			reagents = P.occupant.reagents
 
 	if (reagents)
-		if (length(reagents.reagent_list) > 0)
+		if (length(reagents.reagent_list))
 			if("cloak_juice" in reagents.reagent_list)
 				var/datum/reagent/cloaker = reagents.reagent_list["cloak_juice"]
 				if(cloaker.volume >= 5)
@@ -495,26 +495,29 @@
 				SEND_SIGNAL(reagents, COMSIG_REAGENTS_ANALYZED, usr)
 
 			var/reagents_length = length(reagents.reagent_list)
-			data = "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</span>"
+			data = "<b class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</b>"
 
 			for (var/current_id in reagents.reagent_list)
 				var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
 				var/show_OD = (medical && current_reagent.overdose != 0 && current_reagent.volume >= current_reagent.overdose)
-				if (single_line)
-					reagent_data += "<span [show_OD ? "class='alert'" : "class='notice'"]>[current_reagent] ([current_reagent.volume])[show_OD? " - OD!":""]</span>,"
-				else
-					reagent_data += "<span [show_OD ? "class='alert'" : "class='notice'"]><br>&emsp;[current_reagent.name] - [current_reagent.volume][show_OD? " - OD!":""]</span>"
-			if (single_line)
-				data += "[copytext(reagent_data, 1, -1)]"
-			else
-				data += "[reagent_data]"
+				reagent_data += "<span [show_OD ? "class='alert'" : "class='notice'"]><br>&emsp;[current_reagent.name] - [current_reagent.volume][show_OD? " - OD!":""]</span>"
+			data += "[reagent_data]"
 
 			if (show_temp)
 				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature] K</span>"
 		else
-			data = "<span class='notice'>No active chemical agents found in [A].</span>"
+			data = "<b class='notice'>No active chemical agents found in [A].</b>"
 	else
-		data = "<span class='notice'>No significant chemical agents found in [A].</span>"
+		data = "<b class='notice'>No significant chemical agents found in [A].</b>"
+
+	if (CHECK_LIQUID_CLICK(A))
+		var/turf/T = get_turf(A)
+		var/obj/fluid/liquid = T.active_liquid
+		var/obj/fluid/airborne/gas = T.active_airborne_liquid
+		if (liquid)
+			data += "<br>[scan_reagents(liquid, show_temp, visible, medical, admin)]"
+		if (gas)
+			data += "<br>[scan_reagents(gas, show_temp, visible, medical, admin)]"
 
 	return data
 
@@ -705,6 +708,13 @@
 	[interesting_data ? "<br><i>Energy signature analysis:</i><span class='notice'> [interesting_data]</span>" : null]\
 	"
 
+	if (CHECK_LIQUID_CLICK(A))
+		var/turf/T = get_turf(A)
+		if (T.active_liquid)
+			data += scan_forensic(T.active_liquid, visible)
+		if (T.active_airborne_liquid)
+			data += scan_forensic(T.active_airborne_liquid, visible)
+
 	return data
 
 // Made this a global proc instead of 10 or so instances of duplicate code spread across the codebase (Convair880).
@@ -829,6 +839,13 @@
 
 		P = F.planttype
 		DNA = F.plantgenes
+
+	else if (istype(A, /mob/living/critter/plant))
+		var/mob/living/critter/plant/F = A
+
+		P = F.planttype
+		DNA = F.plantgenes
+
 
 	else
 		return

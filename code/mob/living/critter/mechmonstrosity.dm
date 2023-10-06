@@ -1,9 +1,9 @@
 /mob/living/critter/mechmonstrosity
-	name = "Mechanical Monstrosity"
-	real_name = "mechmonstrosity"
+	name = "mechanical monstrosity"
+	real_name = "mechanical monstrosity"
 	desc = "A severely disfigured human torso which is forcibly kept alive by the mechanical parts.."
 	density = TRUE
-	icon = 'icons/misc/critter.dmi'
+	icon = 'icons/mob/critter/robotic/mechanical/monstrosity.dmi'
 	icon_state = "mechmonstrosity"
 	custom_gib_handler = /proc/robogibs
 	blood_id = "oil"
@@ -85,14 +85,15 @@
 		switch (act)
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/killme.ogg', 70, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/killme.ogg', 70, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> begs for mercy!"
 
 /mob/living/critter/mechmonstrosity/medical
-	icon_state = "mechmonstrosity_m"
 	name = "V.I.V.I-SECT-10N"
 	real_name = "V.I.V.I-SECT-10N"
 	desc = "You better wish that apples will keep this thing away from you.."
+	icon = 'icons/mob/critter/robotic/mechanical/vivisection.dmi'
+	icon_state = "vivisection"
 	hand_count = 2
 	var/smashes_shit = TRUE
 	can_grab = TRUE
@@ -281,7 +282,7 @@
 			logTheThing(LOG_COMBAT, ownerMob, "injects [constructTarget(target,"combat")]. Crawler transformation")
 			for(var/mob/O in AIviewers(ownerMob))
 				O.show_message("<span class='alert'><B>[owner] successfully injected [target]!</B></span>", 1)
-			playsound(ownerMob, 'sound/items/hypo.ogg', 80, 0)
+			playsound(ownerMob, 'sound/items/hypo.ogg', 80, FALSE)
 
 			var/mob/living/critter/robotic/crawler/crawler = new /mob/living/critter/robotic/crawler(get_turf(target))
 			crawler.name = "[target]'s crawling head"
@@ -432,8 +433,9 @@
 		src.read_only = TRUE
 
 /mob/living/critter/robotic/crawler
-	name = "Crawling Monstrosity"
+	name = "crawling monstrosity"
 	desc = "A crawling mechanical monstrosity."
+	icon = 'icons/mob/critter/robotic/mechanical/crawler.dmi'
 	icon_state = "mechmonstrosity_c"
 	icon_state_dead = "mechmonstrosity_c-dead"
 	can_throw = FALSE

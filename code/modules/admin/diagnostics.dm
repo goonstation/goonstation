@@ -352,7 +352,7 @@ proc/debug_map_apc_count(delim,zlim)
 			if(!(area in processed_areas))
 				var/text_charge
 				if(!apc || apc.disposed)
-					text_charge = "N/A"
+					text_charge = "no APC"
 				else if(apc.status & BROKEN)
 					text_charge = "broken"
 				else if(!cell)
@@ -367,6 +367,8 @@ proc/debug_map_apc_count(delim,zlim)
 					if(apc.environ <= 2) off += "env"
 					if(length(off))
 						text_charge += "<br>OFF: [off.Join(" ")]"
+				if(!area.requires_power)
+					text_charge += "<br>inf power area"
 				img.app.overlays = list(src.makeText(text_charge, align_left=TRUE))
 				processed_areas += area
 
@@ -1422,10 +1424,26 @@ proc/debug_map_apc_count(delim,zlim)
 		help = "Displays material of non-turf things.<br>Hover over a tile to see what is made out of them."
 		include_turfs = FALSE
 
-	reagents
-		name = "reagents"
-		help = "TODO"
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+	spatial_hashmap_count
+		name = "spatial hashmap count"
+		help = "Displays the amount of objects in the spatial hashmap on each turf"
+
+		var/hashmap_type = null
+
+		OnEnabled(var/client/C)
+			usr = C.mob
+			hashmap_type = get_one_match(null, /datum/spatial_hashmap)
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(isnull(hashmap_type))
+				img.app.alpha = 0
+				return
+			var/datum/spatial_hashmap/map = get_singleton(hashmap_type)
+			var/list/things_nearby = map.get_nearby(theTurf, 0)
+			var/count = length(things_nearby)
+			img.app.alpha = 120
+			img.app.color = rgb(count * 10, count * 10, count * 10)
+			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay

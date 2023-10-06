@@ -1147,7 +1147,7 @@ proc/create_fluff(datum/mind/target)
 		if(isghostdrone(owner.current))
 			return 1
 
-		if(!owner.current || isdead(owner.current))
+		if(!owner.current || isdead(owner.current) || isVRghost(owner.current) || inafterlifebar(owner.current))
 			return 1
 
 		return 0

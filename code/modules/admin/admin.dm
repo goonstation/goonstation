@@ -13,7 +13,7 @@ var/global/noir = 0
 
 ////////////////////////////////
 /proc/message_admins(var/text, var/asay = 0, var/irc = 0)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">[irc ? "DISCORD" : "ADMIN<br>LOG"]</span>: <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">[irc ? "DISCORD" : "ADMIN <wbr>LOG"]</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C in clients)
 		if(!C.holder)
 			continue
@@ -26,7 +26,7 @@ var/global/noir = 0
 
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER<br>LOG</span>: <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER <wbr>LOG</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
@@ -36,11 +36,11 @@ var/global/noir = 0
 	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER)
 			var/dbg_html = C.debug_variable("", d, 0)
-			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER<br>LOG</span>: <span class=\"message\">[text]</span>[dbg_html]</span>"
+			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER <wbr>LOG</span>: <span class=\"message\">[text]</span>[dbg_html]</span>"
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK<br>LOG</span>: <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK <wbr>LOG</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C)
 		if (C.mob && C.holder && C.holder.attacktoggle && !C.player_mode && rank_to_level(C.holder.rank) >= LEVEL_MOD)
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
@@ -722,14 +722,14 @@ var/global/noir = 0
 						if(cache.Find("Heads of Staff"))
 							tgui_alert(usr,"This person is banned from Heads of Staff. You must lift that ban first.")
 							return
-					logTheThing(LOG_ADMIN, usr, "unbanned [M](Offline) from [job]")
-					logTheThing(LOG_DIARY, usr, "unbanned [M](Offline) from [job]", "admin")
+					logTheThing(LOG_ADMIN, usr, "unbanned [constructName(M)](Offline) from [job]")
+					logTheThing(LOG_DIARY, usr, "unbanned [constructName(M)](Offline) from [job]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] unbanned [M](Offline) from [job]</span>")
 					addPlayerNote(M, usr.ckey, "[usr.ckey] unbanned [M](Offline) from [job]")
 					jobban_unban(M, job, usr.ckey)
 				else
-					logTheThing(LOG_ADMIN, usr, "banned [M](Offline) from [job]")
-					logTheThing(LOG_DIARY, usr, "banned [M](Offline) from [job]", "admin")
+					logTheThing(LOG_ADMIN, usr, "banned [constructName(M)](Offline) from [job]")
+					logTheThing(LOG_DIARY, usr, "banned [constructName(M)](Offline) from [job]", "admin")
 					message_admins("<span class='internal'>[key_name(usr)] banned [M](Offline) from [job]</span>")
 					addPlayerNote(M, usr.ckey, "[usr.ckey] banned [M](Offline) from [job]")
 					if(job == "Everything Except Assistant")
@@ -1278,6 +1278,13 @@ var/global/noir = 0
 				usr.client.cmd_admin_smitegib(M)
 			else
 				tgui_alert(usr,"You need to be at least a Primary Admin to smite a dude.")
+		if ("anvilgib")
+			if( src.level >= LEVEL_PA )
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				usr.client.cmd_admin_anvilgib(M)
+			else
+				tgui_alert(usr,"You need to be at least a Primary Admin to anvil gib a dude.")
 		if("transform")
 			if(( src.level >= LEVEL_PA ) || ((src.level >= LEVEL_SA) ))
 				var/mob/M = locate(href_list["target"])
@@ -1478,8 +1485,8 @@ var/global/noir = 0
 				M.reagents.add_reagent(reagent.id, amount)
 				boutput(usr, "<span class='success'>Added [amount] units of [reagent.id] to [M.name]</span>")
 
-				logTheThing(LOG_ADMIN, usr, "added [amount] units of [reagent.id] to [M] at [log_loc(M)].")
-				logTheThing(LOG_DIARY, usr, "added [amount] units of [reagent.id] to [M] at [log_loc(M)].", "admin")
+				logTheThing(LOG_ADMIN, usr, "added [amount] units of [reagent.id] to [constructName(M)] at [log_loc(M)].")
+				logTheThing(LOG_DIARY, usr, "added [amount] units of [reagent.id] to [constructName(M)] at [log_loc(M)].", "admin")
 				message_admins("[key_name(usr)] added [amount] units of [reagent.id] to [key_name(M)] at [log_loc(M)].")
 
 			else
@@ -3000,7 +3007,7 @@ var/global/noir = 0
 										sawarm:set_item(new /obj/item/saw/elimbinator())
 
 
-									playsound(M, 'sound/machines/chainsaw_red.ogg', 60, 1)
+									playsound(M, 'sound/machines/chainsaw_red.ogg', 60, TRUE)
 									M.update_body()
 							message_admins("[key_name(usr)] has given everyone new arms.")
 							logTheThing(LOG_ADMIN, usr, "used the Saw Arms secret.")
@@ -3738,7 +3745,7 @@ var/global/noir = 0
 			world << "Undefined action [href_list["action"]]"
 
 	//Wires bad hack part 2
-	sleep(0.5 SECONDS)
+	sleep(0)
 	switch (originWindow)
 		if ("adminplayeropts")
 			if (href_list["targetckey"])
@@ -4550,7 +4557,6 @@ var/global/noir = 0
 		M.mind.transfer_to(newM)
 	else
 		newM.key = M.key
-		newM.Login()
 	M.mind = null
 	newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 	qdel(M)

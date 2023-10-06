@@ -14,6 +14,8 @@
 #include "defines\lag.dm"			// the all important LAGCHECK()
 #include "types.dm"					// stuff like childrentypesof()
 #include "datum.dm"					// hasvar()
+#include "macros\spawn.dm"			// SPAWN
+#include "plane.dm"					// debug icons
 #include "defines\abilities.dm"
 #include "defines\access.dm"
 #include "defines\actions.dm"
@@ -71,6 +73,7 @@
 #include "defines\minimap.dm"
 #include "defines\mob.dm"
 #include "defines\movement.dm"
+#include "defines\mutantraces.dm"
 #include "defines\obj.dm"
 #include "defines\pathology.dm"
 #include "defines\pod_door_access_levels.dm"
@@ -79,6 +82,7 @@
 #include "defines\projectiles.dm"
 #include "defines\radio.dm"
 #include "defines\RCD.dm"
+#include "defines\reagents.dm"
 #include "defines\robot.dm"
 #include "defines\roles.dm"
 #include "defines\security.dm"
@@ -92,6 +96,7 @@
 #include "defines\stamina.dm"
 #include "defines\status_effects.dm"
 #include "defines\storage.dm"
+#include "defines\surgery.dm"
 #include "defines\switch.dm"
 #include "defines\temperatures.dm"
 #include "defines\time.dm"
@@ -137,7 +142,6 @@
 #include "macros\procs.dm"
 #include "macros\qdel.dm"
 #include "macros\reagents.dm"
-#include "macros\spawn.dm"
 #include "macros\strings.dm"
 #include "macros\switched_obj.dm"
 #include "macros\time.dm"
@@ -157,13 +161,14 @@
 #include "map.dm"
 #include "math.dm"
 #include "matrix.dm"
+#include "parallax.dm"
 #include "pathfinding.dm"
-#include "plane.dm"
 #include "procpath.dm"
 #include "promises.dm"
 #include "rust_g.dm"
 #include "record_db.dm"
 #include "sorting.dm"
+#include "spatial_hashing.dm"
 #include "text.dm"
 #include "tgs.dm"
 #include "tgui.dm"

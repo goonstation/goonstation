@@ -6,10 +6,10 @@ import {
   Button,
   Divider,
   Flex,
-  Slider,
-  Section,
   Image,
   ProgressBar,
+  Section,
+  Slider,
 } from '../components';
 import { formatPower } from '../format';
 

@@ -1,3 +1,7 @@
+
+TYPEINFO(/obj/storage/closet)
+	mat_appearances_to_ignore = list("steel")
+
 /obj/storage/closet
 	name = "closet"
 	desc = "It's a closet! This one can be opened AND closed."
@@ -608,7 +612,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	spawn_contents = list(/obj/item/clothing/suit/rad = 1,
 					/obj/item/clothing/head/rad_hood = 1,
 					/obj/item/storage/pill_bottle/antirad = 1,
-					/obj/item/clothing/glasses/meson = 1,
+					/obj/item/clothing/glasses/toggleable/meson = 1,
 					/obj/item/reagent_containers/emergency_injector/anti_rad = 1)
 
 /obj/storage/closet/medicalclothes
@@ -645,5 +649,5 @@ TYPEINFO(/obj/storage/closet/coffin)
 	icon = 'icons/obj/large_storage.dmi'
 	icon_state = "closed$$mauxite"
 	default_material = "mauxite"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE

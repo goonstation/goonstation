@@ -16,9 +16,9 @@ TYPEINFO(/obj/item/device/t_scanner)
 
 /obj/item/device/t_scanner
 	name = "T-ray scanner"
-	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
+	desc = "A tuneable terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	icon_state = "t-ray0"
-	var/on = 0
+	var/on = FALSE
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
@@ -29,10 +29,26 @@ TYPEINFO(/obj/item/device/t_scanner)
 	var/client/last_client = null
 	var/image/last_display = null
 	var/find_interesting = TRUE
+	var/list/datum/contextAction/actions = null
+	contextLayout = new /datum/contextLayout/experimentalcircle
+	var/show_underfloor_cables = TRUE
+	var/show_underfloor_disposal_pipes = TRUE
+	var/show_blueprint_disposal_pipes = TRUE
 
+	New()
+		..()
+		actions = list()
+		for(var/actionType in childrentypesof(/datum/contextAction/t_scanner)) //see context_actions.dm
+			var/datum/contextAction/t_scanner/action = new actionType(src)
+			actions += action
+
+	/// Update the inventory, ability, and context buttons
 	proc/set_on(new_on, mob/user=null)
 		on = new_on
 		set_icon_state("t-ray[on]")
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/active))
+				action.icon_state ="[action.base_icon_state][on ? "on" : "off"]"
 		if(user)
 			boutput(user, "You switch [src] [on ? "on" : "off"].")
 		if(!on)
@@ -40,8 +56,32 @@ TYPEINFO(/obj/item/device/t_scanner)
 		else
 			processing_items |= src
 
+	proc/set_underfloor_cables(state, mob/user=null)
+		show_underfloor_cables = state
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/underfloor_cables))
+				action.icon_state = "[action.base_icon_state][show_underfloor_cables ? "on" : "off"]"
+		if(user)
+			boutput(user, "You switch [src] to [show_underfloor_cables ? "show" : "hide"] underfloor cables.")
+
+	proc/set_underfloor_disposal_pipes(state, mob/user=null)
+		show_underfloor_disposal_pipes = state
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/underfloor_disposal_pipes))
+				action.icon_state = "[action.base_icon_state][show_underfloor_disposal_pipes ? "on" : "off"]"
+		if(user)
+			boutput(user, "You switch [src] to [show_underfloor_disposal_pipes ? "show" : "hide"] underfloor disposal pipes.")
+
+	proc/set_blueprint_disposal_pipes(state, mob/user=null)
+		show_blueprint_disposal_pipes = state
+		for(var/datum/contextAction/t_scanner/action in src.actions)
+			if(istype(action, /datum/contextAction/t_scanner/blueprint_disposal_pipes))
+				action.icon_state = "[action.base_icon_state][show_blueprint_disposal_pipes ? "on" : "off"]"
+		if(user)
+			boutput(user, "You switch [src] to [show_blueprint_disposal_pipes ? "show" : "hide"] disposal pipe blueprints.")
+
 	attack_self(mob/user)
-		set_on(!on, user)
+		user.showContextActions(actions, src, contextLayout)
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (istype(A, /turf))
@@ -100,7 +140,11 @@ TYPEINFO(/obj/item/device/t_scanner)
 						continue
 				else if(isobj(A))
 					var/obj/O = A
-					if(O.level == OVERFLOOR && !istype(O, /obj/disposalpipe)) // disposal pipes handled below
+					if (O.level == OVERFLOOR && !istype(O, /obj/disposalpipe))
+						continue // show unsecured pipes behind walls
+					if (!show_underfloor_cables && istype(O, /obj/cable))
+						continue
+					if (!show_underfloor_disposal_pipes && istype(O, /obj/disposalpipe))
 						continue
 				var/image/img = image(A.icon, icon_state=A.icon_state, dir=A.dir)
 				img.plane = PLANE_SCREEN_OVERLAYS
@@ -110,10 +154,10 @@ TYPEINFO(/obj/item/device/t_scanner)
 				img.appearance_flags = RESET_ALPHA | RESET_COLOR | PIXEL_SCALE
 				display.overlays += img
 
-			if (T.disposal_image)
+			if (show_blueprint_disposal_pipes && T.disposal_image)
 				display.overlays += T.disposal_image
 
-			if( length(display.overlays))
+			if(length(display.overlays))
 				display.plane = PLANE_SCREEN_OVERLAYS
 				display.pixel_x = (T.x - center.x) * 32
 				display.pixel_y = (T.y - center.y) * 32
@@ -134,6 +178,7 @@ TYPEINFO(/obj/item/device/t_scanner)
 
 /obj/item/device/t_scanner/pda
 	name = "PDA T-ray scanner"
+	desc = "A terahertz-ray emitter and scanner used to detect underfloor objects such as cables and pipes."
 	find_interesting = FALSE
 
 /*
@@ -176,7 +221,7 @@ TYPEINFO(/obj/item/device/detective_scanner)
 				boutput(usr, "<span class='alert'>ERROR: Scanner unable to load report data.</span>")
 				return
 			if(!ON_COOLDOWN(src, "print", 2 SECOND))
-				playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
+				playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 				SPAWN(1 SECONDS)
 					var/obj/item/paper/P = new /obj/item/paper
 					P.set_loc(get_turf(src))
@@ -468,8 +513,8 @@ TYPEINFO(/obj/item/device/reagentscanner)
 		user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
 		"<span class='notice'>You scan [A] with [src]!</span>")
 
-		src.scan_results = scan_reagents(A, visible = 1)
-		tooltip_rebuild = 1
+		src.scan_results = scan_reagents(A, visible = TRUE)
+		tooltip_rebuild = TRUE
 
 		if (!isnull(A.reagents))
 			if (length(A.reagents.reagent_list) > 0)
@@ -759,9 +804,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 				R["sex"] = M.gender
 				R["pronouns"] = M.get_pronouns().name
 				R["age"] = M.bioHolder.age
-				if (M.gloves)
-					R["fingerprint"] = "Unknown"
-				else
+				if (!M.gloves)
 					R["fingerprint"] = M.bioHolder.fingerprints
 				R["p_stat"] = "Active"
 				R["m_stat"] = "Stable"
@@ -940,7 +983,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		if (!I || !(access_security in I.access))
 			boutput(user, "<span class='alert'>Insufficient access.</span>")
 			return
-		playsound(src, 'sound/machines/keyboard3.ogg', 30, 1)
+		playsound(src, 'sound/machines/keyboard3.ogg', 30, TRUE)
 		var/issuer = I.registered
 		var/issuer_job = I.assignment
 		var/ticket_target = input(user, "Ticket recipient:", "Recipient", "Ticket Recipient") as text
@@ -965,7 +1008,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		data_core.tickets += T
 
 		logTheThing(LOG_ADMIN, user, "tickets <b>[ticket_target]</b> with the reason: [ticket_reason].")
-		playsound(src, 'sound/machines/printer_thermal.ogg', 50, 1)
+		playsound(src, 'sound/machines/printer_thermal.ogg', 50, TRUE)
 		SPAWN(3 SECONDS)
 			var/obj/item/paper/p = new /obj/item/paper
 			p.set_loc(get_turf(src))
@@ -1073,7 +1116,7 @@ TYPEINFO(/obj/item/device/appraisal)
 		// replace with boutput
 		boutput(user, "<span class='notice'>[out_text]Estimated value: <strong>[sell_value] credit\s.</strong></span>")
 		if (sell_value > 0)
-			playsound(src, 'sound/machines/chime.ogg', 10, 1)
+			playsound(src, 'sound/machines/chime.ogg', 10, TRUE)
 
 		if (user.client && !user.client.preferences?.flying_chat_hidden)
 			var/image/chat_maptext/chat_text = null

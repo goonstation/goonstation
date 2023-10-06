@@ -115,6 +115,17 @@
 	spawn_contents = list(/obj/item/gun/kinetic/flaregun,\
 	/obj/item/ammo/bullets/flare)
 
+/obj/item/storage/box/missile_launcher
+	name = "pod-targeting missile launcher box"
+	icon_state = "hard_case"
+	desc = "A box containing a pod-targeting missile launcher and ammunition."
+	slots = 5
+	check_wclass = TRUE
+	can_hold = list(/obj/item/gun/kinetic/missile_launcher,\
+	/obj/item/ammo/bullets/pod_seeking_missile)
+	spawn_contents = list(/obj/item/gun/kinetic/missile_launcher,\
+	/obj/item/ammo/bullets/pod_seeking_missile = 4)
+
 /* -------------------- Grenades -------------------- */
 
 /obj/item/storage/box/flashbang_kit

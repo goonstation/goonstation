@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
@@ -32,9 +32,6 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 	var/max_r_squared = ARTEMIS_MAX_R_SQUARED //951^2 - sqrt(2)*672; radius of circle with the boundary box inscribed in it
 
 	var/max_visibility = ARTEMIS_MAX_R_SQUARED_VIS
-
-	//layer = TURF_LAYER-0.01
-	//plane = -2
 
 	New()
 		..()
@@ -208,7 +205,6 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 /obj/background_star/manta
 	icon_state = "M-1"
-	//plane = 2 // above the ship
 
 	set_state()
 		var/state = rand(1,4)

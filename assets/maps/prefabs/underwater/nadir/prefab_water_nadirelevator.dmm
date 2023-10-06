@@ -45,6 +45,7 @@
 /obj/item/mining_tool/power_pick{
 	pixel_x = -7
 	},
+/obj/item/tank/oxygen,
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
 "bR" = (
@@ -147,12 +148,6 @@
 "eT" = (
 /turf/simulated/floor/engine/caution/north,
 /area/shuttle/sea_elevator)
-"fb" = (
-/obj/table/reinforced/auto,
-/obj/item/tank/oxygen,
-/obj/item/tank/oxygen,
-/turf/simulated/floor/industrial,
-/area/shuttle/sea_elevator)
 "ft" = (
 /obj/table/wood/auto,
 /obj/item/reagent_containers/food/snacks/ingredient/royal_jelly{
@@ -242,9 +237,9 @@
 "hf" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/shuttle/sea_elevator)
-"hk" = (
-/obj/stool/chair/wooden{
-	dir = 8
+"hB" = (
+/obj/stool/chair/dining/wood{
+	dir = 1
 	},
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
@@ -421,7 +416,7 @@
 /turf/simulated/floor/engine/caution/west,
 /area/shuttle/sea_elevator)
 "pk" = (
-/obj/machinery/computer/sea_elevator{
+/obj/machinery/computer/elevator/sea{
 	dir = 8
 	},
 /turf/simulated/floor/industrial,
@@ -639,6 +634,14 @@
 	},
 /turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
+"xz" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/obj/decal/cleanable/dirt/dirt2,
+/mob/living/carbon/human/fathergrife,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
 "xI" = (
 /turf/unsimulated/wall/setpieces/leadwindow{
 	dir = 8
@@ -865,16 +868,16 @@
 "Fi" = (
 /obj/table/reinforced/auto,
 /obj/item/shipcomponent/sensor/mining{
-	pixel_y = 2;
-	pixel_x = -3
+	pixel_x = -3;
+	pixel_y = 2
 	},
 /obj/item/shipcomponent/secondary_system/orescoop{
-	pixel_y = 9;
-	pixel_x = -2
+	pixel_x = -2;
+	pixel_y = 9
 	},
 /obj/item/shipcomponent/secondary_system/lock/pw_id{
-	pixel_y = 2;
-	pixel_x = 6
+	pixel_x = 6;
+	pixel_y = 2
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
@@ -910,6 +913,12 @@
 /area/diner/hallway{
 	name = "Space Diner Backhall"
 	})
+"FP" = (
+/obj/stool/chair/dining/wood{
+	dir = 4
+	},
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
 "FW" = (
 /obj/stool/chair/couch{
 	dir = 4
@@ -977,12 +986,6 @@
 /obj/marker/supplymarker,
 /turf/simulated/floor/black/grime,
 /area/skeleton_trader)
-"IQ" = (
-/obj/stool/chair/wooden{
-	dir = 1
-	},
-/turf/simulated/floor/black/grime,
-/area/diner/dining)
 "Jj" = (
 /obj/machinery/chem_dispenser/soda,
 /turf/simulated/floor/black/grime,
@@ -1019,6 +1022,10 @@
 "Ku" = (
 /obj/machinery/vending/cola/red,
 /obj/decal/tile_edge/check/purple,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
+"KO" = (
+/obj/stool/chair/dining/wood,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
 "KS" = (
@@ -1083,6 +1090,10 @@
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 21
+	},
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 4;
+	pixel_y = 3
 	},
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
@@ -1201,6 +1212,13 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
 /area/diner/dining)
+"OE" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/mob/living/carbon/human/don_glab,
+/turf/simulated/floor/black/grime,
+/area/diner/dining)
 "OI" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/simulated/floor/engine,
@@ -1273,6 +1291,12 @@
 "RX" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/engine/caution/east,
+/area/diner/dining)
+"Sg" = (
+/obj/stool/chair/dining/wood{
+	dir = 8
+	},
+/turf/simulated/floor/black/grime,
 /area/diner/dining)
 "Sh" = (
 /obj/machinery/door/airlock/pyro,
@@ -1409,10 +1433,6 @@
 /obj/machinery/light/small/floor/netural,
 /turf/simulated/floor/engine/caution,
 /area/shuttle/sea_elevator)
-"Vq" = (
-/obj/stool/chair/wooden,
-/turf/simulated/floor/black/grime,
-/area/diner/dining)
 "Vu" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/skeleton_trader)
@@ -1448,12 +1468,6 @@
 /area/tech_outpost{
 	name = "The Recluse"
 	})
-"WK" = (
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/turf/simulated/floor/black/grime,
-/area/diner/dining)
 "WN" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 1;
@@ -1494,10 +1508,6 @@
 	})
 "Xr" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/item/storage/toolbox/mechanical{
-	pixel_y = 3;
-	pixel_x = 4
-	},
 /turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "Xs" = (
@@ -1527,6 +1537,10 @@
 "XP" = (
 /turf/variableTurf/clear,
 /area/allowGenerate/trench)
+"XU" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
 "XY" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -1540,13 +1554,6 @@
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 5
 	},
-/area/diner/dining)
-"Yn" = (
-/obj/stool/chair/wooden{
-	dir = 8
-	},
-/mob/living/carbon/human/don_glab,
-/turf/simulated/floor/black/grime,
 /area/diner/dining)
 "YC" = (
 /obj/machinery/door/airlock/pyro{
@@ -1632,14 +1639,6 @@
 /area/tech_outpost{
 	name = "The Recluse"
 	})
-"ZM" = (
-/obj/decal/cleanable/dirt/dirt2,
-/obj/stool/chair/wooden{
-	dir = 4
-	},
-/mob/living/carbon/human/fatherjack,
-/turf/simulated/floor/black/grime,
-/area/diner/dining)
 "ZZ" = (
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/caution/south,
@@ -2725,7 +2724,7 @@ XP
 "}
 (23,1,1) = {"
 hf
-ji
+XU
 tC
 ob
 tC
@@ -2774,7 +2773,7 @@ XP
 "}
 (24,1,1) = {"
 xI
-fb
+ji
 ob
 ob
 ob
@@ -3155,7 +3154,7 @@ Vf
 Vf
 Vf
 Oz
-ZM
+xz
 uP
 XP
 XP
@@ -3253,7 +3252,7 @@ Vf
 Vf
 Vf
 Vf
-hk
+Sg
 uP
 Nl
 XP
@@ -3300,7 +3299,7 @@ XK
 NO
 Vf
 Vf
-WK
+FP
 Vf
 Uw
 LU
@@ -3348,9 +3347,9 @@ ER
 Lo
 Fw
 Vf
-Vq
+KO
 Tx
-IQ
+hB
 Oz
 uP
 Nl
@@ -3398,7 +3397,7 @@ VR
 Ql
 lZ
 Vf
-Yn
+OE
 Wr
 tR
 Wr

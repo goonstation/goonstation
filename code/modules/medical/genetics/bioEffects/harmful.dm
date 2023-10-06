@@ -135,6 +135,7 @@
 	reclaim_fail = 15
 	var/talk_prob = 10
 	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","HECK","FRICK","JESUS")
+	var/empowered_popup_style = "font-weight: bold;"
 	icon_state  = "bad"
 
 	OnLife(var/mult)
@@ -145,6 +146,12 @@
 		if (isdead(L))
 			return
 		if (probmult(talk_prob))
+			if(src.power > 1)
+				var/original_speechpopupstyle = L.speechpopupstyle
+				L.speechpopupstyle += empowered_popup_style
+				L.say(pick(talk_strings))
+				L.speechpopupstyle = original_speechpopupstyle
+				return
 			L.say(pick(talk_strings))
 
 /datum/bioEffect/shortsighted

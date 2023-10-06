@@ -134,9 +134,8 @@ var/global/meteor_shower_active = 0
 					scroll_angle = 90
 
 			if (scroll_angle)
-				var/list/params = list("scroll_angle" = scroll_angle)
-
-				add_global_parallax_layer(/atom/movable/screen/parallax_layer/meteor_shower, layer_params = params)
+				ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower, 0 SECONDS)
+				GET_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower)?.scroll_angle = scroll_angle
 	#endif
 
 			var/start_x
@@ -199,7 +198,7 @@ var/global/meteor_shower_active = 0
 				S.UpdateIcon()
 
 	#ifndef UNDERWATER_MAP
-			remove_global_parallax_layer(/atom/movable/screen/parallax_layer/meteor_shower)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/meteor_shower, 0 SECONDS)
 	#endif
 
 	admin_call(var/source)

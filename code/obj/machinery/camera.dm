@@ -18,6 +18,10 @@
 	var/ai_only = FALSE
 	///Cant be snipped by wirecutters
 	var/reinforced = FALSE
+	/// automatically offsets and snaps to perspective walls. mainly for regular security cams
+	var/sticky = FALSE
+	/// do auto position cameras use the alternate diagonal sprites?
+	var/alternate_sprites = FALSE
 
 	//This camera is a node pointing to the other bunch of cameras nearby for AI movement purposes
 	var/obj/machinery/camera/c_north = null
@@ -36,6 +40,109 @@
 		network = "ranch"
 		color = "#AAFF99"
 		c_tag = "autotag"
+
+/obj/machinery/camera/auto
+#ifdef IN_MAP_EDITOR
+	icon_state = "cameras_default"
+#endif
+	name = "autoname"
+	c_tag = "autotag"
+	sticky = TRUE
+
+	north
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTH
+		pixel_y = 20
+
+	south
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTH
+
+	east
+		icon_state = "camera"
+		sticky = FALSE
+		dir = WEST
+		pixel_x = 10
+
+	west
+		icon_state = "camera"
+		sticky = FALSE
+		dir = EAST
+		pixel_x = -10
+
+/obj/machinery/camera/auto/alt
+#ifdef IN_MAP_EDITOR
+	icon_state = "cameras_alt"
+#endif
+	alternate_sprites = TRUE
+
+	north
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTHEAST
+		pixel_y = 20
+
+	south
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTHWEST
+
+	east
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTHWEST
+		pixel_x = 10
+
+	west
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTHEAST
+		pixel_x = -10
+
+
+/obj/machinery/camera/proc/autoposition(var/alt)
+	if (!src.sticky)
+		return
+	SPAWN(1 DECI SECOND) // wait for the wingrille spawners to complete loading
+		var/turf/T = null
+		var/list/directions = null
+		var/pixel_offset = 10 // this will get overridden if jen wall
+		if (src.dir != SOUTH) // i.e. if the dir has been varedited to east/west/north
+			directions = list(turn(src.dir, 180)) // the east sprite sits on a west wall so some inversion is needed
+		else
+			directions = cardinal // check each direction
+
+		for (var/D in directions)
+			T = get_step(src, D)
+			if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
+				if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
+					pixel_offset = 12 // jen walls are slightly taller so the offset needs to increase
+				if (!alt) // this uses the alternate sprites which happen to coincide with diagonal dirs
+					src.set_dir(turn(D, 180))
+				else
+					switch (D) // this is horrid but it works ish
+						if (NORTH)
+							src.set_dir(SOUTHEAST)
+						if (SOUTH)
+							src.set_dir(SOUTHWEST)
+						if (EAST)
+							src.set_dir(NORTHWEST)
+						if (WEST)
+							src.set_dir(NORTHEAST)
+				switch (D) // north facing ones don't need to be offset ofc
+					if (EAST)
+						src.pixel_x = pixel_offset
+					if (WEST)
+						src.pixel_x = -pixel_offset
+					if (NORTH)
+						src.pixel_y = pixel_offset * 2
+				T = null
+				return
+		//CRASH("Auto camera has no wall to connect to!")
+
+
 
 /obj/machinery/camera/television
 	name = "television camera"
@@ -115,6 +222,9 @@
 							/area/station/turret_protected/AIbasecore1)
 	if (locate(area) in aiareas)
 		src.ai_only = TRUE
+
+	if (src.sticky)
+		autoposition(src.alternate_sprites)
 
 	AddComponent(/datum/component/camera_coverage_emitter)
 
@@ -298,14 +408,14 @@
 		for(var/mob/O in mobs)
 			if (isAI(O))
 				boutput(O, "[user] holds a paper up to one of your cameras ...")
-				O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+				X.ui_interact(O)
 				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 			else
 				var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
 				if (S)
 					if (S.current == src)
 						boutput(O, "[user] holds a paper up to one of the cameras ...")
-						O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+						X.ui_interact(O)
 						logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 
 //Return a working camera that can see a given mob

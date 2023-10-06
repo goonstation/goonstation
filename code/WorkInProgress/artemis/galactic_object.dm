@@ -1,4 +1,4 @@
-#if ENABLE_ARTEMIS
+#ifdef ENABLE_ARTEMIS
 
 var/global/datum/galaxy/GALAXY = new
 
@@ -10,6 +10,7 @@ var/global/datum/galaxy/GALAXY = new
 	var/mangled_rand
 	var/datum/xor_rand_generator/Rand
 
+#if !defined(GOTTA_GO_FAST_BUT_ZLEVELS_TOO_SLOW)
 	New()
 		..()
 #if defined(DEBUG_ARTEMIS)
@@ -33,6 +34,7 @@ var/global/datum/galaxy/GALAXY = new
 
 		SPAWN(20 SECONDS)
 			populate_galaxy()
+#endif
 
 	/// Random Integer from (L,H) otherwise 0-1
 
@@ -317,7 +319,7 @@ var/global/datum/galaxy/GALAXY = new
 	var/x_old = null
 	var/y_old = null
 	var/scale
-	plane = -1
+	plane = PLANE_SPACE
 	max_visibility = (750 * 700)
 
 	New()

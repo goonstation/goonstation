@@ -93,6 +93,12 @@ $bg-map: colors.$bg-map !default;
   text-overflow: ellipsis;
 }
 
+//ellipsis has to be on the children, it can't work otherwise.
+.Button--ellipsis .Button__content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .Button--fluid {
   display: block;
   margin-left: 0;

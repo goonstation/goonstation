@@ -27,7 +27,7 @@ TYPEINFO(/datum/component/buildable_turf)
 		if (T.amount >= 1)
 			for(var/obj/lattice/L in location)
 				qdel(L)
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 			T.build(location)
 			T.vis_contents -= station_repair.ambient_obj
 			return TRUE

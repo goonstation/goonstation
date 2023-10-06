@@ -9,6 +9,10 @@
 	var/gen_min_y = 1
 	var/gen_max_x
 	var/gen_max_y
+
+	var/floor_path = /turf/simulated/floor/industrial
+	var/wall_path = /turf/simulated/wall/auto/supernorn/material/mauxite
+
 	New()
 		. = ..()
 		src.gen_max_x = world.maxx
@@ -19,19 +23,39 @@
 		build_rooms()
 		build_walls()
 
-	proc/build_rooms()
+	proc/fill_map()
+		cell_grid = new/list(world.maxx,world.maxy)
+		build_rooms(30, maximum_size=80)
+		build_rooms(50, maximum_size=60)
+		build_rooms(250, maximum_size=30)
+
+		build_walls()
+
+		for(var/i in src.gen_min_x to src.gen_max_x)
+			for(var/j in src.gen_min_y to src.gen_max_y)
+
+				if(i<=src.gen_min_x || i>=src.gen_max_x || j<=src.gen_min_y || j>=src.gen_max_y)
+					cell_grid[i][j] = WALL
+				else if(!cell_grid[i][j])
+					if(prob(80))
+						cell_grid[i][j] = FLOOR_ONLY
+					else
+						cell_grid[i][j] = FLOOR
+
+	proc/build_rooms(count=30, maximum_size=25)
 		var/x
 		var/y
 		var/max_x
 		var/max_y
-		for(var/i in 1 to 30)
+		var/overlay_range = maximum_size - 5
+		for(var/i in 1 to count)
 			var/floor_n_door = TRUE
 			if(prob(90))
 				//Pick new location
 				x = rand(src.gen_min_x, src.gen_max_x-5)
 				y = rand(src.gen_min_y, src.gen_max_y-5)
-				max_x = min(x+rand(5,25),src.gen_max_x)
-				max_y = min(y+rand(5,25),src.gen_max_y)
+				max_x = min(x+rand(5,maximum_size),src.gen_max_x)
+				max_y = min(y+rand(5,maximum_size),src.gen_max_y)
 
 			// else if(prob(25) && (max_x-x>6 || max_y-y > 6))
 			// 	//subdivide
@@ -49,8 +73,9 @@
 				//overlay
 				x = clamp(rand(x, max_x), src.gen_min_x, src.gen_max_x)
 				y = clamp(rand(y, max_y), src.gen_min_y, src.gen_max_y)
-				max_x = clamp(x+rand(-20,20), src.gen_min_x, src.gen_max_x)
-				max_y = clamp(y+rand(-20,20), src.gen_min_y, src.gen_max_y)
+
+				max_x = clamp(x+rand(-overlay_range,overlay_range), src.gen_min_x, src.gen_max_x)
+				max_y = clamp(y+rand(-overlay_range,overlay_range), src.gen_min_y, src.gen_max_y)
 
 			if(floor_n_door)
 				set_type(x, y, max_x, max_y, FLOOR)
@@ -127,6 +152,8 @@
 	var/max_x = 0
 	var/max_y = 0
 
+	var/generate_stuff = !(flags & (MAPGEN_IGNORE_FLORA|MAPGEN_IGNORE_FAUNA))
+
 	var/turf/sample = turfs[1]
 	if(!length(cell_grid) || !reuse_seed)
 		if(sample.z == Z_LEVEL_STATION)
@@ -153,15 +180,15 @@
 
 		switch(cell_value)
 			if(FLOOR)
-				T.ReplaceWith(/turf/simulated/floor/industrial)
+				T.ReplaceWith(floor_path)
 				if((T.x % 5 == 0) && (T.y % 5 == 0) && prob(95))
 					if(prob(80))
 						new /obj/machinery/light/small/floor/harsh/very(T)
 					else
 						new /obj/machinery/light/small/floor/broken(T)
-				if(prob(10))
+				if(generate_stuff && prob(10))
 					make_cleanable(/obj/decal/cleanable/dirt,T)
-				if(prob(2))
+				if(generate_stuff && prob(2))
 					var/rarity = rand(1, 100)
 					switch(rarity)
 						if(1 to 10)
@@ -172,13 +199,13 @@
 							new /obj/storage/crate/wooden/(T)
 
 			if(FLOOR_ONLY)
-				T.ReplaceWith(/turf/simulated/floor/industrial)
+				T.ReplaceWith(floor_path)
 
 			if(WALL)
-				T.ReplaceWith(/turf/simulated/wall/auto/supernorn/material/mauxite)
+				T.ReplaceWith(wall_path)
 
 			if(DOOR)
-				T.ReplaceWith(/turf/simulated/floor/industrial)
+				T.ReplaceWith(floor_path)
 				var/obj/door = new /obj/machinery/door/airlock/pyro/classic(T)
 				if(cell_grid[T.x-1][T.y] == WALL)
 					door.dir = NORTH
