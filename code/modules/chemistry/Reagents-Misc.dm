@@ -1316,7 +1316,7 @@ datum
 		oil
 			name = "oil"
 			id = "oil"
-			description = "A decent lubricant for machines. High in benzene, naptha and other hydrocarbons."
+			description = "A decent lubricant for machines. High in benzene, naphtha and other hydrocarbons."
 			reagent_state = LIQUID
 			fluid_r = 0
 			fluid_g = 0
@@ -3346,7 +3346,7 @@ datum
 			name = "hemolymph"
 			id = "hemolymph"
 			//taste = "metallic yet slightly bitter"
-			description = "Hemolymph is a blood-like bodily fluid found in many invertibrates that derives its blue-green color from the presence of copper proteins."
+			description = "Hemolymph is a blood-like bodily fluid found in many invertebrates that derives its blue-green color from the presence of copper proteins."
 			reagent_state = LIQUID
 			fluid_r = 4
 			fluid_b = 165
@@ -4122,7 +4122,7 @@ datum
 		iron_oxide
 			name = "Iron Oxide"
 			id = "iron_oxide"
-			description = "Iron, artifically rusted under the effects of oxygen, acetic acid, salt and a high temperature enviroment."
+			description = "Iron, artificially rusted under the effects of oxygen, acetic acid, salt and a high temperature environment."
 			fluid_r = 112
 			fluid_b = 40
 			fluid_g = 9
