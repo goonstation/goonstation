@@ -317,7 +317,7 @@
 	bites_left = 1
 	heal_amt = 1
 	fill_amt = 0.5
-	initial_volume = 15
+	initial_volume = 30
 	initial_reagents = list("sugar" = 15)
 	var/frosted = 0
 	food_color = "#CC9966"
@@ -350,7 +350,7 @@
 		heal_amt = 0
 		icon_state = "cookie-metal"
 		food_effects = list("food_hp_up")
-		initial_volume = 20
+		initial_volume = 40
 		initial_reagents = list("sugar" = 10, "iron" = 10)
 
 	chocolate_chip
@@ -358,7 +358,7 @@
 		desc = "Invented during the Great Depression, this chocolate-laced cookie was a key element of FDR's New Deal policies."
 		icon_state = "cookie-chips"
 		heal_amt = 2
-		initial_volume = 20
+		initial_volume = 40
 		initial_reagents = list("sugar" = 15, "chocolate" = 5)
 
 	oatmeal
@@ -371,7 +371,7 @@
 		name = "bacon cookie"
 		desc = "A cookie made out of bacon. Is this intended to be savory or a sweet candied bacon sort of thing? Whatever it is, it's pretty dumb."
 		icon_state = "cookie-bacon"
-		initial_volume = 20
+		initial_volume = 40
 		initial_reagents = list("sugar" = 10, "porktonium"=10)
 		food_effects = list("food_sweaty")
 
@@ -379,7 +379,7 @@
 		name = "jaffa cake"
 		desc = "Legally a cake, this edible consists of precision layers of chocolate, sponge cake, and orange jelly."
 		icon_state = "cookie-jaffa"
-		initial_volume = 20
+		initial_volume = 40
 		initial_reagents = list("sugar" = 10, "chocolate"=5, "juice_orange"=5)
 
 	spooky
@@ -387,7 +387,7 @@
 		desc = "Two ounces of pure terror."
 		icon_state = "cookie-spooky"
 		frosted = 1
-		initial_volume = 20
+		initial_volume = 40
 		initial_reagents = list("sugar" = 10, "ectoplasm"=10)
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT
 
@@ -396,7 +396,7 @@
 		desc = "Little bite-sized heart attacks." //no kidding
 		icon_state = "cookie-butter"
 		frosted = 1
-		initial_volume = 20
+		initial_volume = 40
 		initial_reagents = list("sugar" = 10, "butter"=10)
 
 	peanut
@@ -441,7 +441,7 @@
 	icon_state = "moonpie-sugar"
 	bites_left = 1
 	heal_amt = 6
-	initial_volume = 40
+	initial_volume = 100
 	initial_reagents = list("sugar" = 30, "cream" = 10)
 	var/frosted = 0
 	food_effects = list("food_refreshed")
@@ -471,7 +471,7 @@
 		icon_state = "moonpie-metal"
 		heal_amt = 0
 		food_effects = list("food_hp_up_big")
-		initial_volume = 50
+		initial_volume = 100
 		initial_reagents = list("sugar" = 20, "iron" = 20, "cream" = 10)
 
 	chocolate_chip
@@ -480,7 +480,7 @@
 		icon_state = "moonpie-chips"
 		heal_amt = 7
 		food_effects = list("food_refreshed_big")
-		initial_volume = 50
+		initial_volume = 100
 		initial_reagents = list("sugar" = 30, "chocolate" = 10, "cream" = 10)
 
 	oatmeal
@@ -495,7 +495,7 @@
 		desc = "How is this even food?"
 		icon_state = "moonpie-bacon"
 		heal_amt = 5
-		initial_volume = 50
+		initial_volume = 100
 		initial_reagents = list("sugar" = 20, "porktonium" = 20, "cream" = 10)
 		food_effects = list("food_sweaty_big")
 
@@ -504,7 +504,7 @@
 		desc = "This dish was named in an attempt to dodge sales taxes on pie production. However, it is actually legally considered a form of crumble."
 		icon_state = "moonpie-jaffa"
 		heal_amt = 8
-		initial_volume = 50
+		initial_volume = 100
 		initial_reagents = list("sugar" = 20, "chocolate" = 10, "juice_orange" = 10, "cream" = 10)
 		food_effects = list("food_refreshed_big")
 
@@ -513,7 +513,7 @@
 		desc = "A confection infamous for being especially terrible for you, in a culture noted for having nothing but foods that are terrible for you."
 		icon_state = "moonpie-chocolate"
 		heal_amt = 25 //oh jesus
-		initial_volume = 60
+		initial_volume = 100
 		initial_reagents = list("sugar" = 20, "chocolate" = 30, "cream" = 10)
 		food_effects = list("food_refreshed_big")
 
@@ -523,7 +523,7 @@
 		icon_state = "moonpie-spooky"
 		heal_amt = 6
 		frosted = 1
-		initial_volume = 50
+		initial_volume = 100
 		initial_reagents = list("sugar" = 20, "ectoplasm"=20, "cream" = 10)
 		food_effects = list("food_refreshed_big")
 		meal_time_flags = MEAL_TIME_FORBIDDEN_TREAT

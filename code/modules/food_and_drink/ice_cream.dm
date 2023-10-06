@@ -103,7 +103,7 @@
 	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 4
 	heal_amt = 1
-	initial_volume = 10
+	initial_volume = 25
 	initial_reagents = list("yoghurt"=10)
 	food_effects = list("food_disease_resist")
 
@@ -111,6 +111,6 @@
 	name = "frozen yoghurt"
 	desc = "A delightful tub of frozen yoghurt."
 	heal_amt = 2
-	initial_volume = 10
-	initial_reagents = list("yoghurt"=10)
+	initial_volume = 25
+	initial_reagents = list("yoghurt"=10, "cryostylane"=5)
 	food_effects = list("food_cold", "food_disease_resist")

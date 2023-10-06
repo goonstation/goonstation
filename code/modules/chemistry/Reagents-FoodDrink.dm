@@ -200,7 +200,7 @@ datum
 			transparency = 255
 			hunger_value = 0.5
 			taste = "slightly sour"
-			viscosity = 0.4
+			viscosity = 0.6
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (ishuman(M))
 					var/mob/living/carbon/human/H = M
@@ -220,7 +220,7 @@ datum
 			thirst_value = 0.3
 			hunger_value = 0.3
 			bladder_value = -0.2
-			viscosity = 0.1
+			viscosity = 0.5
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(prob(25))
