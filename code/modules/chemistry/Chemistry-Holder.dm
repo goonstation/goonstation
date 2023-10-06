@@ -480,16 +480,19 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 						var/datum/reagents/fluid_group/FG
 						if (istype(src,/datum/reagents/fluid_group))
 							FG = src
-						if (C.consume_all)
-							for(var/B in C.required_reagents)
-								if (FG) //MBC : I don't like doing this here, but it is necessary for fluids not to delete themselves mid-reaction
-									FG.skip_next_update = 1
-								src.del_reagent(B)
-						else
-							for(var/B in C.required_reagents)
-								if (FG)
-									FG.skip_next_update = 1
-								src.remove_reagent(B, C.required_reagents[B] * created_volume / (C.result_amount ? C.result_amount : 1))
+
+						for (var/B in C.required_reagents)
+							if (FG) //MBC : I don't like doing this here, but it is necessary for fluids not to delete themselves mid-reaction
+								FG.skip_next_update = 1
+							var/amount_to_consume = C.required_reagents[B] * created_volume / (C.result_amount ? C.result_amount : 1)
+							if(C.consume_all)
+								var/datum/reagent/current_reagent_to_remove = src.reagent_list[B]
+								amount_to_consume = current_reagent_to_remove ? current_reagent_to_remove.volume : 0
+							src.remove_reagent(B, amount_to_consume, FALSE, FALSE)
+						//only now, after all reactants for this particular reaction have reacted away, we update the chemistry holder and check for new reactions. No chem duping allowed.
+						src.update_total()
+						src.reagents_changed()
+
 						if(C.result)
 							src.add_reagent(C.result, created_volume,, src.total_temperature, chemical_reaction=TRUE)
 						if(created_volume <= 0) //MBC : If a fluid reacted but didn't create anything, we require an update_total call to do drain/evaporate checks.

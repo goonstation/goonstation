@@ -868,7 +868,7 @@
 		name = "sun tea"
 		id = "sun_tea"
 		result = "sun_tea"
-		required_reagents = list("tea" = 3, "juice_orange" = 1, "sugar" = 1)
+		required_reagents = list("tea" = 2, "juice_orange" = 1, "sweet_tea" = 2)
 		result_amount = 5
 		mix_phrase = "The tea takes on a sweet, summery smell."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -3991,6 +3991,7 @@
 		id = "ammonia"
 		result = "ammonia"
 		required_reagents = list("hydrogen" = 3, "nitrogen" = 1)
+		inhibitors = list("chlorine") //to prevent conflict with atrazine
 		result_amount = 3
 		mix_phrase = "The mixture bubbles, emitting an acrid reek."
 
