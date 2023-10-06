@@ -545,11 +545,9 @@
 	var/list/roominfo = list()
 
 proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = 1)
-	if (!user || !user.client)
-		return
+	if (!user || !user.client) return
 	var/input = strip_html(tgui_input_text(user, "Blueprint Name", "Set a name for your new blueprint.", null, 54))
-	if (!input)
-		return
+	if (!input) return
 
 	var/savepath = "data/blueprints/[user.client.ckey]/[input].dat"
 	if (fexists("[savepath]"))
@@ -609,6 +607,73 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = 1)
 			save["icon_state"] << o.icon_state
 
 	boutput(user, "<span class='notice'>Saved blueprint as '[input]'. </span>")
+
+proc/load_abcu_blueprint(mob/user)
+	if (!user || !user.client) return
+	var/list/bplist = flist("data/blueprints/[user.client.ckey]")
+	if (!length(bplist))
+		boutput(user, "<span class='alert'>You don't have any blueprints.</span>")
+		return
+	var/inputbp = tgui_input_list(user, "Pick a blueprint to load.", "Your Blueprints", bplist)
+	if(!inputbp) return
+
+	//var/savefile/selectedbp = new/savefile("data/blueprints/[user.client.ckey]/[inputbp]")
+
+	var/savepath = "data/blueprints/[user.client.ckey]/[inputbp].dat"
+	var/savefile/save = new/savefile("[savepath]") // if it's not an existing file, this makes an empty new one
+	if (isnull(save["roomname"]) && isnull(save["sizex"]) && isnull(save["author"])) // double check
+		boutput(user, "<span class='alert'>Blueprint [inputbp] not found.</span>")
+		fdel("[savepath]") // so we kill it
+		return
+
+	/* var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
+	prints_left-- */
+	var/datum/abcu_blueprint/bp = new/datum/abcu_blueprint
+	var/turf_count
+	var/obj_count
+	save.cd = "/"
+	//var/roomname = save["roomname"]
+	bp.size_x = save["sizex"]
+	bp.size_y = save["sizey"]
+	bp.author = save["author"]
+
+	save.cd = "/tiles" // cd to tiles
+	for (var/A in save.dir) // and now loop on every listing in tiles
+		save.cd = "/tiles/[A]"
+		var/list/coords = splittext(A, ",")
+		var/datum/tileinfo/tf = new/datum/tileinfo()
+		tf.posx = coords[1]
+		tf.posy = coords[2]
+		tf.tiletype = save["type"]
+		tf.state = save["state"]
+		tf.direction = save["dir"]
+		tf.icon = save["icon"]
+		bp.cost_metal += REBUILD_COST_TURF_METAL
+		bp.cost_crystal += REBUILD_COST_TURF_CRYSTAL
+		save.cd = "/tiles/[A]/objects"
+		turf_count++
+
+		for (var/B in save.dir)
+			save.cd = "/tiles/[A]/objects/[B]"
+			var/datum/objectinfo/O = new/datum/objectinfo()
+			O.objecttype = save["type"]
+			O.direction = save["dir"]
+			O.layer = save["layer"]
+			O.px = save["pixelx"]
+			O.py = save["pixely"]
+			O.icon_state = save["icon_state"]
+			bp.cost_metal += REBUILD_COST_OBJECT_METAL
+			bp.cost_crystal += REBUILD_COST_OBJECT_CRYSTAL
+			tf.objects.Add(O)
+
+		bp.roominfo.Add(tf)
+
+	//bp.name = "Blueprint '[input]'"
+	bp.cost_metal = round(bp.cost_metal)
+	bp.cost_crystal = round(bp.cost_crystal)
+
+	boutput(user, "<span class='notice'>Loaded blueprint [inputbp], with [turf_count] tiles, and [obj_count] objects.</span>")
+	return bp
 
 /obj/item/blueprint_marker
 	name = "blueprint marker"
