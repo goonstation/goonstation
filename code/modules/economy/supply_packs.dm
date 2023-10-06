@@ -480,6 +480,15 @@ ABSTRACT_TYPE(/datum/supply_packs)
 			carton.ourEgg.blog = "ordered by [key_name(creator)]|"
 		return beez
 
+/datum/supply_packs/sheep
+	name = "Wool Production Kit"
+	desc = "For use with existing Ranch."
+	category = "Civilian Department"
+	contains = list(/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep)
+	cost = PAY_TRADESMAN*10
+	containertype = /obj/storage/crate
+	containername = "Wool Production Kit"
+
 /datum/supply_packs/fishing
 	name = "Angling Starter Kit"
 	desc = "A full complement of fishing tools for the amateur angler."

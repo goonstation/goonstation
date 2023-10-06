@@ -45,6 +45,8 @@
 	thermal_conductivity = 0.05
 	heat_capacity = 0
 	turf_flags = MOB_STEP
+	can_burn = FALSE
+	can_break = FALSE
 
 	hitby()
 		. = ..()
@@ -79,6 +81,8 @@
 	icon_state = "floor"
 	icon = 'icons/turf/shuttle.dmi'
 	turf_flags = MOB_STEP
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/shuttle/yellow
 	icon_state = "floor2"

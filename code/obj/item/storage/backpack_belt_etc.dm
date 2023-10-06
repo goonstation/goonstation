@@ -674,7 +674,7 @@
 
 	New()
 		..()
-		AddComponent(/datum/component/wearertargeting/energy_shield/ceshield, list(SLOT_BELT), 0.75, 0.2, FALSE, 5) //blocks 3/4 of incoming damage, up to 200 points, on a full charge, but loses charge quickly while active
+		AddComponent(/datum/component/wearertargeting/energy_shield/ceshield, list(SLOT_BELT), 0.75, 0.3, FALSE, 5) //blocks 3/4 of incoming damage, up to 200 points, on a full charge, but loses charge quickly while active
 		var/obj/item/ammo/power_cell/self_charging/cell = new/obj/item/ammo/power_cell/self_charging{recharge_rate = 3; recharge_delay = 10 SECONDS}
 		AddComponent(/datum/component/cell_holder, cell, FALSE, 100, FALSE)
 		cell.set_loc(null) //otherwise it takes a slot in the belt. aaaaa
@@ -854,7 +854,7 @@
 		spawn_contents = list(/obj/item/barrier, /obj/item/device/detective_scanner, /obj/item/device/ticket_writer)
 
 	ntsc
-		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSC, not in vendor
+		spawn_contents = list(/obj/item/gun/energy/signifer2, /obj/item/baton/ntso, /obj/item/instrument/whistle/security, /obj/item/clothing/mask/gas/NTSO, /obj/item/storage/ntsc_pouch, /obj/item/barrier) //secbelt subtype that only spawns on NTSC, not in vendor
 
 	ntso
 		spawn_contents = list(/obj/item/gun/energy/cornicen3, /obj/item/old_grenade/energy_frag = 2, /obj/item/old_grenade/energy_concussion = 2, /obj/item/tank/emergency_oxygen/extended, /obj/item/reagent_containers/food/snacks/donkpocket/warm)
