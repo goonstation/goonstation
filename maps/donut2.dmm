@@ -21839,13 +21839,13 @@
 /area/station/maintenance/southwest)
 "cKW" = (
 /obj/fakeobjects{
+	anchored = 1;
+	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
+	dir = 1;
 	icon = 'icons/obj/networked.dmi';
 	icon_state = "secdetector0";
-	anchored = 1;
 	name = "Experimental Wireless Power Transceiver";
-	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
-	pixel_y = 16;
-	dir = 1
+	pixel_y = 16
 	},
 /obj/machinery/power/data_terminal,
 /obj/cable{
@@ -35263,8 +35263,8 @@
 /area/station/engine/elect)
 "mhF" = (
 /obj/fluid_spawner{
-	reagent_id = "urine";
-	amount = 150
+	amount = 150;
+	reagent_id = "urine"
 	},
 /turf/simulated/floor,
 /area/station/science/testchamber/bombchamber)
@@ -36412,11 +36412,11 @@
 /area/station/science/lobby)
 "mWp" = (
 /obj/fakeobjects{
+	anchored = 1;
+	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
 	icon = 'icons/obj/networked.dmi';
 	icon_state = "secdetector0";
-	anchored = 1;
 	name = "Experimental Wireless Power Transceiver";
-	desc = "Extremely expensive piece of machinery capable of transmitting power from an APC wirelessly through space to a nearby area. Wow! The future is now!";
 	pixel_y = 16
 	},
 /obj/decal/cleanable/writing{
@@ -36530,13 +36530,13 @@
 /area/station/maintenance/inner/central)
 "mZh" = (
 /obj/decal/cleanable/writing{
-	icon_state = "cFrown";
 	color = "#ffaa00";
 	color_name = "orange";
-	words = "Frown";
-	real_name = "Frown";
+	icon_state = "cFrown";
 	name = "Frown";
-	random_icon_states = list("cFrown")
+	random_icon_states = list("cFrown");
+	real_name = "Frown";
+	words = "Frown"
 	},
 /turf/simulated/floor,
 /area/station/science/testchamber/bombchamber)
@@ -42358,6 +42358,9 @@
 /obj/machinery/camera/ranch{
 	dir = 1
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep{
+	secret_thing = 1
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "qZk" = (
@@ -45419,10 +45422,10 @@
 /obj/machinery/atmospherics/pipe/simple/insulated,
 /obj/machinery/portable_atmospherics/scrubber,
 /obj/machinery/power/apc{
-	name = "Bomb Testing Area APC";
+	areastring = "Bomb Testing Chamber";
 	dir = 4;
-	pixel_x = 24;
-	areastring = "Bomb Testing Chamber"
+	name = "Bomb Testing Area APC";
+	pixel_x = 24
 	},
 /obj/cable{
 	icon_state = "0-2"
