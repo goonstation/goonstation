@@ -2148,13 +2148,13 @@ datum
 				if(!M) M = holder.my_atom
 				if (holder.get_reagent_amount(src.id) >= 20)
 					M.stuttering += rand(0,5)
-					if(prob(19) && !ON_COOLDOWN(M, "capsaicin_stun_life", 10 SECONDS))
+					if(prob(19) && !ON_COOLDOWN(M, "capsaicin_stun_life", 7 SECONDS))
 						M.emote(pick("choke","gasp","cough"))
 						M.setStatusMin("stunned", 1 SECOND * mult)
 						M.take_oxygen_deprivation(rand(0,10) * mult)
 						M.bodytemperature += rand(5,20) * mult
 				else
-					if(prob(10) && !ON_COOLDOWN(M, "capsaicin_stun_life", 10 SECONDS))
+					if(prob(10) && !ON_COOLDOWN(M, "capsaicin_stun_life", 7 SECONDS))
 						M.emote(pick("cough"))
 						M.setStatusMin("stunned", 1 SECOND * mult)
 				M.stuttering += rand(0,2)
