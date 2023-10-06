@@ -20,6 +20,8 @@
 	//This is used by bans for checking, so we want it very available
 	apiHandler = new()
 
+	eventRecorder = new()
+
 	participationRecorder = new()
 	//participationRecorder = new(1) //Enable debug
 
