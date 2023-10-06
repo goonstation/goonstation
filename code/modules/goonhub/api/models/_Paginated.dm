@@ -3,19 +3,9 @@ ABSTRACT_TYPE(/datum/apiModel/Paginated)
 /// Paginated - ABSTRACT
 /// Anything with a paginated list inherits from this
 /datum/apiModel/Paginated
-	var/list/data = null
+	var/list/datum/apiModel/data = null
 	var/list/links = null
 	var/list/meta = null
-
-/datum/apiModel/Paginated/New(
-	data,
-	links,
-	meta
-)
-	. = ..()
-	src.data = data
-	src.links = links
-	src.meta = meta
 
 /datum/apiModel/Paginated/SetupFromResponse(response)
 	. = ..()
