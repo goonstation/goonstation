@@ -54,6 +54,29 @@
 		hair_list[third_id] = third_color
 		src.setup_wig(hair_list)
 
+///Randomized wig for the cargo crate
+/obj/item/clothing/head/wig/spawnable/random
+
+	New()
+		src.name = "wig"
+		var/list/possible_hairstyles
+
+		if (prob(50))
+			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/ismasc)
+		else
+			possible_hairstyles = filtered_concrete_typesof(/datum/customization_style, /proc/isfem)
+
+		var/datum/customization_style/hair_type
+		var/picked_color = rgb(rand(0,255),rand(0,255),rand(0,255))
+		hair_type = pick(possible_hairstyles)
+		first_id = initial(hair_type.id)
+		first_color = picked_color
+		if (prob(33))
+			hair_type = pick(possible_hairstyles)
+			second_id = initial(hair_type.id)
+			second_color = picked_color
+		..()
+
 /obj/item/clothing/head/bald_cap
 	name = "bald cap"
 	desc = "You can't tell the difference, Honest!"

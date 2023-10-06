@@ -7000,7 +7000,7 @@
 	icon_state = "tabledir";
 	dir = 4
 	},
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "anP" = (

@@ -457,6 +457,11 @@ ABSTRACT_TYPE(/obj/item)
 				src.change_stack_amount(-1)
 				return
 			user.u_equip(src)
+			if (by_matter_eater && !istype(src, /obj/item/reagent_containers/food) && isliving(user))
+				var/mob/living/L = user
+				if (L.organHolder.stomach)
+					L.organHolder.stomach.consume(src)
+					return
 			qdel(src)
 		return TRUE
 
@@ -495,6 +500,11 @@ ABSTRACT_TYPE(/obj/item)
 				src.change_stack_amount(-1)
 				return
 			user.u_equip(src)
+			if (by_matter_eater && !istype(src, /obj/item/reagent_containers/food) && isliving(user))
+				var/mob/living/L = user
+				if (L.organHolder.stomach)
+					L.organHolder.stomach.consume(src)
+					return
 			qdel(src)
 		return TRUE
 
@@ -696,6 +706,13 @@ ABSTRACT_TYPE(/obj/item)
 	var/mob/user = usr
 
 	params = params2list(params)
+
+	if (ishuman(over_object) && ishuman(usr) && !src.storage)
+		var/mob/living/carbon/human/patient = over_object
+		var/mob/living/carbon/human/surgeon = usr
+		if (surgeryCheck(patient, surgeon))
+			if (insertChestItem(patient, surgeon, src))
+				return
 
 	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action
 		if (user == over_object)
@@ -1200,10 +1217,6 @@ ABSTRACT_TYPE(/obj/item)
 	if (!M || !user) // not sure if this is the right thing...
 		return
 
-	if (surgeryCheck(M, user))		// Check for surgery-specific actions
-		if(insertChestItem(M, user))	// Puting item in patient's chest
-			return
-
 	if (src.Eat(M, user)) // All those checks were done in there anyway
 		return
 
@@ -1279,8 +1292,6 @@ ABSTRACT_TYPE(/obj/item)
 		//moved to item_attack_message
 		//msgs.visible_message_target("<span class='alert'><B><I>... and lands a devastating hit!</B></I></span>")
 
-	msgs.played_sound = src.hitsound
-
 	var/power = src.force + src.getProperty("searing")
 
 	if(hasProperty("unstable"))
@@ -1352,6 +1363,9 @@ ABSTRACT_TYPE(/obj/item)
 		if(power <= 0)
 			fuckup_attack_particle(user)
 			armor_blocked = 1
+
+	if (!armor_blocked)
+		msgs.played_sound = src.hitsound
 
 	if (src.leaves_slash_wound && power > 0 && hit_area == "chest" && ishuman(M))
 		var/num = rand(0, 2)
@@ -1536,7 +1550,8 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/proc/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	if(src in user.juggling)
 		return ""
-	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
+
+	if (((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5)) && !src.cant_drop)
 		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
 		user.u_equip(src)
 		src.set_loc(user.loc)

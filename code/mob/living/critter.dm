@@ -95,6 +95,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 	var/pull_w_class = W_CLASS_SMALL
 
+	///Whether or not we attack mobs with the neutral faction flag
+	var/ai_attacks_neutral = FALSE
 	///If the mob has an ai, turn this to TRUE if you want it to fight back upon being attacked
 	var/ai_retaliates = FALSE
 	///If the mob has an ai, and ai_retaliates is TRUE, how many attacks should we endure before attacking back?
@@ -135,6 +137,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			src.organHolder = new src.custom_organHolder_type(src, custom_brain_type)
 		else
 			src.organHolder = new/datum/organHolder/critter(src, custom_brain_type)
+
 		..()
 
 		hud = new custom_hud_type(src)
@@ -148,7 +151,8 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 
 		health_update_queue |= src
 
-		src.abilityHolder = new /datum/abilityHolder/composite(src)
+		if(!src.abilityHolder)
+			src.abilityHolder = new /datum/abilityHolder/composite(src)
 		if (islist(src.add_abilities) && length(src.add_abilities))
 			for (var/abil in src.add_abilities)
 				if (ispath(abil))
@@ -317,7 +321,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				else
 					src.wake_from_hibernation()
 			// We were harmed, and our ai wants to fight back. Also we don't have anything else really important going on
-			if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate() && M != src)
+			if (src.ai_retaliates && src.ai.enabled && length(src.ai.priority_tasks) <= 0 && src.should_critter_retaliate() && M != src && src.is_npc)
 				var/datum/aiTask/sequence/goalbased/retaliate/task_instance = src.ai.get_instance(/datum/aiTask/sequence/goalbased/retaliate, list(src.ai, src.ai.default_task))
 				task_instance.targetted_mob = M
 				task_instance.start_time = TIME
@@ -663,11 +667,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 			return
 		var/obj/item/old = src.equipped()
 		if (active_hand < hands.len)
-			active_hand++
-			hand = active_hand
+			set_hand(active_hand + 1)
 		else
-			active_hand = 1
-			hand = active_hand
+			set_hand(1)
 		hud.update_hands()
 		src.update_inhands()
 		if (old != src.equipped())
@@ -774,7 +776,7 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 				HH.holder = src
 				hands += HH
 			active_hand = 1
-			hand = active_hand
+			set_hand(1)
 
 	proc/post_setup_hands()
 		if (hand_count)
@@ -1346,8 +1348,9 @@ ADMIN_INTERACT_PROCS(/mob/living/critter, proc/modify_health)
 		if (isintangible(C)) return FALSE
 		if (isdead(C)) return FALSE
 		if (istype(C, src.type)) return FALSE
+		if (isghostcritter(C) || isghostdrone(C)) return FALSE
 		if (C in src.friends) return FALSE
-		return !src.faction || !(C.faction & src.faction) //if we don't have a faction we hate everyone
+		return faction_check(src, C, src.ai_attacks_neutral)
 
 	/// Used for generic critter mobAI - targets returned from this proc will be chased and scavenged. Return a list of potential targets, one will be picked based on distance.
 	proc/seek_scavenge_target(var/range = 5)

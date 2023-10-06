@@ -135,7 +135,12 @@
 	*/
 	proc/can_access_remotely_default(mob/user)
 		if(isAI(user))
-			. = TRUE
+			var/mob/living/silicon/ai/mainframe = user
+			if(isAIeye(user))
+				var/mob/living/intangible/aieye/aEye = user
+				mainframe = aEye.mainframe
+			if((mainframe.z == src.z) || (inunrestrictedz(src) && inonstationz(mainframe)))
+				. = TRUE
 		else if(issilicon(user))
 			if (ishivebot(user) || isrobot(user))
 				var/mob/living/silicon/robot/R = user
@@ -324,7 +329,7 @@
 	pass_unstable = FALSE
 	mat_changename = 0
 	mat_changedesc = 0
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
 	density = 0
 
 	updateHealth()

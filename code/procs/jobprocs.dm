@@ -535,6 +535,7 @@ var/global/totally_random_jobs = FALSE
 						for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
 							qdel(snappedDrone)
 						V.finish_board_pod(src)
+						V.life_support?.activate()
 
 				#undef MAX_ALLOWED_ITERATIONS
 
@@ -680,6 +681,7 @@ var/global/totally_random_jobs = FALSE
 		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+		src.update_colorful_parts()
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
@@ -807,7 +809,7 @@ var/global/totally_random_jobs = FALSE
 			cashModifier = 1.25
 
 		var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
-		S.setup(src,wagesystem.jobs[JOB.name] * cashModifier)
+		S.setup(src,round(wagesystem.jobs[JOB.name] * cashModifier))
 
 		if (isnull(src.get_slot(SLOT_R_STORE)))
 			src.equip_if_possible(S, SLOT_R_STORE)
