@@ -1134,7 +1134,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\models\_PlayerResParent.dm"
 #include "code\modules\goonhub\api\models\_Tracked.dm"
 #include "code\modules\goonhub\api\models\apiModel.dm"
-#include "code\modules\goonhub\api\models\GenericMessage.dm"
+#include "code\modules\goonhub\api\models\Message.dm"
 #include "code\modules\goonhub\api\models\bans\BanDetail.dm"
 #include "code\modules\goonhub\api\models\bans\BanResource.dm"
 #include "code\modules\goonhub\api\models\bans\JobBanResource.dm"

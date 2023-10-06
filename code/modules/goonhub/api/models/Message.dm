@@ -1,5 +1,5 @@
 
-/// JobBanResource
+/// Message
 /datum/apiModel/Message
 	var/message	= null // string
 
