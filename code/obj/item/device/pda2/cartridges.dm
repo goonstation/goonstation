@@ -343,7 +343,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	janitor
 		name = "\improper CustodiPRO cartridge"
 		desc = "When you've mopped till you've dropped, this helps you pick it back up again. Special built-in radio picks up frequencies of nearby mops."
-		icon_state = "cart-j"
+		icon_state = "cart-jani"
 
 		New()
 			..()
@@ -424,7 +424,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	game_codebreaker
 		name = "\improper CodeBreaker cartridge"
 		desc = "Irata Inc ports another of their finest titles to your handheld PDA!"
-		icon_state = "cart-c"
+		icon_state = "cart-game"
 
 		New()
 			..()
@@ -434,7 +434,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	ringtone
 		name = "\improper Thinktronic Sound System Backup cartridge"
 		desc = "Perfect for restoring default audio settings to any Thinktronic Systems handheld device."
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -444,7 +444,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	ringtone_dogs
 		name = "\improper WOLF PACK ULTIMATE PRO ringtone cartridge"
 		desc = "RIDE OR DIE WE HOWL TOGETHER AND PROWL TOGETHER"
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -454,7 +454,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	ringtone_numbers
 		name = "\improper Leaptronics Learning System cartridge"
 		desc = "Blossom into brilliance! For ages 4-6."
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -464,7 +464,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	ringtone_basic
 		name = "\improper Celestial Soultones ringtone cartridge"
 		desc = "Take flight with these enlightening soultones..."
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -474,7 +474,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	ringtone_chimes
 		name = "\improper Jangle Spacechimes ringtone cartridge"
 		desc = "Jangle with us in the spacewind, together."
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -484,7 +484,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	ringtone_beepy
 		name = "\improper Blipous Family Heirloom Spaceblips cartridge"
 		desc = "Blipous family heirloom Spaceblips."
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -494,7 +494,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	ringtone_syndie
 		name = "\improper SounDreamS PRO cartridge"
 		desc = "HI-QUALITY and REALISTIC sound effects for your PDA or project!"
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
