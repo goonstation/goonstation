@@ -62,7 +62,6 @@
 		real_name = name
 		SPAWN(0)
 			ADMIN_BEES_ONLY
-			//statlog_bees(src)
 			src.UpdateIcon()
 
 			if (!isdead(src))
