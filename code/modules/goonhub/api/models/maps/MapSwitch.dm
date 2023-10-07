@@ -1,13 +1,40 @@
 
 /// MapSwitch
 /datum/apiModel/Tracked/MapSwitch
+	var/datum/apiModel/Tracked/MapSwitchInternal/map_switch	= null // Model
+	var/status												= null // string
+
+/datum/apiModel/Tracked/MapSwitch/New(
+	map_switch,
+	status
+)
+	. = ..()
+	src.map_switch	= map_switch
+	src.status		= status
+
+/datum/apiModel/Tracked/MapSwitch/VerifyIntegrity()
+	if (
+		isnull(src.map_switch) \
+		|| isnull(src.status) \
+	)
+		return FALSE
+
+/datum/apiModel/Tracked/MapSwitch/ToString()
+	. = list()
+	.["map_switch"]	= src.map_switch
+	.["status"]		= src.status
+	return json_encode(.)
+
+
+/// MapSwitchInternal
+/datum/apiModel/Tracked/MapSwitchInternal
 	var/game_admin_id	= null // integer
 	var/round_id		= null // integer
 	var/server_id		= null // string
 	var/map				= null // string
 	var/votes			= null // integer
 
-/datum/apiModel/Tracked/MapSwitch/New(
+/datum/apiModel/Tracked/MapSwitchInternal/New(
 	id,
 	game_admin_id,
 	round_id,
@@ -27,7 +54,7 @@
 	src.created_at = created_at
 	src.updated_at = updated_at
 
-/datum/apiModel/Tracked/MapSwitch/VerifyIntegrity()
+/datum/apiModel/Tracked/MapSwitchInternal/VerifyIntegrity()
 	if (
 		isnull(src.id) \
 		|| isnull(src.game_admin_id) \
@@ -40,7 +67,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/MapSwitch/ToString()
+/datum/apiModel/Tracked/MapSwitchInternal/ToString()
 	. = list()
 	.["id"] = src.id
 	.["game_admin_id"] = src.game_admin_id
