@@ -217,13 +217,6 @@
 	/obj/item/chem_grenade/incendiary = 3,\
 	/obj/item/chem_grenade/cryo = 3)
 
-// Wasp grenades for traitor botanists
-/obj/item/storage/box/wasp_grenade_kit
-	name = "experimental biological grenade box"
-	desc = "A box of experimental biological grenades."
-	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/spawner/wasp = 5)
-
 /obj/item/storage/box/crowdgrenades
 	name = "crowd dispersal grenades"
 	desc = "A box of crowd dispersal grenades"
