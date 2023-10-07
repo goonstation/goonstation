@@ -1,5 +1,9 @@
 
 (t)sat oct 07 23
+(u)Lord_Earthfire
+(p)16323
+(e)⚖📦⚙|C-Balance, A-Game-Objects, A-Internal
+(+)Stealth storages have become a little bit more stealthy.
 (u)glowbold
 (p)16310
 (e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
