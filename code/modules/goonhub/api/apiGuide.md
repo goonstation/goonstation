@@ -32,7 +32,7 @@ A Template for API endpoint routes:
 /// [reference to the name of the file or what it does, e.g. Add]
 //datum/apiRoute/[path of route]
 	method = RUSTG_HTTP_METHOD_[method type]
-	path = "[the path of the staging endpoint it connects to]"
+	path = "[the path of the endpoint it connects to]"
 	routeParams = list([list of parameter items, separated by commas]) // [the primitive type of each parameter]
 	queryParams = list([list of parameter items, separated by commas]) // [the primitive type of each parameter]
 	body = [the datum of the body, under /datum/apiBody]
@@ -60,7 +60,7 @@ Other notes:
 #### Making your own apiRoute's
 The list of what to make and how it works is at https://staging.goonhub.com/docs/api, along with the request body and response model needed. They need to match the `apiRoute` in order for the API to work correctly.
 - Under request, the parameters should match in the form of a list of strings matching the parameter names. If it says query parameters, use `queryParams`, if it says path parameters, use `routeParams`.
-- If the path ends with something like `/{kind of routeParam}`, you don't need to include it in `src.path`. It gets appended automatically later on by the routeParams.
+- If the path ends with something like `/{kind of routeParam}`, you don't include it in `src.path`. It gets appended automatically later on by the routeParams.
 - The request body should match an `apiBody`.
 - The response body should match an `apiModel`.
 - If the above two don't have matching ones, you have to make them.
