@@ -273,6 +273,7 @@
 	desc = "Can take on the appearance of another item. Creates a small dimensional rift in space-time, allowing it to hold multiple items."
 	icon_state = "box"
 	sneaky = 1
+	stealthy_storage = TRUE
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_SMALL
@@ -282,7 +283,7 @@
 		..()
 		src.cloaked = 0
 		src.create_storage(/datum/storage, prevent_holding = list(/obj/item/storage/box), max_wclass = src.max_wclass, slots = src.slots, sneaky = src.sneaky,
-			opens_if_worn = TRUE)
+			stealthy_storage = src.stealthy_storage, opens_if_worn = TRUE)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
