@@ -5,4 +5,4 @@
 	method = RUSTG_HTTP_METHOD_DELETE
 	path = "/players/notes"
 	routeParams = list("note") // integer, the note ID
-	correct_response = "message"
+	correct_response = /datum/apiModel/Message

@@ -15,7 +15,7 @@
 	/// Body of the request, invalid for GET
 	var/datum/apiBody/body = null
 	/// The expected type upon deserialization
-	var/correct_response = "string"
+	var/correct_response = null
 
 
 /// Formats a given parameter associated list into a urlstring format
