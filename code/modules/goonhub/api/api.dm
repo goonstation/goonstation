@@ -163,7 +163,7 @@ var/global/datum/apiHandler/apiHandler
 
 		// Validation
 		var/datum/apiModel/model = new route.correct_response
-		if (istype(model, /datum/apiModel/Paginated))
+		if (istype(model, /datum/apiModel/Paginated) || istype(model, /datum/apiModel/Message))
 			model.SetupFromResponse(data)
 		else
 			model.SetupFromResponse(data["data"])
