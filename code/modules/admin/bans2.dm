@@ -1,6 +1,6 @@
-/var/global/datum/bans/bans = new
+/var/global/datum/bansHandler/bansHandler = new
 
-/datum/bans
+/datum/bansHandler
 	/// Convert duration to something useful for Humans
 	proc/getDurationHuman(seconds)
 		var/exp = seconds / 60
@@ -17,7 +17,7 @@
 				. = "[exp] Minute[exp > 1 ? "s" : ""]"
 
 	/// List all bans
-	proc/getAll(filters, sort_by = "id", descending = TRUE, per_page = 30)
+	proc/getAll(list/filters = list(), sort_by = "id", descending = TRUE, per_page = 30)
 		var/datum/apiRoute/bans/get/getBans = new
 		getBans.queryParams = list(
 			"filters" = filters,

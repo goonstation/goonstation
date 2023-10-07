@@ -25,8 +25,11 @@
 		. = list()
 		for (var/key in src.queryParams)
 			if (islist(src.queryParams[key])) // Do we need to encode the value?
-				for (var/subKey in src.queryParams[key])
-					.["[key]\[[subKey]\]"] = src.queryParams[key][subKey]
+				if (length(src.queryParams[key]) > 0)
+					for (var/subKey in src.queryParams[key])
+						.["[key]\[[subKey]\]"] = src.queryParams[key][subKey]
+				else
+					.["[key]\[\]"] = null
 			else
 				.[key] = src.queryParams[key]
 		. = list2params(.)
