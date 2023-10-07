@@ -87,7 +87,7 @@
 					var/datum/ringtone/ring_tone_temp = src.ring_list[src.selectedRT]
 					dat += "Please select an alert type to use [ring_tone_temp].<br><br>"
 					for(var/alert in src.master.alert_ringtones)
-						dat += "<a href='?src=\ref[src];applyTone=[alert[1]]'>[alert[1]]</a><br>"
+						dat += "<a href='?src=\ref[src];applyTone=[alert]'>[alert]</a><br>"
 					dat += "<br><a href='?src=\ref[src];resetMenu=1'>Cancel</a><br>"
 					dat += "[src.dividerThing]<br><br>"
 
