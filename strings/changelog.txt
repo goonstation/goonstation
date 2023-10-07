@@ -1,6 +1,10 @@
 
 (t)sat oct 07 23
 (u)Lord_Earthfire
+(p)16320
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(+)The syndicate now supplies their botanists with experimental biological pouches instead of boxes.
+(u)Lord_Earthfire
 (p)16323
 (e)⚖📦⚙|C-Balance, A-Game-Objects, A-Internal
 (+)Stealth storages have become a little bit more stealthy.
