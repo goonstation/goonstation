@@ -1,15 +1,14 @@
 
 /// Message
 /datum/apiModel/Message
-	var/message	= null // string
+	var/message = null // string
 
-/datum/apiModel/Message/New(
-	message
-)
+/datum/apiModel/Message/SetupFromResponse(response)
 	. = ..()
-	src.message = message
+	src.message = response["message"]
 
 /datum/apiModel/Message/VerifyIntegrity()
+	. = ..()
 	if (
 		isnull(src.message)
 	)
