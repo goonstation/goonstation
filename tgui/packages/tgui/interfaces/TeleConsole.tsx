@@ -26,7 +26,9 @@ export const TeleConsole = (_props, context) => {
         <Section width="70%" mx="auto">
           {host_id ? (
             <Box color="green">
-              <Icon name="check" /> Connected to host!
+              <Box>
+                <Icon name="check" /> Connected to host!
+              </Box>
               <Button
                 icon="power-off"
                 content="RESET CONNECTION"
@@ -36,7 +38,9 @@ export const TeleConsole = (_props, context) => {
             </Box>
           ) : (
             <Box color="red">
-              <Icon name="warning" /> No connection to host!
+              <Box>
+                <Icon name="warning" /> No connection to host!
+              </Box>
               <Button
                 icon="power-off"
                 content="Retry"
@@ -131,7 +135,7 @@ export const TeleConsole = (_props, context) => {
               color={host_id ? "green" : "gray"}
               onClick={() => act("portal")}
             >
-              <Icon name="ring" rotation="90" />Toggle Portal
+              <Icon name="ring" rotation={90} />Toggle Portal
             </Button>
           </Box>
           <Button
