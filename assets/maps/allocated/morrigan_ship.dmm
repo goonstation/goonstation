@@ -1,0 +1,2017 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ah" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 6
+	},
+/area/space)
+"av" = (
+/obj/stool/chair/office/syndie{
+	dir = 1
+	},
+/turf/unsimulated/floor/darkblue,
+/area/space)
+"aH" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
+"bm" = (
+/turf/unsimulated/floor/purpleblack{
+	dir = 1
+	},
+/area/space)
+"bp" = (
+/turf/unsimulated/floor,
+/area/space)
+"bq" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/unsimulated/floor/black,
+/area/space)
+"bQ" = (
+/turf/unsimulated/floor/black/side,
+/area/space)
+"cd" = (
+/obj/machinery/vending/snack,
+/obj/decal/poster/wallsign/looselips{
+	pixel_x = 30
+	},
+/turf/unsimulated/floor/purpleblack{
+	dir = 4
+	},
+/area/space)
+"cv" = (
+/turf/unsimulated/floor/redblack{
+	dir = 8
+	},
+/area/space)
+"cH" = (
+/obj/stool/chair/office/red{
+	dir = 4
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/space)
+"cL" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "QMpad";
+	name = "Artillery Control"
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/floor/red/redblackchecker,
+/area/space)
+"de" = (
+/obj/item/device/radio/intercom/loudspeaker/speaker/south{
+	pixel_y = 24
+	},
+/obj/reagent_dispensers/fueltank,
+/turf/unsimulated/floor/yellowblack{
+	dir = 9
+	},
+/area/space)
+"do" = (
+/obj/stool/chair/comfy/purple{
+	dir = 4
+	},
+/turf/unsimulated/floor/purpleblack/corner{
+	dir = 8
+	},
+/area/space)
+"dH" = (
+/obj/machinery/teleport/portal_generator,
+/turf/unsimulated/floor/black,
+/area/space)
+"dT" = (
+/obj/grille/catwalk,
+/turf/unsimulated/floor/plating/jen,
+/area/space)
+"ee" = (
+/obj/decal/fakeobjects/console_radar,
+/turf/unsimulated/floor/darkblue,
+/area/space)
+"fi" = (
+/turf/unsimulated/floor/redblack{
+	dir = 3
+	},
+/area/space)
+"fo" = (
+/turf/unsimulated/floor/black,
+/area/space)
+"fN" = (
+/obj/decal/fakeobjects/gunship/artillery{
+	dir = 8
+	},
+/turf/space,
+/area/space)
+"gJ" = (
+/obj/machinery/door/airlock/pyro/glass/security,
+/turf/unsimulated/floor/black,
+/area/space)
+"ho" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"ht" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt,
+/turf/unsimulated/floor/black,
+/area/space)
+"hu" = (
+/obj/decal/poster/wallsign/morrigan{
+	pixel_y = 31
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/unsimulated/floor/yellowblack{
+	dir = 9
+	},
+/area/space)
+"hC" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/grille/catwalk,
+/turf/unsimulated/floor/plating/jen,
+/area/space)
+"iQ" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating/damaged1,
+/area/space)
+"jG" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/obj/machinery/communications_dish,
+/turf/space,
+/area/space)
+"jL" = (
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/drinks/mug/random_color,
+/turf/unsimulated/floor/purpleblack{
+	dir = 8
+	},
+/area/space)
+"ke" = (
+/obj/decal/poster/wallsign/mod21{
+	pixel_y = 30
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"kk" = (
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/obj/table/syndicate/auto,
+/obj/item/device/radio/intercom/loudspeaker{
+	pixel_y = 7
+	},
+/turf/unsimulated/floor/darkblue,
+/area/space)
+"km" = (
+/obj/table/syndicate/auto,
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -5;
+	pixel_y = 6
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -5
+	},
+/obj/item/tank/emergency_oxygen/extended{
+	pixel_x = -5;
+	pixel_y = 12
+	},
+/obj/item/extinguisher{
+	pixel_y = 19;
+	pixel_x = 7
+	},
+/obj/item/extinguisher{
+	pixel_y = 14;
+	pixel_x = 8
+	},
+/obj/item/extinguisher{
+	pixel_y = 7;
+	pixel_x = 8
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"kM" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/space)
+"kY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/loudspeaker/speaker/west{
+	pixel_x = 16
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"lp" = (
+/obj/storage/closet/fire,
+/turf/unsimulated/floor/yellowblack{
+	dir = 6
+	},
+/area/space)
+"lG" = (
+/obj/table/syndicate/auto,
+/obj/machinery/recharger,
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 9
+	},
+/area/space)
+"lI" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"ma" = (
+/obj/table/syndicate/auto,
+/obj/item/storage/firstaid/regular{
+	pixel_x = 9;
+	pixel_y = 14
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = 9
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = -5;
+	pixel_y = 14
+	},
+/obj/item/storage/firstaid/regular{
+	pixel_x = -5;
+	pixel_y = 1
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/black,
+/area/space)
+"mc" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/turf/space,
+/area/space)
+"mi" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/space)
+"mn" = (
+/obj/machinery/door/airlock/pyro/glass/security/alt{
+	dir = 8;
+	hardened = 1
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"nJ" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/space)
+"nP" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/yellow,
+/area/space)
+"nR" = (
+/obj/decal/fakeobjects/gunship/cannon{
+	dir = 4
+	},
+/turf/space,
+/area/space)
+"oa" = (
+/obj/machinery/vending/cigarette,
+/turf/unsimulated/floor/purpleblack{
+	dir = 9
+	},
+/area/space)
+"oc" = (
+/obj/decoration/syndiepc/syndiepc9{
+	icon_state = "syndiepc14"
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/floor/black,
+/area/space)
+"od" = (
+/obj/decoration/ntcratesmall/ammo,
+/obj/machinery/door/airlock/pyro/glass/windoor{
+	dir = 8;
+	hardened = 1
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"ox" = (
+/turf/unsimulated/floor/redblack{
+	dir = 5
+	},
+/area/space)
+"oB" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/unsimulated/floor/yellowblack{
+	dir = 5
+	},
+/area/space)
+"oI" = (
+/obj/decoration/decorativeplant/plant2,
+/turf/unsimulated/floor/redblack{
+	dir = 10;
+	icon_state = "redblack"
+	},
+/area/space)
+"oO" = (
+/obj/decal/poster/wallsign/looselips{
+	pixel_x = 30
+	},
+/obj/decal/poster/wallsign/warning3{
+	pixel_y = 34
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/space)
+"pz" = (
+/turf/space,
+/area/space)
+"pB" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"pL" = (
+/obj/machinery/vehicle/miniputt/sy_robust{
+	dir = 8
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"qv" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"qw" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/space)
+"qF" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"qK" = (
+/obj/decoration/decorativeplant/plant2,
+/turf/unsimulated/floor/redblack{
+	dir = 6;
+	icon_state = "redblack"
+	},
+/area/space)
+"rk" = (
+/turf/unsimulated/floor/black/side{
+	dir = 6
+	},
+/area/space)
+"rz" = (
+/obj/stool/chair/office/syndie{
+	dir = 1
+	},
+/turf/unsimulated/floor/redblack{
+	dir = 9
+	},
+/area/space)
+"rC" = (
+/obj/machinery/portable_atmospherics/canister/oxygen,
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/black,
+/area/space)
+"rP" = (
+/turf/simulated/floor/stairs/dark/wide{
+	dir = 1
+	},
+/area/space)
+"sd" = (
+/turf/unsimulated/floor/yellowblack{
+	dir = 6
+	},
+/area/space)
+"sl" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-R"
+	},
+/turf/space,
+/area/space)
+"sp" = (
+/obj/decoration/syndiepc/syndiepc5,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/black,
+/area/space)
+"sv" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"sG" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"tg" = (
+/turf/unsimulated/floor/purpleblack{
+	dir = 10
+	},
+/area/space)
+"tm" = (
+/obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
+	dir = 4;
+	id = "peregrine_podbay";
+	name = "Cargo Bay Door"
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"tx" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/darkblue,
+/area/space)
+"tG" = (
+/obj/table/syndicate/auto,
+/obj/item/plate,
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/purpleblack{
+	dir = 10
+	},
+/area/space)
+"tJ" = (
+/obj/decoration/syndiepc/syndiepc7,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/black,
+/area/space)
+"tL" = (
+/obj/machinery/door/airlock/pyro/glass/command,
+/turf/unsimulated/floor/black,
+/area/space)
+"tQ" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe,
+/obj/decal/tile_edge/stripe{
+	dir = 1
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/space)
+"tV" = (
+/obj/stool/chair/comfy/purple{
+	dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"tW" = (
+/obj/machinery/vehicle/miniputt/sy_robust{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"ul" = (
+/obj/machinery/recharger/wall{
+	dir = 4;
+	pixel_x = 23;
+	pixel_y = 4
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/space)
+"ur" = (
+/obj/machinery/teleport/portal_ring,
+/turf/unsimulated/floor/black,
+/area/space)
+"uI" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"uM" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 1
+	},
+/area/space)
+"uP" = (
+/turf/unsimulated/floor/black/side{
+	dir = 1
+	},
+/area/space)
+"uV" = (
+/obj/machinery/door/airlock/pyro/glass/command{
+	dir = 8;
+	hardened = 1
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"vf" = (
+/obj/machinery/light/incandescent/netural,
+/turf/unsimulated/floor/yellowblack,
+/area/space)
+"vq" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 5
+	},
+/area/space)
+"vV" = (
+/obj/decal/poster/wallsign/looselips{
+	pixel_x = -32
+	},
+/obj/decal/poster/wallsign/morrigan{
+	pixel_y = 31
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"wp" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/space)
+"wC" = (
+/obj/item/device/radio/intercom/loudspeaker/speaker/south{
+	pixel_y = 24
+	},
+/obj/machinery/computer/security/console_upper{
+	dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"wL" = (
+/turf/space,
+/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/black,
+/area/space)
+"xb" = (
+/turf/space,
+/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/black,
+/area/space)
+"xr" = (
+/obj/indestructible/shuttle_corner{
+	dir = 6;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/space)
+"xs" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/unsimulated/floor/purpleblack{
+	dir = 1
+	},
+/area/space)
+"xC" = (
+/turf/space,
+/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/black,
+/area/space)
+"xT" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"yc" = (
+/obj/reagent_dispensers/foamtank,
+/turf/unsimulated/floor/yellowblack{
+	dir = 10
+	},
+/area/space)
+"yu" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"yF" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/black/corner{
+	dir = 1
+	},
+/area/space)
+"yQ" = (
+/obj/machinery/vending/coffee,
+/turf/unsimulated/floor/purpleblack{
+	dir = 6
+	},
+/area/space)
+"zC" = (
+/turf/unsimulated/floor/yellowblack{
+	dir = 1
+	},
+/area/space)
+"Aq" = (
+/obj/table/syndicate/auto,
+/obj/decal/poster/wallsign/pw_map{
+	pixel_y = 27
+	},
+/obj/machinery/computer3/luggable/personal,
+/turf/unsimulated/floor/darkblue,
+/area/space)
+"AF" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/storage/toolbox/mechanical{
+	pixel_x = 3;
+	pixel_y = -2
+	},
+/obj/item/weldingtool/grey{
+	pixel_y = 8;
+	pixel_x = -6
+	},
+/obj/item/weldingtool/grey{
+	pixel_y = 8
+	},
+/obj/item/weldingtool/grey,
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"AG" = (
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/snacks/donut/custom/sturdy,
+/obj/item/reagent_containers/food/drinks/tea{
+	pixel_y = 16;
+	pixel_x = -5
+	},
+/turf/unsimulated/floor/purpleblack,
+/area/space)
+"Bz" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/turf/space,
+/area/space)
+"BS" = (
+/obj/decal/poster/wallsign/report{
+	pixel_y = -33
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 6
+	},
+/area/space)
+"Da" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/space)
+"Dn" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"DU" = (
+/obj/lattice{
+	dir = 1;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"ER" = (
+/obj/decoration/ntcratesmall/ammoloader,
+/turf/unsimulated/floor/black,
+/area/space)
+"EZ" = (
+/obj/stool/chair/office/syndie{
+	dir = 4
+	},
+/turf/unsimulated/floor/darkblue,
+/area/space)
+"Fu" = (
+/obj/decal/poster/wallsign/security,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/space)
+"FE" = (
+/obj/lattice,
+/turf/space,
+/area/space)
+"FP" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 1
+	},
+/obj/decal/tile_edge/stripe,
+/turf/unsimulated/floor/black/side{
+	dir = 10
+	},
+/area/space)
+"GN" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L"
+	},
+/turf/space,
+/area/space)
+"HE" = (
+/turf/unsimulated/floor/yellowblack/corner{
+	dir = 1
+	},
+/area/space)
+"HN" = (
+/obj/decoration/decorativeplant/plant6,
+/turf/unsimulated/floor/redblack{
+	dir = 9
+	},
+/area/space)
+"IU" = (
+/turf/unsimulated/floor/yellowblack,
+/area/space)
+"Jv" = (
+/obj/stool/chair/comfy/purple,
+/turf/unsimulated/floor/black,
+/area/space)
+"JL" = (
+/turf/unsimulated/floor/darkblue,
+/area/space)
+"Kb" = (
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"Kh" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/simulated/floor/stairs/dark/wide,
+/area/space)
+"Lm" = (
+/turf/simulated/floor/stairs/dark,
+/area/space)
+"Lr" = (
+/obj/decoration/syndiepc/syndiepc17,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/black,
+/area/space)
+"Lt" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/plating,
+/area/space)
+"Lu" = (
+/obj/machinery/door/airlock/pyro/glass/security{
+	dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"LD" = (
+/obj/decoration/decorativeplant/plant7,
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
+/turf/unsimulated/floor/purpleblack{
+	dir = 4
+	},
+/area/space)
+"Nc" = (
+/obj/decal/poster/wallsign/space{
+	pixel_y = 32
+	},
+/turf/unsimulated/floor/yellowblack{
+	dir = 1
+	},
+/area/space)
+"Np" = (
+/turf/unsimulated/floor/redblack{
+	dir = 4
+	},
+/area/space)
+"NN" = (
+/turf/unsimulated/floor/purpleblack{
+	dir = 8
+	},
+/area/space)
+"Ol" = (
+/obj/item/device/radio/intercom/loudspeaker/speaker/south{
+	pixel_y = 24
+	},
+/turf/unsimulated/floor/yellow,
+/area/space)
+"Pu" = (
+/obj/decal/poster/wallsign/you4s{
+	pixel_y = 30
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"Pw" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay3,
+/turf/space,
+/area/space)
+"PE" = (
+/obj/decoration/syndiepc/syndiepc16,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/black,
+/area/space)
+"PK" = (
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
+/turf/unsimulated/floor/plating/damaged1,
+/area/space)
+"Qo" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe{
+	dir = 1
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/space)
+"QB" = (
+/obj/decoration/decorativeplant/plant5,
+/turf/unsimulated/floor/purple,
+/area/space)
+"QD" = (
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 5;
+	pixel_y = 16
+	},
+/turf/unsimulated/floor/purpleblack{
+	dir = 5
+	},
+/area/space)
+"QE" = (
+/obj/table/syndicate/auto,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = 6
+	},
+/obj/item/storage/toolbox/mechanical,
+/obj/item/storage/toolbox/mechanical{
+	pixel_y = -6
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"Rc" = (
+/obj/decoration/decorativeplant/plant7,
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/turf/unsimulated/floor/purpleblack{
+	dir = 5
+	},
+/area/space)
+"Rg" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 4;
+	icon_state = "tube1"
+	},
+/turf/simulated/floor/stairs/dark/wide{
+	dir = 6
+	},
+/area/space)
+"Rm" = (
+/obj/decal/poster/wallsign/morrigan{
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/space)
+"Rt" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"RO" = (
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/unsimulated/floor/purpleblack{
+	dir = 8
+	},
+/area/space)
+"RP" = (
+/obj/machinery/vehicle/miniputt/sy_robust{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"RV" = (
+/obj/machinery/computer3/generic/secure_data/console_lower{
+	dir = 4
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"Sk" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+"Sn" = (
+/obj/machinery/computer/announcement/console_upper{
+	name = "Peregrine Announcement Computer";
+	req_access = null;
+	dir = 8
+	},
+/turf/unsimulated/floor/darkblue,
+/area/space)
+"Ss" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"Sv" = (
+/obj/overlay{
+	density = 1;
+	desc = "You have no idea what this does.";
+	icon = 'icons/obj/recycling.dmi';
+	icon_state = "grinder-b1";
+	name = "assembly machine"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/space)
+"Sw" = (
+/turf/unsimulated/floor/red/redblackchecker,
+/area/space)
+"SC" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"SI" = (
+/obj/decoration/decorativeplant/plant5,
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/unsimulated/floor/purple,
+/area/space)
+"Tn" = (
+/obj/decal/tile_edge/stripe{
+	dir = 4
+	},
+/turf/unsimulated/floor/black/side{
+	dir = 8
+	},
+/area/space)
+"TF" = (
+/turf/simulated/floor/stairs/dark/wide{
+	dir = 10
+	},
+/area/space)
+"TQ" = (
+/obj/decal/fakeobjects/shipart/beamcannon,
+/obj/grille/catwalk,
+/turf/unsimulated/floor/plating/jen,
+/area/space)
+"TS" = (
+/obj/stool/chair/office/red{
+	dir = 8
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/space)
+"Uv" = (
+/obj/submachine/weapon_vendor/morriganvendor,
+/turf/unsimulated/floor/black,
+/area/space)
+"UK" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"UQ" = (
+/obj/table/syndicate/auto,
+/obj/item/plate,
+/turf/unsimulated/floor/purpleblack{
+	dir = 4
+	},
+/area/space)
+"UR" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/runway_light/delay2,
+/turf/space,
+/area/space)
+"UU" = (
+/obj/item/device/radio/intercom/loudspeaker/speaker/south{
+	pixel_y = 24
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"Vc" = (
+/obj/item/device/radio/intercom/loudspeaker/speaker/south{
+	pixel_y = 24
+	},
+/turf/unsimulated/floor/black,
+/area/space)
+"Vj" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	icon_state = "wall3_trans"
+	},
+/turf/unsimulated/floor/purpleblack{
+	dir = 5
+	},
+/area/space)
+"Vt" = (
+/obj/indestructible/shuttle_corner{
+	dir = 5;
+	icon_state = "wall3_trans"
+	},
+/turf/space,
+/area/space)
+"Vy" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/light/runway_light/delay4,
+/turf/space,
+/area/space)
+"VR" = (
+/obj/decal/fakeobjects/shuttleweapon,
+/turf/space,
+/area/space)
+"Wd" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/clothing/head/helmet/welding{
+	pixel_x = -7;
+	pixel_y = 15
+	},
+/obj/item/clothing/head/helmet/welding,
+/turf/unsimulated/floor/engine/glow,
+/area/space)
+"Xm" = (
+/obj/railing/red{
+	dir = 8
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/space)
+"Xo" = (
+/obj/decal/fakeobjects/shuttleweapon/base{
+	dir = 1;
+	icon_state = "alt_heater"
+	},
+/turf/space,
+/area/space)
+"XD" = (
+/turf/simulated/floor/stairs/dark{
+	dir = 10
+	},
+/area/space)
+"XI" = (
+/obj/stool/chair/office/syndie{
+	dir = 1
+	},
+/turf/unsimulated/floor/redblack{
+	dir = 5
+	},
+/area/space)
+"XW" = (
+/turf/unsimulated/floor/purpleblack,
+/area/space)
+"Yu" = (
+/turf/unsimulated/floor/purple,
+/area/space)
+"YX" = (
+/obj/decoration/syndiepc/syndiepc18,
+/obj/map/light/dimred,
+/turf/unsimulated/floor/black,
+/area/space)
+"Zf" = (
+/obj/decoration/decorativeplant/plant6,
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/unsimulated/floor/darkblue,
+/area/space)
+"Zk" = (
+/obj/machinery/computer/teleporter,
+/turf/unsimulated/floor/black,
+/area/space)
+"Zp" = (
+/turf/unsimulated/floor/black/side{
+	dir = 4
+	},
+/area/space)
+"ZG" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/space,
+/area/space)
+
+(1,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+"}
+(2,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+yu
+pz
+pz
+pz
+pz
+yu
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+"}
+(3,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+aH
+qv
+qv
+qv
+qv
+Pw
+pz
+pz
+UR
+xT
+xT
+xT
+xT
+xT
+xT
+xT
+qF
+pz
+pz
+pz
+pz
+ZG
+xT
+xT
+mc
+pz
+pz
+"}
+(4,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+Vy
+FE
+FE
+FE
+FE
+Dn
+mi
+qw
+qw
+xr
+pz
+pz
+pz
+pz
+pz
+mi
+qw
+qw
+qw
+qw
+qw
+qw
+xr
+pz
+lI
+pz
+pz
+"}
+(5,1,1) = {"
+pz
+pz
+pz
+pz
+mi
+qw
+tm
+tm
+tm
+tm
+qw
+qw
+de
+yc
+qw
+xr
+pz
+pz
+pz
+mi
+qw
+Uv
+Uv
+Uv
+Uv
+Uv
+qw
+Vt
+pz
+pz
+pz
+pz
+"}
+(6,1,1) = {"
+pz
+pz
+pz
+mi
+qw
+qw
+RP
+ho
+tW
+ho
+qw
+hu
+HE
+vf
+qw
+qw
+PK
+PK
+PK
+qw
+lG
+Qo
+Qo
+tQ
+Tn
+FP
+PK
+pz
+pz
+pz
+pz
+pz
+"}
+(7,1,1) = {"
+pz
+pz
+nR
+Xo
+qw
+Wd
+sG
+sG
+sG
+sG
+bq
+zC
+fo
+lp
+qw
+vV
+fo
+TF
+bp
+iQ
+uP
+fo
+fo
+fo
+fo
+rk
+PK
+pz
+pz
+pz
+pz
+pz
+"}
+(8,1,1) = {"
+pz
+pz
+nR
+Xo
+qw
+AF
+Kb
+pL
+Kb
+pL
+iQ
+Nc
+IU
+qw
+nP
+fo
+fo
+XD
+bp
+gJ
+uP
+fo
+fo
+fo
+bQ
+yF
+qw
+pz
+pz
+pz
+pz
+pz
+"}
+(9,1,1) = {"
+pz
+pz
+pz
+Da
+qw
+qw
+Rt
+sG
+kY
+sv
+iQ
+oB
+sd
+ht
+uM
+fo
+fo
+rP
+nJ
+iQ
+vq
+Zp
+ul
+kM
+BS
+qw
+GN
+VR
+pz
+pz
+pz
+pz
+"}
+(10,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+Da
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+qw
+Ol
+wL
+fo
+uI
+PK
+qw
+PK
+PK
+qw
+iQ
+Lu
+qw
+sl
+VR
+pz
+pz
+pz
+pz
+"}
+(11,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+pz
+PK
+sp
+Lr
+HN
+Kh
+cv
+oI
+qw
+Pu
+xC
+ur
+PK
+ZG
+hC
+dT
+mc
+qw
+Vc
+fo
+rC
+qw
+qw
+xT
+xT
+DU
+pz
+"}
+(12,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+pz
+PK
+PE
+rz
+fo
+ah
+fo
+fi
+tL
+fo
+xb
+dH
+PK
+dT
+dT
+TQ
+dT
+PK
+fo
+fo
+km
+Lt
+GN
+VR
+pz
+pz
+pz
+"}
+(13,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+pz
+PK
+oc
+XI
+fo
+ah
+fo
+fi
+tL
+fo
+xb
+Zk
+PK
+dT
+dT
+dT
+dT
+PK
+fo
+fo
+QE
+Lt
+sl
+VR
+pz
+pz
+pz
+"}
+(14,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+pz
+PK
+tJ
+YX
+ox
+Rg
+Np
+qK
+qw
+UU
+xb
+fo
+PK
+pB
+hC
+dT
+Sk
+qw
+Vc
+fo
+ma
+qw
+qw
+xT
+xT
+DU
+pz
+"}
+(15,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+mi
+qw
+PK
+qw
+uV
+qw
+qw
+qw
+qw
+ke
+xC
+fo
+Ss
+PK
+qw
+PK
+PK
+qw
+iQ
+mn
+qw
+GN
+VR
+pz
+pz
+pz
+pz
+"}
+(16,1,1) = {"
+pz
+pz
+pz
+mi
+qw
+qw
+Zf
+JL
+JL
+tx
+qw
+wC
+RV
+qw
+Fu
+wp
+fo
+TF
+SI
+iQ
+oa
+jL
+RO
+NN
+tg
+qw
+sl
+VR
+pz
+pz
+pz
+pz
+"}
+(17,1,1) = {"
+pz
+pz
+nR
+Xo
+qw
+kk
+fo
+fo
+fo
+EZ
+qw
+TS
+Sw
+Lm
+gJ
+Sw
+fo
+XD
+Yu
+ht
+bm
+fo
+fo
+fo
+XW
+Vj
+qw
+pz
+pz
+pz
+pz
+pz
+"}
+(18,1,1) = {"
+pz
+pz
+nR
+Xo
+qw
+Aq
+av
+JL
+Sn
+ee
+qw
+Rm
+fo
+Xm
+iQ
+oO
+fo
+rP
+QB
+iQ
+xs
+fo
+fo
+fo
+Jv
+tG
+PK
+pz
+pz
+pz
+pz
+pz
+"}
+(19,1,1) = {"
+pz
+pz
+pz
+Da
+qw
+qw
+PK
+PK
+PK
+PK
+qw
+cL
+cH
+Sw
+qw
+qw
+PK
+PK
+PK
+qw
+Rc
+do
+tV
+fo
+Jv
+AG
+PK
+pz
+pz
+pz
+pz
+pz
+"}
+(20,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+Bz
+pz
+pz
+pz
+pz
+Da
+qw
+ER
+od
+qw
+Vt
+pz
+pz
+pz
+Da
+qw
+QD
+UQ
+cd
+LD
+yQ
+qw
+xr
+pz
+pz
+pz
+pz
+"}
+(21,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+jG
+pz
+pz
+pz
+pz
+pz
+Da
+Sv
+PK
+Vt
+pz
+pz
+pz
+pz
+pz
+Da
+Lt
+Lt
+qw
+qw
+qw
+qw
+Vt
+pz
+yu
+pz
+pz
+"}
+(22,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+fN
+Xo
+SC
+xT
+xT
+xT
+xT
+xT
+xT
+xT
+UK
+pz
+pz
+pz
+pz
+SC
+xT
+xT
+Sk
+pz
+pz
+"}
+(23,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+"}
+(24,1,1) = {"
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+pz
+"}

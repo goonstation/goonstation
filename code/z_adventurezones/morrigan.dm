@@ -432,6 +432,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	desc = "Hafgan's fearsome model, this one seems to be unfinished."
 	icon_state = "gunbot_rep1"
 
+/obj/decal/fakeobjects/gunbotrep/inactivesentinel
+	name = "Inactive Sentinel Unit"
+	desc = "Syndicate's fearsome model, this one seems to be inactive."
+	icon = 'icons/mob/critter/robotic/gunbot.dmi'
+	icon_state = "nukebot"
+
+
 /obj/decal/fakeobjects/gunbotrep/gunrep2
 	name = "Unfinished Sentinel"
 	desc = "Hafgan's fearsome model, this one seems to be unfinished."
@@ -489,6 +496,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	desc = "You can just IMAGINE why it's blue..."
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bopbagsyd"
+
+/obj/decal/fakeobjects/shipart
+	name = "random gun"
+	desc = "big boy"
+	bound_height = 96
+	bound_width = 96
+	anchored = TRUE
+	icon = 'icons/obj/adventurezones/morrigan/shipart.dmi'
+
+/obj/decal/fakeobjects/shipart/beamcannon
+	name = "Mod. 504 'Stella Proditor' "
+	desc = "A Massive mounted weapon able to rotate 180 degrees. Fires concentrated superheated plasma bursts that wreak havoc on stations and ships alike."
+	icon_state = "beamcannon"
 
 /obj/decal/fakeobjects/factory
 	name = "Machine"
@@ -575,6 +595,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /obj/decoration/ntcratesmall/syndicrate
 	name = "Metal Crate"
 	icon_state = "syndiecrate"
+
+/obj/decoration/ntcratesmall/ammo
+	name = "Ammo Crate"
+	desc = "Seems to be holding large ammo."
+	icon_state = "ammo"
+
+/obj/decoration/ntcratesmall/ammoloader
+	name = "Ammo Loader"
+	desc = "Seems to be holding large ammo."
+	icon = 'icons/obj/recycling.dmi'
+	icon_state = "loader"
 
 /obj/decoration/ntcratesmall/opencrate
 	name = "Open Crate"
@@ -2381,6 +2412,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			launch_with_missile(AM, target_turf, null, "arrival_missile_synd")
 
 //Suit stuff
+
+/obj/item/clothing/suit/space/ntso/morrigan
+	name = "Morrigan Duress Suit"
+	desc = "A modern Syndicate space suit from the Morrigan Branch."
+	icon_state = "morrigan_specialist"
+	item_state = "morrigan_specialist"
+/obj/item/clothing/head/helmet/space/ntso/morrigan
+	name = "Morrigan Battle Helmet"
+	desc = "A modern combat helmet for Syndicate security forces aboard Morrigan."
+	icon_state = "morrigan_specialist"
+	item_state = "morrigan_specialist"
 /obj/item/clothing/suit/armor/heavy/morrigan
 	icon_state = "heavy_s"
 
@@ -3035,6 +3077,74 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 				boutput(user, "<span class='notice'>You release some heat from the shotgun!</span>")
 				playsound(src, 'sound/ambience/morrigan/steamrelease.ogg', 70, 1)
 				ON_COOLDOWN(src, "rack delay", 1 SECONDS)
+
+//barrier unused but there for completion reasons I'm sick part 2 - rex
+
+
+/obj/itemspecialeffect/barrier/morrigan
+		name = "energy barrier"
+		icon = 'icons/effects/effects.dmi'
+		icon_state = "morriganbarrier"
+/obj/item/barrier/morrigan
+	item_state = "morriganbarrier0"
+	icon_state = "morriganbarrier_0"
+
+	update_icon()
+		icon_state = status ? "morriganbarrier_1" : "morriganbarrier_0"
+		item_state = status ? "morriganbarrier1" : "morriganbarrier0"
+
+	toggle(mob/user, new_state = null)
+		if(!user && ismob(src.loc))
+			user = src.loc
+
+		if(isnull(new_state))
+			new_state = !status
+
+		if (!use_two_handed || setTwoHanded(!src.status))
+			playsound(src, "sparks", 75, 1, -1)
+			src.status = new_state
+			if (new_state)
+				w_class = W_CLASS_BULKY
+				c_flags &= ~ONBELT //haha NO
+				setProperty("meleeprot_all", 9)
+				setProperty("rangedprot", 1.5)
+				setProperty("movespeed", 0.3)
+				setProperty("disorient_resist", 65)
+				setProperty("disorient_resist_eye", 65)
+				setProperty("disorient_resist_ear", 50) //idk how lol ok
+				stamina_damage = stamina_damage_active
+				stamina_cost = stamina_cost_active
+				setProperty("deflection", 20)
+				flick("morriganbarrier_a",src)
+				c_flags |= BLOCK_TOOLTIP
+				src.setItemSpecial(/datum/item_special/barrier/morrigan)
+			else
+				w_class = W_CLASS_SMALL
+				c_flags |= ONBELT
+				delProperty("meleeprot_all", 0)
+				delProperty("rangedprot", 0)
+				delProperty("movespeed", 0)
+				delProperty("disorient_resist", 0)
+				delProperty("disorient_resist_eye", 0)
+				delProperty("disorient_resist_ear", 0)
+				setProperty("deflection", 0)
+				c_flags &= ~BLOCK_TOOLTIP
+				stamina_damage = initial(stamina_damage)
+				stamina_cost = initial(stamina_cost)
+				src.setItemSpecial(/datum/item_special/simple)
+
+			user?.update_equipped_modifiers() // Call the bruteforce movement modifier proc because we changed movespeed while equipped
+
+			destroy_deployed_barrier(user)
+
+			can_disarm = src.status
+
+			src.UpdateIcon()
+			user?.update_inhands()
+		else
+			user?.show_text("You need two free hands in order to activate the [src.name].", "red")
+
+
 //rifle unused but there for completion reasons i'm sick please help - rex
 TYPEINFO(/obj/item/gun/energy/laser_rifle)
 	mats = null

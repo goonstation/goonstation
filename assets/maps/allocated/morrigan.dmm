@@ -427,6 +427,7 @@
 	dir = 4;
 	id = "robot_factory"
 	},
+/obj/forcefield/energyshield/perma/people,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "aud" = (
@@ -884,10 +885,8 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "aMz" = (
-/obj/decal/fakeobjects/robot/security{
-	dir = 1;
-	icon_state = "mars_nuke_bot";
-	name = "Syndicate Elite Gunbot"
+/obj/decal/fakeobjects/gunbotrep/inactivesentinel{
+	dir = 1
 	},
 /turf/unsimulated/floor/black/side,
 /area/morrigan/routing/transport)
@@ -1086,10 +1085,7 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "aWZ" = (
-/obj/decal/fakeobjects/robot/security{
-	icon_state = "mars_nuke_bot";
-	name = "Syndicate Elite Gunbot"
-	},
+/obj/decal/fakeobjects/gunbotrep/inactivesentinel,
 /turf/unsimulated/floor/black/side{
 	dir = 1
 	},
@@ -2556,6 +2552,13 @@
 /obj/decal/cleanable/water,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"cnM" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-edge"
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "coh" = (
 /obj/decal/floatingtiles{
 	dir = 4
@@ -3531,6 +3534,14 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"dqp" = (
+/obj/machinery/conveyor/area_activated,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8;
+	tag = "icon-xtra_bigstripe-edge (WEST)"
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "dqQ" = (
 /obj/machinery/conveyor/EW,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -4415,12 +4426,10 @@
 /turf/unsimulated/floor/white/checker2,
 /area/morrigan/station/medical/robotics)
 "ehK" = (
-/obj/decal/fakeobjects/robot/security{
-	dir = 1;
-	icon_state = "mars_nuke_bot";
-	name = "Defective Model"
-	},
 /obj/machinery/light/incandescent/netural,
+/obj/decal/fakeobjects/gunbotrep/inactivesentinel{
+	dir = 1
+	},
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/engineering/exports)
 "eic" = (
@@ -5085,6 +5094,21 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
+"eIC" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent";
+	dir = 1;
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "eIO" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -6066,6 +6090,18 @@
 "fCR" = (
 /turf/unsimulated/floor/blueblack,
 /area/morrigan/station/hallway)
+"fDA" = (
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "eng_locked";
+	name = "rusted airlock";
+	opacity = 1;
+	pixel_y = 1
+	},
+/turf/space,
+/area/morrigan/derelict/cargo)
 "fDC" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/medical/main)
@@ -7144,6 +7180,15 @@
 "gxu" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/poster/wallsign/hazard_caution,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent";
+	dir = 1;
+	pixel_x = 32
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "gxG" = (
@@ -7301,10 +7346,7 @@
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
 "gDw" = (
-/obj/decal/fakeobjects/robot/security{
-	icon_state = "mars_nuke_bot";
-	name = "Syndicate Elite Gunbot"
-	},
+/obj/decal/fakeobjects/gunbotrep/inactivesentinel,
 /turf/unsimulated/floor/red,
 /area/morrigan/construction)
 "gDO" = (
@@ -11249,8 +11291,8 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "kbN" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
+/obj/machinery/conveyor/area_activated{
+	dir = 8
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
@@ -12224,6 +12266,12 @@
 	dir = 1
 	},
 /area/morrigan/construction)
+"kWU" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "kXi" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
@@ -13171,10 +13219,8 @@
 /turf/unsimulated/floor/purple,
 /area/morrigan/station/civilian/janitor)
 "lOF" = (
-/obj/decal/fakeobjects/robot/security{
-	dir = 1;
-	icon_state = "mars_nuke_bot";
-	name = "Defective Model"
+/obj/decal/fakeobjects/gunbotrep/inactivesentinel{
+	dir = 1
 	},
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/engineering/exports)
@@ -14000,6 +14046,9 @@
 /area/morrigan/derelict/hobo)
 "myh" = (
 /obj/decal/cleanable/dirt/dirt5,
+/obj/machinery/computer/barcode/morrigan{
+	dir = 4
+	},
 /turf/unsimulated/floor/yellow,
 /area/morrigan/derelict/cargo)
 "myv" = (
@@ -16205,8 +16254,7 @@
 /area/morrigan/station/invest)
 "osU" = (
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 5;
-	icon_state = "xtra_bigstripe-corner2"
+	dir = 9
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
@@ -18017,6 +18065,21 @@
 /obj/machinery/vending/medical_public,
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
+"qjL" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 8
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent. Cool air is gently flowing through it.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "air vent";
+	dir = 1;
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "qkb" = (
 /obj/decal/cleanable/dirt/dirt2,
 /obj/item/reagent_containers/food/drinks/bottle/beer,
@@ -18242,6 +18305,13 @@
 	},
 /turf/unsimulated/floor/sanitary/blue,
 /area/morrigan/routing/transport)
+"qtY" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "xtra_bigstripe-edge2"
+	},
+/obj/machinery/cargo_router/morrigan,
+/turf/unsimulated/floor/plating,
+/area/morrigan/derelict/cargo)
 "quq" = (
 /obj/item/casing/rifle_loud{
 	dir = 4;
@@ -23692,14 +23762,6 @@
 /obj/machinery/coffeemaker/security,
 /turf/unsimulated/floor/red/checker,
 /area/morrigan/routing/transport)
-"vvi" = (
-/obj/decal/fakeobjects/robot/security{
-	dir = 1;
-	icon_state = "mars_nuke_bot";
-	name = "Defective Model"
-	},
-/turf/unsimulated/floor/black,
-/area/morrigan/station/engineering/specialist)
 "vvD" = (
 /obj/decal/floatingtiles{
 	dir = 4;
@@ -24423,7 +24485,15 @@
 /area/morrigan/construction)
 "whR" = (
 /obj/decal/cleanable/rust/jen,
-/obj/decal/fakeobjects/console_randompc,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer is incredibly broken.  Look at how broken it is!  Very much so.";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "aiuploadb";
+	name = "broken computer";
+	dir = 4
+	},
 /turf/unsimulated/floor/yellow,
 /area/morrigan/derelict/cargo)
 "wiN" = (
@@ -24703,6 +24773,14 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
+"wxF" = (
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "wyX" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -25899,6 +25977,9 @@
 /area/morrigan/station/medical/reception)
 "xvi" = (
 /obj/machinery/floorflusher/industrial,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict/cargo)
 "xvr" = (
@@ -26334,6 +26415,13 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/engineering/specialist)
+"xPY" = (
+/obj/machinery/floorflusher/industrial,
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "xQK" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/cinnamon,
@@ -26462,7 +26550,15 @@
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
 "xYi" = (
-/obj/decal/fakeobjects/console_radar,
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A computer that is so completely, irreparably broken that you are in disbelief at just how destroyed it is. ";
+	dir = 8;
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "offbroken";
+	name = "broken computer"
+	},
 /turf/unsimulated/floor/yellow,
 /area/morrigan/derelict/cargo)
 "xYs" = (
@@ -28862,7 +28958,7 @@ jZv
 byc
 tdC
 fyJ
-vvi
+wWu
 nkU
 xtg
 xtg
@@ -33349,12 +33445,12 @@ ixt
 umR
 vwJ
 vwJ
-vwJ
-vwJ
-vwJ
-vwJ
-vwJ
-vwJ
+umR
+umR
+umR
+umR
+umR
+umR
 vwJ
 vwJ
 vwJ
@@ -33453,11 +33549,11 @@ umR
 umR
 umR
 umR
+wxF
+dqp
+dqp
+xPY
 umR
-umR
-umR
-umR
-vwJ
 vwJ
 vwJ
 vwJ
@@ -33556,11 +33652,11 @@ aqO
 kfV
 fzl
 ixp
-kbN
+kWU
 kbN
 osU
 umR
-vwJ
+umR
 vwJ
 vwJ
 vwJ
@@ -33653,16 +33749,16 @@ vwJ
 jrL
 xwM
 efO
-xZW
-xZW
 uwL
+xZW
+xZW
 xZW
 atM
 pTQ
 nvz
-iux
-nOb
-umR
+qtY
+cnM
+fDA
 vwJ
 vwJ
 vwJ
@@ -33756,7 +33852,7 @@ vwJ
 vwJ
 umR
 vWC
-nUM
+qjL
 nUM
 thI
 pji
@@ -33970,7 +34066,7 @@ jjl
 umR
 nTm
 xvi
-nOb
+eIC
 umR
 vwJ
 vwJ

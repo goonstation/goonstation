@@ -501,6 +501,29 @@ obj/decal/fakeobjects/teleport_pad
 	layer = EFFECTS_LAYER_UNDER_1
 	plane = PLANE_DEFAULT
 
+/obj/decal/fakeobjects/gunship
+	name = "Gunparts"
+	desc = "You can't see me."
+	bound_height = 64
+	bound_width = 32
+	icon = 'icons/obj/large/32x64.dmi'
+	anchored = TRUE
+	density = 1
+
+/obj/decal/fakeobjects/gunship/howitzer
+	name = "Howitzer"
+	desc = "A devastating, station destroying, hull mounted weapon."
+	icon_state = "howitzer"
+
+/obj/decal/fakeobjects/gunship/artillery
+	name = "Artillery"
+	desc = "Huge in size, this weapon hits far, and very hard."
+	icon_state = "artillery"
+
+/obj/decal/fakeobjects/gunship/cannon
+	name = "Cannon"
+	desc = "A ship mounted cannon, excellent for ship on ship skirmishes."
+	icon_state = "cannon"
 /obj/decal/bloodtrace
 	name = "blood trace"
 	desc = "Oh my!!"

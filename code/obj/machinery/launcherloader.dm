@@ -310,6 +310,12 @@
 		destinations = list("South" = SOUTH, "North" = WEST)
 		default_direction = SOUTH
 		..()
+/obj/machinery/cargo_router/morrigan
+	trigger_when_no_match = 0
+	New()
+		destinations = list("Safe" = EAST, "Suspicious" = WEST)
+		default_direction = EAST
+		..()
 
 /obj/machinery/computer/barcode
 	name = "Barcode Computer"
@@ -448,6 +454,13 @@
 	name = "Barcode Computer"
 	desc = "Used to print barcode stickers for the off-station merchants."
 	destinations = list("Shipping Market")
+
+/obj/machinery/computer/barcode/morrigan
+	name = "Barcode Computer"
+	desc = "Used to print barcode stickers for the cargo carousel routing system."
+
+	destinations = list("Safe","Suspicious")
+
 
 /obj/item/sticker/barcode
 	name = "barcode sticker"

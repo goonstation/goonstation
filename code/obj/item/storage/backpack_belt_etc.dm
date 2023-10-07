@@ -865,9 +865,9 @@
 	tasersmg
 		spawn_contents = list(/obj/item/gun/energy/tasersmg, /obj/item/baton, /obj/item/barrier)
 
-//morrigan admin stuff, normal player should never see this
+//morrigan admin stuff, normal players should never see this
 	morriganlight
-		spawn_contents = list(/obj/item/gun/energy/hafpistol, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
+		spawn_contents = list(/obj/item/gun/energy/hafpistol, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate, /obj/item/barrier/morrigan)
 
 		New()
 			..()
@@ -881,7 +881,7 @@
 			can_hold += /obj/item/gun/energy/lasershotgun
 
 	morriganexplorer
-		spawn_contents = list(/obj/item/gun/energy/smgmine, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
+		spawn_contents = list(/obj/item/gun/energy/smgmine, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate, /obj/item/ammo/power_cell/med_power)
 
 		New()
 			..()

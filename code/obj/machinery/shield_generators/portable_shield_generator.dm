@@ -660,6 +660,13 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	Cross(atom/A)
 		return ..() && !istype(A,/obj/machinery/vehicle)
 
+/obj/forcefield/energyshield/perma/people
+	name = "Permanent Vehicular Forcefield"
+	desc = "A permanent force field that prevents people from passing."
+
+	Cross(atom/A)
+		return ..() && !istype(A,/mob)
+
 /obj/forcefield/energyshield/perma/doorlink
 	name = "Door-linked Atmospheric/Liquid Forcefield"
 	desc = "A door-linked force field that prevents gas and liquids from passing through it."

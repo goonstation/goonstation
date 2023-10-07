@@ -441,7 +441,7 @@
 /datum/materiel/loadout/morriganlight
 	name = "Light Patrol Officer"
 	path = /obj/item/storage/belt/security/morriganlight
-	description = "One belt containing a baton, a light sidearm, and a ticketer. Perfect of station patrols."
+	description = "One belt containing a baton, a light sidearm, and a ticketer and an experimental barrier. Perfect of station patrols."
 /datum/materiel/loadout/morrigancontrol
 	name = "Shock Officer"
 	path = /obj/item/storage/belt/security/morrigancontrol

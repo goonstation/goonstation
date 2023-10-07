@@ -1193,7 +1193,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 	image = "barrier"
 	name = "Energy Barrier"
 	desc = "Deploy a temporary barrier that reflects projectiles. The barrier can be easily broken by any attack or a sustained push. "
-
+	var/barrier_type = /obj/itemspecialeffect/barrier
 	onAdd()
 		if(master)
 			staminaCost = master.stamina_cost * 0.1 //Inherits from the item.
@@ -1208,7 +1208,7 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			var/direction = get_dir_pixel(user, target, params)
 			var/turf/turf = get_step(master, direction)
 
-			var/obj/itemspecialeffect/barrier/E = new /obj/itemspecialeffect/barrier
+			var/obj/itemspecialeffect/barrier/E = new barrier_type
 			E.setup(turf)
 			E.master = user
 			E.set_dir(direction)
@@ -1241,6 +1241,13 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 			afterUse(user)
 		return
+
+/datum/item_special/barrier/morrigan
+	image = "morriganbarrier"
+	name = "Energy Barrier"
+	desc = "Deploy a temporary barrier that reflects projectiles. The barrier can be easily broken by any attack or a sustained push. "
+	barrier_type = new /obj/itemspecialeffect/barrier/morrigan
+
 
 
 /datum/item_special/flame
@@ -1852,8 +1859,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 			playsound(src.loc, 'sound/impact_sounds/Stone_Cut_1.ogg', 50, 0.1, 0, 2)
 		var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 		C.setup(src.loc)
-
-
 	zantetsuken
 		icon = 'icons/effects/64x64.dmi'
 		icon_state = "zantetsuken"
@@ -2000,7 +2005,6 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		blob_act(power)
 			. = ..()
 			was_clashed()
-
 	poof
 		icon = 'icons/effects/64x64.dmi'
 		icon_state = "poof"
