@@ -3043,7 +3043,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
 	name = "space wasp egg?"
-	desc = "There is ALOT OF BUZZING coming from this thing..."
+	desc = "There is A LOT OF BUZZING coming from this thing..."
 	critter_type = /mob/living/critter/small_animal/wasp/angry
 
 /* ================================================= */
@@ -3170,7 +3170,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/slug/snail/diner
 	name = "Snaily Softserve"
 	real_name = "snaildiner"
-	desc = "It's Snaily Softserve! She's a bit slimey and slow, but she means well."
+	desc = "It's Snaily Softserve! She's a bit slimy and slow, but she means well."
 	icon_state = "snail"
 	icon_state_dead = "snail-dead"
 	blood_id = "hemolymph"
