@@ -141,7 +141,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
@@ -614,9 +614,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					. = {"Request denied.<br>"}
 
 				if ("clear")
+					var/orderers = list()
 					for(var/datum/supply_order/order as anything in shippingmarket.supply_requests)
 						if (order.address)
-							src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
+							orderers += order.address
+					for(var/orderer in uniquelist(orderers))
+						src.send_pda_message(orderer, "Your orders have been denied.")
 					shippingmarket.supply_requests = null
 					shippingmarket.supply_requests = new/list()
 					. = {"All requests have been cleared.<br>"}
@@ -1306,6 +1309,6 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	newsignal.data["address_1"] = address
 	newsignal.data["sender"] = "00000000"
 
-	radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(newsignal)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
 #undef ORDER_LABEL_MAX_LEN
