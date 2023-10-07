@@ -50,17 +50,20 @@
 	var/crystal_owed = 0
 	var/tile_cost_processed = FALSE
 
-	var/obj/item/blueprint/current_bp = null
+	var/datum/abcu_blueprint/current_bp = null
 	var/locked = FALSE
 	var/paused = FALSE
 	var/off_x = 0
 	var/off_y = 0
 
-
-
 	New()
 		..()
 		UnsubscribeProcess()
+
+	examine()
+		. = ..()
+		if (current_bp)
+			. += "<br><span class='notice'>Someone has uploaded a blueprint named '[current_bp.room_name]'.</span>"
 
 	attack_ai(mob/user)
 		boutput(user, "<span class='alert'>This machine is not linked to your network.</span>")
@@ -96,7 +99,7 @@
 			src.locked ? "Unlock" : "Lock",
 			"Begin Building",
 			"Dump Materials",
-			"Eject Blueprint",
+			"Select Blueprint",
 			"Cancel Build",
 		)
 		var/user_input = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", option_list)
@@ -132,15 +135,18 @@
 					return
 				src.prepare_build(user)
 
-			if("Eject Blueprint")
+			if("Select Blueprint")
 				if(src.locked || src.building)
-					boutput(user, "<span class='alert'>Can not eject blueprint while machine is locked or building.</span>")
+					boutput(user, "<span class='alert'>You can't load a different blueprint while the machine is locked or building.</span>")
 					return
-				if (!src.current_bp)
+				/* if (!src.current_bp)
 					boutput(user, "<span class='alert'>No blueprint to eject.</span>")
 					return
 				src.current_bp.set_loc(src.loc)
-				src.current_bp = null
+				src.current_bp = null */
+				var/datum/abcu_blueprint/load = load_abcu_blueprint(user)
+				if (load?.room_name)
+					src.current_bp = load
 
 			if("Dump Materials")
 				for(var/obj/o in src)
@@ -283,7 +289,7 @@
 		src.icon_state = "builder1"
 		SubscribeToProcess()
 		src.visible_message("<span class='notice'>[src] starts to buzz and vibrate. The operation light blinks on.</span>")
-		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.current_bp.name], authored by [src.current_bp.author]")
+		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.current_bp.room_name], authored by [src.current_bp.author]")
 
 	proc/end_build()
 		for (var/datum/objectinfo/N in src.apc_list)
@@ -320,8 +326,8 @@
 		if (user)
 			var/message = "<span class='notice'>The machine is holding [metal_count] metal, and [crystal_count] crystal, measured in sheets.</span>"
 			if (src.current_bp)
-				message += "<br><span class='notice'>Its current blueprint requires [src.current_bp.req_metal] metal,"
-				message += " and [src.current_bp.req_glass] crystal, measured in sheets.</span>"
+				message += "<br><span class='notice'>Its current blueprint requires [src.current_bp.cost_metal] metal,"
+				message += " and [src.current_bp.cost_crystal] crystal, measured in sheets.</span>"
 			boutput(user, message)
 		return list(metal_count, crystal_count)
 
@@ -359,7 +365,7 @@
 				src.invalid_count++
 
 			src.markers.Add(O)
-		boutput(user, "<span class='notice'>Building this will require [src.current_bp.req_metal] metal and [src.current_bp.req_glass] glass sheets.</span>")
+		boutput(user, "<span class='notice'>Building this will require [src.current_bp.cost_metal] metal and [src.current_bp.cost_crystal] glass sheets.</span>")
 		src.visible_message("[src] locks into place and begins humming softly.")
 
 /datum/objectinfo
@@ -542,11 +548,12 @@
 	var/size_x = 0
 	var/size_y = 0
 	var/author = ""
+	var/room_name = ""
 	var/list/roominfo = list()
 
 proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = 1)
 	if (!user || !user.client) return
-	var/input = strip_html(tgui_input_text(user, "Blueprint Name", "Set a name for your new blueprint.", null, 54))
+	var/input = strip_html(tgui_input_text(user, "Blueprint Name", "Set a name for your new blueprint.", null, 54)) // 54 char limit
 	if (!input) return
 
 	var/savepath = "data/blueprints/[user.client.ckey]/[input].dat"
@@ -577,7 +584,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = 1)
 	save["sizey"] << sizey
 	save["roomname"] << input
 	save["author"] << user.client.ckey
-	//save.dir.Add("tiles")
+	save.dir.Add("tiles")
 
 	for(var/atom/curr in turf_list)
 		var/posx = (curr.x - minx)
@@ -610,29 +617,21 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = 1)
 
 proc/load_abcu_blueprint(mob/user)
 	if (!user || !user.client) return
-	var/list/bplist = flist("data/blueprints/[user.client.ckey]")
+	var/list/bplist = flist("data/blueprints/[user.client.ckey]/")
 	if (!length(bplist))
 		boutput(user, "<span class='alert'>You don't have any blueprints.</span>")
 		return
 	var/inputbp = tgui_input_list(user, "Pick a blueprint to load.", "Your Blueprints", bplist)
 	if(!inputbp) return
+	var/savepath = "data/blueprints/[user.client.ckey]/[inputbp]"
+	if (!fexists(savepath)) return // unlikely i hope
+	var/savefile/save = new/savefile("[savepath]")
 
-	//var/savefile/selectedbp = new/savefile("data/blueprints/[user.client.ckey]/[inputbp]")
-
-	var/savepath = "data/blueprints/[user.client.ckey]/[inputbp].dat"
-	var/savefile/save = new/savefile("[savepath]") // if it's not an existing file, this makes an empty new one
-	if (isnull(save["roomname"]) && isnull(save["sizex"]) && isnull(save["author"])) // double check
-		boutput(user, "<span class='alert'>Blueprint [inputbp] not found.</span>")
-		fdel("[savepath]") // so we kill it
-		return
-
-	/* var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
-	prints_left-- */
 	var/datum/abcu_blueprint/bp = new/datum/abcu_blueprint
 	var/turf_count
 	var/obj_count
 	save.cd = "/"
-	//var/roomname = save["roomname"]
+	bp.room_name = save["roomname"]
 	bp.size_x = save["sizex"]
 	bp.size_y = save["sizey"]
 	bp.author = save["author"]
@@ -665,10 +664,10 @@ proc/load_abcu_blueprint(mob/user)
 			bp.cost_metal += REBUILD_COST_OBJECT_METAL
 			bp.cost_crystal += REBUILD_COST_OBJECT_CRYSTAL
 			tf.objects.Add(O)
+			obj_count++
 
 		bp.roominfo.Add(tf)
 
-	//bp.name = "Blueprint '[input]'"
 	bp.cost_metal = round(bp.cost_metal)
 	bp.cost_crystal = round(bp.cost_crystal)
 
