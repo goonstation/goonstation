@@ -298,7 +298,7 @@
 			/// PDA message ///
 			var/datum/signal/pdaSignal = get_free_signal()
 			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"=sender_name, "sender"="00000000", "message"="Now playing: [R].", "group"=MGD_PARTY, "alert"=MGA_RADIO)
-			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET,
+			return SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 	else
 		..()
 
