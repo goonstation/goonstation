@@ -35,16 +35,16 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define IM_REALLY_IN_A_FUCKING_HURRY_HERE 1  // All of the below
 
 //#define SKIP_FEA_SETUP // Skip setting up atmospheric system
-#define SKIP_Z5_SETUP // Skip generation of mining level
+//#define SKIP_Z5_SETUP // Skip generation of mining level
 //#define SKIP_PLANETS_SETUP // Skip planet generation (for Artemis)
-#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
-#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
-#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
+//#define SKIP_CAMERA_COVERAGE // Skip calculating security camera coverage
+//#define IM_TESTING_SHIT_STOP_BARFING_CHANGELOGS_AT_ME // Skip changelogs
+//#define I_DONT_WANNA_WAIT_FOR_THIS_PREGAME_SHIT_JUST_GO // Automatically ready up and start the game ASAP. No input required.
 
 //////--- CONVENIENCE OPTIONS FOR TESTING ETC ---//
 //#define DEBUG_EVERYONE_GETS_CAPTAIN_ID // all IDs are captain rank, kept separate from below options to avoid disrupting access-related tests
 //#define NO_COOLDOWNS // disables all /datum/targetable cooldowns
-#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
+//#define BONUS_POINTS // gives a bunch of starting points to various abilities/uplinks/weapon vendors
 //#define SHUT_UP_AND_GIVE_ME_MEDAL_STUFF // causes has_medal to always return true - good for testing medal rewards etc.
 //#define SHOW_ME_STATUSES // incredibly hacky visible status effects
 
@@ -60,7 +60,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define NO_CRITTERS // Deletes mob critters
 //#define NO_RANDOM_ROOMS // Don't generate random rooms. Random room areas will be left blank and the landmark will be visible
 //#define NO_RANDOM_EVENTS // Don't spawn random events
-#define NO_SHUTTLE_CALLS // Don't autocall the shuttle
+//#define NO_SHUTTLE_CALLS // Don't autocall the shuttle
 //#define I_AM_HACKERMAN // Lets you varedit things you normally couldn't (admin holders, server config)
 //#define CHECK_MORE_RUNTIMES // Enables checking for some additional errors which might be too costly on live server
 //#define QUICK_MOB_DELETION // Enables deleting mobs with build mode right click on obj place mode
@@ -123,7 +123,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_WRESTLEMAP   // Wrestlemap by Overtone
 
 //-------Rotation maps:
-#define MAP_OVERRIDE_COGMAP				// Cogmap1, by Dr. Cogwerks
+//#define MAP_OVERRIDE_COGMAP				// Cogmap1, by Dr. Cogwerks
 //#define MAP_OVERRIDE_COGMAP2			// Cogmap2, by Dr. Cogwerks
 //#define MAP_OVERRIDE_DONUT2				// Updated Donut2, by committee. Currently managed by Sord.
 //#define MAP_OVERRIDE_DONUT3				// Donut3 by Ryumi
