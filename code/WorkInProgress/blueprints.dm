@@ -491,6 +491,22 @@
 
 	var/list/roominfo = new/list()
 
+/obj/item/abcu_blueprint_reference
+	name = "structure blueprint"
+	desc = "An ABCU blueprint. You can use this to learn it, or tap it on an ABCU to upload the referenced blueprint."
+	icon = 'icons/obj/writing.dmi'
+	icon_state = "interdictor_blueprint"
+	item_state = "sheet"
+
+	var/author = ""
+	var/room_name = ""
+	var/blueprint_path = ""
+
+	examine()
+		. = ..()
+		if (room_name)
+			. += "<span class='notice'>This blueprint is named '[room_name]'. </span>"
+
 // whitelists/blacklists applied during both saving and loading, so they're freely alterable
 #define WHITELIST_OBJECTS list( \
 	/obj/stool, \
