@@ -823,7 +823,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 	var/allow_scan = 1
 	var/coord_update_flag = 1
 
-	var/readout = "&nbsp;"
+	var/readout = ""
 	var/datum/computer/file/record/user_data
 	var/padNum = 1
 
@@ -927,6 +927,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 					message = replacetext(message, "|n", "<br>")
 
 					src.readout = copytext(message,9,256)
+					tgui_process.update_uis(src)
 
 				src.updateUsrDialog(1)
 				return
@@ -1234,6 +1235,149 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 
 		return
 
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "TeleConsole")
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"xtarget" = xtarget,
+			"ytarget" = ytarget,
+			"ztarget" = ztarget,
+			"host_id" = host_id,
+			"readout" = readout,
+			"panel_open" = panel_open,
+			"padNum" = padNum
+		)
+
+		for (var/datum/teleporter_bookmark/b in bookmarks)
+			.["bookmarks"] += list(list(
+				"ref" = ref(b),
+				"name" = b.name,
+				"xyz" = "([b.x]/[b.y]/[b.z]) "
+			))
+		if (!length(bookmarks)) //this is needed to make TGUI clear out the list
+			.["bookmarks"] = list()
+
+	ui_act(action, params)
+		//. = TRUE means the action was handeled
+		. = ..()
+		if (.)
+			return .
+
+		. = TRUE
+
+		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+
+		switch(action)
+			if ("setX")
+				xtarget = clamp(text2num(params["value"]), 0, 500)
+				coord_update_flag = 1
+			if ("setY")
+				ytarget = clamp(text2num(params["value"]), 0, 500)
+				coord_update_flag = 1
+			if ("setZ")
+				ztarget = clamp(text2num(params["value"]), 0, 14)
+				coord_update_flag = 1
+			if ("send")
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = 0
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] send")
+			if ("receive")
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = 0
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] receive")
+			if ("portal")
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = 0
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] portal toggle")
+			if ("scan")
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = 0
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] scan")
+			if ("restorebookmark")
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				if(!bm) return
+				xtarget = bm.x
+				ytarget = bm.y
+				ztarget = bm.z
+				coord_update_flag = 1
+
+			if ("deletebookmark")
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				if(!bm) return
+				bookmarks.Remove(bm)
+
+			if ("addbookmark")
+				if(length(bookmarks) >= max_bookmarks)
+					boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
+					return
+				var/datum/teleporter_bookmark/bm = new
+				var/title = tgui_input_text(usr, "Enter name:", "Name", "New Bookmark")
+				title = copytext(adminscrub(title), 1, 128)
+				if(!length(title)) return
+				bm.name = title
+				bm.x = xtarget
+				bm.y = ytarget
+				bm.z = ztarget
+				bookmarks.Add(bm)
+				playsound(src.loc, "keyboard", 50, 1, -15)
+
+			if ("reconnect")
+				if ((host_id && params["value"] != "2") || !old_host_id || !src.link)
+					return
+
+				if (params["value"] == "2")
+					host_id = null
+
+				var/old = old_host_id
+				old_host_id = null
+				var/datum/signal/newsignal = get_free_signal()
+				newsignal.source = src
+				newsignal.transmission_method = TRANSMISSION_WIRE
+				newsignal.data["command"] = "term_connect"
+				newsignal.data["device"] = src.device_tag
+
+				newsignal.data_file = user_data.copy_file()
+
+				newsignal.data["address_1"] = old
+				newsignal.data["sender"] = src.net_id
+
+				src.link.post_signal(src, newsignal)
+				SPAWN(1 SECOND)
+					if (!old_host_id)
+						old_host_id = old
+
+			if ("setpad")
+				src.padNum = (src.padNum & 3) + 1
+				coord_update_flag = 1
+
 	proc/message_host(var/message, var/datum/computer/file/file)
 		if (!src.host_id || !message)
 			return
@@ -1245,3 +1389,4 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			src.post_file(src.host_id,"data",message, file)
 		else
 			src.post_status(src.host_id,"command","term_message","data",message)
+
