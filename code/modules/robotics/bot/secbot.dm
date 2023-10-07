@@ -650,7 +650,7 @@
 
 			if(SECBOT_SUMMON)		// summoned to PDA
 				src.doing_something = 1
-				if(!src.path)
+				if (!src.path) //null path means we couldn't find the target
 					src.speak("ERROR 99-28: COULD NOT FIND PATH TO SUMMON TARGET. ABORTING.")
 					src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)	// switch back to what we should be
 

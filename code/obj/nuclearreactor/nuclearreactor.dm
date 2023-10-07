@@ -679,7 +679,7 @@
 
 	/// Transmuting nuclear engine into jeans sometimes causes a client crash
 	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
-		if(mat1.getID() == "jean")
+		if(mat1.getTexture())
 			return
 		. = ..()
 

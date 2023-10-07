@@ -12,7 +12,7 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 
 /obj/machinery/chem_dispenser
 	name = "chem dispenser"
-	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipies."
+	desc = "A complicated, soda fountain-like machine that allows the user to dispense basic chemicals for use in recipes."
 	density = 1
 	anchored = ANCHORED
 	icon = 'icons/obj/chemical.dmi'
@@ -133,11 +133,12 @@ TYPEINFO(/obj/machinery/chem_dispenser)
 			B.reagents.handle_reactions()
 			return
 		*/
-		var/ejected_beaker = null
+		var/obj/item/reagent_containers/glass/ejected_beaker = null
 		if (src.beaker?.loc == src)
-			beaker.reagents?.handle_reactions()
+			src.beaker.reagents?.handle_reactions()
 			ejected_beaker = src.beaker
 			user.put_in_hand_or_drop(ejected_beaker)
+			REMOVE_ATOM_PROPERTY(ejected_beaker, PROP_ITEM_IN_CHEM_DISPENSER, src)
 
 		src.beaker = B
 		APPLY_ATOM_PROPERTY(B, PROP_ITEM_IN_CHEM_DISPENSER, src)
