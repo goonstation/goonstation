@@ -41,7 +41,7 @@ export const TeleConsole = (_props, context) => {
                 icon="power-off"
                 content="Retry"
                 color="green"
-                onClick={() => act('reconnect', { value: 2 })}
+                onClick={() => act('reconnect', { value: 1 })}
               />
             </Box>
           )}
