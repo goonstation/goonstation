@@ -161,6 +161,12 @@ var/global/datum/apiHandler/apiHandler
 
 			src.apiError("API Error: JSON decode error during [req_route]")
 
+		// Handle client and server error responses
+		if (response.status_code >= 400)
+			var/datum/apiModel/Error/model = new
+			model.SetupFromResponse(data)
+			throw EXCEPTION(model)
+
 		// Validation
 		var/datum/apiModel/model = new route.correct_response
 		if (istype(model, /datum/apiModel/Paginated))
