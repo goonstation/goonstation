@@ -4,8 +4,8 @@ TYPEINFO(/obj/item/lightbreaker)
 /obj/item/lightbreaker
 	name = "compact tape"
 	desc = "A casette player loaded with a casette of a vampire's screech."
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "recorder"
+	icon = 'icons/obj/radiostation.dmi'
+	icon_state = "audiolog_newSmall"
 	var/active = 0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"

@@ -4583,6 +4583,15 @@
 	icon_state = "fblue2"
 	},
 /area/station/medical/head)
+"bnJ" = (
+/obj/shrub{
+	dir = 6
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep{
+	secret_thing = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "bnM" = (
 /obj/item/sponge{
 	name = "loofah"
@@ -127050,7 +127059,7 @@ mBB
 mBB
 mBB
 mBB
-rmq
+bnJ
 oJP
 rFi
 vOD
