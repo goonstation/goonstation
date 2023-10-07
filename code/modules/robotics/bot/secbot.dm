@@ -271,6 +271,12 @@
 			message = capitalize(ckeyEx(message))
 		. = ..()
 
+	pull(mob/user)
+		if (src.on)
+			boutput(user,"<span class='alert'><b>[src] resists being pulled around! Maybe deactivate it first.</b></span>")
+			return 1
+		..()
+
 	Move(var/turf/NewLoc, direct)
 		var/oldloc = src.loc
 		. = ..()
@@ -318,6 +324,8 @@
 			src.on = !src.on
 			if (src.on)
 				add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+				if (src.pulled_by)
+					src.pulled_by.remove_pulling()
 			else
 				remove_simple_light("secbot")
 			src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
@@ -813,6 +821,8 @@
 	// look for a criminal in range of the bot
 	proc/look_for_perp()
 		src.anchored = UNANCHORED
+		if (!isturf(src.loc)) //no active searching while in lockers and stuff
+			return
 		for(var/mob/living/carbon/C in view(7, get_turf(src))) //Let's find us a criminal
 			if ((C.stat) || (C.hasStatus("handcuffed")))
 				continue

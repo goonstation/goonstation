@@ -54,7 +54,6 @@
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
-	var/mob/pulled_by = null
 	var/stat = STAT_ALIVE
 	var/next_click = 0
 	var/transforming = null
@@ -1129,10 +1128,7 @@
 			return
 
 	src.pulling = A
-
-	if(ismob(src.pulling))
-		var/mob/M = src.pulling
-		M.pulled_by = src
+	A.pulled_by = src
 
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
@@ -1147,9 +1143,8 @@
 	pull_particle(src,pulling)
 
 /mob/proc/remove_pulling()
-	if(ismob(pulling))
-		var/mob/M = pulling
-		M.pulled_by = null
+	if(src.pulling)
+		src.pulling.pulled_by = null
 	src.pulling = null
 
 // less icon caching maybe?!
