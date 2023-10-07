@@ -983,7 +983,8 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			"host_id" = host_id,
 			"readout" = readout,
 			"panel_open" = panel_open,
-			"padNum" = padNum
+			"padNum" = padNum,
+			"max_bookmarks" = max_bookmarks
 		)
 
 		for (var/datum/teleporter_bookmark/b in bookmarks)

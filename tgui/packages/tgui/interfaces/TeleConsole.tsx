@@ -10,20 +10,21 @@ type TeleConsoleParams = {
   readout: string
   panel_open: boolean
   padNum: number
+  max_bookmarks: number
   bookmarks: [];
 }
 
 export const TeleConsole = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleParams>(context);
-  const { xtarget, ytarget, ztarget, host_id, bookmarks, readout, panel_open, padNum } = data;
+  const { xtarget, ytarget, ztarget, host_id, bookmarks, readout, panel_open, padNum, max_bookmarks } = data;
 
   return (
     <Window
       theme="ntos"
       width={400}
-      height={600}>
+      height={500}>
       <Window.Content textAlign="center">
-        <Section width="70%" mx="auto">
+        <Section width="80%" mx="auto">
           {host_id ? (
             <Box color="green">
               <Box>
@@ -50,10 +51,10 @@ export const TeleConsole = (_props, context) => {
             </Box>
           )}
         </Section>
-        <Section width="70%" mx="auto">
+        <Section width="80%" mx="auto">
           {readout}
         </Section>
-        <Section width="70%" mx="auto">
+        <Section width="80%" mx="auto">
           {"Taget Cordinates: "}
           <Box>
             {"X: "}
@@ -117,7 +118,7 @@ export const TeleConsole = (_props, context) => {
             />
           </Box>
         </Section>
-        <Section width="70%" mx="auto">
+        <Section width="80%" mx="auto">
           <Box>
             <Button
               color={host_id ? "green" : "gray"}
@@ -145,10 +146,10 @@ export const TeleConsole = (_props, context) => {
             content="Scan"
           />
         </Section>
-        <Section width="70%" mx="auto">
+        <Section width="80%" mx="auto">
           {"Bookmarks: "}
           <Button
-            color="green"
+            color={bookmarks.length < max_bookmarks ? "green" : "gray"}
             icon="add"
             onClick={() => act("addbookmark")}
           />
@@ -171,7 +172,7 @@ export const TeleConsole = (_props, context) => {
           })}
         </Section>
         {panel_open ? (
-          <Section width="70%" mx="auto">
+          <Section width="80%" mx="auto">
             <Box>
               {"Open panel:"}
             </Box>
