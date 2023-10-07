@@ -388,6 +388,8 @@
 			boutput(user, "<span class='alert'>[src] refuses your authority!</span>")
 			return
 		src.on = !src.on
+		if (src.on && src.pulled_by)
+			src.pulled_by.remove_pulling()
 		src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -404,6 +406,8 @@
 
 			src.emagged++
 			src.on = 1
+			if (src.pulled_by)
+				src.pulled_by.remove_pulling()
 			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 
@@ -444,6 +448,8 @@
 			src.emagged = 1
 			src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 			src.on = 1
+			if (src.pulled_by)
+				src.pulled_by.remove_pulling()
 		else
 			src.explode()
 		return
