@@ -535,6 +535,7 @@ var/global/totally_random_jobs = FALSE
 						for(var/obj/critter/gunbot/drone/snappedDrone in V.loc)	//Spawning onto a drone doesn't sound fun so the spawn location gets cleaned up.
 							qdel(snappedDrone)
 						V.finish_board_pod(src)
+						V.life_support?.activate()
 
 				#undef MAX_ALLOWED_ITERATIONS
 
@@ -565,10 +566,14 @@ var/global/totally_random_jobs = FALSE
 				boutput(src, "<span class='notice'>The unlock code to your pod ([V]) is: [V.lock.code]</span>")
 				if (src.mind)
 					src.mind.store_memory("The unlock code to your pod ([V]) is: [V.lock.code]")
+
+		var/mob/current_mob = src // this proc does the sin of overwriting src, but it turns out that SPAWN doesn't care and uses the OG src, hence this
 		SPAWN(0)
-			set_clothing_icon_dirty()
+			if(!QDELETED(current_mob))
+				current_mob.set_clothing_icon_dirty()
 			sleep(0.1 SECONDS)
-			update_icons_if_needed()
+			if(!QDELETED(current_mob))
+				current_mob.update_icons_if_needed()
 
 		if (joined_late == 1 && map_settings && map_settings.arrivals_type != MAP_SPAWN_CRYO && JOB.radio_announcement)
 			if (src.mind && src.mind.assigned_role) //ZeWaka: I'm adding this back here because hell if I know where it goes.
@@ -680,6 +685,7 @@ var/global/totally_random_jobs = FALSE
 		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+		src.update_colorful_parts()
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
 		trinket = new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
@@ -807,7 +813,7 @@ var/global/totally_random_jobs = FALSE
 			cashModifier = 1.25
 
 		var/obj/item/currency/spacecash/S = new /obj/item/currency/spacecash
-		S.setup(src,wagesystem.jobs[JOB.name] * cashModifier)
+		S.setup(src,round(wagesystem.jobs[JOB.name] * cashModifier))
 
 		if (isnull(src.get_slot(SLOT_R_STORE)))
 			src.equip_if_possible(S, SLOT_R_STORE)

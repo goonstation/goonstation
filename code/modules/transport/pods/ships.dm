@@ -148,7 +148,7 @@ obj/machinery/vehicle/miniputt/pilot
 	New()
 		..()
 		//Phaser
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon
+		src.m_w_system = new /obj/item/shipcomponent/mainweapon(src)
 		src.m_w_system.ship = src
 		src.components += src.m_w_system
 
@@ -168,7 +168,7 @@ obj/machinery/vehicle/miniputt/pilot
 	New()
 		..()
 		//Phaser
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon
+		src.m_w_system = new /obj/item/shipcomponent/mainweapon(src)
 		src.m_w_system.ship = src
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src

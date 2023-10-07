@@ -46,12 +46,13 @@
 		if (owner.getStatusDuration("blinded"))
 			owner.blinded = 1
 		else
-			for (var/thing in owner.get_equipped_items())
-				if (!thing) continue
-				var/obj/item/I = thing
-				if (I.block_vision)
-					owner.blinded = 1
-					break
+			if(!(HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION) || HAS_ATOM_PROPERTY(owner, PROP_MOB_XRAYVISION_WEAK)))
+				for (var/thing in owner.get_equipped_items())
+					if (!thing) continue
+					var/obj/item/I = thing
+					if (I.block_vision)
+						owner.blinded = 1
+						break
 
 		if (manualblinking && human_owner)
 			var/showmessages = 1

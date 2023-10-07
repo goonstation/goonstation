@@ -859,7 +859,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 #endif
 	mod = "asteroid-"
 	light_mod = "wall-"
-	plane = PLANE_WALL-1
+	plane = PLANE_NOSHADOW_BELOW
 	layer = ASTEROID_LAYER
 	flags = ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
 	default_material = "rock"
@@ -1237,7 +1237,7 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			var/image/edge_overlay = image('icons/turf/walls/asteroid.dmi', "edge[dir_from]")
 			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
 			edge_overlay.layer = src.layer + 1
-			edge_overlay.plane = PLANE_WALL-1
+			edge_overlay.plane = PLANE_NOSHADOW_BELOW
 			edge_overlay.layer = TURF_EFFECTS_LAYER
 			edge_overlay.color = src.stone_color
 			A.UpdateOverlays(edge_overlay, "ast_edge_[dir_from]")
@@ -1349,13 +1349,11 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 				O.onExcavate(src)
 			var/makeores
 			for(makeores = src.amount, makeores > 0, makeores--)
-				var/obj/item/raw_material/MAT = new ore_to_create
+				var/obj/item/raw_material/MAT = new ore_to_create(src)
 
 				// rocks don't deserve quality; moreover this speeds up big explosions since rocks don't need to copyMaterial() anymore
 				if(ore_to_create ==  /obj/item/raw_material/rock)
 					continue
-
-				MAT.set_loc(src)
 
 				if(MAT.material)
 					//If we don't use quality anymore, remove this
@@ -1430,12 +1428,12 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 	icon = 'icons/turf/walls/asteroid.dmi'
 	icon_state = "astfloor1"
 	plane = PLANE_FLOOR //Try to get the edge overlays to work with shadowing. I dare ya.
-	oxygen = 0.001
-	nitrogen = 0.001
+	oxygen = 0
+	nitrogen = 0
 	temperature = TCMB
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
-	has_material = FALSE
+	default_material = null
 	var/sprite_variation = 1
 	var/stone_color = "#D1E6FF"
 	var/image/coloration_overlay = null
@@ -2551,6 +2549,13 @@ TYPEINFO(/obj/submachine/cargopad)
 		..()
 
 	attack_hand(var/mob/user)
+		toggle(user)
+
+	attack_ai(mob/user)
+		. = ..()
+		toggle(user)
+
+	proc/toggle(mob/user)
 		if (src.active == 1)
 			boutput(user, "<span class='notice'>You switch the receiver off.</span>")
 			UpdateOverlays(null, "lights")

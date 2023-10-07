@@ -60,7 +60,10 @@ ABSTRACT_TYPE(/obj/item/clothing)
 
 
 	UpdateName()
-		src.name = "[name_prefix(null, 1)][src.get_stains()][src.real_name ? src.real_name : initial(src.name)][name_suffix(null, 1)]"
+		src.name = src.real_name || initial(src.name)
+		if(src.material?.usesSpecialNaming())
+			src.name = src.material.specialNaming(src)
+		src.name = "[name_prefix(null, 1)][src.get_stains()][src.name][name_suffix(null, 1)]"
 
 	proc/add_stain(var/stn)
 		if (!stn || !src.can_stain)

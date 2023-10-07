@@ -140,7 +140,7 @@
 	afterattack(atom/target, mob/user, reach, params)
 		. = ..()
 		if (state >= GRAB_AGGRESSIVE && !istype(target,/turf))
-			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container())
+			if (src.affecting?.is_open_container() && src.affecting?.reagents && target.is_open_container(TRUE))
 				logTheThing(LOG_CHEMISTRY, user, "transfers chemicals from [src.affecting] [log_reagents(src.affecting)] to [target] at [log_loc(user)].")
 				var/trans = src.affecting.reagents.trans_to(target, 10)
 				if (trans)

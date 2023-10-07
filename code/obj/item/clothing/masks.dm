@@ -733,7 +733,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	handkerchief = /obj/item/cloth/handkerchief/colored/orange
 
 /obj/item/clothing/mask/bandana/nt
-	name = "nt bandana"
+	name = "\improper NT bandana"
 	item_state = "bandana_nt"
 	icon_state = "bandana_nt"
 	desc = "The rebel outlaw's choice."
@@ -766,3 +766,10 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	var/obj/item/clothing/mask/bandana/bandana_to_spawn = pick(possible_bandana)
 	new bandana_to_spawn(src.loc)
 	qdel(src)
+
+/obj/item/clothing/mask/tengu
+	name = "tengu mask"
+	desc = "Traditionally thought to repel evil spirits, thanks to the tengu's alarming face. Maybe it works on staffies, too."
+	item_state = "tengu"
+	icon_state = "tengu"
+	see_face = FALSE

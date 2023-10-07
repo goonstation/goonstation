@@ -613,7 +613,7 @@ datum
 		fffoam
 			name = "firefighting foam"
 			id = "ff-foam"
-			description = "Carbon Tetrachloride is a foam used for fire suppression."
+			description = "Carbon tetrachloride is used for fire suppression."
 			reagent_state = LIQUID
 			fluid_r = 195
 			fluid_g = 195
@@ -1022,7 +1022,8 @@ datum
 				var/atom/Aloc = isturf(A) ? A : A.loc
 				for(var/atom/movable/AM in Aloc)
 					var/datum/component/glued/glued_comp = AM.GetComponent(/datum/component/glued)
-					if(glued_comp?.glued_to == A)
+					// possible idea for a future change: instead of direct deletion just decrease dries_up_time and only delete if <= current time
+					if(glued_comp?.glued_to == A && !isnull(glued_comp.glue_removal_time))
 						qdel(glued_comp)
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume, var/paramslist = 0, var/raw_volume)
@@ -1315,7 +1316,7 @@ datum
 		oil
 			name = "oil"
 			id = "oil"
-			description = "A decent lubricant for machines. High in benzene, naptha and other hydrocarbons."
+			description = "A decent lubricant for machines. High in benzene, naphtha and other hydrocarbons."
 			reagent_state = LIQUID
 			fluid_r = 0
 			fluid_g = 0
@@ -3345,7 +3346,7 @@ datum
 			name = "hemolymph"
 			id = "hemolymph"
 			//taste = "metallic yet slightly bitter"
-			description = "Hemolymph is a blood-like bodily fluid found in many invertibrates that derives its blue-green color from the presence of copper proteins."
+			description = "Hemolymph is a blood-like bodily fluid found in many invertebrates that derives its blue-green color from the presence of copper proteins."
 			reagent_state = LIQUID
 			fluid_r = 4
 			fluid_b = 165
@@ -4121,7 +4122,7 @@ datum
 		iron_oxide
 			name = "Iron Oxide"
 			id = "iron_oxide"
-			description = "Iron, artifically rusted under the effects of oxygen, acetic acid, salt and a high temperature enviroment."
+			description = "Iron, artificially rusted under the effects of oxygen, acetic acid, salt and a high temperature environment."
 			fluid_r = 112
 			fluid_b = 40
 			fluid_g = 9

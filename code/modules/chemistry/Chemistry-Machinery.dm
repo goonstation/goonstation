@@ -478,7 +478,7 @@ TYPEINFO(/obj/machinery/chem_shaker)
 TYPEINFO(/obj/machinery/chem_shaker/large)
 	mats = 25
 /obj/machinery/chem_shaker/large
-	name = "\improper Large Orbital Shaker"
+	name = "large orbital shaker"
 	icon_state = "orbital_shaker_large"
 	max_containers = 4
 	container_row_length = 2
@@ -979,7 +979,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				var/obj/item/reagent_containers/bottle = bottle_from_param(params["bottle"])
 				if(!bottle)
 					// somehow we didn't get a bottle
-					boutput(ui.user, "[src] bottleler makes a weird grinding noise. That can't be good.")
+					boutput(ui.user, "[src] bottler makes a weird grinding noise. That can't be good.")
 					return
 				var/reagent_amount = clamp(round(params["amount"]), CHEMMASTER_MINIMUM_REAGENT, bottle.initial_volume)
 

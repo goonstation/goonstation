@@ -55,7 +55,7 @@
 		if (prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a container
-		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))
+		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living) || istype(src.loc,/obj/item/reagent_containers/glass/jar) || istype(src.loc,/obj/cabinet))
 			return
 		// Nobody can ever see Chompski move
 		for (var/mob/M in viewers(src))
@@ -658,3 +658,15 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)
+
+/obj/item/yoyo
+	name = "Atomic Yo-Yo"
+	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "yoyo"
+	item_state = "yoyo"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROPE)

@@ -41,14 +41,13 @@
 	var/static/mutable_appearance/sleep_bubble = mutable_appearance('icons/mob/mob.dmi', "sleep")
 	var/image/silhouette
 	var/image/static_image = null
-	var/butt_op_stage = 0.0 // sigh
+	var/in_point_mode = 0
 	var/dna_to_absorb = 1
 
 	var/canspeak = 1
 
 	var/datum/organHolder/organHolder = null //Not all living mobs will use organholder. Instantiate on New() if you want one.
 
-	var/list/stomach_process = list() //digesting foods
 	var/list/skin_process = list() //digesting patches
 
 	var/sound_burp = 'sound/voice/burp.ogg'
@@ -116,8 +115,6 @@
 	var/list/stamina_mods_regen = list()
 	var/list/stamina_mods_max = list()
 
-	var/list/stomach_contents = list()
-
 	var/last_sleep = 0 //used for sleep_bubble
 
 	can_lie = TRUE
@@ -176,11 +173,8 @@
 			thishud.remove_object(stamina_bar)
 		stamina_bar = null
 
-	for (var/atom/A as anything in stomach_process)
-		qdel(A)
 	for (var/atom/A as anything in skin_process)
 		qdel(A)
-	stomach_process = null
 	skin_process = null
 
 	for(var/mob/living/intangible/aieye/E in src.contents)
@@ -608,12 +602,16 @@
 	if(!IN_RANGE(src, target, 12)) // don't point through cameras
 		return
 
+	if(src.client && !(target in view(src.client.view))) //don't point at things we can't see
+		return
+
 	var/obj/item/gun/G = src.equipped()
 	if(!istype(G) || !ismob(target))
 		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")
 	else
 		src.visible_message("<span style='font-weight:bold;color:#f00;font-size:120%;'>[src] points \the [G] at [target]!</span>")
 	if (!ON_COOLDOWN(src, "point", 0.5 SECONDS))
+		..()
 		make_point(target, pixel_x=pixel_x, pixel_y=pixel_y, color=src.bioHolder.mobAppearance.customization_first_color, pointer=src)
 
 
@@ -2018,9 +2016,10 @@
 				if (stun > 0)
 					src.do_disorient(clamp(stun*4, P.proj_data.stun*2, stun+80), weakened = stun*2, stunned = stun*2, disorient = 0, remove_stamina_below_zero = 0, target_type = DISORIENT_NONE)
 
-				src.reagents?.add_reagent("radium", damage/4) //fuckit
+				src.take_radiation_dose(damage / (40 * (1 + src.radiation_dose * 1.25)) SIEVERTS, TRUE)
+				src.reagents?.add_reagent("uranium", damage / 40) //this is mooostly for flavour
 				var/orig_val = GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS)
-				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -5)
+				APPLY_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile", -6)
 				if(GET_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS) != orig_val)
 					SPAWN(30 SECONDS)
 						REMOVE_ATOM_PROPERTY(src, PROP_MOB_STAMINA_REGEN_BONUS, "projectile")
