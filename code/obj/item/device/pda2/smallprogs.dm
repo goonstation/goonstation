@@ -1718,3 +1718,33 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			<br>"
 		for (var/value in shippingmarket.pressure_crystal_sales)
 			. += "[value] kiloblast for [shippingmarket.pressure_crystal_sales[value]] credits.<br>"
+
+/datum/computer/file/pda_program/rockbox
+	name = "Rockbox™ Cloud Status"
+	size = 2
+
+	return_text()
+		if(..())
+			return
+
+		. = src.return_text_header()
+		. += "<h4>Rockbox™ Ore Cloud Status</h4>"
+
+		if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
+			return "<span class='alert'>Wireless messaging must be enabled to talk to the cloud!</span>"
+
+		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
+			. += "<B>[S.name] at [get_area(S)]:</B><br>"
+			if(S.broken)
+				.= "No response recieved from Rockbox™ Ore Cloud Storage Container. Please contact technical support!<br><br>"
+				continue
+			if (!length(S.ores))
+				. += "No ores stored in this Rockbox™ Ore Cloud Storage Container.<br><br>"
+				continue
+			.+= "<ul>"
+			var/list/ores = S.ores
+			for(var/ore in ores)
+				var/datum/ore_cloud_data/OCD = ores[ore]
+				. += "<li>[ore] - Current: [OCD.amount] @ [OCD.for_sale ? "[OCD.price]CREDIT_SIGN" : "Not for sale"] (Sold: [OCD.amount_sold])</li>"
+			. += "</ul>"
+
