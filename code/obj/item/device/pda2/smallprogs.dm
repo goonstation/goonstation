@@ -1734,9 +1734,9 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			return "<span class='alert'>Wireless messaging must be enabled to talk to the cloud!</span>"
 
 		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
-			. += "<B>[S.name] at [get_area(S)]:</B><br>"
+			. += "<b>Location: [get_area(S)]</b><br>"
 			if(S.broken)
-				.= "No response recieved from Rockbox™ Ore Cloud Storage Container. Please contact technical support!<br><br>"
+				.= "No response from Rockbox™ Ore Cloud Storage Container!<br><br>"
 				continue
 			if (!length(S.ores))
 				. += "No ores stored in this Rockbox™ Ore Cloud Storage Container.<br><br>"
@@ -1745,6 +1745,5 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			var/list/ores = S.ores
 			for(var/ore in ores)
 				var/datum/ore_cloud_data/OCD = ores[ore]
-				. += "<li>[ore] - Current: [OCD.amount] @ [OCD.for_sale ? "[OCD.price]CREDIT_SIGN" : "Not for sale"] (Sold: [OCD.amount_sold])</li>"
-			. += "</ul>"
-
+				. += "<li>[ore]: [OCD.amount] @ [OCD.for_sale ? "[OCD.price][CREDIT_SIGN]" : "Not for sale"] ([OCD.amount_sold] sold)</li>"
+			. += "</ul><br>"

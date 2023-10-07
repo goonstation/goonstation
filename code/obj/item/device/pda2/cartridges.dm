@@ -381,7 +381,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 	miner
 		name = "\improper MineralMagic™ cartridge"
 		desc = "Always know where your Rockbox™ Ore is."
-		icon_state = "cart-min"
+		icon_state = "cart-mine"
 
 		New()
 			..()
