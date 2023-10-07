@@ -17,7 +17,6 @@
 	if (
 		isnull(src.values["game_admin_ckey"]) \
 		|| isnull(src.values["round_id"]) \
-		|| isnull(src.values["server_id"]) \
 		|| isnull(src.values["reason"]) \
 	)
 		return FALSE
