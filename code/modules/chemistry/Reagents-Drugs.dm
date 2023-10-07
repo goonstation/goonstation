@@ -646,7 +646,7 @@ datum
 		drug/solipsizine
 			name = "solipsizine"
 			id = "solipsizine"
-			description = "A highly potent hallucinogenic substance that causes intense delirium and acute inability to percieve others."
+			description = "A highly potent hallucinogenic substance that causes intense delirium and acute inability to perceive others."
 			reagent_state = LIQUID
 			depletion_rate = 0.2
 			addiction_prob = 8
@@ -1321,7 +1321,7 @@ datum
 			syndicate
 				name = "methamphetamine"
 				id = "synd_methamphetamine"
-				description = "Methamphetamine is a highly effective and dangerous stimulant drug. This batch seems unusally high-grade and pure."
+				description = "Methamphetamine is a highly effective and dangerous stimulant drug. This batch seems unusually high-grade and pure."
 				purge_brain = FALSE
 				fluid_r = 115 // This shit's pure and blue
 				fluid_g = 197

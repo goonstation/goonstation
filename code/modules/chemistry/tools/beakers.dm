@@ -171,7 +171,7 @@
 
 /obj/item/reagent_containers/food/drinks/reserve/brute
 	name = "high capacity styptic powder reserve tank"
-	desc = "A high capacitiy reserve tank filled with styptic powder."
+	desc = "A high capacity reserve tank filled with styptic powder."
 	icon_state = "largebottle-brute"
 	initial_reagents = "styptic_powder"
 

@@ -65,7 +65,7 @@ TYPEINFO(/obj/item/lens/makeshift)
 		if (prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a container
-		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))
+		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living) || istype(src.loc,/obj/item/reagent_containers/glass/jar) || istype(src.loc,/obj/cabinet))
 			return
 		// Nobody can ever see Chompski move
 		for (var/mob/M in viewers(src))

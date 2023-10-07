@@ -38,7 +38,7 @@
 	spawn_contents = list(/obj/item/handcuffs = 3,\
 	/obj/item/ammo/power_cell/med_power,\
 	/obj/item/device/flash,\
-	/obj/item/instrument/whistle)
+	/obj/item/instrument/whistle/security)
 
 /* -------------------- Guns & Ammo -------------------- */
 

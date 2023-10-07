@@ -37788,6 +37788,9 @@
 /obj/shrub{
 	dir = 6
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep{
+	secret_thing = 1
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "jEK" = (

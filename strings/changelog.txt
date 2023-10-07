@@ -1,5 +1,43 @@
 
+(t)fri oct 06 23
+(u)Lord_Earthfire
+(p)16302
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Firefighting Foam's recipe was changed. The new recipe is: (1) Chlorine + (1) Nickel + (1) Carbon -> (2) Carbon Tetrachloride + (1) Nickel
+(u)LeahTheTech
+(+)Pocket and emergency oxygen tanks no longer fit on TTVs (they had no sprites anyway)
+(u)Lord_Earthfire
+(p)16297
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Capsaicin has a cooldown between stuns now but high-dosage capsaicin stuns more often add oxygen deprivation.
+(u)BatElite
+(p)15970
+(e)🎨💊📦|C-Sprites, A-Medical, A-Game-Objects
+(+)Auto-injectors have been resprited!
+(u)Emily
+(*)Something mysterious has appeared in the ranch! What could it be?
+(t)thu oct 05 23
+(u)Azrun
+(p)16028
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Reduced ability for AI and AIeye to interact across levels.
+(u)Flaborized
+(p)16180
+(e)🆕|C-Feature
+(*)Chemical condensers can now be attached to up to four containers, splitting their output evenly through them.
+(t)wed oct 04 23
+(u)LeahTheTech
+(p)16260
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(*)Added a security whistle that all security officers and assistants start with. Blowing it will let you command nearby securitrons by pointing.
+(+)The security whistle now only commands the closest securitron and can only target people, this means missed points will no longer cancel the effect.
 (t)mon oct 02 23
+(u)nerkson and LeahTheTech
+(*)New halloween job: pickle. Has the ability to turn things into pickle. Also looks like a pickle. Pickle.
+(u)Kubius
+(p)16194
+(e)🪲🆕|C-Bug, C-Feature
+(+)Introduced an additional new civilian requisition centering around pod components and adjusted the seed requisition item rewards.
 (u)Smilg
 (p)15774
 (e)🆕📦|C-Feature, A-Game-Objects

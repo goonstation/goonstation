@@ -733,7 +733,7 @@ ABSTRACT_TYPE(/obj/item/clothing/mask/bandana)
 	handkerchief = /obj/item/cloth/handkerchief/colored/orange
 
 /obj/item/clothing/mask/bandana/nt
-	name = "nt bandana"
+	name = "\improper NT bandana"
 	item_state = "bandana_nt"
 	icon_state = "bandana_nt"
 	desc = "The rebel outlaw's choice."

@@ -1492,6 +1492,11 @@ or don't if it uses a custom topopen overlay
 			killswitch = 0
 			logTheThing(LOG_COMBAT, src, "has died to the killswitch robot self destruct protocol")
 			// doink
+			src.brain.take_damage(20,20)
+			if(src.fire_res_on_core)
+				src.TakeDamage( null, src.health)
+			else
+				src.TakeDamage( null, src.health, src.health)
 			src.eject_brain()
 
 
@@ -1666,6 +1671,10 @@ or don't if it uses a custom topopen overlay
 /mob/living/silicon/ai/proc/ai_view_crew_manifest()
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
+
+	if(src.z != Z_LEVEL_STATION)
+		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
 
 	usr.Browse("<head><title>Crew Manifest</title></head><body><tt><b>Crew Manifest:</b><hr>[get_manifest()]</tt></body>", "window=aimanifest")
 
@@ -1863,11 +1872,11 @@ or don't if it uses a custom topopen overlay
 	var/list/bodies = new/list()
 
 	for (var/mob/living/silicon/hivebot/H in available_ai_shells)
-		if (H.shell && !H.dependent && !isdead(H))
+		if (H.shell && !H.dependent && !isdead(H) && get_step(H, 0)?.z == get_step(src, 0)?.z)
 			bodies += H
 
 	for (var/mob/living/silicon/robot/R in available_ai_shells)
-		if (R.shell && !R.dependent && !isdead(R))
+		if (R.shell && !R.dependent && !isdead(R) && get_step(R, 0)?.z == get_step(src, 0)?.z)
 			bodies += R
 
 	var/mob/living/silicon/target_shell = tgui_input_list(usr, "Which body to control?", "Deploy", sortList(bodies, /proc/cmp_text_asc))
@@ -2008,6 +2017,10 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
+	if(src.z != Z_LEVEL_STATION)
+		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
+
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 		for_by_tcl(P, /obj/machinery/power/apc)
 			if (P.z == Z_LEVEL_STATION && !(P.status & BROKEN) && !P.aidisabled && P.is_not_default())
@@ -2032,9 +2045,13 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
+	if(src.z != Z_LEVEL_STATION)
+		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
+
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
 		for_by_tcl(D, /obj/machinery/door/airlock)
-			if (D.z == 1 && D.canAIControl() && !D.isWireCut(AIRLOCK_WIRE_ELECTRIFY) && D.secondsElectrified != 0 )
+			if (D.z == Z_LEVEL_STATION && D.canAIControl() && !D.isWireCut(AIRLOCK_WIRE_ELECTRIFY) && D.secondsElectrified != 0 )
 				D.secondsElectrified = 0
 				count++
 
@@ -2052,6 +2069,10 @@ or don't if it uses a custom topopen overlay
 
 	var/mob/message_mob = src.get_message_mob()
 	if (!src || !message_mob.client || isdead(src))
+		return
+
+	if(src.z != Z_LEVEL_STATION)
+		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
 	if(tgui_alert(message_mob, "Are you sure?", "Confirmation", list("Yes", "No")) == "Yes")
@@ -2531,6 +2552,10 @@ proc/get_mobs_trackable_by_AI()
 	set category = "AI Commands"
 
 	if(src.stat || !can_announce)
+		return
+
+	if(src.z != Z_LEVEL_STATION)
+		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
 	if(last_announcement + announcement_cooldown > world.time)
