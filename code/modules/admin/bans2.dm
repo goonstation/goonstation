@@ -1,7 +1,6 @@
 /var/global/datum/bans/bans = new
 
 /datum/bans
-
 	/// Convert duration to something useful for Humans
 	proc/getDurationHuman(seconds)
 		var/exp = seconds / 60
@@ -16,6 +15,24 @@
 				. = "[exp] Hour[exp > 1 ? "s" : ""]"
 			else
 				. = "[exp] Minute[exp > 1 ? "s" : ""]"
+
+	/// List all bans
+	proc/getAll(filters, sort_by = "id", descending = TRUE, per_page = 30)
+		var/datum/apiRoute/bans/get/getBans = new
+		getBans.queryParams = list(
+			"filters" = filters,
+			"sort_by" = sort_by,
+			"descending" = descending,
+			"per_page" = per_page
+		)
+		var/datum/apiModel/Paginated/BanResourceList/bans
+		try
+			bans = apiHandler.queryAPI(getBans)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			throw EXCEPTION(error.message)
+
+		return bans
 
 	/// Add a ban
 	proc/add(admin_ckey, server_id, ckey, comp_id, ip, reason, duration = FALSE, requires_appeal = FALSE)
@@ -32,13 +49,10 @@
 			requires_appeal
 		)
 		try
-			var/datum/apiModel/Tracked/BanResource/ban = apiHandler.queryAPI(addBan)
-			// TODO: anything?
+			apiHandler.queryAPI(addBan)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
-			out(world, error.message)
-			// TODO: log + message admins about failure
-			return
+			throw EXCEPTION(error.message)
 
 		// We do this instead of requiring an admin client argument because bans can be added multiple ways, e.g. from discord
 		var/client/adminClient = find_client(admin_ckey)
@@ -49,17 +63,16 @@
 		var/serverLogSnippet = server_id ? "from [server_id]" : "from all servers"
 		var/replacementText = "[ckey] (IP: [ip], CompID: [comp_id])"
 
-		// Handle target messaging, admin notices, and logging
-
+		// Tell admins
 		var/logMsg = "has banned [targetClient ? "[constructTarget(targetClient,"admin")]" : replacementText] [serverLogSnippet]. Duration: [durationHuman] Reason: [reason]."
 		logTheThing(LOG_ADMIN, adminClient ? adminClient : adminKey, logMsg)
 		logTheThing(LOG_DIARY, adminClient ? adminClient : adminKey, logMsg, "admin")
-
 		var/adminMsg = "<span class='notice'>"
 		adminMsg += adminClient ? key_name(adminClient) : adminKey
 		adminMsg += " has banned [targetClient ? targetClient : replacementText] [serverLogSnippet].<br>Reason: [reason]<br>Duration: [durationHuman].</span>"
 		message_admins(adminMsg)
 
+		// Tell discord
 		var/ircmsg[] = new()
 		ircmsg["key"] = adminKey
 		ircmsg["key2"] = "[ckey] (IP: [ip], CompID: [comp_id])"
@@ -96,25 +109,34 @@
 		var/datum/apiModel/Tracked/BanResource/ban
 		try
 			ban = apiHandler.queryAPI(checkBan)
-		catch (var/exception/e)
-			var/datum/apiModel/Error/error = e.name
-			out(world, error.message)
-			// TODO: log + message admins about failure
+		catch
 			return FALSE
 
-		// Check for an evasion attempt
-		var/originalBanDetails = ban.original_ban_detail
-		if ((!isnull(originalBanDetails["ckey"]) && ckey != originalBanDetails["ckey"]) || \
-				(!isnull(originalBanDetails["comp_id"]) && comp_id != originalBanDetails["comp_id"]) || \
-				(!isnull(originalBanDetails["ip"]) && ip != originalBanDetails["ip"]))
-			// TODO: add ban details to record an "evasion"
+		// If we haven't recorded any of the player's connection details, this counts as an evasion
+		var/recordedCkey = FALSE
+		var/recordedCompId = FALSE
+		var/recordedIp = FALSE
+		for (var/datum/apiModel/Tracked/BanDetail/banDetail in ban.details)
+			if (banDetail.ckey == ckey) recordedCkey = TRUE
+			if (banDetail.comp_id == comp_id) recordedCompId = TRUE
+			if (banDetail.ip == ip) recordedIp = TRUE
+
+		// var/evasionAttempt = FALSE
+		if (!recordedCkey || !recordedCompId || !recordedIp)
+			// evasionAttempt = TRUE
+			SPAWN(0)
+				try
+					// Add these details to the existing ban
+					src.addDetails(ban.id, ckey, comp_id, ip)
+				catch
+					// pass
 
 		// Build a message to show to the player
 		var/message = "[ban.reason]<br>"
 		message += "Banned By: [ban.game_admin["ckey"]]<br>"
 		message += "This ban applies to [ban.server_id ? "this server only" : "all servers"].<br>"
 		if (ban.expires_at)
-			// TODO: get human readable duration remaining
+			// TODO: get human readable duration remaining (date handling in byond urghh)
 			message += "(This ban will be automatically removed at [ban.expires_at])"
 		else
 			if (ban.requires_appeal)
@@ -125,17 +147,120 @@
 		return message
 
 	/// Update an existing ban
-	proc/update()
-		//
+	proc/update(banId, admin_ckey, server_id, ckey, comp_id, ip, reason, duration, requires_appeal)
+		var/datum/apiRoute/bans/update/updateBan = new
+		updateBan.routeParams = list("[banId]")
+		updateBan.buildBody(
+			admin_ckey,
+			roundId,
+			server_id,
+			ckey,
+			comp_id,
+			ip,
+			reason,
+			duration,
+			requires_appeal
+		)
+		var/datum/apiModel/Tracked/BanResource/ban
+		try
+			ban = apiHandler.queryAPI(updateBan)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			throw EXCEPTION(error.message)
+
+		var/originalBanDetail = ban.original_ban_detail
+		var/client/adminClient = find_client(admin_ckey)
+		var/target = "[originalBanDetail["ckey"]] (IP: [originalBanDetail["ip"]], CompID: [originalBanDetail["comp_id"]])"
+		var/durationHuman = duration ? src.getDurationHuman(duration) : "permanent"
+		var/serverLogSnippet = ban.server_id ? "Server: [ban.server_id]" : "Server: all"
+
+		// Tell admins
+		var/logMsg = "edited [constructTarget(target,"admin")]'s ban. Reason: [ban.reason] Duration: [durationHuman] [serverLogSnippet]"
+		logTheThing(LOG_ADMIN, adminClient ? adminClient : admin_ckey, logMsg)
+		logTheThing(LOG_DIARY, adminClient ? adminClient : admin_ckey, logMsg, "admin")
+		message_admins("<span class='internal'>[key_name(adminClient ? adminClient : admin_ckey)] edited [target]'s ban. Reason: [ban.reason] Duration: [durationHuman] [serverLogSnippet]</span>")
+
+		// Tell Discord
+		var/ircmsg[] = new()
+		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
+		ircmsg["name"] = (adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A")
+		ircmsg["msg"] = "edited [target]'s ban. Reason: [ban.reason]. Duration: [durationHuman]. [serverLogSnippet]."
+		ircbot.export_async("admin", ircmsg)
 
 	/// Remove a ban
-	proc/remove()
-		//
+	proc/remove(banId, admin_ckey, ckey, comp_id, ip)
+		var/datum/apiRoute/bans/delete/deleteBan = new
+		deleteBan.routeParams = list("[banId]")
+		try
+			apiHandler.queryAPI(deleteBan)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			throw EXCEPTION(error.message)
+
+		var/client/adminClient = find_client(admin_ckey)
+		var/target = "[ckey] (IP: [ip], CompID: [comp_id])"
+
+		// Tell admins
+		logTheThing(LOG_ADMIN, adminClient ? adminClient : admin_ckey, "unbanned [target]")
+		logTheThing(LOG_DIARY, adminClient ? adminClient : admin_ckey, "unbanned [target]", "admin")
+		message_admins("<span class='internal'>[key_name(adminClient ? adminClient : admin_ckey)] unbanned [target]</span>")
+
+		// Tell discord
+		var/ircmsg[] = new()
+		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
+		ircmsg["name"] = adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A"
+		ircmsg["msg"] = "deleted [ckey]'s ban."
+		ircbot.export_async("admin", ircmsg)
 
 	/// Add details to an existing ban
-	proc/addDetails()
-		//
+	proc/addDetails(banId, admin_ckey, ckey, comp_id, ip)
+		var/datum/apiRoute/bans/add_detail/addDetail = new
+		addDetail.routeParams = list("[banId]")
+		addDetail.buildBody(ckey, comp_id, ip)
+		var/datum/apiModel/Tracked/BanDetail/banDetail
+		try
+			banDetail = apiHandler.queryAPI(addDetail)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			throw EXCEPTION(error.message)
+
+		var/client/adminClient = find_client(admin_ckey)
+		var/target = "[banDetail.ckey] (IP: [banDetail.ip], CompID: [banDetail.comp_id])"
+
+		// Tell admins
+		var/msg = "added ban details to ban ID [banId] [target]"
+		logTheThing(LOG_ADMIN, adminClient ? adminClient : admin_ckey, msg)
+		logTheThing(LOG_DIARY, adminClient ? adminClient : admin_ckey, msg, "admin")
+		message_admins("<span class='internal'>[key_name(adminClient ? adminClient : admin_ckey)] [msg]</span>")
+
+		// Tell discord
+		var/ircmsg[] = new()
+		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
+		ircmsg["name"] = adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A"
+		ircmsg["msg"] = msg
+		ircbot.export_async("admin", ircmsg)
 
 	/// Remove details from an existing ban
-	proc/removeDetails()
-		//
+	proc/removeDetails(banDetailId, admin_ckey)
+		var/datum/apiRoute/bans/remove_detail/removeDetail = new
+		removeDetail.routeParams = list("[banDetailId]")
+		try
+			apiHandler.queryAPI(removeDetail)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			throw EXCEPTION(error.message)
+
+		var/client/adminClient = find_client(admin_ckey)
+
+		// Tell admins
+		var/msg = "removed ban detail ID [banDetailId]"
+		logTheThing(LOG_ADMIN, adminClient ? adminClient : admin_ckey, msg)
+		logTheThing(LOG_DIARY, adminClient ? adminClient : admin_ckey, msg, "admin")
+		message_admins("<span class='internal'>[key_name(adminClient ? adminClient : admin_ckey)] [msg]</span>")
+
+		// Tell discord
+		var/ircmsg[] = new()
+		ircmsg["key"] = adminClient ? adminClient.key : admin_ckey
+		ircmsg["name"] = adminClient && adminClient.mob && adminClient.mob.name ? stripTextMacros(adminClient.mob.name) : "N/A"
+		ircmsg["msg"] = msg
+		ircbot.export_async("admin", ircmsg)
