@@ -2564,6 +2564,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 /obj/machinery/vending/fortune
 #ifdef HALLOWEEN
 	name = "Necromancer Zoldorf"
+	desc = "A horrid old fortune-telling machine."
 	icon_state = "hfortuneteller"
 	icon_vend = "hfortuneteller-vend"
 	icon_fallen = "hfortuneteller-fallen"
