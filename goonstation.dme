@@ -1173,7 +1173,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\requests\bans\AddBansBody.dm"
 #include "code\modules\goonhub\api\requests\bans\AddBansDetailBody.dm"
 #include "code\modules\goonhub\api\requests\bans\AddJobBansBody.dm"
-#include "code\modules\goonhub\api\requests\bans\CheckBansBody.dm"
 #include "code\modules\goonhub\api\requests\bans\UpdateJobBansBody.dm"
 #include "code\modules\goonhub\api\requests\gameadmins\AddGameAdminsBody.dm"
 #include "code\modules\goonhub\api\requests\gameadmins\UpdateGameAdminsBody.dm"
