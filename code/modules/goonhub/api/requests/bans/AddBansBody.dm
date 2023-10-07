@@ -8,7 +8,8 @@
 		"comp_id", // string
 		"ip", // string
 		"reason", // string
-		"duration" // integer
+		"duration", // integer
+		"requires_appeal" // boolean
 	)
 
 /datum/apiBody/bans/add/VerifyIntegrity()

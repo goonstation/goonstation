@@ -590,6 +590,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\admin\antagifiers.dm"
 #include "code\modules\admin\atom_verbs.dm"
 #include "code\modules\admin\bans.dm"
+#include "code\modules\admin\bans2.dm"
 #include "code\modules\admin\banshark.dm"
 #include "code\modules\admin\bioeffectmanager.dm"
 #include "code\modules\admin\bomb_monitor.dm"

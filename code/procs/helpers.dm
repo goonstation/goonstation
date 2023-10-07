@@ -2595,3 +2595,9 @@ proc/total_density(turf/T)
 	. = T.density
 	for (var/atom/A in T)
 		. += A.density
+
+/// Find a client based on ckey
+/proc/find_client(ckey)
+	for (var/client/C in clients)
+		if (C == ckey)
+			return C

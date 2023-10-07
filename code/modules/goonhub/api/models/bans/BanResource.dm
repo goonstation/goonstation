@@ -11,6 +11,7 @@
 	var/datum/apiModel/Tracked/GameRound/game_round		= null // /datum/apiModel/GameRound - not required
 	var/original_ban_detail								= null // { id: integer, ban_id: integer, ckey: string, comp_id: string, ip: string }
 	var/list/datum/apiModel/Tracked/BanDetail/details	= null // [/datum/apiModel/BanDetail] - not required
+	var/requires_appeal								= null // boolean
 
 /datum/apiModel/Tracked/BanResource/SetupFromResponse(response)
 	src.id = response["id"]
@@ -29,6 +30,7 @@
 		src.game_round.SetupFromResponse(response["game_round"])
 
 	src.original_ban_detail = response["original_ban_detail"]
+	src.requires_appeal = response["requires_appeal"]
 
 	src.details = list()
 	for (var/item in response["details"])
@@ -65,4 +67,5 @@
 	.["details"] = list()
 	for (var/datum/apiModel/Tracked/BanDetail/detail in src.details)
 		.["details"] += detail.ToString()
+	.["requires_appeal"] = src.requires_appeal
 	return json_encode(.)
