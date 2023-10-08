@@ -117,9 +117,9 @@
 		var/recordedCompId = FALSE
 		var/recordedIp = FALSE
 		for (var/datum/apiModel/Tracked/BanDetail/banDetail in ban.details)
-			if (banDetail.ckey == ckey) recordedCkey = TRUE
-			if (banDetail.comp_id == comp_id) recordedCompId = TRUE
-			if (banDetail.ip == ip) recordedIp = TRUE
+			if (!ckey || banDetail.ckey == ckey) recordedCkey = TRUE
+			if (!comp_id || banDetail.comp_id == comp_id) recordedCompId = TRUE
+			if (!ip || banDetail.ip == ip) recordedIp = TRUE
 
 		// var/evasionAttempt = FALSE
 		if (!recordedCkey || !recordedCompId || !recordedIp)
@@ -127,9 +127,11 @@
 			SPAWN(0)
 				try
 					// Add these details to the existing ban
-					src.addDetails(ban.id, ckey, comp_id, ip)
-				catch
-					// pass
+					src.addDetails(ban.id, TRUE, "bot", ckey, comp_id, ip)
+				catch (var/exception/e)
+					var/logMsg = "Failed to add ban evasion details to ban [ban.id] because: [e.name]"
+					logTheThing(LOG_ADMIN, "bot", logMsg)
+					logTheThing(LOG_DIARY, "bot", logMsg, "admin")
 
 		// Build a message to show to the player
 		var/message = "[ban.reason]<br>"
@@ -213,7 +215,7 @@
 		ircbot.export_async("admin", ircmsg)
 
 	/// Add details to an existing ban
-	proc/addDetails(banId, admin_ckey, ckey, comp_id, ip)
+	proc/addDetails(banId, evasion = FALSE, admin_ckey, ckey, comp_id, ip)
 		var/datum/apiRoute/bans/add_detail/addDetail = new
 		addDetail.routeParams = list("[banId]")
 		addDetail.buildBody(ckey, comp_id, ip)
@@ -225,13 +227,14 @@
 			throw EXCEPTION(error.message)
 
 		var/client/adminClient = find_client(admin_ckey)
+		var/messageAdminsAdmin = admin_ckey == "bot" ? admin_ckey : key_name(adminClient ? adminClient : admin_ckey)
 		var/target = "[banDetail.ckey] (IP: [banDetail.ip], CompID: [banDetail.comp_id])"
 
 		// Tell admins
-		var/msg = "added ban details to ban ID [banId] [target]"
+		var/msg = "added ban [evasion ? "evasion" : ""] details to ban ID [banId] [target]"
 		logTheThing(LOG_ADMIN, adminClient ? adminClient : admin_ckey, msg)
 		logTheThing(LOG_DIARY, adminClient ? adminClient : admin_ckey, msg, "admin")
-		message_admins("<span class='internal'>[key_name(adminClient ? adminClient : admin_ckey)] [msg]</span>")
+		message_admins("<span class='internal'>[messageAdminsAdmin] [msg]</span>")
 
 		// Tell discord
 		var/ircmsg[] = new()
