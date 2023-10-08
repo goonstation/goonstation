@@ -507,7 +507,7 @@
 		if (room_name)
 			. += "<span class='notice'>This blueprint is named '[room_name]'. </span>"
 
-// whitelists/blacklists applied during both saving and loading, so they're freely alterable
+// whitelists/blacklists applied during both saving and loading, so it's functionally retroactive
 #define WHITELIST_OBJECTS list( \
 	/obj/stool, \
 	/obj/grille, \
@@ -567,7 +567,7 @@
 	var/room_name = ""
 	var/list/roominfo = list()
 
-proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = 1)
+proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	if (!user || !user.client) return
 	var/input = strip_html(tgui_input_text(user, "Blueprint Name", "Set a name for your new blueprint.", null, 54)) // 54 char limit
 	if (!input) return
@@ -631,7 +631,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = 1)
 
 	boutput(user, "<span class='notice'>Saved blueprint as '[input]'. </span>")
 
-proc/load_abcu_blueprint(mob/user)
+proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE)
 	if (!user || !user.client) return
 	var/list/bplist = flist("data/blueprints/[user.client.ckey]/")
 	if (!length(bplist))
@@ -672,6 +672,8 @@ proc/load_abcu_blueprint(mob/user)
 			save.cd = "/tiles/[A]/objects/[B]"
 			var/datum/objectinfo/O = new/datum/objectinfo()
 			O.objecttype = save["type"]
+			/* if (use_whitelist && (!istypes(O.objecttype, WHITELIST_OBJECTS) || istypes(O.objecttype, BLACKLIST_OBJECTS)))
+				continue */ // UFCK
 			O.direction = save["dir"]
 			O.layer = save["layer"]
 			O.px = save["pixelx"]
