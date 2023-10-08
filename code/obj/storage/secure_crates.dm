@@ -192,14 +192,13 @@
 //puzzle for morrigan
 /obj/storage/crate/morrigancargo
 	name = "Morrigan Cargo Crate"
-	//locked = TRUE
+	locked = TRUE
 	var/contraband_items = list()
 	var/random_shit_to_spawn = list()
 	var/max_contra_amount = 2
 	var/contra_contained = 0 //will be useful for contraband check
 
 	make_my_stuff()
-		.=..()
 		if (.)
 			name = "Order #[rand(100,10000)]"
 			var/amount_to_spawn = rand(2, 5)

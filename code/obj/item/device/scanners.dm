@@ -1188,3 +1188,17 @@ TYPEINFO(/obj/item/device/appraisal)
 	m_amt = 150
 	icon_state = "ticketwriter-alt"
 	item_state = "electronic"
+	var/scanned_contents = null
+
+	attack(mob/M, mob/user)
+		return
+
+	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
+
+		if (istype(A, /obj/storage/crate/morrigancargo))
+			user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
+			"<span class='notice'>You scan [A] with [src]!</span>")
+
+			src.scanned_contents = scan_contents(A, visible = TRUE)
+
+			boutput(user, "[scanned_contents]")
