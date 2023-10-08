@@ -342,8 +342,6 @@ TYPEINFO(/obj/machinery/phone)
 		stripe_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		src.color = parent_phone.color
 		src.UpdateOverlays(stripe_image, "stripe")
-		if(picker_upper)
-			src.get_holder() = picker_upper
 		processing_items.Add(src)
 
 	proc/get_holder()
@@ -370,8 +368,6 @@ TYPEINFO(/obj/machinery/phone)
 			src.parent.hang_up()
 			processing_items.Remove(src)
 			qdel(src)
-		if(GET_DIST(src,src.get_holder()) >= 1)
-			src.get_holder() = null
 
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
