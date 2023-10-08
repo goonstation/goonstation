@@ -125,8 +125,16 @@
 		else
 			boutput(sharktarget2, "<span class='alert'><BIG><B>You can escape the banshark, but not the ban!</B></BIG></span>")
 			logTheThing(LOG_ADMIN, caller:client, "has evaded the shark by ceasing to exist!  Banning them anyway.")
-			message_admins("<span class='internal'>data["ckey"] has evaded the shark by ceasing to exist!  Banning them anyway.</span>")
-		addBan(data)
+			message_admins("<span class='internal'>[data["ckey"]] has evaded the shark by ceasing to exist!  Banning them anyway.</span>")
+		bansHandler.add(
+			data["akey"],
+			data["server"],
+			data["ckey"],
+			data["compID"],
+			data["ip"],
+			data["reason"],
+			data["mins"] * 60 * 10
+		)
 		playsound(src.loc, pick('sound/voice/burp_alien.ogg'), 50, 0)
 		qdel(src)
 

@@ -897,14 +897,15 @@ var/list/special_pa_observing_verbs = list(
 		M.client.warned = 1
 		message_admins("<span class='internal'>[src.ckey] warned [M.ckey].</span>")
 	else
-		var/addData[] = new()
-		addData["ckey"] = M.ckey
-		addData["compID"] = M.computer_id
-		addData["ip"] = M.client.address
-		addData["reason"] = "Autobanning due to previous warn. This is what we in the biz like to call a \"second warning\"."
-		addData["akey"] = src.ckey
-		addData["mins"] = 10
-		addBan(addData)
+		bansHandler.add(
+			src.ckey,
+			null,
+			M.ckey,
+			M.computer_id,
+			M.client.address,
+			"Autobanning due to previous warn. This is what we in the biz like to call a \"second warning\".",
+			10 MINUTES
+		)
 
 /client/proc/clear_area_overlays()
 	set name = "Clear Area Overlays"

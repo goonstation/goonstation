@@ -130,12 +130,15 @@
 			return
 		data["mins"] = length
 		data["akey"] = ckey(user) + " (Discord)"
-		addBan(data) // logging, messaging, and noting are all taken care of by this proc
-
-		var/ircmsg[] = new()
-		ircmsg["name"] = user
-		ircmsg["msg"] = "Banned [ckey] from all servers for [length] minutes, reason: [reason]"
-		ircbot.export("admin", ircmsg)
+		bansHandler.add(
+			ckey(user),
+			null,
+			data["ckey"],
+			data["compID"],
+			data["ip"],
+			data["reason"],
+			data["mins"] * 60 * 10
+		)
 
 /datum/spacebee_extension_command/serverban
 	name = "serverban"
@@ -204,12 +207,15 @@
 			return
 		data["mins"] = length
 		data["akey"] = ckey(user) + " (Discord)"
-		addBan(data) // logging, messaging, and noting are all taken care of by this proc
-
-		var/ircmsg[] = new()
-		ircmsg["name"] = user
-		ircmsg["msg"] = "Banned [ckey] from [server] for [length] minutes, reason: [reason]"
-		ircbot.export("admin", ircmsg)
+		bansHandler.add(
+			ckey(user),
+			data["server"],
+			data["ckey"],
+			data["compID"],
+			data["ip"],
+			data["reason"],
+			data["mins"] * 60 * 10
+		)
 
 /datum/spacebee_extension_command/boot
 	name = "boot"

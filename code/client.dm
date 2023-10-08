@@ -299,9 +299,9 @@
 			return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Checking bans")
-	var/isbanned = checkBan(src.ckey, src.computer_id, src.address, record = 1)
+	var/list/checkBan = bansHandler.check(src.ckey, src.computer_id, src.address)
 
-	if (isbanned)
+	if (checkBan)
 		Z_LOG_DEBUG("Client/New", "[src.ckey] - Banned!!")
 		logTheThing(LOG_DIARY, null, "Failed Login: [constructTarget(src,"diary")] - Banned", "access")
 		if (announce_banlogin) message_admins("<span class='internal'>Failed Login: <a href='?src=%admin_ref%;action=notes;target=[src.ckey]'>[src]</a> - Banned (IP: [src.address], ID: [src.computer_id])</span>")
@@ -319,7 +319,7 @@
 								</head>
 								<body>
 									<h1>You have been banned.</h1>
-									<span class='banreason'>Reason: [isbanned].</span><br>
+									<span class='banreason'>Reason: [checkBan["message"]].</span><br>
 									If you believe you were unjustly banned, head to <a target="_blank" href=\"https://forum.ss13.co\">the forums</a> and post an appeal.<br>
 									<b>If you believe this ban was not meant for you then please appeal regardless of what the ban message or length says!</b>
 								</body>
@@ -860,18 +860,19 @@ var/global/curr_day = null
 		var/cid = computer_id
 		SPAWN(0)
 			if (geoip_check(addr))
-				var/addData[] = new()
-				addData["ckey"] = ck
-				addData["compID"] = cid
-				addData["ip"] = addr
-				addData["reason"] = "Ban evader: computer ID collision." // haha get fucked
-				addData["akey"] = "Marquesas"
-				addData["mins"] = 0
 				var/slt = rand(600, 3000)
 				logTheThing(LOG_ADMIN, null, "Evasion geoip autoban triggered on [key], will execute in [slt / 10] seconds.")
 				message_admins("Autobanning evader [key] in [slt / 10] seconds.")
 				sleep(slt)
-				addBan(addData)
+				bansHandler.add(
+					"bot",
+					null,
+					ck,
+					cid,
+					addr,
+					"Ban evader: computer ID collision.",
+					FALSE
+				)
 
 /proc/geoip_check(var/addr)
 	set background = 1

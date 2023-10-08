@@ -36,6 +36,7 @@
 
 	/// Add a ban
 	proc/add(admin_ckey, server_id, ckey, comp_id, ip, reason, duration = FALSE, requires_appeal = FALSE)
+		duration = duration ? duration / 10 : duration // duration given in deciseconds, api expects seconds
 		var/datum/apiRoute/bans/add/addBan = new
 		addBan.buildBody(
 			admin_ckey,
@@ -146,10 +147,14 @@
 			else
 				message += "This is a permanent ban, you can't appeal this ban until 30 days have passed."
 
-		return message
+		return list(
+			"ban" = ban,
+			"message" = message
+		)
 
 	/// Update an existing ban
 	proc/update(banId, admin_ckey, server_id, ckey, comp_id, ip, reason, duration, requires_appeal)
+		duration = duration ? duration / 10 : duration // duration given in deciseconds, api expects seconds
 		var/datum/apiRoute/bans/update/updateBan = new
 		updateBan.routeParams = list("[banId]")
 		updateBan.buildBody(

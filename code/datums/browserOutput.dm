@@ -196,14 +196,13 @@ var/global
 				var/list/row = src.connectionHistory[i]
 				if (!row || length(row) < 3 || (!row["ckey"] && !row["compid"] && !row["ip"])) //Passed malformed history object
 					return
-				if (checkBan(row["ckey"], row["compid"], row["ip"]))
+				var/list/checkBan = bansHandler.check(row["ckey"], row["compid"], row["ip"])
+				if (checkBan)
 					found = row
 					break
 
 			//Uh oh this fucker has a history of playing on a banned account!!
-			if (length(found) && found["ckey"] != src.owner.ckey)
-				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
-				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+			if (length(found) && found["ckey"] != src.owner.ckey)				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				logTheThing(LOG_DEBUG, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				logTheThing(LOG_DIARY, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])", "debug")
 
@@ -212,17 +211,18 @@ var/global
 					var/ircmsg[] = new()
 					ircmsg["key"] = owner.key
 					ircmsg["name"] = stripTextMacros(owner.mob.name)
-					ircmsg["msg"] = "has a cookie from banned account [found["ckey"]](IP: [found["ip"]], CompID: [found["compID"]])"
+					ircmsg["msg"] = "has a cookie from banned account [found["ckey"]](IP: [found["ip"]], CompID: [found["compid"]])"
 					ircbot.export_async("admin", ircmsg)
 
-				var/banData[] = new()
-				banData["ckey"] = src.owner.ckey
-				banData["compID"] = (found["compID"] == "N/A" ? "N/A" : src.owner.computer_id) // don't add CID if original ban doesn't have one
-				banData["akey"] = "Auto Banner"
-				banData["ip"] = (found["ip"] == "N/A" ? "N/A" : src.owner.address) // don't add IP if original ban doesn't have one
-				banData["reason"] = "\[Evasion Attempt\] Previous ckey: [found["ckey"]]"
-				banData["mins"] = 0
-				addBan(banData)
+				//Add evasion ban details
+				bansHandler.addDetails(
+					checkBan["ban"].id,
+					TRUE,
+					"bot",
+					src.owner.ckey,
+					isnull(found["compid"]) ? null : src.owner.computer_id,
+					isnull(found["ip"]) ? null : src.owner.address
+				)
 	src.cookieSent = 1
 
 /datum/chatOutput/proc/getContextFlags()
