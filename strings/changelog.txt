@@ -1,5 +1,9 @@
 
 (t)sun oct 08 23
+(u)Mr. Moriarty
+(p)16185
+(e)🪲💅📄|C-Bug, C-QoL, A-UI
+(*)Added an antagonists tab to the end of round crew credits.
 (u)Kubius
 (p)16191
 (e)🆕🎨|C-Feature, C-Sprites
