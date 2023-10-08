@@ -10,7 +10,7 @@
 	var/created_at	= null // date-time
 	var/updated_at	= null // date-time
 
-/datum/apiModel/VpnCheckResource/SetupFromResponse()
+/datum/apiModel/VpnCheckResource/SetupFromResponse(response)
 	. = ..()
 	src.id = response["id"]
 	src.round_id = response["round_id"]

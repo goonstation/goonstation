@@ -4,7 +4,7 @@
 	var/datum/apiModel/VpnCheckResource/data	= null // Model
 	var/datum/apiModel/VpnCheckModel/meta/meta	= null // Model, defined below
 
-/datum/apiModel/VpnCheckModel/SetupFromResponse()
+/datum/apiModel/VpnCheckModel/SetupFromResponse(response)
 	. = ..()
 	src.data = new data
 	src.data = src.data.SetupFromResponse(response["data"])
@@ -30,7 +30,7 @@
 	var/cached		= FALSE // Bool
 	var/whitelisted	= FALSE // Bool
 
-/datum/apiModel/VpnCheckModel/meta/SetupFromResponse()
+/datum/apiModel/VpnCheckModel/meta/SetupFromResponse(response)
 	. = ..()
 	src.cached		= response["cached"]
 	src.whitelisted	= response["whitelisted"]
