@@ -121,37 +121,42 @@ export const TeleConsole = (_props, context) => {
         <Section width="80%" mx="auto">
           <Box>
             <Button
-              color={host_id ? "green" : "gray"}
+              color="green"
               icon="sign-out-alt"
               onClick={() => act("send")}
               content="Send"
+              disabled={!host_id}
             />
             <Button
-              color={host_id ? "green" : "gray"}
+              color="green"
               icon="sign-in-alt"
               onClick={() => act("receive")}
               content="Recieve"
+              disabled={!host_id}
             />
             <Button
-              color={host_id ? "green" : "gray"}
+              color="green"
               onClick={() => act("portal")}
+              disabled={!host_id}
             >
               <Icon name="ring" rotation={90} />Toggle Portal
             </Button>
           </Box>
           <Button
-            color={host_id ? "green" : "geay"}
+            color="green"
             icon="magnifying-glass"
             onClick={() => act("scan")}
             content="Scan"
+            disabled={!host_id}
           />
         </Section>
         <Section width="80%" mx="auto">
           {"Bookmarks: "}
           <Button
-            color={bookmarks.length < max_bookmarks ? "green" : "gray"}
+            color="green"
             icon="add"
             onClick={() => act("addbookmark")}
+            disabled={bookmarks.length >= max_bookmarks}
           />
           {bookmarks.map(mark => {
             return (
