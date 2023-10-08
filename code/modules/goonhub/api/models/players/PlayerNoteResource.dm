@@ -8,29 +8,14 @@
 	var/note			= null // string
 	var/legacy_data		= null // [string]
 
-/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/New(
-	id,
-	player_id,
-	ckey,
-	game_admin_id,
-	server_id,
-	round_id,
-	note,
-	legacy_data,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.player_id = player_id
-	src.ckey = ckey
-	src.game_admin_id = game_admin_id
-	src.server_id = server_id
-	src.round_id = round_id
-	src.note = note
-	src.legacy_data = legacy_data
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.ckey = response["ckey"]
+	src.game_admin_id = response["game_admin_id"]
+	src.server_id = response["server_id"]
+	src.round_id = response["round_id"]
+	src.note = response["note"]
+	src.legacy_data = response["legacy_data"]
 
 /datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/VerifyIntegrity()
 	if (

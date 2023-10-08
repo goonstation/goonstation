@@ -1,29 +1,20 @@
 
 /// PlayerMetadataResource
 /datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource
-	var/player	= null // { id: integer, ckey: string }
+	var/player	= null // { id: integer, ckey: string } - TODO
 	var/ckey	= null // string
 	var/data	= null // integer
 
-/datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource/New(
-	id,
-	player,
-	ckey,
-	data,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.player = player
-	src.ckey = ckey
-	src.data = data
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.player = response["player"]
+	src.ckey = response["ckey"]
+	src.data = response["data"]
 
 /datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource/VerifyIntegrity()
 	if (
 		isnull(src.id) \
+		|| isnull(src.player_id) \
 		|| isnull(src.player) \
 		|| isnull(src.ckey) \
 		|| isnull(src.data) \
@@ -35,6 +26,7 @@
 /datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource/ToString()
 	. = list()
 	.["id"] = src.id
+	.["player_id"] = src.player_id
 	.["player"] = src.player
 	.["ckey"] = src.ckey
 	.["data"] = src.data

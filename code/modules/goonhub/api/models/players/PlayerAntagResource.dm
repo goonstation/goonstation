@@ -7,25 +7,12 @@
 	var/late_join		= null // boolean
 	var/weight_exempt	= null // string
 
-/datum/apiModel/Tracked/PlayerRes/PlayerAntagResource/New(
-	id,
-	player_id,
-	round_id,
-	antag_role,
-	late_join,
-	weight_exempt,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/PlayerRes/PlayerAntagResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.player_id = player_id
-	src.round_id = round_id
-	src.antag_role = antag_role
-	src.late_join = late_join
-	src.weight_exempt = weight_exempt
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.round_id = response["round_id"]
+	src.antag_role = response["antag_role"]
+	src.late_join = response["late_join"]
+	src.weight_exempt = response["weight_exempt"]
 
 /datum/apiModel/Tracked/PlayerRes/PlayerAntagResource/VerifyIntegrity()
 	if (

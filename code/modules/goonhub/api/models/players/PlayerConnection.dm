@@ -9,29 +9,14 @@
 	var/country_iso			= null // string
 
 
-/datum/apiModel/Tracked/PlayerRes/PlayerConnection/New(
-	id,
-	player_id,
-	round_id,
-	ip,
-	comp_id,
-	legacy_data,
-	created_at,
-	updated_at,
-	country,
-	country_iso
-)
+/datum/apiModel/Tracked/PlayerRes/PlayerConnection/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.player_id = player_id
-	src.round_id = round_id
-	src.ip = ip
-	src.comp_id = comp_id
-	src.legacy_data = legacy_data
-	src.created_at = created_at
-	src.updated_at = updated_at
-	src.country = country
-	src.country_iso = country_iso
+	src.round_id = response["round_id"]
+	src.ip = response["ip"]
+	src.comp_id = response["comp_id"]
+	src.legacy_data = response["legacy_data"]
+	src.country = response["country"]
+	src.country_iso = response["country_iso"]
 
 /datum/apiModel/Tracked/PlayerRes/PlayerConnection/VerifyIntegrity()
 	if (
