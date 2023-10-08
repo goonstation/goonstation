@@ -1,5 +1,9 @@
 
 (t)sat oct 07 23
+(u)zjdtmkhzt
+(p)15911
+(e)🪲🆕🔎📦|C-Bug, C-Feature, C-Code-Quality, A-Game-Objects
+(+)Light fixtures can now be placed directly on windows.
 (u)glowbold
 (p)16159
 (e)🆕💡|C-Feature, A-Station-Systems
