@@ -33309,10 +33309,6 @@
 /area/station/maintenance/inner/central)
 "kRy" = (
 /obj/decal/cleanable/generic,
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/west)
 "kRB" = (
