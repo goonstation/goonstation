@@ -10,31 +10,16 @@
 	var/issuer_ckey	= null // string
 	var/amount		= null // string
 
-/datum/apiModel/Tracked/EventFineResource/New(
-	id,
-	round_id,
-	player_id,
-	target,
-	reason,
-	issuer,
-	issuer_job,
-	issuer_ckey,
-	amount,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/EventFineResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.round_id = round_id
-	src.player_id = player_id
-	src.target = target
-	src.reason = reason
-	src.issuer = issuer
-	src.issuer_job = issuer_job
-	src.issuer_ckey = issuer_ckey
-	src.amount = amount
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.round_id = response["round_id"]
+	src.player_id = response["player_id"]
+	src.target = response["target"]
+	src.reason = response["reason"]
+	src.issuer = response["issuer"]
+	src.issuer_job = response["issuer_job"]
+	src.issuer_ckey = response["issuer_ckey"]
+	src.amount = response["amount"]
 
 /datum/apiModel/Tracked/EventFineResource/VerifyIntegrity()
 	if (

@@ -9,29 +9,15 @@
 	var/ended_at	= null // date-time
 	var/game_admin	= null // { id: integer, ckey: string, name: string } - not required
 
-/datum/apiModel/Tracked/JobBanResource/New(
-	id,
-	server_id,
-	map,
-	game_type,
-	rp_mode,
-	crashed,
-	ended_at,
-	created_at,
-	updated_at,
-	game_admin
-)
+/datum/apiModel/Tracked/JobBanResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.server_id = server_id
-	src.map = map
-	src.game_type = game_type
-	src.rp_mode = rp_mode
-	src.crashed = crashed
-	src.ended_at = ended_at
-	src.created_at = created_at
-	src.updated_at = updated_at
-	src.game_admin = game_admin
+	src.server_id = response["server_id"]
+	src.map = response["map"]
+	src.game_type = response["game_type"]
+	src.rp_mode = response["rp_mode"]
+	src.crashed = response["crashed"]
+	src.ended_at = response["ended_at"]
+	src.game_admin = response["game_admin"]
 
 /datum/apiModel/Tracked/JobBanResource/VerifyIntegrity()
 	if (

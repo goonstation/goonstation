@@ -13,14 +13,12 @@
 	var/list/datum/apiModel/Tracked/BanDetail/details	= null // [/datum/apiModel/BanDetail] - not required
 
 /datum/apiModel/Tracked/BanResource/SetupFromResponse(response)
-	src.id = response["id"]
+	. = ..()
 	src.round_id = response["round_id"]
 	src.game_admin_id = response["game_admin_id"]
 	src.server_id = response["server_id"]
 	src.reason = response["reason"]
 	src.expires_at = response["expires_at"]
-	src.created_at = response["created_at"]
-	src.updated_at = response["updated_at"]
 	src.deleted_at = response["deleted_at"]
 	src.game_admin = response["game_admin"]
 

@@ -10,31 +10,16 @@
 	var/uploader_job	= null // string
 	var/uploader_ckey	= null // string
 
-/datum/apiModel/Tracked/EventAiLawResource/New(
-	id,
-	round_id,
-	player_id,
-	ai_name,
-	law_number,
-	law_text,
-	uploader_name,
-	uploader_job,
-	uploader_ckey,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/EventAiLawResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.round_id = round_id
-	src.player_id = player_id
-	src.ai_name = ai_name
-	src.law_number = law_number
-	src.law_text = law_text
-	src.uploader_name = uploader_name
-	src.uploader_job = uploader_job
-	src.uploader_ckey = uploader_ckey
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.round_id = response["round_id"]
+	src.player_id = response["player_id"]
+	src.ai_name = response["ai_name"]
+	src.law_number = response["law_number"]
+	src.law_text = response["law_text"]
+	src.uploader_name = response["uploader_name"]
+	src.uploader_job = response["uploader_job"]
+	src.uploader_ckey = response["uploader_ckey"]
 
 /datum/apiModel/Tracked/EventAiLawResource/VerifyIntegrity()
 	if (
