@@ -676,39 +676,40 @@ var/global/totally_random_jobs = FALSE
 		qdel(pda)
 
 	var/T = pick(trinket_safelist)
-	var/obj/item/trinket = null
+	var/list/obj/item/trinkets = list()
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
-		trinket = null //You better stay null, you hear me!
+		trinkets = list() //You better stay null, you hear me!
 	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
-		trinket = src.create_wig()
+		trinkets += src.create_wig()
 		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
 		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
 		src.update_colorful_parts()
 	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
-		trinket = new/obj/item/clothing/head/NTberet(src)
+		trinkets += new/obj/item/clothing/head/NTberet(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
 		var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
-		trinket = new picked(src)
+		trinkets += new picked(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("conspiracytheorist"))
-		trinket = new/obj/item/clothing/head/tinfoil_hat
+		trinkets += new/obj/item/clothing/head/tinfoil_hat
 	else if (src.traitHolder && src.traitHolder.hasTrait("beestfriend"))
 		if (prob(15))
-			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy(src)
+			trinkets += new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy(src)
 		else
-			trinket = new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
-	else if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
-		trinket = new/obj/item/device/light/zippo(src)
+			trinkets += new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
 		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
-		trinket = new random_lunchbox_path(src)
+		trinkets += new random_lunchbox_path(src)
 	else if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
-		trinket = new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
+		trinkets += new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
 	else
-		trinket = new T(src)
+		trinkets += new T(src)
 
-	if (trinket) // rewrote this a little bit so hopefully people will always get their trinket
+	if (src.traitHolder && src.traitHolder.hasTrait("smoker"))
+		trinkets += new/obj/item/device/light/zippo(src)
+
+	for (var/obj/item/trinket in trinkets)
 		src.trinket = get_weakref(trinket)
 		trinket.name = "[src.real_name][pick_string("trinkets.txt", "modifiers")] [trinket.name]"
 		trinket.quality = rand(5,80)
