@@ -139,6 +139,8 @@
 	#endif
 	global.load_morrigan()
 
+	global.load_morrigan_ship()
+
 	if (derelict_mode)
 		Z_LOG_DEBUG("World/Init", "Derelict mode stuff")
 		creepify_station()

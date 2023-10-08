@@ -84,6 +84,8 @@
 	static_colour = TRUE
 	parallax_value = 0.06
 
+/atom/movable/screen/parallax_render_source/asteroids_far/morrigan
+	scroll_speed = 150
 /atom/movable/screen/parallax_render_source/asteroids_far/kondaru
 	scroll_speed = 100
 	scroll_angle = 98

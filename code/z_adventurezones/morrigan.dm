@@ -7,6 +7,11 @@ proc/load_morrigan()
 		if (morrigan_region.turf_in_region(get_turf(conveyor)))
 			conveyor.initialize()
 
+var/datum/allocated_region/morrigan_ship = null
+proc/load_morrigan_ship()
+	var/datum/mapPrefab/allocated/prefab = get_singleton(/datum/mapPrefab/allocated/morrigan_ship)
+	morrigan_ship = prefab.load()
+
 // Morrigan Azone Content
 
 ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
@@ -160,6 +165,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 // ID Cards
 /obj/item/card/id/morrigan
+	desc = "An ID card allowing you into places, but for the syndicate... not much else to say."
+/obj/item/card/id/morrigan/adfm
+	icon_state = "id_morg"
+	access = list(access_maint_tunnels, access_morrigan_security)
 
 /obj/item/card/id/morrigan/balor_it
 	name = "Technical Operative Banks spare ID (do not use)"
@@ -172,73 +181,73 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	name = "Sarah Lin (R&D Specialist)"
 	icon_state = "id_spe"
 	desc = "I wonder where this leads you.."
-	access = list(access_morrigan_specialist)
+	access = list(access_maint_tunnels, access_morrigan_specialist)
 
 /obj/item/card/id/morrigan/inspector
 	name = "Old Inspector's Card"
 	icon_state = "data_old"
 	desc = "Looks like and old proto-type ID card!"
-	access = list(access_morrigan_teleporter)
+	access = list(access_maint_tunnels, access_morrigan_teleporter)
 
 /obj/item/card/id/morrigan/engineer
 	name = "Richard S. Batherl (Engineer)"
 	icon_state = "id_eng"
 	desc = "This should let you get into engineering..."
-	access = list(access_morrigan_engineering)
+	access = list(access_maint_tunnels, access_morrigan_engineering)
 
 /obj/item/card/id/morrigan/ce
 	name = "Misplaced CE Card"
 	icon_state = "id_comde"
 	desc = "Name and picture are scratched off. It's in pretty poor shape."
-	access = list(access_morrigan_CE, access_morrigan_engineering)
+	access = list(access_maint_tunnels, access_morrigan_CE, access_morrigan_engineering)
 
 /obj/item/card/id/morrigan/medical
 	name = "Harther Monoshoe (EMT)"
 	icon_state = "id_res"
 	desc = "A card for medbay!"
-	access = list(access_morrigan_medical)
+	access = list(access_maint_tunnels, access_morrigan_medical)
 
 /obj/item/card/id/morrigan/mdir
 	name = "Barara J. June (Medical Director)"
 	icon_state = "id_com"
 	desc = "An important ID card belonging to the medical director."
-	access = list(access_morrigan_medical, access_morrigan_mdir, access_morrigan_bridge)
+	access = list(access_maint_tunnels, access_morrigan_medical, access_morrigan_mdir, access_morrigan_bridge)
 
 /obj/item/card/id/morrigan/science
 	name = "Troy Wentworth (Scientist)"
 	icon_state = "id_res"
 	desc = "An ID card of a scientist."
-	access = list(access_morrigan_science)
+	access = list(access_maint_tunnels, access_morrigan_science)
 
 /obj/item/card/id/morrigan/rd
 	name = "Partially melted Research Director ID"
 	icon_state = "id_comac"
 	desc = "This card looks badly damaged, does it still work?"
-	access = list(access_morrigan_science, access_morrigan_RD)
+	access = list(access_maint_tunnels, access_morrigan_science, access_morrigan_RD)
 
 /obj/item/card/id/morrigan/janitor
 	name = "Yi Wong (Janitor)"
 	icon_state = "id_civ"
 	desc = "It's sparkling clean."
-	access = list(access_morrigan_janitor)
+	access = list(access_maint_tunnels, access_morrigan_janitor)
 
 /obj/item/card/id/morrigan/security
 	name = "Harrier S. Jentlil (Patrol Officer)"
 	icon_state = "id_sec"
 	desc = "Wow, a still intact security ID! This could come in handy..."
-	access = list(access_morrigan_security)
+	access = list(access_maint_tunnels, access_morrigan_security)
 
 /obj/item/card/id/morrigan/hos
 	name = "Alexander Nash (Elite Head of Security)"
 	icon_state = "id_synexe"
 	desc = "Jackpot!"
-	access = list(access_morrigan_bridge, access_morrigan_security, access_morrigan_HOS)
+	access = list(access_maint_tunnels, access_morrigan_bridge, access_morrigan_security, access_morrigan_HOS)
 
 /obj/item/card/id/morrigan/customs
 	name = "William B. Ron"
 	icon_state = "id_com"
 	desc = "A Head ID but it seems to be lacking something..."
-	access = list(access_morrigan_customs, access_morrigan_bridge)
+	access = list(access_maint_tunnels, access_morrigan_customs, access_morrigan_bridge)
 
 /obj/item/card/id/morrigan/captain
 	name = "Captain's Spare ID"
@@ -247,7 +256,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	New()
 		..()
-		access = morrigan_access() - list(access_morrigan_exit, access_morrigan_HOS)
+		access = morrigan_access() - list(access_morrigan_meetingroom, access_morrigan_HOS)
 
 /obj/item/card/id/morrigan/all_access
 	name = "Number 3 (Hafgan Executive)"
@@ -256,12 +265,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 	New()
 		..()
-		access = morrigan_access()
+		access = morrigan_access() - list(access_morrigan_HOS)
 
 /proc/morrigan_access()
 	return list(access_morrigan_bridge, access_morrigan_medical, access_morrigan_CE, access_morrigan_captain, access_morrigan_RD, access_morrigan_engineering,
 	access_morrigan_factory, access_morrigan_HOS, access_morrigan_meetingroom, access_morrigan_customs, access_morrigan_exit, access_morrigan_science,
-	access_morrigan_mdir, access_morrigan_security, access_morrigan_janitor, access_morrigan_specialist)
+	access_morrigan_mdir, access_morrigan_security, access_morrigan_janitor, access_morrigan_specialist, access_maint_tunnels)
 //decals
 /obj/decal/poster/wallsign/morrigan
 	name = "ADF Morrigan"

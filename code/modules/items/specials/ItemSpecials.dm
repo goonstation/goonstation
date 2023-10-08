@@ -1244,9 +1244,9 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 
 /datum/item_special/barrier/morrigan
 	image = "morriganbarrier"
-	name = "Energy Barrier"
-	desc = "Deploy a temporary barrier that reflects projectiles. The barrier can be easily broken by any attack or a sustained push. "
-	barrier_type = new /obj/itemspecialeffect/barrier/morrigan
+	name = "Mod. 81 Alcor"
+	desc = "Deploy a temporary barrier that reflects projectiles. This design is original and NOT stolen. "
+	barrier_type = /obj/itemspecialeffect/barrier/morrigan
 
 
 

@@ -219,6 +219,11 @@ var/global/list/job_start_locations = list()
 	name = LANDMARK_SYNDICATE_BOSS
 	icon_state = "commander"
 
+// Morrigan spawns (idk if they're antag they'll be admin spawned only anyways - Rex)
+/obj/landmark/antagonist/morrigan
+	name = LANDMARK_MORRIGAN_OPERATIVE
+	icon_state = "morg-operative"
+
 // Pirates
 
 /obj/landmark/antagonist/pirate
