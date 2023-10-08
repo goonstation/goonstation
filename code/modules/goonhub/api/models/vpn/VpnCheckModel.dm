@@ -21,7 +21,7 @@
 /datum/apiModel/VpnCheckModel/ToString()
 	. = list()
 	.["data"]	= src.data
-	.["meta"]		= src.meta
+	.["meta"]	= src.meta
 	return json_encode(.)
 
 

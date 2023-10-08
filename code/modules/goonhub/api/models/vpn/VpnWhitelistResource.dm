@@ -3,7 +3,7 @@
 /datum/apiModel/Tracked/VpnWhitelistResource
 	var/game_admin_id	= null // integer
 	var/ckey			= null // string
-	var/game_admin		= null // { id: integer, ckey: string, name: string } - not required
+	var/game_admin		= null // { id: integer, ckey: string, name: string } - not required - TODO?
 
 /datum/apiModel/Tracked/VpnWhitelistResource/SetupFromResponse(response)
 	. = ..()

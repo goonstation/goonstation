@@ -10,7 +10,8 @@
 	src.ckey = response["ckey"]
 	src.name = response["name"]
 	src.discord_id = response["discord_id"]
-	src.rank = response["rank"]
+	src.rank = new
+	src.rank = src.rank.SetupFromResponse(response["rank"])
 
 /datum/apiModel/Tracked/GameAdminResource/VerifyIntegrity()
 	if (

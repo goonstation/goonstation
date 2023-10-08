@@ -11,33 +11,22 @@
 	var/multiple_choice									= null // boolean
 	var/expires_at										= null // date-time
 
-/datum/apiModel/Tracked/PollResource/New(
-	id,
-	game_admin_id,
-	game_admin,
-	question,
-	options,
-	servers,
-	total_answers,
-	winning_option_id,
-	multiple_choice,
-	expires_at,
-	created_at,
-	updated_at,
-)
+/datum/apiModel/Tracked/PollResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.game_admin_id = game_admin_id
-	src.game_admin = game_admin
-	src.question = question
-	src.options = options
-	src.servers = servers
-	src.total_answers = total_answers
-	src.winning_option_id = winning_option_id
-	src.multiple_choice = multiple_choice
-	src.expires_at = expires_at
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.game_admin_id = response["game_admin_id"]
+	src.game_admin = new
+	src.game_admin = src.game_admin.SetupFromResponse(response["game_admin"])
+	src.question = response["question"]
+	src.options = list()
+	for (var/item in response["options"])
+		var/datum/apiModel/PollOptionResource/option = new
+		option.SetupFromResponse(item)
+		src.options.Add(option)
+	src.servers = response["servers"]
+	src.total_answers = response["total_answers"]
+	src.winning_option_id = response["winning_option_id"]
+	src.multiple_choice = response["multiple_choice"]
+	src.expires_at = response["expires_at"]
 
 /datum/apiModel/Tracked/PollResource/VerifyIntegrity()
 	if (

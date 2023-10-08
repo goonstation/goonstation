@@ -4,19 +4,9 @@
 /datum/apiModel/Tracked/PlayerRes/PollAnswer
 	var/poll_option_id	= null // integer
 
-/datum/apiModel/Tracked/PlayerRes/PollAnswer/New(
-	id,
-	player_id,
-	poll_option_id,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/PlayerRes/PollAnswer/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.player_id = player_id
-	src.poll_option_id = poll_option_id
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.poll_option_id = response["poll_option_id"]
 
 /datum/apiModel/Tracked/PlayerRes/PollAnswer/VerifyIntegrity()
 	if (

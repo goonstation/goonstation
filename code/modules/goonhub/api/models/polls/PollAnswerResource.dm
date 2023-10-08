@@ -4,19 +4,10 @@
 	var/poll_option_id	= null // integer
 	var/poll_id			= null // integer
 
-/datum/apiModel/Tracked/PollAnswerResource/New(
-	id,
-	poll_option_id,
-	poll_id,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/PollAnswerResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.poll_option_id = poll_option_id
-	src.poll_id = poll_id
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.poll_option_id = response["poll_option_id"]
+	src.poll_id = response["poll_id"]
 
 /datum/apiModel/Tracked/PollAnswerResource/VerifyIntegrity()
 	if (

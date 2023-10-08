@@ -6,7 +6,7 @@
 
 /datum/apiModel/Tracked/MapSwitch/SetupFromResponse(response)
 	. = ..()
-	src.map_switch = new map_switch
+	src.map_switch = new
 	src.map_switch = src.map_switch.SetupFromResponse(response["map_switch"])
 	src.status = response["status"]
 
