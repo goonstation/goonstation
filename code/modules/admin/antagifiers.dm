@@ -193,7 +193,7 @@
 
 	nuclear
 		name = "NUKE_TKN.EXE"
-		desc = "A syndicoin mining rig. Get some sweet syndicate requistion tokens"
+		desc = "A syndicoin mining rig. Get some sweet syndicate requisition tokens"
 		icon = 'icons/obj/items/items.dmi'
 		icon_state = "req-token"
 

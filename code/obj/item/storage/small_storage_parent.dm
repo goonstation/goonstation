@@ -15,6 +15,7 @@
 	var/check_wclass = 0
 	var/datum/hud/storage/hud
 	var/sneaky = 0
+	var/stealthy_storage = FALSE
 	var/opens_if_worn = FALSE
 	var/max_wclass = W_CLASS_SMALL
 	var/slots = 7
@@ -31,7 +32,7 @@
 	health = 10
 
 	New()
-		src.create_storage(/datum/storage, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, opens_if_worn)
+		src.create_storage(/datum/storage, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, stealthy_storage, opens_if_worn)
 		src.make_my_stuff()
 		..()
 

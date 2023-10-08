@@ -215,6 +215,7 @@
 		mailgroups = list(MGD_SCIENCE,MGD_PARTY)
 
 	quartermaster
+		name = "Quartermaster PDA"
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
 		mailgroups = list(MGD_CARGO,MGD_PARTY)
@@ -280,7 +281,9 @@
 		alertgroups = list(MGA_MAIL,MGA_RADIO)
 
 	mining
-		icon_state = "pda-e"
+		name = "Mining PDA"
+		icon_state = "pda-q"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/miner
 		mailgroups = list(MGD_MINING,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 

@@ -2193,7 +2193,7 @@
 		return 0
 
 /datum/bioEffect/power/shoot_limb
-	name = "Vestigal Ballistics"
+	name = "Vestigial Ballistics"
 	desc = "Allows the subject to expel one of their limbs with considerable force."
 	id = "shoot_limb"
 	msgGain = "You feel intense pressure in your hip and shoulder joints."
@@ -2238,7 +2238,7 @@
 
 
 /datum/targetable/geneticsAbility/shoot_limb
-	name = "Vestigal Ballistics"
+	name = "Vestigial Ballistics"
 	desc = "OOOOWWWWWW!!!!!!!!"
 	icon_state = "shoot_limb"
 	targeted = TRUE

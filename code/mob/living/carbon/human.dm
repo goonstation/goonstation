@@ -692,7 +692,7 @@
 
 				if(src.client)
 					src.ghostize()
-					boutput(src, "Something went wrong, and we couldnt transfer you into a handspider! Please adminhelp this.")
+					boutput(src, "Something went wrong, and we couldn't transfer you into a handspider! Please adminhelp this.")
 
 				logTheThing(LOG_COMBAT, src, "became a headspider at [log_loc(src)].")
 
