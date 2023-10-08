@@ -29,12 +29,11 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DIARY, null, "Goonhub endpoint doesn't exist, disabled api handler", "debug")
 
 
-	/// Suppress errors on local environments, as it's spammy and local devs probably won't have the config for API connectivity to work
+	/// Build and throw an error exception
 	proc/apiError(list/data, forceErrorException = 0)
-		if (config.server_id != "local" || forceErrorException)
-			var/datum/apiModel/Error/model = new
-			model.SetupFromResponse(data)
-			throw EXCEPTION(model)
+		var/datum/apiModel/Error/model = new
+		model.SetupFromResponse(data)
+		throw EXCEPTION(model)
 
 
 	/**
