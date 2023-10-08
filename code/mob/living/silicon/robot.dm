@@ -2839,6 +2839,7 @@
 			UpdateOverlays(src.i_clothes, "clothes")
 		else
 			UpdateOverlays(null, "clothes")
+		src.update_mob_silhouette()
 
 	proc/compborg_force_unequip(var/slot = 0)
 		src.module_active = null
