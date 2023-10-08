@@ -1730,6 +1730,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/toxins, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/quartermaster, 5, cost=PAY_TRADESMAN/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/miner, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone, 5, cost=PAY_TRADESMAN/6)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_basic, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_chimes, 5, cost=PAY_TRADESMAN/3)
@@ -2563,6 +2564,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 /obj/machinery/vending/fortune
 #ifdef HALLOWEEN
 	name = "Necromancer Zoldorf"
+	desc = "A horrid old fortune-telling machine."
 	icon_state = "hfortuneteller"
 	icon_vend = "hfortuneteller-vend"
 	icon_fallen = "hfortuneteller-fallen"
@@ -3040,11 +3042,14 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		.["cardname"] = src.scan
 		.["bankMoney"] = account ? account["current_money"] : null
 
+		.["vend_type"] = src.vend_type
 		.["holding"] = holding
 		.["holding_pressure"] = holding ? MIXTURE_PRESSURE(holding.air_contents) : null
 		.["min_pressure"] = min_pressure
 		.["max_pressure"] = max_pressure
 		.["fill_cost"] = holding ? src.fill_cost() : null
+		.["air_cost"] = air_cost
+		.["current_fill"] = holding ? MIXTURE_PRESSURE(src.holding.air_contents) : 0
 
 		.["target_pressure"] = src.target_pressure
 

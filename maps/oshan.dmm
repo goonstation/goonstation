@@ -37788,6 +37788,9 @@
 /obj/shrub{
 	dir = 6
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep{
+	secret_thing = 1
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "jEK" = (
@@ -43628,12 +43631,11 @@
 /obj/cable{
 	icon_state = "2-8"
 	},
+/obj/landmark/start/job/detective,
 /obj/item/reagent_containers/food/snacks/popcorn{
-	bites_left = 100;
 	desc = "Those chickens are up to something...";
 	name = "suspicious popcorn"
 	},
-/obj/landmark/start/job/detective,
 /turf/simulated/floor/carpet/grime,
 /area/station/security/detectives_office)
 "tdO" = (

@@ -1023,7 +1023,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 	RL_lights
 		name = "RL lights"
-		help = "Displays number of RL lights on theach turf"
+		help = "Displays number of RL lights on each turf"
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			var/n_lights = length(theTurf.RL_Lights)
 			if (n_lights)

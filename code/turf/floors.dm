@@ -14,9 +14,10 @@
 
 	turf_flags = IS_TYPE_SIMULATED | MOB_SLIP | MOB_STEP
 
-	var/broken = 0
-	var/burnt = 0
+	can_burn = TRUE
+	can_break = TRUE
 	var/has_material = TRUE
+
 	/// Set to instantiated material datum ([getMaterial()]) for custom material floors
 	var/reinforced = FALSE
 	//Stuff for the floor & wall planner undo mode that initial() doesn't resolve.
@@ -27,8 +28,6 @@
 
 	New()
 		..()
-		if (has_material && isnull(default_material))
-			setMaterial(getMaterial("steel"))
 		roundstart_icon_state = icon_state
 		roundstart_dir = dir
 		#ifdef XMAS
@@ -859,6 +858,8 @@ TYPEINFO(/turf/simulated/floor/glassblock)
 	step_material = "step_wood"
 	step_priority = STEP_PRIORITY_MED
 	mat_changename = FALSE
+	can_burn = FALSE
+	can_break = FALSE
 
 	pry_tile(obj/item/C as obj, mob/user as mob, params)
 		boutput(user, "<span class='alert'>This is glass flooring, you can't pry this up!</span>")
@@ -1009,11 +1010,12 @@ DEFINE_FLOORS(minitiles/black,
 	icon_state = "engine"
 	thermal_conductivity = 0.025
 	heat_capacity = 325000
-
 	reinforced = TRUE
-	allows_vehicles = 1
+	allows_vehicles = TRUE
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 	event_handler_flags = IMMUNE_SINGULARITY_INACTIVE
 
@@ -1311,7 +1313,7 @@ TYPEINFO(/turf/simulated/floor/snow)
 	mat_appearances_to_ignore = list("steel")
 /turf/simulated/floor/snow
 	name = "snow"
-	has_material = FALSE
+	default_material = null
 	icon_state = "snow1"
 	step_material = "step_outdoors"
 	step_priority = STEP_PRIORITY_MED
@@ -1615,6 +1617,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	icon_state = "engine"
 	allows_vehicles = 1
 	reinforced = TRUE
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/simulated/floor/shuttlebay
 	name = "shuttle bay plating"
@@ -1623,6 +1627,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	step_material = "step_plating"
 	step_priority = STEP_PRIORITY_MED
 	reinforced = TRUE
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/simulated/floor/metalfoam
 	icon = 'icons/turf/floors.dmi'
@@ -1648,6 +1654,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	allows_vehicles = 1
 	default_material = "blob"
 	mat_changename = FALSE
+	can_burn = FALSE
+	can_break = FALSE
 
 	proc/setOvermind(var/mob/living/intangible/blob_overmind/O)
 		setMaterial(O.my_material)
@@ -1824,91 +1832,11 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	return
 
 /turf/simulated/floor/proc/break_tile_to_plating()
-	if(intact) to_plating()
+	if (intact)
+		to_plating()
 	break_tile()
 
-/turf/simulated/floor/proc/break_tile(var/force_break)
-	if(!force_break)
-		if(src.reinforced) return
-
-	if(broken) return
-	var/image/damage_overlay
-	if (!icon_old)
-		icon_old = icon_state
-	if(intact)
-		damage_overlay = image('icons/turf/floors.dmi',"damaged[pick(1,2,3,4,5)]")
-		damage_overlay.alpha = 200
-	else
-		damage_overlay = image('icons/turf/floors.dmi',"platingdmg[pick(1,2,3)]")
-		damage_overlay.alpha = 200
-	broken = 1
-	UpdateOverlays(damage_overlay,"damage")
-	src.UpdateIcon()
-
-/turf/simulated/floor/proc/burn_tile()
-	if(broken || burnt || reinforced) return
-	var/image/burn_overlay
-	if (!icon_old)
-		icon_old = icon_state
-	if(intact)
-		burn_overlay = image('icons/turf/floors.dmi',"floorscorched[pick(1,2)]")
-		burn_overlay.alpha = 200
-	else
-		burn_overlay = image('icons/turf/floors.dmi',"panelscorched")
-		burn_overlay.alpha = 200
-	UpdateOverlays(burn_overlay,"burn")
-	src.UpdateIcon()
-	burnt = 1
-
-/turf/simulated/floor/shuttle/burn_tile()
-	return
-
-/turf/simulated/floor/proc/restore_tile()
-	if(intact) return
-	setIntact(TRUE)
-	broken = 0
-	burnt = 0
-	icon = initial(icon)
-	if(icon_old)
-		icon_state = icon_old
-	else
-		icon_state = "floor"
-	UpdateOverlays(null,"burn")
-	UpdateOverlays(null,"damage")
-	src.UpdateIcon()
-	if (name_old)
-		name = name_old
-	levelupdate()
-
 /turf/simulated/floor/var/global/girder_egg = 0
-
-/turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
-	if (!user || !istype(W, /obj/item/light_parts/floor))
-		return
-	if(!instantly)
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
-		boutput(user, "You begin to attach the light fixture to [src]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/floor/proc/finish_attaching,\
-			list(W, user), W.icon, W.icon_state, null, null)
-		return
-
-	finish_attaching(W, user)
-	return
-
-/turf/simulated/floor/proc/finish_attaching(obj/item/W, mob/user)
-	// the floor is the target turf
-	var/turf/target = src
-	var/obj/item/light_parts/parts = W
-	var/obj/machinery/light/newlight = new parts.fixture_type(target)
-	boutput(user, "You attach the light fixture to [src].")
-	newlight.icon_state = parts.installed_icon_state
-	newlight.base_state = parts.installed_base_state
-	newlight.fitting = parts.fitting
-	newlight.status = 1 // LIGHT_EMPTY
-	newlight.add_fingerprint(user)
-	src.add_fingerprint(user)
-	user.u_equip(parts)
-	qdel(parts)
 
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
@@ -1946,10 +1874,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 	if (istype(C, /obj/item/pen))
 		var/obj/item/pen/P = C
 		P.write_on_turf(src, user, params)
-		return
-
-	if (istype(C, /obj/item/light_parts/floor))
-		src.attach_light_fixture_parts(user, C) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
 	if (src.reinforced && ((isweldingtool(C) && C:try_weld(user,0,-1,1,1)) || iswrenchingtool(C)))

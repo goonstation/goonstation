@@ -204,9 +204,10 @@
 		checkhealth()
 
 	updateDialog()
-		for(var/client/C)
-			if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
-				src.open_parts_panel(C.mob)
+		. = ..()
+		// for(var/client/C)
+		// 	if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
+		// 		src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
 		if (is_incapacitated(usr) || usr.restrained())
@@ -1074,8 +1075,11 @@
 		boutput(usr, "<span class='alert'>[src] is locked!</span>")
 		return
 
-	actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
-	return
+	if(locate(/mob) in src.contents)
+		actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
+		return
+
+	boutput(usr, "<span class='alert'>No one is in [src].</span>")
 
 /obj/machinery/vehicle/proc/eject_pod(var/mob/user, var/dead_only = 0)
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot

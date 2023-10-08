@@ -602,6 +602,8 @@ ABSTRACT_TYPE(/obj/item)
 	var/added = 0
 	var/imrobot
 	var/imdrone
+	if(QDELETED(other))
+		return added
 	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
 		if (imrobot)
 			max_stack = 300
@@ -664,7 +666,7 @@ ABSTRACT_TYPE(/obj/item)
 
 /obj/item/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..()
-	if (max_stack > 1 && src.loc == user && BOUNDS_DIST(O, user) == 0 && check_valid_stack(O))
+	if (!QDELETED(src) && max_stack > 1 && src.loc == user && BOUNDS_DIST(O, user) == 0 && check_valid_stack(O))
 		if ( src.amount >= max_stack)
 			failed_stack(O, user)
 			return
@@ -676,6 +678,9 @@ ABSTRACT_TYPE(/obj/item)
 		before_stack(O, user)
 
 		for(var/obj/item/other in view(1,user))
+			if (QDELETED(src))
+				//let's not try to stack items into items that are disposed but not deleted yet
+				return
 			stack_result = stack_item(other)
 			if (!stack_result)
 				continue
@@ -1550,7 +1555,8 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/proc/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	if(src in user.juggling)
 		return ""
-	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
+
+	if (((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5)) && !src.cant_drop)
 		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
 		user.u_equip(src)
 		src.set_loc(user.loc)

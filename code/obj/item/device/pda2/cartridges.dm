@@ -81,6 +81,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
 			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pressure_crystal_shopper(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
@@ -96,6 +97,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src) )
 			src.root.add_file( new /datum/computer/file/text/diagnostic_readme(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
+			src.root.add_file( new /datum/computer/file/pda_program/rockbox(src))
 
 	cyborg
 		name = "\improper Cyborg Internal PDA cartridge"
@@ -112,6 +114,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
 			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pressure_crystal_shopper(src))
 			// src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			// src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot(src))
@@ -121,6 +124,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src) )
 			src.root.add_file( new /datum/computer/file/text/diagnostic_readme(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
+			src.root.add_file( new /datum/computer/file/pda_program/rockbox(src))
 
 	research_director
 		name = "\improper SciMaster cartridge"
@@ -249,6 +253,7 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 		New()
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.read_only = 1
@@ -324,7 +329,9 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			//QM stuff
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/mulebot(src))
-			//Miner stuff (lol)
+			//Miner stuff
+			src.root.add_file( new /datum/computer/file/pda_program/rockbox(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/material_scan(src))
 			src.read_only = 1
 
 	clown
@@ -370,6 +377,16 @@ TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
 			src.root.add_file( new /datum/computer/file/pda_program/scan/plant_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/text/handbook_botanist(src))
+
+	miner
+		name = "\improper MineralMagic™ cartridge"
+		desc = "Always know where your Rockbox™ Ore is."
+		icon_state = "cart-mine"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/rockbox(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/material_scan(src))
 			src.read_only = 1
 
 	syndicate

@@ -414,6 +414,7 @@ var/list/admin_verbs = list(
 		/client/proc/debug_image_deletions_clear,
 #endif
 		/client/proc/distribute_tokens,
+		/client/proc/spawn_all_type
 		),
 
 	7 = list(
@@ -470,6 +471,7 @@ var/list/admin_verbs = list(
 		/client/proc/clear_nukeop_uplink_purchases,
 		/client/proc/upload_uncool_words,
 		/client/proc/TestMarketReq,
+		/verb/adminDumpBlueprint,
 
 		/client/proc/delete_profiling_logs,
 		/client/proc/cause_lag,
@@ -1007,7 +1009,7 @@ var/list/fun_images = list()
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
-	set desc = "Respawn yourself as the currenly loaded character of a player. Instantly. Right where you stand."
+	set desc = "Respawn yourself as the currently loaded character of a player. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
@@ -1044,7 +1046,7 @@ var/list/fun_images = list()
 
 /client/proc/respawn_as_new_self()
 	set name = "Respawn As New Self"
-	set desc = "Respawn yourself as your currenly loaded character. Instantly. Right where you stand."
+	set desc = "Respawn yourself as your currently loaded character. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
@@ -1054,7 +1056,7 @@ var/list/fun_images = list()
 
 /client/proc/respawn_as_self()
 	set name = "Respawn As Self"
-	set desc = "Respawn yourself as your currenly loaded character or the character you removed with remove-self. Instantly. Right where you stand."
+	set desc = "Respawn yourself as your currently loaded character or the character you removed with remove-self. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
@@ -2508,3 +2510,29 @@ var/list/fun_images = list()
 				client.set_antag_tokens(client.antag_tokens + 1)
 				break
 	boutput(src, "Roundstart antags given tokens: [total]")
+
+/client/proc/spawn_all_type()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Spawn All Of A Type"
+	set desc = "Creates one of every subtype instance of a type at your loc."
+	ADMIN_ONLY
+	var/spawn_input = input(src, "Enter path", "Enter Path") as null|text
+	if (spawn_input == "")
+		return
+	var/spawn_path = get_one_match(spawn_input, /atom/movable, FALSE)
+	if (!spawn_path)
+		return
+	var/list/spawn_matches = concrete_typesof(spawn_path)
+	if (!length(spawn_matches))
+		return
+	if (length(spawn_matches) > 99)
+		var/response = input(src, "High number of types: [length(spawn_matches)] - Type YES to continue", "Caution!") as null|text
+		if (lowertext(response) != "yes")
+			return
+	var/turf/T = get_turf(usr)
+	if (!T)
+		return
+	for (var/type as anything in spawn_matches)
+		new type(T)
+	logTheThing(LOG_ADMIN, src, "Created [length(spawn_matches)] types of: [spawn_path] at ([log_loc(usr)]")
+	boutput(src, "Created [length(spawn_matches)] types.")

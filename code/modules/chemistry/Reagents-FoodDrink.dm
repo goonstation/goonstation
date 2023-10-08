@@ -504,7 +504,7 @@ datum
 		fooddrink/alcoholic/moonshine
 			name = "moonshine"
 			id = "moonshine"
-			description = "An illegaly brewed and highly potent alcoholic beverage."
+			description = "An illegally brewed and highly potent alcoholic beverage."
 			reagent_state = LIQUID
 			value = 5
 			taste = "painfully strong"
@@ -2148,16 +2148,18 @@ datum
 				if(!M) M = holder.my_atom
 				if (holder.get_reagent_amount(src.id) >= 20)
 					M.stuttering += rand(0,5)
-					if(prob(10))
+					if(prob(19) && !ON_COOLDOWN(M, "capsaicin_stun_life", 7 SECONDS))
 						M.emote(pick("choke","gasp","cough"))
 						M.setStatusMin("stunned", 1 SECOND * mult)
 						M.take_oxygen_deprivation(rand(0,10) * mult)
 						M.bodytemperature += rand(5,20) * mult
+				else
+					if(prob(10) && !ON_COOLDOWN(M, "capsaicin_stun_life", 7 SECONDS))
+						M.emote(pick("cough"))
+						M.setStatusMin("stunned", 1 SECOND * mult)
 				M.stuttering += rand(0,2)
 				M.bodytemperature += rand(0,3) * mult
-				if(prob(10))
-					M.emote(pick("cough"))
-					M.setStatusMin("stunned", 1 SECOND * mult)
+
 				..()
 
 			reaction_mob(var/mob/M, var/method=TOUCH, var/volume_passed)
@@ -2185,19 +2187,20 @@ datum
 				else if (method == TOUCH)
 					if(ishuman(M))
 						var/mob/living/carbon/human/H = M
-						if((issmokeimmune(H) && ((H.glasses?.c_flags & COVERSEYES) || (H.head?.c_flags & COVERSEYES))))
+						if((issmokeimmune(H) && ((H.glasses?.c_flags & COVERSEYES) || (H.head?.c_flags & COVERSEYES) || (H.wear_mask?.c_flags & COVERSEYES))))
 							return
 					if(isrobocritter(M) || istype(M, /mob/living/critter/fire_elemental)) // robotic critters and fire elementals will be immune, but not organic critters.
 						return
 					else
 						M.reagents.add_reagent("capsaicin",round(volume_passed/5))
-						if(prob(50))
-							M.emote("scream")
-							boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
-							M.take_eye_damage(1, 1)
-						M.change_eye_blurry(3)
-						M.setStatusMin("stunned", 2 SECONDS)
-						M.change_misstep_chance(10)
+						if(!ON_COOLDOWN(M, "capsaicin_stun_touch", 3 SECONDS))
+							if(prob(50))
+								M.emote("scream")
+								boutput(M, "<span class='alert'><b>Your eyes hurt!</b></span>")
+								M.take_eye_damage(1, 1)
+							M.change_eye_blurry(3)
+							M.setStatusMin("stunned", 2 SECONDS)
+							M.change_misstep_chance(10)
 
 
 		fooddrink/el_diablo

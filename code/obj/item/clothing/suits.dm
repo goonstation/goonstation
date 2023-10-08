@@ -405,10 +405,8 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 /obj/item/clothing/suit/det_suit/beepsky
 	name = "worn jacket"
 	desc = "This tattered jacket has seen better days."
-	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
-	icon_state = "ntarmor_o"
-	coat_style = "ntarmor"
+	icon_state = "ntjacket_o"
+	coat_style = "ntjacket"
 
 	setupProperties()
 		..()
@@ -418,8 +416,6 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 /obj/item/clothing/suit/det_suit/hos
 	name = "Head of Security's jacket"
 	desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
-	icon = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
 	icon_state = "hoscoat_o"
 	coat_style = "hoscoat"
 
@@ -1404,6 +1400,13 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 		setProperty("meleeprot", 3 + prot)
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)
+
+/obj/item/clothing/suit/space/custom/prototype
+	New()
+		..()
+		var/weave = getMaterial("exoweave")
+		var/augment = getMaterial("bohrum")
+		src.set_custom_mats(weave,augment)
 
 // Light space suits
 /obj/item/clothing/suit/space/light // Lighter suits that don't impede movement, but have way less armor

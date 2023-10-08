@@ -1687,16 +1687,19 @@ obj/item/whetstone
 	- Knocks back on-hit
 */
 
-#define SWIPE_MODE 1
-#define STAB_MODE 2
+#define STAB_MODE 1
+#define SWIPE_MODE 2
+#define STAGE_ONE "low"
+#define STAGE_TWO "med"
+#define STAGE_THREE "high"
 
 /obj/item/heavy_power_sword
 	name = "Hadar heavy power-sword"
 	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple attack types."
 	icon = 'icons/obj/large/64x32.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	icon_state = "hadar_sword2"
+	icon_state = "hadar_sword2_low"
 	item_state = "hadar_sword2"
 	flags = FPRINT | TABLEPASS
 	c_flags = ONBACK
@@ -1714,6 +1717,7 @@ obj/item/whetstone
 	two_handed = 1
 	uses_multiple_icon_states = 1
 
+	var/stage = STAGE_ONE
 	var/mode = SWIPE_MODE
 	var/maximum_force = 100
 	var/swipe_color = "#0081DF"
@@ -1753,13 +1757,32 @@ obj/item/whetstone
 	if (t.loc:sanctuary)
 		return
 
-	if(src.mode == 1) // only knock back on the sweep attack
+	if(src.mode == SWIPE_MODE) // only knock back on the sweep attack
 		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
 		M.throw_at(throw_target, 2, 2)
 	..()
-	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
-		src.force += 5
-		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+	if(ishuman(M) && isalive(M) && src.force < src.maximum_force) //build charge on living humans only, up to the cap
+		src.force = min(src.maximum_force, src.force + 5)
+		switch(src.stage)
+			if(STAGE_ONE)
+				if(src.force >= (src.maximum_force * 0.5))
+					src.stage = STAGE_TWO
+					icon_state = "hadar_sword[src.mode]_[src.stage]"
+					boutput(user, "<span class='alert'>[src]'s generator kicks into overdrive!</span>")
+				else
+					boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+			if(STAGE_TWO)
+				if(src.force >= (src.maximum_force * 0.9))
+					src.stage = STAGE_THREE
+					icon_state = "hadar_sword[src.mode]_[src.stage]"
+					boutput(user, "<span class='alert'>[src]'s overloading generator growls and vents heat!</span>")
+				else
+					boutput(user, "<span class='alert'>[src]'s overloading generator revs higher!</span>")
+			if(STAGE_THREE)
+				if(src.force == src.maximum_force)
+					boutput(user, "<span class='alert'>[src]'s overloaded generator blazes like a star!</span>")
+				else
+					boutput(user, "<span class='alert'>[src]'s overloaded generator burns even brighter!</span>")
 		src.tooltip_rebuild = TRUE
 
 /obj/item/heavy_power_sword/dropped(mob/user)
@@ -1767,23 +1790,25 @@ obj/item/whetstone
 	if (isturf(src.loc))
 		user.visible_message("<span class='alert'>[src] drops from [user]'s hands and powers down!</span>")
 		force = initial(src.force)
+		src.stage = STAGE_ONE
+		icon_state = "hadar_sword[src.mode]_[src.stage]"
 		src.tooltip_rebuild = TRUE
 		return
 
 /obj/item/heavy_power_sword/attack_self(mob/user as mob)
 	switch(src.mode) // switch in-case i want to add more modes later
-		if(1)
+		if(SWIPE_MODE)
 			boutput(user, "<span class='alert'>[src] transforms enabling a ranged stab!</span>")
-			icon_state = "hadar_sword1"
-			item_state = "hadar_sword1"
 			src.mode = STAB_MODE
+			icon_state = "hadar_sword[src.mode]_[src.stage]"
+			item_state = "hadar_sword[src.mode]"
 			hit_type = DAMAGE_STAB
 			src.setItemSpecial(/datum/item_special/rangestab)
-		if(2)
+		if(STAB_MODE)
 			boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
-			icon_state = "hadar_sword2"
-			item_state = "hadar_sword2"
 			src.mode = SWIPE_MODE
+			icon_state = "hadar_sword[src.mode]_[src.stage]"
+			item_state = "hadar_sword[src.mode]"
 			hit_type = DAMAGE_CUT
 			src.setItemSpecial(/datum/item_special/swipe)
 	user.update_inhands()
@@ -1793,6 +1818,9 @@ obj/item/whetstone
 
 #undef SWIPE_MODE
 #undef STAB_MODE
+#undef STAGE_ONE
+#undef STAGE_TWO
+#undef STAGE_THREE
 
 // Battering ram - a door breeching melee tool for the armory
 

@@ -242,7 +242,7 @@ TYPEINFO(/obj/item/fish_portal)
 
 /obj/submachine/fishing_upload_terminal
 	name = "Aquatic Research Upload Terminal"
-	desc = "Insert fish to recieve points to spend in the fishing vendor."
+	desc = "Insert fish to receive points to spend in the fishing vendor."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "uploadterminal_open"
 	anchored = ANCHORED

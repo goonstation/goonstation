@@ -322,7 +322,7 @@
 		var/r1 = text2num(rustg_noise_get_at_coordinates("[global.server_start_time]", "[src.x / noise_scale]", "[src.y / noise_scale]"))
 		var/r2 = text2num(rustg_noise_get_at_coordinates("[global.server_start_time + 123465]", "[src.x / noise_scale]", "[src.y / noise_scale]"))
 		var/col = rgb(255 * (1 - r1 - r2), 255 * r2, 255 * r1)
-		UpdateIcon(140, col)
+		UpdateIcon(90, col)
 
 	edge
 		icon_state = "pit_wall"
