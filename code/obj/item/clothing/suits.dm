@@ -2182,3 +2182,23 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "fakebeewings"
 	item_state = "fakebeewings"
 	c_flags = ONBACK
+
+//Seasonal Stuff
+
+/obj/item/clothing/suit/autumn_cape
+	name = "autumn cape"
+	desc = "A cape made from real processed dried leaves, or so it says on the tag."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "autumn_cape"
+	item_state = "autumn_cape"
+	body_parts_covered = TORSO
+	c_flags = ONBACK
+
+/obj/item/clothing/suit/jacket/autumn_jacket
+	name = "autumn jacket"
+	desc = "A jacket made to look like a pumpkin. It could just as easily be an orange though..."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "autumn_jacket"
+	item_state = "autumn_jacket"
