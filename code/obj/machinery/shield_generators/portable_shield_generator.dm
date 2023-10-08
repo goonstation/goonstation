@@ -661,7 +661,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 		return ..() && !istype(A,/obj/machinery/vehicle)
 
 /obj/forcefield/energyshield/perma/people
-	name = "Permanent Vehicular Forcefield"
+	name = "Permanent Anti-Personnel Forcefield"
 	desc = "A permanent force field that prevents people from passing."
 
 	Cross(atom/A)

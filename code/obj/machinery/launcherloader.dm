@@ -457,9 +457,12 @@
 
 /obj/machinery/computer/barcode/morrigan
 	name = "Barcode Computer"
-	desc = "Used to print barcode stickers for the cargo carousel routing system."
+	desc = "Sorts out the sus from the safe."
 
-	destinations = list("Safe","Suspicious")
+	connection_scan()
+		destinations = list("Safe","Suspicious")
+
+
 
 
 /obj/item/sticker/barcode
