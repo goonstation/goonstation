@@ -887,3 +887,28 @@
 	record_prog.active2 = SR
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
+
+/proc/scan_contents(atom/A as turf|obj|mob, visible = FALSE)
+	if (!A)
+		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+
+	if(visible)
+		animate_scanning(A, "#3c00ff")
+
+	var/contents_data = null
+	var/data = null
+
+
+	if (length(A.contents) > 0)
+
+		var/contents_length = length(A.contents)
+		data = "<b class='notice'>[contents_length] object[contents_length > 1 ? "s" : ""] found in [A].</b>"
+
+		for (var/current_id in A.contents)
+			contents_data += "<span class='notice'>[current_id]</span>"
+
+		data += "[contents_data]"
+	else
+		data = "<span class='notice'>Nothing found in [A].</span>"
+
+	return data
