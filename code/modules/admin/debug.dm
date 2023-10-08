@@ -280,7 +280,7 @@ var/global/debug_messages = 0
 			break
 		catch(var/exception/e)
 			if(e.name != "bad proc" && copytext(e.name, 1, 15) != "undefined proc") // fuck u byond
-				boutput(usr, "<span class='alert'>Exception occured! <a style='color: #88f;' href='byond://winset?command=View-Runtimes'>View Runtimes</a></span>")
+				boutput(usr, "<span class='alert'>Exception occurred! <a style='color: #88f;' href='byond://winset?command=View-Runtimes'>View Runtimes</a></span>")
 				throw e
 
 	if(!success)

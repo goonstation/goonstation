@@ -979,7 +979,7 @@ TYPEINFO(/obj/machinery/chem_master)
 				var/obj/item/reagent_containers/bottle = bottle_from_param(params["bottle"])
 				if(!bottle)
 					// somehow we didn't get a bottle
-					boutput(ui.user, "[src] bottleler makes a weird grinding noise. That can't be good.")
+					boutput(ui.user, "[src] bottler makes a weird grinding noise. That can't be good.")
 					return
 				var/reagent_amount = clamp(round(params["amount"]), CHEMMASTER_MINIMUM_REAGENT, bottle.initial_volume)
 

@@ -107,6 +107,8 @@
 	icon = 'icons/misc/AzungarAdventure.dmi'
 	icon_state = "lava_edges"
 	temperature = 10+T0C
+	can_burn = FALSE
+	can_break = FALSE
 
 	Entered(var/mob/M)
 		. = ..()

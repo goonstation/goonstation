@@ -155,10 +155,15 @@
 	click(atom/target, params, location, control)
 		if (!src.mainframe) return
 
+		var/in_ai_range = (mainframe.z == target.z) || (inunrestrictedz(target) && inonstationz(mainframe))
+
 		if (!src.mainframe.stat && !src.mainframe.restrained() && !src.mainframe.hasStatus(list("weakened", "paralysis", "stunned")))
 			if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 				var/obj/O = target
-				O.receive_silicon_hotkey(src)
+				if(in_ai_range)
+					O.receive_silicon_hotkey(src)
+				else
+					src.show_text("Your mainframe was unable relay this command that far away!", "red")
 				return
 
 		//var/inrange = in_interact_range(target, src)
@@ -183,10 +188,10 @@
 			if (GET_DIST(src, target) > 0)
 				src.set_dir(get_dir(src, target))
 
+			if(in_ai_range)
+				target.attack_ai(src, params, location, control)
 
-			target.attack_ai(src, params, location, control)
-
-		if (src.client.check_any_key(KEY_POINT))
+		if (src.client.check_any_key(KEY_POINT) && in_ai_range)
 			var/turf/T = get_turf(target)
 			mainframe.show_hologram_context(T)
 			return
