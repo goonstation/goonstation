@@ -4,8 +4,9 @@
 /* ================================================== */
 
 /obj/item/chem_grenade
-	name = "metal casing"
+	name = "disassembled chemical grenade"
 	icon_state = "grenade-chem1"
+	desc = "A kit for the construction of a chemical grenade. Use it in hand to begin assembling it."
 	icon = 'icons/obj/items/grenade.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	item_state = "flashbang"
@@ -28,224 +29,316 @@
 	duration_put = 0.25 SECONDS //crime
 	var/is_dangerous = TRUE
 	var/detonating = 0
-	///damage when loaded into a 40mm convesion chamber
+	/// maximum beaker size when assemblying beaker into custom grenades
+	var/custom_grenade_max_beaker_volume = 50
+	/// damage when loaded into a 40mm convesion chamber
 	var/launcher_damage = 25
+	/// ttime until the grenade explodes when triggered
+	var/grenade_time = 3 SECONDS
+	/// standard time until the grenade explodes when triggered
+	var/grenade_time_standard = 3 SECONDS
+	/// maximum time be able to be set in seconds
+	var/maximum_grenade_time = 15 SECONDS
+	/// time intervals you are able to set the grenade to
+	var/interval_grenade_time = 3 SECONDS
 	HELP_MESSAGE_OVERRIDE("")
 
-	New()
-		..()
-		fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
-		fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
-		src.create_reagents(150000)
+/obj/item/chem_grenade/New()
+	..()
+	fluid_image1 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid1", -1)
+	fluid_image2 = image('icons/obj/items/grenade.dmi', "grenade-chem-fluid2", -1)
+	src.create_reagents(150000)
+	if(src.stage == 2)
+		// precreated grenades can still be turned into assemblies. BUT they cannot be disassembled
+		// completed grenade + assemblies -> chemical grenade assembly
+		src.AddComponent(/datum/component/assembly, list(/obj/item/assembly/time_ignite, /obj/item/assembly/prox_ignite, /obj/item/assembly/rad_ignite), PROC_REF(chem_grenade_assemblies), TRUE)
+		// completed grenade + screwdriver -> adjusting of the arming time
+		src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(adjust_time), FALSE)
 
-	is_open_container()
-		return src.detonating
 
-	get_help_message(dist, mob/user)
-		. = ..()
-		switch(stage)
-			if(0)
-				. += "Hit the grenade casing with a fuse to begin the assembly."
-			if(1)
-				if (length(beakers) < 2)
-					. += "Hit the grenade casing with a small beaker to load it inside, up to two."
-				if(length(.))
-					. += "<br>"
-				. += "Hit a loaded grenade casing with a <b>screwdriver</b> to finish it. Then use it in hand to begin the countdown."
-			if(2)
-				if(!istype(src.loc, /obj/item/assembly/chem_bomb))
-					. += "Hit the finished grenade with an igniter assembly to add it to the grenade casing."
+/obj/item/chem_grenade/is_open_container()
+	return src.detonating
 
-	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/grenade_fuse) && !stage)
-			boutput(user, "<span class='notice'>You add [W] to the metal casing.</span>")
-			playsound(src, 'sound/items/Screwdriver2.ogg', 25, -3)
-			qdel(W) //Okay so we're not really adding anything here. cheating.
-			icon_state = "grenade-chem2"
-			name = "unsecured grenade"
-			stage = 1
-		else if (isscrewingtool(W) && stage == 1)
-			if (beakers.len)
-				boutput(user, "<span class='notice'>You lock the assembly.</span>")
-				playsound(src, 'sound/items/Screwdriver.ogg', 25, -3)
-				name = "grenade"
-				icon_state = "grenade-chem3"
-				stage = 2
-			else
-				boutput(user, "<span class='alert'>You need to add at least one beaker before locking the assembly.</span>")
-		else if (istype(W,/obj/item/reagent_containers/glass) && stage == 1)
-			if (length(beakers) == 2)
-				boutput(user, "<span class='alert'>The grenade can not hold more containers.</span>")
-				return
-			var/obj/item/reagent_containers/glass/G = W
-			if (G.initial_volume > 50) // anything bigger than a regular beaker, but someone could varedit their reagent holder beyond this for admin nonsense
-				boutput(user, "<span class='alert'>This beaker is too large!</span>")
-				return
-			else
-				if (G.reagents && G.reagents.total_volume)
-					boutput(user, "<span class='notice'>You add \the [G] to the assembly.</span>")
-					user.drop_item()
-					G.set_loc(src)
-					beakers += G
-					switch (beakers.len)
-						if (1)
-							src.fluid_image1.color = G.reagents.get_average_color().to_rgba()
-							src.UpdateOverlays(src.fluid_image1, "fluid1")
-						if (2)
-							src.fluid_image2.color = G.reagents.get_average_color().to_rgba()
-							src.UpdateOverlays(src.fluid_image2, "fluid2")
-				else
-					boutput(user, "<span class='alert'>\The [G] is empty.</span>")
-		else if (stage == 2 && (istype(W, /obj/item/assembly/rad_ignite) || istype(W, /obj/item/assembly/prox_ignite) || istype(W, /obj/item/assembly/time_ignite)))
-			var/obj/item/assembly/S = W
-			if (!S || !S:status)
-				return
-			boutput(user, "<span class='notice'>You attach the [src.name] to the [S.name]!</span>")
-			logTheThing(LOG_BOMBING, user, "made a chemical bomb with a [S.name].")
-			message_admins("[key_name(user)] made a chemical bomb with a [S.name].")
-
-			var/obj/item/assembly/chem_bomb/R = new /obj/item/assembly/chem_bomb( user )
-			R.attacher = key_name(user)
-
-			switch(UNLINT(S:part1.type))
-				if (/obj/item/device/timer)
-					R.desc = "A very intricate igniter and timer assembly mounted to a chem grenade."
-					R.name = "Timer/Igniter/Chem Grenade Assembly"
-				if (/obj/item/device/prox_sensor)
-					R.desc = "A very intricate igniter and proximity sensor electrical assembly mounted to a chem grenade."
-					R.name = "Proximity/Igniter/Chem Grenade Assembly"
-				if (/obj/item/device/radio/signaler)
-					R.desc = "A very intricate igniter and signaller electrical assembly mounted to a chem grenade."
-					R.name = "Radio/Igniter/Chem Grenade Assembly"
-
-			R.triggering_device = S:part1
-			R.c_state(0)
-			UNLINT(S:part1.set_loc(R))
-			UNLINT(S:part1.master = R)
-			R.igniter = S:part2
-			R.igniter.status = 1
-			UNLINT(S:part2.set_loc(R))
-			UNLINT(S:part2.master = R)
-			S.layer = initial(S.layer)
-			user.u_equip(S)
-			user.put_in_hand_or_drop(R)
-			src.master = R
-			src.layer = initial(src.layer)
-			user.u_equip(src)
-			src.set_loc(R)
-			R.payload = src
-			S:part1 = null
-			S:part2 = null
-			//S = null
-			qdel(S)
+/obj/item/chem_grenade/get_help_message(dist, mob/user)
+	. = ..()
+	switch(stage)
+		if(0)
+			. += "Hit the grenade casing with a fuse to begin the assembly."
+		if(1)
+			if (length(beakers) < 2)
+				. += "Hit the grenade casing with a small beaker to load it inside, up to two."
+			if(length(.))
+				. += "<br>"
+			. += "Hit a loaded grenade casing with a <b>screwdriver</b> to finish it. Then use it in hand to begin the countdown."
+		if(2)
+			if(!istype(src.loc, /obj/item/assembly/chem_bomb))
+				. += "Hit the finished grenade with an igniter assembly to add it to the grenade casing."
 
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
-	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
-		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.armed)
-			return
-		var/area/a = get_area(target)
-		if(a.sanctuary) return
-		if (user.equipped() == src)
-			if (src.arm(user))
-				return ..()
-			user.drop_item()
-			src.throw_at(get_turf(target), 10, 3)
-			return
-		else if (isghostdrone(user))
-			var/mob/living/silicon/ghostdrone/G = user
-			if (istype(G.active_tool, /obj/item/magtractor))
-				var/obj/item/magtractor/mag = G.active_tool
-				if (mag.holding == src)
-					if (src.arm(user))
-						return ..()
-					mag.dropItem()
-					src.throw_at(get_turf(target), 10, 3)
-					return
+/obj/item/chem_grenade/afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+	if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.armed)
+		return
+	var/area/a = get_area(target)
+	if(a.sanctuary) return
+	if (user.equipped() == src)
+		if (src.arm(user))
+			return ..()
+		user.drop_item()
+		src.throw_at(get_turf(target), 10, 3)
+		return
+	else if (isghostdrone(user))
+		var/mob/living/silicon/ghostdrone/G = user
+		if (istype(G.active_tool, /obj/item/magtractor))
+			var/obj/item/magtractor/mag = G.active_tool
+			if (mag.holding == src)
+				if (src.arm(user))
+					return ..()
+				mag.dropItem()
+				src.throw_at(get_turf(target), 10, 3)
+				return
 
-	attack_self(mob/user as mob)
+/obj/item/chem_grenade/attack_self(mob/user as mob)
+	if (src.stage == 0)
+		src.assemble_fuse(user)
+	else
 		src.arm(user)
 
-	attack_hand()
-		walk(src,0)
-		return ..()
+/obj/item/chem_grenade/get_desc()
+	. = ..()
+	if(stage == 2)
+		. += " It is set to detonate in [src.grenade_time / (1 SECOND)] seconds."
 
-	proc/arm(mob/user as mob)
-		if (src.armed || src.stage != 2)
-			return 1
-		var/area/A = get_area(src)
-		if(A.sanctuary)
-			return
-		// Custom grenades only. Metal foam etc grenades cannot be modified (Convair880).
-		var/log_reagents = null
-		if (src.name == "grenade")
-			for (var/obj/item/reagent_containers/glass/G in src.beakers)
-				if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
+/obj/item/chem_grenade/attack_hand()
+	walk(src,0)
+	return ..()
 
-		if(!A.dont_log_combat)
-			if(is_dangerous && user)
-				message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
-			logTheThing(LOG_COMBAT, user, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
+/obj/item/chem_grenade/proc/arm(mob/user as mob)
+	if (src.armed || src.stage != 2)
+		return 1
+	var/area/A = get_area(src)
+	if(A.sanctuary)
+		return
+	// Custom grenades only. Metal foam etc grenades cannot be modified (Convair880).
+	var/log_reagents = null
+	if (src.name == "grenade")
+		for (var/obj/item/reagent_containers/glass/G in src.beakers)
+			if (G.reagents.total_volume) log_reagents += "[log_reagents(G)] "
 
-		boutput(user, "<span class='alert'>You prime the grenade! 3 seconds!</span>")
-		src.armed = TRUE
-		src.icon_state = icon_state_armed
-		playsound(src, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
-		SPAWN(3 SECONDS)
-			if (src && !src.disposed)
-				if(user?.equipped() == src)
-					user.u_equip(src)
-				explode()
+	if(!A.dont_log_combat)
+		if(is_dangerous && user)
+			message_admins("[log_reagents ? "Custom grenade" : "Grenade ([src])"] primed at [log_loc(src)] by [key_name(user)].")
+		logTheThing(LOG_COMBAT, user, "primes a [log_reagents ? "custom grenade" : "grenade ([src.type])"] at [log_loc(user)].[log_reagents ? " [log_reagents]" : ""]")
 
-	proc/explode()
-		src.reagents.my_atom = src //hax
-		var/has_reagents = 0
-		src.detonating = 1
-		for (var/obj/item/reagent_containers/glass/G in beakers)
-			if (G.reagents.total_volume) has_reagents = 1
+	boutput(user, "<span class='alert'>You prime the grenade! [src.grenade_time / 1 SECOND] seconds!</span>")
+	src.armed = TRUE
+	src.icon_state = icon_state_armed
+	playsound(src, 'sound/weapons/armbomb.ogg', 75, TRUE, -3)
+	// When the grenade is armed, we don't want it to be able to be disassembled or turned in assemblies
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	SPAWN(src.grenade_time)
+		if (src && !src.disposed)
+			if(user?.equipped() == src)
+				user.u_equip(src)
+			explode()
 
-		if (!has_reagents)
-			playsound(src.loc, 'sound/items/Screwdriver2.ogg', 50, 1)
-			src.armed = FALSE
-			return
+/obj/item/chem_grenade/proc/explode()
+	src.reagents.my_atom = src //hax
+	var/has_reagents = 0
+	src.detonating = 1
+	for (var/obj/item/reagent_containers/glass/G in beakers)
+		if (G.reagents.total_volume) has_reagents = 1
 
-		playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
+	if (!has_reagents)
+		playsound(src.loc, 'sound/items/Screwdriver2.ogg', 50, 1)
+		src.armed = FALSE
+		return
 
-		for (var/obj/item/reagent_containers/glass/G in beakers)
-			G.reagents.trans_to(src, G.reagents.total_volume)
+	playsound(src.loc, 'sound/effects/bamf.ogg', 50, 1)
 
-		if (src.reagents.total_volume) //The possible reactions didnt use up all reagents.
-			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
-			steam.set_up(10, 0, get_turf(src))
-			steam.attach(src)
-			steam.start()
-			var/min_dispersal = src.reagents.get_dispersal()
-			for (var/atom/A in range(min_dispersal, get_turf(src.loc)))
-				if ( A == src ) continue
-				if (src?.reagents) // Erik: fix for cannot execute null.grenade effects()
-					src.reagents.grenade_effects(src, A)
-					src.reagents.reaction(A, 1, 10, 0)
+	for (var/obj/item/reagent_containers/glass/G in beakers)
+		G.reagents.trans_to(src, G.reagents.total_volume)
 
-		invisibility = INVIS_ALWAYS_ISH //Why am i doing this?
-		if (src.master) src.master.invisibility = INVIS_ALWAYS_ISH
-		SPAWN(5 SECONDS)		   //To make sure all reagents can work
-			if (src.master) qdel(src.master)
-			if (src) qdel(src)	   //correctly before deleting the grenade.
+	if (src.reagents.total_volume) //The possible reactions didnt use up all reagents.
+		var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
+		steam.set_up(10, 0, get_turf(src))
+		steam.attach(src)
+		steam.start()
+		var/min_dispersal = src.reagents.get_dispersal()
+		for (var/atom/A in range(min_dispersal, get_turf(src.loc)))
+			if ( A == src ) continue
+			if (src?.reagents) // Erik: fix for cannot execute null.grenade effects()
+				src.reagents.grenade_effects(src, A)
+				src.reagents.reaction(A, 1, 10, 0)
 
-	move_trigger(var/mob/M, kindof)
-		if (..())
-			for (var/obj/O in contents)
-				if (O.move_triggered)
-					O.move_trigger(M, kindof)
+	invisibility = INVIS_ALWAYS_ISH //Why am i doing this?
+	if (src.master) src.master.invisibility = INVIS_ALWAYS_ISH
+	SPAWN(5 SECONDS)		   //To make sure all reagents can work
+		if (src.master) qdel(src.master)
+		if (src) qdel(src)	   //correctly before deleting the grenade.
 
-/obj/item/grenade_fuse
-	name = "grenade fuse"
-	desc = "A fuse mechanism with a safety lever."
-	icon = 'icons/obj/items/grenade.dmi'
-	icon_state = "grenade-fuse"
-	item_state = "pen"
-	force = 0
-	w_class = W_CLASS_TINY
-	m_amt = 100
+/obj/item/chem_grenade/move_trigger(var/mob/M, kindof)
+	if (..())
+		for (var/obj/O in contents)
+			if (O.move_triggered)
+				O.move_trigger(M, kindof)
+
+//chem grenade-assemblies code
+
+///On stage 0, using the grenade in hand sets the fuse into the grenade
+/obj/item/chem_grenade/proc/assemble_fuse(var/mob/user)
+	boutput(user, "<span class='notice'>You add the fuse to the metal casing.</span>")
+	playsound(src, 'sound/items/Screwdriver2.ogg', 25, -3)
+	src.icon_state = "grenade-chem2"
+	src.name = "unsecured grenade"
+	src.desc = "An unsecured chemical grenade. It can be modified by adding small beakers into it and secured with a screwdriver."
+	src.stage = 1
+	// unsecured grenade + beaker  -> unsecured grenade with beaker
+	src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass), PROC_REF(chem_grenade_filling), TRUE)
+	// unsecured grenade + wrench -> disassembling of the grenade
+	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassembly_filled), FALSE)
+	src.tooltip_rebuild = 1
+
+/// chem grenade filling proc
+/obj/item/chem_grenade/proc/chem_grenade_filling(var/atom/to_combine_atom, var/mob/user)
+	if (length(src.beakers) >= 2)
+		boutput(user, "<span class='alert'>The grenade can not hold more containers.</span>")
+		return TRUE
+	var/obj/item/reagent_containers/glass/manipulated_beaker = to_combine_atom
+	if (manipulated_beaker.initial_volume > src.custom_grenade_max_beaker_volume) // anything bigger than a regular beaker, but someone could varedit their reagent holder beyond this for admin nonsense
+		boutput(user, "<span class='alert'>This beaker is too large!</span>")
+	else
+		if (manipulated_beaker.reagents && manipulated_beaker.reagents.total_volume)
+			boutput(user, "<span class='notice'>You add \the [manipulated_beaker] to the assembly.</span>")
+			user.u_equip(manipulated_beaker)
+			manipulated_beaker.set_loc(src)
+			src.beakers += manipulated_beaker
+			switch (length(src.beakers))
+				if (1)
+					src.fluid_image1.color = manipulated_beaker.reagents.get_average_color().to_rgba()
+					src.UpdateOverlays(src.fluid_image1, "fluid1")
+					//now that we got at least one beaker, we can make the assembly able to be completed by screwing
+					// unsecured grenade with beaker + screwdriver -> completed grenade
+					src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(chem_grenade_completing), FALSE)
+				if (2)
+					src.fluid_image2.color = manipulated_beaker.reagents.get_average_color().to_rgba()
+					src.UpdateOverlays(src.fluid_image2, "fluid2")
+		else
+			boutput(user, "<span class='alert'>\The [manipulated_beaker] is empty.</span>")
+	return TRUE
+
+/// chem grenade completion proc
+/obj/item/chem_grenade/proc/chem_grenade_completing(var/atom/to_combine_atom, var/mob/user)
+	boutput(user, "<span class='notice'>You lock the assembly.</span>")
+	playsound(src, 'sound/items/Screwdriver.ogg', 25, -3)
+	src.name = "chemical grenade"
+	src.icon_state = "grenade-chem3"
+	src.desc = "A chemical grenade. Use it to unleash chemicals over whoever you see fit."
+	src.stage = 2
+	src.tooltip_rebuild = 1
+	//Since we changed the state, remove all assembly components and add the next state ones
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	// completed grenade + assemblies -> chemical grenade assembly
+	src.AddComponent(/datum/component/assembly, list(/obj/item/assembly/time_ignite, /obj/item/assembly/prox_ignite, /obj/item/assembly/rad_ignite), PROC_REF(chem_grenade_assemblies), TRUE)
+	// completed grenade + screwdriver -> adjusting of the arming time
+	src.AddComponent(/datum/component/assembly, TOOL_SCREWING, PROC_REF(adjust_time), FALSE)
+	// completed grenade + wrench -> disassembling of the grenade
+	src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(disassembly_filled), FALSE)
+	return TRUE
+
+/// chem grenade assembly creation
+/obj/item/chem_grenade/proc/chem_grenade_assemblies(var/atom/to_combine_atom, var/mob/user)
+	var/obj/item/assembly/manipulated_assembly = to_combine_atom
+	if (!manipulated_assembly || !manipulated_assembly:status)
+		return
+	boutput(user, "<span class='notice'>You attach the [src.name] to the [manipulated_assembly.name]!</span>")
+	logTheThing(LOG_BOMBING, user, "made a chemical bomb with a [manipulated_assembly.name].")
+	message_admins("[key_name(user)] made a chemical bomb with a [manipulated_assembly.name].")
+
+	var/obj/item/assembly/chem_bomb/created_bomb = new /obj/item/assembly/chem_bomb(user)
+	created_bomb.attacher = key_name(user)
+
+	//i'm sinning here, but it's still better than UNLINT(manipulated_assembly:part1)
+	var/obj/item/assembly_part1
+	var/obj/item/device/igniter/assembly_part2
+	switch(manipulated_assembly.type)
+		if(/obj/item/assembly/time_ignite)
+			var/obj/item/assembly/time_ignite/time_assembly = manipulated_assembly
+			assembly_part1 = time_assembly.part1
+			assembly_part2 = time_assembly.part2
+			time_assembly.part1 = null
+			time_assembly.part2 = null
+			created_bomb.desc = "A very intricate igniter and timer assembly mounted to a chem grenade."
+			created_bomb.name = "Timer/Igniter/Chem Grenade Assembly"
+		if(/obj/item/assembly/prox_ignite)
+			var/obj/item/assembly/prox_ignite/prox_assembly = manipulated_assembly
+			assembly_part1 = prox_assembly.part1
+			assembly_part2 = prox_assembly.part2
+			prox_assembly.part1 = null
+			prox_assembly.part2 = null
+			created_bomb.desc = "A very intricate igniter and proximity sensor electrical assembly mounted to a chem grenade."
+			created_bomb.name = "Proximity/Igniter/Chem Grenade Assembly"
+		if(/obj/item/assembly/rad_ignite)
+			var/obj/item/assembly/rad_ignite/rad_assembly = manipulated_assembly
+			assembly_part1 = rad_assembly.part1
+			assembly_part2 = rad_assembly.part2
+			rad_assembly.part1 = null
+			rad_assembly.part2 = null
+			created_bomb.desc = "A very intricate igniter and signaller electrical assembly mounted to a chem grenade."
+			created_bomb.name = "Radio/Igniter/Chem Grenade Assembly"
+
+	// now we setting up the parts of the assembly at their fitting places
+	created_bomb.triggering_device = assembly_part1
+	created_bomb.c_state(0)
+	assembly_part1.set_loc(created_bomb)
+	assembly_part1.master = created_bomb //well, for stuff like this var/master is on item, i guess *shrug
+	created_bomb.igniter = assembly_part2
+	created_bomb.igniter.status = 1
+	assembly_part2.set_loc(created_bomb)
+	assembly_part2.master = created_bomb
+	manipulated_assembly.layer = initial(manipulated_assembly.layer)
+	user.u_equip(manipulated_assembly)
+	user.put_in_hand_or_drop(created_bomb)
+	src.master = created_bomb
+	src.layer = initial(src.layer)
+	user.u_equip(src)
+	src.set_loc(created_bomb)
+	created_bomb.payload = src
+	qdel(manipulated_assembly)
+	//We don't remove the assembly procs here since the bomb can be disassembled and we could manipulate it again.
+	return TRUE
+
+/// chem grenade time adjustment
+/obj/item/chem_grenade/proc/adjust_time(var/atom/to_combine_atom, var/mob/user)
+	if(src.grenade_time >= src.maximum_grenade_time)
+		src.grenade_time = src.grenade_time_standard
+	else
+		src.grenade_time += src.interval_grenade_time
+	boutput(user, "<span class='notice'>You set [src] to detonate in [src.grenade_time / (1 SECOND)] seconds.</span>")
+	src.tooltip_rebuild = 1
+	return TRUE
+
+/// chem grenade disassembly
+/obj/item/chem_grenade/proc/disassembly_filled(var/atom/to_combine_atom, var/mob/user)
+	for (var/obj/item/reagent_containers/glass/manipulated_beaker in src.beakers)
+		src.beakers -= manipulated_beaker
+		manipulated_beaker.set_loc(get_turf(src))
+	src.fluid_image1.color = rgb(255,255,255,0)
+	src.UpdateOverlays(src.fluid_image1, "fluid1")
+	src.fluid_image2.color = rgb(255,255,255,0)
+	src.UpdateOverlays(src.fluid_image2, "fluid2")
+	src.stage = 0
+	src.icon_state = "grenade-chem1"
+	src.name = "disassembled chemical grenade"
+	src.desc = "A kit for the construction of a chemical grenade. Use it in hand to begin assembling it."
+	src.grenade_time = src.grenade_time_standard
+	//Since we changed the state, remove all assembly components
+	src.RemoveComponentsOfType(/datum/component/assembly)
+	src.tooltip_rebuild = 1
+	return TRUE
+
+
+
+
 
 /* =================================================== */
 /* -------------------- Sub-Types -------------------- */

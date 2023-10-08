@@ -879,10 +879,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Chef", "Sous-Chef", "Waiter", "Clown")
 
 /datum/syndicate_buylist/traitor/chemgrenades
-	name = "Chem Grenade Starter Kit"
-	item = /obj/item/storage/box/grenade_starter_kit
+	name = "Chem Grenade Starter Pouch"
+	item = /obj/item/storage/custom_chem_grenade_pouch
 	cost = 2
-	desc = "Tired of destroying your own face with acid reactions? Want to make the janitor feel incompetent? This kit gets you started with three grenades. Just add beakers and screw!"
+	desc = "Tired of destroying your own face with acid reactions? Want to make the janitor feel incompetent? This pouch gets you started with five grenades. Just add beakers and screw!"
 	job = list("Scientist","Research Director")
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 

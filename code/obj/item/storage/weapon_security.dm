@@ -165,18 +165,11 @@
 	icon_state = "flashbang"
 	spawn_contents = list(/obj/item/chem_grenade/fcleaner = 5)
 
-/obj/item/storage/box/grenade_fuses
-	name = "grenade fuse box"
-	desc = "Contains fuses for constructing grenades."
-	icon_state = "grenade_fuses"
-	spawn_contents = list(/obj/item/grenade_fuse = 7)
-
 /obj/item/storage/box/grenade_starter_kit
 	name = "grenade starter kit"
 	icon_state = "flashbang"
 	desc = "Contains grenade cases and fuses for creating grenades."
-	spawn_contents = list(/obj/item/grenade_fuse = 3,\
-	/obj/item/chem_grenade = 3)
+	spawn_contents = list(/obj/item/chem_grenade = 3)
 
 /obj/item/storage/box/sonic_grenade_kit
 	name = "sonic grenade kit"
