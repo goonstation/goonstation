@@ -89,7 +89,7 @@ You can tell if the shuttle's been called and how long it has to arrive or leave
 Doctors can't heal you if you keep running away from them. Stay still and they'll patch you up in no time!
 Never trust pills you find on the floor.
 Looking for a quick way to earn cash? Try the slot machines that are usually near the bar!
-If you have a health implant, medical staff will know exactly when and where you (inevitably) die.
+If you have a health implant, medical staff will know when you die, after a brief delay.
 Merely getting close to lava will melt your body if you're not wearing protective clothing.
 Helpful mutations can be sold by Genetics via the gene booth. Stop in from time to time to see what they have!
 The key to a long lifespan is meticulous preparation before the crisis.
