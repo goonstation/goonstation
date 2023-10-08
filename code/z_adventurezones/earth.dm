@@ -355,6 +355,7 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		icon_state = "grass_snow"
 	grass
 		name = "grass"
+		icon_state = "grass"
 		New()
 			..()
 		#ifdef AUTUMN
