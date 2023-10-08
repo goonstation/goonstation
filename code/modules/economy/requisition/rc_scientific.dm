@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/req_contract/scientific)
 	//name = "Don't Ask Too Many Questions"
 	payout = PAY_DOCTORATE*10*2
 	weight = 80
-	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","ERROR: CANNOT VERIFY ORIGIN","Organ Study")
+	var/list/namevary = list("Organ Analysis","Organ Research","Biolab Supply","Biolab Partnership","CANNOT VERIFY ORIGIN","Organ Study")
 	var/list/desc_begins = list("conducting","performing","beginning","initiating","seeking supplies for","organizing")
 	var/list/desc_whatstudy = list("long-term study","intensive trialing","in-depth analysis","study","regulatory assessment")
 	var/list/desc_whystudy = list("decay","function","robustness","response to a new medication","atrophy in harsh conditions","therapies","bounciness")
@@ -50,6 +50,59 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 	commodity = /datum/commodity/bodyparts/spleen
 
 
+/datum/req_contract/scientific/clonejuice
+	payout = PAY_DOCTORATE*10
+	weight = 80
+	var/list/namevary = list("Biotechnical Project","Gruesome Undertaking","Any Means Necessary","Protein Purchase","Special Slurry")
+	var/list/desc_wherestudy = list(
+		"(REDACTED)",
+		"Biotechnical development site",
+		"NT-sanctioned medical systems technician",
+		"An affiliated research facility is",
+		"An affiliated research vessel is",
+		"An affiliated research outpost is"
+	)
+	var/list/desc_whatstudy = list(
+		"suitable naturally-derived fluids",
+		"any available protein emulsion of adequate composition",
+		"liquefied viscera of appropriate concentration",
+		"biologically-sourced fluid"
+	)
+	var/list/desc_whystudy = list(
+		"organism replication research",
+		"test operation of a recently repaired system",
+		"an undisclosed project",
+		"a prototype genetically-synchronized mending system",
+		"resupply of depleted biomass reserves"
+	)
+	var/list/desc_bonusflavor = list(
+		null,
+		" Impurity below a seven percent concentration is preferable.",
+		" Contents need not be single-origin or sterile; integration process includes sterilization.",
+		" Please do not source product from NT personnel while they are alive without their explicit permission.",
+		" Homogeneity of mixture composition is not of crucial importance."
+	)
+
+	New()
+		src.name = pick(namevary)
+		src.flavor_desc = "[pick(desc_wherestudy)] seeking [pick(desc_whatstudy)] for [pick(desc_whystudy)].[pick(desc_bonusflavor)]"
+		src.flavor_desc += "<br><i>REQHUB ADVISORY: Parameters from contract issuer indicate the following NT-recognized reagents to be compositionally adequate</i>"
+		src.flavor_desc += "<br>BLOOD | SYNTHFLESH | BEFF | PEPPERONI | MEAT SLURRY"
+
+		src.rc_entries += rc_buildentry(/datum/rc_entry/stack/reagent/clonejuice,rand(8,15)*20)
+		..()
+
+/datum/rc_entry/reagent/clonejuice
+	name = "protein solution"
+	chem_ids = list(
+		"blood",
+		"synthflesh",
+		"beff",
+		"pepperoni",
+		"meat_slurry",
+		"bloodc"
+	)
+	feemod = PAY_DOCTORATE/10
 
 /datum/req_contract/scientific/spectrometry
 	//name = "Totally Will Not Result In A Resonance Cascade"
