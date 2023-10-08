@@ -4,6 +4,9 @@
 (p)15922
 (e)🎨|C-Sprites
 (+)Autumn has come to the station, changing the plant life's hue and adding a few new items to the clothing booth for just the season. There's also a seasonal special clown costume in the clown hole crate!
+(u)tarmunora
+(e)⚖|C-Balance
+(+)Changeling morph arm DNA cost revision: claw arm 4->0, tendril arm 6->10
 (u)Mr. Moriarty
 (p)16185
 (e)🪲💅📄|C-Bug, C-QoL, A-UI
