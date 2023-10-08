@@ -58,10 +58,6 @@
 
 		UpdateIcon()
 
-		if(src.type == /obj/machinery/power/pt_laser) // DELETE THIS ZOMG
-			new /obj/machinery/power/pt_laser/reverse(get_turf(src)) // DELETE THIS ZOMG
-			qdel(src)
-
 /obj/machinery/power/pt_laser/disposing()
 	qdel(src.laser)
 	src.laser = null
@@ -281,10 +277,10 @@
 
 /obj/machinery/power/pt_laser/proc/melt_blocking_objects()
 	for (var/obj/O in blocking_objects)
-		if (istype(O, /obj/machinery/door/poddoor) || istype(O, /obj/laser_sink) || istype(O, /obj/machinery/vehicle) || istype(O, /obj/machinery/bot/mulebot) || isrestrictedz(O.z))
+		if (istype(O, /obj/machinery/door/poddoor) || istype(O, /obj/laser_sink) || istype(O, /obj/machinery/vehicle) || istype(O, /obj/machinery/bot/mulebot) || istype(O, /obj/machinery/power/pt_laser/reverse) || isrestrictedz(O.z))
 			continue
 		else if (prob((abs(output)*PTLEFFICIENCY)/5e5))
-			O.visible_message("<b>[O.name] is melted away by the [src]!</b>")
+			O.visible_message("<b>[O.name] is melted away by \the [src]!</b>")
 			qdel(O)
 
 /obj/machinery/power/pt_laser/proc/can_fire()
@@ -477,13 +473,27 @@
 /obj/machinery/power/pt_laser/reverse
 	name = "power reception laser"
 	desc = "Harness a laser beam from a vast distances across space to receive power."
+	icon_state = "prl"
 
+	capacity = 1 TERA WATT
 	var/cost_per_mw = 1000
 	var/lifetime_spending = 0
 
 /obj/machinery/power/pt_laser/reverse/proc/get_power_cost(input)
-	var/input_mw = input / 1e6
-	return input_mw * src.cost_per_mw
+	var/tiered_pricing_step = 0.10
+	var/tiered_power_step = 10 MEGA WATTS
+	var/running_cost = 0
+	var/remaining_power = input
+	for(var/step in 1 to ceil(input/tiered_power_step))
+		var/power_in_step
+		if(remaining_power>tiered_power_step)
+			power_in_step = tiered_power_step
+		else
+			power_in_step = remaining_power
+		remaining_power -= power_in_step
+		running_cost += ceil((power_in_step / (1 MEGA WATT) ) * src.cost_per_mw * ( 1 +((step-1) * tiered_pricing_step )))
+
+	return running_cost
 
 /obj/machinery/power/pt_laser/reverse/process(mult)
 	//store machine state to see if we need to update the icon overlays
@@ -500,7 +510,6 @@
 			terminal.add_avail(power)
 			charge -= power
 
-
 	if(src.online) // if it's switched on
 		if(!firing) //not firing
 			if(can_fire()) //have power to fire
@@ -516,13 +525,18 @@
 				if(burn_living(L,adj_input*PTLEFFICIENCY)) //returns 1 if they are gibbed, 0 otherwise
 					affecting_mobs -= L
 
-			if(length(blocking_objects) > 0)
+			if(length(src.blocking_objects) > 0)
 				melt_blocking_objects()
 			power_sold(adj_input)
 
 	// only update icon if state changed
 	if(dont_update == 0 && (last_firing != firing || last_disp != chargedisplay() || last_onln != online || ((last_llt > 0 && load_last_tick == 0) || (last_llt == 0 && load_last_tick > 0))))
 		UpdateIcon()
+
+/obj/machinery/power/pt_laser/reverse/chargedisplay()
+	if(!output)
+		return 0
+	return wagesystem.station_budget / get_power_cost(abs(output))
 
 /obj/machinery/power/pt_laser/reverse/can_fire()
 	return wagesystem.station_budget >= get_power_cost(abs(output))
@@ -531,6 +545,7 @@
 	var/proportion = 0
 	for (var/obj/linked_laser/ptl/laser in src.selling_lasers)
 		proportion += laser.power
+	adjusted_output *= proportion
 
 	if (round(adjusted_output) == 0)
 		return FALSE
@@ -538,7 +553,7 @@
 	if(can_fire())
 		charge += adjusted_output
 		var/money_to_charge = get_power_cost(abs(output))
-		//wagesystem.station_budget =  max(wagesystem.station_budget - money_to_charge, 0 )
+		wagesystem.station_budget =  max(wagesystem.station_budget - money_to_charge, 0 )
 		lifetime_spending += money_to_charge
 	else
 		stop_firing()
@@ -560,7 +575,6 @@
 		"charge" = src.charge | 0,
 		"isEmagged" = src.emagged,
 		"isChargingEnabled" = src.charging,
-		"excessPower" = src.excess,
 		"gridLoad" = src.terminal?.powernet.load,
 		"inputLevel" = src.output, // src.chargelevel
 		"inputMultiplier" = src.input_multi,
@@ -568,13 +582,16 @@
 		"isCharging" = src.is_charging,
 		"isFiring" = src.firing,
 		"isLaserEnabled" = src.online,
-		"lifetimeSpending" = src.lifetime_earnings,
+		"lifetimeSpending" = src.lifetime_spending,
 		"name" = src.name,
 		"outputLevel" = src.chargelevel, // src.output
+		"powerCost" = get_power_cost(abs(output)),
 		"outputMultiplier" = src.output_multi,
-		"outputNumber" = src.input_number,
+		"outputNumber" = src.output_number,
+		"stationBudget" = wagesystem.station_budget,
 		"totalGridPower" = src.terminal?.powernet.avail,
-	)
+		"estimatedCostPerSecond" = PROCESSING_TIER_MULTI(src) * MACHINE_PROCS_PER_SEC
+		)
 
 /obj/machinery/power/pt_laser/reverse/ui_act(action, params, datum/tgui/ui, datum/ui_state/state)
 	if(!ui || ui.status != UI_INTERACTIVE)
@@ -659,6 +676,8 @@
 	var/turf/T = get_barrel_turf()
 	if(!T) return //just in case
 	T=get_edge_cheap(T, src.dir)
+	while(T && istype(T,/turf/unsimulated/wall/trench))
+		T = get_step(T, turn(src.dir,180))
 
 	firing = TRUE
 	UpdateIcon(1)
@@ -667,6 +686,46 @@
 	src.laser.try_propagate()
 
 	melt_blocking_objects()
+
+ABSTRACT_TYPE(/obj/item/conversion_kit)
+/obj/item/conversion_kit
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "ckit"
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	item_state = "electronic"
+	force = 5
+	hit_type = DAMAGE_BLUNT
+	throwforce = 5
+	flags = FPRINT | TABLEPASS | CONDUCT
+	w_class = W_CLASS_HUGE
+
+	var/source_type
+	var/new_type
+	var/type_strict
+	var/duration = 5 SECONDS
+
+	afterattack(atom/target, mob/user , flag)
+		. = ..()
+		if( (target.type == source_type) || (!type_strict && istype(target, source_type)) )
+			actions.start(new /datum/action/bar/icon/callback(user, target, duration, /obj/item/conversion_kit/proc/convert,
+			list(user,target), src.icon, src.icon_state, "[user] sets up the [src] and starts to convert [target].", call_proc_on=src), target)
+
+
+	proc/convert(mob/user, atom/target)
+		if(!QDELETED(src) && !QDELETED(target))
+			var/obj/O = new new_type(get_turf(target))
+			O.dir = target.dir
+			user.u_equip(src)
+			qdel(target)
+			qdel(src)
+
+
+/obj/item/conversion_kit/ptl
+	name = "power transmission laser conversion kit"
+	desc = "This kit allows the function of a PTL to be reversed to receive power via a laser."
+	source_type = /obj/machinery/power/pt_laser
+	new_type = /obj/machinery/power/pt_laser/reverse
+	type_strict = TRUE
 
 ABSTRACT_TYPE(/obj/laser_sink)
 ///The abstract concept of a thing that does stuff when hit by a laser
@@ -1032,6 +1091,10 @@ TYPEINFO(/obj/laser_sink/splitter)
 	. = ..()
 	var/turf/T = get_next_turf()
 	if (!T || istype(T, /turf/unsimulated/wall/trench)) //edge of z_level or oshan trench
+		var/obj/laser_sink/ptl_seller/seller = get_singleton(/obj/laser_sink/ptl_seller)
+		if (seller.incident(src))
+			src.sink = seller
+	if(istype(source, /obj/machinery/power/pt_laser/reverse) && T == source?.get_barrel_turf())
 		var/obj/laser_sink/ptl_seller/seller = get_singleton(/obj/laser_sink/ptl_seller)
 		if (seller.incident(src))
 			src.sink = seller

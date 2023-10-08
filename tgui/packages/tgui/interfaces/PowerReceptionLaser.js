@@ -20,7 +20,7 @@ export const PowerReceptionLaser = (props, context) => {
     <Window
       title={name}
       width="310"
-      height="485">
+      height="530">
       <Window.Content>
         <Status />
         <InputControls />
@@ -38,8 +38,9 @@ const Status = (props, context) => {
   const {
     capacity,
     charge,
-    gridLoad,
-    totalGridPower,
+    stationBudget,
+    powerCost,
+    procsPerSecond,
   } = data;
 
   return (
@@ -60,16 +61,27 @@ const Status = (props, context) => {
         }}
         value={charge / capacity} />
       <LabeledList>
-        <LabeledList.Item label="Grid Saturation" />
+        <LabeledList.Item label="Available Funds">
+          {stationBudget + "⪽"}
+
+        </LabeledList.Item>
+        <LabeledList.Item label="Power Cost">
+          {(powerCost) + "⪽"}
+
+        </LabeledList.Item>
+        <LabeledList.Item label="Forecasted Cost">
+          {(powerCost*60) + "⪽"}
+
+        </LabeledList.Item>
       </LabeledList>
       <ProgressBar
         mt="0.5em"
         ranges={{
-          good: [0.8, Infinity],
-          average: [0.5, 0.8],
-          bad: [-Infinity, 0.5],
+          good: [-Infinity, 0.1],
+          average: [0.1, 0.3],
+          bad: [0.3, Infinity],
         }}
-        value={totalGridPower ? (gridLoad / totalGridPower) : 0} />
+        value={(powerCost*60)/stationBudget} />
     </Section>
   );
 };
@@ -78,8 +90,9 @@ const OutputControls = (props, context) => {
   const { act, data } = useBackend(context);
   const {
     isChargingEnabled,
-    excessPower,
     isCharging,
+    isEmagged,
+    gridLoad,
     outputLevel,
     outputNumber,
     outputMultiplier,
@@ -111,8 +124,8 @@ const OutputControls = (props, context) => {
           {formatPower(outputLevel)}
         </LabeledList.Item>
         <LabeledList.Item
-          label="Optimal" >
-          {formatPower(excessPower)}
+          label="Grid Load" >
+          {formatPower(gridLoad)}
         </LabeledList.Item>
       </LabeledList>
       <Box mt="0.5em">
@@ -139,14 +152,18 @@ const OutputControls = (props, context) => {
           content={'MW'}
           selected={outputMultiplier===10**6}
           onClick={() => act('outputMW')} />
-        <Button
-          content={'GW'}
-          selected={outputMultiplier===10**9}
-          onClick={() => act('outputGW')} />
-        <Button
-          content={'TW'}
-          selected={outputMultiplier===10**12}
-          onClick={() => act('outputTW')} />
+        {!!isEmagged && (
+          <>
+            <Button
+              content={'GW'}
+              selected={outputMultiplier===10**9}
+              onClick={() => act('outputGW')} />
+            <Button
+              content={'TW'}
+              selected={outputMultiplier===10**12}
+              onClick={() => act('outputTW')} />
+          </>
+        )}
       </Box>
     </Section>
   );
@@ -214,14 +231,18 @@ const InputControls = (props, context) => {
           content={'MW'}
           selected={inputMultiplier===10**6}
           onClick={() => act('inputMW')} />
-        <Button
-          content={'GW'}
-          selected={inputMultiplier===10**9}
-          onClick={() => act('inputGW')} />
-        <Button
-          content={'TW'}
-          selected={inputMultiplier===10**12}
-          onClick={() => act('inputTW')} />
+        {!!isEmagged && (
+          <>
+            <Button
+              content={'GW'}
+              selected={inputMultiplier===10**9}
+              onClick={() => act('inputGW')} />
+            <Button
+              content={'TW'}
+              selected={inputMultiplier===10**12}
+              onClick={() => act('inputTW')} />
+          </>
+        )}
       </Box>
     </Section>
   );
