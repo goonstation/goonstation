@@ -40,7 +40,6 @@ const Status = (props, context) => {
     charge,
     stationBudget,
     powerCost,
-    procsPerSecond,
   } = data;
 
   return (
@@ -60,6 +59,7 @@ const Status = (props, context) => {
           bad: [-Infinity, 0.5],
         }}
         value={charge / capacity} />
+
       <LabeledList>
         <LabeledList.Item label="Available Funds">
           {stationBudget + "⪽"}

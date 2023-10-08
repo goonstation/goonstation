@@ -478,22 +478,37 @@
 	capacity = 1 TERA WATT
 	var/cost_per_mw = 1000
 	var/lifetime_spending = 0
+	var/prev_input
+	var/prev_cost
 
 /obj/machinery/power/pt_laser/reverse/proc/get_power_cost(input)
-	var/tiered_pricing_step = 0.10
-	var/tiered_power_step = 10 MEGA WATTS
-	var/running_cost = 0
-	var/remaining_power = input
-	for(var/step in 1 to ceil(input/tiered_power_step))
-		var/power_in_step
-		if(remaining_power>tiered_power_step)
-			power_in_step = tiered_power_step
-		else
-			power_in_step = remaining_power
-		remaining_power -= power_in_step
-		running_cost += ceil((power_in_step / (1 MEGA WATT) ) * src.cost_per_mw * ( 1 +((step-1) * tiered_pricing_step )))
+	if(input==prev_input)
+		. = prev_cost
+	else
+		var/tiered_pricing_step = 0.1
+		var/tiered_power_step = 20 MEGA WATTS
 
-	return running_cost
+		var/remaining_power = input
+		for(var/step in 1 to ceil(input/tiered_power_step))
+			var/power_in_step
+			if(!remaining_power) // Uh no more power to tier
+				break
+
+			if(remaining_power > tiered_power_step)
+				power_in_step = tiered_power_step
+			else
+				power_in_step = remaining_power
+
+			if( step > 1000 ) // Ensure that this ends
+				power_in_step = remaining_power
+
+			remaining_power -= power_in_step
+			. += ceil((power_in_step / (1 MEGA WATT) ) * src.cost_per_mw * ( 1 +((step-1) * tiered_pricing_step )))
+
+			tiered_power_step *= 1.2 // Increase the window size to help minimize number of windows
+
+		prev_input = input
+		prev_cost = .
 
 /obj/machinery/power/pt_laser/reverse/process(mult)
 	//store machine state to see if we need to update the icon overlays
@@ -505,7 +520,7 @@
 	var/adj_input = abs(src.output)
 
 	if(terminal && !(src.status & BROKEN))
-		var/power = min(capacity-src.charge, src.chargelevel*mult)
+		var/power = min(src.charge, src.chargelevel*mult)
 		if(power)
 			terminal.add_avail(power)
 			charge -= power
@@ -536,7 +551,7 @@
 /obj/machinery/power/pt_laser/reverse/chargedisplay()
 	if(!output)
 		return 0
-	return wagesystem.station_budget / get_power_cost(abs(output))
+	return min(round((wagesystem.station_budget / get_power_cost(abs(output)))*6),6)
 
 /obj/machinery/power/pt_laser/reverse/can_fire()
 	return wagesystem.station_budget >= get_power_cost(abs(output))
@@ -551,7 +566,7 @@
 		return FALSE
 
 	if(can_fire())
-		charge += adjusted_output
+		src.charge = clamp(src.charge + adjusted_output, 0, src.capacity)
 		var/money_to_charge = get_power_cost(abs(output))
 		wagesystem.station_budget =  max(wagesystem.station_budget - money_to_charge, 0 )
 		lifetime_spending += money_to_charge
@@ -572,7 +587,7 @@
 /obj/machinery/power/pt_laser/reverse/ui_data(mob/user)
 	. = list(
 		"capacity" = src.capacity,
-		"charge" = src.charge | 0,
+		"charge" = src.charge ? src.charge : 0,
 		"isEmagged" = src.emagged,
 		"isChargingEnabled" = src.charging,
 		"gridLoad" = src.terminal?.powernet.load,
@@ -708,8 +723,7 @@ ABSTRACT_TYPE(/obj/item/conversion_kit)
 		. = ..()
 		if( (target.type == source_type) || (!type_strict && istype(target, source_type)) )
 			actions.start(new /datum/action/bar/icon/callback(user, target, duration, /obj/item/conversion_kit/proc/convert,
-			list(user,target), src.icon, src.icon_state, "[user] sets up the [src] and starts to convert [target].", call_proc_on=src), target)
-
+			list(user,target), src.icon, src.icon_state, "[user] sets up the [src] and starts to convert [target].", call_proc_on=src), user)
 
 	proc/convert(mob/user, atom/target)
 		if(!QDELETED(src) && !QDELETED(target))
