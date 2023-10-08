@@ -2602,6 +2602,41 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 			return
 		M.mind?.add_antagonist(ROLE_MACHO_MAN, source = ANTAGONIST_SOURCE_ADMIN)
 
+/datum/job/special/morrigan_specialist
+	linkcolor = "#800202"
+	name = "Syndicate Morrigan Operative"
+	limit = 0
+	wages = PAY_IMPORTANT
+	allow_traitors = 0
+	allow_spy_theft = 0
+	can_join_gangs = FALSE
+	cant_spawn_as_rev = 1
+	slot_back = list(/obj/item/storage/backpack/syndie)
+	slot_jump = list(/obj/item/clothing/under/rank/morrigan/sec)
+	slot_suit = list(/obj/item/clothing/suit/space/ntso/morrigan)
+	slot_head = list(/obj/item/clothing/head/helmet/space/ntso/morrigan)
+	slot_foot = list(/obj/item/clothing/shoes/swat)
+	slot_glov = list(/obj/item/clothing/gloves/swat)
+	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
+	slot_ears = list(/obj/item/device/radio/headset/morrigan) //needs their own secret channel
+	slot_mask = list(/obj/item/clothing/mask/gas/eyemask)
+	slot_card = /obj/item/card/id/morrigan/adfm
+	slot_poc1 = list(/obj/item/device/pda2/syndicate)
+	slot_poc2 = list(/obj/item/requisition_token/morrigan)
+	items_in_backpack = list(/obj/item/tank/emergency_oxygen/extended,
+							/obj/item/clothing/head/morrigan/sberetdec,
+							/obj/item/currency/spacecash/fivehundred)
+
+	faction = FACTION_SYNDICATE
+	special_spawn_location = LANDMARK_MORRIGAN_OPERATIVE
+	radio_announcement = FALSE
+	add_to_manifest = FALSE
+
+	New()
+		..()
+		src.access = list(access_maint_tunnels, access_morrigan_security)
+		return
+
 /datum/job/special/meatcube
 	name = "Meatcube"
 	linkcolor = "#FF0000"

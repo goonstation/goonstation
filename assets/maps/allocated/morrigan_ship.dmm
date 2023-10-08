@@ -3,13 +3,14 @@
 /turf/simulated/floor/stairs/dark{
 	dir = 6
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "av" = (
 /obj/stool/chair/office/syndie{
 	dir = 1
 	},
+/obj/landmark/antagonist/morrigan,
 /turf/unsimulated/floor/darkblue,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "aH" = (
 /obj/lattice{
 	dir = 8;
@@ -17,22 +18,29 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
+"aP" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	dir = 1
+	},
+/area/morrigan_ship_space/frigate)
 "bm" = (
 /turf/unsimulated/floor/purpleblack{
 	dir = 1
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "bp" = (
 /turf/unsimulated/floor,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "bq" = (
 /obj/machinery/door/airlock/pyro/external,
+/obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "bQ" = (
+/obj/landmark/antagonist/morrigan,
 /turf/unsimulated/floor/black/side,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "cd" = (
 /obj/machinery/vending/snack,
 /obj/decal/poster/wallsign/looselips{
@@ -41,18 +49,22 @@
 /turf/unsimulated/floor/purpleblack{
 	dir = 4
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "cv" = (
+/obj/stool/chair/comfy/red{
+	dir = 4
+	},
 /turf/unsimulated/floor/redblack{
 	dir = 8
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "cH" = (
 /obj/stool/chair/office/red{
 	dir = 4
 	},
+/obj/landmark/antagonist/morrigan,
 /turf/unsimulated/floor/red/redblackchecker,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "cL" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -64,7 +76,7 @@
 	},
 /obj/map/light/dimred,
 /turf/unsimulated/floor/red/redblackchecker,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "de" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
@@ -73,56 +85,83 @@
 /turf/unsimulated/floor/yellowblack{
 	dir = 9
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "do" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4
 	},
-/turf/unsimulated/floor/purpleblack/corner{
-	dir = 8
+/turf/unsimulated/floor/wizard/carpet/edge{
+	dir = 5
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
+"du" = (
+/turf/unsimulated/floor/red/redblackchecker,
+/area/morrigan_ship_space/frigate)
 "dH" = (
 /obj/machinery/teleport/portal_generator,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "dT" = (
 /obj/grille/catwalk,
 /turf/unsimulated/floor/plating/jen,
-/area/space)
+/area/morrigan_ship_space)
 "ee" = (
 /obj/decal/fakeobjects/console_radar,
 /turf/unsimulated/floor/darkblue,
-/area/space)
+/area/morrigan_ship_space/frigate)
+"eB" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	dir = 8
+	},
+/area/morrigan_ship_space/frigate)
+"eL" = (
+/obj/decal/fakeobjects/shuttleweapon/base{
+	dir = 1;
+	icon_state = "alt_heater"
+	},
+/turf/space,
+/area/morrigan_ship_space/frigate)
 "fi" = (
 /turf/unsimulated/floor/redblack{
 	dir = 3
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "fo" = (
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
+"fs" = (
+/obj/decal/tile_edge/floorguide/arrow_s,
+/obj/decal/tile_edge/floorguide/qm{
+	dir = 4
+	},
+/turf/unsimulated/floor,
+/area/morrigan_ship_space/frigate)
 "fN" = (
 /obj/decal/fakeobjects/gunship/artillery{
 	dir = 8
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "gJ" = (
 /obj/machinery/door/airlock/pyro/glass/security,
+/obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
+"gS" = (
+/turf/unsimulated/floor/wizard/carpet/cross,
+/area/morrigan_ship_space/frigate)
 "ho" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "ht" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt,
+/obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "hu" = (
 /obj/decal/poster/wallsign/morrigan{
 	pixel_y = 31
@@ -130,43 +169,44 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
+/obj/machinery/vending/air_vendor/plasma,
 /turf/unsimulated/floor/yellowblack{
 	dir = 9
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "hC" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /obj/grille/catwalk,
 /turf/unsimulated/floor/plating/jen,
-/area/space)
+/area/morrigan_ship_space)
+"hP" = (
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/evac{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan_ship_space/frigate)
 "iQ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/plating/damaged1,
-/area/space)
-"jG" = (
-/obj/lattice{
-	dir = 5;
-	icon_state = "lattice-dir"
-	},
-/obj/machinery/light/runway_light/delay2,
-/obj/machinery/communications_dish,
-/turf/space,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "jL" = (
 /obj/table/syndicate/auto,
 /obj/item/reagent_containers/food/drinks/mug/random_color,
 /turf/unsimulated/floor/purpleblack{
 	dir = 8
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "ke" = (
 /obj/decal/poster/wallsign/mod21{
 	pixel_y = 30
 	},
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "kk" = (
 /obj/decal/poster/wallsign/syndicatebanner{
 	pixel_y = 35
@@ -176,7 +216,7 @@
 	pixel_y = 7
 	},
 /turf/unsimulated/floor/darkblue,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "km" = (
 /obj/table/syndicate/auto,
 /obj/item/tank/emergency_oxygen/extended{
@@ -203,7 +243,7 @@
 	pixel_x = 8
 	},
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "kM" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -212,7 +252,7 @@
 /turf/unsimulated/floor/black/side{
 	dir = 4
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "kY" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -221,13 +261,13 @@
 	pixel_x = 16
 	},
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "lp" = (
 /obj/storage/closet/fire,
 /turf/unsimulated/floor/yellowblack{
 	dir = 6
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "lG" = (
 /obj/table/syndicate/auto,
 /obj/machinery/recharger,
@@ -240,7 +280,7 @@
 /turf/unsimulated/floor/black/side{
 	dir = 9
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "lI" = (
 /obj/lattice{
 	dir = 5;
@@ -248,7 +288,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "ma" = (
 /obj/table/syndicate/auto,
 /obj/item/storage/firstaid/regular{
@@ -268,7 +308,7 @@
 	},
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "mc" = (
 /obj/lattice{
 	dir = 9;
@@ -276,53 +316,54 @@
 	tag = "icon-lattice-dir-b (NORTHWEST)"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "mi" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "mn" = (
 /obj/machinery/door/airlock/pyro/glass/security/alt{
 	dir = 8;
 	hardened = 1
 	},
+/obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "nJ" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4
 	},
 /turf/unsimulated/floor,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "nP" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
 	icon_state = "wall3_trans"
 	},
 /turf/unsimulated/floor/yellow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "nR" = (
 /obj/decal/fakeobjects/gunship/cannon{
 	dir = 4
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "oa" = (
 /obj/machinery/vending/cigarette,
 /turf/unsimulated/floor/purpleblack{
 	dir = 9
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "oc" = (
 /obj/decoration/syndiepc/syndiepc9{
 	icon_state = "syndiepc14"
 	},
 /obj/map/light/dimred,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "od" = (
 /obj/decoration/ntcratesmall/ammo,
 /obj/machinery/door/airlock/pyro/glass/windoor{
@@ -330,12 +371,12 @@
 	hardened = 1
 	},
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "ox" = (
 /turf/unsimulated/floor/redblack{
 	dir = 5
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "oB" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -344,14 +385,14 @@
 /turf/unsimulated/floor/yellowblack{
 	dir = 5
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "oI" = (
 /obj/decoration/decorativeplant/plant2,
 /turf/unsimulated/floor/redblack{
 	dir = 10;
 	icon_state = "redblack"
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "oO" = (
 /obj/decal/poster/wallsign/looselips{
 	pixel_x = 30
@@ -360,33 +401,33 @@
 	pixel_y = 34
 	},
 /turf/unsimulated/floor/red/redblackchecker,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "pz" = (
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "pB" = (
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "pL" = (
 /obj/machinery/vehicle/miniputt/sy_robust{
 	dir = 8
 	},
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "qv" = (
 /obj/lattice{
 	dir = 6;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "qw" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "qF" = (
 /obj/lattice{
 	dir = 9;
@@ -394,53 +435,54 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "qK" = (
 /obj/decoration/decorativeplant/plant2,
 /turf/unsimulated/floor/redblack{
 	dir = 6;
 	icon_state = "redblack"
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "rk" = (
 /turf/unsimulated/floor/black/side{
 	dir = 6
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "rz" = (
 /obj/stool/chair/office/syndie{
 	dir = 1
 	},
+/obj/landmark/antagonist/morrigan,
 /turf/unsimulated/floor/redblack{
 	dir = 9
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "rC" = (
 /obj/machinery/portable_atmospherics/canister/oxygen,
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "rP" = (
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 1
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "sd" = (
 /turf/unsimulated/floor/yellowblack{
 	dir = 6
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "sl" = (
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-R"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "sp" = (
 /obj/decoration/syndiepc/syndiepc5,
 /obj/map/light/dimred,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "sv" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -449,18 +491,25 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
+"sC" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/machinery/communications_dish,
+/turf/space,
+/area/morrigan_ship_space)
 "sG" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "tg" = (
 /turf/unsimulated/floor/purpleblack{
 	dir = 10
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "tm" = (
 /obj/machinery/door/poddoor/blast/pyro/podbay_autoclose{
 	dir = 4;
@@ -468,28 +517,30 @@
 	name = "Cargo Bay Door"
 	},
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "tx" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/darkblue,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "tG" = (
 /obj/table/syndicate/auto,
 /obj/item/plate,
 /obj/machinery/light/incandescent/netural,
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
 /turf/unsimulated/floor/purpleblack{
 	dir = 10
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "tJ" = (
 /obj/decoration/syndiepc/syndiepc7,
 /obj/map/light/dimred,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "tL" = (
 /obj/machinery/door/airlock/pyro/glass/command,
+/obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "tQ" = (
 /obj/decal/tile_edge/stripe{
 	dir = 4
@@ -501,13 +552,16 @@
 /turf/unsimulated/floor/black/side{
 	dir = 8
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "tV" = (
 /obj/stool/chair/comfy/purple{
 	dir = 4
 	},
-/turf/unsimulated/floor/black,
-/area/space)
+/obj/landmark/antagonist/morrigan,
+/turf/unsimulated/floor/wizard/carpet/edge{
+	dir = 4
+	},
+/area/morrigan_ship_space/frigate)
 "tW" = (
 /obj/machinery/vehicle/miniputt/sy_robust{
 	dir = 8
@@ -517,58 +571,92 @@
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "ul" = (
 /obj/machinery/recharger/wall{
 	dir = 4;
 	pixel_x = 23;
 	pixel_y = 4
 	},
+/obj/table/syndicate/auto,
+/obj/item/ammo/bullets/smoke{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 3;
+	pixel_y = 6
+	},
+/obj/item/ammo/bullets/smoke{
+	pixel_x = 8;
+	pixel_y = -1
+	},
 /turf/unsimulated/floor/black/side{
 	dir = 4
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "ur" = (
 /obj/machinery/teleport/portal_ring,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "uI" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
 	icon_state = "wall3_trans"
 	},
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "uM" = (
 /turf/simulated/floor/stairs/dark{
 	dir = 1
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "uP" = (
 /turf/unsimulated/floor/black/side{
 	dir = 1
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "uV" = (
 /obj/machinery/door/airlock/pyro/glass/command{
 	dir = 8;
 	hardened = 1
 	},
+/obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "vf" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/yellowblack,
-/area/space)
+/area/morrigan_ship_space/frigate)
+"vo" = (
+/turf/unsimulated/floor/wizard/carpet/edge,
+/area/morrigan_ship_space/frigate)
 "vq" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
 	icon_state = "tube1"
 	},
+/obj/table/syndicate/auto,
+/obj/item/gun/kinetic/riot40mm/morrigan{
+	pixel_y = 9;
+	pixel_x = -6
+	},
+/obj/item/gun/kinetic/riot40mm/morrigan{
+	pixel_y = 5;
+	pixel_x = -4
+	},
+/obj/item/gun/kinetic/riot40mm/morrigan{
+	pixel_y = 1
+	},
 /turf/unsimulated/floor/black/side{
 	dir = 5
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
+"vM" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	dir = 10
+	},
+/area/morrigan_ship_space/frigate)
 "vV" = (
 /obj/decal/poster/wallsign/looselips{
 	pixel_x = -32
@@ -579,14 +667,15 @@
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
+/obj/decoration/ntcratesmall/syndicrate,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "wp" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
 /turf/unsimulated/floor/red/redblackchecker,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "wC" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
@@ -595,26 +684,30 @@
 	dir = 4
 	},
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "wL" = (
 /turf/space,
 /turf/unsimulated/floor/black,
 /turf/unsimulated/floor/black,
 /turf/unsimulated/floor/black,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
+"wP" = (
+/obj/stool/chair/comfy/purple,
+/turf/unsimulated/floor/black,
+/area/morrigan_ship_space/frigate)
 "xb" = (
 /turf/space,
 /turf/unsimulated/floor/black,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "xr" = (
 /obj/indestructible/shuttle_corner{
 	dir = 6;
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "xs" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 1
@@ -622,25 +715,25 @@
 /turf/unsimulated/floor/purpleblack{
 	dir = 1
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "xC" = (
 /turf/space,
 /turf/unsimulated/floor/black,
 /turf/unsimulated/floor/black,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "xT" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "yc" = (
 /obj/reagent_dispensers/foamtank,
 /turf/unsimulated/floor/yellowblack{
 	dir = 10
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "yu" = (
 /obj/lattice{
 	dir = 9;
@@ -648,7 +741,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "yF" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -657,18 +750,23 @@
 /turf/unsimulated/floor/black/corner{
 	dir = 1
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
+"yO" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	dir = 6
+	},
+/area/morrigan_ship_space/frigate)
 "yQ" = (
 /obj/machinery/vending/coffee,
 /turf/unsimulated/floor/purpleblack{
 	dir = 6
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "zC" = (
 /turf/unsimulated/floor/yellowblack{
 	dir = 1
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Aq" = (
 /obj/table/syndicate/auto,
 /obj/decal/poster/wallsign/pw_map{
@@ -676,7 +774,7 @@
 	},
 /obj/machinery/computer3/luggable/personal,
 /turf/unsimulated/floor/darkblue,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "AF" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -691,8 +789,11 @@
 	pixel_y = 8
 	},
 /obj/item/weldingtool/grey,
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "AG" = (
 /obj/table/syndicate/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/sturdy,
@@ -701,14 +802,14 @@
 	pixel_x = -5
 	},
 /turf/unsimulated/floor/purpleblack,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Bz" = (
 /obj/lattice{
 	dir = 4;
 	icon_state = "lattice-dir"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "BS" = (
 /obj/decal/poster/wallsign/report{
 	pixel_y = -33
@@ -716,14 +817,14 @@
 /turf/unsimulated/floor/black/side{
 	dir = 6
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Da" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "Dn" = (
 /obj/lattice{
 	dir = 10;
@@ -731,7 +832,7 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "DU" = (
 /obj/lattice{
 	dir = 1;
@@ -739,25 +840,26 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "ER" = (
 /obj/decoration/ntcratesmall/ammoloader,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "EZ" = (
 /obj/stool/chair/office/syndie{
 	dir = 4
 	},
+/obj/landmark/antagonist/morrigan,
 /turf/unsimulated/floor/darkblue,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Fu" = (
 /obj/decal/poster/wallsign/security,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "FE" = (
 /obj/lattice,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "FP" = (
 /obj/decal/tile_edge/stripe{
 	dir = 4
@@ -772,61 +874,63 @@
 /turf/unsimulated/floor/black/side{
 	dir = 10
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "GN" = (
 /obj/decal/fakeobjects/shuttleengine{
 	icon_state = "alt_heater-L"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "HE" = (
 /turf/unsimulated/floor/yellowblack/corner{
 	dir = 1
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "HN" = (
 /obj/decoration/decorativeplant/plant6,
 /turf/unsimulated/floor/redblack{
 	dir = 9
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "IU" = (
 /turf/unsimulated/floor/yellowblack,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Jv" = (
 /obj/stool/chair/comfy/purple,
+/obj/landmark/antagonist/morrigan,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "JL" = (
 /turf/unsimulated/floor/darkblue,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Kb" = (
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Kh" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
 /turf/simulated/floor/stairs/dark/wide,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Lm" = (
 /turf/simulated/floor/stairs/dark,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Lr" = (
 /obj/decoration/syndiepc/syndiepc17,
 /obj/map/light/dimred,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Lt" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Lu" = (
 /obj/machinery/door/airlock/pyro/glass/security{
 	dir = 4
 	},
+/obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "LD" = (
 /obj/decoration/decorativeplant/plant7,
 /obj/machinery/light/incandescent/netural{
@@ -835,7 +939,7 @@
 /turf/unsimulated/floor/purpleblack{
 	dir = 4
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Nc" = (
 /obj/decal/poster/wallsign/space{
 	pixel_y = 32
@@ -843,23 +947,26 @@
 /turf/unsimulated/floor/yellowblack{
 	dir = 1
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Np" = (
+/obj/stool/chair/comfy/red{
+	dir = 8
+	},
 /turf/unsimulated/floor/redblack{
 	dir = 4
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "NN" = (
 /turf/unsimulated/floor/purpleblack{
 	dir = 8
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Ol" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
 	},
 /turf/unsimulated/floor/yellow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Pu" = (
 /obj/decal/poster/wallsign/you4s{
 	pixel_y = 30
@@ -868,7 +975,7 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Pw" = (
 /obj/lattice{
 	dir = 10;
@@ -876,16 +983,16 @@
 	},
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "PE" = (
 /obj/decoration/syndiepc/syndiepc16,
 /obj/map/light/dimred,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "PK" = (
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/plating/damaged1,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Qo" = (
 /obj/decal/tile_edge/stripe{
 	dir = 4
@@ -896,11 +1003,11 @@
 /turf/unsimulated/floor/black/side{
 	dir = 8
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "QB" = (
 /obj/decoration/decorativeplant/plant5,
 /turf/unsimulated/floor/purple,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "QD" = (
 /obj/table/syndicate/auto,
 /obj/item/reagent_containers/food/drinks/bottle/beer{
@@ -910,7 +1017,7 @@
 /turf/unsimulated/floor/purpleblack{
 	dir = 5
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "QE" = (
 /obj/table/syndicate/auto,
 /obj/item/storage/toolbox/mechanical{
@@ -921,7 +1028,7 @@
 	pixel_y = -6
 	},
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Rc" = (
 /obj/decoration/decorativeplant/plant7,
 /obj/decal/poster/wallsign/syndicatebanner{
@@ -930,7 +1037,7 @@
 /turf/unsimulated/floor/purpleblack{
 	dir = 5
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Rg" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -939,13 +1046,13 @@
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 6
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Rm" = (
 /obj/decal/poster/wallsign/morrigan{
 	pixel_y = 31
 	},
 /turf/unsimulated/floor/red/redblackchecker,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Rt" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -954,15 +1061,18 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "RO" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
+/obj/stool/chair/comfy/purple{
+	dir = 1
+	},
 /turf/unsimulated/floor/purpleblack{
 	dir = 8
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "RP" = (
 /obj/machinery/vehicle/miniputt/sy_robust{
 	dir = 8
@@ -975,35 +1085,36 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "RV" = (
 /obj/machinery/computer3/generic/secure_data/console_lower{
 	dir = 4
 	},
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Sk" = (
 /obj/lattice{
 	dir = 5;
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "Sn" = (
 /obj/machinery/computer/announcement/console_upper{
 	name = "Peregrine Announcement Computer";
 	req_access = null;
 	dir = 8
 	},
+/obj/mapping_helper/access/morrigan/security,
 /turf/unsimulated/floor/darkblue,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Ss" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
 	icon_state = "wall3_trans"
 	},
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Sv" = (
 /obj/overlay{
 	density = 1;
@@ -1013,10 +1124,16 @@
 	name = "assembly machine"
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Sw" = (
+/obj/decal/tile_edge/floorguide/arrow_n{
+	dir = 8
+	},
+/obj/decal/tile_edge/floorguide/security{
+	dir = 1
+	},
 /turf/unsimulated/floor/red/redblackchecker,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "SC" = (
 /obj/lattice{
 	dir = 10;
@@ -1024,14 +1141,14 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "SI" = (
 /obj/decoration/decorativeplant/plant5,
 /obj/machinery/light/incandescent/netural{
 	dir = 8
 	},
 /turf/unsimulated/floor/purple,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Tn" = (
 /obj/decal/tile_edge/stripe{
 	dir = 4
@@ -1039,17 +1156,17 @@
 /turf/unsimulated/floor/black/side{
 	dir = 8
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "TF" = (
 /turf/simulated/floor/stairs/dark/wide{
 	dir = 10
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "TQ" = (
 /obj/decal/fakeobjects/shipart/beamcannon,
 /obj/grille/catwalk,
 /turf/unsimulated/floor/plating/jen,
-/area/space)
+/area/morrigan_ship_space)
 "TS" = (
 /obj/stool/chair/office/red{
 	dir = 8
@@ -1058,11 +1175,16 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/red/redblackchecker,
-/area/space)
+/area/morrigan_ship_space/frigate)
+"Um" = (
+/turf/unsimulated/floor/wizard/carpet/edge{
+	dir = 9
+	},
+/area/morrigan_ship_space/frigate)
 "Uv" = (
 /obj/submachine/weapon_vendor/morriganvendor,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "UK" = (
 /obj/lattice{
 	dir = 5;
@@ -1070,14 +1192,15 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "UQ" = (
 /obj/table/syndicate/auto,
 /obj/item/plate,
+/obj/item/reagent_containers/food/snacks/ratatouille,
 /turf/unsimulated/floor/purpleblack{
 	dir = 4
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "UR" = (
 /obj/lattice{
 	dir = 6;
@@ -1085,7 +1208,7 @@
 	},
 /obj/machinery/light/runway_light/delay2,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "UU" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
@@ -1094,13 +1217,13 @@
 	dir = 1
 	},
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Vc" = (
 /obj/item/device/radio/intercom/loudspeaker/speaker/south{
 	pixel_y = 24
 	},
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Vj" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -1109,14 +1232,14 @@
 /turf/unsimulated/floor/purpleblack{
 	dir = 5
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Vt" = (
 /obj/indestructible/shuttle_corner{
 	dir = 5;
 	icon_state = "wall3_trans"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "Vy" = (
 /obj/lattice{
 	dir = 8;
@@ -1124,11 +1247,15 @@
 	},
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
+"VK" = (
+/obj/landmark/antagonist/morrigan,
+/turf/unsimulated/floor/black,
+/area/morrigan_ship_space/frigate)
 "VR" = (
 /obj/decal/fakeobjects/shuttleweapon,
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "Wd" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/clothing/head/helmet/welding{
@@ -1137,25 +1264,25 @@
 	},
 /obj/item/clothing/head/helmet/welding,
 /turf/unsimulated/floor/engine/glow,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Xm" = (
 /obj/railing/red{
 	dir = 8
 	},
 /turf/unsimulated/floor/red/redblackchecker,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Xo" = (
 /obj/decal/fakeobjects/shuttleweapon/base{
 	dir = 1;
 	icon_state = "alt_heater"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 "XD" = (
 /turf/simulated/floor/stairs/dark{
 	dir = 10
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "XI" = (
 /obj/stool/chair/office/syndie{
 	dir = 1
@@ -1163,41 +1290,57 @@
 /turf/unsimulated/floor/redblack{
 	dir = 5
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "XW" = (
 /turf/unsimulated/floor/purpleblack,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Yu" = (
+/obj/decal/tile_edge/floorguide/arrow_s,
+/obj/decal/tile_edge/floorguide/catering{
+	dir = 4
+	},
 /turf/unsimulated/floor/purple,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "YX" = (
 /obj/decoration/syndiepc/syndiepc18,
 /obj/map/light/dimred,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Zf" = (
 /obj/decoration/decorativeplant/plant6,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
 	},
 /turf/unsimulated/floor/darkblue,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Zk" = (
 /obj/machinery/computer/teleporter,
 /turf/unsimulated/floor/black,
-/area/space)
+/area/morrigan_ship_space/frigate)
 "Zp" = (
+/obj/table/syndicate/auto,
+/obj/item/reagent_containers/mender/brute{
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/mender/burn,
+/obj/item/reagent_containers/mender/brute{
+	pixel_x = 8;
+	pixel_y = 6
+	},
+/obj/item/reagent_containers/mender/burn{
+	pixel_y = 5
+	},
 /turf/unsimulated/floor/black/side{
 	dir = 4
 	},
-/area/space)
+/area/morrigan_ship_space/frigate)
 "ZG" = (
 /obj/lattice{
 	dir = 6;
 	icon_state = "lattice-dir-b"
 	},
 /turf/space,
-/area/space)
+/area/morrigan_ship_space)
 
 (1,1,1) = {"
 pz
@@ -1407,7 +1550,7 @@ pz
 pz
 pz
 nR
-Xo
+eL
 qw
 Wd
 sG
@@ -1425,7 +1568,7 @@ TF
 bp
 iQ
 uP
-fo
+VK
 fo
 fo
 fo
@@ -1441,7 +1584,7 @@ pz
 pz
 pz
 nR
-Xo
+eL
 qw
 AF
 Kb
@@ -1456,7 +1599,7 @@ nP
 fo
 fo
 XD
-bp
+fs
 gJ
 uP
 fo
@@ -1487,7 +1630,7 @@ oB
 sd
 ht
 uM
-fo
+hP
 fo
 rP
 nJ
@@ -1597,7 +1740,7 @@ dT
 TQ
 dT
 PK
-fo
+VK
 fo
 km
 Lt
@@ -1670,7 +1813,7 @@ fo
 ma
 qw
 qw
-xT
+sC
 xT
 DU
 pz
@@ -1747,7 +1890,7 @@ pz
 pz
 pz
 nR
-Xo
+eL
 qw
 kk
 fo
@@ -1756,7 +1899,7 @@ fo
 EZ
 qw
 TS
-Sw
+du
 Lm
 gJ
 Sw
@@ -1765,9 +1908,9 @@ XD
 Yu
 ht
 bm
-fo
-fo
-fo
+Um
+eB
+vM
 XW
 Vj
 qw
@@ -1781,7 +1924,7 @@ pz
 pz
 pz
 nR
-Xo
+eL
 qw
 Aq
 av
@@ -1799,9 +1942,9 @@ rP
 QB
 iQ
 xs
-fo
-fo
-fo
+aP
+gS
+vo
 Jv
 tG
 PK
@@ -1825,7 +1968,7 @@ PK
 qw
 cL
 cH
-Sw
+du
 qw
 qw
 PK
@@ -1835,8 +1978,8 @@ qw
 Rc
 do
 tV
-fo
-Jv
+yO
+wP
 AG
 PK
 pz
@@ -1885,7 +2028,7 @@ pz
 pz
 pz
 pz
-jG
+lI
 pz
 pz
 pz

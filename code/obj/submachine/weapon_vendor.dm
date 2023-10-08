@@ -437,23 +437,23 @@
 /datum/materiel/loadout/morriganmelee
 	name = "Melee Specialist Officer"
 	path = /obj/item/storage/belt/security/morriganmelee
-	description = "One belt containing a baton, a ticketer, and a tactical hammer. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
+	description = "One belt containing a baton, 2 fog grenades, and a tactical hammer. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
 /datum/materiel/loadout/morriganlight
 	name = "Light Patrol Officer"
 	path = /obj/item/storage/belt/security/morriganlight
-	description = "One belt containing a baton, a light sidearm, and a ticketer and an experimental barrier. Perfect of station patrols."
+	description = "One belt containing a baton, a light sidearm, a flashbang grenade, and an experimental barrier. Perfect of station patrols."
 /datum/materiel/loadout/morrigancontrol
 	name = "Shock Officer"
 	path = /obj/item/storage/belt/security/morrigancontrol
-	description = "One belt containing a baton, a laser shotgun, and a ticketer. For more tense situations."
+	description = "One belt containing a baton, a laser shotgun, and a fog grenade. For more tense situations."
 /datum/materiel/loadout/morriganheavy
 	name = "Crowd Disperser Officer"
 	path = /obj/item/storage/belt/security/morriganheavy
-	description = "One belt containing a baton, a laser assault rifle, and a ticketer. For dealing with large crowds."
+	description = "One belt containing a baton, a laser assault rifle, and a fog grenade. For dealing with large crowds."
 /datum/materiel/loadout/morriganexplorer
 	name = "EVA Officer"
 	path = /obj/item/storage/belt/security/morriganexplorer
-	description = "One belt containing a baton, a mining SMG, and a ticketer. For dealing with space threats."
+	description = "One belt containing a baton, a mining SMG, and an extra power cell. For dealing with space threats."
 /datum/materiel/utility/morrigandonuts
 	name = "Sturd(iest) Donuts"
 	path = /obj/item/storage/lunchbox/sturdydonuts

@@ -428,6 +428,14 @@
 	icon_override = "ntboss"
 	icon_tooltip = "Nanotrasen Commander"
 
+/obj/item/device/radio/headset/morrigan
+	name = "Syndicate Morrigan Operative Headset"
+	desc = "Standard issue headset for Morrigan Operatives, using banned frequencies."
+	icon_state = "morrigan_headset"
+	secure_frequencies = list("x" = R_FREQ_MORRIGAN)
+	secure_classes = list("x" = RADIOCL_SYNDICATE)
+	icon_override = "Morrigan"
+	icon_tooltip = "Syndicate Morrigan Operative"
 /obj/item/device/radio/headset/syndicate
 	name = "radio headset"
 	desc = "A radio headset that is also capable of communicating over- wait, isn't that frequency illegal?"

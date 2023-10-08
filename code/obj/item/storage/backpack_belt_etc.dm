@@ -867,35 +867,35 @@
 
 //morrigan admin stuff, normal players should never see this
 	morriganlight
-		spawn_contents = list(/obj/item/gun/energy/hafpistol, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate, /obj/item/barrier/morrigan)
+		spawn_contents = list(/obj/item/gun/energy/hafpistol, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/flashbang, /obj/item/barrier/morrigan)
 
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/hafpistol
 
 	morrigancontrol
-		spawn_contents = list(/obj/item/gun/energy/lasershotgun, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
+		spawn_contents = list(/obj/item/gun/energy/lasershotgun, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/fog)
 
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/lasershotgun
 
 	morriganexplorer
-		spawn_contents = list(/obj/item/gun/energy/smgmine, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate, /obj/item/ammo/power_cell/med_power)
+		spawn_contents = list(/obj/item/gun/energy/smgmine, /obj/item/baton/windup/morrigan, /obj/item/ammo/power_cell/med_power)
 
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/smgmine
 
 	morriganheavy
-		spawn_contents = list(/obj/item/gun/energy/laser_rifle, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
+		spawn_contents = list(/obj/item/gun/energy/laser_rifle, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/fog)
 
 		New()
 			..()
 			can_hold += /obj/item/gun/energy/laser_rifle
 
 	morriganmelee
-		spawn_contents = list(/obj/item/tactical_hammer, /obj/item/baton/windup/morrigan, /obj/item/device/ticket_writer/syndicate)
+		spawn_contents = list(/obj/item/tactical_hammer, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/fog, /obj/item/chem_grenade/fog)
 
 
 //////////////////////////////

@@ -59,6 +59,7 @@ var/global/list/soundCache = list(
  	"sound/ambience/morrigan/knockamb.ogg" = 'sound/ambience/morrigan/knockamb.ogg',\
  	"sound/ambience/morrigan/medbayambi.ogg" = 'sound/ambience/morrigan/medbayambi.ogg',\
  	"sound/ambience/morrigan/metaldrop.ogg" = 'sound/ambience/morrigan/metaldrop.ogg',\
+ 	"sound/ambience/morrigan/morriganshipambi.ogg" = 'sound/ambience/morrigan/morriganshipambi.ogg',\
  	"sound/ambience/morrigan/officeambi.ogg" = 'sound/ambience/morrigan/officeambi.ogg',\
  	"sound/ambience/morrigan/printer.ogg" = 'sound/ambience/morrigan/printer.ogg',\
  	"sound/ambience/morrigan/repairamb.ogg" = 'sound/ambience/morrigan/repairamb.ogg',\

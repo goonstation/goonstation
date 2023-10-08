@@ -3616,6 +3616,19 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Magpie Launch Area"
 	icon_state = "yellow"
 
+// Morrigan's Unbidden Macha
+/area/morrigan_ship_space
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/morrigan
+
+/area/morrigan_ship_space/frigate
+	name = "Syndicate Unbidden Macha Frigate"
+	icon_state = "purple"
+	sound_loop = 'sound/ambience/morrigan/morriganshipambi.ogg'
+	sound_loop_vol = 75
+	requires_power = FALSE
+	do_not_irradiate = TRUE
+	sanctuary = TRUE
+
 // Pirate ship:
 /area/pirate_ship
 	name = "Peregrine"
