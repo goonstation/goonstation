@@ -1,5 +1,9 @@
 
 (t)sun oct 08 23
+(u)Kubius
+(p)16191
+(e)🆕🎨|C-Feature, C-Sprites
+(+)A new type of Scientific requisition is available. Its cash reward is lower, but it offers an item reward in return - and sometimes, it's one you can't get elsewhere.
 (u)MylieDaniels
 (p)16337
 (e)🎨📦|C-Sprites, A-Game-Objects
