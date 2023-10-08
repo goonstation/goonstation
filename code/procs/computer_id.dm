@@ -140,7 +140,7 @@ proc/do_computerid_test(var/client/C)
 			C.ckey,
 			C.computer_id,
 			C.address,
-			"Using a modified dreamseeker client."
+			"Using a modified dreamseeker client.",
 			FALSE
 		)
 

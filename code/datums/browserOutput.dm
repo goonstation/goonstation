@@ -192,17 +192,19 @@ var/global
 		if (connData && islist(connData) && length(connData) && connData["connData"])
 			src.connectionHistory = connData["connData"] //lol fuck
 			var/list/found = new()
+			var/list/checkBan = null
 			for (var/i = src.connectionHistory.len; i >= 1; i--)
 				var/list/row = src.connectionHistory[i]
 				if (!row || length(row) < 3 || (!row["ckey"] && !row["compid"] && !row["ip"])) //Passed malformed history object
 					return
-				var/list/checkBan = bansHandler.check(row["ckey"], row["compid"], row["ip"])
+				checkBan = bansHandler.check(row["ckey"], row["compid"], row["ip"])
 				if (checkBan)
 					found = row
 					break
 
 			//Uh oh this fucker has a history of playing on a banned account!!
-			if (length(found) && found["ckey"] != src.owner.ckey)				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
+			if (length(found) && found["ckey"] != src.owner.ckey)
+				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				logTheThing(LOG_DEBUG, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				logTheThing(LOG_DIARY, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])", "debug")
 
@@ -215,8 +217,9 @@ var/global
 					ircbot.export_async("admin", ircmsg)
 
 				//Add evasion ban details
+				var/datum/apiModel/Tracked/BanResource/ban = checkBan["ban"]
 				bansHandler.addDetails(
-					checkBan["ban"].id,
+					ban.id,
 					TRUE,
 					"bot",
 					src.owner.ckey,
