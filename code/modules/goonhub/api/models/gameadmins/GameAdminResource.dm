@@ -5,23 +5,12 @@
 	var/discord_id 		= null // string
 	var/datum/apiModel/Tracked/GameAdminRank/rank = null
 
-/datum/apiModel/Tracked/GameAdminResource/New(
-	id,
-	ckey,
-	name,
-	discord_id,
-	rank,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/GameAdminResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.ckey = ckey
-	src.name = name
-	src.discord_id = discord_id
-	src.rank = rank
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.ckey = response["ckey"]
+	src.name = response["name"]
+	src.discord_id = response["discord_id"]
+	src.rank = response["rank"]
 
 /datum/apiModel/Tracked/GameAdminResource/VerifyIntegrity()
 	if (

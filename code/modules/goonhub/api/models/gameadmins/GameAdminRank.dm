@@ -2,17 +2,9 @@
 /datum/apiModel/Tracked/GameAdminRank
 	var/rank = null // string
 
-/datum/apiModel/Tracked/GameAdminRank/New(
-	id,
-	rank,
-	created_at,
-	updated_at,
-)
+/datum/apiModel/Tracked/GameAdminRank/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.rank = rank
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.rank = response["rank"]
 
 /datum/apiModel/Tracked/GameAdminRank/VerifyIntegrity()
 	if (

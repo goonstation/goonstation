@@ -1,7 +1,7 @@
 
 /// VpnCheckResource
 /datum/apiModel/VpnCheckResource
-	var/id 				= null // integer
+	var/id 			= null // integer
 	var/round_id	= null // integer
 	var/ip			= null // integer
 	var/service		= null // string
@@ -10,25 +10,16 @@
 	var/created_at	= null // date-time
 	var/updated_at	= null // date-time
 
-/datum/apiModel/VpnCheckResource/New(
-	id,
-	round_id,
-	ip,
-	service,
-	response,
-	error,
-	created_at,
-	updated_at
-)
+/datum/apiModel/VpnCheckResource/SetupFromResponse()
 	. = ..()
-	src.id = id
-	src.round_id = round_id
-	src.ip = ip
-	src.service = service
-	src.response = response
-	src.error = error
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.id = response["id"]
+	src.round_id = response["round_id"]
+	src.ip = response["ip"]
+	src.service = response["service"]
+	src.response = response["response"]
+	src.error = response["error"]
+	src.created_at = response["created_at"]
+	src.updated_at = response["updated_at"]
 
 /datum/apiModel/VpnCheckResource/VerifyIntegrity()
 	if (

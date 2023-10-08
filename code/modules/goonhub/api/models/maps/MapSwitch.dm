@@ -4,13 +4,11 @@
 	var/datum/apiModel/Tracked/MapSwitchInternal/map_switch	= null // Model
 	var/status												= null // string
 
-/datum/apiModel/Tracked/MapSwitch/New(
-	map_switch,
-	status
-)
+/datum/apiModel/Tracked/MapSwitch/SetupFromResponse(response)
 	. = ..()
-	src.map_switch	= map_switch
-	src.status		= status
+	src.map_switch = new map_switch
+	src.map_switch = src.map_switch.SetupFromResponse(response["map_switch"])
+	src.status = response["status"]
 
 /datum/apiModel/Tracked/MapSwitch/VerifyIntegrity()
 	if (
@@ -34,25 +32,13 @@
 	var/map				= null // string
 	var/votes			= null // integer
 
-/datum/apiModel/Tracked/MapSwitchInternal/New(
-	id,
-	game_admin_id,
-	round_id,
-	server_id,
-	map,
-	votes,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/MapSwitchInternal/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.game_admin_id = game_admin_id
-	src.round_id = round_id
-	src.server_id = server_id
-	src.map = map
-	src.votes = votes
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.game_admin_id = response["game_admin_id"]
+	src.round_id = response["round_id"]
+	src.server_id = response["server_id"]
+	src.map = response["map"]
+	src.votes = response["votes"]
 
 /datum/apiModel/Tracked/MapSwitchInternal/VerifyIntegrity()
 	if (

@@ -4,13 +4,12 @@
 	var/datum/apiModel/VpnCheckResource/data	= null // Model
 	var/datum/apiModel/VpnCheckModel/meta/meta	= null // Model, defined below
 
-/datum/apiModel/VpnCheckModel/New(
-	data,
-	meta
-)
+/datum/apiModel/VpnCheckModel/SetupFromResponse()
 	. = ..()
-	src.data	= data
-	src.meta	= meta
+	src.data = new data
+	src.data = src.data.SetupFromResponse(response["data"])
+	src.meta = new meta
+	src.meta = src.meta.SetupFromResponse(response["meta"])
 
 /datum/apiModel/VpnCheckModel/VerifyIntegrity()
 	if (
@@ -28,16 +27,13 @@
 
 // metadata for the parent
 /datum/apiModel/VpnCheckModel/meta
-	var/cached			= FALSE // Bool
-	var/whitelisted		= FALSE // Bool
+	var/cached		= FALSE // Bool
+	var/whitelisted	= FALSE // Bool
 
-/datum/apiModel/VpnCheckModel/meta/New(
-	cached,
-	whitelisted
-)
+/datum/apiModel/VpnCheckModel/meta/SetupFromResponse()
 	. = ..()
-	src.cached			= cached
-	src.whitelisted		= whitelisted
+	src.cached		= response["cached"]
+	src.whitelisted	= response["whitelisted"]
 
 /datum/apiModel/VpnCheckModel/meta/VerifyIntegrity()
 	if (
@@ -48,7 +44,7 @@
 
 /datum/apiModel/VpnCheckModel/meta/ToString()
 	. = list()
-	.["cached"]				= src.cached
-	.["whitelisted"]		= src.whitelisted
+	.["cached"]			= src.cached
+	.["whitelisted"]	= src.whitelisted
 	return json_encode(.)
 
