@@ -167,8 +167,8 @@ TYPEINFO(/obj/machinery/phone)
 		else
 			src.ringing = FALSE
 			src.linked.ringing = FALSE
-			if(src.linked.handset.holder && GET_DIST(src.linked.handset,src.linked.handset.holder) < 1)
-				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_answer.ogg',50,0)
+			if(src.linked.handset.get_holder() && GET_DIST(src.linked.handset,src.linked.handset.get_holder()) < 1)
+				src.linked.handset.get_holder().playsound_local(src.linked.handset.get_holder(),'sound/machines/phones/remote_answer.ogg',50,0)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
 		src.icon_state = "[ringing_icon]"
@@ -199,8 +199,8 @@ TYPEINFO(/obj/machinery/phone)
 			if(src.linked && src.linked.answered == FALSE)
 				if(src.last_ring >= 2)
 					src.last_ring = 0
-					if(src.handset && src.handset.holder && GET_DIST(src.handset,src.handset.holder) < 1)
-						src.handset.holder.playsound_local(src.handset.holder,'sound/machines/phones/ring_outgoing.ogg' ,40,0)
+					if(src.handset && src.handset.get_holder() && GET_DIST(src.handset,src.handset.get_holder()) < 1)
+						src.handset.get_holder().playsound_local(src.handset.get_holder(),'sound/machines/phones/ring_outgoing.ogg' ,40,0)
 			else
 				if(src.last_ring >= 2)
 					playsound(src.loc,'sound/machines/phones/ring_incoming.ogg' ,40,0)
@@ -274,8 +274,8 @@ TYPEINFO(/obj/machinery/phone)
 			if(!src.linked.answered) // nobody picked up. Go back to not-ringing state
 				src.linked.icon_state = "[src.linked.phone_icon]"
 				src.linked.UpdateIcon()
-			else if(src.linked.handset && src.linked.handset.holder && GET_DIST(src.linked.handset,src.linked.handset.holder) < 1)
-				src.linked.handset.holder.playsound_local(src.linked.handset.holder,'sound/machines/phones/remote_hangup.ogg',50,0)
+			else if(src.linked.handset && src.linked.handset.get_holder() && GET_DIST(src.linked.handset,src.linked.handset.get_holder()) < 1)
+				src.linked.handset.get_holder().playsound_local(src.linked.handset.get_holder(),'sound/machines/phones/remote_hangup.ogg',50,0)
 			src.linked.ringing = FALSE
 			src.linked.linked = null
 			src.linked = null
@@ -293,8 +293,8 @@ TYPEINFO(/obj/machinery/phone)
 			return
 		src.dialing = TRUE
 		tgui_process?.update_uis(src)
-		if(src.handset.holder && GET_DIST(src.handset,src.handset.holder) < 1)
-			src.handset.holder?.playsound_local(src.handset.holder,'sound/machines/phones/dial.ogg' ,50,0)
+		if(src.handset.get_holder() && GET_DIST(src.handset,src.handset.get_holder()) < 1)
+			src.handset.get_holder()?.playsound_local(src.handset.get_holder(),'sound/machines/phones/dial.ogg' ,50,0)
 		src.last_called = target.unlisted ? "Undisclosed" : "[target.phone_id]"
 		SPAWN(4 SECONDS)
 			// Is it busy?
@@ -328,7 +328,6 @@ TYPEINFO(/obj/machinery/phone)
 	icon = 'icons/obj/machines/phones.dmi'
 	desc = "I wonder if the last crewmember to use this washed their hands before touching it."
 	var/obj/machinery/phone/parent = null
-	var/mob/holder = null //GC WOES (just dont use this var, get holder using loc)
 	flags = TALK_INTO_HAND
 	w_class = W_CLASS_TINY
 
@@ -344,8 +343,13 @@ TYPEINFO(/obj/machinery/phone)
 		src.color = parent_phone.color
 		src.UpdateOverlays(stripe_image, "stripe")
 		if(picker_upper)
-			src.holder = picker_upper
+			src.get_holder() = picker_upper
 		processing_items.Add(src)
+
+	proc/get_holder()
+		RETURN_TYPE(/mob)
+		if(ismob(src.loc))
+			. = src.loc
 
 	update_icon()
 		. = ..()
@@ -353,7 +357,6 @@ TYPEINFO(/obj/machinery/phone)
 
 	disposing()
 		parent = null
-		holder = null
 		processing_items.Remove(src)
 		..()
 
@@ -362,33 +365,28 @@ TYPEINFO(/obj/machinery/phone)
 			qdel(src)
 			return
 		if(src.parent.answered && BOUNDS_DIST(src, src.parent) > 0)
-			boutput(src.holder,"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
-			src.holder.drop_item(src)
+			boutput(src.get_holder(),"<span class='alert'>The phone cord reaches it limit and the handset is yanked back to its base!</span>")
+			src.get_holder().drop_item(src)
 			src.parent.hang_up()
 			processing_items.Remove(src)
 			qdel(src)
-		if(GET_DIST(src,src.holder) >= 1)
-			src.holder = null
+		if(GET_DIST(src,src.get_holder()) >= 1)
+			src.get_holder() = null
 
 
 	talk_into(mob/M as mob, text, secure, real_name, lang_id)
 		..()
-		if(GET_DIST(src,holder) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
+		if(GET_DIST(src, get_holder()) > 0 || !src.parent.linked || !src.parent.linked.handset) // Guess they dropped it? *shrug
 			return
 		var/processed = "<span class='game say'><span class='bold'>[M.name] \[<span style=\"color:[src.color]\"> [bicon(src)] [src.parent.phone_id]</span>\] says, </span> <span class='message'>\"[text[1]]\"</span></span>"
-		var/mob/T = src.parent.linked.handset.holder
+		var/mob/T = src.parent.linked.handset.get_holder()
 		if(T?.client)
-			if(GET_DIST(src.parent.linked.handset,src.parent.linked.handset.holder)<1)
+			if(GET_DIST(src.parent.linked.handset,src.parent.linked.handset.get_holder())<1)
 				T.show_message(processed, 2)
 			M.show_message(processed, 2)
 
 			for (var/obj/item/device/radio/intercom/I in range(3, T))
 				I.talk_into(M, text, null, M.real_name, lang_id)
-
-	// Attempt to pick up the handset
-	attack_hand(mob/living/user)
-		..(user)
-		holder = user
 
 TYPEINFO(/obj/machinery/phone/wall)
 	mats = 25
