@@ -606,6 +606,7 @@ ABSTRACT_TYPE(/obj/item)
 	var/obj/item/stackee
 	if(QDELETED(other))
 		return added
+
 	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
 		if (imrobot)
 			max_stack = 300
@@ -616,15 +617,19 @@ ABSTRACT_TYPE(/obj/item)
 	else
 		stacker = src
 		stackee = other
-	if (stacker != stackee && check_valid_stack(stackee))
-		if (stacker.amount + stackee.amount > max_stack)
-			if (max_stack - stacker.amount < 0) // if this is negative it means the stack amount is higher than max stack, so cancel all this shit
-				return added
-			added = max_stack - stacker.amount
-		else
-			added = stackee.amount
-		stacker.change_stack_amount(added)
-		stackee.change_stack_amount(-added)
+
+	if (stacker == stackee || !check_valid_stack(stackee))
+		return added
+
+	if (stacker.amount + stackee.amount > max_stack)
+		if (max_stack - stacker.amount < 0) // if this is negative it means the stack amount is higher than max stack, so cancel all this shit
+			return added
+		added = max_stack - stacker.amount
+	else
+		added = stackee.amount
+
+	stacker.change_stack_amount(added)
+	stackee.change_stack_amount(-added)
 
 	return added
 
