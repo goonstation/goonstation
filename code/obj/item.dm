@@ -617,7 +617,7 @@ ABSTRACT_TYPE(/obj/item)
 		stacker = src
 		stackee = other
 	if (stacker != stackee && check_valid_stack(stackee))
-		if (src.amount + other.amount > max_stack)
+		if (stacker.amount + stackee.amount > max_stack)
 			if (max_stack - stacker.amount < 0) // if this is negative it means the stack amount is higher than max stack, so cancel all this shit
 				return added
 			added = max_stack - stacker.amount
