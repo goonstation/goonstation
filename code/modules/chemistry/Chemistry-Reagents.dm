@@ -200,7 +200,7 @@ datum
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism")) //fuck
 					deplRate /= 2
-				if (H.organHolder)
+				if (H.organHolder && !ischangeling(H))
 					if (!H.organHolder.liver || H.organHolder.liver.broken)	//if no liver or liver is dead, deplete slower
 						deplRate /= 2
 					if (H.organHolder.get_working_kidney_amt() == 0)	//same with kidneys
@@ -219,7 +219,7 @@ datum
 			if (!holder)
 				holder = M.reagents
 			var/deplRate = depletion_rate
-			if (ishuman(M))
+			if (ishuman(M) && !ischangeling(H))
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism"))
 					deplRate /= 2
