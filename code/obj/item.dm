@@ -602,6 +602,8 @@ ABSTRACT_TYPE(/obj/item)
 	var/added = 0
 	var/imrobot
 	var/imdrone
+	var/obj/item/stacker
+	var/obj/item/stackee
 	if(QDELETED(other))
 		return added
 	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
@@ -609,21 +611,20 @@ ABSTRACT_TYPE(/obj/item)
 			max_stack = 300
 		else if (imdrone)
 			max_stack = 1000
-		if (other != src && check_valid_stack(src))
-			if (src.amount + other.amount > max_stack)
-				added = max_stack - other.amount
-			else
-				added = src.amount
-			src.change_stack_amount(-added)
-			other.change_stack_amount(added)
+		stacker = other
+		stackee = src
 	else
-		if (other != src && check_valid_stack(other))
-			if (src.amount + other.amount > max_stack)
-				added = max_stack - src.amount
-			else
-				added = other.amount
-			src.change_stack_amount(added)
-			other.change_stack_amount(-added)
+		stacker = src
+		stackee = other
+	if (stacker != stackee && check_valid_stack(stackee))
+		if (src.amount + other.amount > max_stack)
+			if (max_stack - stacker.amount < 0)
+				return added
+			added = max_stack - stacker.amount
+		else
+			added = stackee.amount
+		stacker.change_stack_amount(added)
+		stackee.change_stack_amount(-added)
 
 	return added
 
