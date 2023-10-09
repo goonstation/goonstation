@@ -3,7 +3,7 @@
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 /obj/item/reagent_containers/food/snacks/ingredient
 	name = "ingredient"
-	desc = "you shouldnt be able to see this"
+	desc = "you shouldn't be able to see this"
 	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
 	bites_left = 1
 	heal_amt = 0
@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat
 	name = "raw meat"
-	desc = "you shouldnt be able to see this either!!"
+	desc = "you shouldn't be able to see this either!!"
 	icon_state = "meat"
 	heal_amt = 0
 	custom_food = 1
@@ -496,7 +496,7 @@ TYPEINFO(/obj/item/reagent_containers/food/snacks/ingredient/honey)
 				new /obj/item/reagent_containers/food/snacks/ingredient/dough_strip(get_turf(src))
 			qdel(src)
 		else if (istype(W, /obj/item/robodefibrillator))
-			boutput(user, "<span class='notice'>You defibrilate the dough, yielding a perfect stack of flapjacks.</span>")
+			boutput(user, "<span class='notice'>You defibrillate the dough, yielding a perfect stack of flapjacks.</span>")
 			if (prob(25))
 				JOB_XP(user, "Chef", 1)
 			if(prob(1))
@@ -1007,7 +1007,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 
 	heal(var/mob/M)
 		if (istype(M, /mob/living/critter/wraith/plaguerat))
-			boutput(M, "<span class='notice'>This doesnt satisfy your craving for cheese, but its a start.</span>")
+			boutput(M, "<span class='notice'>This doesn't satisfy your craving for cheese, but its a start.</span>")
 			M.reagents.add_reagent("saline", 4)
 			M.reagents.add_reagent("methamphetamine", 2.5)
 		..()
@@ -1025,7 +1025,7 @@ obj/item/reagent_containers/food/snacks/ingredient/pepperoni_log
 
 	heal(var/mob/M)
 		if (istype(M, /mob/living/critter/wraith/plaguerat))
-			boutput(M, "<span class='notice'>This is incredible, but there isnt enough! MORE!</span>")
+			boutput(M, "<span class='notice'>This is incredible, but there isn't enough! MORE!</span>")
 			M.reagents.add_reagent("omnizine", 3)
 			M.reagents.add_reagent("methamphetamine", 3)
 		..()

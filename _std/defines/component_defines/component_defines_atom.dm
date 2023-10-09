@@ -221,6 +221,8 @@
 	#define COMSIG_MOB_RESIST "mob_resist"
 	/// Sent when the mob is affected by an explosion
 	#define COMSIG_MOB_EX_ACT "mob_explosion_act"
+	/// Sent when the mob points at something (point target)
+	#define COMSIG_MOB_POINT "mob_point"
 
 	// ---- cloaking device signal ----
 

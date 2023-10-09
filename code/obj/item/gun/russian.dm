@@ -52,9 +52,9 @@
 				var/obj/l_eye = H.organHolder.drop_organ("left_eye")
 				var/obj/r_eye = H.organHolder.drop_organ("right_eye")
 				var/obj/head = H.organHolder.drop_organ("head")
-				brain.throw_at(pick(nearby_turfs), pick(1,2), 10)
-				l_eye.throw_at(pick(nearby_turfs), pick(1,2), 10)
-				r_eye.throw_at(pick(nearby_turfs), pick(1,2), 10)
+				brain?.throw_at(pick(nearby_turfs), pick(1,2), 10)
+				l_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
+				r_eye?.throw_at(pick(nearby_turfs), pick(1,2), 10)
 				qdel(head)
 			else
 				user.TakeDamage("head", 300, 0)

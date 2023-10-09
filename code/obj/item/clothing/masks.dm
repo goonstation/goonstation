@@ -380,6 +380,12 @@ TYPEINFO(/obj/item/clothing/mask/monkey_translator)
 			src.item_state = "clown_hat"
 			user.show_text("You untuck the wig from the [src].")
 
+	autumn
+		name = "autumn clown wig and mask"
+		desc = "A special clown mask made to celebrate Autumn. Orange you glad you have it!!"
+		icon_state = "clown_autumn"
+		item_state = "clown_autumn"
+
 /obj/item/clothing/mask/gas/syndie_clown
 	name = "clown wig and mask"
 	desc = "I AM THE ONE WHO HONKS."
