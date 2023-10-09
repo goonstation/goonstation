@@ -1401,6 +1401,13 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 		setProperty("rangedprot", 0.3 + prot / 5)
 		setProperty("space_movespeed", 0.15 + prot / 5)
 
+/obj/item/clothing/suit/space/custom/prototype
+	New()
+		..()
+		var/weave = getMaterial("exoweave")
+		var/augment = getMaterial("bohrum")
+		src.set_custom_mats(weave,augment)
+
 // Light space suits
 /obj/item/clothing/suit/space/light // Lighter suits that don't impede movement, but have way less armor
 	name = "light space suit"
@@ -2175,3 +2182,23 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	icon_state = "fakebeewings"
 	item_state = "fakebeewings"
 	c_flags = ONBACK
+
+//Seasonal Stuff
+
+/obj/item/clothing/suit/autumn_cape
+	name = "autumn cape"
+	desc = "A cape made from real processed dried leaves, or so it says on the tag."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "autumn_cape"
+	item_state = "autumn_cape"
+	body_parts_covered = TORSO
+	c_flags = ONBACK
+
+/obj/item/clothing/suit/jacket/autumn_jacket
+	name = "autumn jacket"
+	desc = "A jacket made to look like a pumpkin. It could just as easily be an orange though..."
+	icon = 'icons/obj/clothing/overcoats/item_suit_gimmick.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit_gimmick.dmi'
+	icon_state = "autumn_jacket"
+	item_state = "autumn_jacket"

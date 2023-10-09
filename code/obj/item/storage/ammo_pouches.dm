@@ -234,6 +234,17 @@
 	prevent_holding = list(/obj/item/storage)
 	spawn_contents = list(/obj/item/old_grenade/emp = 5)
 
+/obj/item/storage/wasp_grenade_pouch
+	name = "experimental biological grenade pouch"
+	desc = "A pouch designed to hold experimental biological grenades."
+	icon_state = "ammopouch-wasp"
+	health = 6
+	w_class = W_CLASS_SMALL
+	slots = 5
+	opens_if_worn = TRUE
+	prevent_holding = list(/obj/item/storage)
+	spawn_contents = list(/obj/item/old_grenade/spawner/wasp = 5)
+
 /obj/item/storage/tactical_grenade_pouch
 	name = "tactical grenade pouch"
 	desc = "A pouch designed to hold assorted special-ops grenades."
