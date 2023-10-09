@@ -254,7 +254,7 @@
 	data["antagonist_roles"] = english_list(antagonist_display_names)
 	data["real_name"] = mind.current.real_name
 	data["player"] = mind.displayed_key
-	data["job_role"] = mind.assigned_role || "N/A"
+	data["job_role"] = (mind.assigned_role && mind.assigned_role != "MODE") ? mind.assigned_role : "N/A" //stupid internal "MODE" job
 	data["status"] = status
 	data["objectives"] = objectives
 	data["antagonist_statistics"] = antagonist_statistics
