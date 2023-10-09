@@ -1846,3 +1846,11 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
     desc = "A shirt imbued with the color scheme of the scientifically best icecream flavor."
     icon_state = "mint_chip"
     item_state = "mint_chip"
+
+//Seasonal Stuff
+
+/obj/item/clothing/under/gimmick/clown_autumn
+	name = "autumn clown suit"
+	desc = "Lets you celebrate the season while still remaining autumnomous."
+	icon_state = "clown_autumn"
+	item_state = "clown_autumn"

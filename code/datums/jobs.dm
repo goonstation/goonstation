@@ -254,8 +254,8 @@ ABSTRACT_TYPE(/datum/job/command)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
 	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/hos)
-	slot_poc1 = list(/obj/item/requisition_token/security)
-	slot_poc2 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
+	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
+	slot_poc2 = list(/obj/item/requisition_token/security)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_head = list(/obj/item/clothing/head/hos_hat)
 	slot_ears = list(/obj/item/device/radio/headset/command/hos)
@@ -265,8 +265,8 @@ ABSTRACT_TYPE(/datum/job/command)
 #else
 	slot_back = list(/obj/item/storage/backpack/security)
 	slot_belt = list(/obj/item/device/pda2/hos)
-	slot_poc1 = list(/obj/item/requisition_token/security)
-	slot_poc2 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
+	slot_poc1 = list(/obj/item/storage/security_pouch) //replaces sec starter kit
+	slot_poc2 = list(/obj/item/requisition_token/security)
 	slot_jump = list(/obj/item/clothing/under/rank/head_of_security)
 	slot_suit = list(/obj/item/clothing/suit/armor/vest)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
@@ -2161,14 +2161,14 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		if (!M)
 			return
-		var/obj/item/trinket = M.trinket.deref()
-		trinket.setMaterial(getMaterial("pickle"))
+		var/obj/item/trinket = M.trinket?.deref()
+		trinket?.setMaterial(getMaterial("pickle"))
 		for (var/i in 1 to 3)
 			var/type = pick(trinket_safelist)
 			var/obj/item/pickle = new type(M.loc)
 			pickle.setMaterial(getMaterial("pickle"))
 			M.equip_if_possible(pickle, SLOT_IN_BACKPACK)
-		M.bioHolder.AddEffect("pickle", magical=1)
+		M.bioHolder.AddEffect("pickle", magical=TRUE)
 
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter

@@ -220,7 +220,7 @@
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel sweaty."
-	msgLose = "You feel much more hygenic."
+	msgLose = "You feel much more hygienic."
 	var/personalized_stink = null
 
 	New()
@@ -250,7 +250,7 @@
 
 /datum/bioEffect/dwarf
 	name = "Dwarfism"
-	desc = "Greatly reduces the overall size of the subject, resulting in markedly dimished height."
+	desc = "Greatly reduces the overall size of the subject, resulting in markedly diminished height."
 	id = "dwarf"
 	msgGain = "Did everything just get bigger?"
 	msgLose = "You feel tall!"
@@ -342,7 +342,7 @@
 
 /datum/bioEffect/drunk/pentetic
 	name = "Pentetic Acid Production"
-	desc = "This mutation somehow causes the subject's body to manufacture a potent chellating agent. How exactly it functions is completely unknown."
+	desc = "This mutation somehow causes the subject's body to manufacture a potent chelating agent. How exactly it functions is completely unknown."
 	id = "drunk_pentetic"
 	msgGain = "You feel detoxified."
 	msgLose = "You feel toxic."
