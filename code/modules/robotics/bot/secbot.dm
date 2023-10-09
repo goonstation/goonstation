@@ -1321,13 +1321,13 @@
 
 					//////PDA NOTIFY/////
 
-				var/message2send ="[last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
+				var/message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
 
 				var/datum/signal/signal = get_free_signal()
 				signal.source = src
 				signal.data["sender"] = "00000000"
 				signal.data["command"] = "text_message"
-				signal.data["sender_name"] = "SEC-MAILBOT"
+				signal.data["sender_name"] = "SECURITY-MAILBOT"
 				signal.data["group"] = MGD_SECURITY
 				signal.data["alert"] = MGA_ARREST
 				signal.data["address_1"] = "00000000"

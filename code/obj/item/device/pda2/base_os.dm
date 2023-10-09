@@ -822,7 +822,7 @@
 						return
 
 					if(!sendername)
-						sendername = "!UNKNOWN!"
+						sendername = "!unknown!"
 
 					var/messageFrom = sendername
 					if (senderassignment)
