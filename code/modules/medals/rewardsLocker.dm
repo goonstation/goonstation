@@ -1120,6 +1120,163 @@
 			boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
 			return FALSE
 
+/datum/achievementReward/captain
+	title = "(Skin Set) Captain Uniform"
+	desc = "Will change the skin of captain hats, captain armor/spacesuits, cap backpacks, captain gloves, sabres and captain uniforms back to the familiar green."
+	required_medal = "Tinkerer"
+	once_per_round = FALSE
+
+	rewardActivate(var/mob/activator)
+		if (ishuman(activator))
+			var/mob/living/carbon/human/H = activator
+			var/succ = FALSE
+			if (H.w_uniform)
+				var/obj/item/clothing/M = H.w_uniform
+				if (istype(M, /obj/item/clothing/under/rank/captain))
+					M.name = "captain's uniform"
+					M.desc = "Would you believe terrorists actually want to steal this jumpsuit? It's true!"
+					if (istype(M, /obj/item/clothing/under/rank/captain/fancy))
+						M.icon_state = "captain-fancy"
+						M.item_state = "captain-fancy"
+					else if (istype(M, /obj/item/clothing/under/rank/captain/dress))
+						M.icon_state = "captain-dress"
+						M.item_state = "captain-dress"
+					else
+						M.icon_state = "captain"
+						M.item_state = "captain"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/under/suit/captain))
+					M.name = "\improper Captain's suit"
+					M.desc = "A green suit and yellow necktie. Exemplifies authority."
+					if (istype(M, /obj/item/clothing/under/suit/captain/dress))
+						M.icon_state = "suitG-dress"
+						M.item_state = "suitG-dress"
+					else
+						M.icon_state = "suitG"
+						M.item_state = "suitG"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.wear_suit)
+				var/obj/item/clothing/M = H.wear_suit
+				if (istype(M, /obj/item/clothing/suit/armor/captain))
+					M.icon_state = "caparmor"
+					M.item_state = "caparmor"
+					M.name = "captain's armor"
+					M.desc = "A suit of protective formal armor made for the station's captain."
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				if (istype(M, /obj/item/clothing/suit/armor/capcoat))
+					M.icon_state = "capcoat"
+					M.item_state = "capcoat"
+					M.name = "captain's coat"
+					M.real_name = "captain's coat"
+					M.desc = "A luxorious formal coat made for the station's captain. It seems to be made out of some thermally resistant material."
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/suit/space/captain))
+					M.icon_state = "spacecap"
+					M.item_state = "spacecap"
+					M.name = "captain's space suit"
+					M.desc = "A suit that protects against low pressure environments and is green."
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.gloves)
+				var/obj/item/clothing/gloves/M = H.gloves
+				if (istype(M, /obj/item/clothing/gloves/swat/captain))
+					M.icon_state = "capgloves"
+					M.item_state = "capgloves"
+					M.name = "captain's gloves"
+					M.real_name = "captain's gloves"
+					M.desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
+					H.update_gloves(H.mutantrace.hand_offset)
+					succ = TRUE
+
+			if (H.head)
+				var/obj/item/clothing/M = H.head
+				if (istype(M, /obj/item/clothing/head/caphat))
+					M.icon_state = "captain"
+					M.item_state = "caphat"
+					M.name = "Captain's hat"
+					M.desc = "A symbol of the captain's rank, and the source of all their power."
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/head/helmet/space/captain))
+					M.name = "captain's space helmet"
+					M.desc = "Helps protect against vacuum. Comes in an interesting green befitting the captain."
+					M.icon_state = "space-captain"
+					M.item_state = "space-captain"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/head/helmet/captain))
+					M.name = "captain's helmet"
+					M.desc = "Somewhat protects an important person's head from being bashed in. Comes in a intriqueing shade of green befitting of a captain"
+					M.icon_state = "helmet-captain"
+					M.item_state = "helmet-captain"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				else if (istype(M, /obj/item/clothing/head/bigcaphat))
+					M.name = "Captain of Captain's hat"
+					M.desc = "A symbol of the captain's rank, signifying they're the greatest captain, and the source of all their power."
+					M.icon_state = "captainbig"
+					M.item_state = "caphat"
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if (H.belt)
+				var/obj/item/M = H.belt
+				if (istype(M, /obj/item/swords_sheaths/captain))
+					if (M.item_state == "red_scabbard-cap1" || M.item_state == "blue_scabbard-cap1")
+						qdel(M)
+						H.equip_if_possible(new /obj/item/swords_sheaths/captain(H), SLOT_BELT)
+						succ = TRUE
+
+			if (H.back)
+				if (istype(H.back, /obj/item/storage/backpack/satchel/captain))
+					var/obj/item/storage/backpack/satchel/captain/M = activator.back
+					M.icon_state = "capsatchel"
+					M.item_state = "capsatchel"
+					M.desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+				if (istype(H.back, /obj/item/storage/backpack/captain))
+					var/obj/item/storage/backpack/captain/M = activator.back
+					M.icon_state = "capbackpack"
+					M.item_state = "capbackpack"
+					M.desc = "A fancy designer bag made out of space snake leather and encrusted with plastic expertly made to look like gold."
+					H.set_clothing_icon_dirty()
+					succ = TRUE
+
+			if(H.find_type_in_hand(/obj/item/megaphone))
+				var/obj/item/megaphone/M = H.find_type_in_hand(/obj/item/megaphone)
+				if (!istype(M, /obj/item/megaphone/syndicate))
+					M.icon_state = "megaphone"
+					M.item_state = "megaphone"
+					M.desc = "The captain's megaphone, fancily decorated to match their typical fashion sense. Useful for barking demands at staff assistants or getting your point across."
+					M.maptext_color = "#b0e8b3"
+					M.maptext_outline_color = "#043606"
+					H.update_inhands()
+					succ = TRUE
+				else
+					boutput(H, "<span class='alert'>That megaphone is WAY too loud to disguise.</span>")
+
+
+			if (!succ)
+				boutput(activator, "<span class='alert'>Unable to redeem... What kind of fake captain are you!?</span>")
+			return succ
+		else
+			boutput(activator, "<span class='alert'>Unable to redeem... Only humans can redeem this.</span>")
+			return FALSE
+
 /datum/achievementReward/ai_malf
 	title = "(AI Face) Malfunction"
 	desc = "Turns you into a scary malfunctioning AI! Only in appearance, of course."
