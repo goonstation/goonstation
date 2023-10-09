@@ -219,7 +219,7 @@ datum
 			if (!holder)
 				holder = M.reagents
 			var/deplRate = depletion_rate
-			if (ishuman(M) && !ischangeling(H))
+			if (ishuman(M) && !ischangeling(M))
 				var/mob/living/carbon/human/H = M
 				if (H.traitHolder.hasTrait("slowmetabolism"))
 					deplRate /= 2
