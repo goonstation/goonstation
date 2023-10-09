@@ -2,7 +2,7 @@
 	id = ROLE_REVOLUTIONARY
 	display_name = "revolutionary"
 	antagonist_icon = "rev"
-	display_at_round_end = FALSE
+	succinct_end_of_round_antagonist_entry = TRUE
 	remove_on_death = TRUE
 
 	New()

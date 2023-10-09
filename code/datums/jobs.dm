@@ -2161,14 +2161,14 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		if (!M)
 			return
-		var/obj/item/trinket = M.trinket.deref()
-		trinket.setMaterial(getMaterial("pickle"))
+		var/obj/item/trinket = M.trinket?.deref()
+		trinket?.setMaterial(getMaterial("pickle"))
 		for (var/i in 1 to 3)
 			var/type = pick(trinket_safelist)
 			var/obj/item/pickle = new type(M.loc)
 			pickle.setMaterial(getMaterial("pickle"))
 			M.equip_if_possible(pickle, SLOT_IN_BACKPACK)
-		M.bioHolder.AddEffect("pickle", magical=1)
+		M.bioHolder.AddEffect("pickle", magical=TRUE)
 
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter

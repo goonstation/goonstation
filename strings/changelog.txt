@@ -1,4 +1,24 @@
 
+(t)sun oct 08 23
+(u)Flaborized
+(p)15922
+(e)🎨|C-Sprites
+(+)Autumn has come to the station, changing the plant life's hue and adding a few new items to the clothing booth for just the season. There's also a seasonal special clown costume in the clown hole crate!
+(u)tarmunora
+(e)⚖|C-Balance
+(+)Changeling morph arm DNA cost revision: claw arm 4->0, tendril arm 6->10
+(u)Mr. Moriarty
+(p)16185
+(e)🪲💅📄|C-Bug, C-QoL, A-UI
+(*)Added an antagonists tab to the end of round crew credits.
+(u)Kubius
+(p)16191
+(e)🆕🎨|C-Feature, C-Sprites
+(+)A new type of Scientific requisition is available. Its cash reward is lower, but it offers an item reward in return - and sometimes, it's one you can't get elsewhere.
+(u)MylieDaniels
+(p)16337
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Nukie Knights have a refreshed visual on their Hadar power sword.
 (t)sat oct 07 23
 (u)zjdtmkhzt
 (p)15911
