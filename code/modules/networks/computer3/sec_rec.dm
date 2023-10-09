@@ -54,6 +54,7 @@
 
 	var/setup_acc_filepath = "/logs/sysusr"//Where do we look for login data?
 	var/setup_logdump_name = "seclog" //What name do we give our logdump textfile?
+	var/setup_mailgroup = MGD_SECURITY //The PDA mailgroup used when alerting security pdas to an arrest set.
 	var/setup_mail_freq = FREQ_PDA //Which frequency do we transmit PDA alerts on?
 
 	initialize() //Forms "SECMATE" ascii art. Oh boy.
@@ -818,10 +819,10 @@
 
 			//Create a PDA mass-message string.
 			signal.data["command"] = "text_message"
-			signal.data["sender_name"] = "SECMATE-MAILBOT"
+			signal.data["sender_name"] = "SEC-MAILBOT"
 			signal.data["group"] = MGD_SECURITY
 			signal.data["alert"] = MGA_ARREST
-			signal.data["message"] = "Crewmember \"[perp_name]\" has been flagged for arrest by [src.authenticated]!"
+			signal.data["message"] = "Alert! Crewmember \"[perp_name]\" has been flagged for arrest by [src.authenticated]!"
 
 			src.log_string += "<br>Arrest notification sent."
 			last_arrest_report = world.time

@@ -51,13 +51,13 @@
 	var/setup_system_os_path = /datum/computer/file/pda_program/os/main_os //Needs an operating system to...operate!!
 	var/setup_scanner_on = 1 //Do we search the cart for a scanprog to start loaded?
 	var/setup_default_module = /obj/item/device/pda_module/flashlight //Module to have installed on spawn.
-	var/mailgroups = list(MGD_PARTY) //What default mail groups the PDA is part of.
+	var/mailgroups = list(MGO_STAFF,MGD_PARTY) //What default mail groups the PDA is part of.
 	var/default_muted_groups = list() //What mail/alert groups should the PDA ignore by default
-	var/reserved_mailgroups = list( // Job-specific mail_groups that cannot be joined or left
+	var/reserved_mailgroups = list( // Job-specific mailgroups that cannot be joined or left
 		// Departments
-		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_MINING, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
+		MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_STATIONREPAIR, MGD_BOTANY, MGD_MINING, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 		// Other
-		MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_ROBOTICS, MGO_GENETICS,
+		MGO_STAFF, MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
 	)
 	var/bombproof = 0 // can't be destroyed with detomatix
 	var/exploding = 0
@@ -69,7 +69,7 @@
 	/// A temporary ringtone set for preview purposed
 	var/datum/ringtone/r_tone_temp
 	/// A list of ringtones tied to an alert -- Overrides whatever settings set for their mailgroup. Typically remains static in length
-	var/list/alert_ringtones = list(MGA_DELIVERY = null,\
+	var/list/alert_ringtones = list(MGA_MAIL = null,\
 									MGA_CHECKPOINT = null,\
 									MGA_ARREST = null,\
 									MGA_DEATH = null,\
@@ -79,7 +79,7 @@
 									MGA_RKIT = null,\
 									MGA_SALES = null,\
 									MGA_SHIPPING = null,\
-									MGA_CREWREQUEST = null,\
+									MGA_CARGOREQUEST = null,\
 									MGA_CRISIS = null,\
 									MGA_RADIO = null)
 
@@ -133,13 +133,13 @@
 		bombproof = 1
 		mailgroups = list( // keep in sync with the list of reserved mail groups
 			// Departments
-			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_SCIENCE, MGD_CARGO, MGD_MINING, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
+			MGD_COMMAND, MGD_SECURITY, MGD_MEDBAY, MGD_MEDRESEACH, MGD_SCIENCE, MGD_CARGO, MGD_MINING, MGD_STATIONREPAIR, MGD_BOTANY, MGD_KITCHEN, MGD_SPIRITUALAFFAIRS,
 			// Other
-			MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER, MGO_GENETICS, MGO_ROBOTICS,
+			MGO_AI, MGO_SILICON, MGO_JANITOR, MGO_ENGINEER,
 			// start in party line by default
 			MGD_PARTY,
 		)
-		default_muted_groups = list(MGA_DELIVERY, MGA_SALES, MGA_SHIPPING, MGA_CREWREQUEST, MGA_RKIT)
+		default_muted_groups = list(MGA_MAIL, MGA_SALES, MGA_SHIPPING, MGA_CARGOREQUEST, MGA_RKIT)
 
 	cyborg
 		icon_state = "pda-h"
@@ -162,7 +162,7 @@
 		setup_default_pen = /obj/item/pen/fancy
 		setup_default_cartridge = /obj/item/disk/data/cartridge/medical_director
 		setup_drive_size = 32
-		mailgroups = list(MGO_ROBOTICS,MGO_GENETICS,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
+		mailgroups = list(MGD_MEDRESEACH,MGD_MEDBAY,MGD_COMMAND,MGD_PARTY)
 
 	medical
 		name = "Medical PDA"
@@ -172,13 +172,13 @@
 
 		robotics
 			name = "Robotics PDA"
-			mailgroups = list(MGD_MEDBAY,MGO_ROBOTICS,MGD_PARTY)
+			mailgroups = list(MGD_MEDRESEACH,MGD_PARTY)
 
 	genetics
 		name = "Genetics PDA"
 		icon_state = "pda-gen"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/genetics
-		mailgroups = list(MGD_MEDBAY,MGO_GENETICS,MGD_PARTY)
+		mailgroups = list(MGD_MEDBAY,MGD_MEDRESEACH,MGD_PARTY)
 
 	security
 		name = "Security PDA"
@@ -267,7 +267,8 @@
 		icon_state = "pda-ce"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/chiefengineer
 		setup_default_module = /obj/item/device/pda_module/tray
-		mailgroups = list(MGO_ENGINEER,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO, MGD_COMMAND, MGD_PARTY)
+		mailgroups = list(MGO_ENGINEER,MGD_MINING,MGD_STATIONREPAIR,MGD_CARGO,MGD_COMMAND,MGD_PARTY)
+
 	chef
 		mailgroups = list(MGD_KITCHEN,MGD_PARTY)
 

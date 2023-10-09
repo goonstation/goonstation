@@ -2557,7 +2557,7 @@
 			newsignal.data["sender_name"] = "CYBORG-DAEMON"
 			newsignal.data["message"] = message
 			newsignal.data["address_1"] = "00000000"
-			newsignal.data["group"] = list(MGO_ROBOTICS, MGO_SILICON)
+			newsignal.data["group"] = list(MGD_MEDRESEACH, MGO_SILICON)
 			newsignal.data["alert"] = MGA_DEATH
 			newsignal.data["sender"] = net_id
 

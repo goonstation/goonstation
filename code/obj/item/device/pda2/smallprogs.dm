@@ -867,14 +867,14 @@ Code:
 			if (!(eye_loc.camera_coverage_emitters && length(eye_loc.camera_coverage_emitters)))
 				an_area = get_area(eye_loc)
 
-		signal.data["message"] = "***[uppertext(alert_title)] EMERGENCY*** at [an_area ? an_area.name : "!UNKNOWN!"]"
+		signal.data["message"] = "<b><span class='alert'>***CRISIS ALERT*** Location: [an_area ? an_area.name : "nowhere"]!</span></b>"
 
 		src.post_signal(signal)
 
 		if(isliving(usr) && !remote)
 			playsound(src.master, alert_sound, 60)
 			var/map_text = null
-			map_text = make_chat_maptext(usr, "[alert_title] emergency alert sent.", "font-family: 'Helvetica'; color: [alert_color]; font-size: 7px;", alpha = 215)
+			map_text = make_chat_maptext(usr, "[alert_title] Emergency alert sent.", "font-family: 'Helvetica'; color: [alert_color]; font-size: 7px;", alpha = 215)
 			for (var/mob/O in hearers(usr))
 				O.show_message(assoc_maptext = map_text)
 			usr.visible_message("<span class='alert'>[usr] presses a red button on the side of their [src.master].</span>",
@@ -1271,7 +1271,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 			if (!antispam || (antispam < (ticker.round_elapsed_ticks)) )
 				antispam = ticker.round_elapsed_ticks + SPAM_DELAY
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SUPPLY-MAILBOT",  "group"=MGD_CARGO, "alert"=MGA_CREWREQUEST, "sender"="00000000", "message"="[O.object] requested by [O.orderedby] at [O.console_location].")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=MGD_CARGO, "alert"=MGA_CARGOREQUEST, "sender"="00000000", "message"="Notification: [O.object] requested by [O.orderedby] at [O.console_location].")
 				SEND_SIGNAL(src.master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 			//////////////////

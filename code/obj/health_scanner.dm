@@ -130,5 +130,5 @@ TYPEINFO(/obj/health_scanner)
 
 	proc/crit_alert(var/mob/living/carbon/human/H)
 		var/datum/signal/new_signal = get_free_signal()
-		new_signal.data = list("command"="text_message", "sender_name"="HEALTH-MAILBOT", "sender"="00000000", "address_1"="00000000", "group"=MGD_MEDBAY, "alert"=MGA_MEDCRIT, "message"="[H] in [get_area(src)].")
+		new_signal.data = list("command"="text_message", "sender_name"="HEALTH-MAILBOT", "sender"="00000000", "address_1"="00000000", "group"=MGD_MEDBAY, "alert"=MGA_MEDCRIT, "message"="CRIT ALERT: [H] in [get_area(src)].")
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, new_signal, null, "pda")

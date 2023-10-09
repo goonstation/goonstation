@@ -187,7 +187,7 @@
 		signal.data["sender_name"] = "ENGINE-MAILBOT"
 		signal.data["group"] = MGO_ENGINEER
 		signal.data["alert"] = MGA_ENGINE
-		signal.data["message"] = event_string
+		signal.data["message"] = "Notice: [event_string]"
 		signal.data["sender"] = "00000000"
 		signal.data["address_1"] = "00000000"
 

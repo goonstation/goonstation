@@ -2114,7 +2114,7 @@ TYPEINFO(/obj/disposaloutlet)
 			newsignal.data["message"] = "[message]"
 			newsignal.data["address_1"] = "00000000"
 			newsignal.data["group"] = groups
-			newsignal.data["alert"] = MGA_DELIVERY
+			newsignal.data["alert"] = MGA_MAIL
 			newsignal.data["sender"] = src.net_id
 
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal)

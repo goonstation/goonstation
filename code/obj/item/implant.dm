@@ -262,7 +262,7 @@ THROWING DARTS
 	scan_category = "health"
 	var/healthstring = ""
 	uses_radio = 1
-	mailgroups = list(MGD_MEDBAY, MGD_SPIRITUALAFFAIRS)
+	mailgroups = list(MGD_MEDBAY, MGD_MEDRESEACH, MGD_SPIRITUALAFFAIRS)
 
 	implanted(mob/M, mob/I)
 		..()
@@ -328,7 +328,7 @@ THROWING DARTS
 	proc/health_alert()
 		if (!src.owner)
 			return
-		src.send_message("[src.owner] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
+		src.send_message("HEALTH ALERT: [src.owner] in [get_area(src)]: [src.sensehealth()]", MGA_MEDCRIT, "HEALTH-MAILBOT")
 
 	proc/death_alert()
 		if (!src.owner)
@@ -339,7 +339,7 @@ THROWING DARTS
 			if(cl_implant.owner != src.owner)
 				continue
 			cloner_areas += "[cl_implant.scanned_here]"
-		var/message = "[src.owner] in [myarea], "
+		var/message = "DEATH ALERT: [src.owner] in [myarea], "
 		if (length(cloner_areas))
 			message += "matching cloning records found in [jointext(cloner_areas, ", ")]."
 		else

@@ -5,6 +5,7 @@
 #define MGD_COMMAND "command"
 #define MGD_SECURITY "security"
 #define MGD_MEDBAY "medbay"
+#define MGD_MEDRESEACH "medresearch"
 #define MGD_SCIENCE "science"
 #define MGD_CARGO "cargo"
 #define MGD_STATIONREPAIR "stationrepair"
@@ -15,26 +16,27 @@
 
 // Mail Groups (Other)
 // These cannot be joined or left.
+#define MGO_STAFF "staff"
 #define MGO_AI "ai"
 #define MGO_SILICON "silicon"
 #define MGO_JANITOR "janitor"
 #define MGO_ENGINEER "engineer"
-#define MGO_ROBOTICS "robotics"
-#define MGO_GENETICS "genetics"
+
 
 // Alert Groups
-// Used by automated messages to allow users to ignore some types without muting groups.
-#define MGA_DELIVERY "Delivery Notice"
+// These cannot be joined, and are used by automated PDA Messages
+// They can be muted
+#define MGA_MAIL "Snail Mail Alert"
 #define MGA_CHECKPOINT "Checkpoint Alert"
 #define MGA_ARREST "Arrest Alert"
 #define MGA_DEATH "Death Alert"
 #define MGA_MEDCRIT "Near-Death Alert"
 #define MGA_CLONER "Cloner Alert"
 #define MGA_ENGINE "Engine Alert"
-#define MGA_RKIT "Scan Notice"
-#define MGA_SALES "Sales Notice"
-#define MGA_SHIPPING "Shipping Notice"
-#define MGA_CREWREQUEST "Crew Request"
+#define MGA_RKIT "Mechanic Alert"
+#define MGA_SALES "Sales Alert"
+#define MGA_SHIPPING "Shipping Alert"
+#define MGA_CARGOREQUEST "Cargo Request"
 #define MGA_CRISIS "Crisis Alert"
-#define MGA_RADIO "Radio Station"
+#define MGA_RADIO "Radio Alert"
 #define MGA_TRACKING "Tracking Alert"

@@ -518,8 +518,8 @@
 		if (report_arrests)
 			var/bot_location = get_area(src)
 			var/datum/signal/pdaSignal = get_free_signal()
-			var/message2send = "[src] destroyed in [bot_location]! Officer down!"
-			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SEC-MAILBOT", "group"=MGD_SECURITY, "alert"=MGA_DEATH, "sender"="00000000", "message"="[message2send]")
+			var/message2send = "Notification: [src] destroyed in [bot_location]! Officer down!"
+			pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SECURITY-MAILBOT", "group"=MGD_SECURITY, "alert"=MGA_DEATH, "sender"="00000000", "message"="[message2send]")
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 
 		if(src.exploding) return
@@ -850,7 +850,7 @@
 
 		if(pda_help && !ON_COOLDOWN(src, SECBOT_HELPME_COOLDOWN, src.helpme_cooldown))
 			// HELPMEPLZ
-			var/message2send = "Unit under attack by [src.target] in [get_area(src)]. Requesting backup."
+			var/message2send ="ALERT: Unit under attack by [src.target] in [get_area(src)]. Requesting backup."
 
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src

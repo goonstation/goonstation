@@ -335,11 +335,11 @@ TYPEINFO(/obj/machinery/genetics_booth)
 	proc/notify_sale(var/budget_inc, var/split_with = 0)
 		var/datum/signal/pdaSignal = get_free_signal()
 
-		var/string = "[budget_inc] credits earned from last booth sale."
+		var/string = "Notification: [budget_inc] credits earned from last booth sale."
 		if (split_with)
 			string += " Splitting half of profits with [split_with]."
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=MGO_GENETICS, "alert"=MGA_SALES, "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=MGD_MEDRESEACH, "alert"=MGA_SALES, "sender"="00000000", "message"=string)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 		//playsound BEEP BEEEEEEEEEEP
@@ -349,7 +349,7 @@ TYPEINFO(/obj/machinery/genetics_booth)
 
 		var/string = "[GBP.name] has sold out!"
 
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=MGO_GENETICS, "alert"=MGA_SALES, "sender"="00000000", "message"=string)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="GENEBOOTH-MAILBOT", "group"=MGD_MEDRESEACH, "alert"=MGA_SALES, "sender"="00000000", "message"=string)
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal)
 
 	Cross(var/mob/M)

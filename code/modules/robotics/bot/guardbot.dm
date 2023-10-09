@@ -1962,11 +1962,11 @@
 		var/datum/signal/pdaSignal = get_free_signal()
 		var/message2send
 		if (prob(5))
-			message2send = "Tactical law operation agent [master] reporting grandslam on tango [last_target] for suspected [rand(10,99)]-[rand(1,999)] \"[pick_string("shittybill.txt", "drugs")]-[pick_string("shittybill.txt", "insults")]\" \
+			message2send = "Notification: Tactical law operation agent [master] reporting grandslam on tango [last_target] for suspected [rand(10,99)]-[rand(1,999)] \"[pick_string("shittybill.txt", "drugs")]-[pick_string("shittybill.txt", "insults")]\" \
 			in [bot_location] at grid reference [LT_loc.x][prob(50)?"-niner":""] mark [LT_loc.y][prob(50)?"-niner":""]. Unit requesting law enforcement personnel for further suspect prosecution. [master] over and out."
 			master.speak(message2send)
 		else
-			message2send ="[last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
+			message2send ="Notification: [last_target] detained by [master] in [bot_location] at coordinates [LT_loc.x], [LT_loc.y]."
 		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="BUDDY-MAILBOT", "group"=MGD_SCIENCE, "alert"=MGA_ARREST, "sender"="00000000", "message"="[message2send]")
 		SEND_SIGNAL(master, COMSIG_MOVABLE_POST_RADIO_PACKET, pdaSignal, null, "pda")
 

@@ -120,7 +120,7 @@
 
 		if (message)
 			var/myarea = get_area(src)
-			message = "Mail has arrived in [myarea]."
+			message = "Mail delivery alert in [myarea]."
 
 			if (message && (mailgroup || mailgroup2))
 				var/groups = list()
@@ -128,7 +128,6 @@
 					groups += mailgroup
 				if (mailgroup2)
 					groups += mailgroup2
-
 				var/datum/signal/newsignal = get_free_signal()
 				newsignal.source = src
 				newsignal.data["command"] = "text_message"
@@ -136,7 +135,7 @@
 				newsignal.data["message"] = "[message]"
 				newsignal.data["address_1"] = "00000000"
 				newsignal.data["group"] = groups
-				newsignal.data["alert"] = MGA_DELIVERY
+				newsignal.data["alert"] = MGA_MAIL
 				newsignal.data["sender"] = src.net_id
 
 				SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
@@ -234,16 +233,19 @@
 		name = "Medbay"
 		mail_tag = "medbay"
 		mailgroup = MGD_MEDBAY
+		mailgroup2 = MGD_MEDRESEACH
 		message = 1
 
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = MGO_ROBOTICS
+			mailgroup = MGD_MEDRESEACH
+			mailgroup2 = null
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = MGO_GENETICS
+			mailgroup = MGD_MEDRESEACH
+			mailgroup2 = null
 		pathology
 			name = "Pathology"
 			mail_tag = "pathology"
@@ -601,6 +603,7 @@
 		name = "Medbay"
 		mail_tag = "medbay"
 		mailgroup = MGD_MEDBAY
+		mailgroup2 = MGD_MEDRESEACH
 		message = 1
 
 		north
@@ -616,7 +619,8 @@
 		robotics
 			name = "Robotics"
 			mail_tag = "robotics"
-			mailgroup = MGO_ROBOTICS
+			mailgroup = MGD_MEDRESEACH
+			mailgroup2 = null
 
 			north
 				dir = NORTH
@@ -631,7 +635,8 @@
 		genetics
 			name = "Genetics"
 			mail_tag = "genetics"
-			mailgroup = MGO_GENETICS
+			mailgroup = MGD_MEDRESEACH
+			mailgroup2 = null
 
 			north
 				dir = NORTH

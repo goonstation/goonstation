@@ -381,7 +381,7 @@
 				artifact_resupply_amount -= art_amount
 				// message
 				var/datum/signal/pdaSignal = get_free_signal()
-				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="IMPORT-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "alert"=MGA_SHIPPING, "sender"="00000000", "message"="Incoming artifact resupply crate. ([art_amount] objects)")
+				pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(MGD_CARGO, MGD_SCIENCE), "sender"="00000000", "message"="Notification: Incoming artifact resupply crate. ([art_amount] objects)")
 				radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 				// make crate
 				var/obj/storage/crate/artcrate = new /obj/storage/crate()

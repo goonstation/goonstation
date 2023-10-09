@@ -46,18 +46,19 @@ var/list/job_mailgroup_list = list(
 	"Janitor" = MGD_STATIONREPAIR,
 	"Miner" = MGD_MINING,
 	"Botanist" = MGD_BOTANY,
-	"Rancher" = MGD_BOTANY,
-	"Roboticist" = MGO_ROBOTICS,
-	"Geneticist" = MGO_GENETICS,
+	"Medical Director" = MGD_MEDRESEACH,
+	"Roboticist" = MGD_MEDRESEACH,
+	"Geneticist" = MGD_MEDRESEACH,
+	"Pathologist" = MGD_MEDRESEACH,
 	"Medical Doctor" = MGD_MEDBAY,
 	"Chaplain" = MGD_SPIRITUALAFFAIRS)
 
-
-// Groups that show on messenger by default
+//Used for PDA department paging.
 var/list/page_departments = list(
 	"Command" = MGD_COMMAND,
 	"Security" = MGD_SECURITY,
 	"Medbay" = MGD_MEDBAY,
+	"Med Research" = MGD_MEDRESEACH,
 	"Science" = MGD_SCIENCE,
 	"Station Repair" = MGD_STATIONREPAIR,
 	"Cargo" = MGD_CARGO,

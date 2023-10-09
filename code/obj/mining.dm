@@ -2484,7 +2484,7 @@ TYPEINFO(/obj/submachine/cargopad)
 		mailgroup = MGD_BOTANY
 		name = "Hydroponics Pad"
 	robotics
-		mailgroup = MGO_ROBOTICS
+		mailgroup = MGD_MEDRESEACH
 		name = "Robotics Pad"
 	artlab
 		mailgroup = MGD_SCIENCE
@@ -2521,8 +2521,8 @@ TYPEINFO(/obj/submachine/cargopad)
 			var/area/area = get_area(src)
 			if (istype(area, /area/station/hydroponics) || istype(area, /area/station/storage/hydroponics) || istype(area, /area/station/ranch))
 				src.mailgroup = MGD_BOTANY
-			else if (istype(area, /area/station/medical/robotics))
-				src.mailgroup = MGO_ROBOTICS
+			else if (istype(area, /area/station/medical))
+				src.mailgroup = MGD_MEDRESEACH
 			else if (istype(area, /area/station/science) || istype(area, /area/research_outpost))
 				src.mailgroup = MGD_SCIENCE
 			else if (istype(area, /area/station/engine))
@@ -2571,7 +2571,7 @@ TYPEINFO(/obj/submachine/cargopad)
 		if (!src.mailgroup)
 			return
 		var/datum/signal/pdaSignal = get_free_signal()
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="SUPPLY-MAILBOT",  "group"=src.mailgroup, "alert"=MGA_DELIVERY, "sender"="00000000", "message"="Incoming delivery to [src.name].")
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT",  "group"=list(src.mailgroup), "sender"="00000000", "message"="Notification: Incoming delivery to [src.name].")
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 // satchels -> obj/item/satchel.dm
