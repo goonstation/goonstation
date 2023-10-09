@@ -3867,10 +3867,15 @@
 		name = "Firefighting foam"
 		id = "ff-foam"
 		result = "ff-foam"
-		required_reagents = list("chlorine" = 1, "carbon" = 1, "sulfur" = 1)
-		result_amount = 3
+		required_reagents = list("chlorine" = 1, "carbon" = 1, "nickel" = 1)
+		result_amount = 2
 		mix_phrase = "The mixture bubbles gently."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			// nickel is a catalyst and does not get used in the process
+			holder.add_reagent("nickel", created_volume / 2,,holder.total_temperature, chemical_reaction = TRUE)
+
 
 	foam
 		name = "Foam"

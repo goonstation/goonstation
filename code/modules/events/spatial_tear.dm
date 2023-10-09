@@ -1,7 +1,7 @@
 /datum/random_event/major/spatial_tear
 	name = "Spatial Tear"
 	centcom_headline = "Spatial Anomaly"
-	centcom_message = "A severe spatial anomaly has been detected near the station. Personnel are advised to avoid any unusual phenomenae."
+	centcom_message = "A severe spatial anomaly has been detected near the station. Personnel are advised to avoid any unusual phenomena."
 	centcom_origin = ALERT_ANOMALY
 	required_elapsed_round_time = 10 MINUTES
 

@@ -21,7 +21,7 @@
 	var/cur_weight = 0
 
 /datum/storage/no_hud/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass,
-		slots, sneaky, opens_if_worn, list/params)
+		slots, sneaky, stealthy_storage, opens_if_worn, list/params)
 	..()
 	src.use_inventory_counter = params["use_inventory_counter"] || initial(src.use_inventory_counter)
 	src.show_count = params["show_count"] || initial(src.show_count)

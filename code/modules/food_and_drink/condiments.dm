@@ -3,7 +3,7 @@
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 /obj/item/reagent_containers/food/snacks/condiment
 	name = "condiment"
-	desc = "you shouldnt be able to see this"
+	desc = "you shouldn't be able to see this"
 	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
 	amount = 1
 	heal_amt = 0
@@ -40,7 +40,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	name = "ketchup"
-	desc = "Pureéd tomatoes as a sauce."
+	desc = "Puréed tomatoes as a sauce."
 	icon_state = "sachet-ketchup"
 	initial_volume = 30
 	initial_reagents = list("ketchup"=20)

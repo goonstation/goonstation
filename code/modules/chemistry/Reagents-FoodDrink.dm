@@ -544,7 +544,7 @@ datum
 		fooddrink/alcoholic/moonshine
 			name = "moonshine"
 			id = "moonshine"
-			description = "An illegaly brewed and highly potent alcoholic beverage."
+			description = "An illegally brewed and highly potent alcoholic beverage."
 			reagent_state = LIQUID
 			value = 5
 			taste = "painfully strong"

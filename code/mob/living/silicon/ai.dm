@@ -157,7 +157,7 @@ or don't if it uses a custom topopen overlay
 		"medical" = "The casing is made out of a white plastic and has a prominent red stripe painted down the front.",
 		"ntold" = "A much older model of NanoTrasen AI core. The stark white has faded to eggshell with time.",
 		"bee" = "The casing has been painted and given little plastic antennae to make it resemble a bee!",
-		"shock" = "The casing is painted a luminecient blue and has what looks to be neon light tubes built into it!",
+		"shock" = "The casing is painted a luminescent blue and has what looks to be neon light tubes built into it!",
 		"gold" = "The casing seems to be made out of gold. No, wait. Looking closer, you think that's actually pyrite.",
 		"engineering" = "The casing is made out of a buffed metal and has a prominent orange stripe painted down the front.",
 		"soviet" = "The latest in Soviet artificial intelligence technology. And by latest, you mean this thing looks like it's been collecting dust for decades.",
@@ -177,7 +177,7 @@ or don't if it uses a custom topopen overlay
 		"mauxite" = "The core has been hammered together out of jagged sheets of mauxite.",
 		"flock" = "The casing is made out of a humming teal material. It pulses and flares to a strange rhythm.",
 		"crt" = "The core appears to be a... CRT television. Huh.",
-		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octogonal prism at all, it's just a cube!",
+		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octagonal prism at all, it's just a cube!",
 		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors."
 	)
 
@@ -2099,10 +2099,10 @@ or don't if it uses a custom topopen overlay
 
 	if(printalerts)
 		printalerts = 0
-		boutput(message_mob, "No longer recieving alert messages.")
+		boutput(message_mob, "No longer receiving alert messages.")
 	else
 		printalerts = 1
-		boutput(message_mob, "Now recieving alert messages.")
+		boutput(message_mob, "Now receiving alert messages.")
 
 /mob/living/silicon/ai/verb/access_internal_pda()
 	set category = "AI Commands"
