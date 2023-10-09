@@ -189,6 +189,8 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 	var/contained_in
 	///Plural description of that container - beakers, patches, pills, etc. First letter capitalized. Should be set if contained_in is set.
 	var/container_name
+	///If set to true, entirety of requested reagent must be within a single reagent container in the shipment
+	var/single_container = FALSE
 
 	rc_eval(atom/eval_item)
 		. = ..()
@@ -201,9 +203,13 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent)
 					C += eval_item.reagents.get_reagent_amount(chemplural)
 			else // If there's just the one, check for it directly
 				C = eval_item.reagents.get_reagent_amount(src.chem_ids)
-			if(C)
+			if(single_container && C >= count) // for single-container evaluation
 				rollcount += C
-				. = TRUE // Let manager know reagent was found in passed eval item
+				. = TRUE
+			else
+				if(C)
+					rollcount += C
+					. = TRUE // Let manager know reagent was found in passed eval item
 
 ///Seed entry. Searches for seeds of the correct crop name, typically matching a particular genetic makeup.
 ABSTRACT_TYPE(/datum/rc_entry/seed)
@@ -340,10 +346,13 @@ ABSTRACT_TYPE(/datum/req_contract)
 					src.requis_desc += "[rce.count]x [rce.name]<br>"
 				if(RC_REAGENT)
 					var/datum/rc_entry/reagent/rchem = rce
-					if(rchem.container_name)
-						src.requis_desc += "[rchem.container_name] containing [rchem.count]+ unit[s_es(rchem.count)] of [rchem.name]<br>"
+					if(rchem.single_container)
+						src.requis_desc += "[rchem.count] unit[s_es(rchem.count)] of [rchem.name] in discrete vessel<br>"
 					else
-						src.requis_desc += "[rchem.count]+ unit[s_es(rchem.count)] of [rchem.name]<br>"
+						if(rchem.container_name)
+							src.requis_desc += "[rchem.container_name] containing [rchem.count]+ unit[s_es(rchem.count)] of [rchem.name]<br>"
+						else
+							src.requis_desc += "[rchem.count]+ unit[s_es(rchem.count)] of [rchem.name]<br>"
 				if(RC_STACK)
 					src.requis_desc += "[rce.count]+ [rce.name]<br>"
 				if(RC_SEED)
