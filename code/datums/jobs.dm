@@ -2168,6 +2168,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 			var/obj/item/pickle = new type(M.loc)
 			pickle.setMaterial(getMaterial("pickle"))
 			M.equip_if_possible(pickle, SLOT_IN_BACKPACK)
+		M.bioHolder.RemoveEffect("midas") //just in case mildly mutated has given us midas I guess?
 		M.bioHolder.AddEffect("pickle", magical=TRUE)
 
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
