@@ -96,3 +96,7 @@
 #define LACES_TIED 1
 #define LACES_CUT 2
 #define LACES_NONE -1
+
+//glove side for iconstate stuff
+#define GLOVE_HAS_LEFT 1
+#define GLOVE_HAS_RIGHT 2
