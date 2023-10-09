@@ -1,4 +1,7 @@
-
+(t)mon oct 09 23
+(u)Flappybat
+(e)⚖|C-Balance
+(+)Scaling of number of traitors vs crew in the Traitor game mode has been adjusted to move the maximum of 5 traitors from a minimum of 35 to 40 crew. RP scaling unchanged.
 (t)sun oct 08 23
 (u)Flaborized
 (p)15922
