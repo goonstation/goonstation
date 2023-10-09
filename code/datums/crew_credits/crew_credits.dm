@@ -7,7 +7,6 @@
 /datum/crewCredits/New()
 	. = ..()
 	src.crew_tab_data = list(
-		CREW_TAB_SECTION_ANTAGONIST = list(),
 		CREW_TAB_SECTION_CAPTAIN = list(),
 		CREW_TAB_SECTION_SECURITY = list(),
 		CREW_TAB_SECTION_MEDICAL = list(),
@@ -63,10 +62,6 @@
 		// Crew Tab Data:
 		"groups" = list(
 			list(
-				"title" = "Antagonists",
-				"crew" = src.crew_tab_data[CREW_TAB_SECTION_ANTAGONIST],
-			),
-			list(
 				"title" = "Captain" + (length(src.crew_tab_data[CREW_TAB_SECTION_CAPTAIN]) == 1 ? "" : "s"),
 				"crew" = src.crew_tab_data[CREW_TAB_SECTION_CAPTAIN],
 			),
@@ -108,9 +103,6 @@
 
 /// For a specified mind, creates an entry in `crew_tab_data` containing the applicable information.
 /datum/crewCredits/proc/generate_crew_member_data(datum/mind/mind)
-	if (mind.is_antagonist())
-		src.crew_tab_data[CREW_TAB_SECTION_ANTAGONIST] += src.bundle_crew_member_data(mind, TRUE)
-
 	if(!mind.assigned_role)
 		return
 
@@ -140,7 +132,7 @@
 	src.crew_tab_data["[crew_tab_section]"] += src.bundle_crew_member_data(mind)
 
 /// Concatenates data on a specifed mind into a list in order to be appended to `crew_tab_data`.
-/datum/crewCredits/proc/bundle_crew_member_data(var/datum/mind/mind, generate_antagonist_data = FALSE)
+/datum/crewCredits/proc/bundle_crew_member_data(var/datum/mind/mind)
 	var/is_head = FALSE
 	var/list/antagonist_display_names = list()
 
@@ -150,15 +142,6 @@
 				continue
 
 			antagonist_display_names += capitalize(antagonist_role.display_name)
-
-		if (generate_antagonist_data)
-			return list(list(
-				"real_name" = mind.current.real_name,
-				"dead" = isdead(mind.current),
-				"player" = mind.displayed_key,
-				"role" = english_list(antagonist_display_names),
-				"head" = is_head,
-			))
 
 	if (!mind.assigned_role)
 		return

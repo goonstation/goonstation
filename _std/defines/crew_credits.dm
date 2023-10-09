@@ -1,7 +1,6 @@
 /// DEBUG: Populates the end-game crew credits with fake names and antagonists. Note that some data entries will be nonsensical.
 //#define CREW_CREDITS_DEBUGGING
 
-#define CREW_TAB_SECTION_ANTAGONIST "antagonist"
 #define CREW_TAB_SECTION_CAPTAIN "captain"
 #define CREW_TAB_SECTION_SECURITY "security"
 #define CREW_TAB_SECTION_MEDICAL "medical"
