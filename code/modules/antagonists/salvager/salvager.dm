@@ -118,13 +118,8 @@
 	wages = 0
 	limit = 0
 	linkcolor = "#acbb27"
-	slot_ears = list() // So they don't get a default headset and stuff first.
 	slot_card = null
-	slot_glov = list()
-	slot_foot = list()
-	slot_back = list()
-	slot_belt = list()
-	spawn_id = 0
+	spawn_id = FALSE
 	radio_announcement = FALSE
 	add_to_manifest = FALSE
 

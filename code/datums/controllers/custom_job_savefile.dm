@@ -38,21 +38,21 @@ datum/job_controller/proc/savefile_save(client/user, profileNum=1)
 	F["[profileNum]_wages"] << src.job_creator.wages
 	F["[profileNum]_limit"] << src.job_creator.limit
 	F["[profileNum]_mob_type"] << src.job_creator.mob_type
-	F["[profileNum]_slot_head"] << src.job_creator.slot_head
-	F["[profileNum]_slot_mask"] << src.job_creator.slot_mask
-	F["[profileNum]_slot_ears"] << src.job_creator.slot_ears
-	F["[profileNum]_slot_eyes"] << src.job_creator.slot_eyes
-	F["[profileNum]_slot_glov"] << src.job_creator.slot_glov
-	F["[profileNum]_slot_foot"] << src.job_creator.slot_foot
 	F["[profileNum]_slot_card"] << src.job_creator.slot_card
-	F["[profileNum]_slot_jump"] << src.job_creator.slot_jump
-	F["[profileNum]_slot_suit"] << src.job_creator.slot_suit
-	F["[profileNum]_slot_back"] << src.job_creator.slot_back
-	F["[profileNum]_slot_belt"] << src.job_creator.slot_belt
-	F["[profileNum]_slot_poc1"] << src.job_creator.slot_poc1
-	F["[profileNum]_slot_poc2"] << src.job_creator.slot_poc2
-	F["[profileNum]_slot_lhan"] << src.job_creator.slot_lhan
-	F["[profileNum]_slot_rhan"] << src.job_creator.slot_rhan
+	F["[profileNum]_slot_head"] << src.job_creator.outfit.slot_head
+	F["[profileNum]_slot_mask"] << src.job_creator.outfit.slot_mask
+	F["[profileNum]_slot_ears"] << src.job_creator.outfit.slot_ears
+	F["[profileNum]_slot_eyes"] << src.job_creator.outfit.slot_eyes
+	F["[profileNum]_slot_gloves"] << src.job_creator.outfit.slot_gloves
+	F["[profileNum]_slot_shoes"] << src.job_creator.outfit.slot_shoes
+	F["[profileNum]_slot_under"] << src.job_creator.outfit.slot_under
+	F["[profileNum]_slot_outer"] << src.job_creator.outfit.slot_outer
+	F["[profileNum]_slot_back"] << src.job_creator.outfit.slot_back
+	F["[profileNum]_slot_belt"] << src.job_creator.outfit.slot_belt
+	F["[profileNum]_left_pocket"] << src.job_creator.outfit.left_pocket
+	F["[profileNum]_right_pocket"] << src.job_creator.outfit.right_pocket
+	F["[profileNum]_left_hand"] << src.job_creator.outfit.left_hand
+	F["[profileNum]_right_hand"] << src.job_creator.outfit.right_hand
 	F["[profileNum]_access"] << src.job_creator.access
 	F["[profileNum]_change_name_on_spawn"] << src.job_creator.change_name_on_spawn
 	if(istext(src.job_creator.special_spawn_location))
@@ -64,8 +64,8 @@ datum/job_controller/proc/savefile_save(client/user, profileNum=1)
 	F["[profileNum]_bio_effects"] << src.job_creator.bio_effects
 	F["[profileNum]_objective"] << src.job_creator.objective
 	F["[profileNum]_receives_implant"] << src.job_creator.receives_implant
-	F["[profileNum]_items_in_backpack"] << src.job_creator.items_in_backpack
-	F["[profileNum]_items_in_belt"] << src.job_creator.items_in_belt
+	F["[profileNum]_backpack_items"] << src.job_creator.outfit.backpack_items
+	F["[profileNum]_belt_items"] << src.job_creator.outfit.belt_items
 	F["[profileNum]_announce_on_join"] << src.job_creator.announce_on_join
 	F["[profileNum]_add_to_manifest"] << src.job_creator.add_to_manifest
 	F["[profileNum]_radio_announcement"] << src.job_creator.radio_announcement
@@ -102,21 +102,21 @@ datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
 	F["[profileNum]_wages"] >> src.job_creator.wages
 	F["[profileNum]_limit"] >> src.job_creator.limit
 	F["[profileNum]_mob_type"] >> src.job_creator.mob_type
-	F["[profileNum]_slot_head"] >> src.job_creator.slot_head
-	F["[profileNum]_slot_mask"] >> src.job_creator.slot_mask
-	F["[profileNum]_slot_ears"] >> src.job_creator.slot_ears
-	F["[profileNum]_slot_eyes"] >> src.job_creator.slot_eyes
-	F["[profileNum]_slot_glov"] >> src.job_creator.slot_glov
-	F["[profileNum]_slot_foot"] >> src.job_creator.slot_foot
 	F["[profileNum]_slot_card"] >> src.job_creator.slot_card
-	F["[profileNum]_slot_jump"] >> src.job_creator.slot_jump
-	F["[profileNum]_slot_suit"] >> src.job_creator.slot_suit
-	F["[profileNum]_slot_back"] >> src.job_creator.slot_back
-	F["[profileNum]_slot_belt"] >> src.job_creator.slot_belt
-	F["[profileNum]_slot_poc1"] >> src.job_creator.slot_poc1
-	F["[profileNum]_slot_poc2"] >> src.job_creator.slot_poc2
-	F["[profileNum]_slot_lhan"] >> src.job_creator.slot_lhan
-	F["[profileNum]_slot_rhan"] >> src.job_creator.slot_rhan
+	F["[profileNum]_slot_head"] >> src.job_creator.outfit.slot_head
+	F["[profileNum]_slot_mask"] >> src.job_creator.outfit.slot_mask
+	F["[profileNum]_slot_ears"] >> src.job_creator.outfit.slot_ears
+	F["[profileNum]_slot_eyes"] >> src.job_creator.outfit.slot_eyes
+	F["[profileNum]_slot_gloves"] >> src.job_creator.outfit.slot_gloves
+	F["[profileNum]_slot_shoes"] >> src.job_creator.outfit.slot_shoes
+	F["[profileNum]_slot_under"] >> src.job_creator.outfit.slot_under
+	F["[profileNum]_slot_outer"] >> src.job_creator.outfit.slot_outer
+	F["[profileNum]_slot_back"] >> src.job_creator.outfit.slot_back
+	F["[profileNum]_slot_belt"] >> src.job_creator.outfit.slot_belt
+	F["[profileNum]_left_pocket"] >> src.job_creator.outfit.left_pocket
+	F["[profileNum]_right_pocket"] >> src.job_creator.outfit.right_pocket
+	F["[profileNum]_left_hand"] >> src.job_creator.outfit.left_hand
+	F["[profileNum]_right_hand"] >> src.job_creator.outfit.right_hand
 	F["[profileNum]_access"] >> src.job_creator.access
 	F["[profileNum]_change_name_on_spawn"] >> src.job_creator.change_name_on_spawn
 	src.job_creator.special_spawn_location = null
@@ -132,12 +132,12 @@ datum/job_controller/proc/savefile_load(client/user, var/profileNum = 1)
 	F["[profileNum]_bio_effects"] >> src.job_creator.bio_effects
 	F["[profileNum]_objective"] >> src.job_creator.objective
 	F["[profileNum]_receives_implant"] >> src.job_creator.receives_implant
-	F["[profileNum]_items_in_backpack"] >> src.job_creator.items_in_backpack
-	if(isnull(src.job_creator.items_in_backpack))
-		src.job_creator.items_in_backpack = list()
-	F["[profileNum]_items_in_belt"] >> src.job_creator.items_in_belt
-	if(isnull(src.job_creator.items_in_belt))
-		src.job_creator.items_in_belt = list()
+	F["[profileNum]_items_in_backpack"] >> src.job_creator.outfit.backpack_items
+	if(isnull(src.job_creator.outfit.backpack_items))
+		src.job_creator.outfit.backpack_items = list()
+	F["[profileNum]_items_in_belt"] >> src.job_creator.outfit.belt_items
+	if(isnull(src.job_creator.outfit.belt_items))
+		src.job_creator.outfit.belt_items = list()
 	F["[profileNum]_announce_on_join"] >> src.job_creator.announce_on_join
 	F["[profileNum]_add_to_manifest"] >> src.job_creator.add_to_manifest
 	F["[profileNum]_radio_announcement"] >> src.job_creator.radio_announcement

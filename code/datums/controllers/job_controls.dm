@@ -1,11 +1,11 @@
 var/datum/job_controller/job_controls
 
-/datum/job_controller/
+/datum/job_controller
 	var/list/staple_jobs = list()
 	var/list/special_jobs = list()
 	var/list/hidden_jobs = list() // not visible to players, for admin stuff, like the respawn panel
 	var/allow_special_jobs = 1 // hopefully this doesn't break anything!!
-	var/datum/job/job_creator = null
+	var/datum/job/created/job_creator = null
 
 	var/loaded_save = 0
 	var/last_client = null
@@ -118,26 +118,26 @@ var/datum/job_controller/job_controls
 		dat += "<BR>"
 		if (ispath(src.job_creator.mob_type, /mob/living/carbon/human))
 			dat += "<A href='?src=\ref[src];EditMutantrace=1'>Mutantrace:</A> [src.job_creator.starting_mutantrace]<br>"
-			dat += "<A href='?src=\ref[src];EditHeadgear=1'>Starting Headgear:</A> [english_list(src.job_creator.slot_head)]<br>"
-			dat += "<A href='?src=\ref[src];EditMask=1'>Starting Mask:</A>  [english_list(src.job_creator.slot_mask)]<br>"
-			dat += "<A href='?src=\ref[src];EditHeadset=1'>Starting Headset:</A> [english_list(src.job_creator.slot_ears)]<br>"
-			dat += "<A href='?src=\ref[src];EditGlasses=1'>Starting Glasses:</A> [english_list(src.job_creator.slot_eyes)]<br>"
-			dat += "<A href='?src=\ref[src];EditOvercoat=1'>Starting Overcoat:</A> [english_list(src.job_creator.slot_suit)]<br>"
-			dat += "<A href='?src=\ref[src];EditJumpsuit=1'>Starting Jumpsuit:</A> [english_list(src.job_creator.slot_jump)]<br>"
+			dat += "<A href='?src=\ref[src];EditHeadgear=1'>Starting Headgear:</A> [english_list(src.job_creator.outfit.slot_head)]<br>"
+			dat += "<A href='?src=\ref[src];EditMask=1'>Starting Mask:</A>  [english_list(src.job_creator.outfit.slot_mask)]<br>"
+			dat += "<A href='?src=\ref[src];EditHeadset=1'>Starting Headset:</A> [english_list(src.job_creator.outfit.slot_ears)]<br>"
+			dat += "<A href='?src=\ref[src];EditGlasses=1'>Starting Glasses:</A> [english_list(src.job_creator.outfit.slot_eyes)]<br>"
+			dat += "<A href='?src=\ref[src];EditOvercoat=1'>Starting Overcoat:</A> [english_list(src.job_creator.outfit.slot_outer)]<br>"
+			dat += "<A href='?src=\ref[src];EditJumpsuit=1'>Starting Jumpsuit:</A> [english_list(src.job_creator.outfit.slot_under)]<br>"
 			dat += "<A href='?src=\ref[src];EditIDCard=1'>Starting ID Card:</A> [src.job_creator.slot_card]<br>"
-			dat += "<A href='?src=\ref[src];EditGloves=1'>Starting Gloves:</A> [english_list(src.job_creator.slot_glov)]<br>"
-			dat += "<A href='?src=\ref[src];EditShoes=1'>Starting Shoes:</A> [english_list(src.job_creator.slot_foot)]<br>"
-			dat += "<A href='?src=\ref[src];EditBack=1'>Starting Back Item:</A> [english_list(src.job_creator.slot_back)]<br>"
-			dat += "<A href='?src=\ref[src];EditBelt=1'>Starting Belt Item:</A> [english_list(src.job_creator.slot_belt)]<br>"
-			dat += "<A href='?src=\ref[src];EditPock1=1'>Starting 1st Pocket Item:</A> [english_list(src.job_creator.slot_poc1)]<br>"
-			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [english_list(src.job_creator.slot_poc2)]<br>"
-			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [english_list(src.job_creator.slot_lhan)]<br>"
-			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [english_list(src.job_creator.slot_rhan)]<br>"
+			dat += "<A href='?src=\ref[src];EditGloves=1'>Starting Gloves:</A> [english_list(src.job_creator.outfit.slot_gloves)]<br>"
+			dat += "<A href='?src=\ref[src];EditShoes=1'>Starting Shoes:</A> [english_list(src.job_creator.outfit.slot_shoes)]<br>"
+			dat += "<A href='?src=\ref[src];EditBack=1'>Starting Back Item:</A> [english_list(src.job_creator.outfit.slot_back)]<br>"
+			dat += "<A href='?src=\ref[src];EditBelt=1'>Starting Belt Item:</A> [english_list(src.job_creator.outfit.slot_belt)]<br>"
+			dat += "<A href='?src=\ref[src];EditPock1=1'>Starting 1st Pocket Item:</A> [english_list(src.job_creator.outfit.left_pocket)]<br>"
+			dat += "<A href='?src=\ref[src];EditPock2=1'>Starting 2nd Pocket Item:</A> [english_list(src.job_creator.outfit.right_pocket)]<br>"
+			dat += "<A href='?src=\ref[src];EditLhand=1'>Starting Left Hand Item:</A> [english_list(src.job_creator.outfit.left_hand)]<br>"
+			dat += "<A href='?src=\ref[src];EditRhand=1'>Starting Right Hand Item:</A> [english_list(src.job_creator.outfit.right_hand)]<br>"
 			dat += "<A href='?src=\ref[src];EditImpl=1'>Starting Implant:</A> [src.job_creator.receives_implant]<br>"
 			for(var/i in 1 to 7)
-				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [length(src.job_creator.items_in_backpack) >= i ? src.job_creator.items_in_backpack[i] : null]<br>"
+				dat += "<A href='?src=\ref[src];EditBpItem=[i]'>Starting Backpack Item [i]:</A> [length(src.job_creator.outfit.backpack_items) >= i ? src.job_creator.outfit.backpack_items[i] : null]<br>"
 			for(var/i in 1 to 7)
-				dat += "<A href='?src=\ref[src];EditBeltItem=[i]'>Starting Belt Item [i]:</A> [length(src.job_creator.items_in_belt) >= i ? src.job_creator.items_in_belt[i] : null]<br>"
+				dat += "<A href='?src=\ref[src];EditBeltItem=[i]'>Starting Belt Item [i]:</A> [length(src.job_creator.outfit.belt_items) >= i ? src.job_creator.outfit.belt_items[i] : null]<br>"
 			dat += "<A href='?src=\ref[src];GetAccess=1'>Set Access Permissions </A>"
 			if (length(src.job_creator.access) > 1)
 				dat += " "
@@ -296,7 +296,7 @@ var/datum/job_controller/job_controls
 		if(href_list["EditHeadgear"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_head = null
+					src.job_creator.outfit.slot_head = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -316,14 +316,14 @@ var/datum/job_controller/job_controls
 						usr.show_text("No headgear matching that name", "red")
 						return
 
-					src.job_creator.slot_head = list(picker)
+					src.job_creator.outfit.slot_head = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditMask"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_mask = null
+					src.job_creator.outfit.slot_mask = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -343,14 +343,14 @@ var/datum/job_controller/job_controls
 						usr.show_text("No mask matching that name", "red")
 						return
 
-					src.job_creator.slot_mask = list(picker)
+					src.job_creator.outfit.slot_mask = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditHeadset"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_ears = null
+					src.job_creator.outfit.slot_ears = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -370,14 +370,14 @@ var/datum/job_controller/job_controls
 						usr.show_text("No headset matching that name", "red")
 						return
 
-					src.job_creator.slot_ears = list(picker)
+					src.job_creator.outfit.slot_ears = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditGlasses"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_eyes = null
+					src.job_creator.outfit.slot_eyes = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -397,14 +397,14 @@ var/datum/job_controller/job_controls
 						usr.show_text("No glasses matching that name", "red")
 						return
 
-					src.job_creator.slot_eyes = list(picker)
+					src.job_creator.outfit.slot_eyes = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditOvercoat"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_suit = null
+					src.job_creator.outfit.slot_outer = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -424,14 +424,14 @@ var/datum/job_controller/job_controls
 						usr.show_text("No exosuit matching that name", "red")
 						return
 
-					src.job_creator.slot_suit = list(picker)
+					src.job_creator.outfit.slot_outer = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditJumpsuit"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_jump = null
+					src.job_creator.outfit.slot_under = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -451,7 +451,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No jumpsuit matching that name", "red")
 						return
 
-					src.job_creator.slot_jump = list(picker)
+					src.job_creator.outfit.slot_under = list(picker)
 
 			src.job_creator()
 
@@ -487,7 +487,7 @@ var/datum/job_controller/job_controls
 		if(href_list["EditGloves"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_glov = null
+					src.job_creator.outfit.slot_gloves = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -507,14 +507,14 @@ var/datum/job_controller/job_controls
 						usr.show_text("No gloves matching that name", "red")
 						return
 
-					src.job_creator.slot_glov = list(picker)
+					src.job_creator.outfit.slot_gloves = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditShoes"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_foot = null
+					src.job_creator.outfit.slot_shoes = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -534,14 +534,14 @@ var/datum/job_controller/job_controls
 						usr.show_text("No shoes matching that name", "red")
 						return
 
-					src.job_creator.slot_foot = list(picker)
+					src.job_creator.outfit.slot_shoes = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditBack"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_back = null
+					src.job_creator.outfit.slot_back = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -572,14 +572,14 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_back = list(picker)
+					src.job_creator.outfit.slot_back = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditBelt"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_belt = null
+					src.job_creator.outfit.slot_belt = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -608,14 +608,14 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_belt = list(picker)
+					src.job_creator.outfit.slot_belt = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditPock1"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_poc1 = null
+					src.job_creator.outfit.left_pocket = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -644,14 +644,14 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_poc1 = list(picker)
+					src.job_creator.outfit.left_pocket = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditPock2"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_poc2 = null
+					src.job_creator.outfit.right_pocket = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -680,14 +680,14 @@ var/datum/job_controller/job_controls
 							return
 						qdel(check)
 
-					src.job_creator.slot_poc2 = list(picker)
+					src.job_creator.outfit.right_pocket = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditLhand"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_lhan = null
+					src.job_creator.outfit.left_hand = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -707,14 +707,14 @@ var/datum/job_controller/job_controls
 						usr.show_text("No item matching that name", "red")
 						return
 
-					src.job_creator.slot_lhan = list(picker)
+					src.job_creator.outfit.left_hand = list(picker)
 
 			src.job_creator()
 
 		if(href_list["EditRhand"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					src.job_creator.slot_rhan = null
+					src.job_creator.outfit.right_hand = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -734,7 +734,7 @@ var/datum/job_controller/job_controls
 						usr.show_text("No item matching that name", "red")
 						return
 
-					src.job_creator.slot_rhan = picker
+					src.job_creator.outfit.right_hand = picker
 
 			src.job_creator()
 
@@ -770,8 +770,8 @@ var/datum/job_controller/job_controls
 			var/slot_num = text2num(href_list["EditBpItem"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					if(length(src.job_creator.items_in_backpack) >= slot_num)
-						src.job_creator.items_in_backpack[slot_num] = null
+					if(length(src.job_creator.outfit.backpack_items) >= slot_num)
+						src.job_creator.outfit.backpack_items[slot_num] = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -791,9 +791,9 @@ var/datum/job_controller/job_controls
 						usr.show_text("No item matching that name", "red")
 						return
 
-					while(length(src.job_creator.items_in_backpack) < slot_num)
-						src.job_creator.items_in_backpack += null
-					src.job_creator.items_in_backpack[slot_num] = picker
+					while(length(src.job_creator.outfit.backpack_items) < slot_num)
+						src.job_creator.outfit.backpack_items += null
+					src.job_creator.outfit.backpack_items[slot_num] = picker
 
 			src.job_creator()
 
@@ -802,8 +802,8 @@ var/datum/job_controller/job_controls
 			var/slot_num = text2num(href_list["EditBeltItem"])
 			switch(alert("Clear or reselect slotted item?","Job Creator","Clear","Reselect"))
 				if("Clear")
-					if(length(src.job_creator.items_in_belt) >= slot_num)
-						src.job_creator.items_in_belt[slot_num] = null
+					if(length(src.job_creator.outfit.belt_items) >= slot_num)
+						src.job_creator.outfit.belt_items[slot_num] = null
 
 				if("Reselect")
 					var/list/L = list()
@@ -823,9 +823,9 @@ var/datum/job_controller/job_controls
 						usr.show_text("No item matching that name", "red")
 						return
 
-					while(length(src.job_creator.items_in_belt) < slot_num)
-						src.job_creator.items_in_belt += null
-					src.job_creator.items_in_belt[slot_num] = picker
+					while(length(src.job_creator.outfit.belt_items) < slot_num)
+						src.job_creator.outfit.belt_items += null
+					src.job_creator.outfit.belt_items[slot_num] = picker
 
 			src.job_creator()
 
@@ -919,21 +919,21 @@ var/datum/job_controller/job_controls
 				JOB.wages = src.job_creator.wages
 				JOB.limit = src.job_creator.limit
 				JOB.mob_type = src.job_creator.mob_type
-				JOB.slot_head = src.job_creator.slot_head
-				JOB.slot_mask = src.job_creator.slot_mask
-				JOB.slot_ears = src.job_creator.slot_ears
-				JOB.slot_eyes = src.job_creator.slot_eyes
-				JOB.slot_glov = src.job_creator.slot_glov
-				JOB.slot_foot = src.job_creator.slot_foot
+				JOB.outfit.slot_head = src.job_creator.outfit.slot_head
+				JOB.outfit.slot_mask = src.job_creator.outfit.slot_mask
+				JOB.outfit.slot_ears = src.job_creator.outfit.slot_ears
+				JOB.outfit.slot_eyes = src.job_creator.outfit.slot_eyes
+				JOB.outfit.slot_gloves = src.job_creator.outfit.slot_gloves
+				JOB.outfit.slot_shoes = src.job_creator.outfit.slot_shoes
 				JOB.slot_card = src.job_creator.slot_card
-				JOB.slot_jump = src.job_creator.slot_jump
-				JOB.slot_suit = src.job_creator.slot_suit
-				JOB.slot_back = src.job_creator.slot_back
-				JOB.slot_belt = src.job_creator.slot_belt
-				JOB.slot_poc1 = src.job_creator.slot_poc1
-				JOB.slot_poc2 = src.job_creator.slot_poc2
-				JOB.slot_lhan = src.job_creator.slot_lhan
-				JOB.slot_rhan = src.job_creator.slot_rhan
+				JOB.outfit.slot_under = src.job_creator.outfit.slot_under
+				JOB.outfit.slot_outer = src.job_creator.outfit.slot_outer
+				JOB.outfit.slot_back = src.job_creator.outfit.slot_back
+				JOB.outfit.slot_belt = src.job_creator.outfit.slot_belt
+				JOB.outfit.left_pocket = src.job_creator.outfit.left_pocket
+				JOB.outfit.right_pocket = src.job_creator.outfit.right_pocket
+				JOB.outfit.left_hand = src.job_creator.outfit.left_hand
+				JOB.outfit.right_hand = src.job_creator.outfit.right_hand
 				JOB.access = JOB.access | src.job_creator.access
 				JOB.change_name_on_spawn = src.job_creator.change_name_on_spawn
 				JOB.special_spawn_location = src.job_creator.special_spawn_location
@@ -943,8 +943,8 @@ var/datum/job_controller/job_controls
 				JOB.radio_announcement = src.job_creator.radio_announcement
 				JOB.add_to_manifest = src.job_creator.add_to_manifest
 				JOB.receives_implant = src.job_creator.receives_implant
-				JOB.items_in_backpack = src.job_creator.items_in_backpack
-				JOB.items_in_belt = src.job_creator.items_in_belt
+				JOB.outfit.backpack_items = src.job_creator.outfit.backpack_items
+				JOB.outfit.belt_items = src.job_creator.outfit.belt_items
 				JOB.spawn_id = src.job_creator.spawn_id
 				JOB.starting_mutantrace = src.job_creator.starting_mutantrace
 				message_admins("Admin [key_name(usr)] created special job [JOB.name]")

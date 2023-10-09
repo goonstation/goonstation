@@ -136,20 +136,10 @@ Contents:
 	name = "Samurai"
 	limit = 0
 	wages = 0
-//	slot_belt = /obj/item/swords_sheaths/katana
-	slot_jump = list(/obj/item/clothing/under/gimmick/hakama/random)
-	slot_head = list(/obj/item/clothing/head/bandana/random_color)
-	slot_foot = list(/obj/item/clothing/shoes/sandal/magic/wizard)
-	slot_rhan = null
-	slot_lhan = list(/obj/item/dojohammer)
-	slot_belt = list(/obj/item/swords_sheaths/katana/reverse)
-	slot_back = list(/obj/item/storage/backpack/randoseru)
-	slot_card = null
-	slot_ears = null
+	outfit = /datum/outfit/samurai
 
 	special_setup(mob/M, no_special_spawn)
 		. = ..()
-
 
 // Objects
 
