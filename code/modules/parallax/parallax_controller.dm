@@ -154,8 +154,8 @@
 	var/datum/component/complexsignal/outermost_movable/C = src.GetComponent(/datum/component/complexsignal/outermost_movable)
 	var/atom/movable/outermost_movable = C.get_outermost_movable()
 	src.client.parallax_controller.outermost_movable = outermost_movable
-	src.update_area_parallax(null, get_area(src.client.parallax_controller.previous_turf), get_area(outermost_movable))
-	src.update_z_level_parallax(null, src.client.parallax_controller.previous_turf?.z, outermost_movable.z)
+	src.update_area_parallax(null, null, get_area(outermost_movable))
+	src.update_z_level_parallax(null, null, outermost_movable.z)
 
 /mob/proc/unregister_parallax_signals()
 	if (!src.GetComponent(/datum/component/complexsignal/outermost_movable))
