@@ -1188,7 +1188,6 @@ Frequency:
 			return
 
 
-
 /datum/statusEffect/low_signal
 	id = "low_signal"
 	name = "Low Signal"
@@ -1217,7 +1216,6 @@ Frequency:
 				H.hud.update_active_tool()
 				H.show_text("Insufficient signal to maintain control of tools.")
 
-
 	onRemove()
 		. = ..()
 		if (QDELETED(owner) || !ismob(owner)) return
@@ -1227,7 +1225,7 @@ Frequency:
 /datum/lifeprocess/hivebot_signal
 	process(var/datum/gas_mixture/environment)
 		if(hivebot_owner?.mainframe)
-			if((hivebot_owner.mainframe.z == hivebot_owner.z) || (inunrestrictedz(hivebot_owner) && inonstationz(hivebot_owner.mainframe)))
+			if((get_step(hivebot_owner.mainframe, 0)?.z == get_step(hivebot_owner, 0)?.z) || (inunrestrictedz(hivebot_owner) && inonstationz(hivebot_owner.mainframe)))
 				hivebot_owner.delStatus("low_signal")
 			else
 				hivebot_owner.setStatus("low_signal", INFINITE_STATUS)
