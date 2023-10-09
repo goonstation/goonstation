@@ -215,8 +215,14 @@ TYPEINFO(/obj/player_piano)
 	proc/is_pulser_auto_linking(var/mob/M)
 		if(ispulsingtool(M.l_hand) && SEND_SIGNAL(M.l_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
 		if(ispulsingtool(M.r_hand) && SEND_SIGNAL(M.r_hand, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE)) return TRUE
-		if(istype(M, /mob/living/silicon))
-			for(var/atom/A in M:module_states)
+		if(istype(M, /mob/living/silicon/robot))
+			var/mob/living/silicon/robot/silicon_user = M
+			for(var/atom/A in silicon_user.module_states)
+				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
+					return TRUE
+		if(istype(M, /mob/living/silicon/hivebot))
+			var/mob/living/silicon/hivebot/silicon_user = M
+			for(var/atom/A in silicon_user.module_states)
 				if(ispulsingtool(A) && SEND_SIGNAL(A, COMSIG_IS_PLAYER_PIANO_AUTO_LINKER_ACTIVE))
 					return TRUE
 		return FALSE
