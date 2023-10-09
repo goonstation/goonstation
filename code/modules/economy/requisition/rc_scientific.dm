@@ -85,11 +85,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 	New()
 		src.name = pick(namevary)
+		src.payout += rand(0,9) * 100
 		src.flavor_desc = "[pick(desc_wherestudy)] seeking [pick(desc_whatstudy)] for [pick(desc_whystudy)].[pick(desc_bonusflavor)]"
-		src.flavor_desc += "<br><i>REQHUB ADVISORY: Parameters from contract issuer indicate the following NT-recognized reagents to be compositionally adequate</i>"
+		src.flavor_desc += "<br><br><i>REQHUB ADVISORY: Parameters from contract issuer indicate the following NT-recognized reagents to be compositionally adequate</i>"
 		src.flavor_desc += "<br>BLOOD | SYNTHFLESH | BEFF | PEPPERONI | MEAT SLURRY"
 
-		src.rc_entries += rc_buildentry(/datum/rc_entry/stack/reagent/clonejuice,rand(8,15)*20)
+		src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/clonejuice,rand(8,15)*20)
 		..()
 
 /datum/rc_entry/reagent/clonejuice
