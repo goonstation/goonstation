@@ -403,7 +403,7 @@
 
 		// give PDA group messages
 		var/datum/signal/pdaSignal = get_free_signal()
-		var/message = "[price] credits earned from outgoing artifact \'[sell_art.name]\'. "
+		var/message = "Notification: [price] credits earned from outgoing artifact \'[sell_art.name]\'. "
 		if(pap)
 			if (pap.lastAnalysis == 3)
 				message += "Analysis was correct."
@@ -411,7 +411,7 @@
 				message += "Analysis was incorrect. Misidentified traits: [pap.lastAnalysisErrors]."
 		else
 			message += "Artifact was not analyzed."
-		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="EXPORT-MAILBOT", "group"=list(MGD_CARGO, MGD_SCIENCE), "alert"=MGA_SALES, "sender"="00000000", "message"=message)
+		pdaSignal.data = list("address_1"="00000000", "command"="text_message", "sender_name"="CARGO-MAILBOT", "group"=list(MGD_CARGO, MGD_SCIENCE), "alert"=MGA_SALES, "sender"="00000000", "message"=message)
 		radio_controller.get_frequency(FREQ_PDA).post_packet_without_source(pdaSignal)
 
 	// Returns value of whatever the list of objects would sell for
