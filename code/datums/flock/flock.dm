@@ -761,7 +761,7 @@ proc/get_default_flock()
 // PROCESS
 
 /datum/flock/proc/relay_process()
-	if (src.total_compute() > 300)
+	if (src.total_compute() > FLOCK_RELAY_COMPUTE_COST - 300)
 		for (var/mob/living/intangible/flock/flockmob in (src.traces + src.flockmind))
 			if (flockmob.GetComponent(/datum/component/tracker_hud/flock))
 				continue
@@ -780,7 +780,7 @@ proc/get_default_flock()
 				T.ReplaceWith(/turf/simulated/floor/feather)
 			new /obj/flock_structure/relay(get_turf(src.center_marker), src)
 		else
-			src.center_marker.alpha = max(0, src.total_compute() - 300)
+			src.center_marker.alpha = max(0, src.total_compute() - (FLOCK_RELAY_COMPUTE_COST-255))
 
 /datum/flock/proc/process()
 	if (src.relay_allowed)

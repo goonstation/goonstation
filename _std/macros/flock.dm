@@ -29,9 +29,9 @@
 #define FLOCK_REPAIR_COST 10
 #define FLOCK_GHOST_DEPOSIT_AMOUNT 10
 
-#define FLOCK_RELAY_COMPUTE_COST 500 // total compute, also make sure to update flockmindTips.html if changing this
+#define FLOCK_RELAY_COMPUTE_COST 1000 // total compute, also make sure to update flockmindTips.html if changing this
 
-#define FLOCKTRACE_COMPUTE_COST 100 // total compute
+#define FLOCKTRACE_COMPUTE_COST 200 // total compute
 
 // achievements
 #define FLOCK_ACHIEVEMENT_CHEAT_STRUCTURES "all_structures"
