@@ -175,6 +175,13 @@
 		if (helmMat.getTexture())
 			src.setTexture(helmMat.getTexture(), helmMat.getTextureBlendMode(), "material")
 
+/obj/item/clothing/head/helmet/space/custom/prototype
+	New()
+		..()
+		var/weave = getMaterial("exoweave")
+		var/augment = getMaterial("plasmaglass")
+		src.set_custom_mats(weave,augment)
+
 // Sealab helmets
 
 /obj/item/clothing/head/helmet/space/engineer/diving //hijacking engiehelms for the flashlight

@@ -113,6 +113,8 @@
 		else if (N2O_pp > 0.5)	// There is sleeping gas in their lungs, but only a little, so give them a bit of a warning
 			if (probmult(20))
 				update.emotes |= pick("giggle", "laugh")
+		breath.nitrogen += breath.nitrous_oxide //it gets converted to nitrogen via magic. I'm no biochemist.
+		breath.nitrous_oxide = 0
 
 		if (prob(15) && (FARD_pp > fart_smell_min))
 			boutput(donor, "<span class='alert'>Smells like someone [pick("died","soiled themselves","let one rip","made a bad fart","peeled a dozen eggs")] in here!</span>")

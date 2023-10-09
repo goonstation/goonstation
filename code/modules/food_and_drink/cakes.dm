@@ -34,7 +34,7 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake1-base_custom"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	bites_left = 0
+	bites_left = 12
 	heal_amt = 2
 	fill_amt = 20 //2 per slice
 	use_bite_mask = FALSE
@@ -492,8 +492,9 @@
 			frost_cake(W,user)
 			return
 		else if(istype(W,/obj/item/reagent_containers/food/snacks/cake))
-			stack_cake(W,user)
-			return
+			if(src != W)
+				stack_cake(W,user)
+				return
 		else if(cake_candle.len && !(litfam) && (W.firesource))
 			src.ignite()
 			W.firesource_interact()

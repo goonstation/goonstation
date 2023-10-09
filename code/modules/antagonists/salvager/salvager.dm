@@ -106,12 +106,18 @@
 
 		starting_freq = .
 
-	handle_round_end(log_data)
-		var/list/dat = ..()
-		if (length(dat))
-			dat.Insert(2,"They collected [src.salvager_points] points worth of material.")
-			logTheThing(LOG_DIARY, src.owner, "collected [src.salvager_points || 0] points worth of material.")
-		return dat
+	handle_round_end()
+		. = ..()
+
+		logTheThing(LOG_DIARY, src.owner, "collected [src.salvager_points || 0] points worth of material.")
+
+	get_statistics()
+		return list(
+			list(
+				"name" = "Collected Material Points",
+				"value" = "[src.salvager_points]",
+			)
+		)
 
 /datum/job/special/salvager
 	name = "Salvager"

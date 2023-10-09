@@ -40,6 +40,10 @@ TYPEINFO(/obj/item/device/multitool)
 	return 1
 
 /obj/item/device/multitool/afterattack(atom/target, mob/user , flag)
+	. = ..()
+	get_and_return_netid(target,user)
+
+/proc/get_and_return_netid(atom/target, mob/user)
 	//Get the NETID from bots/computers/everything else
 	//There's a lot of local vars so this is somewhat evil code
 	//Tried to keep it self contained, read only, and tried to do the appropriate checks

@@ -139,7 +139,7 @@
 
 	cristal_champagne
 		name = "Cristal Champagne"
-		desc = "Fizzy wine used in most prestigeous celebrations. It is also very famous in space hip-hip culture."
+		desc = "Fizzy wine used in most prestigious celebrations. It is also very famous in space hip-hip culture."
 		icon_state = "bottle-champagne"
 		bottle_style = "champagne"
 		fluid_style = "champagne"
@@ -296,7 +296,7 @@
 
 /obj/item/reagent_containers/food/drinks/moonshine
 	name = "jug of moonshine"
-	desc = "A jug of an illegaly brewed alchoholic beverage, which is quite potent."
+	desc = "A jug of an illegally brewed alcoholic beverage, which is quite potent."
 	icon_state = "moonshine"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
@@ -305,7 +305,7 @@
 
 /obj/item/reagent_containers/food/drinks/curacao
 	name = "curaçao liqueur"
-	desc = "A bottle of curaçao liqueur, made from the dried peels of the bitter orange Lahara."
+	desc = "A bottle of curaçao liqueur, made from the dried peels of the bitter orange Laraha."
 	icon_state = "curacao"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
@@ -351,7 +351,7 @@
 
 	maraschino_cherry
 		name = "maraschino cherry"
-		desc = "A sweet, vibrantly red little cherry, which has been preserved in maraschino liquer, which is made from maraschino cherries. Huh."
+		desc = "A sweet, vibrantly red little cherry, which has been preserved in maraschino liqueur, which is made from maraschino cherries. Huh."
 		icon_state = "cherry"
 		edible = 1
 
