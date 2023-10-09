@@ -9553,7 +9553,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/incandescent,
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "aOu" = (
