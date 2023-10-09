@@ -308,9 +308,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	..()
 	if (src.icon_random)
 		src.icon_state = "lpop-[rand(1,6)]"
-	else
-		SPAWN(0)
-			src.UpdateIcon()
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/update_icon()
 	if (src.icon_random)
@@ -329,10 +326,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical/New()
 	..()
-	SPAWN(0)
-		if (islist(src.flavors) && length(src.flavors))
-			for (var/i=5, i>0, i--)
-				src.reagents.add_reagent(pick(src.flavors), 1)
+	if (islist(src.flavors) && length(src.flavors))
+		for (var/i=5, i>0, i--)
+			src.reagents.add_reagent(pick(src.flavors), 1)
+	src.UpdateIcon()
 
 /obj/item/reagent_containers/food/snacks/candy/sugar_cube
 	name = "sugar cube"
