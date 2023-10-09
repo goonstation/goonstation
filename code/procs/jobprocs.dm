@@ -329,98 +329,6 @@ var/global/totally_random_jobs = FALSE
 		picks = FindOccupationCandidates(staff,JOB.name,3)
 	return picks
 
-/proc/equip_job_items(var/datum/job/JOB, var/mob/living/carbon/human/H)
-	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
-	if (JOB.slot_jump && length(JOB.slot_jump) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_jump), SLOT_W_UNIFORM)
-	else if (length(JOB.slot_jump))
-		H.equip_new_if_possible(JOB.slot_jump[1], SLOT_W_UNIFORM)
-	// Backpack and contents
-	if (JOB.slot_back && length(JOB.slot_back) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_back), SLOT_BACK)
-	else if (length(JOB.slot_back))
-		H.equip_new_if_possible(JOB.slot_back[1], SLOT_BACK)
-	if (JOB.slot_back && length(JOB.items_in_backpack))
-		for (var/X in JOB.items_in_backpack)
-			if(ispath(X))
-				H.equip_new_if_possible(X, SLOT_IN_BACKPACK)
-	// Belt and contents
-	if (JOB.slot_belt && length(JOB.slot_belt) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_belt), SLOT_BELT)
-	else if (length(JOB.slot_belt))
-		H.equip_new_if_possible(JOB.slot_belt[1], SLOT_BELT)
-	if (JOB.slot_belt && length(JOB.items_in_belt) && H.belt?.storage)
-		for (var/X in JOB.items_in_belt)
-			if(ispath(X))
-				H.equip_new_if_possible(X, SLOT_IN_BELT)
-	// Footwear
-	if (JOB.slot_foot && length(JOB.slot_foot) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_foot), SLOT_SHOES)
-	else if (length(JOB.slot_foot))
-		H.equip_new_if_possible(JOB.slot_foot[1], SLOT_SHOES)
-	// Suit
-	if (JOB.slot_suit && length(JOB.slot_suit) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_suit), SLOT_WEAR_SUIT)
-	else if (length(JOB.slot_suit))
-		H.equip_new_if_possible(JOB.slot_suit[1], SLOT_WEAR_SUIT)
-	// Ears
-	if (JOB.slot_ears && length(JOB.slot_ears) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_ears), SLOT_EARS)
-	else if (length(JOB.slot_ears))
-		if (!(H.traitHolder && H.traitHolder.hasTrait("allears") && ispath(JOB.slot_ears[1],
-	/obj/item/device/radio/headset)))
-			H.equip_new_if_possible(JOB.slot_ears[1], SLOT_EARS)
-	// Mask
-	if (JOB.slot_mask && length(JOB.slot_mask) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_mask), SLOT_WEAR_MASK)
-	else if (length(JOB.slot_mask))
-		H.equip_new_if_possible(JOB.slot_mask[1], SLOT_WEAR_MASK)
-	// Gloves
-	if (JOB.slot_glov && length(JOB.slot_glov) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_glov), SLOT_GLOVES)
-	else if (length(JOB.slot_glov))
-		H.equip_new_if_possible(JOB.slot_glov[1], SLOT_GLOVES)
-	// Eyes
-	if (JOB.slot_eyes && length(JOB.slot_eyes) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_eyes), SLOT_GLASSES)
-	else if (length(JOB.slot_eyes))
-		H.equip_new_if_possible(JOB.slot_eyes[1], SLOT_GLASSES)
-	// Head
-	if (JOB.slot_head && length(JOB.slot_head) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_head), SLOT_HEAD)
-	else if (length(JOB.slot_head))
-		H.equip_new_if_possible(JOB.slot_head[1], SLOT_HEAD)
-	// Left pocket
-	if (JOB.slot_poc1 && length(JOB.slot_poc1) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_L_STORE)
-	else if (length(JOB.slot_poc1))
-		H.equip_new_if_possible(JOB.slot_poc1[1], SLOT_L_STORE)
-	// Right pocket
-	if (JOB.slot_poc2 && length(JOB.slot_poc2) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc2), SLOT_R_STORE)
-	else if (length(JOB.slot_poc2))
-		H.equip_new_if_possible(JOB.slot_poc2[1], SLOT_R_STORE)
-	// Left hand
-	if (JOB.slot_lhan && length(JOB.slot_lhan) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_L_HAND)
-	else if (length(JOB.slot_lhan))
-		H.equip_new_if_possible(JOB.slot_lhan[1], SLOT_L_HAND)
-	// Right hand
-	if (JOB.slot_rhan && length(JOB.slot_rhan) > 1)
-		H.equip_new_if_possible(weighted_pick(JOB.slot_poc1), SLOT_R_HAND)
-	else if (length(JOB.slot_rhan))
-		H.equip_new_if_possible(JOB.slot_rhan[1], SLOT_R_HAND)
-
-	#ifdef APRIL_FOOLS
-	H.back?.setMaterial(getMaterial("jean"))
-	H.gloves?.setMaterial(getMaterial("jean"))
-	H.wear_suit?.setMaterial(getMaterial("jean"))
-	H.wear_mask?.setMaterial(getMaterial("jean"))
-	H.w_uniform?.setMaterial(getMaterial("jean"))
-	H.shoes?.setMaterial(getMaterial("jean"))
-	H.head?.setMaterial(getMaterial("jean"))
-	#endif
-
 //hey i changed this from a /human/proc to a /living/proc so that critters (from the job creator) would latejoin properly	-- MBC
 /mob/living/proc/Equip_Rank(rank, joined_late, no_special_spawn)
 	SHOULD_NOT_SLEEP(TRUE)
@@ -603,8 +511,8 @@ var/global/totally_random_jobs = FALSE
 		src.equip_if_possible(new /obj/item/device/radio/headset/deaf(src), SLOT_EARS)
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
-	equip_job_items(JOB, src)
-	if (JOB.slot_back)
+	src.equip_outfit(JOB.outfit)
+	if (initial(JOB.outfit.slot_back)) // :(
 		if (src.back?.storage)
 			if(JOB.receives_disk)
 				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
@@ -831,7 +739,7 @@ var/global/totally_random_jobs = FALSE
 		boutput(src, "<span class='alert'><b>UH OH, the game couldn't find your job to set it up! Report this to a coder.</b></span>")
 		return
 
-	equip_job_items(JOB, src)
+	src.equip_outfit(JOB.outfit)
 
 	if (ishuman(src) && JOB.spawn_id)
 		src.spawnId(JOB)
