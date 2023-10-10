@@ -201,7 +201,7 @@
 	make_my_stuff()
 		if (.)
 			name = "Order #[rand(100,10000)]"
-			var/amount_to_spawn = rand(2, 5)
+			var/amount_to_spawn = rand(2, 10)
 			for (var/amount = 0, amount < amount_to_spawn, amount++)
 				var/thing_to_spawn = pick(random_shit_to_spawn)
 				var/contra_to_spawn = pick(contraband_items)
@@ -216,11 +216,16 @@
 		density = 1
 		icon_opened = "engcrate-open"
 		icon_closed = "engcrate"
-		contraband_items = list(/obj/item/gun/kinetic/revolver)
-		random_shit_to_spawn = list(/obj/item/storage/toolbox/mechanical/orange_tools,
-		/obj/item/clothing/head/helmet/welding,
-		/obj/item/clothing/suit/wintercoat/engineering)
-		spawn_contents = list(/obj/item/clothing/suit/wintercoat/engineering)
+		contraband_items = list(/obj/item/clothing/head/NTberet, /obj/item/electronics/disk, /obj/item/device/guardbot_tool/smoker, /obj/item/motherboard, /obj/item/assembly/prox_ignite, /obj/item/reagent_containers/food/drinks/fueltank)
+		random_shit_to_spawn = list(/obj/item/electronics/board,
+		/obj/item/electronics/fuse,
+		/obj/item/electronics/battery,
+		/obj/item/electronics/board,
+		/obj/item/electronics/resistor,
+		/obj/item/electronics/switc,
+		/obj/item/device/net_sniffer,
+		/obj/item/storage/box/cablesbox)
+		spawn_contents = list(/obj/item/device/radio)
 
 	medical
 		icon_state = "securemedicalcrate"
@@ -228,15 +233,36 @@
 		icon_opened = "securemedicalcrateopen"
 		icon_closed = "securemedicalcrate"
 		weld_image_offset_Y = -2
-		contraband_items = list(/obj/item/gun/kinetic/revolver)
-		random_shit_to_spawn = list(/obj/item/scalpel)
-		spawn_contents = (/obj/item/device/analyzer/healthanalyzer)
+		contraband_items = list(/obj/item/reagent_containers/iv_drip/blood,	/obj/item/storage/pill_bottle/cyberpunk, /obj/item/storage/pill_bottle/crank, /obj/item/storage/pill_bottle/methamphetamine)
+		random_shit_to_spawn = list(/obj/item/scalpel, /obj/item/device/analyzer/healthanalyzer_organ_upgrade,
+		/obj/item/device/analyzer/healthanalyzer_upgrade,
+		/obj/item/device/analyzer/atmosanalyzer_upgrade,
+		/obj/item/hemostat,
+		/obj/item/robodefibrillator,
+		/obj/item/body_bag,
+		/obj/item/reagent_containers/iv_drip,
+		/obj/item/device/analyzer/genetic,
+		/obj/item/storage/pill_bottle/antirad,
+		/obj/item/storage/pill_bottle/salicylic_acid,
+		/obj/item/storage/pill_bottle/epinephrine,
+		)
+		spawn_contents = list(/obj/item/device/analyzer/healthanalyzer)
 
 	security
 		icon_state = "weaponcrate"
 		density = 1
 		icon_opened = "weaponcrateopen"
 		icon_closed = "weaponcrate"
-		contraband_items = list(/obj/item/gun/kinetic/revolver)
-		random_shit_to_spawn = list(/obj/item/storage/box/body_bag)
+		contraband_items = list(/obj/item/gun/russianrevolver/fake357, /obj/item/gun/energy/blaster_pod_wars/syndicate, /obj/item/clothing/suit/det_suit/beepsky)
+		random_shit_to_spawn = list(/obj/item/storage/box/handcuff_kit,
+		/obj/item/ammo/ammobox,
+		/obj/item/ammo/bullets/smoke,
+		/obj/item/chem_grenade/fog,
+		/obj/item/chem_grenade/flashbang,
+		/obj/item/device/detective_scanner,
+		/obj/item/clothing/under/misc/prisoner,
+		/obj/item/clothing/glasses/sunglasses,
+		/obj/item/clothing/shoes/swat,
+		/obj/item/clothing/under/misc/syndicate
+		)
 		spawn_contents = list(/obj/item/kitchen/food_box/donut_box)

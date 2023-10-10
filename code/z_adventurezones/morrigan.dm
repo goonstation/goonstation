@@ -2605,6 +2605,10 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "sberetdec"
 	item_state = "tinfoil"
 
+/obj/item/clothing/head/morrigan/sberetdec/generic
+	name = "ADFM Operative Beret"
+	desc = "A decorated beret for a decorated unit."
+
 /obj/item/clothing/head/morrigan/rdberet
 	name = "Research Director's Beret"
 	desc = "A purple beret for the research director"
@@ -2758,7 +2762,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	density = TRUE
 	var/required_object = /obj/item/railgunpart
 	var/complete = FALSE
-	var/amount_required = 3
+	var/amount_required = 4
 
 	attackby(obj/item/W, mob/user)
 		if (src.complete)
@@ -3196,18 +3200,21 @@ TYPEINFO(/obj/item/gun/energy/laser_rifle)
 
 
 // stun baton
+TYPEINFO(/obj/item/baton/windup/morrigan)
+	mats = null
 /obj/item/baton/windup/morrigan
-	name = "Mod.33 Izar"
+	name = "Mod. 41 Izar"
 	desc = "An experimental stun baton, designed to incapacitate targets consistently. It has safeties against users stunning themselves."
 	icon = 'icons/obj/adventurezones/morrigan/weapons/weapon.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	icon_state = "synd_baton"
 	item_state = "synd_baton-off"
 	icon_on = "synd_baton-A"
 	icon_off = "synd_baton"
 	item_on = "synd_baton-A"
 	item_off = "synd_baton-D"
-	force = 15
+	force = 12
 	throwforce = 7
 	contraband = 4
 	can_swap_cell = FALSE

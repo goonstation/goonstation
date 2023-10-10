@@ -3624,7 +3624,7 @@ ABSTRACT_TYPE(/area/station/catwalk)
 	name = "Syndicate Unbidden Macha Frigate"
 	icon_state = "purple"
 	sound_loop = 'sound/ambience/morrigan/morriganshipambi.ogg'
-	sound_loop_vol = 75
+	sound_loop_vol = 90
 	requires_power = FALSE
 	do_not_irradiate = TRUE
 	sanctuary = TRUE

@@ -431,7 +431,7 @@
 /obj/item/device/radio/headset/morrigan
 	name = "Syndicate Morrigan Operative Headset"
 	desc = "Standard issue headset for Morrigan Operatives, using banned frequencies."
-	icon_state = "morrigan_headset"
+	icon_state = "morrigan headset"
 	secure_frequencies = list("x" = R_FREQ_MORRIGAN)
 	secure_classes = list("x" = RADIOCL_SYNDICATE)
 	icon_override = "Morrigan"

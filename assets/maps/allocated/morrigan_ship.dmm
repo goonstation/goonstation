@@ -75,6 +75,9 @@
 	name = "Artillery Control"
 	},
 /obj/map/light/dimred,
+/obj/machinery/light/incandescent/netural{
+	dir = 4
+	},
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan_ship_space/frigate)
 "de" = (
@@ -150,6 +153,15 @@
 "gS" = (
 /turf/unsimulated/floor/wizard/carpet/cross,
 /area/morrigan_ship_space/frigate)
+"gU" = (
+/obj/lattice{
+	dir = 9;
+	icon_state = "lattice-dir-b";
+	tag = "icon-lattice-dir-b (NORTHWEST)"
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/space,
+/area/morrigan_ship_space)
 "ho" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -393,6 +405,13 @@
 	icon_state = "redblack"
 	},
 /area/morrigan_ship_space/frigate)
+"oL" = (
+/obj/submachine/weapon_vendor/morriganvendor,
+/obj/machinery/light/incandescent/netural{
+	dir = 8
+	},
+/turf/unsimulated/floor/black,
+/area/morrigan_ship_space/frigate)
 "oO" = (
 /obj/decal/poster/wallsign/looselips{
 	pixel_x = 30
@@ -409,6 +428,9 @@
 /obj/lattice{
 	dir = 10;
 	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
 	},
 /turf/space,
 /area/morrigan_ship_space)
@@ -428,6 +450,16 @@
 "qw" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan_ship_space/frigate)
+"qE" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/incandescent/netural{
+	dir = 1
+	},
+/turf/space,
+/area/morrigan_ship_space)
 "qF" = (
 /obj/lattice{
 	dir = 9;
@@ -597,6 +629,7 @@
 /area/morrigan_ship_space/frigate)
 "ur" = (
 /obj/machinery/teleport/portal_ring,
+/obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/black,
 /area/morrigan_ship_space/frigate)
 "uI" = (
@@ -668,6 +701,10 @@
 	dir = 1
 	},
 /obj/decoration/ntcratesmall/syndicrate,
+/turf/unsimulated/floor/black,
+/area/morrigan_ship_space/frigate)
+"vZ" = (
+/obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/black,
 /area/morrigan_ship_space/frigate)
 "wp" = (
@@ -1092,6 +1129,14 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan_ship_space/frigate)
+"RY" = (
+/obj/lattice{
+	dir = 5;
+	icon_state = "lattice-dir-b"
+	},
+/obj/machinery/light/incandescent/netural,
+/turf/space,
+/area/morrigan_ship_space)
 "Sk" = (
 /obj/lattice{
 	dir = 5;
@@ -1253,7 +1298,9 @@
 /turf/unsimulated/floor/black,
 /area/morrigan_ship_space/frigate)
 "VR" = (
-/obj/decal/fakeobjects/shuttleweapon,
+/obj/decal/fakeobjects/shuttleweapon{
+	name = "Thruster unit"
+	},
 /turf/space,
 /area/morrigan_ship_space)
 "Wd" = (
@@ -1500,11 +1547,11 @@ pz
 pz
 mi
 qw
+oL
 Uv
 Uv
 Uv
-Uv
-Uv
+oL
 qw
 Vt
 pz
@@ -1656,7 +1703,7 @@ pz
 pz
 Da
 qw
-qw
+PK
 qw
 qw
 qw
@@ -1701,10 +1748,10 @@ Pu
 xC
 ur
 PK
-ZG
+qE
 hC
 dT
-mc
+gU
 qw
 Vc
 fo
@@ -1801,12 +1848,12 @@ qK
 qw
 UU
 xb
-fo
+vZ
 PK
 pB
 hC
 dT
-Sk
+RY
 qw
 Vc
 fo

@@ -2613,19 +2613,21 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	cant_spawn_as_rev = 1
 	slot_back = list(/obj/item/storage/backpack/syndie)
 	slot_jump = list(/obj/item/clothing/under/rank/morrigan/sec)
+	slot_belt = list(/obj/item/device/light/flashlight)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso/morrigan)
 	slot_head = list(/obj/item/clothing/head/helmet/space/ntso/morrigan)
 	slot_foot = list(/obj/item/clothing/shoes/swat)
 	slot_glov = list(/obj/item/clothing/gloves/swat)
 	slot_eyes = list(/obj/item/clothing/glasses/sunglasses)
-	slot_ears = list(/obj/item/device/radio/headset/morrigan) //needs their own secret channel
+	slot_ears = list(/obj/item/device/radio/headset/morrigan)
 	slot_mask = list(/obj/item/clothing/mask/gas/eyemask)
 	slot_card = /obj/item/card/id/morrigan/adfm
-	slot_poc1 = list(/obj/item/device/pda2/syndicate)
+	slot_poc1 = list(/obj/item/tank/emergency_oxygen/extended)
 	slot_poc2 = list(/obj/item/requisition_token/morrigan)
-	items_in_backpack = list(/obj/item/tank/emergency_oxygen/extended,
-							/obj/item/clothing/head/morrigan/sberetdec,
-							/obj/item/currency/spacecash/fivehundred)
+	items_in_backpack = list(/obj/item/clothing/head/morrigan/sberetdec/generic,
+							/obj/item/currency/spacecash/fivehundred,
+							/obj/item/device/flash)
+
 
 	faction = FACTION_SYNDICATE
 	special_spawn_location = LANDMARK_MORRIGAN_OPERATIVE

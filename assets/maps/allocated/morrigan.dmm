@@ -8049,7 +8049,7 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/decal/floatingtiles/random,
 /turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict)
+/area/morrigan/derelict/cargo)
 "heF" = (
 /obj/machinery/dispenser,
 /obj/machinery/light/incandescent/cool/very{

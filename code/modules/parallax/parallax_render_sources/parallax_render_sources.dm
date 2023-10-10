@@ -86,6 +86,7 @@
 
 /atom/movable/screen/parallax_render_source/asteroids_far/morrigan
 	scroll_speed = 150
+	scroll_angle = 180
 /atom/movable/screen/parallax_render_source/asteroids_far/kondaru
 	scroll_speed = 100
 	scroll_angle = 98
@@ -119,7 +120,8 @@
 	static_colour = TRUE
 	parallax_value = 0.5
 	scroll_speed = 500
-
+/atom/movable/screen/parallax_render_source/meteor_shower/morrigan
+	scroll_angle = 180
 
 // Effects
 
