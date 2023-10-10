@@ -15,7 +15,6 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	icon_state = "blank"
 	throwforce = 10
 	density = 1
-	anchored = UNANCHORED
 	custom_suicide = 1
 	/// Stored message
 	var/message = ""
