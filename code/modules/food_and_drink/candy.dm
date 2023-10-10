@@ -314,11 +314,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 		return
 	if (src.reagents)
 		ENSURE_IMAGE(src.image_candy, src.icon, "lpop-w")
-		src.reagents.remove_reagent("sugar", 5) // sugar will always override sadly. So we ignore it.
-		var/datum/color/average = src.reagents.get_average_color()
+		var/datum/color/average = src.reagents.get_average_color(reagent_exception_ids=list("sugar"))
 		src.image_candy.color = average.to_rgba()
 		src.UpdateOverlays(src.image_candy, "candy")
-		src.reagents.add_reagent("sugar", 5) // then we put the sugar back in.
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
 	icon_random = TRUE
