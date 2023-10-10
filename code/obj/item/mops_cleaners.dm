@@ -210,6 +210,8 @@ TRASH BAG
 /obj/item/spraybottle/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (A.storage)
 		return
+	if(istype(A,/obj/ability_button))
+		return
 	if (!isturf(user.loc)) // Hi, I'm hiding in a closet like a wuss while spraying people with death chems risk-free.
 		return
 	if (src.reagents.total_volume < 1)

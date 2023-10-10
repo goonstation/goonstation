@@ -1454,7 +1454,7 @@
 /datum/commodity/costume/vampire
 	comname = "Vampire Costume"
 	comtype = /obj/item/storage/box/costume/vampire
-	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cienema."
+	desc = "A bunch of clothing that kinda resembles a vampire from some old piece of cinema."
 	price = PAY_TRADESMAN*2
 
 /datum/commodity/costume/abomination
@@ -1805,7 +1805,7 @@
 /datum/commodity/flock/tech/ai_kit_flock
 	comname = "Flock Plating Kit"
 	comtype = /obj/item/ai_plating_kit/flock
-	desc = "A decorative plating kit for a computational core. We cannot guarantee an absense of side effects."
+	desc = "A decorative plating kit for a computational core. We cannot guarantee an absence of side effects."
 	price = PAY_IMPORTANT
 
 /////////////////////////////////
@@ -1901,7 +1901,7 @@
 /datum/commodity/clothing/chameleon
 	comname = "Black jumpsuit"
 	comtype = /obj/item/clothing/under/chameleon
-	desc = "A plain black jumpsuit. Not very myserious at all, no."
+	desc = "A plain black jumpsuit. Not very mysterious at all, no."
 	price = PAY_EMBEZZLED
 
 /datum/commodity/banana_grenade

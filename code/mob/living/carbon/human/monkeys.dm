@@ -340,6 +340,14 @@
 		// Dead monkeys can't hold a grude and stops emote
 		if(isdead(src) || T == src)
 			return ..()
+		if(isintangible(T))
+			if(!iswraith(T))
+				return ..()
+			else
+				if(!T.density)
+					return ..()
+		if(isobserver(T))
+			return ..()
 		if(ismonkey(T) && T:ai_active && prob(90))
 			return ..()
 		//src.ai_aggressive = 1
@@ -396,6 +404,22 @@
 	proc/done_with_you(var/atom/T as mob|obj)
 		if (!T)
 			return 0
+		if(isintangible(T))
+			if(!iswraith(T))
+				src.ai_state = 0
+				src.target = null
+				src.ai_target = null
+				src.ai_frustration = 0
+				walk_towards(src,null)
+				return 1
+			else
+				if(!T.density)
+					src.ai_state = 0
+					src.target = null
+					src.ai_target = null
+					src.ai_frustration = 0
+					walk_towards(src,null)
+					return 1
 		if (src.health <= 0 || (GET_DIST(src, T) >= 11))
 			if(src.health <= 0)
 				src.ai_state = AI_FLEEING

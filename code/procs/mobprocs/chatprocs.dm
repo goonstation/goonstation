@@ -291,6 +291,10 @@
 	if (!hivemind_owner)
 		return
 
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
+
 	//i guess this caused some real ugly text huh
 	//message = trim(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
 	if (!message)
@@ -349,6 +353,10 @@
 	if (!owner)
 		return
 
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
+
 	if (!message)
 		return
 
@@ -380,6 +388,10 @@
 
 	if (!owner)
 		return
+
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
 
 	if (!message)
 		return

@@ -36,6 +36,11 @@
 		else
 			..()
 
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if(mode == OMNI_MODE_PULSING)
+			get_and_return_netid(target,user)
+
 	get_desc()
 		. += "It is currently set to "
 		switch(src.mode)
@@ -218,6 +223,7 @@
 
 
 /obj/item/tool/omnitool/syndicate
+	icon_state = "syndicate-omnitool-prying"
 	prefix = "syndicate-omnitool"
 	modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
 
@@ -244,7 +250,6 @@
 			return
 
 		..()
-		return
 
 	New()
 		. = ..()

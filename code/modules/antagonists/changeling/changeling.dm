@@ -103,13 +103,14 @@
 	assign_objectives()
 		new /datum/objective_set/changeling(src.owner, src)
 
-	handle_round_end(log_data)
-		var/list/dat = ..()
-		if (length(dat) && src.ability_holder)
-			dat.Insert(2, {"<b>Absorbed DNA:</b> [max(0, src.ability_holder.absorbtions)]
-							<br><b>Absorbed Identities:</b> [english_list(src.ability_holder.absorbed_dna)]"})
-
-			if (!ischangeling(src.owner.current))
-				dat.Insert(3, {"Their body was destroyed."})
-
-		return dat
+	get_statistics()
+		return list(
+			list(
+				"name" = "Absorbed DNA",
+				"value" = "[src.ability_holder.absorbtions]",
+			),
+			list(
+				"name" = "Absorbed Identities",
+				"value" = "[english_list(src.ability_holder.absorbed_dna)]",
+			),
+		)
