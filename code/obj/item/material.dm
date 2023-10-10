@@ -15,7 +15,7 @@
 	var/scoopable = 1
 	burn_type = 1
 	var/wiggle = 6 // how much we want the sprite to be deviated fron center
-	max_stack = INFINITY
+	max_stack = 50
 	event_handler_flags = USE_FLUID_ENTER
 	/// Does the raw material item get its name set?
 	mat_changename = FALSE

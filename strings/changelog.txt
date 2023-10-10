@@ -1,5 +1,7 @@
 
 (t)tue oct 10 23
+(u)LeahTheTech
+(+)Flockdrones now gain substantially less resources from stacked items, but gain slightly more resources in general.
 (u)Azrun
 (p)16240
 (e)🆕🎨⚖🤖|C-Feature, C-Sprites, C-Balance, A-Silicons
