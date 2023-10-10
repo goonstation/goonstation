@@ -1269,8 +1269,23 @@ TYPEINFO(/obj/item/swords/katana)
 		mid1 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		mid2 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		end = new/obj/itemspecialeffect/katana_dash/end(src)
+		src.create_reagents(KATANA_REAGENT_CAPACITY)
 		src.setItemSpecial(/datum/item_special/katana_dash)
 		BLOCK_SETUP(BLOCK_SWORD)
+
+	afterattack(atom/target, mob/user)
+		..()
+		apply_coating(target, user)
+
+	proc/apply_coating(var/atom/target, var/mob/user)
+		if (target.is_open_container())
+			var/obj/item/reagent_containers/RC = target
+			if(RC.reagents.has_reagent("sakuride", 1))
+				if(RC.reagents.reagent_list.len > 1)
+					boutput(user, "<span class='alert'>This coating is impure!</span>")
+					return
+				RC.reagents.trans_to(src, min(KATANA_REAGENT_CAPACITY , src.reagents.maximum_volume - src.reagents.total_volume))
+				boutput(user, "<span class='hint'>You apply the coating to the blade.</span>")
 
 /obj/item/swords/katana/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] thrusts [src] through their stomach!</b></span>")
@@ -1435,7 +1450,12 @@ TYPEINFO(/obj/item/swords/captain)
 
 	attack_hand(mob/living/carbon/human/user)
 		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
-			draw_sword(user)
+			if(user.a_intent == "grab")
+				playsound(src.loc, "rustle", 50, 1, -5)
+				usr.u_equip(src)
+				usr.put_in_hand_or_drop(src, 0)
+			else
+				draw_sword(user)
 		else
 			return ..()
 
@@ -1463,6 +1483,21 @@ TYPEINFO(/obj/item/swords/captain)
 			if(W.cant_drop == 1)
 				boutput(user, "<span class='notice'>You can't sheathe the [W] while its attached to your arm.</span>")
 
+	mouse_drop(atom/over_object, src_location, over_location)
+		..()
+		var/atom/movable/screen/hud/S = over_object
+		if (istype(S))
+			playsound(src.loc, "rustle", 50, 1, -5)
+			if (can_act(usr) && src.loc == usr)
+				if (S.id == "rhand")
+					if (!usr.r_hand)
+						usr.u_equip(src)
+						usr.put_in_hand_or_drop(src, 0)
+				else
+					if (S.id == "lhand")
+						if (!usr.l_hand)
+							usr.u_equip(src)
+							usr.put_in_hand_or_drop(src, 1)
 
 /obj/item/swords_sheaths/proc/draw_sword(mob/living/carbon/human/user)
 	if(src.sword_inside) //Checks if a sword is inside

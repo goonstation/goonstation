@@ -212,6 +212,8 @@
 
 // for pen reagent dipping
 #define PEN_REAGENT_CAPACITY 4
+// for katana coating, applied to turf on dash. Only used for sakuride for now
+#define KATANA_REAGENT_CAPACITY 15
 
 /// The default, the attack is animated, a message is given, and particles are shown (most items)
 #define ATTACK_VISIBLE 0
