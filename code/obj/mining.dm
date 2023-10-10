@@ -1069,7 +1069,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.color = src.stone_color
 		else
 			SPAWN(1)
-				space_overlays()
+				if(istype(src, /turf/simulated/wall/auto/asteroid))
+					space_overlays()
 
 	generate_worldgen()
 		. = ..()
@@ -1473,7 +1474,8 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		worldgenCandidates += src
 		if(current_state > GAME_STATE_PREGAME)
 			SPAWN(1)
-				space_overlays()
+				if(istype(src, /turf/simulated/floor/plating/airless/asteroid))
+					space_overlays()
 
 	generate_worldgen()
 		. = ..()
