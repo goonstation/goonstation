@@ -188,7 +188,7 @@
 		if (total_placed >= next_pity_point)
 			next_pity_point += initial(next_pity_point)
 			evo_points++
-			boutput(src, "<span class='notice'><b>You have perfomed enough spreads to earn one evo point! You will be granted another after placing [next_pity_point] tiles. Good luck!</b></span>")
+			boutput(src, "<span class='notice'><b>You have performed enough spreads to earn one evo point! You will be granted another after placing [next_pity_point] tiles. Good luck!</b></span>")
 
 		if (length(blobs) >= next_extra_nucleus)
 			next_extra_nucleus += initial(next_extra_nucleus)

@@ -323,6 +323,9 @@
 	if(isdead(src))
 		boutput(usr, "You can't call the shuttle because you are dead!")
 		return
+	if(src.z != Z_LEVEL_STATION)
+		src.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
 
 	logTheThing(LOG_ADMIN, usr,  "called the Emergency Shuttle (reason: [call_reason])")
 	logTheThing(LOG_DIARY, usr, "called the Emergency Shuttle (reason: [call_reason])", "admin")

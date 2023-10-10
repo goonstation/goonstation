@@ -478,7 +478,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if("window treatment")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,rand(3,10)*10*req_quant)
 			if("wood")
-				src.rc_entries += rc_buildentry(/datum/rc_entry/item/sheet,rand(5,12)*req_quant)
+				src.rc_entries += rc_buildentry(/datum/rc_entry/stack/woodsheet,rand(5,12)*10*req_quant)
 			if("solvent")
 				src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/acetone,rand(4,8)*10*req_quant)
 			if("detailing metal")
@@ -496,7 +496,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 				if("window treatment")
 					src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/silicate,rand(3,10)*10)
 				if("wood")
-					src.rc_entries += rc_buildentry(/datum/rc_entry/item/sheet,rand(5,12))
+					src.rc_entries += rc_buildentry(/datum/rc_entry/stack/woodsheet,rand(5,12)*10)
 				if("solvent")
 					src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/acetone,rand(4,8)*10)
 				if("detailing metal")
@@ -511,7 +511,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "rock"
 	commodity = /datum/commodity/ore
 	typepath = /obj/item/raw_material/rock
-	feemod = PAY_TRADESMAN
+	feemod = PAY_UNTRAINED
 
 /datum/rc_entry/seed/grass
 	name = "grass seed"
@@ -525,12 +525,11 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	chem_ids = "silicate"
 	feemod = PAY_DOCTORATE/10
 
-/datum/rc_entry/item/sheet
+/datum/rc_entry/stack/woodsheet
 	name = "wooden sheet"
-	commodity = /datum/commodity/sheet
-	typepath = /obj/item/sheet/wood
-	exactpath = TRUE
-	feemod = PAY_IMPORTANT
+	typepath = /obj/item/sheet
+	mat_id = "wood"
+	feemod = PAY_UNTRAINED/2
 
 /datum/rc_entry/reagent/acetone
 	name = "acetone"
@@ -648,9 +647,15 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/item/powercell
 	name = "standard 15000u power cell"
-	typepath = /obj/item/cell/supercell
-	typepath_alt = /obj/item/cell/supercell/charged
+	typepath = /obj/item/cell
 	feemod = PAY_IMPORTANT
+
+	rc_eval(atom/eval_item)
+		. = ..()
+		if(!.)
+			return
+		var/obj/item/cell/cell = eval_item
+		return cell.maxcharge >= 15000
 
 /datum/rc_entry/item/borgmodule
 	name = "cyborg module"
@@ -661,3 +666,133 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 	name = "proximity sensor"
 	typepath = /obj/item/device/prox_sensor
 	feemod = PAY_TRADESMAN
+
+/datum/req_contract/civilian/pod
+	//name = "Space Hogg"
+	payout = PAY_TRADESMAN*10
+	var/list/namevary = list("Back in the Shop","Vehicular Teardown","Rebuild Assistance","Nuts and Bolts")
+	var/list/flavor_descs = list(
+		"I'm overhauling my daily driver and my usual suppliers are giving me a lead time of weeks. Get everything together and I'll pay way too much.",
+		"Commercial hangar seeking components for rebuild of a client's personal vessel. Timely, well-secured delivery is required.",
+		"goddamn console says i have to fill this shit in GET ME MY PARTS",
+		"HELLO, FELLOW HUMANS. I SEEK VEHICULAR COMPONENTS FOR LEGITIMATE PURPOSES. I WILL REWARD YOU WITH MANY OF THESE CREDITS WE SO DEEPLY CHERISH.",
+		"Private hangar requesting expedited shipment of specified parts. Please use gloves when loading; any fingerprints will be scanned and recorded for later punitive action.",
+		"Transport service requesting parts for overhaul of a passenger vessel. Please be aware any 'mismatched' requests are not erroneous.",
+		"rick says hi",
+		"LF parts for a total overhaul. Used is fine, as long as I can't tell from the stains. Or smell. Peace out")
+
+	New()
+		src.name = pick(namevary)
+		src.flavor_desc = pick(flavor_descs)
+		src.payout += rand(0,40) * 10
+
+		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/engine_component,1)
+		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_engine,1)
+		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_circuitry,1)
+		if(prob(70) || length(src.rc_entries) < 2) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_armor,1)
+		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_control,1)
+		if(prob(60) || length(src.rc_entries) < 4) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_tool,1)
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/pod_secondary,1)
+
+		..()
+
+/datum/rc_entry/item/engine_component
+	name = "any pod-compatible engine but you shouldn't see this particular name for it"
+
+	New()
+		switch(rand(1, 10))
+			if(1 to 6)
+				name = "any pod-compatible engine"
+				typepath = /obj/item/shipcomponent/engine
+				feemod = PAY_TRADESMAN
+			if(7 to 9)
+				name = "Helios Mark-II engine"
+				typepath = /obj/item/shipcomponent/engine/helios
+				feemod = PAY_TRADESMAN*5
+			if(10)
+				name = "Hermes Mark-III engine"
+				typepath = /obj/item/shipcomponent/engine/hermes
+				feemod = PAY_DOCTORATE*5
+		..()
+
+/datum/rc_entry/item/pod_engine
+	name = "pod engine manifold"
+	typepath = /obj/item/pod/engine
+	feemod = PAY_TRADESMAN*2
+
+	New()
+		src.feemod += rand(0,20) * 10
+		..()
+
+/datum/rc_entry/item/pod_circuitry
+	name = "pod circuitry kit"
+	typepath = /obj/item/pod/boards
+	feemod = PAY_TRADESMAN
+
+	New()
+		src.feemod += rand(0,20) * 10
+		..()
+
+/datum/rc_entry/item/pod_armor
+	name = "pod armor but you shouldn't see this particular name for it"
+
+	New()
+		switch(rand(1, 10))
+			if(1 to 6)
+				name = "any pod armor"
+				typepath = /obj/item/podarmor
+				feemod = PAY_TRADESMAN*2
+			if(7 to 9)
+				name = "heavy pod armor"
+				typepath = /obj/item/podarmor/armor_heavy
+				feemod = PAY_TRADESMAN*5
+			if(10)
+				name = "industrial pod armor"
+				typepath = /obj/item/podarmor/armor_industrial
+				feemod = PAY_DOCTORATE*5
+		..()
+
+/datum/rc_entry/item/pod_control
+	name = "pod control interface"
+	typepath = /obj/item/pod/control
+	feemod = PAY_TRADESMAN
+
+	New()
+		src.feemod += rand(0,20) * 10
+		..()
+
+/datum/rc_entry/item/pod_tool
+	name = "youshouldn'tseemium cannon"
+
+	New()
+		switch(rand(1,20))
+			if(1 to 11)
+				name = "Mk 1.5 light phaser"
+				typepath = /obj/item/shipcomponent/mainweapon/phaser
+				feemod = PAY_TRADESMAN*2
+			if(12 to 19)
+				name = "plasma cutter system"
+				typepath = /obj/item/shipcomponent/mainweapon/mining
+				feemod = PAY_TRADESMAN*5
+			if(20)
+				name = "Mk.2 scout laser"
+				typepath = /obj/item/shipcomponent/mainweapon/laser
+				feemod = (PAY_DONTBUYIT*2) + (PAY_DOCTORATE * rand(3,6))
+		..()
+
+/datum/rc_entry/item/pod_secondary
+	name = "youshouldn'tseemium dongle"
+	feemod = PAY_TRADESMAN
+
+	New()
+		switch(rand(1, 10))
+			if(1 to 4)
+				name = "cargo hold"
+				typepath = /obj/item/shipcomponent/secondary_system/cargo
+			if(5 to 7)
+				name = "pod locking mechanism"
+				typepath = /obj/item/shipcomponent/secondary_system/lock
+			if(8 to 10)
+				name = "ship's navigation GPS"
+				typepath = /obj/item/shipcomponent/secondary_system/gps
+		..()

@@ -138,7 +138,9 @@
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		var/staystill = user.loc
 		for(var/obj/item/raw_material/M in view(1,user))
-			if (!M)
+			if (QDELETED(M) || QDELETED(O))
+				continue
+			if (M == O)
 				continue
 			if (M.type != O.type)
 				continue
@@ -154,6 +156,10 @@
 			playsound(src, sound_load, 40, TRUE)
 			sleep(0.5)
 			if (user.loc != staystill) break
+		//we stuff the item we clickdragged with last so we keep all the information we want to reference during the stuffing process
+		if (!QDELETED(O))
+			src.load_item(O)
+			playsound(src, sound_load, 40, TRUE)
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		return
 
