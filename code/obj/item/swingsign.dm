@@ -16,11 +16,12 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	throwforce = 10
 	density = 1
 	anchored = UNANCHORED
+	custom_suicide = 1
 	/// Stored message
 	var/message = ""
 	var/defaultdesc = "A foldable sign for writing annoucements or advertisements."
-	/// There's a /div in SetMessage. If changing the preamble remember to respect it.
-	var/descpreamble = "It says:<br><div style='text-align:center'>"
+	/// Text inserted before the actual message
+	var/descpreamble = "It says:<br><div style='text-align:center'>"// There's a /div in SetMessage. If changing the preamble remember to respect it.
 	var/secured = FALSE
 	/// Damage when thrown into a swing sign
 	var/maxcrashdamage = 5
@@ -28,25 +29,39 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	var/maxmessagerows = 10
 	/// Max width of the message
 	var/maxmessagecols = 40
+	/// Regex that detects '\n' signs
+	//var/static/regex/fixBreaklinesRegex = new(@{"/\n/"}, "g")
+	/// Regex that detects '<br>' tags
+	//var/static/regex/fixBreaklinesRegex = new(@{"<br>"}, "g")
+
+	New()
+		..()
+		if(message)
+			setmessage(message)
 
 	proc/setmessage(var/newmessage)
 		message = newmessage
 		if(message == "")
 			desc = defaultdesc
-			icon_state = "blank"
 		else
 			desc = descpreamble + message + "</div>"
+		UpdateIcon()
+
+	update_icon(...)
+		if(message == "")
+			icon_state = "blank"
+		else
 			icon_state = "written"
 
 	proc/fold()
-		var/obj/item/swingsignfolded/C = new/obj/item/swingsignfolded(src.loc)
+		var/obj/item/swingsignfolded/newSwingsign = new/obj/item/swingsignfolded(src.loc)
 
 		if (src.material)
-			C.setMaterial(src.material)
-		if (src.icon_state)
-			C.icon_state = "folded"
+			newSwingsign.setMaterial(src.material)
+		//if (src.icon_state)
+		//	newSwingsign.icon_state = "folded"
 		if (src.message)
-			C.message = src.message
+			newSwingsign.message = src.message
 
 		qdel(src)
 
@@ -83,15 +98,16 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 			if(T?.sanctuary)
 				return
 			random_brute_damage(M, rand(1,maxcrashdamage),1)
+			L.do_disorient(10, 0, 1 SECOND, 0, disorient = 0, stack_stuns = FALSE)
 			L.force_laydown_standup()
-			L.changeStatus("stunned", 1 SECONDS)
+			//L.changeStatus("stunned", 1 SECONDS)
 			src.visible_message("<b><font color=red>[M] is people-stopped by [src]!</font></b>")
 			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg',50,1)
 			fold() //Change to item
 			return
 		..()
 
-	custom_suicide = 1
+
 	suicide(var/mob/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
@@ -110,7 +126,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 
 /obj/swingsign/ui_data(mob/user)
 	. = list(
-		"message" = src.message,
+		"message" = newline_html_decode(src.message),//Decodes the message for the UI component and replaces all <br> with \n (text.dm)
 		"maxRows" = src.maxmessagerows,
 		"maxCols" = src.maxmessagecols
 	)
@@ -120,7 +136,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	if (.)
 		return
 	if(action == "save_message")
-		var/new_message = params["message"]
+		var/new_message = newline_html_encode(params["message"])//Encodes the message for safety and replaces all \n with <br> (text.dm)
 		setmessage(new_message)
 		. = TRUE
 	update_icon()

@@ -10,13 +10,6 @@ export const SwingSign = (props, context) => {
     maxCols,
   } = data;
 
-  /*
-  Examine text has no html protection it seems.
-  What would happen if I were to write a html code linking to let's say goatse?
-  I have no idea, so I'm filtering out any html brackets with the regex below
-  before sending it back to the object proper, just in case
-  */
-  const antiHTMLregex = /<(?:"[^"]*"['"]*|'[^']*'['"]*|[^'">])+>/g;
   const textareaStyle = {
     overflow: "hidden",
     background: "#0A0A0A",
@@ -28,8 +21,8 @@ export const SwingSign = (props, context) => {
 
   return (
     <Window
-      width={(30+maxCols*8)}// Size depending on specified text space 40
-      height={(95+maxRows*15)}// 10
+      width={(30+maxCols*8)}// Size depending on specified text space
+      height={(95+maxRows*15)}
       title="Swing sign"
     >
       <Window.Content /* scrollable */>
@@ -39,7 +32,7 @@ export const SwingSign = (props, context) => {
               <Button
                 content="Save"
                 onClick={() => {
-                  data["message"] = document.getElementById("messageTA").value.replace(antiHTMLregex, '').replace(/\n/g, '<br>'); // Remove all the potential html code and then replace newlines with <br>
+                  data["message"] = document.getElementById("messageTA").value;
                   act('save_message', data);// Send it back
                 }} />
             </Stack.Item>
@@ -52,20 +45,20 @@ export const SwingSign = (props, context) => {
                 style={textareaStyle}
                 placeholder="Your message goes here..."
                 onInput={(e) => {
-                  let lines = e.target.value.split(/\n/g);
+                  let lines = e.target.value.split(/\n/g);// Split text into rows of text
                   for (let i=0; i<lines.length; i++) { // Fix overflowing text
-                    if (lines[i] && lines[i].length>maxCols) { // Check each line if it overflows
+                    if (lines[i] && lines[i].length>maxCols) { // Check if line overflows
                       let newLine = lines[i].substring(0, maxCols); // Extract line from the beginning
                       lines[i]=lines[i].substring(maxCols, lines[i].length); // Replace the old line with what remains
                       lines.splice(i, 0, newLine); // Insert new line into the [i] spot
                     }
                   }
-                  if (lines && lines.length>maxRows) { // Delete excess lines
+                  if (lines && lines.length>maxRows) { // Delete excess rows
                     lines.splice(maxRows, lines.length-maxRows);
                   }
                   e.target.value = lines.join('\n'); // Join the lines array back together
                 }} >
-                {message.replace(/<br>/g, '\n')}
+                {message}
               </textarea>
             </Stack.Item>
           </Stack>
