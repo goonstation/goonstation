@@ -136,7 +136,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 
 		if(prob(80)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/gemstone,rand(1,8))
 		if(prob(20)) src.rc_entries += rc_buildentry(/datum/rc_entry/stack/telec,rand(1,3))
-		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cryox,rand(4,10)*5)
+		if(prob(50)) src.rc_entries += rc_buildentry(/datum/rc_entry/reagent/cryost,rand(4,10)*5)
 		if(prob(40)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/lambdarod,1)
 		if(!length(src.rc_entries) || prob(70)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/lens,rand(2,6))
 
@@ -165,10 +165,10 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/stack/telec/minprice
 	feemod = 0
 
-/datum/rc_entry/reagent/cryox
-	name = "cryoxadone coolant"
-	chem_ids = "cryoxadone"
-	feemod = PAY_DOCTORATE/3
+/datum/rc_entry/reagent/cryost
+	name = "cryostylane coolant"
+	chem_ids = "cryostylane"
+	feemod = PAY_DOCTORATE/5
 
 /datum/rc_entry/item/lambdarod
 	name = "Lambda phase-control rod"
