@@ -1024,12 +1024,15 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 
 	/// returns the average color of the reagents
 	/// taking into account concentration and transparency
-	proc/get_average_color()
+	/// reagent_exception_ids argument is a list of reagents to excluded from the calculation
+	proc/get_average_color(list/reagent_exception_ids = null)
 		RETURN_TYPE(/datum/color)
 		var/datum/color/average = new(0,0,0,0)
 		var/total_weight = 0
 
 		for(var/id in reagent_list)
+			if(reagent_exception_ids && (id in reagent_exception_ids))
+				continue
 
 			var/datum/reagent/current_reagent = reagent_list[id]
 

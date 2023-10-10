@@ -985,6 +985,11 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		icon_state = "argile"
 		ckey = "bowlofnuts"
 
+	joeled
+		name = "\improper Lawrence Crowley"
+		icon_state = "lawrencecrowley"
+		ckey = "joeled"
+
 /obj/item/item_box/figure_capsule
 	name = "capsule"
 	desc = "A little plastic ball for keeping stuff in. Woah! We're truly in the future with technology like this."
