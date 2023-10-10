@@ -336,7 +336,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 	area_power
 		name = "area power"
-		help = "Shows how charged the APC powercell is in an area. Also shows when the APC is off etc. Colour is based on charge level."
+		help = "Shows how charged the APC powercell is in an area. Also shows when the APC is off etc. Colour is based on charge level.<br>APCs in red."
 		var/list/area/processed_areas
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			var/area/area = theTurf.loc
@@ -349,6 +349,8 @@ proc/debug_map_apc_count(delim,zlim)
 			for(var/c in 1 to 3)
 				lcolor[c] = lcolor[c] / 8 + 220 * num_charge
 			img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
+			if(locate(/obj/machinery/power/apc) in theTurf)
+				img.app.color = rgb(255, lcolor[2], lcolor[3])
 			if(!(area in processed_areas))
 				var/text_charge
 				if(!apc || apc.disposed)
