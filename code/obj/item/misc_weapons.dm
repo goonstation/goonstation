@@ -1423,9 +1423,14 @@ TYPEINFO(/obj/item/swords/captain)
 
 	New()
 		..()
-		var/obj/item/swords/K = new sword_path()
-		sword_inside = K
-		K.set_loc(src)
+		if(sword_inside != null) // setting null prevents sword generation
+			var/obj/item/swords/K = new sword_path()
+			sword_inside = K
+			K.set_loc(src)
+		else
+			// otherwise icon looks like it has a sword in it
+			icon_state = sheath_state
+			item_state = ih_sheath_state
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attack_hand(mob/living/carbon/human/user)

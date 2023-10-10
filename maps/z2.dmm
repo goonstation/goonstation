@@ -32313,7 +32313,9 @@
 /area/dojo)
 "cqN" = (
 /obj/table/wood/auto/desk,
-/obj/decal/fakeobjects/katana_fake,
+/obj/item/swords_sheaths/katana{
+	sword_inside = null
+	},
 /obj/decal/fakeobjects/katana_fake{
 	pixel_y = 15
 	},
