@@ -976,6 +976,14 @@ ABSTRACT_TYPE(/datum/figure_info/patreon)
 		name = "\improper Arcas Lake-Younger"
 		icon_state = "arcas"
 		ckey = "jonaleia"
+	huskymaru
+		name = "\improper Neo Lycan"
+		icon_state = "neolycan"
+		ckey = "huskymaru"
+	bowlofnuts
+		name = "\improper Argile Pratt"
+		icon_state = "argile"
+		ckey = "bowlofnuts"
 
 /obj/item/item_box/figure_capsule
 	name = "capsule"
