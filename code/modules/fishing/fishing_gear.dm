@@ -242,7 +242,7 @@ TYPEINFO(/obj/item/fish_portal)
 
 /obj/submachine/fishing_upload_terminal
 	name = "Aquatic Research Upload Terminal"
-	desc = "Insert fish to recieve points to spend in the fishing vendor."
+	desc = "Insert fish to receive points to spend in the fishing vendor."
 	icon = 'icons/obj/large/32x48.dmi'
 	icon_state = "uploadterminal_open"
 	anchored = ANCHORED
@@ -359,7 +359,7 @@ TYPEINFO(/obj/item/fish_portal)
 	can_hold = 	list(/obj/item/reagent_containers/food/fish)
 
 TYPEINFO(/obj/item/syndie_fishing_rod)
-	mats = list("MET-3"=15, "WOOD"=5)
+	mats = list("MET-3"=15, "WOOD"=5, "POW-2"=5, "CON-2"=5)
 
 /obj/item/syndie_fishing_rod
 	name = "\improper Glaucus fishing rod"
@@ -599,14 +599,16 @@ TYPEINFO(/obj/item/syndie_fishing_rod)
 		..()
 
 	throw_impact(mob/hit_atom, datum/thrown_thing/thr)
-		if (isliving(hit_atom) && hit_atom.equipped() == src.rod)
-			return
-		else
+		if (istype(hit_atom))
 			src.try_embed(hit_atom, FALSE)
+			return
 		return ..()
 
 	proc/try_embed(mob/M, do_weaken = TRUE)
-		if (istype(M) && isliving(M) && !M.nodamage)
+		if (istype(M) && isliving(M))
+			var/area/AR = get_area(M)
+			if (AR?.sanctuary || M.nodamage || (src.rod in M.equipped_list(check_for_magtractor = 0)))
+				return TRUE
 			if (do_weaken)
 				M.changeStatus("weakened", 5 SECONDS)
 				M.TakeDamage(M.hand == LEFT_HAND ? "l_arm": "r_arm", 15, 0, 0, DAMAGE_STAB)

@@ -1980,8 +1980,9 @@
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/storage/primary)
 "ajO" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "ajR" = (
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
@@ -5683,6 +5684,9 @@
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep{
+	secret_thing = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -20304,7 +20308,6 @@
 	icon_state = "2-4"
 	},
 /obj/mapping_helper/access/heads,
-/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = -10
 	},
@@ -20323,6 +20326,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "Bridge"
 	},
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "edo" = (
@@ -31904,7 +31908,7 @@
 	pixel_y = 5
 	},
 /obj/item/screwdriver,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "nns" = (
@@ -36452,6 +36456,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/vending/capsule,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "qSy" = (
@@ -40130,7 +40135,7 @@
 "tOd" = (
 /obj/table/reinforced/auto,
 /obj/item/device/infra_sensor,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},

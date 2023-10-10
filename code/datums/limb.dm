@@ -569,6 +569,8 @@
 		ON_COOLDOWN(src, "limb_cooldown", 2 SECONDS)
 
 /datum/limb/zombie
+	///Legally distinct from can_pickup_item, determines whether we use the thrall behaviour of pickup actionbars
+	var/can_reach = FALSE
 	attack_hand(atom/target, var/mob/living/user, var/reach, params, location, control) //TODO: Make this actually do damage to things instead of just smashing the thing.
 		if (!holder)
 			return
@@ -583,6 +585,9 @@
 		if (isobj(target)) //I am just going to do this like this, this is not good but I do not care.
 			var/hit = FALSE
 			if (isitem(target))
+				if (!src.can_reach)
+					boutput(user, "<span class='alert'>Your zombie arm is too dumb to be able to handle this item!</span>")
+					return
 				boutput(user, "<span class='hint'>You reach out for the [target].</span>")
 				var/datum/action/pickup = \
 					new /datum/action/bar/private/icon/callback(user, target, 1.5 SECONDS, /atom/proc.Attackhand, list(user, params, location, control),
@@ -692,6 +697,8 @@
 		user.lastattacked = target
 		ON_COOLDOWN(src, "limb_cooldown", 3 SECONDS)
 
+/datum/limb/zombie/thrall
+	can_reach = TRUE
 
 /datum/limb/dualsaw
 

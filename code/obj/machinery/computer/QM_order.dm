@@ -149,6 +149,8 @@
 				else
 					account["current_money"] -= P.cost
 					O.object = P
+					if (account["pda_net_id"])
+						O.address = account["pda_net_id"]
 					O.orderedby = usr.name
 					O.console_location = src.console_location
 					var/obj/storage/S = O.create(usr)
@@ -165,6 +167,22 @@
 			else
 				O.object = P
 				O.orderedby = usr.name
+
+				var/list/pda_list = list()
+
+				// check visible PDAs
+				var/mob/living/carbon/human/H = usr
+				if(istype(H))
+					pda_list += H.get_slot(SLOT_L_HAND)
+					pda_list += H.get_slot(SLOT_R_HAND)
+					pda_list += H.get_slot(SLOT_WEAR_ID)
+					pda_list += H.get_slot(SLOT_BELT)
+
+				for (var/obj/item/device/pda2/pda in pda_list)
+					if (pda.host_program.message_on && pda.owner)
+						O.address = pda.net_id
+						break
+
 				O.console_location = src.console_location
 				shippingmarket.supply_requests += O
 				boutput(usr, "Request for [P.name] sent to Supply Console. The Quartermasters will process your request as soon as possible.")

@@ -239,10 +239,10 @@ TYPEINFO(/atom)
 		return null
 	/**
 	  * Convenience proc to see if a container is open for chemistry handling
-	  *
+	  * Takes an argument of whether this openness is for the purpose of pouring something in or not (this should maybe just be a separate flag but we ran out of bits okay)
 	  * returns true if open, false if closed
 	  */
-	proc/is_open_container()
+	proc/is_open_container(input = FALSE)
 		return flags & OPENCONTAINER
 
 	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result

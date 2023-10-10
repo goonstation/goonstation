@@ -1141,6 +1141,7 @@
 
 		var/turf/T = get_turf(target)
 
+
 		var/datum/bioEffect/power/eyebeams/EB = linked_power
 		var/projectile_path = ispath(EB.projectile_path) ? EB.projectile_path : text2path(EB.projectile_path)
 		if(linked_power.power > 1)
@@ -1149,6 +1150,23 @@
 			projectile_path = /datum/projectile/laser/eyebeams/stun
 		if (!ispath(projectile_path))
 			projectile_path = /datum/projectile/laser/eyebeams
+
+		if (!EB.stun_mode && ishuman(owner)) // remember to take off your headgear if you want to fire the laser
+			var/mob/living/carbon/human/H = owner
+			var/obj/item/I
+			if (istype(H.glasses) && H.glasses.c_flags & COVERSEYES)
+				I = H.glasses
+			else if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSEYES)
+				I = H.wear_mask
+			else if (istype(H.head) && H.head.c_flags & COVERSEYES)
+				I = H.head
+			else if (istype(H.wear_suit) && H.wear_suit.c_flags & COVERSEYES)
+				I = H.wear_suit
+			if (istype(I)) // or it might go
+				I.combust() // POOF
+				holder.owner.visible_message("<span class='combat'><b>[holder.owner]'s [I.name] catches on fire!</b></span>",\
+				"<span class='combat'><b>Your [I.name] catches on fire!</b> Maybe you should have taken it off first!</span>")
+				return
 
 		owner.visible_message("<span class='alert'><b>[owner.name]</b> shoots eye beams!</span>")
 		var/datum/projectile/laser/eyebeams/PJ = new projectile_path
@@ -1344,6 +1362,29 @@
 			the_object.setMaterial(getMaterial("flesh"))
 		linked_power.using = 0
 		return
+
+/datum/bioEffect/power/midas/pickle
+	name = "Pickle Touch"
+	id = "pickle"
+	desc = "Allows the subject to induce spontaneous pickling at will."
+	msgGain = "You suddenly smell vinegar."
+	msgLose = "You feel less well preserved."
+	transmute_material = "pickle"
+	power = 2
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	ability_path = /datum/targetable/geneticsAbility/midas/pickle
+
+/datum/targetable/geneticsAbility/midas/pickle
+	name = "Pickle Touch"
+	desc = "Instantly pickle an object"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2152,7 +2193,7 @@
 		return 0
 
 /datum/bioEffect/power/shoot_limb
-	name = "Vestigal Ballistics"
+	name = "Vestigial Ballistics"
 	desc = "Allows the subject to expel one of their limbs with considerable force."
 	id = "shoot_limb"
 	msgGain = "You feel intense pressure in your hip and shoulder joints."
@@ -2197,7 +2238,7 @@
 
 
 /datum/targetable/geneticsAbility/shoot_limb
-	name = "Vestigal Ballistics"
+	name = "Vestigial Ballistics"
 	desc = "OOOOWWWWWW!!!!!!!!"
 	icon_state = "shoot_limb"
 	targeted = TRUE

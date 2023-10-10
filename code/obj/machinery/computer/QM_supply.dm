@@ -141,7 +141,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
@@ -542,6 +542,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							return .("list") // The user cancelled the order
 						O.comment = html_encode(O.comment)
 						wagesystem.shipping_budget -= P.cost
+						if (O.address)
+							src.send_pda_message(O.address, "Your order of [P.name] has been approved.")
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
 						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -600,25 +602,33 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 
 	requests(subaction, href_list)
-		switch (subaction)
-			if (null, "list")
-				. = "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
-				for(var/datum/supply_order/SO in shippingmarket.supply_requests)
-					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
+		if (!isnull(subaction))
+			switch (subaction)
+				if ("remove")
+					var/datum/supply_order/order = locate(href_list["what"]) in shippingmarket.supply_requests
+					if(!istype(order))
+						return
+					if (order.address)
+						src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
+					shippingmarket.supply_requests -= order
+					. = {"Request denied.<br>"}
 
-				. += {"</ul>"}
-				return .
+				if ("clear")
+					var/orderers = list()
+					for(var/datum/supply_order/order as anything in shippingmarket.supply_requests)
+						if (order.address)
+							orderers += order.address
+					for(var/orderer in uniquelist(orderers))
+						src.send_pda_message(orderer, "Your orders have been denied.")
+					shippingmarket.supply_requests = null
+					shippingmarket.supply_requests = new/list()
+					. = {"All requests have been cleared.<br>"}
 
-			if ("remove")
-				shippingmarket.supply_requests -= locate(href_list["what"])
-				// todo: fancy "your request got denied, doofus" message?
-				. = {"Request denied."}
+		. += "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
+		for(var/datum/supply_order/SO in shippingmarket.supply_requests)
+			. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
 
-			if ("clear")
-				shippingmarket.supply_requests = null
-				shippingmarket.supply_requests = new/list()
-				// todo: message people that their stuff's been denied?
-				. = {"All requests have been cleared."}
+		. += {"</ul>"}
 
 		return .
 
@@ -1031,10 +1041,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if(RC)
 				if(RC.pinned)
 					RC.pinned = FALSE
-					shippingmarket.has_pinned_contract = FALSE
-				else if(!shippingmarket.has_pinned_contract)
+				else
 					RC.pinned = TRUE
-					shippingmarket.has_pinned_contract = TRUE
 			src.requisitions_update()
 
 		if ("requis_list")
@@ -1060,16 +1068,21 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 
 /obj/machinery/computer/supplycomp/proc/requisitions_update()
-	src.temp = "<h2>Open Requisition Contracts</h2><div style='text-align: center;'>"
-	src.temp += "To fulfill these contracts, please send full requested<br>"
-	src.temp += "complement of items with the contract's Requisitions tag.<br>"
-	src.temp += "Insufficient or extra items will be returned to you.<br><br>"
-	src.temp += "One contract at a time may be pinned, which reserves it<br>"
-	src.temp += "for your use, even through market shifts.<br><br>"
-	src.temp += "When fulfilling third-party contracts, you <B>must</B><br>"
-	src.temp += "send the included requisition sheet; please be aware<br>"
-	src.temp += "<B>third-party returns are at clients' discretion</B><br>"
-	src.temp += "and your shipment may not be returned if insufficient."
+	src.temp = {"<h2>Open Requisition Contracts</h2><div style='text-align: center;'>
+	To fulfill these contracts, please send full requested<br>
+	complement of items with the contract's Requisitions tag.<br>
+	<br>
+	<B>Items packed for requisition can be validated with a<br>
+	standard cargo appraiser; ensure correct label is applied.</B><br>
+	Insufficient or extra items will be returned to you.<br>
+	<br>
+	Most contracts may be "pinned", which reserves them<br>
+	for your use, even through market shifts.<br>
+	<br>
+	When fulfilling third-party contracts, you <B>must</B><br>
+	send the included requisition sheet; please be aware<br>
+	<B>third-party returns are at clients' discretion</B><br>
+	and your shipment may not be returned if insufficient."}
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
 		src.temp += "<h3>[RC.name][RC.pinned ? " (Pinned)" : null]</h3>"
 		src.temp += "Contract Reward:"
@@ -1101,12 +1114,20 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.printing = 1
 	playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 	SPAWN(2 SECONDS)
-		var/obj/item/paper/thermal/P = new(src.loc)
+		var/obj/item/paper/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"
 		P.info += uppertext(contract.requis_desc)
+		if(contract.payout > 0 || length(contract.item_rewarders) && !contract.hide_item_payouts)
+			P.info += "<br>CONTRACT REWARD:"
+			if(contract.payout > 0) P.info += "<br>[contract.payout] CREDITS"
+			if(!contract.hide_item_payouts)
+				for(var/datum/rc_itemreward/RI in contract.item_rewarders)
+					if(RI.count) P.info += "<br>[RI.count]X [uppertext(RI.name)]"
+					else P.info += "<br>[uppertext(RI.name)]"
 		P.info += "</center></font>"
 		P.name = "Requisition: [contract.name]"
+		P.icon_state = "thermal_paper"
 		src.printing = 0
 
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)
@@ -1279,13 +1300,15 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		return 0
 	return 1
 
-/obj/machinery/computer/supplycomp/proc/post_signal(var/command)
-	var/datum/signal/status_signal = get_free_signal()
-	status_signal.source = src
-	status_signal.transmission_method = 1
-	status_signal.data["command"] = command
-	status_signal.data["address_tag"] = "STATDISPLAY"
+/obj/machinery/computer/supplycomp/proc/send_pda_message(address, message)
+	var/datum/signal/newsignal = get_free_signal()
+	newsignal.source = src
+	newsignal.data["command"] = "text_message"
+	newsignal.data["sender_name"] = "CARGO-MAILBOT"
+	newsignal.data["message"] = message
+	newsignal.data["address_1"] = address
+	newsignal.data["sender"] = "00000000"
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
 
 #undef ORDER_LABEL_MAX_LEN

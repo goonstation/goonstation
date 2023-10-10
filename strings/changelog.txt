@@ -1,5 +1,198 @@
 
+(t)tue oct 10 23
+(u)Azrun
+(p)16240
+(e)🆕🎨⚖🤖|C-Feature, C-Sprites, C-Balance, A-Silicons
+(*)AI's EyeBots now have reduced functionality when used across Z levels.
+(+)AI can now deploy to EyeBots to maintain some presence on the station.
+(t)mon oct 09 23
+(u)Flappybat
+(e)⚖|C-Balance
+(+)Scaling of number of traitors vs crew in the Traitor game mode has been adjusted to move the maximum of 5 traitors from a minimum of 35 to 40 crew. RP scaling unchanged.
+(t)sun oct 08 23
+(u)Flaborized
+(p)15922
+(e)🎨|C-Sprites
+(+)Autumn has come to the station, changing the plant life's hue and adding a few new items to the clothing booth for just the season. There's also a seasonal special clown costume in the clown hole crate!
+(u)tarmunora
+(e)⚖|C-Balance
+(+)Changeling morph arm DNA cost revision: claw arm 4->0, tendril arm 6->10
+(u)Mr. Moriarty
+(p)16185
+(e)🪲💅📄|C-Bug, C-QoL, A-UI
+(*)Added an antagonists tab to the end of round crew credits.
+(u)Kubius
+(p)16191
+(e)🆕🎨|C-Feature, C-Sprites
+(+)A new type of Scientific requisition is available. Its cash reward is lower, but it offers an item reward in return - and sometimes, it's one you can't get elsewhere.
+(u)MylieDaniels
+(p)16337
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Nukie Knights have a refreshed visual on their Hadar power sword.
+(t)sat oct 07 23
+(u)zjdtmkhzt
+(p)15911
+(e)🪲🆕🔎📦|C-Bug, C-Feature, C-Code-Quality, A-Game-Objects
+(+)Light fixtures can now be placed directly on windows.
+(u)glowbold
+(p)16159
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)When approving or denying cargo requests, PDA Messages are sent to the requestor.
+(u)Lord_Earthfire
+(p)16320
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(+)The syndicate now supplies their botanists with experimental biological pouches instead of boxes.
+(u)Lord_Earthfire
+(p)16323
+(e)⚖📦⚙|C-Balance, A-Game-Objects, A-Internal
+(+)Stealth storages have become a little bit more stealthy.
+(u)glowbold
+(p)16310
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Mining PDAs have the new MineralMagic™ PDA cart pre-installed. Additional copies in the CartyParty.
+(t)fri oct 06 23
+(u)Lord_Earthfire
+(p)16302
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Firefighting Foam's recipe was changed. The new recipe is: (1) Chlorine + (1) Nickel + (1) Carbon -> (2) Carbon Tetrachloride + (1) Nickel
+(u)LeahTheTech
+(+)Pocket and emergency oxygen tanks no longer fit on TTVs (they had no sprites anyway)
+(u)Lord_Earthfire
+(p)16297
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Capsaicin has a cooldown between stuns now but high-dosage capsaicin stuns more often add oxygen deprivation.
+(u)BatElite
+(p)15970
+(e)🎨💊📦|C-Sprites, A-Medical, A-Game-Objects
+(+)Auto-injectors have been resprited!
+(u)Emily
+(*)Something mysterious has appeared in the ranch! What could it be?
+(t)thu oct 05 23
+(u)Azrun
+(p)16028
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Reduced ability for AI and AIeye to interact across levels.
+(u)Flaborized
+(p)16180
+(e)🆕|C-Feature
+(*)Chemical condensers can now be attached to up to four containers, splitting their output evenly through them.
+(t)wed oct 04 23
+(u)LeahTheTech
+(p)16260
+(e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
+(*)Added a security whistle that all security officers and assistants start with. Blowing it will let you command nearby securitrons by pointing.
+(+)The security whistle now only commands the closest securitron and can only target people, this means missed points will no longer cancel the effect.
+(t)mon oct 02 23
+(u)nerkson and LeahTheTech
+(*)New halloween job: pickle. Has the ability to turn things into pickle. Also looks like a pickle. Pickle.
+(u)Kubius
+(p)16194
+(e)🪲🆕|C-Bug, C-Feature
+(+)Introduced an additional new civilian requisition centering around pod components and adjusted the seed requisition item rewards.
+(u)Smilg
+(p)15774
+(e)🆕📦|C-Feature, A-Game-Objects
+(*)ABCU blueprints updated+fixed internally. You can migrate old blueprints with a blueprint marker tool.
+(u)Tyrant
+(p)16201
+(e)🪲🗺|C-Bug, A-Mapping
+(+)Clarion now has a capsule vending machine.
+(t)sun oct 01 23
+(u)UnfunnyPerson
+(p)16123
+(e)📦|A-Game-Objects
+(+)Laundry machines can now be scanned with a mechscanner
+(u)Tarmunora
+(+)Waspbow projectiles no longer deal impact damage
+(+)Waspbow/radbow/etc now use/have 60u/shot instead of 40u
+(+)Fixed oversight causing disruptor cells to charge at twice the intended rate
+(t)fri sep 29 23
+(u)Emily
+(+)Zipguns now fire one bullet at a time for ammo types that usually fire in bursts
+(+)Pews can be reshaped with screwdrivers and turned with crowbars.
+(u)Waffleloffle
+(p)15927
+(e)🎨🎩|C-Sprites, A-Clothing
+(*)Adds some particularly costumey headwear, available for purchase at the Clothing Booth during the month of Spooktober.
+(u)Kubius
+(p)16092
+(e)🆕⚖|C-Feature, C-Balance
+(*)Further requisition system improvements. Notable changes: No limit on pinned contracts, fewer and longer-lasting Aid contracts, and a new Civilian contract.
+(u)pali
+(p)15458
+(e)🧫🧛|C-Experimental, A-Gamemodes
+(*)Experiment: Gang members are recruited randomly at roundstart instead of being recruited manually.<br>Give feedback <a href="https://forum.ss13.co/showthread.php?tid=21701">here</a>.
+(u)Bartimeus973
+(p)15630
+(e)⚖🔄💊🔨|C-Balance, C-Rework, A-Medical, A-Player-Actions
+(*)Organ surgery is now redone! Instructions are found in the surgery handbook. For more details click on the PR number in the top right!
+(u)aloe
+(p)15833
+(e)⚖💡🎭|C-Balance, A-Station-Systems, A-RP
+(+)Removed security's access to the crematorium on the RP servers.
+(u)Tarmunora
+(p)15759
+(e)🪲🤖|C-Bug, A-Silicons
+(*)Fixed bug allowing cyborgs to open-hand interact with atoms under certain circumstances
+(u)MeggalBozale
+(p)15957
+(e)🪲💅📦|C-Bug, C-QoL, A-Game-Objects
+(+)NT has spent a few million credits stocking its stations with newly printed guides to material science, featuring minor spelling corrections and updated material values.
+(u)Flappybat & Flaborized
+(p)15797
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(*)Adds emergency flares to the game, when a glowstick just won't cut it! These come as standard issue in emergency toolboxes. Just be careful around flammable gas...
+(u)TealSeer
+(p)16083
+(e)🪲📦|C-Bug, A-Game-Objects
+(+)The ID computer should now let you add/remove Brig access as normal.
+(t)thu sep 28 23
+(u)Emily
+(*)Chickens now get grumpy when they're in crowded areas. They need their space!
+(+)Standardized Requisition payouts to the new system and made minor balance tweaks to some that were too hard to fulfill (e.g. pizza, blood requisitions).
+(u)Kubius
+(p)16078
+(e)🆕|C-Feature
+(+)Indiscriminate food requisitions are now properly indiscriminate, and requisition cargo scanning should now be more discoverable.
+(u)LeahTheTech
+(p)16082
+(e)🆕🗺🎨💅|C-Feature, A-Mapping, C-Sprites, C-QoL
+(*)Added pressure visualization goggles which show surrounding atmospheric pressure when worn, found in engineering lockers.
+(u)Flaborized
+(p)15812
+(e)🎨⚗|C-Sprites, A-Chemistry
+(*)Some small chemistry changes to pyrosium and cryostylane, including an area of effect heat/cool effect. More detailed description in minor logs.
+(+)Pyrosium can now be mixed with magnesium to create a 3x3 area of effect heating effect, and cryostylane can be mixed with iodine for a cold version of the same thing.
+(+)Pyrosium, cryostylane reactions now longer use up the oxygen/magnesium/iodine until the end of the reaction. This means it'll still deplete the oxygen, but you only technically need 1u to carry out the full reaction.
+(u)Smilg
+(p)16040
+(e)💅📦|C-QoL, A-Game-Objects
+(+)Pressure sensor can now use empty hand, and mouse drop.
+(t)wed sep 27 23
+(u)Emily
+(*)Upped rooster chances for most types of roosters
+(*)Most ranches now have a flusher instead of a chute leading to the kitchen, so you can flush your unwanted chickens while they're still alive. (Warning: they will not arrive alive).
+(u)Colossusqw
+(p)15741
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)Caffeine is now it's own standalone chem.
+(+)Caffeine is formed by caffeinated drinks (coffees, unadulterated tea/matcha, cola) as they deplete, and its effects can vary wildly based on volume, much like current ethanol.
+(u)Lord_Earthfire
+(p)16019
+(e)⚖📦⚙|C-Balance, A-Game-Objects, A-Internal
+(+)Syringes, fired from the syringe gun, stuck in a human desintegrate when that human is affected by an explosion.
+(u)MeggalBozale
+(p)15921
+(e)🗺💅🧱📦|A-Mapping, C-QoL, A-Materials, A-Game-Objects
+(+)Wooden planks are mostly replaced with instances of wood sheets, meaning spare planks can be used to furnish tables now.
+(u)Smilg
+(p)15933
+(e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science
+(*)Pressure crystals from Vendomats, when used, can now be sold for credits via Cargo. Work in Toxins today!
+(+)New program for Scientist PDAs that shows you previously sold pressure crystals, and their bounties.
 (t)tue sep 26 23
+(u)Emily
+(*)Repeatedly buying the same crate from the market will "exhaust" supply, causing the price to increase. Exhaustion decays with each shipping market shift.
 (u)Garash
 (p)15784
 (e)🎨🔄📄|C-Sprites, C-Rework, A-UI

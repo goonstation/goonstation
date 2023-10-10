@@ -473,7 +473,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 				if (1)
 					new/obj/item/reagent_containers/food/snacks/ectoplasm(T)
 				if (2)
-					new/obj/decal/cleanable/cobwebFloor(T)
+					new/obj/decal/cleanable/cobwebFloor/halloween(T)
 				if (3)
 					new/obj/item/device/light/candle/spooky/summon(T)
 				if (4)
@@ -562,6 +562,7 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			boutput(holder.owner, "<span class='alert'>You call forth a bat!</span>")
 		else
 			boutput(holder.owner, "<span class='alert'>You can't put a bat there!</span>")
+			return 1
 
 /datum/targetable/ghost_observer/manifest
 	name = "Manifest"
@@ -583,10 +584,8 @@ var/global/datum/spooktober_ghost_handler/spooktober_GH = new()
 			return 1
 
 		start_spooking()
-		//////////////////////////////////////////////////////////////////////
-		sleep(time_to_manifest)
-		//////////////////////////////////////////////////////////////////////
-		stop_spooking()
+		SPAWN(time_to_manifest)
+			stop_spooking()
 
 
 

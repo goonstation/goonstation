@@ -176,12 +176,15 @@
 		src.gloves.wear_image.filters = src.gloves.filters.Copy()
 
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
-			if ("left_[icon_name]" in src.mutantrace?.clothing_icon_states?["hands"]) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
+			var/icon_local = (src.gloves.which_hands & GLOVE_HAS_LEFT) ? icon_name : "transparent"
+			if ("left_[icon_local]" in src.mutantrace?.clothing_icon_states?["hands"]) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icons["hands"]
 				no_offset = TRUE
+				src.gloves.wear_image.pixel_x = initial(src.gloves.wear_image.pixel_x)
+				src.gloves.wear_image.pixel_y = initial(src.gloves.wear_image.pixel_y)
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
-			src.gloves.wear_image.icon_state = "left_[icon_name]"
+			src.gloves.wear_image.icon_state = "left_[icon_local]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
 			src.gloves.update_wear_image(src, src.gloves.wear_image.icon != src.gloves.wear_image_icon)
@@ -190,12 +193,15 @@
 			src.UpdateOverlays(null, "wear_gloves_l")
 
 		if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_right_arm"))
-			if ("right_[icon_name]" in src.mutantrace?.clothing_icon_states?["hands"]) //above but right glove
+			var/icon_local = (src.gloves.which_hands & GLOVE_HAS_RIGHT) ? icon_name : "transparent"
+			if ("right_[icon_local]" in src.mutantrace?.clothing_icon_states?["hands"]) //above but right glove
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icons["hands"]
 				no_offset = TRUE
+				src.gloves.wear_image.pixel_x = initial(src.gloves.wear_image.pixel_x)
+				src.gloves.wear_image.pixel_y = initial(src.gloves.wear_image.pixel_y)
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
-			src.gloves.wear_image.icon_state = "right_[icon_name]"
+			src.gloves.wear_image.icon_state = "right_[icon_local]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
 			src.UpdateOverlays(src.gloves.wear_image, "wear_gloves_r")
@@ -310,6 +316,8 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["back"]) //checks if they are a mutantrace with special back sprites and then replaces them if they do
 			src.back.wear_image.icon = src.mutantrace.clothing_icons["back"]
 			no_offset = TRUE
+			src.back.wear_image.pixel_x = initial(src.back.wear_image.pixel_x)
+			src.back.wear_image.pixel_y = initial(src.back.wear_image.pixel_y)
 		else
 			src.back.wear_image.icon = src.back.wear_image_icon
 		src.back.wear_image.icon_state = wear_state
@@ -343,6 +351,8 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["eyes"]) //checks for special glasses sprites for mutantraces and replaces the sprite with it if there is one.
 			src.glasses.wear_image.icon = src.mutantrace.clothing_icons["eyes"]
 			no_offset = TRUE
+			src.glasses.wear_image.pixel_x = initial(src.glasses.wear_image.pixel_x)
+			src.glasses.wear_image.pixel_y = initial(src.glasses.wear_image.pixel_y)
 		else
 			src.glasses.wear_image.icon = src.glasses.wear_image_icon
 		src.glasses.wear_image.icon_state = wear_state
@@ -372,6 +382,8 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["ears"]) //checks if they are a mutantrace with special earwear sprites and then replaces them if they do
 			src.ears.wear_image.icon = src.mutantrace.clothing_icons["ears"]
 			no_offset = TRUE
+			src.ears.wear_image.pixel_x = initial(src.ears.wear_image.pixel_x)
+			src.ears.wear_image.pixel_y = initial(src.ears.wear_image.pixel_y)
 		else
 			src.ears.wear_image.icon = src.ears.wear_image_icon
 		src.ears.wear_image.icon_state = wear_state
@@ -402,6 +414,8 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["mask"])
 			src.wear_mask.wear_image.icon = src.mutantrace.clothing_icons["mask"]
 			no_offset = TRUE
+			src.wear_mask.wear_image.pixel_x = initial(src.wear_mask.wear_image.pixel_x)
+			src.wear_mask.wear_image.pixel_y = initial(src.wear_mask.wear_image.pixel_y)
 		else
 			src.wear_mask.wear_image.icon = src.wear_mask.wear_image_icon
 		src.wear_mask.wear_image.icon_state = wear_state
@@ -434,6 +448,8 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["head"])
 			src.head.wear_image.icon = src.mutantrace.clothing_icons["head"]
 			no_offset = TRUE
+			src.head.wear_image.pixel_x = initial(src.head.wear_image.pixel_x)
+			src.head.wear_image.pixel_y = initial(src.head.wear_image.pixel_y)
 		else
 			src.head.wear_image.icon = src.head.wear_image_icon
 		src.head.wear_image.icon_state = wear_state
@@ -465,6 +481,8 @@
 		if (wear_state in src.mutantrace?.clothing_icon_states?["belt"]) //checks if they are a mutantrace with special belt sprites and then replaces them if they do
 			src.belt.wear_image.icon = src.mutantrace.clothing_icons["belt"]
 			no_offset = TRUE
+			src.belt.wear_image.pixel_x = initial(src.belt.wear_image.pixel_x)
+			src.belt.wear_image.pixel_y = initial(src.belt.wear_image.pixel_y)
 		else
 			src.belt.wear_image.icon = src.belt.wear_image_icon
 		src.belt.wear_image.icon_state = wear_state

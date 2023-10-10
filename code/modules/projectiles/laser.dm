@@ -138,31 +138,31 @@ toxic - poisons
 	sname = "phaser bolt"
 	dissipation_delay = 5
 	shot_sound = 'sound/weapons/laserlight.ogg'
-	color_red = 0
-	color_green = 1
+	color_red = 1
+	color_green = 0.2
 	color_blue = 0.2
 
 	tiny
 		name = "micro phaser bolt"
-		icon_state = "bolt"
+		icon_state = "phaser_light"
 		sname = "micro phaser bolt"
 		damage = 10
 		cost = 10
 		shot_sound = 'sound/weapons/energy/phaser_tiny.ogg'
-		color_red = 0
-		color_green = 1
+		color_red = 1
+		color_green = 0.2
 		color_blue = 0.2
 
 	huge // yes laser/light/huge is pretty dumb
 		name = "macro phaser blast"
-		icon_state = "crescent"
+		icon_state = "phaser_heavy"
 		sname = "macro phaser blast"
 		damage = 50
 		cost = 62.5
 		shot_sound = 'sound/weapons/energy/phaser_huge.ogg'
-		color_red = 0
-		color_green = 0.1
-		color_blue = 0.4
+		color_red = 1
+		color_green = 0.2
+		color_blue = 0.2
 
 		on_hit(atom/hit, dir, obj/projectile/P)
 			hit.ex_act(3, src, 1.5)
@@ -383,29 +383,61 @@ toxic - poisons
 	shot_sound = 'sound/weapons/laser_a.ogg'
 	dissipation_delay = 6
 	dissipation_rate = 5
-	cost = 25
-	damage = 30
-	color_red = 0
-	color_green = 1
-	color_blue = 0.3
+	cost = 20
+	damage = 33
+	color_icon = "#3d9cff"
+	color_red = 0.2
+	color_green = 0.5
+	color_blue = 1
+	brightness = 1.2
 	shot_number = 1
 
+	on_launch(var/obj/projectile/P)
+		. = ..()
+		P.AddComponent(/datum/component/radioactive, 33, FALSE, FALSE, 2)
+
+	/*tick(var/obj/projectile/P)
+		var/obj/effects/ion_trails/I = new /obj/effects/ion_trails
+		I.set_loc(get_turf(P))
+		I.set_dir(P.dir)
+		flick("ion_fade", I)
+		I.icon_state = "blank"
+		I.pixel_x = P.pixel_x
+		I.pixel_y = P.pixel_y
+		SPAWN( 20 )
+			if (I && !I.disposed) qdel(I)*/
+
+
 	burst
-		damage = 20
-		cost = 50
-		shot_number = 4
-		icon_state = "triple"
+		damage = 15
+		cost = 30
+		shot_number = 3
+		icon_state = "bolt_burst"
 		shot_sound = 'sound/weapons/laser_c.ogg'
+		fullauto_valid = 1
 
 	blast
 		shot_sound = 'sound/weapons/laser_e.ogg'
 		damage = 30
 		cost = 100
-		icon_state = "40mmgatling"
+		icon_state = "crescent_white"
 		shot_number = 1
 
+	cannon
+		shot_sound = 'sound/weapons/energy/howitzer_shot.ogg'
+		damage = 100
+		cost = 200
+		icon_state = "crescent"
+
+	carbine
+		shot_sound = 'sound/weapons/laser_b.ogg'
+		icon_state = "bolt_long"
+		dissipation_delay = 12
+		dissipation_rate = 5
+		projectile_speed = 56
+
+
 /datum/projectile/laser/blaster/pod_pilot
-	icon_state = "modproj"
 	cost = 20
 	damage = 33
 	color_red = 0

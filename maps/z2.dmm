@@ -11510,7 +11510,7 @@
 /area/upper_arctic/exterior/surface)
 "aVl" = (
 /obj/decal/cleanable/cobweb,
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/lower_arctic/lower)
 "aVm" = (
@@ -11967,8 +11967,8 @@
 	icon_state = "2-4"
 	},
 /obj/decal/cleanable/dirt,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /turf/unsimulated/floor/plating/scorched,
 /area/crater/biodome/maint)
 "aWU" = (
@@ -15377,7 +15377,7 @@
 "bib" = (
 /obj/storage/crate,
 /obj/item/storage/toolbox/mechanical,
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/unsimulated/floor/wood,
 /area/marsoutpost)
 "bic" = (
@@ -17783,29 +17783,7 @@
 "bos" = (
 /turf/unsimulated/floor/caution/east,
 /area/drone/assembly)
-"bot" = (
-/obj/overlay{
-	density = 1;
-	desc = "The chassis of an HK-class drone.";
-	dir = 1;
-	icon = 'icons/obj/ship.dmi';
-	icon_state = "drone_construction";
-	name = "partially assembled drone"
-	},
-/turf/unsimulated/floor/engine,
-/area/drone/assembly)
 "bou" = (
-/turf/unsimulated/floor/engine,
-/area/drone/assembly)
-"bov" = (
-/obj/overlay{
-	density = 1;
-	desc = "The chassis of an HK-class drone.";
-	dir = 4;
-	icon = 'icons/obj/ship.dmi';
-	icon_state = "drone_construction";
-	name = "mostly assembled drone"
-	},
 /turf/unsimulated/floor/engine,
 /area/drone/assembly)
 "box" = (
@@ -17940,16 +17918,6 @@
 	icon_state = "floor4"
 	},
 /area/drone)
-"bpl" = (
-/obj/overlay{
-	density = 1;
-	desc = "The chassis of an SC-class drone.";
-	icon = 'icons/obj/ship.dmi';
-	icon_state = "drone_construction";
-	name = "partially assembled drone"
-	},
-/turf/unsimulated/floor/engine,
-/area/drone/assembly)
 "bpn" = (
 /obj/trigger/critter,
 /turf/unsimulated/floor/setpieces{
@@ -18743,18 +18711,6 @@
 /obj/item/device/analyzer/atmospheric,
 /obj/item/electronics/soldering,
 /turf/unsimulated/floor/caution/east,
-/area/drone/assembly)
-"brQ" = (
-/obj/overlay{
-	bound_height = 96;
-	bound_width = 96;
-	density = 1;
-	desc = "An enormous Omega-class battledrone. Luckily, it appears to be inactive at the moment.";
-	icon = 'icons/effects/96x96.dmi';
-	icon_state = "battledrone-inactive";
-	name = "mostly assembled drone"
-	},
-/turf/unsimulated/floor/engine,
 /area/drone/assembly)
 "brS" = (
 /obj/decal/glow{
@@ -29778,22 +29734,6 @@
 /obj/table/auto,
 /turf/unsimulated/floor/grime,
 /area/meat_derelict/entry)
-"ciq" = (
-/obj/decal/fakeobjects/firelock_broken{
-	dir = 4;
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "fdoor0"
-	},
-/obj/machinery/door/poddoor/blast/single{
-	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
-	id = "meatstation1";
-	name = "Safety Interlock";
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/meat_derelict/entry)
 "cir" = (
 /obj/meatlight{
 	brightness = 4
@@ -32308,7 +32248,7 @@
 /obj/decal/wallscroll/scroll3{
 	pixel_y = 32
 	},
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/unsimulated/floor/wood/two,
 /area/dojo)
 "cqF" = (
@@ -57401,12 +57341,6 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
-"ecj" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/meat_derelict/main)
 "edm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -57865,6 +57799,27 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
+"eDt" = (
+/obj/decal/fakeobjects/robot{
+	anchored = 1;
+	desc = "Most of it's electronics appear to be destroyed.";
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-dead";
+	name = "Smashed Robot"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor/plating,
+/area/marsoutpost)
 "eEh" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window{
@@ -58269,12 +58224,6 @@
 	dir = 1
 	},
 /area/moon/museum)
-"fbU" = (
-/obj/critter/monster_door{
-	dir = 4
-	},
-/turf/unsimulated/floor/plating,
-/area/meat_derelict/guts)
 "fcf" = (
 /obj/machinery/light/small,
 /obj/stool/chair{
@@ -59328,6 +59277,12 @@
 	dir = 1
 	},
 /area/iomoon/base)
+"gkx" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/meat_derelict/main)
 "gkG" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -60031,6 +59986,22 @@
 	dir = 1
 	},
 /area/owlery/owleryhall)
+"hcs" = (
+/obj/machinery/conveyor/EW{
+	id = "ddan"
+	},
+/obj/overlay{
+	density = 1;
+	desc = "Part of a drone chassis.";
+	dir = 8;
+	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
+	icon_state = "drone_construction";
+	name = "drone parts"
+	},
+/obj/item/cell/cerenkite,
+/obj/item/shipcomponent/mainweapon/disruptor,
+/turf/unsimulated/floor/caution/north,
+/area/drone/office)
 "hcG" = (
 /obj/table/wood/auto/desk,
 /obj/item/luggable_computer/personal/adhara_laptop,
@@ -60318,27 +60289,6 @@
 /obj/item/clothing/mask/anime,
 /turf/unsimulated/floor/grass/leafy,
 /area/dojo)
-"hsi" = (
-/obj/decal/fakeobjects/robot{
-	anchored = 1;
-	desc = "Most of it's electronics appear to be destroyed.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "mars_bot-dead";
-	name = "Smashed Robot"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/decal/stripe_delivery,
-/turf/unsimulated/floor/plating,
-/area/marsoutpost)
 "htJ" = (
 /obj/decal/cleanable/blood/tracks{
 	dir = 4
@@ -60499,6 +60449,12 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"hAU" = (
+/obj/critter/monster_door{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/meat_derelict/guts)
 "hBd" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/wood/two,
@@ -62434,6 +62390,14 @@
 	},
 /turf/unsimulated/floor/caution/east,
 /area/iomoon/base/underground)
+"jxg" = (
+/turf/unsimulated/wall/generic{
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "broken door";
+	dir = 4
+	},
+/area/meat_derelict/soviet)
 "jxy" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
@@ -62521,6 +62485,22 @@
 "jEp" = (
 /turf/unsimulated/floor/stairs,
 /area/void_diner)
+"jEI" = (
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/poddoor/blast/single{
+	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
+	id = "meatstation1";
+	name = "Safety Interlock";
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
+/area/meat_derelict/entry)
 "jEZ" = (
 /obj/decal/poster/wallsign/dont_panic{
 	pixel_y = -31;
@@ -63059,11 +63039,11 @@
 /turf/unsimulated/wall/auto/lead/white,
 /area/moon/museum)
 "klK" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate,
 /turf/unsimulated/floor/plating,
 /area/hospital)
@@ -66287,14 +66267,6 @@
 "nzm" = (
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/nw,
 /area/centcom/offices/rodney)
-"nzs" = (
-/turf/unsimulated/wall/generic{
-	icon = 'icons/obj/doors/shuttle.dmi';
-	icon_state = "door1";
-	name = "broken door";
-	dir = 4
-	},
-/area/meat_derelict/soviet)
 "nAf" = (
 /turf/unsimulated/floor/dojo/stonestair,
 /area/titlescreen)
@@ -66693,6 +66665,18 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
+"nTH" = (
+/obj/overlay{
+	bound_height = 96;
+	bound_width = 96;
+	density = 1;
+	desc = "An enormous Omega-class battledrone. Luckily, it appears to be inactive at the moment.";
+	icon = 'icons/mob/critter/robotic/drone/drone96x96.dmi';
+	icon_state = "battledrone-inactive";
+	name = "mostly assembled drone"
+	},
+/turf/unsimulated/floor/engine,
+/area/drone/assembly)
 "nTL" = (
 /obj/map/light/brightwhite,
 /mob/living/critter/small_animal/boogiebot,
@@ -67514,22 +67498,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
-"oNa" = (
-/obj/machinery/conveyor/EW{
-	id = "ddan"
-	},
-/obj/overlay{
-	density = 1;
-	desc = "Part of a drone chassis.";
-	dir = 8;
-	icon = 'icons/obj/ship.dmi';
-	icon_state = "drone_construction";
-	name = "drone parts"
-	},
-/obj/item/cell/cerenkite,
-/obj/item/shipcomponent/mainweapon/disruptor,
-/turf/unsimulated/floor/caution/north,
-/area/drone/office)
 "oPt" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -68327,6 +68295,17 @@
 	dir = 4
 	},
 /area/sim/gunsim/lobby)
+"pyK" = (
+/obj/overlay{
+	density = 1;
+	desc = "The chassis of an HK-class drone.";
+	dir = 1;
+	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
+	icon_state = "drone_construction";
+	name = "partially assembled drone"
+	},
+/turf/unsimulated/floor/engine,
+/area/drone/assembly)
 "pyP" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/glassbox,
@@ -71159,6 +71138,16 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"soD" = (
+/obj/overlay{
+	density = 1;
+	desc = "The chassis of an SC-class drone.";
+	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
+	icon_state = "drone_construction";
+	name = "partially assembled drone"
+	},
+/turf/unsimulated/floor/engine,
+/area/drone/assembly)
 "soS" = (
 /obj/securearea{
 	desc = "It looks pretty dangerous in there.";
@@ -71672,6 +71661,17 @@
 	dir = 4
 	},
 /area/iomoon/base)
+"taU" = (
+/obj/overlay{
+	density = 1;
+	desc = "The chassis of an HK-class drone.";
+	dir = 4;
+	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
+	icon_state = "drone_construction";
+	name = "mostly assembled drone"
+	},
+/turf/unsimulated/floor/engine,
+/area/drone/assembly)
 "tbp" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/grime,
@@ -114828,19 +114828,19 @@ blV
 bmh
 bmh
 bmh
-oNa
+hcs
 bns
 xnn
 bof
 bok
-bot
+pyK
 bou
-bpl
+soD
 bor
 bol
 bou
 brg
-brQ
+nTH
 boh
 aaa
 aaa
@@ -115437,9 +115437,9 @@ rZe
 nqE
 boh
 bom
-bov
+taU
 bou
-bpl
+soD
 bpG
 bpZ
 bou
@@ -130218,7 +130218,7 @@ aKS
 aTs
 jYz
 aJX
-hsi
+eDt
 aTs
 aTs
 aTs
@@ -140021,7 +140021,7 @@ pdZ
 cba
 ckB
 cli
-nzs
+jxg
 cli
 cli
 ckB
@@ -140919,7 +140919,7 @@ aqL
 aqL
 aqL
 aqL
-ciq
+jEI
 aqL
 aqL
 ftm
@@ -141522,7 +141522,7 @@ oeC
 hfT
 aqL
 aqL
-ecj
+gkx
 chN
 chN
 bXx
@@ -144244,7 +144244,7 @@ cgK
 cgK
 bWB
 bZd
-fbU
+hAU
 bZd
 bZd
 cdF

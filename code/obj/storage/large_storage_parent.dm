@@ -329,7 +329,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
 					list(I, user), null, positions[1], positions[2]),user)
 				return
-			else if (ispryingtool(I))
+			else if (ispryingtool(I) && src.needs_prying)
 				SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 1 SECOND, /obj/storage/proc/pry_open, user, I.icon, I.icon_state,\
 				"[user] pries open \the [src]", INTERRUPT_ACTION | INTERRUPT_STUNNED)
 
@@ -397,6 +397,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	proc/pry_open(var/mob/user)
 		playsound(src, 'sound/items/Crowbar.ogg', 60, 1)
 		src.pried_open = TRUE
+		src.locked = FALSE
 		src.open = TRUE
 		src.dump_contents(user)
 		src.UpdateIcon()
