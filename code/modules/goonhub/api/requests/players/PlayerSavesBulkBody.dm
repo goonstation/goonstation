@@ -1,20 +1,13 @@
 
 /datum/apiBody/PlayerSavesBulkData
-	var/data	= null
-
-/datum/apiBody/PlayerSavesBulkData/New(
-	data
-)
-	. = ..()
-	src.data = data
+	fields = list(
+		"data" // string
+	)
 
 /datum/apiBody/PlayerSavesBulkData/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.data)
+		isnull(src.values["data"])
 	)
 		return FALSE
 
-/datum/apiBody/PlayerSavesBulkData/toJson()
-	return json_encode(list(
-		"data"	= src.data
-	))
