@@ -220,6 +220,7 @@
 /datum/robot/module_tool_creator/recursive/module/medical_d
 	definitions = list(
 		/obj/item/robospray/drone,
+		/obj/item/suture,
 		/obj/item/reagent_containers/syringe,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/hand_labeler,

@@ -893,8 +893,6 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (src.cabling < 1)
 				boutput(user, "<span class='alert'>Not enough wiring for repairs.</span>")
 				return
-			if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat)
-				return
 			var/usage =  min(src.cabling, D.fireloss)
 			if (usage < 1)
 				return
@@ -912,11 +910,8 @@ TYPEINFO(/obj/machinery/recharge_station)
 			var/moduleRef = params["moduleRef"]
 			if(moduleRef)
 				var/obj/item/robot_module/module = locate(moduleRef) in src.modules
-				if (isdrone(src.occupant) && module.moduletype != "drone")
-					boutput(user, "<span class='alert'>There's no way that module will fit, it's way too big!</span>")
-					return
-				if (iscyborg(src.occupant) && module.moduletype != "cyborg")
-					boutput(user, "<span class='alert'>That module isn't compatible with cyborgs!</span>")
+				if (module.moduletype != R.moduleaccepted)
+					boutput(user, "<span class='alert'>That module isn't compatible!</span>")
 					return
 				if (module)
 					if (R.module) // Remove installed module to make room for new module
@@ -935,7 +930,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (!isrobot(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
-			if (R.module && R.module.swappable == TRUE)
+			if (R.module)
+				if (R.module.swappable == FALSE)
+					boutput(user, "<span class='alert'>You cannot remove a hardwired module!</span>")
+					return
 				var/obj/item/robot_module/removed_module = R.remove_module()
 				src.modules.Add(removed_module)
 				removed_module.set_loc(src)

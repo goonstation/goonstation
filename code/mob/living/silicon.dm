@@ -8,6 +8,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	var/emaggable = FALSE // Can we be emagged?
 	robot_talk_understand = TRUE
 	see_infrared = TRUE
+	var/moduleaccepted = "none"
 	var/list/req_access = list()
 
 	var/killswitch = FALSE

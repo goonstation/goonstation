@@ -22,6 +22,7 @@
 	emaggable = TRUE
 	syndicate_possible = 1
 	movement_delay_modifier = 2 - BASE_SPEED
+	moduleaccepted = "cyborg"
 
 	var/datum/hud/silicon/robot/hud
 
@@ -1215,7 +1216,7 @@
 				boutput(user, "<span class='alert'>You need to get the wires out of the way first.</span>")
 			else if(src.module)
 				boutput(user, "<span class='alert'>[src] already has a module!</span>")
-			else if(module.moduletype != "cyborg")
+			else if(module.moduletype != src.moduleaccepted)
 				boutput(user, "<span class='alert'>That module isn't compatible with cyborgs!</span>")
 			else
 				user.drop_item()

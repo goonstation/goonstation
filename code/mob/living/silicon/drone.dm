@@ -12,8 +12,8 @@
 	health = 25
 	max_health = 25
 	do_hurt_slowdown = FALSE
-	emaggable = TRUE
 	syndicate_possible = 1
+	moduleaccepted = "drone"
 
 	var/datum/hud/silicon/drone/hud
 
@@ -42,7 +42,7 @@
 	var/alarms = list("Motion"=list(), "Fire"=list(), "Atmosphere"=list(), "Power"=list())
 	var/viewalerts = 0
 	var/jetpack = 1
-	var/freemodule = 1 // For picking modules when a robot is first created
+	var/freemodule = TRUE // For picking modules when a robot is first created
 	var/glitchy_speak = 0
 
 	sound_fart = 'sound/voice/farts/poo2_robot.ogg'
@@ -68,7 +68,7 @@
 	weaponlock_time = 120
 	var/custom = 0
 
-	New(loc, var/obj/item/parts/robot_parts/drone_frame/frame = null, var/starter = 0, var/syndie = 0, var/frame_emagged = 0)
+	New(loc, var/obj/item/parts/robot_parts/drone_frame/frame = null, var/starter = 0)
 
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_EXAMINE_ALL_NAMES, src)
 		src.cell = frame.cell
@@ -167,9 +167,9 @@
 			robogibs(T)
 			for(var/obj/item/cell/C in src.contents)
 				C.set_loc(T)
-			for(var/obj/item/robot_module/M in src.contents)
-				if(M.swappable == 1) //no insertable unswappable modules for you if you smash open an eyebot
-					M.set_loc(T)
+			for(var/obj/item/robot_module/module in src.contents)
+				if(module.swappable == TRUE) //no insertable unswappable modules for you if you smash open an eyebot
+					module.set_loc(T)
 			for(var/obj/item/ai_interface/I in src.contents)
 				I.set_loc(T)
 
@@ -866,7 +866,7 @@
 			var/obj/item/robot_module/module = W
 			if(src.module)
 				boutput(user, "<span class='alert'>[src] already has a module!</span>")
-			else if(module.moduletype != "drone")
+			else if(module.moduletype != src.moduleaccepted)
 				boutput(user, "<span class='alert'>There's no way that module will fit, it's way too big!</span>")
 			else
 				user.drop_item()
@@ -1135,7 +1135,7 @@
 	movement_delay()
 		if (src.pulling && !isitem(src.pulling))
 			return ..()
-		return 0.5 + movement_delay_modifier
+		return 1 + movement_delay_modifier
 
 	hotkey(name)
 		switch (name)
@@ -1355,7 +1355,6 @@
 		if (src.locking)
 			src.locking = 0
 		opened = 1
-		//emagged = 1
 		src.visible_message("<span class='alert'>[src]'s panel blows open!</span>")
 		src.TakeDamage("All", 30, 0)
 		return 1
@@ -1491,15 +1490,15 @@
 
 		switch(mod)
 			if("Civilian")
-				src.freemodule = 0
+				src.freemodule = FALSE
 				boutput(src, "<span class='notice'>You chose the Civilian module.</span>")
 				src.set_module(new /obj/item/robot_module/drone/civilian(src))
 			if("Engineering")
-				src.freemodule = 0
+				src.freemodule = FALSE
 				boutput(src, "<span class='notice'>You chose the Engineering module.</span>")
 				src.set_module(new /obj/item/robot_module/drone/engineering(src))
 			if("Medsci")
-				src.freemodule = 0
+				src.freemodule = FALSE
 				boutput(src, "<span class='notice'>You chose the Medsci module.</span>")
 				src.set_module(new /obj/item/robot_module/drone/medical(src))
 
@@ -1694,11 +1693,11 @@
 		else
 			src.ClearSpecificOverlays("hat")
 
-		if (src.emagged)
+	/*	if (src.emagged)
 			UpdateOverlays(SafeGetOverlayImage("emagged", 'icons/mob/hivebot.dmi', "emagged-" + src.hovering, src.layer+0.25), "emagged")
 		else
 			src.ClearSpecificOverlays("emagged")
-
+*/
 
 	proc/compborg_force_unequip(var/slot = 0)
 		src.module_active = null

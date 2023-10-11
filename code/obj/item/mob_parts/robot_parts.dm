@@ -1445,6 +1445,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			drone.hud.module_added()
 
 		drone.update_appearance()
+		drone.update_details()
 
 		qdel(src)
 		return
