@@ -19,6 +19,7 @@
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
 	icon_state  = "bad"
+	group = "vision"
 
 
 /datum/bioEffect/mute
@@ -168,6 +169,7 @@
 	var/datum/hud/vision_impair/hud = new
 	var/applied = 1
 	icon_state  = "bad"
+	group = "vision"
 
 	OnAdd()
 		..()
