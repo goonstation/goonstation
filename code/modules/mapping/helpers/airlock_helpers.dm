@@ -34,17 +34,17 @@ ABSTRACT_TYPE(/obj/mapping_helper/airlock)
 	cycle = TRUE
 	cycleid = "1"
 
-	1
+	id1
 		cycleid = "1"
-	2
+	id2
 		cycleid = "2"
-	3
+	id3
 		cycleid = "3"
-	4
+	id4
 		cycleid = "4"
-	5
+	id5
 		cycleid = "5"
-	6
+	id6
 		cycleid = "6"
-	7
+	id7
 		cycleid = "7"
