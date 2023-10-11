@@ -336,6 +336,7 @@
 				owner.emote("slap")
 			else if (probmult(2))
 				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B></span>")
+				owner.changeStatus("weakened", 5 SECONDS)
 				owner.TakeDamageAccountArmor("head", rand(2,5), 0, 0, DAMAGE_BLUNT)
 			else if (probmult(1))
 				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!</span>")
