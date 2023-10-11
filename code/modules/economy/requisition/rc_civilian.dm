@@ -618,7 +618,7 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/item/botpart_std
 	name = "beepy boopy boye (you shouldn't see this)"
-	typepath = /obj/item/parts/robot_parts/drone
+	typepath = /obj/item/parts/robot_parts/drone_frame
 	exactpath = TRUE
 	feemod = PAY_TRADESMAN*2
 

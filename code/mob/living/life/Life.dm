@@ -202,6 +202,8 @@
 	add_lifeprocess(/datum/lifeprocess/drone_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/drone_signal)
+
 
 /mob/living/silicon/robot/restore_life_processes()
 	..()

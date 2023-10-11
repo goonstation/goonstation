@@ -1872,6 +1872,15 @@
 
 #define can_step_sfx(H) (H.footstep >= 4 || (H.m_intent != "run" && H.footstep >= 3))
 
+/datum/lifeprocess/drone_signal
+	process(var/datum/gas_mixture/environment)
+		if(drone_owner?.mainframe)
+			if((get_step(drone_owner.mainframe, 0)?.z == get_step(drone_owner, 0)?.z) || (inunrestrictedz(drone_owner) && inonstationz(drone_owner.mainframe)))
+				drone_owner.delStatus("low_signal")
+			else
+				drone_owner.setStatus("low_signal", INFINITE_STATUS)
+		..()
+
 #undef can_step_sfx
 #undef DRONE_BATTERY_DISTRESS_INACTIVE
 #undef DRONE_BATTERY_DISTRESS_ACTIVE
