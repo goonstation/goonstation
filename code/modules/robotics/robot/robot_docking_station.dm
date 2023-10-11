@@ -526,10 +526,10 @@ TYPEINFO(/obj/machinery/recharge_station)
 		occupant_data["cosmetics"] = occupant_cosmetics
 
 	if (isdrone(src.occupant)) // drone handling
-		var/mob/living/silicon/drone/D = src.occupant
-		occupant_data["name"] = D.name
+		var/mob/living/silicon/drone/drone = src.occupant
+		occupant_data["name"] = drone.name
 		occupant_data["kind"] = "drone"
-		if (D.ai_interface)
+		if (drone.ai_interface)
 			occupant_data["user"] = "ai"
 		else
 			occupant_data["user"] = "unknown"
@@ -537,26 +537,26 @@ TYPEINFO(/obj/machinery/recharge_station)
 		var/list/parts = list()
 		var/list/chassis = list()
 		chassis["exists"] = TRUE
-		chassis["max_health"] = D.max_health
-		chassis["dmg_blunt"] = D.bruteloss
-		chassis["dmg_burns"] = D.fireloss
+		chassis["max_health"] = drone.max_health
+		chassis["dmg_blunt"] = drone.bruteloss
+		chassis["dmg_burns"] = drone.fireloss
 
 		parts["chassis"] = chassis
 		occupant_data["parts"] = parts
 
 		var/list/occupant_cosmetics = list()
-		occupant_cosmetics["hat"] = D.hat
+		occupant_cosmetics["hat"] = drone.hat
 		occupant_data["cosmetics"] = occupant_cosmetics
 
-		if (D.cell)
+		if (drone.cell)
 			var/list/this_cell = list()
-			var/obj/item/cell/C = D.cell
+			var/obj/item/cell/C = drone.cell
 			this_cell["name"] = C.name
 			this_cell["current"] = C.charge
 			this_cell["max"] = C.maxcharge
 			occupant_data["cell"] = this_cell
-		if (D.module)
-			var/obj/item/robot_module/M = D.module
+		if (drone.module)
+			var/obj/item/robot_module/M = drone.module
 			occupant_data["module"] = M.name
 
 	if (src.conversion_chamber && ishuman(src.occupant))
@@ -814,14 +814,13 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if("cosmetic-change-hat")
 			if (!isdrone(src.occupant))
 				return
-			var/mob/living/silicon/drone/R = src.occupant
-			var/mod = tgui_input_list(user, "Please select a decoration!", "Drone Decoration", list("Nothing", "Beret", "Hard Hat")) //just two for now but it's a start
+			var/mob/living/silicon/drone/drone = src.occupant
+			var/mod = tgui_input_list(user, "Please select a decoration!", "Drone Decoration", list("Nothing", "Beret", "Hard Hat"))
 			if (!mod)
 				mod = "Nothing"
-			else
-				R.hat = mod
-			R.update_appearance()
-			R.update_details()
+			drone.hat = mod
+			drone.update_appearance()
+			drone.update_details()
 			. = TRUE
 
 		if("self-service")
@@ -871,7 +870,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			. = TRUE
 
 		if("repair-fuel-drone")
-			if (!isdrone(occupant))
+			if (!isdrone(src.occupant))
 				return
 			var/mob/living/silicon/drone/D = src.occupant
 			if (src.reagents.get_reagent_amount("fuel") < 1)
@@ -888,7 +887,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			. = TRUE
 
 		if("repair-wiring-drone")
-			if (!isdrone(occupant))
+			if (!isdrone(src.occupant))
 				return
 			var/mob/living/silicon/drone/D = src.occupant
 			if (src.cabling < 1)
@@ -921,7 +920,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 					return
 				if (module)
 					if (R.module) // Remove installed module to make room for new module
-						if (R.module.swappable == 0)
+						if (R.module.swappable == FALSE)
 							boutput(user, "<span class='alert'>You cannot swap out a hardwired module!</span>")
 							return
 						var/obj/item/robot_module/removed_module = R.remove_module()
@@ -936,7 +935,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 			if (!isrobot(src.occupant))
 				return
 			var/mob/living/silicon/robot/R = src.occupant
-			if (R.module && R.module.swappable == 1)
+			if (R.module && R.module.swappable == TRUE)
 				var/obj/item/robot_module/removed_module = R.remove_module()
 				src.modules.Add(removed_module)
 				removed_module.set_loc(src)
@@ -1071,7 +1070,7 @@ TYPEINFO(/obj/machinery/recharge_station)
 		if("cell-install")
 			if (!isrobot(src.occupant))
 				return
-			if (user == src.occupant && !isdrone(user))
+			if (user == src.occupant)
 				boutput(user, "<span class='alert'>You can't modify your own power cell!</span>")
 				return
 			if (isAIeye(user))

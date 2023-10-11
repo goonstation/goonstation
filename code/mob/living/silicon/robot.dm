@@ -728,7 +728,7 @@
 
 		if (src.module)
 			. += "[src.name] has a [src.module.name] "
-			if (src.module.swappable == 0)
+			if (src.module.swappable == FALSE)
 				. += "hardwired in.<br>"
 			else
 				. += "installed.<br>"
@@ -1929,7 +1929,7 @@
 		if(!upgrade) return
 
 		if (upgrade.active)
-			if (!upgrade || upgrade.loc != src || (src.mind && src.mind.current != src) || !iscyborg(src)) // Blame the teleport upgrade.
+			if (!upgrade || upgrade.loc != src || (src.mind && src.mind.current != src) || !isrobot(src)) // Blame the teleport upgrade.
 				return
 			if (!src.cell)
 				src.show_text("You do not have a power cell!", "red")

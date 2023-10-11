@@ -1,4 +1,4 @@
-/obj/item/robot_module/civilian_d
+/obj/item/robot_module/drone/civilian
 	name = "civilian drone module"
 	desc = "A module suitable for the less involved work of the civilian department."
 	icon_state = "civilian-d"

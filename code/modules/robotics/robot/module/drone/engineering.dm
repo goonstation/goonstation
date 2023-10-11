@@ -1,4 +1,4 @@
-/obj/item/robot_module/engineering_d
+/obj/item/robot_module/drone/engineering
 	name = "engineering drone module"
 	desc = "A module designed to allow for simple maintenance work around station."
 	icon_state = "engineering-d"

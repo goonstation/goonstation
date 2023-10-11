@@ -1,6 +1,6 @@
 
 /// Meant mostly for admin gimmicks so tools can be added manually
-/obj/item/robot_module/empty_d
+/obj/item/robot_module/drone/empty
 	name = "empty drone module"
 	desc = "An empty drone module."
 	icon_state = "empty-d"

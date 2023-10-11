@@ -135,7 +135,6 @@
 		/obj/item/electronics/scanner,
 		/obj/item/electronics/soldering,
 		/obj/item/rcd,
-		/obj/item/room_planner,
 		/obj/item/lamp_manufacturer,
 		/obj/item/deconstructor/borg,
 		/obj/item/pinpointer/category/apcs/station,
@@ -222,7 +221,6 @@
 	definitions = list(
 		/obj/item/robospray/drone,
 		/obj/item/reagent_containers/syringe,
-		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/reagent_containers/glass/beaker,
 		/obj/item/hand_labeler,
 		/obj/item/device/gps,

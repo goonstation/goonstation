@@ -1,4 +1,4 @@
-/obj/item/robot_module/medical_d
+/obj/item/robot_module/drone/medical
 	name = "medsci drone module"
 	desc = "Incorporates basic medical supplies alongside the bare essentials for research work."
 	icon_state = "medical-d"

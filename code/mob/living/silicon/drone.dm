@@ -134,7 +134,7 @@
 			src.radio.name = "Primary Radio"
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
-			src.camera.c_tag = src.real_name
+			src.camera.c_tag = src.name
 			src.camera.network = "Robots"
 			src.update_appearance()
 			src.update_details()
@@ -175,7 +175,6 @@
 
 			var/obj/item/parts/robot_parts/drone_frame/frame =  new(T)
 			frame.shelltypetoapply = src.shelltype
-			frame.emagged = src.emagged
 			frame.freemodule = src.freemodule
 			frame.update_icon()
 
@@ -602,7 +601,7 @@
 
 		if (src.module)
 			. += "[src.name] has a [src.module.name] "
-			if (src.module.swappable == 0)
+			if (src.module.swappable == FALSE)
 				. += "hardwired in.<br>"
 			else
 				. += "installed.<br>"
@@ -629,7 +628,7 @@
 		..()
 
 		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
-		src.real_name = "SHELL/[src.mainframe]"
+		src.name = "SHELL/[src.mainframe]"
 		src.internal_pda = mainframe.internal_pda // this way you dont have a seperate PDA in a shell then in your core
 		src.internal_pda.name = "[mainframe.internal_pda.name]'s Internal PDA Unit"
 		src.internal_pda.owner = "[mainframe.internal_pda.owner]"
@@ -643,8 +642,7 @@
 
 	Logout()
 		..()
-		src.real_name = "AI Drone Shell [copytext("\ref[src]", 6, 11)]"
-		src.name = src.real_name
+		src.name = "AI Drone Shell [copytext("\ref[src]", 6, 11)]"
 		src.update_name_tag()
 
 		update_appearance()
@@ -835,7 +833,7 @@
 			src.update_appearance()
 			src.update_details()
 
-		else if (ispryingtool(W))
+		else if (isscrewingtool(W))
 			if (opened)
 				boutput(user, "You close the cover.")
 				playsound(src.loc, 'sound/items/Crowbar.ogg', 50, 1)
@@ -938,8 +936,7 @@
 				I.set_loc(src)
 				if (!(src in available_ai_shells))
 					available_ai_shells += src
-					src.real_name = "AI Drone Shell [copytext("\ref[src]", 6, 11)]"
-					src.name = src.real_name
+					src.name = "AI Drone Shell [copytext("\ref[src]", 6, 11)]"
 				for_by_tcl(AI, /mob/living/silicon/ai)
 					boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 				src.shell = 1
@@ -1006,7 +1003,7 @@
 						return
 					if (istype(src.module,/obj/item/robot_module/))
 						var/obj/item/robot_module/_module = src.module
-						if (_module.swappable == 0)
+						if (_module.swappable == FALSE)
 							boutput(user, "<span class='alert'>You cannot remove a hardwired module!</span>")
 						else
 							user.put_in_hand_or_drop(_module)
@@ -1496,15 +1493,15 @@
 			if("Civilian")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Civilian module.</span>")
-				src.set_module(new /obj/item/robot_module/civilian_d(src))
+				src.set_module(new /obj/item/robot_module/drone/civilian(src))
 			if("Engineering")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Engineering module.</span>")
-				src.set_module(new /obj/item/robot_module/engineering_d(src))
+				src.set_module(new /obj/item/robot_module/drone/engineering(src))
 			if("Medsci")
 				src.freemodule = 0
 				boutput(src, "<span class='notice'>You chose the Medsci module.</span>")
-				src.set_module(new /obj/item/robot_module/medical_d(src))
+				src.set_module(new /obj/item/robot_module/drone/medical(src))
 
 		hud.update_module()
 		update_appearance()
@@ -1675,6 +1672,8 @@
 			var/image/I = SafeGetOverlayImage("faceplate", 'icons/mob/hivebot.dmi', src.shelltype + "-bg", src.layer)
 			I.color = faceColor
 			UpdateOverlays(I, "faceplate")
+		else
+			src.ClearSpecificOverlays("faceplate")
 
 		if (src.opened)
 			var/image/i_panel = SafeGetOverlayImage("opanel", 'icons/mob/hivebot.dmi', "panel-" + src.hovering + "-" + src.shelltype, src.layer)

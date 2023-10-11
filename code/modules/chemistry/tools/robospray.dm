@@ -128,7 +128,6 @@
 /obj/item/robospray/drone
     botreagents = list(
         "ephedrine" = 25,
-        "atropine" = 25,
         "salbutamol" = 25,
         "saline" = 25
     )

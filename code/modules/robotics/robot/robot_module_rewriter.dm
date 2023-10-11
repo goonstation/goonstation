@@ -105,11 +105,11 @@
 							if ("mining")
 								moduleResetType = /obj/item/robot_module/mining
 							if ("civilian_d")
-								moduleResetType = /obj/item/robot_module/civilian_d
+								moduleResetType = /obj/item/robot_module/drone/civilian
 							if ("engineering_d")
-								moduleResetType = /obj/item/robot_module/engineering_d
+								moduleResetType = /obj/item/robot_module/drone/engineering
 							if ("medical_d")
-								moduleResetType = /obj/item/robot_module/medical_d
+								moduleResetType = /obj/item/robot_module/drone/medical
 						if (moduleResetType)
 							var/obj/item/robot_module/replacementModule = new moduleResetType(src)
 							var/moduleIndex = src.modules.Find(module)

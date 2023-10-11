@@ -1218,15 +1218,12 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	name = "drone frame"
 	icon_state = "frame"
 	max_health = 5000
-	/// This will make the borg a syndie one
-	var/emagged = 0
 	var/freemodule = TRUE
 	var/build_step = 0
 	var/shelltypetoapply = "eyebot"
 	var/moduletoapply = null
 	var/obj/item/cell/cell = null
 	var/obj/item/ai_interface/ai_interface = null
-	var/obj/item/ = null
 	appearance_flags = KEEP_TOGETHER
 
 	var/image/image_plate_overlay = null
@@ -1284,24 +1281,36 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				return
 
 		if (istype(W, /obj/item/device/radio))
-			if (src.build_step == 2)
-				var/obj/item/device/radio/M = W
+			if (src.build_step > 2)
+				boutput(user, "\The [src] already has a radio!")
+				return
+			else if  (src.build_step < 1)
+				boutput(user, "<span class='alert'>You need to add plating before you can put in a radio!</span>")
+				return
+			else if  (src.build_step == 1)
+				boutput(user, "<span class='alert'>You need to add wiring before you can put in a radio!</span>")
+				return
+			else
+				var/obj/item/device/radio/radio = W
 				src.build_step++
 				boutput(user, "You add the radio to [src]!")
 				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 				src.UpdateIcon()
 				user.drop_item()
-				qdel(M)
+				qdel(radio)
 				return
-			else if (src.build_step > 2)
-				boutput(user, "\The [src] already has a radio!")
-			else if  (src.build_step < 1)
-				boutput(user, "<span class='alert'>You need to add plating before you can put in a radio!</span>")
-			else if  (src.build_step == 1)
-				boutput(user, "<span class='alert'>You need to add wiring before you can put in a radio!</span>")
 
 		else if (istype(W, /obj/item/cell))
-			if (src.build_step == 3)
+			if  (src.build_step < 1)
+				boutput(user, "<span class='alert'>You need to add plating before you can put in a cell!</span>")
+				return
+			else if  (src.build_step == 1)
+				boutput(user, "<span class='alert'>You need to add wiring before you can put in a cell!</span>")
+				return
+			else if  (src.build_step == 2)
+				boutput(user, "<span class='alert'>You need to add a radio before you can put in a cell!</span>")
+				return
+			else
 				if (src.cell)
 					boutput(user, "<span class='alert'>There is already a cell in there. Use a wrench to remove it.</span>")
 				else
@@ -1311,12 +1320,6 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					boutput(user, "<span class='notice'>You insert [W].</span>")
 					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 					src.UpdateIcon()
-			else if  (src.build_step < 1)
-				boutput(user, "<span class='alert'>You need to add plating before you can put in a cell!</span>")
-			else if  (src.build_step == 1)
-				boutput(user, "<span class='alert'>You need to add wiring before you can put in a cell!</span>")
-			else if  (src.build_step == 2)
-				boutput(user, "<span class='alert'>You need to add a radio before you can put in a cell!</span>")
 
 		if (istype(W,/obj/item/organ/brain))
 			if (src.build_step == 3)
@@ -1336,6 +1339,8 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 					boutput(user, "<span class='notice'>You insert [I].</span>")
 					playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
 					src.UpdateIcon()
+			else
+				boutput(user, "<span class='alert'>You need to finish assembling the rest of the drone before installing a control board!</span>")
 
 		if (iswrenchingtool(W))
 			var/list/actions = list("Do nothing")
@@ -1345,7 +1350,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 				actions.Add("Remove the AI Interface")
 			if(src.cell)
 				actions.Add("Remove the Power cell")
-			if(!actions.len)
+			if(length(actions) == 0)
 				boutput(user, "<span class='alert'>You can't think of anything to do with the frame.</span>")
 				return
 
@@ -1405,15 +1410,14 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 	proc/check_completion()
 		if (build_step == 3)
 			if ((src.ai_interface) && src.cell)
-				return 1
-		return 0
+				return TRUE
+		return FALSE
 
 	proc/finish_drone()
 		var/mob/living/silicon/drone/drone = null
-		drone = new /mob/living/silicon/drone(get_turf(src.loc),src,0,src.emagged)
+		drone = new /mob/living/silicon/drone(get_turf(src.loc),src,0)
 
 		drone.name = "Drone"
-		drone.real_name = "Drone"
 
 		if (src.ai_interface)
 			if (!(drone in available_ai_shells))
@@ -1423,7 +1427,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 			playsound(src, 'sound/weapons/radxbow.ogg', 40, 1)
 			drone.ai_interface = src.ai_interface
 			drone.ai_interface.set_loc(drone)
-			drone.shell = 1
+			drone.shell = TRUE
 		else
 			stack_trace("We finished drone [identify_object(drone)] from frame [identify_object(src)] with a brain, but somehow lost the brain??? Where did it go")
 			drone.death()
@@ -1454,7 +1458,7 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		src.finish_drone()
 
 /obj/item/parts/robot_parts/drone_frame/complete_shell
-	moduletoapply = new/obj/item/robot_module/default_d
+	moduletoapply = new/obj/item/robot_module/drone/default
 	freemodule = FALSE
 	build_step = 3
 	cell = new/obj/item/cell/shell_cell/charged
