@@ -1406,6 +1406,23 @@ ABSTRACT_TYPE(/obj/item/parts/robot_parts/leg/right)
 		else
 			src.UpdateOverlays(null,"cell")
 
+	get_help_message(dist, mob/user)
+		if (build_step != 3)
+			switch(src.build_step)
+				if(0)
+					. = "You can use <b>metal sheets</b> to plate the frame."
+				if(1)
+					. = "You can use <b>cable coils</b> to add wiring to the frame."
+				if(2)
+					. = "You can add a <b>radio</b> to the frame."
+		else
+			if(!src.cell)
+				. = "You can add a <b>power cell</b> to the frame."
+			else if(!src.ai_interface)
+				. = "You can add an <b>AI interface board</b> to the frame."
+			else
+				. = "You can use a <b>wrench</b> to activate the frame."
+
 
 	proc/check_completion()
 		if (build_step == 3)
