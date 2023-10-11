@@ -259,9 +259,9 @@
 	msgGain = "You feel really sick..."
 	msgLose = "You don't feel sick any more."
 	reclaim_fail = 30
-	stability_loss = -20
+	stability_loss = -15
 	var/tox_amount = 1
-	var/tox_prob = 10
+	var/tox_prob = 25
 	icon_state  = "bad"
 	effect_group = "tox"
 
