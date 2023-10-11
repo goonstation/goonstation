@@ -67,7 +67,107 @@ The list of what to make and how it works is at https://staging.goonhub.com/docs
 - If you're making new files, follow the format of existing names.
 
 ### Request bodies and apiBody
-todo
+A `/datum/apiBody` is a type of request which gets sent through a route and provides information.
+The Goonhub api, while it lists what's needed in the body of the request for each route, doesn't actually give fixed names for each body. You can check what's required in the body under "request" -> "Body".
+
+The default format for making them is as follows:
+```dm
+/datum/apiBody/[path]
+	fields = list(
+		"field1", // [type]
+		"field2", // [type]
+		"field3" // [type]
+	)
+
+/datum/apiBody/[path]/VerifyIntegrity(
+	. = ..()
+	if (
+		isnull(src.values["field1"]) \
+		|| isnull(src.values["field2"]) \
+	)	// note that this means field1 and field2 can't be null, but field3 can.
+)
+
+// a real example:
+/datum/apiBody/bans/add
+	fields = list(
+		"game_admin_ckey", // string
+		"round_id", // integer
+		"server_id", // string
+		"ckey", // string
+		"comp_id", // string
+		"ip", // string
+		"reason", // string
+		"duration" // integer
+	)
+
+/datum/apiBody/bans/add/VerifyIntegrity()
+	. = ..()
+	if (
+		isnull(src.values["game_admin_ckey"]) \
+		|| isnull(src.values["round_id"]) \
+		|| isnull(src.values["server_id"]) \
+		|| isnull(src.values["reason"]) \
+	)
+		return FALSE
+```
 
 ### Response models and apiModel
-todo
+A `/datum/apiModel` is a response that is sent back after the task is complete. They are sometimes called resources. The Goonhub API guide lists what kind is required and what they contain. You can check what is required under "Responses" -> "Body".
+
+Note that there are certain parents, which have built in fields. For instance, the abstract type `/datum/apiModel/Tracked` has three fields: `id`, `created_at` and `updated_at`. Anything that needs these three should usually be a subtype and won't have to redefine them.
+
+Similarly, `/datum/apiModel/Tracked/PlayerRes` includes the tracked vars and one more: `player_id`. Meanwhile `/datum/apiModel/Paginated` is usually used in `RUSTG_HTTP_METHOD_GET` methods and includes three vars: `data` (which is another apiModel, nested inside), `links` and `meta`.
+
+The usual format is below:
+```dm
+/// [Name]
+/datum/apiModel/[path]
+	var/field1	= null // [type]
+	var/field2	= null // [type]
+	var/field3	= null // [type]
+
+/datum/apiModel/[path]/SetupFromResponse(response)
+	. = ..()
+	src.field1 = response["field1"]
+	src.field2 = response["field2"]
+	src.field3 = response["field3"]
+
+/datum/apiModel/[path]/VerifyIntegrity()
+	. = ..()
+	if (
+		isnull(src.[field1]) \	// assuming that field1 and 2 cannot be null and field3 can
+		|| isnull(src.[field2])
+	)
+		return FALSE
+
+/datum/apiModel/[path]/ToString()
+	. = list()
+	.["field1"] = src.field1
+	.["field2"] = src.field2
+	.["field3"] = src.field3
+	return json_encode(.)
+
+//A real example:
+/// Error
+/datum/apiModel/Error
+	var/message	= null // string
+	var/errors	= null // null or list
+
+/datum/apiModel/Error/SetupFromResponse(response)
+	. = ..()
+	src.message = response["message"]
+	src.errors = response["errors"]
+
+/datum/apiModel/Error/VerifyIntegrity()
+	. = ..()
+	if (
+		isnull(src.message) \
+	)
+		return FALSE
+
+/datum/apiModel/Error/ToString()
+	. = list()
+	.["message"] = src.message
+	.["errors"] = src.errors
+	return json_encode(.)
+```
