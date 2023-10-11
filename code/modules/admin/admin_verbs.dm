@@ -164,6 +164,7 @@ var/list/admin_verbs = list(
 		/client/proc/respawn_as_self,
 		/client/proc/respawn_as_new_self,
 		/client/proc/respawn_as_job,
+		/client/proc/equip_outfit,
 		/datum/admins/proc/toggletraitorscaling,
 		/client/proc/toggle_flourish,
 
@@ -1043,6 +1044,19 @@ var/list/fun_images = list()
 	ADMIN_ONLY
 
 	respawn_as_self_internal(new_self=TRUE, jobstring = J.name)
+
+/client/proc/equip_outfit()
+	set name = "Equip outfit"
+	set desc = "Equip an outfit instantly. Destructive of items."
+	set popup_menu = FALSE
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	ADMIN_ONLY
+
+	if (ishuman(src.mob))
+		var/mob/living/carbon/human/H = src.mob
+		var/datum/outfit/outfit = tgui_input_list(H, "Which outfit do you want to equip?", "Outfit", concrete_typesof(/datum/outfit))
+		if (outfit)
+			H.equip_outfit(outfit, TRUE)
 
 /client/proc/respawn_as_new_self()
 	set name = "Respawn As New Self"
