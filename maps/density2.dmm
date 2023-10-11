@@ -227,6 +227,17 @@
 	},
 /turf/simulated/floor/white,
 /area/station/science/artifact)
+"bf" = (
+/obj/machinery/conveyor/NS{
+	id = "cargo_dispense_belt"
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor{
+	id = "cargodispense";
+	name = "Cargo Routing Door"
+	},
+/turf/simulated/floor/purple/checker,
+/area/station/quartermaster/office)
 "bg" = (
 /obj/grille/catwalk,
 /obj/cable/yellow{
@@ -287,14 +298,6 @@
 /obj/landmark/start/job/AI,
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai)
-"bw" = (
-/obj/machinery/door/poddoor/pyro/shutters{
-	dir = 4;
-	id = "emergeva";
-	name = "Emergency EVA Equipment Shutter"
-	},
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/arrival/station)
 "bA" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/station/quartermaster/magnet)
@@ -1138,11 +1141,6 @@
 	},
 /turf/simulated/floor/circuit,
 /area/station/turret_protected/ai_upload)
-"gk" = (
-/obj/machinery/recharge_station,
-/mob/living/silicon/hivebot/eyebot,
-/turf/simulated/floor/circuit,
-/area/station/turret_protected/ai_upload)
 "gm" = (
 /obj/item/storage/box/patchbox,
 /obj/item/storage/box/syringes,
@@ -1333,6 +1331,20 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/station/turret_protected/ai_upload)
+"hp" = (
+/obj/table/glass/auto,
+/obj/machinery/activation_button/driver_button{
+	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
+	id = "artlabgun";
+	name = "Emergency Ejection Button";
+	pixel_x = -24
+	},
+/obj/decal/poster/wallsign/space{
+	pixel_x = -32;
+	pixel_y = 12
+	},
+/turf/simulated/floor/purple,
+/area/station/science)
 "hq" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -1729,20 +1741,6 @@
 	dir = 1
 	},
 /area/station/chapel/office)
-"jN" = (
-/obj/table/glass/auto,
-/obj/machinery/activation_button/driver_button{
-	desc = "An emergency ejection button.  Maybe some antique gizmo turns out to be an active bomb or something.  Maybe you want it away from you then.";
-	id = "artlabgun";
-	name = "Emergency Ejection Button";
-	pixel_x = -24
-	},
-/obj/decal/poster/wallsign/space{
-	pixel_x = -32;
-	pixel_y = 12
-	},
-/turf/simulated/floor/purple,
-/area/station/science)
 "jR" = (
 /obj/machinery/conveyor_switch{
 	id = "chapel"
@@ -1891,6 +1889,10 @@
 	},
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"kM" = (
+/obj/strip_door,
+/turf/simulated/floor/red,
+/area/station/security/main)
 "kO" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -2428,6 +2430,15 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/black,
 /area/station/security/brig)
+"oj" = (
+/obj/machinery/conveyor/WE{
+	id = "qmout"
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/turf/simulated/floor/purple/checker,
+/area/station/quartermaster/office)
 "ok" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -3085,20 +3096,6 @@
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/airless/plating/catwalk,
 /area/station/quartermaster/magnet)
-"tE" = (
-/obj/shrub/random,
-/obj/machinery/light{
-	dir = 8;
-	icon_state = "tube1";
-	layer = 9.1;
-	pixel_x = -10
-	},
-/obj/blind_switch{
-	id = "ranchblinds";
-	pixel_y = 24
-	},
-/turf/simulated/floor/auto/grass/leafy,
-/area/station/ranch)
 "tF" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -3637,6 +3634,15 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
+"xB" = (
+/obj/machinery/conveyor/WE{
+	id = "qmin"
+	},
+/obj/strip_door{
+	dir = 4
+	},
+/turf/simulated/floor/purple/checker,
+/area/station/quartermaster/office)
 "xC" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -3649,6 +3655,11 @@
 /obj/cable/orange,
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
+"xE" = (
+/obj/machinery/recharge_station,
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/turf/simulated/floor/circuit,
+/area/station/turret_protected/ai_upload)
 "xK" = (
 /obj/machinery/conveyor/WE{
 	id = "qmout"
@@ -3675,6 +3686,14 @@
 /obj/storage/secure/closet/security/armory,
 /turf/simulated/floor/marble/black,
 /area/station/bridge)
+"xQ" = (
+/obj/machinery/conveyor/SN{
+	id = "garbage";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/janitor/supply)
 "xU" = (
 /obj/machinery/conveyor/WE{
 	id = "qmout"
@@ -4580,6 +4599,20 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/engine/engineering)
+"DT" = (
+/obj/shrub/random,
+/obj/machinery/light{
+	dir = 8;
+	icon_state = "tube1";
+	layer = 9.1;
+	pixel_x = -10
+	},
+/obj/blind_switch{
+	id = "ranchblinds";
+	pixel_y = 24
+	},
+/turf/simulated/floor/auto/grass/leafy,
+/area/station/ranch)
 "DV" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	dir = 4
@@ -4933,6 +4966,25 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/janitor/supply)
+"Gh" = (
+/obj/machinery/mass_driver{
+	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
+	dir = 8;
+	drive_range = 100;
+	id = "artlabgun"
+	},
+/obj/machinery/door/poddoor/pyro/podbay_autoclose{
+	dir = 4;
+	id = "artlabgun"
+	},
+/obj/forcefield/energyshield/perma{
+	desc = "A permanent force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Permanent Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/turf/simulated/floor/plating,
+/area/station/science)
 "Gi" = (
 /obj/table/reinforced/auto,
 /obj/machinery/power/data_terminal,
@@ -5355,15 +5407,6 @@
 "IX" = (
 /turf/simulated/floor/carpet/green/fancy/edge/sw,
 /area/station/bridge)
-"IY" = (
-/obj/machinery/conveyor/WE{
-	id = "qmout"
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/turf/simulated/floor/purple/checker,
-/area/station/quartermaster/office)
 "Jc" = (
 /obj/stool/chair/couch{
 	dir = 9
@@ -5736,17 +5779,6 @@
 /obj/shrub/random,
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/ranch)
-"Lk" = (
-/obj/machinery/conveyor/NS{
-	id = "cargo_dispense_belt"
-	},
-/obj/strip_door,
-/obj/machinery/door/poddoor{
-	id = "cargodispense";
-	name = "Cargo Routing Door"
-	},
-/turf/simulated/floor/purple/checker,
-/area/station/quartermaster/office)
 "Lq" = (
 /obj/machinery/navbeacon/guardbotsecbot_circularpatrol/beacon11,
 /turf/simulated/floor/auto/dirt,
@@ -6868,15 +6900,6 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/mining/staff_room)
-"TL" = (
-/obj/machinery/conveyor/WE{
-	id = "qmin"
-	},
-/obj/strip_door{
-	dir = 4
-	},
-/turf/simulated/floor/purple/checker,
-/area/station/quartermaster/office)
 "TP" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -7164,10 +7187,6 @@
 	icon_state = "3"
 	},
 /area/shuttle/arrival/station)
-"VD" = (
-/obj/strip_door,
-/turf/simulated/floor/red,
-/area/station/security/main)
 "VK" = (
 /obj/kitchenspike,
 /turf/simulated/floor/plating,
@@ -7285,25 +7304,6 @@
 /obj/mapping_helper/access/telesci,
 /turf/simulated/floor/purple,
 /area/station/science/teleporter)
-"Wu" = (
-/obj/machinery/mass_driver{
-	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
-	dir = 8;
-	drive_range = 100;
-	id = "artlabgun"
-	},
-/obj/machinery/door/poddoor/pyro/podbay_autoclose{
-	dir = 4;
-	id = "artlabgun"
-	},
-/obj/forcefield/energyshield/perma{
-	desc = "A permanent force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Permanent Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/turf/simulated/floor/plating,
-/area/station/science)
 "Ww" = (
 /turf/simulated/wall/auto/shuttle{
 	icon_state = "7"
@@ -7481,14 +7481,6 @@
 /obj/machinery/light/incandescent,
 /turf/simulated/floor/black,
 /area/listeningpost)
-"Xp" = (
-/obj/machinery/conveyor/SN{
-	id = "garbage";
-	operating = 1
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/janitor/supply)
 "Xq" = (
 /obj/table/reinforced/auto,
 /obj/item/device/radio,
@@ -7862,6 +7854,14 @@
 /obj/machinery/shuttle/engine/heater{
 	dir = 8;
 	icon_state = "alt_heater-M"
+	},
+/turf/unsimulated/floor/shuttle,
+/area/shuttle/arrival/station)
+"Zn" = (
+/obj/machinery/door/poddoor/pyro/shutters{
+	dir = 4;
+	id = "emergeva";
+	name = "Emergency EVA Equipment Shutter"
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
@@ -46458,7 +46458,7 @@ CE
 ES
 GN
 sJ
-tE
+DT
 Li
 UJ
 KO
@@ -50065,7 +50065,7 @@ Rf
 Rv
 iX
 ky
-VD
+kM
 gX
 mY
 hz
@@ -52821,7 +52821,7 @@ WX
 VC
 Yi
 VC
-bw
+Zn
 VC
 Va
 ZK
@@ -57627,7 +57627,7 @@ Dk
 ri
 tA
 VY
-Lk
+bf
 yp
 XC
 Ha
@@ -58227,9 +58227,9 @@ pT
 qP
 rj
 pP
-TL
+xB
 pP
-IY
+oj
 pP
 Cz
 Et
@@ -59137,7 +59137,7 @@ tU
 vO
 xY
 zR
-Xp
+xQ
 EJ
 Gr
 Hp
@@ -76888,7 +76888,7 @@ Rf
 Rf
 Rf
 dt
-Wu
+Gh
 dt
 Rf
 Rf
@@ -77795,7 +77795,7 @@ fU
 gm
 vU
 YV
-jN
+hp
 vr
 Rf
 Rf
@@ -80811,7 +80811,7 @@ dv
 eo
 fa
 fQ
-gk
+xE
 gT
 dv
 br
