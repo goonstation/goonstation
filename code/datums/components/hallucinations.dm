@@ -153,10 +153,10 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 /datum/component/hallucination/random_image
 	var/list/image_list
 	var/image_prob = 10
-	var/image_time = 20 SECONDS
+	var/image_time = 20
 
 	Initialize(timeout=30, image_list=null, image_prob=10, image_time=20 SECONDS)
-		.=..()
+		. = ..()
 		if(. == COMPONENT_INCOMPATIBLE || length(image_list) == 0)
 			return .
 		src.image_list = image_list
@@ -168,7 +168,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			//pick a non dense turf in view
 			var/list/turf/potentials = list()
 			for(var/turf/T in view(parent_mob))
-				if(T.density == 0)
+				if(!T.density)
 					potentials += T
 			var/turf/halluc_loc = pick(potentials)
 			var/image/halluc = new /image()
@@ -203,6 +203,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/attacker_prob = 10
 	var/max_attackers = 5
 	var/attacker_list = list()
+	
 	Initialize(timeout=30, image_list=null, name_list=null, attacker_prob=10, max_attackers=5)
 		.=..()
 		if(. == COMPONENT_INCOMPATIBLE)
@@ -278,12 +279,13 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 /datum/component/hallucination/random_image_override
 	var/list/image_list
 	var/image_prob = 10
-	var/image_time = 20 SECONDS
+	var/image_time = 20
 	var/list/target_list
 	var/range = 5
 	var/override = TRUE
+	
 	Initialize(timeout=30, image_list=null, target_list=null, range=5, image_prob=10, image_time=20 SECONDS, override=TRUE)
-		.=..()
+		. = ..()
 		if(. == COMPONENT_INCOMPATIBLE || length(image_list) == 0 || length(target_list) == 0)
 			return .
 		src.image_list = image_list
@@ -445,7 +447,6 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	for(var/mob/M in oviewers(world.view,my_target))
 		boutput(M, "<span class='alert'><B>[my_target] flails around wildly.</B></span>")
 	my_target.show_message("<span class='alert'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
-	return
 
 /obj/fake_attacker/Crossed(atom/movable/M)
 	..()
@@ -458,7 +459,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 
 /obj/fake_attacker/New(location, target)
 	..()
-	SPAWN(30 SECONDS)	qdel(src)
+	SPAWN(30 SECONDS)
+		qdel(src)
 	src.name = src.get_name()
 	src.my_target = target
 	if (src.fake_icon && src.fake_icon_state)
@@ -498,7 +500,8 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 			attack_twitch(src)
 
 	if (src.should_attack && prob(10)) step_away(src,my_target,2)
-	SPAWN(0.3 SECONDS) .()
+	SPAWN(0.3 SECONDS)
+		src.process()
 
 /proc/fake_blood(var/mob/target)
 	var/obj/overlay/O = new/obj/overlay(target.loc)
@@ -507,7 +510,6 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	target << I
 	SPAWN(30 SECONDS)
 		qdel(O)
-	return
 
 /proc/fake_attack(var/mob/target)
 	var/list/possible_clones = new/list()
@@ -529,7 +531,6 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/obj/fake_attacker/F = new/obj/fake_attacker(target.loc, target)
 
 	F.name = clone.name
-	//F.my_target = target
 	F.weapon_name = clone_weapon
 
 	var/image/O = image(clone,F)
