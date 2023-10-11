@@ -148,10 +148,6 @@
 	icon_state = "engine_caution_west"
 	},
 /area/devzone)
-"cD" = (
-/obj/machinery/vending/kitchen,
-/turf/simulated/floor/white,
-/area/devzone)
 "cK" = (
 /obj/forcefield/energyshield/perma{
 	dir = 4
@@ -225,13 +221,6 @@
 "dG" = (
 /obj/storage/secure/closet/research/chemical,
 /turf/simulated/floor,
-/area/devzone)
-"dH" = (
-/obj/decal/tile_edge/line/blue{
-	icon_state = "line2"
-	},
-/obj/machinery/dialysis,
-/turf/simulated/floor/white,
 /area/devzone)
 "dL" = (
 /obj/table/reinforced/chemistry/auto/chemstorage,
@@ -959,6 +948,11 @@
 /obj/map/light/brighterwhite,
 /turf/simulated/floor,
 /area/station/turret_protected/ai)
+"nH" = (
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/obj/map/light/brighterwhite,
+/turf/simulated/floor,
+/area/station/turret_protected/ai)
 "nI" = (
 /obj/machinery/atmospherics/binary/pump{
 	dir = 4;
@@ -1412,6 +1406,12 @@
 	},
 /turf/simulated/floor/engine/vacuum,
 /area/devzone)
+"tS" = (
+/obj/machinery/atmospherics/unary/cryo_cell,
+/turf/simulated/floor/bluewhite{
+	dir = 9
+	},
+/area/devzone)
 "tU" = (
 /obj/machinery/atmospherics/pipe/tank,
 /turf/simulated/floor,
@@ -1555,6 +1555,10 @@
 	},
 /turf/simulated/floor/engine/glow,
 /area/space)
+"wv" = (
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/turf/simulated/floor,
+/area/station/turret_protected/ai)
 "wP" = (
 /obj/disposalpipe/segment/transport{
 	dir = 4;
@@ -1908,10 +1912,6 @@
 	},
 /turf/simulated/floor,
 /area/devzone)
-"Bh" = (
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
 "Bq" = (
 /obj/window/auto/reinforced/indestructible/extreme,
 /obj/machinery/door/poddoor/pyro/shutters{
@@ -2403,12 +2403,6 @@
 /obj/machinery/portable_atmospherics/canister/toxins,
 /turf/simulated/floor,
 /area/devzone)
-"In" = (
-/obj/machinery/atmospherics/unary/cryo_cell,
-/turf/simulated/floor/bluewhite{
-	dir = 9
-	},
-/area/devzone)
 "Ip" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -2507,11 +2501,6 @@
 	},
 /turf/simulated/floor/grass/leafy,
 /area/devzone)
-"JN" = (
-/obj/map/light/brighterwhite,
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
-/turf/simulated/floor,
-/area/station/turret_protected/ai)
 "JS" = (
 /obj/machinery/bot/mulebot/QM1,
 /obj/machinery/navbeacon/mule/QM1_north/west,
@@ -2647,6 +2636,13 @@
 	},
 /turf/simulated/floor,
 /area/devzone)
+"LC" = (
+/obj/decal/tile_edge/line/blue{
+	icon_state = "line2"
+	},
+/obj/machinery/dialysis,
+/turf/simulated/floor/white,
+/area/devzone)
 "LD" = (
 /obj/machinery/power/smes,
 /obj/cable{
@@ -2736,6 +2732,10 @@
 "MG" = (
 /obj/machinery/portable_atmospherics/canister/nitrogen,
 /turf/simulated/floor/engine,
+/area/devzone)
+"MH" = (
+/obj/machinery/vending/kitchen,
+/turf/simulated/floor/white,
 /area/devzone)
 "MI" = (
 /obj/machinery/atmospherics/pipe/manifold/overfloor,
@@ -4259,7 +4259,7 @@ Zk
 Ni
 FQ
 Gi
-cD
+MH
 II
 PO
 yE
@@ -4638,8 +4638,8 @@ Bf
 TR
 Yx
 ng
-Bh
-Bh
+wv
+wv
 ze
 ng
 Fe
@@ -4681,8 +4681,8 @@ Bf
 TR
 Yx
 ng
-JN
-Bh
+nH
+wv
 qs
 ng
 Si
@@ -4739,7 +4739,7 @@ ng
 ti
 Yx
 ng
-In
+tS
 Yn
 ng
 Yx
@@ -5040,7 +5040,7 @@ ng
 SG
 oj
 RE
-dH
+LC
 lU
 ng
 Yx
