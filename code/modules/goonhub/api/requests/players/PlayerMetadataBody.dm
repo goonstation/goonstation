@@ -8,7 +8,7 @@
 /datum/apiBody/players/metadata/VerifyIntegrity()
 	. = ..()
 	if (
-		isnull(src.values[src.player_id]) \
-		|| isnull(src.values[src.data])
+		isnull(src.values["player_id"]) \
+		|| isnull(src.values["data"])
 	)
 		return FALSE
