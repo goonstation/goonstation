@@ -22340,6 +22340,20 @@
 	dir = 8
 	},
 /area/station/hydroponics/bay)
+"bwM" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/npc/trader/robot/syndicate,
+/obj/decal/glow{
+	brightness = 3;
+	color_b = 0.35;
+	color_r = 0.35;
+	invisibility = 101;
+	name = "glow - WHITE"
+	},
+/turf/simulated/floor/red,
+/area/listeningpost)
 "bwN" = (
 /turf/simulated/floor{
 	icon_state = "carpetW"
@@ -25335,6 +25349,10 @@
 	},
 /turf/simulated/floor/darkpurple,
 /area/station/teleporter)
+"cFE" = (
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/turf/simulated/floor,
+/area/station/medical/robotics)
 "cIc" = (
 /obj/machinery/power/smes/magical{
 	chargelevel = 150000;
@@ -25416,10 +25434,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
-"dcv" = (
-/obj/landmark/shuttle_subwoofer,
-/turf/space,
-/area/space)
 "dcx" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -25680,17 +25694,7 @@
 	},
 /turf/simulated/floor,
 /area/station/atmos/highcap_storage)
-"dKW" = (
-/obj/machinery/door/airlock/glass{
-	name = "science Mass Driver";
-	req_access_txt = "7"
-	},
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/plating,
-/area/station/science/lab)
-"dOs" = (
+"dJN" = (
 /obj/machinery/mass_driver{
 	dir = 8;
 	id = "qm_dock_out"
@@ -25702,6 +25706,16 @@
 /obj/strip_door,
 /turf/simulated/floor/plating,
 /area/station/quartermaster/storage)
+"dKW" = (
+/obj/machinery/door/airlock/glass{
+	name = "science Mass Driver";
+	req_access_txt = "7"
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/science/lab)
 "dQa" = (
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8;
@@ -26124,6 +26138,17 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
+"fhf" = (
+/obj/machinery/conveyor/WE{
+	id = "QMLoad"
+	},
+/obj/machinery/door/poddoor{
+	id = "QMLoaddoor";
+	name = "Supply Dock Loading Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/quartermaster/storage)
 "fho" = (
 /obj/machinery/light,
 /turf/simulated/floor/plating,
@@ -26208,13 +26233,6 @@
 "fvp" = (
 /turf/simulated/floor/plating,
 /area/station/engine/engineering)
-"fwD" = (
-/obj/strip_door,
-/obj/machinery/conveyor/WE{
-	id = "QM"
-	},
-/turf/simulated/floor/grime,
-/area/station/quartermaster/office)
 "fxa" = (
 /obj/machinery/firealarm,
 /turf/simulated/wall/r_wall,
@@ -27294,6 +27312,10 @@
 	dir = 6
 	},
 /area/station/security/prison)
+"jgX" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "jll" = (
 /obj/submachine/chem_extractor,
 /turf/simulated/floor/purple/side{
@@ -28245,11 +28267,6 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
-"lpA" = (
-/obj/stool/chair/syndicate,
-/obj/npc/trader/exclown,
-/turf/simulated/floor/plating/airless,
-/area/station/maintenance/south)
 "lqs" = (
 /obj/machinery/door/airlock/external{
 	name = "External Access";
@@ -28496,17 +28513,6 @@
 /obj/disposalpipe/segment,
 /turf/simulated/floor,
 /area/station/security/prison)
-"miA" = (
-/obj/machinery/conveyor/WE{
-	id = "QMLoad"
-	},
-/obj/machinery/door/poddoor{
-	id = "QMLoaddoor";
-	name = "Supply Dock Loading Door"
-	},
-/obj/strip_door,
-/turf/simulated/floor/plating,
-/area/station/quartermaster/storage)
 "mjT" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -28520,6 +28526,11 @@
 /obj/storage/closet/emergency,
 /turf/simulated/floor,
 /area/station/security/prison)
+"mlk" = (
+/obj/stool/chair/syndicate,
+/obj/npc/trader/exclown,
+/turf/simulated/floor/plating/airless,
+/area/station/maintenance/south)
 "mlO" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 1;
@@ -28911,16 +28922,6 @@
 	},
 /turf/simulated/wall/r_wall,
 /area/station/teleporter)
-"nNE" = (
-/obj/rack{
-	dir = 1
-	},
-/obj/item/clothing/suit/fire,
-/obj/item/tank/emergency_oxygen,
-/obj/item/clothing/mask/gas,
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor/plating,
-/area/station/maintenance/southwest)
 "nOc" = (
 /turf/simulated/wall/r_wall,
 /area/station/security/hos)
@@ -28981,6 +28982,13 @@
 "nXz" = (
 /turf/simulated/wall/r_wall,
 /area/station/maintenance/solar/east)
+"nZP" = (
+/obj/strip_door,
+/obj/machinery/conveyor/WE{
+	id = "QM"
+	},
+/turf/simulated/floor/grime,
+/area/station/quartermaster/office)
 "oah" = (
 /obj/machinery/camera{
 	c_tag = "Test Chamber East";
@@ -29106,20 +29114,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"oty" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/npc/trader/robot/syndicate,
-/obj/decal/glow{
-	brightness = 3;
-	color_b = 0.35;
-	color_r = 0.35;
-	invisibility = 101;
-	name = "glow - WHITE"
-	},
-/turf/simulated/floor/red,
-/area/listeningpost)
 "otC" = (
 /obj/pool{
 	dir = 5;
@@ -29313,6 +29307,18 @@
 /obj/machinery/meter,
 /turf/simulated/floor/plating,
 /area/station/maintenance/disposal)
+"pfe" = (
+/obj/machinery/power/apc{
+	dir = 1;
+	name = "Upload APC";
+	pixel_y = 24
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/turf/simulated/floor/plating,
+/area/station/turret_protected/ai_upload)
 "pim" = (
 /obj/storage/secure/crate/weapon/armory/phaser,
 /turf/simulated/floor/caution/east,
@@ -29516,6 +29522,10 @@
 	dir = 4
 	},
 /area/station/atmos/highcap_storage)
+"qbn" = (
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/turf/simulated/floor/grass/leafy,
+/area/station/medical/research)
 "qbI" = (
 /obj/machinery/power/smes,
 /obj/cable{
@@ -29618,18 +29628,6 @@
 	},
 /turf/simulated/wall,
 /area/station/engine/power)
-"qnD" = (
-/obj/machinery/power/apc{
-	dir = 1;
-	name = "Upload APC";
-	pixel_y = 24
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
-/turf/simulated/floor/plating,
-/area/station/turret_protected/ai_upload)
 "qpO" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -29867,6 +29865,16 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/science/storage)
+"qPM" = (
+/obj/item/device/radio/intercom{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/storage/tech)
 "qRk" = (
 /turf/simulated/floor/specialroom/chapel{
 	dir = 4
@@ -30515,16 +30523,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"sLl" = (
-/obj/item/device/radio/intercom{
-	dir = 8
-	},
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor/plating,
-/area/station/storage/tech)
 "sNg" = (
 /obj/table/wood{
 	dir = 9
@@ -30912,10 +30910,6 @@
 /obj/machinery/manufacturer/mining,
 /turf/simulated/floor/caution/east,
 /area/station/hangar/engine)
-"tOT" = (
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
-/turf/simulated/floor,
-/area/station/medical/robotics)
 "tPy" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -31305,10 +31299,6 @@
 /obj/item/reagent_containers/food/drinks/bottle/wine,
 /turf/simulated/floor/carpet,
 /area/station/security/hos)
-"uzk" = (
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
-/turf/simulated/floor/grass/leafy,
-/area/station/medical/research)
 "uAV" = (
 /obj/machinery/camera{
 	c_tag = "Locker Room";
@@ -32071,6 +32061,16 @@
 	},
 /turf/simulated/floor,
 /area/station/security/prison)
+"xfc" = (
+/obj/rack{
+	dir = 1
+	},
+/obj/item/clothing/suit/fire,
+/obj/item/tank/emergency_oxygen,
+/obj/item/clothing/mask/gas,
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "xfo" = (
 /obj/machinery/shower{
 	dir = 8;
@@ -39949,7 +39949,7 @@ agy
 agu
 agu
 agu
-oty
+bwM
 afz
 btR
 btR
@@ -58513,7 +58513,7 @@ ayc
 aze
 aAR
 aDB
-sLl
+qPM
 aHI
 aHY
 aMi
@@ -61261,12 +61261,12 @@ aaa
 aaa
 aab
 amK
-dOs
+dJN
 amK
 aab
 aab
 amK
-miA
+fhf
 bFA
 aaa
 aaa
@@ -61870,7 +61870,7 @@ bxX
 apA
 apA
 bDA
-miA
+fhf
 bFB
 apA
 aqK
@@ -65761,7 +65761,7 @@ atm
 atm
 atm
 atm
-qnD
+pfe
 aIn
 aDD
 aMp
@@ -66704,7 +66704,7 @@ bCK
 jul
 aoa
 aoJ
-nNE
+xfc
 bAL
 bAL
 uDx
@@ -66989,8 +66989,8 @@ aQO
 aPt
 ahm
 ahu
-fwD
-fwD
+nZP
+nZP
 boz
 ahX
 bqB
@@ -67006,7 +67006,7 @@ amX
 amS
 anX
 aoJ
-nNE
+xfc
 bAL
 bAL
 asT
@@ -67308,7 +67308,7 @@ amX
 amS
 aoa
 aoJ
-nNE
+xfc
 bAL
 sOw
 asT
@@ -93245,7 +93245,7 @@ aCV
 aFp
 aHv
 aJw
-tOT
+cFE
 aFp
 aOC
 aQy
@@ -93836,7 +93836,7 @@ aaa
 aaa
 aab
 aqJ
-uzk
+qbn
 aeA
 aqJ
 auB
@@ -95393,7 +95393,7 @@ bCv
 bDu
 bEn
 bva
-lpA
+mlk
 bog
 bog
 xuV
@@ -102636,7 +102636,7 @@ bgN
 bgN
 bgN
 bgN
-dcv
+jgX
 aaa
 aaa
 aaa

@@ -5378,6 +5378,10 @@
 /obj/machinery/atmospherics/pipe/simple,
 /turf/simulated/floor,
 /area/hallway/primary/central)
+"nr" = (
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth,
+/area/zeta/bot_storage)
 "ns" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -11365,6 +11369,13 @@
 	},
 /turf/simulated/floor/black,
 /area/turret_protected/aisat_interior)
+"BZ" = (
+/obj/stool/chair{
+	dir = 4
+	},
+/obj/item/parts/robot_parts/drone_frame/complete_shell,
+/turf/simulated/floor,
+/area/bridge)
 "Ca" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -19647,6 +19658,10 @@
 /obj/landmark/start/job/scientist,
 /turf/simulated/floor/white,
 /area/zeta/patients)
+"Uy" = (
+/obj/item/clothing/glasses/toggleable/meson,
+/turf/simulated/floor,
+/area/storage/tech)
 "UA" = (
 /obj/cable{
 	icon_state = "1-2";
@@ -20063,13 +20078,6 @@
 	},
 /turf/simulated/floor,
 /area/hydroponics)
-"Yx" = (
-/obj/stool/chair{
-	dir = 4
-	},
-/obj/item/parts/robot_parts/drone_frame/complete_shell,
-/turf/simulated/floor,
-/area/bridge)
 "Yy" = (
 /obj/landmark/start/job/research_director,
 /turf/simulated/floor/white,
@@ -20094,10 +20102,6 @@
 	},
 /turf/simulated/floor,
 /area/hallway/primary/central)
-"YI" = (
-/obj/strip_door,
-/turf/simulated/floor/caution/northsouth,
-/area/zeta/bot_storage)
 "YO" = (
 /obj/landmark/pest,
 /obj/cable{
@@ -20120,10 +20124,6 @@
 	},
 /turf/simulated/floor,
 /area/atmos)
-"YZ" = (
-/obj/item/clothing/glasses/toggleable/meson,
-/turf/simulated/floor,
-/area/storage/tech)
 "Za" = (
 /obj/landmark/antagonist/blob,
 /turf/simulated/floor,
@@ -29950,8 +29950,8 @@ en
 aO
 eW
 fk
-YZ
-YZ
+Uy
+Uy
 fj
 gu
 gu
@@ -33138,7 +33138,7 @@ aI
 dt
 dN
 ef
-Yx
+BZ
 Vd
 fg
 fA
@@ -96285,7 +96285,7 @@ FC
 IU
 EM
 JB
-YI
+nr
 KB
 KE
 KE
