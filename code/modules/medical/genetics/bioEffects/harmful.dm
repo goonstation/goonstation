@@ -19,7 +19,7 @@
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
 	icon_state  = "bad"
-	group = "vision"
+	effect_group = "vision"
 
 
 /datum/bioEffect/mute
@@ -169,7 +169,7 @@
 	var/datum/hud/vision_impair/hud = new
 	var/applied = 1
 	icon_state  = "bad"
-	group = "vision"
+	effect_group = "vision"
 
 	OnAdd()
 		..()
@@ -320,33 +320,11 @@
 
 	OnAdd()
 		..()
-		if (!ishuman(owner))
-			return
-		var/mob/living/carbon/human/H = owner
-		var/list/possible_limbs = list()
-		if (H.limbs.l_arm)
-			possible_limbs += H.limbs.l_arm
-		if (H.limbs.r_arm)
-			possible_limbs += H.limbs.r_arm
-		if (H.limbs.l_leg)
-			possible_limbs += H.limbs.l_leg
-		if (H.limbs.r_leg)
-			possible_limbs += H.limbs.r_leg
-		if (!possible_limbs.len)
-			return
-
-		src.limb = pick(possible_limbs)
-
-		if (istype(src.limb, /obj/item/parts/human_parts/arm) || istype(src.limb, /obj/item/parts/robot_parts/arm))
-			src.limb_type = LIMB_IS_ARM
-			return
-		else if (istype(src.limb, /obj/item/parts/human_parts/leg) || istype(src.limb, /obj/item/parts/robot_parts/leg))
-			src.limb_type = LIMB_IS_LEG
-			return
+		src.pick_limb()
 
 	OnLife(var/mult)
 		if(..()) return
-		if (!src.limb || (src.limb.loc != src.owner))
+		if ((!src.limb || (src.limb.loc != src.owner)) && !src.pick_limb())
 			return
 		if (owner.stat)
 			return
@@ -381,6 +359,32 @@
 				owner.visible_message("<span class='alert'><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
 				owner.change_misstep_chance(10)
 			return
+
+	proc/pick_limb()
+		. = 0
+		if (!ishuman(owner))
+			return
+		var/mob/living/carbon/human/H = owner
+		var/list/possible_limbs = list()
+		if (H.limbs.l_arm)
+			possible_limbs += H.limbs.l_arm
+		if (H.limbs.r_arm)
+			possible_limbs += H.limbs.r_arm
+		if (H.limbs.l_leg)
+			possible_limbs += H.limbs.l_leg
+		if (H.limbs.r_leg)
+			possible_limbs += H.limbs.r_leg
+		if (!possible_limbs.len)
+			return
+
+		src.limb = pick(possible_limbs)
+
+		if (istype(src.limb, /obj/item/parts/human_parts/arm) || istype(src.limb, /obj/item/parts/robot_parts/arm))
+			src.limb_type = LIMB_IS_ARM
+			return 1
+		else if (istype(src.limb, /obj/item/parts/human_parts/leg) || istype(src.limb, /obj/item/parts/robot_parts/leg))
+			src.limb_type = LIMB_IS_LEG
+			return 1
 
 #undef LIMB_IS_ARM
 #undef LIMB_IS_LEG

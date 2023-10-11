@@ -632,7 +632,7 @@ var/list/radio_brains = list()
 	stability_loss = 20
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
-	group = "vision"
+	effect_group = "vision"
 
 	OnAdd()
 		. = ..()
