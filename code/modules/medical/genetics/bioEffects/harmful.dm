@@ -309,7 +309,7 @@
 	msgGain = "One of your limbs feels a bit strange and twitchy."
 	msgLose = "Your limb feels fine again."
 	reclaim_fail = 15
-	stability_loss = -25
+	stability_loss = -20
 	lockProb = 50
 	lockedGaps = 2
 	lockedDiff = 4
