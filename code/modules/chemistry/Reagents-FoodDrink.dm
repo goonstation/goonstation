@@ -1992,6 +1992,7 @@ datum
 			fluid_b = 250
 			description = "Carbonated water."
 			reagent_state = LIQUID
+			thirst_value = 0.8909
 			taste = "bubbly"
 
 		fooddrink/simplesyrup
