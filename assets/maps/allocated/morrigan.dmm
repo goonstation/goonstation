@@ -3224,9 +3224,6 @@
 	dir = 1
 	},
 /mob/living/critter/robotic/gunbot/morrigan/riotbot,
-/obj/decal/poster/wallsign/morrigan{
-	pixel_y = 31
-	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/hallway)
 "cXL" = (
@@ -3405,6 +3402,9 @@
 /obj/item/soup_pot{
 	pixel_y = 9
 	},
+/obj/decal/poster/wallsign/morrigan{
+	pixel_y = 31
+	},
 /turf/unsimulated/floor/sanitary/white,
 /area/morrigan/station/civilian/kitchen)
 "dhg" = (
@@ -3549,17 +3549,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
-"dqQ" = (
-/obj/machinery/conveyor/EW,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/railing/reinforced,
-/obj/item/gun_parts/back,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/engineering/eng)
 "drj" = (
 /obj/map/light,
 /turf/unsimulated/floor/plating/jen,
@@ -6832,6 +6821,7 @@
 /obj/mapping_helper/airlock/hardener,
 /obj/mapping_helper/airlock/anti_emag,
 /obj/machinery/door/airlock/pyro/engineering,
+/obj/machinery/door/poddoor/buff/railgun_door,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/eng)
 "ggw" = (
@@ -7982,7 +7972,6 @@
 	dir = 4;
 	icon_state = "tube1"
 	},
-/obj/item/gun_parts/bottom_rail/sight,
 /obj/machinery/light/lamp/black/bright,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/eng)
@@ -9191,12 +9180,6 @@
 /obj/decal/poster/wallsign/stencil/left/d,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict/cargo)
-"ika" = (
-/obj/decal/poster/wallsign/morrigan{
-	pixel_y = 31
-	},
-/turf/unsimulated/floor/black,
-/area/morrigan/station/hallway)
 "ikd" = (
 /obj/decoration/decorativeplant/plant6,
 /turf/unsimulated/floor/carpet/green/fancy/edge{
@@ -10364,10 +10347,6 @@
 "jko" = (
 /obj/table/auto,
 /obj/item/screwdriver/orange,
-/obj/item/gun_parts/bottom_rail/sight{
-	pixel_y = 9;
-	pixel_x = -7
-	},
 /obj/item/cell/cerenkite{
 	pixel_y = 16;
 	pixel_x = -8
@@ -10891,7 +10870,6 @@
 /area/morrigan/station/engineering/specialist)
 "jIB" = (
 /obj/storage/secure/crate/weapon,
-/obj/item/gun_parts,
 /obj/item/material_piece/cobryl,
 /turf/unsimulated/floor/circuit/red,
 /area/morrigan/station/medical/robotics)
@@ -15109,6 +15087,12 @@
 /obj/item/reagent_containers/food/snacks/cereal_box/roach,
 /turf/unsimulated/floor/black,
 /area/morrigan/holding)
+"nrz" = (
+/obj/decal/poster/wallsign/morrigan{
+	pixel_y = 31
+	},
+/turf/unsimulated/floor/grey,
+/area/morrigan/station/hallway)
 "nrZ" = (
 /obj/machinery/optable{
 	id = "robotics"
@@ -17213,7 +17197,6 @@
 /area/morrigan/derelict)
 "pnx" = (
 /obj/table/wood/auto,
-/obj/item/gun_parts,
 /obj/machinery/light/lamp/black,
 /obj/map/light/yellow,
 /turf/unsimulated/floor/plating/jen,
@@ -18286,17 +18269,6 @@
 /obj/machinery/light/emergencyflashing,
 /turf/unsimulated/floor/caution/south,
 /area/morrigan/station/exit)
-"qqu" = (
-/obj/machinery/conveyor/EW,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/railing/reinforced,
-/obj/item/gun_parts,
-/turf/unsimulated/floor/industrial,
-/area/morrigan/station/engineering/eng)
 "qqv" = (
 /obj/decal/floatingtiles{
 	dir = 1
@@ -21227,10 +21199,6 @@
 /obj/item/parts/robot_parts/head/sturdy{
 	pixel_x = 10
 	},
-/obj/item/gun_parts/bottom_rail/sight{
-	pixel_y = 9;
-	pixel_x = -7
-	},
 /obj/item/cell/cerenkite{
 	pixel_y = 16;
 	pixel_x = -8
@@ -23650,8 +23618,6 @@
 /area/morrigan/derelict)
 "vmq" = (
 /obj/table/auto,
-/obj/item/gun_parts,
-/obj/item/gun_parts/bottom_rail/heatsink,
 /obj/decal/poster/wallsign/mod21{
 	pixel_y = 30
 	},
@@ -26903,6 +26869,9 @@
 /area/morrigan/station/maintenance)
 "ylq" = (
 /mob/living/critter/robotic/gunbot/morrigan/meleebot,
+/obj/decal/poster/wallsign/morrigan{
+	pixel_y = 31
+	},
 /turf/unsimulated/floor/black/side{
 	dir = 1
 	},
@@ -29211,16 +29180,6 @@ lyR
 bvF
 lyR
 rXk
-ika
-bvF
-bvF
-bvF
-bvF
-bvF
-bvF
-rXk
-ika
-bvF
 bvF
 bvF
 bvF
@@ -29229,7 +29188,17 @@ bvF
 bvF
 bvF
 rXk
-ika
+bvF
+bvF
+bvF
+bvF
+bvF
+bvF
+bvF
+bvF
+bvF
+rXk
+bvF
 bvF
 iQo
 kPk
@@ -30669,7 +30638,7 @@ bvF
 bvF
 bvF
 rXk
-ika
+bvF
 dUp
 mUw
 xjU
@@ -30752,7 +30721,7 @@ uRB
 iwb
 xtg
 hXO
-lyR
+nrz
 bvF
 lyR
 wWI
@@ -32825,7 +32794,7 @@ ajr
 cYT
 jJe
 eVN
-qqu
+rPR
 jNK
 tgf
 ixe
@@ -33031,7 +33000,7 @@ vVG
 bov
 noK
 hiS
-dqQ
+rPR
 gfM
 dQV
 qIE

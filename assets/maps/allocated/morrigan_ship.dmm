@@ -513,6 +513,7 @@
 "sp" = (
 /obj/decoration/syndiepc/syndiepc5,
 /obj/map/light/dimred,
+/obj/effects/background_objects/fortuna,
 /turf/unsimulated/floor/black,
 /area/morrigan_ship_space/frigate)
 "sv" = (
@@ -929,6 +930,9 @@
 	dir = 9
 	},
 /area/morrigan_ship_space/frigate)
+"Ir" = (
+/turf/space/dense,
+/area/morrigan_ship_space)
 "IU" = (
 /turf/unsimulated/floor/yellowblack,
 /area/morrigan_ship_space/frigate)
@@ -1390,46 +1394,41 @@
 /area/morrigan_ship_space)
 
 (1,1,1) = {"
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 "}
 (2,1,1) = {"
-pz
-pz
-pz
-pz
-pz
-yu
+Ir
 pz
 pz
 pz
@@ -1439,6 +1438,7 @@ pz
 pz
 pz
 pz
+yu
 pz
 pz
 pz
@@ -1456,9 +1456,13 @@ pz
 pz
 pz
 pz
+pz
+pz
+pz
+Ir
 "}
 (3,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -1489,10 +1493,10 @@ xT
 xT
 mc
 pz
-pz
+Ir
 "}
 (4,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -1523,10 +1527,10 @@ xr
 pz
 lI
 pz
-pz
+Ir
 "}
 (5,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -1557,10 +1561,10 @@ Vt
 pz
 pz
 pz
-pz
+Ir
 "}
 (6,1,1) = {"
-pz
+Ir
 pz
 pz
 mi
@@ -1591,10 +1595,10 @@ pz
 pz
 pz
 pz
-pz
+Ir
 "}
 (7,1,1) = {"
-pz
+Ir
 pz
 nR
 eL
@@ -1625,10 +1629,10 @@ pz
 pz
 pz
 pz
-pz
+Ir
 "}
 (8,1,1) = {"
-pz
+Ir
 pz
 nR
 eL
@@ -1659,10 +1663,10 @@ pz
 pz
 pz
 pz
-pz
+Ir
 "}
 (9,1,1) = {"
-pz
+Ir
 pz
 pz
 Da
@@ -1693,10 +1697,10 @@ VR
 pz
 pz
 pz
-pz
+Ir
 "}
 (10,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -1727,10 +1731,10 @@ VR
 pz
 pz
 pz
-pz
+Ir
 "}
 (11,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -1761,10 +1765,10 @@ qw
 xT
 xT
 DU
-pz
+Ir
 "}
 (12,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -1795,10 +1799,10 @@ GN
 VR
 pz
 pz
-pz
+Ir
 "}
 (13,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -1829,10 +1833,10 @@ sl
 VR
 pz
 pz
-pz
+Ir
 "}
 (14,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -1863,10 +1867,10 @@ qw
 sC
 xT
 DU
-pz
+Ir
 "}
 (15,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -1897,10 +1901,10 @@ VR
 pz
 pz
 pz
-pz
+Ir
 "}
 (16,1,1) = {"
-pz
+Ir
 pz
 pz
 mi
@@ -1931,10 +1935,10 @@ VR
 pz
 pz
 pz
-pz
+Ir
 "}
 (17,1,1) = {"
-pz
+Ir
 pz
 nR
 eL
@@ -1965,10 +1969,10 @@ pz
 pz
 pz
 pz
-pz
+Ir
 "}
 (18,1,1) = {"
-pz
+Ir
 pz
 nR
 eL
@@ -1999,10 +2003,10 @@ pz
 pz
 pz
 pz
-pz
+Ir
 "}
 (19,1,1) = {"
-pz
+Ir
 pz
 pz
 Da
@@ -2033,10 +2037,10 @@ pz
 pz
 pz
 pz
-pz
+Ir
 "}
 (20,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -2067,10 +2071,10 @@ xr
 pz
 pz
 pz
-pz
+Ir
 "}
 (21,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -2101,10 +2105,10 @@ Vt
 pz
 yu
 pz
-pz
+Ir
 "}
 (22,1,1) = {"
-pz
+Ir
 pz
 pz
 pz
@@ -2135,9 +2139,10 @@ xT
 xT
 Sk
 pz
-pz
+Ir
 "}
 (23,1,1) = {"
+Ir
 pz
 pz
 pz
@@ -2168,40 +2173,39 @@ pz
 pz
 pz
 pz
-pz
-pz
+Ir
 "}
 (24,1,1) = {"
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
-pz
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
+Ir
 "}

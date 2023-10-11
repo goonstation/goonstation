@@ -2788,17 +2788,17 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		if (length(src.contents) >= src.amount_required)
 			playsound(src, 'sound/machines/chime.ogg', 40, TRUE)
 			src.complete = TRUE
-			for_by_tcl(D, /obj/machinery/door/airlock/pyro/engineering/railgun_door)
+			for_by_tcl(D, /obj/machinery/door/poddoor/buff/railgun_door)
 				D.open()
 			for (var/item as anything in src.contents)
 				qdel(item)
 		// TODO ADD OFF STATE
 
-/obj/machinery/door/airlock/pyro/engineering/railgun_door
-	name = "railgun storage"
+/obj/machinery/door/poddoor/buff/railgun_door
+	name = "Railgun Storage"
+	desc = "Door used to keep prying eyes away!."
+	layer = OBJ_LAYER + 1
 	autoclose = FALSE
-	hardened = TRUE
-	cant_emag = TRUE
 
 	New()
 		..()
@@ -2808,6 +2808,12 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		STOP_TRACKING
 		..()
 
+
+/obj/machinery/door/poddoor/blast/cargo
+	name = "Cargo Door"
+	desc = "A strong deterent against cargo!"
+	autoclose = TRUE
+	autoclose_delay = 2 SECONDS
 //gas mask please i beg
 
 /obj/item/clothing/mask/gas/eyemask
