@@ -808,6 +808,7 @@ var/global/current_state = GAME_STATE_INVALID
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
 		for(var/mob/E in mobs)
 			if(E.client)
+				E.verbs += /mob/proc/show_credits
 				if (E.client.preferences.view_tickets)
 					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending tickets to [E.ckey]")
 					E.showtickets()

@@ -1526,6 +1526,16 @@
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 
+/mob/proc/show_credits()
+	set name = "Show Credits"
+	set desc = "Open the crew credits window"
+	set category = "Commands"
+
+	if(isnull(ticker.creds))
+		boutput(src, "<span class='notice'>The credits have not been generated yet!</span>")
+		return
+	ticker.creds.ui_interact(src)
+
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		return !projCanHit(mover:proj_data)
