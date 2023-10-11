@@ -1,3 +1,4 @@
+ABSTRACT_TYPE(/datum/outfit/pod_wars)
 /datum/outfit/pod_wars/nanotrasen
 	outfit_name = "NanoTrasen Pod Pilot"
 

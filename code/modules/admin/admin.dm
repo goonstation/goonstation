@@ -1077,9 +1077,8 @@ var/global/noir = 0
 							id.dropped(H)
 						else
 							boutput(usr, "<span class='alert'>Could not find [H]'s ID card - Replacing with a standard job ID if available.</span>")
-					H.unequip_all(delete_choice == "Yes" ? 1 : 0)
 					SPAWN (1 SECOND)
-						H.equip_outfit(job)
+						H.equip_outfit(job.outfit, delete_choice == "Yes" ? TRUE : FALSE)
 						if (istype(id))
 							if(!H.equip_if_possible(id, SLOT_WEAR_ID))
 								H.put_in_hand(id)

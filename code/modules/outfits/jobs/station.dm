@@ -1,3 +1,6 @@
+/datum/outfit/naked
+	outfit_name = "Naked"
+
 /* ====== COMMAND OUTFITS ====== */
 
 /datum/outfit/command/captain
@@ -63,6 +66,7 @@
 
 /datum/outfit/command/head_of_security/derelict
 	outfit_name = null//"NT-SO Special Operative"
+
 	slot_outer = list(/obj/item/clothing/suit/armor/NT)
 	slot_under = list(/obj/item/clothing/under/misc/turds)
 	slot_head = list(/obj/item/clothing/head/NTberet)
