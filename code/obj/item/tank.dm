@@ -464,6 +464,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	stamina_cost = 8
 	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	distribute_pressure = 17
+	compatible_with_TTV = FALSE
 
 	New()
 		..()
@@ -489,8 +490,6 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 			src.air_contents.oxygen = null
 			return
 
-
-
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
@@ -505,6 +504,7 @@ TYPEINFO(/obj/item/tank/jetpack/micro)
 	desc = "A personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17
+	compatible_with_TTV = FALSE
 
 	New()
 		..()

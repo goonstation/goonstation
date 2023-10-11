@@ -1313,4 +1313,37 @@ ABSTRACT_TYPE(/datum/clothingbooth_item/western/westboot)
 		name = "Brown Cowboy Boots"
 		path = /obj/item/clothing/shoes/westboot/brown
 
+#ifdef AUTUMN
 
+ABSTRACT_TYPE(/datum/clothingbooth_item/autumn_jacket)
+/datum/clothingbooth_item/autumn_jacket
+	name = "autumn coat"
+	slot = SLOT_W_UNIFORM
+	category = "Autumn"
+	cost = PAY_UNTRAINED
+
+	cape
+		name = "Autumn Cape"
+		path = /obj/item/clothing/suit/autumn_cape
+
+	jacket
+		name = "Autumn Jacket"
+		path = /obj/item/clothing/suit/jacket/autumn_jacket
+
+ABSTRACT_TYPE(/datum/clothingbooth_item/autumn_hat)
+
+/datum/clothingbooth_item/autumn_hat
+	name = "autumn hat"
+	slot = SLOT_HEAD
+	category = "Autumn"
+	cost = PAY_UNTRAINED
+
+	leaf_wreath
+		name = "leaf wreath"
+		path = /obj/item/clothing/head/leaf_wreath
+
+	autumn_tree
+		name = "autumn tree"
+		path = /obj/item/clothing/head/autumn_tree
+
+#endif

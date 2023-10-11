@@ -24,10 +24,5 @@
 	for (var/obj/machinery/bot/secbot/secbot as anything in src.secbots)
 		if (QDELETED(secbot))
 			continue
-		if (iscarbon(target))
+		if (iscarbon(target) && target != secbot.target)
 			secbot.EngageTarget(target, FALSE, FALSE, TRUE)
-		else
-			var/turf/T = get_turf(target)
-			if (checkTurfPassable(T))
-				secbot.summon_bot(T)
-	src.RemoveComponent()

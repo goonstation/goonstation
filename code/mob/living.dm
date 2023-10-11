@@ -602,6 +602,9 @@
 	if(!IN_RANGE(src, target, 12)) // don't point through cameras
 		return
 
+	if(src.client && !(target in view(src.client.view))) //don't point at things we can't see
+		return
+
 	var/obj/item/gun/G = src.equipped()
 	if(!istype(G) || !ismob(target))
 		src.visible_message("<span class='emote'><b>[src]</b> points to [target].</span>")

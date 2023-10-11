@@ -1009,7 +1009,7 @@ var/list/fun_images = list()
 
 /client/proc/respawn_as(var/client/cli in clients)
 	set name = "Respawn As"
-	set desc = "Respawn yourself as the currenly loaded character of a player. Instantly. Right where you stand."
+	set desc = "Respawn yourself as the currently loaded character of a player. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
@@ -1046,7 +1046,7 @@ var/list/fun_images = list()
 
 /client/proc/respawn_as_new_self()
 	set name = "Respawn As New Self"
-	set desc = "Respawn yourself as your currenly loaded character. Instantly. Right where you stand."
+	set desc = "Respawn yourself as your currently loaded character. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY
@@ -1056,7 +1056,7 @@ var/list/fun_images = list()
 
 /client/proc/respawn_as_self()
 	set name = "Respawn As Self"
-	set desc = "Respawn yourself as your currenly loaded character or the character you removed with remove-self. Instantly. Right where you stand."
+	set desc = "Respawn yourself as your currently loaded character or the character you removed with remove-self. Instantly. Right where you stand."
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set popup_menu = 0
 	ADMIN_ONLY

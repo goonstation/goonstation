@@ -97,7 +97,7 @@
 					break
 
 				var/turf/T = pick(turfs)
-				if(checkTurfPassable(T))
+				if(!checkTurfPassable(T))
 					maxTries--
 					continue
 

@@ -1,9 +1,94 @@
 
+(t)wed oct 11 23
+(u)glowbold
+(p)16391
+(e)💅📄|C-QoL, A-UI
+(+)You can re-open the end-game crew credits window by using the "Show Credits" verb.
+(t)tue oct 10 23
+(u)LeahTheTech
+(+)Flockdrones now gain substantially less resources from stacked items, but gain slightly more resources in general.
+(u)Azrun
+(p)16240
+(e)🆕🎨⚖🤖|C-Feature, C-Sprites, C-Balance, A-Silicons
+(*)AI's EyeBots now have reduced functionality when used across Z levels.
+(+)AI can now deploy to EyeBots to maintain some presence on the station.
+(t)mon oct 09 23
+(u)Flappybat
+(e)⚖|C-Balance
+(+)Scaling of number of traitors vs crew in the Traitor game mode has been adjusted to move the maximum of 5 traitors from a minimum of 35 to 40 crew. RP scaling unchanged.
+(t)sun oct 08 23
+(u)Flaborized
+(p)15922
+(e)🎨|C-Sprites
+(+)Autumn has come to the station, changing the plant life's hue and adding a few new items to the clothing booth for just the season. There's also a seasonal special clown costume in the clown hole crate!
+(u)tarmunora
+(e)⚖|C-Balance
+(+)Changeling morph arm DNA cost revision: claw arm 4->0, tendril arm 6->10
+(u)Mr. Moriarty
+(p)16185
+(e)🪲💅📄|C-Bug, C-QoL, A-UI
+(*)Added an antagonists tab to the end of round crew credits.
+(u)Kubius
+(p)16191
+(e)🆕🎨|C-Feature, C-Sprites
+(+)A new type of Scientific requisition is available. Its cash reward is lower, but it offers an item reward in return - and sometimes, it's one you can't get elsewhere.
+(u)MylieDaniels
+(p)16337
+(e)🎨📦|C-Sprites, A-Game-Objects
+(+)Nukie Knights have a refreshed visual on their Hadar power sword.
+(t)sat oct 07 23
+(u)zjdtmkhzt
+(p)15911
+(e)🪲🆕🔎📦|C-Bug, C-Feature, C-Code-Quality, A-Game-Objects
+(+)Light fixtures can now be placed directly on windows.
+(u)glowbold
+(p)16159
+(e)🆕💡|C-Feature, A-Station-Systems
+(*)When approving or denying cargo requests, PDA Messages are sent to the requestor.
+(u)Lord_Earthfire
+(p)16320
+(e)🎨⚖📦|C-Sprites, C-Balance, A-Game-Objects
+(+)The syndicate now supplies their botanists with experimental biological pouches instead of boxes.
+(u)Lord_Earthfire
+(p)16323
+(e)⚖📦⚙|C-Balance, A-Game-Objects, A-Internal
+(+)Stealth storages have become a little bit more stealthy.
+(u)glowbold
+(p)16310
+(e)🆕🎨📦|C-Feature, C-Sprites, A-Game-Objects
+(+)Mining PDAs have the new MineralMagic™ PDA cart pre-installed. Additional copies in the CartyParty.
+(t)fri oct 06 23
+(u)Lord_Earthfire
+(p)16302
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Firefighting Foam's recipe was changed. The new recipe is: (1) Chlorine + (1) Nickel + (1) Carbon -> (2) Carbon Tetrachloride + (1) Nickel
+(u)LeahTheTech
+(+)Pocket and emergency oxygen tanks no longer fit on TTVs (they had no sprites anyway)
+(u)Lord_Earthfire
+(p)16297
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Capsaicin has a cooldown between stuns now but high-dosage capsaicin stuns more often add oxygen deprivation.
+(u)BatElite
+(p)15970
+(e)🎨💊📦|C-Sprites, A-Medical, A-Game-Objects
+(+)Auto-injectors have been resprited!
+(u)Emily
+(*)Something mysterious has appeared in the ranch! What could it be?
+(t)thu oct 05 23
+(u)Azrun
+(p)16028
+(e)⚖🤖|C-Balance, A-Silicons
+(*)Reduced ability for AI and AIeye to interact across levels.
+(u)Flaborized
+(p)16180
+(e)🆕|C-Feature
+(*)Chemical condensers can now be attached to up to four containers, splitting their output evenly through them.
 (t)wed oct 04 23
 (u)LeahTheTech
 (p)16260
 (e)🆕🎨⚖📦|C-Feature, C-Sprites, C-Balance, A-Game-Objects
 (*)Added a security whistle that all security officers and assistants start with. Blowing it will let you command nearby securitrons by pointing.
+(+)The security whistle now only commands the closest securitron and can only target people, this means missed points will no longer cancel the effect.
 (t)mon oct 02 23
 (u)nerkson and LeahTheTech
 (*)New halloween job: pickle. Has the ability to turn things into pickle. Also looks like a pickle. Pickle.
