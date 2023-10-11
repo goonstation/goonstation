@@ -282,6 +282,7 @@
 	msgGain = "You feel an irritating itch in your throat."
 	msgLose = "Your throat clears up."
 	reclaim_fail = 15
+	stability_loss = -5
 	icon_state  = "bad"
 
 	OnLife(var/mult)
