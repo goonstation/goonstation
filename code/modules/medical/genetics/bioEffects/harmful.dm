@@ -82,7 +82,7 @@
 	msgGain = "You feel kind of off-balance and disoriented."
 	msgLose = "You feel well co-ordinated again."
 	reclaim_fail = 15
-	stability_loss = -10
+	stability_loss = -15
 	icon_state  = "bad"
 
 /datum/bioEffect/narcolepsy
