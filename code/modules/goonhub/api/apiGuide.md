@@ -38,6 +38,13 @@ A Template for API endpoint routes:
 	body = [the datum of the body, under /datum/apiBody]
 	correct_response = [the datum of the model, under datum/apiModel]
 
+	buildBody(	// check the apiBody section below to understand what this means
+		field1,
+		field2,
+		field3
+	)
+		. = ..(args)
+
 // A proper example:
 
 /// PUT /bans/{ban}
@@ -48,6 +55,18 @@ A Template for API endpoint routes:
 	routeParams = list("ban")	// integer
 	body = /datum/apiBody/bans/add
 	correct_response = /datum/apiModel/Tracked/BanResource
+
+	buildBody(
+		game_admin_ckey,
+		round_id,
+		server_id,
+		ckey,
+		comp_id,
+		ip,
+		reason,
+		duration
+	)
+		. = ..(args)
 ```
 
 The reason why the API files are formatted this way is so that "it's optimized so you can just copypaste stuff and change it via column/vertical select" ~ZeWaka.
@@ -69,6 +88,8 @@ The list of what to make and how it works is at https://staging.goonhub.com/docs
 ### Request bodies and apiBody
 A `/datum/apiBody` is a type of request which gets sent through a route and provides information.
 The Goonhub api, while it lists what's needed in the body of the request for each route, doesn't actually give fixed names for each body. You can check what's required in the body under "request" -> "Body".
+
+This body will need to then be "built" by calling `buildBody()` on the routes that use them, as shown in the example in the above `/datum/apiRoute` section. This way, autocomplete works better. It's a bit silly but will help overall.
 
 The default format for making them is as follows:
 ```dm
