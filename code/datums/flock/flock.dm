@@ -56,7 +56,9 @@ proc/get_default_flock()
 	///list of strings that lets flock record achievements for structure unlocks
 	var/list/achievements = list()
 	var/mob/living/intangible/flock/flockmind/flockmind
+	/// Relay is in the process of being made real, gibs and all
 	var/relay_in_progress = FALSE
+	/// Relay has exploded. Game over!
 	var/relay_finished = FALSE
 	var/datum/tgui/flockpanel
 	var/ui_tab = "drones"
@@ -758,29 +760,30 @@ proc/get_default_flock()
 			available_tiles -= src.busy_tiles[owner]
 		return available_tiles
 
-// PROCESS
-
+/// Process which checks what to do with the relay based off compute, specifically for before placement
 /datum/flock/proc/relay_process()
-	if (src.total_compute() > FLOCK_RELAY_COMPUTE_COST - 300)
+	if (src.flockmind?.tutorial || src.relay_in_progress || src.relay_finished)
+		return
+
+	if (src.total_compute() >= FLOCK_RELAY_COMPUTE_COST)
+		// Create the actual relay
+		src.relay_in_progress = TRUE
+		src.center_marker.alpha = 0
+		for (var/turf/T in range(3, src.center_marker))
+			for (var/atom/A in T)
+				if ((ismob(A) || isflockstructure(A)) && !isintangible(A)) //stupid, but flock structures define gib too
+					var/mob/M = A
+					M.gib()
+				else if (A.density)
+					qdel(A)
+			T.ReplaceWith(/turf/simulated/floor/feather)
+		new /obj/flock_structure/relay(get_turf(src.center_marker), src)
+	else if (src.total_compute() > (FLOCK_RELAY_COMPUTE_COST - 255))
 		for (var/mob/living/intangible/flock/flockmob in (src.traces + src.flockmind))
 			if (flockmob.GetComponent(/datum/component/tracker_hud/flock))
 				continue
 			flockmob.AddComponent(/datum/component/tracker_hud/flock, src.center_marker)
-	if (!src.relay_in_progress && !src.relay_finished)
-		if ((src.total_compute() >= FLOCK_RELAY_COMPUTE_COST) && !src.flockmind?.tutorial)
-			src.relay_in_progress = TRUE
-			src.center_marker.alpha = 0
-			for (var/turf/T in range(3, src.center_marker))
-				for (var/atom/A in T)
-					if ((ismob(A) || isflockstructure(A)) && !isintangible(A)) //stupid, but flock structures define gib too
-						var/mob/M = A
-						M.gib()
-					else if (A.density)
-						qdel(A)
-				T.ReplaceWith(/turf/simulated/floor/feather)
-			new /obj/flock_structure/relay(get_turf(src.center_marker), src)
-		else
-			src.center_marker.alpha = max(0, src.total_compute() - (FLOCK_RELAY_COMPUTE_COST-255))
+		src.center_marker.alpha = max(0, src.total_compute() - (FLOCK_RELAY_COMPUTE_COST-255))
 
 /datum/flock/proc/process()
 	if (src.relay_allowed)
