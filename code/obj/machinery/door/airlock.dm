@@ -1671,7 +1671,7 @@ About the new airlock wires panel:
 	else
 		playsound(src.loc, src.sound_airlock, 25, 1)
 
-	if (src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
+	if (!isnull(src.closeOther) && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close(1)
 
 /obj/machinery/door/airlock/close()
@@ -1703,13 +1703,9 @@ About the new airlock wires panel:
 	if (src.id_tag)
 		src.id_tag = ckeyEx(src.id_tag)
 
-	if (src.closeOtherId != null)
-		src.closeOtherId = ckeyEx(src.closeOtherId)
-		SPAWN(0.5 SECONDS)
-			for_by_tcl(A, /obj/machinery/door/airlock)
-				if (A.closeOtherId == src.closeOtherId && A != src)
-					src.closeOther = A
-					break
+	if (!isnull(src.closeOtherId))
+		src.attempt_cycle_link()
+
 
 /obj/machinery/door/airlock/isblocked()
 	if(src.density && ((src.status & NOPOWER) || src.welded || src.locked || (src.operating == -1) ))
@@ -1722,6 +1718,25 @@ About the new airlock wires panel:
 	else
 		..()
 	return
+
+/obj/machinery/door/airlock/proc/attempt_cycle_link()
+	src.closeOtherId = ckeyEx(src.closeOtherId)
+	SPAWN(0.5 SECONDS)
+	#if defined(CHECK_MORE_RUNTIMES)
+		var/sanity = 0
+		for_by_tcl(A, /obj/machinery/door/airlock)
+			if (A.closeOtherId == src.closeOtherId && A != src)
+				if (sanity == 0)
+					src.closeOther = A
+				sanity += 1
+		if (sanity > 1)
+			CRASH("More than two airlocks with same cyclic ID! ID:[src.closeOtherId]. Number of airlocks: [sanity].")
+	#else
+		for_by_tcl(A, /obj/machinery/door/airlock)
+			if (A.closeOtherId == src.closeOtherId && A != src)
+				src.closeOther = A
+				break	// connect to the first matching airlock then break
+	#endif
 
 TYPEINFO(/obj/machinery/door/airlock)
 	mats = 18
