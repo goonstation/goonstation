@@ -5,7 +5,6 @@
 		"data"
 	)
 
-
 /datum/apiBody/players/metadata/VerifyIntegrity()
 	if (
 		isnull(src.values[src.player_id]) \
