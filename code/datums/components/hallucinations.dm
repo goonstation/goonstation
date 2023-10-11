@@ -418,22 +418,18 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		fake_icon_state = "rattlesnake"
 		get_name()
 			return pick("snek", "WHY DID IT HAVE TO BE SNAKES?!", "rattlesnake", "OH SHIT A SNAKE")
-
 	scorpion
 		fake_icon_state = "spacescorpion"
 		get_name()
 			return "space scorpion"
-
 	aberration
 		fake_icon_state = "aberration"
 		should_attack = FALSE
 		get_name()
 			return "transposed particle field"
-
 	capybara
 		fake_icon_state = "capybara"
 		should_attack = FALSE
-
 	frog
 		fake_icon_state = "frog"
 		should_attack = FALSE
