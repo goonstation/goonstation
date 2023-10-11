@@ -86,7 +86,7 @@ The list of what to make and how it works is at https://staging.goonhub.com/docs
 - If you're making new files, follow the format of existing names.
 
 ### Request bodies and apiBody
-A `/datum/apiBody` is a type of request which gets sent through a route and provides information.
+A `/datum/apiBody` is a type of request which gets sent through a route and provides information. These are typically used on `POST` and `PUT` method using routes.
 The Goonhub api, while it lists what's needed in the body of the request for each route, doesn't actually give fixed names for each body. You can check what's required in the body under "request" -> "Body".
 
 This body will need to then be "built" by calling `buildBody()` on the routes that use them, as shown in the example in the above `/datum/apiRoute` section. This way, autocomplete works better. It's a bit silly but will help overall.
@@ -133,7 +133,7 @@ The default format for making them is as follows:
 ```
 
 ### Response models and apiModel
-A `/datum/apiModel` is a response that is sent back after the task is complete. They are sometimes called resources. The Goonhub API guide lists what kind is required and what they contain. You can check what is required under "Responses" -> "Body".
+A `/datum/apiModel` is a response that is sent back after the task is complete. They are sometimes called resources. The Goonhub API guide lists what kind is required and what they contain. You can check what is required under "Responses" -> "Body". They're typically used in `GET` method routes.
 
 Note that there are certain parents, which have built in fields. For instance, the abstract type `/datum/apiModel/Tracked` has three fields: `id`, `created_at` and `updated_at`. Anything that needs these three should usually be a subtype and won't have to redefine them.
 
