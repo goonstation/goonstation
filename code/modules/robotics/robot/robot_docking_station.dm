@@ -647,24 +647,24 @@ TYPEINFO(/obj/machinery/recharge_station)
 					R.internal_pda.owner = "[R.name]"
 				. = TRUE
 			if (isdrone(src.occupant))
-				var/mob/living/silicon/drone/R = src.occupant
-				if (R.shell || R.dependent) //no renaming AI shells
+				var/mob/living/silicon/drone/drone = src.occupant
+				if (drone.shell || drone.dependent) //no renaming AI shells
 					return
-				var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [R]?", "Drone Maintenance", R.name))), 1, 64)
+				var/newname = copytext(strip_html(sanitize(tgui_input_text(user, "What do you want to rename [drone]?", "Drone Maintenance", drone.name))), 1, 64)
 				if ((!issilicon(user) && (BOUNDS_DIST(user, src) > 0)) || user.stat || !newname)
 					return
 				if (url_regex?.Find(newname))
 					boutput(user, "<span class='notice'><b>Web/BYOND links are not allowed in ingame chat.</b></span>")
 					boutput(user, "<span class='alert'>&emsp;<b>\"[newname]</b>\"</span>")
 					return
-				if(newname && newname != R.name)
+				if(newname && newname != drone.name)
 					phrase_log.log_phrase("name-drone", newname, no_duplicates=TRUE)
-				logTheThing(LOG_STATION, user, "uses a docking station to rename [constructTarget(R,"combat")] to [newname].")
-				R.real_name = "[newname]"
-				R.UpdateName()
-				if (R.internal_pda)
-					R.internal_pda.name = "[R.name]'s Internal PDA Unit"
-					R.internal_pda.owner = "[R.name]"
+				logTheThing(LOG_STATION, user, "uses a docking station to rename [constructTarget(drone,"combat")] to [newname].")
+				drone.name = "[newname]"
+				drone.UpdateName()
+				if (drone.internal_pda)
+					drone.internal_pda.name = "[drone.name]'s Internal PDA Unit"
+					drone.internal_pda.owner = "[drone.name]"
 				. = TRUE
 		if("occupant-eject")
 			src.go_out()

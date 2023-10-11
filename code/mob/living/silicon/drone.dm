@@ -629,12 +629,11 @@
 
 		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 		src.name = "SHELL/[src.mainframe]"
+		src.update_name_tag()
 		src.internal_pda = mainframe.internal_pda // this way you dont have a seperate PDA in a shell then in your core
 		src.internal_pda.name = "[mainframe.internal_pda.name]'s Internal PDA Unit"
 		src.internal_pda.owner = "[mainframe.internal_pda.owner]"
 		src.internal_pda.set_loc(src)
-		src.UpdateName()
-		src.update_name_tag()
 
 		update_appearance()
 		update_details()
