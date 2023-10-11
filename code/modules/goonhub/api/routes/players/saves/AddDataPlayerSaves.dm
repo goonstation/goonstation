@@ -6,3 +6,10 @@
 	path = "/players/saves/data"
 	body = /datum/apiBody/PlayerSavesData
 	correct_response = /datum/apiModel/Tracked/PlayerRes/PlayerDataResource
+
+	buildBody(
+		player_id,
+		key,
+		value
+	)
+		. = ..(args)
