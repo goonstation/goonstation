@@ -882,15 +882,6 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 		owner.visible_message("<span class='alert'>[owner] jimmies [src.the_door]'s lock open!</span>")
 		playsound(src.the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
 
-/obj/machinery/door/unpowered/bulkhead
-	name = "bulkhead door"
-	desc = "A heavy manually operated door. It looks rather beaten."
-	icon = 'icons/obj/doors/bulkhead.dmi'
-	operation_time = 20
-
-/obj/machinery/door/unpowered/bulkhead/Bumped()
-	return
-
 /obj/machinery/door/control/oneshot
 	var/broken = 0
 

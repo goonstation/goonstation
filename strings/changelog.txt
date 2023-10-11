@@ -1,4 +1,9 @@
 
+(t)wed oct 11 23
+(u)glowbold
+(p)16391
+(e)💅📄|C-QoL, A-UI
+(+)You can re-open the end-game crew credits window by using the "Show Credits" verb.
 (t)tue oct 10 23
 (u)LeahTheTech
 (+)Flockdrones now gain substantially less resources from stacked items, but gain slightly more resources in general.
