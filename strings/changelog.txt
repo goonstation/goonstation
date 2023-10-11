@@ -1,5 +1,10 @@
 
 (t)wed oct 11 23
+(u)Lord_Earthfire
+(p)16317
+(e)🪲⚖🔨🐁|C-Bug, C-Balance, A-Player-Actions, A-Critters
+(+)Activated securitrons cannot be pulled anymore.
+(+)Securitrons don't search for targets while in a locker. They still move out of they are patrolling/chasing someone.
 (u)glowbold
 (p)16391
 (e)💅📄|C-QoL, A-UI
