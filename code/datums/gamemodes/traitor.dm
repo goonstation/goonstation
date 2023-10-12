@@ -13,7 +13,7 @@
 #ifdef RP_MODE
 	var/const/pop_divisor = 10
 #else
-	var/const/pop_divisor = 7
+	var/const/pop_divisor = 8
 #endif
 
 

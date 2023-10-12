@@ -499,5 +499,11 @@ TYPEINFO(/turf/simulated/wall)
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
 
+#ifdef AUTUMN
+	New()
+		..()
+		try_set_icon_state(src.icon_state + "_autumn", src.icon)
+#endif
+
 /turf/simulated/wall/grass/leafy
 	icon_state = "grass_leafy"

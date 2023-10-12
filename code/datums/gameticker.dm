@@ -19,6 +19,8 @@ var/global/current_state = GAME_STATE_INVALID
 
 	var/datum/ai_rack_manager/ai_law_rack_manager = new /datum/ai_rack_manager()
 
+	var/datum/crewCredits/creds = null
+
 	var/skull_key_assigned = 0
 
 	var/tmp/last_try_dilate = 0
@@ -824,10 +826,11 @@ var/global/current_state = GAME_STATE_INVALID
 
 	SPAWN(0)
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")
-		var/datum/crewCredits/creds = new
+		creds = new /datum/crewCredits
 		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
 		for(var/mob/E in mobs)
 			if(E.client)
+				E.verbs += /mob/proc/show_credits
 				if (E.client.preferences.view_tickets)
 					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending tickets to [E.ckey]")
 					E.showtickets()
