@@ -1,4 +1,9 @@
 
+(t)thu oct 12 23
+(u)Flaborized
+(p)16405
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(+)The dispensary interlink dispenser in medical will now visually show how many units of chems it has in it, the more blue the screen the more meds it has to vend.
 (t)wed oct 11 23
 (u)tarmunora
 (e)⚖|C-Balance
