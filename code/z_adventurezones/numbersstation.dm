@@ -255,7 +255,12 @@ Nanotrasen, Inc.<br>
 			next_play = play_interval
 		next_warning = next_play - 300
 		SPAWN(20 SECONDS)
-			apiHandler.queryAPI("numbers/get")
+			try
+				var/datum/apiRoute/numbersstation/get/getNumbers = new
+				var/datum/apiModel/NumbersStationPasswordResource/numbersStationPassword = apiHandler.queryAPI(getNumbers)
+				lincolnshire_numbers(numbersStationPassword.numbers)
+			catch
+				// pass
 
 	proc/gather_listeners()
 		listeners = list()
