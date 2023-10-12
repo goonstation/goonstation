@@ -307,40 +307,46 @@
 
 	src.score_tab_data[SCORE_TAB_VICTORY_HEADLINE] = ticker.mode.victory_headline()
 	src.score_tab_data[SCORE_TAB_VICTORY_BODY] = ticker.mode.victory_body()
-	src.score_tab_data[SCORE_TAB_TOTAL_SCORE] = "[round(score_tracker.final_score_all)]%[round(score_tracker.final_score_all) == 69 ? " (nice)" : ""]"
+	src.score_tab_data[SCORE_TAB_TOTAL_SCORE] = round(score_tracker.final_score_all)
 	src.score_tab_data[SCORE_TAB_GRADE] = "[score_tracker.grade]"
 
 	src.score_tab_data[SCORE_TAB_SECTION_SECURITY] = list(
 		list(
 			"name" = "Crew Survival Rate",
-			"value" = "[round(score_tracker.score_crew_survival_rate)]%"
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_crew_survival_rate),
 		),
 		list(
 			"name" = "Enemy Failure Rate",
-			"value" = "[round(score_tracker.score_enemy_failure_rate)]%"
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_enemy_failure_rate),
 		),
 		list(
 			"name" = "Total Department Score",
-			"value" =  "[round(score_tracker.final_score_sec)]%"
+			"type" = "colorPercent",
+			"value" =  round(score_tracker.final_score_sec),
 		)
 	)
 
 	src.score_tab_data[SCORE_TAB_SECTION_ENGINEERING] = list(
 		list(
 			"name" = "Power Generated",
-			"value" = "[engineering_notation(score_tracker.power_generated)]W"
+			"value" = "[engineering_notation(score_tracker.power_generated)]W",
 		),
 		list(
 			"name" = "Station Structural Integrity",
-			"value" = "[round(score_tracker.score_structural_damage)]%"
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_structural_damage),
 		),
 		list(
 			"name" = "Station Areas Powered",
-			"value" = "[round(score_tracker.score_power_outages)]%"
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_power_outages),
 		),
 		list(
 			"name" = "Total Department Score",
-			"value" = "[round(score_tracker.final_score_eng)]%"
+			"type" = "colorPercent",
+			"value" = round(score_tracker.final_score_eng),
 		),
 	)
 
@@ -351,22 +357,26 @@
 		),
 		list(
 			"name" = "Total Department Score",
-			"value" = "[round(score_tracker.final_score_res)]%"
+			"type" = "colorPercent",
+			"value" = round(score_tracker.final_score_res),
 		),
 	)
 
 	src.score_tab_data[SCORE_TAB_SECTION_CIVILIAN] = list(
 		list(
 			"name" = "Overall Station Cleanliness",
-			"value" = "[round(score_tracker.score_cleanliness)]%"
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_cleanliness),
 		),
 		list(
 			"name" = "Station Profitability",
-			"value" = "[round(score_tracker.score_expenses)]%"
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_expenses),
 		),
 		list(
-			"name" ="Total Department Score",
-			"value" = "[round(score_tracker.final_score_civ)]%"
+			"name" = "Total Department Score",
+			"type" = "colorPercent",
+			"value" = round(score_tracker.final_score_civ),
 		),
 	)
 
