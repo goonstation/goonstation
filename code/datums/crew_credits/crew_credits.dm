@@ -3,6 +3,8 @@
 
 	var/list/crew_tab_data
 	var/list/antagonist_tab_data
+	var/list/citation_tab_data
+	var/list/reports_tab_data
 
 /datum/crewCredits/New()
 	. = ..()
@@ -20,6 +22,14 @@
 		ANTAGONIST_TAB_GAME_MODE = capitalize(ticker.mode.name),
 		ANTAGONIST_TAB_VERBOSE_DATA = list(),
 		ANTAGONIST_TAB_SUCCINCT_DATA = list(),
+	)
+	src.citation_tab_data = list(
+		CITATIONS_TAB_SECTION_TICKETS = list(),
+		CITATIONS_TAB_SECTION_FINES = list(),
+	)
+
+	src.reports_tab_data = list(
+		REPORTS_TAB = list()
 	)
 
 	src.generate_crew_credits()
@@ -57,6 +67,9 @@
 		src.generate_antagonist_data(mind)
 
 #endif
+
+	src.generate_citations_data()
+	src.generate_reports_data()
 
 	src.crew_credits_data = list(
 		// Crew Tab Data:
@@ -99,6 +112,13 @@
 		"game_mode" = src.antagonist_tab_data[ANTAGONIST_TAB_GAME_MODE],
 		"verbose_antagonist_data" = src.antagonist_tab_data[ANTAGONIST_TAB_VERBOSE_DATA],
 		"succinct_antagonist_data" = src.antagonist_tab_data[ANTAGONIST_TAB_SUCCINCT_DATA],
+
+		// Citations Tab Data:
+		"tickets" = src.citation_tab_data[CITATION_TAB_SECTION_TICKETS],
+		"fines" = src.citation_tab_data[CITATION_TAB_SECTION_FINES],
+
+		// Reports Tab Data:
+		"reports" = src.citation_tab_data[REPORTS_TAB],
 	)
 
 /// For a specified mind, creates an entry in `crew_tab_data` containing the applicable information.
@@ -261,3 +281,55 @@
 	data["subordinate_antagonists"] = subordinate_antagonists
 
 	src.antagonist_tab_data[ANTAGONIST_TAB_VERBOSE_DATA] += list(data)
+
+/// Get data for Tickets/Fines
+/datum/crewCredits/proc/generate_citations_data()
+	if(length(data_core.tickets))
+		var/list/people_with_tickets = list()
+		for (var/datum/ticket/T in data_core.tickets)
+			people_with_tickets |= T.target
+
+		for(var/ticket_target in people_with_tickets)
+			var/list/tickets = list()
+			for(var/datum/ticket/ticket in data_core.tickets)
+				if(ticket.target == ticket_target)
+					tickets += list(ticket.text)
+			src.citation_tab_data[CITATION_TAB_SECTION_TICKETS] += list(list(
+				"name" = ticket_target,
+				"citations" = tickets,
+			))
+
+	if(length(data_core.fines))
+		var/list/people_with_fines = list()
+		for (var/datum/fine/F in data_core.fines)
+			people_with_fines |= F.target
+
+		for(var/fine_target in people_with_fines)
+			var/list/fines = list()
+			for(var/datum/fine/fine in data_core.fines)
+				if(fine.target == fine_target)
+					fines += list("[fine.target]: [fine.amount] credits<br>Reason: [fine.reason]<br>[fine.approver ? "[fine.issuer != fine.approver ? "Requested by: [fine.issuer] - [fine.issuer_job]<br>Approved by: [fine.approver] - [fine.approver_job]" : "Issued by: [fine.approver] - [fine.approver_job]"]" : "Not Approved"]<br>Paid: [fine.paid_amount] credits<br><br>")
+
+			src.citation_tab_data[CITATION_TAB_SECTION_FINES] += list(list(
+				"name" = fine_target,
+				"citations" = fines,
+			))
+
+// Get data for inspector reports
+/datum/crewCredits/proc/generate_reports_data()
+	src.citation_tab_data[REPORTS_TAB] = list()
+	for_by_tcl(clipboard, /obj/item/clipboard/with_pen/inspector)
+		var/list/pages = list()
+		for(var/obj/item/paper/paper in clipboard.contents)
+			//ignore blank untitled pages
+			if (paper.name == "paper" && !paper.info)
+				continue
+			pages += list(list(
+				"title" = (paper.name == "paper") ? "" : paper.name,
+				"info" = paper.info
+			))
+
+		src.citation_tab_data[REPORTS_TAB] += list(list(
+			"issuer" = "Inspector[clipboard.inspector_name ? " [clipboard.inspector_name]" : ""]'s report",
+			"pages" = pages,
+		))

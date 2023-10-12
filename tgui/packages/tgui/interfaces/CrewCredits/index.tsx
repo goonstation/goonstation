@@ -12,31 +12,45 @@ import { Window } from '../../layouts';
 import { CrewTab } from './CrewTab';
 import { AntagonistsTab } from './AntagonistsTab';
 import { CrewCreditsTabKeys } from './type';
+import { CitationsTab } from './CitationsTab';
+import { ReportTab } from './ReportTab';
 
 export const CrewCredits = (props, context) => {
-  const [menu, setMenu] = useLocalState(context, 'menu', CrewCreditsTabKeys.General);
+  const [menu, setMenu] = useLocalState(context, 'menu', CrewCreditsTabKeys.Crew);
 
   return (
-    <Window title="Crew Credits" width={600} height={600}>
+    <Window title="Round Statistics" width={600} height={600}>
       <Window.Content scrollable>
         <Stack vertical fill>
           <Stack.Item>
             <Tabs>
               <Tabs.Tab
-                selected={menu === CrewCreditsTabKeys.General}
-                onClick={() => setMenu(CrewCreditsTabKeys.General)}>
-                General
+                selected={menu === CrewCreditsTabKeys.Crew}
+                onClick={() => setMenu(CrewCreditsTabKeys.Crew)}>
+                Crew Credits
               </Tabs.Tab>
               <Tabs.Tab
                 selected={menu === CrewCreditsTabKeys.Antagonists}
                 onClick={() => setMenu(CrewCreditsTabKeys.Antagonists)}>
                 Antagonists
               </Tabs.Tab>
+              <Tabs.Tab
+                selected={menu === CrewCreditsTabKeys.Citations}
+                onClick={() => setMenu(CrewCreditsTabKeys.Citations)}>
+                Tickets/Fines
+              </Tabs.Tab>
+              <Tabs.Tab
+                selected={menu === CrewCreditsTabKeys.Report}
+                onClick={() => setMenu(CrewCreditsTabKeys.Report)}>
+                Inspector&apos;s Report
+              </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item>
-            {menu === CrewCreditsTabKeys.General && <CrewTab />}
+            {menu === CrewCreditsTabKeys.Crew && <CrewTab />}
             {menu === CrewCreditsTabKeys.Antagonists && <AntagonistsTab />}
+            {menu === CrewCreditsTabKeys.Citations && <CitationsTab />}
+            {menu === CrewCreditsTabKeys.Report && <ReportTab />}
           </Stack.Item>
         </Stack>
       </Window.Content>

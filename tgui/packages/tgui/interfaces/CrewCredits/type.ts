@@ -63,8 +63,38 @@ export interface SuccinctAntagonistProps {
   dead: BooleanLike;
 }
 
+export interface CitationTabData {
+  tickets: CitationTargetData[];
+  fines: CitationTargetData[];
+}
+
+export interface ReportTabData {
+  reports: ReportData[];
+}
+
+export interface CitationTargetListProps {
+  title: string,
+  citation_targets: CitationTargetData[]
+}
+
+export interface CitationTargetData {
+  name: string;
+  citations: string[];
+}
+
+export interface ReportData {
+  issuer: string;
+  pages: PaperData[]
+}
+
+interface PaperData {
+  title?: string;
+  info: string;
+}
 
 export enum CrewCreditsTabKeys {
-  General,
+  Crew,
   Antagonists,
+  Citations,
+  Report,
 }

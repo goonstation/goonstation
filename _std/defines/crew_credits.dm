@@ -13,3 +13,9 @@
 #define ANTAGONIST_TAB_GAME_MODE "game_mode"
 #define ANTAGONIST_TAB_VERBOSE_DATA "verbose_antagonist_data"
 #define ANTAGONIST_TAB_SUCCINCT_DATA "succinct_antagonist_data"
+
+
+#define CITATION_TAB_SECTION_TICKETS "ticket_targets"
+#define CITATION_TAB_SECTION_FINES "fine_targets"
+
+#define REPORTS_TAB "reports"
