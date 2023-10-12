@@ -299,6 +299,14 @@ proc/get_default_flock()
 
 	src.max_trace_count = round(min(src.total_compute(), FLOCK_RELAY_COMPUTE_COST) / FLOCKTRACE_COMPUTE_COST) + src.free_traces
 
+/datum/flock/proc/update_tiles(forceTextUpdate = FALSE)
+	var/datum/abilityHolder/flockmind/aH = src.flockmind?.abilityHolder
+	aH?.updateTiles(src.stats.tiles_converted, forceTextUpdate)
+
+	for (var/mob/living/intangible/flock/trace/T as anything in src.traces)
+		aH = T.abilityHolder
+		aH?.updateTiles(src.stats.tiles_converted, forceTextUpdate)
+
 /datum/flock/proc/registerFlockmind(var/mob/living/intangible/flock/flockmind/F)
 	if(!F)
 		return
@@ -720,6 +728,7 @@ proc/get_default_flock()
 
 	if (isfeathertile(T))
 		src.stats.tiles_converted++
+		src.update_tiles(TRUE)
 	if (istype(T, /turf/simulated/floor/feather))
 		var/turf/simulated/floor/feather/featherturf = T
 		featherturf.flock = src
@@ -765,7 +774,7 @@ proc/get_default_flock()
 	if (src.flockmind?.tutorial || src.relay_in_progress || src.relay_finished)
 		return
 
-	if (src.total_compute() >= FLOCK_RELAY_COMPUTE_COST)
+	if (src.total_compute() >= FLOCK_RELAY_COMPUTE_COST && src.stats.tiles_converted >= FLOCK_RELAY_TILE_REQUIREMENT)
 		// Create the actual relay
 		src.relay_in_progress = TRUE
 		src.center_marker.alpha = 0
