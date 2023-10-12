@@ -15,17 +15,17 @@ export const ScoreTab = (props, context) => {
   const { score_groups, total_score, grade, victory_body, victory_headline } = data;
   const total_score_render = <ColorPercentage items={total_score} />;
   return (
-    <Fragment>
+    <>
       { !!victory_headline && <SummaryDisplay preamble="Round Result:" headline={victory_headline} body={victory_body}> </SummaryDisplay>}
       { !victory_headline && <SummaryDisplay preamble="Total Score:" headline={total_score_render} body={grade}> </SummaryDisplay>}
 
       <Section>
         {score_groups?.map(
           (category, index) =>
-            !!category.entries.length && <ScoreCategory key={index} title={category.title} entries={category.entries} />
+            !!category.entries.length && <ScoreCategory key={index} {...category} />
         )}
       </Section>
-    </Fragment>
+    </>
   );
 };
 
