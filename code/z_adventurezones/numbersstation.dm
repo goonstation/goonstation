@@ -413,15 +413,15 @@ var/global/datum/numbers_station/lincolnshire = new
 /proc/lincolnshire_numbers(numbers)
 	logTheThing(LOG_DEBUG, null, "<b>Numbers station</b>: numbers: [numbers]")
 	if (numbers == null)
-		return 1
+		return FALSE
 	var/list/nums = splittext(numbers, " ")
 	if (length(nums) < 21)
 		logTheThing(LOG_DEBUG, null, "<b>Numbers station</b> got too few numbers.")
-		return 2
+		return FALSE
 	for (var/i = 1, i <= 21, i++)
 		lincolnshire.numbers[i] = text2num(nums[i])
 	logTheThing(LOG_DEBUG, null, "<b>Numbers station</b> woo success")
-	return 0
+	return TRUE
 
 
 // This particular edition of the handbook is used as the cipher for the numbers station.
