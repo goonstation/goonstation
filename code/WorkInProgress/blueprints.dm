@@ -495,7 +495,7 @@
 	name = "structure blueprint"
 	desc = "An ABCU blueprint. You can use this to learn it, or tap it on an ABCU to upload the referenced blueprint."
 	icon = 'icons/obj/writing.dmi'
-	icon_state = "interdictor_blueprint"
+	icon_state = "interdictor_blueprint" // yoinking this unused icon
 	item_state = "sheet"
 
 	var/author = ""
@@ -506,6 +506,17 @@
 		. = ..()
 		if (room_name)
 			. += "<span class='notice'>This blueprint is named '[room_name]'. </span>"
+
+	afterattack(atom/target, mob/user)
+		if (!istype(target, /obj/machinery/abcu))
+			. = ..()
+			return
+		if (!src.blueprint_path) return
+		var/datum/abcu_blueprint/load = load_abcu_blueprint(user, TRUE, src.blueprint_path)
+		if (load?.room_name)
+			var/obj/machinery/abcu/abcu = target
+			abcu.current_bp = load
+			boutput(user, "Uploaded blueprint [load.room_name] to [abcu].")
 
 // whitelists/blacklists applied during both saving and loading, so it's functionally retroactive
 #define WHITELIST_OBJECTS list( \
@@ -567,14 +578,16 @@
 	var/room_name = ""
 	var/list/roominfo = list()
 
-proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
-	if (!user || !user.client) return
-	var/input = strip_html(tgui_input_text(user, "Blueprint Name", "Set a name for your new blueprint.", null, 54)) // 54 char limit
-	if (!input) return
-
-	var/savepath = "data/blueprints/[user.client.ckey]/[input].dat"
+proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE, var/savepath = "", var/allow_overwrite = TRUE)
+	if (!length(turf_list)) return
+	if (!savepath)
+		if (!user || !user.client) return
+		var/input = strip_html(tgui_input_text(user, "Blueprint Name", "Set a name for your new blueprint.", null, 54)) // 54 char limit
+		if (!input) return
+		savepath = "data/blueprints/[user.client.ckey]/[input].dat"
 	if (fexists("[savepath]"))
-		if (alert(user, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
+		if (!allow_overwrite) return // please god use this param if you're calling this with a null user
+		if (user && alert(user, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
 			return
 		fdel("[savepath]")
 	var/savefile/save = new/savefile("[savepath]")
@@ -631,15 +644,16 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 
 	boutput(user, "<span class='notice'>Saved blueprint as '[input]'. </span>")
 
-proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE)
-	if (!user || !user.client) return
-	var/list/bplist = flist("data/blueprints/[user.client.ckey]/")
-	if (!length(bplist))
-		boutput(user, "<span class='alert'>You don't have any blueprints.</span>")
-		return
-	var/inputbp = tgui_input_list(user, "Pick a blueprint to load.", "Your Blueprints", bplist)
-	if(!inputbp) return
-	var/savepath = "data/blueprints/[user.client.ckey]/[inputbp]"
+proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
+	if (!savepath) // make this proc usable with or without a user and menu
+		if (!user || !user.client) return
+		var/list/bplist = flist("data/blueprints/[user.client.ckey]/")
+		if (!length(bplist))
+			boutput(user, "<span class='alert'>You don't have any blueprints.</span>")
+			return
+		var/inputbp = tgui_input_list(user, "Pick a blueprint to load.", "Your Blueprints", bplist)
+		if(!inputbp) return
+		var/savepath = "data/blueprints/[user.client.ckey]/[inputbp]"
 	if (!fexists(savepath)) return // unlikely i hope
 	var/savefile/save = new/savefile("[savepath]")
 
