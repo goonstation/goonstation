@@ -1,5 +1,7 @@
 
 (t)thu oct 12 23
+(u)LeahTheTech
+(*)Clicking on most types of portal as a ghost will now teleport you through them.
 (u)Flaborized
 (p)16405
 (e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
