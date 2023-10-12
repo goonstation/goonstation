@@ -36,7 +36,7 @@ export const CrewCredits = (props, context) => {
               <Tabs.Tab
                 selected={menu === CrewCreditsTabKeys.Score}
                 onClick={() => setMenu(CrewCreditsTabKeys.Score)}>
-                Round Statistics
+                Station Score
               </Tabs.Tab>
             </Tabs>
           </Stack.Item>
