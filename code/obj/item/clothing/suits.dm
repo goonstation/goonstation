@@ -1814,6 +1814,77 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/salvager)
 	item_state = "wintercoat-detective"
 	coat_style = "wintercoat-detective"
 
+/obj/item/clothing/suit/puffer
+	name = "puffer jacket"
+	desc = "A puffer coat to round out your silhouette."
+	icon_state = "puffer-sci"
+	item_state = "puffer-sci"
+	body_parts_covered = TORSO|LEGS|ARMS
+
+	setupProperties()
+		..()
+		setProperty("coldprot", 30)
+
+/obj/item/clothing/suit/puffer/sci
+	name = "science puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for the lab!"
+	icon_state = "puffer-sci"
+	item_state = "puffer-sci"
+
+/obj/item/clothing/suit/puffer/nurse
+	name = "nurse's puffer jacket"
+	desc = "A poofy, easy to move in nurse jacket. Give it a twirl!"
+	icon_state = "puffer-nurse"
+	item_state = "puffer-nurse"
+
+/obj/item/clothing/suit/puffer/med
+	name = "medical puffer jacket"
+	desc = "A pristine medical puffer, the inside is very soft to the touch."
+	icon_state = "puffer-med"
+	item_state = "puffer-med"
+
+/obj/item/clothing/suit/puffer/genetics
+	name = "genetics puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for defying nature!"
+	icon_state = "puffer-medsci"
+	item_state = "puffer-medsci"
+
+/obj/item/clothing/suit/puffer/hi_vis
+	name = "hi-vis puffer jacket"
+	desc = "A coat that makes you even more visible!"
+	icon_state = "puffer-hivis"
+	item_state = "puffer-hivis"
+
+/obj/item/clothing/suit/puffer/engi
+	name = "engineering puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for the engine!"
+	icon_state = "puffer-engi"
+	item_state = "puffer-engi"
+
+/obj/item/clothing/suit/puffer/sec
+	name = "security puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for catching criminals!"
+	icon_state = "puffer-sec"
+	item_state = "puffer-sec"
+
+/obj/item/clothing/suit/puffer/janitor
+	name = "janitorial puffer jacket"
+	desc = "Sturdy and easy to wash, inevitably going to be splashed with blood."
+	icon_state = "puffer-janitor"
+	item_state = "puffer-janitor"
+
+/obj/item/clothing/suit/puffer/botanist
+	name = "botany puffer jacket"
+	desc = "A big comfy puffer jacket, perfect for gardening!"
+	icon_state = "puffer-botanist"
+	item_state = "puffer-botanist"
+
+/obj/item/clothing/suit/puffer/rancher
+	name = "rancher's puffer jacket"
+	desc = "A warm and sturdy coat, with TASTEFUL flannel."
+	icon_state = "puffer-rancher"
+	item_state = "puffer-rancher"
+
 /obj/item/clothing/suit/hi_vis
 	name = "hi-vis vest"
 	desc = "For when you just have to be seen!"

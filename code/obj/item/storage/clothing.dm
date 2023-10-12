@@ -69,7 +69,8 @@
 	spawn_contents = list(/obj/item/clothing/under/rank/janitor,\
 	/obj/item/clothing/shoes/brown,\
 	/obj/item/device/radio/headset/civilian,\
-	/obj/item/device/pda2/janitor)
+	/obj/item/device/pda2/janitor,\
+	/obj/item/clothing/suit/puffer/janitor)
 
 /obj/item/storage/box/clothing/botanist
 	name = "\improper Botanist's equipment"
@@ -77,7 +78,8 @@
 	/obj/item/clothing/shoes/brown,\
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/botanist,\
-	/obj/item/clothing/gloves/black)
+	/obj/item/clothing/gloves/black,\
+	/obj/item/clothing/suit/puffer/botanist)
 
 /obj/item/storage/box/clothing/rancher
 	name = "\improper Rancher's equipment"
@@ -85,7 +87,8 @@
 	/obj/item/clothing/shoes/westboot/brown/rancher,\
 	/obj/item/device/radio/headset/civilian,\
 	/obj/item/device/pda2/botanist,\
-	/obj/item/clothing/gloves/black)
+	/obj/item/clothing/gloves/black,\
+	/obj/item/clothing/suit/puffer/rancher)
 
 /obj/item/storage/box/clothing/chef
 	name = "\improper Chef's equipment"
