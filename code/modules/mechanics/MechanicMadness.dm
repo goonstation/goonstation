@@ -3081,7 +3081,7 @@ ADMIN_INTERACT_PROCS(/obj/item/mechanics/trigger/button, proc/press)
 		LIGHT_UP_HOUSING
 		var/signum = text2num_safe(input.signal)
 		var/index = round(signum)
-		if (length(sounds) > 1 && index > 0 && index <= length(sounds))
+		if (islist(sounds) && length(sounds) > 1 && index > 0 && index <= length(sounds))
 			ON_COOLDOWN(src, SEND_COOLDOWN_ID, delay)
 			flick("comp_instrument1", src)
 			playsound(get_turf(src), sounds[index], volume, 0)

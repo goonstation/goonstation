@@ -647,9 +647,15 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/item/powercell
 	name = "standard 15000u power cell"
-	typepath = /obj/item/cell/supercell
-	typepath_alt = /obj/item/cell/supercell/charged
+	typepath = /obj/item/cell
 	feemod = PAY_IMPORTANT
+
+	rc_eval(atom/eval_item)
+		. = ..()
+		if(!.)
+			return
+		var/obj/item/cell/cell = eval_item
+		return cell.maxcharge >= 15000
 
 /datum/rc_entry/item/borgmodule
 	name = "cyborg module"

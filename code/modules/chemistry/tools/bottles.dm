@@ -242,7 +242,7 @@
 
 /obj/item/reagent_containers/glass/bottle/antihistamine
 	name = "bottle (diphenhydramine)"
-	desc = "A small bottle of dyphenhidramine, useful for reducing the severity of allergic reactions."
+	desc = "A small bottle of diphenhydramine, useful for reducing the severity of allergic reactions."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "antihistamine"

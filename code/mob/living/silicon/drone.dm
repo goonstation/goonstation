@@ -471,7 +471,7 @@
 /obj/item/parts/robot_parts/drone
 	name = "drone part"
 	icon = 'icons/mob/drone.dmi'
-	desc = "It's a component intended for remote controlled drones. This one happens to be invisible and unusuable. Some things are like that."
+	desc = "It's a component intended for remote controlled drones. This one happens to be invisible and unusable. Some things are like that."
 	var/image/drone_overlay = null
 
 /obj/item/parts/robot_parts/drone/propulsion

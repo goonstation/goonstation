@@ -135,6 +135,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	speechverb_ask = "squeaks"
 	health_brute = 8
 	health_burn = 8
+	faction = FACTION_NEUTRAL
 	ai_type = /datum/aiHolder/mouse
 	ai_retaliate_patience = 0 //retaliate when hit immediately
 	ai_retaliate_persistence = RETALIATE_ONCE //but just hit back once
@@ -240,6 +241,7 @@ ABSTRACT_TYPE(/mob/living/critter/small_animal)
 	health_burn = 2
 
 /mob/living/critter/small_animal/mouse/mad
+	faction = null
 	ai_type = /datum/aiHolder/mouse/mad
 	var/list/disease_types = list(/datum/ailment/disease/space_madness, /datum/ailment/disease/berserker)
 
@@ -1724,6 +1726,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	health_brute = 5
 	health_burn = 5
 	flags = TABLEPASS | DOORPASS
+	faction = FACTION_NEUTRAL
 	fits_under_table = 1
 	ai_type = /datum/aiHolder/roach
 	ai_retaliates = FALSE
@@ -2756,6 +2759,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	icon_state_dead = "floateye-dead"
 	health_brute = 10
 	health_burn = 10
+	faction = FACTION_NEUTRAL
 	isFlying = TRUE
 
 	setup_hands()
@@ -3039,7 +3043,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 
 /obj/item/reagent_containers/food/snacks/ingredient/egg/critter/wasp/angry
 	name = "space wasp egg?"
-	desc = "There is ALOT OF BUZZING coming from this thing..."
+	desc = "There is A LOT OF BUZZING coming from this thing..."
 	critter_type = /mob/living/critter/small_animal/wasp/angry
 
 /* ================================================= */
@@ -3166,7 +3170,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 /mob/living/critter/small_animal/slug/snail/diner
 	name = "Snaily Softserve"
 	real_name = "snaildiner"
-	desc = "It's Snaily Softserve! She's a bit slimey and slow, but she means well."
+	desc = "It's Snaily Softserve! She's a bit slimy and slow, but she means well."
 	icon_state = "snail"
 	icon_state_dead = "snail-dead"
 	blood_id = "hemolymph"

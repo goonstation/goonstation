@@ -772,7 +772,7 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 		projectiles = list(current_projectile)
 		..()
 
-///////////////////////////////////////Modular Blasters
+///////////////////////////////////////Particle Blasters
 TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 	mats = 0
 
@@ -788,6 +788,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
 	rarity = 3
+	muzzle_flash = "muzzle_flash_bluezap"
+	shoot_delay = 2
 
 
 	/*
@@ -851,10 +853,13 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	force = MELEE_DMG_PISTOL
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 	rarity = 4
+	spread_angle = 10
+	muzzle_flash = "muzzle_flash_bluezap"
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/burst)
 		projectiles = list(current_projectile)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
 		..()
 
 /obj/item/gun/energy/blaster_carbine
@@ -871,6 +876,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	force = MELEE_DMG_RIFLE
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 	rarity = 4
+	shoot_delay = 4
+	muzzle_flash = "muzzle_flash_bluezap"
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/carbine)
@@ -892,6 +899,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	shoot_delay = 8
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
 	rarity = 5
+	muzzle_flash = "muzzle_flash_bluezap"
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/cannon)
@@ -901,7 +909,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 		..()
 
 ///////////modular components - putting them here so it's easier to work on for now////////
-
+/*
 TYPEINFO(/obj/item/gun_parts)
 	mats = 0
 
@@ -959,7 +967,7 @@ TYPEINFO(/obj/item/gun_parts)
 
 	grip // tacticool
 		name = "fore grip"
-		icon_state = "mod-grip"
+		icon_state = "mod-grip" */
 
 ///////////////////////////////////////Owl Gun
 /obj/item/gun/energy/owl
