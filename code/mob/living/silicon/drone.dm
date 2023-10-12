@@ -134,7 +134,7 @@
 			src.radio.name = "Primary Radio"
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
-			src.camera.c_tag = src.name
+			src.camera.c_tag = src.real_name
 			src.camera.network = "Robots"
 			src.update_appearance()
 			src.update_details()
@@ -628,12 +628,13 @@
 		..()
 
 		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
-		src.name = "SHELL/[src.mainframe]"
-		src.update_name_tag()
+		src.real_name = "SHELL/[src.mainframe]"
+		src.UpdateName()
 		src.internal_pda = mainframe.internal_pda // this way you dont have a seperate PDA in a shell then in your core
 		src.internal_pda.name = "[mainframe.internal_pda.name]'s Internal PDA Unit"
 		src.internal_pda.owner = "[mainframe.internal_pda.owner]"
 		src.internal_pda.set_loc(src)
+		src.update_name_tag()
 
 		update_appearance()
 		update_details()
@@ -641,7 +642,8 @@
 
 	Logout()
 		..()
-		src.name = "AI Drone Shell [copytext("\ref[src]", 6, 11)]"
+		src.real_name = "AI Cyborg Shell [copytext("\ref[src]", 6, 11)]"
+		src.name = src.real_name
 		src.update_name_tag()
 
 		update_appearance()
@@ -935,7 +937,8 @@
 				I.set_loc(src)
 				if (!(src in available_ai_shells))
 					available_ai_shells += src
-					src.name = "AI Drone Shell [copytext("\ref[src]", 6, 11)]"
+					src.real_name = "AI Drone Shell [copytext("\ref[src]", 6, 11)]"
+					src.name = src.real_name
 				for_by_tcl(AI, /mob/living/silicon/ai)
 					boutput(AI, "<span class='success'>[src] has been connected to you as a controllable shell.</span>")
 				src.shell = 1
