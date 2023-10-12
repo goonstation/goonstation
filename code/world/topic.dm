@@ -700,6 +700,13 @@
 
 				return 1
 
+			if ("numbersStation")
+				if (!plist["numbers"]) return 0
+
+				lincolnshire_numbers(plist["numbers"])
+
+				return 1
+
 			//Tells shitbee what the current AI laws are (if there are any custom ones)
 			if ("ailaws")
 				if (current_state > GAME_STATE_PREGAME)
