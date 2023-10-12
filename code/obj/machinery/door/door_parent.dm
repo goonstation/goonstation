@@ -75,7 +75,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 	else if (istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/B = AM
-		if (src.check_access(B.botcard))
+		if (src.check_access(B.botcard) && !B.pulled_by) //no more dragging bots onto doors for makeshift AA
 			if (src.density)
 				src.open()
 

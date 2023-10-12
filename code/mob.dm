@@ -26,8 +26,6 @@
 
 	var/robot_talk_understand = 0
 
-	var/list/obj/hallucination/hallucinations = null //can probably be on human
-
 	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = list()
 	var/list/color_matrices = list()
@@ -54,7 +52,6 @@
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
-	var/mob/pulled_by = null
 	var/stat = STAT_ALIVE
 	var/next_click = 0
 	var/transforming = null
@@ -243,7 +240,6 @@
 /mob/New(loc, datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
 	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
-	hallucinations = new
 	grabbed_by = new
 	resistances = new
 	ailments = new
@@ -419,7 +415,6 @@
 	ckey = null
 	client = null
 	internals = null
-	hallucinations = null
 	buckled = null
 	handcuffs = null
 	l_hand = null
@@ -1129,10 +1124,7 @@
 			return
 
 	src.pulling = A
-
-	if(ismob(src.pulling))
-		var/mob/M = src.pulling
-		M.pulled_by = src
+	A.pulled_by = src
 
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
@@ -1147,9 +1139,8 @@
 	pull_particle(src,pulling)
 
 /mob/proc/remove_pulling()
-	if(ismob(pulling))
-		var/mob/M = pulling
-		M.pulled_by = null
+	if(src.pulling)
+		src.pulling.pulled_by = null
 	src.pulling = null
 
 // less icon caching maybe?!

@@ -349,14 +349,16 @@ ABSTRACT_TYPE(/obj/item/clothing/suit/jacket/design)
 	c_flags = SPACEWEAR
 	body_parts_covered = TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES
+	acid_survival_time = 15 MINUTES
 
 	setupProperties()
 		..()
 		setProperty("radprot", 50)
-		setProperty("meleeprot", 4)
+		setProperty("meleeprot", 6)
 		setProperty("rangedprot", 2)
 		setProperty("movespeed", 1)
 		setProperty("disorient_resist", 35) //it's a special item
+		delProperty("space_movespeed")
 
 /obj/item/clothing/suit/rad // re-added for Russian Station as there is a permarads area there!
 	name = "\improper Class II radiation suit"
