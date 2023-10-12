@@ -95,17 +95,6 @@ TYPEINFO(/obj/item/card/emag)
 	//It's a..smart card.  Sure.
 	var/datum/computer/file/cardfile = null
 
-	proc/update_name()
-		name = "[src.registered]'s ID Card ([src.assignment])"
-
-	get_desc()
-		. = ..()
-		if(src.pronouns)
-			. += " Pronouns: [src.pronouns.name]"
-
-	registered_owner()
-		.= registered
-
 /obj/item/card/id/New()
 	..()
 	src.pin = rand(1000,9999)
@@ -114,6 +103,22 @@ TYPEINFO(/obj/item/card/emag)
 /obj/item/card/id/disposing()
 	STOP_TRACKING
 	. = ..()
+
+/obj/item/card/id/proc/update_name()
+	. = "identification card"
+	if (src.registered)
+		. = "[src.registered]'s ID card"
+	if (src.assignment)
+		. += " ([src.assignment])"
+	src.name = .
+
+/obj/item/card/id/get_desc()
+	. = ..()
+	if(src.pronouns)
+		. += " Pronouns: [src.pronouns.name]"
+
+/obj/item/card/id/registered_owner()
+	. = registered
 
 /obj/item/card/id/command
 	icon_state = "id_com"
