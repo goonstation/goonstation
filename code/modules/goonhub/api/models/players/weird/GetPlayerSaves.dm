@@ -4,10 +4,13 @@
 	var/datum/apiModel/Tracked/PlayerRes/PlayerDataResource/data	= null
 	var/datum/apiModel/Tracked/PlayerRes/PlayerSaveResource/saves	= null
 
-/datum/apiModel/GetPlayerSaves/SetupFromResponse(response)
+/datum/apiModel/GetPlayerSaves/New(
+	data,
+	saves
+)
 	. = ..()
-	src.data =	response["data"]
-	src.saves =	response["saves"]
+	src.data = data
+	src.saves = saves
 
 /datum/apiModel/GetPlayerSaves/VerifyIntegrity()
 	if (
