@@ -512,49 +512,48 @@ var/global/totally_random_jobs = FALSE
 
 /mob/living/carbon/human/proc/Equip_Job_Slots(var/datum/job/JOB)
 	src.equip_outfit(JOB.outfit)
-	if (initial(JOB.outfit.slot_back)) // :(
-		if (src.back?.storage)
-			if(JOB.receives_disk)
-				var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
-				src.equip_if_possible(D, SLOT_IN_BACKPACK)
-				var/datum/computer/file/clone/R = new
-				R.fields["ckey"] = ckey(src.key)
-				R.fields["name"] = src.real_name
-				R.fields["id"] = copytext(md5(src.real_name), 2, 6)
+	if (src.back?.storage)
+		if (JOB.receives_disk)
+			var/obj/item/disk/data/floppy/read_only/D = new /obj/item/disk/data/floppy/read_only(src)
+			src.equip_if_possible(D, SLOT_IN_BACKPACK)
+			var/datum/computer/file/clone/R = new
+			R.fields["ckey"] = ckey(src.key)
+			R.fields["name"] = src.real_name
+			R.fields["id"] = copytext(md5(src.real_name), 2, 6)
 
-				var/datum/bioHolder/B = new/datum/bioHolder(null)
-				B.CopyOther(src.bioHolder)
+			var/datum/bioHolder/B = new/datum/bioHolder(null)
+			B.CopyOther(src.bioHolder)
 
-				R.fields["holder"] = B
+			R.fields["holder"] = B
 
-				R.fields["abilities"] = null
-				if (src.abilityHolder)
-					var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
-					R.fields["abilities"] = A
+			R.fields["abilities"] = null
+			if (src.abilityHolder)
+				var/datum/abilityHolder/A = src.abilityHolder.deepCopy()
+				R.fields["abilities"] = A
 
-				R.fields["defects"] = src.cloner_defects.copy()
+			R.fields["defects"] = src.cloner_defects.copy()
 
-				SPAWN(0)
-					if(!isnull(src.traitHolder))
-						R.fields["traits"] = src.traitHolder.copy()
+			SPAWN(0)
+				if(!isnull(src.traitHolder))
+					R.fields["traits"] = src.traitHolder.copy()
 
-				R.fields["imp"] = null
-				R.fields["mind"] = src.mind
-				D.root.add_file(R)
+			R.fields["imp"] = null
+			R.fields["mind"] = src.mind
+			D.root.add_file(R)
 
-				if (JOB.receives_security_disk)
-					var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
-					authrec.fields = list("SEC"="[netpass_security]")
-					D.root.add_file( authrec )
-					D.read_only = 1
+			if (JOB.receives_security_disk)
+				var/datum/computer/file/record/authrec = new /datum/computer/file/record {name = "SECAUTH";} (src)
+				authrec.fields = list("SEC"="[netpass_security]")
+				D.root.add_file( authrec )
+				D.read_only = 1
 
-				D.name = "data disk - '[src.real_name]'"
+			D.name = "data disk - '[src.real_name]'"
 
-			if(JOB.receives_badge)
-				var/obj/item/clothing/suit/security_badge/B = new /obj/item/clothing/suit/security_badge(src)
-				src.equip_if_possible(B, SLOT_IN_BACKPACK)
-				B.badge_owner_name = src.real_name
-				B.badge_owner_job = src.job
+		if (JOB.receives_badge)
+			var/obj/item/clothing/suit/security_badge/B = new /obj/item/clothing/suit/security_badge(src)
+			src.equip_if_possible(B, SLOT_IN_BACKPACK)
+			B.badge_owner_name = src.real_name
+			B.badge_owner_job = src.job
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pilot"))
 		var/obj/item/tank/mini_oxygen/E = new /obj/item/tank/mini_oxygen(src.loc)
