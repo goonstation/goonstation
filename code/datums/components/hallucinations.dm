@@ -203,7 +203,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/attacker_prob = 10
 	var/max_attackers = 5
 	var/attacker_list = list()
-	
+
 	Initialize(timeout=30, image_list=null, name_list=null, attacker_prob=10, max_attackers=5)
 		.=..()
 		if(. == COMPONENT_INCOMPATIBLE)
@@ -218,7 +218,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		for(var/obj/fake_attacker/fakey in src.attacker_list)
 			if(fakey.disposed)
 				src.attacker_list -= fakey
-		if(length(attacker_list) > src.max_attackers)
+		if(length(attacker_list) >= src.max_attackers)
 			return
 		if(probmult(attacker_prob))
 			var/obj/fake_attacker/F
@@ -283,7 +283,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/list/target_list
 	var/range = 5
 	var/override = TRUE
-	
+
 	Initialize(timeout=30, image_list=null, target_list=null, range=5, image_prob=10, image_time=20 SECONDS, override=TRUE)
 		. = ..()
 		if(. == COMPONENT_INCOMPATIBLE || length(image_list) == 0 || length(target_list) == 0)
