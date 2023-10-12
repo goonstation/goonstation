@@ -1,35 +1,64 @@
+ABSTRACT_TYPE(/datum/outfit)
 /** ====== OUTFIT DATUM ======
  * A datum which stores an outfit that can be applied to humans
  * Allows for you to have clothing to equip on corpses / spawns without a job
  */
 /datum/outfit
-	var/outfit_name = "outfit"
+	/// Outfit name for player identification only. Outfits should be referred to by path.
+	var/outfit_name = null
 
-	// Following slots support single item list or weighted list - Do not use regular lists or it will error!
+	// Everything should be a path, things will break if paths are not used.
+	// Following slots support single item lists or weighted lists - Do not use regular lists or it will error!
+	/// Item to be equipped to head slot.
 	var/list/slot_head = list()
+	/// Item to be equipped to mask slot.
 	var/list/slot_mask = list()
+	/// Item to be equipped to eyes slot.
 	var/list/slot_eyes = list()
+	/// Item to be equipped to ears slot.
 	var/list/slot_ears = list()
+	/// Item to be equipped to outer suit slot.
 	var/list/slot_outer = list()
+	/// Item to be equipped to under suit slot.
 	var/list/slot_under = list()
+	/// Item to be equipped to back slot.
 	var/list/slot_back = list()
+	/// Item to be equipped to belt slot.
 	var/list/slot_belt = list()
+	/// Item to be equipped to gloves slot.
 	var/list/slot_gloves = list()
+	/// Item to be equipped to shoes slot.
 	var/list/slot_shoes = list()
+	/// Item to be equipped into the left hand.
 	var/list/left_hand = list()
+	/// Item to be equipped into the right hand.
 	var/list/right_hand = list()
+	/// Item to be equipped into the left pocket.
 	var/list/left_pocket = list()
+	/// Item to be equipped into the right pocket.
 	var/list/right_pocket = list()
+	/// Item to be equipped to the ID slot.
+	var/list/slot_id = list(/obj/item/card/id)
 
-	// These are just normal lists, bare in mind the normal 7 item limit.
+	// These are just normal lists, bare in mind the normal 7 item limit for storages.
+	/// Items to place in back assuming it has storage.
 	var/list/backpack_items = list()
+	/// Items to place in belt assuming it has storage.
 	var/list/belt_items = list()
+	/// List of implants to implant.
+	var/list/implants = list()
+	/// List of accesses to apply to the ID card.
+	var/list/access = list()
 
-/mob/living/carbon/human/proc/equip_outfit(var/datum/outfit/outfit)
-	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
-	var/datum/outfit/equip = new outfit()
-	if (!isnull(equip))
+/mob/living/carbon/human/proc/equip_outfit(var/datum/outfit/outfit, var/destructive = TRUE)
+	if (isnull(outfit) || !ispath(outfit))
 		return
+	var/datum/outfit/equip = new outfit()
+	if (!istype(equip))
+		return
+	if (destructive)
+		src.unequip_all(TRUE)
+	// Jumpsuit - Important! Must be equipped early to provide valid slots for other items
 	if (equip.slot_under && length(equip.slot_under) > 1)
 		src.equip_new_if_possible(weighted_pick(equip.slot_under), SLOT_W_UNIFORM)
 	else if (length(equip.slot_under))
@@ -109,6 +138,27 @@
 		src.equip_new_if_possible(weighted_pick(equip.left_pocket), SLOT_R_HAND)
 	else if (length(equip.right_hand))
 		src.equip_new_if_possible(equip.right_hand[1], SLOT_R_HAND)
+	// ID
+	if (equip.slot_id && length(equip.slot_id) > 1)
+		src.equip_new_if_possible(weighted_pick(equip.slot_id), SLOT_WEAR_ID)
+	else if (length(equip.slot_id))
+		src.equip_new_if_possible(equip.slot_id[1], SLOT_WEAR_ID)
+	// Implants
+	if (length(equip.implants))
+		for (var/implant as anything in equip.implants)
+			new implant(src)
+	// Extra ID handling
+	if (src.wear_id)
+		if (istype(src.wear_id, /obj/item/card/id))
+			var/obj/item/card/id/ID = src.wear_id
+			if (equip.access)
+				ID.access = equip.access.Copy()
+			ID.registered = src.real_name
+			if (src.job)
+				ID.assignment = src.job
+			else if (equip.outfit_name)
+				ID.assignment = equip.outfit_name
+			ID.update_name()
 
 #ifdef APRIL_FOOLS
 	src.back?.setMaterial(getMaterial("jean"))
@@ -119,3 +169,20 @@
 	src.shoes?.setMaterial(getMaterial("jean"))
 	src.head?.setMaterial(getMaterial("jean"))
 #endif
+
+/obj/item/instrument/bikehorn/debug
+	attack_self(mob/user as mob)
+		..()
+		if (ishuman(user))
+			var/mob/living/carbon/human/H = user
+			for (var/datum/outfit/O as anything in concrete_typesof(/datum/outfit))
+				H.equip_outfit(O, TRUE)
+				if (!H.back)
+					logTheThing(LOG_DEBUG, O, "[identify_object(O)] has no back item")
+				if (!H.ears)
+					logTheThing(LOG_DEBUG, O, "[identify_object(O)] has no ear item")
+				if (!H.wear_id)
+					logTheThing(LOG_DEBUG, O, "[identify_object(O)] has no ID item")
+				if (!locate(/obj/item/device/pda2) in H)
+					logTheThing(LOG_DEBUG, O, "[identify_object(O)] has no pda")
+
