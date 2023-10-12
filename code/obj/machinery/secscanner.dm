@@ -58,10 +58,14 @@ TYPEINFO(/obj/machinery/secscanner)
 		if( icon_state != "scanner_on" )
 			return
 		src.use_power(15)
-		var/contraband = SEND_SIGNAL(I, COMSIG_MOVABLE_GET_CONTRABAND, TRUE, TRUE)
 
-		if (contraband >= 2)
+		var/list/contraband_returned = list()
+		var/contraband = 0
 
+		if (SEND_SIGNAL(I, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+			contraband = max(contraband_returned)
+
+		if (contraband > 2)
 			playsound( src.loc, fail_sound, 10, 0 )
 			icon_state = "scanner_red"
 			src.use_power(15)
@@ -176,7 +180,9 @@ TYPEINFO(/obj/machinery/secscanner)
 			if (istype(target, /mob/living/critter/changeling))
 				return 6
 			for(var/obj/item/item in target.contents)
-				threatcount += SEND_SIGNAL(item, COMSIG_MOVABLE_GET_CONTRABAND, TRUE, TRUE)
+				var/list/contraband_returned = list()
+				if(SEND_SIGNAL(item, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+					threatcount += max(contraband_returned)
 			return threatcount
 
 		var/mob/living/carbon/human/perp = target
@@ -210,17 +216,25 @@ TYPEINFO(/obj/machinery/secscanner)
 				has_contraband_permit = 1
 
 		if (!has_carry_permit || !has_contraband_permit)
-			threatcount += SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, !has_contraband_permit, !has_carry_permit)
+			var/list/contraband_returned = list()
+			if(SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
+				threatcount += max(contraband_returned)
 
 			if (istype(perp.l_store))
-				threatcount += SEND_SIGNAL(perp.l_store, COMSIG_MOVABLE_GET_CONTRABAND, !has_contraband_permit, !has_carry_permit) * 0.5
+				contraband_returned = list()
+				if(SEND_SIGNAL(perp.l_store, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
+					threatcount += max(contraband_returned)
 
 			if (istype(perp.r_store))
-				threatcount += SEND_SIGNAL(perp.r_store, COMSIG_MOVABLE_GET_CONTRABAND, !has_contraband_permit, !has_carry_permit) * 0.5
+				contraband_returned = list()
+				if(SEND_SIGNAL(perp.r_store, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
+					threatcount += max(contraband_returned)
 
 			if (istype(perp.back) && perp.back?.storage)
 				for(var/obj/item/item in perp.back.storage.get_contents())
-					threatcount += SEND_SIGNAL(item, COMSIG_MOVABLE_GET_CONTRABAND, !has_contraband_permit, !has_carry_permit) * 0.5
+					contraband_returned = list()
+					if(SEND_SIGNAL(item, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
+						threatcount += max(contraband_returned)
 
 		//Agent cards lower threatlevel
 		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))

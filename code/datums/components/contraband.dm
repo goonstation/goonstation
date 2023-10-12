@@ -23,26 +23,33 @@ TYPEINFO(/datum/component/contraband)
 		if (ismob(I.loc))
 			var/mob/M = I.loc
 			src.equipped(I, M, I.equipped_in_slot)
-		RegisterSignal(AM, COMSIG_ITEM_EQUIPPED, PROC_REF(equipped))
+		RegisterSignal(AM, COMSIG_ITEM_EQUIPPED_NOCHECK, PROC_REF(equipped))
 		RegisterSignal(AM, COMSIG_ITEM_PICKUP, PROC_REF(picked_up))
-		RegisterSignals(AM, list(COMSIG_ITEM_UNEQUIPPED, COMSIG_ITEM_DROPPED), PROC_REF(removed))
+		RegisterSignals(AM, list(COMSIG_ITEM_UNEQUIPPED_NOCHECK, COMSIG_ITEM_DROPPED), PROC_REF(removed))
 	src.visible_contraband_changed(AM)
 
-/datum/component/contraband/proc/get_contraband(atom/owner, nonfirearms = TRUE, firearms = TRUE)
-	var/return_val = 0
+/datum/component/contraband/proc/get_contraband(atom/owner, var/list/return_val, nonfirearms = TRUE, firearms = TRUE)
+	if (!islist(return_val))
+		return FALSE
+	var/return_contraband = 0
 	if (nonfirearms && firearms)
-		return_val += HAS_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) : (src.contraband_level + src.carry_level)
-		return_val += GET_ATOM_PROPERTY(owner, PROP_MOVABLE_VISIBLE_CONTRABAND)
-		return_val += GET_ATOM_PROPERTY(owner, PROP_MOVABLE_VISIBLE_GUNS)
-		return return_val
+		return_contraband += HAS_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) : (src.contraband_level + src.carry_level)
+		return_contraband += GET_ATOM_PROPERTY(owner, PROP_MOVABLE_VISIBLE_CONTRABAND)
+		return_contraband += GET_ATOM_PROPERTY(owner, PROP_MOVABLE_VISIBLE_GUNS)
+		return_val += return_contraband
+		return TRUE
 	if (nonfirearms)
-		return_val += HAS_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) : src.contraband_level
-		return_val += GET_ATOM_PROPERTY(owner, PROP_MOVABLE_VISIBLE_CONTRABAND)
+		return_contraband += HAS_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) : src.contraband_level
+		return_contraband += GET_ATOM_PROPERTY(owner, PROP_MOVABLE_VISIBLE_CONTRABAND)
+		return_val += return_contraband
+		return TRUE
 	if (firearms)
 		if (src.carry_level)
-			return_val += HAS_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) : src.carry_level
-		return_val += GET_ATOM_PROPERTY(owner, PROP_MOVABLE_VISIBLE_GUNS)
-	return return_val
+			return_contraband += HAS_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(owner, PROP_MOVABLE_CONTRABAND_OVERRIDE) : src.carry_level
+		return_contraband += GET_ATOM_PROPERTY(owner, PROP_MOVABLE_VISIBLE_GUNS)
+		return_val += return_contraband
+		return TRUE
+	return FALSE
 
 /datum/component/contraband/proc/visible_contraband_changed(atom/owner)
 	if (ismovable(owner.loc))
@@ -56,13 +63,21 @@ TYPEINFO(/datum/component/contraband)
 			slot_mult = 0.5
 		else if (slot in list(SLOT_L_HAND, SLOT_R_HAND, SLOT_WEAR_MASK, SLOT_HEAD, SLOT_SHOES, SLOT_WEAR_SUIT))
 			slot_mult = 1
-	APPLY_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_GUNS, src, src.get_contraband(owner, FALSE, TRUE) * slot_mult)
-	APPLY_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_CONTRABAND, src, src.get_contraband(owner, TRUE, FALSE) * slot_mult)
+	var/list/contraband_returned = list()
+	src.get_contraband(owner, contraband_returned, FALSE, TRUE)
+	APPLY_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_GUNS, src, max(contraband_returned) * slot_mult)
+	contraband_returned = list()
+	src.get_contraband(owner, contraband_returned, TRUE, FALSE)
+	APPLY_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(contraband_returned) * slot_mult)
 	SEND_SIGNAL(user, COMSIG_MOVABLE_CONTRABAND_CHANGED)
 
 /datum/component/contraband/proc/picked_up(obj/item/owner, mob/user)
-	APPLY_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_GUNS, src, src.get_contraband(owner, FALSE, TRUE))
-	APPLY_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_CONTRABAND, src, src.get_contraband(owner, TRUE, FALSE))
+	var/list/contraband_returned = list()
+	src.get_contraband(owner, contraband_returned, FALSE, TRUE)
+	APPLY_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_GUNS, src, max(contraband_returned))
+	contraband_returned = list()
+	src.get_contraband(owner, contraband_returned, TRUE, FALSE)
+	APPLY_ATOM_PROPERTY(user, PROP_MOVABLE_VISIBLE_CONTRABAND, src, max(contraband_returned))
 	SEND_SIGNAL(user, COMSIG_MOVABLE_CONTRABAND_CHANGED)
 
 /datum/component/contraband/proc/removed(obj/item/owner, mob/user)
@@ -80,7 +95,7 @@ TYPEINFO(/datum/component/contraband)
 		if (ismob(I.loc))
 			var/mob/M = I.loc
 			src.removed(I, M)
-		UnregisterSignal(parent, COMSIG_ITEM_EQUIPPED)
-		UnregisterSignal(parent, COMSIG_ITEM_UNEQUIPPED)
+		UnregisterSignal(parent, COMSIG_ITEM_EQUIPPED_NOCHECK)
+		UnregisterSignal(parent, COMSIG_ITEM_UNEQUIPPED_NOCHECK)
 		UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
 

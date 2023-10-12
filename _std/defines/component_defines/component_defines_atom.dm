@@ -126,8 +126,12 @@
 	//	---- generic ----
 
 	/// When an item is equipped (user, slot)
-	#define COMSIG_ITEM_EQUIPPED "itm_equip"
+	#define COMSIG_ITEM_EQUIPPED_NOCHECK "itm_equip_nocheck"
 	/// When an item is unequipped (user)
+	#define COMSIG_ITEM_UNEQUIPPED_NOCHECK "itm_unequip_nocheck"
+	/// When an item is equipped and is considered equipped_in_slot (user, slot)
+	#define COMSIG_ITEM_EQUIPPED "itm_equip"
+	/// When an item is unequipped and was previously considered equipped_in_slot (user)
 	#define COMSIG_ITEM_UNEQUIPPED "itm_unequip"
 	/// When an item is picked up (user)
 	#define COMSIG_ITEM_PICKUP "itm_pickup"

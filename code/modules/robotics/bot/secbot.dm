@@ -921,7 +921,13 @@
 				perp_id = perp.get_id()
 
 			if(perp_id) //Checking for targets and permits
-				threatcount += SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access))
+				var/list/contraband_returned = list()
+				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access)))
+					threatcount += max(contraband_returned)
+			else
+				var/list/contraband_returned = list()
+				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+					threatcount += max(contraband_returned)
 
 		if(istype(perp.mutantrace, /datum/mutantrace/abomination))
 			threatcount += 5

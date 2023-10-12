@@ -3110,8 +3110,13 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					if(ckey(perp_id.registered) in target_names)
 						return 7
 
-					. += SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access))
-
+					var/list/contraband_returned = list()
+					if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(contraband_access in perp_id.access), !(weapon_access in perp_id.access)))
+						. += max(contraband_returned)
+				else
+					var/list/contraband_returned = list()
+					if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+						. += max(contraband_returned)
 				if(perp.mutantrace.jerk)
 //					if(istype(perp.mutantrace, /datum/mutantrace/zombie))
 //						return 5 //Zombies are bad news!
