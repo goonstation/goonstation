@@ -1,5 +1,45 @@
 
+(t)wed oct 11 23
+(u)tarmunora
+(e)⚖|C-Balance
+(+)Minor changes to harmful gene stability bonuses, blindness/shortsighted/x-ray mutually exclusive (though not nightvision)
+(u)Lord_Earthfire
+(p)16317
+(e)🪲⚖🔨🐁|C-Bug, C-Balance, A-Player-Actions, A-Critters
+(+)Activated securitrons cannot be pulled anymore.
+(+)Securitrons don't search for targets while in a locker. They still move out of they are patrolling/chasing someone.
+(u)glowbold
+(p)16391
+(e)💅📄|C-QoL, A-UI
+(+)You can re-open the end-game crew credits window by using the "Show Credits" verb.
+(t)tue oct 10 23
+(u)LeahTheTech
+(+)Flockdrones now gain substantially less resources from stacked items, but gain slightly more resources in general.
+(u)Azrun
+(p)16240
+(e)🆕🎨⚖🤖|C-Feature, C-Sprites, C-Balance, A-Silicons
+(*)AI's EyeBots now have reduced functionality when used across Z levels.
+(+)AI can now deploy to EyeBots to maintain some presence on the station.
+(t)mon oct 09 23
+(u)Flappybat
+(e)⚖|C-Balance
+(+)Scaling of number of traitors vs crew in the Traitor game mode has been adjusted to move the maximum of 5 traitors from a minimum of 35 to 40 crew. RP scaling unchanged.
 (t)sun oct 08 23
+(u)Flaborized
+(p)15922
+(e)🎨|C-Sprites
+(+)Autumn has come to the station, changing the plant life's hue and adding a few new items to the clothing booth for just the season. There's also a seasonal special clown costume in the clown hole crate!
+(u)tarmunora
+(e)⚖|C-Balance
+(+)Changeling morph arm DNA cost revision: claw arm 4->0, tendril arm 6->10
+(u)Mr. Moriarty
+(p)16185
+(e)🪲💅📄|C-Bug, C-QoL, A-UI
+(*)Added an antagonists tab to the end of round crew credits.
+(u)Kubius
+(p)16191
+(e)🆕🎨|C-Feature, C-Sprites
+(+)A new type of Scientific requisition is available. Its cash reward is lower, but it offers an item reward in return - and sometimes, it's one you can't get elsewhere.
 (u)MylieDaniels
 (p)16337
 (e)🎨📦|C-Sprites, A-Game-Objects

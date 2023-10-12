@@ -26,6 +26,8 @@ datum/mind
 
 	/// A list of every antagonist datum that we have.
 	var/list/datum/antagonist/antagonists = list()
+	/// A list of every antagonist datum subordinate to this mind.
+	var/list/datum/antagonist/subordinate/subordinate_antagonists = list()
 
 	// This used for dead/released/etc mindhacks and rogue robots we still want them to show up
 	// in the game over stats. It's a list because former mindhacks could also end up as an emagged

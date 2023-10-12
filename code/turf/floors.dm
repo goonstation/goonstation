@@ -1432,7 +1432,11 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/simulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
+	#ifdef AUTUMN
+	icon_state = "grass_autumn"
+	#else
 	icon_state = "grass"
+	#endif
 	mat_changename = 0
 	mat_changedesc = 0
 	step_material = "step_outdoors"
@@ -1474,7 +1478,11 @@ TYPEINFO(/turf/simulated/floor/grass)
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/grass/leafy
+#ifdef AUTUMN
+	icon_state = "grass_leafy_autumn"
+#else
 	icon_state = "grass_leafy"
+#endif
 
 /turf/simulated/floor/grass/random
 	New()
@@ -1489,7 +1497,11 @@ TYPEINFO(/turf/simulated/floor/grasstodirt)
 /turf/simulated/floor/grasstodirt
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
+	#ifdef AUTUMN
+	icon_state = "autumntodirt"
+	#else
 	icon_state = "grasstodirt"
+	#endif
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -1868,20 +1880,8 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		if(iswrenchingtool(C))
 			playsound(src, 'sound/items/Ratchet.ogg', 80, TRUE)
-		if(do_after(user, 3 SECONDS))
-			if(!src.reinforced)
-				return
-			var/obj/R1 = new /obj/item/rods(src)
-			var/obj/R2 = new /obj/item/rods(src)
-			if (material)
-				R1.setMaterial(material)
-				R2.setMaterial(material)
-			else
-				R1.setMaterial(getMaterial("steel"))
-				R2.setMaterial(getMaterial("steel"))
-			ReplaceWithFloor()
-			src.to_plating()
-			return
+		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /turf/simulated/floor/proc/remove_reinforcement, null, C.icon, C.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+		return
 
 	if(istype(C, /obj/item/rods))
 		if (!src.intact)
@@ -2058,6 +2058,20 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		src.setMaterial(I.material)
 	I.change_stack_amount(-2)
 	playsound(src, 'sound/items/Deconstruct.ogg', 80, TRUE)
+
+/turf/simulated/floor/proc/remove_reinforcement()
+	if(!src.reinforced)
+		return
+	var/obj/R1 = new /obj/item/rods(src)
+	var/obj/R2 = new /obj/item/rods(src)
+	if (material)
+		R1.setMaterial(material)
+		R2.setMaterial(material)
+	else
+		R1.setMaterial(getMaterial("steel"))
+		R2.setMaterial(getMaterial("steel"))
+	ReplaceWithFloor()
+	src.to_plating()
 
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
@@ -2367,9 +2381,14 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	name = "grass"
 	desc = "some leafy grass."
 	icon = 'icons/turf/outdoors.dmi'
+#ifdef AUTUMN
+	icon_state = "grass_leafy_autumn"
+	icon_state_edge = "leafy_edge_autumn"
+#else
 	icon_state = "grass_leafy"
-	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS - 1
 	icon_state_edge = "grass_leafyedge"
+#endif
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS - 1
 
 /turf/simulated/floor/auto/dirt
 	name = "dirt"

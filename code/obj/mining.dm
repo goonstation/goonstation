@@ -1069,7 +1069,8 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/asteroid)
 			src.color = src.stone_color
 		else
 			SPAWN(1)
-				space_overlays()
+				if(istype(src, /turf/simulated/wall/auto/asteroid))
+					space_overlays()
 
 	generate_worldgen()
 		. = ..()
@@ -1473,7 +1474,8 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 		worldgenCandidates += src
 		if(current_state > GAME_STATE_PREGAME)
 			SPAWN(1)
-				space_overlays()
+				if(istype(src, /turf/simulated/floor/plating/airless/asteroid))
+					space_overlays()
 
 	generate_worldgen()
 		. = ..()
@@ -1689,7 +1691,7 @@ TYPEINFO(/turf/simulated/floor/plating/airless/asteroid)
 			signal_event("icon_updated")
 		return
 
-obj/item/clothing/gloves/concussive
+/obj/item/clothing/gloves/concussive
 	name = "concussion gauntlets"
 	desc = "These gloves enable miners to punch through solid rock with their hands instead of using tools."
 	icon_state = "cgaunts"
@@ -2019,6 +2021,8 @@ TYPEINFO(/obj/item/cargotele)
 	icon_state = "cargotele"
 	/// Power cost per teleport
 	var/cost = 25
+	/// Length of action bar before teleport completes
+	var/teleport_delay = 3 SECONDS
 	/// Target pad we send cargo to. Make sure you're sending to the pad's loc and not the pad itself
 	var/obj/submachine/cargopad/target = null
 	/// Type of cell used in this
@@ -2111,7 +2115,7 @@ TYPEINFO(/obj/item/cargotele)
 
 		boutput(user, "<span class='notice'>Teleporting [cargo] to [src.target]...</span>")
 		playsound(user.loc, 'sound/machines/click.ogg', 50, 1)
-		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
+		SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, src.teleport_delay, PROC_REF(finish_teleport), list(cargo, user), null, null, null, null)
 		return TRUE
 
 
@@ -2148,6 +2152,13 @@ TYPEINFO(/obj/item/cargotele)
 				boutput(user, "<span class='notice'>Transfer successful.</span>")
 
 #undef SILICON_POWER_COST_MOD
+
+/obj/item/cargotele/efficient
+	name = "Hedron cargo transporter"
+	desc = "A device for teleporting crated goods. It's modified a bit from the standard design, and boasts improved efficiency and transport speed."
+	cost = 20
+	teleport_delay = 2 SECONDS
+	icon_state = "cargotelegreen"
 
 /obj/item/cargotele/traitor
 	cost = 15

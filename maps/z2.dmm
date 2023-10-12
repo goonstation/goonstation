@@ -19564,8 +19564,6 @@
 /obj/table/auto,
 /obj/item/device/multitool{
 	desc = "A pretty reliable brand, though you wouldn't guess it from the name.";
-	icon_state = "multitool_green";
-	item_state = "multitool";
 	name = "QUIRK multitool"
 	},
 /turf/unsimulated/floor/purple/side{
