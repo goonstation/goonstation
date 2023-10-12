@@ -1526,8 +1526,8 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 
 /obj/item/clothing/suit/space/industrial/nt_specialist
 	name = "NT industrial space armor"
-	item_state = "indus-nt"
-	icon_state = "indus-nt"
+	item_state = "indus_specialist"
+	icon_state = "indus_specialist"
 
 	setupProperties()
 		..()
