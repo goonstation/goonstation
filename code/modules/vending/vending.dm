@@ -3392,12 +3392,9 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		var/fluid_state = 0
 		for(var/datum/data/vending_product/player_product/R in src.player_list)
 			for(var/obj/item/product in R.contents)
-				if(istype(product, /obj/item/item_box/medical_patches) || istype(product, /obj/item/chem_pill_bottle))
-					for(var/obj/item/reagent_containers/container in product)
-						total_reagents += container.reagents.total_volume
-				if(istype(product, /obj/item/reagent_containers))
-					var/obj/item/reagent_containers/container = product
+				for(var/obj/item/reagent_containers/container in product)
 					total_reagents += container.reagents.total_volume
+				total_reagents += product.reagents?.total_volume
 
 		if(!total_reagents) //only show it as empty if it truly has Nothing at All, chemically
 			fluid_state = 0
