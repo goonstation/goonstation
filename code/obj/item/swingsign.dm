@@ -1,5 +1,3 @@
-#define CHARACTERLIMIT 350
-
 //1. /obj/swingsign
 //	Inherited procs
 //	tgui procs
@@ -21,7 +19,6 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	var/defaultdesc = "A foldable sign for writing annoucements or advertisements."
 	/// Text inserted before the actual message
 	var/descpreamble = "It says:<br><div style='text-align:center'>"// There's a /div in SetMessage. If changing the preamble remember to respect it.
-	var/secured = FALSE
 	/// Damage when thrown into a swing sign
 	var/maxcrashdamage = 5
 	/// Max length of the message
@@ -35,8 +32,9 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 
 	New()
 		..()
-		if(message)
-			setmessage(message)
+		//if(message)
+		//	setmessage(message)
+		//src.AddComponent(/datum/component/foldable, /obj/item/swingsignfolded)
 
 	proc/setmessage(var/newmessage)
 		message = newmessage
@@ -66,10 +64,10 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 
 	attack_hand(mob/user)
 		if (!isliving(user)) return
-		if(!secured)
+		if(anchored == UNANCHORED)
 			user.visible_message("<b>[user.name] folds [src].</b>")
 			playsound(src, 'sound/impact_sounds/Clock_slap.ogg',50,1)
-			fold()
+			fold()//
 		else
 			boutput(user, "<span alert='notice'>Sign is too tightly secured to fold!</span>")
 		return
@@ -79,14 +77,13 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 			ui_interact(user)
 			return
 		else if (isscrewingtool(W))
-			if(secured)
+			if(anchored == ANCHORED)
 				boutput(user, "<span class='notice'>You unsecure the swing sign.</span>")
 				anchored = UNANCHORED
 			else
 				boutput(user, "<span class='notice'>You secure the swing sign.</span>")
 				anchored = ANCHORED
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-			secured = !secured
 			return
 		..()
 
@@ -135,10 +132,12 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	if (.)
 		return
 	if(action == "save_message")
-		var/new_message = newline_html_encode(params["message"])//Encodes the message for safety and replaces all \n with <br> (text.dm)
-		setmessage(new_message)
+		var/new_message = params["message"]
+		if(length(new_message)>(src.maxmessagerows * src.maxmessagecols) + src.maxmessagerows - 1)//src.maxmessagerows - 1 - max possible amount of \n signs
+			new_message = copytext(new_message, 1, ((src.maxmessagerows) * src.maxmessagecols) + src.maxmessagerows)
+		setmessage(newline_html_encode(new_message))//Encodes the message for safety and replaces all \n with <br> (text.dm)
 		. = TRUE
-	update_icon()
+		UpdateIcon()
 
 
 //Heldable folded sign ==============
@@ -169,6 +168,7 @@ TYPEINFO(/obj/item/swingsignfolded)
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_LARGE)
 
+	///*
 	attack_self(mob/user as mob)
 		if(cant_drop == 1)
 			boutput(user, "You can't unfold the [src] when its attached to your arm!")
@@ -187,7 +187,7 @@ TYPEINFO(/obj/item/swingsignfolded)
 		user.drop_item()
 		qdel(src)
 		return
-
+	//*/
 	/// Basically copied this from stool.dm /obj/item/chair/folded/attack
 	attack(atom/target as mob, mob/user as mob, params)
 		var/oldcrit = src.stamina_crit_chance

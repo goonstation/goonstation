@@ -41,7 +41,8 @@ export const SwingSign = (props, context) => {
                 id="messageTA"
                 cols={maxCols}
                 rows={maxRows}
-                maxlength={maxCols * maxRows}
+                // \n's count as extra signs so to accomodate it we're giving extra maxRows-1 worth of space
+                maxlength={(maxCols * maxRows) + maxRows - 1}
                 style={textareaStyle}
                 placeholder="Your message goes here..."
                 onInput={(e) => {
