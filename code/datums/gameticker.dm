@@ -808,8 +808,6 @@ var/global/current_state = GAME_STATE_INVALID
 		for(var/mob/E in mobs)
 			if(E.client)
 				E.verbs += /mob/proc/show_credits
-				if (E.client.preferences.view_tickets)
-					E.showtickets()
 				if (E.client.preferences.view_score)
 					creds.ui_interact(E)
 				SPAWN(0) show_xp_summary(E.key, E)

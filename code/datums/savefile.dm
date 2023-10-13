@@ -117,7 +117,6 @@
 		F["tooltip"] << (src.tooltip_option ? src.tooltip_option : TOOLTIP_ALWAYS)
 		F["changelog"] << src.view_changelog
 		F["score"] << src.view_score
-		F["tickets"] << src.view_tickets
 		F["sounds"] << src.admin_music_volume
 		F["radio_sounds"] << src.radio_music_volume
 		F["clickbuffer"] << src.use_click_buffer
@@ -309,7 +308,6 @@
 		F["tooltip"] >> src.tooltip_option
 		F["changelog"] >> src.view_changelog
 		F["score"] >> src.view_score
-		F["tickets"] >> src.view_tickets
 		F["sounds"] >> src.admin_music_volume
 		F["radio_sounds"] >> src.radio_music_volume
 		F["clickbuffer"] >> src.use_click_buffer

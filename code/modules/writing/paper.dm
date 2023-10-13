@@ -234,22 +234,28 @@
 	var/T = ""
 	T = time_type + ": [time2text(world.timeofday, "DD MMM [CURRENT_SPACE_YEAR], hh:mm:ss")]"
 
-	// TODO: change this awful array name & stampAssetType
+	// TODO: change this awful array name & stampAssetType +1
 	var/stamp_assets = list(
+		"stamp-sprite-cap" = "[resource("images/tgui/stamp_icons/stamp-cap.png")]",
+		"stamp-sprite-ce" = "[resource("images/tgui/stamp_icons/stamp-ce.png")]",
+		"stamp-sprite-centcom" = "[resource("images/tgui/stamp_icons/stamp-centcom.png")]",
+		"stamp-sprite-chap" = "[resource("images/tgui/stamp_icons/stamp-chap.png")]",
+		"stamp-sprite-classified" = "[resource("images/tgui/stamp_icons/stamp-classified.png")]",
 		"stamp-sprite-clown" = "[resource("images/tgui/stamp_icons/stamp-clown.png")]",
 		"stamp-sprite-deny" = "[resource("images/tgui/stamp_icons/stamp-deny.png")]",
-		"stamp-sprite-ok" = "[resource("images/tgui/stamp_icons/stamp-ok.png")]",
+		"stamp-sprite-gtc" = "[resource("images/tgui/stamp_icons/stamp-gtc.png")]",
 		"stamp-sprite-hop" = "[resource("images/tgui/stamp_icons/stamp-hop.png")]",
-		"stamp-sprite-md" = "[resource("images/tgui/stamp_icons/stamp-md.png")]",
-		"stamp-sprite-ce" = "[resource("images/tgui/stamp_icons/stamp-ce.png")]",
 		"stamp-sprite-hos" = "[resource("images/tgui/stamp_icons/stamp-hos.png")]",
-		"stamp-sprite-rd" = "[resource("images/tgui/stamp_icons/stamp-rd.png")]",
-		"stamp-sprite-cap" = "[resource("images/tgui/stamp_icons/stamp-cap.png")]",
-		"stamp-sprite-qm" = "[resource("images/tgui/stamp_icons/stamp-qm.png")]",
 		"stamp-sprite-law" = "[resource("images/tgui/stamp_icons/stamp-law.png")]",
-		"stamp-sprite-chap" = "[resource("images/tgui/stamp_icons/stamp-chap.png")]",
+		"stamp-sprite-md" = "[resource("images/tgui/stamp_icons/stamp-md.png")]",
 		"stamp-sprite-mime" = "[resource("images/tgui/stamp_icons/stamp-mime.png")]",
-		"stamp-sprite-centcom" = "[resource("images/tgui/stamp_icons/stamp-centcom.png")]",
+		"stamp-sprite-ok" = "[resource("images/tgui/stamp_icons/stamp-ok.png")]",
+		"stamp-sprite-qm" = "[resource("images/tgui/stamp_icons/stamp-qm.png")]",
+		"stamp-sprite-rd" = "[resource("images/tgui/stamp_icons/stamp-rd.png")]",
+		"stamp-sprite-req-nt" = "[resource("images/tgui/stamp_icons/stamp-req-nt.png")]",
+		"stamp-sprite-stain-1" = "[resource("images/tgui/stamp_icons/stamp-stain-1.png")]",
+		"stamp-sprite-stain-2" = "[resource("images/tgui/stamp_icons/stamp-stain-2.png")]",
+		"stamp-sprite-stain-3" = "[resource("images/tgui/stamp_icons/stamp-stain-3.png")]",
 		"stamp-sprite-syndicate" = "[resource("images/tgui/stamp_icons/stamp-syndicate.png")]",
 		"stamp-sprite-void" = "[resource("images/tgui/stamp_icons/stamp-void.png")]",
 		"stamp-text-time" =  T,

@@ -49,7 +49,6 @@ datum/preferences
 	var/random_blood = 0
 	var/view_changelog = 1
 	var/view_score = 1
-	var/view_tickets = 1
 	var/admin_music_volume = 50
 	var/radio_music_volume = 10
 	var/use_click_buffer = 0
@@ -247,7 +246,6 @@ datum/preferences
 			"tguiLock" = src.tgui_lock,
 			"viewChangelog" = src.view_changelog,
 			"viewScore" = src.view_score,
-			"viewTickets" = src.view_tickets,
 			"useClickBuffer" = src.use_click_buffer,
 			"useWasd" = src.use_wasd,
 			"useAzerty" = src.use_azerty,
@@ -898,11 +896,6 @@ datum/preferences
 				src.profile_modified = TRUE
 				return TRUE
 
-			if ("update-viewTickets")
-				src.view_tickets = !src.view_tickets
-				src.profile_modified = TRUE
-				return TRUE
-
 			if ("update-useClickBuffer")
 				src.use_click_buffer = !src.use_click_buffer
 				src.profile_modified = TRUE
@@ -967,7 +960,6 @@ datum/preferences
 				listen_ooc = 1
 				view_changelog = 1
 				view_score = 1
-				view_tickets = 1
 				admin_music_volume = 50
 				radio_music_volume = 50
 				use_click_buffer = 0

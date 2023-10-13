@@ -5,7 +5,6 @@ var/datum/score_tracker/score_tracker
 	var/score_calculated = 0
 	var/final_score_all = 0
 	var/grade = "The Aristocrats!"
-	var/inspector_report = ""
 	// SECURITY DEPARTMENT
 	// var/score_crew_evacuation_rate = 0 save this for later to keep categories balanced
 	var/score_crew_survival_rate = 0
@@ -43,8 +42,6 @@ var/datum/score_tracker/score_tracker
 			return
 		// Even if its the end of the round it'd probably be nice to just calculate this once and let players grab that
 		// instead of calculating it again every time a player wants to look at the score
-
-		inspector_report = get_inspector_report()
 
 		// SECURITY DEPARTMENT SECTION
 		var/crew_count = 0
@@ -358,59 +355,3 @@ var/datum/score_tracker/score_tracker
 		if (beepsky_alive) 			. += "<B>Beepsky?:</B> Yes<BR>"
 
 		return jointext(., "")
-
-	proc/get_inspector_report()
-		. = list()
-		for_by_tcl(clipboard, /obj/item/clipboard/with_pen/inspector)
-			. += "<B>Inspector[clipboard.inspector_name ? " [clipboard.inspector_name]" : ""]'s report</B><BR><HR>"
-			for(var/obj/item/paper/paper in clipboard.contents)
-				//ignore blank untitled pages
-				if (paper.name == "paper" && !paper.info)
-					continue
-				if (paper.name != "paper")
-					. += "<B>[paper.name]</B>"
-				. += paper.info ? paper.info : "<BR><BR>"
-		return jointext(., "")
-
-/mob/proc/showtickets()
-	if(!length(data_core.tickets) && !length(data_core.fines) && !length(score_tracker.inspector_report)) return
-
-	if (!score_tracker.tickets_text)
-		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] generating showtickets text")
-
-		score_tracker.tickets_text = score_tracker.inspector_report
-
-		score_tracker.tickets_text += {"<B>Tickets</B><BR><HR>"}
-
-		if(data_core.tickets.len)
-			var/list/people_with_tickets = list()
-			for (var/datum/ticket/T in data_core.tickets)
-				people_with_tickets |= T.target
-
-			for(var/N in people_with_tickets)
-				score_tracker.tickets_text += "<b>[N]</b><br><br>"
-				for(var/datum/ticket/T in data_core.tickets)
-					if(T.target == N)
-						score_tracker.tickets_text += "[T.text]<br>"
-			score_tracker.tickets_text += "<br>"
-		else
-			score_tracker.tickets_text += "No tickets were issued!<br><br>"
-
-		score_tracker.tickets_text += {"<B>Fines</B><BR><HR>"}
-
-		if(data_core.fines.len)
-			var/list/people_with_fines = list()
-			for (var/datum/fine/F in data_core.fines)
-				people_with_fines |= F.target
-
-			for(var/N in people_with_fines)
-				score_tracker.tickets_text += "<b>[N]</b><br><br>"
-				for(var/datum/fine/F in data_core.fines)
-					if(F.target == N)
-						score_tracker.tickets_text += "[F.target]: [F.amount] credits<br>Reason: [F.reason]<br>[F.approver ? "[F.issuer != F.approver ? "Requested by: [F.issuer] - [F.issuer_job]<br>Approved by: [F.approver] - [F.approver_job]" : "Issued by: [F.approver] - [F.approver_job]"]" : "Not Approved"]<br>Paid: [F.paid_amount] credits<br><br>"
-		else
-			score_tracker.tickets_text += "No fines were issued!<br><br>"
-		logTheThing(LOG_DEBUG, null, "Zamujasa/SHOWTICKETS: [world.timeofday] done")
-
-	src.Browse(score_tracker.tickets_text, "window=tickets;size=500x650")
-	return
