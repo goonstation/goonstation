@@ -434,12 +434,12 @@
 /datum/crewCredits/proc/generate_heisenhat_data()
 	. = list()
 	.["name"] = "Heisenbee's Hat"
-	.["type"] = "itemList"
 	var/found_hb = FALSE
 	var/tier = world.load_intra_round_value("heisenbee_tier")
 	for(var/obj/critter/domestic_bee/heisenbee/HB in by_cat[TR_CAT_PETS])
 		var/obj/item/hat = HB.original_hat
 		if (hat && !hat.disposed)
+			.["type"] = "itemList"
 			if(hat.loc != HB)
 				var/atom/movable/AM = hat.loc
 				while(istype(AM) && !istype(AM, /mob))
@@ -475,6 +475,7 @@
 					"name" = "No hat yet",
 				))
 		else if (hat)
+			.["type"] = "itemList"
 			.["value"] = list(list(
 				"name" = "\[DESTROYED!\] \[🐝 MURDERED!\]",
 				"iconBase64" = icon2base64(getFlatIcon(hat, no_anim=TRUE)),
