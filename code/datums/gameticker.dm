@@ -595,6 +595,8 @@ var/global/current_state = GAME_STATE_INVALID
 	score_tracker.calculate_score()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] score calculated")
 
+	src.creds = new /datum/crewCredits
+
 	var/final_score = score_tracker.final_score_all
 	if (final_score > 200)
 		final_score = 200
@@ -803,28 +805,15 @@ var/global/current_state = GAME_STATE_INVALID
 	logTheThing(LOG_DEBUG, null, "Power Generation: [json_encode(station_power_generation)]")
 
 	SPAWN(0)
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")
-		creds = new /datum/crewCredits
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
 		for(var/mob/E in mobs)
 			if(E.client)
 				E.verbs += /mob/proc/show_credits
 				if (E.client.preferences.view_tickets)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending tickets to [E.ckey]")
 					E.showtickets()
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done sending tickets to [E.ckey]")
-
 				if (E.client.preferences.view_score)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending crew credits to [E.ckey]")
 					creds.ui_interact(E)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done crew credits to [E.ckey]")
 				SPAWN(0) show_xp_summary(E.key, E)
-
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done showing tickets/scores")
-
 	logTheThing(LOG_DEBUG, null, "Did credits")
-
-	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] finished spacebux updates")
 
 	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
 	for_by_tcl(P, /datum/player)

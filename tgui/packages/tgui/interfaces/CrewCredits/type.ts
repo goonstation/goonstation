@@ -92,9 +92,28 @@ interface PaperData {
   info: string;
 }
 
+export interface ScoreTabData {
+  victory_headline: string;
+  victory_body: string;
+  total_score: string;
+  grade: string;
+  score_groups: ScoreCategoryProps[];
+}
+export interface ScoreCategoryProps {
+  title: string;
+  entries: ScoreItemProps[];
+}
+
+export interface ScoreItemProps {
+  name: string;
+  type: string;
+  value: string;
+}
+
 export enum CrewCreditsTabKeys {
   Crew,
   Antagonists,
+  Score,
   Citations,
   Report,
 }

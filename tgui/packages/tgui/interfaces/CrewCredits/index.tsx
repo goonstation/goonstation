@@ -9,11 +9,14 @@
 import { useLocalState } from '../../backend';
 import { Stack, Tabs } from '../../components';
 import { Window } from '../../layouts';
+import { CrewCreditsTabKeys } from './type';
 import { CrewTab } from './CrewTab';
 import { AntagonistsTab } from './AntagonistsTab';
-import { CrewCreditsTabKeys } from './type';
+import { ScoreTab } from './ScoreTab';
 import { CitationsTab } from './CitationsTab';
 import { ReportTab } from './ReportTab';
+
+
 
 export const CrewCredits = (props, context) => {
   const [menu, setMenu] = useLocalState(context, 'menu', CrewCreditsTabKeys.Crew);
@@ -35,6 +38,11 @@ export const CrewCredits = (props, context) => {
                 Antagonists
               </Tabs.Tab>
               <Tabs.Tab
+                selected={menu === CrewCreditsTabKeys.Score}
+                onClick={() => setMenu(CrewCreditsTabKeys.Score)}>
+                Station Score
+              </Tabs.Tab>
+              <Tabs.Tab
                 selected={menu === CrewCreditsTabKeys.Citations}
                 onClick={() => setMenu(CrewCreditsTabKeys.Citations)}>
                 Tickets/Fines
@@ -44,13 +52,16 @@ export const CrewCredits = (props, context) => {
                 onClick={() => setMenu(CrewCreditsTabKeys.Report)}>
                 Inspector&apos;s Report
               </Tabs.Tab>
+
             </Tabs>
           </Stack.Item>
           <Stack.Item>
             {menu === CrewCreditsTabKeys.Crew && <CrewTab />}
             {menu === CrewCreditsTabKeys.Antagonists && <AntagonistsTab />}
+            {menu === CrewCreditsTabKeys.Score && <ScoreTab />}
             {menu === CrewCreditsTabKeys.Citations && <CitationsTab />}
             {menu === CrewCreditsTabKeys.Report && <ReportTab />}
+
           </Stack.Item>
         </Stack>
       </Window.Content>
