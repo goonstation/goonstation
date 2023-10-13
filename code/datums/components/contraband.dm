@@ -23,9 +23,9 @@ TYPEINFO(/datum/component/contraband)
 		if (ismob(I.loc))
 			var/mob/M = I.loc
 			src.equipped(I, M, I.equipped_in_slot)
-		RegisterSignal(AM, COMSIG_ITEM_EQUIPPED_NOCHECK, PROC_REF(equipped))
+		RegisterSignal(AM, COMSIG_ITEM_EQUIPPED, PROC_REF(equipped))
 		RegisterSignal(AM, COMSIG_ITEM_PICKUP, PROC_REF(picked_up))
-		RegisterSignals(AM, list(COMSIG_ITEM_UNEQUIPPED_NOCHECK, COMSIG_ITEM_DROPPED), PROC_REF(removed))
+		RegisterSignals(AM, list(COMSIG_ITEM_UNEQUIPPED, COMSIG_ITEM_DROPPED), PROC_REF(removed))
 	src.visible_contraband_changed(AM)
 
 /datum/component/contraband/proc/get_contraband(atom/owner, var/list/return_val, nonfirearms = TRUE, firearms = TRUE)
@@ -95,7 +95,7 @@ TYPEINFO(/datum/component/contraband)
 		if (ismob(I.loc))
 			var/mob/M = I.loc
 			src.removed(I, M)
-		UnregisterSignal(parent, COMSIG_ITEM_EQUIPPED_NOCHECK)
-		UnregisterSignal(parent, COMSIG_ITEM_UNEQUIPPED_NOCHECK)
+		UnregisterSignal(parent, COMSIG_ITEM_EQUIPPED)
+		UnregisterSignal(parent, COMSIG_ITEM_UNEQUIPPED)
 		UnregisterSignal(parent, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
 
