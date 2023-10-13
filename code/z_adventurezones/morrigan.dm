@@ -3266,12 +3266,14 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 	default_magazine = /obj/item/ammo/bullets/morriganmed
 
 	New()
-		new default_magazine(new /datum/projectile/syringefilled/morrigan/medsmg)
+		ammo = new default_magazine
 		projectiles = list(current_projectile, new /datum/projectile/syringefilled/morrigan/medsmgheal)
+		set_current_projectile(new/datum/projectile/syringefilled/morrigan/medsmgheal)
 		..()
-
 	update_icon()
-		if (istype_exac0.t(current_projectile, /datum/projectile/syringefilled/morrigan/medsmgheal))
+		if (istype_exact(ammo, /datum/projectile/syringefilled/morrigan/medsmgheal))
+			ammo = new /obj/item/ammo/bullets/morriganmedheal
+			set_current_projectile(new/datum/projectile/syringefilled/morrigan/medsmgheal)
 			icon_state = "medsmgdmg"
 		else
 			icon_state = "medsmgheal"
