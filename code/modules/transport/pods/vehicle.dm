@@ -729,7 +729,7 @@
 				sec_system.run_component()
 			if(src.engine && engine.active)
 				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
-				var/datum/gas_mixture/consumed = src.fueltank.remove_air(usage)
+				var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
 				var/toxins = consumed?.toxins
 				if(isnull(toxins))
 					toxins = 0

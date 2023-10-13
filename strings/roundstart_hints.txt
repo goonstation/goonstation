@@ -1,14 +1,14 @@
 You can step over crates by click-dragging yourself onto them.
-Hold SPACE and click on a tile to throw your current item there
+Hold SPACE and click on a tile to throw your current item there.
 Hold ALT and click on something to examine it.
 Hold CTRL and click on a nearby object to start pulling it.
-Hit CTRL-F to fart. All the cool kids are doing it.
+Hit F to fart. All the cool kids are doing it.
 If you suspect someone's being shit, adminhelp it with F1.
 Admins can always see adminhelps no matter whether they are currently on the server or not.
 Admins and mentors may not be able to give you feedback about certain subjects, e.g. identities of traitors.
 Anyone who intentionally put "Hitler" in their name is adminhelpable.
 Don't forget your PDA has a built-in flashlight.
-Lie down on the ground and hit Z to RESIST if you're on fire to try and extinguish it.
+If you're on fire, hit Z to RESIST and stop, drop, and roll to try and extinguish it.
 Make sure the AI is actually alive before asking it for help.
 You can pass by people when both parties are on Help intent.
 Dying is not uncommon. Don't get frustrated if it happens to you.
@@ -46,7 +46,7 @@ The medical computer can list a person's traits; no more accidental puritan clon
 Want to help? Geneticists might have an interest in checking your genes for cool stuff! Hop down to medical research.
 Are you done for and yet your body just keeps on living? Use the 'succumb' command to hasten your demise so you can start observing.
 Looking for a job? Go to the Head of Personnel's desk for a job change, or ask over the radio if you can be of help.
-New around here? Botany might be a good starting job, check the wiki page or ask your coworkers for assistance.
+New around here? Botany might be a good starting job; check the wiki page or ask your coworkers for assistance.
 Bored? Come to the Bar and have a chat with other crewmembers over a drink.
 While pulling an object, you can move it to the side by clicking adjacent tiles.
 Firearms are a very rare sight on station; if you want to defend yourself then you'll need to get creative!
@@ -59,7 +59,7 @@ The AI is watching, you better behave!
 You can often get a sentence reduced or even negated entirely by just cooperating with Security.
 We were all new once, be patient and guide new players in the right direction!
 You can use a sponge to extract the contents of a bathtub.
-You can interact with things that are diagonal to you, even if they're blocked by something on both cardinal sides.
+You can often interact with things that are diagonal to you, even if they're blocked by something on both cardinal sides.
 Light cyborg arms still work in bot construction. Mass-produce amusing ducks for a limitless source of toys, and a limitless source of frustration from everyone else in a 20-mile radius!
 You can put pizza in the material processor. Make a weapon and eat the evidence, the perfect crime!
 There's more records to play than just the ones in the radio station. Go explore!
@@ -89,7 +89,7 @@ You can tell if the shuttle's been called and how long it has to arrive or leave
 Doctors can't heal you if you keep running away from them. Stay still and they'll patch you up in no time!
 Never trust pills you find on the floor.
 Looking for a quick way to earn cash? Try the slot machines that are usually near the bar!
-If you have a health implant, medical staff will know exactly when and where you (inevitably) die. They can also teleport to your corpse using a hand teleporter.
+If you have a health implant, medical staff will know when you die, after a brief delay.
 Merely getting close to lava will melt your body if you're not wearing protective clothing.
 Helpful mutations can be sold by Genetics via the gene booth. Stop in from time to time to see what they have!
 The key to a long lifespan is meticulous preparation before the crisis.
@@ -118,7 +118,7 @@ Never be afraid to ask others for help, whether in game or through mentorhelp (F
 Completing traitor objectives isn't mandatory. Try to come up with your own goals and gimmicks.
 Being arrested isn't the end of the world.
 A talkative antagonist is fun for everyone.
-By default, you can hold SHIFT (SPACE on TG layout) while moving to sprint, burning stamina to push through slows.
+By default, you can hold SHIFT (SPACE on TG layout) while moving to sprint, burning stamina to push through slowness.
 If a purple mouse runs up to you and squeaks, click it with an empty hand! They're a Mentor Mouse and can provide you useful information!
 When used in conjunction, synaptizine and atropine together in a patient in critical condition will greatly help stave off death!
 Bug reports don't have to be about anything major. Feel free to report minor things like typos, grammatical errors and similar.

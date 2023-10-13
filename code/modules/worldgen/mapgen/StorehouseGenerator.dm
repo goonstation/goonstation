@@ -12,6 +12,7 @@
 
 	var/floor_path = /turf/simulated/floor/industrial
 	var/wall_path = /turf/simulated/wall/auto/supernorn/material/mauxite
+	var/door_path = /obj/machinery/door/airlock/pyro/classic
 
 	New()
 		. = ..()
@@ -145,8 +146,6 @@
 				src.cell_grid[T.x][T.y] = FLOOR_ONLY
 
 /datum/map_generator/storehouse_generator/generate_terrain(list/turfs, reuse_seed, flags)
-	var/cell_value
-
 	var/min_x = world.maxx
 	var/min_y = world.maxy
 	var/max_x = 0
@@ -176,43 +175,175 @@
 			generate_map()
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
-		cell_value = cell_grid[T.x][T.y]
+		assign_turf(T, generate_stuff)
+		LAGCHECK(LAG_MED)
+
+/datum/map_generator/storehouse_generator/proc/assign_turf(turf/T, generate_stuff)
+	var/cell_value = cell_grid[T.x][T.y]
+
+	switch(cell_value)
+		if(FLOOR)
+			T.ReplaceWith(floor_path)
+			if((T.x % 5 == 0) && (T.y % 5 == 0) && prob(95))
+				if(prob(80))
+					new /obj/machinery/light/small/floor/harsh/very(T)
+				else
+					new /obj/machinery/light/small/floor/broken(T)
+			if(generate_stuff && prob(10))
+				make_cleanable(/obj/decal/cleanable/dirt,T)
+			if(generate_stuff && prob(2))
+				var/rarity = rand(1, 100)
+				switch(rarity)
+					if(1 to 10)
+						new /obj/storage/crate/loot/puzzle(T)
+					if(11 to 90)
+						new /obj/storage/crate(T)
+					if(91 to 100)
+						new /obj/storage/crate/wooden/(T)
+
+		if(FLOOR_ONLY)
+			T.ReplaceWith(floor_path)
+
+		if(WALL)
+			T.ReplaceWith(wall_path)
+
+		if(DOOR)
+			T.ReplaceWith(floor_path)
+			var/obj/door = new door_path(T)
+			if(cell_grid[T.x-1][T.y] == WALL)
+				door.dir = NORTH
+			else
+				door.dir = WEST
+
+/datum/map_generator/storehouse_generator/meaty
+	floor_path = /turf/unsimulated/floor/setpieces/bloodfloor
+	wall_path = /turf/unsimulated/wall/auto/adventure/meat
+	door_path = /obj/machinery/door/airlock/pyro/classic
+
+	var/datum/spatial_hashmap/manual/meatlight_map
+	var/datum/spatial_hashmap/manual/meatfriends_map
+
+	var/list/meatier
+	var/list/stomach
+
+	New()
+		..()
+		meatlight_map = new(cs=15)
+		meatlight_map.update_cooldown = INFINITY
+		meatfriends_map = new(cs=15)
+		meatfriends_map.update_cooldown = INFINITY
+		if(!meatier)
+			meatier = rustg_dbp_generate("[rand(1,420)]", "5", "15", "[world.maxx]", "0.001", "0.9")
+		if(!stomach)
+			stomach = rustg_worley_generate("17", "10", "30", "[world.maxx]", "5", "10")
+
+	generate_terrain(list/turfs, reuse_seed, flags)
+		. = ..()
+		qdel(meatlight_map)
+		qdel(meatfriends_map)
+
+	assign_turf(turf/T, generate_stuff)
+		var/cell_value = cell_grid[T.x][T.y]
+		var/meaty = FALSE
+		var/stomach_goop = FALSE
+		var/index = T.x * world.maxx + T.y
+		if(index <= length(meatier))
+			meaty = text2num(meatier[T.x * world.maxx + T.y])
+		if(index <= length(stomach))
+			stomach_goop = text2num(stomach[T.x * world.maxx + T.y])
 
 		switch(cell_value)
 			if(FLOOR)
-				T.ReplaceWith(floor_path)
-				if((T.x % 5 == 0) && (T.y % 5 == 0) && prob(95))
-					if(prob(80))
-						new /obj/machinery/light/small/floor/harsh/very(T)
+				if(meaty && stomach_goop)
+					T.ReplaceWith(/turf/unsimulated/floor/setpieces/bloodfloor/stomach)
+					new /obj/stomachacid(T)
+				else
+					T.ReplaceWith(floor_path)
+					if(meaty)
+						T.icon_state = "bloodfloor_2"
+
+				if(!generate_stuff || !meatlight_map || !meatfriends_map)
+					return
+				if(prob(50))
+					// Half the tiles should be empty
+					//noop
+				else if(prob(66) && !length(meatlight_map?.get_nearby(T,7)))
+					var/atom/light
+					if(prob(95))
+						light = new/obj/map/light/meatland(T)
 					else
-						new /obj/machinery/light/small/floor/broken(T)
-				if(generate_stuff && prob(10))
-					make_cleanable(/obj/decal/cleanable/dirt,T)
-				if(generate_stuff && prob(2))
+						light = new/obj/meatlight(T)
+					meatlight_map.add_weakref(light)
+				else if(prob(5 + (meaty*12)))
+					if(meatfriends_map && !length(meatfriends_map?.get_nearby(T,5)))
+						var/atom/meat_friend
+
+						if(prob(20))
+							meat_friend = new /mob/living/critter/blobman/meat(T)
+						else
+							if(prob(90))
+								meat_friend = new /obj/item/mine/gibs/armed(T)
+							else
+								meat_friend = new /obj/item/mine/gibs(T)
+						meatfriends_map.add_weakref(meat_friend)
+
+				else if(generate_stuff && prob(2))
 					var/rarity = rand(1, 100)
 					switch(rarity)
-						if(1 to 10)
+						if(1 to 8)
 							new /obj/storage/crate/loot/puzzle(T)
-						if(11 to 90)
-							new /obj/storage/crate(T)
-						if(91 to 100)
-							new /obj/storage/crate/wooden/(T)
+						else
+							make_cleanable(/obj/decal/cleanable/blood/gibs, T)
 
 			if(FLOOR_ONLY)
 				T.ReplaceWith(floor_path)
+				if(meaty)
+					T.icon_state = "bloodfloor_2"
+				else if(prob(60))
+					T.icon_state = "bloodfloor_3"
+
+				if(generate_stuff && prob(10))
+					if(meatlight_map && !length(meatlight_map?.get_nearby(T,6)))
+						var/atom/light = new/obj/meatlight(T)
+						meatlight_map.add_weakref(light)
+				else if(generate_stuff && prob(1))
+					var/rarity = rand(1, 100)
+
+					switch(rarity)
+						if(1 to 8)
+							meatfriends_map?.add_weakref(new /obj/item/mine/gibs/armed(T))
+						if(10 to 20)
+							meatfriends_map?.add_weakref(new /obj/item/mine/gibs(T))
+						else
+							make_cleanable(/obj/decal/cleanable/blood/gibs, T)
 
 			if(WALL)
-				T.ReplaceWith(wall_path)
+				if(meaty)
+					if(prob(3))
+						T.ReplaceWith(/turf/unsimulated/wall/auto/adventure/meat/eyes)
+					else
+						T.ReplaceWith(/turf/unsimulated/wall/auto/adventure/meat/meatier)
+				else
+					T.ReplaceWith(wall_path)
 
 			if(DOOR)
 				T.ReplaceWith(floor_path)
-				var/obj/door = new /obj/machinery/door/airlock/pyro/classic(T)
+				if(meaty)
+					T.icon_state = "bloodfloor_2"
+
+				var/obj/door
+				if(meaty)
+					door = new /obj/machinery/door/unpowered/martian/meat(T)
+				else
+					if(!generate_stuff || prob(80))
+						door = new door_path(T)
+					else
+						door = new /obj/critter/monster_door(T)
+
 				if(cell_grid[T.x-1][T.y] == WALL)
 					door.dir = NORTH
 				else
 					door.dir = WEST
-
-		LAGCHECK(LAG_MED)
 
 #undef FLOOR
 #undef WALL

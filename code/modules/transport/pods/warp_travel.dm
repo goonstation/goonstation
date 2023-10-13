@@ -133,6 +133,12 @@
 		sleep(30 SECONDS)
 		qdel(src)
 
+/obj/warp_portal/Click(location, control, params)
+	if (isobserver(usr))
+		usr.set_loc(get_turf(src.target))
+		return
+	..()
+
 /obj/warp_portal/proc/teleport(atom/movable/M as mob|obj)
 	if(istype(M, /obj/effects)) //sparks don't teleport
 		return

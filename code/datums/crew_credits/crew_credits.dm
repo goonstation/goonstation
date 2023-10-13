@@ -3,6 +3,7 @@
 
 	var/list/crew_tab_data
 	var/list/antagonist_tab_data
+	var/list/score_tab_data
 
 /datum/crewCredits/New()
 	. = ..()
@@ -20,6 +21,13 @@
 		ANTAGONIST_TAB_GAME_MODE = capitalize(ticker.mode.name),
 		ANTAGONIST_TAB_VERBOSE_DATA = list(),
 		ANTAGONIST_TAB_SUCCINCT_DATA = list(),
+	)
+	src.score_tab_data = list(
+		SCORE_TAB_SECTION_SECURITY = list(),
+		SCORE_TAB_SECTION_SCIENCE = list(),
+		SCORE_TAB_SECTION_ENGINEERING = list(),
+		SCORE_TAB_SECTION_CIVILIAN = list(),
+		SCORE_TAB_SECTION_ESCAPEE = list(),
 	)
 
 	src.generate_crew_credits()
@@ -57,6 +65,7 @@
 		src.generate_antagonist_data(mind)
 
 #endif
+	src.generate_score_data()
 
 	src.crew_credits_data = list(
 		// Crew Tab Data:
@@ -99,6 +108,34 @@
 		"game_mode" = src.antagonist_tab_data[ANTAGONIST_TAB_GAME_MODE],
 		"verbose_antagonist_data" = src.antagonist_tab_data[ANTAGONIST_TAB_VERBOSE_DATA],
 		"succinct_antagonist_data" = src.antagonist_tab_data[ANTAGONIST_TAB_SUCCINCT_DATA],
+
+		// Score Tab Data:
+		"total_score" = score_tab_data[SCORE_TAB_TOTAL_SCORE],
+		"grade" = score_tab_data[SCORE_TAB_GRADE],
+		"victory_headline" = score_tab_data[SCORE_TAB_VICTORY_HEADLINE],
+		"victory_body" = score_tab_data[SCORE_TAB_VICTORY_BODY],
+		"score_groups" = list(
+			list(
+				"title" = "Security Department",
+				"entries" = src.score_tab_data[SCORE_TAB_SECTION_SECURITY],
+			),
+			list(
+				"title" = "Engineering Department",
+				"entries" = src.score_tab_data[SCORE_TAB_SECTION_ENGINEERING],
+			),
+			list(
+				"title" = "Research Department",
+				"entries" = src.score_tab_data[SCORE_TAB_SECTION_SCIENCE],
+			),
+			list(
+				"title" = "Civilian Department",
+				"entries" = src.score_tab_data[SCORE_TAB_SECTION_CIVILIAN],
+			),
+			list(
+				"title" = "Statistics",
+				"entries" = src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE],
+			),
+		),
 	)
 
 /// For a specified mind, creates an entry in `crew_tab_data` containing the applicable information.
@@ -254,10 +291,202 @@
 	data["antagonist_roles"] = english_list(antagonist_display_names)
 	data["real_name"] = mind.current.real_name
 	data["player"] = mind.displayed_key
-	data["job_role"] = mind.assigned_role || "N/A"
+	data["job_role"] = (mind.assigned_role && mind.assigned_role != "MODE") ? mind.assigned_role : "N/A" //stupid internal "MODE" job
 	data["status"] = status
 	data["objectives"] = objectives
 	data["antagonist_statistics"] = antagonist_statistics
 	data["subordinate_antagonists"] = subordinate_antagonists
 
 	src.antagonist_tab_data[ANTAGONIST_TAB_VERBOSE_DATA] += list(data)
+
+/// Station score
+/datum/crewCredits/proc/generate_score_data()
+	if (score_tracker.score_calculated == 0)
+		return
+
+
+	src.score_tab_data[SCORE_TAB_VICTORY_HEADLINE] = ticker.mode.victory_headline()
+	src.score_tab_data[SCORE_TAB_VICTORY_BODY] = ticker.mode.victory_body()
+	src.score_tab_data[SCORE_TAB_TOTAL_SCORE] = round(score_tracker.final_score_all)
+	src.score_tab_data[SCORE_TAB_GRADE] = "[score_tracker.grade]"
+
+	src.score_tab_data[SCORE_TAB_SECTION_SECURITY] = list(
+		list(
+			"name" = "Crew Survival Rate",
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_crew_survival_rate),
+		),
+		list(
+			"name" = "Enemy Failure Rate",
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_enemy_failure_rate),
+		),
+		list(
+			"name" = "Total Department Score",
+			"type" = "colorPercent",
+			"value" =  round(score_tracker.final_score_sec),
+		)
+	)
+
+	src.score_tab_data[SCORE_TAB_SECTION_ENGINEERING] = list(
+		list(
+			"name" = "Power Generated",
+			"value" = "[engineering_notation(score_tracker.power_generated)]W",
+		),
+		list(
+			"name" = "Station Structural Integrity",
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_structural_damage),
+		),
+		list(
+			"name" = "Station Areas Powered",
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_power_outages),
+		),
+		list(
+			"name" = "Total Department Score",
+			"type" = "colorPercent",
+			"value" = round(score_tracker.final_score_eng),
+		),
+	)
+
+	src.score_tab_data[SCORE_TAB_SECTION_SCIENCE] = list(
+		list(
+			"name" = "Artifacts correctly analyzed",
+			"value" = "[round(score_tracker.score_artifact_analysis)]% ([score_tracker.artifacts_correctly_analyzed]/[score_tracker.artifacts_analyzed])"
+		),
+		list(
+			"name" = "Total Department Score",
+			"type" = "colorPercent",
+			"value" = round(score_tracker.final_score_res),
+		),
+	)
+
+	src.score_tab_data[SCORE_TAB_SECTION_CIVILIAN] = list(
+		list(
+			"name" = "Overall Station Cleanliness",
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_cleanliness),
+		),
+		list(
+			"name" = "Station Profitability",
+			"type" = "colorPercent",
+			"value" = round(score_tracker.score_expenses),
+		),
+		list(
+			"name" = "Total Department Score",
+			"type" = "colorPercent",
+			"value" = round(score_tracker.final_score_civ),
+		),
+	)
+
+	if (score_tracker.richest_escapee)
+		src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE] += list(list(
+			"name" = "Richest Escapee",
+			"value" = "[score_tracker.richest_escapee.real_name] : [score_tracker.richest_total][CREDIT_SIGN]"
+		))
+
+	if (score_tracker.most_damaged_escapee)
+		src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE] += list(list(
+			"name" = "Most Damaged Escapee",
+			"value" = "[score_tracker.most_damaged_escapee.real_name] : [score_tracker.most_damaged_escapee.get_damage()]%"
+		))
+
+	if (length(score_tracker.command_pets_escaped))
+		var/list/command_pet_data = list()
+		for (var/atom/A in score_tracker.command_pets_escaped)
+			command_pet_data += list(list(
+				"iconBase64" = "[icon2base64(getFlatIcon(A, no_anim=TRUE))]",
+				"name" = "[A.name]",
+			))
+		src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE] += list(list(
+				"name" = "Command Pets Escaped",
+				"type" = "itemList",
+				"value" = command_pet_data
+		))
+
+	if (length(score_tracker.pets_escaped))
+		var/list/other_pet_data = list()
+		for (var/atom/A in score_tracker.pets_escaped)
+			other_pet_data += list(list(
+				"iconBase64" = "[icon2base64(getFlatIcon(A, no_anim=TRUE))]",
+				"name" = "[A.name]",
+			))
+		src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE] += list(list(
+				"name" = "Other Pets Escaped",
+				"type" = "itemList",
+				"value" = other_pet_data
+		))
+
+	if (score_tracker.acula_blood)
+		src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE] += list(list(
+			"name" = "Dr. Acula Blood Total",
+			"value" =  "[score_tracker.acula_blood]u"
+		))
+
+	if (score_tracker.beepsky_alive)
+		src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE] += list(list(
+			"name" = "Beepsky?",
+			"value" = "Yes"
+		))
+	src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE] += list(generate_heisenhat_data())
+
+/datum/crewCredits/proc/generate_heisenhat_data()
+	. = list()
+	.["name"] = "Heisenbee's Hat"
+	var/found_hb = FALSE
+	var/tier = world.load_intra_round_value("heisenbee_tier")
+	for(var/obj/critter/domestic_bee/heisenbee/HB in by_cat[TR_CAT_PETS])
+		var/obj/item/hat = HB.original_hat
+		if (hat && !hat.disposed)
+			.["type"] = "itemList"
+			if(hat.loc != HB)
+				var/atom/movable/AM = hat.loc
+				while(istype(AM) && !istype(AM, /mob))
+					AM = AM.loc
+				var/mob/M = AM
+				.["value"] = list(list(
+					"name" = "[hat] (tier [HB.original_tier]) \[STOLEN[istype(M) ? " BY [M]": ""]\]",
+					"iconBase64" = icon2base64(getFlatIcon(hat, no_anim=TRUE)),
+				))
+				if(HB.hat)
+					var/dead = HB.alive ? "" : "(dead) "
+					.["value"] += list(list(
+						"name" = "someone put [HB.hat] on [dead][HB] but that doesn't count",
+						"iconBase64" = icon2base64(getFlatIcon(HB, no_anim=TRUE)),
+					))
+			else if(!HB.alive)
+				.["value"] = list(list(
+					"name" = "[hat] (tier [HB.original_tier]) \[🐝 MURDERED!\]",
+					"iconBase64" = icon2base64(getFlatIcon(HB, no_anim=TRUE)),
+				))
+			else
+				.["value"] = list(list(
+					"name" = "[hat] (tier [HB.original_tier])",
+					"iconBase64" = icon2base64(getFlatIcon(HB, no_anim=TRUE)),
+				))
+		else if(HB.alive)
+			if(hat)
+				.["value"] = list(list(
+					"name" = "\[DESTROYED!\]"
+				))
+			else
+				.["value"] = list(list(
+					"name" = "No hat yet",
+				))
+		else if (hat)
+			.["type"] = "itemList"
+			.["value"] = list(list(
+				"name" = "\[DESTROYED!\] \[🐝 MURDERED!\]",
+				"iconBase64" = icon2base64(getFlatIcon(hat, no_anim=TRUE)),
+			))
+		else
+			.["value"] = list(list(
+				"name" = "No hat yet. \[🐝 MURDERED!\]",
+			))
+
+		found_hb = TRUE
+		break
+
+	if(!found_hb)
+		.["value"] = "Heisenbee is missing, [tier ? "but the hat is safe at tier [tier]" : "and has no hat"]."

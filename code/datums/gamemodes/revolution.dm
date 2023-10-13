@@ -260,23 +260,29 @@
 	return 1
 
 /datum/game_mode/revolution/victory_msg()
+	return "<span class='alert'><FONT size = 3><B>[src.victory_headline()]</B></FONT><br>[src.victory_body()]</span>"
+
+/datum/game_mode/revolution/victory_headline()
 	switch (finished)
 		if(1)
-			return "<span class='alert'><FONT size = 3><B> The heads of staff were killed or abandoned the [station_or_ship()]! The revolutionaries win!</B></FONT></span>"
+			return "Revolutionary victory!"
 		if(2)
-			return "<span class='alert'><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>"
+			return "Crew victory!"
 		if(3)
-			return "<span class='alert'><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>"
+			return "CentCom victory!"
+
+/datum/game_mode/revolution/victory_body()
+	switch (finished)
+		if(1)
+			return "The heads of staff were killed or abandoned the [station_or_ship()]!"
+		if(2)
+			return "The heads of staff managed to stop the revolution!"
+		if(3)
+			return "Everyone was terminated!"
 
 /datum/game_mode/revolution/declare_completion()
-
 	var/text = ""
-	if(finished == 1)
-		boutput(world, "<span class='alert'><FONT size = 3><B> The heads of staff were killed or abandoned the [station_or_ship()]! The revolutionaries win!</B></FONT></span>")
-	else if(finished == 2)
-		boutput(world, "<span class='alert'><FONT size = 3><B> The heads of staff managed to stop the revolution!</B></FONT></span>")
-	else if(finished == 3)
-		boutput(world, "<span class='alert'><FONT size = 3><B> Everyone was terminated! CentCom wins!</B></FONT></span>")
+	boutput(world, src.victory_msg())
 
 #ifdef DATALOGGER
 	var/total = world.load_intra_round_value("rev_total")

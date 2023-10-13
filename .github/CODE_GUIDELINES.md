@@ -453,7 +453,7 @@ make sure it isn't being used as a verb somewhere else.
 # Useful Things
 
 ## VSCode Debugger
-//TODO
+You can check out a guide on using the debugger in the guide located in the [Developer Guide](https://hackmd.io/@goonstation/dev#How-to-use-the-VS-Code-Debugger).
 
 ## Debugging Overlays
 
