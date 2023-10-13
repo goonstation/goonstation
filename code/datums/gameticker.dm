@@ -19,7 +19,7 @@ var/global/current_state = GAME_STATE_INVALID
 
 	var/datum/ai_rack_manager/ai_law_rack_manager = new /datum/ai_rack_manager()
 
-	var/datum/crewCredits/creds = null
+	var/datum/crewCredits/round_stats = null
 
 	var/skull_key_assigned = 0
 
@@ -595,7 +595,7 @@ var/global/current_state = GAME_STATE_INVALID
 	score_tracker.calculate_score()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] score calculated")
 
-	src.creds = new /datum/crewCredits
+	src.round_stats = new /datum/crewCredits
 
 	var/final_score = score_tracker.final_score_all
 	if (final_score > 200)
@@ -807,9 +807,9 @@ var/global/current_state = GAME_STATE_INVALID
 	SPAWN(0)
 		for(var/mob/E in mobs)
 			if(E.client)
-				E.verbs += /mob/proc/show_credits
+				E.verbs += /mob/proc/show_round_statistics
 				if (E.client.preferences.view_score)
-					creds.ui_interact(E)
+					round_stats.ui_interact(E)
 				SPAWN(0) show_xp_summary(E.key, E)
 	logTheThing(LOG_DEBUG, null, "Did credits")
 

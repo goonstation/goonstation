@@ -1517,15 +1517,15 @@
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
 
-/mob/proc/show_credits()
-	set name = "Show Credits"
-	set desc = "Open the crew credits window"
+/mob/proc/show_round_statistics()
+	set name = "Show Round Statistics"
+	set desc = "Open the round statistics menu"
 	set category = "Commands"
 
-	if(isnull(ticker.creds))
-		boutput(src, "<span class='notice'>The credits have not been generated yet!</span>")
+	if(isnull(ticker.round_stats))
+		boutput(src, "<span class='notice'>The round statistics have not been generated yet!</span>")
 		return
-	ticker.creds.ui_interact(src)
+	ticker.round_stats.ui_interact(src)
 
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
