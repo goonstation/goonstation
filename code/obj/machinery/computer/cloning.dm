@@ -106,7 +106,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		return TRUE
 	// check if there's anyone we can clone
 	for(var/datum/db_record/R as anything in src.records)
-		var/mob/selected = find_ghost_by_key(R["ckey"])
+		var/datum/mind/mind = R["mind"]
+		var/mob/selected = mind?.current
 		if (!selected || (selected.mind && selected.mind.get_player()?.dnr))
 			continue
 		// else there's someone we can clone
@@ -270,7 +271,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		else
 			show_message("Error: Mental interface failure.", "warning")
 			return
-	var/datum/db_record/R = find_record(ckey(subjMind.key))
+	var/datum/db_record/R = find_record_by_mind(subjMind)
 	if (!isnull(R))
 		show_message("Subject already in database.", "info")
 		return R
@@ -310,11 +311,20 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	return R
 
 //Find a specific record by key.
-/obj/machinery/computer/cloning/proc/find_record(var/find_key)
+/obj/machinery/computer/cloning/proc/find_record_by_id(var/id)
 	RETURN_TYPE(/datum/db_record)
 	var/selected_record = null
 	for(var/datum/db_record/R as anything in src.records)
-		if (R["ckey"] == find_key)
+		if (R["id"] == id)
+			selected_record = R
+			break
+	return selected_record
+
+/obj/machinery/computer/cloning/proc/find_record_by_mind(datum/mind/M)
+	RETURN_TYPE(/datum/db_record)
+	var/selected_record = null
+	for(var/datum/db_record/R as anything in src.records)
+		if (R["mind"] == M)
 			selected_record = R
 			break
 	return selected_record
@@ -324,8 +334,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 /obj/machinery/computer/cloning/proc/clone_someone()
 	for (var/datum/db_record/record in src.records)
-		var/mob/ghost = find_ghost_by_key(record["ckey"])
-		if (ghost?.mind && !ghost.mind.get_player()?.dnr)
+		var/datum/mind/mind = record["mind"]
+		if (eligible_to_clone(mind) && !mind.get_player()?.dnr)
 			src.clone_record(record)
 			return
 
@@ -368,13 +378,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		show_message("Abnormal reading from cloning pod.", "danger")
 		return
 
-	var/mob/selected = find_ghost_by_key(C["ckey"])
+	var/datum/mind/mind = C["mind"]
+	var/mob/selected = eligible_to_clone(mind)
 
 	if (!selected)
 		show_message("Can't clone: Unable to locate mind.", "danger")
 		return
 
-	if (selected.mind && selected.mind.get_player()?.dnr)
+	if (mind.get_player()?.dnr)
 		// leave the goddamn dnr ghosts alone
 		show_message("Cannot clone: Subject has set DNR.", "danger")
 		return
@@ -417,6 +428,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		JOB_XP(usr, "Medical Doctor", 15)
 		src.menu = 1
 		src.records_scan()
+
+proc/eligible_to_clone(var/datum/mind/mind)
+	if (!mind)
+		return null
+
+	if (!mind.current)
+		return null
+
+	var/mob/M = mind.current
+
+	if (!M.client)
+		return null
+
+	if(istype(M, /mob/dead/target_observer))
+		var/mob/dead/target_observer/tobserver = M
+		if(!tobserver.is_respawnable)
+			return null
+	if(iswraith(M))
+		return null
+	if(isdead(M) || isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
+		return M
+	return null
 
 /// find a ghost mob (or a ghost respawned as critter in vr/afterlife bar)
 proc/find_ghost_by_key(var/find_key)
@@ -746,7 +779,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			if(!src.allowed(usr))
 				show_message("You do not have permission to delete records.", "danger")
 				return TRUE
-			var/selected_record =	find_record(params["ckey"])
+			var/selected_record =	find_record_by_id(params["id"])
 			if(selected_record)
 				logTheThing(LOG_STATION, usr, "deletes the cloning record [selected_record["name"]] for player [selected_record["ckey"]] at [log_loc(src)].")
 				src.records.Remove(selected_record)
@@ -766,9 +799,9 @@ TYPEINFO(/obj/machinery/clone_scanner)
 		if("clone")
 			if (!cloning_with_records)
 				return
-			var/ckey = params["ckey"]
-			if(ckey)
-				clone_record(find_record(ckey))
+			var/id = params["id"]
+			if(id)
+				clone_record(find_record_by_id(id))
 				. = TRUE
 		if ("scanAndClone")
 			if (cloning_with_records)
@@ -791,14 +824,14 @@ TYPEINFO(/obj/machinery/clone_scanner)
 					playsound(src.loc, sound_ping, 50, 1)
 				. = TRUE
 		if("saveToDisk")
-			var/ckey = params["ckey"]
-			var/datum/db_record/selected_record = find_record(ckey)
+			var/id = params["id"]
+			var/datum/db_record/selected_record = find_record_by_id(id)
 			if ((isnull(src.diskette)) || (src.diskette.read_only) || (isnull(selected_record)))
 				show_message("Save error.", "warning")
 				. = TRUE
 
 			for (var/datum/computer/file/clone/R in src.diskette.root.contents)
-				if (R.fields["ckey"] == selected_record.get_field("ckey"))
+				if (R.fields["id"] == selected_record.get_field("id"))
 					show_message("Record already exists on disk.", "info")
 					. = TRUE
 
@@ -823,7 +856,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			var/loaded = 0
 
 			for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
-				if (!find_record(cloneRecord.fields["ckey"]))
+				if (!find_record_by_id(cloneRecord.fields["id"]))
 					var/datum/db_record/R = new(null, cloneRecord.fields.Copy())
 					src.records += R
 					loaded++
@@ -842,7 +875,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 				return
 			var/loaded = FALSE
 			for(var/datum/computer/file/clone/cloneRecord in src.diskette.root.contents)
-				var/mob/ghost = find_ghost_by_key(cloneRecord.fields["ckey"])
+				var/mob/ghost = eligible_to_clone(cloneRecord.fields["mind"])
 				if (isnull(ghost))
 					show_message("Load error.", "warning")
 					continue
@@ -873,15 +906,15 @@ TYPEINFO(/obj/machinery/clone_scanner)
 				src.mindwipe = !src.mindwipe
 				. = TRUE
 		if("editNote")
-			var/ckey = params["ckey"]
-			var/datum/db_record/selected_record = find_record(ckey)
+			var/id = params["id"]
+			var/datum/db_record/selected_record = find_record_by_id(id)
 			var/note_text = tgui_input_text(usr, "Edit note of [selected_record["name"]]", "Edit note", selected_record["note"])
 			if (note_text)
 				selected_record["note"] = note_text
 			. = TRUE
 		if ("deleteNote")
-			var/ckey = params["ckey"]
-			var/datum/db_record/selected_record = find_record(ckey)
+			var/id = params["id"]
+			var/datum/db_record/selected_record = find_record_by_id(id)
 			selected_record["note"] = null
 			. = TRUE
 
@@ -918,7 +951,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			"scannerLocked" = src.scanner.locked,
 		)
 		if(!isnull(src.scanner?.occupant?.mind))
-			. += list("occupantScanned" = !isnull(find_record(ckey(src.scanner.occupant.mind.key))))
+			. += list("occupantScanned" = !isnull(find_record_by_mind(src.scanner.occupant.mind)))
 
 	if(!isnull(src.diskette))
 		. += list("diskReadOnly" = src.diskette.read_only)
@@ -932,7 +965,7 @@ TYPEINFO(/obj/machinery/clone_scanner)
 			currentHealth = implant.getHealthList()
 		if(src.diskette) // checks if saved to disk
 			for (var/datum/computer/file/clone/F in src.diskette.root.contents)
-				if(F.fields["ckey"] == r["ckey"])
+				if(F.fields["id"] == r["id"])
 					saved = TRUE
 
 		recordsTemp.Add(list(list(
