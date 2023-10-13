@@ -17,7 +17,15 @@ type TeleConsoleData = {
   panel_open: boolean
   padNum: number
   max_bookmarks: number
-  bookmarks: [];
+  bookmarks: BookmarkData[];
+}
+
+type BookmarkData = {
+  ref: string
+  name: string
+  X: number
+  Y: number
+  Z: number
 }
 
 export const TeleConsole = (_props, context) => {
