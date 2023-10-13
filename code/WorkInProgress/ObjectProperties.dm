@@ -591,6 +591,24 @@ to say if there's demand for that.
 		return "[propVal] movement delay"
 	ASSOCIATE_ATOM_PROPERTY(PROP_MOB_EQUIPMENT_MOVESPEED)
 
+/datum/objectProperty/equipment/movement/in_hand
+	name = "Speed"
+	id = "carried_movespeed"
+	desc = "Modifies movement speed." //Value is additional movement speed delay. (how much slower - negative value for speed increase)
+
+	onEquipped(obj/item/owner, mob/user, value, slot)
+		if(slot != SLOT_L_HAND && slot != SLOT_R_HAND)
+			return 0
+		. = ..()
+
+	onUnequipped(obj/item/owner, mob/user, value)
+		if(owner.equipped_in_slot != SLOT_L_HAND && owner.equipped_in_slot != SLOT_R_HAND)
+			return 0
+		. = ..()
+
+	getTooltipDesc(var/obj/propOwner, var/propVal)
+		return "[propVal] movement delay - 0 when worn."
+
 /datum/objectProperty/equipment/movement/space
 	name = "Speed"
 	id = "space_movespeed"
