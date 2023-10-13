@@ -13,7 +13,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	icon_state = "blank"
 	throwforce = 10
 	density = 1
-	custom_suicide = 1
+	custom_suicide = TRUE
 	/// Stored message
 	var/message = ""
 	var/defaultdesc = "A foldable sign for writing annoucements or advertisements."
