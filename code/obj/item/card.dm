@@ -161,7 +161,7 @@ TYPEINFO(/obj/item/card/emag)
 	New()
 		..()
 		access = get_access("Captain")
-		src.AddComponent(/datum/component/log_item_pickup, "Captain")
+		src.AddComponent(/datum/component/log_item_pickup, TRUE, "Captain", FALSE)
 
 //ABSTRACT_TYPE(/obj/item/card/id/pod_wars)
 /obj/item/card/id/pod_wars

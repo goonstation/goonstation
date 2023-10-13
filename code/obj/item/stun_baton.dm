@@ -57,6 +57,7 @@ TYPEINFO(/obj/item/baton)
 		if(cell_type)
 			cell = new cell_type
 		AddComponent(/datum/component/cell_holder, cell, rechargable, INFINITY, can_swap_cell)
+		src.AddComponent(/datum/component/log_item_pickup, FALSE, null, FALSE)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		processing_items |= src
 		src.UpdateIcon()

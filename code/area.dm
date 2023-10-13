@@ -3747,10 +3747,10 @@ ABSTRACT_TYPE(/area/station/ai_monitored/storage/)
 		..()
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_AUTH, PROC_REF(authorize))
 		RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_ARMORY_UNAUTH, PROC_REF(unauthorize))
-		SPAWN(5 SECONDS)
+		SPAWN(5 SECONDS) // This delay should allow for armory items to be created and log component for every pickup to be added to guns
 			var/area/A = locate(/area/station/ai_monitored/armory)
 			for(var/obj/item/O in A)
-				O.AddComponent(/datum/component/log_item_pickup, "")
+				O.AddComponent(/datum/component/log_item_pickup, TRUE, "", FALSE)
 
 	Entered(atom/movable/A, atom/oldloc)
 		. = ..()
