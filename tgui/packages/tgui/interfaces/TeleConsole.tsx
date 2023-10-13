@@ -6,7 +6,7 @@
  */
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
-import { Box, Button, Icon, Section } from '../components';
+import { Box, Button, Icon, Input, Section } from '../components';
 
 type TeleConsoleData = {
   xtarget: number
@@ -30,100 +30,11 @@ export const TeleConsole = (_props, context) => {
       width={400}
       height={500}>
       <Window.Content textAlign="center">
-        <Section>
-          {host_id ? (
-            <Box color="green">
-              <Box>
-                <Icon name="check" /> Connected to host!
-              </Box>
-              <Button
-                icon="power-off"
-                content="RESET CONNECTION"
-                color="red"
-                onClick={() => act('reconnect', { value: 2 })}
-              />
-            </Box>
-          ) : (
-            <Box color="red">
-              <Box>
-                <Icon name="warning" /> No connection to host!
-              </Box>
-              <Button
-                icon="power-off"
-                content="Retry"
-                color="green"
-                onClick={() => act('reconnect', { value: 1 })}
-              />
-            </Box>
-          )}
-        </Section>
+        <ConnectionSection />
         <Section>
           {readout}
         </Section>
-        <Section>
-          {"Taget Coordinates: "}
-          <Box>
-            {"X: "}
-            <Button
-              icon="backward"
-              onClick={() => act('setX', { value: xtarget - 10 })}
-            />
-            <Button
-              icon="caret-left"
-              onClick={() => act('setX', { value: xtarget - 1 })}
-            />
-            <Button.Input
-              content={xtarget}
-              onCommit={(e, value) => act('setX', { value: value })}
-            />
-            <Button
-              icon="caret-right"
-              onClick={() => act('setX', { value: xtarget + 1 })}
-            />
-            <Button
-              icon="forward"
-              onClick={() => act('setX', { value: xtarget + 10 })}
-            />
-          </Box>
-          <Box>
-            {"Y: "}
-            <Button
-              icon="backward"
-              onClick={() => act('setY', { value: ytarget - 10 })}
-            />
-            <Button
-              icon="caret-left"
-              onClick={() => act('setY', { value: ytarget - 1 })}
-            />
-            <Button.Input
-              content={ytarget}
-              onCommit={(e, value) => act('setY', { value: value })}
-            />
-            <Button
-              icon="caret-right"
-              onClick={() => act('setY', { value: ytarget + 1 })}
-            />
-            <Button
-              icon="forward"
-              onClick={() => act('setY', { value: ytarget + 10 })}
-            />
-          </Box>
-          <Box>
-            {"Z: "}
-            <Button
-              icon="caret-left"
-              onClick={() => act('setZ', { value: ztarget - 1 })}
-            />
-            <Button.Input
-              content={ztarget}
-              onCommit={(e, value) => act('setZ', { value: value })}
-            />
-            <Button
-              icon="caret-right"
-              onClick={() => act('setZ', { value: ztarget + 1 })}
-            />
-          </Box>
-        </Section>
+        <CoordinatesSection />
         <Section>
           <Box>
             <Button
@@ -156,7 +67,7 @@ export const TeleConsole = (_props, context) => {
             disabled={!host_id}
           />
         </Section>
-        <Section width="80%" mx="auto">
+        <Section>
           {"Bookmarks: "}
           {bookmarks.map(mark => {
             return (
@@ -166,7 +77,7 @@ export const TeleConsole = (_props, context) => {
                   onClick={() => act("restorebookmark", { value: mark["ref"] })}
                   content={mark["name"]}
                 />
-                {mark["xyz"]}
+                {`(${mark["X"]}/${mark["Y"]}/${mark["Z"]})`}
                 <Button
                   icon="trash"
                   color="red"
@@ -175,13 +86,15 @@ export const TeleConsole = (_props, context) => {
               </Box>
             );
           })}
+          {!!(bookmarks.length < max_bookmarks) && ((
+            <Box>
+              <Input
+                onEnter={(e, value) => act('addbookmark', { value: value })}
+              />
+              {`(${xtarget}/${ytarget}/${ztarget})`}
+            </Box>
+          ))}
 
-          <Button
-            color="green"
-            icon="add"
-            onClick={() => act("addbookmark")}
-            disabled={bookmarks.length >= max_bookmarks}
-          />
         </Section>
         {!!panel_open && (
           <Section>
@@ -197,5 +110,112 @@ export const TeleConsole = (_props, context) => {
         )}
       </Window.Content>
     </Window>
+  );
+};
+
+export const ConnectionSection = (_props, context) => {
+  const { act, data } = useBackend<TeleConsoleData>(context);
+  const { host_id } = data;
+
+  return (
+    <Section>
+      {host_id ? (
+        <Box color="green">
+          <Box>
+            <Icon name="check" /> Connected to host!
+          </Box>
+          <Button
+            icon="power-off"
+            content="RESET CONNECTION"
+            color="red"
+            onClick={() => act('reconnect', { value: 2 })}
+          />
+        </Box>
+      ) : (
+        <Box color="red">
+          <Box>
+            <Icon name="warning" /> No connection to host!
+          </Box>
+          <Button
+            icon="power-off"
+            content="Retry"
+            color="green"
+            onClick={() => act('reconnect', { value: 1 })}
+          />
+        </Box>
+      )}
+    </Section>
+  );
+};
+
+export const CoordinatesSection = (_props, context) => {
+  const { act, data } = useBackend<TeleConsoleData>(context);
+  const { xtarget, ytarget, ztarget } = data;
+
+  return (
+    <Section>
+      {"Taget Coordinates: "}
+      <Box>
+        {"X: "}
+        <Button
+          icon="backward"
+          onClick={() => act('setX', { value: xtarget - 10 })}
+        />
+        <Button
+          icon="caret-left"
+          onClick={() => act('setX', { value: xtarget - 1 })}
+        />
+        <Button.Input
+          content={xtarget}
+          onCommit={(e, value) => act('setX', { value: value })}
+        />
+        <Button
+          icon="caret-right"
+          onClick={() => act('setX', { value: xtarget + 1 })}
+        />
+        <Button
+          icon="forward"
+          onClick={() => act('setX', { value: xtarget + 10 })}
+        />
+      </Box>
+      <Box>
+        {"Y: "}
+        <Button
+          icon="backward"
+          onClick={() => act('setY', { value: ytarget - 10 })}
+        />
+        <Button
+          icon="caret-left"
+          onClick={() => act('setY', { value: ytarget - 1 })}
+        />
+        <Button.Input
+          content={ytarget}
+          onCommit={(e, value) => act('setY', { value: value })}
+        />
+        <Button
+          icon="caret-right"
+          onClick={() => act('setY', { value: ytarget + 1 })}
+        />
+        <Button
+          icon="forward"
+          onClick={() => act('setY', { value: ytarget + 10 })}
+        />
+      </Box>
+      <Box>
+        {"Z: "}
+        <Button
+          icon="caret-left"
+          onClick={() => act('setZ', { value: ztarget - 1 })}
+        />
+        <Button.Input
+          content={ztarget}
+          onCommit={(e, value) => act('setZ', { value: value })}
+        />
+        <Button
+          icon="caret-right"
+          onClick={() => act('setZ', { value: ztarget + 1 })}
+        />
+      </Box>
+    </Section>
   );
 };

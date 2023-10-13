@@ -984,20 +984,22 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			"readout" = readout,
 			"panel_open" = panel_open,
 			"padNum" = padNum,
-			"max_bookmarks" = max_bookmarks
+			"max_bookmarks" = max_bookmarks,
+			"bookmarks" = list()
 		)
 
-		for (var/datum/teleporter_bookmark/b in bookmarks)
-			.["bookmarks"] += list(list(
-				"ref" = ref(b),
-				"name" = b.name,
-				"xyz" = "([b.x]/[b.y]/[b.z]) "
-			))
-		if (!length(bookmarks)) //this is needed to make TGUI clear out the list
+		if (length(bookmarks) > 0)
 			.["bookmarks"] = list()
+			for (var/datum/teleporter_bookmark/b as anything in bookmarks)
+				.["bookmarks"] += list(list(
+					"ref" = ref(b),
+					"name" = b.name,
+					"X" = b.x,
+					"Y" = b.y,
+					"Z" = b.z,
+					))
 
 	ui_act(action, params)
-		//. = TRUE means the action was handeled
 		. = ..()
 		if (.)
 			return .
@@ -1086,7 +1088,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 					boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 					return
 				var/datum/teleporter_bookmark/bm = new
-				var/title = tgui_input_text(usr, "Enter name:", "Name", "New Bookmark")
+				var/title = params["value"]
 				title = copytext(adminscrub(title), 1, 128)
 				if(!length(title)) return
 				bm.name = title
