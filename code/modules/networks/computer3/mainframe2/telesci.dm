@@ -998,7 +998,6 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				))
 
 	ui_act(action, params)
-		//. = TRUE means the action was handeled
 		. = ..()
 		if (.)
 			return .
