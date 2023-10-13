@@ -46,8 +46,8 @@
 #define IS_JETPACK					(1<<8)
 /// doesn't need to be worn to appear in the 'get_equipped_items' list and apply itemproperties (protections resistances etc)! for stuff like shields
 #define EQUIPPED_WHILE_HELD			(1<<9)
-/// return early out of equipped/unequipped, unless in SLOT_L_HAND or SLOT_R_HAND (i.e.: if EQUIPPED_WHILE_HELD)
-#define NOT_EQUIPPED_WHEN_WORN		(1<<10)
+/// unused flag
+//#define C_FLAG_UNUSED		(1<<10)
 /// if we currently have a grab (or by extention, a block) attached to us
 #define HAS_GRAB_EQUIP				(1<<11)
 /// whether or not we should show extra tooltip info about blocking with this item
@@ -96,3 +96,7 @@
 #define LACES_TIED 1
 #define LACES_CUT 2
 #define LACES_NONE -1
+
+//glove side for iconstate stuff
+#define GLOVE_HAS_LEFT 1
+#define GLOVE_HAS_RIGHT 2

@@ -1,3 +1,32 @@
+
+(t)thu oct 12 23
+(u)LeahTheTech
+(*)Clicking on most types of portal as a ghost will now teleport you through them.
+(u)Flaborized
+(p)16405
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(+)The dispensary interlink dispenser in medical will now visually show how many units of chems it has in it, the more blue the screen the more meds it has to vend.
+(t)wed oct 11 23
+(u)tarmunora
+(e)⚖|C-Balance
+(+)Minor changes to harmful gene stability bonuses, blindness/shortsighted/x-ray mutually exclusive (though not nightvision)
+(u)Lord_Earthfire
+(p)16317
+(e)🪲⚖🔨🐁|C-Bug, C-Balance, A-Player-Actions, A-Critters
+(+)Activated securitrons cannot be pulled anymore.
+(+)Securitrons don't search for targets while in a locker. They still move out of they are patrolling/chasing someone.
+(u)glowbold
+(p)16391
+(e)💅📄|C-QoL, A-UI
+(+)You can re-open the end-game crew credits window by using the "Show Credits" verb.
+(t)tue oct 10 23
+(u)LeahTheTech
+(+)Flockdrones now gain substantially less resources from stacked items, but gain slightly more resources in general.
+(u)Azrun
+(p)16240
+(e)🆕🎨⚖🤖|C-Feature, C-Sprites, C-Balance, A-Silicons
+(*)AI's EyeBots now have reduced functionality when used across Z levels.
+(+)AI can now deploy to EyeBots to maintain some presence on the station.
 (t)mon oct 09 23
 (u)Flappybat
 (e)⚖|C-Balance
