@@ -1,8 +1,14 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author Valtsu0 (https://github.com/Valtsu0)
+ * @license ISC
+ */
 import { useBackend } from '../backend';
 import { Window } from '../layouts';
 import { Box, Button, Icon, Section } from '../components';
 
-type TeleConsoleParams = {
+type TeleConsoleData = {
   xtarget: number
   ytarget: number
   ztarget: number
@@ -15,7 +21,7 @@ type TeleConsoleParams = {
 }
 
 export const TeleConsole = (_props, context) => {
-  const { act, data } = useBackend<TeleConsoleParams>(context);
+  const { act, data } = useBackend<TeleConsoleData>(context);
   const { xtarget, ytarget, ztarget, host_id, bookmarks, readout, panel_open, padNum, max_bookmarks } = data;
 
   return (
@@ -24,7 +30,7 @@ export const TeleConsole = (_props, context) => {
       width={400}
       height={500}>
       <Window.Content textAlign="center">
-        <Section width="80%" mx="auto">
+        <Section>
           {host_id ? (
             <Box color="green">
               <Box>
@@ -51,11 +57,11 @@ export const TeleConsole = (_props, context) => {
             </Box>
           )}
         </Section>
-        <Section width="80%" mx="auto">
+        <Section>
           {readout}
         </Section>
-        <Section width="80%" mx="auto">
-          {"Taget Cordinates: "}
+        <Section>
+          {"Taget Coordinates: "}
           <Box>
             {"X: "}
             <Button
@@ -118,7 +124,7 @@ export const TeleConsole = (_props, context) => {
             />
           </Box>
         </Section>
-        <Section width="80%" mx="auto">
+        <Section>
           <Box>
             <Button
               color="green"
@@ -152,12 +158,6 @@ export const TeleConsole = (_props, context) => {
         </Section>
         <Section width="80%" mx="auto">
           {"Bookmarks: "}
-          <Button
-            color="green"
-            icon="add"
-            onClick={() => act("addbookmark")}
-            disabled={bookmarks.length >= max_bookmarks}
-          />
           {bookmarks.map(mark => {
             return (
               <Box key={mark["ref"]}>
@@ -175,21 +175,26 @@ export const TeleConsole = (_props, context) => {
               </Box>
             );
           })}
+
+          <Button
+            color="green"
+            icon="add"
+            onClick={() => act("addbookmark")}
+            disabled={bookmarks.length >= max_bookmarks}
+          />
         </Section>
-        {panel_open ? (
-          <Section width="80%" mx="auto">
+        {!!panel_open && (
+          <Section>
+            <Box>Open panel:</Box>
             <Box>
-              {"Open panel:"}
-            </Box>
-            <Box>
-              {"Linked pad number:"}
+              Linked pad number:
               <Button
                 content={padNum}
                 onClick={() => act("setpad")}
               />
             </Box>
           </Section>
-        ) : null}
+        )}
       </Window.Content>
     </Window>
   );

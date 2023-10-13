@@ -985,91 +985,103 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			"panel_open" = panel_open,
 			"padNum" = padNum,
 			"max_bookmarks" = max_bookmarks
-			"bookmarks" = null,
 		)
 
-		if (length(bookmarks) > 0)
+		for (var/datum/teleporter_bookmark/b in bookmarks)
+			.["bookmarks"] += list(list(
+				"ref" = ref(b),
+				"name" = b.name,
+				"xyz" = "([b.x]/[b.y]/[b.z]) "
+			))
+		if (!length(bookmarks)) //this is needed to make TGUI clear out the list
 			.["bookmarks"] = list()
-			for (var/datum/teleporter_bookmark/b as anything in bookmarks)
-				.["bookmarks"] += list(list(
-					"ref" = ref(b),
-					"name" = b.name,
-					"xyz" = "([b.x]/[b.y]/[b.z]) "
-				))
 
 	ui_act(action, params)
+		//. = TRUE means the action was handeled
 		. = ..()
 		if (.)
 			return .
 
-		. = TRUE
-
-		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-
 		switch(action)
 			if ("setX")
 				xtarget = clamp(text2num(params["value"]), 0, 500)
-				coord_update_flag = 1
+				coord_update_flag = TRUE
+				. = TRUE
 			if ("setY")
 				ytarget = clamp(text2num(params["value"]), 0, 500)
-				coord_update_flag = 1
+				coord_update_flag = TRUE
+				. = TRUE
 			if ("setZ")
 				ztarget = clamp(text2num(params["value"]), 0, 14)
-				coord_update_flag = 1
+				coord_update_flag = TRUE
+				. = TRUE
 			if ("send")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
 					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
 					return
 
 				if (coord_update_flag)
-					coord_update_flag = 0
+					coord_update_flag = FALSE
 					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
 
 				message_host("command=teleman&args=-p [padNum] send")
+				. = TRUE
 			if ("receive")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
 					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
 					return
 
 				if (coord_update_flag)
-					coord_update_flag = 0
+					coord_update_flag = TRUE
 					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
 
 				message_host("command=teleman&args=-p [padNum] receive")
+				. = TRUE
 			if ("portal")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
 					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
 					return
 
 				if (coord_update_flag)
-					coord_update_flag = 0
+					coord_update_flag = TRUE
 					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
 
 				message_host("command=teleman&args=-p [padNum] portal toggle")
+				. = TRUE
 			if ("scan")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (!host_id)
 					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
 					return
 
 				if (coord_update_flag)
-					coord_update_flag = 0
+					coord_update_flag = TRUE
 					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
 
 				message_host("command=teleman&args=-p [padNum] scan")
+				. = TRUE
 			if ("restorebookmark")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
 				if(!bm) return
 				xtarget = bm.x
 				ytarget = bm.y
 				ztarget = bm.z
-				coord_update_flag = 1
+				coord_update_flag = TRUE
+				. = TRUE
 
 			if ("deletebookmark")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
 				if(!bm) return
 				bookmarks.Remove(bm)
+				. = TRUE
 
 			if ("addbookmark")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if(length(bookmarks) >= max_bookmarks)
 					boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
 					return
@@ -1083,9 +1095,10 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				bm.z = ztarget
 				bookmarks.Add(bm)
 				playsound(src.loc, "keyboard", 50, 1, -15)
+				. = TRUE
 
 			if ("reconnect")
-
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				if (params["value"] == "2")
 					host_id = null
 
@@ -1106,10 +1119,13 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				SPAWN(1 SECOND)
 					if (!old_host_id)
 						old_host_id = old
+				. = TRUE
+
 
 			if ("setpad")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
 				src.padNum = (src.padNum & 3) + 1
-				coord_update_flag = 1
+				. = TRUE
 
 	proc/message_host(var/message, var/datum/computer/file/file)
 		if (!src.host_id || !message)
