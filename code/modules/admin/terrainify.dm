@@ -716,7 +716,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 /datum/terrainify/storehouse
 	name = "Storehouse"
 	desc = "Load some nearby storehouse (Run before other Generators!)"
-	additional_toggles = list("Fill Z-Level"=FALSE)
+	additional_toggles = list("Fill Z-Level"=FALSE,"Meaty"=FALSE)
 
 	convert_station_level(params, datum/tgui/ui)
 		if (!..())
@@ -724,12 +724,17 @@ ABSTRACT_TYPE(/datum/terrainify)
 		var/list/turf/space = list()
 		for(var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
 			space += S
-		var/datum/map_generator/storehouse_generator/generator = new/datum/map_generator/storehouse_generator
+		var/datum/map_generator/storehouse_generator/generator
+		if(params["Meaty"])
+			generator = new/datum/map_generator/storehouse_generator/meaty
+		else
+			generator = new/datum/map_generator/storehouse_generator
 		station_repair.station_generator = generator
 
 		if(params["Fill Z-Level"])
-			generator.wall_path = /turf/unsimulated/wall/auto/lead/gray
-			generator.floor_path = /turf/unsimulated/floor/industrial
+			if(!(params["Meaty"]))
+				generator.wall_path = /turf/unsimulated/wall/auto/lead/gray
+				generator.floor_path = /turf/unsimulated/floor/industrial
 			generator.fill_map()
 		else
 			generator.generate_map()

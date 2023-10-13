@@ -2822,6 +2822,11 @@ Returns:
 	ex_act()
 		return
 
+	Click(location, control, params)
+		if (isobserver(usr))
+			usr.set_loc(src.target)
+			return
+		..()
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /* var/list/raisinlist = new/list()

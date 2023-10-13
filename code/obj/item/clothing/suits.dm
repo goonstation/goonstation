@@ -1524,14 +1524,14 @@ TYPEINFO(/obj/item/clothing/suit/space/industrial/syndicate)
 		STOP_TRACKING
 		. = ..()
 
-	nt_specialist
-		name = "NT industrial space armor"
-		item_state = "indus-nt"
-		icon_state = "indus-nt"
+/obj/item/clothing/suit/space/industrial/nt_specialist
+	name = "NT industrial space armor"
+	item_state = "indus_specialist"
+	icon_state = "indus_specialist"
 
-		setupProperties()
-			..()
-			setProperty("space_movespeed", 0)
+	setupProperties()
+		..()
+		setProperty("space_movespeed", 0)
 
 /obj/item/clothing/suit/space/industrial/syndicate
 	name = "\improper Syndicate command armor"

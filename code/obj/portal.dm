@@ -40,6 +40,12 @@
 	target = null
 	..()
 
+/obj/portal/Click(location, control, params)
+	if (isobserver(usr))
+		usr.set_loc(src.target)
+		return
+	..()
+
 /obj/portal/proc/teleport(atom/movable/M as mob|obj)
 	if( istype(M, /obj/effects)) //sparks don't teleport
 		return
