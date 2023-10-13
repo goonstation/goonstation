@@ -12,7 +12,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	icon = 'icons/obj/furniture/swingsign.dmi'
 	icon_state = "blank"
 	throwforce = 10
-	density = 1
+	density = TRUE
 	custom_suicide = TRUE
 	/// Stored message
 	var/message = ""
