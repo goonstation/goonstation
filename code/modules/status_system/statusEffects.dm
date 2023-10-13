@@ -2433,7 +2433,7 @@
 	effect_quality = STATUS_QUALITY_POSITIVE
 
 	onAdd(optional=null)
-		owner.add_filter("protection", 1, outline_filter(color="#e6ec21"))
+		owner.add_filter("protection", 1, outline_filter(color="#e5ec21c2"))
 		..()
 
 	onRemove()
