@@ -77,6 +77,10 @@
 	initial_x_coordinate = 65
 	initial_y_coordinate = 0
 
+/atom/movable/screen/parallax_render_source/planet/fortuna
+	parallax_icon_state = "fortuna"
+	initial_x_coordinate = 70
+	initial_y_coordinate = 0
 
 // Asteroid Layers
 /atom/movable/screen/parallax_render_source/asteroids_far
