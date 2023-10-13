@@ -191,6 +191,13 @@ var/datum/respawn_controls/respawn_controller
 		//try to break all links with the previous body so we don't get pulled back by changeling absorb, cloning etc.
 		usr.mind = null
 
+		// remove old cloning records because they are tied to ckey/mind and can cause problems
+		for_by_tcl(C, /obj/machinery/computer/cloning)
+			var/datum/db_record/old = C.find_record(src.ckey)
+			if(!isnull(old))
+				C.records.Remove(old)
+				qdel(old)
+
 		var/mob/new_player/M = new()
 		M.adminspawned = 1
 		M.is_respawned_player = 1
