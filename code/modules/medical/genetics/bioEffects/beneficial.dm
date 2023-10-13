@@ -325,7 +325,7 @@
 
 /datum/bioEffect/regenerator/super
 	name = "Super Regeneration"
-	desc = "Subject's cells are capable of repairing immense trauama at an unbelievably rapid rate."
+	desc = "Subject's cells are capable of repairing immense trauma at an unbelievably rapid rate."
 	id = "regenerator_super"
 	occur_in_genepools = 0
 	probability = 0
@@ -632,6 +632,7 @@ var/list/radio_brains = list()
 	stability_loss = 20
 	degrade_to = "bad_eyesight"
 	icon_state  = "eye"
+	effect_group = "vision"
 
 	OnAdd()
 		. = ..()

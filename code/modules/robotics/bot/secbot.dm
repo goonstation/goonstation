@@ -271,6 +271,12 @@
 			message = capitalize(ckeyEx(message))
 		. = ..()
 
+	pull(mob/user)
+		if (src.on)
+			boutput(user,"<span class='alert'><b>[src] resists being pulled around! Maybe deactivate it first.</b></span>")
+			return 1
+		..()
+
 	Move(var/turf/NewLoc, direct)
 		var/oldloc = src.loc
 		. = ..()
@@ -318,6 +324,8 @@
 			src.on = !src.on
 			if (src.on)
 				add_simple_light("secbot", list(255, 255, 255, 0.4 * 255))
+				if (src.pulled_by)
+					src.pulled_by.remove_pulling()
 			else
 				remove_simple_light("secbot")
 			src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
@@ -380,6 +388,8 @@
 			boutput(user, "<span class='alert'>[src] refuses your authority!</span>")
 			return
 		src.on = !src.on
+		if (src.on && src.pulled_by)
+			src.pulled_by.remove_pulling()
 		src.KillPathAndGiveUp(KPAGU_CLEAR_ALL)
 
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
@@ -396,6 +406,8 @@
 
 			src.emagged++
 			src.on = 1
+			if (src.pulled_by)
+				src.pulled_by.remove_pulling()
 			src.icon_state = "secbot[src.on][(src.on && src.emagged >= 2) ? "-wild" : null]"
 			src.KillPathAndGiveUp(KPAGU_CLEAR_PATH)
 
@@ -436,6 +448,8 @@
 			src.emagged = 1
 			src.visible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
 			src.on = 1
+			if (src.pulled_by)
+				src.pulled_by.remove_pulling()
 		else
 			src.explode()
 		return
@@ -650,7 +664,7 @@
 
 			if(SECBOT_SUMMON)		// summoned to PDA
 				src.doing_something = 1
-				if(!src.path)
+				if (!src.path) //null path means we couldn't find the target
 					src.speak("ERROR 99-28: COULD NOT FIND PATH TO SUMMON TARGET. ABORTING.")
 					src.KillPathAndGiveUp(KPAGU_RETURN_TO_PATROL)	// switch back to what we should be
 
@@ -813,6 +827,8 @@
 	// look for a criminal in range of the bot
 	proc/look_for_perp()
 		src.anchored = UNANCHORED
+		if (!isturf(src.loc)) //no active searching while in lockers and stuff
+			return
 		for(var/mob/living/carbon/C in view(7, get_turf(src))) //Let's find us a criminal
 			if ((C.stat) || (C.hasStatus("handcuffed")))
 				continue

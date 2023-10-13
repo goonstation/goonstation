@@ -141,4 +141,3 @@
 
 /world/proc/setupZLevel(new_zlevel)
 	global.zlevels += new/datum/zlevel("dyn[new_zlevel]", length(global.zlevels) + 1)
-	init_spatial_map(new_zlevel)

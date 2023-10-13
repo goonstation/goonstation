@@ -70,6 +70,15 @@ ABSTRACT_TYPE(/datum/game_mode)
 /datum/game_mode/proc/victory_msg()
 	return ""
 
+///Headline of the victory message
+/datum/game_mode/proc/victory_headline()
+	return ""
+
+///Body of the victory message
+/datum/game_mode/proc/victory_body()
+	return ""
+
+
 // Did some streamlining here (Convair880).
 /datum/game_mode/proc/declare_completion()
 	var/list/datum/mind/antags = list()
@@ -174,12 +183,10 @@ ABSTRACT_TYPE(/datum/game_mode)
 
 	// Display all antagonist datums.
 	for (var/datum/antagonist/antagonist_role as anything in get_all_antagonists())
-		#ifdef DATA_LOGGER
+		antagonist_role.handle_round_end(TRUE)
+#ifdef DATA_LOGGER
 		game_stats.Increment(antagonist_role.check_completion() ? "traitorwin" : "traitorloss")
-		#endif
-		var/antag_dat = antagonist_role.handle_round_end(TRUE)
-		if (antagonist_role.display_at_round_end && length(antag_dat))
-			stuff_to_output.Add(antag_dat)
+#endif
 
 	boutput(world, stuff_to_output.Join("<br>"))
 

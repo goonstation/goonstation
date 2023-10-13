@@ -1262,6 +1262,7 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 
 			O.object = P
 			O.orderedby = src.master.owner
+			O.address = src.master.net_id
 			O.console_location = get_area(src.master)
 			shippingmarket.supply_requests += O
 			src.temp = "Request sent to Supply Console. The Quartermasters will process your request as soon as possible.<BR>"
@@ -1691,3 +1692,59 @@ Using electronic "Detomatix" SELF-DESTRUCT program is perhaps less simple!<br>
 				if(product.desc)
 					. += product.desc
 					. += "<br>"
+
+/datum/computer/file/pda_program/pressure_crystal_shopper
+	name = "Crystal Bazaar"
+	size = 2
+
+	return_text()
+		if(..())
+			return
+
+		. = src.return_text_header()
+
+		. += "<h4>The Pressure Crystal Market</h4> \
+			A few well-funded organizations will pay handsomely for crystals exposed to different pressure values. \
+			The bigger the boom, the higher the payout, although duplicate or similar data will be worth less.\
+			<br><br>\
+			<b>Certain pressure values are of particular interest and will reward bonuses:</b>\
+			<br>"
+		for (var/peak in shippingmarket.pressure_crystal_peaks)
+			var/peak_value = text2num(peak)
+			var/mult = shippingmarket.pressure_crystal_peaks[peak]
+			. += "[peak] kiloblast: \
+				[mult > 1 ? "<B>" : ""]worth [round(mult * 100, 0.01)]% of normal. \
+				[mult > 1 ? "Maximum estimated value: [round(mult * PRESSURE_CRYSTAL_VALUATION(peak_value))]</B> credits." : ""]<br>"
+		. += "<br><b>Pressure crystal values already sold:</b>\
+			<br>"
+		for (var/value in shippingmarket.pressure_crystal_sales)
+			. += "[value] kiloblast for [shippingmarket.pressure_crystal_sales[value]] credits.<br>"
+
+/datum/computer/file/pda_program/rockbox
+	name = "Rockbox™ Cloud Status"
+	size = 2
+
+	return_text()
+		if(..())
+			return
+
+		. = src.return_text_header()
+		. += "<h4>Rockbox™ Ore Cloud Status</h4>"
+
+		if (!istype(master.host_program, /datum/computer/file/pda_program/os/main_os) || !master.host_program:message_on)
+			return "<span class='alert'>Wireless messaging must be enabled to talk to the cloud!</span>"
+
+		for_by_tcl(S, /obj/machinery/ore_cloud_storage_container)
+			. += "<b>Location: [get_area(S)]</b><br>"
+			if(S.broken)
+				.= "No response from Rockbox™ Ore Cloud Storage Container!<br><br>"
+				continue
+			if (!length(S.ores))
+				. += "No ores stored in this Rockbox™ Ore Cloud Storage Container.<br><br>"
+				continue
+			.+= "<ul>"
+			var/list/ores = S.ores
+			for(var/ore in ores)
+				var/datum/ore_cloud_data/OCD = ores[ore]
+				. += "<li>[ore]: [OCD.amount] @ [OCD.for_sale ? "[OCD.price][CREDIT_SIGN]" : "Not for sale"] ([OCD.amount_sold] sold)</li>"
+			. += "</ul><br>"

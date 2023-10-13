@@ -21,4 +21,4 @@ TYPEINFO(/datum/component/watcher)
 
 /datum/component/watcher/proc/watch()
 	var/atom/aparent = src.parent //this is safe, we checked on init
-	aparent.set_dir(get_dir(src.parent, src.target))
+	aparent.set_dir(get_dir(get_turf(src.parent), get_turf(src.target)))

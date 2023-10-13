@@ -336,7 +336,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 	area_power
 		name = "area power"
-		help = "Shows how charged the APC powercell is in an area. Also shows when the APC is off etc. Colour is based on charge level."
+		help = "Shows how charged the APC powercell is in an area. Also shows when the APC is off etc. Colour is based on charge level.<br>APCs in red."
 		var/list/area/processed_areas
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			var/area/area = theTurf.loc
@@ -349,6 +349,8 @@ proc/debug_map_apc_count(delim,zlim)
 			for(var/c in 1 to 3)
 				lcolor[c] = lcolor[c] / 8 + 220 * num_charge
 			img.app.color = rgb(lcolor[1], lcolor[2], lcolor[3])
+			if(locate(/obj/machinery/power/apc) in theTurf)
+				img.app.color = rgb(255, lcolor[2], lcolor[3])
 			if(!(area in processed_areas))
 				var/text_charge
 				if(!apc || apc.disposed)
@@ -1023,7 +1025,7 @@ proc/debug_map_apc_count(delim,zlim)
 
 	RL_lights
 		name = "RL lights"
-		help = "Displays number of RL lights on theach turf"
+		help = "Displays number of RL lights on each turf"
 		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
 			var/n_lights = length(theTurf.RL_Lights)
 			if (n_lights)
@@ -1424,10 +1426,26 @@ proc/debug_map_apc_count(delim,zlim)
 		help = "Displays material of non-turf things.<br>Hover over a tile to see what is made out of them."
 		include_turfs = FALSE
 
-	reagents
-		name = "reagents"
-		help = "TODO"
-		GetInfo(var/turf/theTurf, var/image/debugoverlay/img)
+	spatial_hashmap_count
+		name = "spatial hashmap count"
+		help = "Displays the amount of objects in the spatial hashmap on each turf"
+
+		var/hashmap_type = null
+
+		OnEnabled(var/client/C)
+			usr = C.mob
+			hashmap_type = get_one_match(null, /datum/spatial_hashmap)
+
+		GetInfo(turf/theTurf, image/debugoverlay/img)
+			if(isnull(hashmap_type))
+				img.app.alpha = 0
+				return
+			var/datum/spatial_hashmap/map = get_singleton(hashmap_type)
+			var/list/things_nearby = map.get_nearby(theTurf, 0)
+			var/count = length(things_nearby)
+			img.app.alpha = 120
+			img.app.color = rgb(count * 10, count * 10, count * 10)
+			img.app.overlays = list(src.makeText(count, RESET_ALPHA | RESET_COLOR))
 
 /client/var/list/infoOverlayImages
 /client/var/datum/infooverlay/activeOverlay

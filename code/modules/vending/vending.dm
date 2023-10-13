@@ -1730,6 +1730,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/cola)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/medical, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/toxins, 5, cost=PAY_DOCTORATE/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/quartermaster, 5, cost=PAY_TRADESMAN/3)
+		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/miner, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone, 5, cost=PAY_TRADESMAN/6)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_basic, 5, cost=PAY_TRADESMAN/3)
 		product_list += new/datum/data/vending_product(/obj/item/disk/data/cartridge/ringtone_chimes, 5, cost=PAY_TRADESMAN/3)
@@ -2563,6 +2564,7 @@ TYPEINFO(/obj/machinery/vending/monkey)
 /obj/machinery/vending/fortune
 #ifdef HALLOWEEN
 	name = "Necromancer Zoldorf"
+	desc = "A horrid old fortune-telling machine."
 	icon_state = "hfortuneteller"
 	icon_vend = "hfortuneteller-vend"
 	icon_fallen = "hfortuneteller-fallen"
@@ -3040,11 +3042,14 @@ TYPEINFO(/obj/machinery/vending/janitor)
 		.["cardname"] = src.scan
 		.["bankMoney"] = account ? account["current_money"] : null
 
+		.["vend_type"] = src.vend_type
 		.["holding"] = holding
 		.["holding_pressure"] = holding ? MIXTURE_PRESSURE(holding.air_contents) : null
 		.["min_pressure"] = min_pressure
 		.["max_pressure"] = max_pressure
 		.["fill_cost"] = holding ? src.fill_cost() : null
+		.["air_cost"] = air_cost
+		.["current_fill"] = holding ? MIXTURE_PRESSURE(src.holding.air_contents) : 0
 
 		.["target_pressure"] = src.target_pressure
 
@@ -3344,6 +3349,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 /obj/machinery/vending/player/chemicals
 	name = "dispensary interlink"
 	desc = "An ID-selective dispenser for advanced medical supplies from chemistry."
+	icon = 'icons/obj/medchem_vendor.dmi'
 	icon_state = "medchem"
 	acceptcard = FALSE
 	pay = FALSE
@@ -3353,6 +3359,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	///For linking to the chemlink console thingy
 	var/id = "chemlink"
 	var/obj/machinery/disposal/chemlink/linked = null
+	var/image/fill_image = null
 	///Stuff wot can be put in
 	var/list/allowed_types = list(/obj/item/reagent_containers/pill,
 		/obj/item/reagent_containers/glass/bottle,
@@ -3367,13 +3374,38 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 	New()
 		..()
 		START_TRACKING
+		src.fill_image = image(src.icon, "medchem-0", -1)
+		src.fill_image.plane = PLANE_ABOVE_LIGHTING
+		src.UpdateIcon()
 
 	disposing()
 		. = ..()
 		STOP_TRACKING
 
+	update_icon()
+		..()
+		if (status & (BROKEN|NOPOWER))
+			src.fill_image.icon_state = null
+			src.UpdateOverlays(src.fill_image, "fill_image")
+			return
+		var/total_reagents = 0
+		var/fluid_state = 0
+		for(var/datum/data/vending_product/player_product/R in src.player_list)
+			for(var/obj/item/product in R.contents)
+				for(var/obj/item/reagent_containers/container in product)
+					total_reagents += container.reagents.total_volume
+				total_reagents += product.reagents?.total_volume
+
+		if(!total_reagents) //only show it as empty if it truly has Nothing at All, chemically
+			fluid_state = 0
+		else
+			fluid_state = round(clamp((total_reagents / 500 * 9 + 1), 1, 9)) //it'll jump up a state every ~55 reagents added or so
+		src.fill_image.icon_state = "medchem-[fluid_state]"
+		src.UpdateOverlays(src.fill_image, "fill_image")
+
 	vend_product(datum/data/vending_product/product, mob/user)
 		. = ..()
+		src.UpdateIcon()
 		SPAWN(0)
 			src.linked.update_static_data(user)
 
@@ -3394,6 +3426,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 
 	addProduct(obj/item/target, mob/user, quiet)
 		. = ..()
+		src.UpdateIcon()
 		src.linked.static_data_invalid = TRUE
 		if (!ON_COOLDOWN(src, "announce", 2 SECONDS))
 			src.speak(pick("New product received: [target.name]!",
@@ -3408,3 +3441,7 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 				"Ask your doctor if [src.pick_product_name()] is right for you!",
 				"Prescribe [src.pick_product_name()] today!"
 			)
+
+	power_change()
+		..()
+		src.UpdateIcon()

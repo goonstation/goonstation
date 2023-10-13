@@ -156,28 +156,46 @@
 		logTheThing(LOG_ADMIN, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]")
 		logTheThing(LOG_DIARY, null, "Resulting AI Lawset:<br>[ticker.ai_law_rack_manager.format_for_logs()]", "admin")
 
-#define ROBOT_DRUG_VOLUME 25
-		// Drug those robots (bit messy/evil but it actually works pretty cleanly)
+		//Robots get all hallucinatey
 		for (var/mob/living/L in global.mobs)
 			if (issilicon(L) || isAIeye(L))
 				if (prob(33))
-					var/had_reagents = FALSE
-					if (!L.reagents)
-						L.create_reagents(ROBOT_DRUG_VOLUME)
-						had_reagents = TRUE
-					L.metabolizes = TRUE
-					L.add_lifeprocess(/datum/lifeprocess/chems)
-					var/drugid = pick("LSD", "lsd_bee", "catdrugs", "bathsalts", "psilocybin")
-					L.reagents.add_reagent(drugid, ROBOT_DRUG_VOLUME)
+					var/timeout_seconds = rand(60,120) //1 to 2 minutes
+					switch (rand(1,5))
+						if(1) //lsd-like
+							var/datum/reagent/drug/LSD/drug_type = /datum/reagent/drug/LSD //it's a path so we can grab the static vars, and not do init
+							logTheThing(LOG_DIARY, null, "[L] gets [drug_type] like effect applied by ion storm")
+							L.AddComponent(/datum/component/hallucination/trippy_colors, timeout=timeout_seconds)
+							if(prob(60)) //monkey mode
+								L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=drug_type.monkey_images, name_list=drug_type.monkey_names, attacker_prob=20, max_attackers=3)
+							else
+								L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=null, name_list=null, attacker_prob=20, max_attackers=3)
+							L.AddComponent(/datum/component/hallucination/random_sound, timeout=timeout_seconds, sound_list=drug_type.halluc_sounds, sound_prob=5)
+							L.AddComponent(/datum/component/hallucination/random_image_override, timeout=timeout_seconds, image_list=drug_type.critter_image_list, target_list=list(/mob/living/carbon/human), range=6, image_prob=10, image_time=20, override=TRUE)
+						if(2) //lsbee
+							var/datum/reagent/drug/lsd_bee/drug_type = /datum/reagent/drug/lsd_bee //it's a path so we can grab the static vars, and not do init
+							logTheThing(LOG_DIARY, null, "[L] gets [drug_type] like effect applied by ion storm")
+							var/bee_halluc = drug_type.bee_halluc
+							var/image/imagekey = pick(bee_halluc)
+							L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=10)
+						if(3)
+							var/datum/reagent/drug/catdrugs/drug_type = /datum/reagent/drug/catdrugs //it's a path so we can grab the static vars, and not do init
+							logTheThing(LOG_DIARY, null, "[L] gets [drug_type] like effect applied by ion storm")
+							var/cat_halluc = drug_type.cat_halluc
+							var/image/imagekey = pick(cat_halluc)
+							L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=list(imagekey), name_list=cat_halluc[imagekey], attacker_prob=7, max_attackers=3)
+							L.AddComponent(/datum/component/hallucination/random_sound, timeout=timeout_seconds, sound_list=drug_type.cat_sounds, sound_prob=20)
+						if(4) //hellshroom
+							logTheThing(LOG_DIARY, null, "[L] gets hellshroom like effect applied by ion storm")
+							var/bats = rand(2,3)
+							L.AddComponent(/datum/component/hallucination/fake_attack, timeout=timeout_seconds, image_list=list(new /image('icons/misc/AzungarAdventure.dmi', "hellbat")), name_list=list("hellbat"), attacker_prob=100, max_attackers=bats)
+							boutput(L, "<span class='alert'><b>A hellbat begins to chase you</b>!</span>")
+							L.emote("scream")
+						if(5) //mimicotoxin
+							logTheThing(LOG_DIARY, null, "[L] gets mimicotoxin like effect applied by ion storm")
+							L.AddComponent(/datum/component/hallucination/random_image_override, timeout=timeout_seconds, image_list=list(image('icons/misc/critter.dmi',"mimicface")), target_list=list(/obj/item, /mob/living), range=5, image_prob=2, image_time=10, override=FALSE)
 
-					SPAWN(rand(1 MINUTE, 2 MINUTES))
-						if (!had_reagents)
-							qdel(L.reagents)
-						else
-							L.reagents.remove_reagent(drugid, ROBOT_DRUG_VOLUME)
-						L.metabolizes = initial(L.metabolizes)
-						L.remove_lifeprocess(/datum/lifeprocess/chems)
-#undef ROBOT_DRUG_VOLUME
+
 
 		SPAWN(message_delay * stage_delay)
 
@@ -217,6 +235,8 @@ ABSTRACT_TYPE(/datum/ion_category)
 	proc/fuck_up()
 		if (!length(targets))
 			build_targets()
+		if (!length(targets))
+			return
 		for (var/i in 1 to amount)
 			var/atom/object = pick(targets)
 
@@ -265,7 +285,6 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 /datum/ion_category/doors
 	amount = 40
-	var/list/last_req_access
 
 	valid_instance(var/obj/machinery/door/airlock/door)
 		return ..() && !door.cant_emag
@@ -277,6 +296,7 @@ ABSTRACT_TYPE(/datum/ion_category)
 
 	action(var/obj/machinery/door/airlock/door)
 		var/door_diceroll = !door.isWireCut(AIRLOCK_WIRE_DOOR_BOLTS) ? rand(1,6) : rand(1, 3)
+		var/safe = door.safety
 		switch(door_diceroll)
 			if(1)
 				door.secondsElectrified = -1
@@ -293,15 +313,16 @@ ABSTRACT_TYPE(/datum/ion_category)
 					door.aiControlDisabled = disabled_old
 
 			if(3)
-				if(length(last_req_access))
-					door.req_access = last_req_access
+				door.aiDisabledIdScanner = TRUE
 
 			if(4)
 				if (door.density)
 					door.open()
 					logTheThing(LOG_STATION, null, "Ion storm opened an airlock ([door.name]) at [log_loc(door)]")
 				else
+					door.safety = 0
 					door.close()
+					door.safety = safe
 					logTheThing(LOG_STATION, null, "Ion storm closed an airlock ([door.name]) at [log_loc(door)]")
 
 			if(5)
@@ -321,14 +342,14 @@ ABSTRACT_TYPE(/datum/ion_category)
 					door.open()
 					logTheThing(LOG_STATION, null, "Ion storm bolted an airlock open ([door.name]) at [log_loc(door)]")
 				else
+					door.safety = 0
 					door.close()
+					door.safety = safe
 					logTheThing(LOG_STATION, null, "Ion storm bolted an airlock closed ([door.name]) at [log_loc(door)]")
 
 				if (!door.locked)
 					door.set_locked()
 					door.aiControlDisabled = TRUE
-
-		last_req_access = door.req_access
 
 /datum/ion_category/lights
 	amount = 60
@@ -412,12 +433,11 @@ ABSTRACT_TYPE(/datum/ion_category)
 				alert_prog.send_alert(rand(1,4), TRUE)
 
 /datum/ion_category/station_bots
-	amount = 1
-	prob_of_happening = 10
+	amount = 2
+	prob_of_happening = 20
 
 	valid_instance(obj/machinery/bot/bot)
-		. = ..() && !bot.emagged
-
+		. = ..() && !bot.emagged && (!istype(bot, /obj/machinery/bot/guardbot) && !istype(bot, /obj/machinery/bot/secbot) || prob(50))
 
 	build_targets()
 		for_by_tcl(bot, /obj/machinery/bot)

@@ -19,6 +19,7 @@
 	lockedChars = list("G","C","A","T")
 	lockedTries = 10
 	icon_state  = "bad"
+	effect_group = "vision"
 
 
 /datum/bioEffect/mute
@@ -81,7 +82,7 @@
 	msgGain = "You feel kind of off-balance and disoriented."
 	msgLose = "You feel well co-ordinated again."
 	reclaim_fail = 15
-	stability_loss = -10
+	stability_loss = -15
 	icon_state  = "bad"
 
 /datum/bioEffect/narcolepsy
@@ -135,6 +136,7 @@
 	reclaim_fail = 15
 	var/talk_prob = 10
 	var/list/talk_strings = list("PISS","FUCK","SHIT","DAMN","ARGH","WOOF","CRAP","HECK","FRICK","JESUS")
+	var/empowered_popup_style = "font-weight: bold;"
 	icon_state  = "bad"
 
 	OnLife(var/mult)
@@ -145,6 +147,12 @@
 		if (isdead(L))
 			return
 		if (probmult(talk_prob))
+			if(src.power > 1)
+				var/original_speechpopupstyle = L.speechpopupstyle
+				L.speechpopupstyle += empowered_popup_style
+				L.say(pick(talk_strings))
+				L.speechpopupstyle = original_speechpopupstyle
+				return
 			L.say(pick(talk_strings))
 
 /datum/bioEffect/shortsighted
@@ -161,6 +169,7 @@
 	var/datum/hud/vision_impair/hud = new
 	var/applied = 1
 	icon_state  = "bad"
+	effect_group = "vision"
 
 	OnAdd()
 		..()
@@ -250,9 +259,9 @@
 	msgGain = "You feel really sick..."
 	msgLose = "You don't feel sick any more."
 	reclaim_fail = 30
-	stability_loss = -20
+	stability_loss = -15
 	var/tox_amount = 1
-	var/tox_prob = 10
+	var/tox_prob = 25
 	icon_state  = "bad"
 	effect_group = "tox"
 
@@ -273,6 +282,7 @@
 	msgGain = "You feel an irritating itch in your throat."
 	msgLose = "Your throat clears up."
 	reclaim_fail = 15
+	stability_loss = -5
 	icon_state  = "bad"
 
 	OnLife(var/mult)
@@ -299,7 +309,7 @@
 	msgGain = "One of your limbs feels a bit strange and twitchy."
 	msgLose = "Your limb feels fine again."
 	reclaim_fail = 15
-	stability_loss = -25
+	stability_loss = -20
 	lockProb = 50
 	lockedGaps = 2
 	lockedDiff = 4
@@ -311,33 +321,11 @@
 
 	OnAdd()
 		..()
-		if (!ishuman(owner))
-			return
-		var/mob/living/carbon/human/H = owner
-		var/list/possible_limbs = list()
-		if (H.limbs.l_arm)
-			possible_limbs += H.limbs.l_arm
-		if (H.limbs.r_arm)
-			possible_limbs += H.limbs.r_arm
-		if (H.limbs.l_leg)
-			possible_limbs += H.limbs.l_leg
-		if (H.limbs.r_leg)
-			possible_limbs += H.limbs.r_leg
-		if (!possible_limbs.len)
-			return
-
-		src.limb = pick(possible_limbs)
-
-		if (istype(src.limb, /obj/item/parts/human_parts/arm) || istype(src.limb, /obj/item/parts/robot_parts/arm))
-			src.limb_type = LIMB_IS_ARM
-			return
-		else if (istype(src.limb, /obj/item/parts/human_parts/leg) || istype(src.limb, /obj/item/parts/robot_parts/leg))
-			src.limb_type = LIMB_IS_LEG
-			return
+		src.pick_limb()
 
 	OnLife(var/mult)
 		if(..()) return
-		if (!src.limb || (src.limb.loc != src.owner))
+		if ((!src.limb || (src.limb.loc != src.owner)) && !src.pick_limb())
 			return
 		if (owner.stat)
 			return
@@ -349,6 +337,7 @@
 				owner.emote("slap")
 			else if (probmult(2))
 				owner.visible_message("<span class='alert'><B>[owner.name]'s [src.limb] punches [him_or_her(owner)] in the face!</B></span>")
+				owner.changeStatus("weakened", 5 SECONDS)
 				owner.TakeDamageAccountArmor("head", rand(2,5), 0, 0, DAMAGE_BLUNT)
 			else if (probmult(1))
 				owner.visible_message("<span class='alert'>[owner.name]'s [src.limb] tries to strangle [him_or_her(owner)]!</span>")
@@ -372,6 +361,32 @@
 				owner.visible_message("<span class='alert'><B>[owner.name] can't seem to control [his_or_her(owner)] [src.limb]!</B></span>")
 				owner.change_misstep_chance(10)
 			return
+
+	proc/pick_limb()
+		. = 0
+		if (!ishuman(owner))
+			return
+		var/mob/living/carbon/human/H = owner
+		var/list/possible_limbs = list()
+		if (H.limbs.l_arm)
+			possible_limbs += H.limbs.l_arm
+		if (H.limbs.r_arm)
+			possible_limbs += H.limbs.r_arm
+		if (H.limbs.l_leg)
+			possible_limbs += H.limbs.l_leg
+		if (H.limbs.r_leg)
+			possible_limbs += H.limbs.r_leg
+		if (!possible_limbs.len)
+			return
+
+		src.limb = pick(possible_limbs)
+
+		if (istype(src.limb, /obj/item/parts/human_parts/arm) || istype(src.limb, /obj/item/parts/robot_parts/arm))
+			src.limb_type = LIMB_IS_ARM
+			return 1
+		else if (istype(src.limb, /obj/item/parts/human_parts/leg) || istype(src.limb, /obj/item/parts/robot_parts/leg))
+			src.limb_type = LIMB_IS_LEG
+			return 1
 
 #undef LIMB_IS_ARM
 #undef LIMB_IS_LEG

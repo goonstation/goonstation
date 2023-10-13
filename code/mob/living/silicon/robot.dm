@@ -861,18 +861,19 @@
 		..() // Logs.
 		src.flash(3 SECONDS)
 		var/fire_protect = FALSE
-		for (var/obj/item/roboupgrade/R in src.contents)
-			if (istype(R, /obj/item/roboupgrade/physshield) && R.activated)
-				var/obj/item/roboupgrade/physshield/S = R
-				src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
-				boutput(src, "<span class='notice'>Your force shield absorbs some of the blast!</span>")
-				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
-			if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
-				var/obj/item/roboupgrade/fireshield/S = R
-				src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
-				boutput(src, "<span class='notice'>Your fire shield absorbs the heat of the blast!</span>")
-				playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
-				fire_protect = TRUE
+		if (src.cell)
+			for (var/obj/item/roboupgrade/R in src.contents)
+				if (istype(R, /obj/item/roboupgrade/physshield) && R.activated)
+					var/obj/item/roboupgrade/physshield/S = R
+					src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
+					boutput(src, "<span class='notice'>Your force shield absorbs some of the blast!</span>")
+					playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
+				if (istype(R, /obj/item/roboupgrade/fireshield) && R.activated)
+					var/obj/item/roboupgrade/fireshield/S = R
+					src.cell.use((4-severity) * S.cell_drain_per_damage_reduction)
+					boutput(src, "<span class='notice'>Your fire shield absorbs the heat of the blast!</span>")
+					playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
+					fire_protect = TRUE
 
 		if(!power)
 			switch(severity)
@@ -2838,6 +2839,7 @@
 			UpdateOverlays(src.i_clothes, "clothes")
 		else
 			UpdateOverlays(null, "clothes")
+		src.update_mob_silhouette()
 
 	proc/compborg_force_unequip(var/slot = 0)
 		src.module_active = null

@@ -436,7 +436,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 //Azungar's Nanotrasen inspired Laser Assault Rifle for RP gimmicks
 /obj/item/gun/energy/ntgun
 	name = "laser assault rifle"
-	icon_state = "ntneutral100"
+	icon_state = "nt"
 	desc = "Rather futuristic assault rifle with two firing modes."
 	item_state = "ntgun"
 	force = 10
@@ -445,7 +445,7 @@ TYPEINFO(/obj/item/gun/energy/egun_jr)
 	spread_angle = 6
 	cell_type = /obj/item/ammo/power_cell/med_power
 	uses_charge_overlay = TRUE
-	charge_icon_state = "nt"
+	charge_icon_state = "ntstun"
 
 	New()
 		set_current_projectile(new/datum/projectile/energy_bolt/ntburst)
@@ -772,19 +772,22 @@ TYPEINFO(/obj/item/gun/energy/ghost)
 		projectiles = list(current_projectile)
 		..()
 
-///////////////////////////////////////Modular Blasters
+///////////////////////////////////////Particle Blasters
 TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 	mats = 0
 
 /obj/item/gun/energy/blaster_pistol
 	name = "GRF Zap-Pistole"
-	desc = "A dangerous-looking blaster pistol from Giesel Radiofabrik. It's self-charging by a radioactive power cell."
+	desc = "A dangerous-looking particle blaster pistol from Giesel Radiofabrik. It's self-charging by a radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "pistol"
 	w_class = W_CLASS_NORMAL
-	force = 5
+	force = MELEE_DMG_PISTOL
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 	from_frame_cell_type = /obj/item/ammo/power_cell/self_charging/disruptor
+	rarity = 3
+	muzzle_flash = "muzzle_flash_bluezap"
+	shoot_delay = 2
 
 
 	/*
@@ -852,18 +855,22 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 
 /obj/item/gun/energy/blaster_smg
 	name = "GRF Zap-Maschine"
-	desc = "A special issue blaster weapon from Giesel Radiofabrik, designed for burst fire. It's self-charging by a radioactive power cell."
+	desc = "A special issue particle blaster from Giesel Radiofabrik, designed for burst fire. It's self-charging by a radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "smg"
 	can_dual_wield = 0
 	w_class = W_CLASS_NORMAL
-	force = 7
+	force = MELEE_DMG_PISTOL
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
+	rarity = 4
+	spread_angle = 10
+	muzzle_flash = "muzzle_flash_bluezap"
 
 
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/burst)
 		projectiles = list(current_projectile)
+		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
 		..()
 
 
@@ -876,21 +883,54 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 			src.icon_state = "smg[ratio]"
 			return
 
+/obj/item/gun/energy/blaster_carbine
+	name = "GRF Zap-Karabiner"
+	desc = "A blaster carbine from Giesel Radiofabrik, designed for longer range engagements. It's self-charging by a radioactive power cell. Beware of Bremsstrahulung backscatter."
+	icon = 'icons/obj/large/48x32.dmi'
+	icon_state = "blaster-carbine"
+	item_state = "rifle"
+	can_dual_wield = 0
+	two_handed = 1
+	w_class = W_CLASS_BULKY
+	force = MELEE_DMG_RIFLE
+	cell_type = /obj/item/ammo/power_cell/self_charging/medium
+	rarity = 4
+	shoot_delay = 4
+	muzzle_flash = "muzzle_flash_bluezap"
+
+
+	New()
+		set_current_projectile(new /datum/projectile/laser/blaster/carbine)
+		projectiles = list(current_projectile)
+		..()
+
+
+	update_icon()
+		..()
+		var/list/ret = list()
+		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
+			var/ratio = min(1, ret["charge"] / ret["max_charge"])
+			ratio = round(ratio, 0.25) * 100
+			src.icon_state = "blaster-carbine[ratio]"
+			return
+
 /obj/item/gun/energy/blaster_cannon
 	name = "GRF Zap-Kanone"
-	desc = "A heavily overcharged blaster weapon from Giesel Radiofabrik, designed for repelling hostile boarding parties and swarms. It's self-charging by a larger radioactive power cell."
+	desc = "A heavy particle blaster from Giesel Radiofabrik, designed for high damage. It's self-charging by a larger radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "cannon"
 	item_state = "rifle"
 	can_dual_wield = 0
 	two_handed = 1
 	w_class = W_CLASS_BULKY
-	force = 15
+	force = MELEE_DMG_RIFLE
 	shoot_delay = 8
 	cell_type = /obj/item/ammo/power_cell/self_charging/big
+	rarity = 5
+	muzzle_flash = "muzzle_flash_bluezap"
 
 	New()
-		set_current_projectile(new /datum/projectile/special/spreader/uniform_burst/blaster)
+		set_current_projectile(new /datum/projectile/laser/blaster/cannon)
 		projectiles = list(current_projectile)
 		c_flags |= ONBACK
 		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
@@ -908,7 +948,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 
 
 ///////////modular components - putting them here so it's easier to work on for now////////
-
+/*
 TYPEINFO(/obj/item/gun_parts)
 	mats = 0
 
@@ -966,7 +1006,7 @@ TYPEINFO(/obj/item/gun_parts)
 
 	grip // tacticool
 		name = "fore grip"
-		icon_state = "mod-grip"
+		icon_state = "mod-grip" */
 
 ///////////////////////////////////////Owl Gun
 /obj/item/gun/energy/owl

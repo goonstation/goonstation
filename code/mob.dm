@@ -26,8 +26,6 @@
 
 	var/robot_talk_understand = 0
 
-	var/list/obj/hallucination/hallucinations = null //can probably be on human
-
 	var/respect_view_tint_settings = FALSE
 	var/list/active_color_matrix = list()
 	var/list/color_matrices = list()
@@ -54,7 +52,6 @@
 	var/other_mobs = null
 	var/memory = ""
 	var/atom/movable/pulling = null
-	var/mob/pulled_by = null
 	var/stat = STAT_ALIVE
 	var/next_click = 0
 	var/transforming = null
@@ -243,7 +240,6 @@
 /mob/New(loc, datum/appearanceHolder/AH_passthru)	// I swear Adhara is the reason half my code even comes close to working
 	src.AH_we_spawned_with = AH_passthru
 	src.loc = loc
-	hallucinations = new
 	grabbed_by = new
 	resistances = new
 	ailments = new
@@ -419,7 +415,6 @@
 	ckey = null
 	client = null
 	internals = null
-	hallucinations = null
 	buckled = null
 	handcuffs = null
 	l_hand = null
@@ -768,6 +763,7 @@
 
 // I moved the log entries from human.dm to make them global (Convair880).
 /mob/ex_act(severity, last_touched)
+	SEND_SIGNAL(src, COMSIG_MOB_EX_ACT, severity)
 	logTheThing(LOG_COMBAT, src, "is hit by an explosion (Severity: [severity]) at [log_loc(src)]. Explosion source last touched by [last_touched]")
 	return
 
@@ -1128,10 +1124,7 @@
 			return
 
 	src.pulling = A
-
-	if(ismob(src.pulling))
-		var/mob/M = src.pulling
-		M.pulled_by = src
+	A.pulled_by = src
 
 	//robust grab : a dirty DIRTY trick on mbc's part. When I am being chokeholded by someone, redirect pulls to the captor.
 	//this is so much simpler than pulling the victim and invoking movment on the captor through that chain of events.
@@ -1146,9 +1139,8 @@
 	pull_particle(src,pulling)
 
 /mob/proc/remove_pulling()
-	if(ismob(pulling))
-		var/mob/M = pulling
-		M.pulled_by = null
+	if(src.pulling)
+		src.pulling.pulled_by = null
 	src.pulling = null
 
 // less icon caching maybe?!
@@ -1524,6 +1516,16 @@
 	src.remove_dialogs()
 	if (!isliving(src))
 		src.sight = SEE_TURFS | SEE_MOBS | SEE_OBJS | SEE_SELF | SEE_BLACKNESS
+
+/mob/proc/show_credits()
+	set name = "Show Credits"
+	set desc = "Open the crew credits window"
+	set category = "Commands"
+
+	if(isnull(ticker.creds))
+		boutput(src, "<span class='notice'>The credits have not been generated yet!</span>")
+		return
+	ticker.creds.ui_interact(src)
 
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
@@ -2841,9 +2843,16 @@
 						for (var/obj/item/I in src.contents)
 							var/obj/item/card/id/ID = get_id_card(I)
 							if (!ID)
-								continue
-							ID.registered = newname
-							ID.update_name()
+								if(length(I.contents)>0)
+									for(var/obj/item/J in I.contents)
+										var/obj/item/card/id/ID_maybe = get_id_card(J)
+										if(!ID_maybe)
+											continue
+										if(ID_maybe && ID_maybe.registered == src.real_name)
+											ID = ID_maybe
+							if(ID)
+								ID.registered = newname
+								ID.update_name()
 						for (var/obj/item/device/pda2/PDA in src.contents)
 							PDA.registered = newname
 							PDA.owner = newname
@@ -3135,7 +3144,8 @@
 	src.point_at(A)
 
 /mob/proc/point_at(var/atom/target, var/pixel_x, var/pixel_y) //overriden by living and dead
-	.=0
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_POINT, target)
 
 /mob/verb/pull_verb(atom/movable/A as mob|obj in oview(1, usr))
 	set name = "Pull / Unpull"

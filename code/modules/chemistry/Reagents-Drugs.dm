@@ -289,8 +289,6 @@ datum
 			transparency = 20
 			value = 6 // 4 2
 			thirst_value = -0.03
-			var/counter = 1
-			var/current_color_pattern = 1
 			var/static/list/halluc_sounds = list(
 				"punch",
 				'sound/vox/poo-vox.ogg',
@@ -333,57 +331,41 @@ datum
 				"A whisper in the vents",
 				"The universe itself",
 			)
+			var/static/list/monkey_images = list(
+				new /image('icons/mob/monkey.dmi', "monkey"),
+				new /image('icons/mob/monkey.dmi', "fire3"),
+				new /image('icons/mob/monkey.dmi', "skeleton"),
+				new /image('icons/mob/monkey.dmi', "seamonkey"),
+			)
+			var/static/list/critter_image_list = list(
+				new /image('icons/effects/hallucinations.dmi', "spider"),
+				new /image('icons/effects/hallucinations.dmi', "dragon"),
+				new /image('icons/effects/hallucinations.dmi', "pig"),
+				new /image('icons/effects/hallucinations.dmi', "slime"),
+				new /image('icons/misc/critter.dmi', "martianW"),
+			)
+			var/static/list/monkey_names = strings("names/monkey.txt")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				src.counter += 1 * mult //around half realtime
-				if(M.client && counter >= 6 && prob(20)) //trippy colours
-					if(src.current_color_pattern == 1)
-						animate_fade_drug_inbetween_1(M.client, 40)
-						src.current_color_pattern = 2
-					else
-						animate_fade_drug_inbetween_2(M.client, 40)
-						src.current_color_pattern = 1
-				if(probmult(12) && !ON_COOLDOWN(M, "hallucination_spawn", 30 SECONDS)) //spawn a fake critter
-					if (prob(20))
-						if(prob(60))
-							fake_attack(M)
-						else
-							var/monkeys = rand(1,3)
-							for(var/i = 0, i < monkeys, i++)
-								fake_attackEx(M, 'icons/mob/monkey.dmi', "monkey_hallucination", pick_string_autokey("names/monkey.txt"))
-					else
-						var/fake_type = pick(childrentypesof(/obj/fake_attacker))
-						new fake_type(M.loc, M)
+				//pretty colors
+				M.AddComponent(/datum/component/hallucination/trippy_colors, timeout=10)
+
+				//get attacked
+				if(prob(60)) //monkey mode
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=monkey_images, name_list=monkey_names, attacker_prob=20, max_attackers=3)
+				else
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=null, name_list=null, attacker_prob=20, max_attackers=3)
+
 				//THE VOICES GET LOUDER
-				if(probmult(min(16 + src.counter/2, 30))) //play some fake audio
-					var/atom/origin = M.loc
-					var/turf/mob_turf = get_turf(M)
-					if (mob_turf)
-						origin = locate(mob_turf.x + rand(-10,10), mob_turf.y + rand(-10,10), mob_turf.z)
-					//wacky loosely typed code ahead
-					var/datum/hallucinated_sound/chosen = pick(src.halluc_sounds)
-					if (istype(chosen)) //it's a datum
-						chosen.play(M, origin)
-					else //it's just a path directly
-						M.playsound_local(origin, chosen, 100, 1)
+				M.AddComponent(/datum/component/hallucination/random_sound, timeout=10, sound_list=src.halluc_sounds, sound_prob=5)
+
 				if(probmult(8)) //display a random chat message
 					M.playsound_local(M.loc, pick(src.speech_sounds, 100, 1))
 					boutput(M, "<b>[pick(src.voice_names)]</b> says, \"[phrase_log.random_phrase("say")]\"")
-				if(probmult(10)) //turn someone into a critter
-					var/list/candidates = list()
-					for(var/mob/living/carbon/human/human in viewers(M))
-						candidates += human
-					if (length(candidates))
-						var/mob/living/carbon/human/chosen = pick(candidates)
-						var/obj/fake_attacker/fake_type = pick(childrentypesof(/obj/fake_attacker))
-						var/image/override_img = image(initial(fake_type.fake_icon), chosen, initial(fake_type.fake_icon_state), chosen.layer)
-						override_img.override = TRUE
-						var/client/client = M.client //hold a reference to the client directly
-						client?.images.Add(override_img)
-						SPAWN (20 SECONDS)
-							client?.images.Remove(override_img)
-							qdel(override_img)
+
+				//turn someone into a critter
+				M.AddComponent(/datum/component/hallucination/random_image_override, timeout=10, image_list=critter_image_list, target_list=list(/mob/living/carbon/human), range=6, image_prob=10, image_time=20, override=TRUE)
 				..()
 				return
 
@@ -392,13 +374,6 @@ datum
 				if(method == INGEST)
 					boutput(M, "<span class='alert'><font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font></span>")
 				return
-
-			on_mob_life_complete(var/mob/living/M)
-				if(M.client)
-					if(src.current_color_pattern == 1)
-						animate_fade_from_drug_1(M.client, 40)
-					else
-						animate_fade_from_drug_2(M.client, 40)
 
 			on_remove()
 				. = ..()
@@ -419,30 +394,19 @@ datum
 			transparency = 100
 			value = 5
 			thirst_value = -0.03
+			var/static/list/bee_halluc = list(
+				new /image('icons/misc/bee.dmi',"zombee-wings") = list("zombee", "undead bee", "BZZZZZZZZ"),
+				new /image('icons/misc/bee.dmi',"syndiebee-wings") = list("syndiebee", "evil bee", "syndicate assassin bee", "IT HAS A GUN"),
+				new /image('icons/misc/bee.dmi',"bigbee-angry") = list("very angry bee", "extremely angry bee", "GIANT FRICKEN BEE"),
+				new /image('icons/misc/bee.dmi',"lichbee-wings") = list("evil bee", "demon bee", "YOU CAN'T BZZZZ FOREVER"),
+				new /image('icons/misc/bee.dmi',"voorbees-wings") = list("killer bee", "murder bee", "bad news bee", "RUN"),
+			)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 5)
-				if (probmult(10))
-					var/hstate = null
-					var/hname = null
-					switch(rand(1,5))
-						if(1)
-							hstate = "zombee-wings"
-							hname = pick("zombee", "undead bee", "BZZZZZZZZ")
-						if(2)
-							hstate = "syndiebee-wings"
-							hname = pick("syndiebee", "evil bee", "syndicate assassin bee", "IT HAS A GUN")
-						if(3)
-							hstate = "bigbee-angry"
-							hname = pick("very angry bee", "extremely angry bee", "GIANT FRICKEN BEE")
-						if(4)
-							hstate = "lichbee-wings"
-							hname = pick("evil bee", "demon bee", "YOU CAN'T BZZZZ FOREVER")
-						if(5)
-							hstate = "voorbees-wings"
-							hname = pick("killer bee", "murder bee", "bad news bee", "RUN")
-					fake_attackEx(M, 'icons/misc/bee.dmi', hstate, hname)
+				var/image/imagekey = pick(bee_halluc)
+				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=10)
 				if (probmult(12))
 					M.visible_message(pick("<b>[M]</b> makes a buzzing sound.", "<b>[M]</b> buzzes."),pick("BZZZZZZZZZZZZZZZ", "<span class='alert'><b>THE BUZZING GETS LOUDER</b></span>", "<span class='alert'><b>THE BUZZING WON'T STOP</b></span>"))
 				if (probmult(15))
@@ -492,10 +456,161 @@ datum
 				..()
 				return
 
+		drug/caffeine        //Unified chem for lots of caffeinated drinks, similar to how ethanol functions
+			name = "caffeine"
+			id = "caffeine"
+			description = "An addictive stimulant contained in coffee beans and many caffeinated beverages."
+			reagent_state = LIQUID
+			fluid_r = 230
+			fluid_g = 220
+			fluid_b = 230
+			addiction_prob = 1 //It lasts a while, it's not as low as it seems
+			addiction_min = 100
+			max_addiction_severity = "LOW"
+			stun_resist = 3
+			depletion_rate = 0.1
+			taste = "bitter"
+			overdose = 60
+			threshold = THRESHOLD_INIT
+			var/stamina_regen = 1
+			var/expected_stamina_regen = 1
+			var/expected_stun_resist = 3
+			var/heart_failure_counter = 0
+
+			proc/caffeine_stamina_change(stun_resist, stamina_regen)
+				var/mob/M = holder.my_atom // All of the caffeine regen properties in a single place
+				if (M.reagents.get_reagent_amount(src.id) <= threshold)
+					return // Shouldn't add any stun resist to a chem that isn't there
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST, "reagent_[src.id]", stun_resist)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STUN_RESIST_MAX, "reagent_[src.id]", stun_resist)
+				APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", stamina_regen)
+				return
+
+			cross_threshold_over()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					APPLY_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush", stamina_regen)
+				..()
+
+			cross_threshold_under()
+				if(ismob(holder?.my_atom))
+					var/mob/M = holder.my_atom
+					REMOVE_ATOM_PROPERTY(M, PROP_MOB_STAMINA_REGEN_BONUS, "caffeine_rush")
+				..()
+
+			on_mob_life(var/mob/M, var/mult = 1)
+				if(!M) M = holder.my_atom
+				var/caffeine_amt = holder.get_reagent_amount(src.id)
+
+				if (heart_failure_counter > 150 && ishuman(M)) // This has to get pretty high for bad things to happen
+					var/mob/living/L = M
+					L.contract_disease(/datum/ailment/malady/heartfailure, null, null, 1)
+					heart_failure_counter = 0
+
+				switch(caffeine_amt) //use ~midpoints for depeletion rate thresholds - need stronger coffees or blends to overcaffeinate
+					if(0 to 3)
+						depletion_rate = 0.05
+					if(3 to 10)
+						depletion_rate = 0.1
+					if(10 to 30)
+						depletion_rate = 0.2
+					if(30 to 50)
+						depletion_rate = 0.4
+					if(50 to INFINITY)
+						depletion_rate = 0.5
+
+				switch(caffeine_amt)
+					if(0 to 5)   //This is your trace amount of caffeine, doesn't do much
+						expected_stamina_regen = 1
+						expected_stun_resist   = 3
+
+					if(5 to 20)  //A regular coffee mug's worth
+						if (M.get_eye_blurry() && prob(75))
+							M.change_eye_blurry(-1 * mult)
+						expected_stamina_regen = 2
+						expected_stun_resist   = 7
+						M.dizziness = max(0, M.dizziness-3)
+						M.changeStatus("drowsy", -2 * mult SECONDS) //Helps combat that morning fatigue
+						if (prob(25))
+							M.make_jittery(10 * mult)
+
+					if(20 to 40) //A significant amount of caffeine
+						if (M.get_eye_blurry())
+							M.change_eye_blurry(-1 * mult)
+						expected_stamina_regen = 4
+						expected_stun_resist   = 12
+						M.changeStatus("drowsy", -4 * mult SECONDS)
+						M.dizziness = max(0, M.dizziness-5)
+						M.sleeping = 0 //Causes insomnia
+						if (prob(35))
+							M.make_jittery(10 * mult)
+						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS)) // Keeps down that emote span
+							boutput(M, pick("<span class='notice'>You a slight twitch in your arm.</span>",\
+									"<span class='notice'>You feel a slight tension in your shoulders.</span>",\
+									"<span class='notice'>You feel resltess and anxious.</span>",\
+									"<span class='alert'>You feel ready for anything!</span>",\
+									"<span class='alert'>You feel a rush of energy.</span>",\
+									"<span class='alert'>You can feel a slight pressure in your skull.</span>"))
+
+					if(40 to 60) //A unhealthy amount of caffeine
+						if (M.get_eye_blurry())
+							M.change_eye_blurry(-2 * mult)
+						expected_stamina_regen = 6
+						expected_stun_resist   = 20
+						M.changeStatus("drowsy", -10 * mult SECONDS)
+						M.dizziness = max(0, M.dizziness-7)
+						M.make_jittery(10 * mult)
+						M.change_misstep_chance(1 * mult)
+						M.sleeping = 0
+						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS)) // Keeps down that emote span
+							boutput(M, pick("<span class='notice'>You a slight twitch in your arm.</span>",\
+									"<span class='notice'>You feel a slight tension in your shoulders.</span>",\
+									"<span class='notice'>You feel resltess and anxious.</span>",\
+									"<span class='alert'>You feel ready for anything!</span>",\
+									"<span class='alert'>You feel a rush of energy.</span>",\
+									"<span class='alert'>You can feel a slight pressure in your skull.</span>"))
+						else if (probmult(9))
+							M.emote(pick("twitch","twitch_v","blink_r", "shiver"))
+						heart_failure_counter += mult //This can be bad for you over time
+
+					if(60 to INFINITY)  //Too much coffee. Way bad for you. This is actually non-trivial to reach now
+						if (M.get_eye_blurry())
+							M.change_eye_blurry(-3 * mult)
+						expected_stamina_regen = 8
+						expected_stun_resist   = 25
+						M.change_misstep_chance(4 * mult)
+						M.changeStatus("drowsy", -15 SECONDS)
+						M.dizziness = max(0,M.dizziness-10)
+						M.make_jittery(15 * mult)
+						M.sleeping = 0
+						if (probmult(3) && !ON_COOLDOWN(M, "Caffeine Message", 30 SECONDS))
+							boutput(M, pick("<span class='alert'>You feel your chest clutching for a moment.</span>",\
+									"<span class='alert'>YOU ARE ENERGY INCARNATE.</span>",\
+									"<span class='alert'>YOU FEEL LIKE YOU COULD CONQUER THE WORLD.</span>",\
+									"<span class='alert'>YOU CAN DO EVERYTHING, YOU ARE READY FOR ANY CHALLENGE.</span>",\
+									"<span class='alert'>Your chest burns slightly.</span>",\
+									"<span class='alert'>You feel a flash of pain in your head.</span>",\
+									"<span class='alert'>You are speed.</span>",\
+									"<span class='notice'>Something is wrong.</span>"))
+						else if (probmult(12))
+							M.emote(pick("shiver","twitch_v","blink_r","wheeze"))
+						else if(probmult(9) && !ON_COOLDOWN(M, "feeling_own heartbeat", 60 SECONDS)) //This can't be good for you
+							M.playsound_local(get_turf(M), 'sound/effects/HeartBeatLong.ogg', 20, 1)
+							M.take_toxin_damage(5)
+						heart_failure_counter += 5 * mult // This can be really bad for you
+
+				if (stun_resist != expected_stun_resist || stamina_regen != expected_stamina_regen)
+					stun_resist = expected_stun_resist
+					stamina_regen = expected_stamina_regen
+					caffeine_stamina_change(stun_resist, stamina_regen)
+
+				..()
+				return
+
 		drug/solipsizine
 			name = "solipsizine"
 			id = "solipsizine"
-			description = "A highly potent hallucinogenic substance that causes intense delirium and acute inability to percieve others."
+			description = "A highly potent hallucinogenic substance that causes intense delirium and acute inability to perceive others."
 			reagent_state = LIQUID
 			depletion_rate = 0.2
 			addiction_prob = 8
@@ -957,6 +1072,11 @@ datum
 			transparency = 20
 			viscosity = 0.14
 			thirst_value = -0.1
+			var/static/list/cat_halluc = list(
+				new /image('icons/misc/critter.dmi',"cat-ghost") = list("ghost cat"),
+				new /image('icons/misc/critter.dmi', "cat1-wild") = list("wild cat"),
+			)
+			var/static/list/cat_sounds = list('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg')
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -967,20 +1087,10 @@ datum
 				if(probmult(9))
 					M.visible_message("<span class='notice'><b>[M.name]</b> meows! What the fuck?</span>")
 					playsound(M.loc, 'sound/voice/animal/cat.ogg', 50, 1)
-				if(probmult(7))
-					switch(rand(1,2))
-						if(1)
-							var/ghostcats = rand(1,3)
-							for(var/i = 0, i < ghostcats, i++)
-								fake_attackEx(M, 'icons/misc/critter.dmi', "cat-ghost", "ghost cat")
-								M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
-						if(2)
-							var/wildcats = rand(1,3)
-							for(var/i = 0, i < wildcats, i++)
-								fake_attackEx(M, 'icons/misc/critter.dmi', "cat1-wild", "wild cat")
-								M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
-				if(probmult(20))
-					M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
+
+				var/image/imagekey = pick(cat_halluc)
+				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=cat_halluc[imagekey], attacker_prob=7, max_attackers=3)
+				M.AddComponent(/datum/component/hallucination/random_sound, timeout=10, sound_list=src.cat_sounds, sound_prob=20)
 				..()
 				return
 
@@ -1170,7 +1280,7 @@ datum
 			syndicate
 				name = "methamphetamine"
 				id = "synd_methamphetamine"
-				description = "Methamphetamine is a highly effective and dangerous stimulant drug. This batch seems unusally high-grade and pure."
+				description = "Methamphetamine is a highly effective and dangerous stimulant drug. This batch seems unusually high-grade and pure."
 				purge_brain = FALSE
 				fluid_r = 115 // This shit's pure and blue
 				fluid_g = 197
@@ -1222,8 +1332,7 @@ datum
 						src.breathefire(M)
 					if(check < 5)
 						var/bats = rand(2,3)
-						for(var/i = 0, i < bats, i++)
-						fake_attackEx(M, 'icons/misc/AzungarAdventure.dmi', "hellbat", "hellbat")
+						M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(new /image('icons/misc/AzungarAdventure.dmi', "hellbat")), name_list=list("hellbat"), attacker_prob=100, max_attackers=bats)
 						boutput(M, "<span class='alert'><b>A hellbat begins to chase you</b>!</span>")
 						M.emote("scream")
 					if(check < 20)
