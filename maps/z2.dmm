@@ -346,6 +346,10 @@
 /obj/storage/secure/closet/medical/anesthetic,
 /turf/unsimulated/floor/blue,
 /area/hospital)
+"acK" = (
+/obj/decal/poster/wallsign/stencil/left/d,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "acM" = (
 /turf/unsimulated/floor/bluewhite,
 /area/hospital)
@@ -21679,6 +21683,10 @@
 	icon_state = "iocrust_corner"
 	},
 /area/iomoon)
+"bES" = (
+/obj/decal/poster/wallsign/stencil/left/six,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "bEV" = (
 /obj/map/light/lava,
 /obj/decal/fakeobjects/pipe/heat{
@@ -40252,6 +40260,10 @@
 /obj/decal/cleanable/dirt,
 /turf/unsimulated/floor/grime,
 /area/owlery/owleryhall)
+"cOK" = (
+/obj/decal/poster/wallsign/stencil/left/e,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "cOL" = (
 /obj/decal/cleanable/blood/gibs{
 	icon_state = "gibup1"
@@ -46343,7 +46355,7 @@
 	name = "b_rook"
 	},
 /turf/unsimulated/floor/chess{
-	icon_state = "floorgrime-w"
+	icon_state = "fullblack"
 	},
 /area/sim/racing_track)
 "deL" = (
@@ -46391,7 +46403,7 @@
 	name = "b_pawn"
 	},
 /turf/unsimulated/floor/chess{
-	icon_state = "fullblack"
+	icon_state = "floorgrime-w"
 	},
 /area/sim/racing_track)
 "deO" = (
@@ -46409,7 +46421,7 @@
 	name = "pawn"
 	},
 /turf/unsimulated/floor/chess{
-	icon_state = "white"
+	icon_state = "fullblack"
 	},
 /area/sim/racing_track)
 "deP" = (
@@ -46437,7 +46449,7 @@
 	name = "rook"
 	},
 /turf/unsimulated/floor/chess{
-	icon_state = "fullblack"
+	icon_state = "white"
 	},
 /area/sim/racing_track)
 "deQ" = (
@@ -46601,24 +46613,6 @@
 	},
 /turf/unsimulated/floor/chess{
 	icon_state = "fullblack"
-	},
-/area/sim/racing_track)
-"dfd" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/landmark/chess{
-	name = "queen"
-	},
-/turf/unsimulated/floor/chess{
-	icon_state = "floorgrime-w"
 	},
 /area/sim/racing_track)
 "dfe" = (
@@ -46801,7 +46795,7 @@
 	name = "b_rook"
 	},
 /turf/unsimulated/floor/chess{
-	icon_state = "fullblack"
+	icon_state = "white"
 	},
 /area/sim/racing_track)
 "dfw" = (
@@ -46818,7 +46812,7 @@
 	name = "b_pawn"
 	},
 /turf/unsimulated/floor/chess{
-	icon_state = "floorgrime-w"
+	icon_state = "fullblack"
 	},
 /area/sim/racing_track)
 "dfx" = (
@@ -46835,7 +46829,7 @@
 	name = "pawn"
 	},
 /turf/unsimulated/floor/chess{
-	icon_state = "fullblack"
+	icon_state = "white"
 	},
 /area/sim/racing_track)
 "dfy" = (
@@ -46862,7 +46856,7 @@
 	name = "rook"
 	},
 /turf/unsimulated/floor/chess{
-	icon_state = "white"
+	icon_state = "fullblack"
 	},
 /area/sim/racing_track)
 "dfz" = (
@@ -57523,6 +57517,10 @@
 /obj/item/currency/spacecash/buttcoin,
 /turf/unsimulated/floor/plating,
 /area/afterlife/bar)
+"ekA" = (
+/obj/decal/poster/wallsign/stencil/left/f,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "elx" = (
 /turf/unsimulated/floor/grey/corner,
 /area/centcom/offices{
@@ -57894,6 +57892,10 @@
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /turf/unsimulated/floor/yellow,
 /area/owlery/gangzone)
+"eIp" = (
+/obj/decal/poster/wallsign/stencil/left/h,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "eIF" = (
 /obj/decal/cleanable/blood/tracks,
 /obj/machinery/door/airlock/pyro/glass,
@@ -62104,6 +62106,10 @@
 	icon_state = "floor"
 	},
 /area/iomoon/base/underground)
+"jjH" = (
+/obj/decal/poster/wallsign/stencil/left/c,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "jjW" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/obj/singularity.dmi';
@@ -63103,6 +63109,10 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/sim/gunsim/maintenance)
+"knP" = (
+/obj/decal/poster/wallsign/stencil/right/one,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "knY" = (
 /obj/lattice,
 /obj/machinery/vending/cola/red,
@@ -63802,6 +63812,10 @@
 	},
 /turf/unsimulated/floor/wood/six,
 /area/centcom/offices/janantilles)
+"kXp" = (
+/obj/decal/poster/wallsign/stencil/left/b,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "kYq" = (
 /obj/channel{
 	required_to_pass = 1e+009
@@ -64276,6 +64290,24 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
+"lvG" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/landmark/chess{
+	name = "queen"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "white"
+	},
+/area/sim/racing_track)
 "lwe" = (
 /obj/lattice{
 	dir = 10;
@@ -64365,6 +64397,14 @@
 	},
 /turf/unsimulated/floor/wood,
 /area/centcom/lounge)
+"lCw" = (
+/obj/landmark/chess{
+	name = "b_pawn"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "floorgrime-w"
+	},
+/area/sim/racing_track)
 "lCM" = (
 /obj/grille/steel,
 /turf/unsimulated/floor/plating,
@@ -67732,6 +67772,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"oYr" = (
+/obj/decal/poster/wallsign/stencil/left/seven,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "oYB" = (
 /obj/machinery/door/airlock/pyro/classic{
 	locked = 1
@@ -68109,6 +68153,10 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/studenterhue)
+"ppq" = (
+/obj/decal/poster/wallsign/stencil/right/two,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "ppE" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 10;
@@ -68984,6 +69032,10 @@
 	dir = 1
 	},
 /area/crypt/sigma/morgue)
+"qlA" = (
+/obj/decal/poster/wallsign/stencil/left/five,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "qlV" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	dir = 4;
@@ -69375,6 +69427,10 @@
 	},
 /turf/simulated/floor/sanitary,
 /area/centcom/lobby)
+"qHI" = (
+/obj/decal/poster/wallsign/stencil/right/three,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "qHX" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/drinks/water{
@@ -70371,6 +70427,10 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/tarmunora)
+"rBA" = (
+/obj/decal/poster/wallsign/stencil/left/a,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "rBI" = (
 /obj/table/wood/auto/desk,
 /obj/item/reagent_containers/food/drinks/drinkingglass/shot/normal{
@@ -72828,6 +72888,20 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"uDp" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "floorgrime-w"
+	},
+/area/sim/racing_track)
 "uDt" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -73017,6 +73091,10 @@
 	icon_state = "shore-17"
 	},
 /area/titlescreen)
+"uLk" = (
+/obj/decal/poster/wallsign/stencil/left/eight,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "uMs" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -74799,6 +74877,10 @@
 	opacity = 0
 	},
 /area/titlescreen)
+"wCZ" = (
+/obj/decal/poster/wallsign/stencil/right/four,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "wDg" = (
 /obj/item/storage/toilet/random{
 	dir = 4;
@@ -75597,6 +75679,10 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/centcom/offices/sovexe)
+"xoO" = (
+/obj/decal/poster/wallsign/stencil/left/g,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "xoT" = (
 /obj/machinery/door/airlock/pyro/maintenance{
 	req_access_txt = ""
@@ -123378,14 +123464,14 @@ bOn
 bOn
 bVU
 deK
-deQ
-deU
-dfc
-dfe
-dfk
 dfs
+dfk
+dfe
+dfc
+deU
+deQ
 dfv
-bVU
+uLk
 bVU
 bVT
 aaa
@@ -123680,14 +123766,14 @@ bOn
 bOn
 bVU
 deN
-deR
 deX
 deR
 deX
 deR
 deX
+lCw
 dfw
-bVU
+oYr
 bVU
 bVT
 aaa
@@ -123981,15 +124067,15 @@ bOn
 bOn
 bOn
 bVU
-deM
-deI
+deL
 deJ
 deI
 deJ
 deI
-deH
-deV
-bVU
+deJ
+deI
+deW
+bES
 bVU
 bVT
 aaa
@@ -124283,15 +124369,15 @@ bOn
 bOn
 bOn
 bVU
-deL
-deJ
+deM
 deI
 deJ
 deI
 deJ
 deI
-deW
-bVU
+deJ
+deV
+qlA
 bVU
 bVT
 aaa
@@ -124585,15 +124671,15 @@ bVS
 bOn
 bOn
 bVU
-deM
-deI
+deL
 deJ
 deI
 deH
 deI
 deJ
-deV
-bVU
+deI
+uDp
+wCZ
 bVU
 bVT
 aaa
@@ -124887,15 +124973,15 @@ bOn
 bOn
 bOn
 bVU
-deL
-deH
+deM
 deI
 deJ
 deI
 deJ
 deI
-deW
-bVU
+deJ
+deV
+qHI
 bVU
 bVT
 aaa
@@ -125190,14 +125276,14 @@ bOn
 bOn
 bVU
 deO
-deS
-deY
+dft
 deS
 deY
 deS
 dft
+deS
 dfx
-bVU
+ppq
 bVU
 bVT
 aaa
@@ -125492,14 +125578,14 @@ bOn
 bOn
 bVU
 deP
-deT
-dfb
-dfd
-dfh
-dfr
 dfu
+dfr
+dfh
+lvG
+dfb
+deT
 dfy
-bVU
+knP
 bVU
 bVT
 aaa
@@ -125793,14 +125879,14 @@ bOn
 bOn
 bOn
 bVU
-bVU
-bVU
-bVU
-bVU
-bVU
-bVU
-bVU
-bVU
+eIp
+xoO
+ekA
+cOK
+acK
+jjH
+kXp
+rBA
 bVU
 bVU
 bVT
