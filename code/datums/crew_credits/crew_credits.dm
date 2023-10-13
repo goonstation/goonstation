@@ -30,14 +30,13 @@
 		SCORE_TAB_SECTION_ENGINEERING = list(),
 		SCORE_TAB_SECTION_CIVILIAN = list(),
 		SCORE_TAB_SECTION_ESCAPEE = list(),
-
+	)
 	src.citation_tab_data = list(
 		CITATIONS_TAB_SECTION_TICKETS = list(),
 		CITATIONS_TAB_SECTION_FINES = list(),
 	)
-
 	src.reports_tab_data = list(
-		REPORTS_TAB = list()
+		REPORTS_TAB = list(),
 	)
 
 	src.generate_crew_credits()
@@ -455,7 +454,6 @@
 /datum/crewCredits/proc/generate_heisenhat_data()
 	. = list()
 	.["name"] = "Heisenbee's Hat"
-	.["type"] = "itemList"
 	var/found_hb = FALSE
 	var/tier = world.load_intra_round_value("heisenbee_tier")
 	for(var/obj/critter/domestic_bee/heisenbee/HB in by_cat[TR_CAT_PETS])
@@ -506,6 +504,7 @@
 			))
 
 		found_hb = TRUE
+		.["type"] = "itemList"
 		break
 
 	if(!found_hb)
@@ -553,13 +552,10 @@
 			//ignore blank untitled pages
 			if (paper.name == "paper" && !paper.info)
 				continue
-			pages += list(list(
-				"title" = (paper.name == "paper") ? "" : paper.name,
-				"info" = paper.info
-			))
+			pages += list(paper.ui_static_data())
 
 		src.citation_tab_data[REPORTS_TAB] += list(list(
-			"issuer" = "Inspector[clipboard.inspector_name ? " [clipboard.inspector_name]" : ""]'s report",
+			"issuer" = "Inspector[clipboard.inspector_name ? " [clipboard.inspector_name]" : ""]'s Report",
 			"pages" = pages,
 		))
 

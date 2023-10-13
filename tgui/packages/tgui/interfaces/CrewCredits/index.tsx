@@ -12,9 +12,9 @@ import { Window } from '../../layouts';
 import { CrewCreditsTabKeys } from './type';
 import { CrewTab } from './CrewTab';
 import { AntagonistsTab } from './AntagonistsTab';
+import { CitationsMenuTab, CitationsTab } from './CitationsTab';
+import { ReportMenuTab, ReportTab } from './ReportTab';
 import { ScoreTab } from './ScoreTab';
-import { CitationsTab } from './CitationsTab';
-import { ReportTab } from './ReportTab';
 
 
 
@@ -22,7 +22,7 @@ export const CrewCredits = (props, context) => {
   const [menu, setMenu] = useLocalState(context, 'menu', CrewCreditsTabKeys.Crew);
 
   return (
-    <Window title="Round Statistics" width={600} height={600}>
+    <Window title="Round Statistics" width={600} height={700}>
       <Window.Content scrollable>
         <Stack vertical fill>
           <Stack.Item>
@@ -42,17 +42,8 @@ export const CrewCredits = (props, context) => {
                 onClick={() => setMenu(CrewCreditsTabKeys.Score)}>
                 Station Score
               </Tabs.Tab>
-              <Tabs.Tab
-                selected={menu === CrewCreditsTabKeys.Citations}
-                onClick={() => setMenu(CrewCreditsTabKeys.Citations)}>
-                Tickets/Fines
-              </Tabs.Tab>
-              <Tabs.Tab
-                selected={menu === CrewCreditsTabKeys.Report}
-                onClick={() => setMenu(CrewCreditsTabKeys.Report)}>
-                Inspector&apos;s Report
-              </Tabs.Tab>
-
+              <CitationsMenuTab menu={menu} setMenu={setMenu} />
+              <ReportMenuTab menu={menu} setMenu={setMenu} />
             </Tabs>
           </Stack.Item>
           <Stack.Item>

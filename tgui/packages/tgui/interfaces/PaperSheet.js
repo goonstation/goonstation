@@ -228,6 +228,7 @@ export const PaperSheetView = (props, context) => {
     stamps = [],
     backgroundColor,
     readOnly,
+    fillWindow = true,
   } = props;
   const stampList = stamps || [];
   const textHtml = {
@@ -245,7 +246,7 @@ export const PaperSheetView = (props, context) => {
       <Box
         color="black"
         backgroundColor={backgroundColor}
-        fillPositionedParent
+        fillPositionedParent={fillWindow}
         width="100%"
         height="100%"
         dangerouslySetInnerHTML={textHtml}
