@@ -2609,7 +2609,7 @@
 		on_reaction(var/datum/reagents/holder)
 			var/location = get_turf(holder.my_atom)
 			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
-				var/smoke_to_create = clamp((holder.total_temperature - T20C), 0, 15) / 10 //for every degree over 20C, make .1u of smoke (up to 15u)...
+				var/smoke_to_create = clamp((holder.total_temperature - T20C)/20 , 0, 5)//for every degree over 20C, make .05u of smoke (up to 5u)...
 				if(smoke_to_create > 0)                                     //...but if under 20C, don't make any
 					var/datum/reagents/smokeContents = new/datum/reagents/
 					smokeContents.add_reagent("acid", smoke_to_create)
