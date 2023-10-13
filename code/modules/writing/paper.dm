@@ -252,6 +252,12 @@
 		"stamp-sprite-centcom" = "[resource("images/tgui/stamp_icons/stamp-centcom.png")]",
 		"stamp-sprite-syndicate" = "[resource("images/tgui/stamp_icons/stamp-syndicate.png")]",
 		"stamp-sprite-void" = "[resource("images/tgui/stamp_icons/stamp-void.png")]",
+		"stamp-sprite-classified" = "[resource("images/tgui/stamp_icons/stamp-classified.png")]",
+		"stamp-sprite-req-nt" = "[resource("images/tgui/stamp_icons/stamp-req-nt.png")]",
+		"stamp-sprite-stain-1" = "[resource("images/tgui/stamp_icons/stamp-stain-1.png")]",
+		"stamp-sprite-stain-2" = "[resource("images/tgui/stamp_icons/stamp-stain-2.png")]",
+		"stamp-sprite-stain-3" = "[resource("images/tgui/stamp_icons/stamp-stain-3.png")]",
+		"stamp-sprite-gtc" = "[resource("images/tgui/stamp_icons/stamp-gtc.png")]",
 		"stamp-text-time" =  T,
 		"stamp-text-name" = user.name
 	)
