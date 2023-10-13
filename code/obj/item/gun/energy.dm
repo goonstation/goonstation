@@ -281,7 +281,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 	uses_multiple_icon_states = 1
 	item_state = "phaser_xl"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
@@ -1779,7 +1779,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	item_state = "ntgun2"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	w_class = W_CLASS_NORMAL		//for clarity
 	two_handed = TRUE
 	force = 9
