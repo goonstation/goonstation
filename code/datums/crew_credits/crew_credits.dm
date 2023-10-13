@@ -439,6 +439,7 @@
 	for(var/obj/critter/domestic_bee/heisenbee/HB in by_cat[TR_CAT_PETS])
 		var/obj/item/hat = HB.original_hat
 		if (hat && !hat.disposed)
+			.["type"] = "itemList"
 			if(hat.loc != HB)
 				var/atom/movable/AM = hat.loc
 				while(istype(AM) && !istype(AM, /mob))
@@ -448,26 +449,22 @@
 					"name" = "[hat] (tier [HB.original_tier]) \[STOLEN[istype(M) ? " BY [M]": ""]\]",
 					"iconBase64" = icon2base64(getFlatIcon(hat, no_anim=TRUE)),
 				))
-				.["type"] = "itemList"
 				if(HB.hat)
 					var/dead = HB.alive ? "" : "(dead) "
 					.["value"] += list(list(
 						"name" = "someone put [HB.hat] on [dead][HB] but that doesn't count",
 						"iconBase64" = icon2base64(getFlatIcon(HB, no_anim=TRUE)),
 					))
-					.["type"] = "itemList"
 			else if(!HB.alive)
 				.["value"] = list(list(
 					"name" = "[hat] (tier [HB.original_tier]) \[🐝 MURDERED!\]",
 					"iconBase64" = icon2base64(getFlatIcon(HB, no_anim=TRUE)),
 				))
-				.["type"] = "itemList"
 			else
 				.["value"] = list(list(
 					"name" = "[hat] (tier [HB.original_tier])",
 					"iconBase64" = icon2base64(getFlatIcon(HB, no_anim=TRUE)),
 				))
-				.["type"] = "itemList"
 		else if(HB.alive)
 			if(hat)
 				.["value"] = list(list(
@@ -478,11 +475,11 @@
 					"name" = "No hat yet",
 				))
 		else if (hat)
+			.["type"] = "itemList"
 			.["value"] = list(list(
 				"name" = "\[DESTROYED!\] \[🐝 MURDERED!\]",
 				"iconBase64" = icon2base64(getFlatIcon(hat, no_anim=TRUE)),
 			))
-			.["type"] = "itemList"
 		else
 			.["value"] = list(list(
 				"name" = "No hat yet. \[🐝 MURDERED!\]",
