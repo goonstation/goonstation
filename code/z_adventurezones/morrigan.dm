@@ -2117,8 +2117,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "nukebot"
 	base_icon_state = "nukebot"
 	desc = "One of Morrigan's classic models... best avoid it."
-	health_brute = 20
-	health_burn = 20
+	health_brute = 15
+	health_burn = 15
 	is_npc = TRUE
 	speak_lines = TRUE
 
@@ -2127,6 +2127,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 
 		if (length(.) && prob(10) && src.speak_lines)
 			src.say(pick("POTENTIAL INTRUDER. MOVING TO ELIMINATE.","YOU DO NOT BELONG HERE.","ALERT - ALL SYNDICATE PERSONNEL ARE TO MOVE TO A SAFE ZONE.","WARNING: THREAT RECOGNIZED AS NANOTRASEN.","Help!! Please I don- RESETTING.","YOU CANNOT ESCAPE. SURRENDER. NOW.","NANOTRASEN WILL LEAVE YOU BEHIND.","THIS IS NOT EVEN MY FINAL FORM."))
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.limb = new /datum/limb/gun/kinetic/morriganweak
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.icon_state = "handl"
+		HH.name = "left arm"
+		HH.limb_name = "9mm Handgun"
 
 	get_melee_protection(zone, damage_type)
 		return 4
@@ -2198,8 +2206,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "riotbot"
 	base_icon_state = "riotbot"
 	desc = "A sturdy version with a shield for increased survivability. Not nearly as lethal as the others though."
-	health_brute = 30
-	health_burn = 30
+	health_brute = 15
+	health_burn = 25
 
 	New()
 		..()
@@ -2305,8 +2313,8 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	icon_state = "medibot"
 	base_icon_state = "medibot"
 	desc = "A medical unit, doesn't pose as much of a threat. Looks a little smaller than the other ones."
-	health_brute = 20
-	health_burn = 10
+	health_brute = 12
+	health_burn = 12
 
 	New()
 		..()
@@ -3246,6 +3254,60 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 			user?.show_text("The internal safeties kick in turning off the [src]!", "red")
 		..()
 
+/obj/item/gun/kinetic/medsmg
+	name = "Mod. 101 'Cardea'"
+	uses_multiple_icon_states = 1
+	icon = 'icons/obj/adventurezones/morrigan/weapons/gun48.dmi'
+	icon_state = "medsmg"
+	item_state = "medsmg"
+	has_empty_state = TRUE
+	can_dual_wield = FALSE
+	contraband = 6
+	default_magazine = /obj/item/ammo/bullets/morriganmed
+
+	New()
+		new default_magazine(new /datum/projectile/syringefilled/morrigan/medsmg)
+		projectiles = list(current_projectile, new /datum/projectile/syringefilled/morrigan/medsmgheal)
+		..()
+
+	update_icon()
+		if (istype_exac0.t(current_projectile, /datum/projectile/syringefilled/morrigan/medsmgheal))
+			icon_state = "medsmgdmg"
+		else
+			icon_state = "medsmgheal"
+		..()
+
+	attack_self(var/mob/M)
+		..()
+		src.UpdateIcon()
+		M.update_inhands()
+
+
+//bullets
+/obj/item/ammo/bullets/morriganmed
+	sname = "9mm Poison Darts"
+	name = "9mm Poison Darts"
+	desc = "A magazine of 21 poison darts,for giving up on the oath."
+	icon_state = "medsmg_magazine"
+	amount_left = 21
+	max_amount = 21
+	icon_dynamic = 0
+	ammo_cat = AMMO_TRANQ_9MM
+	ammo_type = new/datum/projectile/syringefilled/morrigan/medsmg
+
+/obj/item/ammo/bullets/morriganmedheal
+	sname = "9mm Heal Darts"
+	name = "9mm Heal Darts"
+	desc = "A magazine of 21 heal darts,for upholding the oath."
+	icon_state = "medsmgheal_magazine"
+	amount_left = 21
+	max_amount = 21
+	icon_dynamic = 0
+	ammo_cat = AMMO_TRANQ_9MM
+	ammo_type = new/datum/projectile/syringefilled/morrigan/medsmgheal
+
+
+
 //projectiles
 /datum/projectile/bullet/optio/hitscanrail
 	name = "hardlight beam"
@@ -3540,6 +3602,25 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 	color_green = 0.1
 	color_blue = 0.8
 
+/datum/projectile/bullet/bullet_9mm/weak
+	name = "bullet"
+	damage = 22
+	shot_sound = 'sound/weapons/smg_shot.ogg'
+	damage_type = D_KINETIC
+	hit_type = DAMAGE_CUT
+	implanted = /obj/item/implant/projectile/bullet_9mm
+	casing = /obj/item/casing/small
+	impact_image_state = "bhole-small"
+	ricochets = TRUE
+
+/datum/limb/gun/kinetic/morriganweak
+	proj = new/datum/projectile/bullet/bullet_9mm/weak
+	shots = 5
+	current_shots = 5
+	cooldown = 3 SECONDS
+	reload_time = 10 SECONDS
+	muzzle_flash = "muzzle_flash"
+
 /datum/projectile/bullet/abg/morrigan
 	name = "rubber slug"
 	shot_sound = 'sound/weapons/shotgunshot.ogg'
@@ -3586,6 +3667,23 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 				for (var/reagent_id as anything in venom_id)
 					hit.reagents.add_reagent(reagent_id, inject_amount)
 
+/datum/projectile/syringefilled/morrigan/medsmg
+	shot_sound = 'sound/weapons/medsmg.ogg'
+	venom_id = list("haloperidol", "cyanide")
+	damage = 5
+	shot_number = 3
+	cost = 3
+	casing = /obj/item/casing/small
+	implanted = /obj/item/implant/projectile/body_visible/dart/tranq_dart_sleepy_barbed
+
+/datum/projectile/syringefilled/morrigan/medsmgheal
+	shot_sound = 'sound/weapons/medsmg.ogg'
+	venom_id = list("salicylic_acid", "saline")
+	inject_amount = 7.5
+	damage = 0
+	cost = 3
+	casing = /obj/item/casing/small
+	implanted = /obj/item/implant/projectile/body_visible/dart/tranq_dart_sleepy_barbed
 /datum/projectile/special/robohook
 	name = "hook"
 	dissipation_rate = 1
@@ -3937,3 +4035,13 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 	anchored = ANCHORED_ALWAYS
 	density = 0
 	opacity = 0
+
+// machinery
+
+/obj/machinery/door_control/cargo_button
+	name = "Old Button"
+	desc = "Looks a little worn out but the light is still on."
+
+/obj/machinery/bio_handscanner/attack_hand(mob/user)
+	SPAWN(1 SECOND)
+		pick(list(/obj/storage/crate/morrigancargo/engineer, /obj/storage/crate/morrigancargo/security, /obj/storage/crate/morrigancargo/medical))

@@ -2132,6 +2132,7 @@ var/global/list/soundCache = list(
  	"sound/weapons/male_cswordturnon.ogg" = 'sound/weapons/male_cswordturnon.ogg',\
  	"sound/weapons/male_toyattack.ogg" = 'sound/weapons/male_toyattack.ogg',\
  	"sound/weapons/male_toyattack2.ogg" = 'sound/weapons/male_toyattack2.ogg',\
+ 	"sound/weapons/medsmg.ogg" = 'sound/weapons/medsmg.ogg',\
  	"sound/weapons/minigunshot.ogg" = 'sound/weapons/minigunshot.ogg',\
  	"sound/weapons/nano-blade-1.ogg" = 'sound/weapons/nano-blade-1.ogg',\
  	"sound/weapons/nano-blade-2.ogg" = 'sound/weapons/nano-blade-2.ogg',\

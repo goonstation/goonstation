@@ -16221,6 +16221,7 @@
 /area/morrigan/derelict)
 "opW" = (
 /obj/item/collecting_chute,
+/obj/item/railgunpart,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/eng)
 "oqw" = (
