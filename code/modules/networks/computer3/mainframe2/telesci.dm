@@ -985,16 +985,17 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			"panel_open" = panel_open,
 			"padNum" = padNum,
 			"max_bookmarks" = max_bookmarks
+			"bookmarks" = null,
 		)
 
-		for (var/datum/teleporter_bookmark/b in bookmarks)
-			.["bookmarks"] += list(list(
-				"ref" = ref(b),
-				"name" = b.name,
-				"xyz" = "([b.x]/[b.y]/[b.z]) "
-			))
-		if (!length(bookmarks)) //this is needed to make TGUI clear out the list
+		if (length(bookmarks) > 0)
 			.["bookmarks"] = list()
+			for (var/datum/teleporter_bookmark/b as anything in bookmarks)
+				.["bookmarks"] += list(list(
+					"ref" = ref(b),
+					"name" = b.name,
+					"xyz" = "([b.x]/[b.y]/[b.z]) "
+				))
 
 	ui_act(action, params)
 		//. = TRUE means the action was handeled
