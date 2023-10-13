@@ -63,7 +63,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 		qdel(src)
 
 	attack_hand(mob/user)
-		if (!isliving(user)) return
+		if (!iscarbon(user)) return
 		if(anchored == UNANCHORED)
 			user.visible_message("<b>[user.name] folds [src].</b>")
 			playsound(src, 'sound/impact_sounds/Clock_slap.ogg',50,1)
