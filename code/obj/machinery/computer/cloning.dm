@@ -303,7 +303,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 
 	return R
 
-//Find a specific record by key.
+//Find a specific record by record ID (only used in UI functions)
 /obj/machinery/computer/cloning/proc/find_record_by_id(var/id)
 	RETURN_TYPE(/datum/db_record)
 	var/selected_record = null
@@ -313,6 +313,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 			break
 	return selected_record
 
+// Find a specific record by saved mind
 /obj/machinery/computer/cloning/proc/find_record_by_mind(datum/mind/M)
 	RETURN_TYPE(/datum/db_record)
 	var/selected_record = null
@@ -422,6 +423,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		src.menu = 1
 		src.records_scan()
 
+// check if a mind has a current mob, a client, and is dead/a ghost/doing afterlife stuff
 proc/eligible_to_clone(var/datum/mind/mind)
 	if (!mind)
 		return null
