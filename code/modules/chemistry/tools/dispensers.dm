@@ -48,8 +48,6 @@
 				if (prob(5))
 					smash()
 					return
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(25))

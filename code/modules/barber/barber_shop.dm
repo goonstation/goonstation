@@ -383,8 +383,6 @@ TYPEINFO(/obj/machinery/hair_dye_dispenser)
 				if (prob(50))
 					qdel(src)
 					return
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(power * 1.25))

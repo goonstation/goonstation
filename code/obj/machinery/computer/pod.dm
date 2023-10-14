@@ -64,14 +64,11 @@
 	return
 
 /obj/machinery/computer/pod/New()
-	..()
+	. = ..()
 	SPAWN( 5 )
 		for(var/obj/machinery/mass_driver/M as anything in machine_registry[MACHINES_MASSDRIVERS])
 			if (M.id == src.id)
 				src.connected = M
-			else
-		return
-	return
 
 /obj/machinery/computer/pod/attack_hand(var/mob/user)
 	if(..())
