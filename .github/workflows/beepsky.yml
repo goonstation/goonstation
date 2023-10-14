@@ -52,6 +52,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - uses: actions/checkout@v4
+      - run: touch +secret/__secret.dme
       - uses: actions/checkout@v4
         with:
           repository: OpenDreamProject/OpenDream
