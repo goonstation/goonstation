@@ -319,7 +319,8 @@ var/global/current_state = GAME_STATE_INVALID
 			if (player.ready)
 				if (player.mind && player.mind.ckey)
 					//Record player participation in this round via the goonhub API
-					participationRecorder.record(player.mind.ckey)
+					var/datum/player/P = player.mind.get_player()
+					participationRecorder.record(P)
 
 				if (player.mind && player.mind.assigned_role == "AI")
 					player.close_spawn_windows()

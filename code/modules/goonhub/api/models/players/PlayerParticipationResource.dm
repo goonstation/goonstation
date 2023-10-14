@@ -14,7 +14,6 @@
 		isnull(src.id) \
 		|| isnull(src.player_id) \
 		|| isnull(src.round_id) \
-		|| isnull(src.legacy_data) \
 		|| isnull(src.created_at) \
 		|| isnull(src.updated_at) \
 	)

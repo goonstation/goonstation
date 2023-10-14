@@ -372,7 +372,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				logTheThing(LOG_DEBUG, character, "<b>Late join:</b> assigned job: [JOB.name]")
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
-					participationRecorder.record(character.mind.ckey)
+					var/datum/player/P = character.mind.get_player()
+					participationRecorder.record(P)
 
 			// Apply any roundstart mutators to late join if applicable
 			roundstart_events(character)
