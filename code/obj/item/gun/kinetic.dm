@@ -687,7 +687,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 1.5) //the addative slow down does not play nice with the full auto so you get this instead
+		setProperty("carried_movespeed", 1.5) //the addative slow down does not play nice with the full auto so you get this instead
 
 /obj/item/gun/kinetic/akm
 	name = "\improper AKM Assault Rifle"
@@ -709,7 +709,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	default_magazine = /obj/item/ammo/bullets/akm
 	fire_animation = TRUE
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	ammobag_magazines = list(/obj/item/ammo/bullets/akm)
 	ammobag_restock_cost = 3
@@ -729,7 +729,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_state = "ohr" // prevent empty state from breaking the worn image
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_RIFLE_308)
@@ -755,7 +755,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "tranq"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	//contraband = 8
 	ammo_cats = list(AMMO_TRANQ_308)
@@ -939,7 +939,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	object_flags = NO_ARM_ATTACH
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBELT
+	c_flags = ONBELT
 
 	spread_angle = 2
 	can_dual_wield = 0
@@ -1173,7 +1173,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	contraband = 1
 	two_handed = TRUE
 	auto_eject = FALSE
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	force = 2
 	ammo_cats = list(AMMO_FOAMDART)
 	max_ammo_capacity = 12
@@ -1369,7 +1369,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	wear_state = "shotty" // prevent empty state from breaking the worn image
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
@@ -1449,7 +1449,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	icon_state = "mts255"
 	item_state = "mts255"
 	flags =  FPRINT | TABLEPASS | CONDUCT
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
@@ -1594,7 +1594,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "flintlock_rifle"
 	ammo_cats = list(AMMO_FLINTLOCK_RIFLE)
 	flags =  FPRINT | TABLEPASS | CONDUCT
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	two_handed = TRUE
 	w_class = W_CLASS_BULKY
@@ -1671,7 +1671,6 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "missile_launcher"
 	item_state = "missile_launcher"
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
 	uses_multiple_icon_states = TRUE
 	has_empty_state = TRUE
 	w_class = W_CLASS_BULKY
@@ -1882,7 +1881,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "ntlauncher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
@@ -1903,7 +1902,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.8)
+		setProperty("carried_movespeed", 0.8)
 
 //2.5
 /obj/item/gun/kinetic/single_action/flintlock/mortar
@@ -2149,7 +2148,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "assault_rifle"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_556)
@@ -2219,7 +2218,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	auto_eject = 0
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	spread_angle = 8
 	can_dual_wield = 0
@@ -2239,7 +2238,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 1)
+		setProperty("carried_movespeed", 1)
 
 
 /obj/item/gun/kinetic/cannon
@@ -2256,7 +2255,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	fire_animation = TRUE
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -2279,7 +2278,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.3)
+		setProperty("carried_movespeed", 0.3)
 
 /obj/item/gun/kinetic/recoilless
 	name = "\improper Carinae RCL/120"
@@ -2293,7 +2292,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 1
 	auto_eject = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -2315,8 +2314,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.2)
-
+		setProperty("carried_movespeed", 0.2)
 
 // demo
 /obj/item/gun/kinetic/grenade_launcher
@@ -2327,7 +2325,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	item_state = "grenade_launcher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_GRENADE_ALL)
@@ -2386,7 +2384,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	max_ammo_capacity = 6
 	auto_eject = 1
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	slowdown = 7
 	slowdown_time = 5
 
@@ -2415,7 +2413,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.8)
+		setProperty("carried_movespeed", 0.8)
 
 
 	dropped(mob/M)
@@ -2488,7 +2486,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 	auto_eject = 1
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -2509,7 +2507,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.3)*/
+		setProperty("carried_movespeed", 0.3)*/
 
 /obj/item/gun/kinetic/sawnoff
 	name = "double-barreled shotgun"
