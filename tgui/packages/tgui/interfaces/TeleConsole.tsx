@@ -162,7 +162,7 @@ export const CoordinatesSection = (_props, context) => {
 
   return (
     <Section>
-      {"Taget Coordinates: "}
+      {"Target Coordinates: "}
       <Box>
         {"X: "}
         <Button
