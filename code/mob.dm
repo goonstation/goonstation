@@ -1787,9 +1787,9 @@
 				if(!decal.can_fluid_absorb)
 					continue
 			else if(istype(O, /obj/item/organ/heart))
-				// heart can have a little reagents, as a treat
+				; // heart can have a little reagents, as a treat
 			else if(istype(O, /obj/item/reagent_containers))
-				// some of our fluids got into a beaker, oh no!
+				; // some of our fluids got into a beaker, oh no!
 			else
 				continue
 			get_our_fluids_here += O
