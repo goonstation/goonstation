@@ -94,7 +94,7 @@ var/global/list/mapNames = list(
 	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(1) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
-		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
+		/atom/movable/screen/parallax_render_source/asteroids_near/sparse
 		)
 	/// The default parallax render source types that `Z_LEVEL_ADVENTURE` should use.
 	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(2) = list()
@@ -102,8 +102,14 @@ var/global/list/mapNames = list(
 	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(3) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/fugere,
+		/atom/movable/screen/parallax_render_source/typhon/closer,
+		/atom/movable/screen/parallax_render_source/planet/faatus,
+		/atom/movable/screen/parallax_render_source/planet/domusDei,
+		/atom/movable/screen/parallax_render_source/planet/quadriga,
+		/atom/movable/screen/parallax_render_source/planet/amantes,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
-		/atom/movable/screen/parallax_render_source/asteroids_near,
+		/atom/movable/screen/parallax_render_source/asteroids_near
 		)
 	/// The default parallax render source types that `Z_LEVEL_SECRET` should use.
 	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(4) = list()
@@ -111,8 +117,15 @@ var/global/list/mapNames = list(
 	VAR_Z_LEVEL_PARALLAX_RENDER_SOURCES(5) = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
+		/atom/movable/screen/parallax_render_source/sid,
+		/atom/movable/screen/parallax_render_source/typhon/further,
+		/atom/movable/screen/parallax_render_source/planet/mors,
+		/atom/movable/screen/parallax_render_source/planet/regis,
+		/atom/movable/screen/parallax_render_source/planet/magus,
+		/atom/movable/screen/parallax_render_source/planet/regina,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
 		/atom/movable/screen/parallax_render_source/asteroids_near,
+		/atom/movable/screen/parallax_render_source/asteroids_near/sparse
 		)
 
 	var/walls = /turf/simulated/wall/auto
@@ -359,6 +372,7 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/typhon/cogmap,
 		/atom/movable/screen/parallax_render_source/planet/mundus,
+		/atom/movable/screen/parallax_render_source/planet/fortuna,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 
@@ -425,7 +439,9 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/typhon/cogmap2,
-		/atom/movable/screen/parallax_render_source/planet/iustitia,
+		/atom/movable/screen/parallax_render_source/planet/mundus
+		/atom/movable/screen/parallax_render_source/planet/mundus/iustitia,
+		/atom/movable/screen/parallax_render_source/planet/mundus/iudicium,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse,
 		)
 

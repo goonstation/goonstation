@@ -1,7 +1,7 @@
 /atom/movable/screen/parallax_render_source/foreground
 	plane = PLANE_FOREGROUND_PARALLAX
 
-// Space Layers
+// ================= Space Layers =================
 /atom/movable/screen/parallax_render_source/space_1
 	parallax_icon_state = "space_1"
 	parallax_value = 0
@@ -31,7 +31,7 @@
 	scroll_angle = 270
 
 
-// Typhon
+// =================    Stars     =================
 /atom/movable/screen/parallax_render_source/typhon
 	parallax_icon = 'icons/misc/1024x1024.dmi'
 	parallax_icon_state = "plasma_giant"
@@ -39,50 +39,154 @@
 	parallax_value = 0.015
 	tessellate = FALSE
 
-/atom/movable/screen/parallax_render_source/typhon/cogmap
-	initial_x_coordinate = 0
-	initial_y_coordinate = 167
+	cogmap
+		initial_x_coordinate = 0
+		initial_y_coordinate = 167
 
-/atom/movable/screen/parallax_render_source/typhon/cogmap2
-	initial_x_coordinate = 300
-	initial_y_coordinate = 140
+	cogmap2
+		initial_x_coordinate = 300
+		initial_y_coordinate = 140
 
-/atom/movable/screen/parallax_render_source/typhon/kondaru
-	initial_x_coordinate = 150
-	initial_y_coordinate = 500
+	kondaru
+		initial_x_coordinate = 150
+		initial_y_coordinate = 500
 
-/atom/movable/screen/parallax_render_source/typhon/donut2
-	initial_x_coordinate = 300
-	initial_y_coordinate = 350
+	donut2
+		initial_x_coordinate = 300
+		initial_y_coordinate = 350
 
-/atom/movable/screen/parallax_render_source/typhon/donut3
-	initial_x_coordinate = -50
-	initial_y_coordinate = 350
+	donut3
+		initial_x_coordinate = -50
+		initial_y_coordinate = 350
 
+	closer // for the debris field
+		parallax_icon = 'icons/misc/1024x1024.dmi'
+		parallax_icon_state = "plasma_giant"
+		initial_x_coordinate = -50
+		initial_y_coordinate = 350
+		parallax_value = 0.02
 
-// Planets
+	further // for the mining level
+		parallax_icon = 'icons/misc/1024x1024.dmi'
+		parallax_icon_state = "plasma_giant"
+		initial_x_coordinate = -50
+		initial_y_coordinate = 350
+		parallax_value = 0.01
+
+// for lore reasons, only one of fugere or sid should be visible at a time really.
+/atom/movable/screen/parallax_render_source/fugere
+	parallax_icon = 'icons/misc/galactic_objects_large.dmi'
+	parallax_icon_state = "star-red"
+	static_colour = TRUE
+	parallax_value = 0.003
+	tessellate = FALSE
+	initial_x_coordinate = -300
+	initial_y_coordinate = 450
+
+/atom/movable/screen/parallax_render_source/sid
+	parallax_icon = 'icons/misc/galactic_objects_large.dmi'
+	parallax_icon_state = "star-blue"
+	static_colour = TRUE
+	parallax_value = 0.003
+	tessellate = FALSE
+	initial_x_coordinate = -300
+	initial_y_coordinate = 450
+
+// =================    Planets   =================
 /atom/movable/screen/parallax_render_source/planet
 	parallax_icon = 'icons/misc/512x512.dmi'
 	static_colour = TRUE
 	parallax_value = 0.03
 	tessellate = FALSE
+// RADIATION BELT DISTRICT PLANETS
+	// we don't have any yet, lol. They are Pendus, Fortitudo and Antistes, for reference.
+// MAIN RINGS DISTRICT PLANETS------------
+/atom/movable/screen/parallax_render_source/planet/quadriga
+	parallax_icon_state = "quadriga"
+	initial_x_coordinate = 100
+	initial_y_coordinate = -100
 
+/atom/movable/screen/parallax_render_source/planet/amantes
+	parallax_icon_state = "amantes"
+	initial_x_coordinate = -200
+	initial_y_coordinate = 50
+
+/atom/movable/screen/parallax_render_source/planet/faatus
+	parallax_icon_state = "faatus"
+	initial_x_coordinate = 230
+	initial_y_coordinate = 100
+
+/atom/movable/screen/parallax_render_source/planet/faatus/domusDei
+	parallax_icon_state = "domusDei"
+	initial_x_coordinate = 230
+	initial_y_coordinate = 100
+	parallax_value = 0.035
+	// this version is behind faatus instead of in front
+	behind
+		parallax_value = 0.025
+
+// MUNDUS GAP DISTRICT PLANETS------------
 /atom/movable/screen/parallax_render_source/planet/mundus
 	parallax_icon_state = "mundus"
 	initial_x_coordinate = 300
 	initial_y_coordinate = -100
 
-/atom/movable/screen/parallax_render_source/planet/iustitia
+/atom/movable/screen/parallax_render_source/planet/mundus/iustitia
 	parallax_icon_state = "iustitia"
 	initial_x_coordinate = 65
 	initial_y_coordinate = 0
+	parallax_value = 0.035
+	// This version is slightly behind mundus.
+	behind
+		parallax_value = 0.025
+
+/atom/movable/screen/parallax_render_source/planet/mundus/iudicium
+	parallax_icon_state = "iudicium"
+	initial_x_coordinate = 45
+	initial_y_coordinate = 200
+	parallax_value = 0.035
+	// this version is slightly behind mundus
+	behind
+		parallax_value = 0.025
 
 /atom/movable/screen/parallax_render_source/planet/fortuna
 	parallax_icon_state = "fortuna"
 	initial_x_coordinate = 70
 	initial_y_coordinate = 0
 
-// Asteroid Layers
+// ROYAL RINGS DISTRICT PLANETS------------
+/atom/movable/screen/parallax_render_source/planet/mors
+	parallax_icon_state = "mors"
+	initial_x_coordinate = 40
+	initial_y_coordinate = -100
+
+/atom/movable/screen/parallax_render_source/planet/mors/regis
+	parallax_icon_state = "regis"
+	initial_x_coordinate = 40
+	initial_y_coordinate = -100
+	parallax_value = 0.035
+	// version behind mors
+	behind
+		parallax_value = 0.025
+
+// todo: magus and regina sprites
+/atom/movable/screen/parallax_render_source/planet/magus
+	parallax_icon_state = "magus"
+	initial_x_coordinate = -50
+	initial_y_coordinate = -10
+/atom/movable/screen/parallax_render_source/planet/magus/regina
+	parallax_icon_state = "regina"
+	initial_x_coordinate = -30
+	initial_y_coordinate = -20
+	parallax_value = 0.035
+	// version of regina behind magus
+	behind
+		parallax_value = 0.025
+
+// NIFLHEIM BELT DISTRICT PLANETS------------
+// todo
+
+// ================= Asteroid Layers =================
 /atom/movable/screen/parallax_render_source/asteroids_far
 	parallax_icon_state = "asteroids_far"
 	static_colour = TRUE
@@ -107,7 +211,7 @@
 	scroll_angle = 180
 
 
-// Miscellaneous Layers
+// ================= Miscellaneous Layers =================
 /atom/movable/screen/parallax_render_source/blowout_clouds
 	parallax_icon_state = "blowout_clouds"
 	static_colour = TRUE
@@ -123,7 +227,7 @@
 	scroll_speed = 500
 
 
-// Effects
+// =================     Effects    =================
 
 // Clouds
 /atom/movable/screen/parallax_render_source/foreground/clouds
@@ -162,7 +266,7 @@
 	scroll_speed = 10
 
 
-// Adventure Zones
+// ================= Adventure Zones =================
 
 // Snow Storm Layers
 /atom/movable/screen/parallax_render_source/foreground/snow
