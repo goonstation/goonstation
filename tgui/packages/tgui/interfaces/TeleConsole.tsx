@@ -9,7 +9,9 @@
 import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
-import { Box, Button, Icon, Input, LabeledList, Section } from '../components';
+import { Box, Button, Icon, Input, LabeledList, Section, Slider, Stack } from '../components';
+import { clamp, toFixed } from 'common/math';
+import { decodeHtmlEntities } from 'common/string';
 
 interface TeleConsoleData {
   xTarget: number;
@@ -31,7 +33,9 @@ interface BookmarkData {
   z: number;
 }
 
-const formatCoordinates = (x: number, y: number, z: number) => `${x}, ${y}, ${z}`;
+const formatDecimal = (value: number) => toFixed(value, 2);
+const formatCoordinates = (x: number, y: number, z: number) => `${formatDecimal(x)}, ${formatDecimal(y)}, ${z}`;
+const formatReadout = (readout: string) => decodeHtmlEntities(readout);
 
 export const TeleConsole = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
@@ -42,7 +46,7 @@ export const TeleConsole = (_props, context) => {
   const handleRestoreBookmark = (ref: string) => act('restorebookmark', { value: ref });
 
   return (
-    <Window theme="ntos" width={400} height={500}>
+    <Window theme="ntos" width={400} height={510}>
       <Window.Content textAlign="center">
         <CoordinatesSection />
         <Section>
@@ -60,7 +64,7 @@ export const TeleConsole = (_props, context) => {
             Scan
           </Button>
         </Section>
-        {readout && <Section>{readout}</Section>}
+        {readout && <Section>{formatReadout(readout)}</Section>}
         <BookmarksSection
           bookmarks={bookmarks}
           maxBookmarks={maxBookmarks}
@@ -164,34 +168,120 @@ const BookmarksSection = (props: BookmarksSectionProps, context) => {
   );
 };
 
+interface SliderProps {
+  format?: (value: number) => string;
+  maxValue: number;
+  minValue: number;
+  step?: number;
+  stepPixelSize?: number;
+}
+
+interface CoordinateSliderProps extends SliderProps {
+  format?: (value: number) => string;
+  onAdjust?: (adjust: number) => void;
+  onChange: (value: number) => void;
+  nudgeAmount?: number;
+  stepAmount?: number;
+  skipAmount?: number;
+  value: number;
+}
+
+const CoordinateSlider = (props: CoordinateSliderProps) => {
+  const {
+    format,
+    maxValue,
+    minValue,
+    onAdjust,
+    onChange,
+    nudgeAmount,
+    skipAmount,
+    stepAmount = 1,
+    step,
+    value,
+    ...rest
+  } = props;
+  const handleAdjust = (adjust: number) => {
+    if (onAdjust) {
+      onAdjust(adjust);
+      return;
+    }
+    onChange(clamp(value + adjust, minValue, maxValue));
+  };
+  return (
+    <Stack inline width="100%">
+      <Stack.Item>
+        <Button icon="backward-fast" onClick={() => onChange(minValue)} />
+        {!!skipAmount && <Button icon="backward-step" onClick={() => handleAdjust(-skipAmount)} />}
+        <Button icon="backward" onClick={() => handleAdjust(-stepAmount)} />
+        {!!nudgeAmount && (
+          <Button onClick={() => handleAdjust(nudgeAmount)}>
+            <Icon name="play" rotation={180} />
+          </Button>
+        )}
+      </Stack.Item>
+      <Stack.Item grow={1}>
+        <Slider
+          {...rest}
+          format={format}
+          value={value}
+          minValue={minValue}
+          maxValue={maxValue}
+          step={step}
+          onChange={(_e, newValue) => onChange(newValue)}
+        />
+      </Stack.Item>
+      <Stack.Item>
+        {!!nudgeAmount && <Button icon="play" onClick={() => handleAdjust(nudgeAmount)} />}
+        <Button icon="forward" onClick={() => handleAdjust(stepAmount)} />
+        {!!skipAmount && <Button icon="forward-step" onClick={() => handleAdjust(skipAmount)} />}
+        <Button icon="fast-forward" onClick={() => onChange(maxValue)} />
+      </Stack.Item>
+    </Stack>
+  );
+};
+
 const CoordinatesSection = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
   const { xTarget, yTarget, zTarget } = data;
-
   return (
     <Section title="Target">
-      <Box>
-        {'X: '}
-        <Button icon="backward" onClick={() => act('setX', { value: xTarget - 10 })} />
-        <Button icon="caret-left" onClick={() => act('setX', { value: xTarget - 1 })} />
-        <Button.Input content={xTarget} onCommit={(_e, value) => act('setX', { value: value })} />
-        <Button icon="caret-right" onClick={() => act('setX', { value: xTarget + 1 })} />
-        <Button icon="forward" onClick={() => act('setX', { value: xTarget + 10 })} />
-      </Box>
-      <Box>
-        {'Y: '}
-        <Button icon="backward" onClick={() => act('setY', { value: yTarget - 10 })} />
-        <Button icon="caret-left" onClick={() => act('setY', { value: yTarget - 1 })} />
-        <Button.Input content={yTarget} onCommit={(_e, value) => act('setY', { value: value })} />
-        <Button icon="caret-right" onClick={() => act('setY', { value: yTarget + 1 })} />
-        <Button icon="forward" onClick={() => act('setY', { value: yTarget + 10 })} />
-      </Box>
-      <Box>
-        {'Z: '}
-        <Button icon="caret-left" onClick={() => act('setZ', { value: zTarget - 1 })} />
-        <Button.Input content={zTarget} onCommit={(_e, value) => act('setZ', { value: value })} />
-        <Button icon="caret-right" onClick={() => act('setZ', { value: zTarget + 1 })} />
-      </Box>
+      <LabeledList>
+        <LabeledList.Item label="X">
+          <CoordinateSlider
+            format={formatDecimal}
+            maxValue={500}
+            minValue={0}
+            nudgeAmount={0.25}
+            skipAmount={10}
+            stepAmount={1}
+            step={0.25}
+            onChange={(value) => act('setX', { value })}
+            value={xTarget}
+          />
+        </LabeledList.Item>
+        <LabeledList.Item label="Y">
+          <CoordinateSlider
+            format={formatDecimal}
+            maxValue={500}
+            minValue={0}
+            nudgeAmount={0.25}
+            skipAmount={10}
+            stepAmount={1}
+            step={0.25}
+            onChange={(value) => act('setY', { value })}
+            value={yTarget}
+          />
+        </LabeledList.Item>
+        <LabeledList.Item label="Z">
+          <CoordinateSlider
+            maxValue={14}
+            minValue={0}
+            onChange={(value) => act('setZ', { value })}
+            stepPixelSize={10}
+            value={zTarget}
+          />
+        </LabeledList.Item>
+      </LabeledList>
     </Section>
   );
 };
