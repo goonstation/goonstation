@@ -568,7 +568,7 @@ var/global/noir = 0
 			else //It's a key. We need to cache it's ban history to not make 300 requests to the API.
 				target = M
 				action = "jobban_offline"
-				M = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+				M = jobban_get_for_player(M)
 			if (!M)
 				return
 
@@ -704,7 +704,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_SA)
 				var/M = href_list["target"]
 				var/job = href_list["type"]
-				var/list/cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+				var/list/cache = jobban_get_for_player(M)
 				if (!M) return
 				if (jobban_isbanned(cache, job))
 					if(cache.Find("Everything Except Assistant") && job != "Everything Except Assistant")

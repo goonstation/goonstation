@@ -6,3 +6,11 @@
 	routeParams = list("jobBan")	// integer
 	body = /datum/apiBody/jobbans/update
 	correct_response = /datum/apiModel/Tracked/JobBanResource
+
+	buildBody(
+		server_id,
+		job,
+		reason,
+		duration
+	)
+		. = ..(args)

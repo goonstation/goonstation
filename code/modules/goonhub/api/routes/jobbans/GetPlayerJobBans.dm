@@ -4,4 +4,4 @@
 	method = RUSTG_HTTP_METHOD_GET
 	path = "/job-bans/get-for-player"
 	queryParams = list("ckey", "server_id") // string, string
-	correct_response = /datum/apiModel/Tracked/JobBanResource
+	correct_response = /datum/apiModel/JobBansForPlayer
