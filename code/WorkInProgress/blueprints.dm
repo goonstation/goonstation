@@ -578,17 +578,15 @@
 	var/room_name = ""
 	var/list/roominfo = list()
 
-proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE, var/savepath = "", var/allow_overwrite = TRUE)
+proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	if (!length(turf_list)) return
-	if (!savepath)
-		if (!user || !user.client) return
-		var/input = strip_html(tgui_input_text(user, "Blueprint Name", "Set a name for your new blueprint.", null, 54)) // 54 char limit
-		if (!input) return
-		savepath = "data/blueprints/[user.client.ckey]/[input].dat"
+	if (!user || !user.client) return
+	var/input = strip_html(tgui_input_text(user, "Blueprint Name", "Set a name for your new blueprint.", null, 54)) // 54 char limit
+	if (!input) return
+	var/savepath = "data/blueprints/[user.client.ckey]/[input].dat"
 	if (fexists("[savepath]"))
-		if (!allow_overwrite) return // please god use this param if you're calling this with a null user
 		if (user && alert(user, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
-			return
+			return // tgui this
 		fdel("[savepath]")
 	var/savefile/save = new/savefile("[savepath]")
 
@@ -653,7 +651,7 @@ proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 			return
 		var/inputbp = tgui_input_list(user, "Pick a blueprint to load.", "Your Blueprints", bplist)
 		if(!inputbp) return
-		var/savepath = "data/blueprints/[user.client.ckey]/[inputbp]"
+		savepath = "data/blueprints/[user.client.ckey]/[inputbp]"
 	if (!fexists(savepath)) return // unlikely i hope
 	var/savefile/save = new/savefile("[savepath]")
 
@@ -703,7 +701,7 @@ proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 	bp.cost_metal = round(bp.cost_metal)
 	bp.cost_crystal = round(bp.cost_crystal)
 
-	boutput(user, "<span class='notice'>Loaded blueprint [inputbp], with [turf_count] tiles, and [obj_count] objects.</span>")
+	boutput(user, "<span class='notice'>Loaded blueprint [bp.room_name], with [turf_count] tiles, and [obj_count] objects.</span>")
 	return bp
 
 /obj/item/blueprint_marker
