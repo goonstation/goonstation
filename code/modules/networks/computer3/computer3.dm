@@ -587,8 +587,6 @@
 		if(3)
 			if (prob(25))
 				set_broken()
-		else
-	return
 
 /obj/machinery/computer3/emp_act()
 	..()

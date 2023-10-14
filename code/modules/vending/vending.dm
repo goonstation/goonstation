@@ -272,8 +272,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/vending, proc/throw_item, proc/admin_command
 				SPAWN(0)
 					src.fall()
 					return
-		else
-	return
 
 /obj/machinery/vending/blob_act(var/power)
 	if (prob(power * 1.25))
