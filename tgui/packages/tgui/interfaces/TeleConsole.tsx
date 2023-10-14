@@ -34,17 +34,15 @@ const formatCoordinates = (x: number, y: number, z: number) => `${x}, ${y}, ${z}
 
 export const TeleConsole = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
-  const [newBookmarkName, setNewBookmarkName] = useLocalState(context, 'newBookmarkName', '');
   const { xtarget, ytarget, ztarget, host_id, bookmarks, readout, panel_open, padNum, max_bookmarks } = data;
 
-  const handleAddBookmark = (name: string) => {
-    act('addbookmark', { value: name });
-    setNewBookmarkName('');
-  };
+  const handleAddBookmark = (name: string) => act('addbookmark', { value: name });
+  const handleDeleteBookmark = (ref: string) => act('deletebookmark', { value: ref });
+  const handleRestoreBookmark = (ref: string) => act('restorebookmark', { value: ref });
+
   return (
     <Window theme="ntos" width={400} height={500}>
       <Window.Content textAlign="center">
-        {readout && <Section>{readout}</Section>}
         <CoordinatesSection />
         <Section>
           <Box>
@@ -63,38 +61,15 @@ export const TeleConsole = (_props, context) => {
             Scan
           </Button>
         </Section>
-        <Section title="Bookmarks">
-          <LabeledList>
-            {bookmarks.map((bookmark) => {
-              return (
-                <LabeledList.Item
-                  key={bookmark.ref}
-                  label={formatCoordinates(bookmark.X, bookmark.Y, bookmark.Z)}
-                  buttons={
-                    <Button icon="trash" color="red" onClick={() => act('deletebookmark', { value: bookmark.ref })} />
-                  }>
-                  <Button icon="bookmark" onClick={() => act('restorebookmark', { value: bookmark.ref })}>
-                    {bookmark.name}
-                  </Button>
-                </LabeledList.Item>
-              );
-            })}
-            {!!(bookmarks.length < max_bookmarks) && (
-              <LabeledList.Item
-                key="new"
-                label={formatCoordinates(xtarget, ytarget, ztarget)}
-                buttons={<Button icon="plus" color="green" onClick={() => handleAddBookmark(newBookmarkName)} />}>
-                <Input
-                  width="100%"
-                  value={newBookmarkName}
-                  onInput={(_e, value) => setNewBookmarkName(value)}
-                  placeholder="New bookmark"
-                  onEnter={(_e, value) => handleAddBookmark(value)}
-                />
-              </LabeledList.Item>
-            )}
-          </LabeledList>
-        </Section>
+        {readout && <Section>{readout}</Section>}
+        <BookmarksSection
+          bookmarks={bookmarks}
+          maxBookmarks={max_bookmarks}
+          onAddBookmark={handleAddBookmark}
+          onDeleteBookmark={handleDeleteBookmark}
+          onRestoreBookmark={handleRestoreBookmark}
+          targetCoords={[xtarget, ytarget, ztarget]}
+        />
         {!!panel_open && (
           <Section>
             <Box>Open panel:</Box>
@@ -136,6 +111,56 @@ const ConnectionSection = (_props, context) => {
           <Button icon="power-off" content="Retry" color="green" onClick={() => act('reconnect', { value: 1 })} />
         </Box>
       )}
+    </Section>
+  );
+};
+
+type BookmarksSectionProps = Pick<TeleConsoleData, 'bookmarks'> & {
+  maxBookmarks: number;
+  onAddBookmark: (name: string) => void;
+  onDeleteBookmark: (ref: string) => void;
+  onRestoreBookmark: (ref: string) => void;
+  targetCoords: [number, number, number];
+};
+
+const BookmarksSection = (props: BookmarksSectionProps, context) => {
+  const { bookmarks, maxBookmarks, onAddBookmark, onDeleteBookmark, onRestoreBookmark, targetCoords } = props;
+  const [newBookmarkName, setNewBookmarkName] = useLocalState(context, 'newBookmarkName', '');
+  const handleAddBookmark = (name: string) => {
+    onAddBookmark(name);
+    setNewBookmarkName('');
+  };
+  return (
+    <Section title="Bookmarks">
+      <LabeledList>
+        {bookmarks.map((bookmark) => {
+          return (
+            <LabeledList.Item
+              key={bookmark.ref}
+              label={formatCoordinates(bookmark.X, bookmark.Y, bookmark.Z)}
+              buttons={<Button icon="trash" color="red" onClick={() => onDeleteBookmark(bookmark.ref)} />}>
+              <Button icon="bookmark" onClick={() => onRestoreBookmark(bookmark.ref)}>
+                {bookmark.name}
+              </Button>
+            </LabeledList.Item>
+          );
+        })}
+        {!!(bookmarks.length < maxBookmarks) && (
+          <LabeledList.Item
+            key="new"
+            label={formatCoordinates(...targetCoords)}
+            buttons={<Button icon="plus" color="green" onClick={() => handleAddBookmark(newBookmarkName)} />}>
+            <Input
+              width="100%"
+              value={newBookmarkName}
+              onInput={(_e, value: string) => setNewBookmarkName(value)}
+              placeholder="New bookmark"
+              onEnter={(_e, value: string) => handleAddBookmark(value)}
+              maxLength={32}
+            />
+          </LabeledList.Item>
+        )}
+      </LabeledList>
     </Section>
   );
 };
