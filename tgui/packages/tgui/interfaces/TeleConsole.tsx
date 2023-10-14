@@ -56,7 +56,7 @@ export const TeleConsole = (_props, context) => {
               color="green"
               icon="sign-in-alt"
               onClick={() => act("receive")}
-              content="Recieve"
+              content="Receive"
               disabled={!host_id}
             />
             <Button
