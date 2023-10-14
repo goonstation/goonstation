@@ -45,18 +45,16 @@ export const TeleConsole = (_props, context) => {
       <Window.Content textAlign="center">
         <CoordinatesSection />
         <Section>
-          <Box>
-            <Button color="green" icon="sign-out-alt" onClick={() => act('send')} disabled={!host_id}>
-              Send
-            </Button>
-            <Button color="green" icon="sign-in-alt" onClick={() => act('receive')} disabled={!host_id}>
-              Receive
-            </Button>
-            <Button color="green" onClick={() => act('portal')} disabled={!host_id}>
-              <Icon name="ring" rotation={90} />
-              Toggle Portal
-            </Button>
-          </Box>
+          <Button color="green" icon="sign-out-alt" onClick={() => act('send')} disabled={!host_id}>
+            Send
+          </Button>
+          <Button color="green" icon="sign-in-alt" onClick={() => act('receive')} disabled={!host_id}>
+            Receive
+          </Button>
+          <Button color="green" onClick={() => act('portal')} disabled={!host_id}>
+            <Icon name="ring" rotation={90} />
+            Toggle Portal
+          </Button>
           <Button color="green" icon="magnifying-glass" onClick={() => act('scan')} disabled={!host_id}>
             Scan
           </Button>
