@@ -1,5 +1,9 @@
 
 (t)fri oct 13 23
+(u)Tyrant
+(p)16420
+(e)🪲🗺💅|C-Bug, A-Mapping, C-QoL
+(+)The VR chessboard is now set up according to the rules of chess.
 (u)MylieDaniels
 (p)16394
 (e)🔎💡|C-Code-Quality, A-Station-Systems
