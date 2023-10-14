@@ -76,10 +76,8 @@
 			health = health -50
 		if(3)
 			health = health -25
-		else
-	if(health <=0)
+	if(health <= 0)
 		src.death()
-	return
 
 /obj/npc/blob_act(var/power)
 	// Called when attacked by a blob

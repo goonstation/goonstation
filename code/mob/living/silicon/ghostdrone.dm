@@ -517,9 +517,7 @@
 
 			user.drop_item()
 			src.putonHat(W, user)
-			if (user == src)
-
-			else
+			if (user != src)
 				user.visible_message("<b>[user]</b> gently places a hat on [src]!", "You gently place a hat on [src]!")
 			return
 
@@ -715,10 +713,7 @@
 						message = "<B>[src]</B> points."
 					else
 						src.point(M)
-
-					if (M)
 						message = "<B>[src]</B> points to [M]."
-					else
 				m_type = 1
 
 			if ("panic","freakout")
