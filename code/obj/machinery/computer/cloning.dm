@@ -258,16 +258,9 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		return
 
 	var/datum/mind/subjMind = subject.mind
-	if ((!subjMind) || (!subjMind.key))
-		if ((subject.ghost && subject.ghost.mind && subject.ghost.mind.key))
-			subjMind = subject.ghost.mind
-		else if (subject.last_client)
-			var/mob/M = find_ghost_by_key(subject.last_client.key)
-			if (isVRghost(M) || inafterlifebar(M) || isghostcritter(M))
-				subjMind = M.mind
-			else
-				show_message("Error: Mental interface failure.", "warning")
-				return
+	if ((!subjMind) || (!subjMind.key) || (!subject.client))
+		if (eligible_to_clone(subject.oldmind))
+			subjMind = subject.oldmind
 		else
 			show_message("Error: Mental interface failure.", "warning")
 			return
