@@ -2671,8 +2671,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon(0)
-			else
-		return
 
 	power_change()
 		if(powered(ENVIRON))
@@ -3176,8 +3174,6 @@ TYPEINFO(/obj/machinery/networked/printer)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			else
-		return
 
 	update_icon()
 		if (status & (NOPOWER|BROKEN))
@@ -3649,8 +3645,6 @@ TYPEINFO(/obj/machinery/networked/test_apparatus)
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			else
-		return
 
 	update_icon()
 		if (status & (NOPOWER|BROKEN))
