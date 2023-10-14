@@ -1450,12 +1450,7 @@ TYPEINFO(/obj/item/swords/captain)
 
 	attack_hand(mob/living/carbon/human/user)
 		if(src.sword_inside && (user.r_hand == src || user.l_hand == src || user.belt == src))
-			if(user.a_intent == "grab")
-				playsound(src.loc, "rustle", 50, 1, -5)
-				usr.u_equip(src)
-				usr.put_in_hand_or_drop(src, 0)
-			else
-				draw_sword(user)
+			draw_sword(user)
 		else
 			return ..()
 
