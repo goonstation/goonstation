@@ -3393,13 +3393,13 @@ ABSTRACT_TYPE(/obj/machinery/vending/jobclothing)
 		for(var/datum/data/vending_product/player_product/R in src.player_list)
 			for(var/obj/item/product in R.contents)
 				for(var/obj/item/reagent_containers/container in product)
-					total_reagents += container.reagents.total_volume
+					total_reagents += container.reagents.total_volume / 2 //let's make patches and pills fill up a bit less
 				total_reagents += product.reagents?.total_volume
 
 		if(!total_reagents) //only show it as empty if it truly has Nothing at All, chemically
 			fluid_state = 0
 		else
-			fluid_state = round(clamp((total_reagents / 500 * 9 + 1), 1, 9)) //it'll jump up a state every ~55 reagents added or so
+			fluid_state = round(clamp((total_reagents / 800 * 9 + 1), 1, 9)) //it'll jump up a state every ~88 reagents added or so
 		src.fill_image.icon_state = "medchem-[fluid_state]"
 		src.UpdateOverlays(src.fill_image, "fill_image")
 

@@ -1,4 +1,15 @@
-
+(t)sat oct 14 23
+(u)LeahTheTech
+(*)Added a button to reopen the round-end credits window, automatically added at round-end.
+(t)fri oct 13 23
+(u)Tyrant
+(p)16420
+(e)🪲🗺💅|C-Bug, A-Mapping, C-QoL
+(+)The VR chessboard is now set up according to the rules of chess.
+(u)MylieDaniels
+(p)16394
+(e)🔎💡|C-Code-Quality, A-Station-Systems
+(+)The way Contraband is calculated has been changed under the hood, nothing should appear different but please report any bugs.
 (t)thu oct 12 23
 (u)LeahTheTech
 (*)Clicking on most types of portal as a ghost will now teleport you through them.

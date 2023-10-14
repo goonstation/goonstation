@@ -262,7 +262,7 @@
 			abilityType = text2path(abilityType)
 		if (!ispath(abilityType))
 			return
-		if (abilityType in src.abilities)
+		if (locate(abilityType) in src.abilities)
 			return
 		var/datum/targetable/A = new abilityType(src)
 		A.holder = src // redundant but can't hurt I guess
