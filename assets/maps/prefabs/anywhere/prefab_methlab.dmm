@@ -1,0 +1,723 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"aw" = (
+/obj/machinery/light/small/sticky,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"aJ" = (
+/obj/decoration/bullethole{
+	pixel_x = 9;
+	pixel_y = -5
+	},
+/obj/decoration/bullethole{
+	pixel_x = -5;
+	pixel_y = -8
+	},
+/obj/decoration/bullethole,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/prefab/methlab)
+"bQ" = (
+/obj/decoration/vent/vent3,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/prefab/methlab)
+"cw" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 8
+	},
+/turf/unsimulated/grimycarpet,
+/area/prefab/methlab)
+"cW" = (
+/obj/submachine/chef_sink{
+	desc = "A common utility sink.";
+	name = "rusty sink"
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"dw" = (
+/obj/storage/closet/wardrobe,
+/obj/decal/cleanable/dirt/jen,
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -1;
+	pixel_y = 7
+	},
+/obj/item/clothing/suit/bio_suit{
+	pixel_x = 4;
+	pixel_y = -3
+	},
+/obj/item/clothing/suit/bio_suit,
+/obj/item/clothing/gloves/latex,
+/obj/item/clothing/head/bio_hood{
+	pixel_x = 7;
+	pixel_y = 3
+	},
+/obj/item/clothing/head/bio_hood{
+	pixel_x = 5;
+	pixel_y = 7
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"eh" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/blood{
+	icon_state = "drip2b";
+	pixel_y = 17
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"fj" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/blood,
+/obj/decal/cleanable/blood{
+	dir = 8;
+	icon_state = "footprints1";
+	pixel_x = -13;
+	pixel_y = 8
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"fP" = (
+/obj/decal/fakeobjects/shuttlethruster{
+	dir = 4;
+	icon_state = "alt_propulsion"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"iC" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/decal/cleanable/blood{
+	dir = 8;
+	icon_state = "footprints1";
+	pixel_x = -13;
+	pixel_y = 8
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"jl" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir-b"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"jR" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-R"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/prefab/methlab)
+"jT" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 1;
+	pixel_x = -2;
+	pixel_y = 9
+	},
+/turf/unsimulated/grimycarpet,
+/area/prefab/methlab)
+"kp" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-L"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/prefab/methlab)
+"nz" = (
+/turf/unsimulated/grimycarpet,
+/area/prefab/methlab)
+"nV" = (
+/obj/decal/fakeobjects/shuttleengine{
+	dir = 4;
+	icon_state = "alt_heater-M"
+	},
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/prefab/methlab)
+"ow" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/glass/condenser{
+	pixel_y = 6;
+	pixel_x = -4
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/item/storage/pill_bottle{
+	pixel_x = 9
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"oQ" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "7";
+	opacity = 1
+	},
+/area/prefab/methlab)
+"qt" = (
+/obj/indestructible/shuttle_corner{
+	dir = 0;
+	opacity = 1
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"qO" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 15;
+	pixel_y = 7
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"tz" = (
+/obj/decoration/vent,
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/prefab/methlab)
+"tV" = (
+/obj/machinery/door/airlock/pyro/external,
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"ui" = (
+/obj/machinery/light/small/sticky/broken{
+	dir = 1;
+	pixel_y = 18
+	},
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"uC" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/prefab/methlab)
+"uU" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/surgery_tray,
+/obj/item/raw_material/ice{
+	pixel_x = -7;
+	pixel_y = 5
+	},
+/obj/item/raw_material/ice{
+	pixel_x = -7;
+	pixel_y = 1
+	},
+/obj/item/raw_material/ice{
+	pixel_x = -2;
+	pixel_y = 5
+	},
+/obj/item/raw_material/ice{
+	pixel_y = 4;
+	pixel_x = 3
+	},
+/obj/item/raw_material/ice,
+/obj/item/raw_material/ice{
+	pixel_x = 8;
+	pixel_y = 1
+	},
+/obj/item/raw_material/ice{
+	pixel_x = 7;
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/glass/flask{
+	pixel_x = -6;
+	pixel_y = 7;
+	initial_reagents = list("phosphorus" = 34);
+	layer = 4
+	},
+/obj/item/reagent_containers/glass/flask{
+	pixel_x = 6;
+	pixel_y = 5;
+	layer = 4;
+	initial_reagents = list("iodine" = 40)
+	},
+/obj/decal/cleanable/ripped_poster{
+	pixel_x = 26
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"vY" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/machinery/light,
+/turf/unsimulated/grimycarpet,
+/area/prefab/methlab)
+"wR" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/item/reagent_containers/food/drinks/bottle/beer{
+	pixel_x = 14
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"xb" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"xc" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"xn" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/table/reinforced/chemistry/auto,
+/obj/item/clipboard{
+	pixel_y = 4;
+	pixel_x = -9
+	},
+/obj/item/paper{
+	pixel_y = 3;
+	pixel_x = -9;
+	icon_state = "paper";
+	info = "94%    96%     96%      99%"
+	},
+/obj/item/pen{
+	pixel_x = -9;
+	pixel_y = 3
+	},
+/obj/item/reagent_containers/glass/vial{
+	pixel_y = 10;
+	pixel_x = 5;
+	initial_reagents = list("triplemeth" = 14)
+	},
+/obj/item/bloodslide{
+	pixel_x = 7;
+	pixel_y = -4;
+	name = "Chemical Slide"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"yd" = (
+/obj/decoration/junctionbox{
+	pixel_y = 32
+	},
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"zH" = (
+/obj/decal/tile_edge/line/black{
+	dir = 4;
+	icon_state = "line1"
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "footprints1";
+	dir = 1;
+	pixel_y = -7;
+	pixel_x = -2
+	},
+/obj/item/casing{
+	pixel_x = 8;
+	dir = 4
+	},
+/obj/item/casing,
+/obj/item/casing{
+	pixel_x = -7;
+	pixel_y = -12;
+	dir = 6
+	},
+/turf/unsimulated/grimycarpet,
+/area/prefab/methlab)
+"Am" = (
+/obj/lattice{
+	dir = 10;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ax" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "14";
+	opacity = 1
+	},
+/area/prefab/methlab)
+"Cq" = (
+/obj/lattice{
+	dir = 8;
+	icon_state = "lattice-dir"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"DL" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Ed" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"Em" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/reagent_dispensers/chemicalbarrel/yellow,
+/obj/item/reagent_containers/glass/bottle/diethylamine{
+	pixel_x = -13;
+	pixel_y = -6
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"EF" = (
+/obj/decal/fakeobjects/nuclearcomputertest{
+	name = "Space RV Control Panel"
+	},
+/turf/unsimulated/grimycarpet,
+/area/prefab/methlab)
+"HO" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "12"
+	},
+/area/prefab/methlab)
+"Ig" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 8
+	},
+/obj/item/clothing/gloves/latex,
+/obj/decal/fakeobjects/apc_broken{
+	pixel_x = 2;
+	pixel_y = 28
+	},
+/turf/unsimulated/grimycarpet,
+/area/prefab/methlab)
+"JE" = (
+/obj/decal/fakeobjects{
+	name = "wheel";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "rover_puzzle_wheelitem";
+	pixel_y = 17
+	},
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"KC" = (
+/obj/decal/cleanable/dirt/jen,
+/obj/item/clothing/mask/gas/emergency{
+	pixel_x = -6;
+	pixel_y = -7
+	},
+/turf/simulated/floor/plating,
+/area/prefab/methlab)
+"Lr" = (
+/obj/storage/crate/packing,
+/obj/item/reagent_containers/vending/bag{
+	pixel_x = -6
+	},
+/obj/item/reagent_containers/vending/bag,
+/obj/item/reagent_containers/vending/bag{
+	pixel_y = -6
+	},
+/obj/item/storage/box/beakerbox{
+	pixel_x = -3
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/sugar{
+	pixel_x = 6
+	},
+/obj/item/reagent_containers/glass/beaker{
+	initial_reagents = "sugar"
+	},
+/turf/unsimulated/grimycarpet,
+/area/prefab/methlab)
+"Mi" = (
+/obj/indestructible/shuttle_corner{
+	dir = 1;
+	opacity = 1
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"ML" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging,
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"MU" = (
+/turf/simulated/wall/auto/shuttle{
+	icon_state = "13";
+	opacity = 1
+	},
+/area/prefab/methlab)
+"Or" = (
+/obj/machinery/light/small/sticky/broken,
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"OL" = (
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/plating,
+/area/prefab/methlab)
+"RZ" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/obj/item/reagent_containers/glass/jug/mutadonebulk{
+	pixel_x = -3;
+	pixel_y = 8;
+	desc = "A sealed container of liquid hydrogen";
+	name = "Hydrogen Container";
+	initial_reagents = "hydrogen"
+	},
+/obj/item/reagent_containers/food/drinks/fueltank{
+	pixel_x = 7;
+	pixel_y = 4;
+	desc = "An old-looking tank for the storage of oil";
+	name = "oil tank";
+	initial_reagents = "oil"
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"TO" = (
+/obj/decoration/junctionbox/junctionbox3{
+	pixel_y = 32;
+	pixel_x = -8
+	},
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"Uy" = (
+/obj/reagent_dispensers/chemicalbarrel{
+	reagents = "water"
+	},
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 5
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"Wa" = (
+/obj/machinery/atmospherics/pipe/simple/heat_exchanging{
+	dir = 10
+	},
+/obj/decal/cleanable/dirt/jen,
+/obj/machinery/chem_heater,
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_x = 10;
+	pixel_y = 22
+	},
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"Wn" = (
+/obj/table/reinforced/chemistry/auto,
+/obj/item/reagent_containers/glass/condenser{
+	pixel_y = 6;
+	pixel_x = 12
+	},
+/obj/item/reagent_containers/glass/condenser{
+	pixel_y = 6;
+	pixel_x = -4
+	},
+/obj/decal/cleanable/dirt/jen,
+/turf/simulated/floor/grime,
+/area/prefab/methlab)
+"XX" = (
+/obj/item/raw_material/shard{
+	pixel_x = 6;
+	pixel_y = -5
+	},
+/obj/grille/steel/broken,
+/turf/simulated/floor/plating,
+/area/prefab/methlab)
+"YI" = (
+/obj/indestructible/shuttle_corner{
+	dir = 8;
+	opacity = 1
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+
+(1,1,1) = {"
+xc
+xc
+xc
+xc
+xc
+xc
+xc
+xc
+xc
+xc
+xc
+"}
+(2,1,1) = {"
+xc
+xc
+xc
+xc
+xc
+qt
+uC
+uC
+XX
+Ed
+xc
+"}
+(3,1,1) = {"
+xc
+xc
+xc
+xc
+xc
+uC
+nz
+nz
+EF
+uC
+xc
+"}
+(4,1,1) = {"
+xc
+xc
+xc
+xc
+aw
+HO
+Ig
+Lr
+cw
+HO
+ui
+"}
+(5,1,1) = {"
+xc
+xc
+xc
+xc
+DL
+aJ
+zH
+jT
+vY
+HO
+JE
+"}
+(6,1,1) = {"
+xc
+DL
+DL
+DL
+DL
+tV
+eh
+iC
+Wn
+HO
+TO
+"}
+(7,1,1) = {"
+DL
+jl
+wR
+DL
+DL
+HO
+cW
+fj
+ow
+HO
+yd
+"}
+(8,1,1) = {"
+DL
+OL
+qO
+Am
+DL
+tz
+RZ
+xb
+xn
+HO
+xc
+"}
+(9,1,1) = {"
+DL
+Cq
+KC
+DL
+xc
+HO
+Wa
+ML
+Uy
+bQ
+xc
+"}
+(10,1,1) = {"
+xc
+DL
+DL
+DL
+xc
+HO
+dw
+uU
+Em
+HO
+JE
+"}
+(11,1,1) = {"
+xc
+xc
+xc
+xc
+Or
+Ax
+oQ
+oQ
+oQ
+MU
+ui
+"}
+(12,1,1) = {"
+xc
+xc
+xc
+xc
+xc
+Mi
+jR
+nV
+kp
+YI
+xc
+"}
+(13,1,1) = {"
+xc
+xc
+xc
+xc
+xc
+xc
+fP
+fP
+fP
+xc
+xc
+"}
+(14,1,1) = {"
+xc
+xc
+xc
+xc
+xc
+xc
+xc
+xc
+xc
+xc
+xc
+"}

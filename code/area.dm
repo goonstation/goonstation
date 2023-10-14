@@ -1632,6 +1632,10 @@ area/prefab/torpedo_deposit
 	name = "Torpedo Deposit"
 	icon_state = "purple"
 
+area/prefab/methlab
+	name = "Inconspicious Space RV"
+	icon_state = "yellow"
+
 // zewaka - vspace areas //
 ABSTRACT_TYPE(/area/sim)
 /area/sim

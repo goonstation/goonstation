@@ -26,3 +26,10 @@ ABSTRACT_TYPE(/datum/mapPrefab/mining/anywhere)
 		prefabPath = "assets/maps/prefabs/anywhere/prefab_beacon.dmm"
 		prefabSizeX = 5
 		prefabSizeY = 5
+
+	methlab
+		maxNum = 1
+		probability = 20
+		prefabPath = "assets/maps/prefabs/anywhere/prefab_methlab.dmm"
+		prefabSizeX = 14
+		prefabSizeY = 11
