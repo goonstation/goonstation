@@ -67,7 +67,9 @@ jobs:
           key: ${{ runner.os }}-nuget-od-${{ hashFiles('OpenDream/**/*.csproj') }}
           restore-keys: |
             ${{ runner.os }}-nuget-od
-      - run: dotnet restore
+      - uses: zyactions/dotnet-restore@v1
+        with:
+          working-directory: OpenDream
       - run: dotnet build -c Release
       - run: dotnet OpenDream/bin/DMCompiler/DMCompiler.dll --suppress-unimplemented goonstation.dme
 
