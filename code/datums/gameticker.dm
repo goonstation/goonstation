@@ -811,6 +811,8 @@ var/global/current_state = GAME_STATE_INVALID
 	SPAWN(0)
 		for(var/mob/E in mobs)
 			if(E.client)
+				if (!E.abilityHolder)
+					E.add_ability_holder(/datum/abilityHolder/generic)
 				E.addAbility(/datum/targetable/crew_credits)
 				if (E.client.preferences.view_tickets)
 					E.showtickets()
