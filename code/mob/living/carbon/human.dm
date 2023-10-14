@@ -246,6 +246,8 @@
 
 	inventory = new(src)
 
+	AddComponent(/datum/component/contraband, 0, 0)
+
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
 

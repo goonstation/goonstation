@@ -295,6 +295,8 @@ To remove:
 #define PROP_ITEM_IN_CHEM_DISPENSER(x) x("in_chem_dispenser", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 //------------------- MOVABLE PROPS ---------------------
+#define PROP_MOVABLE_VISIBLE_CONTRABAND(x) x("visible_contraband", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)  //! The visible contraband level of this movable
+#define PROP_MOVABLE_VISIBLE_GUNS(x) x("visible_firearms", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM) //! The visible firearm contraband level of this movable
 #define PROP_MOVABLE_CONTRABAND_OVERRIDE(x) x("contraband_pverride", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX) //! Thing is considered to have this contraband value, takes max if has multiple of these props
 #define PROP_MOVABLE_KLEPTO_IGNORE(x) x("klepto_go_away", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 //-------------------- TURF PROPS -----------------------

@@ -317,7 +317,14 @@ ABSTRACT_TYPE(/obj/item)
 
 	if (isnull(initial(src.health))) // if not overridden
 		src.health = get_initial_item_health(src.type)
+
 	..()
+	if (src.contraband > 0)
+		if (istype(src, /obj/item/gun))
+			AddComponent(/datum/component/contraband, 0, src.contraband)
+		else
+			AddComponent(/datum/component/contraband, src.contraband, 0)
+
 	if(prob(src.mimic_chance))
 		SPAWN(10 SECONDS)
 			src.become_mimic()
@@ -565,11 +572,6 @@ ABSTRACT_TYPE(/obj/item)
 					break
 			src.combust(firesource)
 	..() // call your fucking parents
-
-/// Gets the effective contraband level of an item. Use this instead of accessing .contraband directly
-/obj/item/proc/get_contraband()
-	// This needs to be a ternary because the value of the contraband override might be 0
-	return HAS_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) : src.contraband
 
 /// Don't override this, override _update_stack_appearance() instead.
 /obj/item/proc/UpdateStackAppearance()
@@ -993,22 +995,18 @@ ABSTRACT_TYPE(/obj/item)
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
 	SHOULD_CALL_PARENT(1)
-	if(src.c_flags & NOT_EQUIPPED_WHEN_WORN && slot != SLOT_L_HAND && slot != SLOT_R_HAND)
-		return
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
 	src.equipped_in_slot = slot
 	for(var/datum/objectProperty/equipment/prop in src.properties)
-		prop.onEquipped(src, user, src.properties[prop])
+		prop.onEquipped(src, user, src.properties[prop], slot)
 	user.update_equipped_modifiers()
 	if (src.storage && !src.storage.opens_if_worn) // also used in equipped() code if a wearing to a slot won't call equipped()
 		src.storage.hide_hud(user)
 
 /obj/item/proc/unequipped(var/mob/user)
 	SHOULD_CALL_PARENT(1)
-	if(src.c_flags & NOT_EQUIPPED_WHEN_WORN && src.equipped_in_slot != SLOT_L_HAND && src.equipped_in_slot != SLOT_R_HAND)
-		return
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif

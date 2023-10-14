@@ -172,6 +172,22 @@ ABSTRACT_TYPE(/datum/spatial_hashmap/by_type)
 	update_cooldown = 5
 	type_to_track = /obj/shrub
 
+/datum/spatial_hashmap/manual/proc/add_target(atom/A)
+	var/turf/T = get_turf(A)
+	if (world.maxz > src.zlevels)
+		src.zlevels = world.maxz
+		src.hashmap.len = src.cols * src.rows * src.zlevels
+	if(T && !QDELETED(A))
+		ADD_TO_MAP(A, T)
+
+/datum/spatial_hashmap/manual/proc/add_weakref(atom/A)
+	var/turf/T = get_turf(A)
+	if (world.maxz > src.zlevels)
+		src.zlevels = world.maxz
+		src.hashmap.len = src.cols * src.rows * src.zlevels
+	if(T && !QDELETED(A))
+		ADD_TO_MAP(get_weakref(A), T)
+
 #undef CELL_POSITION
 #undef ADD_BUCKET
 #undef ADD_TO_MAP
