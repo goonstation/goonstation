@@ -556,6 +556,7 @@
 	probability = 25
 	msgGain = "You hear everything slowed down and deeper."
 	msgLose = "You no longer hear everything slowed down and deeper."
+	effect_group = "soundspeed"
 
 	OnAdd()
 		..()
@@ -576,6 +577,7 @@
 	probability = 25
 	msgGain = "You hear everything sped up and higher pitched."
 	msgLose = "You no longer hear everything sped up and higher pitched."
+	effect_group = "soundspeed"
 
 	OnAdd()
 		..()

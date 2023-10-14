@@ -28,13 +28,6 @@
 	var/has_head = FALSE
 	var/what_role = ""
 
-	while (length(src.crew_tab_data[CREW_TAB_SECTION_ANTAGONIST]) < 4)
-		src.crew_tab_data[CREW_TAB_SECTION_ANTAGONIST] += src.generate_fake_crew_member(
-			real_name = src.fake_carbon_name(),
-			role = pick("Vampire", "Werewolf", "Changeling", "Legworm", "Handspider", "Eyespider", "Traitor", "Spy-thief", "Blob", "Flockmind", "Flockbit", "Omnitraitor", "Nuclear Operative", "Hard-mode Traitor"),
-			dead = prob(50),
-		)
-
 	while (length(src.crew_tab_data[CREW_TAB_SECTION_CAPTAIN]) < 1)
 		src.crew_tab_data[CREW_TAB_SECTION_CAPTAIN] += src.generate_fake_crew_member(
 			real_name = src.fake_carbon_name(),

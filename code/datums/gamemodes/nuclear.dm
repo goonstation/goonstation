@@ -305,22 +305,33 @@
 	return 0
 
 /datum/game_mode/nuclear/victory_msg()
+	return "<FONT size = 3><B>[victory_headline()]</B></FONT><br>[victory_body()]</span>"
+
+/datum/game_mode/nuclear/victory_headline()
 	switch(finished)
 		if(-2) // Major Synd Victory - nuke successfully detonated
-			return "<FONT size = 3><B>Total Syndicate Victory</B></FONT><br>\
-					The operatives have destroyed [station_name(1)]!"
+			return "Total Syndicate Victory"
 		if(-1) // Minor Synd Victory - station abandoned while nuke armed
-			return "<FONT size = 3><B>Syndicate Victory</B></FONT><br>\
-					The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!"
+			return "Syndicate Victory"
 		if(0) // Uhhhhhh
-			return "<FONT size = 3><B>Stalemate</B></FONT><br>\
-					Everybody loses!"
+			return "Stalemate"
 		if(1) // Minor Crew Victory - station evacuated, bombing averted, operatives survived
-			return "<FONT size = 3><B>Crew Victory</B></FONT><br>\
-					The crew of [station_name(1)] averted the bombing! However, some of the operatives survived."
+			return "Crew Victory"
 		if(2) // Major Crew Victory - bombing averted, all ops dead/captured
-			return "<FONT size = 3><B>Total Crew Victory</B></FONT><br>\
-					The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!"
+			return "Total Crew Victory"
+
+/datum/game_mode/nuclear/victory_body()
+	switch(finished)
+		if(-2)
+			return "The operatives have destroyed [station_name(1)]!"
+		if(-1)
+			return "The crew of [station_name(1)] abandoned the [station_or_ship()] while the bomb was armed! The [station_or_ship()] will surely be destroyed!"
+		if(0)
+			return "Everybody loses!"
+		if(1)
+			return "The crew of [station_name(1)] averted the bombing! However, some of the operatives survived."
+		if(2)
+			return "The crew of [station_name(1)] averted the bombing and eliminated all Syndicate operatives!"
 
 /datum/game_mode/nuclear/declare_completion()
 	boutput(world, src.victory_msg())

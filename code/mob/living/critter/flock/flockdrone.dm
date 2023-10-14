@@ -25,7 +25,7 @@
 	butcherable = BUTCHER_ALLOWED
 
 	var/health_absorb_rate = 2 // how much item health is removed per tick when absorbing
-	var/resources_per_health = 4 // how much resources we get per item health
+	var/resources_per_health = 5 // how much resources we get per item health
 
 	var/floorrunning = FALSE
 	var/can_floorrun = TRUE
@@ -1309,12 +1309,17 @@
 	if (!I)
 		return
 	var/health_absorbed = min((flock_owner.health_absorb_rate * mult), I.health)
+	var/resources_to_gain = flock_owner.resources_per_health * health_absorbed
+	if (I.max_stack > 1)
+		resources_to_gain /= (I.max_stack / 10)
+	resources_to_gain = max(1, resources_to_gain)
+	resources_to_gain = round(resources_to_gain)
 	if (flock_owner.absorber.instant_absorb && !flock_owner.absorber.ignore_amount)
 		boutput(flock_owner, "<span class='alert'>[I] is weak enough that it breaks apart instantly!</span>")
-		flock_owner.add_resources(round(flock_owner.resources_per_health * health_absorbed * I.amount))
+		flock_owner.add_resources(resources_to_gain * I.amount)
 	else
 		I.health -= health_absorbed
-		flock_owner.add_resources(round(flock_owner.resources_per_health * health_absorbed))
+		flock_owner.add_resources(resources_to_gain)
 		if (I.health > 0 || (I.health == 0 && I.amount > 1 && !flock_owner.absorber.ignore_amount))
 			if (!ON_COOLDOWN(src.holder, "absorber_noise", 1 SECOND))
 				playsound(flock_owner, "sound/effects/sparks[rand(1, 6)].ogg", 30, 1, extrarange = -10)

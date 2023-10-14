@@ -1619,7 +1619,11 @@
 	ADMIN_ONLY
 
 	var/speech = tgui_input_text(src, "What to force say", "Say")
+	if(isnull(speech))
+		return
 	var/range = tgui_input_number(src, "Tile range", "Range", 5, 7, 1)
+	if(isnull(range))
+		return
 
 	for (var/mob/M in range(range, usr))
 		if (isalive(M))
