@@ -24,7 +24,7 @@ FORBID_INCLUDE = [
     r'code/modules/tgs/**/*.dm',
 
     # Included by map.dm (which we have to whitelist)
-    r'maps**/*.dm'
+    r'maps**/*.dm',
 
     # OpenDream pragma lint file
     r'tools/ci/od_lints.dm'
