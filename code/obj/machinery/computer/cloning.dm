@@ -279,7 +279,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	R = new
 	R["ckey"] = ckey(subjMind.key)
 	R["name"] = subject.real_name
-	R["id"] = copytext(md5(subject.real_name), 2, 6)
+	R["id"] = copytext("\ref[subjMind]", 4, 12)
 
 	var/datum/bioHolder/H = new/datum/bioHolder(null)
 	H.CopyOther(subject.bioHolder)
