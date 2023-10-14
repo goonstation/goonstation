@@ -74,3 +74,6 @@ Desktop.ini
 
 # Dedicated unversioned folder
 /unversioned/**/*
+
+# OpenDream compiled bytecode
+goonstation.json

@@ -25,6 +25,9 @@ FORBID_INCLUDE = [
 
     # Included by map.dm (which we have to whitelist)
     r'maps**/*.dm'
+
+    # OpenDream pragma lint file
+    r'tools/ci/od_lints.dm'
 ]
 
 # Things we want to explicitly allow, even if they're in blocked dirs
