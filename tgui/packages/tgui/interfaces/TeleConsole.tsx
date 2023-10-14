@@ -1,13 +1,14 @@
 /**
  * @file
  * @copyright 2023
- * @author Valtsu0 (https://github.com/Valtsu0)
+ * @author Original Valtsu0 (https://github.com/Valtsu0)
+ * @author Changes Mordent (https://github.com/mordent-goonstation)
  * @license ISC
  */
 
-import { useBackend } from '../backend';
+import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
-import { Box, Button, Icon, Input, Section } from '../components';
+import { Box, Button, Icon, Input, LabeledList, Section } from '../components';
 
 interface TeleConsoleData {
   xtarget: number;
@@ -29,60 +30,70 @@ interface BookmarkData {
   Z: number;
 }
 
+const formatCoordinates = (x: number, y: number, z: number) => `${x}, ${y}, ${z}`;
+
 export const TeleConsole = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
+  const [newBookmarkName, setNewBookmarkName] = useLocalState(context, 'newBookmarkName', '');
   const { xtarget, ytarget, ztarget, host_id, bookmarks, readout, panel_open, padNum, max_bookmarks } = data;
 
+  const handleAddBookmark = (name: string) => {
+    act('addbookmark', { value: name });
+    setNewBookmarkName('');
+  };
   return (
     <Window theme="ntos" width={400} height={500}>
       <Window.Content textAlign="center">
-        <ConnectionSection />
-        <Section>{readout}</Section>
+        {readout && <Section>{readout}</Section>}
         <CoordinatesSection />
         <Section>
           <Box>
-            <Button color="green" icon="sign-out-alt" onClick={() => act('send')} content="Send" disabled={!host_id} />
-            <Button
-              color="green"
-              icon="sign-in-alt"
-              onClick={() => act('receive')}
-              content="Receive"
-              disabled={!host_id}
-            />
+            <Button color="green" icon="sign-out-alt" onClick={() => act('send')} disabled={!host_id}>
+              Send
+            </Button>
+            <Button color="green" icon="sign-in-alt" onClick={() => act('receive')} disabled={!host_id}>
+              Receive
+            </Button>
             <Button color="green" onClick={() => act('portal')} disabled={!host_id}>
               <Icon name="ring" rotation={90} />
               Toggle Portal
             </Button>
           </Box>
-          <Button
-            color="green"
-            icon="magnifying-glass"
-            onClick={() => act('scan')}
-            content="Scan"
-            disabled={!host_id}
-          />
+          <Button color="green" icon="magnifying-glass" onClick={() => act('scan')} disabled={!host_id}>
+            Scan
+          </Button>
         </Section>
-        <Section>
-          {'Bookmarks: '}
-          {bookmarks.map((mark) => {
-            return (
-              <Box key={mark['ref']}>
-                <Button
-                  icon="bookmark"
-                  onClick={() => act('restorebookmark', { value: mark['ref'] })}
-                  content={mark['name']}
+        <Section title="Bookmarks">
+          <LabeledList>
+            {bookmarks.map((bookmark) => {
+              return (
+                <LabeledList.Item
+                  key={bookmark.ref}
+                  label={formatCoordinates(bookmark.X, bookmark.Y, bookmark.Z)}
+                  buttons={
+                    <Button icon="trash" color="red" onClick={() => act('deletebookmark', { value: bookmark.ref })} />
+                  }>
+                  <Button icon="bookmark" onClick={() => act('restorebookmark', { value: bookmark.ref })}>
+                    {bookmark.name}
+                  </Button>
+                </LabeledList.Item>
+              );
+            })}
+            {!!(bookmarks.length < max_bookmarks) && (
+              <LabeledList.Item
+                key="new"
+                label={formatCoordinates(xtarget, ytarget, ztarget)}
+                buttons={<Button icon="plus" color="green" onClick={() => handleAddBookmark(newBookmarkName)} />}>
+                <Input
+                  width="100%"
+                  value={newBookmarkName}
+                  onInput={(_e, value) => setNewBookmarkName(value)}
+                  placeholder="New bookmark"
+                  onEnter={(_e, value) => handleAddBookmark(value)}
                 />
-                {`(${mark['X']}/${mark['Y']}/${mark['Z']})`}
-                <Button icon="trash" color="red" onClick={() => act('deletebookmark', { value: mark['ref'] })} />
-              </Box>
-            );
-          })}
-          {!!(bookmarks.length < max_bookmarks) && (
-            <Box>
-              <Input onEnter={(e, value) => act('addbookmark', { value: value })} />
-              {`(${xtarget}/${ytarget}/${ztarget})`}
-            </Box>
-          )}
+              </LabeledList.Item>
+            )}
+          </LabeledList>
         </Section>
         {!!panel_open && (
           <Section>
@@ -93,12 +104,13 @@ export const TeleConsole = (_props, context) => {
             </Box>
           </Section>
         )}
+        <ConnectionSection />
       </Window.Content>
     </Window>
   );
 };
 
-export const ConnectionSection = (_props, context) => {
+const ConnectionSection = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
   const { host_id } = data;
 
@@ -128,13 +140,12 @@ export const ConnectionSection = (_props, context) => {
   );
 };
 
-export const CoordinatesSection = (_props, context) => {
+const CoordinatesSection = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
   const { xtarget, ytarget, ztarget } = data;
 
   return (
-    <Section>
-      {'Target Coordinates: '}
+    <Section title="Target">
       <Box>
         {'X: '}
         <Button icon="backward" onClick={() => act('setX', { value: xtarget - 10 })} />
