@@ -70,7 +70,7 @@ jobs:
       - uses: zyactions/dotnet-restore@v1
         with:
           working-directory: OpenDream
-      - run: dotnet build -c Release
+      - run: dotnet build -c Release OpenDream/OpenDream.sln
       - run: dotnet OpenDream/bin/DMCompiler/DMCompiler.dll --suppress-unimplemented goonstation.dme
 
   compile:
