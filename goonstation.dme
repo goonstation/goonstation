@@ -1146,6 +1146,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\models\bans\BanResource.dm"
 #include "code\modules\goonhub\api\models\bans\BanResourceList.dm"
 #include "code\modules\goonhub\api\models\bans\JobBanResource.dm"
+#include "code\modules\goonhub\api\models\bans\JobBanResourceList.dm"
 #include "code\modules\goonhub\api\models\bans\JobBansForPlayer.dm"
 #include "code\modules\goonhub\api\models\events\EventAiLawResource.dm"
 #include "code\modules\goonhub\api\models\events\EventFineResource.dm"
