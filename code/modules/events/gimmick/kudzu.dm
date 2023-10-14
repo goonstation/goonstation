@@ -233,7 +233,7 @@
 	if (!istype(Vspread, /turf/simulated/floor) || isfeathertile(Vspread))
 		dogrowth = 0
 		return
-		
+
 	for (var/obj/O in Vspread)
 
 		if (istype(O, /obj/window) || istype(O, /obj/forcefield) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
@@ -310,8 +310,6 @@
 			if (prob(33))
 				qdel(src)
 				return
-		else
-	return
 
 /obj/spacevine/proc/take_damage(var/amount, var/damtype = "brute",var/mob/user)
 	if (!isnum(amount) || amount <= 0)

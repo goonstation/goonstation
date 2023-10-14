@@ -1051,7 +1051,6 @@ ABSTRACT_TYPE(/obj/item)
 				if (!src.ArtifactSanityCheck()) return
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
-		else
 	return ..()
 
 /obj/item/blob_act(var/power)

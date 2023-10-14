@@ -40,8 +40,6 @@ TYPEINFO(/obj/machinery/dispenser)
 					pop_o2()
 				while(TOTAL_PL_TANKS > 0)
 					pop_pl()
-		else
-	return
 
 /obj/machinery/dispenser/blob_act(var/power)
 	if (prob(25 * power / 20))
