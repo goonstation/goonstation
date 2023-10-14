@@ -1,4 +1,9 @@
+
 (t)sat oct 14 23
+(u)glowbold
+(p)16158
+(e)💅📄📦|C-QoL, A-UI, A-Game-Objects
+(+)The supply request console is easier to work with - bargain with cargo today!
 (u)LeahTheTech
 (*)Added a button to reopen the round-end credits window, automatically added at round-end.
 (t)fri oct 13 23
