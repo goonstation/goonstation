@@ -1,4 +1,6 @@
-
+(t)sat oct 14 23
+(u)LeahTheTech
+(*)Added a button to reopen the round-end credits window, automatically added at round-end.
 (t)fri oct 13 23
 (u)Tyrant
 (p)16420
