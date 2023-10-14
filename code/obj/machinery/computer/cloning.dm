@@ -258,7 +258,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 		return
 
 	var/datum/mind/subjMind = subject.mind
-	if ((!subjMind) || (!subjMind.key) || (!subject.client))
+	if ((!subjMind) || (!subjMind.key))
 		if (eligible_to_clone(subject.oldmind))
 			subjMind = subject.oldmind
 		else
