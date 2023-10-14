@@ -56,6 +56,7 @@ jobs:
         with:
           repository: OpenDreamProject/OpenDream
           submodules: "recursive"
+          path: OpenDream
       - name: Setup dotnet
         uses: actions/setup-dotnet@v3
         with:
