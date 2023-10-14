@@ -1,4 +1,9 @@
 
+(t)fri oct 13 23
+(u)MylieDaniels
+(p)16394
+(e)🔎💡|C-Code-Quality, A-Station-Systems
+(+)The way Contraband is calculated has been changed under the hood, nothing should appear different but please report any bugs.
 (t)thu oct 12 23
 (u)LeahTheTech
 (*)Clicking on most types of portal as a ghost will now teleport you through them.
