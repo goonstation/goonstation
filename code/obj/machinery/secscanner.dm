@@ -176,12 +176,24 @@ TYPEINFO(/obj/machinery/secscanner)
 		if(src.emagged)
 			return rand(99,2000) //very high-end bad vibes level assessor
 
+		var/has_carry_permit = 0
+		var/has_contraband_permit = 0
+
 		if (!ishuman(target))
 			if (istype(target, /mob/living/critter/changeling))
 				return 6
+
+			if (issilicon(target))
+				var/mob/living/silicon/S = target
+				var/obj/item/card/id/perp_id = S.botcard
+				if(weapon_access in perp_id.access)
+					has_carry_permit = 1
+				if(contraband_access in perp_id.access)
+					has_contraband_permit = 1
+
 			for(var/obj/item/item in target.contents)
 				var/list/contraband_returned = list()
-				if(SEND_SIGNAL(item, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+				if(SEND_SIGNAL(item, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_carry_permit, !has_carry_permit))
 					threatcount += max(contraband_returned)
 			return threatcount
 
@@ -205,9 +217,6 @@ TYPEINFO(/obj/machinery/secscanner)
 		var/obj/item/card/id/perp_id = perp.equipped()
 		if (!istype(perp_id))
 			perp_id = perp.wear_id
-
-		var/has_carry_permit = 0
-		var/has_contraband_permit = 0
 
 		if(perp_id) //Checking for permits
 			if(weapon_access in perp_id.access)
