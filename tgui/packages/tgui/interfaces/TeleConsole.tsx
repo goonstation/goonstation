@@ -6,35 +6,36 @@
  * @license ISC
  */
 
+import { BooleanLike } from 'common/react';
 import { useBackend, useLocalState } from '../backend';
 import { Window } from '../layouts';
 import { Box, Button, Icon, Input, LabeledList, Section } from '../components';
 
 interface TeleConsoleData {
-  xtarget: number;
-  ytarget: number;
-  ztarget: number;
-  host_id: string;
+  xTarget: number;
+  yTarget: number;
+  zTarget: number;
+  hostId: string;
   readout: string;
-  panel_open: boolean;
+  isPanelOpen: BooleanLike;
   padNum: number;
-  max_bookmarks: number;
+  maxBookmarks: number;
   bookmarks: BookmarkData[];
 }
 
 interface BookmarkData {
   ref: string;
   name: string;
-  X: number;
-  Y: number;
-  Z: number;
+  x: number;
+  y: number;
+  z: number;
 }
 
 const formatCoordinates = (x: number, y: number, z: number) => `${x}, ${y}, ${z}`;
 
 export const TeleConsole = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
-  const { xtarget, ytarget, ztarget, host_id, bookmarks, readout, panel_open, padNum, max_bookmarks } = data;
+  const { xTarget, yTarget, zTarget, hostId, bookmarks, readout, isPanelOpen, padNum, maxBookmarks } = data;
 
   const handleAddBookmark = (name: string) => act('addbookmark', { value: name });
   const handleDeleteBookmark = (ref: string) => act('deletebookmark', { value: ref });
@@ -45,30 +46,30 @@ export const TeleConsole = (_props, context) => {
       <Window.Content textAlign="center">
         <CoordinatesSection />
         <Section>
-          <Button color="green" icon="sign-out-alt" onClick={() => act('send')} disabled={!host_id}>
+          <Button color="green" icon="sign-out-alt" onClick={() => act('send')} disabled={!hostId}>
             Send
           </Button>
-          <Button color="green" icon="sign-in-alt" onClick={() => act('receive')} disabled={!host_id}>
+          <Button color="green" icon="sign-in-alt" onClick={() => act('receive')} disabled={!hostId}>
             Receive
           </Button>
-          <Button color="green" onClick={() => act('portal')} disabled={!host_id}>
+          <Button color="green" onClick={() => act('portal')} disabled={!hostId}>
             <Icon name="ring" rotation={90} />
             Toggle Portal
           </Button>
-          <Button color="green" icon="magnifying-glass" onClick={() => act('scan')} disabled={!host_id}>
+          <Button color="green" icon="magnifying-glass" onClick={() => act('scan')} disabled={!hostId}>
             Scan
           </Button>
         </Section>
         {readout && <Section>{readout}</Section>}
         <BookmarksSection
           bookmarks={bookmarks}
-          maxBookmarks={max_bookmarks}
+          maxBookmarks={maxBookmarks}
           onAddBookmark={handleAddBookmark}
           onDeleteBookmark={handleDeleteBookmark}
           onRestoreBookmark={handleRestoreBookmark}
-          targetCoords={[xtarget, ytarget, ztarget]}
+          targetCoords={[xTarget, yTarget, zTarget]}
         />
-        {!!panel_open && (
+        {!!isPanelOpen && (
           <Section>
             <Box>Open panel:</Box>
             <Box>
@@ -85,11 +86,11 @@ export const TeleConsole = (_props, context) => {
 
 const ConnectionSection = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
-  const { host_id } = data;
+  const { hostId } = data;
 
   return (
     <Section>
-      {host_id ? (
+      {hostId ? (
         <Box color="green">
           <Box>
             <Icon name="check" /> Connected to host!
@@ -135,7 +136,7 @@ const BookmarksSection = (props: BookmarksSectionProps, context) => {
           return (
             <LabeledList.Item
               key={bookmark.ref}
-              label={formatCoordinates(bookmark.X, bookmark.Y, bookmark.Z)}
+              label={formatCoordinates(bookmark.x, bookmark.y, bookmark.z)}
               buttons={<Button icon="trash" color="red" onClick={() => onDeleteBookmark(bookmark.ref)} />}>
               <Button icon="bookmark" onClick={() => onRestoreBookmark(bookmark.ref)}>
                 {bookmark.name}
@@ -165,31 +166,31 @@ const BookmarksSection = (props: BookmarksSectionProps, context) => {
 
 const CoordinatesSection = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
-  const { xtarget, ytarget, ztarget } = data;
+  const { xTarget, yTarget, zTarget } = data;
 
   return (
     <Section title="Target">
       <Box>
         {'X: '}
-        <Button icon="backward" onClick={() => act('setX', { value: xtarget - 10 })} />
-        <Button icon="caret-left" onClick={() => act('setX', { value: xtarget - 1 })} />
-        <Button.Input content={xtarget} onCommit={(e, value) => act('setX', { value: value })} />
-        <Button icon="caret-right" onClick={() => act('setX', { value: xtarget + 1 })} />
-        <Button icon="forward" onClick={() => act('setX', { value: xtarget + 10 })} />
+        <Button icon="backward" onClick={() => act('setX', { value: xTarget - 10 })} />
+        <Button icon="caret-left" onClick={() => act('setX', { value: xTarget - 1 })} />
+        <Button.Input content={xTarget} onCommit={(_e, value) => act('setX', { value: value })} />
+        <Button icon="caret-right" onClick={() => act('setX', { value: xTarget + 1 })} />
+        <Button icon="forward" onClick={() => act('setX', { value: xTarget + 10 })} />
       </Box>
       <Box>
         {'Y: '}
-        <Button icon="backward" onClick={() => act('setY', { value: ytarget - 10 })} />
-        <Button icon="caret-left" onClick={() => act('setY', { value: ytarget - 1 })} />
-        <Button.Input content={ytarget} onCommit={(e, value) => act('setY', { value: value })} />
-        <Button icon="caret-right" onClick={() => act('setY', { value: ytarget + 1 })} />
-        <Button icon="forward" onClick={() => act('setY', { value: ytarget + 10 })} />
+        <Button icon="backward" onClick={() => act('setY', { value: yTarget - 10 })} />
+        <Button icon="caret-left" onClick={() => act('setY', { value: yTarget - 1 })} />
+        <Button.Input content={yTarget} onCommit={(_e, value) => act('setY', { value: value })} />
+        <Button icon="caret-right" onClick={() => act('setY', { value: yTarget + 1 })} />
+        <Button icon="forward" onClick={() => act('setY', { value: yTarget + 10 })} />
       </Box>
       <Box>
         {'Z: '}
-        <Button icon="caret-left" onClick={() => act('setZ', { value: ztarget - 1 })} />
-        <Button.Input content={ztarget} onCommit={(e, value) => act('setZ', { value: value })} />
-        <Button icon="caret-right" onClick={() => act('setZ', { value: ztarget + 1 })} />
+        <Button icon="caret-left" onClick={() => act('setZ', { value: zTarget - 1 })} />
+        <Button.Input content={zTarget} onCommit={(_e, value) => act('setZ', { value: value })} />
+        <Button icon="caret-right" onClick={() => act('setZ', { value: zTarget + 1 })} />
       </Box>
     </Section>
   );

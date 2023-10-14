@@ -977,14 +977,14 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 
 	ui_data(mob/user)
 		. = list(
-			"xtarget" = xtarget,
-			"ytarget" = ytarget,
-			"ztarget" = ztarget,
-			"host_id" = host_id,
+			"xTarget" = xtarget,
+			"yTarget" = ytarget,
+			"zTarget" = ztarget,
+			"hostId" = host_id,
 			"readout" = readout,
-			"panel_open" = panel_open,
+			"isPanelOpen" = panel_open,
 			"padNum" = padNum,
-			"max_bookmarks" = max_bookmarks,
+			"maxBookmarks" = max_bookmarks,
 			"bookmarks" = list()
 		)
 
@@ -994,10 +994,10 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				.["bookmarks"] += list(list(
 					"ref" = ref(b),
 					"name" = b.name,
-					"X" = b.x,
-					"Y" = b.y,
-					"Z" = b.z,
-					))
+					"x" = b.x,
+					"y" = b.y,
+					"z" = b.z,
+				))
 
 	ui_act(action, params)
 		. = ..()
