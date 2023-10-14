@@ -1,5 +1,16 @@
 //Job Ban Handling, Modified to utilize code written within the past 6 years.
 
+/proc/jobban_get_for_player(ckey, server)
+	if (!ckey) return list()
+	try
+		var/datum/apiRoute/jobbans/getforplayer/getJobBansForPlayer = new
+		getJobBansForPlayer.queryParams = list("ckey" = ckey, "server_id" = server)
+		var/datum/apiModel/JobBansForPlayer/jobBansForPlayer = apiHandler.queryAPI(getJobBansForPlayer)
+		return jobBansForPlayer.jobs
+	catch
+		return list()
+
+
 /proc/jobban_fullban(M, rank, akey)
 	if (!M || !akey) return
 	if(ismob(M)) //Correct to ckey if provided a mob.
@@ -9,17 +20,25 @@
 	if(isnull(game_server))
 		return null
 	var/server_id = istype(game_server) ? game_server.id : null // null = all servers
-	if(apiHandler.queryAPI("jobbans/add", list("ckey"=M,"rank"=rank, "akey"=akey, "applicable_server"=server_id)))
+
+	try
+		var/datum/apiRoute/jobbans/add/addJobBan = new
+		addJobBan.buildBody(akey, roundId, server_id, M, rank)
+		apiHandler.queryAPI(addJobBan)
+
 		var/datum/player/player = make_player(M) //Recache the player.
-		player?.cached_jobbans = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+		player?.cached_jobbans = jobban_get_for_player(M, server_id)
+
 		var/ircmsg[] = new()
 		ircmsg["key"] = M
 		ircmsg["rank"] = rank
 		ircmsg["akey"] = akey
 		ircmsg["applicable_server"] = server_id
 		ircbot.export_async("job_ban", ircmsg)
-		return 1
-	return 0 //Errored.
+
+		return TRUE
+	catch
+		return FALSE
 
 
 ///Can be provided with a mob, a raw cache list, or a ckey. Prefer providing a cache if you can't use a mob, as that reduces API load.
@@ -33,17 +52,17 @@
 			//return FALSE
 		var/datum/player/player = make_player(M2.ckey) // Get the player so we can use their bancache.
 		if(player.cached_jobbans == null) // Shit they aren't cached.
-			var/api_response = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M2.ckey), 1)
-			if(!length(api_response)) // API unavailable or something
+			var/list/jobBans = jobban_get_for_player(M2.ckey)
+			player.cached_jobbans = jobBans
+			if(!length(jobBans)) // API unavailable or no bans
 				return FALSE
 			if(!M2?.ckey)
 				return FALSE // new_player was disposed during api call
-			player.cached_jobbans = api_response[M2.ckey]
 		cache = player.cached_jobbans
 	else if(islist(M))
 		cache = M
 	else //If we aren't a string this is going to explode.
-		cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+		cache = jobban_get_for_player(M)
 
 	var/datum/job/J = find_job_in_controller_by_string(rank)
 	if (J?.no_jobban_from_this_job)
@@ -82,7 +101,7 @@
 
 	if (!ismob(M))
 		checkey = M
-		cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=checkey), 1)[checkey]
+		cache = jobban_get_for_player(checkey)
 	else if (M.ckey)
 		checkey = M.ckey
 		var/datum/player/player = make_player(checkey) //Get the player so we can use their bancache.
@@ -93,13 +112,23 @@
 	if(!cache.Find("[rank]"))
 		return
 
-	apiHandler.queryAPI("jobbans/del", list("ckey"=checkey,"rank"=rank))
-	if(rank == "Security Department")
-		if(cache.Find("Security Officer"))
-			apiHandler.queryAPI("jobbans/del", list("ckey"=checkey, "rank"="Security Officer"))
-	var/ircmsg[] = new()
-	ircmsg["key"] = checkey
-	ircmsg["rank"] = rank
-	ircmsg["akey"] = akey
-	ircmsg["applicable_server"] = config.server_id
-	ircbot.export_async("job_unban", ircmsg)
+	try
+		var/datum/apiRoute/jobbans/delete/deleteJobBan = new
+		deleteJobBan.buildBody(null, checkey, rank)
+		apiHandler.queryAPI(deleteJobBan)
+
+		// Wire note: Hi this is super dumb
+		if(rank == "Security Department")
+			if(cache.Find("Security Officer"))
+				var/datum/apiRoute/jobbans/delete/secDeleteJobBan = new
+				secDeleteJobBan.buildBody(null, checkey, "Security Officer")
+				apiHandler.queryAPI(secDeleteJobBan)
+
+		var/ircmsg[] = new()
+		ircmsg["key"] = checkey
+		ircmsg["rank"] = rank
+		ircmsg["akey"] = akey
+		ircmsg["applicable_server"] = config.server_id
+		ircbot.export_async("job_unban", ircmsg)
+	catch
+		// pass
