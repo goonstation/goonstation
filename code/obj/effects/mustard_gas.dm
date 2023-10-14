@@ -20,8 +20,7 @@
 /obj/effects/mustard_gas/Move()
 	. = ..()
 	for(var/mob/living/carbon/human/R in get_turf(src))
-		if (R.internal != null && R.wear_mask && (R.wear_mask.c_flags & MASKINTERNALS))
-		else
+		if (!(R.internal != null && (R.wear_mask?.c_flags & MASKINTERNALS)))
 			R.TakeDamage("chest", 0, 10)
 			R.losebreath = max(5, R.losebreath)
 			R.emote("scream")

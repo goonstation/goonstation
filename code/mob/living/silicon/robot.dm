@@ -384,10 +384,7 @@
 						message = "<B>[src]</B> points."
 					else
 						src.point(M)
-
-					if (M)
 						message = "<B>[src]</B> points to [M]."
-					else
 				m_type = 1
 
 			if ("panic","freakout")
