@@ -129,15 +129,13 @@ var/global
 			for (var/list/message in src.messageQueue)
 				boutput(src.owner, message["message"], message["group"])
 		src.messageQueue = null
-
-		else
-			src.sendClientData()
-			/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
-			SPAWN(1 MINUTE) //60 seconds
-				if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file
-					out(src.owner, "<div class='fatalError'>Chat file tampering detected. Closing connection.</div>")
-					del(src.owner)
-			*/
+		src.sendClientData()
+		/* WIRE TODO: Fix this so the CDN dying doesn't break everyone
+		SPAWN(1 MINUTE) //60 seconds
+			if (!src.cookieSent) //Client has very likely futzed with their local html/js chat file
+				out(src.owner, "<div class='fatalError'>Chat file tampering detected. Closing connection.</div>")
+				del(src.owner)
+		*/
 
 /// Called in update_admins()
 /datum/chatOutput/proc/loadAdmin()
