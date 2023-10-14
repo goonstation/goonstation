@@ -101,9 +101,11 @@ datum/mind
 				current.removeOverlaysClient(current.client)
 				tgui_process.on_transfer(current, new_character)
 				new_character.lastKnownIP = current.client.address
+			current.oldmind = src
 			current.mind = null
 			SEND_SIGNAL(src, COMSIG_MIND_DETACH_FROM_MOB, current, new_character)
 
+		new_character.oldmind = new_character.mind
 		new_character.mind = src
 		current = new_character
 
