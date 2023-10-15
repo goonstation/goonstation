@@ -343,6 +343,16 @@
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/factory)
+"aos" = (
+/obj/railing/yellow{
+	dir = 8
+	},
+/obj/machinery/light/emergencyflashing,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "apl" = (
 /obj/machinery/conveyor/EW,
 /turf/unsimulated/floor/engine/glow,
@@ -372,13 +382,6 @@
 	},
 /turf/unsimulated/floor/purple,
 /area/morrigan/station/civilian/janitor)
-"aqO" = (
-/obj/item/clothing/head/constructioncone,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "ari" = (
 /obj/mopbucket,
 /turf/unsimulated/floor/purple,
@@ -421,13 +424,18 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/station/factory)
 "atM" = (
-/obj/machinery/conveyor/area_activated,
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
 	dir = 4;
 	id = "robot_factory"
 	},
 /obj/forcefield/energyshield/perma/people,
+/obj/plasticflaps,
+/obj/machinery/conveyor/NS{
+	name = "cargo belt - south";
+	operating = 1;
+	id = "morrigancargo"
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "aud" = (
@@ -2560,9 +2568,9 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "cnM" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-edge"
+/obj/machinery/conveyor/NS{
+	name = "cargo belt - south";
+	operating = 1
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
@@ -3379,6 +3387,19 @@
 	},
 /turf/unsimulated/floor/black,
 /area/morrigan/routing/transport)
+"dfv" = (
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "eng_locked";
+	name = "rusted airlock";
+	opacity = 1;
+	pixel_y = 1;
+	dir = 4
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "dfz" = (
 /obj/decoration/bullethole{
 	pixel_y = -10;
@@ -3541,14 +3562,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"dqp" = (
-/obj/machinery/conveyor/area_activated,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8;
-	tag = "icon-xtra_bigstripe-edge (WEST)"
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "drj" = (
 /obj/map/light,
 /turf/unsimulated/floor/plating/jen,
@@ -3585,13 +3598,6 @@
 /obj/railing/red/reinforced,
 /turf/unsimulated/floor/twotone/yellow,
 /area/morrigan/derelict)
-"dse" = (
-/obj/machinery/light/emergencyflashing,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "dsB" = (
 /obj/machinery/conveyor/area_activated{
 	dir = 4
@@ -4338,11 +4344,13 @@
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/medical/main)
 "efO" = (
-/obj/machinery/conveyor/area_activated,
-/obj/disposaloutlet/south,
-/obj/disposalpipe/trunk{
-	dir = 1
+/obj/fakeobjects/morrigan_teleporter{
+	anchored = 1
 	},
+/obj/machinery/launcher_loader/north{
+	dir = 2
+	},
+/obj/landmark/morrigan_crate_puzzle,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "egg" = (
@@ -4505,13 +4513,8 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"emb" = (
-/obj/machinery/conveyor/area_activated{
-	dir = 4
-	},
-/obj/machinery/networked/telepad,
-/obj/landmark/morrigan_crate_puzzle,
-/turf/unsimulated/floor/plating/damaged1,
+"emj" = (
+/turf/unsimulated/floor/lava,
 /area/morrigan/derelict/cargo)
 "emz" = (
 /turf/unsimulated/floor/darkblue,
@@ -4840,6 +4843,19 @@
 	},
 /turf/unsimulated/floor/wood/seven,
 /area/morrigan/station/civilian/cafe)
+"ewk" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/item/clothing/head/constructioncone,
+/obj/item/cable_coil/cut{
+	color = "#DD0000";
+	desc = "A mangled scrap of power cable.";
+	icon_state = "coil1";
+	name = "torn up cable"
+	},
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "ewA" = (
 /turf/unsimulated/floor/engine/caution/corner{
 	dir = 1
@@ -5015,19 +5031,13 @@
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
 "eEI" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
 /obj/decal/cleanable/shattered_traitorcoin,
+/obj/machinery/light/emergencyflashing{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "eFp" = (
@@ -5101,21 +5111,6 @@
 	},
 /turf/unsimulated/floor/industrial,
 /area/morrigan/routing/transport)
-"eIC" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent. Cool air is gently flowing through it.";
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "hvent";
-	name = "air vent";
-	dir = 1;
-	pixel_x = 32
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "eIO" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -6028,9 +6023,10 @@
 /turf/unsimulated/floor/black,
 /area/morrigan/station/engineering/specialist)
 "fzl" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/grille/steel,
+/obj/window/auto/reinforced/indestructible/crystal,
 /obj/decal/poster/wallsign/hazard_caution,
-/turf/unsimulated/floor/plating/damaged1,
+/turf/unsimulated/floor/plating,
 /area/morrigan/derelict/cargo)
 "fzz" = (
 /obj/decal/fakeobjects/firelock_broken{
@@ -6098,16 +6094,12 @@
 /turf/unsimulated/floor/blueblack,
 /area/morrigan/station/hallway)
 "fDA" = (
-/obj/decal/fakeobjects/firelock_broken{
-	density = 1;
-	desc = "Rust has rendered this airlock useless.";
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "eng_locked";
-	name = "rusted airlock";
-	opacity = 1;
-	pixel_y = 1
+/obj/plasticflaps,
+/obj/machinery/conveyor/NS{
+	name = "cargo belt - south";
+	operating = 1
 	},
-/turf/space,
+/turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "fDC" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
@@ -7185,20 +7177,6 @@
 /mob/living/critter/robotic/gunbot/morrigan/meleebot,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOS)
-"gxu" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/hazard_caution,
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent. Cool air is gently flowing through it.";
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "hvent";
-	name = "air vent";
-	dir = 1;
-	pixel_x = 32
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict)
 "gxG" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 8;
@@ -7490,6 +7468,10 @@
 "gIW" = (
 /turf/unsimulated/floor/red/redblackchecker,
 /area/morrigan/station/security/main)
+"gIX" = (
+/obj/machinery/conveyor/EW,
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "gIZ" = (
 /obj/machinery/computer/card/department/medical,
 /turf/unsimulated/floor/wood/six,
@@ -8031,14 +8013,6 @@
 	},
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/spy)
-"hee" = (
-/obj/machinery/light/emergencyflashing{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/floatingtiles/random,
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "heF" = (
 /obj/machinery/dispenser,
 /obj/machinery/light/incandescent/cool/very{
@@ -9262,6 +9236,10 @@
 /obj/machinery/chem_heater,
 /turf/unsimulated/floor/wood/seven,
 /area/morrigan/station/civilian/bar)
+"ini" = (
+/obj/machinery/conveyor/NS,
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "inp" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/twotone/red,
@@ -9406,9 +9384,7 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "iux" = (
-/obj/machinery/conveyor/area_activated{
-	dir = 4
-	},
+/obj/machinery/conveyor/WE,
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict/cargo)
 "ivg" = (
@@ -10499,11 +10475,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"jrL" = (
-/obj/machinery/floorflusher/industrial,
-/obj/disposalpipe/trunk,
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "jsD" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/command/HOP)
@@ -11301,8 +11272,8 @@
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
 "kbN" = (
-/obj/machinery/conveyor/area_activated{
-	dir = 8
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
@@ -11356,6 +11327,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
 	},
+/obj/item/clothing/head/constructioncone,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "kgo" = (
@@ -11675,6 +11647,10 @@
 	dir = 5
 	},
 /area/morrigan/station/science)
+"kwq" = (
+/obj/decal/cleanable/oil/streak,
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "kwu" = (
 /obj/decal/fakeobjects/firelock_broken{
 	density = 1;
@@ -12277,8 +12253,11 @@
 	},
 /area/morrigan/construction)
 "kWU" = (
+/obj/railing/yellow{
+	dir = 8
+	},
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 6
+	dir = 4
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
@@ -13277,6 +13256,10 @@
 /obj/decoration/vent,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/holding)
+"lQT" = (
+/obj/machinery/conveyor/NW,
+/turf/unsimulated/floor/plating/damaged1,
+/area/morrigan/derelict/cargo)
 "lQU" = (
 /obj/machinery/door/airlock/pyro/security{
 	dir = 4;
@@ -14586,6 +14569,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/decal/floatingtiles/random,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "mUw" = (
@@ -15177,7 +15161,11 @@
 /turf/unsimulated/floor/darkblue,
 /area/morrigan/station/command/eva)
 "nvz" = (
-/obj/machinery/conveyor/area_activated,
+/obj/machinery/conveyor/NS{
+	name = "cargo belt - south";
+	operating = 1;
+	id = "morrigancargo"
+	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict/cargo)
 "nvC" = (
@@ -15389,6 +15377,9 @@
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/machinery/light/incandescent/netural{
 	dir = 1
+	},
+/obj/decal/poster/wallsign/warning4{
+	pixel_y = 29
 	},
 /turf/unsimulated/floor/yellow,
 /area/morrigan/derelict/cargo)
@@ -15651,12 +15642,6 @@
 /mob/living/critter/robotic/gunbot/morrigan/meleebot,
 /turf/unsimulated/floor/yellow/checker,
 /area/morrigan/station/engineering/specialist)
-"nOb" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "nOL" = (
 /obj/decoration/vent/vent3,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -15753,10 +15738,6 @@
 	},
 /turf/unsimulated/floor/sanitary/blue,
 /area/morrigan/routing/transport)
-"nTm" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "nTW" = (
 /mob/living/critter/robotic/gunbot/morrigan/meleebot,
 /turf/unsimulated/floor/red,
@@ -17097,10 +17078,10 @@
 /area/morrigan/station/science)
 "pji" = (
 /obj/machinery/light/emergencyflashing,
-/obj/item/brick,
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
+/obj/machinery/conveyor_switch,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "pjx" = (
@@ -17826,8 +17807,11 @@
 /turf/unsimulated/floor/plating,
 /area/morrigan/derelict)
 "pTQ" = (
-/obj/machinery/conveyor/area_activated,
-/obj/machinery/conveyor/area_activated,
+/obj/machinery/conveyor/NS{
+	name = "cargo belt - south";
+	operating = 1;
+	id = "morrigancargo"
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "pUn" = (
@@ -18124,15 +18108,7 @@
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
 	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent. Cool air is gently flowing through it.";
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "hvent";
-	name = "air vent";
-	dir = 1;
-	pixel_x = 32
-	},
+/obj/decal/cleanable/robot_debris/gib,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "qkb" = (
@@ -18417,17 +18393,7 @@
 /area/morrigan/derelict)
 "qwQ" = (
 /obj/machinery/light/emergencyflashing{
-	dir = 1
-	},
-/obj/item/cable_coil/cut{
-	color = "#DD0000";
-	desc = "A mangled scrap of power cable.";
-	icon_state = "coil1";
-	name = "torn up cable"
-	},
-/obj/item/clothing/head/constructioncone,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
+	dir = 8
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
@@ -20012,6 +19978,13 @@
 	},
 /turf/unsimulated/floor/orangeblack,
 /area/morrigan/holding)
+"rVD" = (
+/obj/machinery/conveyor/WE,
+/obj/plasticflaps{
+	dir = 8
+	},
+/turf/unsimulated/floor/plating,
+/area/morrigan/derelict/cargo)
 "rVS" = (
 /obj/item/weldingtool,
 /turf/unsimulated/floor/industrial,
@@ -21219,6 +21192,7 @@
 	dir = 8
 	},
 /obj/decal/cleanable/rust/jen,
+/obj/item/brick,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "tih" = (
@@ -22689,11 +22663,6 @@
 /obj/fakeobjects/morrigan/broken_lockdown,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/armory)
-"uwL" = (
-/obj/machinery/conveyor/area_activated,
-/obj/plasticflaps,
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "uwW" = (
 /obj/decoration/vent,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -23258,7 +23227,15 @@
 	},
 /area/morrigan/derelict)
 "uTR" = (
-/obj/window/auto/reinforced/indestructible,
+/obj/decal/fakeobjects/firelock_broken{
+	density = 1;
+	desc = "Rust has rendered this airlock useless.";
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "eng_closed";
+	name = "rusted airlock";
+	opacity = 1
+	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "uUa" = (
@@ -24284,10 +24261,7 @@
 /area/morrigan/routing/transport)
 "vWC" = (
 /obj/machinery/light/emergencyflashing{
-	dir = 1
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 8
+	dir = 4
 	},
 /obj/item/wrench/orange,
 /turf/unsimulated/floor/plating/damaged1,
@@ -24818,14 +24792,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"wxF" = (
-/obj/decal/tile_edge/stripe/extra_big,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "wyX" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -24909,8 +24875,8 @@
 /turf/unsimulated/floor/terrazzo/black,
 /area/morrigan/station/medical/morgue)
 "wCz" = (
-/obj/decal/poster/wallsign/warning4{
-	pixel_y = 29
+/obj/machinery/activation_button/morrigan_cargo{
+	pixel_y = 28
 	},
 /turf/unsimulated/floor/yellow,
 /area/morrigan/derelict/cargo)
@@ -25280,12 +25246,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"wRn" = (
-/obj/machinery/conveyor/area_activated{
-	dir = 4
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "wRr" = (
 /obj/disposalpipe/segment{
 	dir = 2;
@@ -26021,11 +25981,8 @@
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/medical/reception)
 "xvi" = (
-/obj/machinery/floorflusher/industrial,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/turf/unsimulated/floor/plating,
+/obj/machinery/conveyor/WS,
+/turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "xvr" = (
 /obj/decal/poster/wallsign/warning3,
@@ -26044,8 +26001,10 @@
 /turf/unsimulated/floor/engine/glow,
 /area/morrigan/station/factory)
 "xwM" = (
-/obj/disposalpipe/segment,
-/turf/unsimulated/wall/auto/reinforced/supernorn,
+/obj/machinery/light/emergencyflashing{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict/cargo)
 "xwQ" = (
 /mob/living/critter/robotic/gunbot/morrigan/gunbot,
@@ -26460,13 +26419,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/engineering/specialist)
-"xPY" = (
-/obj/machinery/floorflusher/industrial,
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "xQK" = (
 /obj/table/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/cinnamon,
@@ -26623,10 +26575,6 @@
 /obj/machinery/computer/announcement/syndie,
 /turf/unsimulated/floor/carpet/purple/fancy/edge/north,
 /area/morrigan/station/command/captain)
-"xZW" = (
-/obj/machinery/conveyor/area_activated,
-/turf/unsimulated/floor/plating/damaged1,
-/area/morrigan/derelict/cargo)
 "yab" = (
 /obj/table/syndicate/auto,
 /obj/decoration/floralarrangement,
@@ -33485,21 +33433,21 @@ vwJ
 "}
 (65,1,1) = {"
 vwJ
-emb
+vwJ
+vwJ
 vwJ
 umR
 ixt
 ixt
 umR
 vwJ
-vwJ
+umR
+umR
+dfv
 umR
 umR
 umR
 umR
-umR
-umR
-vwJ
 vwJ
 vwJ
 uRB
@@ -33588,7 +33536,8 @@ vwJ
 "}
 (66,1,1) = {"
 vwJ
-wRn
+umR
+umR
 umR
 umR
 rNA
@@ -33596,13 +33545,12 @@ gfY
 umR
 umR
 umR
+stV
+stV
+stV
 umR
-wxF
-dqp
-dqp
-xPY
+emj
 umR
-vwJ
 vwJ
 vwJ
 uRB
@@ -33691,21 +33639,21 @@ vwJ
 "}
 (67,1,1) = {"
 vwJ
-wRn
 umR
+kwq
 qwQ
+ewk
 rbi
 afy
-aqO
 kfV
 fzl
 ixp
 kWU
 kbN
-osU
+aos
 umR
+gIX
 umR
-vwJ
 vwJ
 vwJ
 uRB
@@ -33794,21 +33742,21 @@ vwJ
 "}
 (68,1,1) = {"
 vwJ
-jrL
+umR
 xwM
 efO
-uwL
-xZW
-xZW
-xZW
+pTQ
+pTQ
+pTQ
+pTQ
 atM
 pTQ
 nvz
 qtY
 cnM
 fDA
-vwJ
-vwJ
+lQT
+umR
 vwJ
 vwJ
 uRB
@@ -33897,21 +33845,21 @@ vwJ
 "}
 (69,1,1) = {"
 vwJ
-vwJ
 umR
+bMR
 vWC
 qjL
 nUM
 thI
 pji
-gxu
+fzl
 mUt
 eEI
 iux
-nOb
+osU
 umR
-vwJ
-vwJ
+umR
+umR
 vwJ
 vwJ
 rAA
@@ -34000,21 +33948,21 @@ vwJ
 "}
 (70,1,1) = {"
 vwJ
-vwJ
 umR
 umR
 umR
+xfV
 uTR
 gLv
-uTR
+xfV
 umR
 umR
-hee
-iux
-dse
 umR
-vwJ
-vwJ
+rVD
+umR
+umR
+umR
+umR
 vwJ
 vwJ
 aEt
@@ -34112,12 +34060,12 @@ stV
 myh
 jjl
 umR
-nTm
-xvi
-eIC
 umR
-vwJ
-vwJ
+xvi
+ini
+ini
+emj
+umR
 vwJ
 vwJ
 vwJ
@@ -34219,8 +34167,8 @@ umR
 umR
 umR
 umR
-vwJ
-vwJ
+umR
+umR
 vwJ
 vwJ
 vwJ

@@ -198,18 +198,23 @@
 	var/max_contra_amount = 2
 	var/contra_contained = 0 //will be useful for contraband check
 
-	make_my_stuff()
-		if (.)
-			name = "Order #[rand(100,10000)]"
-			var/amount_to_spawn = rand(2, 10)
-			for (var/amount = 0, amount < amount_to_spawn, amount++)
-				var/thing_to_spawn = pick(random_shit_to_spawn)
-				var/contra_to_spawn = pick(contraband_items)
-				src.contents += new thing_to_spawn
-				if (prob(10) && contra_contained < max_contra_amount)
-					src.contents += new contra_to_spawn
-					contra_contained += 1
+	New()
+		..()
+		if (src.spawn_contents && make_my_stuff())
+			spawn_contents = null
+		name = "Order #[rand(100,10000)]"
 
+	make_my_stuff()
+		if (!islist(src.spawn_contents))
+			return
+		for (var/amount in 1 to rand(4, 12))
+			var/thing_to_spawn = pick(random_shit_to_spawn)
+			var/contra_to_spawn = pick(contraband_items)
+			new thing_to_spawn(src)
+			if (prob(15) && contra_contained < max_contra_amount)
+				new contra_to_spawn(src)
+				contra_contained++
+		return TRUE
 
 	engineer
 		icon_state = "engcrate"
@@ -253,7 +258,7 @@
 		density = 1
 		icon_opened = "weaponcrateopen"
 		icon_closed = "weaponcrate"
-		contraband_items = list(/obj/item/gun/russianrevolver/fake357, /obj/item/gun/energy/blaster_pod_wars/syndicate, /obj/item/clothing/suit/det_suit/beepsky)
+		contraband_items = list(/obj/item/gun/russianrevolver/fake357, /obj/item/gun/energy/blaster_pod_wars/nanotrasen, /obj/item/clothing/suit/det_suit/beepsky)
 		random_shit_to_spawn = list(/obj/item/storage/box/handcuff_kit,
 		/obj/item/ammo/ammobox,
 		/obj/item/ammo/bullets/smoke,
