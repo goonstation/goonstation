@@ -66327,6 +66327,7 @@
 /obj/machinery/light/incandescent/warm{
 	dir = 8
 	},
+/obj/machinery/firealarm/west,
 /turf/simulated/floor/red/checker,
 /area/station/security/checkpoint/sec_foyer)
 "uwt" = (

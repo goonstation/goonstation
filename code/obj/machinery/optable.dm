@@ -35,8 +35,6 @@ TYPEINFO(/obj/machinery/optable)
 		if(3)
 			if (prob(25))
 				src.set_density(0)
-		else
-	return
 
 /obj/machinery/optable/blob_act(var/power)
 	if(prob(power * 2.5))

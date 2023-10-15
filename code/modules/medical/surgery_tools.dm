@@ -496,7 +496,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 				var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
 				if (suiciding)
-
+					; // do nothing
 				else if (patient.health < 0)
 					if (sumdamage >= 90)
 						user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")

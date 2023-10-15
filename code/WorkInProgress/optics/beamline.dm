@@ -69,9 +69,6 @@
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			else
-		return
-
 
 	update_icon()
 		if (status & (NOPOWER|BROKEN))

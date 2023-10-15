@@ -1349,7 +1349,7 @@ TYPEINFO(/turf/simulated)
 								if (3)
 									new /obj/item/clothing/under/suit/pinstripe {name = "old pinstripe suit"; desc  = "A pinstripe suit.  That was stolen.  Off of a buried corpse.";} ( src )
 								else
-									// default
+									; // default
 						break
 
 		else

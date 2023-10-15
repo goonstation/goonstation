@@ -170,7 +170,7 @@
 
 /obj/machinery/bot/buttbot/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/card/emag))
-		//Do not hit the buttbot with the emag tia
+		return // Do not hit the buttbot with the emag tia
 	else
 		src.visible_message("<span class='alert'>[user] hits [src] with [W]!</span>")
 		src.health -= W.force * 0.5
