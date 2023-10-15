@@ -13,9 +13,13 @@ ABSTRACT_TYPE(/datum/apiBody)
 #if defined(SPACEMAN_DMM)
 		return
 #elif DM_VERSION >= 515 || defined(OPENDREAM) // Yay, actual sanity!
-		throw EXCEPTION("malformed [__TYPE__] [src.toJson()]")
+		var/datum/apiModel/Error/errorModel = new
+		errorModel.SetupFromResponse(list("message" = "malformed [__TYPE__] [src.toJson()]"))
+		throw EXCEPTION(errorModel)
 #else
-		throw EXCEPTION("malformed api body [json_encode(src.toJson())]")
+		var/datum/apiModel/Error/errorModel = new
+		errorModel.SetupFromResponse(list("message" = "malformed api body [json_encode(src.toJson())]"))
+		throw EXCEPTION(errorModel)
 #endif
 
 /// Build a list of values based on fields and input
