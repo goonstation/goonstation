@@ -16959,9 +16959,7 @@
 /turf/simulated/floor,
 /area/station/engine/engineering)
 "biM" = (
-/obj/decal/cleanable/blood/gibs{
-	icon_state = "gib1"
-	},
+/obj/decal/cleanable/blood/gibs,
 /turf/simulated/floor/martian,
 /area/evilreaver/bridge)
 "biN" = (
@@ -33546,7 +33544,7 @@
 /area/station/hallway/secondary/exit)
 "cXG" = (
 /obj/landmark/random_room/size3x3,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/plating,
 /area/station/maintenance/north)
 "cXN" = (
 /obj/disposalpipe/segment/brig,
@@ -33793,6 +33791,9 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor,
 /area/station/hallway/secondary/exit)
+"doM" = (
+/turf/simulated/floor/plating,
+/area/station/maintenance/north)
 "doZ" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /turf/simulated/floor/engine/glow/blue{
@@ -34406,7 +34407,7 @@
 /area/station/crew_quarters/market)
 "efE" = (
 /obj/landmark/random_room/size5x3,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/plating,
 /area/station/maintenance/northeast)
 "efM" = (
 /obj/machinery/firealarm/east,
@@ -35714,6 +35715,9 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/inner/central)
+"fVY" = (
+/turf/simulated/floor/plating,
+/area/station/maintenance/northeast)
 "fWc" = (
 /obj/landmark/spawner/loot,
 /turf/unsimulated/floor/shuttle/red,
@@ -36334,7 +36338,7 @@
 /area/station/science/artifact)
 "gST" = (
 /obj/landmark/random_room/size3x3,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
 "gTH" = (
 /obj/machinery/door/airlock/pyro/glass{
@@ -36549,6 +36553,9 @@
 	},
 /turf/simulated/floor/dirt,
 /area/station/ranch)
+"hpl" = (
+/turf/simulated/floor/plating,
+/area/station/maintenance/inner/central)
 "hps" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/disposalpipe/segment/brig,
@@ -38954,8 +38961,6 @@
 "lCt" = (
 /obj/machinery/door_control/antagscanner{
 	entrance_scanner = 1;
-	id = "Sleeper_Access";
-	name = "Dubious Hand Scanner";
 	pixel_y = 25
 	},
 /turf/space/fluid,
@@ -41739,8 +41744,6 @@
 /area/station/medical/medbay/lobby)
 "pNy" = (
 /obj/machinery/door_control/antagscanner{
-	id = "Sleeper_Access";
-	name = "Dubious Hand Scanner";
 	pixel_x = 32
 	},
 /turf/simulated/floor/stairs/wide/other,
@@ -44413,6 +44416,9 @@
 	dir = 1
 	},
 /area/station/medical/medbay/surgery/storage)
+"uGg" = (
+/turf/simulated/floor/plating,
+/area/station/maintenance/southwest)
 "uGC" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2,
@@ -45302,8 +45308,6 @@
 /area/station/crew_quarters/jazz)
 "wfE" = (
 /obj/machinery/door_control/antagscanner{
-	id = "Sleeper_Access";
-	name = "Dubious Hand Scanner";
 	pixel_y = -33
 	},
 /turf/simulated/floor/black,
@@ -46560,7 +46564,7 @@
 /area/station/science/artifact)
 "yel" = (
 /obj/landmark/random_room/size3x3,
-/turf/simulated/floor/plating/random,
+/turf/simulated/floor/plating,
 /area/station/maintenance/inner/central)
 "yeE" = (
 /obj/cable{
@@ -75283,8 +75287,8 @@ jmA
 buE
 cie
 chZ
-btZ
-btZ
+uGg
+uGg
 gST
 chZ
 cir
@@ -75585,9 +75589,9 @@ iYt
 cib
 cif
 jTG
-btZ
-btZ
-btZ
+uGg
+uGg
+uGg
 jTG
 cif
 cim
@@ -75887,9 +75891,9 @@ cib
 cia
 oUO
 chZ
-btZ
-btZ
-btZ
+uGg
+uGg
+uGg
 chZ
 cId
 cin
@@ -86686,8 +86690,8 @@ afA
 aqc
 afq
 axA
-afq
-afq
+doM
+doM
 cXG
 axA
 ajF
@@ -86988,9 +86992,9 @@ afA
 agw
 llv
 axA
-afq
-afq
-afq
+doM
+doM
+doM
 axA
 akv
 afq
@@ -87290,9 +87294,9 @@ afA
 aib
 afq
 axA
-afq
-afq
-afq
+doM
+doM
+doM
 axA
 aku
 agE
@@ -97883,8 +97887,8 @@ aDr
 aDr
 aig
 chd
-aDr
-aDr
+hpl
+hpl
 yel
 aCD
 aqn
@@ -98185,9 +98189,9 @@ aDr
 aDr
 aig
 chd
-aDr
-aDr
-aDr
+hpl
+hpl
+hpl
 aCD
 aqn
 aqn
@@ -98487,9 +98491,9 @@ aDr
 aKk
 aig
 chd
-aDr
-aDr
-aDr
+hpl
+hpl
+hpl
 aCD
 aqn
 aqn
@@ -99366,8 +99370,8 @@ aqn
 aqn
 aqn
 anx
-aoj
-aoj
+fVY
+fVY
 efE
 aOO
 rCV
@@ -99668,9 +99672,9 @@ aqn
 aqn
 aqn
 anx
-aoj
-aoj
-aoj
+fVY
+fVY
+fVY
 aOO
 aoj
 aoj
@@ -99970,9 +99974,9 @@ aqn
 aqn
 aqn
 anx
-aoj
-aoj
-aoj
+fVY
+fVY
+fVY
 kCm
 aoj
 aoj
@@ -100272,9 +100276,9 @@ aqn
 aqn
 aqn
 anx
-aoj
-aoj
-aoj
+fVY
+fVY
+fVY
 aOO
 aoj
 aoj
@@ -100574,9 +100578,9 @@ aqn
 aqn
 aqn
 anx
-aoj
-aoj
-aoj
+fVY
+fVY
+fVY
 aOO
 aoj
 axy
