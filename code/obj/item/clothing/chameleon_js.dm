@@ -48,13 +48,13 @@
 			boutput(M, "<span class='alert'><B>Your chameleon jumpsuit malfunctions!</B></span>")
 			src.name = "psychedelic jumpsuit"
 			src.desc = "Groovy!"
+			src.icon_state = "psyche"
+			src.item_state = "psyche"
 			icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 			wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 			inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
-			src.icon_state = "psyche"
-			src.item_state = "psyche"
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -348,11 +348,11 @@
 			boutput(M, "<span class='alert'><B>Your chameleon hat malfunctions!</B></span>")
 			src.name = "hat"
 			src.desc = "A knit cap in...what the hell?"
+			src.icon_state = "psyche"
+			src.item_state = "bgloves"
 			src.hides_from_examine = null
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
-			src.icon_state = "psyche"
-			src.item_state = "bgloves"
 			src.seal_hair = FALSE
 			M.set_clothing_icon_dirty()
 
@@ -595,13 +595,13 @@
 			boutput(M, "<span class='alert'><B>Your chameleon suit malfunctions!</B></span>")
 			src.name = "hoodie"
 			src.desc = "A comfy jacket that's hard on the eyes."
-			src.hides_from_examine = null
-			wear_image = image(wear_image_icon)
-			inhand_image = image(inhand_image_icon)
 			src.icon_state = "hoodie-psyche"
 			src.item_state = "hoodie-psyche"
-			src.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-			src.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+			src.hides_from_examine = null
+			src.icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
+			src.wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -923,10 +923,10 @@
 			boutput(M, "<span class='alert'><B>Your chameleon glasses malfunction!</B></span>")
 			src.name = "glasses"
 			src.desc = "A pair of glasses. They seem to be broken, though."
-			wear_image = image(wear_image_icon)
-			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -1058,9 +1058,10 @@
 			boutput(M, "<span class='alert'><B>Your chameleon shoes malfunction!</B></span>")
 			src.name = "shoes"
 			src.desc = "A pair of shoes. Maybe they're those light up kind you had as a kid?"
+			src.icon_state = "psyche"
+			src.item_state = "psyche"
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
-			src.icon_state = "psyche"
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -1245,10 +1246,10 @@
 			boutput(M, "<span class='alert'><B>Your chameleon gloves malfunction!</B></span>")
 			src.name = "gloves"
 			src.desc = "A pair of gloves. Something seems off about them..."
-			wear_image = image(wear_image_icon)
-			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
 			src.material_prints = "high-tech rainbow flashing nanofibers"
 			M.set_clothing_icon_dirty()
 
@@ -1404,10 +1405,10 @@
 			boutput(M, "<span class='alert'><B>Your chameleon belt malfunctions!</B></span>")
 			src.name = "belt"
 			src.desc = "A flashing belt. Looks like you can still put things in it, though."
-			wear_image = image(wear_image_icon)
-			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -1571,10 +1572,10 @@
 			boutput(M, "<span class='alert'><B>Your chameleon backpack malfunctions!</B></span>")
 			src.name = "backpack"
 			src.desc = "A flashing backpack. Looks like you can still put things in it, though."
-			wear_image = image(wear_image_icon)
-			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche_backpack"
 			src.item_state = "psyche_backpack"
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
 
 	verb/change()
