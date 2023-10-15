@@ -203,7 +203,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/attacker_prob = 10
 	var/max_attackers = 5
 	var/attacker_list = list()
-	
+
 	Initialize(timeout=30, image_list=null, name_list=null, attacker_prob=10, max_attackers=5)
 		.=..()
 		if(. == COMPONENT_INCOMPATIBLE)
@@ -283,7 +283,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	var/list/target_list
 	var/range = 5
 	var/override = TRUE
-	
+
 	Initialize(timeout=30, image_list=null, target_list=null, range=5, image_prob=10, image_time=20 SECONDS, override=TRUE)
 		. = ..()
 		if(. == COMPONENT_INCOMPATIBLE || length(image_list) == 0 || length(target_list) == 0)
@@ -475,20 +475,14 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 	else
 		if (src.should_attack && prob(70) && !ON_COOLDOWN(src, "fake_attack_cooldown", 1 SECOND))
 			if (weapon_name)
-				if (narrator_mode)
-					my_target.playsound_local(my_target.loc, 'sound/vox/weapon.ogg', 40, 0)
-				else
-					my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 40, 1)
+				my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 40, 1)
 				my_target.show_message("<span class='alert'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
 				if (prob(20)) my_target.change_eye_blurry(3)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)
 						fake_blood(my_target)
 			else
-				if (narrator_mode)
-					my_target.playsound_local(my_target.loc, 'sound/vox/hit.ogg', 40, 0)
-				else
-					my_target.playsound_local(my_target.loc, pick(sounds_punch), 40, 1)
+				my_target.playsound_local(my_target.loc, pick(sounds_punch), 40, 1)
 				my_target.show_message("<span class='alert'><B>[src.name] has punched [my_target]!</B></span>", 1)
 				if (prob(33))
 					if (!locate(/obj/overlay) in my_target.loc)

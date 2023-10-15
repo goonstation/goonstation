@@ -317,7 +317,14 @@ ABSTRACT_TYPE(/obj/item)
 
 	if (isnull(initial(src.health))) // if not overridden
 		src.health = get_initial_item_health(src.type)
+
 	..()
+	if (src.contraband > 0)
+		if (istype(src, /obj/item/gun))
+			AddComponent(/datum/component/contraband, 0, src.contraband)
+		else
+			AddComponent(/datum/component/contraband, src.contraband, 0)
+
 	if(prob(src.mimic_chance))
 		SPAWN(10 SECONDS)
 			src.become_mimic()
@@ -565,11 +572,6 @@ ABSTRACT_TYPE(/obj/item)
 					break
 			src.combust(firesource)
 	..() // call your fucking parents
-
-/// Gets the effective contraband level of an item. Use this instead of accessing .contraband directly
-/obj/item/proc/get_contraband()
-	// This needs to be a ternary because the value of the contraband override might be 0
-	return HAS_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) : src.contraband
 
 /// Don't override this, override _update_stack_appearance() instead.
 /obj/item/proc/UpdateStackAppearance()
@@ -1049,7 +1051,6 @@ ABSTRACT_TYPE(/obj/item)
 				if (!src.ArtifactSanityCheck()) return
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
-		else
 	return ..()
 
 /obj/item/blob_act(var/power)
@@ -1139,8 +1140,8 @@ ABSTRACT_TYPE(/obj/item)
 		if (W_CLASS_NORMAL) t = "normal-sized"
 		if (W_CLASS_BULKY) t = "bulky"
 		if (W_CLASS_HUGE to INFINITY) t = "huge"
-		else
-	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
+	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50))
+		t = "funny-looking"
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user)

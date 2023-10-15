@@ -325,9 +325,10 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if (22 to 31)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/paperhat,rand(6,12))
 			else
-				// nothing
+				; // nothing
 
-		if(!length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/paperhat,rand(6,12)) //fallback
+		if(!length(src.rc_entries))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/paperhat,rand(6,12)) //fallback
 
 		if(prob(70)) //cookies or cakes?
 			src.rc_entries += rc_buildentry(/datum/rc_entry/food/cake,1+prob(20))
