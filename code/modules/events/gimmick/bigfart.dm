@@ -205,7 +205,7 @@
 			else if(HAS_FLAG(F,LIMB_HEAVIER))
 				if(magical)
 					boutput(H, "<span class='alert'>A pair of invisible hands try to clamp down around [ch ? "our" : "your"] [L]!</span>")
-					boutput(H, "<span class='notification'>...but they just can't seem to find a good grip arouond that massive hunk of metal you call [armleg == "arm" ? "an arm" : "a leg"]!</span>")
+					boutput(H, "<span class='notification'>...but they just can't seem to find a good grip around that massive hunk of metal you call [armleg == "arm" ? "an arm" : "a leg"]!</span>")
 				else
 					boutput(H, "<span class='alert'>[ch ? "We" : "You"] feel a cosmic force conduct through [ch ? "our" : "your"] body, collecting around [ch ? "our" : "your"] [L]!</span>")
 					boutput(H, "<span class='notification'>...but the mass and material of [ch ? "our" : "your"] [L] absorbs and harmlessly radiates it back out into the aether!</span>")
@@ -236,7 +236,7 @@
 		else if(HAS_FLAG(F,LIMB_BEAR))
 			if(ch)
 				if(magical)
-					boutput(H, "<span class='alert'>It felt like we just raked our [pick("viciously restless", "restlessly viscious")] bear claws through an invisible arm!</span>")
+					boutput(H, "<span class='alert'>It felt like we just raked our [pick("viciously restless", "restlessly vicious")] bear claws through an invisible arm!</span>")
 					boutput(H, "<span class='notification'>Whatever it was, it seems to be gone now.<span>")
 				else
 					boutput(H, "<span class='alert'>We've been flooded by some kind of disgusting... energy?!</span>")

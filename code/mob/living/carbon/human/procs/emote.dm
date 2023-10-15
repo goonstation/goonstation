@@ -58,9 +58,7 @@
 					else if (!muzzled)
 						message = "<B>[src]</B> [istype(src.w_uniform, /obj/item/clothing/under/gimmick/frog) ? "croaks" : "screams"]!"
 						m_type = 2
-						if (narrator_mode)
-							playsound(src.loc, 'sound/vox/scream.ogg', 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-						else if (src.sound_list_scream && length(src.sound_list_scream))
+						if (src.sound_list_scream && length(src.sound_list_scream))
 							playsound(src.loc, pick(src.sound_list_scream), 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 						else
 							//if (src.gender == MALE)
@@ -118,14 +116,10 @@
 							playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 						else if (src.reagents && src.reagents.has_reagent("honk_fart"))
 							playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1, channel=VOLUME_CHANNEL_EMOTE)
+						else if (src.getStatusDuration("food_deep_fart"))
+							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3, channel=VOLUME_CHANNEL_EMOTE)
 						else
-							if (narrator_mode)
-								playsound(src, 'sound/vox/fart.ogg', 50, FALSE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-							else
-								if (src.getStatusDuration("food_deep_fart"))
-									playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch() - 0.3, channel=VOLUME_CHANNEL_EMOTE)
-								else
-									playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, src.sound_fart, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 
 						var/fart_on_other = 0
 						for (var/atom/A as anything in src.loc)
@@ -611,10 +605,7 @@
 					message = "<B>[src]</B> uguus!"
 					maptext_out = "<I>uguus</I>"
 					m_type = 2
-					if (narrator_mode)
-						playsound(src, 'sound/vox/uguu.ogg', 80, FALSE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-					else
-						playsound(src, 'sound/voice/uguu.ogg', 80, FALSE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/uguu.ogg', 80, FALSE, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 					SPAWN(1 SECOND)
 						src.wear_mask.set_loc(src.loc)
 						src.wear_mask = null
@@ -1466,16 +1457,10 @@
 							else
 							*/
 							random_brute_damage(src, 20)
-							if (narrator_mode)
-								playsound(src.loc, 'sound/vox/break.ogg', 100, 1, channel=VOLUME_CHANNEL_EMOTE)
-							else
-								playsound(src.loc, src.sound_snap, 100, 1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src.loc, src.sound_snap, 100, 1, channel=VOLUME_CHANNEL_EMOTE)
 						else
 							message = "<B>[src]</B> snaps [his_or_her(src)] fingers."
-							if (narrator_mode)
-								playsound(src.loc, 'sound/vox/deeoo.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-							else
-								playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src.loc, src.sound_fingersnap, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 							if(!ON_COOLDOWN(src, "blade_deploy", 1 SECOND))
 								if(istype(gloves, /obj/item/clothing/gloves/bladed))
 									var/obj/item/clothing/gloves/bladed/blades = src.gloves
@@ -1969,10 +1954,7 @@
 							boutput(M, "<span class='notice'>BZZZZZZZZZZZT!</span>")
 							M.TakeDamage("chest", 0, 20, 0, DAMAGE_BURN)
 							src.charges -= 1
-							if (narrator_mode)
-								playsound(src.loc, 'sound/vox/bloop.ogg', 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-							else
-								playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 							return
 					else if ((src.charges >= 1) && (muzzled) && !src.reagents?.get_reagent_amount("promethazine"))
 						for (var/mob/O in viewers(src, null))
@@ -1983,13 +1965,10 @@
 					else if ((src.charges < 1) && (!muzzled))
 						message = "<B>[src]</B> burps."
 						m_type = 2
-						if (narrator_mode)
-							playsound(src.loc, 'sound/vox/bloop.ogg', 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+						if (src.getStatusDuration("food_deep_burp"))
+							playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch() * 0.5, channel=VOLUME_CHANNEL_EMOTE)
 						else
-							if (src.getStatusDuration("food_deep_burp"))
-								playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch() * 0.5, channel=VOLUME_CHANNEL_EMOTE)
-							else
-								playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+							playsound(src, src.sound_burp, 70, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 
 						var/datum/statusEffect/fire_burp/FB = src.hasStatus("food_fireburp")
 						if (!FB)

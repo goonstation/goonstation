@@ -674,6 +674,8 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			secbot.KillPathAndGiveUp(1)
 			secbot.speak("Awaiting command...")
 			bots += secbot
+			break
+
 		if (length(bots))
 			user.AddComponent(/datum/component/secbot_command, bots, 3 SECONDS)
 

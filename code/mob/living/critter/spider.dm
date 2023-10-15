@@ -355,20 +355,22 @@
 			return 1
 		if (isdead(src))
 			// I can't get the ejectables thing to work so for now we're doing this.
-			if (ispath(src.item_shoes))
-				var/obj/item/I = new src.item_shoes(get_turf(src))
-				if (I)
-					var/turf/T = get_edge_target_turf(I, pick(alldirs))
-					if (T)
-						I.throw_at(T, 12, 3)
-			if (prob(25) && ispath(src.item_mask))
-				var/obj/item/I = new src.item_mask(get_turf(src))
-				if (I)
-					var/turf/T = get_edge_target_turf(I, pick(alldirs))
-					if (T)
-						I.throw_at(T, 12, 3)
-			src.organHolder.drop_and_throw_organ("brain")
 			src.gib(1)
+
+	gib(give_medal, include_ejectables)
+		if (ispath(src.item_shoes))
+			var/obj/item/I = new src.item_shoes(get_turf(src))
+			if (I)
+				var/turf/T = get_edge_target_turf(I, pick(alldirs))
+				if (T)
+					I.throw_at(T, 12, 3)
+		if (prob(25) && ispath(src.item_mask))
+			var/obj/item/I = new src.item_mask(get_turf(src))
+			if (I)
+				var/turf/T = get_edge_target_turf(I, pick(alldirs))
+				if (T)
+					I.throw_at(T, 12, 3)
+		. = ..()
 
 	critter_ability_attack(mob/target)
 		var/datum/targetable/critter/spider_bite/bite = src.abilityHolder.getAbility(/datum/targetable/critter/spider_bite)
@@ -411,6 +413,11 @@
 		can_critter_scavenge()
 			var/datum/targetable/critter/spider_drain/drain = src.abilityHolder.getAbility(/datum/targetable/critter/spider_drain/cluwne)
 			return can_act(src,TRUE) && (!drain.disabled && drain.cooldowncheck())
+
+/mob/living/critter/spider/clown/polymorph
+	gib(give_medal, include_ejectables)
+		src.organHolder.drop_and_throw_organ("brain")
+		. = ..()
 
 /mob/living/critter/spider/clownqueen
 	name = "queen clownspider"

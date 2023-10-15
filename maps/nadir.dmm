@@ -4963,8 +4963,8 @@
 	},
 /obj/machinery/firealarm/east,
 /obj/item/pen/crayon/golden{
-	pixel_y = 7;
-	pixel_x = -6
+	pixel_x = -6;
+	pixel_y = 7
 	},
 /turf/simulated/floor/black,
 /area/station/bridge/hos{
@@ -27254,6 +27254,9 @@
 "lEp" = (
 /obj/shrub{
 	dir = 8
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep{
+	secret_thing = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)

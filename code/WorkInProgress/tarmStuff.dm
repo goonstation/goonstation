@@ -14,7 +14,7 @@
 
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -49,7 +49,7 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.3)
+		setProperty("carried_movespeed", 0.3)
 
 	flashy
 		active_state = "lasercannon-anim"
@@ -233,7 +233,7 @@
 	item_state = "g11"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0
