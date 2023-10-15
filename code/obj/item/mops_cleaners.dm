@@ -592,6 +592,9 @@ TRASH BAG
 	if (!src.reagents)
 		return ..()
 
+	if (istype(target, /obj/ability_button))
+		return
+
 	var/list/choices = src.get_action_options(target)
 
 	if (!length(choices))
