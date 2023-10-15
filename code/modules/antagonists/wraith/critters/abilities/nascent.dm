@@ -1,6 +1,6 @@
 /datum/targetable/critter/nascent/become_commander
 	name = "Become commander"
-	desc = "Become a hallberd-wielding skeleton and summon more bone rattlers."
+	desc = "Become a halberd-wielding skeleton and summon more bone rattlers."
 	icon_state = "choose_skeleton"
 	cooldown = 0
 	targeted = 0
@@ -14,7 +14,7 @@
 		var/mob/living/critter/wraith/nascent/N = holder.owner
 		if(istype(N) && N.master)
 			W = N.master
-		boutput(holder.owner, "<span class='alert'><b>You become a skeleton commander! Swap intents and use your hallberd arm to do sweeps and stabs!</b></span>")
+		boutput(holder.owner, "<span class='alert'><b>You become a skeleton commander! Swap intents and use your halberd arm to do sweeps and stabs!</b></span>")
 		var/mob/living/critter/wraith/skeleton_commander/S = new /mob/living/critter/wraith/skeleton_commander(get_turf(holder.owner), W)
 		holder.owner.mind.transfer_to(S)
 		holder.owner.unequip_all()
