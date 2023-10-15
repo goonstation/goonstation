@@ -966,7 +966,7 @@
 				var/list/success = signal_program(1, list("command"=DWAINE_COMMAND_DMSG, "target"=driver_id, "dcommand"="scan"))
 				if (istype(success))
 					#define _TELESCI_ATMOS_SCAN(GAS, _, NAME, ...) "[NAME]: [success[#GAS]], " +
-					message_user("Scan Results:|nAtmosphere: [APPLY_TO_GASES(_TELESCI_ATMOS_SCAN) " "][success["temp"]] Kelvin, [success["pressure"]] kPa, [(success["burning"])?("BURNING"):(null)]","multiline")
+					message_user("Scan Results:|nAtmosphere: [APPLY_TO_GASES(_TELESCI_ATMOS_SCAN) " "][success["temp"]] Kelvin, [success["pressure"]] kPa[(success["burning"])?(", BURNING"):(null)]","multiline")
 					// undefined at the end of the file because of https://secure.byond.com/forum/post/2072419
 
 				else if (istext(success))
