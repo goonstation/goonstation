@@ -372,6 +372,59 @@
 		cooldown = 4 SECONDS
 		reload_time = 4 SECONDS
 
+/datum/limb/gun/spawner
+	proj = new/datum/projectile/special/spawner
+	shots = 1
+	current_shots = 1
+	cooldown = 2 SECOND
+	reload_time = 2 SECOND
+	var/typetospawn = null
+	var/damage_type = D_KINETIC
+	var/hit_type = DAMAGE_BLUNT
+	var/dissipation_rate = 0
+	var/max_range = 10
+	var/proj_name = "dimensional pocket"
+	var/proj_shot_sound = 'sound/weapons/rocket.ogg'
+	var/proj_hit_sound = null
+	var/proj_icon = 'icons/obj/projectiles.dmi'
+	var/proj_icon_state = "bullet"
+
+	New()
+		. = ..()
+		var/datum/projectile/special/spawner/P = proj
+		P.typetospawn = src.typetospawn
+		P.damage_type = src.damage_type
+		P.hit_type = src.hit_type
+		P.shot_sound = src.proj_shot_sound
+		P.hit_sound = src.proj_hit_sound
+		P.max_range = src.max_range
+		P.dissipation_rate = src.dissipation_rate
+		P.icon = src.proj_icon
+		P.icon_state = src.proj_icon_state
+		P.name = src.proj_name
+
+	snack_dispenser
+		typetospawn = /obj/random_item_spawner/snacks
+		proj_name = "snack"
+		proj_shot_sound = 'sound/machines/ding.ogg'
+
+	ice_cream_dispenser
+		typetospawn = /obj/item/reagent_containers/food/snacks/ice_cream/goodrandom
+		proj_icon = 'icons/obj/foodNdrink/food_snacks.dmi'
+		proj_icon_state = "icecream"
+		proj_shot_sound = 'sound/effects/splort.ogg'
+		proj_name = "ice cream"
+
+	organ_dispenser
+		typetospawn = /obj/random_item_spawner/organs/bloody/one_to_three
+		cooldown = 5 SECOND
+		reload_time = 5 SECOND
+		proj_icon = 'icons/mob/monkey.dmi'
+		proj_icon_state = "monkey"
+		proj_shot_sound = 'sound/voice/screams/monkey_scream.ogg'
+		proj_hit_sound = 'sound/impact_sounds/Slimy_Splat_1.ogg'
+		proj_name = "monkey"
+
 /datum/limb/mouth
 	var/sound_attack = 'sound/voice/animal/short_hiss.ogg'
 	var/dam_low = 3
