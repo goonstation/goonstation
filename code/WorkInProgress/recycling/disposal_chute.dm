@@ -730,8 +730,6 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 		. = ..()
 		if (length(src.contents))
 			src.flush()
-		else
-
 
 	hitby(atom/movable/MO, datum/thrown_thing/thr)
 		if (!src.linked?.acceptsProduct(MO))

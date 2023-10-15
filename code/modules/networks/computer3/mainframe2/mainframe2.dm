@@ -454,8 +454,6 @@
 			if(3)
 				if (prob(25))
 					set_broken()
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(power * 2.5))

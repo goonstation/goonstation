@@ -1051,7 +1051,6 @@ ABSTRACT_TYPE(/obj/item)
 				if (!src.ArtifactSanityCheck()) return
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
-		else
 	return ..()
 
 /obj/item/blob_act(var/power)
@@ -1141,8 +1140,8 @@ ABSTRACT_TYPE(/obj/item)
 		if (W_CLASS_NORMAL) t = "normal-sized"
 		if (W_CLASS_BULKY) t = "bulky"
 		if (W_CLASS_HUGE to INFINITY) t = "huge"
-		else
-	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
+	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50))
+		t = "funny-looking"
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user)

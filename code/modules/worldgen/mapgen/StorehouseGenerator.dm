@@ -89,7 +89,7 @@
 			for(var/j in src.gen_min_y to src.gen_max_y)
 				if(cell_grid[i][j] == DOOR)
 					if(i<=src.gen_min_x || i>=src.gen_max_x || j<=src.gen_min_y || j>=src.gen_max_y)
-						// noop errors have been made
+						; // noop errors have been made
 					else if(cell_grid[i-1][j] && cell_grid[i+1][j] && cell_grid[i][j-1] && cell_grid[i][j+1])
 						cell_grid[i][j] = FLOOR
 					else
@@ -266,7 +266,7 @@
 					return
 				if(prob(50))
 					// Half the tiles should be empty
-					//noop
+					; //noop
 				else if(prob(66) && !length(meatlight_map?.get_nearby(T,7)))
 					var/atom/light
 					if(prob(95))

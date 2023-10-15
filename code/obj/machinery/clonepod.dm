@@ -818,8 +818,6 @@ TYPEINFO(/obj/machinery/clonepod)
 						A.ex_act(severity)
 					qdel(src)
 					return
-			else
-		return
 
 	proc/look_busy(var/big = 0)
 		if (big)
@@ -1153,8 +1151,6 @@ TYPEINFO(/obj/machinery/clonegrinder)
 				if (prob(25))
 					src.status |= BROKEN
 					src.icon_state = "grinderb"
-			else
-		return
 
 	is_open_container()
 		return -1

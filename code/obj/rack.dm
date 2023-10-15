@@ -42,8 +42,6 @@
 		if(3)
 			if (prob(25))
 				rackbreak()
-		else
-	return
 
 /obj/rack/blob_act(var/power)
 	if(prob(power * 2.5))
