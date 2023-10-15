@@ -37,12 +37,8 @@
 		attack_hand(mob/user)
 			user.lastattacked = src
 			flick("[icon_state]2", src)
-			if (narrator_mode)
-				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-				playsound(src.loc, 'sound/vox/honk.ogg', 50, 1, -1)
-			else
-				playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
-				playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
+			playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
+			playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
 			user.changeStatus("fitness_stam_regen", 100 SECONDS)
 
 /obj/fitness/stacklifter

@@ -625,7 +625,7 @@
 
 		switch (selecting)
 			if (SELECT_SKIP)
-
+				;
 			if (SELECT_FIRST_CORNER, DESELECT_FIRST_CORNER) // set to 1 or 2 by use-in-hand option list
 				qdel(corner1img)
 				selectcorner1 = target
