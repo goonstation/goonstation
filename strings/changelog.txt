@@ -1,4 +1,9 @@
 
+(t)sun oct 15 23
+(u)Mordent
+(p)16462
+(e)🪲📄|C-Bug, A-UI
+(+)Slight tweak to GeneTek UI for combining genes.
 (t)sat oct 14 23
 (u)glowbold
 (p)16158
