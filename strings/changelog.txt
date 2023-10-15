@@ -1,5 +1,10 @@
 
 (t)sun oct 15 23
+(u)Valtsu0 and Mordent
+(p)16319
+(e)📄|A-UI
+(+)Science teleporter console now has a fancy new tgui ui
+(+)Cyborgs can no longer use the science teleporter console from more than a screen away
 (u)Mordent
 (p)16462
 (e)🪲📄|C-Bug, A-UI
