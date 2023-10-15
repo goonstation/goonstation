@@ -1,5 +1,9 @@
 
 (t)sun oct 15 23
+(u)Amylizzle
+(p)16411
+(e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science
+(*)Added a new artifact type: Psycho-stimulator Field. It causes you to hallucinate vividly.
 (u)Valtsu0 and Mordent
 (p)16319
 (e)📄|A-UI
