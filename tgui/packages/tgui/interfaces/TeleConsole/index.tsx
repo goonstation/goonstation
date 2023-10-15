@@ -10,6 +10,7 @@ import { useBackend } from '../../backend';
 import { Box, Button, Icon, Section } from '../../components';
 import { Window } from '../../layouts';
 import { BookmarksSection } from './BookmarksSection';
+import { ConnectionSection } from './ConnectionSection';
 import { CoordinatesSection } from './CoordinatesSection';
 import type { TeleConsoleData } from './types';
 import { formatReadout } from './util';
@@ -21,9 +22,11 @@ export const TeleConsole = (_props, context) => {
   const handleAddBookmark = (name: string) => act('addbookmark', { value: name });
   const handleDeleteBookmark = (ref: string) => act('deletebookmark', { value: ref });
   const handleRestoreBookmark = (ref: string) => act('restorebookmark', { value: ref });
+  const handleResetConnect = () => act('reconnect', { value: 2 });
+  const handleRetryConnect = () => act('reconnect', { value: 1 });
 
   return (
-    <Window theme="ntos" width={400} height={510}>
+    <Window theme="ntos" width={400} height={500}>
       <Window.Content textAlign="center">
         <CoordinatesSection />
         <Section>
@@ -59,38 +62,8 @@ export const TeleConsole = (_props, context) => {
             </Box>
           </Section>
         )}
-        <ConnectionSection />
+        <ConnectionSection isConnected={!!hostId} onReset={handleResetConnect} onRetry={handleRetryConnect} />
       </Window.Content>
     </Window>
-  );
-};
-
-const ConnectionSection = (_props, context) => {
-  const { act, data } = useBackend<TeleConsoleData>(context);
-  const { hostId } = data;
-
-  return (
-    <Section>
-      {hostId ? (
-        <Box color="green">
-          <Box>
-            <Icon name="check" /> Connected to host!
-          </Box>
-          <Button
-            icon="power-off"
-            content="RESET CONNECTION"
-            color="red"
-            onClick={() => act('reconnect', { value: 2 })}
-          />
-        </Box>
-      ) : (
-        <Box color="red">
-          <Box>
-            <Icon name="warning" /> No connection to host!
-          </Box>
-          <Button icon="power-off" content="Retry" color="green" onClick={() => act('reconnect', { value: 1 })} />
-        </Box>
-      )}
-    </Section>
   );
 };
