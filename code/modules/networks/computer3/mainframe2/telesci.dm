@@ -823,7 +823,7 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 	var/allow_scan = 1
 	var/coord_update_flag = 1
 
-	var/readout = "&nbsp;"
+	var/readout = ""
 	var/datum/computer/file/record/user_data
 	var/padNum = 1
 
@@ -873,7 +873,6 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			if("term_connect") //Terminal interface stuff.
 				if(target == src.host_id)
 					src.host_id = null
-					src.updateUsrDialog()
 					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
@@ -907,7 +906,6 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 
 					src.link.post_signal(src, newsignal)
 
-				src.updateUsrDialog(1)
 				//SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 				//	src.post_status(target,"command","term_message","data","command=register")
 				return
@@ -927,8 +925,8 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 					message = replacetext(message, "|n", "<br>")
 
 					src.readout = copytext(message,9,256)
+					tgui_process.update_uis(src)
 
-				src.updateUsrDialog(1)
 				return
 
 			if("term_disconnect")
@@ -936,57 +934,8 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 					src.host_id = null
 				src.timeout = initial(src.timeout)
 				src.timeout_alert = 0
-				src.updateUsrDialog()
 				return
 
-		return
-
-	attack_hand(var/mob/user)
-		if (..(user))
-			return
-
-		var/dat = "<head><TITLE>Teleport Computer</TITLE></head><body><br>"
-		if (!host_id)
-			dat += "<center id = \"readout\"><tt><font color=red><b>NO CONNECTION TO HOST</b></font></tt><br><a href='?src=\ref[src];reconnect=1'>Retry</a></center><br>"
-		else
-			dat += "<center id = \"readout\"><tt>[readout]</tt></center><br>"
-
-		dat += {"<script language="JavaScript">
-	function updateReadout(t)
-	{
-		document.getElementById("readout").innerHTML = "<tt>" + t + "</tt>";
-	}
-	</script>"}
-
-		dat += "<b>Target Coordinates</b><BR>"
-		dat += "X: <A href='?src=\ref[src];decreaseX=10'>(<<)</A><A href='?src=\ref[src];decreaseX=1'>(<)</A><A href='?src=\ref[src];setX=1'> [xtarget] </A><A href='?src=\ref[src];increaseX=1'>(>)</A><A href='?src=\ref[src];increaseX=10'>(>>)</A><BR><BR>"
-		dat += "Y: <A href='?src=\ref[src];decreaseY=10'>(<<)</A><A href='?src=\ref[src];decreaseY=1'>(<)</A><A href='?src=\ref[src];setY=1'> [ytarget] </A><A href='?src=\ref[src];increaseY=1'>(>)</A><A href='?src=\ref[src];increaseY=10'>(>>)</A><BR><BR>"
-		dat += "Z: <A href='?src=\ref[src];decreaseZ=1'>(<)</A><A href='?src=\ref[src];setZ=1'> [ztarget] </A><A href='?src=\ref[src];increaseZ=1'>(>)</A>"
-		dat += "<br><br><br><A href='?src=\ref[src];send=1'>Send</A>"
-		dat += "<br><A href='?src=\ref[src];receive=1'>Receive</A>"
-
-		dat += "<br><A href='?src=\ref[src];portal=1'>Toggle Portal</A>"
-
-		if(allow_scan)
-			dat += "<br><br><A href='?src=\ref[src];scan=1'>Scan</A>"
-
-		if(allow_bookmarks)
-			dat += "<br><A href='?src=\ref[src];addbookmark=1'>Add Bookmark</A>"
-
-		if(allow_bookmarks && length(bookmarks))
-			dat += "<br><br><br>Bookmarks:"
-			for (var/datum/teleporter_bookmark/b in bookmarks)
-				dat += "<br>[b.name] ([b.x]/[b.y]/[b.z]) <A href='?src=\ref[src];restorebookmark=\ref[b]'>Restore</A> <A href='?src=\ref[src];deletebookmark=\ref[b]'>Delete</A>"
-
-		dat += "<br><br><br><br><br><center><a href='?src=\ref[src];reconnect=2'>Reset Connection</a></center>"
-
-		if (src.panel_open)
-			dat += "<br>Linked Pad Number: <a href='?src=\ref[src];setpad=1'>[src.padNum]</a><br>"
-			dat += net_switch_html()
-
-		src.add_dialog(user)
-		user.Browse(dat, "window=t_computer;size=400x600")
-		onclose(user, "t_computer")
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -994,223 +943,10 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.panel_open = !src.panel_open
 			boutput(user, "You [src.panel_open ? "unscrew" : "secure"] the cover.")
-			src.updateUsrDialog()
 			return
 
 		else
 			return ..()
-
-
-	updateUsrDialog(var/updateReadout)
-		var/list/nearby = viewers(1, src)
-		for(var/mob/M in nearby)
-			if (M.using_dialog_of(src))
-				if (updateReadout)
-					M << output(url_encode(src.readout), "t_computer.browser:updateReadout")
-				else
-					src.Attackhand(M)
-
-		if (issilicon(usr) || isAIeye(usr))
-			if (!(usr in nearby))
-				if (usr.using_dialog_of(src))
-					if (updateReadout)
-						usr << output(url_encode(src.readout), "t_computer.browser:updateReadout")
-					else
-						src.attack_ai(usr)
-
-	Topic(href, href_list)
-		if (..(href, href_list))
-			return
-
-		src.add_dialog(usr)
-		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-
-		if (href_list["scan"])
-			if (!host_id)
-				boutput(usr, "<span class='alert'>Error: No host connection!</span>")
-				return
-
-			if (coord_update_flag)
-				coord_update_flag = 0
-				message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
-
-			message_host("command=teleman&args=-p [padNum] scan")
-			src.updateUsrDialog(1)
-			return
-
-		if (href_list["reconnect"])
-			if ((host_id && href_list["reconnect"] != "2") || !old_host_id || !src.link)
-				return
-
-			if (href_list["reconnect"] == "2")
-				host_id = null
-
-			var/old = old_host_id
-			old_host_id = null
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_WIRE
-			newsignal.data["command"] = "term_connect"
-			newsignal.data["device"] = src.device_tag
-
-			newsignal.data_file = user_data.copy_file()
-
-			newsignal.data["address_1"] = old
-			newsignal.data["sender"] = src.net_id
-
-			src.link.post_signal(src, newsignal)
-			SPAWN(1 SECOND)
-				if (!old_host_id)
-					old_host_id = old
-
-		if (href_list["restorebookmark"])
-			var/datum/teleporter_bookmark/bm = locate(href_list["restorebookmark"]) in bookmarks
-			if(!bm) return
-			xtarget = bm.x
-			ytarget = bm.y
-			ztarget = bm.z
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		if (href_list["deletebookmark"])
-			var/datum/teleporter_bookmark/bm = locate(href_list["deletebookmark"]) in bookmarks
-			if(!bm) return
-			bookmarks.Remove(bm)
-			src.updateUsrDialog()
-			return
-
-		if (href_list["addbookmark"])
-			if(length(bookmarks) >= max_bookmarks)
-				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
-				return
-			var/datum/teleporter_bookmark/bm = new
-			var/title = tgui_input_text(usr, "Enter name:", "Name", "New Bookmark")
-			title = copytext(adminscrub(title), 1, 128)
-			if(!length(title)) return
-			bm.name = title
-			bm.x = xtarget
-			bm.y = ytarget
-			bm.z = ztarget
-			bookmarks.Add(bm)
-			src.updateUsrDialog()
-			playsound(src.loc, "keyboard", 50, 1, -15)
-			return
-
-		if (href_list["setpad"])
-			src.padNum = (src.padNum & 3) + 1
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		if (href_list["decreaseX"])
-			var/change = text2num_safe(href_list["decreaseX"])
-			xtarget = clamp(xtarget-change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["increaseX"])
-			var/change = text2num_safe(href_list["increaseX"])
-			xtarget = clamp(xtarget+change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["setX"])
-			var/change = input(usr,"Target X:","Enter target X coordinate",xtarget) as num
-			if(!isnum_safe(change))
-				return
-			xtarget = clamp(change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["decreaseY"])
-			var/change = text2num_safe(href_list["decreaseY"])
-			ytarget = clamp(ytarget-change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["increaseY"])
-			var/change = text2num_safe(href_list["increaseY"])
-			ytarget = clamp(ytarget+change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["setY"])
-			var/change = input(usr,"Target Y:","Enter target Y coordinate",ytarget) as num
-			if(!isnum_safe(change))
-				return
-			ytarget = clamp(change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["decreaseZ"])
-			var/change = text2num_safe(href_list["decreaseZ"])
-			ztarget = clamp(ztarget-change, 0, 14)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["increaseZ"])
-			var/change = text2num_safe(href_list["increaseZ"])
-			ztarget = clamp(ztarget+change, 0, 14)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["setZ"])
-			var/change = input(usr,"Target Z:","Enter target Z coordinate",ztarget) as num
-			if(!isnum_safe(change))
-				return
-			ztarget = clamp(change, 0, 14)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["send"])
-			if (!host_id)
-				boutput(usr, "<span class='alert'>Error: No host connection!</span>")
-				return
-
-			if (coord_update_flag)
-				coord_update_flag = 0
-				message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
-
-			message_host("command=teleman&args=-p [padNum] send")
-
-			return
-
-		else if (href_list["receive"])
-			if (!host_id)
-				boutput(usr, "<span class='alert'>Error: No host connection!</span>")
-				return
-
-			if (coord_update_flag)
-				coord_update_flag = 0
-				message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
-
-			message_host("command=teleman&args=-p [padNum] receive")
-
-			return
-
-		else if (href_list["portal"])
-			if (coord_update_flag)
-				coord_update_flag = 0
-				message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
-
-			message_host("command=teleman&args=-p [padNum] portal toggle")
-
-			return
-
-		else
-			usr.Browse(null, "window=t_computer")
-			src.updateUsrDialog()
-			return
 
 	process()
 		if(status & (NOPOWER|BROKEN))
@@ -1223,7 +959,6 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 		if(src.timeout == 0)
 			src.post_status(host_id, "command","term_disconnect","data","timeout")
 			src.host_id = null
-			src.updateUsrDialog()
 			src.timeout = initial(src.timeout)
 			src.timeout_alert = 0
 		else
@@ -1233,6 +968,166 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
 		return
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "TeleConsole", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"xTarget" = xtarget,
+			"yTarget" = ytarget,
+			"zTarget" = ztarget,
+			"hostId" = host_id,
+			"readout" = readout,
+			"isPanelOpen" = panel_open,
+			"padNum" = padNum,
+			"maxBookmarks" = max_bookmarks,
+			"bookmarks" = list()
+		)
+
+		if (length(bookmarks) > 0)
+			.["bookmarks"] = list()
+			for (var/datum/teleporter_bookmark/b as anything in bookmarks)
+				.["bookmarks"] += list(list(
+					"ref" = ref(b),
+					"name" = b.name,
+					"x" = b.x,
+					"y" = b.y,
+					"z" = b.z,
+				))
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return .
+
+		switch(action)
+			if ("setX")
+				xtarget = clamp(text2num(params["value"]), 0, 500)
+				coord_update_flag = TRUE
+				. = TRUE
+			if ("setY")
+				ytarget = clamp(text2num(params["value"]), 0, 500)
+				coord_update_flag = TRUE
+				. = TRUE
+			if ("setZ")
+				ztarget = clamp(text2num(params["value"]), 0, 14)
+				coord_update_flag = TRUE
+				. = TRUE
+			if ("send")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = FALSE
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] send")
+				. = TRUE
+			if ("receive")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = TRUE
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] receive")
+				. = TRUE
+			if ("portal")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = TRUE
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] portal toggle")
+				. = TRUE
+			if ("scan")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = TRUE
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] scan")
+				. = TRUE
+			if ("restorebookmark")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				if(!bm) return
+				xtarget = bm.x
+				ytarget = bm.y
+				ztarget = bm.z
+				coord_update_flag = TRUE
+				. = TRUE
+
+			if ("deletebookmark")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				if(!bm) return
+				bookmarks.Remove(bm)
+				. = TRUE
+
+			if ("addbookmark")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if(length(bookmarks) >= max_bookmarks)
+					boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
+					return
+				var/datum/teleporter_bookmark/bm = new
+				var/title = params["value"]
+				title = copytext(adminscrub(title), 1, 128)
+				if(!length(title)) return
+				bm.name = title
+				bm.x = xtarget
+				bm.y = ytarget
+				bm.z = ztarget
+				bookmarks.Add(bm)
+				playsound(src.loc, "keyboard", 50, 1, -15)
+				. = TRUE
+
+			if ("reconnect")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (params["value"] == "2")
+					host_id = null
+
+				var/old = old_host_id
+				old_host_id = null
+				var/datum/signal/newsignal = get_free_signal()
+				newsignal.source = src
+				newsignal.transmission_method = TRANSMISSION_WIRE
+				newsignal.data["command"] = "term_connect"
+				newsignal.data["device"] = src.device_tag
+
+				newsignal.data_file = user_data.copy_file()
+
+				newsignal.data["address_1"] = old
+				newsignal.data["sender"] = src.net_id
+
+				src.link.post_signal(src, newsignal)
+				SPAWN(1 SECOND)
+					if (!old_host_id)
+						old_host_id = old
+				. = TRUE
+
+
+			if ("setpad")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				src.padNum = (src.padNum & 3) + 1
+				. = TRUE
 
 	proc/message_host(var/message, var/datum/computer/file/file)
 		if (!src.host_id || !message)
@@ -1245,3 +1140,4 @@ TYPEINFO(/obj/machinery/networked/teleconsole)
 			src.post_file(src.host_id,"data",message, file)
 		else
 			src.post_status(src.host_id,"command","term_message","data",message)
+
