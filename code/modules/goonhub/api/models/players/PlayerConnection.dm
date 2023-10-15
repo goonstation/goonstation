@@ -8,7 +8,6 @@
 	var/country				= null // string
 	var/country_iso			= null // string
 
-
 /datum/apiModel/Tracked/PlayerRes/PlayerConnection/SetupFromResponse(response)
 	. = ..()
 	src.round_id = response["round_id"]
@@ -19,17 +18,12 @@
 	src.country_iso = response["country_iso"]
 
 /datum/apiModel/Tracked/PlayerRes/PlayerConnection/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.player_id) \
+		isnull(src.player_id) \
 		|| isnull(src.round_id) \
 		|| isnull(src.ip) \
 		|| isnull(src.comp_id) \
-		|| isnull(src.legacy_data) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
-		|| isnull(src.country) \
-		|| isnull(src.country_iso) \
 	)
 		return FALSE
 

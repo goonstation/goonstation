@@ -905,14 +905,20 @@
 				playtime_request.begin_async()
 
 				// round stats
-				// cleverly making this request inbetween the start and the wait of the playtime request
-				var/list/response = null
+				var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 				try
-					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = plist["ckey"]), forceResponse = 1)
+					var/datum/apiRoute/players/stats/get/getPlayerStats = new
+					getPlayerStats.queryParams = list("ckey" = plist["ckey"])
+					playerStats = apiHandler.queryAPI(getPlayerStats)
 				catch
-					return 0
-				if (!response)
-					return 0
+					return FALSE
+
+				var/list/response = list(
+					"seen" = playerStats.connected,
+					"seen_rp" = playerStats.connected_rp,
+					"participated" = playerStats.played,
+					"participated_rp" = playerStats.played_rp
+				)
 
 				// finish playtime stats
 				UNTIL(playtime_request.is_complete())

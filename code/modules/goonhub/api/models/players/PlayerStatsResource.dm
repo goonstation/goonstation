@@ -3,58 +3,41 @@
 /datum/apiModel/Tracked/PlayerStatsResource
 	var/ckey			= null // string
 	var/key				= null // string
-	var/byond_join_date	= null // string
-	var/byond_major		= null // string
-	var/byond_minor		= null // string
-	var/played			= null // string
-	var/played_rp		= null // string
-	var/connected		= null // string
-	var/connected_rp	= null // string
-	var/time_played		= null // string
+	var/byond_join_date	= null // date
+	var/byond_major		= null // integer
+	var/byond_minor		= null // integer
+	var/played			= null // integer
+	var/played_rp		= null // integer
+	var/connected		= null // integer
+	var/connected_rp	= null // integer
+	var/time_played		= null // integer
 	var/datum/apiModel/Tracked/PlayerRes/PlayerConnection/latest_connection = null // PlayerConnection
 
-/datum/apiModel/Tracked/PlayerStatsResource/New(
-	id,
-	ckey,
-	key,
-	byond_join_date,
-	byond_major,
-	byond_minor,
-	created_at,
-	updated_at,
-	played,
-	played_rp,
-	connected,
-	connected_rp,
-	time_played,
-	latest_connection
-)
+/datum/apiModel/Tracked/PlayerStatsResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.ckey = ckey
-	src.key = key
-	src.byond_join_date = byond_join_date
-	src.byond_major = byond_major
-	src.byond_minor = byond_minor
-	src.created_at = created_at
-	src.updated_at = updated_at
-	src.played = played
-	src.played_rp = played_rp
-	src.connected = connected
-	src.connected_rp = connected_rp
-	src.time_played = time_played
-	src.latest_connection = latest_connection
+	src.ckey = response["ckey"]
+	src.key = response["key"]
+	src.byond_join_date = response["byond_join_date"]
+	src.byond_major = response["byond_major"]
+	src.byond_minor = response["byond_minor"]
+	src.played = response["played"]
+	src.played_rp = response["played_rp"]
+	src.connected = response["connected"]
+	src.connected_rp = response["connected_rp"]
+	src.time_played = response["time_played"]
+
+	if (response["latest_connection"])
+		src.latest_connection = new
+		src.latest_connection.SetupFromResponse(response["latest_connection"])
 
 /datum/apiModel/Tracked/PlayerStatsResource/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.ckey) \
+		isnull(src.ckey) \
 		|| isnull(src.key) \
 		|| isnull(src.byond_join_date) \
 		|| isnull(src.byond_major) \
 		|| isnull(src.byond_minor) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
 		|| isnull(src.played) \
 		|| isnull(src.played_rp) \
 		|| isnull(src.connected) \
@@ -79,5 +62,6 @@
 	.["connected"] = src.connected
 	.["connected_rp"] = src.connected_rp
 	.["time_played"] = src.time_played
-	.["latest_connection"] = src.latest_connection
+	if (src.latest_connection)
+		.["latest_connection"] = src.latest_connection.ToString()
 	return json_encode(.)
