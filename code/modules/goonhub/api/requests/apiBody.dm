@@ -10,17 +10,17 @@ ABSTRACT_TYPE(/datum/apiBody)
 	. = ..()
 	src.setValues(fieldValues)
 	if (!VerifyIntegrity())
-		var/datum/apiModel/Error/errorModel = new
-		var/errorMsg = ""
 #if defined(SPACEMAN_DMM)
 		return
 #elif DM_VERSION >= 515 || defined(OPENDREAM) // Yay, actual sanity!
-		errorMsg = "malformed [__TYPE__] [src.toJson()]"
-#else
-		errorMsg = "malformed api body [json_encode(src.toJson())]"
-#endif
-		errorModel.SetupFromResponse(list("message" = errorMsg))
+		var/datum/apiModel/Error/errorModel = new
+		errorModel.SetupFromResponse(list("message" = "malformed [__TYPE__] [src.toJson()]"))
 		throw EXCEPTION(errorModel)
+#else
+		var/datum/apiModel/Error/errorModel = new
+		errorModel.SetupFromResponse(list("message" = "malformed api body [json_encode(src.toJson())]"))
+		throw EXCEPTION(errorModel)
+#endif
 
 /// Build a list of values based on fields and input
 /datum/apiBody/proc/setValues(list/fieldValues)
