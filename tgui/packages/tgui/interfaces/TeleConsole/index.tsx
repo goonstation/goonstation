@@ -18,6 +18,7 @@ import { formatReadout } from './util';
 export const TeleConsole = (_props, context) => {
   const { act, data } = useBackend<TeleConsoleData>(context);
   const { xTarget, yTarget, zTarget, hostId, bookmarks, readout, isPanelOpen, padNum, maxBookmarks } = data;
+  const isConnectedToHost = !!hostId;
 
   const handleAddBookmark = (name: string) => act('addbookmark', { value: name });
   const handleDeleteBookmark = (ref: string) => act('deletebookmark', { value: ref });
@@ -31,17 +32,17 @@ export const TeleConsole = (_props, context) => {
       <Window.Content textAlign="center">
         <CoordinatesSection />
         <Section>
-          <Button icon="sign-out-alt" onClick={() => act('send')} disabled={!hostId}>
+          <Button icon="sign-out-alt" onClick={() => act('send')} disabled={!isConnectedToHost}>
             Send
           </Button>
-          <Button icon="sign-in-alt" onClick={() => act('receive')} disabled={!hostId}>
+          <Button icon="sign-in-alt" onClick={() => act('receive')} disabled={!isConnectedToHost}>
             Receive
           </Button>
-          <Button onClick={() => act('portal')} disabled={!hostId}>
+          <Button onClick={() => act('portal')} disabled={!isConnectedToHost}>
             <Icon name="ring" rotation={90} />
             Toggle Portal
           </Button>
-          <Button icon="magnifying-glass" onClick={() => act('scan')} disabled={!hostId}>
+          <Button icon="magnifying-glass" onClick={() => act('scan')} disabled={!isConnectedToHost}>
             Scan
           </Button>
         </Section>
@@ -55,7 +56,7 @@ export const TeleConsole = (_props, context) => {
           targetCoords={[xTarget, yTarget, zTarget]}
         />
         <ConnectionSection
-          isConnected={!!hostId}
+          isConnected={isConnectedToHost}
           isPanelOpen={!!isPanelOpen}
           onCyclePad={handleCyclePad}
           onReset={handleResetConnect}
