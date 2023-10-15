@@ -266,26 +266,19 @@ TYPEINFO(/obj/reagent_dispensers/watertank/fountain)
 			return
 
 		if (isscrewingtool(W))
-			if (src.anchored)
-				playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-				user.show_text("You start unscrewing [src] from the floor.", "blue")
-				if (do_after(user, 3 SECONDS))
-					user.show_text("You unscrew [src] from the floor.", "blue")
-					src.anchored = UNANCHORED
-					return
-			else
-				var/turf/T = get_turf(src)
-				if (istype(T, /turf/space))
-					user.show_text("What exactly are you gunna secure [src] to?", "red")
-					return
-				else
-					playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
-					user.show_text("You start securing [src] to [T].", "blue")
-					if (do_after(user, 3 SECONDS))
-						user.show_text("You secure [src] to [T].", "blue")
-						src.anchored = ANCHORED
-						return
+			var/turf/T = get_turf(src)
+			if (!src.anchored && istype(T, /turf/space))
+				user.show_text("What exactly are you gunna secure [src] to?", "red")
+				return
+			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
+			user.show_text("You begin to [src.anchored ? "unscrew" : "secure"] [src].", "blue")
+			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, PROC_REF(toggle_bolts), list(user, T), W.icon, W.icon_state, null, INTERRUPT_MOVE | INTERRUPT_STUNNED | INTERRUPT_ACT)
+			return
 		..()
+
+	proc/toggle_bolts(mob/user, turf/T)
+		user.show_text("You [src.anchored ? "unscrew" : "secure"] [src] [src.anchored ? "from" : "to"] [T].", "blue")
+		src.anchored = !src.anchored
 
 	attack_hand(mob/user)
 		if (src.cup_amount <= 0)
