@@ -1014,6 +1014,7 @@
 					return // just in case
 				if (src.budgun)	// oh no, we have a gun! And no tool!
 					if(!DropTheThing("gun", null, 0, 1, Tdurg)) //lets see if we can drop it
+						;
 					else //guess not
 						return // message is handled in the DropTheThing proc :)
 				else // oh no we have a tool!

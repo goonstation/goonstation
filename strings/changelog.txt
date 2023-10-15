@@ -1,4 +1,21 @@
 
+(t)sun oct 15 23
+(u)Valtsu0 and Mordent
+(p)16319
+(e)📄|A-UI
+(+)Science teleporter console now has a fancy new tgui ui
+(+)Cyborgs can no longer use the science teleporter console from more than a screen away
+(u)Mordent
+(p)16462
+(e)🪲📄|C-Bug, A-UI
+(+)Slight tweak to GeneTek UI for combining genes.
+(t)sat oct 14 23
+(u)glowbold
+(p)16158
+(e)💅📄📦|C-QoL, A-UI, A-Game-Objects
+(+)The supply request console is easier to work with - bargain with cargo today!
+(u)LeahTheTech
+(*)Added a button to reopen the round-end credits window, automatically added at round-end.
 (t)fri oct 13 23
 (u)Tyrant
 (p)16420

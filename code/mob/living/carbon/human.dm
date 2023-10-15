@@ -157,7 +157,8 @@
 	var/special_hair_override = 0 // only really works if they have any special hair
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
-	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r")
+	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r",\
+	"pale", "blush", "scratch", "stretch", /*"fart", */"smile")
 
 	var/icon/flat_icon = null
 
