@@ -7,7 +7,7 @@
  */
 
 import { useBackend } from '../../backend';
-import { Box, Button, Icon, Section } from '../../components';
+import { Button, Icon, Section } from '../../components';
 import { Window } from '../../layouts';
 import { BookmarksSection } from './BookmarksSection';
 import { ConnectionSection } from './ConnectionSection';
@@ -24,9 +24,10 @@ export const TeleConsole = (_props, context) => {
   const handleRestoreBookmark = (ref: string) => act('restorebookmark', { value: ref });
   const handleResetConnect = () => act('reconnect', { value: 2 });
   const handleRetryConnect = () => act('reconnect', { value: 1 });
+  const handleCyclePad = () => act('setpad');
 
   return (
-    <Window theme="ntos" width={400} height={500}>
+    <Window theme="ntos" width={400} height={515}>
       <Window.Content textAlign="center">
         <CoordinatesSection />
         <Section>
@@ -53,16 +54,14 @@ export const TeleConsole = (_props, context) => {
           onRestoreBookmark={handleRestoreBookmark}
           targetCoords={[xTarget, yTarget, zTarget]}
         />
-        {!!isPanelOpen && (
-          <Section>
-            <Box>Open panel:</Box>
-            <Box>
-              Linked pad number:
-              <Button content={padNum} onClick={() => act('setpad')} />
-            </Box>
-          </Section>
-        )}
-        <ConnectionSection isConnected={!!hostId} onReset={handleResetConnect} onRetry={handleRetryConnect} />
+        <ConnectionSection
+          isConnected={!!hostId}
+          isPanelOpen={!!isPanelOpen}
+          onCyclePad={handleCyclePad}
+          onReset={handleResetConnect}
+          onRetry={handleRetryConnect}
+          padNum={padNum}
+        />
       </Window.Content>
     </Window>
   );
