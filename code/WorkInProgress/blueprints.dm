@@ -687,10 +687,22 @@ proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 
 		for (var/B in save.dir)
 			save.cd = "/tiles/[A]/objects/[B]"
+			var/object_type = save["type"]
+			var/permitted = FALSE
+			if (use_whitelist)
+				for (var/whitelisted in WHITELIST_OBJECTS)
+					if (ispath(object_type, whitelisted))
+						permitted = TRUE
+						break
+				for (var/blacklisted in BLACKLIST_OBJECTS)
+					if (ispath(object_type, blacklisted))
+						permitted = FALSE
+						break
+				if (!permitted)
+					continue // skip this obj. do not pass go
+
 			var/datum/objectinfo/O = new/datum/objectinfo()
-			O.objecttype = save["type"]
-			/* if (use_whitelist && (!istypes(O.objecttype, WHITELIST_OBJECTS) || istypes(O.objecttype, BLACKLIST_OBJECTS)))
-				continue */ // UFCK
+			O.objecttype = object_type
 			O.direction = save["dir"]
 			O.layer = save["layer"]
 			O.px = save["pixelx"]
