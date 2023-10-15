@@ -245,6 +245,12 @@
 		icon_state = "detective"
 		item_state = "detective"
 
+	rank/captain
+		name = "captain's uniform"
+		desc = "Would you believe terrorists actually want to steal this jumpsuit? It's true!"
+		icon_state = "captain"
+		item_state = "captain"
+
 	rank/head_of_personnel
 		name = "head of personnel's uniform"
 		desc = "Rather bland and inoffensive. Perfect for vanishing off the face of the universe."
@@ -1325,6 +1331,15 @@
 		hide_prints = TRUE
 		scramble_prints = FALSE
 
+	caps_gloves
+		name = "captain's gloves"
+		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
+		icon_state = "capgloves"
+		item_state = "capgloves"
+		print_type = "high-quality synthetic fibers"
+		hide_prints = TRUE
+		scramble_prints = FALSE
+
 /obj/item/storage/belt/chameleon
 	name = "utility belt"
 	desc = "Can hold various small objects."
@@ -1794,11 +1809,12 @@
 
 	captain
 		name = "Captain"
-		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/captain
 		hat_type = new/datum/chameleon_hat_pattern/caphat
 		suit_type = new/datum/chameleon_suit_pattern/captain_armor
 		glasses_type = new/datum/chameleon_glasses_pattern/sunglasses
 		shoes_type = new/datum/chameleon_shoes_pattern/swat
+		gloves_type = new/datum/chameleon_gloves_pattern/caps_gloves
 		belt_type = null
 		backpack_type = new/datum/chameleon_backpack_pattern/captain
 
