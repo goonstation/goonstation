@@ -1443,9 +1443,9 @@ TYPEINFO(/obj/item/swords/captain)
 
 	New()
 		..()
-			var/obj/item/swords/K = new sword_path()
-			sword_inside = K
-			K.set_loc(src)
+		var/obj/item/swords/K = new sword_path()
+		sword_inside = K
+		K.set_loc(src)
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attack_hand(mob/living/carbon/human/user)
