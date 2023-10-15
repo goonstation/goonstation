@@ -45,7 +45,7 @@ export const BookmarksSection = (props: BookmarksSectionProps, context) => {
           <LabeledList.Item
             key="new"
             label={formatCoordinates(...targetCoords)}
-            buttons={<Button icon="plus" color="green" onClick={() => handleAddBookmark(newBookmarkName)} />}>
+            buttons={<Button icon="plus" onClick={() => handleAddBookmark(newBookmarkName)} />}>
             <Input
               width="100%"
               value={newBookmarkName}
