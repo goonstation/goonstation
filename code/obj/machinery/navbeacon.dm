@@ -1222,3 +1222,128 @@ TYPEINFO(/obj/machinery/wirenav)
 		name = "tour beacon - 'Arrivals'"
 		location = "tour0"
 		codes_txt = "tour;next_tour=tour1;desc=Hello, and welcome to Aetherion Station, Nanotrasen's finest space based luxury hotel! Follow me, and I'll show you around!"
+
+	tour1
+		name = "tour beacon - 'Neptunis'"
+		location = "tour1"
+		codes_txt = "tour;next_tour=tour2;desc=Welcome to the guest wing of Aetherion: Neptunis! Here next to arrivals, you can find anything that tickles your fancy, whether it's gaming in the arcade, trading stocks, or swimming in our massive pool!"
+
+	tour2
+		name = "tour beacon - 'Pool'"
+		location = "tour2"
+		codes_txt = "tour;next_tour=tour3;desc=Here, you can see our excellent poolside facilities, with a stunning world class view! You can also get a tan, and pump some weights!"
+
+	tour3
+		name = "tour beacon - 'Guest Rooms'"
+		location = "tour3"
+		codes_txt = "tour;next_tour=tour4;desc=The guest suites provide a fantastic world class experience here in Aetherion. For a small fee of \[integer overflow error\] credits, you too can stay in utmost luxury!"
+
+	tour4
+		name = "tour beacon - 'Common area'"
+		location = "tour4"
+		codes_txt = "tour;next_tour=tour5;desc=Over here is the common area, where you can relax and chill out, watch some TV, or read some books! This is also where the diplomat's suite is, which you can book for \[integer overflow error\] credits!"
+
+	tour5
+		name = "tour beacon - 'Pod Bay'"
+		location = "tour5"
+		codes_txt = "tour;next_tour=tour6;desc=Behold, the Pod Bay! Here, you can sign up for a space walk, or take a flying licence examination to fly your very own pod! We even offer courses on constructing your very own pods (parts not included) which you can sign up for ABOLUTELY FREE! (You must provide the parts yourself)"
+
+	tour6
+		name = "tour beacon - 'Locker Room'"
+		location = "tour6"
+		codes_txt = "tour;next_tour=tour7;desc=The Locker Room is here, and toilets are available in the back. If you need to change up your look, or get your old clothes clean, this is the place to come!"
+
+	tour7
+		name = "tour beacon - 'Medical Booth'"
+		location = "tour7"
+		codes_txt = "tour;next_tour=tour8;desc=If you ever find yourself in need of some quick medical attention, there is a medical booth right here. Our around the clock staff \[citation needed\] will always be here to patch you up! For more serious issues, of course, you'll be sent onward to medbay by our highly advanced transit system. (the morgue chute)"
+
+	tour8
+		name = "tour beacon - 'Kitchen'"
+		location = "tour8"
+		codes_txt = "tour;next_tour=tour9;desc=Peek inside! This is the kitchen, where the chefs work hard to provide you with five star food! All of our food is certified and tested to be absolutely the best of the best that you can find anywhere this side of the channel \[citation needed\]!"
+
+	tour9
+		name = "tour beacon - 'Bar and Cafe'"
+		location = "tour9"
+		codes_txt = "tour;next_tour=tour10;desc=Here is the Bar (and cafeteria)! Order up your favourite drinks, and dine in style. Over on the other side, you can see the cryogenic sleep module (for if you've had a bit too much to drink!), and the barbershop, where you can get your head strings touched up by our world class \[citation needed\] hairdressers!"
+
+	tour10
+		name = "tour beacon - 'Bridge'"
+		location = "tour10"
+		codes_txt = "tour;next_tour=tour11;desc=Psst, have a peek in here! This is the bridge, where the heads of staff work to manage the station and keep everything running smoothly. Looks rather snazzy, doesn't it? Maybe if you work really hard, you too can work here one day \[citation needed\]!"
+
+	tour11
+		name = "tour beacon - 'Hydroponics and Ranch'"
+		location = "tour11"
+		codes_txt = "tour;next_tour=tour12;desc=The Hydroponics and Ranch grows food for your table, right here aboard the station! No more 3 week old frozen perishables! Only the freshest of the fresh is good enough for our guests \[citation needed\]. Perhaps if you ask them nicely, they'll grow a special flower just for you (or some other kind of plant)? There are also facilities available for those addicted to fishing."
+
+	tour12
+		name = "tour beacon - 'Chapel'"
+		location = "tour12"
+		codes_txt = "tour;next_tour=tour13;desc=Shhh, lower your voice. The onboard chapel is a place of respect and quiet faith, where you can pay your respects to the deities up above."
+
+	tour13
+		name = "tour beacon - 'Medbay'"
+		location = "tour13"
+		codes_txt = "tour;next_tour=tour14;desc=The Medbay is the place to go for all of your medical needs. Our team of expert staff \[citation needed\] will have you fixed right up from the brink of death in no time at all! And even if they fail, there are facilities for cloning you and bringing you back from death itself! You can rest assured that you're safe as can be aboard Aetherion."
+
+	tour14
+		name = "tour beacon - 'Medbay disclaimer'"
+		location = "tour14"
+		codes_txt = "tour;next_tour=tour15;desc=Nanotrasen holdings is not responsible for any injuries or permanent deaths that happen aboard their proprietary stations. In case of legal dispute please call the following number: \[file not found\]."
+
+	tour15
+		name = "tour beacon - 'Research'"
+		location = "tour15"
+		codes_txt = "tour;next_tour=tour16;desc=Up here is the research department, where our scientists work hard to uncover the mysteries of the universe... Best not to disturb them."
+
+	tour16
+		name = "tour beacon - 'Crew Quarters'"
+		location = "tour16"
+		codes_txt = "tour;next_tour=tour17;desc=Down here is where the crew of the station-"
+
+	tour17
+		name = "tour beacon - 'Showers'"
+		location = "tour17"
+		codes_txt = "tour;next_tour=tour18;desc=We apologise for any discomfort or unease you may have felt. The crew will be reprimanded for this. Some showers are available here if you require them"
+
+	tour18
+		name = "tour beacon - 'Cargo'"
+		location = "tour18"
+		codes_txt = "tour;next_tour=tour19;desc=The cargo department is the centre of commerce aboard Aetherion. The quartermasters work tirelessly to scalp the market and profit as much as possible, making it possible to fund the activities of the station. If you need supplies for any particular task, here is the place to ask! They can get you anything your heart desires \[within reason\]."
+
+	tour19
+		name = "tour beacon - 'Security'"
+		location = "tour19"
+		codes_txt = "tour;next_tour=tour20;desc=The security department of the station resides here, working tirelessly to get rid of vandals and criminals trying to ruin our wonderful station. If you ever need their assistance, give a shout over the general radio frequency, or discreetly message their secure line through your PDA."
+
+	tour20
+		name = "tour beacon - 'Customs and Courtroom'"
+		location = "tour20"
+		codes_txt = "tour;next_tour=tour21;desc=The customs desk is where the Head Of Personnel operates, and is able to edit your employee records and change your job to whatever you desire. In a pinch, this section of corridor can also double as a courtroom, for holding criminal trials!"
+
+	tour21
+		name = "tour beacon - 'Owlrey'"
+		location = "tour21"
+		codes_txt = "tour;next_tour=tour22;desc=Tucked away here is a little park, an aviary filled with many owls. It's a lovely spot to settle down and relax for a moment, while enjoying the view outside..."
+
+	tour22
+		name = "tour beacon - 'Engineering'"
+		location = "tour22"
+		codes_txt = "tour;next_tour=tour23;desc=The engineering department keeps the station in tip top shape! The engine itself provides power to the station, while the mechanics tinker with and repair the various devices aboard the station. In here is also the mining department, who keep dangerous asteroids at bay \[citation needed\] and collect new resources for engineers to use and quartermasters to sell! Many lucrative job opportunities are available in this section of the station."
+
+	tour23
+		name = "tour beacon - 'Escape'"
+		location = "tour23"
+		codes_txt = "tour;next_tour=tour24;desc=Finally, we find ourselves at the Escape hallway! This is where the emergency escape shuttle will dock at the end of a shift (or in the unlikely case of a disaster), so make sure you know where it is! There are multiple signs dotted around the station indicating which way to go in case you forget. And if you just miss it, don't worry! If you're quick enough, you can hop in one of our 100% reliable escape pods \[citation needed\], and catch up with the shuttle as it's going through wormhole transit!"
+
+	tour24
+		name = "tour beacon - 'Escape 2'"
+		location = "tour24"
+		codes_txt = "tour;next_tour=tour25;desc=Thank you for joining us aboard Aetherion station! There are shower facilities here and a security checkpoint just over there, in case you need any assistance. We hope that you enjoy your stay with us!"
+
+	tour25
+		name = "tour beacon - Finish"
+		location = "tour25"
+		codes_txt = "tour;"

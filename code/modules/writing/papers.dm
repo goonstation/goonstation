@@ -1162,4 +1162,21 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/paper/robot_depot_note
 	name = "angry note"
 	icon_state = "paper"
-	info = {"When the hell are we actually going to install this stuff? This temporary wiring solution is starting to look quite permanent."}
+	info = {"
+	When the hell are we actually going to install this stuff?
+	This temporary wiring solution is starting to look quite permanent.
+	"}
+
+/obj/item/paper/quartermaster_note
+	name = "informative note"
+	icon_state = "paper"
+	info = {"
+	Please note that due to budget cuts, the westward cargo import conveyor
+	has been rerouted to join into the routing system input conveyors.
+	To summarise: Two routing belts to the north, and the export is in the
+	flusher on your left.
+	You can of course still stick an export sticker on a crate and totally
+	bypass the export line. But that costs barcodes and time so I don't see
+	why you would..?
+	"}
+
