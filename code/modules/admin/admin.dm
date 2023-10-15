@@ -2893,7 +2893,7 @@ var/global/noir = 0
 							for(var/obj/item/W in world)
 								if(istype(W, /obj/item/clothing) || istype(W, /obj/item/card/id) || istype(W, /obj/item/disk) || istype(W, /obj/item/tank))
 									continue
-								W.icon = 'icons/obj/items/gun.dmi'
+								W.icon = 'icons/obj/items/guns/kinetic.dmi'
 								W.icon_state = "revolver"
 								W.item_state = "gun"
 								LAGCHECK(LAG_LOW)

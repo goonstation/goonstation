@@ -221,7 +221,7 @@ CONTAINS:
 /obj/item/staple_gun
 	name = "staple gun"
 	desc = "A medical staple gun for securely reattaching limbs."
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "staplegun"
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER

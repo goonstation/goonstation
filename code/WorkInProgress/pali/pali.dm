@@ -32,6 +32,7 @@
 /obj/item/gun/kinetic/beepsky
 	name = "\improper Loose Cannon"
 	desc = "Gets the job done."
+	icon = 'icons/obj/items/guns/toy.dmi'
 	icon_state = "buff_airzooka"
 	color = "#555555"
 	force = 5
