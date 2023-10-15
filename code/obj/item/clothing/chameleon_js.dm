@@ -82,6 +82,7 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.tooltip_rebuild = 1
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_jumpsuit_pattern
@@ -382,6 +383,7 @@
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.seal_hair = T.seal_hair
+			src.tooltip_rebuild = 1
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_hat_pattern
@@ -630,6 +632,7 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.tooltip_rebuild = 1
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_suit_pattern
@@ -951,6 +954,7 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.tooltip_rebuild = 1
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_glasses_pattern
@@ -1085,6 +1089,7 @@
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.step_sound = T.step_sound
+			src.tooltip_rebuild = 1
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_shoes_pattern
@@ -1266,6 +1271,7 @@
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.material_prints = T.print_type
+			src.tooltip_rebuild = 1
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_gloves_pattern
@@ -1422,6 +1428,7 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.tooltip_rebuild = 1
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_belt_pattern
@@ -1588,6 +1595,7 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.tooltip_rebuild = 1
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_backpack_pattern
