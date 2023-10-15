@@ -4,14 +4,15 @@
 	var/datum/apiModel/Tracked/PlayerRes/PlayerDataResource/data	= null
 	var/datum/apiModel/Tracked/PlayerRes/PlayerSaveResource/saves	= null
 
-/datum/apiModel/Tracked/GameAdminResource/SetupFromResponse(response)
+/datum/apiModel/GetPlayerSaves/SetupFromResponse(response)
 	. = ..()
 	src.data = new
-	src.data = src.data.SetupFromResponse(response["data"])
+	src.data.SetupFromResponse(response["data"])
 	src.saves = new
-	src.saves = src.saves.SetupFromResponse(response["saves"])
+	src.saves.SetupFromResponse(response["saves"])
 
 /datum/apiModel/GetPlayerSaves/VerifyIntegrity()
+	. = ..()
 	if (
 		isnull(src.data) \
 		|| isnull(src.saves) \
