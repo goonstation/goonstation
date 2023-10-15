@@ -1379,6 +1379,9 @@ TYPEINFO(/area/diner)
 	name = "Sunken Asteroid"
 	icon_state = "green"
 	occlude_foreground_parallax_layers = TRUE
+#ifdef UNDERWATER_MAP
+	requires_power = FALSE
+#endif
 
 /area/pasiphae
 	name = "Pasiphae Primary Zone"
