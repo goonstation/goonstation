@@ -11,10 +11,7 @@
 	attackby(obj/item/W, mob/user)
 		user.lastattacked = src
 		src.visible_message("<B>[src]</B> screams!",1)
-		if (narrator_mode)
-			playsound(src, 'sound/vox/scream.ogg', 10, TRUE, -1, channel=VOLUME_CHANNEL_EMOTE)
-		else
-			playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, TRUE, -1, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, 'sound/voice/screams/monkey_scream.ogg', 10, TRUE, -1, channel=VOLUME_CHANNEL_EMOTE)
 		..()
 		return
 

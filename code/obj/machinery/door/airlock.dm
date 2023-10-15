@@ -1666,10 +1666,7 @@ About the new airlock wires panel:
 		power_usage += LINKED_FORCEFIELD_POWER_USAGE
 	.= ..()
 
-	if (narrator_mode)
-		playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
-	else
-		playsound(src.loc, src.sound_airlock, 25, 1)
+	playsound(src.loc, src.sound_airlock, 25, 1)
 
 	if (src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close(1)
@@ -1687,13 +1684,10 @@ About the new airlock wires panel:
 	if (src.linked_forcefield)
 		power_usage -= LINKED_FORCEFIELD_POWER_USAGE
 	if(!..(!src.safety))
-		if (narrator_mode)
-			playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
+		if (src.sound_close_airlock)
+			playsound(src.loc, src.sound_close_airlock, 25, 1)
 		else
-			if (src.sound_close_airlock)
-				playsound(src.loc, src.sound_close_airlock, 25, 1)
-			else
-				playsound(src.loc, src.sound_airlock, 25, 1)
+			playsound(src.loc, src.sound_airlock, 25, 1)
 
 	return
 

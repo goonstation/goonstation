@@ -363,10 +363,7 @@ var/global/the_automaton = null
 			sleep(1 SECOND)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_3.ogg', 50, 1)
 			src.visible_message("<span class='alert'><b>[src] frantically tears [W] to pieces! What!</b></span>")
-			if (narrator_mode)
-				playsound(src.loc, 'sound/vox/ghost.ogg', 60, 1)
-			else
-				playsound(src.loc, 'sound/effects/ghost.ogg', 60, 1)
+			playsound(src.loc, 'sound/effects/ghost.ogg', 60, 1)
 			SPAWN(0)
 				var/i = rand(4,8)
 				while (i-- > 0)

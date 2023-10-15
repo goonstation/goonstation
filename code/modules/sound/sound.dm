@@ -445,13 +445,7 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	return S
 
 /proc/generate_sound(var/atom/source, soundin, vol as num, vary, extrarange as num, pitch = 1)
-	if (narrator_mode && (soundin in list("punch", "swing_hit", "shatter", "explosion")))
-		switch(soundin)
-			if ("shatter") soundin = 'sound/vox/break.ogg'
-			if ("explosion") soundin = list('sound/vox/explosion.ogg', 'sound/vox/explode.ogg')
-			if ("swing_hit") soundin = 'sound/vox/hit.ogg'
-			if ("punch") soundin = 'sound/vox/hit.ogg'
-	else
+	if (istext(soundin))
 		switch(soundin)
 			if ("shatter") soundin = pick(sounds_shatter)
 			if ("explosion") soundin = pick(sounds_explosion)
@@ -505,7 +499,109 @@ var/global/list/default_channel_volumes = list(1, 1, 0.2, 0.5, 0.5, 1, 1)
 	else
 		S.frequency = pitch
 
+	if(narrator_mode)
+		S = narrator_mode_sound(S)
+
 	return S
+
+
+proc/narrator_mode_sound(sound/S)
+	var/sound/output_sound = null
+	var/new_sound_file = narrator_mode_sound_file(S.file)
+	if(istext(new_sound_file))
+		if(!fexists(new_sound_file))
+			CRASH("Narrator mode sound file '[new_sound_file]' does not exist!")
+		output_sound = sound(file(new_sound_file))
+	else if(isfile(new_sound_file))
+		output_sound = sound(new_sound_file)
+	if(isnull(output_sound))
+		return S
+
+	// for reasons unknown to me just setting S.file and returning S does not work correctly
+	output_sound.falloff = S.falloff
+	output_sound.wait = S.wait
+	output_sound.channel = S.channel
+	output_sound.volume = S.volume
+	output_sound.priority = S.priority
+	output_sound.environment = S.environment
+	output_sound.frequency = S.frequency
+	output_sound.pan = S.pan
+	output_sound.echo = S.echo
+	output_sound.x = S.x
+	output_sound.y = S.y
+	output_sound.z = S.z
+	if(new_sound_file in list("sound/vox/door.ogg", "sound/vox/deny.ogg"))
+		output_sound.falloff = 4 // doors be too damn annoying and loud
+	return output_sound
+
+proc/narrator_mode_sound_file(sound_file)
+	var/static/list/narrator_mode_translation = list(
+		'sound/impact_sounds/Generic_Hit_1.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Hit_2.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Hit_3.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Punch_1.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Punch_2.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Punch_3.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Punch_4.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Punch_5.ogg' = "sound/vox/hit.ogg",
+		'sound/impact_sounds/Generic_Stab_1.ogg' = "sound/vox/hit.ogg",
+		'sound/voice/virtual_scream.ogg' = "sound/vox/scream.ogg",
+		'sound/voice/virtual_gassy.ogg' = "sound/vox/fart.ogg",
+		'sound/voice/virtual_snap.ogg' = "sound/vox/snap.ogg",
+		'sound/effects/fingersnap.ogg' = "sound/vox/snap.ogg",
+		'sound/impact_sounds/Generic_Snap_1.ogg' = "sound/vox/snap.ogg",
+		'sound/voice/burp.ogg' = "sound/vox/burpone.ogg",
+		'sound/machines/whistlealert.ogg' = "sound/vox/deeoo.ogg",
+		'sound/machines/whistlebeep.ogg' = "sound/vox/dadeda.ogg",
+		'sound/musical_instruments/Bikehorn_1.ogg' = "sound/vox/honk.ogg",
+		'sound/musical_instruments/Bikehorn_2.ogg' = "sound/vox/honk.ogg",
+		'sound/musical_instruments/Bikehorn_bonk1.ogg' = "sound/vox/honk.ogg",
+		'sound/musical_instruments/Bikehorn_bonk2.ogg' = "sound/vox/honk.ogg",
+		'sound/musical_instruments/Bikehorn_bonk3.ogg' = "sound/vox/honk.ogg",
+		'sound/items/rubberduck.ogg' = "sound/vox/duck.ogg",
+		'sound/machines/windowdoor.ogg' = "sound/vox/door.ogg",
+		'sound/machines/airlock_swoosh_temp.ogg' = "sound/vox/door.ogg",
+		'sound/machines/airlock.ogg' = "sound/vox/door.ogg",
+		'sound/machines/door_open.ogg' = "sound/vox/door.ogg",
+		'sound/machines/door_close.ogg' = "sound/vox/door.ogg",
+		'sound/impact_sounds/Glass_Shatter_1.ogg' = "sound/vox/break.ogg",
+		'sound/impact_sounds/Glass_Shatter_2.ogg' = "sound/vox/break.ogg",
+		'sound/impact_sounds/Glass_Shatter_3.ogg' = "sound/vox/break.ogg",
+		'sound/machines/tractor_running2.ogg' = "sound/vox/engine.ogg",
+		'sound/machines/tractor_running3.ogg' = "sound/vox/engine.ogg",
+		'sound/misc/clownstep1.ogg' = "sound/vox/clown.ogg",
+		'sound/misc/clownstep2.ogg' = "sound/vox/clown.ogg",
+		'sound/impact_sounds/Bush_Hit.ogg' = "sound/vox/shake.ogg",
+		'sound/misc/lightswitch.ogg' = "sound/vox/switch.ogg",
+		'sound/machines/alarm_a.ogg' = "sound/vox/alarm.ogg",
+		'sound/machines/firealarm.ogg' = "sound/vox/alarm.ogg",
+		'sound/effects/explosionfar.ogg' = "sound/vox/explosion.ogg",
+		'sound/effects/ExplosionFirey.ogg' = "sound/vox/explosion.ogg",
+		'sounds/machines/airlock_deny.ogg' = "sound/vox/deny.ogg",
+	)
+	if(sound_file in narrator_mode_translation)
+		return narrator_mode_translation[sound_file]
+
+	var/filetext = "[sound_file]"
+	if(startswith(filetext, "sound/misc/step") || startswith(filetext, "sound/misc/talk"))
+		return null
+	if(startswith(filetext, "sound/voice/screams"))
+		return "sound/vox/scream.ogg"
+	if(startswith(filetext, "sound/voice/farts"))
+		return "sound/vox/fart.ogg"
+
+	var/list/path_parts = splittext(filetext, "/")
+	var/filename = path_parts[length(path_parts)]
+	var/without_extension = splittext(filename, ".")[1]
+	var/list/underscore_parts = splittext(replacetext(without_extension, "-", "_"), "_")
+	for(var/part in underscore_parts)
+		var/normalized = ckey(part)
+		var/without_numbers = regex(@"[0-9]", "g").Replace(normalized, "")
+		var/datum/VOXsound/voxsound = global.voxsounds[without_numbers]
+		if(istype(voxsound))
+			return voxsound.ogg
+
+	return null
 
 
 /**

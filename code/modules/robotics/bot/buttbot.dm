@@ -381,10 +381,7 @@
 	if(istype(src, /obj/machinery/bot/buttbot/cyber))
 		playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 	else
-		if(narrator_mode)
-			playsound(src, 'sound/vox/fart.ogg', 50, TRUE, channel=VOLUME_CHANNEL_EMOTE)
-		else
-			playsound(src, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
+		playsound(src, pick(src.fartsounds), 35, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	var/fart_on_other = 0
 	for (var/atom/A as anything in src.loc)

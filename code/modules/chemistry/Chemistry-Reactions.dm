@@ -82,7 +82,7 @@
 		holder.del_reagent(id)
 
 
-/proc/smoke_reaction(var/datum/reagents/holder, var/smoke_size, var/turf/location, var/vox_smoke = 0, var/do_sfx = 1)
+/proc/smoke_reaction(var/datum/reagents/holder, var/smoke_size, var/turf/location, var/do_sfx = 1)
 	var/block = 0
 
 	if(QDELETED(holder))
@@ -119,10 +119,7 @@
 		purge_smoke_blacklist(holder)
 
 		if (do_sfx)
-			if (narrator_mode || vox_smoke)
-				playsound(location, 'sound/vox/smoke.ogg', 50, TRUE, -3)
-			else
-				playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+			playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 
 		//particleMaster.SpawnSystem(new /datum/particleSystem/chemSmoke(source, holder, 20, smoke_size))
 
@@ -154,7 +151,7 @@
 
 
 
-/proc/classic_smoke_reaction(var/datum/reagents/holder, var/smoke_size, var/turf/location, var/vox_smoke = 0)
+/proc/classic_smoke_reaction(var/datum/reagents/holder, var/smoke_size, var/turf/location)
 	var/block = 0
 	if (holder.my_atom)
 		var/atom/psource = holder.my_atom.loc
@@ -167,10 +164,7 @@
 	if (block)
 		return 0
 
-	if (narrator_mode || vox_smoke)
-		playsound(location, 'sound/vox/smoke.ogg', 50, TRUE, -3)
-	else
-		playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
+	playsound(location, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 
 	var/list/covered = holder.covered_turf()
 	if (!covered || !length(covered))
