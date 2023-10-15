@@ -9,5 +9,6 @@ import { toFixed } from "common/math";
 import { decodeHtmlEntities } from "common/string";
 
 export const formatDecimal = (value: number) => toFixed(value, 2);
-export const formatCoordinates = (x: number, y: number, z: number) => `${formatDecimal(x)}, ${formatDecimal(y)}, ${z}`;
+export const formatCoordinates = (x: number, y: number, z: number) =>
+  `${formatDecimal(x)} / ${formatDecimal(y)} / ${z}`;
 export const formatReadout = (readout: string) => decodeHtmlEntities(readout);
