@@ -92,17 +92,20 @@
 			data["compID"] = M.computer_id
 			data["ip"] = M.lastKnownIP
 		else
-			var/list/response
+			var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 			try
-				response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
-			catch ()
+				var/datum/apiRoute/players/stats/get/getPlayerStats = new
+				getPlayerStats.queryParams = list("ckey" = data["ckey"])
+				playerStats = apiHandler.queryAPI(getPlayerStats)
+			catch
 				var/ircmsg[] = new()
 				ircmsg["name"] = user
 				ircmsg["msg"] = "Failed to query API, try again later."
 				ircbot.export("admin", ircmsg)
 				return
-			data["ip"] = response["last_ip"]
-			data["compID"] = response["last_compID"]
+
+			data["ip"] = playerStats.latest_connection.ip
+			data["compID"] = playerStats.latest_connection.comp_id
 		data["text_ban_length"] = length
 		data["reason"] = reason
 		if (length == "hour")
@@ -154,17 +157,20 @@
 			data["compID"] = M.computer_id
 			data["ip"] = M.lastKnownIP
 		else
-			var/list/response
+			var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 			try
-				response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
-			catch ()
+				var/datum/apiRoute/players/stats/get/getPlayerStats = new
+				getPlayerStats.queryParams = list("ckey" = data["ckey"])
+				playerStats = apiHandler.queryAPI(getPlayerStats)
+			catch
 				var/ircmsg[] = new()
 				ircmsg["name"] = user
 				ircmsg["msg"] = "Failed to query API, try again later."
 				ircbot.export("admin", ircmsg)
 				return
-			data["ip"] = response["last_ip"]
-			data["compID"] = response["last_compID"]
+
+			data["ip"] = playerStats.latest_connection.ip
+			data["compID"] = playerStats.latest_connection.comp_id
 		if(server == "main1" || server == "1" || server == "goon1")
 			server = "main1"
 		else if(server == "main2" || server == "2" || server == "goon2")
