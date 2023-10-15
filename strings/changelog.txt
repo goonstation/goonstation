@@ -1,5 +1,7 @@
 
 (t)sun oct 15 23
+(u)LeahTheTech
+(+)Flock walls can now be destroyed without hitting them with specifically a crowbar. No I have no idea why they were like this.
 (u)TealSeer
 (p)16480
 (e)🪲🗺🔄|C-Bug, A-Mapping, C-Rework
