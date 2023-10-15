@@ -51,7 +51,6 @@ TYPEINFO(/obj/machinery/sleep_console)
 				if (prob(50))
 					qdel(src)
 					return
-			else
 
 	// Just relay emag_act() here.
 	emag_act(var/mob/user, var/obj/item/card/emag/E)
