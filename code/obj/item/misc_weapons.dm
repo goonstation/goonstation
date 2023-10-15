@@ -1281,7 +1281,7 @@ TYPEINFO(/obj/item/swords/katana)
 		if (target.is_open_container())
 			var/obj/item/reagent_containers/RC = target
 			if(RC.reagents.has_reagent("sakuride", 1))
-				if(RC.reagents.reagent_list.len > 1)
+				if(length(RC.reagents.reagent_list) > 1)
 					boutput(user, "<span class='alert'>This coating is impure!</span>")
 					return
 				RC.reagents.trans_to(src, min(KATANA_REAGENT_CAPACITY , src.reagents.maximum_volume - src.reagents.total_volume))
