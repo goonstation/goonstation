@@ -29,10 +29,11 @@ var/global/datum/apiHandler/apiHandler
 			logTheThing(LOG_DIARY, null, "Goonhub endpoint doesn't exist, disabled api handler", "debug")
 
 
-	/// Suppress errors on local environments, as it's spammy and local devs probably won't have the config for API connectivity to work
-	proc/apiError(message = "", forceErrorException = 0)
-		if (config.server_id != "local" || forceErrorException)
-			throw EXCEPTION(message)
+	/// Build and throw an error exception
+	proc/apiError(list/data, forceErrorException = 0)
+		var/datum/apiModel/Error/model = new
+		model.SetupFromResponse(data)
+		throw EXCEPTION(model)
 
 
 	/**
@@ -85,7 +86,7 @@ var/global/datum/apiHandler/apiHandler
 	 */
 	proc/queryAPI(datum/apiRoute/route = null, forceResponse = 0, attempt = 1, forceErrorException = 0)
 		if (!enabled || !route)
-			src.apiError("API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]", forceErrorException)
+			src.apiError(list("message" = "API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]"), forceErrorException)
 			return
 
 		var/req_route = "[config.goonhub_api_endpoint][route.path][route.routeParams ? "/[route.formatRouteParams()]" : ""]/?[route.formatQueryParams()]"
@@ -124,7 +125,7 @@ var/global/datum/apiHandler/apiHandler
 			if (attempt < maxApiRetries)
 				return retryApiQuery(args, attempt = attempt)
 
-			src.apiError("API Error: Request timed out during [req_route]")
+			src.apiError(list("message" = "API Error: Request timed out during [req_route]"))
 			return 1
 
 		// Otherwise the request did finish so we can lower this
@@ -139,7 +140,7 @@ var/global/datum/apiHandler/apiHandler
 			if (attempt < maxApiRetries)
 				return retryApiQuery(args, attempt = attempt)
 
-			src.apiError("API Error: No response from server during query [!response.body ? "during" : "to"] [req_route]")
+			src.apiError(list("message" = "API Error: No response from server during query [!response.body ? "during" : "to"] [req_route]"))
 
 		// At this point we assume the request was a success, so reset the error counter
 		trackRecentError(TRUE)
@@ -159,13 +160,11 @@ var/global/datum/apiHandler/apiHandler
 			if (attempt < maxApiRetries)
 				return retryApiQuery(args, attempt = attempt)
 
-			src.apiError("API Error: JSON decode error during [req_route]")
+			src.apiError(list("message" = "API Error: JSON decode error during [req_route]"))
 
 		// Handle client and server error responses
 		if (response.status_code >= 400)
-			var/datum/apiModel/Error/model = new
-			model.SetupFromResponse(data)
-			throw EXCEPTION(model)
+			return src.apiError(data)
 
 		// Validation
 		var/datum/apiModel/model = new route.correct_response
@@ -176,7 +175,7 @@ var/global/datum/apiHandler/apiHandler
 		if (!model.VerifyIntegrity())
 			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Verification error during <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
 			logTheThing(LOG_DIARY, null, "API Error: Verification error during [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
-			src.apiError("API Error: Verification error during [req_route]")
+			src.apiError(list("message" = "API Error: Verification error during [req_route]"))
 			return
 
 		return model
