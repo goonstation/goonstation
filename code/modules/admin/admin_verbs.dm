@@ -1797,7 +1797,7 @@ var/list/fun_images = list()
 		return alert("The map is already on [map] you dunce!")
 
 	try
-		mapSwitcher.setNextMap(src.key, mapName = map)
+		mapSwitcher.setNextMap(src.ckey, mapName = map)
 	catch (var/exception/e)
 		logTheThing(LOG_DEBUG, null, "<b>Map Switcher:</b> [e.name]")
 		return alert("Oh no! Something went wrong with the map switcher. Details have been logged to the debug category.")
