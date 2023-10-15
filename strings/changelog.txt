@@ -1,5 +1,9 @@
 
 (t)sun oct 15 23
+(u)TealSeer
+(p)16480
+(e)🪲🗺🔄|C-Bug, A-Mapping, C-Rework
+(+)Autolathe storage on donut 2 has been renamed to auxilliary storage, and a team of scientists has been hired to research what exactly an autolathe is.
 (u)Amylizzle
 (p)16411
 (e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science
