@@ -85,19 +85,20 @@
 
 	/// blocking version of cache_round_stats, queries api to cache stats so its only done once per player per round (please update this proc when adding more player stat vars)
 	proc/cache_round_stats_blocking()
-		var/list/response = null
+		var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 		try
-			response = apiHandler?.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
+			var/datum/apiRoute/players/stats/get/getPlayerStats = new
+			getPlayerStats.queryParams = list("ckey" = src.ckey)
+			playerStats = apiHandler.queryAPI(getPlayerStats)
 		catch
-			return 0
-		if (!response)
-			return 0
-		src.rounds_participated = text2num(response["participated"])
-		src.rounds_participated_rp= text2num(response["participated_rp"])
-		src.rounds_seen = text2num(response["seen"])
-		src.rounds_seen_rp = text2num(response["seen_rp"])
-		src.last_seen = response["last_seen"]
-		return 1
+			return FALSE
+
+		src.rounds_participated = text2num(playerStats.played)
+		src.rounds_participated_rp = text2num(playerStats.played_rp)
+		src.rounds_seen = text2num(playerStats.connected)
+		src.rounds_seen_rp = text2num(playerStats.connected_rp)
+		src.last_seen = playerStats.latest_connection.created_at
+		return TRUE
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats(allow_blocking = FALSE)

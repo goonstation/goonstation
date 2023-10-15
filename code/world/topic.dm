@@ -915,7 +915,7 @@
 
 				var/list/response = list(
 					"seen" = playerStats.connected,
-					"seen_rp" = playerStats.connected_rp
+					"seen_rp" = playerStats.connected_rp,
 					"participated" = playerStats.played,
 					"participated_rp" = playerStats.played_rp
 				)
