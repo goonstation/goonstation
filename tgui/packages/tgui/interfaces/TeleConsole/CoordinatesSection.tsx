@@ -7,7 +7,7 @@
 
 import { useBackend } from '../../backend';
 import { LabeledList, Section } from '../../components';
-import { CoordinateSlider } from './SteppedSlider';
+import { SteppedSlider } from './SteppedSlider';
 import type { TeleConsoleData } from './types';
 import { formatDecimal } from './util';
 
@@ -18,7 +18,7 @@ export const CoordinatesSection = (_props, context) => {
     <Section title="Target">
       <LabeledList>
         <LabeledList.Item label="X">
-          <CoordinateSlider
+          <SteppedSlider
             format={formatDecimal}
             maxValue={500}
             minValue={0}
@@ -31,7 +31,7 @@ export const CoordinatesSection = (_props, context) => {
           />
         </LabeledList.Item>
         <LabeledList.Item label="Y">
-          <CoordinateSlider
+          <SteppedSlider
             format={formatDecimal}
             maxValue={500}
             minValue={0}
@@ -44,7 +44,7 @@ export const CoordinatesSection = (_props, context) => {
           />
         </LabeledList.Item>
         <LabeledList.Item label="Z">
-          <CoordinateSlider
+          <SteppedSlider
             maxValue={14}
             minValue={0}
             onChange={(value) => act('setZ', { value })}

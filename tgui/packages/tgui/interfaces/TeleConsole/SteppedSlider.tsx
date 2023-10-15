@@ -27,7 +27,7 @@ interface SteppedSliderProps extends SliderProps {
   skipAmount?: number;
 }
 
-export const CoordinateSlider = (props: SteppedSliderProps) => {
+export const SteppedSlider = (props: SteppedSliderProps) => {
   const {
     format,
     maxValue,
