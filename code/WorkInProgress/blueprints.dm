@@ -502,6 +502,11 @@
 	var/room_name = ""
 	var/blueprint_path = ""
 
+	New()
+		..()
+		if (src.room_name)
+			src.name += ": '[src.room_name]'"
+
 	examine()
 		. = ..()
 		if (room_name)
@@ -560,7 +565,7 @@
 	/obj/submachine/mixer, \
 	/obj/submachine/foodprocessor, \
 )
-
+// blacklist overrules whitelist
 #define BLACKLIST_OBJECTS list( \
 	/obj/disposalpipe/loafer, \
 	/obj/submachine/slot_machine/item, \
@@ -585,8 +590,8 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	if (!input) return
 	var/savepath = "data/blueprints/[user.client.ckey]/[input].dat"
 	if (fexists("[savepath]"))
-		if (user && alert(user, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
-			return // tgui this
+		if (tgui_alert(user, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", list("Yes", "No")) == "No")
+			return
 		fdel("[savepath]")
 	var/savefile/save = new/savefile("[savepath]")
 
@@ -703,6 +708,9 @@ proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 
 	boutput(user, "<span class='notice'>Loaded blueprint [bp.room_name], with [turf_count] tiles, and [obj_count] objects.</span>")
 	return bp
+
+#undef WHITELIST_OBJECTS
+#undef BLACKLIST_OBJECTS
 
 /obj/item/blueprint_marker
 	name = "blueprint marker"
