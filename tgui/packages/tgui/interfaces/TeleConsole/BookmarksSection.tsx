@@ -6,6 +6,7 @@
  * @license ISC
  */
 
+import { decodeHtmlEntities } from 'common/string';
 import { useLocalState } from '../../backend';
 import { Button, Input, LabeledList, Section } from '../../components';
 import { TeleConsoleData } from './types';
@@ -36,7 +37,7 @@ export const BookmarksSection = (props: BookmarksSectionProps, context) => {
               label={formatCoordinates(bookmark.x, bookmark.y, bookmark.z)}
               buttons={<Button icon="trash" color="red" onClick={() => onDeleteBookmark(bookmark.ref)} />}>
               <Button icon="bookmark" onClick={() => onRestoreBookmark(bookmark.ref)}>
-                {bookmark.name}
+                {decodeHtmlEntities(bookmark.name)}
               </Button>
             </LabeledList.Item>
           );
