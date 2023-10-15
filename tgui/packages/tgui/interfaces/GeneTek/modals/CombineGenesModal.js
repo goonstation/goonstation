@@ -1,64 +1,46 @@
 /**
  * @file
  * @copyright 2021
- * @author BenLubar (https://github.com/BenLubar)
+ * @author Original BenLubar (https://github.com/BenLubar)
+ * @author Changes Mordent (https://github.com/mordent-goonstation)
  * @license ISC
  */
 
-import { useBackend, useSharedState } from "../../../backend";
-import { Box, Button, Modal } from "../../../components";
+import { useBackend, useSharedState } from '../../../backend';
+import { Box, Button, Modal, Section, Stack } from '../../../components';
 
-export const CombineGenesModal = (props, context) => {
+export const CombineGenesModal = (_props, context) => {
   const { data, act } = useBackend(context);
-  const [isCombining, setIsCombining] = useSharedState(context, "iscombining", false);
-  const {
-    savedMutations,
-    combining = [],
-  } = data;
-
+  const [isCombining, setIsCombining] = useSharedState(context, 'iscombining', false);
+  const { savedMutations, combining = [] } = data;
   return (
-    <Modal full>
-      <Box width={16} mr={2}>
-        <Box bold mb={2}>
-          Select genes to combine
-        </Box>
-        <Box mb={2}>
-          {savedMutations.map(g => (
-            <Box key={g.ref}>
-              {combining.indexOf(g.ref) >= 0 ? (
-                <Button
-                  icon="check"
-                  color="blue"
-                  onClick={() => act("togglecombine", { ref: g.ref })} />
-              ) : (
-                <Button
-                  icon="blank"
-                  color="grey"
-                  onClick={() => act("togglecombine", { ref: g.ref })} />
-              )}
-              {" " + g.name}
-            </Box>
+    <Modal full width={20}>
+      <Section title="Select">
+        <Stack vertical>
+          {savedMutations.map((g) => (
+            <Stack.Item key={g.ref}>
+              <Button.Checkbox
+                checked={combining.indexOf(g.ref) >= 0}
+                onClick={() => act('togglecombine', { ref: g.ref })}>
+                {g.name}
+              </Button.Checkbox>
+            </Stack.Item>
           ))}
-        </Box>
-        <Box inline width="50%" textAlign="center">
-          <Button
-            icon="sitemap"
-            disabled={!combining.length}
-            onClick={() => {
-              act("combinegenes");
-              setIsCombining(false);
-            }}>
-            Combine
-          </Button>
-        </Box>
-        <Box inline width="50%" textAlign="center">
-          <Button
-            color="bad"
-            icon="times"
-            onClick={() => setIsCombining(false)}>
-            Cancel
-          </Button>
-        </Box>
+        </Stack>
+      </Section>
+      <Box textAlign="center">
+        <Button color="bad" icon="times" onClick={() => setIsCombining(false)}>
+          Cancel
+        </Button>
+        <Button
+          icon="sitemap"
+          disabled={!combining.length}
+          onClick={() => {
+            act('combinegenes');
+            setIsCombining(false);
+          }}>
+          Combine
+        </Button>
       </Box>
     </Modal>
   );
