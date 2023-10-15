@@ -366,7 +366,7 @@
 				icon_state = "choose_plague"
 			if (2)
 				name = "Harbinger"
-				desc = "Lead an army of otherwoldly foes."
+				desc = "Lead an army of otherworldly foes."
 				icon_state = "choose_harbinger"
 			if (3)
 				name = "Trickster"
@@ -2046,7 +2046,7 @@
 		name = "Cut"
 		desc = "Slice open the flesh."
 		icon_state = "scalpel"
-		success_text = "slices open the flesh potecting the organs"
+		success_text = "slices open the flesh protecting the organs"
 		success_sound = 'sound/impact_sounds/Slimy_Cut_1.ogg'
 		slipup_text = " slips up and stabs into the patient"
 

@@ -726,9 +726,9 @@
 		desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 		icon_state = "hoscoat"
 		item_state = "hoscoat"
-		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
-		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 
 	detective_jacket
 		name = "detective's coat"

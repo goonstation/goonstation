@@ -195,7 +195,7 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	default_material = "gnesis"
-	var/broken = FALSE
+	broken = FALSE
 	var/on = FALSE
 
 	// update_icon()
@@ -299,7 +299,6 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 		src.desc = "It's broken. You could probably use a crowbar to break the pieces apart."
 		src.broken = TRUE
 		src.UpdateIcon()
-		src.material.setProperty("reflective", 3)
 		if (playAttackSound)
 			playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 25, TRUE)
 
