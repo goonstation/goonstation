@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
 import { clamp } from 'common/math';
 import { Button, Icon, Slider, Stack } from '../../components';
 

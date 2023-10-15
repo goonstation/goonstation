@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author Mordent (https://github.com/mordent-goonstation)
+ * @license ISC
+ */
+
 import { Box, Button, LabeledList, Section } from '../../components';
 
 interface ConnectionSectionProps {
