@@ -1143,6 +1143,13 @@
 		item_state = "swat"
 		step_sound = "step_military"
 
+	caps_boots
+		name = "captain's boots"
+		desc = "A set of formal shoes with a protective layer underneath."
+		icon_state = "capboots"
+		item_state = "capboots"
+		step_sound = "step_military"
+
 	galoshes
 		name = "galoshes"
 		desc = "Rubber boots that prevent slipping on wet surfaces."
@@ -1821,7 +1828,7 @@
 		hat_type = new/datum/chameleon_hat_pattern/caphat
 		suit_type = new/datum/chameleon_suit_pattern/captain_armor
 		glasses_type = new/datum/chameleon_glasses_pattern/sunglasses
-		shoes_type = new/datum/chameleon_shoes_pattern/swat
+		shoes_type = new/datum/chameleon_shoes_pattern/caps_boots
 		gloves_type = new/datum/chameleon_gloves_pattern/caps_gloves
 		belt_type = null
 		backpack_type = new/datum/chameleon_backpack_pattern/captain
