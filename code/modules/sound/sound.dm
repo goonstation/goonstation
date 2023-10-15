@@ -577,7 +577,7 @@ proc/narrator_mode_sound_file(sound_file)
 		'sound/machines/firealarm.ogg' = "sound/vox/alarm.ogg",
 		'sound/effects/explosionfar.ogg' = "sound/vox/explosion.ogg",
 		'sound/effects/ExplosionFirey.ogg' = "sound/vox/explosion.ogg",
-		'sounds/machines/airlock_deny.ogg' = "sound/vox/deny.ogg",
+		'sound/machines/airlock_deny.ogg' = "sound/vox/deny.ogg",
 	)
 	if(sound_file in narrator_mode_translation)
 		return narrator_mode_translation[sound_file]
