@@ -1245,9 +1245,9 @@ TYPEINFO(/obj/item/swords/katana)
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	hitsound = 'sound/impact_sounds/katana_slash.ogg'
 	midair_fruit_slice = TRUE
+	var/reagent_capacity = 15
 	HELP_MESSAGE_OVERRIDE({"Hit someone while aiming at a specific limb to immediatly slice off the targeted limb. If both arms and legs are sliced off, you can decapitate your target by aiming for the head.\n
 							While on any intent other than <span class='help'>help</span>, click a tile away from you to quickly dash forward to it's location, slicing those in the way."})
-
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
 	var/obj/itemspecialeffect/katana_dash/start/start
@@ -1269,7 +1269,7 @@ TYPEINFO(/obj/item/swords/katana)
 		mid1 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		mid2 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		end = new/obj/itemspecialeffect/katana_dash/end(src)
-		src.create_reagents(KATANA_REAGENT_CAPACITY)
+		src.create_reagents(src.reagent_capacity)
 		src.setItemSpecial(/datum/item_special/katana_dash)
 		BLOCK_SETUP(BLOCK_SWORD)
 
@@ -1284,8 +1284,13 @@ TYPEINFO(/obj/item/swords/katana)
 				if(length(RC.reagents.reagent_list) > 1)
 					boutput(user, "<span class='alert'>This coating is impure!</span>")
 					return
-				RC.reagents.trans_to(src, min(KATANA_REAGENT_CAPACITY , src.reagents.maximum_volume - src.reagents.total_volume))
-				boutput(user, "<span class='hint'>You apply the coating to the blade.</span>")
+				if(src.reagents.has_reagent("sakuride", src.reagent_capacity))
+					boutput(user, "<span class='alert'>The blade is already coated!</span>")
+					return
+				RC.reagents.trans_to(src, src.reagent_capacity)
+				boutput(user, "You apply the coating to the blade.")
+			else
+				boutput(user, "<span class='alert'>You cannot coat the [src] in this!</span>")
 
 /obj/item/swords/katana/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] thrusts [src] through their stomach!</b></span>")
@@ -1438,14 +1443,9 @@ TYPEINFO(/obj/item/swords/captain)
 
 	New()
 		..()
-		if(sword_inside != null) // setting null prevents sword generation
 			var/obj/item/swords/K = new sword_path()
 			sword_inside = K
 			K.set_loc(src)
-		else
-			// otherwise icon looks like it has a sword in it
-			icon_state = sheath_state
-			item_state = ih_sheath_state
 		BLOCK_SETUP(BLOCK_ROD)
 
 	attack_hand(mob/living/carbon/human/user)
