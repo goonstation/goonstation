@@ -855,7 +855,6 @@ var/global/current_state = GAME_STATE_INVALID
 		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
 		if (!P.current_playtime)
 			continue
-		// playtimes["ckeys\[[P.ckey]]"] = round((P.current_playtime / (1 SECOND))) //rounds 1/10th seconds to seconds
 		playtimes["[count]"] = list("id" = P.id, "seconds_played" = round((P.current_playtime / (1 SECOND)))) //rounds 1/10th seconds to seconds
 		count++
 
