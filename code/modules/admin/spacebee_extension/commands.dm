@@ -636,10 +636,14 @@
 
 	execute(user, ckey)
 		try
-			apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = ckey, "akey" = user + " (Discord)"))
-		catch(var/exception/e)
-			system.reply("Error while adding ckey [ckey] to the VPN whitelist: [e.name]")
+			var/datum/apiRoute/vpnwhitelist/add/addWhitelist = new
+			addWhitelist.buildBody(user, ckey)
+			apiHandler.queryAPI(addWhitelist)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			system.reply("Error while adding ckey [ckey] to the VPN whitelist: [error.message]")
 			return FALSE
+
 		global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 		message_admins("Ckey [ckey] added to the VPN whitelist by [user] (Discord).")
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
@@ -654,23 +658,18 @@
 	server_targeting = COMMAND_TARGETING_MAIN_SERVER
 
 	execute(user, ckey)
-		var/list/response
 		try
-			response = apiHandler.queryAPI("vpncheck-whitelist/search", list("ckey" = ckey), forceResponse = 1)
-		catch(var/exception/e)
-			system.reply("Error, while checking vpn whitelist status of ckey [ckey] encountered the following error: [e.name]")
-			return
-		if (!islist(response))
-			system.reply("Failed to query vpn whitelist, did not receive response from API.")
-		if (response["error"])
-			system.reply("Failed to query vpn whitelist, error: [response["error"]]")
-		else if ((response["success"]))
-			if (response["whitelisted"])
-				system.reply("ckey [ckey] is VPN whitelisted. Whitelisted by [response["akey"] ? response["akey"] : "unknown admin"]")
+			var/datum/apiRoute/vpnwhitelist/search/searchWhitelist = new
+			searchWhitelist.queryParams = list("ckey" = ckey)
+			var/datum/apiModel/VpnWhitelistSearch/searchResults = apiHandler.queryAPI(searchWhitelist)
+			if (searchResults.whitelisted)
+				system.reply("ckey [ckey] is VPN whitelisted.")
 			else
 				system.reply("ckey [ckey] is not VPN whitelisted.")
-		else
-			system.reply("Failed to query vpn whitelist, received invalid response from API.")
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			system.reply("Failed to query vpn whitelist, error: [error.message]")
+			return FALSE
 
 /datum/spacebee_extension_command/hard_reboot
 	name = "hardreboot"

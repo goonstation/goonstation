@@ -2322,15 +2322,19 @@ var/list/fun_images = list()
 	DENY_TEMPMIN
 	vpnckey = ckey(vpnckey)
 	try
-		apiHandler.queryAPI("vpncheck-whitelist/add", list("ckey" = vpnckey, "akey" = src.ckey))
-	catch(var/exception/e)
-		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [e.name]")
-		return 0
+		var/datum/apiRoute/vpnwhitelist/add/addWhitelist = new
+		addWhitelist.buildBody(src.ckey, vpnckey)
+		apiHandler.queryAPI(addWhitelist)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		message_admins("Error while adding ckey [vpnckey] to the VPN whitelist: [error.message]")
+		return FALSE
+
 	global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 	message_admins("Ckey [vpnckey] added to the VPN whitelist by [src.key].")
 	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] added to the VPN whitelist.")
 	addPlayerNote(vpnckey, src.ckey, "Ckey [vpnckey] added to the VPN whitelist.")
-	return 1
+	return TRUE
 
 /client/proc/vpn_whitelist_remove(vpnckey as text)
 	set name = "VPN whitelist remove"
@@ -2339,13 +2343,17 @@ var/list/fun_images = list()
 	DENY_TEMPMIN
 	vpnckey = ckey(vpnckey)
 	try
-		apiHandler.queryAPI("vpncheck-whitelist/remove", list("ckey" = vpnckey, "akey" = src.ckey))
-	catch(var/exception/e)
-		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [e.name]")
-		return 0
+		var/datum/apiRoute/vpnwhitelist/delete/deleteWhitelist = new
+		deleteWhitelist.queryParams = list("ckey" = vpnckey)
+		apiHandler.queryAPI(deleteWhitelist)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		message_admins("Error while removing ckey [vpnckey] from the VPN whitelist: [error.message]")
+		return FALSE
+
 	message_admins("Ckey [vpnckey] removed from the VPN whitelist by [src.key].")
 	logTheThing(LOG_ADMIN, src, "Ckey [vpnckey] removed from the VPN whitelist.")
-	return 1
+	return TRUE
 
 /client/proc/cmd_lightsout()
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
