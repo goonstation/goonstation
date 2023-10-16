@@ -853,6 +853,7 @@
 		newbody.unkillable = 1
 		newbody.setStatus("maxhealth-", 30 SECONDS, -25)
 		newbody.setStatus("paralysis", 10 SECONDS)
+		newbody.bioHolder.AddEffect("hell_fire", do_stability = 0, magical = 1)
 
 	if (src.bioHolder)
 		newbody.bioHolder.CopyOther(src.bioHolder)
