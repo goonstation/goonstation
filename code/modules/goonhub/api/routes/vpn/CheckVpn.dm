@@ -1,6 +1,6 @@
 /// GET /vpncheck/{ip}
 /// Check if a player is using a VPN
-/datum/apiRoute/VpnChecks/Check
+/datum/apiRoute/vpn/check
 	method = RUSTG_HTTP_METHOD_GET
 	path = "/vpncheck"
 	routeParams = "ip"

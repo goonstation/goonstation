@@ -12,13 +12,10 @@
 	src.game_admin = response["game_admin"]
 
 /datum/apiModel/Tracked/VpnWhitelistResource/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(game_admin_id) \
-		|| isnull(ckey) \
-		|| isnull(created_at) \
-		|| isnull(updated_at) \
-		|| isnull(game_admin) \
+		isnull(src.game_admin_id) \
+		|| isnull(src.ckey) \
 	)
 		return FALSE
 
