@@ -1,4 +1,9 @@
 
+(t)mon oct 16 23
+(u)Lord_Earthfire
+(p)15909
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Choking makes you unable to breath in chemsmoke.
 (t)sun oct 15 23
 (u)LeahTheTech
 (+)Flock walls can now be destroyed without hitting them with specifically a crowbar. No I have no idea why they were like this.
