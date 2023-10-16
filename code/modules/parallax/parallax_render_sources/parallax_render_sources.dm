@@ -59,6 +59,9 @@
 	initial_x_coordinate = -50
 	initial_y_coordinate = 350
 
+/atom/movable/screen/parallax_render_source/typhon/aetherion
+	initial_x_coordinate = 250
+	initial_y_coordinate = 150
 
 // Planets
 /atom/movable/screen/parallax_render_source/planet
@@ -72,10 +75,17 @@
 	initial_x_coordinate = 300
 	initial_y_coordinate = -100
 
+	aetherion
+		initial_x_coordinate = 200
+		initial_y_coordinate = 100
+
 /atom/movable/screen/parallax_render_source/planet/iustitia
 	parallax_icon_state = "iustitia"
 	initial_x_coordinate = 65
 	initial_y_coordinate = 0
+
+	aetherion
+		initial_x_coordinate = 0
 
 
 // Asteroid Layers
