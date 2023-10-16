@@ -586,20 +586,22 @@
 	var/list/roominfo = list()
 
 proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
-	if (!length(turf_list)) return
-	if (!user || !user.client) return // test what happens if you put filename-illegal characters in here (bad things i bet)
-	var/input = strip_html(tgui_input_text(user, "Set a name for your new blueprint.", "Blueprint Name", null, 54)) // 54 char limit
+	if (!length(turf_list) || !user.client.ckey) return
+	// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
+	var/input = ckeyEx(tgui_input_text(user, "Set a name for your new blueprint. Use only alphanumeric characters, and - and _.",
+		"Blueprint Name", null, 54))
 	if (!input) return
 	var/savepath = "data/blueprints/[user.client.ckey]/[input].dat"
-	if (fexists("[savepath]"))
+	var/savefile/save = new/savefile("[savepath]") // creates a save, or loads an existing one
+	save.cd = "/"
+	if (save["sizex"] || save["sizey"]) // if it exists, and has data in it, ALERT!
 		if (tgui_alert(user, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", list("Yes", "No")) == "No")
 			return
-		fdel("[savepath]") // i should init the savefile and check if it has contents, more robust than simple filename check
-	var/savefile/save = new/savefile("[savepath]")
+		fdel("[savepath]")
+		save = new/savefile("[savepath]")
 
 	var/minx = 100000000
 	var/miny = 100000000
-
 	var/maxx = 0
 	var/maxy = 0
 
