@@ -136,17 +136,7 @@
 				src.prepare_build(user)
 
 			if("Select Blueprint")
-				if(src.locked || src.building)
-					boutput(user, "<span class='alert'>You can't load a different blueprint while the machine is locked or building.</span>")
-					return
-				/* if (!src.current_bp)
-					boutput(user, "<span class='alert'>No blueprint to eject.</span>")
-					return
-				src.current_bp.set_loc(src.loc)
-				src.current_bp = null */
-				var/datum/abcu_blueprint/load = load_abcu_blueprint(user)
-				if (load?.room_name)
-					src.current_bp = load
+				src.get_blueprint(user)
 
 			if("Dump Materials")
 				for(var/obj/o in src)
@@ -368,6 +358,18 @@
 		boutput(user, "<span class='notice'>Building this will require [src.current_bp.cost_metal] metal and [src.current_bp.cost_crystal] glass sheets.</span>")
 		src.visible_message("[src] locks into place and begins humming softly.")
 
+	proc/get_blueprint(mob/user, var/savepath = "")
+		if(src.locked || src.building)
+			boutput(user, "<span class='alert'>You can't load a different blueprint while the machine is locked or building.</span>")
+			return
+		var/datum/abcu_blueprint/load
+		if (savepath)
+			load = load_abcu_blueprint(user, TRUE, savepath)
+		else
+			load = load_abcu_blueprint(user)
+		if (load?.room_name)
+			src.current_bp = load
+
 /datum/objectinfo
 	var/objecttype = null
 	var/direction = 0
@@ -502,8 +504,10 @@
 	var/room_name = ""
 	var/blueprint_path = ""
 
-	New()
-		..()
+	New(turf/new_loc, var/savepath = "") // i think i should set the vars of this obj using New, take the path as an arg and figure it out
+		. = ..(new_loc)
+		if (savepath)
+			src.blueprint_path = savepath
 		if (src.room_name)
 			src.name += ": '[src.room_name]'"
 
@@ -517,11 +521,9 @@
 			. = ..()
 			return
 		if (!src.blueprint_path) return
-		var/datum/abcu_blueprint/load = load_abcu_blueprint(user, TRUE, src.blueprint_path)
-		if (load?.room_name)
-			var/obj/machinery/abcu/abcu = target
-			abcu.current_bp = load
-			boutput(user, "Uploaded blueprint [load.room_name] to [abcu].")
+		var/obj/machinery/abcu/abcu = target
+		abcu.get_blueprint(user, src.blueprint_path)
+		boutput(user, "Tried uploading blueprint [src.room_name] to [abcu].")
 
 // whitelists/blacklists applied during both saving and loading, so it's functionally retroactive
 #define WHITELIST_OBJECTS list( \
@@ -585,14 +587,14 @@
 
 proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	if (!length(turf_list)) return
-	if (!user || !user.client) return
-	var/input = strip_html(tgui_input_text(user, "Blueprint Name", "Set a name for your new blueprint.", null, 54)) // 54 char limit
+	if (!user || !user.client) return // test what happens if you put filename-illegal characters in here (bad things i bet)
+	var/input = strip_html(tgui_input_text(user, "Set a name for your new blueprint.", "Blueprint Name", null, 54)) // 54 char limit
 	if (!input) return
 	var/savepath = "data/blueprints/[user.client.ckey]/[input].dat"
 	if (fexists("[savepath]"))
 		if (tgui_alert(user, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", list("Yes", "No")) == "No")
 			return
-		fdel("[savepath]")
+		fdel("[savepath]") // i should init the savefile and check if it has contents, more robust than simple filename check
 	var/savefile/save = new/savefile("[savepath]")
 
 	var/minx = 100000000
@@ -723,6 +725,16 @@ proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 
 #undef WHITELIST_OBJECTS
 #undef BLACKLIST_OBJECTS
+
+proc/browse_abcu_blueprints(mob/user) // ckey parameter
+	if (!user || !user.client) return
+	var/list/bplist = flist("data/blueprints/[user.client.ckey]/")
+	if (!length(bplist))
+		boutput(user, "<span class='alert'>You don't have any blueprints.</span>")
+		return
+	var/inputbp = tgui_input_list(user, "Pick a blueprint to load.", "Your Blueprints", bplist)
+	if (!inputbp) return
+	return "data/blueprints/[user.client.ckey]/[inputbp]"
 
 /obj/item/blueprint_marker
 	name = "blueprint marker"
@@ -1107,7 +1119,12 @@ proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 				if(prints_left <= 0)
 					boutput(user, "<span class='alert'>Out of energy.</span>")
 					return
-				printSaved(roomname)
+				//printSaved(roomname)
+				var/picked_path = browse_abcu_blueprints(user)
+				if (!picked_path) return
+				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked_path)
+				user.put_in_hand_or_drop(printed)
+				src.prints_left--
 				return
 
 			if("Save Blueprint")
