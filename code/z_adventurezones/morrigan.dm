@@ -2781,7 +2781,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 		put_item(W, user)
 
 	proc/put_item(var/obj/item/W, var/mob/user)
-		if (!istype(W, src.required_object))
+		if (istype(W, src.required_object))
 			W.set_loc(src)
 			user.u_equip(W)
 			SPAWN(2 SECONDS)
@@ -2801,6 +2801,28 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 			for (var/item as anything in src.contents)
 				qdel(item)
 		// TODO ADD OFF STATE
+
+/obj/machinery/activation_button/morrigan_cargo
+	name = "Teleporter control"
+	desc = "A switch used to teleport in a crate"
+	var/turf/spawn_place = null
+	var/list/crates = list(
+		/obj/storage/crate/morrigancargo/engineer,
+		/obj/storage/crate/morrigancargo/security,
+		/obj/storage/crate/morrigancargo/medical
+		)
+
+	New()
+		..()
+		src.spawn_place = get_turf(landmarks[LANDMARK_MORRIGAN_CRATE_PUZZLE][1])
+
+	activate()
+		var/crate = pick(src.crates)
+		new crate(src.spawn_place)
+		showswirl(src.spawn_place)
+		leaveresidual(src.spawn_place)
+
+		sleep(10 SECONDS)
 
 /obj/machinery/door/poddoor/buff/railgun_door
 	name = "Railgun Storage"
@@ -4037,13 +4059,3 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 	anchored = ANCHORED_ALWAYS
 	density = 0
 	opacity = 0
-
-// machinery
-
-/obj/machinery/door_control/cargo_button
-	name = "Old Button"
-	desc = "Looks a little worn out but the light is still on."
-
-/obj/machinery/bio_handscanner/attack_hand(mob/user)
-	SPAWN(1 SECOND)
-		pick(list(/obj/storage/crate/morrigancargo/engineer, /obj/storage/crate/morrigancargo/security, /obj/storage/crate/morrigancargo/medical))
