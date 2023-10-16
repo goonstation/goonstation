@@ -317,9 +317,12 @@ var/global/current_state = GAME_STATE_INVALID
 #endif
 
 			if (player.ready)
-				if (player.mind && player.mind.ckey)
+				var/datum/player/P
+				if (player.mind)
+					P = player.mind.get_player()
+
+				if (player.mind.ckey)
 					//Record player participation in this round via the goonhub API
-					var/datum/player/P = player.mind.get_player()
 					participationRecorder.record(P)
 
 				if (player.mind && player.mind.assigned_role == "AI")
@@ -330,17 +333,17 @@ var/global/current_state = GAME_STATE_INVALID
 				else if (player.mind && player.mind.special_role == ROLE_WRAITH)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: wraith.")
-					antagWeighter.record(role = ROLE_WRAITH, ckey = player.ckey)
+					antagWeighter.record(role = ROLE_WRAITH, P = P)
 
 				else if (player.mind && player.mind.special_role == ROLE_BLOB)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: blob.")
-					antagWeighter.record(role = ROLE_BLOB, ckey = player.ckey)
+					antagWeighter.record(role = ROLE_BLOB, P = P)
 
 				else if (player.mind && player.mind.special_role == ROLE_FLOCKMIND)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: flockmind.")
-					antagWeighter.record(role = ROLE_FLOCKMIND, ckey = player.ckey)
+					antagWeighter.record(role = ROLE_FLOCKMIND, P = P)
 
 				else if (player.mind)
 					if (player.client.using_antag_token && ticker.mode.antag_token_support)

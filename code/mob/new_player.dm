@@ -717,7 +717,7 @@ a.latejoin-card:hover {
 							makebad(new_character, bad_type)
 							new_character.mind.late_special_role = TRUE
 							logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
-							antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
+							antagWeighter.record(role = bad_type, P = new_character.mind.get_player(), latejoin = 1)
 
 
 

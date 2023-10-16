@@ -3645,11 +3645,11 @@ var/global/noir = 0
 
 			usr.client.cmd_view_runtimes()
 
-		if ("viewantaghistory")
-			if (src.level < LEVEL_SA)
-				return tgui_alert(usr,"You must be at least a Secondary Admin to view antag history.")
+		// if ("viewantaghistory")
+		// 	if (src.level < LEVEL_SA)
+		// 		return tgui_alert(usr,"You must be at least a Secondary Admin to view antag history.")
 
-			usr.client.cmd_antag_history(href_list["targetckey"])
+		// 	usr.client.cmd_antag_history(href_list["targetckey"])
 
 		if ("show_player_stats")
 			if (src.level < LEVEL_SA)
