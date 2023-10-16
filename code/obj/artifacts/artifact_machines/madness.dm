@@ -349,8 +349,8 @@
 			var/turf/T = get_turf(O)
 			T.visible_message("<b>[O]</b> shimmers briefly!")
 
-		for (var/mob/living/L in range(range,O))
-			if (!L.client) //no point hallucinating if there's nobody to see it
+		for (var/mob/living/carbon/human/L in range(range,O))
+			if (!L.client || istype(L.head, /obj/item/clothing/head/tinfoil_hat)) //no point hallucinating if there's nobody to see it
 				continue
 
 			for(var/list/comp_args_tuple in src.madness_effects[src.effect_type])
