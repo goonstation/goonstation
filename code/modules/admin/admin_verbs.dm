@@ -168,7 +168,7 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_flourish,
 
 		/client/proc/cmd_view_runtimes,
-		/client/proc/cmd_antag_history,
+		// /client/proc/cmd_antag_history,
 		/client/proc/cmd_admin_show_player_stats,
 		/client/proc/cmd_admin_show_player_ips,
 		/client/proc/cmd_admin_show_player_compids,
@@ -1895,70 +1895,70 @@ var/list/fun_images = list()
 	logTheThing(LOG_DIARY, usr ? usr : src, null, "cancelled the player map vote prematurely", "admin")
 	message_admins("[key_name(usr ? usr : src)] cancelled the player map vote prematurely. Rude.")
 
-/client/proc/cmd_antag_history(var/ckey as text)
-	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
-	set name = "View Antag History"
-	set desc = "View the antag history for a given player"
-	set popup_menu = 0
-	ADMIN_ONLY
+// /client/proc/cmd_antag_history(var/ckey as text)
+// 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+// 	set name = "View Antag History"
+// 	set desc = "View the antag history for a given player"
+// 	set popup_menu = 0
+// 	ADMIN_ONLY
 
-	if (!ckey)
-		return
+// 	if (!ckey)
+// 		return
 
-	var/list/history
-	try
-		history = antagWeighter.completeHistory(ckey)
-	catch(var/exception/e)
-		return alert(e.name)
+// 	var/list/history
+// 	try
+// 		history = antagWeighter.completeHistory(ckey)
+// 	catch(var/exception/e)
+// 		return alert(e.name)
 
-	var/html = "<table>"
-	html += "<thead><tr>"
-	html += "<th>Mode</th>"
-	html += "<th>Played</th>"
-	html += "<th>Antag</th>"
-	html += "<th>Chosen</th>"
-	html += "<th>Target</th>"
-	html += "</tr></thead>"
+// 	var/html = "<table>"
+// 	html += "<thead><tr>"
+// 	html += "<th>Mode</th>"
+// 	html += "<th>Played</th>"
+// 	html += "<th>Antag</th>"
+// 	html += "<th>Chosen</th>"
+// 	html += "<th>Target</th>"
+// 	html += "</tr></thead>"
 
-	for (var/role in config.play_antag_rates)
-		var/list/data
+// 	for (var/role in config.play_antag_rates)
+// 		var/list/data
 
-		if (role in history)
-			data = history[role]
-		else
-			//some round types are so rare, we might have no data for this player playing them, so we make shit up
-			data = list(
-				"seen" = 0,
-				"selected" = 0,
-				"percent" = 0
-			)
+// 		if (role in history)
+// 			data = history[role]
+// 		else
+// 			//some round types are so rare, we might have no data for this player playing them, so we make shit up
+// 			data = list(
+// 				"seen" = 0,
+// 				"selected" = 0,
+// 				"percent" = 0
+// 			)
 
-		var/seen = round(text2num(data["seen"]))
-		var/selected = round(text2num(data["selected"]))
-		var/chosen = round(text2num(data["percent"]))
-		var/target = config.play_antag_rates[role]
+// 		var/seen = round(text2num(data["seen"]))
+// 		var/selected = round(text2num(data["selected"]))
+// 		var/chosen = round(text2num(data["percent"]))
+// 		var/target = config.play_antag_rates[role]
 
-		var/chosenClass = "fine"
-		//if the player has been chosen more than 50% over the target, show red
-		if (chosen > target * 1.5)
-			chosenClass = "danger"
-		//or, if it's just over the target, show orange
-		else if (chosen > target)
-			chosenClass = "warning"
+// 		var/chosenClass = "fine"
+// 		//if the player has been chosen more than 50% over the target, show red
+// 		if (chosen > target * 1.5)
+// 			chosenClass = "danger"
+// 		//or, if it's just over the target, show orange
+// 		else if (chosen > target)
+// 			chosenClass = "warning"
 
-		html += "<tr>"
-		html += "<td>[capitalize(role)]</td>"
-		html += "<td>[seen]</td>"
-		html += "<td>[selected]</td>"
-		html += "<td class='[chosenClass]'>[chosen]%</td>"
-		html += "<td>[target]%</td>"
-		html += "</tr>"
+// 		html += "<tr>"
+// 		html += "<td>[capitalize(role)]</td>"
+// 		html += "<td>[seen]</td>"
+// 		html += "<td>[selected]</td>"
+// 		html += "<td class='[chosenClass]'>[chosen]%</td>"
+// 		html += "<td>[target]%</td>"
+// 		html += "</tr>"
 
-	html += "</table>"
+// 	html += "</table>"
 
-	var/antagHistoryHtml = grabResource("html/antagHistory.html")
-	antagHistoryHtml = replacetext(antagHistoryHtml, "<!-- HTML GOES HERE -->", html)
-	src.Browse(antagHistoryHtml, "window=antaghistory[ckey];title=[capitalize(ckey)]+Antag+History;")
+// 	var/antagHistoryHtml = grabResource("html/antagHistory.html")
+// 	antagHistoryHtml = replacetext(antagHistoryHtml, "<!-- HTML GOES HERE -->", html)
+// 	src.Browse(antagHistoryHtml, "window=antaghistory[ckey];title=[capitalize(ckey)]+Antag+History;")
 
 
 /client/proc/cmd_dispatch_observe_to_ghosts(var/atom/movable/target)
