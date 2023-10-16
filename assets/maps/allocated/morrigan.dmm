@@ -15796,10 +15796,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"nUu" = (
-/obj/item/device/prox_sensor,
-/turf/unsimulated/floor/black,
-/area/morrigan/station/engineering/exports)
 "nUM" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8
@@ -19389,7 +19385,6 @@
 	tag = "icon-xtra_bigstripe-edge (WEST)"
 	},
 /obj/table/syndicate/auto,
-/obj/item/gun/energy/smgmine,
 /turf/unsimulated/floor/twotone/black,
 /area/morrigan/station/invest)
 "rsj" = (
@@ -28584,7 +28579,7 @@ kTX
 jov
 seq
 seq
-nUu
+seq
 seq
 seq
 seq
