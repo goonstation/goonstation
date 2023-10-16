@@ -97,7 +97,7 @@ TYPEINFO(/obj/machinery/the_singularitygen)
 	icon_state = "whole"
 	anchored = ANCHORED
 	density = 1
-	event_handler_flags = IMMUNE_SINGULARITY
+	event_handler_flags = IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	deconstruct_flags = DECON_NONE
 
 
@@ -916,7 +916,7 @@ TYPEINFO(/obj/machinery/field_generator)
 	pass_unstable = TRUE
 	anchored = ANCHORED
 	density = 1
-	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_SINGULARITY | IMMUNE_TRENCH_WARP
 	var/active = 1
 	var/power = 10
 	var/delay = 5

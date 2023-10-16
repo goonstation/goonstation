@@ -376,6 +376,8 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "lava"
 	pathable = FALSE
 	can_replace_with_stuff = TRUE
+	can_burn = FALSE
+	can_break = FALSE
 	var/deadly = TRUE
 	var/no_fly_zone = FALSE
 

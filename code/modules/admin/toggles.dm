@@ -92,7 +92,7 @@ var/list/server_toggles_tab_verbs = list(
 /client/proc/toggle_server_toggles_tab()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Toggle Server Toggles Tab"
-	set desc = "Toggle all the crap in the Toggles (Server) tab so it should go away/show up.  in thoery."
+	set desc = "Toggle all the crap in the Toggles (Server) tab so it should go away/show up.  in theory."
 	ADMIN_ONLY
 
 	var/list/final_verblist

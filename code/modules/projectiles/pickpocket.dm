@@ -6,7 +6,7 @@
 //How much of a punch this has, tends to be seconds/damage before any resist
 	stun = 10
 //How much ammo this costs
-	cost = 30
+	cost = 40
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power

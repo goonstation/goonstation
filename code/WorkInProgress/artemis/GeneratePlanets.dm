@@ -309,6 +309,10 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 			var/stop = 0
 			var/count= 0
 			var/maxTries = (P.required ? 200:80)
+
+			if(region.bottom_left.x+AST_MAPBORDER >= maxX || region.bottom_left.y+AST_MAPBORDER >= maxY)
+				continue
+
 			while (!stop && count < maxTries && failsafe-- > 0) //Kinda brute forcing it. Dumb but whatever.
 				var/turf/target = locate(rand(region.bottom_left.x+AST_MAPBORDER, maxX), rand(region.bottom_left.y+AST_MAPBORDER,maxY), region.bottom_left.z)
 				if(!P.check_biome_requirements(target))
@@ -379,6 +383,7 @@ var/global/datum/planetManager/PLANET_LOCATIONS = new /datum/planetManager()
 	message_admins("Planet region generated at [log_loc(region.bottom_left)] with [generator].")
 
 	return turfs
+
 /datum/map_generator/asteroids
 	clear_turf_type = /turf/space
 

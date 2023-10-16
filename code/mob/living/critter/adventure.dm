@@ -514,14 +514,14 @@
 		// Hand 2 = SWORD Hand 1 = ARM
 		if (is_incapacitated(target))
 			src.set_a_intent(INTENT_HARM)
-			src.active_hand = 1
+			set_hand(1)
 			return ..() // Punch / Kick them
 		if (prob(30))
 			src.set_a_intent(INTENT_DISARM)
-			src.active_hand = 1
+			src.set_hand(1)
 			return src.hand_attack(target) // Disarm them
 		src.set_a_intent(INTENT_HARM)
-		src.active_hand = 2
+		set_hand(2)
 		return ..() // Stab them
 
 	proc/HALT()

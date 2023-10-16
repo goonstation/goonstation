@@ -1225,16 +1225,18 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = MOB_LAYER-1
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb_floor-c"
-
+	var/slow_duration = 3 SECONDS
 
 	Crossed(atom/A)
-		if (ismob(A))
-			A.changeStatus("slowed", 0.2 SECONDS)
+		if (ismob(A) && !isintangible(A))
+			A.changeStatus("slowed", src.slow_duration)
 			SPAWN(-1)
 				qdel(src)		//break when walked over
 		else return 1
 		..()
 
+/obj/decal/cleanable/cobwebFloor/halloween
+	slow_duration = 0.2 SECONDS
 
 /obj/decal/cleanable/fungus
 	name = "space fungus"
@@ -1484,7 +1486,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				if (health <= 0)
 					M.visible_message("<span class='alert'>[M.name] accidentally scuffs a foot across the [src], scattering it everywhere! [pick("Fuck!", "Shit!", "Damnit!", "Welp.")]</span>")
 					qdel(src)
-				else
 
 	get_desc(dist)
 		if (health >= 30)
