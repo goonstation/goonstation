@@ -897,6 +897,10 @@
 	morriganmelee
 		spawn_contents = list(/obj/item/tactical_hammer, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/fog, /obj/item/chem_grenade/fog)
 
+		New()
+			..()
+			can_hold += /obj/item/tactical_hammer
+
 
 //////////////////////////////
 // ~Nuke Ops Class Storage~ //
