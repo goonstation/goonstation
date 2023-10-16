@@ -851,7 +851,7 @@
 
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
-		newbody.setStatus("maxhealth-", null, -90)
+		newbody.setStatus("maxhealth-", 30 SECONDS, -25)
 		newbody.setStatus("paralysis", 10 SECONDS)
 
 	if (src.bioHolder)
