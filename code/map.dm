@@ -659,12 +659,13 @@ var/global/list/mapNames = list(
 	ext_airlocks = /obj/machinery/door/airlock/pyro/external
 	airlock_style = "pyro"
 
-	escape_dir = NORTH
+	escape_dir = WEST
 
 	/*merchant_left_centcom = /area/shuttle/merchant_shuttle/left_centcom/cogmap
 	merchant_left_station = /area/shuttle/merchant_shuttle/left_station/cogmap
 	merchant_right_centcom = /area/shuttle/merchant_shuttle/right_centcom/cogmap
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap*/
+	shipping_destinations = list("Catering","Engineering","Export","Medbay","Research","Security","QM")
 
 	valid_nuke_targets = list()
 
