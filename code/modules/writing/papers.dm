@@ -1171,12 +1171,13 @@ Only trained personnel should operate station systems. Follow all procedures car
 	name = "informative note"
 	icon_state = "paper"
 	info = {"
-	Please note that due to budget cuts, the westward cargo import conveyor
-	has been rerouted to join into the routing system input conveyors.
+	The Import and Export conveyors are controlled in the maints. I'm sorry,
+	but we couldn't really put them anywhere else.
+	Due to budget cuts, the westward cargo import conveyor has been rerouted
+	to join into the routing system input conveyors.
 	To summarise: Two routing belts to the north, and the export is in the
-	flusher on your left.
-	You can of course still stick an export sticker on a crate and totally
-	bypass the export line. But that costs barcodes and time so I don't see
-	why you would..?
+	flusher on your left. Two outputs, one input.
+	Sorry for the inconvenience. When the EVA storage is installed I promise
+	that this will be fixed up and made nicer. I promise.
 	"}
 

@@ -79,6 +79,6 @@ ABSTRACT_TYPE(/obj/machinery/cargo_router/aetherion)
 
 /obj/machinery/cargo_router/aetherion/depot_west
 	New()
-		destinations = list("QM" = SOUTH)
-		default_direction = WEST
+		destinations = list("Catering" = WEST,"Engineering" = WEST,"Export" = WEST,"Medbay" = WEST,"Research" = WEST,"Security" = WEST)
+		default_direction = SOUTH
 		..()
