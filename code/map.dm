@@ -667,7 +667,24 @@ var/global/list/mapNames = list(
 	merchant_right_station = /area/shuttle/merchant_shuttle/right_station/cogmap*/
 	shipping_destinations = list("Catering","Engineering","Export","Medbay","Research","Security","QM")
 
-	valid_nuke_targets = list()
+	valid_nuke_targets = list(
+		"the main security room"		= list(/area/station/security/main),
+		"the artifact laboratory"		= list(/area/station/science/artifact),
+		"the science telepoerter room"	= list(/area/station/science/teleporter),
+		"the cargo bay (QM)"			= list(/area/station/quartermaster/office),
+		"the engineering control room"	= list(/area/station/engine/inner, /area/station/engine/monitoring),
+		"the central warehouse"			= list(/area/station/storage/warehouse),
+		"the medical bay"				= list(/area/station/medical/medbay, /area/station/medical/medbay/surgery, /area/station/medical/medbay/lobby),
+		"the station's cafeteria"		= list(/area/station/crew_quarters/cafeteria),
+		"the EVA storage"				= list(/area/station/ai_monitored/storage/eva),
+		"the genetics lab"				= list(/area/station/medical/research, /area/station/medical/dome),
+		"the public pool"				= list(/area/station/crew_quarters/pool),
+		"the chapel"					= list(/area/station/chapel/sanctuary, /area/station/chapel/funeral_parlor, /area/station/chapel/office),
+		"the hydroponics bay"			= list(/area/station/hydroponics),
+		"the kitchen"					= list(/area/station/crew_quarters/kitchen, /area/station/crew_quarters/kitchen/freezer, /area/station/crew_quarters/catering),
+		"the southern crew quarters"	= list(/area/station/crew_quarters/quarters_south),
+		"the pod bay"					= list(/area/station/hangar/main)
+		)
 
 	job_limits_override = list()
 
