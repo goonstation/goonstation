@@ -9,6 +9,6 @@
 
 	buildBody(
 		player_id,
-		data
+		metadata
 	)
 		. = ..(args)
