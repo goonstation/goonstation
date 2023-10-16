@@ -581,7 +581,7 @@ proc/narrator_mode_sound_file(sound_file)
 		'sound/misc/body_thud.ogg' = "sound/vox/lie.ogg",
 		'sound/items/Crowbar.ogg' = "sound/vox/crow.ogg",
 		'sound/machines/airlock_pry.ogg' = "sound/vox/crow.ogg",
-		'sound/machines/airlock_deny_temp' = "sound/vox/deny.ogg",
+		'sound/machines/airlock_deny_temp.ogg' = "sound/vox/deny.ogg",
 	)
 	if(sound_file in narrator_mode_translation)
 		return narrator_mode_translation[sound_file]
