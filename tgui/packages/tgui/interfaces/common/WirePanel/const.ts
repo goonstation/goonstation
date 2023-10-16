@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author glowbold (https://github.com/pgmzeta)
+ * @license MIT
+ */
+
 // Wire Panel Component: Wire Controls
 export const WirePanelControls = {
   "WIRE_CONTROL_INERT": 0,

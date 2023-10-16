@@ -1,10 +1,15 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author glowbold (https://github.com/pgmzeta)
+ * @license MIT
+ */
 
 import { useBackend } from "../../../backend";
 import { Box, Button, Collapsible, Dimmer, Icon } from "../../../components";
 import type { WirePanelData } from './type';
 import { WirePanelActions, WirePanelControlLabels, WirePanelControls, WirePanelCoverStatus } from './const';
 import { BooleanLike } from "common/react";
-import { Fragment } from "inferno";
 
 export const WirePanel = (props, context) => {
   const { act, data } = useBackend<WirePanelData>(context);
@@ -46,10 +51,10 @@ interface WireProps {
   act_wire: any
 }
 
-const Wire = (data: WireProps) => {
-  const { dm_index, color_name, color_value, is_cut, act_wire } = data;
+const Wire = (props: WireProps) => {
+  const { dm_index, color_name, color_value, is_cut, act_wire } = props;
   return (
-    <Fragment>
+    <>
       <Box className="wire_label" label={color_name} color={color_value}>{color_name}</Box>
       <Box className="wire_buttons">
         { !!is_cut && (
@@ -74,7 +79,7 @@ const Wire = (data: WireProps) => {
           </>
         )}
       </Box>
-    </Fragment>
+    </>
   );
 };
 
