@@ -94,7 +94,7 @@ TYPEINFO(/obj/gold_bee)
 	mat_appearances_to_ignore = list("gold")
 /obj/gold_bee
 	name = "\improper Gold Bee Statue"
-	desc = "The artist has painstainkly sculpted every individual strand of bee wool to achieve this breath-taking result. You could almost swear this bee is about to spontaneously take flight."
+	desc = "The artist has painstakingly sculpted every individual strand of bee wool to achieve this breath-taking result. You could almost swear this bee is about to spontaneously take flight."
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "gold_bee"
 	flags = FPRINT | FLUID_SUBMERGE | TGUI_INTERACTIVE

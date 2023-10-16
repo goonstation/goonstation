@@ -343,6 +343,27 @@
 /datum/overlayComposition/static_noise/sub
 	special_blend = BLEND_SUBTRACT
 
+/datum/overlayComposition/low_signal
+	New()
+		var/datum/overlayDefinition/dither = new()
+		dither.d_icon = 'icons/effects/overlays/weldingmask.dmi'
+		dither.d_icon_state = "weldingmask"
+		dither.d_alpha = 240
+		dither.d_blend_mode = 2
+		dither.d_mouse_opacity = 0
+		definitions.Add(dither)
+
+		var/datum/overlayDefinition/zero = new()
+		zero.d_icon = 'icons/effects/overlays/noise.dmi'
+		zero.d_icon_state = "noise"
+		zero.d_blend_mode = 5
+		zero.d_color = "#111"
+		zero.d_alpha = 100
+		zero.d_mouse_opacity = 0
+		definitions.Add(zero)
+
+		return ..()
+
 
 /datum/overlayComposition/weldingmask
 	New()

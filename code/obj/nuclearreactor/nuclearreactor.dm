@@ -807,7 +807,7 @@
 		if(isintangible(hit) || isobserver(hit))
 			return TRUE //don't irradiate ghosts
 
-		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 5 : 10
+		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 10 : 5
 		var/density = (hit.material ? hit.material.getProperty("density") : 3) //3 is default density
 
 		//first are we colliding with this or ignoring it?

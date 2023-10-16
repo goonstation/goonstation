@@ -617,7 +617,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 
 /datum/syndicate_buylist/traitor/waspgrenade
 	name = "Wasp Grenades"
-	item = /obj/item/storage/box/wasp_grenade_kit
+	item = /obj/item/storage/wasp_grenade_pouch
 	cost = 3
 	desc = "These wasp grenades contain genetically modified extra double large hornets that will surely inspire awe in all your non-botanical friends."
 	vr_allowed = FALSE

@@ -286,9 +286,13 @@
 		logTheThing(LOG_STATION, src, "[user] started ABCU build at [log_loc(src)], with blueprint [src.current_bp.name], authored by [src.current_bp.author]")
 
 	proc/end_build()
-		for (var/datum/objectinfo/N in src.apc_list)
-			new N.objecttype(src.apc_list[N])
-		src.apc_list = new/list
+		SPAWN(2 SECONDS) // gotta wait for make_tile() to finish
+			for (var/datum/objectinfo/N in src.apc_list)
+				var/atom/new_obj = new N.objecttype(src.apc_list[N])
+				new_obj.dir = N.direction
+				new_obj.pixel_x = N.px
+				new_obj.pixel_y = N.py
+			src.apc_list = new/list
 
 		src.building = FALSE
 		UnsubscribeProcess()
@@ -625,7 +629,7 @@
 
 		switch (selecting)
 			if (SELECT_SKIP)
-
+				;
 			if (SELECT_FIRST_CORNER, DESELECT_FIRST_CORNER) // set to 1 or 2 by use-in-hand option list
 				qdel(corner1img)
 				selectcorner1 = target

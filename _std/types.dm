@@ -180,7 +180,7 @@ var/list/list/by_type = list()
 #define START_TRACKING_CAT(x) OTHER_START_TRACKING_CAT(src, x)
 #define STOP_TRACKING_CAT(x) OTHER_STOP_TRACKING_CAT(src, x)
 #define OTHER_START_TRACKING_CAT(what, x) if(!by_cat[x]) { by_cat[x] = list() }; by_cat[x][what] = 1
-#define OTHER_STOP_TRACKING_CAT(what, x) by_cat[x].Remove(what)
+#define OTHER_STOP_TRACKING_CAT(what, x) by_cat[x]?.Remove(what)
 
 /// contains lists of objects indexed by a category string based on START_TRACKING_CAT / STOP_TRACKING_CAT
 var/list/list/by_cat = list()
