@@ -1538,6 +1538,7 @@ ABSTRACT_TYPE(/area/prefab)
 /area/shuttle/sea_elevator_room
 	name = "Sea Elevator Room"
 	icon_state = "purple"
+	occlude_foreground_parallax_layers = TRUE
 
 /area/shuttle/sea_elevator
 	name = "Sea Elevator Shaft"

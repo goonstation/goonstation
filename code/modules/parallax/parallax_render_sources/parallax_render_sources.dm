@@ -37,7 +37,7 @@
 	parallax_icon_state = "caustics"
 	static_colour = TRUE
 	blend_mode = BLEND_ADD
-	alpha = 100
+	alpha = 75
 	parallax_value = 1
 
 
