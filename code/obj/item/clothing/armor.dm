@@ -435,9 +435,12 @@ TYPEINFO(/obj/item/clothing/suit/armor/vest)
 /obj/item/clothing/suit/armor/NT
 	name = "armored nanotrasen jacket"
 	desc = "An armored jacket worn by NanoTrasen security commanders."
-	icon_state = "ntarmor_o"
-	item_state = "ntarmor"
-	coat_style = "ntarmor"
+	icon_state = "ntjacket_o"
+	item_state = "ntjacket"
+	coat_style = "ntjacket"
+	icon = 'icons/obj/clothing/overcoats/item_suit.dmi' //someone moved the sprite!!
+	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
 	body_parts_covered = TORSO
 	hides_from_examine = 0
 

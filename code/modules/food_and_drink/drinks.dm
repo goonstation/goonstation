@@ -138,7 +138,7 @@
 			if (15)
 				src.name += "Hearty Hellburn Brew flavor" //by Eagletanker
 				src.initial_reagents += (list("oxygen"=18, "plasma"=8, "ghostchilijuice"=1, "carbon"=3))
-				src.desc = "9/10 Engineers prefered Grones Hearty Hellburn, find out why yourself!"
+				src.desc = "9/10 Engineers preferred Grones Hearty Hellburn, find out why yourself!"
 				src.label = "engine"
 			if (16)
 				src.name += "Citrus Circus Catastrophe flavor" //by Coolvape
@@ -492,7 +492,7 @@
 
 /obj/item/reagent_containers/food/drinks/milk/clownspider
 	name = "Honkey Gibbersons - Clownspider Milk"
-	desc = "A bottle of really - really colorful milk? The smell is sweet and looking at this envokes the same thrill as wanting to drink paint!"
+	desc = "A bottle of really - really colorful milk? The smell is sweet and looking at this evokes the same thrill as wanting to drink paint!"
 	icon_state = "milk"
 	heal_amt = 1
 	initial_volume = 50

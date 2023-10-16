@@ -154,7 +154,7 @@
 		if(src.part1.armed)
 			//boutput(world, "sending signal")
 			receive_signal()
-		else
+		// else
 			//boutput(world, "not active")
 	..()
 

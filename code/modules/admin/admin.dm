@@ -2191,9 +2191,9 @@ var/global/noir = 0
 					tgui_alert(usr, "You cannot modify your own antag tokens.")
 					return
 				var/tokens = input(usr, "Current Tokens: [M.client.antag_tokens]","Set Antag Tokens to...") as null|num
-				if (!tokens)
+				if (isnull(tokens))
 					return
-				M.client.set_antag_tokens( tokens )
+				M.client.set_antag_tokens(tokens)
 				if (tokens <= 0)
 					logTheThing(LOG_ADMIN, usr, "Removed all antag tokens from [constructTarget(M,"admin")]")
 					logTheThing(LOG_DIARY, usr, "Removed all antag tokens from [constructTarget(M,"diary")]", "admin")
@@ -3177,9 +3177,8 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] IS GETTIN THIS FARTY PARTY STARTED")
 						logTheThing(LOG_ADMIN, usr, "used Farty Party secret")
 						logTheThing(LOG_DIARY, usr, "used Farty Party secret", "admin")
-
-					else
-				if (usr) logTheThing(LOG_ADMIN, usr, "used secret [href_list["secretsfun"]]")
+				if (usr)
+					logTheThing(LOG_ADMIN, usr, "used secret [href_list["secretsfun"]]")
 				logTheThing(LOG_DIARY, usr, "used secret [href_list["secretsfun"]]", "admin")
 			else
 				tgui_alert(usr,"You need to be at least an Adminstrator to use the secrets panel.")

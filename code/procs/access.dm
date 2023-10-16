@@ -43,7 +43,7 @@
 							if (!isnull(access_code))
 								// numerical code
 								access_group += access_code
-							else
+							// else
 								// string code
 								// TODO: some sensible lookup, possibly using access_name_lookup (but they're VERY wordy)
 					// add to the src.req_access list (assuming non-empty)
