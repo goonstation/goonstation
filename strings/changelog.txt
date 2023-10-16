@@ -1,5 +1,61 @@
 
+(t)mon oct 16 23
+(u)Lord_Earthfire
+(p)15909
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Choking makes you unable to breath in chemsmoke.
+(t)sun oct 15 23
+(u)LeahTheTech
+(+)Flock walls can now be destroyed without hitting them with specifically a crowbar. No I have no idea why they were like this.
+(u)TealSeer
+(p)16480
+(e)🪲🗺🔄|C-Bug, A-Mapping, C-Rework
+(+)Autolathe storage on donut 2 has been renamed to auxilliary storage, and a team of scientists has been hired to research what exactly an autolathe is.
+(u)Amylizzle
+(p)16411
+(e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science
+(*)Added a new artifact type: Psycho-stimulator Field. It causes you to hallucinate vividly.
+(u)Valtsu0 and Mordent
+(p)16319
+(e)📄|A-UI
+(+)Science teleporter console now has a fancy new tgui ui
+(+)Cyborgs can no longer use the science teleporter console from more than a screen away
+(u)Mordent
+(p)16462
+(e)🪲📄|C-Bug, A-UI
+(+)Slight tweak to GeneTek UI for combining genes.
+(t)sat oct 14 23
+(u)glowbold
+(p)16158
+(e)💅📄📦|C-QoL, A-UI, A-Game-Objects
+(+)The supply request console is easier to work with - bargain with cargo today!
+(u)LeahTheTech
+(*)Added a button to reopen the round-end credits window, automatically added at round-end.
+(t)fri oct 13 23
+(u)Tyrant
+(p)16420
+(e)🪲🗺💅|C-Bug, A-Mapping, C-QoL
+(+)The VR chessboard is now set up according to the rules of chess.
+(u)MylieDaniels
+(p)16394
+(e)🔎💡|C-Code-Quality, A-Station-Systems
+(+)The way Contraband is calculated has been changed under the hood, nothing should appear different but please report any bugs.
+(t)thu oct 12 23
+(u)LeahTheTech
+(*)Clicking on most types of portal as a ghost will now teleport you through them.
+(u)Flaborized
+(p)16405
+(e)🆕🎨⚗|C-Feature, C-Sprites, A-Chemistry
+(+)The dispensary interlink dispenser in medical will now visually show how many units of chems it has in it, the more blue the screen the more meds it has to vend.
 (t)wed oct 11 23
+(u)tarmunora
+(e)⚖|C-Balance
+(+)Minor changes to harmful gene stability bonuses, blindness/shortsighted/x-ray mutually exclusive (though not nightvision)
+(u)Lord_Earthfire
+(p)16317
+(e)🪲⚖🔨🐁|C-Bug, C-Balance, A-Player-Actions, A-Critters
+(+)Activated securitrons cannot be pulled anymore.
+(+)Securitrons don't search for targets while in a locker. They still move out of they are patrolling/chasing someone.
 (u)glowbold
 (p)16391
 (e)💅📄|C-QoL, A-UI

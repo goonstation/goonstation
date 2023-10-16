@@ -120,7 +120,6 @@
 		if("reportError")
 			var/errorMessage = href_list["message"]
 			CRASH("Error reported from chemicompiler frontend: [errorMessage]")
-		else
 
 /*	attack_self(mob/user as mob)
 		panel()*/
@@ -371,7 +370,6 @@
 					isolateReagent(sx, tx, ax, data[dp+1])
 				if("*")
 					loopUsed = 30	//explicit NOP
-				else
 
 			if(length(data) < dp + 1)
 				data.len = dp + 1
@@ -692,7 +690,6 @@
 			beepCode(1)
 		if(CC_NOTIFICATION_SAVED)
 			beepCode(2)
-		else
 
 /datum/chemicompiler_executor/proc/on_process()
 	if ( !src.core )

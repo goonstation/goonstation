@@ -124,6 +124,10 @@ datum/mind
 			Z_LOG_DEBUG("Mind/TransferTo", "Transferring abilityHolder")
 			new_character.abilityHolder.transferOwnership(new_character)
 
+		if (global.current_state == GAME_STATE_FINISHED)
+			if (!new_character.abilityHolder)
+				new_character.add_ability_holder(/datum/abilityHolder/generic)
+			new_character.addAbility(/datum/targetable/crew_credits)
 		Z_LOG_DEBUG("Mind/TransferTo", "Complete")
 
 		SEND_SIGNAL(src, COMSIG_MIND_ATTACH_TO_MOB, current, old_mob)

@@ -14531,12 +14531,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering)
-"bsq" = (
-/obj/securearea{
-	name = "ENGINEERING ACCESS"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/engine/engineering)
 "bss" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/storage)
@@ -26620,6 +26614,7 @@
 /obj/cable/orange{
 	icon_state = "0-4"
 	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
 "jbP" = (
@@ -35324,7 +35319,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/device/radio/intercom/engineering,
 /obj/machinery/power/data_terminal,
 /obj/noticeboard/persistent{
 	name = "Engineering persistent notice board";
@@ -77750,7 +77744,7 @@ bgz
 boQ
 hVf
 brc
-bsq
+bso
 yfR
 buC
 pCX
@@ -78264,7 +78258,7 @@ bgz
 lWI
 ebq
 brn
-bsq
+bso
 kow
 buC
 qLR

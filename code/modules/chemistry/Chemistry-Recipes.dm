@@ -879,6 +879,7 @@
 		id = "sweet_tea"
 		result = "sweet_tea"
 		required_reagents = list("sugar" = 1, "tea" = 1)
+		inhibitors = list("juice_orange" = 1)
 		result_amount = 2
 		mix_phrase = "The tea sweetens. Visually. Somehow."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -2609,7 +2610,7 @@
 		on_reaction(var/datum/reagents/holder)
 			var/location = get_turf(holder.my_atom)
 			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
-				var/smoke_to_create = clamp((holder.total_temperature - T20C), 0, 15) / 10 //for every degree over 20C, make .1u of smoke (up to 15u)...
+				var/smoke_to_create = clamp((holder.total_temperature - T20C)/20 , 0, 5)//for every degree over 20C, make .05u of smoke (up to 5u)...
 				if(smoke_to_create > 0)                                     //...but if under 20C, don't make any
 					var/datum/reagents/smokeContents = new/datum/reagents/
 					smokeContents.add_reagent("acid", smoke_to_create)
@@ -3996,6 +3997,7 @@
 		id = "ammonia"
 		result = "ammonia"
 		required_reagents = list("hydrogen" = 3, "nitrogen" = 1)
+		inhibitors = list("chlorine" = 1) //to prevent conflict with atrazine
 		result_amount = 3
 		mix_phrase = "The mixture bubbles, emitting an acrid reek."
 
@@ -5045,7 +5047,7 @@
 		result_amount = 5 //14
 		mix_phrase = "The mixture of particles settles together with ease."
 		mix_sound = 'sound/misc/fuse.ogg'
-		inhibitors = list("sulfur")
+		inhibitors = list("sulfur" = 1)
 
 	okay_cement //lime, alumina, magnesia, iron (iii) oxide
 		name = "okay cement"
@@ -5055,7 +5057,7 @@
 		result_amount = 4 //13
 		mix_phrase = "The mixture of particles settles together complacently."
 		mix_sound = 'sound/misc/fuse.ogg'
-		inhibitors = list("gypsum")
+		inhibitors = list("gypsum" = 1)
 
 	poor_cement //lime, alumina, iron (iii) oxide
 		name = "poor cement"
@@ -5065,7 +5067,7 @@
 		result_amount = 2 //
 		mix_phrase = "The mixture of particles settles together... barely."
 		mix_sound = 'sound/misc/fuse.ogg'
-		inhibitors = list("magnesium")
+		inhibitors = list("magnesium" = 1)
 
 	perfect_concrete
 		name = "perfect concrete"
