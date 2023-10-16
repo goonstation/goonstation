@@ -16,6 +16,7 @@
 
 			if (istype(src.master_ability_holder.owner, /mob) && src.master_ability_holder.owner.mind)
 				src.master = src.master_ability_holder.owner.mind
+				src.master.subordinate_antagonists += src
 
 		. = ..()
 

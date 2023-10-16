@@ -85,6 +85,10 @@
 	#define COMSIG_MOVABLE_HIT_THROWN "mov_hit_thrown"
 	/// when an AM is teleported by do_teleport
 	#define COMSIG_MOVABLE_TELEPORTED "mov_teleport"
+	/// when an AM changes nested contraband
+	#define COMSIG_MOVABLE_CONTRABAND_CHANGED "mov_contraband_changed"
+	/// get contraband level of movable (check_nonfirearms, check_firearms)
+	#define COMSIG_MOVABLE_GET_CONTRABAND "mov_get_contraband"
 
 	// ---- complex ----
 
@@ -241,6 +245,8 @@
 	#define COMSIG_MOB_RESIST "mob_resist"
 	/// Sent when the mob is affected by an explosion
 	#define COMSIG_MOB_EX_ACT "mob_explosion_act"
+	/// Sent when the mob points at something (point target)
+	#define COMSIG_MOB_POINT "mob_point"
 
 	// ---- cloaking device signal ----
 

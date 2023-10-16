@@ -514,7 +514,7 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 
 /obj/item/device/radio/headset/pod_wars/nanotrasen
 	name = "radio headset"
-	desc = "A radio headset that is also capable of communicating over... wait, isn't that frequency illegal?"
+	desc = "A radio headset that is also capable of communicating over, this one is tuned into a NanoTrasen frequency"
 	icon_state = "headset"
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_COMMAND)
@@ -524,12 +524,12 @@ ABSTRACT_TYPE(/obj/deployable_turret/pod_wars)
 	team = TEAM_NANOTRASEN
 
 	commander
-		icon_override = "cap"	//get better thingy
+		icon_override = "ntboss"	//get better thingy // better thingy gotten
 		icon_tooltip = "NanoTrasen Commander"
 
 /obj/item/device/radio/headset/pod_wars/syndicate
 	name = "radio headset"
-	desc = "A radio headset that is also capable of communicating over... wait, isn't that frequency illegal?"
+	desc = "A radio headset that is also capable of communicating over, this one is tuned into a Syndicate frequency"
 	icon_state = "headset"
 	secure_frequencies = list("g" = R_FREQ_SYNDICATE)
 	secure_classes = list(RADIOCL_SYNDICATE)

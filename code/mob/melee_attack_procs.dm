@@ -609,10 +609,7 @@
 
 	//abort if either multiplier is 0
 	if (!target_damage_multiplier)
-		if (narrator_mode)
-			msgs.played_sound = 'sound/vox/hit.ogg'
-		else
-			msgs.played_sound = pick(sounds_punch)
+		msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
 		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a target_damage_multiplier of 0.")
 

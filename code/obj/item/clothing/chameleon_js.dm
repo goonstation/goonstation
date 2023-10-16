@@ -541,9 +541,8 @@
 	desc = "Nice and comfy on those cold space evenings."
 	icon_state = "hoodie"
 	item_state = "hoodie"
-	icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-	inhand_image_icon = 'icons/mob/inhand/overcoat/hand_suit.dmi'
-	wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+	icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
+	wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
 	uses_multiple_icon_states = TRUE
 	over_hair = FALSE
 	var/list/clothing_choices = list()
@@ -727,9 +726,9 @@
 		desc = "A slightly armored jacket favored by security personnel. It looks cozy and warm; you could probably sleep in this if you wanted to!"
 		icon_state = "hoscoat"
 		item_state = "hoscoat"
-		sprite_item = 'icons/obj/clothing/overcoats/item_suit_armor.dmi'
-		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit_armor.dmi'
-		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit_armor.dmi'
+		sprite_item = 'icons/obj/clothing/overcoats/item_suit.dmi'
+		sprite_worn = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+		sprite_hand = 'icons/mob/inhand/overcoat/hand_suit.dmi'
 
 	detective_jacket
 		name = "detective's coat"

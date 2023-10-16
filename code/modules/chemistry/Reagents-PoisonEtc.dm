@@ -2217,18 +2217,7 @@ datum
 				. = ..()
 				var/poison_amount = holder?.get_reagent_amount(src.id) // need to check holder as the reagent could be fully removed in the parent call
 				if(poison_amount > 5)
-					for(var/obj/item/I in oview(M,5))
-						if(probmult(2))
-							var/image/mimicface = image(icon('icons/misc/critter.dmi',"mimicface"))
-							mimicface.loc = I
-							mimicface.blend_mode = BLEND_INSET_OVERLAY
-							var/client/client = M.client //hold a reference to the client directly
-							client?.images.Add(mimicface)
-							if(prob(25))
-								M.show_message("[I] suddenly opens eyes that weren't there and sprouts teeth!", 1)
-							SPAWN (10 SECONDS)
-								client?.images.Remove(mimicface)
-								qdel(mimicface)
+					M.AddComponent(/datum/component/hallucination/random_image_override, timeout=10, image_list=list(image('icons/misc/critter.dmi',"mimicface")), target_list=list(/obj/item, /mob/living), range=5, image_prob=2, image_time=10, override=FALSE)
 				if(poison_amount > 15)
 					M.setStatusMin("blinded", 10 SECONDS * mult)
 				if(poison_amount > 30)

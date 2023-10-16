@@ -65,7 +65,7 @@ client/proc/lightweight_mobs()
 
 client/proc/slow_fluids()
 	set name = "Slow Fluid Processing"
-	set desc = "Higher schedulde interval."
+	set desc = "Higher schedule interval."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	ADMIN_ONLY
@@ -82,7 +82,7 @@ client/proc/slow_fluids()
 
 client/proc/slow_atmos()
 	set name = "Slow Atmos Processing"
-	set desc = "Higher schedulde interval. May fuck the TEG."
+	set desc = "Higher schedule interval. May fuck the TEG."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 	set hidden = 1
 	ADMIN_ONLY
