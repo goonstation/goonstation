@@ -911,7 +911,8 @@
 				if (src.scan)
 					return TRUE
 				var/obj/O = usr.equipped()
-				if (istype(O, /obj/item/card/id))
+				var/obj/item/card/id/ID = get_id_card(O)
+				if (istype(ID))
 					boutput(usr, "<span class='notice'>You swipe your ID card.</span>")
 					src.scan = O
 				. = TRUE
