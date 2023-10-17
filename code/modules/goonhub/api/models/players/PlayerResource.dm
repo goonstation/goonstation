@@ -7,36 +7,22 @@
 	var/byond_major		= null // integer
 	var/byond_minor		= null // integer
 
-/datum/apiModel/Tracked/PlayerResource/New(
-	id,
-	ckey,
-	key,
-	byond_join_date,
-	byond_major,
-	byond_minor,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/PlayerResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.ckey = ckey
-	src.key = key
-	src.byond_join_date = byond_join_date
-	src.byond_major = byond_major
-	src.byond_minor = byond_minor
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.ckey = response["ckey"]
+	src.key = response["key"]
+	src.byond_join_date = response["byond_join_date"]
+	src.byond_major = response["byond_major"]
+	src.byond_minor = response["byond_minor"]
 
 /datum/apiModel/Tracked/PlayerResource/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.ckey) \
+		isnull(src.ckey) \
 		|| isnull(src.key) \
 		|| isnull(src.byond_join_date) \
 		|| isnull(src.byond_major) \
 		|| isnull(src.byond_minor) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
 	)
 		return FALSE
 

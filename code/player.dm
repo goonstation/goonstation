@@ -78,6 +78,27 @@
 			src.client = null
 		..()
 
+	/// Record a player login via the API. Sets player ID field for future API use
+	proc/record_login()
+		if (!src.client || src.id) return
+		try
+			var/datum/apiRoute/players/login/playerLogin = new
+			playerLogin.buildBody(
+				src.client.ckey,
+				src.client.key,
+				src.client.address ? src.client.address : "127.0.0.1", // fallback for local dev
+				src.client.computer_id,
+				src.client.byond_version,
+				src.client.byond_build,
+				roundId
+			)
+			var/datum/apiModel/Tracked/PlayerResource/playerResponse = apiHandler.queryAPI(playerLogin)
+			src.id = playerResponse.id
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "Failed to record a player login for [src.client.ckey] because: [error.message]")
+			logTheThing(LOG_DIARY, null, "Failed to record a player login for [src.client.ckey] because: [error.message]", "admin")
+
 	/// queries api to cache stats so its only done once per player per round
 	proc/cache_round_stats()
 		set waitfor = FALSE
