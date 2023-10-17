@@ -740,15 +740,23 @@ proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 #undef WHITELIST_OBJECTS
 #undef BLACKLIST_OBJECTS
 
-proc/browse_abcu_blueprints(mob/user) // ckey parameter
-	if (!user || !user.client) return
-	var/list/bplist = flist("data/blueprints/[user.client.ckey]/")
+proc/browse_abcu_blueprints(mob/user, var/browse_all_users = TRUE)
+	if (!user.client) return
+	var/picked_ckey
+	if (browse_all_users) // for the admin procs
+		var/inputuser = tgui_input_list(user, "Select a user's blueprint folder, by ckey.", "Users", flist("data/blueprints/"))
+		if(!inputuser) return
+		picked_ckey = splittext(inputuser, "/")[1]
+		boutput(user, picked_ckey)
+	else
+		picked_ckey = user.client.ckey
+	var/list/bplist = flist("data/blueprints/[picked_ckey]/")
 	if (!length(bplist))
-		boutput(user, "<span class='alert'>You don't have any blueprints.</span>")
+		boutput(user, "<span class='alert'>No blueprints found.</span>")
 		return
-	var/inputbp = tgui_input_list(user, "Pick a blueprint to load.", "Your Blueprints", bplist)
+	var/inputbp = tgui_input_list(user, "Pick a blueprint.", "Blueprints", bplist)
 	if (!inputbp) return
-	return "data/blueprints/[user.client.ckey]/[inputbp]"
+	return list("path" = "data/blueprints/[picked_ckey]/[inputbp]", "ckey" = picked_ckey, "file" = inputbp)
 
 /obj/item/blueprint_marker
 	name = "blueprint marker"
@@ -1136,7 +1144,7 @@ proc/browse_abcu_blueprints(mob/user) // ckey parameter
 				//printSaved(roomname)
 				var/picked_path = browse_abcu_blueprints(user)
 				if (!picked_path) return
-				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked_path)
+				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked_path["path"])
 				user.put_in_hand_or_drop(printed)
 				src.prints_left--
 				return
