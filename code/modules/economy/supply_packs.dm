@@ -588,7 +588,7 @@ ABSTRACT_TYPE(/datum/supply_packs)
 	cost = PAY_EXECUTIVE*2
 	containertype = /obj/storage/secure/crate/weapon
 	containername = "Weapons Crate - Macro Phaser (Cardlocked \[Armory Equipment])"
-	access = access_armory
+	access = access_maxsec
 
 /datum/supply_packs/evacuation
 	name = "Emergency Equipment"
