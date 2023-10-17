@@ -80,15 +80,15 @@
 	initial_x_coordinate = 65
 	initial_y_coordinate = 0
 
-/atom/movable/screen/parallax_render_source/planet/faatus
-	parallax_icon_state = "faatus"
+/atom/movable/screen/parallax_render_source/planet/fatuus
+	parallax_icon_state = "fatuus"
 	initial_x_coordinate = 100
 	initial_y_coordinate = 50
 
 /atom/movable/screen/parallax_render_source/planet/domusDei
 	parallax_icon_state = "domusDei"
 	initial_x_coordinate = 120
-	initial_y_coordinate = -40
+	initial_y_coordinate = 40
 	parallax_value = 0.05
 
 
