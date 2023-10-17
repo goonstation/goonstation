@@ -2316,6 +2316,7 @@
 						boutput(src, "<span class='alert'>Blargh! That meat is rotten!</span>")
 						playsound(src.loc,'sound/misc/meat_plop.ogg', 40, 1)
 						REMOVE_ATOM_PROPERTY(src,PROP_MOB_CANTMOVE,"cannibalism")
+						H.bioHolder.AddEffect("consumed")
 						return
 					if(ishuman(M))
 						if(src.sims)
