@@ -25,7 +25,6 @@
 	if (
 		isnull(src.server_id) \
 		|| isnull(src.rp_mode) \
-		|| isnull(src.crashed) \
 	)
 		return FALSE
 

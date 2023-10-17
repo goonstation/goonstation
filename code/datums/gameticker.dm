@@ -246,16 +246,9 @@ var/global/current_state = GAME_STATE_INVALID
 		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
 		boutput(world, "<span class='notice'><b>Tip:</b> [pick(dd_file2list("strings/roundstart_hints.txt"))]</span>")
 
-		//Setup the hub site logging
-		var hublog_filename = "data/stats/data.txt"
-		if (fexists(hublog_filename))
-			fdel(hublog_filename)
-
-		hublog = file(hublog_filename)
-		hublog << ""
-
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
+		roundManagement.recordUpdate(mode)
 
 #ifdef BAD_MONKEY_NO_BANANA
 	for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
@@ -547,8 +540,7 @@ var/global/current_state = GAME_STATE_INVALID
 	//End of round statistic collection for goonhub
 	save_flock_stats()
 	src.sendEvents()
-	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] round_end_data")
-	round_end_data(1) //Export round end packet (normal completion)
+	roundManagement.recordEnd()
 
 	var/pets_rescued = 0
 	for(var/pet in by_cat[TR_CAT_PETS])
