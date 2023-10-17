@@ -971,7 +971,8 @@ TYPEINFO(/obj/item/gun_parts)
 	item_state = "gun"
 	force = 5
 	icon_state = "ghost"
-	uses_multiple_icon_states = 1
+	uses_charge_overlay = TRUE
+	charge_icon_state = "ghost"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
 	New()
@@ -979,35 +980,20 @@ TYPEINFO(/obj/item/gun_parts)
 		projectiles = list(current_projectile,new/datum/projectile/owl/owlate)
 		..()
 
-	update_icon()
-		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "ghost[ratio]"
-
 /obj/item/gun/energy/owl_safe
 	name = "owl gun"
 	desc = "Hoot!"
 	item_state = "gun"
 	force = 5
 	icon_state = "ghost"
-	uses_multiple_icon_states = 1
+	uses_charge_overlay = TRUE
+	charge_icon_state = "ghost"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
 	New()
 		set_current_projectile(new/datum/projectile/owl)
 		projectiles = list(current_projectile)
 		..()
-
-	update_icon()
-		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "ghost[ratio]"
 
 ///////////////////////////////////////Frog Gun (Shoots :getin: and :getout:)
 /obj/item/gun/energy/frog
