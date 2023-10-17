@@ -558,7 +558,7 @@
 			//ignore blank untitled pages
 			if (paper.name == "paper" && !paper.info)
 				continue
-			pages += list(paper.ui_static_data())
+			pages += list(paper.package_static_ui_data())
 
 		src.citation_tab_data[REPORTS_TAB] += list(list(
 			"issuer" = "Inspector[clipboard.inspector_name ? " [clipboard.inspector_name]" : ""]'s Report",
