@@ -1941,8 +1941,6 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 			///Mob who is diving on the bomb
 			var/mob/living/carbon/human/hero = src.get_hero()
 
-
-
 			//do mod effects : pre-explosion
 			if (glowsticks)
 				make_cleanable( /obj/decal/cleanable/generic,origin)
@@ -2009,8 +2007,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 					src.reagents.reaction(T,1,5)
 
 			if (istype(hero))
-				if(src.strength >= 9)
-					hero.gib()
+				hero.ex_act(1, src, src.strength)
 				src.strength = max((src.strength * 0.75), (src.strength - 3))
 
 			src.blowthefuckup(src.strength, 0)
@@ -2196,7 +2193,7 @@ ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 	if (delete)
 		qdel(src)
 
-///who, if anyone, is trying to cover the object
+///Pick one human trying to cover the object
 /obj/item/proc/get_hero()
 	if (!istype(src.loc, /turf)) // must be on the floor/tile directly
 		return null
