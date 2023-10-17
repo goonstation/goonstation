@@ -210,7 +210,7 @@ proc/Create_Tommyname()
 
 /obj/item/gun/energy/tommy_gun
 	name = "Tommy Gun"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "tommygun"
 	m_amt = 4000
 	rechargeable = 1
