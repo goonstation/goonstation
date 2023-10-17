@@ -258,9 +258,10 @@
 					T.ReplaceWith(/turf/unsimulated/floor/setpieces/bloodfloor/stomach)
 					new /obj/stomachacid(T)
 				else
-					T.ReplaceWith(floor_path)
 					if(meaty)
-						T.icon_state = "bloodfloor_2"
+						T.ReplaceWith(/turf/unsimulated/floor/auto/meat)
+					else
+						T.ReplaceWith(floor_path)
 
 				if(!generate_stuff || !meatlight_map || !meatfriends_map)
 					return
@@ -277,14 +278,33 @@
 				else if(prob(5 + (meaty*12)))
 					if(meatfriends_map && !length(meatfriends_map?.get_nearby(T,5)))
 						var/atom/meat_friend
+						var/mob/living/critter/C
 
-						if(prob(20))
+						if(prob(25))
 							meat_friend = new /mob/living/critter/blobman/meat(T)
+							C = meat_friend
+
+#ifdef HALLOWEEN
+						else if(prob(5) + (meaty*5))
+							if(prob(1))
+								meat_friend = new /mob/living/critter/changeling/buttcrab(T)
+							else if(prob(20))
+								meat_friend = new /mob/living/critter/changeling/eyespider(T)
+							else if(prob(50))
+								meat_friend = new /mob/living/critter/changeling/legworm(T)
+							else
+								meat_friend = new /mob/living/critter/changeling/handspider(T)
+							C = meat_friend
+							C.is_npc = TRUE
+							C.ai = new /datum/aiHolder/aggressive(C)
+#endif
 						else
 							if(prob(90))
 								meat_friend = new /obj/item/mine/gibs/armed(T)
 							else
 								meat_friend = new /obj/item/mine/gibs(T)
+						if(istype(C) && prob(90)) // A little chaos, as a treat
+							C.faction |= FACTION_GENERIC
 						meatfriends_map.add_weakref(meat_friend)
 
 				else if(generate_stuff && prob(2))
@@ -344,6 +364,27 @@
 					door.dir = NORTH
 				else
 					door.dir = WEST
+
+/turf/unsimulated/floor/auto/meat
+	name = "bloody floor"
+	desc = "Yuck."
+	icon_state = "bloodfloor_2"
+
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
+	var/icon_edge = 'icons/misc/meatland.dmi'
+	icon_state_edge = "acid_corners"
+
+	edge_overlays()
+		for(var/direction in list(SOUTH))
+			var/turf/unsimulated/floor/setpieces/bloodfloor/stomach/T = get_step(src, direction)
+			if(!istype(T) || !istype(get_step(T, direction), /turf/unsimulated/floor/setpieces/bloodfloor/stomach))
+				continue
+			var/edge_direction = turn(direction, 180)
+			var/image/edge_overlay = image(src.icon_edge, "[icon_state_edge]",dir=edge_direction)
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+			edge_overlay.plane = PLANE_FLOOR
+			T.UpdateOverlays(edge_overlay, "edge_[edge_direction]")
 
 #undef FLOOR
 #undef WALL
