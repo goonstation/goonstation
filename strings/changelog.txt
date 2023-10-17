@@ -1,4 +1,9 @@
 
+(t)tue oct 17 23
+(u)glowbold
+(p)15855
+(e)🆕⚖🔨|C-Feature, C-Balance, A-Player-Actions
+(*)Play hero by laying down and blocking on top of live hand grenades and pipebombs.
 (t)mon oct 16 23
 (u)Lord_Earthfire
 (p)15909
