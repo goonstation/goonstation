@@ -421,9 +421,17 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
-				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
-				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
-					T.purchased_items.Add(I)
+
+				if (src.purchase_flags & UPLINK_TRAITOR)
+					var/datum/antagonist/traitor/antagonist_role = usr.mind?.get_antagonist(ROLE_TRAITOR)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.purchased_items.Add(I)
+
+				if (src.purchase_flags & UPLINK_HEAD_REV)
+					var/datum/antagonist/head_revolutionary/antagonist_role = usr.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.purchased_items.Add(I)
+
 				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
 
 			if (I.item)
@@ -687,9 +695,17 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 					boutput(usr, "<span class='alert'>The uplink doesn't have enough [syndicate_currency] left for that!</span>")
 					return
 				src.uses = max(0, src.uses - I.cost)
-				var/datum/antagonist/traitor/T = usr.mind?.get_antagonist(ROLE_TRAITOR)
-				if (!istype(I, /datum/syndicate_buylist/generic/telecrystal) && istype(T))
-					T.purchased_items.Add(I)
+
+				if (src.purchase_flags & UPLINK_TRAITOR)
+					var/datum/antagonist/traitor/antagonist_role = usr.mind?.get_antagonist(ROLE_TRAITOR)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.purchased_items.Add(I)
+
+				if (src.purchase_flags & UPLINK_HEAD_REV)
+					var/datum/antagonist/head_revolutionary/antagonist_role = usr.mind?.get_antagonist(ROLE_HEAD_REVOLUTIONARY)
+					if (istype(antagonist_role) && !istype(I, /datum/syndicate_buylist/generic/telecrystal))
+						antagonist_role.purchased_items.Add(I)
+
 				logTheThing(LOG_DEBUG, usr, "bought this from uplink: [I.name]")
 
 			if (I.item)

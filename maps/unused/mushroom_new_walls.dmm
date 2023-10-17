@@ -2149,7 +2149,7 @@
 	pixel_x = 4;
 	pixel_y = 10
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -5;
 	pixel_y = -1
 	},
@@ -7861,7 +7861,7 @@
 /obj/table/auto,
 /obj/item/device/flash,
 /obj/item/screwdriver,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "aOL" = (
@@ -18743,7 +18743,7 @@
 	pixel_x = 4;
 	pixel_y = 10
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -5;
 	pixel_y = -1
 	},
@@ -21652,7 +21652,7 @@
 	pixel_x = 12;
 	pixel_y = 7
 	},
-/obj/item/clothing/glasses/meson{
+/obj/item/clothing/glasses/toggleable/meson{
 	pixel_x = -4;
 	pixel_y = -4
 	},

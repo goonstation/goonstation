@@ -165,10 +165,7 @@
 
 	ChaseAttack(mob/M)
 		src.attacking = 1
-		if (narrator_mode)
-			playsound(src.loc, 'sound/vox/ghost.ogg', 50, 1, -1)
-		else
-			playsound(src.loc, 'sound/effects/ghost.ogg', 30, 1, -1)
+		playsound(src.loc, 'sound/effects/ghost.ogg', 30, 1, -1)
 		if(iscarbon(M) && prob(50))
 			boutput(M, "<span class='combat'><b>You are forced to the ground by \the [src]!</b></span>")
 			random_brute_damage(M, rand(0,5))
@@ -239,6 +236,7 @@
 /obj/critter/ancient_thing
 	name = "???"
 	desc = "What the hell is that?"
+	icon = 'icons/mob/critter/robotic/ancient/robot.dmi'
 	icon_state = "ancientrobot"
 	dead_state = "ancientrobot" // fades away
 	death_text = "%src% fades away."

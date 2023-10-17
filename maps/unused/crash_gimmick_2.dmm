@@ -309,11 +309,12 @@
 	dir = 6;
 	icon_state = "catwalk_cross"
 	},
+/obj/landmark/shuttle_subwoofer,
 /turf/simulated/floor/shuttlebay{
 	desc = " It is made of steel.";
 	name = "steel shuttle bay plating"
 	},
-/area/shuttle_sound_spawn)
+/area/shuttle/arrival/station)
 "nn" = (
 /obj/cable{
 	icon_state = "0-4"

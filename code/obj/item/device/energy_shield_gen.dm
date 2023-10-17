@@ -147,7 +147,7 @@
 	opacity = 0
 	anchored = ANCHORED
 	layer=12
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP
 	var/health_max = 10
 	var/health = 10
 	var/broken = 0

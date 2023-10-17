@@ -678,7 +678,7 @@
 
 	/// Transmuting nuclear engine into jeans sometimes causes a client crash
 	setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
-		if(mat1.getID() == "jean")
+		if(mat1.getTexture())
 			return
 		. = ..()
 
@@ -783,7 +783,7 @@
 	override_color = TRUE
 	color_icon = "#00FF00"
 	power = 100
-	cost = 20
+	cost = 30
 //Kill/Stun ratio
 	ks_ratio = 1.0
 //name of the projectile setting, used when you change a guns setting
@@ -807,7 +807,7 @@
 		if(isintangible(hit) || isobserver(hit))
 			return TRUE //don't irradiate ghosts
 
-		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 5 : 10
+		var/multiplier = istype(hit,/turf/simulated/wall/auto/reinforced) ? 10 : 5
 		var/density = (hit.material ? hit.material.getProperty("density") : 3) //3 is default density
 
 		//first are we colliding with this or ignoring it?

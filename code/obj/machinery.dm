@@ -222,8 +222,6 @@
 			if (prob(25))
 				qdel(src)
 				return
-		else
-	return
 
 /obj/machinery/blob_act(var/power)
 	// Called when attacked by a blob

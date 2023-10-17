@@ -516,7 +516,7 @@ ABSTRACT_TYPE(/obj/deployable_turret)
 	projectile_type = /datum/projectile/bullet/revolver_38/lb
 	burst_size = 2
 	fire_rate = 1
-	angle_arc_size = 90
+	angle_arc_size = 60
 	icon_tag = "op"
 	quick_deploy_fuel = 0
 	associated_deployer = /obj/item/turret_deployer/outpost

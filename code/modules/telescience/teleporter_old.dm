@@ -31,6 +31,12 @@ TYPEINFO(/obj/machinery/teleport)
 	attack_ai()
 		src.Attackhand()
 
+	Click(location, control, params)
+		if (isobserver(usr) && src.linked_computer.locked)
+			usr.set_loc(get_turf(src.linked_computer.locked))
+			return
+		..()
+
 	Bumped(M as mob|obj)
 		SPAWN( 0 )
 			if (src.icon_state == "tele1")

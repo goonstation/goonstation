@@ -317,7 +317,14 @@ ABSTRACT_TYPE(/obj/item)
 
 	if (isnull(initial(src.health))) // if not overridden
 		src.health = get_initial_item_health(src.type)
+
 	..()
+	if (src.contraband > 0)
+		if (istype(src, /obj/item/gun))
+			AddComponent(/datum/component/contraband, 0, src.contraband)
+		else
+			AddComponent(/datum/component/contraband, src.contraband, 0)
+
 	if(prob(src.mimic_chance))
 		SPAWN(10 SECONDS)
 			src.become_mimic()
@@ -566,11 +573,6 @@ ABSTRACT_TYPE(/obj/item)
 			src.combust(firesource)
 	..() // call your fucking parents
 
-/// Gets the effective contraband level of an item. Use this instead of accessing .contraband directly
-/obj/item/proc/get_contraband()
-	// This needs to be a ternary because the value of the contraband override might be 0
-	return HAS_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) ? GET_ATOM_PROPERTY(src, PROP_MOVABLE_CONTRABAND_OVERRIDE) : src.contraband
-
 /// Don't override this, override _update_stack_appearance() instead.
 /obj/item/proc/UpdateStackAppearance()
 	SHOULD_NOT_OVERRIDE(TRUE)
@@ -602,6 +604,8 @@ ABSTRACT_TYPE(/obj/item)
 	var/added = 0
 	var/imrobot
 	var/imdrone
+	if(QDELETED(other))
+		return added
 	if((imrobot = isrobot(other.loc)) || (imdrone = isghostdrone(other.loc)) || istype(other.loc, /obj/item/magtractor))
 		if (imrobot)
 			max_stack = 300
@@ -664,7 +668,7 @@ ABSTRACT_TYPE(/obj/item)
 
 /obj/item/MouseDrop_T(atom/movable/O as obj, mob/user as mob)
 	..()
-	if (max_stack > 1 && src.loc == user && BOUNDS_DIST(O, user) == 0 && check_valid_stack(O))
+	if (!QDELETED(src) && max_stack > 1 && src.loc == user && BOUNDS_DIST(O, user) == 0 && check_valid_stack(O))
 		if ( src.amount >= max_stack)
 			failed_stack(O, user)
 			return
@@ -676,6 +680,9 @@ ABSTRACT_TYPE(/obj/item)
 		before_stack(O, user)
 
 		for(var/obj/item/other in view(1,user))
+			if (QDELETED(src))
+				//let's not try to stack items into items that are disposed but not deleted yet
+				return
 			stack_result = stack_item(other)
 			if (!stack_result)
 				continue
@@ -706,6 +713,13 @@ ABSTRACT_TYPE(/obj/item)
 	var/mob/user = usr
 
 	params = params2list(params)
+
+	if (ishuman(over_object) && ishuman(usr) && !src.storage)
+		var/mob/living/carbon/human/patient = over_object
+		var/mob/living/carbon/human/surgeon = usr
+		if (surgeryCheck(patient, surgeon))
+			if (insertChestItem(patient, surgeon, src))
+				return
 
 	if (isliving(over_object) && isliving(usr) && !src.storage) //pickup action
 		if (user == over_object)
@@ -981,22 +995,18 @@ ABSTRACT_TYPE(/obj/item)
 
 /obj/item/proc/equipped(var/mob/user, var/slot)
 	SHOULD_CALL_PARENT(1)
-	if(src.c_flags & NOT_EQUIPPED_WHEN_WORN && slot != SLOT_L_HAND && slot != SLOT_R_HAND)
-		return
 	#ifdef COMSIG_ITEM_EQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_EQUIPPED, user, slot)
 	#endif
 	src.equipped_in_slot = slot
 	for(var/datum/objectProperty/equipment/prop in src.properties)
-		prop.onEquipped(src, user, src.properties[prop])
+		prop.onEquipped(src, user, src.properties[prop], slot)
 	user.update_equipped_modifiers()
 	if (src.storage && !src.storage.opens_if_worn) // also used in equipped() code if a wearing to a slot won't call equipped()
 		src.storage.hide_hud(user)
 
 /obj/item/proc/unequipped(var/mob/user)
 	SHOULD_CALL_PARENT(1)
-	if(src.c_flags & NOT_EQUIPPED_WHEN_WORN && src.equipped_in_slot != SLOT_L_HAND && src.equipped_in_slot != SLOT_R_HAND)
-		return
 	#ifdef COMSIG_ITEM_UNEQUIPPED
 	SEND_SIGNAL(src, COMSIG_ITEM_UNEQUIPPED, user)
 	#endif
@@ -1041,7 +1051,6 @@ ABSTRACT_TYPE(/obj/item)
 				if (!src.ArtifactSanityCheck()) return
 				src.ArtifactStimulus("force", 25)
 				src.ArtifactStimulus("heat", 380)
-		else
 	return ..()
 
 /obj/item/blob_act(var/power)
@@ -1131,8 +1140,8 @@ ABSTRACT_TYPE(/obj/item)
 		if (W_CLASS_NORMAL) t = "normal-sized"
 		if (W_CLASS_BULKY) t = "bulky"
 		if (W_CLASS_HUGE to INFINITY) t = "huge"
-		else
-	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50)) t = "funny-looking"
+	if (usr?.bioHolder?.HasEffect("clumsy") && prob(50))
+		t = "funny-looking"
 	return "It is \an [t] item."
 
 /obj/item/attack_hand(mob/user)
@@ -1209,10 +1218,6 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/proc/attack(mob/M, mob/user, def_zone, is_special = 0)
 	if (!M || !user) // not sure if this is the right thing...
 		return
-
-	if (surgeryCheck(M, user))		// Check for surgery-specific actions
-		if(insertChestItem(M, user))	// Puting item in patient's chest
-			return
 
 	if (src.Eat(M, user)) // All those checks were done in there anyway
 		return
@@ -1547,7 +1552,8 @@ ABSTRACT_TYPE(/obj/item)
 /obj/item/proc/on_spin_emote(var/mob/living/carbon/human/user as mob)
 	if(src in user.juggling)
 		return ""
-	if ((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5))
+
+	if (((user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50)) || (user.reagents && prob(user.reagents.get_reagent_amount("ethanol") / 2)) || prob(5)) && !src.cant_drop)
 		. = "<B>[user]</B> [pick("spins", "twirls")] [src] around in [his_or_her(user)] hand, and drops it right on the ground.[prob(10) ? " What an oaf." : null]"
 		user.u_equip(src)
 		src.set_loc(user.loc)

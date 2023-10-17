@@ -1,4 +1,5 @@
 /datum/antagonist/generic
+	succinct_end_of_round_antagonist_entry = TRUE
 
 	New(datum/mind/new_owner, do_equip, do_objectives, do_relocate, silent, source, do_pseudo, do_vr, late_setup, id, display_name)
 		if (!src.id)
