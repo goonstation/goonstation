@@ -287,16 +287,14 @@
 #ifdef HALLOWEEN
 						else if(prob(5) + (meaty*5))
 							if(prob(1))
-								meat_friend = new /mob/living/critter/changeling/buttcrab(T)
+								meat_friend = new /mob/living/critter/changeling/buttcrab/ai_controlled(T)
 							else if(prob(20))
-								meat_friend = new /mob/living/critter/changeling/eyespider(T)
+								meat_friend = new /mob/living/critter/changeling/eyespider/ai_controlled(T)
 							else if(prob(50))
-								meat_friend = new /mob/living/critter/changeling/legworm(T)
+								meat_friend = new /mob/living/critter/changeling/legworm/ai_controlled(T)
 							else
-								meat_friend = new /mob/living/critter/changeling/handspider(T)
+								meat_friend = new /mob/living/critter/changeling/handspider/ai_controlled(T)
 							C = meat_friend
-							C.is_npc = TRUE
-							C.ai = new /datum/aiHolder/aggressive(C)
 #endif
 						else
 							if(prob(90))

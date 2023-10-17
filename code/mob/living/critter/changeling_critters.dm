@@ -313,6 +313,9 @@
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
 
+/mob/living/critter/changeling/handspider/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 ///////////////////////////
 // EYESPIDER
