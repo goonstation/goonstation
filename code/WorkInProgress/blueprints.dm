@@ -504,26 +504,38 @@
 	var/room_name = ""
 	var/blueprint_path = ""
 
-	New(turf/new_loc, var/savepath = "") // i think i should set the vars of this obj using New, take the path as an arg and figure it out
+	New(turf/new_loc, var/savepath = "")
 		. = ..(new_loc)
-		if (savepath)
-			src.blueprint_path = savepath
-		if (src.room_name)
-			src.name += ": '[src.room_name]'"
+		if (!savepath || !fexists(savepath)) return
+		src.blueprint_path = savepath
+		var/splitted = splittext(savepath, "/") // this seemed better than loading the full save file to grab the same data
+		src.author = splitted[3] // sample savepath: "data/blueprint/userckey/Warehouse_v2.dat"
+		src.room_name = splittext(splitted[4], ".")[1]
+		src.name += ": [src.room_name]"
 
-	examine()
-		. = ..()
-		if (room_name)
-			. += "<span class='notice'>This blueprint is named '[room_name]'. </span>"
+	attack_self(mob/user)
+		if (!user?.client?.ckey)
+			. = ..()
+			return
+		if (!src.blueprint_path || !fexists(src.blueprint_path)) // being fed a nonexistent file path should never happen
+			boutput(user, "<span class='alert'>This item is broken, please tell a coder if it keeps breaking!</span>")
+			return
+		// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
+		var/input = ckeyEx(tgui_input_text(user, "Do you want to save a copy of this blueprint to your own collection? \
+			If so, choose a name for it. Use only alphanumeric characters, and - and _.", "Copy Homework", null, 54))
+		if (!input) return
+		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[input].dat")
+		boutput(user, "<span class='notice'>Copied this blueprint! It is named: '[input]'.</span>")
 
 	afterattack(atom/target, mob/user)
 		if (!istype(target, /obj/machinery/abcu))
 			. = ..()
 			return
-		if (!src.blueprint_path) return
+		if (!src.blueprint_path || !fexists(src.blueprint_path))
+			boutput(user, "<span class='alert'>This item is broken, please tell a coder if it keeps breaking!</span>")
+			return
 		var/obj/machinery/abcu/abcu = target
 		abcu.get_blueprint(user, src.blueprint_path)
-		boutput(user, "Tried uploading blueprint [src.room_name] to [abcu].")
 
 // whitelists/blacklists applied during both saving and loading, so it's functionally retroactive
 #define WHITELIST_OBJECTS list( \
