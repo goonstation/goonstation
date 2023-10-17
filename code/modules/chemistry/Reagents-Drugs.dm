@@ -289,8 +289,6 @@ datum
 			transparency = 20
 			value = 6 // 4 2
 			thirst_value = -0.03
-			var/counter = 1
-			var/current_color_pattern = 1
 			var/static/list/halluc_sounds = list(
 				"punch",
 				'sound/vox/poo-vox.ogg',
@@ -333,57 +331,41 @@ datum
 				"A whisper in the vents",
 				"The universe itself",
 			)
+			var/static/list/monkey_images = list(
+				new /image('icons/mob/monkey.dmi', "monkey"),
+				new /image('icons/mob/monkey.dmi', "fire3"),
+				new /image('icons/mob/monkey.dmi', "skeleton"),
+				new /image('icons/mob/monkey.dmi', "seamonkey"),
+			)
+			var/static/list/critter_image_list = list(
+				new /image('icons/effects/hallucinations.dmi', "spider"),
+				new /image('icons/effects/hallucinations.dmi', "dragon"),
+				new /image('icons/effects/hallucinations.dmi', "pig"),
+				new /image('icons/effects/hallucinations.dmi', "slime"),
+				new /image('icons/misc/critter.dmi', "martianW"),
+			)
+			var/static/list/monkey_names = strings("names/monkey.txt")
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				src.counter += 1 * mult //around half realtime
-				if(M.client && counter >= 6 && prob(20)) //trippy colours
-					if(src.current_color_pattern == 1)
-						animate_fade_drug_inbetween_1(M.client, 40)
-						src.current_color_pattern = 2
-					else
-						animate_fade_drug_inbetween_2(M.client, 40)
-						src.current_color_pattern = 1
-				if(probmult(12) && !ON_COOLDOWN(M, "hallucination_spawn", 30 SECONDS)) //spawn a fake critter
-					if (prob(20))
-						if(prob(60))
-							fake_attack(M)
-						else
-							var/monkeys = rand(1,3)
-							for(var/i = 0, i < monkeys, i++)
-								fake_attackEx(M, 'icons/mob/monkey.dmi', "monkey_hallucination", pick_string_autokey("names/monkey.txt"))
-					else
-						var/fake_type = pick(childrentypesof(/obj/fake_attacker))
-						new fake_type(M.loc, M)
+				//pretty colors
+				M.AddComponent(/datum/component/hallucination/trippy_colors, timeout=10)
+
+				//get attacked
+				if(prob(60)) //monkey mode
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=monkey_images, name_list=monkey_names, attacker_prob=20, max_attackers=3)
+				else
+					M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=null, name_list=null, attacker_prob=20, max_attackers=3)
+
 				//THE VOICES GET LOUDER
-				if(probmult(min(16 + src.counter/2, 30))) //play some fake audio
-					var/atom/origin = M.loc
-					var/turf/mob_turf = get_turf(M)
-					if (mob_turf)
-						origin = locate(mob_turf.x + rand(-10,10), mob_turf.y + rand(-10,10), mob_turf.z)
-					//wacky loosely typed code ahead
-					var/datum/hallucinated_sound/chosen = pick(src.halluc_sounds)
-					if (istype(chosen)) //it's a datum
-						chosen.play(M, origin)
-					else //it's just a path directly
-						M.playsound_local(origin, chosen, 100, 1)
+				M.AddComponent(/datum/component/hallucination/random_sound, timeout=10, sound_list=src.halluc_sounds, sound_prob=5)
+
 				if(probmult(8)) //display a random chat message
 					M.playsound_local(M.loc, pick(src.speech_sounds, 100, 1))
 					boutput(M, "<b>[pick(src.voice_names)]</b> says, \"[phrase_log.random_phrase("say")]\"")
-				if(probmult(10)) //turn someone into a critter
-					var/list/candidates = list()
-					for(var/mob/living/carbon/human/human in viewers(M))
-						candidates += human
-					if (length(candidates))
-						var/mob/living/carbon/human/chosen = pick(candidates)
-						var/obj/fake_attacker/fake_type = pick(childrentypesof(/obj/fake_attacker))
-						var/image/override_img = image(initial(fake_type.fake_icon), chosen, initial(fake_type.fake_icon_state), chosen.layer)
-						override_img.override = TRUE
-						var/client/client = M.client //hold a reference to the client directly
-						client?.images.Add(override_img)
-						SPAWN (20 SECONDS)
-							client?.images.Remove(override_img)
-							qdel(override_img)
+
+				//turn someone into a critter
+				M.AddComponent(/datum/component/hallucination/random_image_override, timeout=10, image_list=critter_image_list, target_list=list(/mob/living/carbon/human), range=6, image_prob=10, image_time=20, override=TRUE)
 				..()
 				return
 
@@ -392,13 +374,6 @@ datum
 				if(method == INGEST)
 					boutput(M, "<span class='alert'><font face='[pick("Arial", "Georgia", "Impact", "Mucida Console", "Symbol", "Tahoma", "Times New Roman", "Verdana")]' size='[rand(3,6)]'>Holy shit, you start tripping balls!</font></span>")
 				return
-
-			on_mob_life_complete(var/mob/living/M)
-				if(M.client)
-					if(src.current_color_pattern == 1)
-						animate_fade_from_drug_1(M.client, 40)
-					else
-						animate_fade_from_drug_2(M.client, 40)
 
 			on_remove()
 				. = ..()
@@ -419,30 +394,19 @@ datum
 			transparency = 100
 			value = 5
 			thirst_value = -0.03
+			var/static/list/bee_halluc = list(
+				new /image('icons/misc/bee.dmi',"zombee-wings") = list("zombee", "undead bee", "BZZZZZZZZ"),
+				new /image('icons/misc/bee.dmi',"syndiebee-wings") = list("syndiebee", "evil bee", "syndicate assassin bee", "IT HAS A GUN"),
+				new /image('icons/misc/bee.dmi',"bigbee-angry") = list("very angry bee", "extremely angry bee", "GIANT FRICKEN BEE"),
+				new /image('icons/misc/bee.dmi',"lichbee-wings") = list("evil bee", "demon bee", "YOU CAN'T BZZZZ FOREVER"),
+				new /image('icons/misc/bee.dmi',"voorbees-wings") = list("killer bee", "murder bee", "bad news bee", "RUN"),
+			)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
 				M.druggy = max(M.druggy, 5)
-				if (probmult(10))
-					var/hstate = null
-					var/hname = null
-					switch(rand(1,5))
-						if(1)
-							hstate = "zombee-wings"
-							hname = pick("zombee", "undead bee", "BZZZZZZZZ")
-						if(2)
-							hstate = "syndiebee-wings"
-							hname = pick("syndiebee", "evil bee", "syndicate assassin bee", "IT HAS A GUN")
-						if(3)
-							hstate = "bigbee-angry"
-							hname = pick("very angry bee", "extremely angry bee", "GIANT FRICKEN BEE")
-						if(4)
-							hstate = "lichbee-wings"
-							hname = pick("evil bee", "demon bee", "YOU CAN'T BZZZZ FOREVER")
-						if(5)
-							hstate = "voorbees-wings"
-							hname = pick("killer bee", "murder bee", "bad news bee", "RUN")
-					fake_attackEx(M, 'icons/misc/bee.dmi', hstate, hname)
+				var/image/imagekey = pick(bee_halluc)
+				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=bee_halluc[imagekey], attacker_prob=10)
 				if (probmult(12))
 					M.visible_message(pick("<b>[M]</b> makes a buzzing sound.", "<b>[M]</b> buzzes."),pick("BZZZZZZZZZZZZZZZ", "<span class='alert'><b>THE BUZZING GETS LOUDER</b></span>", "<span class='alert'><b>THE BUZZING WON'T STOP</b></span>"))
 				if (probmult(15))
@@ -1108,6 +1072,11 @@ datum
 			transparency = 20
 			viscosity = 0.14
 			thirst_value = -0.1
+			var/static/list/cat_halluc = list(
+				new /image('icons/misc/critter.dmi',"cat-ghost") = list("ghost cat"),
+				new /image('icons/misc/critter.dmi', "cat1-wild") = list("wild cat"),
+			)
+			var/static/list/cat_sounds = list('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg')
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if(!M) M = holder.my_atom
@@ -1118,20 +1087,10 @@ datum
 				if(probmult(9))
 					M.visible_message("<span class='notice'><b>[M.name]</b> meows! What the fuck?</span>")
 					playsound(M.loc, 'sound/voice/animal/cat.ogg', 50, 1)
-				if(probmult(7))
-					switch(rand(1,2))
-						if(1)
-							var/ghostcats = rand(1,3)
-							for(var/i = 0, i < ghostcats, i++)
-								fake_attackEx(M, 'icons/misc/critter.dmi', "cat-ghost", "ghost cat")
-								M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
-						if(2)
-							var/wildcats = rand(1,3)
-							for(var/i = 0, i < wildcats, i++)
-								fake_attackEx(M, 'icons/misc/critter.dmi', "cat1-wild", "wild cat")
-								M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
-				if(probmult(20))
-					M.playsound_local(M.loc, pick('sound/voice/animal/cat.ogg', 'sound/voice/animal/cat_hiss.ogg'), 50, 1)
+
+				var/image/imagekey = pick(cat_halluc)
+				M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(imagekey), name_list=cat_halluc[imagekey], attacker_prob=7, max_attackers=3)
+				M.AddComponent(/datum/component/hallucination/random_sound, timeout=10, sound_list=src.cat_sounds, sound_prob=20)
 				..()
 				return
 
@@ -1373,8 +1332,7 @@ datum
 						src.breathefire(M)
 					if(check < 5)
 						var/bats = rand(2,3)
-						for(var/i = 0, i < bats, i++)
-						fake_attackEx(M, 'icons/misc/AzungarAdventure.dmi', "hellbat", "hellbat")
+						M.AddComponent(/datum/component/hallucination/fake_attack, timeout=10, image_list=list(new /image('icons/misc/AzungarAdventure.dmi', "hellbat")), name_list=list("hellbat"), attacker_prob=100, max_attackers=bats)
 						boutput(M, "<span class='alert'><b>A hellbat begins to chase you</b>!</span>")
 						M.emote("scream")
 					if(check < 20)

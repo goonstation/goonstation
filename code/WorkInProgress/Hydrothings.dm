@@ -348,7 +348,7 @@
 /obj/item/gun/russianhootolver
 	desc = "Rootin hootin tootin fun for the whole family!"
 	name = "Russian Hootolver"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "hootolver"
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2

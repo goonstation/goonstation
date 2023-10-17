@@ -162,7 +162,7 @@ TYPEINFO(/obj/item/saw/syndie)
 	stamina_damage = 100
 	stamina_cost = 30
 	stamina_crit_chance = 40
-	c_flags = EQUIPPED_WHILE_HELD | NOT_EQUIPPED_WHEN_WORN
+	c_flags = EQUIPPED_WHILE_HELD
 
 	setupProperties()
 		. = ..()

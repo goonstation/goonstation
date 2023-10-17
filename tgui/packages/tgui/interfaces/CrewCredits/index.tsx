@@ -12,6 +12,7 @@ import { Window } from '../../layouts';
 import { CrewTab } from './CrewTab';
 import { AntagonistsTab } from './AntagonistsTab';
 import { CrewCreditsTabKeys } from './type';
+import { ScoreTab } from './ScoreTab';
 
 export const CrewCredits = (props, context) => {
   const [menu, setMenu] = useLocalState(context, 'menu', CrewCreditsTabKeys.General);
@@ -32,11 +33,17 @@ export const CrewCredits = (props, context) => {
                 onClick={() => setMenu(CrewCreditsTabKeys.Antagonists)}>
                 Antagonists
               </Tabs.Tab>
+              <Tabs.Tab
+                selected={menu === CrewCreditsTabKeys.Score}
+                onClick={() => setMenu(CrewCreditsTabKeys.Score)}>
+                Station Score
+              </Tabs.Tab>
             </Tabs>
           </Stack.Item>
           <Stack.Item>
             {menu === CrewCreditsTabKeys.General && <CrewTab />}
             {menu === CrewCreditsTabKeys.Antagonists && <AntagonistsTab />}
+            {menu === CrewCreditsTabKeys.Score && <ScoreTab />}
           </Stack.Item>
         </Stack>
       </Window.Content>

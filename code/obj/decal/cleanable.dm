@@ -1486,7 +1486,6 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 				if (health <= 0)
 					M.visible_message("<span class='alert'>[M.name] accidentally scuffs a foot across the [src], scattering it everywhere! [pick("Fuck!", "Shit!", "Damnit!", "Welp.")]</span>")
 					qdel(src)
-				else
 
 	get_desc(dist)
 		if (health >= 30)

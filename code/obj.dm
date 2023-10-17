@@ -96,7 +96,6 @@
 			if(3)
 				changeHealth(-40)
 				return
-			else
 
 	onMaterialChanged()
 		..()
