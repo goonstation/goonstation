@@ -7,6 +7,7 @@
  */
 
 import { BooleanLike } from 'common/react';
+import { PaperSheetData } from '../PaperSheet/type';
 
 export interface CrewTabData {
   groups: GroupBlockProps[];
@@ -103,19 +104,8 @@ export interface CitationTargetData {
 
 export interface ReportData {
   issuer: string;
-  pages: PaperData[];
-  multi: number;
+  pages: PaperSheetData[];
 }
-
-interface PaperData {
-  name?: string;
-  sizeX: number;
-  sizeY: number;
-  text: string;
-  paperColor: string;
-  stamps: [string, number, number, number]
-}
-
 
 export enum CrewCreditsTabKeys {
   Crew,

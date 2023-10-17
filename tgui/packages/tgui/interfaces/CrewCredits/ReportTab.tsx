@@ -45,7 +45,7 @@ export const ReportTab = (props, context) => {
         {reports.map((report, index) => {
           return (
             <Stack.Item key={index}>
-              { menu === index && <Report multi={index} {...report} />}
+              { menu === index && <Report {...report} />}
             </Stack.Item>
           );
 
@@ -57,20 +57,19 @@ export const ReportTab = (props, context) => {
 };
 
 const Report = (props: ReportData, context) => {
-  const [menu, setMenu] = useLocalState(context, 'pageMenu', "0-0");
-  const { issuer, pages, multi } = props;
+  const [menu, setMenu] = useLocalState(context, 'pageMenu', 0);
+  const { issuer, pages } = props;
   return (
     <Stack vertical>
       <Stack.Item>
         <Section title={issuer}>
           <Tabs>
             {pages.map((page, index) => {
-              const multi_index = `${multi}-${index}`;
               return (
                 <Tabs.Tab
-                  key={multi_index}
-                  selected={menu === multi_index}
-                  onClick={() => setMenu(multi_index)}
+                  key={index}
+                  selected={menu === index}
+                  onClick={() => setMenu(index)}
                 >
                   {page.name ? page.name : "paper"}
                 </Tabs.Tab>
@@ -80,10 +79,9 @@ const Report = (props: ReportData, context) => {
         </Section>
       </Stack.Item >
       {pages.map((page, index) => {
-        const multi_index = `${multi}-${index}`;
         return (
-          <Stack.Item key={multi_index}>
-            { menu === multi_index
+          <Stack.Item key={index}>
+            { menu === index
              && <PaperSheetView
                value={page.text}
                stamps={page.stamps}

@@ -814,8 +814,6 @@ var/global/current_state = GAME_STATE_INVALID
 				if (!E.abilityHolder)
 					E.add_ability_holder(/datum/abilityHolder/generic)
 				E.addAbility(/datum/targetable/crew_credits)
-				if (E.client.preferences.view_tickets)
-					E.showtickets()
 				if (E.client.preferences.view_score)
 					round_stats.ui_interact(E)
 				SPAWN(0) show_xp_summary(E.key, E)
