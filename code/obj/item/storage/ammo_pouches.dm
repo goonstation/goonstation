@@ -345,3 +345,12 @@
 		/obj/item/remote/sawflyremote
 	)
 
+/obj/item/storage/morrigan_pouch
+	name = "Mod. 101 Ammo Pouch"
+	desc = "Contains 4 extra rounds for your weapon."
+	icon_state = "ammopouch-morrigan"
+	w_class = W_CLASS_SMALL
+	slots = 4
+	opens_if_worn = TRUE
+	prevent_holding = list(/obj/item/storage)
+	spawn_contents = list(/obj/item/ammo/bullets/morriganmed = 4)

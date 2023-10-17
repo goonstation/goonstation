@@ -237,7 +237,7 @@
 		src.credits[WEAPON_VENDOR_CATEGORY_UTILITY]+=2
 		..()
 /obj/submachine/weapon_vendor/morriganvendor
-	name = "Security Vendor"
+	name = "Weapons Vendor"
 	icon = 'icons/obj/vending.dmi'
 	icon_state = "weapon-morrigan"
 	desc = "An automated quartermaster service for supplying your security crew with weapons and gear."
@@ -254,6 +254,7 @@
 		materiel_stock += new/datum/materiel/loadout/morriganmelee
 		materiel_stock += new/datum/materiel/loadout/morriganheavy
 		materiel_stock += new/datum/materiel/loadout/morriganexplorer
+		materiel_stock += new/datum/materiel/loadout/morriganmedic
 		materiel_stock += new/datum/materiel/utility/nightvisiongoggles
 		materiel_stock += new/datum/materiel/utility/morrigandonuts
 		materiel_stock += new/datum/materiel/utility/secdonk
@@ -433,27 +434,33 @@
 	name = "Assistant"
 	path = /obj/item/storage/belt/security/assistant
 	description = "One belt containing a security barrier, a forensic scanner, and a security ticket writer."
-//morrigan
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Morrigan ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /datum/materiel/loadout/morriganmelee
 	name = "Melee Specialist Officer"
-	path = /obj/item/storage/belt/security/morriganmelee
+	path = /obj/item/storage/belt/gun/morrigan/melee
 	description = "One belt containing a baton, 2 fog grenades, and a tactical hammer. Does NOT come with a ranged weapon. Only for officers who DO NOT want a ranged weapon!"
 /datum/materiel/loadout/morriganlight
 	name = "Light Patrol Officer"
-	path = /obj/item/storage/belt/security/morriganlight
+	path = /obj/item/storage/belt/gun/morrigan/hafpistol
 	description = "One belt containing a baton, a light sidearm, a flashbang grenade, and an experimental barrier. Perfect of station patrols."
 /datum/materiel/loadout/morrigancontrol
 	name = "Shock Officer"
-	path = /obj/item/storage/belt/security/morrigancontrol
+	path = /obj/item/storage/belt/gun/morrigan/lasershotgun
 	description = "One belt containing a baton, a laser shotgun, and a fog grenade. For more tense situations."
 /datum/materiel/loadout/morriganheavy
 	name = "Crowd Disperser Officer"
-	path = /obj/item/storage/belt/security/morriganheavy
+	path = /obj/item/storage/belt/gun/morrigan/laser_rifle
 	description = "One belt containing a baton, a laser assault rifle, and a fog grenade. For dealing with large crowds."
 /datum/materiel/loadout/morriganexplorer
 	name = "EVA Officer"
-	path = /obj/item/storage/belt/security/morriganexplorer
+	path = /obj/item/storage/belt/gun/morrigan/minesmg
 	description = "One belt containing a baton, a mining SMG, and an extra power cell. For dealing with space threats."
+
+/datum/materiel/loadout/morriganmedic
+	name = "Medical Support Officer"
+	path = /obj/item/storage/belt/gun/morrigan/medsmg
+	description = "A belt containing a baton, a syringe SMG with extra ammo, and medical supplies. For supporting teammates"
 /datum/materiel/utility/morrigandonuts
 	name = "Sturd(iest) Donuts"
 	path = /obj/item/storage/lunchbox/sturdydonuts

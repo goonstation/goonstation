@@ -455,10 +455,12 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Medic SMG ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /obj/item/gun/kinetic/medsmg
 	name = "Mod. 101 'Cardea'"
+	desc = "A kinetic weapon made by Mabinogi, but produced aboard Morrigan. It has two modes, a healing mode for comrades and a poison mode."
 	uses_multiple_icon_states = 1
 	icon = 'icons/obj/adventurezones/morrigan/weapons/gun48.dmi'
-	icon_state = "medsmg"
+	icon_state = "medsmgdmg"
 	item_state = "medsmg"
+	max_ammo_capacity = 21
 	has_empty_state = TRUE
 	can_dual_wield = FALSE
 	contraband = 6
@@ -466,16 +468,17 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 
 	New()
 		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/syringefilled/morrigan/medsmg)
 		projectiles = list(current_projectile, new /datum/projectile/syringefilled/morrigan/medsmgheal)
-		set_current_projectile(new/datum/projectile/syringefilled/morrigan/medsmgheal)
+		spread_angle = 3
 		..()
 	update_icon()
-		if (istype_exact(ammo, /datum/projectile/syringefilled/morrigan/medsmgheal))
-			ammo = new /obj/item/ammo/bullets/morriganmedheal
+		if (istype_exact(current_projectile, /datum/projectile/syringefilled/morrigan/medsmgheal))
 			set_current_projectile(new/datum/projectile/syringefilled/morrigan/medsmgheal)
-			icon_state = "medsmgdmg"
-		else
 			icon_state = "medsmgheal"
+		else
+			set_current_projectile(new/datum/projectile/syringefilled/morrigan/medsmg)
+			icon_state = "medsmgdmg"
 		..()
 
 	attack_self(var/mob/M)
@@ -502,7 +505,8 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 	icon_state = "medsmgheal_magazine"
 	amount_left = 21
 	max_amount = 21
-	icon_dynamic = 0
+	icon_dynamic = 1
+	icon_empty = "medsmgheal_magazine-0"
 	ammo_cat = AMMO_TRANQ_9MM
 	ammo_type = new/datum/projectile/syringefilled/morrigan/medsmgheal
 

@@ -233,16 +233,100 @@
 	item_state = "welding-fire"
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Belts ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
-
-/obj/item/storage/belt/gun/peacebringer
-	name = "HoS belt"
-	desc = "A stylish leather belt for holstering an expensive over the top laser revolver."
+/obj/item/storage/belt/gun/morrigan
+	name = "No no no what have you DONE REX"
+	desc = "If this exists then I am stupid."
 	icon = 'icons/obj/adventurezones/morrigan/belt.dmi'
-	icon_state = "hosbelt"
-	item_state = "hosbelt"
 	slots = 7
 	check_wclass = 1
+
+	New()
+		..()
+		icon_state = initial(icon_state) + "-1"
+		item_state = initial(item_state) + "-1"
+
+	Entered(Obj, OldLoc)
+		..()
+		for (var/obj/item/O in contents)
+			if (istype(O, gun_type))
+				icon_state = initial(icon_state) + "-1"
+				item_state = initial(item_state) + "-1"
+				return
+
+	Exited(Obj, newloc)
+		..()
+		for (var/obj/item/O in contents)
+			if (istype(O, gun_type))
+				return
+		icon_state = initial(icon_state) + "-0"
+		item_state = initial(item_state) + "-0"
+/obj/item/storage/belt/gun/morrigan/peacebringer
+	name = "HoS belt"
+	desc = "A stylish leather belt for holstering an expensive over the top laser revolver."
+	icon_state = "hosbelt"
+	item_state = "hosbelt"
 	gun_type = /obj/item/gun/energy/peacebringer
 	can_hold = list(/obj/item/gun/energy/peacebringer)
 	can_hold_exact = list(/obj/item/gun/energy/peacebringer)
 	spawn_contents = list(/obj/item/gun/energy/peacebringer)
+
+/obj/item/storage/belt/gun/morrigan/hafpistol
+	name = "Light Patrol Belt"
+	desc = "A stylish leather belt for holstering the mod. 21 Deneb"
+	icon_state = "hafbelt"
+	item_state = "hafbelt"
+	gun_type = /obj/item/gun/energy/hafpistol
+	can_hold = list(/obj/item/gun/energy/hafpistol)
+	can_hold_exact = list(/obj/item/gun/energy/hafpistol)
+	spawn_contents = list(/obj/item/gun/energy/hafpistol, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/flashbang, /obj/item/barrier/morrigan)
+
+/obj/item/storage/belt/gun/morrigan/minesmg
+	name = "EVA Belt"
+	desc = "A stylish leather belt for holstering the HMT Lycon"
+	icon_state = "minesmgbelt"
+	item_state = "minesmgbelt"
+	gun_type = /obj/item/gun/energy/smgmine
+	can_hold = list(/obj/item/gun/energy/smgmine)
+	can_hold_exact = list(/obj/item/gun/energy/smgmine)
+	spawn_contents = list(/obj/item/gun/energy/smgmine, /obj/item/baton/windup/morrigan, /obj/item/ammo/power_cell/med_power)
+
+/obj/item/storage/belt/gun/morrigan/lasershotgun
+	name = "Shock Officer Belt"
+	desc = "A stylish leather belt for holstering the Mod. 77 Nosaxa"
+	icon_state = "lasershotgunbelt"
+	item_state = "lasershotgun_belt"
+	gun_type = /obj/item/gun/energy/lasershotgun
+	can_hold = list(/obj/item/gun/energy/lasershotgun)
+	can_hold_exact = list(/obj/item/gun/energy/lasershotgun)
+	spawn_contents = list(/obj/item/gun/energy/lasershotgun, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/fog)
+
+/obj/item/storage/belt/gun/morrigan/laser_rifle
+	name = "Crowd Officer Belt"
+	desc = "A stylish leather belt for holstering the Mod. 201 Mimosa"
+	icon_state = "laseriflebelt"
+	item_state = "laserifle_belt"
+	gun_type = /obj/item/gun/energy/laser_rifle
+	can_hold = list(/obj/item/gun/energy/laser_rifle)
+	can_hold_exact = list(/obj/item/gun/energy/laser_rifle)
+	spawn_contents = list(/obj/item/gun/energy/laser_rifle, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/fog)
+
+/obj/item/storage/belt/gun/morrigan/melee
+	name = "Melee Specialist Belt"
+	desc = "A stylish leather belt for holstering the Tactical Hammer"
+	icon_state = "hammerbelt"
+	item_state = "hammer_belt"
+	gun_type = /obj/item/tactical_hammer
+	can_hold = list(/obj/item/tactical_hammer)
+	can_hold_exact = list(/obj/item/tactical_hammer)
+	spawn_contents = list(/obj/item/tactical_hammer, /obj/item/baton/windup/morrigan, /obj/item/chem_grenade/fog, /obj/item/chem_grenade/fog)
+
+/obj/item/storage/belt/gun/morrigan/medsmg
+	name = "Medical Support Belt"
+	desc = "A stylish belt for holstering the Mod. 101 Cardea"
+	icon_state = "morriganmedicalbelt"
+	item_state = "morriganmedical_belt"
+	gun_type = /obj/item/gun/kinetic/medsmg
+	can_hold = list(/obj/item/gun/kinetic/medsmg)
+	can_hold_exact = list(/obj/item/gun/kinetic/medsmg)
+	spawn_contents = list(/obj/item/gun/kinetic/medsmg, /obj/item/baton/windup/morrigan, /obj/item/storage/box/morriganmedkit, /obj/item/storage/morrigan_pouch)
+

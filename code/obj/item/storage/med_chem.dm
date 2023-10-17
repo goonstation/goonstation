@@ -272,6 +272,18 @@
 	desc = "A box containing body bags*, which, like the name suggests, are used for transporting bodies around. Usually dead ones.<br><small><i>*Bodies not included.</i></small>"
 	spawn_contents = list(/obj/item/body_bag = 7)
 
+/obj/item/storage/box/morriganmedkit
+	name = "MedKit Box"
+	icon_state = "health_upgr"
+	desc = "A box containing first aid for your comrades."
+	spawn_contents = list(/obj/item/reagent_containers/mender/brute,
+	/obj/item/reagent_containers/mender/burn,
+	/obj/item/reagent_containers/hypospray,
+	/obj/item/reagent_containers/glass/bottle/antitoxin,
+	/obj/item/reagent_containers/glass/bottle/epinephrine,
+	/obj/item/reagent_containers/mender_refill_cartridge/brute,
+	/obj/item/reagent_containers/mender_refill_cartridge/burn)
+
 /* -------------------- Prostheses storage -------------------- */
 
 /obj/item/storage/box/prosthesis_kit
