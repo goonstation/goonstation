@@ -416,12 +416,12 @@
 /datum/materiel/sidearm/pistol
 	name = "Branwen Pistol"
 	path = /obj/item/storage/belt/gun/pistol
-	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and three magazines."
+	description = "A gun-belt containing a semi-automatic, 9mm caliber service pistol and four magazines."
 
 /datum/materiel/sidearm/revolver
 	name = "Predator Revolver"
 	path = /obj/item/storage/belt/gun/revolver
-	description = "A gun-belt containing a hefty combat revolver and two .357 caliber speedloaders."
+	description = "A gun-belt containing a hefty combat revolver and three .357 caliber speedloaders."
 
 /datum/materiel/loadout/assault
 	name = "Assault Trooper"
@@ -431,7 +431,7 @@
 /datum/materiel/loadout/heavy
 	name = "Heavy Weapons Specialist"
 	path = /obj/storage/crate/classcrate/heavy
-	description = "Light machine gun, three boxes of ammunition and a pouch of high explosive grenades."
+	description = "Light machine gun, five boxes of ammunition and a pouch of high explosive grenades."
 
 /datum/materiel/loadout/grenadier
 	name = "Grenadier"
@@ -441,12 +441,12 @@
 /datum/materiel/loadout/infiltrator
 	name = "Infiltrator"
 	path = /obj/storage/crate/classcrate/infiltrator
-	description = "Tranquilizer pistol with a pouch of darts, emag and a variety of tools to help you blend in with regular crew."
+	description = "Tranquilizer pistol with a pouch of darts, EMAG and a variety of tools to help you blend in with regular crew."
 
 /datum/materiel/loadout/scout
 	name = "Scout"
 	path = /obj/storage/crate/classcrate/scout
-	description = "Burst-fire submachine gun, personal cloaking device, light breaker and an emag for sneaky flanking actions."
+	description = "Burst-fire submachine gun, personal cloaking device, light breaker and an EMAG for sneaky flanking actions."
 
 /datum/materiel/loadout/medic
 	name = "Field Medic"

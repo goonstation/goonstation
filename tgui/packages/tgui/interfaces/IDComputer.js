@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from "../backend";
-import { Button, Tabs, Section, NoticeBox, LabeledList, Image, Box, Divider, Stack } from "../components";
+import { Box, Button, Divider, Image, LabeledList, NoticeBox, Section, Stack, Tabs } from "../components";
 import { Window } from '../layouts';
 
 const DeptBox = (props, context) => {

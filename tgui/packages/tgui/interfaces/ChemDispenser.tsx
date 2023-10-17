@@ -6,10 +6,10 @@
 */
 
 import { BooleanLike } from "common/react";
-import { useBackend, useSharedState, useLocalState } from "../backend";
-import { AnimatedNumber, Button, NumberInput, Section, Box, Table, Icon, Tabs, Input, Modal } from "../components";
+import { useBackend, useLocalState, useSharedState } from "../backend";
+import { AnimatedNumber, Box, Button, Icon, Input, Modal, NumberInput, Section, Table, Tabs } from "../components";
 import { Window } from "../layouts";
-import { ReagentGraph, ReagentContainer, Reagent, ReagentList, MatterStateIconMap } from "./common/ReagentInfo";
+import { MatterStateIconMap, Reagent, ReagentContainer, ReagentGraph, ReagentList } from "./common/ReagentInfo";
 import { getTemperatureColor, getTemperatureIcon } from './common/temperatureUtils';
 
 type ChemDispenserData = {

@@ -433,7 +433,6 @@ TYPEINFO(/obj/item/organ/eye/cyber/laser)
 		var/datum/targetable/organAbility/eyebeam/OA = aholder.getAbility(abil)//addAbility(abil)
 		if (istype(OA)) // already has a laser eye, apparently!  let's DOUBLE IT
 			OA.linked_organ = list(OA.linked_organ, src)
-			OA.cooldown = 80
 			OA.eye_proj = ispath(src.eye_proj_override) ? eye_proj_override : /datum/projectile/laser/eyebeams
 		else
 			OA = aholder.addAbility(abil)

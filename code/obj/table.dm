@@ -1,3 +1,5 @@
+#define STATUS_WEAK 1
+#define STATUS_STRONG 2
 
 TYPEINFO(/obj/table)
 	/// Determines what types this table will smooth with
@@ -229,25 +231,16 @@ TYPEINFO_NEW(/obj/table)
 			qdel(W)
 			return
 
-		else if (istype(W, /obj/item/plank))
-			if (status == 2)
-				if (istype(src, /obj/table/reinforced/bar)) //why must you be so confusing
-					boutput(user, "<span class='notice'>You can't add more than one finish, that's just illogical!</span>")
-					return
-				else if (istype(src, /obj/table/reinforced/auto))
-					boutput(user, "<span class='notice'>Now adding a faux wood finish to \the [src]</span>") //mwah
-					playsound(src.loc, 'sound/items/zipper.ogg', 50, 1)
-					if(do_after(user,50))
-						var/obj/table/L = new /obj/table/reinforced/bar/auto(src.loc)
-						L.layer = src.layer - 0.01
-						qdel(W)
-						qdel(src)
-						boutput(user, "<span class='notice'>You have added a faux wood finish to \the [src]</span>")
-					return
-				else
-					boutput(user, "<span class='notice'>\The [src] is too weak to be modified!</span>")
-			else
+		else if (istype(W,/obj/item/sheet/wood))
+			if (istype(src, /obj/table/reinforced/bar)) //why must you be so confusing
+				return ..()
+			if (status != STATUS_STRONG || !istype(src, /obj/table/reinforced/auto))
 				boutput(user, "<span class='notice'>\The [src] is too weak to be modified!</span>")
+				return
+			if (W.amount < 5)
+				boutput(user, "<span class='notice'>You need at least 5 planks to furnish the whole table.</span>")
+				return
+			actions.start(new /datum/action/bar/icon/furnish_table(src,W), user)
 
 		else if (istype(W, /obj/item/paint_can))
 			return
@@ -692,16 +685,16 @@ TYPEINFO_NEW(/obj/table/reinforced)
 	name = "reinforced table"
 	desc = "A table made from reinforced metal, it is quite strong and it requires welding and wrenching to disassemble it."
 	icon = 'icons/obj/furniture/table_reinforced.dmi'
-	status = 2
+	status = STATUS_STRONG
 	parts_type = /obj/item/furniture_parts/table/reinforced
 
 	auto
 		auto = 1
 
 	get_help_message(dist, mob/user)
-		if (src.status == 2)
+		if (src.status == STATUS_STRONG)
 			return {"You can use a <b>welding tool</b> on <span class='harm'>harm</span> intent to weaken it for disassembly."}
-		else if (src.status == 1)
+		else if (src.status == STATUS_WEAK)
 			return{"
 				You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it,
 				or a <b>welding tool</b> on <span class='harm'>harm</span> intent to strengthen it.
@@ -709,16 +702,16 @@ TYPEINFO_NEW(/obj/table/reinforced)
 
 	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W) && user.a_intent == "harm" && W:try_weld(user,1))
-			if (src.status == 2)
+			if (src.status == STATUS_STRONG)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return
-			else if (src.status == 1)
+			else if (src.status == STATUS_WEAK)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_STRENGTHEN), user)
 				return
 			else
 				return ..()
 		else if (iswrenchingtool(W) && user.a_intent == "harm")
-			if (src.status == 1)
+			if (src.status == STATUS_WEAK)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
 				return
 			else
@@ -1071,7 +1064,7 @@ TYPEINFO(/obj/table/glass)
 				logTheThing(LOG_STATION, user, "puts [constructTarget(grabbed,"combat")] onto a glass table")
 				src.gentle_slam(user, grabbed)
 
-		else if (istype(W, /obj/item/plank) || istool(W, TOOL_SCREWING | TOOL_WRENCHING) || (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm"))
+		else if (istype(W,/obj/item/sheet/wood) || istool(W, TOOL_SCREWING | TOOL_WRENCHING) || (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm"))
 			return ..()
 
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm")
@@ -1341,10 +1334,10 @@ TYPEINFO(/obj/table/glass)
 				the_table.deconstruct()
 			if (TABLE_WEAKEN)
 				verbens = "weakens"
-				the_table.status = 1
+				the_table.status = STATUS_WEAK
 			if (TABLE_STRENGTHEN)
 				verbens = "strengthens"
-				the_table.status = 2
+				the_table.status = STATUS_STRONG
 			if (TABLE_ADJUST)
 				verbens = "adjusts the shape of"
 				the_table.set_up()
@@ -1397,3 +1390,53 @@ TYPEINFO(/obj/table/glass)
 		playsound(the_table, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_table].</span>")
 		the_table.deconstruct()
+
+/datum/action/bar/icon/furnish_table
+	id = "furnish_table"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/table/reinforced/the_table
+	var/obj/item/sheet/wood/the_planks
+
+	New(var/obj/table/reinforced/rtable,var/obj/item/sheet/wood/planks)
+		..()
+		if (rtable)
+			the_table = rtable
+		if (planks)
+			the_planks = planks
+
+	onUpdate()
+		..()
+		var/mob/source = owner
+		if (the_table == null || the_planks == null || BOUNDS_DIST(owner, the_table) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+		else if (istype(source) && the_planks != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+		else if (the_table.status != STATUS_STRONG)
+			boutput(owner, "<span class='notice'>\The [src] is too weak to be modified!</span>")
+			interrupt(INTERRUPT_ALWAYS)
+		else if (the_planks.amount < 5)
+			boutput(owner, "<span class='notice'>You need at least 5 planks to furnish the whole table.</span>")
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		if (the_planks.amount < 5)
+			boutput(owner, "<span class='notice'>You need at least 5 planks to furnish the whole table.</span>")
+		owner.visible_message("<span class='notice'>[owner] starts adding a faux wood finish to \the [the_table].</span>") //mwah
+		playsound(the_table.loc, 'sound/items/zipper.ogg', 50, 1)
+
+	onEnd()
+		..()
+		owner.visible_message("<span class='notice'>[owner] finishes adding a faux wood finish to \the [the_table].</span>")
+		var/obj/table/L = new /obj/table/reinforced/bar/auto(the_table.loc)
+		L.layer = the_table.layer - 0.01
+		the_planks.change_stack_amount(-5)
+		qdel(the_table)
+		return
+
+#undef STATUS_WEAK
+#undef STATUS_STRONG

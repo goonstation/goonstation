@@ -964,11 +964,6 @@ ABSTRACT_TYPE(/area/shuttle_particle_spawn)
 	icon_state = "shuttle_transit_stars_w"
 	star_dir = "_w"
 
-/area/shuttle_sound_spawn
-	name = "Shuttle Subwoofers"
-	icon_state = "shuttle_transit_sound"
-	teleport_blocked = TRUE
-	requires_power = FALSE
 
 // zewaka - actual areas below //
 
@@ -3225,6 +3220,9 @@ ABSTRACT_TYPE(/area/station/janitor)
 	icon_state = "yellow"
 	sound_environment = 5
 	workplace = 1
+
+/area/station/science/testchamber/bombchamber
+	name = "Bomb Testing Chamber"
 
 ABSTRACT_TYPE(/area/station/science)
 /area/station/science

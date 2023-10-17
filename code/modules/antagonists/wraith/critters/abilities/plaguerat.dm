@@ -56,7 +56,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/plague_rat)
 		if (length(found_decals) > 0)
 			actions.start(new/datum/action/bar/private/icon/plaguerat_eat(found_decals, src), P)
 		else
-			boutput(holder.owner, "<span class='alert'>You can't eat that, it doesnt satisfy your appetite.</span>")
+			boutput(holder.owner, "<span class='alert'>You can't eat that, it doesn't satisfy your appetite.</span>")
 			return TRUE
 
 /datum/action/bar/private/icon/plaguerat_eat

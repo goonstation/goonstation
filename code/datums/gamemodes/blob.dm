@@ -95,6 +95,20 @@
 	return 1
 
 /datum/game_mode/blob/victory_msg()
+	return "<span style='font-size:20px'><b>[victory_headline()]</b><br>[victory_body()]</span>"
+
+/datum/game_mode/blob/victory_headline()
+	if(src.finish_counter)
+		return "Blob victory!"
+	return "Crew victory!"
+
+/datum/game_mode/blob/victory_body()
+	if (src.finish_counter)
+		return "All blobs have been exterminated!"
+	else
+		return "The crew has failed to stop the overmind! The station is lost to the blob!"
+
+/datum/game_mode/blob/declare_completion()
 	var/list/blobs = list()
 	for (var/datum/mind/M in traitors)
 		if (!M)
@@ -106,11 +120,6 @@
 			continue
 		if (isblob(M.current))
 			blobs += M.current
-	if (!blobs.len)
-		return "<span style='font-size:20px'><b>Station victory!</b> - All blobs have been exterminated!</span>"
-	else
-		return "<span style='font-size:20px'><b>Blob victory!</b> - The crew has failed to stop the overmind! The station is lost to the blob!</span>"
-
-/datum/game_mode/blob/declare_completion()
+	src.finish_counter = length(blobs)
 	boutput(world, src.victory_msg())
 	..()
