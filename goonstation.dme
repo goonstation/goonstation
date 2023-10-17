@@ -2193,7 +2193,6 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\procs\datetime.dm"
 #include "code\procs\elecflash.dm"
 #include "code\procs\explosion_new.dm"
-#include "code\procs\export_data.dm"
 #include "code\procs\fireflash.dm"
 #include "code\procs\gamehelpers.dm"
 #include "code\procs\Get_Flat_Icon.dm"
