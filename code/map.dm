@@ -637,8 +637,8 @@ var/global/list/mapNames = list(
 		/atom/movable/screen/parallax_render_source/space_1,
 		/atom/movable/screen/parallax_render_source/space_2,
 		/atom/movable/screen/parallax_render_source/typhon/aetherion,
-		/atom/movable/screen/parallax_render_source/planet/mundus/aetherion,
-		/atom/movable/screen/parallax_render_source/planet/iustitia/aetherion,
+		/atom/movable/screen/parallax_render_source/planet/faatus,
+		/atom/movable/screen/parallax_render_source/planet/domusDei,
 		/atom/movable/screen/parallax_render_source/asteroids_far,
 		/atom/movable/screen/parallax_render_source/asteroids_near/sparse
 		)
