@@ -5,5 +5,10 @@
 	method = RUSTG_HTTP_METHOD_PUT
 	path = "/rounds"
 	routeParams = list("gameRound")
-	body = list("game_type")
+	body = /datum/apiBody/rounds/update
 	correct_response = /datum/apiModel/Tracked/GameRound
+
+	buildBody(
+		game_type
+	)
+		. = ..(args)

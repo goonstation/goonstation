@@ -4006,7 +4006,7 @@ var/global/noir = 0
 		ircmsg["msg"] = "manually restarted the server."
 		ircbot.export_async("admin", ircmsg)
 
-		round_end_data(2) //Wire: export_async round end packet (manual restart)
+		roundManagement.recordEnd(crashed = TRUE)
 
 		sleep(3 SECONDS)
 		Reboot_server()
