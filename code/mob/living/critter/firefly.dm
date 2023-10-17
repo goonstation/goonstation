@@ -189,7 +189,7 @@ TYPEINFO(/mob/living/critter/small_animal/firefly)
 		..()
 
 /mob/living/critter/small_animal/firefly/lightning
-	desc = "A bioluminescent insect that has some suspecious extra glow to it."
+	desc = "A bioluminescent insect that has some suspicious extra glow to it."
 	var/obj/effects/firefly_lightning/lightning
 
 	New()
@@ -346,7 +346,7 @@ TYPEINFO(/datum/component/bug_capture)
 	var/allowed_bug_count = can_jar(B)
 	if(allowed_bug_count)
 		if(B.client)
-			boutput(user, "<span class='alert'>[B] seems just to squirley to capture!  Need a more lazy one.</span>")
+			boutput(user, "<span class='alert'>[B] seems just to squirrelly to capture!  Need a more lazy one.</span>")
 			return FALSE
 	else
 		return FALSE

@@ -176,14 +176,15 @@
 		src.gloves.wear_image.filters = src.gloves.filters.Copy()
 
 		if (src.limbs && src.limbs.l_arm && src.limbs.l_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_left_arm"))
-			if ("left_[icon_name]" in src.mutantrace?.clothing_icon_states?["hands"]) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
+			var/icon_local = (src.gloves.which_hands & GLOVE_HAS_LEFT) ? icon_name : "transparent"
+			if ("left_[icon_local]" in src.mutantrace?.clothing_icon_states?["hands"]) //checking if the wearer is a mutant, and if so swaps the left glove with the special sprite if there is one.
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icons["hands"]
 				no_offset = TRUE
 				src.gloves.wear_image.pixel_x = initial(src.gloves.wear_image.pixel_x)
 				src.gloves.wear_image.pixel_y = initial(src.gloves.wear_image.pixel_y)
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
-			src.gloves.wear_image.icon_state = "left_[icon_name]"
+			src.gloves.wear_image.icon_state = "left_[icon_local]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
 			src.gloves.update_wear_image(src, src.gloves.wear_image.icon != src.gloves.wear_image_icon)
@@ -192,14 +193,15 @@
 			src.UpdateOverlays(null, "wear_gloves_l")
 
 		if (src.limbs && src.limbs.r_arm && src.limbs.r_arm.accepts_normal_human_overlays) //src.bioHolder && !src.bioHolder.HasEffect("robot_right_arm"))
-			if ("right_[icon_name]" in src.mutantrace?.clothing_icon_states?["hands"]) //above but right glove
+			var/icon_local = (src.gloves.which_hands & GLOVE_HAS_RIGHT) ? icon_name : "transparent"
+			if ("right_[icon_local]" in src.mutantrace?.clothing_icon_states?["hands"]) //above but right glove
 				src.gloves.wear_image.icon = src.mutantrace.clothing_icons["hands"]
 				no_offset = TRUE
 				src.gloves.wear_image.pixel_x = initial(src.gloves.wear_image.pixel_x)
 				src.gloves.wear_image.pixel_y = initial(src.gloves.wear_image.pixel_y)
 			else
 				src.gloves.wear_image.icon = src.gloves.wear_image_icon
-			src.gloves.wear_image.icon_state = "right_[icon_name]"
+			src.gloves.wear_image.icon_state = "right_[icon_local]"
 			src.gloves.wear_image.color = src.gloves.color
 			src.gloves.wear_image.alpha = src.gloves.alpha
 			src.UpdateOverlays(src.gloves.wear_image, "wear_gloves_r")

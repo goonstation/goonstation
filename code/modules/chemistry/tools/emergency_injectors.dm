@@ -146,7 +146,7 @@
 	name = "emergency auto-injector (diphenhydramine)"
 	initial_reagents = "antihistamine"
 	label = "blue"
-	desc = "An auto-injector containing dyphenhidramine, useful for reducing the severity of allergic reactions."
+	desc = "An auto-injector containing diphenhydramine, useful for reducing the severity of allergic reactions."
 
 /obj/item/reagent_containers/emergency_injector/salbutamol
 	name = "emergency auto-injector (salbutamol)"

@@ -497,6 +497,10 @@
 /proc/has_or_have(var/mob/subject)
 	return subject.get_pronouns().pluralize ? "have" : "has"
 
+/// "they've had" vs "he's had"
+/proc/ve_or_s(var/mob/subject)
+	return subject.get_pronouns().pluralize ? "'ve" : "'s"
+
 /proc/himself_or_herself(var/mob/subject)
 	return subject.get_pronouns().reflexive
 

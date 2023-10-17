@@ -157,7 +157,7 @@ or don't if it uses a custom topopen overlay
 		"medical" = "The casing is made out of a white plastic and has a prominent red stripe painted down the front.",
 		"ntold" = "A much older model of NanoTrasen AI core. The stark white has faded to eggshell with time.",
 		"bee" = "The casing has been painted and given little plastic antennae to make it resemble a bee!",
-		"shock" = "The casing is painted a luminecient blue and has what looks to be neon light tubes built into it!",
+		"shock" = "The casing is painted a luminescent blue and has what looks to be neon light tubes built into it!",
 		"gold" = "The casing seems to be made out of gold. No, wait. Looking closer, you think that's actually pyrite.",
 		"engineering" = "The casing is made out of a buffed metal and has a prominent orange stripe painted down the front.",
 		"soviet" = "The latest in Soviet artificial intelligence technology. And by latest, you mean this thing looks like it's been collecting dust for decades.",
@@ -177,7 +177,7 @@ or don't if it uses a custom topopen overlay
 		"mauxite" = "The core has been hammered together out of jagged sheets of mauxite.",
 		"flock" = "The casing is made out of a humming teal material. It pulses and flares to a strange rhythm.",
 		"crt" = "The core appears to be a... CRT television. Huh.",
-		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octogonal prism at all, it's just a cube!",
+		"rustic" = "The core appears to be... a box. Where are the beveled edges?! This core isn't a weird octagonal prism at all, it's just a cube!",
 		"cardboard" = "The core appears to be made out of cardboard. Huh. ...Well, it's probably still just as good at opening doors."
 	)
 
@@ -1238,10 +1238,7 @@ or don't if it uses a custom topopen overlay
 			if (src.emote_check(voluntary, 50))
 				if (isdead(src))
 					src.emote_allowed = 0
-				if (narrator_mode)
-					playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
@@ -1271,10 +1268,7 @@ or don't if it uses a custom topopen overlay
 
 		if ("scream")
 			if (src.emote_check(voluntary, 50))
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, src.sound_scream, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, src.sound_scream, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				message = "<b>[src]</b> screams!"
 
 		if ("birdwell", "burp")
@@ -1342,10 +1336,7 @@ or don't if it uses a custom topopen overlay
 						if (38) message = "<B>[src]</B> exterminates the air supply."
 						if (39) message = "<B>[src]</B> farts so hard the borgs feel it."
 						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	#ifdef DATALOGGER
 				game_stats.Increment("farts")
@@ -1872,7 +1863,7 @@ or don't if it uses a custom topopen overlay
 	var/list/bodies = new/list()
 
 	for (var/mob/living/silicon/hivebot/H in available_ai_shells)
-		if (H.shell && !H.dependent && !isdead(H) && get_step(H, 0)?.z == get_step(src, 0)?.z)
+		if (H.shell && !H.dependent && !isdead(H))
 			bodies += H
 
 	for (var/mob/living/silicon/robot/R in available_ai_shells)
@@ -2099,10 +2090,10 @@ or don't if it uses a custom topopen overlay
 
 	if(printalerts)
 		printalerts = 0
-		boutput(message_mob, "No longer recieving alert messages.")
+		boutput(message_mob, "No longer receiving alert messages.")
 	else
 		printalerts = 1
-		boutput(message_mob, "Now recieving alert messages.")
+		boutput(message_mob, "Now receiving alert messages.")
 
 /mob/living/silicon/ai/verb/access_internal_pda()
 	set category = "AI Commands"

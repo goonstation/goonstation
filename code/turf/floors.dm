@@ -1432,7 +1432,11 @@ TYPEINFO(/turf/simulated/floor/grass)
 /turf/simulated/floor/grass
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
+	#ifdef AUTUMN
+	icon_state = "grass_autumn"
+	#else
 	icon_state = "grass"
+	#endif
 	mat_changename = 0
 	mat_changedesc = 0
 	step_material = "step_outdoors"
@@ -1474,7 +1478,11 @@ TYPEINFO(/turf/simulated/floor/grass)
 	step_priority = STEP_PRIORITY_MED
 
 /turf/simulated/floor/grass/leafy
+#ifdef AUTUMN
+	icon_state = "grass_leafy_autumn"
+#else
 	icon_state = "grass_leafy"
+#endif
 
 /turf/simulated/floor/grass/random
 	New()
@@ -1489,7 +1497,11 @@ TYPEINFO(/turf/simulated/floor/grasstodirt)
 /turf/simulated/floor/grasstodirt
 	name = "grass"
 	icon = 'icons/misc/worlds.dmi'
+	#ifdef AUTUMN
+	icon_state = "autumntodirt"
+	#else
 	icon_state = "grasstodirt"
+	#endif
 	mat_changename = 0
 	mat_changedesc = 0
 
@@ -1826,34 +1838,6 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 
 /turf/simulated/floor/var/global/girder_egg = 0
 
-/turf/simulated/floor/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
-	if (!user || !istype(W, /obj/item/light_parts/floor))
-		return
-	if(!instantly)
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, TRUE)
-		boutput(user, "You begin to attach the light fixture to [src]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/floor/proc/finish_attaching,\
-			list(W, user), W.icon, W.icon_state, null, null)
-		return
-
-	finish_attaching(W, user)
-	return
-
-/turf/simulated/floor/proc/finish_attaching(obj/item/W, mob/user)
-	// the floor is the target turf
-	var/turf/target = src
-	var/obj/item/light_parts/parts = W
-	var/obj/machinery/light/newlight = new parts.fixture_type(target)
-	boutput(user, "You attach the light fixture to [src].")
-	newlight.icon_state = parts.installed_icon_state
-	newlight.base_state = parts.installed_base_state
-	newlight.fitting = parts.fitting
-	newlight.status = 1 // LIGHT_EMPTY
-	newlight.add_fingerprint(user)
-	src.add_fingerprint(user)
-	user.u_equip(parts)
-	qdel(parts)
-
 /turf/simulated/floor/proc/pry_tile(obj/item/C as obj, mob/user as mob, params)
 	if (!intact)
 		return
@@ -1892,28 +1876,12 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		P.write_on_turf(src, user, params)
 		return
 
-	if (istype(C, /obj/item/light_parts/floor))
-		src.attach_light_fixture_parts(user, C) // Made this a proc to avoid duplicate code (Convair880).
-		return
-
 	if (src.reinforced && ((isweldingtool(C) && C:try_weld(user,0,-1,1,1)) || iswrenchingtool(C)))
 		boutput(user, "<span class='notice'>Loosening rods...</span>")
 		if(iswrenchingtool(C))
 			playsound(src, 'sound/items/Ratchet.ogg', 80, TRUE)
-		if(do_after(user, 3 SECONDS))
-			if(!src.reinforced)
-				return
-			var/obj/R1 = new /obj/item/rods(src)
-			var/obj/R2 = new /obj/item/rods(src)
-			if (material)
-				R1.setMaterial(material)
-				R2.setMaterial(material)
-			else
-				R1.setMaterial(getMaterial("steel"))
-				R2.setMaterial(getMaterial("steel"))
-			ReplaceWithFloor()
-			src.to_plating()
-			return
+		SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /turf/simulated/floor/proc/remove_reinforcement, null, C.icon, C.icon_state, null, INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_ATTACKED | INTERRUPT_STUNNED | INTERRUPT_ACTION)
+		return
 
 	if(istype(C, /obj/item/rods))
 		if (!src.intact)
@@ -2090,6 +2058,20 @@ DEFINE_FLOORS(solidcolor/black/fullbright,
 		src.setMaterial(I.material)
 	I.change_stack_amount(-2)
 	playsound(src, 'sound/items/Deconstruct.ogg', 80, TRUE)
+
+/turf/simulated/floor/proc/remove_reinforcement()
+	if(!src.reinforced)
+		return
+	var/obj/R1 = new /obj/item/rods(src)
+	var/obj/R2 = new /obj/item/rods(src)
+	if (material)
+		R1.setMaterial(material)
+		R2.setMaterial(material)
+	else
+		R1.setMaterial(getMaterial("steel"))
+		R2.setMaterial(getMaterial("steel"))
+	ReplaceWithFloor()
+	src.to_plating()
 
 /turf/simulated/floor/MouseDrop_T(atom/A, mob/user as mob)
 	..(A,user)
@@ -2399,9 +2381,14 @@ DEFINE_FLOORS_SIMMED_UNSIMMED(racing/rainbow_road,
 	name = "grass"
 	desc = "some leafy grass."
 	icon = 'icons/turf/outdoors.dmi'
+#ifdef AUTUMN
+	icon_state = "grass_leafy_autumn"
+	icon_state_edge = "leafy_edge_autumn"
+#else
 	icon_state = "grass_leafy"
-	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS - 1
 	icon_state_edge = "grass_leafyedge"
+#endif
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS - 1
 
 /turf/simulated/floor/auto/dirt
 	name = "dirt"

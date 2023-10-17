@@ -281,7 +281,7 @@ TYPEINFO(/obj/item/gun/energy/phaser_huge)
 	uses_multiple_icon_states = 1
 	item_state = "phaser_xl"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	desc = "The largest amplified carbon-arc weapon from Radnor Photonics. A big gun for big problems."
 	muzzle_flash = "muzzle_flash_phaser"
 	cell_type = /obj/item/ammo/power_cell/med_plus_power
@@ -781,6 +781,8 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 	desc = "A dangerous-looking particle blaster pistol from Giesel Radiofabrik. It's self-charging by a radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "pistol"
+	charge_icon_state = "pistol"
+	uses_charge_overlay = TRUE
 	w_class = W_CLASS_NORMAL
 	force = MELEE_DMG_PISTOL
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
@@ -809,24 +811,10 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 
 	//handle gun mods at a workbench
 
-
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster)
 		projectiles = list(current_projectile)
 		..()
-
-
-	update_icon()
-		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "pistol[ratio]"
-			return
-
-
-
 
 	/*examine()
 		set src in view()
@@ -858,7 +846,9 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	desc = "A special issue particle blaster from Giesel Radiofabrik, designed for burst fire. It's self-charging by a radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "smg"
-	can_dual_wield = 0
+	charge_icon_state = "smg"
+	uses_charge_overlay = TRUE
+	can_dual_wield = FALSE
 	w_class = W_CLASS_NORMAL
 	force = MELEE_DMG_PISTOL
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
@@ -866,31 +856,22 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	spread_angle = 10
 	muzzle_flash = "muzzle_flash_bluezap"
 
-
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/burst)
 		projectiles = list(current_projectile)
 		AddComponent(/datum/component/holdertargeting/fullauto, 1.2, 1.2, 1)
 		..()
 
-
-	update_icon()
-		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "smg[ratio]"
-			return
-
 /obj/item/gun/energy/blaster_carbine
 	name = "GRF Zap-Karabiner"
 	desc = "A blaster carbine from Giesel Radiofabrik, designed for longer range engagements. It's self-charging by a radioactive power cell. Beware of Bremsstrahulung backscatter."
 	icon = 'icons/obj/large/48x32.dmi'
 	icon_state = "blaster-carbine"
+	charge_icon_state = "blaster-carbine"
 	item_state = "rifle"
-	can_dual_wield = 0
-	two_handed = 1
+	uses_charge_overlay = TRUE
+	can_dual_wield = FALSE
+	two_handed = TRUE
 	w_class = W_CLASS_BULKY
 	force = MELEE_DMG_RIFLE
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
@@ -898,30 +879,21 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 	shoot_delay = 4
 	muzzle_flash = "muzzle_flash_bluezap"
 
-
 	New()
 		set_current_projectile(new /datum/projectile/laser/blaster/carbine)
 		projectiles = list(current_projectile)
 		..()
-
-
-	update_icon()
-		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "blaster-carbine[ratio]"
-			return
 
 /obj/item/gun/energy/blaster_cannon
 	name = "GRF Zap-Kanone"
 	desc = "A heavy particle blaster from Giesel Radiofabrik, designed for high damage. It's self-charging by a larger radioactive power cell. Beware of Bremsstrahlung backscatter."
 	icon = 'icons/obj/items/gun_mod.dmi'
 	icon_state = "cannon"
+	charge_icon_state = "cannon"
 	item_state = "rifle"
-	can_dual_wield = 0
-	two_handed = 1
+	uses_charge_overlay = TRUE
+	can_dual_wield = FALSE
+	two_handed = TRUE
 	w_class = W_CLASS_BULKY
 	force = MELEE_DMG_RIFLE
 	shoot_delay = 8
@@ -935,17 +907,6 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 		c_flags |= ONBACK
 		AddComponent(/datum/component/holdertargeting/windup, 1 SECOND)
 		..()
-
-
-	update_icon()
-		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "cannon[ratio]"
-			return
-
 
 ///////////modular components - putting them here so it's easier to work on for now////////
 /*
@@ -1779,7 +1740,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 	item_state = "ntgun2"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	w_class = W_CLASS_NORMAL		//for clarity
 	two_handed = TRUE
 	force = 9

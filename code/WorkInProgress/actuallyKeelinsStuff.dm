@@ -2822,6 +2822,11 @@ Returns:
 	ex_act()
 		return
 
+	Click(location, control, params)
+		if (isobserver(usr))
+			usr.set_loc(src.target)
+			return
+		..()
 
 ////////////////////////////////////////////////////////////////////////////////////////
 /* var/list/raisinlist = new/list()
@@ -2936,10 +2941,7 @@ var/list/lag_list = new/list()
 				break
 
 	proc/spook(var/mob/living/L)
-		if (narrator_mode)
-			playsound(L, 'sound/vox/ghost.ogg', 5, FALSE)
-		else
-			playsound(L, 'sound/effects/ghost.ogg', 5, FALSE)
+		playsound(L, 'sound/effects/ghost.ogg', 5, FALSE)
 		sleep(0.3 SECONDS)
 		active = 1
 		walk_towards(src,L,3)

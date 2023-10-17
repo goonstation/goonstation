@@ -239,17 +239,12 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 /turf/simulated/wall/auto/feather/attackby(obj/item/C, mob/user)
 	if(!C || !user)
 		return
-	if(ispryingtool(C) && src.broken)
-		playsound(src, 'sound/items/Crowbar.ogg', 80, TRUE)
-		src.destroy()
-		return
-	if(src.broken)
-		boutput(user, "<span class='hint'>It's already broken, you need to take the pieces apart with a crowbar.</span>")
-		return
 	if (src.health > 0)
 		src.takeDamage("brute", C.force)
 	if(src.health <= 0)
 		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks the [initial(src.name)] with [C], shattering it!</span>")
+		playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 50, 1)
+		src.destroy()
 	else
 		src.visible_message("<span class='alert'><span class='bold'>[user]</span> smacks [src] with [C]!</span>")
 	user.lastattacked = src
@@ -299,7 +294,6 @@ TYPEINFO(/turf/simulated/wall/auto/feather)
 		src.desc = "It's broken. You could probably use a crowbar to break the pieces apart."
 		src.broken = TRUE
 		src.UpdateIcon()
-		src.material.setProperty("reflective", 3)
 		if (playAttackSound)
 			playsound(src, 'sound/impact_sounds/Crystal_Shatter_1.ogg', 25, TRUE)
 
