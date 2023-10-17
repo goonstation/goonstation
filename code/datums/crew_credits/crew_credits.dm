@@ -211,11 +211,15 @@
 	if (length(antagonist_display_names))
 		antag_roles_text = " ([english_list(antagonist_display_names)])"
 
+	var/full_role = "[mind.assigned_role][antag_roles_text]"
+	if (mind.assigned_role == "MODE") //I LOVE MODE I LOVE MODE
+		full_role = english_list(antagonist_display_names)
+
 	return list(list(
 		"real_name" = mind.current.real_name,
 		"dead" = isdead(mind.current),
 		"player" = mind.displayed_key,
-		"role" = "[mind.assigned_role][antag_roles_text]",
+		"role" = full_role,
 		"head" = is_head,
 	))
 
@@ -459,6 +463,7 @@
 	for(var/obj/critter/domestic_bee/heisenbee/HB in by_cat[TR_CAT_PETS])
 		var/obj/item/hat = HB.original_hat
 		if (hat && !hat.disposed)
+			.["type"] = "itemList"
 			if(hat.loc != HB)
 				var/atom/movable/AM = hat.loc
 				while(istype(AM) && !istype(AM, /mob))
@@ -494,6 +499,7 @@
 					"name" = "No hat yet",
 				))
 		else if (hat)
+			.["type"] = "itemList"
 			.["value"] = list(list(
 				"name" = "\[DESTROYED!\] \[🐝 MURDERED!\]",
 				"iconBase64" = icon2base64(getFlatIcon(hat, no_anim=TRUE)),
