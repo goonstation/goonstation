@@ -2262,47 +2262,65 @@
 	var/list/bits = list("face","shoulder","side","arm","leg","flesh","neck","hip")
 	var/mob/living/carbon/human/H = M
 	if (!istype(H))
+		boutput(src, "That thing doesn't look good to eat...", "red")
 		return
 
 	if (!H.stat)
-		boutput(usr, "You can't eat [H] while [hes_or_shes(H)] conscious!")
+		boutput(src, "You can't eat [H] while [hes_or_shes(H)] conscious!")
 		return
 
 	if (H.bioHolder.HasEffect("consumed"))
-		boutput(usr, "You've already eaten [H]'s good meat, find someone else!")
+		boutput(src, "You've already eaten [H]'s good meat, find someone else!", "red")
+		return
+	if (H.bioHolder.HasEffect("skeleton")||H.decomp_stage >= DECOMP_STAGE_SKELETONIZED)
+		src.TakeDamage(head, rand(5,10), 0, 0, DAMAGE_CRUSH)
+		take_bleeding_damage(src, null, rand(5,10), DAMAGE_CUT)
+		playsound(src.loc,'sound/impact_sounds/plate_break.ogg',20,1)
+		boutput(src, "<span class='alert'>You try to bite into [H]'s bones but instead break your teeth.</span>")
+		src.visible_message("<span class='alert>[src] tries to bite into [H]'s bones but shatters [his_or_her(src)] teeth!</span>")
 		return
 
 	if(src.emote_check(1, 50, 0))	//spam prevention
-		usr.visible_message("<span class='alert'>[usr] [pick("sinks [his_or_her(H)] teeth into","bites into","chews on","gnaws on","starts eating","munches on")] [H]!</span>")
+		src.visible_message("<span class='alert'>[src] [pick("sinks [his_or_her(src)] teeth into","bites into","chews on","gnaws on","starts eating","munches on")] [H]!</span>")
 
-		var/loc = usr.loc
+		var/loc = src.loc
 
 
 		SPAWN(1 SECONDS)
 			for(var/i = 1, i < 6; i++)
-				APPLY_ATOM_PROPERTY(usr,PROP_MOB_CANTMOVE,"cannibalism") //prevents user from doing weird stuff involving moving away mid sleep to either reset counter before consumption modifier or just move off and back on without interruptiong consumption
-				if (usr.loc != loc || H.loc != loc)
-					boutput(usr, "<span class='alert'>Your consumption of [H] was interrupted!</span>")
-					REMOVE_ATOM_PROPERTY(usr,PROP_MOB_CANTMOVE,"cannibalism")
+				APPLY_ATOM_PROPERTY(src,PROP_MOB_CANTMOVE,"cannibalism")
+				if (src.loc != loc || H.loc != loc)
+					boutput(src, "<span class='alert'>Your consumption of [H] was interrupted!</span>")
+					REMOVE_ATOM_PROPERTY(src,PROP_MOB_CANTMOVE,"cannibalism")
 					return
 
 				else
-					usr.visible_message("<span class='alert'>[usr] [pick("Rips a chunk off of","chomps off a piece of","takes a bite out of","Eats a chunk of","chews off a bit of","gnaws off some of")] [H]'s [pick(bits)]!</span>")
-					playsound(usr.loc, consuming_sounds,40,1)
+					src.visible_message("<span class='alert'>[src] [pick("Rips a chunk off of","chomps off a piece of","takes a bite out of","Eats a chunk of","chews off a bit of","gnaws off some of")] [H]'s [pick(bits)]!</span>")
+					playsound(src.loc, consuming_sounds,20,1)
 
-					if (prob(2) && H.bioHolder.HasEffect("monkey")) //previous method didn't seem to work, this works for sure. prob set to 2, while a high chance of kuru is funny, it was not the intent of the original command
-						usr.reagents.add_reagent("prions", 10)
-						SPAWN(rand(20,50)) boutput(usr, "<span class='alert'>You don't feel so good.</span>")
+					if (prob(2) && H.bioHolder.HasEffect("monkey"))
+						src.reagents.add_reagent("prions", 10)
+						SPAWN(rand(20,50)) boutput(src, "<span class='alert'>You don't feel so good.</span>")
+					if(H.decomp_stage >= DECOMP_STAGE_DECAYED)
+						src.reagents.add_reagent("miasma", 20)
+						src.reagents.add_reagent("yuck", 5)
+						boutput(src, "<span class='alert'>Blargh! That meat is rotten!</span>")
+						playsound(src.loc,'sound/misc/meat_plop.ogg', 40, 1)
+						REMOVE_ATOM_PROPERTY(src,PROP_MOB_CANTMOVE,"cannibalism")
+						return
+					if(ishuman(M))
+						if(src.sims)
+							src.sims.affectMotive("Hunger", 20)
 
 					H.TakeDamageAccountArmor("chest", rand(6,10), 0, 0, DAMAGE_STAB)
-					blood_slash(H, 5, null, pick(NORTH, SOUTH, EAST, WEST)) //only works on living, ideally would want dead body consumption to be bloodier
+					blood_slash(H, 5, null, pick(NORTH, SOUTH, EAST, WEST))
 					if (!isdead(H) && prob(50))
 						H.emote("scream")
 					take_bleeding_damage(H, null, rand(6,10), DAMAGE_STAB)
 				sleep(1 SECONDS)
-				if(i == 5) //allows for not done yet message to appear, prevents consumed bioeffect from being added too early
+				if(i == 5)
 					H.bioHolder.AddEffect("consumed")
-					REMOVE_ATOM_PROPERTY(usr,PROP_MOB_CANTMOVE,"cannibalism")
+					REMOVE_ATOM_PROPERTY(src,PROP_MOB_CANTMOVE,"cannibalism")
 	else
 		src.show_text("You're not done eating [H] yet.", "red")
 
