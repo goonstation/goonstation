@@ -17,8 +17,8 @@ TYPEINFO(/datum/component/wirePanel)
 	var/cover_status = WPANEL_COVER_CLOSED
 	/// by-order list of booleans
 	var/list/cut_wires = list()
-	/// bitmask of which wire controls are hacked
-	var/hacked_controls = 0
+	/// bitmask of which machine controls are active
+	var/active_controls = ~0
 
 /datum/component/wirePanel/Initialize(datum/wirePanel/panelDefintion/_definition)
 	..()
@@ -38,7 +38,7 @@ TYPEINFO(/datum/component/wirePanel)
 	RegisterSignal(parent, COMSIG_WPANEL_SET_CONTROLS, PROC_REF(set_controls))
 	RegisterSignal(parent, COMSIG_WPANEL_SET_COVER, PROC_REF(set_cover))
 
-	RegisterSignal(parent, COMSIG_WPANEL_HACKED_CONTROLS, PROC_REF(state_controls))
+	RegisterSignal(parent, COMSIG_WPANEL_ACTIVE_CONTROLS, PROC_REF(state_controls))
 	RegisterSignal(parent, COMSIG_WPANEL_STATE_COVER, PROC_REF(state_cover))
 
 	RegisterSignal(parent, COMSIG_ATOM_UI_DATA, PROC_REF(ui_data))
@@ -80,13 +80,13 @@ TYPEINFO(/datum/component/wirePanel)
  * Arguments:
  * * `mob/user` - user doing the action
  * * `controls` - the controls to change
- * * `is_hacked` - new hacked state of the controls
+ * * `active` - new active state of the control
  */
-/datum/component/wirePanel/proc/set_controls(obj/parent, mob/user, controls, is_hacked)
-	if (is_hacked)
-		src.hacked_controls = ADD_FLAG(src.hacked_controls, controls)
+/datum/component/wirePanel/proc/set_controls(obj/parent, mob/user, controls, active)
+	if (!active)
+		src.active_controls = REMOVE_FLAG(src.active_controls, controls)
 	else
-		src.hacked_controls = REMOVE_FLAG(src.hacked_controls, controls)
+		src.active_controls = ADD_FLAG(src.active_controls, controls)
 	return TRUE
 
 /**
@@ -109,17 +109,21 @@ TYPEINFO(/datum/component/wirePanel)
  */
 /datum/component/wirePanel/proc/can_mod_wires(obj/parent, mob/user, tool_flag)
 	if (src.cover_status == WPANEL_COVER_BROKEN)
-		boutput(user, "The wire panel looks [pick ("broken", "smashed", "totalled", "messed up")], repair it first!", "wpanel")
+		boutput(user, "The wire panel looks [pick ("broken", "smashed", "totalled", "messed up")]!", "wpanel")
 		return
 
-	if (isAI(user) || (issilicon(user) && BOUNDS_DIST(user, parent)))
-		if (HAS_FLAG(src.hacked_controls, WIRE_CONTROL_SILICON))
+	if (parent.can_access_remotely(user))
+		if (HAS_FLAG(src.active_controls, WIRE_CONTROL_SILICON))
+			return TRUE
+		if (isAI(user))
+			boutput(user, "Remote AI control has been disabled!", "wpanel")
+			return
+		if (issilicon(user) && (BOUNDS_DIST(user, parent) > 0)) // neighboring silicons go down the panel open/closed checks below
 			boutput(user, "Remote silicon control has been disabled!", "wpanel")
 			return
-		return TRUE
 
 	if (src.cover_status == WPANEL_COVER_OPEN)
-		if (BOUNDS_DIST(user, parent)) // [ ] Large object offset
+		if (!in_interact_range(parent, user))
 			boutput(user, "You're too far away to reach the wire panel on [parent]!", "wpanel")
 			return
 		if (!user.find_tool_in_hand(tool_flag))
@@ -137,9 +141,6 @@ TYPEINFO(/datum/component/wirePanel)
 		if (!issilicon(user))
 			boutput(user, "The cover panel is [src.cover_status == WPANEL_COVER_CLOSED ? "closed": "locked"]")
 			return
-		if (HAS_FLAG(src.hacked_controls, WIRE_CONTROL_SILICON))
-			boutput(user, "Remote silicon control has been disabled!", "wpanel")
-			return
 		return TRUE
 
 /// Mob following through and doing the action to the wire.
@@ -147,6 +148,10 @@ TYPEINFO(/datum/component/wirePanel)
 	var/datum/wirePanel/wireDefintion/wire = src.panel_def.by_order[wire_index]
 	if(!istype(wire))
 		return
+
+	var/can_hack = src.active_controls & wire.control_flags
+	var/can_fix = wire.control_flags ^ can_hack
+
 	switch(wire_act_flag)
 		if (WIRE_ACT_CUT)
 			src.cut_wires[wire_index] = TRUE
@@ -157,15 +162,10 @@ TYPEINFO(/datum/component/wirePanel)
 		if (WIRE_ACT_PULSE)
 			boutput(user, "You pulse the <b>[wire.color_name]</b> wire!")
 
-	// only fix what's hacked
-	var/can_fix = src.hacked_controls & wire.control_flags
-	// only hack what's not fixed
-	var/can_hack = wire.control_flags ^ can_fix
-
-	if(HAS_FLAG(wire.hack, wire_act_flag))
-		. = SEND_SIGNAL(parent, COMSIG_WPANEL_SET_CONTROLS, user, can_hack, TRUE)
-	if(HAS_FLAG(wire.fix, wire_act_flag))
-		. = SEND_SIGNAL(parent, COMSIG_WPANEL_SET_CONTROLS, user, can_fix, FALSE)
+	if(HAS_FLAG(wire.hack, wire_act_flag) && can_hack)
+		. = SEND_SIGNAL(parent, COMSIG_WPANEL_SET_CONTROLS, user, can_hack, FALSE)
+	if(HAS_FLAG(wire.fix, wire_act_flag) && can_fix)
+		. = SEND_SIGNAL(parent, COMSIG_WPANEL_SET_CONTROLS, user, can_fix, TRUE)
 
 	tgui_process.update_uis(parent)
 
@@ -197,7 +197,7 @@ TYPEINFO(/datum/component/wirePanel)
 
 /// Returns the currently active wire control flags
 /datum/component/wirePanel/proc/state_controls(obj/parent)
-	return src.hacked_controls
+	return src.active_controls
 
 /// Return the status of the wire panel's cover
 /datum/component/wirePanel/proc/state_cover(obj/parent)
@@ -214,7 +214,7 @@ TYPEINFO(/datum/component/wirePanel)
 		wire_data += list(this_wire)
 	output["wires"] = wire_data
 
-	output["control_lights"] = src.panel_def.control_lights
+	output["controls_to_show"] = src.panel_def.controls_to_show
 
 	data["wire_panel"] = output
 
@@ -232,12 +232,12 @@ TYPEINFO(/datum/component/wirePanel)
 		wire_data += list(this_wire)
 
 	output["wires"] = wire_data
-	output["control_lights"] = src.panel_def.control_lights
+	output["controls_to_show"] = src.panel_def.controls_to_show
 
 	output["cover_status"] = src.cover_status
-	output["hacked_controls"] = src.hacked_controls
+	output["active_controls"] = src.active_controls
 	output["is_silicon_user"] = isAI(user) || issilicon(user)
-	output["is_accessing_remotely"] = isAI(user) || (issilicon(user) && BOUNDS_DIST(user, parent))
+	output["is_accessing_remotely"] = isAI(user) || ((BOUNDS_DIST(user, parent) > 0) && parent.can_access_remotely(user))
 
 	data["wire_panel"] = output
 

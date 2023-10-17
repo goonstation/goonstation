@@ -10,8 +10,8 @@ import { BooleanLike } from "common/react";
 export interface WirePanelData {
   wire_panel: {
     cover_status: number
-    hacked_controls: number
-    control_lights: number
+    active_controls: number
+    controls_to_show: number
     is_silicon_user: BooleanLike
     is_accessing_remotely: BooleanLike
     wires: WireData[]

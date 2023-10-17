@@ -21,26 +21,29 @@
 		if (istype(C))
 			src.color_value = rgb(C.r, C.g, C.b)
 
+ABSTRACT_TYPE(/datum/wirePanel/panelDefintion)
 /datum/wirePanel/panelDefintion
 	/// list of wire defintions, set once per panel definiton
 	var/list/wire_definition = list()
-	/// Scramble the order of wires
-	var/scramble_wire_order = FALSE
-	// [ ] Scramble Colors /// Scramble the color each wire is assigned
-	// var/scramble_wire_color = FALSE
-	/// Show specific control lights
-	var/control_lights = ~0
-
-	/// The actu
+	/// Randomize the order of wires
+	var/randomize_wire_order = TRUE
+	/// Randomize the color of wires
+	// var/randomize_wire_colors = FALSE // [ ] implement
+	/// Show status of these controls in the UI (default: All)
+	var/controls_to_show = ~0
+	/// Stored order of the list
 	var/list/datum/wirePanel/wireDefintion/by_order = list()
 
 /datum/wirePanel/panelDefintion/proc/deserialize()
 	if (length(src.by_order))
 		return
 
-	if (src.scramble_wire_order)
+	if (!length(src.wire_definition))
+		logTheThing(LOG_DEBUG, src, "Tried to generate wire panel with no wires.")
+
+	if (src.randomize_wire_order)
 		shuffle_list(src.wire_definition)
 
 	for (var/i in 1 to length(src.wire_definition))
-		src.by_order += new /datum/wirePanel/wireDefintion(wire_definition[i][1], wire_definition[i][2], wire_definition[i][3])
+		src.by_order += new /datum/wirePanel/wireDefintion(wire_definition[i][1], wire_definition[i][2], wire_definition[i][3], wire_definition[i][4])
 

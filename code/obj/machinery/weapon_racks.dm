@@ -99,7 +99,7 @@
 			src.overlays = null
 			// the only TGUI for this object is wire panels, so close if the cover closes
 			for(var/datum/tgui/ui in tgui_process.get_uis(parent))
-				if(!parent.can_access_remotely(ui.user))
+				if(!src.can_access_remotely(ui.user))
 					tgui_process.close_user_uis(ui.user, parent)
 
 /obj/machinery/weapon_stand/proc/mob_wire_act(obj/parent, mob/user, wire, action)
@@ -112,10 +112,9 @@
 			ui = new(user, src, "WirePanelWindow", src.name)
 			ui.open()
 
-
 /obj/machinery/weapon_stand/proc/check_shock(mob/user)
-	var/hacked_controls = SEND_SIGNAL(src, COMSIG_WPANEL_HACKED_CONTROLS)
-	if (HAS_FLAG(hacked_controls, WIRE_CONTROL_GROUND))
+	var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_ACTIVE_CONTROLS)
+	if (!HAS_FLAG(active_controls, WIRE_CONTROL_GROUND))
 		user.shock(src, 7500, user.hand == LEFT_HAND ? "l_arm" : "r_arm", 1, 0)
 
 /obj/machinery/weapon_stand/attack_hand(mob/user)
@@ -126,14 +125,14 @@
 	src.add_fingerprint(user)
 
 	if (src.has_wire_panel)
-		var/hacked_controls = SEND_SIGNAL(src, COMSIG_WPANEL_HACKED_CONTROLS)
-		if (hacked_controls && HAS_FLAG(hacked_controls, WIRE_CONTROL_POWER_A))
+		var/active_controls = SEND_SIGNAL(src, COMSIG_WPANEL_ACTIVE_CONTROLS)
+		if (!HAS_FLAG(active_controls, WIRE_CONTROL_POWER_A))
 			boutput(user, "<span class='alert'>Without power, the locks can't disengage!</span>")
 			return
 
 		check_shock(user)
 
-		if (HAS_FLAG(hacked_controls, WIRE_CONTROL_ACCESS))
+		if (!HAS_FLAG(active_controls, WIRE_CONTROL_ACCESS))
 			bypass_access = TRUE
 
 	// check access: authorized, emagged, or the access control is broken)
@@ -289,4 +288,4 @@
 		list("ochre", WIRE_CONTROL_POWER, WIRE_ACT_CUT_PULSE, WIRE_ACT_MEND_PULSE),
 		list("slate", WIRE_CONTROL_INERT, WIRE_ACT_CUT_PULSE, WIRE_ACT_MEND_PULSE)
 	)
-
+	controls_to_show = WIRE_CONTROL_ACCESS | WIRE_CONTROL_GROUND | WIRE_CONTROL_POWER_A
