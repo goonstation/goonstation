@@ -1789,7 +1789,7 @@
 			gun_overlay = image(src.budgun.icon, "[src.budgun.icon_state]", layer = 10, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
 
 			if (istype(src.budgun, /obj/item/gun/energy/lawbringer))
-				var/image/lawbringer_lights = image('icons/obj/items/gun.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
+				var/image/lawbringer_lights = image('icons/obj/items/guns/energy.dmi', "lawbringer-d100", 11, pixel_x = src.gun_x_offset, pixel_y = src.gun_y_offset)
 				switch(lawbringer_state)
 					if ("clown")
 						lawbringer_lights.color = "#FFC0CB"

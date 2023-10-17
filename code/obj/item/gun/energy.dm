@@ -3,7 +3,7 @@ TYPEINFO(/obj/item/gun/energy)
 
 /obj/item/gun/energy
 	name = "energy weapon"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	item_state = "gun"
 	m_amt = 2000
 	g_amt = 1000
@@ -131,7 +131,7 @@ TYPEINFO(/obj/item/gun/energy)
 
 /obj/item/gun/energy/heavyion
 	name = "\improper Tianfei heavy ion blaster"
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/energy48x32.dmi'
 	icon_state = "heavyion"
 	item_state = "rifle"
 	force = 1
@@ -539,13 +539,9 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 			return
 		. = ..()
 
-
-
-
 ////////////////////////////////////Wave Gun
 /obj/item/gun/energy/wavegun
 	name = "\improper Sancai wave gun"
-	icon = 'icons/obj/items/gun.dmi'
 	desc = "The versatile XIANG|GIESEL model '三才' with three nonlethal functions: inverse '炎帝', transverse '地皇' and reflective '天皇' ."
 	icon_state = "wavegun"
 	item_state = "wave"
@@ -588,7 +584,6 @@ TYPEINFO(/obj/item/gun/energy/vuvuzela_gun)
 ////////////////////////////////////BFG
 /obj/item/gun/energy/bfg
 	name = "\improper BFG 9000"
-	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "bfg"
 	m_amt = 4000
 	force = 6
@@ -779,7 +774,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_pistol)
 /obj/item/gun/energy/blaster_pistol
 	name = "GRF Zap-Pistole"
 	desc = "A dangerous-looking particle blaster pistol from Giesel Radiofabrik. It's self-charging by a radioactive power cell. Beware of Bremsstrahlung backscatter."
-	icon = 'icons/obj/items/gun_mod.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "pistol"
 	charge_icon_state = "pistol"
 	uses_charge_overlay = TRUE
@@ -844,7 +839,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 /obj/item/gun/energy/blaster_smg
 	name = "GRF Zap-Maschine"
 	desc = "A special issue particle blaster from Giesel Radiofabrik, designed for burst fire. It's self-charging by a radioactive power cell. Beware of Bremsstrahlung backscatter."
-	icon = 'icons/obj/items/gun_mod.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "smg"
 	charge_icon_state = "smg"
 	uses_charge_overlay = TRUE
@@ -865,7 +860,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 /obj/item/gun/energy/blaster_carbine
 	name = "GRF Zap-Karabiner"
 	desc = "A blaster carbine from Giesel Radiofabrik, designed for longer range engagements. It's self-charging by a radioactive power cell. Beware of Bremsstrahulung backscatter."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/energy48x32.dmi'
 	icon_state = "blaster-carbine"
 	charge_icon_state = "blaster-carbine"
 	item_state = "rifle"
@@ -887,7 +882,7 @@ TYPEINFO(/obj/item/gun/energy/blaster_smg)
 /obj/item/gun/energy/blaster_cannon
 	name = "GRF Zap-Kanone"
 	desc = "A heavy particle blaster from Giesel Radiofabrik, designed for high damage. It's self-charging by a larger radioactive power cell. Beware of Bremsstrahlung backscatter."
-	icon = 'icons/obj/items/gun_mod.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "cannon"
 	charge_icon_state = "cannon"
 	item_state = "rifle"
@@ -976,7 +971,8 @@ TYPEINFO(/obj/item/gun_parts)
 	item_state = "gun"
 	force = 5
 	icon_state = "ghost"
-	uses_multiple_icon_states = 1
+	uses_charge_overlay = TRUE
+	charge_icon_state = "ghost"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
 	New()
@@ -984,21 +980,14 @@ TYPEINFO(/obj/item/gun_parts)
 		projectiles = list(current_projectile,new/datum/projectile/owl/owlate)
 		..()
 
-	update_icon()
-		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "ghost[ratio]"
-
 /obj/item/gun/energy/owl_safe
 	name = "owl gun"
 	desc = "Hoot!"
 	item_state = "gun"
 	force = 5
 	icon_state = "ghost"
-	uses_multiple_icon_states = 1
+	uses_charge_overlay = TRUE
+	charge_icon_state = "ghost"
 	cell_type = /obj/item/ammo/power_cell/med_power
 
 	New()
@@ -1006,29 +995,22 @@ TYPEINFO(/obj/item/gun_parts)
 		projectiles = list(current_projectile)
 		..()
 
-	update_icon()
-		..()
-		var/list/ret = list()
-		if(SEND_SIGNAL(src, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
-			var/ratio = min(1, ret["charge"] / ret["max_charge"])
-			ratio = round(ratio, 0.25) * 100
-			src.icon_state = "ghost[ratio]"
-
 ///////////////////////////////////////Frog Gun (Shoots :getin: and :getout:)
 /obj/item/gun/energy/frog
 	name = "frog gun"
+	desc = "It appears to be shivering and croaking in your hand. How creepy." //it must be unhoppy :^)
+	icon = 'icons/obj/items/guns/gimmick.dmi'
+	icon_state = "frog"
 	item_state = "gun"
 	m_amt = 1000
 	force = 0
-	icon_state = "frog"
+
 	cell_type = /obj/item/ammo/power_cell/self_charging/big //gotta have power for the frog
-	desc = "It appears to be shivering and croaking in your hand. How creepy." //it must be unhoppy :^)
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/frog)
 		projectiles = list(current_projectile,new/datum/projectile/bullet/frog/getout)
 		..()
-
 
 ///////////////////////////////////////Shrink Ray
 /obj/item/gun/energy/shrinkray
@@ -1073,12 +1055,12 @@ TYPEINFO(/obj/item/gun_parts)
 ///////////////////////////////////////Glitch Gun
 /obj/item/gun/energy/glitch_gun
 	name = "glitch gun"
-	icon = 'icons/obj/items/gun.dmi'
+	desc = "It's humming with some sort of disturbing energy. Do you really wanna hold this?"
+	icon = 'icons/obj/items/guns/toy.dmi'
 	icon_state = "airzooka"
 	m_amt = 4000
 	force = 0
 	cell_type = /obj/item/ammo/power_cell/high_power
-	desc = "It's humming with some sort of disturbing energy. Do you really wanna hold this?"
 
 	New()
 		set_current_projectile(new/datum/projectile/bullet/glitch/gun)
@@ -1300,7 +1282,6 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 
 /obj/item/gun/energy/lawbringer
 	name = "\improper Lawbringer"
-	icon = 'icons/obj/items/gun.dmi'
 	item_state = "lawg-detain"
 	icon_state = "lawbringer0"
 	desc = "A gun with a microphone. Fascinating."
@@ -1320,7 +1301,7 @@ TYPEINFO(/obj/item/gun/energy/lawbringer)
 		projectiles = list("detain" = current_projectile, "execute" = new/datum/projectile/bullet/revolver_38/lb, "smokeshot" = new/datum/projectile/bullet/smoke, "knockout" = new/datum/projectile/bullet/tranq_dart/law_giver, "hotshot" = new/datum/projectile/bullet/flare, "bigshot" = new/datum/projectile/bullet/aex/lawbringer, "clownshot" = new/datum/projectile/bullet/clownshot, "pulse" = new/datum/projectile/energy_bolt/pulse)
 		// projectiles = list(current_projectile,new/datum/projectile/bullet/revolver_38/lb,new/datum/projectile/bullet/smoke,new/datum/projectile/bullet/tranq_dart/law_giver,new/datum/projectile/bullet/flare,new/datum/projectile/bullet/aex/lawbringer,new/datum/projectile/bullet/clownshot)
 
-		src.indicator_display = image('icons/obj/items/gun.dmi', "")
+		src.indicator_display = image('icons/obj/items/guns/energy.dmi', "")
 		assign_name(M)
 
 		..()
@@ -1734,7 +1715,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 /obj/item/gun/energy/cornicen3
 	name = "\improper Cornicen III"
 	desc = "Formal enough for the boardroom. Rugged enough for the battlefield."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/energy48x32.dmi'
 	muzzle_flash = "muzzle_flash_bluezap"
 	icon_state = "cornicen_close"
 	item_state = "ntgun2"
@@ -1818,8 +1799,9 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 ///////////////////////////////////////Ray Gun
 /obj/item/gun/energy/raygun
 	name = "experimental ray gun"
-	icon_state = "raygun"
 	desc = "A weapon that looks vaguely like a cheap toy and is definitely unsafe."
+	icon = 'icons/obj/items/guns/gimmick.dmi'
+	icon_state = "raygun"
 	item_state = "raygun"
 	force = 5
 	can_dual_wield = 0
@@ -1829,10 +1811,6 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		set_current_projectile(new/datum/projectile/energy_bolt/raybeam)
 		projectiles = list(new/datum/projectile/energy_bolt/raybeam)
 		..()
-
-	update_icon()
-		..()
-		return
 
 	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null) //it's experimental for a reason; use at your own risk!
 		if (canshoot(user))

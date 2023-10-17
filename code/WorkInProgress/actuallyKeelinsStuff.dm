@@ -1964,7 +1964,7 @@ Returns:
 /obj/item/teslacannon
 	desc = "An experimental piece of syndicate technology."
 	name = "Tesla cannon"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "teslacannon"
 	item_state = "gun"
 	flags = FPRINT | EXTRADELAY | TABLEPASS | CONDUCT
