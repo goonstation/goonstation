@@ -192,11 +192,15 @@
 	if (length(antagonist_display_names))
 		antag_roles_text = " ([english_list(antagonist_display_names)])"
 
+	var/full_role = "[mind.assigned_role][antag_roles_text]"
+	if (mind.assigned_role == "MODE") //I LOVE MODE I LOVE MODE
+		full_role = english_list(antagonist_display_names)
+
 	return list(list(
 		"real_name" = mind.current.real_name,
 		"dead" = isdead(mind.current),
 		"player" = mind.displayed_key,
-		"role" = "[mind.assigned_role][antag_roles_text]",
+		"role" = full_role,
 		"head" = is_head,
 	))
 

@@ -204,8 +204,6 @@ TYPEINFO(/turf/simulated/wall)
 		if(3)
 			if (prob(40))
 				dismantle_wall(1)
-		else
-	return
 
 /turf/simulated/wall/blob_act(var/power)
 	if(prob(power))
