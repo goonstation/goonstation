@@ -6,3 +6,9 @@
 	path = "/players/playtime/bulk"
 	body = /datum/apiBody/players/playtime
 	correct_response = /datum/apiModel/Message
+
+	buildBody(
+		serverId,
+		players
+	)
+		. = ..(args)
