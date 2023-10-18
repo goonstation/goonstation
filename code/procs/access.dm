@@ -209,11 +209,6 @@
 						access_research, access_hydro, access_ranch, access_mail, access_ai_upload, access_pathology, access_researchfoyer,
 						access_telesci, access_teleporter)
 		if("Head of Security")
-#ifdef RP_MODE
-			var/list/hos_access = get_all_accesses()
-			hos_access += access_maxsec
-			return hos_access
-#else
 			return list(access_security, access_carrypermit, access_contrabandpermit, access_maxsec, access_brig, access_securitylockers, access_forensics_lockers, access_armory,
 						access_tox, access_tox_storage, access_chemistry, access_medical, access_morgue, access_medlab,
 						access_emergency_storage, access_change_ids, access_eva, access_heads, access_medical_lockers,
@@ -222,7 +217,6 @@
 						access_research, access_dwaine_superuser, access_hydro, access_ranch, access_mail, access_ai_upload,
 						access_engineering, access_teleporter, access_engineering_engine, access_engineering_power, access_engineering_control,
 						access_mining, access_pathology, access_researchfoyer)
-#endif
 		if("Research Director")
 			return list(access_research, access_research_director, access_dwaine_superuser,
 						access_tech_storage, access_maint_tunnels, access_heads, access_eva, access_tox,
