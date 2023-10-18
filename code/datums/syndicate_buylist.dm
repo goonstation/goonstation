@@ -316,6 +316,11 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
 
+	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
+		. = ..()
+		if(in_surplus_crate && prob(5))
+			new /obj/machinery/nuclearbomb/event/micronuke(item.loc)
+
 /datum/syndicate_buylist/traitor/champrojector
 	name = "Chameleon Projector"
 	item = /obj/item/device/chameleon
