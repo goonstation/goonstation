@@ -1,16 +1,15 @@
 // This needs to move
-/atom/movable/screen/relay
-	name = "Relay"
+/atom/movable/screen/hud/relay
+	name = "relay"
 	desc = ""
 	icon = 'icons/misc/featherzone-32x32.dmi'
 	icon_state = "structure-relay"
+	screen_loc = "NORTH, EAST-1"
 	alpha = 100
 
 	New(var/mob/living/intangible/flock/F)
 		..()
-		src.loc = null
-		if (F && istype(F))
-			src.desc = src.getDesc(F)
+		src.update_value(F)
 
 	proc/getDesc(var/mob/living/intangible/flock/F)
 		var/datum/flockstats/flock_stats = F.flock.stats
@@ -37,6 +36,8 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flockmind"
 
+	var/custom_hud_type = /datum/hud/flockmind
+	var/hud
 	var/started = FALSE
 	///Pity respawn max
 	var/max_respawns = 1
@@ -63,7 +64,8 @@
 	else
 		src.started = TRUE
 		src.addAllAbilities()
-
+	src.hud = new custom_hud_type(src)
+	src.attach_hud(src.hud)
 
 /mob/living/intangible/flock/flockmind/proc/start_tutorial()
 	if (src.tutorial)
