@@ -1220,7 +1220,7 @@ proc/create_fluff(datum/mind/target)
 
 /datum/objective/conspiracy
 	requires_mind = FALSE
-	explanation_text = "Lay claim to a vital area of the station, fortify it, then announce your independance. Annex as much of the station as possible."
+	explanation_text = "Lay claim to a vital area of the station, fortify it, then announce your independence. Annex as much of the station as possible."
 
 /datum/objective/conspiracy/commune
 	explanation_text = "Abolish any sort of hierarchy and start a commune."

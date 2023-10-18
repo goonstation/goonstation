@@ -1670,7 +1670,7 @@
 												sleep(0.2 SECONDS)
 
 									if (2)
-										message = "<B>[src]</B> does the twist, like they did last summer."
+										message = "<B>[src]</B> does the twist, like [he_or_she(src)] did last summer."
 										SPAWN(0)
 											for (var/i = 0, i < 4, i++)
 												src.set_dir(turn(src.dir, -90))

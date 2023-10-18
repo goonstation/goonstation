@@ -1,5 +1,29 @@
 
+(t)tue oct 17 23
+(u)Chasu
+(p)16499
+(e)🆕🎩🔬|C-Feature, A-Clothing, A-Science
+(+)Tinfoil hats now block artifact hallucinations.
+(u)glowbold
+(p)15855
+(e)🆕⚖🔨|C-Feature, C-Balance, A-Player-Actions
+(*)Play hero by laying down and blocking on top of live hand grenades and pipebombs.
+(t)mon oct 16 23
+(u)Lord_Earthfire
+(p)15909
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Choking makes you unable to breath in chemsmoke.
 (t)sun oct 15 23
+(u)LeahTheTech
+(+)Flock walls can now be destroyed without hitting them with specifically a crowbar. No I have no idea why they were like this.
+(u)TealSeer
+(p)16480
+(e)🪲🗺🔄|C-Bug, A-Mapping, C-Rework
+(+)Autolathe storage on donut 2 has been renamed to auxilliary storage, and a team of scientists has been hired to research what exactly an autolathe is.
+(u)Amylizzle
+(p)16411
+(e)🆕📦🔬|C-Feature, A-Game-Objects, A-Science
+(*)Added a new artifact type: Psycho-stimulator Field. It causes you to hallucinate vividly.
 (u)Valtsu0 and Mordent
 (p)16319
 (e)📄|A-UI

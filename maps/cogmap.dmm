@@ -34734,21 +34734,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/southwest)
-"cjH" = (
-/obj/machinery/atmospherics/pipe/simple{
-	dir = 4
-	},
-/obj/disposalpipe/segment/morgue{
-	dir = 4
-	},
-/obj/machinery/light/emergency{
-	dir = 1
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/turf/simulated/floor,
-/area/station/hallway/secondary/exit)
 "cjK" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -115232,7 +115217,7 @@ uLB
 cgd
 chl
 ciC
-cjH
+cjL
 clr
 wfd
 uLB

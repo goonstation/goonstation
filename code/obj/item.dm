@@ -10,8 +10,10 @@ ABSTRACT_TYPE(/obj/item)
 	pass_unstable = FALSE
 	var/icon_old = null
 	var/uses_multiple_icon_states = 0
+	/// The in-hand icon state
 	var/item_state = null
-	var/wear_state = null // icon state used for worn sprites, icon_state used otherwise
+	/// icon state used for worn sprites, icon_state used otherwise
+	var/wear_state = null
 	var/image/wear_image = null
 	var/wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	var/wear_layer = MOB_CLOTHING_LAYER

@@ -20,7 +20,7 @@ TYPEINFO(/datum/component/contraband)
 	RegisterSignal(parent, COMSIG_MOVABLE_CONTRABAND_CHANGED, PROC_REF(visible_contraband_changed))
 	if (isitem(AM))
 		var/obj/item/I = AM
-		if (ismob(I.loc))
+		if (ismob(I.loc) && I.equipped_in_slot)
 			var/mob/M = I.loc
 			src.equipped(I, M, I.equipped_in_slot)
 		RegisterSignal(AM, COMSIG_ITEM_EQUIPPED, PROC_REF(equipped))
