@@ -374,6 +374,8 @@
 		var/image/I = globalImages[key]
 		src << I
 
+	SPAWN(0)
+		src.player.record_login()
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 
