@@ -6,12 +6,12 @@
 
 /// add storage to an atom
 /atom/proc/create_storage(storage_type, list/spawn_contents = list(), list/can_hold = list(), list/can_hold_exact = list(), list/prevent_holding = list(),
-		check_wclass = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, opens_if_worn = FALSE, list/params = list())
+		check_wclass = FALSE, max_wclass = W_CLASS_SMALL, slots = 7, sneaky = FALSE, stealthy_storage = FALSE, opens_if_worn = FALSE, list/params = list())
 	var/list/previous_storage = list()
 	for (var/obj/item/I as anything in src.storage?.get_contents())
 		previous_storage += I
 	src.remove_storage()
-	src.storage = new storage_type(src, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, opens_if_worn, params)
+	src.storage = new storage_type(src, spawn_contents, can_hold, can_hold_exact, prevent_holding, check_wclass, max_wclass, slots, sneaky, stealthy_storage, opens_if_worn, params)
 	for (var/obj/item/I as anything in previous_storage)
 		src.storage.add_contents(I)
 
@@ -34,6 +34,8 @@
 	var/datum/hud/storage/hud = null
 	/// Don't print a visible message on use
 	var/sneaky = FALSE
+	/// Don't show the contents of the storage on its description
+	var/stealthy_storage = FALSE
 	/// Prevent accessing storage when clicked when worn, ex. in pocket
 	var/opens_if_worn = FALSE
 	/// Maximum w_class that can be held
@@ -48,7 +50,7 @@
 	var/list/stored_items = null
 
 /datum/storage/New(atom/storage_item, list/spawn_contents, list/can_hold, list/can_hold_exact, list/prevent_holding, check_wclass, max_wclass, \
-		slots, sneaky, opens_if_worn, list/params)
+		slots, sneaky, stealthy_storage, opens_if_worn, list/params)
 	..()
 	src.stored_items = list()
 
@@ -61,6 +63,7 @@
 	src.max_wclass = max_wclass
 	src.slots = slots
 	src.sneaky = sneaky
+	src.stealthy_storage = stealthy_storage
 	src.opens_if_worn = opens_if_worn
 
 	if (istype(src.linked_item, /obj/item))
@@ -396,7 +399,8 @@
 
 /// return outputtable capacity
 /datum/storage/proc/get_capacity_string()
-	return "<br>Holding [length(src.get_contents())]/[src.slots] objects"
+	if (!src.stealthy_storage)
+		return "<br>Holding [length(src.get_contents())]/[src.slots] objects"
 
 /// storage is full or not
 /datum/storage/proc/is_full()

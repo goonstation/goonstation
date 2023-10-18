@@ -79,7 +79,8 @@ TYPEINFO(/obj/item/device/audio_log)
 /obj/item/device/audio_log
 	name = "audio log"
 	desc = "A fairly spartan recording device."
-	icon_state = "recorder"
+	icon = 'icons/obj/radiostation.dmi'
+	icon_state = "audiolog_newSmall"
 	uses_multiple_icon_states = TRUE
 	item_state = "electronic"
 	w_class = W_CLASS_SMALL

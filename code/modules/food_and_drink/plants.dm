@@ -1097,7 +1097,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/plant)
 
 /obj/item/reagent_containers/food/snacks/plant/lemon
 	name = "lemon"
-	desc = "Suprisingly not a commentary on the station's workmanship."
+	desc = "Surprisingly not a commentary on the station's workmanship."
 	icon_state = "lemon"
 	planttype = /datum/plant/fruit/lemon
 	bites_left = 2

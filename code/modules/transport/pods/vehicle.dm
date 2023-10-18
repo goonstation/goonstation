@@ -204,9 +204,10 @@
 		checkhealth()
 
 	updateDialog()
-		for(var/client/C)
-			if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
-				src.open_parts_panel(C.mob)
+		. = ..()
+		// for(var/client/C)
+		// 	if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
+		// 		src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
 		if (is_incapacitated(usr) || usr.restrained())
@@ -728,7 +729,7 @@
 				sec_system.run_component()
 			if(src.engine && engine.active)
 				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
-				var/datum/gas_mixture/consumed = src.fueltank.remove_air(usage)
+				var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
 				var/toxins = consumed?.toxins
 				if(isnull(toxins))
 					toxins = 0

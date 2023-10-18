@@ -49,7 +49,7 @@
 					holder.owner.show_antag_popup("harbinger")
 				if (3)
 					W = new/mob/living/intangible/wraith/wraith_trickster(holder.owner)
-					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a trickster! Decieve the crew and turn them against one another!</span>")
+					boutput(holder.owner, "<span class='notice'>You use some of your energy to evolve into a trickster! Deceive the crew and turn them against one another!</span>")
 					holder.owner.show_antag_popup("trickster")
 
 			W.real_name = holder.owner.real_name

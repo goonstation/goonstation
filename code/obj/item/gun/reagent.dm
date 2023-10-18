@@ -3,7 +3,6 @@ TYPEINFO(/obj/item/gun/reagent)
 
 /obj/item/gun/reagent
 	name = "reagent gun"
-	icon = 'icons/obj/items/gun.dmi'
 	item_state = "gun"
 	m_amt = 2000
 	g_amt = 1000
@@ -99,7 +98,7 @@ TYPEINFO(/obj/item/gun/reagent)
 		if(src.reagents.total_volume)
 			if (src.dump_reagents_on_turf)
 				logTheThing(LOG_CHEMISTRY, usr, "transfers chemicals from [src] [log_reagents(src)] to [get_turf(src)] at [log_loc(usr)].")
-				src.reagents.trans_to(get_turf(src), src.reagents.total_volume)
+				src.reagents.reaction(get_turf(src), TOUCH, src.reagents.total_volume)
 			src.reagents.clear_reagents()
 			src.UpdateIcon()
 			boutput(usr, "<span class='notice'>You dump out \the [src]'s stored reagents.</span>")
@@ -117,6 +116,7 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 
 /obj/item/gun/reagent/syringe
 	name = "syringe gun"
+	icon = 'icons/obj/items/guns/syringe.dmi'
 	icon_state = "syringegun"
 	item_state = "syringegun"
 	w_class = W_CLASS_NORMAL
@@ -200,17 +200,17 @@ TYPEINFO(/obj/item/gun/reagent/syringe)
 		src.reagents.add_reagent("love", src.reagents.maximum_volume)
 
 
-obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in your life.
+/obj/item/gun/reagent/syringe/love/plus // Sometimes you just need more love in your life.
 	name = "Love Gun Plus"
 	capacity = 1000
 
-
 /obj/item/gun/reagent/ecto
 	name = "ectoblaster"
-	icon_state = "ecto0"
+	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
+	icon = 'icons/obj/items/guns/energy.dmi'
+	icon_state = "ghost"
 	ammo_reagents = list("ectoplasm")
 	force = 7
-	desc = "A weapon that launches concentrated ectoplasm. Harmless to humans, deadly to ghosts."
 
 	New()
 		set_current_projectile(new/datum/projectile/ectoblaster)
