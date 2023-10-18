@@ -808,7 +808,7 @@
 	show_lock_panel(mob/living/user)
 		if (isliving(user))
 			if (isnull(bdna))
-				boutput(user, "<span class='notice'>[ship]'s locking mechinism recognizes you as its key!</span>")
+				boutput(user, "<span class='notice'>[ship]'s locking mechanism recognizes you as its key!</span>")
 				playsound(src.loc, 'sound/machines/ping.ogg', 50, 0)
 				bdna = user?.bioHolder?.Uid
 				ship.locked = 0
