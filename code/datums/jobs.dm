@@ -2189,6 +2189,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
+		M.bioHolder.RemoveEffect("buzz")
 		M.critterize(/mob/living/critter/small_animal/plush/cryptid)
 
 /datum/job/special/halloween/critter/remy
