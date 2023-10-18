@@ -239,7 +239,6 @@
 	icon = 'icons/obj/adventurezones/morrigan/belt.dmi'
 	slots = 7
 	check_wclass = 1
-	wear_layer = MOB_SHEATH_LAYER
 	can_hold = list(/obj/item/gun/energy, /obj/item/baton/windup/morrigan)
 
 	New()
@@ -306,6 +305,7 @@
 	desc = "A stylish leather belt for holstering the Mod. 77 Nosaxa"
 	icon_state = "lasershotgunbelt"
 	item_state = "lasershotgun_belt"
+	wear_layer = MOB_SHEATH_LAYER
 	gun_type = /obj/item/gun/energy/lasershotgun
 	can_hold = list(/obj/item/gun/energy/lasershotgun)
 	can_hold_exact = list(/obj/item/gun/energy/lasershotgun, /obj/item/gun/energy, /obj/item/baton/windup/morrigan)
@@ -316,6 +316,7 @@
 	desc = "A stylish leather belt for holstering the Mod. 201 Mimosa"
 	icon_state = "laseriflebelt"
 	item_state = "laserifle_belt"
+	wear_layer = MOB_SHEATH_LAYER
 	gun_type = /obj/item/gun/energy/laser_rifle
 	can_hold = list(/obj/item/gun/energy/laser_rifle, /obj/item/gun/energy, /obj/item/baton/windup/morrigan)
 	can_hold_exact = list(/obj/item/gun/energy/laser_rifle)
@@ -326,6 +327,7 @@
 	desc = "A stylish leather belt for holstering the Tactical Hammer"
 	icon_state = "hammerbelt"
 	item_state = "hammer_belt"
+	wear_layer = MOB_SHEATH_LAYER
 	gun_type = /obj/item/tactical_hammer
 	can_hold = list(/obj/item/tactical_hammer)
 	can_hold_exact = list(/obj/item/tactical_hammer, /obj/item/gun/energy, /obj/item/baton/windup/morrigan)
@@ -336,8 +338,9 @@
 	desc = "A stylish belt for holstering the Mod. 101 Cardea"
 	icon_state = "morriganmedicbelt"
 	item_state = "morriganmedic_belt"
+	wear_layer = MOB_SHEATH_LAYER
 	gun_type = /obj/item/gun/kinetic/medsmg
-	can_hold = list(/obj/item/gun/kinetic/medsmg, /obj/item/gun/energy, /obj/item/baton/windup/morrigan)
+	can_hold = list(/obj/item/gun/kinetic/medsmg, /obj/item/gun/energy, /obj/item/baton/windup/morrigan, /obj/item/robodefibrillator/morrigan)
 	can_hold_exact = list(/obj/item/gun/kinetic/medsmg)
 	spawn_contents = list(/obj/item/gun/kinetic/medsmg, /obj/item/baton/windup/morrigan, /obj/item/storage/box/morriganmedkit, /obj/item/storage/morrigan_pouch, /obj/item/robodefibrillator/morrigan)
 

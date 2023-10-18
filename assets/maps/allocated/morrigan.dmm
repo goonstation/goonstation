@@ -4136,11 +4136,6 @@
 /obj/decal/cleanable/fungus,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/maintenance)
-"dUp" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm20"
-	},
-/area/morrigan/station/hallway)
 "dVg" = (
 /obj/item/implant/projectile/bullet_41,
 /turf/unsimulated/floor/black,
@@ -4835,11 +4830,6 @@
 	name = "blast door"
 	},
 /area/morrigan/derelict)
-"eyf" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm15"
-	},
-/area/morrigan/station/hallway)
 "eyg" = (
 /obj/rack,
 /obj/towelbin,
@@ -5411,17 +5401,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/construction)
-"fav" = (
-/obj/decal/poster/wallsign/stencil/left/m{
-	pixel_x = 12;
-	color = "#FF0000"
-	},
-/obj/decal/poster/wallsign/stencil/right/o{
-	pixel_x = 28;
-	color = "#FF0000"
-	},
-/turf/unsimulated/floor/black,
-/area/morrigan/station/hallway)
 "faH" = (
 /obj/machinery/conveyor/SN,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -6847,11 +6826,6 @@
 	},
 /turf/unsimulated/floor/plating/jen,
 /area/morrigan/station/engineering/specialist)
-"gkB" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm21"
-	},
-/area/morrigan/station/hallway)
 "gkH" = (
 /obj/machinery/light/incandescent/netural,
 /turf/unsimulated/floor/blueblack,
@@ -8308,11 +8282,6 @@
 	},
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
-"hvQ" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm2"
-	},
-/area/morrigan/station/hallway)
 "hvU" = (
 /obj/machinery/vending/alcohol,
 /obj/machinery/light/emergency{
@@ -9358,11 +9327,6 @@
 	},
 /turf/unsimulated/floor/shuttle/yellow,
 /area/morrigan/derelict)
-"iwD" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm7"
-	},
-/area/morrigan/station/hallway)
 "iwY" = (
 /mob/living/critter/robotic/gunbot/morrigan/riotbot,
 /turf/unsimulated/floor/darkblue,
@@ -9892,17 +9856,6 @@
 /obj/decal/cleanable/blood/splatter,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/factory)
-"iTp" = (
-/obj/decal/poster/wallsign/stencil/left/a{
-	pixel_x = 8;
-	color = "#FF0000"
-	},
-/obj/decal/poster/wallsign/stencil/right/n{
-	pixel_x = 23;
-	color = "#FF0000"
-	},
-/turf/unsimulated/floor/black,
-/area/morrigan/station/hallway)
 "iTJ" = (
 /obj/table/reinforced/auto,
 /obj/machinery/computer3/generic/personal/personel_alt{
@@ -13841,11 +13794,6 @@
 "mqD" = (
 /turf/unsimulated/floor/wood/seven,
 /area/morrigan/station/civilian/cafe)
-"mqL" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm1"
-	},
-/area/morrigan/station/hallway)
 "mqP" = (
 /turf/unsimulated/floor/carpet/purple/fancy,
 /area/morrigan/station/command/captain)
@@ -14330,11 +14278,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/morrigan/routing)
-"mMJ" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm6"
-	},
-/area/morrigan/station/hallway)
 "mMM" = (
 /obj/machinery/light/small/sticky/warm,
 /turf/unsimulated/floor/industrial,
@@ -14526,11 +14469,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"mUw" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm16"
-	},
-/area/morrigan/station/hallway)
 "mUN" = (
 /obj/decoration/bustedmantapc/bustedmantapc2{
 	dir = 4
@@ -16550,11 +16488,6 @@
 /obj/mapping_helper/mob_spawn/corpse/human/morrigan_executive,
 /turf/unsimulated/floor/black,
 /area/morrigan/station/factory)
-"oJy" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm3"
-	},
-/area/morrigan/station/hallway)
 "oJL" = (
 /obj/machinery/door/airlock/pyro/command/alt{
 	dir = 4
@@ -18491,11 +18424,6 @@
 /obj/random_item_spawner/med_tool,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/maintenance)
-"qEz" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm17"
-	},
-/area/morrigan/station/hallway)
 "qFi" = (
 /obj/decal/fakeobjects/gunbotrep/riotbotina{
 	dir = 1
@@ -21897,6 +21825,15 @@
 /mob/living/critter/human/hobo/club,
 /turf/unsimulated/floor/plating/damaged1,
 /area/morrigan/derelict)
+"tRn" = (
+/obj/decal/morrigansign/logo{
+	pixel_x = 5;
+	pixel_y = -31
+	},
+/turf/unsimulated/floor/yellowblack/corner{
+	dir = 4
+	},
+/area/morrigan/station/hallway)
 "tRU" = (
 /obj/machinery/door/airlock/pyro/engineering{
 	hardened = 1;
@@ -23097,11 +23034,6 @@
 /obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/plating,
 /area/morrigan/station/invest)
-"uOE" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm5"
-	},
-/area/morrigan/station/hallway)
 "uPg" = (
 /obj/decoration/syndiepc/syndiepc16,
 /turf/unsimulated/floor/red/checker,
@@ -23435,11 +23367,6 @@
 	},
 /turf/unsimulated/floor/plating/random,
 /area/morrigan/derelict)
-"vdQ" = (
-/turf/unsimulated/floor/black{
-	icon_state = "cairngorm19"
-	},
-/area/morrigan/station/hallway)
 "vei" = (
 /obj/decal/cleanable/oil,
 /turf/unsimulated/floor/plating/damaged1,
@@ -25717,17 +25644,6 @@
 	},
 /turf/unsimulated/floor,
 /area/morrigan/derelict)
-"xjU" = (
-/obj/decal/poster/wallsign/stencil/left/i{
-	pixel_x = 7;
-	color = "#FF0000"
-	},
-/obj/decal/poster/wallsign/stencil/right/g{
-	pixel_x = 22;
-	color = "#FF0000"
-	},
-/turf/unsimulated/floor/black,
-/area/morrigan/station/hallway)
 "xkg" = (
 /mob/living/critter/robotic/gunbot/morrigan/meleebot,
 /turf/unsimulated/floor/darkblue,
@@ -26030,17 +25946,6 @@
 /obj/decal/cleanable/rust/jen,
 /turf/unsimulated/floor/wood/seven,
 /area/morrigan/derelict/cargo)
-"xzj" = (
-/obj/decal/poster/wallsign/stencil/left/r{
-	pixel_x = 11;
-	color = "#FF0000"
-	},
-/obj/decal/poster/wallsign/stencil/right/r{
-	pixel_x = 27;
-	color = "#FF0000"
-	},
-/turf/unsimulated/floor/black,
-/area/morrigan/station/hallway)
 "xzG" = (
 /obj/machinery/conveyor/NS,
 /obj/machinery/conveyor/NS{
@@ -30379,8 +30284,8 @@ wHi
 jzY
 dQu
 jNf
-fav
-jCH
+bvF
+tRn
 hhu
 cZu
 nkU
@@ -30480,11 +30385,11 @@ utq
 mCQ
 spa
 jNf
-vdQ
-eyf
-xzj
-uOE
-mqL
+bvF
+bvF
+bvF
+bvF
+bvF
 jCH
 vqY
 uZB
@@ -30583,11 +30488,11 @@ bvF
 bvF
 rXk
 bvF
-dUp
-mUw
-xjU
-mMJ
-hvQ
+bvF
+bvF
+bvF
+bvF
+bvF
 bvF
 ykK
 bvF
@@ -30686,11 +30591,11 @@ bzL
 xNW
 vgI
 hZr
-gkB
-qEz
-iTp
-iwD
-oJy
+bvF
+bvF
+bvF
+bvF
+bvF
 vBC
 kYM
 kgv

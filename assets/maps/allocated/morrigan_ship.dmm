@@ -518,7 +518,6 @@
 "sp" = (
 /obj/decoration/syndiepc/syndiepc5,
 /obj/map/light/dimred,
-/obj/effects/background_objects/fortuna,
 /turf/unsimulated/floor/black,
 /area/morrigan_ship_space/frigate)
 "sv" = (
@@ -638,6 +637,10 @@
 "ur" = (
 /obj/machinery/teleport/portal_ring,
 /obj/machinery/light/incandescent/netural,
+/obj/decal/morrigansign/logo{
+	pixel_x = -14;
+	pixel_y = -33
+	},
 /turf/unsimulated/floor/black,
 /area/morrigan_ship_space/frigate)
 "uI" = (

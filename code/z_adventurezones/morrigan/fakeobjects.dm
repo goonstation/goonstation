@@ -346,3 +346,17 @@
 /obj/decoration/ntcratesmall/opencrate
 	name = "Open Crate"
 	icon_state = "opencrate"
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Floor Icon ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+/obj/decal/morrigansign
+	name = ""
+	bound_height = 160
+	bound_width = 160
+	icon = 'icons/obj/adventurezones/morrigan/morrigan_icon.dmi'
+	mouse_opacity = 0
+	anchored = ANCHORED
+	density = 0
+	plane = PLANE_FLOOR
+
+/obj/decal/morrigansign/logo
+	icon_state = "morrigan"
