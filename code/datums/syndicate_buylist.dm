@@ -319,7 +319,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
 		. = ..()
 		if(in_surplus_crate && prob(5))
-			new /obj/machinery/nuclearbomb/event/micronuke(item.loc)
+			if(prob(20))
+				new /obj/machinery/nuclearbomb/event/micronuke/defended(item.loc)
+			else
+				new /obj/machinery/nuclearbomb/event/micronuke(item.loc)
 
 /datum/syndicate_buylist/traitor/champrojector
 	name = "Chameleon Projector"
