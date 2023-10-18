@@ -499,6 +499,7 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "interdictor_blueprint" // yoinking this unused icon
 	item_state = "sheet"
+	// jank alert: this item lets filenames and saved room_name vars be different. but who cares?
 
 	var/author = ""
 	var/room_name = ""
@@ -517,14 +518,18 @@
 		if (!user?.client?.ckey)
 			. = ..()
 			return
-		if (!src.blueprint_path || !fexists(src.blueprint_path)) // being fed a nonexistent file path should never happen
+		if (!src.blueprint_path || !fexists(src.blueprint_path))
 			boutput(user, "<span class='alert'>This item is broken, please tell a coder if it keeps breaking!</span>")
 			return
 		// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
 		var/input = ckeyEx(tgui_input_text(user, "Do you want to save a copy of this blueprint to your own collection? \
 			If so, choose a name for it. Use only alphanumeric characters, and - and _.", "Copy Homework", null, 54))
+		while (input && fexists("data/blueprints/[user.client.ckey]/[input].dat"))
+			if (!user?.client?.ckey) return // just in case
+			input = ckeyEx(tgui_input_text(user, "A blueprint of that name already exists. Please input another, or cancel.",
+				"Copy Homework", input, 54)) // just replace this with an auto-numbering system, then filename parity blah blah
 		if (!input) return
-		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[input].dat") // FUCK this overwrites shit
+		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[input].dat")
 		boutput(user, "<span class='notice'>Copied this blueprint! It is named: '[input]'.</span>")
 
 	afterattack(atom/target, mob/user)
@@ -607,7 +612,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	var/savefile/save = new/savefile("[savepath]") // creates a save, or loads an existing one
 	save.cd = "/"
 	if (save["sizex"] || save["sizey"]) // if it exists, and has data in it, ALERT!
-		if (tgui_alert(user, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", list("Yes", "No")) == "No")
+		if (tgui_alert(user, "A blueprint named [input] already exists. Really overwrite?", "Overwrite Blueprint", list("Yes", "No")) == "No")
 			return
 		fdel("[savepath]")
 		save = new/savefile("[savepath]")
