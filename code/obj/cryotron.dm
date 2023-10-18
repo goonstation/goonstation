@@ -318,27 +318,6 @@
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 
-	/// Helper to check if a player is trying to insert another player
-	proc/cryo_attack_hand(var/mob/user)
-		if (isgrab(user.l_hand))
-			src.Attackby(user.l_hand, user)
-		else if (isgrab(user.r_hand))
-			src.Attackby(user.r_hand, user)
-		else
-			enter_prompt(user)
-			return
-
-	/// Helper to check if a player is trying to insert another player
-	proc/cryo_attackby(var/obj/item/W, var/mob/user)
-		if (istype(W, /obj/item/grab))
-			var/obj/item/grab/G = W
-			if (ismob(G.affecting) && insert_prompt(G.affecting, user))
-				user.u_equip(G)
-				qdel(G)
-		else
-			enter_prompt(user)
-			return
-
 	/// Override to stop throwing mobs into the cryotron, without this the user will
 	/// unequip the player they're trying to insert
 	attackby(obj/item/I, mob/user)
@@ -386,34 +365,41 @@
 			return
 
 		if (isAIeye(usr))
-			boutput(usr, "<span class='alert'>An incorporeal manifestation of an artificial intelligence's presence can't enter \the [src]!</span>")
 			return
 
-		if (!can_act(usr))
+		if (!can_act(usr) || !in_interact_range(src, usr))
 			return
 
-		if (!in_interact_range(src, usr))
-			return
-
-		if (isdead(usr))
-			return
-
-		if (isobserver(usr))
-			return
-
-		if (isintangible(usr))
+		if (isdead(usr) || isobserver(usr) || isintangible(usr))
 			return
 
 		if (issilicon(usr))
 			enter_prompt(usr)
+			return
 
 		var/obj/item/in_hand_item = usr.equipped()
 
 		if (in_hand_item != null)
-			src.cryo_attackby(in_hand_item, usr)
+			if (istype(in_hand_item, /obj/item/grab))
+				var/obj/item/grab/G = in_hand_item
+
+				if (ismob(G.affecting) && insert_prompt(G.affecting, usr))
+					usr.u_equip(G)
+					qdel(G)
+			else
+				enter_prompt(usr)
+				return
 
 		else if (usr.equipped_limb() != null && in_hand_item == null)
-			src.cryo_attack_hand(usr)
+			if (isgrab(usr.l_hand))
+				src.Attackby(usr.l_hand, usr)
+
+			else if (isgrab(usr.r_hand))
+				src.Attackby(usr.r_hand, usr)
+
+			else
+				enter_prompt(usr)
+				return
 		else
 			enter_prompt(usr)
 
