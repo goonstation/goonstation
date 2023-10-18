@@ -16,13 +16,7 @@
 /datum/hud/flockmind/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltipTheme = null, desc = null, customType = null, mouse_opacity = 1)
 	if(QDELETED(src))
 		CRASH("Tried to create a screen (id '[id]', name '[name]') on a deleted datum/hud")
-	var/atom/movable/screen/hud/S
-	if (customType)
-		if (!ispath(customType, /atom/movable/screen/hud))
-			CRASH("Invalid type passed to create_screen ([customType])")
-		S = new customType
-	else
-		S = new
+	var/atom/movable/screen/hud/relay/S = new(src.hudOwner)
 
 	S.id = id
 	S.master = src

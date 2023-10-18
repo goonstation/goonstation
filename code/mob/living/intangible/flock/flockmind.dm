@@ -1,26 +1,70 @@
+
+/// The relay is under construction
+#define STAGE_UNBUILT 0
+/// The relay has been built
+#define STAGE_BUILT 1
+/// The relay is about to transmit the Signal
+#define STAGE_CRITICAL 2
+/// The relay either transmitted the Signal, or was otherwise destroyed
+#define STAGE_DESTROYED 3
+
 // This needs to move
 /atom/movable/screen/hud/relay
-	name = "relay"
+	name = "Relay Progress"
 	desc = ""
 	icon = 'icons/mob/flock_ui.dmi'
 	icon_state = "structure-relay"
 	screen_loc = "NORTH, EAST-1"
 	alpha = 100
+	var/mob/living/intangible/flock/owner
+	/// Helps control the iconstate
+	var/stage = STAGE_UNBUILT
 
-	New()
+	New(var/mob/living/intangible/flock/F)
 		..()
+		src.owner = F
 
 /atom/movable/screen/hud/relay/proc/getDesc()
-		var/datum/flockstats/flock_stats = src.master.hudOwner.flock.stats
-		return "Peak Compute: [flock_stats.peak_compute] / [FLOCK_RELAY_COMPUTE_COST]\
-				Tiles Converted: [flock_stats.tiles_converted] / [FLOCK_RELAY_TILE_REQUIREMENT]"
+	var/datum/flockstats/flock_stats = src.owner.flock.stats
+	return "Peak Compute: [flock_stats.peak_compute] / [FLOCK_RELAY_COMPUTE_COST]\
+			Tiles Converted: [flock_stats.tiles_converted] / [FLOCK_RELAY_TILE_REQUIREMENT]"
 
+/// Update everything about the icon
 /atom/movable/screen/hud/relay/proc/update_value()
-		var/datum/flockstats/flock_stats = src.master.hudOwner.flock.stats
-		src.desc = src.getDesc()
+	var/datum/flockstats/flock_stats = src.owner.flock.stats
+	src.desc = src.getDesc()
+	if (src.alpha < 255)
 		var/pct_compute = flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST
 		var/pct_tiles = flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT
 		src.alpha = 100 + (155 * pct_compute * pct_tiles)
+
+/atom/movable/screen/hud/relay/proc/update_icon_state()
+	switch(src.stage)
+		if (STAGE_UNBUILT)
+			src.icon_state = "structure-relay"
+		if (STAGE_BUILT)
+			src.icon_state = "structure-relay-glow"
+		if (STAGE_CRITICAL)
+			src.icon_state = "structure-relay-glow"
+			// TODO: figure out how to add overlay of structure-relay-sparks
+		if (STAGE_DESTROYED)
+			. = 0
+			// TODO: figure out what works as a "destroyed" iconstate
+	src.UpdateIcon()
+
+/atom/movable/screen/hud/relay/MouseEntered(location, control, params)
+	src.update_value()
+	usr.client.tooltipHolder.showHover(src, list(
+		"params" = params,
+		"title" = src.name,
+		"content" = (src.desc ? src.desc : null),
+		"theme" = "flock"
+	))
+
+#undef STAGE_UNBUILT
+#undef STAGE_BUILT
+#undef STAGE_CRITICAL
+#undef STAGE_DESTROYED
 
 /////////////////
 // FLOCKMIND MOB
