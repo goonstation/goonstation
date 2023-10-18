@@ -11,6 +11,7 @@
 		releaseButton.desc = "Remove yourself from this drone and become intangible."
 		var/atom/movable/screen/eggButton = create_screen("spawn", "Generate Egg", 'icons/mob/flock_ui.dmi', "spawn_egg", "CENTER-3,SOUTH", HUD_LAYER+1, tooltipTheme = "flock")
 		eggButton.desc = "Lay egg is true! Starts at [FLOCK_LAY_EGG_COST] and scales with number of drones."
+		var/atom/movable/screen/relay/relayInfo = create_screen("relay", "Relay Progress", 'icons/misc/featherzone-32x32.dmi', "structure-relay", "NORTH,EAST", HUD_LAYER+1, tooltipTheme = "flock")
 
 	relay_click(id, mob/user, list/params)
 		var/mob/living/critter/flock/drone/F = master

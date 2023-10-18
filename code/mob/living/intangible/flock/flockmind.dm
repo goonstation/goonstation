@@ -1,3 +1,32 @@
+// This needs to move
+/atom/movable/screen/relay
+	name = "Relay"
+	desc = ""
+	icon = 'icons/misc/featherzone-32x32.dmi'
+	icon_state = "structure-relay"
+	alpha = 100
+
+	New(var/mob/living/intangible/flock/F)
+		..()
+		src.loc = null
+		if (F && istype(F))
+			src.desc = src.getDesc(F)
+
+	proc/getDesc(var/mob/living/intangible/flock/F)
+		var/datum/flockstats/flock_stats = F.flock.stats
+		return "Peak Compute: [flock_stats.peak_compute] / [FLOCK_RELAY_COMPUTE_COST]\
+				Tiles Converted: [flock_stats.tiles_converted] / [FLOCK_RELAY_TILE_REQUIREMENT]"
+
+	proc/update_value(var/mob/living/intangible/flock/F)
+		var/datum/flockstats/flock_stats = F.flock.stats
+		if (!flock_stats || !istype(flock_stats))
+			return
+
+		src.desc = src.getDesc(F)
+		var/pct_compute = flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST
+		var/pct_tiles = flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT
+		src.alpha = 255 * pct_compute * pct_tiles
+
 /////////////////
 // FLOCKMIND MOB
 /////////////////
