@@ -1175,6 +1175,8 @@ proc/create_fluff(datum/mind/target)
 					continue
 				if (!possible_target.current.client)
 					continue
+				if (istype(possible_target.current, /mob/living/carbon/human/virtual))
+					continue
 				possible_targets += possible_target
 
 		if(length(possible_targets) > 0)
