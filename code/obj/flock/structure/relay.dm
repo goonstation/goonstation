@@ -26,7 +26,8 @@ TYPEINFO(/obj/flock_structure/relay)
 	bound_y = -64
 	hitTwitch = FALSE
 	show_in_tutorial = TRUE
-	tutorial_desc = "Your goal and purpose. The Relay becomes closer to being real as you gain more compute, eventually becoming solid at 1000 compute. You must then defend it while it charges before unleashing The Signal, and if you fail your consciousness will be destroyed."
+	// TODO: Reword to include all goals, make dynamic based off whatever goals are present. If they need cheese whiz so be it
+	tutorial_desc = "Your goal and purpose. The Relay becomes closer to being real as you gain more compute, eventually becoming solid at [FLOCK_RELAY_COMPUTE_COST] compute. You must then defend it while it charges before unleashing The Signal, and if you fail your consciousness will be destroyed."
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
 	passthrough = FALSE
@@ -46,6 +47,7 @@ TYPEINFO(/obj/flock_structure/relay)
 	..()
 	logTheThing(LOG_GAMEMODE, src, "Flock relay is constructed[src.flock ? " by flock [src.flock.name]" : ""] at [log_loc(src)].")
 	if(src.flock)
+		src.flock.last_relay = src
 		src.flock.stats.built_relay = TRUE
 	src.info_tag.set_tag_offset(64, -4) // to account for 5x5 sprite
 	src.info_tag.set_info_tag("Completion time: [round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))] seconds")
@@ -92,13 +94,16 @@ TYPEINFO(/obj/flock_structure/relay)
 	if (!src.shuttle_departure_delayed)
 		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 
+/obj/flock_structure/relay/get_time_left()
+	return max(0, round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started)))
+
 /obj/flock_structure/relay/get_desc()
-	var/time_remaining = round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))
+	var/time_remaining = src.get_time_left()
 	if(time_remaining > 0)
 		return "<br><span class='flocksay bold'>\[[time_remaining] second[s_es(time_remaining)] remaining until broadcast.\]</span>"
 
 /obj/flock_structure/relay/building_specific_info()
-	var/time_remaining = round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started))
+	var/time_remaining = src.get_time_left()
 	if(time_remaining > 0)
 		return "<b>Approximately <span class='italic'>[time_remaining]</span> second[time_remaining == 1 ? "" : "s"] left until broadcast.</b>"
 	else

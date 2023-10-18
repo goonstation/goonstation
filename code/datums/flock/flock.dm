@@ -56,6 +56,10 @@ proc/get_default_flock()
 	///list of strings that lets flock record achievements for structure unlocks
 	var/list/achievements = list()
 	var/mob/living/intangible/flock/flockmind/flockmind
+	/// The last relay placed, in case admin intervention or respawns somehow.
+	var/obj/flock_structure/relay/last_relay = null
+	/// How long until the last placed relay transmits the Signal
+	var/time_left = -1
 	/// Relay is in the process of being made real, gibs and all
 	var/relay_in_progress = FALSE
 	/// Relay has exploded. Game over!
@@ -769,10 +773,13 @@ proc/get_default_flock()
 			available_tiles -= src.busy_tiles[owner]
 		return available_tiles
 
-/// Process which checks what to do with the relay based off compute, specifically for before placement
+/// Process to check what to do with the relay based off compute/tiles, specifically for before placement
 /datum/flock/proc/relay_process()
-	if (src.flockmind?.tutorial || src.relay_in_progress || src.relay_finished)
+	if (src.flockmind?.tutorial || src.relay_finished)
 		return
+
+	if (src.relay_in_progress)
+		src.time_left = src.last_relay.get_time_left()
 
 	if (src.total_compute() >= FLOCK_RELAY_COMPUTE_COST && src.stats.tiles_converted >= FLOCK_RELAY_TILE_REQUIREMENT)
 		// Create the actual relay

@@ -37,6 +37,7 @@
 		var/pct_compute = flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST
 		var/pct_tiles = flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT
 		src.alpha = 100 + (155 * pct_compute * pct_tiles)
+	else if (src.owner.flock)
 
 /atom/movable/screen/hud/relay/proc/update_icon_state()
 	switch(src.stage)
@@ -46,10 +47,12 @@
 			src.icon_state = "structure-relay-glow"
 		if (STAGE_CRITICAL)
 			src.icon_state = "structure-relay-glow"
+			src.overlays += "structure-relay-sparks"
 			// TODO: figure out how to add overlay of structure-relay-sparks
 		if (STAGE_DESTROYED)
-			. = 0
-			// TODO: figure out what works as a "destroyed" iconstate
+			qdel(src) // TODO: figure out what works as a "destroyed" iconstate
+			return
+
 	src.UpdateIcon()
 
 /atom/movable/screen/hud/relay/MouseEntered(location, control, params)
