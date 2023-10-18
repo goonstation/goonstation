@@ -2,10 +2,10 @@
 		CAMERA NETWORK STUFF
 ------------------------------------*/
 
-/proc/setup_cameras()
+/proc/setup_cameras(var/cameras)
 	var/list/counts_by_tag = list()
 	var/list/obj/machinery/camera/first_cam_by_tag = list()
-	for (var/obj/machinery/camera/C as anything in by_type[/obj/machinery/camera])
+	for (var/obj/machinery/camera/C as anything in cameras)
 		var/area/where = get_area(C)
 		var/name_build_string = ""
 		var/tag_we_use = null
@@ -17,7 +17,7 @@
 				name_build_string += " - [where.name]"
 			C.name = name_build_string
 
-		if (dd_hasprefix(C.c_tag, "autotag"))
+		if (isnull(C.c_tag) || dd_hasprefix(C.c_tag, "autotag"))
 			tag_we_use = where.name
 		else
 			tag_we_use = C.c_tag
@@ -33,10 +33,10 @@
 			C.c_tag = "[tag_we_use] [counts_by_tag[tag_we_use]]"
 
 /proc/build_camera_network()
-	setup_cameras()
 	var/list/cameras = by_type[/obj/machinery/camera]
 	if (!isnull(cameras))
 		connect_camera_list(cameras)
+		setup_cameras(cameras)
 
 /proc/rebuild_camera_network()
 	if(defer_camnet_rebuild || !camnet_needs_rebuild) return
