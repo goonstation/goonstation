@@ -1169,6 +1169,7 @@ var/datum/preMapLoad/preMapLoad = new
 #include "code\modules\goonhub\api\models\players\PlayerMetadataList.dm"
 #include "code\modules\goonhub\api\models\players\PlayerMetadataResource.dm"
 #include "code\modules\goonhub\api\models\players\PlayerNoteResource.dm"
+#include "code\modules\goonhub\api\models\players\PlayerNoteResourceList.dm"
 #include "code\modules\goonhub\api\models\players\PlayerParticipationResource.dm"
 #include "code\modules\goonhub\api\models\players\PlayerResource.dm"
 #include "code\modules\goonhub\api\models\players\PlayerSaveResource.dm"

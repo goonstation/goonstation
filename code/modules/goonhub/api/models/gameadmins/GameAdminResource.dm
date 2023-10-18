@@ -10,18 +10,15 @@
 	src.ckey = response["ckey"]
 	src.name = response["name"]
 	src.discord_id = response["discord_id"]
-	src.rank = new
-	src.rank = src.rank.SetupFromResponse(response["rank"])
+
+	if ("rank" in response)
+		src.rank = new
+		src.rank = src.rank.SetupFromResponse(response["rank"])
 
 /datum/apiModel/Tracked/GameAdminResource/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.ckey) \
-		|| isnull(src.name) \
-		|| isnull(src.discord_id) \
-		|| isnull(src.rank) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
+		isnull(src.ckey)
 	)
 		return FALSE
 
@@ -31,7 +28,8 @@
 	.["ckey"] = src.ckey
 	.["name"] = src.name
 	.["discord_id"] = src.discord_id
-	.["rank"] = src.rank
+	if (src.rank)
+		.["rank"] = src.rank.ToString()
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
 	return json_encode(.)
