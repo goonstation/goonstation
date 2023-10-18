@@ -524,7 +524,7 @@
 		var/input = ckeyEx(tgui_input_text(user, "Do you want to save a copy of this blueprint to your own collection? \
 			If so, choose a name for it. Use only alphanumeric characters, and - and _.", "Copy Homework", null, 54))
 		if (!input) return
-		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[input].dat")
+		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[input].dat") // FUCK this overwrites shit
 		boutput(user, "<span class='notice'>Copied this blueprint! It is named: '[input]'.</span>")
 
 	afterattack(atom/target, mob/user)
@@ -740,16 +740,16 @@ proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 #undef WHITELIST_OBJECTS
 #undef BLACKLIST_OBJECTS
 
-proc/browse_abcu_blueprints(mob/user, var/browse_all_users = TRUE)
+proc/browse_abcu_blueprints(mob/user, var/browse_all_users = FALSE)
 	if (!user.client) return
 	var/picked_ckey
 	if (browse_all_users) // for the admin procs
 		var/inputuser = tgui_input_list(user, "Select a user's blueprint folder, by ckey.", "Users", flist("data/blueprints/"))
 		if(!inputuser) return
 		picked_ckey = splittext(inputuser, "/")[1]
-		boutput(user, picked_ckey)
 	else
 		picked_ckey = user.client.ckey
+
 	var/list/bplist = flist("data/blueprints/[picked_ckey]/")
 	if (!length(bplist))
 		boutput(user, "<span class='alert'>No blueprints found.</span>")
@@ -757,6 +757,17 @@ proc/browse_abcu_blueprints(mob/user, var/browse_all_users = TRUE)
 	var/inputbp = tgui_input_list(user, "Pick a blueprint.", "Blueprints", bplist)
 	if (!inputbp) return
 	return list("path" = "data/blueprints/[picked_ckey]/[inputbp]", "ckey" = picked_ckey, "file" = inputbp)
+
+proc/delete_abcu_blueprint(mob/user)
+	var/picked = browse_abcu_blueprints(user)
+	if (!picked) return
+	if (fexists(picked["path"]))
+		if (tgui_alert(user, "Really delete [picked["file"]]?", "Blueprint Deletion", list("Yes", "No")) == "No")
+			return
+		fdel(picked["path"])
+		boutput(user, "<span class='alert'>Blueprint [picked["file"]] deleted.</span>")
+	else
+		boutput(user, "<span class='alert'>Blueprint [picked["file"]] not found.</span>")
 
 /obj/item/blueprint_marker
 	name = "blueprint marker"
@@ -1155,7 +1166,8 @@ proc/browse_abcu_blueprints(mob/user, var/browse_all_users = TRUE)
 				return
 
 			if("Delete Blueprint")
-				delSaved(roomname)
+				//delSaved(roomname)
+				delete_abcu_blueprint(user)
 				return
 
 			if("Information")
