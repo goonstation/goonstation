@@ -318,29 +318,31 @@
 					if (!isnull(crew_record))
 						crew_record["p_stat"] = "Active"
 
-	attack_hand(var/mob/user)
-		if(isgrab(user.l_hand))
+	/// Helper to check if a player is trying to insert another player
+	proc/cryo_attack_hand(var/mob/user)
+		if (isgrab(user.l_hand))
 			src.Attackby(user.l_hand, user)
-		else if(isgrab(user.r_hand))
+		else if (isgrab(user.r_hand))
 			src.Attackby(user.r_hand, user)
-		else if (!enter_prompt(user))
-			return ..()
+		else
+			enter_prompt(user)
+			return
 
-	attack_ai(mob/user as mob)
-		if(isAIeye(user))
-			boutput(user, "<span class='alert'>An incorporeal manifestation of an artificial intelligence's presence can't enter \the [src]!</span>")
-			return FALSE
-		if (!enter_prompt(user))
-			return ..()
-
-	attackby(var/obj/item/W, var/mob/user)
+	/// Helper to check if a player is trying to insert another player
+	proc/cryo_attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/grab))
 			var/obj/item/grab/G = W
 			if (ismob(G.affecting) && insert_prompt(G.affecting, user))
 				user.u_equip(G)
 				qdel(G)
-		else if (!enter_prompt(user))
-			return ..()
+		else
+			enter_prompt(user)
+			return
+
+	/// Override to stop throwing mobs into the cryotron, without this the user will
+	/// unequip the player they're trying to insert
+	attackby(obj/item/I, mob/user)
+		return
 
 	proc/insert_prompt(mob/target, mob/user)
 		if (target.client || !target.ckey)
@@ -361,9 +363,58 @@
 		if (!exit_prompt(user))
 			return ..()
 
+	/// Handling dragging players in to cryo, mainly for silicon players.
 	MouseDrop_T(atom/target, mob/user as mob)
-		if (ishuman(target) && isrobot(user) && BOUNDS_DIST(src, user) == 0 && BOUNDS_DIST(src, target) == 0 && BOUNDS_DIST(user, target) == 0)
-			insert_prompt(target, user)
+		if (!ishuman(target) && !isrobot(target))
 			return
+
+		if (BOUNDS_DIST(src, user) != 0)
+			return
+
+		if (BOUNDS_DIST(src, target) != 0)
+			return
+
+		if (BOUNDS_DIST(user, target) != 0)
+			return
+
+		insert_prompt(target, user)
 		return ..()
 
+	/// Override for handling all interactions with the cryo chamber
+	Click()
+		if (!usr)
+			return
+
+		if (isAIeye(usr))
+			boutput(usr, "<span class='alert'>An incorporeal manifestation of an artificial intelligence's presence can't enter \the [src]!</span>")
+			return
+
+		if (!can_act(usr))
+			return
+
+		if (!in_interact_range(src, usr))
+			return
+
+		if (isdead(usr))
+			return
+
+		if (isobserver(usr))
+			return
+
+		if (isintangible(usr))
+			return
+
+		if (issilicon(usr))
+			enter_prompt(usr)
+
+		var/obj/item/in_hand_item = usr.equipped()
+
+		if (in_hand_item != null)
+			src.cryo_attackby(in_hand_item, usr)
+
+		else if (usr.equipped_limb() != null && in_hand_item == null)
+			src.cryo_attack_hand(usr)
+		else
+			enter_prompt(usr)
+
+		. = ..()
