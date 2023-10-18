@@ -1278,16 +1278,15 @@ TYPEINFO(/obj/item/swords/katana)
 		apply_coating(target, user)
 
 	proc/apply_coating(var/atom/target, var/mob/user)
-		if (target.is_open_container())
-			var/obj/item/reagent_containers/RC = target
-			if(RC.reagents.has_reagent("sakuride", 1))
-				if(length(RC.reagents.reagent_list) > 1)
+		if (target.is_open_container() && !istype(target, /mob))
+			if(target.reagents.has_reagent("sakuride", 1))
+				if(length(target.reagents.reagent_list) > 1)
 					boutput(user, "<span class='alert'>This coating is impure!</span>")
 					return
 				if(src.reagents.has_reagent("sakuride", src.reagent_capacity))
 					boutput(user, "<span class='alert'>The blade is already coated!</span>")
 					return
-				RC.reagents.trans_to(src, src.reagent_capacity)
+				target.reagents.trans_to(src, src.reagent_capacity)
 				boutput(user, "You apply the coating to the blade.")
 			else
 				boutput(user, "<span class='alert'>You cannot coat the [src] in this!</span>")
