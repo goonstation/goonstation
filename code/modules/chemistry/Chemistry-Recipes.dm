@@ -3167,8 +3167,8 @@
 		name = "neurodepressant"
 		id = "neurodepressant"
 		result = "neurodepressant"
-		required_reagents = list("acid" = 1, "neurotoxin" = 2, "acetone" = 1)
-		result_amount = 2
+		required_reagents = list("acid" = 1, "neurotoxin" = 1)
+		result_amount = 1
 		min_temperature = T0C + 450
 		mix_phrase = "The neurotoxin breaks down, bubbling violently."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -3177,7 +3177,7 @@
 		name = "Solipsizine"
 		id = "solipsizine"
 		result = "solipsizine"
-		required_reagents = list("antihistamine" = 2, "neurodepressant" = 1, "LSD" = 1, "haloperidol" = 1)
+		required_reagents = list("neurodepressant" = 1, "LSD" = 1, "haloperidol" = 1)
 		result_amount = 3
 
 	mutadone // // COGWERKS CHEM REVISION PROJECT: magic bullshit drug, make it involve mutagen
