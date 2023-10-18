@@ -894,6 +894,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	job = list("Detective")
 	can_buy = UPLINK_TRAITOR
 
+	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
+
 /datum/syndicate_buylist/traitor/traitorthermalscanner
 	name = "Advanced Optical Thermal Scanner"
 	item = /obj/item/clothing/glasses/thermal/traitor
