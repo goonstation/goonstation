@@ -2285,7 +2285,6 @@
 		src.TakeDamage(head, rand(5,10), 0, 0, DAMAGE_CRUSH)
 		take_bleeding_damage(src, null, rand(5,10), DAMAGE_CUT)
 		playsound(src.loc,'sound/impact_sounds/plate_break.ogg',20,1)
-		boutput(src, "<span class='alert'>You try to bite into [H]'s bones but instead break your teeth.</span>")
 		src.visible_message("<span class='alert>[src] tries to bite into [H]'s bones but shatters [his_or_her(src)] teeth!</span>")
 		return
 
