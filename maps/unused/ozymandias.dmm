@@ -29501,7 +29501,7 @@
 /turf/simulated/floor,
 /area/station/hydroponics/bay)
 "hJA" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/simulated/floor/industrial,
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
@@ -30846,7 +30846,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/camera{
 	c_tag = "autotag";
 	dir = 0;
@@ -42934,7 +42934,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/yellow/side{
 	dir = 4
 	},
@@ -48702,11 +48702,11 @@
 	},
 /area/station/crewquarters/garbagegarbs)
 "mJp" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate,
 /obj/disposalpipe/segment/mail/vertical,
 /turf/simulated/floor/grime,
@@ -50294,7 +50294,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
@@ -70689,7 +70689,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/yellow/side{
 	dir = 4
@@ -90198,7 +90198,7 @@
 /obj/table/auto,
 /obj/item/clothing/gloves/yellow,
 /obj/item/clothing/ears/earmuffs,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/yellow/side{
 	dir = 8
 	},

@@ -20,6 +20,11 @@
 		src.help_put_out_fire(M)
 	else if (src == M && src.getStatusDuration("burning"))
 		M.resist()
+	//If we use an empty hand on a cut up person, we might wanna rip out their organs by hand
+	else if (surgeryCheck(M, src) && M.organHolder?.chest?.op_stage >= 2 && ishuman(src))
+		if (M.organHolder.build_region_buttons())
+			src.showContextActions(M.organHolder.contexts, M, M.organHolder.contextLayout)
+			return
 	else if ((M.health <= 0 || M.find_ailment_by_type(/datum/ailment/malady/flatline)) && src.health >= -75.0)
 		if (src == M && src.is_bleeding())
 			src.staunch_bleeding(M) // if they've got SOMETHING to do let's not just harass them for trying to do CPR on themselves
@@ -604,10 +609,7 @@
 
 	//abort if either multiplier is 0
 	if (!target_damage_multiplier)
-		if (narrator_mode)
-			msgs.played_sound = 'sound/vox/hit.ogg'
-		else
-			msgs.played_sound = pick(sounds_punch)
+		msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
 		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a target_damage_multiplier of 0.")
 

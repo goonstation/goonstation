@@ -60,7 +60,8 @@
 
 	var/last_b_state = 1
 
-	var/chest_cavity_open = FALSE
+	///Has our chest cavity been clamped by hemostats?
+	var/chest_cavity_clamped = FALSE
 	var/obj/item/chest_item = null	// Item stored in chest cavity
 	var/chest_item_sewn = FALSE		// Item is sewn in or is loose
 
@@ -156,7 +157,8 @@
 	var/special_hair_override = 0 // only really works if they have any special hair
 
 	random_emotes = list("drool", "blink", "yawn", "burp", "twitch", "twitch_v",\
-	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r")
+	"cough", "sneeze", "shiver", "shudder", "shake", "hiccup", "sigh", "flinch", "blink_r",\
+	"pale", "blush", "scratch", "stretch", /*"fart", */"smile")
 
 	var/icon/flat_icon = null
 
@@ -244,6 +246,8 @@
 	init_preferences?.apply_post_new_stuff(src)
 
 	inventory = new(src)
+
+	AddComponent(/datum/component/contraband, 0, 0)
 
 /datum/human_limbs
 	var/mob/living/carbon/human/holder = null
@@ -691,7 +695,7 @@
 
 				if(src.client)
 					src.ghostize()
-					boutput(src, "Something went wrong, and we couldnt transfer you into a handspider! Please adminhelp this.")
+					boutput(src, "Something went wrong, and we couldn't transfer you into a handspider! Please adminhelp this.")
 
 				logTheThing(LOG_COMBAT, src, "became a headspider at [log_loc(src)].")
 
@@ -847,8 +851,9 @@
 
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
-		newbody.setStatus("maxhealth-", null, -90)
+		newbody.setStatus("maxhealth-", 30 SECONDS, -25)
 		newbody.setStatus("paralysis", 10 SECONDS)
+		newbody.bioHolder.AddEffect("hell_fire", do_stability = 0, magical = 1)
 
 	if (src.bioHolder)
 		newbody.bioHolder.CopyOther(src.bioHolder)
@@ -1659,6 +1664,7 @@
 		if (isdead(M) && !(M in heard_a) && !istype(M, /mob/dead/target_observer) && !(M?.client?.preferences?.local_deadchat))
 			M.show_message(rendered, 2)
 
+	speech_bubble.icon_state = "speech"
 	show_speech_bubble(speech_bubble)
 
 /mob/living/carbon/human/u_equip(obj/item/W)

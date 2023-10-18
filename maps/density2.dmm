@@ -1334,8 +1334,8 @@
 	pixel_x = -24
 	},
 /obj/decal/poster/wallsign/space{
-	pixel_y = 12;
-	pixel_x = -32
+	pixel_x = -32;
+	pixel_y = 12
 	},
 /turf/simulated/floor/purple,
 /area/station/science)
@@ -1379,8 +1379,9 @@
 /turf/space,
 /area/shuttle/escape/station)
 "hC" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "hH" = (
 /turf/space,
 /area/shuttle/research/station)
@@ -4607,8 +4608,8 @@
 	pixel_x = -10
 	},
 /obj/blind_switch{
-	pixel_y = 24;
-	id = "ranchblinds"
+	id = "ranchblinds";
+	pixel_y = 24
 	},
 /turf/simulated/floor/auto/grass/leafy,
 /area/station/ranch)
@@ -4973,8 +4974,8 @@
 	id = "artlabgun"
 	},
 /obj/machinery/door/poddoor/pyro/podbay_autoclose{
-	id = "artlabgun";
-	dir = 4
+	dir = 4;
+	id = "artlabgun"
 	},
 /obj/forcefield/energyshield/perma{
 	desc = "A permanent force field that prevents gasses from passing through it.";
@@ -5964,15 +5965,6 @@
 "MB" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
-/area/space)
-"MG" = (
-/obj/machinery/mass_driver{
-	desc = "A device that launches objects, like ANCIENT BOMBS, for example, on it at great velocity when activated.";
-	dir = 1;
-	drive_range = 100;
-	id = "artlabgun"
-	},
-/turf/space,
 /area/space)
 "MI" = (
 /turf/simulated/wall/auto/supernorn,
@@ -7868,8 +7860,8 @@
 "Zn" = (
 /obj/machinery/door/poddoor/pyro/shutters{
 	dir = 4;
-	name = "Emergency EVA Equipment Shutter";
-	id = "emergeva"
+	id = "emergeva";
+	name = "Emergency EVA Equipment Shutter"
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/arrival/station)
@@ -74773,7 +74765,7 @@ Rf
 Rf
 Rf
 Rf
-MG
+Rf
 Rf
 Rf
 Rf

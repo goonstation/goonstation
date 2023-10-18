@@ -13,7 +13,7 @@ var/global/noir = 0
 
 ////////////////////////////////
 /proc/message_admins(var/text, var/asay = 0, var/irc = 0)
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">[irc ? "DISCORD" : "ADMIN<br>LOG"]</span>: <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">[irc ? "DISCORD" : "ADMIN <wbr>LOG"]</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C in clients)
 		if(!C.holder)
 			continue
@@ -26,7 +26,7 @@ var/global/noir = 0
 
 
 /proc/message_coders(var/text) //Shamelessly adapted from message_admins
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER<br>LOG</span>: <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">CODER <wbr>LOG</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER) //This is for edge cases where a coder needs a goddamn notification when it happens
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
@@ -36,11 +36,11 @@ var/global/noir = 0
 	for (var/client/C)
 		if (C.mob && C.holder && rank_to_level(C.holder.rank) >= LEVEL_CODER)
 			var/dbg_html = C.debug_variable("", d, 0)
-			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER<br>LOG</span>: <span class=\"message\">[text]</span>[dbg_html]</span>"
+			rendered = "<span class=\"admin\"><span class=\"prefix\">CODER <wbr>LOG</span>: <span class=\"message\">[text]</span>[dbg_html]</span>"
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
 
 /proc/message_attack(var/text) //Sends a message to folks when an attack goes down
-	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK<br>LOG</span>: <span class=\"message\">[text]</span></span>"
+	var/rendered = "<span class=\"admin\"><span class=\"prefix\">ATTACK <wbr>LOG</span>: <span class=\"message\">[text]</span></span>"
 	for (var/client/C)
 		if (C.mob && C.holder && C.holder.attacktoggle && !C.player_mode && rank_to_level(C.holder.rank) >= LEVEL_MOD)
 			boutput(C.mob, replacetext(rendered, "%admin_ref%", "\ref[C.holder]"))
@@ -2191,9 +2191,9 @@ var/global/noir = 0
 					tgui_alert(usr, "You cannot modify your own antag tokens.")
 					return
 				var/tokens = input(usr, "Current Tokens: [M.client.antag_tokens]","Set Antag Tokens to...") as null|num
-				if (!tokens)
+				if (isnull(tokens))
 					return
-				M.client.set_antag_tokens( tokens )
+				M.client.set_antag_tokens(tokens)
 				if (tokens <= 0)
 					logTheThing(LOG_ADMIN, usr, "Removed all antag tokens from [constructTarget(M,"admin")]")
 					logTheThing(LOG_DIARY, usr, "Removed all antag tokens from [constructTarget(M,"diary")]", "admin")
@@ -2893,7 +2893,7 @@ var/global/noir = 0
 							for(var/obj/item/W in world)
 								if(istype(W, /obj/item/clothing) || istype(W, /obj/item/card/id) || istype(W, /obj/item/disk) || istype(W, /obj/item/tank))
 									continue
-								W.icon = 'icons/obj/items/gun.dmi'
+								W.icon = 'icons/obj/items/guns/kinetic.dmi'
 								W.icon_state = "revolver"
 								W.item_state = "gun"
 								LAGCHECK(LAG_LOW)
@@ -3177,9 +3177,8 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] IS GETTIN THIS FARTY PARTY STARTED")
 						logTheThing(LOG_ADMIN, usr, "used Farty Party secret")
 						logTheThing(LOG_DIARY, usr, "used Farty Party secret", "admin")
-
-					else
-				if (usr) logTheThing(LOG_ADMIN, usr, "used secret [href_list["secretsfun"]]")
+				if (usr)
+					logTheThing(LOG_ADMIN, usr, "used secret [href_list["secretsfun"]]")
 				logTheThing(LOG_DIARY, usr, "used secret [href_list["secretsfun"]]", "admin")
 			else
 				tgui_alert(usr,"You need to be at least an Adminstrator to use the secrets panel.")

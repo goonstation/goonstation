@@ -8524,7 +8524,7 @@
 /turf/simulated/floor/orangeblack/side,
 /area/h7/computer_core)
 "aPm" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/space,
 /area/space)
 "aPn" = (
@@ -8581,7 +8581,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	tag = "icon-catwalk (WEST)"
@@ -10035,7 +10035,7 @@
 /turf/simulated/floor,
 /area/h7)
 "aTU" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aTV" = (
@@ -12952,11 +12952,11 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "bdO" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate/bloody,
 /obj/item/horseshoe,
 /turf/simulated/floor/airless/plating/damaged1,

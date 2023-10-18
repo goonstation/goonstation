@@ -210,6 +210,8 @@ TRASH BAG
 /obj/item/spraybottle/afterattack(atom/A as mob|obj, mob/user as mob)
 	if (A.storage)
 		return
+	if(istype(A,/obj/ability_button))
+		return
 	if (!isturf(user.loc)) // Hi, I'm hiding in a closet like a wuss while spraying people with death chems risk-free.
 		return
 	if (src.reagents.total_volume < 1)
@@ -289,6 +291,21 @@ TRASH BAG
 	icon = 'icons/obj/janitor.dmi'
 	icon_state = "mop_orange"
 	item_state = "mop_orange"
+
+/obj/item/mop/orange/battleworn
+	desc = "It's been through some shit."
+	name = "battleworn mop"
+	rarity = 6
+	force = 6
+	quality = 80
+
+	New()
+		..()
+		src.setProperty("impact", 2)
+		src.setProperty("block", 20)
+		src.setProperty("frenzy", 1)
+		setItemSpecial(/datum/item_special/whirlwind)
+
 
 /obj/item/mop/New()
 	..()
@@ -542,11 +559,13 @@ TRASH BAG
 
 /obj/item/sponge/process()
 	if (!src.reagents) return
-	if (!istype(src.loc,/turf/simulated/floor)) return
-	if (src.reagents && src.reagents.total_volume >= src.reagents.maximum_volume) return
-	var/turf/simulated/floor/T = src.loc
-	if (T.active_liquid && T.active_liquid.group)
-		T.active_liquid.group.drain(T.active_liquid,1,src)
+	if (src.reagents.total_volume >= src.reagents.maximum_volume) return
+	if (isfloor(src.loc))
+		var/turf/T = src.loc
+		if (T.active_liquid && T.active_liquid.group)
+			T.active_liquid.group.drain(T.active_liquid,1,src)
+	else if (istype(src.loc, /turf/space/fluid))
+		src.reagents.add_reagent(ocean_reagent_id,10)
 
 /obj/item/sponge/proc/get_action_options(atom/target)
 	if (CHECK_LIQUID_CLICK(target))

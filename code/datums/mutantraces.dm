@@ -1693,7 +1693,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							if(13) . = "<B>[src.mob]</B> farts so hard a bunch of fur flies off its ass."
 							if(14) . = "<B>[src.mob]</B> does an impression of a baboon by farting until its ass turns red."
 							if(15) . = "<B>[src.mob]</B> farts out a choking, hideous stench!"
-							if(16) . = "<B>[src.mob]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterial laughter."
+							if(16) . = "<B>[src.mob]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterical laughter."
 							if(17) . = "<B>[src.mob]</B> farts megalomaniacally."
 							if(18) . = "<B>[src.mob]</B> rips a floor-rattling fart. Damn."
 							if(19) . = "<B>[src.mob]</B> farts. What a damn dirty ape!"
@@ -2201,7 +2201,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 			transfer_blood(src.mob, beaker, 10)
 		else
 			var/obj/item/reagent_containers/milk_target = src.mob.equipped()
-			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container())
+			if(istype(milk_target) && milk_target.reagents && milk_target.reagents.total_volume < milk_target.reagents.maximum_volume && milk_target.is_open_container(TRUE))
 				.= ("<span class='alert'><B>[src.mob] dispenses milk into [milk_target].</B></span>")
 				playsound(src.mob, 'sound/misc/pourdrink.ogg', 50, 1)
 				transfer_blood(src.mob, milk_target, 10)
