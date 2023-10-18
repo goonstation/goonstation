@@ -9,8 +9,8 @@
 
 	buildBody(
 		player_id,
-		key,
-		value
+		name,
+		data
 	)
 		. = ..(args)
 

@@ -10,4 +10,3 @@
 		isnull(src.values["data"])
 	)
 		return FALSE
-

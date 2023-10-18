@@ -1,8 +1,8 @@
 
 /// PlayerSaveResource
 /datum/apiModel/Tracked/PlayerRes/PlayerSaveResource
-	var/name	= null // string
-	var/data	= null // integer
+	var/name = null // string
+	var/data = null // string
 
 /datum/apiModel/Tracked/PlayerRes/PlayerSaveResource/SetupFromResponse(response)
 	. = ..()
@@ -10,13 +10,9 @@
 	src.data = response["data"]
 
 /datum/apiModel/Tracked/PlayerRes/PlayerSaveResource/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.player_id) \
-		|| isnull(src.name) \
-		|| isnull(src.data) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
+		isnull(src.name) \
 	)
 		return FALSE
 

@@ -788,16 +788,17 @@ var/global/current_state = GAME_STATE_INVALID
 					logTheThing(LOG_DEBUG, null, "[player.ckey] lost held item")
 					player.client.persistent_bank_item = "none"
 
-				bulk_commit[player.ckey] = list(
-					"persistent_bank" = list(
-						"command" = "add",
-						"value" = earnings
-					),
-					"persistent_bank_item" = list(
-						"command" = "replace",
-						"value" = player.client.persistent_bank_item
-					)
-				)
+				bulk_commit.Add(list(
+					"player_id" = player.client.player.id,
+					"key" = "persistent_bank",
+					"value" = player.client.persistent_bank + earnings
+				))
+				bulk_commit.Add(list(
+					"player_id" = player.client.player.id,
+					"key" = "persistent_bank_item",
+					"value" = player.client.persistent_bank_item
+				))
+
 				SPAWN(0)
 					bank_earnings.pilot_bonus = pilot_bonus
 					bank_earnings.final_payout = earnings
@@ -807,7 +808,7 @@ var/global/current_state = GAME_STATE_INVALID
 
 	//do bulk commit
 	SPAWN(0)
-		cloud_put_bulk(json_encode(bulk_commit))
+		cloud_saves_put_data_bulk(bulk_commit)
 		logTheThing(LOG_DEBUG, null, "Done with spacebux")
 
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents

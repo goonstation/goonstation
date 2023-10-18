@@ -39,9 +39,9 @@
 	var/all_notes = json_decode(content)
 
 	var/datum/player/pdatum = make_player(player)
-	pdatum.cloud_fetch()
+	pdatum.cloudSaves.fetch()
 	var/noticelink = ""
-	if (pdatum.cloud_available() && pdatum.cloud_get("login_notice"))
+	if (pdatum.cloudSaves.getData("login_notice"))
 		noticelink = {" style="color: red; font-weight: bold;">Login Notice Set"}
 	else
 		noticelink = {">Add Login Notice"}

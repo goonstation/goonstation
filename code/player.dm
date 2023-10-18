@@ -36,10 +36,8 @@
 	var/current_playtime = null
 	/// Cache jobbans here to speed things up massively
 	var/list/cached_jobbans = null
-	/// saved profiles from the cloud
-	var/list/cloudsaves = null
-	/// saved data from the cloud (spacebux, volume settings, ...)
-	var/list/clouddata = null
+	/// Manager for cloud data and saves
+	var/datum/cloudSaves/cloudSaves = null
 	/// buildmode holder of our client so it doesn't need to get rebuilt every time we reconnect
 	var/datum/buildmode_holder/buildmode = null
 	/// whether this person is a temporary admin (this round only)
@@ -62,6 +60,7 @@
 		src.key = key
 		src.ckey = ckey(key)
 		src.tag = "player-[src.ckey]"
+		src.cloudSaves = new /datum/cloudSaves(src)
 
 		if (ckey(src.key) in mentors)
 			src.mentor = 1
@@ -148,150 +147,11 @@
 		src.round_leave_time = null //reset this - null value is important
 		src.round_join_time = null //reset this - null value is important
 
-	/// Sets a cloud key value pair and sends it to goonhub
-	proc/cloud_put(key, value)
-		if(!clouddata)
-			return FALSE
-		clouddata[key] = "[value]"
-
-#ifdef LIVE_SERVER
-		// Via rust-g HTTP
-		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
-		request.begin_async()
-#else
-		var/json = null
-		var/list/decoded_json
-		if (fexists("data/simulated_cloud.json"))
-			json = file2text("data/simulated_cloud.json")
-			decoded_json = json_decode(json)
-		else
-			decoded_json = list()
-
-		decoded_json["[ckey(ckey)]"] = clouddata
-		rustg_file_write(json_encode(decoded_json),"data/simulated_cloud.json")
-#endif
-		return TRUE // I guess
-
-	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
-	proc/cloud_put_target(target, key, value)
-		var/list/data = cloud_fetch_target_ckey(target)
-		if(!data)
-			return FALSE
-		data[key] = "[value]"
-
-#ifdef LIVE_SERVER
-		// Via rust-g HTTP
-		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey(target)]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
-		request.begin_async()
-#else
-		var/json = null
-		var/list/decoded_json
-		if (fexists("data/simulated_cloud.json"))
-			json = file2text("data/simulated_cloud.json")
-			decoded_json = json_decode(json)
-		else
-			decoded_json = list()
-		decoded_json["[ckey(target)]"] = data
-		rustg_file_write(json_encode(decoded_json),"data/simulated_cloud.json")
-#endif
-		return TRUE // I guess
-
-	/// Returns some cloud data on the client
-	proc/cloud_get( var/key )
-		return clouddata ? clouddata[key] : null
-
-	/// Returns some cloud data on the provided target ckey
-	proc/cloud_get_target(target, key)
-		var/list/data = cloud_fetch_target_data_only(target)
-		return data ? data[key] : null
-
-	/// Returns 1 if you can set or retrieve cloud data on the client
-	proc/cloud_available()
-		return !!clouddata
-
-	/// Downloads cloud data from goonhub
-	proc/cloud_fetch()
-		var/list/data = cloud_fetch_target_ckey(src.ckey)
-		if (data)
-#ifdef LIVE_SERVER
-			cloudsaves = data["saves"]
-			clouddata = data["cdata"]
-#else
-			clouddata = data
-#endif
-			return TRUE
-
-	/// Refreshes clouddata
-	proc/cloud_fetch_data_only()
-		var/list/data = cloud_fetch_target_data_only(src.ckey)
-		if (data)
-			clouddata = data
-			return TRUE
-
-	/// returns the clouddata of a target ckey in list form
-	proc/cloud_fetch_target_data_only(target)
-		var/list/data = cloud_fetch_target_ckey(target)
-		if (data)
-			return data["cdata"]
-
-	/// returns the cloudsaves of a target ckey in list form
-	proc/cloud_fetch_target_saves_only(target)
-		var/list/data = cloud_fetch_target_ckey(target)
-		if (data)
-			return data["saves"]
-
-	/// Returns cloud data and saves from goonhub for the target ckey in list form
-	proc/cloud_fetch_target_ckey(target)
-#ifdef LIVE_SERVER
-		if(!cdn) return
-		target = ckey(target)
-		if (!target) return
-
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?list&ckey=[target]&api_key=[config.spacebee_api_key]", "", "")
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-
-		if (response.errored || !response.body)
-			logTheThing(LOG_DEBUG, target, "failed to have their cloud data loaded: Couldn't reach Goonhub")
-			return
-
-		var/list/ret = json_decode(response.body)
-		if(ret["status"] == "error")
-			logTheThing(LOG_DEBUG, target, "failed to have their cloud data loaded: [ret["error"]["error"]]")
-			return
-		else
-			return ret
-#else
-		if (!target) return
-		/// holds our json string
-		var/json
-		/// holds our list made from decoding json
-		var/list/decoded_json
-		// make sure the files actually exists before we try to read it, if it doesn't then just return a blank list to work with
-		if (fexists("data/simulated_cloud.json"))
-			// file was found, lets decode it
-			json = file2text("data/simulated_cloud.json")
-			decoded_json = json_decode(json)
-		else
-			decoded_json = list()
-
-		// do we have an entry for the target ckey?
-		if (decoded_json[target])
-			return decoded_json[target]
-		else
-			// we need to return a list with a list in the cdata index or it causes a deadlock where we can't save
-			return list(cdata = list())
-#endif
-
 	proc/get_buildmode()
 		RETURN_TYPE(/datum/buildmode_holder)
 		if(src.buildmode)
 			return src.buildmode
-		var/saved_buildmode = src.cloud_get("buildmode")
+		var/saved_buildmode = src.cloudSaves.getData("buildmode")
 		if(!saved_buildmode)
 			src.buildmode = new /datum/buildmode_holder(src.client)
 		else
@@ -316,7 +176,7 @@
 		if(src.buildmode)
 			var/savefile/S = new
 			S["buildmode"] << buildmode
-			src.cloud_put("buildmode", S.ExportText())
+			src.cloudSaves.putData("buildmode", S.ExportText())
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
