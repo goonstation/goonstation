@@ -155,7 +155,7 @@ proc/is_music_playing()
 				var/show_other_key = 0
 				if (adminC.stealth || adminC.alt_key)
 					show_other_key = 1
-				boutput(C, "<span class=\"medal\"><b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b></span> <span class='notice'>[data["title"]] ([data["duration"]])</span>")
+				boutput(C, "<span class=\"medal\"><b>[show_other_key ? adminC.fakekey : adminC.key] played (your volume: [ ismuted ? "muted" : vol ]):</b></span> <span class='notice'>[data["title"]] ([data["duration_human"]])</span>")
 
 			if (ismuted) //bullshit BYOND 0 is not null fuck you
 				continue
@@ -170,11 +170,11 @@ proc/is_music_playing()
 	if (adminC)
 		logTheThing(LOG_ADMIN, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])")
 		logTheThing(LOG_DIARY, adminC, "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
-		message_admins("[key_name(adminC)] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
+		message_admins("[key_name(adminC)] loaded remote music: [data["title"]] ([data["duration_human"]] / [data["filesize"]])")
 	else
 		logTheThing(LOG_ADMIN, data["admin_ckey"], "loaded remote music: [data["file"]] ([data["filesize"]])")
 		logTheThing(LOG_DIARY, data["admin_ckey"], "loaded remote music: [data["file"]] ([data["filesize"]])", "admin")
-		message_admins("[data["admin_ckey"]] loaded remote music: [data["title"]] ([data["duration"]] / [data["filesize"]])")
+		message_admins("[data["admin_ckey"]] loaded remote music: [data["title"]] ([data["duration_human"]] / [data["filesize"]])")
 	return 1
 
 /client/verb/change_volume(channel_name as anything in audio_channel_name_to_id)
