@@ -91,7 +91,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		global.vpn_ip_checks["[src.address]"] = TRUE
 		var/msg_txt = "[src.address] attempted to connect via vpn or proxy. vpn info:[host ? " host: [host]," : ""] ASN: [asn], org: [organization][fraud_score ? ", fraud score: [fraud_score]" : ""][info ? ", info: [info]" : ""]"
 
-		addPlayerNote(src.ckey, "VPN Blocker", msg_txt)
+		addPlayerNote(src.ckey, "bot", msg_txt)
 		logTheThing(LOG_ADMIN, src, msg_txt)
 		logTheThing(LOG_DIARY, src, msg_txt, "admin")
 		message_admins("[key_name(src)] [msg_txt]")

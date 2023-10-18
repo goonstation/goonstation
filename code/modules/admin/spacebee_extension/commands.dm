@@ -38,7 +38,7 @@
 	help_message = "Adds a note to a given ckey."
 	argument_types = list(/datum/command_argument/string/ckey="ckey", /datum/command_argument/the_rest="note")
 	execute(user, ckey, note)
-		addPlayerNote(ckey, user + " (Discord)", note)
+		addPlayerNote(ckey, user, note)
 
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a note for [ckey]: [note]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a note for [ckey]: [note]", "admin")
@@ -66,7 +66,7 @@
 			system.reply("Error, issue saving login notice, try again later.", user)
 			return
 		// else it succeeded
-		addPlayerNote(ckey, user + " (Discord)", "New login notice set:\n\n[notice]")
+		addPlayerNote(ckey, user, "New login notice set:\n\n[notice]")
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", null, "added a login notice for [ckey]: [notice]", "admin")
 		message_admins("<span class='internal'>[user] (Discord) added a login notice for [ckey]: [notice]</span>")
@@ -647,7 +647,7 @@
 		global.vpn_ip_checks?.Cut() // to allow them to reconnect this round
 		message_admins("Ckey [ckey] added to the VPN whitelist by [user] (Discord).")
 		logTheThing(LOG_ADMIN, "[user] (Discord)", null, "Ckey [ckey] added to the VPN whitelist.")
-		addPlayerNote(ckey, user + " (Discord)", "Ckey [ckey] added to the VPN whitelist.")
+		addPlayerNote(ckey, user, "Ckey [ckey] added to the VPN whitelist.")
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
 
