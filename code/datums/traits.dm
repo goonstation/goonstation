@@ -602,7 +602,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/job/quartermaster
 	name = "Quartermaster Training"
-	desc = "Subject is proficent at haggling."
+	desc = "Subject is proficient at haggling."
 	id = "training_quartermaster"
 
 /datum/trait/job/chef

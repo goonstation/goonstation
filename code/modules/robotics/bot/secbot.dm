@@ -396,7 +396,7 @@
 		if (src.emagged < emag_stages)
 			if (emagged)
 				if (user)
-					boutput(user, "<span class='alert'>You short out [src]'s system clock inhibition circuis.</span>")
+					boutput(user, "<span class='alert'>You short out [src]'s system clock inhibition circuits.</span>")
 				UpdateOverlays(null, "secbot_hat")
 				UpdateOverlays(null, "secbot_charge")
 			else if (user)

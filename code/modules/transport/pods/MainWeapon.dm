@@ -141,7 +141,7 @@
 
 /obj/item/shipcomponent/mainweapon/laser
 	name = "Mk.2 Scout Laser"
-	desc = "An upgraded variant of the stock MK 1.5 phaser. Due to the concentration of energy, a higher quality engine might be neccesary."
+	desc = "An upgraded variant of the stock MK 1.5 phaser. Due to the concentration of energy, a higher quality engine might be necessary."
 	weapon_score = 0.4
 	appearanceString = "pod_weapon_laser"
 	power_used = 100
@@ -209,7 +209,7 @@
 
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
-	desc = "A strudy drill designed for chewing up asteroids like nobodies business."
+	desc = "A sturdy drill designed for chewing up asteroids like nobodies business."
 	power_used = 90
 	weapon_score = 1
 	current_projectile = new/datum/projectile/laser/drill
@@ -328,7 +328,7 @@
 					step_towards(D, get_step(D, D.dir))
 					var/location = get_turf(D)
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span class='alert'>[ship] spews out a metalic foam!</span>")
+						boutput(M, "<span class='alert'>[ship] spews out a metallic foam!</span>")
 					var/list/bandaidfix = list("iron" = 3, "fluorosurfactant" = 1, "acid" = 1)
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(5, location, bandaidfix, 1) // Aborts if reagent list is null (even for metal foam), but I'm not gonna touch foam_spread.dm (Convair880).
