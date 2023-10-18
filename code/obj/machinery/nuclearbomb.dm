@@ -487,13 +487,11 @@ ADMIN_INTERACT_PROCS(/obj/machinery/nuclearbomb, proc/arm, proc/set_time_left)
 		src.SafeScale(0.75, 0.75)
 
 /obj/machinery/nuclearbomb/event/micronuke/defended
-
-	New()
+	arm(mob/user)
 		. = ..()
 		for(var/turf/T in orange(1, get_turf(src)))
 			if(isfloor(T))
-				new /obj/critter/gunbot/drone/miniature_syndie(T)
-
+				new /obj/critter/gunbot/drone/miniature_syndie/robust(T)
 
 /obj/bomb_decoy
 	name = "nuclear bomb"
