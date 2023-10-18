@@ -17589,8 +17589,8 @@
 /obj/item/clothing/under/suit/syndiehos,
 /obj/item/clothing/suit/space/syndiehos,
 /obj/item/clothing/mask/gas/eyemask,
-/obj/item/storage/belt/gun/peacebringer,
 /obj/item/clothing/head/morrigan/shos,
+/obj/item/storage/belt/gun/morrigan/peacebringer,
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOS)
 "pKC" = (

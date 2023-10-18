@@ -160,6 +160,10 @@
 	tag = "icon-lattice-dir-b (NORTHWEST)"
 	},
 /obj/machinery/light/incandescent/netural,
+/obj/decal/fakeobjects/shipart/beamcannon{
+	pixel_y = 33;
+	pixel_x = 32
+	},
 /turf/space,
 /area/morrigan_ship_space)
 "ho" = (
@@ -276,6 +280,7 @@
 /area/morrigan_ship_space/frigate)
 "lp" = (
 /obj/storage/closet/fire,
+/obj/item/storage/firstaid/fire,
 /turf/unsimulated/floor/yellowblack{
 	dir = 6
 	},
@@ -559,7 +564,9 @@
 /obj/table/syndicate/auto,
 /obj/item/plate,
 /obj/machinery/light/incandescent/netural,
-/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip,
+/obj/item/reagent_containers/food/snacks/cookie/chocolate_chip{
+	pixel_y = -6
+	},
 /turf/unsimulated/floor/purpleblack{
 	dir = 10
 	},
@@ -836,8 +843,8 @@
 /obj/table/syndicate/auto,
 /obj/item/reagent_containers/food/snacks/donut/custom/sturdy,
 /obj/item/reagent_containers/food/drinks/tea{
-	pixel_y = 16;
-	pixel_x = -5
+	pixel_y = 21;
+	pixel_x = -7
 	},
 /turf/unsimulated/floor/purpleblack,
 /area/morrigan_ship_space/frigate)
@@ -1211,11 +1218,6 @@
 	dir = 10
 	},
 /area/morrigan_ship_space/frigate)
-"TQ" = (
-/obj/decal/fakeobjects/shipart/beamcannon,
-/obj/grille/catwalk,
-/turf/unsimulated/floor/plating/jen,
-/area/morrigan_ship_space)
 "TS" = (
 /obj/stool/chair/office/red{
 	dir = 8
@@ -1370,16 +1372,36 @@
 /area/morrigan_ship_space/frigate)
 "Zp" = (
 /obj/table/syndicate/auto,
-/obj/item/reagent_containers/mender/brute{
-	pixel_x = 8
+/obj/item/handcuffs/guardbot{
+	pixel_x = 10;
+	pixel_y = 9
 	},
-/obj/item/reagent_containers/mender/burn,
-/obj/item/reagent_containers/mender/brute{
-	pixel_x = 8;
+/obj/item/handcuffs/guardbot{
+	pixel_x = -4;
 	pixel_y = 6
 	},
-/obj/item/reagent_containers/mender/burn{
-	pixel_y = 5
+/obj/item/handcuffs/guardbot{
+	pixel_x = 10;
+	pixel_y = 3
+	},
+/obj/item/handcuffs/guardbot{
+	pixel_x = 10
+	},
+/obj/item/handcuffs/guardbot{
+	pixel_x = -4;
+	pixel_y = 9
+	},
+/obj/item/handcuffs/guardbot{
+	pixel_x = 10;
+	pixel_y = 6
+	},
+/obj/item/handcuffs/guardbot{
+	pixel_x = -4;
+	pixel_y = 3
+	},
+/obj/item/handcuffs/guardbot{
+	pixel_x = -4;
+	pixel_y = -1
 	},
 /turf/unsimulated/floor/black/side{
 	dir = 4
@@ -1788,7 +1810,7 @@ dH
 PK
 dT
 dT
-TQ
+dT
 dT
 PK
 VK

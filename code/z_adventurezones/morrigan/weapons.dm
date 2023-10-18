@@ -9,7 +9,7 @@
 TYPEINFO(/obj/item/gun/energy/railgun_experimental)
 	mats = null
 /obj/item/gun/energy/railgun_experimental
-	name = "Mod.54 Electro Slinger"
+	name = "Mod.54 'Electro Slinger'"
 	cell_type = /obj/item/ammo/power_cell/self_charging/railgun_experimental
 	icon = 'icons/obj/adventurezones/morrigan/weapons/gunlarge.dmi'
 	icon_state = "railgun"
@@ -46,7 +46,7 @@ TYPEINFO(/obj/item/gun/energy/railgun_experimental)
 TYPEINFO(/obj/item/gun/energy/hafpistol)
 	mats = null
 /obj/item/gun/energy/hafpistol
-	name = "Mod.21 Deneb"
+	name = "Mod.21 'Deneb'"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/self_charging/hafpistol
 	icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
@@ -128,7 +128,7 @@ TYPEINFO(/obj/item/gun/energy/peacebringer)
 TYPEINFO(/obj/item/gun/energy/smgmine)
 	mats = null
 /obj/item/gun/energy/smgmine
-	name = "HMT Lycon"
+	name = "HMT 'Lycon'"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/med_power
 	icon = 'icons/obj/adventurezones/morrigan/weapons/gun.dmi'
@@ -170,7 +170,7 @@ TYPEINFO(/obj/item/gun/energy/smgmine)
 TYPEINFO(/obj/item/gun/energy/lasershotgun)
 	mats = null
 /obj/item/gun/energy/lasershotgun
-	name = "Mod. 77 Nosaxa"
+	name = "Mod. 77 'Nosaxa'"
 	uses_multiple_icon_states = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/lasershotgun
 	icon = 'icons/obj/adventurezones/morrigan/weapons/gun48.dmi'
@@ -320,7 +320,7 @@ TYPEINFO(/obj/item/gun/energy/lasershotgun)
 TYPEINFO(/obj/item/gun/energy/laser_rifle)
 	mats = null
 /obj/item/gun/energy/laser_rifle
-	name = "Mod. 201 Mimosa"
+	name = "Mod. 201 'Mimosa'"
 	uses_multiple_icon_states = 1
 	cell_type = /obj/item/ammo/power_cell/self_charging/medium
 	icon = 'icons/obj/adventurezones/morrigan/weapons/gunlarge.dmi'
@@ -415,7 +415,7 @@ TYPEINFO(/obj/item/gun/energy/laser_rifle)
 TYPEINFO(/obj/item/baton/windup/morrigan)
 	mats = null
 /obj/item/baton/windup/morrigan
-	name = "Mod. 41 Izar"
+	name = "Mod. 41 'Izar'"
 	desc = "An experimental stun baton, designed to incapacitate targets consistently. It has safeties against users stunning themselves."
 	icon = 'icons/obj/adventurezones/morrigan/weapons/weapon.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
@@ -485,6 +485,12 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 		..()
 		src.UpdateIcon()
 		M.update_inhands()
+
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Defib ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+/obj/item/robodefibrillator/morrigan
+	icon = 'icons/obj/adventurezones/morrigan/random.dmi'
+	icon_state = "defib-off"
+	item_state = "sdefib"
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Bullets ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /obj/item/ammo/bullets/morriganmed
@@ -807,6 +813,8 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 	color_blue = 0.8
 
 /datum/projectile/syringefilled/morrigan/medsmg
+	sname = "Poison Needles"
+	name = "Poison Needles"
 	shot_sound = 'sound/weapons/medsmg.ogg'
 	venom_id = list("haloperidol", "cyanide")
 	damage = 5
@@ -816,10 +824,11 @@ TYPEINFO(/obj/item/baton/windup/morrigan)
 	implanted = /obj/item/implant/projectile/body_visible/dart/tranq_dart_sleepy_barbed
 
 /datum/projectile/syringefilled/morrigan/medsmgheal
+	sname = "Healing Needle"
+	name = "Healing Needle"
 	shot_sound = 'sound/weapons/medsmg.ogg'
 	venom_id = list("salicylic_acid", "saline")
 	inject_amount = 7.5
 	damage = 0
 	cost = 3
 	casing = /obj/item/casing/small
-	implanted = /obj/item/implant/projectile/body_visible/dart/tranq_dart_sleepy_barbed
