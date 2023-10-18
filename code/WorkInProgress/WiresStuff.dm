@@ -5,73 +5,8 @@
 	set hidden = 1
 	ADMIN_ONLY
 
-	// var/datum/apiRoute/bans/get/getBans = new()
-	// getBans.queryParams = list(
-	// 	"filters" = list(
-	// 		"original_ban_ckey" = "wirewraith"
-	// 	)
-	// )
-	// var/datum/apiModel/Paginated/BanResourceList/bans = apiHandler.queryAPI(getBans, 1, 1, 1)
-	// for (var/datum/apiModel/Tracked/BanResource/ban in bans.data)
-	// 	out(world, ban.ToString())
-
-	// var/datum/apiRoute/bans/check/checkBan = new
-	// checkBan.queryParams = list("ckey" = "absoluteretard")
-	// var/datum/apiModel/Tracked/BanResource/ban = apiHandler.queryAPI(checkBan, 1, 1, 1)
-	// out(world, ban.ToString())
-
-	// var/datum/apiRoute/bans/update/updateBan = new
-	// updateBan.routeParams = list("11771")
-	// updateBan.buildBody(
-	// 	"wirewraith",
-	// 	1,
-	// 	"main1",
-	// 	"somejerk",
-	// 	"123456789",
-	// 	"127.0.0.1",
-	// 	"did something bad2"
-	// )
-	// var/datum/apiModel/Tracked/BanResource/ban = apiHandler.queryAPI(updateBan, 1, 1, 1)
-	// out(world, ban.ToString())
-
-	// var/datum/apiRoute/bans/add_detail/addBanDetail = new
-	// addBanDetail.routeParams = list("11771")
-	// addBanDetail.buildBody(
-	// 	"somejerk",
-	// 	"123456789",
-	// 	"127.0.0.1"
-	// )
-	// try
-	// 	var/datum/apiModel/Tracked/BanDetail/banDetail = apiHandler.queryAPI(addBanDetail, 1, 1, 1)
-	// 	out(world, banDetail.ToString())
-	// catch (var/exception/e)
-	// 	var/datum/apiModel/Error = e.name
-	// 	out(world, Error.message)
-
-	// var/datum/apiRoute/bans/remove_detail/removeBanDetail = new
-	// removeBanDetail.routeParams = list("26066")
-	// try
-	// 	var/datum/apiModel/Message/message = apiHandler.queryAPI(removeBanDetail, 1, 1, 1)
-	// 	out(world, message.ToString())
-	// catch (var/exception/e)
-	// 	// var/datum/apiModel/Error/error = e.name
-	// 	// out(world, error.message)
-
-	// var/datum/apiRoute/bans/delete/deleteBan = new
-	// deleteBan.routeParams = list("11770")
-	// var/datum/apiModel/Message/message = apiHandler.queryAPI(deleteBan, 1, 1, 1)
-	// out(world, message.ToString())
-
-	// try
-	// 	var/datum/apiRoute/players/saves/data/post/addPlayerData = new
-	// 	addPlayerData.buildBody(12, "foo", "bar")
-	// 	var/datum/apiModel/Tracked/PlayerRes/PlayerDataResource/playerData = apiHandler.queryAPI(addPlayerData)
-	// 	out(world, "res is: [playerData.ToString()]")
-	// catch (var/exception/e)
-	// 	var/datum/apiModel/Error/error = e.name
-	// 	out(world, error.message)
-
-	src.holder.load_admin_prefs()
+	//mapWorldNew(src)
+	//boop2
 
 
 /proc/mapWorldNew(client/C)
