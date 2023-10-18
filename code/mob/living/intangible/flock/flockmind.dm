@@ -6,17 +6,19 @@
 	icon_state = "structure-relay"
 	screen_loc = "NORTH, EAST-1"
 	alpha = 100
+	var/mob/living/intangible/flock/owner
 
 	New(var/mob/living/intangible/flock/F)
+		src.owner = F
 		..()
 
-	proc/getDesc()
-		var/datum/flockstats/flock_stats = src.master.flock.stats
+/atom/movable/screen/hud/relay/proc/getDesc()
+		var/datum/flockstats/flock_stats = src.owner.flock.stats
 		return "Peak Compute: [flock_stats.peak_compute] / [FLOCK_RELAY_COMPUTE_COST]\
 				Tiles Converted: [flock_stats.tiles_converted] / [FLOCK_RELAY_TILE_REQUIREMENT]"
 
-	proc/update_value()
-		var/datum/flockstats/flock_stats = src.master.flock.stats
+/atom/movable/screen/hud/relay/proc/update_value()
+		var/datum/flockstats/flock_stats = src.owner.flock.stats
 		src.desc = src.getDesc()
 		var/pct_compute = flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST
 		var/pct_tiles = flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT
