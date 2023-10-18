@@ -943,16 +943,16 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	Musical Backing is "Valor" by David Fesliyan"}
 
 /obj/item/radio_tape/advertisement/chemistry
-	name = "charred compact tape - 'Unofficial Chemsitry Advertisment tape'"
+	name = "charred compact tape - 'Unofficial Chemsitry Advertisement tape'"
 	audio = 'sound/radio_station/adverts/Chemistry.ogg'
-	name_of_thing = "Unofficial Chemsitry Advertisment"
+	name_of_thing = "Unofficial Chemsitry Advertisement"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Brixx79 of Goonstation"}
 
 /obj/item/radio_tape/advertisement/robotics
-	name = "bloodied compact tape stained with oil - 'Unofficial Robotics Advertisment tape'"
+	name = "bloodied compact tape stained with oil - 'Unofficial Robotics Advertisement tape'"
 	audio = 'sound/radio_station/adverts/Robotics.ogg'
-	name_of_thing = "Unofficial Robotics Advertisment"
+	name_of_thing = "Unofficial Robotics Advertisement"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Brixx79 of Goonstation"}
 
@@ -1044,7 +1044,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/decal/fakeobjects/operatorconsole
 	name = "operator's console"
-	desc = "The computer operating console, covered in fancy toggle swtiches and register value lamps."
+	desc = "The computer operating console, covered in fancy toggle switches and register value lamps."
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 32
