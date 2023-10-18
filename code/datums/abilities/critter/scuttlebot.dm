@@ -128,7 +128,7 @@
 			return 1
 		if (istype(holder.owner, /mob/living/critter/robotic/scuttlebot))
 			if(!holder.owner.mind)
-				boutput(holder.owner, "<span class='alert'>You dont have a mind somehow.</span>")
+				boutput(holder.owner, "<span class='alert'>You don't have a mind somehow.</span>")
 				return 1
 
 			var/mob/living/critter/robotic/scuttlebot/E = holder.owner
@@ -139,7 +139,7 @@
 			E.mind.transfer_to(E.controller)
 			E.controller = null
 		else //In case this ability is put on another mob
-			boutput(holder.owner, "<span class='alert'>You dont have a body to go back to!</span>")
+			boutput(holder.owner, "<span class='alert'>You don't have a body to go back to!</span>")
 			return 1
 
 	incapacitationCheck()
