@@ -870,24 +870,16 @@
 				if (!plist["ckey"])
 					return 0
 
-				var/list/data = list(
-					"auth" = config.player_notes_auth,
-					"action" = "get",
-					"ckey" = plist["ckey"],
-					"format" = "json"
-				)
-
-				// Fetch notes via HTTP
-				var/datum/http_request/request = new()
-				request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
-				request.begin_async()
-				UNTIL(request.is_complete())
-				var/datum/http_response/response = request.into_response()
-
-				if (response.errored || !response.body)
-					return 0
-
-				return response.body
+				try
+					var/datum/apiRoute/players/notes/get/getPlayerNotes = new
+					getPlayerNotes.queryParams = list(
+						"filters" = list(
+							"ckey" = plist["ckey"]
+						)
+					)
+					return apiHandler.queryAPI(getPlayerNotes)
+				catch (var/exception/e)
+					return FALSE
 
 			if ("getPlayerStats")
 				if (!plist["ckey"])
