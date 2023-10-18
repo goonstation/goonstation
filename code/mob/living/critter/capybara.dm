@@ -6,3 +6,9 @@
 	is_npc = TRUE
 	ai_type = /datum/aiHolder/capybara
 	butcherable = BUTCHER_YOU_MONSTER //2 makes butchering this creature an abominable act. Which it is. You monsters.
+
+/mob/living/critter/small_animal/capybara/baby
+	name = "capybaby"
+	desc = "Baby coconut doggo!"
+	ai_type = /datum/aiHolder/capybaby
+	transform = matrix(0.5, 0, 0, 0, 0.5, 0)
