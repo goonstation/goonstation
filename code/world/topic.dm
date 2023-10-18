@@ -885,18 +885,6 @@
 				if (!plist["ckey"])
 					return 0
 
-				// playtime stats
-				var/list/data = list(
-					"auth" = config.player_notes_auth,
-					"action" = "user_stats",
-					"ckey" = plist["ckey"],
-					"format" = "json"
-				)
-				var/datum/http_request/playtime_request = new()
-				playtime_request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
-				playtime_request.begin_async()
-
-				// round stats
 				var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 				try
 					var/datum/apiRoute/players/stats/get/getPlayerStats = new
@@ -909,14 +897,9 @@
 					"seen" = playerStats.connected,
 					"seen_rp" = playerStats.connected_rp,
 					"participated" = playerStats.played,
-					"participated_rp" = playerStats.played_rp
+					"participated_rp" = playerStats.played_rp,
+					"playtime" = playerStats.time_played
 				)
-
-				// finish playtime stats
-				UNTIL(playtime_request.is_complete())
-				var/datum/http_response/playtime_response = playtime_request.into_response()
-				if (!playtime_response.errored && playtime_response.body)
-					response["playtime"] = playtime_response.body
 
 				var/datum/player/player = make_player(plist["ckey"])
 				if(isnull(player.last_seen))
