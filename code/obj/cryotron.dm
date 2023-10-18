@@ -417,4 +417,4 @@
 		else
 			enter_prompt(usr)
 
-		. = ..()
+		return ..()
