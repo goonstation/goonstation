@@ -1566,11 +1566,10 @@ ABSTRACT_TYPE(/datum/item_special/spark)
 		return
 
 	proc/apply_dash_reagent(mob/user, var/turf/loc)
-		if(K.reagents.has_reagent("sakuride", 1))
-			var/datum/reagent/sakuride = K.reagents.get_reagent("sakuride")
-			sakuride.reaction_turf(loc, 1)
-			K.reagents.remove_reagent("sakuride", 1)
-			if(K.reagents.get_reagent_amount("sakuride") < 1)
+		if(K.reagents?.total_volume > 1)
+			K.reagents.reaction(loc, TOUCH, 1)
+			K.reagents.remove_any(1)
+			if(K.reagents.total_volume < 1)
 				boutput(user, "The blade's coating tarnishes.")
 
 	proc/on_hit(var/mob/hit)
