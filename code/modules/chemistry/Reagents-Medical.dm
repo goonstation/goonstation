@@ -202,7 +202,6 @@ datum
 						M.setStatus("drowsy", 40 SECONDS)
 						if(probmult(9)) M.emote(pick("smile","giggle","yawn"))
 					if(40 to INFINITY)
-						depletion_rate = 0.4  // depletes itself faster once it reaches KO levels
 						M.setStatusMin("paralysis", 6 SECONDS * mult)
 						M.setStatus("drowsy", 40 SECONDS)
 				..()

@@ -2727,7 +2727,7 @@
 
 		on_reaction(var/datum/reagents/holder, var/created_volume)
 			var/location = get_turf(holder.my_atom)
-			var/ether_mix_speed = min((holder.total_temperature - (T0C + 30))/4, 1) //reacts faster than normally the hotter the reaction, careful with ether's burn temperature though
+			var/ether_mix_speed = max((holder.total_temperature - (T0C + 30))/4, 1) //reacts faster than normally the hotter the reaction, careful with ether's burn temperature though
 			holder.add_reagent("ether", ether_mix_speed, temp_new = holder.total_temperature, chemical_reaction = TRUE)
 			holder.remove_reagent("ethanol", ether_mix_speed)
 			if(holder?.my_atom?.is_open_container())
