@@ -1,3 +1,8 @@
+/**
+ * Manage cloud save files and data for a player
+ */
+
+
 #define CLOUD_SAVES_SIMULATED_CLOUD "data/simulated_cloud.json"
 
 /datum/cloudSaves
@@ -14,39 +19,46 @@
 		src.simulating = TRUE
 		#endif
 
+	/// Get the simulated cloud information for this player, for local development
 	proc/getSimulatedCloud()
 		if (fexists(CLOUD_SAVES_SIMULATED_CLOUD))
 			var/simulatedContent = file2text(CLOUD_SAVES_SIMULATED_CLOUD)
-			var/list/simulatedCloud = json_decode(simulatedContent)
-			var/list/playerCloud = simulatedCloud["[src.player.ckey]"]
-			if (playerCloud)
-				if (!("data" in playerCloud)) playerCloud["data"] = list()
-				if (!("saves" in playerCloud)) playerCloud["saves"] = list()
-				return playerCloud
+			if (simulatedContent)
+				var/list/simulatedCloud = json_decode(simulatedContent)
+				var/list/playerCloud = simulatedCloud["[src.player.ckey]"]
+				if (playerCloud)
+					if (!("data" in playerCloud)) playerCloud["data"] = list()
+					if (!("saves" in playerCloud)) playerCloud["saves"] = list()
+					return playerCloud
 
 		return list("data" = list(), "saves" = list())
 
+	/// Put new data into the simulated cloud for this player, for local development
 	proc/putSimulatedCloud(type, key, value)
 		var/list/simulatedCloud = list()
 		var/list/playerCloud = list("data" = list(), "saves" = list())
 		if (fexists(CLOUD_SAVES_SIMULATED_CLOUD))
 			var/simulatedContent = file2text(CLOUD_SAVES_SIMULATED_CLOUD)
-			simulatedCloud = json_decode(simulatedContent)
-			playerCloud = simulatedCloud["[src.player.ckey]"]
+			if (simulatedContent)
+				simulatedCloud = json_decode(simulatedContent)
+				playerCloud = simulatedCloud["[src.player.ckey]"]
 
+		if (!playerCloud) playerCloud = list()
 		if (!("data" in playerCloud)) playerCloud["data"] = list()
 		if (!("saves" in playerCloud)) playerCloud["saves"] = list()
 		playerCloud[type][key] = value
 		simulatedCloud["[src.player.ckey]"] = playerCloud
 		rustg_file_write(json_encode(simulatedCloud), CLOUD_SAVES_SIMULATED_CLOUD)
 
+	/// Delete data from the simulated cloud for this player, for local development
 	proc/deleteSimulatedCloud(type, key)
 		var/list/simulatedCloud = list()
 		var/list/playerCloud = list("data" = list(), "saves" = list())
 		if (fexists(CLOUD_SAVES_SIMULATED_CLOUD))
 			var/simulatedContent = file2text(CLOUD_SAVES_SIMULATED_CLOUD)
-			simulatedCloud = json_decode(simulatedContent)
-			playerCloud = simulatedCloud["[src.player.ckey]"]
+			if (simulatedContent)
+				simulatedCloud = json_decode(simulatedContent)
+				playerCloud = simulatedCloud["[src.player.ckey]"]
 
 		if (key in playerCloud[type])
 			var/list/thing = playerCloud[type]
@@ -56,6 +68,7 @@
 		simulatedCloud["[src.player.ckey]"] = playerCloud
 		rustg_file_write(json_encode(simulatedCloud), CLOUD_SAVES_SIMULATED_CLOUD)
 
+	/// Fetch all cloud data and files associated with this player
 	proc/fetch()
 		if (!src.player.id) return FALSE
 		if (src.simulating)
@@ -84,9 +97,9 @@
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to have their cloud data loaded: [error.message]")
 
-		out(world, json_encode(src.data))
 		return TRUE
 
+	/// Save new cloud data for this player
 	proc/putData(key, value)
 		if (!src.player.id) return
 		if (src.simulating)
@@ -97,8 +110,7 @@
 			try
 				var/datum/apiRoute/players/saves/data/post/addPlayerData = new
 				addPlayerData.buildBody(src.player.id, key, value)
-				var/datum/apiModel/Tracked/PlayerRes/PlayerDataResource/playerData = apiHandler.queryAPI(addPlayerData)
-				out(world, "res is: [playerData.ToString()]") // TODO: remove
+				apiHandler.queryAPI(addPlayerData)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to put data into their cloud. Key: [key]. Value: [value]. Error: [error.message]")
@@ -107,6 +119,7 @@
 		src.data[key] = value
 		return TRUE
 
+	/// Save a new cloud file for this player
 	proc/putSave(name, data)
 		if (!src.player.id) return
 		if (src.simulating)
@@ -117,8 +130,7 @@
 			try
 				var/datum/apiRoute/players/saves/file/post/addPlayerSave = new
 				addPlayerSave.buildBody(src.player.id, name, data)
-				var/datum/apiModel/Tracked/PlayerRes/PlayerSaveResource/playerSave = apiHandler.queryAPI(addPlayerSave)
-				out(world, "res is: [playerSave.ToString()]") // TODO: remove
+				apiHandler.queryAPI(addPlayerSave)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to put save into their cloud. Error: [error.message]")
@@ -127,6 +139,7 @@
 		src.saves[name] = data
 		return TRUE
 
+	/// Delete cloud data for this player
 	proc/deleteData(key)
 		if (!src.player.id) return
 		if (src.simulating)
@@ -137,8 +150,7 @@
 			try
 				var/datum/apiRoute/players/saves/data/delete/deletePlayerData = new
 				deletePlayerData.buildBody(src.player.id, key)
-				var/datum/apiModel/Message/message = apiHandler.queryAPI(deletePlayerData)
-				out(world, "res is: [message.ToString()]") // TODO: remove
+				apiHandler.queryAPI(deletePlayerData)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to delete data from their cloud. Error: [error.message]")
@@ -147,6 +159,7 @@
 		src.data.Remove(key)
 		return TRUE
 
+	/// Delete a cloud file for this player
 	proc/deleteSave(name)
 		if (!src.player.id) return
 		if (src.simulating)
@@ -157,8 +170,7 @@
 			try
 				var/datum/apiRoute/players/saves/file/delete/deletePlayerSave = new
 				deletePlayerSave.buildBody(src.player.id, name)
-				var/datum/apiModel/Message/message = apiHandler.queryAPI(deletePlayerSave)
-				out(world, "res is: [message.ToString()]") // TODO: remove
+				apiHandler.queryAPI(deletePlayerSave)
 			catch (var/exception/e)
 				var/datum/apiModel/Error/error = e.name
 				logTheThing(LOG_DEBUG, src.player.ckey, "failed to delete save from their cloud. Error: [error.message]")
@@ -174,7 +186,23 @@
 		return src.saves[name]
 
 
-proc/cloud_saves_put_data_bulk(list/data)
+/**
+ * Mass save a collection of cloud data for various players
+ * Input format:
+ * list(
+ * 		list(
+ * 			"player_id" = 1,
+ * 			"key" = "foo",
+ * 			"value" = "bar"
+ * 		),
+ * 		list(
+ * 			"player_id" = 2,
+ * 			"key" = "foo2",
+ * 			"value" = "bar2"
+ * 		)
+ * )
+ */
+/proc/cloud_saves_put_data_bulk(list/data)
 #ifndef LIVE_SERVER
 	var/list/newSimulatedCloud = list()
 	var/list/simulatedCloud = list()
@@ -203,11 +231,39 @@ proc/cloud_saves_put_data_bulk(list/data)
 	try
 		var/datum/apiRoute/players/saves/databulk/post/addBulkData = new
 		addBulkData.buildBody(json_encode(data))
-		var/datum/apiModel/Message/message = apiHandler.queryAPI(addBulkData)
-		out(world, "res is: [message.ToString()]") // TODO: remove
+		apiHandler.queryAPI(addBulkData)
 		return TRUE
 	catch (var/exception/e)
 		var/datum/apiModel/Error/error = e.name
 		logTheThing(LOG_DEBUG, null, "failed to put bulk data into the cloud. Error: [error.message]")
 		return FALSE
+#endif
+
+/// Transfer all cloud save files from one player to another
+/// WARNING: This overwrites all the saves for the target
+/proc/cloud_saves_transfer(from_ckey, to_ckey)
+#ifndef LIVE_SERVER
+	// Wire note: I simply cannot be bothered to code the simulated file aspect of this
+	throw EXCEPTION("Cloud save transferring is disabled during local development")
+#else
+	try
+		var/datum/apiRoute/players/saves/file/transfer/transferSaves = new
+		transferSaves.buildBody(from_ckey, to_ckey)
+		apiHandler.queryAPI(transferSaves)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		logTheThing(LOG_DEBUG, null, "failed to transfer cloud saves from [from_ckey] to [to_ckey]. Error: [error.message]")
+		throw EXCEPTION(error.message)
+		return FALSE
+
+	// Run updates if any of the targets are currently logged in
+	for (var/client/C in clients)
+		if (C.ckey == from_ckey)
+			// The source player has all their saves moved
+			C.player.cloudSaves.saves = list()
+		if (C.ckey == to_ckey)
+			// Trigger a re-fetch on the target so they can get their new saves right away
+			C.player.cloudSaves.fetch()
+
+	return TRUE
 #endif

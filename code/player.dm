@@ -77,6 +77,27 @@
 			src.client = null
 		..()
 
+	/// Record a player login via the API. Sets player ID field for future API use
+	proc/record_login()
+		if (!src.client || src.id) return
+		try
+			var/datum/apiRoute/players/login/playerLogin = new
+			playerLogin.buildBody(
+				src.client.ckey,
+				src.client.key,
+				src.client.address ? src.client.address : "127.0.0.1", // fallback for local dev
+				src.client.computer_id,
+				src.client.byond_version,
+				src.client.byond_build,
+				roundId
+			)
+			var/datum/apiModel/Tracked/PlayerResource/playerResponse = apiHandler.queryAPI(playerLogin)
+			src.id = playerResponse.id
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "Failed to record a player login for [src.client.ckey] because: [error.message]")
+			logTheThing(LOG_DIARY, null, "Failed to record a player login for [src.client.ckey] because: [error.message]", "admin")
+
 	/// queries api to cache stats so its only done once per player per round
 	proc/cache_round_stats()
 		set waitfor = FALSE
@@ -191,86 +212,3 @@
 	if (!player)
 		player = new(key)
 	return player
-
-/** Bulk cloud save for saving many key value pairs and/or many ckeys in a single api call
- * example input (formatted for readability)
- *  command add adds a number onto the current value (record must exist in the cloud to update or it won't do anything)
- *  command replace overwrites the existing record
- * 	{
- * 		"some_ckey":{
- * 			"persistent_bank":{
- * 				"command":"add",
- * 				"value":42069
- * 			},
- * 			"persistent_bank_item":{
- * 				"command":"replace",
- * 				"value":"none"
- * 			}
- * 		},
- * 		"some_other_ckey":{
- * 			"persistent_bank":{
- * 				"command":"add",
- * 				"value":1337
- * 			},
- * 			"persistent_bank_item":{
- * 				"command":"replace",
- * 				"value":"rubber_ducky"
- * 			}
- * 		}
- * 	}
-**/
-proc/cloud_put_bulk(json)
-	if (!rustg_json_is_valid(json))
-		stack_trace("cloud_put_bulk received an invalid json object.")
-		return FALSE
-	var/list/decoded_json = json_decode(json)
-	var/list/sanitized = list()
-	for (var/json_ckey in decoded_json)
-		var/clean_ckey = ckey(json_ckey)
-		if (!length(decoded_json[json_ckey]))
-			stack_trace("cloud_put_bulk received ckey \"[clean_ckey]\" without any key pairs to save.")
-			continue
-		sanitized[clean_ckey] = list()
-		for (var/json_key in decoded_json[json_ckey])
-			var/value = decoded_json[json_ckey][json_key]["value"]
-			if (isnull(value))
-				value = "" //api wants empty strings, not nulls
-			sanitized[clean_ckey][json_key] = list ("command" = decoded_json[json_ckey][json_key]["command"], "value" = value)
-#ifdef LIVE_SERVER
-	var/sanitized_json = json_encode(sanitized)
-	// Via rust-g HTTP
-	var/datum/http_request/request = new()
-	var/list/headers = list(
-		"Authorization" = "[config.spacebee_api_key]",
-		"Content-Type" = "application/json",
-		"Command" = "dataput_bulk"
-	)
-	request.prepare(RUSTG_HTTP_METHOD_POST, "[config.spacebee_api_url]/api/cloudsave", sanitized_json, headers)
-	request.begin_async()
-#else
-	var/save_json
-	var/list/decoded_save
-	if (fexists("data/simulated_cloud.json"))
-		save_json = file2text("data/simulated_cloud.json")
-		decoded_save = json_decode(save_json)
-	else
-		decoded_save = list()
-
-	for (var/sani_ckey in sanitized)
-		if (!decoded_save[sani_ckey])
-			decoded_save[sani_ckey] = list(cdata = list())
-		for (var/data_key in sanitized[sani_ckey])
-			var/value = sanitized[sani_ckey][data_key]["value"]
-			var/command = sanitized[sani_ckey][data_key]["command"]
-			switch(command)
-				if("add")
-					if (data_key in decoded_save[sani_ckey])
-						decoded_save[sani_ckey][data_key] = "[text2num(decoded_save[sani_ckey][data_key]) + value]"
-					else
-						decoded_save[sani_ckey][data_key] = "[value]"
-				if("replace")
-					decoded_save[sani_ckey][data_key] = "[value]"
-
-	rustg_file_write(json_encode(decoded_save),"data/simulated_cloud.json")
-#endif
-	return TRUE

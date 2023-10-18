@@ -333,6 +333,10 @@
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
 
+	// Record a login, sets player.id, which is used by almost every future API call for a player
+	// So we need to do this early, and outside of a spawn
+	src.player.record_login()
+
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
@@ -374,6 +378,8 @@
 		var/image/I = globalImages[key]
 		src << I
 
+	SPAWN(0)
+		src.player.record_login()
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 

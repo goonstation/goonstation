@@ -49,14 +49,13 @@
 
 	var/mob/respawn_as_self_mob = null
 
-	New()
+	New(client/C)
 		..()
+		src.owner = C
 		src.hidden_categories = list()
 		SPAWN(1 DECI SECOND)
-			if (src.owner)
-				var/client/C = src.owner
-				C.chatOutput.getContextFlag()
-				src.load_admin_prefs()
+			src.owner.chatOutput.getContextFlag()
+			src.load_admin_prefs()
 
 		if (!admin_interact_atom_verbs || length(admin_interact_atom_verbs) <= 0)
 			admin_interact_atom_verbs = list(\
@@ -169,15 +168,11 @@
 		user.Browse(HTML.Join(),"window=aprefs;size=385x540")
 
 	proc/load_admin_prefs()
-		if (!src.owner)
-			return
 		var/list/AP
 		if (!owner.player.cloudSaves.loaded)
-			out(world, "firing fetch from admin prefs")
 			owner.player.cloudSaves.fetch()
 
 		var/json_data = owner.player.cloudSaves.getData("admin_preferences")
-		out(world, "admin prefs: [json_data]")
 		if (json_data)
 			AP = json_decode(json_data)
 		else
