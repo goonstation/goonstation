@@ -2,29 +2,25 @@
 /atom/movable/screen/hud/relay
 	name = "relay"
 	desc = ""
-	icon = 'icons/misc/featherzone-32x32.dmi'
+	icon = 'icons/mob/flock_ui.dmi'
 	icon_state = "structure-relay"
 	screen_loc = "NORTH, EAST-1"
 	alpha = 100
 
 	New(var/mob/living/intangible/flock/F)
 		..()
-		src.update_value(F)
 
-	proc/getDesc(var/mob/living/intangible/flock/F)
-		var/datum/flockstats/flock_stats = F.flock.stats
+	proc/getDesc()
+		var/datum/flockstats/flock_stats = src.master.flock.stats
 		return "Peak Compute: [flock_stats.peak_compute] / [FLOCK_RELAY_COMPUTE_COST]\
 				Tiles Converted: [flock_stats.tiles_converted] / [FLOCK_RELAY_TILE_REQUIREMENT]"
 
-	proc/update_value(var/mob/living/intangible/flock/F)
-		var/datum/flockstats/flock_stats = F.flock.stats
-		if (!flock_stats || !istype(flock_stats))
-			return
-
-		src.desc = src.getDesc(F)
+	proc/update_value()
+		var/datum/flockstats/flock_stats = src.master.flock.stats
+		src.desc = src.getDesc()
 		var/pct_compute = flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST
 		var/pct_tiles = flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT
-		src.alpha = 255 * pct_compute * pct_tiles
+		src.alpha = 100 + (155 * pct_compute * pct_tiles)
 
 /////////////////
 // FLOCKMIND MOB

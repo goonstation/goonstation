@@ -3,6 +3,7 @@
 /datum/hud/flockmind
 	var/atom/movable/screen/hud/relay/relayInfo = null
 	var/mob/living/intangible/flock/hudOwner
+	var/hud_icon = 'icons/mob/flock_ui.dmi'
 
 	New(M)
 		..()
@@ -10,5 +11,32 @@
 		src.create_relay_element()
 
 	proc/create_relay_element()
-		src.relayInfo = new()
+		src.relayInfo = src.create_screen("relay", "Relay Race", src.hud_icon, "structure-relay", "EAST,NORTH", HUD_LAYER+1, customType=src.relayInfo)
+		src.relayInfo.update_value()
+
+	proc/create_screen(id, name, icon, state, loc, layer = HUD_LAYER, dir = SOUTH, tooltipTheme = null, desc = null, customType = null, mouse_opacity = 1)
+		if(QDELETED(src))
+			CRASH("Tried to create a screen (id '[id]', name '[name]') on a deleted datum/hud")
+		var/atom/movable/screen/hud/S
+		if (customType)
+			if (!ispath(customType, /atom/movable/screen/hud))
+				CRASH("Invalid type passed to create_screen ([customType])")
+			S = new customType
+		else
+			S = new
+
+		S.id = id
+		S.master = src
+		S.icon = icon
+		S.icon_state = state
+		S.screen_loc = loc
+		S.layer = layer
+		S.set_dir(dir)
+		S.tooltipTheme = tooltipTheme
+		S.mouse_opacity = mouse_opacity
+		src.objects += S
+
+		for (var/client/C in src.clients)
+			C.screen += S
+		return S
 
