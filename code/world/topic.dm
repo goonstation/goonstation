@@ -878,7 +878,7 @@
 						)
 					)
 					return apiHandler.queryAPI(getPlayerNotes)
-				catch (var/exception/e)
+				catch
 					return FALSE
 
 			if ("getPlayerStats")
