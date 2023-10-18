@@ -1278,8 +1278,8 @@ TYPEINFO(/obj/item/swords/katana)
 		apply_coating(target, user)
 
 	proc/apply_coating(var/atom/target, var/mob/user)
-		if (target.is_open_container() && !istype(target, /mob))
-			if(target.reagents.has_reagent("sakuride", 1))
+		if (target.is_open_container() && !ismob(target))
+			if(target.reagents?.has_reagent("sakuride", 1))
 				if(length(target.reagents.reagent_list) > 1)
 					boutput(user, "<span class='alert'>This coating is impure!</span>")
 					return
