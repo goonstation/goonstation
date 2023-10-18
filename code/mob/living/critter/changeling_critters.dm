@@ -167,6 +167,17 @@
 		UnregisterSignal(src, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
 		..()
 
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/critter/dna_gnaw, /datum/targetable/critter/boilgib))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if(istype(A, /datum/targetable/critter/boilgib))
+					if(prob(src.get_health_percentage() * 100))
+						continue
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
+
 	proc/stop_sprint()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT, src.type)
 
@@ -302,6 +313,9 @@
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
 
+/mob/living/critter/changeling/handspider/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 ///////////////////////////
 // EYESPIDER
@@ -360,6 +374,17 @@
 		// EYE CAN SEE FOREVERRRR
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION, src)
 
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/critter/shedtears, /datum/targetable/critter/boilgib))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if(istype(A, /datum/targetable/critter/boilgib))
+					if(prob(src.get_health_percentage() * 100))
+						continue
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
+
 	// a slight breeze will kill these guys, such is life as a squishy li'l eye
 	setup_healths()
 		add_hh_flesh(3, 1)
@@ -404,6 +429,10 @@
 			SPAWN(3 SECONDS)
 				src.client?.images -= arrow
 				qdel(arrow)
+
+/mob/living/critter/changeling/eyespider/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 ///////////////////////////
 // LEGWORM
@@ -492,6 +521,16 @@
 		add_hh_flesh_burn(5, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/critter/powerkick, /datum/targetable/critter/writhe, /datum/targetable/critter/boilgib))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if(istype(A, /datum/targetable/critter/boilgib))
+					if(prob(src.get_health_percentage() * 100))
+						continue
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
@@ -519,6 +558,10 @@
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
+
+/mob/living/critter/changeling/legworm/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 
 ///////////////////////////
@@ -566,7 +609,13 @@
 		add_hh_flesh(16, 1)
 		add_hh_flesh_burn(5, 1.25)
 
-
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/changeling/sting/fartonium, /datum/targetable/changeling/sting/simethicone))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
@@ -585,6 +634,10 @@
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
+
+/mob/living/critter/changeling/buttcrab/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 
 
