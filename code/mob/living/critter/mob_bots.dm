@@ -417,6 +417,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	can_burn = FALSE
 	can_grab = TRUE
 	can_disarm = TRUE
+	can_help = TRUE
 	dna_to_absorb = 0
 	metabolizes = FALSE
 	custom_gib_handler = /proc/robogibs
@@ -425,6 +426,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 	health_brute_vuln = 1
 	health_burn = 25
 	health_burn_vuln = 1.25
+	ai_retaliates = TRUE
+	ai_retaliate_patience = 1
+	ai_retaliate_persistence = RETALIATE_UNTIL_INCAP
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
+	ai_attacks_neutral = TRUE
 	var/net_id
 	var/power = TRUE
 	var/beacon_freq = FREQ_NAVBEACON
@@ -586,7 +593,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 				src.say("Ten-Four. [src.report_arrests ? "Reporting arrests on [FREQ_PDA]" : "No longer reporting arrests"].")
 				return src.report_arrests
 
-	proc/locate_beacon()
+	proc/locate_beacon(var/dest_code)
+
 		return
 
 	proc/receive_signal(datum/signal/signal)
@@ -598,6 +606,12 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		if(signal_command=="bot_status")
 			src.send_status()
 
+		// receive response from beacon
+		var/signal_beacon = signal.data["beacon"]
+		var/valid = signal.data["patrol"]
+		if(!signal_beacon || !valid)
+			return
+
 	proc/send_status()
 		var/datum/signal/signal = get_free_signal()
 		signal.source = src
@@ -608,12 +622,58 @@ ABSTRACT_TYPE(/datum/targetable/critter/bot/fill_with_chem)
 		signal.data["mode"] = 1
 		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal, null, control_freq)
 
+	valid_target(var/mob/living/C)
+		if ((C.hasStatus("handcuffed")) || (assess_perp(C) < 4))
+			return FALSE
+		return ..()
+
 	proc/assess_perp(mob/living/perp)
 		if(src.emagged)
 			return 10 //Everyone is a criminal!
-		else
-			// saving this here while i go make contraband more signals based.
-			return 0
+
+		var/threatcount = 0
+
+		var/obj/item/card/id/perp_id = perp.equipped()
+		if (!istype(perp_id))
+			perp_id = perp.get_id()
+
+		if((src.check_contraband)) // bot is set to actively search for contraband
+
+			if(perp_id) //Checking for targets and permits
+				var/list/contraband_returned = list()
+				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !(access_contrabandpermit in perp_id.access), !(access_carrypermit in perp_id.access)))
+					threatcount += max(contraband_returned)
+			else
+				var/list/contraband_returned = list()
+				if (SEND_SIGNAL(perp, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+					threatcount += max(contraband_returned)
+
+		if (istype(perp_id, /obj/item/card/id/syndicate)) //Agent cards lower threat level
+			threatcount -= 2
+
+		var/perpname = perp.name
+		if(ishuman(perp))
+			var/mob/living/carbon/human/H_perp = perp
+			if(istype(H_perp.mutantrace, /datum/mutantrace/abomination))
+				threatcount += 5
+
+			perpname = H_perp.face_visible() ? H_perp.real_name : perpname
+			if(perp.traitHolder.hasTrait("stowaway") && perp.traitHolder.hasTrait("jailbird"))
+				if(isnull(data_core.security.find_record("name", perpname)))
+					threatcount += 5
+
+		// we have grounds to make an arrest, don't bother with further analysis
+		if(threatcount >= 4)
+			return threatcount
+
+		// note - this does allow flagging 'fire elemental' and such for arrest. probably cool
+		if (src.check_records) // bot is set to actively compare security records
+			for (var/datum/db_record/R as anything in data_core.security.find_records("name", perpname))
+				if(R["criminal"] == "*Arrest*")
+					threatcount = 7
+					break
+
+		return threatcount
 
 	proc/allowed(mob/M)
 		//check if it doesn't require any access at all
