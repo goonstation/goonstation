@@ -1162,6 +1162,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/dawson)
 	material_prints = "sharp scratches"
 	hide_prints = 0
 	rand_pos = 1
+	which_hands = GLOVE_HAS_LEFT
 
 	setupProperties()
 		..()
@@ -1725,6 +1726,7 @@ TYPEINFO(/obj/item/clothing/under/gimmick/shirtnjeans)
 	icon_state = "handcomp"
 	item_state = "handcomp"
 	hide_prints = 0
+	which_hands = GLOVE_HAS_RIGHT
 
 	setupProperties()
 		..()

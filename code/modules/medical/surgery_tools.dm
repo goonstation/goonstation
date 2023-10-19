@@ -221,7 +221,7 @@ CONTAINS:
 /obj/item/staple_gun
 	name = "staple gun"
 	desc = "A medical staple gun for securely reattaching limbs."
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "staplegun"
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
@@ -496,7 +496,7 @@ TYPEINFO(/obj/item/robodefibrillator)
 
 				var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
 				if (suiciding)
-
+					; // do nothing
 				else if (patient.health < 0)
 					if (sumdamage >= 90)
 						user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")

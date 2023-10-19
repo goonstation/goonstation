@@ -1170,6 +1170,7 @@
 	M.ghostize()
 	var/ckey = usr.key
 	M.mind = usr.mind
+	usr.mind.current = M
 	M.ckey = ckey
 
 /proc/releasemob(mob/M as mob in world)
@@ -1179,9 +1180,11 @@
 	if(M.oldmob)
 		M.oldmob.mind = usr.mind
 		usr.client.mob = M.oldmob
+		usr.mind.current = M.oldmob
 	else
 		M.ghostize()
 	M.mind = M.oldmind
+	M.oldmind.current = M
 	if(M.mind)
 		M.ckey = M.mind.key
 	boutput(M, "<span class='alert'>Your soul is sucked back into your body!</span>")
@@ -1616,7 +1619,11 @@
 	ADMIN_ONLY
 
 	var/speech = tgui_input_text(src, "What to force say", "Say")
+	if(isnull(speech))
+		return
 	var/range = tgui_input_number(src, "Tile range", "Range", 5, 7, 1)
+	if(isnull(range))
+		return
 
 	for (var/mob/M in range(range, usr))
 		if (isalive(M))

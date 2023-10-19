@@ -141,6 +141,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	if (door_loc && isrestrictedz(door_loc.z)) // Somebody will find a way to abuse it if I don't put this here.
 		usr.show_text("Unable to interface with door due to unknown interference.", "red")
 		return
+	if(isAI(src) && door_loc?.z == src.z )
+		usr.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
 
 	if (istype(our_door, /obj/machinery/door/airlock/))
 		var/obj/machinery/door/airlock/A = our_door
@@ -182,7 +185,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon/click(atom/target, params, location, control)
 	if (src.targeting_ability)
 		..()
-	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned") && !src.getStatusDuration("low_signal"))
 		if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 			var/obj/O = target
 			if(O.receive_silicon_hotkey(src)) return
@@ -195,7 +198,8 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
 			set_dir(get_dir(src, target))
 
-		target.attack_ai(src, params, location, control)
+		if(!src.getStatusDuration("low_signal"))
+			target.attack_ai(src, params, location, control)
 
 /*
 /mob/living/key_down(key)
@@ -261,6 +265,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	message = trim(html_encode(message))
+	message = src.check_singing_prefix(message)
 
 	if (!message)
 		return

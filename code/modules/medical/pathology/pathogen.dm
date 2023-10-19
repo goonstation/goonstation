@@ -174,7 +174,7 @@ datum/controller/pathogen
 							types[S.name] = S
 						var/chosen = input("Which suppressant?", "Suppressant", types[1]) in types
 						P.suppressant = types[chosen]
-						P.desc = "[P.suppressant.color] dodecahedrical [P.body_type.plural]"
+						P.desc = "[P.suppressant.color] dodecahedral [P.body_type.plural]"
 
 					if ("add")
 						var/list/types = list()

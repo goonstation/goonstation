@@ -1462,7 +1462,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 /obj/item/gun/gibgun
 	name = "grody gizmo"
 	desc = "Some kind of weirdo metal-laden meat tube.  Oh gosh, what would Freud say about this?"
-	//icon = 'icons/misc/meatland.dmi'
+	icon = 'icons/obj/items/guns/gimmick.dmi'
 	icon_state = "gibgun"
 	cant_self_remove = 1
 	cant_other_remove = 1
