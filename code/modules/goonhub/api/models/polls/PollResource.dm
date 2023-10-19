@@ -14,8 +14,9 @@
 /datum/apiModel/Tracked/PollResource/SetupFromResponse(response)
 	. = ..()
 	src.game_admin_id = response["game_admin_id"]
-	src.game_admin = new
-	src.game_admin = src.game_admin.SetupFromResponse(response["game_admin"])
+	if ("game_admin" in response)
+		src.game_admin = new
+		src.game_admin.SetupFromResponse(response["game_admin"])
 	src.question = response["question"]
 	src.options = list()
 	for (var/item in response["options"])
@@ -29,29 +30,22 @@
 	src.expires_at = response["expires_at"]
 
 /datum/apiModel/Tracked/PollResource/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.game_admin_id) \
-		|| isnull(src.game_admin) \
-		|| isnull(src.question) \
-		|| isnull(src.options) \
-		|| isnull(src.servers) \
-		|| isnull(src.total_answers) \
-		|| isnull(src.winning_option_id) \
-		|| isnull(src.multiple_choice) \
-		|| isnull(src.expires_at) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
+		isnull(src.question) \
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/PollResource/ToString()
+/datum/apiModel/Tracked/PollResource/ToList()
 	. = list()
 	.["id"] = src.id
 	.["game_admin_id"] = src.game_admin_id
-	.["game_admin"] = src.game_admin
+	if (src.game_admin)
+		.["game_admin"] = src.game_admin.ToList()
 	.["question"] = src.question
-	.["options"] = src.options
+	.["options"] = list()
+	for (var/datum/apiModel/PollOptionResource/option in src.options)
+		.["options"] += list(option.ToList())
 	.["servers"] = src.servers
 	.["total_answers"] = src.total_answers
 	.["winning_option_id"] = src.winning_option_id
@@ -59,4 +53,3 @@
 	.["expires_at"] = src.expires_at
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)
