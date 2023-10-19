@@ -10,12 +10,10 @@
 	src.poll_id = response["poll_id"]
 
 /datum/apiModel/Tracked/PollAnswerResource/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.poll_option_id) \
+		isnull(src.poll_option_id) \
 		|| isnull(src.poll_id) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
 	)
 		return FALSE
 

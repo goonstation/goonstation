@@ -25,7 +25,7 @@
 /datum/poll_ballot/ui_data(mob/user)
 	. = list(
 			"isAdmin" = isadmin(user),
-			"polls" = poll_manager.poll_data?["data"],
+			"polls" = poll_manager.poll_data,
 			"playerId" = user.client.player.id
 		)
 
@@ -85,71 +85,79 @@
 					//todo
 					return
 
-			var/datum/http_request/request = new
-			var/list/headers = list(
-				"Accept" = "application/json",
-				"Authorization" = config.goonhub_api_token,
-				"Content-Type" = "application/json"
-			)
-			var/list/body = list(
-				"game_admin_ckey" = ui.user.ckey,
-				"question" = question,
-				"multiple_choice" = multiple_choice,
-				"expires_at" = expires_at,
-				"options" = options
-			)
-			body = json_encode(body)
-			request.prepare(RUSTG_HTTP_METHOD_POST, "[config.goonhub_api_endpoint]/api/polls", body, headers)
-			request.begin_async()
-			UNTIL(request.is_complete())
-			var/datum/http_response/response = request.into_response()
-			if (rustg_json_is_valid(response.body))
-				var/list/L = poll_manager.poll_data?["data"]
-				L.Insert(1, list(json_decode(response.body)?["data"]))
-				poll_manager.poll_data?["data"] = L
+			var/list/poll
+			try
+				var/datum/apiRoute/polls/add/addPoll = new
+				addPoll.buildBody(
+					ui.user.ckey,
+					question,
+					multiple_choice,
+					expires_at,
+					options,
+					null
+				)
+				var/datum/apiModel/Tracked/PollResource/pollResource = apiHandler.queryAPI(addPoll)
+				poll = pollResource.ToList()
+			catch (var/exception/e)
+				var/datum/apiModel/Error/error = e.name
+				logTheThing(LOG_DEBUG, null, "Failed to add a poll: [error.message]")
+				return FALSE
+
+			// Add this poll to our cached data
+			var/list/L = poll_manager.poll_data
+			L.Insert(1, list(poll))
+			poll_manager.poll_data = L
 			. = TRUE
 
 		if ("deletePoll")
 			USR_ADMIN_ONLY
 
-			var/datum/http_request/request = new
-			var/list/headers = list(
-				"Accept" = "application/json",
-				"Authorization" = config.goonhub_api_token,
-			)
-			request.prepare(RUSTG_HTTP_METHOD_DELETE, "[config.goonhub_api_endpoint]/api/polls/[params["pollId"]]", null, headers)
-			request.begin_async()
-			UNTIL(request.is_complete())
-			poll_manager.sync_single_poll(params["pollId"])
+			try
+				var/datum/apiRoute/polls/delete/deletePoll = new
+				deletePoll.routeParams = list("[params["pollId"]]")
+				apiHandler.queryAPI(deletePoll)
+			catch (var/exception/e)
+				var/datum/apiModel/Error/error = e.name
+				logTheThing(LOG_DEBUG, null, "Failed to delete a poll: [error.message]")
+				return FALSE
+
+			// Remove this poll from our cached data
+			for (var/i in 1 to length(poll_manager.poll_data))
+				if (poll_manager.poll_data[i]["id"] != params["pollId"])
+					continue
+				var/list/L = poll_manager.poll_data
+				L.Remove(list(poll_manager.poll_data[i]))
+				poll_manager.poll_data = L
+				break
 			. = TRUE
 
 		if ("editPoll")
 			USR_ADMIN_ONLY
 
 			var/question
-			for (var/list/poll as anything in poll_manager.poll_data?["data"])
-				if (poll["id"] == params["pollId"])
+			var/expires_at
+			var/servers
+			for (var/list/poll in poll_manager.poll_data)
+				if (poll["id"] == text2num(params["pollId"]))
 					question = poll["question"]
+					expires_at = poll["expires_at"]
+					servers = poll["servers"]
 					break
 
 			question = tgui_input_text(ui.user, "Enter the poll question", "Edit Poll", question, MAX_MESSAGE_LEN)
 			question = copytext(html_encode(question), 1, MAX_MESSAGE_LEN)
 			if (!question) return
 
-			var/datum/http_request/request = new
-			var/list/headers = list(
-				"Accept" = "application/json",
-				"Authorization" = config.goonhub_api_token,
-				"Content-Type" = "application/json"
-			)
-			var/list/body = list(
-				"question" = question,
-				"expires_at" = null
-			)
-			body = json_encode(body)
-			request.prepare(RUSTG_HTTP_METHOD_PUT, "[config.goonhub_api_endpoint]/api/polls/[params["pollId"]]", body, headers)
-			request.begin_async()
-			UNTIL(request.is_complete())
+			try
+				var/datum/apiRoute/polls/edit/editPoll = new
+				editPoll.routeParams = list("[params["pollId"]]")
+				editPoll.buildBody(question, expires_at, servers)
+				apiHandler.queryAPI(editPoll)
+			catch (var/exception/e)
+				var/datum/apiModel/Error/error = e.name
+				logTheThing(LOG_DEBUG, null, "Failed to edit a poll: [error.message]")
+				return FALSE
+
 			poll_manager.sync_single_poll(params["pollId"])
 			. = TRUE
 
@@ -160,33 +168,31 @@
 			option = copytext(html_encode(option), 1, MAX_MESSAGE_LEN)
 			if (!option) return
 
-			var/datum/http_request/request = new
-			var/list/headers = list(
-				"Accept" = "application/json",
-				"Authorization" = config.goonhub_api_token,
-				"Content-Type" = "application/json"
-			)
-			var/list/body = list(
-				"option" = option
-			)
-			body = json_encode(body)
-			request.prepare(RUSTG_HTTP_METHOD_POST, "[config.goonhub_api_endpoint]/api/polls/option/[params["pollId"]]", body, headers)
-			request.begin_async()
-			UNTIL(request.is_complete())
+			try
+				var/datum/apiRoute/polls/options/add/addPollOption = new
+				addPollOption.routeParams = list("[params["pollId"]]")
+				addPollOption.buildBody(option)
+				apiHandler.queryAPI(addPollOption)
+			catch (var/exception/e)
+				var/datum/apiModel/Error/error = e.name
+				logTheThing(LOG_DEBUG, null, "Failed to add an option to a poll: [error.message]")
+				return FALSE
+
 			poll_manager.sync_single_poll(params["pollId"])
 			. = TRUE
 
 		if ("deleteOption")
 			USR_ADMIN_ONLY
 
-			var/datum/http_request/request = new
-			var/list/headers = list(
-				"Accept" = "application/json",
-				"Authorization" = config.goonhub_api_token,
-			)
-			request.prepare(RUSTG_HTTP_METHOD_DELETE, "[config.goonhub_api_endpoint]/api/polls/option/[params["optionId"]]", null, headers)
-			request.begin_async()
-			UNTIL(request.is_complete())
+			try
+				var/datum/apiRoute/polls/options/delete/deletePollOption = new
+				deletePollOption.routeParams = list("[params["optionId"]]")
+				apiHandler.queryAPI(deletePollOption)
+			catch (var/exception/e)
+				var/datum/apiModel/Error/error = e.name
+				logTheThing(LOG_DEBUG, null, "Failed to delete an option from a poll: [error.message]")
+				return FALSE
+
 			poll_manager.sync_single_poll(params["pollId"])
 			. = TRUE
 
@@ -194,61 +200,63 @@
 			USR_ADMIN_ONLY
 
 			var/option
-			for (var/list/poll as anything in poll_manager.poll_data?["data"]["options"])
-				if (poll["id"] == params["optionId"])
-					option = poll["option"]
-					break
+			for (var/list/poll as anything in poll_manager.poll_data)
+				if (poll["id"] == text2num(params["pollId"]))
+					for (var/list/pollOption in poll["options"])
+						if (pollOption["id"] == text2num(params["optionId"]))
+							option = pollOption["option"]
+							break
 
 			option = tgui_input_text(ui.user, "Enter a poll option", "Edit Option", option, MAX_MESSAGE_LEN)
 			option = copytext(html_encode(option), 1, MAX_MESSAGE_LEN)
 			if (!option) return
 
-			var/datum/http_request/request = new
-			var/list/headers = list(
-				"Accept" = "application/json",
-				"Authorization" = config.goonhub_api_token,
-				"Content-Type" = "application/json"
-			)
-			var/list/body = list(
-				"option" = option,
-				"position" = null
-			)
-			body = json_encode(body)
-			request.prepare(RUSTG_HTTP_METHOD_PUT, "[config.goonhub_api_endpoint]/api/polls/option/[params["optionId"]]", body, headers)
-			request.begin_async()
-			UNTIL(request.is_complete())
+			try
+				var/datum/apiRoute/polls/options/edit/editPollOption = new
+				editPollOption.routeParams = list("[params["optionId"]]")
+				editPollOption.buildBody(option, null)
+				apiHandler.queryAPI(editPollOption)
+			catch (var/exception/e)
+				var/datum/apiModel/Error/error = e.name
+				logTheThing(LOG_DEBUG, null, "Failed to edit an option on a poll: [error.message]")
+				return FALSE
+
 			poll_manager.sync_single_poll(params["pollId"])
 			. = TRUE
 
 		if ("vote")
-			if (!ui.user.client.player.id) return
+			var/player_id = ui.user.client.player.id
+			if (!player_id) return
 
 			// determine if we are treating this as a pick or unpick
 			var/voted_for_option = FALSE
-			for (var/list/L as anything in poll_manager.poll_data?["data"])
-				if (L["id"] != params["pollId"])
+			for (var/list/poll in poll_manager.poll_data)
+				if (poll["id"] != text2num(params["pollId"]))
 					continue
-				for (var/list/option as anything in L["options"])
-					if (option["id"] != params["optionId"])
+				for (var/list/option in poll["options"])
+					if (option["id"] != text2num(params["optionId"]))
 						continue
 					if (ui.user.client.player.id in option["answers_player_ids"])
 						voted_for_option = TRUE
 					break
 				break
 
-			var/datum/http_request/request = new
-			var/list/headers = list(
-				"Accept" = "application/json",
-				"Authorization" = config.goonhub_api_token,
-				"Content-Type" = "application/json"
-			)
-			var/list/body = list(
-				"player_id" = ui.user.client.player.id,
-			)
-			body = json_encode(body)
-			request.prepare(RUSTG_HTTP_METHOD_POST, "[config.goonhub_api_endpoint]/api/polls/option/[voted_for_option ? "unpick" : "pick"]/[params["optionId"]]", body, headers)
-			request.begin_async()
-			UNTIL(request.is_complete())
+			try
+				if (voted_for_option)
+					var/datum/apiRoute/polls/options/unpick/unPickOption = new
+					unPickOption.routeParams = list("[params["optionId"]]")
+					unPickOption.buildBody(player_id)
+					apiHandler.queryAPI(unPickOption)
+				else
+					var/datum/apiRoute/polls/options/pick/pickOption = new
+					pickOption.routeParams = list("[params["optionId"]]")
+					pickOption.buildBody(player_id)
+					apiHandler.queryAPI(pickOption)
+			catch (var/exception/e)
+				var/datum/apiModel/Error/error = e.name
+				logTheThing(LOG_DEBUG, null, "Failed to pick/unpick an option on a poll: [error.message]")
+				return FALSE
+
 			poll_manager.sync_single_poll(params["pollId"])
 			. = TRUE
 
