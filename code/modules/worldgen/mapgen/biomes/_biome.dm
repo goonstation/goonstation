@@ -4,14 +4,29 @@
 	var/turf_type
 	///Chance of having a structure from the flora types list spawn
 	var/flora_density = 0
+	var/minimum_flora_distance = 0
 	///Chance of having a mob from the fauna types list spawn
 	var/fauna_density = 0
+	var/minimum_fauna_distance = 0
 	///list of type paths of objects that can be spawned when the turf spawns flora. Syntax: list(type = weight)
 	var/list/flora_types = list(/obj/tree = 100)
 	///list of type paths of mobs that can be spawned when the turf spawns fauna. Syntax: list(type = weight)
 	var/list/fauna_types = list()
 
+	var/datum/spatial_hashmap/manual/fauna_hashmap
+	var/datum/spatial_hashmap/manual/flora_hashmap
+
+
 var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
+
+/datum/biome/New()
+	. = ..()
+	if(minimum_fauna_distance)
+		fauna_hashmap = new(cs=minimum_fauna_distance)
+		fauna_hashmap.update_cooldown = INFINITY
+	if(minimum_flora_distance)
+		flora_hashmap = new(cs=minimum_fauna_distance)
+		flora_hashmap.update_cooldown = INFINITY
 
 ///This proc handles the creation of a turf of a specific biome type
 /datum/biome/proc/generate_turf(var/turf/gen_turf, flags=0)
@@ -19,8 +34,10 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 	if((flags & MAPGEN_IGNORE_FAUNA) == 0)
 		if(length(fauna_types) && prob(fauna_density))
-			var/mob/fauna = weighted_pick(fauna_types)
-			new fauna(gen_turf)
+			if(!fauna_hashmap || !length(fauna_hashmap.get_nearby(gen_turf, src.minimum_fauna_distance)))
+				var/mob/fauna = weighted_pick(fauna_types)
+				fauna = new fauna(gen_turf)
+				fauna_hashmap?.add_weakref(fauna)
 
 	// Skip areas where flora generation can be problematic due to introduction of dense anchored objects
 	if((gen_turf.z == Z_LEVEL_STATION || isgenplanet(gen_turf)) && ((flags & MAPGEN_IGNORE_BUILDABLE) == 0))
@@ -35,8 +52,10 @@ var/list/area/blacklist_flora_gen = list(/area/shuttle, /area/mining)
 
 	if((flags & MAPGEN_IGNORE_FLORA) == 0)
 		if(length(flora_types) && prob(flora_density))
-			var/obj/structure/flora = weighted_pick(flora_types)
-			new flora(gen_turf)
+			if(!flora_hashmap || !length(flora_hashmap.get_nearby(gen_turf, src.minimum_flora_distance)))
+				var/obj/flora = weighted_pick(flora_types)
+				flora = new flora(gen_turf)
+				flora_hashmap?.add_weakref(flora)
 
 	var/area/A = get_area(gen_turf)
 	A.store_biome(gen_turf, src.type)
