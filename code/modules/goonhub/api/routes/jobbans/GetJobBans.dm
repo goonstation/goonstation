@@ -4,4 +4,4 @@
 	method = RUSTG_HTTP_METHOD_GET
 	path = "/job-bans"
 	queryParams = list("filters", "sort_by", "descending", "per_page") // string[], string, string, string
-	correct_response = /datum/apiModel/Tracked/JobBanResource
+	correct_response = /datum/apiModel/Paginated/JobBanResourceList

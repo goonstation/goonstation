@@ -508,6 +508,9 @@ TYPEINFO(/obj/machinery/processor)
 		return
 
 //
+TYPEINFO(/obj/item/device/matanalyzer)
+	mats = 5
+
 /obj/item/device/matanalyzer
 	icon_state = "matanalyzer"
 	name = "Material analyzer"

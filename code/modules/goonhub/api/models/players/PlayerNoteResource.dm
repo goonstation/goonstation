@@ -1,49 +1,34 @@
 
 /// PlayerNoteResource
 /datum/apiModel/Tracked/PlayerRes/PlayerNoteResource
+	var/datum/apiModel/Tracked/PlayerResource/player = null // Model
 	var/ckey			= null // string
 	var/game_admin_id	= null // integer
+	var/datum/apiModel/Tracked/GameAdminResource/game_admin = null // Model
 	var/server_id		= null // string
 	var/round_id		= null // integer
 	var/note			= null // string
 	var/legacy_data		= null // [string]
 
-/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/New(
-	id,
-	player_id,
-	ckey,
-	game_admin_id,
-	server_id,
-	round_id,
-	note,
-	legacy_data,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.player_id = player_id
-	src.ckey = ckey
-	src.game_admin_id = game_admin_id
-	src.server_id = server_id
-	src.round_id = round_id
-	src.note = note
-	src.legacy_data = legacy_data
-	src.created_at = created_at
-	src.updated_at = updated_at
+	if ("player" in response)
+		src.player = new
+		src.player.SetupFromResponse(response["player"])
+	src.ckey = response["ckey"]
+	src.game_admin_id = response["game_admin_id"]
+	if ("game_admin" in response)
+		src.game_admin = new
+		src.game_admin.SetupFromResponse(response["game_admin"])
+	src.server_id = response["server_id"]
+	src.round_id = response["round_id"]
+	src.note = response["note"]
+	src.legacy_data = response["legacy_data"]
 
 /datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.player_id) \
-		|| isnull(src.ckey) \
-		|| isnull(src.game_admin_id) \
-		|| isnull(src.server_id) \
-		|| isnull(src.round_id) \
-		|| isnull(src.note) \
-		|| isnull(src.legacy_data) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
+		isnull(src.note) \
 	)
 		return FALSE
 
@@ -51,8 +36,12 @@
 	. = list()
 	.["id"] = src.id
 	.["player_id"] = src.player_id
+	if (src.player)
+		.["player"] = src.player.ToString()
 	.["ckey"] = src.ckey
 	.["game_admin_id"] = src.game_admin_id
+	if (src.game_admin)
+		.["game_admin"] = src.game_admin.ToString()
 	.["server_id"] = src.server_id
 	.["round_id"] = src.round_id
 	.["note"] = src.note

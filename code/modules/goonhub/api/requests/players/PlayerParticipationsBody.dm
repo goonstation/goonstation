@@ -1,25 +1,14 @@
 
 /datum/apiBody/PlayerParticipation
-	var/player_id			= 0
-	var/round_id			= 0
-
-/datum/apiBody/PlayerParticipation/New(
-	player_id,
-	round_id
-)
-	. = ..()
-	src.player_id = player_id
-	src.round_id = round_id
+	fields = list(
+		"player_id", // integer
+		"round_id" // integer
+	)
 
 /datum/apiBody/PlayerParticipation/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.player_id) \
-		|| isnull(src.round_id) \
+		isnull(src.values["player_id"]) \
+		|| isnull(src.values["round_id"]) \
 	)
 		return FALSE
-
-/datum/apiBody/PlayerParticipation/toJson()
-	return json_encode(list(
-		"player_id"			= src.player_id,
-		"round_id"			= src.round_id
-	))

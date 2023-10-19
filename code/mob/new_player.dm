@@ -277,7 +277,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		if (!JOB)
 			return
 		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names))
-			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name].")
+			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name]. You can select \"random appearance\" in character setup if you don't want to make a new character.")
 			return
 		global.latespawning.lock()
 
@@ -372,7 +372,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 				logTheThing(LOG_DEBUG, character, "<b>Late join:</b> assigned job: [JOB.name]")
 				//if they have a ckey, joined before a certain threshold and the shuttle wasnt already on its way
 				if (character.mind.ckey && (ticker.round_elapsed_ticks <= MAX_PARTICIPATE_TIME) && !emergency_shuttle.online)
-					participationRecorder.record(character.mind.ckey)
+					var/datum/player/P = character.mind.get_player()
+					participationRecorder.record(P)
 
 			// Apply any roundstart mutators to late join if applicable
 			roundstart_events(character)
@@ -666,8 +667,8 @@ a.latejoin-card:hover {
 		else
 			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
 		new_character.dir = pick(NORTH, EAST, SOUTH, WEST)
-
-		src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
+		if (!J || J.uses_character_profile) //borg joins don't lock out your character profile
+			src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
 
 		close_spawn_windows()
 
@@ -716,7 +717,7 @@ a.latejoin-card:hover {
 							makebad(new_character, bad_type)
 							new_character.mind.late_special_role = TRUE
 							logTheThing(LOG_DEBUG, new_character, "<b>Late join</b>: assigned antagonist role: [bad_type].")
-							antagWeighter.record(role = bad_type, ckey = new_character.ckey, latejoin = 1)
+							antagWeighter.record(role = bad_type, P = new_character.mind.get_player(), latejoin = 1)
 
 
 

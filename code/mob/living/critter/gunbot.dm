@@ -260,7 +260,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 /mob/living/critter/robotic/gunbot/syndicate/polaris
 	name = "\improper unmarked robot"
 	real_name = "\improper unmarked robot"
-	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn."
+	desc = "Painted in red and black, all identifying marks have been scraped off. Darn."
 	health_brute = 20
 	health_burn = 20
 	is_npc = TRUE

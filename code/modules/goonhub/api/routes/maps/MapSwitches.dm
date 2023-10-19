@@ -5,4 +5,13 @@
 	method = RUSTG_HTTP_METHOD_POST
 	path = "/map-switch"
 	body = /datum/apiBody/mapswitch
-	correct_response = /datum/apiModel/Tracked/MapSwitch
+	correct_response = /datum/apiModel/MapSwitch
+
+	buildBody(
+		game_admin_ckey,
+		round_id,
+		server_id,
+		map,
+		votes
+	)
+		. = ..(args)

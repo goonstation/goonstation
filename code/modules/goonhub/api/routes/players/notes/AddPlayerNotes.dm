@@ -6,3 +6,12 @@
 	path = "/players/notes"
 	body = /datum/apiBody/players/notes/post
 	correct_response = /datum/apiModel/Tracked/PlayerRes/PlayerNoteResource
+
+	buildBody(
+		game_admin_ckey,
+		round_id,
+		server_id,
+		ckey,
+		note
+	)
+		. = ..(args)

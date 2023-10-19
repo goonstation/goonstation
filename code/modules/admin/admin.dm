@@ -125,37 +125,37 @@ var/global/noir = 0
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("adminhelp_banner", usr.client.key)
+					C.player.cloudSaves.putData("adminhelp_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("ah_unmute")//guHGUHGUGHGUHG
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("adminhelp_banner", "")
+					C.player.cloudSaves.putData("adminhelp_banner", "")
 					src.show_chatbans(C)
 		if ("mh_mute")//AHDUASHDUHWUDHWDUHWDUWDH
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("mentorhelp_banner", usr.client.key)
+					C.player.cloudSaves.putData("mentorhelp_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("mh_unmute")//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("mentorhelp_banner", "")
+					C.player.cloudSaves.putData("mentorhelp_banner", "")
 					src.show_chatbans(C)
 		if ("pr_mute")
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("prayer_banner", usr.client.key)
+					C.player.cloudSaves.putData("prayer_banner", usr.client.key)
 					src.show_chatbans(C)
 		if ("pr_unmute")
 			if (src.level >= LEVEL_PA)
 				var/client/C = locate(href_list["target"])
 				if(istype(C))
-					C.cloud_put("prayer_banner", "")
+					C.player.cloudSaves.putData("prayer_banner", "")
 					src.show_chatbans(C)
 
 		if ("load_admin_prefs")
@@ -568,7 +568,7 @@ var/global/noir = 0
 			else //It's a key. We need to cache it's ban history to not make 300 requests to the API.
 				target = M
 				action = "jobban_offline"
-				M = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+				M = jobban_get_for_player(M)
 			if (!M)
 				return
 
@@ -704,7 +704,7 @@ var/global/noir = 0
 			if (src.level >= LEVEL_SA)
 				var/M = href_list["target"]
 				var/job = href_list["type"]
-				var/list/cache = apiHandler.queryAPI("jobbans/get/player", list("ckey"=M), 1)[M]
+				var/list/cache = jobban_get_for_player(M)
 				if (!M) return
 				if (jobban_isbanned(cache, job))
 					if(cache.Find("Everything Except Assistant") && job != "Everything Except Assistant")
@@ -2191,9 +2191,9 @@ var/global/noir = 0
 					tgui_alert(usr, "You cannot modify your own antag tokens.")
 					return
 				var/tokens = input(usr, "Current Tokens: [M.client.antag_tokens]","Set Antag Tokens to...") as null|num
-				if (!tokens)
+				if (isnull(tokens))
 					return
-				M.client.set_antag_tokens( tokens )
+				M.client.set_antag_tokens(tokens)
 				if (tokens <= 0)
 					logTheThing(LOG_ADMIN, usr, "Removed all antag tokens from [constructTarget(M,"admin")]")
 					logTheThing(LOG_DIARY, usr, "Removed all antag tokens from [constructTarget(M,"diary")]", "admin")
@@ -2893,7 +2893,7 @@ var/global/noir = 0
 							for(var/obj/item/W in world)
 								if(istype(W, /obj/item/clothing) || istype(W, /obj/item/card/id) || istype(W, /obj/item/disk) || istype(W, /obj/item/tank))
 									continue
-								W.icon = 'icons/obj/items/gun.dmi'
+								W.icon = 'icons/obj/items/guns/kinetic.dmi'
 								W.icon_state = "revolver"
 								W.item_state = "gun"
 								LAGCHECK(LAG_LOW)
@@ -3177,9 +3177,8 @@ var/global/noir = 0
 								message_admins("[key_name(usr)] IS GETTIN THIS FARTY PARTY STARTED")
 						logTheThing(LOG_ADMIN, usr, "used Farty Party secret")
 						logTheThing(LOG_DIARY, usr, "used Farty Party secret", "admin")
-
-					else
-				if (usr) logTheThing(LOG_ADMIN, usr, "used secret [href_list["secretsfun"]]")
+				if (usr)
+					logTheThing(LOG_ADMIN, usr, "used secret [href_list["secretsfun"]]")
 				logTheThing(LOG_DIARY, usr, "used secret [href_list["secretsfun"]]", "admin")
 			else
 				tgui_alert(usr,"You need to be at least an Adminstrator to use the secrets panel.")
@@ -3646,11 +3645,11 @@ var/global/noir = 0
 
 			usr.client.cmd_view_runtimes()
 
-		if ("viewantaghistory")
-			if (src.level < LEVEL_SA)
-				return tgui_alert(usr,"You must be at least a Secondary Admin to view antag history.")
+		// if ("viewantaghistory")
+		// 	if (src.level < LEVEL_SA)
+		// 		return tgui_alert(usr,"You must be at least a Secondary Admin to view antag history.")
 
-			usr.client.cmd_antag_history(href_list["targetckey"])
+		// 	usr.client.cmd_antag_history(href_list["targetckey"])
 
 		if ("show_player_stats")
 			if (src.level < LEVEL_SA)
@@ -4007,7 +4006,7 @@ var/global/noir = 0
 		ircmsg["msg"] = "manually restarted the server."
 		ircbot.export_async("admin", ircmsg)
 
-		round_end_data(2) //Wire: export_async round end packet (manual restart)
+		roundManagement.recordEnd(crashed = TRUE)
 
 		sleep(3 SECONDS)
 		Reboot_server()
@@ -4324,26 +4323,23 @@ var/global/noir = 0
 		return
 
 /datum/admins/proc/show_chatbans(var/client/C)//do not use this as an example of how to write DM please.
-	if( !C.cloud_available() )
-		tgui_alert( "Failed to communicate to Goonhub." )
-		return
 	var/built = {"<title>Chat Bans (todo: prettify)</title>"}
-	if(C.cloud_get( "adminhelp_banner" ))
-		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.cloud_get( "adminhelp_banner" )])<br/>"
+	if(C.player.cloudSaves.getData( "adminhelp_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_unmute' class='alert'>Adminhelp Mute</a> (Last by [C.player.cloudSaves.getData( "adminhelp_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from adminhelping.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=ah_mute'>Adminhelp Mute</a><br/>"
 		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from adminhelping.")
 
-	if(C.cloud_get( "mentorhelp_banner" ))
-		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.cloud_get( "mentorhelp_banner" )])<br/>"
+	if(C.player.cloudSaves.getData( "mentorhelp_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_unmute' class='alert'>Mentorhelp Mute</a> (Last by [C.player.cloudSaves.getData( "mentorhelp_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from mentorhelping.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=mh_mute'>Mentorhelp Mute</a><br/>"
 		logTheThing(LOG_ADMIN, src, "muted [constructTarget(C,"admin")] from mentorhelping.")
 
-	if(C.cloud_get( "prayer_banner" ))
-		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.cloud_get( "prayer_banner" )])<br/>"
+	if(C.player.cloudSaves.getData( "prayer_banner" ))
+		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_unmute' class='alert'>Prayer Mute</a> (Last by [C.player.cloudSaves.getData( "prayer_banner" )])<br/>"
 		logTheThing(LOG_ADMIN, src, "unmuted [constructTarget(C,"admin")] from praying.")
 	else
 		built += "<a href='?src=\ref[src];target=\ref[C];action=pr_mute'>Prayer Mute</a><br/>"

@@ -36,10 +36,8 @@
 	var/current_playtime = null
 	/// Cache jobbans here to speed things up massively
 	var/list/cached_jobbans = null
-	/// saved profiles from the cloud
-	var/list/cloudsaves = null
-	/// saved data from the cloud (spacebux, volume settings, ...)
-	var/list/clouddata = null
+	/// Manager for cloud data and saves
+	var/datum/cloudSaves/cloudSaves = null
 	/// buildmode holder of our client so it doesn't need to get rebuilt every time we reconnect
 	var/datum/buildmode_holder/buildmode = null
 	/// whether this person is a temporary admin (this round only)
@@ -62,6 +60,7 @@
 		src.key = key
 		src.ckey = ckey(key)
 		src.tag = "player-[src.ckey]"
+		src.cloudSaves = new /datum/cloudSaves(src)
 
 		if (ckey(src.key) in mentors)
 			src.mentor = 1
@@ -78,6 +77,27 @@
 			src.client = null
 		..()
 
+	/// Record a player login via the API. Sets player ID field for future API use
+	proc/record_login()
+		if (!src.client || src.id) return
+		try
+			var/datum/apiRoute/players/login/playerLogin = new
+			playerLogin.buildBody(
+				src.client.ckey,
+				src.client.key,
+				src.client.address ? src.client.address : "127.0.0.1", // fallback for local dev
+				src.client.computer_id,
+				src.client.byond_version,
+				src.client.byond_build,
+				roundId
+			)
+			var/datum/apiModel/Tracked/PlayerResource/playerResponse = apiHandler.queryAPI(playerLogin)
+			src.id = playerResponse.id
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "Failed to record a player login for [src.client.ckey] because: [error.message]")
+			logTheThing(LOG_DIARY, null, "Failed to record a player login for [src.client.ckey] because: [error.message]", "admin")
+
 	/// queries api to cache stats so its only done once per player per round
 	proc/cache_round_stats()
 		set waitfor = FALSE
@@ -85,19 +105,20 @@
 
 	/// blocking version of cache_round_stats, queries api to cache stats so its only done once per player per round (please update this proc when adding more player stat vars)
 	proc/cache_round_stats_blocking()
-		var/list/response = null
+		var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 		try
-			response = apiHandler?.queryAPI("playerInfo/get", list("ckey" = src.ckey), forceResponse = 1)
+			var/datum/apiRoute/players/stats/get/getPlayerStats = new
+			getPlayerStats.queryParams = list("ckey" = src.ckey)
+			playerStats = apiHandler.queryAPI(getPlayerStats)
 		catch
-			return 0
-		if (!response)
-			return 0
-		src.rounds_participated = text2num(response["participated"])
-		src.rounds_participated_rp= text2num(response["participated_rp"])
-		src.rounds_seen = text2num(response["seen"])
-		src.rounds_seen_rp = text2num(response["seen_rp"])
-		src.last_seen = response["last_seen"]
-		return 1
+			return FALSE
+
+		src.rounds_participated = text2num(playerStats.played)
+		src.rounds_participated_rp = text2num(playerStats.played_rp)
+		src.rounds_seen = text2num(playerStats.connected)
+		src.rounds_seen_rp = text2num(playerStats.connected_rp)
+		src.last_seen = playerStats.latest_connection.created_at
+		return TRUE
 
 	/// returns an assoc list of cached player stats (please update this proc when adding more player stat vars)
 	proc/get_round_stats(allow_blocking = FALSE)
@@ -147,150 +168,11 @@
 		src.round_leave_time = null //reset this - null value is important
 		src.round_join_time = null //reset this - null value is important
 
-	/// Sets a cloud key value pair and sends it to goonhub
-	proc/cloud_put(key, value)
-		if(!clouddata)
-			return FALSE
-		clouddata[key] = "[value]"
-
-#ifdef LIVE_SERVER
-		// Via rust-g HTTP
-		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey]&key=[url_encode(key)]&value=[url_encode(clouddata[key])]", "", "")
-		request.begin_async()
-#else
-		var/json = null
-		var/list/decoded_json
-		if (fexists("data/simulated_cloud.json"))
-			json = file2text("data/simulated_cloud.json")
-			decoded_json = json_decode(json)
-		else
-			decoded_json = list()
-
-		decoded_json["[ckey(ckey)]"] = clouddata
-		rustg_file_write(json_encode(decoded_json),"data/simulated_cloud.json")
-#endif
-		return TRUE // I guess
-
-	/// Sets a cloud key value pair and sends it to goonhub for a target ckey
-	proc/cloud_put_target(target, key, value)
-		var/list/data = cloud_fetch_target_ckey(target)
-		if(!data)
-			return FALSE
-		data[key] = "[value]"
-
-#ifdef LIVE_SERVER
-		// Via rust-g HTTP
-		var/datum/http_request/request = new() //If it fails, oh well...
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?dataput&api_key=[config.spacebee_api_key]&ckey=[ckey(target)]&key=[url_encode(key)]&value=[url_encode(data[key])]", "", "")
-		request.begin_async()
-#else
-		var/json = null
-		var/list/decoded_json
-		if (fexists("data/simulated_cloud.json"))
-			json = file2text("data/simulated_cloud.json")
-			decoded_json = json_decode(json)
-		else
-			decoded_json = list()
-		decoded_json["[ckey(target)]"] = data
-		rustg_file_write(json_encode(decoded_json),"data/simulated_cloud.json")
-#endif
-		return TRUE // I guess
-
-	/// Returns some cloud data on the client
-	proc/cloud_get( var/key )
-		return clouddata ? clouddata[key] : null
-
-	/// Returns some cloud data on the provided target ckey
-	proc/cloud_get_target(target, key)
-		var/list/data = cloud_fetch_target_data_only(target)
-		return data ? data[key] : null
-
-	/// Returns 1 if you can set or retrieve cloud data on the client
-	proc/cloud_available()
-		return !!clouddata
-
-	/// Downloads cloud data from goonhub
-	proc/cloud_fetch()
-		var/list/data = cloud_fetch_target_ckey(src.ckey)
-		if (data)
-#ifdef LIVE_SERVER
-			cloudsaves = data["saves"]
-			clouddata = data["cdata"]
-#else
-			clouddata = data
-#endif
-			return TRUE
-
-	/// Refreshes clouddata
-	proc/cloud_fetch_data_only()
-		var/list/data = cloud_fetch_target_data_only(src.ckey)
-		if (data)
-			clouddata = data
-			return TRUE
-
-	/// returns the clouddata of a target ckey in list form
-	proc/cloud_fetch_target_data_only(target)
-		var/list/data = cloud_fetch_target_ckey(target)
-		if (data)
-			return data["cdata"]
-
-	/// returns the cloudsaves of a target ckey in list form
-	proc/cloud_fetch_target_saves_only(target)
-		var/list/data = cloud_fetch_target_ckey(target)
-		if (data)
-			return data["saves"]
-
-	/// Returns cloud data and saves from goonhub for the target ckey in list form
-	proc/cloud_fetch_target_ckey(target)
-#ifdef LIVE_SERVER
-		if(!cdn) return
-		target = ckey(target)
-		if (!target) return
-
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/cloudsave?list&ckey=[target]&api_key=[config.spacebee_api_key]", "", "")
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-
-		if (response.errored || !response.body)
-			logTheThing(LOG_DEBUG, target, "failed to have their cloud data loaded: Couldn't reach Goonhub")
-			return
-
-		var/list/ret = json_decode(response.body)
-		if(ret["status"] == "error")
-			logTheThing(LOG_DEBUG, target, "failed to have their cloud data loaded: [ret["error"]["error"]]")
-			return
-		else
-			return ret
-#else
-		if (!target) return
-		/// holds our json string
-		var/json
-		/// holds our list made from decoding json
-		var/list/decoded_json
-		// make sure the files actually exists before we try to read it, if it doesn't then just return a blank list to work with
-		if (fexists("data/simulated_cloud.json"))
-			// file was found, lets decode it
-			json = file2text("data/simulated_cloud.json")
-			decoded_json = json_decode(json)
-		else
-			decoded_json = list()
-
-		// do we have an entry for the target ckey?
-		if (decoded_json[target])
-			return decoded_json[target]
-		else
-			// we need to return a list with a list in the cdata index or it causes a deadlock where we can't save
-			return list(cdata = list())
-#endif
-
 	proc/get_buildmode()
 		RETURN_TYPE(/datum/buildmode_holder)
 		if(src.buildmode)
 			return src.buildmode
-		var/saved_buildmode = src.cloud_get("buildmode")
+		var/saved_buildmode = src.cloudSaves.getData("buildmode")
 		if(!saved_buildmode)
 			src.buildmode = new /datum/buildmode_holder(src.client)
 		else
@@ -315,7 +197,7 @@
 		if(src.buildmode)
 			var/savefile/S = new
 			S["buildmode"] << buildmode
-			src.cloud_put("buildmode", S.ExportText())
+			src.cloudSaves.putData("buildmode", S.ExportText())
 
 /// returns a reference to a player datum based on the ckey you put into it
 /proc/find_player(key)
@@ -330,86 +212,3 @@
 	if (!player)
 		player = new(key)
 	return player
-
-/** Bulk cloud save for saving many key value pairs and/or many ckeys in a single api call
- * example input (formatted for readability)
- *  command add adds a number onto the current value (record must exist in the cloud to update or it won't do anything)
- *  command replace overwrites the existing record
- * 	{
- * 		"some_ckey":{
- * 			"persistent_bank":{
- * 				"command":"add",
- * 				"value":42069
- * 			},
- * 			"persistent_bank_item":{
- * 				"command":"replace",
- * 				"value":"none"
- * 			}
- * 		},
- * 		"some_other_ckey":{
- * 			"persistent_bank":{
- * 				"command":"add",
- * 				"value":1337
- * 			},
- * 			"persistent_bank_item":{
- * 				"command":"replace",
- * 				"value":"rubber_ducky"
- * 			}
- * 		}
- * 	}
-**/
-proc/cloud_put_bulk(json)
-	if (!rustg_json_is_valid(json))
-		stack_trace("cloud_put_bulk received an invalid json object.")
-		return FALSE
-	var/list/decoded_json = json_decode(json)
-	var/list/sanitized = list()
-	for (var/json_ckey in decoded_json)
-		var/clean_ckey = ckey(json_ckey)
-		if (!length(decoded_json[json_ckey]))
-			stack_trace("cloud_put_bulk received ckey \"[clean_ckey]\" without any key pairs to save.")
-			continue
-		sanitized[clean_ckey] = list()
-		for (var/json_key in decoded_json[json_ckey])
-			var/value = decoded_json[json_ckey][json_key]["value"]
-			if (isnull(value))
-				value = "" //api wants empty strings, not nulls
-			sanitized[clean_ckey][json_key] = list ("command" = decoded_json[json_ckey][json_key]["command"], "value" = value)
-#ifdef LIVE_SERVER
-	var/sanitized_json = json_encode(sanitized)
-	// Via rust-g HTTP
-	var/datum/http_request/request = new()
-	var/list/headers = list(
-		"Authorization" = "[config.spacebee_api_key]",
-		"Content-Type" = "application/json",
-		"Command" = "dataput_bulk"
-	)
-	request.prepare(RUSTG_HTTP_METHOD_POST, "[config.spacebee_api_url]/api/cloudsave", sanitized_json, headers)
-	request.begin_async()
-#else
-	var/save_json
-	var/list/decoded_save
-	if (fexists("data/simulated_cloud.json"))
-		save_json = file2text("data/simulated_cloud.json")
-		decoded_save = json_decode(save_json)
-	else
-		decoded_save = list()
-
-	for (var/sani_ckey in sanitized)
-		if (!decoded_save[sani_ckey])
-			decoded_save[sani_ckey] = list(cdata = list())
-		for (var/data_key in sanitized[sani_ckey])
-			var/value = sanitized[sani_ckey][data_key]["value"]
-			var/command = sanitized[sani_ckey][data_key]["command"]
-			switch(command)
-				if("add")
-					if (data_key in decoded_save[sani_ckey])
-						decoded_save[sani_ckey][data_key] = "[text2num(decoded_save[sani_ckey][data_key]) + value]"
-					else
-						decoded_save[sani_ckey][data_key] = "[value]"
-				if("replace")
-					decoded_save[sani_ckey][data_key] = "[value]"
-
-	rustg_file_write(json_encode(decoded_save),"data/simulated_cloud.json")
-#endif
-	return TRUE

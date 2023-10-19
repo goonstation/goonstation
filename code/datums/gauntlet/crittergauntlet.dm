@@ -1234,21 +1234,18 @@ var/global/datum/arena/gauntletController/gauntlet_controller = new()
 		count = 10
 		types = list(/mob/living/critter/small_animal/floateye)
 
-/proc/queryGauntletMatches(data)
-	if (islist(data) && data["data_hub_callback"])
-		logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Invoked (data is [data])")
-		for (var/userkey in data["keys"])
-			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Got key [userkey].")
-			var/matches = data[userkey]
-			logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Matches for [userkey]: [matches].")
-			var/obj/item/card/id/gauntlet/G = locate("gauntlet-id-[userkey]") in world
-			if (G && istype(G))
-				G.SetMatchCount(text2num(matches))
-			else
-				logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Could not locate ID 'gauntlet-id-[userkey]'.")
-				return 1
+/proc/queryGauntletMatches(key)
+	var/datum/apiModel/PreviousGauntlets/previousGauntlets
+	try
+		var/datum/apiRoute/gauntlet/getprevious/getPreviousGauntlets = new
+		getPreviousGauntlets.queryParams = list("key" = key)
+		previousGauntlets = apiHandler.queryAPI(getPreviousGauntlets)
+	catch
+		return FALSE
 
+	var/obj/item/card/id/gauntlet/G = locate("gauntlet-id-[key]") in world
+	if (G && istype(G))
+		G.SetMatchCount(previousGauntlets.gauntlets_completed)
 	else
-		var/list/query = list()
-		query["key"] = data
-		apiHandler.queryAPI("gauntlet/getPrevious", query)
+		logTheThing(LOG_DEBUG, null, "<b>Marquesas/Gauntlet Query:</b> Could not locate ID 'gauntlet-id-[key]'.")
+		return FALSE

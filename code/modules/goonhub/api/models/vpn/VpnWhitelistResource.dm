@@ -1,41 +1,25 @@
 
 /// VpnWhitelistResource
-/datum/apiModel/VpnWhitelistResource
-	var/id 						= null // integer
+/datum/apiModel/Tracked/VpnWhitelistResource
 	var/game_admin_id	= null // integer
 	var/ckey			= null // string
-	var/created_at		= null // date-time
-	var/updated_at		= null // date-time
-	var/game_admin		= null // { id: integer, ckey: string, name: string } - not required
+	var/game_admin		= null // { id: integer, ckey: string, name: string } - not required - TODO?
 
-/datum/apiModel/VpnWhitelistResource/New(
-	id,
-	game_admin_id,
-	ckey,
-	created_at,
-	updated_at,
-	game_admin
-)
+/datum/apiModel/Tracked/VpnWhitelistResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.game_admin_id = game_admin_id
-	src.ckey = ckey
-	src.created_at = created_at
-	src.updated_at = updated_at
-	src.game_admin = game_admin
+	src.game_admin_id = response["game_admin_id"]
+	src.ckey = response["ckey"]
+	src.game_admin = response["game_admin"]
 
-/datum/apiModel/VpnWhitelistResource/VerifyIntegrity()
+/datum/apiModel/Tracked/VpnWhitelistResource/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(game_admin_id) \
-		|| isnull(ckey) \
-		|| isnull(created_at) \
-		|| isnull(updated_at) \
-		|| isnull(game_admin) \
+		isnull(src.game_admin_id) \
+		|| isnull(src.ckey) \
 	)
 		return FALSE
 
-/datum/apiModel/VpnWhitelistResource/ToString()
+/datum/apiModel/Tracked/VpnWhitelistResource/ToString()
 	. = list()
 	.["id"] = src.id
 	.["game_admin_id"] = src.game_admin_id

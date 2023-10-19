@@ -700,6 +700,13 @@
 
 				return 1
 
+			if ("numbersStation")
+				if (!plist["numbers"]) return 0
+
+				lincolnshire_numbers(plist["numbers"])
+
+				return 1
+
 			//Tells shitbee what the current AI laws are (if there are any custom ones)
 			if ("ailaws")
 				if (current_state > GAME_STATE_PREGAME)
@@ -766,8 +773,10 @@
 				if (!plist["data"]) return 0
 
 				play_music_remote(json_decode(plist["data"]))
+
 				// trigger cooldown so radio station doesn't interrupt our cool music
-				EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO use plist duration data if available
+				var/duration = text2num(plist["duration"])
+				EXTEND_COOLDOWN(global, "music", duration SECONDS)
 				return 1
 
 			if ("delay")
@@ -863,67 +872,48 @@
 				if (!plist["ckey"])
 					return 0
 
-				var/list/data = list(
-					"auth" = config.player_notes_auth,
-					"action" = "get",
-					"ckey" = plist["ckey"],
-					"format" = "json"
-				)
-
-				// Fetch notes via HTTP
-				var/datum/http_request/request = new()
-				request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
-				request.begin_async()
-				UNTIL(request.is_complete())
-				var/datum/http_response/response = request.into_response()
-
-				if (response.errored || !response.body)
-					return 0
-
-				return response.body
+				try
+					var/datum/apiRoute/players/notes/get/getPlayerNotes = new
+					getPlayerNotes.queryParams = list(
+						"filters" = list(
+							"ckey" = plist["ckey"]
+						)
+					)
+					return apiHandler.queryAPI(getPlayerNotes)
+				catch
+					return FALSE
 
 			if ("getPlayerStats")
 				if (!plist["ckey"])
 					return 0
 
-				// playtime stats
-				var/list/data = list(
-					"auth" = config.player_notes_auth,
-					"action" = "user_stats",
-					"ckey" = plist["ckey"],
-					"format" = "json"
-				)
-				var/datum/http_request/playtime_request = new()
-				playtime_request.prepare(RUSTG_HTTP_METHOD_GET, "[config.player_notes_baseurl]/?[list2params(data)]", "", "")
-				playtime_request.begin_async()
-
-				// round stats
-				// cleverly making this request inbetween the start and the wait of the playtime request
-				var/list/response = null
+				var/datum/apiModel/Tracked/PlayerStatsResource/playerStats
 				try
-					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = plist["ckey"]), forceResponse = 1)
+					var/datum/apiRoute/players/stats/get/getPlayerStats = new
+					getPlayerStats.queryParams = list("ckey" = plist["ckey"])
+					playerStats = apiHandler.queryAPI(getPlayerStats)
 				catch
-					return 0
-				if (!response)
-					return 0
+					return FALSE
 
-				// finish playtime stats
-				UNTIL(playtime_request.is_complete())
-				var/datum/http_response/playtime_response = playtime_request.into_response()
-				if (!playtime_response.errored && playtime_response.body)
-					response["playtime"] = playtime_response.body
+				var/list/response = list(
+					"seen" = playerStats.connected,
+					"seen_rp" = playerStats.connected_rp,
+					"participated" = playerStats.played,
+					"participated_rp" = playerStats.played_rp,
+					"playtime" = playerStats.time_played
+				)
 
 				var/datum/player/player = make_player(plist["ckey"])
 				if(isnull(player.last_seen))
 					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen
-				if(player.cloud_fetch())
-					for(var/kkey in player.clouddata)
-						if(kkey in list("admin_preferences", "buildmode"))
-							continue
-						response[kkey] = player.clouddata[kkey]
-					response["cloudsaves"] = player.cloudsaves
+				player.cloudSaves.fetch()
+				for(var/kkey in player.cloudSaves.data)
+					if(kkey in list("admin_preferences", "buildmode"))
+						continue
+					response[kkey] = player.cloudSaves.data[kkey]
+				response["cloudsaves"] = player.cloudSaves.saves
 
 				return json_encode(response)
 

@@ -5,21 +5,11 @@
 	var/player_id	= null // string
 	var/name		= null // string
 
-/datum/apiModel/Tracked/EventStationNameResource/New(
-	id,
-	round_id,
-	player_id,
-	name,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/EventStationNameResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.round_id = round_id
-	src.player_id = player_id
-	src.name = name
-	src.created_at = created_at
-	src.updated_at = updated_at
+	src.round_id = response["round_id"]
+	src.player_id = response["player_id"]
+	src.name = response["name"]
 
 /datum/apiModel/Tracked/EventStationNameResource/VerifyIntegrity()
 	if (

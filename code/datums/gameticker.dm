@@ -19,6 +19,8 @@ var/global/current_state = GAME_STATE_INVALID
 
 	var/datum/ai_rack_manager/ai_law_rack_manager = new /datum/ai_rack_manager()
 
+	var/datum/crewCredits/creds = null
+
 	var/skull_key_assigned = 0
 
 	var/tmp/last_try_dilate = 0
@@ -110,8 +112,12 @@ var/global/current_state = GAME_STATE_INVALID
 
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
-		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "spy_theft","arcfiend","salvager", prob(50); "extended", prob(50); "gang"))
+		if("action")
+			src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
+			message_admins("[src.mode.name] was chosen from the \"action\" game mode pool!")
+		if("intrigue")
+			src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended", prob(50);"gang"))
+			message_admins("[src.mode.name] was chosen from the \"intrigue\" game mode pool!!")
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -240,16 +246,9 @@ var/global/current_state = GAME_STATE_INVALID
 		boutput(world, "<FONT class='notice'><B>Enjoy the game!</B></FONT>")
 		boutput(world, "<span class='notice'><b>Tip:</b> [pick(dd_file2list("strings/roundstart_hints.txt"))]</span>")
 
-		//Setup the hub site logging
-		var hublog_filename = "data/stats/data.txt"
-		if (fexists(hublog_filename))
-			fdel(hublog_filename)
-
-		hublog = file(hublog_filename)
-		hublog << ""
-
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
+		roundManagement.recordUpdate(mode)
 
 #ifdef BAD_MONKEY_NO_BANANA
 	for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
@@ -311,9 +310,13 @@ var/global/current_state = GAME_STATE_INVALID
 #endif
 
 			if (player.ready)
-				if (player.mind && player.mind.ckey)
+				var/datum/player/P
+				if (player.mind)
+					P = player.mind.get_player()
+
+				if (player.mind.ckey)
 					//Record player participation in this round via the goonhub API
-					participationRecorder.record(player.mind.ckey)
+					participationRecorder.record(P)
 
 				if (player.mind && player.mind.assigned_role == "AI")
 					player.close_spawn_windows()
@@ -323,17 +326,17 @@ var/global/current_state = GAME_STATE_INVALID
 				else if (player.mind && player.mind.special_role == ROLE_WRAITH)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: wraith.")
-					antagWeighter.record(role = ROLE_WRAITH, ckey = player.ckey)
+					antagWeighter.record(role = ROLE_WRAITH, P = P)
 
 				else if (player.mind && player.mind.special_role == ROLE_BLOB)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: blob.")
-					antagWeighter.record(role = ROLE_BLOB, ckey = player.ckey)
+					antagWeighter.record(role = ROLE_BLOB, P = P)
 
 				else if (player.mind && player.mind.special_role == ROLE_FLOCKMIND)
 					player.close_spawn_windows()
 					logTheThing(LOG_DEBUG, player, "<b>Late join</b>: assigned antagonist role: flockmind.")
-					antagWeighter.record(role = ROLE_FLOCKMIND, ckey = player.ckey)
+					antagWeighter.record(role = ROLE_FLOCKMIND, P = P)
 
 				else if (player.mind)
 					if (player.client.using_antag_token && ticker.mode.antag_token_support)
@@ -537,8 +540,7 @@ var/global/current_state = GAME_STATE_INVALID
 	//End of round statistic collection for goonhub
 	save_flock_stats()
 	src.sendEvents()
-	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] round_end_data")
-	round_end_data(1) //Export round end packet (normal completion)
+	roundManagement.recordEnd()
 
 	var/pets_rescued = 0
 	for(var/pet in by_cat[TR_CAT_PETS])
@@ -614,6 +616,8 @@ var/global/current_state = GAME_STATE_INVALID
 
 	score_tracker.calculate_score()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] score calculated")
+
+	src.creds = new /datum/crewCredits
 
 	var/final_score = score_tracker.final_score_all
 	if (final_score > 200)
@@ -784,16 +788,17 @@ var/global/current_state = GAME_STATE_INVALID
 					logTheThing(LOG_DEBUG, null, "[player.ckey] lost held item")
 					player.client.persistent_bank_item = "none"
 
-				bulk_commit[player.ckey] = list(
-					"persistent_bank" = list(
-						"command" = "add",
-						"value" = earnings
-					),
-					"persistent_bank_item" = list(
-						"command" = "replace",
-						"value" = player.client.persistent_bank_item
-					)
-				)
+				bulk_commit.Add(list(
+					"player_id" = player.client.player.id,
+					"key" = "persistent_bank",
+					"value" = player.client.persistent_bank + earnings
+				))
+				bulk_commit.Add(list(
+					"player_id" = player.client.player.id,
+					"key" = "persistent_bank_item",
+					"value" = player.client.persistent_bank_item
+				))
+
 				SPAWN(0)
 					bank_earnings.pilot_bonus = pilot_bonus
 					bank_earnings.final_payout = earnings
@@ -803,7 +808,7 @@ var/global/current_state = GAME_STATE_INVALID
 
 	//do bulk commit
 	SPAWN(0)
-		cloud_put_bulk(json_encode(bulk_commit))
+		cloud_saves_put_data_bulk(bulk_commit)
 		logTheThing(LOG_DEBUG, null, "Done with spacebux")
 
 	for_by_tcl(P, /obj/bookshelf/persistent) //make the bookshelf save its contents
@@ -823,28 +828,19 @@ var/global/current_state = GAME_STATE_INVALID
 	logTheThing(LOG_DEBUG, null, "Power Generation: [json_encode(station_power_generation)]")
 
 	SPAWN(0)
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")
-		var/datum/crewCredits/creds = new
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
 		for(var/mob/E in mobs)
 			if(E.client)
+				if (!E.abilityHolder)
+					E.add_ability_holder(/datum/abilityHolder/generic)
+				E.addAbility(/datum/targetable/crew_credits)
 				if (E.client.preferences.view_tickets)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending tickets to [E.ckey]")
 					E.showtickets()
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done sending tickets to [E.ckey]")
-
 				if (E.client.preferences.view_score)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending crew credits to [E.ckey]")
 					creds.ui_interact(E)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done crew credits to [E.ckey]")
 				SPAWN(0) show_xp_summary(E.key, E)
-
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done showing tickets/scores")
-
 	logTheThing(LOG_DEBUG, null, "Did credits")
 
-	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] finished spacebux updates")
-
+	var/count = 1
 	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
 	for_by_tcl(P, /datum/player)
 		if (!P.ckey)
@@ -852,12 +848,17 @@ var/global/current_state = GAME_STATE_INVALID
 		P.log_leave_time() //get our final playtime for the round (wont cause errors with people who already d/ced bc of smart code)
 		if (!P.current_playtime)
 			continue
-		playtimes["ckeys\[[P.ckey]]"] = round((P.current_playtime / (1 SECOND))) //rounds 1/10th seconds to seconds
+		playtimes["[count]"] = list("id" = P.id, "seconds_played" = round((P.current_playtime / (1 SECOND)))) //rounds 1/10th seconds to seconds
+		count++
+
 	try
-		apiHandler.queryAPI("playtime/record-multiple", playtimes)
-	catch(var/exception/e)
-		logTheThing(LOG_DEBUG, null, "playtime was unable to be logged because of: [e.name]")
-		logTheThing(LOG_DIARY, null, "playtime was unable to be logged because of: [e.name]", "debug")
+		var/datum/apiRoute/players/playtime/addPlaytime = new
+		addPlaytime.buildBody(config.server_id, playtimes)
+		apiHandler.queryAPI(addPlaytime)
+	catch (var/exception/e)
+		var/datum/apiModel/Error/error = e.name
+		logTheThing(LOG_DEBUG, null, "playtime was unable to be logged because of: [error.message]")
+		logTheThing(LOG_DIARY, null, "playtime was unable to be logged because of: [error.message]", "debug")
 
 	if(global.lag_detection_process.automatic_profiling_on)
 		global.lag_detection_process.automatic_profiling(force_stop=TRUE)

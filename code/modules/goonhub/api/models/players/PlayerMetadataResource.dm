@@ -1,43 +1,28 @@
 
 /// PlayerMetadataResource
 /datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource
-	var/player	= null // { id: integer, ckey: string }
-	var/ckey	= null // string
-	var/data	= null // integer
+	var/player = null // { id: integer, ckey: string }
+	var/metadata	 = null // string
 
-/datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource/New(
-	id,
-	player,
-	ckey,
-	data,
-	created_at,
-	updated_at
-)
+/datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource/SetupFromResponse(response)
 	. = ..()
-	src.id = id
-	src.player = player
-	src.ckey = ckey
-	src.data = data
-	src.created_at = created_at
-	src.updated_at = updated_at
+	if ("player" in response)
+		src.player = response["player"]
+	src.metadata = response["metadata"]
 
 /datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource/VerifyIntegrity()
+	. = ..()
 	if (
-		isnull(src.id) \
-		|| isnull(src.player) \
-		|| isnull(src.ckey) \
-		|| isnull(src.data) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
+		isnull(src.metadata) \
 	)
 		return FALSE
 
 /datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource/ToString()
 	. = list()
 	.["id"] = src.id
+	.["player_id"] = src.player_id
 	.["player"] = src.player
-	.["ckey"] = src.ckey
-	.["data"] = src.data
+	.["metadata"] = src.metadata
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
 	return json_encode(.)

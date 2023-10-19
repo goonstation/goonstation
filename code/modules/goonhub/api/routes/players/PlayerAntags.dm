@@ -6,3 +6,12 @@
 	path = "/players/antags"
 	body = /datum/apiBody/PlayerAntags
 	correct_response = /datum/apiModel/Tracked/PlayerRes/PlayerAntagResource
+
+	buildBody(
+		player_id,
+		round_id,
+		antag_role,
+		late_join,
+		weight_exempt
+	)
+		. = ..(args)

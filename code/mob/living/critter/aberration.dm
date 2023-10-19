@@ -24,6 +24,7 @@
 	canbegrabbed = FALSE
 	throws_can_hit_me = FALSE
 	reagent_capacity = 0
+	faction = FACTION_DERELICT
 	blood_id = null
 	can_bleed = FALSE
 	metabolizes = FALSE
@@ -111,20 +112,12 @@
 		var/datum/healthHolder/Br = src.get_health_holder("brute")
 		Br?.TakeDamage(damage)
 
-	seek_target(range = 7)
-		. = list()
-		for (var/mob/living/M in hearers(range, src))
-			if (isintangible(M))
-				continue
-			if (isdead(M))
-				continue
-			if (istype(M, src.type))
-				continue
-			if (istype(M, /mob/living/carbon/human))
-				var/mob/living/carbon/human/H = M
-				if (istype(H.head, /obj/item/clothing/head/void_crown))
-					continue
-			. += M
+	valid_target(var/mob/living/C)
+		if (istype(C, /mob/living/carbon/human))
+			var/mob/living/carbon/human/H = C
+			if (istype(H.head, /obj/item/clothing/head/void_crown))
+				return FALSE
+		..()
 
 	Cross(atom/movable/mover)
 		if (!istype(mover, /mob))

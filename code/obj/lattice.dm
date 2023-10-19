@@ -31,7 +31,6 @@
 				return
 			if(3)
 				return
-			else
 
 	proc/replace_with_catwalk(var/obj/item/rods/rods)
 		var/turf/T = get_turf(src.loc)

@@ -1328,3 +1328,17 @@ TYPEINFO(/obj/critter/gunbot/drone/miniature_syndie)
 				src.health = 0
 				src.CritterDeath()
 
+/obj/critter/gunbot/drone/miniature_syndie/robust
+	New()
+		. = ..()
+		src.bulletcount = INFINITY
+		src.maxhealth = 40
+		src.health = 40
+		projectile_type = /datum/projectile/bullet/revolver_38/nuke_safe
+		current_projectile = new/datum/projectile/bullet/revolver_38/nuke_safe
+
+/datum/projectile/bullet/revolver_38/nuke_safe
+	get_power(obj/projectile/P, atom/A)
+		. = ..()
+		if(istype(A, /obj/machinery/nuclearbomb) || istype(A, /obj/critter/gunbot/drone/miniature_syndie/robust))
+			. = 0

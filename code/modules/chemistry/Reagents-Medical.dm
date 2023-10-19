@@ -356,7 +356,7 @@ datum
 		medical/yobihodazine // COGWERKS CHEM REVISION PROJECT. probably just a magic drug, i have no idea what this is supposed to be
 			name = "yobihodazine"
 			id = "yobihodazine"
-			description = "A powerful outlawed compound capable of preventing vaccuum damage. Prolonged use leads to neurological damage."
+			description = "A powerful outlawed compound capable of preventing vacuum damage. Prolonged use leads to neurological damage."
 			reagent_state = LIQUID
 			fluid_r = 0
 			fluid_g = 0
@@ -1051,7 +1051,7 @@ datum
 		medical/mutadone // COGWERKS CHEM REVISION PROJECT. - marked for revision. Magic bullshit chem, ought to be related to mutagen somehow
 			name = "mutadone"
 			id = "mutadone"
-			description = "Mutadone is an experimental bromide that can cure genetic abnomalities."
+			description = "Mutadone is an experimental bromide that can cure genetic abnormalities."
 			reagent_state = SOLID
 			fluid_r = 80
 			fluid_g = 150
