@@ -512,7 +512,7 @@
 		var/splitted = splittext(savepath, "/") // this seemed better than loading the full save file to grab the same data
 		src.author = splitted[3] // sample savepath: "data/blueprint/userckey/Warehouse_v2.dat"
 		src.room_name = splittext(splitted[4], ".")[1]
-		src.name += ": [src.room_name]"
+		src.name += ": [src.room_name]" // just load the damn save it's cleaner and doesnt overwrite author
 
 	attack_self(mob/user)
 		if (!user?.client?.ckey)
@@ -522,15 +522,26 @@
 			boutput(user, "<span class='alert'>This item is broken, please tell a coder if it keeps breaking!</span>")
 			return
 		// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
-		var/input = ckeyEx(tgui_input_text(user, "Do you want to save a copy of this blueprint to your own collection? \
-			If so, choose a name for it. Use only alphanumeric characters, and - and _.", "Copy Homework", null, 54))
-		while (input && fexists("data/blueprints/[user.client.ckey]/[input].dat"))
-			if (!user?.client?.ckey) return // just in case
+		/* var/input = ckeyEx(tgui_input_text(user, "Do you want to save a copy of this blueprint to your own collection? \
+			If so, choose a name for it. Use only alphanumeric characters, and - and _.", "Copy Homework", null, 54)) */
+		if (tgui_alert(user, "Do you want to save a copy of '[src.room_name]' to your own collection?",
+			"Copy Homework", list("Yes", "No")) == "No")
+			return
+		var/new_filename = ckeyEx(splittext(splittext(src.blueprint_path, "/")[4], ".")[1])
+		var/copy_num = 0 // if this filename already exists, append "_copynum" to prevent overwrite by fcopy()
+		var/suffix = ""
+		while (fexists("data/blueprints/[user.client.ckey]/[new_filename][suffix].dat") && copy_num < 20)
+			copy_num++
+			suffix = "_" + "[copy_num]"
+			if (copy_num >= 20)
+				boutput(user, "<span class='alert'>Too many copies of this filename! Stopping.</span>")
+				break
+			/* if (!user?.client?.ckey) return // just in case
 			input = ckeyEx(tgui_input_text(user, "A blueprint of that name already exists. Please input another, or cancel.",
-				"Copy Homework", input, 54)) // just replace this with an auto-numbering system, then filename parity blah blah
-		if (!input) return
-		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[input].dat")
-		boutput(user, "<span class='notice'>Copied this blueprint! It is named: '[input]'.</span>")
+				"Copy Homework", input, 54)) */ // just replace this with an auto-numbering system, then filename parity blah blah
+		//if (!input) return
+		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[new_filename][suffix].dat")
+		boutput(user, "<span class='notice'>Copied this blueprint! Its filename is: '[new_filename][suffix]'.</span>")
 
 	afterattack(atom/target, mob/user)
 		if (!istype(target, /obj/machinery/abcu))
