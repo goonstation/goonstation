@@ -4374,7 +4374,7 @@
 		id = "caffeine"
 		result = "caffeine"
 		eventual_result = "caffeine"
-		required_reagents = list("espresso" = 2, "acetone" = 0.05) //acetone as a solvent. also means 'you need to have made a bit of acetone once'
+		required_reagents = list("espresso" = 2, "acetone" = 0.1) //acetone as a solvent. also means 'you need to have made a bit of acetone once'
 		result_amount = 1
 		min_temperature = T0C + 100
 		mix_phrase = "White crystals form as the acetone evaporates."
