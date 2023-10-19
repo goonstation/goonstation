@@ -96,7 +96,3 @@
 			boutput(src.owner.current, "<span class='alert'>Other gang members of your gang are:<br>\t[jointext(member_strings, "<br>\t")]</span>")
 		else
 			boutput(src.owner.current, "<span class='alert'>Seems like it's only you and the gang leader.</span>")
-
-	// The gang leader antagonist datum will announce information pertaining to gang members.
-	handle_round_end()
-		return

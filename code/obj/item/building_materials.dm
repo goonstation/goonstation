@@ -13,8 +13,8 @@ MATERIAL
 	W.ini_dir = SOUTH
 	if (!istype(W) || !usr) //Wire: Fix for Cannot read null.loc (|| !usr)
 		return
-	if (B.sheet.reinforcement)
-		W.set_reinforcement(B.sheet.reinforcement)
+	if (B.sheet1.reinforcement)
+		W.set_reinforcement(B.sheet1.reinforcement)
 		if (map_settings)
 			W = new map_settings.rwindows_thin (usr.loc)
 		else
@@ -29,15 +29,15 @@ MATERIAL
 		return
 	if (!usr) //Wire: Fix for Cannot read null.loc
 		return
-	if (B.sheet.reinforcement)
-		W.set_reinforcement(B.sheet.reinforcement)
+	if (B.sheet1.reinforcement)
+		W.set_reinforcement(B.sheet1.reinforcement)
 		if (map_settings)
 			W = new map_settings.rwindows (usr.loc)
 		else
 			W = new /obj/window/reinforced(usr.loc)
 
 /proc/sheet_crafting_callback(var/datum/action/bar/icon/build/B)
-	tgui_process.update_uis(B.sheet)
+	tgui_process.update_uis(B.sheet1)
 
 /obj/item/sheet
 	name = "sheet"
@@ -166,7 +166,7 @@ MATERIAL
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 						var/a_icon_state = "[reinf ? "r_" : null]table_parts"
 						var/a_name = "[reinf ? "reinforced " : null]glass table parts"
-						actions.start(new /datum/action/bar/icon/build(S, a_type, 2, S.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, /proc/sheet_crafting_callback, src, 1), user)
+						actions.start(new /datum/action/bar/icon/build(a_type, src.loc, 1, 3 SECONDS, S, 2, src, 1, S.material, 'icons/obj/furniture/table_glass.dmi', a_icon_state, /proc/sheet_crafting_callback, a_name), user)
 					return
 				else if (src.material.getMaterialFlags() & MATERIAL_CRYSTAL && S.material.getMaterialFlags() & MATERIAL_METAL) // we're a glass and they're a metal
 					if (src.amount_check(2,user) && S.amount_check(1,user))
@@ -174,7 +174,7 @@ MATERIAL
 						var/a_type = reinf ? /obj/item/furniture_parts/table/glass/reinforced : /obj/item/furniture_parts/table/glass
 						var/a_icon_state = "[reinf ? "r_" : null]table_parts"
 						var/a_name = "[reinf ? "reinforced " : null]glass table parts"
-						actions.start(new /datum/action/bar/icon/build(src, a_type, 2, src.material, 1, 'icons/obj/furniture/table_glass.dmi', a_icon_state, a_name, /proc/sheet_crafting_callback, S, 1), user)
+						actions.start(new /datum/action/bar/icon/build(a_type, src.loc, 1, 3 SECONDS, src, 2, S, 1, src.material, 'icons/obj/furniture/table_glass.dmi', a_icon_state, /proc/sheet_crafting_callback, a_name), user)
 					return
 
 				else
@@ -298,8 +298,12 @@ MATERIAL
 			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/cardboard))
 				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 		if (src?.material?.getMaterialFlags() & MATERIAL_WOOD)
-			for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
-				availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+			if (istype(src,/obj/item/sheet/wood/zwood))
+				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/zwood))
+					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
+			else
+				for(var/recipePath in concrete_typesof(/datum/sheet_crafting_recipe/wood))
+					availableRecipes.Add(sheet_crafting_recipe_get_ui_data(recipePath))
 
 		.["itemList"] = availableRecipes
 
@@ -383,6 +387,17 @@ MATERIAL
 
 					currentRecipe = /datum/sheet_crafting_recipe/metal/construct
 
+				if ("barricade","zbarricade")
+					var/turf/T = get_turf(usr)
+					var/obj/item/sheet/wood/W = src
+					if (!istype(T, /turf/simulated/floor) || locate(W.wall_type) in T.contents)
+						boutput(usr,"<span class='alert'>You can't build that here.</span>")
+						return
+					if (params["recipeID"] == "barricade")
+						currentRecipe = /datum/sheet_crafting_recipe/wood/barricade
+					else
+						currentRecipe = /datum/sheet_crafting_recipe/zwood/zbarricade
+
 				if("smallwindow")
 					for (var/obj/window/window in get_turf(src))
 						//the same direction thindow or a full window
@@ -449,8 +464,7 @@ MATERIAL
 					a_cost = initial(currentRecipe.sheet_cost)
 				if (!a_callback)
 					a_callback = /proc/sheet_crafting_callback
-
-				actions.start(new /datum/action/bar/icon/build(src, a_type, a_cost, src.material, a_amount, initial(currentRecipe.icon), initial(currentRecipe.icon_state), initial(currentRecipe.name), a_callback), usr)
+				actions.start(new /datum/action/bar/icon/build(a_type, src.loc, a_amount, 3 SECONDS, src, a_cost, null, null, src.material, initial(currentRecipe.icon), initial(currentRecipe.icon_state), a_callback), usr)
 				. = TRUE
 
 		return
@@ -484,9 +498,21 @@ MATERIAL
 
 /obj/item/sheet/wood
 	item_state = "sheet-metal"
-	icon_state = "sheet-m_5$wood"
+	icon_state = "sheet-m_5$$wood"
 	default_material = "wood"
 	amount = 10
+	var/wall_type = /obj/structure/woodwall
+
+	afterattack(atom/target, mob/user)
+		if (!isturf(target) || target.density)
+			return ..()
+		var/turf/T = target
+		if (locate(src.wall_type) in T.contents)
+			return ..()
+		actions.start(new /datum/action/bar/icon/build(wall_type, target.loc, 1, 3 SECONDS, src, 5, null, null, src.material, 'icons/ui/actions.dmi', "working"), user)
+/obj/item/sheet/wood/zwood
+	amount = 5
+	wall_type = /obj/structure/woodwall/anti_zombie
 
 /obj/item/sheet/bamboo
 	item_state = "sheet-metal"
@@ -1065,6 +1091,8 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/metal)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/glass)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/cardboard)
 ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
+ABSTRACT_TYPE(/datum/sheet_crafting_recipe/zwood)
+
 /datum/sheet_crafting_recipe
 	var/recipe_id //The ID of the recipe, used for TGUI act()s
 	var/name
@@ -1291,7 +1319,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 		fl_tiles
 			recipe_id = "fl_tiles"
 			craftedType = /obj/item/tile
-			name = "Floor Tile"
+			name = "Floor Tiles"
 			yield = 4
 			can_craft_multiples = TRUE
 			icon = 'icons/obj/metal.dmi'
@@ -1304,7 +1332,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon_state = "wstool"
 		chair
 			recipe_id = "wood_chair"
-			craftedType = /obj/stool/chair/dining/constructed
+			craftedType = /obj/stool/chair/dining/wood/constructed
 			name = "Chair"
 			icon = 'icons/obj/furniture/chairs.dmi'
 			icon_state = "chair_wooden"
@@ -1365,6 +1393,14 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/wood)
 			icon = 'icons/obj/doors/SL_doors.dmi'
 			icon_state = "wood1"
 
+	zwood
+		zbarricade
+			recipe_id = "zbarricade"
+			craftedType = /obj/structure/woodwall/anti_zombie
+			name = "Zombie Barricade"
+			sheet_cost = 5
+			icon = 'icons/obj/structures.dmi'
+			icon_state = "woodwall"
 
 /proc/sheet_crafting_recipe_get_ui_data(var/recipePath)
 	var/datum/sheet_crafting_recipe/typedRecipePath = recipePath

@@ -5,7 +5,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Box, Button, NumberInput, Tooltip, Section } from '../components';
+import { Box, Button, NumberInput, Section, Tooltip } from '../components';
 import { Window } from '../layouts';
 import { ReagentList } from './common/ReagentInfo';
 

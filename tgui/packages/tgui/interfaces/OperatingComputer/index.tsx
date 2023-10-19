@@ -1,25 +1,25 @@
 
 import { useBackend, useSharedState } from '../../backend';
-import { Box, ColorBox, Chart, Section, Stack, Tabs, Table } from '../../components';
+import { Box, Chart, ColorBox, Section, Stack, Table, Tabs } from '../../components';
 import { Window } from '../../layouts';
 import { HealthStat } from '../common/HealthStat';
 import { COLORS } from '../../constants';
 import { ReagentGraph } from '../common/ReagentInfo';
-import { processStatsData, getStatsMax } from '../common/graphUtils';
+import { getStatsMax, processStatsData } from '../common/graphUtils';
 import { capitalize, spaceUnderscores } from '../common/stringUtils';
 import { KeyHealthIndicators } from '../common/KeyHealthIndicators/index';
 import {
+  DisplayAnatomicalAnomoliesProps,
+  DisplayBloodstreamContentProps,
+  DisplayGeneticAnalysisProps,
+  DisplayLimbProps,
+  DisplayLimbsProps,
+  DisplayOrgansProps,
+  LimbData,
   OperatingComputerData,
   OperatingComputerDisplayTitleProps,
-  PatientSummaryProps,
-  DisplayBloodstreamContentProps,
-  DisplayAnatomicalAnomoliesProps,
-  DisplayGeneticAnalysisProps,
   OrganData,
-  DisplayLimbsProps,
-  DisplayLimbProps,
-  LimbData,
-  DisplayOrgansProps,
+  PatientSummaryProps,
 } from './type';
 
 export const OperatingComputer = (props, context) => {

@@ -77,6 +77,9 @@
 		A.addAbility(/datum/targetable/wrestler/drop/fake)
 		A.addAbility(/datum/targetable/wrestler/throw/fake)
 		A.addAbility(/datum/targetable/wrestler/slam/fake)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.hud?.update_ability_hotbar()
 
 	else
 		var/datum/abilityHolder/wrestler/A = src.get_ability_holder(/datum/abilityHolder/wrestler)
@@ -88,6 +91,9 @@
 		A.addAbility(/datum/targetable/wrestler/drop)
 		A.addAbility(/datum/targetable/wrestler/throw)
 		A.addAbility(/datum/targetable/wrestler/slam)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.hud?.update_ability_hotbar()
 
 /mob/proc/remove_wrestle_powers(fake = FALSE)
 	src.remove_stam_mod_max("wrestler", 50)
@@ -105,6 +111,9 @@
 		src.removeAbility(/datum/targetable/wrestler/throw/fake)
 		src.removeAbility(/datum/targetable/wrestler/slam/fake)
 		src.remove_ability_holder(/datum/abilityHolder/wrestler/fake)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.hud?.update_ability_hotbar()
 
 	else
 		src.removeAbility(/datum/targetable/wrestler/kick)
@@ -113,3 +122,6 @@
 		src.removeAbility(/datum/targetable/wrestler/throw)
 		src.removeAbility(/datum/targetable/wrestler/slam)
 		src.remove_ability_holder(/datum/abilityHolder/wrestler)
+		if(ishuman(src))
+			var/mob/living/carbon/human/H = src
+			H.hud?.update_ability_hotbar()

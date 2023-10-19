@@ -75,7 +75,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_c
 
 	else if (istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/B = AM
-		if (src.check_access(B.botcard))
+		if (src.check_access(B.botcard) && !B.pulled_by) //no more dragging bots onto doors for makeshift AA
 			if (src.density)
 				src.open()
 
@@ -881,15 +881,6 @@ TYPEINFO(/obj/machinery/door/unpowered/wood)
 		src.the_door.set_unlocked()
 		owner.visible_message("<span class='alert'>[owner] jimmies [src.the_door]'s lock open!</span>")
 		playsound(src.the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
-
-/obj/machinery/door/unpowered/bulkhead
-	name = "bulkhead door"
-	desc = "A heavy manually operated door. It looks rather beaten."
-	icon = 'icons/obj/doors/bulkhead.dmi'
-	operation_time = 20
-
-/obj/machinery/door/unpowered/bulkhead/Bumped()
-	return
 
 /obj/machinery/door/control/oneshot
 	var/broken = 0

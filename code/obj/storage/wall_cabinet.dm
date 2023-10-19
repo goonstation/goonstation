@@ -180,7 +180,7 @@ TYPEINFO(/obj/item/storage/wall)
 	/obj/item/oreprospector,
 	/obj/item/ore_scoop,
 	/obj/item/mining_tool/power_pick,
-	/obj/item/clothing/glasses/meson,
+	/obj/item/clothing/glasses/toggleable/meson,
 	/obj/item/storage/belt/mining)
 
 /obj/item/storage/wall/cargo

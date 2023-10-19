@@ -5,8 +5,9 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	name = "robot"
 	real_name = "robot"
 	desc = "A Security Robot, something seems a bit off."
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "mars_sec_bot"
+	icon = 'icons/mob/critter/robotic/gunbot.dmi'
+	icon_state = "gunbot"
+	var/base_icon_state = "gunbot"
 	custom_gib_handler = /proc/robogibs
 	hand_count = 2
 	can_throw = FALSE
@@ -28,14 +29,15 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	is_npc = TRUE
 
 	var/speak_lines = TRUE
-	var/eye_light_icon = "mars_sec_bot_eye"
+	var/uses_eye_light = TRUE
 
 	New()
 		..()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_THERMALVISION, src)
-		var/image/eye_light = image(icon, "[eye_light_icon]")
-		eye_light.plane = PLANE_SELFILLUM
-		src.UpdateOverlays(eye_light, "eye_light")
+		if (src.uses_eye_light)
+			var/image/eye_light = SafeGetOverlayImage("eye_light", 'icons/mob/critter/robotic/gunbot.dmi', "eye-[base_icon_state]")
+			eye_light.plane = PLANE_SELFILLUM
+			src.UpdateOverlays(eye_light, "eye_light")
 
 	death(var/gibbed)
 		if (!gibbed)
@@ -208,9 +210,8 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	name = "\improper Syndicate robot"
 	real_name = "\improper Syndicate robot"
 	desc = "A retrofitted Syndicate gunbot, it seems angry."
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "mars_nuke_bot"
-	eye_light_icon = "mars_nuke_bot_eye"
+	icon_state = "nukebot"
+	base_icon_state = "nukebot"
 	hand_count = 3
 	health_brute = 100
 	health_brute_vuln = 1
@@ -259,7 +260,7 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 /mob/living/critter/robotic/gunbot/syndicate/polaris
 	name = "\improper unmarked robot"
 	real_name = "\improper unmarked robot"
-	desc = "Painted in red and black, all indentifying marks have been scraped off. Darn."
+	desc = "Painted in red and black, all identifying marks have been scraped off. Darn."
 	health_brute = 20
 	health_burn = 20
 	is_npc = TRUE
@@ -277,14 +278,14 @@ TYPEINFO(/mob/living/critter/robotic/gunbot)
 	interesting = "your scanner picks up a faint etching of a name. Even though your being shot at. Seems this one is named Mustard."
 
 /mob/living/critter/robotic/gunbot/light
-	icon = 'icons/mob/robots.dmi'
-	icon_state = "syndibot"
+	icon_state = "gunbot_light"
 	hand_count = 2
 	health_brute = 15
 	health_brute_vuln = 1
 	health_burn = 15
 	health_burn_vuln = 1
 	speak_lines = FALSE
+	uses_eye_light = FALSE
 
 	setup_hands()
 		..()
