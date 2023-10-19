@@ -58,15 +58,15 @@
 			branch = tree.get_leaves(room.parent.parent.parent)
 			tree.leaves -= branch
 
-			set_type(room.x, room.y, room.x+room.width, room.y+room.height, FLOOR)
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
 			for(var/door in 1 to rand(1,2))
-				add_perimeter_door(room.x, room.y, room.x+room.width, room.y+room.height)
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
 
 			for(var/datum/bsp_node/leaf in branch)
 				if(tree.are_nodes_adjacent(room,leaf))
-					set_type(leaf.x, leaf.y, leaf.x+leaf.width, leaf.y+leaf.height, FLOOR)
+					set_type(leaf.x, leaf.y, leaf.x+leaf.width-1, leaf.y+leaf.height-1, FLOOR)
 					for(var/door in 1 to rand(1,2))
-						add_perimeter_door(leaf.x, leaf.y, leaf.x+leaf.width, leaf.y+leaf.height)
+						add_perimeter_door(leaf.x, leaf.y, leaf.x+leaf.width-1, leaf.y+leaf.height-1)
 
 		// Create a series of small rooms, prune individual leaves
 		for(var/x in 1 to 40)
@@ -75,9 +75,9 @@
 				break
 			tree.leaves -= room
 
-			set_type(room.x, room.y, room.x+room.width, room.y+room.height, FLOOR)
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
 			for(var/door in 1 to rand(1,2))
-				add_perimeter_door(room.x, room.y, room.x+room.width, room.y+room.height)
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
 
 		// Create a series of LARGE rooms, prune individual leaves
 		for(var/x in 1 to 20)
@@ -89,9 +89,9 @@
 			branch = tree.get_leaves(room)
 			tree.leaves -= branch
 
-			set_type(room.x, room.y, room.x+room.width, room.y+room.height, FLOOR)
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
 			for(var/door in 1 to rand(1,2))
-				add_perimeter_door(room.x, room.y, room.x+room.width, room.y+room.height)
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
 
 		// Iterate through remaining leaves and convert them into rooms and purge leaves of 1-4 parents to
 		// reduce number of empty areas
@@ -100,9 +100,9 @@
 			if(!room)
 				break
 
-			set_type(room.x, room.y, room.x+room.width, room.y+room.height, FLOOR)
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
 			for(var/door in 1 to rand(1,2))
-				add_perimeter_door(room.x, room.y, room.x+room.width, room.y+room.height)
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
 
 			for(var/i in 1 to rand(4))
 				room = room.parent
