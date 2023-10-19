@@ -218,7 +218,7 @@ ABSTRACT_TYPE(/datum/component/hallucination)
 		for(var/obj/fake_attacker/fakey in src.attacker_list)
 			if(fakey.disposed)
 				src.attacker_list -= fakey
-		if(length(attacker_list) > src.max_attackers)
+		if(length(attacker_list) >= src.max_attackers)
 			return
 		if(probmult(attacker_prob))
 			var/obj/fake_attacker/F

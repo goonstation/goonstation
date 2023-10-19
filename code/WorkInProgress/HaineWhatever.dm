@@ -1309,6 +1309,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 /obj/item/gun/bling_blaster
 	name = "fancy bling blaster"
 	desc = "A big old gun with a slot on the side of it to insert cash. It seems to be made of gold, but isn't gold pretty soft? Is this safe?"
+	icon = 'icons/obj/items/guns/gimmick.dmi'
 	icon_state = "bling_blaster"
 	mat_changename = 0
 	mat_changedesc = 0
@@ -1512,14 +1513,15 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 //wrongend's bang! gun
 /obj/item/bang_gun
 	name = "revolver"
-	icon_state = "revolver"
 	desc = "There are 7 bullets left! Each shot will currently use 1 bullets!"
+	icon = 'icons/obj/items/guns/kinetic.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon_state = "revolver"
+	item_state = "gun"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
 	var/bangfired = FALSE // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
-	icon = 'icons/obj/items/gun.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
-	item_state = "gun"
+
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(reach || src.bangfired)
@@ -1541,7 +1543,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 
 /obj/item/bang_gun/ak47
 	name = "ak-477"
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ak47"
 	item_state = "ak47"
 	desc = "There are 30 bullets left! Each shot will currently use 3 bullets!"
@@ -1550,7 +1552,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 
 /obj/item/bang_gun/hunting_rifle
 	name = "Old Hunting Rifle"
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
 	desc = "There are 4 bullets left! Each shot will currently use 1 bullet!"

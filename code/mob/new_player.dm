@@ -277,7 +277,7 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 		if (!JOB)
 			return
 		if (src.is_respawned_player && (src.client.preferences.real_name in src.client.player.joined_names))
-			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name].")
+			tgui_alert(src, "Please pick a different character to respawn as, you've already joined this round as [src.client.preferences.real_name]. You can select \"random appearance\" in character setup if you don't want to make a new character.")
 			return
 		global.latespawning.lock()
 
@@ -667,8 +667,8 @@ a.latejoin-card:hover {
 		else
 			new_character = new /mob/living/carbon/human(src.loc, client.preferences.AH, client.preferences) // fallback
 		new_character.dir = pick(NORTH, EAST, SOUTH, WEST)
-
-		src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
+		if (!J || J.uses_character_profile) //borg joins don't lock out your character profile
+			src.client.player.joined_names += (src.client.preferences.be_random_name ? new_character.real_name : src.client.preferences.real_name)
 
 		close_spawn_windows()
 

@@ -382,7 +382,7 @@
 	unique = 1
 
 	getChefHint()
-		. = "Strenghtens the body's resistance to radiation."
+		. = "Strengthens the body's resistance to radiation."
 
 	onAdd(optional = 80)
 		. = ..()

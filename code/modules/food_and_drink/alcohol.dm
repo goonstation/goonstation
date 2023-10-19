@@ -67,7 +67,7 @@
 	alt_filled_state = 1
 	var/safe = 0
 	initial_volume = 100
-	initial_reagents = list("wine"=80,"ethanol"=20)
+	initial_reagents = list("wine"=60,"ethanol"=20)
 
 	New()
 		..()

@@ -54,7 +54,7 @@
 	/datum/matfab_recipe/makeshift_fuel_rod)
 
 /obj/machinery/nanofab/prototype
-	name = "Nano-fabricator (Protoype)"
+	name = "Nano-fabricator (Prototype)"
 	color = "#496ba3"
 	blueprints = list(/datum/matfab_recipe/mining_tool,
 	/datum/matfab_recipe/mining_head_drill,
@@ -65,7 +65,7 @@
 	/datum/matfab_recipe/spacesuit)
 
 /obj/machinery/nanofab/artifactengine
-	name = "Nano-fabricator (Protoype)"
+	name = "Nano-fabricator (Prototype)"
 	color = "#496ba3"
 
 /// Material science fabricator
