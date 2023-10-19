@@ -49,6 +49,8 @@ ABSTRACT_TYPE(/datum/objective)
 					continue
 				if (!possible_target.current.client)
 					continue
+				if (isvirtual(H) || istype(get_area(H),/area/afterlife))
+					continue
 				possible_targets += possible_target
 
 		if(length(possible_targets) > 0)
@@ -1175,7 +1177,7 @@ proc/create_fluff(datum/mind/target)
 					continue
 				if (!possible_target.current.client)
 					continue
-				if (istype(possible_target.current, /mob/living/carbon/human/virtual))
+				if (isvirtual(H) || istype(get_area(H),/area/afterlife))
 					continue
 				possible_targets += possible_target
 
@@ -1385,6 +1387,8 @@ proc/create_fluff(datum/mind/target)
 				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
 					continue
 				if (!possible_target.current.client)
+					continue
+				if (isvirtual(H) || istype(get_area(H),/area/afterlife))
 					continue
 				possible_targets += possible_target
 
