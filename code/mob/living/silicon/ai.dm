@@ -162,7 +162,7 @@ or don't if it uses a custom topopen overlay
 		"engineering" = "The casing is made out of a buffed metal and has a prominent orange stripe painted down the front.",
 		"soviet" = "The latest in Soviet artificial intelligence technology. And by latest, you mean this thing looks like it's been collecting dust for decades.",
 		"nt" = "A newer model of NanoTrasen AI core. It's been painted a greyish-blue, and proudly displays the NT logo below the screen.",
-		"industrial" = "The casing is made out of a sleek and polished alloy. It looks heavily reenforced- wait, no. No, that's just a really impressive paint job.",
+		"industrial" = "The casing is made out of a sleek and polished alloy. It looks heavily reinforced- wait, no. No, that's just a really impressive paint job.",
 		"lgun" = "The casing is made out of pieces of colourful pink plastic clipped together. It looks like a toy.",
 		"dwaine" = "The casing has a label saying \"Thinktronic Data Systems, LLC\". Jeez, how old is this?",
 		"ailes" = "A bulky computational powerhouse- or, at least, it would have been twenty-odd years ago. The logo below the screen has been scratched off with something sharp.",
@@ -1238,10 +1238,7 @@ or don't if it uses a custom topopen overlay
 			if (src.emote_check(voluntary, 50))
 				if (isdead(src))
 					src.emote_allowed = 0
-				if (narrator_mode)
-					playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 				message = "<B>[src]</B> does a flip!"
 
 				//flick("ai-flip", src)
@@ -1271,10 +1268,7 @@ or don't if it uses a custom topopen overlay
 
 		if ("scream")
 			if (src.emote_check(voluntary, 50))
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, src.sound_scream, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, src.sound_scream, 50, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				message = "<b>[src]</b> screams!"
 
 		if ("birdwell", "burp")
@@ -1342,10 +1336,7 @@ or don't if it uses a custom topopen overlay
 						if (38) message = "<B>[src]</B> exterminates the air supply."
 						if (39) message = "<B>[src]</B> farts so hard the borgs feel it."
 						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 
 	#ifdef DATALOGGER
 				game_stats.Increment("farts")
@@ -1872,7 +1863,7 @@ or don't if it uses a custom topopen overlay
 	var/list/bodies = new/list()
 
 	for (var/mob/living/silicon/hivebot/H in available_ai_shells)
-		if (H.shell && !H.dependent && !isdead(H) && get_step(H, 0)?.z == get_step(src, 0)?.z)
+		if (H.shell && !H.dependent && !isdead(H))
 			bodies += H
 
 	for (var/mob/living/silicon/robot/R in available_ai_shells)

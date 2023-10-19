@@ -1245,9 +1245,9 @@ TYPEINFO(/obj/item/swords/katana)
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
 	hitsound = 'sound/impact_sounds/katana_slash.ogg'
 	midair_fruit_slice = TRUE
+	var/reagent_capacity = 15
 	HELP_MESSAGE_OVERRIDE({"Hit someone while aiming at a specific limb to immediatly slice off the targeted limb. If both arms and legs are sliced off, you can decapitate your target by aiming for the head.\n
 							While on any intent other than <span class='help'>help</span>, click a tile away from you to quickly dash forward to it's location, slicing those in the way."})
-
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
 	var/obj/itemspecialeffect/katana_dash/start/start
@@ -1269,8 +1269,27 @@ TYPEINFO(/obj/item/swords/katana)
 		mid1 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		mid2 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		end = new/obj/itemspecialeffect/katana_dash/end(src)
+		src.create_reagents(src.reagent_capacity)
 		src.setItemSpecial(/datum/item_special/katana_dash)
 		BLOCK_SETUP(BLOCK_SWORD)
+
+	afterattack(atom/target, mob/user)
+		..()
+		apply_coating(target, user)
+
+	proc/apply_coating(var/atom/target, var/mob/user)
+		if (target.is_open_container() && !ismob(target))
+			if(target.reagents?.has_reagent("sakuride", 1))
+				if(length(target.reagents.reagent_list) > 1)
+					boutput(user, "<span class='alert'>This coating is impure!</span>")
+					return
+				if(src.reagents.has_reagent("sakuride", src.reagent_capacity))
+					boutput(user, "<span class='alert'>The blade is already coated!</span>")
+					return
+				target.reagents.trans_to(src, src.reagent_capacity)
+				boutput(user, "You apply the coating to the blade.")
+			else
+				boutput(user, "<span class='alert'>You cannot coat the [src] in this!</span>")
 
 /obj/item/swords/katana/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] thrusts [src] through their stomach!</b></span>")
@@ -1458,6 +1477,21 @@ TYPEINFO(/obj/item/swords/captain)
 			if(W.cant_drop == 1)
 				boutput(user, "<span class='notice'>You can't sheathe the [W] while its attached to your arm.</span>")
 
+	mouse_drop(atom/over_object, src_location, over_location)
+		..()
+		var/atom/movable/screen/hud/S = over_object
+		if (istype(S))
+			playsound(src.loc, "rustle", 50, 1, -5)
+			if (can_act(usr) && src.loc == usr)
+				if (S.id == "rhand")
+					if (!usr.r_hand)
+						usr.u_equip(src)
+						usr.put_in_hand_or_drop(src, 0)
+				else
+					if (S.id == "lhand")
+						if (!usr.l_hand)
+							usr.u_equip(src)
+							usr.put_in_hand_or_drop(src, 1)
 
 /obj/item/swords_sheaths/proc/draw_sword(mob/living/carbon/human/user)
 	if(src.sword_inside) //Checks if a sword is inside

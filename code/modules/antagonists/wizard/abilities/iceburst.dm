@@ -23,7 +23,7 @@
 			if(isdead(M)) continue
 			count2++
 		if(!count2)
-			boutput(holder.owner, "Noone is in range!")
+			boutput(holder.owner, "No one is in range!")
 			return 1
 
 		if(!istype(get_area(holder.owner), /area/sim/gunsim))

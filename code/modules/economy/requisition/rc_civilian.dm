@@ -325,9 +325,10 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 			if (22 to 31)
 				src.rc_entries += rc_buildentry(/datum/rc_entry/item/paperhat,rand(6,12))
 			else
-				// nothing
+				; // nothing
 
-		if(!length(src.rc_entries)) src.rc_entries += rc_buildentry(/datum/rc_entry/item/paperhat,rand(6,12)) //fallback
+		if(!length(src.rc_entries))
+			src.rc_entries += rc_buildentry(/datum/rc_entry/item/paperhat,rand(6,12)) //fallback
 
 		if(prob(70)) //cookies or cakes?
 			src.rc_entries += rc_buildentry(/datum/rc_entry/food/cake,1+prob(20))
@@ -647,9 +648,15 @@ ABSTRACT_TYPE(/datum/rc_entry/reagent/caterdrink)
 
 /datum/rc_entry/item/powercell
 	name = "standard 15000u power cell"
-	typepath = /obj/item/cell/supercell
-	typepath_alt = /obj/item/cell/supercell/charged
+	typepath = /obj/item/cell
 	feemod = PAY_IMPORTANT
+
+	rc_eval(atom/eval_item)
+		. = ..()
+		if(!.)
+			return
+		var/obj/item/cell/cell = eval_item
+		return cell.maxcharge >= 15000
 
 /datum/rc_entry/item/borgmodule
 	name = "cyborg module"

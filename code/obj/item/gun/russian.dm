@@ -1,6 +1,7 @@
 /obj/item/gun/russianrevolver
 	desc = "Fun for the whole family!"
 	name = "\improper Russian revolver"
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "revolver"
 	w_class = W_CLASS_NORMAL
 	throw_speed = 2
@@ -89,6 +90,7 @@
 	shotsMax = 1 //griff
 	contraband = 4
 	var/fakeshots = 0
+
 	New()
 		fakeshots = rand(2, 7)
 		set_current_projectile(new/datum/projectile/bullet/revolver_357)
@@ -105,10 +107,11 @@
 	attack_self(mob/user)
 		if(!shotsLeft)
 			..()
+
 /obj/item/gun/russianrevolver/jk47
 	name = "\improper JK-47 rifle"
 	desc = "The cold-war classic!  Well, um, a model.  Probably?"
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ak47"
 	item_state = "ak47"
 	two_handed = TRUE

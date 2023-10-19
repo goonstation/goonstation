@@ -58,7 +58,9 @@
 		if(!is_valid_observable(observable, all_observables))
 			continue
 		var/list/obs_data = list()
-		obs_data["name"] = observable.name
+		var/mob/observable_mob = observable
+		ENSURE_TYPE(observable_mob)
+		obs_data["name"] = observable_mob ? observable_mob.real_name : observable.name
 		obs_data["ref"] = "\ref[observable]"
 		obs_data["real_name"] = obs_data["name"]
 		obs_data["dead"] = FALSE

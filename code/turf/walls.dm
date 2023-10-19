@@ -204,8 +204,6 @@ TYPEINFO(/turf/simulated/wall)
 		if(3)
 			if (prob(40))
 				dismantle_wall(1)
-		else
-	return
 
 /turf/simulated/wall/blob_act(var/power)
 	if(prob(power))
@@ -498,6 +496,12 @@ TYPEINFO(/turf/simulated/wall)
 	desc = "Looks like a... regular wall that's been painted in a grassy pattern. Clever!"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
+
+#ifdef AUTUMN
+	New()
+		..()
+		try_set_icon_state(src.icon_state + "_autumn", src.icon)
+#endif
 
 /turf/simulated/wall/grass/leafy
 	icon_state = "grass_leafy"

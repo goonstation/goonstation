@@ -59,7 +59,8 @@
 	var/objective = null
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
 	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
-
+	/// Does this job use the name and appearance from the character profile? (for tracking respawned names)
+	var/uses_character_profile = TRUE
 	/// The faction to be assigned to the mob on setup uses flags from factions.dm
 	var/faction = 0
 
@@ -209,7 +210,7 @@ ABSTRACT_TYPE(/datum/job/command)
 #ifdef SUBMARINE_MAP
 	slot_suit = list(/obj/item/clothing/suit/armor/hopcoat)
 	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/heads)
+	slot_belt = list(/obj/item/device/pda2/hop)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
@@ -217,7 +218,7 @@ ABSTRACT_TYPE(/datum/job/command)
 	items_in_backpack = list(/obj/item/storage/box/id_kit,/obj/item/device/flash,/obj/item/storage/box/accessimp_kit)
 #else
 	slot_back = list(/obj/item/storage/backpack)
-	slot_belt = list(/obj/item/device/pda2/heads)
+	slot_belt = list(/obj/item/device/pda2/hop)
 	slot_jump = list(/obj/item/clothing/under/suit/hop)
 	slot_foot = list(/obj/item/clothing/shoes/brown)
 	slot_ears = list(/obj/item/device/radio/headset/command/hop)
@@ -1026,6 +1027,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_back = list()
 	slot_belt = list()
 	items_in_backpack = list()
+	uses_character_profile = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1045,6 +1047,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_back = list()
 	slot_belt = list()
 	items_in_backpack = list()
+	uses_character_profile = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -2161,14 +2164,15 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 		..()
 		if (!M)
 			return
-		var/obj/item/trinket = M.trinket.deref()
-		trinket.setMaterial(getMaterial("pickle"))
+		var/obj/item/trinket = M.trinket?.deref()
+		trinket?.setMaterial(getMaterial("pickle"))
 		for (var/i in 1 to 3)
 			var/type = pick(trinket_safelist)
 			var/obj/item/pickle = new type(M.loc)
 			pickle.setMaterial(getMaterial("pickle"))
 			M.equip_if_possible(pickle, SLOT_IN_BACKPACK)
-		M.bioHolder.AddEffect("pickle", magical=1)
+		M.bioHolder.RemoveEffect("midas") //just in case mildly mutated has given us midas I guess?
+		M.bioHolder.AddEffect("pickle", magical=TRUE)
 
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter

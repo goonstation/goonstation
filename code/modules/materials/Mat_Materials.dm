@@ -984,7 +984,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 /datum/material/crystal/gemstone
 	mat_id = "quartz"
 	name = "quartz"
-	desc = "Quartz is somewhat valuable but not paticularly useful."
+	desc = "Quartz is somewhat valuable but not particularly useful."
 	color = "#BBBBBB"
 	alpha = 220
 	quality = 50
@@ -1157,7 +1157,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	transparent
 		mat_id = "gnesisglass"
-		name = "transclucent gnesis"
+		name = "translucent gnesis"
 		desc = "A rare complex crystalline matrix with a lazily shifting internal structure. The layers are arranged to let light through."
 		color = "#ffffff"
 		alpha = 180
@@ -1306,7 +1306,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 /datum/material/organic/blob
 	mat_id = "blob"
 	name = "blob"
-	desc = "The material of the feared giant space amobea."
+	desc = "The material of the feared giant space amoeba."
 	color = "#44cc44"
 	alpha = 180
 	quality = 2
@@ -1409,6 +1409,19 @@ ABSTRACT_TYPE(/datum/material/organic)
 		setProperty("flammable", 2)
 		addTrigger(TRIGGERS_ON_EAT, new /datum/materialProc/oneat_viscerite())
 
+/datum/material/organic/tensed_viscerite
+	mat_id = "tensed_viscerite"
+	name = "tensed viscerite"
+	desc = "Fleshy mass drawn out under tension. It's translucent and thready."
+	color = "#dd81ff"
+	alpha = 180
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 3)
+		setProperty("chemical", 8)
+		setProperty("flammable", 2)
 
 /datum/material/organic/bone
 	mat_id = "bone"
@@ -1831,6 +1844,20 @@ ABSTRACT_TYPE(/datum/material/fabric)
 		setProperty("electrical", 7)
 		setProperty("flammable", 1)
 
+
+/datum/material/fabric/exoweave
+	mat_id = "exoweave"
+	name = "ExoWeave"
+	desc = "A prototype composite fabric designed for EVA activity, comprised primarily of carbon fibers treated with a silica-based solution."
+	color = "#3d666b"
+
+	New()
+		..()
+		setProperty("density", 5)
+		setProperty("hard", 4)
+		setProperty("chemical", 7)
+		setProperty("thermal", 9)
+		setProperty("electrical", 8)
 
 
 /datum/material/fabric/beewool
