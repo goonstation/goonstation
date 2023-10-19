@@ -52,11 +52,31 @@ export const SteppedSlider = (props: SteppedSliderProps) => {
   return (
     <Stack inline width="100%">
       <Stack.Item>
-        <Button icon="backward-fast" onClick={() => onChange(minValue)} />
-        {!!skipAmount && <Button icon="backward-step" onClick={() => handleAdjust(-skipAmount)} />}
-        <Button icon="backward" onClick={() => handleAdjust(-resolvedStepAmount)} />
+        <Button
+          icon="backward-fast"
+          onClick={() => onChange(minValue)}
+          tooltip={`Minimum (${minValue})`}
+          tooltipPosition="bottom"
+        />
+        {!!skipAmount && (
+          <Button
+            icon="backward"
+            onClick={() => handleAdjust(-skipAmount)}
+            tooltip={`Skip Down (${-skipAmount})`}
+            tooltipPosition="bottom"
+          />
+        )}
+        <Button
+          icon="backward-step"
+          onClick={() => handleAdjust(-resolvedStepAmount)}
+          tooltip={`Step Down (${-resolvedStepAmount})`}
+          tooltipPosition="bottom"
+        />
         {!!nudgeAmount && (
-          <Button onClick={() => handleAdjust(nudgeAmount)}>
+          <Button
+            onClick={() => handleAdjust(-nudgeAmount)}
+            tooltip={`Nudge Down (${-nudgeAmount})`}
+            tooltipPosition="bottom">
             <Icon name="play" rotation={180} />
           </Button>
         )}
@@ -73,10 +93,34 @@ export const SteppedSlider = (props: SteppedSliderProps) => {
         />
       </Stack.Item>
       <Stack.Item>
-        {!!nudgeAmount && <Button icon="play" onClick={() => handleAdjust(nudgeAmount)} />}
-        <Button icon="forward" onClick={() => handleAdjust(resolvedStepAmount)} />
-        {!!skipAmount && <Button icon="forward-step" onClick={() => handleAdjust(skipAmount)} />}
-        <Button icon="fast-forward" onClick={() => onChange(maxValue)} />
+        {!!nudgeAmount && (
+          <Button
+            icon="play"
+            onClick={() => handleAdjust(nudgeAmount)}
+            tooltip={`Nudge Up (+${nudgeAmount})`}
+            tooltipPosition="bottom"
+          />
+        )}
+        <Button
+          icon="forward-step"
+          onClick={() => handleAdjust(resolvedStepAmount)}
+          tooltip={`Step Up (+${resolvedStepAmount})`}
+          tooltipPosition="bottom"
+        />
+        {!!skipAmount && (
+          <Button
+            icon="forward"
+            onClick={() => handleAdjust(skipAmount)}
+            tooltip={`Skip Up (+${skipAmount})`}
+            tooltipPosition="bottom"
+          />
+        )}
+        <Button
+          icon="fast-forward"
+          onClick={() => onChange(maxValue)}
+          tooltip={`Maximum (${maxValue})`}
+          tooltipPosition="bottom"
+        />
       </Stack.Item>
     </Stack>
   );

@@ -352,6 +352,9 @@
 		for (var/mob/living/L in range(range,O))
 			if (!L.client) //no point hallucinating if there's nobody to see it
 				continue
+			var/mob/living/carbon/human/H  = L
+			if(istype(H) && istype(H.head, /obj/item/clothing/head/tinfoil_hat)) 
+				continue
 
 			for(var/list/comp_args_tuple in src.madness_effects[src.effect_type])
 				//yes, we really do mean _AddComponent here, because it's already a list we're passing

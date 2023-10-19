@@ -5,7 +5,7 @@
 	name = "Blood Boil"
 	desc = "Expend all of your energy to self-destruct and spray boiling changeling blood on nearby targets."
 	cooldown = 0
-	start_on_cooldown = 0
+	start_on_cooldown = FALSE
 	icon_state = "blood_boil"
 
 	cast(atom/target)
@@ -13,8 +13,9 @@
 			return 1
 		var/mob/ow = holder.owner
 
-		if(tgui_alert(ow, "This will destroy your body to scald all nearby targets! Are you sure?", "Blood boil", list("Yes","No")) != "Yes")
-			return
+		if(ow.client)
+			if(tgui_alert(ow, "This will destroy your body to scald all nearby targets! Are you sure?", "Blood boil", list("Yes","No")) != "Yes")
+				return
 
 		for (var/turf/splat in view(2,ow.loc))
 			if (prob(50))
@@ -26,7 +27,8 @@
 		var/dmg = 20
 		//Increase the power of the boilgib if we have collected DNA!
 		if (istype(holder.owner, /mob/living/critter/changeling/handspider))
-			dmg += holder.owner:absorbed_dna * 3.3
+			var/mob/living/critter/changeling/handspider/H = holder.owner
+			dmg += H.absorbed_dna * 3.3
 		for (var/mob/M in view(3,ow.loc))
 			if(iscarbon(M))
 				if (ishuman(M))

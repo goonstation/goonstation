@@ -330,7 +330,6 @@ toxic - poisons
 // These are for custom antique laser guns repaired with high-quality components.
 // See displaycase.dm for details (Convair880).
 /datum/projectile/laser/old
-	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "proj_thermal"
 	name = "pulse laser"
 	sname = "pulse laser"
@@ -344,7 +343,6 @@ toxic - poisons
 	color_blue = 0
 
 /datum/projectile/laser/old_burst
-	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "proj_sing"
 	name = "burst laser"
 	sname = "burst laser"
