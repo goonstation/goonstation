@@ -1840,9 +1840,9 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		projectiles = list(current_projectile)
 		..()
 
+// Makeshift Laser Rifle
 #define HEAT_REMOVED_PER_PROCESS 15
 #define FIRE_THRESHOLD 125
-// Makeshift Laser Rifle
 TYPEINFO(/obj/item/gun/energy/makeshift)
 	mats = 0
 
