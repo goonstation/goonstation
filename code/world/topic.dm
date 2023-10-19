@@ -773,8 +773,10 @@
 				if (!plist["data"]) return 0
 
 				play_music_remote(json_decode(plist["data"]))
+
 				// trigger cooldown so radio station doesn't interrupt our cool music
-				EXTEND_COOLDOWN(global, "music", 2 MINUTES) // TODO use plist duration data if available
+				var/duration = text2num(plist["duration"])
+				EXTEND_COOLDOWN(global, "music", duration SECONDS)
 				return 1
 
 			if ("delay")

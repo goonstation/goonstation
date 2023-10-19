@@ -6,3 +6,10 @@
 	path = "/remote-music"
 	body = /datum/apiBody/remoteMusic
 	correct_response = /datum/apiModel/Message
+
+	buildBody(
+		video,
+		round_id,
+		game_admin_ckey
+	)
+	 . = ..(args)
