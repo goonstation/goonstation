@@ -167,7 +167,7 @@ TYPEINFO(/obj/item/syndicate_destruction_system)
 			T = T.ReplaceWith(/turf/simulated/floor/plating/random)
 		if(create_scan_decal)
 			leavescan(T, 1)
-			playsound(T, 'sound/effects/smoke_tile_spread.ogg', 50, 1)
+			playsound(T, 'sound/effects/smoke_tile_spread.ogg', 50, TRUE)
 		return
 
 /obj/decal/syndicate_destruction_scan_center

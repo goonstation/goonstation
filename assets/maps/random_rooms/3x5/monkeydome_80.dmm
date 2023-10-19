@@ -12,9 +12,7 @@
 	layer = 10;
 	name = "palm tree"
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},
@@ -37,9 +35,7 @@
 /obj/shrub{
 	dir = 6
 	},
-/obj/landmark/spawner{
-	name = "monkeyspawn_normal"
-	},
+/mob/living/carbon/human/npc/monkey,
 /turf/simulated/floor/grass{
 	name = "astroturf"
 	},

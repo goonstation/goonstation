@@ -1,5 +1,5 @@
 var/datum/explosion_controller/explosions
-#define RSS_SCALE 2
+#define RSS_SCALE 1.5
 //#define EXPLOSION_MAPTEXT_DEBUGGING
 /datum/explosion_controller
 	var/list/queued_explosions = list()
@@ -65,7 +65,6 @@ var/datum/explosion_controller/explosions
 			queued_turfs[T] = 2 * (queued_turfs[T])**(1 / (2 * RSS_SCALE))
 			p = queued_turfs[T]
 			explosion = queued_turfs_blame[T]
-			//boutput(world, "P1 [p]")
 			if (p >= 6)
 				for (var/mob/M in T)
 					M.ex_act(1, explosion?.last_touched, p)
@@ -104,7 +103,6 @@ var/datum/explosion_controller/explosions
 #endif
 			p = queued_turfs[T]
 			explosion = queued_turfs_blame[T]
-			//boutput(world, "P2 [p]")
 #ifdef EXPLOSION_MAPTEXT_DEBUGGING
 			if (p >= 6)
 				T.maptext = "<span style='color: #ff0000;' class='pixel c sh'>[p]</span>"
@@ -280,5 +278,9 @@ var/datum/explosion_controller/explosions
 				C.set_clothing_icon_dirty()
 
 		explosions.queue_damage(nodes, blame)
+
+		// cleanup, we're done
+		src.source = null
+		src.epicenter = null
 
 #undef RSS_SCALE

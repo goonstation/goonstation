@@ -2,17 +2,17 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon
 	mob_flags = USR_DIALOG_UPDATES_RANGE
 	gender = NEUTER
-	var/syndicate = 0 // Do we get Syndicate laws?
-	var/syndicate_possible = 0 //  Can we become a Syndie robot?
-	var/emagged = 0 // Are we emagged, removing all laws?
-	var/emaggable = 0 // Can we be emagged?
-	robot_talk_understand = 1
-	see_infrared = 1
+	var/syndicate = FALSE // Do we get Syndicate laws?
+	var/syndicate_possible = FALSE //  Can we become a Syndie robot?
+	var/emagged = FALSE // Are we emagged, removing all laws?
+	var/emaggable = FALSE // Can we be emagged?
+	robot_talk_understand = TRUE
+	see_infrared = TRUE
 	var/list/req_access = list()
 
-	var/killswitch = 0
+	var/killswitch = FALSE
 	var/killswitch_at = 0
-	var/weapon_lock = 0
+	var/weapon_lock = FALSE
 	var/weaponlock_time = 120
 	var/obj/item/card/id/botcard //An ID card that the robot "holds" invisibly
 
@@ -26,10 +26,10 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 
 	var/static/regex/monospace_say_regex = new(@"`([^`]+)`", "g")
 
-	can_bleed = 0
+	can_bleed = FALSE
 	blood_id = "oil"
-	use_stamina = 0
-	can_lie = 0
+	use_stamina = FALSE
+	can_lie = FALSE
 	canbegrabbed = FALSE // silicons can't be grabbed, they're too bulky or something
 	grabresistmessage = "but can't get a good grip!"
 
@@ -141,6 +141,9 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	if (door_loc && isrestrictedz(door_loc.z)) // Somebody will find a way to abuse it if I don't put this here.
 		usr.show_text("Unable to interface with door due to unknown interference.", "red")
 		return
+	if(isAI(src) && door_loc?.z == src.z )
+		usr.show_text("Your mainframe was unable relay this command that far away!", "red")
+		return
 
 	if (istype(our_door, /obj/machinery/door/airlock/))
 		var/obj/machinery/door/airlock/A = our_door
@@ -182,20 +185,21 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 /mob/living/silicon/click(atom/target, params, location, control)
 	if (src.targeting_ability)
 		..()
-	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned"))
+	if (!src.stat && !src.restrained() && !src.getStatusDuration("weakened") && !src.getStatusDuration("paralysis") && !src.getStatusDuration("stunned") && !src.getStatusDuration("low_signal"))
 		if(src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK) && istype(target, /obj) )
 			var/obj/O = target
 			if(O.receive_silicon_hotkey(src)) return
 
 	var/inrange = in_interact_range(target, src)
 	var/obj/item/equipped = src.equipped()
-	if (src.client.check_any_key(KEY_OPEN | KEY_BOLT | KEY_SHOCK | KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
+	if (params["ctrl"] || src.client.check_any_key(KEY_EXAMINE | KEY_POINT) || (equipped && (inrange || (equipped.flags & EXTRADELAY))) || istype(target, /turf) || ishelpermouse(target)) // slightly hacky, oh well, tries to check whether we want to click normally or use attack_ai
 		..()
 	else
 		if (GET_DIST(src, target) > 0) // temporary fix for cyborgs turning by clicking
 			set_dir(get_dir(src, target))
 
-		target.attack_ai(src, params, location, control)
+		if(!src.getStatusDuration("low_signal"))
+			target.attack_ai(src, params, location, control)
 
 /*
 /mob/living/key_down(key)
@@ -261,6 +265,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	logTheThing(LOG_DIARY, src, ": [message]", "say")
 
 	message = trim(html_encode(message))
+	message = src.check_singing_prefix(message)
 
 	if (!message)
 		return
@@ -310,7 +315,7 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	for (var/mob/M in mobs)
 		if (istype(M, /mob/new_player))
 			continue
-		if (M.stat > 1 && !istype(M, /mob/dead/target_observer))
+		if (isdead(M) && !istype(M, /mob/dead/target_observer))
 			var/thisR = rendered
 			if (M.client && M.client.holder && src.mind)
 				thisR = "<span class='adminHearing' data-ctx='[M.client.chatOutput.getContextFlags()]'>[rendered]</span>"
@@ -625,7 +630,7 @@ var/global/list/module_editors = list()
 	if(!(rack in ticker.ai_law_rack_manager.registered_racks))
 		return
 	src.law_rack_connection = rack
-	logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)][user ? " by [user]" : ""]")
+	logTheThing(LOG_STATION, src, "[src.name] is connected to the rack at [constructName(src.law_rack_connection)][user ? " by [constructName(user)]" : ""]")
 	if (user)
 		var/area/A = get_area(src.law_rack_connection)
 		boutput(user, "You connect [src.name] to the stored law rack at [A.name].")

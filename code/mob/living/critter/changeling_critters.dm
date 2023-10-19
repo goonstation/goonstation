@@ -13,7 +13,7 @@
 	blood_id = "bloodc"
 	table_hide = 0
 	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/changeling
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	var/datum/abilityHolder/changeling/hivemind_owner = 0
 	var/icon_prefix = ""
 	/// Part this limb critter is based off of- i.e. a cow making a legworm would be a cow leg. Could also be an eye or butt, hence loose type
@@ -100,7 +100,7 @@
 			hat = 0
 			UpdateIcon()
 		if (!gibbed)
-			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, 1, 0.2, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 50, TRUE, 0.2, 1)
 		death_effect()
 		..()
 
@@ -167,6 +167,17 @@
 		UnregisterSignal(src, list(COMSIG_ITEM_PICKUP, COMSIG_ITEM_DROPPED))
 		..()
 
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/critter/dna_gnaw, /datum/targetable/critter/boilgib))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if(istype(A, /datum/targetable/critter/boilgib))
+					if(prob(src.get_health_percentage() * 100))
+						continue
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
+
 	proc/stop_sprint()
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_CANTSPRINT, src.type)
 
@@ -184,7 +195,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0, 2.1, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 			if("flip")
 				if(src.emote_check(voluntary, 50))
@@ -302,6 +313,9 @@
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
 
+/mob/living/critter/changeling/handspider/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 ///////////////////////////
 // EYESPIDER
@@ -360,6 +374,17 @@
 		// EYE CAN SEE FOREVERRRR
 		APPLY_ATOM_PROPERTY(src, PROP_MOB_XRAYVISION, src)
 
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/critter/shedtears, /datum/targetable/critter/boilgib))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if(istype(A, /datum/targetable/critter/boilgib))
+					if(prob(src.get_health_percentage() * 100))
+						continue
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
+
 	// a slight breeze will kill these guys, such is life as a squishy li'l eye
 	setup_healths()
 		add_hh_flesh(3, 1)
@@ -405,6 +430,10 @@
 				src.client?.images -= arrow
 				qdel(arrow)
 
+/mob/living/critter/changeling/eyespider/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
+
 ///////////////////////////
 // LEGWORM
 ///////////////////////////
@@ -424,7 +453,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 
@@ -492,6 +521,16 @@
 		add_hh_flesh_burn(5, 1.25)
 		add_health_holder(/datum/healthHolder/toxin)
 
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/critter/powerkick, /datum/targetable/critter/writhe, /datum/targetable/critter/boilgib))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if(istype(A, /datum/targetable/critter/boilgib))
+					if(prob(src.get_health_percentage() * 100))
+						continue
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
@@ -519,6 +558,10 @@
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
+
+/mob/living/critter/changeling/legworm/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 
 ///////////////////////////
@@ -566,7 +609,13 @@
 		add_hh_flesh(16, 1)
 		add_hh_flesh_burn(5, 1.25)
 
-
+	critter_ability_attack(var/mob/target)
+		for (var/ability_path in list(/datum/targetable/changeling/sting/fartonium, /datum/targetable/changeling/sting/simethicone))
+			var/datum/targetable/critter/A = src.abilityHolder?.getAbility(ability_path)
+			if(istype(A))
+				if (!A.disabled && A.cooldowncheck())
+					A.handleCast(target)
+					return TRUE
 
 	return_to_master()
 		if (ishuman(hivemind_owner.owner))
@@ -585,6 +634,10 @@
 		hivemind_owner.points += (dna_gain)
 		hivemind_owner.insert_into_hivemind(src)
 		qdel(src)
+
+/mob/living/critter/changeling/buttcrab/ai_controlled
+	ai_type = /datum/aiHolder/aggressive
+	is_npc = TRUE
 
 
 
@@ -606,7 +659,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/creepyshriek.ogg', 50, 1, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/creepyshriek.ogg', 50, TRUE, 0.2, 1.7, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b><span class='alert'>[src] screams!</span></b>"
 		return null
 

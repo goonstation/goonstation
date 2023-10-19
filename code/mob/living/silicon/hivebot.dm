@@ -2,6 +2,7 @@
 	name = "Robot"
 	voice_name = "synthesized voice"
 	icon = 'icons/mob/hivebot.dmi'
+	voice_type = "cyborg"
 	icon_state = "vegas"
 	health = 60
 	max_health = 60
@@ -183,10 +184,7 @@
 					message = "<B>[src]</B> points."
 				else
 					src.point(M)
-
-				if (M)
 					message = "<B>[src]</B> points to [M]."
-				else
 			m_type = 1
 
 		if ("panic","freakout")
@@ -290,10 +288,7 @@
 
 		if ("scream")
 			if (src.emote_check(voluntary, 50))
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/scream.ogg', 50, 1, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, src.sound_scream, 80, 0, 0, src.get_age_pitch(), channel=VOLUME_CHANNEL_EMOTE)
 				message = "<b>[src]</b> screams!"
 
 		if ("johnny")
@@ -312,10 +307,7 @@
 					var/obj/container = src.loc
 					container.mob_flip_inside(src)
 				else
-					if (narrator_mode)
-						playsound(src.loc, pick('sound/vox/deeoo.ogg', 'sound/vox/dadeda.ogg'), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-					else
-						playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 					message = "<B>[src]</B> does a flip!"
 					if (prob(50))
 						animate_spin(src, "R", 1, 0)
@@ -380,10 +372,7 @@
 						if (38) message = "<B>[src]</B> exterminates the air supply."
 						if (39) message = "<B>[src]</B> farts so hard the AI feels it."
 						if (40) message = "<B>[src] <span style='color:red'>f</span><span style='color:blue'>a</span>r<span style='color:red'>t</span><span style='color:blue'>s</span>!</B>"
-				if (narrator_mode)
-					playsound(src.loc, 'sound/vox/fart.ogg', 50, 1, channel=VOLUME_CHANNEL_EMOTE)
-				else
-					playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src.loc, src.sound_fart, 50, 1, channel=VOLUME_CHANNEL_EMOTE)
 #ifdef DATALOGGER
 				game_stats.Increment("farts")
 #endif
@@ -487,18 +476,6 @@
 			src.fireloss += 40
 		health_update_queue |= src
 	return
-
-/mob/living/silicon/hivebot/bump(atom/movable/AM as mob|obj)
-	if (src.now_pushing)
-		return
-	if (!istype(AM, /atom/movable))
-		return
-	if (!src.now_pushing)
-		src.now_pushing = 1
-		if (!AM.anchored)
-			var/t = get_dir(src, AM)
-			step(AM, t)
-		src.now_pushing = null
 
 /mob/living/silicon/hivebot/attackby(obj/item/W, mob/user)
 	if (isweldingtool(W))
@@ -797,7 +774,9 @@ Frequency:
 
 	if (src.mainframe)
 		src.real_name = "SHELL/[src.mainframe]"
+		src.bioHolder.mobAppearance.pronouns = src.client.preferences.AH.pronouns
 		src.name = src.real_name
+		src.update_name_tag()
 
 	else if(src.real_name == "Cyborg")
 		src.real_name += " "
@@ -812,6 +791,7 @@ Frequency:
 
 	src.real_name = "AI Shell [copytext("\ref[src]", 6, 11)]"
 	src.name = src.real_name
+	src.update_name_tag()
 
 	return
 
@@ -935,9 +915,8 @@ Frequency:
 	name = "Eyebot"
 	icon_state = "eyebot"
 	health = 25
-
+	do_hurt_slowdown = FALSE
 	jetpack = 1 //ZeWaka: I concur with ghostdrone commenter, fuck whoever made this. See spacemove.
-	var/jeton = 0
 
 	New()
 		..()
@@ -961,6 +940,8 @@ Frequency:
 				available_ai_shells += src
 
 	movement_delay()
+		if (src.pulling && !isitem(src.pulling))
+			return ..()
 		return 1 + movement_delay_modifier
 
 	hotkey(name)
@@ -1087,7 +1068,7 @@ Frequency:
 			if (M.change_stack_amount(-1))
 				src.build_step++
 				boutput(user, "You add the plating to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.icon_state = "shell-plate"
 				return
 			else
@@ -1105,7 +1086,7 @@ Frequency:
 			if (coil.amount >= 3)
 				src.build_step++
 				boutput(user, "You add \the cable to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				coil.amount -= 3
 				src.icon_state = "shell-cable"
 				if (coil.amount < 1)
@@ -1124,7 +1105,7 @@ Frequency:
 			if (!src.cell)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.cell = W
 				user.u_equip(W)
 				W.set_loc(src)
@@ -1141,7 +1122,7 @@ Frequency:
 			if (!src.has_radio)
 				src.build_step++
 				boutput(user, "You add \the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.icon_state = "shell-radio"
 				src.has_radio = 1
 				qdel(W)
@@ -1158,7 +1139,7 @@ Frequency:
 			if (!src.has_interface)
 				src.build_step++
 				boutput(user, "You add the [W] to [src]!")
-				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 				src.has_interface = 1
 				qdel(W)
 				return
@@ -1193,3 +1174,47 @@ Frequency:
 				still_needed += "an AI interface board"
 			boutput(user, "\The [src] needs [still_needed.len ? english_list(still_needed) : "bugfixing (please call a coder)"] before you can activate it.")
 			return
+
+
+/datum/statusEffect/low_signal
+	id = "low_signal"
+	name = "Low Signal"
+	desc = "You have reduced signal to your shell."
+	icon_state = "low_signal"
+	unique = TRUE
+	effect_quality = STATUS_QUALITY_NEGATIVE
+
+	onAdd(optional)
+		. = ..()
+		if (!ismob(owner)) return
+		var/mob/M = owner
+		M.addOverlayComposition(/datum/overlayComposition/low_signal)
+
+	onUpdate(timePassed)
+		. = ..()
+		if (ishivebot(owner))
+			var/mob/living/silicon/hivebot/H = owner
+			if(H.module_active || H.module_states[1] || H.module_states[2] || H.module_states[3])
+				H.module_active = null
+				H.module_states[1] = null
+				H.module_states[2] = null
+				H.module_states[3] = null
+				H.hud.update_tools()
+				H.hud.update_tool_selector()
+				H.hud.update_active_tool()
+				H.show_text("Insufficient signal to maintain control of tools.")
+
+	onRemove()
+		. = ..()
+		if (QDELETED(owner) || !ismob(owner)) return
+		var/mob/M = owner
+		M.removeOverlayComposition(/datum/overlayComposition/low_signal)
+
+/datum/lifeprocess/hivebot_signal
+	process(var/datum/gas_mixture/environment)
+		if(hivebot_owner?.mainframe)
+			if((get_step(hivebot_owner.mainframe, 0)?.z == get_step(hivebot_owner, 0)?.z) || (inunrestrictedz(hivebot_owner) && inonstationz(hivebot_owner.mainframe)))
+				hivebot_owner.delStatus("low_signal")
+			else
+				hivebot_owner.setStatus("low_signal", INFINITE_STATUS)
+		..()

@@ -128,6 +128,7 @@
 				user.show_text("You cut off the reinforcement on [src].", "blue")
 				src.icon_state = "railing"
 				src.is_reinforced = 0
+				src.flags &= !ALWAYS_SOLID_FLUID
 				var/obj/item/rods/R = new /obj/item/rods(get_turf(src))
 				R.amount = 1
 				if(src.material)
@@ -144,16 +145,22 @@
 					user.show_text("You reinforce [src] with the rods.", "blue")
 					src.is_reinforced = 1
 					src.icon_state = "railing-reinforced"
+					src.flags |= ALWAYS_SOLID_FLUID
 			else
 				user.show_text("[src] is already reinforced!", "red")
 
 	attack_hand(mob/user)
 		src.try_vault(user)
 
+	attack_ai(mob/user)
+		if(!can_reach(user, src) || isAI(user) || isAIeye(user))
+			return
+		return src.attack_hand(user)
+
 	Bumped(var/mob/AM as mob)
 		. = ..()
 		if(!istype(AM)) return
-		if(AM.client?.check_key(KEY_RUN))
+		if(AM.client?.check_key(KEY_RUN) || AM.client?.check_key(KEY_BOLT))
 			src.try_vault(AM, TRUE)
 
 	proc/try_vault(mob/user, use_owner_dir = FALSE)
@@ -304,13 +311,13 @@
 			if (istype(ownerMob, /mob/living))
 				if (!ownerMob.hasStatus("weakened"))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
-					playsound(the_railing, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1, -1)
+					playsound(the_railing, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, TRUE, -1)
 					ownerMob.visible_message("<span class='alert'>[ownerMob] tries to climb straight into \the [obstacle].[prob(30) ? pick(" What a goof!!", " A silly [ownerMob.name].", " <b>HE HOO HE HA</b>", " Good thing [he_or_she(ownerMob)] didn't bump [his_or_her(ownerMob)] head!") : null]</span>")
 				// chance for additional head bump damage
 				if (prob(25))
 					ownerMob.changeStatus("weakened", 4 SECONDS)
 					ownerMob.TakeDamage("head", 10, 0, 0, DAMAGE_BLUNT)
-					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1, -1)
+					playsound(the_railing, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE, -1)
 					ownerMob.visible_message("<span class='alert'>[ownerMob] bumps [his_or_her(ownerMob)] head on \the [obstacle].[prob(30) ? pick(" Oof, that looked like it hurt!", " Is [he_or_she(ownerMob)] okay?", " Maybe that wasn't the wisest idea...", " Don't do that!") : null]</span>")
 			return TRUE
 		return FALSE
@@ -385,10 +392,10 @@
 				verbing = "to disassemble"
 			if (RAILING_FASTEN)
 				verbing = "fastening"
-				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, TRUE)
 			if (RAILING_UNFASTEN)
 				verbing = "unfastening"
-				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		ownerMob.visible_message("<span class='alert'>[owner] begins [verbing] [the_railing].</span>")
 
 	onEnd()
@@ -402,11 +409,11 @@
 			if (RAILING_FASTEN)
 				verbens = "fastens"
 				the_railing.anchored = ANCHORED
-				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, TRUE)
 			if (RAILING_UNFASTEN)
 				verbens = "unfastens"
 				the_railing.anchored = UNANCHORED
-				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(the_railing, 'sound/items/Screwdriver.ogg', 50, TRUE)
 		ownerMob.visible_message("<span class='alert'>[owner] [verbens] [the_railing].</span>")
 		logTheThing(LOG_STATION, ownerMob, "[verbens] [the_railing] at [log_loc(the_railing)].")
 

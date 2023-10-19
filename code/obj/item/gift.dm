@@ -40,7 +40,7 @@
 				if(user_choice == "Cancel")
 					return
 				if(!(user_choice == "Wrap"))
-					var/a_used = 2 ** (src.w_class - 1)
+					var/a_used = round(2 ** (src.w_class - 1))
 					if (src.amount < a_used)
 						boutput(user, "<span class='notice'>You need more paper!</span>")
 						return
@@ -60,7 +60,7 @@
 			if(istype(W, /obj/item/phone_handset/))
 				boutput(user, "<span class='notice'>You can't wrap that, it has a cord attached!</span>")
 				return
-			var/a_used = 2 ** (src.w_class - 1)
+			var/a_used = round(2 ** (src.w_class - 1))
 			if (src.amount < a_used)
 				boutput(user, "<span class='notice'>You need more paper!</span>")
 				return
@@ -105,7 +105,7 @@
 		else
 			boutput(user, "<span class='notice'>You need more paper.</span>")
 	else
-		boutput(user, "They're moving around too much.")
+		boutput(user, "<span class='alert'>[hes_or_shes(target)] moving around too much.</span>")
 
 /obj/item/gift
 	desc = "For me!?"

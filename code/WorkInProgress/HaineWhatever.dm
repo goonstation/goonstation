@@ -871,12 +871,12 @@ TYPEINFO(/obj/submachine/blackjack)
 		..()
 		SPAWN(0)
 			randomize_look(src)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/rank/bartender, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/wcoat, slot_wear_suit)
-			src.equip_if_possible(new /obj/item/clothing/glasses/thermal/orange, slot_glasses)
-			src.equip_new_if_possible(/obj/item/gun/kinetic/riotgun, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/storage/box/glassbox, slot_in_backpack)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
+			src.equip_new_if_possible(/obj/item/clothing/under/rank/bartender, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/suit/wcoat, SLOT_WEAR_SUIT)
+			src.equip_if_possible(new /obj/item/clothing/glasses/thermal/orange, SLOT_GLASSES)
+			src.equip_new_if_possible(/obj/item/gun/kinetic/riotgun, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/storage/box/glassbox, SLOT_IN_BACKPACK)
 			for (var/obj/item/reagent_containers/food/drinks/drinkingglass/glass in src)
 				src.glassware += glass
 			// add a random accent
@@ -1115,7 +1115,7 @@ TYPEINFO(/obj/submachine/blackjack)
 		if (hit_atom == usr)
 			if (ishuman(usr))
 				var/mob/living/carbon/human/usagi = usr
-				if (!usagi.equip_if_possible(src, usagi.slot_glasses))
+				if (!usagi.equip_if_possible(src, SLOT_GLASSES))
 					usagi.put_in_hand_or_drop(src)
 			else
 				src.Attackhand(usr)
@@ -1237,12 +1237,12 @@ TYPEINFO(/obj/submachine/blackjack)
 			O.dropped(src)
 			O.layer = initial(O.layer)
 
-	src.equip_new_if_possible(/obj/item/clothing/under/gimmick/sailormoon , slot_w_uniform)
-	src.equip_new_if_possible(/obj/item/clothing/glasses/sailormoon , slot_glasses)
-	src.equip_new_if_possible(/obj/item/clothing/gloves/sailormoon , slot_gloves)
-	src.equip_new_if_possible(/obj/item/clothing/shoes/sailormoon , slot_shoes)
-	src.equip_new_if_possible(/obj/item/clothing/head/sailormoon , slot_head)
-	src.equip_new_if_possible(/obj/item/sailormoon_wand , slot_in_backpack)
+	src.equip_new_if_possible(/obj/item/clothing/under/gimmick/sailormoon , SLOT_W_UNIFORM)
+	src.equip_new_if_possible(/obj/item/clothing/glasses/sailormoon , SLOT_GLASSES)
+	src.equip_new_if_possible(/obj/item/clothing/gloves/sailormoon , SLOT_GLOVES)
+	src.equip_new_if_possible(/obj/item/clothing/shoes/sailormoon , SLOT_SHOES)
+	src.equip_new_if_possible(/obj/item/clothing/head/sailormoon , SLOT_HEAD)
+	src.equip_new_if_possible(/obj/item/sailormoon_wand , SLOT_IN_BACKPACK)
 
 	if (src.bioHolder)
 		src.bioHolder.mobAppearance = AH
@@ -1288,7 +1288,7 @@ TYPEINFO(/obj/submachine/blackjack)
 		if (istype(AM, /obj/item))
 			user.u_equip(AM)
 		AM.set_loc(get_turf(M))
-		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [M] and removes their [AM.name] at [log_loc(user)].")
+		logTheThing(LOG_COMBAT, user, "uses a null scalpel ([src]) on [constructName(M)] and removes their [AM.name] at [log_loc(user)].")
 		return
 
 	custom_suicide = 1
@@ -1309,6 +1309,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 /obj/item/gun/bling_blaster
 	name = "fancy bling blaster"
 	desc = "A big old gun with a slot on the side of it to insert cash. It seems to be made of gold, but isn't gold pretty soft? Is this safe?"
+	icon = 'icons/obj/items/guns/gimmick.dmi'
 	icon_state = "bling_blaster"
 	mat_changename = 0
 	mat_changedesc = 0
@@ -1323,7 +1324,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 	var/possible_bling_rare = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/gold)
 	default_material = "gold"
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!istype(target, /turf) || !istype(start, /turf))
 			return
 		if (target == user.loc || target == loc)
@@ -1360,7 +1361,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 				if (bling)
 					bling.throwforce = 1
 			bling.throw_at(target, 8, 2)
-			playsound(T, 'sound/effects/bamf.ogg', 40, 1)
+			playsound(T, 'sound/effects/bamf.ogg', 40, TRUE)
 			user.visible_message("<span class='success'><b>[user]</b> blasts some bling at [target]!</span>")
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
@@ -1512,14 +1513,15 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 //wrongend's bang! gun
 /obj/item/bang_gun
 	name = "revolver"
-	icon_state = "revolver"
 	desc = "There are 7 bullets left! Each shot will currently use 1 bullets!"
+	icon = 'icons/obj/items/guns/kinetic.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon_state = "revolver"
+	item_state = "gun"
 	flags = FPRINT | TABLEPASS | EXTRADELAY
 	var/bangfired = FALSE // Checks if the gun has been fired before or not. If it's been fired, no more firing for you
 	var/description = "A bang flag pops out of the barrel!" // Used to fuck you and also decide what description is used for the fire text
-	icon = 'icons/obj/items/gun.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
-	item_state = "gun"
+
 
 	pixelaction(atom/target, params, mob/user, reach)
 		if(reach || src.bangfired)
@@ -1527,7 +1529,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 		else if (!ON_COOLDOWN(src, "recent_fire", 30 SECOND))
 			src.bangfired = TRUE
 			user?.visible_message("<span class='alert'><span class='alert'>[user] fires [src][target ? " at [target]" : null]! [description]</span>")
-			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, 1)
+			playsound(user, 'sound/musical_instruments/Trombone_Failiure.ogg', 50, TRUE)
 			icon_state = "bangflag[icon_state]"
 			return
 		else
@@ -1541,7 +1543,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 
 /obj/item/bang_gun/ak47
 	name = "ak-477"
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ak47"
 	item_state = "ak47"
 	desc = "There are 30 bullets left! Each shot will currently use 3 bullets!"
@@ -1550,7 +1552,7 @@ TYPEINFO(/obj/item/gun/bling_blaster)
 
 /obj/item/bang_gun/hunting_rifle
 	name = "Old Hunting Rifle"
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
 	desc = "There are 4 bullets left! Each shot will currently use 1 bullet!"

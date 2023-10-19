@@ -10,19 +10,6 @@
 
 	level = 1
 
-	unsimulated
-		pass_unstable = FALSE
-		event_handler_flags = IMMUNE_SINGULARITY
-		/// If ReplaceWith() actually does a thing or not.
-		var/can_replace_with_stuff = FALSE
-#ifdef CI_RUNTIME_CHECKING
-		can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit (/proc/placeAllPrefabs)
-#endif
-		allows_vehicles = FALSE
-
-	proc/burn_down()
-		return
-
 	// Properties for open tiles (/floor)
 	#define _UNSIM_TURF_GAS_DEF(GAS, ...) var/GAS = 0;
 	APPLY_TO_GASES(_UNSIM_TURF_GAS_DEF)
@@ -58,6 +45,12 @@
 	var/step_material = 0
 	var/step_priority = 0 //compare vs. shoe for step sounds
 
+	// Vars used for breaking and burning turfs, only used for floors at the moment
+	var/can_burn = FALSE
+	var/can_break = FALSE
+	var/broken = FALSE
+	var/burnt = FALSE
+
 	var/special_volume_override = -1 //if greater than or equal to 0, override
 
 	var/turf_flags = 0
@@ -90,7 +83,7 @@
 		..()
 		if(istype(src.material))
 			if(initial(src.opacity))
-				src.set_opacity(src.material.alpha <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
+				src.set_opacity(src.material.getAlpha() <= MATERIAL_ALPHA_OPACITY ? 0 : 1)
 		return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
@@ -133,6 +126,8 @@
 	/// Gets called after the world is finished loading and the game is basically ready to start
 	proc/generate_worldgen()
 
+	proc/burn_down()
+
 	proc/inherit_area() //jerko built a thing
 		if(!loc:expandable) return
 		for(var/dir in (cardinal + 0))
@@ -145,6 +140,51 @@
 		var/area/built_zone/zone = new//TODO: cache a list of these bad boys because they don't get GC'd because WHY WOULD THEY?!
 		zone.contents += src//get in the ZONE
 
+	proc/break_tile(var/force)
+		if (!src.can_break && !force)
+			return
+		if (src.broken)
+			return
+		var/image/damage_overlay
+		if (intact)
+			damage_overlay = image('icons/turf/floors.dmi', "damaged[pick(1,2,3,4,5)]")
+		else
+			damage_overlay = image('icons/turf/floors.dmi', "platingdmg[pick(1,2,3)]")
+		damage_overlay.alpha = 200
+		src.broken = TRUE
+		UpdateOverlays(damage_overlay, "damage")
+
+	proc/burn_tile(var/force)
+		if (!src.can_burn && !force)
+			return
+		if (src.burnt)
+			return
+		var/image/burn_overlay
+		if (intact)
+			burn_overlay = image('icons/turf/floors.dmi', "floorscorched[pick(1,2)]")
+		else
+			burn_overlay = image('icons/turf/floors.dmi', "panelscorched")
+		burn_overlay.alpha = 200
+		src.burnt = TRUE
+		UpdateOverlays(burn_overlay, "burn")
+
+	proc/restore_tile()
+		if(intact)
+			return
+		setIntact(TRUE)
+		src.broken = FALSE
+		src.burnt = FALSE
+		icon = initial(icon)
+		if(icon_old)
+			icon_state = icon_old
+		else
+			icon_state = "floor"
+		UpdateOverlays(null, "burn")
+		UpdateOverlays(null, "damage")
+		if (name_old)
+			name = name_old
+		levelupdate()
+
 	proc/setIntact(var/new_intact_value)
 		if (new_intact_value)
 			src.intact = TRUE
@@ -156,6 +196,8 @@
 	proc/UpdateDirBlocks()
 		src.blocked_dirs = 0
 		for (var/obj/O in src.contents)
+			if(!O.density)
+				continue
 			if (istype(O, /obj/window) && !is_cardinal(O.dir)) // full window
 				src.blocked_dirs = NORTH | SOUTH | EAST | WEST
 				return
@@ -173,6 +215,27 @@
 		var/obj/grille/catwalk/catwalk = new
 		catwalk.setMaterial(rods?.material)
 		catwalk.set_loc(src)
+
+	///A very loose approximation of "is there some light shining on this thing", taking into account all lighting systems and byond internal crap
+	///Performance warning since simple light checks are NOT CHEAP
+	proc/is_lit(RL_threshold = 0.3)
+		if (src.fullbright || src.RL_GetBrightness() > RL_threshold)
+			return TRUE
+
+		var/area/area = get_area(src)
+		if (area.force_fullbright)
+			return TRUE
+
+		for (var/dir in cardinal) //check for neighbouring starlit turfs
+			var/turf/T = get_step(src, dir)
+			if (istype(T, /turf/space))
+				var/turf/space/space_turf = T
+				if (length(space_turf.underlays))
+					return TRUE
+
+		if (src.SL_lit())
+			return TRUE
+		return FALSE
 
 /obj/overlay/tile_effect
 	name = ""
@@ -196,6 +259,16 @@
 	Move()
 		SHOULD_CALL_PARENT(FALSE)
 		return FALSE
+
+/turf/unsimulated
+	pass_unstable = FALSE
+	event_handler_flags = IMMUNE_SINGULARITY
+	/// If ReplaceWith() actually does a thing or not.
+	var/can_replace_with_stuff = FALSE
+#ifdef CI_RUNTIME_CHECKING
+	can_replace_with_stuff = TRUE  //Shitty dumb hack bullshit (/proc/placeAllPrefabs)
+#endif
+	allows_vehicles = FALSE
 
 /turf/unsimulated/meteorhit(obj/meteor as obj)
 	return
@@ -340,9 +413,11 @@ proc/generate_space_color()
 	if(!isnull(space_color) && !istype(src, /turf/space/fluid))
 		src.color = space_color
 
+	// underlays are chacked in CI for duplicate turfs on a dmm tile
+	#ifndef CI_RUNTIME_CHECKING
 	if(fullbright)
 		if(!starlight)
-			starlight = image('icons/effects/overlays/simplelight.dmi', "3x3", pixel_x = -32, pixel_y = -32)
+			starlight = image('icons/effects/overlays/simplelight.dmi', "starlight", pixel_x = -32, pixel_y = -32)
 			starlight.appearance_flags = RESET_COLOR | RESET_TRANSFORM | RESET_ALPHA | NO_CLIENT_COLOR | KEEP_APART // PIXEL_SCALE omitted intentionally
 			starlight.layer = LIGHTING_LAYER_BASE
 			starlight.plane = PLANE_LIGHTING
@@ -351,14 +426,15 @@ proc/generate_space_color()
 		starlight.color = starlight_color_override ? starlight_color_override : src.color
 		if(!isnull(starlight_alpha))
 			starlight.alpha = starlight_alpha
-		UpdateOverlays(starlight, "starlight")
+		src.underlays = list(starlight)
 	else
-		UpdateOverlays(null, "starlight")
+		src.underlays = null
+	#endif
 
 // override for space turfs, since they should never hide anything
 /turf/space/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
+		if(O.level == UNDERFLOOR)
 			O.hide(0)
 
 // override for space turfs, since they should never hide anything
@@ -383,6 +459,7 @@ proc/generate_space_color()
 	density = 1
 	opacity = 1
 	gas_impermeable = 1
+	allows_vehicles = FALSE
 
 	Enter()
 		return 0 // nope
@@ -398,6 +475,10 @@ proc/generate_space_color()
 		src.Entered(AM)
 	if(current_state < GAME_STATE_WORLD_NEW)
 		RL_Init()
+	#ifdef CHECK_MORE_RUNTIMES
+	if(current_state > GAME_STATE_MAP_LOAD && in_replace_with == 0)
+		stack_trace("turf [src] ([src.type]) created directly instead of using ReplaceWith")
+	#endif
 
 /turf/Exit(atom/movable/AM, atom/newloc)
 	SHOULD_CALL_PARENT(TRUE)
@@ -536,7 +617,7 @@ proc/generate_space_color()
 
 /turf/proc/levelupdate()
 	for(var/obj/O in src)
-		if(O.level == 1)
+		if(O.level == UNDERFLOOR)
 			O.hide(src.intact)
 
 /turf/unsimulated/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
@@ -544,13 +625,23 @@ proc/generate_space_color()
 		return ..(what, keep_old_material = keep_old_material, handle_air = handle_air)
 	return
 
+#ifdef CHECK_MORE_RUNTIMES
+var/global/in_replace_with = 0
+#endif
+
 /turf/proc/ReplaceWith(what, keep_old_material = 0, handle_air = 1, handle_dir = 0, force = 0)
 	SEND_SIGNAL(src, COMSIG_TURF_REPLACED, what)
+
+	#ifdef CHECK_MORE_RUNTIMES
+	in_replace_with++
+	#endif
+
 	var/turf/simulated/new_turf
 	var/old_dir = dir
 	var/old_liquid = active_liquid // replacing stuff wasn't clearing liquids properly
 
 	var/oldmat = src.material
+	src.material?.UnregisterSignal(src, COMSIG_ATOM_CROSSED)
 
 	var/datum/gas_mixture/oldair = null //Set if old turf is simulated and has air on it.
 	var/datum/air_group/oldparent = null //Ditto.
@@ -626,9 +717,18 @@ proc/generate_space_color()
 		if(ispath(new_type, /turf/space) && !ispath(new_type, /turf/space/fluid) && delay_space_conversion()) return
 		new_turf = new new_type(src)
 		if (!isturf(new_turf))
-			if (delay_space_conversion()) return
+			if (delay_space_conversion())
+				#ifdef CHECK_MORE_RUNTIMES
+				in_replace_with--
+				#endif
+				return
 			new_turf = new /turf/space(src)
-		if(!istype(new_turf, new_type)) return new_turf // New() replaced the turf with something else, its ReplaceWith handled everything for us already (otherwise we'd screw up lighting)
+		if(!istype(new_turf, new_type))
+			#ifdef CHECK_MORE_RUNTIMES
+			in_replace_with--
+			#endif
+			return new_turf
+			// New() replaced the turf with something else, its ReplaceWith handled everything for us already (otherwise we'd screw up lighting)
 
 	else switch(what)
 		if ("Ocean")
@@ -656,7 +756,11 @@ proc/generate_space_color()
 		if ("Unsimulated Floor")
 			new_turf = new /turf/unsimulated/floor(src)
 		else
-			if (delay_space_conversion()) return
+			if (delay_space_conversion())
+				#ifdef CHECK_MORE_RUNTIMES
+				in_replace_with--
+				#endif
+				return
 			if(station_repair.station_generator && src.z == Z_LEVEL_STATION)
 				station_repair.repair_turfs(list(src), clear=TRUE)
 				keep_old_material = FALSE
@@ -730,7 +834,7 @@ proc/generate_space_color()
 			if (oldair) //Simulated tile -> Simulated tile
 				N.air = oldair
 			else if(zero_new_turf_air && istype(N.air)) // fix runtime: Cannot execute null.zero()
-				N.air.zero()
+				N.air.reset_to_space_gas()
 
 			#define _OLD_GAS_VAR_NOT_NULL(GAS, ...) GAS ## _old ||
 			if (N.air && (APPLY_TO_GASES(_OLD_GAS_VAR_NOT_NULL) 0)) //Unsimulated tile w/ static atmos -> simulated floor handling
@@ -754,6 +858,9 @@ proc/generate_space_color()
 		// tells the atmos system "hey this tile changed, maybe rebuild the group / borders"
 		new_turf.update_nearby_tiles(1)
 
+	#ifdef CHECK_MORE_RUNTIMES
+	in_replace_with--
+	#endif
 	return new_turf
 
 
@@ -984,7 +1091,7 @@ TYPEINFO(/turf/simulated)
 	text = "<font color=#aaa>#"
 	density = 1
 	pathable = 0
-	turf_flags = ALWAYS_SOLID_FLUID
+	flags = ALWAYS_SOLID_FLUID
 	gas_impermeable = TRUE
 #ifndef IN_MAP_EDITOR // display disposal pipes etc. above walls in map editors
 	plane = PLANE_WALL
@@ -1093,7 +1200,7 @@ TYPEINFO(/turf/simulated)
 		if (locate(/obj/lattice, src)) return // If there is any lattice on the turf, do an early return.
 
 		boutput(user, "<span class='notice'>Constructing support lattice ...</span>")
-		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 		R.change_stack_amount(-1)
 		var/obj/lattice/lattice = new(src)
 		lattice.auto_connect(to_walls=TRUE, to_all_turfs=TRUE, force_connect=TRUE)
@@ -1107,7 +1214,7 @@ TYPEINFO(/turf/simulated)
 		if (T.amount >= 1)
 			for(var/obj/lattice/L in src)
 				qdel(L)
-			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, 1)
+			playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 50, TRUE)
 			T.build(src)
 
 #if defined(MAP_OVERRIDE_POD_WARS)
@@ -1238,11 +1345,11 @@ TYPEINFO(/turf/simulated)
 								if (1)
 									new /obj/item/skull {desc = "A skull.  That was robbed.  From a grave.";} ( src )
 								if (2)
-									new /obj/item/plank {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
+									new /obj/item/sheet/wood {name = "rotted coffin wood"; desc = "Just your normal, everyday rotten wood.  That was robbed.  From a grave.";} ( src )
 								if (3)
 									new /obj/item/clothing/under/suit/pinstripe {name = "old pinstripe suit"; desc  = "A pinstripe suit.  That was stolen.  Off of a buried corpse.";} ( src )
 								else
-									// default
+									; // default
 						break
 
 		else

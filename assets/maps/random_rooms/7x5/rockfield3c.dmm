@@ -9,7 +9,7 @@
 /turf/space/fluid/acid,
 /area/space)
 "j" = (
-/obj/landmark/artifact/random_room,
+/obj/landmark/spawner/artifact,
 /turf/space/fluid/acid/clear,
 /area/space)
 "l" = (

@@ -198,7 +198,7 @@ TYPEINFO(/obj/machinery/cashreg)
 			boutput(user, "<span class='notice'>Sending transaction.</span>")
 			user.visible_message("<span class='notice'><b>[src] beeps affirmatively.</b> The transaction was successful!</span>")
 
-			playsound(src, 'sound/machines/printer_cargo.ogg', 50, 1)
+			playsound(src, 'sound/machines/printer_cargo.ogg', 50, TRUE)
 			SPAWN(3 SECONDS)
 				if (print_customer_copy)
 					src.print_receipt(payee, O.registered, transaction_price, transaction_tip, transaction_total, customer_copy = TRUE)

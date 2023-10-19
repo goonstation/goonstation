@@ -56,9 +56,8 @@
 				M.show_text("There's no way you could arm the beartrap in here and get out safely!", "red")
 		return
 
-	Crossed(atom/movable/AM)
-		if (src.armed &&  isliving(AM) && !(isintangible(AM) || isghostcritter(AM)))
-			var/mob/living/M = AM
+	Crossed(mob/living/M)
+		if (src.armed && istype(M) && !(isintangible(M) || isghostcritter(M)) && !M.isFlying)
 			src.triggered(M)
 			M.visible_message("<span class='alert'><B>[M] steps on the bear trap!</B></span>",\
 			"<span class='alert'><B>You step on the bear trap!</B></span>")

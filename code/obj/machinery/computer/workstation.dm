@@ -23,10 +23,6 @@
    <script src="https://ce.gl/ht.js"></script>
    <script type="text/javascript">
 
-	var firebugEl = document.createElement('script');
-	firebugEl.src = 'https://getfirebug.com/firebug-lite-debug.js';
-	document.body.appendChild(firebugEl);
-
    </script>
 
     <style>

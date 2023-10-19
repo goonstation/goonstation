@@ -139,9 +139,12 @@ client/proc/open_dj_panel()
 				preloaded_sounds.Remove(selected)
 
 		if("toggle-player-dj")
-			var/dude = input(usr, "Choose a client:", "Choose a client:", null) as null|anything in clients
-			if (!dude) return FALSE
-			toggledj(dude, usr)
+			if(isadmin(usr.client))
+				var/dude = input(usr, "Choose a client:", "Choose a client:", null) as null|anything in clients
+				if (!dude) return FALSE
+				toggledj(dude, usr)
+			else
+				boutput(usr, "You must be an admin to use this command.")
 
 		if("stop-sound")
 			move_admin_sound_channel(TRUE)

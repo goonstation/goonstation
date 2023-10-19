@@ -15,6 +15,8 @@ var/list/miningModifiers = list()
 		place()
 
 	proc/place()
+		if(src.z == planetZLevel)
+			return // noop
 		if (map_currently_underwater)
 			src.ReplaceWith(/turf/space/fluid/trench, FALSE, TRUE, FALSE, TRUE)
 		else
@@ -175,6 +177,9 @@ var/list/miningModifiers = list()
 
 		var/list/used = list()
 		for(var/s in 0 to 19)
+			if(!length(src.generated - used))
+				break
+
 			var/turf/TU = pick(generated - used)
 			var/list/L = list()
 			for(var/turf/simulated/wall/auto/asteroid/A in orange(5,TU))

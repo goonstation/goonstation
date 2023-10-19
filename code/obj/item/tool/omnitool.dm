@@ -36,6 +36,11 @@
 		else
 			..()
 
+	afterattack(atom/target, mob/user, reach, params)
+		. = ..()
+		if(mode == OMNI_MODE_PULSING)
+			get_and_return_netid(target,user)
+
 	get_desc()
 		. += "It is currently set to "
 		switch(src.mode)
@@ -204,9 +209,21 @@
 			return 1 //welding, has fuel
 		return 0 //not welding
 
+	get_help_message(dist, mob/user)
+		if (istype(src, /obj/item/tool/omnitool/syndicate))
+			var/keybind = "Default: CTRL + X"
+			var/datum/keymap/current_keymap = user.client.keymap
+			for (var/key in current_keymap.keys)
+				if (current_keymap.keys[key] == "flex")
+					keybind = current_keymap.unparse_keybind(key)
+					break
+			return "Hit the omnitool on a piece of clothing to hide it. Retrieve the tool by using the <b>*flex</b> ([keybind]) emote."
+		else
+			return null
 
 
 /obj/item/tool/omnitool/syndicate
+	icon_state = "syndicate-omnitool-prying"
 	prefix = "syndicate-omnitool"
 	modes = list(OMNI_MODE_PRYING, OMNI_MODE_SCREWING, OMNI_MODE_PULSING, OMNI_MODE_WRENCHING, OMNI_MODE_SNIPPING, OMNI_MODE_CUTTING, OMNI_MODE_WELDING)
 
@@ -233,7 +250,6 @@
 			return
 
 		..()
-		return
 
 	New()
 		. = ..()

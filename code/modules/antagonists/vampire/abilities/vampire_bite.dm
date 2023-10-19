@@ -48,7 +48,7 @@
 			return FALSE
 
 	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
-		boutput(M, "<span class='alert'>You need to remove their headgear first.</span>")
+		boutput(M, "<span class='alert'>You need to remove [his_or_her(target)] headgear first.</span>")
 		return FALSE
 
 	if (check_target_immunity(target) == 1)
@@ -210,7 +210,7 @@
 			return 0
 
 	if (is_pointblank && target.head && target.head.c_flags & (BLOCKCHOKE))
-		boutput(M, "<span class='alert'>You need to remove their headgear first.</span>")
+		boutput(M, "<span class='alert'>You need to remove [his_or_her(target)] headgear first.</span>")
 		return 0
 
 	if (check_target_immunity(target) == 1)
@@ -343,7 +343,7 @@
 		var/mob/living/carbon/human/HH = target
 
 
-		boutput(M, "<span class='notice'>You bite [HH] and begin to drain them of blood.</span>")
+		boutput(M, "<span class='notice'>You bite [HH] and begin to drain [him_or_her(HH)] of blood.</span>")
 		HH.visible_message("<span class='alert'><B>[M] bites [HH]!</B></span>")
 
 		actions.start(new/datum/action/bar/private/icon/vamp_blood_suc(M,H,HH,src), M)

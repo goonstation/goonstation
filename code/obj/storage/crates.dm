@@ -246,6 +246,12 @@
 	/obj/item/clothing/mask/clown_hat,
 	/obj/item/storage/box/crayon,
 	/obj/item/storage/box/crayon/basic,
+	#ifdef AUTUMN
+	/obj/item/clothing/shoes/clown_shoes/autumn,
+	/obj/item/clothing/head/clown_autumn_hat,
+	/obj/item/clothing/mask/clown_hat/autumn,
+	/obj/item/clothing/under/gimmick/clown_autumn,
+	#endif
 	/obj/item/storage/box/balloonbox)
 
 	make_my_stuff()
@@ -254,10 +260,6 @@
 				new /obj/item/pen/crayon/rainbow(src)
 			return 1
 
-/obj/storage/crate/materials
-	name = "building materials crate"
-	spawn_contents = list(/obj/item/sheet/steel/fullstack,
-	/obj/item/sheet/glass/fullstack)
 /obj/storage/crate/radio
 	name = "radio headsets crate"
 	spawn_contents = list(

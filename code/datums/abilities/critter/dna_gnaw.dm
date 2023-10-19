@@ -24,7 +24,7 @@
 		if (BOUNDS_DIST(holder.owner, target) > 0)
 			boutput(holder.owner, "<span class='alert'>That is too far away to bite.</span>")
 			return 1
-		playsound(target, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, 1, -1)
+		playsound(target, 'sound/impact_sounds/Flesh_Tear_1.ogg', 50, TRUE, -1)
 		var/mob/M = target
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] gnaws into [M]!</b></span>", "<span class='alert'>We sink our teeth into [M]!</span>")
@@ -52,7 +52,7 @@
 					MT.real_name = "Unknown"
 					MT.bioHolder.AddEffect("husk")
 			else
-				boutput(holder.owner, "<span class='notice'>We cannot gain any DNA from [MT] in their current state.</span>")
+				boutput(holder.owner, "<span class='notice'>We cannot gain any DNA from [MT] in [his_or_her(MT)] current state.</span>")
 
 		holder.owner.TakeDamage("All", -5, -5)
 		M.TakeDamageAccountArmor("All", 5, 0, 0, DAMAGE_CRUSH)

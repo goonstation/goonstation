@@ -32,6 +32,7 @@
 	var/overlay_key = 0
 	var/atom/attached = 0
 	var/sticker_icon_state = "patch"
+	var/do_sticker_thing = FALSE
 
 	New()
 		..()
@@ -98,6 +99,11 @@
 			src.medical = 1
 			src.UpdateIcon()
 			return 1
+
+	set_loc(newloc, storage_check)
+		. = ..()
+		if (src.active && newloc != null)
+			qdel(src)
 
 	attackby(obj/item/W, mob/user)
 		return
@@ -190,9 +196,8 @@
 			if (L.bleeding <= 3)
 				repair_bleeding_damage(M, 25, 1)
 
-		else 
+		else
 			repair_bleeding_damage(M, 25, 1)
-		active = 1
 
 		if (reagents?.total_volume)
 			if (!borg)
@@ -203,6 +208,7 @@
 				if (isliving(M))
 					var/mob/living/L = M
 					L.skin_process += src
+					src.do_sticker_thing = TRUE
 			else
 				reagents.reaction(M, TOUCH, paramslist = list("nopenetrate","ignore_chemprot"))
 
@@ -211,7 +217,7 @@
 				R.trans_to(M, reagents.total_volume/2)
 				src.in_use = 0
 
-			playsound(src, 'sound/items/sticker.ogg', 50, 1)
+			playsound(src, 'sound/items/sticker.ogg', 50, TRUE)
 
 		else
 			if (!borg)
@@ -219,12 +225,13 @@
 				qdel(src)
 			else
 				src.in_use = 0
+		active = 1
 
 	afterattack(var/atom/A as mob|obj|turf, var/mob/user as mob, reach, params)
 		.= 0
 		if(!can_operate_on(A))
 			return
-		if (!attached && ismob(A) && medical)
+		if (!attached && ismob(A) && medical && do_sticker_thing)
 			//do image stuff
 			var/pox = src.pixel_x
 			var/poy = src.pixel_y
@@ -738,7 +745,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/mender_refill_cartridge)
 		if (src?.reagents.total_volume > 0)
 			src.reagents.trans_to(mender, src.reagents.total_volume)
 			src.UpdateIcon()
-			playsound(src, 'sound/items/mender_refill_juice.ogg', 50, 1)
+			playsound(src, 'sound/items/mender_refill_juice.ogg', 50, TRUE)
 			if (src.reagents.total_volume == 0)
 				boutput(user, "<span class='notice'>You refill [mender] to [mender.reagents.total_volume]u and empty [src]!</span>")
 			else

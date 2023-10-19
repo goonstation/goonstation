@@ -270,9 +270,9 @@ TYPEINFO(/obj/machinery/genetics_booth)
 						offered_genes -= selected_product
 						reload_contexts()
 
-					playsound(src, 'sound/machines/ding.ogg', 50, 1, 0, 1.4)
+					playsound(src, 'sound/machines/ding.ogg', 50, TRUE, 0, 1.4)
 			else
-				playsound(src, 'sound/machines/airlock_deny.ogg', 35, 1, 0, 0.5)
+				playsound(src, 'sound/machines/airlock_deny.ogg', 35, TRUE, 0, 0.5)
 
 			//occupant.set_loc(src.loc)
 

@@ -128,12 +128,9 @@
 /area/mining/miningoutpost)
 "aA" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /obj/machinery/computer/power_monitor,
@@ -143,8 +140,7 @@
 /obj/stool/chair/yellow,
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /obj/machinery/light/incandescent/warm/very,
 /turf/simulated/floor/specialroom/medbay,
@@ -574,7 +570,6 @@
 /area/mining/miningoutpost)
 "bV" = (
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/power/smes{
@@ -592,22 +587,18 @@
 /area/mining/miningoutpost)
 "bX" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
 	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
+	
 	},
 /turf/simulated/floor/plating,
 /area/mining/miningoutpost)
 "bY" = (
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/simulated/floor/plating,
 /area/mining/miningoutpost)
@@ -618,10 +609,9 @@
 	},
 /obj/cable{
 	icon_state = "0-2";
-	d2 = 2
+	
 	},
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/plating,
@@ -655,16 +645,13 @@
 /obj/machinery/door/airlock/pyro,
 /obj/cable{
 	icon_state = "1-2";
-	d1 = 1;
-	d2 = 2
+	
 	},
 /turf/simulated/floor/plating,
 /area/mining/miningoutpost)
 "ce" = (
 /obj/stool/chair/yellow,
 /obj/cable{
-	d1 = 1;
-	d2 = 4;
 	icon_state = "1-4"
 	},
 /turf/simulated/floor/specialroom/medbay,
@@ -681,7 +668,6 @@
 /obj/decal/cleanable/dirt,
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /turf/simulated/floor/specialroom/medbay,

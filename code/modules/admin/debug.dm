@@ -280,7 +280,7 @@ var/global/debug_messages = 0
 			break
 		catch(var/exception/e)
 			if(e.name != "bad proc" && copytext(e.name, 1, 15) != "undefined proc") // fuck u byond
-				boutput(usr, "<span class='alert'>Exception occured! <a style='color: #88f;' href='byond://winset?command=View-Runtimes'>View Runtimes</a></span>")
+				boutput(usr, "<span class='alert'>Exception occurred! <a style='color: #88f;' href='byond://winset?command=View-Runtimes'>View Runtimes</a></span>")
 				throw e
 
 	if(!success)
@@ -389,15 +389,17 @@ var/global/debug_messages = 0
 	set name = "Del-All"
 	set desc = "Delete all instances of the selected type."
 
-	// to prevent REALLY stupid deletions
-	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
-	var/hsbitem = get_one_match(typename, /atom)
+	// to prevent REALLY stupid deletions on live
+	var/hsbitem = get_one_match(typename, /atom, use_concrete_types=FALSE)
 	var/background =  alert("Run the process in the background?",,"Yes" ,"No")
 
+#ifdef LIVE_SERVER
+	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
 	for(var/V in blocked)
 		if(V == hsbitem)
 			boutput(usr, "Can't delete that you jerk!")
 			return
+#endif
 	if(hsbitem)
 		src.delete_state = DELETE_RUNNING
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
@@ -433,14 +435,16 @@ var/global/debug_messages = 0
 	set desc = "Delete approximately half of instances of the selected type. *snap"
 
 	// to prevent REALLY stupid deletions
-	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
-	var/hsbitem = get_one_match(typename, /atom)
+	var/hsbitem = get_one_match(typename, /atom, use_concrete_types=FALSE)
 	var/background =  alert("Run the process in the background?",,"Yes" ,"No")
 
+#ifdef LIVE_SERVER
+	var/blocked = list(/obj, /mob, /mob/living, /mob/living/carbon, /mob/living/carbon/human)
 	for(var/V in blocked)
 		if(V == hsbitem)
 			boutput(usr, "Can't delete that you jerk!")
 			return
+#endif
 	if(hsbitem)
 		src.delete_state = DELETE_RUNNING
 		src.verbs += /client/proc/cmd_debug_del_all_cancel
@@ -901,7 +905,7 @@ proc/display_camera_paths()
 	disconnect_camera_network()
 	build_camera_network()
 
-	if(camera_path_list.len > 0) //Refresh the display
+	if(length(camera_path_list) > 0) //Refresh the display
 		display_camera_paths()
 
 /* Wire note: View Runtimes supercedes this in a different way
@@ -1092,7 +1096,7 @@ proc/display_camera_paths()
 	src.animate_color(newColorMatrix)
 
 	var/matrixTable = "<table>"
-	var/isBigMatrix = (newColorMatrix.len == 20)
+	var/isBigMatrix = (length(newColorMatrix) == 20)
 	var/rows = isBigMatrix ? 5 : 4
 	for(var/row=1, row<=rows, row++)
 		matrixTable += "<tr>"
@@ -1204,9 +1208,7 @@ var/datum/flock/testflock
 		if(!src.mob)
 			return
 		var/fname = "spawn_dbg.json"
-		if (fexists(fname))
-			fdel(fname)
-		text2file(json_encode(list("spawn" = detailed_spawn_dbg)), fname)
+		rustg_file_write(json_encode(list("spawn" = detailed_spawn_dbg)), fname)
 		var/tmp_file = file(fname)
 		usr << ftp(tmp_file)
 		fdel(fname)

@@ -43,8 +43,7 @@
 	},
 /obj/cable{
 	icon_state = "2-4";
-	d1 = 2;
-	d2 = 4
+	
 	},
 /turf/simulated/floor/plating,
 /area/space)
@@ -66,8 +65,7 @@
 "i" = (
 /obj/cable{
 	icon_state = "4-8";
-	d1 = 4;
-	d2 = 8
+	
 	},
 /obj/grille/catwalk{
 	dir = 4;
@@ -92,7 +90,7 @@
 "l" = (
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/power/terminal{
 	tag = "icon-term (NORTH)";
@@ -114,8 +112,6 @@
 	level = 2
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/cable{
@@ -205,7 +201,7 @@
 "y" = (
 /obj/cable{
 	icon_state = "0-4";
-	d2 = 4
+	
 	},
 /obj/machinery/atmospherics/pipe/simple{
 	dir = 4;
@@ -241,8 +237,6 @@
 	level = 2
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 8;
 	icon_state = "1-8"
 	},
 /obj/machinery/atmospherics/pipe/simple{

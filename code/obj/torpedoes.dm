@@ -89,7 +89,7 @@
 	density = 0
 	layer = 10
 	alpha = 200
-	event_handler_flags = IMMUNE_MANTA_PUSH
+	event_handler_flags = IMMUNE_MANTA_PUSH | IMMUNE_TRENCH_WARP
 
 	var/image/trgImage = null
 	var/obj/machinery/torpedo_console/master = null
@@ -668,7 +668,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/torpedo_tube, proc/launch)
 		if(launched) return
 		else launched = 1
 		var/flying = 1
-		playsound(src, 'sound/effects/torpedolaunch.ogg', 100, 1)
+		playsound(src, 'sound/effects/torpedolaunch.ogg', 100, TRUE)
 		src.changeIcon()
 		var/aboutToBlow = 0
 		var/steps = 0

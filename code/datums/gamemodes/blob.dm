@@ -13,9 +13,9 @@
 	escape_possible = 0
 
 /datum/game_mode/blob/announce()
-	boutput(world, "<B>The current game mode is - <font color='green'>Blob</font>!</B>")
-	boutput(world, "<B>A dangerous alien organism is rapidly spreading throughout the station!</B>")
-	boutput(world, "You must kill it all while minimizing the damage to the station.")
+	boutput(world, "<b>The current game mode is - <font color='green'>Blob</font>!</b>")
+	boutput(world, "<b>A dangerous alien organism is rapidly spreading throughout the station!</b>")
+	boutput(world, "<b>You must kill it all while minimizing the damage to the station.</b>")
 
 /datum/game_mode/blob/pre_setup()
 	..()
@@ -32,7 +32,7 @@
 
 	var/list/possible_blobs = get_possible_enemies(ROLE_BLOB, num_blobs)
 
-	if (!possible_blobs || !islist(possible_blobs) || !possible_blobs.len || possible_blobs.len < blobs_minimum)
+	if (!possible_blobs || !islist(possible_blobs) || !possible_blobs.len || length(possible_blobs) < blobs_minimum)
 		return 0
 
 	token_players = antag_token_list()
@@ -95,6 +95,20 @@
 	return 1
 
 /datum/game_mode/blob/victory_msg()
+	return "<span style='font-size:20px'><b>[victory_headline()]</b><br>[victory_body()]</span>"
+
+/datum/game_mode/blob/victory_headline()
+	if(src.finish_counter)
+		return "Blob victory!"
+	return "Crew victory!"
+
+/datum/game_mode/blob/victory_body()
+	if (src.finish_counter)
+		return "All blobs have been exterminated!"
+	else
+		return "The crew has failed to stop the overmind! The station is lost to the blob!"
+
+/datum/game_mode/blob/declare_completion()
 	var/list/blobs = list()
 	for (var/datum/mind/M in traitors)
 		if (!M)
@@ -106,11 +120,6 @@
 			continue
 		if (isblob(M.current))
 			blobs += M.current
-	if (!blobs.len)
-		return "<span style='font-size:20px'><b>Station victory!</b> - All blobs have been exterminated!</span>"
-	else
-		return "<span style='font-size:20px'><b>Blob victory!</b> - The crew has failed to stop the overmind! The station is lost to the blob!</span>"
-
-/datum/game_mode/blob/declare_completion()
+	src.finish_counter = length(blobs)
 	boutput(world, src.victory_msg())
 	..()

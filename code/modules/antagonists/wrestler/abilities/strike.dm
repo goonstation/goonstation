@@ -1,6 +1,6 @@
 /datum/targetable/wrestler/strike
 	name = "Strike"
-	desc = "Hit a neaby opponent with a quick attack."
+	desc = "Hit a nearby opponent with a quick attack."
 	icon_state = "Strike"
 	targeted = 1
 	target_anything = 0
@@ -43,7 +43,8 @@
 				for (var/i = 0, i < 4, i++)
 					M.set_dir(turn(M.dir, 90))
 
-				M.set_loc(target.loc)
+				if ((isturf(target.loc) && BOUNDS_DIST(M, target.loc) == 0))
+					M.set_loc(target.loc)
 				sleep(4)
 				if (M && (T && isturf(T) && BOUNDS_DIST(M, T) == 0))
 					M.set_loc(T)

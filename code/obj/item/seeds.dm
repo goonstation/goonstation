@@ -1,5 +1,5 @@
 
-/obj/item/seed/
+/obj/item/seed
 	name = "plant seed"
 	desc = "Plant this in soil to grow something."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
@@ -49,7 +49,7 @@
 		var/datum/plantgenes/HDNA = harvested_plantpot.plantgenes
 		var/datum/plantgenes/SDNA = new_seed.plantgenes
 		if(!origin_plant.unique_seed && !origin_plant.hybrid)
-			new_seed.generic_seed_setup(origin_plant)
+			new_seed.generic_seed_setup(origin_plant, TRUE)
 		HYPpassplantgenes(HDNA,SDNA)
 		new_seed.generation = harvested_plantpot.generation
 		if(origin_plant.hybrid)
@@ -81,7 +81,7 @@
 		plantgenes = null
 		..()
 
-	proc/generic_seed_setup(var/datum/plant/P)
+	proc/generic_seed_setup(var/datum/plant/P, var/has_parent = FALSE)
 		// This proc is pretty much entirely for regular seeds you find from the vendor
 		// or harvest, stuff like artifact seeds generally shouldn't be calling this.
 		if (!P)
@@ -104,6 +104,11 @@
 			src.name = "[P.name] seed"
 			src.plant_seed_color(P.seedcolor)
 			// Calls on a variable in the referenced plant datum to get the seed packet's color.
+			// Now we look if the baseline plant adds any kind of baseline commuts to the seed.
+			// We call this only if the seed has not a parent. In this case, HYPpassplantgenes adds the commuts in question
+			if (!has_parent && length(src.planttype.innate_commuts) > 0)
+				for (var/commut_to_add in src.planttype.innate_commuts)
+					HYPaddCommut(src.plantgenes, commut_to_add)
 		else
 			src.name = "[src.name] seed"
 
@@ -146,27 +151,32 @@
 		else
 			return 0 // Passes an "Everything went fine" code to the manipulator.
 
-/obj/item/seed/grass/
+/obj/item/seed/grass
 	name = "grass seed"
 	seedcolor = "#CCFF99"
 	auxillary_datum = /datum/plant/herb/grass
 
-/obj/item/seed/maneater/
+/obj/item/seed/maneater
 	name = "strange seed"
 	icon_state = "seeds-maneater"
 	auxillary_datum = /datum/plant/maneater
 
-/obj/item/seed/creeper/
+	New()
+		..()
+		//since there is no way to generate maneater seeds save for syndicate buylist, and there is no proc to call on syndicate items spawned in, we can set up the seed here.
+		src.generic_seed_setup(src.planttype, FALSE)
+
+/obj/item/seed/creeper
 	name = "creeper seed"
 	seedcolor = "#CC00FF"
 	auxillary_datum = /datum/plant/weed/creeper
 
-/obj/item/seed/crystal/
+/obj/item/seed/crystal
 	name = "crystal seed"
 	seedcolor = "#DDFFFF"
 	auxillary_datum = /datum/plant/crystal
 
-/obj/item/seed/cannabis/
+/obj/item/seed/cannabis
 	name = "cannabis seed"
 	seedcolor = "#00FF00"
 	auxillary_datum = /datum/plant/herb/cannabis

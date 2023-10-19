@@ -83,6 +83,11 @@
 	afterattack(var/atom/target, mob/user, flag)
 		if(isghostcritter(user)) return
 		if (!target.reagents) return
+		if(istype(target, /obj/item/reagent_containers))
+			var/obj/item/reagent_containers/t = target
+			if(t.current_lid)
+				boutput(user, "<span class='alert'>You cannot transfer liquids with the [target.name] while it has a lid on it!</span>")
+				return
 
 		switch(mode)
 			if (S_DRAW)
@@ -111,7 +116,7 @@
 					boutput(user, "<span class='alert'>The [src.name] is full.</span>")
 					return
 
-				if (!target.is_open_container() && !istype(target,/obj/reagent_dispensers))
+				if (!target.is_open_container() && (!istype(target,/obj/reagent_dispensers) && !istype(target,/obj/item/clothing/mask/cigarette/custom)))
 					boutput(user, "<span class='alert'>You cannot directly remove reagents from this object.</span>")
 					return
 
@@ -143,7 +148,7 @@
 					boutput(user, "<span class='alert'>[target] is full.</span>")
 					return
 
-				if (target.is_open_container() != 1 && !ismob(target) && !istype(target,/obj/item/reagent_containers/food) && !istype(target,/obj/item/reagent_containers/patch))
+				if (target.is_open_container(TRUE) != 1 && !ismob(target) && !istype(target,/obj/item/reagent_containers/food) && !istype(target,/obj/item/clothing/mask/cigarette/custom) && !istype(target,/obj/item/reagent_containers/patch))
 					boutput(user, "<span class='alert'>You cannot directly fill this object.</span>")
 					return
 
@@ -230,7 +235,7 @@
 	initial_reagents = "insulin"
 
 /obj/item/reagent_containers/syringe/haloperidol
-	name = "syringe (anti-psychotic)"
+	name = "syringe (haloperidol)"
 	desc = "Contains haloperidol - used for sedation and to counter violent psychosis."
 	initial_reagents = "haloperidol"
 

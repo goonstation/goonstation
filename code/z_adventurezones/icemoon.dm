@@ -17,6 +17,8 @@ Contents:
 	icon_state = "void_gray"
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 	ex_act(severity)
 		return
@@ -38,6 +40,10 @@ Contents:
 			A.set_loc(T)
 			return
 		else ..()
+
+/turf/unsimulated/floor/arctic
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/arctic/snow
 	name = "odd snow"
@@ -132,7 +138,7 @@ Contents:
 	name = "icy cliff"
 	desc = "Looks dangerous."
 	icon_state = "snow_corner"
-	dir = 5
+	dir = NORTHEAST
 	carbon_dioxide = 100
 	nitrogen = 0
 	oxygen = 0

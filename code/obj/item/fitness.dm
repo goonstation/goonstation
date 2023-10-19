@@ -37,12 +37,8 @@
 		attack_hand(mob/user)
 			user.lastattacked = src
 			flick("[icon_state]2", src)
-			if (narrator_mode)
-				playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-				playsound(src.loc, 'sound/vox/honk.ogg', 50, 1, -1)
-			else
-				playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
-				playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
+			playsound(src.loc, pick(sounds_punch + sounds_hit), 25, 1, -1)
+			playsound(src.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
 			user.changeStatus("fitness_stam_regen", 100 SECONDS)
 
 /obj/fitness/stacklifter
@@ -77,9 +73,9 @@
 				sleep(0.3 SECONDS)
 				user.pixel_y = -4
 				sleep(0.3 SECONDS)
-				playsound(user, 'sound/effects/spring.ogg', 60, 1)
+				playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 
-			playsound(user, 'sound/machines/click.ogg', 60, 1)
+			playsound(user, 'sound/machines/click.ogg', 60, TRUE)
 			in_use = 0
 			user.transforming = 0
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
@@ -116,7 +112,7 @@
 			APPLY_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")
 			user.set_dir(SOUTH)
 			user.set_loc(src.loc)
-			var/obj/decal/W = new /obj/decal/
+			var/obj/decal/W = new /obj/decal
 			W.icon = 'icons/obj/stationobjs.dmi'
 			W.icon_state = "fitnessweight-w"
 			W.set_loc(loc)
@@ -134,12 +130,12 @@
 					sleep(0.3 SECONDS)
 					user.pixel_y = (user.pixel_y == 3) ? 5 : 3
 
-				playsound(user, 'sound/effects/spring.ogg', 60, 1)
+				playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 
 			sleep(0.3 SECONDS)
 			user.pixel_y = 2
 			sleep(0.3 SECONDS)
-			playsound(user, 'sound/machines/click.ogg', 60, 1)
+			playsound(user, 'sound/machines/click.ogg', 60, TRUE)
 			in_use = 0
 			user.transforming = 0
 			REMOVE_ATOM_PROPERTY(user, PROP_MOB_CANTMOVE, "fitness_machine")

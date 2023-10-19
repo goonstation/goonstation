@@ -62,7 +62,7 @@
 
 			var/obj/item/I = user.equipped()
 			if(I) //no hitting the controls with stuff to operate them!
-				src.attackby(I,user)
+				src.Attackby(I,user)
 				return
 
 			//Determine spot that was clicked

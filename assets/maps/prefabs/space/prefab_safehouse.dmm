@@ -273,12 +273,12 @@
 	pixel_y = -8
 	},
 /obj/storage/closet/dresser,
-/obj/item/clothing/under/suit,
+/obj/item/clothing/under/suit/black,
 /obj/decal/cleanable/wardrobe_scuff_marks,
-/obj/item/clothing/under/suit{
+/obj/item/clothing/under/suit/black{
 	pixel_x = 5
 	},
-/obj/item/clothing/under/suit{
+/obj/item/clothing/under/suit/black{
 	pixel_x = 2
 	},
 /obj/item/clothing/shoes/dress_shoes{
@@ -739,7 +739,6 @@
 "Dl" = (
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable{
-	d2 = 4;
 	icon_state = "0-4"
 	},
 /turf/simulated/floor/plating,
@@ -765,8 +764,6 @@
 /area/prefab/safehouse)
 "Du" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/plating,

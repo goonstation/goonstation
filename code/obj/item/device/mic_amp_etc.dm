@@ -25,7 +25,7 @@
 
 	attack_hand(mob/user)
 		if (user.find_in_hand(src) && src.on)
-			playsound(user, 'sound/misc/miccheck.ogg', 30, 1)
+			playsound(user, 'sound/misc/miccheck.ogg', 30, TRUE)
 			user.visible_message("<span class='emote'>[user] taps [src] with [his_or_her(user)] hand.</span>")
 		else
 			return ..()

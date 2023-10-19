@@ -42,6 +42,8 @@
 	user.Browse("<HEAD><TITLE>Notices</TITLE></HEAD>[dat]","window=noticeboard")
 	onclose(user, "noticeboard")
 
+/obj/noticeboard/attack_ai(mob/user)
+	src.attack_hand(user)
 
 /obj/noticeboard/Topic(href, href_list)
 	if (BOUNDS_DIST(src, usr) > 0 || !isliving(usr) || iswraith(usr) || isintangible(usr))
@@ -110,7 +112,7 @@
 				paper.name = book_info[1]
 				paper.info = book_info[2]
 				paper.fingerprintslast = book_info[3]
-				if(book_info.len >= 4) // Gotta love adding a line that will be useful exactly once on each server...
+				if(length(book_info) >= 4) // Gotta love adding a line that will be useful exactly once on each server...
 					paper.color = book_info[4]
 		if(version == 1)
 			for(var/list/info in our_data["things"])
@@ -163,9 +165,6 @@ proc/save_noticeboards()
 	if(isnull(some_board))
 		logTheThing(LOG_DEBUG, null, "No persistent noticeboards to save.")
 		return
-	fdel(some_board.file_name)
-	var/json_data = json_encode(some_board.data)
-//	logTheThing(LOG_DEBUG, null, "Persistent noticeboard save data: [json_data]")
-	text2file(json_data, some_board.file_name)
+	rustg_file_write(json_encode(some_board.data), some_board.file_name)
 
 #undef PERSISTENT_NOTICEBOARD_VERSION

@@ -78,7 +78,7 @@
 		return
 	..()
 	add_history()
-	if (src.history.len > src.history_max)
+	if (length(src.history) > src.history_max)
 		src.history.Cut(1, 2) //drop the oldest entry
 
 /obj/machinery/computer/power_monitor/proc/add_history()

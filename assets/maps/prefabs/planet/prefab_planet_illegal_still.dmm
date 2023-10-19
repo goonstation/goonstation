@@ -1,0 +1,617 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/noGenerate)
+"c" = (
+/obj/structure/girder/reinforced,
+/obj/decal/tile_edge/line/black,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"g" = (
+/obj/stool,
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"h" = (
+/obj/reagent_dispensers/beerkeg,
+/obj/machinery/light/small/cool{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"i" = (
+/obj/table/reinforced/industrial/auto,
+/obj/machinery/glass_recycler,
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"k" = (
+/obj/machinery/bathtub,
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"l" = (
+/obj/machinery/space_heater,
+/turf/simulated/floor/airless/caution/northsouth,
+/area/noGenerate)
+"n" = (
+/obj/storage/crate/internals,
+/obj/item/clothing/mask/breath,
+/obj/item/clothing/mask/breath,
+/obj/item/tank/emergency_oxygen,
+/obj/item/tank/emergency_oxygen,
+/obj/machinery/light/small/cool{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"o" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/noGenerate)
+"t" = (
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"u" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"v" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"x" = (
+/turf/variableTurf/wall,
+/area/allowGenerate)
+"A" = (
+/obj/machinery/portable_atmospherics/pump,
+/turf/simulated/floor/airless/caution/northsouth,
+/area/noGenerate)
+"B" = (
+/obj/machinery/bathtub,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/obj/item/reagent_containers/food/drinks/bottle/hobo_wine/safe,
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"C" = (
+/obj/lattice{
+	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"D" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/noGenerate)
+"I" = (
+/obj/table/reinforced/industrial/auto,
+/obj/item/device/radio,
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"K" = (
+/obj/landmark/spawner/loot,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"L" = (
+/obj/reagent_dispensers/beerkeg,
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"M" = (
+/obj/machinery/door/unpowered/shuttle{
+	autoclose = 1;
+	color = "gray"
+	},
+/turf/simulated/floor/plating,
+/area/noGenerate)
+"N" = (
+/turf/unsimulated/floor/stairs/dark{
+	dir = 8
+	},
+/area/noGenerate)
+"Q" = (
+/obj/machinery/door/unpowered/shuttle{
+	autoclose = 1;
+	color = "gray"
+	},
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"R" = (
+/obj/lattice{
+	dir = 4;
+	icon_state = "lattice-dir"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"V" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"W" = (
+/obj/reagent_dispensers/still,
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+"Z" = (
+/obj/item/storage/box/beer,
+/obj/item/storage/box/beer,
+/obj/storage/crate/wooden,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/item/reagent_containers/food/drinks/bottle/fancy_beer,
+/obj/machinery/light/small/cool,
+/turf/simulated/floor/longtile/black,
+/area/noGenerate)
+
+(1,1,1) = {"
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(2,1,1) = {"
+V
+V
+V
+V
+V
+V
+x
+x
+x
+x
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(3,1,1) = {"
+V
+V
+V
+V
+x
+x
+x
+x
+x
+x
+x
+x
+x
+V
+V
+V
+V
+V
+"}
+(4,1,1) = {"
+V
+V
+V
+x
+x
+x
+c
+x
+x
+c
+x
+x
+x
+x
+x
+V
+V
+V
+"}
+(5,1,1) = {"
+V
+V
+x
+x
+x
+x
+R
+a
+a
+R
+a
+a
+x
+x
+x
+V
+V
+V
+"}
+(6,1,1) = {"
+V
+x
+x
+x
+x
+D
+o
+o
+o
+o
+D
+o
+D
+x
+x
+x
+V
+V
+"}
+(7,1,1) = {"
+V
+x
+x
+c
+C
+o
+i
+B
+k
+Z
+D
+n
+D
+D
+x
+x
+x
+V
+"}
+(8,1,1) = {"
+V
+x
+x
+x
+a
+o
+I
+t
+t
+t
+Q
+t
+l
+D
+x
+x
+x
+V
+"}
+(9,1,1) = {"
+V
+x
+x
+x
+a
+o
+u
+g
+t
+t
+Q
+t
+A
+D
+x
+x
+x
+V
+"}
+(10,1,1) = {"
+V
+x
+x
+c
+C
+o
+h
+L
+W
+W
+D
+N
+D
+D
+x
+x
+x
+V
+"}
+(11,1,1) = {"
+V
+x
+x
+x
+x
+D
+o
+o
+o
+o
+D
+M
+D
+x
+x
+x
+x
+V
+"}
+(12,1,1) = {"
+V
+V
+x
+x
+x
+a
+v
+a
+a
+v
+a
+a
+a
+x
+x
+x
+x
+V
+"}
+(13,1,1) = {"
+V
+V
+x
+x
+x
+a
+c
+a
+x
+c
+x
+K
+x
+x
+x
+x
+x
+V
+"}
+(14,1,1) = {"
+V
+V
+x
+x
+x
+a
+a
+a
+x
+x
+x
+x
+x
+x
+x
+V
+V
+V
+"}
+(15,1,1) = {"
+V
+V
+V
+x
+x
+a
+a
+a
+x
+x
+x
+x
+x
+x
+V
+V
+V
+V
+"}
+(16,1,1) = {"
+V
+V
+V
+a
+x
+a
+a
+x
+x
+x
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(17,1,1) = {"
+V
+V
+V
+a
+a
+a
+a
+x
+x
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(18,1,1) = {"
+V
+V
+V
+x
+a
+a
+a
+a
+a
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(19,1,1) = {"
+V
+V
+x
+x
+a
+a
+a
+x
+x
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(20,1,1) = {"
+V
+V
+x
+x
+x
+x
+x
+x
+x
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(21,1,1) = {"
+V
+V
+V
+x
+x
+x
+x
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(22,1,1) = {"
+V
+V
+V
+x
+x
+x
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}
+(23,1,1) = {"
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+V
+"}

@@ -98,7 +98,7 @@
 		) = 100,
 		list(new /datum/eventSpawnedCritter(
 			name = "gunbots",
-			critter_types = list(/mob/living/critter/robotic/gunbot),
+			critter_types = list(/mob/living/critter/robotic/gunbot/strong),
 			drop_tables = list(
 				new /datum/event_item_drop_table(
 					potential_drop_items = list(/obj/item/property_setter/reinforce, /obj/item/property_setter/thermal, /obj/item/property_setter/speedy),
@@ -232,6 +232,8 @@
 
 				var/datum/mind/M = candidates[1]
 				if (M.current)
+					if(!isobserver(M.current))
+						M.current.ghostize()
 					var/picked_critter = pick(select)
 					log_respawn_event(M, picked_critter, source)
 					if (istype(picked_critter, /datum/eventSpawnedCritter)) // datum provided

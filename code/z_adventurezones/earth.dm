@@ -355,10 +355,13 @@ var/global/Z4_ACTIVE = 0 //Used for mob processing purposes
 		icon_state = "grass_snow"
 	grass
 		name = "grass"
+		icon_state = "grass"
 		New()
 			..()
+		#ifdef AUTUMN
+			try_set_icon_state(src.icon_state + "_autumn", src.icon)
+		#endif
 			set_dir(pick(cardinal))
-		icon_state = "grass"
 		dense
 			name = "dense grass"
 			desc = "whoa, this is some dense grass. wow."
@@ -608,7 +611,7 @@ proc/put_mob_in_centcom_cloner(mob/living/L, indirect=FALSE)
 		L.set_density(TRUE)
 		L.set_a_intent(INTENT_HARM)
 		L.dir_locked = TRUE
-	playsound(clone, 'sound/machines/ding.ogg', 50, 1)
+	playsound(clone, 'sound/machines/ding.ogg', 50, TRUE)
 	clone.visible_message("<span class='notice'>[L.name || "A clone"] pops out of the cloner.</span>")
 	var/static/list/obj/machinery/conveyor/conveyors = null
 	var/static/conveyor_running_count = 0

@@ -257,7 +257,7 @@
 			if (src.emote_check(voluntary, 50))
 				message = "<span class='emote'><b>[src]</B> caws!</span>"
 				m_type = 2
-				playsound(src, 'sound/misc/flockmind/flockmind_caw.ogg', 60, 1, channel=VOLUME_CHANNEL_EMOTE)
+				playsound(src, 'sound/misc/flockmind/flockmind_caw.ogg', 60, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 
 	if (message)
 		logTheThing(LOG_SAY, src, "EMOTE: [message]")

@@ -27,7 +27,7 @@ export const LongRangeTeleporter = (props, context) => {
           <LabeledList>
             {destinations.length ? destinations.map((d) => (
               <LabeledList.Item label={d["destination"]} key={d["destination"]}>
-                {send_allowed && (
+                {!!send_allowed && (
                   <Button
                     icon="sign-out-alt"
                     onClick={() => act("send", { target: d["ref"], name: d["destination"] })}
@@ -35,7 +35,7 @@ export const LongRangeTeleporter = (props, context) => {
                     Send
                   </Button>
                 )}
-                {receive_allowed && (
+                {!!receive_allowed && (
                   <Button
                     icon="sign-in-alt"
                     onClick={() => act("receive", { target: d["ref"], name: d["destination"] })}

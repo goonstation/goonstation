@@ -417,7 +417,7 @@ var/global/datum/numbers_station/lincolnshire = new
 		if (TP == null)
 			return 1
 		var/list/nums = splittext(TP, " ")
-		if (nums.len < 21)
+		if (length(nums) < 21)
 			logTheThing(LOG_DEBUG, null, "<b>Numbers station</b> got too few numbers.")
 			return 2
 		for (var/i = 1, i <= 21, i++)

@@ -50,10 +50,11 @@
 	blueprints = list(/datum/matfab_recipe/simple/nuclear/gas_channel,
 	/datum/matfab_recipe/simple/nuclear/heat_exchanger,
 	/datum/matfab_recipe/simple/nuclear/control_rod,
-	/datum/matfab_recipe/simple/nuclear/fuel_rod)
+	/datum/matfab_recipe/simple/nuclear/fuel_rod,
+	/datum/matfab_recipe/makeshift_fuel_rod)
 
 /obj/machinery/nanofab/prototype
-	name = "Nano-fabricator (Protoype)"
+	name = "Nano-fabricator (Prototype)"
 	color = "#496ba3"
 	blueprints = list(/datum/matfab_recipe/mining_tool,
 	/datum/matfab_recipe/mining_head_drill,
@@ -64,7 +65,7 @@
 	/datum/matfab_recipe/spacesuit)
 
 /obj/machinery/nanofab/artifactengine
-	name = "Nano-fabricator (Protoype)"
+	name = "Nano-fabricator (Prototype)"
 	color = "#496ba3"
 
 /// Material science fabricator
@@ -334,7 +335,7 @@
 		for(var/obj/item/A in src)
 			if(A == W|| !A.amount) continue
 			if(A.material && W.material)
-				if(isSameMaterial(A.material, W.material) && A.check_valid_stack(W))
+				if(A.material.isSameMaterial(W.material) && A.check_valid_stack(W))
 					var/obj/item/I = A
 					I.change_stack_amount(W.amount)
 					if(W == user.equipped())

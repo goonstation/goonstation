@@ -82,7 +82,7 @@ TYPEINFO(/obj/submachine/slot_machine)
 			src.working = 1
 			src.icon_state = "[icon_base]-on"
 
-			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 			. = TRUE
 			ui_interact(usr, ui)
 			SPAWN(2.5 SECONDS) // why was this at ten seconds, christ

@@ -81,7 +81,7 @@
 				owner.changeStatus("weakened", 6 SECONDS)
 				animate(owner, alpha=255, time=3 SECONDS)
 
-				boutput(owner, "You no invisible.")
+				boutput(owner, "<b class='hint'>You reappear.</b>")
 		else if (points > MAX_POINTS)
 			points = MAX_POINTS
 
@@ -266,11 +266,11 @@
 		var/datum/abilityHolder/kudzu/HK = holder
 		if (!HK.stealthed)
 			HK.stealthed = 1
-			boutput(holder.owner, "You secrete nutriends to refract light.")
+			boutput(holder.owner, "<span class='hint'>You secrete nutrients to refract light.</span>")
 			animate(holder.owner, alpha=80, time=3 SECONDS)
 		else
 			HK.stealthed = 0
-			boutput(holder.owner, "You no invisible.")
+			boutput(holder.owner, "<span class='hint'>You reappear.</span>")
 			animate(holder.owner, alpha=255, time=3 SECONDS)
 		return 0
 
@@ -309,10 +309,9 @@
 			if (C.implant)
 				for (var/obj/item/implant/I in C.implant)
 					if (istype(I, /obj/item/implant/projectile))
-						boutput(C, "[I] falls out of you!")
+						boutput(C, "<span class='alert'>[I] falls out of you!</span>")
 						I.on_remove(C)
 						C.implant.Remove(I)
-						//del(I)
 						I.set_loc(get_turf(C))
 						continue
 
@@ -436,7 +435,7 @@
 				S = new pick.unique_seed(holder.owner.loc)
 			else
 				S = new /obj/item/seed(holder.owner.loc,0)
-			S.generic_seed_setup(pick)
+			S.generic_seed_setup(pick, FALSE)
 			holder.owner.put_in_hand_or_drop(S)
 
 		return 0
@@ -535,7 +534,7 @@
 					icon_state = "vine-1"
 					return 0	//we're done successfully
 				else
-					boutput(owner, "Something weird happened, you tried to pick up [vine], but no. Call 1-800-CODER.")
+					boutput(owner, "<h3 class='alert'>Something weird happened, you tried to pick up [vine], but no. Call 1-800-CODER.</span>")
 					return 1
 
 		//turn off
@@ -545,12 +544,8 @@
 			else
 				//if it's not in their hands, where it should be, check if it's in their contents, if not fail.
 				var/obj/item/kudzu/kudzumen_vine/V = locate(/obj/item/kudzu/kudzumen_vine) in holder?.owner.contents
-				if (istype(V))
+				if (V)
 					return attempt_vine_drop(V, owner)
-
-				else
-					boutput(owner, "Can't find your vine to put away. Call 1-800-CODER.")
-					return 1
 
 
 	//I know. success = 0 and failure = 1. Ask whoever wrote ability casts.
@@ -620,7 +615,7 @@
 			kudzu_controller = K
 			amount = length(K.kudzu)
 		else
-			boutput(usr, "messed up kudzu controller call 1-800-CODER")
+			boutput(usr, "<h3 class='alert'>Messed up kudzu controller call 1-800-CODER</h3>")
 			logTheThing(LOG_DEBUG, null, "Messed up kudzu controller for kudzuman")
 
 	disposing()
@@ -741,7 +736,7 @@
 		src.vine_arm = vine_arm
 		src.creation_path = creation_path
 		if (!ispath(creation_path))
-			boutput(owner, "Invalid creation object path. Call 1-800-CODER")
+			boutput(owner, "<h3 class='alert'>Invalid creation object path. Call 1-800-CODER</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		duration += extra_time
@@ -766,7 +761,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!iskudzuman(owner))
-			boutput(owner, "You're not a kudzuman, you can't bend the kudzu to your will!")
+			boutput(owner, "<span class='alert'>You're not a kudzuman, you can't bend the kudzu to your will!</span>")
 			interrupt(INTERRUPT_ALWAYS)
 			return
 

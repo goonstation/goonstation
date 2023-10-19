@@ -90,6 +90,20 @@ ABSTRACT_TYPE(/datum/plant/veg)
 	commuts = list(/datum/plant_gene_strain/metabolism_slow,/datum/plant_gene_strain/immunity_toxin)
 	assoc_reagents = list("currypowder")
 
+/datum/plant/veg/cinnamon
+	name = "Cinnamon"
+	seedcolor = "#C58C66"
+	crop = /obj/item/reagent_containers/food/snacks/plant/cinnamon
+	starthealth = 80
+	growtime = 200
+	harvtime = 220
+	cropsize = 3
+	harvests = 10
+	endurance = 8
+	genome = 13
+	commuts = list(/datum/plant_gene_strain/damage_res,/datum/plant_gene_strain/metabolism_slow)
+	assoc_reagents = list("cinnamon")
+
 /datum/plant/veg/beans
 	name = "Bean"
 	seedcolor = "#AA7777"

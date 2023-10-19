@@ -1,4 +1,4 @@
-/mob/
+/mob
 	var/list/stun_resist_mods = list()
 
 

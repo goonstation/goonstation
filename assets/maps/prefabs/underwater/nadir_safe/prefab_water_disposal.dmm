@@ -72,7 +72,7 @@
 	name = "GLOMAR Salvager"
 	})
 "k" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
@@ -129,7 +129,7 @@
 	name = "GLOMAR Salvager"
 	})
 "s" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating/damaged2,
 /area/evilreaver/storage/engineering{
@@ -213,11 +213,7 @@
 	name = "GLOMAR Salvager"
 	})
 "D" = (
-/obj/npc/trader/robot{
-	name = "Thrifty B.O.B.";
-	picture = "loungebuddy.png";
-	trader_area = "/area/evilreaver/storage/engineering"
-	},
+/obj/npc/trader/robot/robuddy/salvage,
 /obj/map/light/white,
 /turf/simulated/floor/plating/scorched,
 /area/evilreaver/storage/engineering{

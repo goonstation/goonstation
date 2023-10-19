@@ -33,7 +33,7 @@ Modules to do things with cloning modules
 	icon_state = "mindhack"
 	name = "Mindhack cloning module"
 	desc = "A powerful device that remaps people's brains when they get cloned to make them completely loyal to the owner of this module"
-
+	HELP_MESSAGE_OVERRIDE({"Click on a cloning pod while holding the Mindhack Cloning Module to install it. Anyone cloned while the module is on it will be loyal to the person who installed it. Use a <b>screwdriver</b> on the cloning pod to remove it."})
 
 /obj/item/storage/box/mindhack_module_kit
 	name = "Mindhack module kit"

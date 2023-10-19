@@ -100,7 +100,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 			return
 
 		src.on = !src.on
-		playsound(src, 'sound/items/penclick.ogg', 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, TRUE)
 		if (src.on)
 			set_icon_state(src.icon_on)
 			if (src.emagged) // Burn them all!
@@ -476,7 +476,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 		icon_off = "lava_lamp-[lamp_color]0"
 
 	attack_self(mob/user as mob)
-		playsound(src, 'sound/items/penclick.ogg', 30, 1)
+		playsound(src, 'sound/items/penclick.ogg', 30, TRUE)
 		src.on = !src.on
 		user.visible_message("<b>[user]</b> flicks [src.on ? "on" : "off"] the [src].")
 		if (src.on)
@@ -589,7 +589,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 		boutput(user, "<span class='notice'>You need a wrench to activate [src].</span>")
 
 	proc/toggle()
-		playsound(src, 'sound/misc/lightswitch.ogg', 50, 1, pitch=0.5)
+		playsound(src, 'sound/misc/lightswitch.ogg', 50, TRUE, pitch=0.5)
 		src.switch_on = !src.switch_on
 		if (src.switch_on)
 			processing_items |= src
@@ -735,3 +735,155 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	rotatable = FALSE
 	infinite_power = TRUE
 	power_usage = 0 WATTS
+
+#define FLARE_UNLIT 1
+#define FLARE_LIT 2
+#define FLARE_BURNT 3
+
+/obj/item/roadflare
+	name = "emergency flare"
+	desc = "Space grade emergency flare that can burn in an 02 free environment. Estimated burn time 3-6 minutes."
+	icon = 'icons/obj/lighting.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
+	icon_state = "roadflare"
+	uses_multiple_icon_states = 1
+	w_class = W_CLASS_SMALL
+	throwforce = 1
+	flags = FPRINT | TABLEPASS
+	stamina_damage = 0
+	stamina_cost = 0
+	stamina_crit_chance = 1
+	burn_point = 220
+	burn_output = 1200
+	burn_possible = 1
+
+	var/on = FLARE_UNLIT
+
+	var/life_time = 0
+	rand_pos = 1
+
+	var/col_r = 0.95
+	var/col_g = 0.7
+	var/col_b = 0.25
+	var/brightness = 0.4
+
+	New()
+		..()
+		AddComponent(/datum/component/loctargeting/sm_light, col_r*255, col_g*255, col_b*255, 510 * brightness, FALSE)
+
+	process()
+		if (src.on == FLARE_LIT)
+			if (world.time > life_time)
+				var/location = src.loc
+				if (ismob(location))
+					var/mob/M = location
+					src.put_out(M)
+					return
+				else
+					src.put_out()
+					return
+			var/turf/T = get_turf(src.loc)
+			if (T)
+				T.hotspot_expose(900,5)
+
+	proc/light(var/mob/user as mob)
+		src.on = FLARE_LIT
+		w_class = W_CLASS_BULKY
+		src.firesource = FIRESOURCE_OPEN_FLAME
+		src.icon_state = "roadflare-lit"
+
+		playsound(user, 'sound/items/matchstick_light.ogg', 80, FALSE)
+		SEND_SIGNAL(src, COMSIG_LIGHT_ENABLE)
+
+		src.life_time = (world.time + rand(180 SECONDS,360 SECONDS))
+		processing_items |= src
+		if (istype(user))
+			user.update_inhands()
+		src.UpdateParticles(new/particles/roadflare_smoke,"roadflare_smoke")
+
+	proc/put_out(mob/user)
+		src.on = FLARE_BURNT
+		w_class = W_CLASS_SMALL
+		src.firesource = FALSE
+		src.icon_state = "roadflare-burnt"
+		src.item_state = "roadflare"
+		src.name = "burnt-out emergency flare"
+
+		playsound(src, 'sound/impact_sounds/burn_sizzle.ogg', 70, FALSE)
+		SEND_SIGNAL(src, COMSIG_LIGHT_DISABLE)
+		if (istype(user))
+			user.update_inhands()
+		processing_items.Remove(src)
+		src.ClearSpecificParticles("roadflare_smoke")
+
+	temperature_expose(datum/gas_mixture/air, temperature, volume)
+		if (src.on == FLARE_UNLIT)
+			if (temperature > T0C+200)
+				src.visible_message("<span class='alert'>[src] ignites!</span>")
+				src.light()
+
+	ex_act(severity)
+		..()
+		if (QDELETED(src))
+			return
+		if (src.on == FLARE_UNLIT)
+			src.visible_message("<span class='alert'>[src] ignites!</span>")
+			src.light()
+
+	afterattack(atom/target, mob/user as mob)
+		if (src.on == FLARE_LIT)
+			if (!ismob(target) && target.reagents)
+				user.show_text("You heat [target].", "blue")
+				target.reagents.temperature_reagents(4000,10)
+				return
+
+	attack(mob/M, mob/user)
+		if (src.on == FLARE_LIT)
+			if (ishuman(M))
+				if (src.on > 0)
+					var/mob/living/carbon/human/H = M
+					if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
+						src.cautery_surgery(H, user, 5, src.on)
+						return ..()
+					else
+						user.visible_message("<span class='alert'><b>[user]</b> pushes the burning [src] against [H]!</span>",\
+						"<span class='alert'>You press the burning end of [src] against [H]!</span>")
+						playsound(src.loc, 'sound/impact_sounds/burn_sizzle.ogg', 50, 1)
+						H.TakeDamage("All", 0, rand(3,7))
+						if (!H.stat && !ON_COOLDOWN(H, "burn_scream", 4 SECONDS))
+							H.emote("scream")
+						return
+		else
+			return ..()
+
+	attack_self(mob/user)
+		if (user.find_in_hand(src))
+			if (src.on == FLARE_UNLIT)
+				user.visible_message("<b>[user]</b> lights [src] with the striker cap.","You light [src] with the striker cap.")
+				src.light(user)
+				src.add_fingerprint(user)
+				return
+		else
+			return ..()
+
+#undef FLARE_UNLIT
+#undef FLARE_LIT
+#undef FLARE_BURNT
+
+/particles/roadflare_smoke
+	icon = 'icons/effects/effects.dmi'
+	icon_state = list("smoke")
+	color = "#ffffff"
+	width = 150
+	height = 200
+	count = 15
+	spawning = 0.25
+	lifespan = generator("num", 20, 35, UNIFORM_RAND)
+	fade = generator("num", 50, 100, UNIFORM_RAND)
+	position = generator("box", list(4,5,0), list(6,10,0), UNIFORM_RAND)
+	velocity = generator("box", list(-1,0.5,0), list(1,2,0), NORMAL_RAND)
+	rotation = generator("num", 0, 180, NORMAL_RAND)
+	scale = list(0.5, 0.5)
+	gravity = list(0.07, 0.02, 0)
+	grow = list(0.01, 0)
+	fadein = 10

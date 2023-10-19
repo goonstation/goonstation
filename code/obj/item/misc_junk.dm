@@ -55,7 +55,7 @@
 		if (prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a container
-		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))
+		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living) || istype(src.loc,/obj/item/reagent_containers/glass/jar) || istype(src.loc,/obj/cabinet))
 			return
 		// Nobody can ever see Chompski move
 		for (var/mob/M in viewers(src))
@@ -242,7 +242,7 @@ TYPEINFO(/obj/item/disk)
 	if (spam_flag == 0)
 		spam_flag = 1
 
-		playsound(user, 'sound/effects/mag_pandroar.ogg', 100, 0)
+		playsound(user, 'sound/effects/mag_pandroar.ogg', 100, FALSE)
 		for (var/mob/M in view(user))
 			if (M != user)
 				M.change_misstep_chance(50)
@@ -266,7 +266,7 @@ TYPEINFO(/obj/item/disk)
 	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
-		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
+		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE, -1)
 		playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 		user.visible_message("<span class='alert'><B>[user] bonks [M] on the head with [src]!</B></span>",\
 							"<span class='alert'><B>You bonk [M] on the head with [src]!</B></span>",\
@@ -371,15 +371,15 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 					PH = usr.l_hand
 				else
 					PH = usr.r_hand
-				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
-					target_loc = PH.parent.linked.handset.holder.loc
+				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.get_holder())
+					target_loc = PH.parent.linked.handset.get_holder().loc
 
 
 			R.my_atom = src
 			src.reagents.trans_to(usr, 5)
 			src.reagents.trans_to_direct(R, 5)
-			if(PH?.parent.linked?.handset?.holder)
-				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.holder))
+			if(PH?.parent.linked?.handset?.get_holder())
+				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.get_holder()))
 			else
 				smoke_reaction(R, range, get_turf(usr))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, NORTH))
@@ -399,8 +399,8 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 			else
 				usr.visible_message("<span class='alert'><B>[usr] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
 				"<span class='alert'>You puff on the ecig and blow a cloud of smoke right into the phone. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
-				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
-					boutput(PH.parent.linked.handset.holder,"<span class='alert'><B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
+				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.get_holder())
+					boutput(PH.parent.linked.handset.get_holder(),"<span class='alert'><B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
 
 			logTheThing(LOG_COMBAT, usr, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
 			last_used = world.time
@@ -658,3 +658,15 @@ TYPEINFO(/obj/item/reagent_containers/vape)
 	New()
 		. = ..()
 		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)
+
+/obj/item/yoyo
+	name = "Atomic Yo-Yo"
+	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "yoyo"
+	item_state = "yoyo"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROPE)

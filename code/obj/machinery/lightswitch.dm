@@ -127,7 +127,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/light_switch, proc/trigger)
 	if(user)
 		interact_particle(user,src)
 
-	playsound(src, 'sound/misc/lightswitch.ogg', 50, 1)
+	playsound(src, 'sound/misc/lightswitch.ogg', 50, TRUE)
 
 	if(user)
 		src.add_fingerprint(user)

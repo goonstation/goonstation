@@ -3,6 +3,13 @@
 	icon_state = "overlay-0"
 	plane = PLANE_FOREGROUND_PARALLAX_OCCLUSION
 
+/obj/foreground_parallax_occlusion
+	mouse_opacity = 0
+	icon = 'icons/misc/foreground_parallax_occlusion_overlay.dmi'
+	icon_state = "overlay-255"
+	plane = PLANE_FOREGROUND_PARALLAX_OCCLUSION
+
+
 /turf/New()
 	. = ..()
 	var/area/A = get_area(src)
@@ -14,7 +21,7 @@
 	// Cardinal
 	for (var/dir in cardinal)
 		var/turf/CT = get_step(src, dir)
-		if (CT == called_from_turf || !isnull(CT.GetOverlayImage("foreground_parallax_occlusion_overlay")))
+		if (CT && (CT == called_from_turf || !isnull(CT.GetOverlayImage("foreground_parallax_occlusion_overlay"))))
 			connected_directions |= dir
 			if (update_neighbors)
 				CT.update_parallax_occlusion_overlay(FALSE, src)
@@ -25,7 +32,7 @@
 		if ((ordir & connected_directions) != ordir)
 			continue
 		var/turf/OT = get_step(src, ordir)
-		if (OT == called_from_turf || !isnull(OT.GetOverlayImage("foreground_parallax_occlusion_overlay")))
+		if (OT && (OT == called_from_turf || !isnull(OT.GetOverlayImage("foreground_parallax_occlusion_overlay"))))
 			connected_directions |= 8 << i
 			if (update_neighbors)
 				OT.update_parallax_occlusion_overlay(FALSE, src)

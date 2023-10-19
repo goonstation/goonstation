@@ -19,11 +19,11 @@
 			return TRUE
 
 		if(IS_ARRIVALS(T.loc))
-			boutput(F, "<spawn class='alert'>Your rift can't be placed inside arrivals!</span>")
+			boutput(F, "<span class='alert'>Your rift can't be placed inside arrivals!</span>")
 			return TRUE
 
 		if (!istype(T.loc, /area/station/) && !istype(T.loc, /area/tutorial/flock))
-			boutput(F, "<spawn class='alert'>Your rift needs to be placed on the [station_or_ship()]!</span>")
+			boutput(F, "<span class='alert'>Your rift needs to be placed on the [station_or_ship()]!</span>")
 			return TRUE
 
 		if (istype(T, /turf/unsimulated/))
@@ -32,6 +32,10 @@
 
 		if (T.density)
 			boutput(F, "<span class='alert'>Your rift cannot be placed inside a wall!</span>")
+			return TRUE
+
+		if (ismap("DONUT3") && (istype(T.loc, /area/station/medical/asylum) || istype(T.loc, /area/station/crew_quarters/clown)))
+			boutput(F, "<span class='alert'>Your rift needs to be placed on the [station_or_ship()]!</span>")
 			return TRUE
 
 		for (var/atom/O in T.contents)

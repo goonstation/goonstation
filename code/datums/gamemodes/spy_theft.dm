@@ -386,7 +386,7 @@
 	station_bounties[/obj/item/instrument/tambourine] = 1
 
 	station_bounties[/obj/item/clothing/glasses/blindfold] = 1
-	station_bounties[/obj/item/clothing/glasses/meson] = 1
+	station_bounties[/obj/item/clothing/glasses/toggleable/meson] = 1
 	station_bounties[/obj/item/clothing/glasses/sunglasses/sechud] = 2
 	station_bounties[/obj/item/clothing/glasses/sunglasses] = 1
 	station_bounties[/obj/item/clothing/glasses/visor] = 1
@@ -581,7 +581,7 @@
 	var/obj/obj_existing = null
 	var/big_picked=1
 	while(big_picked<=big_station_bounty_amt)
-		if (big_station_bounties.len <= 0)
+		if (length(big_station_bounties) <= 0)
 			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough big station bounties.")
 			message_admins("Spy bounty logic was unable to create enough big station bounties.")
 			break
@@ -620,7 +620,7 @@
 	var/obj/item_existing = null
 	var/item_picked=1
 	while(item_picked<=station_bounty_amt)
-		if (station_bounties.len <= 0)
+		if (length(station_bounties) <= 0)
 			logTheThing(LOG_DEBUG, src, "spy_theft.dm was unable to create enough item bounties.")
 			message_admins("Spy bounty logic was unable to create enough item bounties.")
 			break

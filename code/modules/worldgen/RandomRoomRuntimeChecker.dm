@@ -32,6 +32,7 @@
 		var/dmm_suite/D = new/dmm_suite()
 		D.read_map(loaded, T.x, T.y, T.z, R.prefabPath, DMM_OVERWRITE_MOBS | DMM_OVERWRITE_OBJS)
 		boutput(world, "<span class='alert'>Prefab placement [R.type][R.required?" (REQUIRED)":""] succeeded. [T] @ [log_loc(T)]")
+		check_map_correctness()
 		sleep(1 SECOND)
 		// cleanup
 		var/turf/other_corner = locate(T.x + R.prefabSizeX, T.y + R.prefabSizeY, T.z)

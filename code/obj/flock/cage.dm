@@ -71,7 +71,7 @@
 			eating_occupant = FALSE
 			target = pick(items)
 			H.remove_item(target)
-			playsound(src, 'sound/weapons/nano-blade-1.ogg', 50, 1)
+			playsound(src, 'sound/weapons/nano-blade-1.ogg', 50, TRUE)
 			boutput(H, "<span class='alert'>[src] pulls [target] from you and begins to rip it apart.</span>")
 			src.visible_message("<span class='alert'>[src] pulls [target] from [H] and begins to rip it apart.</span>")
 		else if(length(limbs))
@@ -80,7 +80,7 @@
 			H.limbs.sever(target)
 			H.emote("scream")
 			random_brute_damage(H, 20)
-			playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 80, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 80, TRUE)
 			boutput(H, "<span class='alert bold'>[src] wrenches your [initial(target.name)] clean off and begins peeling it apart! Fuck!</span>")
 			src.visible_message("<span class='alert bold'>[src] wrenches [target.name] clean off and begins peeling it apart!</span>")
 			flock?.achieve(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
@@ -90,14 +90,14 @@
 			H.drop_organ(target)
 			H.emote("scream")
 			random_brute_damage(H, 20)
-			playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, TRUE)
 			boutput(H, "<span class='alert bold'>[src] tears out your [initial(target.name)]! OH GOD!</span>")
 			src.visible_message("<span class='alert bold'>[src] tears out [target.name]!</span>")
 			flock?.achieve(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
 		else
 			H.gib()
 			occupant = null
-			playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, TRUE)
 			src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
 
 	proc/getRobotPiece(mob/living/silicon/robot/R)
@@ -126,7 +126,7 @@
 			eating_occupant = FALSE
 			target = pick(items)
 			R.remove_item(target)
-			playsound(src, 'sound/weapons/nano-blade-1.ogg', 50, 1)
+			playsound(src, 'sound/weapons/nano-blade-1.ogg', 50, TRUE)
 			boutput(R, "<span class='alert'>[src] pulls [target] from you and begins to rip it apart.</span>")
 			src.visible_message("<span class='alert'>[src] pulls [target] from [R] and begins to rip it apart.</span>")
 		else if(length(limbs))
@@ -135,7 +135,7 @@
 			R.compborg_lose_limb(target)
 			R.emote("scream")
 			random_brute_damage(R, 20)
-			playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 80, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Tear_1.ogg', 80, TRUE)
 			boutput(R, "<span class='alert bold'>[src] wrenches your [initial(target.name)] clean off and begins peeling it apart! Fuck!</span>")
 			src.visible_message("<span class='alert bold'>[src] wrenches [target.name] clean off and begins peeling it apart!</span>")
 		else if(length(organs))
@@ -144,13 +144,13 @@
 			R.compborg_lose_limb(target)
 			R.emote("scream")
 			random_brute_damage(R, 20)
-			playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, TRUE)
 			boutput(R, "<span class='alert bold'>[src] tears out your [initial(target.name)]! OH GOD!</span>")
 			src.visible_message("<span class='alert bold'>[src] tears out [target.name]!</span>")
 		else
 			R.gib()
 			occupant = null
-			playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, TRUE)
 			src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
 			flock?.achieve(FLOCK_ACHIEVEMENT_CAGE_HUMAN)
 
@@ -182,7 +182,7 @@
 			if(length(edibles))
 				target = pick(edibles)
 				eating_occupant = FALSE
-				playsound(src, 'sound/weapons/nano-blade-1.ogg', 50, 1)
+				playsound(src, 'sound/weapons/nano-blade-1.ogg', 50, TRUE)
 				if(occupant)
 					boutput(occupant, "<span class='notice'>[src] begins to process [target].</span>")
 			else if(occupant && ishuman(occupant))
@@ -219,12 +219,12 @@
 						M.set_loc(src)
 						M.gib()
 						occupant = null
-						playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
+						playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, TRUE)
 						src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
 					else
 						if(iscritter(target))
 							occupant = null
-							playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, 1)
+							playsound(src, 'sound/impact_sounds/Flesh_Tear_2.ogg', 80, TRUE)
 							src.visible_message("<span class='alert bold'>[src] rips what's left of its occupant to shreds!</span>")
 					target.set_loc(null)
 					qdel(target)
@@ -239,14 +239,14 @@
 				boutput(occupant, "<span class='flocksay italics'>[pick_string("flockmind.txt", "flockmind_conversion")]</span>")
 		if(!length(src.contents) && reagents.get_reagent_amount(target_fluid) < create_egg_at_fluid)
 			if(reagents.has_reagent(target_fluid)) // dump out our excess resources as a cache
-				playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 80, 1)
+				playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 80, TRUE)
 				var/obj/item/flockcache/x = new(src.loc)
 				x.resources = reagents.get_reagent_amount(target_fluid)
 				reagents.del_reagent(target_fluid,x.resources)
 			qdel(src)
 
 	disposing()
-		playsound(src, 'sound/impact_sounds/Energy_Hit_2.ogg', 80, 1)
+		playsound(src, 'sound/impact_sounds/Energy_Hit_2.ogg', 80, TRUE)
 		if (src.reagents) //spill out your contents
 			src.reagents.reaction(get_turf(src))
 

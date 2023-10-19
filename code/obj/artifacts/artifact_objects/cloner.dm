@@ -72,9 +72,6 @@
 				clone.real_name = user.real_name
 				clone.UpdateName()
 
-			if(clone.client) // gross hack for resetting tg layout bleh bluh copied from cloner code
-				clone.client.set_layout(clone.client.tg_layout)
-
 			if(swapSouls && H.mind)
 				H.mind.transfer_to(clone)
 				clone.is_npc = FALSE

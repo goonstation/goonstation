@@ -48,9 +48,7 @@
 	},
 /area/space)
 "aQ" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
+/obj/npc/trader/random,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -89,7 +87,7 @@
 "cc" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
-	
+
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -270,9 +268,7 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "gP" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -542,9 +538,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/destiny)
 "kL" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -1038,8 +1032,7 @@
 /area/space)
 "tp" = (
 /turf/simulated/shuttle/wall/cockpit{
-	icon_state = "shuttlecock_mining";
-	plane = 5
+	icon_state = "shuttlecock_mining"
 	},
 /area/regina)
 "ty" = (
@@ -1204,9 +1197,7 @@
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
 "wR" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1624,9 +1615,7 @@
 /area/space)
 "Fc" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1848,9 +1837,7 @@
 /area/regina)
 "Ki" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -1937,7 +1924,7 @@
 "Ls" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 2;
-	
+
 	},
 /turf/simulated/floor/caution/north,
 /area/regina)
@@ -2109,9 +2096,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "OH" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/machinery/computer/shuttle_bus/embedded/south{
-	plane = 6
-	},
+/obj/machinery/computer/shuttle_bus/embedded/south,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2169,9 +2154,7 @@
 /turf/space,
 /area/regina)
 "Qf" = (
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /obj/stool/chair/comfy,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
@@ -2430,9 +2413,7 @@
 /area/regina)
 "Vv" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/left_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},
@@ -2708,9 +2689,7 @@
 /area/shuttle/merchant_shuttle/diner_centcom)
 "ZW" = (
 /obj/stool/chair/comfy,
-/obj/npc/trader/random{
-	trader_area = "/area/shuttle/merchant_shuttle/right_station"
-	},
+/obj/npc/trader/random,
 /turf/unsimulated/floor/shuttle{
 	icon_state = "floor2"
 	},

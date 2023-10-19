@@ -13,7 +13,7 @@ Custom Books
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "book0"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	item_state = "paper"
+	item_state = "book"
 	layer = OBJ_LAYER
 	//cogwerks - burn vars
 	burn_point = 400
@@ -107,7 +107,7 @@ Custom Books
 	file_path = "strings/books/matsci_guide_old.txt"
 
 /obj/item/paper/book/from_file/matsci_guide
-	name = "Dummies' Guide to Material Science, 7th Ed."
+	name = "Dummies' Guide to Material Science, 8th Ed."
 	desc = "An explanation of how to work materials and their properties. Nanotrasen missed buying a few editions between the old one and this..."
 	icon_state = "matscibook"
 	file_path = "strings/books/matsci_guide_new.txt"
@@ -338,7 +338,7 @@ Custom Books
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "pinkbook"
 	inhand_image_icon = 'icons/mob/inhand/hand_books.dmi'
-	item_state = "paper"
+	item_state = "book"
 	layer = OBJ_LAYER
 
 	New()

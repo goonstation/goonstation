@@ -49,7 +49,7 @@
 	/// is present to activate NANITES!
 	proc/check_material_transformation()
 		if(!generator.active_form || istype(generator.active_form, /datum/teg_transformation/matsci))
-			if(generator.semiconductor?.can_transform && generator.semiconductor?.material && ((src.generator.semiconductor.material.mat_id != src.generator.material?.mat_id) || !src.generator.material))
+			if(generator.semiconductor?.can_transform && generator.semiconductor?.material && ((src.generator.semiconductor.material.getID() != src.generator.material?.getID()) || !src.generator.material))
 				if(src.generator.semiconductor_state == 0 && src.generator.powered())
 					SPAWN(1.5 SECONDS)
 						src.generator.use_power(500 WATTS)
@@ -60,7 +60,7 @@
 						generator.circ1.UpdateOverlays(nanite_overlay,"transform")
 						generator.circ2.UpdateOverlays(nanite_overlay,"transform")
 						sleep(rand(1.5 SECONDS, 2.5 SECONDS))
-						transform_to_type(/datum/teg_transformation/matsci, generator.semiconductor.material.mat_id)
+						transform_to_type(/datum/teg_transformation/matsci, generator.semiconductor.material.getID())
 						sleep(rand(1.5 SECONDS, 2.5 SECONDS))
 						src.generator.visible_message("<span class='alert'>The swarm of nanites disappears back into \the [src.generator].</span>")
 						generator.UpdateOverlays(null,"transform")
@@ -101,7 +101,7 @@ datum/teg_transformation
 		if(initial(src.mat_id))
 			M = getMaterial(src.mat_id)
 		else
-			M = copyMaterial(src.teg.semiconductor.material)
+			M = src.teg.semiconductor.material.copyMaterial()
 
 		teg.setMaterial(M)
 		teg.circ1.setMaterial(M)

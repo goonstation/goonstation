@@ -139,7 +139,7 @@ TYPEINFO(/obj/machinery/door/firedoor)
 				src.set_opacity(1)
 				src.operating = 0
 				return
-		playsound(src, 'sound/machines/airlock_pry.ogg', 50, 1)
+		playsound(src, 'sound/machines/airlock_pry.ogg', 50, TRUE)
 
 	return
 

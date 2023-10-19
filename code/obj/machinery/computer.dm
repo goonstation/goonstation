@@ -44,6 +44,7 @@
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, /obj/machinery/computer/proc/unscrew_monitor,\
 			list(W, user), W.icon, W.icon_state, null, null)
+			return
 		else
 			src.Attackhand(user)
 
@@ -125,7 +126,6 @@
 	for(var/x in src.verbs)
 		src.verbs -= x
 	set_broken()
-	return
 
 /obj/machinery/computer/ex_act(severity)
 	switch(severity)
@@ -143,14 +143,11 @@
 				for(var/x in src.verbs)
 					src.verbs -= x
 				set_broken()
-		else
-	return
 
 /obj/machinery/computer/emp_act()
-	..()
+	. = ..()
 	if(prob(20))
 		src.set_broken()
-	return
 
 /obj/machinery/computer/blob_act(var/power)
 	if (prob(50 * power / 20))
@@ -191,7 +188,7 @@
 /obj/machinery/computer/process()
 	if(status & BROKEN)
 		return
-	..()
+	. = ..()
 	if(status & NOPOWER)
 		return
 
@@ -203,7 +200,7 @@
 		src.screen_image.layer = LIGHTING_LAYER_BASE
 		src.screen_image.color = list(0.33,0.33,0.33, 0.33,0.33,0.33, 0.33,0.33,0.33)
 		src.UpdateOverlays(screen_image, "screen_image")
-	..()
+	. = ..()
 
 /obj/machinery/computer/proc/set_broken()
 	if (status & BROKEN) return

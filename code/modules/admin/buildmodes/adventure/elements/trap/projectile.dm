@@ -90,7 +90,7 @@
 						if (M)
 							T = get_turf(M)
 
-					shoot_projectile_ST(src, current_projectile, T)
+					shoot_projectile_ST_pixel_spread(src, current_projectile, T)
 					next_trap = world.time + trap_delay
 			if ("off")
 				is_on = 0

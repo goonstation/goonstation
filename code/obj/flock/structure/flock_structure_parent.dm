@@ -59,9 +59,8 @@ TYPEINFO(/obj/flock_structure)
 	time_started = world.timeofday
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, "flock_structure")
 
-	if(F)
-		src.flock = F
-		src.flock.registerStructure(src)
+	src.flock = F || get_default_flock()
+	src.flock.registerStructure(src)
 
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOCK_THING, src)
 	src.AddComponent(/datum/component/flock_protection)
@@ -213,7 +212,7 @@ TYPEINFO(/obj/flock_structure)
 	if (!location)
 		location = get_turf(src)
 	visible_message("<span class='alert'>[src.name] violently breaks apart!</span>")
-	playsound(location, 'sound/impact_sounds/Glass_Shatter_2.ogg', 50, 1)
+	playsound(location, 'sound/impact_sounds/Glass_Shatter_2.ogg', 50, TRUE)
 	flockdronegibs(location)
 	var/num_pieces = rand(2,8)
 	var/atom/movable/B

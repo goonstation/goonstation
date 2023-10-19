@@ -12,11 +12,11 @@
 	/obj/critter/ancient_thing,
 	/mob/living/critter/robotic/repairbot/security,
 	/obj/critter/gunbot/drone/buzzdrone,
-	/obj/critter/mechmonstrositycrawler,
+	/mob/living/critter/robotic/crawler,
 	/obj/critter/bat/buff,
 	/mob/living/critter/lion,
 	/mob/living/critter/skeleton/wraith,
-	/obj/critter/gunbot/heavy,
+	/mob/living/critter/robotic/gunbot,
 	/mob/living/critter/bear,
 	/mob/living/critter/brullbar,
 	/obj/critter/gunbot/drone)

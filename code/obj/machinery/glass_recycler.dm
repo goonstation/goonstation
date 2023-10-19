@@ -69,7 +69,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		if (isAI(user) || !in_interact_range(O, user) || !can_act(user) || !isliving(user))
 			return
 
-		src.attackby(O, user)
+		src.Attackby(O, user)
 
 	attackby(obj/item/W, mob/user)
 		if(W.cant_drop)
@@ -111,7 +111,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 						if (!B.broken) glass_amt += 2
 					else
 						glass_amt += W.amount
-		else if (istype(W, /obj/item/material_piece) && W.material?.material_flags & MATERIAL_CRYSTAL && W.material?.alpha <= 180)
+		else if (istype(W, /obj/item/material_piece) && W.material?.getMaterialFlags() & MATERIAL_CRYSTAL && W.material?.getAlpha() <= 180)
 			success = TRUE
 			glass_amt += W.amount * 10
 		else if (istype(W, /obj/item/raw_material/shard))
@@ -235,5 +235,34 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		product_list += new /datum/glass_product("bottle", /obj/item/reagent_containers/glass/bottle, 1)
 		product_list += new /datum/glass_product("vial", /obj/item/reagent_containers/glass/vial, 1)
 		product_list += new /datum/glass_product("flask", /obj/item/reagent_containers/glass/flask, 1)
+		product_list += new /datum/glass_product("shot", /obj/item/reagent_containers/food/drinks/drinkingglass/shot, 1)
+		product_list += new /datum/glass_product("drinkbottle", /obj/item/reagent_containers/food/drinks/bottle/soda, 2)
+		product_list += new /datum/glass_product("pitcher", /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher, 2)
+		product_list += new /datum/glass_product("bowl", /obj/item/reagent_containers/food/drinks/bowl, 1) // for making "spicy dip"
 
+/obj/machinery/glass_recycler/bar //the bar should not have to scroll through all this chemmy crap to get to the glasses and pitchers they use
+	name = "kitchen glass recycler"
+
+	get_products()
+		product_list += new /datum/glass_product("pitcher", /obj/item/reagent_containers/food/drinks/drinkingglass/pitcher, 2)
+		product_list += new /datum/glass_product("drinking", /obj/item/reagent_containers/food/drinks/drinkingglass, 1)
+		product_list += new /datum/glass_product("mug", /obj/item/reagent_containers/food/drinks/mug/random_color, 1)
+		product_list += new /datum/glass_product("oldf", /obj/item/reagent_containers/food/drinks/drinkingglass/oldf, 1)
+		product_list += new /datum/glass_product("shot", /obj/item/reagent_containers/food/drinks/drinkingglass/shot, 1)
+		product_list += new /datum/glass_product("wine", /obj/item/reagent_containers/food/drinks/drinkingglass/wine, 1)
+		product_list += new /datum/glass_product("cocktail", /obj/item/reagent_containers/food/drinks/drinkingglass/cocktail, 1)
+		product_list += new /datum/glass_product("flute", /obj/item/reagent_containers/food/drinks/drinkingglass/flute, 1)
+		product_list += new /datum/glass_product("drinkbottle", /obj/item/reagent_containers/food/drinks/bottle/soda, 2)
+		product_list += new /datum/glass_product("longbottle", /obj/item/reagent_containers/food/drinks/bottle/empty/long, 2)
+		product_list += new /datum/glass_product("tallbottle", /obj/item/reagent_containers/food/drinks/bottle/empty/tall, 2)
+		product_list += new /datum/glass_product("rectangularbottle", /obj/item/reagent_containers/food/drinks/bottle/empty/rectangular, 2)
+		product_list += new /datum/glass_product("squarebottle", /obj/item/reagent_containers/food/drinks/bottle/empty/square, 2)
+		product_list += new /datum/glass_product("masculinebottle", /obj/item/reagent_containers/food/drinks/bottle/empty/masculine, 2)
+		product_list += new /datum/glass_product("round", /obj/item/reagent_containers/food/drinks/drinkingglass/round, 2)
+		product_list += new /datum/glass_product("plate", /obj/item/plate, PLATE_COST)
+		product_list += new /datum/glass_product("bowl", /obj/item/reagent_containers/food/drinks/bowl, 1)
+		product_list += new /datum/glass_product("beaker", /obj/item/reagent_containers/glass/beaker, 1)
+		product_list += new /datum/glass_product("largebeaker", /obj/item/reagent_containers/glass/beaker/large, 2)
+		product_list += new /datum/glass_product("bottle", /obj/item/reagent_containers/glass/bottle, 1)
+		product_list += new /datum/glass_product("vial", /obj/item/reagent_containers/glass/vial, 1)
 #undef PLATE_COST

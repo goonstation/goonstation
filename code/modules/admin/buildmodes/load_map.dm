@@ -29,6 +29,7 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 		if(!dmm_suite)
 			dmm_suite = new(debug_id="buildmode")
 		var/turf/A = get_turf(object)
+		var/turf_log = log_loc(A) //store the turf log before it's overwritten
 		if (!A) return
 		blink(A)
 		if(loading)
@@ -50,7 +51,8 @@ Right Mouse Button on the mode         = Cycle loading modes<br>
 			overwrite_flags |= DMM_OVERWRITE_OBJS
 		else if(mode_number == LOAD_MODE_DEL_ALL)
 			overwrite_flags |= DMM_OVERWRITE_OBJS | DMM_OVERWRITE_MOBS
-		dmm_suite.read_map(text, A.x, A.y, A.z, flags = overwrite_flags)
+		var/datum/loadedProperties/props = dmm_suite.read_map(text, A.x, A.y, A.z, flags = overwrite_flags)
+		logTheThing(LOG_ADMIN, usr, "loaded an area [target] using build mode at [turf_log] with height [(props.maxY - props.sourceY) + 1], width [(props.maxX - props.sourceX) + 1], and mode: [src.mode_names[src.mode_number + 1]]")
 		boutput(usr, "<span class='notice'>Loading finished.</span>")
 		loading = 0
 

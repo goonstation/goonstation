@@ -203,7 +203,7 @@ so you'll want your single-digit days to have 0s in front
 							#else
 							html += "<span class='emoji'>[emoji_parts[1]]"
 							#endif
-							if(emoji_parts.len > 1)
+							if(length(emoji_parts) > 1)
 								html += "<span class='tooltiptext'>[emoji_parts[2]]</span>"
 							html += "</span>"
 						if(pr_num)
@@ -217,7 +217,7 @@ so you'll want your single-digit days to have 0s in front
 						if(emoji_labels)
 							var/list/emoji_parts = splittext(emoji_labels, "|")
 							collapsible_html += "<span class='emoji'>[emoji_parts[1]]"
-							if(emoji_parts.len > 1)
+							if(length(emoji_parts) > 1)
 								collapsible_html += "<span class='tooltiptext'>[emoji_parts[2]]</span>"
 							collapsible_html += "</span>"
 						if(pr_num)

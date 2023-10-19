@@ -1,0 +1,134 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"d" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"g" = (
+/obj/storage/crate,
+/obj/item/stamped_bullion,
+/obj/item/stamped_bullion,
+/obj/item/stamped_bullion,
+/obj/item/stamped_bullion,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"j" = (
+/obj/deployable_turret/outpost/active/south,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"k" = (
+/obj/deployable_turret/outpost/active/north,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"l" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/noGenerate)
+"A" = (
+/obj/deployable_turret/outpost/active/east,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+"I" = (
+/obj/deployable_turret/outpost/active/west,
+/turf/unsimulated/outdoors/concrete,
+/area/noGenerate)
+
+(1,1,1) = {"
+d
+d
+d
+d
+l
+d
+d
+d
+d
+"}
+(2,1,1) = {"
+d
+d
+I
+a
+a
+a
+I
+d
+d
+"}
+(3,1,1) = {"
+d
+k
+l
+l
+a
+l
+l
+j
+d
+"}
+(4,1,1) = {"
+d
+a
+l
+a
+a
+a
+l
+a
+d
+"}
+(5,1,1) = {"
+l
+a
+a
+a
+g
+a
+a
+a
+l
+"}
+(6,1,1) = {"
+d
+a
+l
+a
+a
+a
+l
+a
+d
+"}
+(7,1,1) = {"
+d
+k
+l
+l
+a
+l
+l
+j
+d
+"}
+(8,1,1) = {"
+d
+d
+A
+a
+a
+a
+A
+d
+d
+"}
+(9,1,1) = {"
+d
+d
+d
+d
+l
+d
+d
+d
+d
+"}

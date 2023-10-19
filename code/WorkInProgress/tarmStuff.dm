@@ -2,7 +2,7 @@
 /obj/item/gun/energy/cannon
 	name = "Vexillifer IV"
 	desc = "It's a cannon? A laser gun? You can't tell."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/energy64x32.dmi'
 	icon_state = "lasercannon"
 	item_state = "vexillifer"
 	wear_state = "vexillifer"
@@ -14,7 +14,7 @@
 
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -49,13 +49,13 @@
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.3)
+		setProperty("carried_movespeed", 0.3)
 
 	flashy
 		active_state = "lasercannon-anim"
 		icon_state = "lasercannon-anim"
 
-		shoot(target, start, mob/user, POX, POY, is_dual_wield)
+		shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 			if(src.canshoot(user))
 				flick("lasercannon-fire", src)
 			. = ..()
@@ -228,12 +228,12 @@
 /obj/item/gun/kinetic/g11
 	name = "\improper Manticore assault rifle"
 	desc = "An assault rifle capable of firing single precise bursts. The magazines holders are embossed with \"Anderson Para-Munitions\""
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "g11"
 	item_state = "g11"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD | ONBACK
+	c_flags = ONBACK
 	has_empty_state = 1
 	var/shotcount = 0
 	var/last_shot_time = 0
@@ -252,7 +252,7 @@
 		ammo = new default_magazine
 		. = ..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		spread_angle = max(0, shoot_delay*2+last_shot_time-TIME)*0.4
 		shotcount = 0
 		. = ..(target, start, user, POX+rand(-spread_angle, spread_angle)*16, POY+rand(-spread_angle, spread_angle)*16)
@@ -313,7 +313,7 @@
 		on_hit(atom/hit, angle, obj/projectile/O)
 			var/turf/T = get_turf(hit)
 			new/obj/decal/implo(T)
-			playsound(T, 'sound/effects/suck.ogg', 100, 1)
+			playsound(T, 'sound/effects/suck.ogg', 100, TRUE)
 			var/spamcheck = 0
 			for(var/atom/movable/AM in oview(2, T))
 				if(AM.anchored || AM == hit || AM.throwing) continue
@@ -332,7 +332,7 @@
 /obj/item/gun/kinetic/pistol/autoaim
 	name = "\improper Catoblepas pistol"
 	desc = "A semi-smart pistol with moderate aim-correction. The manufacterer markings read \"Anderson Para-Munitions\"."
-	shoot(target, start, mob/user, POX, POY) //checks clicked turf first, so you can choose a target if need be
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null) //checks clicked turf first, so you can choose a target if need be
 		for(var/mob/M in range(2, target))
 			if(M == user || istype(M.get_id(), /obj/item/card/id/syndicate)) continue
 			..(get_turf(M), start, user, POX, POY)
@@ -526,7 +526,7 @@
 			var/msg = text("As [user] slaps the [src] onto the [target], the [target]")
 			var/currentench = I.enchant(incr)
 			var/turf/T = get_turf(target)
-			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
+			playsound(T, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
 			if(currentench-incr <= 2 || !rand(0, currentench))
 				user.visible_message("<span class='notice'>[msg] glows with a faint light[(currentench >= 3) ? " and vibrates violently!" : "."]</span>")
 			else
@@ -739,6 +739,9 @@ TYPEINFO(/obj/item/device/geiger)
 		. = ..()
 
 //DIRTY DIRTY PLAYERS
+TYPEINFO(/obj/submachine/laundry_machine/portable)
+	mats = 0
+
 /obj/submachine/laundry_machine/portable
 	name = "Port-A-Laundry"
 	desc = "Don't ask."

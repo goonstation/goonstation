@@ -1,7 +1,7 @@
 /obj/item/flash_pistol
 	name = "flash pistol"
 	desc = "A poorly thought out implement of photography from the early twentieth century, utilising a specialised flash compound to ensure a good picture, regardless of lighting level. Needless to say, this should absolutely never be fired at someone from point-blank range."
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "flash_pistol"
 	item_state = "flash_pistol"
 	force = MELEE_DMG_PISTOL
@@ -62,11 +62,11 @@
 
 		if (!src.loaded)
 			user.show_text("*click* *click*", "red")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return
 
 		// Play animations.
-		playsound(src, 'sound/effects/poof.ogg', 100, 1)
+		playsound(src, 'sound/effects/poof.ogg', 100, TRUE)
 		src.loaded = FALSE
 		src.hammer_cocked = FALSE
 		src.UpdateIcon()
@@ -99,7 +99,7 @@
 		src.add_fingerprint(user)
 		if (!src.loaded || !src.hammer_cocked)
 			user.show_text("*click* *click*", "red")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return
 
 		var/turf/T = get_turf(user)
@@ -107,7 +107,7 @@
 			user.visible_message("<span class='alert'><b>[user]</b> tries to use [src], cannot quite comprehend the forces at play!</span>")
 			return
 
-		playsound(src, 'sound/effects/poof.ogg', 100, 1)
+		playsound(src, 'sound/effects/poof.ogg', 100, TRUE)
 		src.hammer_cocked = FALSE
 		src.loaded = FALSE
 		src.UpdateIcon()

@@ -1,0 +1,26 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"t" = (
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
+"F" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/clothing/under/misc/rarestroom,
+/obj/machinery/light/small/floor,
+/turf/simulated/floor/wood,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+t
+t
+t
+"}
+(2,1,1) = {"
+t
+F
+t
+"}
+(3,1,1) = {"
+t
+t
+t
+"}

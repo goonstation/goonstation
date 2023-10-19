@@ -57,7 +57,7 @@
 		src.Artifact_emp_act()
 		..()
 
-	shoot(var/target,var/start,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (!src.ArtifactSanityCheck())
 			return
 		var/datum/artifact/energygun/A = src.artifact

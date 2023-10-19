@@ -328,13 +328,16 @@ TYPEINFO(/obj/item/pinpointer)
 			if(B.dry == -1)
 				timer += 4 MINUTES
 			blood_dna = B.blood_DNA
-		else if(istype(A, /obj/fluid) || istype(A, /obj/item))
+		else if(istype(A, /obj/item))
 			blood_dna = A.blood_DNA
+		else if (CHECK_LIQUID_CLICK(A))
+			var/turf/T = get_turf(A)
+			blood_dna = T.active_liquid.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
 		if(!blood_dna)
 			var/datum/reagents/reagents = A.reagents
-			if(istype(A, /obj/fluid))
-				var/obj/fluid/fluid = A
-				reagents = fluid.group.reagents
+			if(isturf(A))
+				var/turf/T = A
+				reagents = T.active_liquid.group.reagents
 			if(!isnull(reagents))
 				for(var/reag_id in list("blood", "bloodc"))
 					var/datum/reagent/blood/blood = reagents.reagent_list[reag_id]

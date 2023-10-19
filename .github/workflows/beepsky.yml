@@ -53,7 +53,7 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v3
-          
+
       - name: Cache BYOND
         uses: actions/cache@v3
         with:
@@ -135,7 +135,7 @@ jobs:
         run: |
           tools/ci/check_filedirs.sh goonstation.dme
           tools/ci/build_tgui.sh
-          tools/ci/check_grep.sh
+          tools/ci/check_grep_secret.sh
           tools/bootstrap/python tools/ci/validate_dme.py <goonstation.dme
           tools/bootstrap/python -m dmi.test
           tools/bootstrap/python -m mapmerge2.dmm_test

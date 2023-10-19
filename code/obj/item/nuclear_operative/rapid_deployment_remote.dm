@@ -100,11 +100,11 @@
 					return
 				for(var/obj/item/remote/syndicate_teleporter/T in M.get_all_items_on_mob())
 					qdel(T) //Emphasizing that there really is no easy way back if you go this way
-				playsound(M, 'sound/effects/teleport.ogg', 30, 1)
+				playsound(M, 'sound/effects/teleport.ogg', 30, TRUE)
 				var/obj/decal/teleport_swirl/S = new/obj/decal/teleport_swirl(M)
 				M.set_loc(L)
 				var/obj/decal/residual_energy/R = new/obj/decal/residual_energy(L)
-				playsound(L, 'sound/effects/teleport.ogg', 30, 1)
+				playsound(L, 'sound/effects/teleport.ogg', 30, TRUE)
 				SPAWN(1 SECOND)
 					qdel(S)
 					qdel(R)
@@ -114,11 +114,11 @@
 				var/landmark_teleport = pick_landmark(LANDMARK_SYNDICATE_ASSAULT_POD_TELE)
 				if(!landmark_teleport)
 					return
-				playsound(the_nuke, 'sound/effects/teleport.ogg', 30, 1)
+				playsound(the_nuke, 'sound/effects/teleport.ogg', 30, TRUE)
 				var/obj/decal/teleport_swirl/tele_swirl = new/obj/decal/teleport_swirl(the_nuke)
 				the_nuke.set_loc(landmark_teleport)
 				var/obj/decal/residual_energy/tele_energy = new/obj/decal/residual_energy(landmark_teleport)
-				playsound(landmark_teleport, 'sound/effects/teleport.ogg', 30, 1)
+				playsound(landmark_teleport, 'sound/effects/teleport.ogg', 30, TRUE)
 				SPAWN(1 SECOND)
 					qdel(tele_swirl)
 					qdel(tele_energy)

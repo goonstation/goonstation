@@ -66,9 +66,6 @@
 
 #elif defined(MAP_OVERRIDE_TRUNKMAP)
 
-#elif defined(MAP_OVERRIDE_CHIRON)
-#define REVERSED_MAP
-
 /*#elif defined(MAP_OVERRIDE_DENSITY)
 
 #elif defined(MAP_OVERRIDE_OZYMANDIAS)

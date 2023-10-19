@@ -26,7 +26,7 @@ var/global/datum/ircbot/ircbot = new /datum/ircbot()
 				src.interface = config.irclog_url
 				src.loaded = 1
 
-				if (src.queue && src.queue.len > 0)
+				if (src.queue && length(src.queue) > 0)
 					if (src.debugging)
 						src.logDebug("Load success, flushing queue: [json_encode(src.queue)]")
 					for (var/x = 1, x <= src.queue.len, x++) //Flush queue

@@ -50,7 +50,7 @@
 		if (src.amount >= 1)
 			if (last_dispense_time + dispense_rate > TIME)
 				boutput(user, "<span class='alert'>The timer says that you must wait [round(( last_dispense_time + dispense_rate-TIME)/10)] second(s) before the next item is ready!</span>")
-				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, 1)
+				playsound(src, 'sound/machines/buzz-sigh.ogg', 30, TRUE)
 				return
 			src.amount--
 			last_dispense_time = TIME 	//gotta go before the UpdateIcon

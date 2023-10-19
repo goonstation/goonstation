@@ -24,7 +24,11 @@ proc/initialize_biomes()
 		seeds += rand(0, 50000)
 	return
 
-ABSTRACT_TYPE(/area/map_gen)
+/datum/map_generator/proc/set_seed(list/seed_list)
+	if(length(seed_list))
+		seeds = seed_list
+
+ABSTRACT_TYPE(area/map_gen)
 area/map_gen
 	name = "map gen"
 	icon = 'icons/turf/map_gen.dmi'

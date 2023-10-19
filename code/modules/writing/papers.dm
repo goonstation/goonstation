@@ -1,11 +1,11 @@
 // This file is for premade paper/pamphlet things
 
-/obj/item/paper/alchemy/
+/obj/item/paper/alchemy
 	name = "'Chemistry Information'"
 
 /// Cloning Manual -- A big ol' manual.
 /obj/item/paper/Cloning
-	name = "'H-87 Cloning Apparatus Manual"
+	name = "H-87 Cloning Apparatus Manual"
 	info = {"<h4>Getting Started</h4>
 	Congratulations, your station has purchased the H-87 industrial cloning device!<br>
 	Using the H-87 is almost as simple as brain surgery! Simply insert the target humanoid into the scanning chamber and select the scan option to create a new profile!<br>
@@ -47,7 +47,7 @@
 
 /obj/item/paper/Internal
 	name = "'Internal Atmosphere Operating Instructions'"
-	info = "Equipment:<BR>\n\t1+ Tank(s) with appropriate atmosphere<BR>\n\t1 Gas Mask w regulator (standard issue)<BR>\n<BR>\nProcedure:<BR>\n\t1. Wear mask<BR>\n\t2. Attach oxygen tank pipe to regulater (automatic))<BR>\n\t3. Set internal!<BR>\n<BR>\nNotes:<BR>\n\tDon't forget to stop internal when tank is low by<BR>\n\tremoving internal!<BR>\n<BR>\n\tDo not use a tank that has a high concentration of toxins.<BR>\n\tThe filters shut down on internal mode!<BR>\n<BR>\n\tWhen exiting a high danger environment it is advised<BR>\n\tthat you exit through a decontamination zone!<BR>\n<BR>\n\tRefill a tank at a oxygen canister by equiping the tank (Double Click)<BR>\n\tthen 'attacking' the canister (Double Click the canister)."
+	info = "Equipment:<BR>\n\t1+ Tank(s) with appropriate atmosphere<BR>\n\t1 Gas Mask w regulator (standard issue)<BR>\n<BR>\nProcedure:<BR>\n\t1. Wear mask<BR>\n\t2. Attach oxygen tank pipe to regulator (automatic))<BR>\n\t3. Set internal!<BR>\n<BR>\nNotes:<BR>\n\tDon't forget to stop internal when tank is low by<BR>\n\tremoving internal!<BR>\n<BR>\n\tDo not use a tank that has a high concentration of toxins.<BR>\n\tThe filters shut down on internal mode!<BR>\n<BR>\n\tWhen exiting a high danger environment it is advised<BR>\n\tthat you exit through a decontamination zone!<BR>\n<BR>\n\tRefill a tank at a oxygen canister by equiping the tank (Double Click)<BR>\n\tthen 'attacking' the canister (Double Click the canister)."
 
 /obj/item/paper/Court
 	name = "'Judgement'"
@@ -238,12 +238,17 @@ Only trained personnel should operate station systems. Follow all procedures car
 		<br><strong>SUBJ:</strong> Toxins Research Project #08-A
 		<br>
 		<p>
-		The enclosed samples are to be used in continued plasma research.  Our current understanding is that the gas released from "Molitz Beta" in the presence of
-		sufficient temperatures and plasma cause an unusual phenomenon. The gas, Oxygen Agent B, seems to disrupt the typical equilibrium formed in exothermic oxidation
-		allowing for temperatures we have been unable to fully realize. This only seems to occur when combustion is incomplete and can be observed visually as a gentle swirling of the flame.
+		The enclosed samples are to be used in continued plasma research.  Our current understanding is that the samples enclosed (dubbed molitz beta) in the presence of
+		sufficient temperatures and plasma causes an exotic reaction phenomenon. Utiliyzing a yet understood solid catalyst present in moiltz beta,
+		the sample undergoes an intense endothermic reaction between the surrounding FAAE and the sample's internal gas pockets.
 		</p>
 		<p>
-		Please exercise caution in your testing, the result can best be described as a hellfire.  Ensure adequate safety messures are in place to purge the fire.
+		This pressure build up results in significant offgassing.
+		The exotic component of the resultant gas, Oxygen Agent B, seems to disrupt the typical equilibrium formed in exothermic oxidation
+		allowing the potential for temperatures we have been unable to fully realize.
+		</p>
+		<p>
+		Please exercise caution in your testing, when properly utilized the result can best be described as a hellfire.  Ensure adequate safety messures are in place to purge the fire.
 		</p>
 		<p>All findings and documents related to Project #08-A are to be provided in triplicate to CentComm on physical documents only. <b>DO NOT</b> provide this data digitally
 		as it may become compromised.
@@ -509,7 +514,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 /obj/item/paper/dreamy_rhyme
 	name = "Space-Rhymes"
 	icon_state = "thermal_paper"
-	desc = "Scibbled rhymes...and thoughts."
+	desc = "Scribbled rhymes...and thoughts."
 	info = {" Space duck, I do not give a...I do not give anything about luck, shrug, puck, quack
 	<br>
 	<br>
@@ -783,7 +788,7 @@ Only trained personnel should operate station systems. Follow all procedures car
 
 /obj/item/paper/recipe_coconutcurry
 	name = "creased recipe clipping"
-	desc = "Irreperably creased from years of being folded-up. Luckily, you can still make out the text on it."
+	desc = "Irreparably creased from years of being folded-up. Luckily, you can still make out the text on it."
 	icon_state = "paper_caution_crumple"
 	info = {"
 	<i>In the mood for something spicy yet mild? Have extra coconuts to burn? Asking yourself why you grew so many coconuts in the first place?
@@ -1140,4 +1145,16 @@ Only trained personnel should operate station systems. Follow all procedures car
 	You have been late on your payments one too many times... <br>
 	Flake out this time and you will regret it. <br>
 	You know where to find us larry, bring the money, 100,000 credits.
+	"}
+
+/obj/item/paper/labdrawertips
+	name = "stern lab safety warning"
+	icon_state = "paper"
+	info ={"
+	I've had it with you nincompoops taking shortcuts. For the last
+	time, <b> when you open the drawers under the lab counter,
+	USE AN EMPTY HAND!</b> There's no excuse for you to be
+	melting holes in the floor because you tried to grab a
+	handle with the same hand that holds your beloved
+	napalm-phlogiston-thermite """hell mix."""
 	"}

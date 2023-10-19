@@ -32,6 +32,8 @@ proc/buildRandomRooms()
 	shuffle_list(by_type[/obj/landmark/random_room])
 	for_by_tcl(landmark, /obj/landmark/random_room)
 		landmark.apply()
+	for_by_tcl(landmark, /obj/landmark/engine_room)
+		landmark.apply()
 
 
 /obj/landmark/random_room

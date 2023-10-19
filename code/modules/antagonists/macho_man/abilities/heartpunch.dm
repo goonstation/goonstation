@@ -23,7 +23,7 @@
 				for (var/I = 1, I <= 5 && heart_to_punt && step(heart_to_punt,direction, 1), I++)
 //						new D(heart_to_punt.loc)
 					bleed(H, 25, 5)
-					playsound(heart_to_punt,'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+					playsound(heart_to_punt,'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 
 				H.emote("scream")
 				did_it = 1
@@ -46,7 +46,7 @@
 
 				for (var/I = 1, I <= 5 && chestpunt && step(chestpunt ,direction, 1), I++)
 					make_cleanable(/obj/decal/cleanable/oil,chestpunt.loc)
-					playsound(chestpunt,'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+					playsound(chestpunt,'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 
 				did_it = 1
 

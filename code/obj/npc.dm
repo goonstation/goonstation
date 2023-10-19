@@ -76,10 +76,8 @@
 			health = health -50
 		if(3)
 			health = health -25
-		else
-	if(health <=0)
+	if(health <= 0)
 		src.death()
-	return
 
 /obj/npc/blob_act(var/power)
 	// Called when attacked by a blob
@@ -94,7 +92,7 @@
 		activatesecurity()
 		src.anger()
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	if(P.proj_data)
 		switch(P.proj_data.damage_type)

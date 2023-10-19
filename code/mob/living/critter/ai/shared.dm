@@ -7,7 +7,7 @@
 // responsible for: selecting a target (and reporting back the evaluation score based on its value)
 // and moving through the following two tasks:
 // moving to a selected target, performing a /datum/action on the selected target
-/datum/aiTask/sequence/goalbased/
+/datum/aiTask/sequence/goalbased
 	name = "goal parent"
 
 /datum/aiTask/sequence/goalbased/New(parentHolder, transTask)

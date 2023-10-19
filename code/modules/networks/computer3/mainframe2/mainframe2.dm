@@ -454,8 +454,6 @@
 			if(3)
 				if (prob(25))
 					set_broken()
-			else
-		return
 
 	blob_act(var/power)
 		if (prob(power * 2.5))
@@ -507,7 +505,7 @@
 						var/datum/computer/file/mainframe_program/P = src.processing[x]
 						if (istype(P))
 							P.progid = x+1
-						if (src.processing.len == x)
+						if (length(src.processing) == x)
 							src.processing.len++
 						src.processing[x+1] = P
 

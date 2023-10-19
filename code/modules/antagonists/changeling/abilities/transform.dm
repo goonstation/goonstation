@@ -85,7 +85,7 @@
 			boutput(holder.owner, "<span class='alert'>That ability is incompatible with our abilities. We should report this to a coder.</span>")
 			return 1
 
-		if (H.absorbed_dna.len < 2)
+		if (length(H.absorbed_dna) < 2)
 			boutput(holder.owner, "<span class='alert'>We need to absorb more DNA to use this ability.</span>")
 			return 1
 

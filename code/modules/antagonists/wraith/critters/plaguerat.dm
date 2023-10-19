@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 /mob/living/critter/wraith/plaguerat
 	name = "plague rat"
 	real_name = "plague rat"
-	desc = "Shouldnt be seeing this."
+	desc = "Shouldn't be seeing this."
 	icon = 'icons/mob/wraith_critters.dmi'
 	icon_state = "smallRat"
 	density = 1
@@ -34,7 +34,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	can_grab = 0
 	can_disarm = 1
 
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	max_skins = 1
 
 	faction = FACTION_WRAITH
@@ -93,18 +93,18 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 				if(H.clothing_protects_from_chems())
 					boutput(H, "The bite is painful, but at least your biosuit protected you from the rat's diseases.")
 				else
-					boutput(H, "Your hand immediatly starts to painfully puff up, that can't be good.")
+					boutput(H, "Your hand immediately starts to painfully puff up, that can't be good.")
 					H.contract_disease(/datum/ailment/disease/space_plague, null, null, 1)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> toots disgustingly!</span>"
 
 	specific_emote_type(var/act)
@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 				var/mob/living/carbon/human/H = M
 
 				if(H.clothing_protects_from_chems())
-					boutput(H, "The bite hurts alot, but it didn't manage to pierce your protective suit.")
+					boutput(H, "The bite hurts a lot, but it didn't manage to pierce your protective suit.")
 					return 1
 			M.reagents.add_reagent(src.venom, src.bite_transfer_amt)
 

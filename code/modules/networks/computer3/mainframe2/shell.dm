@@ -49,7 +49,7 @@
 		suppress_out = 0
 		pipetemp = ""
 		scriptline = 0
-		if (istype(supplied_config) && supplied_config.len >= 3)
+		if (istype(supplied_config) && length(supplied_config) >= 3)
 			script_iteration = supplied_config[1]
 			scriptvars = supplied_config[2]
 			shscript = supplied_config[3]
@@ -159,7 +159,7 @@
 				switch(lowertext(command))
 					if ("eval")
 						var/result = null
-						var/pipe_result = (command_list.len == 1)
+						var/pipe_result = (length(command_list) == 1)
 
 						if (!command_list.len)
 							continue
@@ -203,7 +203,7 @@
 						if (pipetemp)
 							anger_text = pipetemp
 
-						if(istype(command_list) && (command_list.len > 0))
+						if(istype(command_list) && (length(command_list) > 0))
 							anger_text += jointext(command_list, " ")
 
 						if (piping && piped_list.len && (ckey(piped_list[1]) != "break") )
@@ -227,7 +227,7 @@
 							add_newline = FALSE
 							command_list.Cut(1,2)
 
-						if(istype(command_list) && (command_list.len > 0))
+						if(istype(command_list) && (length(command_list) > 0))
 							echo_text += jointext(command_list, " ")
 
 						if (piping && piped_list.len && (ckey(piped_list[1]) != "break") )
@@ -308,7 +308,7 @@
 							if(istype(command_list))
 								command_list += splittext(pipetemp, " ")
 
-						if (command_list.len < 2)
+						if (length(command_list) < 2)
 							message_user("Error: Insufficient arguments for Talk (Requires Target ID and Message).")
 							return 1
 
@@ -501,7 +501,7 @@
 				//qdel(siglist)
 				return 1
 
-			else if (istype(exec) && (!pipetemp || scripting) && exec.fields && (exec.fields.len > 1) && dd_hasprefix(exec.fields[1], "#!")) //Maybe it's a shell script?
+			else if (istype(exec) && (!pipetemp || scripting) && exec.fields && (length(exec.fields) > 1) && dd_hasprefix(exec.fields[1], "#!")) //Maybe it's a shell script?
 
 				if (script_iteration + 1 >= MAX_SCRIPT_ITERATIONS)
 					return 3
@@ -570,7 +570,7 @@
 			return
 
 		script_format(var/list/scriptlist)
-			if (!scriptlist || scriptlist.len < 2)
+			if (!scriptlist || length(scriptlist) < 2)
 				return list()
 
 			//The first line should just be #!, so...
@@ -607,7 +607,7 @@
 				command_stream.Cut(1,2)
 
 				if (text2num_safe(current_command) != null)
-					if (stack.len > MAX_STACK_DEPTH)
+					if (length(stack) > MAX_STACK_DEPTH)
 						return ERR_STACK_OVER
 
 					stack += script_clampvalue( text2num_safe(current_command) )
@@ -617,7 +617,7 @@
 
 				switch ( lowertext(current_command) )
 					if ("+") //(1X 2X -- (1X + 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
@@ -629,7 +629,7 @@
 							stack[--stack.len] = result
 
 					if ("-") //(1X 2X -- (1X - 2X)
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
@@ -644,7 +644,7 @@
 							return ERR_UNDEFINED
 
 					if ("*") //(1X 2X -- (1X * 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
@@ -663,7 +663,7 @@
 							return ERR_UNDEFINED
 
 					if ("/") //(1X 2X -- (1X / 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
@@ -675,7 +675,7 @@
 
 						else if (istext(stack[stack.len]) && istext(stack[stack.len-1]))
 							var/list/explodedString = splittext("[stack[stack.len-1]]", "[stack[stack.len]]")
-							if (explodedString.len + stack.len > MAX_STACK_DEPTH)
+							if (explodedString.len + length(stack) > MAX_STACK_DEPTH)
 								return ERR_STACK_OVER
 
 							stack.len -= 2
@@ -685,7 +685,7 @@
 							return ERR_UNDEFINED
 
 					if ("%")
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
@@ -699,27 +699,27 @@
 							return ERR_UNDEFINED
 
 					if ("rand")
-						if (stack.len < 1)
+						if (length(stack) < 1)
 							return ERR_STACK_UNDER
 						result = script_clampvalue(rand(1, stack[stack.len]))
 						stack[stack.len] = result
 
 					if ("eq") //(1X 2X -- (1X == 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						result = stack[stack.len-1] == stack[stack.len]
 						stack[--stack.len] = result
 
 					if ("ne") //(1X 2X -- (1X != 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						result = stack[stack.len-1] != stack[stack.len]
 						stack[--stack.len] = result
 
 					if ("gt") //(1X 2X -- (1X > 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
@@ -739,7 +739,7 @@
 							stack[--stack.len] = result
 
 					if ("ge") //(1X 2X -- (1X >= 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
@@ -759,7 +759,7 @@
 							stack[--stack.len] = result
 
 					if ("lt") //(1X 2X -- (1X < 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
@@ -779,7 +779,7 @@
 							stack[--stack.len] = result
 
 					if ("le") //(1X 2X -- (1X <= 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
@@ -799,7 +799,7 @@
 							stack[--stack.len] = result
 
 					if ("and") //(1X 2X -- (1X && 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
@@ -811,7 +811,7 @@
 						stack[--stack.len] = result
 
 					if ("or") //(1X 2X -- (1X || 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))
@@ -833,7 +833,7 @@
 							stack[stack.len] = !stack[stack.len]
 
 					if ("xor","eor") //(1X 2X -- (1X ^ 2X))
-						if (stack.len < 2)
+						if (length(stack) < 2)
 							return ERR_STACK_UNDER
 
 						if (script_isNumResult(stack[stack.len], stack[stack.len-1]))

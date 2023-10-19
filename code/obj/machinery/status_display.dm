@@ -434,7 +434,7 @@ TYPEINFO(/obj/machinery/ai_status_display)
 		if (isdead(owner))
 			faceEmotion = "ai_bsod"
 		if (src.emotion != faceEmotion)
-			UpdateOverlays(faceEmotion != "ai-tetris" ? glow_image : null, "glow_img")
+			UpdateOverlays(faceEmotion != "ai_tetris" ? glow_image : null, "glow_img")
 			face_image.icon_state = faceEmotion
 			UpdateOverlays(face_image, "emotion_img")
 			emotion = faceEmotion
@@ -444,7 +444,7 @@ TYPEINFO(/obj/machinery/ai_status_display)
 			screen_glow.enable()
 			UpdateOverlays(face_image, "emotion_img")
 			UpdateOverlays(back_image, "back_img")
-			UpdateOverlays(owner.faceEmotion != "ai-tetris" ? glow_image : null, "glow_img")
+			UpdateOverlays(owner.faceEmotion != "ai_tetris" ? glow_image : null, "glow_img")
 
 		message = owner.status_message
 		name = initial(name) + " ([owner.name])"

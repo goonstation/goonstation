@@ -895,7 +895,7 @@ var/global/list/generic_exit_list = list("command"=DWAINE_COMMAND_EXIT)
 			return 0
 
 		login_temp_user(var/user_netid, var/datum/computer/file/record/login_record, var/datum/computer/file/mainframe_program/caller_override)
-			if (users.len >= user_max)
+			if (length(users) >= user_max)
 				return 1
 
 			if (!user_netid)

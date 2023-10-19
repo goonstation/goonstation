@@ -107,7 +107,7 @@
 
 		ballshot.max_range = swing_strength + ( ((rand()-0.5) * 3) * golfyness )
 
-		var/obj/projectile/P = shoot_projectile_ST_pixel(the_mob, ballshot, target, pox+mod_x, poy+mod_y)
+		var/obj/projectile/P = shoot_projectile_ST_pixel_spread(the_mob, ballshot, target, pox+mod_x, poy+mod_y)
 		if (P)
 			P.targets = list(target)
 			P.mob_shooter = the_mob
@@ -351,7 +351,7 @@
 
 					ball.ball_projectile.max_range = lerp(return_range, rand()*return_range, 0.3)
 					var/target = pick(nearby_turfs)
-					var/obj/projectile/Q = shoot_projectile_ST_pixel(src, ball.ball_projectile, target, (rand()-0.5)*32, (rand()-0.5)*32)
+					var/obj/projectile/Q = shoot_projectile_ST_pixel_spread(src, ball.ball_projectile, target, (rand()-0.5)*32, (rand()-0.5)*32)
 					if (Q)
 						Q.targets = list(target)
 						Q.mob_shooter = null

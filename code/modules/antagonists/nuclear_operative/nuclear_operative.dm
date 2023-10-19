@@ -35,23 +35,23 @@
 		var/mob/living/carbon/human/H = src.owner.current
 		H.unequip_all(TRUE)
 
-		H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), H.slot_w_uniform)
-		H.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(H), H.slot_shoes)
-		H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), H.slot_gloves)
-		H.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(H), H.slot_back)
-		H.equip_if_possible(new /obj/item/clothing/mask/gas/swat/syndicate(H), H.slot_wear_mask)
-		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), H.slot_glasses)
-		H.equip_if_possible(new /obj/item/requisition_token/syndicate(H), H.slot_r_store)
-		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), H.slot_l_store)
+		H.equip_if_possible(new /obj/item/clothing/under/misc/syndicate(H), SLOT_W_UNIFORM)
+		H.equip_if_possible(new /obj/item/clothing/shoes/swat/noslip(H), SLOT_SHOES)
+		H.equip_if_possible(new /obj/item/clothing/gloves/swat(H), SLOT_GLOVES)
+		H.equip_if_possible(new /obj/item/storage/backpack/syndie/tactical(H), SLOT_BACK)
+		H.equip_if_possible(new /obj/item/clothing/mask/gas/swat/syndicate(H), SLOT_WEAR_MASK)
+		H.equip_if_possible(new /obj/item/clothing/glasses/sunglasses(H), SLOT_GLASSES)
+		H.equip_if_possible(new /obj/item/requisition_token/syndicate(H), SLOT_R_STORE)
+		H.equip_if_possible(new /obj/item/tank/emergency_oxygen/extended(H), SLOT_L_STORE)
 
 		if(src.id == ROLE_NUKEOP_COMMANDER)
-			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(H), H.slot_head)
-			H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(H), H.slot_wear_suit)
-			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(H), H.slot_ears)
-			H.equip_if_possible(new /obj/item/swords_sheaths/nukeop(H), H.slot_belt)
-			H.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(H), H.slot_l_hand)
+			H.equip_if_possible(new /obj/item/clothing/head/helmet/space/syndicate/commissar_cap(H), SLOT_HEAD)
+			H.equip_if_possible(new /obj/item/clothing/suit/space/syndicate/commissar_greatcoat(H), SLOT_WEAR_SUIT)
+			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate/leader(H), SLOT_EARS)
+			H.equip_if_possible(new /obj/item/swords_sheaths/nukeop(H), SLOT_BELT)
+			H.equip_if_possible(new /obj/item/device/nukeop_commander_uplink(H), SLOT_L_HAND)
 		else
-			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate(H), H.slot_ears)
+			H.equip_if_possible(new /obj/item/device/radio/headset/syndicate(H), SLOT_EARS)
 
 		H.equip_sensory_items()
 
@@ -61,7 +61,7 @@
 		else
 			ID = new /obj/item/card/id/syndicate(H)
 
-		H.equip_if_possible(ID, H.slot_wear_id)
+		H.equip_if_possible(ID, SLOT_WEAR_ID)
 
 		new /obj/item/implant/revenge/microbomb(H)
 

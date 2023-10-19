@@ -1,0 +1,93 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/inner_tube/random{
+	pixel_x = 10
+	},
+/turf/simulated/floor/dojo/sand,
+/area/dmm_suite/clear_area)
+"e" = (
+/obj/decal/fakeobjects/palmtree,
+/obj/item/reagent_containers/food/snacks/plant/coconut{
+	pixel_y = -10;
+	pixel_x = 6
+	},
+/turf/simulated/floor/dojo/sand,
+/area/dmm_suite/clear_area)
+"n" = (
+/obj/table/endtable_classic,
+/obj/item/cocktail_stuff/drink_umbrella{
+	pixel_y = 12;
+	pixel_x = 8
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled/sane{
+	pixel_x = 3;
+	pixel_y = 5
+	},
+/obj/item/clothing/gloves/water_wings{
+	pixel_y = -12;
+	pixel_x = 8
+	},
+/obj/item/clothing/glasses/sunglasses/tanning{
+	pixel_x = -5
+	},
+/turf/simulated/floor/dojo/sand,
+/area/dmm_suite/clear_area)
+"r" = (
+/obj/stool/chair/pool,
+/obj/item/clothing/suit/bathrobe,
+/turf/simulated/floor/dojo/sand,
+/area/dmm_suite/clear_area)
+"s" = (
+/obj/decal/cleanable/water,
+/obj/item/inner_tube/flamingo,
+/turf/simulated/floor/dojo/sand,
+/area/dmm_suite/clear_area)
+"y" = (
+/mob/living/critter/small_animal/bird/seagull,
+/turf/simulated/floor/dojo/sand,
+/area/dmm_suite/clear_area)
+"B" = (
+/turf/simulated/floor/dojo/sand,
+/area/dmm_suite/clear_area)
+"M" = (
+/obj/machinery/traymachine/locking/tanning,
+/obj/machinery/computer/tanning{
+	pixel_y = 32
+	},
+/turf/simulated/floor/dojo/sand,
+/area/dmm_suite/clear_area)
+"P" = (
+/obj/machinery/light/incandescent,
+/turf/simulated/floor/dojo/sand,
+/area/dmm_suite/clear_area)
+"R" = (
+/obj/machinery/light/incandescent,
+/obj/item/beach_ball,
+/turf/simulated/floor/dojo/sand,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+e
+B
+R
+"}
+(2,1,1) = {"
+y
+a
+B
+"}
+(3,1,1) = {"
+B
+n
+B
+"}
+(4,1,1) = {"
+B
+r
+s
+"}
+(5,1,1) = {"
+M
+B
+P
+"}

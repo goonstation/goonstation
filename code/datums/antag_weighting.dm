@@ -339,9 +339,3 @@ var/global/datum/antagWeighter/antagWeighter
 
 		//Fire and forget
 		apiHandler.queryAPI("antags/record", apiPlayers)
-
-
-world/New()
-	. = ..()
-	antagWeighter = new()
-	//antagWeighter = new(1) //Enables debug mode

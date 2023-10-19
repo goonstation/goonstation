@@ -42,8 +42,6 @@
 		if(3)
 			if (prob(25))
 				rackbreak()
-		else
-	return
 
 /obj/rack/blob_act(var/power)
 	if(prob(power * 2.5))
@@ -65,7 +63,7 @@
 	var/obj/item/I = O
 	if (istype(I,/obj/item/satchel))
 		var/obj/item/satchel/S = I
-		if (S.contents.len < 1)
+		if (length(S.contents) < 1)
 			boutput(user, "<span class='alert'>There's nothing in [S]!</span>")
 		else
 			user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
@@ -149,11 +147,11 @@
 
 	onStart()
 		..()
-		playsound(the_rack, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(the_rack, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_rack].</span>")
 
 	onEnd()
 		..()
-		playsound(the_rack, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(the_rack, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_rack].</span>")
 		the_rack.deconstruct()

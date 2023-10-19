@@ -32,7 +32,7 @@
 			master.processing_programs.Remove(src)
 			return 1
 
-		if(src.master.processing_programs.len > MAX_BACKGROUND_PROGS) //Don't want too many background programs.
+		if(length(src.master.processing_programs) > MAX_BACKGROUND_PROGS) //Don't want too many background programs.
 			return 1
 
 		if(!(src in src.master.processing_programs))
@@ -913,7 +913,7 @@ file_save - Save file to local disk."}
 				var/key = null
 				var/data = null
 				. = 0
-				if(command_list.len >= 2)
+				if(length(command_list) >= 2)
 
 					key = command_list[1]
 					command_list -= command_list[1]
@@ -926,7 +926,7 @@ file_save - Save file to local disk."}
 					src.print_text("Syntax: \"add \[key] \[data]\"")
 					return
 
-				if(src.working_signal.len >= WORKING_PACKET_MAX)
+				if(length(src.working_signal) >= WORKING_PACKET_MAX)
 					src.print_text("Error: Maximum packet keys reached.")
 					return
 
@@ -1101,7 +1101,7 @@ file_save - Save file to local disk."}
 			if("add") //Add new line to signal if possible.
 				var/title = null
 				var/data = null
-				if(command_list.len >= 2)
+				if(length(command_list) >= 2)
 
 					title = command_list[1]
 					command_list -= command_list[1]
@@ -1114,7 +1114,7 @@ file_save - Save file to local disk."}
 					src.print_half_text("Syntax: \"add \[title] \[data]\"")
 					return
 
-				if(src.working_signal.len >= WORKING_DISPLAY_LENGTH)
+				if(length(src.working_signal) >= WORKING_DISPLAY_LENGTH)
 					src.print_half_text("Error: Working Signal Full.")
 					return
 
@@ -1318,7 +1318,7 @@ file_save - Save file to local disk."}
 				src.holder.root.holder = src
 				src.holder.root.name = "root"
 
-			if(src.text_buffer.len >= 6)
+			if(length(src.text_buffer) >= 6)
 				src.text_buffer -= src.text_buffer[1]
 
 			src.text_buffer += text

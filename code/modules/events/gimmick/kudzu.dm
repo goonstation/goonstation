@@ -83,7 +83,7 @@
 				if (isnull(ecoords))
 					return
 				var/list/coords = splittext(ecoords, ",")
-				if (coords.len < 3)
+				if (length(coords) < 3)
 					return
 				startturf = locate(text2num(coords[1]), text2num(coords[2]), text2num(coords[3]))
 
@@ -232,6 +232,8 @@
 	var/dogrowth = 1
 	if (!istype(Vspread, /turf/simulated/floor) || isfeathertile(Vspread))
 		dogrowth = 0
+		return
+
 	for (var/obj/O in Vspread)
 
 		if (istype(O, /obj/window) || istype(O, /obj/forcefield) || istype(O, /obj/blob) || istype(O, /obj/spacevine) || istype(O, /obj/kudzu_marker))
@@ -308,8 +310,6 @@
 			if (prob(33))
 				qdel(src)
 				return
-		else
-	return
 
 /obj/spacevine/proc/take_damage(var/amount, var/damtype = "brute",var/mob/user)
 	if (!isnum(amount) || amount <= 0)
@@ -472,6 +472,7 @@
 	opacity = 0
 	pixel_x = -16
 	layer = MOB_LAYER - 1
+	anchored = ANCHORED
 
 	attackby(obj/item/W, mob/user)
 		if (iscuttingtool(W))

@@ -6,7 +6,7 @@
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/prefab/sandy_ruins)
 "c" = (
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/sand,
 /area/prefab/sandy_ruins)
 "d" = (

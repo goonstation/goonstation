@@ -58,6 +58,7 @@
 	point_at(atom/target, var/pixel_x, var/pixel_y)
 		if(ON_COOLDOWN(src, "hivemind_member_point", 1 SECOND))
 			return
+		..()
 		make_hive_point(target, pixel_x, pixel_y, color="#e2a059")
 
 	/// Like make_point, but the point is an image that is only displayed to hivemind members
@@ -95,7 +96,7 @@
 	proc/try_launch_attack(atom/shoot_target)
 		.= 0
 		if (isabomination(hivemind_owner.owner) && world.time > (last_attack + src.combat_click_delay))
-			var/obj/projectile/proj = initialize_projectile_ST(target, new /datum/projectile/special/acidspit, shoot_target)
+			var/obj/projectile/proj = initialize_projectile_pixel_spread(target, new /datum/projectile/special/acidspit, shoot_target)
 			if (proj) //ZeWaka: Fix for null.launch()
 				proj.launch()
 				last_attack = world.time

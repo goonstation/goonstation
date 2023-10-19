@@ -350,8 +350,8 @@
 /datum/construction_event/siege/martian
 	name = "Martian Siege"
 	warning_text = "We are under attack by a martian siege force!"
-	attacker_types = list(/obj/critter/martian/warrior, /obj/critter/martian/soldier)
-	bosses = list(/obj/critter/martian/psychic/weak, /obj/critter/martian/sapper)
+	attacker_types = list(/mob/living/critter/martian/warrior, /mob/living/critter/martian/soldier)
+	bosses = list(/mob/living/critter/martian/initiate, /mob/living/critter/martian/sapper)
 	original_size = 20
 	original_bosses = 2
 	is_abstract = 0
@@ -379,7 +379,7 @@
 	name = "Plant Siege"
 	warning_text = "We are under attack by a group of sentient vegetables!"
 	attacker_types = list(/obj/critter/killertomato)
-	bosses = list(/obj/critter/maneater)
+	bosses = list(/mob/living/critter/plant/maneater)
 	original_size = 30
 	original_bosses = 1
 	is_abstract = 0

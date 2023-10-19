@@ -94,7 +94,7 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts)
 			if(prob(40))
 				holder.emote("scream")
 		holder.TakeDamage("chest", 20, 0, 0, DAMAGE_STAB)
-		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB)
+		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = TRUE)
 
 		switch(remove_stage)
 			if(0)
@@ -546,5 +546,5 @@ ABSTRACT_TYPE(/obj/item/parts/artifact_parts/leg/precursor)
 			boutput(M, "<span class='notice'>You feel some bad stuff fall out of your chest!</span>")
 			return
 
-		boutput(holder.owner, "<span class='alert'>[M] has nothing wrong with them that can be healed!</span>")
+		boutput(holder.owner, "<span class='alert'>[M] has nothing wrong with [him_or_her(M)] that can be healed!</span>")
 		return TRUE

@@ -23,7 +23,7 @@
 
 // areas
 
-/area/radiostation/
+/area/radiostation
 	name = "Radio Station"
 	icon_state = "purple"
 
@@ -346,7 +346,7 @@
 		var/obj/O = new /obj/item/raw_material/shard/glass
 		O.set_loc(get_turf(M))
 		if (src.material)
-			O.setMaterial(copyMaterial(src.material))
+			O.setMaterial(src.material)
 		qdel(src)
 	else
 		M.visible_message("<span class='alert'>[user] taps [M] over the head with [src].</span>")
@@ -943,16 +943,16 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 	Musical Backing is "Valor" by David Fesliyan"}
 
 /obj/item/radio_tape/advertisement/chemistry
-	name = "charred compact tape - 'Unofficial Chemsitry Advertisment tape'"
+	name = "charred compact tape - 'Unofficial Chemsitry Advertisement tape'"
 	audio = 'sound/radio_station/adverts/Chemistry.ogg'
-	name_of_thing = "Unofficial Chemsitry Advertisment"
+	name_of_thing = "Unofficial Chemsitry Advertisement"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Brixx79 of Goonstation"}
 
 /obj/item/radio_tape/advertisement/robotics
-	name = "bloodied compact tape stained with oil - 'Unofficial Robotics Advertisment tape'"
+	name = "bloodied compact tape stained with oil - 'Unofficial Robotics Advertisement tape'"
 	audio = 'sound/radio_station/adverts/Robotics.ogg'
-	name_of_thing = "Unofficial Robotics Advertisment"
+	name_of_thing = "Unofficial Robotics Advertisement"
 	desc = {"A small audio tape. It looks too big to fit in an audio log.<br>
 	Voiceover by Brixx79 of Goonstation"}
 
@@ -1044,7 +1044,7 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 
 /obj/decal/fakeobjects/operatorconsole
 	name = "operator's console"
-	desc = "The computer operating console, covered in fancy toggle swtiches and register value lamps."
+	desc = "The computer operating console, covered in fancy toggle switches and register value lamps."
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "gannets_machine1"
 	bound_width = 32
@@ -1107,3 +1107,12 @@ ABSTRACT_TYPE(/obj/item/record/random/notaquario)
 /datum/computer/file/record/radioship/testlog2/New()
 	..()
 	fields = strings("radioship/radioship_records.txt","log_2")
+
+
+
+/obj/item/device/radio/intercom/radiostation
+	name = "broadcast radio"
+	desc = "A powerful radio transmitter. Enable the microphone to begin broadcasting your radio show."
+	device_color = "#E52780"
+	icon = 'icons/obj/radiostation.dmi'
+	icon_state = "mixtable-1"

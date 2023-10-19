@@ -75,7 +75,7 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 	JOB_XP(user, "Janitor", 3)
 	if (M.reagents)
 		M.reagents.trans_to(src, 5)
-	playsound(src, 'sound/items/towel.ogg', 20, 1)
+	playsound(src, 'sound/items/towel.ogg', 20, TRUE)
 	animate_smush(M)
 
 /obj/item/cloth/towel/afterattack(atom/target, mob/user as mob)
@@ -84,7 +84,7 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 			boutput(user, "<span class='alert'>[target] needs to be emptied first.</span>")
 			return
 		user.visible_message("<span class='notice'>[user] [pick("polishes", "shines", "cleans", "wipes")] [target] with [src].</span>")
-		playsound(src, 'sound/items/glass_wipe.ogg', 35, 1)
+		playsound(src, 'sound/items/glass_wipe.ogg', 35, TRUE)
 
 /obj/item/cloth/towel/white
 	name = "white towel"
@@ -115,15 +115,17 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 /obj/item/cloth/towel/clown/attack(mob/living/M, mob/user)
 	if (M != user || user.mind?.assigned_role != "Clown")
 		return ..()
+	var/mob/living/carbon/human/H = user
+	if (!H.organHolder?.stomach)
+		user.show_message("<span class='alert'>You can't seem to swallow!</span>")
+		return
 	user.visible_message("<span class='alert'>[user] rolls [src] into a ball and eats it!</span>")
-	playsound(user, 'sound/misc/gulp.ogg', 30, 1)
+	playsound(user, 'sound/misc/gulp.ogg', 30, TRUE)
 	eat_twitch(user)
 	user.drop_item(src)
-	src.set_loc(user)
+	H.organHolder.stomach.consume(src)
 	SPAWN(1 SECOND)
 		user.emote("burp")
-	var/mob/living/carbon/human/H = user
-	H.stomach_process += src
 
 /obj/item/cloth/towel/clown/attackby(obj/item/I, mob/user)
 	if (I.w_class != W_CLASS_TINY || user.mind?.assigned_role != "Clown")

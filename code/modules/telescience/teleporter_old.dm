@@ -31,6 +31,12 @@ TYPEINFO(/obj/machinery/teleport)
 	attack_ai()
 		src.Attackhand()
 
+	Click(location, control, params)
+		if (isobserver(usr) && src.linked_computer.locked)
+			usr.set_loc(get_turf(src.linked_computer.locked))
+			return
+		..()
+
 	Bumped(M as mob|obj)
 		SPAWN( 0 )
 			if (src.icon_state == "tele1")
@@ -159,7 +165,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/teleport/portal_generator, proc/engage, proc
 			break
 		for(var/obj/machinery/teleport/portal_ring/H in orange(2,src))
 			linked_rings += H
-		if (linked_rings.len > 0) found++
+		if (length(linked_rings) > 0) found++
 		return found
 
 /proc/do_teleport(atom/movable/M as mob|obj, atom/destination, precision, var/use_teleblocks = 1, var/sparks = 1)

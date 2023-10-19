@@ -308,13 +308,16 @@ rules:
   ## Enforce or disallow capitalization of the first letter of a comment
   # capitalized-comments: error
   ## Require or disallow trailing commas
-  comma-dangle: [error, {
-    arrays: always-multiline,
-    objects: always-multiline,
-    imports: always-multiline,
-    exports: always-multiline,
-    functions: only-multiline, ## Optional on functions
-  }]
+  comma-dangle: [
+    error,
+    {
+      arrays: always-multiline,
+      objects: always-multiline,
+      imports: always-multiline,
+      exports: always-multiline,
+      functions: only-multiline, ## Optional on functions
+    }
+  ]
   ## Enforce consistent spacing before and after commas
   comma-spacing: [error, { before: false, after: true }]
   ## Enforce consistent comma style
@@ -564,7 +567,7 @@ rules:
   ## Enforce spacing between rest and spread operators and their expressions
   # rest-spread-spacing: error
   ## Enforce sorted import declarations within modules
-  # sort-imports: error
+  sort-imports: [error, { ignoreCase: true, ignoreDeclarationSort: true }]
   ## Require symbol descriptions
   # symbol-description: error
   ## Require or disallow spacing around embedded expressions of template

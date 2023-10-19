@@ -36,13 +36,14 @@
 		if (!C)
 			src.remove_dialog(user)
 			user.set_eye(null)
-			return 0
+			return FALSE
 
-		if (user.stat == 2 || C.network != src.network) return 0
+		if (isdead(user) || C.network != src.network)
+			return FALSE
 
 		src.current = C
 		user.set_eye(C)
-		return 1
+		return TRUE
 
 	proc/move_viewport_to_camera(var/obj/machinery/camera/C, client/clint)
 		var/datum/viewport/vp = clint.getViewportsByType("cameras: Viewport")[1]
@@ -109,7 +110,7 @@
 		network = "Zeta"
 		icon_state = "security_tv"
 		circuit_type = /obj/item/circuitboard/small_tv
-		density = 0
+		density = FALSE
 
 		power_change()
 			return

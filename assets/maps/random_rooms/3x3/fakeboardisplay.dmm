@@ -1,0 +1,61 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 9
+	},
+/turf/simulated/floor/marble/black,
+/area/space)
+"c" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 5
+	},
+/turf/simulated/floor/marble/black,
+/area/space)
+"i" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 6
+	},
+/turf/simulated/floor/marble/black,
+/area/space)
+"n" = (
+/turf/simulated/floor/marble,
+/area/space)
+"p" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 10
+	},
+/turf/simulated/floor/marble/black,
+/area/space)
+"r" = (
+/obj/railing/velvet{
+	pixel_y = 23
+	},
+/turf/simulated/floor/marble,
+/area/space)
+"A" = (
+/obj/item/boarvessel/forgery{
+	pixel_y = 10;
+	desc = "Absolutely has to be a REAL Boar Vessel, 600-500 BC, Etruscan, ceramic.";
+	name = "100% REAL Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	},
+/obj/table/podium_white,
+/obj/machinery/light/small/floor,
+/obj/effects/lightshaft,
+/turf/simulated/floor/marble/black,
+/area/space)
+
+(1,1,1) = {"
+i
+n
+c
+"}
+(2,1,1) = {"
+n
+A
+r
+"}
+(3,1,1) = {"
+p
+n
+a
+"}

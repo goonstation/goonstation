@@ -11,7 +11,7 @@ html, body {
 }
 body {
 	background: #fff;
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif, "Twemoji", "Segoe UI Emoji";
     font-size: 12px;
     line-height: 1.4;
 	overflow-x: hidden;
@@ -32,12 +32,15 @@ img.icon {
 a {color: #0000ff;}
 a:visited {color: #ff00ff;}
 a.popt {text-decoration: none;}
-.emoji {font-family: "Twemoji", "Segoe UI Emoji" !important;}
 img.emoji {
 	height: 1em;
 	width: 1em;
 	margin: 0 .05em 0 .1em;
 	vertical-align: -0.1em;
+}
+wbr:after {
+	content:"";
+	display: block;
 }
 
 
@@ -326,10 +329,12 @@ img.emoji {
 .system {color: #ff0000;}
 .ooc {color: #002eb8;}
 .looc {color: #4c6ccd;}
+.newbeeooc {color: #29AB87;}
+.newbeelooc {color: #8BC16E;}
 .adminooc {color: #b82e00;}
 .adminlooc {color: #cd6c4c;}
 .admin {color: #386aff;}
-.admin .prefix {display: block; float:left; font-size: 0.5em; text-align: center;}
+.admin .prefix {float:left; font-size: 0.5em; text-align: center;}
 .adminMsgWrap {color: #AE46BA;}
 .gfartooc {color: #0099cc;}
 .gfartlooc {color: #4cb7db;}
@@ -443,6 +448,8 @@ body.theme-dark .emote { color: #888888; }
 body.theme-dark .subtle { color: #7A7471; }
 body.theme-dark .ooc {color: #688eff;}
 body.theme-dark .looc {color: #92a9ee;}
+body.theme-dark .newbeeooc {color: #29AB87;}
+body.theme-dark .newbeelooc {color: #8BC16E;}
 body.theme-dark .adminooc {color: #be6e53;}
 body.theme-dark .adminlooc {color: #ce8c76;}
 body.theme-dark .mentorooc {color: #a653ff;}

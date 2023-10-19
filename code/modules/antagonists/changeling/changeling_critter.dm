@@ -46,7 +46,7 @@ ABSTRACT_TYPE(/datum/antagonist/subordinate/changeling_critter)
 		var/mob/living/critter/changeling/critter = src.owner.current
 		if (!istype(critter))
 			return ..()
-		boutput(src.owner.current, "<h3><font color=red>You have reawakened to serve your host changeling, [src.master.current.real_name]! You must follow their commands!</font></h3>")
+		boutput(src.owner.current, "<h3><font color=red>You have reawakened to serve your host changeling, [src.master.current.real_name]! You must follow [his_or_her(src.master)] commands!</font></h3>")
 
 	announce_removal()
 		return

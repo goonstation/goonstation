@@ -106,7 +106,7 @@ TYPEINFO(/obj/item/injector_belt)
 				src.can_trigger = 0
 				SPAWN(src.min_time) src.can_trigger = 1
 
-				playsound(src, 'sound/items/injectorbelt_active.ogg', 33, 0, -5)
+				playsound(src, 'sound/items/injectorbelt_active.ogg', 33, FALSE, -5)
 				boutput(src.owner, "<span class='notice'>Your Injector belt activates.</span>")
 
 				src.container.reagents.reaction(src.owner, INGEST)
@@ -229,9 +229,9 @@ TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
 				SPAWN(src.min_time) src.can_trigger = 1
 				var/turf/T = get_turf(src)
 				if(T)
-					playsound(T, 'sound/items/injectorbelt_active.ogg', 33, 0, -5)
+					playsound(T, 'sound/items/injectorbelt_active.ogg', 33, FALSE, -5)
 					SPAWN(0.5 SECONDS)
-						playsound(T, 'sound/machines/hiss.ogg', 40, 1, -5)
+						playsound(T, 'sound/machines/hiss.ogg', 40, TRUE, -5)
 
 				boutput(src.owner, "<span class='notice'>Your [src] activates.</span>")
 

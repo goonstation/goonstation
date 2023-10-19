@@ -50,7 +50,6 @@ proc/qdel(var/datum/D)
 	else
 		if(islist(D))
 			D:len = 0
-			del(D)
 		else if(D == world)
 			del(D)
 			CRASH("Cannot qdel /world! Fuck you!")

@@ -244,7 +244,7 @@ TYPEINFO(/obj/item/device/pda_module)
 		scanner = new(src)
 
 	return_menu_badge()
-		var/text = "<a href='byond://?src=\ref[src];toggle=1'>[src.scanner.on ? "Disable" : "Enable"] T-Scanner</a>"
+		var/text = "<a href='byond://?src=\ref[src];toggle=1'>[src.scanner.on ? "Disable" : "Enable"] T-ray Scanner</a>"
 		return text
 
 	Topic(href, href_list)
@@ -270,7 +270,7 @@ TYPEINFO(/obj/item/device/pda_module)
 		scanner.set_on(FALSE)
 
 /obj/ability_button/pda_tray_toggle
-	name = "Toggle PDA T-Scanner"
+	name = "Toggle PDA T-ray Scanner"
 	icon_state = "pda0"
 
 	execute_ability()

@@ -4,7 +4,8 @@
 /obj/machinery/bot/guardbot/bad
 	name = "Secbuddy"
 	desc = "An early sub-model of the popular PR-6S Guardbuddy line. It seems to be in rather poor shape."
-	icon = 'icons/misc/hstation.dmi'
+	skin_icon_state = "secbuddy"
+	face_icon_override = 'icons/obj/bots/robuddy/hemera-secbuddy-faces.dmi'
 
 	control_freq = FREQ_SECBUDDY
 	beacon_freq = FREQ_SECBUDDY_NAVBEACON
@@ -29,7 +30,7 @@
 		switch(scramblemode)
 			if (5)
 				var/list/stutterList = splittext(message, " ")
-				if (stutterList.len > 1)
+				if (length(stutterList) > 1)
 					var/stutterPoint = rand( round(stutterList.len/2), stutterList.len )
 					stutterList.len = stutterPoint
 					message = ""
@@ -43,7 +44,7 @@
 
 			if (6)
 				var/list/bzztList = splittext(message, " ")
-				if (bzztList.len > 1)
+				if (length(bzztList) > 1)
 					for (var/i = 1, i <= bzztList.len, i++)
 						if (prob( min(5*i, 20) ))
 							bzztList[i] = pick("*BZZT*","*ERRT*","*WONK*", "*ZORT*", "*BWOP*", "BWEET")

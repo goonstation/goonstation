@@ -12,7 +12,7 @@
 	appearance_flags = TILE_BOUND | PIXEL_SCALE
 
 	var/list/slots = list("1","2","3","4","5","6") //I hate byond
-	var/list/deniedTypes = list(/obj/item/tool/omnitool) //Add your allowed paths here and the icons for them in rebuildOverlays() below.
+	var/list/deniedTypes = list(/obj/item/tool/omnitool, /obj/item/grab) //Add your allowed paths here and the icons for them in rebuildOverlays() below.
 
 	New()
 		rebuildOverlays()

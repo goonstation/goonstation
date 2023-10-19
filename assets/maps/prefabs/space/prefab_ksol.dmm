@@ -131,7 +131,6 @@
 /obj/machinery/communications_dish,
 /obj/lattice,
 /obj/cable{
-	d2 = 2;
 	icon_state = "0-2"
 	},
 /turf/variableTurf/clear,
@@ -158,8 +157,6 @@
 	icon_state = "lattice-dir"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/variableTurf/clear,
@@ -383,11 +380,7 @@
 	},
 /obj/item/reagent_containers/food/snacks/burger/moldy,
 /obj/item/reagent_containers/food/snacks/ingredient/gcheese,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibmid2";
-	name = "gross organs"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /obj/item/reagent_containers/food/snacks/meatloaf,
 /turf/simulated/floor/airless/damaged3,
 /area/noGenerate)
@@ -474,7 +467,7 @@
 /area/noGenerate)
 "bi" = (
 /obj/decal/cleanable/dirt,
-/obj/landmark/artifact,
+/obj/landmark/spawner/artifact,
 /turf/simulated/floor/airless,
 /area/noGenerate)
 "bj" = (
@@ -554,9 +547,7 @@
 	desc = "A large bin, for trash.";
 	name = "Trash bin"
 	},
-/obj/landmark{
-	name = "replacewith_records"
-	},
+/obj/item/storage/box/record/radio/chronoquest,
 /turf/simulated/floor/airless/carpet{
 	dir = 6;
 	icon_state = "fred2"
@@ -757,11 +748,7 @@
 /area/noGenerate)
 "bU" = (
 /obj/decal/cleanable/dirt,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibhead";
-	name = "grody thing"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)
 "bV" = (
@@ -922,14 +909,10 @@
 "cq" = (
 /obj/lattice,
 /obj/storage/closet,
-/obj/item/record/clown_collection/disco,
-/obj/item/record/clown_collection/eggshell,
-/obj/item/record/clown_collection/honk,
-/obj/item/record/clown_collection/poo,
-/obj/item/record/clown_collection/uguu,
 /obj/machinery/light/incandescent/broken{
 	dir = 4
 	},
+/obj/item/storage/box/record/clown_collection,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "cr" = (
@@ -1102,11 +1085,7 @@
 /obj/decal/cleanable/blood{
 	icon_state = "u_guilty"
 	},
-/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat{
-	icon = 'icons/effects/blood.dmi';
-	icon_state = "gibtorso";
-	name = "meaty bit"
-	},
+/obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/grody,
 /turf/simulated/floor/airless/wood,
 /area/noGenerate)
 "cN" = (
@@ -1171,9 +1150,7 @@
 /area/noGenerate)
 "cV" = (
 /obj/lattice,
-/obj/landmark{
-	name = "replacewith_records"
-	},
+/obj/item/storage/box/record/radio/guitar,
 /turf/variableTurf/floor,
 /area/noGenerate)
 "cW" = (

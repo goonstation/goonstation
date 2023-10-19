@@ -1,6 +1,5 @@
 
 #define IS_NPC_HATED_ITEM(x) ( \
-		istype(x, /obj/item/clothing/suit/straight_jacket) || \
 		istype(x, /obj/item/handcuffs) || \
 		istype(x, /obj/item/device/radio/electropack) || \
 		x:block_vision \
@@ -144,6 +143,14 @@
 			src.real_name = "Junior Syndicate Agent"
 			JobEquipSpawned("Poorly Equipped Junior Syndicate Operative")
 
+/mob/living/carbon/human/npc/survivor // For prefab wrecks. Give them some life. Maybe expand this npc later idk
+	New()
+		..()
+		SPAWN(0)
+			var/pickedjob = pick("Clown", "Engineer", "Artist", "Hollywood Actor", "Waiter", "Pharmacist", "Coach", "Test Subject", "Technical Assistant") // picked from mostly gimmick jobs to avoid good stuff spawning on them
+			JobEquipSpawned("[pickedjob]")
+
+
 //reverse blade samurai
 
 // npc ai procs
@@ -244,22 +251,6 @@
 
 	ai_lastaction = world.time
 	ai_actiondelay = action_delay
-
-
-/*
-/mob/living/carbon/human/proc/ai_findtarget()
-	var/tempmob
-	for (var/mob/living/carbon/M in view(7,src))
-		if (M.stat > 0 || !M.client || M == src || M.is_npc) continue
-		if (!tempmob) tempmob = M
-		for(var/mob/living/carbon/human/L in oview(7,src))
-			if (L.ai_target == tempmob && prob(50)) continue
-		if (M.health < tempmob:health) tempmob = M
-	if(tempmob)
-		ai_target = tempmob
-		ai_state = AI_ANGERING
-		ai_threatened = world.timeofday
-*/
 
 /mob/living/carbon/human/proc/ai_is_valid_target(mob/M)
 	return TRUE
@@ -431,7 +422,7 @@
 						jumpy?.ability.handleCast(target)
 					else
 						var/obj/item/gun/W = src.r_hand
-						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0)
+						W.shoot(get_turf(carbon_target), get_turf(src), src, 0, 0, called_target = carbon_target)
 						if(src.bioHolder.HasEffect("coprolalia") && prob(10))
 							switch(pick(1,2))
 								if(1)
@@ -620,7 +611,7 @@
 		var/poured = FALSE
 		if(istype(src.equipped(), /obj/item/reagent_containers/glass) || prob(20))
 			for(var/obj/item/reagent_containers/container in view(1, src))
-				if(container != src.equipped() && container.is_open_container() && container.reagents?.total_volume < container.reagents?.maximum_volume)
+				if(container != src.equipped() && container.is_open_container(TRUE) && container.reagents?.total_volume < container.reagents?.maximum_volume)
 					src.ai_attack_target(container, src.equipped())
 					poured = TRUE
 					break
@@ -674,8 +665,8 @@
 		walk_towards(src, null)
 		walk_away(src, null)
 		return
-	if((src in actions.running) && length(actions.running[src]))
-		return // don't interupt actions
+	if((src in actions.running) && length(actions.running[src]) && !prob(1))
+		return // don't interupt actions, except 1% as a hack to escape looping actions such as hand washing
 	if( ai_state == AI_PASSIVE && ai_canmove() ) step_rand(src)
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(src.pulling)
@@ -762,7 +753,7 @@
 			var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
 			if(!cigarette.on && (istype(G, /obj/item/device/light/zippo) || istype(G, /obj/item/weldingtool) || istype(G, /obj/item/device/igniter)))
 				score += 8
-		score += G.contraband // this doesn't use get_contraband() because monkeys aren't feds
+		score += G.contraband // this doesn't use contraband signals because monkeys aren't feds
 		score += rand(-2, 2)
 		if(score > pickup_score)
 			pickup_score = score
@@ -790,7 +781,7 @@
 		var/obj/item/gun/kinetic/GN = src.r_hand
 		for(var/obj/item/ammo/bullets/BB in src.contents)
 			src.l_hand = BB
-			GN:attackby(BB,src)
+			GN:Attackby(BB,src)
 			src.u_equip(BB)
 			src.l_hand = null
 			if (BB)
@@ -1010,11 +1001,11 @@
 	if (ai_incapacitated())
 		return
 	for (var/obj/storage/closet/C in view(1,src))
-		if (!C.open)
-			C.open(user=src)
+		if (can_reach(src, C) && prob(5))
+			src.hand_attack(C)
 	for (var/obj/storage/secure/closet/S in view(1,src))
-		if (!S.open && !S.locked)
-			S.open(user=src)
+		if (!S.locked && can_reach(src, S) && prob(5))
+			src.hand_attack(S)
 
 
 #undef IS_NPC_HATED_ITEM

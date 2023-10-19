@@ -5,8 +5,8 @@
 
 	New()
 		. = ..()
-		src.maptext_y = 32
 		src.stam_monitor = new /obj/machinery/maptext_monitor/stamina(src)
+		src.AddComponent(/datum/component/health_maptext)
 
 
 	say(message, ignore_stamina_winded)

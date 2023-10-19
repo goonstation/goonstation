@@ -1,3 +1,5 @@
+#define STATUS_WEAK 1
+#define STATUS_STRONG 2
 
 TYPEINFO(/obj/table)
 	/// Determines what types this table will smooth with
@@ -21,7 +23,7 @@ TYPEINFO_NEW(/obj/table)
 	material_amt = 0.2
 	var/parts_type = /obj/item/furniture_parts/table
 	default_material = null
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	var/auto = 0
 	var/status = null //1=weak|welded, 2=strong|unwelded
 	var/image/working_image = null
@@ -140,9 +142,8 @@ TYPEINFO_NEW(/obj/table)
 			victim.changeStatus("weakened", 3 SECONDS)
 			victim.force_laydown_standup()
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-		if (src.material)
-			src.material.triggerOnAttacked(src, user, victim, src)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
+		src.material_trigger_when_attacked(victim, user, 1)
 
 
 	/// Slam a dude on the table (gently, with great care)
@@ -230,25 +231,16 @@ TYPEINFO_NEW(/obj/table)
 			qdel(W)
 			return
 
-		else if (istype(W, /obj/item/plank))
-			if (status == 2)
-				if (istype(src, /obj/table/reinforced/bar)) //why must you be so confusing
-					boutput(user, "<span class='notice'>You can't add more than one finish, that's just illogical!</span>")
-					return
-				else if (istype(src, /obj/table/reinforced/auto))
-					boutput(user, "<span class='notice'>Now adding a faux wood finish to \the [src]</span>") //mwah
-					playsound(src.loc, 'sound/items/zipper.ogg', 50, 1)
-					if(do_after(user,50))
-						var/obj/table/L = new /obj/table/reinforced/bar/auto(src.loc)
-						L.layer = src.layer - 0.01
-						qdel(W)
-						qdel(src)
-						boutput(user, "<span class='notice'>You have added a faux wood finish to \the [src]</span>")
-					return
-				else
-					boutput(user, "<span class='notice'>\The [src] is too weak to be modified!</span>")
-			else
+		else if (istype(W,/obj/item/sheet/wood))
+			if (istype(src, /obj/table/reinforced/bar)) //why must you be so confusing
+				return ..()
+			if (status != STATUS_STRONG || !istype(src, /obj/table/reinforced/auto))
 				boutput(user, "<span class='notice'>\The [src] is too weak to be modified!</span>")
+				return
+			if (W.amount < 5)
+				boutput(user, "<span class='notice'>You need at least 5 planks to furnish the whole table.</span>")
+				return
+			actions.start(new /datum/action/bar/icon/furnish_table(src,W), user)
 
 		else if (istype(W, /obj/item/paint_can))
 			return
@@ -278,7 +270,7 @@ TYPEINFO_NEW(/obj/table)
 			if (src.lock_id && src.lock_id == K.id)
 				src.drawer_locked = !src.drawer_locked
 				user.visible_message("[user] [!src.drawer_locked ? "un" : null]locks [src].")
-				playsound(src, 'sound/items/Screwdriver2.ogg', 50, 1)
+				playsound(src, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 			else
 				boutput(user, "<span class='alert'>[K] doesn't seem to fit in [src]'s desk drawer lock.</span>")
 			return
@@ -313,8 +305,7 @@ TYPEINFO_NEW(/obj/table)
 						H.limbs.r_arm.sever()
 
 				playsound(src.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-				if (src.material)
-					src.material.triggerOnAttacked(src, user, user, src)
+				src.material_trigger_when_attacked(user, user, 1)
 				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
@@ -354,7 +345,7 @@ TYPEINFO_NEW(/obj/table)
 		I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 		if (istype(I,/obj/item/satchel))
 			var/obj/item/satchel/S = I
-			if (S.contents.len < 1)
+			if (length(S.contents) < 1)
 				boutput(user, "<span class='alert'>There's nothing in [S]!</span>")
 			else
 				user.visible_message("<span class='notice'>[user] dumps out [S]'s contents onto [src]!</span>")
@@ -461,7 +452,7 @@ TYPEINFO(/obj/table/wood)
 	desc = "A table made from solid oak, which is quite rare in space."
 	icon = 'icons/obj/furniture/table_wood.dmi'
 	parts_type = /obj/item/furniture_parts/table/wood
-	uses_material_appearance = FALSE
+	uses_default_material_appearance = FALSE
 	mat_changename = FALSE
 	default_material = "wood"
 
@@ -546,7 +537,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 	name = "table"
 	icon = 'icons/obj/furniture/table.dmi'
 	icon_state = "0$$mauxite"
-	uses_material_appearance = TRUE
+	uses_default_material_appearance = TRUE
 	mat_changename = TRUE
 	default_material = "mauxite"
 
@@ -585,7 +576,7 @@ TYPEINFO_NEW(/obj/table/mauxite)
 			victim.changeStatus("weakened", 4 SECONDS)
 			victim.force_laydown_standup()
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src], collapsing it instantly!</b></span>")
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 		deconstruct()
 
 TYPEINFO(/obj/table/syndicate)
@@ -694,16 +685,16 @@ TYPEINFO_NEW(/obj/table/reinforced)
 	name = "reinforced table"
 	desc = "A table made from reinforced metal, it is quite strong and it requires welding and wrenching to disassemble it."
 	icon = 'icons/obj/furniture/table_reinforced.dmi'
-	status = 2
+	status = STATUS_STRONG
 	parts_type = /obj/item/furniture_parts/table/reinforced
 
 	auto
 		auto = 1
 
 	get_help_message(dist, mob/user)
-		if (src.status == 2)
+		if (src.status == STATUS_STRONG)
 			return {"You can use a <b>welding tool</b> on <span class='harm'>harm</span> intent to weaken it for disassembly."}
-		else if (src.status == 1)
+		else if (src.status == STATUS_WEAK)
 			return{"
 				You can use a <b>wrench</b> on <span class='harm'>harm</span> intent to disassemble it,
 				or a <b>welding tool</b> on <span class='harm'>harm</span> intent to strengthen it.
@@ -711,16 +702,16 @@ TYPEINFO_NEW(/obj/table/reinforced)
 
 	attackby(obj/item/W, mob/user)
 		if (isweldingtool(W) && user.a_intent == "harm" && W:try_weld(user,1))
-			if (src.status == 2)
+			if (src.status == STATUS_STRONG)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_WEAKEN), user)
 				return
-			else if (src.status == 1)
+			else if (src.status == STATUS_WEAK)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_STRENGTHEN), user)
 				return
 			else
 				return ..()
 		else if (iswrenchingtool(W) && user.a_intent == "harm")
-			if (src.status == 1)
+			if (src.status == STATUS_WEAK)
 				actions.start(new /datum/action/bar/icon/table_tool_interact(src, W, TABLE_DISASSEMBLE), user)
 				return
 			else
@@ -766,10 +757,95 @@ TYPEINFO_NEW(/obj/table/reinforced/chemistry)
 	auto
 		auto = 1
 
-/obj/table/reinforced/chemistry/beakers //starts with 7 :B:eakers inside it, wow!!
+/obj/table/reinforced/chemistry/auto/beakers //starts with 7 :B:eakers inside it, wow!!
 	name = "beaker storage"
-	has_drawer = TRUE
 	drawer_contents = list(/obj/item/reagent_containers/glass/beaker = 7)
+
+/obj/table/reinforced/chemistry/auto/basicsup
+	name = "basic supply lab counter"
+	desc = "Everything an aspiring chemist needs to start making chemicals!"
+	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
+				/obj/item/storage/box/beakerbox = 2,
+				/obj/item/reagent_containers/glass/beaker/large = 2,
+				/obj/item/clothing/glasses/spectro,
+				/obj/item/device/reagentscanner = 2,
+				/obj/item/reagent_containers/dropper/mechanical = 2,
+				/obj/item/reagent_containers/dropper = 2)
+
+/obj/table/reinforced/chemistry/auto/auxsup
+	name = "auxiliary supply lab counter"
+	desc = "Extra supplies for the discerning chemist."
+	drawer_contents = list(/obj/item/storage/box/beakerbox,
+				/obj/item/storage/box/patchbox,
+				/obj/item/storage/box/syringes,
+				/obj/item/clothing/glasses/spectro,
+				/obj/item/device/reagentscanner,
+				/obj/item/bunsen_burner,
+				/obj/item/reagent_containers/dropper/mechanical,
+				/obj/item/storage/box/lglo_kit,
+				/obj/item/storage/box/beaker_lids,
+				/obj/item/reagent_containers/glass/condenser = 4)
+
+
+
+/obj/table/reinforced/chemistry/auto/clericalsup
+	name = "clerical supply lab counter"
+	desc = "It's only science if you write it down! Or blow yourself up."
+	drawer_contents = list(/obj/item/paper_bin = 2,
+				/obj/item/hand_labeler,
+				/obj/item/clipboard = 2,
+				/obj/item/pen,
+				/obj/item/stamp,
+				/obj/item/device/audio_log,
+				/obj/item/audio_tape = 2)
+
+
+/obj/table/reinforced/chemistry/auto/firstaid
+	name = "toxin care lab counter"
+	desc = "These drawers have been labeled EMERGENCY TOXIN CARE, which means they're probably already close to empty."
+	drawer_contents = list(/obj/item/storage/firstaid/toxin,
+				/obj/item/reagent_containers/emergency_injector/calomel)
+
+/obj/table/reinforced/chemistry/auto/chemstorage
+	name = "chemical storage lab counter"
+	desc = "A set of basic precursor chemicals to expedite order fulfillment, increase efficiency, and synergize your workflow. Whatever the fuck that means."
+	drawer_contents = list(/obj/item/reagent_containers/food/drinks/fueltank,
+				/obj/item/reagent_containers/glass/bottle/oil,
+				/obj/item/reagent_containers/glass/bottle/phenol,
+				/obj/item/reagent_containers/glass/bottle/acid,
+				/obj/item/reagent_containers/glass/bottle/acetone,
+				/obj/item/reagent_containers/glass/bottle/diethylamine,
+				/obj/item/reagent_containers/glass/bottle/ammonia)
+
+/obj/table/reinforced/chemistry/auto/drugs
+	name = "seedy-looking lab counter"
+	desc = ""
+	drawer_contents = list(/obj/item/plant/herb/cannabis/spawnable = 2,
+				/obj/item/device/light/zippo,
+				/obj/item/reagent_containers/syringe/krokodil,
+				/obj/item/reagent_containers/syringe/morphine,
+				/obj/item/storage/pill_bottle/cyberpunk)
+
+	get_desc(var/dist, var/mob/user)
+		if (user.mind?.assigned_role == "Research Director")
+			. = "<br>A stash of drugs provided in an attempt to placate your underlings. Stocking this drawer was your greatest mistake."
+		else
+			. = "<br>A stash of drugs, and maybe the only positive contribution the RD ever made to the station. Too bad they cheaped out on the selection."
+
+/obj/table/reinforced/chemistry/auto/allinone
+	name = "jam-packed lab counter"
+	desc = "The drawers on these barely close, and rattle loudly when moved. Guess they tried to put too much crap in it."
+	drawer_contents = list(/obj/item/paper/book/from_file/pharmacopia,
+				/obj/item/storage/box/beakerbox = 2,
+				/obj/item/storage/box/syringes,
+				/obj/item/paper_bin,
+				/obj/item/hand_labeler,
+				/obj/item/reagent_containers/dropper/mechanical,
+				/obj/item/reagent_containers/dropper,
+				/obj/item/storage/firstaid/toxin,
+				/obj/item/clothing/glasses/spectro,
+				/obj/item/device/reagentscanner)
+
 
 TYPEINFO(/obj/table/reinforced/industrial)
 TYPEINFO_NEW(/obj/table/reinforced/industrial)
@@ -841,7 +917,7 @@ TYPEINFO(/obj/table/glass)
 			return
 		src.visible_message("<span class='alert'>\The [src] shatters!</span>")
 		playsound(src, "sound/impact_sounds/Glass_Shatter_[rand(1,3)].ogg", 100, 1)
-		if (src.material?.mat_id in list("gnesis", "gnesisglass"))
+		if (src.material?.getID() in list("gnesis", "gnesisglass"))
 			gnesis_smash()
 		else
 			for (var/i=0, i<2, i++)
@@ -953,7 +1029,7 @@ TYPEINFO(/obj/table/glass)
 		if (src.glass_broken == GLASS_BROKEN)
 			if (istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
-				if (!S.material || !(S.material.material_flags & MATERIAL_CRYSTAL))
+				if (!S.material || !(S.material.getMaterialFlags() & MATERIAL_CRYSTAL))
 					boutput(user, "<span class='alert'>You have to use glass or another crystalline material to repair [src]!</span>")
 				else if (S.change_stack_amount(-1))
 					boutput(user, "<span class='notice'>You add glass to [src]!</span>")
@@ -988,7 +1064,7 @@ TYPEINFO(/obj/table/glass)
 				logTheThing(LOG_STATION, user, "puts [constructTarget(grabbed,"combat")] onto a glass table")
 				src.gentle_slam(user, grabbed)
 
-		else if (istype(W, /obj/item/plank) || istool(W, TOOL_SCREWING | TOOL_WRENCHING) || (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm"))
+		else if (istype(W,/obj/item/sheet/wood) || istool(W, TOOL_SCREWING | TOOL_WRENCHING) || (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm"))
 			return ..()
 
 		else if (istype(W, /obj/item/reagent_containers/food/drinks/bottle) && user.a_intent == "harm")
@@ -1013,7 +1089,7 @@ TYPEINFO(/obj/table/glass)
 				smashprob = round(smashprob / 2, 1)
 
 			if (src.place_on(W, user, params))
-				playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 100, 1)
+				playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 100, TRUE)
 			else if (W && user.a_intent != "help")
 				DEBUG_MESSAGE("[src] smashprob = ([smashprob] * 1.5) (result [(smashprob * 1.5)])")
 				smashprob = (smashprob * 1.5)
@@ -1035,9 +1111,8 @@ TYPEINFO(/obj/table/glass)
 		victim.set_loc(src.loc)
 		victim.changeStatus("weakened", 4 SECONDS)
 		src.visible_message("<span class='alert'><b>[user] slams [victim] onto \the [src]!</b></span>")
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-		if (src.material)
-			src.material.triggerOnAttacked(src, user, victim, src)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
+		src.material_trigger_when_attacked(victim, user, 1)
 		if ((prob(src.reinforced ? 60 : 80)) || (user.bioHolder.HasEffect("clumsy") && (!src.reinforced || prob(90))))
 			src.smash()
 			random_brute_damage(victim, rand(20,40),1)
@@ -1054,7 +1129,7 @@ TYPEINFO(/obj/table/glass)
 			if ((prob(src.reinforced ? 60 : 80)))
 				logTheThing(LOG_COMBAT, thr.user, "throws [constructTarget(M,"combat")] into a glass table, breaking it")
 				src.visible_message("<span class='alert'>[M] smashes through [src]!</span>")
-				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+				playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 				src.smash()
 				if (M.loc != src.loc)
 					step(M, get_dir(M, src))
@@ -1066,7 +1141,7 @@ TYPEINFO(/obj/table/glass)
 	place_on(obj/item/W as obj, mob/user as mob, params)
 		..()
 		if (. == 1) // successfully put thing on table, make a noise because we are a fancy special glass table
-			playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 100, 1)
+			playsound(src, 'sound/impact_sounds/Crystal_Hit_1.ogg', 100, TRUE)
 			return 1
 
 	set_up()
@@ -1224,7 +1299,7 @@ TYPEINFO(/obj/table/glass)
 				return
 			else if (prob(8))
 				owner.visible_message("<span class='alert'>[owner] messes up while picking [the_table]'s lock!</span>")
-				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 				interrupt(INTERRUPT_ALWAYS)
 				return
 
@@ -1234,7 +1309,7 @@ TYPEINFO(/obj/table/glass)
 		switch (interaction)
 			if (TABLE_DISASSEMBLE)
 				verbing = "disassembling"
-				playsound(the_table, 'sound/items/Ratchet.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Ratchet.ogg', 50, TRUE)
 			if (TABLE_WEAKEN)
 				verbing = "weakening"
 				the_tool:try_weld(owner,0,-1)
@@ -1243,10 +1318,10 @@ TYPEINFO(/obj/table/glass)
 				the_tool:try_weld(owner,0,-1)
 			if (TABLE_ADJUST)
 				verbing = "adjusting the shape of"
-				playsound(the_table, 'sound/items/Screwdriver.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Screwdriver.ogg', 50, TRUE)
 			if (TABLE_LOCKPICK)
 				verbing = "picking the lock on"
-				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins [verbing] [the_table].</span>")
 
 	onEnd()
@@ -1255,14 +1330,14 @@ TYPEINFO(/obj/table/glass)
 		switch (interaction)
 			if (TABLE_DISASSEMBLE)
 				verbens = "disassembles"
-				playsound(the_table, 'sound/items/Deconstruct.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Deconstruct.ogg', 50, TRUE)
 				the_table.deconstruct()
 			if (TABLE_WEAKEN)
 				verbens = "weakens"
-				the_table.status = 1
+				the_table.status = STATUS_WEAK
 			if (TABLE_STRENGTHEN)
 				verbens = "strengthens"
-				the_table.status = 2
+				the_table.status = STATUS_STRONG
 			if (TABLE_ADJUST)
 				verbens = "adjusts the shape of"
 				the_table.set_up()
@@ -1270,7 +1345,7 @@ TYPEINFO(/obj/table/glass)
 				verbens = "picks the lock on"
 				if (the_table.has_drawer)
 					the_table.drawer_locked = FALSE
-				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, 1)
+				playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] [verbens] [the_table].</span>")
 
 /datum/action/bar/icon/fold_folding_table
@@ -1305,13 +1380,63 @@ TYPEINFO(/obj/table/glass)
 	onStart()
 		..()
 		if (the_tool)
-			playsound(the_table, 'sound/items/Ratchet.ogg', 50, 1)
+			playsound(the_table, 'sound/items/Ratchet.ogg', 50, TRUE)
 		else
-			playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, 1)
+			playsound(the_table, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins disassembling [the_table].</span>")
 
 	onEnd()
 		..()
-		playsound(the_table, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(the_table, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] disassembles [the_table].</span>")
 		the_table.deconstruct()
+
+/datum/action/bar/icon/furnish_table
+	id = "furnish_table"
+	interrupt_flags = INTERRUPT_MOVE | INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION
+	duration = 5 SECONDS
+	icon = 'icons/ui/actions.dmi'
+	icon_state = "working"
+
+	var/obj/table/reinforced/the_table
+	var/obj/item/sheet/wood/the_planks
+
+	New(var/obj/table/reinforced/rtable,var/obj/item/sheet/wood/planks)
+		..()
+		if (rtable)
+			the_table = rtable
+		if (planks)
+			the_planks = planks
+
+	onUpdate()
+		..()
+		var/mob/source = owner
+		if (the_table == null || the_planks == null || BOUNDS_DIST(owner, the_table) > 0)
+			interrupt(INTERRUPT_ALWAYS)
+		else if (istype(source) && the_planks != source.equipped())
+			interrupt(INTERRUPT_ALWAYS)
+		else if (the_table.status != STATUS_STRONG)
+			boutput(owner, "<span class='notice'>\The [src] is too weak to be modified!</span>")
+			interrupt(INTERRUPT_ALWAYS)
+		else if (the_planks.amount < 5)
+			boutput(owner, "<span class='notice'>You need at least 5 planks to furnish the whole table.</span>")
+			interrupt(INTERRUPT_ALWAYS)
+
+	onStart()
+		..()
+		if (the_planks.amount < 5)
+			boutput(owner, "<span class='notice'>You need at least 5 planks to furnish the whole table.</span>")
+		owner.visible_message("<span class='notice'>[owner] starts adding a faux wood finish to \the [the_table].</span>") //mwah
+		playsound(the_table.loc, 'sound/items/zipper.ogg', 50, 1)
+
+	onEnd()
+		..()
+		owner.visible_message("<span class='notice'>[owner] finishes adding a faux wood finish to \the [the_table].</span>")
+		var/obj/table/L = new /obj/table/reinforced/bar/auto(the_table.loc)
+		L.layer = the_table.layer - 0.01
+		the_planks.change_stack_amount(-5)
+		qdel(the_table)
+		return
+
+#undef STATUS_WEAK
+#undef STATUS_STRONG

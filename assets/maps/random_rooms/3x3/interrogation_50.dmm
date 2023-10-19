@@ -1,0 +1,79 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/decal/cleanable/dirt/dirt2,
+/turf/simulated/floor/grey/blackgrime,
+/area/dmm_suite/clear_area)
+"c" = (
+/obj/item/device/light/floodlight/starts_on/fixed{
+	dir = 5
+	},
+/obj/item/cell/shell_cell{
+	pixel_y = -10;
+	pixel_x = -10
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/dmm_suite/clear_area)
+"j" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/item/clothing/mask/cigarette{
+	icon_state = "cigbutt";
+	pixel_y = -8
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/dmm_suite/clear_area)
+"k" = (
+/obj/decal/cleanable/dirt,
+/obj/decal/cleanable/blood{
+	icon_state = "floor6";
+	pixel_y = 30
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/dmm_suite/clear_area)
+"B" = (
+/obj/item/reagent_containers/glass/bucket,
+/obj/decal/cleanable/water,
+/obj/submachine/chef_sink/chem_sink{
+	pixel_y = 8
+	},
+/obj/machinery/light/small/broken{
+	dir = 1;
+	pixel_y = 20
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/dmm_suite/clear_area)
+"G" = (
+/turf/simulated/floor/grey/blackgrime,
+/area/dmm_suite/clear_area)
+"S" = (
+/obj/stool/chair/e_chair,
+/obj/item/handcuffs{
+	pixel_y = -20
+	},
+/obj/decal/cleanable/blood{
+	icon_state = "drip2b"
+	},
+/obj/machinery/drainage,
+/turf/simulated/floor/grey/blackgrime,
+/area/dmm_suite/clear_area)
+"U" = (
+/obj/decal/cleanable/blood{
+	icon_state = "drip1a"
+	},
+/turf/simulated/floor/grey/blackgrime,
+/area/dmm_suite/clear_area)
+
+(1,1,1) = {"
+k
+U
+c
+"}
+(2,1,1) = {"
+G
+S
+a
+"}
+(3,1,1) = {"
+B
+j
+G
+"}

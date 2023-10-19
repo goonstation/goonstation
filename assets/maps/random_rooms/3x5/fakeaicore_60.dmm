@@ -24,7 +24,6 @@
 /obj/computerframe,
 /obj/machinery/power/data_terminal,
 /obj/cable{
-	d2 = 2;
 	dir = null;
 	icon_state = "0-2"
 	},

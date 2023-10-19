@@ -53,7 +53,7 @@
 		if(keybind == "+")
 			keys = list("+")
 
-		if(keys.len > 1)
+		if(length(keys) > 1)
 			//We have multiple keys (modifiers + normal ones)
 			for(var/key in keys)
 				//If it's a modifier key, then change the required modifier

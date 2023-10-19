@@ -618,7 +618,7 @@ TYPEINFO(/obj/machinery/door/airlock/pyro/glass/reinforced)
 	icon_state = "windoor_closed"
 	icon_base = "windoor"
 	panel_icon_state = "windoor_panel_open"
-	welded_icon_state = "fdoor_weld"
+	welded_icon_state = "glassdoor_welded"
 	sound_airlock = 'sound/machines/windowdoor.ogg'
 	has_crush = FALSE
 	health = 500
@@ -1089,6 +1089,13 @@ About the new airlock wires panel:
 	var/wireIndex = airlockWireColorToIndex[wireColor]
 	wires &= ~wireFlag
 	switch(wireIndex)
+		if(AIRLOCK_WIRE_IDSCAN)
+			//Cutting this also flashes the red light on the door (if the door has power).
+			if ((src.arePowerSystemsOn()) && (!(src.status & NOPOWER)))
+				play_deny()
+				if(src.aiDisabledIdScanner == TRUE)
+					src.aiDisabledIdScanner = FALSE
+
 		if(AIRLOCK_WIRE_MAIN_POWER1, AIRLOCK_WIRE_MAIN_POWER2)
 			//Cutting either one disables the main door power, but unless backup power is also cut, the backup power re-powers the door in 10 seconds. While unpowered, the door may be crowbarred open, but bolts-raising will not work. Cutting these wires may electocute the user.
 			src.loseMainPower()
@@ -1647,7 +1654,7 @@ About the new airlock wires panel:
 		boutput(usr, "<span class='alert'>You try to pry [src]  open, but it won't budge! The power of \the [src] must be disabled first.</span>")
 
 	if(!ON_COOLDOWN(src, "prying_sound", 1.5 SECONDS))
-		playsound(src, 'sound/machines/airlock_pry.ogg', 35, 1)
+		playsound(src, 'sound/machines/airlock_pry.ogg', 35, TRUE)
 
 	return
 
@@ -1659,10 +1666,7 @@ About the new airlock wires panel:
 		power_usage += LINKED_FORCEFIELD_POWER_USAGE
 	.= ..()
 
-	if (narrator_mode)
-		playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
-	else
-		playsound(src.loc, src.sound_airlock, 25, 1)
+	playsound(src.loc, src.sound_airlock, 25, 1)
 
 	if (src.closeOther != null && istype(src.closeOther, /obj/machinery/door/airlock/) && !src.closeOther.density)
 		src.closeOther.close(1)
@@ -1680,13 +1684,10 @@ About the new airlock wires panel:
 	if (src.linked_forcefield)
 		power_usage -= LINKED_FORCEFIELD_POWER_USAGE
 	if(!..(!src.safety))
-		if (narrator_mode)
-			playsound(src.loc, 'sound/vox/door.ogg', 25, 1)
+		if (src.sound_close_airlock)
+			playsound(src.loc, src.sound_close_airlock, 25, 1)
 		else
-			if (src.sound_close_airlock)
-				playsound(src.loc, src.sound_close_airlock, 25, 1)
-			else
-				playsound(src.loc, src.sound_airlock, 25, 1)
+			playsound(src.loc, src.sound_airlock, 25, 1)
 
 	return
 
@@ -1934,11 +1935,11 @@ TYPEINFO(/obj/machinery/door/airlock)
 
 	set_locked()
 		. = ..()
-		playsound(src, 'sound/machines/airlock_bolt.ogg', 40, 1, -2)
+		playsound(src, 'sound/machines/airlock_bolt.ogg', 40, TRUE, -2)
 
 	set_unlocked()
 		. = ..()
-		playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, 1, -2)
+		playsound(src, 'sound/machines/airlock_unbolt.ogg', 40, TRUE, -2)
 
 
 	allowed(mob/living/carbon/human/user)
@@ -1984,7 +1985,7 @@ TYPEINFO(/obj/machinery/door/airlock)
 	if(src.welded && !src.locked)
 		audible_message("<span class='alert'>[src] lets out a loud whirring and grinding noise!</span>")
 		animate_shake(src, 5, 2, 2, src.pixel_x, src.pixel_y)
-		playsound(src, 'sound/items/mining_drill.ogg', 25, 1, 0, 0.8)
+		playsound(src, 'sound/items/mining_drill.ogg', 25, TRUE, 0, 0.8)
 		src.take_damage(src.health * 0.8)
 
 /obj/machinery/door/airlock/receive_silicon_hotkey(var/mob/user)

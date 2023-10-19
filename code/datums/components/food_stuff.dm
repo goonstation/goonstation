@@ -82,7 +82,7 @@ TYPEINFO(/datum/component/consume/organpoints)
 					boutput(L, "<span class='alert'>Ugh. Nothing but bone. Pretty spooky though.</span>")
 					return
 				if (/obj/item/skull/peculiar)
-					playsound(L, 'sound/misc/meat_plop.ogg', 100, 1)
+					playsound(L, 'sound/misc/meat_plop.ogg', 100, TRUE)
 					L.visible_message("<span class='alert'>[M] vomits <i>everywhere</i>.</span>", "<span class='alert'><b>UUAAAUGGHHH...</b> The wizard's skull was cursed.</span>")
 					L.emote("scream")
 					L.changeStatus("paralysis", 10 SECONDS)
@@ -196,7 +196,7 @@ TYPEINFO(/datum/component/consume/organheal)
 				if (/obj/item/skull/strange)
 					boutput(M, "<span class='alert'>Ugh. Nothing but bone. Pretty spooky though.</span>")
 				if (/obj/item/skull/peculiar)
-					playsound(M, 'sound/misc/meat_plop.ogg', 100, 1)
+					playsound(M, 'sound/misc/meat_plop.ogg', 100, TRUE)
 					M.visible_message("<span class='alert'>[M] vomits <i>everywhere</i>.</span>", "<span class='alert'><b>UUAAAUGGHHH...</b> The wizard's skull was cursed.</span>")
 					M.emote("scream")
 					M.changeStatus("paralysis", 10 SECONDS)
@@ -279,15 +279,6 @@ TYPEINFO(/datum/component/consume/food_effects)
 /datum/component/consume/food_effects/InheritComponent(datum/component/consume/food_effects/C, i_am_original, _new_status_effects)
 	if(C?.status_effects)
 		src.status_effects = C.status_effects
-		boutput(world, "[C] was already init'd. heal amt on it was [C.status_effects] is now [src.status_effects], supposed to be [_new_status_effects]")
-	else
-		if (islist(_new_status_effects)) // C(duplicate component) wasn't initialized, so we don't know if the raw argument _new_status_effects is a string / list
-			src.status_effects |= _new_status_effects
-			boutput(world, "[_new_status_effects] was list. [src.status_effects]")
-		else if(istext(_new_status_effects))
-			var/list/new_sfx = list(_new_status_effects)
-			src.status_effects |= new_sfx
-			boutput(world, "[_new_status_effects] not list. [src.status_effects]")
 
 
 /datum/component/consume/food_effects/proc/apply_food_effects(var/obj/item/I, var/mob/M)

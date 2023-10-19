@@ -149,6 +149,10 @@
 		var/mob/M = holder.owner
 		var/area/area = get_area(M)
 
+		if(!istype(area, /area/station))
+			boutput(M, "<span class='alert'>You can only set your gang's base on the station.</span>")
+			return
+
 		if(area.gang_base)
 			boutput(M, "<span class='alert'>Another gang's base is in this area!</span>")
 			return
@@ -165,13 +169,16 @@
 		antag_role.gang.base = area
 		area.gang_base = 1
 
+		for(var/datum/mind/member in antag_role.gang.members)
+			boutput(member.current, "<span class='alert'>Your gang's base has been set up in [area]!</span>")
+
 		for(var/obj/decal/cleanable/gangtag/G in area)
 			if(G.owners == antag_role.gang)
 				continue
 			antag_role.gang.make_tag(get_turf(G))
 			break
 
-		var/obj/ganglocker/locker = new /obj/ganglocker(usr.loc)
+		var/obj/ganglocker/locker = new /obj/ganglocker(get_turf(M))
 		locker.name = "[antag_role.gang.gang_name] Locker"
 		locker.desc = "A locker with a small screen attached to the door, and the words 'Property of [antag_role.gang.gang_name] - DO NOT TOUCH!' scratched into both sides."
 		locker.gang = antag_role.gang

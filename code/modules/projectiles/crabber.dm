@@ -5,7 +5,7 @@
 	icon_state = "proj_crab"
 
 	stun = 50
-	cost = 30
+	cost = 40
 	dissipation_rate = 1
 	dissipation_delay = 20
 	sname = "claw"
@@ -55,6 +55,6 @@
 				var/mob/living/critter/C = H.make_critter(/mob/living/critter/small_animal/crab)
 				if (istype(C))
 
-					playsound(T2, 'sound/effects/splort.ogg', 50, 1)
+					playsound(T2, 'sound/effects/splort.ogg', 50, TRUE)
 					C.change_misstep_chance(30)
 					C.stuttering = 40

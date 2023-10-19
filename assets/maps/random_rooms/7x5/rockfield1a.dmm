@@ -3,7 +3,7 @@
 /turf/space/fluid/acid,
 /area/space)
 "k" = (
-/obj/landmark/artifact/random_room,
+/obj/landmark/spawner/artifact,
 /turf/space/fluid/acid/clear,
 /area/space)
 "u" = (

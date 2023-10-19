@@ -11,11 +11,11 @@
 		src.abilityHolder = new /datum/abilityHolder/slasher(src)
 		src.addAllAbilities()
 
-		src.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, slot_wear_mask)
-		src.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, slot_gloves)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, SLOT_WEAR_MASK)
+		src.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, SLOT_GLOVES)
 
 		src.see_invisible = INVIS_GHOST
 		src.bioHolder.AddEffect("breathless", 0, 0, 0, 1)
@@ -230,12 +230,12 @@
 				M.drop_from_slot(M.shoes)
 				M.drop_from_slot(M.head)
 				sleep(2) //just gotta make sure everything drops
-				M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, M.slot_wear_mask)
-				M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, M.slot_wear_suit)
-				M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, M.slot_shoes)
-				M.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, M.slot_w_uniform)
-				M.equip_new_if_possible(/obj/item/slasher_machete/possessed, M.slot_r_hand)
-				M.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, M.slot_gloves)
+				M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/unremovable, SLOT_WEAR_MASK)
+				M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher, SLOT_WEAR_SUIT)
+				M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes/noslip, SLOT_SHOES)
+				M.equip_new_if_possible(/obj/item/clothing/under/color/unremovable, SLOT_W_UNIFORM)
+				M.equip_new_if_possible(/obj/item/slasher_machete/possessed, SLOT_R_HAND)
+				M.equip_new_if_possible(/obj/item/clothing/gloves/black/slasher, SLOT_GLOVES)
 				if(!W.hasStatus("incorporeal"))
 					W.incorporealize()
 				SPAWN(3.5 SECONDS)
@@ -245,7 +245,7 @@
 						qdel(O2)
 
 				APPLY_ATOM_PROPERTY(M, PROP_MOB_NO_SELF_HARM, src)
-				playsound(M, 'sound/effects/ghost.ogg', 45, 0)
+				playsound(M, 'sound/effects/ghost.ogg', 45, FALSE)
 				var/mob/dead/observer/O = M.ghostize()
 				if(!O)
 					boutput(src, "<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 101</span>")
@@ -280,7 +280,7 @@
 				M.mind.transfer_to(src)
 				sleep(5 DECI SECONDS)
 				WG.verbs += list(/mob/verb/setdnr)
-				playsound(M, 'sound/effects/ghost2.ogg', 50, 0)
+				playsound(M, 'sound/effects/ghost2.ogg', 50, FALSE)
 				if(!WG || !M)
 					src.visible_message("<span class='bold' style='color:red'>Something fucked up! Aborting possession, please let #imcoder know. Error Code: 105</span>")
 					if(M)
@@ -313,18 +313,18 @@
 			for(var/obj/item/clothing/mask/gas/emergency/unremovable/U in M)
 				M.u_equip(U)
 				qdel(U)
-			M.equip_new_if_possible(/obj/item/clothing/under/color, M.slot_w_uniform)
-			M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/postpossession, M.slot_wear_mask)
-			M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher/postpossession, M.slot_wear_suit)
-			M.equip_new_if_possible(/obj/item/clothing/gloves/black, M.slot_gloves)
-			M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes, M.slot_shoes)
+			M.equip_new_if_possible(/obj/item/clothing/under/color, SLOT_W_UNIFORM)
+			M.equip_new_if_possible(/obj/item/clothing/mask/gas/emergency/postpossession, SLOT_WEAR_MASK)
+			M.equip_new_if_possible(/obj/item/clothing/suit/apron/slasher/postpossession, SLOT_WEAR_SUIT)
+			M.equip_new_if_possible(/obj/item/clothing/gloves/black, SLOT_GLOVES)
+			M.equip_new_if_possible(/obj/item/clothing/shoes/slasher_shoes, SLOT_SHOES)
 
 		///heals a bunch of bad things the Slasher can get hit with, but not all
 		regenerate()
 			var/turf/T = get_turf(src)
 			var/obj/overlay/O1 = new /obj/overlay/darkness_field(T, 2 SECONDS, radius = 3, max_alpha = 160)
 			var/obj/overlay/O2 = new /obj/overlay/darkness_field{plane = PLANE_SELFILLUM}(T, 2 SECONDS, radius = 3, max_alpha = 160)
-			playsound(src, 'sound/machines/ArtifactEld1.ogg', 60, 0)
+			playsound(src, 'sound/machines/ArtifactEld1.ogg', 60, FALSE)
 			if(src.hasStatus("handcuffed"))
 				src.visible_message("<span class='alert'>[src]'s wrists dissolve into the shadows, making the handcuffs vanish!</span>")
 				src.handcuffs.destroy_handcuffs(src)
@@ -354,7 +354,7 @@
 		soulSteal(mob/living/carbon/human/M, soul_remove = TRUE)
 			var/mob/living/W = src
 			boutput(src, "<span class='alert'>You steal [M]'s soul!</span>")
-			playsound(src, 'sound/voice/wraith/wraithpossesobject.ogg', 60, 0)
+			playsound(src, 'sound/voice/wraith/wraithpossesobject.ogg', 60, FALSE)
 			if(soul_remove)
 				M.mind?.soul = 0
 			M.setStatus("soulstolen", INFINITE_STATUS)
@@ -370,7 +370,7 @@
 			var/image/overlay_image = image("icon" = 'icons/effects/genetics.dmi', "icon_state" = "aurapulse", layer = MOB_LIMB_LAYER)
 			overlay_image.color = "#1a1102"
 			src.UpdateOverlays(overlay_image, "slasher_aura")
-			playsound(src, 'sound/effects/ghostlaugh.ogg', 40, 0)
+			playsound(src, 'sound/effects/ghostlaugh.ogg', 40, FALSE)
 			SPAWN(2 SECONDS)
 				src.UpdateOverlays(null, "slasher_aura")
 				for(var/mob/living/M in oview(4, src))
@@ -384,7 +384,7 @@
 				src.last_btype = src.blood_type
 				src.last_bdna = src.blood_DNA
 			if(!src.trailing_blood)
-				src.tracked_blood = list("bDNA" = src.last_bdna, "btype" = src.last_btype, "count" = INFINITY)
+				src.tracked_blood = list("bDNA" = src.last_bdna, "btype" = src.last_btype, "count" = INFINITY, "sample_reagent" = src.blood_id)
 				src.track_blood()
 				trailing_blood = TRUE
 				APPLY_ATOM_PROPERTY(src, PROP_MOB_BLOOD_TRACKING_ALWAYS, src)

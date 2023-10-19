@@ -13,9 +13,9 @@
 
 	proc/update_outermost_movable(atom/movable/_target, atom/movable/old_outermost, atom/movable/new_outermost)
 		// use turf for the chat if we are in a disposal pipe and other such underfloor things
-		if (old_outermost.level == 1 && old_outermost.invisibility == INVIS_ALWAYS)
+		if (old_outermost.level == UNDERFLOOR && old_outermost.invisibility == INVIS_ALWAYS)
 			old_outermost = old_outermost.loc
-		if (new_outermost.level == 1 && new_outermost.invisibility == INVIS_ALWAYS)
+		if (new_outermost.level == UNDERFLOOR && new_outermost.invisibility == INVIS_ALWAYS)
 			new_outermost = new_outermost.loc
 
 		old_outermost?.vis_contents -= src

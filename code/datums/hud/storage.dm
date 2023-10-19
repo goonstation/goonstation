@@ -31,61 +31,16 @@
 	relay_click(id, mob/user, params)
 		switch (id)
 			if ("boxes")
-				if (params && islist(src.obj_locs))
-					var/list/prams = params
-					if (!islist(prams))
-						prams = params2list(prams)
-					if (islist(prams))
-						var/clicked_loc = prams["screen-loc"] // should be in the format 1:16,1:16 (tile x : pixel offset x, tile y : pixel offset y)
-						//DEBUG_MESSAGE(clicked_loc)
-						//var/regex/loc_regex = regex("(\\d*):\[^,]*,(\\d*):\[^\n]*")
-						//clicked_loc = loc_regex.Replace(clicked_loc, "$1,$2")
-						//DEBUG_MESSAGE(clicked_loc)
-
-						//MBC : I DONT KNOW REGEX BUT THE ABOVE IS NOT WORKING LETS DO THIS INSTEAD
-
-
-						var/firstcolon = findtext(clicked_loc,":")
-						var/comma = findtext(clicked_loc,",")
-						var/secondcolon = findtext(clicked_loc,":",comma)
-						if (firstcolon == secondcolon)
-							if (firstcolon > comma)
-								firstcolon = 0
-							else
-								secondcolon = 0
-
-						var/x = copytext(clicked_loc,1,firstcolon ? firstcolon : comma)
-						var/px = firstcolon ? copytext(clicked_loc,firstcolon+1,comma) : 0
-						var/y = copytext(clicked_loc,comma+1,secondcolon ? secondcolon : 0)
-						var/py = secondcolon ? copytext(clicked_loc,secondcolon+1) : 0
-
-						if (user.client && user.client.byond_version == 512 && user.client.byond_build == 1469) //sWAP EM BECAUSE OF BAD BYOND BUG
-							var/temp = y
-							y = px
-							px = temp
-
-						//ddumb hack for offset storage
-						var/turfd = (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/bible))
-
-						var/pixel_y_adjust = 0
-						if (user && user.client && user.client.tg_layout && !turfd)
-							pixel_y_adjust = 1
-
-						if (pixel_y_adjust && text2num(py) > 16)
-							y = text2num(y) + 1
-							py = text2num(py) - 16
-						//end dumb hack
-
-						clicked_loc = "[x],[y]"
-
-
-						var/obj/item/I = src.obj_locs[clicked_loc]
-						if (I)
-							//DEBUG_MESSAGE("clicking [I] with params [list2params(params)]")
-							user.click(I, params)
-						else if (user.equipped())
-							//DEBUG_MESSAGE("clicking [src.master.linked_item] with [user.equipped()] with params [list2params(params)]")
-							user.click(src.master.linked_item, params)
+				var/clicked_loc = src.get_clicked_position(user, params)
+				if (!clicked_loc)
+					return
+				var/obj/item/I = src.obj_locs[clicked_loc]
+				if (I)
+					//DEBUG_MESSAGE("clicking [I] with params [list2params(params)]")
+					user.click(I, params)
+				else if (user.equipped())
+					//DEBUG_MESSAGE("clicking [src.master.linked_item] with [user.equipped()] with params [list2params(params)]")
+					user.click(src.master.linked_item, params)
 
 			if ("close")
 				user.detach_hud(src)
@@ -104,6 +59,71 @@
 	MouseExited(var/atom/movable/screen/hud/H)
 		if (!H) return
 		sel.screen_loc = null
+
+	MouseDrop_T(atom/movable/screen/hud/H, atom/movable/O, mob/user, params)
+		if (!(user in src.mobs))
+			return
+		if (!(O in src.master.get_contents()))
+			return
+		var/clicked_position = src.get_clicked_position(user, params)
+		if (!clicked_position)
+			return
+		if (src.obj_locs[clicked_position] == O)
+			user.click(O, params2list(params))
+
+	/// returns position of the hud clicked
+	proc/get_clicked_position(mob/user, list/params)
+		if (!params)
+			return
+		if (!islist(src.obj_locs))
+			return
+
+		var/list/prams = params
+		if (!islist(prams))
+			prams = params2list(prams)
+		if (!islist(prams))
+			return
+
+		var/clicked_loc = prams["screen-loc"] // should be in the format 1:16,1:16 (tile x : pixel offset x, tile y : pixel offset y)
+		//DEBUG_MESSAGE(clicked_loc)
+		//var/regex/loc_regex = regex("(\\d*):\[^,]*,(\\d*):\[^\n]*")
+		//clicked_loc = loc_regex.Replace(clicked_loc, "$1,$2")
+		//DEBUG_MESSAGE(clicked_loc)
+
+		//MBC : I DONT KNOW REGEX BUT THE ABOVE IS NOT WORKING LETS DO THIS INSTEAD
+
+		var/firstcolon = findtext(clicked_loc,":")
+		var/comma = findtext(clicked_loc,",")
+		var/secondcolon = findtext(clicked_loc,":",comma)
+		if (firstcolon == secondcolon)
+			if (firstcolon > comma)
+				firstcolon = 0
+			else
+				secondcolon = 0
+
+		var/x = copytext(clicked_loc,1,firstcolon ? firstcolon : comma)
+		var/px = firstcolon ? copytext(clicked_loc,firstcolon+1,comma) : 0
+		var/y = copytext(clicked_loc,comma+1,secondcolon ? secondcolon : 0)
+		var/py = secondcolon ? copytext(clicked_loc,secondcolon+1) : 0
+
+		if (user.client && user.client.byond_version == 512 && user.client.byond_build == 1469) //sWAP EM BECAUSE OF BAD BYOND BUG
+			var/temp = y
+			y = px
+			px = temp
+
+		//ddumb hack for offset storage
+		var/turfd = (isturf(master.linked_item.loc) && !istype(master.linked_item, /obj/item/bible))
+
+		var/pixel_y_adjust = 0
+		if (user && user.client && user.client.tg_layout && !turfd)
+			pixel_y_adjust = 1
+
+		if (pixel_y_adjust && text2num(py) > 16)
+			y = text2num(y) + 1
+			py = text2num(py) - 16
+		//end dumb hack
+
+		return "[x],[y]"
 
 //idk if i can even use the params of mousedrop for this
 /*

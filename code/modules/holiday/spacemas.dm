@@ -67,7 +67,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 
 	// Select player.
 	var/list/datum/mind/candidates = dead_player_list(1, confirmation_delay, text_messages)
-	if (!islist(candidates) || candidates.len <= 0)
+	if (!islist(candidates) || length(candidates) <= 0)
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (no eligible candidates found).")
 		xmas_respawn_lock = 0
 		return
@@ -81,7 +81,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 	// Respawn player.
 	var/mob/L
 	var/ASLoc = pick_landmark(LANDMARK_LATEJOIN)
-	var/WSLoc = job_start_locations["wizard"] ? pick(job_start_locations["wizard"]) : null
+	var/WSLoc = pick_landmark(LANDMARK_WIZARD)
 
 	if (!ASLoc)
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (no late-join landmark found).")
@@ -146,7 +146,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 /obj/machinery/bot/guardbot/bootleg
 	name = "Super Protector Friend III"
 	desc = "The label on the back reads 'New technology! Blinking light action!'."
-	icon = 'icons/misc/xmas.dmi'
+	icon = 'icons/obj/bots/robuddy/super-protector-friend.dmi'
 
 	speak(var/message)
 		var/fontmode = rand(1,4)
@@ -172,7 +172,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 /obj/machinery/bot/guardbot/xmas
 	name = "Jinglebuddy"
 	desc = "Festive!"
-	icon = 'icons/obj/bots/xmasbuddy.dmi'
+	skin_icon_state = "xmasbuddy"
 	setup_default_tool_path = /obj/item/device/guardbot_tool/xmas
 
 	speak(var/message)
@@ -243,14 +243,14 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 			return
 
 		if (ranged)
-			var/obj/projectile/P = shoot_projectile_ST_pixel(master, current_projectile, target)
+			var/obj/projectile/P = shoot_projectile_ST_pixel_spread(master, current_projectile, target)
 			if (!P)
 				return
 
 			user.visible_message("<span class='alert'><b>[master] throws a snowball at [target]!</b></span>")
 
 		else
-			var/obj/projectile/P = initialize_projectile_ST(master, current_projectile, target)
+			var/obj/projectile/P = initialize_projectile_pixel_spread(master, current_projectile, target)
 			if (!P)
 				return
 
@@ -766,14 +766,14 @@ proc/compare_ornament_score(list/a, list/b)
 		desc = "Father Christmas! Santa Claus! Old Nick! ..wait, not that last one. I hope."
 		gender = "male"
 
-		src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, slot_w_uniform)
-		src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, slot_wear_suit)
-		src.equip_new_if_possible(/obj/item/clothing/shoes/black, slot_shoes)
-		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, slot_glasses)
-		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, slot_head)
-		src.equip_new_if_possible(/obj/item/storage/backpack/red, slot_back)
-		src.equip_new_if_possible(/obj/item/device/radio/headset, slot_ears)
-		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, slot_wear_id)
+		src.equip_new_if_possible(/obj/item/clothing/under/shorts/red, SLOT_W_UNIFORM)
+		src.equip_new_if_possible(/obj/item/clothing/suit/space/santa, SLOT_WEAR_SUIT)
+		src.equip_new_if_possible(/obj/item/clothing/shoes/black, SLOT_SHOES)
+		src.equip_new_if_possible(/obj/item/clothing/glasses/regular, SLOT_GLASSES)
+		src.equip_new_if_possible(/obj/item/clothing/head/helmet/space/santahat, SLOT_HEAD)
+		src.equip_new_if_possible(/obj/item/storage/backpack/red, SLOT_BACK)
+		src.equip_new_if_possible(/obj/item/device/radio/headset, SLOT_EARS)
+		src.equip_new_if_possible(/obj/item/card/id/captains_spare/santa, SLOT_WEAR_ID)
 
 		var/datum/abilityHolder/HS = src.add_ability_holder(/datum/abilityHolder/santa)
 		HS.addAbility(/datum/targetable/santa/heal)

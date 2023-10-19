@@ -14,6 +14,14 @@
 	light_g = 0.86
 	light_b = 1
 
+	New()
+		..()
+		START_TRACKING
+
+	disposing()
+		..()
+		STOP_TRACKING
+
 
 /obj/machinery/computer/robotics/attackby(obj/item/I, user)
 	if (perma && isscrewingtool(I))
@@ -68,7 +76,7 @@
 		for(var/mob/living/silicon/robot/R in A.connected_robots)
 			dat += "[R.name] |"
 			if(R.disposed)
-				dat += " Missing |"
+				continue
 			else if(isnull(R.part_head?.brain))
 				dat += " Intelligence Cortex Missing |"
 			else if(R.stat)

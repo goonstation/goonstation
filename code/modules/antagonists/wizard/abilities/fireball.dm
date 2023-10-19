@@ -48,7 +48,7 @@
 			holder.owner.say("MHOL HOTTOV", FALSE, maptext_style, maptext_colors)
 		..()
 
-		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target)
+		var/obj/projectile/P = initialize_projectile_pixel_spread( holder.owner, fb_proj, target)
 		if (P)
 			P.mob_shooter = holder.owner
 			P.launch()
@@ -64,7 +64,7 @@
 	var/datum/projectile/fireball/fire_elemental/fb_proj = new
 
 	cast(atom/target)
-		var/obj/projectile/P = initialize_projectile_ST( holder.owner, fb_proj, target )
+		var/obj/projectile/P = initialize_projectile_pixel_spread( holder.owner, fb_proj, target )
 		logTheThing(LOG_COMBAT, usr, "used their [src.name] ability at [log_loc(usr)]")
 		if (P)
 			P.mob_shooter = holder.owner

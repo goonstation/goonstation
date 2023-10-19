@@ -84,7 +84,7 @@ TYPEINFO(/obj/storage/closet/dresser)
 	icon_state = "orange"
 	icon_closed = "orange"
 	spawn_contents = list(/obj/item/clothing/under/color/orange = 4,
-	/obj/item/clothing/under/misc = 3,
+	/obj/item/clothing/under/misc/prisoner = 3,
 	/obj/item/clothing/shoes/orange = 4)
 
 /obj/storage/closet/wardrobe/yellow

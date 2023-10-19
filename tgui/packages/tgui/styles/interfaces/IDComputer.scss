@@ -1,0 +1,31 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author Garash (https://github.com/Garash2k)
+ * @license ISC
+ */
+
+@use '../colors.scss';
+
+
+.Section__title {
+  .IDComputer__DeptBox & {
+    text-shadow: 1px 1px 1px black, 1px -1px 1px black, -1px -1px 1px black, -1px 1px 1px black;
+    background-color: colors.$grey;
+  }
+  .IDComputer__DeptBox_color_blue & {
+    background-color: colors.$blue;
+  }
+  .IDComputer__DeptBox_color_yellow & {
+    background-color: colors.$yellow;
+  }
+  .IDComputer__DeptBox_color_purple & {
+    background-color: colors.$purple;
+  }
+  .IDComputer__DeptBox_color_red & {
+    background-color: colors.$red;
+  }
+  .IDComputer__DeptBox_color_green & {
+    background-color: colors.$green;
+  }
+}

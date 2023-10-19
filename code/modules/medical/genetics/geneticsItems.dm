@@ -1,3 +1,6 @@
+ADMIN_INTERACT_PROCS(/obj/item/genetics_injector, proc/admin_command_set_uses)
+ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_command_change_bioeffect)
+
 /obj/item/genetics_injector
 	name = "genetics injector"
 	desc = "A special injector designed to interact with one's genetic structure."
@@ -38,6 +41,16 @@
 			src.icon_state = "injector_2"
 			src.desc = "A [src] that has been used up. It should be recycled or disposed of."
 			src.name = "expended " + src.name
+		else
+			src.icon_state = initial(src.icon_state)
+			src.desc = initial(src.desc)
+			if(startswith(src.name, "expended "))
+				src.name = copytext(src.name, length("expended ") + 1)
+
+	proc/admin_command_set_uses()
+		set name = "Set Uses"
+		src.uses = tgui_input_number(usr, "Set [src]'s number of uses", "[src] uses", src.uses, 1000, 0)
+		src.update_appearance()
 
 	dna_injector
 		name = "dna injector"
@@ -50,6 +63,16 @@
 
 			target.bioHolder.AddEffectInstance(BE,1)
 			src.uses--
+			src.update_appearance()
+
+		proc/admin_command_change_bioeffect()
+			set name = "Change Bioeffect"
+			var/input = tgui_input_text(usr, "Enter a /datum/bioEffect path or partial name.", "Set Bioeffect", null, allowEmpty = TRUE)
+			var/datum/bioEffect/type_to_add = get_one_match(input, /datum/bioEffect, cmp_proc=/proc/cmp_text_asc)
+			if(isnull(type_to_add))
+				return
+			src.BE = new type_to_add
+			src.name = "[initial(src.name)] - [BE.name]"
 			src.update_appearance()
 
 	dna_activator

@@ -6,6 +6,7 @@ var/global/the_automaton = null
 /obj/critter/automaton
 	name = "automaton"
 	desc = "What is this thing? A toy? A machine? What is it doing? Why does it seem to be watching you?"
+	icon = 'icons/mob/critter/robotic/automaton.dmi'
 	icon_state = "automaton"
 	health = 1000 // what kind of jerk would kill it
 	anchored = ANCHORED
@@ -35,11 +36,6 @@ var/global/the_automaton = null
 		SPAWN(1 SECOND)
 			if (!the_automaton)
 				the_automaton = src
-
-	disposing()
-		if (the_automaton == src)
-			the_automaton = null
-		..()
 
 	disposing()
 		if (the_automaton == src)
@@ -113,7 +109,7 @@ var/global/the_automaton = null
 			for (var/mob/M in view(7,src))
 				mobsnearby.Add("[M.name]")
 			var/mob/M1 = null
-			if (mobsnearby.len > 0) // somehow this returned a blank list once wtf
+			if (length(mobsnearby) > 0) // somehow this returned a blank list once wtf
 				M1 = pick(mobsnearby)
 			if (M1 && prob(50)) // do we see anyone
 				if (!src.muted)
@@ -123,7 +119,7 @@ var/global/the_automaton = null
 				switch (current_loc.type)
 					if (/area/solarium)
 
-						src.set_dir(4)
+						src.set_dir(EAST)
 						if (!src.muted)
 							src.visible_message("<span class='alert'><b>[src]</b> stares into the sun.</span>")
 					if (/area/station/engine/core)
@@ -367,10 +363,7 @@ var/global/the_automaton = null
 			sleep(1 SECOND)
 			playsound(src.loc, 'sound/impact_sounds/Generic_Hit_3.ogg', 50, 1)
 			src.visible_message("<span class='alert'><b>[src] frantically tears [W] to pieces! What!</b></span>")
-			if (narrator_mode)
-				playsound(src.loc, 'sound/vox/ghost.ogg', 60, 1)
-			else
-				playsound(src.loc, 'sound/effects/ghost.ogg', 60, 1)
+			playsound(src.loc, 'sound/effects/ghost.ogg', 60, 1)
 			SPAWN(0)
 				var/i = rand(4,8)
 				while (i-- > 0)
@@ -409,7 +402,7 @@ var/global/the_automaton = null
 		var/obj/decal/teleport_swirl/swirl = new /obj/decal/teleport_swirl
 		swirl.set_loc(target_turf)
 		swirl.pixel_y = 10
-		playsound(target_turf, 'sound/effects/teleport.ogg', 50, 1)
+		playsound(target_turf, 'sound/effects/teleport.ogg', 50, TRUE)
 		SPAWN(1.5 SECONDS)
 			swirl.pixel_y = 0
 			qdel(swirl)

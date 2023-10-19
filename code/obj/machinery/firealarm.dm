@@ -247,3 +247,19 @@ ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 		reply.data["type"] = "Fire"
 		SPAWN(0.5 SECONDS)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
+
+// these seem kind of inverted but it's because an alarm on a wall to the north faces south and etc
+/obj/machinery/firealarm/north
+	pixel_y = 30
+
+/obj/machinery/firealarm/south
+	dir = NORTH
+	pixel_y = -22
+
+/obj/machinery/firealarm/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/machinery/firealarm/west
+	dir = EAST
+	pixel_x = -24

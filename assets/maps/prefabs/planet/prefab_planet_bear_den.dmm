@@ -11,7 +11,7 @@
 /turf/variableTurf/clear,
 /area/allowGenerate)
 "Q" = (
-/obj/item/fish/salmon,
+/obj/item/reagent_containers/food/fish/salmon,
 /turf/variableTurf/clear,
 /area/allowGenerate)
 

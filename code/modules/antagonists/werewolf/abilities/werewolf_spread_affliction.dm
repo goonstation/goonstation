@@ -25,7 +25,7 @@
 		if (!ishuman(target)) // Critter mobs include robots and combat drones. There's not a lot of meat on them.
 			boutput(M, "<span class='alert'>[target] probably wouldn't make a very good werewolf.</span>")
 			return 1
-		if (target.stat == 2) //can't pass affliction on to the dead
+		if (isdead(target)) //can't pass affliction on to the dead
 			boutput(M, "<span class='alert'>A dead [target] probably wouldn't make a very good werewolf.</span>")
 			return 1
 		if (target.canmove)
@@ -55,7 +55,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		// It's okay when the victim expired half-way through the spread, we're interrupted, find a new "victim"
-		if (target.stat == 2)
+		if (isdead(target))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		A.locked = 1
@@ -115,7 +115,7 @@
 			else if (isvampire(HH))
 				boutput(M, "<span class='alert'>[HH] doesn't seem to be affected by the bite much at all!</span>")
 			else if (ischangeling(HH))
-				boutput(M, "<span class='alert'>Your teeth seem to sink into [HH]'s skin but can't grab purchase. You don't think it's worth it trying to infect them!</span>")
+				boutput(M, "<span class='alert'>Your teeth seem to sink into [HH]'s skin but can't grab purchase. You don't think it's worth it trying to infect [him_or_her(HH)]!</span>")
 			else if (isabomination(HH))
 				boutput(M, "<span class='alert'>This abomination doesn't seem to be able to take any werewolf DNA into its collective!</span>")
 			else if (iswrestler(HH))

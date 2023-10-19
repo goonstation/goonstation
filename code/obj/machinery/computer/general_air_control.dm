@@ -1,4 +1,4 @@
-#define _GET_SIGNAL_GAS(GAS, _, NAME, ID, ...) if(data[#ID + #GAS]) { mixer_part += "<FONT color='[gas_text_color(#GAS)]'>[data[#ID + #GAS]]% [NAME]</FONT>  " }
+#define _GET_SIGNAL_GAS(GAS, _, NAME, ID, ...) if(data[ID + #GAS]) { mixer_part += "<FONT color='[gas_text_color(#GAS)]'>[data[ID + #GAS]]% [NAME]</FONT>  " }
 #define GET_SIGNAL_MIXTURE(ID) APPLY_TO_GASES(_GET_SIGNAL_GAS, ID)
 
 obj/machinery/computer/general_air_control
@@ -454,7 +454,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 #define MAX_PRESSURE 20 * ONE_ATMOSPHERE
 /obj/machinery/computer/atmosphere/mixercontrol
-	var/obj/machinery/atmospherics/mixer/mixerid
+	var/obj/machinery/atmospherics/trinary/mixer/mixerid
 	var/mixer_information
 	req_access = list(access_engineering_engine, access_tox_storage)
 	object_flags = CAN_REPROGRAM_ACCESS | NO_GHOSTCRITTER
@@ -512,7 +512,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 
 			if(data)
 				mixer_part += "<B>Input 1 Composition</B>: <BR>"
-				GET_SIGNAL_MIXTURE(in1)
+				GET_SIGNAL_MIXTURE("In1")
 				if(data["in1tg"])
 					mixer_part += "<FONT color='black'>[data["in1tg"]]% OTHER</FONT>   "
 				if (data["in1kpa"] && data["in1temp"])
@@ -520,7 +520,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				mixer_part += "<BR>"
 
 				mixer_part += "<B>Input 2 Composition</B>: <BR>"
-				GET_SIGNAL_MIXTURE(in2)
+				GET_SIGNAL_MIXTURE("In2")
 				if(data["in2tg"])
 					mixer_part += "<FONT color='black'>[data["in2tg"]]% OTHER</FONT>   "
 				if (data["in2kpa"] && data["in2temp"])
@@ -533,7 +533,7 @@ Rate: <A href='?src=\ref[src];change_vol=-10'>--</A> <A href='?src=\ref[src];cha
 				mixer_part += "<B>Gas Input Ratio</b>: <A href='?src=\ref[src];ratio=5'><<</A> <A href='?src=\ref[src];ratio=1'><</A> [data["i1trans"]]% /  [data["i2trans"]]% <A href='?src=\ref[src];ratio=-1'>></A> <A href='?src=\ref[src];ratio=-5'>>></A>"
 
 				mixer_part += "<HR><B>Resulting Composition</B>: <BR>"
-				GET_SIGNAL_MIXTURE(out)
+				GET_SIGNAL_MIXTURE("Out")
 				if(data["outtg"])
 					mixer_part += "<FONT color='black'>[data["outtg"]]% OTHER</FONT>   "
 				if (data["outkpa"] && data["outtemp"])

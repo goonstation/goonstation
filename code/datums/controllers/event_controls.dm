@@ -136,7 +136,7 @@ var/datum/event_controller/random_events
 		next_spawn_event = ticker.round_elapsed_ticks + rand(time_between_spawn_events_lower, time_between_spawn_events_upper)
 
 	proc/do_random_event(var/list/event_bank, var/source = null)
-		if (!event_bank || event_bank.len < 1)
+		if (!event_bank || length(event_bank) < 1)
 			logTheThing(LOG_DEBUG, null, "<b>Random Events:</b> do_random_event proc was passed a bad event bank")
 			return
 		if (!ticker?.mode?.do_random_events)
@@ -148,7 +148,7 @@ var/datum/event_controller/random_events
 			if (RE.is_event_available( ignore_time_lock = (source=="spawn_antag") ))
 				eligible += RE
 				weights += RE.weight
-		if (eligible.len > 0)
+		if (length(eligible) > 0)
 			var/datum/random_event/this = weightedprob(eligible, weights)
 			this.event_effect(source)
 		else
@@ -233,7 +233,7 @@ var/datum/event_controller/random_events
 
 	Topic(href, href_list[])
 		//So we have not had any validation on the admin random events panel since its inception. Argh. /Spy
-		if(usr?.client && !usr.client.holder) {boutput(usr, "Only administrators may use this command."); return}
+		if(usr?.client && !usr.client.holder) {boutput(usr, "<h3 class='admin'>Only administrators may use this command.</span>"); return}
 		if (href_list["TriggerEvent"] || href_list["TriggerMEvent"] || href_list["TriggerSEvent"] || href_list["TriggerStartEvent"])
 			var/datum/random_event/RE
 			if(href_list["TriggerEvent"])

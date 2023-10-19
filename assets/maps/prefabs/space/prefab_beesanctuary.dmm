@@ -87,12 +87,7 @@
 /turf/unsimulated/floor/purpleblack,
 /area/prefab/bee_sanctuary)
 "eu" = (
-/obj/stool{
-	desc = "A soft little bed the general size and shape of a space bee.";
-	icon = 'icons/misc/critter.dmi';
-	icon_state = "beebed";
-	name = "bee bed"
-	},
+/obj/stool/bee_bed,
 /obj/machinery/light/small{
 	dir = 1;
 	pixel_y = 10
@@ -243,8 +238,6 @@
 /area/prefab/bee_sanctuary)
 "jn" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/shuttlebay,
@@ -265,8 +258,6 @@
 "jw" = (
 /obj/machinery/door/airlock/pyro/external,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/shuttlebay,
@@ -329,8 +320,6 @@
 	pixel_y = -10
 	},
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor,
@@ -379,8 +368,6 @@
 /area/prefab/bee_sanctuary)
 "oo" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/caution/west,
@@ -459,8 +446,6 @@
 "pT" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
@@ -489,8 +474,6 @@
 /area/prefab/bee_sanctuary)
 "qC" = (
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -539,8 +522,6 @@
 /area/prefab/bee_sanctuary)
 "sM" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/white,
@@ -588,8 +569,6 @@
 /area/prefab/bee_sanctuary)
 "uV" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor/shuttlebay,
@@ -691,8 +670,6 @@
 "yF" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -759,8 +736,6 @@
 "Ag" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
@@ -776,8 +751,6 @@
 /area/prefab/bee_sanctuary)
 "Au" = (
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /turf/unsimulated/floor,
@@ -829,8 +802,6 @@
 "BS" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -855,13 +826,9 @@
 "CL" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/simulated/floor/airless/plating/catwalk/auto,
@@ -970,8 +937,6 @@
 "EE" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /obj/cable{
@@ -1015,8 +980,6 @@
 /area/prefab/bee_sanctuary)
 "FW" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 4;
 	icon_state = "2-4"
 	},
 /turf/unsimulated/floor/shuttlebay,
@@ -1322,8 +1285,6 @@
 	name = "Office door"
 	},
 /obj/cable{
-	d1 = 1;
-	d2 = 2;
 	icon_state = "1-2"
 	},
 /turf/unsimulated/floor/white,
@@ -1433,8 +1394,6 @@
 /area/prefab/bee_sanctuary)
 "Qd" = (
 /obj/cable{
-	d1 = 2;
-	d2 = 8;
 	icon_state = "2-8"
 	},
 /turf/unsimulated/wall/auto/reinforced/supernorn,
@@ -1657,8 +1616,6 @@
 "Vk" = (
 /obj/grille/catwalk,
 /obj/cable{
-	d1 = 4;
-	d2 = 8;
 	icon_state = "4-8"
 	},
 /obj/cable{

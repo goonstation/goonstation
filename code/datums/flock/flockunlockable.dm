@@ -42,7 +42,7 @@ ABSTRACT_TYPE(/datum/unlockable_flock_structure)
 
 	check_unlocked()
 		var/relay_built = src.my_flock.relay_in_progress || src.my_flock.relay_finished
-		return ..() || (src.my_flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST && !relay_built && !src.my_flock.flockmind.tutorial)
+		return ..() || (src.my_flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST && !relay_built && !src.my_flock.flockmind?.tutorial)
 
 /datum/unlockable_flock_structure/collector
 	structType = /obj/flock_structure/collector

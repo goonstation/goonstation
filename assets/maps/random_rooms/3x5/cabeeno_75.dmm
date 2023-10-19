@@ -1,0 +1,200 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/obj/submachine/ATM/atm_alt{
+	dir = 4
+	},
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 10
+	},
+/area/space)
+"f" = (
+/obj/item/storage/secure/ssafe/loot{
+	pixel_x = -28
+	},
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/stamped_bullion{
+	pixel_y = 5
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/honey{
+	pixel_x = -5
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/honey{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/honey{
+	pixel_x = 5
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/honey{
+	pixel_y = 8
+	},
+/turf/simulated/floor/black,
+/area/space)
+"g" = (
+/obj/stool/bar,
+/mob/living/critter/small_animal/bee,
+/turf/simulated/floor/carpet/red/fancy/edge,
+/area/space)
+"i" = (
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 5
+	},
+/area/space)
+"l" = (
+/obj/submachine/slot_machine/cash,
+/turf/simulated/floor/black,
+/area/space)
+"m" = (
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 8
+	},
+/area/space)
+"p" = (
+/obj/stool/bar,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 1
+	},
+/area/space)
+"r" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/reagent_containers/food/drinks/drinkingglass/wine{
+	pixel_y = 10;
+	pixel_x = 5
+	},
+/turf/simulated/floor/black,
+/area/space)
+"v" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/machinery/light/incandescent{
+	dir = 8
+	},
+/obj/item/dice/coin/poker_chip{
+	pixel_x = -5;
+	pixel_y = 5
+	},
+/turf/simulated/floor/black,
+/area/space)
+"x" = (
+/obj/table/reinforced/roulette,
+/obj/item/spacecash/random/really_small{
+	pixel_y = 10
+	},
+/obj/item/dice/coin/poker_chip/v10{
+	pixel_y = -5
+	},
+/obj/machinery/light/incandescent{
+	dir = 4
+	},
+/obj/item/dice/coin/poker_chip/v25{
+	pixel_y = -4;
+	pixel_x = -5
+	},
+/obj/item/dice/coin/poker_chip/v5{
+	pixel_y = -4;
+	pixel_x = 5
+	},
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 4
+	},
+/area/space)
+"B" = (
+/obj/stool/chair/office/syndie,
+/mob/living/critter/small_animal/bee/fancy,
+/turf/simulated/floor/black,
+/area/space)
+"H" = (
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 9
+	},
+/area/space)
+"M" = (
+/obj/stool/bar,
+/mob/living/critter/small_animal/bee/small,
+/turf/simulated/floor/carpet/red/fancy/edge{
+	dir = 6
+	},
+/area/space)
+"N" = (
+/obj/table/reinforced/bar/auto{
+	name = "wooden table"
+	},
+/obj/item/dice/coin/poker_chip{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/dice/coin/poker_chip{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/dice/coin/poker_chip{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/dice/coin/poker_chip{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/dice/coin/poker_chip{
+	pixel_x = 8;
+	pixel_y = 5
+	},
+/obj/item/dice/coin/poker_chip{
+	pixel_x = 5
+	},
+/turf/simulated/floor/black,
+/area/space)
+"Z" = (
+/obj/roulette_table_w,
+/obj/item/spacecash/random/really_small,
+/obj/item/reagent_containers/food/drinks/drinkingglass/random_style/filled{
+	pixel_y = 10;
+	pixel_x = -10
+	},
+/obj/item/dice/coin/poker_chip/v10,
+/obj/item/dice/coin/poker_chip/v10,
+/obj/item/dice/coin/poker_chip/v10,
+/obj/item/dice/coin/poker_chip/v10{
+	pixel_y = 1
+	},
+/obj/item/dice/coin/poker_chip/v10{
+	pixel_x = -5;
+	pixel_y = -2
+	},
+/obj/item/dice/coin/poker_chip/v10{
+	pixel_x = 5
+	},
+/obj/item/dice/coin/poker_chip/v25{
+	pixel_x = -5
+	},
+/obj/item/dice/coin/poker_chip/v5{
+	pixel_y = -2
+	},
+/turf/simulated/floor/carpet/red,
+/area/space)
+
+(1,1,1) = {"
+f
+v
+H
+m
+a
+"}
+(2,1,1) = {"
+B
+r
+p
+Z
+g
+"}
+(3,1,1) = {"
+l
+N
+i
+x
+M
+"}

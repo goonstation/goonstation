@@ -167,7 +167,7 @@
 			return FALSE
 		if (C.health < 0)
 			return FALSE
-		if (C.stat == 2)
+		if (isdead(C))
 			return FALSE
 		if (!src.flock.isEnemy(C))
 			return FALSE

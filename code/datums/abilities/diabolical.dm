@@ -217,7 +217,7 @@
 	cast(mob/target)
 		var/mob/living/carbon/human/H = target
 		if (!istype(H))
-			boutput(holder.owner, "Your target must be human!")
+			boutput(holder.owner, "<span class='alert'>Your target must be human!</span>")
 			return 1
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] shoots finger guns in [target]s direction.</b></span>")

@@ -12,7 +12,8 @@
 	"Illusions",
 	"EMP",
 	"Blinding",
-	"Sleepyness")
+	"Sleepyness",
+	"Slipperiness")
 
 	cast()
 		if (..())

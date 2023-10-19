@@ -84,7 +84,7 @@
 
 		t += "<FONT SIZE=+1><TABLE><tr><td colspan='2'><center>Main Supply<BR><FONT SIZE=+3><a href='?src=\ref[src];set_main=[mainsupply ? 0 : 1]'>[mainsupply ? "On" : "Off"]</A></center></font></td></tr>"
 
-		if(L.len > 0)
+		if(length(L) > 0)
 
 			var/side = 0
 

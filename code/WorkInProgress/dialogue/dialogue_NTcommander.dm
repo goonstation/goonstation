@@ -6,6 +6,7 @@
 	icon_state = "ntcommander"
 	density = 1
 	anchored = ANCHORED_ALWAYS
+	layer = OBJ_LAYER + 0.1
 	var/datum/dialogueMaster/dialogue = null
 
 	New()

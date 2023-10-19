@@ -282,7 +282,7 @@
 	eye_normal
 		name = "ocular prosthesis kit"
 		desc = "A box containing a pair of cybereyes."
-		spawn_contents = list(/obj/item/organ/eye/cyber = 2,\
+		spawn_contents = list(/obj/item/organ/eye/cyber/configurable = 2,\
 		/obj/item/surgical_spoon = 1)
 
 	eye_sunglasses
@@ -351,7 +351,7 @@
 		spawn_contents = list(/obj/item/surgical_spoon = 1)
 		make_my_stuff()
 			..()
-			var/list/eyez = typesof(/obj/item/organ/eye/cyber)
+			var/list/eyez = childrentypesof(/obj/item/organ/eye/cyber/configurable)
 			if (eyez.len)
 				for (var/i=rand(2,3), i>0, i--)
 					var/epath = pick(eyez)

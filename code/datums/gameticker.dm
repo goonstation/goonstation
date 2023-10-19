@@ -1,5 +1,5 @@
 var/global/datum/controller/gameticker/ticker
-var/global/current_state = GAME_STATE_WORLD_INIT
+var/global/current_state = GAME_STATE_INVALID
 
 /datum/controller/gameticker
 	var/hide_mode = TRUE
@@ -18,6 +18,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	var/click_delay = 3
 
 	var/datum/ai_rack_manager/ai_law_rack_manager = new /datum/ai_rack_manager()
+
+	var/datum/crewCredits/creds = null
 
 	var/skull_key_assigned = 0
 
@@ -110,8 +112,12 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	switch(master_mode)
 		if("random","secret") src.mode = config.pick_random_mode()
-		if("action") src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
-		if("intrigue") src.mode = config.pick_mode(pick(prob(300);"mixed_rp", prob(200); "traitor", prob(75);"changeling","vampire", prob(50); "spy_theft","arcfiend","salvager", prob(50); "extended", prob(25); "gang", "conspiracy"))
+		if("action")
+			src.mode = config.pick_mode(pick("nuclear","wizard","blob"))
+			message_admins("[src.mode.name] was chosen from the \"action\" game mode pool!")
+		if("intrigue")
+			src.mode = config.pick_mode(pick(prob(300);"traitor", prob(200);"mixed_rp", prob(75);"changeling",prob(75);"vampire", prob(50);"spy_theft", prob(50);"arcfiend", prob(50);"salvager", prob(50);"extended", prob(50);"gang"))
+			message_admins("[src.mode.name] was chosen from the \"intrigue\" game mode pool!!")
 		if("pod_wars") src.mode = config.pick_mode("pod_wars")
 		else src.mode = config.pick_mode(master_mode)
 
@@ -193,6 +199,13 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 	//Create objectives for the non-traitor/nogoodnik crew.
 	generate_crew_objectives()
 #endif
+	//picky eater trait handling
+	for (var/mob/living/carbon/human/H in mobs)
+		if (H.client && H.traitHolder?.hasTrait("picky_eater"))
+			var/datum/trait/picky_eater/eater_trait = H.traitHolder.getTrait("picky_eater")
+			if (length(eater_trait.fav_foods) > 0)
+				boutput(H, eater_trait.explanation_text)
+				H.mind.store_memory(eater_trait.explanation_text)
 
 	//Equip characters
 	equip_characters()
@@ -244,6 +257,11 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		//Tell the participation recorder that we're done FAFFING ABOUT
 		participationRecorder.releaseHold()
 
+#ifdef BAD_MONKEY_NO_BANANA
+	for_by_tcl(monke, /mob/living/carbon/human/npc/monkey)
+		qdel(monke)
+#endif
+
 #ifdef MAP_OVERRIDE_NADIR
 	SPAWN(30 MINUTES) // special catalytic engine warning
 		for(var/obj/machinery/power/catalytic_generator/CG in machine_registry[MACHINES_POWER])
@@ -261,9 +279,9 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			break
 #endif
 
-	for(var/turf/T in job_start_locations["AI"])
-		if(isnull(locate(/mob/living/silicon/ai) in T))
-			new /obj/item/clothing/suit/cardboard_box/ai(T)
+	if(!countJob("AI")) // There is no roundstart AI, spawn in a Latejoin AI on the spawn landmark.
+		for(var/turf/T in job_start_locations["AI"])
+			new /mob/living/silicon/ai/latejoin(T)
 	if(!processScheduler.isRunning)
 		processScheduler.start()
 
@@ -343,13 +361,13 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	proc/implant_skull_key()
 		//Hello, I will sneak in a solarium thing here.
-		if(!skull_key_assigned && ticker.minds.len > 5) //Okay enough gaming the system you pricks
+		if(!skull_key_assigned && length(ticker.minds) > 5) //Okay enough gaming the system you pricks
 			var/list/HL = list()
 			for (var/mob/living/carbon/human/human in mobs)
 				if (human.client)
 					HL += human
 
-			if(HL.len > 5)
+			if(length(HL) > 5)
 				var/mob/living/carbon/human/H = pick(HL)
 				if(istype(H))
 					skull_key_assigned = 1
@@ -514,6 +532,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 		else if(ismobcritter(pet))
 			var/mob/living/critter/P = pet
 			if(isalive(P) && in_centcom(P)) pets_rescued++
+		else if(istype(pet, /obj/item/rocko) && in_centcom(pet)) pets_rescued++
 
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] Processing end-of-round generic medals")
 	var/list/all_the_baddies = ticker.mode.traitors + ticker.mode.token_players + ticker.mode.Agimmicks + ticker.mode.former_antagonists
@@ -534,7 +553,7 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 				if (ishuman(player))
 					var/mob/living/carbon/human/H = player
-					if (H && istype(H) && H.implant && H.implant.len > 0)
+					if (H && istype(H) && H.implant && length(H.implant) > 0)
 						var/bullets = 0
 						for (var/obj/item/implant/I in H)
 							if (istype(I, /obj/item/implant/projectile))
@@ -579,6 +598,8 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	score_tracker.calculate_score()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] score calculated")
+
+	src.creds = new /datum/crewCredits
 
 	var/final_score = score_tracker.final_score_all
 	if (final_score > 200)
@@ -629,10 +650,27 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 			if (player.mind.assigned_role in wagesystem.jobs)
 				job_wage = wagesystem.jobs[player.mind.assigned_role]
 
+			var/job_wage_converted = 100
+			switch(job_wage)
+				if(0 to PAY_DUMBCLOWN)
+					job_wage_converted = 100
+				if(PAY_DUMBCLOWN+1 to PAY_UNTRAINED)
+					job_wage_converted = PAY_UNTRAINED
+				if(PAY_UNTRAINED+1 to PAY_TRADESMAN)
+					job_wage_converted = PAY_TRADESMAN
+				if(PAY_TRADESMAN+1 to PAY_DOCTORATE)
+					job_wage_converted = PAY_DOCTORATE
+				if(PAY_DOCTORATE+1 to PAY_IMPORTANT)
+					job_wage_converted = PAY_IMPORTANT
+				if(PAY_IMPORTANT+1 to INFINITY)
+					job_wage_converted = PAY_EXECUTIVE
+
+			job_wage = job_wage_converted
+
 			if (isrobot(player))
-				job_wage = 500
+				job_wage = PAY_DOCTORATE
 			if (isAI(player) || isshell(player))
-				job_wage = 900
+				job_wage = PAY_IMPORTANT
 
 			//if part-time, reduce wage
 			if (player.mind.join_time > 5400) //grace period of 9 mins after roundstart to be a full-time employee
@@ -768,28 +806,20 @@ var/global/current_state = GAME_STATE_WORLD_INIT
 
 	logTheThing(LOG_DEBUG, null, "Spawned XP")
 
+	logTheThing(LOG_DEBUG, null, "Power Generation: [json_encode(station_power_generation)]")
+
 	SPAWN(0)
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] creds/new")
-		var/datum/crewCredits/creds = new
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] displaying tickets and scores")
 		for(var/mob/E in mobs)
 			if(E.client)
+				if (!E.abilityHolder)
+					E.add_ability_holder(/datum/abilityHolder/generic)
+				E.addAbility(/datum/targetable/crew_credits)
 				if (E.client.preferences.view_tickets)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending tickets to [E.ckey]")
 					E.showtickets()
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done sending tickets to [E.ckey]")
-
 				if (E.client.preferences.view_score)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] sending crew credits to [E.ckey]")
 					creds.ui_interact(E)
-					//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done crew credits to [E.ckey]")
 				SPAWN(0) show_xp_summary(E.key, E)
-
-		//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] done showing tickets/scores")
-
 	logTheThing(LOG_DEBUG, null, "Did credits")
-
-	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] finished spacebux updates")
 
 	var/list/playtimes = list() //associative list with the format list("ckeys\[[player_ckey]]" = playtime_in_seconds)
 	for_by_tcl(P, /datum/player)

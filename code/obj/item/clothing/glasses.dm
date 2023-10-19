@@ -32,7 +32,7 @@
 	onMaterialChanged()
 		..()
 		if(istype(src.material))
-			if(src.material.alpha >= 190)
+			if(src.material.getAlpha() >= 190)
 				desc = "You can't see through these. G.R.E.A.T."
 				block_vision = 1
 			alpha = 255
@@ -57,43 +57,47 @@
 				return
 			var/mob/living/carbon/human/target = M //can't equip to mobs unless they are human
 			if(target.glasses)
-				boutput(user, "<span class='alert'>[target] is already wearing something on their eyes!</span>")
+				boutput(user, "<span class='alert'>[target] is already wearing something on [his_or_her(target)] eyes!</span>")
 				return
-			actions.start(new/datum/action/bar/icon/otherItem(user, target, user.equipped(), target.slot_glasses, 1.3 SECONDS) , user) //Uses extended timer to make up for previously having to manually equip to someone's eyes.
+			actions.start(new/datum/action/bar/icon/otherItem(user, target, user.equipped(), SLOT_GLASSES, 1.3 SECONDS) , user) //Uses extended timer to make up for previously having to manually equip to someone's eyes.
 			return
 		..() //if not selecting the head of a human or monkey, just do normal attack.
 
-TYPEINFO(/obj/item/clothing/glasses/meson)
-	mats = 6
-
-/obj/item/clothing/glasses/meson
-	name = "meson goggles"
-	icon_state = "meson"
-	var/base_state = "meson"
-	item_state = "glasses"
-	desc = "Goggles that allow you to see the structure of the station through walls."
-	color_r = 0.92
-	color_g = 1
-	color_b = 0.92
-	var/on = 1
-
-	setupProperties()
-		..()
-		setProperty("disorient_resist_eye", 15)
-
+ABSTRACT_TYPE(/obj/item/clothing/glasses/toggleable)
+/obj/item/clothing/glasses/toggleable
+	var/on = TRUE
 
 	attack_self(mob/user)
 		src.toggle(user)
 
 	proc/toggle(var/mob/toggler)
 		src.on = !src.on
-		src.item_state = "[src.base_state][src.on ? null : "-off"]"
-		set_icon_state("[src.base_state][src.on ? null : "-off"]")
+		src.item_state = "[initial(src.icon_state)][src.on ? null : "-off"]"
+		src.set_icon_state("[initial(src.icon_state)][src.on ? null : "-off"]")
 		toggler.update_clothing()
-		playsound(src, 'sound/items/mesonactivate.ogg', 30, 1)
+
+TYPEINFO(/obj/item/clothing/glasses/toggleable/meson)
+	mats = 6
+/obj/item/clothing/glasses/toggleable/meson
+	name = "meson goggles"
+	icon_state = "meson"
+	item_state = "glasses"
+	desc = "Goggles that allow you to see the structure of the station through walls."
+	color_r = 0.92
+	color_g = 1
+	color_b = 0.92
+	abilities = list(/obj/ability_button/meson_toggle)
+
+	setupProperties()
+		..()
+		setProperty("disorient_resist_eye", 15)
+
+	toggle(var/mob/toggler)
+		..()
+		playsound(src, 'sound/items/mesonactivate.ogg', 30, TRUE)
 		if (ishuman(toggler))
 			var/mob/living/carbon/human/H = toggler
-			if (istype(H.glasses, /obj/item/clothing/glasses/meson)) //hamdling of the rest is done in life.dm
+			if (istype(H.glasses, /obj/item/clothing/glasses/toggleable/meson)) //hamdling of the rest is done in life.dm
 				if (src.on)
 					H.vision.set_scan(1)
 					APPLY_ATOM_PROPERTY(toggler, PROP_MOB_MESONVISION, src)
@@ -118,8 +122,6 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 	unequipped(mob/user)
 		. = ..()
 		REMOVE_ATOM_PROPERTY(user, PROP_MOB_MESONVISION, src)
-
-/obj/item/clothing/glasses/meson/abilities = list(/obj/ability_button/meson_toggle)
 
 /obj/item/clothing/glasses/regular
 	name = "prescription glasses"
@@ -174,7 +176,7 @@ TYPEINFO(/obj/item/clothing/glasses/meson)
 		if(H.mind)
 			if(H.mind.assigned_role == "Detective" && !src.already_worn)
 				src.already_worn = 1
-				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, 0)
+				playsound(user, 'sound/voice/yeaaahhh.ogg', 100, FALSE)
 				user.visible_message("<span class='alert'><B><font size=3>YEAAAAAAAAAAAAAAAH!</font></B></span>")
 	..()
 	return
@@ -285,6 +287,7 @@ TYPEINFO(/obj/item/clothing/glasses/thermal)
 	color_g = 0.75 // slightly more red?
 	color_b = 0.75
 	upgraded = TRUE
+	is_syndicate = TRUE
 
 /obj/item/clothing/glasses/thermal/orange
 	name = "orange-tinted glasses"
@@ -720,3 +723,63 @@ TYPEINFO(/obj/item/clothing/glasses/nightvision/sechud/flashblocking)
 		if(src.equipped_in_slot == SLOT_GLASSES)
 			get_image_group(CLIENT_IMAGE_GROUP_PACKETVISION).remove_mob(user)
 		..()
+TYPEINFO(/obj/item/clothing/glasses/toggleable/atmos)
+	mats = 6
+/obj/item/clothing/glasses/toggleable/atmos
+	name = "pressure visualization goggles"
+	desc = "Goggles with an integrated local atmospheric pressure scanner, capable of providing a visualization of surrounding air pressure."
+	icon_state = "atmos"
+	item_state = "glasses"
+	abilities = list(/obj/ability_button/atmos_goggle_toggle)
+	var/list/image/atmos_overlays = list()
+	//this is literally just a 32x32 white square, someone please tell me if there's a less dumb way to do this
+	var/icon/overlay_icon = 'icons/effects/effects.dmi'
+	var/overlay_state = "atmos_overlay"
+
+	toggle(var/mob/toggler)
+		..()
+		toggler.playsound_local(src, 'sound/machines/tone_beep.ogg', 40, TRUE)
+		if (src.equipped_in_slot == SLOT_GLASSES && src.on)
+			processing_items |= src
+		else
+			processing_items -= src
+
+	equipped(mob/user, slot)
+		..()
+		if (slot == SLOT_GLASSES && src.on)
+			processing_items |= src
+
+	unequipped(mob/user)
+		if(src.equipped_in_slot == SLOT_GLASSES)
+			processing_items -= src
+		..()
+
+	proc/clear_overlays(mob/M)
+		if (!M.client)
+			return
+		for (var/image/image as anything in src.atmos_overlays)
+			M.client.images -= image
+		src.atmos_overlays = list()
+
+	proc/generate_overlays(mob/M)
+		if (!M.client)
+			return
+		for (var/turf/simulated/T in view(M, M.client.view))
+			if (!T.air)
+				continue
+			var/image/new_overlay = image(src.overlay_icon, T, src.overlay_state)
+			var/relative_pressure = MIXTURE_PRESSURE(T.air)/ONE_ATMOSPHERE
+			//make more orange if over one atmosphere
+			new_overlay.color = rgb(91 * (max(1,relative_pressure)), 103, 231 / (max(1,relative_pressure)))
+			new_overlay.alpha = 0
+			animate(new_overlay, alpha=min(200, 200 * relative_pressure), time=2 DECI SECONDS)
+			animate(alpha=0, time=2 SECONDS)
+			src.atmos_overlays += new_overlay
+			M.client.images += new_overlay
+
+	process()
+		var/mob/M = src.loc
+		if (!istype(M) || !M.client)
+			return
+		src.clear_overlays(M)
+		src.generate_overlays(M)

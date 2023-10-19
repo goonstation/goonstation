@@ -4,8 +4,8 @@
 /obj/machinery/bot/barbuddy
 	name = "BarBuddy"
 	desc = "A little bartending robot!"
-	icon = 'icons/obj/bots/aibots.dmi'
-	icon_state = "robuddy1"
+	icon = 'icons/obj/bots/robuddy/pr-6.dmi'
+	icon_state = "body"
 	layer = 5.0 //TODO LAYER
 	density = 0
 	anchored = UNANCHORED
@@ -16,7 +16,7 @@
 	var/list/targets = list() // Nearby tables that are in need of drinks.
 	var/atom/moveTowards // The object that should be moved towards.
 	var/worryLevel = 0 // Taking the barbuddy away from their bar makes them sad. Very sad. This stores how sad they are.
-	var/emotion // The face the barbuddy should be making.
+	var/emotion = "neutral" // The face the barbuddy should be making.
 
 	var/possible_drinks = list("bilk","beer","cider","mead","wine","champagne","rum","vodka","bourbon", \
 							"boorbon","beepskybeer","screwdriver","bloody_mary","bloody_scary",\
@@ -55,6 +55,7 @@
 	New()
 		..()
 		src.setEmotion("happy")
+		src.UpdateOverlays(image(src.icon, "lights-on"), "lights")
 		// Start by getting a few initial things
 		home = get_turf(src)
 		if (!home)

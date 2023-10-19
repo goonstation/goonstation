@@ -28,11 +28,11 @@
 			if(secured)
 				boutput(user, "<span class='alert'>You unsecure the generator.</span>")
 				secured = 0
-				playsound(src, 'sound/items/Ratchet.ogg', 60, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 60, TRUE)
 			else
 				boutput(user, "<span class='alert'>You secure the generator.</span>")
 				secured = 1
-				playsound(src, 'sound/items/Ratchet.ogg', 60, 1)
+				playsound(src, 'sound/items/Ratchet.ogg', 60, TRUE)
 
 	attack_hand(mob/user)
 		if(secured)
@@ -147,7 +147,7 @@
 	opacity = 0
 	anchored = ANCHORED
 	layer=12
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP
 	var/health_max = 10
 	var/health = 10
 	var/broken = 0
@@ -172,7 +172,7 @@
 		if(broken) return
 		health--
 		check()
-		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 		qdel(O)
 
 	proc/check()
@@ -180,7 +180,7 @@
 			broken = 1
 			icon_state = "shield0"
 			name = "weakened shield"
-			playsound(src, 'sound/effects/shielddown2.ogg', 45, 1)
+			playsound(src, 'sound/effects/shielddown2.ogg', 45, TRUE)
 			SPAWN(45 SECONDS)
 				health = health_max
 				check()

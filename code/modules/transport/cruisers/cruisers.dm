@@ -39,7 +39,7 @@
 	bound_height = 160
 	density = 1
 	anchored = ANCHORED
-	dir = 1
+	dir = NORTH
 	plane = PLANE_FLOOR
 	var/obj/cruiser_shield_visual/shield_obj
 
@@ -760,11 +760,11 @@
 
 		if(turret_left)
 			if(get_dir(origins["left"], target) != src.dir && get_dir(origins["left"], target) != turn(src.dir,45) && get_dir(origins["left"], target) != turn(src.dir,-45))
-				//internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
+				; //internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
 			else
 				if(!(firemode & CRUISER_FIREMODE_RIGHT))
 					if((firemode & CRUISER_FIREMODE_ALT && alt_weapon == 0) || !(firemode & CRUISER_FIREMODE_ALT))
-						var/obj/projectile/proj_left = initialize_projectile_ST(origins["left"], turret_left.current_projectile, target)
+						var/obj/projectile/proj_left = initialize_projectile_pixel_spread(origins["left"], turret_left.current_projectile, target)
 						proj_left.launch()
 						proj_left.shooter = src
 
@@ -776,11 +776,11 @@
 
 		if(turret_right)
 			if(get_dir(origins["right"], target) != src.dir && get_dir(origins["right"], target) != turn(src.dir,45) && get_dir(origins["right"], target) != turn(src.dir,-45))
-				//internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
+				; //internal_sound(src.loc, 'sound/machines/shielddown.ogg', 100, 1, -1)
 			else
 				if(!(firemode & CRUISER_FIREMODE_LEFT))
 					if((firemode & CRUISER_FIREMODE_ALT && alt_weapon == 1) || !(firemode & CRUISER_FIREMODE_ALT))
-						var/obj/projectile/proj_right = initialize_projectile_ST(origins["right"], turret_right.current_projectile, target)
+						var/obj/projectile/proj_right = initialize_projectile_pixel_spread(origins["right"], turret_right.current_projectile, target)
 						proj_right.launch()
 						proj_right.shooter = src
 

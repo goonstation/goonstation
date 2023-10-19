@@ -62,7 +62,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 #endif
 
 /// boots player and displays VPN message
-/client/proc/vpn_bonk(host, asn, organization, fraud_score, repeat_attempt = FALSE)
+/client/proc/vpn_bonk(host, asn, organization, fraud_score, repeat_attempt = FALSE, info)
 	var/vpn_kick_string = {"
 				<!doctype html>
 				<html>
@@ -85,7 +85,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 		message_admins("[key_name(src)] [src.address] attempted to connect with a VPN or proxy but was kicked!")
 	else
 		global.vpn_ip_checks["[src.address]"] = TRUE
-		var/msg_txt = "[src.address] attempted to connect via vpn or proxy. vpn info:[host ? " host: [host]," : ""] ASN: [asn], org: [organization][fraud_score ? ", fraud score: [fraud_score]" : ""]"
+		var/msg_txt = "[src.address] attempted to connect via vpn or proxy. vpn info:[host ? " host: [host]," : ""] ASN: [asn], org: [organization][fraud_score ? ", fraud score: [fraud_score]" : ""][info ? ", info: [info]" : ""]"
 
 		addPlayerNote(src.ckey, "VPN Blocker", msg_txt)
 		logTheThing(LOG_ADMIN, src, msg_txt)

@@ -1,0 +1,4 @@
+/obj/machinery/atmospherics/retrofilter : /obj/machinery/atmospherics/trinary/retrofilter{@OLD}
+/obj/machinery/atmospherics/filter : /obj/machinery/atmospherics/trinary/filter{@OLD}
+/obj/machinery/atmospherics/mixer/@SUBTYPES : /obj/machinery/atmospherics/trinary/mixer/@SUBTYPES{@OLD}
+/obj/machinery/atmospherics/manifold_valve : /obj/machinery/atmospherics/trinary/manifold_valve{@OLD}

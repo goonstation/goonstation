@@ -35,27 +35,25 @@
 			src.name = name
 
 		if (target && istype(target, /atom/movable))
-			src.RegisterSignal(target, COMSIG_MOVABLE_SET_LOC, PROC_REF(handle_move))
-			src.RegisterSignal(target, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
-			src.handle_move(target)
+			src.RegisterSignal(target, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(handle_move))
+			// set initial marker position
+			src.handle_move(target, null, get_turf(target))
 
 		src.can_be_deleted_by_player = can_be_deleted_by_player
 		src.list_on_ui = list_on_ui
 		src.scale_marker(marker_scale)
 
 	disposing()
-		src.UnregisterSignal(target, COMSIG_MOVABLE_SET_LOC)
-		src.UnregisterSignal(target, COMSIG_MOVABLE_MOVED)
+		if(!QDELETED(target))
+			src.UnregisterSignal(target, XSIG_MOVABLE_TURF_CHANGED)
+		target = null
 		. = ..()
 
-	proc/handle_move(var/atom/movable/target)
-		if (!map || !target)
+	proc/handle_move(thing, turf/old_turf, turf/new_turf)
+		if (!map || !thing || !new_turf)
 			return
 
-		var/turf/T = get_turf(target)
-		if (!T)
-			return
-		map.set_marker_position(src, T.x, T.y, T.z)
+		map.set_marker_position(src, new_turf.x, new_turf.y, new_turf.z)
 
 	proc/scale_marker(var/scale)
 		var/scale_factor = (scale / src.marker_scale)

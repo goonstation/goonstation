@@ -258,6 +258,48 @@ ABSTRACT_TYPE(/datum/customization_style/biological)
 			longfront
 				name = "Long Front"
 				id = "longfront"
+			salty
+				name = "Salty"
+				id = "salty"
+			wolfcut
+				name = "Wolfcut"
+				id = "wolfcut"
+			brushed
+				name = "Brushed"
+				id = "brushed"
+			walnut
+				name = "Walnut"
+				id = "walnut"
+			mop
+				name = "Mop"
+				id = "mop"
+			acorn
+				name = "Acorn"
+				id = "acorn"
+			curtain
+				name = "Curtain"
+				id = "curtain"
+			scott
+				name = "Scott"
+				id = "scott"
+			curly_bob
+				name = "Curly Bob"
+				id = "curly_bob"
+			charming
+				name = "Charming"
+				id = "charming"
+			spoon
+				name = "Spoon"
+				id = "spoon"
+			messy_waves
+				name = "Messy Waves"
+				id = "messy_waves"
+			blunt_bob
+				name = "Blunt Bob"
+				id = "blunt_bob"
+			jelly
+				name = "Jelly"
+				id = "jelly"
 		long
 			chub2_s
 				name = "Bang: Left"

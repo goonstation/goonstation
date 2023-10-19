@@ -37,7 +37,7 @@
 			APPLY_ATOM_PROPERTY(holder.owner, PROP_MOB_CANTMOVE, "floorbiting")
 			SPAWN(0.4 SECONDS)
 				if(holder.owner && target_human && (BOUNDS_DIST(holder.owner, target) == 0))
-					playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, pitch = 1.3)
+					playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, TRUE, pitch = 1.3)
 					target_human.changeStatus("weakened", 2 SECONDS)
 					target_human.force_laydown_standup()
 					holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites at [target_human]'s ankles!</b></span>",\
@@ -50,7 +50,7 @@
 				if(floorturf)
 					animate_slide(floorturf, 0, 0, 4)
 		else
-			playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, 1, pitch = 1.3)
+			playsound(floorturf, 'sound/impact_sounds/Flesh_Tear_3.ogg', 50, TRUE, pitch = 1.3)
 			target_human.changeStatus("weakened", 2 SECONDS)
 			target_human.force_laydown_standup()
 			holder.owner.visible_message("<span class='combat'><b>[holder.owner] bites at [target_human]'s ankles!</b></span>",\

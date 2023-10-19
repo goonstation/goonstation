@@ -179,11 +179,13 @@
 	cast(atom/target)
 		..()
 		var/mob/living/M = holder.owner
-		if (M.ai && M.is_npc)
-			if(M.ai.enabled )
+		if (M.ai)
+			if(M.ai.enabled)
 				M.ai.disable()
+				M.is_npc = FALSE
 			else
 				M.ai.enable()
+				M.is_npc = TRUE
 		else if( M.is_npc && ishuman(M) )
 			var/mob/living/carbon/human/H = M
 			H.ai_set_active(!H.ai_active)
@@ -218,5 +220,15 @@
 		. = ..()
 		var/turf/T = get_turf(target)
 		for(var/obj/O in T.cameras)
-			shoot_projectile_ST(O, current_projectile, T)
+			shoot_projectile_ST_pixel_spread(O, current_projectile, T)
 
+/datum/targetable/crew_credits
+	name = "Crew credits"
+	desc = "Re-open the crew credits window."
+	icon = 'icons/mob/ghost_observer_abilities.dmi'
+	icon_state = "crew-credits"
+	targeted = FALSE
+	cooldown = 1 SECOND
+
+	cast(atom/target)
+		holder.owner.show_credits()

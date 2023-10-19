@@ -46,7 +46,7 @@ TYPEINFO(/obj/machinery/door/feather)
 /obj/machinery/door/feather/take_damage(var/amount, var/mob/user = 0)
 	..()
 	if(src.health <= (src.health_max/2) && !broken)
-		playsound(src, 'sound/impact_sounds/Glass_Shatter_1.ogg', 25, 1)
+		playsound(src, 'sound/impact_sounds/Glass_Shatter_1.ogg', 25, TRUE)
 		src.name = "shattered wall door thing"
 		src.desc = "Well, no one's opening this thing anymore."
 		src.icon_state = "door-broke"
@@ -54,7 +54,7 @@ TYPEINFO(/obj/machinery/door/feather)
 
 /obj/machinery/door/feather/break_me_complitely()
 	var/turf/T = get_turf(src)
-	playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
+	playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, TRUE)
 	var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard
 	S.set_loc(T)
 	S.setMaterial(getMaterial("gnesisglass"))
@@ -82,7 +82,7 @@ TYPEINFO(/obj/machinery/door/feather)
 
 /obj/machinery/door/feather/proc/deconstruct()
 	var/turf/T = get_turf(src)
-	playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, 1)
+	playsound(T, 'sound/impact_sounds/Glass_Shatter_3.ogg', 25, TRUE)
 	var/obj/item/raw_material/shard/S = new /obj/item/raw_material/shard(T)
 	S.setMaterial(getMaterial("gnesisglass"))
 	S = new /obj/item/raw_material/shard(T)
@@ -107,7 +107,7 @@ TYPEINFO(/obj/machinery/door/feather)
 			icon_state = "[icon_base]1"
 		if("deny")
 			flick("[icon_base]_deny", src)
-			playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 50, 1, -2)
+			playsound(src, 'sound/misc/flockmind/flockdrone_door_deny.ogg', 50, TRUE, -2)
 
 
 /obj/machinery/door/feather/attack_ai(mob/user as mob)
@@ -132,11 +132,11 @@ TYPEINFO(/obj/machinery/door/feather)
 	if (src.broken)
 		return FALSE
 	if (..())
-		playsound(src, 'sound/misc/flockmind/flockdrone_door.ogg', 30, 1, extrarange = -10)
+		playsound(src, 'sound/misc/flockmind/flockdrone_door.ogg', 30, TRUE, extrarange = -10)
 
 /obj/machinery/door/feather/close()
 	if(..())
-		playsound(src, 'sound/misc/flockmind/flockdrone_door.ogg', 30, 1, extrarange = -10)
+		playsound(src, 'sound/misc/flockmind/flockdrone_door.ogg', 30, TRUE, extrarange = -10)
 
 /obj/machinery/door/feather/isblocked()
 	return FALSE // this door will not lock or be inaccessible to flockdrones

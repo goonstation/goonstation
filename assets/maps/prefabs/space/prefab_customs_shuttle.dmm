@@ -652,7 +652,7 @@
 	},
 /area/prefab/crashed_hop_shuttle)
 "Op" = (
-/obj/stool/chair/wooden/regal{
+/obj/stool/chair/dining/regal{
 	dir = 8
 	},
 /turf/simulated/floor/carpet/purple/standard/edge,

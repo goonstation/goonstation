@@ -220,7 +220,7 @@
 	effectType = EFFECT_TYPE_DISABILITY
 	isBad = 1
 	msgGain = "You feel sweaty."
-	msgLose = "You feel much more hygenic."
+	msgLose = "You feel much more hygienic."
 	var/personalized_stink = null
 
 	New()
@@ -250,7 +250,7 @@
 
 /datum/bioEffect/dwarf
 	name = "Dwarfism"
-	desc = "Greatly reduces the overall size of the subject, resulting in markedly dimished height."
+	desc = "Greatly reduces the overall size of the subject, resulting in markedly diminished height."
 	id = "dwarf"
 	msgGain = "Did everything just get bigger?"
 	msgLose = "You feel tall!"
@@ -342,7 +342,7 @@
 
 /datum/bioEffect/drunk/pentetic
 	name = "Pentetic Acid Production"
-	desc = "This mutation somehow causes the subject's body to manufacture a potent chellating agent. How exactly it functions is completely unknown."
+	desc = "This mutation somehow causes the subject's body to manufacture a potent chelating agent. How exactly it functions is completely unknown."
 	id = "drunk_pentetic"
 	msgGain = "You feel detoxified."
 	msgLose = "You feel toxic."
@@ -366,7 +366,7 @@
 	msgGain = "You begin to sense an odd chemical taste in your mouth."
 	msgLose = "The chemical taste in your mouth fades."
 	occur_in_genepools = 1 //this is going to be very goddamn rare and very fucking difficult to unlock.
-	mob_exclusive = /mob/living/carbon/human/
+	mob_exclusive = /mob/living/carbon/human
 	probability = 1
 	blockCount = 5
 	can_research = 0
@@ -386,7 +386,7 @@
 
 	New()
 		..()
-		if (all_functional_reagent_ids.len > 1)
+		if (length(all_functional_reagent_ids) > 1)
 			reagent_to_add = pick(all_functional_reagent_ids)
 		else
 			reagent_to_add = "water"
@@ -401,7 +401,7 @@
 	stability_loss = 25
 
 	OnLife(var/mult)
-		if (prob(src.change_prob) && all_functional_reagent_ids.len > 1)
+		if (prob(src.change_prob) && length(all_functional_reagent_ids) > 1)
 			reagent_to_add = pick(all_functional_reagent_ids)
 		..()
 
@@ -532,3 +532,61 @@
 	New()
 		..()
 		color_hex = "#680000"
+
+/datum/bioEffect/reversedSounds
+	name = "Antitemporal Inner Ear"
+	desc = "Makes your inner ear travel back in time, causing you to hear sounds in reverse."
+	id = "reversed_sounds"
+	probability = 25
+	msgGain = "You start hearing things backwards."
+	msgLose = "You no longer hear things backwards."
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, -1)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()
+
+/datum/bioEffect/slowSounds
+	name = "Leisurely Inner Ear"
+	desc = "Makes your inner ear chill out a little, meaning you hear things deeper and in slow motion."
+	id = "slow_sounds"
+	probability = 25
+	msgGain = "You hear everything slowed down and deeper."
+	msgLose = "You no longer hear everything slowed down and deeper."
+	effect_group = "soundspeed"
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 0.5 / power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 0.5 / power)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()
+
+/datum/bioEffect/fastSounds
+	name = "Hurried Inner Ear"
+	desc = "Your inner ear is full of performance enhancing drugs, it processes sounds really quickly and with higher pitch!"
+	id = "fast_sounds"
+	probability = 25
+	msgGain = "You hear everything sped up and higher pitched."
+	msgLose = "You no longer hear everything sped up and higher pitched."
+	effect_group = "soundspeed"
+
+	OnAdd()
+		..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 2 * power)
+
+	onPowerChange(oldval, newval)
+		. = ..()
+		APPLY_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src, 2 * power)
+
+	OnRemove()
+		REMOVE_ATOM_PROPERTY(owner, PROP_MOB_HEARD_PITCH, src)
+		..()

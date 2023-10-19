@@ -34,7 +34,7 @@
 	speechverb_ask = "chitters"
 	speechverb_gasp = "rattles"
 	speechverb_stammer = "click-clacks"
-	butcherable = TRUE
+	butcherable = BUTCHER_ALLOWED
 	can_throw = TRUE
 	can_grab = TRUE
 	can_disarm = TRUE
@@ -91,11 +91,11 @@
 		switch (act)
 			if ("scream","hiss","chitter")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/bugchitter.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<b>[src]</b> chitters!"
 			if ("snap","clack","click","clak")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/items/Scissor.ogg', 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/items/Scissor.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='alert'><b>[src]</b> claks!</span>"
 		return null
 
@@ -123,7 +123,6 @@
 		return ..()
 
 	death()
-		src.can_lie = FALSE
 		src.reagents.add_reagent("atropine", 50, null)
 		src.reagents.add_reagent("haloperidol", 50, null)
 		return ..()
@@ -249,10 +248,6 @@
 		HH.name = "mouth"
 		HH.limb_name = "teeth"
 		HH.can_hold_items = FALSE
-
-	death()
-		src.can_lie = FALSE
-		..()
 
 	proc/aftereat()
 		var/datum/targetable/critter/vomit_ore/vomit = src.abilityHolder.getAbility(/datum/targetable/critter/vomit_ore)

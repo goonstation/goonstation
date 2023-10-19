@@ -885,7 +885,6 @@
 "WN" = (
 /obj/machinery/power/furnace,
 /obj/cable{
-	d2 = 8;
 	icon_state = "0-8"
 	},
 /obj/machinery/light/incandescent/netural{

@@ -236,6 +236,9 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		watts_gen = 0
 
 	relaymove(mob/user, direction, delay, running)
+		if(src.occupant != user)
+			stack_trace("relaymove() called on [src] by '[user]' who is not the occupant '[occupant]'!")
+			src.occupant = user
 		var/spin_dir = direction & (EAST | WEST)
 		if(spin_dir)
 			if(was_running && (was_running != spin_dir) )
@@ -254,9 +257,9 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 
 		if(!ON_COOLDOWN(src, "squeek", delay * 3))
 			if(running)
-				playsound(src, movement_sound, 20, 1, 0, 0.9)
+				playsound(src, movement_sound, 20, TRUE, 0, 0.9)
 			else
-				playsound(src, movement_sound, 15, 1, -3, 1.0)
+				playsound(src, movement_sound, 15, TRUE, -3, 1.0)
 
 		was_running = spin_dir * running
 

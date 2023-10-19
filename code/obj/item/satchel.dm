@@ -28,7 +28,7 @@
 			boutput(user, "<span class='alert'>[src] cannot hold that kind of item!</span>")
 			return
 
-		if (src.contents.len < src.maxitems)
+		if (length(src.contents) < src.maxitems)
 			var/max_stack_reached = FALSE
 			if (W.amount > 1)
 				boutput(user, "<span class='notice'>You begin to fill [src] with [W].</span>")
@@ -38,11 +38,11 @@
 			else
 				boutput(user, "<span class='notice'>You put [W] in [src].</span>")
 			W.add_fingerprint(user)
-			if (!max_stack_reached && (src.contents.len < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
+			if (!max_stack_reached && (length(src.contents) < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
 				user.u_equip(W)
 				W.set_loc(src)
 				W.dropped(user)
-			if (src.contents.len == src.maxitems)
+			if (length(src.contents) == src.maxitems)
 				boutput(user, "<span class='notice'>[src] is now full!</span>")
 			src.UpdateIcon()
 			tooltip_rebuild = 1
@@ -72,7 +72,7 @@
 			if (user.l_hand == src || user.r_hand == src)
 				var/obj/item/getItem = null
 
-				if (src.contents.len > 1)
+				if (length(src.contents) > 1)
 					if (user.a_intent == INTENT_GRAB)
 						getItem = src.search_through(user)
 
@@ -82,7 +82,7 @@
 
 						getItem = pick(src.contents)
 
-				else if (src.contents.len == 1)
+				else if (length(src.contents) == 1)
 					getItem = src.contents[1]
 
 				if (getItem)
@@ -144,7 +144,7 @@
 			boutput(user, "<span class='alert'>\The [src] can't hold that kind of item.</span>")
 			return
 
-		if (src.contents.len < src.maxitems)
+		if (length(src.contents) < src.maxitems)
 			user.visible_message("<span class='notice'>[user] begins quickly filling \the [src].</span>")
 			var/staystill = user.loc
 			var/interval = 0
@@ -158,13 +158,13 @@
 					if (amount_of_stack_splits == src.max_stack_scoop)
 						max_stack_reached = TRUE
 				I.add_fingerprint(user)
-				if (!max_stack_reached && (src.contents.len < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
+				if (!max_stack_reached && (length(src.contents) < src.maxitems)) // if we split up the item and it was more than the satchel can find we should not add the rest
 					I.set_loc(src)
 				if (!(interval++ % 5))
 					src.UpdateIcon()
 					sleep(0.2 SECONDS)
 				if (user.loc != staystill) break
-				if (src.contents.len >= src.maxitems)
+				if (length(src.contents) >= src.maxitems)
 					boutput(user, "<span class='notice'>\The [src] is now full!</span>")
 					break
 			boutput(user, "<span class='notice'>You finish filling \the [src].</span>")
@@ -212,7 +212,7 @@
 	update_icon()
 
 		var/perc
-		if (src.contents.len > 0 && src.maxitems > 0)
+		if (length(src.contents) > 0 && src.maxitems > 0)
 			perc = (src.contents.len / src.maxitems) * 100
 		else
 			perc = 0
@@ -257,7 +257,8 @@
 			/obj/item/parts/human_parts/arm,
 			/obj/item/parts/human_parts/leg,
 			/obj/item/raw_material/cotton,
-			/obj/item/feather)
+			/obj/item/feather,
+			/obj/item/bananapeel)
 
 		matches(atom/movable/inserted, atom/movable/template)
 			. = ..()

@@ -203,8 +203,8 @@ datum/v_space
 		S.set_loc(virtual_character)
 		C.color = clothing_color
 		S.color = clothing_color
-		virtual_character.equip_if_possible( C, virtual_character.slot_w_uniform )
-		virtual_character.equip_if_possible( S, virtual_character.slot_shoes)
+		virtual_character.equip_if_possible( C, SLOT_W_UNIFORM )
+		virtual_character.equip_if_possible( S, SLOT_SHOES)
 		if(isobserver(user) && !isAIeye(user))
 			virtual_character.isghost = user.real_name
 			virtual_character.real_name = "Virtual Spectre #[rand(1, 999)]"

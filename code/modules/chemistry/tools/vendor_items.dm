@@ -98,7 +98,7 @@
 		if (ismob(T))
 			T = get_turf(T)
 		T.visible_message("<span class='alert'>[src] bursts!</span>")
-		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+		playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
 		qdel(src)
 
 	throw_impact(atom/A, datum/thrown_thing/thr)

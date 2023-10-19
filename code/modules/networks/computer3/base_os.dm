@@ -167,7 +167,7 @@
 				if("rename","ren") //Sets name of file arg1 to arg2
 					var/to_rename = null
 					var/new_name = null
-					if(command_list.len >= 2)
+					if(length(command_list) >= 2)
 						to_rename = command_list[1]
 						new_name = command_list[2]
 						new_name = copytext(strip_html(new_name), 1, 16)
@@ -348,11 +348,11 @@
 							var/pcommand = null
 							var/sig_filename = null
 
-							if(command_list.len >= 3) //These two args are needed for this mode
+							if(length(command_list) >= 3) //These two args are needed for this mode
 								id = round(text2num_safe(command_list[2]))
 								pcommand = strip_html(command_list[3])
 
-							if(command_list.len >= 4) //Having a signal file is optional, however
+							if(length(command_list) >= 4) //Having a signal file is optional, however
 								sig_filename = ckey(command_list[4])
 
 							if(!pcommand) //Check for command first, if they skip it they also don't get the id and it complains about that and aaaa
@@ -386,7 +386,7 @@
 											else
 												signal.data += entry
 
-									if (command_list.len > 4)
+									if (length(command_list) > 4)
 										signal.data_file = get_file_name(ckey(command_list[5]), src.current_folder)
 										if (istype(signal.data_file, /datum/computer/file))
 											signal.data_file = signal.data_file.copy_file()
@@ -427,7 +427,7 @@
 
 						if("kill", "k") //Okay now that we know them it is time to BE RID OF THEM
 							var/target_id = 0
-							if(command_list.len >= 2)
+							if(length(command_list) >= 2)
 								target_id = round(text2num_safe(command_list[2]))
 							else
 								src.print_error_text("Target ID Required.")
@@ -447,7 +447,7 @@
 
 						if("switch", "s")
 							var/target_id = 0
-							if(command_list.len >= 2)
+							if(length(command_list) >= 2)
 								target_id = round(text2num_safe(command_list[2]))
 							else
 								src.print_error_text("Target ID Required.")
@@ -486,7 +486,7 @@
 								"}
 
 					var/anger_text = "A clown? On a space station? what"
-					if(istype(command_list) && (command_list.len > 0))
+					if(istype(command_list) && (length(command_list) > 0))
 						anger_text = strip_html(jointext(command_list, " "))
 
 					src.print_text("<tt>[anger_text]<br>[goon]</tt>")
