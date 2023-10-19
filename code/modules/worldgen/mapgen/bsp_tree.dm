@@ -21,6 +21,9 @@
 
 	New(x=1, y=1, width=300, height=300, min_width=10, min_height=10)
 		..()
+		if(width <= 0 || height <= 0 || min_width < 1 || min_height < 1)
+			return
+
 		src.root = new
 		src.leaves = list()
 		root.x = x
