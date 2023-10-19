@@ -8,7 +8,7 @@ var/global/datum/poll_manager/poll_manager = new
 		set waitfor = FALSE
 		try
 			var/datum/apiRoute/polls/get/getPolls = new
-			getPolls.queryParams = list("filters" = list("active" = "true")) // TODO: maybe?
+			getPolls.queryParams = list("filters" = list("active" = "true"))
 			var/datum/apiModel/Paginated/PollResourceList/polls = apiHandler.queryAPI(getPolls)
 			poll_data = polls.ToList()["data"]
 		catch (var/exception/e)
