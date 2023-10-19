@@ -9,9 +9,14 @@ ABSTRACT_TYPE(/datum/apiModel)
 /datum/apiModel/proc/VerifyIntegrity()
 	return TRUE
 
-/// Override to determine how this mdoel will get shown for debugging purposes
-/datum/apiModel/proc/ToString()
+/// Override to convert a model to an associative list
+/datum/apiModel/proc/ToList()
 	return
 
+/// Get a string representation of a model for debugging purposes. Optional.
+/datum/apiModel/proc/ToString()
+	return json_encode(src.ToList())
+
+/// Override to build a model from an API response object
 /datum/apiModel/proc/SetupFromResponse()
 	return

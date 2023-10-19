@@ -1,46 +1,40 @@
 var/global/datum/poll_manager/poll_manager = new
 /// master poll controller for the server. Caches the results, syncs with api
 /datum/poll_manager
-	var/list/poll_data
+	var/list/poll_data = list()
 
 	/// fetch and cache the latest poll data from the API
 	proc/sync_polldata()
 		set waitfor = FALSE
+		try
+			var/datum/apiRoute/polls/get/getPolls = new
+			getPolls.queryParams = list("filters" = list("active" = "true")) // TODO: maybe?
+			var/datum/apiModel/Paginated/PollResourceList/polls = apiHandler.queryAPI(getPolls)
+			poll_data = polls.ToList()["data"]
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "Failed to fetch poll data: [error.message]")
 
-		var/datum/http_request/request = new
-		var/list/headers = list(
-			"Accept" = "application/json",
-			"Authorization" = config.goonhub_api_token
-		)
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.goonhub_api_endpoint]/api/polls", null, headers)
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-		if (rustg_json_is_valid(response.body))
-			poll_data = json_decode(response.body)
 
-	proc/sync_single_poll(var/pollId)
-		var/datum/http_request/request = new
-		var/list/headers = list(
-			"Accept" = "application/json",
-			"Authorization" = config.goonhub_api_token
-		)
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.goonhub_api_endpoint]/api/polls/[pollId]", null, headers)
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-		var/list/data
-		if (rustg_json_is_valid(response.body))
-			data = json_decode(response.body)
-			data = data["data"]
+	proc/sync_single_poll(pollId)
+		var/list/poll
+		try
+			var/datum/apiRoute/polls/show/getPoll = new
+			getPoll.routeParams = list("[pollId]")
+			var/datum/apiModel/Tracked/PollResource/pollResource = apiHandler.queryAPI(getPoll)
+			poll = pollResource.ToList()
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "Failed to fetch data for poll #[pollId]: [error.message]")
+			return
 
-		for (var/i in 1 to length(poll_data?["data"]))
-			if (poll_data["data"][i]["id"] != pollId)
+		for (var/i in 1 to length(poll_data))
+			if (poll_data[i]["id"] != pollId)
 				continue
-			if (!data)
-				var/list/L = poll_data["data"]
-				L.Remove(list(poll_data["data"][i]))
-				poll_data["data"] = L
+			if (!poll)
+				var/list/L = poll_data
+				L.Remove(list(poll_data[i]))
+				poll_data = L
 				return
-			poll_data["data"][i] = data
+			poll_data[i] = poll
 			break
