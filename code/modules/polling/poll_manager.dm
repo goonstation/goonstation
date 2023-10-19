@@ -32,9 +32,7 @@ var/global/datum/poll_manager/poll_manager = new
 			if (poll_data[i]["id"] != pollId)
 				continue
 			if (!poll)
-				var/list/L = poll_data
-				L.Remove(list(poll_data[i]))
-				poll_data = L
+				poll_data.Remove(list(poll_data[i]))
 				return
 			poll_data[i] = poll
 			break

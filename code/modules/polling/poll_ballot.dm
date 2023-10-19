@@ -104,9 +104,7 @@
 				return FALSE
 
 			// Add this poll to our cached data
-			var/list/L = poll_manager.poll_data
-			L.Insert(1, list(poll))
-			poll_manager.poll_data = L
+			poll_manager.poll_data.Insert(1, list(poll))
 			. = TRUE
 
 		if ("deletePoll")
@@ -125,9 +123,7 @@
 			for (var/i in 1 to length(poll_manager.poll_data))
 				if (poll_manager.poll_data[i]["id"] != params["pollId"])
 					continue
-				var/list/L = poll_manager.poll_data
-				L.Remove(list(poll_manager.poll_data[i]))
-				poll_manager.poll_data = L
+				poll_manager.poll_data.Remove(list(poll_manager.poll_data[i]))
 				break
 			. = TRUE
 
