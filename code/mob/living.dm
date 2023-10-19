@@ -197,7 +197,9 @@
 	src.remove_ailments()
 	src.lastgasp(allow_dead = TRUE)
 	if (src.ai) src.ai.disable()
-	if (src.key) statlog_death(src, gibbed)
+	if (src.key)
+		var/datum/eventRecord/Death/deathEvent = new
+		deathEvent.buildAndSend(src, gibbed)
 	if (src.client && ticker.round_elapsed_ticks >= 12000 && VALID_MOB(src))
 		var/num_players = 0
 		for(var/client/C)

@@ -397,7 +397,8 @@
 	New()
 		..()
 		SPAWN(1 SECOND)
-			statlog_ticket(src, usr)
+			var/datum/eventRecord/Ticket/ticketEvent = new()
+			ticketEvent.buildAndSend(src, usr)
 
 /datum/fine
 	var/ID = null
@@ -422,7 +423,8 @@
 		SPAWN(1 SECOND)
 			bank_record = data_core.bank.find_record("name", target)
 			if(!bank_record) qdel(src)
-			statlog_fine(src, usr)
+			var/datum/eventRecord/Fine/fineEvent = new()
+			fineEvent.buildAndSend(src, usr)
 
 /datum/fine/proc/approve(var/approved_by,var/their_job)
 	if(approver || paid) return

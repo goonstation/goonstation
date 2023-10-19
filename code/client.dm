@@ -338,6 +338,10 @@
 		SPAWN(-1)
 			src.chatOutput.start()
 
+	// Record a login, sets player.id, which is used by almost every future API call for a player
+	// So we need to do this early, and outside of a spawn
+	src.player.record_login()
+
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
 		boutput(src, "<span class='ooc adminooc'>You are an admin! Time for crime.</span>")
@@ -379,6 +383,8 @@
 		var/image/I = globalImages[key]
 		src << I
 
+	SPAWN(0)
+		src.player.record_login()
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - ok mostly done")
 
@@ -469,32 +475,25 @@
 			src.cmd_rp_rules()
 #endif
 		//Cloud data
-#ifdef LIVE_SERVER
-		if (cdn)
-			if(!cloud_available())
-				src.player.cloud_fetch()
-#else
-		// dev server, uses local save file to simulate clouddata
-		if (src.player.cloud_fetch()) // might needlessly reload, but whatever.
-#endif
-			if(cloud_available())
-				src.load_antag_tokens()
-				src.load_persistent_bank()
-				var/decoded = cloud_get("audio_volume")
-				if(decoded)
-					var/list/old_volumes = volumes.Copy()
-					volumes = json_decode(decoded)
-					for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
-						if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
-							volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
-						else
-							volumes += old_volumes[i]
+		if (!src.player.cloudSaves.loaded)
+			src.player.cloudSaves.fetch()
+		src.load_antag_tokens()
+		src.load_persistent_bank()
+		var/decoded = src.player.cloudSaves.getData("audio_volume")
+		if(decoded)
+			var/list/old_volumes = volumes.Copy()
+			volumes = json_decode(decoded)
+			for(var/i = length(volumes) + 1; i <= length(old_volumes); i++) // default values for channels not in the save
+				if(i - 1 == VOLUME_CHANNEL_EMOTE) // emote channel defaults to game volume
+					volumes += src.getRealVolume(VOLUME_CHANNEL_GAME)
+				else
+					volumes += old_volumes[i]
 
-				// Show login notice, if one exists
-				src.show_login_notice()
+			// Show login notice, if one exists
+			src.show_login_notice()
 
-				// Set screen saturation
-				src.set_saturation(text2num(cloud_get("saturation")))
+			// Set screen saturation
+			src.set_saturation(text2num(src.player.cloudSaves.getData("saturation")))
 
 		src.mob.reset_keymap()
 
@@ -714,30 +713,26 @@
 /client/proc/load_antag_tokens()
 	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 	if (!AT)
-		if( cloud_available() )
-			antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
+		antag_tokens = src.player.cloudSaves.getData( "antag_tokens" )
+		antag_tokens = antag_tokens ? text2num(antag_tokens) : 0
 		return
 
 	var/ATtoken
 	AT[ckey] >> ATtoken
 	if (!ATtoken)
-		antag_tokens = cloud_get( "antag_tokens" ) ? text2num(cloud_get( "antag_tokens" )) : 0
+		antag_tokens = src.player.cloudSaves.getData( "antag_tokens" )
+		antag_tokens = antag_tokens ? text2num(antag_tokens) : 0
 		return
 	else
 		antag_tokens = ATtoken
-	if( cloud_available() )
-		antag_tokens += text2num( cloud_get( "antag_tokens" ) || "0" )
-		var/failed = cloud_put( "antag_tokens", antag_tokens )
-		if( failed )
-			logTheThing(LOG_DEBUG, src, "Failed to store antag tokens in the ~cloud~: [failed]")
-		else
-			AT[ckey] << null
+	antag_tokens += text2num( src.player.cloudSaves.getData( "antag_tokens" ) || "0" )
+	if (src.player.cloudSaves.putData( "antag_tokens", antag_tokens ))
+		AT[ckey] << null
 
 /client/proc/set_antag_tokens(amt as num)
 	antag_tokens = amt
-	if( cloud_available() )
-		cloud_put( "antag_tokens", amt )
-		. = TRUE
+	src.player.cloudSaves.putData( "antag_tokens", amt )
+	. = TRUE
 	/*
 	var/savefile/AT = LoadSavefile("data/AntagTokens.sav")
 	if (!AT) return
@@ -750,25 +745,10 @@
 
 
 /client/proc/load_persistent_bank()
-	persistent_bank_valid = cloud_available()
-
-	persistent_bank = cloud_get("persistent_bank") ? text2num(cloud_get("persistent_bank")) : FALSE
-
-	if(!persistent_bank && cloud_available())
-		logTheThing(LOG_DEBUG, src, "first cloud_get failed but cloud is available!")
-		persistent_bank += text2num( cloud_get("persistent_bank") || "0" )
-		var/failed = cloud_put( "persistent_bank", persistent_bank )
-		if(failed)
-			logTheThing(LOG_DEBUG, src, "Failed to store persistent cash in the ~cloud~: [failed]")
-
-	persistent_bank_item = cloud_get("persistent_bank_item")
-
-	if(!persistent_bank_item && cloud_available())
-		persistent_bank_item = cloud_get("persistent_bank_item")
-		var/failed = cloud_put( "persistent_bank_item", persistent_bank_item )
-		if(failed)
-			logTheThing(LOG_DEBUG, src, "Failed to store persistent bank item in the ~cloud~: [failed]")
-
+	persistent_bank_valid = TRUE
+	var/cPersistentBank = src.player.cloudSaves.getData("persistent_bank")
+	persistent_bank = cPersistentBank ? text2num(cPersistentBank) : FALSE
+	persistent_bank_item = src.player.cloudSaves.getData("persistent_bank_item")
 
 //MBC TODO : PERSISTENTBANK_VERSION_MIN, MAX FOR BANKING SO WE CAN WIPE AWAY EVERYONE'S HARD WORK WITH A SINGLE LINE OF CODE CHANGE
 // defines are already set, just do the checks here ok
@@ -777,17 +757,14 @@
 /client/proc/set_last_purchase(datum/bank_purchaseable/purchase)
 	if (!purchase || purchase == 0 || !purchase.carries_over)
 		persistent_bank_item = "none"
-		if( cloud_available() )
-			cloud_put( "persistent_bank_item", "none" )
+		src.player.cloudSaves.putData( "persistent_bank_item", "none" )
 	else
 		persistent_bank_item = purchase.name
-		if( cloud_available() )
-			cloud_put( "persistent_bank_item", persistent_bank_item )
+		src.player.cloudSaves.putData( "persistent_bank_item", persistent_bank_item )
 
 /client/proc/set_persistent_bank(amt as num)
 	persistent_bank = amt
-	if( cloud_available() )
-		cloud_put( "persistent_bank", amt )
+	src.player.cloudSaves.putData( "persistent_bank", amt )
 	/*
 	var/savefile/PB = LoadSavefile("data/PersistentBank.sav")
 	if (!PB) return
@@ -800,15 +777,14 @@
 		load_persistent_bank()
 		if(!persistent_bank_valid)
 			return
-	var/list/earnings = list((ckey) = list("persistent_bank" = list("command" = "add", "value" = amt)))
-	cloud_put_bulk(json_encode(earnings))
 	persistent_bank += amt
+	src.player.cloudSaves.putData("persistent_bank", persistent_bank)
 
 /client/proc/sub_from_bank(datum/bank_purchaseable/purchase)
 	add_to_bank(-purchase.cost)
 
 /client/proc/bank_can_afford(amt as num)
-	player.cloud_fetch_data_only()
+	player.cloudSaves.fetch()
 	load_persistent_bank()
 	var/new_bank_value = persistent_bank - amt
 	if (new_bank_value >= 0)
@@ -1191,18 +1167,6 @@ var/global/curr_day = null
 		return 0
 	return (src.ckey in muted_keys) && muted_keys[src.ckey]
 
-/// Sets a cloud key value pair and sends it to goonhub
-/client/proc/cloud_put(key, value)
-	return src.player.cloud_put(key, value)
-
-/// Returns some cloud data on the client
-/client/proc/cloud_get(key)
-	return src.player.cloud_get(key)
-
-/// Returns 1 if you can set or retrieve cloud data on the client
-/client/proc/cloud_available()
-	return src.player.cloud_available()
-
 /client/proc/message_one_admin(source, message)
 	if(!src.holder)
 		return
@@ -1297,7 +1261,7 @@ var/global/curr_day = null
 	var/s = input("Enter a saturation % from 50-150. Default is 100.", "Saturation %", 100) as num
 	s = clamp(s, 50, 150) / 100
 	src.set_saturation(s)
-	src.cloud_put("saturation", s)
+	src.player.cloudSaves.putData("saturation", s)
 	boutput(usr, "<span class='notice'>You have changed your game saturation to [s * 100]%.</span>")
 
 /client/proc/set_view_size(var/x, var/y)

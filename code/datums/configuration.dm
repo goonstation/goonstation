@@ -80,6 +80,11 @@
 	var/goonhub_api_token = null
 	var/goonhub_api_web_token = null
 
+	var/goonhub_events_endpoint = null
+	var/goonhub_events_port = null
+	var/goonhub_events_channel = null
+	var/goonhub_events_password = null
+
 	//Goonhub2 server
 	var/goonhub2_hostname = null
 
@@ -342,6 +347,15 @@
 				config.goonhub_api_token = trim(value)
 			if ("goonhub_api_web_token")
 				config.goonhub_api_web_token = trim(value)
+
+			if ("goonhub_events_endpoint")
+				config.goonhub_events_endpoint = trim(value)
+			if ("goonhub_events_port")
+				config.goonhub_events_port = trim(value)
+			if ("goonhub_events_channel")
+				config.goonhub_events_channel = trim(value)
+			if ("goonhub_events_password")
+				config.goonhub_events_password = trim(value)
 
 			if ("goonhub2_hostname")
 				config.goonhub2_hostname = trim(value)
