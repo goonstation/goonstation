@@ -1848,7 +1848,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 /obj/item/gun/energy/makeshift
 	name = "makeshift laser rifle"
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/energy64x32.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "makeshift-energy"
 	item_state = "makeshift_laser"
@@ -2058,24 +2058,24 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				var/obj/item/cell/artifact/C = our_cell
 				var/datum/artifact/powercell/AS = C.artifact
 				var/datum/artifact_origin/AO = AS.artitype
-				overlay_image = SafeGetOverlayImage("gun_cell", 'icons/obj/large/64x32.dmi', "makeshift-[AO.name]")
+				overlay_image = SafeGetOverlayImage("gun_cell", 'icons/obj/items/guns/energy64x32.dmi', "makeshift-[AO.name]")
 			else
-				overlay_image = SafeGetOverlayImage("gun_cell", 'icons/obj/large/64x32.dmi', "makeshift-[our_cell.icon_state]")
+				overlay_image = SafeGetOverlayImage("gun_cell", 'icons/obj/items/guns/energy64x32.dmi', "makeshift-[our_cell.icon_state]")
 			src.UpdateOverlays(overlay_image, "gun_cell")
 		else
 			src.UpdateOverlays(null, "gun_cell")
 
 		if (our_light)
-			var/image/overlay_image = SafeGetOverlayImage("gun_light", 'icons/obj/large/64x32.dmi', "makeshift-light")
+			var/image/overlay_image = SafeGetOverlayImage("gun_light", 'icons/obj/items/guns/energy64x32.dmi', "makeshift-light")
 			src.UpdateOverlays(overlay_image, "gun_light")
 		else
 			src.UpdateOverlays(null, "gun_light")
 
 		if (heat > FIRE_THRESHOLD)
-			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", 'icons/obj/large/64x32.dmi', "makeshift-burn")
+			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", 'icons/obj/items/guns/energy64x32.dmi', "makeshift-burn")
 			src.UpdateOverlays(overlay_image, "gun_smoke")
 		else if (heat > 70)
-			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", 'icons/obj/large/64x32.dmi', "makeshift-smoke")
+			var/image/overlay_image = SafeGetOverlayImage("gun_smoke", 'icons/obj/items/guns/energy64x32.dmi', "makeshift-smoke")
 			src.UpdateOverlays(overlay_image, "gun_smoke")
 		else
 			src.UpdateOverlays(null, "gun_smoke")
