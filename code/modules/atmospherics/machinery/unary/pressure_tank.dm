@@ -157,3 +157,15 @@
 	air_temporary.oxygen = (180*ONE_ATMOSPHERE*O2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 	air_temporary.nitrogen = (180*ONE_ATMOSPHERE*N2STANDARD)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)
 
+
+/obj/machinery/atmospherics/pipe/tank/radgas
+	icon = 'icons/obj/atmospherics/tanks/green_pipe_tank.dmi'
+	name = "Pressure Tank (Nuclear Exhaust)"
+
+/obj/machinery/atmospherics/pipe/tank/radgas/New()
+	..()
+	air_temporary = new /datum/gas_mixture
+	air_temporary.volume = volume
+	air_temporary.temperature = T20C
+
+	air_temporary.radgas = (50*ONE_ATMOSPHERE)*(air_temporary.volume)/(R_IDEAL_GAS_EQUATION*air_temporary.temperature)

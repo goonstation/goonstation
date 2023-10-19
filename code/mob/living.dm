@@ -1398,7 +1398,7 @@
 			L.give_to(src)
 
 /mob/living/proc/give_to(var/mob/living/M)
-	if (!M || M == src || isalive(M))
+	if (!M || M == src || !isalive(M))
 		return
 
 #ifdef TWITCH_BOT_ALLOWED
