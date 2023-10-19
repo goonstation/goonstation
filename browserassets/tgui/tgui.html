@@ -595,7 +595,13 @@
 			<div>Please enable Javascript and restart the game.</div>
 		</div>
 	</noscript>
-
+	<script>
+		Byond.topic({
+			tgui: 1,
+			window_id: window.__windowId__,
+			type: 'ready',
+		});
+	</script>
 </body>
 
 </html>
