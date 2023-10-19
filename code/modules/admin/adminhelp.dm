@@ -11,7 +11,7 @@
 		gib(client.mob)
 		return
 
-	if (client.cloud_available() && client.cloud_get("adminhelp_banner"))
+	if (client.player.cloudSaves.getData("adminhelp_banner"))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 
@@ -110,7 +110,7 @@
 		logTheThing(LOG_DIARY, client.mob, "([mmouse.is_admin ? "A" : "M"]MOUSEWHISPER): [msg]", "say")
 		return
 
-	if (client.cloud_available() && client.cloud_get("mentorhelp_banner"))
+	if (client.player.cloudSaves.getData("mentorhelp_banner"))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 
@@ -174,7 +174,7 @@
 	if(client.ismuted())
 		boutput(client.mob, "You are muted and cannot pray.")
 		return
-	if(client.cloud_available() && client.cloud_get( "prayer_banner" ))
+	if(client.player.cloudSaves.getData( "prayer_banner" ))
 		boutput(client.mob, "You have been banned from using this command.")
 		return
 

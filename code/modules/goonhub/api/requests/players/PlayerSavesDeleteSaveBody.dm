@@ -1,16 +1,14 @@
 
-/datum/apiBody/PlayerSavesData
+/datum/apiBody/PlayerSavesDeleteSave
 	fields = list(
 		"player_id", // integer
 		"name", // string
-		"data" //string
 	)
 
-/datum/apiBody/PlayerSavesData/VerifyIntegrity()
+/datum/apiBody/PlayerSavesDeleteSave/VerifyIntegrity()
 	. = ..()
 	if (
 		isnull(src.values["player_id"]) \
 		|| isnull(src.values["name"]) \
-		|| isnull(src.values["data"])
 	)
 		return FALSE

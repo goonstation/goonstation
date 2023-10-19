@@ -906,12 +906,12 @@
 					player.cache_round_stats_blocking()
 				if(player)
 					response["last_seen"] = player.last_seen
-				if(player.cloud_fetch())
-					for(var/kkey in player.clouddata)
-						if(kkey in list("admin_preferences", "buildmode"))
-							continue
-						response[kkey] = player.clouddata[kkey]
-					response["cloudsaves"] = player.cloudsaves
+				player.cloudSaves.fetch()
+				for(var/kkey in player.cloudSaves.data)
+					if(kkey in list("admin_preferences", "buildmode"))
+						continue
+					response[kkey] = player.cloudSaves.data[kkey]
+				response["cloudsaves"] = player.cloudSaves.saves
 
 				return json_encode(response)
 

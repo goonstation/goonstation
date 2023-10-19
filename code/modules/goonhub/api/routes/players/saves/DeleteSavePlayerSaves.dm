@@ -4,5 +4,11 @@
 /datum/apiRoute/players/saves/file/delete
 	method = RUSTG_HTTP_METHOD_DELETE
 	path = "/players/saves/file"
-	routeParams = list("playerSave")
+	body = /datum/apiBody/PlayerSavesDeleteSave
 	correct_response = /datum/apiModel/Message
+
+	buildBody(
+		player_id,
+		name
+	)
+		. = ..(args)
