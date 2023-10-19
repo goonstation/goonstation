@@ -64,6 +64,9 @@ TYPEINFO(/atom)
 	/// Storage for items
 	var/datum/storage/storage = null
 
+	/// Which mob is pulling this atom currently
+	var/mob/pulled_by = null
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()

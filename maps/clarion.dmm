@@ -5685,6 +5685,9 @@
 	dir = 4;
 	pixel_x = 10
 	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep{
+	secret_thing = 1
+	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
 "ays" = (
@@ -14526,12 +14529,6 @@
 /area/station/engine/engineering)
 "bsp" = (
 /obj/disposalpipe/segment/mail,
-/turf/simulated/wall/auto/supernorn,
-/area/station/engine/engineering)
-"bsq" = (
-/obj/securearea{
-	name = "ENGINEERING ACCESS"
-	},
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering)
 "bss" = (
@@ -26617,6 +26614,7 @@
 /obj/cable/orange{
 	icon_state = "0-4"
 	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
 "jbP" = (
@@ -35321,7 +35319,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/device/radio/intercom/engineering,
 /obj/machinery/power/data_terminal,
 /obj/noticeboard/persistent{
 	name = "Engineering persistent notice board";
@@ -77747,7 +77744,7 @@ bgz
 boQ
 hVf
 brc
-bsq
+bso
 yfR
 buC
 pCX
@@ -78261,7 +78258,7 @@ bgz
 lWI
 ebq
 brn
-bsq
+bso
 kow
 buC
 qLR

@@ -1693,7 +1693,7 @@ ABSTRACT_TYPE(/datum/mutantrace)
 							if(13) . = "<B>[src.mob]</B> farts so hard a bunch of fur flies off its ass."
 							if(14) . = "<B>[src.mob]</B> does an impression of a baboon by farting until its ass turns red."
 							if(15) . = "<B>[src.mob]</B> farts out a choking, hideous stench!"
-							if(16) . = "<B>[src.mob]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterial laughter."
+							if(16) . = "<B>[src.mob]</B> reflects on its captive life aboard a space station, before farting and bursting into hysterical laughter."
 							if(17) . = "<B>[src.mob]</B> farts megalomaniacally."
 							if(18) . = "<B>[src.mob]</B> rips a floor-rattling fart. Damn."
 							if(19) . = "<B>[src.mob]</B> farts. What a damn dirty ape!"

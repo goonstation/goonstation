@@ -15,15 +15,15 @@ ABSTRACT_TYPE(/obj/item/preassembled_frame_box)
 		qdel(src)
 
 /obj/item/preassembled_frame_box/putt
-	name = "Preasembled MiniPutt Frame Kit"
+	name = "Preassembled MiniPutt Frame Kit"
 	frame_type = /obj/structure/preassembeled_vehicleframe/puttframe
 
 /obj/item/preassembled_frame_box/sub
-	name = "Preasembled Minisub Frame Kit"
+	name = "Preassembled Minisub Frame Kit"
 	frame_type = /obj/structure/preassembeled_vehicleframe/subframe
 
 /obj/item/preassembled_frame_box/pod
-	name = "Preasembled Pod Frame Kit"
+	name = "Preassembled Pod Frame Kit"
 	frame_type = /obj/structure/preassembeled_vehicleframe/podframe
 
 	attack_self(mob/user as mob)
@@ -77,7 +77,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 	var/step_build_time = 10 SECONDS //per each 7 steps
 
 /obj/structure/preassembeled_vehicleframe/puttframe
-	name = "Preassembeled MiniPutt Frame"
+	name = "Preassembled MiniPutt Frame"
 	desc = "A MiniPutt ship under construction."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "parts"
@@ -85,7 +85,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 	vehicle_name = "MiniPutt"
 
 /obj/structure/preassembeled_vehicleframe/subframe
-	name = "Preassembeled Minisub Frame"
+	name = "Preassembled Minisub Frame"
 	desc = "A minisub under construction."
 	icon = 'icons/obj/machines/8dirvehicles.dmi'
 	icon_state = "parts"
@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 	vehicle_name = "Minisub"
 
 /obj/structure/preassembeled_vehicleframe/podframe
-	name = "Preassembeled Pod Frame"
+	name = "Preassembled Pod Frame"
 	desc = "A vehicle pod under construction."
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = "parts"

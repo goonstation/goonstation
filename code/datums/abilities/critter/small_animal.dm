@@ -215,7 +215,7 @@
 
 /datum/targetable/critter/pincer_grab
 	name = "Grab"
-	desc = "Grab a mob with your pincers, imobilizing them for a bit"
+	desc = "Grab a mob with your pincers, immobilizing them for a bit"
 	cooldown = 15 SECONDS
 	targeted = TRUE
 	icon_state = "pincer_grab"

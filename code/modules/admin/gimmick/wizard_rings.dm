@@ -1,6 +1,6 @@
 /obj/item/clothing/gloves/ring/wizard
 	name = "wizard ring"
-	desc = "Parent object for wizadry rings, you shouldn't see this..."
+	desc = "Parent object for wizardry rings, you shouldn't see this..."
 	icon = 'icons/obj/clothing/item_wizard_rings.dmi'
 	icon_state = "ring"
 	item_state = "ring"
@@ -97,7 +97,7 @@
 
 	staff_thunder
 		name = "ring of thunder"
-		desc = "Little arcs of electricty run along the outside of this ring."
+		desc = "Little arcs of electricity run along the outside of this ring."
 		icon_state = "stave_of_thunder"
 		ability_path = /datum/targetable/spell/summon_thunder_staff
 		var/obj/item/staff/thunder/created_staff

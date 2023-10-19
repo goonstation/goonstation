@@ -103,7 +103,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/pieslice)
 		name = "slice of blackberry pie"
 		icon_state = "blackberrypie-slice"
 		initial_reagents = list("juice_blackberry"=3)
-		desc = "A slice of balckberry pie. The stains will be oh so worth it."
+		desc = "A slice of blackberry pie. The stains will be oh so worth it."
 	blueberry
 		name = "slice of blueberry pie"
 		icon_state = "blueberrypie-slice"

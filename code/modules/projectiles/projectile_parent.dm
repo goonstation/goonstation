@@ -820,13 +820,13 @@ ABSTRACT_TYPE(/datum/projectile)
 		shooter = remote_sound_source
 
 	if (play_shot_sound)
-		if (narrator_mode)
+		if (narrator_mode) // yeah sorry I don't have a good way of getting rid of this one
 			playsound(S, 'sound/vox/shoot.ogg', 50, TRUE)
 		else if(DATA.shot_sound && DATA.shot_volume && shooter)
 			playsound(S, DATA.shot_sound, DATA.shot_volume, 1,DATA.shot_sound_extrarange)
 			if (isobj(shooter))
 				for (var/mob/M in shooter)
-					M << sound(DATA.shot_sound, volume=DATA.shot_volume)
+					M.playsound_local(S, DATA.shot_sound, DATA.shot_volume, 1, DATA.shot_sound_extrarange, flags= SOUND_IGNORE_SPACE)
 
 #ifdef DATALOGGER
 	if (game_stats && istype(game_stats))
