@@ -28,8 +28,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/RandomEntries/ToString()
-	. = list()
+/datum/apiModel/RandomEntries/ToList()
+	. = ..()
+	.["entries"] = list()
 	for (var/datum/apiModel/entry in src.entries)
-		.["entries"] += entry.ToString()
-	return json_encode(.)
+		.["entries"] += list(entry.ToList())

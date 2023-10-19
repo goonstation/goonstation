@@ -17,12 +17,11 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/PlayerRes/PlayerMetadataResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["player_id"] = src.player_id
 	.["player"] = src.player
 	.["metadata"] = src.metadata
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

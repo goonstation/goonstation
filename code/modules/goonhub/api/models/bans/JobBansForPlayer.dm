@@ -7,7 +7,6 @@
 	. = ..()
 	src.jobs = response
 
-/datum/apiModel/JobBansForPlayer/ToString()
-	. = list()
+/datum/apiModel/JobBansForPlayer/ToList()
+	. = ..()
 	.["jobs"] = src.jobs
-	return json_encode(.)

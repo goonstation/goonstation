@@ -32,20 +32,19 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/PlayerRes/PlayerNoteResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["player_id"] = src.player_id
 	if (src.player)
-		.["player"] = src.player.ToString()
+		.["player"] = src.player.ToList()
 	.["ckey"] = src.ckey
 	.["game_admin_id"] = src.game_admin_id
 	if (src.game_admin)
-		.["game_admin"] = src.game_admin.ToString()
+		.["game_admin"] = src.game_admin.ToList()
 	.["server_id"] = src.server_id
 	.["round_id"] = src.round_id
 	.["note"] = src.note
 	.["legacy_data"] = src.legacy_data
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

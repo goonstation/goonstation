@@ -18,11 +18,10 @@
 	)
 		return FALSE
 
-/datum/apiModel/MapSwitch/ToString()
-	. = list()
-	.["map_switch"]	= src.map_switch.ToString()
+/datum/apiModel/MapSwitch/ToList()
+	. = ..()
+	.["map_switch"]	= src.map_switch.ToList()
 	.["status"]		= src.status
-	return json_encode(.)
 
 
 /// MapSwitchInternal
@@ -49,8 +48,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/MapSwitchInternal/ToString()
-	. = list()
+/datum/apiModel/Tracked/MapSwitchInternal/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["game_admin_id"] = src.game_admin_id
 	.["round_id"] = src.round_id
@@ -59,4 +58,3 @@
 	.["votes"] = src.votes
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

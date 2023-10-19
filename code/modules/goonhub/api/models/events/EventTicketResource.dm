@@ -34,8 +34,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/EventTicketResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/EventTicketResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["round_id"] = src.round_id
 	.["player_id"] = src.player_id
@@ -46,4 +46,3 @@
 	.["issuer_ckey"] = src.issuer_ckey
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

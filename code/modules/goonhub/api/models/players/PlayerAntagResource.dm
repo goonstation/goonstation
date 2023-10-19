@@ -22,8 +22,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/PlayerRes/PlayerAntagResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/PlayerRes/PlayerAntagResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["player_id"] = src.player_id
 	.["round_id"] = src.round_id
@@ -32,4 +32,3 @@
 	.["weight_exempt"] = src.weight_exempt
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

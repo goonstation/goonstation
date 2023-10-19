@@ -16,7 +16,6 @@ ABSTRACT_TYPE(/datum/apiModel/Tracked/PlayerRes)
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/PlayerRes/ToString()
+/datum/apiModel/Tracked/PlayerRes/ToList()
 	. = ..()
 	.["player_id"] = src.player_id
-	return json_encode(.)

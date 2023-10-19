@@ -44,8 +44,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/BanResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/BanResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["round_id"] = src.round_id
 	.["game_admin_id"] = src.game_admin_id
@@ -58,9 +58,8 @@
 	.["game_admin"] = src.game_admin
 	.["game_round"] = src.game_round
 	if (src.game_round)
-		.["game_round"] = src.game_round.ToString()
+		.["game_round"] = src.game_round.ToList()
 	.["original_ban_detail"] = src.original_ban_detail
 	.["details"] = list()
 	for (var/datum/apiModel/Tracked/BanDetail/detail in src.details)
-		.["details"] += detail.ToString()
-	return json_encode(.)
+		.["details"] += list(detail.ToList())

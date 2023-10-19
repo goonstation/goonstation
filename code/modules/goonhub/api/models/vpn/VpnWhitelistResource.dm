@@ -19,12 +19,11 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/VpnWhitelistResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/VpnWhitelistResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["game_admin_id"] = src.game_admin_id
 	.["ckey"] = src.ckey
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
 	.["game_admin"] = src.game_admin
-	return json_encode(.)

@@ -14,7 +14,6 @@
 	)
 		return FALSE
 
-/datum/apiModel/VpnWhitelistSearch/ToString()
-	. = list()
+/datum/apiModel/VpnWhitelistSearch/ToList()
+	. = ..()
 	.["whitelisted"] = src.whitelisted
-	return json_encode(.)

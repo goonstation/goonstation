@@ -21,9 +21,8 @@ ABSTRACT_TYPE(/datum/apiModel/Tracked)
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/ToString()
-	. = list()
+/datum/apiModel/Tracked/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

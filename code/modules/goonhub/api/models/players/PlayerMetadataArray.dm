@@ -14,7 +14,6 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerMetadataArray/ToString()
-	. = list()
+/datum/apiModel/PlayerMetadataArray/ToList()
+	. = ..()
 	.["data"] = src.data
-	return json_encode(.)
