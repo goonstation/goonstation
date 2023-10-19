@@ -26,7 +26,7 @@
 	. = list(
 			"isAdmin" = isadmin(user),
 			"polls" = poll_manager.poll_data?["data"],
-			"playerId" = user.client.player.fetch_player_id(user.ckey)
+			"playerId" = user.client.player.id
 		)
 
 /datum/poll_ballot/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
@@ -221,8 +221,7 @@
 			. = TRUE
 
 		if ("vote")
-			var/player_id = ui.user.client.player.fetch_player_id(ui.user.ckey)
-			if (!player_id) return
+			if (!ui.user.client.player.id) return
 
 			// determine if we are treating this as a pick or unpick
 			var/voted_for_option = FALSE
@@ -232,7 +231,7 @@
 				for (var/list/option as anything in L["options"])
 					if (option["id"] != params["optionId"])
 						continue
-					if (player_id in option["answers_player_ids"])
+					if (ui.user.client.player.id in option["answers_player_ids"])
 						voted_for_option = TRUE
 					break
 				break
@@ -244,7 +243,7 @@
 				"Content-Type" = "application/json"
 			)
 			var/list/body = list(
-				"player_id" = player_id,
+				"player_id" = ui.user.client.player.id,
 			)
 			body = json_encode(body)
 			request.prepare(RUSTG_HTTP_METHOD_POST, "[config.goonhub_api_endpoint]/api/polls/option/[voted_for_option ? "unpick" : "pick"]/[params["optionId"]]", body, headers)
