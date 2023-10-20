@@ -1,5 +1,9 @@
 
 (t)fri oct 20 23
+(u)Facsimil
+(p)14878
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Player pianos now can be linked together automatically.
 (u)CrystalClover
 (p)16264
 (e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
