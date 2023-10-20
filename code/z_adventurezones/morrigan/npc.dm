@@ -358,7 +358,7 @@
 	desc = "You don't recognize them"
 	health_brute = 20
 	health_burn = 20
-	faction = FACTION_SYNDICATE
+	faction = FACTION_DERELICT
 	ai_type = /datum/aiHolder/aggressive
 	human_to_copy = /mob/living/carbon/human/morrigan_quality
 
@@ -368,12 +368,55 @@
 		if (length(.) && prob(10))
 			src.say(pick("Who...who are you?!", "Get away from here!", "SECURITY, HELP!", "You aren't meant to be here!", "It's because of people like you!", "You caused this!"))
 
+/mob/living/critter/human/morrigan_quality/knife
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb/sword
+		HH.name = "left hand"
+		HH.suffix = "-L"
+		HH.icon_state = "blade"
+		HH.limb_name = "combat knife"
+		HH.can_hold_items = FALSE
+		HH.object_for_inhand = /obj/item/dagger
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "right arm"
+
+/mob/living/critter/human/morrigan_quality/bat
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "left hand"
+		HH.suffix = "-L"
+		HH.icon_state = "blade"
+		HH.limb_name = "scrap club"
+		HH.can_hold_items = FALSE
+		HH.object_for_inhand = /obj/item/scrapweapons/weapons/club
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "right arm"
 /mob/living/critter/human/morrigan_rnd
 	name = "R&D Worker"
 	desc = "You don't recognize them"
 	health_brute = 20
 	health_burn = 20
-	faction = FACTION_SYNDICATE
+	faction = FACTION_DERELICT
 	ai_type = /datum/aiHolder/aggressive
 	human_to_copy = /mob/living/carbon/human/morrigan_rnd
 
@@ -382,6 +425,49 @@
 
 		if (length(.) && prob(10))
 			src.say(pick("Who...who are you?!", "Get away from here!", "SECURITY, HELP!", "You aren't meant to be here!", "It's because of people like you!", "You caused this!"))
+
+/mob/living/critter/human/morrigan_rnd/knife
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb/sword
+		HH.name = "left hand"
+		HH.suffix = "-L"
+		HH.icon_state = "blade"
+		HH.limb_name = "combat knife"
+		HH.can_hold_items = FALSE
+		HH.object_for_inhand = /obj/item/dagger
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "right arm"
+/mob/living/critter/human/morrigan_rnd/bat
+
+	setup_hands()
+		..()
+		var/datum/handHolder/HH = hands[1]
+		HH.icon = 'icons/mob/critter_ui.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "left hand"
+		HH.suffix = "-L"
+		HH.icon_state = "blade"
+		HH.limb_name = "scrap club"
+		HH.can_hold_items = FALSE
+		HH.object_for_inhand = /obj/item/scrapweapons/weapons/club
+
+		HH = hands[2]
+		HH.icon = 'icons/mob/hud_human.dmi'
+		HH.limb = new /datum/limb
+		HH.name = "right hand"
+		HH.suffix = "-R"
+		HH.icon_state = "handr"
+		HH.limb_name = "right arm"
 
 /mob/living/critter/human/hobo/dagger
 	hand_count = 2

@@ -8,6 +8,7 @@
 	desc = "One of Morrigan's classic models... best avoid it."
 	health_brute = 15
 	health_burn = 15
+	health_burn_vuln = 0.9
 	is_npc = TRUE
 	speak_lines = TRUE
 
@@ -43,6 +44,7 @@
 	desc = "A security robot specially designed for close quarters combat. Prone to overheating.."
 	health_brute = 20
 	health_burn = 10
+	health_burn_vuln = 1
 	ai_type = /datum/aiHolder/aggressive
 
 	New()
@@ -97,6 +99,7 @@
 	desc = "A sturdy version with a shield for increased survivability. Not nearly as lethal as the others though."
 	health_brute = 15
 	health_burn = 25
+	health_burn_vuln = 0.5
 
 	New()
 		..()
@@ -156,6 +159,7 @@
 	desc = "An engnieering unit, you can somehow feel that it's angry at you."
 	health_brute = 20
 	health_burn = 10
+	health_burn_vuln = 0.8
 
 	ai_type = /datum/aiHolder/aggressive
 
@@ -204,6 +208,7 @@
 	desc = "A medical unit, doesn't pose as much of a threat. Looks a little smaller than the other ones."
 	health_brute = 12
 	health_burn = 12
+	health_burn_vuln = 1
 
 	New()
 		..()
