@@ -12,7 +12,7 @@ import { Window } from '../layouts';
 import { VendorCashTable } from './common/VendorCashTable';
 import { GasTankInfo } from './GasTank';
 
-type AirVendorParams = {
+interface AirVendorParams {
   cash: number;
   cardname: string;
   bankMoney: number;
@@ -25,7 +25,7 @@ type AirVendorParams = {
   fill_cost: number;
   target_pressure: number;
   current_fill: number;
-};
+}
 
 const VendorSection = (_props, context) => {
   const { act, data } = useBackend<AirVendorParams>(context);
@@ -50,15 +50,15 @@ const VendorSection = (_props, context) => {
   return (
     <Section title={`Buy ${vend_type}!`}>
       <LabeledList>
-        <LabeledList.Item label="Cost">
+        <LabeledList.Item label="Cost" verticalAlign="middle">
           <Button
             content={isFree ? 'Free!' : `${fill_cost || 0}⪽`}
-            color={canVend ? 'green' : 'grey'}
+            color={canVend ? 'green' : undefined}
             disabled={!canVend}
             onClick={handleFillClick}
           />
         </LabeledList.Item>
-        <LabeledList.Item label="Pressure">
+        <LabeledList.Item label="Pressure" verticalAlign="middle">
           <Stack>
             <Stack.Item>
               <Button
