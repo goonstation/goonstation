@@ -159,11 +159,11 @@
 						logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 
 /obj/machinery/camera/ex_act(severity)
-	if(src.invuln)
+	if (src.invuln)
 		return
-	else
-		update_coverage() // explosion happened, probably destroyed nearby turfs, better rebuild
-		..(severity)
+	..(severity)
+	if (!QDELETED(src))
+		src.update_coverage() // explosion happened, probably destroyed nearby turfs, better rebuild
 
 /obj/machinery/camera/emp_act()
 	..()
