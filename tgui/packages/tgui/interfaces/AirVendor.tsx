@@ -45,7 +45,7 @@ const VendorSection = (_props, context) => {
   const handleChangePressure = (pressure: number) => act('o2_changepressure', { pressure: pressure });
 
   const isFree = !air_cost;
-  const canVend = isFree || (fill_cost > 0 && (bankMoney > fill_cost || cash > fill_cost));
+  const canVend = isFree || (fill_cost > 0 && (bankMoney >= fill_cost || cash >= fill_cost));
 
   return (
     <Section title={`Buy ${vend_type}!`}>
