@@ -2180,6 +2180,14 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	slot_card = null
 	slot_back = list()
 
+	special_setup(var/mob/living/carbon/human/M)
+		if (!M)
+			return
+
+		..()
+		// Deactivate any gene that was activated by Mildly mutated trait
+		M.bioHolder.DeactivateAllPoolEffects()
+
 /datum/job/special/halloween/critter/plush
 	name = "Plush Toy"
 	mentor_only = FALSE
@@ -2190,8 +2198,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 
-		// Deactivate any gene that was activated by Mildly mutated trait
-		M.bioHolder.DeactivateAllPoolEffects()
 		M.critterize(/mob/living/critter/small_animal/plush/cryptid)
 
 /datum/job/special/halloween/critter/remy
@@ -2203,8 +2209,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 
-		// Deactivate any gene that was activated by Mildly mutated trait
-		M.bioHolder.DeactivateAllPoolEffects()
 		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/mouse/remy)
 		C.flags = null
 
@@ -2217,8 +2221,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 
-		// Deactivate any gene that was activated by Mildly mutated trait
-		M.bioHolder.DeactivateAllPoolEffects()
 		var/mob/living/critter/C = M.critterize(/mob/living/critter/spider/nice)
 		C.flags = null
 
@@ -2231,8 +2233,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 
-		// Deactivate any gene that was activated by Mildly mutated trait
-		M.bioHolder.DeactivateAllPoolEffects()
 		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/bird/crow)
 		C.flags = null
 

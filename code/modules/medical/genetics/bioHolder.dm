@@ -488,7 +488,7 @@ var/list/datum/bioEffect/mutini_effects = list()
 		E.holder = src
 		E.activated_from_pool = 1
 		E.OnAdd()
-		DeactivateAllPoolEffects(E, TRUE)
+		OutputGainOrLoseMsg(E, TRUE)
 
 		mobAppearance.UpdateMob()
 		return E
