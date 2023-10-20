@@ -223,7 +223,7 @@
 	)
 
 /obj/item/paper/ui_static_data(mob/user)
-	src.package_static_ui_data(user)
+	. = src.package_static_ui_data(user)
 
 /obj/item/paper/ui_data(mob/user)
 	. = list(

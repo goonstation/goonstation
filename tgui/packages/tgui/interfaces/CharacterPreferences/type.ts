@@ -65,6 +65,8 @@ export interface CharacterPreferencesData {
   tguiFancy: BooleanLike;
   tguiLock: BooleanLike;
   viewChangelog: BooleanLike;
+  viewSummary: number;
+  summaryTab: number;
   viewScore: BooleanLike;
   viewTickets: BooleanLike;
   useClickBuffer: BooleanLike;
@@ -111,4 +113,10 @@ export enum CharacterPreferencesTooltip {
   Always = 1, // TOOLTIP_ALWAYS
   Never = 2, // TOOLTIP_NEVER
   Alt = 3, // TOOLTIP_ALT
+}
+
+export enum CharacterPreferenceViewSummary {
+  Never,
+  Always,
+  TicketsReportsOnly,
 }

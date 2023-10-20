@@ -1,45 +1,53 @@
 /datum/crewCredits
-	var/crew_credits_data
+	/// Has the summary been generated yet
+	var/static/is_summary_generated = FALSE
+	/// Does the round summary have any tickets/fines
+	var/static/has_citation_data = FALSE
+	/// Does the round summary have any reports
+	var/static/has_report_data = FALSE
 
-	var/list/crew_tab_data
-	var/list/antagonist_tab_data
-	var/list/score_tab_data
-	var/list/citation_tab_data
-	var/list/reports_tab_data
+	var/static/list/crew_tab_data = list()
+	var/static/list/antagonist_tab_data = list()
+	var/static/list/score_tab_data = list()
+	var/static/list/citation_tab_data = list()
+	var/static/list/report_tab_data = list()
 
-/datum/crewCredits/New()
+	var/current_tab = CREDITS_TAB_CREW
+
+/datum/crewCredits/New(initial_tab=CREDITS_TAB_CREW)
 	. = ..()
-	src.crew_tab_data = list(
-		CREW_TAB_SECTION_CAPTAIN = list(),
-		CREW_TAB_SECTION_SECURITY = list(),
-		CREW_TAB_SECTION_MEDICAL = list(),
-		CREW_TAB_SECTION_SCIENCE = list(),
-		CREW_TAB_SECTION_ENGINEERING = list(),
-		CREW_TAB_SECTION_CIVILIAN = list(),
-		CREW_TAB_SECTION_SILICON = list(),
-		CREW_TAB_SECTION_OTHER = list(),
-	)
-	src.antagonist_tab_data = list(
-		ANTAGONIST_TAB_GAME_MODE = capitalize(ticker.mode.name),
-		ANTAGONIST_TAB_VERBOSE_DATA = list(),
-		ANTAGONIST_TAB_SUCCINCT_DATA = list(),
-	)
-	src.score_tab_data = list(
-		SCORE_TAB_SECTION_SECURITY = list(),
-		SCORE_TAB_SECTION_SCIENCE = list(),
-		SCORE_TAB_SECTION_ENGINEERING = list(),
-		SCORE_TAB_SECTION_CIVILIAN = list(),
-		SCORE_TAB_SECTION_ESCAPEE = list(),
-	)
-	src.citation_tab_data = list(
-		CITATIONS_TAB_SECTION_TICKETS = list(),
-		CITATIONS_TAB_SECTION_FINES = list(),
-	)
-	src.reports_tab_data = list(
-		REPORTS_TAB = list(),
-	)
-
-	src.generate_crew_credits()
+	if(!is_summary_generated)
+		src.crew_tab_data = list(
+			CREW_TAB_SECTION_CAPTAIN = list(),
+			CREW_TAB_SECTION_SECURITY = list(),
+			CREW_TAB_SECTION_MEDICAL = list(),
+			CREW_TAB_SECTION_SCIENCE = list(),
+			CREW_TAB_SECTION_ENGINEERING = list(),
+			CREW_TAB_SECTION_CIVILIAN = list(),
+			CREW_TAB_SECTION_SILICON = list(),
+			CREW_TAB_SECTION_OTHER = list(),
+		)
+		src.antagonist_tab_data = list(
+			ANTAGONIST_TAB_GAME_MODE = capitalize(ticker.mode.name),
+			ANTAGONIST_TAB_VERBOSE_DATA = list(),
+			ANTAGONIST_TAB_SUCCINCT_DATA = list(),
+		)
+		src.score_tab_data = list(
+			SCORE_TAB_SECTION_SECURITY = list(),
+			SCORE_TAB_SECTION_SCIENCE = list(),
+			SCORE_TAB_SECTION_ENGINEERING = list(),
+			SCORE_TAB_SECTION_CIVILIAN = list(),
+			SCORE_TAB_SECTION_ESCAPEE = list(),
+		)
+		src.citation_tab_data = list(
+			CITATIONS_TAB_SECTION_TICKETS = list(),
+			CITATIONS_TAB_SECTION_FINES = list(),
+		)
+		src.report_tab_data = list(
+			REPORT_TAB_REPORTS = list(),
+		)
+		src.generate_crew_credits()
+	src.current_tab = initial_tab
 
 /datum/crewCredits/ui_state(mob/user)
 	return tgui_always_state.can_use_topic(src, user)
@@ -54,10 +62,50 @@
 		ui.set_autoupdate(FALSE)
 		ui.open()
 
-/datum/crewCredits/ui_static_data(mob/user)
-	return src.crew_credits_data
+/datum/crewCredits/ui_act(action, list/params, datum/tgui/ui, datum/ui_state/state)
+	. = ..()
+	if(action != "current_tab")
+		return
 
-/// Populates `crew_credits_data` with the data to be passed to the UI.
+	if(params["tab"] == src.current_tab)
+		return
+
+	src.current_tab = params["tab"]
+
+	switch(src.current_tab)
+		if(CREDITS_TAB_CREW)
+			ui.send_update(src.crew_tab_ui_data())
+		if(CREDITS_TAB_ANTAGONIST)
+			ui.send_update(src.antagonist_tab_ui_data())
+		if(CREDITS_TAB_SCORE)
+			ui.send_update(src.score_tab_ui_data())
+		if(CREDITS_TAB_CITATION)
+			ui.send_update(src.citation_tab_ui_data())
+		if(CREDITS_TAB_REPORT)
+			ui.send_update(src.report_tab_ui_data())
+	return TRUE
+
+/datum/crewCredits/ui_data(mob/user)
+	. = ..()
+	.["current_tab"] = src.current_tab
+
+/datum/crewCredits/ui_static_data(mob/user)
+	. = ..()
+	switch(src.current_tab)
+		if(CREDITS_TAB_CREW)
+			. += src.crew_tab_ui_data()
+		if(CREDITS_TAB_ANTAGONIST)
+			. += src.antagonist_tab_ui_data()
+		if(CREDITS_TAB_SCORE)
+			. += src.score_tab_ui_data()
+		if(CREDITS_TAB_CITATION)
+			. += src.citation_tab_ui_data()
+		if(CREDITS_TAB_REPORT)
+			. += src.report_tab_ui_data()
+	.["has_citation_data"] = src.has_citation_data
+	.["has_report_data"] = src.has_report_data
+
+/// Populates each tab with the data to be passed to the UI.
 /datum/crewCredits/proc/generate_crew_credits()
 #ifdef CREW_CREDITS_DEBUGGING
 
@@ -75,87 +123,10 @@
 
 #endif
 	src.generate_score_data()
+	src.generate_citation_data()
+	src.generate_report_data()
 
-	src.generate_citations_data()
-	src.generate_reports_data()
-
-	src.crew_credits_data = list(
-		// Crew Tab Data:
-		"groups" = list(
-			list(
-				"title" = "Captain" + (length(src.crew_tab_data[CREW_TAB_SECTION_CAPTAIN]) == 1 ? "" : "s"),
-				"crew" = src.crew_tab_data[CREW_TAB_SECTION_CAPTAIN],
-			),
-			list(
-				"title" = "Security Department",
-				"crew" = src.crew_tab_data[CREW_TAB_SECTION_SECURITY],
-			),
-			list(
-				"title" = "Medical Department",
-				"crew" = src.crew_tab_data[CREW_TAB_SECTION_MEDICAL],
-			),
-			list(
-				"title" = "Science Department",
-				"crew" = src.crew_tab_data[CREW_TAB_SECTION_SCIENCE],
-			),
-			list(
-				"title" = "Engineering Department",
-				"crew" = src.crew_tab_data[CREW_TAB_SECTION_ENGINEERING],
-			),
-			list(
-				"title" = "Civilian Department",
-				"crew" = src.crew_tab_data[CREW_TAB_SECTION_CIVILIAN],
-			),
-			list(
-				"title" = "Silicons",
-				"crew" = src.crew_tab_data[CREW_TAB_SECTION_SILICON],
-			),
-			list(
-				"title" = "Other",
-				"crew" = src.crew_tab_data[CREW_TAB_SECTION_OTHER],
-			),
-		),
-
-		// Antagonists Tab Data:
-		"game_mode" = src.antagonist_tab_data[ANTAGONIST_TAB_GAME_MODE],
-		"verbose_antagonist_data" = src.antagonist_tab_data[ANTAGONIST_TAB_VERBOSE_DATA],
-		"succinct_antagonist_data" = src.antagonist_tab_data[ANTAGONIST_TAB_SUCCINCT_DATA],
-
-		// Score Tab Data:
-		"total_score" = score_tab_data[SCORE_TAB_TOTAL_SCORE],
-		"grade" = score_tab_data[SCORE_TAB_GRADE],
-		"victory_headline" = score_tab_data[SCORE_TAB_VICTORY_HEADLINE],
-		"victory_body" = score_tab_data[SCORE_TAB_VICTORY_BODY],
-		"score_groups" = list(
-			list(
-				"title" = "Security Department",
-				"entries" = src.score_tab_data[SCORE_TAB_SECTION_SECURITY],
-			),
-			list(
-				"title" = "Engineering Department",
-				"entries" = src.score_tab_data[SCORE_TAB_SECTION_ENGINEERING],
-			),
-			list(
-				"title" = "Research Department",
-				"entries" = src.score_tab_data[SCORE_TAB_SECTION_SCIENCE],
-			),
-			list(
-				"title" = "Civilian Department",
-				"entries" = src.score_tab_data[SCORE_TAB_SECTION_CIVILIAN],
-			),
-			list(
-				"title" = "Statistics",
-				"entries" = src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE],
-			),
-		),
-
-		// Citations Tab Data:
-		"tickets" = src.citation_tab_data[CITATION_TAB_SECTION_TICKETS],
-		"fines" = src.citation_tab_data[CITATION_TAB_SECTION_FINES],
-
-		// Reports Tab Data:
-		"reports" = src.citation_tab_data[REPORTS_TAB],
-	)
+	src.is_summary_generated = TRUE
 
 /// For a specified mind, creates an entry in `crew_tab_data` containing the applicable information.
 /datum/crewCredits/proc/generate_crew_member_data(datum/mind/mind)
@@ -222,6 +193,44 @@
 		"role" = full_role,
 		"head" = is_head,
 	))
+
+/datum/crewCredits/proc/crew_tab_ui_data(mob/user)
+	. = list(
+		"groups"= list(
+			list(
+				"title" = "Captain" + (length(src.crew_tab_data[CREW_TAB_SECTION_CAPTAIN]) == 1 ? "" : "s"),
+				"crew" = src.crew_tab_data[CREW_TAB_SECTION_CAPTAIN],
+			),
+			list(
+				"title" = "Security Department",
+				"crew" = src.crew_tab_data[CREW_TAB_SECTION_SECURITY],
+			),
+			list(
+				"title" = "Medical Department",
+				"crew" = src.crew_tab_data[CREW_TAB_SECTION_MEDICAL],
+			),
+			list(
+				"title" = "Science Department",
+				"crew" = src.crew_tab_data[CREW_TAB_SECTION_SCIENCE],
+			),
+			list(
+				"title" = "Engineering Department",
+				"crew" = src.crew_tab_data[CREW_TAB_SECTION_ENGINEERING],
+			),
+			list(
+				"title" = "Civilian Department",
+				"crew" = src.crew_tab_data[CREW_TAB_SECTION_CIVILIAN],
+			),
+			list(
+				"title" = "Silicons",
+				"crew" = src.crew_tab_data[CREW_TAB_SECTION_SILICON],
+			),
+			list(
+				"title" = "Other",
+				"crew" = src.crew_tab_data[CREW_TAB_SECTION_OTHER],
+			),
+		)
+	)
 
 /// For a specified mind, creates an entry in `antagonist_tab_data` containing the applicable information.
 /datum/crewCredits/proc/generate_antagonist_data(datum/mind/mind)
@@ -321,6 +330,13 @@
 	data["subordinate_antagonists"] = subordinate_antagonists
 
 	src.antagonist_tab_data[ANTAGONIST_TAB_VERBOSE_DATA] += list(data)
+
+/datum/crewCredits/proc/antagonist_tab_ui_data(mob/user)
+	. = list(
+		"game_mode" = src.antagonist_tab_data[ANTAGONIST_TAB_GAME_MODE],
+		"verbose_antagonist_data" = src.antagonist_tab_data[ANTAGONIST_TAB_VERBOSE_DATA],
+		"succinct_antagonist_data" = src.antagonist_tab_data[ANTAGONIST_TAB_SUCCINCT_DATA],
+	)
 
 /// Station Score
 /datum/crewCredits/proc/generate_score_data()
@@ -454,6 +470,36 @@
 		))
 	src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE] += list(generate_heisenhat_data())
 
+/datum/crewCredits/proc/score_tab_ui_data(mob/user)
+	. = list(
+		"total_score" = score_tab_data[SCORE_TAB_TOTAL_SCORE],
+		"grade" = score_tab_data[SCORE_TAB_GRADE],
+		"victory_headline" = score_tab_data[SCORE_TAB_VICTORY_HEADLINE],
+		"victory_body" = score_tab_data[SCORE_TAB_VICTORY_BODY],
+		"score_groups" = list(
+			list(
+				"title" = "Security Department",
+				"entries" = src.score_tab_data[SCORE_TAB_SECTION_SECURITY],
+			),
+			list(
+				"title" = "Engineering Department",
+				"entries" = src.score_tab_data[SCORE_TAB_SECTION_ENGINEERING],
+			),
+			list(
+				"title" = "Research Department",
+				"entries" = src.score_tab_data[SCORE_TAB_SECTION_SCIENCE],
+			),
+			list(
+				"title" = "Civilian Department",
+				"entries" = src.score_tab_data[SCORE_TAB_SECTION_CIVILIAN],
+			),
+			list(
+				"title" = "Statistics",
+				"entries" = src.score_tab_data[SCORE_TAB_SECTION_ESCAPEE],
+			),
+		),
+	)
+
 /// Heisenbee's hat
 /datum/crewCredits/proc/generate_heisenhat_data()
 	. = list()
@@ -517,8 +563,9 @@
 		.["value"] = "Heisenbee is missing, [tier ? "but the hat is safe at tier [tier]" : "and has no hat"]."
 
 /// Tickets/Fines
-/datum/crewCredits/proc/generate_citations_data()
+/datum/crewCredits/proc/generate_citation_data()
 	if(length(data_core.tickets))
+		src.has_citation_data = TRUE
 		var/list/people_with_tickets = list()
 		for (var/datum/ticket/T in data_core.tickets)
 			people_with_tickets |= T.target
@@ -534,6 +581,7 @@
 			))
 
 	if(length(data_core.fines))
+		src.has_citation_data = TRUE
 		var/list/people_with_fines = list()
 		for (var/datum/fine/F in data_core.fines)
 			people_with_fines |= F.target
@@ -549,9 +597,14 @@
 				"citations" = fines,
 			))
 
+/datum/crewCredits/proc/citation_tab_ui_data(mob/user)
+	. = list(
+		"tickets" = src.citation_tab_data[CITATION_TAB_SECTION_TICKETS],
+		"fines" = src.citation_tab_data[CITATION_TAB_SECTION_FINES],
+	)
+
 /// Inspector Report
-/datum/crewCredits/proc/generate_reports_data()
-	src.citation_tab_data[REPORTS_TAB] = list()
+/datum/crewCredits/proc/generate_report_data()
 	for_by_tcl(clipboard, /obj/item/clipboard/with_pen/inspector)
 		var/list/pages = list()
 		for(var/obj/item/paper/paper in clipboard.contents)
@@ -559,9 +612,14 @@
 			if (paper.name == "paper" && !paper.info)
 				continue
 			pages += list(paper.package_static_ui_data())
+		if(length(pages) > 0)
+			src.has_report_data = TRUE
+			src.report_tab_data[REPORT_TAB_REPORTS] += list(list(
+				"issuer" = "Inspector[clipboard.inspector_name ? " [clipboard.inspector_name]" : ""]'s Report",
+				"pages" = pages,
+			))
 
-		src.citation_tab_data[REPORTS_TAB] += list(list(
-			"issuer" = "Inspector[clipboard.inspector_name ? " [clipboard.inspector_name]" : ""]'s Report",
-			"pages" = pages,
-		))
-
+/datum/crewCredits/proc/report_tab_ui_data(mob/user)
+	. = list(
+		"reports" = src.report_tab_data[REPORT_TAB_REPORTS],
+	)

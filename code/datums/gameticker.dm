@@ -19,7 +19,8 @@ var/global/current_state = GAME_STATE_INVALID
 
 	var/datum/ai_rack_manager/ai_law_rack_manager = new /datum/ai_rack_manager()
 
-	var/datum/crewCredits/round_stats = null
+	/// map of client ref to summary datum
+	var/list/datum/crewCredits/crew_credits_by_client = list()
 
 	var/skull_key_assigned = 0
 
@@ -599,8 +600,6 @@ var/global/current_state = GAME_STATE_INVALID
 	score_tracker.calculate_score()
 	//logTheThing(LOG_DEBUG, null, "Zamujasa: [world.timeofday] score calculated")
 
-	src.round_stats = new /datum/crewCredits
-
 	var/final_score = score_tracker.final_score_all
 	if (final_score > 200)
 		final_score = 200
@@ -808,14 +807,23 @@ var/global/current_state = GAME_STATE_INVALID
 
 	logTheThing(LOG_DEBUG, null, "Power Generation: [json_encode(station_power_generation)]")
 
+	var/has_report_or_citation_data = FALSE
+	var/datum/crewCredits/crew_credits = new /datum/crewCredits()
+	if (crew_credits.has_citation_data || crew_credits.has_report_data)
+		has_report_or_citation_data = TRUE
+
 	SPAWN(0)
 		for(var/mob/E in mobs)
 			if(E.client)
+				var/datum/crewCredits/client_credits = new /datum/crewCredits(E.client.preferences.summary_tab)
+				src.crew_credits_by_client["\ref[E.client]"] = client_credits
 				if (!E.abilityHolder)
 					E.add_ability_holder(/datum/abilityHolder/generic)
 				E.addAbility(/datum/targetable/crew_credits)
-				if (E.client.preferences.view_score)
-					round_stats.ui_interact(E)
+				if (E.client.preferences.view_summary == SHOW_CREDITS_ALWAYS)
+					src.crew_credits_by_client["\ref[E.client]"].ui_interact(E)
+				else if (has_report_or_citation_data && E.client.preferences.view_summary == SHOW_CREDITS_CITATIONS_REPORTS)
+					src.crew_credits_by_client["\ref[E.client]"].ui_interact(E)
 				SPAWN(0) show_xp_summary(E.key, E)
 	logTheThing(LOG_DEBUG, null, "Did credits")
 

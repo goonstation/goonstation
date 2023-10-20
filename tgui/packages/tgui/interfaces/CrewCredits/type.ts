@@ -9,6 +9,20 @@
 import { BooleanLike } from 'common/react';
 import { PaperSheetData } from '../PaperSheet/type';
 
+export enum CrewCreditsTabKeys {
+  Crew,
+  Antagonists,
+  Score,
+  Citations,
+  Reports,
+}
+
+export interface CrewCreditsData{
+  current_tab: number;
+  has_citation_data: BooleanLike;
+  has_report_data: BooleanLike;
+}
+
 export interface CrewTabData {
   groups: GroupBlockProps[];
 }
@@ -86,10 +100,7 @@ export interface ScoreItemProps {
 export interface CitationTabData {
   tickets: CitationTargetData[];
   fines: CitationTargetData[];
-}
-
-export interface ReportTabData {
-  reports: ReportData[];
+  current_tab: number;
 }
 
 export interface CitationTargetListProps {
@@ -102,15 +113,15 @@ export interface CitationTargetData {
   citations: string[];
 }
 
+export interface ReportMenuTabProps {
+  current_tab: number;
+}
+
+export interface ReportTabData {
+  reports: ReportData[];
+}
+
 export interface ReportData {
   issuer: string;
   pages: PaperSheetData[];
-}
-
-export enum CrewCreditsTabKeys {
-  Crew,
-  Antagonists,
-  Score,
-  Citations,
-  Report,
 }

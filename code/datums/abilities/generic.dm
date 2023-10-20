@@ -231,4 +231,4 @@
 	cooldown = 1 SECOND
 
 	cast(atom/target)
-		holder.owner.show_round_statistics()
+		holder.owner.show_credits()

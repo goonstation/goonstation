@@ -5,35 +5,18 @@
  * @license MIT
  */
 
-import { Fragment } from 'inferno';
 import { useBackend } from '../../backend';
-import { Box, Section, Tabs } from '../../components';
-import { CitationTabData, CitationTargetData, CitationTargetListProps, CrewCreditsTabKeys } from './type';
-
-export const CitationsMenuTab = (props, context) => {
-  const { menu, setMenu } = props;
-  const { data } = useBackend<CitationTabData>(context);
-  const { tickets, fines } = data;
-  if ((!tickets || !tickets.length) && (!fines || !fines.length)) {
-    return null;
-  }
-  return (
-    <Tabs.Tab
-      selected={menu === CrewCreditsTabKeys.Citations}
-      onClick={() => setMenu(CrewCreditsTabKeys.Citations)}>
-      Tickets/Fines
-    </Tabs.Tab>
-  );
-};
+import { Box, Section } from '../../components';
+import { CitationTabData, CitationTargetData, CitationTargetListProps } from './type';
 
 export const CitationsTab = (props, context) => {
   const { data } = useBackend<CitationTabData>(context);
   const { tickets, fines } = data;
   return (
-    <Fragment>
+    <>
       <CitationTargetList title="Tickets" citation_targets={tickets} />
       <CitationTargetList title="Fines" citation_targets={fines} />
-    </Fragment>
+    </>
   );
 };
 
