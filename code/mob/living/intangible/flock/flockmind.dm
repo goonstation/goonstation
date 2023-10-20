@@ -26,8 +26,10 @@
 
 /atom/movable/screen/hud/relay/proc/getDesc()
 	var/datum/flockstats/flock_stats = src.owner.flock.stats
-	return "Peak Compute: [flock_stats.peak_compute] / [FLOCK_RELAY_COMPUTE_COST]\
-			Tiles Converted: [flock_stats.tiles_converted] / [FLOCK_RELAY_TILE_REQUIREMENT]"
+	var/pct_compute = min(100, round(flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST * 100))
+	var/pct_tiles = min(100, round(flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT * 100))
+	var/pct_total = round((((pct_compute / 100) * (pct_tiles / 100)) * 100))
+	return "Overall Progress: [pct_total]% \nCompute: [pct_compute]% \nConverted: [pct_tiles]%"
 
 /// Update everything about the icon
 /atom/movable/screen/hud/relay/proc/update_value()
@@ -38,6 +40,8 @@
 		var/pct_tiles = flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT
 		src.alpha = 100 + (155 * pct_compute * pct_tiles)
 	else if (src.owner.flock)
+		// TODO
+		.
 
 /atom/movable/screen/hud/relay/proc/update_icon_state()
 	switch(src.stage)
@@ -48,7 +52,6 @@
 		if (STAGE_CRITICAL)
 			src.icon_state = "structure-relay-glow"
 			src.overlays += "structure-relay-sparks"
-			// TODO: figure out how to add overlay of structure-relay-sparks
 		if (STAGE_DESTROYED)
 			qdel(src) // TODO: figure out what works as a "destroyed" iconstate
 			return

@@ -26,8 +26,8 @@ TYPEINFO(/obj/flock_structure/relay)
 	bound_y = -64
 	hitTwitch = FALSE
 	show_in_tutorial = TRUE
-	// TODO: Reword to include all goals, make dynamic based off whatever goals are present. If they need cheese whiz so be it
-	tutorial_desc = "Your goal and purpose. The Relay becomes closer to being real as you gain more compute, eventually becoming solid at [FLOCK_RELAY_COMPUTE_COST] compute. You must then defend it while it charges before unleashing The Signal, and if you fail your consciousness will be destroyed."
+	// TODO: Reword to include all goals, why does this have to be const :(
+	tutorial_desc = "Your goal and purpose. The Relay becomes closer to being real as you gain more compute, eventually becoming solid at 1000 compute. You must then defend it while it charges before unleashing The Signal, and if you fail your consciousness will be destroyed."
 	layer = EFFECTS_LAYER_BASE //big spooky thing needs to render over everything
 	plane = PLANE_NOSHADOW_ABOVE
 	passthrough = FALSE
@@ -94,7 +94,7 @@ TYPEINFO(/obj/flock_structure/relay)
 	if (!src.shuttle_departure_delayed)
 		emergency_shuttle.disabled = SHUTTLE_CALL_ENABLED
 
-/obj/flock_structure/relay/get_time_left()
+/obj/flock_structure/relay/proc/get_time_left()
 	return max(0, round(src.charge_time_length - getTimeInSecondsSinceTime(src.time_started)))
 
 /obj/flock_structure/relay/get_desc()
