@@ -11,6 +11,10 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	var/obj/machinery/camera/current = null
 	var/can_view_ai = FALSE
 
+	disposing()
+		src.current = null
+		..()
+
 	attack_self(var/mob/user)
 		user.unlock_medal("I Spy", 1)
 

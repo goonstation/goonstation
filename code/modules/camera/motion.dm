@@ -16,6 +16,11 @@
 			if (isdead(target))
 				lostTarget(target)
 
+/obj/machinery/camera/motion/disposing()
+	for (var/dude as anything in src.motionTargets)
+		LAZYLISTREMOVE(src.motionTargets, dude)
+	..()
+
 /obj/machinery/camera/motion/proc/newTarget(var/mob/target)
 	if (isAI(target))
 		return 0
