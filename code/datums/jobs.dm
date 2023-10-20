@@ -2189,7 +2189,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-		// Deactivate any gene that was activated by
+
+		// Deactivate any gene that was activated by Mildly mutated trait
 		M.bioHolder.DeactivateAllPoolEffects()
 		M.critterize(/mob/living/critter/small_animal/plush/cryptid)
 
@@ -2202,6 +2203,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 
+		// Deactivate any gene that was activated by Mildly mutated trait
 		M.bioHolder.DeactivateAllPoolEffects()
 		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/mouse/remy)
 		C.flags = null
@@ -2214,6 +2216,8 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
+
+		// Deactivate any gene that was activated by Mildly mutated trait
 		M.bioHolder.DeactivateAllPoolEffects()
 		var/mob/living/critter/C = M.critterize(/mob/living/critter/spider/nice)
 		C.flags = null
@@ -2227,6 +2231,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		if (!M)
 			return
 
+		// Deactivate any gene that was activated by Mildly mutated trait
 		M.bioHolder.DeactivateAllPoolEffects()
 		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/bird/crow)
 		C.flags = null
