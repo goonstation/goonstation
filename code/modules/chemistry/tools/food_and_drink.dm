@@ -155,6 +155,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/list/food_effects = list()
 	var/create_time = 0
 	var/bites_left = 3
+	var/uneaten_bites_left = 3
 
 	var/dropped_item = null
 
@@ -163,6 +164,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 
 	New()
 		..()
+		src.uneaten_bites_left = initial(bites_left)
 		if (doants)
 			processing_items.Add(src)
 		create_time = world.time
@@ -475,7 +477,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 						src.reagents.copy_to(eater.reagents, 3/max(src.reagents.total_volume, 3)) //copy up to 3u total, once per food per 15 seconds
 			else
 				var/obj/item/reagent_containers/food/snacks/bite/B = new /obj/item/reagent_containers/food/snacks/bite
-				B.fill_amt = src.fill_amt/initial(src.bites_left) //so all the bites add up to the full item fillness
+				B.fill_amt = src.fill_amt/src.uneaten_bites_left //so all the bites add up to the full item fillness
 				if(src.reagents)
 					B.reagents.maximum_volume = reagents.total_volume/((src.bites_left+1) || 1) //MBC : I copied this from the Eat proc. It doesn't really handle the reagent transfer evenly??
 					src.reagents.trans_to(B,B.reagents.maximum_volume,1,0)						//i'll leave it tho because i dont wanna mess anything up
@@ -490,8 +492,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 				for (var/effect in src.food_effects)
 					L.add_food_bonus(effect, src)
 
-		if (use_bite_mask && initial(bites_left))
-			var/desired_mask = (bites_left / initial(bites_left)) * 5
+		if (use_bite_mask && src.uneaten_bites_left)
+			var/desired_mask = (bites_left / src.uneaten_bites_left) * 5
 			desired_mask = round(desired_mask)
 			desired_mask = max(1,desired_mask)
 			desired_mask = min(desired_mask, 5)
