@@ -798,9 +798,9 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 		boutput(user, "<span class='notice'>You scan in [M].</span>")
 		boutput(M, "<span class='alert'>[user] scans you with the RecordTrak!</span>")
 		for(var/datum/db_record/R as anything in data_core.general.records)
-			if (lowertext(R["name"]) == lowertext(M.name))
+			if (lowertext(R["name"]) == lowertext(M.real_name))
 				//Update Information
-				R["name"] = M.name
+				R["name"] = M.real_name
 				R["sex"] = M.gender
 				R["pronouns"] = M.get_pronouns().name
 				R["age"] = M.bioHolder.age
@@ -816,7 +816,7 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			src.active1["id"] = num2hex(rand(1, 1.6777215E7),6)
 			src.active1["rank"] = "Unassigned"
 			//Update Information
-			src.active1["name"] = M.name
+			src.active1["name"] = M.real_name
 			src.active1["sex"] = M.gender
 			src.active1["pronouns"] = M.get_pronouns().name
 			src.active1["age"] = M.bioHolder.age
