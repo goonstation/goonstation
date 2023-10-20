@@ -35,7 +35,7 @@
 		src.food_color = src.reagents.get_master_color()
 		if (!src.cream_image)
 			src.cream_image = image(src.icon)
-		var/cream_level = (100 * round(bites_left/initial(bites_left),0.25))
+		var/cream_level = (100 * round(src.bites_left/src.uneaten_bites_left,0.25))
 		if (!src.food_color)
 			src.food_color = src.reagents.get_master_color()
 		src.cream_image.icon_state = "ice[cream_level]"
