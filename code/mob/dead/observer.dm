@@ -10,6 +10,7 @@
 	canmove = TRUE
 	blinded = FALSE
 	anchored = ANCHORED	//  don't get pushed around
+	var/doubleghost = FALSE //! When a ghost gets busted they become a ghost of a ghost and this var is true
 	var/observe_round = FALSE
 	var/health_shown = FALSE
 	var/arrest_shown = FALSE
@@ -141,7 +142,7 @@
 
 // Make sure to keep this JPS-cache safe
 /mob/dead/observer/Cross(atom/movable/mover)
-	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
+	if (!doubleghost && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (proj.proj_data?.hits_ghosts)
 			return 0
@@ -158,7 +159,7 @@
 #endif
 
 /mob/dead/observer/bullet_act(var/obj/projectile/P)
-	if (src.icon_state == "doubleghost" || !P.proj_data?.hits_ghosts)
+	if (doubleghost|| !P.proj_data?.hits_ghosts)
 		return
 
 #ifdef HALLOWEEN
@@ -172,7 +173,11 @@
 			return
 #endif
 
-	src.icon_state = "doubleghost"
+	src.doubleghost = TRUE
+	if(!try_set_icon_state("doubleghost"))
+		src.add_filter("doubleghost_outline", 0, outline_filter(1, "#000000", OUTLINE_SHARP))
+		// color matrix makes the outline and all other fully black pixels white and somewhat transparent, hides the rest
+		src.color = list(0,0,0,-255, 0,0,0,-255, 0,0,0,-255, 0,0,0,0.627451, 1,1,1,0)
 	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
 
 
