@@ -1,7 +1,5 @@
 //list("Catering","Engineering","Export","Medbay","Research","Security","QM")
 
-ABSTRACT_TYPE(/obj/machinery/cargo_router/aetherion)
-
 // engine router
 /obj/machinery/cargo_router/aetherion/southsec_west
 	New()
