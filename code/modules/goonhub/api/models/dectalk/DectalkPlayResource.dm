@@ -2,7 +2,7 @@
 
 /// DectalkPlayResource
 /datum/apiModel/DectalkPlayResource
-	var/audio = null // string
+	var/audio = null // string, url pointing to the recorded audio file
 
 /datum/apiModel/DectalkPlayResource/SetupFromResponse(response)
 	. = ..()
