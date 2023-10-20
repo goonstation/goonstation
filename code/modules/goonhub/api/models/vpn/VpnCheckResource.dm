@@ -39,8 +39,8 @@
 		return FALSE
 	return TRUE
 
-/datum/apiModel/VpnCheckResource/ToString()
-	. = list()
+/datum/apiModel/VpnCheckResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["round_id"] = src.round_id
 	.["ip"] = src.ip
@@ -50,4 +50,3 @@
 	.["meta"] = src.meta
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

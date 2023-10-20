@@ -28,7 +28,7 @@
 		return FALSE
 
 /datum/apiModel/PollOptionResource/ToList()
-	. = list()
+	. = ..()
 	.["id"] = src.id
 	.["poll_id"] = src.poll_id
 	.["option"] = src.option

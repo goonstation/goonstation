@@ -38,12 +38,11 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerSearchResource/ToString()
-	. = list()
+/datum/apiModel/PlayerSearchResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["ip"] = src.ip
 	.["comp_id"] = src.comp_id
 	.["player_id"] = src.player_id
 	.["ckey"] = src.ckey
 	.["created_at"] = src.created_at
-	return json_encode(.)

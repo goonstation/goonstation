@@ -31,8 +31,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/JobBanResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/JobBanResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["round_id"] = src.round_id
 	.["game_admin_id"] = src.game_admin_id
@@ -45,4 +45,3 @@
 	.["updated_at"] = src.updated_at
 	.["deleted_at"] = src.deleted_at
 	.["game_admin"] = src.game_admin
-	return json_encode(.)

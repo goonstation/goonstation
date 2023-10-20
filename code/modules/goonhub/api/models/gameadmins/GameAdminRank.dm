@@ -15,10 +15,9 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/GameAdminRank/ToString()
-	. = list()
+/datum/apiModel/Tracked/GameAdminRank/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["rank"] = src.rank
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

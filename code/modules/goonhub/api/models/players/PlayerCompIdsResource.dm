@@ -18,8 +18,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerCompIdsResource/ToString()
-	. = list()
-	.["latest_connection"] = src.latest_connection.ToString()
+/datum/apiModel/PlayerCompIdsResource/ToList()
+	. = ..()
+	.["latest_connection"] = src.latest_connection.ToList()
 	.["comp_ids"] = src.comp_ids
-	return json_encode(.)

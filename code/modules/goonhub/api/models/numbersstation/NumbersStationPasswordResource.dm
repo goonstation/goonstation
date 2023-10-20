@@ -14,7 +14,6 @@
 	)
 		return FALSE
 
-/datum/apiModel/NumbersStationPasswordResource/ToString()
-	. = list()
+/datum/apiModel/NumbersStationPasswordResource/ToList()
+	. = ..()
 	.["numbers"] = src.numbers
-	return json_encode(.)

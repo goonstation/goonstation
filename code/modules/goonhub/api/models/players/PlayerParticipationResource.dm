@@ -19,12 +19,11 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/PlayerRes/PlayerParticipationResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/PlayerRes/PlayerParticipationResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["player_id"] = src.player_id
 	.["round_id"] = src.round_id
 	.["legacy_data"] = src.legacy_data
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

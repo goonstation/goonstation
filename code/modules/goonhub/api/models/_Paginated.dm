@@ -26,7 +26,7 @@ ABSTRACT_TYPE(/datum/apiModel/Paginated)
 			return FALSE
 
 /datum/apiModel/Paginated/ToList()
-	. = list()
+	. = ..()
 	.["data"] = list()
 	for (var/datum/apiModel/item in src.data)
 		.["data"] += list(item.ToList())

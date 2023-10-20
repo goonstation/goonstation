@@ -16,8 +16,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/Error/ToString()
-	. = list()
+/datum/apiModel/Error/ToList()
+	. = ..()
 	.["message"] = src.message
 	.["errors"] = src.errors
-	return json_encode(.)

@@ -37,8 +37,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/EventFineResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/EventFineResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["round_id"] = src.round_id
 	.["player_id"] = src.player_id
@@ -50,4 +50,3 @@
 	.["amount"] = src.amount
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

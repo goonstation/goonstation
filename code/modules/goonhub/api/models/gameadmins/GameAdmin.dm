@@ -25,7 +25,7 @@
 		return FALSE
 
 /datum/apiModel/Tracked/GameAdmin/ToList()
-	. = list()
+	. = ..()
 	.["id"] = src.id
 	.["ckey"] = src.ckey
 	.["name"] = src.name

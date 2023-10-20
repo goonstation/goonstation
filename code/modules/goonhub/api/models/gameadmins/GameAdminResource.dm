@@ -22,14 +22,13 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/GameAdminResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/GameAdminResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["ckey"] = src.ckey
 	.["name"] = src.name
 	.["discord_id"] = src.discord_id
 	if (src.rank)
-		.["rank"] = src.rank.ToString()
+		.["rank"] = src.rank.ToList()
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

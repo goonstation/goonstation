@@ -11,7 +11,7 @@ ABSTRACT_TYPE(/datum/apiModel)
 
 /// Override to convert a model to an associative list
 /datum/apiModel/proc/ToList()
-	return
+	return list()
 
 /// Get a string representation of a model for debugging purposes. Optional.
 /datum/apiModel/proc/ToString()

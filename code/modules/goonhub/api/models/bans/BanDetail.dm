@@ -22,8 +22,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/BanDetail/ToString()
-	. = list()
+/datum/apiModel/Tracked/BanDetail/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["ban_id"] = src.ban_id
 	.["ckey"] = src.ckey
@@ -32,4 +32,3 @@
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
 	.["deleted_at"] = src.deleted_at
-	return json_encode(.)

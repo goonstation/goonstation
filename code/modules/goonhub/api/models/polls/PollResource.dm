@@ -37,7 +37,7 @@
 		return FALSE
 
 /datum/apiModel/Tracked/PollResource/ToList()
-	. = list()
+	. = ..()
 	.["id"] = src.id
 	.["game_admin_id"] = src.game_admin_id
 	if (src.game_admin)

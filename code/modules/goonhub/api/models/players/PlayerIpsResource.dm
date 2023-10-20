@@ -18,8 +18,7 @@
 	)
 		return FALSE
 
-/datum/apiModel/PlayerIpsResource/ToString()
-	. = list()
-	.["latest_connection"] = src.latest_connection.ToString()
+/datum/apiModel/PlayerIpsResource/ToList()
+	. = ..()
+	.["latest_connection"] = src.latest_connection.ToList()
 	.["ips"] = src.ips
-	return json_encode(.)

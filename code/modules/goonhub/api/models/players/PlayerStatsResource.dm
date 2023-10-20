@@ -47,8 +47,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/PlayerStatsResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/PlayerStatsResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["ckey"] = src.ckey
 	.["key"] = src.key
@@ -63,5 +63,4 @@
 	.["connected_rp"] = src.connected_rp
 	.["time_played"] = src.time_played
 	if (src.latest_connection)
-		.["latest_connection"] = src.latest_connection.ToString()
-	return json_encode(.)
+		.["latest_connection"] = src.latest_connection.ToList()
