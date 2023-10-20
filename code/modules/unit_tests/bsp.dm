@@ -18,23 +18,23 @@
 	var/x
 	var/y
 	var/datum/bsp_node/root = T.root
-	var/list/grid = new/list(root.x+root.width+1,root.y+root.height+1)
-	var/list/leaves = new/list()
-	for(var/datum/bsp_node/node in T.leaves)
-		TEST_ASSERT(node.width >= T.min_width, "Test node meets width requirement.")
-		TEST_ASSERT(node.height >= T.min_height, "Test node meets height requirement.")
-		for(x in node.x to node.x+node.width-1)
-			for(y in node.y to node.y+node.height-1)
-				TEST_ASSERT(grid[x][y] == null, "Test leaf contents are mutually exclusive.([x],[y])")
-				grid[x][y] = TRUE
+	if(root)
+		var/list/grid = new/list(root.x+root.width+1,root.y+root.height+1)
+		var/list/leaves = new/list()
+		for(var/datum/bsp_node/node in T.leaves)
+			TEST_ASSERT(node.width >= T.min_width, "Test node meets width requirement.")
+			TEST_ASSERT(node.height >= T.min_height, "Test node meets height requirement.")
+			for(x in node.x to node.x+node.width-1)
+				for(y in node.y to node.y+node.height-1)
+					TEST_ASSERT(grid[x][y] == null, "Test leaf contents are mutually exclusive.([x],[y])")
+					grid[x][y] = TRUE
 
-		if(node == node.parent.left)
-			TEST_ASSERT(T.are_nodes_adjacent(node.parent.left,node.parent.right), "Test balanced leaves are adjacent.")
+			if(node == node.parent?.left)
+				TEST_ASSERT(T.are_nodes_adjacent(node.parent.left,node.parent.right), "Test balanced leaves are adjacent.")
 
-	leaves = T.get_leaves(root)
-	TEST_ASSERT(length(T.leaves ^ leaves)==0, "Test iterated list of leaves matches what is generated on creation.")
+		leaves = T.get_leaves(root)
+		TEST_ASSERT(length(T.leaves ^ leaves)==0, "Test iterated list of leaves matches what is generated on creation.")
 
-	if(length(T.leaves))
 		for(x in 1 to root.x+root.width+1)
 			for(y in 1 to root.y+root.height+1)
 				if(x < root.x)
