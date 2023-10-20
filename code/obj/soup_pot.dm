@@ -12,7 +12,7 @@
 	icon_state = "bowl"
 	name = null
 	desc = "Ah, the, uh, wonders of the kitchen stove."
-	bites_left = null
+	bites_left = 6
 	heal_amt = null
 	initial_volume = null
 	initial_reagents = null
