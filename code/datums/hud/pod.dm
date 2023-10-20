@@ -94,6 +94,8 @@
 		check_clients()
 		if(istype(master.fueltank))
 			fuel_bar.update_health_overlay(MIXTURE_PRESSURE(master.fueltank.air_contents), PORTABLE_ATMOS_MAX_RELEASE_PRESSURE, 0, 0)
+		else
+			fuel_bar.update_health_overlay(0, 100, 0, 0)
 
 	proc/update_states()
 		check_clients()

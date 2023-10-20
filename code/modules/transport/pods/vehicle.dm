@@ -414,6 +414,7 @@
 					W.set_loc(src)
 					src.fueltank = W
 					src.updateDialog()
+					src.myhud?.update_fuel()
 					src.engine.activate()
 				else
 					boutput(usr, "<span class='alert'>That doesn't fit there.</span>")
@@ -425,6 +426,7 @@
 					fueltank.set_loc(src.loc)
 					fueltank = null
 					src.updateDialog()
+					src.myhud?.update_fuel()
 					src.engine.deactivate()
 				else
 					boutput(usr, "<span class='alert'>There's no tank in the slot.</span>")
@@ -735,7 +737,7 @@
 					toxins = 0
 
 				if(usage)
-					myhud?.update_fuel()
+					src.myhud?.update_fuel()
 					if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
 						engine.deactivate()
 				consumed?.dispose()
