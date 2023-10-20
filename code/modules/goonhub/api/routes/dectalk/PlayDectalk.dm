@@ -7,6 +7,7 @@
 	correct_response = /datum/apiModel/DectalkPlayResource
 
 	buildBody(
-		text
+		text,
+		round_id
 	)
 		. = ..(args)
