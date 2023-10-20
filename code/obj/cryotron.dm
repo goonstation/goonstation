@@ -364,13 +364,13 @@
 		if (!usr)
 			return
 
-		if (isAIeye(usr))
+		if (isAIeye(usr) || isintangible(usr))
 			return
 
 		if (!can_act(usr) || !in_interact_range(src, usr))
 			return
 
-		if (isdead(usr) || isobserver(usr) || isintangible(usr))
+		if (isdead(usr) || isobserver(usr))
 			return
 
 		if (issilicon(usr))
