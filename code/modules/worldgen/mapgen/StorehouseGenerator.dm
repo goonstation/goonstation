@@ -43,6 +43,86 @@
 					else
 						cell_grid[i][j] = FLOOR
 
+	proc/fill_map_bsp()
+		cell_grid = new/list(world.maxx,world.maxy)
+		var/datum/bsp_node/room
+		var/list/datum/bsp_node/branch
+		var/datum/bsp_tree/tree = new(width=world.maxx, height=world.maxy, min_width=7, min_height=7)
+
+		// Create a series of merged rooms, prune entire branch from which the rooms could merge
+		for(var/x in 1 to 80)
+			room = pick(tree.leaves)
+			if(!room)
+				break
+			tree.leaves -= room
+			branch = tree.get_leaves(room.parent.parent.parent)
+			tree.leaves -= branch
+
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+			for(var/datum/bsp_node/leaf in branch)
+				if(tree.are_nodes_adjacent(room,leaf))
+					set_type(leaf.x, leaf.y, leaf.x+leaf.width-1, leaf.y+leaf.height-1, FLOOR)
+					for(var/door in 1 to rand(1,2))
+						add_perimeter_door(leaf.x, leaf.y, leaf.x+leaf.width-1, leaf.y+leaf.height-1)
+
+		// Create a series of small rooms, prune individual leaves
+		for(var/x in 1 to 40)
+			room = pick(tree.leaves)
+			if(!room)
+				break
+			tree.leaves -= room
+
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+		// Create a series of LARGE rooms, prune individual leaves
+		for(var/x in 1 to 20)
+			room = pick(tree.leaves)
+			if(!room)
+				break
+			room = room.parent
+			room = room.parent
+			branch = tree.get_leaves(room)
+			tree.leaves -= branch
+
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+		// Iterate through remaining leaves and convert them into rooms and purge leaves of 1-4 parents to
+		// reduce number of empty areas
+		while(length(tree.leaves))
+			room = pick(tree.leaves)
+			if(!room)
+				break
+
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+			for(var/i in 1 to rand(4))
+				room = room.parent
+			branch = tree.get_leaves(room)
+			tree.leaves -= branch
+
+		build_walls()
+
+		for(var/i in src.gen_min_x to src.gen_max_x)
+			for(var/j in src.gen_min_y to src.gen_max_y)
+
+				if(i<=src.gen_min_x || i>=src.gen_max_x || j<=src.gen_min_y || j>=src.gen_max_y)
+					cell_grid[i][j] = WALL
+				else if(!cell_grid[i][j])
+					if(prob(80))
+						cell_grid[i][j] = FLOOR_ONLY
+					else
+						cell_grid[i][j] = FLOOR
+
+
 	proc/build_rooms(count=30, maximum_size=25)
 		var/x
 		var/y
@@ -91,6 +171,8 @@
 					if(i<=src.gen_min_x || i>=src.gen_max_x || j<=src.gen_min_y || j>=src.gen_max_y)
 						; // noop errors have been made
 					else if(cell_grid[i-1][j] && cell_grid[i+1][j] && cell_grid[i][j-1] && cell_grid[i][j+1])
+						cell_grid[i][j] = FLOOR
+					else if(cell_grid[i-1][j] != WALL && cell_grid[i][j-1] != WALL)
 						cell_grid[i][j] = FLOOR
 					else
 						continue
