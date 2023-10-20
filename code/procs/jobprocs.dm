@@ -678,31 +678,34 @@ var/global/totally_random_jobs = FALSE
 	var/T = pick(trinket_safelist)
 	var/list/obj/item/trinkets = list()
 
-	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
-		trinkets = list()
-	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
-		trinkets += src.create_wig()
-		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
-		src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
-		src.update_colorful_parts()
-	else if (src.traitHolder && src.traitHolder.hasTrait("loyalist"))
-		trinkets += new/obj/item/clothing/head/NTberet(src)
-	else if (src.traitHolder && src.traitHolder.hasTrait("petasusaphilic"))
-		var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
-		trinkets += new picked(src)
-	else if (src.traitHolder && src.traitHolder.hasTrait("conspiracytheorist"))
-		trinkets += new/obj/item/clothing/head/tinfoil_hat
-	else if (src.traitHolder && src.traitHolder.hasTrait("beestfriend"))
-		if (prob(15))
-			trinkets += new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy(src)
+	if (istype(src.traitHolder))
+		if (src.traitHolder.hasTrait("pawnstar"))
+			trinkets = list()
+		else if (src.traitHolder.hasTrait("bald"))
+			trinkets += src.create_wig()
+			src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
+			src.bioHolder.mobAppearance.customization_second = new /datum/customization_style/none
+			src.bioHolder.mobAppearance.customization_third = new /datum/customization_style/none
+			src.update_colorful_parts()
+		else if (src.traitHolder.hasTrait("loyalist"))
+			trinkets += new/obj/item/clothing/head/NTberet(src)
+		else if (src.traitHolder.hasTrait("petasusaphilic"))
+			var/picked = pick(filtered_concrete_typesof(/obj/item/clothing/head, /proc/filter_trait_hats))
+			trinkets += new picked(src)
+		else if (src.traitHolder.hasTrait("conspiracytheorist"))
+			trinkets += new/obj/item/clothing/head/tinfoil_hat
+		else if (src.traitHolder.hasTrait("beestfriend"))
+			if (prob(15))
+				trinkets += new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee/buddy(src)
+			else
+				trinkets += new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
+		else if (src.traitHolder.hasTrait("lunchbox"))
+			var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
+			trinkets += new random_lunchbox_path(src)
+		else if (src.traitHolder.hasTrait("allergic"))
+			trinkets += new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
 		else
-			trinkets += new/obj/item/reagent_containers/food/snacks/ingredient/egg/bee(src)
-	else if (src.traitHolder && src.traitHolder.hasTrait("lunchbox"))
-		var/random_lunchbox_path = pick(childrentypesof(/obj/item/storage/lunchbox))
-		trinkets += new random_lunchbox_path(src)
-	else if (src.traitHolder && src.traitHolder.hasTrait("allergic"))
-		trinkets += new/obj/item/reagent_containers/emergency_injector/epinephrine(src)
+			trinkets += new T(src)
 	else
 		trinkets += new T(src)
 
