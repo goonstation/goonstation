@@ -1,5 +1,10 @@
 
 (t)fri oct 20 23
+(u)TDHooligan
+(p)16546
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)You can now concentrate coffee into espresso with sodium sulfate...
+(+)...and extract pure caffeine from said espresso with acetone and heat. Drink responsibly!
 (u)Facsimil
 (p)14878
 (e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
