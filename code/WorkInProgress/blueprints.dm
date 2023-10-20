@@ -499,7 +499,7 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "interdictor_blueprint" // yoinking this unused icon
 	item_state = "sheet"
-	// jank alert: this item lets filenames and saved room_name vars be different. but who cares?
+	// jank alert: this item lets filenames and saved roomname data be different. but who cares?
 
 	var/author = ""
 	var/room_name = ""
@@ -509,10 +509,11 @@
 		. = ..(new_loc)
 		if (!savepath || !fexists(savepath)) return
 		src.blueprint_path = savepath
-		var/splitted = splittext(savepath, "/") // this seemed better than loading the full save file to grab the same data
-		src.author = splitted[3] // sample savepath: "data/blueprint/userckey/Warehouse_v2.dat"
-		src.room_name = splittext(splitted[4], ".")[1]
-		src.name += ": [src.room_name]" // just load the damn save it's cleaner and doesnt overwrite author
+		var/savefile/save = new/savefile(savepath)
+		save.cd = "/"
+		src.author = save["author"]
+		src.room_name = save["roomname"]
+		src.name += ": [src.room_name]"
 
 	attack_self(mob/user)
 		if (!user?.client?.ckey)
@@ -522,26 +523,19 @@
 			boutput(user, "<span class='alert'>This item is broken, please tell a coder if it keeps breaking!</span>")
 			return
 		// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
-		/* var/input = ckeyEx(tgui_input_text(user, "Do you want to save a copy of this blueprint to your own collection? \
-			If so, choose a name for it. Use only alphanumeric characters, and - and _.", "Copy Homework", null, 54)) */
-		if (tgui_alert(user, "Do you want to save a copy of '[src.room_name]' to your own collection?",
-			"Copy Homework", list("Yes", "No")) == "No")
-			return
-		var/new_filename = ckeyEx(splittext(splittext(src.blueprint_path, "/")[4], ".")[1])
-		var/copy_num = 0 // if this filename already exists, append "_copynum" to prevent overwrite by fcopy()
-		var/suffix = ""
-		while (fexists("data/blueprints/[user.client.ckey]/[new_filename][suffix].dat") && copy_num < 20)
-			copy_num++
-			suffix = "_" + "[copy_num]"
-			if (copy_num >= 20)
-				boutput(user, "<span class='alert'>Too many copies of this filename! Stopping.</span>")
-				break
-			/* if (!user?.client?.ckey) return // just in case
-			input = ckeyEx(tgui_input_text(user, "A blueprint of that name already exists. Please input another, or cancel.",
-				"Copy Homework", input, 54)) */ // just replace this with an auto-numbering system, then filename parity blah blah
-		//if (!input) return
-		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[new_filename][suffix].dat")
-		boutput(user, "<span class='notice'>Copied this blueprint! Its filename is: '[new_filename][suffix]'.</span>")
+		var/input = ckeyEx(tgui_input_text(user, "You are copying '[src.room_name]' to your own collection. \
+			Choose a file name for it. Use only alphanumeric characters, and - and _.", "Copy Homework", null, 54))
+		var/timeout = 0
+		while (input && fexists("data/blueprints/[user.client.ckey]/[input].dat"))
+			if (!user?.client?.ckey || timeout > 5)
+				boutput(user, "<span class='alert'>Copy operation timed out. Please try again.</span>")
+				return
+			input = ckeyEx(tgui_input_text(user, "A blueprint named '[input]' already exists. Please input another, or cancel.",
+				"Copy Homework", input, 54)) // handy dandy prompt autofilled with the last used input
+			timeout++
+		if (!input) return
+		fcopy(src.blueprint_path, "data/blueprints/[user.client.ckey]/[input].dat")
+		boutput(user, "<span class='notice'>Copied this blueprint! Its filename is: '[input]'.</span>")
 
 	afterattack(atom/target, mob/user)
 		if (!istype(target, /obj/machinery/abcu))
@@ -616,14 +610,19 @@
 proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	if (!length(turf_list) || !user.client.ckey) return
 	// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
-	var/input = ckeyEx(tgui_input_text(user, "Set a name for your new blueprint. Use only alphanumeric characters, and - and _.",
+	var/input = strip_html(tgui_input_text(user, "Set a name for your new blueprint. \
+		Filename conversion preserves only alphanumeric characters, and - and _.",
 		"Blueprint Name", null, 54))
 	if (!input) return
-	var/savepath = "data/blueprints/[user.client.ckey]/[input].dat"
+	// raw input goes into savefile's roomname, sanitized goes into filename
+	var/input_sanitized = ckeyEx(input)
+	var/savepath = "data/blueprints/[user.client.ckey]/[input_sanitized].dat"
+
 	var/savefile/save = new/savefile("[savepath]") // creates a save, or loads an existing one
 	save.cd = "/"
 	if (save["sizex"] || save["sizey"]) // if it exists, and has data in it, ALERT!
-		if (tgui_alert(user, "A blueprint named [input] already exists. Really overwrite?", "Overwrite Blueprint", list("Yes", "No")) == "No")
+		if (tgui_alert(user, "A blueprint file named [input_sanitized] already exists. Really overwrite?",
+			"Overwrite Blueprint", list("Yes", "No")) == "No")
 			return
 		fdel("[savepath]")
 		save = new/savefile("[savepath]")
@@ -677,19 +676,14 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 			save["pixely"] << o.pixel_y
 			save["icon_state"] << o.icon_state
 
-	boutput(user, "<span class='notice'>Saved blueprint as '[input]'. </span>")
+	boutput(user, "<span class='notice'>Saved blueprint '[input]' with filename '[input_sanitized]'. </span>")
 
 proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 	if (!savepath) // make this proc usable with or without a user and menu
-		if (!user || !user.client) return
-		var/list/bplist = flist("data/blueprints/[user.client.ckey]/")
-		if (!length(bplist))
-			boutput(user, "<span class='alert'>You don't have any blueprints.</span>")
-			return
-		var/inputbp = tgui_input_list(user, "Pick a blueprint to load.", "Your Blueprints", bplist)
-		if(!inputbp) return
-		savepath = "data/blueprints/[user.client.ckey]/[inputbp]"
-	if (!fexists(savepath)) return // unlikely i hope
+		var/picked = browse_abcu_blueprints(user)
+		if (!picked) return
+		savepath = picked["path"]
+	if (!fexists(savepath)) return
 	var/savefile/save = new/savefile("[savepath]")
 
 	var/datum/abcu_blueprint/bp = new/datum/abcu_blueprint
@@ -765,6 +759,7 @@ proc/browse_abcu_blueprints(mob/user, var/browse_all_users = FALSE)
 		picked_ckey = splittext(inputuser, "/")[1]
 	else
 		picked_ckey = user.client.ckey
+	if (!picked_ckey) return
 
 	var/list/bplist = flist("data/blueprints/[picked_ckey]/")
 	if (!length(bplist))
@@ -774,8 +769,8 @@ proc/browse_abcu_blueprints(mob/user, var/browse_all_users = FALSE)
 	if (!inputbp) return
 	return list("path" = "data/blueprints/[picked_ckey]/[inputbp]", "ckey" = picked_ckey, "file" = inputbp)
 
-proc/delete_abcu_blueprint(mob/user)
-	var/picked = browse_abcu_blueprints(user)
+proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
+	var/picked = browse_abcu_blueprints(user, browse_all_users)
 	if (!picked) return
 	if (fexists(picked["path"]))
 		if (tgui_alert(user, "Really delete [picked["file"]]?", "Blueprint Deletion", list("Yes", "No")) == "No")
@@ -1169,9 +1164,9 @@ proc/delete_abcu_blueprint(mob/user)
 					boutput(user, "<span class='alert'>Out of energy.</span>")
 					return
 				//printSaved(roomname)
-				var/picked_path = browse_abcu_blueprints(user)
-				if (!picked_path) return
-				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked_path["path"])
+				var/picked = browse_abcu_blueprints(user)
+				if (!picked) return
+				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked["path"])
 				user.put_in_hand_or_drop(printed)
 				src.prints_left--
 				return
