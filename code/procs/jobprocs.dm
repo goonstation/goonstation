@@ -679,7 +679,7 @@ var/global/totally_random_jobs = FALSE
 	var/list/obj/item/trinkets = list()
 
 	if (src.traitHolder && src.traitHolder.hasTrait("pawnstar"))
-		trinkets = list() //You better stay null, you hear me!
+		trinkets = list()
 	else if (src.traitHolder && src.traitHolder.hasTrait("bald"))
 		trinkets += src.create_wig()
 		src.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
