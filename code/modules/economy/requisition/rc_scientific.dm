@@ -440,7 +440,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/organ)
 /datum/rc_entry/stack/electrum
 	name = "electrum"
 	typepath = /obj/item/material_piece
-	typepath = /obj/item/raw_material
+	mat_id = "electrum"
 	feemod = PAY_IMPORTANT
 
 /datum/rc_entry/item/graviton

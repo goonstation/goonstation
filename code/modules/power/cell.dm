@@ -1,6 +1,6 @@
 /obj/item/cell
 	name = "power cell"
-	desc = "A rechargable electrochemical power cell. It's too large to fit into most handheld devices, but can be used to power cyborgs and APCs."
+	desc = "A rechargeable electrochemical power cell. It's too large to fit into most handheld devices, but can be used to power cyborgs and APCs."
 	icon = 'icons/obj/power.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "cell"
@@ -52,7 +52,7 @@
 
 /obj/item/cell/shell_cell
 	name = "AI shell power cell"
-	desc = "A rechargable electrochemical power cell. It's made for AI shells."
+	desc = "A rechargeable electrochemical power cell. It's made for AI shells."
 	maxcharge = 4000
 
 /obj/item/cell/hypercell

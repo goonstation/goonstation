@@ -1,6 +1,6 @@
 /datum/targetable/wrestler/strike
 	name = "Strike"
-	desc = "Hit a neaby opponent with a quick attack."
+	desc = "Hit a nearby opponent with a quick attack."
 	icon_state = "Strike"
 	targeted = 1
 	target_anything = 0

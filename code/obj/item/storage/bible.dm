@@ -118,10 +118,7 @@
 		else if (isdead(M))
 			M.visible_message("<span class='alert'><B>[user] smacks [M]'s lifeless corpse with [src].</B></span>")
 
-		if (narrator_mode)
-			playsound(src.loc, 'sound/vox/hit.ogg', 25, 1, -1)
-		else
-			playsound(src.loc, "punch", 25, 1, -1)
+		playsound(src.loc, "punch", 25, 1, -1)
 
 		return
 

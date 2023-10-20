@@ -961,12 +961,21 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 	name = "grass"
 	icon = 'icons/turf/outdoors.dmi'
 	icon_state = "grass"
+	#ifdef AUTUMN
+	icon_state = "grass_autumn"
+	#else
+	icon_state = "grass"
+	#endif
 	mat_changename = 0
 	mat_changedesc = 0
 	default_material = "synthrubber"
 
 /turf/unsimulated/floor/grass/leafy
+	#ifdef AUTUMN
+	icon_state = "grass_leafy_autumn"
+	#else
 	icon_state = "grass_leafy"
+	#endif
 
 /turf/unsimulated/floor/grass/random
 	New()
@@ -1070,9 +1079,14 @@ TYPEINFO(/turf/unsimulated/floor/grass)
 	name = "grass"
 	desc = "some leafy grass."
 	icon = 'icons/turf/outdoors.dmi'
+	#ifdef AUTUMN
+	icon_state = "grass_leafy_autumn"
+	icon_state_edge = "grass_leafyedge_autumn"
+	#else
 	icon_state = "grass_leafy"
-	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS - 1
 	icon_state_edge = "grass_leafyedge"
+	#endif
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_GRASS - 1
 
 /turf/unsimulated/floor/auto/dirt
 	name = "dirt"

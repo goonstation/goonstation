@@ -280,10 +280,7 @@ TYPEINFO(/obj/item/toy/handheld)
 			var/mob/living/carbon/human/H = user
 			if (H.sims)
 				H.sims.affectMotive("fun", 1)
-		if (narrator_mode)
-			playsound(user, 'sound/vox/duct.ogg', 50, TRUE)
-		else
-			playsound(user, 'sound/items/rubberduck.ogg', 50, TRUE)
+		playsound(user, 'sound/items/rubberduck.ogg', 50, TRUE)
 		if(prob(1))
 			user.drop_item()
 			playsound(user, 'sound/ambience/industrial/AncientPowerPlant_Drone3.ogg', 50, TRUE) // this is gonna spook some people!!

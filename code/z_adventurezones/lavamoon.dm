@@ -561,6 +561,7 @@ var/sound/iomoon_alarm_sound = null
 		var/mob/living/carbon/human/H = user
 		if(istype(H))
 			boutput(user, "<i><b><font face = Tempus Sans ITC>EI NATH</font></b></i>")
+			logTheThing(LOG_COMBAT, H, "Becomes unkillable via Shield of Souls (unkill_shield))")
 
 			//EI NATH!!
 			elecflash(user,radius = 2, power = 6)
