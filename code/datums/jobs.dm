@@ -2197,7 +2197,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-
 		M.critterize(/mob/living/critter/small_animal/plush/cryptid)
 
 /datum/job/special/halloween/critter/remy
@@ -2208,7 +2207,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-
 		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/mouse/remy)
 		C.flags = null
 
@@ -2220,7 +2218,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-
 		var/mob/living/critter/C = M.critterize(/mob/living/critter/spider/nice)
 		C.flags = null
 
@@ -2232,7 +2229,6 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 		..()
 		if (!M)
 			return
-
 		var/mob/living/critter/C = M.critterize(/mob/living/critter/small_animal/bird/crow)
 		C.flags = null
 
