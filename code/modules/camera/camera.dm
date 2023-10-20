@@ -88,25 +88,36 @@
 
 /obj/machinery/camera/disposing()
 	STOP_TRACKING
-	if(src.camera_status)
+	if (src.camera_status)
 		src.set_camera_status(FALSE)
 
-	if(global.camnets && global.camnets[network])
+	if (src.light)
+		qdel(src.light)
+		src.light = null
+
+	if (src.viewer)
+		src.disconnect_viewers()
+
+	if (global.camnets && global.camnets[network])
 		global.camnets[network].Remove(src)
 
 	if (c_north)
 		c_north.referrers -= src
+		c_north = null
 	if (c_east)
 		c_east.referrers -= src
+		c_east = null
 	if (c_south)
 		c_south.referrers -= src
+		c_south = null
 	if (c_west)
 		c_west.referrers -= src
+		c_west = null
 
 	global.dirty_cameras |= src.referrers
 	global.camnet_needs_rebuild = TRUE
 
-	for(var/obj/machinery/camera/C as anything in referrers)
+	for (var/obj/machinery/camera/C as anything in referrers)
 		if (C.c_north == src)
 			C.c_north = null
 		if (C.c_east == src)
