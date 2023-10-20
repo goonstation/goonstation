@@ -5,6 +5,9 @@
 #define CYCLE_TIME_MOB_INSIDE 5
 #define CYCLE_TIME 10
 
+TYPEINFO(/obj/submachine/laundry_machine)
+	mats = 20
+
 /obj/submachine/laundry_machine
 	name = "laundry machine"
 	desc = "A combined washer/dryer unit used for cleaning clothes."

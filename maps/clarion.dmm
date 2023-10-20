@@ -1980,8 +1980,9 @@
 /turf/simulated/floor/grey/whitegrime/other,
 /area/station/storage/primary)
 "ajO" = (
+/obj/landmark/shuttle_subwoofer,
 /turf/space,
-/area/shuttle_sound_spawn)
+/area/space)
 "ajR" = (
 /turf/simulated/floor/black,
 /area/station/hangar/sec)
@@ -5683,6 +5684,9 @@
 /obj/machinery/light{
 	dir = 4;
 	pixel_x = 10
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep{
+	secret_thing = 1
 	},
 /turf/simulated/floor/grass/leafy,
 /area/station/ranch)
@@ -14527,12 +14531,6 @@
 /obj/disposalpipe/segment/mail,
 /turf/simulated/wall/auto/supernorn,
 /area/station/engine/engineering)
-"bsq" = (
-/obj/securearea{
-	name = "ENGINEERING ACCESS"
-	},
-/turf/simulated/wall/auto/supernorn,
-/area/station/engine/engineering)
 "bss" = (
 /turf/simulated/wall/auto/supernorn,
 /area/station/quartermaster/storage)
@@ -20304,7 +20302,6 @@
 	icon_state = "2-4"
 	},
 /obj/mapping_helper/access/heads,
-/obj/mapping_helper/firedoor_spawn,
 /obj/machinery/secscanner{
 	pixel_y = -10
 	},
@@ -20323,6 +20320,7 @@
 /obj/machinery/door/airlock/pyro/command{
 	name = "Bridge"
 	},
+/obj/machinery/door/firedoor/pyro,
 /turf/simulated/floor/blue,
 /area/station/bridge)
 "edo" = (
@@ -26616,6 +26614,7 @@
 /obj/cable/orange{
 	icon_state = "0-4"
 	},
+/obj/item/device/radio/intercom/engineering,
 /turf/simulated/floor/white,
 /area/station/engine/engineering)
 "jbP" = (
@@ -31904,7 +31903,7 @@
 	pixel_y = 5
 	},
 /obj/item/screwdriver,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
 "nns" = (
@@ -32908,6 +32907,7 @@
 /obj/machinery/ai_status_display{
 	pixel_y = 28
 	},
+/obj/machinery/dialysis,
 /turf/simulated/floor/redwhite{
 	dir = 1
 	},
@@ -35319,7 +35319,6 @@
 	dir = 1;
 	pixel_y = 21
 	},
-/obj/item/device/radio/intercom/engineering,
 /obj/machinery/power/data_terminal,
 /obj/noticeboard/persistent{
 	name = "Engineering persistent notice board";
@@ -36451,6 +36450,7 @@
 	dir = 8;
 	icon_state = "line1"
 	},
+/obj/machinery/vending/capsule,
 /turf/simulated/floor/black,
 /area/station/hallway/primary/central)
 "qSy" = (
@@ -40129,7 +40129,7 @@
 "tOd" = (
 /obj/table/reinforced/auto,
 /obj/item/device/infra_sensor,
-/obj/item/clothing/glasses/meson,
+/obj/item/clothing/glasses/toggleable/meson,
 /obj/machinery/status_display{
 	pixel_y = 30
 	},
@@ -77744,7 +77744,7 @@ bgz
 boQ
 hVf
 brc
-bsq
+bso
 yfR
 buC
 pCX
@@ -78258,7 +78258,7 @@ bgz
 lWI
 ebq
 brn
-bsq
+bso
 kow
 buC
 qLR

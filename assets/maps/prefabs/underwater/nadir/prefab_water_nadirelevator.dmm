@@ -45,6 +45,7 @@
 /obj/item/mining_tool/power_pick{
 	pixel_x = -7
 	},
+/obj/item/tank/oxygen,
 /turf/simulated/floor/black,
 /area/shuttle/sea_elevator)
 "bR" = (
@@ -146,12 +147,6 @@
 /area/shuttle/sea_elevator)
 "eT" = (
 /turf/simulated/floor/engine/caution/north,
-/area/shuttle/sea_elevator)
-"fb" = (
-/obj/table/reinforced/auto,
-/obj/item/tank/oxygen,
-/obj/item/tank/oxygen,
-/turf/simulated/floor/industrial,
 /area/shuttle/sea_elevator)
 "ft" = (
 /obj/table/wood/auto,
@@ -1513,7 +1508,6 @@
 	})
 "Xr" = (
 /obj/decal/cleanable/dirt/jen,
-/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor,
 /area/shuttle/sea_elevator)
 "Xs" = (
@@ -1543,6 +1537,10 @@
 "XP" = (
 /turf/variableTurf/clear,
 /area/allowGenerate/trench)
+"XU" = (
+/obj/machinery/vending/air_vendor/plasma,
+/turf/simulated/floor/industrial,
+/area/shuttle/sea_elevator)
 "XY" = (
 /obj/stool/chair/comfy{
 	dir = 4
@@ -2726,7 +2724,7 @@ XP
 "}
 (23,1,1) = {"
 hf
-ji
+XU
 tC
 ob
 tC
@@ -2775,7 +2773,7 @@ XP
 "}
 (24,1,1) = {"
 xI
-fb
+ji
 ob
 ob
 ob

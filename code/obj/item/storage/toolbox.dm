@@ -72,7 +72,8 @@ ABSTRACT_TYPE(/obj/item/storage/toolbox)
 	spawn_contents = list(/obj/item/crowbar/red,\
 	/obj/item/extinguisher,\
 	/obj/item/device/light/flashlight,\
-	/obj/item/device/radio)
+	/obj/item/device/radio,\
+	/obj/item/roadflare)
 
 /obj/item/storage/toolbox/mechanical
 	name = "mechanical toolbox"

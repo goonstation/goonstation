@@ -111,6 +111,13 @@
 		setup_drive_size = 32
 		mailgroups = list(MGD_COMMAND,MGD_PARTY)
 
+	hop
+		icon_state = "pda-hop"
+		setup_default_pen = /obj/item/pen/fancy
+		setup_default_cartridge = /obj/item/disk/data/cartridge/head
+		setup_drive_size = 32
+		mailgroups = list(MGD_COMMAND,MGD_PARTY)
+
 	hos
 		icon_state = "pda-hos"
 		setup_default_pen = /obj/item/pen/fancy
@@ -215,6 +222,7 @@
 		mailgroups = list(MGD_SCIENCE,MGD_PARTY)
 
 	quartermaster
+		name = "Quartermaster PDA"
 		icon_state = "pda-q"
 		setup_default_cartridge = /obj/item/disk/data/cartridge/quartermaster
 		mailgroups = list(MGD_CARGO,MGD_PARTY)
@@ -280,7 +288,9 @@
 		alertgroups = list(MGA_MAIL,MGA_RADIO)
 
 	mining
-		icon_state = "pda-e"
+		name = "Mining PDA"
+		icon_state = "pda-q"
+		setup_default_cartridge = /obj/item/disk/data/cartridge/miner
 		mailgroups = list(MGD_MINING,MGD_PARTY)
 		alertgroups = list(MGA_MAIL, MGA_RADIO, MGA_SALES)
 

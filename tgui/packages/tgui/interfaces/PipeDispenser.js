@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState } from '../backend';
-import { Button, Section, Stack, Box, NumberInput, Image } from '../components';
+import { Box, Button, Image, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const PipeDispenser = (props, context) => {

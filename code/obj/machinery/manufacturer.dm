@@ -2548,6 +2548,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/beaker_lid_box,
 		/datum/manufacture/bunsen_burner,
 		/datum/manufacture/spectrogoggles,
+		/datum/manufacture/atmos_goggles,
 		/datum/manufacture/reagentscanner,
 		/datum/manufacture/dropper,
 		/datum/manufacture/mechdropper,
@@ -2843,8 +2844,9 @@ TYPEINFO(/obj/machinery/manufacturer)
 	supplemental_desc = "This one produces crates, carts, that sort of thing. Y'know, box stuff."
 	icon_state = "fab-crates"
 	icon_base = "crates"
-	free_resource_amt = 5
-	free_resources = list(/obj/item/material_piece/steel)
+	free_resource_amt = 1
+	free_resources = list(/obj/item/material_piece/steel,
+		/obj/item/material_piece/organic/wood)
 	accept_blueprints = FALSE
 	available = list(/datum/manufacture/crate,
 		/datum/manufacture/packingcrate,
@@ -2920,6 +2922,7 @@ TYPEINFO(/obj/machinery/manufacturer)
 		/datum/manufacture/soldering,
 		/datum/manufacture/multitool,
 		/datum/manufacture/t_scanner,
+		/datum/manufacture/atmos_goggles,
 		/datum/manufacture/engivac,
 		/datum/manufacture/lampmanufacturer,
 		/datum/manufacture/breathmask,

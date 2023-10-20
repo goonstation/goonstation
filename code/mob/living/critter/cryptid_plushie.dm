@@ -55,6 +55,8 @@
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/glowing_eyes/set_glowing_eyes_color)
 		abilityHolder.updateButtons()
 
+		bioHolder.AddEffect("resist_alcohol")
+
 	death(gibbed)
 		. = ..()
 		// do stuff with old dead body
@@ -201,6 +203,13 @@
 		being_seen_status_update()
 		SPAWN(2 SECONDS)  // gross bandaid to work around the life loop being a tad too slow
 			being_seen_status_update()
+
+		if (src.reagents.has_reagent("ethanol"))
+			if (src.reagents.get_reagent_amount("ethanol") >= 15 && prob(25))
+				playsound(get_turf(src), 'sound/voice/burp.ogg', 15, TRUE, channel=VOLUME_CHANNEL_EMOTE, pitch=1.8)
+				src.visible_message("<span class='alert'><B>[src] burps?</B></span>")
+				hit_twitch(src)
+				src.reagents.del_reagent("ethanol")
 
 	proc/set_dormant_status(var/enabled)
 		if(enabled)

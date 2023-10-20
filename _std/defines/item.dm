@@ -86,6 +86,11 @@
 #define OMNI_MODE_CUTTING 6
 #define OMNI_MODE_WELDING 7
 
+//fluid_canister flags
+#define FLUID_CANISTER_MODE_OFF 1
+#define FLUID_CANISTER_MODE_SLURP 2
+#define FLUID_CANISTER_MODE_PISS 3
+
 //tooltip flags for rebuilding
 
 /// rebuild tooltip every single time without exception

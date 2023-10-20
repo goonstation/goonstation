@@ -138,6 +138,8 @@
 				token = ":" + R.secure_frequencies[choice_index - 1]
 
 			var/text = input("", "Speaking to [choice] frequency") as null|text
+			if (!text)
+				return
 			if (src.capitalize_speech())
 				var/i = 1
 				while (copytext(text, i, i+1) == " ")
@@ -291,6 +293,10 @@
 	if (!hivemind_owner)
 		return
 
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
+
 	//i guess this caused some real ugly text huh
 	//message = trim(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
 	if (!message)
@@ -349,6 +355,10 @@
 	if (!owner)
 		return
 
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
+
 	if (!message)
 		return
 
@@ -380,6 +390,10 @@
 
 	if (!owner)
 		return
+
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
 
 	if (!message)
 		return

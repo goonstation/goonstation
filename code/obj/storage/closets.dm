@@ -612,7 +612,7 @@ TYPEINFO(/obj/storage/closet/coffin)
 	spawn_contents = list(/obj/item/clothing/suit/rad = 1,
 					/obj/item/clothing/head/rad_hood = 1,
 					/obj/item/storage/pill_bottle/antirad = 1,
-					/obj/item/clothing/glasses/meson = 1,
+					/obj/item/clothing/glasses/toggleable/meson = 1,
 					/obj/item/reagent_containers/emergency_injector/anti_rad = 1)
 
 /obj/storage/closet/medicalclothes

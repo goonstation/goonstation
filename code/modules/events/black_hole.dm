@@ -54,7 +54,7 @@
 			particleMaster.SpawnSystem(new /datum/particleSystem/bhole_warning(src))
 
 		var/turf/T = get_turf(src)
-		for (var/client/C in GET_NEARBY(T, 15))
+		for (var/client/C in GET_NEARBY(/datum/spatial_hashmap/clients, T, 15))
 			boutput(C, "<span class='alert'>The air grows heavy and thick. Something feels terribly wrong.</span>")
 			shake_camera(C.mob, 5, 16)
 		playsound(src,'sound/effects/creaking_metal1.ogg',100,FALSE,5,0.5)

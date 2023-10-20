@@ -329,7 +329,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
 					list(I, user), null, positions[1], positions[2]),user)
 				return
-			else if (ispryingtool(I))
+			else if (ispryingtool(I) && src.needs_prying)
 				SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 1 SECOND, /obj/storage/proc/pry_open, user, I.icon, I.icon_state,\
 				"[user] pries open \the [src]", INTERRUPT_ACTION | INTERRUPT_STUNNED)
 
@@ -338,10 +338,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				user.show_text("It appears to be broken.", "red")
 				return
 			else if (src.personal)
-				var/obj/item/card/id/ID = null
-				if (istype(I, /obj/item/card/id))
-					ID = I
-				else
+				var/obj/item/card/id/ID = get_id_card(I)
+				if (!istype(ID))
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.wear_id)
@@ -397,6 +395,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 	proc/pry_open(var/mob/user)
 		playsound(src, 'sound/items/Crowbar.ogg', 60, 1)
 		src.pried_open = TRUE
+		src.locked = FALSE
 		src.open = TRUE
 		src.dump_contents(user)
 		src.UpdateIcon()
@@ -933,6 +932,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		..()
 		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
+		the_storage.dump_contents(owner)
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)
 			I.setMaterial(the_storage.material)

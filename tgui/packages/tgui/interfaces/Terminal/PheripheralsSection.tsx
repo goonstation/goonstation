@@ -7,7 +7,7 @@
 
 import { useBackend } from '../../backend';
 import { TerminalData } from './types';
-import { Section, Button } from '../../components';
+import { Button, Section } from '../../components';
 
 export const PheripheralsSection = (_props, context) => {
   const { act, data } = useBackend<TerminalData>(context);

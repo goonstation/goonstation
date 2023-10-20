@@ -106,6 +106,7 @@
 	proc/play(var/mob/user)
 		if (pick_random_note && length(sounds_instrument))
 			play_note(rand(1, length(sounds_instrument)),user)
+			src.show_play_message(user)
 		if(length(contextActions))
 			user.showContextActions(contextActions, src)
 
@@ -582,6 +583,24 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 	note_time = 1 SECOND
 	pick_random_note = 1
 
+/* -------------------- Lucky bike horn ------------- */
+// some loot associated with the tragedy of the Blue Clown
+/obj/item/instrument/bikehorn/lucky
+	name = "lucky bike horn"
+	desc = "The bulb is well-worn from years of use in the space circus, where it accompanied its clown through acrobatic hoops and big cat stunts."
+	sounds_instrument = list('sound/musical_instruments/Bikehorn_1.ogg')
+	rarity = 6
+	quality = 80
+
+	New()
+		..()
+		src.setProperty("block", 45)
+		src.setProperty("deflection",45)
+		src.setProperty("vault_speed",3)
+		src.setProperty("disorient_resist",45)
+
+
+
 /* -------------------- Harmonica -------------------- */
 
 /obj/item/instrument/harmonica
@@ -639,6 +658,27 @@ TYPEINFO(/obj/item/instrument/bikehorn/dramatic)
 			else
 				sleep(5 SECONDS)
 		return 1
+
+/obj/item/instrument/whistle/security
+	name = "security whistle"
+	desc = "A whistle with a red stripe. Good for getting the attention of nearby securitrons."
+	icon_state = "whistle-sec"
+	contraband = 4 //beepsky takes stolen whistles seriously
+	HELP_MESSAGE_OVERRIDE("Blow this to briefly command nearby securitrons to follow your pointing, point at a perp to have them arrested.")
+
+	post_play_effect(mob/user)
+		var/list/bots = list()
+		for (var/obj/machinery/bot/secbot/secbot in view(user.client.view, user)) //cursed awful byond screen syntax
+			if (secbot.emagged)
+				continue
+			secbot.KillPathAndGiveUp(1)
+			secbot.speak("Awaiting command...")
+			bots += secbot
+			break
+
+		if (length(bots))
+			user.AddComponent(/datum/component/secbot_command, bots, 3 SECONDS)
+
 
 /* -------------------- Vuvuzela -------------------- */
 
