@@ -106,19 +106,20 @@
 	hair.alpha = 192
 	overlays += hair
 
-	wig = new
-	wig.mat_changename = 0
-	var/datum/material/wigmat = getMaterial("ectofibre")
-	wigmat = wigmat.getMutable()
-	wigmat.setColor(P.AH.customization_first_color)
-	wig.setMaterial(wigmat)
-	wig.name = "ectofibre [name]'s hair"
-	wig.icon = 'icons/mob/human_hair.dmi'
-	wig.icon_state = cust_one_state
-	wig.color = P.AH.customization_first_color
-	wig.wear_image_icon = 'icons/mob/human_hair.dmi'
-	wig.wear_image = image(wig.wear_image_icon, wig.icon_state)
-	wig.wear_image.color = P.AH.customization_first_color
+	if(cust_one_state && cust_one_state != "none")
+		wig = new
+		wig.mat_changename = 0
+		var/datum/material/wigmat = getMaterial("ectofibre")
+		wigmat = wigmat.getMutable()
+		wigmat.setColor(P.AH.customization_first_color)
+		wig.setMaterial(wigmat)
+		wig.name = "ectofibre [name]'s hair"
+		wig.icon = 'icons/mob/human_hair.dmi'
+		wig.icon_state = cust_one_state
+		wig.color = P.AH.customization_first_color
+		wig.wear_image_icon = 'icons/mob/human_hair.dmi'
+		wig.wear_image = image(wig.wear_image_icon, wig.icon_state)
+		wig.wear_image.color = P.AH.customization_first_color
 
 
 	var/image/beard = image('icons/mob/human_hair.dmi', cust_two_state)
@@ -397,19 +398,21 @@
 		detail.alpha = 192
 		O.overlays += detail
 
-		O.wig = new
-		O.wig.mat_changename = 0
-		var/datum/material/wigmat = getMaterial("ectofibre")
-		wigmat = wigmat.getMutable()
-		wigmat.setColor(src.bioHolder.mobAppearance.customization_first_color)
-		O.wig.setMaterial(wigmat)
-		O.wig.name = "[O.name]'s hair"
-		O.wig.icon = 'icons/mob/human_hair.dmi'
-		O.wig.icon_state = src.bioHolder.mobAppearance.customization_first.id
-		O.wig.color = src.bioHolder.mobAppearance.customization_first_color
-		O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
-		O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
-		O.wig.wear_image.color = src.bioHolder.mobAppearance.customization_first_color
+		var/cust_one = src.bioHolder.mobAppearance.customization_first.id
+		if(cust_one && cust_one != "none")
+			O.wig = new
+			O.wig.mat_changename = 0
+			var/datum/material/wigmat = getMaterial("ectofibre")
+			wigmat = wigmat.getMutable()
+			wigmat.setColor(src.bioHolder.mobAppearance.customization_first_color)
+			O.wig.setMaterial(wigmat)
+			O.wig.name = "[O.name]'s hair"
+			O.wig.icon = 'icons/mob/human_hair.dmi'
+			O.wig.icon_state = cust_one
+			O.wig.color = src.bioHolder.mobAppearance.customization_first_color
+			O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
+			O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
+			O.wig.wear_image.color = src.bioHolder.mobAppearance.customization_first_color
 
 
 	return O
