@@ -395,13 +395,6 @@
 		window.update = function (message) {
 			window.__updateQueue__.push(message);
 		};
-		window.onload = function () {
-			Byond.topic({
-				tgui: 1,
-				window_id: window.__windowId__,
-				type: 'ready',
-			});
-		};
 
 		// Necessary polyfill to make Webpack code splitting work on IE8
 		if (!Function.prototype.bind) (function () {
@@ -595,7 +588,13 @@
 			<div>Please enable Javascript and restart the game.</div>
 		</div>
 	</noscript>
-
+	<script>
+		Byond.topic({
+			tgui: 1,
+			window_id: window.__windowId__,
+			type: 'ready',
+		});
+	</script>
 </body>
 
 </html>
