@@ -275,7 +275,7 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 	stop_size_scaling = TRUE
 	mutations = list(/datum/plantmutation/creeper/tumbling)
 	//stabilizer is the bad commut for the plant here, toxic the good one
-	commuts = list(/datum/plant_gene_strain/stabilizer, /datum/plant_gene_strain/reagent_adder/toxic)
+	commuts = list(/datum/plant_gene_strain/stabilizer, /datum/plant_gene_strain/invasive)
 
 	HYPspecial_proc(var/obj/machinery/plantpot/POT)
 		..()
@@ -286,10 +286,17 @@ ABSTRACT_TYPE(/datum/plant/artifact)
 
 		var/datum/plant/current_planttype = POT.current
 		var/datum/plantgenes/DNA = POT.plantgenes
+		// If the creeper got the invasive growth gene strain, we make it more capable of spreading
+		if (HYPCheckCommut(DNA, /datum/plant_gene_strain/invasive))
+			damage_to_other_plants += 5
+			chance_to_damage += 17
+			health_treshold_for_spreading -= 15
+		// We check for the health treshold and if we have grown sufficiently
 		if (POT.growth > (current_planttype.growtime - DNA?.get_effective_value("growtime")) && POT.health > round(current_planttype.starthealth * health_treshold_for_spreading / 100) && prob(chance_to_damage))
 			for (var/obj/machinery/plantpot/checked_plantpot in range(1,POT))
 				var/datum/plant/growing = checked_plantpot.current
-				if (!checked_plantpot.dead && growing && !istype(growing,/datum/plant/crystal) && !istype(growing,/datum/plant/artifact/creeper))
+				// We don't try to destroy other creepers and cannot attack crystals
+				if (!checked_plantpot.dead && growing && !istype(growing,/datum/plant/crystal) && !istype(growing, current_planttype))
 					checked_plantpot.HYPdamageplant("physical", damage_to_other_plants, 1)
 				else if (checked_plantpot.dead)
 					checked_plantpot.HYPdestroyplant()

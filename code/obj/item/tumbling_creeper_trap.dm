@@ -17,9 +17,8 @@
 	var/datum/plantgenes/plantgenes = null
 	var/generation = 0 // For genetics tracking.
 	var/armed = FALSE //! This determinates if the trap is armed or not
-	var/armed_force = 8 //! how much damage the trap does when stepped upon. Will be set when harvested
+	var/armed_force = 12 //! how much damage the trap does when stepped upon. Will be set when harvested
 	var/crashed_force = 20 //! how much damage the trap does when crashed into. Will be set when harvested
-	var/reagent_storage = 5 //! How much the max amount of chems is the trap should be able to hold
 	var/target_zone = "chest" //! which zone the trap tries to target and calculate the damage resist from
 
 
@@ -35,43 +34,20 @@
 
 	src.plantgenes = new /datum/plantgenes(src)
 
-	src.reagents.maximum_volume = src.reagent_storage
 
 /obj/item/plant/tumbling_creeper/HYPsetup_DNA(var/datum/plantgenes/passed_genes, var/obj/machinery/plantpot/harvested_plantpot, var/datum/plant/origin_plant, var/quality_status)
 
 	var/endurance_for_max = 150 // how much endurance is needed to reach max damage with the trap
-	var/potency_for_max = 250 // how much potency is needed to generate the max injection-multiplier
-	var/armed_force_min = 8 // how much damage the trap does when stepped upon with 0 endurance
-	var/armed_force_max = 18 // how much damage the trap does when stepped upon with the maximum endurance
-	var/crashed_force_min = 16 // how much damage the trap does when stepped upon with 0 endurance
-	var/crashed_force_max = 30 // how much damage the trap does when stepped upon with the maximum endurance
-	var/reagent_storage_min = 4 // How much the max amount of chems is the trap should be able to hold	at 0 potency
-	var/reagent_storage_max = 30 // How much the max amount of chems is the trap should be able to hold	at max potency
-	var/reagent_generation_multiplier = 1 //! How much percentage of the volume should be filled with assoc_reagents when harvested
+	var/armed_force_min = 12 // how much damage the trap does when stepped upon with 0 endurance
+	var/armed_force_max = 25 // how much damage the trap does when stepped upon with the maximum endurance
+	var/crashed_force_min = 20 // how much damage the trap does when stepped upon with 0 endurance
+	var/crashed_force_max = 35 // how much damage the trap does when stepped upon with the maximum endurance
 
 	var/datum/plantgenes/creeper_genes = src.plantgenes
 	src.planttype = HYPgenerateplanttypecopy(src, origin_plant)
 	src.generation = src.generation
 	HYPpassplantgenes(passed_genes,creeper_genes)
 
-	// raise the reagent storage limit linear from 0 potency to max potency
-	src.reagent_storage = clamp(
-		round(reagent_storage_min + (creeper_genes?.get_effective_value("potency") / potency_for_max) * (reagent_storage_max - reagent_storage_min)),
-		reagent_storage_min,
-		reagent_storage_max)
-
-	src.reagents.maximum_volume = src.reagent_storage
-
-	//add chemicals until reagent_generation_multiplier percentage of the storage is filled
-	if (src.planttype)
-		//we build a list out of all chems in assoc_reagents and commuts
-		var/list/put_reagents = HYPget_assoc_reagents(origin_plant, passed_genes)
-		// Now we add each reagent into the tumbling creeper
-		if (length(put_reagents) > 0)
-			var/volume_to_fill = src.reagent_storage * reagent_generation_multiplier
-			var/to_add = volume_to_fill / length(put_reagents)
-			for (var/plant_reagent in put_reagents)
-				src.reagents.add_reagent(plant_reagent, to_add)
 
 	// raise the damage of the plant linear from 0 endurance to max endurance
 	src.crashed_force = clamp(
@@ -208,8 +184,6 @@
 	..()
 
 /obj/item/plant/tumbling_creeper/ex_act(severity)
-
-	//no reuseable explosive chem traps, sorry
 	qdel(src)
 
 /obj/item/plant/tumbling_creeper/proc/arm(mob/user)
@@ -284,7 +258,6 @@
 
 /obj/item/plant/tumbling_creeper/proc/crash_into(mob/living/carbon/human/victim as mob)
 
-	var/crash_transfer_multiplier = 0.4 //! Multiplier to damage to calculate the amount of chems tranferred when crashed into.
 	var/crashed_weakened = 3 SECONDS //! how long you are stunned if you crash into the trap
 
 	if (!src || !victim || !src.armed)
@@ -292,39 +265,32 @@
 	logTheThing(LOG_COMBAT, victim, "crashed into [src] at [log_loc(src)].")
 	victim.changeStatus("weakened", crashed_weakened)
 	victim.force_laydown_standup()
-	src.trap_damage(victim, src.crashed_force, crash_transfer_multiplier)
+	//now we set the correct damage zone and apply the damage
+	var/target = "All"
+	if (victim.organHolder[src.target_zone])
+		target = src.target_zone
+	victim.TakeDamageAccountArmor(target, src.crashed_force, 0, 0, DAMAGE_STAB)
+	//after this, we play a corresponding sound and update everything
 	playsound(victim.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 80, 1)
 	victim.UpdateDamageIcon()
 
 
 /obj/item/plant/tumbling_creeper/proc/step_on(mob/living/carbon/human/victim as mob)
 
-	var/armed_weakened = 2 SECONDS // how long you are weakened after stepping into the trap
-	var/stepon_transfer_multiplier = 0.5 // Multiplier to damage to calculate the amount of chems tranferred when stepped into.
+	var/armed_weakened = 2 SECONDS //! how long you are weakened after stepping into the trap
 
 	if (!src || !victim || !src.armed)
 		return
 	logTheThing(LOG_COMBAT, victim, "stepped into [src] at [log_loc(src)].")
 	victim.changeStatus("weakened", armed_weakened)
 	victim.force_laydown_standup()
-	src.trap_damage(victim, src.armed_force, stepon_transfer_multiplier)
+	//now we set the correct damage zone and apply the damage
+	var/target = "All"
+	if (victim.organHolder[src.target_zone])
+		target = src.target_zone
+	victim.TakeDamageAccountArmor(target, src.armed_force, 0, 0, DAMAGE_STAB)
+	//after this, we play a corresponding sound, make a material trigger and update everything
 	playsound(victim.loc, 'sound/impact_sounds/Flesh_stab_1.ogg', 80, 1)
 	if (src.material)
 		src.material.triggerOnAttack(src, null, victim)
 	victim.UpdateDamageIcon()
-
-/obj/item/plant/tumbling_creeper/proc/trap_damage(mob/living/carbon/human/victim as mob, damage, transfer_multiplier)
-
-	if (!src || !victim)
-		return
-	var/target = "All"
-	if (victim.organHolder[src.target_zone])
-		target = src.target_zone
-	// we need this to calculate how much chems get transfered
-	// This means damage against the zone, reduced by melee protection, multiplied by transfer multiplier and then rounded
-	var/injected_amount = max(0, round((damage - victim.get_melee_protection(target, DAMAGE_STAB))*transfer_multiplier))
-	victim.TakeDamageAccountArmor(target, damage, 0, 0, DAMAGE_STAB)
-	// If injected_amount is greater than 0 and there are reagents in the trap, inject the victim
-	if (src.reagents && src.reagents.total_volume && injected_amount > 0)
-		logTheThing(LOG_COMBAT, src, "injected [victim] at [log_loc(src)] with [min(injected_amount, src.reagents.total_volume)]u of reagents.")
-		src.reagents.trans_to(victim, injected_amount)
