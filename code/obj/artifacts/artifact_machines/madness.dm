@@ -353,6 +353,15 @@
 			if (!L.client) //no point hallucinating if there's nobody to see it
 				continue
 
+			var/mob/living/carbon/human/H  = L
+			if(istype(H) && istype(H.head, /obj/item/clothing/head/tinfoil_hat)) 
+				continue
+
+			if(!ON_COOLDOWN(L, "halluc_cooldown_\ref[src]", 60 SECONDS)) //dont spam logs - we only want to log when a new effect applies - not a refresh
+				logTheThing(LOG_COMBAT, L, "was affected by a [src.effect_type] hallucination from [src.associated_object] at [log_loc(src.associated_object)]")
+			else
+				EXTEND_COOLDOWN(L, "halluc_cooldown_\ref[src]", 60 SECONDS)
+        
 			for(var/list/comp_args_tuple in src.madness_effects[src.effect_type])
 				//yes, we really do mean _AddComponent here, because it's already a list we're passing
 				//also we do it with the summed list because _AddComponent modifies the list that is passed to it

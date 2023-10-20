@@ -207,7 +207,7 @@
 			M.item_state = "satchel_robotics"
 			M.name = "robotics satchel"
 			M.real_name = "robotics satchel"
-			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromaticly on the shoulder of roboticists.(Base Item: robotics backpack)"
+			M.desc = "A thick, wearable container made of synthetic fibers, able to carry a number of objects monochromatically on the shoulder of roboticists.(Base Item: robotics backpack)"
 
 		else if (istype(M, /obj/item/storage/backpack/genetics) || activator.back.icon_state == "bp_genetics")
 			M.icon_state = "satchel_genetics"
@@ -836,7 +836,7 @@
 					M.item_state = "centcoat"
 					M.name = "commander's coat"
 					M.real_name = "commander's coat"
-					M.desc = "A luxorious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
+					M.desc = "A luxurious formal coat. It is specifically made for Nanotrasen commanders.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 
@@ -1008,7 +1008,7 @@
 					M.item_state = "centcoat-red"
 					M.name = "\improper CentCom coat"
 					M.real_name = "\improper CentCom coat"
-					M.desc = "A luxorious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
+					M.desc = "A luxurious formal coat. It is specifically made for CENTCOM executives.(Base Item: [prev])"
 					H.set_clothing_icon_dirty()
 					succ = TRUE
 

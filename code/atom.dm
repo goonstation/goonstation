@@ -400,7 +400,8 @@ TYPEINFO(/atom)
 /// Not intended for normal use. Current intended use is stuff like `src.try_set_icon_state(src.icon_state + "-autumn")` for seasonal modifiers etc.
 /atom/proc/try_set_icon_state(new_state, new_icon=null)
 	if(src.is_valid_icon_state(new_state, new_icon))
-		src.icon = new_icon
+		if(new_icon)
+			src.icon = new_icon
 		src.set_icon_state(new_state)
 		return TRUE
 	return FALSE

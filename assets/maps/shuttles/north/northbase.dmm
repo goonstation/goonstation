@@ -1111,15 +1111,6 @@
 	icon_state = "floor"
 	},
 /area/centcom/outside)
-"Rf" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0;
-	icon_state = "7"
-	},
-/turf/simulated/wall/auto/shuttle{
-	icon_state = "3"
-	},
-/area/shuttle/escape/centcom)
 "Rs" = (
 /turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
@@ -1163,16 +1154,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
-"SH" = (
-/obj/indestructible/shuttle_corner{
-	dir = 0
-	},
-/obj/indestructible/shuttle_corner{
-	dir = 0;
-	icon_state = "7"
-	},
-/turf/unsimulated/floor/shuttle,
-/area/shuttle/escape/centcom)
 "SW" = (
 /obj/machinery/atmospherics/portables_connector,
 /obj/decal/fakeobjects{
@@ -1463,7 +1444,7 @@ tt
 rR
 tt
 tt
-Rf
+rR
 jl
 Hm
 hi
@@ -1604,7 +1585,7 @@ Ih
 tt
 tt
 tt
-SH
+rR
 Zb
 Dz
 IG

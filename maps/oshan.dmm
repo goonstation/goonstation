@@ -36490,7 +36490,7 @@
 "hdz" = (
 /obj/machinery/door/airlock/pyro/alt{
 	dir = 4;
-	name = "Crematorium"
+	name = "Crew Quarters"
 	},
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,

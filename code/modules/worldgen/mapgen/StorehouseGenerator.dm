@@ -43,6 +43,86 @@
 					else
 						cell_grid[i][j] = FLOOR
 
+	proc/fill_map_bsp()
+		cell_grid = new/list(world.maxx,world.maxy)
+		var/datum/bsp_node/room
+		var/list/datum/bsp_node/branch
+		var/datum/bsp_tree/tree = new(width=world.maxx, height=world.maxy, min_width=7, min_height=7)
+
+		// Create a series of merged rooms, prune entire branch from which the rooms could merge
+		for(var/x in 1 to 80)
+			room = pick(tree.leaves)
+			if(!room)
+				break
+			tree.leaves -= room
+			branch = tree.get_leaves(room.parent.parent.parent)
+			tree.leaves -= branch
+
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+			for(var/datum/bsp_node/leaf in branch)
+				if(tree.are_nodes_adjacent(room,leaf))
+					set_type(leaf.x, leaf.y, leaf.x+leaf.width-1, leaf.y+leaf.height-1, FLOOR)
+					for(var/door in 1 to rand(1,2))
+						add_perimeter_door(leaf.x, leaf.y, leaf.x+leaf.width-1, leaf.y+leaf.height-1)
+
+		// Create a series of small rooms, prune individual leaves
+		for(var/x in 1 to 40)
+			room = pick(tree.leaves)
+			if(!room)
+				break
+			tree.leaves -= room
+
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+		// Create a series of LARGE rooms, prune individual leaves
+		for(var/x in 1 to 20)
+			room = pick(tree.leaves)
+			if(!room)
+				break
+			room = room.parent
+			room = room.parent
+			branch = tree.get_leaves(room)
+			tree.leaves -= branch
+
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+		// Iterate through remaining leaves and convert them into rooms and purge leaves of 1-4 parents to
+		// reduce number of empty areas
+		while(length(tree.leaves))
+			room = pick(tree.leaves)
+			if(!room)
+				break
+
+			set_type(room.x, room.y, room.x+room.width-1, room.y+room.height-1, FLOOR)
+			for(var/door in 1 to rand(1,2))
+				add_perimeter_door(room.x, room.y, room.x+room.width-1, room.y+room.height-1)
+
+			for(var/i in 1 to rand(4))
+				room = room.parent
+			branch = tree.get_leaves(room)
+			tree.leaves -= branch
+
+		build_walls()
+
+		for(var/i in src.gen_min_x to src.gen_max_x)
+			for(var/j in src.gen_min_y to src.gen_max_y)
+
+				if(i<=src.gen_min_x || i>=src.gen_max_x || j<=src.gen_min_y || j>=src.gen_max_y)
+					cell_grid[i][j] = WALL
+				else if(!cell_grid[i][j])
+					if(prob(80))
+						cell_grid[i][j] = FLOOR_ONLY
+					else
+						cell_grid[i][j] = FLOOR
+
+
 	proc/build_rooms(count=30, maximum_size=25)
 		var/x
 		var/y
@@ -91,6 +171,8 @@
 					if(i<=src.gen_min_x || i>=src.gen_max_x || j<=src.gen_min_y || j>=src.gen_max_y)
 						; // noop errors have been made
 					else if(cell_grid[i-1][j] && cell_grid[i+1][j] && cell_grid[i][j-1] && cell_grid[i][j+1])
+						cell_grid[i][j] = FLOOR
+					else if(cell_grid[i-1][j] != WALL && cell_grid[i][j-1] != WALL)
 						cell_grid[i][j] = FLOOR
 					else
 						continue
@@ -258,9 +340,10 @@
 					T.ReplaceWith(/turf/unsimulated/floor/setpieces/bloodfloor/stomach)
 					new /obj/stomachacid(T)
 				else
-					T.ReplaceWith(floor_path)
 					if(meaty)
-						T.icon_state = "bloodfloor_2"
+						T.ReplaceWith(/turf/unsimulated/floor/auto/meat)
+					else
+						T.ReplaceWith(floor_path)
 
 				if(!generate_stuff || !meatlight_map || !meatfriends_map)
 					return
@@ -277,14 +360,31 @@
 				else if(prob(5 + (meaty*12)))
 					if(meatfriends_map && !length(meatfriends_map?.get_nearby(T,5)))
 						var/atom/meat_friend
+						var/mob/living/critter/C
 
-						if(prob(20))
+						if(prob(25))
 							meat_friend = new /mob/living/critter/blobman/meat(T)
+							C = meat_friend
+
+#ifdef HALLOWEEN
+						else if(prob(5) + (meaty*5))
+							if(prob(1))
+								meat_friend = new /mob/living/critter/changeling/buttcrab/ai_controlled(T)
+							else if(prob(20))
+								meat_friend = new /mob/living/critter/changeling/eyespider/ai_controlled(T)
+							else if(prob(50))
+								meat_friend = new /mob/living/critter/changeling/legworm/ai_controlled(T)
+							else
+								meat_friend = new /mob/living/critter/changeling/handspider/ai_controlled(T)
+							C = meat_friend
+#endif
 						else
 							if(prob(90))
 								meat_friend = new /obj/item/mine/gibs/armed(T)
 							else
 								meat_friend = new /obj/item/mine/gibs(T)
+						if(istype(C) && prob(90)) // A little chaos, as a treat
+							C.faction |= FACTION_GENERIC
 						meatfriends_map.add_weakref(meat_friend)
 
 				else if(generate_stuff && prob(2))
@@ -344,6 +444,27 @@
 					door.dir = NORTH
 				else
 					door.dir = WEST
+
+/turf/unsimulated/floor/auto/meat
+	name = "bloody floor"
+	desc = "Yuck."
+	icon_state = "bloodfloor_2"
+
+	edge_priority_level = FLOOR_AUTO_EDGE_PRIORITY_DIRT
+	var/icon_edge = 'icons/misc/meatland.dmi'
+	icon_state_edge = "acid_corners"
+
+	edge_overlays()
+		for(var/direction in list(SOUTH))
+			var/turf/unsimulated/floor/setpieces/bloodfloor/stomach/T = get_step(src, direction)
+			if(!istype(T) || !istype(get_step(T, direction), /turf/unsimulated/floor/setpieces/bloodfloor/stomach))
+				continue
+			var/edge_direction = turn(direction, 180)
+			var/image/edge_overlay = image(src.icon_edge, "[icon_state_edge]",dir=edge_direction)
+			edge_overlay.appearance_flags = PIXEL_SCALE | TILE_BOUND | RESET_COLOR | RESET_ALPHA
+			edge_overlay.layer = src.layer + (src.edge_priority_level / 1000)
+			edge_overlay.plane = PLANE_FLOOR
+			T.UpdateOverlays(edge_overlay, "edge_[edge_direction]")
 
 #undef FLOOR
 #undef WALL

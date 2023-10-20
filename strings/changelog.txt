@@ -1,4 +1,33 @@
 
+(t)fri oct 20 23
+(u)TDHooligan
+(p)16546
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)You can now concentrate coffee into espresso with sodium sulfate...
+(+)...and extract pure caffeine from said espresso with acetone and heat. Drink responsibly!
+(u)Facsimil
+(p)14878
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Player pianos now can be linked together automatically.
+(u)CrystalClover
+(p)16264
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(+)Crates of all sorts are now cheaper to fabricate
+(t)wed oct 18 23
+(u)Kevin From HP
+(p)16383
+(e)🗺|A-Mapping
+(+)Sword sheaths can now be dragged out of belt slot onto hand/ground.
+(+)Using any katana on a container of pure sakuride will coat it in up to 15u. Dashing leaves a trail of petals behind you.
+(t)tue oct 17 23
+(u)Chasu
+(p)16499
+(e)🆕🎩🔬|C-Feature, A-Clothing, A-Science
+(+)Tinfoil hats now block artifact hallucinations.
+(u)glowbold
+(p)15855
+(e)🆕⚖🔨|C-Feature, C-Balance, A-Player-Actions
+(*)Play hero by laying down and blocking on top of live hand grenades and pipebombs.
 (t)mon oct 16 23
 (u)Lord_Earthfire
 (p)15909

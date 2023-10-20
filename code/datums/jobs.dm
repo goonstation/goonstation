@@ -59,7 +59,8 @@
 	var/objective = null
 	var/rounds_needed_to_play = 0 //0 by default, set to the amount of rounds they should have in order to play this
 	var/map_can_autooverride = 1 // if set to 0 map can't change limit on this job automatically (it can still set it manually)
-
+	/// Does this job use the name and appearance from the character profile? (for tracking respawned names)
+	var/uses_character_profile = TRUE
 	/// The faction to be assigned to the mob on setup uses flags from factions.dm
 	var/faction = 0
 
@@ -1026,6 +1027,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_back = list()
 	slot_belt = list()
 	items_in_backpack = list()
+	uses_character_profile = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
@@ -1045,6 +1047,7 @@ ABSTRACT_TYPE(/datum/job/civilian)
 	slot_back = list()
 	slot_belt = list()
 	items_in_backpack = list()
+	uses_character_profile = FALSE
 
 	special_setup(var/mob/living/carbon/human/M)
 		..()
