@@ -2,7 +2,7 @@
 
 /// DectalkPlayResource
 /datum/apiModel/DectalkPlayResource
-	var/audio = null // integer
+	var/audio = null // string
 
 /datum/apiModel/DectalkPlayResource/SetupFromResponse(response)
 	. = ..()
