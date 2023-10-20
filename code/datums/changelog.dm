@@ -249,8 +249,8 @@ so you'll want your single-digit days to have 0s in front
 <h1>Goonstation 13 <a href="#license"><img alt="Creative Commons CC-BY-NC-SA License" src="[resource("images/changelog/88x31.png")]" /></a></h1>
 
 <ul class="links cf">
-    <li>Official Wiki<br><strong><a target="_blank" href="http://wiki.ss13.co/">https://wiki.ss13.co</a></strong><span></span></li>
-    <li>Official Forums<br><strong><a target="_blank" href="https://forum.ss13.co/">https://forum.ss13.co</a></strong></li>
+    <li>Official Wiki<br><strong><a target="_blank" href="http://wiki.ss13.co/" target="_blank">https://wiki.ss13.co</a></strong><span></span></li>
+    <li>Official Forums<br><strong><a target="_blank" href="https://forum.ss13.co/" target="_blank">https://forum.ss13.co</a></strong></li>
 </ul>"}
 
 	html += changelog_parse(file2text("strings/changelog.txt"), "Changelog", src.testmerge_changes)
