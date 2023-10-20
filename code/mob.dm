@@ -953,7 +953,7 @@
 		for (var/medal in medals)
 			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
-		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1">Medal Details</a>"}
+		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
 		boutput(src, output.Join("<br>"))
 
 /mob/verb/setdnr()
