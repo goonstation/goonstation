@@ -735,6 +735,7 @@
 					toxins = 0
 
 				if(usage)
+					myhud?.update_fuel()
 					if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
 						engine.deactivate()
 				consumed?.dispose()
@@ -1478,6 +1479,8 @@
 	src.sensors.activate()
 	myhud.update_systems()
 	myhud.update_states()
+	myhud.update_health()
+	myhud.update_fuel()
 	///// Lights Subsystem
 	src.lights = new /obj/item/shipcomponent/pod_lights/pod_1x1( src )
 	src.lights.ship = src
