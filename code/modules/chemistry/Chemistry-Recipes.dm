@@ -4362,7 +4362,7 @@
 
 			//precipitate gross stuff, it's easy to MAKE a caffeine machine, but you want to clear out your equipment from time to time...
 			if (prob(50))
-				holder.add_reagent("bitters", created_volume*0.2, temp_new = holder.total_temperature, chemical_reaction = FALSE) //RAW coffee
+				holder.add_reagent("sewage", created_volume*0.2, temp_new = holder.total_temperature, chemical_reaction = FALSE) //RAW coffee
 			else
 				holder.add_reagent("yuck", created_volume*0.2, temp_new = holder.total_temperature, chemical_reaction = FALSE) //sulfate sludge
 
