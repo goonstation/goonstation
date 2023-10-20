@@ -6,26 +6,26 @@
  * @license ISC
  */
 
-import { useBackend } from "../backend";
-import { Button, Dimmer, LabeledList, Section, Slider, Stack } from "../components";
+import { useBackend } from '../backend';
+import { Button, Dimmer, LabeledList, Section, Slider, Stack } from '../components';
 import { Window } from '../layouts';
 import { VendorCashTable } from './common/VendorCashTable';
 import { GasTankInfo } from './GasTank';
 
 type AirVendorParams = {
-  cash: number,
-  cardname: string,
-  bankMoney: number,
-  vend_type: string,
-  holding: string,
-  holding_pressure: number,
-  min_pressure: number,
-  max_pressure: number,
-  air_cost: number,
-  fill_cost: number,
-  target_pressure: number,
-  current_fill: number
-}
+  cash: number;
+  cardname: string;
+  bankMoney: number;
+  vend_type: string;
+  holding: string;
+  holding_pressure: number;
+  min_pressure: number;
+  max_pressure: number;
+  air_cost: number;
+  fill_cost: number;
+  target_pressure: number;
+  current_fill: number;
+};
 
 const VendorSection = (_props, context) => {
   const { act, data } = useBackend<AirVendorParams>(context);
@@ -53,9 +53,10 @@ const VendorSection = (_props, context) => {
         <LabeledList.Item label="Cost">
           <Button
             content={isFree ? 'Free!' : `${fill_cost || 0}⪽`}
-            color={canVend ? "green" : "grey"}
+            color={canVend ? 'green' : 'grey'}
             disabled={!canVend}
-            onClick={handleFillClick} />
+            onClick={handleFillClick}
+          />
         </LabeledList.Item>
         <LabeledList.Item label="Pressure">
           <Stack>
@@ -63,7 +64,8 @@ const VendorSection = (_props, context) => {
               <Button
                 disabled={target_pressure === min_pressure}
                 onClick={() => handleChangePressure(min_pressure)}
-                content="Min" />
+                content="Min"
+              />
             </Stack.Item>
             <Stack.Item grow>
               <Slider
@@ -80,7 +82,8 @@ const VendorSection = (_props, context) => {
               <Button
                 disabled={target_pressure === max_pressure}
                 onClick={() => handleChangePressure(max_pressure)}
-                content="Max" />
+                content="Max"
+              />
             </Stack.Item>
           </Stack>
         </LabeledList.Item>
@@ -97,17 +100,17 @@ const TankSection = (_props, context) => {
   const handleTankInsert = () => act('o2_insert');
 
   return (
-    <Section title={"Holding Tank"} buttons={
-      <Button onClick={handleTankEject} icon="eject" disabled={!holding}>Eject</Button>
-    }>
-      <GasTankInfo pressure={holding_pressure || 0} maxPressure={max_pressure || 1} name={holding || "N/A"} />
+    <Section
+      title={'Holding Tank'}
+      buttons={
+        <Button onClick={handleTankEject} icon="eject" disabled={!holding}>
+          Eject
+        </Button>
+      }>
+      <GasTankInfo pressure={holding_pressure || 0} maxPressure={max_pressure || 1} name={holding || 'N/A'} />
       {!holding && (
         <Dimmer>
-          <Button
-            icon="eject"
-            fontSize={1.5}
-            onClick={handleTankInsert}
-            bold>
+          <Button icon="eject" fontSize={1.5} onClick={handleTankInsert} bold>
             Insert Gas Tank
           </Button>
         </Dimmer>
@@ -124,14 +127,17 @@ export const AirVendor = (_props, context) => {
   const handleCashEject = () => act('returncash');
 
   return (
-    <Window
-      width={350}
-      height={320}>
+    <Window width={350} height={320}>
       <Window.Content>
         <VendorSection />
         <TankSection />
-        <VendorCashTable cardname={cardname} onCardClick={handleCardEject} bankMoney={bankMoney}
-          cash={cash} onCashClick={handleCashEject} />
+        <VendorCashTable
+          cardname={cardname}
+          onCardClick={handleCardEject}
+          bankMoney={bankMoney}
+          cash={cash}
+          onCashClick={handleCashEject}
+        />
       </Window.Content>
     </Window>
   );
