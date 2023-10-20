@@ -155,7 +155,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/list/food_effects = list()
 	var/create_time = 0
 	var/bites_left = 3
-	var/uneaten_bites_left = 3
+	var/uneaten_bites_left = null
 
 	var/dropped_item = null
 
@@ -163,8 +163,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks)
 	var/meal_time_flags = 0
 
 	New()
+		if (!src.uneaten_bites_left)
+			src.uneaten_bites_left = initial(bites_left)
 		..()
-		src.uneaten_bites_left = initial(bites_left)
 		if (doants)
 			processing_items.Add(src)
 		create_time = world.time

@@ -25,8 +25,6 @@
 			qdel(src)
 			return
 
-		..()
-
 		if (bowl)
 			src.icon = bowl.icon
 			src.icon_state = bowl.icon_state
@@ -51,6 +49,8 @@
 				var/effect = pick(temp)
 				src.food_effects += effect
 				temp -= effect
+
+		..()
 
 		if(reagents.total_volume)
 			var/datum/color/average = reagents.get_average_color()
