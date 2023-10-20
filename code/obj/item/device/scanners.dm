@@ -790,6 +790,10 @@ TYPEINFO(/obj/item/device/prisoner_scanner)
 			boutput(user, "<span class='alert'>The device displays an error about an \"incompatible target\".</span>")
 			return
 
+		if (!M.face_visible())
+			boutput(user, "<span class='alert'>The device displays an error, the target's face must be visible.</span>")
+			return
+
 		////General Records
 		var/found = 0
 		//if( !istype(get_area(src), /area/security/prison) && !istype(get_area(src), /area/security/main))
