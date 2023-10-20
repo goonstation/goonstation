@@ -584,9 +584,10 @@
 		return
 
 	var/datum/attackResults/msgs = calculate_melee_attack(target, 2, 9, extra_damage)
-	msgs.damage_type = damtype
-	attack_effects(target, zone_sel?.selecting)
-	msgs.flush(suppress_flags)
+	if(msgs)
+		msgs.damage_type = damtype
+		attack_effects(target, zone_sel?.selecting)
+		msgs.flush(suppress_flags)
 
 /mob/proc/calculate_melee_attack(var/mob/target, var/base_damage_low = 2, var/base_damage_high = 9, var/extra_damage = 0, var/stamina_damage_mult = 1, var/can_crit = 1, can_punch = 1, can_kick = 1)
 	var/datum/attackResults/msgs = new(src)
