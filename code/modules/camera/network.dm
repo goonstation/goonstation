@@ -51,7 +51,7 @@
 		C.c_east = null
 		C.c_south = null
 		C.c_west = null
-		C.referrers.Clen = 0
+		C.referrers.len = 0
 
 /proc/connect_camera_list(var/list/obj/machinery/camera/camlist, var/force_connection=0)
 	if(!length(camlist)) return 1
