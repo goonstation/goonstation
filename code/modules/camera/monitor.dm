@@ -36,7 +36,7 @@ TYPEINFO(/obj/item/device/camera_viewer)
 
 		var/obj/machinery/camera/C = displayed_cameras[selected_camera]
 
-		if ((!user.contents.Find(src) || !can_act(user) || !user.sight_check(1) || !(C.camera_status)) && (!issilicon(user)))
+		if ((!(src in user.contents) || !can_act(user) || !user.sight_check(1) || !(C.camera_status)) && (!issilicon(user)))
 			user.set_eye(null)
 			return 0
 		else

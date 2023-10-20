@@ -42,7 +42,7 @@
 	if(defer_camnet_rebuild || !camnet_needs_rebuild) return
 
 	connect_camera_list(dirty_cameras)
-	dirty_cameras.Cut()
+	dirty_cameras.len = 0
 	camnet_needs_rebuild = 0
 
 /proc/disconnect_camera_network()
@@ -51,10 +51,10 @@
 		C.c_east = null
 		C.c_south = null
 		C.c_west = null
-		C.referrers.Cut()
+		C.referrers.Clen = 0
 
 /proc/connect_camera_list(var/list/obj/machinery/camera/camlist, var/force_connection=0)
-	if(!length(camlist))  return 1
+	if(!length(camlist)) return 1
 
 	logTheThing(LOG_DEBUG, null, "<B>SpyGuy/Camnet:</B> Starting to connect cameras")
 	var/count = 0
@@ -77,8 +77,8 @@
 	return 0
 
 /proc/connect_camera_neighbours(var/obj/machinery/camera/C, var/direction, var/force_connection=0)
-	var/dir_var = "" //The direction we're trying to fill
-	var/rec_var = "" //The reciprocal of this direction
+	var/dir_var = "" //! The direction we're trying to fill
+	var/rec_var = "" //! The reciprocal of this direction
 
 	if(direction & NORTH)
 		dir_var = "c_north"

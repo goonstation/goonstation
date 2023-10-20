@@ -61,7 +61,7 @@
 	..()
 	START_TRACKING
 	var/area/area = get_area(src)
-	//if only these had a common parent...
+	//TODO: if only these had a common parent...
 	var/list/aiareas = list(/area/station/turret_protected/ai,
 							/area/station/turret_protected/ai_upload,
 							/area/station/turret_protected/AIsat,
@@ -158,7 +158,7 @@
 		return //avoid stacking emp
 	if(!istype(src, /obj/machinery/camera/television)) //tv cams were getting messed up
 		src.icon_state = "cameraemp"
-	src.network = null                   //Not the best way but it will do. I think.
+	src.network = null //Not the best way but it will do. I think.
 	camera_status--
 
 	SPAWN(90 SECONDS)
@@ -216,7 +216,6 @@
 	. = 0
 	. = (node == c_north) + (node == c_east) + (node == c_south) + (node == c_west)
 
-// here there was an antisemitic joke, commented out, that persisted until february 27 2020. Why the fuck it lasted so many years really puts ones morals into question.
 
 /obj/machinery/camera/proc/disconnect_viewers()
 	for(var/mob/O in mobs)
