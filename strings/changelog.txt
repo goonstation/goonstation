@@ -1,4 +1,10 @@
 
+(t)wed oct 18 23
+(u)Kevin From HP
+(p)16383
+(e)🗺|A-Mapping
+(+)Sword sheaths can now be dragged out of belt slot onto hand/ground.
+(+)Using any katana on a container of pure sakuride will coat it in up to 15u. Dashing leaves a trail of petals behind you.
 (t)tue oct 17 23
 (u)Chasu
 (p)16499

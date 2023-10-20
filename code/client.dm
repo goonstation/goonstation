@@ -240,7 +240,7 @@
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
 
 	if (IsGuestKey(src.key))
-		if(!(!src.address || src.address == world.host)) // If you're a host or a developer locally, ignore this check.
+		if(!(!src.address || src.address == world.host || src.address == "127.0.0.1")) // If you're a host or a developer locally, ignore this check.
 			var/gueststring = {"
 							<!doctype html>
 							<html>
@@ -332,6 +332,11 @@
 		return
 
 	Z_LOG_DEBUG("Client/New", "[src.ckey] - Ban check complete")
+
+	if (!src.chatOutput.loaded)
+		//Load custom chat
+		SPAWN(-1)
+			src.chatOutput.start()
 
 	//admins and mentors can enter a server through player caps.
 	if (init_admin())
@@ -527,11 +532,6 @@
 		var/atom/plane_parent = src.get_plane(PLANE_LIGHTING)
 		plane_parent.color = list(255, 0, 0, 0, 255, 0, 0, 0, 255, -spooky_light_mode, -spooky_light_mode - 1, -spooky_light_mode - 2)
 		src.set_color(normalize_color_to_matrix("#AAAAAA"))
-
-	if (!src.chatOutput.loaded)
-		//Load custom chat
-		SPAWN(-1)
-			src.chatOutput.start()
 
 	logTheThing(LOG_DIARY, null, "Login: [constructTarget(src.mob,"diary")] from [src.address]", "access")
 
