@@ -1,6 +1,7 @@
 /datum/custom_soup
 	var/name
 	var/bites_left = 3
+	var/uneaten_bites_left = 3
 	var/heal_amt = 0
 	var/desc = null
 	var/initial_volume = 60
@@ -23,6 +24,7 @@
 		if(!S || !istype(S))
 			qdel(src)
 			return
+
 		if (bowl)
 			src.icon = bowl.icon
 			src.icon_state = bowl.icon_state
@@ -32,6 +34,7 @@
 		src.fluid_image = bowl?.fluid_image || image("icon" = 'icons/obj/kitchen.dmi', "icon_state" = "bowl_fluid")
 		src.name = S.name
 		src.bites_left = S.bites_left
+		src.uneaten_bites_left = S.uneaten_bites_left
 		if(S.desc)
 			src.desc = S.desc
 		src.heal_amt = S.heal_amt
@@ -46,8 +49,6 @@
 				var/effect = pick(temp)
 				src.food_effects += effect
 				temp -= effect
-
-
 
 		..()
 
@@ -226,6 +227,7 @@ TYPEINFO(/obj/stove)
 						S.initial_reagents[id] = I.reagents.reagent_list[id].volume/pot.total_wclass
 
 		S.bites_left = max(1,round(S.bites_left))
+		S.uneaten_bites_left = S.bites_left
 
 		if(biggester)
 			if(biggest)

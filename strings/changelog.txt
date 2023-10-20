@@ -1,4 +1,18 @@
 
+(t)fri oct 20 23
+(u)TDHooligan
+(p)16546
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)You can now concentrate coffee into espresso with sodium sulfate...
+(+)...and extract pure caffeine from said espresso with acetone and heat. Drink responsibly!
+(u)Facsimil
+(p)14878
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Player pianos now can be linked together automatically.
+(u)CrystalClover
+(p)16264
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(+)Crates of all sorts are now cheaper to fabricate
 (t)wed oct 18 23
 (u)Kevin From HP
 (p)16383
