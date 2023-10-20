@@ -130,7 +130,7 @@
 		if (target.lying)
 			src.visible_message("<span class='notice'>[src] shakes [target], trying to wake [him_or_her(target)] up!</span>")
 		else if(target.hasStatus("shivering"))
-			src.visible_message("<span class='alert'><B>[src] shakes [target], trying to warm up!</B></span>")
+			src.visible_message("<span class='alert'><B>[src] shakes [target], trying to warm [him_or_her(target)] up!</B></span>")
 			target.changeStatus("shivering", -2 SECONDS)
 		else
 			if (ishuman(target) && ishuman(src))
