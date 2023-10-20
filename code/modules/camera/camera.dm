@@ -12,11 +12,13 @@
 	var/prefix = "security"
 	/// Used by autoname: EX "camera - west primary hallway"
 	var/uses_area_name = FALSE
-	// These stack: EX "security camera - west primary hallway"
+	// The two above stack: EX "security camera - west primary hallway"
+
 	layer = EFFECTS_LAYER_UNDER_1
 	/// The camera tag which identifies this camera
 	var/c_tag = null
 	var/c_tag_order = 999
+	/// Whether the camera is on or off (bad var name)
 	var/camera_status = TRUE
 	anchored = ANCHORED
 	/// Can't be destroyed by explosions

@@ -33,7 +33,7 @@
 			C.c_tag = "[tag_we_use] [counts_by_tag[tag_we_use]]"
 
 /proc/build_camera_network()
-	var/list/cameras = by_type[/obj/machinery/camera]
+	var/list/obj/machinery/camera/cameras = by_type[/obj/machinery/camera]
 	if (!isnull(cameras))
 		connect_camera_list(cameras)
 		setup_cameras(cameras)
