@@ -611,12 +611,11 @@
 	if (!target_damage_multiplier)
 		msgs.played_sound = pick(sounds_punch)
 		msgs.visible_message_self("<span class='alert'><B>[src] [src.punchMessage] [target], but it does absolutely nothing!</B></span>")
-		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a target_damage_multiplier of 0.")
-
+		return
 	if (!self_damage_multiplier)
 		msgs.played_sound = 'sound/impact_sounds/Generic_Snap_1.ogg'
 		msgs.visible_message_self("<span class='alert'><B>[src] hits [target] with a ridiculously feeble attack!</B></span>")
-		CRASH("calculate_melee_attack for mob [src] attacking mob [target] had a self_damage_multiplier of 0.")
+		return
 
 	msgs.played_sound = "punch"
 	var/do_punch = FALSE
