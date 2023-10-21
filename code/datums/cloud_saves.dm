@@ -70,7 +70,6 @@
 
 	/// Fetch all cloud data and files associated with this player
 	proc/fetch()
-		if (!src.player.id) return FALSE
 		if (src.simulating)
 			// Local fallback, load data from JSON file
 			var/list/playerCloud = src.getSimulatedCloud()
@@ -79,6 +78,7 @@
 			src.loaded = TRUE
 
 		else
+			if (!src.player.id) return FALSE
 			try
 				var/datum/apiRoute/players/saves/get/getSavesAndData = new
 				getSavesAndData.queryParams = list("player_id" = src.player.id)
@@ -101,12 +101,12 @@
 
 	/// Save new cloud data for this player
 	proc/putData(key, value)
-		if (!src.player.id) return
 		if (src.simulating)
 			// Local fallback, update JSON file
 			src.putSimulatedCloud("data", key, value)
 
 		else
+			if (!src.player.id) return
 			try
 				var/datum/apiRoute/players/saves/data/post/addPlayerData = new
 				addPlayerData.buildBody(src.player.id, key, value)
@@ -121,12 +121,12 @@
 
 	/// Save a new cloud file for this player
 	proc/putSave(name, data)
-		if (!src.player.id) return
 		if (src.simulating)
 			// Local fallback, update JSON file
 			src.putSimulatedCloud("saves", name, data)
 
 		else
+			if (!src.player.id) return
 			try
 				var/datum/apiRoute/players/saves/file/post/addPlayerSave = new
 				addPlayerSave.buildBody(src.player.id, name, data)
@@ -141,12 +141,12 @@
 
 	/// Delete cloud data for this player
 	proc/deleteData(key)
-		if (!src.player.id) return
 		if (src.simulating)
 			// Local fallback, update JSON file
 			src.deleteSimulatedCloud("data", key)
 
 		else
+			if (!src.player.id) return
 			try
 				var/datum/apiRoute/players/saves/data/delete/deletePlayerData = new
 				deletePlayerData.buildBody(src.player.id, key)
@@ -161,12 +161,12 @@
 
 	/// Delete a cloud file for this player
 	proc/deleteSave(name)
-		if (!src.player.id) return
 		if (src.simulating)
 			// Local fallback, update JSON file
 			src.deleteSimulatedCloud("saves", name)
 
 		else
+			if (!src.player.id) return
 			try
 				var/datum/apiRoute/players/saves/file/delete/deletePlayerSave = new
 				deletePlayerSave.buildBody(src.player.id, name)
