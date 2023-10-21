@@ -1,5 +1,9 @@
 
 (t)sat oct 21 23
+(u)MeggalBozale
+(p)16032
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Blob Overminds feel they can do more with less and now send less blobs to smaller stations.
 (u)disgustingfreakfingers
 (p)16031
 (e)🎨🐁|C-Sprites, A-Critters
