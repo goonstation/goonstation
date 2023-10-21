@@ -318,13 +318,13 @@
 				if(!isnull(owner_uplink) && !(S.can_buy & owner_uplink.purchase_flags)) //You can get anything (not usually excluded from surplus crates) from any gamemode if you spawn this without an uplink
 					continue
 
-				if (!S.not_in_crates)
-					possible_items += S
+				if (S.surplus_weight)
+					possible_items[S] = S.surplus_weight
 
 		if (islist(possible_items) && length(possible_items))
 			var/list/crate_contents = list()
 			while(telecrystals < 18)
-				var/datum/syndicate_buylist/item_datum = pick(possible_items)
+				var/datum/syndicate_buylist/item_datum = weighted_pick(possible_items)
 				crate_contents += item_datum.name
 				if(telecrystals + item_datum.cost > 24) continue
 				var/obj/item/I = new item_datum.item(src)
