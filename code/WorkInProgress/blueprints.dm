@@ -392,86 +392,31 @@
 	set desc = "Allows creation of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
-	var/list/userlist = flist("data/blueprints/")
-	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
-	if(!inputuser) return
-	var/list/bplist = flist("data/blueprints/[inputuser]")
-	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
-	if(!inputbp) return
-
-	var/savefile/selectedbp = new/savefile("data/blueprints/[inputuser]/[inputbp]")
-	var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(usr))
-
-	selectedbp.cd = "/"
-	var/roomname = selectedbp["roomname"]
-	bp.size_x = selectedbp["sizex"]
-	bp.size_y = selectedbp["sizey"]
-	bp.author = selectedbp["author"]
-
-	selectedbp.cd = "/tiles" // cd to tiles
-	for (var/A in selectedbp.dir) // and now loop on every listing in tiles
-		selectedbp.cd = "/tiles/[A]"
-		var/list/coords = splittext(A, ",")
-		var/datum/tileinfo/tf = new/datum/tileinfo()
-		tf.posx = coords[1]
-		tf.posy = coords[2]
-		tf.tiletype = selectedbp["type"]
-		tf.state = selectedbp["state"]
-		tf.direction = selectedbp["dir"]
-		tf.icon = selectedbp["icon"]
-		bp.req_metal += 1
-		bp.req_glass += 0.5
-		selectedbp.cd = "/tiles/[A]/objects"
-		for (var/B in selectedbp.dir)
-			selectedbp.cd = "/tiles/[A]/objects/[B]"
-			var/datum/objectinfo/O = new/datum/objectinfo()
-			O.objecttype = selectedbp["type"]
-			O.direction = selectedbp["dir"]
-			O.layer = selectedbp["layer"]
-			O.px = selectedbp["pixelx"]
-			O.py = selectedbp["pixely"]
-			O.icon_state = selectedbp["icon_state"]
-			bp.req_metal += 0.9
-			bp.req_glass += 1.5
-			tf.objects.Add(O)
-		bp.roominfo.Add(tf)
-	bp.name = "Blueprint '[roomname]'"
-	bp.req_metal = round(bp.req_metal)
-	bp.req_glass = round(bp.req_glass)
-
-	boutput(usr, "<span class='notice'>Printed blueprint for '[roomname]'.</span>")
-	return
+	var/picked = browse_abcu_blueprints(usr, "Admin Share Blueprint", "Choose a blueprint to print and share!", TRUE)
+	if (!picked) return
+	var/obj/printed = new /obj/item/abcu_blueprint_reference(usr, picked["path"])
+	usr.put_in_hand_or_drop(printed)
+	boutput(usr, "<span class='notice'>Spawned the blueprint '[picked["file"]]'.</span>")
 
 /verb/adminDeleteBlueprint()
 	set name = "Blueprint Delete"
 	set desc = "Allows deletion of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
-	var/list/userlist = flist("data/blueprints/")
-	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
-	if(!inputuser) return
-	var/list/bplist = flist("data/blueprints/[inputuser]")
-	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
-	if(!inputbp) return
-	fdel("data/blueprints/[inputuser]/[inputbp]")
-	boutput(usr, "<span class='notice'>Deleted [inputuser]'s [inputbp].</span>")
+	delete_abcu_blueprint(usr, TRUE)
 
 /verb/adminDumpBlueprint()
 	set name = "Blueprint Dump"
 	set desc = "Dumps readable HTML blueprint, of any user, to your client folder."
 	SET_ADMIN_CAT(ADMIN_CAT_DEBUG)
 
-	var/list/userlist = flist("data/blueprints/")
-	var/inputuser = tgui_input_list(usr, "Select a user by ckey.", "Users", userlist)
-	if(!inputuser) return
-	var/list/bplist = flist("data/blueprints/[inputuser]")
-	var/inputbp = tgui_input_list(usr, "Pick a blueprint belonging to this user.", "Blueprints", bplist)
-	if(!inputbp) return
+	var/picked = browse_abcu_blueprints(usr, "Admin Dump Blueprint", "Choose a blueprint to export.", TRUE)
+	if (!picked) return
 
-	var/savefile/selectedbp = new/savefile("data/blueprints/[inputuser]/[inputbp]")
-	selectedbp.ExportText("/","data/blueprints/[inputuser]/[inputbp].txt")
-	usr.client.Export("data/blueprints/[inputuser]/[inputbp].txt")
-	fdel("data/blueprints/[inputuser]/[inputbp].txt")
+	var/savefile/selectedbp = new/savefile(picked["path"])
+	selectedbp.ExportText("/","data/blueprints/[picked["ckey"]]/[picked["file"]].txt")
+	usr.client.Export("data/blueprints/[picked["ckey"]]/[picked["file"]].txt")
+	fdel("data/blueprints/[picked["ckey"]]/[picked["file"]].txt")
 
 	boutput(usr, "<span class='notice'>Dumped blueprint to BYOND user data folder.</span>")
 
@@ -688,7 +633,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 
 proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 	if (!savepath) // make this proc usable with or without a user and menu
-		var/picked = browse_abcu_blueprints(user)
+		var/picked = browse_abcu_blueprints(user, "Load Blueprint", "Pick a blueprint to load.")
 		if (!picked) return
 		savepath = picked["path"]
 	if (!fexists(savepath)) return
@@ -758,7 +703,7 @@ proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 #undef WHITELIST_OBJECTS
 #undef BLACKLIST_OBJECTS
 
-proc/browse_abcu_blueprints(mob/user, var/browse_all_users = FALSE)
+proc/browse_abcu_blueprints(mob/user, var/window_title = "Blueprints", var/description = "Pick a blueprint.", var/browse_all_users = FALSE)
 	if (!user.client) return
 	var/picked_ckey
 	if (browse_all_users) // for the admin procs
@@ -773,12 +718,12 @@ proc/browse_abcu_blueprints(mob/user, var/browse_all_users = FALSE)
 	if (!length(bplist))
 		boutput(user, "<span class='alert'>No blueprints found.</span>")
 		return
-	var/inputbp = tgui_input_list(user, "Pick a blueprint.", "Blueprints", bplist)
+	var/inputbp = tgui_input_list(user, description, window_title, bplist)
 	if (!inputbp) return
 	return list("path" = "data/blueprints/[picked_ckey]/[inputbp]", "ckey" = picked_ckey, "file" = inputbp)
 
 proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
-	var/picked = browse_abcu_blueprints(user, browse_all_users)
+	var/picked = browse_abcu_blueprints(user, "Delete Blueprint", "Delete one of these blueprints?", browse_all_users)
 	if (!picked) return
 	if (fexists(picked["path"]))
 		if (tgui_alert(user, "Really delete [picked["file"]]?", "Blueprint Deletion", list("Yes", "No")) == "No")
@@ -981,7 +926,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 				if(prints_left <= 0)
 					boutput(user, "<span class='alert'>Out of energy.</span>")
 					return
-				var/picked = browse_abcu_blueprints(user)
+				var/picked = browse_abcu_blueprints(user, "Share Blueprint", "Choose a blueprint to print and share!")
 				if (!picked) return
 				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked["path"])
 				user.put_in_hand_or_drop(printed)
