@@ -232,6 +232,8 @@
 
 				var/datum/mind/M = candidates[1]
 				if (M.current)
+					if(!isobserver(M.current))
+						M.current.ghostize()
 					var/picked_critter = pick(select)
 					log_respawn_event(M, picked_critter, source)
 					if (istype(picked_critter, /datum/eventSpawnedCritter)) // datum provided

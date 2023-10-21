@@ -19,9 +19,14 @@
 		/obj/item/clothing/under/misc/mimedress = 10,\
 		/obj/item/clothing/suit/torncloak/random = 20,\
 		/obj/item/clothing/suit/scarfcape/random = 20,\
-		/obj/item/clothing/suit/fakebeewings = 10,
-	// station
+		/obj/item/clothing/suit/fakebeewings = 10,\
+		/obj/item/clothing/head/giraffehat = 10, \
+		/obj/item/clothing/head/axehat = 20, \
+		/obj/item/clothing/head/mushroomcap/inky = 10, \
+		/obj/item/clothing/head/rhinobeetle = 20, \
+		/obj/item/clothing/head/stagbeetle = 20, \
 	)
+	// station
 	var/list/department = list(
 	// medbay
 		/obj/item/roboupgrade/efficiency = 20,\

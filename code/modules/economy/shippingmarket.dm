@@ -29,8 +29,7 @@
 	var/last_market_update = 0
 
 	var/list/datum/req_contract/req_contracts = list() // Requisition contracts for export, listed in clearinghouse
-	var/max_req_contracts = 5 // Maximum contracts active in clearinghouse at one time (refills to this at each cycle)
-	var/has_pinned_contract = 0 // One contract at a time may be pinned to prevent it from disappearing in cycle
+	var/max_req_contracts = 6 // Maximum contracts active in clearinghouse at one time (refills to this at each cycle)
 	var/civ_contracts_active = 0 // To ensure at least one contract of each type is available
 	var/aid_contracts_active = 0 // after market shift, these keep track of that
 	var/sci_contracts_active = 0
@@ -119,22 +118,20 @@
 		if(length(req_contracts) >= max_req_contracts)
 			return
 		var/contract2make //picking path from which to generate the newly-added contract
-		if(src.civ_contracts_active == 0) //guarantee presence of at least one contract of each type
+		if(src.civ_contracts_active == 0) //guarantee presence of a civilian and scientific contract, for variety
 			contract2make = pick_req_contract(/datum/req_contract/civilian)
-		else if(src.aid_contracts_active == 0)
-			contract2make = pick_req_contract(/datum/req_contract/aid)
 		else if(src.sci_contracts_active == 0)
 			contract2make = pick_req_contract(/datum/req_contract/scientific)
-		else //do random gen, slightly higher weighting to civilian; don't make too many aid contracts
-			if(src.aid_contracts_active > 1)
+		else //do random gen, slightly higher weighting to aid, or civilian if we already have aid
+			if(src.aid_contracts_active > 0)
 				if(prob(55))
 					contract2make = pick_req_contract(/datum/req_contract/civilian)
 				else
 					contract2make = pick_req_contract(/datum/req_contract/scientific)
 			else
 				switch(rand(1,10))
-					if(1 to 4) contract2make = pick_req_contract(/datum/req_contract/civilian)
-					if(5 to 7) contract2make = pick_req_contract(/datum/req_contract/aid)
+					if(1 to 3) contract2make = pick_req_contract(/datum/req_contract/civilian)
+					if(4 to 7) contract2make = pick_req_contract(/datum/req_contract/aid)
 					if(8 to 10) contract2make = pick_req_contract(/datum/req_contract/scientific)
 		var/datum/req_contract/contractmade = new contract2make
 		switch(contractmade.req_class)
@@ -265,16 +262,16 @@
 				if (prob(T.chance_leave))
 					T.hidden = 1
 
-		// Thin out and time out contracts by variant...
+		// Remove / time out contracts by variant...
 		for(var/datum/req_contract/RC in src.req_contracts)
 			switch(RC.req_class)
 				if(CIV_CONTRACT)
-					if(!RC.pinned && prob(80))
+					if(!RC.pinned)
 						src.civ_contracts_active--
 						src.req_contracts -= RC
 						qdel(RC)
 				if(SCI_CONTRACT)
-					if(!RC.pinned && prob(70))
+					if(!RC.pinned)
 						src.sci_contracts_active--
 						src.req_contracts -= RC
 						qdel(RC)

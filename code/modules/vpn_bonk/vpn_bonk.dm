@@ -74,7 +74,7 @@ var/global/list/vpn_ip_checks = list() //assoc list of ip = true or ip = false. 
 
 						Please disable your VPN or proxy, close the game, and rejoin.<br>
 						<h2>Not using a VPN or proxy / Having trouble connecting?</h2>
-						If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY">our Discord server</a> and and fill out <a href="https://dyno.gg/form/b39d898a">this form</a> for help whitelisting your account.
+						If you are not using a VPN or proxy please join <a href="https://discord.com/invite/zd8t6pY" target="_blank">our Discord server</a> and and fill out <a href="https://dyno.gg/form/b39d898a" target="_blank">this form</a> for help whitelisting your account.
 					</body>
 				</html>
 			"}

@@ -9,7 +9,7 @@
 	anchored = UNANCHORED
 //////////Recon
 /obj/machinery/vehicle/recon
-	name = "Reconaissance Ship 7X-"
+	name = "Reconnaissance Ship 7X-"
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "recon"
 	capacity = 1
@@ -1009,7 +1009,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 /obj/machinery/vehicle/pod_smooth/industrial
 	name = "Pod I-"
-	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accomodate up to four passengers."
+	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accommodate up to four passengers."
 	armor_score_multiplier = 1.25
 	icon_state = "pod_industrial"
 	health = 550

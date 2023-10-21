@@ -1445,7 +1445,9 @@
 						/obj/item/clothing/mask/wrestling/blue,
 						/obj/item/clothing/mask/anime,
 						/obj/item/paper_mask,
-						/obj/item/clothing/mask/kitsune)
+						/obj/item/clothing/mask/kitsune,
+						/obj/item/clothing/head/minotaurmask,
+						/obj/item/clothing/mask/tengu)
 
 	one
 		amt2spawn = 1
@@ -1572,7 +1574,9 @@
 						/obj/item/clothing/head/pumpkin,
 						/obj/item/clothing/head/wig,
 						/obj/item/clothing/head/zombie,
-						/obj/item/clothing/head/werewolf/odd)
+						/obj/item/clothing/head/werewolf/odd,
+						/obj/item/clothing/head/elephanthat/random,
+						/obj/item/clothing/head/mushroomcap/random)
 
 	one
 		amt2spawn = 1

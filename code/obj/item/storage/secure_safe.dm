@@ -22,6 +22,8 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 	var/emagged = FALSE
 	var/open = FALSE
 	var/hackable = FALSE
+	/// Can we do the mastermind game to try to crack this safe?
+	var/crackable = TRUE
 	var/disabled = FALSE
 	w_class = W_CLASS_NORMAL
 	burn_possible = FALSE
@@ -246,7 +248,7 @@ ABSTRACT_TYPE(/obj/item/storage/secure)
 		src.number_of_guesses = list()
 	else
 		src.number_of_guesses[user.key]++
-		if (length(guess) == src.code_len)
+		if (length(guess) == src.code_len && src.crackable)
 			var/desctext = src.gen_hint(guess)
 			if (desctext)
 				boutput(user, "<span class='alert'>[src]'s lock panel emits [desctext].</span>")

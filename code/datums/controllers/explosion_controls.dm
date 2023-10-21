@@ -1,5 +1,5 @@
 var/datum/explosion_controller/explosions
-#define RSS_SCALE 2
+#define RSS_SCALE 1.5
 //#define EXPLOSION_MAPTEXT_DEBUGGING
 /datum/explosion_controller
 	var/list/queued_explosions = list()
@@ -91,7 +91,7 @@ var/datum/explosion_controller/explosions
 				else
 					severity = 3
 				O.ex_act(severity, explosion?.last_touched, power)
-				O.last_explosion = explosion
+				O?.last_explosion = explosion
 
 		LAGCHECK(LAG_HIGH)
 

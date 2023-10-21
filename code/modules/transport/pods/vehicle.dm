@@ -204,9 +204,10 @@
 		checkhealth()
 
 	updateDialog()
-		for(var/client/C)
-			if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
-				src.open_parts_panel(C.mob)
+		. = ..()
+		// for(var/client/C)
+		// 	if (C.mob && C.mob.using_dialog_of(src) && BOUNDS_DIST(C.mob, src) == 0)
+		// 		src.open_parts_panel(C.mob)
 
 	Topic(href, href_list)
 		if (is_incapacitated(usr) || usr.restrained())
@@ -728,7 +729,7 @@
 				sec_system.run_component()
 			if(src.engine && engine.active)
 				var/usage = src.powercurrent/3000*mult // 0.0333 moles consumed per 100W per tick
-				var/datum/gas_mixture/consumed = src.fueltank.remove_air(usage)
+				var/datum/gas_mixture/consumed = src.fueltank?.remove_air(usage)
 				var/toxins = consumed?.toxins
 				if(isnull(toxins))
 					toxins = 0
@@ -1074,8 +1075,11 @@
 		boutput(usr, "<span class='alert'>[src] is locked!</span>")
 		return
 
-	actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
-	return
+	if(locate(/mob) in src.contents)
+		actions.start(new/datum/action/bar/icon/eject_pod(src,usr), usr)
+		return
+
+	boutput(usr, "<span class='alert'>No one is in [src].</span>")
 
 /obj/machinery/vehicle/proc/eject_pod(var/mob/user, var/dead_only = 0)
 	for(var/mob/M in src) // nobody likes losing a pod to a dead pilot

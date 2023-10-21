@@ -154,7 +154,7 @@
 				// Have to send the type instead of a reference to the obj because it would get caught by the garbage collector. oh well.
 				src.temp += {"<A href='?src=\ref[src];doorder=\ref[N]'><B><U>[N.comname]</U></B></A><BR>
 				<B>Cost:</B> [N.price] [currency]<BR>
-				<B>Description:</B> [N.desc] Amount: [N.amount]<BR>
+				<B>Description:</B> [N.desc] Amount: [N.amount > -1 ? N.amount : "Infinite"]<BR>
 				<A href='?src=\ref[src];haggleb=\ref[N]'><B><U>Haggle</U></B></A><BR><BR>"}
 			src.temp += "<BR><A href='?src=\ref[src];mainmenu=1'>Ok</A>"
 		//////////////////////////////////////////////
@@ -200,10 +200,12 @@
 					else if(current_funds >= P.price * quantity)
 						if(barter)
 							barter_customers[usr] -= P.price * quantity
-							P.amount -= quantity
+							if(P.amount > 0)
+								P.amount -= quantity
 						else
 							account["current_money"] -= P.price * quantity
-							P.amount -= quantity
+							if(P.amount > 0)
+								P.amount -= quantity
 						if(log_trades)
 							logTheThing(LOG_STATION, usr, "bought ([quantity]) [P.comtype] from [src] at [log_loc(get_turf(src))]")
 						while(quantity-- > 0)
@@ -629,7 +631,7 @@
 
 	New()
 		..()
-		icon_state = pick("martian","martianP","martianW","martianSP","mars_bot","welder","petbee","lavacrab","boogie","walrus","owl","goose","swan","gull","parrot","possum","bumblespider","big_spide[pick("","-red","-blue","-green")]")
+		icon_state = pick("martian","martianP","martianW","martianSP","welder","petbee","lavacrab","walrus","owl","goose","swan","gull","parrot","possum","bumblespider","big_spide[pick("","-red","-blue","-green")]") //"mars_bot" "boogie"
 		if (icon_state in list("owl","goose","swan","gull"))
 			icon = 'icons/misc/bird.dmi'
 		else if (icon_state == "parrot")
@@ -654,7 +656,7 @@
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
-		sell_dialogue = "Ah, an entepreneur after my own heart!  I have a few friends who are looking for things to buy!"
+		sell_dialogue = "Ah, an entrepreneur after my own heart!  I have a few friends who are looking for things to buy!"
 
 		buy_dialogue = "YES, COME RIGHT UP AND BUY MY FRIEND!"
 
@@ -764,7 +766,7 @@
 
 		portrait_setup = "<img src='[resource("images/traders/[src.picture]")]'><HR><B>[src.name]</B><HR>"
 
-		sell_dialogue = "You receive visions of various indviuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
+		sell_dialogue = "You receive visions of various individuals who are looking to purchase something, and get the feeling that <B>[src.name]</B> will act as the middle man."
 
 		buy_dialogue = "You hear a voice in your head,<I>\"Please select what you would like to buy\".</I>"
 
@@ -991,7 +993,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 
 /obj/npc/trader/robot/robuddy/drugs
 	name = "Sketchy D-5"
-	desc = "The robot equivelant of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon."
+	desc = "The robot equivalent of that guy back on Earth who tried to sell you stolen military gear and drugs in the bathroom of an old greasy spoon."
 	picture = "loungebuddy.png"
 	greeting = "I got what you need."
 
@@ -1026,7 +1028,7 @@ ABSTRACT_TYPE(/obj/npc/trader/robot/robuddy)
 
 /obj/npc/trader/robot/robuddy/diner
 	name = "B.I.F.F."
-	desc = "The robot proprieter of the Diner. Deals in food that's to dine for!"
+	desc = "The robot proprietor of the Diner. Deals in food that's to dine for!"
 	picture = "loungebuddy.png"
 
 	New()

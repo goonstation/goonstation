@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 	New()
 		src.name = pick(namevary)
-		src.cycles_remaining = rand(0,2)
+		src.cycles_remaining = rand(1,2)
 		src.flavor_desc = "An affiliated [pick(desc_placejob)] [pick(desc_placetype)] has [pick(desc_enhancer1)] a [pick(desc_enhancer2)] [pick(desc_whatborked)]"
 		src.flavor_desc += " and requires repair supplies as soon as possible."
 		src.payout += rand(0,80) * 10
@@ -112,7 +112,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 	New()
 		src.name = pick(namevary)
-		src.cycles_remaining = rand(1,2)
+		src.cycles_remaining = rand(1,3)
 		src.flavor_desc = "[pick(desc_helpsite)] requires additional supplies [pick(desc_tense)] [pick(desc_crisis)]. [pick(desc_emphasis)]"
 		src.payout += rand(0,60) * 10
 
@@ -319,7 +319,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	New()
 		src.name = pick(namevary)
-		src.cycles_remaining = rand(1,2)
+		src.cycles_remaining = rand(2,3)
 		var/tilter = pick(desc_shortage)
 		src.flavor_desc = "An affiliated [pick(desc_placejob)] [pick(desc_place)] is experiencing"
 		src.flavor_desc += " a severe shortage of [tilter] [pick(desc_after)] [pick(desc_whybork)].[pick(desc_emphasis)]"

@@ -213,7 +213,7 @@
 
 /obj/item/material_piece/hamburgris
 	name = "clump"
-	desc = "A big clump of petrified mince, with a horriffic smell."
+	desc = "A big clump of petrified mince, with a horrific smell."
 	default_material = "hamburgris"
 	icon_state = "wad"
 
@@ -405,7 +405,7 @@ ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 
 /obj/item/material_piece/gnesisglass
 	name = "wafer"
-	desc = "A shimmering, transclucent block of weird alien computer crystal stuff."
+	desc = "A shimmering, translucent block of weird alien computer crystal stuff."
 	icon_state = "bar"
 	default_material = "gnesisglass"
 

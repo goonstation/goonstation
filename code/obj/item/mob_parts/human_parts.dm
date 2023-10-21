@@ -140,7 +140,7 @@
 			if(prob(40))
 				holder.emote("scream")
 		holder.TakeDamage("chest",20,0)
-		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = 1)
+		take_bleeding_damage(holder, tool.the_mob, 15, DAMAGE_STAB, surgery_bleed = TRUE)
 
 		switch(remove_stage)
 			if(0)
@@ -1675,7 +1675,7 @@
 	icon = 'icons/mob/vampiric_thrall.dmi'
 	partIcon = 'icons/mob/vampiric_thrall.dmi'
 	kind_of_limb = (LIMB_MUTANT | LIMB_ZOMBIE)
-	limb_type = /datum/limb/zombie
+	limb_type = /datum/limb/zombie/thrall
 
 /obj/item/parts/human_parts/leg/mutant/vampiric_thrall
 	icon = 'icons/mob/vampiric_thrall.dmi'

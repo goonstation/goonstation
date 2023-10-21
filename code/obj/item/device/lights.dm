@@ -747,7 +747,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	icon_state = "roadflare"
 	uses_multiple_icon_states = 1
-	w_class = W_CLASS_POCKET_SIZED
+	w_class = W_CLASS_SMALL
 	throwforce = 1
 	flags = FPRINT | TABLEPASS
 	stamina_damage = 0
@@ -803,7 +803,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 
 	proc/put_out(mob/user)
 		src.on = FLARE_BURNT
-		w_class = W_CLASS_POCKET_SIZED
+		w_class = W_CLASS_SMALL
 		src.firesource = FALSE
 		src.icon_state = "roadflare-burnt"
 		src.item_state = "roadflare"
@@ -842,7 +842,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 			if (ishuman(M))
 				if (src.on > 0)
 					var/mob/living/carbon/human/H = M
-					if (H.bleeding || (H.butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+					if (H.bleeding || ((H.organHolder && !H.organHolder.get_organ("butt")) && user.zone_sel.selecting == "chest"))
 						src.cautery_surgery(H, user, 5, src.on)
 						return ..()
 					else

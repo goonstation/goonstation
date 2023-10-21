@@ -665,8 +665,8 @@
 		walk_towards(src, null)
 		walk_away(src, null)
 		return
-	if((src in actions.running) && length(actions.running[src]))
-		return // don't interupt actions
+	if((src in actions.running) && length(actions.running[src]) && !prob(1))
+		return // don't interupt actions, except 1% as a hack to escape looping actions such as hand washing
 	if( ai_state == AI_PASSIVE && ai_canmove() ) step_rand(src)
 	if( ai_state == AI_ATTACKING && ai_canmove() )
 		if(src.pulling)
@@ -753,7 +753,7 @@
 			var/obj/item/clothing/mask/cigarette/cigarette = src.wear_mask
 			if(!cigarette.on && (istype(G, /obj/item/device/light/zippo) || istype(G, /obj/item/weldingtool) || istype(G, /obj/item/device/igniter)))
 				score += 8
-		score += G.contraband // this doesn't use get_contraband() because monkeys aren't feds
+		score += G.contraband // this doesn't use contraband signals because monkeys aren't feds
 		score += rand(-2, 2)
 		if(score > pickup_score)
 			pickup_score = score

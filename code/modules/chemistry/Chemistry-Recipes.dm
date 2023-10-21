@@ -879,6 +879,7 @@
 		id = "sweet_tea"
 		result = "sweet_tea"
 		required_reagents = list("sugar" = 1, "tea" = 1)
+		inhibitors = list("juice_orange" = 1)
 		result_amount = 2
 		mix_phrase = "The tea sweetens. Visually. Somehow."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
@@ -2609,7 +2610,7 @@
 		on_reaction(var/datum/reagents/holder)
 			var/location = get_turf(holder.my_atom)
 			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
-				var/smoke_to_create = clamp((holder.total_temperature - T20C), 0, 15) / 10 //for every degree over 20C, make .1u of smoke (up to 15u)...
+				var/smoke_to_create = clamp((holder.total_temperature - T20C)/20 , 0, 5)//for every degree over 20C, make .05u of smoke (up to 5u)...
 				if(smoke_to_create > 0)                                     //...but if under 20C, don't make any
 					var/datum/reagents/smokeContents = new/datum/reagents/
 					smokeContents.add_reagent("acid", smoke_to_create)
@@ -2726,7 +2727,7 @@
 		name = "Kerosene"
 		id = "kerosene"
 		result = "kerosene"
-		min_temperature = T0C + 600
+		min_temperature = T0C + 550
 		required_reagents = list("cyclopentanol" = 1, "oxygen" = 3, "acetone" = 1, "hydrogen" = 1, "aluminium" = 1, "nickel" = 1)
 		result_amount = 3
 		mix_phrase = "This pungent odor could probably melt steel."
@@ -3858,10 +3859,15 @@
 		name = "Firefighting foam"
 		id = "ff-foam"
 		result = "ff-foam"
-		required_reagents = list("chlorine" = 1, "carbon" = 1, "sulfur" = 1)
-		result_amount = 3
+		required_reagents = list("chlorine" = 1, "carbon" = 1, "nickel" = 1)
+		result_amount = 2
 		mix_phrase = "The mixture bubbles gently."
 		mix_sound = 'sound/misc/drinkfizz.ogg'
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			// nickel is a catalyst and does not get used in the process
+			holder.add_reagent("nickel", created_volume / 2,,holder.total_temperature, chemical_reaction = TRUE)
+
 
 	foam
 		name = "Foam"
@@ -3991,6 +3997,7 @@
 		id = "ammonia"
 		result = "ammonia"
 		required_reagents = list("hydrogen" = 3, "nitrogen" = 1)
+		inhibitors = list("chlorine" = 1) //to prevent conflict with atrazine
 		result_amount = 3
 		mix_phrase = "The mixture bubbles, emitting an acrid reek."
 
@@ -4325,6 +4332,56 @@
 
 		on_reaction(datum/reagents/holder, created_volume) // TODO: actual byproduct/multi-output handling
 			holder.add_reagent("phenol", created_volume, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+
+	espresso //makin' caffeine by dehydrating coffee
+		name = "Coffee concentration"
+		id = "espresso"
+		result = "espresso" 
+		eventual_result = "espresso"
+		required_reagents = list("coffee" = 2, "sodium_sulfate" = 0.1) //sodium sulfate as an approximate drying agent
+		result_amount = 1
+		max_temperature = T0C + 30 //sodium sulfate fails at 30c (A.K.A. 'you want to to make the caffeine in another thing')
+		mix_phrase = "A gross precipitate forms as the water is absorbed."
+		instant = FALSE
+		reaction_speed = 0.5
+		var/shock_ticks = 0
+
+		physical_shock(var/force, var/datum/reagents/holder)
+			if(force > 3)
+				shock_ticks = 5
+				playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
+
+		on_reaction(datum/reagents/holder, created_volume)
+			reaction_icon_state = list("reaction_bubble-1", "reaction_bubble-2")
+			if(shock_ticks > 0) 
+				reaction_speed = 1
+				shock_ticks--
+				reaction_icon_state = list("reaction_sparkle-1", "reaction_sparkle-2")
+			else
+				reaction_speed = 0.5
+
+			//precipitate gross stuff, it's easy to MAKE a caffeine machine, but you want to clear out your equipment from time to time...
+			if (prob(50))
+				holder.add_reagent("sewage", created_volume*0.2, temp_new = holder.total_temperature, chemical_reaction = FALSE) //RAW coffee
+			else
+				holder.add_reagent("yuck", created_volume*0.2, temp_new = holder.total_temperature, chemical_reaction = FALSE) //sulfate sludge
+
+	espresso/fresh
+		required_reagents = list("coffee_fresh" = 2, "sodium_sulfate" = 0.1) 
+	
+	caffeine
+		name = "Caffeine precipitation"
+		id = "caffeine"
+		result = "caffeine"
+		eventual_result = "caffeine"
+		required_reagents = list("espresso" = 2, "acetone" = 0.1) //acetone as a solvent. also means 'you need to have made a bit of acetone once'
+		result_amount = 1
+		min_temperature = T0C + 100
+		mix_phrase = "White crystals form as the acetone evaporates."
+		instant = FALSE
+		reaction_speed = 0.5
+		on_reaction(datum/reagents/holder, created_volume)
+			holder.temperature_reagents(holder.total_temperature - created_volume*100, 400, change_min = 1)
 
 	hairgrownium
 		name = "Hairgrownium"
@@ -5040,7 +5097,7 @@
 		result_amount = 5 //14
 		mix_phrase = "The mixture of particles settles together with ease."
 		mix_sound = 'sound/misc/fuse.ogg'
-		inhibitors = list("sulfur")
+		inhibitors = list("sulfur" = 1)
 
 	okay_cement //lime, alumina, magnesia, iron (iii) oxide
 		name = "okay cement"
@@ -5050,7 +5107,7 @@
 		result_amount = 4 //13
 		mix_phrase = "The mixture of particles settles together complacently."
 		mix_sound = 'sound/misc/fuse.ogg'
-		inhibitors = list("gypsum")
+		inhibitors = list("gypsum" = 1)
 
 	poor_cement //lime, alumina, iron (iii) oxide
 		name = "poor cement"
@@ -5060,7 +5117,7 @@
 		result_amount = 2 //
 		mix_phrase = "The mixture of particles settles together... barely."
 		mix_sound = 'sound/misc/fuse.ogg'
-		inhibitors = list("magnesium")
+		inhibitors = list("magnesium" = 1)
 
 	perfect_concrete
 		name = "perfect concrete"

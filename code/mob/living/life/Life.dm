@@ -202,6 +202,8 @@
 	add_lifeprocess(/datum/lifeprocess/hivebot_statusupdate)
 	add_lifeprocess(/datum/lifeprocess/stuns_lying)
 	add_lifeprocess(/datum/lifeprocess/blindness)
+	add_lifeprocess(/datum/lifeprocess/hivebot_signal)
+
 
 /mob/living/silicon/robot/restore_life_processes()
 	..()
@@ -364,6 +366,9 @@
 
 		if (prob(1) && prob(5))
 			src.handle_random_emotes()
+
+		if (src.organHolder?.chest?.op_stage > 0 && !src.chest_cavity_clamped && prob(10)) //Going around with a gaping unsutured wound is a bad idea
+			take_bleeding_damage(src, null, rand(5, 10))
 
 	src.handle_pathogens()
 

@@ -55,6 +55,7 @@
 	icon = 'icons/obj/wizard.dmi'
 	icon_state = "forcewall"
 	anchored = ANCHORED
+	event_handler_flags = IMMUNE_TRENCH_WARP
 	opacity = 0
 	density = 1
 	luminosity = 3
