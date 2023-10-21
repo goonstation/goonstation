@@ -506,6 +506,36 @@
 	<p>And much much more ! Order yours today !</p>
 	"}
 
+/obj/item/paper/morrigan/hospastpaper
+	name = "Confidential Document"
+	desc = "A very official-looking document..."
+	sizex = 1080
+	sizey = 1538
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/Ntdoc.png")]'></body></html>"
+
+/obj/item/paper/morrigan/hoshospital
+	name = "Picture"
+	desc = "Seems to show someone in a hospital bed, they look severely injured."
+	sizex = 1042
+	sizey = 1080
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/hospital.png")]'></body></html>"
+
+/obj/item/paper/morrigan/hosoldteam
+	name = "Group Picture"
+	desc = "Shows a team of scientists."
+	sizex = 1024
+	sizey = 1024
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/nteam.png")]'></body></html>"
+
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Audio Tapes ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /obj/item/audio_tape/morrigan_interrogation
 	New()
