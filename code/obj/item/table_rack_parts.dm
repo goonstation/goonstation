@@ -217,7 +217,6 @@ TYPEINFO(/obj/item/furniture_parts/table/glass)
 	icon = 'icons/obj/furniture/table_glass.dmi'
 	furniture_type = /obj/table/glass/auto
 	furniture_name = "glass table"
-	density_check = FALSE //FOR NOW
 	var/has_glass = 1
 	default_material = "glass"
 

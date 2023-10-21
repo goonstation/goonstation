@@ -72,6 +72,8 @@
 	//ALTERNATIVE to force ingest in life
 	proc/just_do_the_apply_thing(var/mob/M, var/mult = 1, var/hasmask = 0)
 		if (!M) return
+		if (check_target_immunity(M, TRUE))
+			return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)
@@ -94,6 +96,8 @@
 
 	force_mob_to_ingest(var/mob/M, var/mult = 1)//called when mob is drowning/standing in the smoke
 		if (!M) return
+		if (check_target_immunity(M, TRUE))
+			return
 		if (!src.group || !src.group.reagents || !src.group.reagents.reagent_list) return
 
 		var/react_volume = src.amt > 10 ? (src.amt-10) / 3 + 10 : (src.amt)

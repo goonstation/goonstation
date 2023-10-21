@@ -148,7 +148,7 @@
 
 /obj/spookMarker
 	name = "Spooky Marker"
-	desc = "What is this? You feel like you shouldn't be able to see it, but it has an ominous and slightly mischevious aura."
+	desc = "What is this? You feel like you shouldn't be able to see it, but it has an ominous and slightly mischievous aura."
 	icon = 'icons/effects/wraitheffects.dmi'
 	icon_state = "acursed"
 	// invisibility = INVIS_ALWAYS

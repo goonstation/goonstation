@@ -9553,7 +9553,6 @@
 	},
 /obj/machinery/power/data_terminal,
 /obj/machinery/light/incandescent,
-/obj/machinery/light/incandescent,
 /turf/simulated/floor/wood,
 /area/station/medical/head)
 "aOu" = (
@@ -16293,7 +16292,7 @@
 /area/station/engine/engineering)
 "brW" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "brX" = (
 /turf/simulated/floor/orangeblack/corner{
 	dir = 8
@@ -16510,34 +16509,34 @@
 "bsN" = (
 /obj/machinery/abcu,
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "bsO" = (
 /obj/machinery/vending/book,
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "bsP" = (
 /obj/cable{
 	icon_state = "0-2"
 	},
 /obj/machinery/vending/pda,
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "bsQ" = (
 /obj/machinery/camera{
 	c_tag = "Autolathe"
 	},
 /obj/machinery/vending/floppy,
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "bsR" = (
 /obj/table/auto,
 /obj/item/storage/toolbox/mechanical,
 /obj/item/hand_labeler,
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "bsS" = (
 /turf/simulated/wall/auto/supernorn,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "bsT" = (
 /turf/simulated/floor/yellow/side{
 	dir = 8
@@ -16672,10 +16671,10 @@
 	},
 /obj/storage/crate/abcumarker,
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "btM" = (
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "btN" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16684,13 +16683,13 @@
 	icon_state = "2-4"
 	},
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "btO" = (
 /obj/cable{
 	icon_state = "4-8"
 	},
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "btP" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -16700,7 +16699,7 @@
 /obj/item/storage/belt/utility,
 /obj/item/storage/belt/utility,
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "btT" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/red/side{
@@ -16856,7 +16855,7 @@
 /obj/machinery/disposal,
 /obj/disposalpipe/trunk/east,
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "buP" = (
 /obj/machinery/bot/firebot,
 /obj/disposalpipe/segment{
@@ -16864,24 +16863,24 @@
 	icon_state = "pipe-c"
 	},
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "buQ" = (
 /obj/cable{
 	icon_state = "1-2"
 	},
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "buR" = (
 /obj/storage/closet/emergency,
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "buS" = (
 /obj/item/extinguisher{
 	pixel_y = 8
 	},
 /obj/storage/closet/fire,
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "buU" = (
 /obj/machinery/vending/janitor,
 /turf/simulated/floor/specialroom/arcade,
@@ -17102,7 +17101,7 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "bvW" = (
 /obj/cable{
 	icon_state = "0-8"
@@ -17112,14 +17111,14 @@
 	},
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "bvX" = (
 /obj/cable{
 	icon_state = "0-8"
 	},
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "bvY" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -43556,7 +43555,7 @@
 /obj/machinery/door/airlock/pyro/glass,
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor,
-/area/station/storage/autolathe)
+/area/station/storage/auxillary)
 "rUL" = (
 /obj/stool/bench,
 /turf/simulated/floor/pool/no_animate,

@@ -701,7 +701,7 @@ datum
 									holder.remove_reagent(id, our_amt)
 								else
 									holder.del_reagent(id)
-						if(istype(holder.my_atom, /obj))
+						if(istype(holder?.my_atom, /obj))
 							var/obj/container = holder.my_atom
 							container.shatter_chemically(projectiles = TRUE)
 

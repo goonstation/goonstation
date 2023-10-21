@@ -137,7 +137,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/generic)
 	name = "Chameleon Outfit"
 	item = /obj/item/storage/backpack/chameleon
 	cost = 1
-	desc = "A full ensemble of clothing made of advanced fibres that can change colour to suit the needs of the wearer. Comes in a backpack that itelf can be disguised in the same manner. Do not expose to electromagnetic interference."
+	desc = "A full ensemble of clothing made of advanced fibres that can change colour to suit the needs of the wearer. Comes in a backpack that itself can be disguised in the same manner. Do not expose to electromagnetic interference."
 
 /datum/syndicate_buylist/generic/syndicard
 	name = "Agent Card"
@@ -315,6 +315,14 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "A rather volatile pipe bomb packed with miniature syndicate troops."
 	br_allowed = TRUE
 	can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF
+
+	run_on_spawn(obj/item, mob/living/owner, in_surplus_crate, obj/item/uplink/uplink)
+		. = ..()
+		if(in_surplus_crate && prob(5))
+			if(prob(20))
+				new /obj/machinery/nuclearbomb/event/micronuke/defended(item.loc)
+			else
+				new /obj/machinery/nuclearbomb/event/micronuke(item.loc)
 
 /datum/syndicate_buylist/traitor/champrojector
 	name = "Chameleon Projector"
@@ -893,6 +901,10 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/traitor)
 	desc = "Armor-piercing ammo for a .38 Special revolver (not included)."
 	job = list("Detective")
 	can_buy = UPLINK_TRAITOR
+
+	run_on_spawn(obj/item/the_thing, mob/living/owner, in_surplus_crate)
+		if(in_surplus_crate)
+			new /obj/item/gun/kinetic/zipgun(the_thing.loc)
 
 /datum/syndicate_buylist/traitor/traitorthermalscanner
 	name = "Advanced Optical Thermal Scanner"

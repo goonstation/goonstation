@@ -46,7 +46,8 @@
 			elecflash(target,power = 4, exclude_center = 0)
 			//target.elecgib()
 			arcFlash(holder.owner, target, 0) // we just want the effect, the damage is taken care of below
-			target.TakeDamage("chest", 0, burn_damage / target_damage_modifier, 0, DAMAGE_BURN)
+			var/target_damage = burn_damage / target_damage_modifier
+			target.TakeDamage("chest", 0, target_damage, 0, DAMAGE_BURN)
 			var/count = 0
 			for (var/mob/living/L in oview(src.arc_range, target))
 				if (iswizard(L))
@@ -56,7 +57,7 @@
 				if (iswizard(L))
 					continue
 				arcFlash(target, L, max(src.wattage / count, 1)) // adds some randomness to the damage
-				L.TakeDamage("chest", 0, burn_damage / count, 0, DAMAGE_BURN)
+				L.TakeDamage("chest", 0, min(burn_damage / count, target_damage), 0, DAMAGE_BURN)
 		else
 			elecflash(target,power = 2)
 			boutput(holder.owner, "<span class='alert'>Your spell is weak without a staff to focus it!</span>")
