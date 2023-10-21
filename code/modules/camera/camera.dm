@@ -145,20 +145,18 @@
 	if (istype(W, /obj/item/paper))
 		if (ON_COOLDOWN(src, "paper_camera", 8 SECONDS))
 			return
-		var/obj/item/paper/X = W
+		var/obj/item/paper/paper = W
 		boutput(user, "You hold a paper up to the camera ...")
-		for(var/mob/O in mobs)
-			if (isAI(O))
-				boutput(O, "[user] holds a paper up to one of your cameras ...")
-				X.ui_interact(O)
-				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
-			else
-				var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
-				if (S)
-					if (S.current == src)
-						boutput(O, "[user] holds a paper up to one of the cameras ...")
-						X.ui_interact(O)
-						logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
+		for (var/mob/M as anything in global.mobs)
+			if (isAI(M))
+				boutput(M, "[user] holds a paper up to one of your cameras ...")
+				paper.ui_interact(M)
+				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(M, "station")] to read it. <b>Title:</b> [paper.name]. <b>Text:</b> [adminscrub(paper.info)]")
+		if (length(src.viewers))
+			for (var/guy as anything in src.viewers)
+				boutput(guy, "[user] holds a paper up to the camera...")
+				paper.ui_interact(guy)
+				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(guy, "station")] to read it. <b>Title:</b> [paper.name]. <b>Text:</b> [adminscrub(paper.info)]")
 
 /obj/machinery/camera/ex_act(severity)
 	if (src.invuln)
@@ -188,14 +186,6 @@
 
 /obj/machinery/camera/blob_act(var/power)
 	return
-
-/obj/machinery/camera/attack_ai(var/mob/living/silicon/ai/user as mob)
-	if (!istype(user)) //Other silicon mobs shouldn't try to encroach on the AI's "view through all cameras" schtick.  Mostly because it generates runtime errors.
-		return
-	if (src.network != user.network || !(src.camera_status))
-		return
-	user.current = src
-	user.set_eye(src)
 
 /obj/machinery/camera/proc/set_camera_status(status)
 	src.camera_status = status
