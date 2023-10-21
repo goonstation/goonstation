@@ -1,14 +1,14 @@
 import { useBackend, useLocalState } from '../../backend';
 import { Dropdown, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { BoothList } from './BoothList';
+import { ClothingItemList } from './ClothingItemList';
 import { CharacterPreview } from './CharacterPreview';
 import { PurchaseInfo } from './PurchaseInfo';
 import type { ClothingBoothData } from './type';
 
 export const ClothingBooth = (_, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
-  const categories = data.clothingBoothCategories || [];
+  const categories = data.clothingBoothCategories ?? [];
 
   const [selectedCategory, selectCategory] = useLocalState(context, 'selectedCategory', categories[0]);
   const { items } = selectedCategory;
@@ -23,7 +23,7 @@ export const ClothingBooth = (_, context) => {
           <Stack.Item>
             <Section fill>
               <Stack fill align="center" justify="space-between">
-                <Stack.Item bold>{`Cash: ${data.money}⪽`}</Stack.Item>
+                <Stack.Item bold>Cash: {data.money}⪽</Stack.Item>
                 <Stack.Item>
                   <Dropdown
                     className="clothingbooth__dropdown"
@@ -40,7 +40,7 @@ export const ClothingBooth = (_, context) => {
             <Stack fill vertical>
               <Stack.Item grow={1}>
                 <Section fill scrollable>
-                  <BoothList items={items} />
+                  <ClothingItemList items={items} />
                 </Section>
               </Stack.Item>
             </Stack>
