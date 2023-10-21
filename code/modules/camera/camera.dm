@@ -143,7 +143,7 @@
 		return
 
 	if (istype(W, /obj/item/paper))
-		if (!ON_COOLDOWN(src, "paper_camera", 8 SECONDS))
+		if (ON_COOLDOWN(src, "paper_camera", 8 SECONDS))
 			return
 		var/obj/item/paper/X = W
 		boutput(user, "You hold a paper up to the camera ...")
