@@ -16,7 +16,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 /mob/living/critter/small_animal/bat,
 /mob/living/critter/small_animal/bat/angry,
 /mob/living/critter/spider/nice,
-/mob/living/critter/spider/clown,
+/mob/living/critter/spider/clown/polymorph,
 /mob/living/critter/small_animal/fly,
 /mob/living/critter/small_animal/mosquito,
 /mob/living/critter/spider/baby,
@@ -126,6 +126,7 @@ var/list/animal_spell_critter_paths = list(/mob/living/critter/small_animal/cat,
 			var/mob/living/critter/C = target.make_critter(pick(animal_spell_critter_paths))
 			C.real_name = "[target.real_name] the [C.real_name]"
 			C.name = C.real_name
+			C.is_npc = FALSE
 			logTheThing(LOG_COMBAT, M, "casts the Polymorph spell on [constructTarget(target,"combat")] turning them into [constructTarget(C,"combat")] at [log_loc(C)].")
 			C.butcherable = BUTCHER_ALLOWED // we would like the brain to be recoverable, please
 			if (istype(C, /mob/living/critter/small_animal/bee))

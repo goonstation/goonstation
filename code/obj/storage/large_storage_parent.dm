@@ -338,10 +338,8 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 				user.show_text("It appears to be broken.", "red")
 				return
 			else if (src.personal)
-				var/obj/item/card/id/ID = null
-				if (istype(I, /obj/item/card/id))
-					ID = I
-				else
+				var/obj/item/card/id/ID = get_id_card(I)
+				if (!istype(ID))
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.wear_id)
@@ -934,6 +932,7 @@ ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 		..()
 		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
+		the_storage.dump_contents(owner)
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)
 			I.setMaterial(the_storage.material)

@@ -167,6 +167,26 @@
 
 			. = scan_secrecord(src.master, C, visible = 1)
 
+	material_scan
+		name = "Material Scanner"
+		size = 2
+
+		scan_atom(atom/A as mob|obj|turf|area)
+			if(..())
+				return
+
+			if(!A.material)
+				. = "No significant material found in \the [A]."
+				return
+
+			. = "<u>[capitalize(A.material.getName())]</u><br>[A.material.getDesc()]<br><br>"
+			if (length(A.material.getMaterialProperties()))
+				for(var/datum/material_property/mat in A.material.getMaterialProperties())
+					var/value = A.material.getProperty(mat.id)
+					. += "• [mat.getAdjective(A.material)] ([value])<br>"
+			else
+				. += "The material is completely unremarkable."
+
 /datum/computer/file/electronics_scan
 	name = "scanfile"
 	extension = "OSCN"

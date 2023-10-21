@@ -33,6 +33,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	var/overridespecial = 0
 	var/datum/item_special/specialoverride = null
 
+	///which hands is this glove on. So that we don't have a dozen blank iconstate in wear images for rings/etc. that are only on one side
+	var/which_hands = GLOVE_HAS_LEFT | GLOVE_HAS_RIGHT
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 3)
@@ -779,6 +782,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	cant_other_remove = 1
 	abilities = list()
 	ability_buttons = list()
+	which_hands = GLOVE_HAS_LEFT
 
 	setupProperties()
 		..()

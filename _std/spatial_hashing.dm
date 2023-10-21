@@ -135,12 +135,12 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 			return list()
 
 		// if the range is higher than cell size, we can miss cells!
-		range = min(range, cellsize)
+		range = min(range, src.cellsize)
 
 		. = list()
 		for (var/id in get_atom_id(A, range))
 			if(length(hashmap[id]))
-				. += hashmap[id]
+				. += src.hashmap[id]
 
 /datum/spatial_hashmap/clients
 	cellsize = 30 // 300x300 -> 10x10
@@ -171,6 +171,22 @@ ABSTRACT_TYPE(/datum/spatial_hashmap/by_type)
 	cellsize = 10
 	update_cooldown = 5
 	type_to_track = /obj/shrub
+
+/datum/spatial_hashmap/manual/proc/add_target(atom/A)
+	var/turf/T = get_turf(A)
+	if (world.maxz > src.zlevels)
+		src.zlevels = world.maxz
+		src.hashmap.len = src.cols * src.rows * src.zlevels
+	if(T && !QDELETED(A))
+		ADD_TO_MAP(A, T)
+
+/datum/spatial_hashmap/manual/proc/add_weakref(atom/A)
+	var/turf/T = get_turf(A)
+	if (world.maxz > src.zlevels)
+		src.zlevels = world.maxz
+		src.hashmap.len = src.cols * src.rows * src.zlevels
+	if(T && !QDELETED(A))
+		ADD_TO_MAP(get_weakref(A), T)
 
 #undef CELL_POSITION
 #undef ADD_BUCKET
