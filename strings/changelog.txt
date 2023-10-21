@@ -1,4 +1,42 @@
 
+(t)sat oct 21 23
+(u)Glamurio (Ryou)
+(p)15767
+(e)🆕🗺🎨⚖📦|C-Feature, A-Mapping, C-Sprites, C-Balance, A-Game-Objects
+(*)Plastic flaps are now called strip doors and are constructable! Simply use some steel sheets to create a frame.
+(+)Plastic is a new material and can be obtained from snipping plastic flaps.
+(u)Colossusqw
+(p)16543
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Solipsizine's recipe no longer requires diphenhydramine.
+(u)MeggalBozale
+(p)16032
+(e)⚖🧛|C-Balance, A-Gamemodes
+(+)Blob Overminds feel they can do more with less and now send less blobs to smaller stations.
+(u)disgustingfreakfingers
+(p)16031
+(e)🎨🐁|C-Sprites, A-Critters
+(+)Updated yeti sprite. Disregard for perspective and realism remains intact.
+(t)fri oct 20 23
+(u)TDHooligan
+(p)16546
+(e)🆕⚗|C-Feature, A-Chemistry
+(*)You can now concentrate coffee into espresso with sodium sulfate...
+(+)...and extract pure caffeine from said espresso with acetone and heat. Drink responsibly!
+(u)Facsimil
+(p)14878
+(e)🆕💅📦|C-Feature, C-QoL, A-Game-Objects
+(+)Player pianos now can be linked together automatically.
+(u)CrystalClover
+(p)16264
+(e)⚖💅📦|C-Balance, C-QoL, A-Game-Objects
+(+)Crates of all sorts are now cheaper to fabricate
+(t)wed oct 18 23
+(u)Kevin From HP
+(p)16383
+(e)🗺|A-Mapping
+(+)Sword sheaths can now be dragged out of belt slot onto hand/ground.
+(+)Using any katana on a container of pure sakuride will coat it in up to 15u. Dashing leaves a trail of petals behind you.
 (t)tue oct 17 23
 (u)Chasu
 (p)16499

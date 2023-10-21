@@ -6096,11 +6096,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/station/storage/tools)
-"ast" = (
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/turf/simulated/floor,
-/area/station/storage/tools)
 "asu" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -11708,11 +11703,6 @@
 /obj/disposalpipe/segment/mineral{
 	dir = 4
 	},
-/turf/simulated/floor/plating,
-/area/station/hallway/secondary/exit)
-"aJc" = (
-/obj/item/sheet/wood,
-/obj/disposalpipe/junction/middle/east,
 /turf/simulated/floor/plating,
 /area/station/hallway/secondary/exit)
 "aJd" = (
@@ -20423,16 +20413,6 @@
 /obj/disposalpipe/segment/morgue,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/north)
-"bgm" = (
-/obj/plasticflaps,
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/disposalpipe/segment/cargo{
-	dir = 4
-	},
-/turf/simulated/floor/black,
-/area/station/science/bot_storage)
 "bgp" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -26955,20 +26935,6 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/medical/robotics)
-"bzt" = (
-/obj/machinery/mass_driver{
-	dir = 4;
-	id = "qm_dock_out"
-	},
-/obj/forcefield/energyshield/perma{
-	desc = "A permanent force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Permanent Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/plasticflaps,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "bzu" = (
 /obj/landmark/start/job/quartermaster,
 /obj/machinery/light/small/floor,
@@ -42073,14 +42039,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/maintenance/outer/se)
-"cpG" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating,
-/area/station/maintenance/outer/se)
 "cpH" = (
 /obj/machinery/conveyor/WE{
 	name = "cargo belt - east";
@@ -46937,6 +46895,21 @@
 "dnV" = (
 /turf/simulated/floor/stairs/wide/middle,
 /area/station/hallway/secondary/exit)
+"doe" = (
+/obj/machinery/conveyor/WE{
+	name = "cargo belt - east";
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	doordir = "single";
+	icon_state = "bdoorsingle1";
+	id = "mports_door";
+	name = "Cargo Export"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "doI" = (
 /obj/machinery/vending/cards,
 /turf/simulated/floor/black,
@@ -47633,6 +47606,11 @@
 	},
 /turf/simulated/floor/carpet/blue/fancy/edge/north,
 /area/station/hallway/primary/east)
+"esF" = (
+/obj/item/sheet/wood,
+/obj/disposalpipe/junction/middle/east,
+/turf/simulated/floor/plating,
+/area/station/hallway/secondary/exit)
 "esS" = (
 /turf/simulated/shuttle/wall{
 	dir = 4;
@@ -47775,6 +47753,10 @@
 	},
 /turf/simulated/floor,
 /area/station/engine/engineering)
+"eGi" = (
+/obj/landmark/shuttle_subwoofer,
+/turf/space,
+/area/space)
 "eHj" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -48838,6 +48820,11 @@
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/darkpurple,
 /area/station/storage/eva)
+"gsI" = (
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/turf/simulated/floor,
+/area/station/storage/tools)
 "gtP" = (
 /obj/disposalpipe/segment,
 /turf/simulated/floor/plating,
@@ -49136,25 +49123,6 @@
 /obj/disposalpipe/junction/right/south,
 /turf/simulated/floor/wood/two,
 /area/station/crew_quarters/quarters_south)
-"heP" = (
-/obj/lattice{
-	dir = 6;
-	icon_state = "lattice-dir"
-	},
-/obj/disposalpipe/segment/transport,
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/forcefield/energyshield/perma{
-	desc = "A permanent force field that prevents gasses from passing through it.";
-	dir = 4;
-	name = "Permanent Atmospheric Forcefield";
-	powerlevel = 1
-	},
-/obj/plasticflaps,
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "hfe" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -49876,6 +49844,16 @@
 /obj/mapping_helper/firedoor_spawn,
 /turf/simulated/floor/plating,
 /area/station/maintenance/south)
+"ilc" = (
+/obj/strip_door,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/disposalpipe/segment/cargo{
+	dir = 4
+	},
+/turf/simulated/floor/black,
+/area/station/science/bot_storage)
 "ina" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -50146,6 +50124,21 @@
 /obj/mapping_helper/access/medical_director,
 /turf/simulated/floor/white,
 /area/station/crew_quarters/md)
+"iHm" = (
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
+/obj/strip_door,
+/obj/machinery/door/poddoor/blast{
+	dir = 4;
+	doordir = "single";
+	icon_state = "bdoorsingle1";
+	id = "imports_door";
+	name = "Cargo Import"
+	},
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "iIK" = (
 /obj/machinery/door/airlock/pyro{
 	name = "office"
@@ -52200,6 +52193,25 @@
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
 	})
+"mgA" = (
+/obj/lattice{
+	dir = 6;
+	icon_state = "lattice-dir"
+	},
+/obj/disposalpipe/segment/transport,
+/obj/machinery/conveyor/EW{
+	name = "cargo belt - west";
+	operating = 1
+	},
+/obj/forcefield/energyshield/perma{
+	desc = "A permanent force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Permanent Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "mgU" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -52338,10 +52350,6 @@
 	dir = 4
 	},
 /area/station/janitor/office)
-"mpY" = (
-/obj/landmark/shuttle_subwoofer,
-/turf/space,
-/area/space)
 "mqh" = (
 /obj/disposalpipe/segment/cargo{
 	dir = 4
@@ -52360,21 +52368,6 @@
 /area/station/storage/emergency{
 	name = "Hilarious Storage A"
 	})
-"msh" = (
-/obj/machinery/conveyor/EW{
-	name = "cargo belt - west";
-	operating = 1
-	},
-/obj/plasticflaps,
-/obj/machinery/door/poddoor/blast{
-	dir = 4;
-	doordir = "single";
-	icon_state = "bdoorsingle1";
-	id = "imports_door";
-	name = "Cargo Import"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "mtl" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
 /obj/cable,
@@ -52766,21 +52759,6 @@
 /obj/disposalpipe/segment/cargo,
 /turf/simulated/floor/plating/random,
 /area/station/maintenance/southeast)
-"mXW" = (
-/obj/machinery/conveyor/WE{
-	name = "cargo belt - east";
-	operating = 1
-	},
-/obj/plasticflaps,
-/obj/machinery/door/poddoor/blast{
-	dir = 4;
-	doordir = "single";
-	icon_state = "bdoorsingle1";
-	id = "mports_door";
-	name = "Cargo Export"
-	},
-/turf/simulated/floor,
-/area/station/quartermaster/storage)
 "mYb" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/blueblack{
@@ -53026,6 +53004,20 @@
 /obj/machinery/power/data_terminal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/east)
+"nqm" = (
+/obj/machinery/mass_driver{
+	dir = 4;
+	id = "qm_dock_out"
+	},
+/obj/forcefield/energyshield/perma{
+	desc = "A permanent force field that prevents gasses from passing through it.";
+	dir = 4;
+	name = "Permanent Atmospheric Forcefield";
+	powerlevel = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor,
+/area/station/quartermaster/storage)
 "nqU" = (
 /obj/decal/cleanable/dirt,
 /obj/disposalpipe/segment{
@@ -59482,6 +59474,14 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/storage/tech)
+"xBB" = (
+/obj/machinery/conveyor/WE{
+	name = "cargo belt - east";
+	operating = 1
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/station/maintenance/outer/se)
 "xBS" = (
 /obj/disposalpipe/segment/mineral{
 	dir = 4
@@ -98358,7 +98358,7 @@ bno
 bqf
 bqn
 bvE
-aJc
+esF
 mzm
 aFo
 aFb
@@ -108911,7 +108911,7 @@ aIu
 nQB
 bas
 bas
-bgm
+ilc
 bas
 blR
 boN
@@ -116797,7 +116797,7 @@ fGR
 fGR
 cnM
 fGR
-cpG
+xBB
 fGR
 fGR
 aaa
@@ -129116,7 +129116,7 @@ jje
 jje
 jje
 aaa
-mpY
+eGi
 jje
 jje
 jje
@@ -132771,13 +132771,13 @@ aAk
 aDa
 aEb
 arH
-mXW
+doe
 clg
 clg
 buL
 clg
 clg
-msh
+iHm
 clg
 eGf
 bLm
@@ -133657,7 +133657,7 @@ aaa
 aaa
 aro
 arK
-ast
+gsI
 cjW
 arC
 asb
@@ -134283,9 +134283,9 @@ bnc
 arH
 bmU
 bqa
-bzt
+nqm
 buH
-heP
+mgA
 bzR
 bCE
 bzU

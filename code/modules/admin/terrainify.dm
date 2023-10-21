@@ -735,7 +735,7 @@ ABSTRACT_TYPE(/datum/terrainify)
 			if(!(params["Meaty"]))
 				generator.wall_path = /turf/unsimulated/wall/auto/lead/gray
 				generator.floor_path = /turf/unsimulated/floor/industrial
-			generator.fill_map()
+			generator.fill_map_bsp()
 		else
 			generator.generate_map()
 

@@ -436,7 +436,7 @@
 	},
 /area/moon/underground/hemera)
 "bm" = (
-/obj/plasticflaps{
+/obj/strip_door{
 	name = "particularly dense plastic flaps";
 	opacity = 1
 	},
