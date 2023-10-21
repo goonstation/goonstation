@@ -92,7 +92,9 @@
 			"Select Blueprint",
 			"Cancel Build",
 		)
-		var/user_input = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : "Select an action.", "ABCU", option_list)
+		var/input_list_desc = "Select an action."
+		if (src.current_bp) input_list_desc += " Loaded blueprint: [src.current_bp.room_name]"
+		var/user_input = tgui_input_list(user, src.building ? "The build job is currently paused. Choose:" : input_list_desc, "ABCU", option_list)
 		if (!user_input) return
 
 		switch(user_input)
