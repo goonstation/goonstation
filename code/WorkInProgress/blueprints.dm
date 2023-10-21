@@ -641,6 +641,8 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 
 	var/sizex = (maxx - minx) + 1
 	var/sizey = (maxy - miny) + 1
+	var/turf_count
+	var/obj_count
 
 	save.cd = "/"
 	save["sizex"] << sizex
@@ -650,6 +652,9 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	save.dir.Add("tiles")
 
 	for(var/atom/curr in turf_list)
+		if (!istypes(curr, WHITELIST_TURFS))
+			continue
+
 		var/posx = (curr.x - minx)
 		var/posy = (curr.y - miny)
 
@@ -659,6 +664,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 		save["state"] << curr.icon_state
 		if (curr.icon != initial(curr.icon))
 			save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
+		turf_count++
 
 		for(var/obj/o in curr)
 			if (use_whitelist && (!istypes(o, WHITELIST_OBJECTS) || istypes(o, BLACKLIST_OBJECTS)))
@@ -675,8 +681,10 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 			save["pixelx"] << o.pixel_x
 			save["pixely"] << o.pixel_y
 			save["icon_state"] << o.icon_state
+			obj_count++
 
-	boutput(user, "<span class='notice'>Saved blueprint '[input]' with filename '[input_sanitized]'. </span>")
+	boutput(user, "<span class='notice'>Saved blueprint '[input]' with filename '[input_sanitized]'. \
+		Saved [turf_count] tile\s, [obj_count] object\s.</span>")
 
 proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 	if (!savepath) // make this proc usable with or without a user and menu
@@ -802,54 +810,6 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 	var/roomname = "NewRoom"
 	var/list/turf/roomList = new/list()
 
-	var/list/permittedObjectTypes = list(\
-	"/obj/stool", \
-	"/obj/grille", \
-	"/obj/window", \
-	"/obj/machinery/door", \
-	"/obj/cable", \
-	"/obj/table", \
-	"/obj/rack", \
-	"/obj/structure",
-	"/obj/disposalpipe", \
-//	"/obj/machinery/vending", \ //No cheap buckshot/oddcigs/chemdepots. Use a mechscanner
-	"/obj/machinery/light", \
-	"/obj/machinery/door_control", \
-	"/obj/machinery/light_switch", \
-	"/obj/machinery/camera", \
-	"/obj/item/device/radio/intercom", \
-	"/obj/machinery/firealarm", \
-	"/obj/machinery/power/apc", \
-	"/obj/machinery/alarm", \
-	"/obj/machinery/disposal", \
-	"/obj/machinery/gibber",
-	"/obj/machinery/floorflusher",
-	"/obj/machinery/activation_button/driver_button", \
-	"/obj/machinery/door_control",
-	"/obj/machinery/disposal",
-	"/obj/submachine/chef_oven",
-	"/obj/submachine/chef_sink",
-	"/obj/machinery/launcher_loader",
-	"/obj/machinery/optable",
-	"/obj/machinery/mass_driver", \
-//	"/obj/reagent_dispensers", \ //No free helium/fuel/omni/raj/etc from abcu
-	"/obj/machinery/sleeper", \
-	"/obj/machinery/sleep_console", \
-	"/obj/submachine/slot_machine", \
-	"/obj/machinery/deep_fryer",
-	"/obj/submachine/ATM", \
-	"/obj/submachine/ice_cream_dispenser",
-	"/obj/machinery/portable_atmospherics", \
-	"/obj/machinery/ai_status_display",
-	"/obj/securearea",
-	"/obj/submachine/mixer",
-	"/obj/submachine/foodprocessor"
-	)
-
-	var/list/blacklistedObjectTypes = list(\
-	"/obj/disposalpipe/loafer",
-	"/obj/submachine/slot_machine/item",
-	"/obj/machinery/portable_atmospherics/canister")
 	var/list/permittedTileTypes = list("/turf/simulated")
 
 
@@ -989,140 +949,6 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 				using.client.images += i
 		return
 
-	proc/saveMarked(var/name = "", var/applyWhitelist = 1)
-		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
-		if (fexists("[savepath]"))
-			if (alert(usr, "A blueprint of this name already exists. Really overwrite?", "Overwrite Blueprint", "Yes", "No") == "No")
-				return
-			fdel("[savepath]")
-		var/savefile/save = new/savefile("[savepath]")
-
-		var/minx = 100000000
-		var/miny = 100000000
-
-		var/maxx = 0
-		var/maxy = 0
-
-		for(var/turf/t as anything in roomList)
-			if(t.x < minx) minx = t.x
-			if(t.y < miny) miny = t.y
-
-			if(t.x > maxx) maxx = t.x
-			if(t.y > maxy) maxy = t.y
-
-		var/sizex = (maxx - minx) + 1
-		var/sizey = (maxy - miny) + 1
-
-		save.cd = "/"
-		save["sizex"] << sizex
-		save["sizey"] << sizey
-		save["roomname"] << roomname
-		save["author"] << usr.client.ckey
-		save.dir.Add("tiles")
-
-		for(var/atom/curr in roomList)
-			var/posx = (curr.x - minx)
-			var/posy = (curr.y - miny)
-
-			save.cd = "/tiles/[posx],[posy]"
-			save["type"] << curr.type
-			save["dir"] << curr.dir
-			save["state"] << curr.icon_state
-			if (curr.icon != initial(curr.icon))
-				save["icon"] << "[curr.icon]" // string this or it saves the entire .dmi file
-
-			for(var/obj/o in curr)
-				var/permitted = 0
-				for(var/p in permittedObjectTypes)
-					var/type = text2path(p)
-					if(istype(o, type))
-						permitted = 1
-						break
-
-				for(var/p in blacklistedObjectTypes)
-					var/type = text2path(p)
-					if(istype(o, type))
-						permitted = 0
-						break//no
-
-				if(permitted || !applyWhitelist)
-					var/id = "\ref[o]"
-					save.cd = "/tiles/[posx],[posy]/objects"
-					while(save.dir.Find(id))
-						id = id + "I"
-					save.cd = "[id]"
-					save["dir"] << o.dir
-					save["type"] << o.type
-					save["layer"] << o.layer
-					save["pixelx"] << o.pixel_x
-					save["pixely"] << o.pixel_y
-					save["icon_state"] << o.icon_state
-
-		boutput(usr, "<span class='notice'>Saved blueprint as '[name]'. </span>")
-		return
-
-	proc/printSaved(var/name = "")
-		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
-		var/savefile/save = new/savefile("[savepath]") // if it's not an existing file, this makes an empty new one
-		if (isnull(save["roomname"]) && isnull(save["sizex"])) // double check
-			boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
-			fdel("[savepath]") // so we kill it
-			return
-
-		var/obj/item/blueprint/bp = new/obj/item/blueprint(get_turf(src))
-		prints_left--
-
-		save.cd = "/"
-		var/roomname = save["roomname"]
-		bp.size_x = save["sizex"]
-		bp.size_y = save["sizey"]
-		bp.author = save["author"]
-
-		save.cd = "/tiles" // cd to tiles
-		for (var/A in save.dir) // and now loop on every listing in tiles
-			save.cd = "/tiles/[A]"
-			var/list/coords = splittext(A, ",")
-			var/datum/tileinfo/tf = new/datum/tileinfo()
-			tf.posx = coords[1]
-			tf.posy = coords[2]
-			tf.tiletype = save["type"]
-			tf.state = save["state"]
-			tf.direction = save["dir"]
-			tf.icon = save["icon"]
-			bp.req_metal += 1
-			bp.req_glass += 0.5
-			save.cd = "/tiles/[A]/objects"
-			for (var/B in save.dir)
-				save.cd = "/tiles/[A]/objects/[B]"
-				var/datum/objectinfo/O = new/datum/objectinfo()
-				O.objecttype = save["type"]
-				O.direction = save["dir"]
-				O.layer = save["layer"]
-				O.px = save["pixelx"]
-				O.py = save["pixely"]
-				O.icon_state = save["icon_state"]
-				bp.req_metal += 0.9
-				bp.req_glass += 1.5
-				tf.objects.Add(O)
-			bp.roominfo.Add(tf)
-			bp.name = "Blueprint '[roomname]'"
-			bp.req_metal = round(bp.req_metal)
-			bp.req_glass = round(bp.req_glass)
-
-		boutput(usr, "<span class='notice'>Printed blueprint for '[roomname]'.</span>")
-		return
-
-	proc/delSaved(var/name = "")
-		var/savepath = "data/blueprints/[usr.client.ckey]/[name].dat"
-		if (fexists("[savepath]"))
-			if (strip_html(input(usr,"Really delete this blueprint? Input blueprint name to confirm.","Blueprint Deletion","") as text) != name)
-				boutput(usr, "<span class='alert'>Failed to delete blueprint '[name]': input did not match blueprint name.</span>")
-				return
-			fdel("[savepath]")
-			boutput(usr, "<span class='alert'>Blueprint [name] deleted.</span>")
-		else
-			boutput(usr, "<span class='alert'>Blueprint [name] not found.</span>")
-
 	attack_self(mob/user as mob)
 		if(!user.client)
 			return
@@ -1134,9 +960,10 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 			playsound(src.loc, 'sound/machines/button.ogg', 25)
 			return
 
-		var/list/options = list("Select Rectangle", "Deselect Rectangle", "Reset", "Set Blueprint Name", "Print Saved Blueprint",
-			"Save Blueprint", "Delete Blueprint" , "Information",)
-		var/input = input(user,"Select option:","Option") in options
+		var/list/options = list("Select Rectangle", "Deselect Rectangle", "Reset",
+			"Save Blueprint", "Delete Blueprint", "Share A Blueprint", "Information",)
+		//var/input = input(user,"Select option:","Option") in options
+		var/input = tgui_input_list(user, "Choose an action.", "Blueprint Marker", options)
 
 		switch(input)
 			if("Select Rectangle")
@@ -1150,20 +977,10 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 				removeOverlays()
 				roomList.Cut()
 
-			if("Set Blueprint Name")
-				roomname = copytext(strip_html(input(user,"Set Blueprint Name:","Setup",roomname) as text), 1, 257)
-				boutput(user, "<span class='notice'>Name set to '[roomname]'</span>")
-
-			//if("Create Clone Blueprint")
-			//	saveMarked("_temp", 1)
-			//	printSaved("_temp")
-			//	return
-
-			if("Print Saved Blueprint")
+			if("Share A Blueprint")
 				if(prints_left <= 0)
 					boutput(user, "<span class='alert'>Out of energy.</span>")
 					return
-				//printSaved(roomname)
 				var/picked = browse_abcu_blueprints(user)
 				if (!picked) return
 				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked["path"])
@@ -1172,12 +989,10 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 				return
 
 			if("Save Blueprint")
-				//saveMarked(roomname)
 				save_abcu_blueprint(user, roomList)
 				return
 
 			if("Delete Blueprint")
-				//delSaved(roomname)
 				delete_abcu_blueprint(user)
 				return
 
@@ -1186,11 +1001,9 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 				message += "<span class='notice'>Saved blueprints persist between rounds, but are limited to a size of 20 tiles on each axis, making 20x20 the largest blueprint.</span><br><br>"
 				message += "<span class='notice'>(De)Select Rectangle: Mass-selects or deselects tiles in a filled rectangle shape, defined by 2 corners.</span><br>"
 				message += "<span class='notice'>Reset: Resets the tools and clears all marked areas.</span><br>"
-				message += "<span class='notice'>Set Blueprint Name: Sets the active blueprint that print/save/delete functions will access.</span><br>"
-				message += "<span class='notice'>Print Saved Blueprint: Prints the active blueprint for usage in the ABCU builder device.</span><br>"
 				message += "<span class='notice'>Save Blueprint: Saves a blueprint of the marked area to the server. Most structures will be saved, but it can not save all types of objects.</span><br>"
-				message += "<span class='notice'>Your saved blueprints are accessed solely by its Blueprint Name, so note it down.</span><br>"
-				message += "<span class='notice'>Delete Blueprint: Permanently deletes the active blueprint from the server.</span><br>"
+				message += "<span class='notice'>Delete Blueprint: Permanently deletes a chosen blueprint from the server.</span><br>"
+				message += "<span class='notice'>Share Blueprint: Prints a chosen blueprint. The printout can be used on an ABCU, or memorized by other players.</span><br>"
 				message += "<span class='notice'>Outdated blueprints can be migrated using the 'Migrate blueprint' local verb.</span><br>"
 				boutput(user, message)
 				return
@@ -1214,6 +1027,8 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 		using = user
 		updateOverlays()
 		return
+
+#undef WHITELIST_TURFS
 
 /obj/item/blueprint_marker/verb/migrate_bigfile_blueprint()
 	// this is a tucked-away verb because it's niche and for old stuff, don't want it on the tool's main menu
