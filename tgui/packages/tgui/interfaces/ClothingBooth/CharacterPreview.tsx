@@ -14,20 +14,25 @@ const PreviewImage = (props: PreviewImageProps) => {
 
 export const CharacterPreview = (_, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
-  const { previewHeight, previewIcon } = data;
+  const { previewHeight, previewIcon64, previewShowClothing } = data;
   return (
     <Stack vertical align="center">
-      <Stack.Item>
-        <PreviewImage height={previewHeight} icon64={previewIcon} />
+      <Stack.Item textAlign>
+        <PreviewImage height={previewHeight} icon64={previewIcon64} />
       </Stack.Item>
       <Stack.Item>
-        <Button icon="chevron-left" tooltip="Clockwise" tooltipPosition="right" onClick={() => act('rotate-cw')} />
+        <Button icon="rotate-right" tooltip="Clockwise" tooltipPosition="bottom" onClick={() => act('rotate-cw')} />
         <Button
-          icon="chevron-right"
+          icon="rotate-left"
           tooltip="Counter-clockwise"
-          tooltipPosition="right"
+          tooltipPosition="bottom"
           onClick={() => act('rotate-ccw')}
         />
+      </Stack.Item>
+      <Stack.Item>
+        <Button.Checkbox checked={!previewShowClothing} color="transparent" onClick={() => act('toggle-clothing')}>
+          Hide Clothing
+        </Button.Checkbox>
       </Stack.Item>
     </Stack>
   );

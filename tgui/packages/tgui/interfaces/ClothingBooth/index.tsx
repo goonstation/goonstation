@@ -1,49 +1,44 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author DisturbHerb (https://github.com/disturbherb)
+ * @license ISC
+ */
+
 import { useBackend, useLocalState } from '../../backend';
-import { Dropdown, Section, Stack } from '../../components';
+import { Button, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { ClothingItemList } from './ClothingItemList';
 import { CharacterPreview } from './CharacterPreview';
+import { StockList } from './StockList';
 import { PurchaseInfo } from './PurchaseInfo';
-import type { ClothingBoothData } from './type';
+import { ClothingBoothData } from './type';
 
 export const ClothingBooth = (_, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
-  const categories = data.clothingBoothCategories ?? [];
-
-  const [selectedCategory, selectCategory] = useLocalState(context, 'selectedCategory', categories[0]);
-  const { items } = selectedCategory;
-  const handleSelectCategory = (value) =>
-    selectCategory(categories[categories.findIndex((category) => category.category === value)]);
+  const [hideUnaffordable, toggleHideUnaffordable] = useLocalState(context, 'hideUnaffordable', false);
 
   return (
-    <Window title={data.name} width={300} height={500}>
+    <Window title={data.name} width={450} height={550}>
       <Window.Content>
         <Stack fill vertical>
-          {/* Topmost section, containing the cash balance and category dropdown. */}
+          {/* Topmost section, containing the cash balance. */}
           <Stack.Item>
             <Section fill>
-              <Stack fill align="center" justify="space-between">
+              <Stack fluid align="center" justify="space-between">
                 <Stack.Item bold>Cash: {data.money}⪽</Stack.Item>
                 <Stack.Item>
-                  <Dropdown
-                    className="clothingbooth__dropdown"
-                    options={categories.map((category) => category.category)}
-                    selected={selectedCategory.category}
-                    onSelected={handleSelectCategory}
-                  />
+                  <Button.Checkbox
+                    checked={!!hideUnaffordable}
+                    onClick={() => toggleHideUnaffordable(!hideUnaffordable)}>
+                    Hide Unaffordable
+                  </Button.Checkbox>
                 </Stack.Item>
               </Stack>
             </Section>
           </Stack.Item>
           {/* Clothing booth item list */}
           <Stack.Item grow={1}>
-            <Stack fill vertical>
-              <Stack.Item grow={1}>
-                <Section fill scrollable>
-                  <ClothingItemList items={items} />
-                </Section>
-              </Stack.Item>
-            </Stack>
+            <StockList />
           </Stack.Item>
           {/* Character rendering and purchase button. */}
           <Stack.Item>
@@ -54,7 +49,7 @@ export const ClothingBooth = (_, context) => {
                 </Section>
               </Stack.Item>
               <Stack.Item grow={1}>
-                <Section fill title="Purchase Info">
+                <Section fill>
                   <Stack fill vertical justify="space-around">
                     <Stack.Item>
                       <PurchaseInfo />

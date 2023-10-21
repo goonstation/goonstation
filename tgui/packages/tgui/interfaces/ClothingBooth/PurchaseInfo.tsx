@@ -4,15 +4,23 @@ import type { ClothingBoothData } from './type';
 
 export const PurchaseInfo = (_, context) => {
   const { act, data } = useBackend<ClothingBoothData>(context);
+  const { itemLookup, money, selectedItemId } = data;
+  const selectedItem = selectedItemId ? itemLookup[selectedItemId] : undefined;
   return (
     <Stack bold vertical textAlign="center">
-      {data.selectedItemName ? (
+      {selectedItem ? (
         <>
-          <Stack.Item>Selected: ${data.selectedItemName}</Stack.Item>
-          <Stack.Item>Price: ${data.selectedItemCost}⪽</Stack.Item>
+          <Stack.Item>Selected: {selectedItem.name}</Stack.Item>
+          {/* {!!data.selectedItem && (
+            <Stack.Item>
+              {Object.values(data.selectedItem).map((variant) => (
+                <VariantSwatch key={variant.name} {...variant} />
+              ))}
+            </Stack.Item>
+          )} */}
           <Stack.Item>
-            <Button color="green" disabled={data.selectedItemCost > data.money} onClick={() => act('purchase')}>
-              {!(data.selectedItemCost > data.money) ? 'Purchase' : 'Insufficient Cash'}
+            <Button color="green" disabled={selectedItem.cost > money} onClick={() => act('purchase')}>
+              {`${selectedItem.cost > money ? 'Insufficent Cash' : 'Purchase'} (${selectedItem.cost}⪽)`}
             </Button>
           </Stack.Item>
         </>

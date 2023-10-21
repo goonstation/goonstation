@@ -11,6 +11,16 @@
     padding-right: 0.5rem;
   }
 
+  &boothitem__season- {
+    &autumn {
+      color: orange;
+    }
+
+    &halloween {
+      color: orange;
+    }
+  }
+
   &boothitem > div {
     pointer-events: none;
   }
