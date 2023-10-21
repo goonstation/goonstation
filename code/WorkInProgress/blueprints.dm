@@ -364,7 +364,7 @@
 			return
 		var/datum/abcu_blueprint/load
 		if (savepath)
-			load = load_abcu_blueprint(user, TRUE, savepath)
+			load = load_abcu_blueprint(user, savepath)
 		else
 			load = load_abcu_blueprint(user)
 		if (load?.room_name)
@@ -553,7 +553,11 @@
 	var/list/roominfo = list()
 
 proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
-	if (!length(turf_list) || !user.client.ckey) return
+	if (!user.client.ckey) return
+	if (!length(turf_list))
+		boutput(user, "<span class='alert'>There are no selected tiles to save.</span>")
+		return
+
 	// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
 	var/input = strip_html(tgui_input_text(user, "Set a name for your new blueprint. \
 		Filename conversion preserves only alphanumeric characters, and - and _.",
@@ -631,7 +635,7 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	boutput(user, "<span class='notice'>Saved blueprint '[input]' with filename '[input_sanitized]'. \
 		Saved [turf_count] tile\s, [obj_count] object\s.</span>")
 
-proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
+proc/load_abcu_blueprint(mob/user, var/savepath = "", var/use_whitelist = TRUE)
 	if (!savepath) // make this proc usable with or without a user and menu
 		var/picked = browse_abcu_blueprints(user, "Load Blueprint", "Pick a blueprint to load.")
 		if (!picked) return
@@ -697,7 +701,7 @@ proc/load_abcu_blueprint(mob/user, var/use_whitelist = TRUE, var/savepath = "")
 	bp.cost_metal = round(bp.cost_metal)
 	bp.cost_crystal = round(bp.cost_crystal)
 
-	boutput(user, "<span class='notice'>Loaded blueprint [bp.room_name], with [turf_count] tiles, and [obj_count] objects.</span>")
+	boutput(user, "<span class='notice'>Loaded blueprint [bp.room_name], with [turf_count] tile\s, and [obj_count] object\s.</span>")
 	return bp
 
 #undef WHITELIST_OBJECTS
@@ -931,6 +935,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked["path"])
 				user.put_in_hand_or_drop(printed)
 				src.prints_left--
+				boutput(user, "<span class='notice'>Printed the blueprint '[picked["file"]]'. Prints remaining: [src.prints_left].</span>")
 				return
 
 			if("Save Blueprint")
