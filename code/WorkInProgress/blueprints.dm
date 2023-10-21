@@ -70,22 +70,12 @@
 		return
 
 	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/blueprint))
-			if(src.current_bp)
-				boutput(user, "<span class='alert'>Theres already a blueprint in the machine.</span>")
-				return
-			else
-				boutput(user, "<span class='notice'>You insert the blueprint into the machine.</span>")
-				user.drop_item()
-				W.set_loc(src)
-				src.current_bp = W
-				return
-		else if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
+		if (istype(W, /obj/item/sheet) || istype(W, /obj/item/material_piece))
 			boutput(user, "<span class='notice'>You insert the material into the machine.</span>")
 			user.drop_item()
 			W.set_loc(src)
 			return
-		return
+		. = ..()
 
 	attack_hand(mob/user)
 		if(src.building && !src.paused)
@@ -419,24 +409,6 @@
 	fdel("data/blueprints/[picked["ckey"]]/[picked["file"]].txt")
 
 	boutput(usr, "<span class='notice'>Dumped blueprint to BYOND user data folder.</span>")
-
-/obj/item/blueprint
-	name = "Blueprint"
-	desc = "A blueprint used to quickly construct rooms."
-	icon = 'icons/obj/writing.dmi'
-
-	icon_state = "blueprint"
-	item_state = "sheet"
-
-	var/req_metal = 0
-	var/req_glass = 0
-
-	var/size_x = 0
-	var/size_y = 0
-
-	var/author = ""
-
-	var/list/roominfo = new/list()
 
 /obj/item/abcu_blueprint_reference
 	name = "structure blueprint"
