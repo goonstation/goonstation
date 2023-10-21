@@ -1,5 +1,10 @@
 
 (t)sat oct 21 23
+(u)Glamurio (Ryou)
+(p)15767
+(e)🆕🗺🎨⚖📦|C-Feature, A-Mapping, C-Sprites, C-Balance, A-Game-Objects
+(*)Plastic flaps are now called strip doors and are constructable! Simply use some steel sheets to create a frame.
+(+)Plastic is a new material and can be obtained from snipping plastic flaps.
 (u)Colossusqw
 (p)16543
 (e)⚖⚗|C-Balance, A-Chemistry
