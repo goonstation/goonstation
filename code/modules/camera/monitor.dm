@@ -9,9 +9,13 @@ TYPEINFO(/obj/item/device/camera_viewer)
 	w_class = W_CLASS_SMALL
 	var/list/network = list("SS13")
 	var/obj/machinery/camera/current = null
+	// Sin but we need to know for disposing to clear viewer list on current
+	var/mob/last_viewer = null
 	var/can_view_ai = FALSE
 
 	disposing()
+		src.current?.disconnect_viewer(src.last_viewer)
+		src.last_viewer = null
 		src.current = null
 		..()
 
@@ -35,20 +39,31 @@ TYPEINFO(/obj/item/device/camera_viewer)
 		var/selected_camera = tgui_input_list(user, "Which camera should you change to?", "Camera Selection", sortList(displayed_cameras, /proc/cmp_text_asc))
 
 		if (!selected_camera)
-			user.set_eye(null)
-			return 0
+			src.current?.disconnect_viewer(user)
+			src.current = null
+			src.last_viewer = null
+			return FALSE
 
 		var/obj/machinery/camera/C = displayed_cameras[selected_camera]
 
 		if ((!(src in user.contents) || !can_act(user) || !user.sight_check(1) || !(C.camera_status)) && (!issilicon(user)))
-			user.set_eye(null)
-			return 0
+			src.current?.disconnect_viewer(user)
+			src.current = null
+			src.last_viewer = null
+			return FALSE
+		else if (src.current)
+			src.current.move_viewer_to(user, C)
 		else
-			user.set_eye(C)
+			C.connect_viewer(user)
+		src.current = C
+		src.last_viewer = user
+		return TRUE
 
 	dropped(var/mob/user)
 		..()
-		user.set_eye(null)
+		src.current?.disconnect_viewer(user)
+		src.last_viewer = null
+		src.current = null
 
 /obj/item/device/camera_viewer/public
 	desc = "A portable video monitor, connected the public camera network."

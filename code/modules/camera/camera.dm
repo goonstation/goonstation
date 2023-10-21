@@ -44,8 +44,8 @@
 	/// Robust light
 	var/datum/light/point/light
 
-	/// The cameras viewer, for quickly disconnecting them when needed
-	var/mob/viewer
+	/// The viewers of the camera, for quickly disconnecting them when needed
+	var/list/mob/viewers
 
 	/*
 	Autoname
@@ -77,6 +77,8 @@
 
 	AddComponent(/datum/component/camera_coverage_emitter)
 
+	LAZYLISTINIT(src.viewers)
+
 	src.light = new /datum/light/point
 	src.light.set_brightness(0.3)
 	src.light.set_color(209/255, 27/255, 6/255)
@@ -95,7 +97,7 @@
 		qdel(src.light)
 		src.light = null
 
-	if (src.viewer)
+	if (length(src.viewers))
 		src.disconnect_viewers()
 
 	if (global.camnets && global.camnets[network])
@@ -229,12 +231,38 @@
 	. = 0
 	. = (node == c_north) + (node == c_east) + (node == c_south) + (node == c_west)
 
+/// Connect a viewer to this camera
+/obj/machinery/camera/proc/connect_viewer(var/mob/viewer)
+	if (QDELETED(viewer) || !istype(viewer))
+		return FALSE
+	if (src.camera_status)
+		LAZYLISTADD(src.viewers, viewer)
+		viewer.set_eye(src)
+		return TRUE
 
+/// Disconnect a viewer from this camera
+/obj/machinery/camera/proc/disconnect_viewer(var/mob/viewer)
+	if (istype(viewer))
+		LAZYLISTREMOVE(src.viewers, viewer)
+	if (!QDELETED(viewer))
+		viewer.set_eye(null)
+
+/// Move viewers eyes from current camera to a new camera
+/obj/machinery/camera/proc/move_viewer_to(var/mob/viewer, var/obj/machinery/camera/cam)
+	if (QDELETED(viewer) || !istype(viewer))
+		return FALSE
+	if (QDELETED(cam) || !istype(cam))
+		return FALSE
+	if (cam.camera_status) // Only switch if all checks succeed
+		src.disconnect_viewer(viewer)
+		cam.connect_viewer(viewer)
+		return TRUE
+
+/// Disconnect all viewers from this camera
 /obj/machinery/camera/proc/disconnect_viewers()
-	for(var/mob/O in mobs)
-		if(O.eye == src)
-			O.set_eye(null)
-			boutput(O, "The screen bursts into static.")
+	for (var/mob/guy as anything in src.viewers)
+		src.disconnect_viewer(guy)
+		boutput(guy, "The screen bursts into static.")
 
 /obj/machinery/camera/proc/break_camera(mob/user)
 	src.set_camera_status(FALSE)
