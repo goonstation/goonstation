@@ -5,7 +5,7 @@
 	shuttle_available_threshold = 20 MINUTES
 
 	antag_token_support = TRUE
-	var/const/blobs_minimum = 2
+	var/const/blobs_minimum = 1
 	var/const/blobs_possible = 4
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
@@ -27,8 +27,8 @@
 		if(player.ready)
 			num_players++
 
-	var/i = rand(-5, 0)
-	var/num_blobs = clamp(round((num_players + i) / 18), blobs_minimum, blobs_possible)
+	var/i = rand(0, 5)
+	var/num_blobs = clamp(round((num_players + i) / 25), blobs_minimum, blobs_possible)
 
 	var/list/possible_blobs = get_possible_enemies(ROLE_BLOB, num_blobs)
 
