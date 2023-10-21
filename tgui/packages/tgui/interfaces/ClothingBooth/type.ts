@@ -10,10 +10,10 @@ export interface ClothingBoothData {
 
 export interface ClothingBoothCategory {
   category: string;
-  items: CategoryItems[];
+  items: BoothItemData[];
 }
 
-export interface CategoryItems {
+export interface BoothItemData {
   cost: number;
   img: string;
   name: string;

@@ -1,10 +1,10 @@
-import { classes } from 'common/react';
 import { useBackend, useLocalState } from '../../backend';
-import { Box, Button, Divider, Dropdown, Image, Section, Stack } from '../../components';
+import { Dropdown, Section, Stack } from '../../components';
 import { Window } from '../../layouts';
-import { ClothingBoothData } from './type';
-
-import { capitalize } from '../common/stringUtils';
+import { BoothList } from './BoothList';
+import { CharacterPreview } from './CharacterPreview';
+import { PurchaseInfo } from './PurchaseInfo';
+import type { ClothingBoothData } from './type';
 
 export const ClothingBooth = (_, context) => {
   const { data } = useBackend<ClothingBoothData>(context);
@@ -12,6 +12,8 @@ export const ClothingBooth = (_, context) => {
 
   const [selectedCategory, selectCategory] = useLocalState(context, 'selectedCategory', categories[0]);
   const { items } = selectedCategory;
+  const handleSelectCategory = (value) =>
+    selectCategory(categories[categories.findIndex((category) => category.category === value)]);
 
   return (
     <Window title={data.name} width={300} height={500}>
@@ -27,9 +29,7 @@ export const ClothingBooth = (_, context) => {
                     className="clothingbooth__dropdown"
                     options={categories.map((category) => category.category)}
                     selected={selectedCategory.category}
-                    onSelected={(value) => (
-                      selectCategory(categories[categories.findIndex((category) => category.category === value)])
-                    )}
+                    onSelected={handleSelectCategory}
                   />
                 </Stack.Item>
               </Stack>
@@ -40,9 +40,7 @@ export const ClothingBooth = (_, context) => {
             <Stack fill vertical>
               <Stack.Item grow={1}>
                 <Section fill scrollable>
-                  {items.map((item) => (
-                    <ClothingBoothItem key={item.name} item={item} />
-                  ))}
+                  <BoothList items={items} />
                 </Section>
               </Stack.Item>
             </Stack>
@@ -69,72 +67,5 @@ export const ClothingBooth = (_, context) => {
         </Stack>
       </Window.Content>
     </Window>
-  );
-};
-
-const ClothingBoothItem = (props, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
-  const { item } = props;
-
-  return (
-    <>
-      <Stack
-        align="center"
-        className={classes([
-          'clothingbooth__boothitem',
-          item.name === data.selectedItemName && 'clothingbooth__boothitem-selected',
-        ])}
-        onClick={() => act('select', { path: item.path })}>
-        <Stack.Item>
-          <img src={`data:image/png;base64,${item.img}`} />
-        </Stack.Item>
-        <Stack.Item grow={1}>
-          <Box bold>{capitalize(item.name)}</Box>
-        </Stack.Item>
-        <Stack.Item bold>{`${item.cost}⪽`}</Stack.Item>
-      </Stack>
-      <Divider />
-    </>
-  );
-};
-
-const CharacterPreview = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
-  return (
-    <Stack vertical align="center">
-      <Stack.Item textAlign>
-        <Image height={data.previewHeight * 2 + 'px'} pixelated src={`data:image/png;base64,${data.previewIcon}`} />
-      </Stack.Item>
-      <Stack.Item>
-        <Button icon="chevron-left" tooltip="Clockwise" tooltipPosition="right" onClick={() => act('rotate-cw')} />
-        <Button
-          icon="chevron-right"
-          tooltip="Counter-clockwise"
-          tooltipPosition="right"
-          onClick={() => act('rotate-ccw')}
-        />
-      </Stack.Item>
-    </Stack>
-  );
-};
-
-const PurchaseInfo = (_, context) => {
-  const { act, data } = useBackend<ClothingBoothData>(context);
-  return (
-    <Stack bold vertical textAlign="center">
-      {data.selectedItemName ? (
-        <>
-          <Stack.Item>{`Selected: ${data.selectedItemName}`}</Stack.Item>
-          <Stack.Item>{`Price: ${data.selectedItemCost}⪽`}</Stack.Item>
-          <Stack.Item>
-            <Button color="green" disabled={data.selectedItemCost > data.money} onClick={() => act('purchase')}>
-              {!(data.selectedItemCost > data.money) ? `Purchase` : `Insufficient Cash`}
-            </Button>
-          </Stack.Item>
-        </>
-      ) : (
-        <Stack.Item>{`Please select an item.`}</Stack.Item>
-      )}
-    </Stack>
   );
 };
