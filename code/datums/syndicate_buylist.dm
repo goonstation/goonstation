@@ -1140,7 +1140,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	name = "Micronuke"
 	item = /obj/machinery/nuclearbomb/event/micronuke
 	desc = "A miniaturized version of the nuclear bomb given to our nuclear operative teams. Blow (a small portion) of the station to smithereens!"
-	cost = 7
+	cost = 5
 	surplus_weight = 5
 	vr_allowed = FALSE
 	can_buy = UPLINK_TRAITOR
