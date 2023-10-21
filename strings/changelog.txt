@@ -1,5 +1,9 @@
 
 (t)sat oct 21 23
+(u)Colossusqw
+(p)16543
+(e)⚖⚗|C-Balance, A-Chemistry
+(+)Solipsizine's recipe no longer requires diphenhydramine.
 (u)MeggalBozale
 (p)16032
 (e)⚖🧛|C-Balance, A-Gamemodes
