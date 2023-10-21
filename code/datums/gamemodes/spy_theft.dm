@@ -105,9 +105,9 @@
 				continue
 
 			if (S.cost <= value_high && S.cost >= value_low)
-				possible_items += S
+				possible_items[S] = S.surplus_weight
 
-		reward = pick(possible_items)
+		reward = weighted_pick(possible_items)
 
 	proc/spawn_reward(var/mob/user,var/obj/item/device/pda2/hostpda)
 		if (reward_was_spawned) return

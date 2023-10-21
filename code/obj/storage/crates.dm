@@ -318,7 +318,7 @@
 				if(!isnull(owner_uplink) && !(S.can_buy & owner_uplink.purchase_flags)) //You can get anything (not usually excluded from surplus crates) from any gamemode if you spawn this without an uplink
 					continue
 
-				if (S.surplus_weight)
+				if (!S.not_in_crates)
 					possible_items[S] = S.surplus_weight
 
 		if (islist(possible_items) && length(possible_items))
