@@ -1,5 +1,9 @@
 
 (t)sat oct 21 23
+(u)Amylizzle & Waffleloffle
+(p)16540
+(e)🆕🎨📡🐁|C-Feature, C-Sprites, A-AI, A-Critters
+(+)Capybaras should not be alone, and so the pool room capybara now has a baby. Sprites by Waffleloffle.
 (u)Glamurio (Ryou)
 (p)15767
 (e)🆕🗺🎨⚖📦|C-Feature, A-Mapping, C-Sprites, C-Balance, A-Game-Objects
