@@ -424,8 +424,11 @@
 		if (shield_value > 0)
 			add_overlay(shield_value, shield_max, 0, 255, 255, 0, 102, 102)
 			add_counter(barBits.len, shield_value, "#000000")
-		else
+			return
+		if ((health_value/health_max) > 0.5)
 			add_counter(barBits.len, health_value, "#000000")
+		else
+			add_counter(barBits.len, health_value, "#d9e8f2")
 
 	proc/add_overlay(value, max_value, r0, g0, b0, r1, g1, b1)
 		var/percentage = value / max_value
