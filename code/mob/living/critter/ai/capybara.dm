@@ -33,12 +33,12 @@
 /datum/aiTask/timed/sitting/on_tick()
 	ON_COOLDOWN(src.holder.owner, "capy_sit_down", 15 SECONDS)
 	holder.stop_move()
-	holder.owner.icon_state = "capybara-sit"
+	holder.owner.icon_state = "[initial(holder.owner.icon_state)]-sit"
 
 /datum/aiTask/timed/sitting/next_task()
 	. = ..()
 	if(.)
-		holder.owner.icon_state = "capybara"
+		holder.owner.icon_state = initial(holder.owner.icon_state)
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------//
 // keep close to an adult capy

@@ -9,6 +9,7 @@
 
 /mob/living/critter/small_animal/capybara/baby
 	name = "capybaby"
+	icon_state = "capybaby"
+	icon_state_dead = "capybaby-dead" //normally this wouldn't be necessary, except icon_state can be modified to capybara-sitting
 	desc = "Baby coconut doggo!"
 	ai_type = /datum/aiHolder/capybaby
-	transform = matrix(0.5, 0, 0, 0, 0.5, 0)
