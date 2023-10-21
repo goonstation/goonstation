@@ -49,6 +49,7 @@ ABSTRACT_TYPE(/datum/syndicate_buylist)
 
 	/**
 	 * Runs on the purchase of the buylist datum
+	 *
 	 * Arguments:
 	 * `item`, the item you're expecting
 	 * `owner`, the person who bought the item
