@@ -459,6 +459,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 /obj/mapVoteLink
 	name = "<span style='color: green; text-decoration: underline;'>Map Vote</span>"
+	flags = NOSPLASH
 
 	Click()
 		var/client/C = usr.client

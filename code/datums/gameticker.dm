@@ -839,3 +839,9 @@ var/global/current_state = GAME_STATE_INVALID
 		global.lag_detection_process.automatic_profiling(force_stop=TRUE)
 
 	return 1
+
+/datum/controller/gameticker/proc/get_credits()
+	RETURN_TYPE(/datum/crewCredits)
+	if (!src.creds)
+		src.creds = new /datum/crewCredits
+	return src.creds

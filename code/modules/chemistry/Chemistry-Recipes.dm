@@ -2194,7 +2194,7 @@
 				if(istype(holder.my_atom, /obj))
 					var/obj/container = holder.my_atom
 					container.shatter_chemically(projectiles = TRUE)
-			else
+			else if (holder.covered_cache)
 				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
 				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
 					var/turf/location = pick(holder.covered_cache)
@@ -3177,7 +3177,7 @@
 		name = "Solipsizine"
 		id = "solipsizine"
 		result = "solipsizine"
-		required_reagents = list("antihistamine" = 2, "neurodepressant" = 1, "LSD" = 1, "haloperidol" = 1)
+		required_reagents = list("neurodepressant" = 1, "LSD" = 1, "haloperidol" = 1)
 		result_amount = 3
 
 	mutadone // // COGWERKS CHEM REVISION PROJECT: magic bullshit drug, make it involve mutagen
@@ -4332,6 +4332,56 @@
 
 		on_reaction(datum/reagents/holder, created_volume) // TODO: actual byproduct/multi-output handling
 			holder.add_reagent("phenol", created_volume, temp_new = holder.total_temperature, chemical_reaction = TRUE)
+
+	espresso //makin' caffeine by dehydrating coffee
+		name = "Coffee concentration"
+		id = "espresso"
+		result = "espresso"
+		eventual_result = "espresso"
+		required_reagents = list("coffee" = 2, "sodium_sulfate" = 0.1) //sodium sulfate as an approximate drying agent
+		result_amount = 1
+		max_temperature = T0C + 30 //sodium sulfate fails at 30c (A.K.A. 'you want to to make the caffeine in another thing')
+		mix_phrase = "A gross precipitate forms as the water is absorbed."
+		instant = FALSE
+		reaction_speed = 0.5
+		var/shock_ticks = 0
+
+		physical_shock(var/force, var/datum/reagents/holder)
+			if(force > 3)
+				shock_ticks = 5
+				playsound(get_turf(holder.my_atom), 'sound/effects/bubbles_short.ogg', 50, 1)
+
+		on_reaction(datum/reagents/holder, created_volume)
+			reaction_icon_state = list("reaction_bubble-1", "reaction_bubble-2")
+			if(shock_ticks > 0)
+				reaction_speed = 1
+				shock_ticks--
+				reaction_icon_state = list("reaction_sparkle-1", "reaction_sparkle-2")
+			else
+				reaction_speed = 0.5
+
+			//precipitate gross stuff, it's easy to MAKE a caffeine machine, but you want to clear out your equipment from time to time...
+			if (prob(50))
+				holder.add_reagent("sewage", created_volume*0.2, temp_new = holder.total_temperature, chemical_reaction = FALSE) //RAW coffee
+			else
+				holder.add_reagent("yuck", created_volume*0.2, temp_new = holder.total_temperature, chemical_reaction = FALSE) //sulfate sludge
+
+	espresso/fresh
+		required_reagents = list("coffee_fresh" = 2, "sodium_sulfate" = 0.1)
+
+	caffeine
+		name = "Caffeine precipitation"
+		id = "caffeine"
+		result = "caffeine"
+		eventual_result = "caffeine"
+		required_reagents = list("espresso" = 2, "acetone" = 0.1) //acetone as a solvent. also means 'you need to have made a bit of acetone once'
+		result_amount = 1
+		min_temperature = T0C + 100
+		mix_phrase = "White crystals form as the acetone evaporates."
+		instant = FALSE
+		reaction_speed = 0.5
+		on_reaction(datum/reagents/holder, created_volume)
+			holder.temperature_reagents(holder.total_temperature - created_volume*100, 400, change_min = 1)
 
 	hairgrownium
 		name = "Hairgrownium"

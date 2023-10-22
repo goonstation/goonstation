@@ -48,13 +48,13 @@
 			boutput(M, "<span class='alert'><B>Your chameleon jumpsuit malfunctions!</B></span>")
 			src.name = "psychedelic jumpsuit"
 			src.desc = "Groovy!"
+			src.icon_state = "psyche"
+			src.item_state = "psyche"
 			icon = 'icons/obj/clothing/uniforms/item_js_gimmick.dmi'
 			wear_image_icon = 'icons/mob/clothing/jumpsuits/worn_js_gimmick.dmi'
 			inhand_image_icon = 'icons/mob/inhand/jumpsuit/hand_js_gimmick.dmi'
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
-			src.icon_state = "psyche"
-			src.item_state = "psyche"
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -82,6 +82,7 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_jumpsuit_pattern
@@ -245,6 +246,12 @@
 		icon_state = "detective"
 		item_state = "detective"
 
+	rank/captain
+		name = "captain's uniform"
+		desc = "Would you believe terrorists actually want to steal this jumpsuit? It's true!"
+		icon_state = "captain"
+		item_state = "captain"
+
 	rank/head_of_personnel
 		name = "head of personnel's uniform"
 		desc = "Rather bland and inoffensive. Perfect for vanishing off the face of the universe."
@@ -341,11 +348,11 @@
 			boutput(M, "<span class='alert'><B>Your chameleon hat malfunctions!</B></span>")
 			src.name = "hat"
 			src.desc = "A knit cap in...what the hell?"
+			src.icon_state = "psyche"
+			src.item_state = "bgloves"
 			src.hides_from_examine = null
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
-			src.icon_state = "psyche"
-			src.item_state = "bgloves"
 			src.seal_hair = FALSE
 			M.set_clothing_icon_dirty()
 
@@ -376,6 +383,7 @@
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.seal_hair = T.seal_hair
+			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_hat_pattern
@@ -587,13 +595,13 @@
 			boutput(M, "<span class='alert'><B>Your chameleon suit malfunctions!</B></span>")
 			src.name = "hoodie"
 			src.desc = "A comfy jacket that's hard on the eyes."
-			src.hides_from_examine = null
-			wear_image = image(wear_image_icon)
-			inhand_image = image(inhand_image_icon)
 			src.icon_state = "hoodie-psyche"
 			src.item_state = "hoodie-psyche"
-			src.icon = 'icons/obj/clothing/overcoats/item_suit.dmi'
-			src.wear_image_icon = 'icons/mob/clothing/overcoats/worn_suit.dmi'
+			src.hides_from_examine = null
+			src.icon = 'icons/obj/clothing/overcoats/hoods/hoodies.dmi'
+			src.wear_image_icon = 'icons/mob/clothing/overcoats/hoods/worn_hoodies.dmi'
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -624,6 +632,7 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_suit_pattern
@@ -914,10 +923,10 @@
 			boutput(M, "<span class='alert'><B>Your chameleon glasses malfunction!</B></span>")
 			src.name = "glasses"
 			src.desc = "A pair of glasses. They seem to be broken, though."
-			wear_image = image(wear_image_icon)
-			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -945,6 +954,7 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_glasses_pattern
@@ -1048,9 +1058,10 @@
 			boutput(M, "<span class='alert'><B>Your chameleon shoes malfunction!</B></span>")
 			src.name = "shoes"
 			src.desc = "A pair of shoes. Maybe they're those light up kind you had as a kid?"
+			src.icon_state = "psyche"
+			src.item_state = "psyche"
 			wear_image = image(wear_image_icon)
 			inhand_image = image(inhand_image_icon)
-			src.icon_state = "psyche"
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -1079,6 +1090,7 @@
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.step_sound = T.step_sound
+			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_shoes_pattern
@@ -1130,6 +1142,13 @@
 		desc = "Polished and very shiny military boots."
 		icon_state = "swat"
 		item_state = "swat"
+		step_sound = "step_military"
+
+	caps_boots
+		name = "captain's boots"
+		desc = "A set of formal shoes with a protective layer underneath."
+		icon_state = "capboots"
+		item_state = "capboots"
 		step_sound = "step_military"
 
 	galoshes
@@ -1227,10 +1246,10 @@
 			boutput(M, "<span class='alert'><B>Your chameleon gloves malfunction!</B></span>")
 			src.name = "gloves"
 			src.desc = "A pair of gloves. Something seems off about them..."
-			wear_image = image(wear_image_icon)
-			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
 			src.material_prints = "high-tech rainbow flashing nanofibers"
 			M.set_clothing_icon_dirty()
 
@@ -1260,6 +1279,7 @@
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
 			src.material_prints = T.print_type
+			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_gloves_pattern
@@ -1325,6 +1345,15 @@
 		hide_prints = TRUE
 		scramble_prints = FALSE
 
+	caps_gloves
+		name = "captain's gloves"
+		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
+		icon_state = "capgloves"
+		item_state = "capgloves"
+		print_type = "high-quality synthetic fibers"
+		hide_prints = TRUE
+		scramble_prints = FALSE
+
 /obj/item/storage/belt/chameleon
 	name = "utility belt"
 	desc = "Can hold various small objects."
@@ -1376,10 +1405,10 @@
 			boutput(M, "<span class='alert'><B>Your chameleon belt malfunctions!</B></span>")
 			src.name = "belt"
 			src.desc = "A flashing belt. Looks like you can still put things in it, though."
-			wear_image = image(wear_image_icon)
-			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche"
 			src.item_state = "psyche"
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -1407,6 +1436,7 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_belt_pattern
@@ -1542,10 +1572,10 @@
 			boutput(M, "<span class='alert'><B>Your chameleon backpack malfunctions!</B></span>")
 			src.name = "backpack"
 			src.desc = "A flashing backpack. Looks like you can still put things in it, though."
-			wear_image = image(wear_image_icon)
-			inhand_image = image(inhand_image_icon)
 			src.icon_state = "psyche_backpack"
 			src.item_state = "psyche_backpack"
+			wear_image = image(wear_image_icon)
+			inhand_image = image(inhand_image_icon)
 			M.set_clothing_icon_dirty()
 
 	verb/change()
@@ -1573,6 +1603,7 @@
 			src.inhand_image_icon = T.sprite_hand
 			src.wear_image = image(wear_image_icon)
 			src.inhand_image = image(inhand_image_icon)
+			src.tooltip_rebuild = TRUE
 			usr.set_clothing_icon_dirty()
 
 /datum/chameleon_backpack_pattern
@@ -1794,11 +1825,12 @@
 
 	captain
 		name = "Captain"
-		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank
+		jumpsuit_type = new/datum/chameleon_jumpsuit_pattern/rank/captain
 		hat_type = new/datum/chameleon_hat_pattern/caphat
 		suit_type = new/datum/chameleon_suit_pattern/captain_armor
 		glasses_type = new/datum/chameleon_glasses_pattern/sunglasses
-		shoes_type = new/datum/chameleon_shoes_pattern/swat
+		shoes_type = new/datum/chameleon_shoes_pattern/caps_boots
+		gloves_type = new/datum/chameleon_gloves_pattern/caps_gloves
 		belt_type = null
 		backpack_type = new/datum/chameleon_backpack_pattern/captain
 

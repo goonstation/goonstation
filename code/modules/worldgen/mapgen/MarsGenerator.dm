@@ -5,13 +5,15 @@
 	turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
 	flora_types = list(/obj/machinery/light/beacon=10)
-	flora_density = 0.8
+	flora_density = 2
+	minimum_flora_distance = 10
 
 /datum/biome/mars/martian_area
 	turf_type = /turf/unsimulated/floor/setpieces/martian/station_duststorm
 
 	fauna_types = list(/mob/living/critter/martian=50, /mob/living/critter/martian/soldier=10, /mob/living/critter/martian/mutant=1, /mob/living/critter/martian/initiate=5, /mob/living/critter/martian/warrior=10)
 	fauna_density = 1
+	minimum_fauna_distance = 3
 
 /datum/biome/mars/martian_rock
 	turf_type = /turf/unsimulated/wall/setpieces/martian/auto

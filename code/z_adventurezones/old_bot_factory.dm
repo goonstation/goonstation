@@ -274,20 +274,16 @@
 	icon_state = "filecabinet"
 	icon_closed = "filecabinet"
 	icon_opened = "filecabinet-open"
+	icon_redlight = null
+	icon_greenlight = null
 	secure = 2
 
-	update_icon()
-
-		if (src.open)
-			src.locked = 0
-			src.remove_prefixes("locked")
-			src.UpdateName()
-			src.icon_state = src.icon_opened
-		else
+	close()
+		..()
+		if(!src.locked)
 			src.locked = 1
 			src.name_prefix("locked")
 			src.UpdateName()
-			src.icon_state = src.icon_closed
 
 	receive_signal()
 		return

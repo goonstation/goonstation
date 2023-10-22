@@ -111,8 +111,8 @@
 	var/ai_calm_down = 0 // do we chill out after a while?
 	var/ai_picking_pocket = 0
 	var/ai_offhand_pickup_chance = 50
-	var/bruteloss
-	var/burnloss
+	var/bruteloss = 0
+	var/burnloss = 0
 
 	max_health = 100
 
@@ -851,8 +851,9 @@
 
 	if (!antag_removal && src.unkillable) // Doesn't work properly for half the antagonist types anyway (Convair880).
 		newbody.unkillable = 1
-		newbody.setStatus("maxhealth-", null, -90)
+		newbody.setStatus("maxhealth-", 30 SECONDS, -25)
 		newbody.setStatus("paralysis", 10 SECONDS)
+		newbody.bioHolder.AddEffect("hell_fire", do_stability = 0, magical = 1)
 
 	if (src.bioHolder)
 		newbody.bioHolder.CopyOther(src.bioHolder)

@@ -138,6 +138,8 @@
 				token = ":" + R.secure_frequencies[choice_index - 1]
 
 			var/text = input("", "Speaking to [choice] frequency") as null|text
+			if (!text)
+				return
 			if (src.capitalize_speech())
 				var/i = 1
 				while (copytext(text, i, i+1) == " ")

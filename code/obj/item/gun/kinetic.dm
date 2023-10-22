@@ -1,7 +1,7 @@
 ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic
 	name = "kinetic weapon"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	item_state = "gun"
 	m_amt = 2000
 	var/obj/item/ammo/bullets/ammo = null
@@ -469,6 +469,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/vgun
 	name = "virtual pistol"
 	desc = "This thing would be better if it wasn't such a piece of shit."
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "railgun"
 	force = MELEE_DMG_PISTOL
 	contraband = 0
@@ -540,7 +541,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/survival_rifle
 	name = "\improper Efnysien survival rifle"
 	desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "survival_rifle_22"
 	item_state = "survival_rifle"
 	wear_state = "survival_rifle"
@@ -660,7 +661,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/minigun // it is now STRONK
 	name = "\improper Alpha Hydrae minigun"
 	desc = "The M134 Alpha Hydrae Minigun is a 7.62×51mm NATO, six-barrel rotary machine gun with a high rate of fire."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "minigun"
 	item_state = "heavy"
 	force = MELEE_DMG_LARGE
@@ -692,7 +693,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/akm
 	name = "\improper AKM Assault Rifle"
 	desc = "An old Cold War relic chambered in 7.62x39. Rusted, but not busted."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ak47"
 	item_state = "ak47"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -723,7 +724,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/hunting_rifle
 	name = "old hunting rifle"
 	desc = "A powerful antique hunting rifle."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
 	wear_state = "ohr" // prevent empty state from breaking the worn image
@@ -750,7 +751,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/dart_rifle
 	name = "tranquilizer rifle"
 	desc = "A veterinary tranquilizer rifle chambered in .308 caliber."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "tranq"
 	item_state = "tranq"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -1048,8 +1049,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //0.393
 /obj/item/gun/kinetic/foamdartgun
 	name = "foam dart gun"
-	icon_state = "foamdartgun"
 	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
+	icon = 'icons/obj/items/guns/toy.dmi'
+	icon_state = "foamdartgun"
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "toygun"
@@ -1146,8 +1148,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 /obj/item/gun/kinetic/foamdartrevolver
 	name = "foam dart revolver"
-	icon_state = "foamdartrevolver"
 	desc = "An advanced dart gun for experienced pros. Just holding it imbues you with a sense of great power."
+	icon = 'icons/obj/items/guns/toy.dmi'
+	icon_state = "foamdartrevolver"
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "toyrevolver"
@@ -1164,8 +1167,9 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 		..()
 /obj/item/gun/kinetic/foamdartshotgun
 	name = "foam dart shotgun"
-	icon_state = "foamdartshotgun"
 	desc = "The more powerful, older brother of the dart gun. Kicks like a horse, a foam horse. A horse made of foam."
+	icon = 'icons/obj/items/guns/toy.dmi'
+	icon_state = "foamdartshotgun"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "foamdartshotgun"
 	wear_state = "foamdartshotgun"
@@ -1189,6 +1193,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/blowgun
 	name = "flute"
 	desc = "Wait, this isn't a flute. It's a blowgun!"
+	icon = 'icons/obj/items/guns/syringe.dmi'
 	icon_state = "blowgun"
 	item_state = "cane-f"
 	force = MELEE_DMG_PISTOL
@@ -1363,7 +1368,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/riotgun
 	name = "riot shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "shotty"
 	item_state = "shotty"
 	wear_state = "shotty" // prevent empty state from breaking the worn image
@@ -1444,7 +1449,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/single_action/mts_255
 	name = "\improper MTs-255 Revolver Shotgun"
 	desc = "A single-action revolving cylinder shotgun, popular with Soviet hunters, produced by the Zvezda Design Bureau."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "mts255"
 	item_state = "mts255"
@@ -1588,7 +1593,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //0.75
 /obj/item/gun/kinetic/single_action/flintlock/rifle
 	name = "flintlock rifle"
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "flintlock_rifle"
 	item_state = "flintlock_rifle"
@@ -1667,7 +1672,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/missile_launcher
 	name = "pod-targeting missile launcher"
 	desc = "A collapsible, infantry portable, pod-targeting missile launcher."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "missile_launcher"
 	item_state = "missile_launcher"
@@ -1696,12 +1701,12 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 
 	update_icon()
 		if (src.collapsed)
-			src.icon = 'icons/obj/items/gun.dmi'
+			src.icon = 'icons/obj/items/guns/kinetic.dmi'
 			src.icon_state = "missile_launcher-collapsed"
 			src.item_state = "missile_launcher-collapsed"
 
 		else
-			src.icon = 'icons/obj/large/64x32.dmi'
+			src.icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 			src.icon_state = "missile_launcher"
 
 			if (src.ammo.amount_left < 1)
@@ -1780,7 +1785,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/rpg7
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."
 	name = "\improper MPRT-7"
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "rpg7"
 	uses_multiple_icon_states = 1
@@ -1834,7 +1839,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/mrl
 	desc = "A 6-barrel multiple rocket launcher armed with guided micro-missiles."
 	name = "Fomalhaut MRL"
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "mrls"
 	item_state = "mrls"
@@ -1876,7 +1881,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/antisingularity
 	desc = "An experimental rocket launcher designed to deliver various payloads in rocket format."
 	name = "\improper Singularity Buster rocket launcher"
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "ntlauncher"
 	item_state = "ntlauncher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -1907,7 +1912,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 //2.5
 /obj/item/gun/kinetic/single_action/flintlock/mortar
 	name = "hand mortar"
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "hand_mortar"
 	item_state = "hand_mortar"
 	ammo_cats = list(AMMO_FLINTLOCK_MORTAR)
@@ -1941,6 +1946,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/airzooka //This is technically kinetic? I guess?
 	name = "airzooka"
 	desc = "The new double action air projection device from Donk Co!"
+	icon = 'icons/obj/items/guns/toy.dmi'
 	icon_state = "airzooka"
 	force = MELEE_DMG_PISTOL
 	max_ammo_capacity = 10
@@ -2050,7 +2056,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/smg
 	name = "\improper Bellatrix submachine gun"
 	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "mp52"
 	w_class = W_CLASS_SMALL
 	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
@@ -2143,7 +2149,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/assault_rifle
 	name = "\improper Sirius assault rifle"
 	desc = "A bullpup assault rifle capable of semi-automatic and burst fire modes, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -2208,7 +2214,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/light_machine_gun
 	name = "\improper Antares light machine gun"
 	desc = "A 100 round light machine gun, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "lmg"
 	item_state = "lmg"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -2244,7 +2250,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/cannon
 	name = "\improper Alphard 20mm cannon"
 	desc = "A 20mm anti-materiel recoiling cannon. Slow but enormously powerful."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "cannon"
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -2283,7 +2289,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/recoilless
 	name = "\improper Carinae RCL/120"
 	desc = "An absurdly destructive 120mm recoilless gun-mortar, the largest man-portable weapon in the Almagest line."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "recoilless"
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -2320,7 +2326,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/grenade_launcher
 	name = "\improper Rigil grenade launcher"
 	desc = "A 40mm hand-held grenade launcher, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -2375,7 +2381,7 @@ ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
 /obj/item/gun/kinetic/sniper
 	name = "\improper Betelgeuse sniper rifle"
 	desc = "A semi-automatic bullpup sniper rifle, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/large/64x32.dmi' // big guns get big icons
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "sniper"
 	item_state = "sniper"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'

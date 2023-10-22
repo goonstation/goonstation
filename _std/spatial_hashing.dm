@@ -135,12 +135,12 @@ ABSTRACT_TYPE(/datum/spatial_hashmap)
 			return list()
 
 		// if the range is higher than cell size, we can miss cells!
-		range = min(range, cellsize)
+		range = min(range, src.cellsize)
 
 		. = list()
 		for (var/id in get_atom_id(A, range))
 			if(length(hashmap[id]))
-				. += hashmap[id]
+				. += src.hashmap[id]
 
 /datum/spatial_hashmap/clients
 	cellsize = 30 // 300x300 -> 10x10
