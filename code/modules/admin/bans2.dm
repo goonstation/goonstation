@@ -98,7 +98,7 @@
 
 	/// Check if a ban exists
 	proc/check(ckey, comp_id, ip)
-		if (ip == "127.0.0.1") return FALSE // Ignore if localhost
+		if (!ip || ip == "127.0.0.1") return FALSE // Ignore if localhost
 
 		var/datum/apiRoute/bans/check/checkBan = new
 		checkBan.queryParams = list(
