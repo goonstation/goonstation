@@ -2383,12 +2383,6 @@
 		reaction_icon_color = "#8c866d"
 		var/count = 0
 
-		does_react(datum/reagents/holder)
-			if (holder.get_reagent_amount("chromium") / holder.total_volume < 0.3)
-				return FALSE
-			else
-				return TRUE
-
 		on_reaction(datum/reagents/holder, created_volume)
 			count += created_volume
 			if (holder.has_reagent("silicon_dioxide")) // prevent catalyst ashing with a support
