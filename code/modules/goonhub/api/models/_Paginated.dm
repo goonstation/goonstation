@@ -25,11 +25,10 @@ ABSTRACT_TYPE(/datum/apiModel/Paginated)
 		if (!item.VerifyIntegrity())
 			return FALSE
 
-/datum/apiModel/Paginated/ToString()
-	. = list()
+/datum/apiModel/Paginated/ToList()
+	. = ..()
 	.["data"] = list()
 	for (var/datum/apiModel/item in src.data)
-		.["data"] += item.ToString()
+		.["data"] += list(item.ToList())
 	.["links"] = src.links
 	.["meta"] = src.meta
-	return json_encode(.)

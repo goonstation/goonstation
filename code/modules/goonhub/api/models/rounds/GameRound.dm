@@ -28,8 +28,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/GameRound/ToString()
-	. = list()
+/datum/apiModel/Tracked/GameRound/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["server_id"] = src.server_id
 	.["map"] = src.map
@@ -39,4 +39,3 @@
 	.["ended_at"] = src.ended_at
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

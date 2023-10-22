@@ -26,12 +26,11 @@
 	)
 		return FALSE
 
-/datum/apiModel/GetPlayerSaves/ToString()
-	. = list()
+/datum/apiModel/GetPlayerSaves/ToList()
+	. = ..()
 	.["data"] = list()
 	for (var/datum/apiModel/Tracked/PlayerRes/PlayerDataResource/data in src.data)
-		.["data"] += data.ToString()
+		.["data"] += list(data.ToList())
 	.["saves"] = list()
 	for (var/datum/apiModel/Tracked/PlayerRes/PlayerSaveResource/save in src.saves)
-		.["saves"] += save.ToString()
-	return json_encode(.)
+		.["saves"] += list(save.ToList())

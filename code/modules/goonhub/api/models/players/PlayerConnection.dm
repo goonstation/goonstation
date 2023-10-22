@@ -27,8 +27,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/PlayerRes/PlayerConnection/ToString()
-	. = list()
+/datum/apiModel/Tracked/PlayerRes/PlayerConnection/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["player_id"] = src.player_id
 	.["round_id"] = src.round_id
@@ -39,4 +39,3 @@
 	.["updated_at"] = src.updated_at
 	.["country"] = src.country
 	.["country_iso"] = src.country_iso
-	return json_encode(.)

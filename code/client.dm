@@ -240,7 +240,7 @@
 		boutput(src, "<div class=\"motd\">[join_motd]</div>")
 
 	if (IsGuestKey(src.key))
-		if(!(!src.address || src.address == world.host)) // If you're a host or a developer locally, ignore this check.
+		if(!(!src.address || src.address == world.host || src.address == "127.0.0.1")) // If you're a host or a developer locally, ignore this check.
 			var/gueststring = {"
 							<!doctype html>
 							<html>

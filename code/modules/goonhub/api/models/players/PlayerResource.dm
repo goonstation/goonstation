@@ -26,8 +26,8 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/PlayerResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/PlayerResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["ckey"] = src.ckey
 	.["key"] = src.key
@@ -36,4 +36,3 @@
 	.["byond_minor"] = src.byond_minor
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

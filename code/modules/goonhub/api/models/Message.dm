@@ -14,7 +14,6 @@
 	)
 		return FALSE
 
-/datum/apiModel/Message/ToString()
-	. = list()
+/datum/apiModel/Message/ToList()
+	. = ..()
 	.["message"] = src.message
-	return json_encode(.)

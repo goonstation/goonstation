@@ -22,12 +22,11 @@
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/EventStationNameResource/ToString()
-	. = list()
+/datum/apiModel/Tracked/EventStationNameResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["round_id"] = src.round_id
 	.["player_id"] = src.player_id
 	.["name"] = src.name
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

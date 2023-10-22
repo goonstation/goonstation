@@ -14,7 +14,6 @@
 	)
 		return FALSE
 
-/datum/apiModel/PreviousGauntlets/ToString()
-	. = list()
+/datum/apiModel/PreviousGauntlets/ToList()
+	. = ..()
 	.["gauntlets_completed"] = src.gauntlets_completed
-	return json_encode(.)

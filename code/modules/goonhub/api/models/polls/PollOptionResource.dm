@@ -18,22 +18,20 @@
 	src.answers_player_ids = response["answers_player_ids"]
 
 /datum/apiModel/PollOptionResource/VerifyIntegrity()
+	. = ..()
 	if (
 		isnull(src.id) \
 		|| isnull(src.poll_id) \
 		|| isnull(src.option) \
-		|| isnull(src.position) \
-		|| isnull(src.answers_count) \
 		|| isnull(src.answers_player_ids) \
 	)
 		return FALSE
 
-/datum/apiModel/PollOptionResource/ToString()
-	. = list()
+/datum/apiModel/PollOptionResource/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["poll_id"] = src.poll_id
 	.["option"] = src.option
 	.["position"] = src.position
 	.["answers_count"] = src.answers_count
 	.["answers_player_ids"] = src.answers_player_ids
-	return json_encode(.)

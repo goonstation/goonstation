@@ -2038,23 +2038,22 @@ proc/countJob(rank)
 var/global/nextDectalkDelay = 1 //seconds
 var/global/lastDectalkUse = 0
 /proc/dectalk(msg)
-	if (!msg || !config.spacebee_api_key) return 0
+	if (!msg) return 0
 	if (TIME > (lastDectalkUse + (nextDectalkDelay * 10)))
 		lastDectalkUse = TIME
 		msg = copytext(msg, 1, 2000)
 
-		// Fetch via HTTP from goonhub
-		var/datum/http_request/request = new()
-		request.prepare(RUSTG_HTTP_METHOD_GET, "[config.spacebee_api_url]/api/tts?dectalk=[url_encode(msg)]&api_key=[config.spacebee_api_key]", "", "")
-		request.begin_async()
-		UNTIL(request.is_complete())
-		var/datum/http_response/response = request.into_response()
-
-		if (response.errored || !response.body)
-			logTheThing(LOG_DEBUG, null, "<b>dectalk:</b> Failed to contact goonhub. msg : [msg]")
+		var/datum/apiModel/DectalkPlayResource/playDectalkResource
+		try
+			var/datum/apiRoute/dectalk/play/playDectalk = new
+			playDectalk.buildBody(msg)
+			playDectalkResource = apiHandler.queryAPI(playDectalk, roundId)
+		catch (var/exception/e)
+			var/datum/apiModel/Error/error = e.name
+			logTheThing(LOG_DEBUG, null, "<b>dectalk:</b> Failed to play dectalk for msg: '[msg]' because: [error.message]")
 			return
 
-		return list("audio" = response.body, "message" = msg)
+		return list("audio" = playDectalkResource.audio, "message" = msg)
 	else
 		return list("cooldown" = 1)
 

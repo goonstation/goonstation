@@ -21,13 +21,11 @@
 		|| isnull(src.name) \
 		|| isnull(src.discord_id) \
 		|| isnull(src.rank_id) \
-		|| isnull(src.created_at) \
-		|| isnull(src.updated_at) \
 	)
 		return FALSE
 
-/datum/apiModel/Tracked/GameAdmin/ToString()
-	. = list()
+/datum/apiModel/Tracked/GameAdmin/ToList()
+	. = ..()
 	.["id"] = src.id
 	.["ckey"] = src.ckey
 	.["name"] = src.name
@@ -35,4 +33,3 @@
 	.["rank_id"] = src.rank_id
 	.["created_at"] = src.created_at
 	.["updated_at"] = src.updated_at
-	return json_encode(.)

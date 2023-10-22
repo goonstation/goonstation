@@ -1,6 +1,7 @@
 var/global/datum/eventRecorder/eventRecorder
 
 /datum/eventRecorder
+	var/enabled = FALSE
 	var/connected = FALSE
 	var/list/events = list()
 	var/eventsPushed = 0
@@ -11,6 +12,13 @@ var/global/datum/eventRecorder/eventRecorder
 
 	/// Connect to the external event service
 	proc/connect()
+		if (!config.goonhub_events_endpoint || !config.goonhub_events_port || !config.goonhub_events_channel)
+			src.enabled = FALSE
+			var/logMsg = "Disabled Goonhub Event Recording service due to missing config"
+			logTheThing(LOG_DEBUG, null, "<b>Event Recorder:</b> [logMsg]")
+			logTheThing(LOG_DIARY, null, "Event Recorder: [logMsg]", "debug")
+			return
+
 		var/addr = "redis://"
 		if (config.goonhub_events_password)
 			addr += ":[config.goonhub_events_password]@"
@@ -29,7 +37,7 @@ var/global/datum/eventRecorder/eventRecorder
 
 	/// Push the event queue to the server
 	proc/process()
-		if (!length(src.events) || (!src.connected && !src.connect())) return
+		if (!src.enabled || !length(src.events) || (!src.connected && !src.connect())) return
 
 		var/res = rustg_redis_lpush(config.goonhub_events_channel, json_encode(src.events))
 		var/list/lRes = json_decode(res)
@@ -45,6 +53,8 @@ var/global/datum/eventRecorder/eventRecorder
 
 	/// Add an event to the event queue
 	proc/add(datum/eventRecord/event)
+		if (!src.enabled) return
+
 		var/list/data = event.body.ToList()
 		data["type"] = event.eventType
 		data["round_id"] = roundId
