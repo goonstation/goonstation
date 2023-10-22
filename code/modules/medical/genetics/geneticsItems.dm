@@ -258,7 +258,7 @@ ADMIN_INTERACT_PROCS(/obj/item/genetics_injector/dna_injector, proc/admin_comman
 			src.use_mode = SCRAMBLER_MODE_PASTE
 			boutput(target, "<span class='alert'>Your body changes! You feel completely different!</span>")
 			src.bioHolder.CopyOther(target.bioHolder)
-			stored_name = target.name
+			stored_name = target.real_name
 			randomize_look(target)
 			UpdateIcon()
 
