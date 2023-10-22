@@ -132,6 +132,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food)
 		else
 			src.reagents.trans_to(slice, amount_to_transfer)
 
+	is_open_container()
+		return TRUE
 /* ================================================ */
 /* -------------------- Snacks -------------------- */
 /* ================================================ */
