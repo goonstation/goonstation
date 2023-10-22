@@ -1,3 +1,9 @@
+/**
+ * @file
+ * @copyright 2023
+ * @author glowbold (https://github.com/pgmzeta)
+ * @license MIT
+ */
 import { Window } from '../layouts';
 import { Section } from "../components";
 

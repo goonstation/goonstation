@@ -8,14 +8,14 @@
 import { RemoteAccessButton } from ".";
 import { LabeledList } from "../../../components";
 import { WirePanelAction } from "./const";
-import { WireData } from "./type";
+import type { WireData } from "./type";
 
 interface WireListProps {
   wires: WireData[];
   act_wire: (wire_index: number, action: WirePanelAction) => void
 }
 
-export const WireList =(props: WireListProps) => {
+export const WireList = (props: WireListProps) => {
   const { wires, act_wire } = props;
   return (
     <LabeledList>

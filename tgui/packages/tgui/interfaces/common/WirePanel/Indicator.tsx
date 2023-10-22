@@ -19,12 +19,12 @@ export const IndicatorList = (props: IndicatorListProps) => {
   return (
     <LabeledList>
       {
-        Object.keys(WirePanelControl).map((control) => {
+        Object.entries(WirePanelControl).map(([control, value]) => {
           if (controls_to_show & WirePanelControl[control]) {
             return (
               <Indicator
                 key={control}
-                control={WirePanelControl[control]}
+                control={value}
                 status={active_controls & WirePanelControl[control]}
               />
             );
@@ -36,7 +36,7 @@ export const IndicatorList = (props: IndicatorListProps) => {
 };
 
 interface IndicatorProps {
-  control: WirePanelControl,
+  control: WirePanelControl | string,
   status: BooleanLike,
 }
 

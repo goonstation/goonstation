@@ -39,15 +39,12 @@ export const WirePanelInsert = (_, context) => {
 
   return (
     <Box
-      className="wirePanel_insert"
       title={`Maintenance Panel${shouldDisable ? ' :: Remote Silicon Access Disabled' : ''}`}
       open={wire_panel.cover_status === WirePanelCoverStatus.Open}
       disabled={!!shouldDisable}>
-      <>
-        <WireList wires={wire_panel.wires} act_wire={act_wire} />
-        <Divider />
-        <IndicatorList controls_to_show={wire_panel.controls_to_show} active_controls={wire_panel.active_controls} />
-      </>
+      <WireList wires={wire_panel.wires} act_wire={act_wire} />
+      <Divider />
+      <IndicatorList controls_to_show={wire_panel.controls_to_show} active_controls={wire_panel.active_controls} />
     </Box>
   );
 };
