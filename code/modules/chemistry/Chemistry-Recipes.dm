@@ -2392,12 +2392,12 @@
 		on_reaction(datum/reagents/holder, created_volume)
 			count += created_volume
 			if (holder.has_reagent("silicon_dioxide")) // prevent catalyst ashing with a support
-				holder.remove_reagent("silicon_dioxide", created_volume / 2)
+				holder.remove_reagent("silicon_dioxide", created_volume / 5)
 			else
-				holder.remove_reagent("chromium", 5 * created_volume) // super exaggerated catalytic ashing
+				holder.remove_reagent("chromium", 4 * created_volume) // super exaggerated catalytic ashing
 			if (holder.has_reagent("magnesium_chloride", 10))
 				reaction_speed = 0.25
-				holder.remove_reagent("magnesium_chloride", created_volume / 2)
+				holder.remove_reagent("magnesium_chloride", created_volume / 5)
 			else
 				reaction_speed = 0.05
 			if (count >= 10)
