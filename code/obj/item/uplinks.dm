@@ -956,7 +956,7 @@ Note: Add new traitor items to syndicate_buylist.dm, not here.
 
 		var/datum/antagonist/spy_thief/antag_role = user.mind?.get_antagonist(ROLE_SPY_THIEF)
 		if (istype(antag_role))
-			antag_role.stolen_items.Add(new /mutable_appearance(delivery))
+			antag_role.stolen_items[delivery.name] = new /mutable_appearance(delivery)
 
 		qdel(delivery)
 
