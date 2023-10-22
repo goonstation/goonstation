@@ -66,4 +66,3 @@
 	for (var/datum/apiModel/Tracked/BanDetail/detail in src.details)
 		.["details"] += list(detail.ToList())
 	.["requires_appeal"] = src.requires_appeal
-	return json_encode(.)
