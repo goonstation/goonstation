@@ -2384,25 +2384,25 @@
 		var/count = 0
 
 		does_react(datum/reagents/holder)
-			if (holder.get_reagent_amount("chromium") / holder.total_volume < 0.33) // generously rounded
+			if (holder.get_reagent_amount("chromium") / holder.total_volume < 0.3)
 				return FALSE
 			else
 				return TRUE
 
 		on_reaction(datum/reagents/holder, created_volume)
 			count += created_volume
-			if (holder.get_reagent_amount("silicon_dioxide") > (5 * created_volume)) // prevent catalyst ashing with a support
-				holder.remove_reagent("silicon_dioxide", created_volume / 3)
+			if (holder.has_reagent("silicon_dioxide")) // prevent catalyst ashing with a support
+				holder.remove_reagent("silicon_dioxide", created_volume / 2)
 			else
-				holder.remove_reagent("chromium", 2 * created_volume) // super exaggerated catalytic ashing
-			if (holder.get_reagent_amount("magnesium_chloride") > 20 * created_volume)
-				reaction_speed += 0.025
+				holder.remove_reagent("chromium", 5 * created_volume) // super exaggerated catalytic ashing
+			if (holder.has_reagent("magnesium_chloride", 10))
+				reaction_speed = 0.25
+				holder.remove_reagent("magnesium_chloride", created_volume / 2)
 			else
-				reaction_speed = max(0.05,reaction_speed - 0.05)
-			holder.remove_reagent("magnesium_chloride", created_volume)
+				reaction_speed = 0.05
 			if (count >= 10)
 				count -= 10
-				var/location = get_turf(holder.my_atom)
+				var/location = get_turf(holder.my_atom) || pick(holder.covered_cache)
 				for(var/mob/M in AIviewers(null, location))
 					boutput(M, "<span class='notice'>The plastic clumps together in a messy sheet.</span>")
 				new /obj/item/material_piece/rubber/plastic(location)
