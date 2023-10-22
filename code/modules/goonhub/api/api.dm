@@ -25,12 +25,12 @@ var/global/datum/apiHandler/apiHandler
 		..()
 		if (!config.goonhub_api_endpoint)
 			src.enabled = FALSE
-			logTheThing(LOG_DEBUG, null, "Goonhub endpoint doesn't exist, disabled api handler")
-			logTheThing(LOG_DIARY, null, "Goonhub endpoint doesn't exist, disabled api handler", "debug")
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Goonhub endpoint doesn't exist, disabled api handler")
+			logTheThing(LOG_DIARY, null, "API Error: Goonhub endpoint doesn't exist, disabled api handler", "debug")
 
 
 	/// Build and throw an error exception
-	proc/apiError(list/data, forceErrorException = 0)
+	proc/apiError(list/data, source)
 		var/datum/apiModel/Error/model = new
 		model.SetupFromResponse(data)
 		throw EXCEPTION(model)
@@ -39,16 +39,15 @@ var/global/datum/apiHandler/apiHandler
 	/**
 	 * Retries an API query in the event of failure
 	 *
-	 * @givenArgs (list) arglist of the failed query attempt
+	 * @route (/datum/apiRoute) requested route to call, ex. /datum/apiRoute/players/notes/get
 	 * @attempt (int) number of times we've attempted this query
-	 * @return (*) the result of another query attempt
+	 * @return (/datum/apiModel) model containing parsed data response from api
 	 */
-	proc/retryApiQuery(list/givenArgs, attempt = 1)
+	proc/retryApiQuery(datum/apiRoute/route, attempt)
 		//the sleep delay grows as attempts increases
-		sleep(apiRetryDelay * attempt)
-		//arglist() doesnt recognise named params lol
-		givenArgs[4] = attempt + 1
-		return src.queryAPI(arglist(givenArgs))
+		sleep(src.apiRetryDelay * attempt)
+		attempt++
+		return src.queryAPI(route, attempt)
 
 
 	/**
@@ -56,55 +55,53 @@ var/global/datum/apiHandler/apiHandler
 	 *
 	 * @reset (bool) reset the counter (eg successful request)
 	 */
-	proc/trackRecentError(reset = 0)
+	proc/trackRecentError(reset = FALSE)
 		if (reset)
-			emergency_shutoff_counter = 0
+			src.emergency_shutoff_counter = 0
 			return
 
-		emergency_shutoff_counter++
-		if (enabled && emergency_shutoff_counter > 50)
+		src.emergency_shutoff_counter++
+		if (src.enabled && src.emergency_shutoff_counter > 50)
 			logTheThing(LOG_DEBUG, null, "DISABLING API REQUESTS - Too many errors.")
 			logTheThing(LOG_DIARY, null, "DISABLING API REQUESTS - Too many errors.", "debug")
-			message_admins("API requests have been disabled due to too many errors (check logs).")
-			enabled = 0
+			message_admins("API requests have been disabled due to too many errors (check debug logs).")
+			src.enabled = 0
 			SPAWN(60 SECONDS)
-				emergency_shutoff_counter = 0
+				src.emergency_shutoff_counter = 0
 				logTheThing(LOG_DEBUG, null, "RE-ENABLING API REQUESTS - Cooldown expired.")
 				logTheThing(LOG_DIARY, null, "RE-ENABLING API REQUESTS - Cooldown expired.", "debug")
 				message_admins("API requests have been re-enabled after waiting.")
-				enabled = 1
-
+				src.enabled = 1
 
 	/**
 	 * Constructs a query to send to the goonhub web API
 	 *
 	 * @route (/datum/apiRoute) requested route to call, ex. /datum/apiRoute/players/notes/get
-	 * @forceResponse (boolean) will force the API server to return the requested data from the route rather than hitting hubCallback later on
 	 * @attempt (int) number of times we've attempted this query
-	 * @return (list|boolean) list containing parsed data response from api, 1 if forceResponse is false
+	 * @return (/datum/apiModel|boolean) model containing parsed data response from api, or boolean indicating success
 	 *
 	 */
-	proc/queryAPI(datum/apiRoute/route = null, forceResponse = 0, attempt = 1, forceErrorException = 0)
-		if (!enabled || !route)
-			src.apiError(list("message" = "API Error: Cancelled query due to [!enabled ? "disabled apiHandler" : "missing route parameter"]"), forceErrorException)
-			return
+	proc/queryAPI(datum/apiRoute/route = null, attempt = 1)
+		if (!enabled)
+			src.apiError(list("message" = "API Error: Cancelled query due to disabled apiHandler"))
+			return FALSE
+		if (!route)
+			src.apiError(list("message" = "API Error: Cancelled query due to missing route parameter"))
+			return FALSE
 
 		var/req_route = "[config.goonhub_api_endpoint][route.path][route.routeParams ? "/[route.formatRouteParams()]" : ""]/?[route.formatQueryParams()]"
-
 		var/headers = list(
 			"Accept" = "application/json",
 			"Content-Type" = "application/json",
 			"Authorization" = config.goonhub_api_token
 		)
 
-		lazy_waiting_counter++
-		while (lazy_concurrent_counter > 50)
+		src.lazy_waiting_counter++
+		while (src.lazy_concurrent_counter > 50)
 			// if we have too many requests out, just wait a little to let some finish
 			sleep(rand(1, 5))
-		lazy_waiting_counter--
-
-		// Fetch via HTTP from goonhub
-		lazy_concurrent_counter++
+		src.lazy_waiting_counter--
+		src.lazy_concurrent_counter++
 
 		// Actual request
 		var/datum/http_request/request = new()
@@ -113,58 +110,60 @@ var/global/datum/apiHandler/apiHandler
 		request.begin_async()
 		var/time_started = TIME
 		UNTIL(request.is_complete() || (TIME - time_started) > 10 SECONDS)
-		if(!request.is_complete())
-			// to whoever looks at this next: uhh, do we have to do any cleanup of
-			// these requests or will it just solve itself?
-			trackRecentError()
-			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Request timed out during <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
-			logTheThing(LOG_DIARY, null, "API Error: Request timed out during [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
+		if (!request.is_complete())
+			src.trackRecentError()
+			var/msg = "Request timed out during [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
+			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
 			// This one is over so we can clear it now
-			lazy_concurrent_counter--
-			if (attempt < maxApiRetries)
-				return retryApiQuery(args, attempt = attempt)
+			src.lazy_concurrent_counter--
+			if (attempt < src.maxApiRetries)
+				return src.retryApiQuery(route, attempt)
 
 			src.apiError(list("message" = "API Error: Request timed out during [req_route]"))
-			return 1
+			return FALSE
 
 		// Otherwise the request did finish so we can lower this
-		lazy_concurrent_counter--
+		src.lazy_concurrent_counter--
 		var/datum/http_response/response = request.into_response()
 
 		if (response.errored || !response.body)
-			trackRecentError()
-			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: No response from server during query [!response.body ? "during" : "to"] <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
-			logTheThing(LOG_DIARY, null, "API Error: No response from server during query [!response.body ? "during" : "to"] [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
+			src.trackRecentError()
+			var/msg = "No response from server during query [!response.body ? "during" : "to"] [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
+			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
-			if (attempt < maxApiRetries)
-				return retryApiQuery(args, attempt = attempt)
+			if (attempt < src.maxApiRetries)
+				return src.retryApiQuery(route, attempt)
 
 			src.apiError(list("message" = "API Error: No response from server during query [!response.body ? "during" : "to"] [req_route]"))
 
 		// At this point we assume the request was a success, so reset the error counter
-		trackRecentError(TRUE)
+		src.trackRecentError(TRUE)
 
 		// Parse the response
 		var/list/data
 		try
 			data = json_decode(response.body)
 		catch
-			// pass
+			// pass so we can handle retries or build our own exception
 
 		// Bad data format
 		if (!data)
-			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: JSON decode error during <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
-			logTheThing(LOG_DIARY, null, "API Error: JSON decode error during [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
+			var/msg = "JSON decode error during [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
+			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
 
-			if (attempt < maxApiRetries)
-				return retryApiQuery(args, attempt = attempt)
+			if (attempt < src.maxApiRetries)
+				return src.retryApiQuery(route, attempt)
 
 			src.apiError(list("message" = "API Error: JSON decode error during [req_route]"))
 
 		// Handle client and server error responses
 		if (response.status_code >= 400)
-			return src.apiError(data)
+			src.apiError(data)
+			return FALSE
 
 		// Validation
 		var/datum/apiModel/model = new route.correct_response
@@ -173,9 +172,10 @@ var/global/datum/apiHandler/apiHandler
 		else
 			model.SetupFromResponse(data["data"], route)
 		if (!model.VerifyIntegrity())
-			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: Verification error during <b>[req_route]</b> (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])")
-			logTheThing(LOG_DIARY, null, "API Error: Verification error during [req_route] (Attempt: [attempt]; recent errors: [emergency_shutoff_counter], concurrent: [lazy_concurrent_counter])", "debug")
-			src.apiError(list("message" = "API Error: Verification error during [req_route]"))
-			return
+			var/msg = "Verification error on response during [req_route] (Attempt: [attempt]; recent errors: [src.emergency_shutoff_counter], concurrent: [src.lazy_concurrent_counter])"
+			logTheThing(LOG_DEBUG, null, "<b>API Error</b>: [msg]")
+			logTheThing(LOG_DIARY, null, "API Error: [msg]", "debug")
+			src.apiError(list("message" = "API Error: Verification error on response during [req_route]"))
+			return FALSE
 
 		return model
