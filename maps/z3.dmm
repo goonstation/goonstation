@@ -1673,6 +1673,32 @@
 	name = "solar paneling"
 	},
 /area/space)
+"afL" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "West Engine Compartment";
+	req_access_txt = ""
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "afN" = (
 /obj/item/clothing/suit/bedsheet{
 	bcolor = "yellow";
@@ -1785,9 +1811,6 @@
 /obj/machinery/vending/coffee,
 /turf/simulated/floor/carpet/green/fancy/edge/nw,
 /area/diner/motel/observatory)
-"agI" = (
-/turf/unsimulated/floor/engine/caution,
-/area/helldrone/core)
 "agJ" = (
 /turf/simulated/wall/auto/reinforced/supernorn,
 /area/radiostation/bedroom)
@@ -1968,6 +1991,13 @@
 "aic" = (
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
+"aid" = (
+/obj/decoration/syndiepc/syndiepc10,
+/obj/map/light/dimred,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/helldrone)
 "aih" = (
 /obj/table/wood/round/auto,
 /obj/machinery/light/lamp/black/bright,
@@ -2079,6 +2109,11 @@
 "ajC" = (
 /turf/simulated/wall/auto/supernorn,
 /area/buddyfactory)
+"ajD" = (
+/obj/machinery/door/airlock/pyro/security,
+/obj/mapping_helper/airlock/anti_emag,
+/turf/simulated/floor/plating,
+/area/helldrone)
 "ajM" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/generic{
@@ -4631,20 +4666,6 @@
 /obj/storage/secure/filing_cabinet/lunarium,
 /turf/simulated/floor,
 /area/buddyfactory)
-"auI" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 9;
-	tag = "icon-intact-f (NORTHWEST)"
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
-/obj/machinery/light/small/iomoon{
-	name = "maintenance light";
-	tag = ""
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "auN" = (
 /obj/map/light/cyan,
 /turf/simulated/floor/shuttle/flock,
@@ -5413,6 +5434,30 @@
 /obj/machinery/light/flock,
 /turf/simulated/floor/shuttle/flock,
 /area/flock_trader)
+"aEc" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 4
+	},
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/power/data_terminal,
+/obj/machinery/computer3/terminal/zeta/console_lower{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/machinery/door_control{
+	pixel_x = -22;
+	name = "button";
+	id = "balor_tele_out"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "aEl" = (
 /obj/item/furniture_parts/table/flock,
 /obj/table/flock/auto,
@@ -8291,13 +8336,6 @@
 	},
 /turf/simulated/floor/orangeblack,
 /area/h7/computer_core)
-"aOJ" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/plating,
-/area/h7/computer_core)
 "aOK" = (
 /turf/simulated/floor/caution/south,
 /area/derelict_ai_sat/core)
@@ -8512,6 +8550,10 @@
 	},
 /turf/simulated/floor/orangeblack/side,
 /area/h7/computer_core)
+"aPm" = (
+/obj/item/sheet/wood,
+/turf/space,
+/area/space)
 "aPn" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -8559,6 +8601,19 @@
 	},
 /turf/simulated/floor/plating,
 /area/h7)
+"aPt" = (
+/obj/grille/catwalk{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/item/sheet/wood,
+/turf/simulated/floor/airless/plating/catwalk{
+	dir = 8;
+	tag = "icon-catwalk (WEST)"
+	},
+/area/derelict_ai_sat/solar)
 "aPu" = (
 /obj/grille/catwalk{
 	dir = 5
@@ -10002,6 +10057,10 @@
 	},
 /turf/simulated/floor,
 /area/h7)
+"aTU" = (
+/obj/item/sheet/wood,
+/turf/simulated/floor/plating/airless,
+/area/space)
 "aTV" = (
 /obj/machinery/light/worn{
 	dir = 1
@@ -11703,11 +11762,6 @@
 	dir = 10
 	},
 /area/h7/lab)
-"aZx" = (
-/obj/decal/fakeobjects/console_radar,
-/obj/map/light/screen,
-/turf/unsimulated/floor/engine/glow,
-/area/helldrone/core)
 "aZy" = (
 /turf/simulated/floor/airless/plating/damaged1,
 /area/space)
@@ -12815,6 +12869,16 @@
 "bdH" = (
 /turf/simulated/floor/grime,
 /area/h7/lab)
+"bdO" = (
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/storage/crate/bloody,
+/obj/item/horseshoe,
+/turf/simulated/floor/airless/plating/damaged1,
+/area/abandonedship)
 "bdQ" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 8
@@ -12879,6 +12943,14 @@
 	},
 /turf/simulated/floor,
 /area/h7/lab)
+"ben" = (
+/obj/stool/chair/comfy/shuttle/pilot{
+	dir = 8
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/helldrone)
 "bev" = (
 /obj/creepy_sound_trigger,
 /obj/machinery/door/unpowered/shuttle{
@@ -12946,6 +13018,12 @@
 	},
 /turf/simulated/floor/plating,
 /area/h7/lab)
+"beP" = (
+/obj/storage/closet/dresser,
+/obj/item/card/id/morrigan/balor_it,
+/obj/item/clothing/under/rank/engineer/april_fools,
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "beS" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -15128,6 +15206,11 @@
 	icon_state = "delivery"
 	},
 /area/space)
+"bof" = (
+/obj/decal/fakeobjects/console_lever,
+/obj/map/light/screen,
+/turf/simulated/floor/circuit/red,
+/area/helldrone/core)
 "boh" = (
 /obj/item/material_piece/cloth/beewool,
 /turf/simulated/floor/airless{
@@ -15248,6 +15331,13 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
+"bqo" = (
+/obj/machinery/light/small/iomoon{
+	name = "maintenance light";
+	tag = ""
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "brw" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/airless,
@@ -15272,6 +15362,12 @@
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
+"bxA" = (
+/obj/decal/poster/wallsign/danger_highvolt{
+	pixel_x = 32
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "bxI" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
@@ -15300,10 +15396,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/derelict_ai_sat)
-"bAB" = (
-/obj/machinery/light/small/iomoon,
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
 "bAH" = (
 /obj/disposalpipe/trunk{
 	desc = "An underfloor mail pipe.";
@@ -15320,18 +15412,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
-"bBT" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "Part of the sensor system for a really big syndicate drone.";
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "eye_array";
-	name = "drone sensor array"
-	},
-/turf/space,
-/area/space)
 "bCL" = (
 /obj/map/light/cyan,
 /obj/decal/fakeobjects{
@@ -15353,11 +15433,13 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
-"bFI" = (
-/obj/cable{
-	icon_state = "4-8"
+"bEP" = (
+/obj/decal/tile_edge/stripe,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
 	},
-/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/plating,
 /area/helldrone)
 "bFR" = (
 /obj/cable{
@@ -15403,10 +15485,26 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
-"bMD" = (
-/obj/storage/closet/dresser,
-/obj/item/storage/firstaid/regular,
-/turf/unsimulated/floor/black,
+"bNo" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	name = "West Engine Compartment";
+	req_access_txt = ""
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/turf/simulated/floor/plating,
+/area/helldrone)
+"bNr" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "reactor_stats";
+	name = "broken computer";
+	dir = 8
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/floor/plating,
 /area/helldrone)
 "bOm" = (
 /obj/decal/cleanable/dirt,
@@ -15429,13 +15527,6 @@
 	},
 /turf/unsimulated/floor/specialroom/freezer,
 /area/timewarp/ship)
-"bPb" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Pod Bay"
-	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "bPC" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 8
@@ -15472,18 +15563,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
-"bWw" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 4;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
 "bWJ" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/recharge_station,
@@ -15550,6 +15629,12 @@
 	},
 /turf/simulated/floor/scorched,
 /area/diner/bathroom)
+"cbV" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "ccW" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -15577,11 +15662,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
-"cgM" = (
-/obj/storage/crate,
-/obj/item/storage/firstaid/regular,
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "cgQ" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -15628,13 +15708,6 @@
 	icon_state = "shuttlecock_mining"
 	},
 /area/shuttle/mining/diner)
-"ckX" = (
-/obj/decoration/syndiepc/syndiepc12,
-/obj/map/light/dimred,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/helldrone)
 "cll" = (
 /obj/random_item_spawner/junk/one_or_zero,
 /obj/decal/cleanable/dirt,
@@ -15642,48 +15715,8 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
-"cmW" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 9;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	tag = "icon-intact (NORTH)"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor/plating,
-/area/helldrone)
-"cnf" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 6;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "West Engine Compartment";
-	req_access_txt = ""
-	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/black,
+"cnN" = (
+/turf/unsimulated/floor/twotone/yellow,
 /area/helldrone)
 "cpF" = (
 /turf/simulated/floor/carpet/green/standard/edge/west,
@@ -15733,9 +15766,41 @@
 	},
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hallway)
+"cyL" = (
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "cyX" = (
 /turf/simulated/floor/black/grime,
 /area/diner/hallway/docking)
+"czA" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/obj/decal/fakeobjects/pipe{
+	desc = "It seems to have been damaged somehow.";
+	dir = 4;
+	icon = 'icons/obj/atmospherics/retro_filter.dmi';
+	icon_state = "intact_off";
+	name = "filter"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/hazard_electrical{
+	pixel_y = 31;
+	pixel_x = -64
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1;
+	icon_state = "xtra_bigstripe-corner"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "cAS" = (
 /obj/machinery/door/airlock/pyro/classic{
 	name = "Bathroom"
@@ -15746,12 +15811,6 @@
 /mob/living/critter/zombie/biosuit,
 /turf/simulated/floor,
 /area/h7/lab)
-"cDa" = (
-/obj/machinery/light/small{
-	dir = 1
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "cEs" = (
 /obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
@@ -15822,12 +15881,6 @@
 	},
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
-"cMm" = (
-/obj/decal/poster/wallsign/syndicatebanner{
-	pixel_y = 35
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "cMo" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/instrument/harmonica,
@@ -15903,6 +15956,16 @@
 	icon_state = "hive"
 	},
 /area/bee_trader)
+"cUv" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-corner"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "cWa" = (
 /obj/machinery/power/apc/autoname_north/nopoweralert,
 /obj/cable{
@@ -15973,6 +16036,18 @@
 	},
 /turf/space,
 /area/timewarp)
+"deH" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "dfy" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -15980,26 +16055,10 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/arcade)
-"dgy" = (
-/obj/machinery/light/small/iomoon{
-	name = "maintenance light";
-	tag = ""
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/helldrone)
 "dgO" = (
 /obj/item/device/radio/beacon,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
-"dhj" = (
-/obj/decal/fakeobjects/operatorconsole{
-	pixel_y = -6
-	},
-/obj/map/light/dimred,
-/turf/simulated/floor/circuit/red,
-/area/helldrone/core)
 "dho" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -16030,6 +16089,15 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/bee_trader)
+"doF" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "doJ" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -16075,15 +16143,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
-"doS" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer3/generic/personal/personel_alt,
-/obj/item/clothing/mask/cigarette/dryjoint{
-	pixel_x = 10;
-	pixel_y = 10
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "dqf" = (
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
@@ -16113,6 +16172,22 @@
 "duy" = (
 /turf/simulated/floor/longtile/black,
 /area/space)
+"dvg" = (
+/obj/decal/poster/wallsign/hazard_electrical{
+	pixel_y = -25;
+	pixel_x = -32
+	},
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 6;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "dvU" = (
 /obj/machinery/vehicle/miniputt/armed,
 /turf/simulated/floor/shuttlebay,
@@ -16179,6 +16254,10 @@
 	},
 /turf/space,
 /area/space)
+"dEQ" = (
+/obj/table/auto,
+/turf/simulated/floor/plating,
+/area/helldrone)
 "dHq" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -16189,10 +16268,6 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/space)
-"dNl" = (
-/obj/decal/poster/wallsign/space,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/helldrone)
 "dOh" = (
 /obj/lattice{
 	dir = 6;
@@ -16227,6 +16302,12 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor,
 /area/radiostation/bedroom)
+"dSl" = (
+/obj/stool/chair/comfy/red{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "dUN" = (
 /turf/simulated/floor/carpet{
 	dir = 5;
@@ -16245,6 +16326,14 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/dining)
+"dXl" = (
+/obj/storage/secure/closet/brig_automatic/solitary,
+/obj/machinery/light/small{
+	brightness = 2;
+	dir = 8
+	},
+/turf/simulated/floor/plating,
+/area/helldrone)
 "dXK" = (
 /obj/machinery/light/incandescent/netural,
 /turf/simulated/floor/grime,
@@ -16278,61 +16367,9 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
-"eaE" = (
-/obj/machinery/light/small/iomoon{
-	name = "maintenance light";
-	tag = ""
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
-"eaJ" = (
-/obj/machinery/atmospherics/portables_connector,
-/obj/decal/fakeobjects/pipe{
-	density = 1;
-	desc = "A tank.  For storing air.";
-	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
-	name = "storage tank";
-	tag = ""
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "edv" = (
 /turf/simulated/floor/grime,
 /area/diner/motel/chemstorage)
-"edZ" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 6;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	name = "grimy pipe";
-	pixel_x = -6
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/danger_highvolt,
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "efe" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 5;
@@ -16340,12 +16377,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
-"egF" = (
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/obj/machinery/networked/mainframe/balor,
-/turf/unsimulated/floor/engine/caution,
-/area/helldrone/core)
 "eha" = (
 /obj/lattice{
 	dir = 9;
@@ -16361,6 +16392,51 @@
 	},
 /turf/space,
 /area/diner/jucer_trader)
+"ehU" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit";
+	tag = "icon-conduit (NORTHEAST)"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "A thermoelectric generator that appears to have fallen into disrepair.";
+	icon = 'icons/obj/power.dmi';
+	icon_state = "teg-broken";
+	name = "broken generator"
+	},
+/obj/machinery/light/small/iomoon{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
+"ehZ" = (
+/obj/machinery/light/small/iomoon,
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "ejg" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/mining/diner)
@@ -16382,14 +16458,6 @@
 /obj/item/reagent_containers/food/drinks/bowl,
 /turf/simulated/floor/carpet/green/fancy/edge/north,
 /area/diner/motel/observatory)
-"enF" = (
-/obj/machinery/light/small/iomoon{
-	dir = 1;
-	name = "maintenance light";
-	tag = ""
-	},
-/turf/unsimulated/floor/twotone/yellow,
-/area/helldrone)
 "enX" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1;
@@ -16421,6 +16489,10 @@
 /obj/item/caution,
 /turf/simulated/floor/purple,
 /area/radiostation/engineering)
+"erA" = (
+/obj/machinery/vending/snack,
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "erR" = (
 /obj/machinery/light/emergency{
 	dir = 8;
@@ -16438,17 +16510,6 @@
 	},
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
-"etP" = (
-/obj/machinery/light/small/iomoon{
-	dir = 1
-	},
-/obj/decal/poster/wallsign/syndicatebanner{
-	pixel_y = 35
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/helldrone)
 "euD" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/shuttlebay,
@@ -16457,6 +16518,18 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/plating/damaged2,
 /area/abandonedship)
+"eyk" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "eBj" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
@@ -16481,16 +16554,22 @@
 	icon_state = "floor2"
 	},
 /area/diner/jucer_trader)
+"eFN" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "eGm" = (
 /obj/landmark/random_room/size3x3,
 /turf/simulated/floor/black/grime,
 /area/diner/hallway/docking)
-"eGR" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 5
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "eGS" = (
 /obj/cable,
 /obj/machinery/power/smes{
@@ -16501,42 +16580,32 @@
 	},
 /turf/simulated/floor/airless/plating,
 /area/diner/solar)
-"eIu" = (
-/obj/machinery/light/small{
-	brightness = 2;
-	dir = 8
+"eHg" = (
+/obj/machinery/door/airlock/pyro/external{
+	dir = 8;
+	name = "Pod Bay"
 	},
-/obj/item/reagent_containers/food/drinks/noodlecup,
-/obj/decal/poster/wallsign/syndicatebanner{
-	pixel_y = 35
-	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/unsimulated/floor/black,
 /area/helldrone)
-"eJI" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/door/window/brigdoor/genpop/northleft{
-	name = "Outbound teleporter";
-	id = "balor_tele_out"
-	},
+"eIG" = (
 /obj/map/light/dimred,
-/obj/cable{
-	icon_state = "1-2"
+/obj/stool/chair/office/syndie{
+	dir = 4
 	},
 /turf/unsimulated/floor/engine/glow,
-/area/helldrone)
-"eLZ" = (
-/obj/machinery/door/airlock/pyro/security,
-/obj/mapping_helper/airlock/anti_emag,
-/turf/simulated/floor/plating,
-/area/helldrone)
+/area/helldrone/core)
 "eMb" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
 	},
 /area/diner/dining)
+"eNg" = (
+/obj/stool/bed,
+/obj/item/clothing/suit/bedsheet/black,
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "eNy" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -16557,6 +16626,20 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
+"eWk" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/warning1,
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "eXg" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 8
@@ -16567,6 +16650,21 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/airless/black,
 /area/space)
+"eYh" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/obj/decal/fakeobjects/pipe{
+	desc = "It won't budge.";
+	dir = 4;
+	icon = 'icons/obj/pipe-item.dmi';
+	icon_state = "valve";
+	name = "rusted valve"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "eYy" = (
 /obj/item/paper/businesscard/bonktek{
 	pixel_x = 5;
@@ -16597,15 +16695,6 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
-"fdG" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/decal/poster/wallsign/syndicatebanner{
-	pixel_y = 35
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "fdI" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -16734,6 +16823,19 @@
 "frd" = (
 /turf/simulated/floor/plating,
 /area/diner/hallway/docking)
+"fsr" = (
+/obj/decoration/syndiepc/syndiepc19,
+/obj/map/light/dimred,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/helldrone)
+"fuD" = (
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/machinery/networked/mainframe/balor,
+/turf/unsimulated/floor/engine/caution,
+/area/helldrone/core)
 "fvE" = (
 /obj/decal/cleanable/dirt,
 /obj/decal/cleanable/dirt/mars{
@@ -16744,38 +16846,6 @@
 	icon_state = "floor2"
 	},
 /area/diner/jucer_trader)
-"fyz" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 4;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
-"fzK" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 6
-	},
-/obj/decal/fakeobjects/pipe{
-	desc = "It seems to be broken.";
-	dir = 4;
-	icon = 'icons/obj/pipe-item.dmi';
-	icon_state = "meter";
-	name = "meter"
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4;
-	icon_state = "xtra_bigstripe-corner"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "fAl" = (
 /obj/decal/poster/wallsign/stencil/left/c{
 	pixel_x = -5
@@ -16812,11 +16882,12 @@
 /obj/machinery/light/runway_light/delay3,
 /turf/space,
 /area/diner/jucer_trader)
-"fEc" = (
-/obj/decal/fakeobjects/console_radar,
-/obj/map/light/screen,
-/turf/simulated/floor/circuit/red,
-/area/helldrone/core)
+"fEZ" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "fFQ" = (
 /obj/table/auto,
 /obj/machinery/light/incandescent/warm{
@@ -16854,33 +16925,6 @@
 /obj/decal/cleanable/oil,
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
-"fKj" = (
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
-	},
-/obj/decal/fakeobjects/pipe{
-	density = 1;
-	desc = "A tank.  For storing air.";
-	dir = 1;
-	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
-	name = "storage tank";
-	tag = ""
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
-"fLC" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "fLF" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -16890,6 +16934,9 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"fNu" = (
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "fQg" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
@@ -16911,15 +16958,6 @@
 /obj/machinery/door/airlock/pyro,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
-"fVd" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 8;
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "vent";
-	name = "rusted vent"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "fVj" = (
 /obj/stool/chair/office{
 	dir = 1
@@ -16932,16 +16970,8 @@
 	},
 /turf/space,
 /area/space)
-"fWj" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
+"fVM" = (
+/obj/machinery/light/small,
 /turf/unsimulated/floor/black,
 /area/helldrone)
 "fWG" = (
@@ -16959,6 +16989,14 @@
 /obj/machinery/space_heater,
 /turf/simulated/floor/airless/caution/northsouth,
 /area/space)
+"fXd" = (
+/obj/machinery/light/small{
+	dir = 4;
+	icon_state = "bulb1"
+	},
+/obj/storage/secure/closet/brig_automatic/solitary,
+/turf/simulated/floor/plating,
+/area/helldrone)
 "fXs" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
@@ -16966,6 +17004,14 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/diner/dining)
+"fYF" = (
+/obj/decal/tile_edge/stripe,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 10;
+	icon_state = "xtra_bigstripe-corner2"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "fZa" = (
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/grime,
@@ -17038,10 +17084,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
-"gia" = (
-/obj/decal/poster/wallsign/security_wall,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/helldrone)
 "giG" = (
 /obj/decal/cleanable/gangtag{
 	icon_state = "gangtag12";
@@ -17156,6 +17198,10 @@
 /obj/submachine/chef_sink,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"guX" = (
+/obj/decal/poster/wallsign/security_wall,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "gwV" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -17209,6 +17255,22 @@
 	},
 /turf/space,
 /area/space)
+"gAu" = (
+/obj/cable{
+	icon_state = "1-8"
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
+"gBs" = (
+/obj/machinery/light/small{
+	dir = 4;
+	icon_state = "bulb1"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "gBu" = (
 /obj/item/storage/toilet/random{
 	dir = 8;
@@ -17217,6 +17279,32 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
+"gDJ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "Part of the sensor system for a really big syndicate drone.";
+	dir = 1;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "eye_array";
+	name = "drone sensor array"
+	},
+/turf/space,
+/area/space)
+"gHe" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "Probably shouldn't drink the water here.";
+	dir = 4
+	},
+/obj/decal/fakeobjects/pipe{
+	desc = "It is not working.";
+	dir = 4;
+	icon = 'icons/obj/atmospherics/pump.dmi';
+	icon_state = "intact_off";
+	name = "pump"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "gJv" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
@@ -17234,6 +17322,14 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
+"gKu" = (
+/obj/machinery/door_control{
+	id = "zdrone_hangar";
+	name = "Hangar Toggle";
+	pixel_y = 24
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "gLC" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -17263,6 +17359,24 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
+"gON" = (
+/obj/decal/fakeobjects/lightbulb_broken,
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A tank.  For storing air.";
+	dir = 1;
+	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
+	name = "storage tank";
+	tag = ""
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "gPt" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 8;
@@ -17273,14 +17387,6 @@
 "gQF" = (
 /turf/simulated/floor/plating/scorched,
 /area/diner/hangar)
-"gTW" = (
-/obj/machinery/light/small{
-	dir = 4;
-	icon_state = "bulb1"
-	},
-/obj/storage/secure/closet/brig_automatic/solitary,
-/turf/simulated/floor/plating,
-/area/helldrone)
 "gVs" = (
 /obj/decal/tile_edge/stripe/extra_big,
 /obj/item/paper/businesscard/biteylou{
@@ -17338,6 +17444,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
+"hdk" = (
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "hgU" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -17421,6 +17533,10 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hallway/docking)
+"hnO" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
+/turf/simulated/floor/plating,
+/area/helldrone)
 "hoh" = (
 /obj/decal/fakeobjects/shuttlethruster{
 	dir = 2;
@@ -17428,6 +17544,11 @@
 	},
 /turf/space,
 /area/diner/jucer_trader)
+"hpL" = (
+/obj/decal/fakeobjects/console_randompc,
+/obj/map/light/screen,
+/turf/unsimulated/floor/engine/glow,
+/area/helldrone/core)
 "hpN" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -17489,26 +17610,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/diner/dining)
-"hzV" = (
-/obj/machinery/atmospherics/portables_connector,
-/obj/decal/fakeobjects/pipe{
-	density = 1;
-	desc = "A tank.  For storing air.";
-	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
-	name = "storage tank";
-	tag = ""
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 8
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "hAu" = (
 /obj/decal/cleanable/machine_debris,
 /turf/simulated/shuttle/wall{
@@ -17516,12 +17617,25 @@
 	icon_state = "wall3_space"
 	},
 /area/space)
-"hCz" = (
-/obj/machinery/door/airlock/pyro/external{
-	name = "Pod Bay"
+"hDE" = (
+/obj/decal/fakeobjects/tallsmes,
+/turf/unsimulated/floor/engine/glow,
+/area/helldrone/core)
+"hEI" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
 	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/simulated/floor/plating,
+/obj/decal/fakeobjects/pipe{
+	desc = "Probably shouldn't drink the water here.";
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
 /area/helldrone)
 "hEK" = (
 /obj/random_pod_spawner/random_putt_spawner,
@@ -17544,6 +17658,18 @@
 /obj/storage/secure/closet/fridge/kitchen,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
+"hIk" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent.  A rather decrepit one, at that.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "defunct vent"
+	},
+/obj/decal/fakeobjects/console_randompc,
+/obj/map/light/screen,
+/turf/unsimulated/floor/engine/glow,
+/area/helldrone/core)
 "hIT" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -17568,14 +17694,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
-"hJS" = (
-/obj/decal/tile_edge/stripe,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "hKe" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/carpet/green/standard/edge/ne,
@@ -17606,19 +17724,6 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
-"hRv" = (
-/obj/grille/catwalk{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/item/sheet/wood,
-/turf/simulated/floor/airless/plating/catwalk{
-	dir = 8;
-	tag = "icon-catwalk (WEST)"
-	},
-/area/derelict_ai_sat/solar)
 "hSH" = (
 /turf/simulated/floor/green/checker,
 /area/diner/arcade)
@@ -17681,6 +17786,10 @@
 /mob/living/critter/zombie/scientist,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
+"iae" = (
+/obj/map/light/dimred,
+/turf/unsimulated/floor/engine/glow,
+/area/helldrone/core)
 "ibe" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/decal/tile_edge/check/yellow{
@@ -17691,6 +17800,12 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"ibG" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "ibO" = (
 /obj/storage/crate/bin,
 /obj/machinery/light{
@@ -17741,13 +17856,6 @@
 /obj/submachine/ice_cream_dispenser,
 /turf/simulated/floor/damaged2,
 /area/diner/kitchen)
-"ifg" = (
-/obj/machinery/light/small{
-	brightness = 2;
-	dir = 8
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "ifC" = (
 /obj/decal/tile_edge/check/yellow{
 	dir = 8;
@@ -17757,25 +17865,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
-"igu" = (
-/obj/machinery/door/airlock/pyro/glass,
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
-"igW" = (
-/obj/decal/fakeobjects/pipe{
-	desc = "Probably shouldn't drink the water here.";
-	dir = 4
-	},
-/obj/decal/fakeobjects/pipe{
-	desc = "It is not working.";
-	dir = 4;
-	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
-	name = "pump"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "iii" = (
 /obj/effects/background_objects/antistes,
 /turf/space,
@@ -17801,8 +17890,24 @@
 	},
 /turf/space,
 /area/bee_trader)
-"ikX" = (
-/turf/unsimulated/floor/red/redblackchecker,
+"ila" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 10;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/black,
 /area/helldrone)
 "ilw" = (
 /obj/overlay{
@@ -17835,6 +17940,14 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
+"ioq" = (
+/obj/machinery/light/small/iomoon{
+	dir = 1;
+	name = "maintenance light";
+	tag = ""
+	},
+/turf/unsimulated/floor/twotone/yellow,
+/area/helldrone)
 "ioJ" = (
 /obj/decal/fakeobjects/pipe{
 	desc = "It won't budge.";
@@ -17849,14 +17962,6 @@
 "ioL" = (
 /turf/simulated/floor/scorched2,
 /area/diner/hangar)
-"ipJ" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/obj/machinery/light/small,
-/obj/machinery/networked/telepad/morrigan,
-/turf/unsimulated/floor/engine/glow/blue,
-/area/helldrone)
 "irg" = (
 /obj/machinery/door/poddoor/blast{
 	dir = 1;
@@ -17874,6 +17979,12 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
+"isA" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "itz" = (
 /obj/decal/cleanable/cobweb2,
 /obj/decal/cleanable/dirt,
@@ -17902,20 +18013,6 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/bedroom)
-"izb" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/danger_highvolt,
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "izd" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -17954,13 +18051,6 @@
 /obj/item/device/audio_log/timewarp_01,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
-"iCG" = (
-/mob/living/critter/robotic/gunbot/syndicate/polaris{
-	desc = "Painted in red and black.";
-	name = "Syndicate Sentinel Unit"
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "iDu" = (
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/kitchen)
@@ -17969,6 +18059,12 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/diner/dining)
+"iDQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "iEV" = (
 /obj/indestructible/shuttle_corner{
 	dir = 8;
@@ -17988,35 +18084,10 @@
 	},
 /turf/simulated/floor/shuttlebay,
 /area/diner/tug)
-"iHW" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "An engine part.  Probably.  It might just be a snow-cone machine, really.";
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "circ1-broken";
-	name = "mistreated engine part"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "iIc" = (
 /obj/critter/gunbot/drone/heavydrone,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"iJf" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
-"iKF" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	hardened = 1;
-	dir = 4
-	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "iMD" = (
 /obj/cable{
 	icon_state = "0-2"
@@ -18027,12 +18098,6 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
-"iNk" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/helldrone)
 "iOb" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -18072,6 +18137,34 @@
 	name = "reinforced plating"
 	},
 /area/diner/motel/chemstorage)
+"iRP" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 6;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	name = "grimy pipe";
+	pixel_x = -6
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/danger_highvolt,
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "iTg" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair/couch{
@@ -18188,6 +18281,13 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
+"jcs" = (
+/obj/decal/fakeobjects/shuttleweapon/base{
+	dir = 1;
+	name = "Engine Part"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "jcK" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "This shuttle door is really jammed.  It might as well not even be a door.  What a lousy door.  Fuck this door, man, just... just...  FUCK YOU, DOOR.";
@@ -18226,22 +18326,6 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
-"jgO" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/mob/living/critter/robotic/gunbot/syndicate/polaris{
-	desc = "Painted in red and black.";
-	name = "Syndicate Sentinel Unit"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "jgQ" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/plate,
@@ -18279,16 +18363,6 @@
 	},
 /turf/space,
 /area/diner/tug)
-"jiL" = (
-/obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	dir = 4;
-	name = "Drone Computer Core";
-	req_access_txt = ""
-	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/simulated/floor/orangeblack,
-/area/helldrone/core)
 "jiP" = (
 /obj/npc/trader/robot/robuddy/drugs,
 /turf/simulated/floor/grime,
@@ -18315,13 +18389,16 @@
 /obj/decal/cleanable/fungus,
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hangar)
-"jop" = (
-/obj/machinery/door/airlock/pyro/external{
-	dir = 8;
-	name = "Pod Bay"
+"jqh" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/black,
+/obj/machinery/door/window/brigdoor/genpop/northright{
+	name = "Inbound teleporter";
+	id = "balor_tele_in"
+	},
+/obj/map/light/cyan,
+/turf/unsimulated/floor/engine/glow/blue,
 /area/helldrone)
 "jqk" = (
 /obj/decal/fakeobjects/lightbulb_broken,
@@ -18345,10 +18422,6 @@
 /area/space)
 "jsq" = (
 /obj/landmark/spawner/loot,
-/turf/space,
-/area/space)
-"jsC" = (
-/obj/item/sheet/wood,
 /turf/space,
 /area/space)
 "jta" = (
@@ -18379,15 +18452,26 @@
 /mob/living/critter/zombie/scientist,
 /turf/simulated/floor,
 /area/abandonedoutpostthing)
-"juA" = (
-/obj/decal/tile_edge/stripe/big{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/extra_big{
+"juV" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
 	dir = 4;
-	icon_state = "xtra_bigstripe-corner"
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
 	},
-/turf/unsimulated/floor/plating,
+/obj/table/auto,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/item/paper/morrigan/balor_IT{
+	pixel_x = -5;
+	layer = 3.1
+	},
+/obj/random_item_spawner/desk_stuff,
+/turf/unsimulated/floor/black,
 /area/helldrone)
 "jvw" = (
 /turf/simulated/floor/plating,
@@ -18409,12 +18493,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway)
-"jyK" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
 "jzS" = (
 /obj/storage/crate,
 /obj/item/electronics/resistor{
@@ -18495,6 +18573,19 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
+"jMr" = (
+/obj/storage/closet/emergency,
+/turf/simulated/floor/shuttlebay,
+/area/helldrone)
+"jNk" = (
+/obj/item/tank/oxygen,
+/obj/machinery/light/small/iomoon{
+	dir = 8;
+	name = "maintenance light";
+	tag = ""
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "jOk" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4;
@@ -18509,26 +18600,17 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
 /area/diner/motel/chemstorage)
-"jTp" = (
-/obj/machinery/light/small,
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
 "jUl" = (
 /turf/simulated/floor/carpet{
 	icon_state = "red2"
 	},
 /area/diner/dining)
-"jUp" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "reactor_stats";
-	name = "broken computer"
-	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/plating,
+"jUz" = (
+/obj/storage/crate,
+/obj/item/clothing/suit/space/syndicate_worn,
+/obj/item/clothing/mask/gas/swat,
+/obj/item/clothing/under/misc/syndicate,
+/turf/unsimulated/floor/black,
 /area/helldrone)
 "jVh" = (
 /obj/machinery/r_door_control/podbay/diner2,
@@ -18565,18 +18647,6 @@
 /obj/machinery/light/small,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
-"kcm" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 9;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
 "kdj" = (
 /obj/decal/fakeobjects/skeleton{
 	desc = "The head seems to be gone.";
@@ -18682,22 +18752,17 @@
 	name = "broken door"
 	},
 /area/space_hive)
+"krQ" = (
+/obj/machinery/light/small{
+	brightness = 2;
+	dir = 8
+	},
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "kse" = (
 /obj/item/clothing/under/gimmick/donk,
 /turf/simulated/floor/sanitary,
 /area/abandonedoutpostthing)
-"ksz" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "ksP" = (
 /obj/machinery/atmospherics/binary/valve,
 /turf/simulated/floor/grime,
@@ -18720,21 +18785,6 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
-"kwf" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 4;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/poster/wallsign/syndicatebanner{
-	pixel_y = 35
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "kwO" = (
 /obj/machinery/sim/vr_bed{
 	dir = 8
@@ -18766,28 +18816,26 @@
 "kyb" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/jucer_trader)
+"kyR" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "kAX" = (
 /obj/effects/background_objects/station/ss12,
 /turf/space,
 /area/space)
-"kBc" = (
-/obj/storage/secure/closet/brig_automatic/solitary,
-/obj/machinery/light/small{
-	brightness = 2;
-	dir = 8
-	},
-/turf/simulated/floor/plating,
-/area/helldrone)
 "kBd" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/damaged2,
 /area/diner/hallway)
-"kCl" = (
-/obj/storage/closet/dresser,
-/obj/item/card/id/morrigan/balor_it,
-/obj/item/clothing/under/rank/engineer/april_fools,
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "kDA" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 2;
@@ -18811,6 +18859,19 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/airless/grime,
 /area/abandonedmedicalship)
+"kGy" = (
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/turf/unsimulated/floor/black,
+/area/helldrone)
+"kIt" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/floor/engine/caution,
+/area/helldrone/core)
 "kKk" = (
 /obj/table/auto,
 /obj/item/pen,
@@ -18838,20 +18899,6 @@
 	name = "reinforced plating"
 	},
 /area/diner/motel/chemstorage)
-"kNG" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects/shuttleweapon/base{
-	dir = 1;
-	name = "Engine Part"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "kOK" = (
 /turf/unsimulated/floor,
 /area/timewarp/ship)
@@ -18920,17 +18967,12 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
-"kZg" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent.  A rather decrepit one, at that.";
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "hvent";
-	name = "defunct vent"
+"kXa" = (
+/obj/decal/fakeobjects/operatorconsole{
+	pixel_y = -7
 	},
-/obj/decal/fakeobjects/console_randompc,
-/obj/map/light/screen,
-/turf/unsimulated/floor/engine/glow,
+/obj/map/light/dimred,
+/turf/simulated/floor/circuit/red,
 /area/helldrone/core)
 "lab" = (
 /turf/simulated/floor/grime,
@@ -18997,10 +19039,6 @@
 /obj/item/paper/businesscard/hemera_rcd,
 /turf/simulated/floor,
 /area/h7/control)
-"lgz" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "lgD" = (
 /obj/mopbucket,
 /obj/item/mop/old,
@@ -19031,12 +19069,25 @@
 /obj/computerframe,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
+"lmi" = (
+/obj/decoration/syndiepc/syndiepc16,
+/obj/map/light/dimred,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/helldrone)
 "lmj" = (
 /obj/decal/timeplug{
 	dir = 6
 	},
 /turf/space,
 /area/timewarp)
+"lmw" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone/core)
 "lpI" = (
 /obj/machinery/door/unpowered/shuttle{
 	autoclose = 1;
@@ -19044,13 +19095,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/space)
-"lqK" = (
-/obj/machinery/door/airlock/pyro/security,
-/obj/mapping_helper/airlock/anti_emag,
-/obj/mapping_helper/access/morrigan/bridge,
-/obj/mapping_helper/airlock/hardener,
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "luF" = (
 /obj/lattice{
 	dir = 9;
@@ -19079,6 +19123,9 @@
 	dir = 5
 	},
 /area/derelict_ai_sat)
+"lxq" = (
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "lxr" = (
 /obj/machinery/camera{
 	network = "Pathopost"
@@ -19105,31 +19152,21 @@
 /obj/item/storage/toolbox/mechanical,
 /turf/simulated/floor/black/grime,
 /area/diner/motel/chemstorage)
-"lyG" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
+"lzK" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 1
+	},
+/obj/decal/fakeobjects/pipe{
 	density = 1;
-	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "reactor_stats";
-	name = "broken computer";
-	dir = 8
+	desc = "A tank.  For storing air.";
+	dir = 1;
+	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
+	name = "storage tank";
+	tag = ""
 	},
-/obj/map/light/screen,
-/turf/unsimulated/floor/engine/glow,
-/area/helldrone/core)
-"lzO" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
 	},
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/decal/poster/wallsign/warning1,
 /turf/unsimulated/floor/plating,
 /area/helldrone)
 "lAr" = (
@@ -19141,6 +19178,16 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
+"lAz" = (
+/obj/machinery/door/airlock/pyro/security{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "lBg" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -19231,12 +19278,6 @@
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/diner/hangar)
-"lKv" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/helldrone/core)
 "lLL" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/bed,
@@ -19322,17 +19363,6 @@
 	dir = 4
 	},
 /area/timewarp/ship)
-"lSN" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "A vent.  A rather decrepit one, at that.";
-	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
-	icon_state = "hvent";
-	name = "defunct vent"
-	},
-/obj/decal/fakeobjects/tallsmes,
-/turf/unsimulated/floor/engine/glow,
-/area/helldrone/core)
 "lTu" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 2;
@@ -19380,6 +19410,17 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green/standard/edge/east,
 /area/diner/jucer_trader)
+"mad" = (
+/obj/machinery/light/small/iomoon{
+	dir = 1
+	},
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/helldrone)
 "mbs" = (
 /obj/stool/chair/dining/wood{
 	dir = 8;
@@ -19400,6 +19441,11 @@
 /obj/decal/tile_edge/stripe/extra_big,
 /turf/simulated/floor/grime,
 /area/diner/hallway/docking)
+"mdy" = (
+/obj/storage/crate,
+/obj/item/storage/firstaid/regular,
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "mdB" = (
 /obj/cable,
 /obj/cable{
@@ -19430,12 +19476,6 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
-"mgS" = (
-/obj/storage/secure/crate/morrigan,
-/obj/landmark/morrigan_crate,
-/obj/decal/fakeobjects/teleport_pad,
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
 "mhn" = (
 /obj/stool/chair{
 	dir = 4
@@ -19452,13 +19492,6 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
-"mhJ" = (
-/obj/map/light/dimred,
-/obj/stool/chair/office/syndie{
-	dir = 4
-	},
-/turf/unsimulated/floor/engine/glow,
-/area/helldrone/core)
 "mig" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -19468,19 +19501,6 @@
 "miz" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/timewarp/ship)
-"miN" = (
-/obj/stool/chair/comfy/shuttle/pilot{
-	dir = 8
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/helldrone)
-"mlr" = (
-/obj/decal/fakeobjects/console_lever,
-/obj/map/light/screen,
-/turf/simulated/floor/circuit/red,
-/area/helldrone/core)
 "mnS" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4
@@ -19542,18 +19562,17 @@
 	},
 /turf/space,
 /area/timewarp)
+"mvr" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/strip_door,
+/turf/simulated/floor/plating,
+/area/h7/computer_core)
 "mvM" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/h7/control)
-"mwy" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	name = "West Engine Compartment";
-	req_access_txt = ""
-	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/simulated/floor/plating,
-/area/helldrone)
 "mxv" = (
 /obj/map/light/cyan,
 /obj/table/auto,
@@ -19571,15 +19590,9 @@
 	},
 /turf/space,
 /area/diner/jucer_trader)
-"mCq" = (
-/obj/stool/chair/red{
-	dir = 1
-	},
-/obj/machinery/light/small{
-	dir = 4;
-	icon_state = "bulb1"
-	},
-/turf/unsimulated/floor/black,
+"mCI" = (
+/obj/decal/fakeobjects/safehouse/airhandlingunit,
+/turf/simulated/floor/plating,
 /area/helldrone)
 "mEE" = (
 /obj/decal/tile_edge/line/blue{
@@ -19594,8 +19607,11 @@
 /obj/decal/cleanable/dirt/dirt3,
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
-"mEH" = (
-/obj/table/auto,
+"mFk" = (
+/obj/machinery/door/airlock/pyro/external{
+	name = "Pod Bay"
+	},
+/obj/mapping_helper/airlock/anti_emag,
 /turf/simulated/floor/plating,
 /area/helldrone)
 "mGv" = (
@@ -19629,6 +19645,14 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
+"mKf" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	hardened = 1
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/turf/simulated/floor/black,
+/area/helldrone)
 "mKS" = (
 /turf/simulated/shuttle/wall{
 	dir = 10;
@@ -19653,15 +19677,6 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/industrial,
 /area/space)
-"mOl" = (
-/obj/machinery/door/airlock/pyro/command{
-	aiControlDisabled = 1;
-	name = "Drone Computer Core";
-	req_access_txt = ""
-	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/simulated/floor/orangeblack,
-/area/helldrone)
 "mOG" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -19731,10 +19746,6 @@
 	dir = 4
 	},
 /area/timewarp/ship)
-"nbn" = (
-/obj/machinery/vending/snack,
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
 "nbY" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/incandescent/warm{
@@ -19766,6 +19777,16 @@
 	},
 /turf/simulated/floor/carpet/green/fancy,
 /area/diner/motel/observatory)
+"ndr" = (
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "nfI" = (
 /obj/decal/cleanable/blood/splatter{
 	icon_state = "gibbl2"
@@ -19776,10 +19797,6 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
-"ngk" = (
-/obj/stool/bed,
-/turf/simulated/floor/plating,
-/area/helldrone)
 "ngA" = (
 /obj/grille/catwalk,
 /turf/simulated/floor/airless/plating/catwalk,
@@ -19868,12 +19885,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/diner/tug)
-"nwS" = (
-/obj/stool/chair/comfy/red{
-	dir = 1
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "nxO" = (
 /obj/machinery/chem_heater,
 /obj/decal/tile_edge/stripe/extra_big{
@@ -19895,6 +19906,13 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"nyv" = (
+/obj/machinery/door/airlock/pyro/external{
+	name = "Pod Bay"
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "nyA" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
@@ -19907,27 +19925,6 @@
 	},
 /turf/simulated/floor/yellow/checker,
 /area/diner/arcade)
-"nAo" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 4;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/table/auto,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/obj/item/paper/morrigan/balor_IT{
-	pixel_x = -5;
-	layer = 3.1
-	},
-/obj/random_item_spawner/desk_stuff,
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "nAN" = (
 /obj/lattice{
 	dir = 4;
@@ -19947,6 +19944,12 @@
 /obj/decal/float/clock,
 /turf/unsimulated/floor/void/timewarp,
 /area/timewarp)
+"nEB" = (
+/obj/stool/chair/office/syndie{
+	dir = 8
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "nEE" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4;
@@ -19954,6 +19957,13 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedship)
+"nIn" = (
+/obj/decal/poster/wallsign/poster_nt{
+	icon_state = "wall_poster_syndicate";
+	name = "Syndicate Poster"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "nIX" = (
 /obj/reagent_dispensers/fueltank,
 /obj/machinery/door_control/podbay/diner1/new_walls/south{
@@ -19961,21 +19971,44 @@
 	},
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
+"nJj" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
+"nJT" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/mob/living/critter/robotic/gunbot/syndicate/polaris{
+	desc = "Painted in red and black.";
+	name = "Syndicate Sentinel Unit"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "nJW" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/buddyfactory)
+"nKF" = (
+/obj/decal/poster/wallsign/escape,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "nLp" = (
 /obj/stool/chair,
 /turf/simulated/floor/airless/scorched,
 /area/abandonedmedicalship)
-"nLK" = (
-/obj/decal/fakeobjects/cpucontroller{
-	pixel_y = -3
-	},
-/obj/map/light/dimred,
-/turf/unsimulated/floor/engine/glow,
-/area/helldrone/core)
 "nMz" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -19983,6 +20016,50 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
+"nNm" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 1
+	},
+/obj/decal/fakeobjects/pipe{
+	desc = "It is not working.";
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pump.dmi';
+	icon_state = "intact_off";
+	name = "pump"
+	},
+/obj/decal/fakeobjects/pipe{
+	desc = "It seems to have been damaged somehow.";
+	dir = 1;
+	icon = 'icons/obj/atmospherics/retro_filter.dmi';
+	icon_state = "intact_off";
+	name = "filter"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
+"nNL" = (
+/obj/decal/fakeobjects/console_radar,
+/obj/map/light/screen,
+/turf/unsimulated/floor/engine/glow,
+/area/helldrone/core)
+"nNP" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
+/obj/machinery/light/small,
+/obj/machinery/networked/telepad/morrigan,
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/turf/unsimulated/floor/engine/glow,
+/area/helldrone)
 "nOd" = (
 /obj/decal/timeplug{
 	dir = 8
@@ -20017,13 +20094,12 @@
 /obj/grille/steel,
 /turf/simulated/floor/plating/airless,
 /area/space)
-"nRA" = (
-/obj/cable{
-	d1 = 1;
-	d2 = 8;
-	icon_state = "1-8"
+"nRY" = (
+/obj/decoration/syndiepc/syndiepc12,
+/obj/map/light/dimred,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
 	},
-/turf/unsimulated/floor/black,
 /area/helldrone)
 "nSJ" = (
 /turf/simulated/floor/darkblue,
@@ -20036,18 +20112,10 @@
 	icon_state = "fred2"
 	},
 /area/timewarp/ship)
-"nTX" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
-	},
-/obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
-	},
-/obj/decal/fakeobjects/safehouse/airfilter,
-/turf/unsimulated/floor/plating,
+"nTj" = (
+/obj/storage/closet/dresser,
+/obj/item/storage/firstaid/regular,
+/turf/unsimulated/floor/black,
 /area/helldrone)
 "nUA" = (
 /turf/simulated/floor/carpet/green/fancy/innercorner/ne,
@@ -20058,17 +20126,23 @@
 	},
 /turf/space,
 /area/salyut)
+"nWV" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "Probably shouldn't drink the water here.";
+	dir = 4
+	},
+/obj/decal/fakeobjects/pipe{
+	desc = "It seems to be broken.";
+	dir = 4;
+	icon = 'icons/obj/pipe-item.dmi';
+	icon_state = "meter";
+	name = "meter"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "nYg" = (
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/salyut)
-"nYK" = (
-/obj/machinery/door/airlock/pyro/engineering{
-	hardened = 1;
-	dir = 4
-	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/twotone/yellow,
-/area/helldrone)
 "nZd" = (
 /obj/reagent_dispensers/foamtank,
 /obj/machinery/power/apc/autoname_north/nopoweralert,
@@ -20079,6 +20153,13 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/black/grime,
 /area/diner/motel/chemstorage)
+"nZG" = (
+/obj/decal/fakeobjects/operatorconsole{
+	pixel_y = -6
+	},
+/obj/map/light/dimred,
+/turf/simulated/floor/circuit/red,
+/area/helldrone/core)
 "oaz" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -20124,22 +20205,21 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/motel/pool)
+"ohu" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "A vent.  A rather decrepit one, at that.";
+	icon = 'icons/obj/atmospherics/pipe_vent.dmi';
+	icon_state = "hvent";
+	name = "defunct vent"
+	},
+/obj/decal/fakeobjects/tallsmes,
+/turf/unsimulated/floor/engine/glow,
+/area/helldrone/core)
 "oie" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/damaged2,
 /area/skeleton_trader)
-"okE" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "olA" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/plating/scorched,
@@ -20150,6 +20230,10 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
+"oma" = (
+/obj/machinery/portable_atmospherics/canister/empty,
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "ona" = (
 /obj/stool/chair/dining/wood{
 	dir = 4
@@ -20204,24 +20288,19 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/arcade)
-"osi" = (
-/obj/stool/chair/office/syndie{
-	dir = 8
+"osl" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9;
+	tag = "icon-intact-f (NORTHWEST)"
 	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
-"ovp" = (
-/obj/storage/crate,
-/obj/item/clothing/suit/space/syndicate_worn,
-/obj/item/clothing/mask/gas/swat,
-/obj/item/clothing/under/misc/syndicate,
-/turf/unsimulated/floor/black,
-/area/helldrone)
-"owi" = (
-/obj/cable{
-	icon_state = "2-4"
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
 	},
-/turf/unsimulated/floor/black,
+/obj/machinery/light/small/iomoon{
+	name = "maintenance light";
+	tag = ""
+	},
+/turf/unsimulated/floor/plating,
 /area/helldrone)
 "owN" = (
 /obj/lattice{
@@ -20267,6 +20346,13 @@
 	},
 /turf/space,
 /area/space_hive)
+"oCm" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	hardened = 1
+	},
+/turf/simulated/floor,
+/area/helldrone)
 "oCo" = (
 /obj/machinery/conveyor/SN{
 	id = "robot_factory";
@@ -20278,6 +20364,17 @@
 	icon_state = "corner_east"
 	},
 /area/buddyfactory)
+"oCv" = (
+/obj/machinery/light/small{
+	brightness = 2;
+	dir = 8
+	},
+/obj/item/reagent_containers/food/drinks/noodlecup,
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "oEP" = (
 /turf/simulated/floor/carpet/green/standard/edge/se,
 /area/diner/jucer_trader)
@@ -20299,13 +20396,9 @@
 	},
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
-"oMB" = (
-/obj/cable{
-	icon_state = "4-8"
-	},
-/obj/machinery/fakesecscanner{
-	dir = 8;
-	pixel_x = 12
+"oLF" = (
+/obj/machinery/light/small{
+	dir = 4
 	},
 /turf/unsimulated/floor/black,
 /area/helldrone)
@@ -20331,20 +20424,16 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/hangar)
-"oPt" = (
-/obj/machinery/light/small{
-	dir = 1
+"oPk" = (
+/obj/machinery/door/airlock/pyro/command{
+	aiControlDisabled = 1;
+	dir = 4;
+	name = "Drone Computer Core";
+	req_access_txt = ""
 	},
-/obj/machinery/door_control{
-	pixel_x = 22;
-	name = "button";
-	id = "balor_tele_in"
-	},
-/obj/decal/poster/wallsign/syndicatebanner{
-	pixel_y = 35
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
+/obj/mapping_helper/airlock/anti_emag,
+/turf/simulated/floor/orangeblack,
+/area/helldrone/core)
 "oQp" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/unsimulated/floor/shuttle{
@@ -20355,13 +20444,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/arrival,
 /area/diner/hallway)
-"oQT" = (
-/obj/machinery/light/small{
-	dir = 4;
-	icon_state = "bulb1"
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "oQX" = (
 /turf/simulated/shuttle/wall{
 	dir = 8;
@@ -20376,35 +20458,6 @@
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
-"oSs" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 1
-	},
-/obj/decal/fakeobjects/pipe{
-	desc = "It is not working.";
-	dir = 1;
-	icon = 'icons/obj/atmospherics/pump.dmi';
-	icon_state = "intact_off";
-	name = "pump"
-	},
-/obj/decal/fakeobjects/pipe{
-	desc = "It seems to have been damaged somehow.";
-	dir = 1;
-	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
-	name = "filter"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "oSY" = (
 /obj/table/wood/auto,
 /obj/machinery/light/lamp/black{
@@ -20412,7 +20465,21 @@
 	},
 /turf/simulated/floor/wood/two,
 /area/radiostation/studio)
-"oUy" = (
+"oVO" = (
+/obj/machinery/atmospherics/portables_connector,
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A tank.  For storing air.";
+	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
+	name = "storage tank";
+	tag = ""
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
 /turf/unsimulated/floor/plating,
 /area/helldrone)
 "oWn" = (
@@ -20427,6 +20494,16 @@
 /obj/item/storage/box/record/notaquario,
 /turf/simulated/floor/wood/two,
 /area/space)
+"oXi" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-corner"
+	},
+/turf/unsimulated/floor/twotone/yellow,
+/area/helldrone)
 "oXy" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/carpet{
@@ -20456,23 +20533,6 @@
 	},
 /turf/space/asteroid,
 /area/space)
-"oYm" = (
-/obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
-"oZk" = (
-/obj/decal/fakeobjects/operatorconsole{
-	pixel_y = -7
-	},
-/obj/map/light/dimred,
-/turf/simulated/floor/circuit/red,
-/area/helldrone/core)
 "oZB" = (
 /turf/simulated/floor/damaged2,
 /area/diner/kitchen)
@@ -20492,9 +20552,6 @@
 /mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/scorched2,
 /area/diner/kitchen)
-"pcf" = (
-/turf/unsimulated/floor/twotone/yellow,
-/area/helldrone)
 "pci" = (
 /obj/decal/floatingtiles{
 	icon_state = "floattiles5"
@@ -20505,11 +20562,25 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/diner/kitchen)
-"peu" = (
-/obj/machinery/light/small{
-	dir = 8
+"pdw" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 6
 	},
-/turf/unsimulated/floor/black,
+/obj/decal/fakeobjects/pipe{
+	desc = "It seems to be broken.";
+	dir = 4;
+	icon = 'icons/obj/pipe-item.dmi';
+	icon_state = "meter";
+	name = "meter"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 4;
+	icon_state = "xtra_bigstripe-corner"
+	},
+/turf/unsimulated/floor/plating,
 /area/helldrone)
 "pfi" = (
 /obj/submachine/chef_sink/chem_sink{
@@ -20520,10 +20591,6 @@
 /obj/item/reagent_containers/glass/bucket,
 /turf/simulated/floor/purple,
 /area/radiostation/engineering)
-"pft" = (
-/obj/decal/poster/wallsign/escape,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/helldrone)
 "pfR" = (
 /obj/decal/poster/wallsign/stencil/left/n{
 	pixel_x = -7
@@ -20536,6 +20603,12 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/diner/tug)
+"pgW" = (
+/obj/machinery/light/small/iomoon{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "phG" = (
 /obj/lattice{
 	dir = 6;
@@ -20580,6 +20653,19 @@
 	},
 /turf/space,
 /area/space)
+"pkK" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "reactor_stats";
+	name = "broken computer";
+	dir = 8
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/engine/glow,
+/area/helldrone/core)
 "pkQ" = (
 /obj/machinery/light/incandescent/netural{
 	dir = 4;
@@ -20648,6 +20734,21 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
+"prp" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "bot2"
+	},
+/obj/machinery/light/small,
+/obj/machinery/networked/telepad/morrigan,
+/turf/unsimulated/floor/engine/glow/blue,
+/area/helldrone)
+"prJ" = (
+/mob/living/critter/robotic/gunbot/syndicate/polaris{
+	desc = "Painted in red and black.";
+	name = "Syndicate Sentinel Unit"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "psV" = (
 /obj/cable{
 	icon_state = "0-4"
@@ -20717,21 +20818,11 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
-"pAQ" = (
-/obj/decal/poster/wallsign/hazard_electrical{
-	pixel_y = -25;
-	pixel_x = -32
-	},
-/obj/decal/tile_edge/stripe/extra_big,
+"pBJ" = (
 /obj/decal/tile_edge/stripe/extra_big{
-	dir = 6;
-	icon_state = "xtra_bigstripe-corner2"
+	dir = 1
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/unsimulated/floor/black,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone)
 "pBN" = (
 /obj/machinery/door/unpowered/shuttle,
@@ -20752,15 +20843,18 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
+"pEn" = (
+/obj/stool/chair/comfy/red,
+/turf/unsimulated/floor/black,
+/area/helldrone)
+"pEx" = (
+/obj/stool/bed,
+/turf/simulated/floor/plating,
+/area/helldrone)
 "pEP" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/engineering)
-"pFm" = (
-/obj/table/reinforced/auto,
-/obj/machinery/computer3/generic/personal/personel_alt,
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "pHw" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -20832,11 +20926,6 @@
 	},
 /turf/simulated/floor,
 /area/derelict_ai_sat)
-"pPa" = (
-/obj/decal/fakeobjects/console_randompc,
-/obj/map/light/screen,
-/turf/unsimulated/floor/engine/glow,
-/area/helldrone/core)
 "pPj" = (
 /obj/grille/catwalk{
 	dir = 4
@@ -20866,17 +20955,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating,
 /area/diner/motel)
-"pUW" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1
-	},
-/obj/machinery/door/window/brigdoor/genpop/northright{
-	name = "Inbound teleporter";
-	id = "balor_tele_in"
-	},
-/obj/map/light/cyan,
-/turf/unsimulated/floor/engine/glow/blue,
-/area/helldrone)
 "pXr" = (
 /obj/decal/cleanable/dirt,
 /obj/cable{
@@ -20902,6 +20980,10 @@
 	dir = 5;
 	icon_state = "catwalk_cross"
 	},
+/area/space)
+"qaa" = (
+/obj/machinery/broadside_gun/artillery_cannon/syndicate,
+/turf/space,
 /area/space)
 "qad" = (
 /obj/pool/perspective{
@@ -21034,17 +21116,6 @@
 /obj/decal/cleanable/dirt/dirt4,
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
-"qlw" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "An engine part.  Probably.  It might just be a snow-cone machine, really.";
-	icon = 'icons/obj/atmospherics/pipes.dmi';
-	icon_state = "circ2-broken";
-	name = "mistreated engine part"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "qmD" = (
 /obj/stool/chair/couch/red{
 	dir = 4
@@ -21074,6 +21145,18 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/motel/pool)
+"qpp" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "qqs" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -21087,10 +21170,20 @@
 	dir = 10
 	},
 /area/diner/dining)
-"qrQ" = (
-/obj/decal/poster/wallsign/hazard_caution,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/helldrone/core)
+"qsj" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/poster/wallsign/engine_sign{
+	pixel_y = -16;
+	dir = 8
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "qsv" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -21125,13 +21218,6 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
-"qvj" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	hardened = 1
-	},
-/turf/simulated/floor,
-/area/helldrone)
 "qvs" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4;
@@ -21141,18 +21227,6 @@
 /area/evilreaver/storage/engineering{
 	name = "GLOMAR Salvager"
 	})
-"qwz" = (
-/obj/decal/poster/wallsign/teleport_sign{
-	dir = 4
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/helldrone)
-"qxW" = (
-/obj/machinery/vehicle/miniputt/syndiputt{
-	dir = 4
-	},
-/turf/simulated/floor/shuttlebay,
-/area/helldrone)
 "qAR" = (
 /obj/rack,
 /obj/item/clothing/mask/breath,
@@ -21172,6 +21246,19 @@
 	dir = 8
 	},
 /area/timewarp/ship)
+"qFb" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/machinery/portable_atmospherics/canister/empty,
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "qFq" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/kitchen/utensil/fork,
@@ -21182,16 +21269,17 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
-"qKr" = (
-/obj/stool/chair/comfy/red,
-/turf/unsimulated/floor/black,
-/area/helldrone)
-"qLe" = (
-/obj/machinery/light/small{
-	brightness = 2;
-	dir = 8
+"qHv" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
 	},
-/turf/unsimulated/floor/red/redblackchecker,
+/turf/unsimulated/floor/plating,
 /area/helldrone)
 "qLo" = (
 /obj/decal/timeplug{
@@ -21245,13 +21333,6 @@
 	},
 /turf/simulated/floor/scorched2,
 /area/diner/hangar)
-"qPV" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	hardened = 1
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "qRa" = (
 /obj/decal/poster/wallsign/pool,
 /turf/simulated/wall/auto/reinforced/old,
@@ -21331,17 +21412,11 @@
 /obj/item/reagent_containers/food/drinks/bottle/hobo_wine,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
-"qXO" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 4;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+"qXE" = (
+/obj/machinery/light/small{
+	dir = 8
 	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/turf/unsimulated/floor/black,
 /area/helldrone)
 "qXR" = (
 /obj/indestructible/shuttle_corner{
@@ -21394,16 +21469,16 @@
 /obj/machinery/vending/cola/blue,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
-"rce" = (
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/item/sheet/wood,
-/obj/storage/crate/bloody,
-/obj/item/horseshoe,
-/turf/simulated/floor/airless/plating/damaged1,
-/area/abandonedship)
+"rcl" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/fakesecscanner{
+	dir = 8;
+	pixel_x = 12
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "rcV" = (
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor{
@@ -21425,20 +21500,6 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
-"rgR" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "reactor_stats";
-	name = "broken computer";
-	dir = 4
-	},
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/helldrone)
 "riq" = (
 /obj/table/auto,
 /obj/item/device/audio_log/timewarp_00,
@@ -21451,18 +21512,6 @@
 	},
 /turf/simulated/floor/plating/damaged3,
 /area/diner/kitchen)
-"rna" = (
-/obj/stool/bed,
-/obj/item/clothing/suit/bedsheet/black,
-/turf/unsimulated/floor/black,
-/area/helldrone)
-"rnq" = (
-/obj/decoration/syndiepc/syndiepc16,
-/obj/map/light/dimred,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/helldrone)
 "rnP" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -21521,47 +21570,18 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/grime,
 /area/diner/hangar)
-"rum" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 10;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+"rub" = (
+/obj/decal/fakeobjects/console_radar,
+/obj/map/light/screen,
+/turf/simulated/floor/circuit/red,
+/area/helldrone/core)
+"rvL" = (
+/obj/cable{
+	d1 = 1;
+	d2 = 8;
+	icon_state = "1-8"
 	},
-/obj/decal/fakeobjects/pipe{
-	desc = "Probably shouldn't drink the water here.";
-	dir = 4
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
-"ruu" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
-	},
-/obj/decal/fakeobjects/pipe{
-	desc = "It seems to have been damaged somehow.";
-	dir = 4;
-	icon = 'icons/obj/atmospherics/retro_filter.dmi';
-	icon_state = "intact_off";
-	name = "filter"
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
-/obj/decal/poster/wallsign/hazard_electrical{
-	pixel_y = 31;
-	pixel_x = -64
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 1;
-	icon_state = "xtra_bigstripe-corner"
-	},
-/turf/unsimulated/floor/plating,
+/turf/unsimulated/floor/black,
 /area/helldrone)
 "rwl" = (
 /obj/securearea{
@@ -21578,18 +21598,19 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"rxn" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/helldrone)
 "rxp" = (
 /obj/indestructible/shuttle_corner{
 	dir = 10;
 	icon_state = "wall3_trans"
 	},
 /turf/space,
+/area/helldrone)
+"ryX" = (
+/turf/unsimulated/floor/engine/caution,
+/area/helldrone/core)
+"rzD" = (
+/obj/decal/poster/wallsign/hazard_danger,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone)
 "rzM" = (
 /obj/table/auto,
@@ -21659,12 +21680,14 @@
 /obj/item/gun/energy/phaser_gun,
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
-"rLR" = (
-/obj/decal/fakeobjects/shuttleweapon/base{
-	dir = 1;
-	name = "Engine Part"
+"rLF" = (
+/obj/machinery/light/small/iomoon{
+	name = "maintenance light";
+	tag = ""
 	},
-/turf/unsimulated/floor/plating,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
 /area/helldrone)
 "rNi" = (
 /turf/unsimulated/wall/setpieces/leadwindow{
@@ -21672,6 +21695,16 @@
 	icon_state = "leadwindow_2"
 	},
 /area/timewarp/ship)
+"rNj" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "It won't budge.";
+	dir = 4;
+	icon = 'icons/obj/pipe-item.dmi';
+	icon_state = "valve";
+	name = "rusted valve"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "rOs" = (
 /obj/lattice{
 	icon_state = "lattice-dir"
@@ -21696,12 +21729,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
-"rPA" = (
-/obj/machinery/light/small{
-	dir = 4
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "rQo" = (
 /obj/stool/chair/comfy/shuttle/brown,
 /obj/decal/cleanable/dirt,
@@ -21758,25 +21785,10 @@
 	},
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"rSa" = (
-/obj/machinery/portable_atmospherics/canister/empty,
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "rTq" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
 /area/radiostation/serverroom)
-"rTR" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 5;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/helldrone)
 "rTS" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 1;
@@ -21793,6 +21805,10 @@
 	},
 /turf/simulated/floor/darkblue,
 /area/diner/hallway)
+"rVK" = (
+/obj/decal/poster/wallsign/hazard_caution,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone/core)
 "rVO" = (
 /obj/lattice,
 /obj/decal/floatingtiles{
@@ -21808,6 +21824,11 @@
 	},
 /turf/simulated/floor/black/grime,
 /area/diner/hallway/docking)
+"rYt" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer3/generic/personal/personel_alt,
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "rYH" = (
 /obj/decal/cleanable/oil,
 /obj/decal/fakeobjects/shuttleengine{
@@ -21815,6 +21836,16 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedship)
+"rZa" = (
+/obj/decal/poster/wallsign/space,
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
+"saj" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "sbh" = (
 /obj/decal/cleanable/dirt/jen,
 /turf/simulated/floor/carpet/green/standard/edge/east,
@@ -21851,15 +21882,6 @@
 	},
 /turf/space,
 /area/bee_trader)
-"sgC" = (
-/obj/cable{
-	icon_state = "1-8"
-	},
-/obj/cable{
-	icon_state = "2-8"
-	},
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
 "siP" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -21877,20 +21899,6 @@
 /obj/machinery/light/runway_light/delay5,
 /turf/space,
 /area/diner/jucer_trader)
-"skc" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/obj/decal/poster/wallsign/engine_sign{
-	pixel_y = -16;
-	dir = 8
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "skq" = (
 /obj/decal/poster/wallsign/poster_rand,
 /turf/simulated/wall/auto/reinforced/old,
@@ -21901,6 +21909,13 @@
 	},
 /turf/space,
 /area/timewarp)
+"sml" = (
+/obj/decal/fakeobjects/cpucontroller{
+	pixel_y = -3
+	},
+/obj/map/light/dimred,
+/turf/unsimulated/floor/engine/glow,
+/area/helldrone/core)
 "smm" = (
 /obj/pool/perspective,
 /turf/simulated/floor/grime,
@@ -21915,6 +21930,20 @@
 /obj/machinery/door_control/podbay/diner2/new_walls/north,
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
+"snR" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/obj/machinery/door_control{
+	pixel_x = 22;
+	name = "button";
+	id = "balor_tele_in"
+	},
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "soj" = (
 /obj/decal/cleanable/dirt,
 /obj/machinery/door/window{
@@ -21951,20 +21980,6 @@
 	dir = 4
 	},
 /area/timewarp/ship)
-"sqe" = (
-/obj/decal/fakeobjects/pipe{
-	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
-	},
-/obj/decal/tile_edge/stripe/big{
-	dir = 1
-	},
-/obj/machinery/light/small/iomoon{
-	name = "maintenance light";
-	tag = ""
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "srt" = (
 /obj/decal/tile_edge/line/green{
 	dir = 8;
@@ -21981,6 +21996,12 @@
 	},
 /turf/space,
 /area/timewarp)
+"suc" = (
+/obj/storage/secure/crate/morrigan,
+/obj/landmark/morrigan_crate,
+/obj/decal/fakeobjects/teleport_pad,
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "svo" = (
 /turf/simulated/floor/carpet/green/fancy/innercorner/nw,
 /area/diner/motel/observatory)
@@ -22010,22 +22031,10 @@
 	},
 /turf/simulated/floor/caution/northsouth,
 /area/buddyfactory)
-"sBT" = (
-/obj/decal/fakeobjects/safehouse/airhandlingunit,
-/turf/simulated/floor/plating,
-/area/helldrone)
 "sCe" = (
 /obj/machinery/r_door_control/podbay/diner1,
 /turf/simulated/wall/auto/reinforced/old,
 /area/diner/hangar)
-"sCs" = (
-/obj/machinery/door/airlock/pyro/command{
-	dir = 4;
-	hardened = 1
-	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/simulated/floor/black,
-/area/helldrone)
 "sDv" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/decal/fakeobjects/shuttleengine{
@@ -22034,14 +22043,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/shuttle/mining/diner)
-"sEs" = (
-/obj/machinery/broadside_gun/artillery_cannon/syndicate,
-/turf/space,
-/area/space)
-"sEw" = (
-/obj/storage/closet/emergency,
-/turf/simulated/floor/shuttlebay,
-/area/helldrone)
 "sFI" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	icon_state = "delivery2"
@@ -22059,13 +22060,6 @@
 	dir = 10
 	},
 /area/abandonedoutpostthing)
-"sFX" = (
-/obj/decal/poster/wallsign/poster_nt{
-	icon_state = "wall_poster_syndicate";
-	name = "Syndicate Poster"
-	},
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
-/area/helldrone)
 "sGi" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -22078,14 +22072,59 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedmedicalship)
-"sLu" = (
-/obj/map/light/dimred,
-/turf/unsimulated/floor/engine/glow,
-/area/helldrone/core)
-"sLx" = (
-/obj/decal/fakeobjects/tallsmes,
-/turf/unsimulated/floor/engine/glow,
-/area/helldrone/core)
+"sKz" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit";
+	tag = "icon-conduit (NORTHEAST)"
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	icon_state = "delivery2"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
+"sKR" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 1;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/obj/machinery/light/small/iomoon{
+	dir = 8;
+	name = "maintenance light";
+	tag = ""
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "sNo" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -22147,12 +22186,6 @@
 /obj/reagent_dispensers/still,
 /turf/simulated/floor/longtile/black,
 /area/space)
-"sTq" = (
-/obj/machinery/light/small/iomoon{
-	dir = 1
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "sTA" = (
 /obj/machinery/conveyor/WE{
 	name = "salvage belt - east";
@@ -22160,12 +22193,6 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"sUZ" = (
-/obj/decal/poster/wallsign/danger_highvolt{
-	pixel_x = 32
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "sVk" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/window_blinds/cog2/middle,
@@ -22189,6 +22216,30 @@
 /obj/decal/timeplug,
 /turf/space,
 /area/timewarp)
+"sXf" = (
+/obj/machinery/atmospherics/portables_connector,
+/obj/decal/fakeobjects/pipe{
+	density = 1;
+	desc = "A tank.  For storing air.";
+	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
+	name = "storage tank";
+	tag = ""
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 8
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
+"sXn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "sXp" = (
 /obj/machinery/light/small,
 /turf/simulated/floor/shuttlebay,
@@ -22228,16 +22279,6 @@
 	icon_state = "red2"
 	},
 /area/diner/dining)
-"sZL" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/obj/machinery/light/small,
-/obj/machinery/networked/telepad/morrigan,
-/obj/machinery/power/data_terminal,
-/obj/cable,
-/turf/unsimulated/floor/engine/glow,
-/area/helldrone)
 "tbl" = (
 /obj/machinery/power/apc/autoname_east/nopoweralert,
 /obj/cable{
@@ -22329,6 +22370,18 @@
 /obj/item/cable_coil,
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
+"tko" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "reactor_stats";
+	name = "broken computer"
+	},
+/obj/map/light/screen,
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "tkr" = (
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
@@ -22350,25 +22403,6 @@
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
 /area/abandonedoutpostthing)
-"tmX" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 10;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit"
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "tnF" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating/random,
@@ -22453,6 +22487,22 @@
 /obj/machinery/light/lamp/black/bright,
 /turf/simulated/floor/carpet/grime,
 /area/diner/motel)
+"tBS" = (
+/obj/machinery/door/airlock/pyro/glass,
+/obj/mapping_helper/airlock/anti_emag,
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
+"tCx" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "An engine part.  Probably.  It might just be a snow-cone machine, really.";
+	icon = 'icons/obj/atmospherics/pipes.dmi';
+	icon_state = "circ2-broken";
+	name = "mistreated engine part"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "tDg" = (
 /obj/submachine/ATM{
 	pixel_x = 32
@@ -22473,6 +22523,10 @@
 	},
 /turf/simulated/floor/plating/scorched,
 /area/diner/kitchen)
+"tEs" = (
+/obj/machinery/light/small,
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "tFI" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 9;
@@ -22595,21 +22649,6 @@
 	},
 /turf/unsimulated/floor/white,
 /area/timewarp/ship)
-"tRW" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 1;
-	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
-	icon_state = "manifold"
-	},
-/obj/decal/fakeobjects/pipe{
-	desc = "It won't budge.";
-	dir = 4;
-	icon = 'icons/obj/pipe-item.dmi';
-	icon_state = "valve";
-	name = "rusted valve"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "tUS" = (
 /obj/decal/poster/wallsign/stencil/left/y{
 	pixel_x = -1
@@ -22648,13 +22687,6 @@
 	},
 /turf/space,
 /area/shuttle/mining/diner)
-"uek" = (
-/obj/decoration/syndiepc/syndiepc19,
-/obj/map/light/dimred,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
-	},
-/area/helldrone)
 "uen" = (
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/grime,
@@ -22665,14 +22697,6 @@
 /obj/decal/stripe_delivery,
 /turf/simulated/floor,
 /area/diner/dining)
-"uic" = (
-/obj/decal/tile_edge/stripe,
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 10;
-	icon_state = "xtra_bigstripe-corner2"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "uiy" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/black,
@@ -22713,6 +22737,12 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/innercorner/nw,
 /area/diner/motel/observatory)
+"uqh" = (
+/obj/machinery/vehicle/miniputt/syndiputt{
+	dir = 4
+	},
+/turf/simulated/floor/shuttlebay,
+/area/helldrone)
 "uqs" = (
 /obj/disposalpipe/segment{
 	dir = 4
@@ -22736,18 +22766,35 @@
 /obj/item/paper/bores_part_two,
 /turf/simulated/floor/plating/airless/asteroid,
 /area/space)
-"utq" = (
-/obj/table/reinforced/auto,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+"utr" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
 	},
+/obj/decal/poster/wallsign/syndicatebanner{
+	pixel_y = 35
+	},
+/turf/unsimulated/floor/black,
 /area/helldrone)
-"uue" = (
-/obj/decoration/syndiepc/syndiepc10,
-/obj/map/light/dimred,
-/turf/simulated/floor/shuttle{
-	icon_state = "floor4"
+"uuK" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 9;
+	tag = "icon-intact-f (NORTHWEST)"
 	},
+/obj/decal/fakeobjects/pipe{
+	dir = 5
+	},
+/obj/machinery/door/airlock/pyro/engineering{
+	hardened = 1;
+	dir = 4
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/turf/unsimulated/floor/twotone/yellow,
 /area/helldrone)
 "uvN" = (
 /obj/decal/fakeobjects/shuttleengine{
@@ -22762,6 +22809,11 @@
 	},
 /turf/unsimulated/wall/auto/adventure/shuttle,
 /area/abandonedship)
+"uye" = (
+/obj/table/auto,
+/obj/item/storage/firstaid/regular,
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "uyN" = (
 /obj/decal/tile_edge/line/blue{
 	dir = 6;
@@ -22850,47 +22902,6 @@
 	icon_state = "hive"
 	},
 /area/bee_trader)
-"uFG" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 9;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 5;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit";
-	tag = "icon-conduit (NORTHEAST)"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "A thermoelectric generator that appears to have fallen into disrepair.";
-	icon = 'icons/obj/power.dmi';
-	icon_state = "teg-broken";
-	name = "broken generator"
-	},
-/obj/machinery/light/small/iomoon{
-	dir = 1
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "uGl" = (
 /obj/machinery/light/small,
 /obj/storage/closet/fire,
@@ -22921,18 +22932,15 @@
 /obj/machinery/light/runway_light/delay4,
 /turf/space,
 /area/space)
-"uHM" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 8;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
+"uHw" = (
+/obj/stool/chair/red{
+	dir = 1
 	},
-/obj/machinery/portable_atmospherics/canister/empty,
-/turf/unsimulated/floor/plating,
+/obj/machinery/light/small{
+	dir = 4;
+	icon_state = "bulb1"
+	},
+/turf/unsimulated/floor/black,
 /area/helldrone)
 "uIh" = (
 /turf/simulated/wall/auto/asteroid{
@@ -22940,19 +22948,6 @@
 	stone_color = "#575A5E"
 	},
 /area/space)
-"uJa" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
-	icon = 'icons/obj/computer.dmi';
-	icon_state = "reactor_stats";
-	name = "broken computer";
-	dir = 8
-	},
-/obj/map/light/dimred,
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "uJr" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4;
@@ -22969,19 +22964,6 @@
 /turf/simulated/floor/shuttle{
 	icon_state = "floor4"
 	},
-/area/helldrone)
-"uLp" = (
-/obj/decal/fakeobjects/pipe{
-	desc = "It won't budge.";
-	icon = 'icons/obj/pipe-item.dmi';
-	icon_state = "valve";
-	name = "rusted valve"
-	},
-/obj/machinery/light/small{
-	brightness = 2;
-	dir = 4
-	},
-/turf/unsimulated/floor/plating,
 /area/helldrone)
 "uLu" = (
 /obj/machinery/shower{
@@ -23018,15 +23000,16 @@
 	},
 /turf/simulated/floor/plating/damaged1,
 /area/salyut)
+"uNW" = (
+/obj/decal/poster/wallsign/teleport_sign{
+	dir = 4
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "uOv" = (
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/green/standard/edge/sw,
 /area/diner/jucer_trader)
-"uOE" = (
-/obj/table/auto,
-/obj/item/storage/firstaid/regular,
-/turf/unsimulated/floor/red/redblackchecker,
-/area/helldrone)
 "uPG" = (
 /obj/decal/fakeobjects/shuttleengine{
 	dir = 4;
@@ -23044,6 +23027,21 @@
 /obj/item/plate/tray,
 /turf/simulated/floor/plating/damaged1,
 /area/diner/kitchen)
+"uQB" = (
+/obj/machinery/light/small{
+	brightness = 2;
+	dir = 8
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
+"uRk" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	hardened = 1;
+	dir = 4
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "uSs" = (
 /obj/machinery/computer/tetris,
 /obj/item/paper/businesscard/skulls{
@@ -23143,6 +23141,19 @@
 	},
 /turf/space,
 /area/diner/solar)
+"vfM" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/obj/decal/fakeobjects/safehouse/airfilter,
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "vgW" = (
 /obj/decal/tile_edge/line/yellow{
 	dir = 4;
@@ -23150,15 +23161,19 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
-"vii" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4
+"vin" = (
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
 	},
+/obj/machinery/door/window/brigdoor/genpop/northleft{
+	name = "Outbound teleporter";
+	id = "balor_tele_out"
+	},
+/obj/map/light/dimred,
 /obj/cable{
-	icon_state = "4-8"
+	icon_state = "1-2"
 	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/black,
+/turf/unsimulated/floor/engine/glow,
 /area/helldrone)
 "vjf" = (
 /obj/stool/chair,
@@ -23185,13 +23200,17 @@
 /obj/decal/cleanable/dirt,
 /turf/simulated/floor/carpet/blue/fancy/edge/east,
 /area/diner/motel)
+"vlu" = (
+/obj/machinery/door/airlock/pyro/command{
+	dir = 4;
+	hardened = 1
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "vly" = (
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating,
 /area/buddyfactory)
-"vlW" = (
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "vnG" = (
 /turf/unsimulated/floor/black,
 /area/timewarp/ship)
@@ -23208,27 +23227,33 @@
 	},
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
+"vqT" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 4;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
+"vrK" = (
+/obj/table/reinforced/auto,
+/obj/machinery/computer3/generic/personal/personel_alt,
+/obj/item/clothing/mask/cigarette/dryjoint{
+	pixel_x = 10;
+	pixel_y = 10
+	},
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "vrP" = (
 /obj/grille/catwalk,
 /obj/decal/fakeobjects/cargopad,
 /obj/map/light/yellow,
 /turf/space,
 /area/diner/jucer_trader)
-"vtD" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 9;
-	tag = "icon-intact-f (NORTHWEST)"
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 5
-	},
-/obj/machinery/door/airlock/pyro/engineering{
-	hardened = 1;
-	dir = 4
-	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/twotone/yellow,
-/area/helldrone)
 "vue" = (
 /turf/unsimulated/floor/white/grime,
 /area/timewarp/ship)
@@ -23238,6 +23263,17 @@
 	},
 /turf/simulated/floor/damaged5,
 /area/diner/motel/chemstorage)
+"vut" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 5;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/helldrone)
 "vuF" = (
 /obj/cable,
 /obj/machinery/power/solar/diner,
@@ -23283,16 +23319,6 @@
 /obj/decal/cleanable/cobweb2,
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
-"vzS" = (
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	dir = 4;
-	icon_state = "xtra_bigstripe-corner"
-	},
-/turf/unsimulated/floor/twotone/yellow,
-/area/helldrone)
 "vAK" = (
 /obj/table/reinforced/auto,
 /obj/machinery/light/lamp/black{
@@ -23337,18 +23363,22 @@
 "vJC" = (
 /turf/simulated/floor/carpet/arcade,
 /area/diner/arcade)
-"vKv" = (
-/obj/item/tank/oxygen,
-/obj/machinery/light/small/iomoon{
-	dir = 8;
-	name = "maintenance light";
-	tag = ""
+"vKl" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 9;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
 	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
-"vLa" = (
-/obj/machinery/networked/radio,
-/turf/unsimulated/floor/black,
+/obj/decal/fakeobjects/pipe{
+	dir = 1;
+	tag = "icon-intact (NORTH)"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/unsimulated/floor/plating,
 /area/helldrone)
 "vNR" = (
 /obj/grille/steel,
@@ -23394,6 +23424,14 @@
 	},
 /turf/simulated/floor/white/grime,
 /area/derelict_ai_sat)
+"vRt" = (
+/obj/machinery/door/airlock/pyro/engineering{
+	hardened = 1;
+	dir = 4
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/turf/unsimulated/floor/twotone/yellow,
+/area/helldrone)
 "vRy" = (
 /obj/stool/chair,
 /mob/living/critter/zombie/scientist,
@@ -23456,6 +23494,10 @@
 /obj/machinery/computer/transit_shuttle/johnbus,
 /turf/simulated/floor/grime,
 /area/diner/hangar)
+"vZN" = (
+/obj/machinery/networked/radio,
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "vZT" = (
 /obj/stool/chair{
 	dir = 4
@@ -23469,39 +23511,6 @@
 /obj/machinery/portable_atmospherics/pump,
 /turf/simulated/floor/airless/caution/northsouth,
 /area/space)
-"wbZ" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 9;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 5;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	name = "power conduit";
-	tag = "icon-conduit (NORTHEAST)"
-	},
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "delivery2"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "wcs" = (
 /obj/cable,
 /obj/cable{
@@ -23513,34 +23522,19 @@
 	},
 /turf/simulated/floor/plating/airless,
 /area/space)
-"wcV" = (
-/obj/decal/fakeobjects/lightbulb_broken,
-/obj/machinery/atmospherics/portables_connector{
-	dir = 1
+"wcS" = (
+/obj/map/light/dimred,
+/obj/map/light/dimred,
+/obj/stool/chair/office/syndie{
+	dir = 8
 	},
-/obj/decal/fakeobjects/pipe{
-	density = 1;
-	desc = "A tank.  For storing air.";
-	dir = 1;
-	icon = 'icons/obj/atmospherics/tanks/blue_pipe_tank.dmi';
-	name = "storage tank";
-	tag = ""
+/turf/unsimulated/floor/engine/glow,
+/area/helldrone/core)
+"wdX" = (
+/obj/table/reinforced/auto,
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
 	},
-/obj/decal/tile_edge/stripe/extra_big{
-	icon_state = "bot2"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
-"wdG" = (
-/obj/machinery/door/airlock/pyro/security{
-	dir = 4
-	},
-/obj/mapping_helper/airlock/anti_emag,
-/turf/unsimulated/floor/black,
-/area/helldrone)
-"wea" = (
-/obj/decal/poster/wallsign/hazard_danger,
-/turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/helldrone)
 "weF" = (
 /obj/securearea{
@@ -23553,6 +23547,20 @@
 	icon_state = "catwalk_cross"
 	},
 /area/space)
+"wfw" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "This computer seems like it is on some kind attract screen.  They keyboard does nothing!";
+	icon = 'icons/obj/computer.dmi';
+	icon_state = "reactor_stats";
+	name = "broken computer";
+	dir = 4
+	},
+/turf/simulated/floor/shuttle{
+	icon_state = "floor4"
+	},
+/area/helldrone)
 "wfJ" = (
 /obj/storage/secure/closet/personal,
 /obj/item/clothing/under/gimmick/sweater,
@@ -23562,24 +23570,6 @@
 	icon_state = "fred2"
 	},
 /area/radiostation/bedroom)
-"wiw" = (
-/obj/decal/fakeobjects/pipe{
-	desc = "It won't budge.";
-	dir = 4;
-	icon = 'icons/obj/pipe-item.dmi';
-	icon_state = "valve";
-	name = "rusted valve"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
-"wjj" = (
-/obj/machinery/door_control{
-	id = "zdrone_hangar";
-	name = "Hangar Toggle";
-	pixel_y = 24
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "wjS" = (
 /obj/machinery/vending/cola/red,
 /obj/decal/cleanable/dirt,
@@ -23592,6 +23582,20 @@
 	},
 /turf/simulated/floor/specialroom/bar,
 /area/diner/dining)
+"wnr" = (
+/obj/decal/fakeobjects/pipe{
+	icon = 'icons/obj/atmospherics/pipes/manifold_pipe.dmi';
+	icon_state = "manifold"
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/machinery/light/small/iomoon{
+	name = "maintenance light";
+	tag = ""
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "wnW" = (
 /obj/decal/fakeobjects/skeleton{
 	desc = "The remains of a human. The skull has a hole in it.  An extra one, I mean.";
@@ -23743,6 +23747,20 @@
 	icon_state = "floor2"
 	},
 /area/diner/tug)
+"wAb" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	dir = 8;
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	layer = 2.5;
+	name = "power conduit"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/decal/poster/wallsign/danger_highvolt,
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "wAy" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/abandonedmedicalship/robot_trader)
@@ -23783,30 +23801,6 @@
 	},
 /turf/simulated/floor/grime,
 /area/diner/hallway)
-"wGf" = (
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 4
-	},
-/obj/machinery/light/small{
-	dir = 1
-	},
-/obj/machinery/power/data_terminal,
-/obj/machinery/computer3/terminal/zeta/console_lower{
-	dir = 4
-	},
-/obj/cable{
-	icon_state = "0-2"
-	},
-/obj/machinery/door_control{
-	pixel_x = -22;
-	name = "button";
-	id = "balor_tele_out"
-	},
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "wIg" = (
 /obj/table/reinforced/bar/auto,
 /obj/item/reagent_containers/food/snacks/condiment/syrup,
@@ -23835,9 +23829,34 @@
 	},
 /turf/simulated/floor/scorched2,
 /area/diner/hangar)
+"wLg" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	desc = "Like conventional cables, but more burly.";
+	icon = 'icons/obj/power_cond.dmi';
+	icon_state = "conduit";
+	name = "power conduit"
+	},
+/obj/decal/fakeobjects/shuttleweapon/base{
+	dir = 1;
+	name = "Engine Part"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "wLE" = (
 /turf/unsimulated/floor/caution/corner/nw,
 /area/timewarp/ship)
+"wMh" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "An engine part.  Probably.  It might just be a snow-cone machine, really.";
+	icon = 'icons/obj/atmospherics/pipes.dmi';
+	icon_state = "circ1-broken";
+	name = "mistreated engine part"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "wNJ" = (
 /obj/reagent_dispensers/beerkeg,
 /obj/machinery/light/small/cool{
@@ -23855,13 +23874,21 @@
 /obj/machinery/door/airlock/pyro/external,
 /turf/simulated/floor/plating,
 /area/diner/hallway)
+"wSq" = (
+/obj/machinery/door/airlock/pyro/command{
+	aiControlDisabled = 1;
+	name = "Drone Computer Core";
+	req_access_txt = ""
+	},
+/obj/mapping_helper/airlock/anti_emag,
+/turf/simulated/floor/orangeblack,
+/area/helldrone)
 "wSz" = (
 /turf/simulated/floor/scorched,
 /area/diner/hangar)
-"wVy" = (
-/obj/item/sheet/wood,
-/turf/simulated/floor/plating/airless,
-/area/space)
+"wSH" = (
+/turf/unsimulated/floor/red/redblackchecker,
+/area/helldrone)
 "wXr" = (
 /obj/decal/cleanable/dirt,
 /obj/stool/chair/dining/wood{
@@ -23901,10 +23928,6 @@
 	},
 /turf/simulated/floor/carpet/green/fancy/innercorner/ne,
 /area/diner/motel/observatory)
-"xgX" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced/crystal,
-/turf/simulated/floor/plating,
-/area/helldrone)
 "xht" = (
 /obj/stool/bed,
 /turf/simulated/floor/carpet{
@@ -24026,6 +24049,19 @@
 	},
 /turf/space,
 /area/timewarp)
+"xAk" = (
+/obj/decal/fakeobjects/pipe{
+	desc = "It won't budge.";
+	icon = 'icons/obj/pipe-item.dmi';
+	icon_state = "valve";
+	name = "rusted valve"
+	},
+/obj/machinery/light/small{
+	brightness = 2;
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "xCP" = (
 /obj/warp_beacon/diner,
 /obj/lattice,
@@ -24040,26 +24076,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/mining/diner)
-"xEo" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	desc = "Like conventional cables, but more burly.";
-	dir = 1;
-	icon = 'icons/obj/power_cond.dmi';
-	icon_state = "conduit";
-	layer = 2.5;
-	name = "power conduit"
-	},
-/obj/decal/fakeobjects/pipe{
-	dir = 5
-	},
-/obj/machinery/light/small/iomoon{
-	dir = 8;
-	name = "maintenance light";
-	tag = ""
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "xEB" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4
@@ -24116,6 +24132,15 @@
 /obj/landmark/spawner/loot,
 /turf/simulated/floor/plating,
 /area/derelict_ai_sat)
+"xPr" = (
+/obj/decal/fakeobjects/pipe{
+	dir = 8;
+	icon = 'icons/obj/atmospherics/pipes.dmi';
+	icon_state = "vent";
+	name = "rusted vent"
+	},
+/turf/unsimulated/floor/plating,
+/area/helldrone)
 "xRo" = (
 /obj/machinery/light/incandescent/warm{
 	dir = 8
@@ -24131,29 +24156,11 @@
 	icon_state = "floor6"
 	},
 /area/diner/jucer_trader)
-"xTn" = (
-/obj/decal/fakeobjects/pipe{
-	desc = "Probably shouldn't drink the water here.";
-	dir = 4
-	},
-/obj/decal/fakeobjects/pipe{
-	desc = "It seems to be broken.";
-	dir = 4;
-	icon = 'icons/obj/pipe-item.dmi';
-	icon_state = "meter";
-	name = "meter"
-	},
-/turf/unsimulated/floor/plating,
-/area/helldrone)
 "xVr" = (
 /mob/living/critter/zombie/scientist,
 /obj/machinery/telejam/active,
 /turf/simulated/floor/white,
 /area/abandonedoutpostthing)
-"xYs" = (
-/obj/machinery/light/small,
-/turf/unsimulated/floor/black,
-/area/helldrone)
 "xYM" = (
 /obj/machinery/conveyor/WE{
 	id = "robot_factory";
@@ -24213,6 +24220,13 @@
 /obj/random_pod_spawner,
 /turf/simulated/floor/shuttlebay,
 /area/diner/hangar)
+"ycm" = (
+/obj/machinery/door/airlock/pyro/security,
+/obj/mapping_helper/airlock/anti_emag,
+/obj/mapping_helper/access/morrigan/bridge,
+/obj/mapping_helper/airlock/hardener,
+/turf/unsimulated/floor/black,
+/area/helldrone)
 "ycy" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -24251,20 +24265,6 @@
 	dir = 4
 	},
 /area/abandonedoutpostthing)
-"yjP" = (
-/obj/map/light/dimred,
-/obj/map/light/dimred,
-/obj/stool/chair/office/syndie{
-	dir = 8
-	},
-/turf/unsimulated/floor/engine/glow,
-/area/helldrone/core)
-"yla" = (
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/unsimulated/floor/engine/caution,
-/area/helldrone/core)
 "ylg" = (
 /obj/machinery/computer/transit_shuttle/mining,
 /turf/simulated/floor/plating,
@@ -33291,26 +33291,26 @@ aaa
 aaa
 aaa
 aaa
-sEs
+qaa
 aaa
 aaa
 aaa
 aWM
 bgu
 aaa
-bBT
-bBT
-bBT
-bBT
-bBT
-bBT
+gDJ
+gDJ
+gDJ
+gDJ
+gDJ
+gDJ
 aaa
 bgu
 bfU
 aaa
 aaa
 aaa
-sEs
+qaa
 aaa
 aaa
 aaa
@@ -33600,12 +33600,12 @@ aWM
 bgu
 bgu
 bgu
-xgX
-xgX
-xgX
-xgX
-xgX
-xgX
+hnO
+hnO
+hnO
+hnO
+hnO
+hnO
 bgu
 bgu
 bgu
@@ -33900,16 +33900,16 @@ bgu
 bgu
 bgu
 bgu
-ifg
+uQB
 bgu
-uek
-uue
-rgR
-rgR
-ckX
-uue
+fsr
+aid
+wfw
+wfw
+nRY
+aid
 bgu
-ifg
+uQB
 bgu
 bgu
 bgu
@@ -34199,22 +34199,22 @@ aaa
 aWM
 bgu
 bgu
-ikX
+wSH
 bgu
-cMm
-vlW
+hdk
+lxq
 bgu
-rnq
-miN
+lmi
+ben
 uKf
 uKf
-miN
-utq
+ben
+wdX
 bgu
-vlW
-vlW
+lxq
+lxq
 bgu
-pcf
+cnN
 bgu
 bgu
 bfU
@@ -34500,24 +34500,24 @@ aaa
 aWM
 bgu
 bgu
-qLe
-ikX
-gia
-vlW
-vlW
+krQ
+wSH
+guX
+lxq
+lxq
 bgu
 bgu
-etP
+mad
 uKf
 uKf
-dgy
+rLF
 bgu
 bgu
-vlW
-xYs
+lxq
+fVM
 bgu
-enF
-pcf
+ioq
+cnN
 bgu
 bgu
 bfU
@@ -34801,26 +34801,26 @@ aaa
 aaa
 bgu
 bgu
-ikX
-vlW
-ikX
-eLZ
-vlW
-vlW
-vlW
+wSH
+lxq
+wSH
+ajD
+lxq
+lxq
+lxq
 bgu
-sCs
+mKf
 bgu
 bgu
-sCs
+mKf
 bgu
-vlW
-vlW
-pAQ
-mwy
-pcf
-vlW
-pcf
+lxq
+lxq
+dvg
+bNo
+cnN
+lxq
+cnN
 bgu
 bgu
 aaa
@@ -35102,28 +35102,28 @@ aaa
 aaa
 aaa
 bgu
-qLe
-vlW
-vlW
-ikX
-gia
-vlW
-vlW
-vlW
-peu
-vlW
-vlW
-vlW
-vlW
-peu
-vlW
-vlW
-xYs
+krQ
+lxq
+lxq
+wSH
+guX
+lxq
+lxq
+lxq
+qXE
+lxq
+lxq
+lxq
+lxq
+qXE
+lxq
+lxq
+fVM
 bgu
-enF
-vlW
-sUZ
-vzS
+ioq
+lxq
+bxA
+oXi
 bgu
 aaa
 aaa
@@ -35406,26 +35406,26 @@ aWM
 bgu
 bgu
 bgu
-wdG
+kGy
 bgu
 bgu
 bgu
-vlW
-vlW
-vlW
-vlW
-rPA
-vlW
-rPA
-vlW
-vlW
-xYs
+lxq
+lxq
+lxq
+lxq
+oLF
+lxq
+oLF
+lxq
+lxq
+fVM
 bgu
 bgu
-lgz
-lgz
+sXn
+sXn
 bgu
-nYK
+vRt
 bgu
 bfU
 aaa
@@ -35707,27 +35707,27 @@ bgu
 bgu
 bgu
 bgu
-iCG
-vlW
-ikX
-ikX
+prJ
+lxq
+wSH
+wSH
 bgu
-cDa
-bgu
-bgu
+fEZ
 bgu
 bgu
 bgu
 bgu
-wea
-vlW
-vlW
 bgu
-iHW
-iHW
-cmW
-xEo
-okE
+bgu
+rzD
+lxq
+lxq
+bgu
+wMh
+wMh
+vKl
+sKR
+qHv
 bgu
 bgu
 bgu
@@ -36005,34 +36005,34 @@ aaa
 aaa
 aaa
 aaa
-xgX
-ngk
+hnO
+pEx
 bfY
-igu
-vlW
-vlW
-vlW
-ikX
+tBS
+lxq
+lxq
+lxq
+wSH
 bgu
-vlW
-vlW
+lxq
+lxq
 bgu
-cDa
-ifg
-vlW
-ifg
-mOl
-vlW
-vlW
+fEZ
+uQB
+lxq
+uQB
+wSq
+lxq
+lxq
 bgu
-rLR
-rLR
-izb
-wiw
-oUy
-uic
-sBT
-xgX
+jcs
+jcs
+wAb
+rNj
+fNu
+fYF
+mCI
+hnO
 aaa
 aaa
 aaa
@@ -36307,34 +36307,34 @@ aaa
 aaa
 aaa
 aaa
-xgX
-mEH
-gTW
+hnO
+dEQ
+fXd
 bgu
-vlW
-vlW
-vlW
-bAB
+lxq
+lxq
+lxq
+ehZ
 bgu
-vlW
-oQT
+lxq
+gBs
 bed
-jiL
+oPk
 bed
 bed
 bed
-qrQ
-iCG
-vlW
+rVK
+prJ
+lxq
 bgu
-uFG
-wbZ
-cnf
-ruu
-eGR
-hJS
-sBT
-xgX
+ehU
+sKz
+afL
+czA
+saj
+bEP
+mCI
+hnO
 aaa
 aaa
 aaa
@@ -36615,26 +36615,26 @@ bgu
 bgu
 bgu
 bgu
-owi
-jyK
-rxn
-iJf
-lKv
-lKv
-yla
-egF
-pPa
-kZg
+cyL
+iDQ
+isA
+ibG
+lmw
+lmw
+kIt
+fuD
+hpL
+hIk
 bed
 bed
-xYs
+fVM
 bgu
-kNG
-kNG
-edZ
-rum
-igW
-oUy
+wLg
+wLg
+iRP
+hEI
+gHe
+fNu
 bgu
 bgu
 aaa
@@ -36913,30 +36913,30 @@ aaa
 aaa
 aaa
 bgu
-mgS
-ifg
-vLa
+suc
+uQB
+vZN
 bgu
-bFI
-ikX
+cbV
+wSH
 bgu
-cDa
+fEZ
 bed
-sLx
-sLu
-agI
-yjP
-sLu
-dhj
+hDE
+iae
+ryX
+wcS
+iae
+nZG
 bed
-skc
+qsj
 bgu
-qlw
-qlw
-lgz
-ksz
-xTn
-eaE
+tCx
+tCx
+sXn
+kyR
+nWV
+bqo
 bgu
 aaa
 aaa
@@ -37215,30 +37215,30 @@ aaa
 aaa
 aaa
 bgu
-ikX
-vlW
-vlW
-lqK
-bFI
-ikX
+wSH
+lxq
+lxq
+ycm
+cbV
+wSH
 bgu
-vlW
+lxq
 bed
-nLK
-agI
-agI
-agI
-agI
-mlr
+sml
+ryX
+ryX
+ryX
+ryX
+bof
 bed
-vlW
+lxq
 bgu
-lgz
-lgz
-lgz
-jgO
-igW
-uJa
+sXn
+sXn
+sXn
+nJT
+gHe
+bNr
 bgu
 aaa
 aaa
@@ -37517,30 +37517,30 @@ aaa
 aaa
 aaa
 bgu
-nbn
-vlW
-vlW
+erA
+lxq
+lxq
 bgu
-fdG
-ikX
+doF
+wSH
 bgu
-vlW
+lxq
 bed
-sLu
-agI
-agI
-agI
-agI
-mlr
+iae
+ryX
+ryX
+ryX
+ryX
+bof
 bed
-vlW
+lxq
 bgu
-jUp
-oUy
-oUy
-ksz
-tRW
-wcV
+tko
+fNu
+fNu
+kyR
+eYh
+gON
 bgu
 aaa
 aaa
@@ -37819,30 +37819,30 @@ aaa
 aaa
 aaa
 bgu
-uOE
-mCq
-ovp
+uye
+uHw
+jUz
 bgu
-bFI
-ikX
+cbV
+wSH
 bgu
-vlW
+lxq
 bed
-lSN
-sLu
-mhJ
-sLu
-sLu
-oZk
+ohu
+iae
+eIG
+iae
+iae
+kXa
 bed
-vlW
+lxq
 bgu
-sTq
-fzK
-uLp
-oSs
-nTX
-fKj
+pgW
+pdw
+xAk
+nNm
+vfM
+lzK
 bgu
 aaa
 aaa
@@ -38125,26 +38125,26 @@ bgu
 bgu
 bgu
 bgu
-bFI
-jTp
+cbV
+tEs
 bgu
-cDa
+fEZ
 bed
 bed
-fEc
-lyG
-lyG
-aZx
+rub
+pkK
+pkK
+nNL
 bed
 bed
-xYs
+fVM
 bgu
-lgz
-vtD
+sXn
+uuK
 bgu
-ksz
-fVd
-eaE
+kyR
+xPr
+bqo
 bgu
 bgu
 aaa
@@ -38421,34 +38421,34 @@ aaa
 aaa
 aaa
 aaa
-xgX
-mEH
-kBc
+hnO
+dEQ
+dXl
 bgu
-vlW
-owi
-nRA
-ikX
+lxq
+cyL
+rvL
+wSH
 bgu
-vlW
-ifg
+lxq
+uQB
 bed
 bed
 bed
 bed
 bed
 bed
-ifg
-vlW
+uQB
+lxq
 bgu
-eaJ
-sqe
+oVO
+wnr
 bgu
-ksz
-oUy
-uic
-sBT
-xgX
+kyR
+fNu
+fYF
+mCI
+hnO
 aaa
 aaa
 aaa
@@ -38723,34 +38723,34 @@ aaa
 aaa
 aaa
 aaa
-xgX
-ngk
+hnO
+pEx
 bfY
-igu
-vlW
-oMB
-ikX
-ikX
+tBS
+lxq
+rcl
+wSH
+wSH
 bgu
-vlW
-vlW
-vlW
-ifg
-vlW
-vlW
-ifg
-fyz
-vlW
-vlW
+lxq
+lxq
+lxq
+uQB
+lxq
+lxq
+uQB
+qpp
+lxq
+lxq
 bgu
-eaJ
-oYm
+oVO
+ndr
 bgu
-fWj
-juA
-hJS
-sBT
-xgX
+eyk
+cUv
+bEP
+mCI
+hnO
 aaa
 aaa
 aaa
@@ -39030,26 +39030,26 @@ bgu
 bgu
 bgu
 bgu
-vii
-qwz
+lAz
+uNW
 bgu
 bgu
 bgu
-qvj
+oCm
 bgu
 bgu
 bgu
-qPV
+vlu
 bgu
-qXO
-vlW
-vlW
+vqT
+lxq
+lxq
 bgu
-eaJ
-oYm
+oVO
+ndr
 bgu
-lzO
-iKF
+eWk
+uRk
 bgu
 bgu
 bgu
@@ -39330,28 +39330,28 @@ aaa
 aaa
 rxp
 bgu
-wGf
-nAo
-sgC
-eJI
-sZL
+aEc
+juV
+gAu
+vin
+nNP
 bgu
-eIu
-vlW
-kCl
+oCv
+lxq
+beP
 bgu
-bMD
-vlW
-ifg
-qXO
-vlW
-xYs
+nTj
+lxq
+uQB
+vqT
+lxq
+fVM
 bgu
-hzV
-auI
+sXf
+osl
 bgu
-uHM
-eaE
+qFb
+bqo
 bgu
 tcp
 aaa
@@ -39632,28 +39632,28 @@ aaa
 aaa
 aaa
 bgu
-osi
-fyz
-kcm
-iNk
+nEB
+qpp
+deH
+pBJ
 bgu
-sFX
-rna
-qKr
-pFm
+nIn
+eNg
+pEn
+rYt
 bgu
-doS
-nwS
-rna
-qXO
-vlW
-vlW
-bgu
-bgu
+vrK
+dSl
+eNg
+vqT
+lxq
+lxq
 bgu
 bgu
-uHM
-rSa
+bgu
+bgu
+qFb
+oma
 bgu
 aaa
 aaa
@@ -39934,11 +39934,11 @@ aaa
 aaa
 aaa
 bgu
-oPt
-fyz
-bWw
-pUW
-ipJ
+snR
+qpp
+eFN
+jqh
+prp
 bgu
 bgu
 bgu
@@ -39947,14 +39947,14 @@ bgu
 bgu
 bgu
 bgu
-rTR
-tmX
-fLC
+vut
+ila
+nJj
 bgu
 bgu
 bgu
 bgu
-uHM
+qFb
 bgu
 bgu
 aaa
@@ -40245,13 +40245,13 @@ bgu
 bcg
 bcg
 bcg
-sEw
+jMr
 tNm
-cgM
+mdy
 bgu
 bgu
-kwf
-vlW
+utr
+lxq
 bgu
 bgu
 bgu
@@ -40545,15 +40545,15 @@ jOk
 bgu
 bgu
 bcg
-qxW
+uqh
 bcg
 bcg
 bgu
-wjj
-vKv
-pft
-fyz
-vlW
+gKu
+jNk
+nKF
+qpp
+lxq
 bgu
 bgu
 wqE
@@ -40850,12 +40850,12 @@ bcg
 bcg
 bcg
 bcg
-hCz
-vlW
-rPA
-bPb
-fyz
-xYs
+mFk
+lxq
+oLF
+nyv
+qpp
+fVM
 bgu
 bgu
 uVV
@@ -41153,8 +41153,8 @@ oNj
 pQo
 hso
 bgu
-jop
-dNl
+eHg
+rZa
 bgu
 bgu
 bgu
@@ -41894,7 +41894,7 @@ aFX
 aLU
 aLU
 aLU
-aOJ
+mvr
 aLU
 aLU
 aQM
@@ -51413,7 +51413,7 @@ aaa
 aaa
 aaa
 aHU
-rce
+bdO
 aIv
 aHU
 aaa
@@ -62179,7 +62179,7 @@ aaa
 aaa
 aaa
 aaa
-jsC
+aPm
 aaa
 aaa
 aaa
@@ -62828,7 +62828,7 @@ aao
 aaa
 aaa
 aaa
-hRv
+aPt
 aaa
 aaa
 aaa
@@ -65564,7 +65564,7 @@ aSP
 amR
 amR
 rwl
-wVy
+aTU
 agV
 aaa
 aaa
@@ -70981,7 +70981,7 @@ aOf
 aOf
 aOf
 aOf
-jsC
+aPm
 aPK
 aaa
 aOf

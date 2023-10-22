@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/announcement
 	name = "Announcement Computer"
-	icon_state = "comm"
+	icon_state = "announcement"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
 	circuit_type = /obj/item/circuitboard/announcement
 	var/announcement_delay = 1200
