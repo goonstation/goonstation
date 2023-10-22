@@ -648,7 +648,7 @@ var/global/list/playersSeen = list()
 
 
 /client/proc/openBanPanel()
-	set name = "Ban Panel"
+	set name = "Ban Panel (Legacy)"
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
 	if (src.holder && !src.holder.tempmin)
 		src.holder.banPanel()
@@ -660,7 +660,6 @@ var/global/list/playersSeen = list()
 		message_admins("[key_name(src)] tried to access the ban panel but was denied.")
 		del(usr.client)
 	return
-
 
 //DEBUG (gets the latest ban and prints it out)
 /proc/debugBans(data)
