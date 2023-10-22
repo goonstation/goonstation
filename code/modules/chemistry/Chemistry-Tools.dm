@@ -512,7 +512,7 @@ proc/ui_describe_reagents(atom/A)
 		return TRUE
 
 	is_open_container()
-		if(..() && !GET_ATOM_PROPERTY(src, PROP_ITEM_IN_CHEM_DISPENSER))
+		if(!GET_ATOM_PROPERTY(src, PROP_ITEM_IN_CHEM_DISPENSER))
 			return TRUE
 
 /* =================================================== */
