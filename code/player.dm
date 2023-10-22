@@ -79,7 +79,8 @@
 
 	/// Record a player login via the API. Sets player ID field for future API use
 	proc/record_login()
-		if (!src.client || src.id) return
+		if (!roundId || !src.client || src.id) return
+		var/datum/apiModel/Tracked/PlayerResource/playerResponse
 		try
 			var/datum/apiRoute/players/login/playerLogin = new
 			playerLogin.buildBody(
@@ -91,12 +92,14 @@
 				src.client.byond_build,
 				roundId
 			)
-			var/datum/apiModel/Tracked/PlayerResource/playerResponse = apiHandler.queryAPI(playerLogin)
-			src.id = playerResponse.id
+			playerResponse = apiHandler.queryAPI(playerLogin)
 		catch (var/exception/e)
 			var/datum/apiModel/Error/error = e.name
 			logTheThing(LOG_DEBUG, null, "Failed to record a player login for [src.client.ckey] because: [error.message]")
 			logTheThing(LOG_DIARY, null, "Failed to record a player login for [src.client.ckey] because: [error.message]", "admin")
+			return
+
+		src.id = playerResponse.id
 
 	/// queries api to cache stats so its only done once per player per round
 	proc/cache_round_stats()
