@@ -1522,10 +1522,10 @@
 	set desc = "Open the crew credits window"
 	set category = "Commands"
 
-	if(isnull(ticker.creds))
+	if(isnull(global.ticker.creds))
 		boutput(src, "<span class='notice'>The credits have not been generated yet!</span>")
 		return
-	ticker.creds.ui_interact(src)
+	global.ticker.creds.ui_interact(src)
 
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
