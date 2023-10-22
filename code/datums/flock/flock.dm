@@ -59,7 +59,7 @@ proc/get_default_flock()
 	/// The last relay placed, in case admin intervention or respawns somehow.
 	var/obj/flock_structure/relay/last_relay = null
 	/// How long until the last placed relay transmits the Signal
-	var/time_left = -1
+	var/time_left = INFINITY
 	/// Relay is in the process of being made real, gibs and all
 	var/relay_in_progress = FALSE
 	/// Relay has exploded. Game over!
