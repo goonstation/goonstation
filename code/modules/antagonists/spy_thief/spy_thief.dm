@@ -4,6 +4,7 @@
 	antagonist_icon = "spy_thief"
 
 	/// A list of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
+	/// Note that this stores references to deleted items which is questionable at best.
 	var/list/obj/stolen_items = list()
 	/// A list of buylist datums that this traitor has redeemed using their uplink.
 	///
