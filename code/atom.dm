@@ -248,7 +248,7 @@ TYPEINFO(/atom)
 	  * - child procs may override this for special behaviours, such as checking size.
 	  */
 	proc/is_open_container(inward)
-		CRASH("You're meant to override this proc!")
+		CRASH("You're meant to override this proc! [src]")
 
 	/// Set a container to be open or closed and handle chemistry reactions that might happen as a result.
 	/// First arg is boolean, second (optional) arg is which way the opencontainer is being shut.
