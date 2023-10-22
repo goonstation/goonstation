@@ -119,7 +119,7 @@
 		for (var/mutable_appearance/stolen_item as anything in src.stolen_items)
 			stolen_items += list(
 				list(
-					"iconBase64" = "[icon2base64(icon(stolen_item.icon, stolen_item.icon_state, frame = 1, dir = stolen_item.dir))]",
+					"iconBase64" = "[icon2base64(getFlatIcon(stolen_item, no_anim=TRUE))]",
 					"name" = "[stolen_item.name]",
 				)
 			)
