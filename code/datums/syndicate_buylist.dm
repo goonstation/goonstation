@@ -1086,10 +1086,9 @@ ABSTRACT_TYPE(/datum/syndicate_buylist/surplus)
 	can_buy = UPLINK_TRAITOR | UPLINK_NUKE_OP
 
 	spy
-		cost = 3
+		cost = 5
 		vr_allowed = FALSE
 		not_in_crates = TRUE
-		surplus_weight = 25 // so this remains rare in spy
 		can_buy = UPLINK_TRAITOR | UPLINK_SPY_THIEF | UPLINK_NUKE_OP
 
 /datum/syndicate_buylist/surplus/akm
