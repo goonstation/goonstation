@@ -104,7 +104,7 @@
 			return
 
 		if(istype(M))
-			M.visible_message("<span class='alert'><B>[M] stabs [target] with their sharp fingers!</B></span>")
+			M.visible_message("<span class='alert'><B>[M] stabs [target] with [his_or_her(M)] sharp fingers!</B></span>")
 			boutput(M, "<span class='notice'>You begin to pump your [pick("polluted","spooky","bad","gross","icky","evil","necrotic")] blood into [target]'s chest.</span>")
 			boutput(target, "<span class='alert'>You feel cold . . .</span>")
 
