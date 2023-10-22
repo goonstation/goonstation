@@ -3,9 +3,8 @@
 	display_name = "spy thief"
 	antagonist_icon = "spy_thief"
 
-	/// A list of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
-	/// Note that this stores references to deleted items which is questionable at best.
-	var/list/obj/stolen_items = list()
+	/// A list of mutable appearnces of items that this traitor has stolen using their uplink. This tracks items stolen with any uplink, so if a spy thief steals another spy thief's uplink, stolen items will show up here too!
+	var/list/mutable_appearance/stolen_items = list()
 	/// A list of buylist datums that this traitor has redeemed using their uplink.
 	///
 	///This tracks items redeemed with any uplink, so if a spy thief steals another spy thief's uplink, redeemed items will show up here too!
@@ -117,10 +116,10 @@
 
 	get_statistics()
 		var/list/stolen_items = list()
-		for (var/obj/stolen_item as anything in src.stolen_items)
+		for (var/mutable_appearance/stolen_item as anything in src.stolen_items)
 			stolen_items += list(
 				list(
-					"iconBase64" = "[icon2base64(icon(initial(stolen_item.icon), initial(stolen_item.icon_state), frame = 1, dir = initial(stolen_item.dir)))]",
+					"iconBase64" = "[icon2base64(icon(stolen_item.icon, stolen_item.icon_state, frame = 1, dir = stolen_item.dir))]",
 					"name" = "[stolen_item.name]",
 				)
 			)
