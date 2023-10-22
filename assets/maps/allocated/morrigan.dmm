@@ -1420,7 +1420,10 @@
 	dir = 8;
 	icon_state = "tube1"
 	},
-/obj/decal/tile_edge/floorguide/arrow_s,
+/obj/decal/morrigansign/lero{
+	pixel_y = -66;
+	pixel_x = -22
+	},
 /turf/unsimulated/floor/black,
 /area/morrigan/teleporter)
 "blT" = (
@@ -4770,6 +4773,10 @@
 /obj/item/parts/robot_parts/robot_frame,
 /turf/unsimulated/floor/industrial,
 /area/morrigan/station/engineering/eng)
+"evK" = (
+/obj/decal/tile_edge/floorguide/arrow_s,
+/turf/unsimulated/floor/black,
+/area/morrigan/teleporter)
 "evO" = (
 /obj/table/wood/round,
 /obj/item/plate,
@@ -5450,10 +5457,6 @@
 	pixel_y = 32
 	},
 /obj/item/audio_tape/morrigan_interrogation,
-/obj/item/audio_tape/morrigan_interrogation2{
-	pixel_y = 7;
-	pixel_x = -12
-	},
 /turf/unsimulated/floor/black,
 /area/morrigan/station/security/interrogation)
 "fcl" = (
@@ -12966,15 +12969,6 @@
 	},
 /turf/unsimulated/floor/shuttle/red,
 /area/morrigan/station/engineering/exports)
-"lIm" = (
-/obj/decal/tile_edge/stripe{
-	dir = 1
-	},
-/obj/decal/tile_edge/floorguide/arrow_s{
-	dir = 4
-	},
-/turf/unsimulated/floor/black,
-/area/morrigan/teleporter)
 "lIP" = (
 /obj/item/electronics/screen,
 /turf/unsimulated/floor/plating/jen,
@@ -21400,7 +21394,8 @@
 /turf/unsimulated/floor/twotone/red,
 /area/morrigan/station/podbay/medical)
 "twh" = (
-/obj/mapping_helper/wingrille_spawn/crystal,
+/obj/grille/steel,
+/obj/window/auto/reinforced/indestructible/glass,
 /turf/unsimulated/floor/black,
 /area/morrigan/teleporter)
 "tws" = (
@@ -23334,6 +23329,13 @@
 /area/morrigan/derelict)
 "vbP" = (
 /obj/machinery/light/incandescent/netural,
+/obj/storage/crate/bin/trash,
+/obj/item/spent_scrambler,
+/obj/item/audio_tape/morrigan_interrogation2,
+/obj/item/audio_tape/morrigan_interrogation3{
+	pixel_y = 2;
+	pixel_x = -5
+	},
 /turf/unsimulated/floor/wood/six,
 /area/morrigan/station/command/HOS)
 "vch" = (
@@ -39384,7 +39386,7 @@ ssI
 hqX
 ssI
 blt
-fOj
+evK
 jVa
 fOj
 fmV
@@ -39590,9 +39592,9 @@ pXI
 hqX
 hqX
 iJI
-lIm
-lIm
 sjn
+hqX
+hqX
 vmy
 twh
 hqX

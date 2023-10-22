@@ -80,7 +80,12 @@
 	desc = "About as useful as a stick."
 	item_state = "hafpistol"
 	force = 5
-
+/obj/item/spent_scrambler
+	name = "Used Syringe"
+	desc = "Hmm... have you seen this item before ?"
+	icon = 'icons/obj/syringe.dmi'
+	icon_state = "spent_scrambler"
+	force = 0
 /obj/item/broken_optio
 	name = "spent optio gun"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
@@ -246,6 +251,11 @@
 	desc = "A Massive mounted weapon able to rotate 180 degrees. Fires concentrated superheated plasma bursts that wreak havoc on stations and ships alike."
 	icon_state = "beamcannon"
 
+/obj/decal/fakeobjects/shipart/fire
+	name = "Thruster"
+	desc = "It's fuel burning..."
+	icon_state = "fuel"
+
 /obj/decal/fakeobjects/factory
 	name = "Machine"
 	icon = 'icons/obj/adventurezones/morrigan/factory64x64.dmi'
@@ -360,3 +370,6 @@
 
 /obj/decal/morrigansign/logo
 	icon_state = "morrigan"
+
+/obj/decal/morrigansign/lero
+	icon_state = "lero"

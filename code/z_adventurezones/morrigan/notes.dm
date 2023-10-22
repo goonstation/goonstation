@@ -351,15 +351,14 @@
 	"}
 /obj/item/paper/morrigan/MorriganNT2
 	name = "Intercepted PDA Message"
-	icon_state = "paper"
-	info ={"
-	Hello CentComm,
-	This is agent S, I've confirmed that there is indeed a way to self destruct this station. I don't know where yet, rumors say it in the bridge. <br>
-	Sounds too risky to infil right now, they appear to be on high alert or something. We would appreciate some feedback, your last orders date from <br>
-	a while ago. Is operation Blue still in action ? We're eagerly awaiting a response from you.<br>
-	-May Nanotrasen never fall.
-	--Transcript End. Message Delivered from PDA-%#24EW#2 to $%@#!-32.--
-	"}
+	desc = "Hmm, a transcript"
+	icon_state = "thermal_paper"
+	sizex = 268
+	sizey = 356
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/PDA NT.png")]'></body></html>"
 
 /obj/item/paper/morrigan/MorriganNT3
 	name = "Slightly Damaged Note"
@@ -407,7 +406,7 @@
 
 
 /obj/item/paper/morrigan/morrigance
-	name = "In case you're locked out"
+	name = "Intercepted Message #490"
 	icon_state = "paper"
 	info = {"
 	What kind of IDIOT are you ? Are you trying to get all of us fired Matheos ? Why were you even IN there ? My fucking god, it's not even something I expected of you<br>
@@ -553,7 +552,7 @@
 	"This missing here, that disappears there... I'm not blind to this. We know what you're doing.",
 	"You'd have been executed already, if it weren't for me. Call it a favor.",
 	"*static*",
-	"Looks like our time is done, think carefully about our conversation today, Matheos. "
+	"Looks like our time is done, think carefully about our conversation today, Matheos."
 	)
 
 		speakers = list(

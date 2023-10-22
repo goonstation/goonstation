@@ -2644,7 +2644,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 	allow_spy_theft = 0
 	can_join_gangs = FALSE
 	cant_spawn_as_rev = 1
-	slot_back = list(/obj/item/storage/backpack/syndie)
+	slot_back = list(/obj/item/storage/backpack/morrigan)
 	slot_jump = list(/obj/item/clothing/under/rank/morrigan/sec)
 	slot_belt = list(/obj/item/device/light/flashlight)
 	slot_suit = list(/obj/item/clothing/suit/space/ntso/morrigan)

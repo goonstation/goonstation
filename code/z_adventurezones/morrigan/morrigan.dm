@@ -1135,3 +1135,14 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	anchored = ANCHORED_ALWAYS
 	density = 0
 	opacity = 0
+
+
+/obj/item/storage/secure/ssafe/hossafe
+	name = "Secure Safe"
+	crackable = FALSE
+	code = 51854
+	code_len = 5
+	configure_mode = FALSE
+
+	spawn_contents = list(/obj/item/paper/morrigan/hospastpaper, /obj/item/paper/morrigan/hoshospital, /obj/item/paper/morrigan/hosoldteam)
+

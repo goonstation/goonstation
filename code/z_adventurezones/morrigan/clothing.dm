@@ -344,3 +344,10 @@
 	can_hold_exact = list(/obj/item/gun/kinetic/medsmg)
 	spawn_contents = list(/obj/item/gun/kinetic/medsmg, /obj/item/baton/windup/morrigan, /obj/item/storage/box/morriganmedkit, /obj/item/storage/morrigan_pouch, /obj/item/robodefibrillator/morrigan)
 
+//▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Backpack ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
+
+/obj/item/storage/backpack/morrigan
+	satchel_compatible = FALSE
+	inhand_image_icon = "docbag3"
+	icon_state = "bp_morrigan"
+	item_state = "bp_morrigan"
