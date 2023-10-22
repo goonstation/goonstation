@@ -5,7 +5,7 @@
 	return tgui_admin_state.can_use_topic(src, user)
 
 /datum/player_panel/ui_status(mob/user)
-  return tgui_admin_state.can_use_topic(src, user)
+	return tgui_admin_state.can_use_topic(src, user)
 
 /datum/player_panel/ui_interact(mob/user, datum/tgui/ui)
 	ui = tgui_process.try_update_ui(user, src, ui)
