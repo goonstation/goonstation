@@ -661,7 +661,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	luminosity = 1
 	force_fullbright = 0
 #endif
-	requires_power = 0
+	requires_power = FALSE
 	sound_environment = 2
 	expandable = 0
 
