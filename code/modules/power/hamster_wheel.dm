@@ -236,6 +236,9 @@ TYPEINFO(/obj/machinery/power/power_wheel)
 		watts_gen = 0
 
 	relaymove(mob/user, direction, delay, running)
+		if(src.occupant != user)
+			stack_trace("relaymove() called on [src] by '[user]' who is not the occupant '[occupant]'!")
+			src.occupant = user
 		var/spin_dir = direction & (EAST | WEST)
 		if(spin_dir)
 			if(was_running && (was_running != spin_dir) )

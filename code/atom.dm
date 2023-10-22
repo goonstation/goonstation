@@ -64,6 +64,9 @@ TYPEINFO(/atom)
 	/// Storage for items
 	var/datum/storage/storage = null
 
+	/// Which mob is pulling this atom currently
+	var/mob/pulled_by = null
+
 /* -------------------- name stuff -------------------- */
 	/*
 	to change names: either add or remove something with the appropriate proc(s) and then call atom.UpdateName()
@@ -397,7 +400,8 @@ TYPEINFO(/atom)
 /// Not intended for normal use. Current intended use is stuff like `src.try_set_icon_state(src.icon_state + "-autumn")` for seasonal modifiers etc.
 /atom/proc/try_set_icon_state(new_state, new_icon=null)
 	if(src.is_valid_icon_state(new_state, new_icon))
-		src.icon = new_icon
+		if(new_icon)
+			src.icon = new_icon
 		src.set_icon_state(new_state)
 		return TRUE
 	return FALSE

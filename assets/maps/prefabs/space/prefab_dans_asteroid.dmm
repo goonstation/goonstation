@@ -605,7 +605,7 @@
 /turf/simulated/floor/airless/grime,
 /area/prefab/discount_dans_asteroid)
 "xw" = (
-/obj/plasticflaps,
+/obj/strip_door,
 /turf/unsimulated/floor/arctic/snow/ice,
 /area/prefab/discount_dans_asteroid)
 "xz" = (

@@ -948,7 +948,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 /datum/material/crystal/gemstone
 	mat_id = "quartz"
 	name = "quartz"
-	desc = "Quartz is somewhat valuable but not paticularly useful."
+	desc = "Quartz is somewhat valuable but not particularly useful."
 	color = "#BBBBBB"
 	alpha = 220
 	quality = 50
@@ -1121,7 +1121,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 
 	transparent
 		mat_id = "gnesisglass"
-		name = "transclucent gnesis"
+		name = "translucent gnesis"
 		desc = "A rare complex crystalline matrix with a lazily shifting internal structure. The layers are arranged to let light through."
 		color = "#ffffff"
 		alpha = 180
@@ -1270,7 +1270,7 @@ ABSTRACT_TYPE(/datum/material/organic)
 /datum/material/organic/blob
 	mat_id = "blob"
 	name = "blob"
-	desc = "The material of the feared giant space amobea."
+	desc = "The material of the feared giant space amoeba."
 	color = "#44cc44"
 	alpha = 180
 	quality = 2
@@ -1860,6 +1860,20 @@ ABSTRACT_TYPE(/datum/material/rubber)
 		setProperty("electrical", 3)
 		setProperty("thermal", 4)
 
+/datum/material/rubber/plastic
+	mat_id = "plastic"
+	name = "plastic"
+	desc = "A synthetic material made of polymers. Great for polluting oceans."
+	color = "#baccd3"
+	alpha = 200
+
+	New()
+		..()
+		setProperty("density", 3)
+		setProperty("hard", 1)
+		setProperty("electrical", 2)
+		setProperty("thermal", 3)
+		setProperty("chemical", 5)
 
 /datum/material/rubber/synthrubber
 	mat_id = "synthrubber"

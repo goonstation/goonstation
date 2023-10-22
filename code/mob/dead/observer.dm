@@ -10,6 +10,7 @@
 	canmove = TRUE
 	blinded = FALSE
 	anchored = ANCHORED	//  don't get pushed around
+	var/doubleghost = FALSE //! When a ghost gets busted they become a ghost of a ghost and this var is true
 	var/observe_round = FALSE
 	var/health_shown = FALSE
 	var/arrest_shown = FALSE
@@ -106,19 +107,20 @@
 	hair.alpha = 192
 	overlays += hair
 
-	wig = new
-	wig.mat_changename = 0
-	var/datum/material/wigmat = getMaterial("ectofibre")
-	wigmat = wigmat.getMutable()
-	wigmat.setColor(P.AH.customization_first_color)
-	wig.setMaterial(wigmat)
-	wig.name = "ectofibre [name]'s hair"
-	wig.icon = 'icons/mob/human_hair.dmi'
-	wig.icon_state = cust_one_state
-	wig.color = P.AH.customization_first_color
-	wig.wear_image_icon = 'icons/mob/human_hair.dmi'
-	wig.wear_image = image(wig.wear_image_icon, wig.icon_state)
-	wig.wear_image.color = P.AH.customization_first_color
+	if(cust_one_state && cust_one_state != "none")
+		wig = new
+		wig.mat_changename = 0
+		var/datum/material/wigmat = getMaterial("ectofibre")
+		wigmat = wigmat.getMutable()
+		wigmat.setColor(P.AH.customization_first_color)
+		wig.setMaterial(wigmat)
+		wig.name = "ectofibre [name]'s hair"
+		wig.icon = 'icons/mob/human_hair.dmi'
+		wig.icon_state = cust_one_state
+		wig.color = P.AH.customization_first_color
+		wig.wear_image_icon = 'icons/mob/human_hair.dmi'
+		wig.wear_image = image(wig.wear_image_icon, wig.icon_state)
+		wig.wear_image.color = P.AH.customization_first_color
 
 
 	var/image/beard = image('icons/mob/human_hair.dmi', cust_two_state)
@@ -140,7 +142,7 @@
 
 // Make sure to keep this JPS-cache safe
 /mob/dead/observer/Cross(atom/movable/mover)
-	if (src.icon_state != "doubleghost" && istype(mover, /obj/projectile))
+	if (!doubleghost && istype(mover, /obj/projectile))
 		var/obj/projectile/proj = mover
 		if (proj.proj_data?.hits_ghosts)
 			return 0
@@ -157,7 +159,7 @@
 #endif
 
 /mob/dead/observer/bullet_act(var/obj/projectile/P)
-	if (src.icon_state == "doubleghost" || !P.proj_data?.hits_ghosts)
+	if (doubleghost|| !P.proj_data?.hits_ghosts)
 		return
 
 #ifdef HALLOWEEN
@@ -171,7 +173,11 @@
 			return
 #endif
 
-	src.icon_state = "doubleghost"
+	src.doubleghost = TRUE
+	if(!try_set_icon_state("doubleghost"))
+		src.add_filter("doubleghost_outline", 0, outline_filter(1, "#000000", OUTLINE_SHARP))
+		// color matrix makes the outline and all other fully black pixels white and somewhat transparent, hides the rest
+		src.color = list(0,0,0,-255, 0,0,0,-255, 0,0,0,-255, 0,0,0,0.627451, 1,1,1,0)
 	src.visible_message("<span class='alert'><b>[src] is busted!</b></span>","<span class='alert'>You are demateralized into a state of further death!</span>")
 
 
@@ -397,19 +403,21 @@
 		detail.alpha = 192
 		O.overlays += detail
 
-		O.wig = new
-		O.wig.mat_changename = 0
-		var/datum/material/wigmat = getMaterial("ectofibre")
-		wigmat = wigmat.getMutable()
-		wigmat.setColor(src.bioHolder.mobAppearance.customization_first_color)
-		O.wig.setMaterial(wigmat)
-		O.wig.name = "[O.name]'s hair"
-		O.wig.icon = 'icons/mob/human_hair.dmi'
-		O.wig.icon_state = src.bioHolder.mobAppearance.customization_first.id
-		O.wig.color = src.bioHolder.mobAppearance.customization_first_color
-		O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
-		O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
-		O.wig.wear_image.color = src.bioHolder.mobAppearance.customization_first_color
+		var/cust_one = src.bioHolder.mobAppearance.customization_first.id
+		if(cust_one && cust_one != "none")
+			O.wig = new
+			O.wig.mat_changename = 0
+			var/datum/material/wigmat = getMaterial("ectofibre")
+			wigmat = wigmat.getMutable()
+			wigmat.setColor(src.bioHolder.mobAppearance.customization_first_color)
+			O.wig.setMaterial(wigmat)
+			O.wig.name = "[O.name]'s hair"
+			O.wig.icon = 'icons/mob/human_hair.dmi'
+			O.wig.icon_state = cust_one
+			O.wig.color = src.bioHolder.mobAppearance.customization_first_color
+			O.wig.wear_image_icon = 'icons/mob/human_hair.dmi'
+			O.wig.wear_image = image(O.wig.wear_image_icon, O.wig.icon_state)
+			O.wig.wear_image.color = src.bioHolder.mobAppearance.customization_first_color
 
 
 	return O

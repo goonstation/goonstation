@@ -19560,18 +19560,6 @@
 	icon_state = "iocrust_corner"
 	},
 /area/iomoon)
-"bvp" = (
-/obj/table/auto,
-/obj/item/device/multitool{
-	desc = "A pretty reliable brand, though you wouldn't guess it from the name.";
-	icon_state = "multitool_green";
-	item_state = "multitool";
-	name = "QUIRK multitool"
-	},
-/turf/unsimulated/floor/purple/side{
-	dir = 1
-	},
-/area/iomoon/base)
 "bvq" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -25652,6 +25640,23 @@
 	},
 /turf/unsimulated/floor/plating/scorched,
 /area/crater)
+"bSN" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/landmark/chess{
+	name = "pawn"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "white"
+	},
+/area/sim/racing_track)
 "bSO" = (
 /obj/map/light/graveyard,
 /turf/unsimulated/grasstodirt,
@@ -29733,6 +29738,22 @@
 "cip" = (
 /obj/table/auto,
 /turf/unsimulated/floor/grime,
+/area/meat_derelict/entry)
+"ciq" = (
+/obj/decal/fakeobjects/firelock_broken{
+	dir = 4;
+	icon = 'icons/obj/doors/SL_doors.dmi';
+	icon_state = "fdoor0"
+	},
+/obj/machinery/door/poddoor/blast/single{
+	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
+	id = "meatstation1";
+	name = "Safety Interlock";
+	dir = 4
+	},
+/turf/unsimulated/floor{
+	icon_state = "floor"
+	},
 /area/meat_derelict/entry)
 "cir" = (
 /obj/meatlight{
@@ -41717,13 +41738,6 @@
 /obj/grille/catwalk,
 /turf/unsimulated/floor/plating,
 /area/owlery/Owlmait2)
-"cSr" = (
-/obj/plasticflaps,
-/obj/river{
-	dir = 4
-	},
-/turf/unsimulated/grass,
-/area/owlery/Owlmait2)
 "cSs" = (
 /obj/machinery/light/emergency{
 	dir = 8
@@ -46320,34 +46334,6 @@
 	icon_state = "white"
 	},
 /area/sim/racing_track)
-"deK" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 8;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/landmark/chess{
-	name = "b_rook"
-	},
-/turf/unsimulated/floor/chess{
-	icon_state = "floorgrime-w"
-	},
-/area/sim/racing_track)
 "deL" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -46376,70 +46362,6 @@
 	},
 /turf/unsimulated/floor/chess{
 	icon_state = "white"
-	},
-/area/sim/racing_track)
-"deN" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/landmark/chess{
-	name = "b_pawn"
-	},
-/turf/unsimulated/floor/chess{
-	icon_state = "fullblack"
-	},
-/area/sim/racing_track)
-"deO" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/landmark/chess{
-	name = "pawn"
-	},
-/turf/unsimulated/floor/chess{
-	icon_state = "white"
-	},
-/area/sim/racing_track)
-"deP" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 1;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/landmark/chess{
-	name = "rook"
-	},
-/turf/unsimulated/floor/chess{
-	icon_state = "fullblack"
 	},
 /area/sim/racing_track)
 "deQ" = (
@@ -46605,24 +46527,6 @@
 	icon_state = "fullblack"
 	},
 /area/sim/racing_track)
-"dfd" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/landmark/chess{
-	name = "queen"
-	},
-/turf/unsimulated/floor/chess{
-	icon_state = "floorgrime-w"
-	},
-/area/sim/racing_track)
 "dfe" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -46777,94 +46681,6 @@
 	},
 /turf/unsimulated/floor/chess{
 	icon_state = "fullblack"
-	},
-/area/sim/racing_track)
-"dfv" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 8;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/landmark/chess{
-	name = "b_rook"
-	},
-/turf/unsimulated/floor/chess{
-	icon_state = "fullblack"
-	},
-/area/sim/racing_track)
-"dfw" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/landmark/chess{
-	name = "b_pawn"
-	},
-/turf/unsimulated/floor/chess{
-	icon_state = "floorgrime-w"
-	},
-/area/sim/racing_track)
-"dfx" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/landmark/chess{
-	name = "pawn"
-	},
-/turf/unsimulated/floor/chess{
-	icon_state = "fullblack"
-	},
-/area/sim/racing_track)
-"dfy" = (
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/landmark/chess{
-	name = "rook"
-	},
-/turf/unsimulated/floor/chess{
-	icon_state = "white"
 	},
 /area/sim/racing_track)
 "dfz" = (
@@ -51675,6 +51491,17 @@
 	},
 /turf/unsimulated/floor/carpet/red/standard,
 /area/centcom/offices/questx)
+"dCb" = (
+/obj/overlay{
+	density = 1;
+	desc = "The chassis of an HK-class drone.";
+	dir = 1;
+	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
+	icon_state = "drone_construction";
+	name = "partially assembled drone"
+	},
+/turf/unsimulated/floor/engine,
+/area/drone/assembly)
 "dCf" = (
 /obj/decal/fakeobjects/robotpedestal{
 	desc = "Looks fairly robust.";
@@ -57331,6 +57158,24 @@
 	dir = 6
 	},
 /area/centcom/offices/walpvrgis)
+"ebn" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 1;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/landmark/chess{
+	name = "pawn"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "fullblack"
+	},
+/area/sim/racing_track)
 "ebC" = (
 /obj/landmark/viscontents_spawn{
 	targetZ = 4
@@ -57341,6 +57186,12 @@
 /area/centcom/offices{
 	icon_state = "blue"
 	})
+"ecj" = (
+/turf/unsimulated/floor{
+	icon = 'icons/turf/shuttle.dmi';
+	icon_state = "floor3"
+	},
+/area/meat_derelict/main)
 "edm" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -57799,27 +57650,6 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/marsoutpost)
-"eDt" = (
-/obj/decal/fakeobjects/robot{
-	anchored = 1;
-	desc = "Most of it's electronics appear to be destroyed.";
-	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
-	icon_state = "mars_bot-dead";
-	name = "Smashed Robot"
-	},
-/obj/decal/fakeobjects{
-	anchored = 1;
-	density = 1;
-	desc = "It's brown for some strange reason.";
-	dir = 4;
-	icon = 'icons/misc/worlds.dmi';
-	icon_state = "mars_window";
-	layer = 8;
-	name = "window"
-	},
-/obj/decal/stripe_delivery,
-/turf/unsimulated/floor/plating,
-/area/marsoutpost)
 "eEh" = (
 /obj/table/reinforced/auto,
 /obj/machinery/door/window{
@@ -58224,6 +58054,12 @@
 	dir = 1
 	},
 /area/moon/museum)
+"fbU" = (
+/obj/critter/monster_door{
+	dir = 4
+	},
+/turf/unsimulated/floor/plating,
+/area/meat_derelict/guts)
 "fcf" = (
 /obj/machinery/light/small,
 /obj/stool/chair{
@@ -58768,6 +58604,18 @@
 	icon_state = "shore-11"
 	},
 /area/titlescreen)
+"fIG" = (
+/obj/overlay{
+	bound_height = 96;
+	bound_width = 96;
+	density = 1;
+	desc = "An enormous Omega-class battledrone. Luckily, it appears to be inactive at the moment.";
+	icon = 'icons/mob/critter/robotic/drone/drone96x96.dmi';
+	icon_state = "battledrone-inactive";
+	name = "mostly assembled drone"
+	},
+/turf/unsimulated/floor/engine,
+/area/drone/assembly)
 "fKc" = (
 /obj/indestructible/shuttle_corner{
 	dir = 1;
@@ -58824,6 +58672,16 @@
 	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/aloe)
+"fLI" = (
+/obj/overlay{
+	density = 1;
+	desc = "The chassis of an SC-class drone.";
+	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
+	icon_state = "drone_construction";
+	name = "partially assembled drone"
+	},
+/turf/unsimulated/floor/engine,
+/area/drone/assembly)
 "fMq" = (
 /obj/machinery/light,
 /obj/table/wood/round/auto,
@@ -59277,12 +59135,6 @@
 	dir = 1
 	},
 /area/iomoon/base)
-"gkx" = (
-/turf/unsimulated/floor{
-	icon = 'icons/turf/shuttle.dmi';
-	icon_state = "floor3"
-	},
-/area/meat_derelict/main)
 "gkG" = (
 /obj/grille/catwalk{
 	dir = 9
@@ -59986,22 +59838,6 @@
 	dir = 1
 	},
 /area/owlery/owleryhall)
-"hcs" = (
-/obj/machinery/conveyor/EW{
-	id = "ddan"
-	},
-/obj/overlay{
-	density = 1;
-	desc = "Part of a drone chassis.";
-	dir = 8;
-	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
-	icon_state = "drone_construction";
-	name = "drone parts"
-	},
-/obj/item/cell/cerenkite,
-/obj/item/shipcomponent/mainweapon/disruptor,
-/turf/unsimulated/floor/caution/north,
-/area/drone/office)
 "hcG" = (
 /obj/table/wood/auto/desk,
 /obj/item/luggable_computer/personal/adhara_laptop,
@@ -60434,6 +60270,10 @@
 	dir = 5
 	},
 /area/centcom/offices/aloe)
+"hzi" = (
+/obj/decal/poster/wallsign/stencil/left/six,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "hzM" = (
 /obj/tree,
 /turf/unsimulated/floor/grass/leafy,
@@ -60449,12 +60289,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
-"hAU" = (
-/obj/critter/monster_door{
-	dir = 4
-	},
-/turf/unsimulated/floor/plating,
-/area/meat_derelict/guts)
 "hBd" = (
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/wood/two,
@@ -60655,6 +60489,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/upper_arctic/pod1)
+"hME" = (
+/obj/decal/poster/wallsign/stencil/left/a,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "hNm" = (
 /obj/machinery/vending/snack{
 	status = 1
@@ -61016,6 +60854,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"ilt" = (
+/obj/decal/poster/wallsign/stencil/left/c,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "imi" = (
 /obj/machinery/light/runway_light/delay4,
 /obj/lattice{
@@ -61559,6 +61401,10 @@
 /obj/decal/fakeobjects/lightbulb_broken,
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
+"iJf" = (
+/obj/decal/poster/wallsign/stencil/left/g,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "iJj" = (
 /turf/unsimulated/wall/auto/lead/blue,
 /area/retentioncenter)
@@ -61597,6 +61443,17 @@
 	},
 /turf/unsimulated/floor/grass/leafy,
 /area/crater/biodome/north)
+"iOq" = (
+/obj/overlay{
+	density = 1;
+	desc = "The chassis of an HK-class drone.";
+	dir = 4;
+	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
+	icon_state = "drone_construction";
+	name = "mostly assembled drone"
+	},
+/turf/unsimulated/floor/engine,
+/area/drone/assembly)
 "iOu" = (
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -62245,6 +62102,10 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/merchant_shuttle/right_centcom/donut2)
+"jqy" = (
+/obj/decal/poster/wallsign/stencil/left/b,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "jqz" = (
 /turf/unsimulated/floor/black/side,
 /area/iomoon/base)
@@ -62390,14 +62251,6 @@
 	},
 /turf/unsimulated/floor/caution/east,
 /area/iomoon/base/underground)
-"jxg" = (
-/turf/unsimulated/wall/generic{
-	icon = 'icons/obj/doors/shuttle.dmi';
-	icon_state = "door1";
-	name = "broken door";
-	dir = 4
-	},
-/area/meat_derelict/soviet)
 "jxy" = (
 /obj/decal/fakeobjects/firelock_broken{
 	desc = "Rust has rendered this airlock useless.";
@@ -62422,6 +62275,16 @@
 "jxZ" = (
 /turf/unsimulated/floor/stairs/wood2,
 /area/afterlife/bar)
+"jyd" = (
+/obj/table/auto,
+/obj/item/device/multitool{
+	desc = "A pretty reliable brand, though you wouldn't guess it from the name.";
+	name = "QUIRK multitool"
+	},
+/turf/unsimulated/floor/purple/side{
+	dir = 1
+	},
+/area/iomoon/base)
 "jzk" = (
 /obj/grille/steel,
 /turf/unsimulated/floor/plating/random,
@@ -62485,22 +62348,6 @@
 "jEp" = (
 /turf/unsimulated/floor/stairs,
 /area/void_diner)
-"jEI" = (
-/obj/decal/fakeobjects/firelock_broken{
-	dir = 4;
-	icon = 'icons/obj/doors/SL_doors.dmi';
-	icon_state = "fdoor0"
-	},
-/obj/machinery/door/poddoor/blast/single{
-	desc = "A security blast door.  Labeling indicates that it was installed 'in case the teleportation experiment starts bringing in Draculas.' There's probably a control for it somewhere.";
-	id = "meatstation1";
-	name = "Safety Interlock";
-	dir = 4
-	},
-/turf/unsimulated/floor{
-	icon_state = "floor"
-	},
-/area/meat_derelict/entry)
 "jEZ" = (
 /obj/decal/poster/wallsign/dont_panic{
 	pixel_y = -31;
@@ -63457,6 +63304,20 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
+"kIF" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "floorgrime-w"
+	},
+/area/sim/racing_track)
 "kIH" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 9;
@@ -64278,6 +64139,10 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon)
+"lvP" = (
+/obj/decal/poster/wallsign/stencil/right/two,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "lwe" = (
 /obj/lattice{
 	dir = 10;
@@ -64371,13 +64236,6 @@
 /obj/grille/steel,
 /turf/unsimulated/floor/plating,
 /area/moon/museum)
-"lDb" = (
-/obj/machinery/conveyor/SN{
-	id = "owlery_trash"
-	},
-/obj/plasticflaps,
-/turf/unsimulated/floor/plating,
-/area/owlery/Owlmait)
 "lDq" = (
 /obj/machinery/light/small,
 /turf/unsimulated/floor/plating,
@@ -64723,13 +64581,6 @@
 	icon_state = "space-1"
 	},
 /area/titlescreen)
-"lWL" = (
-/obj/machinery/conveyor/SN{
-	id = "owlery_trash"
-	},
-/obj/plasticflaps,
-/turf/unsimulated/floor/grime,
-/area/owlery/Owlmait)
 "lWU" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -65539,6 +65390,24 @@
 /obj/table/wood/round/auto,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
+"mRb" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/landmark/chess{
+	name = "queen"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "white"
+	},
+/area/sim/racing_track)
 "mSq" = (
 /obj/lattice{
 	dir = 5;
@@ -65803,6 +65672,10 @@
 	icon_state = "floor3"
 	},
 /area/hospital/samostrel)
+"neM" = (
+/obj/decal/poster/wallsign/stencil/left/e,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "nfK" = (
 /obj/decal/fakeobjects/pipe{
 	dir = 4;
@@ -66049,13 +65922,6 @@
 	name = "the high ground"
 	},
 /area/centcom/offices/enakai)
-"ntB" = (
-/obj/cable{
-	icon_state = "1-4"
-	},
-/obj/machinery/atmospherics/pipe/tank/toxins,
-/turf/unsimulated/floor/plating/scorched,
-/area/crater)
 "nun" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -66267,6 +66133,14 @@
 "nzm" = (
 /turf/unsimulated/floor/carpet/purple/fancy/narrow/nw,
 /area/centcom/offices/rodney)
+"nzs" = (
+/turf/unsimulated/wall/generic{
+	icon = 'icons/obj/doors/shuttle.dmi';
+	icon_state = "door1";
+	name = "broken door";
+	dir = 4
+	},
+/area/meat_derelict/soviet)
 "nAf" = (
 /turf/unsimulated/floor/dojo/stonestair,
 /area/titlescreen)
@@ -66665,18 +66539,6 @@
 	},
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base)
-"nTH" = (
-/obj/overlay{
-	bound_height = 96;
-	bound_width = 96;
-	density = 1;
-	desc = "An enormous Omega-class battledrone. Luckily, it appears to be inactive at the moment.";
-	icon = 'icons/mob/critter/robotic/drone/drone96x96.dmi';
-	icon_state = "battledrone-inactive";
-	name = "mostly assembled drone"
-	},
-/turf/unsimulated/floor/engine,
-/area/drone/assembly)
 "nTL" = (
 /obj/map/light/brightwhite,
 /mob/living/critter/small_animal/boogiebot,
@@ -67228,6 +67090,13 @@
 "ouA" = (
 /turf/unsimulated/floor/plating/damaged2,
 /area/void_diner)
+"ouH" = (
+/obj/machinery/conveyor/SN{
+	id = "owlery_trash"
+	},
+/obj/strip_door,
+/turf/unsimulated/floor/grime,
+/area/owlery/Owlmait)
 "ove" = (
 /obj/decal/fakeobjects{
 	anchored = 1;
@@ -67484,6 +67353,10 @@
 /obj/mapping_helper/wingrille_spawn/auto,
 /turf/unsimulated/floor/plating,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap2)
+"oKc" = (
+/obj/decal/poster/wallsign/stencil/right/three,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "oKo" = (
 /obj/decal/exhibit/lowend{
 	exhibit_id = "ex_centcom_lowend_5";
@@ -67534,6 +67407,24 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital)
+"oQJ" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 1;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/landmark/chess{
+	name = "b_pawn"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "floorgrime-w"
+	},
+/area/sim/racing_track)
 "oSb" = (
 /obj/cable{
 	icon_state = "1-2"
@@ -68295,17 +68186,6 @@
 	dir = 4
 	},
 /area/sim/gunsim/lobby)
-"pyK" = (
-/obj/overlay{
-	density = 1;
-	desc = "The chassis of an HK-class drone.";
-	dir = 1;
-	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
-	icon_state = "drone_construction";
-	name = "partially assembled drone"
-	},
-/turf/unsimulated/floor/engine,
-/area/drone/assembly)
 "pyP" = (
 /obj/table/reinforced/auto,
 /obj/item/storage/box/glassbox,
@@ -68827,6 +68707,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base)
+"pZn" = (
+/obj/decal/poster/wallsign/stencil/left/eight,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "pZp" = (
 /obj/tree{
 	dir = 8
@@ -68900,6 +68784,22 @@
 	icon_state = "fblue2"
 	},
 /area/centcom/gallery)
+"qfl" = (
+/obj/machinery/conveyor/EW{
+	id = "ddan"
+	},
+/obj/overlay{
+	density = 1;
+	desc = "Part of a drone chassis.";
+	dir = 8;
+	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
+	icon_state = "drone_construction";
+	name = "drone parts"
+	},
+/obj/item/cell/cerenkite,
+/obj/item/shipcomponent/mainweapon/disruptor,
+/turf/unsimulated/floor/caution/north,
+/area/drone/office)
 "qfs" = (
 /obj/machinery/portable_reclaimer,
 /turf/unsimulated/floor/plating,
@@ -68999,6 +68899,10 @@
 	},
 /turf/unsimulated/floor/white,
 /area/owlery/owleryhall)
+"qnC" = (
+/obj/decal/poster/wallsign/stencil/left/h,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "qnW" = (
 /obj/grille/catwalk{
 	dir = 6;
@@ -69076,6 +68980,13 @@
 	},
 /turf/unsimulated/wall/auto/adventure/icemooninterior,
 /area/precursor)
+"qrL" = (
+/obj/machinery/conveyor/SN{
+	id = "owlery_trash"
+	},
+/obj/strip_door,
+/turf/unsimulated/floor/plating,
+/area/owlery/Owlmait)
 "qrR" = (
 /turf/unsimulated/wall/auto/adventure/fake_window,
 /area/gauntlet/viewing)
@@ -69264,6 +69175,27 @@
 	icon_state = "floor"
 	},
 /area/centcom/lounge)
+"qCf" = (
+/obj/decal/fakeobjects/robot{
+	anchored = 1;
+	desc = "Most of it's electronics appear to be destroyed.";
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi';
+	icon_state = "mars_bot-dead";
+	name = "Smashed Robot"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/decal/stripe_delivery,
+/turf/unsimulated/floor/plating,
+/area/marsoutpost)
 "qCy" = (
 /obj/indestructible/shuttle_corner{
 	dir = 4;
@@ -69975,6 +69907,33 @@
 	},
 /turf/unsimulated/floor/blackwhite,
 /area/owlery/office)
+"rjl" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/landmark/chess{
+	name = "b_rook"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "white"
+	},
+/area/sim/racing_track)
 "rkj" = (
 /obj/grille/catwalk{
 	dir = 10
@@ -70572,10 +70531,21 @@
 "rKC" = (
 /turf/unsimulated/wall/trench,
 /area/afterlife/bar/sanctuary)
+"rKO" = (
+/obj/decal/poster/wallsign/stencil/left/five,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "rLk" = (
 /obj/stool,
 /turf/unsimulated/floor/carpet/grime,
 /area/iomoon/base/underground)
+"rLv" = (
+/obj/strip_door,
+/obj/river{
+	dir = 4
+	},
+/turf/unsimulated/grass,
+/area/owlery/Owlmait2)
 "rLB" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -70682,6 +70652,10 @@
 	},
 /turf/unsimulated/floor/void/channel,
 /area/adventure/channel/flingy)
+"rRv" = (
+/obj/decal/poster/wallsign/stencil/right/four,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "rRG" = (
 /obj/machinery/door/airlock/pyro/external{
 	dir = 4
@@ -71096,6 +71070,10 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/iomoon/base/underground)
+"slS" = (
+/obj/decal/poster/wallsign/stencil/left/seven,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "smg" = (
 /turf/unsimulated/floor/dream/space,
 /area/titlescreen)
@@ -71114,6 +71092,23 @@
 /obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/black,
 /area/syndicate_station/assault_pod)
+"soh" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/landmark/chess{
+	name = "b_pawn"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "fullblack"
+	},
+/area/sim/racing_track)
 "sot" = (
 /obj/machinery/door/airlock/pyro/security,
 /obj/mapping_helper/access/owlsecurity,
@@ -71138,16 +71133,6 @@
 	},
 /turf/unsimulated/floor/plating,
 /area/hospital/underground)
-"soD" = (
-/obj/overlay{
-	density = 1;
-	desc = "The chassis of an SC-class drone.";
-	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
-	icon_state = "drone_construction";
-	name = "partially assembled drone"
-	},
-/turf/unsimulated/floor/engine,
-/area/drone/assembly)
 "soS" = (
 /obj/securearea{
 	desc = "It looks pretty dangerous in there.";
@@ -71661,17 +71646,6 @@
 	dir = 4
 	},
 /area/iomoon/base)
-"taU" = (
-/obj/overlay{
-	density = 1;
-	desc = "The chassis of an HK-class drone.";
-	dir = 4;
-	icon = 'icons/mob/critter/robotic/drone/construction.dmi';
-	icon_state = "drone_construction";
-	name = "mostly assembled drone"
-	},
-/turf/unsimulated/floor/engine,
-/area/drone/assembly)
 "tbp" = (
 /obj/table/reinforced/auto,
 /turf/unsimulated/floor/grime,
@@ -71806,6 +71780,10 @@
 	},
 /turf/unsimulated/floor/carpet/red/decal,
 /area/centcom/offices/grifflez)
+"tmM" = (
+/obj/decal/poster/wallsign/stencil/right/one,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "tnk" = (
 /obj/machinery/chem_dispenser/chemical,
 /obj/decal/stripe_delivery,
@@ -72417,6 +72395,34 @@
 /obj/machinery/light,
 /turf/unsimulated/floor/darkpurple,
 /area/syndicate_station/battlecruiser)
+"uci" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 1;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 8;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/landmark/chess{
+	name = "b_rook"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "fullblack"
+	},
+/area/sim/racing_track)
 "ucy" = (
 /obj/machinery/light,
 /turf/unsimulated/floor/wood/two,
@@ -73226,6 +73232,42 @@
 	icon_state = "shore-45"
 	},
 /area/titlescreen)
+"vaG" = (
+/obj/landmark/chess{
+	name = "b_pawn"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "floorgrime-w"
+	},
+/area/sim/racing_track)
+"vaX" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 1;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/landmark/chess{
+	name = "rook"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "white"
+	},
+/area/sim/racing_track)
 "vaZ" = (
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/shuttle/merchant_shuttle/left_centcom/cogmap)
@@ -75176,6 +75218,10 @@
 	},
 /turf/unsimulated/iomoon/plating,
 /area/iomoon/base)
+"wQX" = (
+/obj/decal/poster/wallsign/stencil/left/d,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "wRR" = (
 /obj/decal/fakeobjects/dreambeach/earth,
 /turf/unsimulated/floor/dream/beach,
@@ -75639,6 +75685,33 @@
 	dir = 8
 	},
 /area/iomoon/base)
+"xqw" = (
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/decal/fakeobjects{
+	anchored = 1;
+	density = 1;
+	desc = "It's brown for some strange reason.";
+	dir = 4;
+	icon = 'icons/misc/worlds.dmi';
+	icon_state = "mars_window";
+	layer = 8;
+	name = "window"
+	},
+/obj/landmark/chess{
+	name = "rook"
+	},
+/turf/unsimulated/floor/chess{
+	icon_state = "fullblack"
+	},
+/area/sim/racing_track)
 "xqB" = (
 /obj/item/reagent_containers/food/snacks/mushroom/psilocybin,
 /turf/unsimulated/floor/grey/side{
@@ -76531,6 +76604,10 @@
 	},
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/merchant_shuttle/right_centcom/cogmap)
+"yfL" = (
+/obj/decal/poster/wallsign/stencil/left/f,
+/turf/unsimulated/floor/setpieces/gauntlet,
+/area/sim/racing_track)
 "yfQ" = (
 /obj/machinery/door/airlock/pyro/glass{
 	name = "Break Room"
@@ -76601,6 +76678,13 @@
 "ykL" = (
 /turf/unsimulated/floor/marble/black,
 /area/centcom/gallery)
+"ylC" = (
+/obj/cable{
+	icon_state = "1-4"
+	},
+/obj/machinery/atmospherics/pipe/tank/radgas,
+/turf/unsimulated/floor/plating/scorched,
+/area/crater)
 "ylS" = (
 /mob/living/critter/robotic/repairbot,
 /turf/unsimulated/iomoon/ancient_floor,
@@ -86901,9 +86985,9 @@ aBY
 cBQ
 cBb
 cCz
-lWL
+ouH
 iPA
-lDb
+qrL
 iIT
 iIT
 gHt
@@ -89178,7 +89262,7 @@ buq
 buN
 buN
 izT
-bvp
+jyd
 buK
 bww
 gjN
@@ -93572,7 +93656,7 @@ cQf
 cPf
 cRR
 cGK
-cSr
+rLv
 cGK
 cGK
 cUh
@@ -114828,19 +114912,19 @@ blV
 bmh
 bmh
 bmh
-hcs
+qfl
 bns
 xnn
 bof
 bok
-pyK
+dCb
 bou
-soD
+fLI
 bor
 bol
 bou
 brg
-nTH
+fIG
 boh
 aaa
 aaa
@@ -115437,9 +115521,9 @@ rZe
 nqE
 boh
 bom
-taU
+iOq
 bou
-soD
+fLI
 bpG
 bpZ
 bou
@@ -118408,7 +118492,7 @@ aJk
 aJk
 bPJ
 isG
-ntB
+ylC
 bQU
 ybt
 bRR
@@ -123379,15 +123463,15 @@ bOn
 bOn
 bOn
 bVU
-deK
-deQ
-deU
-dfc
-dfe
-dfk
+uci
 dfs
-dfv
-bVU
+dfk
+dfe
+dfc
+deU
+deQ
+rjl
+pZn
 bVU
 bVT
 aaa
@@ -123681,15 +123765,15 @@ bOn
 bOn
 bOn
 bVU
-deN
-deR
+oQJ
 deX
 deR
 deX
 deR
 deX
-dfw
-bVU
+vaG
+soh
+slS
 bVU
 bVT
 aaa
@@ -123983,15 +124067,15 @@ bOn
 bOn
 bOn
 bVU
-deM
-deI
+deL
 deJ
 deI
 deJ
 deI
-deH
-deV
-bVU
+deJ
+deI
+deW
+hzi
 bVU
 bVT
 aaa
@@ -124285,15 +124369,15 @@ bOn
 bOn
 bOn
 bVU
-deL
-deJ
+deM
 deI
 deJ
 deI
 deJ
 deI
-deW
-bVU
+deJ
+deV
+rKO
 bVU
 bVT
 aaa
@@ -124587,15 +124671,15 @@ bVS
 bOn
 bOn
 bVU
-deM
-deI
+deL
 deJ
 deI
 deH
 deI
 deJ
-deV
-bVU
+deI
+kIF
+rRv
 bVU
 bVT
 aaa
@@ -124889,15 +124973,15 @@ bOn
 bOn
 bOn
 bVU
-deL
-deH
+deM
 deI
 deJ
 deI
 deJ
 deI
-deW
-bVU
+deJ
+deV
+oKc
 bVU
 bVT
 aaa
@@ -125191,15 +125275,15 @@ bOn
 bOn
 bOn
 bVU
-deO
-deS
-deY
+ebn
+dft
 deS
 deY
 deS
 dft
-dfx
-bVU
+deS
+bSN
+lvP
 bVU
 bVT
 aaa
@@ -125493,15 +125577,15 @@ bOn
 bOn
 bOn
 bVU
-deP
-deT
-dfb
-dfd
-dfh
-dfr
+vaX
 dfu
-dfy
-bVU
+dfr
+dfh
+mRb
+dfb
+deT
+xqw
+tmM
 bVU
 bVT
 aaa
@@ -125795,14 +125879,14 @@ bOn
 bOn
 bOn
 bVU
-bVU
-bVU
-bVU
-bVU
-bVU
-bVU
-bVU
-bVU
+qnC
+iJf
+yfL
+neM
+wQX
+ilt
+jqy
+hME
 bVU
 bVU
 bVT
@@ -130218,7 +130302,7 @@ aKS
 aTs
 jYz
 aJX
-eDt
+qCf
 aTs
 aTs
 aTs
@@ -140021,7 +140105,7 @@ pdZ
 cba
 ckB
 cli
-jxg
+nzs
 cli
 cli
 ckB
@@ -140919,7 +141003,7 @@ aqL
 aqL
 aqL
 aqL
-jEI
+ciq
 aqL
 aqL
 ftm
@@ -141522,7 +141606,7 @@ oeC
 hfT
 aqL
 aqL
-gkx
+ecj
 chN
 chN
 bXx
@@ -144244,7 +144328,7 @@ cgK
 cgK
 bWB
 bZd
-hAU
+fbU
 bZd
 bZd
 cdF

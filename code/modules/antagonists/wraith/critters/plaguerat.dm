@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 /mob/living/critter/wraith/plaguerat
 	name = "plague rat"
 	real_name = "plague rat"
-	desc = "Shouldnt be seeing this."
+	desc = "Shouldn't be seeing this."
 	icon = 'icons/mob/wraith_critters.dmi'
 	icon_state = "smallRat"
 	density = 1
@@ -93,7 +93,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 				if(H.clothing_protects_from_chems())
 					boutput(H, "The bite is painful, but at least your biosuit protected you from the rat's diseases.")
 				else
-					boutput(H, "Your hand immediatly starts to painfully puff up, that can't be good.")
+					boutput(H, "Your hand immediately starts to painfully puff up, that can't be good.")
 					H.contract_disease(/datum/ailment/disease/space_plague, null, null, 1)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
@@ -135,7 +135,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 				var/mob/living/carbon/human/H = M
 
 				if(H.clothing_protects_from_chems())
-					boutput(H, "The bite hurts alot, but it didn't manage to pierce your protective suit.")
+					boutput(H, "The bite hurts a lot, but it didn't manage to pierce your protective suit.")
 					return 1
 			M.reagents.add_reagent(src.venom, src.bite_transfer_amt)
 

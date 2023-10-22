@@ -23,7 +23,7 @@
 		/obj/item/dice/robot,
 		/obj/item/device/light/zippo/borg,
 		/obj/item/device/prisoner_scanner,
-		/obj/item/instrument/whistle/security,
+		/obj/item/instrument/whistle,
 		/obj/item/item_box/assorted/stickers/robot,
 		// TODO: security grenade fabricator?!
 		// /obj/item/handcuffs/tape_roll/crappy,
