@@ -65,7 +65,7 @@ var/global/list/playersSeen = list()
 
 	var/list/data
 	try
-		data = apiHandler.queryAPI("bans/check", query, 1)
+		data = apiHandler.queryAPI("bans/check", query)
 	catch ()
 		//API is dead, let the person in without checking
 		return 0
@@ -281,7 +281,7 @@ var/global/list/playersSeen = list()
 			if (auto_fill == "Yes")
 				var/list/response
 				try
-					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
+					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]))
 				catch ()
 					boutput(src, "<span class='alert'>Failed to query API, try again later.</span>")
 					return
@@ -724,7 +724,7 @@ var/global/list/playersSeen = list()
 	//Ask the remote for them
 	var/query[] = new()
 	query["ids"] = needBans
-	var/data[] = apiHandler.queryAPI("bans/updateLocal", query, 1)
+	var/data[] = apiHandler.queryAPI("bans/updateLocal", query)
 	if (!data) return 0
 
 	if (data["error"]) //Error returned from the API welp
@@ -852,7 +852,7 @@ var/global/list/playersSeen = list()
 	//Get the latest logID from the API
 	var/query[] = new()
 	query["latestLocalID"] = latestLocalID
-	var/data[] = apiHandler.queryAPI("bans/parity", query, 1)
+	var/data[] = apiHandler.queryAPI("bans/parity", query)
 	if (!data) return 0
 
 	var/list/row = data[data[1]]
