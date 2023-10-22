@@ -120,7 +120,7 @@
 	build_syndi_buylist_cache()
 	build_camera_network()
 	build_manufacturer_icons()
-	clothingbooth_setup()
+	build_clothingbooth_caches()
 	initialize_biomes()
 
 	Z_LOG_DEBUG("World/Init", "Setting up airlock/APC wires...")
