@@ -1144,5 +1144,5 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 	code_len = 5
 	configure_mode = FALSE
 
-	spawn_contents = list(/obj/item/paper/morrigan/hospastpaper, /obj/item/paper/morrigan/hoshospital, /obj/item/paper/morrigan/hosoldteam)
+	spawn_contents = list(/obj/item/paper/morrigan/hospastpaper, /obj/item/paper/morrigan/hoshospital, /obj/item/paper/morrigan/hosoldteam, /obj/item/paper/morrigan/hospastpaper2, /obj/item/paper/morrigan/hosrecovered)
 

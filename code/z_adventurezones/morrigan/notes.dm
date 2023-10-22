@@ -1,13 +1,13 @@
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Notes ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /obj/item/paper/morrigan/toiletnote
-	name = "Messy piece of paper"
-	icon_state = "paper_caution_bloody"
-	info ={"
-	He said he'd be here, that where was some way out, I spent all my lunch money on this... <br>
-	Did he bail out on me ? Why did he mention a vending machine... <br>
-	I have to get out of here before the wardens come back.
-	"}
+	name = "messy note"
+	icon_state = "paper_caution"
+	sizex = 1080
+	sizey = 1816
 
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/toilet.png")]'></body></html>"
 /obj/item/paper/morrigan/complaint1
 	name = "Old piece of paper"
 	icon_state = "paper_burned"
@@ -21,16 +21,12 @@
 /obj/item/paper/morrigan/rolecall
 	name = "Torn off piece of paper"
 	icon_state = "paper_burned"
-	info ={"
-	<h2 style="text-align: center;"><span style="text-decoration: underline;"><strong>Manifest Role Call</strong></span></h2>
-	<ul>
-	<li>Carla Bentson - Present</li>
-	<li>Hendrick L. Fold - ABS</li>
-	<li>Bernadette Crimnoty - ABS</li>
-	</ul>
-	<p>(the rest seems to be torn off...)</p>
-	"}
+	sizex = 1078
+	sizey = 794
 
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/role_call.png")]'></body></html>"
 /obj/item/paper/morrigan/Cecomplaint
 	name = "Old letter"
 	icon_state = "paper_burned"
@@ -86,13 +82,14 @@
 	"}
 
 /obj/item/paper/morrigan/laraman
-	name = "LARA"
+	name = "lara"
 	icon_state = "paper_caution"
-	info ={"
-	Don't TELL LARA. LARA, LARA, PLEASE NOT LARA. LARA? LARAAAAAA, OH LARA<br>
-	Not LARA! LARA ? LARA. L A R A. LARA! HANDS OFF LARA, WHERE'S LARA?<br>
-	Have you seen LARA ? please LARA ! Laraaaaaaa??
-	"}
+	sizex = 1080
+	sizey = 1833
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/lara.png")]'></body></html>"
 
 /obj/item/paper/morrigan/hobonote
 	name = "Note"
@@ -103,15 +100,6 @@
 	that soda machine been keeping our brews fresh! You'd be right surprised what kinda liquor you can brew with them sodas.<br>
 	Damn syndies keep restockin' it too! Every wheneversday yes sirree. We've also sealed off most the parts that was causing trouble with them<br>
 	crazies over on the other side. Still hopin' we get a sign of Johnny sometime soon though. Went out to scout for some drugs days ago.
-	"}
-
-/obj/item/paper/morrigan/hintjail
-	name = "Paper"
-	icon_state = "paper"
-	info ={"
-	A spot of relief.<br>
-	The one that stands out<br>
-	The sewers beneath.
 	"}
 
 /obj/item/paper/morrigan/NTnote
@@ -188,16 +176,6 @@
 	I SWEAR TO GOD, I don't care if she's the RD that SLOP needs to get her act together. If you're using MY workstation,<br>
 	PUT THE DAMN TOOLS BACK. I'm sick and tired of having to beg to on an easter egg hunt for MY shit. If I catch them misplacing them one more time.<br>
 	"}
-
-/obj/item/paper/morrigan/morriganclown
-	name ="Nukies?"
-	icon_state = "paper"
-	info ={"
-	Hi Cappy! Honk :)<br>
-	Iz me Klown!! Authorize armory I think nukies engi. Need Aa, please give ?<br>
-	-Klown
-	"}
-
 /obj/item/paper/morrigan/MorriganHoS
 	name = "Important Message From HQ"
 	icon_state = "paper"
@@ -210,7 +188,7 @@
 	A full scale investigation will be conducted on ADF Morrigan.<br>
 	Your direct orders are to ensure no one leaves the station for any reason without our express authorization.<br>
 	We're counting on you back at HQ here. Report to us if anything changes, and stay alert.
-	-Syndicate High Command.
+	-Hafgan Executives.
 	"}
 
 /obj/item/paper/morrigan/MorriganHoS2
@@ -218,14 +196,14 @@
 	icon_state = "paper"
 	info ={"
 	Hello Alexander, <br>
-	Your reports have been received. Please handle all 3 suspected spies with caution.<br>
+	Your reports have been received. Please handle all 4 suspected spies with caution.<br>
 	As of now, we have restricted radio frequencies. Adjust your radio accordingly to frequences =Redacted=.<br>
 	You are not to execute the spies until we gather as much information from them as possible.<br>
-	A =Redacted= Executive, codenamed Number 3 will be overseeing operations in Morrigan.<br>
-	Ensure they come to no harm what-so-ever. Your branch reputation is on the line here.<br>
-	Your direct orders are to ensure the interrogation of the 3 spies. A formal report is to be issued to us as soon as possible.<br>
+	An Executive, codenamed Number 3 will be overseeing operations in Morrigan.<br>
+	Ensure you extract as much information as you can. Your branch's reputation is on the line here.<br>
+	Your direct orders are to ensure the interrogation of the 4 spies. A formal report is to be issued to us as soon as possible.<br>
 	You are not to us fail us,<br>
-	-Syndicate High Command.
+	-Hafgan Executives.
 	"}
 
 /obj/item/paper/morrigan/morrigancaptain
@@ -269,7 +247,15 @@
 	name = "Left over note"
 	icon_state = "paper"
 	info ={"
-
+	Hello Alexander, <br>
+	We have heard about the spy incident on Morrigan, though other means.<br>
+	We are surprised you have not reached out to us regarding the matter. The Syndicate are responsible for this branch.<br>
+	Regardless, we hear you have a high priority target by the name of Soren.<br>
+	This individual has been a thorn in our sides for far too long to let this chance pass.<br>
+	Ensure you execute them as soon as possible, preserve the body and have it shipped out the =Redacted= when possible.<br>
+	Remember where your loyalty lies, Commander. You owe us a debt.<br>
+	Do not disappoint us,<br>
+	-Syndicate High Command.
 	"}
 
 /obj/item/paper/morrigan/morriganfactory
@@ -304,42 +290,27 @@
 	<p style="text-align: center;">SITUATION CRITICAL</p>
 	<p style="text-align: center;">--Transcript End. Message Delivered to HQ.--</p>
 	"}
-
-/obj/item/paper/morrigan/morriganling
-	name = "Intercepted PDA Message"
-	icon_state = "paper"
-	info ={"
-	Hey Jess, don't you think Albert is acting a little strange... I could've sworn he never had a pink finger... didn't we always call him<br>
-	 'foursies' or something for it ? He's also been doing a lot of EVA work... he never liked leaving the station.<br>
-	 He also doesn't seem to be snacking at all like he usually does. Something feels off. I can't exactly point out what.<br>
-	 I don't know what to do or say. Surely I'm not the only one noticing this. We can talk more about this at lunch.<br>
-	 See you soon,<br>
-	 Hubert.
-	 --Transcript End. Message Delivered from PDA-Hubert V. Bronbor--
-	"}
-
 /obj/item/paper/morrigan/morriganhop
-	name = "Reminder! New ID Cards!"
-	icon_state = "paper"
-	info ={"
-	This is your reminder that we are changing the ID locks on certain doors after our little incident. This is a security measure and is mandatory. <br>
-	Be sure to deposit your old ID by the end of the week for your new one. You will not be provided a new one if you don't give us back the old one. <br>
-	Your old cards will not work anymore 48 hours from now. We will be working extra hours to help deal with the temporary situation.<br>
-	-Head of Personnel
-	--Transcript End. Message Delivered to all valid PDAs--
-	"}
+	name = "Intercepted PDA Message"
+	desc = "Hmm, a transcript"
+	icon_state = "thermal_paper"
+	sizex = 536
+	sizey = 712
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/pda-hop.png")]'></body></html>"
 
 /obj/item/paper/morrigan/morriganrd
-	name = "You're Fired Nick"
-	icon_state = "paper"
-	info ={"
-	You're fucking fired Nick. By the time you read this, I want you out of my department. That acid could've seriously injured me or you co-workers.<br>
-	You've a clear disregard for safety here and I don't want you anywhere near us. Oh and the captain is aware of this too, so good luck getting a new job<br>
-	I don't want to see your face ever again, keep the fucking ID and the mask. I already got a new one.<br>
-	-Research Director.
-	--Transcript End. Message Delivered to PDA-Nickolas Eol and HQ--
-	"}
+	name = "Intercepted PDA Message"
+	desc = "Hmm, a transcript"
+	icon_state = "thermal_paper"
+	sizex = 536
+	sizey = 712
 
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/pda-rd.png")]'></body></html>"
 /obj/item/paper/morrigan/MorriganNT
 	name = "Midly Crumbled Note"
 	icon_state = "paper"
@@ -353,12 +324,12 @@
 	name = "Intercepted PDA Message"
 	desc = "Hmm, a transcript"
 	icon_state = "thermal_paper"
-	sizex = 268
-	sizey = 356
+	sizex = 536
+	sizey = 712
 
 	New()
 		..()
-		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/PDA NT.png")]'></body></html>"
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/pda-nt.png")]'></body></html>"
 
 /obj/item/paper/morrigan/MorriganNT3
 	name = "Slightly Damaged Note"
@@ -374,35 +345,23 @@
 
 /obj/item/paper/morrigan/morrigancargo
 	name = "Order #781"
-	icon_state = "paper"
-	info = {"
-	<p style="text-align: center;"><strong>Order Recieved</strong></p>
-	<ul>
-	<li style="text-align: left;">4 Medical Units - 20 000 x 4</li>
-	<li style="text-align: left;">1 Sentinel Unit - 15 000 x 1</li>
-	<li style="text-align: left;">4 Engineer Units - 23 000 x 4</li>
-	<li style="text-align: left;">10 Mod.21 Deneb Handguns - 9 000 x 10</li>
-	<li>TOTAL : 277 000 Credits</li>
-	</ul>
-	<p>Recipient : Third Party HAFGAN H.I.</p>
-	<p>Thank you for your purchase !</p>
-	"}
+	icon_state = "thermal_paper"
+	sizex = 534
+	sizey = 890
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/receipt.png")]'></body></html>"
 
 /obj/item/paper/morrigan/morrigancargo2
 	name = "Order #385"
-	icon_state = "paper"
-	info = {"
-	<p style="text-align: center;"><strong>Order Recieved</strong></p>
-	<ul>
-	<li style="text-align: left;">1 CQC Unit - 25 000 x 1</li>
-	<li style="text-align: left;">2 Sentinel Units - 15 000 x 2</li>
-	<li style="text-align: left;">5 Mod.77 Nosaxa - 15 000 x 4</li>
-	<li style="text-align: left;">20 Mod.21 Deneb Handguns - 9 000 x 20</li>
-	<li>TOTAL : 295 000 Credits</li>
-	</ul>
-	<p>Recipient : Third Party HAFGAN H.I.</p>
-	<p>Thank you for your purchase !</p>
-	"}
+	icon_state = "thermal_paper"
+	sizex = 534
+	sizey = 890
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/receipt2.png")]'></body></html>"
 
 
 /obj/item/paper/morrigan/morrigance
@@ -505,6 +464,16 @@
 	<p>And much much more ! Order yours today !</p>
 	"}
 
+/obj/item/paper/morrigan/hospastpaper2
+	name = "Confidential Document"
+	desc = "it has seen better days."
+	sizex = 1078
+	sizey = 1193
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/Ntdoc2.png")]'></body></html>"
+
 /obj/item/paper/morrigan/hospastpaper
 	name = "Confidential Document"
 	desc = "A very official-looking document..."
@@ -534,6 +503,36 @@
 	New()
 		..()
 		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/nteam.png")]'></body></html>"
+
+/obj/item/paper/morrigan/hosrecovered
+	name = "Medical Document"
+	desc = "A medical document..."
+	sizex = 1080
+	sizey = 1531
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/medical.png")]'></body></html>"
+
+/obj/item/paper/morrigan/hoshint
+	name = "Note"
+	desc = "Some sorta hint."
+	sizex = 625
+	sizey = 1042
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/hint.png")]'></body></html>"
+
+/obj/item/paper/morrigan/cargopuzzle
+	name = "Note"
+	desc = "Some sorta hint."
+	sizex = 1000
+	sizey = 1034
+
+	New()
+		..()
+		info = "<html><body><style>img {width: 100%; height: auto;}></style><img src='[resource("images/morrigan/contraband.png")]'></body></html>"
 
 //▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓ Audio Tapes ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓
 /obj/item/audio_tape/morrigan_interrogation
@@ -646,3 +645,56 @@
 		"Soren's Voice",
 		"Filtered Voice"
 		)
+/obj/item/audio_tape/morrigan_interrogation4
+	New()
+		..()
+
+		messages = list(
+
+	"So you've not only infiltrated our operation but intend to steal property too...",
+	"YOU'VE GOT THE WRONG PERSON, Listen to me I'm NOT MATHEOS I don't know what happened, I work for you!!",
+	"You aren't hunh. That's convient, I have someone who works for me I don't even recognize.",
+	"Look boss PLEASE give me a chance to explain, I have no clue how this ended up happening, I've been serving under you for 2 years now!",
+	"Spying for 2 years, the notes don't suggest that. But we appreciate your honesty.",
+	"I am not a spy, I was even willing to join the Nuclear Operative position. This is some sort of mix up...",
+	"Hmm, I wonder what else you haven't been telling us. It's safe to say you're a threat to our operation.",
+	"Wait- WAIT HOS PLEASE LISTEN.",
+	"...",
+	"*Thud and shackles*",
+	"Sedate him, we've gotten all we need from this scum. Make sure he's the first to be executed given how he's managed to flee our custody once.",
+	"*undiscernable noises*",
+	)
+
+		speakers = list(
+		"Filtered voice",
+		"Matheos's voice",
+		"Filtered voice",
+		"Matheos's voice",
+		"Filtered voice",
+		"Matheos' voice",
+		"Filtered Voice",
+		"Matheos's Voice",
+		"Unknown",
+		"Unknown",
+		"Filtered Voice",
+		"???")
+
+/obj/item/audio_tape/morrigan_execution
+	New()
+		..()
+
+		messages = list(
+
+	"They have stuff in their bag shouldn't we-",
+	"It's just an ID card, they're phasing out anyways. I wanna get this over with and go have lunch.",
+	"Are you sure the hos won't mind...",
+	"ALERT HULL BREACH DETECTED IN ASSEMBLY AREA.",
+	"Oh shit-",
+	)
+
+		speakers = list(
+		"Filtered voice",
+		"Filtered voice",
+		"Filtered voice",
+		"AI voice",
+		"Filtered voice")
