@@ -707,14 +707,16 @@ ABSTRACT_TYPE(/datum/terrainify)
 			handle_mining(params, space)
 
 			if(params["Spooky"])
+				// The following should be removed iff Caustics Parallax #16477 is merged
 				var/list/station_areas = get_accessible_station_areas()
 				for(var/area_name in station_areas)
 					var/area/A = station_areas[area_name]
-					A.occlude_foreground_parallax_layers = TRUE
-					for(var/turf/T in get_area_turfs(A))
-						if(T.z == Z_LEVEL_STATION)
-							T.update_parallax_occlusion_overlay()
-							LAGCHECK(LAG_MED)
+					if(!A.occlude_foreground_parallax_layers)
+						A.occlude_foreground_parallax_layers = TRUE
+						for(var/turf/T in get_area_turfs(A))
+							if(T.z == Z_LEVEL_STATION)
+								T.update_parallax_occlusion_overlay()
+								LAGCHECK(LAG_MED)
 
 				ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/foreground/fog, 20 SECONDS)
 
