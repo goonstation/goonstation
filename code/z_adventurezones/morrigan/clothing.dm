@@ -348,6 +348,5 @@
 
 /obj/item/storage/backpack/morrigan
 	satchel_compatible = FALSE
-	inhand_image_icon = "docbag3"
 	icon_state = "bp_morrigan"
-	item_state = "bp_morrigan"
+	item_state = "docbag3"

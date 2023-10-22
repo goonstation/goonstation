@@ -369,6 +369,7 @@
 			src.say(pick("Who...who are you?!", "Get away from here!", "SECURITY, HELP!", "You aren't meant to be here!", "It's because of people like you!", "You caused this!"))
 
 /mob/living/critter/human/morrigan_quality/knife
+	hand_count = 2
 
 	setup_hands()
 		..()
@@ -391,6 +392,7 @@
 		HH.limb_name = "right arm"
 
 /mob/living/critter/human/morrigan_quality/bat
+	hand_count = 2
 
 	setup_hands()
 		..()
@@ -427,6 +429,7 @@
 			src.say(pick("Who...who are you?!", "Get away from here!", "SECURITY, HELP!", "You aren't meant to be here!", "It's because of people like you!", "You caused this!"))
 
 /mob/living/critter/human/morrigan_rnd/knife
+	hand_count = 2
 
 	setup_hands()
 		..()
@@ -448,6 +451,7 @@
 		HH.icon_state = "handr"
 		HH.limb_name = "right arm"
 /mob/living/critter/human/morrigan_rnd/bat
+	hand_count = 2
 
 	setup_hands()
 		..()

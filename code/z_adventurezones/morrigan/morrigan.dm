@@ -1140,7 +1140,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/networked/telepad/morrigan, proc/transmit)
 /obj/item/storage/secure/ssafe/hossafe
 	name = "Secure Safe"
 	crackable = FALSE
-	code = 51854
+	code = 50848
 	code_len = 5
 	configure_mode = FALSE
 

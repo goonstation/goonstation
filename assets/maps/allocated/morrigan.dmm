@@ -9130,7 +9130,7 @@
 /turf/unsimulated/floor/caution/corner/nw,
 /area/morrigan/station/exit)
 "ijS" = (
-/obj/decal/poster/wallsign/stencil/left/d,
+/obj/decal/poster/wallsign/stencil/left/t,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict/cargo)
 "ikd" = (
@@ -17627,8 +17627,8 @@
 /turf/unsimulated/wall/auto/adventure/shuttle/dark,
 /area/morrigan/station/podbay/medical)
 "pPd" = (
-/obj/decal/poster/wallsign/stencil/left/two,
-/obj/decal/poster/wallsign/stencil/right/n,
+/obj/decal/poster/wallsign/stencil/right/s,
+/obj/decal/poster/wallsign/stencil/left/one,
 /turf/unsimulated/wall/auto/reinforced/supernorn,
 /area/morrigan/derelict/cargo)
 "pPo" = (
