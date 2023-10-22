@@ -150,6 +150,7 @@ var/list/admin_verbs = list(
 		/client/proc/main_loop_tick_detail,
 		/client/proc/display_bomb_monitor,
 		//Ban verbs
+		/client/proc/ban_panel,
 		/client/proc/openBanPanel,
 		/client/proc/banooc,
 		/client/proc/view_cid_list,
@@ -745,6 +746,17 @@ var/list/special_pa_observing_verbs = list(
 		return
 	if (src.holder.level >= LEVEL_SA)
 		global.player_panel.ui_interact(src.mob)
+
+/client/proc/ban_panel()
+	set name = "Ban Panel"
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	if (!src.holder || src.holder?.tempmin)
+		logTheThing(LOG_ADMIN, src, "tried to access the ban panel")
+		logTheThing(LOG_DIARY, src, "tried to access the ban panel", "admin")
+		message_admins("[key_name(src)] tried to access the ban panel but was denied.")
+	if (isnull(src.holder.ban_panel))
+		src.holder.ban_panel = new
+	src.holder.ban_panel.ui_interact(src.mob)
 
 /client/proc/jobbans(key as text)
 	set name = "Jobban Panel"

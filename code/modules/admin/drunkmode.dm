@@ -10,6 +10,7 @@ var/list/dangerousVerbs = list(\
 
 //No banning for you
 /client/proc/warn,\
+/client/proc/ban_panel,\
 /client/proc/openBanPanel,\
 /client/proc/cmd_admin_addban,\
 /client/proc/banooc,\
