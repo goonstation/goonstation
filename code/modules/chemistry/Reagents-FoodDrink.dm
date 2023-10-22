@@ -1702,7 +1702,7 @@ datum
 
 			on_mob_life(var/mob/living/carbon/human/M, var/mult = 1)
 				if(!M) M = holder.my_atom
-				if(istype(M) && !M.mutantrace)
+				if(istype(M) && !(M.mutantrace.name == "roach"))
 					bioeffect_length++
 				..()
 
