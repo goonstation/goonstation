@@ -181,6 +181,19 @@
 	parallax_value = 0.9
 	scroll_speed = 150
 
+/atom/movable/screen/parallax_render_source/foreground/fog
+	parallax_icon_state = "snow_dense"
+	color = list(
+		1, 0, 0, 0.4,
+		0, 1, 0, 0.4,
+		0, 0, 1, 0.4,
+		0, 0, 0, 1,
+		0, 0, 0, -1)
+	static_colour = TRUE
+	parallax_value = 0.8
+	scroll_speed = 5
+	scroll_angle = 180
+
 
 // Dust Storm Layers
 /atom/movable/screen/parallax_render_source/foreground/dust
