@@ -829,9 +829,9 @@ proc/chem_helmet_check(mob/living/carbon/human/H, var/what_liquid="hot")
 		if(!current_reagent.data) current_reagent.data = sdata
 
 		src.last_temp = src.total_temperature
-		var/temp_temperature = src.total_temperature*src.total_volume*src.composite_heat_capacity + temp_new*new_amount*current_reagent.heat_capacity
+		var/temp_temperature = src.total_temperature*src.total_volume*src.composite_heat_capacity + temp_new*amount*current_reagent.heat_capacity
 
-		var/divison_amount = src.total_volume*src.composite_heat_capacity + new_amount*current_reagent.heat_capacity
+		var/divison_amount = src.total_volume*src.composite_heat_capacity + amount*current_reagent.heat_capacity
 		if (divison_amount > 0)
 			src.total_temperature = temp_temperature / divison_amount
 

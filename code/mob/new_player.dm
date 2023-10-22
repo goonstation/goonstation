@@ -871,7 +871,6 @@ a.latejoin-card:hover {
 			var/ASLoc = pick_landmark(LANDMARK_OBSERVER, locate(1, 1, 1))
 			if (ASLoc)
 				observer.set_loc(ASLoc)
-			observer.apply_looks_of(client)
 
 			observer.observe_round = 1
 			if(client.preferences && client.preferences.be_random_name) //Wire: fix for Cannot read null.be_random_name (preferences &&)
@@ -880,6 +879,7 @@ a.latejoin-card:hover {
 			observer.bioHolder.mobAppearance.CopyOther(client.preferences.AH)
 			observer.gender = observer.bioHolder.mobAppearance.gender
 			observer.UpdateName()
+			observer.apply_looks_of(client)
 
 			if(!src.mind) src.mind = new(src)
 			ticker.minds |= src.mind

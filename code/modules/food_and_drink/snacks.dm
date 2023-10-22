@@ -144,7 +144,7 @@
 			src.reagents.trans_to(P, src.reagents.total_volume/makeslices)
 			P.pixel_x = rand(-6, 6)
 			P.pixel_y = rand(-6, 6)
-			P.fill_amt = src.fill_amt / initial(src.bites_left)
+			P.fill_amt = src.fill_amt / src.uneaten_bites_left
 			. += P
 			makeslices--
 		qdel(src)

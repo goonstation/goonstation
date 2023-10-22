@@ -1016,6 +1016,7 @@ ADMIN_INTERACT_PROCS(/obj/whitehole, proc/admin_activate)
 					fryholder.icon = composite
 					fryholder.overlays = thing.overlays
 					fryholder.bites_left = 5
+					fryholder.uneaten_bites_left = fryholder.bites_left
 					if (ismob(thing))
 						fryholder.w_class = W_CLASS_BULKY
 					if(thing.reagents)
