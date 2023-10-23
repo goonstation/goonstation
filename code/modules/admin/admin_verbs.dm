@@ -107,6 +107,8 @@ var/list/admin_verbs = list(
 		/client/proc/force_desussification,
 		/client/proc/admin_observe_random_player,
 		/client/proc/orp,
+		/client/proc/admin_observe_next_player,
+		/client/proc/onp,
 		/client/proc/admin_pick_random_player,
 		/client/proc/fix_powernets,
 		/datum/admins/proc/delay_start,
