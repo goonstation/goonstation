@@ -1996,14 +1996,14 @@
 		boutput(src, "<span class='alert'>Error: you must be an observer to use this command.</span>")
 		return
 
-	var/mob/dead/observer/O = src.mob
-
 	var/client/currently_observed_client = null
 	if (istype(src.mob, /mob/dead/target_observer))
 		var/mob/currently_observed_mob = src.mob.loc
 		if(istype(currently_observed_mob))
 			currently_observed_client = currently_observed_mob.client
 		qdel(src.mob)
+
+	var/mob/dead/observer/O = src.mob
 
 	for(var/i = 1 to 2) // so we wrap around if we are on the last valid one
 		for(var/client/client in clients)
