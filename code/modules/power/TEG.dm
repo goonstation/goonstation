@@ -432,6 +432,10 @@
 
 		return 1
 
+	is_open_container()
+		return circulator_flags & LUBE_DRAIN_OPEN
+
+
 /obj/machinery/atmospherics/binary/circulatorTemp/right
 	icon_state = "circ2-off"
 	name = "cold gas circulator"
