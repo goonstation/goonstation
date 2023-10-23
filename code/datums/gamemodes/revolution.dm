@@ -19,10 +19,15 @@
 	var/waittime = 0
 	var/const/waittime_l = 600 //lower bound on time before intercept arrives (in tenths of seconds)
 	var/const/waittime_h = 1800 //upper bound on time before intercept arrives (in tenths of seconds)
+	/// Has the revolution announcement been sent out yet
 	var/waittimed = FALSE
+	/// The time to wait till we send out the tracker time
 	var/trackertime = 0
-	var/const/trackertime_min = 27 MINUTES //lower bound on time before intercept arrives (in tenths of seconds)
-	var/const/trackertime_max = 30 MINUTES //upper bound on time before intercept arrives (in tenths of seconds)
+	/// lower bound on time before intercept arrives (in tenths of seconds)
+	var/const/trackertime_min = 27 MINUTES
+	/// upper bound on time before intercept arrives (in tenths of seconds)
+	var/const/trackertime_max = 30 MINUTES
+	/// Has the tracker been sent out yet
 	var/trackertimed = FALSE
 	var/const/min_revheads = 3
 	var/const/max_revheads = 5
@@ -121,12 +126,12 @@
 	if (!istype(ticker.mode, /datum/game_mode/revolution/extended) && ticker.round_elapsed_ticks >= round_limit && !gibwave_started)
 		gibwave_started = TRUE
 		start_gibwave()
-	if (world.time > win_check_freq)
+	if (ticker.round_elapsed_ticks > win_check_freq)
 		win_check_freq += win_check_freq
 		check_win()
-	if (TIME >= waittime && !waittimed)
+	if (ticker.round_elapsed_ticks >= waittime && !waittimed)
 		send_intercept()
-	if (TIME >= trackertime && !trackertimed)
+	if (ticker.round_elapsed_ticks >= trackertime && !trackertimed)
 		send_tracker()
 #endif
 
