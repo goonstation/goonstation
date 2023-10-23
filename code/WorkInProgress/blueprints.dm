@@ -361,6 +361,7 @@
 			load = load_abcu_blueprint(user)
 		if (load?.room_name)
 			src.current_bp = load
+			logTheThing(LOG_STATION, user, "[user] loaded blueprint [load.room_name] (authored by: [load.author]) in [src].") // no slurs kthx
 
 /datum/objectinfo
 	var/objecttype = null
@@ -386,7 +387,7 @@
 
 	var/picked = browse_abcu_blueprints(usr, "Admin Share Blueprint", "Choose a blueprint to print and share!", TRUE)
 	if (!picked) return
-	var/obj/printed = new /obj/item/abcu_blueprint_reference(usr, picked["path"])
+	var/obj/printed = new /obj/item/abcu_blueprint_reference(usr, picked["path"], usr)
 	usr.put_in_hand_or_drop(printed)
 	boutput(usr, "<span class='notice'>Spawned the blueprint '[picked["file"]]'.</span>")
 
@@ -395,7 +396,9 @@
 	set desc = "Allows deletion of blueprints of any user."
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 
-	delete_abcu_blueprint(usr, TRUE)
+	var/deleted = delete_abcu_blueprint(usr, TRUE)
+	if (!deleted) return
+	logTheThing(LOG_ADMIN, usr, "[usr] deleted blueprint [deleted["file"]], owned by [deleted["ckey"]].")
 
 /verb/adminDumpBlueprint()
 	set name = "Blueprint Dump"
@@ -406,9 +409,9 @@
 	if (!picked) return
 
 	var/savefile/selectedbp = new/savefile(picked["path"])
-	selectedbp.ExportText("/","data/blueprints/[picked["ckey"]]/[picked["file"]].txt")
-	usr.client.Export("data/blueprints/[picked["ckey"]]/[picked["file"]].txt")
-	fdel("data/blueprints/[picked["ckey"]]/[picked["file"]].txt")
+	selectedbp.ExportText("/", "[picked["path"]].txt")
+	usr.client.Export("[picked["path"]].txt")
+	fdel("[picked["path"]].txt")
 
 	boutput(usr, "<span class='notice'>Dumped blueprint to BYOND user data folder.</span>")
 
@@ -424,7 +427,7 @@
 	var/room_name = ""
 	var/blueprint_path = ""
 
-	New(turf/new_loc, var/savepath = "")
+	New(turf/new_loc, var/savepath = "", mob/creator)
 		. = ..(new_loc)
 		if (!savepath || !fexists(savepath)) return
 		src.blueprint_path = savepath
@@ -697,8 +700,14 @@ proc/browse_abcu_blueprints(mob/user, var/window_title = "Blueprints", var/descr
 		boutput(user, "<span class='alert'>No blueprints found.</span>")
 		return
 	var/inputbp = tgui_input_list(user, description, window_title, bplist)
-	if (!inputbp) return
-	return list("path" = "data/blueprints/[picked_ckey]/[inputbp]", "ckey" = picked_ckey, "file" = inputbp)
+	if (!inputbp || !fexists("data/blueprints/[picked_ckey]/[inputbp]")) return
+
+	var/savefile/save = new/savefile("data/blueprints/[picked_ckey]/[inputbp]")
+	if (!save["author"] || !save["roomname"])
+		boutput(user, "Something is wrong with this savefile. Stopping.")
+		return
+	return list("path" = "data/blueprints/[picked_ckey]/[inputbp]", "ckey" = picked_ckey,
+		"file" = inputbp, "author" = save["author"], "roomname" = save["roomname"])
 
 proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 	var/picked = browse_abcu_blueprints(user, "Delete Blueprint", "Delete one of these blueprints?", browse_all_users)
@@ -708,6 +717,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 			return
 		fdel(picked["path"])
 		boutput(user, "<span class='alert'>Blueprint [picked["file"]] deleted.</span>")
+		return picked
 	else
 		boutput(user, "<span class='alert'>Blueprint [picked["file"]] not found.</span>")
 
@@ -906,10 +916,11 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 					return
 				var/picked = browse_abcu_blueprints(user, "Share Blueprint", "Choose a blueprint to print and share!")
 				if (!picked) return
-				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked["path"])
+				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked["path"], user)
 				user.put_in_hand_or_drop(printed)
 				src.prints_left--
 				boutput(user, "<span class='notice'>Printed the blueprint '[picked["file"]]'. Prints remaining: [src.prints_left].</span>")
+				logTheThing(LOG_STATION, user, "[user] printed [printed], named '[picked["roomname"]]' (authored by: [picked["author"]]).")
 				return
 
 			if("Save Blueprint")
