@@ -91,7 +91,7 @@ var/datum/explosion_controller/explosions
 				else
 					severity = 3
 				O.ex_act(severity, explosion?.last_touched, power)
-				O.last_explosion = explosion
+				O?.last_explosion = explosion
 
 		LAGCHECK(LAG_HIGH)
 

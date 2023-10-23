@@ -9,7 +9,7 @@ TYPEINFO(/obj/machinery/crusher)
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
-	anchored = ANCHORED
+	anchored = ANCHORED_ALWAYS
 	is_syndicate = 1
 	power_usage = 500
 	flags = FLUID_SUBMERGE | UNCRUSHABLE

@@ -953,7 +953,7 @@
 		for (var/medal in medals)
 			output += "&emsp;[medal]"
 		output += "<b>You have [length(medals)] medal\s.</b>"
-		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1">Medal Details</a>"}
+		output += {"<a href="http://www.byond.com/members/[src.key]?tab=medals&all=1"  target="_blank">Medal Details</a>"}
 		boutput(src, output.Join("<br>"))
 
 /mob/verb/setdnr()
@@ -1522,9 +1522,14 @@
 	set desc = "Open the crew credits window"
 	set category = "Commands"
 
+	if (global.current_state < GAME_STATE_FINISHED)
+		boutput(src, "<span class='notice'>The gane hasn't finished yet!</span>")
+		return
+
 	if(!ticker.crew_credits_by_client.Find("\ref[src.client]"))
 		ticker.crew_credits_by_client["\ref[src.client]"] = new /datum/crewCredits(src.client.preferences.summary_tab)
-	ticker.crew_credits_by_client["\ref[src.client]"].ui_interact(src)
+
+	global.ticker.crew_credits_by_client["\ref[src.client]"].ui_interact(src)
 
 /mob/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))

@@ -213,7 +213,7 @@
 
 /obj/item/material_piece/hamburgris
 	name = "clump"
-	desc = "A big clump of petrified mince, with a horriffic smell."
+	desc = "A big clump of petrified mince, with a horrific smell."
 	default_material = "hamburgris"
 	icon_state = "wad"
 
@@ -248,6 +248,7 @@
 	default_material = "slag"
 	mat_changename = FALSE
 
+ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/rubber/latex
 	name = "sheet"
 	desc = "A sheet of latex."
@@ -258,6 +259,12 @@
 		src.create_reagents(10)
 		reagents.add_reagent("rubber", 10)
 		return ..()
+
+/obj/item/material_piece/rubber/plastic
+	name = "flap"
+	icon_state = "latex"
+	desc = "A flap of plastic."
+	default_material = "plastic"
 
 /obj/item/material_piece/organic/wood
 	name = "wooden log"
@@ -398,7 +405,7 @@
 
 /obj/item/material_piece/gnesisglass
 	name = "wafer"
-	desc = "A shimmering, transclucent block of weird alien computer crystal stuff."
+	desc = "A shimmering, translucent block of weird alien computer crystal stuff."
 	icon_state = "bar"
 	default_material = "gnesisglass"
 

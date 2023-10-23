@@ -521,13 +521,6 @@
 	icon_state = "floor2"
 	},
 /area/shuttle/escape/centcom)
-"tL" = (
-/obj/mapping_helper/wingrille_spawn/auto/reinforced,
-/obj/machinery/shuttle/engine/heater{
-	icon_state = "alt_heater-R"
-	},
-/turf/space,
-/area/shuttle/escape/centcom)
 "uE" = (
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 8;
@@ -1774,7 +1767,7 @@ kg
 kg
 Zc
 Hx
-tL
+PO
 eL
 Cf
 qp

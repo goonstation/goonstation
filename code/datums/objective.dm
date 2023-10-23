@@ -49,6 +49,8 @@ ABSTRACT_TYPE(/datum/objective)
 					continue
 				if (!possible_target.current.client)
 					continue
+				if (isvirtual(possible_target) || istype(get_area(possible_target),/area/afterlife))
+					continue
 				possible_targets += possible_target
 
 		if(length(possible_targets) > 0)
@@ -1175,6 +1177,8 @@ proc/create_fluff(datum/mind/target)
 					continue
 				if (!possible_target.current.client)
 					continue
+				if (isvirtual(possible_target) || istype(get_area(possible_target),/area/afterlife))
+					continue
 				possible_targets += possible_target
 
 		if(length(possible_targets) > 0)
@@ -1220,7 +1224,7 @@ proc/create_fluff(datum/mind/target)
 
 /datum/objective/conspiracy
 	requires_mind = FALSE
-	explanation_text = "Lay claim to a vital area of the station, fortify it, then announce your independance. Annex as much of the station as possible."
+	explanation_text = "Lay claim to a vital area of the station, fortify it, then announce your independence. Annex as much of the station as possible."
 
 /datum/objective/conspiracy/commune
 	explanation_text = "Abolish any sort of hierarchy and start a commune."
@@ -1383,6 +1387,8 @@ proc/create_fluff(datum/mind/target)
 				if (possible_target.current.mind && possible_target.current.mind.is_target) // Cannot read null.is_target
 					continue
 				if (!possible_target.current.client)
+					continue
+				if (isvirtual(possible_target) || istype(get_area(possible_target),/area/afterlife))
 					continue
 				possible_targets += possible_target
 

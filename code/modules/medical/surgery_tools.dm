@@ -221,7 +221,7 @@ CONTAINS:
 /obj/item/staple_gun
 	name = "staple gun"
 	desc = "A medical staple gun for securely reattaching limbs."
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "staplegun"
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
@@ -937,8 +937,9 @@ TYPEINFO(/obj/machinery/defib_mount)
 					qdel(tool)
 
 			else if (istype(tool, /obj/item/material_piece/cloth))
-				ownerMob.u_equip(tool)
-				qdel(tool)
+				var/obj/item/material_piece/cloth/C = tool
+				C.in_use = FALSE
+				C.change_stack_amount(-1)
 
 /* ================================================== */
 /* -------------------- Body Bag -------------------- */

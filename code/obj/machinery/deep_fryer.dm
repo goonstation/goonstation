@@ -262,6 +262,7 @@ TYPEINFO(/obj/machinery/deep_fryer)
 		fryholder.w_class = item.w_class
 	else
 		fryholder.bites_left = 5
+	fryholder.uneaten_bites_left = fryholder.bites_left
 	if (ismob(thing))
 		fryholder.w_class = W_CLASS_BULKY
 	if(thing.reagents)

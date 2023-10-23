@@ -592,6 +592,8 @@ var/list/headset_channel_lookup
 
 // Hope I didn't butcher this, but I couldn't help but notice some odd stuff going on when I tried to debug radio jammers (Convair880).
 /obj/item/device/radio/proc/accept_rad(obj/item/device/radio/R as obj, message, var/datum/packet_network/radio/freq)
+	if (istype(src.loc, /obj/item/electronics/frame)) //shut up deconstructed intercoms
+		return FALSE
 	if (message)
 		// Simple frequency match. The only check that used to be here.
 		if (src.frequency == R.frequency)

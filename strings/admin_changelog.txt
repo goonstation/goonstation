@@ -1,3 +1,9 @@
+(t)mon oct 23 23
+(u)pali
+(*)New verb Observe-Next-Player with alias ONP which is nice if you want to loop through all players quickly. (Like ORP but you don't get repeats.)
+(t)thu oct 19 23
+(u)pali
+(*)Fluids build mode has been added.
 (t)fri sep 29 23
 (u)Flappybat
 (*)New verb Spawn-All-Of-A-Type that creates all of a type.<br>Primarily intended for debugging, please exercise caution on a live server!
