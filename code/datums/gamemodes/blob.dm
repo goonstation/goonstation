@@ -104,9 +104,9 @@
 
 /datum/game_mode/blob/victory_body()
 	if (src.finish_counter)
-		return "All blobs have been exterminated!"
-	else
 		return "The crew has failed to stop the overmind! The station is lost to the blob!"
+	else
+		return "All blobs have been exterminated!"
 
 /datum/game_mode/blob/declare_completion()
 	var/list/blobs = list()
