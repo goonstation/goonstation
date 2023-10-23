@@ -780,6 +780,7 @@ proc/get_default_flock()
 
 	if (src.relay_in_progress)
 		src.time_left = src.last_relay.get_time_left()
+		return
 
 	if (src.total_compute() >= FLOCK_RELAY_COMPUTE_COST && src.stats.tiles_converted >= FLOCK_RELAY_TILE_REQUIREMENT)
 		// Create the actual relay
