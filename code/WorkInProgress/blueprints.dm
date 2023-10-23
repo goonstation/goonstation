@@ -387,7 +387,7 @@
 
 	var/picked = browse_abcu_blueprints(usr, "Admin Share Blueprint", "Choose a blueprint to print and share!", TRUE)
 	if (!picked) return
-	var/obj/printed = new /obj/item/abcu_blueprint_reference(usr, picked["path"], usr)
+	var/obj/printed = new /obj/item/abcu_blueprint_reference(usr, picked, usr)
 	usr.put_in_hand_or_drop(printed)
 	boutput(usr, "<span class='notice'>Spawned the blueprint '[picked["file"]]'.</span>")
 
@@ -421,20 +421,18 @@
 	icon = 'icons/obj/writing.dmi'
 	icon_state = "interdictor_blueprint" // yoinking this unused icon
 	item_state = "sheet"
+	w_class = W_CLASS_SMALL
 	// jank alert: this item lets filenames and saved roomname data be different. but who cares?
 
 	var/author = ""
 	var/room_name = ""
 	var/blueprint_path = ""
 
-	New(turf/new_loc, var/savepath = "", mob/creator)
+	New(turf/new_loc, var/list/picked_data)
 		. = ..(new_loc)
-		if (!savepath || !fexists(savepath)) return
-		src.blueprint_path = savepath
-		var/savefile/save = new/savefile(savepath)
-		save.cd = "/"
-		src.author = save["author"]
-		src.room_name = save["roomname"]
+		src.author = picked_data["author"]
+		src.room_name = picked_data["roomname"]
+		src.blueprint_path = picked_data["path"]
 		src.name += ": [src.room_name]"
 
 	attack_self(mob/user)
@@ -916,7 +914,7 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 					return
 				var/picked = browse_abcu_blueprints(user, "Share Blueprint", "Choose a blueprint to print and share!")
 				if (!picked) return
-				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked["path"], user)
+				var/obj/printed = new /obj/item/abcu_blueprint_reference(src, picked, user)
 				user.put_in_hand_or_drop(printed)
 				src.prints_left--
 				boutput(user, "<span class='notice'>Printed the blueprint '[picked["file"]]'. Prints remaining: [src.prints_left].</span>")
