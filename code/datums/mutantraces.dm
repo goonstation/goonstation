@@ -459,44 +459,20 @@ ABSTRACT_TYPE(/datum/mutantrace)
 				//////////////ARMS//////////////////
 				if (src.r_limb_arm_type_mutantrace)
 					if ((L.limbs.r_arm && !(L.limbs.r_arm.limb_is_transplanted || L.limbs.r_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/arm/limb = new src.r_limb_arm_type_mutantrace(L)
-						if (istype(limb))
-							qdel(L.limbs.r_arm)
-							limb.quality = 0.5
-							L.limbs.r_arm = limb
-							limb.holder = L
-							limb.remove_stage = 0
+						L.limbs.replace_with("r_arm", src.r_limb_arm_type_mutantrace, show_message=FALSE, no_drop=TRUE)
 
 				if (src.l_limb_arm_type_mutantrace)
 					if ((L.limbs.l_arm && !(L.limbs.l_arm.limb_is_transplanted || L.limbs.l_arm.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/arm/limb = new src.l_limb_arm_type_mutantrace(L)
-						if (istype(limb))
-							qdel(L.limbs.l_arm)
-							limb.quality = 0.5
-							L.limbs.l_arm = limb
-							limb.holder = L
-							limb.remove_stage = 0
+						L.limbs.replace_with("l_arm", src.l_limb_arm_type_mutantrace, show_message=FALSE, no_drop=TRUE)
 
 				//////////////LEGS//////////////////
 				if (src.r_limb_leg_type_mutantrace)
 					if ((L.limbs.r_leg && !(L.limbs.r_leg.limb_is_transplanted || L.limbs.r_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/leg/limb = new src.r_limb_leg_type_mutantrace(L)
-						if (istype(limb))
-							qdel(L.limbs.r_leg)
-							limb.quality = 0.5
-							L.limbs.r_leg = limb
-							limb.holder = L
-							limb.remove_stage = 0
+						L.limbs.replace_with("r_leg", src.r_limb_leg_type_mutantrace, show_message=FALSE, no_drop=TRUE)
 
 				if (src.l_limb_leg_type_mutantrace)
 					if ((L.limbs.l_leg && !(L.limbs.l_leg.limb_is_transplanted || L.limbs.l_leg.limb_is_unnatural)) || src.ignore_missing_limbs == 1)
-						var/obj/item/parts/human_parts/leg/limb = new src.l_limb_leg_type_mutantrace(L)
-						if (istype(limb))
-							qdel(L.limbs.l_leg)
-							limb.quality = 0.5
-							L.limbs.l_leg = limb
-							limb.holder = L
-							limb.remove_stage = 0
+						L.limbs.replace_with("l_leg", src.l_limb_leg_type_mutantrace, show_message=FALSE, no_drop=TRUE)
 
 				//////////////HEAD//////////////////
 				if (src.special_head)
