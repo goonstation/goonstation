@@ -108,7 +108,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/computer/cloning, proc/scan_someone, proc/cl
 	for(var/datum/db_record/R as anything in src.records)
 		var/datum/mind/mind = R["mind"]
 		var/mob/selected = mind?.current
-		if (!selected || (selected.mind && selected.mind.get_player()?.dnr))
+		if (!selected || (selected.mind && selected.mind.get_player()?.dnr) || !eligible_to_clone(mind))
 			continue
 		// else there's someone we can clone
 		icon_state = "dnac"
