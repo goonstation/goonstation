@@ -303,6 +303,8 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					W.dropped(src.mob)
 					W.layer = initial(W.layer)
 		M.update_colorful_parts()
+		M.set_face_icon_dirty()
+		M.set_body_icon_dirty()
 
 		SPAWN(2.5 SECONDS) // Don't remove.
 			if (M?.organHolder?.skull)
@@ -354,7 +356,6 @@ ABSTRACT_TYPE(/datum/mutantrace)
 						W.layer = initial(W.layer)
 			if (ishuman(src.mob))
 				var/mob/living/carbon/human/H = src.mob
-				MutateMutant(H, "reset")
 				organ_mutator(H, "reset")
 				LimbSetter(H, "reset")
 
@@ -593,17 +594,12 @@ ABSTRACT_TYPE(/datum/mutantrace)
 					return
 
 	/// Applies or removes the bioeffect associated with the mutantrace
-	proc/MutateMutant(var/mob/living/carbon/human/H, var/mode as text)
-		if (!H || !mode || !race_mutation)
+	proc/MutateMutant(var/mob/living/carbon/human/H)
+		if (!H || !race_mutation)
 			return
 		var/datum/bioEffect/mutantrace/mr = src.race_mutation
-		switch (mode)
-			if ("set")
-				if(!H.bioHolder.HasEffect(initial(mr.id)))
-					H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
-			if ("reset")
-				if(H.bioHolder.HasEffect(initial(mr.id)))
-					H.bioHolder.RemoveEffect(initial(mr.id))
+		if(!H.bioHolder.HasEffect(initial(mr.id)))
+			H.bioHolder.AddEffect(initial(mr.id), 0, 0, 0, 1)
 
 	/// Copies over female variants of mutant heads and organs
 	proc/MakeMutantDimorphic(var/mob/living/carbon/human/H)
