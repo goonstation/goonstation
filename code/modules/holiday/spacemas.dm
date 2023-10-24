@@ -66,7 +66,7 @@ var/static/list/santa_snacks = list(/obj/item/reagent_containers/food/drinks/egg
 		message_admins("[which_one == 0 ? "Santa Claus" : "Krampus"] respawn is sending offer to eligible ghosts. They have [confirmation_delay / 10] seconds to respond.")
 
 	// Select player.
-	var/list/datum/mind/candidates = dead_player_list(1, confirmation_delay, text_messages)
+	var/list/datum/mind/candidates = dead_player_list(1, confirmation_delay, text_messages, for_antag = which_one)
 	if (!islist(candidates) || length(candidates) <= 0)
 		message_admins("Couldn't set up [which_one == 0 ? "Santa Claus" : "Krampus"] respawn (no eligible candidates found).")
 		xmas_respawn_lock = 0
