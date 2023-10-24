@@ -156,6 +156,7 @@ TYPEINFO(/obj/strip_door)
 			var/mob/living/M = A
 			var/density = src.flap_material.hasProperty("density") ? src.flap_material.getProperty("density") : 3
 			M.changeStatus("slowed", 2 SECONDS, density * 2)
+		src.flap_material.triggerOnEntered(src, A)
 
 	// Ensure that we're no longer slowed when leaving flaps
 	Uncrossed(atom/A)
