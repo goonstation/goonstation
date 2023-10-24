@@ -528,9 +528,9 @@
 				boutput(M, "<span class='alert'>You are struck by a big rocket! Thankfully it was not the exploding kind.</span>")
 				M.do_disorient(stunned = 40)
 			else
-				boutput(M, "<span class='alert'>You are struck by a union-busting rocket! There goes your salary!</span>")
+				boutput(M, "<span class='alert'>You are struck by a union-busting rocket! There goes your union benefits!</span>")
 				M.traitHolder.removeTrait("unionized")
-				data_core.bank.find_record("name", M.real_name)["wage"] = 0
+				data_core.bank.find_record("name", M.real_name)["wage"] = data_core.bank.find_record("name", M.real_name)["wage"]/1.5
 
 
 //magical crap
