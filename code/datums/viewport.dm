@@ -140,3 +140,11 @@
 /mob/living/silicon/ai/death(gibbed)
 	src.client?.clearViewportsByType("AI: Viewport")
 	.=..()
+
+
+/client/proc/cmd_create_viewport()
+	set category = ADMIN_CAT_SELF
+	set name = "Create Viewport"
+	ADMIN_ONLY
+
+	src.mob.create_viewport("Blob: Viewport")
