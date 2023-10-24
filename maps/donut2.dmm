@@ -42534,7 +42534,8 @@
 /area/station/hangar/main)
 "rkz" = (
 /obj/machinery/conveyor/EW{
-	id = "cargo-art-in"
+	id = "cargo-art-in";
+	operating = 1
 	},
 /obj/strip_door{
 	dir = 4
