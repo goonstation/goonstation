@@ -143,7 +143,7 @@
 
 
 /client/proc/cmd_create_viewport()
-	set category = ADMIN_CAT_SELF
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Create Viewport"
 	ADMIN_ONLY
 
