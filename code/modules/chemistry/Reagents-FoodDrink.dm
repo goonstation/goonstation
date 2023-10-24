@@ -968,10 +968,11 @@ datum
 				if(!src.orig_mutantrace)
 					src.orig_mutantrace = M.mutantrace.type
 
-			on_mob_life_complete(var/mob/living/carbon/human/M)
-				if(M && M.bioHolder && src.orig_mutantrace && src.orig_mutantrace != M.mutantrace)
-					M.set_mutantrace(src.orig_mutantrace)
-				src.orig_mutantrace = null
+			on_remove()
+				..()
+				var/mob/living/carbon/human/H = holder.my_atom
+				if(istype(H) && H.bioHolder && src.orig_mutantrace && src.orig_mutantrace != H.mutantrace)
+					H.set_mutantrace(src.orig_mutantrace)
 
 			on_mob_life(var/mob/M, var/mult = 1)
 				if (!M)
