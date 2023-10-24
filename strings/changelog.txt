@@ -1,3 +1,9 @@
+
+(t)tue oct 24 23
+(u)glowbold
+(p)16580
+(e)🆕🎨📄🚗|C-Feature, C-Sprites, A-UI, A-Vehicles
+(*)The Pod HUD shows the pressure of your fuel tank.
 (t)sun oct 22 23
 (u)LeahTheTech
 (+)Announcement computers now have a unique sprite (finally)
