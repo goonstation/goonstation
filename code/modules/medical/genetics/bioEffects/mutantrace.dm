@@ -23,10 +23,6 @@
 			var/mob/living/carbon/human/H = owner
 			if (!istype(H.mutantrace, src.mutantrace_path))
 				H.set_mutantrace(src.mutantrace_path)
-			for (var/ID in H.bioHolder.effects)
-				// clear away any existing mutantraces first
-				if (istype(H.bioHolder.GetEffect(ID), /datum/bioEffect/mutantrace) && ID != src.id)
-					H.bioHolder.RemoveEffect(ID)
 
 	OnRemove()
 		..()
