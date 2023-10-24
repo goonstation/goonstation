@@ -1997,7 +1997,7 @@
 			var/obj/portal/P = new /obj/portal
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
-			P.target = T
+			P.set_target(T)
 			src.dir = map_settings ? map_settings.escape_dir : SOUTH
 			src.set_loc(T)
 			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")

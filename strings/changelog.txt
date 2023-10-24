@@ -1,5 +1,7 @@
 
 (t)tue oct 24 23
+(u)pali
+(*)Tracking beacons have a blue indicator light when a teleporter or a poartal is currently pointed at them.
 (u)glowbold
 (p)16580
 (e)🆕🎨📄🚗|C-Feature, C-Sprites, A-UI, A-Vehicles
