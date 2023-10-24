@@ -350,6 +350,13 @@ ABSTRACT_TYPE(/datum/material)
 		L[D] = 0
 		return
 
+	/// Checks if material proc type is present for a given trigger in the material
+	proc/hasTrigger(var/triggerListName as text, materialProcType)
+		var/list/L = src.vars[triggerListName]
+		for(var/datum/materialProc/P in L)
+			if(istype(P.type, materialProcType)) return 1
+		return 0
+
 	///Triggers is specified using one of the TRIGGER_ON_ defines
 	proc/removeTrigger(var/triggerListName as text, var/inType)
 		if(!src.mutable)
