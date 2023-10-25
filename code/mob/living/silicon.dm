@@ -164,9 +164,6 @@ ADMIN_INTERACT_PROCS(/mob/living/silicon, proc/pick_law_rack)
 	return
 #undef STUNNED
 
-/mob/living/silicon/proc/damage_mob(var/brute = 0, var/fire = 0, var/tox = 0)
-	return
-
 /mob/living/silicon/has_any_hands()
 	// no hands :(
 

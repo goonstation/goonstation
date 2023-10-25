@@ -232,21 +232,21 @@ TYPEINFO(/obj/machinery/secscanner)
 			if (istype(perp.l_store))
 				contraband_returned = list()
 				if(SEND_SIGNAL(perp.l_store, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
-					threatcount += max(contraband_returned)
+					threatcount += max(contraband_returned) * 0.5
 
 			if (istype(perp.r_store))
 				contraband_returned = list()
 				if(SEND_SIGNAL(perp.r_store, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
-					threatcount += max(contraband_returned)
+					threatcount += max(contraband_returned) * 0.5
 
 			if (istype(perp.back) && perp.back?.storage)
 				for(var/obj/item/item in perp.back.storage.get_contents())
 					contraband_returned = list()
 					if(SEND_SIGNAL(item, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, !has_contraband_permit, !has_carry_permit))
-						threatcount += max(contraband_returned)
+						threatcount += max(contraband_returned) * 0.5
 
 		//Agent cards lower threatlevel
-		if((istype(perp.wear_id, /obj/item/card/id/syndicate)))
+		if(istype(perp_id, /obj/item/card/id/syndicate))
 			threatcount -= 2
 
 		// we have grounds to make an arrest, don't bother with further analysis

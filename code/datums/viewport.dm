@@ -16,7 +16,9 @@
 		viewport_id = "viewport_[max_viewport_id++]"
 		winclone( viewer, "blank-map", viewport_id )
 		winset( viewer, "[viewport_id]", list2params(list("on-close" = ".viewport-close \"\ref[src]\"", "size" = "256,256")))
+		var/style = winget(viewer, "mapwindow.map", "style")
 		var/list/params = list( "parent" = viewport_id, "type" = "map", "pos" = "0,0", "size" = "256,256", "anchor1" = "0,0", "anchor2" = "100,100" )
+		params["style"] = style
 		winset(viewer, "map_[viewport_id]", list2params(params))
 		handler = new
 		handler.plane = PLANE_BLACKNESS
@@ -104,48 +106,35 @@
 	if(istype(vp) && vp.viewer == src)
 		qdel(vp)
 
-///client/verb/dupeVP()
-//	var/datum/viewport/vp = new(src)
-//	vp.SetViewport( get_turf(src.mob), 8, 8 )
-/mob/living/intangible/aieye/verb/create_viewport()
+/mob/proc/create_viewport(id)
+	var/list/viewports = client.getViewportsByType(id)
+	if(length(viewports) >= 5)
+		boutput( src, "<b>You can only have up to 5 active viewports. Close an existing viewport to create another.</b>" )
+		return
+
+	var/datum/viewport/vp = new(src.client, id)
+	var/turf/ourPos = get_turf(src)
+	var/turf/startPos = null
+	for(var/i = 4, i >= 0 || !startPos, i--)
+		startPos = locate(ourPos.x - i, ourPos.y + i, ourPos.z)
+		if(startPos) break
+	vp.clickToMove = 1
+	vp.SetViewport(startPos, 8, 8)
+
+/mob/living/intangible/aieye/verb/ai_eye_create_viewport()
 	set category = "AI Commands"
 	set name = "EXPERIMENTAL: Create Viewport"
 	set desc = "Expand your powers with Nanotransen's Viewportifier!"
 
+	src.create_viewport("AI: Viewport")
 
-	var/list/viewports = client.getViewportsByType("AI: Viewport")
-	if(length(viewports) >= 5)
-		boutput( src, "<b>You can only have up to 5 active viewports. Close an existing viewport to create another.</b>" )
-		return
-
-	var/datum/viewport/vp = new(src.client, "AI: Viewport")
-	var/turf/ourPos = get_turf(src)
-	var/turf/startPos = null
-	for(var/i = 4, i >= 0 || !startPos, i--)
-		startPos = locate(ourPos.x - i, ourPos.y + i, ourPos.z)
-		if(startPos) break
-	vp.clickToMove = 1
-	vp.SetViewport(startPos, 8, 8)
-
-/mob/living/intangible/blob_overmind/verb/create_viewport()
+/mob/living/intangible/blob_overmind/verb/blob_create_viewport()
 	set category = "Blob Commands"
 	set name = "EXPERIMENTAL: Create Viewport"
 	set desc = "Expand your powers with BlobCorp's Viewportifier!"
 
+	src.create_viewport("Blob: Viewport")
 
-	var/list/viewports = client.getViewportsByType("Blob: Viewport")
-	if(length(viewports) >= 5)
-		boutput( src, "<b>You can only have up to 5 active viewports. Close an existing viewport to create another.</b>" )
-		return
-
-	var/datum/viewport/vp = new(src.client, "Blob: Viewport")
-	var/turf/ourPos = get_turf(src)
-	var/turf/startPos = null
-	for(var/i = 4, i >= 0 || !startPos, i--)
-		startPos = locate(ourPos.x - i, ourPos.y + i, ourPos.z)
-		if(startPos) break
-	vp.clickToMove = 1
-	vp.SetViewport(startPos, 8, 8)
 /mob/living/intangible/blob_overmind/death()
 	src.client?.clearViewportsByType("Blob: Viewport")
 	.=..()
@@ -153,3 +142,11 @@
 /mob/living/silicon/ai/death(gibbed)
 	src.client?.clearViewportsByType("AI: Viewport")
 	.=..()
+
+
+/client/proc/cmd_create_viewport()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Create Viewport"
+	ADMIN_ONLY
+
+	src.mob.create_viewport("Blob: Viewport")

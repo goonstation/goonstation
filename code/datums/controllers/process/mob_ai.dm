@@ -74,7 +74,7 @@ datum/controller/process/mob_ai
 						M.ai._mobai_being_processed = TRUE
 						M.ai.tick()
 					catch(var/exception/e)
-						logTheThing(LOG_DEBUG, "mobAI process", "A runtime was thrown by [constructTarget(M)](\ref[M]) while processing its AI. [e] on [e.file]:[e.line]")
+						stack_trace("A runtime was thrown by [constructTarget(M)](\ref[M]) while processing its AI. [e] on [e.file]:[e.line]")
 #else
 					M.ai._mobai_being_processed = TRUE
 					M.ai.tick()

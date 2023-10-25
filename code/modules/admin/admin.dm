@@ -2933,7 +2933,6 @@ var/global/noir = 0
 								if(istype(H.mutantrace, /datum/mutantrace/zombie))
 									continue //Already a zombie!
 
-								qdel(H.mutantrace)
 								H.set_mutantrace(/datum/mutantrace/zombie)
 								setalive(H) //Set stat back to zero so we can call death()
 								H.death()//Calling death() again means that the zombies will rise after ~20 seconds.

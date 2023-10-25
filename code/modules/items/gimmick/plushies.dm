@@ -69,7 +69,7 @@ TYPEINFO(/obj/submachine/claw_machine)
 			. += "It is currently empty."
 
 /obj/submachine/claw_machine/attackby(obj/item/I, mob/user)
-	if(I.cant_drop || I.tool_flags)
+	if(I.cant_drop || I.tool_flags || isgrab(I))
 		return ..()
 	user.drop_item()
 	I.set_loc(src)

@@ -2314,6 +2314,7 @@
 	blinded = 0
 	bleeding = 0
 	blood_volume = 500
+	decomp_stage = DECOMP_STAGE_NO_ROT
 
 	if (!src.limbs)
 		src.limbs = new /datum/human_limbs(src)

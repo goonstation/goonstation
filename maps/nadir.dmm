@@ -3331,22 +3331,6 @@
 /area/station/maintenance/outer/se{
 	name = "Southeast Breach Hull"
 	})
-"bwW" = (
-/obj/machinery/conveyor/EW{
-	id = "garbage";
-	move_lag = 6;
-	operating = 1
-	},
-/obj/machinery/door/poddoor/pyro{
-	autoclose = 1;
-	dir = 4;
-	id = "crusher";
-	layer = 4;
-	name = "Crusher Door"
-	},
-/obj/plasticflaps,
-/turf/simulated/floor/caution/northsouth,
-/area/station/maintenance/disposal)
 "bxc" = (
 /obj/cable{
 	icon_state = "2-8"
@@ -4939,37 +4923,6 @@
 	},
 /turf/simulated/floor/engine,
 /area/station/turret_protected/ai)
-"ckl" = (
-/obj/table/reinforced/bar/auto,
-/obj/item/coin{
-	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
-	name = "thick coin";
-	pixel_x = -4;
-	pixel_y = 1
-	},
-/obj/item/coin{
-	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
-	name = "tarnished coin";
-	pixel_x = 5
-	},
-/obj/item/coin{
-	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
-	name = "strange coin";
-	pixel_x = 9;
-	pixel_y = 3
-	},
-/obj/item/stamp/hop{
-	pixel_x = -15
-	},
-/obj/machinery/firealarm/east,
-/obj/item/pen/crayon/golden{
-	pixel_x = -6;
-	pixel_y = 7
-	},
-/turf/simulated/floor/black,
-/area/station/bridge/hos{
-	name = "Head of Personnel's Quarters"
-	})
 "ckn" = (
 /obj/decal/stripe_delivery,
 /turf/simulated/floor/greenblack{
@@ -16427,6 +16380,14 @@
 /area/station/engine/inner{
 	name = "Transception Array Control"
 	})
+"hjc" = (
+/obj/strip_door,
+/obj/machinery/door/firedoor/pyro,
+/obj/disposalpipe/segment/ejection{
+	dir = 2
+	},
+/turf/simulated/floor/black,
+/area/station/science/bot_storage)
 "hje" = (
 /obj/cable{
 	icon_state = "1-4"
@@ -17910,26 +17871,6 @@
 /obj/machinery/firealarm/east,
 /turf/simulated/floor/black/grime,
 /area/station/security/brig/genpop)
-"hNg" = (
-/obj/disposalpipe/segment/transport,
-/obj/plasticflaps{
-	layer = 3.1
-	},
-/obj/machinery/door/poddoor/blast/pyro{
-	doordir = "mid";
-	icon_state = "bdoormid1";
-	id = "cargogaming";
-	layer = 3.2;
-	name = "Transception Bay Door"
-	},
-/obj/machinery/conveyor/SN{
-	id = "nadir_qmio2"
-	},
-/obj/forcefield/energyshield/perma/doorlink,
-/turf/simulated/floor/engine/caution/northsouth,
-/area/station/quartermaster/cargobay{
-	name = "Cargo Primary Endpoint"
-	})
 "hNh" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/simulated/floor/plating,
@@ -20096,6 +20037,25 @@
 	dir = 1
 	},
 /area/station/engine/storage)
+"iFv" = (
+/obj/machinery/conveyor/WE{
+	id = "nadir_qmio"
+	},
+/obj/strip_door{
+	layer = 3.1
+	},
+/obj/machinery/door/poddoor/pyro{
+	autoclose = 1;
+	dir = 4;
+	id = "cargo_swapabout";
+	layer = 3.2;
+	name = "Cargo Transfer"
+	},
+/obj/forcefield/energyshield/perma/doorlink{
+	dir = 8
+	},
+/turf/simulated/floor/black,
+/area/station/quartermaster/cargooffice)
 "iFC" = (
 /obj/machinery/door/airlock/pyro/glass,
 /obj/cable{
@@ -21557,6 +21517,26 @@
 /obj/machinery/glass_recycler/chemistry,
 /turf/simulated/floor/purpleblack,
 /area/station/science/chemistry)
+"jpF" = (
+/obj/disposalpipe/segment/transport,
+/obj/strip_door{
+	layer = 3.1
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	doordir = "mid";
+	icon_state = "bdoormid1";
+	id = "cargogaming";
+	layer = 3.2;
+	name = "Transception Bay Door"
+	},
+/obj/machinery/conveyor/SN{
+	id = "nadir_qmio2"
+	},
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/engine/caution/northsouth,
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "jpG" = (
 /obj/disposalpipe/segment/vertical,
 /turf/simulated/floor/black/corner{
@@ -23930,6 +23910,25 @@
 	},
 /turf/simulated/floor/darkblue/checker/other,
 /area/station/crew_quarters/radio/lab)
+"kng" = (
+/obj/strip_door{
+	layer = 3.1
+	},
+/obj/machinery/door/poddoor/blast/pyro{
+	doordir = "mid";
+	icon_state = "bdoormid1";
+	id = "cargogaming";
+	layer = 3.2;
+	name = "Transception Bay Door"
+	},
+/obj/machinery/conveyor/SN{
+	id = "nadir_qmio2"
+	},
+/obj/forcefield/energyshield/perma/doorlink,
+/turf/simulated/floor/engine/caution/northsouth,
+/area/station/quartermaster/cargobay{
+	name = "Cargo Primary Endpoint"
+	})
 "knk" = (
 /obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /obj/machinery/door/poddoor/pyro{
@@ -27251,15 +27250,6 @@
 	},
 /turf/simulated/floor/white,
 /area/station/medical/medbay/lobby)
-"lEp" = (
-/obj/shrub{
-	dir = 8
-	},
-/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep{
-	secret_thing = 1
-	},
-/turf/simulated/floor/grass/leafy,
-/area/station/ranch)
 "lEw" = (
 /obj/disposalpipe/segment/mail/bent/west,
 /turf/simulated/floor/white,
@@ -27919,6 +27909,22 @@
 /area/station/engine/substation/pylon{
 	name = "South Catalytic Substation"
 	})
+"lQh" = (
+/obj/machinery/conveyor/EW{
+	id = "garbage";
+	move_lag = 6;
+	operating = 1
+	},
+/obj/machinery/door/poddoor/pyro{
+	autoclose = 1;
+	dir = 4;
+	id = "crusher";
+	layer = 4;
+	name = "Crusher Door"
+	},
+/obj/strip_door,
+/turf/simulated/floor/caution/northsouth,
+/area/station/maintenance/disposal)
 "lQk" = (
 /obj/machinery/camera{
 	c_tag = "autotag";
@@ -37507,6 +37513,13 @@
 /obj/decal/boxingropeenter,
 /turf/simulated/floor/specialroom/gym,
 /area/station/crew_quarters/fitness)
+"qda" = (
+/obj/strip_door,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/black,
+/area/station/security/beepsky)
 "qdz" = (
 /obj/decal/cleanable/oil,
 /turf/simulated/floor/shuttlebay,
@@ -40281,25 +40294,6 @@
 	},
 /turf/simulated/floor/plating,
 /area/station/hydroponics/bay)
-"rxw" = (
-/obj/machinery/conveyor/WE{
-	id = "nadir_qmio"
-	},
-/obj/plasticflaps{
-	layer = 3.1
-	},
-/obj/machinery/door/poddoor/pyro{
-	autoclose = 1;
-	dir = 4;
-	id = "cargo_swapabout";
-	layer = 3.2;
-	name = "Cargo Transfer"
-	},
-/obj/forcefield/energyshield/perma/doorlink{
-	dir = 8
-	},
-/turf/simulated/floor/black,
-/area/station/quartermaster/cargooffice)
 "rxJ" = (
 /obj/table/reinforced/industrial/auto,
 /obj/item/hand_tele{
@@ -42461,13 +42455,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/southwest)
-"suY" = (
-/obj/plasticflaps,
-/obj/cable{
-	icon_state = "1-2"
-	},
-/turf/simulated/floor/black,
-/area/station/security/beepsky)
 "svf" = (
 /obj/machinery/light/flock,
 /obj/table/flock/auto,
@@ -45653,6 +45640,37 @@
 	},
 /turf/simulated/floor/carpet/red/fancy/edge/sw,
 /area/station/crew_quarters/cafeteria)
+"tLm" = (
+/obj/table/reinforced/bar/auto,
+/obj/item/coin{
+	desc = "One side is adorned with a strange-looking ship, and the other with the words 'Una Salus Victus' surrounded by a wreath.";
+	name = "thick coin";
+	pixel_x = -4;
+	pixel_y = 1
+	},
+/obj/item/coin{
+	desc = "Upon close inspection, you're pretty sure this thing is an arcade token.";
+	name = "tarnished coin";
+	pixel_x = 5
+	},
+/obj/item/coin{
+	desc = "Its face is engraved with a strange hexagon-based fractal. The other side is polished to a mirror sheen.";
+	name = "strange coin";
+	pixel_x = 9;
+	pixel_y = 3
+	},
+/obj/item/stamp/hop{
+	pixel_x = -15
+	},
+/obj/machinery/firealarm/east,
+/obj/item/pen/crayon/golden{
+	pixel_x = -6;
+	pixel_y = 7
+	},
+/turf/simulated/floor/black,
+/area/station/bridge/hos{
+	name = "Head of Personnel's Quarters"
+	})
 "tLt" = (
 /obj/cable{
 	icon_state = "1-8"
@@ -53779,14 +53797,6 @@
 	dir = 1
 	},
 /area/station/hallway/primary/northwest)
-"xyW" = (
-/obj/plasticflaps,
-/obj/machinery/door/firedoor/pyro,
-/obj/disposalpipe/segment/ejection{
-	dir = 2
-	},
-/turf/simulated/floor/black,
-/area/station/science/bot_storage)
 "xzc" = (
 /obj/cable{
 	icon_state = "4-8"
@@ -54117,25 +54127,6 @@
 /obj/disposalpipe/segment/horizontal,
 /turf/simulated/floor/plating,
 /area/station/maintenance/southeast)
-"xHa" = (
-/obj/plasticflaps{
-	layer = 3.1
-	},
-/obj/machinery/door/poddoor/blast/pyro{
-	doordir = "mid";
-	icon_state = "bdoormid1";
-	id = "cargogaming";
-	layer = 3.2;
-	name = "Transception Bay Door"
-	},
-/obj/machinery/conveyor/SN{
-	id = "nadir_qmio2"
-	},
-/obj/forcefield/energyshield/perma/doorlink,
-/turf/simulated/floor/engine/caution/northsouth,
-/area/station/quartermaster/cargobay{
-	name = "Cargo Primary Endpoint"
-	})
 "xHl" = (
 /obj/item/storage/wall{
 	dir = 8;
@@ -55027,6 +55018,15 @@
 /area/station/hallway/secondary/construction{
 	name = "The Warrens"
 	})
+"yco" = (
+/obj/shrub{
+	dir = 8
+	},
+/obj/item/reagent_containers/food/snacks/ingredient/egg/critter/sheep{
+	secret_thing = 1
+	},
+/turf/simulated/floor/grass/leafy,
+/area/station/ranch)
 "ycq" = (
 /obj/cable{
 	icon_state = "2-4"
@@ -94188,7 +94188,7 @@ klG
 rDs
 tZQ
 fer
-lEp
+yco
 rxT
 kfe
 szr
@@ -94256,7 +94256,7 @@ kGf
 vef
 lXZ
 mhQ
-suY
+qda
 ydL
 ebB
 ebB
@@ -96370,7 +96370,7 @@ tqL
 coc
 kyK
 jOJ
-ckl
+tLm
 gow
 ocC
 mQl
@@ -97552,7 +97552,7 @@ xZW
 fpX
 uwF
 wSE
-xyW
+hjc
 lWM
 tKh
 lWM
@@ -102088,7 +102088,7 @@ huy
 hSH
 dqX
 oxJ
-rxw
+iFv
 oxJ
 kqZ
 wbj
@@ -104813,7 +104813,7 @@ liG
 pYn
 vsG
 pJt
-xHa
+kng
 gwo
 dHS
 tAy
@@ -105115,7 +105115,7 @@ nes
 nes
 vsG
 ttr
-hNg
+jpF
 vjw
 pQa
 wKF
@@ -105417,7 +105417,7 @@ vIv
 oRI
 vsG
 mrq
-xHa
+kng
 nym
 tMp
 pum
@@ -113502,7 +113502,7 @@ eVf
 kti
 kti
 kti
-bwW
+lQh
 kti
 frk
 ojD

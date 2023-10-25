@@ -1,3 +1,9 @@
+(t)tue oct 24 23
+(u)pali
+(*)Admin Create-Viewport verb, does the obvious.
+(t)mon oct 23 23
+(u)pali
+(*)New verb Observe-Next-Player with alias ONP which is nice if you want to loop through all players quickly. (Like ORP but you don't get repeats.)
 (t)thu oct 19 23
 (u)pali
 (*)Fluids build mode has been added.

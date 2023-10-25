@@ -474,6 +474,10 @@ TYPEINFO(/atom)
 	master = null
 	..()
 
+TYPEINFO(/atom/movable)
+	/// Either a number or a list of the form list("MET-1"=5, "erebite"=3)
+	/// See the `match_material_pattern` proc for an explanation of what "CRY-2" is supposed to mean
+	var/list/mats = null
 
 /atom/movable
 	layer = OBJ_LAYER
@@ -503,10 +507,20 @@ TYPEINFO(/atom)
 	/// how much it slows you down while pulling it, changed this from w_class because that's gunna cause issues with items that shouldn't fit in backpacks but also shouldn't slow you down to pull (sorry grayshift)
 	var/p_class = 2.5
 
+	// Enables mobs and objs to be mechscannable
+	/// Can this only be scanned with a syndicate mech scanner?
+	var/is_syndicate = FALSE
+	/// Dictates how this object behaves when scanned with a device analyzer or equivalent - see "_std/defines/mechanics.dm" for docs
+	var/mechanics_interaction = MECHANICS_INTERACTION_ALLOWED
+	/// If defined, device analyzer scans will yield this typepath (instead of the default, which is just the object's type itself)
+	var/mechanics_type_override = null
 
 //some more of these event handler flag things are handled in set_loc far below . . .
 /atom/movable/New()
 	..()
+	var/typeinfo/obj/typeinfo = src.get_typeinfo()
+	if (typeinfo.mats && !src.mechanics_interaction != MECHANICS_INTERACTION_BLACKLISTED)
+		src.AddComponent(/datum/component/analyzable, !isnull(src.mechanics_type_override) ? src.mechanics_type_override : src.type)
 	src.last_turf = isturf(src.loc) ? src.loc : null
 	//hey this is mbc, there is probably a faster way to do this but i couldnt figure it out yet
 	if (isturf(src.loc))

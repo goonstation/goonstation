@@ -72,7 +72,7 @@
 
 		if (owner.lying != lying_old)
 			owner.update_lying()
-			owner.set_density(!owner.lying)
+			owner.set_density(!owner.lying && initial(owner.density))
 
 			if (owner.lying && !owner.buckled && !HAS_ATOM_PROPERTY(owner, PROP_MOB_SUPPRESS_LAYDOWN_SOUND))
 				var/turf/T = get_turf(owner)

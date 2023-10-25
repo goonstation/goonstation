@@ -841,6 +841,14 @@ TYPEINFO(/mob/living/critter/small_animal/cat/jones)
 	dogtype = "george"
 	var/playing_dead = 0 // code mostly just c/p from possums, I'll shove this up on the parent somewhere at some point
 
+	New(loc)
+		..()
+		START_TRACKING
+
+	disposing()
+		STOP_TRACKING
+		..()
+
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream","bark","howl")
