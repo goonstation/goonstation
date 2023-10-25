@@ -444,7 +444,7 @@
 			return
 		// ckeyEx to sanitize filename: no spaces/special chars, only '_', '-', and '@' allowed. 54 char limit in tgui_input
 		var/input = ckeyEx(tgui_input_text(user, "You are copying '[src.room_name]' to your own collection. \
-			Choose a file name for it. Use only alphanumeric characters, and - and _.", "Copy Homework", null, 54))
+			Choose a file name for it. Use only alphanumeric characters, and - and _.", "Copy Homework", ckeyEx(src.room_name), 54))
 		var/timeout = 0
 		while (input && fexists("data/blueprints/[user.client.ckey]/[input].dat"))
 			if (!user?.client?.ckey || timeout > 5)
