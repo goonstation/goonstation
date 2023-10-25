@@ -736,8 +736,6 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 	var/selecting = 0
 	var/turf/selectcorner1
 	var/image/corner1img
-
-	var/roomname = "NewRoom"
 	var/list/turf/roomList = new/list()
 
 	var/list/permittedTileTypes = list("/turf/simulated")
