@@ -113,7 +113,7 @@
 			src.stop_following()
 		src.followed_atom = target_atom
 		RegisterSignal(src.followed_atom, XSIG_MOVABLE_TURF_CHANGED, PROC_REF(followed_turf_changed))
-		src.SetViewport(get_turf(target_atom))
+		followed_turf_changed(target_atom, null, get_turf(target_atom))
 
 	proc/followed_turf_changed(atom/thing, turf/old_turf, turf/new_turf)
 		var/turf/T = null
