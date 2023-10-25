@@ -35,6 +35,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
 		/client/proc/cmd_create_viewport,
+		/client/proc/cmd_create_viewport_silent,
 
 		/datum/admins/proc/announce,
 		/datum/admins/proc/toggleooc,
