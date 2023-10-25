@@ -176,4 +176,4 @@
 	set name = "Create Silent Viewport"
 	ADMIN_ONLY
 
-	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport - Silent")
+	src.mob.create_viewport("Admin: Viewport - Silent")
