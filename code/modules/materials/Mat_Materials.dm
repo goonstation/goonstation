@@ -1872,7 +1872,6 @@ ABSTRACT_TYPE(/datum/material/rubber)
 	name = "plastic"
 	desc = "A synthetic material made of polymers. Great for polluting oceans."
 	color = "#baccd3"
-	alpha = 200
 
 	New()
 		..()
