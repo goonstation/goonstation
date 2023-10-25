@@ -778,11 +778,15 @@ proc/ui_describe_reagents(atom/A)
 			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container)) //empty hand on either condenser or its connected container should disconnect
 			RegisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED, PROC_REF(remove_container))
 			RegisterSignal(container, COMSIG_MOVABLE_MOVED, PROC_REF(remove_container))
-			var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x + 10, src.pixel_y, container.pixel_x, container.pixel_y + get_chemical_effect_position())
-			result.lineImage.pixel_x = -src.pixel_x
-			result.lineImage.pixel_y = -src.pixel_y
-			src.UpdateOverlays(result.lineImage, "tube\ref[container]")
+			add_line(container)
 			src.connected_containers.Add(container)
+
+
+	proc/add_line(var/obj/container)
+		var/datum/lineResult/result = drawLine(src, container, "condenser", "condenser_end", src.pixel_x - 5, src.pixel_y, container.pixel_x, container.pixel_y + get_chemical_effect_position())
+		result.lineImage.pixel_x = -src.pixel_x
+		result.lineImage.pixel_y = -src.pixel_y
+		src.UpdateOverlays(result.lineImage, "tube\ref[container]")
 
 	proc/remove_container(var/obj/container)
 		src.UpdateOverlays(null, "tube\ref[container]")
@@ -795,13 +799,13 @@ proc/ui_describe_reagents(atom/A)
 		for(var/obj/container in src.connected_containers)
 			remove_container(container)
 
-	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
+	proc/try_adding_reagents_to_container(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority) //called when a reaction occurs inside the condenser flagged with "chemical_reaction = TRUE"
 		if(length(src.connected_containers) <= 0) //if we have no beaker, dump the reagents into condenser
 			src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
 		else
-			add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+			add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority)
 
-	proc/add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+	proc/add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority)
 		var/list/non_full_containers = list()
 		for(var/obj/container in connected_containers)
 			if(container.reagents.maximum_volume > container.reagents.total_volume) //don't bother with this if it's already full, move onto other containers
@@ -817,10 +821,39 @@ proc/ui_describe_reagents(atom/A)
 				src.add_reagents_to_containers(reagent, divided_amount - remaining_container_space, sdata, temp_new, donotreact, donotupdate)  //...then run the whole proc again with the remaining reagent, evenly distributing to remaining containers
 			else
 				container.reagents.add_reagent(reagent, divided_amount, sdata, temp_new, donotreact, donotupdate)
-
 	disposing()
 		src.remove_container()
 		. = ..()
+
+	fractional
+		icon_state = "condenser_fractional"
+		add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority)
+			var/obj/chosen_container
+			if (priority <= length(connected_containers))
+				chosen_container = connected_containers[priority]
+			else if (priority > length(connected_containers))
+				chosen_container = connected_containers[length(connected_containers)]
+
+			if(chosen_container.reagents.maximum_volume <= chosen_container.reagents.total_volume)	//all full? backflow!!
+				src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+				return
+
+			var/remaining_container_space = chosen_container.reagents.maximum_volume - chosen_container.reagents.total_volume
+			if(remaining_container_space < amount) 																			//if there's more reagent to add than the beaker can hold...
+				chosen_container.reagents.add_reagent(reagent, remaining_container_space, sdata, temp_new, donotreact, donotupdate) //...add what we can to the beaker...
+				src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+			else
+				chosen_container.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
+
+		add_line(var/obj/container)
+			var/id = length(src.connected_containers)+1
+			var/x_off = 5*((id+1)%2)  //alternate between 0/+5
+			var/y_off = (4*round((id-1)/2)) //go up by 4 pixels for every 2nd connection
+			boutput(world, "offsets: [src.pixel_x-4+x_off], [src.pixel_y+5+y_off]")
+			var/datum/lineResult/result = drawLine(src, container, "condenser_[id]", "condenser_end_[id]", src.pixel_x-4+x_off, src.pixel_y+5+y_off, container.pixel_x, container.pixel_y + get_chemical_effect_position())
+			result.lineImage.pixel_x = -src.pixel_x
+			result.lineImage.pixel_y = -src.pixel_y
+			src.UpdateOverlays(result.lineImage, "tube\ref[container]")
 
 /obj/item/reagent_containers/synthflesh_pustule
 	name = "synthetic pustule"
