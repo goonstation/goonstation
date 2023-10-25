@@ -1,5 +1,6 @@
 /obj/item/pen/sleepypen
-	flags = FPRINT | ONBELT | TABLEPASS | NOSPLASH | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 	hide_attack = TRUE
 	move_triggered = TRUE
 	can_dip = FALSE
@@ -19,6 +20,11 @@
 			uses_handwriting = TRUE
 		src.create_reagents(100)
 		reagents.add_reagent("ketamine", 100)
+
+	//Open to be poured into, but not out of. Confusing!
+	is_open_container(input = FALSE)
+		if (input)
+			return TRUE
 
 	attack(mob/M, mob/user)
 		if (!ismob(M))
@@ -42,7 +48,8 @@
 	name = "greasy pen"
 	icon_state = "pen-greasy"
 	desc = "Holy shit...that pen is fucking greasy."
-	flags = FPRINT | ONBELT | TABLEPASS | NOSPLASH | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | NOSPLASH | OPENCONTAINER
+	c_flags = ONBELT
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
 	New()
@@ -79,7 +86,6 @@
 					src.reagents.remove_any(30)
 					if(user != M)
 						M.show_text("<b>[user] poked you with their leaking pen! Urgh!</b>", "red")
-				else
 			if(luck==3)
 				boutput(user, "<span class='alert'>You stab yourself with the pointy end of the greasy sleepy pen.")
 				logTheThing(LOG_COMBAT, user, "tries to stab [constructTarget(M,"combat")] with the discount sleepy pen [log_reagents(src)] but uses it on themselves at [log_loc(user)].")

@@ -324,7 +324,7 @@ Obsidian Crown
 
 	equipped(var/mob/user, var/slot)
 		..()
-		logTheThing(LOG_COMBAT, user, "equipped [src].")
+		logTheThing(LOG_COMBAT, user, "equipped [src] at [log_loc(src)].")
 		cant_self_remove = 1
 		cant_other_remove = 1
 		if (!src.processing)
@@ -381,7 +381,7 @@ Obsidian Crown
 					return
 				var/list/randomturfs = new/list()
 				for(var/turf/T in orange(host, 25))
-					if(T.density)
+					if(!T.can_crossed_by(host))
 						continue
 					randomturfs.Add(T)
 				boutput(host, "<span class='combat'>[that_jerk] is warped away!</span>")

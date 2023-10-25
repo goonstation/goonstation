@@ -175,7 +175,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		src.passiveVotes = new()
 		map_vote_holder.clear_votes()
 		//no one voted :(
-		if (votes.len == 0)
+		if (length(votes) == 0)
 			return
 
 		//determine winner
@@ -192,7 +192,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 			//a tie is detected! make a note of which maps are tied
 			else if (mapVotes == highestVotes)
-				if (tiedMaps.len == 0)
+				if (length(tiedMaps) == 0)
 					//retroactively note that the previously highest voted map is now tied
 					tiedMaps += src.voteChosenMap
 				tiedMaps += map
@@ -236,12 +236,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 	// Standardized way to ask a user for a map
 	proc/clientSelectMap(client/C,var/pickable)
-		var/info = "Select a map"
-		info += "\nCurrently on: [src.current]"
-		if(pickable)
-			return input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in src.playerPickable
-		else
-			return(input(info, "Switch Map", src.next ? src.next : src.current) as null|anything in mapNames)
+		return tgui_input_list(C, "Select a map. Currently on: [src.current]", "Switch Map", pickable ? src.playerPickable : mapNames, src.next || src.current)
 
 	//show a html report of who voted for what in any given map vote
 	proc/composeVoteReport(vote)
@@ -256,7 +251,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 		var/list/reportData = src.previousVotes["vote[vote]"]
 		for (var/mapName in reportData)
 			var/list/voters = reportData[mapName]
-			html += "<b>[mapName]</b> - [voters.len] total vote[voters.len == 1 ? "" : "s"]<br>"
+			html += "<b>[mapName]</b> - [voters.len] total vote[length(voters) == 1 ? "" : "s"]<br>"
 
 			var/count = 1
 			for (var/ckey in voters)
@@ -464,6 +459,7 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 
 /obj/mapVoteLink
 	name = "<span style='color: green; text-decoration: underline;'>Map Vote</span>"
+	flags = NOSPLASH
 
 	Click()
 		var/client/C = usr.client
@@ -480,11 +476,13 @@ var/global/datum/mapSwitchHandler/mapSwitcher
 				//chosenMap = "Density"
 			if(istype(I, /obj/item/reagent_containers/food/snacks/donut))
 				chosenMap = "Donut 2"
+			//if(istype(I, /obj/item/grab))
+				//chosenMap = "Wrestlemap"
 
 		if (mapSwitcher.playersVoting)
 			if(chosenMap)
 				map_vote_holder.special_vote(C,chosenMap)
-				boutput(C.mob, "Map vote successful???")
+				boutput(C.mob, "<span class='success'>Map vote successful???</span>")
 			else
 				map_vote_holder.show_window(C)
 

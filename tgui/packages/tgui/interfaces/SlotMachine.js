@@ -4,7 +4,7 @@
  */
 
 import { useBackend } from '../backend';
-import { BlockQuote, Button, Divider, Icon, NoticeBox, NumberInput, Stack } from '../components';
+import { BlockQuote, Button, Icon, NoticeBox, NumberInput, Stack } from '../components';
 import { Window } from '../layouts';
 
 export const SlotMachine = (_props, context) => {
@@ -108,7 +108,7 @@ const SlotWindow = (_props, context) => {
                 minValue={20}
                 maxValue={1000}
                 value={wager}
-                format={value => "$" + value}
+                format={value => value + "⪽"}
                 onDrag={(_e, value) => act('set_wager', { bet: value })}
               />
             </Stack.Item>

@@ -26,6 +26,7 @@ TYPEINFO(/datum/component/fragile_item)
 		ARG_INFO("sound_to_play_on_breaking", DATA_INPUT_TEXT, "Sound effect that plays when the item breaks", 'sound/impact_sounds/Crystal_Shatter_1.ogg')
 	)
 /datum/component/fragile_item/Initialize(var/safe_hits = 3, var/probability_of_breaking = 40, var/stay_in_hand = 1, var/type_to_break_into = /obj/item/raw_material/shard/glass, var/sound_to_play_on_breaking = 'sound/impact_sounds/Crystal_Shatter_1.ogg')
+	. = ..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 	src.safe_hits = safe_hits
@@ -34,8 +35,8 @@ TYPEINFO(/datum/component/fragile_item)
 	src.type_to_break_into = type_to_break_into
 	src.sound_to_play_on_breaking = sound_to_play_on_breaking
 
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_POST), .proc/on_after_attack)
-	RegisterSignal(parent, list(COMSIG_MOVABLE_THROW_END), .proc/on_after_throw)
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_POST, PROC_REF(on_after_attack))
+	RegisterSignal(parent, COMSIG_MOVABLE_THROW_END, PROC_REF(on_after_throw))
 
 /datum/component/fragile_item/proc/on_after_attack(var/obj/item/I, var/mob/M, var/mob/user, var/damage)
 	potentially_break_melee_swinged(I, user)

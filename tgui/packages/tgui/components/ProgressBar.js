@@ -4,7 +4,7 @@
  * @license MIT
  */
 
-import { clamp01, scale, keyOfMatchingRange, toFixed } from 'common/math';
+import { clamp01, keyOfMatchingRange, scale, toFixed } from 'common/math';
 import { classes, pureComponentHooks } from 'common/react';
 import { computeBoxClassName, computeBoxProps } from './Box';
 import { CSS_COLORS } from '../constants';
@@ -16,6 +16,7 @@ export const ProgressBar = props => {
     minValue = 0,
     maxValue = 1,
     color,
+    textColor,
     ranges = {},
     children,
     ...rest
@@ -54,7 +55,7 @@ export const ProgressBar = props => {
       <div
         className="ProgressBar__fill ProgressBar__fill--animated"
         style={fillStyles} />
-      <div className="ProgressBar__content">
+      <div className="ProgressBar__content" style={textColor && { color: textColor }}>
         {hasContent
           ? children
           : toFixed(scaledValue * 100) + '%'}

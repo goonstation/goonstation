@@ -32,15 +32,15 @@
 
 	proc/replace_arm(var/mob/living/carbon/human/C, var/target_limb = "r_arm")
 		var/list/choices = list()
-		choices += ("Claw (DNA cost : 4)")
-		choices += ("Abomination (DNA cost : 6)")
+		choices += ("Claw (DNA cost : Free)")
+		choices += ("Abomination (DNA cost : 10)")
 
 		var/choice = tgui_input_list(holder.owner, "Select a form for our arm:", "Select Arm", choices)
 		if (!choice)
 			boutput(holder.owner, "<span class='notice'>We change our mind.</span>")
 			return 1
 		var/choice_index = choices.Find(choice)
-		var/cost = (choice_index == 1) ? 4 : 6
+		var/cost = (choice_index == 1) ? 0 : 10
 
 		if (holder.points >= cost)
 			holder.points -= cost
@@ -60,7 +60,7 @@
 		var/adjective = pick("terrifying","scary","menacing","badass","deadly","disgusting","grody")
 		holder.owner.visible_message(text("<span class='alert'><B>[holder.owner]'s [(target_limb == "r_arm") ? "right" : "left"] arm quivers and rearranges itself into a [adjective] new form!</B></span>"))
 		logTheThing(LOG_COMBAT, C, "morphs a [new_limb], [log_loc(C)].")
-		playsound(C, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, 1, 0.2, 1)
+		playsound(C, 'sound/impact_sounds/Slimy_Hit_4.ogg', 50, TRUE, 0.2, 1)
 
 		SPAWN(cooldown)
 			if (target_limb == "r_arm")

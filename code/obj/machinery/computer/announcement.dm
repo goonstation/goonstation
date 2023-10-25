@@ -2,7 +2,7 @@
 
 /obj/machinery/computer/announcement
 	name = "Announcement Computer"
-	icon_state = "comm"
+	icon_state = "announcement"
 	machine_registry_idx = MACHINES_ANNOUNCEMENTS
 	circuit_type = /obj/item/circuitboard/announcement
 	var/announcement_delay = 1200
@@ -152,8 +152,7 @@
 			var/mob/living/carbon/human/H = user
 			message = process_accents(H, message) //Slurred announcements? YES!
 		if (isflockmob(user))
-			var/mob/living/critter/flock/flock_creature = user
-			message = radioGarbleText(message, flock_creature?.flock.snoop_clarity)
+			message = radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)
 			msg_sound = 'sound/misc/flockmind/flockmind_caw.ogg'
 
 		command_announcement(message, "[A.name] Announcement by [ID.registered] ([ID.assignment])", msg_sound)
@@ -180,7 +179,9 @@
 	proc/set_arrival_alert(var/mob/user)
 		if (!user)
 			return
-		var/newalert = input(user,"Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR", "Custom Arrival Alert", src.arrivalalert) as null|text
+		var/newalert = tgui_input_text(user, "Please enter a new arrival alert message. Valid tokens: $NAME, $JOB, $STATION, $THEY, $THEM, $THEIR", "Custom Arrival Alert", src.arrivalalert)
+		if (!in_interact_range(src, user))
+			return
 		if (!newalert)
 			return
 		if (!findtext(newalert, "$NAME"))
@@ -207,6 +208,8 @@
 	proc/announce_arrival(var/mob/living/person)
 		if (!src.announces_arrivals)
 			return 1
+		if ((person.traitHolder.hasTrait("stowaway")) || (person.traitHolder.hasTrait("pilot")) || (person.traitHolder.hasTrait("sleepy")))
+			return 1 //people who have been on the ship the whole time, or who aren't on the ship, won't be announced
 		if (!src.announcement_radio)
 			src.announcement_radio = new(src)
 

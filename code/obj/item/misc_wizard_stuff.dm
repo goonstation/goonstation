@@ -128,10 +128,7 @@
 		if (ismob(src.loc))
 			var/mob/HH = src.loc
 			HH.u_equip(src)
-		if (istype(src.loc, /obj/item/storage))
-			var/obj/item/storage/S_temp = src.loc
-			var/datum/hud/storage/H_temp = S_temp.hud
-			H_temp.remove_object(src)
+		src.stored?.transfer_stored_item(src, get_turf(src))
 		if(istype(src.loc, /mob/living/critter/small_animal/snake))
 			var/atom/movable/snake = src
 			while(istype(snake.loc, /mob/living/critter/small_animal/snake))
@@ -187,7 +184,7 @@
 		if (iswizard(user) && !iswizard(M) && !isdead(M) && !check_target_immunity(M))
 			if (M?.traitHolder?.hasTrait("training_chaplain"))
 				M.visible_message("<spab class='alert'>A divine light shields [M] from harm!</span>")
-				playsound(M, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, 1)
+				playsound(M, 'sound/impact_sounds/Energy_Hit_1.ogg', 40, TRUE)
 				JOB_XP(M, "Chaplain", 2)
 				return
 
@@ -252,7 +249,7 @@
 		thunder_charges -= 1
 		var/turf/T = get_turf(target)
 		var/obj/lightning_target/lightning = new/obj/lightning_target(T)
-		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, 1)
+		playsound(T, 'sound/effects/electric_shock_short.ogg', 70, TRUE)
 		lightning.caster = user
 		UpdateIcon()
 		flick("[icon_state]_fire", src)
@@ -328,7 +325,7 @@
 	name = "Magic Mirror"
 	icon = 'icons/obj/decals/misc.dmi'
 	icon_state = "wizard_mirror"
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	density = 0
 

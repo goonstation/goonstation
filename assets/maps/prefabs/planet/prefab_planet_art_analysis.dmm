@@ -1,0 +1,305 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"d" = (
+/obj/decal/cleanable/dirt,
+/obj/landmark/spawner/artifact/one_in_ten,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/noGenerate)
+"p" = (
+/obj/machinery/networked/test_apparatus/pitching_machine{
+	dir = 4
+	},
+/obj/decal/tile_edge/stripe/big{
+	dir = 9
+	},
+/obj/machinery/power/data_terminal,
+/obj/decal/cleanable/dirt{
+	dir = 8
+	},
+/turf/simulated/floor/circuit/purple,
+/area/noGenerate)
+"q" = (
+/obj/machinery/networked/test_apparatus/impact_pad,
+/obj/machinery/power/data_terminal,
+/obj/artifact_spawner,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/decal/cleanable/dirt/dirt4,
+/obj/mapping_helper/mob_spawn/corpse/human,
+/obj/item/reagent_containers/food/snacks/burger/moldy,
+/turf/simulated/floor/circuit/purple,
+/area/noGenerate)
+"r" = (
+/obj/machinery/light{
+	dir = 8;
+	layer = 9.1;
+	light_type = /obj/item/light/tube/light_purpleish;
+	pixel_x = -10
+	},
+/obj/table/reinforced/auto,
+/obj/random_item_spawner/desk_stuff/g_clip_bin_pen,
+/turf/simulated/floor/purplewhite{
+	dir = 9
+	},
+/area/noGenerate)
+"v" = (
+/obj/machinery/door/unpowered/wood/pyro{
+	dir = 8
+	},
+/obj/decal/cleanable/dirt,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"w" = (
+/obj/machinery/networked/test_apparatus/electrobox,
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/obj/machinery/power/data_terminal,
+/obj/decal/cleanable/dirt/dirt5,
+/turf/simulated/floor/circuit/purple,
+/area/noGenerate)
+"y" = (
+/obj/decal/cleanable/dirt,
+/obj/landmark/spawner/artifact/one_in_ten,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"z" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin{
+	pixel_x = 6
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 1
+	},
+/area/noGenerate)
+"A" = (
+/obj/mapping_helper/mob_spawn/corpse/human{
+	spawn_type = /mob/living/carbon/human/normal/scientist
+	},
+/turf/simulated/floor/white,
+/area/noGenerate)
+"G" = (
+/obj/table/reinforced/auto,
+/obj/item/paper_bin/artifact_paper{
+	pixel_x = 10
+	},
+/turf/simulated/floor/purplewhite{
+	dir = 5
+	},
+/area/noGenerate)
+"I" = (
+/obj/decal/cleanable/dirt/dirt3,
+/obj/landmark/spawner/artifact/one_in_ten,
+/turf/simulated/floor/white,
+/area/noGenerate)
+"J" = (
+/turf/simulated/wall/auto/supernorn,
+/area/noGenerate)
+"N" = (
+/obj/machinery/networked/test_apparatus/xraymachine,
+/obj/decal/tile_edge/stripe/big,
+/obj/machinery/power/data_terminal,
+/obj/decal/cleanable/dirt/dirt3,
+/turf/simulated/floor/circuit/purple,
+/area/noGenerate)
+"P" = (
+/obj/reagent_dispensers/watertank/fountain,
+/turf/simulated/floor/purplewhite{
+	dir = 8
+	},
+/area/noGenerate)
+"T" = (
+/obj/machinery/light/incandescent/purpleish{
+	dir = 1;
+	pixel_y = 12
+	},
+/obj/decal/tile_edge/stripe/big,
+/turf/simulated/floor/circuit/purple,
+/area/noGenerate)
+"U" = (
+/obj/machinery/networked/test_apparatus/heater,
+/obj/decal/tile_edge/stripe/big{
+	dir = 10
+	},
+/obj/machinery/power/data_terminal,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/artifact_spawner,
+/obj/decal/cleanable/dirt{
+	dir = 8
+	},
+/turf/simulated/floor/circuit/purple,
+/area/noGenerate)
+"X" = (
+/obj/decal/tile_edge/stripe/big{
+	dir = 1
+	},
+/turf/simulated/floor/circuit/purple,
+/area/noGenerate)
+"Z" = (
+/turf/simulated/floor/white,
+/area/noGenerate)
+
+(1,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(2,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(3,1,1) = {"
+a
+a
+J
+J
+J
+J
+J
+J
+a
+a
+"}
+(4,1,1) = {"
+a
+a
+J
+r
+d
+P
+p
+J
+a
+a
+"}
+(5,1,1) = {"
+a
+a
+J
+z
+A
+I
+X
+J
+a
+a
+"}
+(6,1,1) = {"
+a
+a
+J
+G
+Z
+Z
+X
+J
+a
+a
+"}
+(7,1,1) = {"
+a
+a
+J
+U
+Z
+Z
+q
+J
+a
+a
+"}
+(8,1,1) = {"
+a
+a
+J
+T
+Z
+A
+X
+J
+a
+a
+"}
+(9,1,1) = {"
+a
+a
+J
+N
+Z
+y
+w
+J
+a
+a
+"}
+(10,1,1) = {"
+a
+a
+J
+J
+Z
+J
+J
+J
+a
+a
+"}
+(11,1,1) = {"
+a
+a
+a
+J
+v
+J
+a
+a
+a
+a
+"}
+(12,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}
+(13,1,1) = {"
+a
+a
+a
+a
+a
+a
+a
+a
+a
+a
+"}

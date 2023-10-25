@@ -1,7 +1,7 @@
 //FLAGS BITMASK
 
-/// can be put in back slot
-#define ONBACK							 (1<<0)
+/// unused
+//#define							 (1<<0)
 /// can pass by a table or rack
 #define TABLEPASS						 (1<<1)
 /// thing doesn't drift in space
@@ -14,8 +14,8 @@
 #define NOSHIELD						 (1<<5)
 /// conducts electricity (metal etc.)
 #define CONDUCT							 (1<<6)
-/// can be put in belt slot
-#define ONBELT							 (1<<7)
+/// can mousedrop reagents into from a reagent_container
+#define ACCEPTS_MOUSEDROP_REAGENTS		 (1<<7)
 /// takes a fingerprint
 #define FPRINT							 (1<<8)
 /// item has priority to check when entering or leaving
@@ -24,10 +24,8 @@
 #define DOORPASS						 (1<<10)
 /// automagically talk into this object when a human is holding it (Phone handset!)
 #define TALK_INTO_HAND 			 (1<<11)
-/// is an open container for chemistry purposes
+/// is an open container for chemistry purposes. don't check this flag directly, use obj.is_open_container()
 #define OPENCONTAINER				 (1<<12)
-/// is an atom spawned in an adventure area
-#define ISADVENTURE 				 (1<<13)
 /// No beaker etc. splashing. For Chem machines etc.
 #define NOSPLASH 						 (1<<13)
 /// No attack when hitting stuff with this item.
@@ -54,15 +52,17 @@
 //Item function flags
 
 /// apply to an item's flags to use the item's intent_switch_trigger() proc. This will be called when intent is switched while this item is in hand.
-#define USE_INTENT_SWITCH_TRIGGER 1
+#define USE_INTENT_SWITCH_TRIGGER (1<<0)
 /// allows special attacks to be performed on help and grab intent with this item
-#define USE_SPECIALS_ON_ALL_INTENTS 2
+#define USE_SPECIALS_ON_ALL_INTENTS (1<<1)
 /// prevents items from creating smoke while burning
-#define SMOKELESS 4
+#define SMOKELESS (1<<2)
 /// makes items immune to acid
-#define IMMUNE_TO_ACID 8
+#define IMMUNE_TO_ACID (1<<3)
 /// prevents items from heating anything up while burning
-#define COLD_BURN 16
+#define COLD_BURN (1<<4)
+/// Prevents an item from being placed inside of a storage container, regardless of the item's `w_class` or the storage's `can_hold` list.
+#define UNSTORABLE (1<<5)
 
 //tool flags
 #define TOOL_CLAMPING 1
@@ -76,6 +76,20 @@
 #define TOOL_WELDING 256
 #define TOOL_WRENCHING 512
 #define TOOL_CHOPPING 1024 // for firaxes, does additional damage to doors.
+
+//omnitool flags
+#define OMNI_MODE_PRYING 1
+#define OMNI_MODE_SNIPPING 2
+#define OMNI_MODE_WRENCHING 3
+#define OMNI_MODE_SCREWING 4
+#define OMNI_MODE_PULSING 5
+#define OMNI_MODE_CUTTING 6
+#define OMNI_MODE_WELDING 7
+
+//fluid_canister flags
+#define FLUID_CANISTER_MODE_OFF 1
+#define FLUID_CANISTER_MODE_SLURP 2
+#define FLUID_CANISTER_MODE_PISS 3
 
 //tooltip flags for rebuilding
 
@@ -183,6 +197,7 @@
 
 #define W_CLASS_TINY 1
 #define W_CLASS_SMALL 2
+#define W_CLASS_POCKET_SIZED 2.5
 #define W_CLASS_NORMAL 3
 #define W_CLASS_BULKY 4
 #define W_CLASS_HUGE 5
@@ -204,3 +219,7 @@
 #define ATTACK_FULLY_HIDDEN 1
 /// No attack message is shown and no particles are displayed, but the animation of the attacker still plays (genetics analyzer, autoinjectors)
 #define ATTACK_PARTIALLY_HIDDEN 2
+/// for matches
+#define MATCH_UNLIT 0
+#define MATCH_LIT 1
+#define MATCH_INERT 2 /// broken or burn out

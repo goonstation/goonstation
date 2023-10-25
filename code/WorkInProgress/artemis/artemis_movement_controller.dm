@@ -1,3 +1,5 @@
+#ifdef ENABLE_ARTEMIS
+
 /datum/movement_controller/artemis
 
 	var/obj/artemis/ship
@@ -7,7 +9,7 @@
 		ship = A
 
 	keys_changed(mob/owner, keys, changed)
-		owner.attempt_move()
+		attempt_move(owner)
 		..()
 
 	process_move(mob/owner, keys)
@@ -16,11 +18,30 @@
 		if (is_incapacitated(user))
 			return
 
-		if(ship.control_lock)
+		if(ship.control_lock && keys)
 			user.show_message("<span class='alert'>The controls are locked!</span>")
 			return
 
 		if (ship.engine_check()) // ENGINE CHECK HERE LATER
+
+			if( keys & KEY_THROW )
+				if(!ship.full_throttle)
+					ship.full_throttle = TRUE
+					ship.accel *= 2
+					src.ship.controls.myhud.throttle_stick.icon_state = "throttle_up"
+
+					if(ship.back)
+						animate(ship.back, transform=matrix().Scale(1.2), loop=-1, time=3)
+						animate(transform=matrix(), loop=-1, time=4)
+						ship.back.color = "#f0f"
+			else
+				if(ship.full_throttle)
+					ship.full_throttle = FALSE
+					ship.accel = initial(ship.accel)
+					src.ship.controls.myhud.throttle_stick.icon_state = "throttle_down"
+					if(ship.back)
+						animate(ship.back, transform=matrix(), loop=0, time=6)
+						ship.back.color = "#fff"
 
 			if((keys & KEY_FORWARD) && !(keys & KEY_BACKWARD))
 
@@ -34,10 +55,12 @@
 						new_angle = ship.ship_angle
 						new_mag = ship.accel
 					else
+						var/arctan_result
 						new_mag = sqrt(ship.vel_mag**2 + ship.accel**2 + 2*ship.vel_mag*ship.accel*cos(ship.ship_angle-ship.vel_angle))
 						new_mag = min(ship.max_speed,new_mag)
 
-						var/arctan_result = (ship.ship_angle == ship.vel_angle) ? 0 : arctan(((ship.accel*sin(ship.ship_angle-ship.vel_angle))/(ship.vel_mag + ship.accel*cos(ship.ship_angle-ship.vel_angle))))
+						if(new_mag) //check for div/0
+							arctan_result = (ship.ship_angle == ship.vel_angle) ? 0 : arctan(((ship.accel*sin(ship.ship_angle-ship.vel_angle))/(ship.vel_mag + ship.accel*cos(ship.ship_angle-ship.vel_angle))))
 
 						new_angle = ship.vel_angle + arctan_result
 
@@ -57,8 +80,10 @@
 
 					if(ship.back_left)
 						flick("[ship.icon_base]_thruster_back_l",ship.back_left)
+					ship.engines.use_power(list("sw", "se", "s"), ship.full_throttle)
 
-					spawn(ship.animation_speed)
+
+					SPAWN(ship.animation_speed)
 						ship.accelerating = 0
 
 			if(!(keys & KEY_FORWARD) && (keys & KEY_BACKWARD))
@@ -70,6 +95,10 @@
 					if(ship.vel_mag == 0)
 						ship.vel_angle = 0
 
+						if(keys & KEY_RUN)
+							ship.vel_mag += (ship.accel)
+							ship.vel_angle = ship.ship_angle + 180
+
 					ship.accelerating = 1
 
 					ship.update_my_stuff()
@@ -78,8 +107,9 @@
 						flick("[ship.icon_base]_thruster_front_l",ship.front_left)
 					if(ship.front_right)
 						flick("[ship.icon_base]_thruster_front_r",ship.front_right)
+					ship.engines.use_power(list("nw", "ne"))
 
-					spawn(ship.animation_speed)
+					SPAWN(ship.animation_speed)
 						ship.accelerating = 0
 
 			if(!(keys & KEY_LEFT) && (keys & KEY_RIGHT))
@@ -96,7 +126,7 @@
 						ship.rot_mag = max(ship.rot_mag,-ship.rot_max_speed)
 
 					if(!ship.rot_loop_on)
-						spawn(0)
+						SPAWN(0)
 							ship.rotate_ship()
 
 					if(ship.back_left)
@@ -104,8 +134,9 @@
 
 					if(ship.front_right)
 						flick("[ship.icon_base]_thruster_front_r",ship.front_right)
+					ship.engines.use_power(list("ne", "sw"))
 
-					spawn(ship.animation_speed)
+					SPAWN(ship.animation_speed)
 						ship.rotating = 0
 
 
@@ -122,7 +153,7 @@
 						ship.rot_mag = max(ship.rot_mag,-ship.rot_max_speed)
 
 					if(!ship.rot_loop_on)
-						spawn(0)
+						SPAWN(0)
 							ship.rotate_ship()
 
 					if(ship.front_left)
@@ -130,9 +161,10 @@
 
 					if(ship.back_right)
 						flick("[ship.icon_base]_thruster_back_r",ship.back_right)
+					ship.engines.use_power(list("nw", "se"))
 
-					spawn(ship.animation_speed)
-					ship.rotating = 0
+					SPAWN(ship.animation_speed)
+						ship.rotating = 0
 
 		return ship.animation_speed
 
@@ -182,8 +214,9 @@
 					M.accelerating = 1
 
 					M.update_my_stuff()
+					M.engines.use_power(list("s"))
 
-					spawn(M.animation_speed)
+					SPAWN(M.animation_speed)
 						M.accelerating = 0
 
 			if(keys & KEY_BACKWARD)
@@ -198,8 +231,9 @@
 					M.accelerating = 1
 
 					M.update_my_stuff()
+					M.engines.use_power(list("nw", "ne"))
 
-					spawn(M.animation_speed)
+					SPAWN(M.animation_speed)
 						M.accelerating = 0
 
 			if(!M.vel_mag)
@@ -219,10 +253,10 @@
 						M.rot_mag = max(M.rot_mag,-M.rot_max_speed)
 
 					if(!M.rot_loop_on)
-						spawn(0)
+						SPAWN(0)
 							M.rotate_ship()
 
-					spawn(M.animation_speed)
+					SPAWN(M.animation_speed)
 						M.rotating = 0
 
 
@@ -239,7 +273,7 @@
 						M.rot_mag = max(M.rot_mag,-M.rot_max_speed)
 
 					if(!M.rot_loop_on)
-						spawn(0)
+						SPAWN(0)
 							M.rotate_ship()
 
 					if(M.front_left)
@@ -248,7 +282,9 @@
 					if(M.back_right)
 						flick("[M.icon_base]_thruster_back_r",M.back_right)
 
-					spawn(M.animation_speed)
-					M.rotating = 0
+					SPAWN(M.animation_speed)
+						M.rotating = 0
 
 		return ship.animation_speed
+
+#endif

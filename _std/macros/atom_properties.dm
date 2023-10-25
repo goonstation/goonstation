@@ -168,6 +168,37 @@ To remove:
 	_sightprocess?.Process(); \
 } while(0)
 
+#define PROP_UPDATE_TELEBLOCK_CAT(target, prop, old_val) do { \
+	var/is_teleblocking = GET_ATOM_PROPERTY_RAW(target, prop); \
+	if (isnull(old_val) && !isnull(is_teleblocking)) { \
+		OTHER_START_TRACKING_CAT(target, TR_CAT_TELEPORT_JAMMERS); \
+	} else if (!isnull(old_val) && isnull(is_teleblocking)) { \
+		OTHER_STOP_TRACKING_CAT(target, TR_CAT_TELEPORT_JAMMERS); \
+	}; \
+} while(0)
+
+#define PROP_UPDATE_HIDE_ICONS(target, prop, old_val) do { \
+	var/new_val = GET_ATOM_PROPERTY_RAW(target, prop); \
+	if (old_val != new_val) { \
+		var/icon_alpha = new_val ? 0 : 255; \
+		if(isliving(target)) { \
+			var/mob/living/L = target; \
+			L.name_tag?.set_visibility(!new_val); \
+		} if(ishuman(target)) { \
+			var/mob/living/carbon/human/H = target; \
+			H.arrestIcon?.alpha = icon_alpha; \
+			if (H.prodoc_icons) { \
+				var/image/I; \
+				for (var/implant in H.prodoc_icons) { \
+					I = H.prodoc_icons[implant]; \
+					I.alpha = icon_alpha; \
+				} \
+			} \
+			H.health_mon?.alpha = icon_alpha; \
+		} \
+	}; \
+} while(0)
+
 // Property defines
 //
 // These must be defined as macros in the format PROP_<yourproperty>(x) x("property key name", MACRO TO APPLY THE PROPERTY, MACRO TO REMOVE THE PROPERTY)
@@ -193,7 +224,7 @@ To remove:
 #define PROP_MOB_SPECTRO(x) x("spectrovision", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_SIGHT)
 #define PROP_MOB_EXAMINE_ALL_NAMES(x) x("examine_all", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_EXAMINE_HEALTH(x) x("healthvison", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
-#define PROP_MOB_EXAMINE_HEALTH_SYNDICATE(x) x("healthvison_syndicate", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_EXAMINE_HEALTH_SYNDICATE(x) x("healthvison_syndicate", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) // doesn't work without PROP_MOB_EXAMINE_HEALTH; TODO rename this to further reduce confusion
 //movement properties
 #define PROP_MOB_CANTMOVE(x) x("cantmove", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANTSPRINT(x) x("cantsprint", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
@@ -245,18 +276,38 @@ To remove:
 #define PROP_MOB_PASSIVE_WRESTLE(x) x("wrassler", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANTTHROW(x) x("cantthrow", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_MOB_CANT_BE_PINNED(x) x("cantbepinned", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
-#define PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING(x) x("can_build_without_holding", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) // mob can bulid furniture without holding them (for borgs)
+#define PROP_MOB_CAN_CONSTRUCT_WITHOUT_HOLDING(x) x("can_build_without_holding", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Mob can bulid furniture without holding them (for borgs)
+#define PROP_MOB_BLOODGIB_IMMUNE(x) x("bloodgib_immune", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE) //! Mob won't gib from having 1000+ effective blood
+#define PROP_MOB_OVERDOSE_WEAKNESS(x) x("overdose_weakness", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_SUPPRESS_LAYDOWN_SOUND(x) x("suppress_laydown_sound", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_SUPPRESS_DEATH_SOUND(x) x("suppress_death_sound", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_NO_MIASMA(x) x("no_miasma", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_NO_DECOMPOSITION(x) x("no_decomposition", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_MOB_HEARD_PITCH(x) x("heard_pitch", APPLY_ATOM_PROPERTY_PRODUCT, REMOVE_ATOM_PROPERTY_PRODUCT)
+
+/// Hides med/sec HUDs and name tags from the mob
+#define PROP_MOB_HIDE_ICONS(x) x("hide_icons", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE, PROP_UPDATE_HIDE_ICONS)
 
 //-------------------- OBJ PROPS ------------------------
 #define PROP_OBJ_GOLFABLE(x) x("golfable", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
+//-------------------- ITEM PROPS -----------------------
+#define PROP_ITEM_IN_CHEM_DISPENSER(x) x("in_chem_dispenser", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+
 //------------------- MOVABLE PROPS ---------------------
+#define PROP_MOVABLE_VISIBLE_CONTRABAND(x) x("visible_contraband", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM)  //! The visible contraband level of this movable
+#define PROP_MOVABLE_VISIBLE_GUNS(x) x("visible_firearms", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM) //! The visible firearm contraband level of this movable
+#define PROP_MOVABLE_CONTRABAND_OVERRIDE(x) x("contraband_pverride", APPLY_ATOM_PROPERTY_MAX, REMOVE_ATOM_PROPERTY_MAX) //! Thing is considered to have this contraband value, takes max if has multiple of these props
+#define PROP_MOVABLE_KLEPTO_IGNORE(x) x("klepto_go_away", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 //-------------------- TURF PROPS -----------------------
 //-------------------- ATOM PROPS -----------------------
 #define PROP_ATOM_NEVER_DENSE(x) x("neverdense", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_NO_ICON_UPDATES(x) x("no_icon_updates", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+#define PROP_ATOM_TELEPORT_JAMMER(x) x("teleport_jammer", APPLY_ATOM_PROPERTY_SUM, REMOVE_ATOM_PROPERTY_SUM, PROP_UPDATE_TELEBLOCK_CAT)
 #define PROP_ATOM_FLOCK_THING(x) x("flock_thing", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 #define PROP_ATOM_FLOATING(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
+/// Thing will redirect clicks to a fluid on its tile when clicked by a relevant item (beaker mop etc)
+#define PROP_ATOM_DO_LIQUID_CLICKS(x) x("do_liquid_clicks", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
@@ -402,6 +453,7 @@ To remove:
 		} \
 	} while (0)
 
+//WARNING: there is currently no good default handling (i.e.: yielding 1 instead of null) for when the property is not set at all. You need to do it manually.
 #define APPLY_ATOM_PROPERTY_PRODUCT(target, property, do_update, update_macro, source, value) \
 	do { \
 		LAZYLISTINIT(target.atom_properties); \

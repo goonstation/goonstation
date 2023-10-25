@@ -1,22 +1,18 @@
 /proc/command_alert(var/text, var/title = "", var/sound_to_play = "", var/do_sanitize = 1, var/alert_origin=null)
 	var/big_title = alert_origin ? alert_origin : "[ALERT_GENERAL]"
-	boutput(world, "<h1 class='alert'>[big_title]</h1>")
-
+	var/out_text = "<h1 class='alert'>[big_title]</h1>"
 	if (title && length(title) > 0)
-		boutput(world, "<h2 class='alert'>[title]</h2>")
+		out_text += "<h2 class='alert'>[title]</h2>"
 
-	boutput(world, "<span class='alert'>[replacetext(text, "\n", "<br>\n")]</span>")
-	boutput(world, "<br>")
+	out_text += "<span class='alert'>[replacetext(text, "\n", "<br>\n")]</span><br><br>"
+	boutput(world, out_text)
 	if (sound_to_play && length(sound_to_play) > 0)
 		playsound_global(world, sound_to_play, 100)
 
 /proc/command_announcement(var/text, var/title, var/sound_to_play = "", var/css_class = "alert", var/do_sanitize = 1) //Slightly less conspicuous, but requires a title.
 	if(!title || !text) return
 
-	boutput(world, "<h2 class='alert'>[title]</h2>")
-
-	boutput(world, "<span class='[css_class]'>[text]</span>")
-	boutput(world, "<br>")
+	boutput(world, "<h2 class='alert'>[title]</h2><span class='[css_class]'>[text]</span><br><br>")
 	if (sound_to_play && length(sound_to_play) > 0)
 		playsound_global(world, sound_to_play, 100)
 
@@ -67,9 +63,10 @@
 				text = replacetext(text, "%mrand_name%", rand_mob_mult.name)
 				text = replacetext(text, "%mrand_job%", rand_mob_mult.job ? rand_mob_mult.job : "space hobo")
 
-				boutput(M, "<h1 class='alert'>[ALERT_GENERAL]</h1>")
-				if(title != "") boutput(M, "<h2 class='alert'>[title]</h2>")
-				boutput(M, "<span class='alert'>[text]</span><br>")
+				var/out_text = "<h1 class='alert'>[ALERT_GENERAL]</h1>"
+				if(title != "") out_text += "<h2 class='alert'>[title]</h2>"
+				out_text += "<span class='alert'>[text]</span><br><br>"
+				boutput(M, out_text)
 
 	if (sound_to_play && length(sound_to_play) > 0)
 		playsound_global(world, sound_to_play, 100)

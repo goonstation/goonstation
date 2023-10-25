@@ -7,7 +7,7 @@
 
 import { useBackend, useLocalState } from "../backend";
 import { Fragment } from 'inferno';
-import { Box, Button, Collapsible, ColorBox, Dropdown, Input, LabeledList, NoticeBox, NumberInput, Section } from '../components';
+import { Box, Button, Collapsible, ColorBox, Dropdown, Input, LabeledList, NoticeBox, NumberInput, Section, Stack } from '../components';
 import { Window } from '../layouts';
 import { map } from 'common/collections';
 import { toFixed } from 'common/math';
@@ -85,30 +85,155 @@ const FilterTextEntry = (props, context) => {
   );
 };
 
+
+const FilterTransformEntry = (props, context) => {
+  const { value, name, filterName } = props;
+  const { act } = useBackend(context);
+  let transMatrix = value;
+  if (transMatrix === null) {
+    transMatrix = Array(1, 0, 0, 0, 1, 0);
+  }
+  return (
+    <Fragment>
+      Matrix:
+      <Stack>
+        {[0, 1, 2].map((col, key) => (
+          <Stack.Item key={key}>
+            <Stack vertical>
+              {[0, 1, 2].map((row, key) => (
+                <Stack.Item
+                  key={key}>
+                  {(col === 2 && row < 2) && (
+                    0
+                  )}
+                  {(col === 2 && row === 2) && (
+                    1
+                  )}
+                  {(col < 2) && (
+                    <NumberInput
+                      inline
+                      value={transMatrix[col*3+row]}
+                      step={0.01}
+                      width="50px"
+                      format={v => toFixed(v, 2)}
+                      onDrag={(e, v) => {
+                        let retTrans = transMatrix;
+                        retTrans[col*3+row] = v;
+                        act('transition_filter_value', {
+                          name: filterName,
+                          new_data: {
+                            [name]: retTrans,
+                          },
+                        });
+                      }}
+                    />
+                  )}
+                </Stack.Item>
+              ))}
+            </Stack>
+          </Stack.Item>
+        ))}
+      </Stack>
+    </Fragment>
+  );
+};
+
+
 const FilterColorEntry = (props, context) => {
   const { value, filterName, name } = props;
   const { act } = useBackend(context);
-  return (
-    <Fragment>
-      <Button
-        icon="pencil-alt"
-        onClick={() => act('modify_color_value', {
-          name: filterName,
-        })} />
-      <ColorBox
-        color={value}
-        mr={0.5} />
-      <Input
-        value={value}
-        width="90px"
-        onInput={(e, value) => act('transition_filter_value', {
-          name: filterName,
-          new_data: {
-            [name]: value,
-          },
-        })} />
-    </Fragment>
-  );
+  const prefixes = ['r', 'g', 'b', 'a', 'c'];
+  if (Array.isArray(value)) {
+    // standardise to 20 val color matrix
+    let colmatrix = value;
+    if (colmatrix.length < 20) {
+      while (colmatrix.length < 12) {
+        colmatrix.push(0);
+      }
+      colmatrix = Array(
+        colmatrix[0], colmatrix[1], colmatrix[2], 0,
+        colmatrix[3], colmatrix[4], colmatrix[5], 0,
+        colmatrix[6], colmatrix[7], colmatrix[8], 0,
+        0, 0, 0, 1,
+        colmatrix[9], colmatrix[10], colmatrix[11], 0);
+      while (colmatrix.length < 20) {
+        colmatrix.push(0);
+      }
+    }
+    return (
+      <Fragment>
+        <Button
+          icon="pencil-alt"
+          onClick={() => act('modify_color_value', {
+            name: filterName,
+          })} />
+        <Stack>
+          {[0, 1, 2, 3].map((col, key) => (
+            <Stack.Item key={key}>
+              <Stack vertical>
+                {[0, 1, 2, 3, 4].map((row, key) => (
+                  <Stack.Item
+                    key={key}>
+                    <Box
+                      inline
+                      textColor="label"
+                      width="2.1rem">
+                      {`${prefixes[row]}${prefixes[col]}:`}
+                    </Box>
+                    <NumberInput
+                      inline
+                      value={colmatrix[row*4+col]}
+                      step={0.01}
+                      width="50px"
+                      format={v => toFixed(v, 2)}
+                      onDrag={(e, v) => {
+                        let retColor = colmatrix;
+                        retColor[row*4+col] = v;
+                        act('transition_filter_value', {
+                          name: filterName,
+                          new_data: {
+                            [name]: retColor,
+                          },
+                        });
+                      }}
+                    />
+                  </Stack.Item>
+                ))}
+              </Stack>
+            </Stack.Item>
+          ))}
+        </Stack>
+      </Fragment>
+    );
+  } else {
+    return (
+      <Fragment>
+        {value.type}
+        <Button
+          icon="pencil-alt"
+          onClick={() => act('modify_color_value', {
+            name: filterName,
+          })} />
+        <ColorBox
+          color={value}
+          mr={0.5} />
+        <Input
+          value={value}
+          width="90px"
+          onInput={(e, value) => act('transition_filter_value', {
+            name: filterName,
+            new_data: {
+              [name]: value,
+            },
+          })} />
+        <Button
+          content="Convert to color matrix"
+          onClick={() => act('convert_color_value_matrix', {
+            name: filterName,
+          })} />
+      </Fragment>
+    );
+  }
 };
 
 const FilterIconEntry = (props, context) => {
@@ -170,6 +295,27 @@ const FilterSpaceEntry = (props, context) => {
   );
 };
 
+const FilterBlendmodeEntry = (props, context) => {
+  const { name, value, filterName, filterType } = props;
+  const { act, data } = useBackend(context);
+
+  const filterInfo = data.filter_info;
+  const flags = filterInfo[filterType]['blend_mode'];
+  return (
+    map((flagField, flagName) => (
+      <Button.Checkbox
+        checked={value === flagField}
+        content={flagName}
+        onClick={() => act('modify_filter_value', {
+          name: filterName,
+          new_data: {
+            [name]: flagField,
+          },
+        })} />
+    ))(flags)
+  );
+};
+
 const FilterDataEntry = (props, context) => {
   const { name, value, hasValue, filterName } = props;
 
@@ -181,6 +327,8 @@ const FilterDataEntry = (props, context) => {
     icon: <FilterIconEntry {...props} />,
     flags: <FilterFlagsEntry {...props} />,
     space: <FilterSpaceEntry {...props} />,
+    blendmode: <FilterBlendmodeEntry {...props} />,
+    matrix: <FilterTransformEntry {...props} />,
   };
 
   const filterEntryMap = {
@@ -199,6 +347,8 @@ const FilterDataEntry = (props, context) => {
     threshold: 'float',
     factor: 'float',
     repeat: 'int',
+    transform: 'matrix',
+    blend_mode: 'blendmode',
   };
 
   return (

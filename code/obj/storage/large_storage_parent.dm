@@ -6,8 +6,10 @@
 // PLEASE JUST MAKE A MESS OF make_my_stuff() INSTEAD
 // CALL YOUR PARENTS
 
-#define RELAYMOVE_DELAY 50
+#define RELAYMOVE_DELAY 1 SECOND
 
+ABSTRACT_TYPE(/obj/storage)
+ADMIN_INTERACT_PROCS(/obj/storage, proc/open, proc/close)
 /obj/storage
 	name = "storage"
 	desc = "this is a parent item you shouldn't see!!"
@@ -37,6 +39,10 @@
 	//Offsets for the weld icon, rather than make icons for every slightly off crate or closet
 	var/weld_image_offset_X = 0 //Positive is right, negative is left
 	var/weld_image_offset_Y = 0 //Positive is up, negative is down
+	/// If the storage needs a crowbar to open it
+	var/needs_prying = FALSE
+	/// If the storage is pried open, prevents closing
+	var/pried_open = FALSE
 	var/locked = 0
 	var/emagged = 0
 	var/jiggled = 0
@@ -175,6 +181,13 @@
 	alter_health()
 		. = get_turf(src)
 
+	get_desc()
+		. = ..()
+		if (src.needs_prying && !src.open)
+			. += " Its shut tightly."
+		else if (src.pried_open)
+			. += " The door has been pried open, it won't close anymore."
+
 	Click(location, control, params)
 		// lets you open when inside of it
 		if((usr in src) && can_act(usr))
@@ -189,20 +202,31 @@
 			return
 		src.last_relaymove_time = world.time
 
+		if (istype(get_turf(src), /turf/space))
+			if (!istype(get_turf(src), /turf/space/fluid))
+				return
+
 		if (src.legholes)
-			step(src,user.dir)
-			return
+			if (!src.anchored)
+				step(src,user.dir)
+				return
+			else
+				user.show_text("You try moving, but [src] seems to be stuck to the floor!", "red")
+				return
 
 		if (!src.open(user=user))
 			if (!src.is_short && src.legholes)
-				step(src, pick(alldirs))
+				if (!src.anchored)
+					step(src, pick(alldirs))
+				else
+					user.show_text("You try moving, but [src] seems to be stuck to the floor!", "red")
 			if (!src.jiggled)
 				src.jiggled = 1
 				user.show_text("You kick at [src], but it doesn't budge!", "red")
 				user.unlock_medal("IT'S A TRAP", 1)
 				for (var/mob/M in hearers(src, null))
 					M.show_text("<font size=[max(0, 5 - GET_DIST(src, M))]>THUD, thud!</font>")
-				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, 1, -3)
+				playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg', 15, TRUE, -3)
 				var/shakes = 5
 				while (shakes > 0)
 					shakes--
@@ -240,7 +264,7 @@
 			return src.Attackby(null, user)
 
 	attackby(obj/item/I, mob/user)
-		if (istype(I, /obj/item/satchel/))
+		if (istype(I, /obj/item/satchel))
 			if(src.secure && src.locked)
 				user.show_text("Access Denied", "red")
 				return
@@ -270,7 +294,7 @@
 			if (isweldingtool(I))
 				var/obj/item/weldingtool/weldingtool = I
 				if(weldingtool.welding)
-					if (src._health <= 0)
+					if (src._health <= 0 && !src.pried_open)
 						if(!weldingtool.try_weld(user, 1, burn_eyes = TRUE))
 							return
 						src._health = src._max_health
@@ -297,23 +321,25 @@
 						I.set_loc(src.loc)
 				return
 
-		else if (!src.open && isweldingtool(I))
-			if(!I:try_weld(user, 1, burn_eyes = TRUE))
+		else if (!src.open)
+			if (isweldingtool(I))
+				if (!I:try_weld(user, 1, burn_eyes = TRUE))
+					return
+				var/positions = src.get_welding_positions()
+				actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
+					list(I, user), null, positions[1], positions[2]),user)
 				return
-			var/positions = src.get_welding_positions()
-			actions.start(new /datum/action/bar/private/welding(user, src, 2 SECONDS, /obj/storage/proc/weld_action, \
-				list(I, user), null, positions[1], positions[2]),user)
-			return
+			else if (ispryingtool(I) && src.needs_prying)
+				SETUP_GENERIC_PRIVATE_ACTIONBAR(user, src, 1 SECOND, /obj/storage/proc/pry_open, user, I.icon, I.icon_state,\
+				"[user] pries open \the [src]", INTERRUPT_ACTION | INTERRUPT_STUNNED)
 
 		if (src.secure)
 			if (src.emagged)
 				user.show_text("It appears to be broken.", "red")
 				return
 			else if (src.personal)
-				var/obj/item/card/id/ID = null
-				if (istype(I, /obj/item/card/id))
-					ID = I
-				else
+				var/obj/item/card/id/ID = get_id_card(I)
+				if (!istype(ID))
 					if (ishuman(user))
 						var/mob/living/carbon/human/H = user
 						if (H.wear_id)
@@ -357,14 +383,23 @@
 		. = ..()
 		if(isnull(src.material))
 			return
-		var/found_negative = (src.material.mat_id == "negativematter")
+		var/found_negative = (src.material.getID() == "negativematter")
 		if(!found_negative)
-			for(var/datum/material/parent_mat in src.material.parent_materials)
-				if(parent_mat.mat_id == "negativematter")
+			for(var/datum/material/parent_mat in src.material.getParentMaterials())
+				if(parent_mat.getID() == "negativematter")
 					found_negative = TRUE
 					break
 		if(found_negative)
-			src.AddComponent(/datum/component/extradimensional_storage)
+			src.AddComponent(/datum/component/extradimensional_storage/storage)
+
+	proc/pry_open(var/mob/user)
+		playsound(src, 'sound/items/Crowbar.ogg', 60, 1)
+		src.pried_open = TRUE
+		src.locked = FALSE
+		src.open = TRUE
+		src.dump_contents(user)
+		src.UpdateIcon()
+		p_class = initial(p_class)
 
 	proc/weld_action(obj/item/W, mob/user)
 		if(src.open)
@@ -476,10 +511,9 @@
 			user.u_equip(O)
 			O.set_loc(get_turf(user))
 
-		else if(istype(O.loc, /obj/item/storage))
-			var/obj/item/storage/storage = O.loc
-			O.set_loc(get_turf(O))
-			storage.hud.remove_item(O)
+		else if(istype(O, /obj/item))
+			var/obj/item/I = O
+			I.stored?.transfer_stored_item(I, get_turf(I), user = user)
 
 		SPAWN(0.5 SECONDS)
 			var/stuffed = FALSE
@@ -490,7 +524,8 @@
 				/obj/item/raw_material = "materials",
 				/obj/item/material_piece = "processed materials",
 				/obj/item/paper = "paper",
-				/obj/item/tile = "floor tiles")
+				/obj/item/tile = "floor tiles",
+				/obj/item/reagent_containers/food/fish = "fish")
 			for(var/drag_type in draggable_types)
 				if(!istype(O, drag_type))
 					continue
@@ -501,6 +536,8 @@
 				var/staystill = user.loc
 				for (var/obj/thing in view(1,user))
 					if(!istype(thing, drag_type))
+						continue
+					if (thing.anchored)
 						continue
 					if (thing in user)
 						continue
@@ -615,6 +652,9 @@
 		if (src._health <= 0)
 			visible_message("<span class='alert'>[src] can't close; it's been smashed open!</span>")
 			return 0
+		if (src.pried_open)
+			visible_message("<span class='alert'>[src] can't close; the prying broke its hinges!</span>")
+			return 0
 		if (!src.can_close())
 			visible_message("<span class='alert'>[src] can't close; looks like it's too full!</span>")
 			return 0
@@ -634,11 +674,14 @@
 				O.set_loc(src)
 
 		for (var/mob/M in get_turf(src))
+			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
+				continue
 			if (M.anchored || M.buckled)
 				continue
-			if (src.is_short && !M.lying && ( M != src.loc ) ) // ignore movement when container is inside the mob (possessed)
-				step_away(M, src, 1)
-				continue
+			if (src.is_short && (M != src.loc) && !isdead(M))
+				if (!M.lying)
+					step_away(M, src, 1)
+					continue
 #ifdef HALLOWEEN
 			if (halloween_mode && prob(5)) //remove the prob() if you want, it's just a little broken if dudes are constantly teleporting
 				var/list/obj/storage/myPals = list()
@@ -653,8 +696,6 @@
 				M.playsound_local(M.loc, "warp", 50, 1)
 				continue
 #endif
-			if (isobserver(M) || iswraith(M) || isintangible(M) || islivingobject(M))
-				continue
 			if (src.crunches_contents)
 				src.crunch(M)
 			M.set_loc(src)
@@ -683,7 +724,7 @@
 
 	proc/can_open()
 		. = TRUE
-		if (src.welded || src.locked)
+		if (src.welded || src.locked || src.needs_prying)
 			return 0
 
 	proc/count_turf_items()
@@ -692,6 +733,8 @@
 		for(var/obj/O in T.contents)
 			if(!isitem(O) || O == src || O.anchored)
 				crate_contents--
+			if(O.cannot_be_stored)
+				crate_contents = INFINITY //too big to fit on the locker, it wont close
 		return crate_contents
 
 	proc/can_close()
@@ -719,7 +762,7 @@
 			if(istype(O,/obj/item/mousetrap))
 				var/obj/item/mousetrap/our_trap = O
 				if(our_trap.armed && user)
-					INVOKE_ASYNC(our_trap, /obj/item/mousetrap.proc/triggered,user)
+					INVOKE_ASYNC(our_trap, TYPE_PROC_REF(/obj/item/mousetrap, triggered), user)
 
 		for (var/mob/M in src)
 			M.set_loc(newloc)
@@ -731,7 +774,16 @@
 
 	proc/unlock()
 		if (src.locked)
-			src.locked = !src.locked
+			src.locked = FALSE
+			src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
+			src.UpdateIcon()
+
+	//why is everything defined on the parent type aa
+	proc/lock()
+		if (!src.locked)
+			src.locked = TRUE
+			src.visible_message("[src] clicks[src.open ? "" : " locked"].")
+			src.UpdateIcon()
 
 	proc/bust_out()
 		if (src.flip_health)
@@ -816,14 +868,14 @@
 			return
 
 		if (src.open)
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
 					usr.lying = 1
 				src.close()
 		else if (src.open(user=usr))
-			step_towards(usr, src)
+			usr.step_towards_movedelay(src)
 			sleep(1 SECOND)
 			if (usr.loc == src.loc)
 				if (src.is_short)
@@ -873,13 +925,14 @@
 
 	onStart()
 		..()
-		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, 1)
+		playsound(the_storage, 'sound/items/Ratchet.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] begins taking apart [the_storage].</span>")
 
 	onEnd()
 		..()
-		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, 1)
+		playsound(the_storage, 'sound/items/Deconstruct.ogg', 50, TRUE)
 		owner.visible_message("<span class='notice'>[owner] takes apart [the_storage].</span>")
+		the_storage.dump_contents(owner)
 		var/obj/item/I = new /obj/item/sheet(get_turf(the_storage))
 		if (the_storage.material)
 			I.setMaterial(the_storage.material)
@@ -888,7 +941,11 @@
 			I.setMaterial(M)
 		qdel(the_storage)
 
-
+//this is written out manually because the linter got very angry when I tried to use .. in the macro version
+TYPEINFO(/obj/storage/secure)
+TYPEINFO_NEW(/obj/storage/secure)
+	. = ..()
+	admin_procs += list(/obj/storage/proc/lock, /obj/storage/proc/unlock)
 /obj/storage/secure
 	name = "secure storage"
 	icon_state = "secure"
@@ -964,9 +1021,7 @@
 					. = 0
 					if (signal.data["pass"] == netpass_security)
 						. = 1
-						src.locked = !src.locked
-						src.visible_message("[src] clicks[src.open ? "" : " locked"].")
-						src.UpdateIcon()
+						src.lock()
 					if (.)
 						reply.data["command"] = "ack"
 					else
@@ -976,9 +1031,7 @@
 					. = 0
 					if (signal.data["pass"] == netpass_security)
 						. = 1
-						src.locked = !src.locked
-						src.visible_message("[src] clicks[src.open ? "" : " unlocked"].")
-						src.UpdateIcon()
+						src.unlock()
 					if (.)
 						reply.data["command"] = "ack"
 					else

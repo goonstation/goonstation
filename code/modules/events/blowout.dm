@@ -1,8 +1,17 @@
 /datum/random_event/major/blowout
 	name = "Radioactive Blowout"
+	var/list/space_color = list(
+		2,  2,  2,  0,
+	   -2,  2,  2,  0,
+		2, -2, -2,  0,
+		0,  0,  0,  2,
+		0,  0,  0,  0,
+	)
+#ifdef RP_MODE
 	required_elapsed_round_time = 40 MINUTES
-	var/space_color = "#ff4646"
-
+#else
+	required_elapsed_round_time = 26.6 MINUTES
+#endif
 	event_effect()
 		..()
 		var/timetoreachsec = rand(1,9)
@@ -49,9 +58,9 @@
 
 
 	#ifndef UNDERWATER_MAP
-			for (var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-				LAGCHECK(LAG_LOW)
-				S.color = src.space_color
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_STATION, src.space_color, 3 SECONDS)
+			ADD_PARALLAX_RENDER_SOURCE_TO_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/blowout_clouds, 3 SECONDS)
+			GET_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/blowout_clouds)?.scroll_angle = rand(0, 359)
 	#endif
 
 			world << siren
@@ -89,9 +98,8 @@
 			command_alert("All radiation alerts onboard [station_name(1)] have been cleared. You may now leave the tunnels freely. Maintenance doors will regain their normal access requirements shortly.", "All Clear", alert_origin = ALERT_WEATHER)
 
 	#ifndef UNDERWATER_MAP
-			for (var/turf/space/S in block(locate(1, 1, Z_LEVEL_STATION), locate(world.maxx, world.maxy, Z_LEVEL_STATION)))
-				LAGCHECK(LAG_LOW)
-				S.color = S.space_color
+			RECOLOUR_PARALLAX_RENDER_SOURCES_IN_GROUP(Z_LEVEL_STATION, list(), 3 SECONDS)
+			REMOVE_PARALLAX_RENDER_SOURCE_FROM_GROUP(Z_LEVEL_STATION, /atom/movable/screen/parallax_render_source/blowout_clouds, 3 SECONDS)
 	#endif
 
 			sleep(rand(25 SECONDS,50 SECONDS))

@@ -14,6 +14,7 @@
 	real_name = "ice cream"
 	bites_left = 4
 	heal_amt = 4
+	fill_amt = 3
 	food_color = null
 	var/flavor_name = null
 	var/image/cream_image = null
@@ -34,7 +35,7 @@
 		src.food_color = src.reagents.get_master_color()
 		if (!src.cream_image)
 			src.cream_image = image(src.icon)
-		var/cream_level = (100 * round(bites_left/initial(bites_left),0.25))
+		var/cream_level = (100 * round(src.bites_left/src.uneaten_bites_left,0.25))
 		if (!src.food_color)
 			src.food_color = src.reagents.get_master_color()
 		src.cream_image.icon_state = "ice[cream_level]"
@@ -82,7 +83,7 @@
 		SPAWN(0)
 			if (src.reagents)
 				var/flavor = null
-				if (all_functional_reagent_ids.len > 1)
+				if (length(all_functional_reagent_ids) > 1)
 					flavor = pick(all_functional_reagent_ids)
 				else
 					flavor = "vanilla"
@@ -98,7 +99,7 @@
 	desc = "A plain yoghurt."
 	icon = 'icons/obj/foodNdrink/food_snacks.dmi'
 	icon_state = "yoghurt"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 6
 	heal_amt = 1
 

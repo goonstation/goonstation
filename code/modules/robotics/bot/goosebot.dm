@@ -7,7 +7,7 @@
 	icon_state = "goosebot"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1
 	health = 10
 	no_camera = 1

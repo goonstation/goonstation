@@ -112,7 +112,7 @@
 					var/obj/item/clothing/mask/cursedclown_hat/clownmask = new /obj/item/clothing/mask/cursedclown_hat(affected_mob)
 					clownmask.cant_self_remove = 1
 					clownmask.cant_other_remove = 1
-					affected_mob:equip_if_possible( clownmask, affected_mob:slot_wear_mask) //Hope you like your new mask sucka!!!!!
+					affected_mob:equip_if_possible( clownmask, SLOT_WEAR_MASK) //Hope you like your new mask sucka!!!!!
 					SPAWN(2.5 SECONDS) // Don't remove.
 						if (affected_mob) affected_mob.assign_gimmick_skull() // The mask IS your new face (Convair880).
 		if(4)
@@ -129,7 +129,7 @@
 					var/obj/item/clothing/mask/cursedclown_hat/clownmask = new /obj/item/clothing/mask/cursedclown_hat(affected_mob)
 					clownmask.cant_self_remove = 1
 					clownmask.cant_other_remove = 1
-					affected_mob:equip_if_possible( clownmask, affected_mob:slot_wear_mask)
+					affected_mob:equip_if_possible( clownmask, SLOT_WEAR_MASK)
 					SPAWN(2.5 SECONDS) // Don't remove.
 						if (affected_mob) affected_mob.assign_gimmick_skull() // The mask IS your new face (Convair880).
 
@@ -145,7 +145,7 @@
 							c:layer = initial(c:layer)
 
 					var/obj/item/clothing/under/gimmick/cursedclown/clownsuit = new /obj/item/clothing/under/gimmick/cursedclown(affected_mob)
-					affected_mob:equip_if_possible(clownsuit, affected_mob:slot_w_uniform)
+					affected_mob:equip_if_possible(clownsuit, SLOT_W_UNIFORM)
 
 			if(probmult(10))
 				if(!affected_mob:shoes || ((affected_mob:shoes != null) && !istype(affected_mob:shoes, /obj/item/clothing/shoes/cursedclown_shoes)))
@@ -158,7 +158,7 @@
 							c:layer = initial(c:layer)
 
 					var/obj/item/clothing/shoes/cursedclown_shoes/clownshoes = new /obj/item/clothing/shoes/cursedclown_shoes(affected_mob)
-					affected_mob:equip_if_possible( clownshoes, affected_mob:slot_shoes)
+					affected_mob:equip_if_possible( clownshoes, SLOT_SHOES)
 
 			if(probmult(10))
 				if(!affected_mob:gloves || ((affected_mob:gloves != null) && !istype(affected_mob:gloves, /obj/item/clothing/gloves/cursedclown_gloves)))
@@ -171,7 +171,7 @@
 							c:layer = initial(c:layer)
 
 					var/obj/item/clothing/gloves/cursedclown_gloves/clowngloves = new /obj/item/clothing/gloves/cursedclown_gloves(affected_mob)
-					affected_mob:equip_if_possible( clowngloves, affected_mob:slot_gloves)
+					affected_mob:equip_if_possible( clowngloves, SLOT_GLOVES)
 
 			if(probmult(8))
 				playsound(affected_mob.loc, 'sound/musical_instruments/Boathorn_1.ogg', 45, 1)

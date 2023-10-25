@@ -26,11 +26,6 @@
 	if (src.spellshield)
 		shielded = 1
 		boutput(user, "<span class='alert'><b>[src]'s Spell Shield prevents your attack!</b></span>")
-	else
-		if (!src.spellshield)
-			for(var/obj/item/device/shield/S in src)
-				if (S.active)
-					shielded = 1
 
 	if (!shielded || !(W.flags & NOSHIELD))
 		SPAWN( 0 )

@@ -5,10 +5,11 @@ TYPEINFO(/datum/component/obj_projectile_damage)
 	initialization_args = list()
 
 /datum/component/obj_projectile_damage/Initialize()
+	. = ..()
 	if(!istype(parent, /obj))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, .proc/projectile_collide)
-	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, .proc/examine)
+	RegisterSignal(parent, COMSIG_ATOM_HITBY_PROJ, PROC_REF(projectile_collide))
+	RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examine))
 
 /datum/component/obj_projectile_damage/proc/projectile_collide(owner, var/obj/projectile/P)
 	var/obj/O = parent

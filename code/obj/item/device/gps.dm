@@ -1,3 +1,6 @@
+TYPEINFO(/obj/item/device/gps)
+	mats = 2
+
 /obj/item/device/gps
 	name = "space GPS"
 	desc = "A navigation device that can tell you your position, and the position of other GPS devices. Uses coordinate beacons."
@@ -13,9 +16,9 @@
 	w_class = W_CLASS_SMALL
 	m_amt = 50
 	g_amt = 100
-	mats = 2
 	var/frequency = FREQ_GPS
 	var/net_id
+	var/wrenched_in = FALSE //! is this wrenched in a cabinet frame?
 
 	proc/get_z_info(var/turf/T)
 		. =  "Landmark: Unknown"
@@ -94,7 +97,7 @@
 			font-size: 12px;
 		}
 		</style>"})
-		HTML += build_html_gps_form(src, false, src.tracking_target)
+		HTML += build_html_gps_form(src, FALSE, src.tracking_target)
 		HTML += "<div><div class='buttons refresh'><A href='byond://?src=\ref[src];refresh=6'>(Refresh)</A></div>"
 		HTML += "<div class='desc'>Each GPS is coined with a unique four digit number followed by a four letter identifier.<br>This GPS is assigned <b>[serial]-[identifier]</b>.</div><hr>"
 		HTML += "<HR>"
@@ -137,6 +140,28 @@
 		user.Browse(HTML.Join(), "window=gps_[src];title=GPS;size=400x540;override_setting=1")
 		onclose(user, "gps")
 
+	attack_hand(mob/user)
+		if(src.wrenched_in) return
+		..()
+
+	attackby(obj/item/used_tool, mob/user)
+		if(iswrenchingtool(used_tool))
+			if(src.wrenched_in)
+				boutput(user, "You detach the [src] from the housing.")
+				logTheThing(LOG_STATION, user, "detaches a <b>[src]</b> from the housing at [log_loc(src)].")
+				src.wrenched_in = FALSE
+				src.anchored = UNANCHORED
+				return
+
+			else
+				if(istype(src.stored?.linked_item,/obj/item/storage/mechanics))
+					boutput(user, "You attach the [src] to the housing.")
+					logTheThing(LOG_STATION, user, "attaches a <b>[src]</b> to the housing  at [log_loc(src)].")
+					src.wrenched_in = TRUE
+					src.anchored = ANCHORED
+					return
+		..()
+
 	attack_ai(mob/user)
 		. = ..()
 		src.show_HTML(user)
@@ -155,7 +180,7 @@
 			return
 		if (usr.contents.Find(src) || usr.contents.Find(src.master) || in_interact_range(src, usr) || issilicon(usr) || isAIeye(usr))
 			src.add_dialog(usr)
-			var/turf/T = get_turf(usr)
+			var/turf/T = get_turf(src)
 			if(href_list["getcords"])
 				boutput(usr, "<span class='notice'>Located at: <b>X</b>: [T.x], <b>Y</b>: [T.y]</span>")
 				return

@@ -170,12 +170,14 @@
 	name = "pink shoes"
 	icon_state = "pink"
 
+TYPEINFO(/obj/item/clothing/shoes/magnetic)
+	mats = 8
+
 /obj/item/clothing/shoes/magnetic
 	name = "magnetic shoes"
 	desc = "Keeps the wearer firmly anchored to the ground. Provided the ground is metal, of course."
 	icon_state = "magboots"
 	// c_flags = NOSLIP
-	mats = 8
 	burn_possible = 0
 	laces = LACES_NONE
 	kick_bonus = 2
@@ -196,12 +198,14 @@
 		step_sound = "step_plating"
 		playsound(src.loc, 'sound/items/miningtool_off.ogg', 30, 1)
 
+TYPEINFO(/obj/item/clothing/shoes/hermes)
+	mats = 0
+
 /obj/item/clothing/shoes/hermes
 	name = "sacred sandals" // The ultimate goal of material scientists.
 	desc = "Sandals blessed by the all-powerful goddess of victory and footwear."
 	icon_state = "wizard" //TODO: replace with custom sprite, thinking winged sandals
 	c_flags = NOSLIP
-	mats = 0
 	magical = 1
 	burn_possible = 0
 	laces = LACES_NONE
@@ -213,6 +217,9 @@
 		setProperty("movespeed", -2)
 		delProperty("chemprot")
 
+TYPEINFO(/obj/item/clothing/shoes/industrial)
+	mats = list("MET-3"= 15,"CON-2" = 10,"POW-3" = 10)
+
 /obj/item/clothing/shoes/industrial
 #ifdef UNDERWATER_MAP
 	name = "mechanised diving boots"
@@ -223,7 +230,6 @@
 	name = "mechanised boots"
 	desc = "Industrial-grade boots fitted with mechanised balancers and stabilisers to increase running speed under a heavy workload."
 #endif
-	mats = list("MET-3"= 15,"CON-2" = 10,"POW-3" = 10)
 	burn_possible = 0
 	laces = LACES_NONE
 	kick_bonus = 2
@@ -264,6 +270,9 @@
 		setupProperties()
 			..()
 			delProperty("chemprot")
+
+	waders
+		name = "angler's waders"
 
 /obj/item/clothing/shoes/clown_shoes
 	name = "clown shoes"
@@ -312,6 +321,12 @@
 			return
 		return ..()
 
+	autumn
+		name = "autumn clown shoes"
+		desc = "Wouldn't want to leaf these behind."
+		icon_state = "clown_autumn"
+		item_state = "clown_autumn"
+
 
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
@@ -331,11 +346,13 @@
 		setProperty("chemprot", 7)
 		setProperty("negate_fluid_speed_penalty",0.6)
 
+TYPEINFO(/obj/item/clothing/shoes/moon)
+	mats = 2
+
 /obj/item/clothing/shoes/moon
 	name = "moon shoes"
 	desc = "Recent developments in trampoline-miniaturization technology have made these little wonders possible."
 	icon_state = "moonshoes"
-	mats = 2
 
 	equipped(var/mob/user, var/slot)
 		..()
@@ -369,19 +386,23 @@
 	icon_state = "ziggy"
 
 /obj/item/clothing/shoes/sandal
-	name = "magic sandals"
-	desc = "They magically stop you from slipping on magical hazards. It's not the mesh on the underside that does that. It's MAGIC. Read a fucking book."
+	name = "sandals"
+	desc = "Standard beach footwear, just in case you happen to find a space beach."
 	icon_state = "wizard"
-	c_flags = NOSLIP
-	magical = 1
 	laces = LACES_NONE
 	step_sound = "step_flipflop"
 	step_priority = STEP_PRIORITY_LOW
+
+/obj/item/clothing/shoes/sandal/magic
+	name = "magic sandals"
+	desc = "They magically stop you from slipping on magical hazards. It's not the mesh on the underside that does that. It's MAGIC. Read a fucking book."
+	c_flags = NOSLIP
+	magical = 1
 	duration_remove = 10 SECONDS
 
-	/// Subtype that wizards spawn with, and is in their vendor. Cows can wear them, unlike regular sandals (might also be useful in the future)
-	wizard
-		compatible_species = list("human", "cow")
+/// Subtype that wizards spawn with, and is in their vendor. Cows can wear them, unlike regular sandals (might also be useful in the future)
+/obj/item/clothing/shoes/sandal/magic/wizard
+	compatible_species = list("human", "cow")
 
 /obj/item/clothing/shoes/tourist
 	name = "flip-flops"
@@ -456,10 +477,16 @@
 /obj/item/clothing/shoes/swat/knight // so heavy you can't get shoved!
 	name = "combat sabatons"
 	desc = "Massive, magnetic, slip-resistant armored footwear for syndicate super-heavies."
-	icon_state = "swatheavy"
+	icon_state = "knightboots"
 	magnetic = 1
 	c_flags = NOSLIP
 	compatible_species = list("cow", "human")
+
+/obj/item/clothing/shoes/swat/captain
+	name = "captain's boots"
+	desc = "A set of formal shoes with a protective layer underneath."
+	icon_state = "capboots"
+	item_state = "capboots"
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"

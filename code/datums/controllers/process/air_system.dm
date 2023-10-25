@@ -4,7 +4,7 @@
 
 	setup()
 		name = "Atmos"
-		schedule_interval = 2 SECONDS
+		schedule_interval = 1 SECOND
 
 		if(!air_master)
 			air_master = new /datum/controller/air_system()

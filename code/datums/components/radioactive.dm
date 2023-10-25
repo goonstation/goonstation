@@ -21,9 +21,11 @@ TYPEINFO(/datum/component/radioactive)
 	var/effect_range = 1
 	/// Internal, do not touch - keeps a record of atom.color since we override it with filters.
 	var/_backup_color = null //so hacky
+	/// Internal, store of turf glow overlay
+	var/static/image/_turf_glow = null
 
 	Initialize(radStrength=100, decays=FALSE, neutron=FALSE, effectRange=1)
-		if(!istype(parent,/atom))
+		if(!istype(parent,/atom) || parent.type == /turf/space) //exact type check to exclude ocean floors
 			return COMPONENT_INCOMPATIBLE
 		. = ..()
 		src.radStrength = radStrength
@@ -32,19 +34,21 @@ TYPEINFO(/datum/component/radioactive)
 		src.effect_range = effectRange
 		if(parent.GetComponent(src.type)) //don't redo the filters and stuff if we're a duplicate
 			return
-		RegisterSignal(parent, list(COMSIG_ATOM_EXAMINE), .proc/examined)
-		RegisterSignal(parent, list(COMSIG_ATOM_CROSSED,
+
+		RegisterSignal(parent, COMSIG_ATOM_RADIOACTIVITY, PROC_REF(get_radioactivity))
+		RegisterSignal(parent, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
+		RegisterSignals(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
 			COMSIG_ATTACKHAND,
 			COMSIG_ITEM_EQUIPPED,
 			COMSIG_ITEM_PICKUP,
 			COMSIG_MOB_GRABBED,
 			COMSIG_ITEM_ATTACK_POST,
-		), .proc/touched)
-		RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/eaten)
+		), PROC_REF(touched))
+		RegisterSignals(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL), PROC_REF(eaten))
 
 		if(isitem(parent))
-			RegisterSignal(parent, list(COMSIG_ITEM_PROCESS), .proc/ticked)
+			RegisterSignal(parent, COMSIG_ITEM_PROCESS, PROC_REF(ticked))
 			if(!(parent in global.processing_items))
 				global.processing_items.Add(parent)
 				src._added_to_items_processing = TRUE
@@ -60,10 +64,16 @@ TYPEINFO(/datum/component/radioactive)
 			PA.add_filter("radiation_color_\ref[src]", 1, color_matrix_filter(normalize_color_to_matrix(PA.color ? PA.color : "#FFF")))
 			PA.color = null
 		PA.add_simple_light("radiation_light_\ref[src]", rgb2num(color))
-		PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
+		if(istype(PA, /turf))
+			if(isnull(src._turf_glow))
+				src._turf_glow = image('icons/effects/effects.dmi', "greyglow")
+			src._turf_glow.color = color //we can do this because overlays take a copy of the image and do not preserve the link between them
+			PA.UpdateOverlays(src._turf_glow, "radiation_overlay_\ref[src]")
+		else
+			PA.add_filter("radiation_outline_\ref[src]", 2, outline_filter(size=1.3, color=color))
 
 	proc/process()
-		if(QDELETED(parent))
+		if(QDELETED(parent) || !parent.datum_components)
 			global.processing_items.Remove(src)
 			return
 		ticked(parent)
@@ -77,7 +87,9 @@ TYPEINFO(/datum/component/radioactive)
 		PA.remove_simple_light("radiation_light_\ref[src]")
 		PA.remove_filter("radiation_outline_\ref[src]")
 		PA.remove_filter("radiation_color_\ref[src]")
+		PA.UpdateOverlays(null, "radiation_overlay_\ref[src]")
 		PA.color = src._backup_color
+		UnregisterSignal(parent, list(COMSIG_ATOM_RADIOACTIVITY))
 		UnregisterSignal(parent, list(COMSIG_ATOM_EXAMINE))
 		UnregisterSignal(parent, list(COMSIG_ATOM_CROSSED,
 			COMSIG_ATOM_ENTERED,
@@ -87,11 +99,9 @@ TYPEINFO(/datum/component/radioactive)
 			COMSIG_MOB_GRABBED,
 			COMSIG_ITEM_ATTACK_POST,
 		))
-		UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
+		UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED, COMSIG_ITEM_CONSUMED_PARTIAL))
 		if(isitem(parent))
 			UnregisterSignal(parent, list(COMSIG_ITEM_PROCESS))
-		else if(ismob(parent))
-			UnregisterSignal(parent, list(COMSIG_LIVING_LIFE_TICK))
 
 	InheritComponent(datum/component/radioactive/R, i_am_original)
 		if (i_am_original)
@@ -100,7 +110,7 @@ TYPEINFO(/datum/component/radioactive)
 				src.neutron = R.neutron
 				src.decays = R.decays
 			else if (R.neutron == src.neutron && R.decays == src.decays) //if compatible, stack
-				src.radStrength = min(src.radStrength+R.radStrength, 100)
+				src.radStrength = max(src.radStrength, R.radStrength)
 			src.do_filters()
 			//else
 				//either you tried to apply a decay to a permanent, or a non-neutron to a neutron
@@ -150,3 +160,9 @@ TYPEINFO(/datum/component/radioactive)
 
 		lines += "[ismob(owner) ? capitalize(he_or_she(owner)) : "It"] is [rad_word] with a [pick("fuzzy","sickening","nauseating","worrying")] [neutron ? "blue" : "green"] light.[examiner.job == "Clown" ? " You should touch [ismob(owner) ? him_or_her(owner) : "it"]!" : ""]"
 
+	/// Returns level of radioactivity (0 to 100) - note that SEND_SIGNAL returns 0 if the signal is not registered
+	proc/get_radioactivity(atom/owner, list/return_val)
+		if(isnull(return_val))
+			return_val = list()
+		return_val += src.radStrength
+		return TRUE

@@ -97,7 +97,6 @@ var/global/list/atomTooltips = new()
 				"browserassets/js/animatePopup.js",
 				"browserassets/js/tooltip.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.svg",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
 				"browserassets/css/font-awesome.css",
@@ -117,7 +116,7 @@ var/global/list/atomTooltips = new()
 		var/list/windowIDs = params2list(windows)
 		for (var/windowID in windowIDs)
 			if (src.owner && dd_hasprefix(windowID, src.window))
-				winset(src.owner, windowID, "parent=")
+				winset(src.owner, windowID, "parent=none")
 
 
 	proc/add(atom/thing = null, clone = 1, stuck = 1)
@@ -491,8 +490,8 @@ var/global/list/atomTooltips = new()
 		viewCenterX = (text2num(viewSizes[1])-1)/2
 		viewCenterY = (text2num(viewSizes[2])-1)/2
 
-	var/xDist = screenCenter.x - src.x
-	var/yDist = screenCenter.y - src.y
+	var/xDist = screenCenter ? screenCenter.x - src.x : 0
+	var/yDist = screenCenter ? screenCenter.y - src.y : 0
 	var/screenX = (viewCenterX + 1) - xDist
 	var/screenY = (viewCenterY + 1) - yDist
 
@@ -550,7 +549,6 @@ var/global/list/atomTooltips = new()
 			qdel(t)
 
 		atomTooltips.Remove(src)
-	ClearAllOverlays()
 	. = ..()
 
 

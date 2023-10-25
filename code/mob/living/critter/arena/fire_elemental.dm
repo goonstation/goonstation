@@ -2,8 +2,9 @@
 	name = "fire elemental"
 	real_name = "fire elemental"
 	desc = "You can't tell if this person is on fire, or made of it. Or both."
-	density = 1
+	icon = 'icons/mob/critter/humanoid/elemental/fire.dmi'
 	icon_state = "fire_elemental"
+	density = 1
 	custom_gib_handler = /proc/fire_elemental_gibs
 	hand_count = 3
 	can_throw = 1
@@ -36,7 +37,7 @@
 		..()
 		var/datum/handHolder/HH = hands[3]
 		HH.name = "control of fire"
-		HH.limb = new /datum/limb/gun/fire_elemental
+		HH.limb = new /datum/limb/gun/kinetic/fire_elemental
 		HH.icon_state = "fire_essence"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.limb_name = "fire essence"
@@ -74,3 +75,6 @@
 			make_cleanable(/obj/decal/cleanable/ash,src.loc)
 			ghostize()
 			qdel(src)
+
+	is_heat_resistant()
+		return TRUE

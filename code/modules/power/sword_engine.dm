@@ -14,7 +14,7 @@
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state = "engine_mangled"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	requires_power = FALSE
 	var/output = 30000
 	var/lastout = 0
@@ -28,7 +28,7 @@
 	var/lastexcess = 0
 	var/online = 0
 	var/integrity_state = 0		//0 - covered in mangled metal. 1 - normal, panel closed. 2 - normal, panel open.
-	var/core_inserted = true
+	var/core_inserted = TRUE
 	var/obj/machinery/power/terminal/terminal = null
 	var/image/glow
 	var/image/core
@@ -83,11 +83,11 @@
 		if(get_turf(user) == T)
 			if(src.anchored == 0)
 				boutput(user, "<span class='notice'>You secured the SWORD Engine!</span>")
-				src.anchored = 1
+				src.anchored = ANCHORED
 				//terminal_setup()
 			else
 				boutput(user, "<span class='notice'>You unsecured the SWORD Engine!</span>")
-				src.anchored = 0
+				src.anchored = UNANCHORED
 				//for(var/obj/machinery/power/terminal/temp_term in get_turf(src))
 				//	if(temp_term.master == src)
 				//		qdel(temp_term)
@@ -101,13 +101,13 @@
 		elecflash(src)
 		if (src.online)
 			src.online = 0
-		core_inserted = false
+		core_inserted = FALSE
 		user.put_in_hand_or_drop(new /obj/item/sword_core)
 		user.show_message("<span class='notice'>You remove the SWORD core from the SWORD Engine!</span>", 1)
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is missing."
 		UpdateIcon()
 	else if (integrity_state == 2 && (istype(W,/obj/item/sword_core) && !core_inserted))
-		core_inserted = true
+		core_inserted = TRUE
 		qdel(W)
 		user.show_message("<span class='notice'>You insert the SWORD core into the SWORD Engine!</span>", 1)
 		desc = "The remains of the SWORD's Engine, salvaged to work as a better SMES unit. The core is installed."
@@ -205,8 +205,9 @@
 		if (charging)
 			if (excess >= 0)									//If there's power available, attempts to charge.
 				load = min(capacity-charge, chargelevel)		//Charges at set rate, limited to the spare capacity.
-				charge += load									//Increases the charge.
-				add_load(load)									//Adds the load to the terminal side network.
+				if(terminal.add_load(load))									//Attempt to add load to network...
+					charge += load								//and increase the charge if successful.
+
 			else												//If there is not enough capacity...
 				charging = 0									//...it stops charging.
 				chargecount  = 0
@@ -269,12 +270,6 @@
 /obj/machinery/power/sword_engine/add_avail(var/amount)
 	if (terminal && terminal.powernet)
 		terminal.powernet.newavail += amount
-
-
-/obj/machinery/power/sword_engine/add_load(var/amount)
-	if (terminal && terminal.powernet)
-		terminal.powernet.newload += amount
-
 
 /obj/machinery/power/sword_engine/ui_state(mob/user)
 	return tgui_default_state

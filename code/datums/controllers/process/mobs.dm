@@ -53,19 +53,16 @@
 				M.Life(src)
 				if (!(c++ % 5))
 					scheck()
-			else if(istype(X, /mob/wraith))
-				var/mob/wraith/W = X
-				W.Life(src)
-				scheck()
 			else if(istype(X, /mob/dead))
 				var/mob/dead/G = X
 				#ifdef HALLOWEEN
-				if (TRUE)
+				G:Life(src)
+				scheck()
 				#else
 				if (isadminghost(G) || IS_TWITCH_CONTROLLED(G))
-				#endif
 					G:Life(src)
 					scheck()
+				#endif
 
 	tickDetail()
 		if (length(detailed_count))

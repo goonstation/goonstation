@@ -63,7 +63,3 @@ chui/engine
 
 
 var/global/chui/engine/chui
-world/New()
-
-	if(!chui) chui = new()
-	. = ..()

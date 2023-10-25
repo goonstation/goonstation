@@ -9,6 +9,11 @@
 	var/labels = list()
 	for (var/label in form.data["tags"])
 		labels += "\[[label]\]"
+	var/testmerges = list()
+#ifdef TESTMERGE_PRS
+	for (var/testmerge in TESTMERGE_PRS)
+		testmerges += "#[testmerge]" // so they're clickable on GH
+#endif
 	var/desc = {"
 ### Labels
 
@@ -32,20 +37,22 @@
 
 Reported by: [user_client.key]
 On server: [global.config.server_name]
+Active test merges: [english_list(testmerges)]
 Round log date: [global.roundLog_date]
 Reported on: [time2text(world.realtime, "YYYY-MM-DD hh:mm:ss")]
+Map: [global.map_setting]
 "}
-	var/success = ircbot.export("issue", list(
+	var/list/success = ircbot.export("issue", list(
 		"title" = title,
 		"body" = desc,
 		"secret" = form.data["secret"],
 	))
 	if (!form.disposed)
 		qdel(form)
-	if(success)
+	if(success && success["status"] != "error")
 		tgui_alert(user_client.mob, "Issue reported!", "Issue reported!")
 		if(prob(easteregg_chance))
-			var/obj/critter/roach/actual_bug = new(user_client.mob.loc)
+			var/mob/living/critter/small_animal/cockroach/actual_bug = new(user_client.mob.loc)
 			actual_bug.name = title
 	else
 		tgui_alert(user_client.mob, "There has been an issue with reporting your bug, please try again later!", "Issue not reported!")

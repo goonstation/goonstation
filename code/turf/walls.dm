@@ -1,3 +1,6 @@
+TYPEINFO(/turf/simulated/wall)
+	mat_appearances_to_ignore = list("steel")
+
 /turf/simulated/wall
 	name = "wall"
 	desc = "Looks like a regular wall."
@@ -13,12 +16,13 @@
 	pathable = 1
 	flags = ALWAYS_SOLID_FLUID
 	text = "<font color=#aaa>#"
+	HELP_MESSAGE_OVERRIDE("You can use a <b>welding tool</b> to begin to disassemble it.")
+	default_material = "steel"
 
-	/// The material name (string) that this will default to if a material is not otherwise set
-	var/default_material = "steel"
 	var/health = 100
 	var/list/forensic_impacts = null
 	var/last_proj_update_time = null
+	var/girdermaterial = null
 
 	New()
 		..()
@@ -28,17 +32,12 @@
 
 		src.AddComponent(/datum/component/bullet_holes, 15, 10)
 
-		//for fluids
-		if (src.active_liquid && src.active_liquid.group)
-			src.active_liquid.group.displace(src.active_liquid)
+		src.selftilenotify() // displace fluid
 
 		#ifdef XMAS
 		if(src.z == Z_LEVEL_STATION && current_state <= GAME_STATE_PREGAME)
 			xmasify()
 		#endif
-
-		if(!src.material)
-			src.setMaterial(getMaterial(src.default_material), appearance = FALSE, setname = FALSE, copy = FALSE)
 
 
 	ReplaceWithFloor()
@@ -64,7 +63,7 @@
 				health *= 1.5
 			else if (src.material.getProperty("density") <= 2)
 				health *= 0.75
-			if(src.material.material_flags & MATERIAL_CRYSTAL)
+			if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 				health /= 2
 		return
 
@@ -87,134 +86,109 @@
 	if(!ticker && istype(src.loc, /area/station/maintenance) && prob(7))
 		make_cleanable(/obj/decal/cleanable/fungus, src)
 
-// Made this a proc to avoid duplicate code (Convair880).
-/turf/simulated/wall/proc/attach_light_fixture_parts(var/mob/user, var/obj/item/W, var/instantly)
-	if (!user || !istype(W, /obj/item/light_parts/) || istype(W, /obj/item/light_parts/floor))	//hack, no floor lights on walls
-		return
+/turf/simulated/wall/proc/attach_item(var/mob/user, var/obj/item/W) //we don't want code duplication
+	//reset object position
+	//not doing so breaks it's further position
+	W.pixel_y = 0
+	W.pixel_x = 0
 
-	// the wall is the target turf, the source is the turf where the user is standing
+
+	//based on light fixture code
 	var/turf/target = src
 	var/turf/source = get_turf(user)
 
-	// need to find the direction to orient the new light
-	var/dir = 0
 
-	// find the direction from the mob to the target wall
+	var/direction = 0
+
 	for (var/d in cardinal)
-		if (get_step(source,d) == target)
-			dir = d
+		if (get_step(source, d) == target)
+			direction = d
 			break
 
-	// if no direction was found, fail. need to be standing cardinal to the wall to put the fixture up
-	if (!dir)
-		return //..(parts, user)
+	if (!direction)
+		boutput(user, "<span class='alert'> Attaching \the [W] seems hard in this position...</span>")
+		return FALSE
 
-	if(!instantly && W && !W.disposed)
-		playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
-		boutput(user, "You begin to attach the light fixture to [src]...")
-		SETUP_GENERIC_ACTIONBAR(user, src, 4 SECONDS, /turf/simulated/wall/proc/finish_attaching,\
-			list(W, user, dir), W.icon, W.icon_state, null, null)
-		return
+	user.u_equip(W)
+	W.set_loc(get_turf(user))
 
-	finish_attaching(W, user, dir)
-	return
+	if (user.dir == EAST)
+		W.pixel_x = 32
+		W.pixel_y = 3
+	else if (user.dir == WEST)
+		W.pixel_x = -32
+		W.pixel_y = 3
+	else if (user.dir == NORTH)
+		W.pixel_y = 35
+		W.pixel_x = 0
+	else
+		W.pixel_y = -21
+		W.pixel_x = 0
 
-/turf/simulated/wall/proc/finish_attaching(obj/item/W, mob/user, var/light_dir)
-	boutput(user, "You attach the light fixture to [src].")
-	var/obj/item/light_parts/parts = W
-	var/obj/machinery/light/newlight = new parts.fixture_type(get_turf(user))
-	newlight.set_dir(light_dir)
-	newlight.icon_state = parts.installed_icon_state
-	newlight.base_state = parts.installed_base_state
-	newlight.fitting = parts.fitting
-	newlight.status = 1 // LIGHT_EMPTY
-	newlight.add_fingerprint(user)
 	src.add_fingerprint(user)
-	user.u_equip(parts)
-	qdel(parts)
+	W.anchored = TRUE
+	boutput(user, "You attach \the [W] to [src].")
+	return TRUE
 
 /turf/simulated/wall/proc/dismantle_wall(devastated=0, keep_material = 1)
+	var/datum/material/defaultMaterial = getMaterial("steel")
 	if (istype(src, /turf/simulated/wall/r_wall) || istype(src, /turf/simulated/wall/auto/reinforced))
 		if (!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder/reinforced(src)
 			var/obj/item/sheet/B = new /obj/item/sheet( src )
-			if (src.material)
-				A.setMaterial(src.material)
-				B.setMaterial(src.material)
-				B.set_reinforcement(src.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M, copy = FALSE)
-				B.setMaterial(M, copy = FALSE)
-				B.set_reinforcement(M)
+
+			A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
+			B.setMaterial(src.material ? src.material : defaultMaterial)
+			B.set_reinforcement(src.material)
 		else
 			if (prob(50)) // pardon all these nested probabilities, just trying to vary the damage appearance a bit
 				var/atom/A = new /obj/structure/girder/reinforced(src)
-				if (src.material)
-					A.setMaterial(src.material)
-				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
+
 
 				if (prob(50))
 					var/atom/movable/B = new /obj/item/raw_material/scrap_metal
 					B.set_loc(src)
-					if (src.material)
-						B.setMaterial(src.material)
-					else
-						B.setMaterial(getMaterial("steel"), copy = FALSE)
+					B.setMaterial(src.material ? src.material : defaultMaterial)
 
 			else if( prob(50))
 				var/atom/A = new /obj/structure/girder(src)
-				if (src.material)
-					A.setMaterial(src.material)
-				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
 
 	else
 		if (!devastated)
-			playsound(src, 'sound/items/Welder.ogg', 100, 1)
 			var/atom/A = new /obj/structure/girder(src)
 			var/atom/B = new /obj/item/sheet( src )
 			var/atom/C = new /obj/item/sheet( src )
-			if (src.material)
-				A.setMaterial(src.material)
-				B.setMaterial(src.material)
-				C.setMaterial(src.material)
-			else
-				var/datum/material/M = getMaterial("steel")
-				A.setMaterial(M, copy = FALSE)
-				B.setMaterial(M, copy = FALSE)
-				C.setMaterial(M, copy = FALSE)
+
+			A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
+			B.setMaterial(src.material ? src.material : defaultMaterial)
+			C.setMaterial(src.material ? src.material : defaultMaterial)
+
 		else
 			if (prob(50))
 				var/atom/A = new /obj/structure/girder/displaced(src)
-				if (src.material)
-					A.setMaterial(src.material)
-				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+				A.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
+
 
 			else if (prob(50))
 				var/atom/B = new /obj/structure/girder(src)
 
-				if (src.material)
-					B.setMaterial(src.material)
-				else
-					B.setMaterial(getMaterial("steel"), copy = FALSE)
+				B.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
+
 
 				if (prob(50))
 					var/atom/movable/C = new /obj/item/raw_material/scrap_metal
 					C.set_loc(src)
-					if (src.material)
-						C.setMaterial(src.material)
-					else
-						C.setMaterial(getMaterial("steel"), copy = FALSE)
+					C.setMaterial(src.girdermaterial ? src.girdermaterial : defaultMaterial)
+
 
 	var/atom/D = ReplaceWithFloor()
 	if (src.material && keep_material)
 		D.setMaterial(src.material)
 	else
-		D.setMaterial(getMaterial("steel"), copy = FALSE)
+		D.setMaterial(getMaterial("steel"))
+
 
 /turf/simulated/wall/burn_down()
 	src.ReplaceWithFloor()
@@ -230,8 +204,6 @@
 		if(3)
 			if (prob(40))
 				dismantle_wall(1)
-		else
-	return
 
 /turf/simulated/wall/blob_act(var/power)
 	if(prob(power))
@@ -245,8 +217,7 @@
 		else
 			if (prob(70))
 				playsound(user.loc, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
-				if (src.material)
-					src.material.triggerOnAttacked(src, user, user, src)
+				src.material_trigger_when_attacked(user, user, 1)
 				for (var/mob/N in AIviewers(user, null))
 					if (N.client)
 						shake_camera(N, 4, 8, 0.5)
@@ -260,7 +231,7 @@
 				return
 
 	boutput(user, "<span class='notice'>You hit the [src.name] but nothing happens!</span>")
-	playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, 1)
+	playsound(src, 'sound/impact_sounds/Generic_Stab_1.ogg', 25, TRUE)
 	interact_particle(user,src)
 	return
 
@@ -271,10 +242,6 @@
 	if (istype(W, /obj/item/pen))
 		var/obj/item/pen/P = W
 		P.write_on_turf(src, user, params)
-		return
-
-	else if (istype(W, /obj/item/light_parts))
-		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
 	else if (isweldingtool(W))
@@ -309,14 +276,39 @@
 		else return
 
 	else
-		if(src.material)
-			src.material.triggerOnHit(src, W, user, 1)
+		src.material_trigger_when_attacked(W, user, 1)
 		src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 		//return attack_hand(user)
 
 /turf/simulated/wall/proc/weld_action(obj/item/W, mob/user)
 	logTheThing(LOG_STATION, user, "deconstructed a wall ([src.name]) using \a [W] at [get_area(user)] ([log_loc(user)])")
 	dismantle_wall()
+
+/turf/simulated/wall/bullet_act(obj/projectile/P)
+	..()
+	if (!istype(P.proj_data, /datum/projectile/bullet))
+		return
+	var/datum/projectile/bullet/bullet = P.proj_data
+	if (!bullet.ricochets)
+		return
+	if (prob(90))
+		return
+
+	var/proj_name = P.name
+	var/obj/projectile/p_copy = SEMI_DEEP_COPY(P)
+	p_copy.proj_data.shot_sound = "sound/weapons/ricochet/ricochet-[rand(1, 4)].ogg"
+	p_copy.proj_data.power = sqrt(p_copy.proj_data.power)
+	p_copy.proj_data.dissipation_delay *= 0.5
+	p_copy.proj_data.armor_ignored /= 0.25
+	var/obj/projectile/p_reflected = shoot_reflected_bounce(p_copy, src, 1)
+	P.die()
+	p_copy.die()
+	if (!p_reflected)
+		return
+
+	p_reflected.rotateDirection(rand(-15, 15))
+
+	src.visible_message("<span class='alert'>\The [proj_name] richochets off [src]!</span>")
 
 /turf/simulated/wall/r_wall
 	name = "reinforced wall"
@@ -337,8 +329,9 @@
 				health *= 1.5
 			else if (src.material.getProperty("density") <= 2)
 				health *= 0.75
-			if(src.material.material_flags & MATERIAL_CRYSTAL)
+			if(src.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 				health /= 2
+				desc += " Wait where did the girder go?"
 		return
 
 /turf/simulated/wall/r_wall/attackby(obj/item/W, mob/user, params)
@@ -348,10 +341,6 @@
 	if (istype(W, /obj/item/pen))
 		var/obj/item/pen/P = W
 		P.write_on_turf(src, user, params)
-		return
-
-	else if (istype(W, /obj/item/light_parts))
-		src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
 		return
 
 	else if (isweldingtool(W))
@@ -382,7 +371,7 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+					A.setMaterial(getMaterial("steel"))
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 			else if((isrobot(user) && (user.loc == T)))
 				src.d_state = 6
@@ -390,14 +379,14 @@
 				if (src.material)
 					A.setMaterial(src.material)
 				else
-					A.setMaterial(getMaterial("steel"), copy = FALSE)
+					A.setMaterial(getMaterial("steel"))
 				boutput(user, "<span class='notice'>You removed the support rods.</span>")
 
 	else if (iswrenchingtool(W))
 		if (src.d_state == 4)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Detaching support rods.</span>")
-			playsound(src, 'sound/items/Ratchet.ogg', 100, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 100, TRUE)
 			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 5
@@ -408,18 +397,18 @@
 
 	else if (issnippingtool(W))
 		if (src.d_state == 0)
-			playsound(src, 'sound/items/Wirecutter.ogg', 100, 1)
+			playsound(src, 'sound/items/Wirecutter.ogg', 100, TRUE)
 			src.d_state = 1
 			var/atom/A = new /obj/item/rods( src )
 			if (src.material)
 				A.setMaterial(src.material)
 			else
-				A.setMaterial(getMaterial("steel"), copy = FALSE)
+				A.setMaterial(getMaterial("steel"))
 
 	else if (isscrewingtool(W))
 		if (src.d_state == 1)
 			var/turf/T = user.loc
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			boutput(user, "<span class='notice'>Removing support lines.</span>")
 			sleep(4 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
@@ -433,7 +422,7 @@
 		if (src.d_state == 3)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying cover off.</span>")
-			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
+			playsound(src, 'sound/items/Crowbar.ogg', 100, TRUE)
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				src.d_state = 4
@@ -444,7 +433,7 @@
 		else if (src.d_state == 6)
 			var/turf/T = user.loc
 			boutput(user, "<span class='notice'>Prying outer sheath off.</span>")
-			playsound(src, 'sound/items/Crowbar.ogg', 100, 1)
+			playsound(src, 'sound/items/Crowbar.ogg', 100, TRUE)
 			sleep(10 SECONDS)
 			if ((user.loc == T && user.equipped() == W))
 				boutput(user, "<span class='notice'>You removed the outer sheath.</span>")
@@ -479,7 +468,7 @@
 			if(S.material)
 				src.setMaterial(S.material)
 			else
-				src.setMaterial(getMaterial("steel"), copy = FALSE)
+				src.setMaterial(getMaterial("steel"))
 			boutput(user, "<span class='notice'>You repaired the wall.</span>")
 
 //grabsmash
@@ -492,8 +481,7 @@
 	if(istype(src, /turf/simulated/wall/r_wall) && src.d_state > 0)
 		src.icon_state = "r_wall-[d_state]"
 
-	if(src.material)
-		src.material.triggerOnHit(src, W, user, 1)
+	src.material_trigger_when_attacked(W, user, 1)
 
 	src.visible_message("<span class='alert'>[usr ? usr : "Someone"] uselessly hits [src] with [W].</span>", "<span class='alert'>You uselessly hit [src] with [W].</span>")
 	//return attack_hand(user)
@@ -502,3 +490,18 @@
 /turf/simulated/wall/meteorhit(obj/M as obj)
 	dismantle_wall()
 	return 0
+
+/turf/simulated/wall/grass
+	name = "tall grass"
+	desc = "Looks like a... regular wall that's been painted in a grassy pattern. Clever!"
+	icon = 'icons/turf/outdoors.dmi'
+	icon_state = "grass"
+
+#ifdef AUTUMN
+	New()
+		..()
+		try_set_icon_state(src.icon_state + "_autumn", src.icon)
+#endif
+
+/turf/simulated/wall/grass/leafy
+	icon_state = "grass_leafy"

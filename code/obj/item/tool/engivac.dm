@@ -9,13 +9,13 @@
 #define ENGIVAC_MISC_ITEM_LIMIT 2 //How much non-listed crap a toolbox can have before the engivac rejects it.
 
 obj/item/engivac
-	name = "engineering materiel vacuum"
+	name = "engineering material vacuum"
 	desc = "A tool that sucks up debris and building materials into an inserted toolbox. It is also capable of automatically laying floor tiles on plating."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "engivac"
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	item_state = "engivac_"
-	flags = ONBELT | ONBACK //engis & mechs will want to keep their toolbelts on with this, most other crew their backpacks. Hope this doesn't break stuff.
+	c_flags = ONBELT | ONBACK | EQUIPPED_WHILE_HELD //engis & mechs will want to keep their toolbelts on with this, most other crew their backpacks. Hope this doesn't break stuff.
 	w_class = W_CLASS_BULKY
 
 	//Stuff relating to the particular toolbox we have installed
@@ -55,7 +55,7 @@ obj/item/engivac/update_icon(mob/M = null)
 ///Change worn sprite depending on slot
 obj/item/engivac/equipped(var/mob/user, var/slot)
 	..()
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/on_move)
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(on_move))
 	if (slot == SLOT_BACK)
 		wear_image = image('icons/mob/clothing/back.dmi')
 	if (slot == SLOT_BELT)
@@ -109,9 +109,6 @@ obj/item/engivac/attackby(obj/item/I, mob/user)
 		held_toolbox = I
 		I.set_loc(src)
 		UpdateIcon(user)
-		var/obj/item/storage/toolbox/toolbox = I
-		if(user.s_active == toolbox.hud)
-			user.detach_hud(user.s_active)
 		return
 	..()
 
@@ -188,7 +185,7 @@ obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 		if (tile_target.intact && !(tile_target.broken || tile_target.burnt)) //Does this need replacing?
 			return
 
-		tile_target.attackby(current_stack,M)
+		tile_target.Attackby(current_stack,M)
 
 		if (current_stack.disposed) //This stack just ran out
 			current_stack = null
@@ -232,7 +229,7 @@ obj/item/engivac/proc/attempt_fill(obj/item/target)
 	if (BOUNDS_DIST(target, src) > 0) //I'm sure smartasses will find a way
 		return FALSE
 	var/succeeded = FALSE
-	var/list/toolbox_contents = held_toolbox.get_contents()
+	var/list/toolbox_contents = held_toolbox.storage.get_contents()
 	for (var/obj/item/thingy as anything in toolbox_contents) //This loop is trying to stack target onto similar stacks in the toolbox
 		if (!istype(thingy, target.type))
 			continue
@@ -243,8 +240,8 @@ obj/item/engivac/proc/attempt_fill(obj/item/target)
 		if (target.disposed)
 			break
 	if (!target.disposed) //If we get to here we've still got some left on the stack
-		if (held_toolbox.check_can_hold(target) > 0) // target can fit. check_can_hold returns 0 or lower for various errors
-			held_toolbox.add_contents(target)
+		if (held_toolbox.storage.check_can_hold(target) == STORAGE_CAN_HOLD) // target can fit
+			held_toolbox.storage.add_contents(target)
 			succeeded = TRUE
 	return succeeded
 
@@ -253,7 +250,7 @@ obj/item/engivac/proc/attempt_fill(obj/item/target)
 obj/item/engivac/proc/scan_for_floortiles()
 	if (!held_toolbox) //lol
 		return FALSE
-	var/list/toolbox_contents = held_toolbox.get_contents()
+	var/list/toolbox_contents = held_toolbox.storage.get_contents()
 	for (var/i=1, i <= toolbox_contents.len, i++)
 		if (!istype(toolbox_contents[i], /obj/item/tile))
 			if (i == toolbox_contents.len)
@@ -275,7 +272,7 @@ obj/item/engivac/proc/rebuild_collection_list()
 obj/item/engivac/proc/toolbox_contents_check(obj/item/storage/toolbox/tocheck)
 	if (!istype(tocheck))
 		return FALSE
-	var/list/toolbox_contents = tocheck.get_contents()
+	var/list/toolbox_contents = tocheck.storage.get_contents()
 	var/strikes = 0
 	var/in_list = FALSE
 	for (var/obj/item/thingy as anything in toolbox_contents)

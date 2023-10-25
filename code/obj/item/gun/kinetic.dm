@@ -1,7 +1,7 @@
 ABSTRACT_TYPE(/obj/item/gun/kinetic)
 /obj/item/gun/kinetic
 	name = "kinetic weapon"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	item_state = "gun"
 	m_amt = 2000
 	var/obj/item/ammo/bullets/ammo = null
@@ -57,7 +57,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 
 	New()
 		if(silenced)
-			current_projectile.shot_sound = 'sound/machines/click.ogg'
+			current_projectile.shot_sound = 'sound/weapons/suppressed_22.ogg'
 		..()
 		src.UpdateIcon()
 
@@ -76,9 +76,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 	update_icon()
 
 		if (src.ammo)
-			inventory_counter.update_number(src.ammo.amount_left)
+			inventory_counter?.update_number(src.ammo.amount_left)
 		else
-			inventory_counter.update_text("-")
+			inventory_counter?.update_text("-")
 
 		if(src.has_empty_state)
 			if (src.ammo.amount_left < 1 && !findtext(src.icon_state, "-empty")) //sanity check
@@ -87,7 +87,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				src.icon_state = replacetext(src.icon_state, "-empty", "")
 		return 0
 
-	canshoot()
+	canshoot(mob/user)
 		if(src.ammo && src.current_projectile)
 			if(src.ammo:amount_left >= src.current_projectile:cost)
 				return 1
@@ -99,7 +99,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				return 1
 		boutput(user, "<span class='alert'>*click* *click*</span>")
 		if (!src.silenced)
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 		return 0
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
@@ -115,33 +115,33 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 				if(0)
 					user.show_text("You can't reload this gun.", "red")
 					return
-				if(1)
+				if(AMMO_RELOAD_INCOMPATIBLE)
 					user.show_text("This ammo won't fit!", "red")
 					return
-				if(2)
+				if(AMMO_RELOAD_SOURCE_EMPTY)
 					user.show_text("There's no ammo left in [b.name].", "red")
 					return
-				if(3)
+				if(AMMO_RELOAD_ALREADY_FULL)
 					user.show_text("[src] is full!", "red")
 					return
-				if(4)
+				if(AMMO_RELOAD_PARTIAL)
 					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>There wasn't enough ammo left in [b.name] to fully reload [src]. It only has [src.ammo.amount_left] rounds remaining.</span>")
 					src.tooltip_rebuild = 1
 					src.logme_temp(user, src, b) // Might be useful (Convair880).
 					return
-				if(5)
+				if(AMMO_RELOAD_FULLY)
 					user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You fully reload [src] with ammo from [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
 					src.tooltip_rebuild = 1
 					src.logme_temp(user, src, b)
 					return
-				if(6)
+				if(AMMO_RELOAD_TYPE_SWAP)
 					switch (src.ammo.swap(b,src))
-						if(0)
+						if(AMMO_SWAP_INCOMPATIBLE)
 							user.show_text("This ammo won't fit!", "red")
 							return
-						if(1)
+						if(AMMO_SWAP_SOURCE_EMPTY)
 							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap out the magazine. Or whatever this specific gun uses.</span>")
-						if(2)
+						if(AMMO_SWAP_ALREADY_FULL)
 							user.visible_message("<span class='alert'>[user] reloads [src].</span>", "<span class='alert'>You swap [src]'s ammo with [b.name]. There are [b.amount_left] rounds left in [b.name].</span>")
 					src.logme_temp(user, src, b)
 					return
@@ -161,102 +161,100 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic)
 			if (src.sanitycheck(0, 1) == 0)
 				user.show_text("You can't unload this gun.", "red")
 				return
-			if (src.ammo.amount_left <= 0)
-				// The gun may have been fired; eject casings if so.
-				if ((src.casings_to_eject > 0) && src.current_projectile.casing)
-					if (src.sanitycheck(1, 0) == 0)
-						logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
-						src.casings_to_eject = 0
-						return
-					else
-						user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
-						src.ejectcasings()
-						return
-				else
-					user.show_text("[src] is empty!", "red")
-					return
-
-			// Make a copy here to avoid item teleportation issues.
-			var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
-			ammoHand.amount_left = src.ammo.amount_left
-			ammoHand.name = src.ammo.name
-			ammoHand.icon = src.ammo.icon
-			ammoHand.icon_state = src.ammo.icon_state
-			ammoHand.ammo_type = src.ammo.ammo_type
-			ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
-			ammoHand.UpdateIcon()
-			user.put_in_hand_or_drop(ammoHand)
-			ammoHand.after_unload(user)
-
-			// The gun may have been fired; eject casings if so.
-			src.ejectcasings()
-			src.casings_to_eject = 0
-
-			src.ammo.amount_left = 0
-			src.ammo.refillable = FALSE
-			src.UpdateIcon()
-			src.add_fingerprint(user)
-			ammoHand.add_fingerprint(user)
-
-			user.visible_message("<span class='alert'>[user] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
-			//DEBUG_MESSAGE("Unloaded [src]'s ammo manually.")
-			return
-
+			src.eject_magazine(user)
 		return ..()
 
 	attack(mob/M, mob/user)
 	// Finished Cogwerks' former WIP system (Convair880).
-		if (src.canshoot() && user.a_intent != "help" && user.a_intent != "grab")
+		if (src.canshoot(user) && user.a_intent != "help" && user.a_intent != "grab")
 			if (src.auto_eject)
 				var/turf/T = get_turf(src)
 				if(T)
 					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
-						for (var/i = 1, i <= number_of_casings, i++)
-							var/obj/item/casing/C = new src.current_projectile.casing(T)
-							C.forensic_ID = src.forensic_ID
-							C.set_loc(T)
+						for (var/i in 1 to number_of_casings)
+							new src.current_projectile.casing(T, src.forensic_ID)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
 				src.casings_to_eject += src.current_projectile.shot_number
-		..()
+		. = ..()
 
-	shoot(var/target, var/start, var/mob/user)
-		if (src.canshoot() && !isghostdrone(user))
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (src.canshoot(user) && !isghostdrone(user))
 			if (src.auto_eject)
 				var/turf/T = get_turf(src)
 				if(T)
 					if (src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
 						var/number_of_casings = max(1, src.current_projectile.shot_number)
 						//DEBUG_MESSAGE("Ejected [number_of_casings] casings from [src].")
-						for (var/i = 1, i <= number_of_casings, i++)
-							var/obj/item/casing/C = new src.current_projectile.casing(T)
-							C.forensic_ID = src.forensic_ID
-							C.set_loc(T)
+						for (var/i in 1 to number_of_casings)
+							new src.current_projectile.casing(T, src.forensic_ID)
 			else
 				if (src.casings_to_eject < 0)
 					src.casings_to_eject = 0
 				src.casings_to_eject += src.current_projectile.shot_number
 
 		if (fire_animation)
-			if(src.ammo?.amount_left > 1)
+			if(src.ammo?.amount_left >= 1)
 				var/flick_state = src.has_fire_anim_state && src.fire_anim_state ? src.fire_anim_state : src.icon_state
 				flick(flick_state, src)
 
-		..()
+		if(..() && istype(user.loc, /turf/space) || user.no_gravity)
+			user.inertia_dir = get_dir(target, user)
+			step(user, user.inertia_dir)
+
+	proc/eject_magazine(mob/user)
+		if (src.ammo.amount_left <= 0)
+			// The gun may have been fired; eject casings if so.
+			if ((src.casings_to_eject > 0) && src.current_projectile.casing)
+				if (src.sanitycheck(1, 0) == 0)
+					logTheThing(LOG_DEBUG, usr, "<b>Convair880</b>: [usr]'s gun ([src]) ran into the casings_to_eject cap, aborting.")
+					src.casings_to_eject = 0
+					return
+				else
+					user.show_text("You eject [src.casings_to_eject] casings from [src].", "red")
+					src.ejectcasings()
+					playsound(src, src.ammo.sound_load, rand(30, 60), TRUE)
+					return
+			else
+				user.show_text("[src] is empty!", "red")
+				return
+
+		// Make a copy here to avoid item teleportation issues.
+		var/obj/item/ammo/bullets/ammoHand = new src.ammo.type
+		ammoHand.amount_left = src.ammo.amount_left
+		ammoHand.name = src.ammo.name
+		ammoHand.icon = src.ammo.icon
+		ammoHand.icon_state = src.ammo.icon_state
+		ammoHand.ammo_type = src.ammo.ammo_type
+		ammoHand.delete_on_reload = 1 // No duplicating empty magazines, please (Convair880).
+		ammoHand.UpdateIcon()
+		user.put_in_hand_or_drop(ammoHand)
+		ammoHand.after_unload(user)
+
+		// The gun may have been fired; eject casings if so.
+		src.ejectcasings()
+		src.casings_to_eject = 0
+
+		src.ammo.amount_left = 0
+		src.ammo.refillable = FALSE
+		src.UpdateIcon()
+		src.add_fingerprint(user)
+		ammoHand.add_fingerprint(user)
+
+		user.visible_message("<span class='alert'>[user] unloads [src].</span>", "<span class='alert'>You unload [src].</span>")
+		//DEBUG_MESSAGE("Unloaded [src]'s ammo manually.")
+		return
 
 	proc/ejectcasings()
 		if ((src.casings_to_eject > 0) && src.current_projectile.casing && (src.sanitycheck(1, 0) == 1))
 			var/turf/T = get_turf(src)
 			if(T)
 				//DEBUG_MESSAGE("Ejected [src.casings_to_eject] [src.current_projectile.casing] from [src].")
-				var/obj/item/casing/C = null
 				while (src.casings_to_eject > 0)
-					C = new src.current_projectile.casing(T)
-					C.forensic_ID = src.forensic_ID
-					C.set_loc(T)
+					new src.current_projectile.casing(T, src.forensic_ID)
 					src.casings_to_eject--
 		return
 
@@ -287,14 +285,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 			src.has_fire_anim_state = TRUE
 			src.fire_anim_state = src.gen_icon_state(TRUE)
 
-	canshoot()
+	canshoot(mob/user)
 		if (hammer_cocked)
 			return ..()
 		else
 			return FALSE
 
-	shoot(var/target, var/start, var/mob/user)
-		..()
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		. = ..()
 		hammer_cocked = FALSE
 		src.UpdateIcon()
 
@@ -308,7 +306,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		src.hammer_cocked = !src.hammer_cocked
 		src.UpdateIcon()
 
-	proc/gen_icon_state(var/ignore_hammer_state)
+	proc/gen_icon_state(ignore_hammer_state)
 		var/state = "[initial(src.icon_state)]" + (src.gilded ? "-golden" : "")
 		if (!ignore_hammer_state && src.hammer_cocked)
 			state += "-c"
@@ -316,6 +314,48 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		else if (!ignore_hammer_state && src.has_uncocked_state)
 			state +="-uc"
 		return state
+
+
+ABSTRACT_TYPE(/obj/item/survival_rifle_barrel)
+/obj/item/survival_rifle_barrel
+	icon = 'icons/obj/electronics.dmi'
+	icon_state = "dbox"
+	var/caliber_name = ""
+	var/rifle_icon_state = ""
+	var/ammo_cats = list()
+	var/max_ammo_capacity = 1
+	var/default_magazine = null
+	var/default_projectile = null
+
+	New()
+		name = "[src.caliber_name] rifle barrel"
+		desc = "An interchangable barrel for the Efnysien survival rifle. This one is designed to fire [src.caliber_name]."
+		..()
+
+	barrel_22
+		caliber_name = ".22 LR"
+		rifle_icon_state = "survival_rifle_22"
+		ammo_cats = list(AMMO_PISTOL_22)
+		max_ammo_capacity = 10
+		default_magazine = /obj/item/ammo/bullets/bullet_22
+		default_projectile = /datum/projectile/bullet/bullet_22
+
+
+	barrel_9mm
+		caliber_name = "9x19mm Parabellum"
+		rifle_icon_state = "survival_rifle_9mm"
+		ammo_cats = list(AMMO_PISTOL_9MM_ALL)
+		max_ammo_capacity = 15
+		default_magazine = /obj/item/ammo/bullets/bullet_9mm
+		default_projectile = /datum/projectile/bullet/bullet_9mm
+
+	barrel_556
+		caliber_name = "5.56x45mm NATO"
+		rifle_icon_state = "survival_rifle_556"
+		ammo_cats = list(AMMO_AUTO_556)
+		max_ammo_capacity = 20
+		default_magazine = /obj/item/ammo/bullets/assault_rifle
+		default_projectile = /datum/projectile/bullet/assault_rifle
 
 /obj/item/casing
 	name = "bullet casing"
@@ -418,18 +458,18 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 				playsound(src.loc, "sound/weapons/casings/casing-xl-0[rand(1,6)].ogg", 15, 0.1)
 
 
-
-	New()
-		..()
-		src.pixel_y += rand(-12,12)
-		src.pixel_x += rand(-12,12)
-		src.set_dir(pick(alldirs))
-		return
+/obj/item/casing/New(loc, forensic_ID)
+	. = ..()
+	src.pixel_y += rand(-12,12)
+	src.pixel_x += rand(-12,12)
+	src.set_dir(pick(alldirs))
+	src.forensic_ID = forensic_ID
 
 //no caliber and ALL
 /obj/item/gun/kinetic/vgun
 	name = "virtual pistol"
 	desc = "This thing would be better if it wasn't such a piece of shit."
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "railgun"
 	force = MELEE_DMG_PISTOL
 	contraband = 0
@@ -441,7 +481,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		set_current_projectile(new/datum/projectile/bullet/vbullet)
 		..()
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		var/turf/T = get_turf(src)
 
 		if (!istype(T.loc, /area/sim))
@@ -456,30 +496,39 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	icon_state = "zipgun"
 	force = MELEE_DMG_PISTOL
 	contraband = 6
-	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_SMG_9MM, AMMO_TRANQ_ALL, AMMO_RIFLE_308, AMMO_AUTO_308, AMMO_AUTO_556, AMMO_CASELESS_G11, AMMO_FLECHETTE)
+	ammo_cats = list(AMMO_PISTOL_ALL, AMMO_REVOLVER_ALL, AMMO_SMG_9MM, AMMO_TRANQ_ALL, AMMO_RIFLE_308, AMMO_AUTO_308, AMMO_AUTO_556, AMMO_CASELESS_G11, AMMO_FLECHETTE, AMMO_STAPLE)
 	max_ammo_capacity = 2
 	var/failure_chance = 6
 	var/failured = 0
-	default_magazine = /obj/item/ammo/bullets/bullet_22
+	default_magazine = /obj/item/ammo/bullets/staples
 
 	New()
 
 		ammo = new default_magazine
-		ammo.amount_left = 0 // start empty
-		set_current_projectile(new/datum/projectile/bullet/bullet_22)
+		ammo.amount_left = 1 // start empty
+		set_current_projectile(new/datum/projectile/bullet/staple)
 		..()
 
+	set_current_projectile(datum/projectile/newProj)
+		..()
+		if(src.current_projectile.cost > 1)
+			if(src.current_projectile.shot_number < src.current_projectile.cost)
+				src.current_projectile.power = src.current_projectile.cost/src.current_projectile.shot_number
+			src.current_projectile.cost = 1
+		if(src.current_projectile.shot_number > 1)
+			src.current_projectile.shot_number = 1
 
-	shoot(var/target,var/start ,var/mob/user)
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(failured)
-			if(canshoot())
+			if(canshoot(user))
 				var/turf/T = get_turf(src)
 				explosion(src, T,-1,-1,1,2)
 				qdel(src)
 			return
 		if(ammo?.amount_left && current_projectile.power)
 			failure_chance = clamp(round(current_projectile.power/2 - 9), 0, 33)
-		if(canshoot() && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
+		if(canshoot(user) && prob(failure_chance)) // Empty zip guns had a chance of blowing up. Stupid (Convair880).
 			failured = 1
 			if(prob(failure_chance))	// Sometimes the failure is obvious
 				playsound(src.loc, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
@@ -488,6 +537,77 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 				playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 		..()
 		return
+
+/obj/item/gun/kinetic/survival_rifle
+	name = "\improper Efnysien survival rifle"
+	desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company."
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	icon_state = "survival_rifle_22"
+	item_state = "survival_rifle"
+	wear_state = "survival_rifle"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	force = MELEE_DMG_RIFLE
+	c_flags = ONBACK
+	contraband = 8
+	two_handed = TRUE
+	can_dual_wield = FALSE
+	auto_eject = TRUE
+	fire_animation = TRUE
+	var/obj/item/survival_rifle_barrel/barrel = new /obj/item/survival_rifle_barrel/barrel_22
+
+	New()
+		src.set_barrel_stats(src.barrel)
+		ammo = new default_magazine
+		..()
+
+	attackby(obj/item/b, mob/user)
+		if (istype(b, /obj/item/survival_rifle_barrel))
+			var/obj/item/survival_rifle_barrel/new_barrel = b
+			src.try_swap_barrel(user, new_barrel, TRUE)
+			return
+		..()
+
+	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
+		if (istype(target, /obj/item/survival_rifle_barrel))
+			var/obj/item/survival_rifle_barrel/new_barrel = target
+			src.try_swap_barrel(user, new_barrel, FALSE)
+			return
+		..()
+
+	proc/try_swap_barrel(var/mob/user, var/obj/item/survival_rifle_barrel/new_barrel, var/holding_barrel)
+		if (istype(new_barrel, src.barrel.type))
+			user.show_text("There's no point swapping the barrel. They're the same caliber!", "red")
+			return
+		// Eject the mag first so we don't dissapear ammo
+		src.eject_magazine(user)
+
+		// Swap the barrel objs
+		playsound(src.loc, 'sound/items/Ratchet.ogg', 50, 1)
+		user.visible_message("[user] begins swapping the barrel on [his_or_her(user)] [src].", "You begin swapping the barrel on \the [src].")
+		SETUP_GENERIC_ACTIONBAR(user, src, 5 SECONDS, /obj/item/gun/kinetic/survival_rifle/proc/swap_barrel, list(user, new_barrel, holding_barrel), src.icon, src.icon_state,"[user] finishes swapping the barrel on [his_or_her(user)] [src].", null)
+		return
+
+	proc/swap_barrel(var/mob/user, var/obj/item/survival_rifle_barrel/new_barrel, var/holding_barrel)
+		if (holding_barrel)
+			// Drop the barrel if you're holding it, so we can set_loc on it
+			user.drop_item()
+		new_barrel.set_loc(src)
+		user.put_in_hand_or_drop(src.barrel)
+		src.barrel = new_barrel
+
+		// Set the gun's stats to the new barrel
+		src.set_barrel_stats(barrel)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)
+
+	proc/set_barrel_stats(var/obj/item/survival_rifle_barrel/barrel)
+		src.icon_state = barrel.rifle_icon_state
+		src.ammo_cats = barrel.ammo_cats
+		src.max_ammo_capacity = barrel.max_ammo_capacity
+		src.default_magazine = barrel.default_magazine
+		set_current_projectile(new barrel.default_projectile)
+		src.projectiles = list(current_projectile)
+		src.desc = desc = "A semi-automatic rifle, renowned for it's easily convertible caliber, developed by Mabinogi Firearms Company. It's currently fitted with a [src.barrel.name]."
+		src.tooltip_rebuild = 1
 
 /obj/item/gun/kinetic/revolver/vr
 	icon = 'icons/effects/VR.dmi'
@@ -538,41 +658,42 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 
 //0.308
-/obj/item/gun/kinetic/minigun
-	name = "minigun"
-	desc = "The M134 Minigun is a 7.62×51mm NATO, six-barrel rotary machine gun with a high rate of fire."
+/obj/item/gun/kinetic/minigun // it is now STRONK
+	name = "\improper Alpha Hydrae minigun"
+	desc = "The M134 Alpha Hydrae Minigun is a 7.62×51mm NATO, six-barrel rotary machine gun with a high rate of fire."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "minigun"
 	item_state = "heavy"
 	force = MELEE_DMG_LARGE
 	ammo_cats = list(AMMO_AUTO_308)
-	max_ammo_capacity = 100
-	auto_eject = 1
+	max_ammo_capacity = 200 //its a minigun it can have some ammo
+	two_handed = TRUE
+	auto_eject = 0
+	has_empty_state = 1
+	spread_angle = 15 //15 degrees is a lot
+	can_dual_wield = TRUE //if you can figure it out, you can do it
+	fire_animation = TRUE
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD
 
-	spread_angle = 25
-	can_dual_wield = 0
-
-	slowdown = 5
-	slowdown_time = 15
-
-	two_handed = 1
 	w_class = W_CLASS_BULKY
 	default_magazine = /obj/item/ammo/bullets/minigun
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/minigun)
+		AddComponent(/datum/component/holdertargeting/fullauto, 2.5, 0.4, 0.9) //you only get full auto, why would you burst fire with a minigun?
 		..()
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.4)
+		setProperty("carried_movespeed", 1.5) //the addative slow down does not play nice with the full auto so you get this instead
 
 /obj/item/gun/kinetic/akm
 	name = "\improper AKM Assault Rifle"
 	desc = "An old Cold War relic chambered in 7.62x39. Rusted, but not busted."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ak47"
 	item_state = "ak47"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -588,8 +709,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	gildable = 1
 	default_magazine = /obj/item/ammo/bullets/akm
 	fire_animation = TRUE
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK | EXTRADELAY
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	ammobag_magazines = list(/obj/item/ammo/bullets/akm)
 	ammobag_restock_cost = 3
@@ -603,13 +724,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/hunting_rifle
 	name = "old hunting rifle"
 	desc = "A powerful antique hunting rifle."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "ohr"
 	item_state = "ohr"
 	wear_state = "ohr" // prevent empty state from breaking the worn image
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_RIFLE_308)
@@ -630,12 +751,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/dart_rifle
 	name = "tranquilizer rifle"
 	desc = "A veterinary tranquilizer rifle chambered in .308 caliber."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "tranq"
 	item_state = "tranq"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	//contraband = 8
 	ammo_cats = list(AMMO_TRANQ_308)
@@ -771,6 +892,40 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		set_current_projectile(new /datum/projectile/bullet/nine_mm_soviet)
 		..()
 
+//medic primary
+/obj/item/gun/kinetic/veritate
+	desc = "A personal defence weapon, developed by Almagest Weapons Fabrication."
+	name = "\improper Veritate PDW"
+	icon_state = "vector"
+	item_state = "glocksyn"
+	shoot_delay = 1
+	w_class = W_CLASS_SMALL
+	force = MELEE_DMG_PISTOL
+	ammo_cats = list(AMMO_FLECHETTE)
+	max_ammo_capacity = 21
+	auto_eject = 1
+	has_empty_state = 1
+	gildable = 0
+	fire_animation = FALSE
+	default_magazine = /obj/item/ammo/bullets/veritate
+	ammobag_magazines = list(/obj/item/ammo/bullets/veritate)
+	ammobag_restock_cost = 2
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/bullet/veritate)
+		projectiles = list(current_projectile,new/datum/projectile/bullet/veritate/burst)
+		..()
+
+	attack_self(mob/user as mob)
+		..()	//burst shot has a slight spread.
+		if (istype(current_projectile, /datum/projectile/bullet/veritate/burst/))
+			spread_angle = 6
+			shoot_delay = 3 DECI SECONDS
+		else
+			spread_angle = 0
+			shoot_delay = 2 DECI SECONDS
+
 /obj/item/gun/kinetic/SMG_briefcase
 	name = "secure briefcase"
 	icon = 'icons/obj/items/storage.dmi'
@@ -785,7 +940,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
 	object_flags = NO_ARM_ATTACH
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	c_flags = ONBELT
 
 	spread_angle = 2
 	can_dual_wield = 0
@@ -840,7 +995,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 					user.show_text("[src] is empty!", "red")
 					return
 
-	canshoot()
+	canshoot(mob/user)
 		if(open)
 			return 0
 		else
@@ -894,8 +1049,9 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 //0.393
 /obj/item/gun/kinetic/foamdartgun
 	name = "foam dart gun"
-	icon_state = "foamdartgun"
 	desc = "A toy gun that fires foam darts. Keep out of reach of clowns, staff assistants and scientists."
+	icon = 'icons/obj/items/guns/toy.dmi'
+	icon_state = "foamdartgun"
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "toygun"
@@ -905,7 +1061,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	max_ammo_capacity = 1
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/foamdarts
-	var/pulled = 0
+	var/pulled = FALSE
 
 	New()
 		ammo = new default_magazine
@@ -916,7 +1072,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	attack_self(mob/user as mob)
 		..()
 		if(!pulled)
-			pulled = 1
+			pulled = TRUE
 			playsound(user.loc, 'sound/weapons/gunload_click.ogg', 60, 1)
 			UpdateIcon()
 
@@ -927,35 +1083,74 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		else
 			icon_state="foamdartgun"
 
-	canshoot()
+	canshoot(mob/user)
 		if(!pulled)
-			return 0
+			return FALSE
 		else
 			return ..()
 
-	shoot(var/target,var/start ,var/mob/user)
-		if(!pulled)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if(!src.canshoot(user))
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return
 		..()
-		pulled = 0
+		pulled = FALSE
 		UpdateIcon()
 
 	shoot_point_blank(atom/target, var/mob/user, second_shot)
-		if(!pulled)
+		if(!src.canshoot(user))
 			boutput(user, "<span class='notice'>You need to pull back the pully tab thingy first!</span>")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 60, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 60, TRUE)
 			return
 		..()
-		pulled = 0
+		pulled = FALSE
 		UpdateIcon()
+
+/obj/item/gun/kinetic/foamdartgun/borg
+	name = "cybernetic foam dart gun"
+	desc = "A law enforcement weapon that fires foam darts. Synthesizes darts directly from the battery and includes new auto-load technology."
+	icon_state="foamdartgun-pull"
+	inventory_counter_enabled = FALSE
+	allowReverseReload = FALSE
+	var/power_requirement = 100 //! The amount of power deducted from a borg's cell when they fire this.
+
+	New()
+		. = ..()
+		set_current_projectile(new /datum/projectile/bullet/foamdart/biodegradable)
+
+	canshoot(mob/user)
+		// no parent call so we don't care if it's pulled
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			return S.cell?.charge >= power_requirement
+		else // guess someone spawned one???
+			return TRUE
+
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (src.canshoot(user))
+			. = ..() // this checks canshoot twice; could be refactored
+		else
+			boutput(user, "<span class='alert'>You're too low on power to synthesize a dart!</span>")
+
+	shoot_point_blank(atom/target, mob/user, second_shot)
+		if (src.canshoot(user))
+			. = ..()
+		else
+			boutput(user, "<span class='alert'>You're too low on power to synthesize a dart!</span>")
+
+	process_ammo(mob/user)
+		if (issilicon(user))
+			var/mob/living/silicon/S = user
+			S.cell?.use(src.power_requirement)
+		return TRUE
 
 
 /obj/item/gun/kinetic/foamdartrevolver
 	name = "foam dart revolver"
-	icon_state = "foamdartrevolver"
 	desc = "An advanced dart gun for experienced pros. Just holding it imbues you with a sense of great power."
+	icon = 'icons/obj/items/guns/toy.dmi'
+	icon_state = "foamdartrevolver"
 	w_class = W_CLASS_SMALL
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "toyrevolver"
@@ -970,11 +1165,35 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/foamdart)
 		..()
+/obj/item/gun/kinetic/foamdartshotgun
+	name = "foam dart shotgun"
+	desc = "The more powerful, older brother of the dart gun. Kicks like a horse, a foam horse. A horse made of foam."
+	icon = 'icons/obj/items/guns/toy.dmi'
+	icon_state = "foamdartshotgun"
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	item_state = "foamdartshotgun"
+	wear_state = "foamdartshotgun"
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	contraband = 1
+	two_handed = TRUE
+	auto_eject = FALSE
+	c_flags = ONBACK
+	force = 2
+	ammo_cats = list(AMMO_FOAMDART)
+	max_ammo_capacity = 12
+	muzzle_flash = null
+	default_magazine = /obj/item/ammo/bullets/foamdarts
+
+	New()
+		ammo = new default_magazine
+		set_current_projectile(new/datum/projectile/special/spreader/buckshot_burst/foamdarts)
+		..()
 
 //0.40
 /obj/item/gun/kinetic/blowgun
 	name = "flute"
 	desc = "Wait, this isn't a flute. It's a blowgun!"
+	icon = 'icons/obj/items/guns/syringe.dmi'
 	icon_state = "blowgun"
 	item_state = "cane-f"
 	force = MELEE_DMG_PISTOL
@@ -996,7 +1215,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 //0.41
 /obj/item/gun/kinetic/derringer
 	name = "derringer"
-	desc = "A small and easy-to-hide gun that comes with 2 shots. (Can be hidden in worn clothes and retrieved by using the wink emote)"
+	desc = "A small and easy-to-hide gun that comes with 2 shots."
 	icon_state = "derringer"
 	force = MELEE_DMG_PISTOL
 	ammo_cats = list(AMMO_PISTOL_41)
@@ -1005,6 +1224,15 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	muzzle_flash = null
 	default_magazine = /obj/item/ammo/bullets/derringer
 	fire_animation = TRUE
+
+	get_help_message(dist, mob/user)
+		var/keybind = "Default CTRL + W"
+		var/datum/keymap/current_keymap = user.client.keymap
+		for (var/key in current_keymap.keys)
+			if (current_keymap.keys[key] == "wink")
+				keybind = current_keymap.unparse_keybind(key)
+				break
+		return "Hit the gun on a piece of clothing to hide it inside. Retrieve it by using the <b>*wink</b> ([keybind]) emote."
 
 	afterattack(obj/O as obj, mob/user as mob)
 		if (O.loc == user && O != src && istype(O, /obj/item/clothing))
@@ -1059,36 +1287,34 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		..()
 
 //0.58
-/obj/item/gun/kinetic/flintlockpistol
+/obj/item/gun/kinetic/single_action/flintlock
 	name = "flintlock pistol"
-	desc = "A powerful antique flintlock pistol."
+	desc = "In recent years, flintlocks have again become increasingly popular among space privateers due to the replacement of the gun flint with a shaped plasma crystal, resulting in a significantly higher firepower."
 	icon_state = "flintlock"
 	item_state = "flintlock"
+	fire_animation = TRUE
+	has_uncocked_state = TRUE
 	force = MELEE_DMG_PISTOL
-	contraband = 0 //It's so old that futuristic security scanners don't even recognize it.
 	ammo_cats = list(AMMO_FLINTLOCK)
-	max_ammo_capacity = 1 // It's magazine-fed (Convair880).
-	auto_eject = null
-	default_magazine = /obj/item/ammo/bullets/flintlock
-	var/failure_chance = 1
+	max_ammo_capacity = 1
+	default_magazine = /obj/item/ammo/bullets/flintlock/single
 
 	New()
 		ammo = new default_magazine
 		set_current_projectile(new/datum/projectile/bullet/flintlock)
 		..()
 
-	shoot()
-		if(ammo?.amount_left && current_projectile.power)
-			failure_chance = clamp(round(current_projectile.power/2), 10, 33)
-		if(canshoot() && prob(failure_chance))
-			var/turf/T = get_turf(src)
-			boutput(T, "<span class='alert'>[src] blows up!</span>")
-			explosion(src, T,0,1,1,2)
-			qdel(src)
-		else
-			..()
-			return
-
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		sleep(0.3)
+		if (src.canshoot(user) && !isghostdrone(user))
+			var/obj/effects/flintlock_smoke/E = new /obj/effects/flintlock_smoke(get_turf(src))
+			var/dir_x = target.x + POX/32 - start.x - POY/32
+			var/dir_y = target.y - start.y
+			var/len = vector_magnitude(dir_x, dir_y)
+			dir_x /= len
+			dir_y /= len
+			E.setdir(dir_x, dir_y)
+		. = ..()
 
 //0.72
 /obj/item/gun/kinetic/spes
@@ -1117,7 +1343,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	suicide(var/mob/living/carbon/human/user as mob)
 		if (!src.user_can_suicide(user))
 			return 0
-		if (!istype(user) || !src.canshoot())//!hasvar(user,"organHolder")) STOP IT STOP IT HOLY SHIT STOP WHY DO YOU USE HASVAR FOR THIS, ONLY HUMANS HAVE ORGANHOLDERS
+		if (!istype(user) || !src.canshoot(user))//!hasvar(user,"organHolder")) STOP IT STOP IT HOLY SHIT STOP WHY DO YOU USE HASVAR FOR THIS, ONLY HUMANS HAVE ORGANHOLDERS
 			return 0
 
 		src.process_ammo(user)
@@ -1125,7 +1351,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		user.visible_message("<span class='alert'><b>[user] places [src]'s barrel in [hisher] mouth and pulls the trigger with [hisher] foot!</b></span>")
 		var/obj/head = user.organHolder.drop_organ("head")
 		qdel(head)
-		playsound(src, 'sound/weapons/shotgunshot.ogg', 100, 1)
+		playsound(src, 'sound/weapons/shotgunshot.ogg', 100, TRUE)
 		var/obj/decal/cleanable/blood/gibs/gib = make_cleanable( /obj/decal/cleanable/blood/gibs,get_turf(user))
 		gib.streak_cleanable(turn(user.dir,180))
 		health_update_queue |= user
@@ -1142,13 +1368,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/riotgun
 	name = "riot shotgun"
 	desc = "A police-issue shotgun meant for suppressing riots."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "shotty"
 	item_state = "shotty"
 	wear_state = "shotty" // prevent empty state from breaking the worn image
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
@@ -1172,10 +1398,10 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		. = ..()
 		src.icon_state = "shotty" + (gilded ? "-golden" : "") + (racked_slide ? "" : "-empty" )
 
-	canshoot()
+	canshoot(mob/user)
 		return(..() && src.racked_slide)
 
-	shoot(var/target,var/start ,var/mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if(ammo.amount_left > 0 && !racked_slide)
 			boutput(user, "<span class='notice'>You need to rack the slide before you can fire!</span>")
 		..()
@@ -1218,19 +1444,17 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 				if (src.ammo.amount_left < 8) // Do not eject shells if you're racking a full "clip"
 					var/turf/T = get_turf(src)
 					if (T && src.current_projectile.casing) // Eject shells on rack instead of on shoot()
-						var/obj/item/casing/C = new src.current_projectile.casing(T)
-						C.forensic_ID = src.forensic_ID
-						C.set_loc(T)
+						new src.current_projectile.casing(T, src.forensic_ID)
 
 /obj/item/gun/kinetic/single_action/mts_255
 	name = "\improper MTs-255 Revolver Shotgun"
 	desc = "A single-action revolving cylinder shotgun, popular with Soviet hunters, produced by the Zvezda Design Bureau."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
 	icon_state = "mts255"
 	item_state = "mts255"
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 5
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
@@ -1303,7 +1527,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 					src.icon_state = "slamgun-open-loaded"
 				else
 					src.icon_state = "slamgun-open"
-				update_icon()
+				UpdateIcon()
 				two_handed = 0
 
 			user.update_inhands()
@@ -1312,11 +1536,11 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 				w_class = W_CLASS_BULKY
 				force = MELEE_DMG_RIFLE
 				src.icon_state = "slamgun-ready"
-				update_icon()
+				UpdateIcon()
 				two_handed = 1
 				user.update_inhands()
 
-	canshoot()
+	canshoot(mob/user)
 		if (src.icon_state == "slamgun-ready")
 			return ..()
 		else
@@ -1326,7 +1550,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		. = src.casings_to_eject
 		..()
 		if(. != src.casings_to_eject)
-			update_icon()
+			UpdateIcon()
 
 	update_icon()
 		if(src.icon_state == "slamgun-ready")
@@ -1366,6 +1590,24 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		else
 			boutput(user, "<span class='alert'>You can't fire \the [src] when it is open!</span>")
 
+//0.75
+/obj/item/gun/kinetic/single_action/flintlock/rifle
+	name = "flintlock rifle"
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	wear_image_icon = 'icons/mob/clothing/back.dmi'
+	icon_state = "flintlock_rifle"
+	item_state = "flintlock_rifle"
+	ammo_cats = list(AMMO_FLINTLOCK_RIFLE)
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBACK
+	force = MELEE_DMG_RIFLE
+	two_handed = TRUE
+	w_class = W_CLASS_BULKY
+	default_magazine = /obj/item/ammo/bullets/flintlock/rifle/single
+
+	New()
+		..()
+		set_current_projectile(new/datum/projectile/bullet/flintlock/rifle)
 
 //1.0
 /obj/item/gun/kinetic/coilgun_TEST
@@ -1409,7 +1651,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 				boutput(user, "<span class='alert'>The [src] already has something in it! You can't use the conversion chamber right now! You'll have to manually unload the [src]!</span>")
 				return
 			else
-				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
+				SETUP_GENERIC_ACTIONBAR(user, src, 1 SECOND, PROC_REF(convert_grenade), list(b, user), b.icon, b.icon_state,"", null)
 				return
 		else
 			..()
@@ -1419,19 +1661,137 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		TO_LOAD.Attackby(nade, user)
 		src.Attackby(TO_LOAD, user)
 
+	breach
+		default_magazine = /obj/item/ammo/bullets/breach_flashbang/single
+		New()
+			..()
+			ammo = new default_magazine
+			set_current_projectile(new/datum/projectile/bullet/breach_flashbang)
 
 //1.58
+/obj/item/gun/kinetic/missile_launcher
+	name = "pod-targeting missile launcher"
+	desc = "A collapsible, infantry portable, pod-targeting missile launcher."
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
+	icon_state = "missile_launcher"
+	item_state = "missile_launcher"
+	uses_multiple_icon_states = TRUE
+	has_empty_state = TRUE
+	w_class = W_CLASS_BULKY
+	throw_speed = 2
+	throw_range = 4
+	force = MELEE_DMG_LARGE
+	contraband = 8
+	ammo_cats = list(AMMO_ROCKET_ALL)
+	max_ammo_capacity = 1
+	can_dual_wield = FALSE
+	two_handed = TRUE
+	muzzle_flash = "muzzle_flash_launch"
+	default_magazine = /obj/item/ammo/bullets/pod_seeking_missile
+	var/collapsed
+
+	New()
+		ammo = new default_magazine
+		ammo.amount_left = 0
+		set_current_projectile(new /datum/projectile/bullet/homing/pod_seeking_missile)
+		AddComponent(/datum/component/holdertargeting/smartgun/homing/pod, 1)
+		src.set_collapsed_state(TRUE)
+		..()
+
+	update_icon()
+		if (src.collapsed)
+			src.icon = 'icons/obj/items/guns/kinetic.dmi'
+			src.icon_state = "missile_launcher-collapsed"
+			src.item_state = "missile_launcher-collapsed"
+
+		else
+			src.icon = 'icons/obj/items/guns/kinetic64x32.dmi'
+			src.icon_state = "missile_launcher"
+
+			if (src.ammo.amount_left < 1)
+				src.item_state = "missile_launcher-empty"
+			else
+				src.item_state = "missile_launcher"
+
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			H.update_inhands()
+
+		. = ..()
+
+	canshoot(mob/user)
+		if (src.collapsed)
+			boutput(user, "<span class='alert'>You need to extend the [src.name] before you can fire!</span>")
+			return FALSE
+		. = ..()
+
+	attack_self(mob/user)
+		src.set_collapsed_state(!src.collapsed)
+
+		..()
+
+	attackby(obj/item/I, mob/user)
+		if (istype(I, /obj/item/ammo/bullets) && src.collapsed)
+			boutput(user, "<span class='alert'>You can't load a missile into the chamber! You'll have to extend the [src.name] first!</span>")
+			return
+		..()
+
+	proc/set_collapsed_state(var/collapsed)
+		if (src.setTwoHanded(!collapsed))
+			src.collapsed = collapsed
+
+			if (src.collapsed)
+				src.item_function_flags &= ~UNSTORABLE
+				src.w_class = W_CLASS_NORMAL
+				src.has_empty_state = FALSE
+
+			else
+				src.item_function_flags |= UNSTORABLE
+				src.w_class = W_CLASS_BULKY
+				src.has_empty_state = TRUE
+
+			src.UpdateIcon()
+			// Update HUD inhands, as they seem to dislike icon file changes paired with changing twohandedness.
+			if (ishuman(src.loc))
+				var/mob/living/carbon/human/H = src.loc
+				H.updateTwoHanded(src, !src.collapsed)
+
+			if (src.collapsed)
+				src.unload()
+
+	proc/unload()
+		if (src.ammo.amount_left <= 0)
+			return
+
+		var/obj/item/ammo/bullets/missile = new src.ammo.type
+		missile.amount_left = src.ammo.amount_left
+		missile.name = src.ammo.name
+		missile.icon = src.ammo.icon
+		missile.icon_state = src.ammo.icon_state
+		missile.ammo_type = src.ammo.ammo_type
+		missile.UpdateIcon()
+
+		if (ishuman(src.loc))
+			var/mob/living/carbon/human/H = src.loc
+			H.put_in_hand_or_drop(missile)
+
+		src.ammo.amount_left = 0
+		src.ammo.refillable = FALSE
+		src.UpdateIcon()
+
+
 // Ported from old, non-gun RPG-7 object class (Convair880).
 /obj/item/gun/kinetic/rpg7
 	desc = "A rocket-propelled grenade launcher licensed by the Space Irish Republican Army."
 	name = "\improper MPRT-7"
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "rpg7"
 	uses_multiple_icon_states = 1
 	item_state = "rpg7"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = ONBACK
+	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
@@ -1477,14 +1837,14 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 			return
 
 /obj/item/gun/kinetic/mrl
-	desc = "A  6-barrel multiple rocket launcher armed with guided micro-missiles."
+	desc = "A 6-barrel multiple rocket launcher armed with guided micro-missiles."
 	name = "Fomalhaut MRL"
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	icon_state = "mrls"
 	item_state = "mrls"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = ONBACK
+	c_flags = ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
@@ -1521,12 +1881,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/antisingularity
 	desc = "An experimental rocket launcher designed to deliver various payloads in rocket format."
 	name = "\improper Singularity Buster rocket launcher"
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "ntlauncher"
 	item_state = "ntlauncher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	w_class = W_CLASS_BULKY
 	throw_speed = 2
 	throw_range = 4
@@ -1547,8 +1907,22 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.8)
+		setProperty("carried_movespeed", 0.8)
 
+//2.5
+/obj/item/gun/kinetic/single_action/flintlock/mortar
+	name = "hand mortar"
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
+	icon_state = "hand_mortar"
+	item_state = "hand_mortar"
+	ammo_cats = list(AMMO_FLINTLOCK_MORTAR)
+	force = MELEE_DMG_RIFLE
+	two_handed = TRUE
+	default_magazine = /obj/item/ammo/bullets/flintlock/mortar/single
+
+	New()
+		..()
+		set_current_projectile(new/datum/projectile/bullet/flintlock/mortar)
 
 //3.0
 /obj/item/gun/kinetic/gungun //meesa jarjar binks
@@ -1572,6 +1946,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/airzooka //This is technically kinetic? I guess?
 	name = "airzooka"
 	desc = "The new double action air projection device from Donk Co!"
+	icon = 'icons/obj/items/guns/toy.dmi'
 	icon_state = "airzooka"
 	force = MELEE_DMG_PISTOL
 	max_ammo_capacity = 10
@@ -1611,7 +1986,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		..()
 
 	afterattack(atom/A, mob/user as mob)
-		if(src.ammo.amount_left < max_ammo_capacity && istype(A, /obj/critter/cat))
+		if(src.ammo.amount_left < max_ammo_capacity && istype(A, /mob/living/critter/small_animal/cat))
 			src.ammo.amount_left += 1
 			user.visible_message("<span class='alert'>[user] loads \the [A] into \the [src].</span>", "<span class='alert'>You load \the [A] into \the [src].</span>")
 			src.current_projectile.icon_state = A.icon_state //match the cat sprite that we load
@@ -1681,7 +2056,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/smg
 	name = "\improper Bellatrix submachine gun"
 	desc = "A semi-automatic, 9mm submachine gun, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/large/48x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic48x32.dmi'
 	icon_state = "mp52"
 	w_class = W_CLASS_SMALL
 	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
@@ -1750,18 +2125,20 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 // scout
 /obj/item/gun/kinetic/tactical_shotgun //just a reskin, unused currently
-	name = "tactical shotgun"
-	desc = "Multi-purpose high-grade military shotgun, painted a menacing black colour."
+	name = "\improper Pryderi tactical shotgun"
+	desc = "A compact multi-purpose shotgun from Mabinogi Firearms Company, standard-issue for Hafgan's mine guards and convoy security throughout the Martian War."
 	icon_state = "tactical_shotgun"
 	item_state = "shotgun"
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_SHOTGUN_ALL)
-	max_ammo_capacity = 8
+	max_ammo_capacity = 5
 	auto_eject = 1
 	two_handed = 1
 	can_dual_wield = 0
 	default_magazine = /obj/item/ammo/bullets/buckshot_burst
+	fire_animation = TRUE
+	has_empty_state = TRUE
 
 	New()
 		ammo = new default_magazine
@@ -1772,12 +2149,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/assault_rifle
 	name = "\improper Sirius assault rifle"
 	desc = "A bullpup assault rifle capable of semi-automatic and burst fire modes, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "assault_rifle"
 	item_state = "assault_rifle"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 8
 	ammo_cats = list(AMMO_AUTO_556)
@@ -1837,7 +2214,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/light_machine_gun
 	name = "\improper Antares light machine gun"
 	desc = "A 100 round light machine gun, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "lmg"
 	item_state = "lmg"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -1846,8 +2223,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	max_ammo_capacity = 100
 	auto_eject = 0
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	spread_angle = 8
 	can_dual_wield = 0
@@ -1867,13 +2244,13 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 1)
+		setProperty("carried_movespeed", 1)
 
 
 /obj/item/gun/kinetic/cannon
 	name = "\improper Alphard 20mm cannon"
 	desc = "A 20mm anti-materiel recoiling cannon. Slow but enormously powerful."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "cannon"
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -1883,8 +2260,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	auto_eject = 1
 	fire_animation = TRUE
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -1907,12 +2284,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.3)
+		setProperty("carried_movespeed", 0.3)
 
 /obj/item/gun/kinetic/recoilless
 	name = "\improper Carinae RCL/120"
 	desc = "An absurdly destructive 120mm recoilless gun-mortar, the largest man-portable weapon in the Almagest line."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "recoilless"
 	item_state = "cannon"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -1920,8 +2297,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_HOWITZER)
 	max_ammo_capacity = 1
 	auto_eject = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -1943,19 +2320,18 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.2)
-
+		setProperty("carried_movespeed", 0.2)
 
 // demo
 /obj/item/gun/kinetic/grenade_launcher
 	name = "\improper Rigil grenade launcher"
 	desc = "A 40mm hand-held grenade launcher, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "grenade_launcher"
 	item_state = "grenade_launcher"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY
+	c_flags = ONBACK
 	force = MELEE_DMG_RIFLE
 	contraband = 7
 	ammo_cats = list(AMMO_GRENADE_ALL)
@@ -1987,7 +2363,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 					boutput(user, "<span class='alert'>The [src] has a different kind of grenade in the conversion chamber, and refuses to mix and match!</span>")
 					return
 				else
-					SETUP_GENERIC_ACTIONBAR(user, src, 0.3 SECONDS, .proc/convert_grenade, list(b, user), b.icon, b.icon_state,"", null)
+					SETUP_GENERIC_ACTIONBAR(user, src, 0.3 SECONDS, PROC_REF(convert_grenade), list(b, user), b.icon, b.icon_state,"", null)
 					return
 		else
 			..()
@@ -2005,7 +2381,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 /obj/item/gun/kinetic/sniper
 	name = "\improper Betelgeuse sniper rifle"
 	desc = "A semi-automatic bullpup sniper rifle, developed by Almagest Weapons Fabrication."
-	icon = 'icons/obj/large/64x32.dmi' // big guns get big icons
+	icon = 'icons/obj/items/guns/kinetic64x32.dmi'
 	icon_state = "sniper"
 	item_state = "sniper"
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
@@ -2013,8 +2389,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	ammo_cats = list(AMMO_RIFLE_308)
 	max_ammo_capacity = 6
 	auto_eject = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 	slowdown = 7
 	slowdown_time = 5
 
@@ -2043,7 +2419,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.8)
+		setProperty("carried_movespeed", 0.8)
 
 
 	dropped(mob/M)
@@ -2067,12 +2443,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		just_stop_snipe(M)
 
 	proc/just_stop_snipe(var/mob/living/M) // remove overlay here
+		M.use_movement_controller = null
 		if (M.client)
 			M.client.pixel_x = 0
 			M.client.pixel_y = 0
+			M.keys_changed(0,0xFFFF) //This is necessary for the designator to work
 
-		M.use_movement_controller = null
-		M.keys_changed(0,0xFFFF) //This is necessary for the designator to work
 		M.removeOverlayComposition(/datum/overlayComposition/sniper_scope)
 
 	attack_hand(mob/user)
@@ -2098,7 +2474,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		src.keys_changed(0,0xFFFF)
 		if(!src.hasOverlayComposition(/datum/overlayComposition/sniper_scope))
 			src.addOverlayComposition(/datum/overlayComposition/sniper_scope)
-		playsound(src, 'sound/weapons/scope.ogg', 50, 1)
+		playsound(src, 'sound/weapons/scope.ogg', 50, TRUE)
 		break
 
 
@@ -2115,8 +2491,8 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	max_ammo_capacity = 5
 	auto_eject = 1
 
-	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY | ONBACK
-	c_flags = NOT_EQUIPPED_WHEN_WORN | EQUIPPED_WHILE_HELD
+	flags =  FPRINT | TABLEPASS | CONDUCT | USEDELAY | EXTRADELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
 
 	can_dual_wield = 0
 
@@ -2137,7 +2513,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 
 	setupProperties()
 		..()
-		setProperty("movespeed", 0.3)*/
+		setProperty("carried_movespeed", 0.3)*/
 
 /obj/item/gun/kinetic/sawnoff
 	name = "double-barreled shotgun"
@@ -2171,12 +2547,12 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		. = ..()
 		src.icon_state = "coachgun" + (gilded ? "-golden" : "") + (!src.broke_open ? "" : "-empty" )
 
-	canshoot()
+	canshoot(mob/user)
 		if (!src.broke_open)
 			return TRUE
 		..()
 
-	shoot(target, start, mob/user)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		if (src.broke_open)
 			boutput(user, "<span class='alert'>You need to close [src] before you can fire!</span>")
 		if (!src.broke_open && src.ammo.amount_left > 0)
@@ -2184,19 +2560,7 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 		..()
 
 	attack_self(mob/user)
-		if (src.broke_open)
-			src.broke_open = FALSE
-		else
-			src.broke_open = TRUE
-			src.casings_to_eject = src.shells_to_eject
-
-			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
-				src.ejectcasings()
-				src.shells_to_eject = 0
-
-		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
-
-		update_icon()
+		src.toggle_action(user)
 		..()
 
 	attackby(obj/item/I, mob/user)
@@ -2214,3 +2578,23 @@ ABSTRACT_TYPE(/obj/item/gun/kinetic/single_action)
 	alter_projectile(obj/projectile/P)
 		. = ..()
 		P.proj_data.shot_sound = 'sound/weapons/sawnoff.ogg'
+
+	on_spin_emote(mob/living/carbon/human/user)
+		if(src.broke_open) // Only allow spinning to close the gun, doesn't make as much sense spinning it open.
+			src.toggle_action(user)
+			user.visible_message("<span class='alert'><b>[user]</b> snaps shut [src] with a [pick("spin", "twirl")]!</span>")
+		..()
+
+	proc/toggle_action(mob/user)
+		if (!src.broke_open)
+			src.casings_to_eject = src.shells_to_eject
+
+			if (src.casings_to_eject > 0) //this code exists because without it the gun ejects double the amount of shells
+				src.ejectcasings()
+				src.shells_to_eject = 0
+		src.broke_open = !src.broke_open
+
+		playsound(user.loc, 'sound/weapons/gunload_click.ogg', 15, TRUE)
+
+		UpdateIcon()
+

@@ -38,7 +38,7 @@
 /datum/effects/system/ion_trail_follow/proc/start() //todo : process loop. no spawn loop, ew
 	if(!src.on)
 		src.on = 1
-		RegisterSignal(holder, COMSIG_MOVABLE_MOVED, .proc/on_vehicle_move)
+		RegisterSignal(holder, COMSIG_MOVABLE_MOVED, PROC_REF(on_vehicle_move))
 
 /datum/effects/system/ion_trail_follow/proc/stop()
 	src.on = 0

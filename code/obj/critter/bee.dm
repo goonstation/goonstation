@@ -1,3 +1,6 @@
+
+ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
+
 /obj/critter/domestic_bee
 	name = "greater domestic space-bee"
 	desc = "Genetically engineered for extreme size and indistinct segmentation and bred for docility, the greater domestic space-bee is increasingly popular among space traders and science-types."
@@ -15,7 +18,7 @@
 	firevuln = 0.5
 	brutevuln = 0.8
 	angertext = "buzzes threateningly at"
-	butcherable = 2
+	butcherable = BUTCHER_YOU_MONSTER
 	flying = 1
 	min_quality = -60
 	p_class = 2
@@ -221,16 +224,8 @@
 				src.task = "thinking"
 				src.attacking = 0
 				return
-
-			if (planter.current.assoc_reagents.len || (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents)))
-				var/list/additional_reagents = planter.current.assoc_reagents
-				if (planter.plantgenes && planter.plantgenes.mutation && length(planter.plantgenes.mutation.assoc_reagents))
-					additional_reagents = additional_reagents | planter.plantgenes.mutation.assoc_reagents
-
-				/*var/associated_reagent = planter.current.associated_reagent
-				if (planter.plantgenes && planter.plantgenes.mutation && planter.plantgenes.mutation.associated_reagent)
-					associated_reagent = planter.plantgenes.mutation.associated_reagent*/
-
+			var/list/additional_reagents = HYPget_assoc_reagents(planter.current, planter.plantgenes)
+			if (length(additional_reagents))
 				planter.reagents.remove_reagent("nectar", nectarTransferAmt*0.75)
 				src.reagents.add_reagent("honey", nectarTransferAmt*0.75)
 				for (var/X in additional_reagents)
@@ -411,7 +406,7 @@
 				src.puke_honey()
 			qdel(W)
 		else if (istype(W, /obj/item/reagent_containers/glass))
-			if (W.reagents.has_reagent("menthol") && W.reagents.reagent_list.len == 1)
+			if (W.reagents.has_reagent("menthol") && length(W.reagents.reagent_list) == 1)
 				src.visible_message("<b>[src]</b> sniffles a bit.", 1)
 				src.health = min(initial(src.health), src.health+5)
 		else
@@ -837,11 +832,13 @@
 	New()
 		src.tier = world.load_intra_round_value("heisenbee_tier")
 		src.original_tier = src.tier
-		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, .proc/save_upgraded_tier)
+		src.RegisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT, PROC_REF(save_upgraded_tier))
 		heisentier_hat()
 		..()
+		START_TRACKING
 
 	disposing()
+		STOP_TRACKING
 		UnregisterSignal(GLOBAL_SIGNAL, COMSIG_GLOBAL_REBOOT)
 		..()
 
@@ -1046,7 +1043,7 @@
 
 			cleaned = 1
 			W.reagents.clear_reagents()
-			playsound(src, 'sound/effects/bubbles2.ogg', 80, 1, -3)
+			playsound(src, 'sound/effects/bubbles2.ogg', 80, TRUE, -3)
 			user.visible_message("<span class='notice'><b>[user]</b> washes [src]!</span>", "<span class='notice'>You clean the HECK out of [src]!</span>")
 			src.visible_message("<span class='notice'>[src] bumbles really happily!  Also, a little squeakily.</span>")
 			//todo: splash visual effect
@@ -1229,9 +1226,9 @@
 						var/key_dodgy = (src.name == "sun bee" && !derelict_mode) || (src.name == "moon bee" && derelict_mode)
 
 						if(src.name == "sun bee")
-							K = new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow.";} (src.loc)
+							K = new /obj/item/device/key {name = "solar key"; desc = "A metal key with a sun icon on the bow."; icon_state = "key_solar";} (src.loc)
 						else
-							K = new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow.";} (src.loc)
+							K = new /obj/item/device/key {name = "lunar key"; desc = "A metal key with a moon icon on the bow."; icon_state = "key_lunar";} (src.loc)
 						K.dodgy = key_dodgy
 
 				if(prob(15))
@@ -1529,8 +1526,8 @@
 	honey_color = "#ff0033"
 
 	do_reagentStuff(mob/M)
-		if (M.reagents.get_reagent_amount("honkfartium") < 10)
-			M.reagents.add_reagent("honkfartium", 5)
+		if (M.reagents.get_reagent_amount("honk_fart") < 10)
+			M.reagents.add_reagent("honk_fart", 5)
 		M.reagents.add_reagent("lube", 5)
 
 
@@ -1585,7 +1582,7 @@
 	firevuln = 1
 	brutevuln = 1
 	angertext = "squeals at"
-	butcherable = 2
+	butcherable = BUTCHER_YOU_MONSTER
 	generic = 0
 	var/growth_timer = 60
 	var/royal = 0
@@ -1712,7 +1709,7 @@
 
 			if (!src.attacking)
 				src.attacking = 1
-				src.visible_message("<b>[src]</b> [pick("nibbles on", "nips at", "chews on", "gnaws")] [target]!")
+				src.visible_message("<b>[src]</b> [pick("nibbles on", "nips at", "chews on", "gnaws")] [target]!", group="larva_nibble")
 				SPAWN(10 SECONDS)
 					src.attacking = 0
 		else
@@ -1836,7 +1833,7 @@
 
 	proc/hatch(var/mob/user, var/turf/T)
 		src.set_loc(T)
-		src.anchored = 1
+		src.anchored = ANCHORED
 		src.layer = initial(src.layer)
 		var/hatch_wiggle_counter = rand(3,8)
 		while (hatch_wiggle_counter-- > 0)
@@ -1844,28 +1841,33 @@
 			sleep(0.2 SECONDS)
 			src.pixel_x--
 			sleep(1 SECOND)
+		var/crittercount = 0
+		for(var/obj/critter/C in range(1, src))
+			crittercount++
+		if(crittercount <= 25)
+			src.visible_message("[src] hatches!")
+			var/obj/critter/domestic_bee_larva/newLarva
+			if (larva_type)
+				newLarva = new larva_type(get_turf(src))
+			else
+				newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
 
-		src.visible_message("[src] hatches!")
-		var/obj/critter/domestic_bee_larva/newLarva
-		if (larva_type)
-			newLarva = new larva_type(get_turf(src))
+			reagents.del_reagent("egg")
+			reagents.del_reagent("bee")
+			var/main_reagent = reagents.get_master_reagent()
+			if (main_reagent == "LSD")
+				newLarva.custom_bee_type = /obj/critter/domestic_bee/lsbee
+			if (main_reagent == "lsd_bee")
+				newLarva.custom_bee_type = /obj/critter/domestic_bee/rgbee
+
+			newLarva.blog += src.blog + "|larva hatched by [key_name(user)]|"
+
+			if (bee_name)
+				newLarva.name = bee_name
+			else if (prob(50))
+				newLarva.name = pick_string("bee_names.txt", "beename")
 		else
-			newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
-
-		reagents.del_reagent("egg")
-		reagents.del_reagent("bee")
-		var/main_reagent = reagents.get_master_reagent()
-		if (main_reagent == "LSD")
-			newLarva.custom_bee_type = /obj/critter/domestic_bee/lsbee
-		if (main_reagent == "lsd_bee")
-			newLarva.custom_bee_type = /obj/critter/domestic_bee/rgbee
-
-		newLarva.blog += src.blog + "|larva hatched by [key_name(user)]|"
-
-		if (bee_name)
-			newLarva.name = bee_name
-		else if (prob(50))
-			newLarva.name = pick_string("bee_names.txt", "beename")
+			src.visible_message("[src] cracks open, but nothing was inside! Perhaps the larva was too shy to exist in such cramped conditions.")
 
 		qdel(src)
 
@@ -1877,18 +1879,22 @@
 		src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
 		playsound(src.loc, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
 		make_cleanable(/obj/decal/cleanable/eggsplat,T)
-		var/obj/critter/domestic_bee_larva/newLarva
-		if (larva_type)
-			newLarva = new larva_type(get_turf(src))
-		else
-			newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
+		var/crittercount = 0
+		for(var/obj/critter/C in range(1, src))
+			crittercount++
+		if(crittercount <= 25)
+			var/obj/critter/domestic_bee_larva/newLarva
+			if (larva_type)
+				newLarva = new larva_type(get_turf(src))
+			else
+				newLarva = new /obj/critter/domestic_bee_larva(get_turf(src))
 
-		if (bee_name)
-			newLarva.name = bee_name
-		else if (prob(50))
-			newLarva.name = pick_string("bee_names.txt", "beename")
+			if (bee_name)
+				newLarva.name = bee_name
+			else if (prob(50))
+				newLarva.name = pick_string("bee_names.txt", "beename")
 
-		newLarva.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
+			newLarva.throw_at(get_edge_target_turf(src, src.dir), 2, 1)
 		qdel (src)
 
 	buddy
@@ -1914,6 +1920,7 @@
 
 		heal(var/mob/M)
 			boutput(M, "<span class='alert'>You feel as if you have made a grave mistake.  Perhaps a doorway has closed forever.</span>")
+			..()
 
 		attack_self(mob/user as mob)
 			if (src.anchored)
@@ -1925,7 +1932,7 @@
 				return
 
 			user.visible_message("[user] primes [src] and puts it down.", "You twist [src], priming it to hatch, then place it on the ground.")
-			src.anchored = 1
+			src.anchored = ANCHORED
 			src.layer = initial(src.layer)
 			user.u_equip(src)
 			src.set_loc(get_turf(user))
@@ -2038,6 +2045,7 @@
 	name = "bee beard"
 	desc = "A beard. From a bee."
 	icon_state = "beard"
+	c_flags = null
 
 /obj/item/reagent_containers/food/snacks/beefood
 	name = "bee kibble"
@@ -2075,7 +2083,7 @@
 	firevuln = 0.8
 	brutevuln = 0.8
 	angertext = "bozzes angrily at"
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	sleeping_icon_state = "fakebee-sleep"
 	max_quality = 25
 	flying = 1

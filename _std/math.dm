@@ -9,7 +9,17 @@
 /// ceil, with second argument being the multiple to use for rounding
 #define ceil2(x,y) (-round(-x / y) * y)
 
-#define nround(x) (((x % 1) >= 0.5)? round(x) : ceil(x))
+/// rounds down to the nearest integer
+#define roundfloor(x) round(x)
+
+/// rounds down to the nearest integer, note that the built-in round() function alwys roundsd to the lower integer
+#define nround(x) ((((x) % 1) >= 0.5) ? round(x) : ceil(x))
+
+/// decimal part of a number but always positive. Basically modulo 1 in a way
+#define posfract(x) ((x) - roundfloor(x))
+
+/// x % y but without rounding x first (i.e. fractmodulo(5.7, 2) = 1.7), also always positive
+#define fractmodulo(x, y) ((x) - (y) * roundfloor((x) / (y)))
 
 /// Returns the sign of the given number (1 or -1)
 #define sign(x) (((x) > 0) - ((x) < 0))
@@ -94,4 +104,5 @@ proc/text2num_safe(x)
 	. -= round(.)
 
 // hyperbolic trig functions
+#define sech(x) (2/((eulers**x)+(eulers**-x)+0.000001))
 #define tanh(x) (((eulers**(2*x))-1)/((eulers**(2*x))+1))

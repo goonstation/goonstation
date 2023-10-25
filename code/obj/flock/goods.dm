@@ -18,15 +18,15 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "beaker"
 	rc_flags = RC_VISIBLE | RC_SPECTRO
-	mat_changename = 0
-	mat_changedesc = 0
-	mat_changeappearance = 0
+	mat_changename = FALSE
+	mat_changedesc = FALSE
+	mat_changeappearance = FALSE
+	default_material = "gnesis"
 
 /obj/item/reagent_containers/gnesis/New()
 	..()
 	src.create_reagents(50)
 	reagents.add_reagent("flockdrone_fluid", 50)
-	src.setMaterial(getMaterial("gnesis"))
 
 ////////////////
 // FLOCKBURGER
@@ -59,13 +59,15 @@
 	name = "incapacitor"
 	desc = "A clunky projectile weapon of alien machine origin. It appears to have been based off of a couple pictures of regular human guns, but with no clear understanding of ergonomics."
 	icon_state = "incapacitor"
+	charge_icon_state = "incapacitor"
 	item_state = "incapacitor"
+	uses_charge_overlay = TRUE
 	force = 1
-	rechargeable = 0 // yeah this is weird alien technology good fucking luck charging it
-	can_swap_cell = 0 // No
-	cell_type = /obj/item/ammo/power_cell/self_charging
+	rechargeable = FALSE // yeah this is weird alien technology good fucking luck charging it
+	can_swap_cell = FALSE // No
+	cell_type = /obj/item/ammo/power_cell/self_charging/flockdrone
 	projectiles = null
-	is_syndicate = 1 // it's less that this is a syndicate weapon and more that replicating it isn't trivial
+	is_syndicate = TRUE // it's less that this is a syndicate weapon and more that replicating it isn't trivial
 	custom_cell_max_capacity = 100
 
 /obj/item/gun/energy/flock/New()

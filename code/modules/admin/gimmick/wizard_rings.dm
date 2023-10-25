@@ -1,6 +1,6 @@
 /obj/item/clothing/gloves/ring/wizard
 	name = "wizard ring"
-	desc = "Parent object for wizadry rings, you shouldn't see this..."
+	desc = "Parent object for wizardry rings, you shouldn't see this..."
 	icon = 'icons/obj/clothing/item_wizard_rings.dmi'
 	icon_state = "ring"
 	item_state = "ring"
@@ -97,7 +97,7 @@
 
 	staff_thunder
 		name = "ring of thunder"
-		desc = "Little arcs of electricty run along the outside of this ring."
+		desc = "Little arcs of electricity run along the outside of this ring."
 		icon_state = "stave_of_thunder"
 		ability_path = /datum/targetable/spell/summon_thunder_staff
 		var/obj/item/staff/thunder/created_staff
@@ -259,13 +259,13 @@
 			..()
 			if (isliving(user))
 				var/mob/living/L = user
-				L.spell_soulguard = 2
+				L.spell_soulguard = SOULGUARD_RING
 
 		unequipped(var/mob/user)
 			..()
 			if (isliving(user))
 				var/mob/living/L = user
-				L.spell_soulguard = 0
+				L.spell_soulguard = SOULGUARD_INACTIVE
 
 //random rings
 /obj/wizard_ring_generator
@@ -307,7 +307,8 @@
 	SET_ADMIN_CAT(ADMIN_CAT_FUN)
 	set popup_menu = 0
 	ADMIN_ONLY
-
+	if (alert(usr, "Are you sure you want to spawn all wizard rings at your current location?", "Spawn rings", "Yes", "No, I misclicked") == "No, I misclicked")
+		return
 	var/turf/T_LOC = get_turf(src.mob)
 
 	var/list/L = concrete_typesof(/obj/item/clothing/gloves/ring/wizard)

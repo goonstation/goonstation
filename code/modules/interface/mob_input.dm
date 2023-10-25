@@ -35,7 +35,7 @@
 					src.targeting_ability = S
 					update_cursor()
 				return 100
-			if (!S.can_target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
+			if (!S.target_ghosts && ismob(target) && (!isliving(target) || iswraith(target) || isintangible(target)))
 				src.show_text("It would have no effect on this target.", "red")
 				if(S.sticky)
 					src.targeting_ability = S
@@ -106,6 +106,29 @@
 				else if (dir & WEST)
 					set_dir(WEST)
 
+/**
+ * This proc is called when a mob double clicks on something with the left mouse button.
+ * Return TRUE if the click was handled, FALSE otherwise. Handled doubleclicks will suppress the Click() call that follows.
+ * (Note that the Click() call for the *first* click always happens.)
+ */
+/mob/proc/double_click(atom/target, location, control, list/params)
+	if(src.client?.check_key(KEY_EXAMINE))
+		if(src.help_examine(target))
+			return TRUE
+
+/mob/proc/help_examine(atom/target)
+	var/help_message = target.get_help_message(GET_DIST(src, target), src)
+	var/list/additional_help_messages = list()
+	SEND_SIGNAL(target, COMSIG_ATOM_HELP_MESSAGE, src, additional_help_messages)
+	if (length(additional_help_messages))
+		if (help_message)
+			additional_help_messages = list(help_message)	+ additional_help_messages
+		help_message = jointext(additional_help_messages, "\n")
+	help_message = replacetext(trim(help_message), "\n", "<br>")
+	if (help_message)
+		boutput(src, "<span class='helpmsg'>[help_message]</span>")
+		return TRUE
+
 /mob/proc/hotkey(name) //if this gets laggy, look into adding a small spam cooldown like with resting / eating?
 	switch (name)
 		if ("look_n")
@@ -133,6 +156,16 @@
 /mob/proc/get_ability_hotkey(mob/user, parameters)
 	if(!parameters["left"]) return
 	if(!user?.abilityHolder) return
+	if(istype(user.abilityHolder, /datum/abilityHolder/composite))
+		var/datum/abilityHolder/composite/holder = user.abilityHolder
+		for(var/datum/abilityHolder/H in holder.holders)
+			if(parameters["ctrl"] && H.ctrlPower)
+				return H.ctrlPower
+			if(parameters["alt"] && H.altPower)
+				return H.altPower
+			if(parameters["shift"] && H.shiftPower)
+				return H.shiftPower
+
 	if(parameters["ctrl"] && user.abilityHolder.ctrlPower)
 		return user.abilityHolder.ctrlPower
 	if(parameters["alt"] && user.abilityHolder.altPower)
@@ -173,7 +206,7 @@
 		return
 
 	var/fetched_keylist = C.cloud_get("custom_keybind_data")
-	if (!isnull(fetched_keylist)) //The client has a list of custom keybinds.
+	if (!isnull(fetched_keylist) && fetched_keylist != "") //The client has a list of custom keybinds.
 		var/datum/keymap/new_map = new /datum/keymap(json_decode(fetched_keylist))
 		C.keymap.overwrite_by_action(new_map)
 		C.keymap.on_update(C)

@@ -40,7 +40,7 @@
 			else playsound(src.loc, 'sound/machines/buzz-two.ogg', 50, 1)
 
 	attack(mob/M, mob/user, def_zone)
-		var/newmode = input("Select sound to play", "Make some noise", src.mode) in list("honk", "fart", "burp", "squeak", "cat", "harmonica", "vuvuzela", "bang", "buzz", "gunshot", "siren", "coo", "rimshot", "trombone")
+		var/newmode = tgui_input_list(user, "Select sound to play", "Make some noise", list("bang", "burp", "buzz", "cat", "coo", "fart", "gunshot", "harmonica", "honk", "rimshot", "siren", "squeak", "trombone", "vuvuzela"), src.mode)
 
 		if (newmode && rand(1,150) == 1)
 			boutput(user, "<span class='alert'>BZZZ SOUND SYNTHESISER ERROR</span>")

@@ -2,11 +2,13 @@
  *	Arcade -- An arcade cabinet.
  */
 
+TYPEINFO(/obj/machinery/computer/arcade)
+	mats = 10
+
 /obj/machinery/computer/arcade
 	name = "arcade machine"
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "arcade"
-	mats = 10
 	deconstruct_flags = DECON_MULTITOOL
 	circuit_type = /obj/item/circuitboard/arcade
 	var/enemy_name = "Space Villian"
@@ -140,14 +142,14 @@
 		var/prizeselect = rand(1,8)
 		switch(prizeselect)
 			if(1)
-				var/obj/item/spacecash/P = new /obj/item/spacecash
+				var/obj/item/currency/spacecash/P = new /obj/item/currency/spacecash
 				P.setup(src.loc)
 				prize = P
 				prize.name = "space ticket"
 				prize.desc = "It's almost like actual currency!"
 			if(2)
 				if (isrestrictedz(z))
-					var/obj/item/spacecash/P = new /obj/item/spacecash
+					var/obj/item/currency/spacecash/P = new /obj/item/currency/spacecash
 					P.setup(src.loc)
 					prize = P
 					prize.name = "space ticket"
@@ -155,7 +157,7 @@
 				else
 					prize = new /obj/item/device/radio/beacon(src.loc)
 					prize.name = "electronic blink toy game"
-					prize.anchored = FALSE
+					prize.anchored = UNANCHORED
 					prize.desc = "Blink.  Blink.  Blink."
 			if(3)
 				prize = new /obj/item/device/light/zippo(src.loc)

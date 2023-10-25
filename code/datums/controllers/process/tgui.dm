@@ -28,7 +28,7 @@ var/global/datum/controller/process/tgui/tgui_process
 			stack_trace("Unable to load tgui.html, retrying in 10 seconds.\n[e]")
 			SPAWN(10 SECONDS)
 				basehtml = grabResource("tgui/tgui.html")
-		tgui_process = src
+		global.tgui_process = src
 
 	copyStateFrom(datum/controller/process/target)
 		var/datum/controller/process/tgui/old_tgui = target
@@ -36,6 +36,7 @@ var/global/datum/controller/process/tgui/tgui_process
 		src.current_run = old_tgui.current_run
 		src.open_uis = old_tgui.open_uis
 		src.open_uis_by_src = old_tgui.open_uis_by_src
+		global.tgui_process = src
 
 	doWork()
 		src.current_run = open_uis.Copy()
@@ -55,4 +56,4 @@ var/global/datum/controller/process/tgui/tgui_process
 		close_all_uis()
 
 	tickDetail()
-		boutput(usr, "Open TGUIs:[open_uis.len]")
+		boutput(usr, "<span class='admin'>Open TGUIs:[open_uis.len]</span>")

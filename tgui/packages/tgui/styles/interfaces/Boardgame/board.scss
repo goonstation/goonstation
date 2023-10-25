@@ -1,0 +1,65 @@
+@import './setup.scss';
+
+// The board on where the pieces are placed
+
+.boardgame__board {
+  z-index: map-get($boardgame-layers, 'board');
+  flex-grow: 1;
+
+  &-pieces {
+    z-index: map-get($boardgame-layers, 'pieces');
+  }
+  &-overlay {
+    z-index: map-get($boardgame-layers, 'overlay');
+  }
+  &-inner {
+    transition: 1s all;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 0.25px);
+  }
+
+  // Styles
+
+  &-checkerboard {
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  // Common styles for the board
+
+  // Grid Guide renderer
+  &-ggrenderer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+  }
+
+  // Grid Piece renderer
+  &-gprenderer {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    &-piece {
+      position: absolute;
+      & > span {
+        padding: 2px 6px;
+        background-color: rgba(0, 0, 0, 0.5);
+        position: absolute;
+        text-align: center;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 14px;
+        font-weight: bolder;
+        text-shadow: 0 0 2px black;
+        z-index: 1;
+        font-family: Arial;
+      }
+    }
+  }
+}

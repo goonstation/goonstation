@@ -1,9 +1,8 @@
-
 /*
  * 90 101 87 97 107 97 39 115 83 116 117 102 102
  */
 
-//foo 45: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat
+//foo 46: bodacious grandiose bargaloo mambo prime preceed wow github cdn sub jekyll docs rsc ci2 rename profile rat tgui
 
 
 /* 514 checklist
@@ -12,13 +11,15 @@
 	particle abuse
 */
 
+// playsound\(([^,]*), "(sound/[^\[]+)"
+// playsound($1, '$2'
 // Greek Adventurezone Thingy
 
-/turf/unsimulated/greek/
+/turf/unsimulated/greek
 	name = "Greek Adventurezone Sprites"
 	icon = 'icons/turf/adventure_gannets.dmi'
 
-/turf/unsimulated/wall/greek/
+/turf/unsimulated/wall/greek
 	name = "Greek Adventurezone Sprites"
 	icon = 'icons/turf/adventure_gannets.dmi'
 
@@ -99,7 +100,7 @@
 	desc = "A sharp cliff face formed by rocks"
 	icon = 'icons/turf/adventure_gannets.dmi'
 	icon_state = "cave-wall"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 1
 
@@ -131,8 +132,9 @@
 	name = "cyclops"
 	real_name = "cyclops"
 	desc = "The Eye stares straight into your soul. Creepy."
-	density = 1
+	icon = 'icons/mob/critter/humanoid/cyclops.dmi'
 	icon_state = "greek-cyclops"
+	density = 1
 	health = 70
 	wanderer = 0
 	aggressive = 1
@@ -141,7 +143,7 @@
 	atksilicon = 1
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if ((C.name == src.oldtarget_name) && (world.time < src.last_found + 100)) continue
 			if (iscarbon(C) && !src.atkcarbon) continue

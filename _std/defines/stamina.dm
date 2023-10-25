@@ -88,3 +88,9 @@
 #define STAMINA_DEFAULT_FART_COST 1
 
 #define USE_STAMINA_DISORIENT //use the new stamina based stun disorient system thingy
+
+//disorient target defines
+#define DISORIENT_NONE 0
+#define DISORIENT_BODY 1
+#define DISORIENT_EYE 2
+#define DISORIENT_EAR 4

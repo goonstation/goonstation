@@ -14,22 +14,8 @@
 var/telesci_modifiers_set = 0
 
 proc/is_teleportation_allowed(var/turf/T)
-	for (var/atom in by_cat[TR_CAT_TELEPORT_JAMMERS])
-		if (istype(atom, /obj/machinery/telejam))
-			var/obj/machinery/telejam/TJ = atom
-			if (!TJ.active)
-				continue
-			if(IN_RANGE(TJ, T, TJ.range))
-				return FALSE
-		if (istype(atom, /obj/item/device/flockblocker))
-			var/obj/item/device/flockblocker/F = atom
-			if (!F.active)
-				continue
-			if(IN_RANGE(F, T, F.range))
-				return FALSE
-
-	for_by_tcl(N, /obj/blob/nucleus)
-		if(IN_RANGE(N, T, 3))
+	for (var/atom/A as anything in by_cat[TR_CAT_TELEPORT_JAMMERS])
+		if (IN_RANGE(A, T, GET_ATOM_PROPERTY(A, PROP_ATOM_TELEPORT_JAMMER)))
 			return FALSE
 
 	// first check the always allowed turfs from map landmarks
@@ -48,18 +34,21 @@ proc/is_teleportation_allowed(var/turf/T)
 
 	return TRUE
 
+TYPEINFO(/obj/machinery/networked/telepad)
+	mats = 16
+
 /obj/machinery/networked/telepad
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pad0"
 	name = "teleport pad"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	layer = FLOOR_EQUIP_LAYER1
-	mats = 16
 	timeout = 10
 	desc = "Stand on this to have your wildest dreams come true!"
 	device_tag = "PNET_S_TELEPAD"
 	plane = PLANE_NOSHADOW_BELOW
+	power_usage = 200
 	var/recharging = 0
 	var/realx = 0
 	var/realy = 0
@@ -250,7 +239,7 @@ proc/is_teleportation_allowed(var/turf/T)
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.send(turfcheck)
 							sleep(0.5 SECONDS)
 
@@ -274,13 +263,13 @@ proc/is_teleportation_allowed(var/turf/T)
 									src.message_host("command=nack&cause=bad[turfcheck & 1 ? "x" : null][turfcheck & 2 ? "y" : null][turfcheck & 4 ? "z" : null]")
 								else
 									src.message_host("command=nack&cause=badxyz")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.badreceive()
 							else if(!is_teleportation_allowed(turfcheck))
 								src.message_host("command=nack&cause=interference")
 							else
 								message_host("command=ack")
-								sleep(1 SECOND)
+								sleep(0.5 SECONDS)
 								src.receive(turfcheck)
 							sleep(0.5 SECONDS)
 
@@ -420,6 +409,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		return
 
 	process()
+		..()
 		if(status & (NOPOWER|BROKEN))
 			if (start_portal || end_portal)
 				qdel(start_portal)
@@ -429,8 +419,6 @@ proc/is_teleportation_allowed(var/turf/T)
 				badreceive()
 
 			return
-
-		use_power(200)
 
 		if (start_portal || end_portal)
 			use_power(50000) //Apparently this could run indefinitely on solar power. Fuck that. 25 000 -> 250 000
@@ -485,6 +473,9 @@ proc/is_teleportation_allowed(var/turf/T)
 		if (!target)
 			return 1
 
+		leaveresidual(target)
+		sleep(0.5 SECONDS)
+
 		var/list/stuff = list()
 		for(var/atom/movable/O as obj|mob in src.loc)
 			if(O.anchored) continue
@@ -494,12 +485,15 @@ proc/is_teleportation_allowed(var/turf/T)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
 				logTheThing(LOG_STATION, usr, "sent [constructTarget(which,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
-			which.set_loc(target)
+			else
+				logTheThing(LOG_STATION, usr, "sent [log_object(which)] from [log_loc(which)] to [log_loc(target)] with a telepad")
+			// teleblock checks should already be done
+			do_teleport(which,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
+
 
 		showswirl_out(src.loc)
 		leaveresidual(src.loc)
 		showswirl(target)
-		leaveresidual(target)
 		use_power(1500)
 		if(prob(2) && prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
@@ -516,6 +510,9 @@ proc/is_teleportation_allowed(var/turf/T)
 			//boutput(usr, "Unknown interference prevents teleportation from that location!")
 			return 1
 
+		leaveresidual(receiveturf)
+		sleep(0.5 SECONDS)
+
 		var/list/stuff = list()
 		for(var/atom/movable/O as obj|mob in receiveturf)
 			if(O.anchored) continue
@@ -524,11 +521,12 @@ proc/is_teleportation_allowed(var/turf/T)
 			var/atom/movable/which = pick(stuff)
 			if(ismob(which))
 				logTheThing(LOG_STATION, usr, "received [constructTarget(which,"station")] from [log_loc(which)] to [log_loc(src)] with a telepad")
-			which.set_loc(src.loc)
+			else
+				logTheThing(LOG_STATION, usr, "received [log_object(which)] from [log_loc(which)] to [log_loc(src)] with a telepad")
+			do_teleport(which,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 		showswirl(src.loc)
 		leaveresidual(src.loc)
 		showswirl_out(receiveturf)
-		leaveresidual(receiveturf)
 		use_power(1500)
 		if(prob(2) && prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
@@ -553,17 +551,17 @@ proc/is_teleportation_allowed(var/turf/T)
 			if(O.anchored) continue
 			receive.Add(O)
 		for(var/atom/movable/O in send)
-			O.set_loc(target)
+			do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 			if(ismob(O))
 				logTheThing(LOG_STATION, usr, "sent [constructTarget(O,"station")] to [log_loc(target)] from [log_loc(src)] with a telepad")
 
 		for(var/atom/movable/O in receive)
 			if(ismob(O))
 				logTheThing(LOG_STATION, usr, "received [constructTarget(O,"station")] from [log_loc(O)] to [log_loc(src)] with a telepad")
-			O.set_loc(src.loc)
+			do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 		showswirl(src.loc)
 		showswirl(target)
-		use_power(500000)
+		use_power(400000)
 		if(prob(2))
 			src.visible_message("<span class='alert'>The console emits a loud pop and an acrid smell fills the air!</span>")
 			XSUBTRACT = rand(0,100)
@@ -608,7 +606,7 @@ proc/is_teleportation_allowed(var/turf/T)
 		else //MAJOR EFFECTS
 			effect = pick("mutatearea","areascatter","majorsummon")
 		logTheThing(LOG_STATION, usr, "receives the telepad at [log_loc(src)] on invalid coords, causing the [effect] effect.")
-		INVOKE_ASYNC(src, /obj/machinery/networked/telepad.proc/processbadeffect, effect)
+		INVOKE_ASYNC(src, TYPE_PROC_REF(/obj/machinery/networked/telepad, processbadeffect), effect)
 
 	proc/processbadeffect(var/effect)
 		switch(effect)
@@ -639,7 +637,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("ignite")
@@ -673,11 +671,11 @@ proc/is_teleportation_allowed(var/turf/T)
 					M.throw_at(target, 10, 2)
 				return
 			if("rads")
-				for(var/turf/T in view(5,src.loc))
-					if(!T.reagents)
-						T.create_reagents(1000)
-					T.reagents.add_reagent("radium", 20)
-				for(var/mob/O in AIviewers(src, null)) O.show_message("<span class='alert'>The area surrounding the [src] begins to glow bright green!</span>", 1)
+				playsound(src, 'sound/weapons/ACgun2.ogg', 50, TRUE)
+				for (var/i in 1 to rand(3,5))
+					var/datum/projectile/neutron/projectile = new(15)
+					shoot_projectile_DIR(src, projectile, pick(alldirs))
+				src.visible_message("<span class='alert'>A bright green pulse emanates from the [src]!</span>")
 				return
 			if("fire")
 				fireflash(src.loc, 6) // cogwerks - lowered from 8, too laggy
@@ -695,7 +693,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("brute")
@@ -737,23 +735,23 @@ proc/is_teleportation_allowed(var/turf/T)
 					for(var/atom/movable/O as obj|mob in src.loc)
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("minorsummon")
 				var/summon = pick("pig","mouse","roach","rockworm")
 				switch(summon)
 					if("pig")
-						new /obj/critter/pig(src.loc)
+						new /mob/living/critter/small_animal/pig(src.loc)
 					if("mouse")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/mouse(src.loc)
+							new /mob/living/critter/small_animal/mouse(src.loc)
 					if("roach")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/roach(src.loc)
+							new /mob/living/critter/small_animal/cockroach(src.loc)
 					if("rockworm")
 						for(var/i = 1 to rand(3,8))
-							new/obj/critter/rockworm(src.loc)
+							new /mob/living/critter/rockworm(src.loc)
 				return
 			if("tinyfire")
 				fireflash(src.loc, 3)
@@ -761,7 +759,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					O.show_message("<span class='alert'>The area surrounding the [src] bursts into flame!</span>", 1)
 				return
 			if("mediumsummon")
-				var/summon = pick(/obj/critter/maneater,/obj/critter/killertomato,/obj/critter/wasp,/obj/critter/golem,/obj/critter/magiczombie,/obj/critter/mimic)
+				var/summon = pick(/mob/living/critter/plant/maneater, /obj/critter/killertomato, /mob/living/critter/small_animal/wasp, /mob/living/critter/golem, /mob/living/critter/skeleton, /mob/living/critter/mimic)
 				new summon(src.loc)
 				return
 			if("getrandom")
@@ -773,7 +771,7 @@ proc/is_teleportation_allowed(var/turf/T)
 					turfs += T
 				var/turf = pick(turfs)
 				for(var/atom/movable/O as obj|mob in turf)
-					O.set_loc(src.loc)
+					do_teleport(O,src.loc,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				return
 			if("areascatter")
 				var/list/turfs = new
@@ -787,16 +785,16 @@ proc/is_teleportation_allowed(var/turf/T)
 					for(var/atom/movable/O as obj|mob in oview(src,5))
 						if(O.anchored) continue
 						target = pick(turfs)
-						if(target) O.set_loc(target)
+						if(target) do_teleport(O,target,FALSE,use_teleblocks=FALSE,sparks=FALSE)
 				qdel(turfs)
 				return
 			if("majorsummon")
 				var/summon = pick(
-					/obj/critter/zombie,
-					/obj/critter/bear,
+					/mob/living/critter/zombie,
+					/mob/living/critter/bear,
 					/mob/living/carbon/human/npc/syndicate,
-					/obj/critter/martian/soldier,
-					/obj/critter/lion,
+					/mob/living/critter/martian/soldier,
+					/mob/living/critter/lion,
 					/obj/critter/yeti,
 					/obj/critter/gunbot/drone,
 					/obj/critter/ancient_thing)
@@ -804,15 +802,17 @@ proc/is_teleportation_allowed(var/turf/T)
 				return
 
 
+TYPEINFO(/obj/machinery/networked/teleconsole)
+	mats = 14
+
 /obj/machinery/networked/teleconsole
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "s_teleport"
 	name = "teleport computer"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	device_tag = "SRV_TERMINAL"
 	timeout = 10
-	mats = 14
 	var/xtarget = 0
 	var/ytarget = 0
 	var/ztarget = 0
@@ -823,7 +823,7 @@ proc/is_teleportation_allowed(var/turf/T)
 	var/allow_scan = 1
 	var/coord_update_flag = 1
 
-	var/readout = "&nbsp;"
+	var/readout = ""
 	var/datum/computer/file/record/user_data
 	var/padNum = 1
 
@@ -873,7 +873,6 @@ proc/is_teleportation_allowed(var/turf/T)
 			if("term_connect") //Terminal interface stuff.
 				if(target == src.host_id)
 					src.host_id = null
-					src.updateUsrDialog()
 					SPAWN(0.3 SECONDS)
 						src.post_status(target, "command","term_disconnect")
 					return
@@ -907,7 +906,6 @@ proc/is_teleportation_allowed(var/turf/T)
 
 					src.link.post_signal(src, newsignal)
 
-				src.updateUsrDialog(1)
 				//SPAWN(0.2 SECONDS) //Sign up with the driver (if a mainframe contacted us)
 				//	src.post_status(target,"command","term_message","data","command=register")
 				return
@@ -927,8 +925,8 @@ proc/is_teleportation_allowed(var/turf/T)
 					message = replacetext(message, "|n", "<br>")
 
 					src.readout = copytext(message,9,256)
+					tgui_process.update_uis(src)
 
-				src.updateUsrDialog(1)
 				return
 
 			if("term_disconnect")
@@ -936,57 +934,8 @@ proc/is_teleportation_allowed(var/turf/T)
 					src.host_id = null
 				src.timeout = initial(src.timeout)
 				src.timeout_alert = 0
-				src.updateUsrDialog()
 				return
 
-		return
-
-	attack_hand(var/mob/user)
-		if (..(user))
-			return
-
-		var/dat = "<head><TITLE>Teleport Computer</TITLE></head><body><br>"
-		if (!host_id)
-			dat += "<center id = \"readout\"><tt><font color=red><b>NO CONNECTION TO HOST</b></font></tt><br><a href='?src=\ref[src];reconnect=1'>Retry</a></center><br>"
-		else
-			dat += "<center id = \"readout\"><tt>[readout]</tt></center><br>"
-
-		dat += {"<script language="JavaScript">
-	function updateReadout(t)
-	{
-		document.getElementById("readout").innerHTML = "<tt>" + t + "</tt>";
-	}
-	</script>"}
-
-		dat += "<b>Target Coordinates</b><BR>"
-		dat += "X: <A href='?src=\ref[src];decreaseX=10'>(<<)</A><A href='?src=\ref[src];decreaseX=1'>(<)</A><A href='?src=\ref[src];setX=1'> [xtarget] </A><A href='?src=\ref[src];increaseX=1'>(>)</A><A href='?src=\ref[src];increaseX=10'>(>>)</A><BR><BR>"
-		dat += "Y: <A href='?src=\ref[src];decreaseY=10'>(<<)</A><A href='?src=\ref[src];decreaseY=1'>(<)</A><A href='?src=\ref[src];setY=1'> [ytarget] </A><A href='?src=\ref[src];increaseY=1'>(>)</A><A href='?src=\ref[src];increaseY=10'>(>>)</A><BR><BR>"
-		dat += "Z: <A href='?src=\ref[src];decreaseZ=1'>(<)</A><A href='?src=\ref[src];setZ=1'> [ztarget] </A><A href='?src=\ref[src];increaseZ=1'>(>)</A>"
-		dat += "<br><br><br><A href='?src=\ref[src];send=1'>Send</A>"
-		dat += "<br><A href='?src=\ref[src];receive=1'>Receive</A>"
-
-		dat += "<br><A href='?src=\ref[src];portal=1'>Toggle Portal</A>"
-
-		if(allow_scan)
-			dat += "<br><br><A href='?src=\ref[src];scan=1'>Scan</A>"
-
-		if(allow_bookmarks)
-			dat += "<br><A href='?src=\ref[src];addbookmark=1'>Add Bookmark</A>"
-
-		if(allow_bookmarks && length(bookmarks))
-			dat += "<br><br><br>Bookmarks:"
-			for (var/datum/teleporter_bookmark/b in bookmarks)
-				dat += "<br>[b.name] ([b.x]/[b.y]/[b.z]) <A href='?src=\ref[src];restorebookmark=\ref[b]'>Restore</A> <A href='?src=\ref[src];deletebookmark=\ref[b]'>Delete</A>"
-
-		dat += "<br><br><br><br><br><center><a href='?src=\ref[src];reconnect=2'>Reset Connection</a></center>"
-
-		if (src.panel_open)
-			dat += "<br>Linked Pad Number: <a href='?src=\ref[src];setpad=1'>[src.padNum]</a><br>"
-			dat += net_switch_html()
-
-		src.add_dialog(user)
-		user.Browse(dat, "window=t_computer;size=400x600")
-		onclose(user, "t_computer")
 		return
 
 	attackby(obj/item/W, mob/user)
@@ -994,223 +943,10 @@ proc/is_teleportation_allowed(var/turf/T)
 			playsound(src.loc, 'sound/items/Screwdriver.ogg', 50, 1)
 			src.panel_open = !src.panel_open
 			boutput(user, "You [src.panel_open ? "unscrew" : "secure"] the cover.")
-			src.updateUsrDialog()
 			return
 
 		else
 			return ..()
-
-
-	updateUsrDialog(var/updateReadout)
-		var/list/nearby = viewers(1, src)
-		for(var/mob/M in nearby)
-			if (M.using_dialog_of(src))
-				if (updateReadout)
-					M << output(url_encode(src.readout), "t_computer.browser:updateReadout")
-				else
-					src.Attackhand(M)
-
-		if (issilicon(usr) || isAIeye(usr))
-			if (!(usr in nearby))
-				if (usr.using_dialog_of(src))
-					if (updateReadout)
-						usr << output(url_encode(src.readout), "t_computer.browser:updateReadout")
-					else
-						src.attack_ai(usr)
-
-	Topic(href, href_list)
-		if (..(href, href_list))
-			return
-
-		src.add_dialog(usr)
-		playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
-
-		if (href_list["scan"])
-			if (!host_id)
-				boutput(usr, "<span class='alert'>Error: No host connection!</span>")
-				return
-
-			if (coord_update_flag)
-				coord_update_flag = 0
-				message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
-
-			message_host("command=teleman&args=-p [padNum] scan")
-			src.updateUsrDialog(1)
-			return
-
-		if (href_list["reconnect"])
-			if ((host_id && href_list["reconnect"] != "2") || !old_host_id || !src.link)
-				return
-
-			if (href_list["reconnect"] == "2")
-				host_id = null
-
-			var/old = old_host_id
-			old_host_id = null
-			var/datum/signal/newsignal = get_free_signal()
-			newsignal.source = src
-			newsignal.transmission_method = TRANSMISSION_WIRE
-			newsignal.data["command"] = "term_connect"
-			newsignal.data["device"] = src.device_tag
-
-			newsignal.data_file = user_data.copy_file()
-
-			newsignal.data["address_1"] = old
-			newsignal.data["sender"] = src.net_id
-
-			src.link.post_signal(src, newsignal)
-			SPAWN(1 SECOND)
-				if (!old_host_id)
-					old_host_id = old
-
-		if (href_list["restorebookmark"])
-			var/datum/teleporter_bookmark/bm = locate(href_list["restorebookmark"]) in bookmarks
-			if(!bm) return
-			xtarget = bm.x
-			ytarget = bm.y
-			ztarget = bm.z
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		if (href_list["deletebookmark"])
-			var/datum/teleporter_bookmark/bm = locate(href_list["deletebookmark"]) in bookmarks
-			if(!bm) return
-			bookmarks.Remove(bm)
-			src.updateUsrDialog()
-			return
-
-		if (href_list["addbookmark"])
-			if(bookmarks.len >= max_bookmarks)
-				boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
-				return
-			var/datum/teleporter_bookmark/bm = new
-			var/title = input(usr,"Enter name:","Name","New Bookmark") as text
-			title = copytext(adminscrub(title), 1, 128)
-			if(!length(title)) return
-			bm.name = title
-			bm.x = xtarget
-			bm.y = ytarget
-			bm.z = ztarget
-			bookmarks.Add(bm)
-			src.updateUsrDialog()
-			playsound(src.loc, "keyboard", 50, 1, -15)
-			return
-
-		if (href_list["setpad"])
-			src.padNum = (src.padNum & 3) + 1
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		if (href_list["decreaseX"])
-			var/change = text2num_safe(href_list["decreaseX"])
-			xtarget = clamp(xtarget-change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["increaseX"])
-			var/change = text2num_safe(href_list["increaseX"])
-			xtarget = clamp(xtarget+change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["setX"])
-			var/change = input(usr,"Target X:","Enter target X coordinate",xtarget) as num
-			if(!isnum_safe(change))
-				return
-			xtarget = clamp(change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["decreaseY"])
-			var/change = text2num_safe(href_list["decreaseY"])
-			ytarget = clamp(ytarget-change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["increaseY"])
-			var/change = text2num_safe(href_list["increaseY"])
-			ytarget = clamp(ytarget+change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["setY"])
-			var/change = input(usr,"Target Y:","Enter target Y coordinate",ytarget) as num
-			if(!isnum_safe(change))
-				return
-			ytarget = clamp(change, 0, 500)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["decreaseZ"])
-			var/change = text2num_safe(href_list["decreaseZ"])
-			ztarget = clamp(ztarget-change, 0, 14)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["increaseZ"])
-			var/change = text2num_safe(href_list["increaseZ"])
-			ztarget = clamp(ztarget+change, 0, 14)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["setZ"])
-			var/change = input(usr,"Target Z:","Enter target Z coordinate",ztarget) as num
-			if(!isnum_safe(change))
-				return
-			ztarget = clamp(change, 0, 14)
-			coord_update_flag = 1
-			src.updateUsrDialog()
-			return
-
-		else if (href_list["send"])
-			if (!host_id)
-				boutput(usr, "<span class='alert'>Error: No host connection!</span>")
-				return
-
-			if (coord_update_flag)
-				coord_update_flag = 0
-				message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
-
-			message_host("command=teleman&args=-p [padNum] send")
-
-			return
-
-		else if (href_list["receive"])
-			if (!host_id)
-				boutput(usr, "<span class='alert'>Error: No host connection!</span>")
-				return
-
-			if (coord_update_flag)
-				coord_update_flag = 0
-				message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
-
-			message_host("command=teleman&args=-p [padNum] receive")
-
-			return
-
-		else if (href_list["portal"])
-			if (coord_update_flag)
-				coord_update_flag = 0
-				message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
-
-			message_host("command=teleman&args=-p [padNum] portal toggle")
-
-			return
-
-		else
-			usr.Browse(null, "window=t_computer")
-			src.updateUsrDialog()
-			return
 
 	process()
 		if(status & (NOPOWER|BROKEN))
@@ -1223,7 +959,6 @@ proc/is_teleportation_allowed(var/turf/T)
 		if(src.timeout == 0)
 			src.post_status(host_id, "command","term_disconnect","data","timeout")
 			src.host_id = null
-			src.updateUsrDialog()
 			src.timeout = initial(src.timeout)
 			src.timeout_alert = 0
 		else
@@ -1233,6 +968,166 @@ proc/is_teleportation_allowed(var/turf/T)
 				src.post_status(src.host_id, "command","term_ping","data","reply")
 
 		return
+
+	ui_interact(mob/user, datum/tgui/ui)
+		ui = tgui_process.try_update_ui(user, src, ui)
+		if(!ui)
+			ui = new(user, src, "TeleConsole", src.name)
+			ui.open()
+
+	ui_data(mob/user)
+		. = list(
+			"xTarget" = xtarget,
+			"yTarget" = ytarget,
+			"zTarget" = ztarget,
+			"hostId" = host_id,
+			"readout" = readout,
+			"isPanelOpen" = panel_open,
+			"padNum" = padNum,
+			"maxBookmarks" = max_bookmarks,
+			"bookmarks" = list()
+		)
+
+		if (length(bookmarks) > 0)
+			.["bookmarks"] = list()
+			for (var/datum/teleporter_bookmark/b as anything in bookmarks)
+				.["bookmarks"] += list(list(
+					"ref" = ref(b),
+					"name" = b.name,
+					"x" = b.x,
+					"y" = b.y,
+					"z" = b.z,
+				))
+
+	ui_act(action, params)
+		. = ..()
+		if (.)
+			return .
+
+		switch(action)
+			if ("setX")
+				xtarget = clamp(text2num(params["value"]), 0, 500)
+				coord_update_flag = TRUE
+				. = TRUE
+			if ("setY")
+				ytarget = clamp(text2num(params["value"]), 0, 500)
+				coord_update_flag = TRUE
+				. = TRUE
+			if ("setZ")
+				ztarget = clamp(text2num(params["value"]), 0, 14)
+				coord_update_flag = TRUE
+				. = TRUE
+			if ("send")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = FALSE
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] send")
+				. = TRUE
+			if ("receive")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = TRUE
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] receive")
+				. = TRUE
+			if ("portal")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = TRUE
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] portal toggle")
+				. = TRUE
+			if ("scan")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (!host_id)
+					boutput(usr, "<span class='alert'>Error: No host connection!</span>")
+					return
+
+				if (coord_update_flag)
+					coord_update_flag = TRUE
+					message_host("command=teleman&args=-p [padNum] coords x=[xtarget] y=[ytarget] z=[ztarget]")
+
+				message_host("command=teleman&args=-p [padNum] scan")
+				. = TRUE
+			if ("restorebookmark")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				if(!bm) return
+				xtarget = bm.x
+				ytarget = bm.y
+				ztarget = bm.z
+				coord_update_flag = TRUE
+				. = TRUE
+
+			if ("deletebookmark")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				var/datum/teleporter_bookmark/bm = locate(params["value"]) in bookmarks
+				if(!bm) return
+				bookmarks.Remove(bm)
+				. = TRUE
+
+			if ("addbookmark")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if(length(bookmarks) >= max_bookmarks)
+					boutput(usr, "<span class='alert'>Maximum number of Bookmarks reached.</span>")
+					return
+				var/datum/teleporter_bookmark/bm = new
+				var/title = params["value"]
+				title = copytext(adminscrub(title), 1, 128)
+				if(!length(title)) return
+				bm.name = title
+				bm.x = xtarget
+				bm.y = ytarget
+				bm.z = ztarget
+				bookmarks.Add(bm)
+				playsound(src.loc, "keyboard", 50, 1, -15)
+				. = TRUE
+
+			if ("reconnect")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				if (params["value"] == "2")
+					host_id = null
+
+				var/old = old_host_id
+				old_host_id = null
+				var/datum/signal/newsignal = get_free_signal()
+				newsignal.source = src
+				newsignal.transmission_method = TRANSMISSION_WIRE
+				newsignal.data["command"] = "term_connect"
+				newsignal.data["device"] = src.device_tag
+
+				newsignal.data_file = user_data.copy_file()
+
+				newsignal.data["address_1"] = old
+				newsignal.data["sender"] = src.net_id
+
+				src.link.post_signal(src, newsignal)
+				SPAWN(1 SECOND)
+					if (!old_host_id)
+						old_host_id = old
+				. = TRUE
+
+
+			if ("setpad")
+				playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)
+				src.padNum = (src.padNum & 3) + 1
+				. = TRUE
 
 	proc/message_host(var/message, var/datum/computer/file/file)
 		if (!src.host_id || !message)
@@ -1245,3 +1140,4 @@ proc/is_teleportation_allowed(var/turf/T)
 			src.post_file(src.host_id,"data",message, file)
 		else
 			src.post_status(src.host_id,"command","term_message","data",message)
+

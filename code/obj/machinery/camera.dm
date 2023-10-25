@@ -11,13 +11,17 @@
 	var/c_tag = null
 	var/c_tag_order = 999
 	var/camera_status = TRUE
-	anchored = 1
+	anchored = ANCHORED
 	var/invuln = null
 	var/last_paper = 0
 	///Cameras only the AI can see through
 	var/ai_only = FALSE
 	///Cant be snipped by wirecutters
 	var/reinforced = FALSE
+	/// automatically offsets and snaps to perspective walls. mainly for regular security cams
+	var/sticky = FALSE
+	/// do auto position cameras use the alternate diagonal sprites?
+	var/alternate_sprites = FALSE
 
 	//This camera is a node pointing to the other bunch of cameras nearby for AI movement purposes
 	var/obj/machinery/camera/c_north = null
@@ -28,18 +32,124 @@
 	//Here's a list of cameras pointing to this camera for reprocessing purposes
 	var/list/obj/machinery/camera/referrers = list()
 
+	/// Robust light
+	var/datum/light/point/light
+
 	ranch
 		name = "autoname"
 		network = "ranch"
 		color = "#AAFF99"
 		c_tag = "autotag"
 
+/obj/machinery/camera/auto
+#ifdef IN_MAP_EDITOR
+	icon_state = "cameras_default"
+#endif
+	name = "autoname"
+	c_tag = "autotag"
+	sticky = TRUE
+
+	north
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTH
+		pixel_y = 20
+
+	south
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTH
+
+	east
+		icon_state = "camera"
+		sticky = FALSE
+		dir = WEST
+		pixel_x = 10
+
+	west
+		icon_state = "camera"
+		sticky = FALSE
+		dir = EAST
+		pixel_x = -10
+
+/obj/machinery/camera/auto/alt
+#ifdef IN_MAP_EDITOR
+	icon_state = "cameras_alt"
+#endif
+	alternate_sprites = TRUE
+
+	north
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTHEAST
+		pixel_y = 20
+
+	south
+		icon_state = "camera"
+		sticky = FALSE
+		dir = SOUTHWEST
+
+	east
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTHWEST
+		pixel_x = 10
+
+	west
+		icon_state = "camera"
+		sticky = FALSE
+		dir = NORTHEAST
+		pixel_x = -10
+
+
+/obj/machinery/camera/proc/autoposition(var/alt)
+	if (!src.sticky)
+		return
+	SPAWN(1 DECI SECOND) // wait for the wingrille spawners to complete loading
+		var/turf/T = null
+		var/list/directions = null
+		var/pixel_offset = 10 // this will get overridden if jen wall
+		if (src.dir != SOUTH) // i.e. if the dir has been varedited to east/west/north
+			directions = list(turn(src.dir, 180)) // the east sprite sits on a west wall so some inversion is needed
+		else
+			directions = cardinal // check each direction
+
+		for (var/D in directions)
+			T = get_step(src, D)
+			if (istype(T,/turf/simulated/wall) || istype(T,/turf/unsimulated/wall) || (locate(/obj/mapping_helper/wingrille_spawn) in T) || (locate(/obj/window) in T))
+				if (istype(T, /turf/simulated/wall/auto/jen) || istype(T, /turf/simulated/wall/auto/reinforced/jen))
+					pixel_offset = 12 // jen walls are slightly taller so the offset needs to increase
+				if (!alt) // this uses the alternate sprites which happen to coincide with diagonal dirs
+					src.set_dir(turn(D, 180))
+				else
+					switch (D) // this is horrid but it works ish
+						if (NORTH)
+							src.set_dir(SOUTHEAST)
+						if (SOUTH)
+							src.set_dir(SOUTHWEST)
+						if (EAST)
+							src.set_dir(NORTHWEST)
+						if (WEST)
+							src.set_dir(NORTHEAST)
+				switch (D) // north facing ones don't need to be offset ofc
+					if (EAST)
+						src.pixel_x = pixel_offset
+					if (WEST)
+						src.pixel_x = -pixel_offset
+					if (NORTH)
+						src.pixel_y = pixel_offset * 2
+				T = null
+				return
+		//CRASH("Auto camera has no wall to connect to!")
+
+
+
 /obj/machinery/camera/television
 	name = "television camera"
 	desc = "A bulky stationary camera for wireless broadcasting of live feeds."
 	network = "Zeta" // why not.
 	icon_state = "television"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	reinforced = TRUE
 	var/securedstate = 2
@@ -59,9 +169,9 @@
 			src.securedstate = (securedstate == 1) ? 0 : 1
 
 			if (securedstate == 0)
-				src.anchored = 0
+				src.anchored = UNANCHORED
 			else
-				src.anchored = 1
+				src.anchored = ANCHORED
 
 /datum/action/bar/icon/cameraSecure //This is used when you are securing a non-mobile television camera
 	duration = 150
@@ -98,7 +208,7 @@
 /obj/machinery/camera/television/mobile
 	name = "mobile television camera"
 	desc = "A bulky mobile camera for wireless broadcasting of live feeds."
-	anchored = 0
+	anchored = UNANCHORED
 	icon_state = "mobilevision"
 	securedstate = null //No bugginess thank you
 
@@ -106,10 +216,23 @@
 	..()
 	var/area/area = get_area(src)
 	//if only these had a common parent...
-	if (istype(area, /area/station/turret_protected/ai) || istype(area, /area/station/turret_protected/ai_upload) || istype(area, /area/station/turret_protected/AIsat))
+	var/list/aiareas = list(/area/station/turret_protected/ai,
+							/area/station/turret_protected/ai_upload,
+							/area/station/turret_protected/AIsat,
+							/area/station/turret_protected/AIbasecore1)
+	if (locate(area) in aiareas)
 		src.ai_only = TRUE
 
+	if (src.sticky)
+		autoposition(src.alternate_sprites)
+
 	AddComponent(/datum/component/camera_coverage_emitter)
+
+	src.light = new /datum/light/point
+	src.light.set_brightness(0.3)
+	src.light.set_color(209/255, 27/255, 6/255)
+	src.light.attach(src)
+	src.light.enable()
 
 	START_TRACKING
 	SPAWN(1 SECOND)
@@ -242,18 +365,15 @@
 				else
 					boutput(OAI, "Your connection to the camera has been lost.")
 		*/
-		var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
-		if (S)
-			if (S.current == src)
-				S.remove_dialog(O)
-				S.current = null
-				O.set_eye(null)
-				boutput(O, "The screen bursts into static.")
+		if(O.eye == src)
+			O.set_eye(null)
+			boutput(O, "The screen bursts into static.")
 
 /obj/machinery/camera/proc/break_camera(mob/user)
 	src.set_camera_status(FALSE)
 	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera1"
+	src.light.disable()
 	if (user)
 		user.visible_message("<span class='alert'>[user] has deactivated [src]!</span>", "<span class='alert'>You have deactivated [src].</span>")
 		logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a security camera ([log_loc(src.loc)])")
@@ -263,7 +383,7 @@
 	src.set_camera_status(TRUE)
 	playsound(src.loc, 'sound/items/Wirecutter.ogg', 100, 1)
 	src.icon_state = "camera"
-	// updateCoverage()
+	src.light.enable()
 	if (user)
 		user.visible_message("<span class='alert'>[user] has reactivated [src]!</span>", "<span class='alert'>You have reactivated [src].</span>")
 		add_fingerprint(user)
@@ -274,13 +394,7 @@
 		return
 
 	if (issnippingtool(W) && !src.reinforced)
-		if (src.camera_status)
-			src.break_camera(user)
-		else
-			src.repair_camera(user)
-		// now disconnect anyone using the camera
-		src.disconnect_viewers()
-		return
+		SETUP_GENERIC_ACTIONBAR(src, src, 0.5 SECOND, /obj/machinery/camera/proc/snipcamera, null, W.icon, W.icon_state, null, INTERRUPT_ACT | INTERRUPT_STUNNED | INTERRUPT_ACTION | INTERRUPT_MOVE)
 
 	if (!src.camera_status)
 		return
@@ -294,14 +408,14 @@
 		for(var/mob/O in mobs)
 			if (isAI(O))
 				boutput(O, "[user] holds a paper up to one of your cameras ...")
-				O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+				X.ui_interact(O)
 				logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 			else
 				var/obj/machinery/computer/security/S = O.using_dialog_of_type(/obj/machinery/computer/security)
 				if (S)
 					if (S.current == src)
 						boutput(O, "[user] holds a paper up to one of the cameras ...")
-						O.Browse(text("<HTML><HEAD><TITLE>[]</TITLE></HEAD><BODY><TT>[]</TT></BODY></HTML>", X.name, X.info), text("window=[]", X.name))
+						X.ui_interact(O)
 						logTheThing(LOG_STATION, user, "holds up a paper to a camera at [log_loc(src)], forcing [constructTarget(O,"station")] to read it. <b>Title:</b> [X.name]. <b>Text:</b> [adminscrub(X.info)]")
 
 //Return a working camera that can see a given mob
@@ -340,7 +454,7 @@
 /obj/machinery/camera/motion/proc/lostTarget(var/mob/target)
 	if (target in motionTargets)
 		motionTargets -= target
-	if (motionTargets.len == 0)
+	if (length(motionTargets) == 0)
 		cancelAlarm()
 
 /obj/machinery/camera/motion/proc/cancelAlarm()
@@ -377,7 +491,14 @@
 			for (var/mob/living/silicon/aiPlayer in mobs) // manually cancel, to not disturb internal state
 				aiPlayer.cancelAlarm("Motion", src.loc.loc)
 
-
+/obj/machinery/camera/proc/snipcamera(user)
+	if (src.camera_status)
+		src.break_camera(user)
+	else
+		src.repair_camera(user)
+	// now disconnect anyone using the camera
+	src.disconnect_viewers()
+	return
 
 
 /*------------------------------------

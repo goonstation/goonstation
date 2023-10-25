@@ -3,12 +3,15 @@
 	max_stages = 4
 	spread = "Non-Contagious"
 	cure = "Chicken Soup"
-	associated_reagent = "feather fluid"
+	associated_reagent = "feather_fluid"
 	reagentcure = list("chickensoup")
 	affected_species = list("Human")
 //
 /datum/ailment/disease/avian_flu/stage_act(var/mob/living/affected_mob, var/datum/ailment_data/D, mult)
 	if (..())
+		return
+	if(!ishuman(affected_mob))
+		affected_mob.cure_disease(D)
 		return
 	switch(D.stage)
 		if(2)

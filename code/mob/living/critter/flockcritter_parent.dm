@@ -1,3 +1,5 @@
+TYPEINFO(/mob/living/critter/flock)
+	mat_appearances_to_ignore = list("gnesis")
 /mob/living/critter/flock
 	var/resources = 0
 	name = "concept of a bird machine"
@@ -13,7 +15,6 @@
 	speechverb_stammer = "buzzes"
 	custom_gib_handler = /proc/flockdronegibs
 	custom_vomit_type = /obj/decal/cleanable/flockdrone_debris/fluid
-	mat_appearances_to_ignore = list("gnesis")
 	mat_changename = FALSE
 	mat_changedesc = FALSE
 	see_invisible = INVIS_FLOCK
@@ -55,22 +56,17 @@
 	burn.value = src.health_burn
 	burn.maximum_value = src.health_burn
 	burn.last_value = src.health_burn
-	burn.damage_multiplier = 0.2
+	burn.damage_multiplier = 0.4
 
 /mob/living/critter/flock/New(var/atom/L, var/datum/flock/F=null)
 	..()
 	remove_lifeprocess(/datum/lifeprocess/radiation)
-	qdel(abilityHolder)
-	setMaterial(getMaterial("gnesis"), copy = FALSE)
-	src.material.setProperty("reflective", 5)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_RADPROT_INT, src, 100)
 	APPLY_ATOM_PROPERTY(src, PROP_ATOM_FLOATING, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_AI_UNTRACKABLE, src)
 	APPLY_ATOM_PROPERTY(src, PROP_MOB_NIGHTVISION, src)
 
-	// do not automatically set up a flock if one is not provided
-	// flockless drones act differently
-	src.flock = F
+	src.flock = F || get_default_flock()
 	// wait for like one tick for the unit to set up properly before registering
 	SPAWN(1 DECI SECOND)
 		if(!isnull(src.flock))
@@ -185,12 +181,12 @@
 	return FALSE
 
 /mob/living/critter/flock/Life(datum/controller/process/mobs/parent)
-	if (..(parent))
+	if (..(parent) || isdead(src))
 		return TRUE
 
 	// automatic extinguisher! after some time, anyway
 	if(getStatusDuration("burning") > 0 && !src.extinguishing)
-		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, 1, -3)
+		playsound(src, 'sound/weapons/rev_flash_startup.ogg', 40, TRUE, -3)
 		boutput(src, "<span class='flocksay'><b>\[SYSTEM: Fire detected in critical systems. Integrated extinguishing systems are engaging.\]</b></span>")
 		src.extinguishing = TRUE
 		SPAWN(5 SECONDS)
@@ -200,7 +196,7 @@
 				F.set_loc(src.loc)
 				SPAWN(10 SECONDS)
 					qdel(F)
-			playsound(src, 'sound/effects/spray.ogg', 50, 1, -3)
+			playsound(src, 'sound/effects/spray.ogg', 50, TRUE, -3)
 			update_burning(-100)
 			sleep(2 SECONDS)
 			src.extinguishing = FALSE
@@ -242,9 +238,9 @@
 	qdel(src.flock_name_tag)
 	src.flock_name_tag = null
 	if (src.flock)
-		src.flock.deaths++
+		src.flock.stats.deaths++
 		src.flock.removeDrone(src)
-	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, 1)
+	playsound(src, 'sound/impact_sounds/Glass_Shatter_3.ogg', 50, TRUE)
 
 /mob/living/critter/flock/disposing()
 	if (src.flock)
@@ -294,7 +290,7 @@
 			return
 
 		boutput(F, "<span class='notice'>You begin spraying nanite strands onto the structure. You need to stay still for this.</span>")
-		playsound(target, 'sound/misc/flockmind/flockdrone_convert.ogg', 30, 1, extrarange = -10)
+		playsound(target, 'sound/misc/flockmind/flockdrone_convert.ogg', 30, TRUE, extrarange = -10)
 
 		var/flick_anim = "spawn-floor"
 		if(istype(target, /turf/space))
@@ -324,6 +320,7 @@
 		..()
 		if(src.decal)
 			qdel(src.decal)
+			src.decal = null
 		var/mob/living/critter/flock/F = owner
 		F?.flock?.unreserveTurf(F.real_name)
 
@@ -331,6 +328,7 @@
 		..()
 		if(src.decal)
 			qdel(src.decal)
+			src.decal = null
 		var/mob/living/critter/flock/F = owner
 		if (!F || isdead(F) || !target || !in_interact_range(F, target) || isfeathertile(target))
 			return
@@ -381,9 +379,9 @@
 
 		boutput(F, "<span class='notice'>You begin weaving nanite strands into a solid structure. You need to stay still for this.</span>")
 		if(duration <= 30)
-			playsound(target, 'sound/misc/flockmind/flockdrone_quickbuild.ogg', 30, 1, extrarange = -10)
+			playsound(target, 'sound/misc/flockmind/flockdrone_quickbuild.ogg', 30, TRUE, extrarange = -10)
 		else
-			playsound(target, 'sound/misc/flockmind/flockdrone_build.ogg', 30, 1, extrarange = -10)
+			playsound(target, 'sound/misc/flockmind/flockdrone_build.ogg', 30, TRUE, extrarange = -10)
 
 		var/flick_anim = "spawn-barricade"
 		src.decal = new /obj/decal/flock_build_barricade
@@ -407,7 +405,7 @@
 		F.pay_resources(FLOCK_BARRICADE_COST)
 		var/obj/O = new structurepath(target)
 		animate_flock_convert_complete(O)
-		playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 30, 1, extrarange = -10)
+		playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 30, TRUE, extrarange = -10)
 		O.AddComponent(/datum/component/flock_interest, F?.flock)
 /////////////////////////////////////////////////////////////////////////////////
 // EGG ACTION
@@ -427,7 +425,7 @@
 	onUpdate()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F) || !F.flock || !F.can_afford(FLOCK_LAY_EGG_COST))
+		if (!F || isdead(F) || !F.flock || !F.can_afford(F.flock.current_egg_cost))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if(prob(40))
@@ -437,7 +435,7 @@
 	onStart()
 		..()
 		var/mob/living/critter/flock/drone/F = owner
-		if (!F || isdead(F) || !F.flock || !F.can_afford(FLOCK_LAY_EGG_COST))
+		if (!F || isdead(F) || !F.flock || !F.can_afford(F.flock.current_egg_cost))
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		boutput(F, "<span class='notice'>Your internal fabricators spring into action. If you move the process will be ruined!</span>")
@@ -450,8 +448,8 @@
 
 		F.visible_message("<span class='alert'>[owner] deploys some sort of device!</span>", "<span class='notice'>You deploy a second-stage assembler.</span>")
 		new /obj/flock_structure/egg(get_turf(F), F.flock)
-		playsound(F, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, 1, extrarange = -10)
-		F.pay_resources(FLOCK_LAY_EGG_COST)
+		playsound(F, 'sound/impact_sounds/Metal_Clang_1.ogg', 30, TRUE, extrarange = -10)
+		F.pay_resources(F.flock.current_egg_cost)
 
 /////////////////////////////////////////////////////////////////////////////////
 // REPAIR ACTION
@@ -500,7 +498,7 @@
 			F.visible_message("<span class='notice'>[F] begins spraying glowing fibers onto [target].</span>",
 				"<span class='notice'>You begin repairing [target]. You will need to stay still for this to work.</span>",
 				"You hear hissing and spraying.")
-		playsound(target, 'sound/misc/flockmind/flockdrone_quickbuild.ogg', 30, 1, extrarange = -10)
+		playsound(target, 'sound/misc/flockmind/flockdrone_quickbuild.ogg', 30, TRUE, extrarange = -10)
 
 	onEnd()
 		..()
@@ -604,7 +602,7 @@
 					var/mob/living/M = target
 					M.was_harmed(F, null, "flock", INTENT_DISARM)
 
-		playsound(target, 'sound/misc/flockmind/flockdrone_build.ogg', 30, 1, extrarange = -10)
+		playsound(target, 'sound/misc/flockmind/flockdrone_build.ogg', 30, TRUE, extrarange = -10)
 
 	onInterrupt()
 		..()
@@ -620,8 +618,9 @@
 			return
 
 		var/obj/flock_structure/cage/cage = new /obj/flock_structure/cage(target.loc, target, F.flock)
+		F.flock?.flockmind?.tutorial?.PerformSilentAction(FLOCK_ACTION_CAGE)
 		cage.visible_message("<span class='alert'>[cage] forms around [target], entombing them completely!</span>")
-		playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 70, 1)
+		playsound(target, 'sound/misc/flockmind/flockdrone_build_complete.ogg', 70, TRUE)
 		logTheThing(LOG_COMBAT, owner, "entombs [constructTarget(target)] in a flock cage at [log_loc(owner)]")
 
 ///
@@ -677,7 +676,7 @@
 			door.deconstruct()
 		else if(istype(target, /obj/table/flock))
 			var/obj/table/flock/f = target
-			playsound(f, 'sound/items/Deconstruct.ogg', 30, 1, extrarange = -10)
+			playsound(f, 'sound/items/Deconstruct.ogg', 30, TRUE, extrarange = -10)
 			f.deconstruct()
 		else if(istype(target, /obj/flock_structure))
 			var/obj/flock_structure/f = target
@@ -733,7 +732,7 @@
 
 	onStart()
 		..()
-		playsound(target, 'sound/misc/flockmind/flockdrone_quickbuild.ogg', 50, 1)
+		playsound(target, 'sound/misc/flockmind/flockdrone_quickbuild.ogg', 50, TRUE)
 
 	onEnd()
 		..()

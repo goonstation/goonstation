@@ -84,7 +84,7 @@
 
 					var/obj/item/clothing/mask/clown_hat/clownmask = new /obj/item/clothing/mask/clown_hat(affected_mob)
 					//clownmask.cursed = 1
-					affected_mob:equip_if_possible( clownmask, affected_mob:slot_wear_mask) //Hope you like your new mask sucka!!!!!
+					affected_mob:equip_if_possible( clownmask, SLOT_WEAR_MASK) //Hope you like your new mask sucka!!!!!
 		if(4)
 #ifdef HALLOWEEN
 			if(probmult(1))
@@ -111,7 +111,7 @@
 
 					var/obj/item/clothing/mask/clown_hat/clownmask = new /obj/item/clothing/mask/clown_hat(affected_mob)
 					//clownmask.cursed = 1
-					affected_mob:equip_if_possible( clownmask, affected_mob:slot_wear_mask)
+					affected_mob:equip_if_possible( clownmask, SLOT_WEAR_MASK)
 
 			if(probmult(10))
 				if(!affected_mob:w_uniform || ((affected_mob:w_uniform != null) && !istype(affected_mob:w_uniform, /obj/item/clothing/under/misc/clown)))
@@ -126,7 +126,7 @@
 
 					var/obj/item/clothing/under/misc/clown/clownsuit = new /obj/item/clothing/under/misc/clown(affected_mob)
 					//clownsuit.cursed = 1
-					affected_mob:equip_if_possible( clownsuit, affected_mob:slot_w_uniform)
+					affected_mob:equip_if_possible( clownsuit, SLOT_W_UNIFORM)
 
 			if(probmult(10))
 				if(!affected_mob:shoes || ((affected_mob:shoes != null) && !istype(affected_mob:shoes, /obj/item/clothing/shoes/clown_shoes)))
@@ -140,7 +140,7 @@
 
 					var/obj/item/clothing/shoes/clown_shoes/clownshoes = new /obj/item/clothing/shoes/clown_shoes(affected_mob)
 					//clownshoes.cursed = 1
-					affected_mob:equip_if_possible( clownshoes, affected_mob:slot_shoes)
+					affected_mob:equip_if_possible( clownshoes, SLOT_SHOES)
 
 			if(probmult(8))
 				playsound(affected_mob.loc, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1)

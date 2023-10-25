@@ -4,12 +4,18 @@
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "default"
 	flags = FPRINT | TABLEPASS| CONDUCT
-	var/power_used = 0 //How much of the engine's capacity the part takes up
-	var/obj/machinery/vehicle/ship = null //The owner of the part
-	var/active = 0 //If the part is working or not
-	var/ready = 1 //Some parts need setup before full functionality
-	var/component_class = 0 //determines if a part can be installed.
-	var/system = "part" //what system it is, to avoid a bunch of istype checks
+	/// How much of the engine's capacity the part takes up
+	var/power_used = 0
+	/// The owner of the part
+	var/obj/machinery/vehicle/ship = null
+	/// If the part is working or not
+	var/active = 0
+	/// Some parts need setup before full functionality
+	var/ready = 1
+	/// Determines if a part can be installed.
+	var/component_class = 0
+	/// What system it is, to avoid a bunch of istype checks
+	var/system = "part"
 
 // Code to clean up a shipcomponent that is no longer in use
 /obj/item/shipcomponent/disposing()
@@ -28,14 +34,15 @@
 	else
 		activate()
 
-//What the component does when activated
+///What the component does when activated
+///Returns 1 if successful
 /obj/item/shipcomponent/proc/activate()
 	if(src.active == 1 || !ship)//NYI find out why ship is null
-		return
+		return FALSE
 	if(ship.powercapacity < (ship.powercurrent + power_used))
 		for(var/mob/M in ship)
 			boutput(M, "[ship.ship_message("Not enough power to activate [src]!")]")
-			return
+			return FALSE
 	else
 		ship.powercurrent += power_used
 
@@ -45,7 +52,7 @@
 		mob_activate(M)
 	if (src.ship.myhud)
 		src.ship.myhud.update_states()
-	return
+	return TRUE
 
 ///Component does this constantly
 /obj/item/shipcomponent/proc/run_component()

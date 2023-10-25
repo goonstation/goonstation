@@ -15,30 +15,30 @@
 			src.gender = "male"
 			src.real_name = "Batman"
 
-			src.equip_new_if_possible(/obj/item/storage/backpack/, slot_back)
-			src.equip_new_if_possible(/obj/item/clothing/shoes/swat, slot_shoes)
-			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer, slot_w_uniform)
-			src.equip_new_if_possible(/obj/item/clothing/suit/armor/batman, slot_wear_suit)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses/sechud, slot_glasses)
-			src.equip_new_if_possible(/obj/item/clothing/gloves/yellow, slot_gloves)
-			src.equip_new_if_possible(/obj/item/clothing/head/helmet/batman, slot_head)
-			src.equip_new_if_possible(/obj/item/clothing/mask/batman, slot_wear_mask)
-			src.equip_new_if_possible(/obj/item/storage/belt/security, slot_belt)
-			src.equip_new_if_possible(/obj/item/device/radio/headset/command, slot_ears)
-			src.equip_new_if_possible(/obj/item/card/id/syndicate, slot_wear_id)
-			src.equip_new_if_possible(/obj/item/handcuffs/tape_roll, slot_l_store)
-			src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, slot_r_store)
+			src.equip_new_if_possible(/obj/item/storage/backpack/, SLOT_BACK)
+			src.equip_new_if_possible(/obj/item/clothing/shoes/swat, SLOT_SHOES)
+			src.equip_new_if_possible(/obj/item/clothing/under/misc/lawyer, SLOT_W_UNIFORM)
+			src.equip_new_if_possible(/obj/item/clothing/suit/armor/batman, SLOT_WEAR_SUIT)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/sunglasses/sechud, SLOT_GLASSES)
+			src.equip_new_if_possible(/obj/item/clothing/gloves/yellow, SLOT_GLOVES)
+			src.equip_new_if_possible(/obj/item/clothing/head/helmet/batman, SLOT_HEAD)
+			src.equip_new_if_possible(/obj/item/clothing/mask/batman, SLOT_WEAR_MASK)
+			src.equip_new_if_possible(/obj/item/storage/belt/security, SLOT_BELT)
+			src.equip_new_if_possible(/obj/item/device/radio/headset/command, SLOT_EARS)
+			src.equip_new_if_possible(/obj/item/card/id/syndicate, SLOT_WEAR_ID)
+			src.equip_new_if_possible(/obj/item/handcuffs/tape_roll, SLOT_L_STORE)
+			src.equip_new_if_possible(/obj/item/tank/emergency_oxygen, SLOT_R_STORE)
 
-			src.equip_new_if_possible(/obj/item/storage/box/tactical_kit, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/storage/medical_pouch, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/storage/belt/syndicate_medic_belt, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/breaching_charge/thermite, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/breaching_charge/thermite, slot_in_backpack)
-			src.equip_new_if_possible(/obj/item/storage/box/flashbang_kit, slot_in_backpack)
+			src.equip_new_if_possible(/obj/item/storage/box/tactical_kit, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/storage/medical_pouch, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/storage/belt/syndicate_medic_belt, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/breaching_charge/thermite, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/breaching_charge/thermite, SLOT_IN_BACKPACK)
+			src.equip_new_if_possible(/obj/item/storage/box/flashbang_kit, SLOT_IN_BACKPACK)
 
-			src.equip_new_if_possible(/obj/item/tool/omnitool, slot_in_belt)
-			src.equip_new_if_possible(/obj/item/clothing/glasses/thermal, slot_in_belt)
-			src.equip_new_if_possible(/obj/item/gun/energy/pickpocket, slot_in_belt)
+			src.equip_new_if_possible(/obj/item/tool/omnitool, SLOT_IN_BELT)
+			src.equip_new_if_possible(/obj/item/clothing/glasses/thermal, SLOT_IN_BELT)
+			src.equip_new_if_possible(/obj/item/gun/energy/pickpocket, SLOT_IN_BELT)
 
 			src.verbs += /mob/proc/batsmoke
 			src.verbs += /mob/proc/batarang
@@ -87,7 +87,7 @@
 	set category = "Batman"
 	set name = "Batsmoke \[Support]"
 
-	playsound(usr, 'sound/weapons/launcher.ogg', 70, 0, 0)
+	playsound(usr, 'sound/weapons/launcher.ogg', 70, FALSE, 0)
 	usr.visible_message("<span class='alert'>[usr] drops a smoke bomb!</span>", "<span class='alert'>You drop a smoke bomb!</span>")
 
 	var/datum/effects/system/bad_smoke_spread/smoke = new /datum/effects/system/bad_smoke_spread()
@@ -103,13 +103,13 @@
 	A.icon_state = "batarang"
 	A.icon = 'icons/effects/effects.dmi'
 	A.name = "a batarang"
-	A.anchored = 0
+	A.anchored = UNANCHORED
 	A.set_density(0)
 	var/i
 	for(i=0, i<100, i++)
 		step_to(A,T,0)
 		if (GET_DIST(A,T) < 1)
-			playsound(T, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 70, 0, 0)
+			playsound(T, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 70, FALSE, 0)
 			random_brute_damage(T, 7)
 			take_bleeding_damage(T, usr, 5, DAMAGE_STAB, 0)
 			bleed(T, 3, 1)
@@ -152,7 +152,7 @@
 
 /obj/decal/batman_pow
 	name = "POW!"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	mouse_opacity = 0
@@ -370,7 +370,7 @@ obj/item/batarang
 			H.changeStatus("weakened", 1 SECONDS)
 			H.force_laydown_standup()
 			take_bleeding_damage(H, null, 10)
-			playsound(src, hitsound, 60, 1)
+			playsound(src, hitsound, 60, TRUE)
 
 		else
 			return

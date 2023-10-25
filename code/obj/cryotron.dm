@@ -5,11 +5,12 @@
 /obj/cryotron
 	name = "industrial cryogenic sleep unit"
 	desc = "The terminus of a large underfloor cryogenic storage complex."
-	anchored = 1
+	anchored = ANCHORED_ALWAYS
 	density = 1
 	icon = 'icons/obj/large/64x96.dmi'
 	icon_state = "cryotron_up"
 	event_handler_flags = IMMUNE_SINGULARITY
+	pass_unstable = FALSE
 	bound_width = 96
 	bound_x = -32
 	bound_height = 64
@@ -47,7 +48,13 @@
 			if (isliving(M))
 				var/mob/living/L = M
 				L.hibernating = 0
-				L.removeOverlayComposition(/datum/overlayComposition/blinded)
+				if (isnull(L.bioHolder) || !L.bioHolder.HasEffect("blind"))
+					L.removeOverlayComposition(/datum/overlayComposition/blinded)
+				else
+					if(ishuman(L))
+						var/mob/living/carbon/human/H = L
+						if (H.glasses?.allow_blind_sight)
+							L.removeOverlayComposition(/datum/overlayComposition/blinded)
 		for (var/obj/O in src)
 			O.set_loc(T)
 		..()
@@ -69,6 +76,11 @@
 		boutput(person, "<b>Cryo-recovery process initiated.  Please wait . . .</b>")
 		if (!person.bioHolder.HasEffect("blind"))
 			person.removeOverlayComposition(/datum/overlayComposition/blinded)
+		else
+			if(ishuman(person))
+				var/mob/living/carbon/human/H = person
+				if (H.glasses?.allow_blind_sight)
+					person.removeOverlayComposition(/datum/overlayComposition/blinded)
 		return 1
 
 	proc/process()
@@ -176,11 +188,31 @@
 
 	proc/enter_prompt(var/mob/living/user as mob)
 		if (mob_can_enter_storage(user)) // check before the prompt for dead/incapped/restrained/etc users
-			if (tgui_alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed.", "Confirmation", list("Yes", "No")) == "Yes")
-				if (tgui_alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", list("Yes", "No")) == "Yes")
-					if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
-						add_person_to_storage(user)
-					return 1
+			var/what_does_the_player_want = tgui_alert(user, "Would you like to enter cryogenic storage? You will be unable to leave it again until 5 minutes have passed. You can also \"Observe\", where you free up your role slot in the round and become an observer.", "Confirmation", list("Yes", "No", "Observe"))
+			switch (what_does_the_player_want)
+				if ("Yes")
+					if (tgui_alert(user, "Are you absolutely sure you want to enter cryogenic storage?", "Confirmation", list("Yes", "No")) == "Yes")
+						if (mob_can_enter_storage(user)) // check again in case they left the prompt up and moved away/died/whatever
+							add_person_to_storage(user)
+							user.show_text("<b style=\"font-size: 200%\">Remember, if you want to abandon the round to observe and free up space for someone else, simply use the \"ghost\" command in the Commands tab. (top-right corner)</b>", "blue")
+						return 1
+
+				if ("Observe")
+					var/confirmation_message = "Are you absolutely sure you want to abandon the round? "
+#ifdef RP_MODE
+					confirmation_message += "You can respawn back to the round later."
+#else
+					confirmation_message += "You will be an observer until the next round."
+#endif
+					if (tgui_alert(user, confirmation_message, "Confirmation", list("Yes", "No")) == "Yes")
+						if (mob_can_enter_storage(user))
+							add_person_to_storage(user)
+							respawn_controller.subscribeNewRespawnee(user.ckey)
+							user.mind?.get_player()?.dnr = TRUE
+							user.ghostize()
+							qdel(user)
+							return 1
+
 		return 0
 
 	proc/mob_can_enter_storage(var/mob/living/L as mob, var/mob/user as mob)
@@ -215,7 +247,7 @@
 		// Person entering is too far away
 		if (BOUNDS_DIST(src, L) > 0)
 			boutput(L, "<b>You need to be closer to [src] to enter cryogenic storage!</b>")
-			boutput(user, "<b>[L] needs to be closer to [src] for you to put them in cryogenic storage!</b>")
+			boutput(user, "<b>[L] needs to be closer to [src] for you to put [him_or_her(L)] in cryogenic storage!</b>")
 			return FALSE
 		// Person putting other person in is too far away
 		if (user && BOUNDS_DIST(src, user) > 0)
@@ -269,13 +301,16 @@
 		return 0
 
 	proc/ensure_storage()
-		if (!stored_mobs.len)
-			return
 		for (var/mob/living/L in stored_mobs)
-			if (L.loc != src)
-				L.hibernating = 0
-				L.removeOverlayComposition(/datum/overlayComposition/blinded)
-				stored_mobs[L] = null
+			if (L.loc != src || QDELETED(L))
+				if(!QDELETED(L))
+					L.hibernating = 0
+					if (!L.bioHolder.HasEffect("blind"))
+						L.removeOverlayComposition(/datum/overlayComposition/blinded)
+					if(ishuman(L))
+						var/mob/living/carbon/human/H = L
+						if (H.glasses?.allow_blind_sight)
+							L.removeOverlayComposition(/datum/overlayComposition/blinded)
 				stored_mobs -= L
 				if(!isnull(L.loc)) // loc only goes null when you ghost, probably
 					stored_crew_names -= L.real_name // you shouldn't be removed from the list when you ghost
@@ -311,7 +346,7 @@
 		if (target.client || !target.ckey)
 			boutput(user, "<span class='alert'>You can't force someone into cryosleep if they're still logged in or are an NPC!</span>")
 			return FALSE
-		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? They will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
+		else if (tgui_alert(user, "Would you like to put [target] into cryogenic storage? [he_or_she(target)] will be able to leave it immediately if they log back in.", "Confirmation", list("Yes", "No")) == "Yes")
 			if (!src.mob_can_enter_storage(target, user))
 				return FALSE
 			else

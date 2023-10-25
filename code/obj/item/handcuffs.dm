@@ -2,7 +2,8 @@
 	name = "handcuffs"
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "handcuff"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	throwforce = 5
 	w_class = W_CLASS_SMALL
 	throw_speed = 2
@@ -16,9 +17,9 @@
 	desc = "Adjustable metal rings joined by cable, made to be applied to a person in such a way that they are unable to use their hands. Difficult to remove from oneself."
 	custom_suicide = 1
 
-/obj/item/handcuffs/setMaterial(var/datum/material/mat1, var/appearance = 1, var/setname = 1, var/copy = 1, var/use_descriptors = 0)
+/obj/item/handcuffs/setMaterial(var/datum/material/mat1, var/appearance = TRUE, var/setname = TRUE, var/mutable = FALSE, var/use_descriptors = FALSE)
 	..()
-	if (mat1.mat_id == "silver")
+	if (mat1.getID() == "silver")
 		name = "silver handcuffs"
 		icon_state = "handcuff-silver"
 		desc = "These handcuffs are perfect for containing evil creatures, but they're fragile otherwise as a result."
@@ -36,7 +37,7 @@
 		return 0
 	user.canmove = 0
 	user.visible_message("<span class='alert'><b>[user] jams one end of [src] into one of [his_or_her(user)] eye sockets, closing the loop through the other!")
-	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, 1)
+	playsound(user, 'sound/impact_sounds/Flesh_Stab_1.ogg', 50, TRUE)
 	user.emote("scream")
 	SPAWN(1 SECOND)
 		user.visible_message("<span class='alert'><b>[user] yanks the other end of [src] as hard as [he_or_she(user)] can, ripping [his_or_her(user)] skull clean out of [his_or_her(user)] head! [pick("Jesus christ!","Holy shit!","What the fuck!?","Oh my god!")]</b></span>")
@@ -44,7 +45,7 @@
 		if (skull)
 			skull.set_loc(user.loc)
 		make_cleanable( /obj/decal/cleanable/blood,user.loc)
-		playsound(user, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, 1)
+		playsound(user, 'sound/impact_sounds/Flesh_Break_2.ogg', 50, TRUE)
 		health_update_queue |= user
 
 /* do not do this thing here:
@@ -60,9 +61,8 @@
 */
 		for (var/mob/living/carbon/human/O in AIviewers(user, null))
 			if (O != user && prob(33))
-				O.visible_message("<span class='alert'>[O] pukes all over [himself_or_herself(O)]. Thanks, [user].</span>",\
-				"<span class='alert'>You feel ill from watching that. Thanks, [user].</span>")
-				O.vomit()
+				var/vomit_message = "<span class='alert'>[O] pukes all over [himself_or_herself(O)].</span>"
+				O.vomit(0, null, vomit_message)
 
 		SPAWN(0.5 SECONDS)
 			if (user && skull)
@@ -78,7 +78,10 @@
 	return 1
 
 /obj/item/handcuffs/attack(mob/M, mob/user)
-	if (user.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))//!user.bioHolder.HasEffect("lost_left_arm") && !user.bioHolder.HasEffect("lost_right_arm"))
+	src.try_cuff(M, user)
+
+/obj/item/handcuffs/proc/try_cuff(mob/M, mob/user, instant = FALSE)
+	if (user?.bioHolder && user.bioHolder.HasEffect("clumsy") && prob(50))
 		boutput(user, "<span class='alert'>Uh ... how do those things work?!</span>")
 		if (ishuman(user))
 			var/mob/living/carbon/human/H = user
@@ -95,9 +98,9 @@
 		var/handslost = !istype(H.limbs.l_arm,/obj) + !istype(H.limbs.r_arm,/obj)
 		switch(handslost)
 			if (1)
-				boutput(user, "<span class='alert'>[H.name] only has one arm, you still try to handcuff [his_or_her(H)]!</span>")
+				boutput(user, "<span class='alert'>[H.name] only has one arm, you still try to handcuff [him_or_her(H)]!</span>")
 			if (2)
-				boutput(user, "<span class='alert'>[H.name] has no arms, you can't handcuff them!</span>")
+				boutput(user, "<span class='alert'>[H.name] has no arms, you can't handcuff [him_or_her(H)]!</span>")
 				return
 
 		if (H.hasStatus("handcuffed"))
@@ -105,10 +108,19 @@
 			return
 
 		playsound(src.loc, 'sound/weapons/handcuffs.ogg', 30, 1, -2)
-		actions.start(new/datum/action/bar/icon/handcuffSet(H, src), user)
-		return
+		if (instant)
+			src.cuff(M)
+		else
+			actions.start(new/datum/action/bar/icon/handcuffSet(H, src), user)
 
-	return
+/obj/item/handcuffs/proc/cuff(mob/living/carbon/human/target)
+	src.set_loc(target)
+	target.handcuffs = src
+	target.drop_from_slot(target.r_hand)
+	target.drop_from_slot(target.l_hand)
+	target.drop_juggle()
+	target.setStatus("handcuffed", duration = INFINITE_STATUS)
+	target.update_clothing()
 
 /obj/item/handcuffs/New()
 	..()
@@ -121,7 +133,7 @@
 	..()
 
 /obj/item/handcuffs/proc/werewolf_cant_rip()
-	.= src.material && src.material.mat_id == "silver"
+	.= src.material?.getID() == "silver"
 
 /obj/item/handcuffs/proc/drop_handcuffs(mob/user)
 	user.handcuffs = null
@@ -129,7 +141,7 @@
 	user.drop_item(src)
 	user.update_clothing()
 	if (src.strength == 1) // weak cuffs break
-		if (src.material && src.material.mat_id == "silver")
+		if (src.material && src.material.getID() == "silver")
 			src.visible_message("<span class='alert'>[src] disintegrate.</span>")
 		else if ((istype(src, /obj/item/handcuffs/guardbot)))
 			src.visible_message("<span class='alert'>[src] biodegrade instantly. [prob (10) ? "DO NOT QUESTION THIS" : null]</span>")
@@ -147,7 +159,8 @@
 	name = "ducktape"
 	desc = "A convenient and illegal source of makeshift handcuffs."
 	icon_state = "ducktape"
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	m_amt = 200
 	amount = 10
 	delete_on_last_use = TRUE

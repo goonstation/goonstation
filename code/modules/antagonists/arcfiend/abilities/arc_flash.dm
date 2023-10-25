@@ -3,7 +3,7 @@
 	name = "Arc Flash"
 	desc = "Unleash a ranged bolt of electricity towards a creature. Nearby targets will also be shocked by chain lightning, although with reduced effectiveness."
 	icon_state = "arcflash"
-	cooldown = 15 SECONDS
+	cooldown = 12 SECONDS
 	pointCost = 50
 	target_anything = TRUE
 	targeted = TRUE

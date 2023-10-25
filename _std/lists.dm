@@ -244,7 +244,7 @@ proc/keep_truthy(some_list)
 		.[first[i]] = second[i]
 
 /// Returns a list in plain english as a string
-/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "" )
+/proc/english_list(list/input, nothing_text = "nothing", and_text = " and ", comma_text = ", ", final_comma_text = "," )
 	var/total = length(input)
 	switch(total)
 		if (0)
@@ -345,9 +345,22 @@ proc/params2complexlist(params)
 	for(var/item in L)
 		. |= item
 
+#define shuffle_list_interval(x, start, end) \
+	do { \
+	for(var/i in start to end - 1) \
+		x.Swap(i, rand(i, end)) \
+	} while (0)
+
 #define shuffle_list(x) \
 	do { \
 	var/listlen = length(x); \
-	for(var/i in 1 to listlen - 1) \
-		x.Swap(i, rand(i, listlen)) \
+	shuffle_list_interval(x, 1, listlen) \
+	} while (0)
+
+/// Reverses a list in place
+#define reverse_list(x) \
+	do { \
+	var/listlen = length(x); \
+	for(var/i in 1 to round(listlen / 2)) \
+		x.Swap(i, listlen - i + 1) \
 	} while (0)

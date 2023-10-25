@@ -19,18 +19,48 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 	var/spookData
 
 	click_right(atom/object, var/ctrl, var/alt, var/shift)
-		if( object.spookTypes )
-			//var/list/otypes = object.spookTypes
-			activeSpook = input( "Select a Spook" ) as null|anything in object.spook_getspooks()
-			activeType = object.type
+		var/list/choices = list()
+		if(object.spookTypes)
+			choices += object.spook_getspooks()
+
+		var/typeinfo/atom/typeinfo = object.get_typeinfo()
+		if (typeinfo.admin_procs)
+			for (var/procpath/proc_path as anything in typeinfo.admin_procs)
+				var/proc_name = proc_path.name
+				if (!proc_name)
+					var/split_list = splittext("[proc_path]", "/")
+					proc_name = split_list[length(split_list)]
+				choices["[proc_name] *"] = proc_path
+
+		if(!choices.len)
+			return
+
+		var/choice = tgui_input_list(usr, "What spook?", "Spook", choices)
+		activeSpook = choice
+
+		if(!activeSpook)
+			return
+
+		activeType = object.type
+		update_button_text("[activeType]: [choice]")
+
+		if(choices[activeSpook])
+			activeSpook = choices[activeSpook]
+
+		if(istext(activeSpook))
 			spookData = object.spook_data( activeSpook )
-			update_button_text("[activeType]: [activeSpook]")
+		else if(isproc(activeSpook))
+			spookData = null
 
 	click_left(atom/object)
-		if(activeSpook && activeType && (istype( object, activeType ) || (object.spookTypes && (activeSpook in object.spook_getspooks()))))
+		if(istext(activeSpook) && activeType && (istype( object, activeType ) || (object.spookTypes && (activeSpook in object.spook_getspooks()))))
 			object.spook_act( activeSpook, spookData )
+		else if(isproc(activeSpook))
+			var/typeinfo/atom/typeinfo = object.get_typeinfo()
+			if (typeinfo.admin_procs && (activeSpook in typeinfo.admin_procs))
+				call(object, activeSpook)()
 
-/obj/machinery/light/spookTypes = "Break;Set Color;Toggle"
+/obj/machinery/light/spookTypes = "Set Color"
 /obj/machinery/light/spook_data(what)
 	switch(what)
 		if("Set Color")
@@ -38,24 +68,17 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			return list( hex2num(copytext(ret, 2, 4)) / 255.0, hex2num(copytext(ret, 4, 6)) / 255.0, hex2num(copytext(ret, 6, 8)) / 255.0 )
 		else
 			.=..()
+
 /obj/machinery/light/spook_act(what,data)
 	switch(what)
-		if("Break")
-			broken()
 		if("Set Color")
 			light.set_color( arglist(data || list(1,1,1)) )
-		if("Toggle")
-			src.seton(!src.on)
 		else
 			..()
 
-/obj/machinery/door/spookTypes = "Open;Close;Toggle"
+/obj/machinery/door/spookTypes = "Toggle"
 /obj/machinery/door/spook_act(what, data)
 	switch(what)
-		if("Open")
-			open()
-		if("Close")
-			close()
 		if("Toggle")
 			if (src.density)
 				open()
@@ -63,23 +86,8 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 				close()
 		else
 			.=..()
-/obj/machinery/door/airlock/spook_getspooks()
-	return ..() + "Deny Sound"
-/obj/machinery/door/airlock/spook_act(what, data)
-	switch(what)
-		if("Deny Sound")
-			play_deny()
-		else
-			.=..()
 
-/obj/item/reagent_containers/food/drinks/drinkingglass/spookTypes = "Break"
-/obj/item/reagent_containers/food/drinks/drinkingglass/spook_act(what)
-	switch(what)
-		if("Break")
-			smash()
-		else
-			.=..()
-/obj/item/device/light/flashlight/spookTypes = "Set Color;Toggle"
+/obj/item/device/light/flashlight/spookTypes = "Set Color"
 /obj/item/device/light/flashlight/spook_data(what)
 	switch(what)
 		if("Set Color")
@@ -91,8 +99,6 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 	switch(what)
 		if("Set Color")
 			light.set_color(arglist( data ))
-		if("Toggle")
-			attack_self()
 		else
 			.=..()
 
@@ -103,20 +109,6 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			toggle()
 		if("Thump")
 			animate_storage_thump(src)
-		else .=..()
-/*/obj/storage/secure
-	spookTypes = "Toggle;Secure"//just because i'm lazy, don't do this please
-	spook_act(what)
-		switch(what)
-			if("Toggle Lock")
-				toggle()
-			else .=..()
-*/
-/obj/machinery/vending/spookTypes = "Throw Item"
-/obj/machinery/vending/spook_act(what)
-	switch(what)
-		if("Throw Item")
-			throw_item()
 		else .=..()
 
 /obj/item/spookTypes = "Spook;Come Alive"
@@ -131,7 +123,7 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 		else
 			.	=	..()
 
-/obj/critter/domestic_bee/spookTypes = "Dance;Honey;Zombify"
+/obj/critter/domestic_bee/spookTypes = "Zombify"
 /obj/critter/domestic_bee/spook_act(what, data)
 	switch(what)
 		if("Zombify")
@@ -141,27 +133,5 @@ Right Mouse Button on turf/mob/obj     = Select spook<br>
 			icon_body = "zombee"
 			sleeping_icon_state = "zombee-sleep"
 			honey_color = rgb(0, 255, 0)
-		if("Dance")
-			src.dance()
-		if("Honey")
-			src.puke_honey()
-		else
-			. = ..()
-
-/obj/machinery/light_switch/spookTypes = "Toggle"
-/obj/machinery/light_switch/spook_act(what, data)
-	switch(what)
-		if("Toggle")
-			src.attack_hand(usr)
-		else
-			. = ..()
-
-/obj/machinery/power/apc/spookTypes = "Toggle"
-/obj/machinery/power/apc/spook_act(what, data)
-	switch(what)
-		if("Toggle")
-			src.operating = !src.operating
-			src.update()
-			UpdateIcon()
 		else
 			. = ..()

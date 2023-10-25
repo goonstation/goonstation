@@ -26,6 +26,12 @@
 // also /obj/item/storage/nerd_kit/New() is in storage.dm with /obj/item/storage/nerd_kit instead of RANDOMLY FLOATING AROUND IN HERE WHAT IS WRONG WITH YOU PEOPLE
 //deathbutton to deathbutton.dm
 
+#ifdef HALLOWEEN
+#define EPHEMERAL_HALLOWEEN EPHEMERAL_SHOWN
+#else
+#define EPHEMERAL_HALLOWEEN EPHEMERAL_HIDDEN
+#endif
+
 /*
  *	DEATH PLAQUE
  */
@@ -46,7 +52,7 @@
 	desc = "Rest in peace."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "tombstone"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/robbed = 0
 	var/special = null //The path of whatever special loot is robbed from this grave.
@@ -66,7 +72,7 @@
 	desc = "A classic 20th century jukebox. Ayyy!"
 	icon = 'icons/obj/decoration.dmi'
 	icon_state = "jukebox"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/last_switch = 0
 	var/list/to_transfer = list() //List of mobs waiting to be shuffled back.
@@ -121,7 +127,7 @@
 
 			M.changeStatus("weakened", 3 SECONDS)
 
-		if(!src.to_transfer.len || src.to_transfer.len == 1)
+		if(!src.to_transfer.len || length(src.to_transfer) == 1)
 			src.visible_message("The [src] buzzes.")
 			src.last_switch = 0
 			if(src.teleport_next_switch)
@@ -316,7 +322,7 @@
 	desc = "The television, that insidious beast, that Medusa which freezes a billion people to stone every night, staring fixedly, that Siren which called and sang and promised so much and gave, after all, so little."
 	icon = 'icons/obj/computer.dmi'
 	icon_state = "security_det"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	attack_hand(mob/user)
@@ -345,7 +351,7 @@
 			M.set_loc(stoneman)
 			stoneman.name = "statue of [M.name]"
 			stoneman.desc = "A really dumb looking statue. Very well carved, though."
-			stoneman.anchored = 0
+			stoneman.anchored = UNANCHORED
 			stoneman.set_density(1)
 			stoneman.layer = MOB_LAYER
 
@@ -403,7 +409,7 @@
 			if("ONION SLUG CANDY") // Anagram: ANNOYING CLOUDS
 				particleMaster.SpawnSystem(new /datum/particleSystem/spooky_mist(get_turf(user)))
 				user.show_text("A cold and spooky wind begins to blow!","#8218A8")
-				playsound(user, 'sound/ambience/nature/Wind_Cold2.ogg', 50, 1, 5)
+				playsound(user, 'sound/ambience/nature/Wind_Cold2.ogg', 50, TRUE, 5)
 			if("HOT SIGMA") // Anagram: IM A GHOST
 				user.blend_mode = 2
 				user.alpha = 150
@@ -493,7 +499,7 @@
 	desc = "A decorative ghost, hanging from the ceiling. It's <b><u><i>pretty scary!!!!</i></u></b>"
 	icon = 'icons/mob/ghost_drone.dmi'
 	icon_state = "g_drone"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	pixel_y = 7
 	var/trigger_sound = 'sound/effects/ExtremelyScaryGhostNoise.ogg'
@@ -534,7 +540,7 @@
 	desc = "An empty cast-iron cauldron."
 	icon = 'icons/misc/halloween.dmi'
 	icon_state = "cauldron"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	candy
@@ -551,6 +557,9 @@
 				newcandy.razor_blade = 1
 			boutput(user, "You grab [newcandy] from the cauldron!")
 
+		/// subtype named "ephemeral" which only spawns on halloween
+		EPHEMERAL_HALLOWEEN
+
 	jellybean
 		name = "jellybean-filled cauldron"
 		desc = "It's full of jellybeans! Wonder what's in these..."
@@ -560,3 +569,6 @@
 			var/obj/item/reagent_containers/food/snacks/candy/jellybean/everyflavor/B = new
 			user.put_in_hand_or_drop(B)
 			boutput(user, "You grab [B] from the cauldron!")
+
+		/// subtype named "ephemeral" which only spawns on halloween
+		EPHEMERAL_HALLOWEEN

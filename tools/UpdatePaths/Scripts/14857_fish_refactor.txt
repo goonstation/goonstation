@@ -1,0 +1,1 @@
+/obj/item/fish/@SUBTYPES : /obj/item/reagent_containers/food/fish/@SUBTYPES{@OLD}

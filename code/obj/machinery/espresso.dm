@@ -1,16 +1,18 @@
 /* ==================================================== */
 /* --------------------- Machine ---------------------- */
 /* ==================================================== */
-/obj/machinery/espresso_machine/
+TYPEINFO(/obj/machinery/espresso_machine)
+	mats = 30
+
+/obj/machinery/espresso_machine
 	name = "espresso machine"
 	desc = "It's top of the line NanoTrasen espresso technology! Featuring 100% Organic Locally-Grown espresso beans!" //haha no
 	icon = 'icons/obj/foodNdrink/espresso.dmi'
 	icon_state = "espresso_machine"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	flags = FPRINT | NOSPLASH | TGUI_INTERACTIVE
 	event_handler_flags = NO_MOUSEDROP_QOL
-	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/cupslimit = 2
 	var/cupsinside = 0
@@ -26,6 +28,8 @@
 		src.update()
 
 	ui_interact(mob/user, datum/tgui/ui)
+		for(var/obj/item/reagent_containers/container in src.contents)
+			SEND_SIGNAL(container.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "EspressoMachine")
@@ -109,6 +113,7 @@
 							C.reagents.add_reagent("espresso", 4)
 							C.reagents.add_reagent("milk", 6)
 				playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
+				use_power(10)
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (istype(W, /obj/item/reagent_containers/food/drinks/espressocup))
@@ -135,7 +140,7 @@
 		if (isAI(user) || !can_reach(user, O) || BOUNDS_DIST(user, src) > 1 || !can_act(user) )
 			return
 
-		src.attackby(O, user)
+		src.Attackby(O, user)
 
 	attack_hand(mob/user)
 		if (can_reach(user,src) && !(status & (NOPOWER|BROKEN)))
@@ -182,15 +187,17 @@
 /* ===================================================== */
 //Sorry for budging in here, whoever made the espresso machine. Lets just rename this to coffee.dm?
 
+TYPEINFO(/obj/machinery/coffeemaker)
+	mats = 30
+
 /obj/machinery/coffeemaker
 	name = "coffeemaker"
 	desc = "It's top of the line NanoTrasen espresso technology! Featuring 100% Organic Locally-Grown espresso beans!" //haha no
 	icon = 'icons/obj/foodNdrink/espresso.dmi'
 	icon_state = "coffeemaker-gen"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	flags = FPRINT | NOSPLASH
-	mats = 30
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_WIRECUTTERS
 	var/carafe_name = "coffee carafe"
 	var/image/image_top = null
@@ -248,6 +255,7 @@
 							for(var/obj/item/reagent_containers/food/drinks/carafe/C in src.contents)
 								C.reagents.add_reagent(src.emagged ? "tea" : "coffee_fresh",100)
 								playsound(src.loc, 'sound/misc/pourdrink.ogg', 50, 1)
+								use_power(10)
 						if ("Remove carafe")
 							if (!src.my_carafe)
 								user.show_text("The carafe is gone!")
@@ -315,13 +323,17 @@
 	icon_state = "coffeemaker-eng"
 	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/engineering
 
+/obj/machinery/coffeemaker/command
+	icon_state = "coffeemaker-com"
+	default_carafe = /obj/item/reagent_containers/food/drinks/carafe/command
+
 /* ===================================================== */
 /* ---------------------- Racks --------------------- */
 /* ===================================================== */
 
 ABSTRACT_TYPE(/obj/drink_rack)
 /obj/drink_rack
-	anchored = 1
+	anchored = ANCHORED
 	var/amount_on_rack = null
 	var/max_amount = null
 	var/contained = null

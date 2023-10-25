@@ -42,7 +42,7 @@
 			return 1
 
 		if (RC && istype(RC))
-			if (src.the_poison.len > 1)
+			if (length(src.the_poison) > 1)
 				if (!RC.reagents)
 					RC.reagents = new /datum/reagents(src.amount_per_poison * src.the_poison.len)
 					RC.reagents.my_atom = RC

@@ -57,7 +57,7 @@
 	icon_state = "spark"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	target = null
 	var/range = 6
 	var/trap_delay = 100
@@ -111,7 +111,7 @@
 									logTheThing(LOG_COMBAT, M, "was gibbed by [src] ([src.type]) at [log_loc(M)].")
 								M:gib()
 					if (attack_amt)
-						playsound(src, 'sound/effects/elec_bigzap.ogg', 40, 1)
+						playsound(src, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 					next_trap = world.time + trap_delay
 			if ("off")
 				is_on = 0

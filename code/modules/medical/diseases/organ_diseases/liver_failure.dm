@@ -4,7 +4,6 @@
 	max_stages = 3
 	spread = "The patient's liver is starting to fail"
 	cure = "anti-toxin drugs"
-	reagentcure = list("organ_drug2")
 	recureprob = 10
 	affected_species = list("Human")
 	stage_prob = 1

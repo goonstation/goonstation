@@ -1,10 +1,10 @@
 /obj/pool
 	name = "pool"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "pool"
-	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID
+	flags = FPRINT | ALWAYS_SOLID_FLUID | IS_PERSPECTIVE_FLUID | FLUID_DENSE
 
 	Cross(atom/movable/mover)
 		ENSURE_TYPE(mover)
@@ -14,16 +14,16 @@
 
 /obj/pool/ladder
 	name = "pool ladder"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
-	dir = 8
+	dir = WEST
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "ladder"
 
 /obj/pool/perspective
 	name = "pool"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/obj/fluid.dmi'
 	plane = PLANE_FLOOR
 	icon_state = "pool"
@@ -31,7 +31,7 @@
 /obj/pool_springboard
 	name = "springboard"
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	layer = EFFECTS_LAYER_UNDER_2
 	pixel_x = -16
 	icon = 'icons/obj/stationobjs.dmi'
@@ -73,21 +73,21 @@
 			user.pixel_x = -9
 			sleep(0.3 SECONDS)
 			user.pixel_x = -12
-			playsound(user, 'sound/effects/spring.ogg', 60, 1)
+			playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 			sleep(0.3 SECONDS)
 			user.pixel_y = 25
 			sleep(0.5 SECONDS)
 			user.pixel_y = 15
-			playsound(user, 'sound/effects/spring.ogg', 60, 1)
+			playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 			sleep(0.5 SECONDS)
 			user.pixel_y = 25
 			user.start_chair_flip_targeting(extrarange = 2)
 			sleep(0.5 SECONDS)
 			user.pixel_y = 15
-			playsound(user, 'sound/effects/spring.ogg', 60, 1)
+			playsound(user, 'sound/effects/spring.ogg', 60, TRUE)
 			sleep(0.5 SECONDS)
 			user.pixel_y = 25
-			playsound(user, 'sound/effects/brrp.ogg', 15, 1)
+			playsound(user, 'sound/effects/brrp.ogg', 15, TRUE)
 			sleep(0.2 SECONDS)
 			if(range == 1) boutput(user, "<span class='alert'>You slip...</span>")
 			user.layer = MOB_LAYER
@@ -104,7 +104,7 @@
 						playsound(src.loc, 'sound/impact_sounds/Generic_Snap_1.ogg', 50, 1)
 			user.pixel_y = 0
 			user.pixel_x = 0
-			playsound(user, 'sound/impact_sounds/Liquid_Hit_Big_1.ogg', 60, 1)
+			playsound(user, 'sound/impact_sounds/Liquid_Hit_Big_1.ogg', 60, TRUE)
 			in_use = 0
 			suiciding = 0
 			user.transforming = 0

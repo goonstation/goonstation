@@ -1,6 +1,6 @@
 //MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
 "a" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "s" = (

@@ -1,7 +1,7 @@
 //
 // Firealarm
 //
-
+ADMIN_INTERACT_PROCS(/obj/machinery/firealarm, proc/alarm, proc/reset)
 /obj/machinery/firealarm
 	name = "Fire Alarm"
 	icon = 'icons/obj/monitors.dmi'
@@ -10,11 +10,12 @@
 	deconstruct_flags = DECON_WIRECUTTERS | DECON_MULTITOOL
 	machine_registry_idx = MACHINES_FIREALARMS
 	power_usage = 10
+	power_channel = ENVIRON
 	var/alarm_frequency = FREQ_ALARM
 	var/detecting = 1
 	var/working = 1
 	var/lockdownbyai = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/alarm_zone
 	var/net_id
 	var/ringlimiter = 0
@@ -48,7 +49,7 @@
 	UpdateIcon()
 
 	AddComponent(/datum/component/mechanics_holder)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleinput))
 	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, alarm_frequency)
 
 /obj/machinery/firealarm/disposing()
@@ -107,8 +108,14 @@
 		src.detecting = !( src.detecting )
 		if (src.detecting)
 			user.visible_message("<span class='alert'>[user] has reconnected [src]'s detecting unit!</span>", "You have reconnected [src]'s detecting unit.")
+			src.icon_state = "firep"
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+			logTheThing(LOG_STATION, null, "[key_name(user)] fixed a fire alarm at ([log_loc(src.loc)])")
 		else
 			user.visible_message("<span class='alert'>[user] has disconnected [src]'s detecting unit!</span>", "You have disconnected [src]'s detecting unit.")
+			src.icon_state = "firep-cut"
+			playsound(src.loc, 'sound/items/Wirecutter.ogg', 50, 1)
+			logTheThing(LOG_STATION, null, "[key_name(user)] deactivated a fire alarm at ([log_loc(src.loc)])")
 	else if (!alarm_active)
 		src.alarm()
 	else
@@ -119,9 +126,7 @@
 /obj/machinery/firealarm/process()
 	if(status & (NOPOWER|BROKEN))
 		return
-
-	use_power(power_usage, ENVIRON)
-
+	..()
 
 /obj/machinery/firealarm/power_change()
 	if(powered(ENVIRON))
@@ -242,3 +247,19 @@
 		reply.data["type"] = "Fire"
 		SPAWN(0.5 SECONDS)
 			SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, reply)
+
+// these seem kind of inverted but it's because an alarm on a wall to the north faces south and etc
+/obj/machinery/firealarm/north
+	pixel_y = 30
+
+/obj/machinery/firealarm/south
+	dir = NORTH
+	pixel_y = -22
+
+/obj/machinery/firealarm/east
+	dir = WEST
+	pixel_x = 24
+
+/obj/machinery/firealarm/west
+	dir = EAST
+	pixel_x = -24

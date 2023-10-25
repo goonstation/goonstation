@@ -6,6 +6,9 @@
 	*/
 #define get_turf(x) get_step(x, 0)
 
+/// Gets the z-level of the turf an atom is on
+#define get_z(x) get_step(x, 0)?.z
+
 /// returns a list of all neighboring turfs in cardinal directions.
 #define getneighbours(x) (list(get_step(x, NORTH), get_step(x, EAST), get_step(x, SOUTH), get_step(x, WEST)))
 

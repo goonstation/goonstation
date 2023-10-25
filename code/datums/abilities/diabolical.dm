@@ -175,8 +175,8 @@
 	not_when_handcuffed = 0
 
 	New()
-		..()
 		desc = "Spend [CONTRACT_COST] souls to summon a random new contract to your location"
+		..()
 
 	cast(mob/target)
 		if (!holder)
@@ -217,7 +217,7 @@
 	cast(mob/target)
 		var/mob/living/carbon/human/H = target
 		if (!istype(H))
-			boutput(holder.owner, "Your target must be human!")
+			boutput(holder.owner, "<span class='alert'>Your target must be human!</span>")
 			return 1
 
 		holder.owner.visible_message("<span class='alert'><b>[holder.owner] shoots finger guns in [target]s direction.</b></span>")
@@ -316,8 +316,8 @@
 	tryCast()
 		if (is_incapacitated(holder.owner))
 			boutput(holder.owner, "<span class='alert'>You cannot cast this ability while you are incapacitated.</span>")
-			src.holder.locked = 0
-			return 999
+			src.holder.locked = FALSE
+			return CAST_ATTEMPT_FAIL_NO_COOLDOWN
 		. = ..()
 
 	cast(atom/T)
@@ -327,6 +327,7 @@
 		var/slide_amount = 22 // around 20-25 is just wide enough to show most of the person hiding underneath
 
 		if(usr.plane == PLANE_UNDERFLOOR)
+			APPLY_ATOM_PROPERTY(usr, PROP_MOB_HIDE_ICONS, "underfloor")
 			usr.flags &= ~(NODRIFT | DOORPASS | TABLEPASS)
 			APPLY_ATOM_PROPERTY(usr, PROP_MOB_CANTMOVE, "floorswitching")
 			REMOVE_ATOM_PROPERTY(usr, PROP_MOB_NO_MOVEMENT_PUFFS, "floorswitching")
@@ -342,6 +343,7 @@
 					animate_slide(floorturf, 0, 0, 4)
 
 		else
+			APPLY_ATOM_PROPERTY(usr, PROP_MOB_HIDE_ICONS, "underfloor")
 			APPLY_ATOM_PROPERTY(usr, PROP_MOB_CANTMOVE, "floorswitching")
 			animate_slide(floorturf, x_coeff * -slide_amount, y_coeff * -slide_amount, 4)
 			SPAWN(0.4 SECONDS)

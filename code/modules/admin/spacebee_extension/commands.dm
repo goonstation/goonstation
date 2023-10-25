@@ -29,7 +29,7 @@
 		if (M.key) result += M.key
 		if (isdead(M)) result += "DEAD"
 		if (role) result += role
-		if (checktraitor(M)) result += "\[T\]"
+		if (M.mind?.is_antagonist()) result += "\[T\]"
 		system.reply(result.Join(" | "), user)
 
 /datum/spacebee_extension_command/addnote
@@ -288,7 +288,19 @@
 		for(var/client/C)
 			if (C.ckey == ckey)
 				var/mob/M = C.mob
-				if (M && ismob(M) && !isAI(M) && !isobserver(M))
+				var/area/A = get_area(M)
+				if (ismob(M) && istype(A, /area/prison/cell_block/wards))
+					var/ASLoc = pick_landmark(LANDMARK_LATEJOIN, locate(1, 1, 1))
+					if (ASLoc)
+						M.set_loc(ASLoc)
+
+					M.show_text("<h2><font color=red><b>You have been unprisoned and sent back to the station.</b></font></h2>", "red")
+					logTheThing(LOG_ADMIN, "[user] (Discord)", null, "prisoned [constructTarget(C,"admin")].")
+					logTheThing(LOG_DIARY, "[user] (Discord)", null, "prisoned [constructTarget(C,"diary")].", "admin")
+					system.reply("Unprisoned [ckey].", user)
+					return
+
+				else if (M && ismob(M) && !isAI(M) && !isobserver(M))
 					var/prison = pick_landmark(LANDMARK_PRISONWARP)
 					if (prison)
 						M.changeStatus("paralysis", 8 SECONDS)
@@ -345,8 +357,14 @@
 		if(new_mode in global.valid_modes)
 			var/which = "next round's "
 			if (current_state <= GAME_STATE_PREGAME)
+#ifndef MAP_OVERRIDE_POD_WARS
+				if (new_mode == "pod_wars")
+					system.reply("You can only set the mode to Pod Wars if the current map is a Pod Wars map! If you want to play Pod Wars, you have to set the next map for compile to be pod_wars.dmm!", user)
+					return
+#endif
 				master_mode = new_mode
 				which = ""
+
 			world.save_mode(new_mode)
 			logTheThing(LOG_ADMIN, "[user] (Discord)", null, "set the [which]mode as [new_mode]")
 			logTheThing(LOG_DIARY, "[user] (Discord)", null, "set the [which]mode as [new_mode]", "admin")
@@ -390,7 +408,7 @@
 		else
 			var/list/message = list()
 			message += "You can put text arguments in quotes if you want spaces in them!"
-			message += "# means you need to add a server id.\n"
+			message += "\\# means you need to add a server id.\n"
 			for(var/command_name in system.commands)
 				var/datum/spacebee_extension_command/command = system.commands[command_name]
 				message += src.help_for_command(command)
@@ -431,6 +449,7 @@
 	name = "cryo"
 	help_message = "Cryos a given ckey."
 	action_name = "cryo"
+	allow_disconnected = TRUE
 
 	perform_action(user, mob/target)
 		if (!length(by_type[/obj/cryotron]))
@@ -474,7 +493,7 @@
 		if (target.mind)
 			target.mind.damned = 0
 			target.mind.transfer_to(newM)
-		newM.Login()
+		target.mind = null
 		newM.sight = SEE_TURFS //otherwise the HUD remains in the login screen
 		qdel(target)
 
@@ -498,7 +517,7 @@
 		if(!target)
 			system.reply("Valid mob not found.", "user")
 			return FALSE
-		target.revive()
+		target.full_heal()
 		message_admins("<span class='alert'>Admin [user] (Discord) healed / revived [key_name(target)]!</span>")
 		logTheThing(LOG_ADMIN, "[user] (Discord)", target, "healed / revived [constructTarget(target,"admin")]")
 		logTheThing(LOG_DIARY, "[user] (Discord)", target, "healed / revived [constructTarget(target,"diary")]", "admin")
@@ -621,6 +640,31 @@
 		addPlayerNote(ckey, user + " (Discord)", "Ckey [ckey] added to the VPN whitelist.")
 		system.reply("[ckey] added to the VPN whitelist.")
 		return TRUE
+
+/datum/spacebee_extension_command/check_vpn_whitelist
+	name = "checkvpnwhitelist"
+	help_message = "Checks if a given ckey is VPN whitelisted"
+	argument_types = list(/datum/command_argument/string/ckey="ckey")
+	server_targeting = COMMAND_TARGETING_MAIN_SERVER
+
+	execute(user, ckey)
+		var/list/response
+		try
+			response = apiHandler.queryAPI("vpncheck-whitelist/search", list("ckey" = ckey), forceResponse = 1)
+		catch(var/exception/e)
+			system.reply("Error, while checking vpn whitelist status of ckey [ckey] encountered the following error: [e.name]")
+			return
+		if (!islist(response))
+			system.reply("Failed to query vpn whitelist, did not receive response from API.")
+		if (response["error"])
+			system.reply("Failed to query vpn whitelist, error: [response["error"]]")
+		else if ((response["success"]))
+			if (response["whitelisted"])
+				system.reply("ckey [ckey] is VPN whitelisted. Whitelisted by [response["akey"] ? response["akey"] : "unknown admin"]")
+			else
+				system.reply("ckey [ckey] is not VPN whitelisted.")
+		else
+			system.reply("Failed to query vpn whitelist, received invalid response from API.")
 
 /datum/spacebee_extension_command/hard_reboot
 	name = "hardreboot"

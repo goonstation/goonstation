@@ -1,8 +1,12 @@
+TYPEINFO(/obj/item/device/flyswatter)
+	mats = 15
+
 /obj/item/device/flyswatter
 	name = "fly swatter"
 	desc = "It's one of those fancy electric types, so you can hear that satisfying zap, zap, <i>zap</i>!"
 	icon_state = "flyswatter"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	force = 10
 	hit_type = DAMAGE_BURN
 	w_class = W_CLASS_BULKY
@@ -10,7 +14,6 @@
 	throw_range = 10
 	throw_speed = 2
 	m_amt = 100
-	mats = 15
 
 	New()
 		..()
@@ -31,9 +34,9 @@
 
 	proc/smack_bug(atom/target as obj|mob, mob/user as mob)
 		user.visible_message("<span class='notice'><b>[user] smacks [target] with [src]. KO!</b></span>")
-		playsound(target, 'sound/effects/electric_shock_short.ogg', 50, 1)
+		playsound(target, 'sound/effects/electric_shock_short.ogg', 50, TRUE)
 		SPAWN(0.2 SECONDS)
-			playsound(target, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, 1)
+			playsound(target, 'sound/impact_sounds/Flesh_Crush_1.ogg', 50, TRUE)
 		if (ismobcritter(target))
 			var/mob/living/critter/MC = target
 			MC.TakeDamage("all", 20, 20)

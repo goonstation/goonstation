@@ -28,7 +28,7 @@
 	icon_state = "beakerlarge"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/reagent
 	var/trap_delay = 100
 	var/next_trap = 0

@@ -34,7 +34,7 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 	if(GET_DIST(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
 		return UI_INTERACTIVE
 
-	// AI Borgs can recieve updates from anything that the AI can see.
+	// AI Borgs can receive updates from anything that the AI can see.
 	if (src.connected_ai)
 		return UI_UPDATE
 
@@ -49,15 +49,19 @@ var/global/datum/ui_state/tgui_default_state/tgui_default_state = new /datum/ui_
 	if(GET_DIST(src, src_object) <= ((WIDE_TILE_WIDTH - 1)/ 2))
 		return UI_INTERACTIVE
 
-	return UI_UPDATE // AI eyebots can recieve updates from anything that the AI can see.
+	return UI_UPDATE // AI eyebots can receive updates from anything that the AI can see.
 
-/mob/living/intangible/aieye/default_can_use_topic(src_object)
+/mob/living/intangible/aieye/default_can_use_topic(obj/src_object)
 	. = shared_ui_interaction(src_object)
 	if(. < UI_INTERACTIVE)
 		return
 
+	if((src.mainframe.z == src_object.z) || (inunrestrictedz(src_object) && inonstationz(mainframe)))
+		return UI_INTERACTIVE
+	else
+		return UI_UPDATE
+
 	// The AI can interact with anything it can see.
-	return UI_INTERACTIVE
 
 /mob/living/silicon/ai/default_can_use_topic(src_object)
 	. = shared_ui_interaction(src_object)

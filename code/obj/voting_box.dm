@@ -4,7 +4,7 @@
 	icon_state = "voting_box"
 	density = 1
 	flags = FPRINT
-	anchored = 1
+	anchored = ANCHORED
 	desc = "Some sort of thing to put ballots into. Maybe you can even vote with it!"
 	var/bribeAmount = 0
 	var/bribeJerk = null
@@ -31,7 +31,7 @@
 				map_vote_holder.special_vote(C,map)
 				var/adv = pick("", "proudly", "confidently", "cautiously", "dismissively", "carelessly", "idly")
 				var/adj = pick("", "questionable", "decisive", "worthless", "important", "curious", "bizarre", "regrettable")
-				visible_message("<span class='notice'><strong>[user]</strong> [adv] [hadVoted ? "changes their" : "casts a"] [adj] vote [hadVoted ? "to" : "for"] <strong>[map]</strong>.</span>")
+				visible_message("<span class='notice'><strong>[user]</strong> [adv] [hadVoted ? "changes [his_or_her(user)]" : "casts a"] [adj] vote [hadVoted ? "to" : "for"] <strong>[map]</strong>.</span>")
 				playsound(src.loc, 'sound/machines/ping.ogg', 35)
 
 				if (user.real_name == bribeJerk)
@@ -49,7 +49,7 @@
 	attackby(obj/item/S, mob/user)
 		src.add_fingerprint(user)
 
-		if (istype(S, /obj/item/spacecash))
+		if (istype(S, /obj/item/currency/spacecash))
 			if (!mapSwitcher.playersVoting)
 				boutput(user, "<span class='alert'>There's no point in buying a vote when there's no vote going on.</span>")
 				return
@@ -71,26 +71,25 @@
 						if (user.real_name == bribeJerk)
 							// increase paid amount here
 							bribeAmount += S.amount
-							visible_message("<strong>[user] increases their bribe to [bribeAmount] credits!</strong>")
+							visible_message("<strong>[user] increases [his_or_her(user)] bribe to [bribeAmount] credits!</strong>")
 						else
 							// time to switch our vote.
-							visible_message("<strong>[user] has paid [S.amount] credits to swing the map vote in their favor!</strong>")
+							visible_message("<strong>[user] has paid [S.amount] credits to swing the map vote in [his_or_her(user)] favor!</strong>")
 							boutput(user, "<span class='notice'>You've puchased a vote for [chosen].</span>")
 							bribeAmount = S.amount
 							bribeJerk = user.real_name
 							map_vote_holder.voting_box(src,chosen)
+						S.amount = 0
+						user.u_equip(S)
+						S.dropped(user)
+						qdel( S )
+						animate_storage_rustle(src)
+						playsound(src.loc, 'sound/machines/ping.ogg', 75)
+						SPAWN(1 SECOND)
+							playsound(src.loc, 'sound/machines/paper_shredder.ogg', 90, 1)
 				else
 					boutput(user, "<span class='alert'>You can't buy a vote when you haven't voted, doofus.</span>")
 					return
-
-			S.amount = 0
-			user.u_equip(S)
-			S.dropped(user)
-			qdel( S )
-			animate_storage_rustle(src)
-			playsound(src.loc, 'sound/machines/ping.ogg', 75)
-			SPAWN(1 SECOND)
-				playsound(src.loc, 'sound/machines/paper_shredder.ogg', 90, 1)
 			return
 
 

@@ -1,12 +1,35 @@
+#ifdef ENABLE_ARTEMIS
+
 #define ARTEMIS_ANIMATION_SPEED 2 // 2/10ths of a second. used to calculate various displacements
 #define ARTEMIS_MAX_R 951
+#define ARTEMIS_MAX_R_VIS 500
+#define ARTEMIS_MAX_R_SQUARED_VIS (ARTEMIS_MAX_R_VIS * ARTEMIS_MAX_R_VIS)
 #define ARTEMIS_MAX_R_SQUARED 904401 //951^2 - sqrt(2)*672; radius of circle with the boundary box inscribed in it
 #define ARTEMIS_MAX_R_SQUARED_GALACTIC 35.328 //(951*2/320)**2
 #define ARTEMIS_MAP_SHIP_PIXEL_RATIO 29.7 //3804 pixel diameter circle for rendering ship object, compared to a 128 pixel circle for map object movement; scale diff is 29.7
 #define ARTEIMS_MAP_VIEW_SIZE 31 // 31x31 tiles
 
+/datum/artemis_engine_controller
+	var/malfunction = FALSE
+	//Abstract Engine Health into 1:NW, 2:NE, 3:SW, 4:SE, 5-8:S
+	var/list/engine_health = list(1,1,1,1,1,1,1,1)
+	var/list/engine_list = list()
+
+	proc/engine_check()
+		. = !src.malfunction && TRUE //check that requipment power is on
+
+	proc/use_power(list/banks, stress)
+		for(var/bank in banks)
+			for(var/obj/machinery/shuttle/engine/propulsion/P in engine_list[bank])
+				P.use_power(500)
+
+	proc/add_engine(obj/machinery/shuttle/engine/propulsion/P)
+		if(!src.engine_list[P.id])
+			src.engine_list[P.id] = list()
+		src.engine_list[P.id] |= P
+
 /obj/artemis
-	name = "Artemis-"
+	name = "Artemis"
 	desc = "Artemis"
 	icon = 'icons/misc/artemis.dmi'
 	icon_state = "artemis"
@@ -14,7 +37,7 @@
 	var/stars_id = "artemis"
 	var/list/obj/background_star/my_stars = list()
 	var/list/obj/background_star/galactic_object/my_galactic_objects = list() // stores nearby galactic objects and references to their tracking images
-	var/obj/landmark/ship_marker/ship_marker
+	var/turf/ship_marker
 
 	var/mob/my_pilot = null
 
@@ -57,6 +80,8 @@
 	var/image/nav_arrow = null
 	var/navigating = 0
 	var/datum/galactic_object/navigation_target = null
+	var/sensor_range = 4096
+	var/teleporter_range = 4096
 
 	var/do_process = 0
 
@@ -67,20 +92,26 @@
 	var/image/back = null
 	var/has_back = 1
 
-	var/num_stars = 200
+	var/num_stars = 80 // 200
 	var/map_size = ARTEIMS_MAP_VIEW_SIZE
 
 	var/datum/galactic_object/ship/background_ship_datum
 
 	var/control_lock = 0
 
+	var/full_throttle = FALSE
 	var/buoy_count = 3
 
+	var/bottom_x_offset = 57 // tile offset for duplicated bottom
+
+	var/obj/machinery/sim/vr_bed/flight_chair/controls
 	var/datum/movement_controller/artemis/controller
+	var/datum/artemis_engine_controller/engines
 	var/controller_type = null
 
 	New()
 		..()
+		src.engines = new(src)
 		if(controller_type)
 			var/path = text2path("/datum/movement_controller/artemis/[controller_type]")
 			controller = new path(src)
@@ -112,12 +143,14 @@
 
 		gen_stars()
 
-		spawn(0)
+		SPAWN(0)
 			do_process = 1
 			src.fast_process()
+		START_TRACKING
 
 	disposing()
 		UnsubscribeProcess()
+		STOP_TRACKING
 		..()
 
 	proc/SubscribeToProcess()
@@ -131,13 +164,21 @@
 	get_movement_controller()
 		return controller
 
-	proc/link_landmark()
-		for(var/obj/landmark/ship_marker/L in world)
-			if(L.ship_id == src.stars_id)
-				src.ship_marker = L
-
 	proc/engine_check()
-		return 1
+		. = engines.engine_check()
+
+	proc/use_power(var/list/banks, var/stress)
+		engines.use_power(banks, stress)
+
+	proc/link_landmark()
+		for(var/turf/T in landmarks[LANDMARK_SHIPS])
+			if(landmarks[LANDMARK_SHIPS][T] == src.stars_id)
+				src.ship_marker = T
+
+#ifdef ARTEMIS_LINK_AT_ROUNDSTART
+		if(!is_syndicate && !special_places.Find(src.name))
+			special_places.Add(src.name)
+#endif
 
 	proc/gen_stars()
 		var/map_max_r = map_size*16*sqrt(2) // circle than inscribes the map view square
@@ -149,6 +190,9 @@
 			S.ships_id =  src.stars_id
 			S.max_r = map_max_r
 			S.max_r_squared = map_max_r_squared
+			S.galaxy_icon = image(S.icon, S, S.icon_state, S.layer)
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).add_image(S.galaxy_icon)
+			S.icon = null
 
 	proc/link_stars()
 		for(var/obj/background_star/S in world)
@@ -192,23 +236,50 @@
 		return 0
 
 	proc/fast_process()
+#ifdef DEBUG_ARTEMIS
+		var/tick = TIME
+		var/list/timing = list()
+		timing.len = 2
+		timing[1] = 0
+		timing[2] = 0
+#endif
 		while(do_process)
-			if(vel_mag)
+			if(src.vel_mag)
 				calc_new_coords()
-			if(tracking)
+			if(src.tracking)
 				do_tracking()
-			if(navigating)
+			if(src.navigating)
 				update_nav_arrow()
+
+			for(var/obj/background_star/S in src.my_stars)
+				if(S.start)
+					S.process()
+
+			for(var/obj/background_star/galactic_object/G in src.my_galactic_objects)
+				if(G.start)
+					G.process()
+
+#ifdef DEBUG_ARTEMIS
+			var/delta = TIME - tick
+			if(timing[2] > 120)
+				boutput(world,"[src] fast_process() running at [timing[1]/timing[2]] avg with [animation_speed] sleep delay")
+				timing[1] = 0
+				timing[2] = 0
+			else
+				timing[1] += delta
+				timing[2]++
+			tick = TIME
+#endif
 			sleep(animation_speed)
 
-
 	proc/process() //slow processing
-		if(!old_x)
-			old_x = galactic_x
-		if(!old_y)
-			old_y = galactic_y
-
 		calc_new_coords()
+
+		if(!my_galaxy)
+			my_galaxy = GALAXY
+			link_stars()
+			link_landmark()
+			GALAXY.bodies += background_ship_datum
 
 		if(old_x == galactic_x && old_y == galactic_y)
 			return
@@ -224,20 +295,20 @@
 				src.unload_body(G)
 
 		if(my_galactic_objects.len > 0 && !src.tracking)
-			spawn(0)
+			SPAWN(0)
 				src.begin_tracking()
 		else if (my_galactic_objects.len == 0 && src.tracking)
-			spawn(0)
+			SPAWN(0)
 				src.end_tracking()
 
 	proc/load_body(var/datum/galactic_object/G, var/force_tracking_update = 0)
 		if(!(src in G.nearby_ships))
 			var/obj/background_star/galactic_object/map_body = G.load_map_body(src)
-			my_galactic_objects += map_body
+			src.my_galactic_objects += map_body
 
 			if(navigating && (G == src.navigation_target))
 				src.navigating = 0
-				if(my_pilot && src.nav_arrow in my_pilot.client.images)
+				if(my_pilot && (src.nav_arrow in my_pilot.client.images))
 					my_pilot.show_message("<span class='notice'>Navigation target reached.</span>")
 					my_pilot.client.images -= src.nav_arrow
 
@@ -252,7 +323,7 @@
 
 			if(force_tracking_update)
 				if(my_galactic_objects.len > 0 && !src.tracking)
-					spawn(0)
+					SPAWN(0)
 						src.begin_tracking()
 
 	proc/unload_body(var/datum/galactic_object/G, var/force_tracking_update = 0)
@@ -272,7 +343,7 @@
 
 			if(force_tracking_update)
 				if (my_galactic_objects.len == 0 && src.tracking)
-					spawn(0)
+					SPAWN(0)
 						src.end_tracking()
 
 	proc/update_my_stuff(var/vel, var/rot, var/vang, var/sang)
@@ -348,7 +419,7 @@
 
 	proc/remove_arrows(var/mob/M)
 		for(var/obj/background_star/galactic_object/G in src.my_galactic_objects)
-			if((my_galactic_objects[G] in my_pilot.client.images))
+			if((my_galactic_objects[G] in my_pilot.client?.images))
 				M.client.images -= my_galactic_objects[G]
 		return
 
@@ -388,7 +459,7 @@
 		return
 
 	proc/remove_nav_arrow(var/mob/M)
-		if((src.nav_arrow in my_pilot.client.images))
+		if((src.nav_arrow in my_pilot.client?.images))
 			M.client.images -= src.nav_arrow
 		return
 
@@ -405,15 +476,15 @@
 			M.client.images += back
 
 	proc/remove_thrusters(var/mob/M)
-		if(front_right in M.client.images)
+		if(front_right in M.client?.images)
 			M.client.images -= front_right
-		if(front_left in M.client.images)
+		if(front_left in M.client?.images)
 			M.client.images -= front_left
-		if(back_right in M.client.images)
+		if(back_right in M.client?.images)
 			M.client.images -= back_right
-		if(back_left in M.client.images)
+		if(back_left in M.client?.images)
 			M.client.images -= back_left
-		if(back in M.client.images)
+		if(back in M.client?.images)
 			M.client.images -= back
 
 
@@ -429,6 +500,14 @@
 	galactic_y = 30
 	vel_angle = 180
 	has_back = 0
+	bottom_x_offset = null
+	is_syndicate = TRUE
+
+	New()
+		..()
+#ifndef DEBUG_ARTEMIS
+		qdel(src)
+#endif
 
 /obj/artemis/manta
 	name = "Manta-"
@@ -449,15 +528,17 @@
 	var/drag_coefficient = 0.01
 	var/engine_working_temp = 1
 	var/r_curvature = 50
-
 	controller_type = "manta"
 
+	New()
+		..()
+		qdel(src)
 
 	fast_process()
 		while(do_process)
 			if(vel_mag)
 				calc_new_coords()
-				if(engine_check()) // ENGINE CHECK HERE LATER
+				if(src.engine_check()) // ENGINE CHECK HERE LATER
 					if(!back.icon_state)
 						back.icon_state = "[icon_base]_thruster_back"
 				else
@@ -491,6 +572,9 @@
 			S.ships_id =  src.stars_id
 			S.max_r = map_max_r
 			S.max_r_squared = map_max_r_squared
+			S.galaxy_icon = image(S.icon, S, S.icon_state, S.layer)
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_MAP_ICONS).add_image(S.galaxy_icon)
+			S.icon = null
 
 	handle_rotate()
 		if(!src.rot_loop_on)
@@ -521,3 +605,137 @@
 		if(src.rot_mag)
 			return 1
 		return 0
+
+/area/ship
+	teleport_blocked = TRUE
+
+	artemis
+		name = "Artemis"
+	arjuna
+		name = "Arjuna"
+	manta
+		name = "Manta"
+	space_canvas
+		name = "Space Canvas"
+
+	Entered(atom/movable/A)
+		. = ..()
+		if(ismob(A))
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).add_mob(A)
+
+	Exited(atom/movable/A)
+		. = ..()
+		if(ismob(A))
+			get_image_group(CLIENT_IMAGE_GROUP_ARTEMIS_SHIP_ICONS).remove_mob(A)
+
+
+// Azrun TODO Move to Event File
+/datum/random_event/minor/artemis_transponder
+	name = "Artemis Transponder"
+	customization_available = TRUE
+	disabled = 1
+	weight = 10
+	var/list/event_transmissions
+
+	var/options = list(
+		"Martians"=10,
+		"Zombies"=10,
+		"Flock"=1,
+		"Assault"=2,
+		"Disappeared"=4
+		)
+
+	admin_call(var/source)
+		if (..())
+			return
+
+		var/scenario = tgui_input_list(usr,"What happened to Artemis crew?", "Artemis Incident", src.options)
+
+		src.event_effect(source, scenario)
+
+	event_effect(source, scenario)
+		..()
+
+		if(!scenario)
+			scenario = weighted_pick(src.options)
+
+		spawn_scenario(scenario)
+
+		var/command_report = "Transponder data has been detected from the NSS Artemis.  Encryption key uploaded to Quantum telescope to allow for asset recovery."
+		tele_man.addManualEvent(eventType=/datum/telescope_event/artemis, active=TRUE)
+
+		var/sound_to_play = "sound/misc/announcement_1.ogg"
+		command_announcement(replacetext(command_report, "\n", "<br>"), "Priority Broadcast Received", sound_to_play, do_sanitize=0);
+		return
+
+
+	is_event_available(var/ignore_time_lock = 0)
+		return 0
+
+	proc/spawn_scenario(scenario)
+		var/list/mob_types
+		var/mob_count
+		var/body_count
+		var/artemis_turfs = get_area_turfs(/area/ship/artemis, 1)
+		var/broken_lights = rand(0,5)
+		switch(scenario)
+			if("Martians")
+				mob_types = list(/mob/living/critter/martian=50, /mob/living/critter/martian/soldier=10, /mob/living/critter/martian/mutant=1, /mob/living/critter/martian/warrior=10, null=5)
+				mob_count = 10
+				body_count = 8
+			if("Zombies")
+				mob_types = list(/mob/living/critter/zombie/scientist=5,/mob/living/critter/zombie/radiation=2, /mob/living/critter/zombie/security=2, /mob/living/critter/zombie=10, null=1)
+				mob_count = 8
+				body_count = 2
+			if("Flock")
+				mob_types = list(/mob/living/critter/flock/drone=1,/mob/living/critter/flock/bit=5)
+				mob_count = 2
+				body_count = 8
+			if("Assault")
+				mob_types = list(/obj/decoration/syndcorpse5=1,/obj/decoration/syndcorpse10=1,/obj/dialogueobj/engineerscorpse=4,/obj/dialogueobj/securitycorpse1=4,/obj/dialogueobj/securitycorpse6=4,/obj/dialogueobj/securitycorpse7=1,/obj/dialogueobj/syndiecorpse7=1)
+				mob_count = 6
+				body_count = 4
+				broken_lights = 5
+				for(var/i in 1 to rand(6,10))
+					var/turf/T = pick(artemis_turfs)
+					if(prob(70))
+						for(var/j in 1 to rand(2,5))
+							new /obj/item/casing/small(T)
+					else if(prob(70))
+						for(var/j in 1 to rand(2,3))
+							new /obj/item/casing/shotgun/red(T)
+					else
+						new /obj/item/casing/rifle(T)
+
+
+		var/bodies_to_gib
+		if(body_count)
+			bodies_to_gib = list()
+			for(var/i in 1 to body_count)
+				if(prob(10))
+					bodies_to_gib += new /mob/living/carbon/human/npc(pick(artemis_turfs))
+				else
+					gibs(pick(artemis_turfs))
+
+		if(mob_types && mob_count)
+			for(var/i in 1 to mob_count)
+				var/mob_path = weighted_pick(mob_types)
+				if(mob_path != "null")
+					new mob_path(pick(artemis_turfs))
+
+		if(broken_lights)
+			var/obj/machinery/light/L
+			var/list/obj/machinery/light/lights = list()
+
+			var/area/A = get_area_by_type(/area/ship/artemis)
+			for(L in A.machines)
+				lights += L
+			for(var/i in 1 to broken_lights)
+				L = pick(lights)
+				L.broken()
+
+		sleep(10 SECONDS)
+		for(var/mob/living/carbon/human/M in bodies_to_gib)
+			M.gib()
+
+#endif

@@ -1,10 +1,13 @@
+TYPEINFO(/obj/machinery/gibber)
+	mats = 15
+
 /obj/machinery/gibber
 	name = "Gibber"
 	desc = "The name isn't descriptive enough?"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "grinder"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/operating = 0 //Is it on?
 	var/dirty = 0 // Does it need cleaning?
 	var/mob/occupant // Mob who has been put inside
@@ -14,7 +17,6 @@
 	var/machine_startup_sound = 'sound/machines/tractorrev.ogg'
 	var/machine_shutdown_sound = 'sound/machines/tractor_running3.ogg'
 	var/rotor_sound = 'sound/machines/lavamoon_rotors_fast_short.ogg'
-	mats = 15
 	deconstruct_flags =  DECON_WRENCH | DECON_WELDER
 
 	output_north

@@ -27,7 +27,7 @@
 
 
 /// in kPa * L/(K * mol)
-#define R_IDEAL_GAS_EQUATION	8.31
+#define R_IDEAL_GAS_EQUATION	8.3144626
 /// 1atm, now in kPa
 #define ONE_ATMOSPHERE		101.325
 
@@ -95,6 +95,13 @@
 /// Minimum amount of air that has to move before a group processing can be suspended
 #define MINIMUM_AIR_TO_SUSPEND MOLES_CELLSTANDARD*MINIMUM_AIR_RATIO_TO_SUSPEND
 
+//multi group checking
+/// Our group processing check failed. We will suspend group processing.
+#define SELF_CHECK_FAIL 0
+/// Sharer group processing check failed. The sharer will suspend group processing.
+#define SHARER_CHECK_FAIL -1
+/// All group processing checks passed. Group processing can be preserved.
+#define GROUP_CHECK_PASS 1
 
 #define MINIMUM_WATER_TO_SUSPEND MOLAR_DENSITY_WATER*CELL_VOLUME*MINIMUM_AIR_RATIO_TO_SUSPEND
 
@@ -140,6 +147,17 @@
 /// Hotspot Maximum Temperature to maintain maths works to 1e35-sh in practice)
 #define HOTSPOT_MAX_CAT_TEMPERATURE (INFINITY)
 
+// Radgas properties
+// Rad particles concentration required to contaminate stuff
+#define RADGAS_MINIMUM_CONTAMINATION_MOLES 5
+// how much stuff gets contaminated per tick
+#define RADGAS_MAXIMUM_CONTAMINATION_TICK 5
+// maximum amount stuff can be contaminated by radgas - lower values mean it'll spread out more, higher values mean it'll be more deadly
+#define RADGAS_MAXIMUM_CONTAMINATION 10
+// how much radstrength per mole of contamination is applied - how much radiation per radgas
+#define RADGAS_CONTAMINATION_PER_MOLE 5
+// only apply contamination to atoms on a turf every few seconds, instead of every tick
+#define RADGAS_CONTAMINATION_COOLDOWN 3 SECONDS
 //Gas Reaction Flags
 #define REACTION_ACTIVE (1<<0) 	//! Reaction is Active
 #define COMBUSTION_ACTIVE (1<<1) //! Combustion is Active
@@ -173,7 +191,9 @@
 // archiving
 
 // comment out to make atmos a bit less precise but less memory intensive and maybe a bit faster, may cause bugs
+// "Archiving gas is how you ensure the order of turfs talking to each other is consistent. It's a key part of the sim actually working" - LemonInTheDark
 // #define ATMOS_ARCHIVING
+
 
 #ifdef ATMOS_ARCHIVING
 #define ARCHIVED(VAR) VAR##_archived
@@ -201,11 +221,14 @@ What can break when adding new gases:
 	TEG stats computer will ignore your new gas. Feel free to add it to reactor_stats.dm manually but good luck.
 */
 
-#define SPECIFIC_HEAT_PLASMA		200
-#define SPECIFIC_HEAT_O2		20
-#define SPECIFIC_HEAT_N2		20
-#define SPECIFIC_HEAT_CO2		30
-#define SPECIFIC_HEAT_FARTS 69
+#define SPECIFIC_HEAT_PLASMA	150
+#define SPECIFIC_HEAT_O2		40
+#define SPECIFIC_HEAT_N2		50
+#define SPECIFIC_HEAT_CO2		40
+#define SPECIFIC_HEAT_FARTS 	69
+#define SPECIFIC_HEAT_RADGAS 	5
+#define SPECIFIC_HEAT_N2O		60
+#define SPECIFIC_HEAT_AGENTB	300
 
 #define _APPLY_TO_GASES(PREF, SUFF, MACRO, ARGS...) \
 	MACRO(PREF ## oxygen ## SUFF, SPECIFIC_HEAT_O2, "O2", ARGS) \
@@ -213,13 +236,19 @@ What can break when adding new gases:
 	MACRO(PREF ## carbon_dioxide ## SUFF, SPECIFIC_HEAT_CO2, "CO2", ARGS) \
 	MACRO(PREF ## toxins ## SUFF, SPECIFIC_HEAT_PLASMA, "Plasma", ARGS) \
 	MACRO(PREF ## farts ## SUFF, SPECIFIC_HEAT_FARTS, "Farts", ARGS) \
+	MACRO(PREF ## radgas ## SUFF, SPECIFIC_HEAT_RADGAS, "Fallout", ARGS) \
+	MACRO(PREF ## nitrous_oxide ## SUFF, SPECIFIC_HEAT_N2O, "N2O", ARGS) \
+	MACRO(PREF ## oxygen_agent_b ## SUFF, SPECIFIC_HEAT_AGENTB, "Oxygen Agent B", ARGS) \
 
 #define APPLY_TO_GASES(MACRO, ARGS...) \
 	MACRO(oxygen, SPECIFIC_HEAT_O2, "O2", ARGS) \
 	MACRO(nitrogen, SPECIFIC_HEAT_N2, "N2", ARGS) \
 	MACRO(carbon_dioxide, SPECIFIC_HEAT_CO2, "CO2", ARGS) \
 	MACRO(toxins, SPECIFIC_HEAT_PLASMA, "Plasma", ARGS) \
-	MACRO(farts, SPECIFIC_HEAT_FARTS, "Farts", ARGS)
+	MACRO(farts, SPECIFIC_HEAT_FARTS, "Farts", ARGS) \
+	MACRO(radgas, SPECIFIC_HEAT_RADGAS, "Fallout", ARGS) \
+	MACRO(nitrous_oxide, SPECIFIC_HEAT_N2O, "N2O", ARGS) \
+	MACRO(oxygen_agent_b, SPECIFIC_HEAT_AGENTB, "Oxygen Agent B", ARGS) \
 //	_APPLY_TO_GASES(,, MACRO, ARGS) // replace with this when the langserver gets fixed >:(
 // (the _APPLY_TO_GASES version compiles and works fine but the linter rejects it for now)
 
@@ -246,8 +275,10 @@ proc/gas_text_color(gas_id)
 			return "orange"
 		if("toxins")
 			return "red"
-		if ("farts")
+		if("farts")
 			return "purple"
+		if("radgas")
+			return "green"
 	return "black"
 
 ////////////////////////////
@@ -259,58 +290,31 @@ proc/gas_text_color(gas_id)
 #define MINIMUM_REACT_QUANTITY MINIMUM_HEAT_CAPACITY
 #define QUANTIZE(variable)		(round(variable, ATMOS_EPSILON))
 
-/// Given a gas mixture, zeroes it
+// Zeroing gases
 #define _ZERO_GAS(GAS, _, _, MIXTURE) (MIXTURE).GAS = 0;
-#define ZERO_BASE_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)
-#define ZERO_ARCHIVED_BASE_GASES(MIXTURE) APPLY_TO_ARCHIVED_GASES(_ZERO_GAS, MIXTURE)
+/// Given a gas mixture, zeroes it.
+#define ZERO_GASES(MIXTURE) APPLY_TO_GASES(_ZERO_GAS, MIXTURE)
+/// Given a gas mixture, zeroes it's archived gases.
+#define ZERO_ARCHIVED_GASES(MIXTURE) APPLY_TO_ARCHIVED_GASES(_ZERO_GAS, MIXTURE)
 
 // total moles
-
 #define _GAS_MOLES_ADD(GAS, _, _, MIXTURE) (MIXTURE).GAS +
-#define BASE_GASES_TOTAL_MOLES(MIXTURE) (APPLY_TO_GASES(_GAS_MOLES_ADD, MIXTURE) 0)
-
-/datum/gas_mixture/proc/total_moles_full()
-	. = BASE_GASES_TOTAL_MOLES(src)
-	for(var/datum/gas/trace_gas as anything in trace_gases)
-		. += trace_gas.moles
-
 /// Returns total moles of a given gas mixture
-#define TOTAL_MOLES(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).total_moles_full() : BASE_GASES_TOTAL_MOLES(MIXTURE))
+#define TOTAL_MOLES(MIXTURE) (APPLY_TO_GASES(_GAS_MOLES_ADD, MIXTURE) 0)
 
 // pressure
-
+/// Returns the mixture pressure.
 #define MIXTURE_PRESSURE(MIXTURE) (TOTAL_MOLES(MIXTURE) * R_IDEAL_GAS_EQUATION * (MIXTURE).temperature / (MIXTURE).volume)
-
-#define ADD_MIXTURE_PRESSURE(MIXTURE, VAR) do { \
-	var/_moles = BASE_GASES_TOTAL_MOLES(MIXTURE); \
-	if(length(MIXTURE.trace_gases)) { \
-		for(var/datum/gas/trace_gas as anything in MIXTURE.trace_gases) { \
-			_moles += trace_gas.moles; \
-		} \
-	} \
-	VAR += _moles * R_IDEAL_GAS_EQUATION * MIXTURE.temperature / MIXTURE.volume; \
-} while (0)
+/// Add the pressure of the mixture to VAR.
+#define ADD_MIXTURE_PRESSURE(MIXTURE, VAR) VAR += TOTAL_MOLES(MIXTURE) * R_IDEAL_GAS_EQUATION * MIXTURE.temperature / MIXTURE.volume
 
 // heat capacity
-
 #define _GAS_HEAT_CAP(GAS, SPECIFIC_HEAT, _, MIXTURE) (MIXTURE).GAS * SPECIFIC_HEAT +
-#define BASE_GASES_HEAT_CAPACITY(MIXTURE) (APPLY_TO_GASES(_GAS_HEAT_CAP, MIXTURE) 0)
-#define BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE) (APPLY_TO_ARCHIVED_GASES(_GAS_HEAT_CAP, MIXTURE) 0)
-
-/datum/gas_mixture/proc/heat_capacity_full()
-	. = BASE_GASES_HEAT_CAPACITY(src)
-	for(var/datum/gas/trace_gas as anything in trace_gases)
-		. += trace_gas.moles * trace_gas.specific_heat
-
-#define HEAT_CAPACITY(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_full() : BASE_GASES_HEAT_CAPACITY(MIXTURE))
-
-/datum/gas_mixture/proc/heat_capacity_archived_full()
-	. = BASE_GASES_HEAT_CAPACITY(src)
-	for(var/datum/gas/trace_gas as anything in trace_gases)
-		. += trace_gas.ARCHIVED(moles) * trace_gas.specific_heat
-
-#define HEAT_CAPACITY_ARCHIVED(MIXTURE) (length((MIXTURE).trace_gases) ? (MIXTURE).heat_capacity_archived_full() : BASE_GASES_ARCH_HEAT_CAPACITY(MIXTURE))
-
+/// Returns the total heat capacity of the given mixture
+#define HEAT_CAPACITY(MIXTURE) (APPLY_TO_GASES(_GAS_HEAT_CAP, MIXTURE) 0)
+/// Returns the total heat capacity of the given mixture's archived gases.
+#define HEAT_CAPACITY_ARCHIVED(MIXTURE) (APPLY_TO_ARCHIVED_GASES(_GAS_HEAT_CAP, MIXTURE) 0)
+/// Returns the total heat energy of the given mixture
 #define THERMAL_ENERGY(MIXTURE) ((MIXTURE).temperature * HEAT_CAPACITY(MIXTURE))
 
 // air stats
@@ -323,14 +327,10 @@ proc/gas_text_color(gas_id)
 
 // requires var/total_moles = TOTAL_MOLES(MIXTURE) defined beforehand
 #define _CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%[SEP]" +
-#define _UNKNOWN_CONCENTRATION_REPORT(MIXTURE, SEP) (length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%[SEP]": "")
-#define CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_CONCENTRATION_REPORT, MIXTURE, SEP) _UNKNOWN_CONCENTRATION_REPORT(MIXTURE, SEP))
+#define CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_CONCENTRATION_REPORT, MIXTURE, SEP) "")
 
 #define _SIMPLE_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, SEP) "[(round(MIXTURE.GAS / total_moles * 100)) ? "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%[SEP]" : ""]" +
-#define _SIMPLE_UNKNOWN_CONCENTRATION_REPORT(MIXTURE, SEP) "[(length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%[SEP]": "")]"
-#define SIMPLE_CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_SIMPLE_CONCENTRATION_REPORT, MIXTURE, SEP) _SIMPLE_UNKNOWN_CONCENTRATION_REPORT(MIXTURE, SEP))
+#define SIMPLE_CONCENTRATION_REPORT(MIXTURE, SEP) (APPLY_TO_GASES(_SIMPLE_CONCENTRATION_REPORT, MIXTURE, SEP) "")
 
 #define _LIST_CONCENTRATION_REPORT(GAS, _, NAME, MIXTURE, LIST) LIST += "[NAME]: [round(MIXTURE.GAS / total_moles * 100)]%";
-#define _LIST_UNKNOWN_CONCENTRATION_REPORT(MIXTURE, LIST) LIST += (length((MIXTURE).trace_gases) ? "Unknown: [round((total_moles - BASE_GASES_TOTAL_MOLES(MIXTURE)) / total_moles * 100)]%": "")
-#define LIST_CONCENTRATION_REPORT(MIXTURE, LIST) APPLY_TO_GASES(_LIST_CONCENTRATION_REPORT, MIXTURE, LIST) \
-_LIST_UNKNOWN_CONCENTRATION_REPORT(MIXTURE, LIST)
+#define LIST_CONCENTRATION_REPORT(MIXTURE, LIST) APPLY_TO_GASES(_LIST_CONCENTRATION_REPORT, MIXTURE, LIST)

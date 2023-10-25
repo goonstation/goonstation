@@ -51,8 +51,8 @@
 	icon_state = "critter_spawn"
 	density = 0
 	opacity = 0
-	anchored = 1
-	var/critter = /obj/critter/bear
+	anchored = ANCHORED
+	var/critter = /mob/living/critter/bear
 	var/spawn_delay = 20
 	var/tmp/next_spawn = 0
 	var/spawn_count = 1
@@ -63,6 +63,7 @@
 
 	var/list/critter_vars = list()
 
+	// objcritter options
 	var/aggressive = null // bool
 	var/atkcarbon = null // bool
 	var/atksilicon = null // bool
@@ -70,32 +71,47 @@
 	var/opensdoors = null //bool
 	var/wanderer = null // bool
 
+	// mobcritter options
+	var/health_brute = null
+	var/health_burn = null
+
+
+
 	New()
 		..()
 		src.underlays += image('icons/obj/randompuzzles.dmi', "critter_spawn")
-		if (src.aggressive != null)
-			src.critter_vars += "aggressive"
-			src.critter_vars["aggressive"] = src.aggressive
+		if (ispath(critter, /obj/critter))
+			if (src.aggressive != null)
+				src.critter_vars += "aggressive"
+				src.critter_vars["aggressive"] = src.aggressive
 
-		if (src.atkcarbon != null)
-			src.critter_vars += "atkcarbon"
-			src.critter_vars["atkcarbon"] = src.atkcarbon
+			if (src.atkcarbon != null)
+				src.critter_vars += "atkcarbon"
+				src.critter_vars["atkcarbon"] = src.atkcarbon
 
-		if (src.atksilicon != null)
-			src.critter_vars += "atksilicon"
-			src.critter_vars["atksilicon"] = src.atksilicon
+			if (src.atksilicon != null)
+				src.critter_vars += "atksilicon"
+				src.critter_vars["atksilicon"] = src.atksilicon
 
-		if (src.health != null)
-			src.critter_vars += "health"
-			src.critter_vars["health"] = src.health
+			if (src.health != null)
+				src.critter_vars += "health"
+				src.critter_vars["health"] = src.health
 
-		if (src.opensdoors != null)
-			src.critter_vars += "opensdoors"
-			src.critter_vars["opensdoors"] = src.opensdoors
+			if (src.opensdoors != null)
+				src.critter_vars += "opensdoors"
+				src.critter_vars["opensdoors"] = src.opensdoors
 
-		if (src.wanderer != null)
-			src.critter_vars += "wanderer"
-			src.critter_vars["wanderer"] = src.wanderer
+			if (src.wanderer != null)
+				src.critter_vars += "wanderer"
+				src.critter_vars["wanderer"] = src.wanderer
+
+		else if (ispath(critter, /mob/living/critter))
+			if (!isnull(src.critter_vars["health_brute"]))
+				src.critter_vars["health_brute"] = src.health_brute
+			if (!isnull(src.critter_vars["health_burn"]))
+				src.critter_vars["health_burn"] = src.health_burn
+		else
+			stack_trace("There's an enemy spawn trigger which has a non-critter path, someone should fix that")
 
 	trigger_actions()
 		return triggeracts
@@ -124,10 +140,9 @@
 					next_spawn = world.time + spawn_delay
 					var/turf/T = get_turf(src)
 					for (var/i = 0, i < spawn_count, i++)
-						var/obj/critter/C = new critter(T)
+						var/atom/movable/C = new critter(T) // we're using `.vars` anyways, who gives a shit about types
 						for (var/varname in src.critter_vars)
 							C.vars[varname] = src.critter_vars[varname]
-					return
 
 	serialize(var/savefile/F, var/path, var/datum/sandbox/sandbox)
 		..()

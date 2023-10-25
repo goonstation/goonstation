@@ -26,11 +26,15 @@ var/global/logLength = 0
 	var/forceNonDiaryLoggingToo = FALSE
 	var/area/A
 
+	if(istype(source, /mob/living/carbon/human/preview) && type == LOG_COMBAT)
+		return //we don't give a flying fuck about the preview mobs maving mutations - but maybe we care about debug etc.?
+
 	if (source)
 		A = get_area(source)
 		source = constructName(source, type)
 	else
 		if (type != LOG_DIARY) source = "<span class='blank'>(blank)</span>"
+
 
 	if (disable_log_lists) // lag reduction hack - ONLY print logs to the web versions
 		if (type == LOG_DIARY)
@@ -74,6 +78,7 @@ var/global/logLength = 0
 			if (LOG_VEHICLE) logs[LOG_VEHICLE] += ingameLog
 			if (LOG_GAMEMODE) logs[LOG_GAMEMODE] += ingameLog
 			if (LOG_TOPIC) logs[LOG_TOPIC] += ingameLog
+			if (LOG_CHEMISTRY) logs[LOG_CHEMISTRY] += ingameLog
 			if (LOG_DIARY)
 				diaryLogging = should_diary_log(diaryType)
 
@@ -165,7 +170,7 @@ var/global/logLength = 0
 	var/mob/mobRef
 	if (ismob(ref))
 		mobRef = ref
-		traitor = checktraitor(mobRef)
+		traitor = mobRef.mind?.is_antagonist()
 		if (mobRef.name)
 			if (ishuman(mobRef))
 				var/mob/living/carbon/human/humanRef = mobRef
@@ -204,7 +209,7 @@ var/global/logLength = 0
 		online = 1
 		if (clientRef.mob)
 			mobRef = clientRef.mob
-			traitor = checktraitor(mobRef)
+			traitor = mobRef.mind?.is_antagonist()
 			if (mobRef.name)
 				if (ishuman(clientRef.mob))
 					var/mob/living/carbon/human/humanRef = clientRef.mob
@@ -229,6 +234,16 @@ var/global/logLength = 0
 		nice_rack += "(UID: [rack_ref.unique_id]) at "
 		nice_rack += log_loc(rack_ref)
 		return nice_rack.Join()
+	else if(istype(ref,/datum/mind))
+		var/datum/mind/mindRef = ref
+		if(mindRef.current && ismob(mindRef.current))
+			return(constructName(mindRef.current, type))
+		else
+			name = "[mindRef.displayed_key] (character destroyed)"
+			if (mindRef.key)
+				key = mindRef.key
+			if (mindRef.ckey)
+				ckey = mindRef.ckey
 	else
 		return ref
 

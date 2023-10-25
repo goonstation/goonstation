@@ -1,17 +1,19 @@
 var/list/genescanner_addresses = list()
 var/list/genetek_hair_styles = list()
 
+TYPEINFO(/obj/machinery/genetics_scanner)
+	mats = 15
+
 /obj/machinery/genetics_scanner
 	name = "GeneTek scanner"
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "scanner_0"
 	density = 1
-	mats = 15
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/mob/occupant = null
-	var/datum/character_preview/multiclient/occupant_preview = null
+	var/datum/movable_preview/character/multiclient/occupant_preview = null
 	var/locked = 0
-	anchored = 1
+	anchored = ANCHORED
 	soundproofing = 10
 
 	var/net_id = null
@@ -281,7 +283,7 @@ var/list/genetek_hair_styles = list()
 
 	var/s_tone = "#FAD7D0"
 
-	var/datum/character_preview/multiclient/preview = null
+	var/datum/movable_preview/character/multiclient/preview = null
 
 	New(mob/target)
 		..()
@@ -291,7 +293,7 @@ var/list/genetek_hair_styles = list()
 
 		src.target_mob = target
 		src.preview = new()
-		src.preview.add_background("#092426")
+		src.preview.add_background("#092426", height_mult = 2)
 		src.load_mob_data(src.target_mob)
 		return
 

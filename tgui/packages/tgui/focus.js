@@ -23,3 +23,10 @@ export const focusWindow = () => {
     focus: true,
   });
 };
+
+/**
+ * Checks if the browser window has focus.
+ */
+export const hasWindowFocus = () => {
+  return document.hasFocus();
+};

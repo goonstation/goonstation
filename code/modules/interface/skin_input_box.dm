@@ -119,6 +119,8 @@ var/list/input_window_presets =  list(
 	"whisper" = list("whisperwindow", "whisper \\\"text\\\"", ".whisper", ".cancel_typing whisper"),
 	"emote" = list("emotewindow", "Choose an emote to display.", ".emote", ".cancel_typing emote"),
 	"me"  = list("mewindow",  "me (text)",        ".me",  ".cancel_typing me"),
+	"radiosay" = list("radiosaywindow", "main channel radio", "say_main_radio", null),
+	"radiochannelsay" = list("radiochannelsaywindow", "radio channel radio", "say_channel_radio", null),
 )
 
 /client/proc/create_preset_input_window(name, force=FALSE, show=TRUE)
@@ -151,6 +153,12 @@ var/list/input_window_presets =  list(
 
 	create_preset_input_window("me")
 
+/client/verb/init_radiosay()
+	set name = ".init_radiosay"
+	set hidden = TRUE
+
+	create_preset_input_window("radiosay")
+
 //Verb available to the user in case something in the window breaks
 /client/verb/fix_chatbox()
 	set name = "Fix chatbox"
@@ -171,3 +179,4 @@ var/list/input_window_presets =  list(
 		create_preset_input_window("whisper", show=FALSE)
 		create_preset_input_window("emote", show=FALSE)
 		create_preset_input_window("me", show=FALSE)
+		create_preset_input_window("radiosay", show=FALSE)

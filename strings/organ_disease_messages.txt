@@ -1,3 +1,3 @@
 feelbetter@=You feel better.@,You start feeling slightly better.@,Your body feels less exhausted.@,Your health seems to be improving.@,Your condition seems to be getting better.
 appendicitis0@=You feel faint.@,Something doesn't feel right.@,Your head hurts.@,Your vision goes blurry for a brief moment.@,You feel rather tired.
-appendicitis1@=You feel feverish.@,You start to feel warmer.@,Your body feels warmer then usually.@,Your body temperature seems to be going up.
+appendicitis1@=You feel feverish.@,You start to feel warmer.@,Your body feels warmer than usual.@,Your body temperature seems to be going up.

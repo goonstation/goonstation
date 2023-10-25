@@ -9,7 +9,7 @@
 // obj/submachine/seed.dm: The splicer and reagent extractor are in here.
 
 ABSTRACT_TYPE(/datum/plant)
-/datum/plant/
+/datum/plant
 	// Standard variables for plants are added here.
 	var/name = "plant species name" // Name of the plant species
 	var/sprite = null         // The plant's normal sprite - overridden by special_icon
@@ -32,6 +32,7 @@ ABSTRACT_TYPE(/datum/plant)
 	var/nectarlevel = 0 //If nonzero, slowly tries to maintain this level of nectar reagent.
 	var/list/assoc_reagents = list() // Used for extractions, harvesting, etc
 	var/list/commuts = list() // What general mutations can occur in this plant?
+	var/list/innate_commuts = list() //! What kind of mutations should every seed of this plant receive when it is generated
 	var/list/mutations = list() // what mutant variants does this plant have?
 	var/genome = 0 // Used for splicing - how "similar" the plants are = better odds of splice
 	var/stop_size_scaling // Stops the enlarging of sprites based on quality
@@ -39,9 +40,11 @@ ABSTRACT_TYPE(/datum/plant)
 
 	var/special_proc = 0 // Does this plant do something special when it's in the pot?
 	var/attacked_proc = 0 // Does this plant react if you try to attack it?
+	var/proximity_proc = 0 // Does this plant react to things moving around it?
 	var/harvested_proc = 0 // Take a guess
 
-	var/dont_rename_crop = false	// don't rename the crop after the plant
+	/// Don't rename the crop after the plant.
+	var/dont_rename_crop = FALSE
 
 
 	var/category = null // Used for vendor filtering
@@ -64,6 +67,8 @@ ABSTRACT_TYPE(/datum/plant)
 		else
 			return "[src.name]-G[grow_level]"
 
+	proc/getIconOverlay(grow_level, datum/plantmutation/MUT)
+		return
 
 	proc/getBase64Img()
 		var/path = src.type
@@ -157,7 +162,7 @@ ABSTRACT_TYPE(/datum/plant)
 	proc/HYPinfusionP(var/obj/item/seed/S,var/reagent)
 		var/datum/plantgenes/DNA = S.plantgenes
 
-		var/damage_prob = 100 - (src.endurance + DNA.endurance)
+		var/damage_prob = 100 - (src.endurance + DNA?.get_effective_value("endurance"))
 		damage_prob = clamp(damage_prob, 0, 100)
 		var/damage_amt = 0
 		switch (reagent)
@@ -178,9 +183,9 @@ ABSTRACT_TYPE(/datum/plant)
 					damage_amt = rand(15,30)
 			if ("blood","bloodc")
 				if (src.growthmode == "carnivore")
-					DNA.growtime += rand(5,10)
-					DNA.harvtime += rand(5,10)
-					DNA.endurance += rand(10,30)
+					DNA.growtime += rand(4,6)
+					DNA.harvtime += rand(4,6)
+					DNA.endurance += rand(4,8)
 			if ("radium","uranium")
 				damage_amt = rand(5,15)
 				HYPmutateDNA(DNA,1)
@@ -191,19 +196,19 @@ ABSTRACT_TYPE(/datum/plant)
 				HYPnewcommutcheck(src,DNA, 2)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(2))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
 			if ("mutagen")
 				HYPmutateDNA(DNA,2)
 				HYPnewcommutcheck(src,DNA, 3)
 				HYPnewmutationcheck(src,DNA,null,1,S)
 				if (prob(5))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/unstable)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/unstable)
 			if ("ammonia")
 				damage_amt = rand(10,20)
 				DNA.growtime += rand(5,10)
 				DNA.harvtime += rand(2,5)
 				if (prob(5))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/accelerator)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/accelerator)
 			if ("potash")
 				DNA.cropsize += rand(1,4)
 				DNA.harvests -= rand(0,2)
@@ -213,7 +218,7 @@ ABSTRACT_TYPE(/datum/plant)
 			if ("space_fungus")
 				DNA.endurance += rand(1,3)
 				if (prob(3))
-					HYPaddCommut(S.planttype,DNA,/datum/plant_gene_strain/damage_res)
+					HYPaddCommut(DNA,/datum/plant_gene_strain/damage_res)
 			if ("mutadone")
 				if (DNA.growtime < 0)
 					DNA.growtime++
@@ -229,11 +234,13 @@ ABSTRACT_TYPE(/datum/plant)
 					DNA.endurance++
 
 		if (damage_amt)
-			if (prob(damage_prob)) S.seeddamage += damage_amt
-		if (S.seeddamage > 99)
-			return 99 // destroy the seed
+			if (prob(damage_prob))
+				S.seeddamage += damage_amt
 
-/datum/plantgenes/
+	proc/ProximityProc(var/obj/machinery/plantpot/POT,var/mob/user) // Simple proximity proc for stuff like nettles
+		return
+
+/datum/plantgenes
 	var/growtime = 0 // These vars are pretty much bonuses/penalties applied on top of the
 	var/harvtime = 0 // same vars found in /datum/plant honestly. They go largely towards
 	var/harvests = 0 // the same purpose for the most part.
@@ -263,6 +270,28 @@ ABSTRACT_TYPE(/datum/plant)
 			src.d_potency = rand(0,1)
 			src.d_endurance = rand(0,1)
 			// optimise this later
+
+	/// This gives out a plant stat, modified by all commuts that affect produce
+	proc/get_effective_value(gene_stat as text)
+		var/output_base = 0
+		switch(gene_stat)
+			if("growtime")
+				output_base = src.growtime
+			if("harvtime")
+				output_base = src.harvtime
+			if("harvests")
+				output_base = src.harvtime
+			if("cropsize")
+				output_base = src.cropsize
+			if("potency")
+				output_base = src.potency
+			if("endurance")
+				output_base = src.endurance
+		var/output_real = output_base
+		if (src.commuts)
+			for (var/datum/plant_gene_strain/X in src.commuts)
+				output_real +=  round(X.get_plant_stat_modifier(src, gene_stat, output_base))
+		return output_real
 
 /datum/action/bar/icon/harvest_plant  //In the words of my forebears, "I really don't know a good spot to put this, so im putting it here, fuck you." Adds a channeled action to harvesting flagged plants.
 	id = "harvest_plant"

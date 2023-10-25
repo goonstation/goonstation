@@ -97,7 +97,6 @@ var/global
 				//"browserassets/js/anchorme.js",
 				"browserassets/js/browserOutput.js",
 				"browserassets/css/fonts/fontawesome-webfont.eot",
-				"browserassets/css/fonts/fontawesome-webfont.svg",
 				"browserassets/css/fonts/fontawesome-webfont.ttf",
 				"browserassets/css/fonts/fontawesome-webfont.woff",
 				"browserassets/css/font-awesome.css",
@@ -132,7 +131,7 @@ var/global
 		src.messageQueue = null
 		if (ua)
 			//For persistent user tracking
-			apiHandler.queryAPI("versions/add", list(
+			apiHandler?.queryAPI("versions/add", list(
 				"ckey" = src.owner.ckey,
 				"userAgent" = ua,
 				"byondMajor" = src.owner.byond_version,
@@ -190,19 +189,19 @@ var/global
 			return
 
 		var/list/connData = json_decode(cookie)
-		if (connData && islist(connData) && connData.len > 0 && connData["connData"])
+		if (connData && islist(connData) && length(connData) && connData["connData"])
 			src.connectionHistory = connData["connData"] //lol fuck
 			var/list/found = new()
 			for (var/i = src.connectionHistory.len; i >= 1; i--)
 				var/list/row = src.connectionHistory[i]
-				if (!row || row.len < 3 || (!row["ckey"] && !row["compid"] && !row["ip"])) //Passed malformed history object
+				if (!row || length(row) < 3 || (!row["ckey"] && !row["compid"] && !row["ip"])) //Passed malformed history object
 					return
 				if (checkBan(row["ckey"], row["compid"], row["ip"]))
 					found = row
 					break
 
 			//Uh oh this fucker has a history of playing on a banned account!!
-			if (found.len > 0 && found["ckey"] != src.owner.ckey)
+			if (length(found) && found["ckey"] != src.owner.ckey)
 				//TODO: add a new evasion ban for the CURRENT client details, using the matched row details
 				message_admins("[key_name(src.owner)] has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
 				logTheThing(LOG_DEBUG, src.owner, "has a cookie from a banned account! (Matched: [found["ckey"]], [found["ip"]], [found["compid"]])")
@@ -218,9 +217,9 @@ var/global
 
 				var/banData[] = new()
 				banData["ckey"] = src.owner.ckey
-				banData["compID"] = src.owner.computer_id
+				banData["compID"] = (found["compID"] == "N/A" ? "N/A" : src.owner.computer_id) // don't add CID if original ban doesn't have one
 				banData["akey"] = "Auto Banner"
-				banData["ip"] = src.owner.address
+				banData["ip"] = (found["ip"] == "N/A" ? "N/A" : src.owner.address) // don't add IP if original ban doesn't have one
 				banData["reason"] = "\[Evasion Attempt\] Previous ckey: [found["ckey"]]"
 				banData["mins"] = 0
 				addBan(banData)
@@ -384,9 +383,12 @@ var/global
 
 			baseData = icon2base64(icon, iconKey)
 
-		return "<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon [obj:icon_state]\" src=\"data:image/png;base64,[baseData]\" />"
+		return "<img style=\"position: relative; left: -1px; bottom: -3px;\" class=\"icon\" src=\"data:image/png;base64,[baseData]\" />"
 
 /proc/boutput(target = 0, message = "", group = "", forceScroll=FALSE)
+	// if (findtext(message, "<") != 1)
+	// 	stack_trace("Message \"[message]\" being sent via boutput without HTML tag wrapping.")
+
 	if (target == world)
 		for (var/client/C in clients)
 			boutput(C, message, group, forceScroll)
@@ -406,7 +408,9 @@ var/global
 		//Some macros remain in the string even after parsing and fuck up the eventual output
 		message = stripTextMacros(message)
 
-		message = replacetext(message, "\u2028", "") // this character crashes the js side and I don't know how to fix it there
+		// shittery that breaks text or worse
+		var/static/regex/shittery_regex = regex(@"[\u2028\u202a\u202b\u202c\u202d\u202e]", "g")
+		message = replacetext(message, shittery_regex, "")
 
 		//Grab us a client if possible
 		var/client/C
@@ -425,7 +429,7 @@ var/global
 		else if (ismind(target) && target:current)
 			C = target:current:client
 
-		if (C?.chatOutput && !C.chatOutput.loaded && C.chatOutput.messageQueue && islist(C.chatOutput.messageQueue))
+		if (islist(C?.chatOutput?.messageQueue) && !C.chatOutput.loaded)
 			//Client sucks at loading things, put their messages in a queue
 			C.chatOutput.messageQueue += list(list("message" = message, "group" = group))
 		else
@@ -462,9 +466,6 @@ var/global
 //Aliases for boutput
 /proc/out(target = 0, message = "", group = "")
 	boutput(target, message, group)
-/proc/bo(target = 0, message = "", group = "")
-	boutput(target, message, group)
-
 
 /*
 I spent so long on this regex I don't want to get rid of it :(

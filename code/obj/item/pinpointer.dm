@@ -1,8 +1,12 @@
+TYPEINFO(/obj/item/pinpointer)
+	mats = 4
+
 /obj/item/pinpointer
 	name = "pinpointer"
 	icon = 'icons/obj/items/pinpointers.dmi'
 	icon_state = "disk_pinoff"
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS| CONDUCT
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	item_state = "electronic"
 	throw_speed = 4
@@ -13,15 +17,14 @@
 	var/target_criteria = null
 	/// exact target reference
 	var/target_ref = null
-	var/active = 0
+	/// do not set directly, use turn_on and turn_off
+	var/active = FALSE
 	var/icon_type = "disk"
-	mats = 4
 	desc = "An extremely advanced scanning device used to locate things. It displays this with an extremely technicalogically advanced arrow."
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 1
 	var/image/arrow = null
-	var/atom/movable/hudarrow
 	var/hudarrow_color = "#67cd22"
 	var/max_range = null
 
@@ -39,8 +42,7 @@
 			if (!(src.target_criteria || src.target_ref || src.target))
 				user.show_text("No target criteria specified, cannot activate \the [src].", "red")
 				return
-			active = 1
-			work()
+			src.turn_on()
 			boutput(user, "<span class='notice'>You activate \the [src]</span>")
 		else
 			src.turn_off()
@@ -48,41 +50,35 @@
 
 	pickup(mob/user)
 		. = ..()
-		if(!hasvar(user, "hud")) // I'm so sorry
-			return
-		var/datum/hud/hud = user:hud
-		if(isnull(hudarrow))
-			hudarrow = hud.create_screen("pinpointer", "Pinpointer", 'icons/obj/items/pinpointers.dmi', "hudarrow", "CENTER, CENTER")
-			hudarrow.mouse_opacity = 0
-			hudarrow.appearance_flags = 0
-			hudarrow.alpha = active ? 127 : 0
-			hudarrow.color = hudarrow_color
-		else
-			hud.add_object(hudarrow)
+		if (src.active)
+			user.AddComponent(/datum/component/tracker_hud, src.target, src.hudarrow_color)
 
 	dropped(mob/user)
 		. = ..()
-		if(!hasvar(user, "hud") || isnull(hudarrow)) // very sorry once more
-			return
-		var/datum/hud/hud = user:hud
-		hud.remove_object(hudarrow)
+		var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
+		arrow?.RemoveComponent()
+
+	proc/turn_on()
+		active = TRUE
+		src.work()
+		var/mob/user = src.loc
+		if (istype(user) && src.target)
+			user.AddComponent(/datum/component/tracker_hud, src.target, src.hudarrow_color)
 
 	proc/turn_off()
-		active = 0
+		active = FALSE
 		ClearSpecificOverlays("arrow")
-		if(hudarrow)
-			animate(hudarrow, alpha=0, time=1 SECOND)
+		var/mob/user = src.loc
+		if (istype(user))
+			var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
+			arrow?.RemoveComponent()
 
 	proc/work_check()
 		return // override to interrupt work if conditions are met
 
 	proc/work()
 		set waitfor = FALSE
-		if(hudarrow)
-			animate(hudarrow, alpha=127, time=1 SECOND)
 		while(active)
-			if(!active)
-				break
 			if(!target)
 				if (target_ref)
 					target = locate(target_ref)
@@ -91,6 +87,10 @@
 				if(!target || target.qdeled)
 					src.turn_off()
 					return
+				var/mob/user = src.loc
+				if (istype(user))
+					var/datum/component/tracker_hud/arrow = user.GetComponent(/datum/component/tracker_hud)
+					arrow?.change_target(src.target)
 			work_check()
 			var/turf/ST = get_turf(src)
 			var/turf/T = get_turf(target)
@@ -112,19 +112,6 @@
 					arrow.icon_state = "pinonfar"
 			UpdateOverlays(arrow, "arrow")
 
-			if(hudarrow && ismob(src.loc))
-				var/ang = get_angle(get_turf(src), get_turf(target))
-				var/hudarrow_dist = 16 + 32 / (1 + 3 ** (3 - dist / 10))
-				var/matrix/M = matrix()
-				var/hudarrow_scale = 0.6 + 0.4 / (1 + 3 ** (3 - dist / 10))
-				M = M.Scale(hudarrow_scale, hudarrow_scale)
-				M = M.Turn(ang)
-				if(dist == 0)
-					hudarrow_dist += 9
-					M.Turn(180) // point at yourself :)
-				M = M.Translate(hudarrow_dist * sin(ang), hudarrow_dist * cos(ang))
-				animate(hudarrow, transform=M, time=0.5 SECONDS, flags=ANIMATION_PARALLEL)
-
 			sleep(0.5 SECONDS)
 
 /// tracks something using by_type or by_cat, see types.dm for more info
@@ -135,38 +122,49 @@
 	var/z_locked = null // Z-level number if locked to that Z-level
 	var/include_area_text = TRUE
 
+	proc/get_choices()
+		var/list/trackable
+		if(istext(category))
+			trackable = by_cat[category]
+		else if(ispath(category))
+			trackable = by_type[category]
+		. = list()
+		for(var/atom/A in trackable)
+			var/turf/T = get_turf(A)
+			if(A.disposed || isnull(T))
+				continue
+			if(!isnull(z_locked) && z_locked != T.z)
+				continue
+			var/dist = GET_DIST(A, src)
+			if(!isnull(max_range) && dist > max_range)
+				continue
+			var/in_loc = ""
+			if(!isturf(A.loc))
+				in_loc = " [in_or_on] [A.loc]"
+			var/area_text = include_area_text ? " in [get_area(A)]" : ""
+			.["[A][in_loc][area_text]"] = A
+
+	proc/process_choice(choice, list/choices, mob/user)
+		if(isnull(choice))
+			return null
+		return choices[choice]
+
 	attack_self(mob/user)
 		if(!active)
 			if(isnull(category))
 				user.show_text("No tracking category, cannot activate the pinpointer.", "red")
 				return
-			var/list/trackable
-			if(istext(category))
-				trackable = by_cat[category]
-			else if(ispath(category))
-				trackable = by_type[category]
-			var/list/choices = list()
-			for(var/atom/A in trackable)
-				var/turf/T = get_turf(A)
-				if(A.disposed || isnull(T))
-					continue
-				if(!isnull(z_locked) && z_locked != T.z)
-					continue
-				var/dist = GET_DIST(A, src)
-				if(!isnull(max_range) && dist > max_range)
-					continue
-				var/in_loc = ""
-				if(!isturf(A.loc))
-					in_loc = " [in_or_on] [A.loc]"
-				var/area_text = include_area_text ? " in [get_area(A)]" : ""
-				choices["[A][in_loc][area_text]"] = A
+			var/list/choices = get_choices()
 			if(!length(choices))
 				user.show_text("No [thing_name]s available, cannot activate the pinpointer.", "red")
 				return
 			var/choice = tgui_input_list(user, "Pick a [thing_name] to track.", "[src]", choices)
 			if(isnull(choice))
 				return
-			target = choices[choice]
+			var/atom/potential_target = process_choice(choice, choices, user)
+			if(isnull(potential_target))
+				return
+			target = potential_target
 		. = ..()
 
 /obj/item/pinpointer/category/spysticker
@@ -216,7 +214,7 @@
 	icon_state = "semi_pinoff"
 	icon_type = "semi"
 	hudarrow_color = "#adad00"
-	target_criteria = /obj/item/teg_semiconductor
+	target_criteria = /obj/item/teg_semiconductor/prototype
 
 /obj/item/pinpointer/trench
 	name = "pinpointer (sea elevator)"
@@ -237,6 +235,14 @@
 			target_ref = "\ref[A.find_middle()]"
 		. = ..()
 
+/obj/item/pinpointer/gold_bee
+	name = "pinpointer (Gold Bee Statue)"
+	desc = "Points in the direction of the Gold Bee Statue."
+	icon_state = "disk_pinoff"
+	icon_type = "disk"
+	target_criteria = /obj/gold_bee
+	hudarrow_color = "#e1940d"
+
 /obj/item/pinpointer/idtracker
 	name = "ID pinpointer"
 	icon_state = "id_pinoff"
@@ -250,7 +256,6 @@
 			if (!src.owner || !src.owner.mind)
 				boutput(user, "<span class='alert'>\The [src] emits a sorrowful ping!</span>")
 				return
-			active = 1
 			var/list/targets = list()
 			for_by_tcl(I, /obj/item/card/id)
 				if(!I)
@@ -262,12 +267,11 @@
 				LAGCHECK(LAG_LOW)
 			target = null
 			target = input(user, "Which ID do you wish to track?", "Target Locator", null) in targets
-			work()
 			if(!target)
 				boutput(user, "<span class='notice'>You activate the target locator. No available targets!</span>")
-				active = 0
 			else
 				boutput(user, "<span class='notice'>You activate the target locator. Tracking [target]</span>")
+				src.turn_on()
 		else
 			..()
 
@@ -284,7 +288,6 @@
 			if (!src.owner || !src.owner.mind || src.owner.mind.special_role != ROLE_SPY_THIEF)
 				boutput(user, "<span class='alert'>The target locator emits a sorrowful ping!</span>")
 				return
-			active = 1
 
 			var/list/targets = list()
 			for_by_tcl(I, /obj/item/card/id)
@@ -297,12 +300,11 @@
 
 			target = null
 			target = input(user, "Which ID do you wish to track?", "Target Locator", null) in targets
-			work()
 			if(!target)
 				boutput(user, "<span class='notice'>You activate the target locator. No available targets!</span>")
-				active = 0
 			else
 				boutput(user, "<span class='notice'>You activate the target locator. Tracking [target]</span>")
+				src.turn_on()
 		else
 			..()
 
@@ -326,13 +328,16 @@
 			if(B.dry == -1)
 				timer += 4 MINUTES
 			blood_dna = B.blood_DNA
-		else if(istype(A, /obj/fluid) || istype(A, /obj/item))
+		else if(istype(A, /obj/item))
 			blood_dna = A.blood_DNA
+		else if (CHECK_LIQUID_CLICK(A))
+			var/turf/T = get_turf(A)
+			blood_dna = T.active_liquid.blood_DNA // I guess this prevents you from scanning the blood in a gas? so rarely relevant I don't care
 		if(!blood_dna)
 			var/datum/reagents/reagents = A.reagents
-			if(istype(A, /obj/fluid))
-				var/obj/fluid/fluid = A
-				reagents = fluid.group.reagents
+			if(isturf(A))
+				var/turf/T = A
+				reagents = T.active_liquid.group.reagents
 			if(!isnull(reagents))
 				for(var/reag_id in list("blood", "bloodc"))
 					var/datum/reagent/blood/blood = reagents.reagent_list[reag_id]
@@ -346,8 +351,7 @@
 				target = H
 				blood_timer = timer
 				break
-		active = 1
-		work()
+		src.turn_on()
 		user.visible_message("<span class='notice'><b>[user]</b> scans [A] with [src]!</span>",\
 			"<span class='notice'>You scan [A] with [src]!</span>")
 
@@ -357,6 +361,9 @@
 			if(ismob(src.loc))
 				boutput(src.loc, "<span class='alert'>[src] shuts down because the blood in it became too dry!</span>")
 
+TYPEINFO(/obj/item/pinpointer/secweapons)
+	mats = null
+
 /obj/item/pinpointer/secweapons
 	name = "security weapon pinpointer"
 	icon_state = "sec_pinoff"
@@ -364,7 +371,6 @@
 	var/list/itemrefs
 	var/list/accepted_types
 	hudarrow_color = "#ee4444"
-	mats = null
 	desc = "An extremely advanced scanning device used to locate lost security tools. It displays this with an extremely technicalogically advanced arrow."
 
 	proc/track(var/list/L)
@@ -392,15 +398,20 @@
 			if (!target)
 				user.show_text("No target specified. Cannot activate pinpointer.", "red")
 				return
-
-			active = 1
-			work()
+			src.turn_on()
 			boutput(user, "<span class='notice'>You activate the pinpointer</span>")
 		else
-			active = 0
-			arrow.icon_state = ""
-			UpdateOverlays(arrow, "arrow")
+			src.turn_off()
 			boutput(user, "<span class='notice'>You deactivate the pinpointer</span>")
+
+//lets you click on something to pick it as a target, good for gimmicks
+/obj/item/pinpointer/picker
+	attack_self(mob/user)
+		if (!src.active && !src.target)
+			SPAWN(0)
+				src.target = pick_ref(user)
+			return
+		..()
 
 
 // gimmick pinpointers because I feel like adding them now that I made the by_cat pinpointer base version
@@ -459,6 +470,19 @@
 	name = "\improper APC pinpointer"
 	category = /obj/machinery/power/apc
 	thing_name = "APC"
+
+	get_choices()
+		. = list("-- CURRENT ROOM --") + ..()
+
+	process_choice(choice, list/choices, mob/user)
+		if (choice == "-- CURRENT ROOM --")
+			var/area/AR = get_area(src)
+			if(AR.area_apc)
+				return AR.area_apc
+			else
+				boutput(user, "<span class='alert'>There is no APC in this area!</span>")
+				return null
+		return ..()
 
 /obj/item/pinpointer/category/apcs/station
 	name = "\improper APC pinpointer"
@@ -531,7 +555,7 @@
 
 /obj/item/pinpointer/category/bibles
 	name = "bible pinpointer"
-	category = /obj/item/storage/bible
+	category = /obj/item/bible
 	thing_name = "bible"
 
 /obj/item/pinpointer/category/gps
@@ -591,3 +615,8 @@
 	thing_name = "artifact"
 	hudarrow_color = "#7755ff"
 	max_range = 20
+
+/obj/item/pinpointer/category/rancid
+	name = "smelly person pinpointer"
+	category = TR_CAT_RANCID_STUFF
+	thing_name = "smelly person"

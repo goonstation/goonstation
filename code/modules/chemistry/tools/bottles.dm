@@ -158,7 +158,7 @@
 	New()
 		var/poison = pick_string("chemistry_tools.txt", "traitor_poison_bottle")
 		src.initial_reagents = poison
-		logTheThing(LOG_DEBUG, src, "poison bottle spawned from string [poison], contains: [log_reagents(src)]")
+		logTheThing(LOG_CHEMISTRY, src, "poison bottle spawned from string [poison], contains: [log_reagents(src)]")
 		..()
 
 // gannets - large poison bottles for nuke op medics.
@@ -199,7 +199,7 @@
 
 /obj/item/reagent_containers/glass/bottle/haloperidol
 	name = "haloperidol bottle"
-	desc = "A small bottle of haloperidol, a powerful anti-psychotic."
+	desc = "A small bottle of haloperidol, a powerful sedative and anti-psychotic."
 	amount_per_transfer_from_this = 5
 	initial_reagents = "haloperidol"
 
@@ -242,7 +242,7 @@
 
 /obj/item/reagent_containers/glass/bottle/antihistamine
 	name = "bottle (diphenhydramine)"
-	desc = "A small bottle of dyphenhidramine, useful for reducing the severity of allergic reactions."
+	desc = "A small bottle of diphenhydramine, useful for reducing the severity of allergic reactions."
 	bottle_style = "1"
 	amount_per_transfer_from_this = 5
 	initial_reagents = "antihistamine"

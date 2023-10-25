@@ -1,5 +1,6 @@
 #define KNOCK_DELAY 1 SECOND
 
+ADMIN_INTERACT_PROCS(/obj/machinery/door, proc/open, proc/close, proc/break_me_complitely)
 /obj/machinery/door
 	name = "door"
 	icon_state = "door1"
@@ -12,13 +13,14 @@
 	flags = FPRINT | ALWAYS_SOLID_FLUID
 	event_handler_flags = USE_FLUID_ENTER
 	object_flags = BOTS_DIRBLOCK
+	pass_unstable = TRUE
 	text = "<font color=#D2691E>+"
 	var/secondsElectrified = 0
 	var/visible = TRUE
 	var/panel_open = FALSE
 	var/operating = FALSE
 	var/operation_time = 1 SECOND
-	anchored = TRUE
+	anchored = ANCHORED
 	var/autoclose = FALSE
 	var/interrupt_autoclose = FALSE
 	var/last_used = 0
@@ -31,6 +33,7 @@
 	var/sound_deny = 0
 	var/has_crush = TRUE //flagged to true when the door has a secret admirer. also if the var == 1 then the door does have the ability to crush items.
 	var/close_trys = 0
+	var/autoclose_delay = 15 SECONDS
 
 	var/health = 400
 	var/health_max = 400
@@ -40,6 +43,9 @@
 	var/next_timeofday_opened = 0 //high tier jank
 
 	var/ignore_light_or_cam_opacity = FALSE
+
+	/// Set before calling open() for handling COMSIG_DOOR_OPENED. Can be null. This gets immediately set to null after the signal calls.
+	var/atom/movable/bumper = null
 
 /obj/machinery/door/Bumped(atom/AM)
 	if (src.operating) return
@@ -69,7 +75,7 @@
 
 	else if (istype(AM, /obj/machinery/bot))
 		var/obj/machinery/bot/B = AM
-		if (src.check_access(B.botcard))
+		if (src.check_access(B.botcard) && !B.pulled_by) //no more dragging bots onto doors for makeshift AA
 			if (src.density)
 				src.open()
 
@@ -101,13 +107,10 @@
 			// If we just return 0, they will be able to bump-open the door and get past regardless
 			// because mob paralysis doesn't take effect until the next tick.
 			if (prob(20) && !ON_COOLDOWN(H, "brainstumble_cooldown", 1 SECOND))
-				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, 1)
+				playsound(src, 'sound/impact_sounds/Metal_Clang_3.ogg', 50, TRUE)
 				src.visible_message("<span class='alert'><b>[H]</b> stumbles into [src] head-first. [pick("Ouch", "Damn", "Woops")]!</span>")
 				if (!istype(H.head, /obj/item/clothing/head/helmet))
-					var/obj/item/affecting = H.organs["head"]
-					if (affecting)
-						affecting.take_damage(9, 0)
-						H.UpdateDamageIcon()
+					H.TakeDamageAccountArmor("head", 9, 0, 0, DAMAGE_BLUNT)
 					H.changeStatus("weakened", 1 SECOND)
 				else
 					boutput(H, "<span class='notice'>Your helmet protected you from injury!</span>")
@@ -144,7 +147,7 @@
 	return !density
 
 /obj/machinery/door/proc/update_nearby_tiles(need_rebuild)
-	var/turf/simulated/source = loc
+	var/turf/source = src.loc
 	if (istype(source))
 		return source.update_nearby_tiles(need_rebuild)
 
@@ -165,7 +168,7 @@
 	..()
 	UnsubscribeProcess()
 	AddComponent(/datum/component/mechanics_holder)
-	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", .proc/toggleinput)
+	SEND_SIGNAL(src,COMSIG_MECHCOMP_ADD_INPUT,"toggle", PROC_REF(toggleinput))
 	AddComponent(/datum/component/bullet_holes, 15, src.hardened ? 999 : 5) // no bullet holes if hardened; wouldn't want to get their hopes up
 	src.update_nearby_tiles(need_rebuild=1)
 	START_TRACKING
@@ -178,6 +181,9 @@
 
 /obj/machinery/door/disposing()
 		src.update_nearby_tiles()
+		if(ignore_light_or_cam_opacity)
+				ignore_light_or_cam_opacity = FALSE
+				src.set_opacity(0)
 		STOP_TRACKING
 		..()
 
@@ -340,32 +346,22 @@
 		else
 			src.last_used = world.time
 			src.close()
+		return
+
 	else if (src.density && !ON_COOLDOWN(src, "deny_sound", 1 SECOND)) // stop the sound from spamming, if there is one
 		play_animation("deny")
 		if (src.sound_deny)
 			playsound(src, src.sound_deny, 25, 0)
 
-	if (src.density && !src.operating && I)
+	if (src.density && !src.operating && I?.force > 5)
+		var/resolvedForce = I.force
+		if (I.tool_flags & TOOL_CHOPPING)
+			resolvedForce *= 4
 		user.lastattacked = src
 		attack_particle(user,src)
 		playsound(src, src.hitsound , 50, 1, pitch = 1.6)
-		src.take_damage(I.force, user)
-/*
-		var/resolvedForce = I.force
-		if (I.tool_flags & TOOL_CHOPPING)
-			resolvedForce *= 4
-*/
-
-		var/resolvedForce = I.force
-		if (I.tool_flags & TOOL_CHOPPING)
-			resolvedForce *= 4
-			user.lastattacked = src
-			attack_particle(user,src)
-			playsound(src, src.hitsound , 50, 1, pitch = 1.6)
-			src.take_damage(resolvedForce, user)
-
-
-	return ..(I,user)
+		src.take_damage(resolvedForce, user)
+		return ..(I,user) // only call parent if force > 5; no material hit or attack message otherwise
 
 /obj/machinery/door/proc/bumpopen(atom/movable/AM)
 	if (src.operating)
@@ -373,12 +369,11 @@
 	if(world.time-last_used <= 10)
 		return 0
 	src.add_fingerprint(AM)
-	if (!src.requiresID())
-		AM = null
 
-	if (src.allowed(AM))
+	if (!src.requiresID() || src.allowed(AM))
 		if (src.density)
 			last_used = world.time
+			src.bumper = AM
 			if (src.open() == 1)
 				return 1
 			else
@@ -459,7 +454,7 @@
 	if (damage < 1)
 		return
 
-	if(src.material) src.material.triggerOnBullet(src, src, P)
+	src.material_trigger_on_bullet(src, P)
 
 	switch(P.proj_data.damage_type)
 		if(D_KINETIC)
@@ -513,10 +508,7 @@
 		play_animation("opening")
 		next_timeofday_opened = world.timeofday + (src.operation_time)
 		SPAWN(-1)
-			if (ignore_light_or_cam_opacity)
-				src.set_opacity(0)
-			else
-				src.RL_SetOpacity(0)
+			src.set_opacity(0)
 		src.use_power(100)
 		sleep(src.operation_time / 2)
 		src.set_density(0)
@@ -524,6 +516,8 @@
 		src.update_nearby_tiles()
 		next_timeofday_opened = 0
 		sleep(src.operation_time / 2)
+		SEND_SIGNAL(src, COMSIG_DOOR_OPENED, src.bumper)
+		src.bumper = null
 		SEND_SIGNAL(src,COMSIG_MECHCOMP_TRANSMIT_SIGNAL,"doorOpened")
 
 		if(operating == 1) //emag again
@@ -572,12 +566,13 @@
 					continue
 				var/mob_layer = L.layer	//Make it look like we're inside the door
 				L.layer = src.layer - 0.01
-				playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, 1)
-				L.emote("scream")
+				if(!ON_COOLDOWN(L, "doorcrush", 0.5 SECONDS))
+					playsound(src, 'sound/impact_sounds/Flesh_Break_1.ogg', 100, TRUE)
+					L.emote("scream")
 
-				L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
+					L.TakeDamageAccountArmor("All", rand(20, 50), 0, 0, DAMAGE_CRUSH)
 
-				L.changeStatus("weakened", 3 SECONDS)
+					L.changeStatus("weakened", 3 SECONDS)
 				L.stuttering += 10
 				did_crush = 1
 				SPAWN(src.operation_time * 1.5 + crush_delay)
@@ -586,17 +581,14 @@
 		sleep(src.operation_time)
 
 		if(src.visible)
-			if (ignore_light_or_cam_opacity)
-				src.set_opacity(1)
-			else
-				src.RL_SetOpacity(1)
+			src.set_opacity(1)
 
 		src.closed()
 
 		if(did_crush)
 			interrupt_autoclose = 1
 			src.visible_message("<span class='alert'>\The [src] whirrs [pick_string("descriptors.txt", "borg_shake")]!</span>")
-			playsound(src, 'sound/machines/hydraulic.ogg', 30,1)
+			playsound(src, 'sound/machines/hydraulic.ogg', 30,TRUE)
 			sleep(crush_delay) //If we crushed someone, wait a bit until resuming operations to prevent chaincrushing
 			src.operating = 0
 			src.open()
@@ -606,7 +598,7 @@
 
 /obj/machinery/door/proc/opened()
 	if(autoclose)
-		sleep(15 SECONDS)
+		sleep(src.autoclose_delay)
 		if(interrupt_autoclose)
 			interrupt_autoclose = 0
 		else
@@ -620,6 +612,23 @@
 		close()
 	else return
 
+/// toggles the lock state of the door
+/obj/machinery/door/proc/toggle_locked()
+	if (locked)
+		set_unlocked()
+	else
+		set_locked()
+
+/// locks the door, aka bolt / key lock
+/obj/machinery/door/proc/set_locked()
+	src.locked = TRUE
+	src.UpdateIcon()
+
+/// unlocks the door, aka unbolt / un-key lock
+/obj/machinery/door/proc/set_unlocked()
+	src.locked = FALSE
+	src.UpdateIcon()
+
 /obj/machinery/door/proc/knockOnDoor(mob/user)
 	if(!ON_COOLDOWN(user, "knocking_cooldown", KNOCK_DELAY)) //slow the fuck down cowboy
 		attack_particle(user,src)
@@ -632,6 +641,12 @@
 		if(!istype(D, /obj/machinery/door/window) && D.density)
 			return 0
 	return 1
+
+/obj/machinery/door/set_opacity(newopacity)
+	if(ignore_light_or_cam_opacity)
+		src.opacity = newopacity
+	else
+		. = ..()
 
 /turf/simulated/wall/proc/checkForMultipleDoors()
 	if(!src.loc)
@@ -662,6 +677,7 @@
 	src.add_fingerprint(user)
 	if (src.allowed(user))
 		if (src.density)
+			src.bumper = user
 			open()
 		else
 			close()
@@ -692,14 +708,16 @@
 
 /obj/machinery/door/unpowered/martian/open()
 	if(src.locked) return
-	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 	. = ..()
 
 /obj/machinery/door/unpowered/martian/close()
-	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, 1)
+	playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 50, TRUE)
 	. = ..()
 
 // APRIL FOOLS
+TYPEINFO(/obj/machinery/door/unpowered/wood)
+	mat_appearances_to_ignore = list("wood")
 /obj/machinery/door/unpowered/wood
 	name = "door"
 	icon = 'icons/obj/doors/door_wood.dmi'
@@ -713,7 +731,7 @@
 	panel_open = 0
 	operating = 0
 	layer = EFFECTS_LAYER_UNDER_1
-	anchored = TRUE
+	anchored = ANCHORED
 	autoclose = TRUE
 	var/blocked = null
 	var/simple_lock = 0
@@ -749,7 +767,7 @@
 
 /obj/machinery/door/unpowered/wood/attackby(obj/item/I, mob/user)
 	if (I) // eh, this'll work well enough.
-		src.material?.triggerOnHit(src, I, user, 1)
+		src.material_trigger_when_attacked(I, user, 1)
 	if (src.operating)
 		return
 	src.add_fingerprint(user)
@@ -765,7 +783,7 @@
 			if (!(checkdir & src.lock_dir))
 				boutput(user, "<span class='alert'>[src]'s keyhole isn't on this side!</span>")
 				return
-		src.locked = !src.locked
+		src.toggle_locked()
 		src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
 		return
 	else if (isscrewingtool(I) && src.locked)
@@ -773,9 +791,9 @@
 		return
 	if (user.is_hulk())
 		src.visible_message("<span class='alert'><B>[user] smashes through the door!</B></span>")
-		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, 1)
+		playsound(src, 'sound/impact_sounds/Generic_Hit_Heavy_1.ogg', 50, TRUE)
 		src.operating = -1
-		src.locked = 0
+		src.set_unlocked()
 		open()
 		return 1
 	if (!src.locked)
@@ -785,36 +803,36 @@
 			close()
 	else if (src.density)
 		play_animation("deny")
-		playsound(src, 'sound/machines/door_locked.ogg', 50, 1, -2)
+		playsound(src, 'sound/machines/door_locked.ogg', 50, TRUE, -2)
 		boutput(user, "<span class='alert'>The door is locked!</span>")
 	return
 
 /obj/machinery/door/unpowered/wood/open()
 	if(src.locked) return
-	playsound(src, 'sound/machines/door_open.ogg', 50, 1)
+	playsound(src, 'sound/machines/door_open.ogg', 50, TRUE)
 	. = ..()
 
 /obj/machinery/door/unpowered/wood/close()
-	playsound(src, 'sound/machines/door_close.ogg', 50, 1)
+	playsound(src, 'sound/machines/door_close.ogg', 50, TRUE)
 	. = ..()
 
-/obj/machinery/door/unpowered/wood/verb/simple_lock(mob/user)
+/obj/machinery/door/unpowered/wood/verb/simple_lock()
 	set name = "Lock Door"
 	set category = "Local"
 	set src in oview(1)
 
-	if (isdead(user) || isintangible(user))
+	if (isdead(usr) || isintangible(usr))
 		return
 	if (!src.density || src.operating)
-		boutput(user, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
+		boutput(usr, "<span class='alert'>You COULD flip the lock on [src] while it's open, but it wouldn't actually accomplish anything!</span>")
 		return
 	if (src.lock_dir)
-		var/checkdir = get_dir(src, user)
+		var/checkdir = get_dir(src, usr)
 		if (!(checkdir & src.lock_dir))
-			boutput(user, "<span class='alert'>[src]'s lock isn't on this side!</span>")
+			boutput(usr, "<span class='alert'>[src]'s lock isn't on this side!</span>")
 			return
-	src.locked = !src.locked
-	src.visible_message("<span class='notice'><B>[user] [!src.locked ? "un" : null]locks [src].</B></span>")
+	src.toggle_locked()
+	src.visible_message("<span class='notice'><B>[usr] [!src.locked ? "un" : null]locks [src].</B></span>")
 	return
 
 /datum/action/bar/icon/door_lockpick
@@ -849,7 +867,7 @@
 			return
 		if (prob(5) || (!the_door.simple_lock && prob(5)))
 			owner.visible_message("<span class='alert'>[owner] messes up while picking [src.the_door]'s lock!</span>")
-			playsound(the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
+			playsound(the_door, 'sound/items/Screwdriver2.ogg', 50, TRUE)
 			interrupt(INTERRUPT_ALWAYS)
 			return
 
@@ -860,18 +878,9 @@
 
 	onEnd()
 		..()
-		src.the_door.locked = 0
+		src.the_door.set_unlocked()
 		owner.visible_message("<span class='alert'>[owner] jimmies [src.the_door]'s lock open!</span>")
 		playsound(src.the_door, 'sound/items/Screwdriver2.ogg', 50, 1)
-
-/obj/machinery/door/unpowered/bulkhead
-	name = "bulkhead door"
-	desc = "A heavy manually operated door. It looks rather beaten."
-	icon = 'icons/obj/doors/bulkhead.dmi'
-	operation_time = 20
-
-/obj/machinery/door/unpowered/bulkhead/Bumped()
-	return
 
 /obj/machinery/door/control/oneshot
 	var/broken = 0

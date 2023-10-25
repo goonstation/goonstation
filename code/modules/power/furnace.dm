@@ -1,20 +1,50 @@
+TYPEINFO(/obj/machinery/power/furnace)
+	mats = 20
+
 /obj/machinery/power/furnace
 	name = "Zaojun-2 5kW Furnace"
 	desc = "The venerable XIANG|GIESEL model '灶君' combustion furnace with integrated 5 kilowatt thermocouple. A simple power solution for low-demand facilities and outposts."
 	icon_state = "furnace"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/active = 0
 	var/last_active = 0
 	var/fuel = 0
 	var/last_fuel_state = 0
 	var/maxfuel = 1000
-	var/genrate = 5000
+	var/genrate = 20000
 	var/stoked = 0 // engine ungrump
-	custom_suicide = 1
-	mats = 20
+	custom_suicide = TRUE
 	event_handler_flags = NO_MOUSEDROP_QOL | USE_FLUID_ENTER
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
+
+	// lights
+	var/datum/light/cone/cone_light = new /datum/light/cone
+	var/datum/light/point/point_light = new /datum/light/point
+	var/col_r = 0.69
+	var/col_g = 0.23
+	var/col_b = 0.01
+	var/outer_angular_size = 90
+	var/inner_angular_size = 75
+	var/inner_radius = 2
+
+	New(new_loc)
+		..()
+		START_TRACKING
+		src.point_light.set_brightness(0.5)
+		src.point_light.set_color(src.col_r, src.col_g, src.col_b)
+		src.point_light.attach(src)
+
+		src.cone_light.set_brightness(0.7)
+		src.cone_light.set_color(src.col_r, src.col_g, src.col_b)
+		src.cone_light.outer_angular_size = src.outer_angular_size
+		src.cone_light.inner_angular_size = src.inner_angular_size
+		src.cone_light.inner_radius = src.inner_radius
+		src.cone_light.attach(src)
+
+	disposing()
+		STOP_TRACKING
+		..()
 
 	process()
 		if(status & BROKEN) return
@@ -26,7 +56,7 @@
 					stoked--
 			if(!src.fuel)
 				src.visible_message("<span class='alert'>[src] runs out of fuel and shuts down!</span>")
-				src.active = 0
+				src.active = FALSE
 		else
 			on_inactive()
 
@@ -45,14 +75,18 @@
 				var/image/I = GetOverlayImage("active")
 				if(!I) I = image('icons/obj/power.dmi', "furn-burn")
 				UpdateOverlays(I, "active")
+				src.point_light.enable()
+				src.cone_light.enable()
 			else
 				UpdateOverlays(null, "active", 0, 1) //Keep it in cache for when it's toggled
+				src.point_light.disable()
+				src.cone_light.disable()
 
 		var/fuel_state = round(min((src.fuel / src.maxfuel) * 5, 4))
 		//At max fuel, the state will be 4, aka all bars, then it will lower / increase as fuel is added
 		if(fuel_state != last_fuel_state) //The fuel state has changed and we need to do an update
 			last_fuel_state = fuel_state
-			for(var/i = 1; i <= 4; i++)
+			for(var/i in 1 to 4)
 				var/okey = "fuel[i]"
 				if(fuel_state >= i) //Add the overlay
 					var/image/I = GetOverlayImage(okey)
@@ -63,7 +97,9 @@
 
 
 	was_deconstructed_to_frame(mob/user)
-		src.active = 0
+		src.active = FALSE
+		src.point_light.disable()
+		src.cone_light.disable()
 
 	attack_hand(var/mob/user)
 		if (!src.fuel) boutput(user, "<span class='alert'>There is no fuel in the furnace!</span>")
@@ -73,11 +109,11 @@
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/grab))
+			var/obj/item/grab/grab = W
 			if (!src.active)
-				boutput(user, "<span class='alert'>It'd probably be easier to dispose of them while the furnace is active...</span>")
+				boutput(user, "<span class='alert'>It'd probably be easier to dispose of [him_or_her(grab.affecting)] while the furnace is active...</span>")
 				return
 			else
-				var/obj/item/grab/grab = W
 				var/mob/target = grab.affecting
 				if (!isdead(grab.affecting))
 					boutput(user, "<span class='alert'>[grab.affecting.name] needs to be dead first!</span>")
@@ -112,7 +148,7 @@
 			return
 
 	MouseDrop_T(atom/movable/O as mob|obj, mob/user as mob)
-		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0)
+		if (!in_interact_range(src, user)  || BOUNDS_DIST(O, user) > 0 || !can_act(user))
 			return
 		else
 			if (src.fuel >= src.maxfuel)
@@ -131,7 +167,7 @@
 						src.fuel = src.maxfuel
 						boutput(user, "<span class='notice'>The furnace is now full!</span>")
 						break
-				playsound(src, 'sound/machines/click.ogg', 50, 1)
+				playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 				boutput(user, "<span class='notice'>You finish loading [crate] into [src]!</span>")
 				return
 
@@ -149,7 +185,7 @@
 				sleep(0.3 SECONDS)
 				if (user.loc != staystill)
 					break
-			playsound(src, 'sound/machines/click.ogg', 50, 1)
+			playsound(src, 'sound/machines/click.ogg', 50, TRUE)
 			boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 
 		src.updateUsrDialog()
@@ -183,7 +219,7 @@
 			else
 				if(amtload && F.inventory_counter)
 					F.inventory_counter.update_number(F.amount)
-					F.update_stack_appearance()
+					F.UpdateStackAppearance()
 		return amtload
 
 	// this is run after it's checked a person isn't being loaded in with a grab
@@ -204,14 +240,14 @@
 				else
 					stacked = TRUE
 					handle_stacks(W, fuel_amount)
-		else if (istype(W, /obj/item/spacecash/))
+		else if (istype(W, /obj/item/currency/spacecash/))
 			if (W.amount == 1)
 				fuel_name = "a credit"
-				fuel += 1
+				fuel += 0.1
 			else
 				fuel_name = "credits"
 				stacked = TRUE
-				handle_stacks(W, 2)
+				handle_stacks(W, 0.1)
 		else if (istype(W, /obj/item/paper/)) fuel += 6
 		else if (istype(W, /obj/item/clothing/gloves/)) fuel += 10
 		else if (istype(W, /obj/item/clothing/head/)) fuel += 20
@@ -220,8 +256,9 @@
 		else if (istype(W, /obj/item/clothing/head/)) fuel += 20
 		else if (istype(W, /obj/item/clothing/suit/)) fuel += 40
 		else if (istype(W, /obj/item/clothing/under/)) fuel += 30
-		else if (istype(W, /obj/item/plank)) fuel += 100
-		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuckburn)) fuel += 120
+		else if (istype(W, /obj/item/reagent_containers/food/snacks/yuck/burn)) fuel += 120
+		else if (istype(W, /obj/item/reagent_containers/food/fish/lava_fish)) fuel += 150
+		else if (istype(W, /obj/item/reagent_containers/food/fish/igneous_fish)) fuel += 250
 		else if (istype(W, /obj/critter))
 			var/obj/critter/C = W
 			if (C.alive)

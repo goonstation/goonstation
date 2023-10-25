@@ -45,7 +45,7 @@
 	additive_slowdown = 3
 
 /datum/movement_modifier/disoriented
-	additive_slowdown = 8
+	additive_slowdown = 7
 
 /datum/movement_modifier/hastened
 	additive_slowdown = -0.8
@@ -58,6 +58,9 @@
 
 /datum/movement_modifier/reagent/juggernaut
 	health_deficiency_adjustment = -65
+
+/datum/movement_modifier/pain_immune
+	health_deficiency_adjustment = -10000
 
 /datum/movement_modifier/reagent/morphine
 	health_deficiency_adjustment = -60
@@ -165,11 +168,17 @@
 /datum/movement_modifier/amphibian
 	additive_slowdown = 1.2
 
+/datum/movement_modifier/maneater
+	additive_slowdown = 5
+
 /datum/movement_modifier/kudzu
 	additive_slowdown = 4
 
 /datum/movement_modifier/zombie
 	additive_slowdown = 3
+
+/datum/movement_modifier/golem
+	additive_slowdown = 2.5
 
 /datum/movement_modifier/revenant
 	maximum_slowdown = 2
@@ -237,3 +246,14 @@
 
 /datum/movement_modifier/shiver
 	additive_slowdown = 2
+
+// methed up bears
+
+/datum/movement_modifier/spacebear
+	health_deficiency_adjustment = -30
+	additive_slowdown = -0.4
+
+// slowed down by hook
+
+/datum/movement_modifier/syndie_fishing
+	multiplicative_slowdown = 1.5

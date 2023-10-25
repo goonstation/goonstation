@@ -6,7 +6,7 @@
 	opacity = 0;
 	req_access_txt = null
 	},
-/obj/access_spawn/medical,
+/obj/mapping_helper/access/medical,
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "bn" = (
@@ -67,7 +67,7 @@
 /turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom)
 "gI" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 1;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"
@@ -149,7 +149,7 @@
 	},
 /area/shuttle/escape/centcom)
 "oU" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-L"
@@ -160,7 +160,7 @@
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "ri" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-M"
@@ -183,7 +183,7 @@
 	opacity = 0;
 	req_access_txt = null
 	},
-/obj/access_spawn/heads,
+/obj/mapping_helper/access/heads,
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "tG" = (
@@ -193,7 +193,7 @@
 	opacity = 0;
 	req_access_txt = null
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/red,
 /area/shuttle/escape/centcom)
 "vM" = (
@@ -220,7 +220,7 @@
 	},
 /area/shuttle/escape/centcom)
 "xR" = (
-/obj/wingrille_spawn/auto,
+/obj/mapping_helper/wingrille_spawn/auto,
 /obj/machinery/shuttle/engine/heater{
 	dir = 4;
 	icon_state = "alt_heater-R"
@@ -239,7 +239,7 @@
 	},
 /area/shuttle/escape/centcom)
 "yN" = (
-/obj/wingrille_spawn/auto/crystal,
+/obj/mapping_helper/wingrille_spawn/auto/crystal,
 /turf/unsimulated/floor/black,
 /area/shuttle/escape/centcom)
 "AN" = (
@@ -327,7 +327,7 @@
 /turf/unsimulated/outdoors/grass,
 /area/shuttle/escape/centcom)
 "Io" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadcap"
 	},

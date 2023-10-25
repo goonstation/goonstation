@@ -40,7 +40,7 @@ var/global/mutable_appearance/elecflash_ma = null
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
 					chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
-					playsound(T, sound, 50, 1)
+					playsound(T, sound, 50, TRUE)
 			else
 				chain_to += T
 	else	// copy paste also!
@@ -49,7 +49,7 @@ var/global/mutable_appearance/elecflash_ma = null
 				if (!(T.active_liquid.group in fluid_groups_touched))
 					fluid_groups_touched += T.active_liquid.group
 					chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
-					playsound(T, sound, 50, 1)
+					playsound(T, sound, 50, TRUE)
 			else
 				chain_to += T
 
@@ -61,10 +61,10 @@ var/global/mutable_appearance/elecflash_ma = null
 					if (!(T.active_liquid.group in fluid_groups_touched))
 						fluid_groups_touched += T.active_liquid.group
 						chain_to |= T.active_liquid.get_connected_fluid_members(power * 9.5 * (1-(T.active_liquid.group.avg_viscosity/T.active_liquid.group.max_viscosity)))
-						playsound(T, sound, 50, 1)
+						playsound(T, sound, 50, TRUE)
 				else
 					chain_to += T
-		if (chain_to.len < 2)
+		if (length(chain_to) < 2)
 			chain_to += get_step(center_turf,pick(alldirs)) //consider this an extra layer of randomness for when we dont jump to fluid
 
 
@@ -83,7 +83,7 @@ var/global/mutable_appearance/elecflash_ma = null
 		E.appearance = elecflash_ma
 		T.hotspot_expose(1000,100,usr, electric = power)
 		elecs += E
-		if (radius <= 0 && chain_to.len < 8 && center_turf)
+		if (radius <= 0 && length(chain_to) < 8 && center_turf)
 			E.pixel_x = (center_turf.x - E.x) * 32
 			E.pixel_y = (center_turf.y - E.y) * 32
 			animate(E, transform = M, pixel_x = rand(-32,32), pixel_y = rand(-32,32), time = (0.66 SECONDS) + (power * (0.12 SECONDS)), easing = CUBIC_EASING | EASE_OUT)
@@ -92,7 +92,7 @@ var/global/mutable_appearance/elecflash_ma = null
 
 
 
-	playsound(center_turf, sound, 50, 1)
+	playsound(center_turf, sound, 50, TRUE)
 
 	SPAWN(3 SECONDS)
 		for(var/atom in elecs)
@@ -118,3 +118,4 @@ var/global/mutable_appearance/elecflash_ma = null
 		else
 			src.do_disorient(stamina_damage = 15 + power * 8, weakened = 1 SECONDS + (power * (0.1 SECONDS)), stunned = 0, paralysis = 0, disorient = (power * (0.5 SECONDS)), remove_stamina_below_zero = 0, target_type = DISORIENT_BODY)
 		src.TakeDamage("chest", 0, rand(0,1) * power * 0.2, damage_type=DAMAGE_BURN)
+		src.setStatus("defibbed", sqrt(power) SECONDS)

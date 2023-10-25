@@ -55,6 +55,8 @@
 		abilityHolder.addAbility(/datum/targetable/critter/cryptid_plushie/glowing_eyes/set_glowing_eyes_color)
 		abilityHolder.updateButtons()
 
+		bioHolder.AddEffect("resist_alcohol")
+
 	death(gibbed)
 		. = ..()
 		// do stuff with old dead body
@@ -174,7 +176,7 @@
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 300))
-					playsound(src, 'sound/misc/lincolnshire.ogg', 65, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/misc/lincolnshire.ogg', 65, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> plays a song!</span>"
 			if ("fart")
 				return
@@ -202,6 +204,13 @@
 		SPAWN(2 SECONDS)  // gross bandaid to work around the life loop being a tad too slow
 			being_seen_status_update()
 
+		if (src.reagents.has_reagent("ethanol"))
+			if (src.reagents.get_reagent_amount("ethanol") >= 15 && prob(25))
+				playsound(get_turf(src), 'sound/voice/burp.ogg', 15, TRUE, channel=VOLUME_CHANNEL_EMOTE, pitch=1.8)
+				src.visible_message("<span class='alert'><B>[src] burps?</B></span>")
+				hit_twitch(src)
+				src.reagents.del_reagent("ethanol")
+
 	proc/set_dormant_status(var/enabled)
 		if(enabled)
 			if(!src.hasStatus("dormant"))
@@ -223,7 +232,7 @@
 		for (var/mob/M in viewers(src))
 			if (M == src)
 				continue
-			if (!isalive(M))
+			if (!isalive(M) || isintangible(M))
 				continue
 			if (istype(M, /mob/living/critter/small_animal/plush/cryptid)) // other cryptids are ok
 				continue
@@ -274,7 +283,8 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 
 		var/selected
 		do
-			var/list/words = list("*REFRESH*") + get_ouija_word_list(src, words_min, words_max)
+			var/list/words = list("*REFRESH*") + get_ouija_word_list(src, words_min, words_max,
+				filename="plush_toy_words.txt", strings_category="plush_toy_words")
 			selected = tgui_input_list(usr, "Select a word:", src.name, words, allowIllegal=FALSE)
 		while(selected == "*REFRESH*")
 		if(!selected)
@@ -389,14 +399,14 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie)
 	proc/generate_gibberish_words()
 		var/list/words = list()
 		for(var/i in 1 to rand(5, 10))
-			var/picked = pick(strings("ouija_board.txt", "ouija_board_words"))
+			var/picked = pick(strings("plush_toy_words.txt", "plush_toy_words"))
 			picked = uppertext(picked)
 			words |= picked
 		var/list/more_words = list("... hello?", "Is anyone there?", "Please...", "Help...", "Help, please...", "Can anyone hear me?", "It hurts.", "It's so dark...")
 		words += pick(more_words)
 		return words
 
-ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
+ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleportation)
 /datum/targetable/critter/cryptid_plushie/teleportation
 	var/animation_ripples = 4
 	var/animation_waves = 3
@@ -455,7 +465,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 	cooldown = 100
 	targeted = 1
 	target_anything = 1
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(atom/target)
 		if (..())
@@ -482,7 +492,7 @@ ABSTRACT_TYPE(/datum/targetable/critter/cryptid_plushie/teleporation)
 	icon_state = "teleport"
 	cooldown = 600
 	targeted = 0
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(atom/target)
 		if (..())

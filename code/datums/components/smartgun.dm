@@ -12,6 +12,7 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	var/turf/mouse_target
 	var/stopping
 	var/shooting
+	var/type_to_target = /mob/living
 	var/tracking
 	var/list/tracked_targets
 	var/list/image/targeting_images
@@ -38,8 +39,8 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 					hudSquare.xOffset = x
 					hudSquare.yOffset = y
 					hudSquares["[x],[y]"] = hudSquare
-			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, .proc/init_smart_aim)
-			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, .proc/end_smart_aim)
+			RegisterSignal(G, COMSIG_ITEM_SWAP_TO, PROC_REF(init_smart_aim))
+			RegisterSignal(G, COMSIG_ITEM_SWAP_AWAY, PROC_REF(end_smart_aim))
 			if(ismob(G.loc))
 				on_pickup(null, G.loc)
 
@@ -70,9 +71,9 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 		src.end_smart_aim(source, user)
 
 /datum/component/holdertargeting/smartgun/proc/init_smart_aim(datum/source, mob/user)
-	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEMOVE, .proc/retarget)
-	RegisterSignal(user, COMSIG_MOVABLE_MOVED, .proc/moveRetarget)
-	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, .proc/shoot_tracked_targets)
+	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEMOVE, PROC_REF(retarget))
+	RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(moveRetarget))
+	RegisterSignal(user, COMSIG_FULLAUTO_MOUSEDOWN, PROC_REF(shoot_tracked_targets))
 	if(user.client)
 		aimer = user.client
 		for(var/x in 1 to (istext(aimer.view) ? WIDE_TILE_WIDTH : SQUARE_TILE_WIDTH))
@@ -101,7 +102,6 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 		src.mouse_target = get_step(src.mouse_target, direct)
 
 /datum/component/holdertargeting/smartgun/proc/retarget(mob/M, object, location, control, params)
-
 	var/turf/T
 	var/atom/movable/screen/fullautoAimHUD/F = object
 	if(istype(F) && aimer)
@@ -119,38 +119,38 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	tracking = 1
 	shotcount = 0
 	while(!stopping)
-		if(!shooting && checkshots(parent) > shotcount)
-			for(var/mob/living/M in range(2, mouse_target))
-				ON_COOLDOWN(M, "smartgun_last_tracked_\ref[src]", 1.5 SECONDS)
-				if(tracked_targets[M] < src.maxlocks && src.is_valid_target(user, M) && shotcount < src.checkshots(parent))
-					tracked_targets[M] += 1
+		if(!shooting && checkshots(parent, user) > shotcount)
+			for(var/atom/A as anything in range(2, mouse_target))
+				ON_COOLDOWN(A, "smartgun_last_tracked_\ref[src]", 1.5 SECONDS)
+				if(tracked_targets[A] < src.maxlocks && src.is_valid_target(user, A) && shotcount < src.checkshots(parent, user))
+					tracked_targets[A] += 1
 					shotcount++
-					src.update_targeting_images(M)
-			for(var/mob/living/M in tracked_targets)
-				if(!GET_COOLDOWN(M, "smartgun_last_tracked_\ref[src]"))
-					tracked_targets[M]--
+					src.update_targeting_images(A)
+			for(var/atom/A as anything in tracked_targets)
+				if(!GET_COOLDOWN(A, "smartgun_last_tracked_\ref[src]"))
+					tracked_targets[A]--
 					shotcount--
-					src.update_targeting_images(M)
-					if(tracked_targets[M] <= 0)
-						tracked_targets -= M
+					src.update_targeting_images(A)
+					if(tracked_targets[A] <= 0)
+						tracked_targets -= A
 
 		sleep(0.6 SECONDS)
 
 	stopping = 0
 	tracking = 0
 
-/datum/component/holdertargeting/smartgun/proc/update_targeting_images(mob/M)
+/datum/component/holdertargeting/smartgun/proc/update_targeting_images(atom/A)
 	if(!src.aimer)
 		return
-	if(tracked_targets[M] > 0)
-		if(!targeting_images[M])
-			targeting_images[M] = image(icon('icons/cursors/target/flat.dmi', "all"), M, pixel_y = 32)
-			aimer.images += targeting_images[M]
-			targeting_images[M].maptext_y = 3
-		targeting_images[M].maptext = "<span class='pixel c ol'>[tracked_targets[M]]</span>"
+	if(tracked_targets[A] > 0)
+		if(!targeting_images[A])
+			targeting_images[A] = image(icon('icons/cursors/target/flat.dmi', "all"), A, pixel_y = 32)
+			aimer.images += targeting_images[A]
+			targeting_images[A].maptext_y = 3
+		targeting_images[A].maptext = "<span class='pixel c ol'>[tracked_targets[A]]</span>"
 	else
-		aimer.images -= targeting_images[M]
-		targeting_images -= M
+		aimer.images -= targeting_images[A]
+		targeting_images -= A
 
 /image/targeting_image
 
@@ -163,23 +163,23 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	spawn(0)
 		if(length(local_targets))
 			G.suppress_fire_msg = 1
-			for(var/mob/living/M in local_targets)
-				for(var/i in 1 to local_targets[M])
-					G.shoot(get_turf(M), get_turf(user), user)
+			for(var/atom/A as anything in local_targets)
+				for(var/i in 1 to local_targets[A])
+					G.shoot(get_turf(A), get_turf(user), user, called_target = A)
 					sleep(1 DECI SECOND)
 
 			G.suppress_fire_msg = initial(G.suppress_fire_msg)
 		else
 			if(!ON_COOLDOWN(G, "shoot_delay", G.shoot_delay))
-				G.shoot(mouse_target, get_turf(user), user)
+				G.shoot(mouse_target, get_turf(user), user, called_target = mouse_target)
 		shooting = 0
 
 	tracked_targets = list()
 	shotcount = 0
 	if(aimer)
-		for(var/mob/M in targeting_images)
-			aimer.images -= targeting_images[M]
-			targeting_images -= M
+		for(var/atom/A as anything in targeting_images)
+			aimer.images -= targeting_images[A]
+			targeting_images -= A
 
 /datum/component/holdertargeting/smartgun/proc/stop_tracking_targets(mob/user)
 	if(tracking)
@@ -187,18 +187,18 @@ TYPEINFO(/datum/component/holdertargeting/smartgun)
 	tracked_targets = list()
 	mouse_target = null
 	if(aimer)
-		for(var/mob/M in targeting_images)
-			aimer.images -= targeting_images[M]
-			targeting_images -= M
+		for(var/atom/A as anything in targeting_images)
+			aimer.images -= targeting_images[A]
+			targeting_images -= A
 
 /datum/component/holdertargeting/smartgun/proc/is_valid_target(mob/user, mob/M)
-	return M != user && !isdead(M)
+	return (istype(M) && M != user && !isdead(M))
 
-/datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G)
+/datum/component/holdertargeting/smartgun/proc/checkshots(obj/item/gun/G, mob/user)
 	var/list/ret = list()
 	if(istype(G, /obj/item/gun/kinetic))
 		var/obj/item/gun/kinetic/K = G
 		return round(K.ammo.amount_left * K.current_projectile.cost)
 	else if(SEND_SIGNAL(G, COMSIG_CELL_CHECK_CHARGE, ret) & CELL_RETURNED_LIST)
 		return round(ret["charge"] / G.current_projectile.cost)
-	else return G.canshoot() * INFINITY //idk, just let it happen
+	else return G.canshoot(user) * INFINITY //idk, just let it happen

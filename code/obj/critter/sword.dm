@@ -41,13 +41,13 @@
 	///Used to keep track of the SWORD's heat for Heat Reallocation.
 	var/current_heat_level = 0
 	///Used to check if the initial transformation has already been started or not.
-	var/transformation_triggered = false
+	var/transformation_triggered = FALSE
 	///Used to lock the SWORD's rotation in place. Or, at the very least, attempt to.
-	var/rotation_locked = false
+	var/rotation_locked = FALSE
 	///Used to prevent some things during transformation sequences.
-	var/changing_modes = false
+	var/changing_modes = FALSE
 	///Used to prevent spam-reporting the death of the SWORD.
-	var/died_already = false
+	var/died_already = FALSE
 	///Used to prevent the SWORD from using Destructive Leap/Destructive Flight in the same direction twice in a row, at a 75% efficiency.
 	var/past_destructive_rotation = null
 	///Used to keep track of what ability the SWORD is currently using.
@@ -61,7 +61,7 @@
 
 	New()
 		..()
-		anchored = 1
+		anchored = ANCHORED
 		firevuln = 0
 		brutevuln = 0
 		miscvuln = 0
@@ -83,13 +83,13 @@
 	CritterDeath()
 		..()
 		if (!died_already)
-			died_already = true
+			died_already = TRUE
 			SPAWN(5 SECONDS)
 				command_announcement("<br><b><span class='alert'>The Syndicate Weapon has been eliminated.</span></b>", "Safety Update", 'sound/misc/announcement_1.ogg')
 				logTheThing(LOG_COMBAT, src, "has been defeated.")
 				message_admins("The Syndicate Weapon: Orion Retribution Device has been defeated.")
 
-			playsound(src, 'sound/effects/ship_engage.ogg', 100, 1)
+			playsound(src, 'sound/effects/ship_engage.ogg', 100, TRUE)
 
 			var/datum/effects/system/harmless_smoke_spread/smoke = new /datum/effects/system/harmless_smoke_spread()
 			var/death_loc = get_center()
@@ -122,7 +122,7 @@
 				qdel(src)
 
 	process()
-		anchored = 1
+		anchored = ANCHORED
 		if (!src.alive) return 0
 
 		if(sleeping > 0)
@@ -132,7 +132,7 @@
 		check_health()
 
 		if(prob(5))
-			playsound(src, 'sound/machines/giantdrone_boop1.ogg', 55, 1)
+			playsound(src, 'sound/machines/giantdrone_boop1.ogg', 55, TRUE)
 
 		if(task == "following path" && mode)
 			follow_path()
@@ -311,7 +311,7 @@
 								linear_purge()
 							else
 								gyrating_edge()
-			anchored = 1
+			anchored = ANCHORED
 
 
 //-TRANSFORMATIONS-//
@@ -324,8 +324,8 @@
 
 		switch(transformation_id)
 			if(0)
-				rotation_locked = true
-				changing_modes = true
+				rotation_locked = TRUE
+				changing_modes = TRUE
 				icon = 'icons/misc/retribution/SWORD/transformations.dmi'
 				icon_state = "beacon"
 				glow = image('icons/misc/retribution/SWORD/transformations_o.dmi', "beacon")
@@ -337,8 +337,8 @@
 					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 					glow.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(glow, "glow")
-					changing_modes = false
-					rotation_locked = false
+					changing_modes = FALSE
+					rotation_locked = FALSE
 					name = true_name
 					desc = true_desc
 					aggressive = 1							//Only after exiting the beacon form will the SWORD become aggressive.
@@ -346,8 +346,8 @@
 					mode = 1
 
 			if(1)
-				rotation_locked = true
-				changing_modes = true
+				rotation_locked = TRUE
+				changing_modes = TRUE
 				icon = 'icons/misc/retribution/SWORD/transformations.dmi'
 				icon_state = "anchored"
 				glow = image('icons/misc/retribution/SWORD/transformations_o.dmi', "anchored")
@@ -359,13 +359,13 @@
 					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 					glow.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(glow, "glow")
-					changing_modes = false
-					rotation_locked = false
+					changing_modes = FALSE
+					rotation_locked = FALSE
 					mode = 1
 
 			else
-				rotation_locked = true
-				changing_modes = true
+				rotation_locked = TRUE
+				changing_modes = TRUE
 				icon = 'icons/misc/retribution/SWORD/transformations.dmi'
 				icon_state = "unanchored"
 				glow = image('icons/misc/retribution/SWORD/transformations_o.dmi', "unanchored")
@@ -377,8 +377,8 @@
 					glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
 					glow.plane = PLANE_SELFILLUM
 					src.UpdateOverlays(glow, "glow")
-					changing_modes = false
-					rotation_locked = false
+					changing_modes = FALSE
+					rotation_locked = FALSE
 					mode = 2
 
 		SPAWN(10)
@@ -532,13 +532,13 @@
 						tile_purge(src.loc.x + 1 - increment,src.loc.y + 1,0)
 
 		SPAWN(10)
-			rotation_locked = true
+			rotation_locked = TRUE
 
 		SPAWN(20)
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
 			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
-			rotation_locked = false
+			rotation_locked = FALSE
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
@@ -546,7 +546,7 @@
 
 
 	proc/gyrating_edge()									//Spins, dealing mediocre damage to anyone nearby.
-		rotation_locked = true
+		rotation_locked = TRUE
 		firevuln = 0.5
 		brutevuln = 0.5
 		miscvuln = 0.1
@@ -574,7 +574,7 @@
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
 			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
-			rotation_locked = false
+			rotation_locked = FALSE
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
@@ -592,7 +592,7 @@
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "destructive")
 		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
-		rotation_locked = true
+		rotation_locked = TRUE
 		firevuln = 0.75
 		brutevuln = 0.75
 		miscvuln = 0.15
@@ -630,7 +630,7 @@
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "anchored")
 			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
-			rotation_locked = false
+			rotation_locked = FALSE
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
@@ -640,7 +640,7 @@
 //-UNANCHORED ABILITIES-//
 
 	proc/heat_reallocation()								//Sets anyone nearby on fire while dealing increasing burning damage.
-		rotation_locked = true
+		rotation_locked = TRUE
 		firevuln = 1.25
 		brutevuln = 1.25
 		miscvuln = 0.25
@@ -676,7 +676,7 @@
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
-			rotation_locked = false
+			rotation_locked = FALSE
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
@@ -684,7 +684,7 @@
 
 
 	proc/energy_absorption()								//Becomes immune to burn damage for the duration. Creates a snapshot of it's health during activation, returning to it after 1.2 seconds. Increases the heat value by damage taken during the duration.
-		rotation_locked = true
+		rotation_locked = TRUE
 		firevuln = 0
 		brutevuln = 1.25
 		miscvuln = 0.25
@@ -705,7 +705,7 @@
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
-			rotation_locked = false
+			rotation_locked = FALSE
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
@@ -723,7 +723,7 @@
 		glow = image('icons/misc/retribution/SWORD/abilities_o.dmi', "destructive")
 		glow.plane = PLANE_SELFILLUM
 		src.UpdateOverlays(glow, "glow")
-		rotation_locked = true
+		rotation_locked = TRUE
 		firevuln = 0.75
 		brutevuln = 0.75
 		miscvuln = 0.15
@@ -818,7 +818,7 @@
 			glow = image('icons/misc/retribution/SWORD/base_o.dmi', "unanchored")
 			glow.plane = PLANE_SELFILLUM
 			src.UpdateOverlays(glow, "glow")
-			rotation_locked = false
+			rotation_locked = FALSE
 			firevuln = 1
 			brutevuln = 1
 			miscvuln = 0.2
@@ -845,7 +845,7 @@
 					random_brute_damage(M, 80 / dam_type)
 			M.changeStatus("weakened", 4 SECOND)
 			M.changeStatus("stunned", 1 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
 		var/turf/simulated/T = locate(point_x,point_y,src.z)
 		if(dam_type == 2 && istype(T, /turf/simulated/wall))
 			leavescan(T, 1)
@@ -880,7 +880,7 @@
 
 
 	proc/transformation_countdown()							//Starts the initial transformation's countdown.
-		transformation_triggered = true
+		transformation_triggered = TRUE
 		name = transformation_name
 		desc = transformation_desc
 		glow = image('icons/misc/retribution/SWORD/base_o.dmi', "beacon")

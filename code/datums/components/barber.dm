@@ -10,16 +10,17 @@
 #define TOP_DETAIL 3
 #define ALL_HAIR 4
 
-
 TYPEINFO(/datum/component/toggle_tool_use)
 	initialization_args = list()
 
 /datum/component/toggle_tool_use
+
 /datum/component/toggle_tool_use/Initialize()
+	. = ..()
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
-	RegisterSignal(parent, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP), .proc/on_drop_or_pickup)
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_SELF), .proc/toggle_force_use_as_tool)
+	RegisterSignals(parent, list(COMSIG_ITEM_DROPPED, COMSIG_ITEM_PICKUP), PROC_REF(on_drop_or_pickup))
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_SELF, PROC_REF(toggle_force_use_as_tool))
 
 	// this proc is supposed to make certain tools less accidentally deadly for inexperienced players to use
 	// when force_use_as_tool is set, all intents will try to do their tool-thing, and if it can't, return a message saying they're using it wrong
@@ -59,19 +60,64 @@ TYPEINFO(/datum/component/toggle_tool_use)
 
 TYPEINFO(/datum/component/barber)
 	initialization_args = list()
+	var/list/all_hairs = list()
+	var/list/all_hair_types = list()
 
+TYPEINFO_NEW(/datum/component/barber)
+	. = ..()
+
+	// just so we get a special icon sprite for no hair
+	src.all_hairs += list("None" = list("hair_id" = "none", "hair_icon" = "data:image/png;base64," + icon2base64(icon('icons/map-editing/landmarks.dmi', "x", SOUTH)), "hair_type" = /datum/customization_style/none))
+
+	for (var/datum/customization_style/style as anything in all_hair_types)
+		var/hair_icon = "data:image/png;base64," + icon2base64(icon('icons/mob/human_hair.dmi', initial(style.id), SOUTH, 1)) // yeah, sure, i'll keep it white. the user can preview the hair style anyway.
+		src.all_hairs += list(initial(style.name) = list("hair_id" = initial(style.id), "hair_icon" = hair_icon, "hair_type" = style))
+
+ABSTRACT_TYPE(/datum/component/barber)
 /datum/component/barber
+	var/datum/appearanceHolder/new_AH
+	var/datum/movable_preview/character/preview
+	var/mob/living/carbon/human/barbee
+	var/mob/barber
+	var/hair_portion = "bottom"
+	var/actionbar_type = null
+	var/cutting_names = list()
+
 /datum/component/barber/Initialize()
+	. = ..()
+
 	if(!istype(parent, /obj/item))
 		return COMPONENT_INCOMPATIBLE
 
+TYPEINFO(/datum/component/barber/haircut)
+TYPEINFO_NEW(/datum/component/barber/haircut)
+	all_hair_types = concrete_typesof(/datum/customization_style/hair)
+	. = ..()
+
 /datum/component/barber/haircut
+	actionbar_type = /datum/action/bar/barber/haircut
+
 /datum/component/barber/haircut/Initialize()
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_PRE), .proc/do_haircut)
+	. = ..()
+	if (. == COMPONENT_INCOMPATIBLE)
+		return .
+
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, PROC_REF(do_haircut))
+
+TYPEINFO(/datum/component/barber/shave)
+TYPEINFO_NEW(/datum/component/barber/shave)
+	all_hair_types = concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns) + concrete_typesof(/datum/customization_style/eyebrows)
+	. = ..()
 
 /datum/component/barber/shave
+	actionbar_type = /datum/action/bar/barber/shave
+
 /datum/component/barber/shave/Initialize()
-	RegisterSignal(parent, list(COMSIG_ITEM_ATTACK_PRE), .proc/do_shave)
+	. = ..()
+	if (. == COMPONENT_INCOMPATIBLE)
+		return .
+
+	RegisterSignal(parent, COMSIG_ITEM_ATTACK_PRE, PROC_REF(do_shave))
 
 /datum/component/barber/proc/do_haircut(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
 	if(!M || !user || (user.a_intent != INTENT_HELP && !thing.force_use_as_tool))
@@ -100,28 +146,16 @@ TYPEINFO(/datum/component/barber)
 		else
 			return 0
 
+	if (!isnull(src.barbee) && src.barbee != M) // If we are already cutting someone's hair...
+		user.show_text("You are already cutting someone's hair.", "red")
+		return
+
 	SPAWN(0)
-		var/list/region = list(
-			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
-			"Middle Detail ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
-			"Bottom Detail ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
-			"Create Wig" = ALL_HAIR)
+		src.barber = user
+		src.barbee = M
 
-		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
+		src.ui_interact(user)
 
-		if (!which_part)
-			return
-
-		if(region[which_part] != ALL_HAIR)
-			var/list/customization_types = list(/datum/customization_style/none) + concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/eyebrows)
-			var/new_style = select_custom_style(customization_types, user)
-
-			if (!new_style)
-				return
-
-			actions.start(new/datum/action/bar/barber/haircut(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
-		else
-			actions.start(new/datum/action/bar/barber/haircut(M, user, get_barbery_conditions(M, user), null, region[which_part]), user)
 	return ATTACK_PRE_DONT_ATTACK
 
 /datum/component/barber/proc/do_shave(var/obj/item/thing, mob/living/carbon/human/M as mob, mob/living/carbon/human/user as mob)
@@ -141,7 +175,7 @@ TYPEINFO(/datum/component/barber)
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(!ishuman(M))
-		boutput(user, "You don't know how to shave that! At least without cutting its face off.")
+		boutput(user, "<span class='alert'>You don't know how to shave that! At least without cutting its face off.</span>")
 		non_murderous_failure = BARBERY_FAILURE
 
 	if(iswizard(M))
@@ -175,28 +209,15 @@ TYPEINFO(/datum/component/barber)
 		else
 			return 0
 
+	if (!isnull(src.barbee) && src.barbee != M) // If we are already cutting someone's hair...
+		user.show_text("You are already cutting someone's hair.", "red")
+		return
+
 	SPAWN(0)
+		src.barber = user
+		src.barbee = M
 
-		var/list/region = list(
-			"Top Detail ([M.bioHolder.mobAppearance.customization_third.name])" = TOP_DETAIL,
-			"Middle Detail ([M.bioHolder.mobAppearance.customization_second.name])" = MIDDLE_DETAIL,
-			"Bottom Detail ([M.bioHolder.mobAppearance.customization_first.name])" = BOTTOM_DETAIL,
-			"Create Wig" = ALL_HAIR)
-
-		var/which_part = input(user, "Which clump of hair?", "Clump") as null|anything in region
-
-		if (!which_part)
-			return
-
-		if (region[which_part] != ALL_HAIR)
-			var/list/facehair = list(/datum/customization_style/none) + concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)
-			var/new_style = select_custom_style(facehair, user)
-
-			if (!new_style)
-				return
-			actions.start(new/datum/action/bar/barber/shave(M, user, get_barbery_conditions(M, user), new_style, region[which_part]), user)
-		else
-			actions.start(new/datum/action/bar/barber/shave(M, user, get_barbery_conditions(M, user), null, region[which_part]), user)
+		src.ui_interact(user)
 
 	return ATTACK_PRE_DONT_ATTACK
 
@@ -255,7 +276,7 @@ TYPEINFO(/datum/component/barber)
 	if(!ishuman(M))
 		if(issilicon(M))
 			if(barbery_type == "haircut")
-				playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				M.tri_message(user, "[user] waves [his_or_her(user)] scissors around [M]'s [isAI(M) ? "core" : "metallic upper housing"], snipping at nothing!",\
 											"[user] snips [his_or_her(user)] scissors around your [isAI(M) ? "core" : "head"].",\
 									"You snip at a piece of lint stuck in a seam on [M]'s [isAI(M) ? "core" : "head"] plates.")
@@ -264,8 +285,8 @@ TYPEINFO(/datum/component/barber)
 											"[user] slides [his_or_her(user)] razor across [isAI(M) ? "your screen" : "the front of your head"].",\
 									"You shave off a small patch of [isAI(M) ? "dust stuck to [M]'s screen" : "rust on [M]'s face"].")
 		return 0 // runtimes violate law 1, probably
-	else if(!M.mutantrace || M.hair_override)
-		return 1 // is human or mutant forced to be hairy, should be fine
+	else if((M.mutantrace.mutant_appearance_flags & HAS_HUMAN_HAIR) || M.hair_override)
+		return 1 // has human hair or mutant forced to be hairy, should be fine
 	else
 		var/datum/mutantrace/mutant = M.mutantrace.name
 		var/datum/mutantrace/mutant_us = "human"
@@ -274,7 +295,7 @@ TYPEINFO(/datum/component/barber)
 		switch(mutant)
 			if("blob")
 				if(barbery_type == "haircut")
-					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 					M.tri_message(user, "[user] waves [his_or_her(user)] scissors around [M]'s head, snipping at nothing!",\
 												"[user] snips at something on the upper hemisphere of your macrocellular structure!",\
 										"You snip at a patch of fuzz stuck to [M]'s gooey outer membrane... thing.")
@@ -291,18 +312,18 @@ TYPEINFO(/datum/component/barber)
 									 "[M]'s flubbery body flings the [barbery_type == "haircut" ? "scissors" : "razor"] out of your hand!")
 				return 0
 			if("flashy")
-				boutput(user, "[M]'s bright, flashing skin hurts your eyes.")
+				boutput(user, "<span class='alert'>[M]'s bright, flashing skin hurts your eyes.</span>")
 				user.take_eye_damage(1)
 				return 1
 			if("virtual")
-				boutput(user, "You prepare to modify M.bioHolder.mobAppearance.customization_[barbery_type == "haircut" ? "first" : "second"].")
+				boutput(user, "<span class='hint'>You prepare to modify M.bioHolder.mobAppearance.customization_[barbery_type == "haircut" ? "first" : "second"].</span>")
 				return 1
 			if("blank", "humanoid")
-				boutput(user, "You somehow correctly guess which end of [M] is forward.")
+				boutput(user, "<span class='hint'>You somehow correctly guess which end of [M] is forward.</span>")
 				return 1
 			if("grey")
 				if(barbery_type == "haircut")
-					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 					M.tri_message(user, "[user] waves [his_or_her(user)] scissors around [M]'s head, snipping at nothing!",\
 												"You can sense the [mutant_us]'s polite intentions as it pretends that you are not completely bald.",\
 																					"You snip your scissors around [M]'s bald head, ignoring the fact that [he_or_she(user)] is very, very bald.")
@@ -313,20 +334,20 @@ TYPEINFO(/datum/component/barber)
 				return 0
 			if("lizard")
 				if(barbery_type == "haircut")
-					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head.",\
 											"[user] gives your scales a trim.",\
 									 "You find a few overgrown scales on [M] head and give them a trim.")
 				return 0
 			if("zombie")
-				boutput(user, "Hair is hair, even if it is mashed full of rotted skin and attached to someone who wants to eat your brain.")
+				boutput(user, "<span class='hint'>Hair is hair, even if it is mashed full of rotted skin and attached to someone who wants to eat your brain.</span>")
 				return 1
 			if("vampiric thrall")
-				boutput(user, "Hair is hair, even if it is attached to someone who wants to drink your blood.")
+				boutput(user, "<span class='hint'>Hair is hair, even if it is attached to someone who wants to drink your blood.</span>")
 				return 1
 			if("skeleton")
 				if(barbery_type == "haircut")
-					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s skull, [barbery_type == "haircut" ? "snipping" : "cutting"] at nothing!",\
 											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your skull.",\
 									 "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s exposed skull, knocking loose some space dust.")
@@ -339,14 +360,14 @@ TYPEINFO(/datum/component/barber)
 			if("abomination")
 				user.emote("scream")
 				if(barbery_type == "haircut")
-					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s writhing, monstrous form!",\
 											"[user] patronizes us by trying to alter our appearance.",\
 									 "You muster your courage and manage to give one of the many scraggly, wriggling, <i>familiar</i> patches of hair scattered across [M] a trim!")
 				return 0
 			if("werewolf")
 				M.emote("scream")
-				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, TRUE)
 				M.tri_message(user, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] [M]'s ear trying to [barbery_type == "haircut" ? "trim its hair" : "shave it"]!",\
 											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] your ear! <span class='alert'>FUCK</span>",\
 									 "You try to [barbery_type == "haircut" ? "snip" : "cut"] some of the fur on [M]'s head, but end up cutting its ear!")
@@ -355,7 +376,7 @@ TYPEINFO(/datum/component/barber)
 				return 0
 			if("hunter")
 				M.emote("scream")
-				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, TRUE)
 				M.tri_message(user, "[user] cuts one of [M]'s dreads too deep!",\
 											"[user] cuts off one of your head protrusions! <span class='alert'>FUCK</span>",\
 									 "You try to cut [M]'s hair, but find that much of it is part of their head! Gross.")
@@ -364,14 +385,14 @@ TYPEINFO(/datum/component/barber)
 				return 0
 			if("ithillid")
 				if(barbery_type == "haircut")
-					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head.",\
 											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
 									 "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s fishy head, knocking loose some space barnnacles.")
 				return 0
 			if("monkey", "sea monkey")
 				M.emote("scream")
-				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, TRUE)
 				M.tri_message(user, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] [M]'s ear trying to trim [his_or_her(user)] hair!",\
 											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] your ear! <span class='alert'>FUCK</span>",\
 									 "You try to [barbery_type == "haircut" ? "snip" : "cut"] some of the fur on the top of [M]'s head, but end up slicing its ear!")
@@ -380,14 +401,14 @@ TYPEINFO(/datum/component/barber)
 				return 0
 			if("martian")
 				if(barbery_type == "haircut")
-					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, [barbery_type == "haircut" ? "snipping" : "slashing"] at nothing!",\
 											"You can sense the [mutant_us] judging your lack of hair and head-shape as it pretends to do its job.",\
 									 "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s bald, oddly-shaped head, ignoring the fact that it is very, very bald.")
 				return 0
 			if("stupid alien baby")
 				M.emote("scream")
-				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, TRUE)
 				M.tri_message(user, "[user] [barbery_type == "haircut" ? "snips" : "cuts"] one of [M]'s antenna-things!",\
 											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] your stupid alien dealie-bobbers! <span class='alert'>FUCK</span>",\
 									 "You nick one of the things sticking out of [M]'s head while pretending to cut at nothing!")
@@ -395,19 +416,19 @@ TYPEINFO(/datum/component/barber)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
 			if("premature clone")
-				boutput(user, "You try to cut [M]'s hair very carefully, lest they fall over and explode.")
+				boutput(user, "<span class='hint'>You try to cut [M]'s hair very carefully, lest [he_or_she(M)] fall over and explode.</span>")
 				return 1
 			if("mutilated")
 				M.emote("scream")
 				user.vomit()
 				if(barbery_type == "haircut")
-					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s horrible, disgusting, head-shaped mass of gore, [barbery_type == "haircut" ? "snipping" : "cutting"] at nothing!",\
 											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something on your head.",\
 									 "You suppress waves of nausea trying to [barbery_type == "haircut" ? "snip" : "cut"] your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head-shaped clump of decayed meat.")
 				return 0
 			if("cyclops")
-				boutput(user, "You mind [M]'s enormous fucking eyeball.")
+				boutput(user, "<span class='hint'>You mind [M]'s enormous fucking eyeball.</span>")
 			if("cat")
 				M.emote("scream")
 				playsound(M.loc, 'sound/voice/animal/cat_hiss.ogg', 50, 1)
@@ -419,23 +440,23 @@ TYPEINFO(/datum/component/barber)
 				return 0
 			if("amphibian", "Shelter Amphibian")
 				if(barbery_type == "haircut")
-					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\
 											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something around your head.",\
 									 "You wave your [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s massive frog head, knocking loose some... dead spaceflies?")
 				return 0
 			if("kudzu")
-				boutput(user, "You take a brief moment to figure out what part of [M]'s head isn't vines.")
+				boutput(user, "<span class='hint'>You take a brief moment to figure out what part of [M]'s head isn't vines.</span>")
 			if("cow")
 				if(barbery_type == "haircut")
-					playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+					playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				M.tri_message(user, "[user] waves [his_or_her(user)] [barbery_type == "haircut" ? "scissors" : "razor"] around [M]'s head, snipping at nothing!",\
 											"[user] [barbery_type == "haircut" ? "snips" : "cuts"] at something around your head, obviouly pretending to be a hairstylist.",\
 									 "You perform a one-sided LARP with [M], pretending to be an experienced barber working on someone who actually has hair.")
 				return 0
 			if("roach")
 				M.emote("scream")
-				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, TRUE)
 				M.tri_message(user, "[user] cuts one of [M]'s antennae!",\
 											"[user] cuts into your stupid insect dealie-bobbers! <span class='alert'>FUCK</span>",\
 									 "You slice one of the things sticking out of [M]'s head while pretending to cut at nothing!")
@@ -443,11 +464,179 @@ TYPEINFO(/datum/component/barber)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				return 0
 			else
-				boutput(user, "You're not quite sure what that is, but decide to cut its hair anyway. If it has any.")
+				boutput(user, "<span class='hint'>You're not quite sure what that is, but decide to cut its hair anyway. If it has any.</span>")
 	return 1
 
 
 
+/datum/component/barber/ui_interact(mob/user, datum/tgui/ui)
+	ui = tgui_process.try_update_ui(user, src, ui)
+	if(!ui)
+		ui = new(user, src, "BarberingMenu")
+		ui.open()
+
+/datum/component/barber/ui_data(mob/user)
+	if (isnull(src.new_AH))
+		src.new_AH = new /datum/appearanceHolder/()
+		src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+
+	if (isnull(src.preview))
+		var/preview_id = src.barber.name + "_" + src.barbee.name + "_" + "[src.parent.type]" // To avoid mixing up preview IDs, we gotta be *really* specific
+		src.preview = new /datum/movable_preview/character(src.barber.client, "barber", preview_id)
+
+		if (src.barbee.hud.layout_style == "tg")
+			var/mob/living/carbon/human/preview_mob = src.preview.preview_thing // So the game understands we are manipulating a human
+			preview_mob.hud.layout_style = "tg"
+
+		src.preview.add_background("#242424", 2)
+		src.reference_clothes(src.barbee, src.preview.preview_thing)
+		src.preview.update_appearance(src.new_AH, direction=SOUTH, name=src.barbee.name)
+
+	var/list/current_hair_style = list("bottom" = new_AH.customization_first.name, "middle" = new_AH.customization_second.name, "top" = new_AH.customization_third.name)
+	. = list("preview" = src.preview.preview_id, "selected_hair_portion" = hair_portion, "current_hair_style" = current_hair_style)
+
+/datum/component/barber/ui_static_data(mob/user)
+	var/typeinfo/datum/component/barber/typeinfo = src.get_typeinfo()
+	. = list("available_styles" = typeinfo.all_hairs)
+
+/datum/component/barber/ui_act(var/action, var/params)
+	. = ..()
+	if (.)
+		return TRUE
+
+	switch(action)
+
+		if("change_hair_portion")
+			src.hair_portion = params["new_portion"]
+			return TRUE
+
+		if("update_preview")
+			switch(params["action"])
+				if("new_hair")
+					var/typeinfo/datum/component/barber/typeinfo = src.get_typeinfo()
+
+					var/datum/customization_style/new_hairstyle = new /datum/customization_style/none // If we don't find any styles, we are probably trying to use the "none" style.
+
+					for (var/list/hair_listing as anything in typeinfo.all_hairs)
+						if (typeinfo.all_hairs[hair_listing]["hair_id"] == params["style_id"])
+							var/hair_style_type = typeinfo.all_hairs[hair_listing]["hair_type"]
+							new_hairstyle = new hair_style_type
+							break
+
+					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance) // To avoid confusion and kind of nerf this feature, let's completely reset the hair when the client tries to view another style.
+
+					switch (src.hair_portion)
+						if ("bottom")
+							src.new_AH.customization_first = new_hairstyle
+						if ("middle")
+							src.new_AH.customization_second = new_hairstyle
+						if ("top")
+							src.new_AH.customization_third = new_hairstyle
+					src.reference_clothes(src.barbee, src.preview.preview_thing)
+					src.preview.update_appearance(src.new_AH)
+
+				if("change_direction")
+					src.preview.update_appearance(src.new_AH, src.new_AH.mutant_race, turn(src.preview.preview_thing.dir, params["direction"]))
+
+				if("reset")
+					src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+					src.reference_clothes(src.barbee, src.preview.preview_thing)
+					src.preview.update_appearance(src.new_AH)
+
+			return TRUE
+		if("do_hair")
+			if (ON_COOLDOWN(src.barber, "cut_hair", 1 SECOND))
+				return
+
+			if (isnull(params["style_id"])) // It means we are making a wig
+				actions.start_and_wait(new src.actionbar_type(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), null, ALL_HAIR), src.barber)
+
+				if (!barber || !barbee)
+					return // If there's no barber, it's safe to say we've been disposed of
+
+				src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+				src.reference_clothes(src.barbee, src.preview.preview_thing)
+				src.preview.update_appearance(src.new_AH)
+				src.ui_close(src.barber)
+				return
+
+			var/hair_portion_list = list(
+				"bottom" = BOTTOM_DETAIL,
+				"middle" = MIDDLE_DETAIL,
+				"top" = TOP_DETAIL
+			)
+
+			var/hair_portion_selected = hair_portion_list[src.hair_portion]
+			var/datum/customization_style/new_hairstyle = null
+
+			var/typeinfo/datum/component/barber/typeinfo = src.get_typeinfo()
+
+			for (var/list/hair_listing as anything in typeinfo.all_hairs)
+				if (typeinfo.all_hairs[hair_listing]["hair_id"] == params["style_id"])
+					var/hair_style_type = typeinfo.all_hairs[hair_listing]["hair_type"]
+					new_hairstyle = new hair_style_type
+					break
+
+			actions.start_and_wait(new src.actionbar_type(src.barbee, src.barber, get_barbery_conditions(src.barbee, src.barber), new_hairstyle, hair_portion_selected), src.barber)
+
+			if (!barber || !barbee) // If either don't exist anymore, it's safe to say we have been disposed of.
+				return
+
+			if(istype(barbee.bioHolder.mobAppearance.customization_first,/datum/customization_style/none) && \
+			istype(barbee.bioHolder.mobAppearance.customization_second,/datum/customization_style/none) && \
+			istype(barbee.bioHolder.mobAppearance.customization_third,/datum/customization_style/none))
+				src.ui_close(src.barber) // There is nothing more to cut.
+
+			if (!barber || !barbee)
+				return // If there's no barber, it's safe to say we've been disposed of
+
+			src.new_AH.CopyOther(src.barbee.bioHolder.mobAppearance)
+			src.reference_clothes(src.barbee, src.preview.preview_thing)
+			src.preview.update_appearance(src.new_AH)
+			return TRUE
+
+
+// Safer than manually changing appearance var.
+/datum/component/barber/proc/reference_clothes(var/mob/living/carbon/human/to_copy, var/mob/living/carbon/human/to_paste)
+	src.nullify_clothes(to_paste) // Better safe than runtiming 57 times
+
+	to_paste.wear_suit = to_copy.wear_suit
+	to_paste.w_uniform = to_copy.w_uniform
+	to_paste.shoes = to_copy.shoes
+	to_paste.belt = to_copy.belt
+	to_paste.gloves = to_copy.gloves
+	to_paste.glasses = to_copy.glasses
+	to_paste.head = to_copy.head
+	to_paste.wear_id = to_copy.wear_id
+	to_paste.r_store = to_copy.r_store
+	to_paste.l_store = to_copy.l_store
+
+/datum/component/barber/proc/nullify_clothes(var/mob/living/carbon/human/to_nullify)
+	to_nullify.wear_suit = null
+	to_nullify.w_uniform = null
+	to_nullify.shoes = null
+	to_nullify.belt = null
+	to_nullify.gloves = null
+	to_nullify.glasses = null
+	to_nullify.head = null
+	to_nullify.wear_id = null
+	to_nullify.r_store = null
+	to_nullify.l_store = null
+
+/datum/component/barber/ui_status(mob/user, datum/ui_state/state)
+	. = user.find_in_hand(src.parent) // If our parent is on the barber's hands, then the barber can still cut hair, otherwise, close the window immediately.
+	. = . && (src.barbee in range(1, src.barber)) // If the previous condition was true, and the barbee is still within barber range, we're good to go.
+	. = . ? UI_INTERACTIVE : UI_CLOSE // If, after checking the previous conditions, return is true, then the user can still cut hair. Otherwise, close the window.
+
+/datum/component/barber/ui_close(mob/user) // Disposing code for all important variables
+	if (src.preview)
+		src.nullify_clothes(src.preview.preview_thing)
+	qdel(src.new_AH)
+	qdel(src.preview)
+	src.new_AH = null
+	src.preview = null
+	src.barber = null
+	src.barbee = null
 
 /datum/component/barber/UnregisterFromParent()
 	UnregisterSignal(parent, COMSIG_MOB_ATTACKED_PRE)
@@ -480,7 +669,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 		M.tri_message(user, "[user] begins [cutting] [M]'s hair.",\
 			"<span class='notice'>[user] begins [cutting] your hair.</span>",\
 			"<span class='notice'>You begin [cutting] [M]'s hair.</span>")
-		playsound(user, 'sound/items/Scissor.ogg', 100, 1)
+		playsound(user, 'sound/items/Scissor.ogg', 100, TRUE)
 		..()
 
 	onUpdate()
@@ -499,7 +688,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 		var/list/hair_list = src.getHairStyles()
 		switch (degree_of_success)
 			if (0) // cut their head up and hair off
-				playsound(M, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
+				playsound(M, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, TRUE)
 				logTheThing(LOG_COMBAT, user, "mangles (barbery failure with moderate damage) [constructTarget(M,"combat")]'s head at [log_loc(user)].")
 				M.tri_message(user, "<span class='alert'>[user] mangles the absolute fuck out of [M]'s head!.</span>",\
 					"<span class='alert'>[user] mangles the absolute fuck out of your head!</span>",\
@@ -511,7 +700,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				take_bleeding_damage(M, user, 2, DAMAGE_CUT, 1)
 				M.emote("scream")
 			if (1) // same, but it makes a wig
-				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, 1)
+				playsound(M, 'sound/impact_sounds/Slimy_Cut_1.ogg', 100, TRUE)
 				logTheThing(LOG_COMBAT, user, "cuts all of [constructTarget(M,"combat")]'s hair off (barbery failure with small damage) at [log_loc(user)].")
 				M.tri_message(user, "<span class='alert'>[user] [cuts] all of [M]'s hair off!.</span>",\
 					"<span class='alert'>[user] [cuts] all of your hair off!</span>",\
@@ -525,7 +714,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 				take_bleeding_damage(M, user, 1, DAMAGE_CUT, 1)
 				M.emote("scream")
 			if (2) // you cut their hair into something else
-				playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				logTheThing(LOG_COMBAT, user, "cuts [constructTarget(M,"combat")]'s hair into a random one at [log_loc(user)].")
 				var/hair_type = pick(hair_list)
 				new_style = new hair_type
@@ -540,7 +729,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 											"<span class='notice'>[user] [cuts] your hair.</span>",\
 																					"<span class='notice'>You [cut] [M]'s hair, but it doesn't quite look like what you had in mind! Maybe they wont notice?</span>")
 			if (3) // you did it !!
-				playsound(M, 'sound/items/Scissor.ogg', 100, 1)
+				playsound(M, 'sound/items/Scissor.ogg', 100, TRUE)
 				if (src.which_part == ALL_HAIR)
 					logTheThing(LOG_COMBAT, user, "cuts all of [constructTarget(M,"combat")]'s hair into a wig at [log_loc(user)].")
 					M.tri_message(user, "[user] [cuts] all of [M]'s hair off and makes it into a wig.",\
@@ -569,7 +758,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 		..()
 
 	onInterrupt()
-		boutput(owner, "You were interrupted!")
+		boutput(owner, "<span class='alert'>You were interrupted!</span>")
 		..()
 
 /datum/action/bar/barber/haircut
@@ -579,7 +768,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cutting = "cutting"
 
 	getHairStyles()
-		return concrete_typesof(/datum/customization_style/hair) + concrete_typesof(/datum/customization_style/eyebrows)
+		return concrete_typesof(/datum/customization_style/hair)
 
 /datum/action/bar/barber/shave
 	id = "shave"
@@ -588,7 +777,7 @@ ABSTRACT_TYPE(/datum/action/bar/barber)
 	cutting = "shaving"
 
 	getHairStyles()
-		return concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)
+		return concrete_typesof(/datum/customization_style/beard) + concrete_typesof(/datum/customization_style/moustache) + concrete_typesof(/datum/customization_style/sideburns)  + concrete_typesof(/datum/customization_style/eyebrows)
 
 #undef HAIRCUT
 #undef SHAVE

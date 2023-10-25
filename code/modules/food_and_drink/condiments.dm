@@ -3,12 +3,13 @@
 ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 /obj/item/reagent_containers/food/snacks/condiment
 	name = "condiment"
-	desc = "you shouldnt be able to see this"
+	desc = "you shouldn't be able to see this"
 	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
 	amount = 1
 	heal_amt = 0
 
 	heal(var/mob/M)
+		..()
 		boutput(M, "<span class='alert'>It's just not good enough on its own...</span>")
 
 	afterattack(atom/target, mob/user, flag)
@@ -36,7 +37,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 
 /obj/item/reagent_containers/food/snacks/condiment/ketchup
 	name = "ketchup"
-	desc = "Pureéd tomatoes as a sauce."
+	desc = "Puréed tomatoes as a sauce."
 	icon_state = "sachet-ketchup"
 	initial_volume = 30
 	initial_reagents = list("ketchup"=20)
@@ -63,7 +64,9 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "The subject of many a tiresome innuendo."
 	icon_state = "mayonnaise" //why the fuck was this icon state called cookie
 	initial_volume = 5
+	#ifdef SECRETS_ENABLED
 	initial_reagents = "mayo"
+	#endif
 
 /obj/item/reagent_containers/food/snacks/condiment/hotsauce
 	name = "hot sauce"
@@ -103,7 +106,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	name = "custard"
 	desc = "A perennial favourite of clowns."
 	icon_state = "custard"
-	needspoon = 1
+	required_utensil = REQUIRED_UTENSIL_SPOON
 	bites_left = 2
 	heal_amt = 3
 
@@ -114,6 +117,13 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	initial_volume = 10
 	initial_reagents = "matcha"
 	food_color = "#74A12E"
+
+/obj/item/reagent_containers/food/snacks/condiment/mustard
+	name = "mustard"
+	desc = "A sauce of ground mustard seeds."
+	icon_state = "mustard"
+	initial_volume = 30
+	initial_reagents = list("mustard" = 20)
 
 /obj/item/reagent_containers/food/snacks/condiment/chocchips
 	name = "chocolate chips"
@@ -136,6 +146,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "Fluffy and fragrant."
 	icon_state = "butters"
 	heal_amt = 3
+	fill_amt = 2
 	initial_volume = 20
 
 	New()
@@ -147,7 +158,8 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 	desc = "A little bottle for shaking things onto other things."
 	icon = 'icons/obj/foodNdrink/food.dmi'
 	icon_state = "shaker"
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_SMALL
 	g_amt = 10
 	var/stuff = null
@@ -187,7 +199,6 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/condiment)
 						H.tri_message(user, "<span class='alert'><b>[user]</b> [myVerb]s something into [H]'s eyes!</span>",\
 							"<span class='alert'>[H == user ? "You [myVerb]" : "[user] [myVerb]s"] some salt into your eyes! <B>FUCK!</B></span>",\
 							"<span class='alert'>You [myVerb] some salt into [user == H ? "your" : "[H]'s"] eyes![user == H ? " <B>FUCK!</B>" : null]</span>")
-						H.emote("scream")
 						random_brute_damage(user, 1)
 						src.shakes ++
 						return

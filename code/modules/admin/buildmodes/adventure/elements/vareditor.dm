@@ -6,7 +6,7 @@
 	icon_state = "var_editor"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	target = null
 	var/var_name = ""
 	var/var_value = null

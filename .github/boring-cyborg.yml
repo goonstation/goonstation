@@ -10,6 +10,7 @@ labelPRBasedOnFilePath:
   # Add 'tooling' label to any changes to the .github folder or any subfolders
   A-Tooling:
     - .github/**/*
+    - 'tools/**/*'
 
   # Add 'tgui' label to any changes to the tgui folder or any subfolders
   A-UI:

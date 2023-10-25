@@ -12,6 +12,7 @@ var/datum/score_tracker/score_tracker
 	var/score_enemy_failure_rate = 0
 	var/final_score_sec = 0
 	// ENGINEERING DEPARTMENT
+	var/power_generated = 0
 	var/score_power_outages = 0
 	var/score_structural_damage = 0
 	var/final_score_eng = 0
@@ -130,6 +131,9 @@ var/datum/score_tracker/score_tracker
 		score_power_outages = clamp(score_power_outages,0,100)
 		score_structural_damage = clamp(score_structural_damage,0,100)
 
+		for(var/time in station_power_generation)
+			power_generated += station_power_generation[time]
+
 		final_score_eng = (score_power_outages + score_structural_damage) * 0.5
 
 		// RESEARCH DEPARTMENT SECTION
@@ -151,7 +155,7 @@ var/datum/score_tracker/score_tracker
 			// something glitched out and broke so give them a free pass on it
 			score_expenses = 100
 		else
-			var/profit_target = 300000
+			var/profit_target = wagesystem.total_stipend
 			var/totalfunds = wagesystem.station_budget + wagesystem.research_budget + wagesystem.shipping_budget
 			if (totalfunds == 0)
 				score_expenses = 0
@@ -219,12 +223,6 @@ var/datum/score_tracker/score_tracker
 		boutput(world, "<br><b>Final Rating: <font size='4'>[final_score_all]%</font></b>")
 		boutput(world, "<b>Grade: <font size='4'>[grade]</font></b>")
 
-#ifndef  MAP_OVERRIDE_POD_WARS
-		for (var/client/C)
-			var/mob/M = C.mob
-			if (M && C.preferences.view_score)
-				M.scorestats()
-#endif
 		return
 
 	/////////////////////////////////////
@@ -283,15 +281,18 @@ var/datum/score_tracker/score_tracker
 
 	proc/get_cash_in_thing(var/atom/A)
 		. = 0
-		for (var/I in A)
-			if (istype(I, /obj/item/storage))
+		if (istype(A, /obj/item/currency/spacecash))
+			var/obj/item/currency/spacecash/SC = A
+			. += SC.amount
+		else if (istype(A, /obj/item/card/id))
+			var/obj/item/card/id/ID = A
+			. += ID.money
+		else if (A.storage)
+			for (var/obj/item/I as anything in A.storage.get_contents())
 				. += get_cash_in_thing(I)
-			if (istype(I, /obj/item/spacecash))
-				var/obj/item/spacecash/SC = I
-				. += SC.amount
-			if (istype(I, /obj/item/card/id))
-				var/obj/item/card/id/ID = I
-				. += ID.amount
+		else
+			for (var/I in A)
+				. += get_cash_in_thing(I)
 
 	proc/heisenhat_stats()
 		. = list()
@@ -340,7 +341,7 @@ var/datum/score_tracker/score_tracker
 	proc/escapee_facts()
 		. = list()
 		//Richest Escapee | Most Damaged Escapee | Dr. Acula Blood Total | Clown Beatings
-		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : $[richest_total]<BR>"
+		if (richest_escapee)		. += "<B>Richest Escapee:</B> [richest_escapee.real_name] : [richest_total][CREDIT_SIGN]<BR>"
 		if (most_damaged_escapee) 	. += "<B>Most Damaged Escapee:</B> [most_damaged_escapee.real_name] : [most_damaged_escapee.get_damage()]%<BR>"		//it'll be kinda different from when it's calculated, but whatever.
 		if (length(command_pets_escaped))
 			var/list/who_escaped = list()
@@ -370,56 +371,6 @@ var/datum/score_tracker/score_tracker
 					. += "<B>[paper.name]</B>"
 				. += paper.info ? paper.info : "<BR><BR>"
 		return jointext(., "")
-
-
-/mob/proc/scorestats()
-	if (score_tracker.score_calculated == 0)
-		return
-
-	if (!score_tracker.score_text)
-		score_tracker.score_text = ticker.mode.victory_msg()
-		if (length(score_tracker.score_text))
-			score_tracker.score_text += "<br><br>"
-		score_tracker.score_text += {"<B>Round Statistics and Score</B><BR><HR>"}
-		score_tracker.score_text += "<B><U>TOTAL SCORE: [round(score_tracker.final_score_all)]%</U></B>"
-		if(round(score_tracker.final_score_all) == 69)
-			score_tracker.score_text += " <b>nice</b>"
-		score_tracker.score_text += "<BR>"
-		score_tracker.score_text += "<B><U>GRADE: [score_tracker.grade]</U></B><BR>"
-		score_tracker.score_text += "<BR>"
-
-		score_tracker.score_text += "<B><U>SECURITY DEPARTMENT</U></B><BR>"
-		score_tracker.score_text += "<B>Crew Member Survival Rate:</B> [round(score_tracker.score_crew_survival_rate)]%<BR>"
-		score_tracker.score_text += "<B>Enemy Objective Failure Rate:</B> [round(score_tracker.score_enemy_failure_rate)]%<BR>"
-		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_sec)]%<BR>"
-		score_tracker.score_text += "<BR>"
-
-		score_tracker.score_text += "<B><U>ENGINEERING DEPARTMENT</U></B><BR>"
-		score_tracker.score_text += "<B>Station Structural Integrity:</B> [round(score_tracker.score_structural_damage)]%<BR>"
-		score_tracker.score_text += "<B>Station Areas Powered:</B> [round(score_tracker.score_power_outages)]%<BR>"
-		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_eng)]%<BR>"
-		score_tracker.score_text += "<BR>"
-
-		score_tracker.score_text += "<B><U>RESEARCH DEPARTMENT</U></B><BR>"
-		score_tracker.score_text += "<B>Artifacts correctly analyzed:</B> [round(score_tracker.score_artifact_analysis)]% ([score_tracker.artifacts_correctly_analyzed]/[score_tracker.artifacts_analyzed])<BR>"
-		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_res)]%<BR>"
-		score_tracker.score_text += "<BR>"
-
-		score_tracker.score_text += "<B><U>CIVILIAN DEPARTMENT</U></B><BR>"
-		score_tracker.score_text += "<B>Overall Station Cleanliness:</B> [round(score_tracker.score_cleanliness)]%<BR>"
-		score_tracker.score_text += "<B>Profit Made from Initial Budget:</B> [round(score_tracker.score_expenses)]%<BR>"
-		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_civ)]%<BR>"
-		score_tracker.score_text += "<BR>"
-	 /* until this is actually done or being worked on im just going to comment it out
-		score_tracker.score_text += "<B>Most Experienced:</B> [score_tracker.most_xp]<BR>"
-		*/
-		score_tracker.score_text += "<B><U>STATISTICS</U></B><BR>"
-		score_tracker.score_text += score_tracker.escapee_facts()
-		score_tracker.score_text += score_tracker.heisenhat_stats()
-
-		score_tracker.score_text += "<HR>"
-
-	src.Browse(score_tracker.score_text, "window=roundscore;size=500x700;title=Round Statistics")
 
 /mob/proc/showtickets()
 	if(!length(data_core.tickets) && !length(data_core.fines) && !length(score_tracker.inspector_report)) return

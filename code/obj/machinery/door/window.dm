@@ -40,7 +40,7 @@
 		return src.Attackby(null, user)
 
 /obj/machinery/door/window/attackby(obj/item/I, mob/user)
-	if (!can_act(usr))
+	if (!can_act(user))
 		return
 	if (src.isblocked() == 1)
 		return
@@ -103,7 +103,7 @@
 /obj/machinery/door/window/Cross(atom/movable/mover)
 	if (istype(mover, /obj/projectile))
 		var/obj/projectile/P = mover
-		if (P.proj_data.window_pass)
+		if (P.proj_data?.window_pass)
 			return 1
 
 	if (get_dir(loc, mover) & dir) // Check for appropriate border.
@@ -185,10 +185,7 @@
 	SPAWN(0.8 SECONDS)
 		if (src)
 			src.set_density(0)
-			if (ignore_light_or_cam_opacity)
-				src.set_opacity(0)
-			else
-				src.RL_SetOpacity(0)
+			src.set_opacity(0)
 			src.update_nearby_tiles()
 			if (emag_open == 1)
 				src.operating = -1
@@ -214,10 +211,7 @@
 
 	src.set_density(1)
 	if (src.visible)
-		if (ignore_light_or_cam_opacity)
-			src.opacity = 1
-		else
-			src.RL_SetOpacity(1)
+		src.set_opacity(1)
 	src.update_nearby_tiles()
 
 	SPAWN(1 SECOND)

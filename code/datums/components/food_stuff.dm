@@ -7,6 +7,7 @@ TYPEINFO(/datum/component/consume)
 	initialization_args = list()
 
 /datum/component/consume/Initialize()
+	. = ..()
 	if(!istype(parent, /mob))
 		return COMPONENT_INCOMPATIBLE
 
@@ -20,7 +21,7 @@ TYPEINFO(/datum/component/consume/can_eat_inedible_organs)
 /datum/component/consume/can_eat_inedible_organs/Initialize(var/can_eat_heads)
 	..()
 	src.can_eat_heads = can_eat_heads
-	RegisterSignal(parent, list(COMSIG_MOB_ITEM_CONSUMED_PRE), .proc/is_it_organs)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED_PRE, PROC_REF(is_it_organs))
 
 /datum/component/consume/can_eat_inedible_organs/proc/is_it_organs(var/mob/M, var/mob/user, var/obj/item/I)
 	if (istype(I, /obj/item/skull) || (istype(I, /obj/item/organ/head) && can_eat_heads)) // skulls, heads
@@ -43,7 +44,7 @@ TYPEINFO(/datum/component/consume/organpoints)
 /datum/component/consume/organpoints/Initialize(var/target_abilityholder)
 	..()
 	src.target_abilityholder = target_abilityholder
-	RegisterSignal(parent, list(COMSIG_MOB_ITEM_CONSUMED), .proc/eat_organ_get_points)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED, PROC_REF(eat_organ_get_points))
 
 /datum/component/consume/organpoints/proc/eat_organ_get_points(var/mob/M, var/mob/user, var/obj/item/I)
 	if (!I || !M || !ishuman(M) || !user)
@@ -81,7 +82,7 @@ TYPEINFO(/datum/component/consume/organpoints)
 					boutput(L, "<span class='alert'>Ugh. Nothing but bone. Pretty spooky though.</span>")
 					return
 				if (/obj/item/skull/peculiar)
-					playsound(L, 'sound/misc/meat_plop.ogg', 100, 1)
+					playsound(L, 'sound/misc/meat_plop.ogg', 100, TRUE)
 					L.visible_message("<span class='alert'>[M] vomits <i>everywhere</i>.</span>", "<span class='alert'><b>UUAAAUGGHHH...</b> The wizard's skull was cursed.</span>")
 					L.emote("scream")
 					L.changeStatus("paralysis", 10 SECONDS)
@@ -161,7 +162,7 @@ TYPEINFO(/datum/component/consume/organheal)
 /datum/component/consume/organheal/Initialize(var/mod_mult)
 	..()
 	src.mod_mult = mod_mult
-	RegisterSignal(parent, list(COMSIG_MOB_ITEM_CONSUMED), .proc/eat_organ_get_heal)
+	RegisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED, PROC_REF(eat_organ_get_heal))
 
 /datum/component/consume/organheal/proc/eat_organ_get_heal(var/mob/M, var/mob/user, var/obj/item/I)
 	if (!I || !M || !user)
@@ -195,7 +196,7 @@ TYPEINFO(/datum/component/consume/organheal)
 				if (/obj/item/skull/strange)
 					boutput(M, "<span class='alert'>Ugh. Nothing but bone. Pretty spooky though.</span>")
 				if (/obj/item/skull/peculiar)
-					playsound(M, 'sound/misc/meat_plop.ogg', 100, 1)
+					playsound(M, 'sound/misc/meat_plop.ogg', 100, TRUE)
 					M.visible_message("<span class='alert'>[M] vomits <i>everywhere</i>.</span>", "<span class='alert'><b>UUAAAUGGHHH...</b> The wizard's skull was cursed.</span>")
 					M.emote("scream")
 					M.changeStatus("paralysis", 10 SECONDS)
@@ -273,20 +274,11 @@ TYPEINFO(/datum/component/consume/food_effects)
 		return COMPONENT_INCOMPATIBLE
 	src.food_parent = parent
 	src.status_effects = _status_effects
-	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL), .proc/apply_food_effects)
+	RegisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED), PROC_REF(apply_food_effects))
 
 /datum/component/consume/food_effects/InheritComponent(datum/component/consume/food_effects/C, i_am_original, _new_status_effects)
 	if(C?.status_effects)
 		src.status_effects = C.status_effects
-		boutput(world, "[C] was already init'd. heal amt on it was [C.status_effects] is now [src.status_effects], supposed to be [_new_status_effects]")
-	else
-		if (islist(_new_status_effects)) // C(duplicate component) wasn't initialized, so we don't know if the raw argument _new_status_effects is a string / list
-			src.status_effects |= _new_status_effects
-			boutput(world, "[_new_status_effects] was list. [src.status_effects]")
-		else if(istext(_new_status_effects))
-			var/list/new_sfx = list(_new_status_effects)
-			src.status_effects |= new_sfx
-			boutput(world, "[_new_status_effects] not list. [src.status_effects]")
 
 
 /datum/component/consume/food_effects/proc/apply_food_effects(var/obj/item/I, var/mob/M)
@@ -296,5 +288,29 @@ TYPEINFO(/datum/component/consume/food_effects)
 			L.add_food_bonus(effect, food_parent)
 
 /datum/component/consume/food_effects/UnregisterFromParent()
-	UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED_ALL))
+	UnregisterSignal(parent, list(COMSIG_ITEM_CONSUMED_PARTIAL, COMSIG_ITEM_CONSUMED))
+	. = ..()
+
+/// Eating rocks
+
+/datum/component/consume/can_eat_raw_materials
+	var/can_eat_scrap = FALSE // Glass shards and metal scrap
+
+TYPEINFO(/datum/component/consume/can_eat_raw_materials)
+	initialization_args = list(
+		ARG_INFO("can_eat_scrap", DATA_INPUT_BOOL, "If scrap is also valid food", FALSE)
+	)
+/datum/component/consume/can_eat_raw_materials/Initialize(var/can_eat_scrap)
+	..()
+	src.can_eat_scrap = can_eat_scrap
+	RegisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED_PRE, PROC_REF(is_a_raw_material))
+
+/datum/component/consume/can_eat_raw_materials/proc/is_a_raw_material(var/mob/M, var/mob/user, var/obj/item/I)
+	if (istype (I, /obj/item/raw_material) || (istype (I, /obj/item/raw_material/shard) || istype(I, /obj/item/raw_material/scrap_metal)) && can_eat_scrap)
+		return FORCE_EDIBILITY
+	else
+		return FALSE
+
+/datum/component/consume/can_eat_raw_materials/UnregisterFromParent()
+	UnregisterSignal(parent, COMSIG_MOB_ITEM_CONSUMED_PRE)
 	. = ..()

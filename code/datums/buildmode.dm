@@ -233,6 +233,8 @@ ABSTRACT_TYPE(/datum/buildmode)
 /client/proc/resetbuildmode()
 	set name = "Reset Build Mode"
 	set desc = "If your build mode save got screwed up use this to reset it!"
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+
 	if(src.buildmode?.is_active)
 		src.togglebuildmode()
 	qdel(src.buildmode)
@@ -256,7 +258,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 		if (!usr.client.holder.buildmode_view)
 			usr.client.cmd_admin_aview()
 		usr.see_in_dark = initial(usr.see_in_dark)
-		usr.see_invisible = INVIS_GHOST
+		usr.see_invisible = INVIS_SPOOKY
 	else
 		src.buildmode.activate()
 		if (!usr.client.holder.buildmode_view)
@@ -268,7 +270,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 /atom/movable/screen/buildmode/builddir
 	name = "Set direction"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = SOUTH
@@ -287,29 +289,29 @@ ABSTRACT_TYPE(/datum/buildmode)
 
 		if (icon_y <= 11)
 			if (icon_x <= 11)
-				dir = 10
+				dir = SOUTHWEST
 			else if (icon_x >= 22)
-				dir = 6
+				dir = SOUTHEAST
 			else
-				dir = 2
+				dir = SOUTH
 		else if (icon_y >= 22)
 			if (icon_x <= 11)
-				dir = 9
+				dir = NORTHWEST
 			else if (icon_x >= 22)
-				dir = 5
+				dir = NORTHEAST
 			else
-				dir = 1
+				dir = NORTH
 		else if (icon_x <= 16)
-			dir = 8
+			dir = WEST
 		else
-			dir = 4
+			dir = EAST
 
 		holder.dir = dir
 
 /atom/movable/screen/buildmode/buildhelp
 	name = "Click for help"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = NORTH
@@ -328,7 +330,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 /atom/movable/screen/buildmode/buildquit
 	name = "Click to exit build mode"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = NORTH
@@ -347,7 +349,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 /atom/movable/screen/buildmode/buildmode
 	name = "Click to select mode"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = NORTH
@@ -373,7 +375,7 @@ ABSTRACT_TYPE(/datum/buildmode)
 
 /atom/movable/screen/buildmode/hotkey
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = NORTH

@@ -1,6 +1,7 @@
 /datum/game_mode/extended
-	name = "extended"
+	name = "Extended"
 	config_tag = "extended"
+	regular = FALSE
 	do_antag_random_spawns = 0
 	latejoin_antag_compatible = 0
 

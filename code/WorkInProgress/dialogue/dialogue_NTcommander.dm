@@ -5,7 +5,8 @@
 	icon = 'icons/misc/factionreps.dmi'
 	icon_state = "ntcommander"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
+	layer = OBJ_LAYER + 0.1
 	var/datum/dialogueMaster/dialogue = null
 
 	New()

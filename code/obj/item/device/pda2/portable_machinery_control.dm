@@ -102,7 +102,7 @@
 		. += "<h4>[src.machinery_name] Interlink</h4>"
 
 		if (!src.active) // Show us the list.
-			if (!src.machinerylist || (src.machinerylist && src.machinerylist.len == 0))
+			if (!src.machinerylist || (src.machinerylist && length(src.machinerylist) == 0))
 				. += "No linkable machinery found.<BR>"
 
 			else

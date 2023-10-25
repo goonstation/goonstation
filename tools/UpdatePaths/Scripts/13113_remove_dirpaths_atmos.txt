@@ -1,0 +1,245 @@
+/obj/machinery/atmospherics/valve/vertical{dir=@UNSET} : /obj/machinery/atmospherics/valve{@OLD}
+/obj/machinery/atmospherics/valve/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/valve{@OLD;dir=4}
+
+/obj/machinery/atmospherics/valve/purge/vertical{dir=@UNSET} : /obj/machinery/atmospherics/valve/purge{@OLD}
+/obj/machinery/atmospherics/valve/purge/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/valve/purge{@OLD;dir=4}
+
+/obj/machinery/atmospherics/valve/notify_admins/vertical{dir=@UNSET} : /obj/machinery/atmospherics/valve/notify_admins{@OLD}
+/obj/machinery/atmospherics/valve/notify_admins/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/valve/notify_admins{@OLD;dir=4}
+
+
+/obj/machinery/atmospherics/valve/digital/vertical{dir=@UNSET} : /obj/machinery/atmospherics/valve/digital{@OLD}
+/obj/machinery/atmospherics/valve/digital/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/valve/digital{@OLD;dir=4}
+
+/obj/machinery/atmospherics/valve/digital/purge/vertical{dir=@UNSET} : /obj/machinery/atmospherics/valve/digital/purge{@OLD}
+/obj/machinery/atmospherics/valve/digital/purge/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/valve/digital/purge{@OLD;dir=4}
+
+/obj/machinery/atmospherics/valve/digital/notify_admins/vertical{dir=@UNSET} : /obj/machinery/atmospherics/valve/digital/notify_admins{@OLD}
+/obj/machinery/atmospherics/valve/digital/notify_admins/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/valve/digital/notify_admins{@OLD;dir=4}
+
+
+/obj/machinery/atmospherics/unary/vent_pump/north{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump{@OLD;dir=1}
+/obj/machinery/atmospherics/unary/vent_pump/east{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump{@OLD;dir=4}
+/obj/machinery/atmospherics/unary/vent_pump/west{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump{@OLD;dir=8}
+/obj/machinery/atmospherics/unary/vent_pump/south{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump{@OLD}
+
+/obj/machinery/atmospherics/unary/vent_pump/security/north{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/security{@OLD;dir=1}
+/obj/machinery/atmospherics/unary/vent_pump/security/east{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/security{@OLD;dir=4}
+/obj/machinery/atmospherics/unary/vent_pump/security/west{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/security{@OLD;dir=8}
+/obj/machinery/atmospherics/unary/vent_pump/security/south{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/security{@OLD}
+
+/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/north{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank{@OLD;dir=1}
+/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/east{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank{@OLD;dir=4}
+/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/west{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank{@OLD;dir=8}
+/obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank/south{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/toxlab_chamber_to_tank{@OLD}
+
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/north{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/high_volume{@OLD;dir=1}
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/east{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/high_volume{@OLD;dir=4}
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/west{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/high_volume{@OLD;dir=8}
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/south{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/high_volume{@OLD}
+
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/security/north{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/high_volume/security{@OLD;dir=1}
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/security/east{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/high_volume/security{@OLD;dir=4}
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/security/west{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/high_volume/security{@OLD;dir=8}
+/obj/machinery/atmospherics/unary/vent_pump/high_volume/security/south{dir=@UNSET} : /obj/machinery/atmospherics/unary/vent_pump/high_volume/security{@OLD}
+
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/north{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer{@OLD;dir=1}
+/obj/machinery/atmospherics/unary/cold_sink/freezer/south{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer{@OLD}
+/obj/machinery/atmospherics/unary/cold_sink/freezer/east{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer{@OLD;dir=4}
+/obj/machinery/atmospherics/unary/cold_sink/freezer/west{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer{@OLD;dir=8}
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/north{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{@OLD;dir=1}
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/south{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{@OLD}
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/east{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{@OLD;dir=4}
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/west{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo{@OLD;dir=8}
+
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/kitchen/north{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/kitchen{@OLD;dir=1}
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/kitchen/south{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/kitchen{@OLD}
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/kitchen/east{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/kitchen{@OLD;dir=4}
+/obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/kitchen/west{dir=@UNSET} : /obj/machinery/atmospherics/unary/cold_sink/freezer/cryo/kitchen{@OLD;dir=8}
+
+
+/obj/machinery/atmospherics/unary/cryo_cell/north{dir=@UNSET} : /obj/machinery/atmospherics/unary/cryo_cell{@OLD;dir=1}
+/obj/machinery/atmospherics/unary/cryo_cell/south{dir=@UNSET} : /obj/machinery/atmospherics/unary/cryo_cell{@OLD}
+/obj/machinery/atmospherics/unary/cryo_cell/east{dir=@UNSET} : /obj/machinery/atmospherics/unary/cryo_cell{@OLD;dir=4}
+/obj/machinery/atmospherics/unary/cryo_cell/west{dir=@UNSET} : /obj/machinery/atmospherics/unary/cryo_cell{@OLD;dir=8}
+
+/obj/machinery/atmospherics/portables_connector/north{dir=@UNSET} : /obj/machinery/atmospherics/portables_connector{@OLD;dir=1}
+/obj/machinery/atmospherics/portables_connector/south{dir=@UNSET} : /obj/machinery/atmospherics/portables_connector{@OLD}
+/obj/machinery/atmospherics/portables_connector/east{dir=@UNSET} : /obj/machinery/atmospherics/portables_connector{@OLD;dir=4}
+/obj/machinery/atmospherics/portables_connector/west{dir=@UNSET} : /obj/machinery/atmospherics/portables_connector{@OLD;dir=8}
+
+/obj/machinery/atmospherics/unary/portables_connector/north{dir=@UNSET} : /obj/machinery/atmospherics/unary/portables_connector{@OLD;dir=1}
+/obj/machinery/atmospherics/unary/portables_connector/south{dir=@UNSET} : /obj/machinery/atmospherics/unary/portables_connector{@OLD}
+/obj/machinery/atmospherics/unary/portables_connector/east{dir=@UNSET} : /obj/machinery/atmospherics/unary/portables_connector{@OLD;dir=4}
+/obj/machinery/atmospherics/unary/portables_connector/west{dir=@UNSET} : /obj/machinery/atmospherics/unary/portables_connector{@OLD;dir=8}
+
+
+/obj/machinery/atmospherics/simple/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple{@OLD}
+/obj/machinery/atmospherics/simple/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple{@OLD;dir=10}
+
+/obj/machinery/atmospherics/simple/overfloor/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/overfloor{@OLD}
+/obj/machinery/atmospherics/simple/overfloor/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/overfloor{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/overfloor/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/overfloor{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/overfloor/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/overfloor{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/overfloor/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/overfloor{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/overfloor/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/overfloor{@OLD;dir=10}
+
+/obj/machinery/atmospherics/simple/color_pipe/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe{@OLD}
+/obj/machinery/atmospherics/simple/color_pipe/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/color_pipe/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/color_pipe/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/color_pipe/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/color_pipe/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe{@OLD;dir=10}
+
+/obj/machinery/atmospherics/simple/color_pipe/overfloor/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/overfloor{@OLD}
+/obj/machinery/atmospherics/simple/color_pipe/overfloor/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/overfloor{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/color_pipe/overfloor/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/overfloor{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/color_pipe/overfloor/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/overfloor{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/color_pipe/overfloor/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/overfloor{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/color_pipe/overfloor/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/overfloor{@OLD;dir=10}
+
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe{@OLD}
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe{@OLD;dir=10}
+
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor{@OLD}
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/cyan_pipe/overfloor{@OLD;dir=10}
+
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe{@OLD}
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe{@OLD;dir=10}
+
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor{@OLD}
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/green_pipe/overfloor{@OLD;dir=10}
+
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe{@OLD}
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe{@OLD;dir=10}
+
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor{@OLD}
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/color_pipe/yellow_pipe/overfloor{@OLD;dir=10}
+
+
+/obj/machinery/atmospherics/simple/insulated/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated{@OLD}
+/obj/machinery/atmospherics/simple/insulated/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/insulated/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/insulated/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/insulated/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/insulated/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated{@OLD;dir=10}
+
+/obj/machinery/atmospherics/simple/insulated/cold/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated/cold{@OLD}
+/obj/machinery/atmospherics/simple/insulated/cold/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated/cold{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/insulated/cold/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated/cold{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/insulated/cold/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated/cold{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/insulated/cold/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated/cold{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/insulated/cold/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/insulated/cold{@OLD;dir=10}
+
+
+/obj/machinery/atmospherics/simple/junction/south{dir=@UNSET} : /obj/machinery/atmospherics/simple/junction{@OLD}
+/obj/machinery/atmospherics/simple/junction/north{dir=@UNSET} : /obj/machinery/atmospherics/simple/junction{@OLD;dir=1}
+/obj/machinery/atmospherics/simple/junction/west{dir=@UNSET} : /obj/machinery/atmospherics/simple/junction{@OLD;dir=8}
+/obj/machinery/atmospherics/simple/junction/east{dir=@UNSET} : /obj/machinery/atmospherics/simple/junction{@OLD;dir=4}
+
+
+/obj/machinery/atmospherics/simple/heat_exchanging/vertical{dir=@UNSET} : /obj/machinery/atmospherics/simple/heat_exchanging{@OLD}
+/obj/machinery/atmospherics/simple/heat_exchanging/horizontal{dir=@UNSET} : /obj/machinery/atmospherics/simple/heat_exchanging{@OLD;dir=4}
+/obj/machinery/atmospherics/simple/heat_exchanging/northeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/heat_exchanging{@OLD;dir=5}
+/obj/machinery/atmospherics/simple/heat_exchanging/northwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/heat_exchanging{@OLD;dir=9}
+/obj/machinery/atmospherics/simple/heat_exchanging/southeast{dir=@UNSET} : /obj/machinery/atmospherics/simple/heat_exchanging{@OLD;dir=6}
+/obj/machinery/atmospherics/simple/heat_exchanging/southwest{dir=@UNSET} : /obj/machinery/atmospherics/simple/heat_exchanging{@OLD;dir=10}
+
+
+/obj/machinery/atmospherics/pipe/tank/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank{@OLD}
+/obj/machinery/atmospherics/pipe/tank/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/tank/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/tank/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank{@OLD;dir=4}
+
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{@OLD}
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/tank/carbon_dioxide/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/carbon_dioxide{@OLD;dir=4}
+
+/obj/machinery/atmospherics/pipe/tank/toxins/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/toxins{@OLD}
+/obj/machinery/atmospherics/pipe/tank/toxins/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/toxins{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/tank/toxins/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/toxins{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/tank/toxins/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/toxins{@OLD;dir=4}
+
+/obj/machinery/atmospherics/pipe/tank/oxygen_agent_b/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/oxygen_agent_b{@OLD}
+/obj/machinery/atmospherics/pipe/tank/oxygen_agent_b/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/oxygen_agent_b{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/tank/oxygen_agent_b/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/oxygen_agent_b{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/tank/oxygen_agent_b/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/oxygen_agent_b{@OLD;dir=4}
+
+/obj/machinery/atmospherics/pipe/tank/oxygen/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/oxygen{@OLD}
+/obj/machinery/atmospherics/pipe/tank/oxygen/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/oxygen{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/tank/oxygen/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/oxygen{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/tank/oxygen/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/oxygen{@OLD;dir=4}
+
+/obj/machinery/atmospherics/pipe/tank/nitrogen/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/nitrogen{@OLD}
+/obj/machinery/atmospherics/pipe/tank/nitrogen/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/nitrogen{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/tank/nitrogen/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/nitrogen{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/tank/nitrogen/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/nitrogen{@OLD;dir=4}
+
+/obj/machinery/atmospherics/pipe/tank/sleeping_agent/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/sleeping_agent{@OLD}
+/obj/machinery/atmospherics/pipe/tank/sleeping_agent/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/sleeping_agent{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/tank/sleeping_agent/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/sleeping_agent{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/tank/sleeping_agent/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/sleeping_agent{@OLD;dir=4}
+
+/obj/machinery/atmospherics/pipe/tank/air/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/airv{@OLD}
+/obj/machinery/atmospherics/pipe/tank/air/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/air{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/tank/air/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/air{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/tank/air/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/air{@OLD;dir=4}
+
+/obj/machinery/atmospherics/pipe/tank/air_repressurization/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/air_repressurization{@OLD}
+/obj/machinery/atmospherics/pipe/tank/air_repressurization/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/air_repressurization{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/tank/air_repressurization/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/air_repressurization{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/tank/air_repressurization/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/tank/air_repressurization{@OLD;dir=4}
+
+
+/obj/machinery/atmospherics/pipe/vent/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/vent{@OLD}
+/obj/machinery/atmospherics/pipe/vent/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/vent{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/vent/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/vent{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/vent/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/vent{@OLD;dir=4}
+
+
+/obj/machinery/atmospherics/pipe/vertical_pipe/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/vertical_pipe{@OLD}
+/obj/machinery/atmospherics/pipe/vertical_pipe/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/vertical_pipe{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/vertical_pipe/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/vertical_pipe{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/vertical_pipe/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/vertical_pipe{@OLD;dir=4}
+
+
+/obj/machinery/atmospherics/pipe/manifold/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/manifold{@OLD}
+/obj/machinery/atmospherics/pipe/manifold/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/manifold{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/manifold/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/manifold{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/manifold/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/manifold{@OLD;dir=4}
+
+/obj/machinery/atmospherics/pipe/manifold/overfloor/south{dir=@UNSET} : /obj/machinery/atmospherics/pipe/manifold/overfloor{@OLD}
+/obj/machinery/atmospherics/pipe/manifold/overfloor/north{dir=@UNSET} : /obj/machinery/atmospherics/pipe/manifold/overfloor{@OLD;dir=1}
+/obj/machinery/atmospherics/pipe/manifold/overfloor/west{dir=@UNSET} : /obj/machinery/atmospherics/pipe/manifold/overfloor{@OLD;dir=8}
+/obj/machinery/atmospherics/pipe/manifold/overfloor/east{dir=@UNSET} : /obj/machinery/atmospherics/pipe/manifold/overfloor{@OLD;dir=4}

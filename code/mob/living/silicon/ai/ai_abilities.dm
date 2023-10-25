@@ -45,6 +45,8 @@
 						return expansion
 
 /datum/targetable/ai/module
+	icon_state = "ai_template"
+
 	castcheck(atom/target)
 		. = ..()
 		if(.)
@@ -111,7 +113,7 @@
 				D.icon_state = "chempuff"
 				D.layer = EFFECTS_LAYER_BASE
 
-				playsound(cam, 'sound/machines/mixer.ogg', 50, 1)
+				playsound(cam, 'sound/machines/mixer.ogg', 50, TRUE)
 
 				logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires [src.name], creating metal foam at [log_loc(T)].")
 
@@ -200,12 +202,12 @@
 				animate(cam.get_filter("charge_outline"), size=0.5, time=charge_time)
 				SPAWN(charge_time)
 					logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] fires a camera projectile [src.name], targeting [key_name(target)] [log_loc(target)].")
-					shoot_projectile_ST(cam, P, target)
+					shoot_projectile_ST_pixel_spread(cam, P, target)
 					if(P.cost > 1)
 						if (issilicon(cam))
 							var/mob/living/silicon/S = cam
 							if (S.cell)
-								S.cell.charge -= P.cost
+								S.cell.use(P.cost)
 						else
 							cam.use_power(P.cost / CELLRATE)
 					cam.remove_filter("charge_outline")
@@ -326,6 +328,7 @@
 				boutput(holder.owner, "<span class='alert'>Interference inhibits teleportation.</span>")
 
 /datum/targetable/ai/module/nanite_repair
+	name = "Nanite Repair"
 	icon_state = "nanites"
 	desc = "Send out targeted nanites to repair a silicon being or a camera."
 	targeted = TRUE
@@ -338,14 +341,14 @@
 
 		if(issilicon(target))
 			var/mob/living/silicon/S = target
-			var/nanite_overlay = S.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+			var/nanite_overlay = S.SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 			S.UpdateOverlays(nanite_overlay, "nanite_heal")
 			SPAWN(3 SECONDS)
 				S.HealDamage("All", 6, 6)
 				S.UpdateOverlays(null,"nanite_heal")
 		else if(istype_exact(target,/obj/machinery/camera)) // sweet you got eyes on that camera
 			var/obj/machinery/camera/C
-			var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+			var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 			C.UpdateOverlays(nanite_overlay, "nanite_heal")
 			C.set_camera_status(TRUE)
 			C.icon_state = "camera"
@@ -377,7 +380,7 @@
 			SPAWN(rand(10 SECONDS, 20 SECONDS))
 				var/repaired = 0
 				for(C in cameras_to_repair)
-					var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/misc/critter.dmi', "nanites")
+					var/nanite_overlay = C.SafeGetOverlayImage("nanite_heal",'icons/mob/critter/robotic/nanites.dmi', "nanites")
 					C.UpdateOverlays(nanite_overlay, "nanite_heal")
 					C.set_camera_status(TRUE)
 					C.icon_state = "camera"
@@ -499,7 +502,7 @@
 
 		if(C)
 			logTheThing(LOG_COMBAT, holder.owner, "[key_name(holder.owner)] activates AI [src.name], targeting [log_loc(target)].")
-			playsound(C, 'sound/weapons/flash.ogg', 100, 1)
+			playsound(C, 'sound/weapons/flash.ogg', 100, TRUE)
 			C.visible_message("[C] emits a sudden flash.")
 			for (var/atom/A in oviewers((flash_range), get_turf(C)))
 				var/mob/living/M

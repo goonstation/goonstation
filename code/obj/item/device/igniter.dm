@@ -1,16 +1,19 @@
+TYPEINFO(/obj/item/device/igniter)
+	mats = 2
+
 /obj/item/device/igniter
 	name = "igniter"
 	desc = "A small electronic device can be paired with other electronics, or used to heat chemicals directly."
 	icon_state = "igniter"
 	var/status = 1
-	flags = FPRINT | TABLEPASS| CONDUCT | ONBELT | USEDELAY
+	flags = FPRINT | TABLEPASS| CONDUCT | USEDELAY
+	c_flags = ONBELT
 	item_state = "electronic"
 	m_amt = 100
 	throwforce = 5
 	w_class = W_CLASS_TINY
 	throw_speed = 3
 	throw_range = 10
-	mats = 2
 	firesource = FIRESOURCE_IGNITER
 
 	//blcok spamming shit because inventory uncaps click speed and kinda makes this an exploit
@@ -19,7 +22,8 @@
 
 /obj/item/device/igniter/attack(mob/M, mob/user)
 	if (ishuman(M))
-		if (M:bleeding || (M:butt_op_stage == 4 && user.zone_sel.selecting == "chest"))
+		var/mob/living/carbon/human/H = M
+		if (H:bleeding || (H.organHolder.back_op_stage > BACK_SURGERY_CLOSED && user.zone_sel.selecting == "chest"))
 			if (!src.cautery_surgery(M, user, 15))
 				return ..()
 		else return ..()

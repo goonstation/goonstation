@@ -15,7 +15,7 @@
 	icon_state = "duckbot"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1 // ACTION
 	health = 5
 	bot_move_delay = DUCKBOT_MOVE_SPEED
@@ -44,7 +44,7 @@
 
 /obj/machinery/bot/duckbot/New()
 	. = ..()
-	MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 /// Makes the duckbot mill around aimlessly, or chase people if emagged
 /obj/machinery/bot/duckbot/proc/wakka_wakka()
@@ -54,7 +54,7 @@
 			if(!GET_COOLDOWN(src, DUCKBOT_ANNOY_TIMEOUT))
 				src.KillPathAndGiveUp(1)
 			else if(!ON_COOLDOWN(src, DUCKBOT_ANNOY_PATHING_COOLDOWN, src.annoy_path_cooldown))
-				var/turf/randwander = get_step_rand(get_turf(src.annoy_target))
+				var/turf/randwander = get_step_truly_rand(get_turf(src.annoy_target))
 				src.navigate_to(randwander, DUCKBOT_MOVE_SPEED, 0, 30)
 		else
 			for_by_tcl(M, /mob)
@@ -63,8 +63,12 @@
 						src.annoy_target = M
 						src.navigate_to(get_turf(M), src.bot_move_delay, 0, 20)
 						break
+	else if(prob(95))
+		// this is not true random, instead it's a mostly non-direction-changing wall-hugging behaviour
+		src.navigate_to(get_step_rand(get_turf(src)))
 	else
-		src.navigate_to(get_step_rand(src))
+		// true random step
+		src.navigate_to(get_step_truly_rand(get_turf(src)))
 
 /// Sends the duckbot to a random spot on the station
 /obj/machinery/bot/duckbot/proc/mystical_journey()

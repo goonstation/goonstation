@@ -41,6 +41,7 @@
 			H.delStatus("stunned")
 			H.delStatus("weakened")
 			H.delStatus("disorient")
+			H.delStatus("pinned")
 			H.force_laydown_standup()
 
 			H.abilityHolder.updateButtons()
@@ -51,7 +52,6 @@
 /mob/proc/revert_from_horror_form()
 	if(ishuman(src))
 		var/mob/living/carbon/human/H = src
-		qdel(H.mutantrace)
 		H.set_mutantrace(null)
 		var/datum/abilityHolder/changeling/C = H.get_ability_holder(/datum/abilityHolder/changeling)
 		if(!C || C.points < 15)

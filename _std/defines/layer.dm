@@ -24,6 +24,10 @@
 // Mob clothing and effect layers
 #define MOB_LAYER_BASE 		4
 #define MOB_OVERLAY_BASE	FLOAT_LAYER
+#define MOB_LAYER_OVER_FUCKING_EVERYTHING_LAYER (MOB_OVERLAY_BASE - 0.1) ///! Boxes
+#define MOB_OVER_TOP_LAYER 	(MOB_OVERLAY_BASE - 0.2)	///! For things which are draped over the top of all other clothing
+#define MOB_BACK_SUIT_LAYER (MOB_OVERLAY_BASE - 0.3)	///! For capes and scarves and stuff. Technically on back, but we want to layer over almost everything else
+#define MOB_FULL_SUIT_LAYER	 (MOB_OVERLAY_BASE - 0.4) 	///! For things which fully cover the body, but are still normal-ish clothes (cult robes, mechanicus robe)
 #define MOB_EFFECT_LAYER 	(MOB_OVERLAY_BASE-1)	// FLOAT_LAYER
 #define MOB_HANDCUFF_LAYER 	(MOB_OVERLAY_BASE-2)
 #define MOB_INHAND_LAYER 	(MOB_OVERLAY_BASE-3)

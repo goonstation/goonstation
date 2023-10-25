@@ -5,11 +5,9 @@
 	name = "Bite"
 	desc = "Bite a mob, doing a little damage and injecting them with your venom. (You do have venom, don't you?)"
 	icon_state = "clown_spider_bite"
-	cooldown = 200
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 20 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (..())
@@ -53,12 +51,10 @@
 /datum/targetable/critter/spider_flail
 	name = "Flail"
 	desc = "Flail at a mob, stunning them and injecting them with your venom. (You do have venom, don't you?)"
-	cooldown = 300
+	cooldown = 30 SECONDS
 	icon_state = "spider_flail"
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (disabled && world.time > last_cast)
@@ -136,11 +132,9 @@
 	name = "Drain"
 	desc = "Drain a dead human."
 	icon_state = "clown_spider_drain"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
-
-	var/datum/projectile/slam/proj = new
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 
 	cast(atom/target)
 		if (disabled && world.time > last_cast)
@@ -199,7 +193,6 @@
 					holder.owner.set_loc(pick(neightbors))
 				SPAWN(0)
 					var/obj/icecube/cube = new /obj/icecube(get_turf(H), H)
-					H.set_loc(cube)
 					if (istype(S))
 						switch (S.encase_in_web)
 							if (2)
@@ -207,6 +200,7 @@
 								"<span class='combat'><b>You encase [H] in cotton candy!</b></span>")
 								cube.name = "bundle of cotton candy"
 								cube.desc = "What the fuck spins webs out of - y'know what, scratch that. You don't want to find out."
+								cube.icon = 'icons/effects/effects.dmi'
 								cube.icon_state = "candyweb2"
 								cube.steam_on_death = 0
 
@@ -215,6 +209,7 @@
 								"<span class='combat'><b>You encase [H] in web!</b></span>")
 								cube.name = "bundle of web"
 								cube.desc = "A big wad of web. Someone seems to be stuck inside it."
+								cube.icon = 'icons/effects/effects.dmi'
 								cube.icon_state = "web2"
 								cube.steam_on_death = 0
 
@@ -240,13 +235,11 @@
 /datum/targetable/critter/clownspider_kick // for clown/cluwnespiders
 	name = "Kick"
 	desc = "Kick a mob, doing a little damage and possibly causing a short stun."
-	cooldown = 100
+	cooldown = 10 SECONDS
 	icon_state = "clown_spider_kick"
-	targeted = 1
-	target_anything = 1
+	targeted = TRUE
+	target_anything = TRUE
 	var/sound/sound_kick = 'sound/musical_instruments/Bikehorn_1.ogg'
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (..())
@@ -284,12 +277,10 @@
 	name = "Trample"
 	desc = "Kick the SHIT out of a mob with all eight legs."
 	icon_state = "clown_spider_trample"
-	cooldown = 300
-	targeted = 1
-	target_anything = 1
+	cooldown = 30 SECONDS
+	targeted = TRUE
+	target_anything = TRUE
 	var/sound/sound_kick = "clownstep"
-
-	var/datum/projectile/slam/proj = new
 
 	cast(atom/target)
 		if (disabled && world.time > last_cast)
@@ -377,7 +368,7 @@
 
 		if (istype(holder.owner, /mob/living/critter/spider/clownqueen))
 			var/mob/living/critter/spider/clownqueen/queen = holder.owner
-			if (islist(queen.babies) && queen.babies.len > queen.max_defensive_babies)
+			if (islist(queen.babies) && length(queen.babies) > queen.max_defensive_babies)
 				boutput(queen, "<span class='alert'><b>You make a new baby, but know in your [flavor_text] heart that it does not love you.</b></span>")
 
 

@@ -6,7 +6,7 @@
 	desc = "Part of an elaborate small-ship teleportation network recently deployed by Nanotrasen.  Probably won't cause you to die."
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "beacon"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	var/packable = 0
 	var/obj/deployer = /obj/beacon_deployer
@@ -77,13 +77,13 @@
 				boutput(user,"This beacon's retraction hardware is locked into place and can't be altered.")
 				return
 			src.visible_message("<b>[user.name]</b> undeploys [src].")
-			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
 			src.startpack()
 		else if (ispulsingtool(W))
 			if (!packable)
 				boutput(user,"This beacon's designation circuits are hard-wired and can't be altered.")
 				return
-			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
+			var/str = html_encode(input(user,"Set designation","Re-Designate Buoy","") as null|text)
 			if (!str || !length(str))
 				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
 				return
@@ -99,6 +99,7 @@
 /obj/warp_beacon/New()
 	..()
 	START_TRACKING
+	AddComponent(/datum/component/minimap_marker, MAP_SYNDICATE | MAP_POD_WARS_NANOTRASEN | MAP_POD_WARS_SYNDICATE, "portal")
 
 /obj/warp_beacon/disposing()
 	..()
@@ -110,7 +111,7 @@
 	icon_state = "fatportal"
 	density = 0
 	var/obj/target = null
-	anchored = 1
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER
 
 /obj/warp_portal/Bumped(mob/M as mob|obj)
@@ -132,6 +133,12 @@
 		sleep(30 SECONDS)
 		qdel(src)
 
+/obj/warp_portal/Click(location, control, params)
+	if (isobserver(usr))
+		usr.set_loc(get_turf(src.target))
+		return
+	..()
+
 /obj/warp_portal/proc/teleport(atom/movable/M as mob|obj)
 	if(istype(M, /obj/effects)) //sparks don't teleport
 		return
@@ -148,10 +155,11 @@
 		if (!issilicon(M)) // Borgs don't care about rads (for the meantime)
 			boutput(T, "<span class='alert'>You are exposed to some pretty swole strange particles, this can't be good...</span>")
 
-		if(prob(1))
-			T.gib()
-			T.unlock_medal("Where we're going, we won't need eyes to see", 1)
-			logTheThing(LOG_COMBAT, T, "entered [src] at [log_loc(src)] and gibbed")
+		if(prob(2))
+			M.set_loc(random_space_turf() || random_nonrestrictedz_turf())
+			var/turf/throw_target = locate(rand(1, world.maxx), rand(1, world.maxy), src.target.z)
+			M.throw_at(throw_target, INFINITY, 2)
+			logTheThing(LOG_COMBAT, T, "entered [src] at [log_loc(src)] and got teleported to random space tile [log_loc(M)]")
 			return
 		else
 			T.take_radiation_dose(rand()*1 SIEVERTS)
@@ -162,6 +170,8 @@
 				else
 					H:bioHolder:RandomEffect("good")
 			logTheThing(LOG_COMBAT, T, "entered [src] at [log_loc(src)], got irradiated and teleported to [log_loc(src.target)]")
+	else if (istype(M, /atom/movable))
+		logTheThing(LOG_COMBAT, M, "([M.type]) entered [src] at [log_loc(src)] and teleported to [log_loc(src.target)]")
 	if (istype(M, /atom/movable))
 		animate_portal_tele(src)
 		playsound(src.loc, "warp", 50, 1, 0.2, 1.2)
@@ -172,7 +182,7 @@
 	src.icon_state = "beaconpack"
 	SPAWN(14) //wait until packing is complete
 		var/obj/beacon_deployer/packitup = new src.deployer(src.loc)
-		playsound(src, 'sound/machines/heater_off.ogg', 20, 1)
+		playsound(src, 'sound/machines/heater_off.ogg', 20, TRUE)
 		if(src.beaconid)
 			packitup.beaconid = src.beaconid
 			packitup.name = "warp buoy unit [beaconid]"
@@ -205,12 +215,12 @@
 				boutput(user, "<span style=\"color:red\">The beacon can't connect to the warp network.</span>")
 				return
 			src.visible_message("<b>[user.name]</b> deploys [src].")
-			playsound(src, 'sound/items/Ratchet.ogg', 40, 1)
+			playsound(src, 'sound/items/Ratchet.ogg', 40, TRUE)
 			src.deploying = 1
 			src.deploybeacon()
 
 		else if (ispulsingtool(W) && !src.deploying)
-			var/str = input(user,"Set designation","Re-Designate Buoy","") as null|text
+			var/str = html_encode(input(user,"Set designation","Re-Designate Buoy","") as null|text)
 			if (!str || !length(str))
 				boutput(user, "<span style=\"color:red\">No valid input detected.</span>")
 				return
@@ -225,10 +235,10 @@
 
 /obj/beacon_deployer/proc/deploybeacon()
 	src.icon_state = "beacondeploy"
-	src.anchored = 1
+	src.anchored = ANCHORED
 	SPAWN(16) //wait until unpacking is complete
 		var/obj/warp_beacon/depbeac = new /obj/warp_beacon/deployed(src.loc)
-		playsound(src, 'sound/machines/heater_off.ogg', 20, 1)
+		playsound(src, 'sound/machines/heater_off.ogg', 20, TRUE)
 		depbeac.name = "Buoy [src.beaconid]"
 		depbeac.beaconid = src.beaconid
 		depbeac.deployer = src.type
@@ -313,13 +323,13 @@
 	onStart()
 		..()
 		if (beacon.state == 1)
-			playsound(beacon, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(beacon, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 			owner.visible_message("<span class='bold'>[owner]</span> begins installing rods onto \the [beacon].")
 		if (beacon.state == 2)
-			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, 1)
+			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, TRUE)
 			owner.visible_message("<span class='bold'>[owner]</span> begins connecting \the [beacon]'s electrical systems.")
 		if (beacon.state == 3)
-			playsound(beacon, 'sound/effects/zzzt.ogg', 30, 1)
+			playsound(beacon, 'sound/effects/zzzt.ogg', 30, TRUE)
 			owner.visible_message("<span class='bold'>[owner]</span> begins soldering \the [beacon]'s wiring into place.")
 	onEnd()
 		..()
@@ -327,7 +337,7 @@
 			beacon.state = 2
 			beacon.icon_state = "beacframe_2"
 			boutput(owner, "<span class='notice'>You successfully install the framework rods.</span>")
-			playsound(beacon, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, 1)
+			playsound(beacon, 'sound/impact_sounds/Generic_Stab_1.ogg', 40, TRUE)
 
 			the_tool.change_stack_amount(-4) //the_tool should be rods
 
@@ -337,7 +347,7 @@
 			beacon.state = 3
 			beacon.icon_state = "beaconunit"
 			boutput(owner, "<span class='notice'>You finish wiring together the beacon's electronics.</span>")
-			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, 1)
+			playsound(beacon, 'sound/items/Deconstruct.ogg', 40, TRUE)
 
 			the_tool.amount -= 1
 			if (the_tool.amount < 1)
@@ -351,7 +361,7 @@
 			return
 		if (beacon.state == 3)
 			boutput(owner, "<span class='notice'>You solder the wiring into place, completing the beacon. It's now ready to deploy with a wrench.</span>")
-			playsound(beacon, 'sound/effects/zzzt.ogg', 40, 1)
+			playsound(beacon, 'sound/effects/zzzt.ogg', 40, TRUE)
 			var/turf/T = get_turf(beacon)
 			new /obj/beacon_deployer(T)
 			qdel(beacon)

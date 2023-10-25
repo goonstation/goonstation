@@ -60,7 +60,7 @@ var/global/list/playersSeen = list()
 	query["ip"] = ip
 	query["record"] = record
 	#ifdef RP_MODE
-	query["rp_mode"] = true
+	query["rp_mode"] = TRUE
 	#endif
 
 	var/list/data
@@ -88,7 +88,7 @@ var/global/list/playersSeen = list()
 
 	//Are any of the details...different? This is to catch out ban evading jerks who change their ckey but forget to mask their IP or whatever
 	var/timeAdded = 0
-	if (!expired && (row["ckey"] != ckey || row["ip"] != ip || row["compID"] != compID)) //Insert a new ban for this JERK
+	if (!expired && (row["ckey"] != ckey || (row["ip"] != ip && row["ip"] != "N/A") || (row["compID"] != compID && row["compID"] != "N/A"))) //Insert a new ban for this JERK
 		var/newChain = 0
 		if (text2num(row["previous"]) > 0) //if we matched a previous auto-added ban
 			if (text2num(row["chain"]) > 0)
@@ -103,8 +103,8 @@ var/global/list/playersSeen = list()
 		var/remaining = (timestamp > 0 ? timestamp - CMinutes : timestamp)
 		var/addData[] = new()
 		addData["ckey"] = ckey
-		addData["compID"] = compID
-		addData["ip"] = ip
+		addData["compID"] = (row["compID"] == "N/A" ? "N/A" : compID) // don't record CID if the original ban doesn't have one down
+		addData["ip"] = (row["ip"] == "N/A" ? "N/A" : ip) // don't record ip if the original ban doesn't have one down
 		addData["reason"] = row["reason"]
 		addData["oakey"] = row["oakey"]
 		addData["akey"] = "Auto Banner"
@@ -174,7 +174,7 @@ var/global/list/playersSeen = list()
 
 		var/replacement_text
 		if (targetC)
-			targetC.mob.unlock_medal("Banned", 1)
+			targetC.mob.unlock_medal("Banned", FALSE)
 			boutput(targetC, "<span class='alert'><BIG><B>You have been banned by [row["akey"]].<br>Reason: [row["reason"]]</B></BIG></span>")
 			boutput(targetC, "<span class='alert'>To try to resolve this matter head to https://forum.ss13.co</span>")
 		else
@@ -274,12 +274,11 @@ var/global/list/playersSeen = list()
 		var/data[] = new()
 
 		if (!mobRef)
-			data["ckey"] = input(src, "Ckey (lowercase, only alphanumeric, no spaces, leave blank to skip)", "Ban") as null|text
-			var/auto = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
-			if (auto == "No")
-				data["compID"] = input(src, "Computer ID", "Ban") as null|text
-				data["ip"] = input(src, "IP Address", "Ban") as null|text
-			else if (data["ckey"])
+			data["ckey"] = ckey(input(src, "Ckey, leave blank to skip", "Ban") as null|text)
+			var/auto_fill
+			if (data["ckey"])
+				auto_fill = alert("Attempt to autofill IP and compID with most recent?","Autofill?","Yes","No")
+			if (auto_fill == "Yes")
 				var/list/response
 				try
 					response = apiHandler.queryAPI("playerInfo/get", list("ckey" = data["ckey"]), forceResponse = 1)
@@ -290,6 +289,9 @@ var/global/list/playersSeen = list()
 					boutput(src, "<span class='alert'>No data found for target, IP and/or compID will be left blank.</span>")
 				data["ip"] = response["last_ip"]
 				data["compID"] = response["last_compID"]
+			else
+				data["compID"] = input(src, "Computer ID", "Ban") as null|text
+				data["ip"] = input(src, "IP Address", "Ban") as null|text
 		else
 			data["ckey"] = M.ckey
 			data["compID"] = M.computer_id
@@ -655,6 +657,8 @@ var/global/list/playersSeen = list()
 		src << sound('sound/voice/farts/poo2.ogg')
 		logTheThing(LOG_ADMIN, src, "tried to access the ban panel")
 		logTheThing(LOG_DIARY, src, "tried to access the ban panel", "admin")
+		message_admins("[key_name(src)] tried to access the ban panel but was denied.")
+		del(usr.client)
 	return
 
 
@@ -688,7 +692,7 @@ var/global/list/playersSeen = list()
 	if (fexists(banLog))
 		//Here we fetch the latest logID, increment it, then append our data as json
 		var/list/log = dd_file2list(banLog)
-		var/lastIndex = (log.len > 1 ? log.len - 1 : 1)
+		var/lastIndex = (length(log) > 1 ? log.len - 1 : 1)
 		var/lastRow = log[lastIndex]
 		var/list/rowDetails = splittext(lastRow, ":")
 		lastID = text2num(rowDetails[1])
@@ -840,7 +844,7 @@ var/global/list/playersSeen = list()
 	//Only operate on the log if it...exists and has stuff, naturally
 	if (fexists(banLog) && length(file2text(banLogF)) > 0)
 		var/list/log = dd_file2list(banLog)
-		var/lastIndex = (log.len > 1 ? log.len - 1 : 1)
+		var/lastIndex = (length(log) > 1 ? log.len - 1 : 1)
 		var/lastRow = log[lastIndex]
 		log = splittext(lastRow, ":")
 		latestLocalID = log[1]

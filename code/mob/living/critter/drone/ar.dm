@@ -1,13 +1,14 @@
 /mob/living/critter/robotic/drone/ar
 	drone_designation = "AR"
 	desc = "A highly dangerous Syndicate artillery drone."
-	icon_state = "drone5"
+	icon = 'icons/mob/critter/robotic/drone/artillery.dmi'
+	icon_state = "drone_artillery"
 	alert_sounds = list('sound/machines/engine_alert1.ogg')
 
 	setup_hands()
 		..()
 		var/datum/handHolder/HH = hands[1]
-		HH.limb = new /datum/limb/gun/artillery
+		HH.limb = new /datum/limb/gun/kinetic/artillery
 		HH.name = "S-42 Long Range Explosive Shells"
 		HH.icon = 'icons/mob/critter_ui.dmi'
 		HH.icon_state = "handart"

@@ -3,10 +3,10 @@
 	desc = "A mobile scanner and computer in one unit for genetics work."
 	icon = 'icons/obj/Cryogenic2.dmi'
 	icon_state = "PAG_0"
-	anchored = 0
+	anchored = UNANCHORED
 	req_access = null //will revisit later
 	var/mob/occupant = null
-	var/datum/character_preview/multiclient/occupant_preview = null
+	var/datum/movable_preview/character/multiclient/occupant_preview = null
 	var/locked = 0
 	var/homeloc = null
 
@@ -139,7 +139,7 @@
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/sheet) && (src.status & BROKEN))
 			var/obj/item/sheet/S = W
-			if (S.material && S.material.material_flags & MATERIAL_CRYSTAL)
+			if (S.material && S.material.getMaterialFlags() & MATERIAL_CRYSTAL)
 				if (S.amount >= 2)
 					W.change_stack_amount(-2)
 					playsound(src.loc, 'sound/items/Deconstruct.ogg', 50, 1)

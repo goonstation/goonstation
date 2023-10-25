@@ -3,9 +3,10 @@
 	organ_name = "spleen"
 	organ_holder_name = "spleen"
 	organ_holder_location = "chest"
-	organ_holder_required_op_stage = 6
 	icon_state = "spleen"
 	body_side = L_ORGAN
+	surgery_flags = SURGERY_SNIPPING | SURGERY_CUTTING
+	region = SUBCOSTAL
 
 
 	on_life(var/mult = 1)
@@ -42,13 +43,15 @@
 		..()
 		src.icon_state = pick("plant_spleen", "plant_spleen_bloom")
 
+TYPEINFO(/obj/item/organ/spleen/cyber)
+	mats = 6
+
 /obj/item/organ/spleen/cyber
 	name = "cyberspleen"
 	desc = "A fancy robotic spleen to replace one that someone's lost!"
 	icon_state = "cyber-spleen"
-	made_from = "pharosium"
+	default_material = "pharosium"
 	// item_state = "heart_robo1"
 	robotic = 1
 	edible = 0
-	mats = 6
 	created_decal = /obj/decal/cleanable/oil

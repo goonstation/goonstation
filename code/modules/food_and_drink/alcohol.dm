@@ -67,7 +67,7 @@
 	alt_filled_state = 1
 	var/safe = 0
 	initial_volume = 100
-	initial_reagents = list("wine"=80,"ethanol"=20)
+	initial_reagents = list("wine"=60,"ethanol"=20)
 
 	New()
 		..()
@@ -89,7 +89,7 @@
 
 		while (adulterants > 0)
 			adulterants--
-			reagents.add_reagent(pick(adulterant_safety), rand(1,3))
+			reagents.add_reagent(pick_string("chemistry_tools.txt", adulterant_safety), rand(1,3))
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -139,7 +139,7 @@
 
 	cristal_champagne
 		name = "Cristal Champagne"
-		desc = "Fizzy wine used in most prestigeous celebrations. It is also very famous in space hip-hip culture."
+		desc = "Fizzy wine used in most prestigious celebrations. It is also very famous in space hip-hip culture."
 		icon_state = "bottle-champagne"
 		bottle_style = "champagne"
 		fluid_style = "champagne"
@@ -296,7 +296,7 @@
 
 /obj/item/reagent_containers/food/drinks/moonshine
 	name = "jug of moonshine"
-	desc = "A jug of an illegaly brewed alchoholic beverage, which is quite potent."
+	desc = "A jug of an illegally brewed alcoholic beverage, which is quite potent."
 	icon_state = "moonshine"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
@@ -305,7 +305,7 @@
 
 /obj/item/reagent_containers/food/drinks/curacao
 	name = "curaçao liqueur"
-	desc = "A bottle of curaçao liqueur, made from the dried peels of the bitter orange Lahara."
+	desc = "A bottle of curaçao liqueur, made from the dried peels of the bitter orange Laraha."
 	icon_state = "curacao"
 	heal_amt = 1
 	rc_flags = RC_FULLNESS
@@ -351,7 +351,7 @@
 
 	maraschino_cherry
 		name = "maraschino cherry"
-		desc = "A sweet, vibrantly red little cherry, which has been preserved in maraschino liquer, which is made from maraschino cherries. Huh."
+		desc = "A sweet, vibrantly red little cherry, which has been preserved in maraschino liqueur, which is made from maraschino cherries. Huh."
 		icon_state = "cherry"
 		edible = 1
 
@@ -366,6 +366,53 @@
 		desc = "A stick of celery. Does not feature ants. Unless you leave it on the floor, but those would probably not be very tasty. I dunno, though, I've never eaten an ant. They might be delicious."
 		icon_state = "celery"
 		edible = 1
+
+// idk where to put this so here
+/obj/item/straw
+	name = "drinking straw"
+	desc = "A straw, for drinking from."
+	icon = 'icons/obj/foodNdrink/drinks.dmi'
+	icon_state = "straw"
+	flags = FPRINT | TABLEPASS | SUPPRESSATTACK
+	w_class = W_CLASS_TINY
+	var/cooldown = 1 SECOND
+	var/slurp_size = 5
+
+	New()
+		..()
+		src.color = rgb(rand(150,255), rand(150,255), rand(150,255))
+
+	afterattack(atom/target, mob/user)
+		if (ON_COOLDOWN(user, "straw_slurp", cooldown)) // done like this so I can varedit the cooldown to 0 rather than having to go through click delay
+			return ..()
+
+		var/datum/reagents/target_reagents = null
+		var/msg
+		if (target.reagents && target.is_open_container())
+			target_reagents = target.reagents
+			msg = "<span class='hint'>You slurp some of the liquid from \the [target]. [target_reagents.get_taste_string(user)]</span>"
+		else if (istype(target, /obj/fluid))
+			var/obj/fluid/drank = target
+			target_reagents = drank.group?.reagents
+			msg = "<span class='hint'>You slurp some of \the [drank] off of \the [get_turf(drank)]. [target_reagents.get_taste_string(user)]</span>"
+
+		if (target_reagents?.total_volume)
+			target_reagents.reaction(user, INGEST, clamp(target_reagents.total_volume, CHEM_EPSILON, min(src.slurp_size, (user.reagents?.maximum_volume - user.reagents?.total_volume))))
+			target_reagents.trans_to(user, min(target_reagents.total_volume, src.slurp_size))
+			eat_twitch(user)
+			boutput(user, msg)
+			playsound(user.loc,'sound/items/drink.ogg', rand(30,70), vary = TRUE)
+		else
+			return ..()
+
+/obj/item/straw/fast
+	cooldown = 0
+
+/obj/item/storage/box/straws
+	name = "box of straws"
+	icon_state = "straws"
+	spawn_contents = list(/obj/item/straw = 7)
+
 
 // empty bottles
 

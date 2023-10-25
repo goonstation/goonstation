@@ -644,15 +644,38 @@ export const Particool = (props, context) => {
               Particle
             </Box>
           }
-          buttons={!hasParticles ? (
-            <Button
-              icon="plus"
-              content="Add Particle"
-              onClick={() => act('add_particle')} />
-          ) : (<Button.Confirm
-            icon="minus"
-            content="Remove Particle"
-            onClick={() => act("remove_particle")} />)} >
+          buttons={
+            <>
+              { !!hasParticles
+              && <>
+                <Button
+                  icon="save"
+                  content="Save Particle"
+                  onClick={() => act('save_particle')}
+                />
+                <Button
+                  icon="file-image"
+                  content="Save Particle + Icon"
+                  onClick={() => act('save_particle_with_icon')}
+                /> {/* eslint-disable-next-line */}
+              </>}
+              <Button
+                icon="upload"
+                content="Load Particle"
+                onClick={() => act('load_particle')}
+              />
+              {!hasParticles ? (
+                <Button
+                  icon="plus"
+                  content="Add Particle"
+                  onClick={() => act('add_particle')} />
+              ) : (<Button.Confirm
+                icon="minus"
+                content="Remove Particle"
+                onClick={() => act("remove_particle")} />)}
+              <Button />
+            </>
+          } >
           <GeneratorHelp />
           <Box
             mt={2}

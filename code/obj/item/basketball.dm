@@ -16,11 +16,13 @@
 	stamina_crit_chance = 5
 	custom_suicide = 1
 	contraband = 2 // Due to the illegalization of basketball in 2041
+	var/base_icon_state = "bball"
+	var/spinning_icon_state = "bball_spin"
 
 /obj/item/basketball/attack_hand(mob/user)
 	..()
 	if(user)
-		src.icon_state = "bball"
+		src.icon_state = base_icon_state
 
 /obj/item/basketball/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] fouls out, permanently.</b></span>")
@@ -32,7 +34,7 @@
 
 /obj/item/basketball/throw_impact(atom/hit_atom, datum/thrown_thing/thr)
 	..(hit_atom)
-	src.icon_state = "bball"
+	src.icon_state = base_icon_state
 	if(hit_atom)
 		playsound(src.loc, 'sound/items/bball_bounce.ogg', 65, 1)
 		if(ismob(hit_atom))
@@ -59,8 +61,8 @@
 				M.do_disorient(stamina_damage = 20, weakened = 0, stunned = 0, disorient = 10, remove_stamina_below_zero = 0)
 
 /obj/item/basketball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, mob/thrown_by, throw_type = 1,
-			allow_anchored = 0, bonus_throwforce = 0, end_throw_callback = null)
-	src.icon_state = "bball_spin"
+			allow_anchored = UNANCHORED, bonus_throwforce = 0, end_throw_callback = null)
+	src.icon_state = spinning_icon_state
 	. = ..()
 
 /obj/item/basketball/attackby(obj/item/W, mob/user)
@@ -97,7 +99,7 @@
 	desc = "Can be mounted on walls."
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "bbasket0"
 	event_handler_flags = USE_FLUID_ENTER
@@ -114,7 +116,7 @@
 			src.visible_message("<span class='notice'><b>[user] removes [src].</b></span>")
 			src.pixel_y = 0
 			src.pixel_x = 0
-			src.anchored = 0
+			src.anchored = UNANCHORED
 			src.mounted = 0
 		else if (src.mounted && !istype(W, /obj/item/bballbasket))
 			if (W.cant_drop) return
@@ -145,7 +147,7 @@
 					user.drop_item()
 					src.set_loc(get_turf(user))
 					src.mounted = 1
-					src.anchored = 1
+					src.anchored = ANCHORED
 					src.set_dir(get_dir(src, target))
 					switch (src.dir)
 						if (NORTH)
@@ -238,13 +240,8 @@
 		var/mob/living/carbon/human/H = user
 		if(!H.gloves)
 			boutput(H, "<span class='combat'>Your hand burns from grabbing the [src.name].</span>")
-			var/obj/item/affecting = H.organs["r_arm"]
-			if(H.hand)
-				affecting = H.organs["l_arm"]
-			if(affecting)
-				affecting.take_damage(0, 15)
-				H.UpdateDamageIcon()
-
+			var/zone = H.hand ? "l_arm" : "r_arm"
+			H.TakeDamage(zone, 0, 15, 0, DAMAGE_BURN)
 
 //BLOOD BOWL BALL
 
@@ -296,12 +293,12 @@
 					return
 	return
 
-/obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = 0, bonus_throwforce = 0)
+/obj/item/bloodbowlball/throw_at(atom/target, range, speed, list/params, turf/thrown_from, throw_type = 1, allow_anchored = UNANCHORED, bonus_throwforce = 0)
 	src.icon_state = "bloodbowlball_air"
 	. = ..()
 
 /obj/item/bloodbowlball/attack(target, mob/user)
-	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
+	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 	if(iscarbon(target))
 		var/mob/living/carbon/targMob = target
 		if(!isdead(targMob))

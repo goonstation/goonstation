@@ -184,7 +184,7 @@
 				return
 
 			var/obj/item/organ/brain/B = W
-			if(B.owner && !B.owner.dnr)
+			if(B.owner && !B.owner.get_player().dnr)
 				the_brain = B
 				user.u_equip(B)
 				B.set_loc(src)
@@ -230,10 +230,10 @@
 			update_controller_verbs()
 		if ("pulse")
 			controller.say("[pick("BZ", "FZ", "GZ")][pick("A", "U", "O")][pick("P", "T", "ZZ")]")
-			playsound(src, 'sound/voice/screams/robot_scream.ogg', 10, 1)
+			playsound(src, 'sound/voice/screams/robot_scream.ogg', 10, TRUE)
 		if ("cut")
 			controller.show_text("You no longer feel connected to the [det]!", "red")
-			playsound(src, 'sound/voice/screams/robot_scream.ogg', 70, 1)
+			playsound(src, 'sound/voice/screams/robot_scream.ogg', 70, TRUE)
 			detonator_part = null
 			update_controller_verbs()
 

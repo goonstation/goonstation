@@ -28,12 +28,21 @@
 		else if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			var/obj/machinery/atmospherics/unary/cryo_cell/C = owner.loc
 			loc_temp = C.air_contents.temperature
+		else if (istype(owner.loc,/obj/icecube))
+			var/obj/icecube/ice = owner.loc
+			if (!ice.does_cooling)
+				return
+			loc_temp = ice.cooltemp// ice go brrrrrrrrr
+			if (owner.bodytemperature > ice.melttemp)
+				ice.takeDamage(1 * mult)
+			else if (environment.temperature > ice.melttemp)
+				ice.takeDamage(0.5 * mult)
 		else
 			loc_temp = environment.temperature
 
 		var/thermal_protection
-		if (owner.stat < 2)
-			owner.bodytemperature = owner.adjustBodyTemp(owner.bodytemperature,owner.base_body_temp,1,owner.thermoregulation_mult)
+		if (!isdead(owner))
+			owner.bodytemperature = owner.adjustBodyTemp(owner.bodytemperature, owner.base_body_temp, 1 ,owner.thermoregulation_mult)
 		if (loc_temp < owner.base_body_temp) // a cold place -> add in cold protection
 			if (owner.is_cold_resistant())
 				return ..()
@@ -43,7 +52,7 @@
 				return ..()
 			thermal_protection = owner.get_heat_protection()
 		var/thermal_divisor = (100 - thermal_protection) * 0.01
-		owner.bodytemperature = owner.adjustBodyTemp(owner.bodytemperature,loc_temp,thermal_divisor,owner.innate_temp_resistance)
+		owner.bodytemperature = owner.adjustBodyTemp(owner.bodytemperature,loc_temp, thermal_divisor, owner.innate_temp_resistance)
 
 		if (istype(owner.loc, /obj/machinery/atmospherics/unary/cryo_cell))
 			return ..()
@@ -70,8 +79,10 @@
 			owner.handle_temperature_damage(ARMS, environment.temperature, environment_heat_capacity*thermal_divisor, mult)
 
 			for (var/atom/A in owner.contents)
-				if (A.material)
-					A.material.triggerTemp(A, environment.temperature)
+				A.material_trigger_on_temp(environment.temperature)
+
+			for (var/atom/equipped_stuff in owner.equipped())
+				equipped_stuff.material_trigger_on_temp(environment.temperature)
 
 		// decoupled this from environmental temp - this should be more for hypothermia/heatstroke stuff
 		//if (src.bodytemperature > src.base_body_temp || src.bodytemperature < src.base_body_temp)

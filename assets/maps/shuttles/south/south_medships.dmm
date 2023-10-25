@@ -83,9 +83,10 @@
 "in" = (
 /obj/machinery/door/airlock/pyro/security{
 	density = 0;
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
-/obj/access_spawn/security,
+/obj/mapping_helper/access/security,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "ir" = (
@@ -172,7 +173,7 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -239,7 +240,7 @@
 /turf/unsimulated/floor/shuttlebay,
 /area/centcom/outside)
 "qO" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	dir = 4;
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
@@ -290,18 +291,20 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "rP" = (
-/obj/wingrille_spawn/auto/reinforced,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "rW" = (
 /obj/machinery/door/airlock/pyro/glass/med{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
 "sU" = (
 /obj/machinery/door/airlock/pyro/external{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /turf/unsimulated/floor/shuttle,
 /area/shuttle/escape/centcom)
@@ -395,7 +398,8 @@
 /area/centcom/outside)
 "xT" = (
 /obj/machinery/door/airlock/pyro/external{
-	dir = 4
+	dir = 4;
+	hardened = 1
 	},
 /obj/machinery/light/small/floor,
 /turf/unsimulated/floor/shuttle,
@@ -579,7 +583,7 @@
 /turf/unsimulated/floor/black,
 /area/centcom/outside)
 "Gm" = (
-/turf/unsimulated/wall{
+/turf/unsimulated/wall/generic{
 	icon = 'icons/misc/worlds.dmi';
 	icon_state = "leadwindow_1";
 	name = "window";
@@ -660,7 +664,7 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /turf/unsimulated/floor{
 	icon_state = "floor"
@@ -868,7 +872,7 @@
 	density = 1;
 	icon = 'icons/obj/atmospherics/atmos.dmi';
 	icon_state = "orange";
-	name = "Canister [Plasma]"
+	name = "Canister \[Plasma\]"
 	},
 /obj/decal/tile_edge/line/black{
 	icon_state = "line1";

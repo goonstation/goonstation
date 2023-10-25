@@ -6,10 +6,10 @@
 	capacity = 4
 	health = 140
 	maxhealth = 140
-	anchored = 0
+	anchored = UNANCHORED
 //////////Recon
 /obj/machinery/vehicle/recon
-	name = "Reconaissance Ship 7X-"
+	name = "Reconnaissance Ship 7X-"
 	icon = 'icons/obj/ship.dmi'
 	icon_state = "recon"
 	capacity = 1
@@ -148,7 +148,7 @@ obj/machinery/vehicle/miniputt/pilot
 	New()
 		..()
 		//Phaser
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon
+		src.m_w_system = new /obj/item/shipcomponent/mainweapon(src)
 		src.m_w_system.ship = src
 		src.components += src.m_w_system
 
@@ -168,7 +168,7 @@ obj/machinery/vehicle/miniputt/pilot
 	New()
 		..()
 		//Phaser
-		src.m_w_system = new /obj/item/shipcomponent/mainweapon
+		src.m_w_system = new /obj/item/shipcomponent/mainweapon(src)
 		src.m_w_system.ship = src
 		src.lock = new /obj/item/shipcomponent/secondary_system/lock(src)
 		src.lock.ship = src
@@ -187,6 +187,7 @@ obj/machinery/vehicle/miniputt/pilot
 	maxhealth = 250
 	armor_score_multiplier = 0.7
 	speed = 0.8
+	acid_damage_multiplier = 0
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	New()
@@ -394,7 +395,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	var/cable_amt = null
 	var/vehicle_name = null
 	var/vehicle_type = null
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 /obj/item/putt/frame_box
@@ -412,7 +413,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		qdel(src)
 
 /obj/item/sub/frame_box
-	name = "Minisib Frame Kit"
+	name = "Minisub Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
 	icon = 'icons/obj/electronics.dmi'
 	icon_state = "dbox"
@@ -618,7 +619,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		if(5)
 			if(istype(W, /obj/item/sheet))
 				var/obj/item/sheet/S = W
-				if (S.material && S.material.material_flags & MATERIAL_METAL)
+				if (S.material && S.material.getMaterialFlags() & MATERIAL_METAL)
 					if( S.amount < src.metal_amt)
 						boutput(user, text("<span class='alert'>You need at least [src.metal_amt] metal sheets to make the internal plating.</span>"))
 						return
@@ -707,7 +708,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 				if (!S.material)
 					boutput(user, "These sheets won't work. You'll need reinforced glass or crystal.")
 					return
-				if (!(S.material.material_flags & MATERIAL_CRYSTAL) || !S.reinforcement)
+				if (!(S.material.getMaterialFlags() & MATERIAL_CRYSTAL) || !S.reinforcement)
 					boutput(user, "These sheets won't work. You'll need reinforced glass or crystal.")
 					return
 
@@ -851,62 +852,71 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 		//fucK ME
 		if (shoot_dir & (shoot_dir-1))
 			if (shoot_dir == SOUTHEAST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), SOUTHEAST), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), SOUTHEAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 				var/turf/E = get_step(get_turf(src), EAST)
-				P = shoot_projectile_DIR(get_step(E, EAST), PROJ, shoot_dir, src)
+				P = shoot_projectile_DIR(get_step(E, EAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 			if (shoot_dir == SOUTHWEST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), WEST), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), WEST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
-				P = shoot_projectile_DIR(get_step(get_turf(src), SOUTH), PROJ, shoot_dir, src)
+				P = shoot_projectile_DIR(get_step(get_turf(src), SOUTH), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 
 			if (shoot_dir == NORTHEAST)
 				var/turf/NE = get_step(get_turf(src), NORTHEAST)
 
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(NE, NORTH), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(NE, NORTH), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
-				P = shoot_projectile_DIR(get_step(NE, EAST), PROJ, shoot_dir, src)
+				P = shoot_projectile_DIR(get_step(NE, EAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 
 			if (shoot_dir == NORTHWEST)
 				var/turf/N = get_step(get_turf(src), NORTH)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(N, WEST), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(N, WEST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.mob_shooter = user
-				P = shoot_projectile_DIR(get_step(N, NORTH), PROJ, shoot_dir, src)
+					P.shooter = src
+				P = shoot_projectile_DIR(get_step(N, NORTH), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 		else
 			if (shoot_dir == SOUTH || shoot_dir == WEST)
-				var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir)
+				var/obj/projectile/P = shoot_projectile_DIR(src, PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
+					P.shooter = src
 					P.mob_shooter = user
 					P.pixel_x = H * -5
 					P.pixel_y = V * -5
 			if (shoot_dir == SOUTH || shoot_dir == EAST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), EAST), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), EAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
 					P.pixel_x = H * 5
 					P.pixel_y = V * -5
 			if (shoot_dir == NORTH || shoot_dir == WEST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTH), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTH), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
 					P.pixel_x = H * -5
 					P.pixel_y = V * 5
 			if (shoot_dir == NORTH || shoot_dir == EAST)
-				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTHEAST), PROJ, shoot_dir, src)
+				var/obj/projectile/P = shoot_projectile_DIR(get_step(get_turf(src), NORTHEAST), PROJ, shoot_dir, remote_sound_source = src)
 				if (P)
 					P.shooter = src
 					P.mob_shooter = user
@@ -955,6 +965,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.9
+	acid_damage_multiplier = 0
 	init_comms_type = /obj/item/shipcomponent/communications/syndicate
 
 	/*prearmed
@@ -998,13 +1009,26 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 
 /obj/machinery/vehicle/pod_smooth/industrial
 	name = "Pod I-"
-	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accomodate up to four passengers."
+	desc = "A slow yet sturdy industrial pod, designed for hazardous work in asteroid belts. Can accommodate up to four passengers."
 	armor_score_multiplier = 1.25
 	icon_state = "pod_industrial"
 	health = 550
 	maxhealth = 550
 	speed = 1.5
 	capacity = 4
+
+/obj/machinery/vehicle/pod_smooth/industrial/nadir
+	//special name, pre-equipped with drilling hardware
+	New()
+		..()
+		name += "[pick(" (The Orca)"," (Sea Pig)"," (The Iso-Pod)")]"
+		src.m_w_system = new /obj/item/shipcomponent/mainweapon/rockdrills(src)
+		src.m_w_system.ship = src
+		src.components += src.m_w_system
+		myhud.update_systems()
+		myhud.update_states()
+		src.overlays += image('icons/effects/64x64.dmi', "[src.m_w_system.appearanceString]")
+		return
 
 //pod wars ones//
 /obj/machinery/vehicle/pod_smooth/nt_light
@@ -1015,7 +1039,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 250
 	maxhealth = 250
 	speed = 0.9
-	init_comms_type = /obj/item/shipcomponent/communications/
+	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/nt_robust
 	name = "Pod NTR-"
@@ -1025,7 +1049,7 @@ ABSTRACT_TYPE(/obj/structure/vehicleframe)
 	health = 500
 	maxhealth = 500
 	speed = 0.8
-	init_comms_type = /obj/item/shipcomponent/communications/
+	init_comms_type = /obj/item/shipcomponent/communications
 
 /obj/machinery/vehicle/pod_smooth/sy_light
 	name = "Pod SYL-"
@@ -1206,7 +1230,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin1"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
 
 /obj/item/podarmor/armor_custom
 	name = "Pod Armor"
@@ -1216,7 +1243,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin1"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/light,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/civilian)
 
 /obj/item/podarmor/armor_heavy
 	name = "Heavy Pod Armor"
@@ -1226,7 +1256,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin2"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nanoputt,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/heavy,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/heavy)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/heavy,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nanoputt,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/heavy,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/heavy)
 
 /obj/item/podarmor/nt_light
 	name = "Light NT Pod Armor"
@@ -1235,7 +1268,9 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	icon_state = "dbox"
 	overlay_state = "pod_skinB"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_light,
-		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_light)
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_light,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_light,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_light)
 
 /obj/item/podarmor/nt_robust
 	name = "Robust NT Pod Armor"
@@ -1244,7 +1279,9 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	icon_state = "dbox"
 	overlay_state = "pod_skinBF"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_robust,
-		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_robust)
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_robust,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/nt_robust,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/nt_robust)
 
 /obj/item/podarmor/sy_light
 	name = "Light Syndicate Pod Armor"
@@ -1253,7 +1290,9 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	icon_state = "dbox"
 	overlay_state = "pod_skinR"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_light,
-		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_light)
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_light,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_light,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_light)
 
 /obj/item/podarmor/sy_robust
 	name = "Robust Syndicate Pod Armor"
@@ -1262,7 +1301,9 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	icon_state = "dbox"
 	overlay_state = "pod_skinRF"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_robust,
-		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_robust)
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_robust,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/sy_robust,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/sy_robust)
 
 
 /obj/item/podarmor/armor_black
@@ -1273,7 +1314,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin3"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/black,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/black,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/black)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/black,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/black,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/black,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/black)
 
 /obj/item/podarmor/armor_red
 	name = "Syndicate Pod Armor"
@@ -1283,7 +1327,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin2"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/syndiputt,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/syndicate,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/syndisub)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/syndisub,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/syndiputt,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/syndicate,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/syndisub)
 
 /obj/item/podarmor/armor_industrial
 	name = "Industrial Pod Armor"
@@ -1293,7 +1340,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	overlay_state = "skin3"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/indyputt,
 		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/industrial,
-		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/industrial)
+		"/obj/structure/vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/industrial,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/indyputt,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/industrial,
+		"/obj/structure/preassembeled_vehicleframe/subframe" = /obj/machinery/vehicle/tank/minisub/industrial)
 
 /obj/item/podarmor/armor_gold
 	name = "Gold Pod Armor"
@@ -1302,7 +1352,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	icon_state = "dbox"
 	overlay_state = "skin4"
 	vehicle_types = list("/obj/structure/vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/gold,
-		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold)
+		"/obj/structure/vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold,
+		"/obj/structure/preassembeled_vehicleframe/puttframe" = /obj/machinery/vehicle/miniputt/gold,
+		"/obj/structure/preassembeled_vehicleframe/podframe" = /obj/machinery/vehicle/pod_smooth/gold)
+
 /obj/item/pod/frame_box
 	name = "Pod Frame Kit"
 	desc = "You can hear an awful lot of junk rattling around in this box."
@@ -1322,7 +1375,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 		for(T in checkturfs)
 			if (istype(T, /turf/space))
 				continue
-			if (!T.allows_vehicles)
+			if (!T.allows_vehicles || T.density)
 				canbuild = 0
 				boutput(user, "<span class='alert'>You can't build a pod here! It'd get stuck.</span>")
 				break
@@ -1423,7 +1476,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 	proc/escape()
 		if(!launched)
 			launched = 1
-			anchored = 0
+			anchored = UNANCHORED
 			var/opened_door = 0
 			var/turf_in_front = get_step(src,src.dir)
 			for(var/obj/machinery/door/poddoor/D in turf_in_front)
@@ -1458,7 +1511,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
 			src.set_dir(map_settings ? map_settings.escape_dir : SOUTH)
-			P.target = T
+			P.set_target(T)
 			src.set_loc(T)
 			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
 
@@ -1503,10 +1556,10 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 				pilot << sound('sound/effects/Explosion2.ogg')
 				if(ishuman(pilot))
 					var/mob/living/carbon/human/H = pilot
-					for(var/effect in list("sever_left_leg","sever_right_leg","sever_left_arm","sever_right_arm"))
-						if(prob(40))
-							SPAWN(rand(0,5))
-								H.bioHolder.AddEffect(effect)
+					if(prob(40))
+						var/limb = pick(list("l_arm","r_arm","l_leg","r_leg"))
+						SPAWN(rand(0,5))
+							H.sever_limb(limb)
 				src.leave_pod(pilot)
 				src.icon_state = "escape_nowindow"
 				while(src)

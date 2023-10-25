@@ -6,7 +6,7 @@
  */
 
 import { useBackend } from '../backend';
-import { Button, Section, Flex, TextArea } from '../components';
+import { Button, Flex, Section, TextArea } from '../components';
 import { Window } from '../layouts';
 
 export const ArtifactPaper = (props, context) => {
@@ -59,7 +59,7 @@ export const ArtifactPaper = (props, context) => {
               </Flex.Item>
             ))}
           </Flex>
-          <h3>Artifact Triggers</h3>
+          <h3>Artifact Triggers (If Applicable)</h3>
           <Flex direction={"column"} wrap={"wrap"} height={5}>
             {allArtifactTriggers.map(x => (
               <Flex.Item key={x.id}

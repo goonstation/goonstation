@@ -14,7 +14,7 @@
 	if(forceartitype)
 		picked = forceartitype
 	else
-		if (artifactweights.len == 0)
+		if (length(artifactweights) == 0)
 			return
 		picked = weighted_pick(artifactweights)
 
@@ -25,9 +25,9 @@
 		return
 
 	if (istext(forceartiorigin))
-		new type(T,forceartiorigin)
+		. = new type(T,forceartiorigin)
 	else
-		new type(T)
+		. = new type(T)
 
 /obj/proc/ArtifactSanityCheck()
 	// This proc is called in any other proc or thing that uses the new artifact shit. If there was an improper artifact variable
@@ -94,8 +94,22 @@
 		var/obj/item/I = src
 		I.item_state = appearance.name
 
-	A.fx_image = image(src.icon, src.icon_state + "fx")
+	A.fx_image = new
+	A.fx_image.icon = src.icon
+	A.fx_image.icon_state = src.icon_state + "fx"
 	A.fx_image.color = rgb(rand(AO.fx_red_min,AO.fx_red_max),rand(AO.fx_green_min,AO.fx_green_max),rand(AO.fx_blue_min,AO.fx_blue_max))
+	A.fx_image.alpha = rand(AO.fx_alpha_min, AO.fx_alpha_max)
+	A.fx_image.layer = 5
+	A.fx_image.blend_mode = BLEND_ADD
+	A.fx_image.plane = PLANE_LIGHTING
+
+	A.fx_fallback = new
+	A.fx_fallback.icon = src.icon
+	A.fx_fallback.icon_state = src.icon_state + "fx"
+	A.fx_fallback.color = A.fx_image.color
+	A.fx_fallback.alpha = A.fx_image.alpha
+	A.fx_fallback.vis_flags |= VIS_INHERIT_LAYER
+	A.fx_fallback.vis_flags |= VIS_INHERIT_PLANE
 
 	A.react_mpct[1] = AO.impact_reaction_one
 	A.react_mpct[2] = AO.impact_reaction_two
@@ -127,13 +141,13 @@
 
 /obj/proc/ArtifactActivated()
 	if (!src)
-		return
+		return 1
 	if (!src.ArtifactSanityCheck())
 		return 1
 	var/datum/artifact/A = src.artifact
 	if (A.activated)
 		return 1
-	if (A.triggers.len < 1 && !A.automatic_activation)
+	if (length(A.triggers) < 1 && !A.automatic_activation)
 		return 1 // can't activate these ones at all by design
 	if (!A.may_activate(src))
 		return 1
@@ -146,7 +160,8 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state + "fx"
 	else
-		src.UpdateOverlays(A.fx_image, "activated")
+		src.vis_contents += A.fx_image
+		src.vis_contents += A.fx_fallback
 	A.effect_activate(src)
 
 /obj/proc/ArtifactDeactivated()
@@ -164,7 +179,8 @@
 	if (A.nofx)
 		src.icon_state = src.icon_state - "fx"
 	else
-		src.UpdateOverlays(null, "activated")
+		src.vis_contents -= A.fx_image
+		src.vis_contents -= A.fx_fallback
 	A.effect_deactivate(src)
 
 /obj/proc/Artifact_emp_act()
@@ -245,7 +261,7 @@
 			if (K.universal || A.artitype == K.artitype)
 				if (K.activator && !A.activated)
 					src.ArtifactActivated()
-					if(K.corrupting && A.faults.len < 10) // there's only so much corrupting you can do ok
+					if(K.corrupting && length(A.faults) < 10) // there's only so much corrupting you can do ok
 						for(var/i=1,i<rand(1,3),i++)
 							src.ArtifactDevelopFault(100)
 				else if (A.activated)
@@ -372,6 +388,7 @@
 		if (prob(F.trigger_prob))
 			if (F.halt_loop)
 				halt = 1
+			logTheThing(LOG_COMBAT, src, "experienced an artifact fault [F.type_name] affecting [constructTarget(user,"combat")] at [log_loc(src)]")
 			F.deploy(src,user,cosmeticSource)
 		if (halt)
 			return FAULT_RESULT_STOP
@@ -469,7 +486,7 @@
 		src.ArtifactStimulus("force", 1)
 		user.visible_message("<b>[user.name]</b> touches [src].")
 		if (istype(src.artifact,/datum/artifact))
-			if (A.touch_descriptors.len > 0)
+			if (length(A.touch_descriptors) > 0)
 				boutput(user, "[pick(A.touch_descriptors)]")
 			else
 				boutput(user, "You can't really tell how it feels.")
@@ -576,6 +593,6 @@
 		logTheThing(type_of_action == "detonated" ? LOG_BOMBING : LOG_STATION, user, "an artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [target && isturf(target) ? "[log_loc(target)]" : "[log_loc(O)]"].[type_of_action == "detonated" ? " Last touched by: [O.fingerprintslast ? "[O.fingerprintslast]" : "*null*"]" : ""]")
 
 	if (trigger_alert)
-		message_admins("An artifact ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
+		message_admins("An <a href='byond://?src=%client_ref%;Refresh=\ref[O]'>artifact</a> ([A.type_name]) was [type_of_action] [special_addendum ? "([special_addendum])" : ""] at [log_loc(O)]. Last touched by: [key_name(O.fingerprintslast)]")
 
 	return

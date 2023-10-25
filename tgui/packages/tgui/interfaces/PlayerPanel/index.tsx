@@ -7,11 +7,11 @@
  */
 
 import { useBackend, useLocalState } from '../../backend';
-import { Button, Input, Stack, Table } from '../../components';
+import { Button, Input, Table } from '../../components';
 import { Window } from '../../layouts';
 import { Header } from './Header';
 import { Action, SortDirection } from './constant';
-import { CellTemplateConfig, CellValueSelectorConfig, Column, PlayerData, PlayerPanelData, SortConfig, SorterConfig } from './type';
+import { CellTemplateConfig, CellValueSelectorConfig, Column, PlayerData, PlayerPanelData, SortConfig } from './type';
 
 const defaultTemplate = <Row extends object, Value>(config: CellTemplateConfig<Row, Value>) => `${config.value}`;
 const ckeyTemplate = (config: CellTemplateConfig<PlayerData, string>) => {
@@ -21,28 +21,24 @@ const ckeyTemplate = (config: CellTemplateConfig<PlayerData, string>) => {
     value,
   } = config;
   return (
-    <Stack>
-      <Stack.Item grow={1}>
-        <Button
-          onClick={() => act(Action.OpenPlayerOptions, {
-            ckey: value,
-            mobRef: row.mobRef,
-          })}
-        >
-          {value}
-        </Button>
-      </Stack.Item>
-      <Stack.Item>
-        <Button
-          icon="envelope"
-          color="bad"
-          onClick={() => act(Action.PrivateMessagePlayer, {
-            ckey: value,
-            mobRef: row.mobRef,
-          })}
-        />
-      </Stack.Item>
-    </Stack>
+    <>
+      <Button
+        onClick={() => act(Action.OpenPlayerOptions, {
+          ckey: value,
+          mobRef: row.mobRef,
+        })}
+      >
+        {value}
+      </Button>
+      <Button
+        icon="envelope"
+        color="bad"
+        onClick={() => act(Action.PrivateMessagePlayer, {
+          ckey: value,
+          mobRef: row.mobRef,
+        })}
+      />
+    </>
   );
 };
 

@@ -15,7 +15,8 @@ Contains:
 	icon = 'icons/obj/items/tank.dmi'
 	inhand_image_icon = 'icons/mob/inhand/hand_tools.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBACK | TGUI_INTERACTIVE
+	flags = FPRINT | TABLEPASS | CONDUCT | TGUI_INTERACTIVE
+	c_flags = ONBACK
 
 	pressure_resistance = ONE_ATMOSPHERE * 5
 
@@ -43,7 +44,6 @@ Contains:
 	New()
 		..()
 		src.air_contents = new /datum/gas_mixture
-		src.air_contents.vacuum()
 		src.air_contents.volume = 70 //liters
 		src.air_contents.temperature = T20C
 		processing_items |= src
@@ -92,7 +92,7 @@ Contains:
 		return FALSE
 
 	proc/set_release_pressure(pressure)
-		distribute_pressure = clamp(pressure, 0, TANK_MAX_RELEASE_PRESSURE)
+		distribute_pressure = clamp(pressure, 1, TANK_MAX_RELEASE_PRESSURE)
 
 	proc/toggle_valve()
 		if (iscarbon(src.loc))
@@ -160,12 +160,11 @@ Contains:
 			range = min(range, 12)
 
 			if(src in bible_contents)
-				for_by_tcl(B, /obj/item/storage/bible)
+				for_by_tcl(B, /obj/item/bible)
 					var/turf/T = get_turf(B.loc)
 					if(T)
 						logTheThing(LOG_BOMBING, src, "exploded at [log_loc(T)], range: [range], last touched by: [src.fingerprintslast]")
 						explosion(src, T, round(range * 0.25), round(range * 0.5), round(range), round(range * 1.5))
-				bible_contents.Remove(src)
 				qdel(src)
 				return
 			var/turf/epicenter = get_turf(loc)
@@ -199,13 +198,13 @@ Contains:
 		var/list/extras = list()
 		if (extra_desc)
 			extras += extra_desc
-		extras += ..()
+		extras += " It is labeled to have a volume of [src.air_contents.volume] litres. " + ..()
 		return extras.Join(" ")
 
 	examine(mob/user)
 		. = list()
 		var/can_interact = in_interact_range(src, user) || isobserver(user)
-		var/celsius_temperature = src.air_contents.temperature - T0C
+		var/celsius_temperature = TO_CELSIUS(src.air_contents.temperature)
 		var/descriptive = "buggy. Report this to a coder."
 		switch (celsius_temperature)
 			if (-INFINITY to -1)
@@ -282,6 +281,14 @@ Contains:
 				set_release_pressure(params["releasePressure"])
 				. = TRUE
 
+///Returns a serialized description of this tank for use with the PortableHoldingTank TGUI component
+/obj/item/tank/proc/ui_describe()
+	return list(
+		"name" = src.name,
+		"pressure" = MIXTURE_PRESSURE(src.air_contents),
+		"maxPressure" = PORTABLE_ATMOS_MAX_RELEASE_PRESSURE,
+	)
+
 /obj/item/tank/ui_state(mob/user)
 	return tgui_physical_state
 
@@ -290,6 +297,12 @@ Contains:
 		tgui_physical_state.can_use_topic(src, user),
 		tgui_not_incapacitated_state.can_use_topic(src, user)
 	)
+
+////////////////////////////////////////////////////////////
+
+/obj/item/tank/empty
+	name = "gas tank"
+	icon_state = "empty"
 
 ////////////////////////////////////////////////////////////
 
@@ -302,17 +315,17 @@ Contains:
 	New()
 		..()
 		src.air_contents.oxygen = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * O2STANDARD
-		var/datum/gas/sleeping_agent/trace_gas = src.air_contents.get_or_add_trace_gas_by_type(/datum/gas/sleeping_agent)
-		trace_gas.moles = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
-		return
+		src.air_contents.nitrous_oxide = (3 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C) * N2STANDARD
 
 ////////////////////////////////////////////////////////////
+
+TYPEINFO(/obj/item/tank/jetpack)
+	mats = 16
 
 /obj/item/tank/jetpack
 	name = "jetpack (oxygen)"
 	uses_multiple_icon_states = TRUE
 	w_class = W_CLASS_BULKY
-	mats = 16
 	force = 8
 	desc = "A jetpack that can use oxygen as a propellant, allowing the wearer to maneuver freely in space. It can also be used as a gas source for internals like a regular tank."
 	distribute_pressure = 17
@@ -348,7 +361,7 @@ Contains:
 		src.icon_state = "[base_icon_state][src.on]"
 		boutput(usr, "<span class='notice'>You [src.on ? "" : "de"]activate [src]'s propulsion.</span>")
 		playsound(src.loc, 'sound/machines/click.ogg', 30, TRUE)
-		update_icon()
+		UpdateIcon()
 		if (ismob(src.loc))
 			var/mob/M = src.loc
 			M.update_clothing() // Immediately update the worn icon
@@ -408,18 +421,20 @@ Contains:
 		STOP_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
 		..()
 
+TYPEINFO(/obj/item/tank/jetpack/micro)
+	mats = 8
+
 /obj/item/tank/jetpack/micro
 	name = "micro-lite jetpack (oxygen)"
 	icon_state = "microjetpack0"
-	item_state = "microjetpack0"
+	item_state = "microjetpack"
 	base_icon_state = "microjetpack"
-	extra_desc = "This one is the smaller variant, suiable for shorter ranged activities."
-	mats = 8
+	extra_desc = "This one is the smaller variant, suitable for shorter ranged activities."
 	force = 6
 
 	New()
 		..()
-		src.air_contents.volume = 18
+		src.air_contents.volume = 30
 		src.air_contents.oxygen = (1.7 * ONE_ATMOSPHERE) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 ////////////////////////////////////////////////////////////
@@ -441,6 +456,7 @@ Contains:
 	name = "pocket oxygen tank"
 	icon_state = "pocket_oxtank"
 	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = null
 	health = 5
 	w_class = W_CLASS_TINY
 	force = 1
@@ -448,6 +464,7 @@ Contains:
 	stamina_cost = 8
 	desc = "A tiny personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	distribute_pressure = 17
+	compatible_with_TTV = FALSE
 
 	New()
 		..()
@@ -457,7 +474,7 @@ Contains:
 
 /obj/item/tank/emergency_oxygen/extended
 	name = "extended capacity pocket oxygen tank"
-	desc = "A an extended capacity version of the pocket emergency oxygen tank."
+	desc = "An extended capacity version of the pocket emergency oxygen tank."
 	icon_state = "ex_pocket_oxtank"
 
 	New()
@@ -473,12 +490,12 @@ Contains:
 			src.air_contents.oxygen = null
 			return
 
-
-
 /obj/item/tank/mini_oxygen
 	name = "mini oxygen tank"
 	icon_state = "mini_oxtank"
-	flags = FPRINT | TABLEPASS | ONBELT | CONDUCT
+	item_state = "em_oxtank"
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	health = 5
 	w_class = W_CLASS_NORMAL
 	force = 3
@@ -487,10 +504,11 @@ Contains:
 	desc = "A personal oxygen tank meant to keep you alive in an emergency. To use, put on a secure mask and open the tank's release valve."
 	wear_image_icon = 'icons/mob/clothing/belt.dmi'
 	distribute_pressure = 17
+	compatible_with_TTV = FALSE
 
 	New()
 		..()
-		src.air_contents.volume = 8
+		src.air_contents.volume = 15
 		src.air_contents.oxygen = (ONE_ATMOSPHERE / 5) * 70 / (R_IDEAL_GAS_EQUATION * T20C)
 		return
 
@@ -535,13 +553,12 @@ Contains:
 
 		if(src in bible_contents)
 			strength = fuel_moles/20
-			for_by_tcl(B, /obj/item/storage/bible)//world)
+			for_by_tcl(B, /obj/item/bible)//world)
 				var/turf/T = get_turf(B.loc)
 				if(T)
 					explosion(src, T, 0, strength, strength*2, strength*3)
 			if(src.master)
 				qdel(src.master)
-			bible_contents.Remove(src)
 			qdel(src)
 			return
 

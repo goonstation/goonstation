@@ -4,12 +4,18 @@
 	icon_state = "album"
 	item_state = "briefcase"
 
-/obj/item/storage/photo_album/attackby(obj/item/W, mob/user, obj/item/storage/T)
+/obj/item/storage/photo_album/attackby(obj/item/W, mob/user)
 	if (!istype(W,/obj/item/photo))
 		boutput(user, "<span class='alert'>You can only put photos in a photo album.</span>")
 		return
 
 	return ..()
+
+TYPEINFO(/obj/item/camera)
+	mats = 15
+
+TYPEINFO(/obj/item/camera/large)
+	mats = 25
 
 /obj/item/camera
 	name = "camera"
@@ -18,12 +24,12 @@
 	icon_state = "camera"
 	item_state = "electropack"
 	w_class = W_CLASS_SMALL
-	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | EXTRADELAY | CONDUCT
+	c_flags = ONBELT
 	m_amt = 2000
 	throwforce = 5
 	throw_speed = 4
 	throw_range = 10
-	mats = 15
 	var/pictures_left = 10 // set to a negative to take INFINITE PICTURES
 	var/pictures_max = 30
 	var/can_use = 1
@@ -35,7 +41,6 @@
 		src.setItemSpecial(null)
 
 	large
-		mats = 25
 		pictures_left = 30
 
 
@@ -95,17 +100,17 @@
 		if (user.find_in_hand(src) && user.mind && user.mind.special_role == ROLE_SPY_THIEF) // No metagming this
 			if (!src.flash_mode)
 				user.show_text("You use the secret switch to set the camera to flash mode.", "blue")
-				playsound(user, 'sound/items/pickup_defib.ogg', 100, 1)
+				playsound(user, 'sound/items/pickup_defib.ogg', 100, TRUE)
 				src.icon_state = "camera_flash"
 			else
 				user.show_text("You use the secret switch to set the camera to take photos.", "blue")
-				playsound(user, 'sound/items/putback_defib.ogg', 100, 1)
+				playsound(user, 'sound/items/putback_defib.ogg', 100, TRUE)
 				src.icon_state = "camera"
 			src.flash_mode = !src.flash_mode
 			src.UpdateIcon()
 
 	New()
-		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 10}
+		var/cell = new/obj/item/ammo/power_cell/self_charging/medium{recharge_rate = 5}
 		AddComponent(/datum/component/cell_holder,cell, FALSE, 200, FALSE)
 		RegisterSignal(src, COMSIG_UPDATE_ICON, /atom/proc/UpdateIcon)
 		..()
@@ -143,7 +148,7 @@
 		var/mob/M = target
 		SEND_SIGNAL(src, COMSIG_CELL_USE, 25)
 		var/blind_success = M.apply_flash(30, 8, 0, 0, 0, rand(0, 1), 0, 0, 100, 70, disorient_time = 30)
-		playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 		flick("camera_flash-anim", src)
 		// Log entry.
 		var/blind_msg_target = "!"
@@ -164,6 +169,12 @@
 	else
 		. = ..() 	// Call /obj/item/camera/spy/afterattack() for photo mode
 
+TYPEINFO(/obj/item/camera_film)
+	mats = 10
+
+TYPEINFO(/obj/item/camera_film/large)
+	mats = 15
+
 /obj/item/camera_film
 	name = "film cartridge"
 	desc = "A replacement film cartridge for an instant camera."
@@ -172,13 +183,11 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_storage.dmi'
 	item_state = "box"
 	w_class = W_CLASS_SMALL
-	mats = 10
 	var/pictures = 10
 
 	large
 		name = "film cartridge (large)"
 		pictures = 30
-		mats = 15
 
 	examine()
 		. = ..()
@@ -222,7 +231,7 @@
 	else
 		if(signed || written)
 			. += "<br>"
-		if(signed.len > 0)
+		if(length(signed) > 0)
 			for(var/x in signed)
 				. += "It is signed: [x]"
 				. += "<br>"
@@ -378,18 +387,17 @@
 				if (iscarbon(M))
 					var/mob/living/carbon/temp = M
 					if (temp.l_hand || temp.r_hand)
-						var/they_are = M.gender == "male" ? "He's" : M.gender == "female" ? "She's" : "They're" // I wanna just use he_or_she() but it wouldn't really work
 						if (temp.l_hand)
-							holding = "[they_are] holding \a [temp.l_hand]"
+							holding = "[hes_or_shes(M)] holding \a [temp.l_hand]"
 						if (temp.r_hand)
 							if (holding)
 								holding += " and \a [temp.r_hand]."
 							else
-								holding = "[they_are] holding \a [temp.r_hand]."
+								holding = "[hes_or_shes(M)] holding \a [temp.r_hand]."
 						else if (holding)
 							holding += "."
 
-				var/they_look = M.gender == "male" ? "he looks" : M.gender == "female" ? "she looks" : "they look"
+				var/they_look = "[he_or_she(M)] look[M.get_pronouns().pluralize ? null : "s"]"
 				var/health_info = M.health < 75 ? " - [they_look][M.health < 25 ? " really" : null] hurt" : null
 				if (powerflash && M == target && !M.eyes_protected_from_light())
 					if (!health_info)
@@ -436,17 +444,19 @@
 	photo.icon = photo_icon
 
 	var/obj/item/photo/P
+	// if we're on the floor drop on the floor. If we're in a person or a bot drop in whatever they're in
+	var/atom/output_loc = isturf(src.loc) ? src.loc : src.loc.loc
 	if(src.takes_voodoo_pics)
-		P = new/obj/item/photo/voodoo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		P = new/obj/item/photo/voodoo(output_loc, photo, photo_icon, finished_title, finished_detail)
 		P:cursed_dude = deafnote //kubius: using runtime eval because non-voodoo photos don't have a cursed_dude var
 		if(src.takes_voodoo_pics == 2) //unlimited photo uses
 			P:enchant_power = -1
 	else if(src.steals_souls)
-		P = new/obj/item/photo/haunted(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		P = new/obj/item/photo/haunted(output_loc, photo, photo_icon, finished_title, finished_detail)
 		var/obj/item/photo/haunted/HP = P
 		for(var/mob/M as anything in stolen_souls)
 			HP.add_soul(M)
 	else
-		P = new/obj/item/photo(get_turf(src), photo, photo_icon, finished_title, finished_detail)
+		P = new/obj/item/photo(output_loc, photo, photo_icon, finished_title, finished_detail)
 
 	return P

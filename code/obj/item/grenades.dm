@@ -9,10 +9,15 @@ PIPE BOMBS + CONSTRUCTION
 
 ////////////////////////////// Old-style grenades ///////////////////////////////////////
 
+TYPEINFO(/obj/item/old_grenade)
+	mats = 6
+
+ADMIN_INTERACT_PROCS(/obj/item/old_grenade, proc/detonate)
+
 /obj/item/old_grenade
 	desc = "You shouldn't be able to see this!"
 	name = "old grenade"
-	var/state = 0
+	var/armed = FALSE
 	var/det_time = 3 SECONDS
 	var/org_det_time = 3 SECONDS
 	var/alt_det_time = 6 SECONDS
@@ -23,9 +28,9 @@ PIPE BOMBS + CONSTRUCTION
 	item_state = "banana"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT | EXTRADELAY
-	is_syndicate = 0
-	mats = 6
+	flags = FPRINT | TABLEPASS | CONDUCT | EXTRADELAY
+	c_flags = ONBELT
+	is_syndicate = FALSE
 	stamina_damage = 0
 	stamina_cost = 0
 	stamina_crit_chance = 0
@@ -35,12 +40,14 @@ PIPE BOMBS + CONSTRUCTION
 	var/icon_state_armed = null
 	var/not_in_mousetraps = 0
 	var/issawfly = FALSE //for sawfly remote
+	///damage when loaded into a 40mm convesion chamber
+	var/launcher_damage = 25
 
 	attack_self(mob/user as mob)
-		if (!src.state)
-			src.state = 1		//This could help for now. Should leverege the click buffer from combat stuff too.
+		if (!src.armed)
+			src.armed = TRUE		//This could help for now. Should leverage the click buffer from combat stuff too.
 			if (!isturf(user.loc))
-				src.state = 0
+				src.armed = FALSE
 				return
 			logGrenade(user)
 			if (user?.bioHolder.HasEffect("clumsy"))
@@ -49,7 +56,7 @@ PIPE BOMBS + CONSTRUCTION
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
-					if (src) prime(user)
+					if (src) detonate(user)
 					return
 			else
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
@@ -57,24 +64,24 @@ PIPE BOMBS + CONSTRUCTION
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
-					if (src) prime(user)
+					if (src) detonate(user)
 					return
 
 // warcrimes: Why the fuck is autothrow a feature why would this ever be a feature WHY. Now it wont do it unless it's primed i think.
 	afterattack(atom/target as mob|obj|turf, mob/user as mob)
-		if (src.state)
+		if (src.armed)
 			return
-		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.state )
+		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc) || !src.armed )
 			return
 		if (user.equipped() == src)
-			if (!src.state)
-				src.state = 1
+			if (!src.armed)
+				src.armed = TRUE
 				src.UpdateIcon()
 				logGrenade(user)
 				boutput(user, "<span class='alert'>You prime [src]! [det_time/10] seconds!</span>")
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				SPAWN(src.det_time)
-					if (src) prime(user)
+					if (src) detonate(user)
 					return
 			user.drop_item()
 			src.throw_at(get_turf(target), 10, 3)
@@ -94,12 +101,12 @@ PIPE BOMBS + CONSTRUCTION
 
 	update_icon()
 		..()
-		if (src.state)
+		if (src.armed)
 			src.icon_state = src.icon_state_armed
 		else
 			src.icon_state = initial(src.icon_state)
 
-	proc/prime(mob/user) // Most grenades require a turf reference.
+	proc/detonate(mob/user) // Most grenades require a turf reference.
 		var/turf/T = get_turf(src)
 		if (!T || !isturf(T))
 			return null
@@ -108,7 +115,7 @@ PIPE BOMBS + CONSTRUCTION
 
 	proc/logGrenade(mob/user)
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -119,47 +126,59 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	det_time = 3 SECONDS
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	is_dangerous = FALSE
 	var/payload = null
+	var/amount_to_spawn = 5
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
+			if (src.is_dangerous)
+				var/mob/living/carbon/human/hero = src.get_hero()
+				if(istype(hero))
+					for (var/i in 1 to (src.amount_to_spawn / 2))
+						new payload(hero) // so they burst out
+					qdel(src)
+					hero.gib()
+					return
 			new payload(T)
-			for (var/i = 1; i<= 8; i= i*2)
-				if (istype(get_turf(get_step(T,i)),/turf/simulated/floor))
-					new payload(get_step(T,i))
+			for (var/i in 1 to src.amount_to_spawn - 1)
+				var/turf/adjacent = get_step(T, cardinal[(i % length(cardinal)) + 1])
+				if (!adjacent.density)
+					new payload(adjacent)
 				else
 					new payload(T)
 		qdel(src)
-		return
 
 /obj/item/old_grenade/spawner/banana
 	name = "banana grenade"
 	icon_state = "banana"
 	icon_state_armed = "banana1"
 	payload = /obj/item/bananapeel
+	launcher_damage = 10
 
 /obj/item/old_grenade/spawner/cheese_sandwich
 	name = "cheese sandwich grenade"
 	icon_state = "banana-old"
 	icon_state_armed = "banana1-old"
 	payload = /obj/item/reagent_containers/food/snacks/sandwich/cheese
+	launcher_damage = 10
 
 /obj/item/old_grenade/spawner/banana_corndog
 	name = "banana corndog grenade"
 	icon_state = "banana-old"
 	icon_state_armed = "banana1-old"
 	payload = /obj/item/reagent_containers/food/snacks/corndog/banana
+	launcher_damage = 10
 
 /obj/item/old_grenade/spawner/wasp
 	name = "suspicious looking grenade"
 	icon_state = "wasp"
 	icon_state_armed = "wasp1"
-	payload = /obj/critter/wasp
+	payload =/mob/living/critter/small_animal/wasp/angry
 	is_dangerous = TRUE
 
 /obj/item/old_grenade/thing_thrower
@@ -170,24 +189,26 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "banana"
 	item_state = "banana"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "banana1"
 	is_dangerous = FALSE
 	var/payload = /obj/item/reagent_containers/food/snacks/plant/tomato
 	var/count = 7
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
 			for(var/i = 1; i <= src.count; i++)
 				var/atom/movable/thing = new payload(T)
 				var/turf/target = locate(T.x + rand(-4, 4), T.y + rand(-4, 4), T.z)
 				if(target)
 					thing.throw_at(target, rand(0, 10), rand(1, 4))
 		qdel(src)
-		return
+
+TYPEINFO(/obj/item/old_grenade/graviton)
+	mats = 12
 
 /obj/item/old_grenade/graviton //ITS SPELT GRAVITON
 	desc = "It is set to detonate in 10 seconds."
@@ -197,17 +218,16 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp" //TODO: grenades REALLY need custom inhands, but I'm not submitting them in this PR
-	is_syndicate = 1
-	mats = 12
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
 
 	attack_self(mob/user as mob)
-		if (!src.state)
-			src.state = 1		//This could help for now. Should leverege the click buffer from combat stuff too.
+		if (!src.armed)
+			src.armed = TRUE		//This could help for now. Should leverege the click buffer from combat stuff too.
 			if (!isturf(user.loc))
-				src.state = 0
+				src.armed = FALSE
 				return
 			logGrenade(user)
 			if (user?.bioHolder.HasEffect("clumsy"))
@@ -217,7 +237,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
-					if (src) prime()
+					if (src) detonate()
 					return
 			else
 				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
@@ -226,11 +246,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
-					if (src) prime()
+					if (src) detonate()
 					return
 		return
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			if (T && isrestrictedz(T.z) || T.loc:sanctuary)
@@ -238,15 +258,25 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				elecflash(src,power = 4)
 				qdel(src)
 				return
-			for (var/atom/movable/X in orange(9, T))
-				if (istypes(X, list(/obj/machinery/containment_field, /obj/machinery/field_generator, /obj/fluid, /obj/effect, /obj/overlay)))
-					continue
-				var/area/t = get_area(X)
-				if(t?.sanctuary) continue
-				if (prob(50) && X.anchored != 2)
-					step_towards(X,src)
+			playsound(src.loc, 'sound/effects/singsuck.ogg', 75, TRUE)
+			var/reach = 9
+			var/mob/living/carbon/human/hero = src.get_hero()
+			if (istype(hero))
+				reach = reach / 2
+				hero.TakeDamage("chest", 100, 0, 0, DAMAGE_CRUSH)
+			for (var/atom/movable/AM in orange(reach, T))
+				if (prob(50)) continue
+				if (AM.anchored == ANCHORED_ALWAYS) continue
+				if (HAS_ANY_FLAGS(AM.event_handler_flags, IMMUNE_SINGULARITY | IMMUNE_SINGULARITY_INACTIVE)) continue
+				if (istypes(AM, list(/obj/effect, /obj/overlay))) continue
+				var/area/t = get_area(AM)
+				if (t?.sanctuary) continue
+				step_towards(AM ,src)
 		qdel(src)
 		return
+
+TYPEINFO(/obj/item/old_grenade/singularity)
+	mats = 12
 
 /obj/item/old_grenade/singularity
 	desc = "It is set to detonate in 10 seconds."
@@ -256,18 +286,17 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "graviton"
 	item_state = "emp"
-	is_syndicate = 1
-	mats = 12
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "graviton1"
 	var/icon_state_exploding = "graviton2"
 	var/radius = 3
 
 	attack_self(mob/user as mob)
-		if (!src.state)
-			src.state = 1		//This could help for now. Should leverege the click buffer from combat stuff too.
+		if (!src.armed)
+			src.armed = TRUE		//This could help for now. Should leverege the click buffer from combat stuff too.
 			if (!isturf(user.loc))
-				src.state = 0
+				src.armed = FALSE
 				return
 			logGrenade(user)
 			if (user?.bioHolder.HasEffect("clumsy"))
@@ -277,7 +306,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(0.5 SECONDS)
-					if (src) prime()
+					if (src) detonate()
 					return
 			else
 				boutput(user, "<span style=\"color:red\">You prime [src]! [det_time/10] seconds!</span>")
@@ -286,11 +315,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				playsound(src.loc, src.sound_armed, 75, 1, -3)
 				src.add_fingerprint(user)
 				SPAWN(src.det_time)
-					if (src) prime()
+					if (src) detonate()
 					return
 		return
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			if (T && isrestrictedz(T.z) || T.loc:sanctuary)
@@ -311,7 +340,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			gen.set_active(1)
 			gen.state = 3
 			gen.power = 250
-			gen.anchored = 1
+			gen.anchored = ANCHORED
 			icon_state = "Field_Gen +a"
 		qdel(src)
 
@@ -323,7 +352,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	org_det_time = 2 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "smoke1"
 	var/datum/effects/system/bad_smoke_spread/smoke
@@ -334,13 +363,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		src.smoke.attach(src)
 		src.smoke.set_up(10, 0, src.loc)
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			var/obj/item/old_grenade/smoke/mustard/M = null
 			if (istype(src, /obj/item/old_grenade/smoke/mustard))
 				M = src
-			playsound(T, 'sound/effects/smoke.ogg', 50, 1, -3)
+			playsound(T, 'sound/effects/smoke.ogg', 50, TRUE, -3)
 
 			SPAWN(0)
 				if (src)
@@ -396,19 +425,25 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
-	is_syndicate = 0
+	is_syndicate = FALSE
 	sound_armed = 'sound/weapons/pindrop.ogg'
 	icon_state_armed = "fragnade1"
 	var/custom_projectile_type = /datum/projectile/bullet/stinger_ball
 	var/pellets_to_fire = 20
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
+			var/mob/living/carbon/human/hero = src.get_hero()
+			if(istype(hero) && src.custom_projectile_type)
+				for (var/i in 1 to (src.pellets_to_fire / 2 ))
+					var/obj/projectile/P = initialize_projectile_pixel_spread(src, new src.custom_projectile_type(), hero, 0, 0)
+					P.collide(hero)
+				src.pellets_to_fire = src.pellets_to_fire / 4
 			explosion(src, T, -1, -1, -0.25, 1)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.name = "Explosion"
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'
@@ -417,7 +452,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			if (istype(src, /obj/item/old_grenade/stinger/frag))
 				F = src
 			if (F)
-				playsound(T, 'sound/effects/smoke.ogg', 20, 1, -2)
+				playsound(T, 'sound/effects/smoke.ogg', 20, TRUE, -2)
 				SPAWN(0)
 					if (F?.smoke) //Wire note: Fix for Cannot execute null.start()
 						for(var/i = 1 to 6)
@@ -428,10 +463,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				PJ.spread_projectile_type = src.custom_projectile_type
 				PJ.pellet_shot_volume = 75 / PJ.pellets_to_fire //anti-ear destruction
 			PJ.pellets_to_fire = src.pellets_to_fire
-			var/targetx = src.y - rand(-5,5)
-			var/targety = src.y - rand(-5,5)
-			var/turf/newtarget = locate(targetx, targety, src.z)
-			shoot_projectile_ST(src, PJ, newtarget)
+			var/targetx = T.y - rand(-5,5)
+			var/targety = T.y - rand(-5,5)
+			var/turf/newtarget = locate(targetx, targety, T.z)
+			shoot_projectile_ST_pixel_spread(T, PJ, newtarget)
 			SPAWN(0.5 SECONDS)
 				qdel(O)
 				qdel(src)
@@ -445,6 +480,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state_armed = "fragnade-alt1"
 	var/datum/effects/system/bad_smoke_spread/smoke
 	custom_projectile_type = /datum/projectile/bullet/grenade_fragment
+	launcher_damage = 30
 
 	New()
 		..()
@@ -461,16 +497,22 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "fragnade"
-	is_syndicate = 0
+	is_syndicate = FALSE
 	sound_armed = 'sound/weapons/pindrop.ogg'
+	launcher_damage = 30
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
-			explosion_new(src, T, 5.0, 2)
-			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
+			var/power = 5.0
+			var/mob/living/carbon/human/hero = src.get_hero()
+			if(istype(hero))
+				hero.ex_act(1, src, power)
+				power = power / 2
+			explosion_new(src, T, power, 2)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.name = "Explosion"
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'
@@ -490,11 +532,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	org_det_time = 3 SECONDS
 	alt_det_time = 6 SECONDS
 	item_state = "flashbang"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/effects/screech.ogg'
 	icon_state_armed = "sonic1"
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			if (isrestrictedz(T.z) && !restricted_z_allowed(usr, T))
@@ -503,13 +545,20 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				qdel(src)
 				return
 
-			playsound(T, 'sound/weapons/flashbang.ogg', 25, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 25, TRUE)
+
+			var/base_damage = 16
+
+			var/mob/living/carbon/human/hero = src.get_hero()
+			if(istype(hero))
+				hero.take_ear_damage(base_damage)
+				base_damage = base_damage / 2
 
 			for (var/mob/living/M in hearers(8, T))
 				if(check_target_immunity(M)) continue
-				var/loud = 16 / (GET_DIST(M, T) + 1)
+				var/loud = base_damage / (GET_DIST(M, T) + 1)
 				if (src.loc == M.loc || src.loc == M)
-					loud = 16
+					loud = base_damage
 
 				var/weak = loud / 3
 				var/stun = loud
@@ -523,6 +572,37 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		qdel(src)
 		return
 
+/obj/item/old_grenade/foam_dart
+	name = "foam dart grenade"
+	desc = "You can make great fights with these and foam dart guns."
+	icon_state = "foam-dart"
+	det_time = 3 SECONDS
+	org_det_time = 3 SECONDS
+	alt_det_time = 6 SECONDS
+	item_state = "fragnade"
+	sound_armed = 'sound/weapons/pindrop.ogg'
+	icon_state_armed = "foam-dart1"
+	var/custom_projectile_type = /datum/projectile/bullet/foamdart/biodegradable
+	var/pellets_to_fire = 18
+	launcher_damage = 5
+
+	detonate()
+		var/turf/T = ..()
+		if (!T)
+			qdel(src)
+			return
+		var/datum/projectile/special/spreader/uniform_burst/circle/burst_circle = new /datum/projectile/special/spreader/uniform_burst/circle(T)
+		if(src.custom_projectile_type)
+			burst_circle.spread_projectile_type = src.custom_projectile_type
+			burst_circle.pellet_shot_volume = 75 / burst_circle.pellets_to_fire
+		burst_circle.pellets_to_fire = src.pellets_to_fire
+		var/targetx = T.y - rand(-5,5)
+		var/targety = T.y - rand(-5,5)
+		var/turf/newtarget = locate(targetx, targety, T.z)
+		shoot_projectile_ST_pixel_spread(T, burst_circle, newtarget)
+		SPAWN(0.5 SECONDS)
+			qdel(src)
+
 /obj/item/old_grenade/emp
 	desc = "It is set to detonate in 5 seconds."
 	name = "emp grenade"
@@ -531,14 +611,27 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 3 SECONDS
 	icon_state = "emp"
 	item_state = "emp"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "emp1"
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/items/Welder2.ogg', 25, 1)
+			playsound(T, 'sound/items/Welder2.ogg', 25, TRUE)
+
+			var/reach = world.view - 1
+
+			var/mob/living/carbon/human/hero = src.get_hero()
+			if(istype(hero))
+				var/datum/organHolder/organs = hero.organHolder
+				if(istype(organs))
+					for(var/organ_slot in organs.organ_list)
+						var/obj/item/organ/O = organs.organ_list[organ_slot]
+						if(O?.robotic)
+							O.emp_act()
+				reach = reach / 2
+
 			T.hotspot_expose(700,125)
 
 			var/grenade = src // detaching the proc - in theory
@@ -548,11 +641,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			pulse.icon = 'icons/effects/effects.dmi'
 			pulse.icon_state = "emppulse"
 			pulse.name = "emp pulse"
-			pulse.anchored = 1
+			pulse.anchored = ANCHORED
 			SPAWN(2 SECONDS)
 				if (pulse) qdel(pulse)
 
-			for (var/turf/tile in range(world.view-1, T))
+			for (var/turf/tile in range(reach, T))
 				for (var/atom/O in tile.contents)
 					var/area/t = get_area(O)
 					if(t?.sanctuary) continue
@@ -563,6 +656,9 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			qdel(src)
 		return
 
+TYPEINFO(/obj/item/old_grenade/oxygen)
+	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
+
 /obj/item/old_grenade/oxygen
 	name = "red oxygen grenade"
 	desc = "It is set to detonate in 3 seconds."
@@ -571,12 +667,12 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "oxy"
 	item_state = "flashbang"
-	mats = list("MET-2"=2, "CON-1"=2, "molitz"=10, "char"=1 )
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "oxy1"
 	is_dangerous = FALSE
+	launcher_damage = 20
 
-	prime()
+	detonate()
 		var/turf/simulated/T = ..()
 		var/datum/gas_mixture/GM = new /datum/gas_mixture
 		GM.temperature = T20C + 15
@@ -620,7 +716,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				HH.apply_sonic_stun(0, 0, misstep, 0, 2, ear_damage, ear_tempdeaf, stamina)
 
 			animate(E, alpha=0, time=2.5 SECONDS)
-			playsound(T, 'sound/weapons/flashbang.ogg', 30, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 30, TRUE)
 			var/datum/effects/system/steam_spread/steam = new /datum/effects/system/steam_spread
 			steam.set_up(10, 0, get_turf(src), color="#0ff", plane=PLANE_NOSHADOW_ABOVE)
 			steam.attach(src.loc)
@@ -628,7 +724,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 		else
 			animate(E, alpha=0, time=2 SECONDS)
-			playsound(T, 'sound/weapons/flashbang.ogg', 15, 1)
+			playsound(T, 'sound/weapons/flashbang.ogg', 15, TRUE)
 
 		E.fingerprintslast = src.fingerprintslast
 		qdel(src)
@@ -642,11 +738,12 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	alt_det_time = 6 SECONDS
 	icon_state = "moustache"
 	item_state = "flashbang"
-	is_syndicate = 1
+	is_syndicate = TRUE
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "moustache1"
+	launcher_damage = 10
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
 			for (var/mob/living/carbon/human/M in range(5, T))
@@ -663,10 +760,10 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					moustache.cant_self_remove = 1
 					moustache.cant_other_remove = 1
 
-					M.equip_if_possible(moustache, M.slot_wear_mask)
+					M.equip_if_possible(moustache, SLOT_WEAR_MASK)
 					M.set_clothing_icon_dirty()
 
-			playsound(T, 'sound/effects/Explosion2.ogg', 100, 1)
+			playsound(T, 'sound/effects/Explosion2.ogg', 100, TRUE)
 			var/obj/effects/explosion/E = new /obj/effects/explosion(T)
 			E.fingerprintslast = src.fingerprintslast
 
@@ -678,8 +775,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "lightgrenade"
 	icon = 'icons/obj/items/weapons.dmi'
 	desc = "It's a small cast-iron egg-shaped object, with the words \"Pick Me Up\" in gold in it."
-	state = 0
-	not_in_mousetraps = 1
+	armed = FALSE
+	not_in_mousetraps = TRUE
 	var/old_light_grenade = 0
 	var/destination
 
@@ -692,23 +789,24 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		#endif
 
 	primed
-		state = 1
+		armed = TRUE
 
 	old
 		old_light_grenade = 1
 
 		primed
-			state = 1
+			armed = TRUE
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(user, target) == 0 || (!isturf(target) && !isturf(target.loc)) || !isturf(user.loc))
 			return
-		if (istype(target, /obj/item/storage)) return ..()
-		if (src.state == 0)
+		if (target.storage)
+			return ..()
+		if (!src.armed && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did, but you throw it anyway.</span>")
-			src.state = 1
+			src.armed = TRUE
 			src.add_fingerprint(user)
 			user.drop_item()
 			src.throw_at(get_turf(target), 10, 3)
@@ -717,15 +815,15 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	attack_self(mob/user as mob)
 		if (!isturf(user.loc))
 			return
-		if (src.state == 0)
+		if (!src.armed && user)
 			message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
 			boutput(user, "<span class='alert'>You pull the pin on [src]. You're not sure what that did. Maybe you should throw it?</span>")
-			src.state = 1
+			src.armed = TRUE
 		return
 
 	attack_hand(mob/user)
-		if (src.state == 0)
+		if (!src.armed)
 			..()
 		else
 			SPAWN(0.1 SECONDS)
@@ -777,11 +875,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 ////////////////////////// Gimmick bombs /////////////////////////////////
 
-/obj/item/gimmickbomb/
+/obj/item/gimmickbomb
 	name = "Don't spawn this directly!"
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = ""
-	var/armed = 0
+	var/armed = FALSE
 	var/sound_explode = 'sound/effects/Explosion2.ogg'
 	var/sound_beep = 'sound/machines/twobeep.ogg'
 	var/is_dangerous = TRUE
@@ -808,7 +906,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	proc/logGrenade(mob/user)
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
 				message_admins("Grenade ([src]) primed at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "primes a grenade ([src.type]) at [log_loc(user)].")
@@ -841,10 +939,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				M << S
 
 	attack_self(mob/user as mob)
-		if (user.equipped() == src && !armed)
+		if (user.equipped() == src && !src.armed)
 			src.arm(user)
 			logGrenade(user)
-			armed = 1
+			armed = TRUE
+
+	///Enforce a dress code upon victims
+	proc/dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
+		return 0
 
 /obj/item/gimmickbomb/owlgib
 	name = "Owl Bomb"
@@ -866,28 +968,38 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "owlbomb"
 	sound_beep = 'sound/voice/animal/hoot.ogg'
 
+	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
+		if (!(H.wear_mask && istype(H.wear_mask, /obj/item/clothing/mask/owl_mask)))
+			for(var/obj/item/clothing/O in H)
+				H.u_equip(O)
+				if (O)
+					O.set_loc(H.loc)
+					O.dropped(H)
+					O.layer = initial(O.layer)
+
+				var/obj/item/clothing/under/gimmick/owl/owlsuit = new /obj/item/clothing/under/gimmick/owl(H)
+				owlsuit.cant_self_remove = cant_self_remove
+				owlsuit.cant_other_remove = cant_other_remove
+				var/obj/item/clothing/mask/owl_mask/owlmask = new /obj/item/clothing/mask/owl_mask(H)
+				owlmask.cant_self_remove = cant_self_remove
+				owlsuit.cant_other_remove = cant_other_remove
+
+				H.equip_if_possible(owlsuit, SLOT_W_UNIFORM)
+				H.equip_if_possible(owlmask, SLOT_WEAR_MASK)
+				H.set_clothing_icon_dirty()
+
 	detonate()
+		var/mob/living/carbon/human/hero = src.get_hero()
+		if(istype(hero))
+			src.dress_up(hero, cant_self_remove=TRUE, cant_other_remove=TRUE)
+			..()
+			return
+
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN(0)
-				if (!(M.wear_mask && istype(M.wear_mask, /obj/item/clothing/mask/owl_mask)))
-					for(var/obj/item/clothing/O in M)
-						M.u_equip(O)
-						if (O)
-							O.set_loc(M.loc)
-							O.dropped(M)
-							O.layer = initial(O.layer)
-
-					var/obj/item/clothing/under/gimmick/owl/owlsuit = new /obj/item/clothing/under/gimmick/owl(M)
-					owlsuit.cant_self_remove = 1
-					var/obj/item/clothing/mask/owl_mask/owlmask = new /obj/item/clothing/mask/owl_mask(M)
-					owlmask.cant_self_remove = 1
-
-
-					M.equip_if_possible(owlsuit, M.slot_w_uniform)
-					M.equip_if_possible(owlmask, M.slot_wear_mask)
-					M.set_clothing_icon_dirty()
+				src.dress_up(M)
 		..()
 
 /obj/item/gimmickbomb/hotdog
@@ -895,24 +1007,34 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	desc = "A hotdog bomb? What the heck does that even mean?!"
 	icon_state = "hotdog"
 
+	dress_up(mob/living/carbon/human/H, cant_self_remove=TRUE, cant_other_remove=FALSE)
+		if (!(H.wear_suit && istype(H.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
+			for(var/obj/item/clothing/O in H)
+				H.u_equip(O)
+				if (O)
+					O.set_loc(H.loc)
+					O.dropped(H)
+					O.layer = initial(O.layer)
+
+			var/obj/item/clothing/suit/gimmick/hotdog/suit = new /obj/item/clothing/suit/gimmick/hotdog(H)
+			suit.cant_self_remove = cant_self_remove
+			suit.cant_other_remove = cant_other_remove
+
+			H.equip_if_possible(suit, SLOT_WEAR_SUIT)
+			H.set_clothing_icon_dirty()
+		..()
+
 	detonate()
+		var/mob/living/carbon/human/hero = src.get_hero()
+		if(istype(hero))
+			src.dress_up(hero, cant_self_remove=TRUE, cant_other_remove=TRUE)
+			..()
+			return
 		for(var/mob/living/carbon/human/M in range(5, src))
 			var/area/t = get_area(M)
 			if(t?.sanctuary) continue
 			SPAWN(0)
-				if (!(M.wear_suit && istype(M.wear_suit, /obj/item/clothing/suit/gimmick/hotdog)))
-					for(var/obj/item/clothing/O in M)
-						M.u_equip(O)
-						if (O)
-							O.set_loc(M.loc)
-							O.dropped(M)
-							O.layer = initial(O.layer)
-
-					var/obj/item/clothing/suit/gimmick/hotdog/H = new /obj/item/clothing/suit/gimmick/hotdog(M)
-					H.cant_self_remove = 1
-
-					M.equip_if_possible(H, M.slot_wear_suit)
-					M.set_clothing_icon_dirty()
+				src.dress_up(M)
 		..()
 
 /obj/item/gimmickbomb/butt
@@ -945,8 +1067,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 
 /obj/item/gimmickbomb/butt/prearmed
-	armed = 1
-	anchored = 1
+	armed = TRUE
+	anchored = ANCHORED
 
 	New()
 		SPAWN(0)
@@ -954,8 +1076,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		return ..()
 
 /obj/item/gimmickbomb/owlgib/prearmed
-	armed = 1
-	anchored = 1
+	armed = TRUE
+	anchored = ANCHORED
 
 	New()
 		SPAWN(0)
@@ -963,8 +1085,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		return ..()
 
 /obj/item/gimmickbomb/owlclothes/prearmed
-	armed = 1
-	anchored = 1
+	armed = TRUE
+	anchored = ANCHORED
 
 	New()
 		SPAWN(0)
@@ -983,7 +1105,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "firework"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	force = 1
 	throwforce = 1
 	throw_speed = 1
@@ -1151,13 +1273,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	name = "Breaching Charge"
 	icon = 'icons/obj/items/grenade.dmi'
 	icon_state = "bcharge"
-	var/state = null
+	var/armed = FALSE
 	var/det_time = 50
 	w_class = W_CLASS_SMALL
 	item_state = "flashbang"
 	throw_speed = 4
 	throw_range = 20
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	var/expl_devas = 0
 	var/expl_heavy = 0
 	var/expl_light = 1
@@ -1169,15 +1292,15 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	stamina_crit_chance = 0
 
 	attack_hand(var/mob/user)
-		if (src.state)
+		if (src.armed)
 			boutput(user, "<span class='alert'>\The [src] is firmly anchored into place!</span>")
 			return
 		return ..()
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
-			if (!src.state)
-				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
+			if (!src.armed)
+				if (!src.check_placeable_target(target))
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
 					boutput(user, "<span class='alert'>Huh? How does this thing work?!</span>")
@@ -1194,8 +1317,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					src.icon_state = "bcharge2"
 					user.u_equip(src)
 					src.set_loc(get_turf(target))
-					src.anchored = 1
-					src.state = 1
+					src.anchored = ANCHORED
+					src.armed = TRUE
 
 					// Yes, please (Convair880).
 					var/area/A = get_area(src)
@@ -1261,6 +1384,13 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		qdel(src)
 		return
 
+	proc/check_placeable_target(atom/A)
+		if (!istype(A, /obj/item))
+			return TRUE
+		if (A.storage) // no blowing yourself up if you have full storage
+			return FALSE
+		return A.density
+
 /obj/item/breaching_charge/NT
 	name = "NanoTrasen Experimental EDF-7 Breaching Charge"
 	expl_devas = 0
@@ -1275,14 +1405,14 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 /obj/item/breaching_charge/thermite
 	name = "Thermite Breaching Charge"
 	desc = "When applied to a wall, causes a thermite reaction which totally destroys it."
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	w_class = W_CLASS_TINY
 	expl_range = 2
 
 	afterattack(atom/target as mob|obj|turf|area, mob/user as mob)
 		if (user.equipped() == src)
-			if (!src.state)
+			if (!src.armed)
 				if (istype(target, /obj/item/storage)) // no blowing yourself up if you have full backpack
 					return
 				if (user.bioHolder && user.bioHolder.HasEffect("clumsy"))
@@ -1300,8 +1430,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 					src.icon_state = "bcharge2"
 					user.u_equip(src)
 					src.set_loc(get_turf(target))
-					src.anchored = 1
-					src.state = 1
+					src.anchored = ANCHORED
+					src.armed = TRUE
 
 					// Yes, please (Convair880).
 					var/area/A = get_area(src)
@@ -1339,7 +1469,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				O.name = "Thermite"
 				O.desc = "A searing wall of flames."
 				O.icon = 'icons/effects/fire.dmi'
-				O.anchored = 1
+				O.anchored = ANCHORED
 				O.layer = TURF_EFFECTS_LAYER
 				O.color = "#ff9a3a"
 				var/datum/light/point/light = new
@@ -1427,14 +1557,28 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	icon_state = "Pipe_Frame"
 	burn_possible = 0
 	material_amt = 0.3
+	HELP_MESSAGE_OVERRIDE("") // so there's the verb and stuff, actual message provided below
 	var/state = 1
 	var/strength = 5
 	var/list/item_mods = new/list() //stuff something into one or both of the pipes to change the finished product
-	var/list/allowed_items = list("/obj/item/device/light/glowstick","/obj/item/clothing/head/butt", "/obj/item/paper", "/obj/item/reagent_containers/food/snacks/ingredient/meat",\
-	 							"/obj/item/reagent_containers/food/snacks/ectoplasm", "/obj/item/scrap", "/obj/item/raw_material/scrap_metal", "/obj/item/cell","/obj/item/cable_coil",\
-	 							"/obj/item/item_box/medical_patches", "/obj/item/item_box/gold_star", "/obj/item/item_box/assorted/stickers", "/obj/item/material_piece/cloth",\
-	 							"/obj/item/raw_material/shard", "/obj/item/raw_material/telecrystal", "/obj/item/instrument", "/obj/item/reagent_containers/food/snacks/ingredient/butter",\
-	 							"/obj/item/rcd_ammo")
+	var/list/allowed_items = list(/obj/item/device/light/glowstick, /obj/item/clothing/head/butt, /obj/item/paper, /obj/item/reagent_containers/food/snacks/ingredient/meat,\
+	 							/obj/item/reagent_containers/food/snacks/ectoplasm, /obj/item/scrap, /obj/item/raw_material/scrap_metal, /obj/item/cell,/obj/item/cable_coil,\
+	 							/obj/item/item_box/medical_patches, /obj/item/item_box/gold_star, /obj/item/item_box/assorted/stickers, /obj/item/material_piece/cloth,\
+	 							/obj/item/raw_material/shard, /obj/item/raw_material/telecrystal, /obj/item/instrument, /obj/item/reagent_containers/food/snacks/ingredient/butter,\
+	 							/obj/item/rcd_ammo)
+
+	get_help_message(dist, mob/user)
+		switch(src.state)
+			if (1) // Default state
+				return "You can use a <b>welding tool</b> to hollow out the frame."
+			if (2) // Hollowed out
+				return "You can add fuel to begin making a pipebomb, a staple gun to create a zip gun, a pipe frame to create a slam gun, or use <b>wirecutters</b> to create hollow pipe hulls."
+			if (3) // Hollowed out with chem inside
+				return "You can add a cable coil to continue making a pipebomb."
+			if (4) // Hollowed out with chem and wiring
+				return "You can add an igniter assembly and secure it with a <b>screwdriver</b> to finish making the pipebomb."
+			if (5) // Hollowed out Pipeshot
+				return "You can add fuel and glass shards or scrap to make pipeshot."
 
 	attack_self(mob/user as mob)
 		if (state == 3)
@@ -1445,187 +1589,234 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			state = 2
 		return
 
-	attackby(obj/item/W, mob/user)
-		if(istype(W, /obj/item/pipebomb/frame))
-			var/obj/item/pipebomb/frame/other_frame = W
-			if((src.state + other_frame.state == 3)) // one of pipes is welded, other one is not
-				user.u_equip(src)
-				user.u_equip(W)
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-				var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
-				user.put_in_hand_or_drop(S)
-				qdel(W)
-				qdel(src)
+	New()
+		. = ..()
+		// unwelded frame + welder -> hollow frame
+		src.AddComponent(/datum/component/assembly, TOOL_WELDING, PROC_REF(pipeframe_welding), FALSE)
+		// unwelded frame + hollow frame -> slamgun
+		src.AddComponent(/datum/component/assembly, /obj/item/pipebomb/frame, PROC_REF(slamgun_crafting), TRUE)
+		// unwelded frame + mousetrap -> mousetrap roller
+		src.AddComponent(/datum/component/assembly, /obj/item/mousetrap, PROC_REF(mousetrap_roller_crafting), TRUE)
 
-		if(isweldingtool(W) && state == 1)
-			if(!W:try_weld(user, 1))
-				return
-			boutput(user, "<span class='notice'>You hollow out the pipe.</span>")
-			src.state = 2
-			icon_state = "Pipe_Hollow"
-			desc = "Two small pipes joined together. The pipes are empty."
+	// Pipebomb/shot assembly procs
 
-			if (material)
-				name = "hollow [src.material.name] pipe frame"
-			else
-				name = "hollow pipe frame"
-			src.flags |= NOSPLASH
+	/// Pipeframe welding proc
+	proc/pipeframe_welding(var/atom/to_combine_atom, var/mob/user)
+		if(!to_combine_atom:try_weld(user, 1))
+			return FALSE
+		boutput(user, "<span class='notice'>You hollow out the pipe.</span>")
+		src.state = 2
+		src.icon_state = "Pipe_Hollow"
+		src.desc = "Two small pipes joined together. The pipes are empty."
+		if (src.material)
+			src.name = "hollow [src.material.getName()] pipe frame"
+		else
+			src.name = "hollow pipe frame"
+		src.flags |= NOSPLASH
+		//Since we changed the state, remove all assembly components and add the next state ones
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		// hollow frame + cutters  -> unfilled pipeshot
+		src.AddComponent(/datum/component/assembly, TOOL_SNIPPING, PROC_REF(pipeshot_crafting), FALSE)
+		// hollow frame + *stuff*  -> hollow frame + pipebomb special effects
+		src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
+		// hollow frame + staple gun  -> zipgun
+		src.AddComponent(/datum/component/assembly, /obj/item/staple_gun, PROC_REF(zipgun_crafting), TRUE)
+		// hollow frame + fuel  -> unwired pipebombs
+		src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipebomb_filling), FALSE)
+		// Since the assembly was done, return TRUE
+		return TRUE
 
-		if(issnippingtool(W) && state == 2) //pipeshot crafting
-			name = "hollow pipe hulls"
-			boutput(user, "<span class='notice'>You cut the pipe into four neat hulls.</span>")
-			src.state = 5
-			icon_state = "Pipeshot"
-			desc = "Four open pipe shells. They're currently empty."
+	/// Zipgun crafting proc
+	proc/zipgun_crafting(var/atom/to_combine_atom, var/mob/user)
+		user.show_text("You combine [to_combine_atom] and [src]. This looks pretty unsafe!")
+		user.u_equip(to_combine_atom)
+		user.u_equip(src)
+		playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+		var/obj/item/gun/kinetic/zipgun/new_gun = new/obj/item/gun/kinetic/zipgun
+		user.put_in_hand_or_drop(new_gun)
+		qdel(to_combine_atom)
+		qdel(src)
 
-		if (allowed_items.len && item_mods.len < 3 && state == 2)
-			var/ok = 0
-			for (var/A in allowed_items)
-				if (istype(W, text2path(A) )) ok = 1
-			if (ok)
-				boutput(user, "<span class='notice'>You stuff [W] into the [item_mods.len == 0 ? "first" : "second"] pipe.</span>")
-				item_mods += W
-				user.u_equip(W)
-				W.set_loc(src)
+	///mousetrap roller crafting proc
+	proc/mousetrap_roller_crafting(var/atom/to_combine_atom, var/mob/user)
+		//This could theoretically be moved to mousetrap and enabled if a bomb is attached.
+		//But you either check if a bomb is attached or if the pipeframe is state 2, so it won't change much
 
-		if(istype(W, /obj/item/reagent_containers/) && state == 2)
-			var/ok = 0
-			for (var/A in allowed_items)
-				if (istype(W, text2path(A) )) ok = 1
-			if (!ok)
-				//There is less room for explosive material when you use item mods
-				var/max_allowed = 20 - item_mods.len * 5
-				src.state = 3
-				var/avg_volatility = 0
-				src.reagents = new /datum/reagents(max_allowed)
-				src.reagents.my_atom = src
-				W.reagents.trans_to(src, max_allowed)
-				boutput(user, "<span class='notice'>You fill the pipe with [src.reagents.total_volume] units of the reagents.</span>")
-				for (var/id in src.reagents.reagent_list)
-					var/datum/reagent/R = src.reagents.reagent_list[id]
-					avg_volatility += R.volatility * R.volume / src.reagents.maximum_volume
+		var/obj/item/mousetrap/checked_trap = to_combine_atom
 
-				qdel(src.reagents)
-				src.reagents = null
-				if (avg_volatility < 1) // B A D.
-					src.strength = 0
-				else
-					src.strength *= avg_volatility
-					src.strength -= item_mods.len * 0.5 //weakened by having mods
+		// Pies won't do, they require a mob as the target. Obviously, the mousetrap roller is much more
+		// likely to bump into an inanimate object.
+		if (!checked_trap.grenade && !checked_trap.grenade_old && !checked_trap.pipebomb && !checked_trap.buttbomb)
+			user.show_text("[checked_trap] must have a grenade or pipe bomb attached first.", "red")
+			return FALSE
 
-				icon_state = "Pipe_Filled"
-				src.state = 3
-				desc = "Two small pipes joined together. The pipes are filled."
+		user.u_equip(checked_trap)
+		user.u_equip(src)
+		new /obj/item/mousetrap_roller(get_turf(checked_trap), checked_trap, src)
+		// we don't remove the components here since the frame can be retreived by disassembling the roller
+		// Since the assembly was done, return TRUE
+		return TRUE
 
-				if (material)
-					name = "filled [src.material.name] pipe frame"
-				else
-					name = "filled pipe frame"
+	/// Slamgun crafting proc
+	proc/slamgun_crafting(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/pipebomb/frame/other_frame = to_combine_atom
+		if(other_frame.state == 2) // the other pipe needs to be welded
+			user.u_equip(src)
+			user.u_equip(to_combine_atom)
+			playsound(src, 'sound/items/Deconstruct.ogg', 50, TRUE)
+			var/obj/item/gun/kinetic/slamgun/S = new/obj/item/gun/kinetic/slamgun
+			user.put_in_hand_or_drop(S)
+			qdel(to_combine_atom)
+			qdel(src)
+			// Since the assembly was done, return TRUE
+			return TRUE
 
-		if(istype(W, /obj/item/reagent_containers/) && state == 5) //pipeshot crafting cont'd
-			var/amount = 20
+	///pipeshot crafting proc
+	proc/pipeshot_crafting(var/atom/to_combine_atom, var/mob/user)
+		src.name = "hollow pipe hulls"
+		boutput(user, "<span class='notice'>You cut the pipe into four neat hulls.</span>")
+		src.state = 5
+		src.icon_state = "Pipeshot"
+		src.desc = "Four open pipe shells. They're currently empty."
+		//Since we changed the state, remove all assembly components and add the next state ones
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		// unfilled pipeshot + fuel  -> filled pipeshot
+		src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipeshot_filling), FALSE)
+		// Since the assembly was done, return TRUE
+		return TRUE
+
+	/// Pipebomb special effect filling proc
+	proc/pipebomb_stuffing(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/stuffable_item = to_combine_atom
+		if (length(item_mods) < 3)
+			boutput(user, "<span class='notice'>You stuff [stuffable_item] into the [length(item_mods) == 0 ? "first" : "second"] pipe.</span>")
+			item_mods += stuffable_item
+			user.u_equip(stuffable_item)
+			stuffable_item.set_loc(src)
+			//once we begun stuffing items in the frame, only pipebombs are the way to go
+			if (length(item_mods) == 1)
+				src.RemoveComponentsOfType(/datum/component/assembly)
+				// hollow frame + *stuff*  -> hollow frame + pipebomb special effects
+				src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
+				// hollow frame + fuel  -> unwired pipebombs
+				src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipebomb_filling), FALSE)
+			// Since the assembly was done, return TRUE
+			return TRUE
+		else
+			boutput(user, "<span class='notice'>There are already too many items in the frame.</span>")
+
+	/// Pipebomb fuel filling proc
+	proc/pipebomb_filling(var/atom/to_combine_atom, var/mob/user)
+		//There is less room for explosive material when you use item mods
+		var/obj/item/reagent_containers/filling_glass = to_combine_atom
+		var/max_allowed = 20 - src.item_mods.len * 5
+		if(filling_glass.reagents.total_volume < max_allowed)
+			boutput(user, "<span class='notice'>There is not enough chemicals in [filling_glass] to fill the frame.</span>")
+		else
+			src.state = 3
 			var/avg_volatility = 0
+			src.reagents = new /datum/reagents(max_allowed)
+			src.reagents.my_atom = src
+			filling_glass.reagents.trans_to(src, max_allowed)
+			boutput(user, "<span class='notice'>You fill the pipe with [src.reagents.total_volume] units of the reagents.</span>")
+			for (var/id in src.reagents.reagent_list)
+				var/datum/reagent/R = src.reagents.reagent_list[id]
+				avg_volatility += R.volatility * R.volume / src.reagents.maximum_volume
 
-			for (var/id in W.reagents.reagent_list)
-				var/datum/reagent/R = W.reagents.reagent_list[id]
+			qdel(src.reagents)
+			src.reagents = null
+			if (avg_volatility < 1) // B A D.
+				src.strength = 0
+			else
+				src.strength *= avg_volatility
+				src.strength -= item_mods.len * 0.5 //weakened by having mods
+
+			src.icon_state = "Pipe_Filled"
+			src.state = 3
+			src.desc = "Two small pipes joined together. The pipes are filled."
+
+			if (src.material)
+				src.name = "filled [src.material.getName()] pipe frame"
+			else
+				src.name = "filled pipe frame"
+			//Since we changed the state, remove all assembly components and add the next state ones
+			src.RemoveComponentsOfType(/datum/component/assembly)
+			// cables + unwired pipebomb -> wired pipebomb
+			src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(pipebomb_cabling), TRUE)
+
+		// We return true here even if the volatility was not high enough, so we don't spill chemicals on the frame for no reason
+		// Since the assembly was done, return TRUE
+		return TRUE
+
+	/// Pipeshot fuel filling proc
+	proc/pipeshot_filling(var/atom/to_combine_atom, var/mob/user)
+		var/obj/item/reagent_containers/filling_glass = to_combine_atom
+		var/amount = 20
+		var/avg_volatility = 0
+		if(filling_glass.reagents.total_volume < amount)
+			boutput(user, "<span class='notice'>There is not enough chemicals in [filling_glass] to fill [src].</span>")
+			//since we don't want to spill on the frame, still return true
+		else
+			for (var/id in to_combine_atom.reagents.reagent_list)
+				var/datum/reagent/R = to_combine_atom.reagents.reagent_list[id]
 				avg_volatility += R.volatility
-			avg_volatility /= W.reagents.reagent_list.len
+			avg_volatility /= length(to_combine_atom.reagents.reagent_list)
 
 			if (avg_volatility < 1) // invalid ingredients/concentration
-				boutput(user, "<span class='notice'>You realize that the contents of [W] aren't actually all too explosive and decide not to pour it into the [src].</span>")
+				boutput(user, "<span class='notice'>You realize that the contents of [filling_glass] aren't actually all too explosive and decide not to pour it into the [src].</span>")
 			else
 				//consume the reagents
 				src.reagents = new /datum/reagents(amount)
 				src.reagents.my_atom = src
-				W.reagents.trans_to(src, amount)
+				filling_glass.reagents.trans_to(src, amount)
 				qdel(src.reagents)
 				//make the hulls
 				boutput(user, "<span class='notice'>You add some propellant to the hulls.</span>")
 				new /obj/item/assembly/pipehulls(get_turf(src))
 				qdel(src)
+		// Since the assembly was done, return TRUE
+		// We return true here even if the volatility was not high enough, so we don't spill chemicals on the frame for no reason
+		return TRUE
 
-		if(istype(W, /obj/item/cable_coil) && state == 3)
-			boutput(user, "<span class='notice'>You link the cable, fuel and pipes.</span>")
-			src.state = 4
-			icon_state = "Pipe_Wired"
 
-			if (material)
-				name = "[src.material.name] pipe bomb frame"
-			else
-				name = "pipe bomb frame"
+	/// Pipebomb cabling proc
+	proc/pipebomb_cabling(var/atom/to_combine_atom, var/mob/user)
+		boutput(user, "<span class='notice'>You link the cable, fuel and pipes.</span>")
+		src.state = 4
+		src.icon_state = "Pipe_Wired"
 
-			desc = "Two small pipes joined together, filled with explosives and connected with a cable. It needs some kind of ignition switch."
-			src.flags &= ~NOSPLASH
-
-		if(istype(W, /obj/item/assembly/time_ignite) && state == 4)
-			boutput(user, "<span class='notice'>You connect the cable to the timer/igniter assembly.</span>")
-			var/turf/T = get_turf(src)
-			var/obj/item/pipebomb/bomb/A = new /obj/item/pipebomb/bomb(T)
-			A.strength = src.strength
-			if (material)
-				A.setMaterial(src.material)
-				src.material = null
-
-			//add properties from item mods to the finished pipe bomb
-			for (var/M in item_mods)
-				for (var/I in allowed_items)
-					if (istype(M, text2path(I) ))
-						A.name = "modified pipe bomb"
-						if (istype(M, /obj/item/device/light/glowstick))
-							A.glowsticks += 1
-						if (istype(M, /obj/item/clothing/head/butt))
-							A.butt += 1
-						if (istype(M, /obj/item/paper))
-							A.confetti += 1
-						if (istype(M, /obj/item/reagent_containers/food/snacks/ingredient/meat))
-							A.meat += 1
-						if (istype(M, /obj/item/reagent_containers/food/snacks/ectoplasm))
-							A.ghost += 1
-						if (istype(M, /obj/item/scrap) || istype(M,/obj/item/raw_material/scrap_metal))
-							A.extra_shrapnel += 1
-						if (istype(M,/obj/item/cable_coil))
-							A.cable += 1
-						if (istype(M, /obj/item/cell))
-							var/obj/item/cell/C = M
-							A.charge += C.charge
-							if (C.rigged || istype(M, /obj/item/cell/erebite))
-								A.strength += 3
-						if (istype(M, /obj/item/material_piece/cloth))
-							A.strength = src.strength / 5
-						if (istype(M, /obj/item/raw_material/shard))
-							var/obj/item/raw_material/shard/S = M // fix for duplication glitch because someone may have forgot to assign M to S, whoops!
-							A.bleed += 1
-							if (S && (S.material.hasProperty("hard") || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
-								A.bleed += 1
-						if (istype(M, /obj/item/raw_material/telecrystal))
-							A.tele += 1
-						if (istype(M, /obj/item/instrument))
-							var/obj/item/instrument/R = M
-							A.sound_effect = islist(R.sounds_instrument) ? pick(R.sounds_instrument) : R.sounds_instrument
-						if (istype(M, /obj/item/reagent_containers/food/snacks/ingredient/butter))
-							if (!A.reagents)
-								var/datum/reagents/R = new/datum/reagents(20)
-								A.reagents = R
-							A.reagents.add_reagent("water", 5)
-						if (istype(M, /obj/item/rcd_ammo))
-							A.rcd += 1
-							if (istype(M, /obj/item/rcd_ammo/big))
-								A.rcd += 1
-						if (istype(M, /obj/item/item_box/medical_patches) || istype(M,/obj/item/item_box/gold_star))
-							var/obj/item/item_box/B = M
-							A.throw_objs += B.contained_item
-						if (istype(M, /obj/item/item_box/assorted/stickers))
-							var/obj/item/item_box/assorted/B = M
-							A.throw_objs += B.contained_items
-						if (istype(M, /obj/item/material_piece/plasmastone) || istype(M, /obj/item/raw_material/plasmastone))
-							A.plasma += 1
-			user.u_equip(W)
-			qdel(W)
-			qdel(src)
+		if (src.material)
+			src.name = "[src.material.getName()] pipe bomb frame"
 		else
-			..()
-			return
+			src.name = "pipe bomb frame"
 
+		src.desc = "Two small pipes joined together, filled with explosives and connected with a cable. It needs some kind of ignition switch."
+		src.flags &= ~NOSPLASH
+		//Since we changed the state, remove all assembly components and add the next state ones
+		src.RemoveComponentsOfType(/datum/component/assembly)
+		// timer + wired pipebomb -> standard pipebomb
+		src.AddComponent(/datum/component/assembly, /obj/item/device/timer, PROC_REF(standard_pipebomb_crafting), TRUE)
+		// Since the assembly was done, return TRUE
+		return TRUE
+
+	/// Standard pipebomb without assemblies
+	proc/standard_pipebomb_crafting(var/atom/to_combine_atom, var/mob/user)
+		boutput(user, "<span class='notice'>You connect the cable to the timer.</span>")
+		var/turf/target_turf = get_turf(src)
+		var/obj/item/pipebomb/bomb/complete_bomb = new /obj/item/pipebomb/bomb(target_turf)
+		complete_bomb.strength = src.strength
+		if (src.material)
+			complete_bomb.setMaterial(src.material)
+		//add properties from item mods to the finished pipe bomb
+		complete_bomb.set_up_special_ingredients(src.item_mods)
+		user.u_equip(to_combine_atom)
+		qdel(to_combine_atom)
+		qdel(src)
+		// Since the assembly was done, return TRUE
+		return TRUE
+
+
+ADMIN_INTERACT_PROCS(/obj/item/pipebomb/bomb, proc/arm)
 /obj/item/pipebomb/bomb
 	name = "pipe bomb"
 	desc = "An improvised explosive made primarily out of two pipes."
@@ -1633,7 +1824,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	contraband = 4
 
 	var/strength = 5
-	var/armed = 0
+	var/armed = FALSE
 	var/is_dangerous = TRUE
 
 	var/glowsticks = 0
@@ -1654,20 +1845,79 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 	var/list/throw_objs = new /list()
 
-	attack_self(mob/user as mob)
-		if (armed)
+	attack_self(mob/user)
+		if (src.armed)
 			return
+		src.arm(user)
+
+	/// This proc handles the addition of special effects to the pipebomb. Pass a list with the items to items_to_account for this
+	proc/set_up_special_ingredients(var/list/items_to_account)
+		if(length(items_to_account) > 0)
+			src.name = "modified pipe bomb"
+		else
+			return
+		for (var/checked_item in items_to_account)
+			if (istype(checked_item, /obj/item/device/light/glowstick))
+				src.glowsticks += 1
+			if (istype(checked_item, /obj/item/clothing/head/butt))
+				src.butt += 1
+			if (istype(checked_item, /obj/item/paper))
+				src.confetti += 1
+			if (istype(checked_item, /obj/item/reagent_containers/food/snacks/ingredient/meat))
+				src.meat += 1
+			if (istype(checked_item, /obj/item/reagent_containers/food/snacks/ectoplasm))
+				src.ghost += 1
+			if (istype(checked_item, /obj/item/scrap) || istype(checked_item,/obj/item/raw_material/scrap_metal))
+				src.extra_shrapnel += 1
+			if (istype(checked_item,/obj/item/cable_coil))
+				src.cable += 1
+			if (istype(checked_item, /obj/item/cell))
+				var/obj/item/cell/C = checked_item
+				src.charge += C.charge
+				if (C.rigged || istype(checked_item, /obj/item/cell/erebite))
+					src.strength += 3
+			if (istype(checked_item, /obj/item/material_piece/cloth))
+				src.strength = src.strength / 5
+			if (istype(checked_item, /obj/item/raw_material/shard))
+				var/obj/item/raw_material/shard/S = checked_item // fix for duplication glitch because someone may have forgot to assign M to S, whoops!
+				src.bleed += 1
+				if (S && (S.material.hasProperty("hard") || istype(S, /obj/item/raw_material/shard/plasmacrystal)))
+					src.bleed += 1
+			if (istype(checked_item, /obj/item/raw_material/telecrystal))
+				src.tele += 1
+			if (istype(checked_item, /obj/item/instrument))
+				var/obj/item/instrument/R = checked_item
+				src.sound_effect = islist(R.sounds_instrument) ? pick(R.sounds_instrument) : R.sounds_instrument
+			if (istype(checked_item, /obj/item/reagent_containers/food/snacks/ingredient/butter))
+				if (!src.reagents)
+					var/datum/reagents/R = new/datum/reagents(20)
+					src.reagents = R
+				src.reagents.add_reagent("water", 5)
+			if (istype(checked_item, /obj/item/rcd_ammo))
+				src.rcd += 1
+				if (istype(checked_item, /obj/item/rcd_ammo/big))
+					src.rcd += 1
+			if (istype(checked_item, /obj/item/item_box/medical_patches) || istype(checked_item,/obj/item/item_box/gold_star))
+				var/obj/item/item_box/B = checked_item
+				src.throw_objs += B.contained_item
+			if (istype(checked_item, /obj/item/item_box/assorted/stickers))
+				var/obj/item/item_box/assorted/B = checked_item
+				src.throw_objs += B.contained_items
+			if (istype(checked_item, /obj/item/material_piece/plasmastone) || istype(checked_item, /obj/item/raw_material/plasmastone))
+				src.plasma += 1
+
+	proc/arm(mob/user)
 		boutput(user, "<span class='alert'>You activate the pipe bomb! 5 seconds!</span>")
-		armed = 1
+		armed = TRUE
 		var/area/A = get_area(src)
-		if(!A.dont_log_combat)
+		if(!A.dont_log_combat && user)
 			if(is_dangerous)
-				message_admins("[key_name(user)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
+				message_admins("[key_name(user || usr)] arms a [src.name] (power [strength]) at [log_loc(src)] by [key_name(user)].")
 			logTheThing(LOG_COMBAT, user, "arms a [src.name] (power [strength]) at [log_loc(src)])")
 
 		if (sound_effect)
 			SPAWN(4 SECONDS) //you can use a sound effect to hold a bomb in hand and throw it at the very last moment!
-				playsound(src, sound_effect, 50, 1)
+				playsound(src, sound_effect, 50, TRUE)
 		SPAWN(5 SECONDS)
 			do_explode()
 
@@ -1679,33 +1929,39 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if (src.strength)
 			if (src.material)
 				var/strength_mult = 1
-				if (findtext(material.mat_id, "erebite"))
+				if (findtext(material.getID(), "erebite"))
 					strength_mult = 2
-				else if (findtext(material.mat_id, "plasmastone"))
+				else if (findtext(material.getID(), "plasmastone"))
 					strength_mult = 1.25
 				src.strength *= strength_mult
 
+			///Explosion center point
+			var/turf/origin = get_turf(src.loc)
+
+			///Mob who is diving on the bomb
+			var/mob/living/carbon/human/hero = src.get_hero()
+
 			//do mod effects : pre-explosion
 			if (glowsticks)
-				var/turf/T = get_turf(src.loc)
-				make_cleanable( /obj/decal/cleanable/generic,T)
-				for (var/turf/splat in view(1,src.loc))
-					make_cleanable( /obj/decal/cleanable/greenglow,splat)
+				make_cleanable( /obj/decal/cleanable/generic,origin)
 				var/radium_amt = 6 * glowsticks
-				for (var/mob/M in view(3,src.loc))
-					if(iscarbon(M))
-						if (M.reagents)
-							M.reagents.add_reagent("radium", radium_amt, null, T0C + 300)
-					boutput(M, "<span class='alert'>You are splashed with hot green liquid!</span>")
+				if (istype(hero))
+					hero.reagents.add_reagent("radium", 10 * radium_amt, null, T0C + 300)
+				else // leave a radium puddle instead
+					for (var/turf/splat in view(1,src.loc))
+						make_cleanable( /obj/decal/cleanable/greenglow,splat)
+					for (var/mob/M in view(3,src.loc))
+						if(iscarbon(M))
+							if (M.reagents)
+								M.reagents.add_reagent("radium", radium_amt, null, T0C + 300)
+						boutput(M, "<span class='alert'>You are splashed with hot green liquid!</span>")
 			if (butt)
 				if (butt > 1)
 					playsound(src.loc, 'sound/voice/farts/superfart.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
-					for (var/mob/M in view(3+butt,src.loc))
-						ass_explosion(M, 0, 5)
 				else
 					playsound(src.loc, 'sound/voice/farts/poo2.ogg', 90, 1, channel=VOLUME_CHANNEL_EMOTE)
-					for (var/mob/M in view(3,src.loc))
-						ass_explosion(M, 0, 5)
+				for (var/mob/M in view(istype(hero) ? 1 : 3 + butt,src.loc))
+					ass_explosion(M, 0, 5)
 			if (confetti)
 				if (confetti > 1)
 					particleMaster.SpawnSystem(new /datum/particleSystem/confetti_more(src.loc))
@@ -1717,7 +1973,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 				for (var/turf/splat in view(meat,src.loc))
 					make_cleanable( /obj/decal/cleanable/blood,splat)
 			if (ghost) //throw objects towards bomb center
-				var/turf/T = get_turf(src.loc)
 				if (ghost > 1)
 					for (var/mob/M in view(2+ghost,src.loc))
 						if(iscarbon(M))
@@ -1725,28 +1980,35 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 							var/yank_distance = 1
 							if (prob(50))
 								yank_distance = 2
-							M.throw_at(T, yank_distance, 2)
+							M.throw_at(origin, yank_distance, 2)
 				for (var/obj/O in view(1,src.loc))
-					O.throw_at(T, 2, 2)
+					O.throw_at(origin, 2, 2)
 			if (extra_shrapnel)
-				throw_shrapnel(get_turf(src.loc), 4, extra_shrapnel * 3)
+				throw_shrapnel(origin, 4, extra_shrapnel * (istype(hero) ? 1 : 3))
 			if (cable && charge) //arc flash
 				var/target_count = 0
 				for (var/mob/living/L in view(5, src.loc))
 					target_count++
 				if (target_count)
 					for (var/mob/living/L in oview(5, src.loc))
-						arcFlash(src, L, max((charge*7) / target_count, 1))
+						// reducing range increases impact, reduce mob shock intensity instead
+						arcFlash(src, L, max((charge*7) / (target_count * (istype(hero) ? 2 : 1)), 1))
 				else
 					for (var/turf/T in oview(3,src.loc))
 						if (prob(2))
 							arcFlashTurf(src, T, max((charge*6) * rand(),1))
 			if (bleed)
-				for (var/mob/M in view(3,src.loc))
+				for (var/mob/M in view(istype(hero) ? 1 : 3,src.loc))
 					take_bleeding_damage(M, null, bleed * 3, DAMAGE_CUT)
 			if (src.reagents)
-				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12),src.loc) )
+				if (istype(hero))
+					src.reagents.trans_to_direct(hero, src.reagents.total_volume / 2)
+				for (var/turf/T in oview(1+ round(src.reagents.total_volume * 0.12), src.loc))
 					src.reagents.reaction(T,1,5)
+
+			if (istype(hero))
+				hero.ex_act(1, src, src.strength)
+				src.strength = max((src.strength * 0.75), (src.strength - 3))
 
 			src.blowthefuckup(src.strength, 0)
 
@@ -1761,7 +2023,7 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 							boutput(M, "<span class='alert'>You suddenly teleport ...</span>")
 							M.set_loc(warp_to)
 			if (rcd)
-				playsound(src, 'sound/items/Deconstruct.ogg', 70, 1)
+				playsound(src, 'sound/items/Deconstruct.ogg', 70, TRUE)
 				for (var/turf/T in view(rcd,src.loc))
 					if (istype(T, /turf/space))
 						var/turf/simulated/floor/F = T:ReplaceWithFloor()
@@ -1783,27 +2045,26 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 						payload.volume = R_IDEAL_GAS_EQUATION * T20C / 1000
 						target.air.merge(payload)
 
-			if (throw_objs.len && throw_objs.len > 0)
-				var/turf/T = get_turf(src.loc)
+			if (throw_objs.len && length(throw_objs) > 0)
 				var/count = 20
 				var/obj/spawn_item
 				for (var/mob/living/L in oview(5, src.loc))
 					spawn_item = pick(throw_objs)
-					var/obj/O = new spawn_item(T)
+					var/obj/O = new spawn_item(origin)
 					if (istype(O,/obj/item/reagent_containers/patch))
 						var/obj/item/reagent_containers/patch/P = O
 						P.good_throw = 1
-					O.throw_at(L,5,3)
+					O.throw_at(L, istype(hero) ? 2 : 5, 3) // thrown short of far targets
 					count--
 				if (count > 0)
 					for (var/turf/target in oview(4,src.loc))
 						if (prob(4))
 							spawn_item = pick(throw_objs)
-							var/obj/O = new spawn_item(T)
+							var/obj/O = new spawn_item(origin)
 							if (istype(O,/obj/item/reagent_containers/patch))
 								var/obj/item/reagent_containers/patch/P = O
 								P.good_throw = 1
-							O.throw_at(target,4,3)
+							O.throw_at(target, istype(hero) ? 2 : 4, 3) // thrown short of far targets
 							count--
 						if (count <= 0)
 							break;
@@ -1831,7 +2092,6 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			var/obj/critter/gunbot/drone/miniature_syndie/O = new /obj/critter/gunbot/drone/miniature_syndie(get_turf(src))
 			var/atom/target = get_edge_target_turf(src, pick(alldirs))
 			O.throw_at(target,4,3)
-
 		..()
 
 /obj/item/pipebomb/bomb/engineering
@@ -1854,9 +2114,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 
 /obj/proc/on_blowthefuckup(strength)
 	new /obj/effects/explosion/tiny_baby (src.loc)
-	if (src.material)
-		src.material.triggerTemp(src, T0C + strength * 100)
-		src.material.triggerExp(src, 1)
+	src.material_trigger_on_temp(T0C + strength * 100)
+	src.material_trigger_on_explosion(1)
 
 /obj/item/pipebomb/bomb/on_blowthefuckup(strength)
 	..()
@@ -1868,11 +2127,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if (M.get_ranged_protection()>=1.5)
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
-			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-			implanted.bleed_time = 25 * sqstrength
-			implanted.owner = M
-			M.implant += implanted
-			implanted.implanted(M, null)
+			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
+			implanted.implanted(M, null, 25 * sqstrength)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
 				M.emote("scream")
@@ -1885,18 +2141,11 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 		if (M.get_ranged_protection()>=1.5)
 			boutput(M, "<span class='alert'><b>Your armor blocks the shrapnel!</b></span>")
 		else
-			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-			implanted.owner = M
-			M.implant += implanted
+			var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
 			implanted.implanted(M, null, 25 * sqstrength)
 			boutput(M, "<span class='alert'><b>You are struck by shrapnel!</b></span>")
 			if (!M.stat)
 				M.emote("scream")
-
-
-
-
-
 
 /obj/proc/blowthefuckup(var/strength = 1, var/delete = 1) // dropping this to object-level so that I can use it for other things
 	var/T = get_turf(src)
@@ -1923,11 +2172,8 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 			if (M.get_ranged_protection()>=1.5)
 				boutput(M, "<span class='alert'><b>Your armor blocks the chunks of [src.name]!</b></span>")
 			else
-				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel(M)
-				implanted.bleed_time = 25 * sqstrength
-				implanted.owner = M
-				M.implant += implanted
-				implanted.implanted(M, null)
+				var/obj/item/implant/projectile/shrapnel/implanted = new /obj/item/implant/projectile/shrapnel
+				implanted.implanted(M, null, 25 * sqstrength)
 				boutput(M, "<span class='alert'><b>You are struck by chunks of [src.name]!</b></span>")
 				if (!M.stat)
 					M.emote("scream")
@@ -1946,3 +2192,20 @@ ABSTRACT_TYPE(/obj/item/old_grenade/spawner)
 	explosion_new(src, T, strength, 1)
 	if (delete)
 		qdel(src)
+
+///Pick one human trying to cover the object
+/obj/item/proc/get_hero()
+	if (!istype(src.loc, /turf)) // must be on the floor/tile directly
+		return null
+	var/turf/origin = src.loc
+	var/list/sacrifices = list()
+	for (var/mob/living/carbon/human/H in origin.contents)
+		// The deliberate act of using one's body to cover a live time-fused hand grenade
+		if(isalive(H) && H.lying && H.hasStatus("blocking"))
+			sacrifices.Add(H)
+	if (!length(sacrifices))
+		return null
+	var/mob/living/carbon/human/hero = pick(sacrifices)
+	if (istype(hero))
+		src.visible_message("<span class='combat'><B>[hero] dives onto [src], covering it with [his_or_her(hero)] body!</B></span>")
+	return hero

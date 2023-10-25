@@ -7,7 +7,7 @@
 	max_range = 0
 	cooldown = 0
 	pointCost = 0
-	restricted_area_check = 1
+	restricted_area_check = ABILITY_AREA_CHECK_ALL_RESTRICTED_Z
 
 	cast(mob/target)
 		if (!holder)

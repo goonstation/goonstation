@@ -326,7 +326,7 @@
 
 	proc/play_optional_sound(var/sound/sound)
 		if (sound)
-			playsound(src, sound, 50, 1)
+			playsound(src, sound, 50, TRUE)
 
 	proc/addUntiedEvent(var/datum/critterEvent/E)
 		events += E
@@ -536,9 +536,9 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	doOnDeath()
 		if (gibtype)
-			gibs(C.loc, list())
+			gibs(C.loc)
 		else
-			robogibs(C.loc, list())
+			robogibs(C.loc)
 		qdel(C)
 
 /datum/critterDeath/explode
@@ -1172,7 +1172,7 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 
 	proc/fire_at(var/turf/T, var/mob/RT)
 		var/turf/S = get_turf(C)
-		shoot_projectile_ST(S, current_projectile, T)
+		shoot_projectile_ST_pixel_spread(S, current_projectile, T)
 		C.tokenized_message(fire_text, RT)
 		return 1
 
@@ -1728,8 +1728,8 @@ var/global/datum/critterCreatorHolder/critter_creator_controller = new()
 	proc/getEnum(var/name, var/default, var/list/possible)
 		return input(usr, "New value for [name]", name, default) in possible
 
-	proc/getTypeExclusive(var/name, var/default, var/parent_type)
-		return input(usr, "New value for [name]", name, default) in childrentypesof(parent_type)
+	proc/getTypeExclusive(var/name, var/default, var/type_of_parent)
+		return input(usr, "New value for [name]", name, default) in childrentypesof(type_of_parent)
 
 	proc/stripPath(var/typename)
 		var/typetext = "[typename]"

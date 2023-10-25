@@ -7,7 +7,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "doorctrl0"
 	layer = EFFECTS_LAYER_UNDER_1
-	anchored = 1
+	anchored = ANCHORED
 	var/numkills = 0
 
 	get_desc()

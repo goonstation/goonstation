@@ -1,13 +1,17 @@
+TYPEINFO(/obj/machinery/crusher)
+	mats = 20
+
 /obj/machinery/crusher
 	name = "Crusher Unit"
 	desc = "Breaks things down into metal/glass/waste"
+	pass_unstable = TRUE
 	density = 1
 	icon = 'icons/obj/scrap.dmi'
 	icon_state = "Crusher_1"
 	layer = MOB_LAYER - 1
-	anchored = 1
-	mats = 20
+	anchored = ANCHORED_ALWAYS
 	is_syndicate = 1
+	power_usage = 500
 	flags = FLUID_SUBMERGE | UNCRUSHABLE
 	event_handler_flags = USE_FLUID_ENTER
 	var/osha_prob = 40 //How likely it is anyone touching it is to get dragged in
@@ -17,9 +21,9 @@
 
 	var/last_sfx = 0
 
-/obj/machinery/crusher/Bumped(atom/AM)
+/obj/machinery/crusher/Bumped(atom/movable/AM)
 	return_if_overlay_or_effect(AM)
-	if(AM.flags & UNCRUSHABLE)
+	if(AM.flags & UNCRUSHABLE || AM.anchored == 2)
 		return
 
 	var/turf/T = get_turf(src)
@@ -31,13 +35,13 @@
 
 /obj/machinery/crusher/Cross(atom/movable/mover)
 	. = ..()
-	if(mover.flags & UNCRUSHABLE)
+	if(mover.flags & UNCRUSHABLE || mover.anchored == 2)
 		. = TRUE
 
 /obj/machinery/crusher/Crossed(atom/movable/AM)
 	. = ..()
 	return_if_overlay_or_effect(AM)
-	if(AM.flags & UNCRUSHABLE)
+	if(AM.flags & UNCRUSHABLE || AM.anchored == 2)
 		return
 
 	var/turf/T = get_turf(src)
@@ -69,7 +73,7 @@
 	onStart()
 		. = ..()
 		if (!ON_COOLDOWN(owner, "crusher_sound", 1 SECOND))
-			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
+			playsound(owner, 'sound/items/mining_drill.ogg', 40, TRUE,0,0.8)
 		target.temp_flags |= BEING_CRUSHERED
 		if(!src.classic)
 			target.set_loc(owner.loc)
@@ -83,7 +87,7 @@
 			interrupt(INTERRUPT_ALWAYS)
 			return
 		if (!ON_COOLDOWN(owner, "crusher_sound", rand(0.5, 2.5) SECONDS))
-			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
+			playsound(owner, 'sound/items/mining_drill.ogg', 40, TRUE,0,0.8)
 		if(!src.classic)
 			target.set_loc(owner.loc)
 
@@ -156,7 +160,7 @@
 			return
 
 		if (!ON_COOLDOWN(owner, "crusher_sound", 1 SECOND))
-			playsound(owner, 'sound/items/mining_drill.ogg', 40, 1,0,0.8)
+			playsound(owner, 'sound/items/mining_drill.ogg', 40, TRUE,0,0.8)
 
 		var/obj/item/scrap/S = new(get_turf(owner))
 		S.blood = bblood
@@ -176,7 +180,7 @@
 		user.visible_message("<span class='combat bold'>[user] [pick_string("descriptors.txt", "crusherpoke")] the [src]!</span>")
 		if(prob(osha_prob)) //RIP you.
 			user.canmove = 0
-			user.anchored = 1
+			user.anchored = ANCHORED
 			sleep(0.5 SECONDS) //Give it a little time
 			if(user) //Gotta make sure they haven't moved since last time
 				poking_jerks -= user
@@ -192,7 +196,7 @@
 			var/anc = user.anchored
 			//To prevent them moving away.
 			user.canmove = 0
-			user.anchored = 1
+			user.anchored = ANCHORED
 			interact_particle(user,src)
 			sleep(0.5 SECONDS)
 			if(user) //Still here?
@@ -222,12 +226,11 @@
 /obj/machinery/crusher/process()
 	..()
 	if(status & (NOPOWER|BROKEN))	return
-	use_power(500)
 
 /obj/machinery/crusher/New()
 	..()
 	var/turf/T = get_turf(src)
-	if (T.contents.len > 100) //if it has to check too much stuff, it might lag?
+	if (length(T.contents) > 100) //if it has to check too much stuff, it might lag?
 		src.visible_message("<span style='color:red'>\The [src] fails to deploy because of how much stuff there is on the ground! Clean it up!</span>")
 		qdel(src)
 		return

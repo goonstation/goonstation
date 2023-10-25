@@ -59,9 +59,9 @@
 			logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims default rack!")
 
 			if(!src.first_registered)
-				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1,1,true,true)
-				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2,2,true,true)
-				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3,3,true,true)
+				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov1, 1, TRUE, TRUE)
+				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov2, 2, TRUE, TRUE)
+				src.default_ai_rack.SetLaw(new /obj/item/aiModule/asimov3, 3, TRUE, TRUE)
 				src.first_registered = TRUE
 				logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims first registered, and gets Asimov laws!")
 
@@ -80,10 +80,10 @@
 			logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims default SYNDICATE rack!")
 
 			if(!src.first_registered_syndie)
-				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law1,1,true,true)
-				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law2,2,true,true)
-				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law3,3,true,true)
-				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law4,4,true,true)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law1, 1, TRUE, TRUE)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law2, 2, TRUE, TRUE)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law3, 3, TRUE, TRUE)
+				src.default_ai_rack_syndie.SetLaw(new /obj/item/aiModule/syndicate/law4, 4, TRUE, TRUE)
 				src.first_registered_syndie = TRUE
 				logTheThing(LOG_STATION, src, "the law rack [constructName(new_rack)] claims first registered SYNDICATE, and gets Syndicate laws!")
 
@@ -121,7 +121,7 @@
 				logTheThing(LOG_STATION, E.mainframe, "[E.mainframe.name] loses connection to the rack [constructName(dead_rack)] and now has no laws")
 
 /* ION STORM */
-	proc/ion_storm_all_racks(var/picked_law="Beep repeatedly.",var/lawnumber=2,var/replace=true)
+	proc/ion_storm_all_racks(picked_law = "Beep repeatedly.", lawnumber = 2, replace = TRUE)
 		for(var/obj/machinery/lawrack/R in src.registered_racks)
 			if(istype(R,/obj/machinery/lawrack/syndicate))
 				continue //sadly syndie law racks must be immune to ion storms, because nobody can actually get at them to fix them.

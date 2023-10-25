@@ -1,16 +1,3 @@
-/obj/item/goldbar //deprecated, needs getting rid of except the map is being weird about it
-	name = "fool's pyrite bar"
-	desc = "It's gold that isn't. Except it is. MINDFUCK"
-	icon = 'icons/obj/materials.dmi'
-	icon_state = "gold-bar"
-	force = 8
-	throwforce = 10
-	//metal = 1
-	//conductor = 1
-	New()
-		src.setMaterial(getMaterial("gold"), appearance = 0, setname = 0, copy = FALSE)
-		return ..()
-
 /datum/ore
 	var/name = null
 	var/output = null
@@ -62,7 +49,7 @@
 	output = /obj/item/raw_material/molitz
 	events = list(/datum/ore/event/gem,/datum/ore/event/gem/molitz_b,/datum/ore/event/gem/molitz_b)
 	gems = list(/obj/item/raw_material/gemstone,/obj/item/raw_material/uqill,/obj/item/raw_material/fibrilith)
-	event_chance = 12
+	event_chance = 20
 	hardness_mod = 1
 	mining_health = 160
 
@@ -261,11 +248,11 @@
 		if (!AST)
 			return 1
 		if(prob(25))
-			var/obj/critter/ancient_repairbot/N = new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(AST)
+			var/obj/critter/gunbot/drone/buzzdrone/naniteswarm/N = new /obj/critter/gunbot/drone/buzzdrone/naniteswarm (AST)
 			N.set_loc(AST)
 
 	onExcavate(var/turf/simulated/wall/auto/asteroid/AST)
 		if (!AST)
 			return 1
-		var/obj/critter/ancient_repairbot/N = new/obj/critter/gunbot/drone/buzzdrone/naniteswarm(AST)
+		var/obj/critter/gunbot/drone/buzzdrone/naniteswarm/N = new /obj/critter/gunbot/drone/buzzdrone/naniteswarm (AST)
 		N.set_loc(AST)

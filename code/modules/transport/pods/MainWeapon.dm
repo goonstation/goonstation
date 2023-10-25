@@ -12,6 +12,9 @@
 	var/remaining_ammunition = 0
 	var/muzzle_flash = null
 
+	/// Can it be removed by a player
+	var/removable = TRUE
+
 	icon = 'icons/obj/podweapons.dmi'		//remove this line.  or leave it. Could put these sprites in ship.dmi like how the original is
 	icon_state = "class-a"
 
@@ -30,6 +33,8 @@
 					dat += {"<A href='?src=\ref[src];gunner=1'>Enter Gunner Seat</A><BR>"}
 				else
 					dat += {"[src]<BR>"}
+			if(uses_ammunition)
+				dat += {"<b>Remaining ammo:</b> [remaining_ammunition]<BR>"}
 		else
 			dat += {"<B><span style=\"color:red\">SYSTEM OFFLINE</span></B>"}
 		user.Browse(dat, "window=ship_main_weapon")
@@ -89,7 +94,7 @@
 /obj/item/shipcomponent/mainweapon/mining
 	name = "Plasma Cutter System"
 	desc = "A high-temperature rock cutter for pods. Use with extreme caution."
-	power_used = 130
+	power_used = 80
 	weapon_score = 0.7
 	current_projectile = new/datum/projectile/laser/mining
 	appearanceString = "pod_weapon_cutter_on"
@@ -99,7 +104,7 @@
 /obj/item/shipcomponent/mainweapon/bad_mining
 	name = "Mining Phaser System"
 	desc = "A weak, short-range phaser that can cut through solid rock. Weak damage, but more effective against critters."
-	power_used = 1
+	power_used = 10
 	current_projectile = new/datum/projectile/laser/light/mining
 	appearanceString = "pod_weapon_ltlaser"
 	firerate = 7
@@ -136,7 +141,7 @@
 
 /obj/item/shipcomponent/mainweapon/laser
 	name = "Mk.2 Scout Laser"
-	desc = "An upgraded variant of the stock MK 1.5 phaser. Due to the concentration of energy, a higher quality engine might be neccesary."
+	desc = "An upgraded variant of the stock MK 1.5 phaser. Due to the concentration of energy, a higher quality engine might be necessary."
 	weapon_score = 0.4
 	appearanceString = "pod_weapon_laser"
 	power_used = 100
@@ -159,9 +164,11 @@
 	name = "Svet-Oruzhiye Mk.4"
 	weapon_score = 0.6
 	current_projectile = new/datum/projectile/laser/glitter
+	power_used = 75
 	firerate = 5
 	icon_state = "strelka"
 	muzzle_flash = "muzzle_flash_laser"
+	removable = FALSE
 
 /obj/item/shipcomponent/mainweapon/disruptor_light
 	name = "Mk.3 Disruptor"
@@ -183,6 +190,7 @@
 	name = "SPE-12 Ballistic System"
 	desc = "A one of it's kind kinetic podweapon, designed to fire shotgun rounds similar to those in a SPES-12."
 	weapon_score = 1.25
+	power_used = 30
 	current_projectile = new/datum/projectile/bullet/a12/weak
 	appearanceString = "pod_weapon_gun_off"
 	firerate = 10
@@ -192,7 +200,7 @@
 /obj/item/shipcomponent/mainweapon/laser_ass // hehhh
 	name = "Mk.4 Assault Laser"
 	weapon_score = 1.25
-	power_used = 350
+	power_used = 300
 	firerate = 35
 	appearanceString = "pod_weapon_emitter"
 	current_projectile = new/datum/projectile/laser/asslaser
@@ -201,8 +209,8 @@
 
 /obj/item/shipcomponent/mainweapon/rockdrills
 	name = "Rock Drilling Rig"
-	desc = "A strudy drill designed for chewing up asteroids like nobodies business."
-	power_used = 100
+	desc = "A sturdy drill designed for chewing up asteroids like nobodies business."
+	power_used = 90
 	weapon_score = 1
 	current_projectile = new/datum/projectile/laser/drill
 	appearanceString = "pod_weapon_drills"
@@ -320,7 +328,7 @@
 					step_towards(D, get_step(D, D.dir))
 					var/location = get_turf(D)
 					for(var/mob/M in AIviewers(5, location))
-						boutput(M, "<span class='alert'>[ship] spews out a metalic foam!</span>")
+						boutput(M, "<span class='alert'>[ship] spews out a metallic foam!</span>")
 					var/list/bandaidfix = list("iron" = 3, "fluorosurfactant" = 1, "acid" = 1)
 					var/datum/effects/system/foam_spread/s = new()
 					s.set_up(5, location, bandaidfix, 1) // Aborts if reagent list is null (even for metal foam), but I'm not gonna touch foam_spread.dm (Convair880).
@@ -375,8 +383,8 @@
 	current_projectile = new/datum/projectile/laser/drill/cutter
 	firerate = 100
 	var/increment
-	var/pod_is_large = false
-	var/core_inserted = false
+	var/pod_is_large = FALSE
+	var/core_inserted = FALSE
 	icon = 'icons/misc/retribution/SWORD_loot.dmi'
 	icon_state= "SPS_empty"
 
@@ -397,12 +405,12 @@
 				purge.dir &= EAST | WEST
 		ship.vis_contents += purge
 		if(ship.capacity != 1 && !istype(/obj/machinery/vehicle/miniputt, ship) && !istype(/obj/machinery/vehicle/recon, ship) && !istype(/obj/machinery/vehicle/cargo, ship))
-			pod_is_large = true
+			pod_is_large = TRUE
 			flick("SPS_o_large", purge)
 			purge.pixel_x -= 128
 			purge.pixel_y -= 128
 		else
-			pod_is_large = false
+			pod_is_large = FALSE
 			flick("SPS_o_small", purge)
 			purge.pixel_x -= 144
 			purge.pixel_y -= 144
@@ -455,7 +463,7 @@
 
 	attackby(obj/item/W, mob/user)
 		if (isscrewingtool(W) && core_inserted)
-			core_inserted = false
+			core_inserted = FALSE
 			set_icon_state("SPS_empty")
 			user.put_in_hand_or_drop(new /obj/item/sword_core)
 			user.show_message("<span class='notice'>You remove the SWORD core from the Syndicate Purge System!</span>", 1)
@@ -463,7 +471,7 @@
 			tooltip_rebuild = 1
 			return
 		else if ((istype(W,/obj/item/sword_core) && !core_inserted))
-			core_inserted = true
+			core_inserted = TRUE
 			qdel(W)
 			set_icon_state("SPS")
 			user.show_message("<span class='notice'>You insert the SWORD core into the Syndicate Purge System!</span>", 1)
@@ -475,7 +483,7 @@
 		for (var/mob/M in locate(point_x,point_y,ship.loc.z))
 			random_burn_damage(M, 60)
 			M.changeStatus("weakened", 2 SECOND)
-			INVOKE_ASYNC(M, /mob.proc/emote, "scream")
+			INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, emote), "scream")
 			playsound(M.loc, 'sound/impact_sounds/burn_sizzle.ogg', 70, 1)
 		var/turf/simulated/T = locate(point_x,point_y,ship.loc.z)
 		if(T && prob(100 - (10 * increment)))

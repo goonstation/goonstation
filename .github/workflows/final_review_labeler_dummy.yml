@@ -1,0 +1,24 @@
+name: Final Review Labeler
+
+on:
+  pull_request_review:
+    types: [submitted]
+
+jobs:
+  dummy-workflow:
+    name: Labeler
+    runs-on: ubuntu-latest
+    if: github.event.review.state == 'approved'
+    steps:
+      - name: Explanation
+        run: echo "This is a dummy workflow that triggers a workflow_run; it's necessary because otherwise the GITHUB_TOKEN won't be able to push a label for externally forked pull requests"
+      - name: Save PR number
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          mkdir -p ./pr
+          echo $PR_NUMBER > ./pr/pr_number
+      - uses: actions/upload-artifact@v3
+        with:
+          name: pr_number
+          path: pr/

@@ -1,11 +1,13 @@
+TYPEINFO(/obj/submachine/slot_machine)
+	mats = 8
+
 /obj/submachine/slot_machine
 	name = "Slot Machine"
 	desc = "Gambling for the antisocial."
 	icon = 'icons/obj/gambling.dmi'
 	icon_state = "slots-off"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 8
 	flags = TGUI_INTERACTIVE
 	deconstruct_flags = DECON_SIMPLE
 	var/plays = 0
@@ -80,7 +82,7 @@
 			src.working = 1
 			src.icon_state = "[icon_base]-on"
 
-			playsound(src, 'sound/machines/ding.ogg', 50, 1)
+			playsound(src, 'sound/machines/ding.ogg', 50, TRUE)
 			. = TRUE
 			ui_interact(usr, ui)
 			SPAWN(2.5 SECONDS) // why was this at ten seconds, christ
@@ -290,10 +292,10 @@
 	var/play_money = 0
 
 	attackby(var/obj/item/I, user)
-		if(istype(I, /obj/item/spacecash/))
+		if(istype(I, /obj/item/currency/spacecash/))
 			boutput(user, "<span class='notice'>You insert the cash into [src].</span>")
 
-			if(istype(I, /obj/item/spacecash/buttcoin))
+			if(istype(I, /obj/item/currency/spacecash/buttcoin))
 				boutput(user, "Your transaction will complete anywhere within 10 to 10e27 minutes from now.")
 			else
 				src.play_money += I.amount
@@ -400,7 +402,7 @@
 					src.icon_state = "slots-off"
 					updateUsrDialog()
 			if(operation == 2) // Eject Card
-				new /obj/item/spacecash(src.loc, src.play_money)
+				new /obj/item/currency/spacecash(src.loc, src.play_money)
 				src.play_money = 0
 				src.working = 0
 				src.icon_state = "slots-off" // just in case, some fucker broke it earlier

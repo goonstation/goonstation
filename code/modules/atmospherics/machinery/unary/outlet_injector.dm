@@ -3,121 +3,115 @@
 	icon_state = "off"
 	layer = PIPE_MACHINE_LAYER
 	plane = PLANE_NOSHADOW_BELOW //They're supposed to be embedded in the floor.
-
 	name = "Air Injector"
 	desc = "Has a valve and pump attached to it"
 
-	var/on = 0
-	var/injecting = 0
-
+	/// Are we doing anything?
+	var/on = FALSE
+	/// Are we injecting air at this current moment?
+	var/injecting = FALSE
+	/// Volume of air to output.
 	var/volume_rate = 50
-//
+
 	var/frequency = 0
 	var/id = null
 
-	level = 1
+	level = UNDERFLOOR
 
-	New()
-		..()
-		MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
+/obj/machinery/atmospherics/unary/outlet_injector/New()
+	..()
+	MAKE_DEFAULT_RADIO_PACKET_COMPONENT(null, frequency)
 
-	update_icon()
-		if(node)
-			if(on)
-				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
-			else
-				icon_state = "[level == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
+/obj/machinery/atmospherics/unary/outlet_injector/update_icon()
+	var/turf/T = get_turf(src)
+	src.hide(T.intact)
+
+/obj/machinery/atmospherics/unary/outlet_injector/process()
+	..()
+	injecting = FALSE
+
+	if(!on)
+		return FALSE
+
+	if(air_contents.temperature > 0)
+		var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+
+		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+
+		loc.assume_air(removed)
+
+		network?.update = TRUE
+
+	return TRUE
+
+/// Injects gas into the environment once.
+/obj/machinery/atmospherics/unary/outlet_injector/proc/inject()
+	if(on || injecting)
+		return FALSE
+
+	injecting = TRUE
+
+	if(air_contents.temperature > 0)
+		var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
+
+		var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
+
+		loc.assume_air(removed)
+
+		network?.update = TRUE
+
+	flick("inject", src)
+
+/obj/machinery/atmospherics/unary/outlet_injector/proc/broadcast_status()
+	var/datum/signal/signal = get_free_signal()
+	signal.transmission_method = TRANSMISSION_RADIO
+	signal.source = src
+
+	signal.data["tag"] = src.id
+	signal.data["device"] = "AO"
+	signal.data["power"] = src.on
+	signal.data["volume_rate"] = src.volume_rate
+
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
+
+	return TRUE
+
+/obj/machinery/atmospherics/unary/outlet_injector/receive_signal(datum/signal/signal)
+	if(signal.data["tag"] && (signal.data["tag"] != id))
+		return FALSE
+
+	switch(signal.data["command"])
+		if("power_on")
+			src.on = TRUE
+
+		if("power_off")
+			src.on = FALSE
+
+		if("power_toggle")
+			src.on = !on
+
+		if("inject")
+			SPAWN(0) src.inject()
+
+		if("set_volume_rate")
+			var/number = text2num_safe(signal.data["parameter"])
+			number = clamp(number, 0, air_contents.volume)
+
+			src.volume_rate = number
+
+	if(signal.data["tag"])
+		SPAWN(0.5 SECONDS) src.broadcast_status()
+	UpdateIcon()
+
+/obj/machinery/atmospherics/unary/outlet_injector/hide(var/intact) //to make the little pipe section invisible, the icon changes.
+	if(node)
+		if(on)
+			icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]on"
 		else
-			icon_state = "exposed"
-			on = 0
+			icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]off"
+	else
+		icon_state = "[intact && issimulatedturf(src.loc) && level == UNDERFLOOR ? "h" : "" ]exposed"
+		on = FALSE
 
-		return
-
-	process()
-		..()
-		injecting = 0
-
-		if(!on)
-			return 0
-
-		if(air_contents.temperature > 0)
-			var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
-			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
-			loc.assume_air(removed)
-
-			if(network)
-				network.update = 1
-
-		return 1
-
-	proc/inject()
-		if(on || injecting)
-			return 0
-
-		injecting = 1
-
-		if(air_contents.temperature > 0)
-			var/transfer_moles = (MIXTURE_PRESSURE(air_contents))*volume_rate/(air_contents.temperature * R_IDEAL_GAS_EQUATION)
-
-			var/datum/gas_mixture/removed = air_contents.remove(transfer_moles)
-
-			loc.assume_air(removed)
-
-			if(network)
-				network.update = 1
-
-		flick("inject", src)
-
-	proc/broadcast_status()
-		var/datum/signal/signal = get_free_signal()
-		signal.transmission_method = 1 //radio signal
-		signal.source = src
-
-		signal.data["tag"] = id
-		signal.data["device"] = "AO"
-		signal.data["power"] = on
-		signal.data["volume_rate"] = volume_rate
-
-		SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, signal)
-
-		return 1
-
-	receive_signal(datum/signal/signal)
-		if(signal.data["tag"] && (signal.data["tag"] != id))
-			return 0
-
-		switch(signal.data["command"])
-			if("power_on")
-				on = 1
-
-			if("power_off")
-				on = 0
-
-			if("power_toggle")
-				on = !on
-
-			if("inject")
-				SPAWN(0) inject()
-
-			if("set_volume_rate")
-				var/number = text2num_safe(signal.data["parameter"])
-				number = clamp(number, 0, air_contents.volume)
-
-				volume_rate = number
-
-		if(signal.data["tag"])
-			SPAWN(0.5 SECONDS) broadcast_status()
-		UpdateIcon()
-
-	hide(var/i) //to make the little pipe section invisible, the icon changes.
-		if(node)
-			if(on)
-				icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]on"
-			else
-				icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]off"
-		else
-			icon_state = "[i == 1 && istype(loc, /turf/simulated) ? "h" : "" ]exposed"
-			on = 0
-		return
+/obj/machinery/atmospherics/unary/outlet_injector/overfloor
+	level = OVERFLOOR

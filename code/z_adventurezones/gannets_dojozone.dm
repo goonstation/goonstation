@@ -139,7 +139,7 @@ Contents:
 //	slot_belt = /obj/item/swords_sheaths/katana
 	slot_jump = list(/obj/item/clothing/under/gimmick/hakama/random)
 	slot_head = list(/obj/item/clothing/head/bandana/random_color)
-	slot_foot = list(/obj/item/clothing/shoes/sandal/wizard)
+	slot_foot = list(/obj/item/clothing/shoes/sandal/magic/wizard)
 	slot_rhan = null
 	slot_lhan = list(/obj/item/dojohammer)
 	slot_belt = list(/obj/item/swords_sheaths/katana/reverse)
@@ -344,18 +344,13 @@ Contents:
 	icon = 'icons/obj/large/160x128.dmi'
 	icon_state = "arch"
 
-/obj/sakura_tree
+/obj/tree/sakura_tree
 	name = "cherry tree"
 	desc = "A pretty japanese cherry tree. You don't find a lot of these away from earth."
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "sakuratree"
-	anchored = 1
-	layer = EFFECTS_LAYER_UNDER_3
-	pixel_x = -20
-	density = 1
-	opacity = 0
 
-/obj/sakura_tree/tree_2
+/obj/tree/sakura_tree/tree_2
 	icon_state = "sakuratree2"
 
 /*
@@ -371,14 +366,14 @@ Contents:
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_1"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/fakeobjects/kanji_2
 	plane = PLANE_FLOOR
 	name = "symbol"
 	icon = 'icons/effects/96x96.dmi'
 	icon_state = "kanji_2"
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/fakeobjects/dojohouse
 	icon = 'icons/effects/224x160.dmi'
@@ -393,7 +388,7 @@ Contents:
 /obj/decal/fakeobjects/birdhouse // i literally cannot find the correct name for this.
 	name = "small shrine"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = OBJ_LAYER
 	icon = 'icons/obj/dojo.dmi'
@@ -416,7 +411,7 @@ Contents:
 /obj/decal/fakeobjects/plantpot
 	name = "plant pot"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = EFFECTS_LAYER_UNDER_3
 	icon = 'icons/obj/dojo.dmi'
@@ -426,7 +421,7 @@ Contents:
 	name = "toro"
 	desc = "A stone lamp. It doesn't appear to be lit."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	opacity = 0
 	layer = 5
 	icon = 'icons/obj/large/32x64.dmi'
@@ -448,7 +443,7 @@ Contents:
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "furnace"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	var/obj/effects/tatara/effect
 
 	var/temperature = T0C + 870
@@ -483,7 +478,7 @@ Contents:
 			if(istype(O,/obj/item/rods))
 				var/obj/item/rods/R = O
 				if(prob(1*mult))
-					if((R.material?.material_flags & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
+					if((R.material?.getMaterialFlags() & MATERIAL_METAL) && R.material.getProperty("density") >= 3 && R.material.getProperty("hard") >= 2)
 						if (R.amount > 1)
 							R.change_stack_amount(-1)
 						else
@@ -499,15 +494,32 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "anvil"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	parts_type = null
 	hulk_immune = TRUE
+	HELP_MESSAGE_OVERRIDE("") // No, you can't wrench it
 
 	attackby(obj/item/W, mob/user, params)
-		if (istype(W) && src.place_on(W, user, params))
+		if (istype(W))
+			src.place_on(W, user, params)
+
+/obj/table/anvil/gimmick
+	anchored = UNANCHORED
+	HELP_MESSAGE_OVERRIDE({"You can use a <b>welding tool</b> on <span class='harm'>harm</span> intent to slice it into sheets."})
+	attackby(obj/item/W, mob/user, params)
+		if (isweldingtool(W) && user.a_intent == "harm")
+			SETUP_GENERIC_ACTIONBAR(user, src, 10 SECONDS, PROC_REF(deconstruct), null, W.icon, W.icon_state, "[user] finishes slicing \the [src] into sheets.",
+			INTERRUPT_ACT | INTERRUPT_ACTION | INTERRUPT_MOVE | INTERRUPT_ATTACKED | INTERRUPT_STUNNED)
 			return
-		else
-			return ..()
+		..()
+
+	deconstruct()
+		var/obj/item/sheet/sheet_stack = new /obj/item/sheet(src.loc)
+		sheet_stack.amount = 10
+		if (src.material)
+			sheet_stack.setMaterial(src.material)
+		sheet_stack.update_appearance()
+		qdel(src)
 
 /obj/dojo_bellows
 	name = "bellows"
@@ -515,7 +527,7 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "bellows"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 	attack_hand(mob/user)
 		. = ..()
@@ -533,7 +545,7 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "sword_wall_rack"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 
 /obj/decal/fakeobjects/rake
 	name = "zen garden rake"
@@ -547,7 +559,7 @@ Contents:
 	icon = 'icons/obj/dojo.dmi'
 	icon_state = "sealed_door"
 	density = 1
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	opacity = 1
 
 /obj/decal/fakeobjects/katana_fake
@@ -562,7 +574,7 @@ Contents:
 	name = "paper lantern"
 	desc = "A brightly lit paper lantern."
 	density = 0
-	anchored = 2
+	anchored = ANCHORED_ALWAYS
 	opacity = 0
 
 	var/datum/light/point/light
@@ -692,7 +704,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/sengoku)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto/sengoku)
 /turf/unsimulated/wall/auto/sengoku
-	icon = 'icons/turf/walls_sengoku.dmi'
+	icon = 'icons/turf/walls/sengoku.dmi'
 
 
 TYPEINFO(/turf/unsimulated/wall/auto/paper)
@@ -700,17 +712,17 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/paper)
 	. = ..()
 	connects_to = typecacheof(/turf/unsimulated/wall/auto/paper)
 /turf/unsimulated/wall/auto/paper
-	icon = 'icons/turf/walls_paper.dmi'
+	icon = 'icons/turf/walls/paper.dmi'
 
 
 /turf/unsimulated/wall/sengoku_tall
-	icon = 'icons/turf/walls_sengoku.dmi'
+	icon = 'icons/turf/walls/sengoku.dmi'
 	icon_state= "tall"
 	opacity = 0
 
 /turf/simulated/wall/false_wall/sengoku
 	desc = "There seems to be markings on one of the edges, huh."
-	icon = 'icons/turf/walls_paper.dmi'
+	icon = 'icons/turf/walls/paper.dmi'
 	icon_state = "2"
 	can_be_auto = 0
 

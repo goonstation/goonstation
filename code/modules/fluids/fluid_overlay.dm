@@ -32,7 +32,7 @@
 
 		var/image/submerged_image = image(I)
 		submerged_image.layer = src.layer + 1
-		submerged_image.appearance_flags = RESET_COLOR
+		submerged_image.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		submerged_image.icon = I
 		submerged_image.blend_mode = BLEND_MULTIPLY
 		submerged_images += submerged_image
@@ -58,7 +58,7 @@
 		var/image/submerged_image = image(I)
 		ma = new(submerged_image)
 		ma.layer = src.layer + 0.1
-		ma.appearance_flags = RESET_COLOR
+		ma.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		ma.icon = I
 		ma.blend_mode = BLEND_MULTIPLY
 		submerged_image.appearance = ma
@@ -106,7 +106,7 @@
 		var/image/submerged_image = image(I)
 		ma = new(submerged_image)
 		ma.layer = src.layer + 1
-		ma.appearance_flags = RESET_COLOR
+		ma.appearance_flags = RESET_COLOR | PIXEL_SCALE
 		ma.icon = I
 		ma.blend_mode = BLEND_MULTIPLY
 		submerged_image.appearance = ma

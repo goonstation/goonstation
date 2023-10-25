@@ -125,7 +125,7 @@ change the direction of created objects.<br>
 						marker.pixel_y = -16
 						marker.plane = PLANE_OVERLAY_EFFECTS
 						marker.layer = NOLIGHT_EFFECTS_LAYER_BASE
-						marker.appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM
+						marker.appearance_flags = RESET_ALPHA | RESET_COLOR | NO_CLIENT_COLOR | KEEP_APART | RESET_TRANSFORM | PIXEL_SCALE
 						marker.alpha = 100
 						usr.client.images += marker
 						SPAWN(0)
@@ -174,7 +174,7 @@ change the direction of created objects.<br>
 						new objpath(T)
 						var/obj/itemspecialeffect/poof/P = new /obj/itemspecialeffect/poof
 						P.setup(T)
-						playsound(T, 'sound/effects/poff.ogg', 50, 1, pitch = 1)
+						playsound(T, 'sound/effects/poff.ogg', 50, TRUE, pitch = 1)
 					else if(ispath(objpath, /turf))
 						T.ReplaceWith(objpath, keep_old_material=0, handle_air=0, force=1)
 					else
@@ -198,3 +198,7 @@ change the direction of created objects.<br>
 		else
 			if(isobj(object))
 				qdel(object)
+#ifdef QUICK_MOB_DELETION
+			if (ismob(object))
+				qdel(object)
+#endif

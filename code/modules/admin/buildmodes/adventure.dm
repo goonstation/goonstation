@@ -72,7 +72,7 @@ Click on the secondary adventure button to begin your adventure journey!<br>
 /atom/movable/screen/buildmode/buildadventure
 	name = "Click to set adventure settings"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	layer = HUD_LAYER + 1
 	plane = PLANE_HUD
 	dir = NORTH

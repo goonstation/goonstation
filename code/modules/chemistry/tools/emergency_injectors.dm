@@ -19,22 +19,26 @@
 	var/label = "orange" // colors available as of the moment: orange, red, blue, green, yellow, purple, black, white, big red
 	hide_attack = ATTACK_PARTIALLY_HIDDEN
 
+	New()
+		..()
+		src.item_state = "emerg_inj-[src.label]"
+		src.fluid_image = image(src.icon, "emerg_inj-fluid")
+		src.fluid_image.color = src.reagents.get_average_color().to_rgba()
+		src.vis_contents += src.fluid_image
+		src.UpdateIcon()
+
 	on_reagent_change()
 		..()
 		src.UpdateIcon()
 
 	update_icon()
-		src.underlays = null
-		if (reagents.total_volume)
-			icon_state = "emerg_inj-[label]"
-			var/datum/color/average = reagents.get_average_color()
-			if (!src.fluid_image)
-				src.fluid_image = image(src.icon, "emerg_inj-fluid", -1)
-			src.fluid_image.color = average.to_rgba()
-			src.underlays += src.fluid_image
+		if (src.reagents.total_volume)
+			src.icon_state = "emerg_inj-[src.label]"
 		else
-			icon_state = "emerg_inj-[label]0"
-		item_state = "emerg_inj-[label]"
+			src.icon_state = "emerg_inj-[src.label]0"
+			src.fluid_image = image(src.fluid_image, "emerg_inj-fluid-flick")
+			flick("emerg_inj-[src.label]-flick", src)
+		UpdateOverlays(src.fluid_image, "fluid")
 
 	attack(mob/M, mob/user)
 		if (iscarbon(M) || ismobcritter(M))
@@ -48,9 +52,10 @@
 				src.reagents.trans_to(M, amount_per_transfer_from_this)
 				user.visible_message("<span class='alert'>[user] injects [M == user ? himself_or_herself(user) : M] with [src]!</span>",\
 				"<span class='alert'>You inject [M == user ? "yourself" : M] with [src]!</span>")
-				playsound(M, 'sound/items/hypo.ogg', 40, 0)
+				playsound(M, 'sound/items/hypo.ogg', 40, FALSE)
 				if(!src.reagents.total_volume)
 					src.empty = 1
+					src.name += " (expended)"
 				return
 		else
 			boutput(user, "<span class='alert'>You can only use [src] on people!</span>")
@@ -68,9 +73,10 @@
 				src.reagents.trans_to(user, amount_per_transfer_from_this)
 				user.visible_message("<span class='alert'>[user] injects [himself_or_herself(user)] with [src]!</span>",\
 				"<span class='alert'>You inject yourself with [src]!</span>")
-				playsound(user, 'sound/items/hypo.ogg', 40, 0)
+				playsound(user, 'sound/items/hypo.ogg', 40, FALSE)
 				if(!src.reagents.total_volume)
 					src.empty = 1
+					src.name += " (expended)"
 				return
 		else
 			return
@@ -142,7 +148,7 @@
 	name = "emergency auto-injector (diphenhydramine)"
 	initial_reagents = "antihistamine"
 	label = "blue"
-	desc = "An auto-injector containing dyphenhidramine, useful for reducing the severity of allergic reactions."
+	desc = "An auto-injector containing diphenhydramine, useful for reducing the severity of allergic reactions."
 
 /obj/item/reagent_containers/emergency_injector/salbutamol
 	name = "emergency auto-injector (salbutamol)"
@@ -214,7 +220,7 @@
 	label = "black"
 	desc = "An auto-injector containing uhh, well, y'see... Hmm. You're unsure on this one."
 	New()
-		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green_mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
+		src.initial_reagents = pick("methamphetamine", "formaldehyde", "lipolicide", "pancuronium", "sulfonal", "morphine", "toxin", "bee", "LSD", "lsd_bee", "space_drugs", "THC", "mucus", "green mucus", "crank", "bathsalts", "krokodil", "catdrugs", "jenkem", "psilocybin", "omnizine")
 		..()
 
 
@@ -299,14 +305,16 @@
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/lifesupport
 	name = "lifesupport combi-injector"
-	desc = "A combination medical injector containing salbutamol and mannitol- useful in near-death situations.."
+	desc = "A combination medical injector containing salbutamol and mannitol- useful in near-death situations."
 	initial_reagents = list("salbutamol" = 25, "mannitol" = 25)
 	label = "blue"
 
 /obj/item/reagent_containers/emergency_injector/high_capacity/juggernaut
 	name = "Juggernaut injector"
 	desc = "A large syringe-like thing that automatically injects its contents into someone. This one contains juggernaut, a potent pain-killing chemical."
+	#ifdef SECRETS_ENABLED
 	initial_reagents = "juggernaut"
+	#endif
 	label = "bigred"
 	initial_volume = 60
 	amount_per_transfer_from_this = 20

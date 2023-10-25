@@ -1,0 +1,134 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+"d" = (
+/obj/indestructible/shuttle_corner{
+	dir = 4;
+	icon_state = "wall3_trans"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"f" = (
+/obj/decal/cleanable/dirt,
+/obj/computerframe,
+/obj/item/storage/secure/ssafe/pilot_cargo3{
+	pixel_y = 32
+	},
+/obj/random_item_spawner/circuitboards/one,
+/turf/unsimulated/floor/plating,
+/area/noGenerate)
+"g" = (
+/obj/decal/fakeobjects/shuttlethruster,
+/turf/variableTurf/clear,
+/area/noGenerate)
+"i" = (
+/obj/indestructible/shuttle_corner{
+	dir = 10;
+	icon_state = "wall3_trans"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"o" = (
+/obj/indestructible/shuttle_corner{
+	dir = 9;
+	icon_state = "wall3_trans"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"H" = (
+/obj/decal/cleanable/dirt,
+/turf/unsimulated/floor/plating,
+/area/noGenerate)
+"I" = (
+/obj/indestructible/shuttle_corner{
+	dir = 2;
+	icon_state = "wall3_trans"
+	},
+/turf/variableTurf/clear,
+/area/noGenerate)
+"J" = (
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/noGenerate)
+"L" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-R"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/noGenerate)
+"Q" = (
+/obj/decal/floatingtiles{
+	icon_state = "floattiles2"
+	},
+/obj/decal/fakeobjects/firelock_broken{
+	desc = "Rust has rendered this airlock useless.";
+	icon = 'icons/misc/hstation.dmi';
+	icon_state = "bloodydoor";
+	name = "broken airlock"
+	},
+/turf/unsimulated/floor/plating,
+/area/noGenerate)
+"S" = (
+/obj/item/seed/alien,
+/turf/unsimulated/floor/plating,
+/area/noGenerate)
+"V" = (
+/obj/decal/fakeobjects/shuttleengine{
+	icon_state = "alt_heater-L"
+	},
+/turf/unsimulated/wall/auto/adventure/shuttle/dark,
+/area/noGenerate)
+"Z" = (
+/obj/item/storage/belt/utility,
+/obj/item/clothing/under/misc/tourist,
+/turf/unsimulated/floor/plating,
+/area/noGenerate)
+
+(1,1,1) = {"
+a
+a
+a
+o
+a
+a
+"}
+(2,1,1) = {"
+a
+o
+J
+J
+I
+a
+"}
+(3,1,1) = {"
+a
+Q
+S
+H
+V
+g
+"}
+(4,1,1) = {"
+a
+J
+f
+Z
+L
+g
+"}
+(5,1,1) = {"
+a
+i
+J
+J
+d
+a
+"}
+(6,1,1) = {"
+a
+a
+a
+i
+a
+a
+"}

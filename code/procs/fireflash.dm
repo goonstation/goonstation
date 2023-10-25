@@ -13,15 +13,10 @@
 		for(var/obj/kudzu_marker/M in T) qdel(M)
 //		for(var/obj/alien/weeds/V in T) qdel(V)
 
-		var/obj/hotspot/h = new /obj/hotspot
-		h.temperature = temp
-		h.volume = 400
-		h.set_real_color()
-		h.set_loc(T)
-		T.active_hotspot = h
-		hotspots += h
+		T.add_hotspot(temp, 400)
+		hotspots += T.active_hotspot
 
-		T.hotspot_expose(h.temperature, h.volume)
+		T.hotspot_expose(T.active_hotspot.temperature, T.active_hotspot.volume)
 /*// experimental thing to let temporary hotspots affect atmos
 		h.perform_exposure()
 */
@@ -34,7 +29,6 @@
 				L.bodytemperature = max(temp/3, L.bodytemperature)
 				LAGCHECK(LAG_REALTIME)
 			for(var/obj/critter/C in T)
-				if(istype(C, /obj/critter/zombie)) C.health -= 15
 				C.health -= (30 * C.firevuln)
 				C.check_health()
 				SPAWN(0.5 SECONDS)
@@ -102,15 +96,11 @@
 		var/need_expose = 0
 		var/expose_temp = 0
 		if (!existing_hotspot)
-			var/obj/hotspot/h = new /obj/hotspot
+			T.add_hotspot((temp - dist * falloff), 400)
 			need_expose = 1
-			h.temperature = temp - dist * falloff
-			expose_temp = h.temperature
-			h.volume = 400
-			h.set_loc(T)
-			T.active_hotspot = h
-			hotspots += h
-			existing_hotspot = h
+			expose_temp = T.active_hotspot.temperature
+			hotspots += T.active_hotspot
+			existing_hotspot = T.active_hotspot
 		else if (existing_hotspot.temperature < temp - dist * falloff)
 			expose_temp = (temp - dist * falloff) - existing_hotspot.temperature
 			prev_temp = existing_hotspot.temperature
@@ -180,7 +170,7 @@
 		if (istype(T, /turf/simulated) && !T.loc:sanctuary)
 			var/mytemp = affected[T]
 			var/melt = 1643.15 // default steel melting point
-			if (T.material && T.material.getProperty("flammable") > 3) //wood walls?
+			if (T.material && T.material.getProperty("flammable") > 4) //wood walls?
 				melt = 505.93 / 2 //451F (divided by 2 b/c it's multiplied by 2 below)
 				bypass_RNG = 1
 			var/divisor = melt

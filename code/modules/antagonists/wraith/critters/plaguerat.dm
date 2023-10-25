@@ -3,7 +3,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 /mob/living/critter/wraith/plaguerat
 	name = "plague rat"
 	real_name = "plague rat"
-	desc = "Shouldnt be seeing this."
+	desc = "Shouldn't be seeing this."
 	icon = 'icons/mob/wraith_critters.dmi'
 	icon_state = "smallRat"
 	density = 1
@@ -18,7 +18,8 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	death_text = "%src% falls on its back!"
 	pet_text = list("pets","hugs","snuggles","cuddles")
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
-						/datum/targetable/critter/plague_rat/rat_bite)
+						/datum/targetable/critter/plague_rat/rat_bite,
+						/datum/targetable/vent_move/plaguerat)
 
 	health_brute = 50
 	health_brute_vuln = 0.45
@@ -26,21 +27,23 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	health_burn_vuln = 0.65
 	var/obj/machinery/wraith/rat_den/linked_den = null
 	reagent_capacity = 100
-	var/master = null
+	var/mob/living/intangible/wraith/master = null
 
 	can_help = 1
 	can_throw = 1
 	can_grab = 0
 	can_disarm = 1
 
-	butcherable = 1
+	butcherable = BUTCHER_ALLOWED
 	max_skins = 1
+
+	faction = FACTION_WRAITH
 
 	blood_id = "miasma"
 	/// venom injected per bite
 	var/bite_transfer_amt = 3
 
-	New(var/turf/T, var/mob/wraith/M = null)
+	New(var/turf/T, var/mob/living/intangible/wraith/M = null)
 		..(T)
 		START_TRACKING
 		SPAWN(0)
@@ -84,24 +87,24 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 			boutput(user, "As you approach to pet [src], it snaps at you and bites your hand.")
 			random_brute_damage(user, 5)
 			user.emote("scream")
-			playsound(src.loc, "sound/impact_sounds/Flesh_Tear_2.ogg", 70, 1)
+			playsound(src.loc, 'sound/impact_sounds/Flesh_Tear_2.ogg', 70, 1)
 			if(ishuman(user))
 				var/mob/living/carbon/human/H = user
 				if(H.clothing_protects_from_chems())
 					boutput(H, "The bite is painful, but at least your biosuit protected you from the rat's diseases.")
 				else
-					boutput(H, "Your hand immediatly starts to painfully puff up, that can't be good.")
+					boutput(H, "Your hand immediately starts to painfully puff up, that can't be good.")
 					H.contract_disease(/datum/ailment/disease/space_plague, null, null, 1)
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
 		switch (act)
 			if ("scream")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, "sound/voice/animal/mouse_squeak.ogg", 80, 1, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/animal/mouse_squeak.ogg', 80, TRUE, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> squeaks!</span>"
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/farts/poo2.ogg', 40, 1, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2.ogg', 40, TRUE, 0.1, 3, channel=VOLUME_CHANNEL_EMOTE)
 					return "<span class='emote'><b>[src]</b> toots disgustingly!</span>"
 
 	specific_emote_type(var/act)
@@ -111,6 +114,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 		return ..()
 
 	death(var/gibbed)
+		if (src.master && istype(src.master, /mob/living/intangible/wraith))
+			src.master.summons -= src
+			src.master = null
 		if (!gibbed)
 			src.unequip_all()
 			playsound(src, src.deathsound, 50, 0)
@@ -129,11 +135,11 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 				var/mob/living/carbon/human/H = M
 
 				if(H.clothing_protects_from_chems())
-					boutput(H, "The bite hurts alot, but it didn't manage to pierce your protective suit.")
+					boutput(H, "The bite hurts a lot, but it didn't manage to pierce your protective suit.")
 					return 1
 			M.reagents.add_reagent(src.venom, src.bite_transfer_amt)
 
-	proc/grow_up(var/mob/wraith/M = null)
+	proc/grow_up(var/mob/living/intangible/wraith/M = null)
 		if (!ispath(src.adultpath))
 			return 0
 		src.unequip_all()
@@ -155,9 +161,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	bite_transfer_amt = 1
 	flags = TABLEPASS | DOORPASS
 	adultpath = /mob/living/critter/wraith/plaguerat/medium
-	health_brute = 15
+	health_brute = 25
 	health_brute_vuln = 1
-	health_burn = 15
+	health_burn = 25
 	health_burn_vuln = 1.2
 
 	can_help = 1
@@ -191,9 +197,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	flags = TABLEPASS
 	bite_transfer_amt = 2.5
 	adultpath = /mob/living/critter/wraith/plaguerat/adult
-	health_brute = 25
+	health_brute = 40
 	health_brute_vuln = 0.9
-	health_burn = 25
+	health_burn = 40
 	health_burn_vuln = 1.2
 	can_help = 1
 	can_throw = 0
@@ -201,6 +207,7 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	can_disarm = 1
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite,
+						/datum/targetable/vent_move/plaguerat,
 						/datum/targetable/critter/plague_rat/spawn_rat_den)
 
 	setup_hands()
@@ -226,9 +233,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	desc = "A horrible mass of puss and warts, that once used to look like a rat."
 	icon_state = "giantRat"
 	bite_transfer_amt = 4
-	health_brute = 40
+	health_brute = 50
 	health_brute_vuln = 0.8
-	health_burn = 40
+	health_burn = 50
 	health_burn_vuln = 1.3
 	can_help = 1
 	can_throw = 1
@@ -236,9 +243,9 @@ ABSTRACT_TYPE(/mob/living/critter/wraith/plaguerat)
 	can_disarm = 1
 	add_abilities = list(/datum/targetable/critter/plague_rat/eat_filth,
 						/datum/targetable/critter/plague_rat/rat_bite,
+						/datum/targetable/vent_move/plaguerat,
 						/datum/targetable/critter/plague_rat/spawn_rat_den,
-						/datum/targetable/critter/slam/rat,
-						/datum/targetable/wraithAbility/make_plague_rat)
+						/datum/targetable/critter/slam/rat)
 
 	setup_hands()
 		..()

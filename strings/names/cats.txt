@@ -21,4 +21,4 @@ names@=
 	Purrito@,Trista@,Impawster@,cat_names.txt@,🐈@,🐱@,Le Chat@,C@
 	Lil Bub@,Félicette@,Tuxedo Stan@,Paddles@,Catmando@,Hamish McHamish@,Puffins@,Hank the Cat
 	Smudge@,The Unsinkable Sam@,Tama@,Fred the Undercover Kitty@,Blackie the Talking Cat
-	Cheeto@,Snow@,The Giant Cat That Makes All Of The Rules
+	Cheeto@,Snow@,The Giant Cat That Makes All Of The Rules@,Beefaroni

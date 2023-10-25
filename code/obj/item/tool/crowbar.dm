@@ -7,7 +7,8 @@
 	icon_state = "crowbar"
 	item_state = "crowbar"
 
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	tool_flags = TOOL_PRYING
 	health = 5
 	w_class = W_CLASS_SMALL
@@ -50,3 +51,34 @@
 /obj/item/crowbar/yellow
 	desc = "A tool used as a lever to pry objects. This one's a nice lemon color."
 	icon_state = "crowbar-yellow"
+
+/obj/item/crowbar/blue
+	desc = "A tool used as a lever to pry objects. The handle is painted an appropriate light blue."
+	icon_state = "crowbar-blue"
+
+/obj/item/crowbar/grey
+	desc = "A tool used as a lever to pry objects. Now in grey!"
+	icon_state = "crowbar-grey"
+
+/obj/item/crowbar/orange
+	desc = "A tool used as a lever to pry objects. This one's got a hue somewhere between yellow and red."
+	icon_state = "crowbar-orange"
+
+/obj/item/crowbar/green
+	desc = "A tool used as a lever to pry objects, with added green."
+	icon_state = "crowbar-green"
+
+/obj/item/crowbar/glowbar
+	desc = "That doesn't look safe to handle, at all. The name 'KANG' is etched into the metal."
+	name = "glowbar"
+	icon_state = "crowbar-green"
+	rarity = 7
+	quality = 100
+
+	New()
+		..()
+		AddComponent(/datum/component/radioactive, 25, FALSE, TRUE, 1)
+		AddComponent(/datum/component/loctargeting/simple_light, 255, 50, 135, 135)
+		src.setProperty("searing", 7)
+		src.setProperty("unstable", 7)
+		setItemSpecial(/datum/item_special/suck)

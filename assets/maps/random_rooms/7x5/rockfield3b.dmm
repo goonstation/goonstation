@@ -1,0 +1,70 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"a" = (
+/turf/unsimulated/wall/trench,
+/area/space)
+"l" = (
+/turf/space/fluid/acid,
+/area/space)
+"X" = (
+/obj/storage/crate/trench_loot,
+/obj/item/device/gps,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/obj/item/reagent_containers/food/snacks/plant/corn,
+/turf/space/fluid/acid/clear,
+/area/space)
+"Y" = (
+/turf/unsimulated/wall/trench/side,
+/area/space)
+
+(1,1,1) = {"
+l
+l
+l
+a
+Y
+"}
+(2,1,1) = {"
+a
+Y
+l
+l
+l
+"}
+(3,1,1) = {"
+a
+a
+Y
+l
+l
+"}
+(4,1,1) = {"
+a
+Y
+l
+l
+l
+"}
+(5,1,1) = {"
+l
+l
+l
+a
+Y
+"}
+(6,1,1) = {"
+l
+a
+a
+a
+Y
+"}
+(7,1,1) = {"
+a
+a
+a
+Y
+X
+"}

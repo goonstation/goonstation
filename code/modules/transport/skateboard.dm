@@ -33,7 +33,7 @@
 /obj/decal/skateboardpopup
 	name = ""
 	desc = ""
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	layer = MOB_LAYER + 2
 	icon = 'icons/effects/96x32.dmi'
@@ -67,7 +67,7 @@
 	icon_state = "skateboard0"
 	layer = MOB_LAYER + 1
 	soundproofing = 0
-	throw_dropped_items_overboard = 1
+	can_eject_items = TRUE
 	var/sickness = 0
 	var/speed_delay = 5
 	var/datum/action/bar/skateboard/runningAction = null
@@ -164,7 +164,7 @@
 
 	last_bumped_atom = AM
 	bumped_queue.Add(AM)
-	if(bumped_queue.len >= 9)
+	if(length(bumped_queue) >= 9)
 		bumped_queue.Cut(1,2)
 
 	if(isturf(AM) || istype(AM, /obj/window) || istype(AM, /obj/grille))
@@ -221,7 +221,7 @@
 	in_bump = 0
 	return
 
-/obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount)
+/obj/vehicle/skateboard/eject_rider(var/crashed, var/selfdismount, ejectall=TRUE)
 	if (!src.rider)
 		return
 

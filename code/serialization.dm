@@ -18,7 +18,7 @@
 	var/icon/icon
 	var/icon_state
 
-/proc/icon_deserializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/defaultIcon, var/defaultState)
+/proc/icon_deserializer(var/savefile/F, var/path, var/datum/sandbox/sandbox, var/defaultIcon, var/defaultState, var/grab_file_reference_from_rsc_cache = 0)
 	var/iname
 	var/datum/iconDeserializerData/IDS = new()
 	IDS.icon = defaultIcon
@@ -43,7 +43,10 @@
 			else if (IDS.icon)
 				F["[path].icon_state"] >> IDS.icon_state
 	else
-		IDS.icon = icon(file(iname))
+		if (grab_file_reference_from_rsc_cache)
+			IDS.icon = fcopy_rsc(iname)
+		else
+			IDS.icon = icon(file(iname))
 		F["[path].icon_state"] >> IDS.icon_state
 	return IDS
 

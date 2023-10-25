@@ -1,6 +1,7 @@
 /datum/custom_soup
 	var/name
 	var/bites_left = 3
+	var/uneaten_bites_left = 3
 	var/heal_amt = 0
 	var/desc = null
 	var/initial_volume = 60
@@ -23,6 +24,7 @@
 		if(!S || !istype(S))
 			qdel(src)
 			return
+
 		if (bowl)
 			src.icon = bowl.icon
 			src.icon_state = bowl.icon_state
@@ -32,13 +34,14 @@
 		src.fluid_image = bowl?.fluid_image || image("icon" = 'icons/obj/kitchen.dmi', "icon_state" = "bowl_fluid")
 		src.name = S.name
 		src.bites_left = S.bites_left
+		src.uneaten_bites_left = S.uneaten_bites_left
 		if(S.desc)
 			src.desc = S.desc
 		src.heal_amt = S.heal_amt
 		src.initial_volume = S.initial_volume
 		src.initial_reagents = S.initial_reagents
 
-		if(S.food_effects.len <= 4)
+		if(length(S.food_effects) <= 4)
 			src.food_effects = S.food_effects
 		else
 			var/list/temp = S.food_effects
@@ -46,8 +49,6 @@
 				var/effect = pick(temp)
 				src.food_effects += effect
 				temp -= effect
-
-
 
 		..()
 
@@ -58,14 +59,16 @@
 		else
 			src.UpdateOverlays(null, "fluid")
 
+TYPEINFO(/obj/stove)
+	mats = 18
+
 /obj/stove
 	name = "stove"
 	desc = "A perfectly ordinary kitchen stove; not that you'll be doing anything ordinary with it.<br>It seems this model doesn't have a built in igniter, so you'll have to light it manually."
 	icon = 'icons/obj/soup_pot.dmi'
 	icon_state = "stove0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
-	mats = 18
 	deconstruct_flags = DECON_WRENCH | DECON_CROWBAR | DECON_WELDER
 	var/obj/item/soup_pot/pot
 	var/on = 0
@@ -224,6 +227,7 @@
 						S.initial_reagents[id] = I.reagents.reagent_list[id].volume/pot.total_wclass
 
 		S.bites_left = max(1,round(S.bites_left))
+		S.uneaten_bites_left = S.bites_left
 
 		if(biggester)
 			if(biggest)

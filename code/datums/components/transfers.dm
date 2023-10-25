@@ -8,12 +8,13 @@
 	var/atom/output_target
 
 /datum/component/transfer_output/Initialize()
+	. = ..()
 	if (!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 
 /datum/component/transfer_output/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP, .proc/handle_drop)
-	RegisterSignal(parent, COMSIG_TRANSFER_OUTGOING, .proc/handle_outgoing)
+	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP, PROC_REF(handle_drop))
+	RegisterSignal(parent, COMSIG_TRANSFER_OUTGOING, PROC_REF(handle_outgoing))
 
 /datum/component/transfer_output/proc/handle_outgoing(comsig_target, obj/item/outgoing)
 	if(!output_target)
@@ -68,6 +69,7 @@
 #define DEFAULT_TRANSFER_FILTER list(/obj/item/)
 
 /datum/component/transfer_input/Initialize(list/filter=null, transfer_proc=null, filter_proc=null, filter_link_proc=null)
+	. = ..()
 	if(!isatom(parent))
 		return COMPONENT_INCOMPATIBLE
 	src.filter = filter || DEFAULT_TRANSFER_FILTER
@@ -78,9 +80,9 @@
 #undef DEFAULT_TRANSFER_FILTER
 
 /datum/component/transfer_input/RegisterWithParent()
-	RegisterSignal(parent, COMSIG_TRANSFER_INCOMING, .proc/handle_incoming)
-	RegisterSignal(parent, COMSIG_TRANSFER_CAN_LINK, .proc/handle_incoming_link)
-	RegisterSignal(parent, COMSIG_ATTACKBY, .proc/handle_attackby)
+	RegisterSignal(parent, COMSIG_TRANSFER_INCOMING, PROC_REF(handle_incoming))
+	RegisterSignal(parent, COMSIG_TRANSFER_CAN_LINK, PROC_REF(handle_incoming_link))
+	RegisterSignal(parent, COMSIG_ATTACKBY, PROC_REF(handle_attackby))
 
 /datum/component/transfer_input/proc/handle_incoming_link(comsig_target, obj/other)
 	return !filter_link_proc || call(parent, filter_link_proc)(other)
@@ -127,7 +129,7 @@
 		if (M.holding)
 			incoming = M.holding
 
-	if (istype(incoming, /obj/item/storage) || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop))
+	if (incoming.storage || istype(incoming, /obj/item/satchel) || istype(incoming, /obj/item/ore_scoop))
 		var/action
 		if(is_permitted(incoming))
 			if(length(incoming.contents))
@@ -145,17 +147,20 @@
 			return
 
 		if (action == CONTAINER_CHOICE_DUMP)
-			if (!length(incoming.contents)) // We check here too in case it changed between asking and them responding
+			if (!length(incoming.contents)) // in case it changed between asking and them responding
 				boutput(attacker, "<span class='alert'>There is nothing in [incoming]!</span>")
 				return
 			if (istype(incoming, /obj/item/ore_scoop))
 				var/obj/item/ore_scoop/scoop = incoming
 				incoming = scoop.satchel
 			var/transfers = 0
-			for(var/obj/item/I in incoming)
+			for(var/obj/item/I in (incoming.storage?.get_contents() || incoming))
 				SEND_SIGNAL(parent, COMSIG_TRANSFER_INCOMING, I)
 				transfers++
 			incoming.UpdateIcon()
+			if (istype(incoming, /obj/item/satchel))
+				var/obj/item/satchel/changed_satchel = incoming
+				changed_satchel.tooltip_rebuild = 1
 			if (transfers)
 				attacker.visible_message("<span class='notice'>[attacker] dumps [transfers] items out of [incoming] into [parent].</span>")
 			else
@@ -178,7 +183,7 @@
 
 /datum/component/transfer_input/quickloading/RegisterWithParent()
 	..()
-	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP_T, .proc/handle_drop_t)
+	RegisterSignal(parent, COMSIG_ATOM_MOUSEDROP_T, PROC_REF(handle_drop_t))
 
 /datum/component/transfer_input/quickloading/proc/handle_drop_t(comsig_target, atom/dropped, mob/user)
 	if(cant_do_shit(user))
@@ -247,7 +252,7 @@
 			if (M.type != load_type)
 				continue
 			if(SEND_SIGNAL(target, COMSIG_TRANSFER_INCOMING, M))
-				playsound(target, 'sound/items/Deconstruct.ogg', 40, 1)
+				playsound(target, 'sound/items/Deconstruct.ogg', 40, TRUE)
 				onRestart()
 				return
 

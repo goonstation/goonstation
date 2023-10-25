@@ -49,6 +49,7 @@
 	stamina_crit_chance = 0
 
 	pixel_point = TRUE
+	var/instructions = ""
 
 	New()
 		..()
@@ -91,7 +92,7 @@
 			// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 			artists[ckey(user.ckey)]++
 
-			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Slimy_Splat_1.ogg', 40, TRUE)
 			user.visible_message("[user] paints over \the [src] with \the [W].", "You paint over \the [src] with \the [W].")
 			logTheThing(LOG_STATION, user, "coated [src] in paint: [log_loc(src)]: canvas{\ref[src], -1, -1, [P.paint_color]}")
 
@@ -104,14 +105,25 @@
 		else
 			. = ..()
 
+	proc/get_instructions(mob/user)
+		. = instructions
+
+	proc/is_writing_implament_valid(obj/item/W, mob/user)
+		if(!istype(W, /obj/item/pen))
+			boutput(user, "You need something to draw with!")
+			return FALSE
+		var/obj/item/pen/pen = W
+		if(!pen.suitable_for_canvas)
+			boutput(user, "<span class='alert'>\The [pen] is not suitable for drawing on a canvas!</span>")
+			return FALSE
+		return TRUE
+
 	proc/get_dot_color(mob/user)
 		// check for writing implement...
 		// in active hand ...
 		var/obj/item/active_item = user.equipped()
 
-		if (!istype(active_item, /obj/item/pen))
-			// you need something to draw with you dope
-			boutput(user, "You need something to draw with!")
+		if (!is_writing_implament_valid(active_item, user))
 			return null
 
 		var/obj/item/pen/P = active_item
@@ -151,7 +163,8 @@
 		// tracks how many things someone's drawn on it.
 		// so you can tell if scrimblo made a cool scene and then dogshit2000 put obscenities on top or whatever.
 		artists[ckey(usr.ckey)]++
-		pixel_artists[pixel_id] = usr.ckey
+		if(dot_color != "#00000000")
+			pixel_artists[pixel_id] = usr.ckey
 		logTheThing(LOG_STATION, usr, "draws on [src]: [log_loc(src)]: canvas{\ref[src], [x], [y], [dot_color]}")
 
 
@@ -169,6 +182,10 @@
 		var/mult = src.display_mult
 
 		var/isadmin = user?.client?.holder?.level >= LEVEL_MOD
+
+		var/maybe_instructions = get_instructions(user)
+		if(maybe_instructions)
+			maybe_instructions = "<div id=\"instructions\">[maybe_instructions]</div>"
 
 		var/dat = {"
 <!doctype html>
@@ -194,6 +211,7 @@
     right: 0px;
     left: 0px;
     top: 0px;
+		flex-direction: column;
 		}
 	#inner {
 		position: relative;
@@ -233,10 +251,16 @@
 	#canvas {
 		z-index: 1;
 		}
+	#instructions {
+		text-align: center;
+		width: 100%;
+		margin-bottom: 10px;
+	}
 </style>
 </head>
 <body>
 <div id="container">
+	[maybe_instructions]
 	<div id="inner">
 		<img id="back" src="canvas-\ref[src]-base.png">
 		<img id="canvas" src="canvas-\ref[src].png">
@@ -314,6 +338,17 @@
 		src.icon = src.art
 		src.pixel_artists = world.load_intra_round_value("persistent_canvas_artists_[id]") || list()
 
+	proc/load_from_file()
+		var/file = input(usr, "Please select the image to load.", "Load Image", null) as null|icon
+		if(isnull(file))
+			return
+		src.art = icon(file)
+		src.art.Crop(1, 1, bound_width, bound_height)
+		src.icon = src.art
+
+	proc/save_to_local_file()
+		usr << ftp(src.art, "canvas_[src.name]_[time2text(world.realtime,"YYYY-MM-DD")].png")
+
 	proc/save_to_id(id)
 		world.save_intra_round_value("persistent_canvas_[id]", src.art)
 		world.save_intra_round_value("persistent_canvas_artists_[id]", src.pixel_artists)
@@ -359,7 +394,7 @@
 	canvas_height = 7 * 32
 	bound_width = 7 * 32
 	bound_height = 7 * 32
-	anchored = TRUE
+	anchored = ANCHORED
 	display_mult = 4
 	plane = PLANE_FLOOR
 	var/id = null
@@ -397,13 +432,15 @@
 			return null
 
 	attackby(obj/item/W, mob/user)
-		pop_open_a_browser_box(user)
+		; // don't call parent to prevent paint can nonsense
 
-	attack_hand(mob/user)
-		pop_open_a_browser_box(user)
+	Click(location, control, params)
+		. = ..()
+		pop_open_a_browser_box(usr)
 
 	reagent_act()
 		return
+
 	ex_act(severity)
 		return
 

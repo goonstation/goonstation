@@ -2,5 +2,8 @@
 /**/node_modules
 /**/*.bundle.*
 /**/*.chunk.*
+/**/*.min.*
 /**/*.hot-update.*
 /packages/inferno/**
+/**/browserassets/**/*.css
+/**/browserassets/**/*.js

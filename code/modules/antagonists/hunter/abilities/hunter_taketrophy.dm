@@ -11,7 +11,7 @@
 	when_stunned = 0
 	not_when_handcuffed = 1
 	hunter_only = 1
-	restricted_area_check = 2
+	restricted_area_check = ABILITY_AREA_CHECK_VR_ONLY
 
 	cast(mob/target)
 		if (!holder)
@@ -156,7 +156,7 @@
 
 		switch (no_of_skulls)
 			if (0)
-				boutput(M, "<span class='alert'><b>Their skull was missing. No trophy for you.</b></span>")
+				boutput(M, "<span class='alert'><b>[capitalize(his_or_her(target))] skull was missing. No trophy for you.</b></span>")
 			if (1)
 				if (tvalue <= 0)
 					boutput(M, "<span class='alert'><b>This trophy is completely worthless!</b></span>")
@@ -165,7 +165,7 @@
 				if (tvalue > 1)
 					boutput(M, "<span class='notice'><b>You have slain a powerful opponent!<br>This trophy has a value of [tvalue].</b></span>")
 			else
-				boutput(M, "<span class='notice'><b>You found mulitple trophies. They have a combined value of [tvalue].</b></span>")
+				boutput(M, "<span class='notice'><b>You found multiple trophies. They have a combined value of [tvalue].</b></span>")
 
 	onInterrupt()
 		..()

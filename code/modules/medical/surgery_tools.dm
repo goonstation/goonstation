@@ -24,7 +24,8 @@ CONTAINS:
 	icon_state = "scalpel1"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_CUT
@@ -44,7 +45,6 @@ CONTAINS:
 	New()
 		..()
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
 		BLOCK_SETUP(BLOCK_KNIFE)
 
@@ -93,7 +93,8 @@ CONTAINS:
 	icon_state = "saw"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "saw"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SAWING
 	hit_type = DAMAGE_CUT
@@ -114,7 +115,6 @@ CONTAINS:
 		..()
 		src.setItemSpecial(/datum/item_special/double)
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		BLOCK_SETUP(BLOCK_LARGE)
 
 	attack(mob/living/carbon/M, mob/user)
@@ -160,7 +160,8 @@ CONTAINS:
 	icon_state = "spoon"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "scalpel"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	tool_flags = TOOL_SPOONING
 	hit_type = DAMAGE_STAB
@@ -180,7 +181,6 @@ CONTAINS:
 	New()
 		..()
 		src.create_reagents(5)
-		AddComponent(/datum/component/transfer_on_attack)
 		setProperty("piercing", 80)
 
 
@@ -203,8 +203,8 @@ CONTAINS:
 		var/hisher = his_or_her(user)
 		user.visible_message("<span class='alert'><b>[user] jabs [src] straight through [hisher] eye and into [hisher] brain!</b></span>")
 		blood_slash(user, 25)
-		playsound(user.loc, src.hitsound, 50, 1)
 		user.TakeDamage("head", 150, 0)
+		playsound(user.loc, 'sound/effects/espoon_suicide.ogg', 50, 0)
 		SPAWN(50 SECONDS)
 			if (user && !isdead(user))
 				user.suiciding = 0
@@ -221,14 +221,14 @@ CONTAINS:
 /obj/item/staple_gun
 	name = "staple gun"
 	desc = "A medical staple gun for securely reattaching limbs."
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "staplegun"
 	w_class = W_CLASS_TINY
 	object_flags = NO_GHOSTCRITTER
 	throw_speed = 4
 	throw_range = 20
 	force = 5
-	flags = ONBELT
+	c_flags = ONBELT
 	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
 	var/datum/projectile/staple = new/datum/projectile/bullet/staple
 	var/ammo = 20
@@ -249,7 +249,7 @@ CONTAINS:
 
 		if (src.ammo < 1)
 			user.show_text("*click* *click*", "red")
-			playsound(user, 'sound/weapons/Gunclick.ogg', 50, 1)
+			playsound(user, 'sound/weapons/Gunclick.ogg', 50, TRUE)
 			return ..()
 
 		if (user.a_intent != "help" && ishuman(M))
@@ -308,27 +308,6 @@ CONTAINS:
 				surgery_limb.surgery(src)
 			return
 
-	attackby(obj/item/W, mob/user)
-		..()
-
-		if (istype(W,/obj/item/pipebomb/frame))
-			var/obj/item/pipebomb/frame/F = W
-			if (F.state < 2)
-				user.show_text("This might work better if [F] was hollowed out.")
-			else if (F.state == 2)
-				user.show_text("You combine [F] and [src]. This looks pretty unsafe!")
-				user.u_equip(F)
-				user.u_equip(src)
-				playsound(src, 'sound/items/Deconstruct.ogg', 50, 1)
-				var/obj/item/gun/kinetic/zipgun/Z = new/obj/item/gun/kinetic/zipgun
-				user.put_in_hand_or_drop(Z)
-				qdel(F)
-				qdel(src)
-
-			else
-				user.show_text("You can't seem to combine these two items this way.")
-		return
-
 
 // a mostly decorative thing from z2 areas I want to add to office closets
 /obj/item/staple_gun/red
@@ -341,6 +320,9 @@ CONTAINS:
 /* =============================================== */
 /* -------------------- Defib -------------------- */
 /* =============================================== */
+
+TYPEINFO(/obj/item/robodefibrillator)
+	mats = 10
 
 /obj/item/robodefibrillator
 	name = "defibrillator"
@@ -356,7 +338,6 @@ CONTAINS:
 	var/emagged = 0
 	var/makeshift = 0
 	var/obj/item/cell/cell = null
-	mats = 10
 
 	emag_act(var/mob/user)
 		if (src.makeshift)
@@ -402,7 +383,7 @@ CONTAINS:
 		if(!src.hasStatus("defib_charged"))
 			user.visible_message("<span class='alert'>[user] rubs the paddles of [src] together.</span>", "<span class='notice'>You rub the paddles of [src] together.</span>", "<span class='alert'>You hear an electrical whine.</span>")
 			playsound(user.loc, 'sound/items/defib_charge.ogg', 90, 0)
-			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, .proc/charge, user, src.icon, "[src.icon_base]-on", null, INTERRUPT_NONE)
+			SETUP_GENERIC_ACTIONBAR(user, src, 0.2 SECONDS, PROC_REF(charge), user, src.icon, "[src.icon_base]-on", null, INTERRUPT_NONE)
 
 	proc/charge(mob/user)
 		if(prob(1))
@@ -449,6 +430,11 @@ CONTAINS:
 		else
 			user.suiciding = 0
 		return 1
+
+	Exited(Obj, newloc)
+		. = ..()
+		if(Obj == src.cell)
+			src.cell = null
 
 /obj/item/robodefibrillator/proc/defibrillate(var/mob/living/patient as mob, var/mob/living/user as mob, var/emagged = 0, var/faulty = 0, var/obj/item/cell/cell = null, var/suiciding = 0)
 	if (!isliving(patient))
@@ -510,7 +496,7 @@ CONTAINS:
 
 				var/sumdamage = patient.get_brute_damage() + patient.get_burn_damage() + patient.get_toxin_damage()
 				if (suiciding)
-
+					; // do nothing
 				else if (patient.health < 0)
 					if (sumdamage >= 90)
 						user.show_text("<b>[patient]</b> looks horribly injured. Resuscitation alone may not help revive them.", "red")
@@ -616,30 +602,29 @@ CONTAINS:
 	var/obj/machinery/defib_mount/parent = null	//temp set while not attached
 	w_class = W_CLASS_BULKY
 
-	move_callback(var/mob/living/M, var/turf/source, var/turf/target)
-		if (parent)
-			parent.put_back_defib(M)
-		else
-			qdel(src)
-
 	disposing()
+		parent?.defib = null
 		parent = null
 		..()
+
+TYPEINFO(/obj/machinery/defib_mount)
+	mats = 25
 
 /obj/machinery/defib_mount
 	name = "mounted defibrillator"
 	icon = 'icons/obj/compact_machines.dmi'
 	desc = "Uses electrical currents to restart the hearts of critical patients."
 	icon_state = "defib1"
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
-	mats = 25
+	status = REQ_PHYSICAL_ACCESS
 	var/obj/item/robodefibrillator/mounted/defib = null
 
 	New()
 		..()
 		if (!defib)
 			src.defib = new /obj/item/robodefibrillator/mounted(src)
+		RegisterSignal(src.defib, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move))
 
 	emag_act()
 		..()
@@ -651,21 +636,18 @@ CONTAINS:
 			defib = null
 		..()
 
+	process()
+		handle_move(src.defib.loc)
+		..()
+
 	update_icon()
 		if (defib && defib.loc == src)
 			icon_state = "defib1"
 		else
 			icon_state = "defib0"
 
-	process()
-		if (src.defib && src.defib.loc != src)
-			if (BOUNDS_DIST(get_turf(src.defib), get_turf(src)) > 0)
-				if (isliving(src.defib.loc))
-					put_back_defib(src.defib.loc)
-		..()
-
 	attack_hand(mob/living/user)
-		if (isAI(user) || isintangible(user) || isobserver(user)) return
+		if (isAI(user) || isintangible(user) || isobserver(user) || !in_interact_range(src, user)) return
 		user.lastattacked = src
 		..()
 		if(!defib || QDELETED(defib))
@@ -676,35 +658,28 @@ CONTAINS:
 		user.put_in_hand_or_drop(src.defib)
 		src.defib.parent = src
 		playsound(src, 'sound/items/pickup_defib.ogg', 65, vary=0.2)
-
+		RegisterSignal(user, COMSIG_MOVABLE_MOVED, PROC_REF(handle_move), TRUE)
 		UpdateIcon()
-
-		//set move callback (when user moves, defib go back)
-		if (islist(user.move_laying))
-			user.move_laying += src
-		else
-			if (user.move_laying)
-				user.move_laying = list(user.move_laying, src.defib)
-			else
-				user.move_laying = list(src.defib)
 
 	attackby(obj/item/W, mob/living/user)
 		user.lastattacked = src
 		if (W == src.defib)
-			src.defib.move_callback(user,get_turf(user),get_turf(src))
+			put_back_defib(user)
 
-	proc/put_back_defib(var/mob/living/M)
+	proc/handle_move(mob/living/user)
+		if (src.defib && src.defib.loc != src)
+			if (BOUNDS_DIST(src.defib, src) > 0)
+				put_back_defib(user)
+
+	proc/put_back_defib(mob/living/M)
 		if (src.defib)
-			M.drop_item(defib)
+			if (isliving(src.defib.loc))
+				M.drop_item(defib) // drop it before moving it back, otherwise its prob on floor
 			src.defib.set_loc(src)
 			src.defib.parent = null
-		if (islist(M.move_laying))
-			M.move_laying -= src.defib
-		else
-			M.move_laying = null
 
-		playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
-		UpdateIcon()
+			playsound(src, 'sound/items/putback_defib.ogg', 65, vary=0.2)
+			UpdateIcon()
 
 
 /* ================================================ */
@@ -748,6 +723,7 @@ CONTAINS:
 				else
 					user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to close!", "red")
 					H.organHolder.chest.op_stage = 0
+					H.organHolder.close_surgery_regions()
 					src.in_use = 0
 					return
 		else
@@ -835,7 +811,7 @@ CONTAINS:
 
 	update_icon()
 		switch (src.uses)
-			if (0 to -INFINITY)
+			if (-INFINITY to 0)
 				src.icon_state = "bandage-item-0"
 			if (1 to 2)
 				src.icon_state = "bandage-item-1"
@@ -924,8 +900,8 @@ CONTAINS:
 							target.organHolder.heart.op_stage = 0
 						if (target.organHolder.chest)
 							target.organHolder.chest.op_stage = 0
-						if (target.butt_op_stage)
-							target.butt_op_stage = 0
+						if (target.organHolder.back_op_stage)
+							target.organHolder.back_op_stage = BACK_SURGERY_CLOSED
 						target.TakeDamage("chest", 2, 0)
 					else if (zone == "head")
 						if (target.organHolder.head)
@@ -961,8 +937,9 @@ CONTAINS:
 					qdel(tool)
 
 			else if (istype(tool, /obj/item/material_piece/cloth))
-				ownerMob.u_equip(tool)
-				qdel(tool)
+				var/obj/item/material_piece/cloth/C = tool
+				C.in_use = FALSE
+				C.change_stack_amount(-1)
 
 /* ================================================== */
 /* -------------------- Body Bag -------------------- */
@@ -975,7 +952,7 @@ CONTAINS:
 	icon_state = "bodybag"
 	uses_multiple_icon_states = 1
 	flags = FPRINT | TABLEPASS
-	object_flags = NO_GHOSTCRITTER
+	object_flags = NO_GHOSTCRITTER | NO_ARM_ATTACH
 	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 1
@@ -1066,6 +1043,24 @@ CONTAINS:
 			src.w_class = W_CLASS_TINY
 			src.Attackhand(usr)
 
+	attackby(obj/item/W, mob/user, params)
+		if(length(src.contents) && istool(W, TOOL_CUTTING | TOOL_SNIPPING)) //don't cut open empty bags, what's the point?
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(cut_open), null, W.icon, W.icon_state, "[user] cuts open [src]!", null)
+		else
+			. = ..()
+
+	proc/cut_open()
+		for (var/obj/O in src)
+			O.set_loc(get_turf(src))
+		for (var/mob/M in src)
+			M.changeStatus("weakened", 0.5 SECONDS)
+			M.set_loc(get_turf(src))
+		var/obj/decal/cleanable/balloon/B = make_cleanable(/obj/decal/cleanable/balloon, get_turf(src))
+		B.icon_state = "balloon_black_pop"
+		B.name = "body bag"
+		B.desc = "The remains of a body bag"
+		qdel(src)
+
 	proc/open()
 		playsound(src, src.sound_zipper, 100, 1, , 6)
 		for (var/obj/O in src)
@@ -1101,7 +1096,8 @@ CONTAINS:
 	icon_state = "hemostat"
 	inhand_image_icon = 'icons/mob/inhand/hand_medical.dmi'
 	item_state = "hemostat"
-	flags = FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	object_flags = NO_GHOSTCRITTER
 	hit_type = DAMAGE_STAB
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
@@ -1132,22 +1128,15 @@ CONTAINS:
 			if (user.a_intent == INTENT_HELP)
 				return
 			return ..()
-		if (H.bleeding)
+		if (H.chest_cavity_clamped && !H.bleeding)
+			boutput(user, "<span class='notice'>[M]'s blood vessels are already clamped.</span>")
+			return
+		if (H.organHolder.chest.op_stage > 0 || H.bleeding)
 			user.tri_message(H, "<span class='alert'><b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
 				"<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
 				"<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
 
-			if (!do_mob(user, H, clamp(surgery_status * 4, 0, 100)))
-				user.visible_message("<span class='alert'><b>[user]</b> was interrupted!</span>",\
-				"<span class='alert'>You were interrupted!</span>")
-				return
-
-			user.tri_message(H, "<span class='notice'><b>[user]</b> clamps the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
-				"<span class='notice'>You clamp the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
-				"<span class='notice'>[H == user ? "You clamp" : "<b>[user]</b> clamps"] the bleeders in your incision with [src].</span>")
-
-			if (H.bleeding)
-				repair_bleeding_damage(H, 50, rand(2,5))
+			actions.start(new/datum/action/bar/icon/clamp_bleeders(user, H), user)
 			return
 
 /* ======================================================= */
@@ -1185,14 +1174,14 @@ CONTAINS:
 				else if (clumsy && !doctor && prob(1)) // extreme clumsiness can lead to extremely unintended examination results
 					var/obj/item/organ/head/head = H.drop_organ("head")
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head and hits it clean off [H == user ? "[his_or_her(H)] own" : "[H]'s"] shoulders!</span>")
-					playsound(H, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, 1)
+					playsound(H, 'sound/impact_sounds/Flesh_Stab_1.ogg', 80, TRUE)
 					if (head)
 						head.throw_at(get_dir(user, H), 3, 3)
 					return
 
 				else if (clumsy && prob(33)) // WHACK
 					H.visible_message("<span style='color:red;font-weight:bold'>[user] swings [src] way too hard at [H == user ? "[his_or_her(H)] own" : "[H]'s"] head!</span>")
-					playsound(H, 'sound/impact_sounds/Generic_Hit_1.ogg', 80, 1)
+					playsound(H, 'sound/impact_sounds/Generic_Hit_1.ogg', 80, TRUE)
 					my_damage = (max(my_damage, 2) * 3)
 
 				else if (!headSurgeryCheck(H))
@@ -1212,7 +1201,7 @@ CONTAINS:
 				if (!H.limbs || !H.
 */
 		H.TakeDamage(def_zone, my_damage)
-		playsound(H, my_sound, 80, 1)
+		playsound(H, my_sound, 80, TRUE)
 		return
 
 	//else if (isrobot(M)) // clonk clonk
@@ -1226,14 +1215,14 @@ CONTAINS:
 	stamina_damage = 1
 	stamina_cost = 1
 	stamina_crit_chance = 1
-
-	New()
-		..()
-		src.setMaterial(getMaterial("synthrubber"))
+	default_material = "synthrubber"
 
 /* ================================================== */
 /* -------------------- Penlight -------------------- */
 /* ================================================== */
+
+TYPEINFO(/obj/item/device/light/flashlight/penlight)
+	mats = 1
 
 /obj/item/device/light/flashlight/penlight
 	name = "penlight"
@@ -1249,7 +1238,6 @@ CONTAINS:
 	throw_range = 15
 	m_amt = 50
 	g_amt = 10
-	mats = 1
 	col_r = 0.9
 	col_g = 0.8
 	col_b = 0.7
@@ -1402,7 +1390,7 @@ CONTAINS:
 	icon = 'icons/obj/surgery.dmi'
 	icon_state = "tray"
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	var/max_to_move = 10
 	p_class = 1.5
 
@@ -1503,7 +1491,7 @@ keeping this here because I want to make something else with it eventually
 		I.glide_size = 0 // required for smooth movement with the tray
 		// register for pickup, register for being pulled off the table, register for item deletion while attached to table
 		SPAWN(0)
-			RegisterSignal(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), .proc/detach)
+			RegisterSignals(I, list(COMSIG_ITEM_PICKUP, COMSIG_MOVABLE_MOVED, COMSIG_PARENT_PRE_DISPOSING), PROC_REF(detach))
 
 	proc/detach(obj/item/I as obj) //remove from the attached items list and deregister signals
 		src.attached_objs.Remove(I)

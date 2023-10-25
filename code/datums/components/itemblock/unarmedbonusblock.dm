@@ -6,7 +6,7 @@
 	src.types = types
 
 /datum/component/wearertargeting/unarmedblock/unarmed_bonus_block/on_block_begin(mob/living/carbon/source, obj/item/grab/block/B)
-	RegisterSignal(B, COMSIG_BLOCK_BLOCKED, .proc/apply_bonus)
+	RegisterSignal(B, COMSIG_BLOCK_BLOCKED, PROC_REF(apply_bonus))
 	for(var/type in types)
 		B.setProperty("I_block_[type]", 1)
 

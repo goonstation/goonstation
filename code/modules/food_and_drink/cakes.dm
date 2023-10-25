@@ -34,8 +34,9 @@
 	icon = 'icons/obj/foodNdrink/food_dessert.dmi'
 	icon_state = "cake1-base_custom"
 	inhand_image_icon = 'icons/mob/inhand/hand_food.dmi'
-	bites_left = 0
+	bites_left = 12
 	heal_amt = 2
+	fill_amt = 20 //2 per slice
 	use_bite_mask = FALSE
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	initial_volume = 100
@@ -105,7 +106,7 @@
 				else
 					generic_number = 2
 				tag = "cake[clayer]-generic[generic_number]"
-				overlay_color = F.food_color
+				overlay_color = F.get_food_color()
 
 			for(var/food_effect in F.food_effects)
 				src.food_effects |= food_effect
@@ -216,6 +217,7 @@
 			schild.food_color = src.food_color
 			schild.sliced = TRUE
 			schild.bites_left = 1
+			schild.fill_amt = src.fill_amt / CAKE_SLICES
 
 			schild.set_loc(get_turf(src.loc))
 		qdel(s) //cleaning up the template slice
@@ -490,8 +492,9 @@
 			frost_cake(W,user)
 			return
 		else if(istype(W,/obj/item/reagent_containers/food/snacks/cake))
-			stack_cake(W,user)
-			return
+			if(src != W)
+				stack_cake(W,user)
+				return
 		else if(cake_candle.len && !(litfam) && (W.firesource))
 			src.ignite()
 			W.firesource_interact()
@@ -518,6 +521,8 @@
 				qdel(W)
 
 	attack_hand(mob/user)
+		if (src.stored)
+			return ..()
 		if(length(cakeActions))
 			user.showContextActions(cakeActions, src)
 		else
@@ -654,8 +659,6 @@
 		..()
 		eater.show_text("It's so hard it breaks one of your teeth AND it tastes disgusting! Why would you ever eat this?","red")
 		random_brute_damage(eater, 3)
-		eater.emote("scream")
-		return
 
 #endif
 

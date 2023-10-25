@@ -3,9 +3,9 @@
 
 //don't attack mobs in santuary zones. attacking non-mobs there is fine
 //we can only attack people in pods etc if we're also in the pod etc
-#define ATTACK_CHECK(target) ((!(get_area(target)):sanctuary || !ismob(target)) && (isturf(target:loc) || target:loc == src.loc))
+#define ATTACK_CHECK(target) ((!ismob(target) || !((get_area(target))?:sanctuary)) && (isturf(target:loc) || target:loc == src.loc))
 
-/obj/critter/
+/obj/critter
 	name = "critter"
 	desc = "you shouldnt be able to see this"
 	icon = 'icons/misc/critter.dmi'
@@ -13,7 +13,7 @@
 	var/dead_state = null
 	layer = 5
 	density = 1
-	anchored = 0
+	anchored = UNANCHORED
 	flags = FPRINT | CONDUCT | USEDELAY | FLUID_SUBMERGE
 	event_handler_flags = USE_PROXIMITY | USE_FLUID_ENTER
 	var/is_template = 0
@@ -81,7 +81,7 @@
 	var/sleeping_icon_state = null
 	var/mob/living/wrangler = null
 
-	var/butcherable = 0
+	var/butcherable = BUTCHER_NOT_ALLOWED
 	var/meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat
 	var/name_the_meat = 1
 
@@ -190,7 +190,7 @@
 		if(registered_area)
 			task = "hibernating"
 			registered_area.registered_critters |= src
-			anchored = 1
+			anchored = ANCHORED
 			//DEBUG_MESSAGE("[src] started hibernating at [log_loc(src)] in [registered_area ? registered_area.name : "nowhere"].")
 			//critters -= src //Stop processing this critter
 
@@ -231,7 +231,7 @@
 					user.visible_message("<span class='alert'>[user] skins [src].</span>","You skin [src].")
 
 			if (src.butcherable && (istype(W, /obj/item/kitchen/utensil/knife) || istype(W, /obj/item/knife/butcher)))
-				user.visible_message("<span class='alert'>[user] butchers [src].[src.butcherable == 2 ? "<b>WHAT A MONSTER</b>" : null]","You butcher [src].</span>")
+				user.visible_message("<span class='alert'>[user] butchers [src].[src.butcherable == BUTCHER_YOU_MONSTER ? " <b>WHAT A MONSTER!</b>" : null]","You butcher [src].</span>")
 
 				var/i = rand(2,4)
 				var/transfer = src.reagents.total_volume / i
@@ -321,7 +321,7 @@
 		if (src.alive && src.health <= 0) src.CritterDeath()
 
 		if (hitsound)
-			playsound(src, hitsound, 50, 1)
+			playsound(src, hitsound, 50, TRUE)
 		if (W?.hitsound)
 			playsound(src,W.hitsound,50,1)
 
@@ -378,7 +378,7 @@
 			attack_twitch(user)
 			hit_twitch(src)
 			if (hitsound)
-				playsound(src, hitsound, 50, 1)
+				playsound(src, hitsound, 50, TRUE)
 			if (src.alive && src.health <= 0) src.CritterDeath()
 			if (src.alive)
 				on_damaged(user)
@@ -428,7 +428,7 @@
 			sleeping = 0
 			on_wake()
 
-		if(src.material) src.material.triggerOnBullet(src, src, P)
+		src.material_trigger_on_bullet(src, P)
 
 		switch(P.proj_data.damage_type)
 			if(D_KINETIC,D_PIERCING,D_SLASHING)
@@ -490,6 +490,7 @@
 		return
 
 	proc/follow_path()
+		set waitfor = 0
 		if (!mobile)
 			task = "thinking"
 			return
@@ -582,6 +583,7 @@
 			sleep_check = 10
 
 	proc/process()
+		SHOULD_NOT_SLEEP(TRUE)
 		if (is_template || task == "hibernating")
 			return 0
 		if (!src.alive)
@@ -604,6 +606,7 @@
 		return ai_think()
 
 	proc/ai_think()
+		set waitfor = 0
 		switch(task)
 			if ("thinking")
 				src.attack = 0
@@ -644,7 +647,7 @@
 							if(ATTACK_CHECK(current_target))
 								ChaseAttack(current_target)
 							src.task = "attacking"
-							src.anchored = 1
+							src.anchored = ANCHORED
 							src.target_lastloc = current_target.loc
 					else
 						if (mobile)
@@ -881,7 +884,7 @@
 		else
 			src.icon_state = dead_state
 		src.alive = 0
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.set_density(0)
 		walk_to(src,0) //halt walking
 		report_death()
@@ -961,7 +964,7 @@
 			return
 		// FUCK YOU WHOEVER IS USING THIS
 		// FUCK YOU
-		shoot_projectile_ST(src,  new/datum/projectile/bullet/revolver_38(), target)
+		shoot_projectile_ST_pixel_spread(src,  new/datum/projectile/bullet/revolver_38(), target)
 		return
 
 
@@ -1039,7 +1042,7 @@
 				make_cleanable( /obj/decal/cleanable/eggsplat,T)
 				src.set_loc(T)
 			else
-				src.anchored = 1
+				src.anchored = ANCHORED
 				src.layer = initial(src.layer)
 				if (user)
 					user.u_equip(src)
@@ -1047,7 +1050,7 @@
 
 			if (shouldThrow && T)
 				src.visible_message("<span class='alert'>[src] splats onto the floor messily!</span>")
-				playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, 1)
+				playsound(T, 'sound/impact_sounds/Slimy_Splat_1.ogg', 100, TRUE)
 			else
 				var/hatch_wiggle_counter = rand(3,8)
 				while (hatch_wiggle_counter-- > 0)
@@ -1078,7 +1081,7 @@
 			if (istype(src.parent, /mob/living/critter/spider/clownqueen))
 				var/mob/living/critter/spider/clownqueen/queen = src.parent
 				if (islist(queen.babies))
-					queen.babies += newCritter
+					queen.babies += get_weakref(newCritter)
 
 			sleep(0.1 SECONDS)
 			qdel(src)

@@ -1,12 +1,14 @@
 
 /* ==================== Area ==================== */
-
+TYPEINFO(/area/station/shield_zone)
+	valid_bounty_area = FALSE
 /area/station/shield_zone
 	name = "shield protected space"
 	icon_state = "shield_zone"
 	expandable = FALSE
 	do_not_irradiate = TRUE
 	requires_power = FALSE
+	minimaps_to_render_on = null
 
 /* ==================== Generator ==================== */
 
@@ -15,9 +17,10 @@
 	desc = "Some kinda thing what generates a big ol' shield around everything."
 	icon = 'icons/obj/large/32x96.dmi'
 	icon_state = "shieldgen0"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	bound_height = 96
+	power_usage = 250
 	var/obj/machinery/power/data_terminal/link = null
 	var/net_id = null
 	var/list/shields = list()
@@ -80,7 +83,6 @@
 			src.deactivate()
 			return
 
-		src.use_power(250)
 		if (src.shields.len)
 			src.use_power(5*src.shields.len)
 

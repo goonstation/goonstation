@@ -20,6 +20,11 @@
 	if (!dd_hasprefix(message, "*")) // if this is an emote it is logged in emote
 		logTheThing(LOG_SAY, src, "SAY: [html_encode(message)] [log_loc(src)]")
 
+/mob/verb/sa_verb(message as text)
+	set name = "sa"
+	set hidden = 1
+	src.say_verb(message)
+
 /mob/verb/say_radio()
 	set name = "say_radio"
 	set hidden = 1
@@ -74,7 +79,7 @@
 			choices += channel_name
 
 		var/choice = 0
-		if (choices.len == 1)
+		if (length(choices) == 1)
 			choice = choices[1]
 		else
 			choice = input("", "Select Radio and Channel", null) as null|anything in choices
@@ -117,7 +122,7 @@
 
 
 			var/choice = 0
-			if (choices.len == 1)
+			if (length(choices) == 1)
 				choice = choices[1]
 			else
 				choice = input("", "Select Radio Channel", null) as null|anything in choices
@@ -133,6 +138,8 @@
 				token = ":" + R.secure_frequencies[choice_index - 1]
 
 			var/text = input("", "Speaking to [choice] frequency") as null|text
+			if (!text)
+				return
 			if (src.capitalize_speech())
 				var/i = 1
 				while (copytext(text, i, i+1) == " ")
@@ -223,7 +230,7 @@
 
 	var/image/chat_maptext/chat_text = null
 	if (speechpopups && src.chat_text)
-		var/num = hex2num(copytext(md5(src.get_heard_name()), 1, 7))
+		var/num = hex2num(copytext(md5(src.get_heard_name(just_name_itself=TRUE)), 1, 7))
 		var/maptext_color = hsv2rgb((num % 360)%40+240, (num / 360) % 15+5, (((num / 360) / 10) % 15) + 55)
 
 		var/turf/T = get_turf(src)
@@ -236,7 +243,7 @@
 			T = get_step(T, EAST)
 
 		var/singing_italics = singing ? " font-style: italic;" : ""
-		chat_text = make_chat_maptext(src, message, "color: [maptext_color];" + singing_italics)
+		chat_text = make_chat_maptext(src, message, singing_italics)
 
 		if(chat_text)
 			chat_text.measure(src.client)
@@ -244,7 +251,7 @@
 				if(I != chat_text)
 					I.bump_up(chat_text.measured_height)
 
-		oscillate_colors(chat_text, list(maptext_color, "#a530bd"))
+		oscillate_colors(chat_text, list(maptext_color, "#c482d1"))
 
 	message = src.say_quote(message)
 	//logTheThing(LOG_SAY, src, "SAY: [message]")
@@ -262,10 +269,16 @@
 				chat_text.show_to(C)
 			continue
 
-		if (istype(M,/mob/dead/target_observer/hivemind_observer)) continue
-		if (istype(M,/mob/dead/target_observer/mentor_mouse_observer)) continue
+		if (istype(M, /mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				continue
+		if (iswraith(M))
+			var/mob/living/intangible/wraith/the_wraith = M
+			if (!the_wraith.hearghosts)
+				continue
 
-		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/seanceghost))
+		if (isdead(M) || iswraith(M) || isghostdrone(M) || isVRghost(M) || inafterlifebar(M) || istype(M, /mob/living/intangible/seanceghost))
 			if(chat_text && !M.client.preferences.flying_chat_hidden)
 				chat_text.show_to(C)
 			boutput(M, rendered)
@@ -279,6 +292,10 @@
 
 	if (!hivemind_owner)
 		return
+
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
 
 	//i guess this caused some real ugly text huh
 	//message = trim(copytext(html_encode(sanitize(message)), 1, MAX_MESSAGE_LEN))
@@ -338,6 +355,10 @@
 	if (!owner)
 		return
 
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
+
 	if (!message)
 		return
 
@@ -369,6 +390,10 @@
 
 	if (!owner)
 		return
+
+	var/mob/living/L = src
+	if (istype(L))
+		message = L.check_singing_prefix(message)
 
 	if (!message)
 		return
@@ -455,6 +480,10 @@
 	if (src.get_brain_damage() >= 60)
 		speechverb = pick("says","stutters","mumbles","slurs")
 
+	if(src.find_type_in_hand(/obj/item/megaphone))
+		var/obj/item/megaphone/megaphone = src.find_type_in_hand(/obj/item/megaphone)
+		loudness += megaphone.loudness_mod
+
 	if (src.speech_void)
 		text = voidSpeak(text)
 
@@ -526,35 +555,40 @@
 
 	if(class)
 		class = " class='game [class]'"
-	if (loudness > 0)
+	if (loudness > 1)
+		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<strong style='font-size:36px'><b [class? class : ""]>[text]</b></strong>[font_accent ? "</font>" : null][second_quote]"
+	else if (loudness > 0)
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<big><strong><b [class? class : ""]>[text]</b></strong></big>[font_accent ? "</font>" : null][second_quote]"
 	else if (loudness < 0)
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<small [class? class : ""]>[text]</small>[font_accent ? "</font>" : null][second_quote]"
 	else
 		return "[speechverb],[first_quote][font_accent ? "<font face='[font_accent]'>" : null]<span [class? class : ""]>[text]</span>[font_accent ? "</font>" : null][second_quote]"
 
-/mob/proc/emote(var/act, var/voluntary = 0)
-	return
+//no, voluntary is not a boolean. screm
+/mob/proc/emote(act, voluntary = 0, atom/target)
+	set waitfor = FALSE
+	SHOULD_CALL_PARENT(TRUE)
+	SEND_SIGNAL(src, COMSIG_MOB_EMOTE, act, voluntary, target)
 
-/mob/proc/emote_check(var/voluntary = 1, var/time = 10, var/admin_bypass = 1, var/dead_check = 1)
+/mob/proc/emote_check(voluntary = 1, time = 1 SECOND, admin_bypass = TRUE, dead_check = TRUE)
 	if (src.emote_allowed)
 		if (dead_check && isdead(src))
-			src.emote_allowed = 0
-			return 0
+			src.emote_allowed = FALSE
+			return FALSE
 		if (voluntary && (src.getStatusDuration("paralysis") > 0 || isunconscious(src)))
-			return 0
+			return FALSE
 		if (world.time >= (src.last_emote_time + src.last_emote_wait))
 			if (!no_emote_cooldowns && !(src.client && (src.client.holder && admin_bypass) && !src.client.player_mode) && voluntary)
-				src.emote_allowed = 0
+				src.emote_allowed = FALSE
 				src.last_emote_time = world.time
 				src.last_emote_wait = time
 				SPAWN(time)
-					src.emote_allowed = 1
-			return 1
+					src.emote_allowed = TRUE
+			return TRUE
 		else
-			return 0
+			return FALSE
 	else
-		return 0
+		return FALSE
 
 /mob/proc/listen_ooc()
 	set name = "(Un)Mute OOC"
@@ -613,6 +647,7 @@
 
 		var ooc_class = ""
 		var display_name = src.key
+		var/ooc_icon = ""
 
 		if (src.client.stealth || src.client.alt_key)
 			if (!C.holder)
@@ -627,6 +662,9 @@
 				ooc_class = "adminooc"
 		else if (src.client.is_mentor() && !src.client.stealth)
 			ooc_class = "mentorooc"
+		else if (src.client.player.is_newbee)
+			ooc_class = "newbeeooc"
+			ooc_icon = "Newbee"
 
 		if( src.client.cloud_available() && src.client.cloud_get("donor") )
 			msg = replacetext(msg, ":shelterfrog:", "<img src='http://stuff.goonhub.com/shelterfrog.png' width=32>")
@@ -635,7 +673,13 @@
 			msg = replacetext(msg, ":shelterbee:", "<img src='http://stuff.goonhub.com/shelterbee.png' width=32>")
 
 		var/rendered = "<span class=\"ooc [ooc_class]\"><span class=\"prefix\">OOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
-
+		if (ooc_icon)
+			rendered = {"
+			<div class='tooltip'>
+				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[ooc_icon].png")]\">
+				<span class="tooltiptext">[ooc_icon]</span>
+			</div>
+			"} + rendered
 		if (C.holder)
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
@@ -691,21 +735,15 @@
 
 	var/list/recipients = list()
 
-	for (var/mob/M in range(LOOC_RANGE))
-		if (!M.client)
+	for (var/client/C in clients)
+		if (!C.mob)
 			continue
-		if (M.client.preferences && !M.client.preferences.listen_looc)
+		if (C.preferences && !C.preferences.listen_looc)
 			continue
-		recipients += M.client
-
-	for (var/client/C)
-		if (!C.mob) continue
-		var/mob/M = C.mob
-
-		if (M.client in recipients)
-			continue
-		if (M.client.holder && !M.client.only_local_looc && !M.client.player_mode)
-			recipients += M.client
+		if (C.holder && !C.only_local_looc && !C.player_mode) // is admin with global looc enabled and not in player mode
+			recipients += C
+		else if (IN_RANGE(C.mob, src, LOOC_RANGE)) // is in range to hear looc
+			recipients += C
 
 	var looc_style = ""
 	if (src.client.holder && !src.client.stealth)
@@ -715,6 +753,8 @@
 			looc_style = "color: #cd6c4c;"
 	else if (src.client.is_mentor() && !src.client.stealth)
 		looc_style = "color: #a24cff;"
+	else if (src.client.player.is_newbee)
+		looc_style = "color: #8BC16E;"
 
 	var/image/chat_maptext/looc_text = null
 	looc_text = make_chat_maptext(src, "\[LOOC: [msg]]", looc_style)
@@ -735,6 +775,7 @@
 
 		var looc_class = ""
 		var display_name = src.key
+		var/looc_icon = ""
 
 		if (src.client.stealth || src.client.alt_key)
 			if (!C.holder)
@@ -749,9 +790,18 @@
 				looc_class = "adminlooc"
 		else if (src.client.is_mentor() && !src.client.stealth)
 			looc_class = "mentorlooc"
+		else if (src.client.player.is_newbee)
+			looc_class = "newbeelooc"
+			looc_icon = "Newbee"
 
 		var/rendered = "<span class=\"looc [looc_class]\"><span class=\"prefix\">LOOC:</span> <span class=\"name\" data-ctx='\ref[src.mind]'>[display_name]:</span> <span class=\"message\">[msg]</span></span>"
-
+		if (looc_icon)
+			rendered = {"
+			<div class='tooltip'>
+				<img class=\"icon misc\" style=\"position: relative; bottom: -3px; \" src=\"[resource("images/radio_icons/[looc_icon].png")]\">
+				<span class="tooltiptext">[looc_icon]</span>
+			</div>
+			"} + rendered
 		if (C.holder)
 			rendered = "<span class='adminHearing' data-ctx='[C.chatOutput.getContextFlags()]'>[rendered]</span>"
 
@@ -765,7 +815,8 @@
 /mob/proc/heard_say(var/mob/other)
 	return
 
-/mob/proc/lastgasp()
+/mob/proc/lastgasp(allow_dead=FALSE)
+	set waitfor = FALSE
 	return
 
 /mob/proc/item_attack_message(var/mob/T, var/obj/item/S, var/d_zone, var/devastating = 0, var/armor_blocked = 0)
@@ -930,7 +981,7 @@
 				assoc_maptext.show_to(src.client)
 
 			if (isliving(src))
-				for (var/mob/dead/target_observer/M in src:observers)
+				for (var/mob/dead/target_observer/M in src.observers)
 					if(!just_maptext)
 						if (M.client?.holder && !M.client.player_mode)
 							if (M.mind)
@@ -992,7 +1043,7 @@
 		if (second_message && M == second_target && M != src)
 			msg = second_message
 		M.show_message(msg, 1, blind_message, 2)
-		//DEBUG_MESSAGE("<b>[M] recieves message: &quot;[msg]&quot;</b>")
+		//DEBUG_MESSAGE("<b>[M] receives message: &quot;[msg]&quot;</b>")
 
 // it was about time we had this instead of just visible_message()
 /atom/proc/audible_message(var/message, var/alt, var/alt_type, var/group = "", var/just_maptext, var/image/chat_maptext/assoc_maptext = null)
@@ -1057,13 +1108,15 @@
 
 	var/class = "flocksay"
 
-	if(istype(mob_speaking, /mob/living/intangible/flock) && !involuntary)
+	if(istype(mob_speaking, /mob/living/intangible/flock) && !involuntary || speak_as_admin)
 		class += " sentient"
 		if (istype(mob_speaking, /mob/living/intangible/flock/flockmind))
 			class += " flockmind"
 	else if(is_npc)
 		class += " flocknpc"
 	else if(isnull(mob_speaking))
+		if (flock?.quiet)
+			return
 		class += " bold italics"
 		name = "\[SYSTEM\]"
 
@@ -1084,7 +1137,8 @@
 	else
 		rendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[name]</span> <span class='message'>[message]</span></span>"
 		flockmindRendered = "<span class='game [class]'><span class='bold'>\[[flock ? flock.name : "--.--"]\] </span><span class='name'>[flock && speaker ? "<a href='?src=\ref[flock.flockmind];origin=\ref[structure_speaking ? structure_speaking.loc : mob_speaking]'>[name]</a>" : "[name]"]</span> <span class='message'>[message]</span></span>"
-		siliconrendered = "<span class='game [class]'><span class='bold'>\[[flock ? flockBasedGarbleText(flock.name, -30, flock) : "--.--"]\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[flockBasedGarbleText(name, -20, flock)]</span> <span class='message'>[flockBasedGarbleText(message, 0, flock)]</span></span>"
+		if (flock && !flock.flockmind?.tutorial && flock.total_compute() >= FLOCK_RELAY_COMPUTE_COST / 4 && prob(90))
+			siliconrendered = "<span class='game [class]'><span class='bold'>\[?????\] </span><span class='name' [mob_speaking ? "data-ctx='\ref[mob_speaking.mind]'" : ""]>[radioGarbleText(name, FLOCK_RADIO_GARBLE_CHANCE)]</span> <span class='message'>[radioGarbleText(message, FLOCK_RADIO_GARBLE_CHANCE)]</span></span>"
 
 	for (var/client/CC)
 		if (!CC.mob) continue
@@ -1094,9 +1148,15 @@
 
 		var/thisR = ""
 
-		if((isflockmob(M)) || (M.client.holder && !M.client.player_mode) || (isobserver(M) && !(istype(M, /mob/dead/target_observer/hivemind_observer))))
+		var/is_dead_observer = isobserver(M)
+		if (istype(M, /mob/dead/target_observer))
+			var/mob/dead/target_observer/tobserver = M
+			if(!tobserver.is_respawnable)
+				continue
+
+		if((isflockmob(M)) || (M.client.holder && !M.client.player_mode) || is_dead_observer)
 			thisR = rendered
-		if(flock?.snooping && M.client && M.robot_talk_understand)
+		if((M.robot_talk_understand || istype(M, /mob/living/intangible/aieye)) && (!involuntary && mob_speaking || prob(30)))
 			thisR = siliconrendered
 		if(istype(M, /mob/living/intangible/flock/flockmind) && !(istype(mob_speaking, /mob/living/intangible/flock/flockmind)) && M:flock == flock)
 			thisR = flockmindRendered

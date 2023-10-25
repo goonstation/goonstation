@@ -1,16 +1,15 @@
 /mob/living/critter/robotic/scuttlebot
 	name = "scuttlebot"
 	desc = "A strangely hat shaped robot looking to spy on your deepest secrets"
-	density = 0
-	custom_gib_handler = /proc/gibs
+	icon = 'icons/mob/critter/robotic/scuttlebot.dmi'
+	icon_state = "scuttlebot"
 	flags = TABLEPASS | DOORPASS
 	hand_count = 1
-	can_help = 1
-	can_throw = 1
-	can_grab = 0
-	can_disarm = 1
-	fits_under_table = 1
-	icon_state = "scuttlebot"
+	can_help = TRUE
+	can_throw = TRUE
+	can_grab = FALSE
+	can_disarm = TRUE
+	fits_under_table = TRUE
 	speechverb_say = "beeps"
 	speechverb_exclaim = "boops"
 	speechverb_ask = "beeps curiously"
@@ -59,8 +58,20 @@
 
 			if ("fart")
 				if (src.emote_check(voluntary, 50))
-					playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, 1, pitch=1.4, channel=VOLUME_CHANNEL_EMOTE)
+					playsound(src, 'sound/voice/farts/poo2_robot.ogg', 50, TRUE, pitch=1.4, channel=VOLUME_CHANNEL_EMOTE)
 					return pick("[src] unleashes the tiniest robotic toot.", "[src] sends out a ridiculously pitched fart.")
+
+			if ("burp")
+				if (src.emote_check(voluntary, 50))
+					playsound(src.loc, 'sound/vox/birdwell.ogg', 40, 1, pitch=1.3, channel=VOLUME_CHANNEL_EMOTE)
+					return "<b>[src]</b> birdwells!"
+
+			if ("flip")
+				if (src.emote_check(voluntary, 50))
+					playsound(src.loc, pick(src.sound_flip1, src.sound_flip2), 40, 1, pitch=1.3, channel=VOLUME_CHANNEL_EMOTE)
+					animate_spin(src, pick("L", "R"), 1, 0)
+					return "<b>[src]</b> does a flip!"
+
 		return null
 
 	death(var/gibbed)
@@ -98,6 +109,18 @@
 	add_abilities = list(/datum/targetable/critter/takepicture,
 						/datum/targetable/critter/scuttle_scan,
 						/datum/targetable/critter/control_owner)
+
+	var/obj/item/clothing/head/det_hat/gadget/linked_hat = null
+
+	setup_hands()
+
+	proc/make_inspector()
+		icon_state = "scuttlebot_inspector"
+		src.is_inspector = TRUE
+
+/mob/living/critter/robotic/scuttlebot/ghostplayable // admin gimmick ghost spawnable version
+
+	add_abilities = list(/datum/targetable/critter/takepicture)
 
 	var/obj/item/clothing/head/det_hat/gadget/linked_hat = null
 

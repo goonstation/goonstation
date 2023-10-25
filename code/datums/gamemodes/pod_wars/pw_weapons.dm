@@ -1,13 +1,14 @@
 ///////////////////////////////////////PW Blasters
+TYPEINFO(/obj/item/gun/energy/blaster_pod_wars)
+	mats = 0
+
 /obj/item/gun/energy/blaster_pod_wars
 	name = "blaster pistol"
 	desc = "A dangerous-looking blaster pistol. It's self-charging by a radioactive power cell."
-	icon = 'icons/obj/items/gun.dmi'
 	icon_state = "pw_pistol"
 	item_state = "pw_pistol_nt"
 	w_class = W_CLASS_NORMAL
 	force = 8
-	mats = 0
 	cell_type = /obj/item/ammo/power_cell/self_charging/pod_wars_basic
 
 	var/image/indicator_display = null
@@ -15,8 +16,8 @@
 	var/initial_proj = /datum/projectile/laser/blaster
 	var/team_num = 0	//1 is NT, 2 is Syndicate
 
-	shoot(var/target,var/start,var/mob/user)
-		if (canshoot())
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, start, user)
@@ -29,7 +30,7 @@
 				return ..(target, start, user)
 
 	shoot_point_blank(atom/target, mob/user, second_shot)
-		if (canshoot())
+		if (canshoot(user))
 			if (team_num)
 				if (team_num == get_pod_wars_team_num(user))
 					return ..(target, user)
@@ -49,9 +50,9 @@
 	New()
 		current_projectile = new initial_proj
 		projectiles = list(current_projectile)
-		src.indicator_display = image('icons/obj/items/gun.dmi', "")
+		src.indicator_display = image('icons/obj/items/guns/energy.dmi', "")
 		if(istype(loc, /mob/living))
-			RegisterSignal(loc, COMSIG_MOB_DEATH, .proc/stop_charging)
+			RegisterSignal(loc, COMSIG_MOB_DEATH, PROC_REF(stop_charging))
 		..()
 
 
@@ -92,7 +93,7 @@
 		team_num = 2
 
 /obj/item/ammo/power_cell/higher_power
-	name = "Power Cell - 500"
+	name = "power cell - 500"
 	desc = "A power cell that holds a max of 500PU"
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "power_cell"
@@ -103,31 +104,31 @@
 
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_basic
-	name = "Power Cell - Basic Radioisotope"
+	name = "power cell - basic radioisotope"
 	desc = "A power cell that contains a radioactive material and small capacitor that recharges at a modest rate. Holds 200PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	charge = 200
 	max_charge = 200
-	recharge_rate = 10
+	recharge_rate = 5
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_standard
-	name = "Power Cell - Standard Radioisotope"
+	name = "power cell - standard radioisotope"
 	desc = "A power cell that contains a radioactive material that recharges at a quick rate. Holds 300PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	charge = 300
 	max_charge = 300
-	recharge_rate = 15
+	recharge_rate = 8
 
 /obj/item/ammo/power_cell/self_charging/pod_wars_high
-	name = "Power Cell - Robust Radioisotope "
+	name = "power cell - robust radioisotope"
 	desc = "A power cell that contains a radioactive material and large capacitor that recharges at a modest rate. Holds 350PU."
 	icon = 'icons/obj/items/ammo.dmi'
 	icon_state = "recharger_cell"
 	charge = 350
 	max_charge = 350
-	recharge_rate = 30
+	recharge_rate = 15
 
 //////////survival_machete//////////////
 /obj/item/survival_machete
@@ -172,10 +173,10 @@
 	var/datum/projectile/custom_projectile_type = /datum/projectile/laser/blaster/blast
 	var/pellets_to_fire = 10
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/grenade.ogg', 25, 1)
+			playsound(T, 'sound/weapons/grenade.ogg', 25, TRUE)
 			var/datum/projectile/special/spreader/uniform_burst/circle/PJ = new(T)
 			PJ.pellets_to_fire = src.pellets_to_fire
 			if(src.custom_projectile_type)
@@ -186,10 +187,10 @@
 			if (istype(L))
 
 				// var/datum/projectile/P = new PJ.spread_projectile_type		//dummy projectile to get power level
-				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.power)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
+				L.TakeDamage("chest", 0, ((initial(custom_projectile_type.damage)/4)*pellets_to_fire)/L.get_ranged_protection(), 0, DAMAGE_BURN)
 				L.emote("twitch_v")
 			else
-				shoot_projectile_ST(get_turf(src), PJ, get_step(src, NORTH))
+				shoot_projectile_ST_pixel_spread(get_turf(src), PJ, get_step(src, NORTH))
 			SPAWN(0.1 SECONDS)
 				qdel(src)
 		else
@@ -214,12 +215,12 @@
 	sound_armed = 'sound/weapons/armbomb.ogg'
 	icon_state_armed = "concussion1"
 
-	prime()
+	detonate()
 		var/turf/T = ..()
 		if (T)
-			playsound(T, 'sound/weapons/conc_grenade.ogg', 90, 1)
+			playsound(T, 'sound/weapons/conc_grenade.ogg', 90, TRUE)
 			var/obj/overlay/O = new/obj/overlay(get_turf(T))
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.name = "Explosion"
 			O.layer = NOLIGHT_EFFECTS_LAYER_BASE
 			O.icon = 'icons/effects/64x64.dmi'

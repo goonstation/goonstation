@@ -1,6 +1,6 @@
 /datum/component/loctargeting/mat_triggersonlife
 	dupe_mode = COMPONENT_DUPE_UNIQUE
-	proctype = .proc/triggerMatOnLife
+	proctype = PROC_REF(triggerMatOnLife)
 	signals = list(COMSIG_LIVING_LIFE_TICK)
 	loctype = /mob/living
 

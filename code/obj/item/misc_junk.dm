@@ -24,7 +24,7 @@
 
 /obj/item/gnomechompski
 	name = "Gnome Chompski"
-	desc = "what"
+	desc = "What."
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "gnome"
 	w_class = W_CLASS_BULKY
@@ -36,12 +36,12 @@
 	New()
 		..()
 		processing_items.Add(src)
-		START_TRACKING
+		START_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 		BLOCK_SETUP(BLOCK_TANK)
 
 	disposing()
 		. = ..()
-		STOP_TRACKING
+		STOP_TRACKING_CAT(TR_CAT_GHOST_OBSERVABLES)
 
 	attack_self(mob/user as mob)
 		if(last_laugh + 50 < world.time)
@@ -50,10 +50,12 @@
 			last_laugh = world.time
 
 	process()
+		if (src.anchored)
+			return
 		if (prob(50) || current_state < GAME_STATE_PLAYING) // Takes around 12 seconds for ol chompski to vanish
 			return
 		// No teleporting if youre in a container
-		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living))
+		if (istype(src.loc,/obj/storage) || istype(src.loc,/mob/living) || istype(src.loc,/obj/item/reagent_containers/glass/jar) || istype(src.loc,/obj/cabinet))
 			return
 		// Nobody can ever see Chompski move
 		for (var/mob/M in viewers(src))
@@ -86,6 +88,7 @@
 	desc = "A tube made of cardboard. Extremely non-threatening."
 	stamina_damage = 5
 	stamina_cost = 1
+	hitsound = 'sound/impact_sounds/tube_bonk.ogg'
 
 	New()
 		..()
@@ -123,17 +126,31 @@
 		user.put_in_hand_or_drop(new /obj/item/clothing/head/party)
 		qdel(src)
 
+TYPEINFO(/obj/item/disk)
+	mats = 8
+
 /obj/item/disk
 	name = "disk"
 	icon = 'icons/obj/items/items.dmi'
-	mats = 8
 
 /obj/item/dummy
 	name = "dummy"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
-	flags = TABLEPASS
+	anchored = ANCHORED_ALWAYS
+	flags = TABLEPASS | UNCRUSHABLE
 	burn_possible = 0
+	item_function_flags = IMMUNE_TO_ACID
+
+	disposing()
+		disposed = FALSE
+		..()
+		CRASH("Something tried to delete the can_reach dummy!")
+
+	ex_act()
+		return
+
+	changeHealth(change)
+		return
 
 /obj/item/rubber_chicken
 	name = "Rubber Chicken"
@@ -203,7 +220,7 @@
 	attack(mob/M, mob/user, def_zone)
 		if (ismob(M))
 			user.visible_message("<b>[user]</b> takes a reading with the [src].",\
-			"[M]'s Thetan Level: [user == M ? 0 : rand(1,10)]")
+			"[M]'s Thetan Level: [(user == M) ? 0 : rand(1, 10)]")
 			return
 		else
 			return ..()
@@ -225,7 +242,7 @@
 	if (spam_flag == 0)
 		spam_flag = 1
 
-		playsound(user, 'sound/effects/mag_pandroar.ogg', 100, 0)
+		playsound(user, 'sound/effects/mag_pandroar.ogg', 100, FALSE)
 		for (var/mob/M in view(user))
 			if (M != user)
 				M.change_misstep_chance(50)
@@ -238,7 +255,8 @@
 	desc = "Looks like one of those fair toys."
 	icon = 'icons/obj/items/weapons.dmi'
 	icon_state = "rubber_hammer"
-	flags = FPRINT | ONBELT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	force = 0
 
 	New()
@@ -248,7 +266,7 @@
 	attack(mob/M, mob/user)
 		src.add_fingerprint(user)
 
-		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, 1, -1)
+		playsound(M, 'sound/musical_instruments/Bikehorn_1.ogg', 50, TRUE, -1)
 		playsound(M, "sound/misc/boing/[rand(1,6)].ogg", 20, 1)
 		user.visible_message("<span class='alert'><B>[user] bonks [M] on the head with [src]!</B></span>",\
 							"<span class='alert'><B>You bonk [M] on the head with [src]!</B></span>",\
@@ -262,6 +280,9 @@
 			src.setItemSpecial(/datum/item_special/slam)
 
 
+TYPEINFO(/obj/item/reagent_containers/vape)
+	mats = 6
+
 /obj/item/reagent_containers/vape //yeet
 	name = "e-cigarette"
 	desc = "The pinacle of human technology. An electronic cigarette!"
@@ -271,8 +292,8 @@
 	initial_reagents = "nicotine"
 	item_state = "ecig"
 	icon_state = "ecig"
-	mats = 6
-	flags = FPRINT | TABLEPASS | OPENCONTAINER | ONBELT | NOSPLASH
+	flags = FPRINT | TABLEPASS | OPENCONTAINER | NOSPLASH
+	c_flags = ONBELT
 	var/emagged = 0
 	var/last_used = 0
 	var/list/safe_smokables = list("nicotine", "THC", "CBD")
@@ -350,15 +371,15 @@
 					PH = usr.l_hand
 				else
 					PH = usr.r_hand
-				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
-					target_loc = PH.parent.linked.handset.holder.loc
+				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.get_holder())
+					target_loc = PH.parent.linked.handset.get_holder().loc
 
 
 			R.my_atom = src
 			src.reagents.trans_to(usr, 5)
 			src.reagents.trans_to_direct(R, 5)
-			if(PH?.parent.linked?.handset?.holder)
-				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.holder))
+			if(PH?.parent.linked?.handset?.get_holder())
+				smoke_reaction(R, range, get_turf(PH.parent.linked.handset.get_holder()))
 			else
 				smoke_reaction(R, range, get_turf(usr))
 			particleMaster.SpawnSystem(new /datum/particleSystem/blow_cig_smoke(target_loc, NORTH))
@@ -378,8 +399,8 @@
 			else
 				usr.visible_message("<span class='alert'><B>[usr] blows a cloud of smoke right into the phone! They look [pick("really lame", "like a total dork", "unbelievably silly", "a little ridiculous", "kind of pathetic", "honestly pitiable")]. </B></span>",\
 				"<span class='alert'>You puff on the ecig and blow a cloud of smoke right into the phone. You feel [pick("really cool", "totally awesome", "completely euphoric", "like the coolest person in the room", "like everybody respects you", "like the latest trend-setter")].</span>")
-				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.holder)
-					boutput(PH.parent.linked.handset.holder,"<span class='alert'><B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
+				if(PH.parent.linked && PH.parent.linked.handset && PH.parent.linked.handset.get_holder())
+					boutput(PH.parent.linked.handset.get_holder(),"<span class='alert'><B>[usr] blows a cloud of smoke right through the phone! What a total [pick("dork","loser","dweeb","nerd","useless piece of shit","dumbass")]!</B></span>")
 
 			logTheThing(LOG_COMBAT, usr, "vapes a cloud of [log_reagents(src)] at [log_loc(target_loc)].")
 			last_used = world.time
@@ -420,7 +441,7 @@
 /obj/item/wrestlingbell
 	name = "Wrestling bell"
 	desc = "A bell used to signal the start of a wrestling match"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	icon = 'icons/obj/wrestlingbell.dmi'
 	icon_state = "wrestlingbell"
@@ -437,7 +458,7 @@
 /obj/item/trophy
 	name = "trophy"
 	desc = "You're winner! You did it! You did the thing! Good job!"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 0
 	icon = 'icons/obj/junk.dmi'
 	icon_state = "trophy"
@@ -490,7 +511,7 @@
 			boutput(owner, "<h3><span class='alert'>You have held [src.name] long enough! Good job!</span></h3>")
 			if(owner?.client)
 				src.set_loc(pick_landmark(LANDMARK_ASS_ARENA_SPAWN))
-				INVOKE_ASYNC(owner.client, /client.proc/respawn_target, owner, 1)
+				INVOKE_ASYNC(owner.client, TYPE_PROC_REF(/client, respawn_target), owner, 1)
 				DEBUG_MESSAGE("[owner.name] has been ass arena respawned!")
 				owner.gib()
 				owner = null
@@ -588,3 +609,64 @@
 		user.put_in_hand_or_drop(g)
 		user.visible_message("<span style=\"color:red\">[user.name] unwraps [g]!</span>")
 		qdel(src)
+
+/obj/item/nuclear_waste
+	name = "radioactive waste"
+	desc = "Radioactive waste produced as a by product of reprocessing fuel. It may still contain some fuel to be extracted."
+	icon = 'icons/misc/reactorcomponents.dmi'
+	icon_state = "waste"
+	default_material = "slag"
+
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/radioactive, 20, FALSE, FALSE, 1)
+
+	ex_act(severity) //blowing up nuclear waste is always a good idea
+		var/turf/current_loc = get_turf(src)
+		var/datum/gas_mixture/leak_gas = new/datum/gas_mixture()
+		leak_gas.radgas += 100
+		current_loc.assume_air(leak_gas)
+		qdel(src)
+
+/obj/tombstone/nuclear_warning
+	name = "inscribed stone"
+	desc = {"A stone block, inscribed with a message. It says:<br>
+	This place is a message... and part of a system of messages... pay attention to it!<br>
+    Sending this message was important to us. We considered ourselves to be a powerful culture.<br>
+    This place is not a place of honor... no highly esteemed deed is commemorated here... nothing valued is here.<br>
+    What is here was dangerous and repulsive to us. This message is a warning about danger.<br>
+    The danger is in a particular location... it increases towards a center... the center of danger is here... of a particular size and shape, and below us.<br>
+    The danger is still present, in your time, as it was in ours.<br>
+    The danger is to the body, and it can kill.<br>
+    The form of the danger is an emanation of energy.<br>
+    The danger is unleashed only if you substantially disturb this place physically. This place is best shunned and left uninhabited.<br>
+	<br>
+	...spooky!"}
+
+/obj/item/boarvessel
+	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	desc = "Oh my God! A REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
+	icon_state = "boarvessel"
+
+	attack_self(mob/user as mob)
+		user.visible_message("<span class='notice'>[user] pets [src]!</span>", "<span class='notice'>You pet [src]!</span>")
+
+/obj/item/boarvessel/forgery
+	name = "\improper Boar Vessel, 600-500 BC, Etruscan, ceramic"
+	desc = "Whatever, it's probably not a REAL Boar Vessel, 600-500 BC, Etruscan, ceramic."
+
+	New()
+		. = ..()
+		src.AddComponent(/datum/component/radioactive, 1, FALSE, FALSE, 1)
+
+/obj/item/yoyo
+	name = "Atomic Yo-Yo"
+	desc = "Molded into the transparent neon plastic are the words \"ATOMIC CONTAGION F VIRAL YO-YO.\"  It's as extreme as the 1990s."
+	icon = 'icons/obj/items/items.dmi'
+	icon_state = "yoyo"
+	item_state = "yoyo"
+	inhand_image_icon = 'icons/mob/inhand/hand_general.dmi'
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_ROPE)

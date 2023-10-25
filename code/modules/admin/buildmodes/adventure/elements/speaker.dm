@@ -2,7 +2,7 @@
 	name = "AB CREATE: Speaker"
 	var/speaker_name
 	var/speaker_type
-	var/speaker_anchored = 1
+	var/speaker_anchored = ANCHORED
 	var/color_rgb = ""
 	var/message
 
@@ -42,7 +42,7 @@
 /obj/adventurepuzzle/triggerable/speaker
 	name = "speaker"
 	desc = "A strange device that emits sound, truly the future."
-	anchored = 1
+	anchored = ANCHORED
 	var/speaker_type
 	var/message
 	var/floating_text = FALSE

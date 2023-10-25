@@ -6,9 +6,9 @@
 	icon_state = "c_box"
 	item_state = "c_box"
 	density = 1
-	see_face = 0
+	see_face = FALSE
 	over_hair = 1
-	wear_layer = MOB_OVERLAY_BASE
+	wear_layer = MOB_LAYER_OVER_FUCKING_EVERYTHING_LAYER
 	c_flags = COVERSEYES | COVERSMOUTH
 	body_parts_covered = HEAD|TORSO|LEGS|ARMS
 	hides_from_examine = C_UNIFORM|C_GLOVES|C_SHOES|C_EARS|C_GLASSES|C_MASK
@@ -53,7 +53,7 @@
 				block_vision = 0
 				src.UpdateOverlays(image(src.icon, "eyeholes"), "eyeholes")
 				src.wear_image.overlays += image(src.wear_image_icon, "eyeholes")
-				playsound(src, 'sound/items/Scissor.ogg', 100, 1)
+				playsound(src, 'sound/items/Scissor.ogg', 100, TRUE)
 				user.visible_message("<span class='notice'>[user] cuts eyeholes out of [src].</span>",\
 				"<span class='notice'>You cut eyeholes out of [src].</span>")
 		else if (istype(W, /obj/item/pen/crayon))

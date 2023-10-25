@@ -27,7 +27,7 @@
 				return
 
 			if ("reboot")
-				if(command_list.len >= 1)
+				if(length(command_list) >= 1)
 					//for(var/t in command_list)
 					//	command_list -= t
 					var/t = command_list[1]
@@ -40,7 +40,7 @@
 						print_text("Unknown system: [lowertext(t)]")
 
 			if ("set_power","spwr")
-				if(command_list.len == 2)
+				if(length(command_list) == 2)
 					var/system = command_list[1]
 					var/percentage = command_list[2]
 

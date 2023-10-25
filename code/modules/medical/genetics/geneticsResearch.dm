@@ -311,6 +311,21 @@ var/datum/geneticsResearchManager/genResearch = new()
 		genResearch.max_material += 50
 		..()
 
+/datum/geneticsResearchEntry/gene_booth_speedup_complex
+	name = "Complex Gene Booth Acceleration"
+	desc = "Increases the working speed of the Gene Booth by an additional +25%."
+	researchTime = 1200
+	researchCost = 150
+	tier = 2
+	requiredMutRes = list("early_secret_access")
+	requiredResearch = list(/datum/geneticsResearchEntry/genebooth)
+
+	onFinish()
+		var/obj/machinery/genetics_booth/type = /obj/machinery/genetics_booth
+		type.process_speedup += 0.25
+		type = type // we get warned about type being defined but unused and idk how else to make byond shut up
+		..()
+
 // TIER TWO
 
 /datum/geneticsResearchEntry/reclaimer
@@ -349,6 +364,20 @@ var/datum/geneticsResearchManager/genResearch = new()
 	researchCost = 120
 	tier = 2
 	requiredResearch = list(/datum/geneticsResearchEntry/rademitter)
+
+/datum/geneticsResearchEntry/gene_booth_speedup
+	name = "Gene Booth Injection Speedup"
+	desc = "Increases the working speed of the Gene Booth by 25%."
+	researchTime = 1200
+	researchCost = 75
+	tier = 2
+	requiredResearch = list(/datum/geneticsResearchEntry/genebooth)
+
+	onFinish()
+		var/obj/machinery/genetics_booth/type = /obj/machinery/genetics_booth
+		type.process_speedup += 0.25
+		type = type
+		..()
 
 // TIER THREE
 
@@ -396,6 +425,21 @@ var/datum/geneticsResearchManager/genResearch = new()
 
 	onFinish()
 		genResearch.emitter_radiation -= 30
+		..()
+
+
+/datum/geneticsResearchEntry/gene_booth_speedup_biotic
+	name = "Biotic Gene Booth Injection"
+	desc = "Increases the working speed of the Gene Booth by an additional +25%."
+	researchTime = 1800
+	researchCost = 100
+	tier = 3
+	requiredResearch = list(/datum/geneticsResearchEntry/genebooth, /datum/geneticsResearchEntry/gene_booth_speedup)
+
+	onFinish()
+		var/obj/machinery/genetics_booth/type = /obj/machinery/genetics_booth
+		type.process_speedup += 0.25
+		type = type
 		..()
 
 // TIER FOUR

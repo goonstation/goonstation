@@ -1,3 +1,4 @@
+#ifdef ENABLE_ARTEMIS
 /datum/game_mode/artemis_freeroam
 	name = "free roam"
 	config_tag = "freeroam"
@@ -7,9 +8,5 @@
 	boutput(world, "<B>Just have fun!</B>")
 
 /datum/game_mode/artemis_freeroam/pre_setup()
-	for (var/obj/artemis/ship in world)
-		ship.my_galaxy = GALAXY
-		ship.link_stars()
-		ship.link_landmark()
-		GALAXY.bodies += ship.background_ship_datum
 	return 1
+#endif

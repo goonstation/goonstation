@@ -1,9 +1,9 @@
 /obj/machinery/wraith/vortex_wraith
 	name = "Summoning portal"
-	icon = 'icons/obj/objects.dmi'
+	icon = 'icons/obj/wraith_objects.dmi'
 	icon_state = "harbinger_circle_inact"
 	desc = "It hums and thrums as you stare at it. Dark shadows weave in and out of sight within."
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	_health = 25
 	var/list/obj/critter/critter_list = list()
@@ -14,21 +14,21 @@
 	var/next_spawn = 5 SECONDS
 	var/total_mob_value = 0	//Total point value of all linked mobs
 	var/obj/mob_type = null
-	var/random_mode = true
-	var/mob/wraith/master = null
+	var/random_mode = TRUE
+	var/mob/living/intangible/wraith/master = null
 	var/datum/light/light
 	var/datum/light/portal_light
-	var/list/obj/critter/default_mobs = list(/obj/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
+	var/list/obj/critter/default_mobs = list(/mob/living/critter/crunched,	//Useful for random mode or when we dont have a mob_type on spawn
 								/obj/critter/ancient_thing,
-								/obj/critter/ancient_repairbot/security,
-								/obj/critter/mechmonstrositycrawler,
-								/obj/critter/shade,
+								/mob/living/critter/robotic/repairbot/security,
+								/mob/living/critter/robotic/crawler,
+								/mob/living/critter/shade,
 								/obj/critter/bat/buff,
-								/obj/critter/lion,
-								/obj/critter/wraithskeleton,
-								/obj/critter/bear,
-								/obj/critter/brullbar,
-								/obj/critter/gunbot/heavy)
+								/mob/living/critter/bear,
+								/mob/living/critter/lion,
+								/mob/living/critter/skeleton/wraith,
+								/mob/living/critter/brullbar,
+								/mob/living/critter/robotic/gunbot)
 
 	New(var/mob_type_chosen = null)
 		if(mob_type_chosen != null)
@@ -55,8 +55,15 @@
 		if ((src.next_growth != null) && (growth < 4))	//Dont grow if we are at max level
 			if (src.next_growth < TIME)	//Growth grants us more health, spawn range, and spawn cap
 				next_growth = TIME + 10 SECONDS + (growth * 10) SECONDS	//Subsequent levels are slower
-				if (growth == 0)
-					icon_state = "harbinger_circle"
+				switch (growth)
+					if (0)
+						icon_state = "harbinger_circle_2"
+					if (1)
+						icon_state = "harbinger_circle_3"
+					if (2)
+						icon_state = "harbinger_circle_4"
+					if (3)
+						icon_state = "harbinger_circle_5"
 				growth++
 				src._health += 10
 				src.mob_value_cap += 5
@@ -95,7 +102,7 @@
 				portal_light.set_color(150, 40, 40)
 				portal_light.attach(portal)
 				portal_light.enable()
-				playsound(chosen_turf, "sound/effects/flameswoosh.ogg" , 80, 1)
+				playsound(chosen_turf, 'sound/effects/flameswoosh.ogg' , 80, 1)
 				SPAWN(3 SECOND)
 					animate(portal, alpha=0, time=1 SECONDS)
 					SPAWN(1 SECOND)
@@ -106,6 +113,9 @@
 					minion_value = getMobValue(src.mob_type)
 					if ((src.total_mob_value + minion_value) <= src.mob_value_cap)
 						var/obj/minion = new src.mob_type(chosen_turf)
+						if (ismobcritter(minion))
+							var/mob/living/critter/C = minion
+							C.faction |= FACTION_WRAITH
 						src.critter_list += minion
 						minion.alpha = 0
 						animate(minion, alpha=255, time = 2 SECONDS)
@@ -139,25 +149,25 @@
 
 	proc/getMobValue(var/obj/O)
 		switch (O)
-			if (/obj/critter/bear)
+			if (/mob/living/critter/bear)
 				return 10
-			if (/obj/critter/wraithskeleton)
+			if (/mob/living/critter/skeleton/wraith)
 				return 4
-			if (/obj/critter/shade)
+			if (/mob/living/critter/shade)
 				return 4
-			if (/obj/critter/crunched)
+			if (/mob/living/critter/crunched)
 				return 4
 			if (/obj/critter/bat/buff)
 				return 3
-			if (/obj/critter/lion)
+			if (/mob/living/critter/lion)
 				return 5
-			if (/obj/critter/brullbar)
+			if (/mob/living/critter/brullbar)
 				return 15
-			if (/obj/critter/gunbot/heavy)
+			if (/mob/living/critter/robotic/gunbot)
 				return 15
 			if (/obj/critter/ancient_thing)
 				return 7
-			if (/obj/critter/mechmonstrositycrawler)
+			if (/mob/living/critter/robotic/crawler)
 				return 4
 			else	//You never know, lets give an average point cost
 				return 6

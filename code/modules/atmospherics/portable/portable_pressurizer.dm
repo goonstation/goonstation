@@ -22,6 +22,9 @@
  * 	Allows for input/output of enviromental air and will convert objects made of materials that produce gas to.. gas.
  * 	Once sufficient pressure has been reached it can be released spreading it across the current airgroup with a minor stun explosion.
   */
+TYPEINFO(/obj/machinery/portable_atmospherics/pressurizer)
+	mats = list("MET-1" = 15, "MET-2" = 3, "INS-1" = 3, "CON-1" = 10)
+
 /obj/machinery/portable_atmospherics/pressurizer
 	name = "Extreme-Pressure Pressurization Device"
 	desc = "Some kind of nightmare contraption to make a lot of noise or pressurize rooms."
@@ -51,7 +54,6 @@
 	var/process_rate = 2
 	var/powconsumption = 0
 	var/emagged = 0
-	mats = list("MET-1" = 15, "MET-2" = 3, "INS-1" = 3, "CON-1" = 10)
 
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_WRENCH | DECON_WELDER | DECON_MULTITOOL
 
@@ -144,7 +146,7 @@
 			material_progress = 0
 			if(length(src.contents))
 				target_material = pick(src.contents)
-				if((target_material.amount > 1) && (target_material.material?.name in src.whitelist))
+				if((target_material.amount > 1) && (target_material.material?.getName() in src.whitelist))
 					var/atom/movable/splitStack = target_material.split_stack(target_material.amount-1)
 					splitStack.set_loc(src)
 				target_material.set_loc(null)
@@ -160,8 +162,8 @@
 			var/progress = min(src.process_rate * 5,100-material_progress)
 			var/datum/gas_mixture/GM = new /datum/gas_mixture
 			GM.temperature = T20C
-			if(target_material.material?.name in src.whitelist)
-				switch(target_material.material.name)
+			if(target_material.material?.getName() in src.whitelist)
+				switch(target_material.material.getName())
 					if("molitz")
 						GM.oxygen += 1500 * progress / 100
 					if("viscerite")
@@ -218,14 +220,13 @@
 			var/obj/item/satchel/S = I
 			for(var/obj/item/O in S.contents) O.set_loc(src)
 			S.UpdateIcon()
+			S.tooltip_rebuild = 1
 			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
 			return
-		if (istype(I,/obj/item/storage/) && I.contents.len)
-			var/obj/item/storage/S = I
-			for(var/obj/item/O in S)
-				O.set_loc(src)
-				S.hud.remove_object(O)
-			user.visible_message("<b>[user.name]</b> dumps out [S] into [src].")
+		if (length(I.storage?.get_contents()))
+			for(var/obj/item/O in I.storage.get_contents())
+				I.storage.transfer_stored_item(O, src, user = user)
+				user.visible_message("<b>[user.name]</b> dumps out [I] into [src].")
 			return
 
 		var/obj/item/grab/G = I

@@ -1,8 +1,11 @@
+TYPEINFO(/obj/critter/gunbot)
+	mats = 8
+
 /obj/critter/gunbot
 	name = "Robot"
 	desc = "A Security Robot, something seems a bit off."
-	icon = 'icons/mob/robots.dmi'
-	icon_state = "syndibot"
+	icon = 'icons/mob/critter/robotic/gunbot.dmi'
+	icon_state = "gunbot_light"
 	density = 1
 	health = 50
 	aggressive = 1
@@ -15,11 +18,10 @@
 	firevuln = 0.5
 	brutevuln = 1
 	is_syndicate = 1
-	mats = 8
 	deconstruct_flags = DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 
 	seek_target()
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		for (var/mob/living/C in hearers(src.seekrange,src))
 			if (!src.alive) break
 			if (C.health < 0) continue

@@ -1,8 +1,10 @@
+#define ORDER_LABEL_MAX_LEN 32 // The "order label" refers to the label you can specify when ordering something through cargo.
+
 /datum/rockbox_globals
 	var/const/rockbox_standard_fee = 5
 	var/rockbox_client_fee_min = 1
 	var/rockbox_client_fee_pct = 10
-	var/rockbox_premium_purchased = 0
+	var/rockbox_premium_purchased = 1
 
 var/global/datum/rockbox_globals/rockbox_globals = new /datum/rockbox_globals
 
@@ -139,7 +141,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	New()
 		..()
-		MAKE_SENDER_RADIO_PACKET_COMPONENT(null, FREQ_STATUS_DISPLAY)
+		MAKE_SENDER_RADIO_PACKET_COMPONENT("pda", FREQ_PDA)
 
 /obj/machinery/computer/supplycomp/emag_act(var/mob/user, var/obj/item/card/emag/E)
 	if(!hacked)
@@ -147,6 +149,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			boutput(user, "<span class='notice'>The intake safety shorts out. Special supplies unlocked.</span>")
 		shippingmarket.launch_distance = 200 // dastardly
 		src.hacked = 1
+		src.req_access = list()
 		return 1
 	return 0
 
@@ -155,6 +158,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		return 0
 	if(user)
 		boutput(user, "<span class='notice'>Treacherous supplies removed.</span>")
+	src.req_access = initial(src.req_access)
 	src.hacked = 0
 	return 1
 
@@ -348,15 +352,12 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	</style>
 	<script type="text/javascript">
-	// apparently just normal ol "a href=#fuck" links dont work in byond
-	// im at a loss for words
-	function are_you_fucking_shitting_me(h) {
-		var top = document.getElementById(h).offsetTop;
-		window.scrollTo(0, top - 65); /* ehhhhHHHHHHHHhhhhhhhhhhh */
-	}
-
-	// lol because chui uses its own shitty inner scrolling crap this doesnt work OH WELL
-	// if u use chui u get nothing good day sir.
+		// same-page anchor "a href=#id" links dont work in byond
+		// doesn't work for CHUI as it has its own scrolling logic
+		function scroll_to_id(h) {
+			var top = document.getElementById(h).offsetTop;
+			window.scrollTo(0, top);
+		}
 	</script>
 
 	<div id="fakeTopBar">
@@ -484,7 +485,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				for (var/foundCategory in global.QM_CategoryList)
 					//var/categorycolor = random_color() //I must say, I simply love the colors this generates.
 
-					. += "[catnum ? " &middot; " : ""] <a href='javascript:are_you_fucking_shitting_me(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
+					. += "[catnum ? " &middot; " : ""] <a href='javascript:scroll_to_id(\"category-[catnum]\");' style='white-space: nowrap; display: inline-block; margin: 0 0.2em;'>[foundCategory]</a> "
 
 					ordershit += {"
 			<a name='category-[catnum]' id='category-[catnum]'></a><h3>[foundCategory]</h3>
@@ -530,11 +531,17 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 					var/datum/supply_packs/P = O.object
 					shippingmarket.supply_requests -= O
 					if(wagesystem.shipping_budget >= P.cost)
-						wagesystem.shipping_budget -= P.cost
 						O.object = P
 						O.orderedby = usr.name
 						var/default_comment = ""
-						O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
+						O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = TRUE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
+						if (isnull(O.comment))
+							shippingmarket.supply_requests += O
+							return .("list") // The user cancelled the order
+						O.comment = html_encode(O.comment)
+						wagesystem.shipping_budget -= P.cost
+						if (O.address)
+							src.send_pda_message(O.address, "Your order of [P.name] has been approved.")
 						var/obj/storage/S = O.create(usr)
 						shippingmarket.receive_crate(S)
 						logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -544,6 +551,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 						. = {"<strong>Thanks for your order.</strong>"}
 					else
 						. = {"<strong>Insufficient funds in shipping budget.</strong>"}
+						shippingmarket.supply_requests += O
 				else
 					//Comes from the orderform
 
@@ -562,11 +570,14 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 							return
 
 						if(wagesystem.shipping_budget >= P.cost)
-							wagesystem.shipping_budget -= P.cost
 							O.object = P
 							O.orderedby = usr.name
 							var/default_comment = ""
-							O.comment = copytext(html_encode(input(usr,"Comment:","Enter comment",default_comment)), 1, MAX_MESSAGE_LEN)
+							O.comment = tgui_input_text(usr, "Comment:", "Enter comment", default_comment, multiline = FALSE, max_length = ORDER_LABEL_MAX_LEN, allowEmpty = TRUE)
+							if (isnull(O.comment))
+								return .("list") // The user cancelled the order
+							O.comment = html_encode(O.comment)
+							wagesystem.shipping_budget -= P.cost
 							var/obj/storage/S = O.create(usr)
 							shippingmarket.receive_crate(S)
 							logTheThing(LOG_STATION, usr, "ordered a [P.name] at [log_loc(src)].")
@@ -590,25 +601,33 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 
 	requests(subaction, href_list)
-		switch (subaction)
-			if (null, "list")
-				. = "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
-				for(var/datum/supply_order/SO in shippingmarket.supply_requests)
-					. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
+		if (!isnull(subaction))
+			switch (subaction)
+				if ("remove")
+					var/datum/supply_order/order = locate(href_list["what"]) in shippingmarket.supply_requests
+					if(!istype(order))
+						return
+					if (order.address)
+						src.send_pda_message(order.address, "Your order of [order.object.name] has been denied.")
+					shippingmarket.supply_requests -= order
+					. = {"Request denied.<br>"}
 
-				. += {"</ul>"}
-				return .
+				if ("clear")
+					var/orderers = list()
+					for(var/datum/supply_order/order as anything in shippingmarket.supply_requests)
+						if (order.address)
+							orderers += order.address
+					for(var/orderer in uniquelist(orderers))
+						src.send_pda_message(orderer, "Your orders have been denied.")
+					shippingmarket.supply_requests = null
+					shippingmarket.supply_requests = new/list()
+					. = {"All requests have been cleared.<br>"}
 
-			if ("remove")
-				shippingmarket.supply_requests -= locate(href_list["what"])
-				// todo: fancy "your request got denied, doofus" message?
-				. = {"Request denied."}
+		. += "<h2>Current Requests</h2><br><a href='[topicLink("requests", "clear")]'>Clear all</a><br><ul>"
+		for(var/datum/supply_order/SO in shippingmarket.supply_requests)
+			. += "<li>[SO.object.name], requested by [SO.orderedby] from [SO.console_location]. Price: [SO.object.cost] <a href='[topicLink("order", "buy", list(what = "\ref[SO]"))]'>Approve</a> <a href='[topicLink("requests", "remove", list(what = "\ref[SO]"))]'>Deny</a></li>"
 
-			if ("clear")
-				shippingmarket.supply_requests = null
-				shippingmarket.supply_requests = new/list()
-				// todo: message people that their stuff's been denied?
-				. = {"All requests have been cleared."}
+		. += {"</ul>"}
 
 		return .
 
@@ -616,9 +635,9 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		switch (subaction)
 			if (null, "list")
 				. = {"<h2>Rockbox™ Ore Cloud Storage Service Settings:</h2><ul><br>
-					<B>Rockbox™ Fees:</B> $[!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>
+					<B>Rockbox™ Fees:</B> [!rockbox_globals.rockbox_premium_purchased ? rockbox_globals.rockbox_standard_fee : 0][CREDIT_SIGN] per ore [!rockbox_globals.rockbox_premium_purchased ? "(Purchase our <A href='[topicLink("rockbox_controls", "premium_service")]'>Premium Service</A> to remove this fee!)" : ""]<BR>
 					<B>Client Quartermaster Transaction Fee:</B> <A href='[topicLink("rockbox_controls", "fee_pct")]'>[rockbox_globals.rockbox_client_fee_pct]%</A><BR>
-					<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>$[rockbox_globals.rockbox_client_fee_min]</A><BR>
+					<B>Client Quartermaster Transaction Fee Per Ore Minimum:</B> <A href='[topicLink("rockbox_controls", "fee_min")]'>[rockbox_globals.rockbox_client_fee_min][CREDIT_SIGN]</A><BR>
 					</ul>"}
 
 				return
@@ -647,7 +666,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 				fee_min = input(usr,"What fee min would you like to set? (Min 0)","Minimum Fee per Transaction in Credits:",) as num
 				fee_min = max(0,fee_min)
 				rockbox_globals.rockbox_client_fee_min = fee_min
-				. = {"Minimum Fee per Transaction is now $[rockbox_globals.rockbox_client_fee_min]"}
+				. = {"Minimum Fee per Transaction is now [rockbox_globals.rockbox_client_fee_min][CREDIT_SIGN]"}
 
 		return
 
@@ -1021,10 +1040,8 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 			if(RC)
 				if(RC.pinned)
 					RC.pinned = FALSE
-					shippingmarket.has_pinned_contract = FALSE
-				else if(!shippingmarket.has_pinned_contract)
+				else
 					RC.pinned = TRUE
-					shippingmarket.has_pinned_contract = TRUE
 			src.requisitions_update()
 
 		if ("requis_list")
@@ -1050,16 +1067,21 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 
 /obj/machinery/computer/supplycomp/proc/requisitions_update()
-	src.temp = "<h2>Open Requisition Contracts</h2><div style='text-align: center;'>"
-	src.temp += "To fulfill these contracts, please send full requested<br>"
-	src.temp += "complement of items with the contract's Requisitions tag.<br>"
-	src.temp += "Insufficient or extra items will be returned to you.<br><br>"
-	src.temp += "One contract at a time may be pinned, which reserves it<br>"
-	src.temp += "for your use, even through market shifts.<br><br>"
-	src.temp += "When fulfilling third-party contracts, you <B>must</B><br>"
-	src.temp += "send the included requisition sheet; please be aware<br>"
-	src.temp += "<B>third-party returns are at clients' discretion</B><br>"
-	src.temp += "and your shipment may not be returned if insufficient."
+	src.temp = {"<h2>Open Requisition Contracts</h2><div style='text-align: center;'>
+	To fulfill these contracts, please send full requested<br>
+	complement of items with the contract's Requisitions tag.<br>
+	<br>
+	<B>Items packed for requisition can be validated with a<br>
+	standard cargo appraiser; ensure correct label is applied.</B><br>
+	Insufficient or extra items will be returned to you.<br>
+	<br>
+	Most contracts may be "pinned", which reserves them<br>
+	for your use, even through market shifts.<br>
+	<br>
+	When fulfilling third-party contracts, you <B>must</B><br>
+	send the included requisition sheet; please be aware<br>
+	<B>third-party returns are at clients' discretion</B><br>
+	and your shipment may not be returned if insufficient."}
 	for (var/datum/req_contract/RC in shippingmarket.req_contracts)
 		src.temp += "<h3>[RC.name][RC.pinned ? " (Pinned)" : null]</h3>"
 		src.temp += "Contract Reward:"
@@ -1091,12 +1113,20 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 	src.printing = 1
 	playsound(src.loc, 'sound/machines/printer_thermal.ogg', 60, 0)
 	SPAWN(2 SECONDS)
-		var/obj/item/paper/thermal/P = new(src.loc)
+		var/obj/item/paper/P = new(src.loc)
 		P.info = "<font face='System' size='2'><center>REQUISITION CONTRACT MANIFEST<br>"
 		P.info += "FOR SUPPLIER REFERENCE ONLY<br><br>"
 		P.info += uppertext(contract.requis_desc)
+		if(contract.payout > 0 || length(contract.item_rewarders) && !contract.hide_item_payouts)
+			P.info += "<br>CONTRACT REWARD:"
+			if(contract.payout > 0) P.info += "<br>[contract.payout] CREDITS"
+			if(!contract.hide_item_payouts)
+				for(var/datum/rc_itemreward/RI in contract.item_rewarders)
+					if(RI.count) P.info += "<br>[RI.count]X [uppertext(RI.name)]"
+					else P.info += "<br>[uppertext(RI.name)]"
 		P.info += "</center></font>"
 		P.name = "Requisition: [contract.name]"
+		P.icon_state = "thermal_paper"
 		src.printing = 0
 
 /obj/machinery/computer/supplycomp/proc/trader_dialogue_update(var/dialogue,var/datum/trader/T)
@@ -1114,7 +1144,7 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 
 	var/topMenu = {"
 		<h2>Trader Communications</h2>
-		<div style='float: right;'><a href='[topicLink("trader_cart", "\ref[T]")]'>🛒 [cart_items] item\s ($[cart_price])</a></div>
+		<div style='float: right;'><a href='[topicLink("trader_cart", "\ref[T]")]'>🛒 [cart_items] item\s ([cart_price][CREDIT_SIGN])</a></div>
 		[T.goods_sell.len ? "<a href='[topicLink("trader_selling", "\ref[T]")]'>Selling ([T.goods_sell.len])</a>" : ""]
 		[T.goods_sell.len && T.goods_buy.len ? " &bull; " : ""]
 		[T.goods_buy.len ? "<a href='[topicLink("trader_buying", "\ref[T]")]'>Buying ([T.goods_buy.len])</a>" : ""]
@@ -1269,11 +1299,15 @@ var/global/datum/cdc_contact_controller/QM_CDC = new()
 		return 0
 	return 1
 
-/obj/machinery/computer/supplycomp/proc/post_signal(var/command)
-	var/datum/signal/status_signal = get_free_signal()
-	status_signal.source = src
-	status_signal.transmission_method = 1
-	status_signal.data["command"] = command
-	status_signal.data["address_tag"] = "STATDISPLAY"
+/obj/machinery/computer/supplycomp/proc/send_pda_message(address, message)
+	var/datum/signal/newsignal = get_free_signal()
+	newsignal.source = src
+	newsignal.data["command"] = "text_message"
+	newsignal.data["sender_name"] = "CARGO-MAILBOT"
+	newsignal.data["message"] = message
+	newsignal.data["address_1"] = address
+	newsignal.data["sender"] = "00000000"
 
-	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, status_signal, null, FREQ_STATUS_DISPLAY)
+	SEND_SIGNAL(src, COMSIG_MOVABLE_POST_RADIO_PACKET, newsignal, null, "pda")
+
+#undef ORDER_LABEL_MAX_LEN

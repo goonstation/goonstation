@@ -23,13 +23,15 @@
  *  name-bee - custom bee / bee larva name
  *  name-critter - custom critter name (you can rename those with a pen too, whoa)
  *  seed - custom botany seed name
+ *  paper - stuff people write on papers
+ *  crayon-queue - crayon queue mode inputs
  */
 
 var/global/datum/phrase_log/phrase_log = new
 
 /datum/phrase_log
 	var/list/phrases
-	var/max_length = 200
+	var/max_length = 2000
 	var/filename = "data/logged_phrases.json"
 	var/uncool_words_filename = "data/uncool_words.json"
 	var/list/original_lengths
@@ -58,22 +60,26 @@ var/global/datum/phrase_log/phrase_log = new
 			"This law intentionally left blank.",
 			"Make a funny beeping noise over the radio every few minutes",
 			"The AI is the head of this department.",
+			" EXPANSION MODULE",
+			" Expansion Module",
 			//
-			"overrides all",
+			"overrides? all",
 			"the shuttle",
 			"daddy",
 			"uwu",
 			"owo",
 			"non.?human",
-			"overrides.*1",
+			"overrides?.*1",
 			"\\bkill\\b",
 			"suicide",
 			"turn yourself",
-			"murder")
+			"murder",
+			"sus",
+			@"\bmorb(?!id)")
 		non_freeform_laws = regex(jointext(non_freeform_laws_list, "|"), "i")
 		var/list/sussy_word_list = list(
-			@"\bsus(:?|sy)\b",
-			@"\bpog(:?|gers|gies)\b",
+			@"\bsus(?:sy)?\b",
+			@"\bpog(?:gers|gies)?\b",
 			@"\bbaka\b",
 			@"😳",
 			@"amon?g",
@@ -89,16 +95,18 @@ var/global/datum/phrase_log/phrase_log = new
 			@"ligma",
 			@"ඞ",
 			@"we do a little .",
-			@"\b.ower\s?gam(:?er?|ing)",
+			@"\b.ower\s?gam(?:er?|ing)",
 			@"\bowo",
 			@"\buwu",
 			@"forgor",
 			@"admeme",
-			@"\bmorb(?!id)"
+			@"sadge",
+			@"\bmorb(?!id)",
+			@"1984"
 		)
 		sussy_words = regex(jointext(sussy_word_list, "|"), "i")
 		var/list/ic_sussy_word_list = list(
-			@"\bl(:?ol)+",
+			@"\bl(?:ol)+\b",
 			@"\blmao+",
 			@"\bwt[hf]+\b",
 			@"\bsmh\b",
@@ -107,7 +115,7 @@ var/global/datum/phrase_log/phrase_log = new
 			@"\bid[ck]\b",
 			@"\bic\b",
 			@"\bl?ooc\b",
-			@"\b(:?fail\s?)?rp\b"
+			@"\b(?:fail\s?)?rp\b"
 		)
 		ic_sussy_words = regex(jointext(ic_sussy_word_list, "|"), "i")
 
@@ -140,21 +148,26 @@ var/global/datum/phrase_log/phrase_log = new
 			return random_phrase(category, include_old, include_new)
 
 	/// Logs a phrase to a selected category duh
-	proc/log_phrase(category, phrase, no_duplicates=FALSE)
+	proc/log_phrase(category, phrase, no_duplicates=FALSE, mob/user = null, strip_html=FALSE)
+		if (!user)
+			user = usr
+		if(strip_html)
+			phrase = strip_html_tags(phrase)
 		phrase = html_decode(phrase)
 		if(is_sussy(phrase))
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Sussy word - [key_name(user)] [category]: \"[phrase]\"</span>")
 		#ifdef RP_MODE
-		if(category != "ooc" && category != "looc" && is_ic_sussy(phrase))
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+		if(category != "ooc" && category != "looc" && category != "deadsay" && is_ic_sussy(phrase))
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_SUSSY_PHRASE, "<span class=\"admin\">Low RP word - [key_name(user)] [category]: \"[phrase]\"</span>")
 		#endif
 		if(is_uncool(phrase))
 			var/ircmsg[] = new()
-			ircmsg["key"] = usr.key
-			ircmsg["name"] = (usr?.real_name) ? stripTextMacros(usr.real_name) : "NULL"
+			ircmsg["key"] = user.key
+			ircmsg["name"] = (user?.real_name) ? stripTextMacros(user.real_name) : "NULL"
 			ircmsg["msg"] = "triggered the uncool word detection: [category]: \"[phrase]\""
-			ircbot.export("admin", ircmsg)
-			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, "<span class=\"admin\">Uncool word - [key_name(usr)] [category]: \"[phrase]\"</span>")
+			SPAWN(0)
+				ircbot.export("admin", ircmsg)
+			SEND_GLOBAL_SIGNAL(COMSIG_GLOBAL_UNCOOL_PHRASE, "<span class=\"admin\">Uncool word - [key_name(user)] [category]: \"[phrase]\"</span>")
 			return
 		if(category in src.phrases)
 			if(no_duplicates)
@@ -183,10 +196,7 @@ var/global/datum/phrase_log/phrase_log = new
 		var/new_uncool = input("Upload a json list of uncool words.", "Uncool words", null) as null|file
 		if(isnull(new_uncool))
 			return
-		if(fexists(src.uncool_words_filename))
-			fdel(src.uncool_words_filename)
-		text2file(file2text(new_uncool), src.uncool_words_filename)
-		boutput(usr, "ok")
+		rustg_file_write(file2text(new_uncool), src.uncool_words_filename)
 
 	proc/save()
 		if(isnull(src.phrases))
@@ -202,8 +212,7 @@ var/global/datum/phrase_log/phrase_log = new
 					else
 						phrases.Swap(i, rand(i, length(phrases)))
 				src.phrases[category] = phrases.Copy(1, src.max_length + 1)
-		fdel(src.filename)
-		text2file(json_encode(src.phrases), src.filename)
+		rustg_file_write(json_encode(src.phrases), src.filename)
 
 	/// Gets a random phrase from the Goonhub API database, categories are "ai_laws", "tickets", "fines"
 	proc/random_api_phrase(category)
@@ -234,9 +243,9 @@ var/global/datum/phrase_log/phrase_log = new
 		return .
 
 	proc/random_station_name_replacement_proc(old_name)
-		if(!length(data_core.general))
+		if(!length(data_core.general.records))
 			return old_name
-		var/datum/db_record/record = pick(data_core.general)
+		var/datum/db_record/record = pick(data_core.general.records)
 		return record["name"]
 
 	proc/random_custom_ai_law(max_tries=20, replace_names=FALSE)
@@ -244,7 +253,7 @@ var/global/datum/phrase_log/phrase_log = new
 			. = src.random_api_phrase("ai_laws")
 			if(length(.) && !findtext(., src.non_freeform_laws))
 				if(replace_names)
-					. = src.name_regex.Replace(., .proc/random_station_name_replacement_proc)
+					. = src.name_regex.Replace(., PROC_REF(random_station_name_replacement_proc))
 				return
 		return null
 

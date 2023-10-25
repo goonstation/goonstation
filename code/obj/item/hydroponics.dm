@@ -10,6 +10,9 @@
 
 //////////////////////////////////////////////// Chainsaw ////////////////////////////////////
 
+TYPEINFO(/obj/item/saw)
+	mats = 12
+
 /obj/item/saw
 	name = "chainsaw"
 	desc = "An electric chainsaw used to chop up harmful plants."
@@ -30,7 +33,7 @@
 	w_class = W_CLASS_BULKY
 	flags = FPRINT | TABLEPASS | CONDUCT
 	tool_flags = TOOL_SAWING
-	mats = 12
+	leaves_slash_wound = TRUE
 	var/sawnoise = 'sound/machines/chainsaw_green.ogg'
 	arm_icon = "chainsaw-D"
 	var/base_arm = "chainsaw"
@@ -132,6 +135,9 @@
 
 /obj/item/saw/abilities = list(/obj/ability_button/saw_toggle)
 
+TYPEINFO(/obj/item/saw/syndie)
+	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
+
 /obj/item/saw/syndie
 	name = "red chainsaw"
 	icon_state = "c_saw_s_off"
@@ -148,7 +154,6 @@
 	throw_range = 5
 	w_class = W_CLASS_BULKY
 	is_syndicate = 1
-	mats = list("MET-2"=25, "CON-1"=5, "POW-2"=5)
 	desc = "A gas powered antique. This one is the real deal. Time for a space chainsaw massacre."
 	contraband = 10 //scary
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
@@ -157,7 +162,7 @@
 	stamina_damage = 100
 	stamina_cost = 30
 	stamina_crit_chance = 40
-	c_flags = EQUIPPED_WHILE_HELD | NOT_EQUIPPED_WHEN_WORN
+	c_flags = EQUIPPED_WHILE_HELD
 
 	setupProperties()
 		. = ..()
@@ -168,9 +173,9 @@
 			return
 		..()
 		if (src.active)
-			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 90, 0)
+			playsound(src, 'sound/machines/chainsaw_red_start.ogg', 90, FALSE)
 		else
-			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, 0)
+			playsound(src, 'sound/machines/chainsaw_red_stop.ogg', 90, FALSE)
 
 	attack(mob/target, mob/user)
 		if(!active)
@@ -338,6 +343,9 @@
 /obj/item/saw/syndie/vr
 	icon = 'icons/effects/VR.dmi'
 
+TYPEINFO(/obj/item/saw/elimbinator)
+	mats = 12
+
 /obj/item/saw/elimbinator
 	name = "The Elimbinator"
 	desc = "Lops off limbs left and right!"
@@ -356,7 +364,6 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_BULKY
-	mats = 12
 	sawnoise = 'sound/machines/chainsaw_red.ogg'
 	hitsound = 'sound/machines/chainsaw_red.ogg'
 	arm_icon = "chainsaw_s-A"
@@ -386,14 +393,16 @@
 
 ////////////////////////////////////// Plant analyzer //////////////////////////////////////
 
-/obj/item/plantanalyzer/
+TYPEINFO(/obj/item/plantanalyzer)
+	mats = 4
+
+/obj/item/plantanalyzer
 	name = "plant analyzer"
 	desc = "A device which examines the genes of plant seeds."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'
 	icon_state = "plantanalyzer"
 	w_class = W_CLASS_TINY
-	flags = ONBELT
-	mats = 4
+	c_flags = ONBELT
 
 	afterattack(atom/A as mob|obj|turf|area, mob/user as mob)
 		if (BOUNDS_DIST(A, user) > 0)
@@ -436,7 +445,7 @@
 				S = new /obj/item/seed
 				S.set_loc(src.loc)
 				S.removecolor()
-			S.generic_seed_setup(selected)
+			S.generic_seed_setup(selected, FALSE)
 
 
 
@@ -453,7 +462,8 @@
 	inhand_image_icon = 'icons/mob/inhand/tools/screwdriver.dmi'
 	icon_state = "trowel"
 
-	flags = FPRINT | TABLEPASS | ONBELT
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBELT
 	w_class = W_CLASS_TINY
 
 	force = 5
@@ -467,7 +477,10 @@
 	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 	rand_pos = 1
-	var/image/plantyboi
+	var/image/plantyboi //! The "plant" overlay of the plant
+	var/image/plantyboi_plantoverlay //! The "plantoverlay" of the plant
+	var/datum/plantgenes/genes //! The genes of the plant when it was plucked
+	var/grow_level = -1 //! The growth level of the plant when it was plucked
 
 	New()
 		..()
@@ -481,10 +494,17 @@
 				if(p.growthmode == "weed")
 					user.visible_message("<b>[user]</b> tries to uproot the [p.name], but it's roots hold firmly to the [pot]!","<span class='alert'>The [p.name] is too strong for you traveller...</span>")
 					return
+				src.genes = pot.plantgenes
+				src.grow_level = pot.grow_level
 				if(pot.GetOverlayImage("plant"))
 					plantyboi = pot.GetOverlayImage("plant")
 					plantyboi.pixel_x = 2
 					src.icon_state = "trowel_full"
+					if(pot.GetOverlayImage("plantoverlay"))
+						plantyboi_plantoverlay = pot.GetOverlayImage("plantoverlay")
+						plantyboi_plantoverlay.pixel_x = 2
+					else
+						plantyboi_plantoverlay = null
 				else
 					return
 				pot.HYPdestroyplant()
@@ -535,7 +555,7 @@
 
 /////////////////////////////////////////// Compost bag ////////////////////////////////////////////////
 
-/obj/item/reagent_containers/glass/compostbag/
+/obj/item/reagent_containers/glass/compostbag
 	name = "compost bag"
 	desc = "A big bag of shit."
 	icon = 'icons/obj/hydroponics/items_hydroponics.dmi'

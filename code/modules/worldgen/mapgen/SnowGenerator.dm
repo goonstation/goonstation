@@ -1,5 +1,5 @@
 //the random offset applied to square coordinates, causes intermingling at biome borders
-//#define BIOME_RANDOM_SQUARE_DRIFT 2
+#define BIOME_RANDOM_SQUARE_DRIFT 2
 
 /datum/map_generator/snow_generator
 	///2D list of all biomes based on heat and humidity combos.
@@ -32,6 +32,8 @@
 	)
 	///Used to select "zoom" level into the perlin noise, higher numbers result in slower transitions
 	var/perlin_zoom = 85
+	wall_turf_type	= /turf/simulated/wall/auto/asteroid/mountain
+	floor_turf_type = /turf/simulated/floor/plating/airless/asteroid/mountain
 
 ///Seeds the rust-g perlin noise with a random number.
 /datum/map_generator/snow_generator/generate_terrain(list/turfs, reuse_seed, flags)
@@ -85,3 +87,13 @@
 			LAGCHECK(LAG_LOW)
 		else
 			LAGCHECK(LAG_HIGH)
+
+
+/turf/simulated/wall/auto/asteroid/mountain/snow
+	replace_type = /turf/simulated/floor/plating/airless/asteroid/desert
+
+/turf/simulated/floor/plating/airless/asteroid/mountain/snow
+	temperature = 235
+
+
+#undef BIOME_RANDOM_SQUARE_DRIFT

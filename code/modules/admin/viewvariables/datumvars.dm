@@ -92,6 +92,13 @@
 		boutput( src, "<span class='alert'>Get down from there!!</span>" )
 		return
 
+	if(src.holder.tempmin)
+		logTheThing(LOG_ADMIN, src, "tried to access the variables of [D]")
+		logTheThing(LOG_DIARY, src, "tried to access the variables of [D]", "admin")
+		message_admins("[key_name(src)] tried to access the variables of [D] but was denied.")
+		alert("You need to be an actual admin to access view variables.")
+		return
+
 	if(D == world && src.holder.level < LEVEL_CODER) // maybe host???
 		src.audit(AUDIT_ACCESS_DENIED, "tried to view variables of world as non-coder.")
 		boutput( src, "<span class='alert'>Get down from there!!</span>" )
@@ -102,10 +109,12 @@
 	if (!D) //Wire: Fix for runtime error: Cannot read null.type (datum having been deleted)
 		return
 
+	#ifndef I_AM_HACKERMAN
 	if(istype(D, /datum/configuration) || istype(D, /datum/admins))
 		boutput(src, "<span class='alert'>YEAH... no....</span>")
 		src.audit(AUDIT_ACCESS_DENIED, "tried to View-Variables a forbidden type([D.type])")
 		return
+	#endif
 
 	if(D != "GLOB")
 		src.audit(AUDIT_VIEW_VARIABLES, "is viewing variables on [D]: [D.type] [istype(D, /atom) ? "at [D:x], [D:y], [D:z]" : ""]")
@@ -151,8 +160,12 @@
 				names += V
 	else
 		for (var/V in D.vars)
+			#ifdef I_AM_HACKERMAN
+			names += V
+			#else
 			if(!istype(D.vars[V], /datum/admins))
 				names += V
+			#endif
 
 	names = sortList(names, /proc/cmp_text_asc)
 	if(D == "GLOB")
@@ -196,9 +209,6 @@
 	html += "<a href='byond://?src=\ref[src];CallProc=\ref[D]'>Call Proc</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];ListProcs=\ref[D]'>List Procs</a>"
 	html += " &middot; <a href='byond://?src=\ref[src];DMDump=\ref[D]'>DM Dump</a>"
-
-	if (src.holder.level >= LEVEL_CODER && D != "GLOB")
-		html += " &middot; <a href='byond://?src=\ref[src];ViewReferences=\ref[D]'>View References</a>"
 
 	html += "<br>"
 	html += {"<a href='byond://?src=\ref[src];Refresh=\ref[D]'>Refresh</a>"}
@@ -397,11 +407,11 @@
 
 	else if (islist(value))
 		var/list/L = value
-		html += "\[[name]\]</th><td>List ([(!isnull(L) && L.len > 0) ? "[L.len] items" : "<em>empty</em>"])"
+		html += "\[[name]\]</th><td>List ([(!isnull(L) && length(L) > 0) ? "[L.len] items" : "<em>empty</em>"])"
 
 		if (L?.len > 0 && !(name == "underlays" || name == "overlays" || name == "vars" || name == "verbs"))
 			// not sure if this is completely right...
-			//if (0) // (L.vars.len > 0)
+			//if (0) // (length(L.vars) > 0)
 			//	html += "<ol>"
 			//	for (var/entry in L)
 			//		html += debug_variable(entry, L[entry], level + 1)
@@ -419,7 +429,7 @@
 					html += debug_variable(L[index], L[L[index]], value, level + 1, max_list_len)
 				else
 					html += debug_variable("[index]", L[index], value, level + 1, max_list_len)
-			if(L.len > max_list_len)
+			if(length(L) > max_list_len)
 				html += "<tr><th>\[...\]</th><td><em class='value'>...</em></td>"
 
 			html += "</tbody></table>"
@@ -628,14 +638,6 @@
 		else
 			audit(AUDIT_ACCESS_DENIED, "tried to replace explosive replica all rude-like.")
 		return
-	if (href_list["ViewReferences"])
-		USR_ADMIN_ONLY
-		if(holder && src.holder.level >= LEVEL_CODER)
-			var/datum/D = locate(href_list["ViewReferences"])
-			usr.client.view_references(D, href_list["window_name"])
-		else
-			audit(AUDIT_ACCESS_DENIED, "tried to view references.")
-		return
 	if (href_list["AddPathogen"])
 		USR_ADMIN_ONLY
 		if(holder && src.holder.level >= LEVEL_PA)
@@ -730,9 +732,11 @@
 /client/proc/set_all(datum/D, variable, val)
 	if(!variable || !D || !(variable in D.vars))
 		return
+	#ifndef I_AM_HACKERMAN
 	if(variable == "holder")
 		boutput(src, "Access denied.")
 		return
+	#endif
 	if(!isadmin(src))
 		boutput(src, "Only administrators may use this command.")
 		return
@@ -749,7 +753,11 @@
 /client/proc/modify_variable(datum/D, variable, set_global = 0)
 	if(D != "GLOB" && (!variable || !D || !(variable in D.vars)))
 		return
+	#ifdef I_AM_HACKERMAN
+	var/list/locked = list()
+	#else
 	var/list/locked = list("vars", "key", "ckey", "client", "holder")
+	#endif
 	var/list/pixel_movement_breaking_vars = list("step_x", "step_y", "step_size", "bound_x", "bound_y", "bound_height", "bound_width", "bounds")
 
 	if(!isadmin(src))
@@ -761,16 +769,19 @@
 			return
 
 	var/var_value = D == "GLOB" ? global.vars[variable] : D.vars[variable]
+	#ifndef I_AM_HACKERMAN
 	if( istype(var_value, /datum/admins) || istype(D, /datum/admins) || var_value == logs || var_value == logs["audit"] )
 		src.audit(AUDIT_ACCESS_DENIED, "tried to assign a value to a forbidden variable.")
 		boutput(src, "You can't set that value.")
 		return
+	#endif
 
 	if (locked.Find(variable) && !(src.holder.rank in list("Host", "Coder", "Administrator")))
 		boutput(usr, "<span class='alert'>You do not have access to edit this variable!</span>")
 		return
 
 	//Let's prevent people from promoting themselves, yes?
+	#ifndef I_AM_HACKERMAN
 	var/list/locked_type = list(/datum/admins) //Short list - might be good if there are more objects that oughta be paws-off
 	if(D != "GLOB" && (D.type == /datum/configuration || (!(src.holder.rank in list("Host", "Coder")) && (D.type in locked_type) )))
 		boutput(usr, "<span class='alert'>You're not allowed to edit [D.type] for security reasons!</span>")
@@ -778,6 +789,7 @@
 		logTheThing(LOG_DIARY, usr, "tried to varedit [D.type] but was denied!", "admin")
 		message_admins("[key_name(usr)] tried to varedit [D.type] but was denied.") //If someone tries this let's make sure we all know it.
 		return
+	#endif
 
 	var/default = suggest_input_type(var_value, variable)
 
@@ -790,10 +802,11 @@
 		else
 			original_name = D:name
 
-	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, DATA_INPUT_MOB_REFERENCE, \
-											DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, DATA_INPUT_ICON, DATA_INPUT_FILE, \
-											DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_JSON, DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, \
-											DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE, DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR), \
+	var/datum/data_input_result/result = src.input_data(list(DATA_INPUT_TEXT, DATA_INPUT_NUM, DATA_INPUT_NUM_ADJUST, DATA_INPUT_TYPE, \
+											DATA_INPUT_MOB_REFERENCE, DATA_INPUT_TURF_BY_COORDS, DATA_INPUT_REFPICKER, DATA_INPUT_NEW_INSTANCE, \
+											DATA_INPUT_ICON, DATA_INPUT_FILE, DATA_INPUT_COLOR, DATA_INPUT_LIST_EDIT, DATA_INPUT_JSON, \
+											DATA_INPUT_LIST_BUILD, DATA_INPUT_MATRIX, DATA_INPUT_NULL, DATA_INPUT_REF, DATA_INPUT_RESTORE, \
+											DATA_INPUT_PARTICLE_EDITOR, DATA_INPUT_FILTER_EDITOR, DATA_INPUT_COLOR_MATRIX_EDITOR), \
 											default = var_value, default_type = default)
 
 	switch(result.output_type) // specified cases are special handling. everything in the `else` is generic cases
@@ -808,7 +821,8 @@
 					x.vars[variable] = initial(x.vars[variable])
 			else
 				if (D == "GLOB")
-					global.vars[variable] = initial(global.vars[variable])
+					// global.vars[variable] = initial(global.vars[variable]) // <- this trick does not work on global.vars
+					boutput(src, "<span class='alert'>You can't restore global variables.</span>")
 				else
 					D.vars[variable] = initial(D.vars[variable])
 
@@ -821,6 +835,11 @@
 			if(src.holder)
 				src.holder.particool = new /datum/particle_editor(D)
 				src.holder.particool.ui_interact(mob)
+
+		if (DATA_INPUT_COLOR_MATRIX_EDITOR)
+			if(src.holder)
+				src.holder.color_matrix_editor = new /datum/color_matrix_editor(src, D)
+				src.holder.color_matrix_editor.ui_interact(mob)
 
 		if (DATA_INPUT_NUM_ADJUST)
 			if (!isnum(var_value))

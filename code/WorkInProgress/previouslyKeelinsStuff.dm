@@ -367,7 +367,7 @@ var/reverse_mode = 0
 						else
 							user.shock(src, rand(5000, 250000), "chest", 1, 1)
 						/*harmless_smoke_puff(get_turf(src))
-						playsound(user, 'sound/effects/ghost2.ogg', 60, 0)
+						playsound(user, 'sound/effects/ghost2.ogg', 60, FALSE)
 						user.flash(60)
 						var/mob/oldmob = user
 						var/mob/dead/observer/O = new/mob/dead/observer()
@@ -444,7 +444,7 @@ var/reverse_mode = 0
 									boutput(user, "<span class='alert'>The relic's power completely overwhelms you!!</span>")
 									using = 1
 									harmless_smoke_puff( get_turf(src) )
-									playsound(user, 'sound/effects/ghost2.ogg', 60, 0)
+									playsound(user, 'sound/effects/ghost2.ogg', 60, FALSE)
 									logTheThing(LOG_COMBAT, user, "was killed by [src] ([src.type]) at [log_loc(user)].")
 									user.flash(60)
 									var/mob/oldmob = user
@@ -458,7 +458,7 @@ var/reverse_mode = 0
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	New()
@@ -472,116 +472,7 @@ var/reverse_mode = 0
 		SPAWN(rand(10,300))
 			src.sparks()
 
-/proc/testa()
-	fake_attack(usr)
 
-/proc/testb()
-	fake_attack(input(usr) as mob in world)
-
-/obj/fake_attacker
-	icon = null
-	icon_state = null
-	name = ""
-	desc = ""
-	density = 0
-	anchored = 1
-	opacity = 0
-	var/mob/living/carbon/human/my_target = null
-	var/weapon_name = null
-	event_handler_flags = USE_FLUID_ENTER
-
-
-	disposing()
-		my_target = null
-		. = ..()
-
-/obj/fake_attacker/attackby()
-	step_away(src,my_target,2)
-	for(var/mob/M in oviewers(world.view,my_target))
-		boutput(M, "<span class='alert'><B>[my_target] flails around wildly.</B></span>")
-	my_target.show_message("<span class='alert'><B>[src] has been attacked by [my_target] </B></span>", 1) //Lazy.
-	return
-
-/obj/fake_attacker/Crossed(atom/movable/M)
-	..()
-	if (M == my_target)
-		step_away(src,my_target,2)
-		if (prob(30))
-			for(var/mob/O in oviewers(world.view , my_target))
-				boutput(O, "<span class='alert'><B>[my_target] stumbles around.</B></span>")
-
-/obj/fake_attacker/New(location, target)
-	..()
-	SPAWN(30 SECONDS)	qdel(src)
-	src.my_target = target
-	step_away(src,my_target,2)
-	process()
-
-/obj/fake_attacker/proc/process()
-	if (!my_target)
-		qdel(src)
-		return
-	if (BOUNDS_DIST(src, my_target) > 0)
-		step_towards(src,my_target)
-	else
-		if (prob(15))
-			if (weapon_name)
-				if (narrator_mode)
-					my_target.playsound_local(my_target.loc, 'sound/vox/weapon.ogg', 50, 0)
-				else
-					my_target.playsound_local(my_target.loc, "sound/impact_sounds/Generic_Hit_[rand(1, 3)].ogg", 50, 1)
-				my_target.show_message("<span class='alert'><B>[my_target] has been attacked with [weapon_name] by [src.name] </B></span>", 1)
-				if (prob(20)) my_target.change_eye_blurry(3)
-				if (prob(33))
-					if (!locate(/obj/overlay) in my_target.loc)
-						fake_blood(my_target)
-			else
-				if (narrator_mode)
-					my_target.playsound_local(my_target.loc, 'sound/vox/hit.ogg', 50, 0)
-				else
-					my_target.playsound_local(my_target.loc, pick(sounds_punch), 50, 1)
-				my_target.show_message("<span class='alert'><B>[src.name] has punched [my_target]!</B></span>", 1)
-				if (prob(33))
-					if (!locate(/obj/overlay) in my_target.loc)
-						fake_blood(my_target)
-
-	if (prob(15)) step_away(src,my_target,2)
-	SPAWN(0.5 SECONDS) .()
-
-/proc/fake_blood(var/mob/target)
-	var/obj/overlay/O = new/obj/overlay(target.loc)
-	O.name = "blood"
-	var/image/I = image('icons/effects/blood.dmi',O,"floor[rand(1,7)]",O.dir,1)
-	target << I
-	SPAWN(30 SECONDS)
-		qdel(O)
-	return
-
-/proc/fake_attack(var/mob/target)
-	var/list/possible_clones = new/list()
-	var/mob/living/carbon/human/clone = null
-	var/clone_weapon = null
-
-	for(var/mob/living/carbon/human/H in mobs)
-		if (H.stat || H.lying || H.dir == NORTH) continue
-		possible_clones += H
-
-	if (!possible_clones.len) return
-	clone = pick(possible_clones)
-
-	if (clone.l_hand)
-		clone_weapon = clone.l_hand.name
-	else if (clone.r_hand)
-		clone_weapon = clone.r_hand.name
-
-	var/obj/fake_attacker/F = new/obj/fake_attacker(target.loc, target)
-
-	F.name = clone.name
-	//F.my_target = target
-	F.weapon_name = clone_weapon
-
-	var/image/O = image(clone,F)
-	target << O
 
 //Same as the thing below just for density and without support for atoms.
 /proc/can_line(var/atom/source, var/atom/target, var/length=5)

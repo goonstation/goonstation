@@ -60,10 +60,7 @@
 		venom_ids = list("haloperidol", "atropine")
 		inject_amount = 10
 
-	fermid_polymorph
-		name = "Fermid Sting"
-		desc = "Sting an adjacent target with some nasty toxins."
-		icon_state = "fermid_sting"
-		venom_ids = list("ants", "histamine")
-		inject_amount = 8
+		polymorph
+			venom_ids = list("ants", "histamine")
+			inject_amount = 8
 

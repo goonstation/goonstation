@@ -4,8 +4,8 @@
 /// nulls a var if its value doesn't match the var's type
 #define ENSURE_TYPE(VAR) if(!istype(VAR)) VAR = null;
 
-#define ABSTRACT_TYPE(type) /datum/_is_abstract ## type
-#define IS_ABSTRACT(type) text2path("/datum/_is_abstract[type]")
+#define ABSTRACT_TYPE(type) /_is_abstract ## type
+#define IS_ABSTRACT(type) text2path("/_is_abstract[type]")
 /*
 usage:
 
@@ -141,24 +141,32 @@ proc/maximal_subtype(var/list/L)
 			else if (!(ispath(., t)))
 				return null // paths in L aren't linearly ordered
 
+
 // by_type and by_cat stuff
 
 // sometimes we want to have all objects of a certain type stored (bibles, staffs of cthulhu, ...)
-// to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/storage/bible] to access the list of things
+// to do that add START_TRACKING to New (or unpooled) and STOP_TRACKING to disposing, then use by_type[/obj/item/bible] to access the list of things
 
 #ifdef SPACEMAN_DMM // just don't ask
-#define START_TRACKING
-#define STOP_TRACKING
+	#define START_TRACKING
+	#define STOP_TRACKING
+#elif defined(OPENDREAM) // Yay, actual sanity!
+	#define START_TRACKING if(!by_type[__TYPE__]) { by_type[__TYPE__] = list() }; by_type[__TYPE__][src] = 1
+	#define STOP_TRACKING by_type[__TYPE__].Remove(src)
 #else
-#define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1 //we use an assoc list here because removing from one is a lot faster
-#if DM_BUILD >= 1552
-#define STOP_TRACKING by_type[......].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ....... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
-#else
-#define STOP_TRACKING by_type[.....].Remove(src) //ok if ur seeing this and thinking "wtf is up with the ...... in THIS use case it gives us the type path at the particular scope this is called. and the amount of dots varies based on scope in the macro! fun
-#endif
+	/// we use an assoc list here because removing from one is a lot faster
+	#define START_TRACKING if(!by_type[......]) { by_type[......] = list() }; by_type[.......][src] = 1
+	#if DM_BUILD >= 1552
+		// ok if ur seeing this and thinking "wtf is up with the .......
+		// in THIS use case it gives us the type path at the particular scope this is called.
+		// and the amount of dots varies based on scope in the macro! fun
+		#define STOP_TRACKING by_type[......].Remove(src)
+	#else
+		#define STOP_TRACKING by_type[.....].Remove(src)
+	#endif
 #endif
 
-/// contains lists of objects indexed by their type based on START_TRACKING / STOP_TRACKING
+/// contains lists of objects indexed by their type based on [START_TRACKING] / [STOP_TRACKING]
 var/list/list/by_type = list()
 
 /// Performs a typecheckless for loop with var/iterator over by_type[_type]
@@ -172,7 +180,7 @@ var/list/list/by_type = list()
 #define START_TRACKING_CAT(x) OTHER_START_TRACKING_CAT(src, x)
 #define STOP_TRACKING_CAT(x) OTHER_STOP_TRACKING_CAT(src, x)
 #define OTHER_START_TRACKING_CAT(what, x) if(!by_cat[x]) { by_cat[x] = list() }; by_cat[x][what] = 1
-#define OTHER_STOP_TRACKING_CAT(what, x) by_cat[x].Remove(what)
+#define OTHER_STOP_TRACKING_CAT(what, x) by_cat[x]?.Remove(what)
 
 /// contains lists of objects indexed by a category string based on START_TRACKING_CAT / STOP_TRACKING_CAT
 var/list/list/by_cat = list()
@@ -206,6 +214,10 @@ var/list/list/by_cat = list()
 #define TR_CAT_HUNTER_GEAR "hunter_gear"
 #define TR_CAT_FLOCK_STRUCTURE "flock_structure"
 #define TR_CAT_AREA_PROCESS "process_area"
+#define TR_CAT_RANCID_STUFF "rancid_stuff"
+#define TR_CAT_GHOST_OBSERVABLES "ghost_observables"
+#define TR_CAT_STATION_EMERGENCY_LIGHTS "emergency_lights"
+#define TR_CAT_STAMINA_MOBS "stamina_mobs"
 // powernets? processing_items?
 // mobs? ai-mobs?
 
@@ -222,6 +234,8 @@ var/list/list/by_cat = list()
 
 /typeinfo/atom
 	parent_type = /typeinfo/datum
+	/// Used to provide a list of subtypes that will be returned by get_random_subtype
+	var/random_subtypes = null
 
 /typeinfo/turf
 	parent_type = /typeinfo/atom
@@ -237,7 +251,7 @@ var/list/list/by_cat = list()
 /typeinfo/mob
 	parent_type = /typeinfo/atom/movable
 
-/typeinfo/var/SpacemanDMM_return_type = /typeinfo/
+/typeinfo/var/SpacemanDMM_return_type = /typeinfo
 
 /**
  * Declares typeinfo for some type.
@@ -327,7 +341,10 @@ proc/find_first_by_type(type)
 	while(ancestor != null)
 		if(ancestor in global.by_type)
 			if(length(global.by_type[ancestor]))
-				return global.by_type[ancestor][1]
+				for(var/instance in global.by_type[ancestor])
+					if(istype(instance, type))
+						return instance
+				return null
 			else
 				return null
 		ancestor = type2parent(ancestor)
@@ -442,7 +459,10 @@ proc/find_all_by_type(type, procedure=null, procedure_src=null, arguments=null, 
 		IT_TYPE(/turf) \
 		IT_TYPE(/atom/movable) \
 		IT_TYPE(/atom) \
-		IT_TYPE(/datum)
+		IT_TYPE(/datum) \
+		IT_TYPE(/client) \
+		else
+			CRASH("find_all_by_type: invalid type: [type]")
 	#undef IT_TYPE
 
 /// istype but for checking a list of types
@@ -452,3 +472,11 @@ proc/istypes(datum/dat, list/types)
 		if(istype(dat, type))
 			return TRUE
 	return FALSE
+
+/// Returns a random subtype when an atom has TYPEINFO with a random_subtypes list
+/proc/get_random_subtype(atom_type, return_instance = FALSE, return_instance_newargs = null)
+	var/typeinfo/atom/info = get_type_typeinfo(atom_type)
+	var/atom/chosen_type = pick(info.random_subtypes)
+	if (!return_instance)
+		return chosen_type
+	return new chosen_type(return_instance_newargs)

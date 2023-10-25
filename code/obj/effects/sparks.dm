@@ -9,7 +9,7 @@
 	name = "sparks"
 	icon_state = "sparks"
 	var/amount = 6
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 
 /obj/effects/sparks/New()
@@ -35,7 +35,7 @@
 
 /obj/effects/rendersparks
 	name = "sparks"
-	anchored = 1
+	anchored = ANCHORED
 	icon = 'icons/effects/64x64.dmi'
 	icon_state = ""
 	pixel_x = -16

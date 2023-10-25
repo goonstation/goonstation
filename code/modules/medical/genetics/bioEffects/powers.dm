@@ -11,9 +11,8 @@
 	blockGaps = 2
 	stability_loss = 10
 	var/using = 0
-	var/safety = 0
 	var/ability_path = /datum/targetable/geneticsAbility/cryokinesis
-	var/datum/targetable/geneticsAbility/ability = /datum/targetable/geneticsAbility/cryokinesis
+	var/datum/targetable/geneticsAbility/ability = null
 
 	New()
 		..()
@@ -22,35 +21,39 @@
 	disposing()
 		src.owner = null
 		if (ability)
-			ability.dispose()
 			ability.owner = null
+			qdel(ability)
 		src.ability = null
 		..()
 
 	OnAdd()
 		..()
-		if (ishuman(owner))
-			check_ability_owner()
-			var/mob/living/carbon/human/H = owner
-			H.hud.update_ability_hotbar()
-		return
+		check_ability_owner()
 
 	OnRemove()
 		..()
-		if (ishuman(owner))
-			var/mob/living/carbon/human/H = owner
-			if (H.hud)
-				H.hud.update_ability_hotbar()
-		return
+		if (src.ability)
+			src.ability.holder.removeAbilityInstance(src.ability)
 
 	proc/check_ability_owner()
 		if (ispath(ability_path))
-			var/datum/targetable/geneticsAbility/AB = new ability_path(src)
+			var/datum/targetable/geneticsAbility/AB = src.owner?.abilityHolder?.addAbility(src.ability_path)
+			if (!AB)
+				return
 			ability = AB
+			AB.cooldown = src.cooldown
 			AB.linked_power = src
 			icon = AB.icon
 			icon_state = AB.icon_state
 			AB.owner = src.owner
+			src.owner.abilityHolder.updateButtons() //have to manually update because the cooldown is stored on the bioeffect
+
+	//varedit support for cooldowns
+	onVarChanged(variable, oldval, newval)
+		. = ..()
+		if (variable == "cooldown" && istype(src.ability))
+			src.ability.cooldown = newval
+			src.ability.holder?.updateButtons()
 
 /datum/targetable/geneticsAbility/cryokinesis
 	name = "Cryokinesis"
@@ -122,7 +125,7 @@
 	blockGaps = 2
 	stability_loss = 5
 	ability_path = /datum/targetable/geneticsAbility/mattereater
-	var/target_path = /obj/item/
+	var/target_path = /obj/item
 
 /datum/targetable/geneticsAbility/mattereater
 	name = "Matter Eater"
@@ -162,6 +165,7 @@
 
 		if (!(the_object in get_filtered_atoms_in_touch_range(owner, mattereater.target_path)) && !istype(the_object, /obj/the_server_ingame_whoa))
 			owner.show_text("<span class='alert'>Man, that thing is long gone, far away, just let it go.</span>")
+			using = FALSE
 			return TRUE
 
 		var/area/cur_area = get_area(owner)
@@ -184,20 +188,14 @@
 			if (isitem(the_object))
 				var/obj/item/the_item = the_object
 				H.sims?.affectMotive("Hunger", (the_item.w_class + 1) * 5) // +1 so tiny items still give a small boost
-				for(var/A in owner.organs)
-					var/obj/item/affecting = null
-					if (!owner.organs[A])
-						continue
-					affecting = owner.organs[A]
-					if (!isitem(affecting))
-						continue
-					affecting.heal_damage(4, 0)
+				owner.HealDamage("All", 5, 0)
 				owner.UpdateDamageIcon()
 
 		if (!QDELETED(the_object)) // Finally, ensure that the item is deleted regardless of what it is
 			var/obj/item/I = the_object
 			if(I)
 				if(I.Eat(owner, owner, TRUE)) //eating can return false to indicate it failed
+					logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
 					// Organs and body parts have special behaviors we need to account for
 					if (ishuman(owner))
 						var/mob/living/carbon/human/H = owner
@@ -212,6 +210,7 @@
 			else //Eat() handles qdel, visible message and sound playing, so only do that when we don't have Eat()
 				owner.visible_message("<span class='alert'>[owner] eats [the_object].</span>")
 				playsound(owner.loc, 'sound/items/eatfood.ogg', 50, FALSE)
+				logTheThing(LOG_COMBAT, owner, "uses Matter Eater to eat [log_object(the_object)] at [log_loc(owner)].")
 				qdel(the_object)
 
 
@@ -345,7 +344,7 @@
 			owner.changeStatus("paralysis", 5 SECONDS)
 			owner.changeStatus("weakened", 5 SECONDS)
 			container.visible_message("<span class='alert'><b>[owner.loc]</b> emits a loud thump and rattles a bit.</span>")
-			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, 1)
+			playsound(container, 'sound/impact_sounds/Metal_Hit_Heavy_1.ogg', 50, TRUE)
 			animate_storage_thump(container)
 
 		return
@@ -709,13 +708,10 @@
 			return 1
 
 		if (isdead(read))
-			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have their mind read.</span>")
-			return
-		if (read.health < 0)
-			boutput(owner, "<span class='alert'>[read.name] is dying, and their thoughts are too scrambled to read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have [his_or_her(read)] mind read.</span>")
 			return
 
-		boutput(usr, "<span class='notice'>Mind Reading of [read.name]:</b></span>")
+		boutput(owner, "<span class='notice'>Mind Reading of [read.name]:</b></span>")
 		var/pain_condition = read.health
 		// lower health means more pain
 		var/list/randomthoughts = list("what to have for lunch","the future","the past","money",
@@ -758,6 +754,10 @@
 			else
 				boutput(owner, "<span class='notice'><b>Mood</b>: You sense strange thoughts from [read.name].</span>")
 
+		var/speech = steal_speech_text(read)
+		if (length(speech))
+			thoughts = "thinking about [speech]"
+
 		if (ishuman(target))
 			var/mob/living/carbon/human/H = read
 			if (H.pin)
@@ -768,7 +768,6 @@
 			boutput(read, "<span class='alert'>You sense [owner.name] reading your mind.</span>")
 		else if (read.traitHolder.hasTrait("training_chaplain"))
 			boutput(read, "<span class='alert'>You sense someone intruding upon your thoughts...</span>")
-		return
 
 	cast_misfire(atom/target)
 		if (..())
@@ -795,10 +794,7 @@
 			return 1
 
 		if (isdead(read))
-			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have their mind read.</span>")
-			return
-		if (read.health < 0)
-			boutput(owner, "<span class='alert'>[read.name] is dying, and their thoughts are too scrambled to read.</span>")
+			boutput(owner, "<span class='alert'>[read.name] is dead and cannot have [his_or_her(read)] mind read.</span>")
 			return
 
 		boutput(read, "<span class='alert'>Somehow, you sense <b>[owner]</b> trying and failing to read your mind!</span>")
@@ -806,7 +802,31 @@
 		owner.emote("scream")
 		owner.changeStatus("paralysis", 5 SECONDS)
 		owner.changeStatus("stunned", 7 SECONDS)
-		return
+
+	/// Mostly stolen from laspgasp() (thanks pali)
+	///
+	/// Grab whatever they're typing from the say/whisper/radio menu, or the command bar. Separate proc so we can return if the target client goes null
+	proc/steal_speech_text(mob/living/carbon/target)
+		var/client/target_client = target.client
+		var/enteredtext = winget(target_client, "mainwindow.input", "text") // grab the text from the input bar
+		if (isnull(target_client)) return
+		if (length(enteredtext) > 5 && copytext(enteredtext, 1, 6) == "say \"") // check if the player is trying to say something
+			enteredtext = copytext(enteredtext, 6, 0) // grab the text they were trying to say
+			enteredtext = "saying something like <i>\"[enteredtext]\"</i>, in an old-fashioned way."
+		if (!length(enteredtext))
+			for (var/window_type in list("say", "radiosay", "whisper"))
+				enteredtext = winget(target_client, "[window_type]window.say-input", "text")
+				if (isnull(target_client)) return
+				if (length(enteredtext))
+					switch(window_type)
+						if ("say")
+							enteredtext = "saying something like <i>\"[enteredtext]\"</i>"
+						if ("radiosay")
+							enteredtext = "saying something like <i>;\"[enteredtext]\"</i>"
+						if ("whisper")
+							enteredtext = "whispering something like <i>\"[enteredtext]\"</i>"
+					break
+		return enteredtext
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1024,7 +1044,7 @@
 					animate_shake(T,5,rand(3,8),rand(3,8))
 
 			// Superfarted on the bible? Off to hell.
-			for (var/obj/item/storage/bible/B in owner.loc)
+			for (var/obj/item/bible/B in owner.loc)
 				if(gib_user)
 					owner.mind.damned = TRUE
 				else
@@ -1121,6 +1141,7 @@
 
 		var/turf/T = get_turf(target)
 
+
 		var/datum/bioEffect/power/eyebeams/EB = linked_power
 		var/projectile_path = ispath(EB.projectile_path) ? EB.projectile_path : text2path(EB.projectile_path)
 		if(linked_power.power > 1)
@@ -1130,9 +1151,26 @@
 		if (!ispath(projectile_path))
 			projectile_path = /datum/projectile/laser/eyebeams
 
+		if (!EB.stun_mode && ishuman(owner)) // remember to take off your headgear if you want to fire the laser
+			var/mob/living/carbon/human/H = owner
+			var/obj/item/I
+			if (istype(H.glasses) && H.glasses.c_flags & COVERSEYES)
+				I = H.glasses
+			else if (istype(H.wear_mask) && H.wear_mask.c_flags & COVERSEYES)
+				I = H.wear_mask
+			else if (istype(H.head) && H.head.c_flags & COVERSEYES)
+				I = H.head
+			else if (istype(H.wear_suit) && H.wear_suit.c_flags & COVERSEYES)
+				I = H.wear_suit
+			if (istype(I)) // or it might go
+				I.combust() // POOF
+				holder.owner.visible_message("<span class='combat'><b>[holder.owner]'s [I.name] catches on fire!</b></span>",\
+				"<span class='combat'><b>Your [I.name] catches on fire!</b> Maybe you should have taken it off first!</span>")
+				return
+
 		owner.visible_message("<span class='alert'><b>[owner.name]</b> shoots eye beams!</span>")
 		var/datum/projectile/laser/eyebeams/PJ = new projectile_path
-		shoot_projectile_ST(owner, PJ, T)
+		shoot_projectile_ST_pixel_spread(owner, PJ, T)
 
 	cast_misfire(atom/target)
 		if (..())
@@ -1146,7 +1184,7 @@
 /datum/projectile/laser/eyebeams
 	name = "optic laser"
 	icon_state = "eyebeam"
-	power = 20
+	damage = 20
 	cost = 20
 	sname = "eye laser"
 	dissipation_delay = 5
@@ -1156,7 +1194,8 @@
 	color_blue = 1
 
 /datum/projectile/laser/eyebeams/stun
-	ks_ratio = 0
+	damage = 0
+	stun = 20
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1241,28 +1280,32 @@
 
 	cast(atom/target)
 		if (..())
-			return 1
+			return TRUE
 		if(linked_power.using)
-			return 1
+			return TRUE
 
 		var/obj/the_object = target
 
-		if(!target)
-			var/base_path = /obj/item/
-			if (linked_power.power > 1)
-				base_path = /obj/
+		var/base_path = /obj/item
+		if (linked_power.power > 1)
+			base_path = /obj
 
-			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
+
+		if(target)
+			if (!(target in items))
+				return TRUE
+		else
 			if (!items.len)
-				boutput(usr, "/red You can't find anything nearby to touch.")
-				return 1
+				boutput(usr, "<span class='alert'>You can't find anything nearby to touch.</span>")
+				return TRUE
 
 			linked_power.using = 1
 			the_object = input("Which item do you want to transmute?","Midas Touch") as null|obj in items
 			if (!the_object)
 				last_cast = 0
 				linked_power.using = 0
-				return 1
+				return TRUE
 
 		if(isitem(the_object))
 			var/obj/item/the_item = the_object
@@ -1280,9 +1323,8 @@
 				the_object.setMaterial(getMaterial(linked.transmute_material))
 			else
 				owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to gold!</span>")
-				the_object.setMaterial(getMaterial("gold"), copy = FALSE)
+				the_object.setMaterial(getMaterial("gold"))
 		linked_power.using = 0
-		return
 
 	cast_misfire()
 		if (..())
@@ -1290,9 +1332,9 @@
 		if(linked_power.using)
 			return 1
 
-		var/base_path = /obj/item/
+		var/base_path = /obj/item
 		if (linked_power.power > 1)
-			base_path = /obj/
+			base_path = /obj
 
 		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 		if (!items.len)
@@ -1317,9 +1359,33 @@
 			owner.visible_message("[owner] touches [the_object].")
 		else
 			owner.visible_message("<span class='alert'>[owner] touches [the_object], turning it to flesh!</span>")
-			the_object.setMaterial(getMaterial("flesh"), copy = FALSE)
+			the_object.setMaterial(getMaterial("flesh"))
 		linked_power.using = 0
 		return
+
+/datum/bioEffect/power/midas/pickle
+	name = "Pickle Touch"
+	id = "pickle"
+	desc = "Allows the subject to induce spontaneous pickling at will."
+	msgGain = "You suddenly smell vinegar."
+	msgLose = "You feel less well preserved."
+	transmute_material = "pickle"
+	power = 2
+	occur_in_genepools = 0
+	probability = 0
+	scanner_visibility = 0
+	can_research = 0
+	can_make_injector = 0
+	can_copy = 0
+	can_reclaim = 0
+	can_scramble = 0
+	curable_by_mutadone = 0
+	ability_path = /datum/targetable/geneticsAbility/midas/pickle
+
+/datum/targetable/geneticsAbility/midas/pickle
+	name = "Pickle Touch"
+	desc = "Instantly pickle an object"
+	icon_state = "pickle"
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1416,8 +1482,8 @@
 	occur_in_genepools = 0
 	stability_loss = 15
 	ability_path = /datum/targetable/geneticsAbility/dimension_shift
-	var/active = 0
-	var/processing = 0
+	var/active = FALSE
+	var/processing = FALSE
 	var/atom/last_loc = null
 	acceptable_in_mutini = 0
 
@@ -1438,8 +1504,8 @@
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				active = 0
-			processing = 0
+				active = FALSE
+				processing = FALSE
 		return
 
 /datum/targetable/geneticsAbility/dimension_shift
@@ -1485,7 +1551,7 @@
 				var/obj/dummy/spell_invis/invis_object = new /obj/dummy/spell_invis(get_turf(owner))
 				invis_object.canmove = 0
 				owner.set_loc(invis_object)
-			P.processing = FALSE
+				P.processing = FALSE
 			return TRUE
 		else
 			var/obj/dummy/spell_invis/invis_object
@@ -1504,8 +1570,8 @@
 			SPAWN(0.7 SECONDS)
 				animate(owner, alpha = 255, time = 5, easing = LINEAR_EASING)
 				animate(color = "#FFFFFF", time = 5, easing = LINEAR_EASING)
-				P.active = 0
-			P.processing = 0
+				P.active = FALSE
+				P.processing = FALSE
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1556,7 +1622,7 @@
 	name = ""
 	desc = ""
 	density = 0
-	anchored = 1
+	anchored = ANCHORED
 	mouse_opacity = 0
 	icon = null
 	icon_state = null
@@ -1712,7 +1778,7 @@
 		for (var/mob/living/L in range(7,owner))
 			if (L.hearing_check(1))
 				if(count++ > (4 + src.linked_power.power * 3)) break
-				if(locate(/obj/item/storage/bible) in get_turf(L))
+				if(locate(/obj/item/bible) in get_turf(L))
 					owner.visible_message("<span class='alert'><b>A mysterious force smites [owner.name] for inciting blasphemy!</b></span>")
 					owner.gib()
 				else
@@ -1883,24 +1949,20 @@
 		return
 
 	OnLife(var/mult)
-		if(..()) return
-		if (isliving(owner))
-			var/mob/living/L = owner
-			var/turf/T = get_turf(L)
+		if(..())
+			return
+		if (!src.active)
+			return
+		if (!isliving(owner))
+			return
 
-			if (T && isturf(T))
-				var/area/A = get_area(T)
-				if (istype(T, /turf/space) || (A && (istype(A, /area/shuttle/) || istype(A, /area/shuttle_transit_space) || A.name == "Space" || A.name == "Ocean")))
-					src.cloak_decloak(2)
+		var/mob/living/L = owner
+		var/turf/T = get_turf(L)
 
-				else
-					if (T.RL_GetBrightness() < 0.2 && can_act(owner) && src.active)
-						src.cloak_decloak(1)
-					else
-						src.cloak_decloak(2)
-			else
-				src.cloak_decloak(2)
-		return
+		if (!isturf(T) || T.is_lit())
+			src.cloak_decloak(2)
+		else if (can_act(src.owner))
+			src.cloak_decloak(1)
 
 /datum/targetable/geneticsAbility/darkcloak
 	name = "Cloak of Darkness"
@@ -1916,6 +1978,7 @@
 		if (DC.active)
 			boutput(usr, "You stop using your cloak of darkness.")
 			DC.active = 0
+			DC.cloak_decloak(2)
 		else
 			boutput(usr, "You start using your cloak of darkness.")
 			DC.active = 1
@@ -1999,7 +2062,7 @@
 			boutput(usr, "You start using your chameleon cloaking.")
 			CH.last_moved = TIME
 			CH.active = 1
-			CH.RegisterSignal(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
+			CH.RegisterSignals(owner, list(COMSIG_MOVABLE_MOVED, COMSIG_MOB_ATTACKED_PRE), /datum/bioEffect/power/chameleon/proc/decloak)
 		return 0
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -2108,10 +2171,9 @@
 			return 1
 
 		var/obj/the_object = target
-
+		var/base_path = /obj
+		var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 		if(!the_object)
-			var/base_path = /obj
-			var/list/items = get_filtered_atoms_in_touch_range(owner,base_path)
 			if (!items.len)
 				boutput(usr, "/red You can't find anything nearby to spray ink on.")
 				return 1
@@ -2120,6 +2182,8 @@
 			if (!the_object)
 				last_cast = 0
 				return 1
+		if (!(the_object in items))
+			return 1
 
 		var/datum/bioEffect/power/ink/I = linked_power
 		if (!linked_power)
@@ -2130,7 +2194,7 @@
 		return 0
 
 /datum/bioEffect/power/shoot_limb
-	name = "Vestigal Ballistics"
+	name = "Vestigial Ballistics"
 	desc = "Allows the subject to expel one of their limbs with considerable force."
 	id = "shoot_limb"
 	msgGain = "You feel intense pressure in your hip and shoulder joints."
@@ -2175,7 +2239,7 @@
 
 
 /datum/targetable/geneticsAbility/shoot_limb
-	name = "Vestigal Ballistics"
+	name = "Vestigial Ballistics"
 	desc = "OOOOWWWWWW!!!!!!!!"
 	icon_state = "shoot_limb"
 	targeted = TRUE
@@ -2186,10 +2250,9 @@
 
 	proc/hit_callback(var/datum/thrown_thing/thr)
 		for(var/mob/living/carbon/hit in get_turf(thr.thing))
-			hit.changeStatus("weakened", 15 SECONDS)
-			hit.changeStatus("stunned", 5 SECONDS)
+			hit.changeStatus("weakened", 5 SECONDS)
+			hit.force_laydown_standup()
 			break
-		return 0
 
 	cast(atom/target)
 		if (..())
@@ -2221,8 +2284,13 @@
 					if (!linked_power.safety)
 						new thrown_limb.streak_decal(owner.loc)
 						var/damage = rand(5,15)
+						var/do_bleed = TRUE
+						if(thrown_limb.kind_of_limb | LIMB_SKELLY)
+							damage /= 2.5
+							do_bleed = FALSE
 						random_brute_damage(H, damage)
-						take_bleeding_damage(H, null, damage)
+						if(do_bleed)
+							take_bleeding_damage(H, null, damage)
 						if(prob(60)) owner.emote("scream")
 
 						//reset the time until the ability spontaniously fires

@@ -148,6 +148,8 @@
 				T = new traitType
 			else
 				T = trait_instance
+			if(T.afterlife_blacklisted && inafterlifebar(owner))
+				return
 			traits[id] = T
 			if(!isnull(owner))
 				if(T.isMoveTrait)
@@ -192,6 +194,7 @@
 	var/requiredUnlock = null //If set to a string, the xp unlock of that name is required for this to be selectable.
 	var/isMoveTrait = FALSE // If TRUE, onMove will be called each movement step from the holder's mob
 	var/datum/mutantrace/mutantRace = null //If set, should be in the "species" category.
+	var/afterlife_blacklisted = FALSE // If TRUE, trait will not be added in the Afterlife Bar
 
 	New()
 		ASSERT(src.name)
@@ -200,7 +203,7 @@
 	proc/onAdd(var/mob/owner)
 		if(mutantRace && ishuman(owner))
 			var/mob/living/carbon/human/H = owner
-			H.mutantrace?.origAH.CopyOther(H.bioHolder.mobAppearance)
+			H.default_mutantrace = mutantRace
 			H.set_mutantrace(mutantRace)
 		return
 
@@ -267,6 +270,7 @@
 	icon_state = "deaf"
 	category = list("body")
 	points = 1
+	afterlife_blacklisted = TRUE
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -402,6 +406,7 @@
 	icon_state = "glassesG"
 	category = list("vision")
 	points = 1
+	afterlife_blacklisted = TRUE
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -419,6 +424,7 @@
 	id = "blind"
 	category = list("vision")
 	points = 2
+	afterlife_blacklisted = TRUE
 
 	onAdd(var/mob/owner)
 		if(owner.bioHolder)
@@ -438,6 +444,7 @@
 	icon_state = "mildly_mutatedB"
 	points = 0
 	category = list("genetics")
+	afterlife_blacklisted = TRUE
 
 	onAdd(var/mob/owner)
 		var/datum/bioHolder/B = owner.bioHolder
@@ -595,7 +602,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 /datum/trait/job/quartermaster
 	name = "Quartermaster Training"
-	desc = "Subject is proficent at haggling."
+	desc = "Subject is proficient at haggling."
 	id = "training_quartermaster"
 
 /datum/trait/job/chef
@@ -608,6 +615,25 @@ ABSTRACT_TYPE(/datum/trait/job)
 	name = "Professional Drinker"
 	desc = "Sometimes you drink on the job, sometimes drinking is the job."
 	id = "training_drinker"
+
+/datum/trait/job/clown
+	name = "Clown Training"
+	desc = "Subject is trained at being a clumsy buffoon."
+	id = "training_clown"
+
+	onAdd(var/mob/owner)
+		owner.AddComponent(/datum/component/death_confetti)
+		owner.bioHolder?.AddEffect("accent_comic", magical = TRUE)
+		owner.bioHolder?.AddEffect("clumsy", magical = TRUE)
+
+/datum/trait/job/mime
+	name = "Mime Training"
+	desc = "..."
+	id = "training_mime"
+
+	onAdd(var/mob/owner)
+		owner.bioHolder?.AddEffect("mute", magical = TRUE)
+		owner.bioHolder?.AddEffect("blankman", magical = TRUE)
 
 // Stats - Undetermined Border
 /datum/trait/athletic
@@ -632,10 +658,10 @@ ABSTRACT_TYPE(/datum/trait/job)
 
 //Category: Background.
 
-/datum/trait/immigrant
+/datum/trait/stowaway
 	name = "Stowaway"
 	desc = "You spawn hidden away on-station without an ID, PDA, or entry in NT records."
-	id = "immigrant"
+	id = "stowaway"
 	icon_state = "stowaway"
 	category = list("background")
 	points = 1
@@ -693,13 +719,14 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "randomallergy"
 	points = 0
 	category = list("allergy")
+	afterlife_blacklisted = TRUE
 
 	var/allergen = null
 
 	var/list/allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
 	"salbutamol","perfluorodecalin","mannitol","charcoal","antihol","ethanol","iron","mercury","oxygen","plasma","sugar","radium","water","bathsalts","jenkem","crank",\
-	"LSD","space_drugs","THC","nicotine","krokodil","catdrugs","triplemeth","methamphetamine","mutagen","neurotoxin","sarin","smokepowder","infernite","phlogiston","fuel",\
+	"LSD","space_drugs","THC","nicotine","krokodil","catdrugs","triplemeth","methamphetamine","mutagen","neurotoxin","saxitoxin","smokepowder","infernite","phlogiston","fuel",\
 	"anti_fart","lube","ectoplasm","cryostylane","oil","sewage","ants","spiders","poo","love","hugs","fartonium","blood","bloodc","vomit","urine","capsaicin","cheese",\
 	"coffee","chocolate","chickensoup","salt","grease","badgrease","msg","egg")
 
@@ -721,6 +748,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "medicalallergy"
 	points = 1
 	category = list("allergy")
+	afterlife_blacklisted = TRUE
 
 	allergen_id_list = list("spaceacillin","morphine","teporone","salicylic_acid","calomel","synthflesh","omnizine","saline","anti_rad","smelling_salt",\
 	"haloperidol","epinephrine","insulin","silver_sulfadiazine","mutadone","ephedrine","penteticacid","antihistamine","styptic_powder","cryoxadone","atropine",\
@@ -732,6 +760,7 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "addict"
 	icon_state = "syringe"
 	points = 2
+	afterlife_blacklisted = TRUE
 	var/selected_reagent = "ethanol"
 	var/addictive_reagents = list("bath salts", "lysergic acid diethylamide", "space drugs", "psilocybin", "cat drugs", "methamphetamine", "ethanol", "nicotine")
 	var/do_addiction = FALSE
@@ -788,9 +817,9 @@ ABSTRACT_TYPE(/datum/trait/job)
 		OTHER_START_TRACKING_CAT(owner, TR_CAT_CLOWN_DISBELIEF_MOBS)
 		if(owner.client)
 			src.turnOn(owner)
-		src.RegisterSignal(owner, COMSIG_MOB_LOGIN, .proc/turnOn)
-		src.RegisterSignal(owner, COMSIG_MOB_LOGOUT, .proc/turnOff)
-		src.RegisterSignal(owner, COMSIG_ATOM_EXAMINE, .proc/examined)
+		src.RegisterSignal(owner, COMSIG_MOB_LOGIN, PROC_REF(turnOn))
+		src.RegisterSignal(owner, COMSIG_MOB_LOGOUT, PROC_REF(turnOff))
+		src.RegisterSignal(owner, COMSIG_ATOM_EXAMINE, PROC_REF(examined))
 
 	proc/turnOn(mob/owner)
 		for(var/image/I as anything in global.clown_disbelief_images)
@@ -893,11 +922,12 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "You will sometimes randomly pick up nearby items."
 	id = "kleptomaniac"
 	points = 1
+	afterlife_blacklisted = TRUE
 
 	onLife(var/mob/owner, var/mult)
 		if(!owner.stat && !owner.lying && can_act(owner) && !owner.equipped() && probmult(6))
-			for(var/obj/item/I in view(1, owner))
-				if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I))
+			for(var/obj/item/I in oview(1, owner))
+				if(!I.anchored && !I.cant_drop && isturf(I.loc) && can_reach(owner, I) && !HAS_ATOM_PROPERTY(I, PROP_MOVABLE_KLEPTO_IGNORE))
 					I.Attackhand(owner)
 					owner.emote(pick("grin", "smirk", "chuckle", "smug"))
 					break
@@ -907,12 +937,14 @@ ABSTRACT_TYPE(/datum/trait/job)
 	desc = "When interacting with anything you have a chance to interact with something different instead."
 	id = "clutz"
 	points = 2
+	afterlife_blacklisted = TRUE
 
 /datum/trait/leftfeet
 	name = "Two left feet"
 	desc = "Every now and then you'll stumble in a random direction."
 	id = "leftfeet"
 	points = 1
+	afterlife_blacklisted = TRUE
 
 /datum/trait/scaredshitless
 	name = "Scared Shitless"
@@ -991,6 +1023,44 @@ ABSTRACT_TYPE(/datum/trait/job)
 	id = "super_slips"
 	desc = "You never were good at managing yourself slipping."
 	points = 1
+
+/datum/trait/picky_eater
+	name = "Picky eater"
+	icon_state = "foodstuff"
+	id = "picky_eater"
+	desc = "Your refined palate only tolerates a handful of foods."
+	points = 0
+	var/list/fav_foods = list()
+	var/explanation_text = null
+
+	onAdd(var/mob/owner)
+		if (length(fav_foods) <= 0 && ishuman(owner))
+			var/mob/living/carbon/human/H = owner
+			var/choices[5]
+			var/list/names[5]
+			var/i = 0
+			var/max_rolls = 30
+			var/current_rolls = 0
+			while (i < 5)
+				i++
+				choices[i] = pick(allowed_favorite_ingredients)
+				var/choiceType = choices[i]
+				var/obj/item/reagent_containers/food/snacks/instance =  new choiceType
+				if(instance.custom_food)
+					fav_foods += choiceType
+					names[i] = instance.name
+				else
+					i--
+				current_rolls++
+				if (current_rolls > max_rolls)
+					stack_trace("Failed to generate a foodlist for picky eater [H]. Aborting.")
+					return
+			explanation_text = "<b>Your favorite foods are : </b>"
+			for (var/ingredient in names)
+				if (ingredient != names[5])
+					explanation_text += "[ingredient], "
+				else
+					explanation_text += "and [ingredient]<br/>"
 
 //Infernal Contract Traits
 /datum/trait/hair

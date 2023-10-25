@@ -209,6 +209,74 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	genome = 1
 	assoc_reagents = list("wolfsbane")
 
+/datum/plant/herb/stinging_nettle
+	name = "Nettle"
+	override_icon_state = "Nettle"
+	seedcolor = "#2ecc43"
+	crop = /obj/item/plant/herb/nettle
+	mutations = list(/datum/plantmutation/stinging_nettle/smooth)
+	cropsize = 3
+	starthealth = 20
+	growtime = 40
+	harvtime = 100
+	cropsize = 4
+	harvests = 3
+	proximity_proc = 1
+	harvested_proc = 1
+	force_seed_on_harvest = 1
+	vending = 2
+	genome = 7
+
+	ProximityProc(var/obj/machinery/plantpot/POT, mob/victim)
+		var/datum/plant/P = POT.current
+		var/datum/plantgenes/DNA = POT.plantgenes
+		var/sting_cooldown = clamp((30 - DNA?.get_effective_value("endurance") / 2), 5, 30) // Cooldown reduced based off endurance
+		var/chem_protection = 1
+
+		if (POT.growth > (P.growtime + DNA?.get_effective_value("growtime")) && !ON_COOLDOWN(POT, "nettle_sting", sting_cooldown SECONDS))
+			for (var/mob/living/M in range(1,POT))
+				if (ishuman(M))
+					var/mob/living/carbon/human/H = M
+					if (istype(H.w_uniform, /obj/item/clothing/under/rank/hydroponics) || istype(H.w_uniform, /obj/item/clothing/under/misc/hydroponics))
+						return  //botanist jumpsuits are expecially good at keeping nettles away
+					chem_protection = ((100 - M.get_chem_protection())/100) //not gonna inject people with bio suits (1 is no chem prot, 0 is full prot for maths)
+
+				if (!(DNA.mutation && istype(DNA.mutation,/datum/plantmutation/stinging_nettle/smooth))) //dead nettles don't inject histamine
+					M.reagents?.add_reagent("histamine", 5 * chem_protection) //separated from regular reagents so it's never more than 5 units
+					boutput(M, "<span class='alert'><b>You feel stinging as [POT] brushes against you!<b></span>")
+				else
+					boutput(M, "<span class='notice'>You feel something brush against you.</span>")
+				var/list/plant_complete_reagents = HYPget_assoc_reagents(P, DNA)
+				for (var/plantReagent in plant_complete_reagents) //amount of delivered chems is based on potency
+					M.reagents?.add_reagent(plantReagent, 5 * chem_protection * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(plant_complete_reagents) ** 0.5))))))
+
+
+	HYPharvested_proc(var/obj/machinery/plantpot/POT,var/mob/user) //better not try to harvest these without gloves
+		. = ..()
+		if (.) return
+		var/datum/plantgenes/DNA = POT.plantgenes
+		var/mob/living/carbon/human/H = user
+
+		if (H.hand)//gets active arm - left arm is 1, right arm is 0
+			if (istype(H.limbs.l_arm,/obj/item/parts/robot_parts) || istype(H.limbs.l_arm,/obj/item/parts/human_parts/arm/left/synth))
+				return
+		else
+			if (istype(H.limbs.r_arm,/obj/item/parts/robot_parts) || istype(H.limbs.r_arm,/obj/item/parts/human_parts/arm/right/synth))
+				return
+		if(istype(H))
+			if(H.gloves)
+				return
+
+		if (!(DNA.mutation && istype(DNA.mutation,/datum/plantmutation/stinging_nettle/smooth))) //smooth nettles don't inject histamine
+			H.reagents?.add_reagent("histamine", 5)
+			boutput(user, "<span class='alert'>Your hands itch from touching [POT]!</span>")
+			H.changeStatus("weakened", 4 SECONDS)
+		else
+			boutput(user, "<span class='notice'>You feel something brush against you.</span>")
+		var/list/plant_complete_reagents = HYPget_assoc_reagents(src, DNA)
+		for (var/plantReagent in plant_complete_reagents)
+			H.reagents?.add_reagent(plantReagent, 5 * round(max(1,(1 + DNA?.get_effective_value("potency") / (10 * (length(plant_complete_reagents) ** 0.5))))))
+
 /datum/plant/herb/tobacco
 	name = "Tobacco"
 	seedcolor = "#82D213"
@@ -257,3 +325,18 @@ ABSTRACT_TYPE(/datum/plant/herb)
 	genome = 4
 	assoc_reagents = list("grassgro")
 	commuts = list(/datum/plant_gene_strain/growth_fast,/datum/plant_gene_strain/health_poor)
+
+/datum/plant/herb/lavender
+	name = "Lavender"
+	seedcolor = "#be9ffe"
+	crop = /obj/item/clothing/head/flower/lavender
+	starthealth = 20
+	growtime = 80
+	harvtime = 120
+	cropsize = 3
+	harvests = 3
+	nectarlevel = 10
+	force_seed_on_harvest = TRUE
+	genome = 3
+	assoc_reagents = list("lavender_essence")
+	commuts = list(/datum/plant_gene_strain/variable_harvest, /datum/plant_gene_strain/quality)

@@ -16,6 +16,9 @@
 //Game Carts
 //Ringtone Carts
 
+TYPEINFO(/obj/item/disk/data/cartridge/syndicate)
+	mats = 0
+
 /obj/item/disk/data/cartridge
 	name = "\improper PDA cartridge"
 	desc = "A data cartridge for PDAs."
@@ -78,6 +81,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
 			src.root.add_file( new /datum/computer/file/pda_program/status_display(src))
 			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pressure_crystal_shopper(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
@@ -87,11 +91,13 @@
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portabrig(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/mulebot(src))
+			src.root.add_file( new /datum/computer/file/pda_program/genebooth_tracker(src))
 			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src) )
 			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src) )
 			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src) )
 			src.root.add_file( new /datum/computer/file/text/diagnostic_readme(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
+			src.root.add_file( new /datum/computer/file/pda_program/rockbox(src))
 
 	cyborg
 		name = "\improper Cyborg Internal PDA cartridge"
@@ -108,6 +114,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/records/security(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
 			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pressure_crystal_shopper(src))
 			// src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			// src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/secbot(src))
@@ -117,6 +124,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src) )
 			src.root.add_file( new /datum/computer/file/text/diagnostic_readme(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
+			src.root.add_file( new /datum/computer/file/pda_program/rockbox(src))
 
 	research_director
 		name = "\improper SciMaster cartridge"
@@ -132,6 +140,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portasci(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pressure_crystal_shopper(src))
 			src.read_only = 1
 
 	medical_director
@@ -150,6 +159,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portananomed(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portamedbay(src))
+			src.root.add_file( new /datum/computer/file/pda_program/genebooth_tracker(src))
 			src.read_only = 1
 
 
@@ -165,20 +175,6 @@
 			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portananomed(src))
 			src.root.add_file( new /datum/computer/file/pda_program/portable_machinery_control/portamedbay(src))
-			src.read_only = 1
-
-	mechanic
-		name = "\improper Analysis Made Easy cartridge"
-		desc = "More like, copyright infringement made easy."
-		icon_state = "cart-network"
-		file_amount = 64
-		New()
-			..()
-			src.root.add_file( new /datum/computer/file/pda_program/scan/electronics(src))
-			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src) )
-			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src) )
-			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src) )
-			src.root.add_file( new /datum/computer/file/text/diagnostic_readme(src))
 			src.read_only = 1
 
 	security
@@ -246,12 +242,26 @@
 			..()
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pressure_crystal_shopper(src))
+			src.read_only = 1
+
+	bartender
+		name = "\improper Drinkmaster 1000"
+		desc = "Your friend for making the perfect drink!"
+		icon_state = "cart-hydro"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.read_only = 1
 
 	genetics
 		name = "\improper Deoxyribonucleic Amigo cartridge"
 		desc = "There was, at one point, a time when this cartridge often got use."
-		icon_state = "cart-med"
+		icon_state = "cart-gene"
 
 		New()
 			..()
@@ -259,6 +269,7 @@
 			src.root.add_file( new /datum/computer/file/pda_program/scan/medrecord_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/records/medical(src))
+			src.root.add_file( new /datum/computer/file/pda_program/genebooth_tracker(src))
 			src.read_only = 1
 
 	quartermaster
@@ -277,32 +288,50 @@
 		name = "\improper Engine-buddy Atmospherics cartridge"
 		desc = "Great for the enterprising engineer in everyone!"
 		icon_state = "cart-engine"
+		file_amount = 128
 
 		New()
 			..()
+			src.root.add_file( new /datum/computer/file/pda_program/scan/electronics(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
+			src.root.add_file( new /datum/computer/file/pda_program/power_controller(src))
 			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
 			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
-			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src))
+			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src))
+			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src))
+			src.root.add_file( new /datum/computer/file/text/diagnostic_readme(src))
 			src.read_only = 1
 
 	chiefengineer
 		name = "\improper EngineDaemon Ultimate cartridge"
-		desc = "A limited edition cartridge for high-class engineers. The warranty label is missing."
+		desc = "A limited edition cartridge for high-class engineers. The warranty label is missing and it looks like it has been modified."
 		icon_state = "cart-engine"
-		file_amount = 64
+		file_amount = 256 //it has indeed been modified. not technically necessary (ce programs use 114 size) but seemed thematically appropriate
 
 		New()
 			..()
+			//Command stuff
 			src.root.add_file( new /datum/computer/file/pda_program/manifest(src))
-			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
-			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
-			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
-			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
-			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
 			src.root.add_file( new /datum/computer/file/pda_program/fileshare(src))
 			src.root.add_file( new /datum/computer/file/pda_program/security_ticket(src))
+			//Engineer stuff
+			src.root.add_file( new /datum/computer/file/pda_program/scan/electronics(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/health_scan(src))
+			src.root.add_file( new /datum/computer/file/pda_program/power_checker(src))
+			src.root.add_file( new /datum/computer/file/pda_program/power_controller(src))
+			src.root.add_file( new /datum/computer/file/pda_program/atmos_alerts(src))
+			src.root.add_file( new /datum/computer/file/pda_program/signaler(src))
+			src.root.add_file( new /datum/computer/file/pda_program/pingtool(src))
+			src.root.add_file( new /datum/computer/file/pda_program/packet_sniffer(src))
+			src.root.add_file( new /datum/computer/file/pda_program/packet_sender(src))
+			//QM stuff
+			src.root.add_file( new /datum/computer/file/pda_program/qm_records(src))
 			src.root.add_file( new /datum/computer/file/pda_program/bot_control/mulebot(src))
+			//Miner stuff
+			src.root.add_file( new /datum/computer/file/pda_program/rockbox(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/material_scan(src))
 			src.read_only = 1
 
 	clown
@@ -319,8 +348,8 @@
 
 	janitor
 		name = "\improper CustodiPRO cartridge"
-		desc = "When you've mopped till you've dropped, this helps you pick it back up again. Special built-in radio picks up frequenies of nearby mops."
-		icon_state = "cart-j"
+		desc = "When you've mopped till you've dropped, this helps you pick it back up again. Special built-in radio picks up frequencies of nearby mops."
+		icon_state = "cart-jani"
 
 		New()
 			..()
@@ -348,13 +377,25 @@
 			src.root.add_file( new /datum/computer/file/pda_program/scan/plant_scan(src))
 			src.root.add_file( new /datum/computer/file/pda_program/scan/reagent_scan(src))
 			src.root.add_file( new /datum/computer/file/text/handbook_botanist(src))
+
+	miner
+		name = "\improper MineralMagic™ cartridge"
+		desc = "Always know where your Rockbox™ Ore is."
+		icon_state = "cart-mine"
+
+		New()
+			..()
+			src.root.add_file( new /datum/computer/file/pda_program/rockbox(src))
+			src.root.add_file( new /datum/computer/file/pda_program/scan/material_scan(src))
 			src.read_only = 1
 
 	syndicate
 		name = "\improper Detomatix cartridge"
 		desc = "Designed with the latest advancements in blast processing."
 		icon_state = "cart-deto"
-		mats = 0
+		HELP_MESSAGE_OVERRIDE({"Put the cartridge into a pda, then from the main menu navigate to <b>"File Browser"</b>
+								Use the <b>"MISSILE"</b> app to scan for pda targets, then hit the <b>"DETONATE"</b> button to blow up the target PDA.
+								Use the <b>"SELF-DESTRUCT"</b> program to almost instantaneously explode your own PDA."})
 
 		New()
 			..()
@@ -399,7 +440,7 @@
 	game_codebreaker
 		name = "\improper CodeBreaker cartridge"
 		desc = "Irata Inc ports another of their finest titles to your handheld PDA!"
-		icon_state = "cart-c"
+		icon_state = "cart-game"
 
 		New()
 			..()
@@ -409,7 +450,7 @@
 	ringtone
 		name = "\improper Thinktronic Sound System Backup cartridge"
 		desc = "Perfect for restoring default audio settings to any Thinktronic Systems handheld device."
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -419,7 +460,7 @@
 	ringtone_dogs
 		name = "\improper WOLF PACK ULTIMATE PRO ringtone cartridge"
 		desc = "RIDE OR DIE WE HOWL TOGETHER AND PROWL TOGETHER"
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -429,7 +470,7 @@
 	ringtone_numbers
 		name = "\improper Leaptronics Learning System cartridge"
 		desc = "Blossom into brilliance! For ages 4-6."
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -439,7 +480,7 @@
 	ringtone_basic
 		name = "\improper Celestial Soultones ringtone cartridge"
 		desc = "Take flight with these enlightening soultones..."
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -449,7 +490,7 @@
 	ringtone_chimes
 		name = "\improper Jangle Spacechimes ringtone cartridge"
 		desc = "Jangle with us in the spacewind, together."
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -459,7 +500,7 @@
 	ringtone_beepy
 		name = "\improper Blipous Family Heirloom Spaceblips cartridge"
 		desc = "Blipous family heirloom Spaceblips."
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()
@@ -469,7 +510,7 @@
 	ringtone_syndie
 		name = "\improper SounDreamS PRO cartridge"
 		desc = "HI-QUALITY and REALISTIC sound effects for your PDA or project!"
-		icon_state = "cart-c"
+		icon_state = "cart-ring"
 
 		New()
 			..()

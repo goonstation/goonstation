@@ -18,7 +18,7 @@ Fibre wire
 /obj/item/soulskull
 	name = "ominous skull"
 	desc = "This skull gives you the heebie-jeebies."
-	icon = 'icons/obj/surgery.dmi'
+	icon = 'icons/obj/items/organs/skull.dmi'
 	icon_state = "skull_ominous"
 	var/being_mean = 0
 
@@ -47,7 +47,7 @@ Fibre wire
 
 		if(ticker?.mode) //Yes, I'm sure my runtimes will matter if the goddamn TICKER is gone.
 			for(var/datum/mind/M in (ticker.mode.Agimmicks | ticker.mode.traitors)) //We want an EVIL ghost
-				if(!M.dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != ROLE_VAMPTHRALL && M.special_role != ROLE_MINDHACK)
+				if(!M.get_player().dnr && M.current && isobserver(M.current) && M.current.client && M.special_role != ROLE_VAMPTHRALL && M.special_role != ROLE_MINDHACK)
 					priority_targets.Add(M.current)
 
 		if(!priority_targets.len) //Okay, fine. Any ghost. *sigh
@@ -55,7 +55,7 @@ Fibre wire
 			for (var/client/C)
 				var/mob/dead/observer/O = C.mob
 				if (!istype(C)) continue
-				if(O.mind && !O.mind.dnr)
+				if(O.mind && !O.mind.get_player()?.dnr)
 					possible_targets.Add(O)
 
 
@@ -158,9 +158,9 @@ proc/Create_Tommyname()
 			O.dropped(src)
 			O.layer = initial(O.layer)
 
-	src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_shoes)
-	src.equip_new_if_possible(/obj/item/clothing/under/suit {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , slot_w_uniform)
-	src.equip_new_if_possible(/obj/item/football, slot_in_backpack)
+	src.equip_new_if_possible(/obj/item/clothing/shoes/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_SHOES)
+	src.equip_new_if_possible(/obj/item/clothing/under/suit/black {cant_drop = 1; cant_other_remove = 1; cant_self_remove = 1} , SLOT_W_UNIFORM)
+	src.equip_new_if_possible(/obj/item/football, SLOT_IN_BACKPACK)
 
 	src.sound_scream = 'sound/voice/tommy_you-are-tearing-me-apart-lisauh.ogg'
 	src.sound_fingersnap = 'sound/voice/tommy_did-not-hit-hehr.ogg'
@@ -176,15 +176,13 @@ proc/Create_Tommyname()
 	icon = 'icons/obj/projectiles.dmi'
 	icon_state = "random_thing"
 //How much of a punch this has, tends to be seconds/damage before any resist
-	power = 10
+	stun = 10
 //How much ammo this costs
 	cost = 10
 //How fast the power goes away
 	dissipation_rate = 1
 //How many tiles till it starts to lose power
 	dissipation_delay = 10
-//Kill/Stun ratio
-	ks_ratio = 0
 //name of the projectile setting, used when you change a guns setting
 	sname = "Tommify"
 //file location for the sound you want it to play
@@ -203,6 +201,8 @@ proc/Create_Tommyname()
 			hit:tommyize_reshape()
 			playsound(hit.loc, 'sound/voice/tommy_hey-everybody.ogg', 50, 1)
 		else if(ismob(hit))
+			if (issilicon(hit))
+				return
 			hit:tommyize()
 			playsound(hit.loc, 'sound/voice/tommy_hey-everybody.ogg', 50, 1)
 
@@ -210,7 +210,7 @@ proc/Create_Tommyname()
 
 /obj/item/gun/energy/tommy_gun
 	name = "Tommy Gun"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/kinetic.dmi'
 	icon_state = "tommygun"
 	m_amt = 4000
 	rechargeable = 1
@@ -223,7 +223,7 @@ proc/Create_Tommyname()
 		projectiles = list(new/datum/projectile/tommy)
 		..()
 
-	shoot(var/target,var/start,var/mob/user,var/POX,var/POY)
+	shoot(turf/target, turf/start, mob/user, POX, POY, is_dual_wield, atom/called_target = null)
 		for(var/mob/O in AIviewers(user, null))
 			O.show_message("<span class='alert'><B>[user] fires the [src] at [target]!</B></span>", 1, "<span class='alert'>You hear a loud crackling noise.</span>", 2)
 		sleep(0.1 SECONDS)
@@ -306,7 +306,7 @@ proc/Create_Tommyname()
 	desc = "warning"
 	icon = 'icons/mob/screen1.dmi'
 	icon_state = "x2"
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS
 
 	Crossed(atom/movable/AM)
@@ -372,7 +372,7 @@ proc/Create_Tommyname()
 					var/starty = 1
 					var/mob/badmantarget = M
 					boutput(badmantarget, "<span style=\"color:black\"> <B> You hear a voice in your head, 'You're not supposed to be here'. </B>")
-					playsound(badmantarget, 'sound/misc/american_patriot.ogg', 50, 1, -1)
+					playsound(badmantarget, 'sound/misc/american_patriot.ogg', 50, TRUE, -1)
 					sleep(10 SECONDS)
 					startx = badmantarget.x - rand(-11, 11)
 					starty = badmantarget.y - rand(-11, 11)
@@ -395,7 +395,7 @@ proc/Create_Tommyname()
 				var/obj/item/clothing/head/wig/W = H.create_wig()
 				H.bioHolder.mobAppearance.customization_first = new /datum/customization_style/none
 				H.drop_from_slot(H.head)
-				H.force_equip(W, H.slot_head)
+				H.force_equip(W, SLOT_HEAD)
 				H.update_colorful_parts()
 
 /obj/item/gun/energy/dtrumpet
@@ -413,7 +413,7 @@ proc/Create_Tommyname()
 /obj/machinery/power/debug_generator
 	name = "mysterious petrol generator"
 	desc = "Holds untold powers. Literally. Untold power. Get it? Power. Watts? Ok, fine. This thing spits out unlimited watt-volts!! There. I said it!"
-	icon_state = "ggenoff"
+	icon_state = "ggen0"
 	density = 1
 	var/generating = 0
 	New()
@@ -425,11 +425,11 @@ proc/Create_Tommyname()
 		if(generating > 0)
 			SubscribeToProcess()
 			powernet = get_direct_powernet()
-			icon_state = "ggenoff"
+			icon_state = "ggen0"
 		else
 			UnsubscribeProcess()
 			powernet = null
-			icon_state = "ggen"
+			icon_state = "ggen1"
 
 	process()
 		..()
@@ -659,7 +659,7 @@ proc/Create_Tommyname()
 				move_and_delete_object(A)
 		sleep(DEFAULT_ANIMATION_TIME)
 
-	while(created_atoms.len > 0)
+	while(length(created_atoms) > 0)
 		var/atom/A = created_atoms[created_atoms.len]
 		created_atoms.len--
 		if(istype(A, /turf))
@@ -771,7 +771,7 @@ proc/Create_Tommyname()
 			O.set_loc(T)
 			animate_slide(O, 0, 0, animtime, LINEAR_EASING)
 
-	playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, 1)
+	playsound(T, 'sound/effects/airbridge_dpl.ogg', 50, TRUE)
 	sleep(animtime)
 	if(turf_type)
 		DEBUG_MESSAGE("Creating [turf_type] at [log_loc(T)]")
@@ -851,6 +851,7 @@ proc/Create_Tommyname()
 	w_class = W_CLASS_TINY
 	c_flags = EQUIPPED_WHILE_HELD
 	object_flags = NO_ARM_ATTACH | NO_GHOSTCRITTER
+	hide_attack = ATTACK_FULLY_HIDDEN //we handle our own attack twitch
 
 	icon = 'icons/obj/items/items.dmi'
 	icon_state = "garrote0"
@@ -860,6 +861,10 @@ proc/Create_Tommyname()
 
 	// Are we ready to do something mean here?
 	var/wire_readied = 0
+
+	HELP_MESSAGE_OVERRIDE({"Use the garrot wire in hand to hold it with two hands, then place yourself behind your target.
+							Click them with the wire to attempt to grab them.
+							While a target is being strangled, use the wire in hand to inflict more damage and bleed in addition to the suffocation."})
 
 	New()
 		..()
@@ -925,23 +930,23 @@ proc/Create_Tommyname()
 	// Also no strangling with flaccid wires, that's just weird.
 
 	if(!assailant || !target)
-		return 1
+		return FALSE
 
 	if(!wire_readied)
 		assailant.show_message("<span class='combat'>You have to have a firm grip of the wire before you can strangle [target]!</span>")
-		return 1
+		return FALSE
 
 	if(chokehold)
 		assailant.show_message("<span class='combat'>You're too busy strangling [chokehold.affecting] to strangle someone else!</span>")
-		return 1
+		return FALSE
 
 	// TODO: check that target has their back turned
 	if(is_behind_target(assailant, target))
 		// Try to grab a dude
 		actions.start(new/datum/action/bar/private/icon/garrote_target(target, src), assailant)
+		return TRUE
 	else
 		assailant.show_message("<span class='combat'>You have to be behind your target or they'll see you coming!</span>")
-		return 1
 
 // Actually apply the grab (called via action bar)
 /obj/item/garrote/try_grab(var/mob/living/target, var/mob/living/assailant)
@@ -1000,7 +1005,8 @@ proc/Create_Tommyname()
 	if (target && target == src.chokehold?.affecting)
 		src.try_upgrade_grab()
 	else
-		src.attempt_grab(user, target)
+		if (src.attempt_grab(user, target)) //if we successfully grab someone then do an attack twitch
+			attack_twitch(user)
 
 /datum/action/bar/private/icon/garrote_target
 	duration = 10
@@ -1018,7 +1024,7 @@ proc/Create_Tommyname()
 
 	proc/check_conditions()
 		. = 0
-		if(BOUNDS_DIST(owner, target) > 0 || !target || !owner || !the_garrote || !the_garrote.wire_readied)
+		if(BOUNDS_DIST(owner, target) > 0 || !target || !isturf(target.loc) || !owner || !the_garrote || !the_garrote.wire_readied)
 			interrupt(INTERRUPT_ALWAYS)
 			. = 1
 
@@ -1043,7 +1049,7 @@ proc/Create_Tommyname()
 // Special grab obj that doesn't care if it's in someone's hands
 /obj/item/grab/garrote_grab
 	// No breaking out under own power
-	prob_mod = 0
+	irresistible = 1
 	var/extra_deadly = 0
 	check()
 		if(!assailant || !affecting)

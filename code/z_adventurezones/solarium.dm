@@ -27,7 +27,7 @@ var/global/the_sun = null
 	layer = EFFECTS_LAYER_UNDER_4
 	luminosity = 5
 	var/datum/light/light
-	anchored = 2 // This stopped being funny weeks ago.
+	anchored = ANCHORED_ALWAYS // This stopped being funny weeks ago.
 
 	New()
 		..()
@@ -74,7 +74,7 @@ var/global/derelict_mode = 0
 	desc = "This looks kinda important.  You can barely hear farting and honking coming from a speaker inside.  Weird."
 	icon = 'icons/obj/networked.dmi'
 	icon_state = "server"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 
 	New()
@@ -138,6 +138,9 @@ var/global/derelict_mode = 0
 				LAGCHECK(LAG_LOW)
 				space.icon_state = "howlingsun"
 				space.icon = 'icons/misc/worlds.dmi'
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_DEBRIS)
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_MINING)
 			playsound_global(world, 'sound/machines/lavamoon_plantalarm.ogg', 70)
 			SPAWN(1 DECI SECOND)
 				for(var/mob/living/carbon/human/H in mobs)
@@ -171,29 +174,27 @@ proc/voidify_world()
 	lobby_titlecard.set_pregame_html()
 
 	SPAWN(3 SECONDS)
-		for (var/turf/space/space in world)
-			LAGCHECK(LAG_LOW)
-			if(was_eaten)
+		if (was_eaten)
+			for (var/turf/space/space in world)
+				LAGCHECK(LAG_LOW)
 				if (space.icon_state != "acid_floor")
 					space.icon_state = "acid_floor"
 					space.icon = 'icons/misc/meatland.dmi'
 					space.name = "stomach acid"
-					if (space.z == 1)
+					if (space.z == Z_LEVEL_STATION)
 						new /obj/stomachacid(space)
-			else
-				if(space.icon_state != "darkvoid")
-					space.icon_state = "darkvoid"
-					space.icon = 'icons/turf/floors.dmi'
-					space.name = "void"
-		//var/obj/overlay/the_sun = locate("the_sun")
-		//if (istype(the_sun))
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_STATION)
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_DEBRIS)
+			REMOVE_ALL_PARALLAX_RENDER_SOURCES_FROM_GROUP(Z_LEVEL_MINING)
+		else
+			generate_void(TRUE)
+
 		if (the_sun)
 			var/obj/Sun = the_sun
 			Sun.icon_state = "sun_red"
 			Sun.desc = "Uhhh...."
-			Sun.blend_mode = 2 // heh
-		//var/obj/critter/the_automaton = locate("the_automaton")
-		//if (istype(the_automaton))
+			Sun.blend_mode = 2
+
 		if (the_automaton)
 			var/obj/critter/Automaton = the_automaton
 			Automaton.aggressive = 1

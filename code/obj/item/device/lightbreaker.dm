@@ -1,8 +1,11 @@
+TYPEINFO(/obj/item/lightbreaker)
+	mats = 15
+
 /obj/item/lightbreaker
 	name = "compact tape"
 	desc = "A casette player loaded with a casette of a vampire's screech."
-	icon = 'icons/obj/items/device.dmi'
-	icon_state = "recorder"
+	icon = 'icons/obj/radiostation.dmi'
+	icon_state = "audiolog_newSmall"
 	var/active = 0
 	flags = FPRINT | TABLEPASS| CONDUCT
 	item_state = "electronic"
@@ -11,11 +14,11 @@
 	throw_range = 10
 	w_class = W_CLASS_SMALL
 	is_syndicate = 1
-	mats = 15
 	stamina_cost = 10
 	stamina_crit_chance = 15
 	var/ammo = 4
 	var/ammo_max = 4
+	HELP_MESSAGE_OVERRIDE({"Use the lightbreaker in hand to shatter most windows and lights around you, and deafen/stagger people around you without ear protection. To recharge the lightbreaker, hit it with a <b>screwdriver</b>."})
 
 	examine()
 		. = ..()
@@ -97,7 +100,7 @@
 		if (istype(source) && the_tool != source.equipped())
 			interrupt(INTERRUPT_ALWAYS)
 			return
-		playsound(the_breaker, 'sound/misc/winding.ogg', 50, 1,3)
+		playsound(the_breaker, 'sound/misc/winding.ogg', 50, TRUE,3)
 
 	onStart()
 		..()

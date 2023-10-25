@@ -222,7 +222,7 @@ Nanotrasen, Inc.<br>
 	configure_mode = 0
 	random_code = 1
 	spawn_contents = list(/obj/item/paper/requisitionF49B,
-	/obj/item/spacecash/thousand, /obj/item/spacecash/thousand, /obj/item/reagent_containers/food/drinks/bottle/fancy_beer)
+	/obj/item/currency/spacecash/thousand, /obj/item/currency/spacecash/thousand, /obj/item/reagent_containers/food/drinks/bottle/fancy_beer)
 
 /obj/item/storage/secure/ssafe/pilot_cargo3
 	name = "pilot's lockbox"
@@ -417,7 +417,7 @@ var/global/datum/numbers_station/lincolnshire = new
 		if (TP == null)
 			return 1
 		var/list/nums = splittext(TP, " ")
-		if (nums.len < 21)
+		if (length(nums) < 21)
 			logTheThing(LOG_DEBUG, null, "<b>Numbers station</b> got too few numbers.")
 			return 2
 		for (var/i = 1, i <= 21, i++)

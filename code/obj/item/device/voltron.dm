@@ -2,7 +2,7 @@
 	icon = null
 	name = "Sparks"
 	desc = "Dangerous looking sparks."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	var/can_move = 1
@@ -20,7 +20,7 @@
 			target.set_loc(src)
 			img = image('icons/effects/effects.dmi',src ,"energyorb")
 			target << img
-		RegisterSignal(the_user, list(COMSIG_MOB_DROPPED), .proc/handle_dropped_item)
+		RegisterSignal(the_user, COMSIG_MOB_DROPPED, PROC_REF(handle_dropped_item))
 		APPLY_ATOM_PROPERTY(the_user, PROP_MOB_CANTTHROW, src)
 
 		//SPAWN(0) check() but why
@@ -112,7 +112,7 @@
 		for(var/i = 1, i <= cableimgs.len, i++)
 			var/image/cimg = image(cicon)
 			cimg.layer = 100
-			cimg.plane = 100
+			cimg.plane = PLANE_ABOVE_BLACKNESS
 			cableimgs[i] = cimg//@MBC this is how you'd do phasing
 		return ..()
 
@@ -204,7 +204,7 @@
 						img.invisibility = INVIS_NONE
 						img.alpha = 255
 						img.layer = 100
-						img.plane = 100
+						img.plane = PLANE_ABOVE_BLACKNESS
 						img.loc = locate(C.x, C.y, C.z)
 				power = round(power)
 				power--
@@ -232,10 +232,10 @@
 		if(D)
 			dummy.invisibility = INVIS_ALWAYS
 
-		playsound(src, 'sound/effects/shielddown2.ogg', 40, 1)
+		playsound(src, 'sound/effects/shielddown2.ogg', 40, TRUE)
 		var/obj/overlay/O = new/obj/overlay(get_turf(target))
 		O.name = "Energy"
-		O.anchored = 1
+		O.anchored = ANCHORED
 		O.layer = MOB_EFFECT_LAYER
 		target.transforming = 1
 		O.icon = 'icons/effects/effects.dmi'
@@ -266,10 +266,10 @@
 
 			activating = 1
 
-			playsound(src, 'sound/effects/singsuck.ogg', 40, 1)
+			playsound(src, 'sound/effects/singsuck.ogg', 40, TRUE)
 			var/obj/overlay/O = new/obj/overlay(get_turf(user))
 			O.name = "Energy"
-			O.anchored = 1
+			O.anchored = ANCHORED
 			O.layer = MOB_EFFECT_LAYER
 			user.transforming = 1
 			O.icon = 'icons/effects/effects.dmi'

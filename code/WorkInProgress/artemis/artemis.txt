@@ -1,0 +1,1 @@
+As of writing, all artemis development is happening in the github branch `development/artemis`.

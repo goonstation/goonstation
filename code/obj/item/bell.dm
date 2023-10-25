@@ -9,6 +9,7 @@
 	throw_speed = 3
 	throw_range = 15
 	w_class = W_CLASS_SMALL
+	var/sends_signal_to_hop_watch = FALSE
 
 /obj/item/bell/attack_hand(mob/user)
 	if ((!isturf(src.loc) && !user.is_in_hands(src)))
@@ -16,7 +17,10 @@
 	if (ON_COOLDOWN(src, "service_bell", 1.5 SECONDS))
 		return
 	src.visible_message("<span class='notice'><b>[user]</b> rings \the [src]!</span>")
-	playsound(src, 'sound/effects/bell_ring.ogg', 30, 0)
+	playsound(src, 'sound/effects/bell_ring.ogg', 30, FALSE)
+	if(sends_signal_to_hop_watch)
+		for_by_tcl(watch, /obj/item/pocketwatch)
+			watch.the_bell_has_been_rung()
 
 /obj/item/bell/attack_self(mob/user as mob)
 	src.attack_hand(user)
@@ -28,6 +32,7 @@
 
 /obj/item/bell/hop
 	icon_state = "bell_hop" // get it?
+	sends_signal_to_hop_watch = TRUE
 
 /obj/item/bell/kitchen
 	name = "dinner bell"

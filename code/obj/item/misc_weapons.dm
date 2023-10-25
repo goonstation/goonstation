@@ -16,6 +16,9 @@
 
 
 /// Cyalume saber/esword, famed traitor item
+TYPEINFO(/obj/item/sword)
+	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
+
 /obj/item/sword
 	name = "cyalume saber"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -40,22 +43,23 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	is_syndicate = 1
-	mats = list("MET-1"=5, "CON-2"=5, "POW-3"=10)
+	leaves_slash_wound = TRUE
 	contraband = 5
 	desc = "An illegal, recalled Super Protector Friend glow sword. When activated, uses energized cyalume to create an extremely dangerous saber. Can be concealed when deactivated."
-	stamina_damage = 35 // This gets applied by obj/item/attack, regardless of if the saber is active.
+	stamina_damage = 40 // This gets applied by obj/item/attack, regardless of if the saber is active.
 	stamina_cost = 5
 	stamina_crit_chance = 35
 	var/active_force = 60
-	var/active_stamina_dmg = 40
-	var/active_stamina_cost = 40
-	var/inactive_stamina_dmg = 35
+	var/active_stamina_dmg = 30
+	var/active_stamina_cost = 30
+	var/inactive_stamina_dmg = 40
 	var/inactive_force = 1
 	var/inactive_stamina_cost = 5
 	var/state_name = "sword"
 	var/off_w_class = W_CLASS_SMALL
 	var/datum/component/loctargeting/simple_light/light_c
 	var/do_stun = 0
+	HELP_MESSAGE_OVERRIDE({"Use the saber in hand to turn it on/off. <span class='grab'>Block</span> with the activated saber in hand to deflect most bullets shot at you back to the sender."})
 
 	stunner
 		do_stun = 1
@@ -104,7 +108,7 @@
 		light_c = src.AddComponent(/datum/component/loctargeting/simple_light, r, g, b, 150)
 		light_c.update(0)
 		src.setItemSpecial(/datum/item_special/swipe/csaber)
-		AddComponent(/datum/component/itemblock/saberblock, .proc/can_reflect, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, PROC_REF(can_reflect), PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 /obj/item/sword/proc/can_reflect()
@@ -167,7 +171,7 @@
 		var/obj/item/sword/S = H.find_type_in_hand(/obj/item/sword, "right")
 		if (!S)
 			S = H.find_type_in_hand(/obj/item/sword, "left")
-		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus("stunned", "weakened", "paralysis")))
+		if (S && S.active && !(H.lying || isdead(H) || H.hasStatus(list("stunned", "weakened", "paralysis"))))
 			var/obj/itemspecialeffect/clash/C = new /obj/itemspecialeffect/clash
 			if(target.gender == MALE) playsound(target, pick('sound/weapons/male_cswordattack1.ogg','sound/weapons/male_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(target, pick('sound/weapons/female_cswordattack1.ogg','sound/weapons/female_cswordattack2.ogg'), 70, 0, 5, clamp(1.0 + (30 - H.bioHolder.age)/50, 0.7, 1.4))
@@ -196,12 +200,12 @@
 
 		if (!loaded_glowstick)
 			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick seems to be missing.</span>")
-			playsound(user, 'sound/items/zippo_close.ogg', 60, 1)
+			playsound(user, 'sound/items/zippo_close.ogg', 60, TRUE)
 			return
 
 		if (!loaded_glowstick.on)
 			boutput(user, "<span class='alert'>The sword emits a brief flash of light and turns off! The blade-focus glowstick hasn't been cracked!</span>")
-			playsound(user, 'sound/items/zippo_close.ogg', 60, 1)
+			playsound(user, 'sound/items/zippo_close.ogg', 60, TRUE)
 			return
 
 	if (user.bioHolder.HasEffect("clumsy") && prob(50))
@@ -217,24 +221,24 @@
 		boutput(user, "<span class='notice'>The sword is now active.</span>")
 		hit_type = DAMAGE_CUT
 		stamina_damage = active_stamina_dmg
-		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
+		if(!ON_COOLDOWN(src, "playsound_on", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnon.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
+			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnon.ogg', 70, FALSE, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
 			else playsound(U,'sound/weapons/female_cswordturnon.ogg' , 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
 		src.force = active_force
 		src.stamina_cost = active_stamina_cost
 		src.w_class = W_CLASS_BULKY
-		user.unlock_medal("The Force is strong with this one", 1)
+		user.unlock_medal("The Force is strong with this one")
 	else
 		src.UpdateIcon()
 		SET_BLOCKS(BLOCK_SWORD)
 		boutput(user, "<span class='notice'>The sword can now be concealed.</span>")
 		hit_type = DAMAGE_BLUNT
 		stamina_damage = inactive_stamina_dmg
-		if(ishuman(user) && !ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
+		if(!ON_COOLDOWN(src, "playsound_off", 2 SECONDS))
 			var/mob/living/carbon/human/U = user
-			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnoff.ogg', 70, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
-			else playsound(U,'sound/weapons/female_cswordturnoff.ogg', 100, 0, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
+			if(U.gender == MALE) playsound(U,'sound/weapons/male_cswordturnoff.ogg', 70, FALSE, 5, clamp(1.0 + (30 - U.bioHolder.age)/60, 0.7, 1.2))
+			else playsound(U,'sound/weapons/female_cswordturnoff.ogg', 100, FALSE, 5, clamp(1.0 + (30 - U.bioHolder.age)/50, 0.7, 1.4))
 		src.force = inactive_force
 		src.stamina_cost = inactive_stamina_cost
 		src.w_class = off_w_class
@@ -272,7 +276,7 @@
 				return
 
 			user.visible_message("<b>[user]</b> unscrews and opens [src].")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			src.open = 1
 			if (loaded_glowstick)
 				src.icon_state = "[state_name]-open-[bladecolor]"
@@ -281,12 +285,12 @@
 			return
 		else if (src.open && src.bladecolor)
 			user.visible_message("<b>[user]</b> closes and screws [src] shut.")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			src.open = 0
 			src.icon_state = "[state_name]0"
 		else
 			boutput(user, "<span class='alert'>The screw spins freely in place without a blade to screw into.</span>")
-			playsound(src, 'sound/items/Screwdriver.ogg', 100, 1)
+			playsound(src, 'sound/items/Screwdriver.ogg', 100, TRUE)
 			return
 
 	if (istype(W, /obj/item/device/light/glowstick) && !loaded_glowstick && open)
@@ -408,6 +412,52 @@
 /obj/item/sword/pink
 	bladecolor = "Pi"
 
+TYPEINFO(/obj/item/sword/pink/angel)
+	mats = null
+/obj/item/sword/pink/angel
+	name = "The Nyasaber"
+	desc = "A strange colour of saber, for a sith. You sense the dark side of the nya within it..."
+	active = TRUE
+	active_force = 5
+	icon_state = "sword1-Pi"
+	item_state = "sword1-Pi"
+
+	pickup(mob/user)
+		if(isadmin(user))
+			src.active_force = 60
+			if(src.active)
+				src.force = 60
+			. = ..()
+		else if(istype(user, /mob/living/critter/small_animal/cat))
+			boutput(user, "<span class='alert'>You can nyot use this!</span>")
+		else
+			src.active_force = initial(src.active_force)
+			if(src.active)
+				src.force = initial(src.force)
+			user.unequip_all()
+			user.make_critter(/mob/living/critter/small_animal/cat)
+			playsound(user.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+
+	pull(mob/user)
+		if(isadmin(user))
+			return ..()
+		else if(istype(user, /mob/living/critter/small_animal/cat))
+			boutput(user, "<span class='alert'>You can nyot use this!</span>")
+		else
+			user.unequip_all()
+			user.make_critter(/mob/living/critter/small_animal/cat)
+			playsound(user.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+
+	mouse_drop(atom/over_object, src_location, over_location, over_control, params)
+		if(isadmin(usr))
+			return ..()
+		else if(istype(usr, /mob/living/critter/small_animal/cat))
+			boutput(usr, "<span class='alert'>You can nyot use this!</span>")
+		else
+			usr.unequip_all()
+			usr.make_critter(/mob/living/critter/small_animal/cat)
+			playsound(usr.loc, 'sound/voice/animal/cat.ogg', 50, 1)
+
 /obj/item/sword/white
 	bladecolor = "W"
 
@@ -480,6 +530,7 @@
 	stamina_cost = 5
 	stamina_crit_chance = 50
 	pickup_sfx = 'sound/items/blade_pull.ogg'
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 
 	New()
 		..()
@@ -504,7 +555,6 @@
 		take_bleeding_damage(M, null, 5, DAMAGE_CUT)
 
 /obj/item/dagger/attack(target, mob/user)
-	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 	if(ismob(target))
 		take_bleeding_damage(target, user, 5, DAMAGE_STAB)
 	..()
@@ -524,6 +574,7 @@
 /obj/item/dagger/syndicate
 	name = "syndicate dagger"
 	desc = "An ornamental dagger for syndicate higher-ups. It sounds fancy, but it's basically the munitions company equivalent of those glass cubes with the company logo frosted on."
+	HELP_MESSAGE_OVERRIDE({"Throw the dagger at someone to instantly incapacitate them for a short while."})
 
 /obj/item/dagger/syndicate/specialist //Infiltrator class knife
 	name = "syndicate fighting utility knife"
@@ -561,7 +612,7 @@
 			random_brute_damage(C, throwforce, 1)
 
 			take_bleeding_damage(A, null, 5, DAMAGE_CUT)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 
 /obj/item/dagger/throwing_knife/tele
 	name = "portable knife"
@@ -574,11 +625,53 @@
 		usr.set_loc(get_turf(src))
 		usr.put_in_hand(src)
 
-/obj/item/storage/box/shuriken_pouch
-	name = "Shuriken Pouch"
-	desc = "Contains four throwing stars!"
-	icon_state = "ammopouch"
-	spawn_contents = list(/obj/item/implant/projectile/shuriken = 4)
+// Revolutionary sign.
+/obj/item/revolutionary_sign
+	name = "revolutionary sign"
+	desc = "A sign bearing revolutionary propaganda. Good for picketing."
+
+	icon = 'icons/obj/items/weapons.dmi'
+	icon_state = "revsign"
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
+	item_state = "revsign"
+
+	w_class = W_CLASS_BULKY
+	throwforce = 8
+	flags = FPRINT | TABLEPASS | CONDUCT
+	c_flags = EQUIPPED_WHILE_HELD
+	force = 3
+	stamina_damage = 30
+	stamina_cost = 15
+	stamina_crit_chance = 10
+	hitsound = 'sound/impact_sounds/Wood_Hit_1.ogg'
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/swipe)
+		BLOCK_SETUP(BLOCK_LARGE)
+		processing_items.Add(src)
+
+	attack(mob/living/target, mob/user)
+		if (isrevolutionary(user))
+			var/nearby_revs = 0
+			for (var/mob/M in viewers(5, src.loc))
+				if (isrevolutionary(M))
+					nearby_revs++
+			random_brute_damage(target, min(25, nearby_revs * 5), TRUE)
+		..()
+
+	disposing()
+		..()
+		processing_items.Remove(src)
+
+	process()
+		..()
+		if (ismob(src.loc))
+			var/mob/owner = src.loc
+			if (isrevolutionary(owner))
+				for (var/mob/M in viewers(5, owner))
+					if (isrevolutionary(M))
+						M.changeStatus("revspirit", 20 SECONDS)
 
 /obj/item/implant/projectile/shuriken
 	name = "shuriken"
@@ -594,12 +687,10 @@
 		..()
 		if (ishuman(M))
 			var/mob/living/carbon/human/H = M
-			H.implant.Add(src)
+			src.implanted(M)
 			src.visible_message("<span class='alert'>[src] gets embedded in [M]!</span>")
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Cut_1.ogg', 100, 1)
 			H.changeStatus("weakened", 2 SECONDS)
-			src.set_loc(M)
-			src.implanted = 1
 		random_brute_damage(M, 11)//embedding cares not for your armour
 		take_bleeding_damage(M, null, 3, DAMAGE_CUT)
 
@@ -708,10 +799,13 @@
 	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
 	tool_flags = TOOL_CUTTING
 	hit_type = DAMAGE_STAB
+	hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
 	var/makemeat = 1
+	HELP_MESSAGE_OVERRIDE({"Throw the knife at someone for a guaranteed short stun. Use the knife on a dead body to instantly turn it into meat."})
 
 /obj/item/knife/butcher/New()
 	..()
+	src.AddComponent(/datum/component/bloodflick)
 	BLOCK_SETUP(BLOCK_KNIFE)
 
 /obj/item/knife/butcher/throw_impact(atom/A, datum/thrown_thing/thr)
@@ -727,7 +821,8 @@
 		random_brute_damage(C, 20,1)
 		take_bleeding_damage(C, null, 10, DAMAGE_CUT)
 
-		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+		playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
+		logTheThing(LOG_COMBAT, C, "is struck by [src] at [log_loc(C)] (likely thrown by [ismob(usr) ? constructName(usr) : "a non-mob"].")
 	else
 		..()
 
@@ -736,7 +831,6 @@
 		if (scalpel_surgery(target,user))
 			return
 
-	playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, 1)
 
 	if (iscarbon(target))
 		var/mob/living/carbon/C = target
@@ -745,6 +839,7 @@
 			take_bleeding_damage(C, user, 10, DAMAGE_STAB)
 		else
 			if (src.makemeat)
+				playsound(target, 'sound/impact_sounds/Flesh_Stab_1.ogg', 60, TRUE)
 				logTheThing(LOG_COMBAT, user, "butchers [C]'s corpse with the [src.name] at [log_loc(C)].")
 				for (var/i in 0 to 2)
 					new /obj/item/reagent_containers/food/snacks/ingredient/meat/humanmeat(get_turf(C),C)
@@ -782,6 +877,7 @@
 	throw_range = 10
 	makemeat = 0
 	var/hunter_key = "" // The owner of this spear.
+	HELP_MESSAGE_OVERRIDE({"Throw the spear at someone for a guaranteed short stun."})
 
 	New()
 		..()
@@ -795,7 +891,8 @@
 
 	disposing()
 		. = ..()
-		STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
+		if (hunter_key)
+			STOP_TRACKING_CAT(TR_CAT_HUNTER_GEAR)
 
 /////////////////////////////////////////////////// Axe ////////////////////////////////////////////
 
@@ -870,10 +967,12 @@
 	icon_state = "fireaxe"
 	item_state = "fireaxe"
 	hitsound = null
-	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY | ONBELT
+	flags = FPRINT | CONDUCT | TABLEPASS | USEDELAY
+	c_flags = ONBELT
 	object_flags = NO_ARM_ATTACH
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING //TOOL_CHOPPING flagged items do 4 times as much damage to doors.
 	hit_type = DAMAGE_CUT
+	leaves_slash_wound = TRUE
 	click_delay = 10
 	two_handed = 0
 
@@ -937,6 +1036,9 @@
 
 ///////////////////////////////// Baseball Bat ////////////////////////////////////////////////////////////
 
+TYPEINFO(/obj/item/bat)
+	mats = list("wood" = 8)
+
 /obj/item/bat
 	name = "Baseball Bat"
 	desc = "Play ball! Note: Batter is responsible for any injuries sustained due to ball-hitting."
@@ -944,13 +1046,13 @@
 	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
 	icon_state = "baseballbat"
 	item_state = "baseballbat"
+	hitsound = 'sound/impact_sounds/bat_wood.ogg'
 	hit_type = DAMAGE_BLUNT
 	force = 12
 	throwforce = 7
 	stamina_damage = 24
 	stamina_cost = 30
 	stamina_crit_chance = 15
-	mats = list("wood" = 8)
 
 	attack(mob/M, mob/user, def_zone, is_special)
 		. = ..()
@@ -1004,7 +1106,7 @@
 /obj/item/banme/attack(mob/M, mob/user)
 	boutput(M, "<span class='alert'><b>You have been BANNED by [user]!</b></span>")
 	boutput(user, "<span class='alert'><b>You have BANNED [M]!</b></span>")
-	playsound(loc, 'sound/vox/banned.ogg', 60, 1)
+	playsound(loc, 'sound/vox/banned.ogg', 60, TRUE)
 	return
 
 /////////////////////////////////////////////////// Swords ////////////////////////////////////////////
@@ -1025,8 +1127,15 @@
 	attack_verbs = "slashes"
 	hitsound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
 	is_syndicate = TRUE
+	leaves_slash_wound = TRUE
 	var/delimb_prob = 1
+	var/midair_fruit_slice = FALSE //! if this is TRUE, blocking with this weapon can slice thrown food items midair
+	var/midair_fruit_slice_stamina_cost = 7 //! The amount of stamina it costs to slice food midair
 	custom_suicide = 1
+
+/obj/item/swords/New()
+	src.AddComponent(/datum/component/bloodflick)
+	..()
 
 /obj/item/swords/proc/handle_parry(mob/target, mob/user)
 	if (target != user && ishuman(target))
@@ -1113,15 +1222,32 @@
 		else if(target.organHolder?.butt)
 			target.organHolder.drop_and_throw_organ("butt", dist = 5, speed = 1, showtext = 1)
 
+/obj/item/swords/try_specific_equip(mob/living/carbon/human/user)
+	. = FALSE
+	if (!istype(user))
+		return
+	if (!istype(user.belt, /obj/item/swords_sheaths))
+		return
+	var/obj/item/swords_sheaths/sheath = user.belt
+	if (!sheath.sword_inside && sheath.sword_path == src.type && !src.cant_drop)
+		sheath.Attackby(src, user)
+		return TRUE
+
 //PS the description can be shortened if you find it annoying and you are a jerk.
+TYPEINFO(/obj/item/swords/katana)
+	mats = list("MET-3"=20, "FAB-1"=5)
+
 /obj/item/swords/katana
 	name = "katana"
 	desc = "That's it. I'm sick of all this 'Masterwork Cyalume Saber' bullshit that's going on in the SS13 system right now. Katanas deserve much better than that. Much, much better than that. I should know what I'm talking about. I myself commissioned a genuine katana in Space Japan for 2,400,000 Nuyen (that's about 20,000 credits) and have been practicing with it for almost 2 years now. I can even cut slabs of solid mauxite with my katana. Space Japanese smiths spend light-years working on a single katana and fold it up to a million times to produce the finest blades known to space mankind. Katanas are thrice as sharp as Syndicate sabers and thrice as hard for that matter too. Anything a c-saber can cut through, a katana can cut through better. I'm pretty sure a katana could easily bisect a drunk captain wearing full captain's armor with a simple tap. Ever wonder why the Syndicate never bothered conquering Space Japan? That's right, they were too scared to fight the disciplined Space Samurai and their space katanas of destruction. Even in World War 72, Nanotrasen soldiers targeted the men with the katanas first because their killing power was feared and respected."
 	icon_state = "katana"
 	force = 15 //Was at 5, but that felt far too weak. C-swords are at 60 in comparison. 15 is still quite a bit of damage, but just not insta-crit levels.
-	mats = list("MET-3"=20, "FAB-1"=5)
 	contraband = 7 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
-
+	hitsound = 'sound/impact_sounds/katana_slash.ogg'
+	midair_fruit_slice = TRUE
+	var/reagent_capacity = 15
+	HELP_MESSAGE_OVERRIDE({"Hit someone while aiming at a specific limb to immediatly slice off the targeted limb. If both arms and legs are sliced off, you can decapitate your target by aiming for the head.\n
+							While on any intent other than <span class='help'>help</span>, click a tile away from you to quickly dash forward to it's location, slicing those in the way."})
 
 	// pickup_sfx = 'sound/items/blade_pull.ogg'
 	var/obj/itemspecialeffect/katana_dash/start/start
@@ -1143,8 +1269,27 @@
 		mid1 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		mid2 = new/obj/itemspecialeffect/katana_dash/mid(src)
 		end = new/obj/itemspecialeffect/katana_dash/end(src)
+		src.create_reagents(src.reagent_capacity)
 		src.setItemSpecial(/datum/item_special/katana_dash)
 		BLOCK_SETUP(BLOCK_SWORD)
+
+	afterattack(atom/target, mob/user)
+		..()
+		apply_coating(target, user)
+
+	proc/apply_coating(var/atom/target, var/mob/user)
+		if (target.is_open_container() && !ismob(target))
+			if(target.reagents?.has_reagent("sakuride", 1))
+				if(length(target.reagents.reagent_list) > 1)
+					boutput(user, "<span class='alert'>This coating is impure!</span>")
+					return
+				if(src.reagents.has_reagent("sakuride", src.reagent_capacity))
+					boutput(user, "<span class='alert'>The blade is already coated!</span>")
+					return
+				target.reagents.trans_to(src, src.reagent_capacity)
+				boutput(user, "You apply the coating to the blade.")
+			else
+				boutput(user, "<span class='alert'>You cannot coat the [src] in this!</span>")
 
 /obj/item/swords/katana/suicide(var/mob/user as mob)
 	user.visible_message("<span class='alert'><b>[user] thrusts [src] through their stomach!</b></span>")
@@ -1173,16 +1318,19 @@
 	force = 18
 	throw_range = 6
 	contraband = 5 //Fun fact: sheathing your katana makes you 100% less likely to be tazed by beepsky, probably
+	delimb_prob = 1
 
 	New()
 		..()
 		src.setItemSpecial(/datum/item_special/katana_dash/reverse)
 
+TYPEINFO(/obj/item/swords/captain)
+	mats = list("MET-2"=15)
+
 /obj/item/swords/captain
 	icon_state = "cap_sword"
 	name = "Commander's Sabre"
 	desc = ""
-	mats = list("MET-2"=15)
 	force = 16 //not awful but not amazing
 	contraband = 4
 	tooltip_flags = REBUILD_USER
@@ -1235,6 +1383,41 @@
 		..()
 		src.setItemSpecial(/datum/item_special/rangestab)
 
+/obj/item/swords/clown // this is the worst thing I've ever created
+	icon_state = "clown_sword"
+	name = "Clowns's Sabre"
+	desc = "A sharp sab- is that a bike horn that's been cut in half duct taped to a sword? What the hell? How does that even work???"
+	force = 4
+	delimb_prob = 1 // yes
+	contraband = 1
+	hit_type = DAMAGE_BLUNT
+	attack_verbs = "bonks"
+	hitsound = null // do this in attack
+	leaves_slash_wound = FALSE
+
+	New()
+		..()
+		src.setItemSpecial(/datum/item_special/rangestab)
+
+	attack(mob/M, mob/user)
+		if(ismob(M))
+			playsound(src, pick('sound/musical_instruments/Bikehorn_bonk1.ogg', 'sound/musical_instruments/Bikehorn_bonk2.ogg', 'sound/musical_instruments/Bikehorn_bonk3.ogg'), 50, 1, -1)
+		..()
+
+/obj/item/swords/clown/suicide(var/mob/living/carbon/human/user as mob)
+	if (!istype(user) || !user.organHolder || !src.user_can_suicide(user))
+		return 0
+	else
+		user.visible_message("<span class='alert'><b>[user] places the horn end of the [src] up to their head and sotfly honks it.</b></span>")
+		SPAWN(1 SECOND)
+			if(prob(5))
+				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, FALSE, 0)
+				user.gib()
+			else
+				playsound(user, 'sound/musical_instruments/Bikehorn_1.ogg', 50, FALSE, 0)
+				user.death()
+
+
 /obj/item/swords_sheaths //blegh, keeping naming consistent
 	name = "youshouldntseemieum sheath"
 	icon = 'icons/obj/items/weapons.dmi'
@@ -1247,7 +1430,8 @@
 	throw_speed = 1
 	throw_range = 5
 	w_class = W_CLASS_NORMAL
-	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY | ONBELT
+	flags = FPRINT | TABLEPASS | NOSHIELD | USEDELAY
+	c_flags = ONBELT
 	var/obj/item/swords/sword_inside = 1
 	var/sheathed_state = "katana_sheathed"
 	var/sheath_state = "katana_sheath"
@@ -1287,12 +1471,27 @@
 			user.update_clothing()
 			src.sword_inside = W //katana SHOULD be in the sheath now.
 			boutput(user, "<span class='notice'>You sheathe [W] in [src].</span>")
-			playsound(user, 'sound/effects/sword_sheath.ogg', 50, 0, 0)
+			playsound(user, 'sound/effects/sword_sheath.ogg', 50, FALSE, 0)
 		else
 			..()
 			if(W.cant_drop == 1)
 				boutput(user, "<span class='notice'>You can't sheathe the [W] while its attached to your arm.</span>")
 
+	mouse_drop(atom/over_object, src_location, over_location)
+		..()
+		var/atom/movable/screen/hud/S = over_object
+		if (istype(S))
+			playsound(src.loc, "rustle", 50, 1, -5)
+			if (can_act(usr) && src.loc == usr)
+				if (S.id == "rhand")
+					if (!usr.r_hand)
+						usr.u_equip(src)
+						usr.put_in_hand_or_drop(src, 0)
+				else
+					if (S.id == "lhand")
+						if (!usr.l_hand)
+							usr.u_equip(src)
+							usr.put_in_hand_or_drop(src, 1)
 
 /obj/item/swords_sheaths/proc/draw_sword(mob/living/carbon/human/user)
 	if(src.sword_inside) //Checks if a sword is inside
@@ -1396,6 +1595,17 @@
 	ih_sheath_state = "scabbard-pirate0"
 	sword_path = /obj/item/swords/pirate
 
+/obj/item/swords_sheaths/clown
+	name = "Clown's Scabbard"
+	desc = "A nifty container for a... is that just a magnet to hold a sword to it? Oh god."
+	icon_state = "clown_sword_scabbard"
+	item_state = "scabbard-clown1"
+
+	sheathed_state = "clown_sword_scabbard"
+	sheath_state = "clown_scabbard"
+	ih_sheathed_state = "scabbard-clown1"
+	ih_sheath_state = "scabbard-clown0"
+	sword_path = /obj/item/swords/clown
 
 /*
  *							--- Non-electronic Swords ---
@@ -1412,7 +1622,7 @@
 	wear_image_icon = 'icons/mob/clothing/back.dmi' //todo back sprites
 	icon_state = "claymore"
 	item_state = "longsword"
-	flags = ONBACK
+	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
@@ -1434,7 +1644,7 @@
 
 
 /obj/item/swords/bloodthirsty_blade/attack(target, mob/user)
-	playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 60, 1)
+	playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 60, TRUE)
 	if(iscarbon(target))
 		var/mob/living/carbon/C = target
 		if(!isdead(C))
@@ -1476,7 +1686,7 @@ obj/item/swords/fragile_sword
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	attack(target, mob/user)
-		playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 60, 1)
+		playsound(target, 'sound/impact_sounds/Blade_Small_Bloody.ogg', 60, TRUE)
 		if(iscarbon(target))
 			var/mob/living/carbon/C = target
 			if(!isdead(C))
@@ -1493,7 +1703,7 @@ obj/item/swords/fragile_sword
 				force += 5
 				throwforce = force
 				boutput(user, "<span class='notice'>You sharpen the blade of the [src] with the whetstone.</span>")
-				playsound(loc, 'sound/items/blade_pull.ogg', 60, 1)
+				playsound(loc, 'sound/items/blade_pull.ogg', 60, TRUE)
 		..()
 
 obj/item/whetstone
@@ -1511,18 +1721,22 @@ obj/item/whetstone
 	- Knocks back on-hit
 */
 
-#define SWIPE_MODE 1
-#define STAB_MODE 2
+#define STAB_MODE 1
+#define SWIPE_MODE 2
+#define STAGE_ONE "low"
+#define STAGE_TWO "med"
+#define STAGE_THREE "high"
 
 /obj/item/heavy_power_sword
 	name = "Hadar heavy power-sword"
 	desc = "A heavy cyalume saber variant, builds generator charge when used in combat & supports multiple attack types."
 	icon = 'icons/obj/large/64x32.dmi'
-	inhand_image_icon = 'icons/mob/inhand/hand_cswords.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_tall.dmi'
 	wear_image_icon = 'icons/mob/clothing/back.dmi'
-	icon_state = "hadar_sword2"
+	icon_state = "hadar_sword2_low"
 	item_state = "hadar_sword2"
-	flags = ONBACK | FPRINT | TABLEPASS
+	flags = FPRINT | TABLEPASS
+	c_flags = ONBACK
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING | TOOL_CHOPPING
 	contraband = 5
@@ -1537,6 +1751,7 @@ obj/item/whetstone
 	two_handed = 1
 	uses_multiple_icon_states = 1
 
+	var/stage = STAGE_ONE
 	var/mode = SWIPE_MODE
 	var/maximum_force = 100
 	var/swipe_color = "#0081DF"
@@ -1545,9 +1760,10 @@ obj/item/whetstone
 	New()
 		..()
 		START_TRACKING_CAT(TR_CAT_NUKE_OP_STYLE)
+		src.AddComponent(/datum/component/bloodflick)
 		src.setItemSpecial(/datum/item_special/swipe)
 		src.update_special_color()
-		AddComponent(/datum/component/itemblock/saberblock, null, .proc/get_reflect_color)
+		AddComponent(/datum/component/itemblock/saberblock, null, PROC_REF(get_reflect_color))
 		BLOCK_SETUP(BLOCK_SWORD)
 
 	disposing()
@@ -1575,13 +1791,32 @@ obj/item/whetstone
 	if (t.loc:sanctuary)
 		return
 
-	if(src.mode == 1) // only knock back on the sweep attack
+	if(src.mode == SWIPE_MODE) // only knock back on the sweep attack
 		var/turf/throw_target = get_edge_target_turf(M, get_dir(user,M))
 		M.throw_at(throw_target, 2, 2)
 	..()
-	if(ishuman(M) && isalive(M) && src.force <= src.maximum_force) //build charge on living humans only, up to the cap
-		src.force += 5
-		boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+	if(ishuman(M) && isalive(M) && src.force < src.maximum_force) //build charge on living humans only, up to the cap
+		src.force = min(src.maximum_force, src.force + 5)
+		switch(src.stage)
+			if(STAGE_ONE)
+				if(src.force >= (src.maximum_force * 0.5))
+					src.stage = STAGE_TWO
+					icon_state = "hadar_sword[src.mode]_[src.stage]"
+					boutput(user, "<span class='alert'>[src]'s generator kicks into overdrive!</span>")
+				else
+					boutput(user, "<span class='alert'>[src]'s generator builds charge!</span>")
+			if(STAGE_TWO)
+				if(src.force >= (src.maximum_force * 0.9))
+					src.stage = STAGE_THREE
+					icon_state = "hadar_sword[src.mode]_[src.stage]"
+					boutput(user, "<span class='alert'>[src]'s overloading generator growls and vents heat!</span>")
+				else
+					boutput(user, "<span class='alert'>[src]'s overloading generator revs higher!</span>")
+			if(STAGE_THREE)
+				if(src.force == src.maximum_force)
+					boutput(user, "<span class='alert'>[src]'s overloaded generator blazes like a star!</span>")
+				else
+					boutput(user, "<span class='alert'>[src]'s overloaded generator burns even brighter!</span>")
 		src.tooltip_rebuild = TRUE
 
 /obj/item/heavy_power_sword/dropped(mob/user)
@@ -1589,23 +1824,25 @@ obj/item/whetstone
 	if (isturf(src.loc))
 		user.visible_message("<span class='alert'>[src] drops from [user]'s hands and powers down!</span>")
 		force = initial(src.force)
+		src.stage = STAGE_ONE
+		icon_state = "hadar_sword[src.mode]_[src.stage]"
 		src.tooltip_rebuild = TRUE
 		return
 
 /obj/item/heavy_power_sword/attack_self(mob/user as mob)
 	switch(src.mode) // switch in-case i want to add more modes later
-		if(1)
+		if(SWIPE_MODE)
 			boutput(user, "<span class='alert'>[src] transforms enabling a ranged stab!</span>")
-			icon_state = "hadar_sword1"
-			item_state = "hadar_sword1"
 			src.mode = STAB_MODE
+			icon_state = "hadar_sword[src.mode]_[src.stage]"
+			item_state = "hadar_sword[src.mode]"
 			hit_type = DAMAGE_STAB
 			src.setItemSpecial(/datum/item_special/rangestab)
-		if(2)
+		if(STAB_MODE)
 			boutput(user, "<span class='alert'>[src] transforms in order to swing wide!</span>")
-			icon_state = "hadar_sword2"
-			item_state = "hadar_sword2"
 			src.mode = SWIPE_MODE
+			icon_state = "hadar_sword[src.mode]_[src.stage]"
+			item_state = "hadar_sword[src.mode]"
 			hit_type = DAMAGE_CUT
 			src.setItemSpecial(/datum/item_special/swipe)
 	user.update_inhands()
@@ -1615,6 +1852,9 @@ obj/item/whetstone
 
 #undef SWIPE_MODE
 #undef STAB_MODE
+#undef STAGE_ONE
+#undef STAGE_TWO
+#undef STAGE_THREE
 
 // Battering ram - a door breeching melee tool for the armory
 
@@ -1652,7 +1892,8 @@ obj/item/whetstone
 	hitsound = 'sound/impact_sounds/Flesh_Cut_1.ogg'
 	force = 15.0 //damage increases by 2.5 for every soul they take
 	throwforce = 15 //damage goes up by 2.5 for every soul they take
-	flags = FPRINT | CONDUCT | TABLEPASS | ONBELT
+	flags = FPRINT | CONDUCT | TABLEPASS
+	c_flags = ONBELT
 	item_function_flags = IMMUNE_TO_ACID
 	hit_type = DAMAGE_CUT
 	tool_flags = TOOL_CUTTING
@@ -1707,7 +1948,7 @@ obj/item/whetstone
 			C.force_laydown_standup()
 			take_bleeding_damage(C, null, src.force / 2	, DAMAGE_CUT)
 			random_brute_damage(C, round(throwforce * 0.75),1)
-			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, 1)
+			playsound(src, 'sound/impact_sounds/Flesh_Stab_3.ogg', 40, TRUE)
 
 	possessed
 		cant_self_remove = 1
@@ -1715,6 +1956,140 @@ obj/item/whetstone
 		cant_drop = 1
 		throwforce = 20 //higher base damage, lower once the slasher starts scaling up their machete
 		force = 20
+
+
+// Halberd- Experimental weapon by NightmareChamillian
+#define HALB_HEAVY_DAMAGE 35
+#define HALB_MED_DAMAGE 24
+#define HALB_LIGHT_DAMAGE 15
+
+#define HALB_HEAVY_STAMDAM 40
+#define HALB_LIGHT_STAMDAM 20
+
+#define HALB_HEAVY_STAMCOST 35
+#define HALB_MED_STAMCOST 20
+#define HALB_LIGHT_STAMCOST 10
+
+/obj/item/halberd
+	name = "Halberd"
+	desc = "An ancient axe-like weapon capable of cleaving and piercing flesh with ease. You have no idea what this is doing outside a museum."
+	icon = 'icons/obj/large/64x32.dmi'
+	inhand_image_icon = 'icons/mob/inhand/hand_weapons.dmi'
+	item_state = "halberdhoriz"
+	icon_state = "halberdnormal"
+
+	w_class = W_CLASS_BULKY
+	two_handed = 1
+	throw_range = 10
+	throwforce = 30 //yeet like spear
+	stamina_crit_chance = 5
+
+	//these combat variables change depending on intent- starts with help intent vars
+	force = HALB_MED_DAMAGE
+	stamina_damage = HALB_LIGHT_STAMDAM
+	stamina_cost = HALB_LIGHT_STAMCOST
+	var/guard = null //! used to keep track of what melee properties we're using
+
+	hit_type = DAMAGE_CUT
+	flags = FPRINT | TABLEPASS | USEDELAY
+	c_flags = EQUIPPED_WHILE_HELD | ONBACK
+	item_function_flags = USE_INTENT_SWITCH_TRIGGER | USE_SPECIALS_ON_ALL_INTENTS
+	leaves_slash_wound = TRUE
+
+	New()
+		..()
+		BLOCK_SETUP(BLOCK_SWORD)
+
+	setupProperties()
+		. = ..()
+		setProperty("deflection", 60)
+		setProperty("block", 40)
+
+	intent_switch_trigger(mob/user as mob)
+		if(guard != user.a_intent)
+			change_guard(user,user.a_intent)
+
+	proc/change_guard(var/mob/user,var/intent) //heavily modified kendo code
+		guard = intent
+		switch(guard)
+			if("help") //light swing with the axe
+				force = HALB_MED_DAMAGE
+				stamina_damage = HALB_LIGHT_STAMDAM
+				stamina_cost = HALB_LIGHT_STAMCOST
+				item_state = "halberdhoriz"
+				icon_state = "halberdnormal"
+				hit_type = DAMAGE_CUT
+				src.click_delay = COMBAT_CLICK_DELAY * 0.75
+				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
+				src.setItemSpecial(/datum/item_special/simple)
+				boutput(user, "<span class='notice'>You will now make light swings with the axe!</span>")
+			if("disarm") //thrust with the pointy end
+				force = HALB_LIGHT_DAMAGE
+				stamina_damage = HALB_LIGHT_STAMDAM
+				stamina_cost = HALB_LIGHT_STAMCOST
+				item_state = "halberdverti"
+				icon_state = "halberdnormal"
+				hit_type = DAMAGE_STAB
+				src.click_delay = COMBAT_CLICK_DELAY * 0.60
+				hitsound = 'sound/impact_sounds/Flesh_Stab_1.ogg'
+				src.setItemSpecial(/datum/item_special/rangestab)
+				boutput(user, "<span class='notice'>You will thrust with the tip!</span>")
+
+			if("grab") //attack with the spur on the back
+				force = HALB_LIGHT_DAMAGE
+				stamina_damage = HALB_HEAVY_STAMDAM
+				stamina_cost = HALB_MED_STAMCOST
+				item_state = "halberdhoriz"
+				icon_state = "halberdupsidown"
+				hit_type = DAMAGE_STAB
+				src.click_delay = COMBAT_CLICK_DELAY
+				hitsound ='sound/impact_sounds/coconut_break.ogg' //it's a good hitsound when you ignore the name
+				src.setItemSpecial(/datum/item_special/simple)
+				boutput(user, "<span class='notice'>You will now make dehabilitating swings with the spur!</span>")
+
+			if("harm") //wide, tiring swings with the axe
+				force = HALB_HEAVY_DAMAGE
+				stamina_damage = HALB_HEAVY_STAMDAM
+				stamina_cost = HALB_HEAVY_STAMCOST
+				item_state = "halberdhoriz"
+				icon_state = "halberdnormal"
+				hit_type = DAMAGE_CUT
+				src.click_delay = COMBAT_CLICK_DELAY * 1.25
+				hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
+				src.setItemSpecial(/datum/item_special/swipe)
+				boutput(user, "<span class='notice'>You will now make heavy swings with the axe!</span>")
+
+		user.update_inhands()
+		src.tooltip_rebuild = TRUE
+
+	attack_hand(mob/user)
+		if(src.loc != user)
+			change_guard(user,user.a_intent)
+		..()
+
+	dropped(mob/user as mob)
+		..()
+		stat_reset()
+
+	proc/stat_reset() //sets it to normal
+		src.force = HALB_MED_DAMAGE
+		src.stamina_damage = HALB_LIGHT_STAMDAM
+		src.stamina_cost = HALB_LIGHT_STAMCOST
+		src.item_state = "halberd1"
+		src.hit_type = DAMAGE_CUT
+		src.click_delay = COMBAT_CLICK_DELAY * 0.75
+		src.hitsound =  'sound/impact_sounds/Blade_Small_Bloody.ogg'
+		src.setItemSpecial(/datum/item_special/simple)
+		src.tooltip_rebuild = TRUE
+
+#undef HALB_HEAVY_DAMAGE
+#undef HALB_MED_DAMAGE
+#undef HALB_LIGHT_DAMAGE
+#undef HALB_HEAVY_STAMDAM
+#undef HALB_LIGHT_STAMDAM
+#undef HALB_HEAVY_STAMCOST
+#undef HALB_MED_STAMCOST
+#undef HALB_LIGHT_STAMCOST
 
 /obj/item/swords/sord
 	name = "gross sord"

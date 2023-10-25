@@ -99,10 +99,10 @@
 		H.init(src)	// copy the contents of disposer to holder
 		H.mail_tag = src.destination_tag
 
-		air_contents.zero()		// new empty gas resv.
+		ZERO_GASES(air_contents)
 
 		sleep(1 SECOND)
-		playsound(src, 'sound/machines/disposalflush.ogg', 50, 0, 0)
+		playsound(src, 'sound/machines/disposalflush.ogg', 50, FALSE, 0)
 		sleep(0.5 SECONDS) // wait for animation to finish
 
 
@@ -197,7 +197,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		message = 1
 	mining
 		name = "Mining"
@@ -483,7 +483,7 @@
 	mechanics
 		name = "Mechanics"
 		mail_tag = "mechanics"
-		mailgroup = MGO_MECHANIC
+		mailgroup = MGO_ENGINEER
 		message = 1
 
 		north

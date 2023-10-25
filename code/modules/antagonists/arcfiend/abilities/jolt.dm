@@ -104,6 +104,8 @@
 		if (!src.target.bioHolder?.HasEffect("resist_electric"))
 			boutput(src.target, "<span class='alert'><b>Your heart spasms painfully and stops beating!</b></span>")
 			src.target.contract_disease(/datum/ailment/malady/flatline, null, null, TRUE)
+			var/datum/abilityHolder/arcfiend/AH = src.holder
+			AH.hearts_stopped++
 		else
 			cure_arrest()
 		..()

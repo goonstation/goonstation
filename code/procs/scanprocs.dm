@@ -1,6 +1,7 @@
 
 
-/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE)
+/proc/scan_health(var/mob/M as mob, var/verbose_reagent_info = 0, var/disease_detection = 1, var/organ_scan = 0, var/visible = 0, syndicate = FALSE,
+	admin = FALSE)
 	if (!M)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -14,7 +15,7 @@
 	if (M.bioHolder && M.bioHolder.HasEffect("dead_scan"))
 		death_state = 2
 
-	var/health_percent = round(100 * M.health / M.max_health)
+	var/health_percent = round(100 * M.health / (M.max_health||1))
 
 	var/colored_health
 	if(M.max_health <= 0)
@@ -26,8 +27,10 @@
 	else colored_health = "<span class='alert'>[health_percent]</span>"
 
 	var/optimal_temp = M.base_body_temp
-	var/body_temp_C = round(M.bodytemperature - T0C, M.bodytemperature - T0C < 1000 ? 0.01 : 1)
-	var/body_temp_F = round(M.bodytemperature * 1.8 - T0F, M.bodytemperature * 1.8 - T0F < 1000 ? 0.01 : 1)
+	var/body_temp_C = TO_CELSIUS(M.bodytemperature)
+	body_temp_C = round(body_temp_C, body_temp_C < 1000 ? 0.01 : 1)
+	var/body_temp_F = TO_FAHRENHEIT(M.bodytemperature)
+	body_temp_F = round(body_temp_F, body_temp_F < 1000 ? 0.01 : 1)
 	var/body_temp = "[body_temp_C]&deg;C ([body_temp_F]&deg;F)"
 	var/colored_temp = ""
 	if (M.bodytemperature >= (optimal_temp + 60))
@@ -146,7 +149,7 @@
 		if (ishuman)
 			var/mob/living/carbon/human/H = M
 			if (H.pathogens.len)
-				pathogen_data = "<span class='alert'>Scans indicate the presence of [H.pathogens.len > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
+				pathogen_data = "<span class='alert'>Scans indicate the presence of [length(H.pathogens) > 1 ? "[H.pathogens.len] " : null]pathogenic bodies.</span>"
 				for (var/uid in H.pathogens)
 					var/datum/pathogen/P = H.pathogens[uid]
 					pathogen_data += "<br>&emsp;<span class='alert'>Strain [P.name] seems to be in stage [P.stage]. Suggested suppressant: [P.suppressant.therapy].</span>."
@@ -198,6 +201,8 @@
 				//Joke in case there is no organHolder
 				if (!H.organHolder)
 					organ_data = "<span class='alert'>Subject has no organs. Veeeerrrry curious.</span>"
+			else if (H.robotic_organs > 0)
+				organ_data = "<span style='color:purple'><b>Unknown augmented organs detected.</b></span>"
 
 
 	var/datum/statusEffect/simpledot/radiation/R = M.hasStatus("radiation")
@@ -210,7 +215,7 @@
 
 	if (M.reagents)
 		if (verbose_reagent_info)
-			reagent_data = scan_reagents(M, 0, 0, 0, 1)
+			reagent_data = scan_reagents(M, 0, 0, 0, 1, admin = admin)
 		else
 			var/ephe_amt = M.reagents:get_reagent_amount("ephedrine")
 			var/epi_amt = M.reagents:get_reagent_amount("epinephrine")
@@ -266,7 +271,7 @@
 				return null
 
 	else
-		return "<br><span style='color:purple'><b>[input]</b> - missing!</span>"
+		return "<br><span class='alert'><b>[input]</b> - missing!</span>"
 
 //Using input here because it get's the organs name in an easy and clear way. using name or organ_name in obj/item/organ is not any better really
 /proc/obfuscate_organ_health(var/obj/item/organ/O)
@@ -333,14 +338,15 @@
 
 /proc/scan_genetic(mob/M as mob, datum/genetic_prescan/prescan = null, visible = FALSE)
 	if (!M)
-		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
+		return "<b class='alert'>ERROR: NO SUBJECT DETECTED</b>"
 	if (visible)
 		animate_scanning(M, "#9eee80")
 	if (!ishuman(M))
-		return "<span class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</span>"
+		return "<b class='alert'>ERROR: UNABLE TO ANALYZE GENETIC STRUCTURE</b>"
+	var/mob/living/carbon/human/H = M
 	var/list/data = list()
 	var/datum/bioHolder/BH = M.bioHolder
-	data += "<span class='notice'>Genetic Stability: [BH.genetic_stability]</span>"
+	data += "<b class='notice'>Genetic Stability: [BH.genetic_stability]</b>"
 	var/datum/genetic_prescan/GP = prescan
 	if (!GP)
 		GP = new /datum/genetic_prescan
@@ -351,20 +357,26 @@
 		for (var/bioEffectId in BH.effectPool)
 			GP.poolDna += BH.GetEffect(bioEffectId)
 		GP.generate_known_unknown()
-	data += "<span class='notice'>Potential Genetic Effects:</span>"
+	data += "<b class='notice'>Potential Genetic Effects:</b>"
 	for (var/datum/bioEffect/BE in GP.poolDnaKnown)
 		data += BE.name
 	if (length(GP.poolDnaUnknown))
 		data += "<span class='alert'>Unknown: [length(GP.poolDnaUnknown)]</span>"
 	else if (!length(GP.poolDnaKnown))
 		data += "-- None --"
-	data += "<span class='notice'>Active Genetic Effects:</span>"
+	data += "<b class='notice'>Active Genetic Effects:</b>"
 	for (var/datum/bioEffect/BE in GP.activeDnaKnown)
 		data += BE.name
 	if (length(GP.activeDnaUnknown))
 		data += "<span class='alert'>Unknown: [length(GP.activeDnaUnknown)]</span>"
 	else if (!length(GP.activeDnaKnown))
 		data += "-- None --"
+
+	if (length(H.cloner_defects.active_cloner_defects))
+		data += "<b class='alert'>Detected Cloning-Related Defects:</b>"
+		for(var/datum/cloner_defect/defect as anything in H.cloner_defects.active_cloner_defects)
+			data += "<b class='alert'>[defect.name]</b>"
+			data += "<i class='alert'>[defect.desc]</i>"
 	return data.Join("<br>")
 
 /proc/update_medical_record(var/mob/living/carbon/human/M)
@@ -453,7 +465,7 @@
 	record_prog.mode = 1
 	pda.AttackSelf(usr)
 
-/proc/scan_reagents(var/atom/A as turf|obj|mob, var/show_temp = 1, var/single_line = 0, var/visible = 0, var/medical = 0)
+/proc/scan_reagents(atom/A, show_temp = TRUE, visible = FALSE, medical = FALSE, admin = FALSE)
 	if (!A)
 		return "<span class='alert'>ERROR: NO SUBJECT DETECTED</span>"
 
@@ -473,34 +485,39 @@
 			reagents = P.occupant.reagents
 
 	if (reagents)
-		if (reagents.reagent_list.len > 0)
+		if (length(reagents.reagent_list))
 			if("cloak_juice" in reagents.reagent_list)
 				var/datum/reagent/cloaker = reagents.reagent_list["cloak_juice"]
 				if(cloaker.volume >= 5)
 					data = "<span class='alert'>ERR: SPECTROSCOPIC ANALYSIS OF THIS SUBSTANCE IS NOT POSSIBLE.</span>"
 					return data
+			if (!admin)
+				SEND_SIGNAL(reagents, COMSIG_REAGENTS_ANALYZED, usr)
 
 			var/reagents_length = length(reagents.reagent_list)
-			data = "<span class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</span>"
+			data = "<b class='notice'>[reagents_length] chemical agent[reagents_length > 1 ? "s" : ""] found in [A].</b>"
 
 			for (var/current_id in reagents.reagent_list)
 				var/datum/reagent/current_reagent = reagents.reagent_list[current_id]
 				var/show_OD = (medical && current_reagent.overdose != 0 && current_reagent.volume >= current_reagent.overdose)
-				if (single_line)
-					reagent_data += "<span [show_OD ? "class='alert'" : "class='notice'"]>[current_reagent] ([current_reagent.volume])[show_OD? " - OD!":""]</span>,"
-				else
-					reagent_data += "<span [show_OD ? "class='alert'" : "class='notice'"]><br>&emsp;[current_reagent.name] - [current_reagent.volume][show_OD? " - OD!":""]</span>"
-			if (single_line)
-				data += "[copytext(reagent_data, 1, -1)]"
-			else
-				data += "[reagent_data]"
+				reagent_data += "<span [show_OD ? "class='alert'" : "class='notice'"]><br>&emsp;[current_reagent.name] - [current_reagent.volume][show_OD? " - OD!":""]</span>"
+			data += "[reagent_data]"
 
 			if (show_temp)
-				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature - T0C]&deg;C ([reagents.total_temperature * 1.8 - T0F]&deg;F)</span>"
+				data += "<br><span class='notice'>Overall temperature: [reagents.total_temperature] K</span>"
 		else
-			data = "<span class='notice'>No active chemical agents found in [A].</span>"
+			data = "<b class='notice'>No active chemical agents found in [A].</b>"
 	else
-		data = "<span class='notice'>No significant chemical agents found in [A].</span>"
+		data = "<b class='notice'>No significant chemical agents found in [A].</b>"
+
+	if (CHECK_LIQUID_CLICK(A))
+		var/turf/T = get_turf(A)
+		var/obj/fluid/liquid = T.active_liquid
+		var/obj/fluid/airborne/gas = T.active_airborne_liquid
+		if (liquid)
+			data += "<br>[scan_reagents(liquid, show_temp, visible, medical, admin)]"
+		if (gas)
+			data += "<br>[scan_reagents(gas, show_temp, visible, medical, admin)]"
 
 	return data
 
@@ -538,7 +555,7 @@
 		if (H.gunshot_residue) // Left by firing a kinetic gun.
 			forensic_data += "<br><span class='notice'>Gunshot residue found.</span>"
 
-		if (H.implant && H.implant.len > 0)
+		if (H.implant && length(H.implant) > 0)
 			var/wounds = null
 			for (var/obj/item/implant/I in H.implant)
 				if (istype(I, /obj/item/implant/projectile))
@@ -644,8 +661,11 @@
 
 		if (isitem(A))
 			var/obj/item/I = A
-			if(I.contraband)
-				contraband_data = "<span class='alert'>(CONTRABAND: LEVEL [I.contraband])</span>"
+			var/list/contraband_returned = list()
+			if (SEND_SIGNAL(I, COMSIG_MOVABLE_GET_CONTRABAND, contraband_returned, TRUE, TRUE))
+				var/contra = max(contraband_returned)
+				if (contra)
+					contraband_data = "<span class='alert'>(CONTRABAND: LEVEL [contra])</span>"
 
 		if (istype(A, /obj/item/clothing/gloves))
 			var/obj/item/clothing/gloves/G = A
@@ -690,6 +710,13 @@
 	[glove_data ? "<br><i>Material analysis:</i><span class='notice'> [glove_data]</span>" : null]\
 	[interesting_data ? "<br><i>Energy signature analysis:</i><span class='notice'> [interesting_data]</span>" : null]\
 	"
+
+	if (CHECK_LIQUID_CLICK(A))
+		var/turf/T = get_turf(A)
+		if (T.active_liquid)
+			data += scan_forensic(T.active_liquid, visible)
+		if (T.active_airborne_liquid)
+			data += scan_forensic(T.active_airborne_liquid, visible)
 
 	return data
 
@@ -754,15 +781,15 @@
 	if (total_moles > 0)
 		if (pda_readout == 1) // Output goes into PDA interface, not the user's chatbox.
 			data = "Air Pressure: [round(pressure, 0.1)] kPa<br>\
-			[CONCENTRATION_REPORT(check_me, "<br>")]\
-			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
+			Temperature: [round(check_me.temperature)] K<br>\
+			[CONCENTRATION_REPORT(check_me, "<br>")]"
 
 		else if (simple_output) // For the log_atmos() proc.
-			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature)] K</i>\
 			, <b>Contents:</b> <i>[CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else if (alert_output) // For the alert_atmos() proc.
-			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature - T0C)]&deg;C</i>\
+			data = "(<b>Pressure:</b> <i>[round(pressure, 0.1)] kPa</i>, <b>Temp:</b> <i>[round(check_me.temperature)] K</i>\
 			, <b>Contents:</b> <i>[SIMPLE_CONCENTRATION_REPORT(check_me, ", ")]</i>"
 
 		else
@@ -770,8 +797,9 @@
 			<span class='notice'>Atmospheric analysis of <b>[A]</b></span><br>\
 			<br>\
 			Pressure: [round(pressure, 0.1)] kPa<br>\
-			[CONCENTRATION_REPORT(check_me, "<br>")]\
-			Temperature: [round(check_me.temperature - T0C)]&deg;C<br>"
+			Temperature: [round(check_me.temperature)] K<br>\
+			Volume: [check_me.volume] L<br>\
+			[SIMPLE_CONCENTRATION_REPORT(check_me, "<br>")]"
 
 	else
 		// Only used for "Atmospheric Scan" accessible through the PDA interface, which targets the turf
@@ -814,6 +842,13 @@
 
 		P = F.planttype
 		DNA = F.plantgenes
+
+	else if (istype(A, /mob/living/critter/plant))
+		var/mob/living/critter/plant/F = A
+
+		P = F.planttype
+		DNA = F.plantgenes
+
 
 	else
 		return

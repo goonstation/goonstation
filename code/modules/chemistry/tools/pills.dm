@@ -32,7 +32,6 @@
 		if (!src.reagents || !src.reagents.total_volume)
 			user.show_text("[src] doesn't contain any reagents.", "red")
 			return
-		
 		src.pill_action(user, user)
 		return
 
@@ -59,7 +58,7 @@
 	attackby(obj/item/I, mob/user)
 		if (!I)
 			return
-		if (I.is_open_container() && I.reagents)
+		if (I.is_open_container(TRUE) && I.reagents)
 			if (istype(I, /obj/item/clothing/mask/cigarette)) //Apparently you can smush a lit cigarette into a pill and destroy both
 				return
 			afterattack(I, user)	//Probably weird but afterattack contains the dissolving code
@@ -72,7 +71,7 @@
 	afterattack(var/atom/target, mob/user, flag)
 		if (!isobj(target))
 			return ..()
-		if (target.is_open_container() && target.reagents)
+		if (target.is_open_container(TRUE) && target.reagents)
 			if (!src.reagents || !src.reagents.total_volume)
 				boutput(user, "<span class='alert'>[src] doesn't contain any reagents.</span>")
 				return
@@ -86,13 +85,17 @@
 				user.visible_message("<span class='alert'>[user] puts something in [target].</span>",\
 				"<span class='success'>You dissolve [src] in [target].</span>")
 
-			logTheThing(LOG_COMBAT, user, "dissolves a [src.name] [log_reagents(src)] in [target] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "dissolves a [src.name] [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
 			qdel(src)
 			return
 		else
 			return ..()
+
+	on_reagent_transfer()
+		..()
+		qdel(src)
 
 	proc/pill_action(mob/user, mob/target)
 		if (iscarbon(target) || ismobcritter(target))
@@ -106,7 +109,7 @@
 				user.visible_message("<span class='alert'>[user] forces [target] to swallow [src].</span>",\
 				"<span class='alert'>You force [target] to swallow [src].</span>")
 
-			logTheThing(LOG_COMBAT, user, "[user == target ? "swallows" : "makes [constructTarget(target,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
+			logTheThing(user == target ? LOG_CHEMISTRY : LOG_COMBAT, user, "[user == target ? "swallows" : "makes [constructTarget(target,"combat")] swallow"] a [src.name] [log_reagents(src)] at [log_loc(user)].")
 
 			if (src.reagents.total_volume)
 				src.reagents.reaction(target, INGEST)

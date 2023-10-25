@@ -58,6 +58,8 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 #define FREQ_SECBUDDY_NAVBEACON 1431
 #define FREQ_ALARM 1437 // fire and air alarms
 #define FREQ_HYDRO 1433
+#define FREQ_HARMONIC_SIPHON 1455
+#define FREQ_TRANSCEPTION_SYS 1465
 #define FREQ_STATUS_DISPLAY 1435
 #define FREQ_BOT_CONTROL 1447
 #define FREQ_AIRLOCK_CONTROL 1449 // seems to be unused nowadays?
@@ -73,3 +75,7 @@ proc/get_radio_connection_by_id(atom/movable/AM, id)
 #define FREQ_COMM_DISH 0000 // unused for now, supposed to be for communication across comm dishes
 #define FREQ_AIR_ALARM_CONTROL 1439
 #define FREQ_TRACKING_IMPLANT 1451
+#define FREQ_POWER_SYSTEMS 1473 // for services that interface with power machinery
+
+// Address Tags
+#define ADDRESS_TAG_POWER "POWER_CONTROL" // for syncing variables and data with power_checker

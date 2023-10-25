@@ -10,7 +10,7 @@
 	icon_state = "cambot0"
 	layer = 5.0 //TODO LAYER
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	on = 1
 	health = 20
 	locked = 1
@@ -51,7 +51,7 @@
 			logTheThing(LOG_STATION, src.emagger, "emagged a cambot[src.name != "Cambot" ? ", [src.name]," : null] at [log_loc(src)].")
 
 		src.audible_message("<span class='alert'><B>[src] buzzes oddly!</B></span>")
-		playsound(src, 'sound/weapons/flash.ogg', 50, 1)
+		playsound(src, 'sound/weapons/flash.ogg', 50, TRUE)
 		flick("cambot-spark", src)
 		src.emagged = 1
 		return 1
@@ -128,7 +128,7 @@
 	else
 		src.on = !src.on
 
-	src.anchored = 0
+	src.anchored = UNANCHORED
 	src.target = null
 	src.icon_state = "cambot[src.on]"
 	src.path = null
@@ -163,7 +163,7 @@
 	if (src.frustration >= 8)
 		src.KillPathAndGiveUp(1)
 
-	if(src.last_shot + src.shot_cooldown <= TIME)
+	if(src.last_shot && src.last_shot + src.shot_cooldown <= TIME)
 		return
 
 	// Let's find us something to photograph.
@@ -265,7 +265,7 @@
 	if (!T || !isturf(T))
 		return
 
-	src.anchored = 1
+	src.anchored = ANCHORED
 	src.icon_state = "cambot-c"
 	src.visible_message("<span class='alert'>[src] aims at [target].</span>")
 	src.photographing = 1
@@ -285,7 +285,7 @@
 					if (ismob(target))
 						var/mob/M = target
 						M.apply_flash(30, 8, 0, 0, 0, rand(0, 2), 0, 0, 100)
-					playsound(src, 'sound/weapons/flash.ogg', 100, 1)
+					playsound(src, 'sound/weapons/flash.ogg', 100, TRUE)
 
 			// don't sit there taking pictures of the same thing over and over
 			if (!(target in src.photographed))
@@ -293,7 +293,7 @@
 
 		src.photographing = 0
 		src.icon_state = "cambot[src.on]"
-		src.anchored = 0
+		src.anchored = UNANCHORED
 		src.path = null
 		src.target = null
 		src.frustration = 0

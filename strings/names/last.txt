@@ -388,7 +388,6 @@ names@=
 	Hirleman
 	Hobbs
 	Hoenshell
-	Hogan
 	Holdeman
 	Holiday
 	Holmes

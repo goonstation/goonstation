@@ -53,6 +53,9 @@
 
 		..()
 
+	get_desc()
+		. = " It is labeled to have a volume of [src.volume] litres."
+
 	proc
 		connect(obj/machinery/atmospherics/portables_connector/new_port)
 			//Make sure not already connected to something else
@@ -63,8 +66,6 @@
 			if(new_port.loc != loc)
 				return 0
 
-			//logTheThing(LOG_COMBAT, usr, "attaches [src] to [new_port] at [log_loc(new_port)].")
-
 			add_fingerprint(usr)
 
 			//Perform the connection
@@ -72,7 +73,7 @@
 			connected_port.connected_device = src
 			connected_port.on = 1
 
-			anchored = 1 //Prevent movement
+			anchored = ANCHORED //Prevent movement
 
 			//Actually enforce the air sharing
 			var/datum/pipe_network/network = connected_port.return_network(src)
@@ -88,7 +89,7 @@
 			var/datum/pipe_network/network = connected_port.return_network(src)
 			network?.gases -= air_contents
 
-			anchored = 0
+			anchored = UNANCHORED
 
 			connected_port.connected_device = null
 			connected_port = null

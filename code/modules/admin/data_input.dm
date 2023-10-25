@@ -10,6 +10,7 @@
 /// @param custom_type_message 	If not null, set as the text for input type selection
 /// @return 			 		A data_input_result with the parsed input and the selected input type, or both null if we didn't get any data
 /client/proc/input_data(list/allowed_types, custom_title = null, custom_message = null, default = null, custom_type_title = null, custom_type_message = null, default_type = null)
+	RETURN_TYPE(/datum/data_input_result)
 	. = new /datum/data_input_result(null, null) //in case anything goes wrong, return this. Thus, to check for cancellation, check for a null output_type.
 
 	if (!src.holder)
@@ -118,12 +119,7 @@
 				return
 
 		if (DATA_INPUT_REFPICKER)
-			var/datum/promise/promise = new
-			var/datum/targetable/refpicker/abil = new
-			abil.promise = promise
-			src.mob.targeting_ability = abil
-			src.mob.update_cursor()
-			input = promise.wait_for_value()
+			input = pick_ref(src.mob)
 
 		if (DATA_INPUT_NEW_INSTANCE)
 			var/stub = input(custom_message  || "Enter part of type:", custom_title) as null|text
@@ -131,7 +127,14 @@
 				boutput(src, "<span class='alert'>Cancelled.</span>")
 				return
 			input = get_one_match(stub, /datum, use_concrete_types = FALSE, only_admin_spawnable = FALSE)
-			input = new input
+			if(isnull(input))
+				boutput(src, "<span class='alert'>Cancelled.</span>")
+				return
+			var/list/arglist = src.get_proccall_arglist()
+			if(length(arglist))
+				input = new input(arglist(arglist))
+			else
+				input = new input
 
 		if (DATA_INPUT_NUM_ADJUST)
 			input = input("Enter amount to adjust by:", custom_title) as null|num
@@ -178,7 +181,7 @@
 					MV.Add(text2num(temp))
 					i++
 
-			if (MV.len >= 6)
+			if (length(MV) >= 6)
 				input = matrix(MV[1], MV[2], MV[3], MV[4], MV[5], MV[6])
 
 			else
@@ -223,9 +226,9 @@
 
 /// Get a suggested input type based on the thing you're editing
 /// @param var_value The value to evaluate
-/// @param L The list the value is contained in, if applicable, to determine if the var value is associated to another value
+/// @param varname The name of the variable
 /// @return Suggested input type for input_data()
-/client/proc/suggest_input_type(var/var_value, var/varname = null)
+/client/proc/suggest_input_type(var_value, varname = null)
 	var/default = null
 
 	if (varname == "particles")
@@ -235,8 +238,12 @@
 		default = DATA_INPUT_FILTER_EDITOR
 
 	else if (istype(var_value, /matrix))
-		boutput(src, "Variable appears to be <b>MATRIX</b>.")
-		default = DATA_INPUT_MATRIX
+		if (varname == "color")
+			boutput(src, "Variable appears to be <b>COLOR MATRIX</b>.")
+			default = DATA_INPUT_COLOR_MATRIX_EDITOR
+		else
+			boutput(src, "Variable appears to be <b>MATRIX</b>.")
+			default = DATA_INPUT_MATRIX
 
 	else if (isnum(var_value))
 		boutput(src, "Variable appears to be <b>NUM</b>.")
@@ -309,13 +316,26 @@
 	var/datum/promise/promise = null
 	target_anything = TRUE
 	targeted = TRUE
-	max_range = 3000
-	can_target_ghosts = TRUE
-	dont_lock_holder = TRUE
+	check_range = FALSE
+	target_ghosts = TRUE
+	lock_holder = FALSE
 
-	castcheck(var/mob/M)
-		if (M.client && M.client.holder)
+	castcheck()
+		if (usr.client && usr.client.holder)
 			return TRUE
 
 	handleCast(var/atom/selected)
 		promise.fulfill(selected)
+
+/datum/targetable/refpicker/nonadmin
+	castcheck(var/mob/M)
+		return TRUE
+
+///Gives the target mob a reference picker ability and returns the atom picked. Synchronous.
+/proc/pick_ref(mob/M)
+	var/datum/promise/promise = new
+	var/datum/targetable/refpicker/abil = new
+	abil.promise = promise
+	M.targeting_ability = abil
+	M.update_cursor()
+	return promise.wait_for_value()

@@ -1,0 +1,868 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"ac" = (
+/obj/machinery/atmospherics/binary/circulatorTemp/right,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/engine/core)
+"ag" = (
+/obj/item/extinguisher,
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/decal/stripe_delivery,
+/obj/cable/orange{
+	icon_state = "2-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"as" = (
+/obj/item/device/radio/intercom{
+	dir = 1;
+	frequency = 1448;
+	name = "Toxins Lab Intercom"
+	},
+/obj/machinery/atmospherics/portables_connector{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"bf" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8;
+	level = 2
+	},
+/obj/machinery/meter{
+	pixel_y = 1
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"bM" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"dq" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"em" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"eq" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 6
+	},
+/obj/machinery/meter{
+	pixel_x = 8;
+	pixel_y = -7
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"ez" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"eH" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"eN" = (
+/obj/machinery/power/apc/autoname_north,
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot loop inlet valve"
+	},
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"eZ" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/storage/crate/furnacefuel,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"fX" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"gC" = (
+/obj/decal/stripe_delivery,
+/obj/stool/chair{
+	dir = 1
+	},
+/obj/cable/orange{
+	icon_state = "1-4"
+	},
+/obj/landmark/start{
+	name = "Engineer"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"hn" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable,
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"hw" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/grey/side,
+/area/station/engine/inner)
+"hU" = (
+/obj/machinery/firealarm{
+	dir = 1;
+	layer = 3.5;
+	pixel_y = -24
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop auxillary west"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"ir" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"iC" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop outlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"iO" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot loop auxillary west"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"jH" = (
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable,
+/obj/cable{
+	icon_state = "0-2"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"kF" = (
+/obj/machinery/atmospherics/unary/furnace_connector{
+	dir = 4
+	},
+/obj/machinery/power/furnace/thermo,
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"lQ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 10
+	},
+/obj/machinery/meter{
+	pixel_x = -8;
+	pixel_y = -7
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"no" = (
+/obj/cable{
+	icon_state = "0-2"
+	},
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"nW" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"oO" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/machinery/power/stats_meter{
+	name = "Hot Loop Outlet Meter";
+	pixel_x = -12;
+	tag = "Hot Loop Outlet Meter"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"pa" = (
+/obj/machinery/atmospherics/binary/passive_gate{
+	dir = 8;
+	on = 1;
+	pixel_y = 1;
+	target_pressure = 1e+031
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core)
+"pc" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "outlet purge valve"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"qm" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 5
+	},
+/obj/cable{
+	icon_state = "2-8"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"ri" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8;
+	level = 2
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"rB" = (
+/obj/machinery/light/emergency{
+	dir = 1;
+	pixel_y = 16
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"rI" = (
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Core Access";
+	req_access = null
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"sq" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/machinery/light{
+	dir = 1;
+	layer = 9.1;
+	pixel_y = 21
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"sZ" = (
+/obj/machinery/atmospherics/binary/passive_gate{
+	on = 1;
+	target_pressure = 1e+031
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"uc" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"uK" = (
+/obj/machinery/light/small,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
+/area/station/engine/inner)
+"vv" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 9
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"vN" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Core Access";
+	req_access = null
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"vR" = (
+/obj/machinery/portable_atmospherics/pump,
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor/grey/side,
+/area/station/engine/inner)
+"vS" = (
+/obj/machinery/power/generatorTemp,
+/obj/item/paper/engine,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/cable/orange{
+	icon_state = "0-2"
+	},
+/obj/cable/orange,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/engine/core)
+"wQ" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop inlet valve"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core)
+"xs" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/power/stats_meter{
+	name = "Cold Loop Inlet Meter";
+	pixel_x = 12;
+	tag = "Cold Loop Inlet Meter"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"xv" = (
+/obj/machinery/atmospherics/unary/furnace_connector{
+	dir = 4
+	},
+/obj/machinery/power/furnace/thermo,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"yD" = (
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"yZ" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0
+	},
+/obj/machinery/door/airlock/pyro/glass/engineering{
+	name = "Core Access";
+	req_access = null
+	},
+/obj/mapping_helper/access/engineering_engine,
+/obj/mapping_helper/firedoor_spawn,
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"zn" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"zx" = (
+/obj/machinery/atmospherics/portables_connector{
+	dir = 4
+	},
+/obj/item/device/radio/intercom/engineering{
+	dir = 1
+	},
+/obj/cable{
+	icon_state = "1-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"zQ" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/obj/machinery/light/small/floor/warm,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"AM" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"Bi" = (
+/obj/machinery/atmospherics/pipe/simple/insulated,
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"Bm" = (
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"Bp" = (
+/obj/machinery/light/small{
+	dir = 1;
+	pixel_y = 21
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"Cv" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 1
+	},
+/obj/machinery/power/stats_meter{
+	name = "Hot Loop Inlet Meter";
+	pixel_x = -12;
+	tag = "Hot Loop Inlet Meter"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"CP" = (
+/obj/machinery/light,
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"DK" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	level = 2
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"EC" = (
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core)
+"Fd" = (
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	dir = 4
+	},
+/obj/cable{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"FE" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-4"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"Gz" = (
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"Hs" = (
+/obj/machinery/light/small,
+/obj/machinery/portable_atmospherics/scrubber,
+/obj/decal/tile_edge/stripe/extra_big,
+/turf/simulated/floor/grey/side{
+	dir = 1
+	},
+/area/station/engine/inner)
+"If" = (
+/obj/cable{
+	icon_state = "0-8"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"Jl" = (
+/obj/machinery/firealarm{
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "cold loop inlet valve"
+	},
+/obj/cable{
+	icon_state = "2-4"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"JD" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"Kh" = (
+/obj/machinery/atmospherics/binary/passive_gate{
+	dir = 4;
+	on = 1;
+	pixel_y = 1;
+	target_pressure = 1e+031
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core)
+"Kx" = (
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"KR" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"LC" = (
+/obj/cable{
+	icon_state = "0-4"
+	},
+/obj/cable,
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/obj/cable{
+	icon_state = "0-8"
+	},
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"LD" = (
+/obj/machinery/atmospherics/pipe/simple/insulated/cold,
+/obj/machinery/power/stats_meter{
+	name = "Cold Loop Outlet Meter";
+	pixel_x = 12;
+	tag = "Cold Loop Outlet Meter"
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"OQ" = (
+/obj/machinery/atmospherics/binary/valve{
+	name = "outlet purge valve"
+	},
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"PX" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot loop inlet valve"
+	},
+/turf/simulated/wall/auto/reinforced/supernorn,
+/area/station/engine/core)
+"Ru" = (
+/obj/decal/stripe_delivery,
+/turf/simulated/floor/grey,
+/area/station/engine/inner)
+"Rw" = (
+/obj/machinery/atmospherics/unary/cold_sink/freezer{
+	dir = 8
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"Sf" = (
+/obj/cable/orange{
+	icon_state = "1-2"
+	},
+/obj/mapping_helper/wingrille_spawn/auto/reinforced,
+/turf/simulated/floor/plating,
+/area/station/engine/core)
+"TN" = (
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 0;
+	name = "autoname - SS13";
+	pixel_y = 20
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated/cold{
+	can_rupture = 0;
+	dir = 10
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"WO" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 8;
+	level = 2
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"WR" = (
+/obj/machinery/atmospherics/binary/valve{
+	dir = 4;
+	name = "hot loop outlet valve"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"Xc" = (
+/obj/machinery/atmospherics/pipe/manifold{
+	dir = 4;
+	level = 2
+	},
+/obj/machinery/meter{
+	pixel_y = 1
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"Yg" = (
+/obj/machinery/light_switch{
+	name = "N light switch";
+	pixel_y = 24
+	},
+/obj/machinery/atmospherics/pipe/simple/insulated{
+	can_rupture = 0;
+	dir = 6
+	},
+/obj/cable{
+	icon_state = "4-8"
+	},
+/turf/simulated/floor/engine,
+/area/station/engine/core)
+"ZF" = (
+/obj/machinery/atmospherics/binary/circulatorTemp,
+/obj/decal/tile_edge/stripe/extra_big,
+/obj/decal/tile_edge/stripe/extra_big{
+	dir = 1
+	},
+/turf/simulated/floor,
+/area/station/engine/core)
+
+(1,1,1) = {"
+uK
+AM
+PX
+fX
+hn
+hn
+dq
+pa
+AM
+hw
+Kx
+"}
+(2,1,1) = {"
+bM
+FE
+uc
+xv
+xv
+xv
+kF
+WR
+em
+Gz
+Kx
+"}
+(3,1,1) = {"
+EC
+Yg
+DK
+DK
+DK
+DK
+vv
+Fd
+zx
+EC
+rB
+"}
+(4,1,1) = {"
+EC
+eN
+Bm
+Bm
+zQ
+Bm
+nW
+uc
+iO
+EC
+Ru
+"}
+(5,1,1) = {"
+rI
+lQ
+sZ
+Cv
+ZF
+Bi
+oO
+Xc
+DK
+vN
+pc
+"}
+(6,1,1) = {"
+Sf
+sq
+JD
+eZ
+vS
+gC
+ir
+Bm
+CP
+jH
+Bp
+"}
+(7,1,1) = {"
+rI
+eq
+sZ
+xs
+ac
+ag
+LD
+bf
+ri
+yZ
+OQ
+"}
+(8,1,1) = {"
+EC
+Jl
+Bm
+Bm
+zQ
+Bm
+yD
+ez
+hU
+EC
+Ru
+"}
+(9,1,1) = {"
+EC
+TN
+WO
+WO
+WO
+WO
+qm
+zn
+as
+EC
+rB
+"}
+(10,1,1) = {"
+bM
+LC
+ez
+KR
+KR
+KR
+Rw
+iC
+no
+Gz
+Kx
+"}
+(11,1,1) = {"
+Hs
+If
+wQ
+fX
+jH
+jH
+eH
+Kh
+If
+vR
+Kx
+"}

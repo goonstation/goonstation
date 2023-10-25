@@ -4,8 +4,8 @@
 	if (src.abilityHolder)
 		if (istype(src.abilityHolder,/datum/abilityHolder/composite))
 			var/datum/abilityHolder/composite/C = src.abilityHolder
-			if (!C.getHolder(/datum/abilityHolder/generic))
-				C.addHolder(/datum/abilityHolder/generic)
+			if (!C.getHolder(/datum/abilityHolder/hidden))
+				C.addHolder(/datum/abilityHolder/hidden)
 		if (!chair_flip_ability)
 			chair_flip_ability = src.abilityHolder.addAbility(/datum/targetable/chairflip)
 
@@ -22,16 +22,15 @@
 		src.chair_flip_ability.extrarange = 0
 
 /datum/abilityHolder/generic
+	usesPoints = FALSE
+	regenRate = 0
+
+/datum/abilityHolder/hidden
 	usesPoints = 0
 	regenRate = 0
 	topBarRendered = 0
 	rendered = 0
-
-	//updateButtons(var/called_by_owner = 0, var/start_x = 1, var/start_y = 0)
-	//	any_abilities_displayed = 0
-	//	x_occupied = start_x
-	//	y_occupied = start_y
-	//	return
+	hidden = TRUE
 
 /datum/targetable/chairflip
 	name = "Chair Flip"
@@ -40,7 +39,7 @@
 	targeted = 1
 	target_anything = 1
 	cooldown = 1
-	preferred_holder_type = /datum/abilityHolder/generic
+	preferred_holder_type = /datum/abilityHolder/hidden
 	icon = null
 	icon_state = null
 	var/extrarange = 0 //affects next flip only
@@ -66,6 +65,7 @@
 		..()
 
 		var/mob/M = holder.owner
+		logTheThing(LOG_COMBAT, M, "chairflips from [log_loc(M)], vector: ([target.x - M.x], [target.y - M.y]), dir: <i>[dir2text(get_dir(M, target))]</i>")
 		check_mutantrace(M)
 		if (GET_DIST(M,target) > dist)
 			var/steps = 0
@@ -127,8 +127,6 @@
 				src.visible_message("<b><span class='alert'>[src] bounces off [M] harmlessly!</span></b>")
 				return
 			playsound(src.loc, 'sound/impact_sounds/Flesh_Break_1.ogg', 75, 1)
-			if (prob(25))
-				M.emote("scream")
 
 			logTheThing(LOG_COMBAT, src, "[src] chairflips into [constructTarget(M,"combat")], [log_loc(M)].")
 			M.lastattacker = src
@@ -173,7 +171,7 @@
 	onAttach(datum/abilityHolder/holder)
 		. = ..()
 		var/atom/movable/screen/ability/topBar/B = src.object
-		B.UpdateOverlays(image('icons/obj/surgery.dmi', "brain1"), "brain_state")
+		B.UpdateOverlays(image('icons/obj/items/organs/brain.dmi', "brain1"), "brain_state")
 
 	castcheck()
 		. = isadmin(holder.owner)
@@ -181,12 +179,13 @@
 	cast(atom/target)
 		..()
 		var/mob/living/M = holder.owner
-		if (M.ai && M.is_npc)
-			if(M.ai.enabled )
-				M.ai.enabled = FALSE
+		if (M.ai)
+			if(M.ai.enabled)
+				M.ai.disable()
+				M.is_npc = FALSE
 			else
-				M.ai.enabled = TRUE
-				M.ai.interrupt()
+				M.ai.enable()
+				M.is_npc = TRUE
 		else if( M.is_npc && ishuman(M) )
 			var/mob/living/carbon/human/H = M
 			H.ai_set_active(!H.ai_active)
@@ -195,7 +194,7 @@
 	updateObject()
 		var/mob/living/M = holder.owner
 		var/atom/movable/screen/ability/topBar/B = src.object
-		var/image/I = B.SafeGetOverlayImage("brain_state", 'icons/obj/surgery.dmi', "brain1")
+		var/image/I = B.SafeGetOverlayImage("brain_state", 'icons/obj/items/organs/brain.dmi', "brain1")
 		if(M.ai?.enabled || M.ai_active)
 			I.icon_state = "ai_brain"
 		else
@@ -221,5 +220,15 @@
 		. = ..()
 		var/turf/T = get_turf(target)
 		for(var/obj/O in T.cameras)
-			shoot_projectile_ST(O, current_projectile, T)
+			shoot_projectile_ST_pixel_spread(O, current_projectile, T)
 
+/datum/targetable/crew_credits
+	name = "Crew credits"
+	desc = "Re-open the crew credits window."
+	icon = 'icons/mob/ghost_observer_abilities.dmi'
+	icon_state = "crew-credits"
+	targeted = FALSE
+	cooldown = 1 SECOND
+
+	cast(atom/target)
+		holder.owner.show_credits()

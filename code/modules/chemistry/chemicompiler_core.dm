@@ -120,7 +120,6 @@
 		if("reportError")
 			var/errorMessage = href_list["message"]
 			CRASH("Error reported from chemicompiler frontend: [errorMessage]")
-		else
 
 /*	attack_self(mob/user as mob)
 		panel()*/
@@ -232,7 +231,7 @@
 	windowCall("setUIState", json)
 
 /datum/chemicompiler_core/proc/parseCBF(string, button)
-	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@","#")
+	var/list/tokens = list(">", "<", "+", "-", ".",",", "\[", "]", "{", "}", "(", ")", "^", "'", "$", "@", "#", "*")
 	var/l = length(string)
 	var/list/inst = new
 	var/token
@@ -369,7 +368,8 @@
 				if("#") //move individual reagent from container
 					loopUsed = tx > 10 ? 45 : 30 //output is more expensive
 					isolateReagent(sx, tx, ax, data[dp+1])
-				else
+				if("*")
+					loopUsed = 30	//explicit NOP
 
 			if(length(data) < dp + 1)
 				data.len = dp + 1
@@ -579,9 +579,6 @@
 	chemicompilerJs.setSrc(resource("js/chemicompiler.js"))
 	htmlTag.addToBody(chemicompilerJs)
 
-	//var/datum/tag/firebug/fb = new
-	//htmlTag.addToBody(fb)
-
 	html = htmlTag.toHtml()
 
 /datum/chemicompiler_core/testCore
@@ -693,7 +690,6 @@
 			beepCode(1)
 		if(CC_NOTIFICATION_SAVED)
 			beepCode(2)
-		else
 
 /datum/chemicompiler_executor/proc/on_process()
 	if ( !src.core )
@@ -708,6 +704,10 @@
 		qdel(src)
 		return
 	if(istype(reservoirs[resId], /obj/item/reagent_containers/glass))
+		var/obj/item/reagent_containers/glass/beaker = reservoirs[resId]
+		if (QDELETED(beaker))
+			reservoirs[resId] = null
+			return
 		// Taking a res out
 		if(!usr.equipped())
 			boutput(usr, "<span class='notice'>You remove the [reservoirs[resId]] from the [src.holder].</span>")

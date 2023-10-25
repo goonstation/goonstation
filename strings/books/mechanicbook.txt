@@ -143,3 +143,19 @@
 	<br>For example: Set the Trigger Field to \"user_id\". When a Signal with \"user_id=captain\" arrives the Component forwards \"captain\"
 	<br>
 	<br>
+	<br><B>Movement Component:</B>
+	<br>This component can only be deployed inside a component cabinet. It will allow the cabinet to move by it's own power.
+	<br>For this it has two possible inputs:
+	<br>"step" will make the cabinet take a single step in the given direction.
+	<br>"walk" will make the cabinet walk in the given direction until it is stopped.
+	<br>The speed of the cabinet can also be configured.
+	<br>Directions can be given as numbers or text
+	<br>Stopping is done via 0
+	<br>north 1
+	<br>south 2
+	<br>east 4
+	<br>west 8
+	<br>northeast 5
+	<br>southeast 6
+	<br>northwest 9
+	<br>southwest 10

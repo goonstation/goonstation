@@ -4,20 +4,23 @@
 	icon_state = "glassbox0"
 	desc = "A display case for antique possessions."
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
+	material_amt = 0.3
 	var/health = 30
 	var/obj/item/displayed = null // The item held within.
 	var/destroyed = 0
 
 	New()
+		..()
+		if (ispath(src.displayed))
+			src.displayed = new src.displayed
+
 		if (displayed)
 			displayed.set_loc(src)
 			displayed.pixel_x = 0
 			displayed.pixel_y = 0
 			displayed.transform *= 0.8
 			overlays += displayed
-		..()
-		return
 
 /obj/displaycase/ex_act(severity)
 	switch(severity)
@@ -96,12 +99,12 @@
 /obj/displaycase/attackby(obj/item/W, mob/user)
 	if (isscrewingtool(W)) // To bolt to the floor
 		if (src.anchored == 0)
-			src.anchored = 1
-			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
+			src.anchored = ANCHORED
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
 			user.show_message("<span class='notice'>You bolt the display case to the floor.</span>")
 		else
-			src.anchored = 0
-			playsound(user, 'sound/items/Screwdriver2.ogg', 65, 1)
+			src.anchored = UNANCHORED
+			playsound(user, 'sound/items/Screwdriver2.ogg', 65, TRUE)
 			user.show_message("<span class='notice'>You unbolt the display case from the floor.</span>")
 		return
 	else if (iswrenchingtool(W) && destroyed) // To disassemble when broken
@@ -166,16 +169,17 @@
 // high-quality materials, which will make the weapon more powerful (Convair880).
 /obj/item/captaingun
 	name = "antique laser gun"
-	icon = 'icons/obj/items/gun.dmi'
+	icon = 'icons/obj/items/guns/energy.dmi'
 	icon_state = "caplaser"
 	inhand_image_icon = 'icons/mob/inhand/hand_guns.dmi'
 	item_state = "gun"
 	force = 1
-	flags =  FPRINT | TABLEPASS | CONDUCT | ONBELT
+	flags =  FPRINT | TABLEPASS | CONDUCT
+	c_flags = ONBELT
 	var/stability = 10
 
 	var/repair_stage = 0
-	var/quality_counter = 0 // Simply the sum of all material.quality values of every component.
+	var/quality_counter = 0 // Simply the sum of all material.getQuality() values of every component.
 	var/q_threshold1 = 100 // Decent quality.
 	var/q_threshold2 = 200 // Superb quality.
 
@@ -258,7 +262,6 @@
 				if (src.quality_counter >= src.q_threshold2)
 					L.setMaterial(getMaterial("gold"), appearance = 0, setname = 0)
 					if (L.material)
-						L.material.owner = L
 						L.material.triggerOnAdd(L)
 						L.name = "show-piece antique laser gun"
 						user.unlock_medal("Tinkerer", 1)
@@ -277,7 +280,7 @@
 						user.show_text("You rewire the circuit board.", "blue")
 						src.repair_stage = 2
 						if (C.material)
-							src.quality_counter += C.material.quality
+							src.quality_counter += C.material.getQuality()
 					else
 						user.show_text("You were interrupted!", "red")
 						return
@@ -292,7 +295,7 @@
 					user.show_text("You install the coil.", "blue")
 					src.repair_stage = 3
 					if (O.material)
-						src.quality_counter += O.material.quality
+						src.quality_counter += O.material.getQuality()
 					user.u_equip(O)
 					qdel(O)
 				else
@@ -316,7 +319,7 @@
 					user.show_text("You install the lens.", "blue")
 					src.repair_stage = 5
 					if (O.material)
-						src.quality_counter += O.material.quality
+						src.quality_counter += O.material.getQuality()
 					user.u_equip(O)
 					qdel(O)
 				else
@@ -339,7 +342,7 @@
 					P.set_loc(src)
 					src.our_cell = P
 					if (P.material)
-						src.quality_counter += P.material.quality
+						src.quality_counter += P.material.getQuality()
 				else
 					user.show_text("You were interrupted!", "red")
 					return

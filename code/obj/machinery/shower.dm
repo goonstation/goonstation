@@ -6,7 +6,7 @@
 	icon = 'icons/obj/stationobjs.dmi'
 	icon_state = "showerhead"
 	desc = "A shower head, for showering."
-	anchored = 1
+	anchored = ANCHORED
 	flags = OPENCONTAINER
 
 	var/on = 0 //Are we currently spraying???
@@ -17,21 +17,30 @@
 #define SPRAY_DELAY 5 //Delay between sprays, in tenths of a second.
 							//Don't set it to 50 or below thanks (reagents need to clear)
 
-
 	New()
 		..()
+		AddComponent(/datum/component/mechanics_holder)
+		SEND_SIGNAL(src, COMSIG_MECHCOMP_ADD_INPUT, "toggle", PROC_REF(mechcomp_toggle))
 		src.create_reagents(320)
 
+	///Silly wrapper proc to drop the args
+	proc/mechcomp_toggle()
+		src.toggle(null)
+
 	attack_ai(mob/user as mob)
-		. = attack_hand(user)
+		src.toggle(user)
 
 	attack_hand(mob/user)
+		src.toggle(user)
+
+	proc/toggle(mob/user)
 		src.on = !src.on
 		if (src.on)
 			SubscribeToProcess()
 		else
 			UnsubscribeProcess()
-		boutput(user, "You turn [src.on ? "on" : "off"] \the [src].")
+		if (user)
+			boutput(user, "You turn [src.on ? "on" : "off"] \the [src].")
 
 #ifdef HALLOWEEN
 		if(halloween_mode && prob(15))
@@ -61,6 +70,9 @@
 
 			// "blood - 2.7867e-018" because remove_any() uses ratios (Convair880).
 			for (var/current_id in src.reagents.reagent_list)
+				if (isnull(src.reagents.reagent_list[current_id]))
+					stack_trace("[identify_object(src)] had `[current_id]` in its reagent list, but the value was null")
+					continue
 				var/datum/reagent/current_reagent = src.reagents.reagent_list[current_id]
 				if (current_reagent.id == "water" || current_reagent.id == "cleaner")
 					continue
@@ -79,8 +91,8 @@
 				if (ismob(A))
 					var/mob/M = A
 					if (!isdead(M))
-						if ((!src.reagents.has_reagent("water") && !src.reagents.has_reagent("cleaner")) || ((src.reagents.has_reagent("water") && src.reagents.has_reagent("cleaner")) && src.reagents.reagent_list.len > 2))
-							logTheThing(LOG_COMBAT, M, "is hit by chemicals [log_reagents(src)] from a shower head at [log_loc(M)].")
+						if ((!src.reagents.has_reagent("water") && !src.reagents.has_reagent("cleaner")) || ((src.reagents.has_reagent("water") && src.reagents.has_reagent("cleaner")) && length(src.reagents.reagent_list) > 2))
+							logTheThing(LOG_CHEMISTRY, M, "is hit by chemicals [log_reagents(src)] from a shower head at [log_loc(M)].")
 
 				spawn(0)
 					src.reagents.reaction(A, 1, 40) // why the FUCK was this ingest ?? ?? ? ?? ? ?? ? ?? ? ???

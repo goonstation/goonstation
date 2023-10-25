@@ -12,7 +12,7 @@
 			if (D.signal_tag == src.signal_tag)
 				drone_list += D
 
-		if (drone_list.len < 1)
+		if (length(drone_list) < 1)
 			boutput(user, "<span class='alert'>No usable drones detected.</span>")
 			return
 
@@ -26,8 +26,8 @@
 					boutput(user, "<span class='alert'>Connection error: Drone already in use.</span>")
 
 /mob/living/silicon/drone
-	name = "Drone"
-	var/base_name = "Drone"
+	name = "drone"
+	var/base_name = "drone"
 	desc = "A small remote-controlled robot for doing risky work from afar."
 	icon = 'icons/mob/drone.dmi'
 	icon_state = "base"
@@ -53,7 +53,7 @@
 
 	New()
 		..()
-		name = "Drone [rand(1,9)]*[rand(10,99)]"
+		name = "drone [rand(1,9)]*[rand(10,99)]"
 		base_name = name
 		hud = new(src)
 		src.attach_hud(hud)
@@ -148,7 +148,7 @@
 			if (src.health == 0)
 				src.visible_message("<span class='alert'><b>[src.name] is destroyed!</b></span>")
 				disconnect_user()
-				robogibs(src.loc,null)
+				robogibs(src.loc)
 				playsound(src.loc, src.sound_destroyed, 50, 2)
 				qdel(src)
 				return
@@ -239,6 +239,7 @@
 			playsound(src.loc, beeps_n_boops[1], 30, 1)
 
 	emote(var/act)
+		..()
 		//var/param = null
 		if (findtext(act, " ", 1, null))
 			var/t1 = findtext(act, " ", 1, null)
@@ -322,7 +323,7 @@
 	icon_state = "frame-0"
 	opacity = 0
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	var/construct_stage = 0
 	var/obj/item/device/radio/part_radio = null
 	var/obj/item/cell/part_cell = null
@@ -470,7 +471,7 @@
 /obj/item/parts/robot_parts/drone
 	name = "drone part"
 	icon = 'icons/mob/drone.dmi'
-	desc = "It's a component intended for remote controlled drones. This one happens to be invisible and unusuable. Some things are like that."
+	desc = "It's a component intended for remote controlled drones. This one happens to be invisible and unusable. Some things are like that."
 	var/image/drone_overlay = null
 
 /obj/item/parts/robot_parts/drone/propulsion

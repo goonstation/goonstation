@@ -5,7 +5,7 @@
  * @license ISC
  */
 
-import { useBackend, useSharedState, useLocalState } from "../backend";
+import { useBackend, useLocalState, useSharedState } from "../backend";
 import { Button, Dimmer, Divider, Flex, NumberInput, Section, SectionEx, Stack } from '../components';
 import { Window } from '../layouts';
 import { Fragment } from 'inferno';
@@ -35,7 +35,7 @@ export const ReagentExtractor = (props, context) => {
           <Stack.Item basis={19.5}>
             <ReagentDisplay container={inserted} insertable />
           </Stack.Item>
-          <Stack.Item grow>
+          <Stack.Item grow basis="auto">
             <Stack fill>
               {/* Extractables (produce) */}
               <Stack.Item grow>
@@ -126,7 +126,7 @@ const ReagentDisplay = (props, context) => {
       />
       <Flex wrap justify="center">
         <Flex.Item grow />
-        <Flex.Item grow>
+        <Flex.Item grow basis="auto">
           <Button
             mb={0.5}
             width={17}

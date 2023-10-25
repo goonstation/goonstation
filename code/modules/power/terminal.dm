@@ -10,14 +10,14 @@
 	level = 1
 	layer = FLOOR_EQUIP_LAYER1
 	plane = PLANE_NOSHADOW_BELOW
-	var/obj/machinery/power/master = null
-	anchored = 1
+	var/obj/machinery/master = null
+	anchored = ANCHORED
 	directwired = 0		// must have a cable on same turf connecting to terminal
 
 /obj/machinery/power/terminal/New(var/new_loc)
 	..()
 	var/turf/T = new_loc
-	if(istype(T) && level==1) hide(T.intact)
+	if(istype(T) && level==UNDERFLOOR) hide(T.intact)
 
 /obj/machinery/power/terminal/disposing()
 	if (src.powernet && src.powernet.data_nodes)
@@ -73,6 +73,9 @@
 //It sends wired /datum/signal information between its master obj and other
 //data terminals in its powernet's nodes.
 
+TYPEINFO(/obj/machinery/power/data_terminal)
+	mats = 5
+
 /obj/machinery/power/data_terminal //The data terminal is remarkably similar to a regular terminal
 	name = "data terminal"
 	icon_state = "dterm"
@@ -80,18 +83,17 @@
 	level = 1
 	layer = FLOOR_EQUIP_LAYER1
 	plane = PLANE_NOSHADOW_BELOW
-	anchored = 1
+	anchored = ANCHORED
 	directwired = 0
 	use_datanet = 1
-	mats = 5
 	deconstruct_flags = DECON_SCREWDRIVER | DECON_CROWBAR | DECON_WELDER | DECON_WIRECUTTERS | DECON_MULTITOOL
 	var/obj/master = null //It can be any obj that can use receive_signal
 
 	ex_act()
-		if (master)
-			return
-
-		return ..()
+		SPAWN(1)
+			if (master)
+				return
+			..()
 
 /obj/machinery/power/data_terminal
 
@@ -100,7 +102,7 @@
 
 		var/turf/T = new_loc
 
-		if(level==1 && istype(T)) hide(T.intact)
+		if(level==UNDERFLOOR && istype(T)) hide(T.intact)
 
 	disposing()
 		master = null
@@ -143,11 +145,13 @@
 		invisibility = i ? INVIS_ALWAYS : INVIS_NONE
 		alpha = invisibility ? 128 : 255
 
+TYPEINFO(/obj/machinery/power/data_terminal/cable_tray)
+	mats = 0 // uh no thanks
+
 /obj/machinery/power/data_terminal/cable_tray
 	name = "cable tray"
 	desc = "A connector that goes off into somewhere..."
 	icon_state = "vterm"
-	mats = 0 // uh no thanks
 
 	New()
 		..()

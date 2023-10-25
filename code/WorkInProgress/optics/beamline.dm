@@ -34,8 +34,6 @@
 				src.beam.dispose()
 			return
 
-		use_power(power_usage)
-
 		if (!src.beam)
 			var/turf/beamTurf = get_step(src, src.dir)
 			if (!istype(beamTurf) || beamTurf.density)
@@ -71,9 +69,6 @@
 				if (prob(25))
 					src.status |= BROKEN
 					src.UpdateIcon()
-			else
-		return
-
 
 	update_icon()
 		if (status & (NOPOWER|BROKEN))

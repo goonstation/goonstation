@@ -12,7 +12,7 @@
 	proc
 		ensureNonEmptyQueue()
 			// Make sure there is always at least one bin available in the queue
-			if(queue.len == 0)
+			if(length(queue) == 0)
 				queue.len++
 				queue[1] = new /list()
 
@@ -27,12 +27,12 @@
 			return queue[1]
 
 		isEmpty()
-			if(queue.len == 0)
+			if(length(queue) == 0)
 				return 1
-			if(queue.len > 1)
+			if(length(queue) > 1)
 				return 0
 			var/list/bin = queue[1]
-			if(bin.len > 0)
+			if(length(bin) > 0)
 				return 0
 
 		enqueue(var/D)
@@ -40,7 +40,7 @@
 			var/list/bin = getLastBin()
 
 			// If the bin has grown too large, throw it back and build a new one
-			if(bin.len >= binSize)
+			if(length(bin) >= binSize)
 				bin = new /list()
 				queue.len++
 				queue[queue.len] = bin
@@ -53,14 +53,14 @@
 				bin.Add(D)
 
 		first(var/list/l)
-			if(l.len > 0)
+			if(length(l) > 0)
 				. = l[1]
 				l.Cut(1,2)
 			else
 				. = null
 
 		last(var/list/l)
-			if(l.len > 0)
+			if(length(l) > 0)
 				. = l[l.len]
 				l.len--
 			else
@@ -70,7 +70,7 @@
 			if(!isEmpty())
 				var/list/bin = getFirstBin()
 				. = first(bin)
-				if(bin.len == 0)
+				if(length(bin) == 0)
 					queue.Cut(1,2)
 			else
 				. = null

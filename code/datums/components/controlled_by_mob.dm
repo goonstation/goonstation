@@ -30,6 +30,7 @@ TYPEINFO(/datum/component/controlled_by_mob)
 	control_from_inside = 1
 
 /datum/component/controlled_by_mob/Initialize(mob/controlling_mob)
+	. = ..()
 	if(!istype(parent, /obj))
 		return COMPONENT_INCOMPATIBLE
 	var/obj/O = parent

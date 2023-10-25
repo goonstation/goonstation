@@ -331,7 +331,7 @@ chui/window/security_cameras
 		else if (href_list["save"])
 			var/obj/machinery/camera/C = locate(href_list["save"])
 
-			if (istype(C) && owner.favorites.len < owner.favorites_Max)
+			if (istype(C) && length(owner.favorites) < owner.favorites_Max)
 				owner.favorites += C
 		else if (href_list["remove"])
 			var/obj/machinery/camera/C = locate(href_list["remove"])

@@ -214,6 +214,27 @@ proc/filter_is_character_setup_ringtone(type)
 				SPAWN(1 SECOND)
 					src.holder.explode()
 
+
+/// Stock Thinktronic ringtones
+/datum/ringtone/thinktronic
+	name = "Three-Beep"
+	desc = "An advanced ringtone modeled after the highly successful \"Two-Beep\"!"
+	ringList = list('sound/machines/phones/ringtones/bebebeep.ogg')
+	succText = "<span class='notice'>*Successfully set your device's sound system to Three-Beep.*</span>"
+
+/datum/ringtone/thinktronic/quad1
+	name = "Four-Beep 1"
+	desc = "An avant garde ringtone inspired by the classic two-beep."
+	ringList = list('sound/machines/phones/ringtones/bobobebeep.ogg')
+	succText = "<span class='notice'>*Successfully set your device's sound system to Four-Beep 1.*</span>"
+
+/datum/ringtone/thinktronic/quad2
+	name = "Four-Beep 2"
+	desc = "An even more avant garde ringtone inspired by the classic two-beep."
+	ringList = list('sound/machines/phones/ringtones/bebobeboop.ogg')
+	succText = "<span class='notice'>*Successfully set your device's sound system to Four-Beep 2.*</span>"
+
+
 /// Clown ringtones
 /datum/ringtone/clown
 	name = "Nooty's Tooter"

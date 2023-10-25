@@ -8,14 +8,14 @@
 			process()
 
 /obj/literal_firewall
-	name = "Firewall"
+	name = "firewall"
 	desc = "Man, your port doesn't feel like it's allowed through there! If only there was a way to open it."
 	icon = 'icons/effects/fire.dmi'
 	icon_state = "1"
 	color = "#9C2A00"
 	density = 1
 	opacity = 1
-	anchored = 1
+	anchored = ANCHORED
 
 	attackby(var/obj/item/W, var/mob/user)
 		if (disposed)

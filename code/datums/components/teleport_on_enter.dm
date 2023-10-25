@@ -9,14 +9,15 @@ TYPEINFO(/datum/component/teleport_on_enter)
 	)
 
 /datum/component/teleport_on_enter/Initialize(var/destination, var/noisy = TRUE)
+	. = ..()
 	if (!istype(parent, /atom))
 		return COMPONENT_INCOMPATIBLE
 	if (!destination)
 		return COMPONENT_INCOMPATIBLE
 	src.destination = destination
 	src.noisy = noisy
-	RegisterSignal(parent, COMSIG_ATOM_ENTERED, .proc/teleport)
-	RegisterSignal(destination, COMSIG_PARENT_PRE_DISPOSING, .proc/UnregisterFromParent)
+	RegisterSignal(parent, COMSIG_ATOM_ENTERED, PROC_REF(teleport))
+	RegisterSignal(destination, COMSIG_PARENT_PRE_DISPOSING, PROC_REF(UnregisterFromParent))
 
 
 /datum/component/teleport_on_enter/proc/teleport(var/teleporter, var/atom/movable/teleportee)

@@ -59,7 +59,7 @@
 	icon_state = "projectiletrap"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	target = null
 	var/proj_type = /datum/projectile/bullet
 	var/datum/projectile/current_projectile
@@ -90,7 +90,7 @@
 						if (M)
 							T = get_turf(M)
 
-					shoot_projectile_ST(src, current_projectile, T)
+					shoot_projectile_ST_pixel_spread(src, current_projectile, T)
 					next_trap = world.time + trap_delay
 			if ("off")
 				is_on = 0

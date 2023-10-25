@@ -39,26 +39,10 @@
 
 		src.changeStatus(id, bite_time)
 
-#define DIGESTION_PER_LIFE_TICK 3 //Total amount of reagents we can digest each Life tick
-/mob/living/proc/handle_digestion(var/mult = 1)
-	if (src.stomach_process && length(src.stomach_process))
-		var/count_to_process = min(length(src.stomach_process), 10)
-		var/count_left = count_to_process
-		for(var/obj/item/reagent_containers/food/snacks/bite/B in stomach_process)
-			B.process_stomach(src, (DIGESTION_PER_LIFE_TICK / count_to_process) * mult) //Takes an even amt of reagents from all stomach contents
-			if(count_left-- <= 0)
-				break
-#undef DIGESTION_PER_LIFE_TICK
-
 
 /mob/living/vomit(var/nutrition=0, var/specialType=null)
 	..()
-	if (src.stomach_process && length(src.stomach_process))
-		var/obj/gross = pick(src.stomach_process)
-		src.stomach_process -= gross
-		gross.set_loc(src.loc)
-		. = gross
-
+	return src.organHolder?.stomach?.vomit()
 
 
 /datum/statusEffect/simplehot/foodBrute
@@ -398,7 +382,7 @@
 	unique = 1
 
 	getChefHint()
-		. = "Strenghtens the body's resistance to radiation."
+		. = "Strengthens the body's resistance to radiation."
 
 	onAdd(optional = 80)
 		. = ..()
@@ -471,3 +455,43 @@
 				if (prob(sweat_prob))
 					var/turf/T = get_turf(owner)
 					T.fluid_react_single("water",5)
+
+/datum/statusEffect/brainfood
+	id = "brain_food"
+	name = "Brain Food"
+	desc = "Slowly restore brain damage."
+	icon_state = "+"
+	exclusiveGroup = "Food"
+	maxDuration = 6000
+	unique = 1
+	visible = TRUE
+
+	var/tickCount = 0
+	var/tickSpacing = 20 //Time between ticks.
+
+	onUpdate(timePassed)
+		tickCount += timePassed
+		var/times = (tickCount / tickSpacing)
+		if(times >= 1 && ismob(owner))
+			tickCount -= (round(times) * tickSpacing)
+			for(var/i in 1 to times)
+				var/mob/M = owner
+				M.take_brain_damage(-1)
+		return
+
+	ithillid
+		id = "brain_food_ithillid"
+
+		onAdd(optional)
+			. = ..()
+			var/mob/living/carbon/human/H = owner
+			if(!(istype(H) && istype(H.mutantrace, /datum/mutantrace/ithillid)))
+				visible = FALSE
+				duration = 0
+
+/datum/statusEffect/full
+	id = "full"
+	name = "Full"
+	desc = "Your stomach is completely full!"
+	icon_state = "stomach"
+	unique = TRUE

@@ -73,7 +73,7 @@
 	name = "beach ball"
 	item_state = "clown"
 	density = 0
-	anchored = 0
+	anchored = UNANCHORED
 	w_class = W_CLASS_TINY
 	force = 0
 	throwforce = 0

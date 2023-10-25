@@ -9,6 +9,7 @@
 	var/send_only = FALSE
 
 /datum/component/packet_connected/Initialize(connection_id, datum/packet_network/network, address=null, receive_packet_proc=null, send_only=FALSE, net_tags=null, all_hearing=FALSE)
+	. = ..()
 	if(!istype(parent, /atom/movable))
 		return COMPONENT_INCOMPATIBLE
 	src.connection_id = connection_id
@@ -114,7 +115,7 @@
 	if(isnum(network) || istext(network))
 		network = radio_controller.get_frequency(network).packet_network
 	. = ..(connection_id, network, address, receive_packet_proc, send_only, net_tags, all_hearing)
-	RegisterSignal(parent, COMSIG_MOVABLE_POST_RADIO_PACKET, .proc/send_radio_packet)
+	RegisterSignal(parent, COMSIG_MOVABLE_POST_RADIO_PACKET, PROC_REF(send_radio_packet))
 
 /datum/component/packet_connected/radio/CheckDupeComponent(datum/component/packet_connected/C, connection_id, datum/packet_network/network, address=null, receive_packet_proc=null, send_only=FALSE, net_tags=null, all_hearing=FALSE)
 	if(isnum(network) || istext(network))

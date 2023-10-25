@@ -58,3 +58,47 @@
 
 		proc/init_exponential_smoothing(sample_interval, time_const)
 			init_basic(1.0 - ( eulers ** ( -sample_interval / time_const )))
+
+	pid
+		init(proportional_gain, integral_gain, derivative_gain, time_delta=1)
+			var/coeff_list = list()
+			coeff_list += proportional_gain + integral_gain*time_delta + derivative_gain/time_delta
+			coeff_list += -proportional_gain - 2*derivative_gain/time_delta
+			coeff_list += derivative_gain/time_delta
+			..(null, coeff_list)
+
+
+/// Provide support for basic PID Controller
+/// Allows for dampening an approach to a target value
+///
+/// https://en.wikipedia.org/wiki/PID_controller
+
+/datum/pid
+	var/proportional_gain //Kp
+	var/integral_gain // Ki
+	var/derivative_gain //Kd
+
+	var/target_value = 0
+	var/integral = 0
+
+	var/last_error = 0
+
+
+	New(proportional_gain, integral_gain, derivative_gain)
+		. = ..()
+		src.proportional_gain = proportional_gain
+		src.integral_gain = integral_gain
+		src.derivative_gain = derivative_gain
+
+	proc/calculate(input, setpoint)
+		if(setpoint)
+			src.target_value = setpoint
+
+		var/error = src.target_value - input
+
+		integral += error
+		var/derivative = error - last_error
+		last_error = error
+
+		//                P                                  I                           D
+		. = (src.proportional_gain * error) + (src.integral_gain * integral) + (src.derivative_gain * derivative)

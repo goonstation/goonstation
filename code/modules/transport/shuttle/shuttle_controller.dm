@@ -14,7 +14,7 @@ datum/shuttle_controller
 	var/map_turf = /turf/space //Set in New() by map settings
 	var/transit_turf = /turf/space/no_replace //Not currently modified
 	var/centcom_turf = /turf/unsimulated/floor/shuttlebay //Not currently modified
-
+	var/turf/sound_turf = null //!where to play takeoff sounds, defined by landmark
 
 	// call the shuttle
 	// if not called before, set the endtime to T+600 seconds
@@ -34,7 +34,7 @@ datum/shuttle_controller
 			settimeleft(SHUTTLEARRIVETIME)
 			online = 1
 
-		INVOKE_ASYNC(ircbot, /datum/ircbot.proc/event, "shuttlecall", src.timeleft())
+		INVOKE_ASYNC(ircbot, TYPE_PROC_REF(/datum/ircbot, event), "shuttlecall", src.timeleft())
 
 		return TRUE
 
@@ -82,7 +82,14 @@ datum/shuttle_controller
 				if (S.emergency && !(S in src.airbridges))
 					src.airbridges += S
 			map_turf = map_settings.shuttle_map_turf
-
+			src.sound_turf = pick_landmark(LANDMARK_SHUTTLE_SOUND)
+			if (!istype(src.sound_turf))
+				logTheThing(LOG_DEBUG, null, "Shuttle sound landmark not found, trying station shuttle area turfs")
+				var/area/start_location = locate(map_settings ? map_settings.escape_station : /area/shuttle/escape/station)
+				for (var/turf/new_target in start_location)
+					if(istype(new_target))
+						src.sound_turf = new_target
+						break
 		process()
 			if (!online)
 				return
@@ -100,13 +107,13 @@ datum/shuttle_controller
 					else if (timeleft <= 0)
 						location = SHUTTLE_LOC_STATION
 						if (ticker?.mode)
-							if (ticker.mode.shuttle_available == 0)
+							if (ticker.mode.shuttle_available == SHUTTLE_AVAILABLE_DISABLED)
 								command_alert("CentCom has received reports of unusual activity on the station. The shuttle has been returned to base as a precaution, and will not be usable.");
 								online = 0
 								direction = 1
 								endtime = null
 								return 0
-							if (ticker.mode.shuttle_available == 2 && (ticker.round_elapsed_ticks < max(0, ticker.mode.shuttle_available_threshold)) && callcount < 1)
+							if (ticker.mode.shuttle_available == SHUTTLE_AVAILABLE_DELAY && (ticker.round_elapsed_ticks < max(0, ticker.mode.shuttle_available_threshold)) && callcount < 1)
 								callcount++
 								command_alert("CentCom reports that the emergency shuttle has veered off course due to unknown interference. The next shuttle will be equipped with electronic countermeasures to break through.");
 								online = 0
@@ -194,19 +201,19 @@ datum/shuttle_controller
 						announcement_done = 1
 
 					else if (announcement_done < 2 && timeleft < 30)
-						var/area/sound_location = locate(/area/shuttle_sound_spawn)
-						playsound(sound_location, 'sound/effects/ship_charge.ogg', 100)
+						if (istype(src.sound_turf))
+							playsound(src.sound_turf, 'sound/effects/ship_charge.ogg', 100)
 						announcement_done = 2
 
 					else if (announcement_done < 3 && timeleft < 4)
-						var/area/sound_location = locate(/area/shuttle_sound_spawn)
-						playsound(sound_location, 'sound/effects/ship_engage.ogg', 100)
+						if (istype(src.sound_turf))
+							playsound(src.sound_turf, 'sound/effects/ship_engage.ogg', 100)
 						announcement_done = 3
 
 					else if (announcement_done < 4 && timeleft < 1)
-						var/area/sound_location = locate(/area/shuttle_sound_spawn)
-						playsound(sound_location, 'sound/effects/explosion_new4.ogg', 75)
-						playsound(sound_location, 'sound/effects/flameswoosh.ogg', 75)
+						if (istype(src.sound_turf))
+							playsound(src.sound_turf, 'sound/effects/explosion_new4.ogg', 75)
+							playsound(src.sound_turf, 'sound/effects/flameswoosh.ogg', 75)
 						announcement_done = 4
 						if (src.airbridges.len)
 							for (var/obj/machinery/computer/airbr/S in src.airbridges)
@@ -240,7 +247,6 @@ datum/shuttle_controller
 							else if(istype( A, /mob ))
 								var/mob/M = A
 								shake_camera(M, 32, 32)
-								M.addOverlayComposition(/datum/overlayComposition/shuttle_warp)
 								if (!isturf(M.loc) || !isliving(M) || isintangible(M))
 									continue
 								SPAWN(1 DECI SECOND)
@@ -271,10 +277,7 @@ datum/shuttle_controller
 							particle_spawn.start_particles()
 
 						DEBUG_MESSAGE("Now moving shuttle!")
-						start_location.move_contents_to(end_location, map_turf, turf_to_skip=/turf/simulated/floor/plating)
-						for (var/turf/O in end_location)
-							if (istype(O, map_turf))
-								O.ReplaceWith(transit_turf, keep_old_material = 0, force=1)
+						start_location.move_contents_to(end_location, map_turf, turf_to_skip=list(/turf/simulated/floor/plating, src.map_turf))
 
 						if(station_repair.station_generator)
 							var/list/turf/turfs_to_fix = get_area_turfs(start_location)

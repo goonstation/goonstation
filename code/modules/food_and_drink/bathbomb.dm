@@ -54,7 +54,7 @@
 				user.visible_message("<span class='alert'>[user] puts [src] in [target].</span>",\
 				"<span class='success'>You dissolve [src] in [target].</span>")
 
-			//logTheThing(LOG_COMBAT, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
 			reagents.trans_to(target, src.reagents.total_volume)
 			user.u_equip(src)
 			user.drop_item(src)
@@ -73,7 +73,7 @@
 			user.visible_message("<span class='alert'>[user] puts [src] in [target].</span>",\
             "<span class='success'>You dissolve [src] in [target].</span>")
 
-			//logTheThing(LOG_COMBAT, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
+			logTheThing(LOG_CHEMISTRY, user, "dissolves a bath bomb [log_reagents(src)] in [target] at [log_loc(user)].")
 			var/turf/T = get_turf(target)
 			T.fluid_react(src.reagents,src.reagents.total_volume)
 			user.u_equip(src)
@@ -130,7 +130,7 @@
 			name += " - Sail The Seven Cs Flavor"
 			desc = "Time for a little Arr and Arr!"
 			R.add_reagent("cocktail_citrus", 5)
-			var/list/seas = list("carbon","charcoal","calomel","cyanide","cholesterol","cider","infernite","chocolate milk","cheese","cola","carpet","cornsyrup","capulettium")
+			var/list/seas = list("carbon","charcoal","calomel","cyanide","cholesterol","cider","infernite","chocolate_milk","cheese","cola","carpet","cornsyrup","capulettium")
 			var/temp = null
 			for(var/i=0,i<4,i++)
 				temp = pick(seas)
@@ -187,7 +187,7 @@
 			R.add_reagent("coffee",5)
 			R.add_reagent("ipecac",5) // NOT IN 2016
 			R.add_reagent("toxic_slurry",5)
-			R.add_reagent("thc",5)
+			R.add_reagent("THC",5)
 
 		else if(flavor_value < 57)
 			name += " - Public Pool Flavor"

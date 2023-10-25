@@ -4,6 +4,7 @@
 	circuit_type = /obj/item/circuitboard/teleporter
 	var/obj/item/locked = null
 	var/obj/machinery/teleport/portal_generator/linkedportalgen = null
+	var/list/obj/machinery/teleport/portal_ring/linkedportals = null
 	id = null
 	desc = "A computer that sets which beacon the connected teleporter attempts to create a portal to."
 
@@ -14,7 +15,18 @@
 /obj/machinery/computer/teleporter/New()
 	src.id = text("[]", rand(1000, 9999))
 	..()
-	return
+
+/obj/machinery/computer/teleporter/disposing()
+	if(src.linkedportalgen)
+		src.linkedportalgen.linked_computer = null
+		src.linkedportalgen = null
+	for(var/obj/machinery/teleport/portal_ring/P in src.linkedportals)
+		P.update_target_item_stuff(FALSE)
+		P.linked_computer = null
+	src.linkedportalgen = null
+	src.linkedportals = null
+	src.locked = null
+	..()
 
 /obj/machinery/computer/teleporter/attack_hand()
 	src.add_fingerprint(usr)
@@ -57,7 +69,12 @@
 	var/desc = tgui_input_list(usr, "Please select a location to lock in.", "Locking Computer", sortList(L, /proc/cmp_text_asc))
 	if (isnull(desc))
 		return
+	if(src.locked)
+		for(var/obj/machinery/teleport/portal_ring/P in src.linkedportals)
+			P.update_target_item_stuff(FALSE)
 	src.locked = L[desc]
+	for(var/obj/machinery/teleport/portal_ring/P in src.linkedportals)
+		P.update_target_item_stuff(P.on)
 	for(var/mob/O in hearers(src, null))
 		O.show_message("<span class='notice'>Locked In</span>", 2)
 	playsound(src.loc, 'sound/machines/keypress.ogg', 50, 1, -15)

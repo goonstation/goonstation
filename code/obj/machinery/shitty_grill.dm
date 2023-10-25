@@ -1,12 +1,14 @@
+TYPEINFO(/obj/machinery/shitty_grill)
+	mats = 20
+
 /obj/machinery/shitty_grill
 	name = "shitty grill"
 	desc = "Is that a space heater? That doesn't look safe at all!"
 	icon = 'icons/obj/kitchen.dmi'
 	icon_state = "shittygrill_off"
-	anchored = 0
+	anchored = UNANCHORED
 	density = 1
 	flags = NOSPLASH
-	mats = 20
 	var/obj/item/grillitem = null
 	var/cooktime = 0
 	var/grilltemp_target = 250 + T0C // lets get it warm enough to cook
@@ -92,7 +94,7 @@
 				boutput(user, "<span class='alert'>There is nothing in [W] to pour!</span>")
 
 			else
-				logTheThing(LOG_COMBAT, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
+				logTheThing(LOG_CHEMISTRY, user, "pours chemicals [log_reagents(W)] into the [src] at [log_loc(src)].") // Logging for the deep fryer (Convair880).
 				src.visible_message("<span class='notice'>[user] pours [W:amount_per_transfer_from_this] units of [W]'s contents into [src].</span>")
 				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
 				W.reagents.trans_to(src, W:amount_per_transfer_from_this)
@@ -127,7 +129,7 @@
 
 			return
 
-		if (W.w_class > src.max_wclass || istype(W, /obj/item/storage) || istype(W, /obj/item/storage/secure))
+		if (W.w_class > src.max_wclass || W.storage)
 			boutput(user, "<span class='alert'>There is no way that could fit!</span>")
 			return
 
@@ -144,6 +146,7 @@
 		return
 
 	onVarChanged(variable, oldval, newval)
+		. = ..()
 		if (variable == "grillitem")
 			if (!oldval && newval)
 				SubscribeToProcess()
@@ -266,12 +269,12 @@
 		if (src.cooktime >= 60)
 			if (ismob(src.grillitem))
 				var/mob/M = src.grillitem
-				INVOKE_ASYNC(M, /mob.proc/ghostize)
+				INVOKE_ASYNC(M, TYPE_PROC_REF(/mob, ghostize))
 			else
 				for (var/mob/M in src.grillitem)
 					M.ghostize()
 			qdel(src.grillitem)
-			src.grillitem = new /obj/item/reagent_containers/food/snacks/yuckburn (src)
+			src.grillitem = new /obj/item/reagent_containers/food/snacks/yuck/burn (src)
 			if (!src.grillitem.reagents)
 				src.grillitem.create_reagents(50)
 
@@ -316,7 +319,8 @@
 		if (ismob(grillitem))
 			shittysteak.bites_left = 5
 		else
-			shittysteak.bites_left = src.grillitem.w_class
+			shittysteak.bites_left = round(src.grillitem.w_class)
+		shittysteak.uneaten_bites_left = shittysteak.bites_left
 		shittysteak.reagents = src.grillitem.reagents
 		shittysteak.reagents.my_atom = shittysteak
 

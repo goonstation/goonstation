@@ -60,8 +60,7 @@
 
 /datum/aiHolder/aquatic/fish/tick()
 	if(isdead(owner))
-		enabled = 0
-		walk(owner,0)
+		src.disable()
 	if (!enabled)
 		return
 	if(sleeping > 0)
@@ -75,11 +74,11 @@
 			if(M.client)
 				stay_awake = 1
 				waking = 15
-				enabled = 1
+				src.enable()
 				break
 		if(!stay_awake)
 			sleeping = 15
-			enabled = 0
+			src.disable()
 	if(!istype(owner.loc, /turf/space/fluid) || owner.z != 1) // fuck finding hotspots when we're in an aquarium or some other zlevel
 		step_rand(owner, 0)
 		return

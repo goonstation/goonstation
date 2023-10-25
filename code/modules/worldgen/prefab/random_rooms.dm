@@ -32,15 +32,19 @@ proc/buildRandomRooms()
 	shuffle_list(by_type[/obj/landmark/random_room])
 	for_by_tcl(landmark, /obj/landmark/random_room)
 		landmark.apply()
+	for_by_tcl(landmark, /obj/landmark/engine_room)
+		landmark.apply()
 
 
 /obj/landmark/random_room
 	var/size = null
 	icon = 'icons/effects/mapeditor.dmi'
+	icon_state = "random_room"
 	deleted_on_start = FALSE
 	add_to_landmarks = FALSE
 	opacity = 1
 	invisibility = 0 // To see landmarks if NO_RANDOM_ROOM is defined
+	plane = PLANE_FLOOR
 
 	New()
 		..()
@@ -60,12 +64,16 @@ proc/buildRandomRooms()
 
 	size3x3
 		size = "3x3"
-		icon_state = "3x3"
+		icon = 'icons/effects/mapeditor/3x3tiles.dmi'
 
 	size3x5
 		size = "3x5"
-		icon_state = "3x5"
+		icon = 'icons/effects/mapeditor/3x5tiles.dmi'
 
 	size5x3
 		size = "5x3"
-		icon_state = "5x3"
+		icon = 'icons/effects/mapeditor/5x3tiles.dmi'
+
+	size7x5
+		size = "7x5"
+		icon = 'icons/effects/mapeditor/7x5tiles.dmi'

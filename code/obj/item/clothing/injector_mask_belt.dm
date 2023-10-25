@@ -7,14 +7,17 @@ There's much less duplicate code here than there used to be, it could probably b
 	but I'm not doing that without help on my first pull request in addition to learning TGUI!
 */
 
+TYPEINFO(/obj/item/injector_belt)
+	mats = 10
+
 /obj/item/injector_belt
 	name = "injector belt"
 	desc = "Automated injection system attached to a belt."
 	icon = 'icons/obj/items/belts.dmi'
 	icon_state = "injectorbelt_atm"
 	item_state = "injector"
-	flags = FPRINT | TABLEPASS | ONBELT | NOSPLASH
-	mats = 10
+	flags = FPRINT | TABLEPASS | NOSPLASH
+	c_flags = ONBELT
 
 	var/can_trigger = 1
 	var/mob/owner = null
@@ -51,6 +54,8 @@ There's much less duplicate code here than there used to be, it could probably b
 		return
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.container)
+			SEND_SIGNAL(src.container.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "AutoInjector", name)
@@ -72,6 +77,9 @@ There's much less duplicate code here than there used to be, it could probably b
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
 				boutput(user, "<span class='alert'>There is already a container attached to the belt.</span>")
+				return
+			if (W.w_class > W_CLASS_SMALL)
+				boutput(user, "<span class='alert'>[W] is too large to fit in the belt.</span>")
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
@@ -98,7 +106,7 @@ There's much less duplicate code here than there used to be, it could probably b
 				src.can_trigger = 0
 				SPAWN(src.min_time) src.can_trigger = 1
 
-				playsound(src, 'sound/items/injectorbelt_active.ogg', 33, 0, -5)
+				playsound(src, 'sound/items/injectorbelt_active.ogg', 33, FALSE, -5)
 				boutput(src.owner, "<span class='notice'>Your Injector belt activates.</span>")
 
 				src.container.reagents.reaction(src.owner, INGEST)
@@ -120,12 +128,14 @@ There's much less duplicate code here than there used to be, it could probably b
 
 //////////////////////////////////////
 
+TYPEINFO(/obj/item/clothing/mask/gas/injector_mask)
+	mats = 10
+
 /obj/item/clothing/mask/gas/injector_mask
 	name = "Vapo-Matic"
 	desc = "Automated chemical vaporizer system built into an old industrial respirator. Doesn't look very safe at all!"
 	flags = FPRINT | TABLEPASS  | NOSPLASH
 	c_flags =  COVERSMOUTH | MASKINTERNALS
-	mats = 10
 	icon_state = "gas_injector"
 	item_state = "gas_injector"
 
@@ -164,6 +174,8 @@ There's much less duplicate code here than there used to be, it could probably b
 		return
 
 	ui_interact(mob/user, datum/tgui/ui)
+		if (src.container)
+			SEND_SIGNAL(src.container.reagents, COMSIG_REAGENTS_ANALYZED, user)
 		ui = tgui_process.try_update_ui(user, src, ui)
 		if(!ui)
 			ui = new(user, src, "AutoInjector", name)
@@ -185,6 +197,9 @@ There's much less duplicate code here than there used to be, it could probably b
 		if(istype(W,/obj/item/reagent_containers/glass))
 			if (container)
 				boutput(user, "<span class='alert'>There is already a container attached to the mask.</span>")
+				return
+			if (W.w_class > W_CLASS_SMALL)
+				boutput(user, "<span class='alert'>[W] is too large to fit in the belt.</span>")
 				return
 			if (!W.reagents.total_volume)
 				user.show_text("[W] is empty.", "red")
@@ -214,9 +229,9 @@ There's much less duplicate code here than there used to be, it could probably b
 				SPAWN(src.min_time) src.can_trigger = 1
 				var/turf/T = get_turf(src)
 				if(T)
-					playsound(T, 'sound/items/injectorbelt_active.ogg', 33, 0, -5)
+					playsound(T, 'sound/items/injectorbelt_active.ogg', 33, FALSE, -5)
 					SPAWN(0.5 SECONDS)
-						playsound(T, 'sound/machines/hiss.ogg', 40, 1, -5)
+						playsound(T, 'sound/machines/hiss.ogg', 40, TRUE, -5)
 
 				boutput(src.owner, "<span class='notice'>Your [src] activates.</span>")
 
@@ -488,10 +503,10 @@ ABSTRACT_TYPE(/datum/injector_belt_condition/with_threshold)
 	switch(action)
 		if ("remove_cont")
 			if (current_belt)
-				usr.put_in_hand_or_drop(current_belt.container)
+				user.put_in_hand_or_drop(current_belt.container)
 				current_belt.container = null
 			else if (current_mask)
-				usr.put_in_hand_or_drop(current_mask.container)
+				user.put_in_hand_or_drop(current_mask.container)
 				current_mask.container = null
 			. = TRUE
 

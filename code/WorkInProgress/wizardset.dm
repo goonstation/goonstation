@@ -108,7 +108,7 @@
 	name = "false wall triggerable endpoint"
 	var/turf/unsimulated/wall/adaptive/wizard_fake/attached
 	invisibility = INVIS_ADVENTURE
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 
@@ -192,7 +192,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		if (opening == -1)
 			return
 		src.opening = -1
-		src.RL_SetOpacity(1)
+		src.set_opacity(1)
 		src.set_density(1)
 		flick("wizard_false_wall_closing", src)
 		SPAWN(1 SECOND)
@@ -210,7 +210,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 		SPAWN(1.2 SECONDS)
 			src.set_density(0)
 			src.opening = 0
-			src.RL_SetOpacity(0)
+			src.set_opacity(0)
 
 	opened
 		New()
@@ -286,7 +286,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	flags = ON_BORDER
 	density = 1
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	invisibility = INVIS_ALWAYS_ISH
 	icon = null
 	icon_state = null
@@ -295,7 +295,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	name = "cover"
 	desc = "A cover. Usually covers showcased objects. Hopefully."
 	layer = EFFECTS_LAYER_BASE
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/list/dummies = list()
@@ -307,10 +307,10 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 
 	New()
 		..()
-		dummies += new /obj/border_dummy { dir = 1; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 2; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 4; }(src.loc)
-		dummies += new /obj/border_dummy { dir = 8; }(src.loc)
+		dummies += new /obj/border_dummy { dir = NORTH; }(src.loc)
+		dummies += new /obj/border_dummy { dir = SOUTH; }(src.loc)
+		dummies += new /obj/border_dummy { dir = EAST; }(src.loc)
+		dummies += new /obj/border_dummy { dir = WEST; }(src.loc)
 		for (var/obj/item/O in get_turf(src))
 			O.pixel_y = 2
 			O.pixel_x = 0
@@ -395,7 +395,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	desc = "A magical stand. Looks like it's missing a part."
 	icon = 'icons/turf/adventure.dmi'
 	icon_state = "pedestal_empty"
-	anchored = 1
+	anchored = ANCHORED
 	density = 1
 	opacity = 0
 	var/obj/item/orb/O = null
@@ -489,7 +489,7 @@ var/global/datum/wizard_zone_controller/wizard_zone_controller
 	var/static/list/red_potions = list("elixir of preservation" = "formaldehyde", "elixir of flesh" = "synthflesh")
 	var/static/list/blue_potions = list("essence of ice" = "cryostylane", "draught of fresh water" = "water")
 	var/static/list/magenta_potions = list("essence of motion" = "anima", "potion of rejuvenation" = "omnizine")
-	var/static/list/green_potions = list("distillation of venom" = "sarin", "elixir of neutralize poison" = "charcoal")
+	var/static/list/green_potions = list("distillation of venom" = "saxitoxin", "elixir of neutralize poison" = "charcoal")
 	var/static/list/yellow_potions = list("distillation of madness" = "madness_toxin", "elixir of speed" = "methamphetamine")
 	var/static/list/black_potions = list("essence of death" = "initropidril", "elixir invulnerability" = "juggernaut")
 	var/static/list/white_potions = list("essence of creation" = "big_bang", "elixir of life" = "strange_reagent")
@@ -652,7 +652,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 /obj/wizard_light
 	name = "empty crystal socket"
 	desc = "A holder for light crystals."
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	opacity = 0
 	icon = 'icons/turf/adventure.dmi'
@@ -699,6 +699,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 			apply_crystal()
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
+		. = ..()
 		if (varname == "dir")
 			update_dir(newvalue)
 			apply_crystal()
@@ -709,7 +710,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 			pixel_x = 0
 			pixel_y = 0
 			if (!(dir in cardinal))
-				src.set_dir(2)
+				src.set_dir(SOUTH)
 			switch (dir)
 				if (1)
 					pixel_y = -32
@@ -810,7 +811,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 	desc = "A wooden furniture used for the storage of books."
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	var/id = null
 	icon = 'icons/turf/adventure.dmi'
 	icon_state = "bookcase_empty_alone"
@@ -833,6 +834,7 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 		update_dir(dir)
 
 	onVarChanged(var/varname, var/oldvalue, var/newvalue)
+		. = ..()
 		if (varname == "dir")
 			update_dir(newvalue)
 
@@ -841,8 +843,8 @@ ABSTRACT_TYPE(/obj/item/wizard_crystal)
 
 	proc/update_dir(var/D)
 		src.set_dir(D)
-		if (!(dir & 2))
-			src.set_dir(2)
+		if (!(dir & SOUTH))
+			src.set_dir(SOUTH)
 		pixel_y = 28
 		effect_overlay.set_dir(dir)
 

@@ -22,7 +22,7 @@
 			null, \
 			FALSE \
 		)
-		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(receive_signal))
 
 	on_deactivated(obj/item/device/pda2/pda)
 		qdel(get_radio_connection_by_id(pda, "ping"))
@@ -151,7 +151,7 @@
 			null, \
 			TRUE \
 		)
-		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, .proc/receive_signal)
+		RegisterSignal(pda, COMSIG_MOVABLE_RECEIVE_PACKET, PROC_REF(receive_signal))
 
 	on_deactivated(obj/item/device/pda2/pda)
 		qdel(get_radio_connection_by_id(pda, "sniffer"))
@@ -273,7 +273,7 @@
 		result += "[t][t2]"
 
 
-		if(result.len > 100)
+		if(length(result) > 100)
 			result.Cut(1,2)
 		master.updateSelfDialog()
 
@@ -385,7 +385,7 @@
 		else if(href_list["edit"])
 			var/codekey = href_list["code"]
 
-			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender", codekey) as text|null ), 1, 16)
+			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender", codekey) as text|null ), 1, 255)
 			if(!newkey)
 				return
 
@@ -430,10 +430,10 @@
 
 		else if(href_list["add"])
 
-			if(keyval && (keyval.len >= MAX_PACKET_KEYS))
+			if(keyval && (length(keyval) >= MAX_PACKET_KEYS))
 				return
 
-			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender") as text|null ), 1, 16)
+			var/newkey = copytext(ckeyEx( input("Enter Packet Key", "Packet Sender") as text|null ), 1, 255)
 			if(!newkey)
 				return
 

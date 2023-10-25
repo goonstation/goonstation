@@ -6,7 +6,7 @@
 	icon_state = "proc_caller"
 	density = 0
 	opacity = 0
-	anchored = 1
+	anchored = ANCHORED
 	target = null
 	var/procpath = ""
 	var/arg = null

@@ -122,7 +122,7 @@
 	icon = 'icons/misc/hospital.dmi'
 	icon_state = "specter"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 
 	Crossed(atom/movable/AM as mob|obj)
@@ -144,7 +144,7 @@
 	icon_state = "specter"
 	desc = "&#9617;????&#9617;&#9617;&#9617;&#9617;"
 	density = 1
-	anchored = 1
+	anchored = ANCHORED
 	var/targeting = 0
 
 
@@ -202,7 +202,7 @@
 	icon = 'icons/misc/mark.dmi'
 	icon_state = "x4"
 	invisibility = INVIS_ALWAYS
-	anchored = 1
+	anchored = ANCHORED
 	density = 0
 	var/ready = 1
 
@@ -224,7 +224,7 @@
 					spawnloc = tempTurf
 
 				var/obj/stool/bed/gurney = new /obj/stool/bed/moveable/hospital/halloween (spawnloc)
-				playsound(src, 'sound/machines/squeaky_rolling.ogg', 40, 0) //Maybe a squeaky wheel metal noise??
+				playsound(src, 'sound/machines/squeaky_rolling.ogg', 40, FALSE) //Maybe a squeaky wheel metal noise??
 
 				gurney.throw_at(get_edge_target_turf(src, WEST), 20, 1)
 
@@ -252,8 +252,8 @@
 	New()
 		..()
 
-		new /obj/item/reagent_containers/food/drinks/bottle/hospital (src)
-		new /obj/item/device/audio_log/hospital_01 (src)
+		src.storage.add_contents(new /obj/item/reagent_containers/food/drinks/bottle/hospital(src))
+		src.storage.add_contents(new /obj/item/device/audio_log/hospital_01(src))
 
 /obj/item/device/audio_log/hospital_01
 
@@ -375,8 +375,8 @@
 		if (!keySpawned)
 			var/obj/item/device/key/hospital/theKey = new (src)
 			keySpawned = 1
-			var/image/O = image(icon = 'icons/misc/aprilfools.dmi', loc = theKey, icon_state = "key", layer = 20)
-			usr << O
+			var/image/O = image(icon = 'icons/obj/artifacts/keys.dmi', loc = theKey, icon_state = "key_niobium", layer = 20)
+			user << O
 
 
 		..()
@@ -422,14 +422,15 @@
 /obj/machinery/bot/guardbot/soviet
 	name = "Evgeny-12"
 	desc = "A &#x411;&#x420;-86 (&#x411;&#x44b;&#x442;&#x43e;&#x432;&#x43e;&#x439; &#x420;&#x43e&#x431;&#x43e;&#x442;-86), one of the latest in a series of robuddy clones produced in the Eastern Bloc.  They copied the general frame of the PR-3 and never really changed from that, I guess."
-	icon = 'icons/misc/hospital.dmi'
+	icon = 'icons/obj/bots/robuddy/pr-3.dmi'
+	skin_icon_state = "soviet"
 	setup_unique_name = 1
 	setup_no_costumes = 1
 	no_camera = 1
 	setup_charge_maximum = 800
 	setup_default_tool_path = /obj/item/device/guardbot_tool/flash
 	hat_x_offset = 2
-	hat_y_offset = 10
+	hat_y_offset = -2
 	setup_default_startup_task = /datum/computer/file/guardbot_task/soviet
 
 	beacon_freq = 1440
@@ -456,7 +457,7 @@
 		src.task = null
 		src.wakeup_timer = 0
 		src.last_dock_id = null
-		icon_needs_update = 1
+		src.UpdateIcon()
 		if(!warm_boot)
 			src.scratchpad.len = 0
 			src.speak("Bytovoj Robot v6 aktivirovan.")
@@ -485,7 +486,7 @@
 
 		src.invisibility = INVIS_ALWAYS_ISH
 		var/obj/overlay/Ov = new/obj/overlay(T)
-		Ov.anchored = 1
+		Ov.anchored = ANCHORED
 		Ov.name = "Explosion"
 		Ov.layer = NOLIGHT_EFFECTS_LAYER_BASE
 		Ov.pixel_x = -92
@@ -680,6 +681,14 @@
 				awaiting_beacon = 0
 				patrol_delay = 5
 		return
+
+/obj/machinery/guardbot_dock/soviet
+	desc = "A recharging and command station for Soviet robuddy clones.  Could probably also work with regular robuddies."
+	autoeject = 3
+
+	New()
+		src.UpdateOverlays(image('icons/misc/hospital.dmi', icon_state = "charger_skin-soviet"), "skin")
+		. = ..()
 
 #undef SB_SAW_BUD
 #undef SB_SOLARIUM

@@ -9,7 +9,7 @@
 	var/extratoggle = 0
 	var/popuptoggle = 0
 	var/servertoggles_toggle = 0
-	var/animtoggle = 1
+	var/disable_atom_verbs = 1
 	var/attacktoggle = 1
 	var/ghost_respawns = 1
 	var/adminwho_alerts = 1
@@ -33,12 +33,17 @@
 	var/show_topic_log = FALSE
 	var/priorRank = null
 	var/audit = AUDIT_ACCESS_DENIED
+	var/ghost_interaction = FALSE //! if toggled on then the admin ghost can interact with things
 
 	var/static/list/admin_interact_verbs
 	var/static/list/admin_interact_atom_verbs
 
 	var/datum/filter_editor/filteriffic = null
 	var/datum/particle_editor/particool = null
+	var/datum/color_matrix_editor/color_matrix_editor = null
+	var/datum/centcomviewer/centcomviewer = null
+	var/datum/bioeffectmanager/bioeffectmanager = null
+	var/datum/abilitymanager/abilitymanager = null
 
 	var/list/hidden_categories = null
 
@@ -53,7 +58,7 @@
 				C.chatOutput.getContextFlag()
 				src.load_admin_prefs()
 
-		if (!admin_interact_atom_verbs || admin_interact_atom_verbs.len <= 0)
+		if (!admin_interact_atom_verbs || length(admin_interact_atom_verbs) <= 0)
 			admin_interact_atom_verbs = list(\
 			"Spin",\
 			"Rotate",\
@@ -61,7 +66,7 @@
 			"Emag",\
 			)
 
-		if (!admin_interact_verbs || admin_interact_verbs.len <= 0)
+		if (!admin_interact_verbs || length(admin_interact_verbs) <= 0)
 			admin_interact_verbs = list()
 			admin_interact_verbs["obj"] = list(\
 			"Get Thing",\
@@ -74,7 +79,8 @@
 			"Possess",\
 			"Create Poster",\
 			"Copy Here",\
-			"Ship to Cargo"\
+			"Ship to Cargo",\
+			"Set Material",\
 			)
 			admin_interact_verbs["mob"] = list(\
 			"Player Options",\
@@ -105,11 +111,13 @@
 			"Transfer Client To",\
 			"Shamecube",\
 			"Create Poster",\
-			"Ship to Cargo"\
+			"Ship to Cargo",\
+			"Set Material",\
 			)
 			admin_interact_verbs["turf"] = list(\
 			"Jump To Turf",\
 			"Air Status",\
+			"Check Reagents",\
 			"Create Explosion",\
 			"Create Fluid",\
 			"Create Smoke",\
@@ -119,7 +127,8 @@
 			"View Variables",\
 			"View Fingerprints",\
 			"Delete",\
-			"Create Poster"\
+			"Create Poster",\
+			"Set Material",\
 			)
 
 
@@ -138,7 +147,7 @@
 			//HTML += "<b>Hide Extra Verbs?: <a href='?src=\ref[src];action=toggle_extra_verbs'>[(src.extratoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Popup Verbs?: <a href='?src=\ref[src];action=toggle_popup_verbs'>[(src.popuptoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Hide Server Toggles Tab?: <a href='?src=\ref[src];action=toggle_server_toggles_tab'>[(src.servertoggles_toggle ? "Yes" : "No")]</a></b><br>"
-		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.animtoggle ? "Yes" : "No")]</a></b><br>"
+		HTML += "<b>Hide Atom Verbs \[old\]?: <a href='?src=\ref[src];action=toggle_atom_verbs'>[(src.disable_atom_verbs ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Attack Alerts?: <a href='?src=\ref[src];action=toggle_attack_messages'>[(src.attacktoggle ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Ghost respawn offers?: <a href='?src=\ref[src];action=toggle_ghost_respawns'>[(src.ghost_respawns ? "Yes" : "No")]</a></b><br>"
 		HTML += "<b>Receive Who/Adminwho alerts?: <a href='?src=\ref[src];action=toggle_adminwho_alerts'>[(src.adminwho_alerts ? "Yes" : "No")]</a></b><br>"
@@ -186,12 +195,13 @@
 			src.owner:toggle_server_toggles_tab()
 		servertoggles_toggle = saved_servertoggles_toggle
 
-		var/saved_animtoggle = AP["animtoggle"]
-		if (isnull(saved_animtoggle))
-			saved_animtoggle = 1
-		if (saved_animtoggle == 0 && animtoggle != 0)
+		//yes the var name makes no sense, but I'm not resetting everyone's prefs for it
+		var/saved_disable_atom_verbs = AP["animtoggle"]
+		if (isnull(saved_disable_atom_verbs))
+			saved_disable_atom_verbs = 1
+		if (saved_disable_atom_verbs == 0 && disable_atom_verbs != 0)
 			src.owner:toggle_atom_verbs()
-		animtoggle = saved_animtoggle
+		disable_atom_verbs = saved_disable_atom_verbs
 
 		var/saved_attacktoggle = AP["attacktoggle"]
 		if (isnull(saved_attacktoggle))
@@ -339,7 +349,7 @@
 		AP["auto_alias_global_save"] = auto_alias_global_save
 		AP["popuptoggle"] = popuptoggle
 		AP["servertoggles_toggle"] = servertoggles_toggle
-		AP["animtoggle"] = animtoggle
+		AP["animtoggle"] = disable_atom_verbs
 		AP["attacktoggle"] = attacktoggle
 		AP["rp_word_filtering"] = rp_word_filtering
 		AP["uncool_word_filtering"] = uncool_word_filtering

@@ -178,7 +178,7 @@
 
 		disp_value_change = (cv < current_value) ? 1 : ((cv > current_value) ? -1 : 0)
 		last_value = current_value
-		if (values.len >= 50)
+		if (length(values) >= 50)
 			values.Cut(1,2)
 		values += current_value
 
@@ -253,7 +253,7 @@
 			fluctuate()
 
 	proc/generateBrokers()
-		if (borrow_brokers.len > 2)
+		if (length(borrow_brokers) > 2)
 			return
 		if (!stockExchange.stockBrokers.len)
 			stockExchange.generateBrokers()

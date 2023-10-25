@@ -6,7 +6,7 @@
  */
 
 import { useBackend, useLocalState } from "../backend";
-import { Tooltip, Button, Stack, Tabs, Icon, Box, Section, Dropdown } from "../components";
+import { Box, Button, Dropdown, Icon, Section, Stack, Tabs, Tooltip } from "../components";
 import { Window } from '../layouts';
 
 const FlockPartitions = (props, context) => {
@@ -55,6 +55,11 @@ const FlockPartitions = (props, context) => {
                         </Button>
                       </Stack.Item>
                     )}
+                    <Stack.Item>
+                      <Button onClick={() => act('promote_trace', { 'origin': partition.ref })} >
+                        Promote sentience
+                      </Button>
+                    </Stack.Item>
                     <Stack.Item>
                       <Button onClick={() => act('delete_trace', { 'origin': partition.ref })} >
                         Remove sentience

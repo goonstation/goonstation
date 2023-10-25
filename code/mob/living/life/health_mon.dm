@@ -35,7 +35,7 @@
 						H.health_mon.icon_state = "10"
 					if (-INFINITY to 0) //0
 						H.health_mon.icon_state = "0"
-		if (H.implant_icons)
+		if (H.prodoc_icons)
 			var/has_health = FALSE
 			var/has_cloner = FALSE
 			var/has_other = FALSE
@@ -49,10 +49,15 @@
 				else if (I.scan_category == "other" || I.scan_category == "unknown")
 					has_other = TRUE
 			var/image/I
-			I = H.implant_icons["health"]
+			I = H.prodoc_icons["health"]
 			I.icon_state = has_health ? "implant-health" : null
-			I = H.implant_icons["cloner"]
+			I = H.prodoc_icons["cloner"]
 			I.icon_state = has_cloner ? "implant-cloner" : null
-			I = H.implant_icons["other"]
+			I = H.prodoc_icons["other"]
 			I.icon_state = has_other ? "implant-other" : null
+
+			I = H.prodoc_icons["robotic_organs"]
+			I.icon_state = null
+			if (H.robotic_organs > 0)
+				I.icon_state = "organs-cyber"
 		..()

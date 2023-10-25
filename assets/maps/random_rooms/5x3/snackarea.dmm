@@ -23,9 +23,9 @@
 /area/dmm_suite/clear_area)
 "E" = (
 /obj/storage/crate,
-/obj/critter/roach,
-/obj/critter/roach,
-/obj/critter/roach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
+/mob/living/critter/small_animal/cockroach,
 /turf/simulated/floor/plating/random,
 /area/dmm_suite/clear_area)
 "Q" = (

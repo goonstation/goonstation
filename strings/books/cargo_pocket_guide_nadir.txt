@@ -1,0 +1,63 @@
+<h1>QUARTERMASTER'S COMPENDIUM</h1>
+		<p><i>TRANSCEPTION SYSTEMS BRIEF INCLUDED - FOR NADIR EXTRACTION SITE ONLY - DO NOT REPRODUCE</i></p>
+		<p><i>Original compiled for Nanotrasen by Servin Underwriting, LTD - (C) 2048 All Rights Reserved</i></p>
+		<h2>YOUR DUTIES</h2>
+		<br>
+		<hr>
+		<h3>OPERATE THE TRANSCEPTION ARRAY</h3>
+		<br>
+		As you are stationed at the Nadir Extraction Site, the conventional mass-driver cargo system used by most other Nanotrasen facilities is unavailable due to the corrosive conditions on-site. Cargo is instead sent and received by transception array.
+		<br>
+		<br>
+		Transception pads and interlink computers are provided to you for the operation of the transception array. Pads must be directly linked by contiguous cable line to the array; interlink computers connect to the pads wirelessly.
+		<br>
+		<br>
+		<b>To send cargo,</b> load your shipment onto one of the available transception pads, and instruct it to Send using a transception interlink. After a brief delay, the pad will instantaneously export it for sale.
+		<br>
+		<br>
+		<b>To receive cargo,</b> select an unobstructed pad and instruct it to Receive using a transception interlink. If more than one type of shipment is available, you will be prompted to select the shipment to receive.
+		<br>
+		<br>
+		<b>STAND CLEAR OF THE PAD WHILE IT IS OPERATING.</b>
+		<br>
+		<br>
+		Please be aware that each transception requires a considerable amount of activation energy, and high-volume transception may cause the array's automated power-loss failsafe to activate.
+		<br>
+		<br>
+		For more details on the transception array's systems, please consult the guide book located in the control room. Quartermasters are authorized to access aforementioned control room for power systems configuration.
+		<br>
+		<hr>
+		<h3>IMPORT SUPPLIES AS NECESSARY</h3>
+		<br>
+		During the course of a standard shift, departments may require supplies beyond those which have been provided by default.
+		<br>
+		<br>
+		It is advised that you comply with supply requests made through the official supply requisition system, available on PDA and through supply request consoles.
+		<br>
+		<br>
+		Some products are high in popularity, such as the honey production crate for Hydroponics. Be sure to ask if anyone needs anything, and encourage them to use the supply request system.
+		<br>
+		<hr>
+		<h3>EXPORT ONBOARD PRODUCTS</h3>
+		<br>
+		As the shift progresses, one or more departments are likely to ready exports. It is your task to sell these to appropriate buyers.
+		<br>
+		<br>
+		To sell products to a specific trader, use your bar code computer to print a label indicating a crate for sale to said trader. Place this label on the exterior of the closed crate prior to outbound transception.
+		<br>
+		<br>
+		Available traders rotate over time, and it is recommended to check the listing of available traders each market cycle.
+		<br>
+		<br>
+		You may also sell goods directly to the primary market by not applying a label.
+		<br>
+		<br>
+		Advanced quartermasters may also seek to manufacture, or ask for the manufacture of, goods currently in demand by market traders to earn profit.
+		<br>
+		It is advised that you consult with the Captain or Head of Personnel before investing considerable amounts of the supply budget into profit-driven endeavors.
+		<br>
+		<hr>
+		<p><i>For further information, ask for mentor help or consult Nanotrasen's on-line data-base at:
+		<ul>
+			<li><a href="https://wiki.ss13.co/Quartermaster" target="Goonstation Wiki: Quartermaster">https://wiki.ss13.co/Quartermaster</a></li></ul>
+		Thank you for your service to Nanotrasen.</i></p>

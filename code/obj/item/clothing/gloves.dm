@@ -33,6 +33,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	var/overridespecial = 0
 	var/datum/item_special/specialoverride = null
 
+	///which hands is this glove on. So that we don't have a dozen blank iconstate in wear images for rings/etc. that are only on one side
+	var/which_hands = GLOVE_HAS_LEFT | GLOVE_HAS_RIGHT
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 3)
@@ -90,7 +93,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 			target.visible_message(
 				"<span class='alert'><b>[challenger]</b> slaps [target] in the face with the [src]!</span>"
 			)
-		playsound(target, 'sound/impact_sounds/Generic_Snap_1.ogg', 100, 1)
+		playsound(target, 'sound/impact_sounds/Generic_Snap_1.ogg', 100, TRUE)
 
 	attackby(obj/item/W, mob/user)
 		if (istype(W, /obj/item/cable_coil))
@@ -167,7 +170,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		return data
 
 	proc/special_attack(var/mob/target, var/mob/living/user)
-		boutput(usr, "Your gloves do nothing special")
+		boutput(user, "Your gloves do nothing special")
 		return
 
 	proc/setSpecialOverride(var/type = null, master = null, active = 1)
@@ -185,7 +188,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 		src.overridespecial = active
 		S.onAdd()
 		src.specialoverride = S
-		src.tooltip_rebuild = true;
+		src.tooltip_rebuild = TRUE
 		return S
 
 
@@ -368,6 +371,8 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 /obj/item/clothing/gloves/swat/knight
 	name = "combat gauntlets"
 	desc = "Heavy-duty combat gloves that help you keep hold of your weapon."
+	icon_state = "combatgauntlets"
+	item_state = "swat_syndie"
 
 	setupProperties()
 		..()
@@ -378,7 +383,25 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	icon_state = "swat_NT"
 	item_state = "swat_NT"
 
-/obj/item/clothing/gloves/stungloves/
+/obj/item/clothing/gloves/swat/captain
+	name = "captain's gloves"
+	desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
+	icon_state = "capgloves"
+	item_state = "capgloves"
+
+	centcomm
+		name = "commander's gloves"
+		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
+		icon_state = "centcomgloves"
+		item_state = "centcomgloves"
+
+	centcommred
+		name = "commander's gloves"
+		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
+		icon_state = "centcomredgloves"
+		item_state = "centcomredgloves"
+
+/obj/item/clothing/gloves/stungloves
 	name = "stun gloves"
 	desc = "These gloves are electrically charged."
 	icon_state = "stun"
@@ -490,13 +513,42 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 	nodescripition = TRUE
 
+	custom_suicide = TRUE
+	suicide_in_hand = FALSE
+
+	get_help_message(dist, mob/user)
+		var/keybind = "Default: CTRL + Z"
+		var/datum/keymap/current_keymap = user.client.keymap
+		for (var/key in current_keymap.keys)
+			if (current_keymap.keys[key] == "snap")
+				keybind = current_keymap.unparse_keybind(key)
+				break
+		return {"While wearing the gloves, use the <b>*snap</b> ([keybind]) emote to deploy/retract the blades."}
+
+	suicide(mob/living/carbon/human/user)
+		if (!istype(user) || !src.user_can_suicide(user) || user.gloves != src)
+			return FALSE
+		if (!src.deployed)
+			src.sheathe_blades_toggle(user)
+			user.update_clothing()
+		user.visible_message("<span class='alert'>[user] crosses the blades of [his_or_her(user)] gloves across [his_or_her(user)] neck...</span>",
+			"<span class='alert'>You cross the blades of your gloves across your neck...</span>")
+		src.cant_self_remove = TRUE
+		SPAWN(3 SECONDS)
+			src.cant_self_remove = FALSE
+			user.drop_organ("head", get_turf(user))
+			user.visible_message("<span class='alert'>[user] slices [his_or_her(user)] head clean off! Holy shit!</span>", "<span class='alert'>You slice your head clean off!</span>")
+			playsound(get_turf(user), 'sound/impact_sounds/Flesh_Cut_1.ogg', 70, 1)
+			take_bleeding_damage(user, user, 200, DAMAGE_CUT, TRUE, get_turf(user))
+			user.spread_blood_clothes(user)
+			user.death()
+
 	special_attack(mob/living/target, mob/living/user)
 		if(check_target_immunity( target ))
 			return 0
 		logTheThing(LOG_COMBAT, user, "slashes [constructTarget(target,"combat")] with hand blades at [log_loc(user)].")
-		var/obj/item/affecting = target.get_affecting(user)
-		var/datum/attackResults/msgs = user.calculate_melee_attack(target, affecting, 16, 16, 0, 0.8, 0)
-		user.attack_effects(target, affecting)
+		var/datum/attackResults/msgs = user.calculate_melee_attack(target, 16, 16, 0, 0.8, 0, can_punch = 0, can_kick = 0)
+		user.attack_effects(target, user.zone_sel?.selecting)
 		var/action = pick("stab", "slashe")
 		msgs.base_attack_message = "<b><span class='alert'>[user] [action]s [target] with their hand blades!</span></b>"
 		msgs.played_sound = 'sound/impact_sounds/Blade_Small_Bloody.ogg'
@@ -559,6 +611,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	can_be_charged = 1 // Quite pointless, but could be useful as a last resort away from powered wires? Hell, it's a traitor item and can get the buff (Convair880).
 	max_uses = 10
 	flags = HAS_EQUIP_CLICK
+	HELP_MESSAGE_OVERRIDE({"While standing on a powered wire, click on a tile far away while on <span class='disarm'>disarm</span> intent to non-lethally stun, or on <span class='harm'>harm</span> item to shoot out dangerous lightning. The lightning's power is directly linked to the power in the wire."})
 
 	var/spam_flag = 0
 
@@ -605,7 +658,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 
 			var/list/dummies = new/list()
 
-			playsound(user, 'sound/effects/elec_bigzap.ogg', 40, 1)
+			playsound(user, 'sound/effects/elec_bigzap.ogg', 40, TRUE)
 
 			SEND_SIGNAL(user, COMSIG_MOB_CLOAKING_DEVICE_DEACTIVATE)
 
@@ -637,7 +690,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 					logTheThing(LOG_COMBAT, user, "zaps [constructTarget(target_r,"combat")] with power gloves")
 					switch(user.a_intent)
 						if("harm")
-							src.electrocute(victim, 100, netnum)
+							src.electrocute(victim, 100, netnum, ignore_range = TRUE)
 							if(uses)
 								victim.shock(src, 1000 * uses, victim.hand == LEFT_HAND ? "l_arm": "r_arm", 1)
 								uses--
@@ -729,6 +782,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	cant_other_remove = 1
 	abilities = list()
 	ability_buttons = list()
+	which_hands = GLOVE_HAS_LEFT
 
 	setupProperties()
 		..()

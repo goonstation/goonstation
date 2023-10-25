@@ -9,7 +9,7 @@ const relayedTypes = [
 ];
 
 export const relayMiddleware = store => {
-  const devServer = require('tgui-dev-server/link/client');
+  const devServer = require('tgui-dev-server/link/client.cjs');
   const externalBrowser = location.search === '?external';
   let initialized = false;
   if (externalBrowser) {

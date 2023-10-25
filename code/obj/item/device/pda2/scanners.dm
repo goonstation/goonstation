@@ -64,10 +64,10 @@
 		name = "Reagent Scan"
 		size = 6
 
-		scan_atom(atom/A as mob|obj|turf|area)
+		scan_atom(atom/A)
 			if (..())
 				return
-			. = scan_reagents(A, visible = 1)
+			. = scan_reagents(A, visible = TRUE)
 
 	//Plant scanner
 	plant_scan
@@ -119,7 +119,8 @@
 			var/datum/computer/file/electronics_scan/theScan = new
 			theScan.scannedName = initial(O.name)
 			theScan.scannedPath = O.mechanics_type_override ? O.mechanics_type_override : O.type
-			theScan.scannedMats = O.mats
+			var/typeinfo/obj/typeinfo = O.get_typeinfo()
+			theScan.scannedMats = typeinfo.mats
 
 			var/datum/signal/signal = get_free_signal()
 			signal.source = src.master
@@ -165,6 +166,26 @@
 			var/mob/living/carbon/C = A
 
 			. = scan_secrecord(src.master, C, visible = 1)
+
+	material_scan
+		name = "Material Scanner"
+		size = 2
+
+		scan_atom(atom/A as mob|obj|turf|area)
+			if(..())
+				return
+
+			if(!A.material)
+				. = "No significant material found in \the [A]."
+				return
+
+			. = "<u>[capitalize(A.material.getName())]</u><br>[A.material.getDesc()]<br><br>"
+			if (length(A.material.getMaterialProperties()))
+				for(var/datum/material_property/mat in A.material.getMaterialProperties())
+					var/value = A.material.getProperty(mat.id)
+					. += "• [mat.getAdjective(A.material)] ([value])<br>"
+			else
+				. += "The material is completely unremarkable."
 
 /datum/computer/file/electronics_scan
 	name = "scanfile"

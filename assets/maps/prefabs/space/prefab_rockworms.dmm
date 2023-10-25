@@ -1,0 +1,47 @@
+//MAP CONVERTED BY dmm2tgm.py THIS HEADER COMMENT PREVENTS RECONVERSION, DO NOT REMOVE
+"g" = (
+/turf/variableTurf/floor,
+/area/noGenerate)
+"l" = (
+/mob/living/critter/rockworm,
+/turf/variableTurf/floor,
+/area/noGenerate)
+"z" = (
+/turf/variableTurf/clear,
+/area/allowGenerate)
+
+(1,1,1) = {"
+z
+z
+g
+z
+z
+"}
+(2,1,1) = {"
+z
+l
+l
+l
+z
+"}
+(3,1,1) = {"
+g
+l
+l
+l
+g
+"}
+(4,1,1) = {"
+z
+l
+l
+l
+z
+"}
+(5,1,1) = {"
+z
+z
+g
+z
+z
+"}

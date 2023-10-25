@@ -4,6 +4,7 @@
 	var/for_sale = FALSE
 	var/type_path = /obj/item/raw_material
 	var/list/stats = list()
+	var/amount_sold = 0
 
 /obj/machinery/ore_cloud_storage_container
 	name = "Rockbox™ Ore Cloud Storage Container"
@@ -11,7 +12,7 @@
 	icon = 'icons/obj/mining_cloud_storage.dmi'
 	icon_state = "ore_storage_unit"
 	density = TRUE
-	anchored = TRUE
+	anchored = ANCHORED
 	event_handler_flags = USE_FLUID_ENTER | NO_MOUSEDROP_QOL
 
 	var/list/datum/ore_cloud_data/ores = list()
@@ -104,7 +105,7 @@
 			var/amtload = 0
 			var/rejected = 0
 			for (var/obj/item/raw_material/M in dropped.contents)
-				if(M.material?.name != M.initial_material_name)
+				if(M.material?.getName() != M.initial_material_name)
 					rejected += M.amount
 					continue
 				amtload += M.amount
@@ -124,11 +125,11 @@
 		src.updateUsrDialog()
 
 	proc/quickload(var/mob/living/user,var/obj/item/O)
-		if (!user || !O)
+		if (!user || QDELETED(O))
 			return
 		if(istype(O,/obj/item/raw_material/))
 			var/obj/item/raw_material/R = O
-			if(R.material?.name != R.initial_material_name)
+			if(R.material?.getName() != R.initial_material_name)
 				boutput(user, "<span class='alert'>[src] rejects the anomalous ore.</span>")
 				return
 		else
@@ -137,23 +138,28 @@
 		user.visible_message("<span class='notice'>[user] begins quickly stuffing [O] into [src]!</span>")
 		var/staystill = user.loc
 		for(var/obj/item/raw_material/M in view(1,user))
-			if (!M)
+			if (QDELETED(M) || QDELETED(O))
+				continue
+			if (M == O)
 				continue
 			if (M.type != O.type)
 				continue
-			if(!isSameMaterial(O.material,M.material))
+			if(!O.material.isSameMaterial(M.material))
 				continue
-			if(M.material?.name != M.initial_material_name)
+			if(M.material?.getName() != M.initial_material_name)
 				continue
 			if (O.loc == user)
 				continue
 			if (O in user.contents)
 				continue
 			src.load_item(M)
-			M.set_loc(src)
-			playsound(src, sound_load, 40, 1)
+			playsound(src, sound_load, 40, TRUE)
 			sleep(0.5)
 			if (user.loc != staystill) break
+		//we stuff the item we clickdragged with last so we keep all the information we want to reference during the stuffing process
+		if (!QDELETED(O))
+			src.load_item(O)
+			playsound(src, sound_load, 40, TRUE)
 		boutput(user, "<span class='notice'>You finish stuffing [O] into [src]!</span>")
 		return
 
@@ -167,7 +173,7 @@
 
 		if (istype(W, /obj/item/raw_material/) && src.accept_loading(user))
 			var/obj/item/raw_material/R = W
-			if(R.material?.name != R.initial_material_name)
+			if(R.material?.getName() != R.initial_material_name)
 				boutput(user, "<span class='alert'>[src] rejects the anomalous ore.</span>")
 				return
 			user.visible_message("<span class='notice'>[user] loads [W] into the [src].</span>", "<span class='notice'>You load [W] into the [src].</span>")
@@ -178,11 +184,12 @@
 			var/amtload = 0
 			for (var/obj/item/loading in W.contents)
 				var/obj/item/raw_material/R = loading
-				if (R.material?.name != R.initial_material_name)
+				if (R.material?.getName() != R.initial_material_name)
 					continue
 				src.load_item(R, user)
 				amtload++
 			satchel.UpdateIcon()
+			satchel.tooltip_rebuild = 1
 			if (amtload)
 				boutput(user, "<span class='notice'>[amtload] materials loaded from [satchel]!</span>")
 			else
@@ -201,8 +208,7 @@
 	proc/load_item(var/obj/item/raw_material/R,var/mob/living/user)
 		if (!R)
 			return
-		R.set_loc(src)
-		if (user && R)
+		if (user)
 			user.u_equip(R)
 			R.dropped(user)
 		add_ore_amount(R.material_name,R.amount,R)
@@ -243,7 +249,7 @@
 			return "no properties"
 		if (istype(mat, /datum/material/crystal/gemstone)) return "varied levels of hardness and density"
 		var/list/stat_list = list()
-		for(var/datum/material_property/stat in mat.properties)
+		for(var/datum/material_property/stat in mat.getMaterialProperties())
 			stat_list += stat.getAdjective(mat)
 		if (!stat_list.len) return "no properties"
 		return stat_list.Join(", ")
@@ -273,11 +279,13 @@
 		var/datum/ore_cloud_data/OCD = ores[material_name]
 		if(OCD)
 			amount_ejected = min(ejectamt, OCD.amount)
+			if (transmit)
+				OCD.amount_sold += amount_ejected
 			for(var/i in 1 to amount_ejected)
 				var/obj/item/raw_material/ore = new OCD.type_path(src)
 				ore.removeMaterial()
-				ore.setMaterial(OCD.stats[length(OCD.stats)], (lowertext(ore.initial_material_name) != lowertext(ore.material_name)), (lowertext(ore.initial_material_name) != lowertext(ore.material_name)), FALSE) //for the most part, this will only affect gemstones by preserving their type, but also quality
-				ore.initial_material_name = ore.material.name
+				ore.setMaterial(OCD.stats[length(OCD.stats)], TRUE, (lowertext(ore.initial_material_name) != lowertext(ore.material_name)), FALSE) //for the most part, this will only affect gemstones by preserving their type, but also quality
+				ore.initial_material_name = ore.material.getName()
 				OCD.stats.Cut(length(OCD.stats))
 				ore.set_loc(eject_location)
 				OCD.amount--
@@ -337,7 +345,8 @@
 				"amount" = OCD.amount,
 				"price" = OCD.price,
 				"forSale" = OCD.for_sale,
-				"stats" = length(OCD.stats) ? src.human_readable_ore_properties(OCD.stats[length(OCD.stats)]) : ""
+				"stats" = length(OCD.stats) ? src.human_readable_ore_properties(OCD.stats[length(OCD.stats)]) : "",
+				"amountSold" = OCD.amount_sold
 			))
 
 		. = list(
