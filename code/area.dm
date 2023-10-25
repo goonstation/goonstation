@@ -795,6 +795,7 @@ ABSTRACT_TYPE(/area/shuttle)
 	force_fullbright = 0
 	sound_group = "ice_moon"
 	area_parallax_render_source_group = /datum/parallax_render_source_group/area/ice_moon
+	occlude_foreground_parallax_layers = TRUE
 
 /area/shuttle/icebase_elevator/lower
 	name = "Chasm Lift Lower Section"
