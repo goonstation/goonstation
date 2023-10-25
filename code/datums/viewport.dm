@@ -118,7 +118,7 @@
 	proc/followed_turf_changed(atom/thing, turf/old_turf, turf/new_turf)
 		var/turf/T = null
 		for(var/i = round(max(width, height) / 2), i >= 0 || !new_turf, i--)
-			T = locate(new_turf.x - i, new_turf.y + i - 1, new_turf.z)
+			T = locate(new_turf.x - i, new_turf.y + i + 1, new_turf.z)
 			if(T) break
 		if(!T)
 			T = old_turf
