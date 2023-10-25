@@ -1278,7 +1278,7 @@ proc/outermost_movable(atom/movable/target)
 		// this turf is being shown elsewhere through a visual mirror, make sure they get to hear too
 		. |= all_hearers(range, T.vistarget)
 
-	for(var/atom/movable/screen/viewport_handler/viewport_handler in T.vis_locs)
+	for(var/atom/movable/screen/viewport_handler/viewport_handler in T?.vis_locs)
 		if(viewport_handler.listens)
 			. |= viewport_handler.viewer.mob
 

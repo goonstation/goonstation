@@ -36,6 +36,7 @@ var/list/admin_verbs = list(
 		/client/proc/cmd_admin_playermode,
 		/client/proc/cmd_create_viewport,
 		/client/proc/cmd_create_viewport_silent,
+		/client/proc/cmd_create_viewport_following,
 
 		/datum/admins/proc/announce,
 		/datum/admins/proc/toggleooc,
