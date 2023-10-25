@@ -2789,7 +2789,7 @@ var/list/mob_bird_species = list("smallowl" = /mob/living/critter/small_animal/b
 	density = TRUE
 	speechverb_say = "oinks"
 	speechverb_exclaim = "squeals"
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
 	name_the_meat = FALSE
 
 	ai_type = /datum/aiHolder/aggressive // Worry not they will only attack mice
