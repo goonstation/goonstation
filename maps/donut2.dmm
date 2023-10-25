@@ -25833,6 +25833,12 @@
 	icon_state = "0-2"
 	},
 /obj/machinery/light/incandescent,
+/obj/machinery/camera{
+	c_tag = "autotag";
+	dir = 8;
+	name = "autoname - SS13";
+	tag = ""
+	},
 /turf/simulated/floor/plating,
 /area/station/engine/ptl)
 "geo" = (
@@ -32920,12 +32926,6 @@
 /area/station/bridge)
 "lmg" = (
 /obj/machinery/light_switch/east,
-/obj/machinery/camera{
-	c_tag = "autotag";
-	dir = 8;
-	name = "autoname - SS13";
-	tag = ""
-	},
 /obj/item/device/radio/intercom/engineering{
 	dir = 8
 	},
