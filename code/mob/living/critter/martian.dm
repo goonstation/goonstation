@@ -215,18 +215,18 @@
 
 	New()
 		..()
-		abilityHolder.addAbility(/datum/targetable/critter/gibstare)
+		abilityHolder.addAbility(/datum/targetable/critter/radiationblast)
 		abilityHolder.addAbility(/datum/targetable/critter/telepathy)
 
 	critter_attack(var/mob/target)
-		var/datum/targetable/critter/gibstare/gib = src.abilityHolder.getAbility(/datum/targetable/critter/gibstare)
-		if (!gib.disabled && gib.cooldowncheck())
-			gib.handleCast(target)
+		var/datum/targetable/critter/radiationblast/rads = src.abilityHolder.getAbility(/datum/targetable/critter/radiationblast)
+		if (!rads.disabled && rads.cooldowncheck())
+			rads.handleCast(target)
 			return TRUE
 
 	can_critter_attack()
-		var/datum/targetable/critter/gibstare/gib = src.abilityHolder.getAbility(/datum/targetable/critter/gibstare)
-		return ..() && !gib.disabled
+		var/datum/targetable/critter/radiationblast/rads = src.abilityHolder.getAbility(/datum/targetable/critter/radiationblast)
+		return ..() && !rads.disabled
 
 /mob/living/critter/martian/initiate
 	name = "martian initiate"
