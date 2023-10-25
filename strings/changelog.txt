@@ -1,4 +1,10 @@
 
+(t)wed oct 25 23
+(u)MylieDaniels
+(p)16602
+(e)⚗|A-Chemistry
+(*)Plastic sheets can now be formed with 10 oil, 10 carbon, 20 hydrogen, and 40 chromium. Takes a while!
+(+)Silicon dioxide will prevent chromium from depleting in plastic production, while magnesium dioxide will speed it up and prevent the carbon and hydrogen from fighting. Optimize!
 (t)tue oct 24 23
 (u)pali
 (*)Tracking beacons have a blue indicator light when a teleporter or a poartal is currently pointed at them.
