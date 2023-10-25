@@ -1,9 +1,27 @@
+/atom/movable/screen/viewport_handler
+	name = "Viewport Handler"
+	plane = PLANE_BLACKNESS
+	mouse_opacity = 0
+	var/viewport_kind
+	var/client/viewer
+	var/listens = FALSE
+
+	New(client/viewer, kind)
+		..()
+		src.viewport_kind = kind
+		src.viewer = viewer
+
+	disposing()
+		viewer = null
+		..()
+
+
 /datum/viewport
 	var/global/max_viewport_id = 0
 	var/viewport_id = 0
 	var/clickToMove = 0
 	var/client/viewer
-	var/atom/movable/screen/handler
+	var/atom/movable/screen/viewport_handler/handler
 
 	var/list/planes = list()
 	var/kind
@@ -15,14 +33,12 @@
 		src.viewer = viewer
 		viewport_id = "viewport_[max_viewport_id++]"
 		winclone( viewer, "blank-map", viewport_id )
-		winset( viewer, "[viewport_id]", list2params(list("on-close" = ".viewport-close \"\ref[src]\"", "size" = "256,256")))
+		winset( viewer, "[viewport_id]", list2params(list("on-close" = ".viewport-close \"\ref[src]\"", "size" = "256,256", "title" = "[kind]")))
 		var/style = winget(viewer, "mapwindow.map", "style")
 		var/list/params = list( "parent" = viewport_id, "type" = "map", "pos" = "0,0", "size" = "256,256", "anchor1" = "0,0", "anchor2" = "100,100" )
 		params["style"] = style
 		winset(viewer, "map_[viewport_id]", list2params(params))
-		handler = new
-		handler.plane = PLANE_BLACKNESS
-		handler.mouse_opacity = 0
+		handler = new(viewer, kind)
 		handler.screen_loc = "map_[viewport_id]:1,1"
 		winshow( viewer, viewport_id, 1 )
 		viewer.screen += handler
@@ -106,13 +122,14 @@
 	if(istype(vp) && vp.viewer == src)
 		qdel(vp)
 
-/mob/proc/create_viewport(id)
-	var/list/viewports = client.getViewportsByType(id)
+/mob/proc/create_viewport(kind)
+	RETURN_TYPE(/datum/viewport)
+	var/list/viewports = client.getViewportsByType(kind)
 	if(length(viewports) >= 5)
 		boutput( src, "<b>You can only have up to 5 active viewports. Close an existing viewport to create another.</b>" )
 		return
 
-	var/datum/viewport/vp = new(src.client, id)
+	var/datum/viewport/vp = new(src.client, kind)
 	var/turf/ourPos = get_turf(src)
 	var/turf/startPos = null
 	for(var/i = 4, i >= 0 || !startPos, i--)
@@ -120,6 +137,7 @@
 		if(startPos) break
 	vp.clickToMove = 1
 	vp.SetViewport(startPos, 8, 8)
+	return vp
 
 /mob/living/intangible/aieye/verb/ai_eye_create_viewport()
 	set category = "AI Commands"
@@ -149,4 +167,13 @@
 	set name = "Create Viewport"
 	ADMIN_ONLY
 
-	src.mob.create_viewport("Blob: Viewport")
+	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport")
+	viewport.handler.listens = TRUE
+
+
+/client/proc/cmd_create_viewport()
+	SET_ADMIN_CAT(ADMIN_CAT_SELF)
+	set name = "Create Silent Viewport"
+	ADMIN_ONLY
+
+	var/datum/viewport/viewport = src.mob.create_viewport("Admin: Viewport - Silent")
