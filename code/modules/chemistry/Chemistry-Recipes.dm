@@ -2389,7 +2389,7 @@
 				holder.remove_reagent("silicon_dioxide", created_volume / 5)
 			else
 				holder.remove_reagent("chromium", 4 * created_volume) // super exaggerated catalytic ashing
-			if (holder.has_reagent("magnesium_chloride", 10))
+			if (holder.has_reagent("magnesium_chloride"))
 				reaction_speed = 0.25
 				holder.remove_reagent("magnesium_chloride", created_volume / 5)
 			else
