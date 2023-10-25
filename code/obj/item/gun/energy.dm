@@ -1874,8 +1874,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	var/heat = 0
 	///What step of repair are we on if we have broken? 0 = functional
 	var/heat_repair = 0
-	///What projectile we switch to when update_proj() is called
-	var/lens_proj = /datum/projectile/laser/makeshift
 
 	proc/break_light()
 		if (our_cell)
@@ -1915,10 +1913,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		playsound(src, 'sound/effects/pop.ogg', 50, TRUE)
 		src.icon_state = "makeshift-energy"
 		update_icon()
-
-	proc/update_proj()
-		set_current_projectile(new lens_proj)
-		projectiles = list(current_projectile)
 
 	emp_act()
 		if (our_cell)
@@ -2115,7 +2109,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	w_class = W_CLASS_BULKY // so you cant have 5 almost finished guns in your backpack then finish them in a combat encounter
 
 	tooltip_rebuild = TRUE
-	icon = 'icons/obj/large/64x32.dmi'
+	icon = 'icons/obj/items/guns/energy64x32.dmi'
 	icon_state = "makeshift-construction1"
 	/// Used to display the correct help message.
 	var/state = 0
@@ -2184,7 +2178,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 
 	proc/add_inside_wiring(var/atom/to_combine_atom, var/mob/user)
 		var/obj/item/cable_coil/C = to_combine_atom
-		if (C.amount >= 10) // you need a LOT of wire
+		if (C.amount >= 10)
 			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/makeshift_laser_barrel/proc/finish_add_wire,\
 			list(C,user), C.icon, C.icon_state, "<span class='notice'>[user] attaches wire to the inside of [src].</span>", null)
 			return TRUE
@@ -2247,8 +2241,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		var/obj/item/gun/energy/makeshift/M = new/obj/item/gun/energy/makeshift
 		user.put_in_hand_or_drop(M)
 		M.update_icon()
-		M.lens_proj = lens_proj
-		M.update_proj()
+		M.set_current_projectile(new lens_proj)
 		M.attach_light(our_light, user)
 		qdel(src)
 		return
