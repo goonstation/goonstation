@@ -835,6 +835,7 @@
 	newbody.set_loc(reappear_turf)
 
 	newbody.real_name = src.real_name
+	newbody.faction = src.faction
 
 	// These necessities (organs/limbs/inventory) are bad enough. I don't care about specific damage values etc.
 	// Antag status removal doesn't happen very often (Convair880).
