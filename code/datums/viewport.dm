@@ -16,7 +16,9 @@
 		viewport_id = "viewport_[max_viewport_id++]"
 		winclone( viewer, "blank-map", viewport_id )
 		winset( viewer, "[viewport_id]", list2params(list("on-close" = ".viewport-close \"\ref[src]\"", "size" = "256,256")))
+		var/style = winget(viewer, "mapwindow.map", "style")
 		var/list/params = list( "parent" = viewport_id, "type" = "map", "pos" = "0,0", "size" = "256,256", "anchor1" = "0,0", "anchor2" = "100,100" )
+		params["style"] = style
 		winset(viewer, "map_[viewport_id]", list2params(params))
 		handler = new
 		handler.plane = PLANE_BLACKNESS
