@@ -702,7 +702,7 @@ proc/browse_abcu_blueprints(mob/user, var/window_title = "Blueprints", var/descr
 
 	var/savefile/save = new/savefile("data/blueprints/[picked_ckey]/[inputbp]")
 	if (!save["author"] || !save["roomname"])
-		boutput(user, "Something is wrong with this savefile. Stopping.")
+		boutput(user, "<span class='alert'>Something is wrong with this savefile. Stopping.</span>")
 		return
 	return list("path" = "data/blueprints/[picked_ckey]/[inputbp]", "ckey" = picked_ckey,
 		"file" = inputbp, "author" = save["author"], "roomname" = save["roomname"])
