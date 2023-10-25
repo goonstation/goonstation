@@ -751,6 +751,13 @@ proc/debug_map_apc_count(delim,zlim)
 			else
 				img.app.alpha = 0
 
+		colorful
+			name = "camera coverage (colorful)"
+			GetInfo(turf/theTurf, image/debugoverlay/img)
+				. = ..()
+				// staging this gradient to scale for 1-5 cameras
+				img.app.color = hsv2rgb(clamp(200 - (length(theTurf.camera_coverage_emitters) * 40), 0, 200), 85, 100)
+
 	atmos_pipes
 		name = "atmos pipes"
 		help = {"highlights all atmos machinery<br>pipe color - the pipeline to which it belongs<br>numbers:<br>temperature<br>moles<br>pressure"}
