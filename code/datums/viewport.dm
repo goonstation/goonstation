@@ -218,7 +218,7 @@
 	ADMIN_ONLY
 
 	var/atom/target_atom = pick_ref(src.mob)
-	if(!target_atom)
+	if(!target_atom || isturf(target_atom))
 		boutput(src, "<span class='alert'>No viewport target selected.</span>")
 		return
 
