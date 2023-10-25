@@ -1,7 +1,7 @@
 
 // Very split up so that you, too, can give flockminds more hud elements.
 /datum/hud/flockmind
-	var/atom/movable/screen/hud/relay/relayInfo = null
+	var/atom/movable/screen/hud/relay/relayInfo
 	var/mob/living/intangible/flock/hudOwner
 	var/hud_icon = 'icons/mob/flock_ui.dmi'
 

@@ -68,7 +68,6 @@
 			src.overlays = null
 			src.icon_state = "template-full"
 			return
-
 	src.UpdateIcon()
 
 /atom/movable/screen/hud/relay/MouseEntered(location, control, params)
@@ -95,8 +94,6 @@
 	icon = 'icons/misc/featherzone.dmi'
 	icon_state = "flockmind"
 
-	var/custom_hud_type = /datum/hud/flockmind
-	var/hud
 	var/started = FALSE
 	///Pity respawn max
 	var/max_respawns = 1
@@ -123,8 +120,6 @@
 	else
 		src.started = TRUE
 		src.addAllAbilities()
-	src.hud = new custom_hud_type(src)
-	src.attach_hud(src.hud)
 
 /mob/living/intangible/flock/flockmind/proc/start_tutorial()
 	if (src.tutorial)

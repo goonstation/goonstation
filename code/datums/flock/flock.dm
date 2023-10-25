@@ -802,9 +802,25 @@ proc/get_default_flock()
 			flockmob.AddComponent(/datum/component/tracker_hud/flock, src.center_marker)
 		src.center_marker.alpha = max(0, src.total_compute() - (FLOCK_RELAY_COMPUTE_COST-255))
 
+/// Update the relay icons based off the state of the actual relay
+/datum/flock/proc/relay_hud_process()
+	// There should be a list of ALL minds but i guess this works
+	var/list/all_flockminds = src.trace_minds
+	all_flockminds += src.flockmind_mind
+	for (var/flockthing in all_flockminds)
+		if (isflockmob(flockthing))
+			if (istype(flockthing, /mob/living/intangible/flock))
+				var/mob/living/intangible/flock/flockmob = flockthing
+				flockmob.update_hud_relay()
+			if (istype(flockthing, /mob/living/critter/flock))
+				var/mob/living/critter/flock/flockmob = flockthing
+				flockmob.update_hud_relay()
+				// todo gui on critters
+
 /datum/flock/proc/process()
 	if (src.relay_allowed)
 		src.relay_process()
+		src.relay_hud_process()
 
 	for(var/datum/unlockable_flock_structure/ufs as anything in src.unlockableStructures)
 		ufs.process()

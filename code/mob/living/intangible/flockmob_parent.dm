@@ -22,6 +22,9 @@
 	var/afk_counter = 0
 	var/turf/previous_turf = null
 
+	var/custom_hud_type = /datum/hud/flockmind
+	var/hud
+
 /mob/living/intangible/flock/New()
 	..()
 	src.appearance_flags |= NO_CLIENT_COLOR
@@ -37,6 +40,8 @@
 	//src.render_special.set_centerlight_icon("flockvision", "#09a68c", BLEND_OVERLAY, PLANE_FLOCKVISION, alpha=196)
 	//src.render_special.set_widescreen_fill(color="#09a68c", plane=PLANE_FLOCKVISION, alpha=196)
 	src.previous_turf = get_turf(src)
+	src.hud = new custom_hud_type(src)
+	src.attach_hud(src.hud)
 
 /mob/living/intangible/flock/Login()
 	..()
@@ -292,3 +297,7 @@
 			src.set_loc(get_turf(origin))
 			if (href_list["ping"])
 				origin.AddComponent(/datum/component/flock_ping)
+
+/mob/living/intangible/flock/proc/update_hud_relay()
+	var/datum/hud/flockmind/flockhud = src.hud
+	flockhud.relayInfo.update_value()
