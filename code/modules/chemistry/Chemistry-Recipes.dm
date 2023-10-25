@@ -2352,12 +2352,12 @@
 		name = "hydrogen_carbon_dissolving"
 		id = "hydrogen_carbon_dissolving"
 		required_reagents = list("carbon" = 1, "hydrogen" = 1)
-		inhibitors = list("fuel") //keep welding fuel to keep making oil
+		inhibitors = list("fuel", "magnesium_chloride" = 5) //keep welding fuel to keep cooking oil/plastic or magnesium chloride for better plasticmaking
 		hidden = TRUE
 		instant = FALSE
-		reaction_speed = 2 //very very slow by default, but much faster with heat
+		reaction_speed = 2
 		result_amount = 1
-		mix_phrase = "The mixture begins vibrate and dissolve quickly."
+		mix_phrase = "The mixture begins to vibrate and dissolve quickly."
 
 		on_reaction(var/datum/reagents/holder)
 			holder.physical_shock(rand(2, 6))
@@ -2367,6 +2367,39 @@
 				return FALSE
 			else
 				return TRUE
+
+	polyethylene // behold as i mangle the Zeigler-Natta process (technically its using a Phillips catalyst but uh)
+		name = "Polyethylene Plastic"
+		id = "polyethylene"
+		required_reagents = list("carbon" = 1, "hydrogen" = 2, "oil" = 1, "chromium" = 0)
+		instant = FALSE
+		stateful = TRUE
+		hidden = TRUE
+		result_amount = 1
+		reaction_speed = 0.05
+		mix_phrase = "The mixture slowly froths into granules of solid plastic."
+		reaction_icon_state = list("reaction_puff-1", "reaction_puff-2")
+		mix_sound = 'sound/misc/drinkfizz.ogg'
+		reaction_icon_color = "#8c866d"
+		var/count = 0
+
+		on_reaction(datum/reagents/holder, created_volume)
+			count += created_volume
+			if (holder.has_reagent("silicon_dioxide")) // prevent catalyst ashing with a support
+				holder.remove_reagent("silicon_dioxide", created_volume / 5)
+			else
+				holder.remove_reagent("chromium", 4 * created_volume) // super exaggerated catalytic ashing
+			if (holder.has_reagent("magnesium_chloride"))
+				reaction_speed = 0.25
+				holder.remove_reagent("magnesium_chloride", created_volume / 5)
+			else
+				reaction_speed = 0.05
+			if (count >= 10)
+				count -= 10
+				var/location = get_turf(holder.my_atom) || pick(holder.covered_cache)
+				for(var/mob/M in AIviewers(null, location))
+					boutput(M, "<span class='notice'>The plastic clumps together in a messy sheet.</span>")
+				new /obj/item/material_piece/rubber/plastic(location)
 
 	hemodissolve // denaturing hemolymph
 		name = "Copper"
