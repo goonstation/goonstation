@@ -16,18 +16,17 @@
 	icon_state = "structure-relay"
 	screen_loc = "NORTH, EAST-1"
 	alpha = 100
-	var/mob/living/intangible/flock/owner
+	var/datum/flock/F = null
 	/// Helps control the iconstate
 	var/stage = STAGE_UNBUILT
 
-	New(var/mob/living/intangible/flock/F)
+	New(var/datum/flock/F)
 		..()
 		var/image/under_relay = new(src.icon, icon_state = "template-full")
 		src.underlays += under_relay
-		src.owner = F
 
 /atom/movable/screen/hud/relay/proc/getDesc()
-	var/datum/flockstats/flock_stats = src.owner.flock.stats
+	var/datum/flockstats/flock_stats = src.F.stats
 	var/pct_compute = min(100, round(flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST * 100))
 	var/pct_tiles = min(100, round(flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT * 100))
 	var/pct_total = round((((pct_compute / 100) * (pct_tiles / 100)) * 100))
@@ -35,21 +34,25 @@
 
 /// Update everything about the icon
 /atom/movable/screen/hud/relay/proc/update_value()
-	var/datum/flockstats/flock_stats = src.owner.flock.stats
+	if (!src.F)
+		// WARN: relay icon for src.master.hudOwner had no flock provided, setting now
+		//src.F = src.master.hudOwner.flock
+		return
+	var/datum/flockstats/flock_stats = src.F.stats
 	src.desc = src.getDesc()
 	// This is probably bad but the gist of it is to update with the relay
-	if (!src.owner.flock.relay_in_progress)
+	if (!src.F.relay_in_progress)
 		var/pct_compute = flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST
 		var/pct_tiles = flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT
 		src.alpha = 100 + (155 * pct_compute * pct_tiles)
 		src.update_icon_state()
-	else if (src.owner.flock.time_left > 60)
+	else if (src.F.time_left > 60)
 		src.stage = STAGE_BUILT
 		src.update_icon_state()
-	else if (src.owner.flock.time_left > 0)
+	else if (src.F.time_left > 0)
 		src.stage = STAGE_CRITICAL
 		src.update_icon_state()
-	else if (src.owner.flock.relay_finished)
+	else if (src.F.relay_finished)
 		src.stage = STAGE_DESTROYED
 		src.update_icon_state()
 
@@ -102,11 +105,11 @@
 
 
 /mob/living/intangible/flock/flockmind/New(turf/newLoc, datum/flock/F = null)
+	src.flock = F || new /datum/flock()
 	..()
 
 	src.abilityHolder = new /datum/abilityHolder/flockmind(src)
 
-	src.flock = F || new /datum/flock()
 	src.real_name = "Flockmind [src.flock.name]"
 	src.name = src.real_name
 	if(src.flock.name == "ba.ba") //this easteregg used with permission from Hempuli. Thanks Hempuli!

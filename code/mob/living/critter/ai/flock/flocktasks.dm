@@ -624,7 +624,7 @@ stare
 /datum/aiTask/succeedable/rummage/succeeded()
 	var/obj/item/storage/container_target = holder.target
 	var/mob/living/critter/flock/drone/F = holder.owner
-	if(container_target) // fix runtime Cannot read null.contents
+	if(container_target && container_target.storage) // fix runtime Cannot read null.contents
 		return !length(container_target.storage.get_contents()) || (F.absorber.item == container_target)
 
 	else

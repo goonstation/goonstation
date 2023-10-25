@@ -804,18 +804,14 @@ proc/get_default_flock()
 
 /// Update the relay icons based off the state of the actual relay
 /datum/flock/proc/relay_hud_process()
-	// There should be a list of ALL minds but i guess this works
-	var/list/all_flockminds = src.trace_minds
-	all_flockminds += src.flockmind_mind
-	for (var/flockthing in all_flockminds)
-		if (isflockmob(flockthing))
-			if (istype(flockthing, /mob/living/intangible/flock))
-				var/mob/living/intangible/flock/flockmob = flockthing
-				flockmob.update_hud_relay()
-			if (istype(flockthing, /mob/living/critter/flock))
-				var/mob/living/critter/flock/flockmob = flockthing
-				flockmob.update_hud_relay()
-				// todo gui on critters
+	// There should be a list of ALL active players but i guess this works
+	var/list/all_flock_players = src.traces
+	all_flock_players += src.flockmind
+	for (var/mob/living/intangible/flock/flock_intangible as anything in all_flock_players)
+		flock_intangible.update_hud_relay()
+		if (istype(flock_intangible.loc, /mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/flockdrone = flock_intangible.loc
+			flockdrone.update_hud_relay()
 
 /datum/flock/proc/process()
 	if (src.relay_allowed)
