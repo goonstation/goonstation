@@ -1511,7 +1511,7 @@ ABSTRACT_TYPE(/obj/item/podarmor)
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
 			src.set_dir(map_settings ? map_settings.escape_dir : SOUTH)
-			P.target = T
+			P.set_target(T)
 			src.set_loc(T)
 			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")
 
