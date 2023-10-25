@@ -171,7 +171,7 @@
 	viewport.handler.listens = TRUE
 
 
-/client/proc/cmd_create_viewport()
+/client/proc/cmd_create_viewport_silent()
 	SET_ADMIN_CAT(ADMIN_CAT_SELF)
 	set name = "Create Silent Viewport"
 	ADMIN_ONLY
