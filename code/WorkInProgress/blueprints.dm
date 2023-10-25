@@ -546,10 +546,10 @@ proc/save_abcu_blueprint(mob/user, list/turf_list, var/use_whitelist = TRUE)
 	save.cd = "/"
 	if (save["sizex"] || save["sizey"]) // if it exists, and has data in it, ALERT!
 		if (tgui_alert(user, "A blueprint file named [input_sanitized] already exists. Really overwrite?",
-			"Overwrite Blueprint", list("Yes", "No")) == "No")
-			return
-		fdel("[savepath]")
-		save = new/savefile("[savepath]")
+			"Overwrite Blueprint", list("Yes", "No")) == "Yes")
+			fdel("[savepath]")
+			save = new/savefile("[savepath]")
+		else return
 
 	var/minx = 100000000
 	var/miny = 100000000
@@ -711,11 +711,10 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 	var/picked = browse_abcu_blueprints(user, "Delete Blueprint", "Delete one of these blueprints?", browse_all_users)
 	if (!picked) return
 	if (fexists(picked["path"]))
-		if (tgui_alert(user, "Really delete [picked["file"]]?", "Blueprint Deletion", list("Yes", "No")) == "No")
-			return
-		fdel(picked["path"])
-		boutput(user, "<span class='alert'>Blueprint [picked["file"]] deleted.</span>")
-		return picked
+		if (tgui_alert(user, "Really delete [picked["file"]]?", "Blueprint Deletion", list("Yes", "No")) == "Yes")
+			fdel(picked["path"])
+			boutput(user, "<span class='alert'>Blueprint [picked["file"]] deleted.</span>")
+			return picked
 	else
 		boutput(user, "<span class='alert'>Blueprint [picked["file"]] not found.</span>")
 
@@ -893,7 +892,6 @@ proc/delete_abcu_blueprint(mob/user, var/browse_all_users = FALSE)
 
 		var/list/options = list("Select Rectangle", "Deselect Rectangle", "Reset",
 			"Save Blueprint", "Delete Blueprint", "Share A Blueprint", "Information",)
-		//var/input = input(user,"Select option:","Option") in options
 		var/input = tgui_input_list(user, "Choose an action.", "Blueprint Marker", options)
 
 		switch(input)
