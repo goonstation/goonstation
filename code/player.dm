@@ -166,9 +166,7 @@
 			decoded_json = list()
 
 		decoded_json["[ckey(ckey)]"] = clouddata
-		//t2f appends, but need to to replace
-		fdel("data/simulated_cloud.json")
-		text2file(json_encode(decoded_json),"data/simulated_cloud.json")
+		rustg_file_write(json_encode(decoded_json),"data/simulated_cloud.json")
 #endif
 		return TRUE // I guess
 
@@ -193,9 +191,7 @@
 		else
 			decoded_json = list()
 		decoded_json["[ckey(target)]"] = data
-		//t2f appends, but need to to replace
-		fdel("data/simulated_cloud.json")
-		text2file(json_encode(decoded_json),"data/simulated_cloud.json")
+		rustg_file_write(json_encode(decoded_json),"data/simulated_cloud.json")
 #endif
 		return TRUE // I guess
 
@@ -412,8 +408,6 @@ proc/cloud_put_bulk(json)
 				if("replace")
 					decoded_save[sani_ckey][data_key] = "[value]"
 
-	//t2f appends, but need to to replace
-	fdel("data/simulated_cloud.json")
-	text2file(json_encode(decoded_save),"data/simulated_cloud.json")
+	rustg_file_write(json_encode(decoded_save),"data/simulated_cloud.json")
 #endif
 	return TRUE

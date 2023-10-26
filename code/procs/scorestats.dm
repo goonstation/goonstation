@@ -12,6 +12,7 @@ var/datum/score_tracker/score_tracker
 	var/score_enemy_failure_rate = 0
 	var/final_score_sec = 0
 	// ENGINEERING DEPARTMENT
+	var/power_generated = 0
 	var/score_power_outages = 0
 	var/score_structural_damage = 0
 	var/final_score_eng = 0
@@ -129,6 +130,9 @@ var/datum/score_tracker/score_tracker
 
 		score_power_outages = clamp(score_power_outages,0,100)
 		score_structural_damage = clamp(score_structural_damage,0,100)
+
+		for(var/time in station_power_generation)
+			power_generated += station_power_generation[time]
 
 		final_score_eng = (score_power_outages + score_structural_damage) * 0.5
 
@@ -398,6 +402,7 @@ var/datum/score_tracker/score_tracker
 		score_tracker.score_text += "<BR>"
 
 		score_tracker.score_text += "<B><U>ENGINEERING DEPARTMENT</U></B><BR>"
+		score_tracker.score_text += "<B>Power Generated:</B> [engineering_notation(score_tracker.power_generated)]W<BR>"
 		score_tracker.score_text += "<B>Station Structural Integrity:</B> [round(score_tracker.score_structural_damage)]%<BR>"
 		score_tracker.score_text += "<B>Station Areas Powered:</B> [round(score_tracker.score_power_outages)]%<BR>"
 		score_tracker.score_text += "<B>Total Department Score:</B> [round(score_tracker.final_score_eng)]%<BR>"

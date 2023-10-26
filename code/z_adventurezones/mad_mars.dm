@@ -300,10 +300,10 @@
 	c_flags = SPACEWEAR | COVERSEYES | COVERSMOUTH
 	see_face = TRUE
 
-
 /obj/critter/marsrobot
 	name = "Inactive Robot"
 	desc = "It looks like it hasn't been in service for decades."
+	icon = 'icons/mob/critter/robotic/mars_bot.dmi'
 	icon_state = "mars_bot"
 	death_text = "%src% collapses!"
 	density = 1
@@ -597,10 +597,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 	sound_group = "mars"
 	sound_loop = 'sound/ambience/loop/Mars_Interior.ogg'
 	sound_loop_vol = 60
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/foreground/dust,
-		/atom/movable/screen/parallax_layer/foreground/dust/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/mars
 	occlude_foreground_parallax_layers = TRUE
 
 /area/marsoutpost/New()
@@ -649,8 +646,7 @@ TYPEINFO(/obj/vehicle/marsrover)
 /obj/critter/gunbot/heavy
 	name = "security robot"
 	desc = "A 2030's-era security robot. Uh oh."
-	icon = 'icons/misc/critter.dmi'
-	icon_state = "mars_sec_bot"
+	icon_state = "gunbot"
 	opensdoors = OBJ_CRITTER_OPENS_DOORS_NONE
 	atksilicon = 1
 	var/overheat = 0

@@ -7270,8 +7270,7 @@
 "ti" = (
 /turf/simulated/shuttle/wall/cockpit{
 	dir = 2;
-	icon_state = "shuttlecock_mining";
-	plane = 5
+	icon_state = "shuttlecock_mining"
 	},
 /area/space)
 "tj" = (
@@ -9957,7 +9956,7 @@
 "zQ" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 2;
-	
+
 	},
 /turf/simulated/floor/caution/north,
 /area/space)
@@ -10340,7 +10339,7 @@
 "AT" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
-	
+
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4;
@@ -10707,9 +10706,7 @@
 /area/space)
 "NE" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/machinery/computer/shuttle_bus/embedded/south{
-	plane = 6
-	},
+/obj/machinery/computer/shuttle_bus/embedded/south,
 /mob/living/carbon/human/john,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"

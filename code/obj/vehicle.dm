@@ -130,7 +130,7 @@ ABSTRACT_TYPE(/obj/vehicle)
 			src.eject_rider(crashed=FALSE, selfdismount=TRUE, ejectall=FALSE)
 
 	Click(location,control,params)
-		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier && !usr:in_point_mode)
+		if(istype(usr, /mob/dead/observer) && usr.client && !usr.client.keys_modifier)
 			var/mob/dead/observer/O = usr
 			if(src.rider)
 				O.insert_observer(src.rider)
@@ -2464,7 +2464,7 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	if (issnippingtool(I))
 		if (openpanel && !broken)
 			boutput(user, "<span class='notice'>You cut [src]'s wires!<span>")
-			new /obj/item/cable_coil/cut/small( src.loc )
+			new /obj/item/cable_coil/cut( src.loc , 5)
 			break_forklift()
 		return
 
@@ -2472,11 +2472,13 @@ obj/vehicle/forklift/attackby(var/obj/item/I, var/mob/user)
 	if (istype(I,/obj/item/cable_coil))
 		if (openpanel && broken)
 			var/obj/item/cable_coil/coil = I
-			coil.use(5)
-			boutput(user, "<span class='notice'>You replace [src]'s wires!</span>")
-			broken = 0
-			if (helditems_maximum < 4)
-				helditems_maximum = 4
+			if(coil.use(5))
+				boutput(user, "<span class='notice'>You replace [src]'s wires!</span>")
+				broken = 0
+				if (helditems_maximum < 4)
+					helditems_maximum = 4
+			else
+				boutput(user, "<span class='notice'>You need at least 5 pieces of cable for this!</span>")
 			return
 
 	return ..() // attacking rider on forklift

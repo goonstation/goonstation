@@ -7,13 +7,17 @@
 	flags = FPRINT
 	pressure_resistance = ONE_ATMOSPHERE
 	flags = FPRINT | TABLEPASS | OPENCONTAINER | ACCEPTS_MOUSEDROP_REAGENTS
+	HELP_MESSAGE_OVERRIDE("You can drag and drop yourself to move onto the bucket.<br>The bucket has 7 storage slots inside of it.<br>To pour reagents into the bucket from a <b>cup</b> or similar, drag and drop the cup to the bucket.")
 	var/rc_flags = RC_FULLNESS | RC_VISIBLE | RC_SPECTRO
 	var/image/fluid_image
 	p_class = 1.2
 
 	New()
 		. = ..()
+		src.create_reagents(400)
 		src.fluid_image = image(src.icon, "fluid", -1)
+		src.create_storage(/datum/storage/unholdable, max_wclass = W_CLASS_NORMAL, params = list("rustle"=TRUE))
+		START_TRACKING
 
 	update_icon()
 		if (reagents.total_volume)
@@ -27,11 +31,6 @@
 		..()
 		src.UpdateIcon()
 
-/obj/mopbucket/New()
-	..()
-	create_reagents(400)
-	START_TRACKING
-
 /obj/mopbucket/disposing()
 	. = ..()
 	STOP_TRACKING
@@ -42,7 +41,6 @@
 	if (!reagents)
 		return
 	. = "<br><span class='notice'>[reagents.get_description(user,rc_flags)]</span>"
-	return
 
 /obj/mopbucket/attackby(obj/item/W, mob/user)
 	if (istype(W, /obj/item/mop))

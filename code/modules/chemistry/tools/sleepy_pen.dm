@@ -1,5 +1,5 @@
 /obj/item/pen/sleepypen
-	flags = FPRINT | TABLEPASS | NOSPLASH | OPENCONTAINER
+	flags = FPRINT | TABLEPASS | NOSPLASH
 	c_flags = ONBELT
 	hide_attack = TRUE
 	move_triggered = TRUE
@@ -20,6 +20,11 @@
 			uses_handwriting = TRUE
 		src.create_reagents(100)
 		reagents.add_reagent("ketamine", 100)
+
+	//Open to be poured into, but not out of. Confusing!
+	is_open_container(input = FALSE)
+		if (input)
+			return TRUE
 
 	attack(mob/M, mob/user)
 		if (!ismob(M))

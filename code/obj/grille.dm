@@ -370,7 +370,7 @@
 			if (S.material && S.material.getMaterialFlags() & MATERIAL_CRYSTAL && S.amount_check(2))
 				var/obj/window/WI
 				var/win_thin = 0
-				var/win_dir = 2
+				var/win_dir = SOUTH
 				var/turf/ST = get_turf(src)
 
 				if (ST && isturf(ST))

@@ -37,7 +37,7 @@
 		. = {"It's [online ? "on" : "off"]line. [charging ? "It's charging, and it" : "It"] looks about [round(charge / capacity * 100, 20)]% full."}
 
 /obj/machinery/power/smes/construction
-	New(var/turf/iloc, var/idir = 2)
+	New(var/turf/iloc, var/idir = SOUTH)
 		if (!isturf(iloc))
 			qdel(src)
 		set_dir(idir)
@@ -181,7 +181,7 @@
 	if (status & BROKEN)
 		return
 
-	if (!online)
+	if (!online || isnull(powernet))
 		loaddemand = 0
 		return
 

@@ -187,7 +187,7 @@
 	..() // Admin-assigned antagonists or whatever.
 
 /obj/item/device/spy_implanter
-	name = "Multi-Use Implanter"
+	name = "multi-use implanter"
 	desc = "A specialized, self-sanitizing implantation implement that may be used to inject multiple implants. As a trade-off, it cannot be reloaded outside of the factory."
 	icon = 'icons/obj/items/device.dmi'
 	icon_state = "revimplanter4"

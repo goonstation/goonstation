@@ -1380,12 +1380,6 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
 		icon_state = "sweater[pick(1,2,3)]"
 		..()
 
-/obj/item/clothing/under/gimmick/chaps
-	name = "assless chaps"
-	desc = "Now with 95% less chafing!"
-	icon_state = "chaps"
-	item_state = "chaps"
-
 /obj/item/clothing/under/gimmick/vault13
 	name = "Vault 13 Jumpsuit"
 	desc = "A svelte jumpsuit strangely similar to station-issued versions."
@@ -1852,3 +1846,11 @@ ABSTRACT_TYPE(/obj/item/clothing/under/gimmick)
     desc = "A shirt imbued with the color scheme of the scientifically best icecream flavor."
     icon_state = "mint_chip"
     item_state = "mint_chip"
+
+//Seasonal Stuff
+
+/obj/item/clothing/under/gimmick/clown_autumn
+	name = "autumn clown suit"
+	desc = "Lets you celebrate the season while still remaining autumnomous."
+	icon_state = "clown_autumn"
+	item_state = "clown_autumn"

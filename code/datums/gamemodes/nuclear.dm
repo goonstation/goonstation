@@ -467,7 +467,7 @@ var/syndicate_name = null
 	return name
 
 /obj/cairngorm_stats/
-	name = "Mission Memorial"
+	name = "\improper Mission Memorial"
 	icon = 'icons/obj/large/32x64.dmi'
 	icon_state = "memorial_mid"
 	anchored = ANCHORED

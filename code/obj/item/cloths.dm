@@ -115,15 +115,17 @@ ABSTRACT_TYPE(/obj/item/cloth/towel)
 /obj/item/cloth/towel/clown/attack(mob/living/M, mob/user)
 	if (M != user || user.mind?.assigned_role != "Clown")
 		return ..()
+	var/mob/living/carbon/human/H = user
+	if (!H.organHolder?.stomach)
+		user.show_message("<span class='alert'>You can't seem to swallow!</span>")
+		return
 	user.visible_message("<span class='alert'>[user] rolls [src] into a ball and eats it!</span>")
 	playsound(user, 'sound/misc/gulp.ogg', 30, TRUE)
 	eat_twitch(user)
 	user.drop_item(src)
-	src.set_loc(user)
+	H.organHolder.stomach.consume(src)
 	SPAWN(1 SECOND)
 		user.emote("burp")
-	var/mob/living/carbon/human/H = user
-	H.stomach_process += src
 
 /obj/item/cloth/towel/clown/attackby(obj/item/I, mob/user)
 	if (I.w_class != W_CLASS_TINY || user.mind?.assigned_role != "Clown")

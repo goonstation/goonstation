@@ -328,6 +328,7 @@
 /obj/decal/tile_edge/line/blue{
 	icon_state = "line2"
 	},
+/obj/machinery/dialysis,
 /turf/simulated/floor/white,
 /area/devzone)
 "fs" = (

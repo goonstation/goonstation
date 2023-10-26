@@ -449,7 +449,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	desc = "A force field that can block various states of matter."
 	icon = 'icons/obj/meteor_shield.dmi'
 	icon_state = "shieldw"
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP
 	var/powerlevel //Stores the power level of the deployer
 	var/isactive = TRUE
 	density = 0
@@ -642,7 +642,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/shieldgenerator, proc/turn_on, proc/turn_off
 	layer = 2.5 //sits under doors if we want it to
 	flags = ALWAYS_SOLID_FLUID | FLUID_DENSE
 	gas_impermeable = TRUE
-	event_handler_flags = USE_FLUID_ENTER
+	event_handler_flags = USE_FLUID_ENTER | IMMUNE_TRENCH_WARP
 
 	meteorhit(obj/O as obj)
 		return

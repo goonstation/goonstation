@@ -142,6 +142,7 @@ o+`        `-` ``..-:yooos-..----------..`
 //#define MAP_OVERRIDE_MUSHROOM			// Updated Mushroom
 //#define MAP_OVERRIDE_TRUNKMAP			// Updated Ovary
 //#define MAP_OVERRIDE_DENSITY			// Density, the smallest map
+//#define MAP_OVERRIDE_DENSITY2			// Density2, the second smallest map
 //#define MAP_OVERRIDE_OZYMANDIAS		// Ozymandias, the largest map (sort of)
 //#define MAP_OVERRIDE_FLEET				// Multiple stations stuck together
 //#define MAP_OVERRIDE_ICARUS

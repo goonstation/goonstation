@@ -87,7 +87,7 @@
 "cc" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 8;
-	
+
 	},
 /obj/decal/tile_edge/stripe/extra_big{
 	dir = 4
@@ -1032,8 +1032,7 @@
 /area/space)
 "tp" = (
 /turf/simulated/shuttle/wall/cockpit{
-	icon_state = "shuttlecock_mining";
-	plane = 5
+	icon_state = "shuttlecock_mining"
 	},
 /area/regina)
 "ty" = (
@@ -1925,7 +1924,7 @@
 "Ls" = (
 /obj/machinery/atmospherics/unary/vent_pump{
 	dir = 2;
-	
+
 	},
 /turf/simulated/floor/caution/north,
 /area/regina)
@@ -2097,9 +2096,7 @@
 /area/shuttle/merchant_shuttle/left_centcom/donut2)
 "OH" = (
 /obj/stool/chair/comfy/shuttle/brown,
-/obj/machinery/computer/shuttle_bus/embedded/south{
-	plane = 6
-	},
+/obj/machinery/computer/shuttle_bus/embedded/south,
 /turf/simulated/floor/shuttle{
 	icon_state = "floor2"
 	},

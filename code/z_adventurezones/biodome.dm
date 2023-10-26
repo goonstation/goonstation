@@ -376,6 +376,8 @@ SYNDICATE DRONE FACTORY AREAS
 	icon_state = "lava"
 	pathable = FALSE
 	can_replace_with_stuff = TRUE
+	can_burn = FALSE
+	can_break = FALSE
 	var/deadly = TRUE
 	var/no_fly_zone = FALSE
 
@@ -985,7 +987,7 @@ SYNDICATE DRONE FACTORY AREAS
 /obj/graveyard/loose_rock
 	icon = 'icons/misc/worlds.dmi'
 	icon_state = "rockwall"
-	dir = 4
+	dir = EAST
 	density = 1
 	opacity = 1
 	anchored = ANCHORED

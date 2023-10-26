@@ -19,11 +19,7 @@ CONTENTS:
 	sound_group = "void"
 	sound_loop = 'sound/ambience/spooky/Void_Song.ogg'
 	ambient_light = rgb(6.9, 4.20, 6.9)
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/void,
-		/atom/movable/screen/parallax_layer/void/clouds_1,
-		/atom/movable/screen/parallax_layer/void/clouds_2,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/void
 
 /area/crunch/New()
 	. = ..()
@@ -75,6 +71,8 @@ TYPEINFO(/turf/unsimulated/floor/void)
 	icon_state = "void"
 	desc = "A strange shifting void ..."
 	plane = PLANE_SPACE
+	can_burn = FALSE
+	can_break = FALSE
 
 /turf/unsimulated/floor/void/crunch
 	fullbright = 0
@@ -116,6 +114,8 @@ TYPEINFO(/turf/simulated/floor/void)
 	plane = PLANE_SPACE
 	step_material = "step_lattice"
 	step_priority = STEP_PRIORITY_MED
+	can_burn = FALSE
+	can_break = FALSE
 
 	ex_act()
 		return

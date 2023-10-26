@@ -69,7 +69,7 @@ TYPEINFO(/obj/machinery/glass_recycler)
 		if (isAI(user) || !in_interact_range(O, user) || !can_act(user) || !isliving(user))
 			return
 
-		src.attackby(O, user)
+		src.Attackby(O, user)
 
 	attackby(obj/item/W, mob/user)
 		if(W.cant_drop)

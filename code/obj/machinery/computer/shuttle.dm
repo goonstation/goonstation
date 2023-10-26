@@ -239,7 +239,7 @@ ABSTRACT_TYPE(/obj/machinery/computer/transit_shuttle)
 /obj/machinery/computer/transit_shuttle/research/embedded
 	icon_state = "shuttle-embed";
 	pixel_y = -25
-	ejectdir = 2
+	ejectdir = SOUTH
 	embed = 1
 
 // JOHN BILL'S JUICIN' BUS

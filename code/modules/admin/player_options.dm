@@ -360,6 +360,7 @@
 				<div class='optionGroup' style='border-color: #B57EDC;'>
 					<h2 style='background-color: #B57EDC;'>Antagonist Options</h2>
 					<div>
+						[jobban_isbanned(M, "Syndicate") ? "<div class='antag'>⚠ This player is antag banned ⚠</div>" : ""]
 						<div class='l'>Options</div>
 						<div class='r'>
 							<a href='?src=\ref[src];targetmob=\ref[M];action=add_antagonist'>Add Antagonist Role</a> &bull;

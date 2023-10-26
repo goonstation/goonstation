@@ -739,6 +739,9 @@ TYPEINFO(/obj/item/device/geiger)
 		. = ..()
 
 //DIRTY DIRTY PLAYERS
+TYPEINFO(/obj/submachine/laundry_machine/portable)
+	mats = 0
+
 /obj/submachine/laundry_machine/portable
 	name = "Port-A-Laundry"
 	desc = "Don't ask."

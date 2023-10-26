@@ -33,9 +33,6 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 	var/max_visibility = ARTEMIS_MAX_R_SQUARED_VIS
 
-	//layer = TURF_LAYER-0.01
-	//plane = -2
-
 	New()
 		..()
 #if defined(DEBUG_ARTEMIS)
@@ -208,7 +205,6 @@ var/global/matrix/GLOBAL_ANIMATION_MATRIX = matrix()
 
 /obj/background_star/manta
 	icon_state = "M-1"
-	//plane = 2 // above the ship
 
 	set_state()
 		var/state = rand(1,4)

@@ -33,6 +33,9 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	var/overridespecial = 0
 	var/datum/item_special/specialoverride = null
 
+	///which hands is this glove on. So that we don't have a dozen blank iconstate in wear images for rings/etc. that are only on one side
+	var/which_hands = GLOVE_HAS_LEFT | GLOVE_HAS_RIGHT
+
 	setupProperties()
 		..()
 		setProperty("coldprot", 3)
@@ -379,6 +382,24 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	desc = "A pair of NanoTrasen tactical gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
 	icon_state = "swat_NT"
 	item_state = "swat_NT"
+
+/obj/item/clothing/gloves/swat/captain
+	name = "captain's gloves"
+	desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant. The high-quality materials help you in blocking attacks."
+	icon_state = "capgloves"
+	item_state = "capgloves"
+
+	centcomm
+		name = "commander's gloves"
+		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
+		icon_state = "centcomgloves"
+		item_state = "centcomgloves"
+
+	centcommred
+		name = "commander's gloves"
+		desc = "A pair of formal gloves that are electrically insulated and quite heat-resistant."
+		icon_state = "centcomredgloves"
+		item_state = "centcomredgloves"
 
 /obj/item/clothing/gloves/stungloves
 	name = "stun gloves"
@@ -761,6 +782,7 @@ ABSTRACT_TYPE(/obj/item/clothing/gloves)
 	cant_other_remove = 1
 	abilities = list()
 	ability_buttons = list()
+	which_hands = GLOVE_HAS_LEFT
 
 	setupProperties()
 		..()

@@ -209,7 +209,7 @@ Alien/mutant/other fish:
 
 /obj/item/reagent_containers/food/fish/pike
 	name = "pike"
-	desc = "Named after the long and pointy weapon of war, the Pike features in the Finnish Kalevala, where it's jawbown in turned in to a magical kantele."
+	desc = "Named after the long and pointy weapon of war, the Pike features in the Finnish Kalevala, where it's jawbone is turned in to a magical kantele."
 	icon = 'icons/obj/foodNdrink/food_fish_48x32.dmi'
 	icon_state = "pike"
 	inhand_color = "#24d10d"
@@ -349,7 +349,7 @@ Alien/mutant/other fish:
 
 /obj/item/reagent_containers/food/fish/clownfish
 	name = "clownfish"
-	desc = "A pop-culturarly significant orange fish that lives in a symbiotic relationship with an enemone."
+	desc = "A pop-culturally significant orange fish that lives in a symbiotic relationship with an anemone."
 	icon_state = "clownfish"
 	inhand_color = "#ff6601"
 	category = FISH_CATEGORY_AQUARIUM

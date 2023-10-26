@@ -321,6 +321,13 @@ TYPEINFO(/obj/item/clothing/shoes/industrial)
 			return
 		return ..()
 
+	autumn
+		name = "autumn clown shoes"
+		desc = "Wouldn't want to leaf these behind."
+		icon_state = "clown_autumn"
+		item_state = "clown_autumn"
+
+
 /obj/item/clothing/shoes/clown_shoes/New()
 	. = ..()
 	AddComponent(/datum/component/wearertargeting/tripsalot, list(SLOT_SHOES))
@@ -474,6 +481,12 @@ TYPEINFO(/obj/item/clothing/shoes/moon)
 	magnetic = 1
 	c_flags = NOSLIP
 	compatible_species = list("cow", "human")
+
+/obj/item/clothing/shoes/swat/captain
+	name = "captain's boots"
+	desc = "A set of formal shoes with a protective layer underneath."
+	icon_state = "capboots"
+	item_state = "capboots"
 
 /obj/item/clothing/shoes/fuzzy //not boolean slippers
 	name = "fuzzy slippers"

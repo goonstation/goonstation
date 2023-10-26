@@ -185,7 +185,7 @@ obj/item/engivac/proc/on_move(mob/M, turf/source, dir)
 		if (tile_target.intact && !(tile_target.broken || tile_target.burnt)) //Does this need replacing?
 			return
 
-		tile_target.attackby(current_stack,M)
+		tile_target.Attackby(current_stack,M)
 
 		if (current_stack.disposed) //This stack just ran out
 			current_stack = null

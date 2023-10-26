@@ -57,7 +57,7 @@
 	desc = "A free-floating mineral deposit from space."
 	icon_base = "adoor"
 	doordir = "single"
-	plane = PLANE_WALL-1 //We don't want depth shadows
+	plane = PLANE_NOSHADOW_BELOW
 	color = "#D1E6FF" //To match with asteroid var/stone_color, change if you need it to match something.
 
 	flags = FPRINT | IS_PERSPECTIVE_FLUID | ALWAYS_SOLID_FLUID //The poddoors aren't inherently fullbright, need a suitable turf or area underneath.

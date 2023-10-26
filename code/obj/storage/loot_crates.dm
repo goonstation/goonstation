@@ -19,9 +19,14 @@
 		/obj/item/clothing/under/misc/mimedress = 10,\
 		/obj/item/clothing/suit/torncloak/random = 20,\
 		/obj/item/clothing/suit/scarfcape/random = 20,\
-		/obj/item/clothing/suit/fakebeewings = 10,
-	// station
+		/obj/item/clothing/suit/fakebeewings = 10,\
+		/obj/item/clothing/head/giraffehat = 10, \
+		/obj/item/clothing/head/axehat = 20, \
+		/obj/item/clothing/head/mushroomcap/inky = 10, \
+		/obj/item/clothing/head/rhinobeetle = 20, \
+		/obj/item/clothing/head/stagbeetle = 20, \
 	)
+	// station
 	var/list/department = list(
 	// medbay
 		/obj/item/roboupgrade/efficiency = 20,\
@@ -462,7 +467,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 		attached.vis_contents += src
 		attached.locked = TRUE
 		attached.anchored = ANCHORED
-		attached.update_icon()
+		attached.UpdateIcon()
 		icon_state = "antitamper-on"
 		playsound(src, 'sound/impact_sounds/Wood_Snap.ogg', 40, TRUE)
 
@@ -477,7 +482,7 @@ var/global/datum/loot_crate_manager/loot_crate_manager = new /datum/loot_crate_m
 			C.vis_contents -= src
 			C.locked = FALSE
 			C.anchored = UNANCHORED
-			C.update_icon()
+			C.UpdateIcon()
 			qdel(src)
 		playsound(src, 'sound/impact_sounds/plate_break.ogg', 30, TRUE)
 

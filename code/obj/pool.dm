@@ -16,7 +16,7 @@
 	name = "pool ladder"
 	anchored = ANCHORED
 	density = 0
-	dir = 8
+	dir = WEST
 	icon = 'icons/obj/fluid.dmi'
 	icon_state = "ladder"
 

@@ -50,11 +50,14 @@
 
 #if (BUILD_TIME_MONTH == 10)
 #define HALLOWEEN 1
-#elif (BUILD_TIME_MONTH == 9) || (BUILD_TIME_MONTH == 10) || (BUILD_TIME_MONTH == 11)
+#endif
+#if (BUILD_TIME_MONTH == 9) || (BUILD_TIME_MONTH == 10) || (BUILD_TIME_MONTH == 11)
 #define AUTUMN 1
-#elif (BUILD_TIME_MONTH == 12)
+#endif
+#if (BUILD_TIME_MONTH == 12)
 #define XMAS 1
-#elif (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 1)
+#endif
+#if (BUILD_TIME_MONTH == 7) && (BUILD_TIME_DAY == 1)
 #define CANADADAY 1
 #endif
 

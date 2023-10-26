@@ -39,7 +39,7 @@
 	bound_height = 160
 	density = 1
 	anchored = ANCHORED
-	dir = 1
+	dir = NORTH
 	plane = PLANE_FLOOR
 	var/obj/cruiser_shield_visual/shield_obj
 

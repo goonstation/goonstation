@@ -1018,7 +1018,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 	mats = 20
 
 /obj/item/clothing/shoes/stomp_boots
-	name = "Stomper Boots"
+	name = "stomper boots"
 	desc = "A pair of specialized boots for stomping the ground really hard." // TODO add techy explanation I guess
 	icon_state = "stompboots"
 	kick_bonus = 3
@@ -1118,7 +1118,7 @@ TYPEINFO(/obj/item/clothing/shoes/stomp_boots)
 			boutput(the_mob, "<span class='alert'>The stomper boots are recharging. The integrated timer shows <b>\"00:[(cooldown_in_seconds < 10 ? "0" : "")][cooldown_in_seconds]\"</b>.</span>")
 
 /obj/item/clothing/shoes/stomp_boots/extreme
-	name = "STOMP BOOTS HYPERMURDER EDITION"
+	name = "\improper STOMP BOOTS HYPERMURDER EDITION"
 	desc = "PAPA'S GOT A BRAND NEW SHOE"
 	abilities = list(/obj/ability_button/stomper_boot_stomp/extreme)
 

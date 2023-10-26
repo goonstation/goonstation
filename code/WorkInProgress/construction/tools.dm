@@ -526,7 +526,7 @@ TYPEINFO(/obj/item/room_planner)
 		"shuttle white" = 'icons/turf/walls/shuttle/white.dmi',
 		"shuttle dark" = 'icons/turf/walls/shuttle/dark.dmi',
 		"overgrown" = 'icons/turf/walls/overgrown.dmi',
-		"meat" = 'icons/turf/walls/meat/meaty.dmi',
+		"meat" = 'icons/turf/walls/meat/meatier.dmi',
 		"ancient" = 'icons/turf/walls/ancient.dmi',
 		"cave" = 'icons/turf/walls/cave.dmi',
 		"lead blue" = 'icons/turf/walls/lead/blue.dmi',
@@ -816,24 +816,24 @@ TYPEINFO(/obj/item/room_planner)
 		G.setMaterial(metal)
 
 		var/mask = bmask
-		if (mask & 1)
+		if (mask & NORTH)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.set_dir(1)
+			W.set_dir(NORTH)
 			W.setMaterial(glass)
 
-		if (mask & 2)
+		if (mask & SOUTH)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.set_dir(2)
+			W.set_dir(SOUTH)
 			W.setMaterial(glass)
 
-		if (mask & 4)
+		if (mask & EAST)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.set_dir(4)
+			W.set_dir(EAST)
 			W.setMaterial(glass)
 
-		if (mask & 8)
+		if (mask & WEST)
 			var/obj/window/reinforced/W = new /obj/window/reinforced(L)
-			W.set_dir(8)
+			W.set_dir(WEST)
 			W.setMaterial(glass)
 		qdel(src)
 

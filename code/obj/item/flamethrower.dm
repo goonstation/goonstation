@@ -335,7 +335,7 @@ A Flamethrower in various states of assembly
 	try_specific_equip(mob/user)
 		. = FALSE
 		if (istype(user.back, /obj/item/tank/jetpack/backtank))
-			user.back.attackby(src, user)
+			user.back.Attackby(src, user)
 			return TRUE
 
 /obj/item/gun/flamethrower/backtank/napalm

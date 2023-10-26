@@ -15,7 +15,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 /datum/req_contract/aid/wrecked
 	//name = "Breach Recovery"
-	payout = 4000
+	payout = PAY_TRADESMAN*10*2
 	var/list/namevary = list("Breach Recovery","Breach Response","Integrity Failure","Crisis Response","Disaster Assistance","Disaster Response")
 	var/list/desc_placejob = list("research","mining","security","cargo transfer")
 	var/list/desc_placetype = list("vessel","ship","station","outpost")
@@ -25,7 +25,7 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 
 	New()
 		src.name = pick(namevary)
-		src.cycles_remaining = rand(0,2)
+		src.cycles_remaining = rand(1,2)
 		src.flavor_desc = "An affiliated [pick(desc_placejob)] [pick(desc_placetype)] has [pick(desc_enhancer1)] a [pick(desc_enhancer2)] [pick(desc_whatborked)]"
 		src.flavor_desc += " and requires repair supplies as soon as possible."
 		src.payout += rand(0,80) * 10
@@ -45,50 +45,51 @@ ABSTRACT_TYPE(/datum/req_contract/aid)
 /datum/rc_entry/item/spacesuit
 	name = "space suit"
 	typepath = /obj/item/clothing/suit/space
-	feemod = 2250
+	feemod = PAY_IMPORTANT*2
 
 /datum/rc_entry/item/spacehelmet
 	name = "space helmet"
 	typepath = /obj/item/clothing/head/helmet/space
-	feemod = 1900
+	feemod = PAY_IMPORTANT
 
 /datum/rc_entry/stack/steelsheet
 	name = "NT-spec steel sheet"
+	commodity = /datum/commodity/sheet
 	typepath = /obj/item/sheet
 	mat_id = "steel"
-	feemod = 30
+	feemod = PAY_TRADESMAN/2
 
 ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 /datum/rc_entry/item/basictool/crowbar
 	name = "crowbar"
 	typepath = /obj/item/crowbar
-	feemod = 250
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/item/basictool/screwdriver
 	name = "screwdriver"
 	typepath = /obj/item/screwdriver
-	feemod = 220
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/item/basictool/wirecutters
 	name = "wirecutters"
 	typepath = /obj/item/wirecutters
-	feemod = 240
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/item/basictool/wrench
 	name = "wrench"
 	typepath = /obj/item/wrench
-	feemod = 220
+	feemod = PAY_TRADESMAN
 
 /datum/rc_entry/item/basictool/welder
 	name = "welding tool"
 	typepath = /obj/item/weldingtool
-	feemod = 480
+	feemod = PAY_TRADESMAN*2
 
 
 
 /datum/req_contract/aid/triage
 	//name = "Medical Aid"
-	payout = 5000
+	payout = PAY_DOCTORATE*10*2
 	var/list/namevary = list("Medical Aid","Medical Emergency","Triage Support","Aid Request","Critical Condition","Vital Support")
 	var/list/desc_helpsite = list("A medical facility","An affiliated station's medical bay","A triage center","A medical outpost","Our nearest station")
 	var/list/desc_tense = list("to assist with","after heavy load due to","to restock after")
@@ -111,7 +112,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 	New()
 		src.name = pick(namevary)
-		src.cycles_remaining = rand(1,2)
+		src.cycles_remaining = rand(1,3)
 		src.flavor_desc = "[pick(desc_helpsite)] requires additional supplies [pick(desc_tense)] [pick(desc_crisis)]. [pick(desc_emphasis)]"
 		src.payout += rand(0,60) * 10
 
@@ -134,7 +135,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/basictool)
 
 ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/item/surgical
-	feemod = 350
+	feemod = PAY_DOCTORATE
 
 	scalpel
 		name = "scalpel"
@@ -142,7 +143,6 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	saw
 		name = "circular saw"
-		feemod = 520
 		typepath = /obj/item/circular_saw
 
 	scissors
@@ -159,7 +159,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	stapler
 		name = "staple gun"
-		feemod = 780
+		feemod = PAY_DOCTORATE*2
 		typepath = /obj/item/staple_gun
 
 /datum/rc_entry/reagent/brutepatch
@@ -167,35 +167,35 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 	container_name = "Patches"
 	name = "styptic powder"
 	chem_ids = "styptic_powder"
-	feemod = 50
+	feemod = PAY_DOCTORATE/10
 
 /datum/rc_entry/reagent/burnpatch
 	contained_in = /obj/item/reagent_containers/patch
 	container_name = "Patches"
 	name = "silver sulfadiazine"
 	chem_ids = "silver_sulfadiazine"
-	feemod = 50
+	feemod = PAY_DOCTORATE/10
 
 /datum/rc_entry/item/lgloves
 	name = "latex glove pair"
-	feemod = 300
+	feemod = PAY_DOCTORATE
 	typepath = /obj/item/clothing/gloves/latex
 
 /datum/rc_entry/item/hypospray
 	name = "hypospray"
-	feemod = 900
+	feemod = PAY_DOCTORATE*2
 	typepath = /obj/item/reagent_containers/hypospray
 
 /datum/rc_entry/item/med_analyzer
 	name = "health analyzer"
-	feemod = 1200
+	feemod = PAY_DOCTORATE*2
 	typepath = /obj/item/device/analyzer/healthanalyzer
 
 
 
 /datum/req_contract/aid/geeksquad
 	//name = "Computer Failure"
-	payout = 4800
+	payout = PAY_DOCTORATE*10*2
 	var/list/namevary = list("Systems Failure","Short Circuit","Computer Overload","Electronics Failure","Systems Breakdown","Crucial Repair")
 	var/list/desc_wherebork = list("research","mining","security","cargo transfer","communications","deep-space survey")
 	var/list/desc_whobork = list("vessel","ship","station","outpost")
@@ -251,50 +251,50 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/item/mainboard
 	name = "computer mainboard"
 	typepath = /obj/item/motherboard
-	feemod = 1840
+	feemod = PAY_EXECUTIVE
 
 /datum/rc_entry/item/cardscan
 	name = "ID scanner module"
 	typepath = /obj/item/peripheral/card_scanner
 	exactpath = TRUE
-	feemod = 2300
+	feemod = PAY_EXECUTIVE
 
 /datum/rc_entry/item/netcard
 	name = "wired network card"
 	typepath = /obj/item/peripheral/network/powernet_card
 	exactpath = TRUE
-	feemod = 2080
+	feemod = PAY_EXECUTIVE
 
 /datum/rc_entry/item/interfaceboard
 	name = "AI interface board"
 	typepath = /obj/item/ai_interface
-	feemod = 5000
+	feemod = PAY_EMBEZZLED
 
 /datum/rc_entry/item/t_ray
 	name = "T-ray scanner"
 	typepath = /obj/item/device/t_scanner
-	feemod = 1280
+	feemod = PAY_TRADESMAN*2
 
 /datum/rc_entry/item/soldering
 	name = "soldering iron"
 	typepath = /obj/item/electronics/soldering
-	feemod = 820
+	feemod = PAY_TRADESMAN*2
 
 /datum/rc_entry/item/multitool
 	name = "multitool"
 	typepath = /obj/item/device/multitool
-	feemod = 2800
+	feemod = PAY_TRADESMAN*4
 
 /datum/rc_entry/stack/cable
 	name = "lengths of electrical cabling"
 	typepath = /obj/item/cable_coil
-	feemod = 50
+	feemod = PAY_TRADESMAN/4
 
 
 
 /datum/req_contract/aid/supplyshort
 	//name = "Supply Chain Failure"
-	payout = 4500
+	payout = PAY_TRADESMAN*10*2
 	var/list/namevary = list("Urgent Restock","Supply Crisis","Supply Chain Failure","Short Stock","Emergency Resupply")
 	var/list/desc_placejob = list("research","mining","hydroponics","civilian","Nanotrasen")
 	var/list/desc_place = list("vessel","station","outpost","colony")
@@ -319,7 +319,7 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 
 	New()
 		src.name = pick(namevary)
-		src.cycles_remaining = rand(1,2)
+		src.cycles_remaining = rand(2,3)
 		var/tilter = pick(desc_shortage)
 		src.flavor_desc = "An affiliated [pick(desc_placejob)] [pick(desc_place)] is experiencing"
 		src.flavor_desc += " a severe shortage of [tilter] [pick(desc_after)] [pick(desc_whybork)].[pick(desc_emphasis)]"
@@ -343,12 +343,12 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 /datum/rc_entry/stack/char
 	name = "char ore"
 	commodity = /datum/commodity/ore/char
-	feemod = 80 //on top of market char price
+	feemod = PAY_TRADESMAN/4 //on top of market char price
 
 /datum/rc_entry/reagent/fuel
 	name = "welding-grade liquid fuel"
 	chem_ids = "fuel"
-	feemod = 25
+	feemod = PAY_DOCTORATE/10
 
 /datum/rc_entry/reagent/coffee
 	name = "coffee"
@@ -359,4 +359,4 @@ ABSTRACT_TYPE(/datum/rc_entry/item/surgical)
 		"expresso",
 		"energydrink"
 	)
-	feemod = 20
+	feemod = PAY_DOCTORATE/10

@@ -4059,10 +4059,10 @@
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
 	dir = 1;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
 	icon_state = "bdoorleft1";
 	id = "hangar_soviet";
-	name = "pod bay (salyut)";
-	icon = 'icons/obj/doors/sovblastdoor.dmi'
+	name = "pod bay (salyut)"
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -6715,10 +6715,10 @@
 /area/abandonedmedicalship)
 "aJx" = (
 /turf/simulated/shuttle/wall{
-	icon_state = "door1";
-	name = "broken door";
+	dir = 8;
 	icon = 'icons/obj/doors/shuttle.dmi';
-	dir = 8
+	icon_state = "door1";
+	name = "broken door"
 	},
 /area/abandonedmedicalship)
 "aJy" = (
@@ -8524,7 +8524,7 @@
 /turf/simulated/floor/orangeblack/side,
 /area/h7/computer_core)
 "aPm" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/space,
 /area/space)
 "aPn" = (
@@ -8581,7 +8581,7 @@
 /obj/cable{
 	icon_state = "4-8"
 	},
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/simulated/floor/airless/plating/catwalk{
 	dir = 8;
 	tag = "icon-catwalk (WEST)"
@@ -10035,7 +10035,7 @@
 /turf/simulated/floor,
 /area/h7)
 "aTU" = (
-/obj/item/plank,
+/obj/item/sheet/wood,
 /turf/simulated/floor/plating/airless,
 /area/space)
 "aTV" = (
@@ -12952,11 +12952,11 @@
 /turf/simulated/floor/plating,
 /area/helldrone)
 "bdO" = (
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
-/obj/item/plank,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
+/obj/item/sheet/wood,
 /obj/storage/crate/bloody,
 /obj/item/horseshoe,
 /turf/simulated/floor/airless/plating/damaged1,
@@ -16195,10 +16195,10 @@
 /obj/machinery/door/poddoor/blast{
 	autoclose = 1;
 	dir = 1;
+	icon = 'icons/obj/doors/sovblastdoor.dmi';
 	icon_state = "bdoorright1";
 	id = "hangar_soviet";
-	name = "pod bay (salyut)";
-	icon = 'icons/obj/doors/sovblastdoor.dmi'
+	name = "pod bay (salyut)"
 	},
 /turf/simulated/floor/shuttlebay{
 	name = "reinforced plating"
@@ -22117,6 +22117,7 @@
 /area/space)
 "uBn" = (
 /obj/item/cigbutt,
+/obj/machinery/vending/air_vendor/plasma,
 /turf/simulated/floor/caution/west,
 /area/diner/hangar)
 "uBo" = (

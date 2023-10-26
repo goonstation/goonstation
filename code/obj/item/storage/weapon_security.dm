@@ -38,7 +38,7 @@
 	spawn_contents = list(/obj/item/handcuffs = 3,\
 	/obj/item/ammo/power_cell/med_power,\
 	/obj/item/device/flash,\
-	/obj/item/instrument/whistle)
+	/obj/item/instrument/whistle/security)
 
 /* -------------------- Guns & Ammo -------------------- */
 
@@ -114,6 +114,17 @@
 	desc = "A box containing a flare gun and spare ammo."
 	spawn_contents = list(/obj/item/gun/kinetic/flaregun,\
 	/obj/item/ammo/bullets/flare)
+
+/obj/item/storage/box/missile_launcher
+	name = "pod-targeting missile launcher box"
+	icon_state = "hard_case"
+	desc = "A box containing a pod-targeting missile launcher and ammunition."
+	slots = 5
+	check_wclass = TRUE
+	can_hold = list(/obj/item/gun/kinetic/missile_launcher,\
+	/obj/item/ammo/bullets/pod_seeking_missile)
+	spawn_contents = list(/obj/item/gun/kinetic/missile_launcher,\
+	/obj/item/ammo/bullets/pod_seeking_missile = 4)
 
 /* -------------------- Grenades -------------------- */
 
@@ -206,13 +217,6 @@
 	/obj/item/chem_grenade/incendiary = 3,\
 	/obj/item/chem_grenade/cryo = 3)
 
-// Wasp grenades for traitor botanists
-/obj/item/storage/box/wasp_grenade_kit
-	name = "experimental biological grenade box"
-	desc = "A box of experimental biological grenades."
-	icon_state = "flashbang"
-	spawn_contents = list(/obj/item/old_grenade/spawner/wasp = 5)
-
 /obj/item/storage/box/crowdgrenades
 	name = "crowd dispersal grenades"
 	desc = "A box of crowd dispersal grenades"
@@ -262,6 +266,7 @@
 	desc = "Can take on the appearance of another item. Creates a small dimensional rift in space-time, allowing it to hold multiple items."
 	icon_state = "box"
 	sneaky = 1
+	stealthy_storage = TRUE
 	var/cloaked = 0
 	flags = FPRINT | TABLEPASS | NOSPLASH
 	w_class = W_CLASS_SMALL
@@ -271,7 +276,7 @@
 		..()
 		src.cloaked = 0
 		src.create_storage(/datum/storage, prevent_holding = list(/obj/item/storage/box), max_wclass = src.max_wclass, slots = src.slots, sneaky = src.sneaky,
-			opens_if_worn = TRUE)
+			stealthy_storage = src.stealthy_storage, opens_if_worn = TRUE)
 
 	UpdateName()
 		src.name = "[name_prefix(null, 1)][src.real_name][name_suffix(null, 1)]"
@@ -291,6 +296,7 @@
 			src.icon_state = W.icon_state
 			src.item_state = W.item_state
 			src.inhand_image = W.inhand_image
+			src.tooltip_rebuild = TRUE
 			boutput(user, "<span class='notice'>The secret storage changes form to look like [W.name]!<br>Use the reset command to change it back.</span>")
 			src.cloaked = 1
 			return
@@ -307,6 +313,7 @@
 			src.icon_state = initial(src.icon_state)
 			src.item_state = initial(src.item_state)
 			src.inhand_image = initial(src.inhand_image)
+			src.tooltip_rebuild = TRUE
 			boutput(usr, "<span class='alert'>You reset the [src.name].</span>")
 			src.cloaked = 0
 			src.add_fingerprint(usr)

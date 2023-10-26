@@ -115,10 +115,6 @@ TYPEINFO_NEW(/turf/simulated/wall/auto/reinforced)
 
 
 	attackby(obj/item/W, mob/user)
-		if (istype(W, /obj/item/light_parts))
-			src.attach_light_fixture_parts(user, W) // Made this a proc to avoid duplicate code (Convair880).
-			return
-
 		/* ----- Deconstruction ----- */
 		if (src.d_state == 0 && issnippingtool(W))
 			actions.start(new /datum/action/bar/icon/wall_tool_interact(src, W, WALL_CUTRERODS), user)
@@ -1007,7 +1003,7 @@ TYPEINFO_NEW(/turf/unsimulated/wall/auto/adventure/bee)
 	icon_state = "bee-map"
 #endif
 	mod = "bee-"
-	plane = PLANE_WALL-1 //We don't want depth shadows
+	plane = PLANE_NOSHADOW_BELOW
 
 	exterior // so i dont have to make more parts for it to look good
 		mod = "beeout-"

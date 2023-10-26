@@ -197,7 +197,7 @@ ABSTRACT_TYPE(/obj/structure/preassembeled_vehicleframe)
 /obj/structure/preassembeled_vehicleframe/attack_hand(mob/user)
 	. = ..()
 	//Let's call attackby with no item to get the step advice
-	attackby(null, user)
+	Attackby(null, user)
 
 /obj/structure/preassembeled_vehicleframe/proc/step_wrench_1(var/mob/user)
 	src.overlays += image(src.icon, "[pick("frame1", "frame2")]")

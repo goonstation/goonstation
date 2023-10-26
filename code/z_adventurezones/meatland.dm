@@ -86,7 +86,7 @@ meaty thoughts from cogwerks to his spacepal aibm:
 	desc = "It keeps pulsing.  Ew.  Probably shouldn't put your hand in the..mouth?"
 	icon = 'icons/misc/meatland.dmi'
 	icon_state = "meatlumps"
-	dir = 4
+	dir = EAST
 
 /obj/stomachacid
 	name = "acid"

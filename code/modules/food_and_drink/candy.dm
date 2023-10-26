@@ -5,6 +5,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy)
 	icon = 'icons/obj/foodNdrink/food_candy.dmi'
 	icon_state = "candy"
 	heal_amt = 1
+	fill_amt = 0.3 //You can eat a lot of candy
 	real_name = "candy"
 	var/sugar_content = 50
 	var/razor_blade = 0 //Is this BOOBYTRAPPED CANDY?
@@ -307,20 +308,15 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 	..()
 	if (src.icon_random)
 		src.icon_state = "lpop-[rand(1,6)]"
-	else
-		SPAWN(0)
-			src.UpdateIcon()
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/update_icon()
 	if (src.icon_random)
 		return
 	if (src.reagents)
 		ENSURE_IMAGE(src.image_candy, src.icon, "lpop-w")
-		src.reagents.remove_reagent("sugar", 5) // sugar will always override sadly. So we ignore it.
-		var/datum/color/average = src.reagents.get_average_color()
+		var/datum/color/average = src.reagents.get_average_color(reagent_exception_ids=list("sugar"))
 		src.image_candy.color = average.to_rgba()
 		src.UpdateOverlays(src.image_candy, "candy")
-		src.reagents.add_reagent("sugar", 5) // then we put the sugar back in.
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical
 	icon_random = TRUE
@@ -328,10 +324,10 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 /obj/item/reagent_containers/food/snacks/candy/lollipop/random_medical/New()
 	..()
-	SPAWN(0)
-		if (islist(src.flavors) && length(src.flavors))
-			for (var/i=5, i>0, i--)
-				src.reagents.add_reagent(pick(src.flavors), 1)
+	if (islist(src.flavors) && length(src.flavors))
+		for (var/i=5, i>0, i--)
+			src.reagents.add_reagent(pick(src.flavors), 1)
+	src.UpdateIcon()
 
 /obj/item/reagent_containers/food/snacks/candy/sugar_cube
 	name = "sugar cube"
@@ -344,7 +340,7 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/candy/jellybean)
 
 	afterattack(obj/target, mob/user, flag)
 		..()
-		if (target.is_open_container() && target.reagents)
+		if (target.is_open_container(TRUE) && target.reagents)
 			if (target.reagents.total_volume >= target.reagents.maximum_volume)
 				boutput(user, "<span class='alert'>[target] is full.</span>")
 				return

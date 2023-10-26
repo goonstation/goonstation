@@ -75,10 +75,10 @@ ABSTRACT_TYPE(/area/supply)
 	..()
 	var/connectdir = get_connected_directions_bitflag(connects_to)
 	if (connectdir & NORTH || connectdir & SOUTH)
-		src.dir = 4
+		src.dir = EAST
 		return
 	if (connectdir & EAST || connectdir & WEST)
-		src.dir = 1
+		src.dir = NORTH
 
 /obj/plasticflaps/disposing()
 	..()

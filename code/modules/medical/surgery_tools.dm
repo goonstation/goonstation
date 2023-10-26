@@ -723,6 +723,7 @@ TYPEINFO(/obj/machinery/defib_mount)
 				else
 					user.show_text("[H == user ? "You have" : "[H] has"] no wounds or incisions on [H == user ? "your" : his_or_her(H)] [zone_sel2name[zone]] to close!", "red")
 					H.organHolder.chest.op_stage = 0
+					H.organHolder.close_surgery_regions()
 					src.in_use = 0
 					return
 		else
@@ -899,8 +900,8 @@ TYPEINFO(/obj/machinery/defib_mount)
 							target.organHolder.heart.op_stage = 0
 						if (target.organHolder.chest)
 							target.organHolder.chest.op_stage = 0
-						if (target.butt_op_stage)
-							target.butt_op_stage = 0
+						if (target.organHolder.back_op_stage)
+							target.organHolder.back_op_stage = BACK_SURGERY_CLOSED
 						target.TakeDamage("chest", 2, 0)
 					else if (zone == "head")
 						if (target.organHolder.head)
@@ -1041,6 +1042,24 @@ TYPEINFO(/obj/machinery/defib_mount)
 			src.w_class = W_CLASS_TINY
 			src.Attackhand(usr)
 
+	attackby(obj/item/W, mob/user, params)
+		if(length(src.contents) && istool(W, TOOL_CUTTING | TOOL_SNIPPING)) //don't cut open empty bags, what's the point?
+			SETUP_GENERIC_ACTIONBAR(user, src, 2 SECONDS, PROC_REF(cut_open), null, W.icon, W.icon_state, "[user] cuts open [src]!", null)
+		else
+			. = ..()
+
+	proc/cut_open()
+		for (var/obj/O in src)
+			O.set_loc(get_turf(src))
+		for (var/mob/M in src)
+			M.changeStatus("weakened", 0.5 SECONDS)
+			M.set_loc(get_turf(src))
+		var/obj/decal/cleanable/balloon/B = make_cleanable(/obj/decal/cleanable/balloon, get_turf(src))
+		B.icon_state = "balloon_black_pop"
+		B.name = "body bag"
+		B.desc = "The remains of a body bag"
+		qdel(src)
+
 	proc/open()
 		playsound(src, src.sound_zipper, 100, 1, , 6)
 		for (var/obj/O in src)
@@ -1108,22 +1127,15 @@ TYPEINFO(/obj/machinery/defib_mount)
 			if (user.a_intent == INTENT_HELP)
 				return
 			return ..()
-		if (H.bleeding)
+		if (H.chest_cavity_clamped && !H.bleeding)
+			boutput(user, "<span class='notice'>[M]'s blood vessels are already clamped.</span>")
+			return
+		if (H.organHolder.chest.op_stage > 0 || H.bleeding)
 			user.tri_message(H, "<span class='alert'><b>[user]</b> begins clamping the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
 				"<span class='alert'>You begin clamping the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
 				"<span class='alert'>[H == user ? "You begin" : "<b>[user]</b> begins"] clamping the bleeders in your incision with [src].</span>")
 
-			if (!do_mob(user, H, clamp(surgery_status * 4, 0, 100)))
-				user.visible_message("<span class='alert'><b>[user]</b> was interrupted!</span>",\
-				"<span class='alert'>You were interrupted!</span>")
-				return
-
-			user.tri_message(H, "<span class='notice'><b>[user]</b> clamps the bleeders in [H == user ? "[his_or_her(H)]" : "[H]'s"] incision with [src].</span>",\
-				"<span class='notice'>You clamp the bleeders in [user == H ? "your" : "[H]'s"] incision with [src].</span>",\
-				"<span class='notice'>[H == user ? "You clamp" : "<b>[user]</b> clamps"] the bleeders in your incision with [src].</span>")
-
-			if (H.bleeding)
-				repair_bleeding_damage(H, 50, rand(2,5))
+			actions.start(new/datum/action/bar/icon/clamp_bleeders(user, H), user)
 			return
 
 /* ======================================================= */

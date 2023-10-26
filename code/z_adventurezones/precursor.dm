@@ -19,10 +19,7 @@
 	skip_sims = 1
 	sims_score = 30
 	sound_group = "ice_moon"
-	area_parallax_layers = list(
-		/atom/movable/screen/parallax_layer/foreground/snow,
-		/atom/movable/screen/parallax_layer/foreground/snow/sparse,
-		)
+	area_parallax_render_source_group = /datum/parallax_render_source_group/area/ice_moon
 	occlude_foreground_parallax_layers = TRUE
 
 /area/upper_arctic/pod1
@@ -631,7 +628,7 @@
 	density = 1
 	anchored = ANCHORED
 	opacity = 1
-	dir = 4 // facing right or left
+	dir = EAST // facing right or left
 	var/active = 0
 	var/id = 1
 	var/obj/precursor_puzzle/controller/linked_controller = null

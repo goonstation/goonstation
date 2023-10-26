@@ -619,7 +619,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "You can try to clean it up, but there'll always be a little bit left."
 	icon = 'icons/effects/glitter.dmi'
 	icon_state = "glitter"
-	random_dir = 4
+	random_dir = EAST
 	random_icon_states = list("glitter-1", "glitter-2", "glitter-3", "glitter-4", "glitter-5", "glitter-6", "glitter-7", "glitter-8", "glitter-9", "glitter-10")
 	can_sample = 1
 	sample_reagent = "glitter"
@@ -693,7 +693,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "Ripped up little flecks of paper."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "paper"
-	random_dir = 4
+	random_dir = EAST
 	can_sample = 1
 	sample_reagent = "paper"
 	sample_verb = "scrape"
@@ -709,7 +709,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "A sad little pile of leaves from a sad, destroyed bush."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "leaves"
-	random_dir = 4
+	random_dir = EAST
 
 /obj/decal/cleanable/rust
 	name = "rust"
@@ -1165,7 +1165,7 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	desc = "Someone should clean that up."
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "dirt"
-	random_dir = 1
+	random_dir = NORTH
 	stain = "dirty"
 	can_sample = 1
 	sample_reagent = "carbon"
@@ -1225,16 +1225,18 @@ var/list/blood_decal_violent_icon_states = list("floor1", "floor2", "floor3", "f
 	layer = MOB_LAYER-1
 	icon = 'icons/obj/decals/cleanables.dmi'
 	icon_state = "cobweb_floor-c"
-
+	var/slow_duration = 3 SECONDS
 
 	Crossed(atom/A)
-		if (ismob(A))
-			A.changeStatus("slowed", 0.2 SECONDS)
+		if (ismob(A) && !isintangible(A))
+			A.changeStatus("slowed", src.slow_duration)
 			SPAWN(-1)
 				qdel(src)		//break when walked over
 		else return 1
 		..()
 
+/obj/decal/cleanable/cobwebFloor/halloween
+	slow_duration = 0.2 SECONDS
 
 /obj/decal/cleanable/fungus
 	name = "space fungus"
