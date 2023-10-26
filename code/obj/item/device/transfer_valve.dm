@@ -540,6 +540,10 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 	ex_act(var/ex, var/inf, var/factor)
 		var/exp_power = (factor / 2) ** 2 || (4-clamp(ex, 1, 3))*2 // we made it extremely accurate
 
+		if (exp_power >= 10000) //sadly, the hemera nuke exists and so we must put a limit here
+			qdel(src)
+			return
+
 		if (src.explosion_id == exp_power * world.time)
 			return // we don't want peeps stacking 50 crystals on 1 explosion
 			// this only stops stacking, or making rings of crystals - you can still make a line of valuable crystals from the epicenter
