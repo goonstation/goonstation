@@ -158,30 +158,19 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/ingredient)
 		src.name = pick("meaty bit", "gross organs", "grody thing")
 		src.icon_state = pick("gibmid1", "gibmid2", "gibarm", "gibtorso", "gibhead")
 
-/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
-	name = "bacon"
-	desc = "A strip of salty cured pork. Many disgusting nerds have a bizarre fascination with this meat, going so far as to construct tiny houses out of it."
-	icon_state = "bacon"
+/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
+	name = "raw bacon"
+	desc = "A strip of salty raw cured pork. It really should be cooked first."
+	icon_state = "bacon-raw"
 	initial_reagents = list("porktonium"=10)
-	blood = 0
+	blood = 2
 	fill_amt = 0.5 //it's only one strip
+	real_name = "bacon"
 
 	New()
 		..()
 		src.pixel_x += rand(-4,4)
 		src.pixel_y += rand(-4,4)
-
-	heal(var/mob/M)
-		..()
-		M.nutrition += 20
-		return
-
-	raw
-		name = "raw bacon"
-		desc = "A strip of salty raw cured pork. It really should be cooked first."
-		icon_state = "bacon-raw"
-		blood = 2
-		real_name = "bacon"
 
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat/nugget
 	name = "chicken nugget"
