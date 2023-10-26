@@ -1663,7 +1663,7 @@ or don't if it uses a custom topopen overlay
 	set category = "AI Commands"
 	set name = "View Crew Manifest"
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2008,7 +2008,7 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2036,7 +2036,7 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2062,7 +2062,7 @@ or don't if it uses a custom topopen overlay
 	if (!src || !message_mob.client || isdead(src))
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		message_mob.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
@@ -2545,7 +2545,7 @@ proc/get_mobs_trackable_by_AI()
 	if(src.stat || !can_announce)
 		return
 
-	if(src.z != Z_LEVEL_STATION)
+	if(get_z(src) != Z_LEVEL_STATION)
 		src.show_text("Your mainframe was unable relay this command that far away!", "red")
 		return
 
