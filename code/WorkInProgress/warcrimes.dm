@@ -650,7 +650,7 @@ Urs' Hauntdog critter
 	density = 1
 	speechverb_say = "screams!"
 	speechverb_exclaim = "screams!"
-	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	meat_type = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	name_the_meat = 0
 
 	specific_emotes(var/act, var/param = null, var/voluntary = 0)
