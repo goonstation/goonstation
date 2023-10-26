@@ -195,7 +195,7 @@ datum/cookingrecipe/flockbrainburger
 
 /datum/cookingrecipe/baconburger
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	cookbonus = 13
 	output = /obj/item/reagent_containers/food/snacks/burger/baconburger
 
@@ -503,7 +503,7 @@ datum/cookingrecipe/flockbrainburger
 /datum/cookingrecipe/sandwich_blt
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
 	amt1 = 2
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	item4 = /obj/item/reagent_containers/food/snacks/plant/lettuce
 	cookbonus = 7
@@ -566,7 +566,7 @@ datum/cookingrecipe/flockbrainburger
 /datum/cookingrecipe/elviswich_blt
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/elvis
 	amt1 = 2
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	item4 = /obj/item/reagent_containers/food/snacks/plant/lettuce
 	cookbonus = 7
@@ -620,7 +620,7 @@ datum/cookingrecipe/flockbrainburger
 /datum/cookingrecipe/scarewich_blt
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/spooky
 	amt1 = 2
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	item3 = /obj/item/reagent_containers/food/snacks/ingredient/tomatoslice
 	item4 = /obj/item/reagent_containers/food/snacks/plant/lettuce
 	cookbonus = 7
@@ -883,7 +883,7 @@ datum/cookingrecipe/flockbrainburger
 
 /datum/cookingrecipe/bacontoast
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/toastbacon
 
@@ -902,7 +902,7 @@ datum/cookingrecipe/flockbrainburger
 
 /datum/cookingrecipe/elvisbacontoast
 	item1 = /obj/item/reagent_containers/food/snacks/breadslice/elvis
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	cookbonus = 5
 	output = /obj/item/reagent_containers/food/snacks/toastbacon/elvis
 
@@ -914,7 +914,7 @@ datum/cookingrecipe/flockbrainburger
 	output = /obj/item/reagent_containers/food/snacks/toastegg/elvis
 
 /datum/cookingrecipe/breakfast
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	amt1 = 2
 	item2 = /obj/item/reagent_containers/food/snacks/ingredient/egg
 	amt2 = 2
@@ -1044,7 +1044,7 @@ datum/cookingrecipe/flockbrainburger
 
 /datum/cookingrecipe/cookie_bacon
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_cookie
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	cookbonus = 4
 	output = /obj/item/reagent_containers/food/snacks/cookie/bacon
 
@@ -1202,7 +1202,7 @@ datum/cookingrecipe/flockbrainburger
 /datum/cookingrecipe/bacon
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	cookbonus = 8
-	output = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	output = /obj/item/reagent_containers/food/snacks/bacon
 
 /datum/cookingrecipe/pie_strawberry
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
@@ -1382,7 +1382,7 @@ datum/cookingrecipe/flockbrainburger
 
 /datum/cookingrecipe/pie_bacon
 	item1 = /obj/item/reagent_containers/food/snacks/ingredient/dough_s
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	cookbonus = 15
 	output = /obj/item/reagent_containers/food/snacks/pie/bacon
 
@@ -1453,7 +1453,7 @@ datum/cookingrecipe/flockbrainburger
 /datum/cookingrecipe/refried_beans
 	item1 = /obj/item/reagent_containers/food/snacks/plant/bean
 	amt1 = 2
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/soup/refried_beans
 
@@ -1532,13 +1532,13 @@ datum/cookingrecipe/flockbrainburger
 
 /datum/cookingrecipe/cake_bacon
 	item1 = /obj/item/reagent_containers/food/snacks/cake_batter
-	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item2 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	amt2 = 3
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/bacon
 
 /datum/cookingrecipe/cake_true_bacon
-	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon
+	item1 = /obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw
 	amt1 = 7
 	cookbonus = 14
 	output = /obj/item/reagent_containers/food/snacks/cake/true_bacon
