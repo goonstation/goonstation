@@ -13,12 +13,10 @@
 	/// worn belt icon states
 	var/static/belt_icons = list("eldritch" = "martian-belt",
 								 "martian" = "martian-belt",
-								 "precursor" = "martian-belt",
 								 "wizard" = "martian-belt")
 	/// worn back icon states
 	var/back_icons = list("eldritch" = "martian-backpack",
 						  "martian" = "martian-backpack",
-						  "precursor" = "martian-backpack",
 						  "wizard" = "martian-backpack")
 
 	/// wizard arts have an overlay applied, this is used to store it, otherwise it appears in the transformed icon when worn
@@ -101,7 +99,7 @@
 	associated_object = /obj/item/artifact/bag_of_holding
 	type_name = "Bag of Holding"
 	rarity_weight = 200
-	validtypes = list("eldritch", "martian", "precursor", "wizard")
+	validtypes = list("eldritch", "martian", "wizard")
 	validtriggers = list(/datum/artifact_trigger/force, /datum/artifact_trigger/electric, /datum/artifact_trigger/heat,
 		/datum/artifact_trigger/radiation, /datum/artifact_trigger/carbon_touch, /datum/artifact_trigger/silicon_touch,
 		/datum/artifact_trigger/cold)
@@ -153,12 +151,6 @@
 				boh.c_flags |= (ONBELT | ONBACK)
 				boh.create_storage(/datum/storage/artifact_bag_of_holding/wizard, max_wclass = pick(prob(75); W_CLASS_TINY, prob(100); W_CLASS_SMALL),
 					slots = rand(20, 40), opens_if_worn = TRUE, params = list("visible_slots" = rand(2, 5)))
-
-			// small storage, but it fits in pockets
-			if ("precursor")
-				boh.w_class = W_CLASS_SMALL
-				boh.create_storage(/datum/storage/artifact_bag_of_holding/precursor, max_wclass = pick(prob(40); W_CLASS_TINY, prob(100); W_CLASS_SMALL),
-					slots = rand(2, 4), opens_if_worn = TRUE)
 
 		if (boh.c_flags & ONBELT || boh.c_flags & ONBACK)
 			boh.uses_multiple_icon_states = TRUE

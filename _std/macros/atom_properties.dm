@@ -306,8 +306,6 @@ To remove:
 #define PROP_ATOM_FLOATING(x) x("floating", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 /// Thing will redirect clicks to a fluid on its tile when clicked by a relevant item (beaker mop etc)
 #define PROP_ATOM_DO_LIQUID_CLICKS(x) x("do_liquid_clicks", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
-/// when an atom is put into a precursor bag of holding artifact storage
-#define PROP_ATOM_PRECURSOR_BOH_ENTERED(x) x("precursor_boh_entered", APPLY_ATOM_PROPERTY_SIMPLE, REMOVE_ATOM_PROPERTY_SIMPLE)
 
 // In lieu of comments, these are the indexes used for list access in the macros below.
 #define ATOM_PROPERTY_ACTIVE_VALUE 1
