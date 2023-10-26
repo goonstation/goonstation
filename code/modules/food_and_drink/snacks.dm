@@ -3116,3 +3116,23 @@ ABSTRACT_TYPE(/obj/item/reagent_containers/food/snacks/dippable)
 			qdel (W)
 			return
 		return ..()
+
+// The cooked bacon
+/obj/item/reagent_containers/food/snacks/bacon
+	name = "bacon"
+	desc = "A strip of salty cured pork. Many disgusting nerds have a bizarre fascination with this meat, going so far as to construct tiny houses out of it."
+	icon_state = "bacon"
+	initial_reagents = list("porktonium"=10)
+	fill_amt = 0.5 //it's only one strip
+	icon = 'icons/obj/foodNdrink/food_ingredient.dmi'
+	bites_left = 1
+
+	New()
+		..()
+		src.pixel_x += rand(-4,4)
+		src.pixel_y += rand(-4,4)
+
+	heal(var/mob/M)
+		..()
+		M.nutrition += 20
+		return
