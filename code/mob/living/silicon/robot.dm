@@ -2229,6 +2229,22 @@
 		targethead.mode = newMode
 		update_bodypart(part = "head")
 		return 1
+	
+	verb/cmd_alter_eye_color()
+		set category = "Robot Commands"
+		set name = "Change eye color"
+		var/datum/robot_cosmetic/C = null
+		if (src.cosmetic_mods)
+			C = src.cosmetic_mods
+		else
+			boutput(usr, "<span class='alert'>ERROR: Cannot find cyborg's decorations.</span>")
+			return
+		var/selected_color = input(usr) as color
+		if(selected_color)
+			C.fx = hex_to_rgb_list(selected_color)
+			src.update_appearance()
+			src.update_bodypart("head")
+		. = TRUE
 
 	verb/access_internal_pda()
 		set category = "Robot Commands"
