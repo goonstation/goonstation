@@ -805,13 +805,18 @@ proc/get_default_flock()
 /// Update the relay icons based off the state of the actual relay
 /datum/flock/proc/relay_hud_process()
 	// There should be a list of ALL active players but i guess this works
-	var/list/all_flock_players = src.traces
-	all_flock_players += src.flockmind
-	for (var/mob/living/intangible/flock/flock_intangible as anything in all_flock_players)
-		flock_intangible.update_hud_relay()
-		if (istype(flock_intangible.loc, /mob/living/critter/flock/drone))
-			var/mob/living/critter/flock/drone/flockdrone = flock_intangible.loc
+	for (var/mob/living/intangible/flock/flocktrace as anything in src.traces)
+		if (istype(flocktrace.loc, /mob/living/critter/flock/drone))
+			var/mob/living/critter/flock/drone/flockdrone = flocktrace.loc
 			flockdrone.update_hud_relay()
+			continue
+		flocktrace.update_hud_relay()
+	// Why the flockmind isnt in traces idk but handling separately works
+	if (istype(src.flockmind.loc, /mob/living/critter/flock/drone))
+		var/mob/living/critter/flock/drone/flockdrone = src.flockmind
+		flockdrone.update_hud_relay()
+		return
+	src.flockmind.update_hud_relay()
 
 /datum/flock/proc/process()
 	if (src.relay_allowed)

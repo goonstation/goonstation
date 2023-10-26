@@ -30,7 +30,7 @@
 	var/pct_compute = min(100, round(flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST * 100))
 	var/pct_tiles = min(100, round(flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT * 100))
 	var/pct_total = round((((pct_compute / 100) * (pct_tiles / 100)) * 100))
-	return "Overall Progress: [pct_total]% \nCompute: [pct_compute]% \nConverted: [pct_tiles]%"
+	return "Overall Progress: [pct_total]%</br>Compute: [pct_compute]%</br>Converted: [pct_tiles]%"
 
 /// Update everything about the icon
 /atom/movable/screen/hud/relay/proc/update_value()
@@ -41,11 +41,12 @@
 	var/datum/flockstats/flock_stats = src.F.stats
 	src.desc = src.getDesc()
 	// This is probably bad but the gist of it is to update with the relay
-	if (!src.F.relay_in_progress)
+	if (src.alpha < 255)
 		var/pct_compute = flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST
 		var/pct_tiles = flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT
 		src.alpha = 100 + (155 * pct_compute * pct_tiles)
-	else if (src.F.time_left > 60)
+
+	if (src.F.time_left > 60)
 		src.icon_state = "structure-relay-glow"
 	else if (src.F.time_left > 0)
 		src.icon_state = "structure-relay-glow"
