@@ -136,6 +136,7 @@
 	var/scan_range = 7
 	var/turf/magnetic_center
 	alpha = 128
+	anchored = ANCHORED_ALWAYS
 
 	small
 		width = 7
