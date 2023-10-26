@@ -3300,7 +3300,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 					master.frustration++
 					if (master.mover)
 						qdel(master.mover)
-					master.navigate_to(protected,3,1,1, max_dist=15)
+					master.navigate_to(protected,2,1,1, max_dist=15)
 					return
 				else
 
@@ -3316,7 +3316,7 @@ TYPEINFO(/obj/item/device/guardbot_module)
 						master.moving = 0
 						if (master.mover)
 							qdel(master.mover)
-						master.navigate_to(protected,3,1,1, max_dist=15)
+						master.navigate_to(protected,2,1,1, max_dist=15)
 
 			return
 

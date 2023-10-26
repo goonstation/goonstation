@@ -50832,6 +50832,9 @@
 /area/centcom/offices/wire)
 "dyX" = (
 /obj/machinery/light,
+/obj/critter/meatslinky/gizmo{
+	health = 999999
+	},
 /turf/unsimulated/floor/wood/two,
 /area/centcom/offices/wire)
 "dyY" = (
