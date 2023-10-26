@@ -63,28 +63,3 @@ TYPEINFO(/datum/component/assembly)
 		//if the assembly is valid, we go and call the proc
 		//we need to return true so onattack does not trigger. Else we would still attack a completed assembly
 		return src.do_combine(checked_atom, user)
-
-/// Assembly component that gives an item to the user instead of calling a proc
-TYPEINFO(/datum/component/assembly/item_return)
-	initialization_args = list(
-		ARG_INFO("to_combine_item", DATA_INPUT_TYPE, "path or list of items that will trigger this proc when used on. Can take tool-bitflags like TOOL_CUTTING."),
-		ARG_INFO("proc_to_call", DATA_INPUT_REF, "The proc reference that will be called on the created item"),
-		ARG_INFO("on_tool_attack", DATA_INPUT_BOOL, "Set this to TRUE if you want the component to fire if the construction should go two-ways.", FALSE),
-		ARG_INFO("item_to_give", DATA_INPUT_TYPE, "Item or items to give to the user when combined"),
-	)
-
-/datum/component/assembly/item_return
-	/// what item do we spawn?
-	var/item_to_spawn = null
-
-/datum/component/assembly/item_return/Initialize(var/required_item, var/called_proc, var/on_tool_attack = FALSE, var/item_to_give)
-	. = ..()
-	src.item_to_spawn = item_to_give
-
-/datum/component/assembly/item_return/do_combine(var/atom/checked_atom, var/mob/user)
-	var/obj/item/to_give = new src.item_to_spawn
-	user.put_in_hand_or_drop(to_give)
-	qdel(src.parent)
-	return call(to_give, src.valid_assembly_proc)(checked_atom, user)
-
-
