@@ -45,32 +45,18 @@
 		var/pct_compute = flock_stats.peak_compute / FLOCK_RELAY_COMPUTE_COST
 		var/pct_tiles = flock_stats.tiles_converted / FLOCK_RELAY_TILE_REQUIREMENT
 		src.alpha = 100 + (155 * pct_compute * pct_tiles)
-		src.update_icon_state()
 	else if (src.F.time_left > 60)
-		src.stage = STAGE_BUILT
-		src.update_icon_state()
+		src.icon_state = "structure-relay-glow"
 	else if (src.F.time_left > 0)
-		src.stage = STAGE_CRITICAL
-		src.update_icon_state()
+		src.icon_state = "structure-relay-glow"
+		var/image/sparks = new(src.icon, icon_state = "structure-relay-sparks")
+		src.overlays += sparks
 	else if (src.F.relay_finished)
-		src.stage = STAGE_DESTROYED
-		src.update_icon_state()
-
-/atom/movable/screen/hud/relay/proc/update_icon_state()
-	switch(src.stage)
-		if (STAGE_UNBUILT)
-			src.icon_state = "structure-relay"
-		if (STAGE_BUILT)
-			src.icon_state = "structure-relay-glow"
-		if (STAGE_CRITICAL)
-			src.icon_state = "structure-relay-glow"
-			var/image/sparks = new(src.icon, icon_state = "structure-relay-sparks")
-			src.overlays += sparks
-		if (STAGE_DESTROYED) // *could* used a destroyed iconstate but just having the template/nothing is fine i guess
-			src.underlays = null
-			src.overlays = null
-			src.icon_state = "template-full"
-			return
+		src.underlays = null
+		src.overlays = null
+		src.icon_state = "template-full"
+	else
+		return
 	src.UpdateIcon()
 
 /atom/movable/screen/hud/relay/MouseEntered(location, control, params)
