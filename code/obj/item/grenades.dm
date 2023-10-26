@@ -1621,7 +1621,6 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
 		// hollow frame + staple gun  -> zipgun
 		src.AddComponent(/datum/component/assembly, /obj/item/staple_gun, PROC_REF(zipgun_crafting), TRUE)
-
 		// hollow frame + fuel  -> unwired pipebombs
 		src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipebomb_filling), FALSE)
 		// Since the assembly was done, return TRUE

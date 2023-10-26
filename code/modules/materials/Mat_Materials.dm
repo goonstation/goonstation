@@ -847,6 +847,7 @@ ABSTRACT_TYPE(/datum/material/crystal)
 		setProperty("density", 2)
 		setProperty("hard", 3)
 
+
 /datum/material/crystal/molitz
 	mat_id = "molitz"
 	name = "molitz"

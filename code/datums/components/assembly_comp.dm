@@ -41,9 +41,6 @@ TYPEINFO(/datum/component/assembly)
 /datum/component/assembly/proc/attackby(var/atom/affected_parent, var/atom/to_combine_atom, var/mob/user, var/params, var/is_special)
 	return try_combination(to_combine_atom, user)
 
-/datum/component/assembly/proc/do_combine(var/atom/checked_atom, var/mob/user)
-	return call(src.parent, src.valid_assembly_proc)(checked_atom, user)
-
 /datum/component/assembly/proc/try_combination(var/atom/checked_atom, var/mob/user)
 	var/is_combinable = FALSE
 	//if to_combine_item is a list, we look if we find the item in there
@@ -62,4 +59,4 @@ TYPEINFO(/datum/component/assembly)
 	if(is_combinable)
 		//if the assembly is valid, we go and call the proc
 		//we need to return true so onattack does not trigger. Else we would still attack a completed assembly
-		return src.do_combine(checked_atom, user)
+		return call(src.parent, src.valid_assembly_proc)(checked_atom, user)
