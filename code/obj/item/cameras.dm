@@ -36,20 +36,9 @@ TYPEINFO(/obj/item/camera/large)
 	var/takes_voodoo_pics = 0
 	var/steals_souls = FALSE
 
-	proc/remove_lens(var/atom/to_combine_atom, var/mob/user)
-		var/obj/item/lens/makeshift/L = new /obj/item/lens/makeshift
-		L.setMaterial(getMaterial("lens_glass_medium"))
-		user.u_equip(src)
-		boutput(user,"<span class='notice'>You cut out a lens from [src], but destroy [src] in the process.</span>")
-		playsound(src, 'sound/items/Wirecutter.ogg', 50, TRUE)
-		qdel(src)
-		user.put_in_hand_or_drop(L)
-		return TRUE
-
 	New()
 		..()
 		src.setItemSpecial(null)
-		src.AddComponent(/datum/component/assembly, TOOL_SNIPPING, PROC_REF(remove_lens), FALSE)
 
 	large
 		pictures_left = 30

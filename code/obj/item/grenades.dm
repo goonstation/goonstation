@@ -1572,7 +1572,7 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 			if (1) // Default state
 				return "You can use a <b>welding tool</b> to hollow out the frame."
 			if (2) // Hollowed out
-				return "You can add fuel to begin making a pipebomb, a staple gun to create a zip gun, a pipe frame to create a slam gun, a <b>wrench</b> to create a laser rifle assembly, or use <b>wirecutters</b> to create hollow pipe hulls."
+				return "You can add fuel to begin making a pipebomb, a staple gun to create a zip gun, a pipe frame to create a slam gun, or use <b>wirecutters</b> to create hollow pipe hulls."
 			if (3) // Hollowed out with chem inside
 				return "You can add a cable coil to continue making a pipebomb."
 			if (4) // Hollowed out with chem and wiring
@@ -1621,21 +1621,11 @@ TYPEINFO(/obj/item/old_grenade/oxygen)
 		src.AddComponent(/datum/component/assembly, src.allowed_items, PROC_REF(pipebomb_stuffing), TRUE)
 		// hollow frame + staple gun  -> zipgun
 		src.AddComponent(/datum/component/assembly, /obj/item/staple_gun, PROC_REF(zipgun_crafting), TRUE)
-		// hollow frame + wrench  -> makeshift laser gun frame
-		src.AddComponent(/datum/component/assembly, TOOL_WRENCHING, PROC_REF(makeshift_laser_crafting), FALSE)
+
 		// hollow frame + fuel  -> unwired pipebombs
 		src.AddComponent(/datum/component/assembly, list(/obj/item/reagent_containers/glass, /obj/item/reagent_containers/food/drinks,), PROC_REF(pipebomb_filling), FALSE)
 		// Since the assembly was done, return TRUE
 		return TRUE
-
-	/// laser rifle crafting proc
-	proc/makeshift_laser_crafting(var/atom/to_combine_atom, var/mob/user)
-		user.show_text("You wrench [src] into one long pipe!")
-		user.u_equip(src)
-		playsound(src, 'sound/items/Ratchet.ogg', 50, TRUE)
-		var/obj/item/gun/kinetic/zipgun/new_gun = new/obj/item/makeshift_laser_barrel
-		user.put_in_hand_or_drop(new_gun)
-		qdel(src)
 
 	/// Zipgun crafting proc
 	proc/zipgun_crafting(var/atom/to_combine_atom, var/mob/user)

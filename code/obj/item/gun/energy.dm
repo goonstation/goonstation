@@ -2017,7 +2017,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				. += " [src] is lacking a power source!"
 			if (!our_light)
 				. += " [src] is lacking a light source!"
-			else if(our_light != LIGHT_OK)
+			else if(our_light.light_status != LIGHT_OK)
 				. += " [src]'s light source is nonfunctional!"
 		else
 			. += " [src] is completely broken!"
@@ -2084,10 +2084,10 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 			var/datum/projectile/laser/makeshift/possible_laser
 			if (istype(possible_laser))
 				heat += rand(possible_laser.heat_low, possible_laser.heat_high)
-			else
+			else // alllow varedit shenanigans
 				heat += rand(15,20)
 			update_icon()
-			if (heat > 120 || (heat > 100 && prob(25)))
+			if (heat > 120)
 				boutput(user,"<span class='alert'>[src] bursts into flame!</span>")
 				break_light()
 				return
@@ -2099,161 +2099,10 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	New()
 		..()
 		var/obj/item/cell/supercell/charged/C = new /obj/item/cell/supercell/charged
-		attach_cell(C)
+		src.attach_cell(C)
 		var/obj/item/light/tube/T = new /obj/item/light/tube
-		attach_light(T)
-
-/obj/item/makeshift_laser_barrel
-	name = "pipe assembly"
-	desc = "A long empty pipe."
-	w_class = W_CLASS_BULKY // so you cant have 5 almost finished guns in your backpack then finish them in a combat encounter
-
-	tooltip_rebuild = TRUE
-	icon = 'icons/obj/items/guns/energy64x32.dmi'
-	icon_state = "makeshift-construction1"
-	/// Used to display the correct help message.
-	var/state = 0
-	///what proj does the resulting laser rifle use?
-	var/lens_proj = /datum/projectile/laser/makeshift
-
-	var/obj/item/light/tube/our_light
-
-	New()
-		..()
-		src.AddComponent(/datum/component/assembly, /obj/item/sheet, PROC_REF(construct_stock), FALSE)
-
-	get_help_message(dist, mob/user)
-		switch(src.state)
-			if (0)
-				return "You can use 4 metal sheets to construct a stock/grip for [src]."
-			if (1)
-				return "You can insert a salvaged lens into [src]. Salvaged lenses can be obtained by using <b>wirecutters</b> on a flashlight, camera, or flash."
-			if (2)
-				return "You can add 10 lengths of cable coil to wire the inside of the barrel."
-			if (3)
-				return "You can add a light tube to [src]."
-			if (4)
-				return "You can attach a timer to [src]."
-			if (5)
-				return "You can use a <b>welding tool</b> on [src] to weld the end of the barrel into a point."
-			if (6)
-				return "You can use a cable coil on [src] to wire the timer and barrel together."
-
-	proc/construct_stock(var/atom/to_combine_atom, var/mob/user)
-		var/obj/item/sheet/W = to_combine_atom
-		if (W.material.getMaterialFlags() & MATERIAL_METAL && W.amount >= 4)
-			state = 1
-			boutput(user,"<span class='notice'>You construct a stock and grip for the barrel.</span>")
-			playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
-			W.change_stack_amount(-4)
-			name = "pipe/stock assembly"
-			desc = "A gun of some kind? It seems unfinished."
-			icon_state = "makeshift-construction2"
-			update_icon()
-			src.RemoveComponentsOfType(/datum/component/assembly)
-			src.AddComponent(/datum/component/assembly, /obj/item/lens, PROC_REF(add_lens), FALSE)
-			return TRUE
-
-	proc/add_lens(var/atom/to_combine_atom, var/mob/user)
-		var/obj/item/lens/L = to_combine_atom
-		boutput(user,"<span class='notice'>You stuff [L] inside [src].</span>")
-		state = 2
-		if (L.material)
-			switch(L.material.getProperty("reflective"))
-				if(0 to 2)
-					lens_proj = /datum/projectile/laser/makeshift
-				if(3 to 5)
-					lens_proj = /datum/projectile/laser/makeshift/medium
-				if(6 to 7)
-					lens_proj = /datum/projectile/laser/makeshift/powerful
-				if(8 to INFINITY)
-					lens_proj = /datum/projectile/laser/makeshift/very_powerful
-		else
-			lens_proj = /datum/projectile/laser/makeshift // just in case
-		user.u_equip(L)
-		qdel(L)
-		src.RemoveComponentsOfType(/datum/component/assembly)
-		src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(add_inside_wiring), FALSE)
-		return TRUE
-
-	proc/add_inside_wiring(var/atom/to_combine_atom, var/mob/user)
-		var/obj/item/cable_coil/C = to_combine_atom
-		if (C.amount >= 10)
-			SETUP_GENERIC_ACTIONBAR(user, src, 3 SECONDS, /obj/item/makeshift_laser_barrel/proc/finish_add_wire,\
-			list(C,user), C.icon, C.icon_state, "<span class='notice'>[user] attaches wire to the inside of [src].</span>", null)
-			return TRUE
-		else
-			boutput(user,"<span class='notice'>You need at least 10 wire to fully wire up the barrel.</span>")
-			return FALSE
-
-	proc/finish_add_wire(var/obj/item/cable_coil/C, var/mob/user)
-		C.change_stack_amount(-10)
-		icon_state = "makeshift-construction3"
-		state = 3
-		src.RemoveComponentsOfType(/datum/component/assembly)
-		src.AddComponent(/datum/component/assembly, /obj/item/light/tube, PROC_REF(add_lighttube), FALSE)
-		return TRUE
-
-	proc/add_lighttube(var/atom/to_combine_atom, var/mob/user)
-		var/obj/item/light/tube/T = to_combine_atom
-		boutput(user,"<span class='notice'>You place [T] inside of the barrel.</span>")
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
-		user.u_equip(T)
-		our_light = T
-		state = 4
-		T.set_loc(src)
-		name = "pipe/stock/light assembly"
-		icon_state = "makeshift-construction4"
-		update_icon()
-		src.RemoveComponentsOfType(/datum/component/assembly)
-		src.AddComponent(/datum/component/assembly, /obj/item/device/timer, PROC_REF(add_timer), FALSE)
-		return TRUE
-
-	proc/add_timer(var/atom/to_combine_atom, var/mob/user)
-		var/obj/item/device/timer/T = to_combine_atom
-		boutput(user,"<span class='notice'>You attach the timer to [src].</span>")
-		playsound(src.loc, 'sound/effects/pop.ogg', 50, TRUE)
-		state = 5
-		user.u_equip(T)
-		qdel(T)
-		name = "pipe/stock/light/timer assembly"
-		icon_state = "makeshift-construction5"
-		update_icon()
-		src.RemoveComponentsOfType(/datum/component/assembly)
-		src.AddComponent(/datum/component/assembly, TOOL_WELDING, PROC_REF(weld_barrel), FALSE)
-		return TRUE
-
-	proc/weld_barrel(var/atom/to_combine_atom, var/mob/user)
-		if (to_combine_atom:try_weld(user, 1))
-			boutput(user,"<span class='notice'>You weld the end of the barrel into a point.</span>")
-			state = 6
-			name = "makeshift energy rifle"
-			icon_state = "makeshift-construction6"
-			update_icon()
-			src.RemoveComponentsOfType(/datum/component/assembly)
-			src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(finish_gun), FALSE)
-			return TRUE
-
-	proc/finish_gun(var/atom/to_combine_atom, var/mob/user)
-		var/obj/item/cable_coil/C = to_combine_atom
-		boutput(user,"<span class='notice'>You wire the timer, light tube, and barrel together.</span>")
-		C.change_stack_amount(-1)
-		var/obj/item/gun/energy/makeshift/M = new/obj/item/gun/energy/makeshift
-		user.put_in_hand_or_drop(M)
-		M.update_icon()
-		M.set_current_projectile(new lens_proj)
-		M.attach_light(our_light, user)
-		qdel(src)
-		return
-
-/obj/item/makeshift_laser_barrel/testing
-
-	New()
-		..()
-		our_light = new /obj/item/light/tube
-		our_light.set_loc(src)
-		src.RemoveComponentsOfType(/datum/component/assembly)
-		src.AddComponent(/datum/component/assembly, /obj/item/cable_coil, PROC_REF(finish_gun), FALSE)
+		src.attach_light(T)
+		src.update_icon()
 
 #undef HEAT_REMOVED_PER_PROCESS
 #undef FIRE_THRESHOLD
