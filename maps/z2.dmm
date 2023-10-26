@@ -34419,7 +34419,7 @@
 "cxx" = (
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat/mysterymeat,
-/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon,
+/obj/item/reagent_containers/food/snacks/ingredient/meat/bacon/raw,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/item/reagent_containers/food/snacks/ingredient/meat,
 /obj/storage/crate/freezer,
