@@ -832,6 +832,7 @@ proc/ui_describe_reagents(atom/A)
 	fractional
 		var/container_count = 4
 		var/container_order[4]
+		desc = "A set of glass tubes, conveniently capable of splitting the outputs of more advanced reactions. Can be hooked up to many types of containers."
 		icon_state = "condenser_fractional"
 		update_icon()
 			src.UpdateOverlays(null, "fluid_image")
@@ -849,10 +850,15 @@ proc/ui_describe_reagents(atom/A)
 				boutput(user, "<span class='alert'>The [src.name] is fully connected!</span>")
 				return
 			..()
+
 		add_reagents_to_containers(reagent, amount, sdata, temp_new, donotreact, donotupdate, priority)
 			var/obj/chosen_container
 			if (priority <= container_count)
 				chosen_container = container_order[priority]
+			else
+				for(var/i = container_count to 1)
+					if (container_order[i])
+						chosen_container = container_order[i]
 
 			if(!chosen_container || chosen_container.reagents.maximum_volume <= chosen_container.reagents.total_volume)	//all full? backflow!!
 				src.reagents.add_reagent(reagent, amount, sdata, temp_new, donotreact, donotupdate)
@@ -867,15 +873,22 @@ proc/ui_describe_reagents(atom/A)
 
 		add_line(var/obj/container, var/containerNo)
 			var/x_off = 5*((containerNo+1)%2)  //alternate between 0/+5
-			var/y_off = (5*round((containerNo-1)/2)) //go up by 4 pixels for every 2nd connection
-			var/datum/lineResult/result = drawLine(src, container, "condenser_[containerNo]", "condenser_end_[containerNo]", src.pixel_x-4+x_off, src.pixel_y+4+y_off, container.pixel_x, container.pixel_y + get_chemical_effect_position(), mode=LINEMODE_STRETCH_NO_CLIP)
+			var/y_off = (4*round((containerNo-1)/2)) //go up by 4 pixels for every 2nd connection
+			var/datum/lineResult/result = drawLine(src, container, "condenser_[containerNo]", "condenser_end_[containerNo]", src.pixel_x-4+x_off, src.pixel_y+5+y_off, container.pixel_x, container.pixel_y + get_chemical_effect_position(), mode=LINEMODE_STRETCH_NO_CLIP)
 			result.lineImage.layer = src.layer+0.01
-			src.UpdateOverlays(result.lineImage, "tube\ref[container]")
+			result.lineImage.pixel_x = -src.pixel_x
+			result.lineImage.pixel_y = -src.pixel_y
+			src.UpdateOverlays(result.lineImage, "tube\ref[containerNo]")
 		remove_container(var/obj/container)
 			for(var/i= 1 to container_count)
 				if (container_order[i] == container)
+					src.connected_containers.Remove(container)
+					src.UpdateOverlays(null, "tube\ref[i]")
+					UnregisterSignal(container, COMSIG_ATTACKHAND)
+					UnregisterSignal(container, XSIG_OUTERMOST_MOVABLE_CHANGED)
+					UnregisterSignal(container, COMSIG_MOVABLE_MOVED)
 					container_order[i] = FALSE
-			..()
+
 		add_container(var/obj/container)
 			//seperate implementation, for a condenser that cares about what lines are what
 			RegisterSignal(container, COMSIG_ATTACKHAND, PROC_REF(remove_container))

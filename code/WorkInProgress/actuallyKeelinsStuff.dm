@@ -103,7 +103,7 @@ Returns:
 		I.filters += filter(type="layer", render_source = (islist(render_source_line) ? pick(render_source_line) : render_source_line))
 		if(render_source_cap != null)
 			//And to avoid resizing caps, we pre-emptively upscale the source cap, so that it looks the same.
-			//This probably breaks source caps at the beginning
+			//This probably breaks dual-ended caps.
 			var/matrix/M2 = UNLINT(matrix().Scale(1/scale,1).Translate(-((1/scale)-1)*32,0))
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
 		I.transform = M
