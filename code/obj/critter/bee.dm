@@ -761,6 +761,7 @@ ADMIN_INTERACT_PROCS(/obj/critter/domestic_bee, proc/dance, proc/puke_honey)
 	hat_x_offset_left = 10
 
 /obj/critter/domestic_bee/queen/big/buddy
+	name = "queen greater domestic space-B33"
 	desc = "It appears to be a hybrid of a queen domestic space-bee and a PR-6 Robuddy. This one's a little bigger than normal."
 	health = 75
 	firevuln = 0.4
