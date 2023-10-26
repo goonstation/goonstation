@@ -94,6 +94,20 @@ Returns:
 			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
 		I.transform = UNLINT(matrix().Turn(-angle).Translate((dist),0).Turn(angle))
 		result.lineImage = I
+	else if(mode == LINEMODE_STRETCH_NO_CLIP)
+		//using the transform available in filters clips things awfully in rare cases.
+		//So, matrix M scales down our 64 pixel line to whatever length was calculated earlier, then moves it into place.
+		var/matrix/M = UNLINT(matrix().Scale(scale,1).Translate((dist/2),0).Turn(angle).Translate(src_off_x,src_off_y))
+		var/image/I = image(null,source)
+		I.appearance_flags = KEEP_APART  //Required for some odd reason.
+		I.filters += filter(type="layer", render_source = (islist(render_source_line) ? pick(render_source_line) : render_source_line))
+		if(render_source_cap != null)
+			//And to avoid resizing caps, we pre-emptively upscale the source cap, so that it looks the same.
+			//This probably breaks source caps at the beginning
+			var/matrix/M2 = UNLINT(matrix().Scale(1/scale,1).Translate(-((1/scale)-1)*32,0))
+			I.filters += filter(type="layer", render_source = (islist(render_source_cap) ? pick(render_source_cap) : render_source_cap), transform=M2)
+		I.transform = M
+		result.lineImage = I
 	else if(mode == LINEMODE_SIMPLE)
 		var/image/I = image(null,source)
 		I.icon = 'icons/effects/lines2.dmi'
