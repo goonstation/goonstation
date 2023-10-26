@@ -1145,6 +1145,16 @@ var/global/noir = 0
 			else
 				tgui_alert(usr,"If you are below the rank of Administrator, you need to be observing and at least a Primary Administrator to get a player.")
 
+		if ("viewport")
+			if(src.level >= LEVEL_SA)
+				var/mob/M = locate(href_list["target"])
+				if (!M) return
+				var/datum/viewport/viewport = usr.create_viewport("Admin: Viewport", title = "Following: [M.name]", size=9)
+				viewport.handler.listens = TRUE
+				viewport.start_following(M)
+			else
+				tgui_alert(usr, "You need to be at least a Secondary Adminstrator to follow a player with a vieweport.")
+
 		if ("gib")
 			if( src.level >= LEVEL_PA )
 				var/mob/M = locate(href_list["target"])
