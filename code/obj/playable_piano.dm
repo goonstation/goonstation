@@ -5,7 +5,7 @@
 	icon_state = "piano_key"
 	w_class = W_CLASS_TINY
 
-#define MIN_TIMING 0.25
+#define MIN_TIMING 0.1
 #define MAX_TIMING 0.5
 #define MAX_NOTE_INPUT 15360
 
