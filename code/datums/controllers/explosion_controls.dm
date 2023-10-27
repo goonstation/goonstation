@@ -1,5 +1,5 @@
 var/datum/explosion_controller/explosions
-#define RSS_SCALE 1.5
+#define STACKED_EXPLOSION_DIMISHING_RETURNS_SCALING 1.5
 //#define EXPLOSION_MAPTEXT_DEBUGGING
 /datum/explosion_controller
 	var/list/queued_explosions = list()
@@ -62,7 +62,7 @@ var/datum/explosion_controller/explosions
 		var/datum/explosion/explosion
 
 		for (var/turf/T as anything in queued_turfs)
-			queued_turfs[T] = 2 * (queued_turfs[T])**(1 / (2 * RSS_SCALE))
+			queued_turfs[T] = 2 * (queued_turfs[T])**(1 / (2 * STACKED_EXPLOSION_DIMISHING_RETURNS_SCALING))
 			p = queued_turfs[T]
 			explosion = queued_turfs_blame[T]
 			if (p >= 6)
@@ -264,7 +264,7 @@ var/datum/explosion_controller/explosions
 
 		for (var/turf/T as anything in nodes) // inverse square law (IMPORTANT) and pre-stun
 			var/p = power / (((radius-nodes[T]) / brisance + 1)**2)
-			nodes[T] = p**RSS_SCALE
+			nodes[T] = p**STACKED_EXPLOSION_DIMISHING_RETURNS_SCALING
 			blame[T] = src
 			p = min(p, 10)
 			if(prob(1))
