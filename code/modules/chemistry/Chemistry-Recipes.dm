@@ -2641,13 +2641,13 @@
 		temperature_change = 4 //changes to 8 in closed containers
 		stateful = TRUE
 
-		on_reaction(var/datum/reagents/holder)
+		on_reaction(var/datum/reagents/holder, created_volume)
 			if(holder.has_reagent("water"))
-				holder.remove_reagent("water", reaction_speed/2)
+				holder.remove_reagent("water", created_volume/2)
 			else
-				holder.remove_reagent("steam", reaction_speed) //if it gets above 100C, you can still use steam (in a closed container) at half efficiency
-				holder.remove_reagent("sulfur", reaction_speed/2) //also uses these less efficiently; this should mean an even amount of water, sulfur and oxygen will always deplete evenly-ish
-				holder.remove_reagent("oxygen", reaction_speed/2)
+				holder.remove_reagent("steam", created_volume) //if it gets above 100C, you can still use steam (in a closed container) at half efficiency
+				holder.remove_reagent("sulfur", created_volume/2) //also uses these less efficiently; this should mean an even amount of water, sulfur and oxygen will always deplete evenly-ish
+				holder.remove_reagent("oxygen", created_volume/2)
 
 			var/location = get_turf(holder.my_atom)
 			if (holder.my_atom && holder.my_atom.is_open_container() || istype(holder,/datum/reagents/fluid_group))
