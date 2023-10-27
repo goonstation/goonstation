@@ -224,7 +224,7 @@ ADMIN_INTERACT_PROCS(/obj/machinery/disposal, proc/flush, proc/eject)
 			return
 
 		// if it has just been shot out of a mail chute, don't accept it.
-		if (!GET_COOLDOWN(MO, "PipeEject"))
+		if (GET_COOLDOWN(MO, "PipeEject"))
 			return
 
 		if(isitem(MO))
