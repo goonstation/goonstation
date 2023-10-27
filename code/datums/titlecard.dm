@@ -92,7 +92,7 @@
 
 /datum/titlecard/proc/get_tip(mob/new_player/new_player)
 	. = new_player.my_own_roundstart_tip || get_global_tip()
-	. = "Tip: [.] <a href='byond://winset?command=.refresh_tip' style='font-size:0.6em;color:#aaf;'>REFRESH TIP</a>"
+	. = "Tip: [.] <a href='byond://winset?command=.refresh_tip' style='color:#aaf;'>🔄</a>"
 
 proc/get_random_tip()
 	#ifdef RP_MODE
