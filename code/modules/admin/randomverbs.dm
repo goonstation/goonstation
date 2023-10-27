@@ -1976,6 +1976,7 @@
 
 	O.insert_observer(M)
 
+
 /client/proc/orp()
 	SET_ADMIN_CAT(ADMIN_CAT_NONE)
 	set name = "ORP"
@@ -1983,6 +1984,46 @@
 	ADMIN_ONLY
 
 	src.admin_observe_random_player()
+
+
+/client/proc/admin_observe_next_player()
+	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)
+	set name = "Observe Next Player"
+	set desc = "Observe the next living logged-in player in some unspecified order."
+	ADMIN_ONLY
+
+	if (!isobserver(src.mob))
+		boutput(src, "<span class='alert'>Error: you must be an observer to use this command.</span>")
+		return
+
+	var/client/currently_observed_client = null
+	if (istype(src.mob, /mob/dead/target_observer))
+		var/mob/currently_observed_mob = src.mob.loc
+		if(istype(currently_observed_mob))
+			currently_observed_client = currently_observed_mob.client
+		qdel(src.mob)
+
+	var/mob/dead/observer/O = src.mob
+
+	for(var/i = 1 to 2) // so we wrap around if we are on the last valid one
+		for(var/client/client in clients)
+			if(currently_observed_client == client)
+				currently_observed_client = null // makes it so the next one is accepted
+				continue
+			if(isliving(client.mob) && isnull(currently_observed_client))
+				O.insert_observer(client.mob)
+				return
+
+	boutput(src, "<span class='alert'>Error: no valid players found.</span>")
+
+
+/client/proc/onp()
+	SET_ADMIN_CAT(ADMIN_CAT_NONE)
+	set name = "ONP"
+	set popup_menu = 0
+	ADMIN_ONLY
+
+	src.admin_observe_next_player()
 
 /client/proc/admin_pick_random_player()
 	SET_ADMIN_CAT(ADMIN_CAT_PLAYERS)

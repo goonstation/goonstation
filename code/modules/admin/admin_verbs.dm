@@ -34,6 +34,9 @@ var/list/admin_verbs = list(
 		/client/proc/toggle_hearing_all,
 		/client/proc/cmd_admin_prison_unprison,
 		/client/proc/cmd_admin_playermode,
+		/client/proc/cmd_create_viewport,
+		/client/proc/cmd_create_viewport_silent,
+		/client/proc/cmd_create_viewport_following,
 
 		/datum/admins/proc/announce,
 		/datum/admins/proc/toggleooc,
@@ -107,6 +110,8 @@ var/list/admin_verbs = list(
 		/client/proc/force_desussification,
 		/client/proc/admin_observe_random_player,
 		/client/proc/orp,
+		/client/proc/admin_observe_next_player,
+		/client/proc/onp,
 		/client/proc/admin_pick_random_player,
 		/client/proc/fix_powernets,
 		/datum/admins/proc/delay_start,

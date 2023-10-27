@@ -130,6 +130,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 
 /obj/item/device/light/flashlight/abilities = list(/obj/ability_button/flashlight_toggle)
 
+ADMIN_INTERACT_PROCS(/obj/item/device/light/glowstick, proc/turnon, proc/burst)
 /obj/item/device/light/glowstick // fuck yeah space rave
 	icon = 'icons/obj/lighting.dmi'
 	icon_state = "glowstick-green0"
@@ -305,6 +306,7 @@ ADMIN_INTERACT_PROCS(/obj/item/device/light/flashlight, proc/toggle)
 	col_b = 0
 	color_name = "red"
 
+ADMIN_INTERACT_PROCS(/obj/item/device/light/candle, proc/light, proc/put_out)
 /obj/item/device/light/candle
 	name = "candle"
 	desc = "It's a big candle."
@@ -740,6 +742,7 @@ TYPEINFO(/obj/item/device/light/floodlight)
 #define FLARE_LIT 2
 #define FLARE_BURNT 3
 
+ADMIN_INTERACT_PROCS(/obj/item/roadflare, proc/light, proc/put_out)
 /obj/item/roadflare
 	name = "emergency flare"
 	desc = "Space grade emergency flare that can burn in an 02 free environment. Estimated burn time 3-6 minutes."

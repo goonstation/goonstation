@@ -450,6 +450,8 @@
 /proc/jpsTurfPassable(turf/T, turf/source, atom/passer, list/options)
 	. = TRUE
 	options ||= list()
+	if(istype(T, /turf/space/fluid/warp_z5))
+		return FALSE
 	if(istype(passer,/mob/living/critter/flock/drone) && istype(T, /turf/simulated/wall/auto/feather))
 		var/mob/living/critter/flock/drone/F = passer
 		var/turf/simulated/wall/auto/feather/wall = T

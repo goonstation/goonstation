@@ -414,6 +414,7 @@
 					W.set_loc(src)
 					src.fueltank = W
 					src.updateDialog()
+					src.myhud?.update_fuel()
 					src.engine.activate()
 				else
 					boutput(usr, "<span class='alert'>That doesn't fit there.</span>")
@@ -425,6 +426,7 @@
 					fueltank.set_loc(src.loc)
 					fueltank = null
 					src.updateDialog()
+					src.myhud?.update_fuel()
 					src.engine.deactivate()
 				else
 					boutput(usr, "<span class='alert'>There's no tank in the slot.</span>")
@@ -735,6 +737,7 @@
 					toxins = 0
 
 				if(usage)
+					src.myhud?.update_fuel()
 					if(abs(usage - toxins)/usage > 0.10) // 5% difference from expectation
 						engine.deactivate()
 				consumed?.dispose()
@@ -1478,6 +1481,8 @@
 	src.sensors.activate()
 	myhud.update_systems()
 	myhud.update_states()
+	myhud.update_health()
+	myhud.update_fuel()
 	///// Lights Subsystem
 	src.lights = new /obj/item/shipcomponent/pod_lights/pod_1x1( src )
 	src.lights.ship = src
@@ -1992,7 +1997,7 @@
 			var/obj/portal/P = new /obj/portal
 			P.set_loc(get_turf(src))
 			var/turf/T = pick_landmark(LANDMARK_ESCAPE_POD_SUCCESS)
-			P.target = T
+			P.set_target(T)
 			src.dir = map_settings ? map_settings.escape_dir : SOUTH
 			src.set_loc(T)
 			logTheThing(LOG_STATION, src, "creates an escape portal at [log_loc(src)].")

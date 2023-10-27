@@ -603,7 +603,7 @@
 				if(!isdead(enemy))
 					src.wake_from_ai_pause()
 					break
-	else if(src.wander_count > FLOCK_DRONE_WANDER_PAUSE_COUNT)
+	else if(src.wander_count > FLOCK_DRONE_WANDER_PAUSE_COUNT && !src.absorber.item)
 		src.pause_ai()
 
 /mob/living/critter/flock/drone/process_move(keys)

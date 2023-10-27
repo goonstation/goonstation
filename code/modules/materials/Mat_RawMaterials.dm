@@ -248,8 +248,9 @@
 	default_material = "slag"
 	mat_changename = FALSE
 
+ABSTRACT_TYPE(/obj/item/material_piece/rubber)
 /obj/item/material_piece/rubber/latex
-	name = "sheet"
+	name = "latex sheet"
 	desc = "A sheet of latex."
 	icon_state = "latex"
 	default_material = "latex"
@@ -258,6 +259,12 @@
 		src.create_reagents(10)
 		reagents.add_reagent("rubber", 10)
 		return ..()
+
+/obj/item/material_piece/rubber/plastic
+	name = "plastic sheet"
+	icon_state = "latex"
+	desc = "A sheet of plastic."
+	default_material = "plastic"
 
 /obj/item/material_piece/organic/wood
 	name = "wooden log"
