@@ -35,7 +35,6 @@
 	if (
 		isnull(src.ckey) \
 		|| isnull(src.key) \
-		|| isnull(src.byond_join_date) \
 		|| isnull(src.byond_major) \
 		|| isnull(src.byond_minor) \
 		|| isnull(src.played) \
