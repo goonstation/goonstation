@@ -11,13 +11,14 @@
 	/// original item_state
 	var/base_item_state
 	/// worn belt icon states
-	var/static/belt_icons = list("eldritch" = "martian-belt",
+	// TODO: sprite eldrich and wizard belts
+	var/static/belt_icons = list("eldritch" = null,
 								 "martian" = "martian-belt",
-								 "wizard" = "martian-belt")
+								 "wizard" = null)
 	/// worn back icon states
-	var/back_icons = list("eldritch" = "martian-backpack",
+	var/back_icons = list("eldritch" = "eldritch-backpack",
 						  "martian" = "martian-backpack",
-						  "wizard" = "martian-backpack")
+						  "wizard" = "wizard-backpack")
 
 	/// wizard arts have an overlay applied, this is used to store it, otherwise it appears in the transformed icon when worn
 	var/image/wizard_gem_image
@@ -127,8 +128,8 @@
 					wclass = pick(prob(30); W_CLASS_TINY, prob(100); W_CLASS_SMALL, prob(10); W_CLASS_NORMAL)
 
 				// allow it to be worn if it can hold a lot of items
-				if (slots > 4)
-					boh.c_flags |= ONBELT
+				//if (slots > 4)
+				//	boh.c_flags |= ONBELT
 				if (slots > 6)
 					boh.c_flags |= ONBACK
 
@@ -148,7 +149,8 @@
 			// "large sized" storage that can hold small items
 			if ("wizard")
 				boh.w_class = W_CLASS_BULKY
-				boh.c_flags |= (ONBELT | ONBACK)
+				//boh.c_flags |= (ONBELT | ONBACK)
+				boh.c_flags |= ONBACK
 				boh.create_storage(/datum/storage/artifact_bag_of_holding/wizard, max_wclass = pick(prob(75); W_CLASS_TINY, prob(100); W_CLASS_SMALL),
 					slots = rand(20, 40), opens_if_worn = TRUE, params = list("visible_slots" = rand(2, 5)))
 
