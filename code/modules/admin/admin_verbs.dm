@@ -1984,7 +1984,7 @@ var/list/fun_images = list()
 
 	if (global.current_state != GAME_STATE_PREGAME)
 		return
-	var/hint = pick(dd_file2list("strings/roundstart_hints.txt"))
+	var/hint = get_random_tip()
 	for (var/client/C)
 		if (!istype(C.mob,/mob/new_player))
 			continue
