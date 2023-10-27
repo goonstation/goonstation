@@ -11,6 +11,8 @@ var/global/datum/mutex/limited/latespawning = new(5 SECONDS)
 	var/pregameBrowserLoaded = FALSE
 	var/antag_fallthrough = FALSE
 
+	var/my_own_roundstart_tip = null //! by default everyone sees the get_global_tip() tip, but if they press the button to refresh they get their own
+
 #ifdef TWITCH_BOT_ALLOWED
 	var/twitch_bill_spawn = FALSE
 #endif

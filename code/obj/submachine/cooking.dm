@@ -84,7 +84,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 					else
 						user.show_text("You're too messy to improve your hygiene this way, you need a shower or a bath.", "red")
 				//simpler handwashing if hygiene isn't a concern
-				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+				playsound(src.loc, 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 				user.visible_message("<span class='notice'>[user] washes [his_or_her(user)] hands.</span>")
 				H.blood_DNA = null
 				H.blood_type = null
@@ -124,7 +124,7 @@ TYPEINFO(/obj/submachine/chef_sink)
 	loopStart()
 		..()
 		if(!checkStillValid()) return
-		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 25, 1)
+		playsound(get_turf(sink), 'sound/impact_sounds/Liquid_Slosh_1.ogg', 15, 1)
 
 	onEnd()
 		if(!checkStillValid())
