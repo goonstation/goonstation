@@ -631,6 +631,7 @@
 		id = "milk_powder"
 		result = "milk_powder"
 		required_reagents = list("milk" = 1)
+		inhibitors = ("water")
 		result_amount = 1
 		min_temperature = T0C + 100
 		mix_phrase = "The water boils away, leaving behind a white condensed powder."
