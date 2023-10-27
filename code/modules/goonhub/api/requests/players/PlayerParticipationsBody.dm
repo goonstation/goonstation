@@ -2,7 +2,8 @@
 /datum/apiBody/PlayerParticipation
 	fields = list(
 		"player_id", // integer
-		"round_id" // integer
+		"round_id", // integer
+		"job" // string
 	)
 
 /datum/apiBody/PlayerParticipation/VerifyIntegrity()
