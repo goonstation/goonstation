@@ -200,8 +200,6 @@
 
 	for(var/turf/T in turfs) //Go through all the turfs and generate them
 		assign_turf(T, flags)
-		while(air_master && (length(air_master.groups_to_rebuild) > 10 || length(air_master.tiles_to_update) > 5000))
-			sleep(air_master.parent_controller?.schedule_interval)
 		LAGCHECK(LAG_MED)
 
 /datum/map_generator/room_maze_generator/proc/assign_turf(turf/T, flags)
