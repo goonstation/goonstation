@@ -1961,6 +1961,7 @@
 			return null
 		var/obj/item/robot_module/RM = src.module
 		RM.icon_state = initial(RM.icon_state)
+		RM.radio.remove_radio_upgrade()
 		src.show_text("Your module was removed!", "red")
 		uneq_all()
 		src.module = null
