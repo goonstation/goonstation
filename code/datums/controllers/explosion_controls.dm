@@ -15,6 +15,7 @@ var/datum/explosion_controller/explosions
 		if(istype(source)) // Oshan hotspots rudely send a datum here 😐
 			for(var/atom/movable/loc_ancestor in obj_loc_chain(source))
 				SEND_SIGNAL(loc_ancestor, COMSIG_ATOM_EXPLODE_INSIDE, args)
+		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction)
 		var/atom/A = epicenter
 		if(istype(A))
 			var/severity = power >= 6 ? 1 : power > 3 ? 2 : 3
@@ -23,7 +24,7 @@ var/datum/explosion_controller/explosions
 				fprint = source.fingerprintslast
 			while(!istype(A, /turf))
 				if(!istype(A, /mob) && A != source)
-					A.ex_act(severity, fprint, power)
+					A.ex_act(severity, fprint, power, E)
 				A = A.loc
 		if (!istype(epicenter, /turf))
 			epicenter = get_turf(epicenter)
@@ -31,7 +32,6 @@ var/datum/explosion_controller/explosions
 			return
 		if (epicenter.loc:sanctuary)
 			return//no boom boom in sanctuary
-		var/datum/explosion/E = new/datum/explosion(source, epicenter, power, brisance, angle, width, usr, turf_safe, range_cutoff_fraction)
 		if(exploding)
 			queued_explosions += E
 		else
@@ -67,13 +67,13 @@ var/datum/explosion_controller/explosions
 			explosion = queued_turfs_blame[T]
 			if (p >= 6)
 				for (var/mob/M in T)
-					M.ex_act(1, explosion?.last_touched, p)
+					M.ex_act(1, explosion?.last_touched, p, explosion)
 			else if (p > 3)
 				for (var/mob/M in T)
-					M.ex_act(2, explosion?.last_touched, p)
+					M.ex_act(2, explosion?.last_touched, p, explosion)
 			else
 				for (var/mob/M in T)
-					M.ex_act(3, explosion?.last_touched, p)
+					M.ex_act(3, explosion?.last_touched, p, explosion)
 
 		LAGCHECK(LAG_HIGH)
 
@@ -90,7 +90,7 @@ var/datum/explosion_controller/explosions
 					severity = 2
 				else
 					severity = 3
-				O.ex_act(severity, explosion?.last_touched, power)
+				O.ex_act(severity, explosion?.last_touched, power, explosion)
 				O?.last_explosion = explosion
 
 		LAGCHECK(LAG_HIGH)
@@ -118,7 +118,7 @@ var/datum/explosion_controller/explosions
 					continue // they can break even on severity 3
 				else if(istype(T, /turf/simulated))
 					severity = max(severity, 3)
-			T.ex_act(severity, explosion?.last_touched)
+			T.ex_act(severity, explosion?.last_touched, null, explosion)
 #endif
 		LAGCHECK(LAG_HIGH)
 
@@ -282,5 +282,3 @@ var/datum/explosion_controller/explosions
 		// cleanup, we're done
 		src.source = null
 		src.epicenter = null
-
-#undef RSS_SCALE

@@ -537,24 +537,26 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 		if (src.pressure)
 			. += "<br><span class='notice'>This crystal has already measured something. Another explosion will overwrite the previous results.</span>"
 
-	ex_act(var/ex, var/inf, var/factor)
-		var/exp_power = (factor / 2) ** 2 || (4-clamp(ex, 1, 3))*2 // we made it extremely accurate
+	ex_act(severity, fingerprints, power, datum/explosion/explosion)
+		var/exp_power = explosion?.power || (4-clamp(severity, 1, 3))*2
 
 		if (exp_power >= 10000) //sadly, the hemera nuke exists and so we must put a limit here
 			qdel(src)
 			return
-
-		if (src.explosion_id == exp_power * world.time)
-			return // we don't want peeps stacking 50 crystals on 1 explosion
-			// this only stops stacking, or making rings of crystals - you can still make a line of valuable crystals from the epicenter
 
 		if (src.last_explode_time < world.time)
 			src.pressure = exp_power
 		else // sum the power of multiple explosions at roughly the same instant, but diminishingly
 			// preferring stronger explosions, too
 			src.pressure = max(src.pressure, exp_power) + sqrt(min(src.pressure, exp_power))
-
-		src.icon_state = "pressure_[clamp(ex, 1, 3)]"
+		var/icon_num
+		if (exp_power < 10)
+			icon_num = 3
+		else if (exp_power < 50)
+			icon_num = 2
+		else
+			icon_num = 1
+		src.icon_state = "pressure_[icon_num]"
 		src.last_explode_time = world.time
 		src.explosion_id = exp_power * world.time
 

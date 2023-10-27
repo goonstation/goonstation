@@ -1,4 +1,6 @@
-
+(t)fri oct 27 23
+(u)LeahTheTech
+(+)Pressure crystals now more consistently and accurately measure explosion power, they also shatter when hit by extreme (10000) power explosions.
 (t)wed oct 25 23
 (u)MylieDaniels
 (p)16602
