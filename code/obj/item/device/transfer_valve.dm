@@ -538,9 +538,9 @@ TYPEINFO(/obj/item/device/transfer_valve/briefcase)
 			. += "<br><span class='notice'>This crystal has already measured something. Another explosion will overwrite the previous results.</span>"
 
 	ex_act(severity, fingerprints, power, datum/explosion/explosion)
-		var/exp_power = explosion?.power || (4-clamp(severity, 1, 3))*2
+		var/exp_power = (power / 2) ** 2 || (4-clamp(severity, 1, 3))*2
 
-		if (exp_power >= 10000) //sadly, the hemera nuke exists and so we must put a limit here
+		if (explosion.power >= 10000) //sadly, the hemera nuke exists and so we must put a limit here
 			qdel(src)
 			return
 
