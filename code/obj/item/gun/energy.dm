@@ -1841,7 +1841,7 @@ TYPEINFO(/obj/item/gun/energy/wasp)
 		..()
 
 // Makeshift Laser Rifle
-#define HEAT_REMOVED_PER_PROCESS 15
+#define HEAT_REMOVED_PER_PROCESS 30
 #define FIRE_THRESHOLD 125
 TYPEINFO(/obj/item/gun/energy/makeshift)
 	mats = 0
@@ -1853,7 +1853,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	icon_state = "makeshift-energy"
 	item_state = "makeshift_laser"
 	wear_state = "makeshift_laser"
-	w_class = W_CLASS_BULKY
 	c_flags = ONBACK
 	cell_type = null
 	can_swap_cell = FALSE
@@ -1861,7 +1860,7 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	force = 7
 	two_handed = TRUE
 	can_dual_wield = FALSE
-	desc = "A laser rifle cobbled together from various supplies found around the station, probably not the most reliable weapon in a firefight."
+	desc = "A laser rifle cobbled together from various appliances, Prone to overheating."
 	muzzle_flash = "muzzle_flash_phaser"
 	charge_icon_state = "laser"
 	spread_angle = 10
@@ -1874,18 +1873,6 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	var/heat = 0
 	///What step of repair are we on if we have broken? 0 = functional
 	var/heat_repair = 0
-
-	proc/break_light()
-		if (our_cell)
-			our_cell.use(our_cell.charge)
-			SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
-		elecflash(get_turf(src), 1, 3)
-		our_light.light_status = LIGHT_BURNED
-		our_light.update()
-		heat_repair = 1
-		src.icon_state = "makeshift-burnt-1"
-		heat += FIRE_THRESHOLD // spicy!
-		update_icon()
 
 	proc/attach_cell(var/obj/item/cell/C, mob/user)
 		if (user)
@@ -1914,10 +1901,27 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		src.icon_state = "makeshift-energy"
 		update_icon()
 
+	proc/add_heat(var/heat_to_add, var/mob/user)
+		heat += heat_to_add
+		if (heat >= FIRE_THRESHOLD)
+			if (user)
+				boutput(user,"<span class='alert'>[src] bursts into flame!</span>")
+			if (our_cell)
+				our_cell.use(our_cell.charge)
+				SEND_SIGNAL(src, COMSIG_CELL_USE, INFINITY)
+			elecflash(get_turf(src), 1, 3)
+			our_light.light_status = LIGHT_BURNED
+			our_light.update()
+			heat_repair = 1
+			src.icon_state = "makeshift-burnt-1"
+			heat += FIRE_THRESHOLD // spicy!
+			update_icon()
+
+
 	emp_act()
 		if (our_cell)
-			src.visible_message("<span class='alert'>[src]'s cell violently explodes!</span>")
-			do_explode() // heh
+			src.visible_message("<span class='alert'>[src]'s cell violently overheats!</span>")
+			src.add_heat(FIRE_THRESHOLD)
 
 	New()
 		processing_items |= src
@@ -2014,13 +2018,13 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 		. = ..()
 		if (!heat_repair)
 			if (!our_cell)
-				. += " [src] is lacking a power source!"
+				. += "<span class='alert'><b> [src] is lacking a power source!</b></span>"
 			if (!our_light)
-				. += " [src] is lacking a light source!"
+				. += "<span class='alert'><b> [src] is lacking a light source!</b></span>"
 			else if(our_light.light_status != LIGHT_OK)
-				. += " [src]'s light source is nonfunctional!"
+				. += "<span class='alert'><b> [src]'s light source is nonfunctional!</b></span>"
 		else
-			. += " [src] is completely broken!"
+			. += "<span class='alert'><b> [src] is broken and requires repairs!</b></span>"
 
 	get_help_message(dist, mob/user)
 		switch(src.heat_repair)
@@ -2083,14 +2087,10 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 				return
 			var/datum/projectile/laser/makeshift/possible_laser
 			if (istype(possible_laser))
-				heat += rand(possible_laser.heat_low, possible_laser.heat_high)
-			else // alllow varedit shenanigans
-				heat += rand(15,20)
+				src.add_heat(rand(possible_laser.heat_low, possible_laser.heat_high), user)
+			else // allow varedit shenanigans
+				src.add_heat(rand(15,20), user)
 			update_icon()
-			if (heat > 120)
-				boutput(user,"<span class='alert'>[src] bursts into flame!</span>")
-				break_light()
-				return
 			our_cell.use(current_projectile.cost)
 		return ..(target, start, user)
 
@@ -2099,10 +2099,10 @@ TYPEINFO(/obj/item/gun/energy/makeshift)
 	New()
 		..()
 		var/obj/item/cell/supercell/charged/C = new /obj/item/cell/supercell/charged
+		C.update_icon() // fix visual bug
 		src.attach_cell(C)
 		var/obj/item/light/tube/T = new /obj/item/light/tube
 		src.attach_light(T)
-		src.update_icon()
 
 #undef HEAT_REMOVED_PER_PROCESS
 #undef FIRE_THRESHOLD
