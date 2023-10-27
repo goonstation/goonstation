@@ -42,7 +42,7 @@ CONTENTS:
 /area/crunch/artifact_boh_pocket_dimension
 	name = "unknown dimension"
 	ambient_light = null
-	area_parallax_layers = list()
+	area_parallax_render_source_group = null
 	teleport_blocked = 2
 
 TYPEINFO(/turf/unsimulated/wall/void)
