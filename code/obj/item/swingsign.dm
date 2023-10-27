@@ -29,22 +29,12 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 	//var/static/regex/fixBreaklinesRegex = new(@{"/\n/"}, "g")
 	/// Regex that detects '<br>' tags
 	//var/static/regex/fixBreaklinesRegex = new(@{"<br>"}, "g")
-	var/datum/component/foldable/fold_component
 
 	New()
 		..()
 		//if(message)
 		//	setmessage(message)
-		src.AddComponent(/datum/component/foldable, /obj/item/objBriefcase/swingsignfolded)
-
-		fold_component = src.GetComponent(/datum/component/foldable) //Fold up into a briefcase the first spawn
-		fold_component.change_name=FALSE
-		if(!fold_component?.the_briefcase)
-			return
-		var/obj/item/objBriefcase/swingsignfolded/storedSign = fold_component.the_briefcase
-		if (storedSign)
-			storedSign.set_loc(get_turf(src))
-			src.set_loc(storedSign)
+		//src.AddComponent(/datum/component/foldable, /obj/item/swingsignfolded)
 
 	proc/setmessage(var/newmessage)
 		message = newmessage
@@ -60,9 +50,8 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 		else
 			icon_state = "written"
 
-	/*
 	proc/fold()
-		var/obj/item/objBriefcase/swingsignfolded/newSwingsign = new/obj/item/objBriefcase/swingsignfolded(src.loc)
+		var/obj/item/swingsignfolded/newSwingsign = new/obj/item/swingsignfolded(src.loc)
 
 		if (src.material)
 			newSwingsign.setMaterial(src.material)
@@ -72,13 +61,13 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 			newSwingsign.message = src.message
 
 		qdel(src)
-	*/
+
 	attack_hand(mob/user)
 		if (!iscarbon(user)) return
 		if(anchored == UNANCHORED)
-			//user.visible_message("<b>[user.name] folds [src].</b>")
+			user.visible_message("<b>[user.name] folds [src].</b>")
 			playsound(src, 'sound/impact_sounds/Clock_slap.ogg',50,1)
-			foldUpIntoBriefcase()//fold()//
+			fold()//
 		else
 			boutput(user, "<span alert='notice'>Sign is too tightly secured to fold!</span>")
 		return
@@ -91,11 +80,9 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 			if(anchored == ANCHORED)
 				boutput(user, "<span class='notice'>You unsecure the swing sign.</span>")
 				anchored = UNANCHORED
-				fold_component.can_fold = TRUE
 			else
 				boutput(user, "<span class='notice'>You secure the swing sign.</span>")
 				anchored = ANCHORED
-				fold_component.can_fold = FALSE
 			playsound(src, 'sound/items/Screwdriver.ogg', 50, 1)
 			return
 		..()
@@ -112,9 +99,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 			//L.changeStatus("stunned", 1 SECONDS)
 			src.visible_message("<b><font color=red>[M] is people-stopped by [src]!</font></b>")
 			playsound(src, 'sound/impact_sounds/Wood_Hit_1.ogg',50,1)
-			anchored = UNANCHORED
-			fold_component.can_fold = TRUE
-			foldUp()//fold() //Change to item
+			fold() //Change to item
 			return
 		..()
 
@@ -125,9 +110,7 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 		user.visible_message("<span class='alert'><b>[user] puts [his_or_her(user)] head between [src]'s legs and clamps them shut!</b></span>")
 		user.TakeDamage("head", 250, 0)
 		playsound(src, 'sound/items/woodbat.ogg',50,1)
-		anchored = UNANCHORED
-		fold_component.can_fold = TRUE
-		foldUp()//fold() //Change to item
+		fold()
 		return 1
 
 
@@ -158,9 +141,9 @@ TYPEINFO(/obj/swingsign)//No idea what TYPEINFO is, I just know it lets me disab
 
 
 //Heldable folded sign ==============
-TYPEINFO(/obj/item/objBriefcase/swingsignfolded)//obj/item/swingsignfolded)
+TYPEINFO(/obj/item/swingsignfolded)
 	mat_appearances_to_ignore = list("wood")
-/obj/item/objBriefcase/swingsignfolded //obj/item/swingsignfolded //Not an actual briefcase!
+/obj/item/swingsignfolded
 	name = "swing sign"
 	desc = "A foldable sign for writing annoucements and advertisements"
 	icon = 'icons/obj/furniture/swingsign.dmi'
@@ -180,19 +163,13 @@ TYPEINFO(/obj/item/objBriefcase/swingsignfolded)//obj/item/swingsignfolded)
 	/// Stored message for the deployed object
 	var/message = ""
 
-	///This is the same thing as original foldable constructor, but with different Block Setup, special attack and removed descriptions praising briefcase technology.
-	New(var/loc, var/obj/object)
-		..(loc)
-		src.set_loc(loc)
-		if(object)
-			src.thingInside = object
-		//..()
+	New()
+		..()
 		src.setItemSpecial(/datum/item_special/swipe)
 		BLOCK_SETUP(BLOCK_LARGE)
 
-	/*
+	///*
 	attack_self(mob/user as mob)
-
 		if(cant_drop == 1)
 			boutput(user, "You can't unfold the [src] when its attached to your arm!")
 			return
@@ -204,25 +181,13 @@ TYPEINFO(/obj/item/objBriefcase/swingsignfolded)//obj/item/swingsignfolded)
 		if (src.message)
 			newSwingsign.setmessage(src.message)//Pass the message onto the object. Calling swingsign.message directly won't update the desc.
 
-		boutput(user, "You unfold the [src].")
+		boutput(user, "You unfold the [newSwingsign].")
 
 		playsound(user, 'sound/impact_sounds/Clock_slap.ogg',50,1)
-		..()
 		user.drop_item()
 		qdel(src)
 		return
-	*/
-	///This is the same thing as original foldable proc, but with a sound effect and removed action description mentioning a briefcase
-	deploy(var/mob/user)
-		if(!thingInside)
-			return
-		thingInside.set_loc(get_turf(src))
-		if(src.loc == user)
-			user.drop_from_slot(src)
-		src.set_loc(null)
-		user.visible_message("<span class='alert'>[user] unfolds [thingInside]!</span>")//boutput(user, "You unfold the [src].")
-		playsound(user, 'sound/impact_sounds/Clock_slap.ogg',50,1)
-
+	//*/
 	/// Basically copied this from stool.dm /obj/item/chair/folded/attack
 	attack(atom/target as mob, mob/user as mob, params)
 		var/oldcrit = src.stamina_crit_chance

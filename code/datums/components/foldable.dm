@@ -4,7 +4,6 @@
 	var/original_desc
 	var/briefcase_path
 	var/change_name = 1
-	var/can_fold = TRUE ///NEW
 
 /datum/component/foldable/keep_name
 	change_name = 0
@@ -52,34 +51,28 @@ TYPEINFO(/datum/component/foldable)
 	set name = "Fold up"
 	set src in view(1)
 
-	if(foldUp())
-		usr.visible_message("<span class='alert'>[usr] folds [src] back up!</span>")
-
-/obj/proc/foldUp()
 	if(usr.stat)
 		return
 	var/atom/movable/object = src
 	if(!object)
 		return
 
-	var/datum/component/foldable/fold_component = src.GetComponent(/datum/component/foldable)
+	var/datum/component/foldable/fold_component = object.GetComponent(/datum/component/foldable)
 	if(!fold_component)
-		return FALSE
+		return
 	if(!fold_component.the_briefcase)
-		return FALSE//fold_component.the_briefcase = new/obj/item/objBriefcase(get_turf(object), object)
-	if(!fold_component.can_fold)
-		return FALSE
+		return //fold_component.the_briefcase = new/obj/item/objBriefcase(get_turf(object), object)
 	var/obj/item/objBriefcase/briefcase = fold_component.the_briefcase
 
-	if(object.loc == briefcase)
-		return FALSE
+	if(src.loc == briefcase)
+		return
 
-	if(object.loc == usr)
+	if(src.loc == usr)
 		usr.drop_from_slot(src)
 
 	briefcase.set_loc(get_turf(object))
-	src.set_loc(briefcase)
-	return TRUE
+	object.set_loc(briefcase)
+	usr.visible_message("<span class='alert'>[usr] folds [object] back up!</span>")
 
 /obj/item/objBriefcase
 	name = "briefcase"

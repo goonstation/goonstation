@@ -1396,7 +1396,7 @@ ABSTRACT_TYPE(/datum/sheet_crafting_recipe/zwood)
 			icon_state = "wood1"
 		swing_sign
 			recipe_id = "swing_sign"
-			craftedType = /obj/swingsign//obj/item/swingsignfolded
+			craftedType = /obj/item/swingsignfolded
 			name = "Swing Sign"
 			sheet_cost = 2
 			icon = 'icons/obj/furniture/swingsign.dmi'
