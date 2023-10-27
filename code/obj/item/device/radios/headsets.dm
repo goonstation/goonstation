@@ -644,3 +644,9 @@ TYPEINFO(/obj/item/device/radio_upgrade)
 
 			src.secure_frequencies = list("z" = frequency)
 			src.secure_classes = list("z" = RADIOCL_SYNDICATE)
+
+	syndieborg
+		name = "private radio channel upgrade"
+		desc = "You shouldn't see this."
+		secure_frequencies = list("z" = R_FREQ_SYNDICATE)
+		secure_classes = list("z" = RADIOCL_SYNDICATE)

@@ -44,9 +44,9 @@
 	var/module_active = null
 	var/list/module_states = list(null,null,null)
 
-	var/obj/item/device/radio/default_radio = null // radio used when there's no module radio
-	var/obj/item/device/radio/radio = null
-	var/obj/item/device/radio/ai_radio = null // Radio used for when this is an AI-controlled shell.
+	var/obj/item/device/radio/headset/default_radio = null // radio used when there's no module radio
+	var/obj/item/device/radio/headset/radio = null
+	var/obj/item/device/radio/headset/ai_radio = null // Radio used for when this is an AI-controlled shell.
 	var/mob/living/silicon/ai/connected_ai = null
 	var/obj/machinery/camera/camera = null
 	var/obj/item/robot_module/module = null
@@ -209,12 +209,14 @@
 			src.botcard.access = get_all_accesses()
 			src.botcard.registered = "Cyborg"
 			src.botcard.assignment = "Cyborg"
-			src.default_radio = new /obj/item/device/radio(src)
+			src.default_radio = new /obj/item/device/radio/headset(src)
 			if (src.shell)
 				src.ai_radio = new /obj/item/device/radio/headset/command/ai(src)
 				src.radio = src.ai_radio
 			else
 				src.radio = src.default_radio
+				if (src.syndicate)
+					src.radio.install_radio_upgrade(new /obj/item/device/radio_upgrade/syndieborg)
 			src.ears = src.radio
 			src.camera = new /obj/machinery/camera(src)
 			src.camera.c_tag = src.real_name
@@ -1949,6 +1951,8 @@
 				src.radio = RM.radio
 				src.internal_pda.mailgroups = RM.mailgroups
 				src.internal_pda.alertgroups = RM.alertgroups
+				if (src.syndicate)
+					src.radio.install_radio_upgrade(new /obj/item/device/radio_upgrade/syndieborg)
 			src.ears = src.radio
 			src.radio.set_loc(src)
 
@@ -1971,6 +1975,8 @@
 				src.radio = src.default_radio
 				src.internal_pda.mailgroups = initial(src.internal_pda.mailgroups)
 				src.internal_pda.alertgroups = initial(src.internal_pda.alertgroups)
+				if (src.syndicate)
+					src.radio.install_radio_upgrade(new /obj/item/device/radio_upgrade/syndieborg)
 			src.ears = src.radio
 		return RM
 
