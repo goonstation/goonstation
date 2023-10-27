@@ -192,7 +192,7 @@ TYPEINFO(/obj/machinery/status_display)
 				update_display_lines(line1,line2)
 
 			if(7) // Nuclear Operative Bomb Armed!
-				if(isnull(src.the_bomb))
+				if(QDELETED(src.the_bomb))
 					if(ticker.mode.type == /datum/game_mode/nuclear)
 						var/datum/game_mode/nuclear/game_mode = ticker.mode
 						src.the_bomb = game_mode.the_bomb
@@ -200,6 +200,9 @@ TYPEINFO(/obj/machinery/status_display)
 						for_by_tcl(nuke, /obj/machinery/nuclearbomb)
 							src.the_bomb = nuke
 							break
+					if(isnull(src.the_bomb))
+						src.mode = 1
+						return
 				if (!src.the_bomb?.armed)
 					set_picture("nuclear")
 					return
