@@ -4274,6 +4274,17 @@ datum
 				if (!issilicon(user) && !isAI(user) && !isintangible(user) && !isobserver(user)) //there's probably other things we should exclude here
 					src.holder.trans_to(user, max(1, src.volume))
 
+		genetic_sludge
+			name = "genetic sludge"
+			id = "genetic_sludge"
+			description = "A gross assortment of seperated genetic material that's not useful to the cloning process."
+			fluid_r = 57
+			fluid_g = 110
+			fluid_b = 86
+			transparency = 255
+			viscosity = 0.7
+			taste = "like mud but if they burned it"
+
 /obj/badman/ //I really don't know a good spot to put this guy so im putting him here, fuck you.
 	name = "Senator Death Badman"
 	desc = "Finally, a politician I can trust."

@@ -2348,6 +2348,44 @@
 				holder.add_reagent("oil", amount_of_oil_mixed, temp_new = holder.total_temperature, chemical_reaction = TRUE)
 				holder.remove_reagent("fuel", amount_of_fuel_to_use)
 
+	genetic_sludge_oil
+		name = "Genetic Sludge Made Oil"
+		id = "genetic_sludge_oil"
+		result = "oil"
+		required_reagents = list("genetic_sludge" = 5, "fuel" = 1)
+		instant = FALSE
+		reaction_speed = 1
+		result_amount = 1
+		mix_phrase = "The sludge darkens with an iridescent shimmer."
+
+	genetic_sludge_oil_explosion //oil and sludge explode together, therefore you need a condenser or to mix the recipe in very small amounts
+		name = "Genetic Sludge Explosion"
+		id = "genetic_sludge_explosion"
+		required_reagents = list("genetic_sludge" = 1, "oil" = 1)
+		mix_phrase = "The mixture explodes!"
+		reaction_icon_state = list("reaction_explode-1", "reaction_explode-2")
+		reaction_icon_color = "#ffffff"
+
+		on_reaction(var/datum/reagents/holder, var/created_volume)
+			if (holder.last_basic_explosion >= ticker.round_elapsed_ticks - 3)
+				return
+			holder.last_basic_explosion = ticker.round_elapsed_ticks
+			var/atom/my_atom = holder.my_atom
+			if (my_atom)
+				var/turf/location = get_turf(my_atom)
+				explosion(my_atom, location, -1,-1,0,1)
+				fireflash(location, 0)
+				if(istype(holder.my_atom, /obj))
+					var/obj/container = holder.my_atom
+					container.shatter_chemically(projectiles = TRUE)
+			else if (holder.covered_cache)
+				var/amt = max(1, (holder.covered_cache.len * (created_volume / holder.covered_cache_volume)))
+				for (var/i = 0, i < amt && holder.covered_cache.len, i++)
+					var/turf/location = pick(holder.covered_cache)
+					holder.covered_cache -= location
+					explosion_new(my_atom, location, 2.25/amt)
+					fireflash(location, 0)
+
 	hydrogen_carbon_dissolve //made to interact with oil so you have to keep it 'fueled', change to make a unique chem that fades away instead if this is broken/weird later
 		name = "hydrogen_carbon_dissolving"
 		id = "hydrogen_carbon_dissolving"

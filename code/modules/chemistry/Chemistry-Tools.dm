@@ -1151,3 +1151,15 @@ proc/ui_describe_reagents(atom/A)
 #undef BUNSEN_LOW
 #undef BUNSEN_MEDIUM
 #undef BUNSEN_HIGH
+
+/obj/item/reagent_containers/glass/medical_byproduct_can
+	name = "medical byproduct can"
+	desc = "A fluid canister designed to seperate and store chemically useful medical waste reagents. Can be added to an enzymatic reclaimer or cryo pod, and removed with a medical ID card."
+	icon = 'icons/obj/chemical.dmi'
+	icon_state = "byproduct_can"
+	amount_per_transfer_from_this = 10
+	incompatible_with_chem_dispensers = TRUE
+	can_recycle = FALSE //not actually glass
+	splash_all_contents = FALSE
+	object_flags = FPRINT | OPENCONTAINER | SUPPRESSATTACK
+	initial_volume = 100

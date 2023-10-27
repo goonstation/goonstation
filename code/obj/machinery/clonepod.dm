@@ -863,6 +863,7 @@ TYPEINFO(/obj/machinery/clonegrinder)
 	var/emagged = 0
 	var/auto_strip = 1 // disabled when emagged (people were babies about this when it being turned off was the default) :V
 	var/upgraded = 0 // upgrade card makes the reclaimer more efficient
+	var/obj/item/reagent_containers/glass/medical_byproduct_can/current_byproduct_can = null //!the byproduct can currently attached
 
 	New()
 		..()
@@ -1080,6 +1081,11 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			user.drop_item()
 			qdel(G)
 			return
+		if (istype(G, /obj/item/reagent_containers/glass/medical_byproduct_can))
+			if(current_byproduct_can)
+				boutput(user, "<span class='alert'>The [src.name] already has the [byproduct_can.name] connected! You can only connect one! Okay!!! </span>")
+				return
+			connect_byproduct_can(user, G)
 		if (src.process_timer > 0)
 			boutput(user, "<span class='alert'>The [src.name] is still running, hold your horses!</span>")
 			return
@@ -1177,6 +1183,17 @@ TYPEINFO(/obj/machinery/clonegrinder)
 			if (user && !isdead(user)) // how????????? ?
 				user.suiciding = 0 // just in case I guess
 		return 1
+
+	proc/connect_byproduct_can(mob/user, byproduct_can)
+		current_byproduct_can = byproduct_can
+		user.u_equip(byproduct_can)
+		byproduct_can.set_loc(src)
+		boutput(user, "<span class='notice'><b>You connect the [byproduct_can] to the [src.name].</span>")
+
+	proc/rmeove_byproduct_can(mob/user)
+		user.put_in_hand_or_drop(src.current_byproduct_can)
+		current_byproduct_can = null
+		boutput(user, "<span class='notice'><b>You disconnect the [byproduct_can] from the [src.name].</span>")
 
 /datum/action/bar/icon/put_in_reclaimer
 	id = "put_in_reclaimer"
