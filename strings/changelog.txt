@@ -14,6 +14,7 @@
 (*)Miasma-exposure to people with salbutamol in them causes the creation of lungrot bloom. This toxic fungus causes lungrot, causing people to cough out more miasma!
 (u)LeahTheTech
 (+)Added a room designator to the construction supplies crate to help with fixing built zone area issues.
+(+)Fire extinguishers now spray over more things, no more eternal flames on top of computer consoles.
 (t)fri oct 27 23
 (u)pali
 (+)Roundstart tips have been moved from chat to the lobby screen. You can now press a button to get a new tip.
