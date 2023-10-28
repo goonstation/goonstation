@@ -1381,12 +1381,13 @@ datum/preferences
 					src.jobs_unwanted -= JD.name
 					src.jobs_low_priority += JD.name
 
+				var/hover_text = JD.short_description
 
 				HTML += {"
 				<div>
 					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level - 1]" class="arrow" style="left: 0;">&lt;</a>
 					[level < (4 - (JD.cant_allocate_unwanted ? 1 : 0)) ? {"<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=[level + 1]" class="arrow" style="right: 0;">&gt;</a>"} : ""]
-					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];">
+					<a href="byond://?src=\ref[src];preferences=1;occ=[level];job=[JD.name];level=0" class="job" style="color: [JD.linkcolor];" title="[hover_text]">
 					[JD.name]</a>
 				</div>
 				"}
@@ -1544,7 +1545,7 @@ datum/preferences
 				if (2) picker = "Medium Priority"
 				if (3) picker = "Low Priority"
 				if (4) picker = "Unwanted"
-		var/datum/job/J = find_job_in_controller_by_string(job)
+
 		if (J.cant_allocate_unwanted && picker == "Unwanted")
 			boutput(user, "<span class='alert'><b>[job] cannot be set to Unwanted.</b></span>")
 			src.antispam = 0
