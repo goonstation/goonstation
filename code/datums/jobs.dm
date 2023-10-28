@@ -2236,6 +2236,7 @@ ABSTRACT_TYPE(/datum/job/special/halloween)
 			M.equip_if_possible(pickle, SLOT_IN_BACKPACK)
 		M.bioHolder.RemoveEffect("midas") //just in case mildly mutated has given us midas I guess?
 		M.bioHolder.AddEffect("pickle", magical=TRUE)
+		M.blood_id = "juice_pickle"
 
 ABSTRACT_TYPE(/datum/job/special/halloween/critter)
 /datum/job/special/halloween/critter
