@@ -15,7 +15,7 @@
 	icon = 'icons/mob/flock_ui.dmi'
 	icon_state = "structure-relay"
 	screen_loc = "NORTH, EAST-1"
-	alpha = 100
+	alpha = 0
 	var/datum/flock/F = null
 	/// Helps control the iconstate
 
@@ -24,16 +24,10 @@
 		var/image/under_relay = new(src.icon, icon_state = "template-full")
 		src.underlays += under_relay
 
-/atom/movable/screen/hud/relay/proc/getDesc()
-	var/pct_compute = min(100, round((src.F.total_compute - src.F.used_compute) / FLOCK_RELAY_COMPUTE_COST * 100))
-	var/pct_tiles = min(100, round(length(src.F.all_owned_tiles) / FLOCK_RELAY_TILE_REQUIREMENT * 100))
-	var/pct_total = round((((pct_compute / 100) * (pct_tiles / 100)) * 100))
-	return "Overall Progress: [pct_total]%</br>Compute: [pct_compute]%</br>Converted: [pct_tiles]%"
-
 /// Update everything about the icon and description
-/atom/movable/screen/hud/relay/proc/update_value(new_stage = null, new_alpha = null)
-	src.desc = src.getDesc()
-	
+/atom/movable/screen/hud/relay/proc/update_value(new_stage = null, new_alpha = null, new_desc = null)
+	if (new_desc)
+		src.desc = new_desc
 	if (new_alpha)
 		src.alpha = new_alpha
 	if (!new_stage)

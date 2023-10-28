@@ -835,8 +835,15 @@ proc/get_default_flock()
 	else if (src.relay_finished)
 		src.relay_stage = STAGE_DESTROYED
 
+/datum/flock/proc/get_progress_desc()
+	var/pct_compute = min(100, round((src.total_compute - src.used_compute) / FLOCK_RELAY_COMPUTE_COST * 100))
+	var/pct_tiles = min(100, round(length(src.all_owned_tiles) / FLOCK_RELAY_TILE_REQUIREMENT * 100))
+	var/pct_total = round((((pct_compute / 100) * (pct_tiles / 100)) * 100))
+	return "Overall Progress: [pct_total]%</br>Compute: [pct_compute]%</br>Converted: [pct_tiles]%"
+
 /datum/flock/proc/update_flockmob_relay_icons()
 
+	var/new_desc = src.get_progress_desc()
 	var/new_alpha = null
 	var/previous_stage = src.relay_stage
 	src.update_stage()
@@ -854,10 +861,10 @@ proc/get_default_flock()
 		if (istype(flockmob.loc, /mob/living/critter/flock/drone))
 			var/mob/living/critter/flock/drone/drone = flockmob.loc
 			var/datum/hud/critter/flock/drone/flockhud = drone.hud
-			flockhud.relayInfo.update_value(src.relay_stage, new_alpha)
+			flockhud.relayInfo.update_value(src.relay_stage, new_alpha, new_desc)
 			continue
 		var/datum/hud/flock_intangible/flockhud = flockmob.hud
-		flockhud.relayInfo.update_value(src.relay_stage, new_alpha)
+		flockhud.relayInfo.update_value(src.relay_stage, new_alpha, new_desc)
 
 /datum/flock/proc/process()
 	if (src.relay_allowed)
